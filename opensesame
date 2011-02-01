@@ -1,0 +1,68 @@
+#!/usr/bin/env python
+#-*- coding:utf-8 -*-
+
+"""
+This file is part of OpenSesame.
+
+OpenSesame is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+OpenSesame is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
+"""
+
+import os
+import os.path
+from PyQt4 import QtGui, QtCore
+import sys
+import libqtopensesame.qtopensesame
+
+if __name__ == "__main__":
+
+	# A horrifyingly ugly hack to change the working directory
+	# under Windows
+	if os.name == "nt":
+		try:	
+			# Extract the part of the description containing the path
+			s = str(libqtopensesame.qtopensesame)
+			i = s.find("from '") + 6
+			j = s.find("'>'") - 1
+			s = s[i:j]
+			# Go up the tree until the path of the current script
+			while not os.path.exists(os.path.join(s, "opensesame")) and not os.path.exists(os.path.join(s, "opensesame.exe")):
+				s = os.path.dirname(s)
+			os.chdir(s)
+			if s not in sys.path:
+				sys.path.append(s)
+			print "opensesame: Changing working directory to '%s'" % s
+		except Exception as e:
+			print "opensesame: Failed to change working directory:", e				
+
+	app = QtGui.QApplication(sys.argv)		
+	myapp = libqtopensesame.qtopensesame.qtopensesame()
+	QtCore.QObject.connect(app, QtCore.SIGNAL("quit()"), myapp.close)		
+	myapp.show()		
+	
+	# Open an experiment if it has been specified as a command
+	# line argument
+	if len(sys.argv) >= 2 and os.path.isfile(sys.argv[1]):
+		myapp.open_file(sys.argv[1])
+		
+	# Run the experiment if it has been specified on the
+	# command line
+	if "--run" in sys.argv:
+		myapp.run_experiment()
+	elif "--run-in-window" in sys.argv:
+		myapp.run_experiment(False)
+	else:	
+		myapp.check_update(always = False)	
+		myapp.show_random_tip(always = False)	
+		
+	sys.exit(app.exec_())

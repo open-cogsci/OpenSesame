@@ -1,0 +1,10 @@
+0.12
+- Removed small wait before getting response
+- Timeout now returns None
+
+0.11			
+- Fixed a bug which could cause the plug-in to wait eternally for a key-release (now max 50ms)
+- Added version description to the interface
+
+0.10
+- First relatively stable version

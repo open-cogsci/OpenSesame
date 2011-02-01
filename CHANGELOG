@@ -1,0 +1,250 @@
+TODO
+
+Lotje
+- Download icoontjes op website
+- On adding a new item, have an option to give a new name right away
+
+Tutorial
+- Add structure tree figure
+- Fix script fonts on adobe acrobat (only windows?)
+
+Inline_script
+- Add replace
+
+Loop
+- Add counterbalancing/ latin square order
+
+General
+- Enable quit by window-exit button
+- Moving items up and down doesn't work properly on duplicate items
+- Speed-up changes, perhaps by disabling full script refresh on each change
+
+- Fixed? A bug where the sequence item is not properly updated on removing and adding items. This appears to have something to do with
+  the hard refresh gone bad. I have made a quick fix, have to see if it re-occurs. See Jan's mail with attached error log.
+  
+CHANGELOG
+
+0.22 "Axiomatic Axelrod"
+- Added search capabilities to inline_editor and a notification of unapplied changes
+- Added noise patch as a drawing primitive to the sketchpad
+- Fixed a bug where the sketchpad gave errors if it failed to parse a draw command
+- Fixed a bug where pre-release versions broke update checking
+- Fixed a bug where changing the working directory only worked if the path didn't contain spaces
+- The default location for the logfile is now the location of the experiment
+- Print stacktrace on unexpected exceptions
+- Doesn't ask for subject nr, logfile etc. in debug mode
+- Added an optional hack (--pylink) to make sure that pylink is load before pygame (if available)
+- Added qtplugin.add_text() function
+- Fixed a bug in var_info() which caused the logger to crash on advanced_delay and text_input plugins 
+- Added cleanup functions to the experiment, to cleanup afterwards
+- Added restart option, to circumvent pylinks refusal to deinitialize (disabled by default, since the problems seems to be fixed)
+- Fixed a papercut in the logger which caused unpredictable ordering of columns
+- Fixed a bug which could cause the sketchpad to crash on incorrectly formatted draw items, causing a "variable g not defined error".
+- Fixed a bug where exceptions on apply script weren't caught and caused a crash
+- Fixed a bug where changing the "Show if" option in sketchpads wasn't automatically applied
+- Added a delete option to the context menu in the overview tree of items in a sequence
+- Added comments to OpenSesame script, indicated by # or //
+- Sketchpads now throw an exception if they can't parse a command instead of simply ignoring it
+- Added Alt+A apply shortcut to script editor
+- Fixed a papercut where repeat couldn't be higher than 100 in a loop item
+- Added external_script plug-in
+- Started using codenames for releases
+- Massively improved tables in loop items
+- Created a specific help_browser, which allows clicking on hyperlinks and shows a footer message
+- Changes about from a dialog to a help tab
+- Added contribute and bug submission help tabs
+
+0.21
+- Fixed a bug where text consisting of only digits caused the sketchpad to crash
+- Fixed a papercut where using scaled images in a sketchpad caused a deprecation warning
+- Changed logfile dialog to indicate escape key
+- Added open on double-click to file pool
+- Changed the file pool automatic renaming notification
+- Added different error messages for "image not found" and "unsupported image format" to the sketchpad
+- Made the error message for non-existent variabled in a logger more transparent
+- Made .opensesame.tar.gz the default format
+- Fixed a papercut where the logger jumped to the top of the tab after a variable was (de)selected
+- Fixed a papercut where the logger displayed the same variable twice if it was offered by two items (or more)
+- Fixed a bug where the loop order was reset to random on opening a file
+- Loop items now store the order of the columns in the table
+- Added copy/paste keyboard shortcuts to loop item table
+- Fixed a bug where some changes to the loop tab weren't applied to the script immediately
+- Keep track of unsaved changes and ask if they should be saved on exit
+- Make use of the statusbar
+- Added auto-save function for automatic creation of backups
+- Fixed a bug which crashed the sampler on changing the duration to a numeric value
+- Added multiple select and remove to file pool
+- The old name is now suggested on renaming files from the file pool
+- Ask before overwriting files in the file pool
+- Added inline_script.copy_sketchpad() convenience function
+- Sort items by type and name in pulldown menus
+- Close tabs on deleting unused items to prevent non-existent items having a tab
+- Added possibility to rename from the sequence tab
+- Removed the inconsistent "Draw a line" tooltip from the sketchpad
+- Added thick gridlines to indicate the display center in the sketchpad
+- Changed grid color to green (better visible on white background)
+- Added delete/ edit context menu to sketchpad
+- Added improved conditional statements
+- Added conditional statements to individual items in sketchpads
+- Added tooltips to individual sketchpad items
+- Added auto-log option to the logger item
+- The default logfile is now defaultlog.csv and .csv is the preferred extension for logfiles
+- Suggest a name and folder in the "save as" dialog
+- Added "click to edit" label to make renaming more obvious
+- Fixed a bug where pasting text with newlines in a sketchpad textline corrupted the experiment
+- Fixed a bug where arrow head size was not preserved in sketchpads
+- Added subject_nr and subject_parity (even/ odd) experiment variables
+- Fixed a bug where removing a loop variable didn't work
+- Renaming loop variables now suggests old name and doesn't complain about unchanged name
+- Added rounding of float numbers in sketchpads/ feedback
+- Keyboard_response and mouse_response items now offer average_response_time, avg_rt, accuracy and acc
+- Improved error message on variable not found
+- Improved error message on failure to open file
+- Added rename on doubleclick for item overview
+- Strict sanitize names on renaming
+- Added context menu to item overview
+- Fixed a bug where "Show text in toolbar didn't work"
+
+0.20
+- Fixed a bug which could cause OpenSesame to enter a loop on startup on Windows
+
+0.19
+- Fixed a critical bug where variable coordinates in sketchpads didn't work
+- Fixed a bug where applying script changes detached the edit tab
+
+0.18
+- Better looking error messages and return the Python traceback in inline_script errors
+- Implemented basic drag and drop functionality
+- The file pool automatically becomes visible if something is added to it
+- The debug window now has cowsaying power!
+- The notifcation dialog now has a title and looks slightly better
+- OpenSesame can now check for updates at startup (enabled by default)
+- Added startup tips
+- Fixed a bug where the same plugin was imported multiple times if it was presented at multiple locations
+- Added the srbox plugin
+- Fixed a bug where applying the script of plugins didn't work
+- Fixed a bug where plugins could not reset their variables
+- Fixed a bug where variably defined textlines where not shown in the GUI
+- Fixed a bug where integer allowed responses didn't work
+- Now ask for logfile location using a file dialog
+- Change the working directory to the folder containing opensesame under Windows
+- Fixed a bug where the current directory wasn't set which caused problems under Windows
+- Added auto-indent and selection (un)indent
+- Fixed a papercut where opening a file sometimes caused the window to resize
+- Fixed a papercut where the file pool wasn't refreshed if a file was openened through the command line
+- Added the 'open' option to the file pool
+- The file pool now checks for duplicate names when renaming a file
+- Restyled the sketchpad tab to be less space consuming
+
+0.17
+- Added output buffering, which is rerouted to the debug window
+- Added basic Python interpreter
+- Fixed the missing pixels bug in drawing circles/ ellipses, as per the instruction on the PyGame FAQ. This has the unfortunate side-effect that drawing a thick circle will overwrite it's inner parts with the background color.
+- Accept an experiment file as the first parameter on the command line and accept the --debug, --run, and --run-in-window command line parameters
+- Added a timeout option to the keyboard_response and mouse_response items
+- The mouse_response now suggests the cursor_x and cursor_y variables to the logger
+- The logger now suggests to log the count_[name] variable for all sequence items
+- Added help buttons to the variable inspector, file pool and debug window
+- Changed the help tabs so that hyperlinks are clickable
+- Added option to copy logfiles to the file pool
+- Added the option to open the file pool folder in the file manager
+- Added auto response mode
+- Added basic plugin functionality
+- Refreshed the sequence edit
+- Added fixation_dot plugin
+- Added text_display plugin
+- Added advanced_delay plugin
+- Extended the help files
+- Polished up the item's name and description display
+- Added text_input plugin
+- Revamp of the logger controls
+- More consistent widget margins in the GUI
+- Fixed a papercut where changing the loop table made the cursor jump to the first cell
+- Fixed a bug where incorrect variable-names where accepted by the loop item
+- Fixed a bug where sequence items crashed on incorrectly formatted conditions
+- Fixed a bug where the general tab crashed on incorrectly formatted input
+- Revamp of the general ("welcom") tab
+- Consistent use of tooltips throughout the GUI
+- Created a separate item toolbar and added the "Add plugin" button
+- Save/ restore the window state
+- Revamp of the pool widget (added view switching and refresh button)
+- Added the variable wizard to the loop
+- Added partial repeats (< 1) in loops
+
+0.16
+- Fixed a bug where an incorrectly formatted draw command caused the sketchpad to crash
+- Sketchpads now check if numeric attributes (x, y, etc.) are really numeric
+- Added Gabor patch as draw primitive to sketchpad
+- Added the .opensesame.tar.gz format
+- Greatly improved saving and opening of files
+- Added the file pool, which is saved with the .opensesame.tar.gz format
+- Fixed a bug where data pasted into the loop table wasn't applied automatically
+- Fixed a papercut where the sketchpad in the GUI didn't automatically use the foreground color
+- Minor tweaks to the sequence edit tab
+- Changed the OpenSesame icon
+- Polished the help files a bit
+- Fixed a bug in the sequence where an empty "Run if" was not changed to "always"
+- Fixed a bug where using """ to define strings in inline scripts confused OpenSesame
+- Fixed a papercut where changes to the inline_script item weren't applied automatically
+- Added the count_[item name] variable to keep track of how often a variable is executed
+- Changed the default sketchpad/ feedback duration to 'keypress'
+- Fixed a bug where opening a new file didn't reset the current path
+- Fixed a bug where changing the description didn't take
+- Added gaze_cue.opensesame.tar.gz
+- Added tilt_adaptation.opensesame
+- Added theeuwes_1992.opensesame
+- Added 'Add multiple cycles' button to loop item
+- Polished the interface a bit (fixing icon sizes etc.)
+- Fixed a bug where recursion could occur after inserting a loop or sequence
+
+0.15
+- Made sketchpads use variables for all parameters
+- Added the variable inspector
+- Added the sampler and synth items
+- Fixed a bug where variables could be defined in terms of themselves
+- Fixed a bug where the tabs became disattached when the general script was applied
+- Fixed a bug where empty variables caused an incomprehensible error message
+- Fixed a bug where changes in the sequence edit tab where not visible in the script tab
+- Added the "suggest variables" button to the logger item
+- Added synth_example.opensesame and synth_inline_example.opensesame
+- Update test_suite.opensesame
+
+0.14
+- Replaced all text editor-bits with the awesome line-numbered editor with syntax highlighting
+- Fixed not being able to unset allowed_response and correct_response variables in keyboard_response and mouse_response
+- Fixed a bug where the script_tab was not updated properly after applying script changes
+- Fixed a bug where the compensation value was not read properly from the script
+- Fixed a bug where changing the resolution using the GUI didn't work.
+- Implemented different font families and sizes and fixed different font size in GUI and experiment
+- Added update checker
+- Fixed a bug where empty lines where stripped from the inline code
+- Added a dialog when creating a new file
+- Added keyboard shortcuts
+- Added tutorial_inline.opensesame to the examples
+
+0.13
+- Fixed the missing sequence item in the item tree
+- Fixed the "add logger" toopltip in sequence item
+- Unused items are collapsed automatically in the item tree
+- Fixed bug were "delete unused items" did not delete all unused items
+- Fixed broken "new file" function
+- Added a dialog to add/ select an item after adding a new loop or sequence
+- loop: Fixed a confusion between the number of cycles and the number of cycle variables in the loop item
+- Made the gui refresh more efficient by using a refresh_lock
+- Made pygame use HWSURFACE and DOUBLEBUF to wait for vertical refresh
+- Added seperate toolbar buttons for fullscreen and window running
+- sketchpad; Changed the layout of the sketchpad edit tab
+- Added timing error compensation
+- Did some testing on Windows 7 and XP
+- sketchpad: Added a popout window for the sketchpad
+- Fixed a bug where renaming the entry point didn't work correctly
+- loop: Added copying/pasting options to the table
+- loop: Added variable renaming and checking for duplicate variables
+- Generated preliminary documentation
+- openexp.response: accept human readable keynames for allowed responses
+
+0.12
+- Fixed the broken notification dialog
+
+0.11
+- First usable version

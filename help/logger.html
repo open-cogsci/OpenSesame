@@ -1,0 +1,67 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
+	<TITLE></TITLE>
+	<META NAME="GENERATOR" CONTENT="LibreOffice 3.3  (Linux)">
+	<META NAME="AUTHOR" CONTENT="Sebastiaan Mathot">
+	<META NAME="CREATED" CONTENT="20101128;13435600">
+	<META NAME="CHANGED" CONTENT="20110129;17501400">
+	<STYLE TYPE="text/css">
+	<!--
+		@page { margin: 0.79in }
+		P { margin-bottom: 0.08in }
+		H1 { margin-bottom: 0.08in }
+		H1.western { font-family: "Arial", sans-serif; font-size: 16pt }
+		H1.cjk { font-family: "DejaVu Sans"; font-size: 16pt }
+		H1.ctl { font-family: "Lohit Hindi"; font-size: 16pt }
+		H2.western { font-family: "Albany", sans-serif; font-size: 14pt; font-style: italic }
+		H2.cjk { font-family: "HG Mincho Light J"; font-size: 14pt; font-style: italic }
+		H2.ctl { font-family: "Arial Unicode MS"; font-size: 14pt; font-style: italic }
+		A:link { so-language: zxx }
+	-->
+	</STYLE>
+</HEAD>
+<BODY LANG="en-US" DIR="LTR">
+<H1 CLASS="western">Logger items</H1>
+<P>Typically, you will not only want participants to provide
+responses during an experiment, you will also want to log those
+responses to a data file for analysis. This is where the logger item
+comes in.</P>
+<H2 CLASS="western">Selecting variables</H2>
+<P>In the logger item you can indicate which variables you wish to
+log. By default the logger tries to autodetect and log all variables.
+This is a safe bet, but results in large datafiles, with lots of
+unnecessary information. 
+</P>
+<P>If you deselect the autodetect option, you can select variables
+from the list, which contains all (global) variables that OpenSesame
+is aware of. If, for some reason, the variable that you want to log
+does not appear in the list, you can add it using the <B>Add custom
+variable</B> button.</P>
+<P>If you are unsure which variables you want to log, you can click
+on the <B>Smart select</B> <SPAN STYLE="font-weight: normal">button,
+which will select all variables that are likely to be of interest.</SPAN></P>
+<H2 CLASS="western"><B>Special variables</B></H2>
+<UL>
+	<LI><P><B>time_[name of item]</B> <SPAN STYLE="font-weight: normal">variables
+	contain the timestamp of when an item has been run for the last
+	time. This can be useful if you have doubts about the timing of your
+	experiment.</SPAN></P>
+	<LI><P><B>count_[name of item]</B> <SPAN STYLE="font-weight: normal">variables
+	contain the number of times that an item has been run. This can be
+	useful as a trial or block counter. </SPAN>
+	</P>
+</UL>
+<H2 CLASS="western">Format of the logfile</H2>
+<P STYLE="font-weight: normal">The logfile is in plain-text,
+comma-separated format. This format can be viewed in most
+text-editors (although Windows Notepad may not handle the
+line-endings properly) and spreadsheets.</P>
+<H2 CLASS="western">Merging data files</H2>
+<P>If you prefer to have all participant data in a single
+spreadsheet, you can merge the OpenSesame logfiles using the online
+spreadsheet merger
+&lt;<A HREF="http://www.cogsci.nl/software/online-spreadsheet-merger">http://www.cogsci.nl/software/online-spreadsheet-merger</A>&gt;.</P>
+</BODY>
+</HTML>
