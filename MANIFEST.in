@@ -1,0 +1,18 @@
+include data/opensesame.desktop
+include resources/*.png
+include resources/*.opensesame
+include resources/*.ttf
+include resources/README
+include resources/tips.txt
+include examples/*
+include help/*.html
+include sounds/*
+include COPYING
+include opensesame.bat
+recursive-include plugins/advanced_delay *
+recursive-include plugins/external_script *
+recursive-include plugins/fixation_dot *
+recursive-include plugins/text_display *
+recursive-include plugins/text_input *
+recursive-exclude plugins *.pyc
+recursive-exclude plugins */resources/*
