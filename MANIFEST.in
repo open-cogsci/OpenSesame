@@ -8,7 +8,6 @@ include examples/*
 include help/*.html
 include sounds/*
 include COPYING
-include opensesame.bat
 recursive-include plugins/advanced_delay *
 recursive-include plugins/external_script *
 recursive-include plugins/fixation_dot *

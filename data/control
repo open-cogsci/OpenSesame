@@ -1,0 +1,15 @@
+Source: opensesame
+Section: science
+Priority: optional
+Maintainer: Sebastiaan Mathot <s.mathot@cogsci.nl>
+Build-Depends: cdbs (>=0.4.49), debhelper (>= 5.0.38), python-central (>= 0.5.6)
+XS-Python-Version: >= 2.6
+Standards-Version: 3.8.1
+Homepage: http://www.cogsci.nl
+
+Package: opensesame
+Architecture: all
+XB-Python-Version: ${python:Versions}
+Depends: ${misc:Depends}, ${python:Depends}, python-qt4, python-pygame, python-numpy
+Description: OpenSesame is a graphical experiment builder
+
