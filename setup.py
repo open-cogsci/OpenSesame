@@ -26,7 +26,7 @@ def plugins():
 
 setup(name="opensesame",
 
-	version = "0.23-pre1",
+	version = "0.22",
 	description = "A graphical experiment builder for the social sciences",
 	author = "Sebastiaan Mathot",
 	author_email = "s.mathot@cogsci.nl",

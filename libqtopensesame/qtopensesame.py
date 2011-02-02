@@ -165,8 +165,8 @@ class qtopensesame(QtGui.QMainWindow):
 						
 		# Set some initial variables
 		self.current_path = None
-		self.version = "0.23-pre1"
-		self.codename = "Bluesy Beck"
+		self.version = "0.22"
+		self.codename = "Axiomatic Axelrod"
 		self.lock_refresh = False
 		self.auto_check_update = True
 		self.show_startup_tip = True
