@@ -1,0 +1,5 @@
+opensesame (0.22-1) unstable; urgency=low
+
+  * Initial release (Closes: #nnnn)  <nnnn is the bug number of your ITP>
+
+ -- Sebastiaan Mathot <sebastiaan@fennec>  Sun, 30 Jan 2011 13:08:04 +0100
