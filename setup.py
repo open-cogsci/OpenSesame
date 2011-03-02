@@ -9,20 +9,18 @@ import os.path
 included_plugins = ["advanced_delay", "external_script", "fixation_dot", "text_display", "text_input"]
 
 def plugins():
-    
-    """
-    Create a list of all plugins that need to be included in the release
-    """
-    
+	"""
+	Create a list of all plugins that need to be included in the release
+	"""
 	global included_plugins
 
 	l = []
 	for plugin in os.listdir("plugins"):
-	
+
 		if plugin in included_plugins:
 			l.append( ("/usr/share/opensesame/plugins/%s" % plugin, glob.glob("plugins/%s/*" % plugin)) )
-			
-	return l				
+
+	return l
 
 setup(name="opensesame",
 
@@ -31,7 +29,7 @@ setup(name="opensesame",
 	author = "Sebastiaan Mathot",
 	author_email = "s.mathot@cogsci.nl",
 	url = "http://www.cogsci.nl",
-	scripts = ["opensesame"],	      
+	scripts = ["opensesame"],
 	packages = ["openexp", "libopensesame", "libqtopensesame"],
 	package_dir = {"openexp" : "openexp", "libopensesame" : "libopensesame", "libqtopensesame" : "libqtopensesame"},
 	data_files=[
@@ -43,5 +41,5 @@ setup(name="opensesame",
 		("/usr/share/opensesame/examples", glob.glob("examples/*")),
 		] + plugins()
 	)
-	
-	
+
+
