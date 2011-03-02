@@ -15,6 +15,7 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
+import openexp.response
 from libopensesame import item, exceptions
 import shlex
 
@@ -34,9 +35,12 @@ class sequence(item.item):
 	def run(self):
 	
 		"""
-		Run all items
+		Run all items	
 		"""
 	
+		# Flush the responses to catch escape presses
+		openexp.response.flush()
+		
 		for item, cond in self.items:		
 			if self.match(cond):	
 				self.experiment.items[item].run()

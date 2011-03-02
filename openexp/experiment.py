@@ -70,6 +70,17 @@ class experiment:
 		print "experiment.init_sound(): sampling freq = %d, buffer size = %d" % (self.sound_freq, self.sound_buf_size)
 		pygame.mixer.pre_init(frequency=self.sound_freq, buffer=self.sound_buf_size)
 		
+	def init_icon(self):
+	
+		"""
+		Set the window icon
+		"""
+		
+		surf = pygame.Surface( (32, 32) )
+		surf.fill( (255, 255, 255) )
+		pygame.draw.circle(surf, (0, 0, 255), (16, 16), 10, 4)
+		pygame.display.set_icon(surf)
+		
 	def init_display(self, defaultlog = False):
 		
 		"""
@@ -78,11 +89,13 @@ class experiment:
 				
 		pygame.init()
 		response.init_key_codes()
+
+		self.init_icon()		
 		
 		if self.fullscreen:
 			mode = pygame.FULLSCREEN | pygame.HWSURFACE | pygame.DOUBLEBUF
 		else:
-			mode = pygame.HWSURFACE | pygame.DOUBLEBUF
+			mode = pygame.HWSURFACE | pygame.DOUBLEBUF			
 			
 		if pygame.display.mode_ok(self.resolution, mode):	
 			print "experiment.init_display(): display mode ok"

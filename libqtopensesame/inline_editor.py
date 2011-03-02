@@ -54,8 +54,81 @@ from PyQt4.Qt import QWidget
 from PyQt4.Qt import Qt
 from PyQt4 import QtGui, QtCore
 import os
+from libqtopensesame import replace_dialog_ui
+
+class replace_dialog(QtGui.QDialog):
+
+	"""
+	A search/ replace dialog
+	"""
+
+	def __init__(self, parent = None):
+		
+		"""
+		Constructore
+		"""
+							
+		QtGui.QDialog.__init__(self, parent)	
+		self.edit = parent.edit
+		self.ui = replace_dialog_ui.Ui_Dialog()
+		self.ui.setupUi(self)	
+		self.adjustSize()	
+		
+		self.ui.edit_search.setText(parent.search.text())
+		
+		self.ui.button_search.clicked.connect(self.search)
+		self.ui.button_replace.clicked.connect(self.replace)
+		self.ui.button_replace_all.clicked.connect(self.replace_all)
+		
+	def search(self):
+	
+		"""
+		Select text matching the current selection. Returns True
+		if the selection has been found, false otherwise
+		"""
+	
+		if not self.edit.find(self.ui.edit_search.text()):
+			self.edit.moveCursor(QtGui.QTextCursor.Start)
+			return self.edit.find(self.ui.edit_search.text())
+			
+		return True
+
+	def replace(self):
+	
+		"""
+		Replace the current selection
+		"""
+	
+		c = self.edit.textCursor()					
+		p = c.position()	
+			
+		if c.hasSelection():
+			c.beginEditBlock()										
+			c.removeSelectedText()			
+			c.insertText(self.ui.edit_replace.text())
+			c.endEditBlock()
+		else:
+			QtGui.QMessageBox.information(self, "No selection", "No text has been selected. You can search and select text using the 'Search' button.")
+		
+	def replace_all(self):
+	
+		"""
+		Iteratively replace all occurences
+		"""
+	
+		i = 0
+		while self.search():
+			self.replace()
+			i += 1
+			
+		QtGui.QMessageBox.information(self, "Replace all", "%d occurence(s) have been replaced" % i)
  
 class inline_editor(QFrame):
+
+	"""
+	A wrapper class around several widgets, which
+	together make up a full fledged text editor
+	"""
  
 	class NumberBar(QWidget):
 
@@ -149,7 +222,7 @@ class inline_editor(QFrame):
 			"""
 			Capture keypresses to implement selection indentation
 			and auto indentation
-			"""
+			"""			
 
 			# Process the Alt + A shortcut to apply changes
 			if e.key() == QtCore.Qt.Key_A and e.modifiers() == QtCore.Qt.AltModifier:
@@ -206,9 +279,7 @@ class inline_editor(QFrame):
 					return
 				
 			QPlainTextEdit.keyPressEvent(self, e)
-			
-			
-			
+									
 		def focusOutEvent(self, event):
 		
 			"""
@@ -290,9 +361,18 @@ class inline_editor(QFrame):
 		
 		self.search = QtGui.QLineEdit()
 		self.search.setMaximumWidth(150)
-		self.search.editingFinished.connect(self.perform_search)
+		self.search.returnPressed.connect(self.perform_search)
+		self.search.setToolTip("Enter a search term")
 		
-		self.replace = QtGui.QPushButton()
+		self.search_button = QtGui.QPushButton(self.experiment.icon("search"), "")
+		self.search_button.setIconSize(QtCore.QSize(16, 16))
+		self.search_button.setToolTip("Search")
+		self.search_button.clicked.connect(self.perform_search)
+		
+		self.replace_button = QtGui.QPushButton(self.experiment.icon("replace"), "")
+		self.replace_button.setIconSize(QtCore.QSize(16, 16))
+		self.replace_button.setToolTip("Replace")
+		self.replace_button.clicked.connect(self.perform_replace)
 		
 		self.modified = self.experiment.label_image("unsaved_changes")
 		self.modified.setToolTip("Press Alt + A to apply unsaved changes")
@@ -304,8 +384,9 @@ class inline_editor(QFrame):
 				
 		search_widget = QtGui.QWidget()
 		search_hbox = QtGui.QHBoxLayout(search_widget)
-		search_hbox.addWidget(self.experiment.label_image("search"))		
 		search_hbox.addWidget(self.search)
+		search_hbox.addWidget(self.search_button)
+		search_hbox.addWidget(self.replace_button)
 		search_hbox.addStretch()		
 		search_hbox.addWidget(self.modified)				
 		search_hbox.addWidget(self.apply)
@@ -337,7 +418,14 @@ class inline_editor(QFrame):
 		if not self.edit.find(self.search.text()):
 			self.edit.moveCursor(QtGui.QTextCursor.Start)
 			self.edit.find(self.search.text())
-				
+			
+	def perform_replace(self):
+	
+		"""
+		Performs a search/ replace
+		"""
+		
+		replace_dialog(self).exec_()
 		
 	def getText(self):
 
