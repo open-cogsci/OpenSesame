@@ -16,6 +16,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame import item, exceptions
+import openexp.response
 import shlex
 import random
 
@@ -110,6 +111,9 @@ class loop(item.item):
 							exec("self.experiment.%s = \"%s\"" % (var, val))
 						else:
 							exec("self.experiment.%s = %s" % (var, val))
+							
+				# Flush the responses to catch escape presses
+				openexp.response.flush()							
 		
 				if eval("self.experiment.items[\"%s\"].prepare()" % self.item):
 					exec("self.experiment.items[\"%s\"].run()" % self.item)

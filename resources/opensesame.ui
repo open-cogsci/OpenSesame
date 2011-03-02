@@ -27,6 +27,9 @@
       <property name="tabsClosable">
        <bool>true</bool>
       </property>
+      <property name="movable">
+       <bool>true</bool>
+      </property>
      </widget>
     </item>
    </layout>
@@ -104,10 +107,12 @@
    </widget>
    <widget class="QMenu" name="menu_tools">
     <property name="title">
-     <string>Tools</string>
+     <string>Options</string>
     </property>
     <addaction name="action_check_for_update"/>
     <addaction name="action_auto_check_update"/>
+    <addaction name="separator"/>
+    <addaction name="action_immediate_rename"/>
     <addaction name="separator"/>
     <addaction name="action_set_autosave_interval"/>
     <addaction name="action_open_autosave_folder"/>
@@ -959,6 +964,14 @@ Tip 2: You can execute Python commands using the field above. For more informati
    </property>
    <property name="text">
     <string>Contribute</string>
+   </property>
+  </action>
+  <action name="action_immediate_rename">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Immediately rename new items</string>
    </property>
   </action>
  </widget>

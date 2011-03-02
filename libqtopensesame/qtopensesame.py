@@ -165,14 +165,14 @@ class qtopensesame(QtGui.QMainWindow):
 						
 		# Set some initial variables
 		self.current_path = None
-		self.version = "0.22"
-		self.codename = "Axiomatic Axelrod"
+		self.version = "0.23-pre1"
+		self.codename = "Blue Beck"
 		self.lock_refresh = False
 		self.auto_check_update = True
 		self.show_startup_tip = True
 		self.default_logfile_folder = ""
 		self.unsaved_changes = False
-		
+				
 		# Determine the users home folder
 		if os.name == "nt":
 			self.home_folder = os.environ["USERPROFILE"]
@@ -185,8 +185,7 @@ class qtopensesame(QtGui.QMainWindow):
 		if not os.path.exists(os.path.join(self.home_folder, ".opensesame", "backup")):
 			os.mkdir(os.path.join(self.home_folder, ".opensesame", "backup"))
 		self.autosave_folder = os.path.join(self.home_folder, ".opensesame", "backup")
-			
-		
+					
 		# Set the filter-string for opening and saving files
 		self.file_type_filter = "OpenSesame files (*.opensesame.tar.gz *.opensesame);;OpenSesame script and file pool (*.opensesame.tar.gz);;OpenSesame script (*.opensesame)"
 				
@@ -217,7 +216,8 @@ class qtopensesame(QtGui.QMainWindow):
 		
 		QtCore.QObject.connect(self.ui.action_check_for_update, QtCore.SIGNAL("triggered()"), self.check_update)
 		QtCore.QObject.connect(self.ui.action_set_autosave_interval, QtCore.SIGNAL("triggered()"), self.set_autosave_interval)
-		QtCore.QObject.connect(self.ui.action_open_autosave_folder, QtCore.SIGNAL("triggered()"), self.open_autosave_folder)		
+		QtCore.QObject.connect(self.ui.action_open_autosave_folder, QtCore.SIGNAL("triggered()"), self.open_autosave_folder)
+		QtCore.QObject.connect(self.ui.action_immediate_rename, QtCore.SIGNAL("triggered()"), self.set_immediate_rename)
 		
 		QtCore.QObject.connect(self.ui.action_add_loop, QtCore.SIGNAL("triggered()"), self.drag_loop)
 		QtCore.QObject.connect(self.ui.action_add_sequence, QtCore.SIGNAL("triggered()"), self.drag_sequence)		
@@ -279,23 +279,11 @@ class qtopensesame(QtGui.QMainWindow):
 		# Build the items toolbar		
 		self.ui.toolbar_items.build()
 					
-		self.ui.edit_stdout.setPlainText("You can print to this debug window using the Python 'print [msg]' statement in inline_script items or the interpreter field above.\n")
-						
+		self.ui.edit_stdout.setPlainText("You can print to this debug window using the Python 'print [msg]' statement in inline_script items or the interpreter field above.\n")						
 		self.set_status("Welcome to OpenSesame %s" % self.version)			
-			
-		self.restore_state()
-		
-		self.set_unsaved(False)
-		
-		# Start auto save timer
-		if self.autosave_interval > 0:
-			if self.experiment.debug:
-				print "qtopensesame.__init__(): starting auto-save timer (interval = %d ms)" % self.autosave_interval
-			self.autosave_timer = QtCore.QTimer.singleShot(self.autosave_interval, self.autosave)
-		else:
-			if self.experiment.debug:
-				print "qtopensesame.__init__(): auto-save disabled"
-			self.autosave_timer = None
+		self.restore_state()		
+		self.set_unsaved(False)				
+		self.start_autosave_timer()					
 					
 	def restore_state(self):
 	
@@ -315,6 +303,7 @@ class qtopensesame(QtGui.QMainWindow):
 		self.show_startup_tip = settings.value("show_startup_tip", True).toBool()		
 		self.default_logfile_folder = settings.value("default_logfile_folder", self.home_folder).toString()
 		self.autosave_interval = settings.value("autosave_interval", 10 * 60 * 1000).toInt()[0] # Every 10 minutes
+		self.immediate_rename = settings.value("immediate_rename", False).toBool()
 		
 		self.ui.action_auto_check_update.setChecked(self.auto_check_update)
 		
@@ -338,8 +327,9 @@ class qtopensesame(QtGui.QMainWindow):
 		settings.setValue("show_startup_tip", self.show_startup_tip)
 		settings.setValue("default_logfile_folder", self.default_logfile_folder)
 		settings.setValue("autosave_interval", self.autosave_interval)
+		settings.setValue("immediate_rename", self.immediate_rename)
 		settings.endGroup()
-		
+				
 	def set_autosave_interval(self):
 	
 		"""
@@ -347,15 +337,21 @@ class qtopensesame(QtGui.QMainWindow):
 		"""
 		
 		i, ok = QtGui.QInputDialog.getInt(self.ui.centralwidget, "Set auto-save interval", "How often (in minutes) do you want OpenSesame to make a backup of your experiment? Enter '0' to turn off auto-save.", self.autosave_interval / (60 * 1000), min = 0)
-		if ok:
-			if self.autosave_interval == 0:
-				need_start = True		
-			else:
-				need_start = False
-			self.autosave_interval = i * 60 * 1000 # Convert to integers			
-			if need_start and self.experiment.debug:
-				print "qtopensesame.__init__(): starting auto-save timer (interval = %d ms)" % self.autosave_interval
-
+		if not ok:
+			return
+			
+		# Cancel the old timer if necessary
+		if self.autosave_timer != None:
+			if self.experiment.debug:
+				print "qtopensesame.set_autosave_interval(): cancelling auto-save timer"
+			self.autosave_timer.stop()
+			self.autosave_timer = None
+	
+		# Convert the interval to milliseconds
+		self.autosave_interval = i * 60 * 1000
+			
+		# Start the timer
+		self.start_autosave_timer()
 			
 	def open_autosave_folder(self):
 	
@@ -366,7 +362,27 @@ class qtopensesame(QtGui.QMainWindow):
 		if os.name == "nt":
 			os.startfile(self.autosave_folder)
 		elif os.name == "posix":
-			pid = subprocess.Popen(["xdg-open", self.autosave_folder]).pid					
+			pid = subprocess.Popen(["xdg-open", self.autosave_folder]).pid		
+			
+	def start_autosave_timer(self):
+	
+		"""
+		Construct the autosave timer, if autosave is enabled
+		"""			
+		
+		# Start auto save timer
+		if self.autosave_interval > 0:
+			if self.experiment.debug:
+				print "qtopensesame.start_autosave_timer(): starting auto-save timer (interval = %d ms)" % self.autosave_interval
+			self.autosave_timer = QtCore.QTimer()
+			self.autosave_timer.setInterval(self.autosave_interval)
+			self.autosave_timer.setSingleShot(True)
+			self.autosave_timer.timeout.connect(self.autosave)
+			self.autosave_timer.start()
+		else:
+			if self.experiment.debug:
+				print "qtopensesame.start_autosave_timer(): auto-save disabled"
+			self.autosave_timer = None					
 		
 	def autosave(self):
 	
@@ -397,10 +413,7 @@ class qtopensesame(QtGui.QMainWindow):
 			self.set_unsaved(_unsaved_changes)
 			self.window_message(_window_msg)
 			
-		if self.autosave_interval > 0:
-			self.autosave_timer = QtCore.QTimer.singleShot(self.autosave_interval, self.autosave)
-		else:
-			self.autosave_timer = None			
+		self.start_autosave_timer()
 		
 	def save_unsaved_changes(self):
 	
@@ -457,6 +470,16 @@ class qtopensesame(QtGui.QMainWindow):
 			d.exec_()
 		elif self.experiment.debug:
 			print "qtopensesame.show_random_tip(): skipping random tip"
+			
+	def set_immediate_rename(self):
+	
+		"""
+		Set the immediate_rename based on the menu
+		"""
+		
+		self.immediate_rename = self.ui.action_immediate_rename.isChecked()
+		if self.experiment.debug:
+			print "qtopensesame.set_immediate_rename(): set to %s" % self.immediate_rename
 		
 	def update_dialog(self, message):
 	
@@ -812,11 +835,12 @@ class qtopensesame(QtGui.QMainWindow):
 		if self.current_path == None:
 			self.save_file_as()
 			return
-
+			
 		try:
+			self.get_ready()		
 			script = self.experiment.to_string()
 		except libopensesame.exceptions.script_error as e:
-			self.experiment.notify("Could not save file, because the script could not be generated. The following error occured: '%s'" % e)
+			self.experiment.notify("Could not save file, because the script could not be generated. The following error occured:<br/>%s" % e)
 			return
 		
 		try:
@@ -1267,27 +1291,44 @@ class qtopensesame(QtGui.QMainWindow):
 			
 		shutil.copyfile(fname, os.path.join(self.experiment.pool_folder, _fname))
 		self.refresh_pool(True)
+		
+	def get_ready(self):
+	
+		"""
+		Finalize all items, to prepare for running or saving
+		"""
+		
+		# Redo the get_ready loop until no items report having done
+		# anything		
+		redo = True
+		done = []
+		while redo:
+			redo = False
+			for item in self.experiment.items:
+				if item not in done:
+					done.append(item)
+					if self.experiment.items[item].get_ready():
+						redo = True
+						break
 					
 	def run_experiment(self, fullscreen = True):
 	
 		"""
-		Run the experiment
+		Run the experiment		
 		"""
-				
-		# First generate the script
+		
+		# Before we run the experiment, we parse it in three steps
+		# 1) Apply any pending changes
+		# 2) Convert the experiment to a string
+		# 3) Parse the string into a new experiment (with all the GUI stuff stripped off)
 		try:
+			self.get_ready()
 			script = self.experiment.to_string()
-		except libopensesame.exceptions.script_error as e:
-			self.experiment.notify("Failed to generate the script:<br/><b>%s</b>" % e)
-			return
-			
-		# Next parse the generated the script back into an experiment, with the GUI stripped off
-		try:
 			exp = libopensesame.experiment.experiment("Experiment", script, self.experiment.pool_folder)
 		except libopensesame.exceptions.script_error as e:
-			self.experiment.notify("The generated script is corrupt:<br/><b>%s</b>" % e)
+			self.experiment.notify(str(e))
 			return
-						
+									
 		if self.experiment.debug:
 		
 			exp.set("subject_nr", 999)
@@ -1340,8 +1381,10 @@ class qtopensesame(QtGui.QMainWindow):
 		
 		# Suspend autosave
 		if self.autosave_timer != None:
+			if self.experiment.debug:
+				print "qtopnsesame.run_experiment(): stopping autosave timer"
 			self.autosave_timer.stop()		
-
+			
 		# Reroute the standard output to the debug window
 		buf = output_buffer(self.ui.edit_stdout)
 		sys.stdout = buf			
@@ -1381,6 +1424,8 @@ class qtopensesame(QtGui.QMainWindow):
 		
 		# Resume autosave
 		if self.autosave_timer != None:
+			if self.experiment.debug:
+				print "qtopnsesame.run_experiment(): resuming autosave timer"		
 			self.autosave_timer.start()
 			
 		# Restart the experiment if necessary
@@ -1525,7 +1570,7 @@ class qtopensesame(QtGui.QMainWindow):
 		"""
 
 		name = self.experiment.unique_name("%s" % item_type)
-		
+				
 		if self.experiment.debug:	
 			print "qtopensesame.add_item(): adding %s" % item_type		
 					
@@ -1544,6 +1589,14 @@ class qtopensesame(QtGui.QMainWindow):
 			exec("from libqtopensesame import %s" % item_type)					
 			name = self.experiment.unique_name("%s" % item_type)
 			item = eval("%s.%s(name, self.experiment)" % (item_type, item_type))
+			
+		# Ask for a new name
+		if self.immediate_rename:
+			name, ok = QtGui.QInputDialog.getText(self, "New name", "Please enter a name for the new %s" % item_type, text = name)
+			if not ok:
+				return None
+			name = str(name)
+			item.name = name		
 			
 		self.experiment.items[name] = item
 		if refresh:		
@@ -1696,23 +1749,25 @@ class qtopensesame(QtGui.QMainWindow):
 		if self.experiment.items[target].item_type not in ("sequence", "loop"):			
 			real_target_item = target_item			
 			real_target = target
-			target_item = target_item.parent()
+			target_item = target_item.parent()					
 			target = str(target_item.text(0))
-			
+				
 			# Determine the position in the sequence
 			index = 0
 			for child in target_item.takeChildren():
 				if child == real_target_item:
 					break
 				index += 1
-			
+		
 		else:
 		
 			# By default insert the item at the top of the sequence
 			index = 0	 
 			
-		# If the target is not an item, return
-		if target not in self.experiment.items:
+		# If the target is not an item and is not the main experiment, return
+		if target not in self.experiment.items and target_item.parent() != None:
+			if self.experiment.debug:
+				print "qtopensesame.drop_item(): failed to drop onto %s" % target
 			return
 			
 		# Create a new item
@@ -1725,16 +1780,30 @@ class qtopensesame(QtGui.QMainWindow):
 		if new_item == None:
 			self.refresh(target)
 			return
-	
-		# If the target is a sequence insert the new item
-		if self.experiment.items[target].item_type == "sequence":
-			self.experiment.items[target].items.insert(index, (new_item, "always"))
 			
-		# If the target is a loop, replace the loop item
-		if self.experiment.items[target].item_type == "loop":
-			self.experiment.items[target].item = new_item
+		# If the target has no parent, it is the main experiment. In this case, we have
+		# to change the entry point of the experiment
+		if target_item.parent() == None:
+			
+			if self.experiment.debug:
+				print "qtopensesame.drop_item(): changing experiment entry point to %s" % target
+			self.experiment.set("start", new_item)
+			
+		# Otherwise we add the new item to the parent sequence or the loop
+		else:
+		
+			if self.experiment.debug:
+				print "qtopensesame.drop_item(): dropping onto %s" % target		
+			
+			# If the target is a sequence insert the new item
+			if self.experiment.items[target].item_type == "sequence":
+				self.experiment.items[target].items.insert(index, (new_item, "always"))
+			
+			# If the target is a loop, replace the loop item
+			if self.experiment.items[target].item_type == "loop":
+				self.experiment.items[target].item = new_item
 
-		self.refresh(target)
+		self.refresh(target)			
 		self.select_item(new_item)		
 		
 	def drag_item(self, add_func):
