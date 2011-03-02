@@ -1,3 +1,15 @@
+0.23 "Blue Beck"
+- Fixed a bug where no items could be added if the main sequence was replaced
+- Fixed a bug where the autosave timer continued while the experiment was running
+- Replace pygame icon by custom window icon for the experiment window
+- The keyboard is now flushed before every sequence and with every loop cycle, to catch escape presses
+- Added a replace dialog to the inline_editor
+- The keyboard is now flushed during synth and sampler playback, to catch escape presses
+- Tabs are now draggable
+- Script changes are now automatically applied when running/ saving the experiment
+- Renamed "Tools" to "Options" in menu
+- Added immediate rename option, to rename items as soon as they are created (default = off)
+
 0.22 "Axiomatic Axelrod"
 - Added search capabilities to inline_editor and a notification of unapplied changes
 - Added noise patch as a drawing primitive to the sketchpad

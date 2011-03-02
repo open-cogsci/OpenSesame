@@ -33,3 +33,7 @@ You can import complete Python scripts using the external_script plug-in. This w
 You can prepare a table in your favorite spreadsheet and simply paste it into the table of a loop item.
 
 Each version of OpenSesame has a codename that is two word alliteration, where the second word is the last name of a famous scientist. (This is a reference to Ubuntu Linux, which uses a similar naming scheme.)
+
+You can select elements from the sketchpad using right-click to edit or delete them directly.
+
+By default, OpenSesame automatically picks a name for a new item. However, if you enable the "Immediately rename" option (Options -> Immediately rename new items) you will be asked to give a new name to items the moment they are created.

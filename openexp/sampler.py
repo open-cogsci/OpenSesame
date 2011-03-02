@@ -18,6 +18,7 @@ along with openexp.  If not, see <http://www.gnu.org/licenses/>.
 import pygame
 from pygame.locals import *
 import openexp.exceptions
+import openexp.response
 import numpy
 import os.path
 
@@ -40,7 +41,7 @@ class sampler:
 				raise openexp.exceptions.sample_error("sampler.__init__() the file '%s' does not exist" % src)
 		
 			if os.path.splitext(src)[1].lower() not in (".ogg", ".wav"):
-				raise openexp.exceptions.sample_error("sampler.__init__() the file '%s' is not a .ogg or .wav file" % src)			
+				raise openexp.exceptions.sample_error("sampler.__init__() the file '%s' is not an .ogg or .wav file" % src)			
 	
 			self.sound = pygame.mixer.Sound(src)
 		self._stop_after = 0
@@ -150,7 +151,7 @@ class sampler:
 		
 		if block:
 			while pygame.mixer.get_busy():
-				pass
+				openexp.response.flush()
 	
 freq = 48000
 

@@ -37,7 +37,7 @@ class inline_script(libopensesame.inline_script.inline_script, libqtopensesame.q
 		self._var_info = None
 		random.seed()
 		
-	def apply_edit_changes(self, dummy = None, dummy2 = None):
+	def apply_edit_changes(self, dummy = None, dummy2 = None, catch = True):
 	
 		"""
 		Read the logvar table
@@ -47,9 +47,14 @@ class inline_script(libopensesame.inline_script.inline_script, libqtopensesame.q
 		
 		sp = str(self.textedit_prepare.edit.toPlainText())
 		sr = str(self.textedit_run.edit.toPlainText())				
+		
 		if "\"\"\"" in sp + sr:
-			self.experiment.notify("You're not allowed to use the \"\"\" way to define strings. This confuses OpenSesame :$ Sorry!")
-			return		
+			if catch:
+				self.experiment.notify("You're not allowed to use the \"\"\" way to define strings. This confuses OpenSesame :$ Sorry!")
+				return		
+			else:
+				raise libopensesame.exceptions.script_error("You're not allowed to use the \"\"\" way to define strings. This confuses OpenSesame :$ Sorry!")
+				
 		self.prepare_script = sp
 		self.run_script = sr
 		self.lock = True
@@ -119,7 +124,6 @@ class inline_script(libopensesame.inline_script.inline_script, libqtopensesame.q
 		tabwidget_script.addTab(widget, self.experiment.icon("inline_script"), "Run phase")		
 		
 		self.edit_vbox.addWidget(tabwidget_script)
-
 		
 	def edit_widget(self):
 	
@@ -140,3 +144,17 @@ class inline_script(libopensesame.inline_script.inline_script, libqtopensesame.q
 		return self._edit_widget		
 		
 				
+	def get_ready(self):
+	
+		"""
+		Apply pending script changes
+		"""
+		
+		if self.textedit_prepare.isModified() or self.textedit_run.isModified():
+			if self.experiment.debug:
+				print "inline_script.finalize(): applying pending Python script changes"
+			self.apply_edit_changes(catch = False)
+			return True
+			
+		return libqtopensesame.qtitem.qtitem.get_ready(self)
+			

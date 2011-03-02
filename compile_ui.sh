@@ -10,6 +10,7 @@ pyuic4 resources/update_dialog.ui > libqtopensesame/update_dialog_ui.py
 pyuic4 resources/tip_dialog.ui > libqtopensesame/tip_dialog_ui.py
 pyuic4 resources/loop_wizard_dialog.ui > libqtopensesame/loop_wizard_dialog_ui.py
 pyuic4 resources/gabor_dialog.ui > libqtopensesame/gabor_dialog_ui.py
+pyuic4 resources/replace_dialog.ui > libqtopensesame/replace_dialog_ui.py
 pyuic4 resources/noise_patch_dialog.ui > libqtopensesame/noise_patch_dialog_ui.py
 pyuic4 resources/new_loop_sequence.ui > libqtopensesame/new_loop_sequence_ui.py
 pyrcc4 resources/icons.qrc > libqtopensesame/icons_rc.py

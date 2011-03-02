@@ -29,7 +29,7 @@ import pygame
 
 from PyQt4 import QtGui, QtCore
 
-version = 0.12
+version = 0.13
 
 class srbox(item.item, generic_response.generic_response):
 
@@ -49,12 +49,13 @@ class srbox(item.item, generic_response.generic_response):
 		self.item_type = "srbox"
 		
 		# Provide a short accurate description of the items functionality
-		self.description = "Collects input from a serial response box"
+		self.description = "Collects input from a serial response box (Psychology Software Tools) or compatible devices"
 		
 		# Set some item-specific variables
 		self.timeout = "infinite"
 		self.lights = ""
 		self.dev = "autodetect"
+		self.dummy = "no"
 		
 		# The connection to the box
 		_srbox = None
@@ -71,13 +72,6 @@ class srbox(item.item, generic_response.generic_response):
 		# Pass the word on to the parent
 		item.item.prepare(self)
 		
-		global _srbox
-		
-		if _srbox == None:
-			srbox_init(self.dev, self.experiment.debug)
-			if _srbox == None:
-				raise exceptions.runtime_error("Failed to open the serial response box in srbox '%s'" % self.name)								
-		
 		# Prepare the allowed responses
 		if self.has("allowed_responses"):
 			self._allowed_responses = []
@@ -87,36 +81,49 @@ class srbox(item.item, generic_response.generic_response):
 						r = int(r)
 					except:
 						raise exceptions.runtime_error("'%s' is not a valid response in srbox '%s'. Expecting a number in the range 0 .. 5." % (r, self.name))
-					
+				
 					if r < 0 or r > 5:
 						raise exceptions.runtime_error("'%s' is not a valid response in srbox '%s'. Expecting a number in the range 0 .. 5." % (r, self.name))
-					
-					self._allowed_responses.append(r)
 				
+					self._allowed_responses.append(r)
+			
 			if len(self._allowed_responses) == 0:
 				self._allowed_responses = None
 		else:
 			self._allowed_responses = None
-			
+		
 		if self.experiment.debug:
-			print "srbox.prepare(): allowed responses set to %s" % self._allowed_responses
+			print "srbox.prepare(): allowed responses set to %s" % self._allowed_responses		
+		
+		if self.has("dummy") and self.get("dummy") == "yes":
 			
-		# Prepare the light byte		
-		s = "010" # Control string
-		for i in range(5):
-			if str(5 - i) in str(self.get("lights")):
-				s += "1"
-			else:
-				s += "0"				
-		self._lights = chr(int(s, 2))
-		if self.experiment.debug:
-			print "srbox.prepare(): lights string set to %s (%s)" % (s, self.get("lights"))
+			self._resp_func = openexp.response.get_key
 			
-		# Prepare auto response
-		if self.experiment.auto_response:
-			self._resp_func = self.auto_responder
 		else:
-			self._resp_func = srbox_get
+		
+			global _srbox
+		
+			if _srbox == None:
+				srbox_init(self.dev, self.experiment.debug)
+				if _srbox == None:
+					raise exceptions.runtime_error("Failed to open the serial response box in srbox '%s'" % self.name)										
+			
+			# Prepare the light byte		
+			s = "010" # Control string
+			for i in range(5):
+				if str(5 - i) in str(self.get("lights")):
+					s += "1"
+				else:
+					s += "0"				
+			self._lights = chr(int(s, 2))
+			if self.experiment.debug:
+				print "srbox.prepare(): lights string set to %s (%s)" % (s, self.get("lights"))
+			
+			# Prepare auto response
+			if self.experiment.auto_response:
+				self._resp_func = self.auto_responder
+			else:
+				self._resp_func = srbox_get
 			
 		self.prepare_timeout()	
 				
@@ -140,14 +147,24 @@ class srbox(item.item, generic_response.generic_response):
 		if self.experiment.start_response_interval == None:
 			self.experiment.start_response_interval = self.get("time_%s" % self.name)
 
-		# Get the response
-		try:
-			srbox_send(self._lights, self.experiment.debug)
-			srbox_start(self.experiment.debug)
-			self.experiment.end_response_interval, resp = self._resp_func(self._allowed_responses, self._timeout)
-			srbox_stop(self.experiment.debug)
-		except Exception as e:
-			raise exceptions.runtime_error("An error occured in srbox '%s': %s." % (self.name, e))
+		if self.has("dummy") and self.get("dummy") == "yes":
+		
+			# In dummy mode, we simply take the numeric keys from the keyboard instead of an sr-box
+			self.experiment.end_response_interval, resp = self._resp_func(None, self._timeout)
+			try:
+				resp = int(openexp.response.key_name(resp))
+			except:
+				raise exceptions.runtime_error("An error occured in srbox '%s': Only number keys are accepted in dummy mode" % self.name)
+				
+		else:
+			# Get the response
+			try:
+				srbox_send(self._lights, self.experiment.debug)
+				srbox_start(self.experiment.debug)
+				self.experiment.end_response_interval, resp = self._resp_func(self._allowed_responses, self._timeout)
+				srbox_stop(self.experiment.debug)
+			except Exception as e:
+				raise exceptions.runtime_error("An error occured in srbox '%s': %s." % (self.name, e))
 		
 		# Do some bookkeeping
 		self.experiment.response_time = self.experiment.end_response_interval - self.experiment.start_response_interval		
@@ -237,6 +254,7 @@ class qtsrbox(srbox, qtplugin.qtplugin):
 		# - creates a QLineEdit		
 		# qtplugin.add_spinbox_control(varname, label, min, max, suffix = suffix, prefix = prefix)
 		
+		self.add_combobox_control("dummy", "Dummy mode (use keyboard instead)", ["no", "yes"])
 		self.add_line_edit_control("dev", "Device name", tooltip = "Expecting a valid device name. Leave empty for autodetect.", default = "autodetect")
 		self.add_line_edit_control("correct_response", "Correct response", tooltip = "Expecting a button number (1 .. 5)")
 		self.add_line_edit_control("allowed_responses", "Allowed responses", tooltip = "Expecting a semicolon-separated list of button numbers, e.g., 1;3;4")

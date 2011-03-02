@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'resources/opensesame.ui'
 #
-# Created: Sat Jan 29 18:04:52 2011
+# Created: Tue Mar  1 15:56:03 2011
 #      by: PyQt4 UI code generator 4.7.4
 #
 # WARNING! All changes made in this file will be lost!
@@ -22,6 +22,7 @@ class Ui_MainWindow(object):
         self.horizontalLayout.setObjectName("horizontalLayout")
         self.tabwidget = QtGui.QTabWidget(self.centralwidget)
         self.tabwidget.setTabsClosable(True)
+        self.tabwidget.setMovable(True)
         self.tabwidget.setObjectName("tabwidget")
         self.horizontalLayout.addWidget(self.tabwidget)
         MainWindow.setCentralWidget(self.centralwidget)
@@ -414,6 +415,9 @@ class Ui_MainWindow(object):
         icon31.addPixmap(QtGui.QPixmap(":/icons/contribute.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.action_contribute.setIcon(icon31)
         self.action_contribute.setObjectName("action_contribute")
+        self.action_immediate_rename = QtGui.QAction(MainWindow)
+        self.action_immediate_rename.setCheckable(True)
+        self.action_immediate_rename.setObjectName("action_immediate_rename")
         self.menu_file.addAction(self.action_new)
         self.menu_file.addAction(self.action_open)
         self.menu_file.addAction(self.action_save)
@@ -454,6 +458,8 @@ class Ui_MainWindow(object):
         self.menu_tools.addAction(self.action_check_for_update)
         self.menu_tools.addAction(self.action_auto_check_update)
         self.menu_tools.addSeparator()
+        self.menu_tools.addAction(self.action_immediate_rename)
+        self.menu_tools.addSeparator()
         self.menu_tools.addAction(self.action_set_autosave_interval)
         self.menu_tools.addAction(self.action_open_autosave_folder)
         self.menubar.addAction(self.menu_file.menuAction())
@@ -489,7 +495,7 @@ class Ui_MainWindow(object):
         self.menu_items.setTitle(QtGui.QApplication.translate("MainWindow", "Items", None, QtGui.QApplication.UnicodeUTF8))
         self.menu_view.setTitle(QtGui.QApplication.translate("MainWindow", "View", None, QtGui.QApplication.UnicodeUTF8))
         self.menu_help.setTitle(QtGui.QApplication.translate("MainWindow", "Help and feedback", None, QtGui.QApplication.UnicodeUTF8))
-        self.menu_tools.setTitle(QtGui.QApplication.translate("MainWindow", "Tools", None, QtGui.QApplication.UnicodeUTF8))
+        self.menu_tools.setTitle(QtGui.QApplication.translate("MainWindow", "Options", None, QtGui.QApplication.UnicodeUTF8))
         self.dock_overview.setWindowTitle(QtGui.QApplication.translate("MainWindow", "Overview", None, QtGui.QApplication.UnicodeUTF8))
         self.itemtree.headerItem().setText(0, QtGui.QApplication.translate("MainWindow", "1", None, QtGui.QApplication.UnicodeUTF8))
         self.dock_variable_inspector.setWindowTitle(QtGui.QApplication.translate("MainWindow", "Variable inspector", None, QtGui.QApplication.UnicodeUTF8))
@@ -576,6 +582,7 @@ class Ui_MainWindow(object):
         self.action_open_autosave_folder.setText(QtGui.QApplication.translate("MainWindow", "Open auto-save folder", None, QtGui.QApplication.UnicodeUTF8))
         self.action_submit_a_bug.setText(QtGui.QApplication.translate("MainWindow", "Submit a bug", None, QtGui.QApplication.UnicodeUTF8))
         self.action_contribute.setText(QtGui.QApplication.translate("MainWindow", "Contribute", None, QtGui.QApplication.UnicodeUTF8))
+        self.action_immediate_rename.setText(QtGui.QApplication.translate("MainWindow", "Immediately rename new items", None, QtGui.QApplication.UnicodeUTF8))
 
 from tree_overview import tree_overview
 from toolbar_items import toolbar_items

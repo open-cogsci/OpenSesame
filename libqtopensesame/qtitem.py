@@ -311,7 +311,7 @@ class qtitem(object):
 		if focus:
 			self.experiment.ui.tabwidget.setCurrentIndex(self.edit_tab_index)
 		
-	def apply_script_changes(self, rebuild = True):
+	def apply_script_changes(self, rebuild = True, catch = True):
 	
 		"""
 		Reloads the item based on the new script
@@ -324,12 +324,15 @@ class qtitem(object):
 		
 		# Create a new item and make it a clone of the current item
 		item = self.experiment.main_window.add_item(self.item_type, False)
-		
-		try:
+
+		if catch:		
+			try:
+				self.experiment.items[item].from_string(script)
+			except Exception as e:
+				self.experiment.notify(str(e))			
+				return
+		else:
 			self.experiment.items[item].from_string(script)
-		except Exception as e:
-			self.experiment.notify(str(e))			
-			return
 
 		self.edit_script.setModified(False)		
 		self.experiment.items[item].name = self.name
@@ -472,5 +475,20 @@ class qtitem(object):
 		for var in self.variables:
 			if var not in exclude and str(self.variables[var]).find("[") >= 0:
 				return True				
+		return False
+		
+	def get_ready(self):
+	
+		"""
+		This function should be overridden to do any last-minute stuff that
+		and item should do before an experiment is actually run, such as 
+		applying pending script changes.
+		"""
+	
+		if self.edit_script.isModified():
+			if self.experiment.debug:
+				print "inline_script.finalize(): applying pending OpenSesame script changes"		
+			self.apply_script_changes(catch = False)
+			return True
 		return False
 			

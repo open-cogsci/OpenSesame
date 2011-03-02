@@ -1,5 +1,8 @@
 <RCC>
   <qresource prefix="icons">
+    <file>close.png</file>
+    <file>search.png</file>
+    <file>replace.png</file>
     <file>submit_bug.png</file>
     <file>contribute.png</file>
     <file>noise_patch.png</file>
@@ -9,10 +12,6 @@
     <file>wizard_large.png</file>
     <file>wizard.png</file>
     <file>refresh.png</file>
-    <file>opensesame_l.png</file>
-    <file>o_xl.png</file>
-    <file>opensesame_xl.png</file>
-    <file>opensesame_xxl.png</file>
     <file>plugins_large.png</file>
     <file>auto_response_large.png</file>
     <file>execute.png</file>

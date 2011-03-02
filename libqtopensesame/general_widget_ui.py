@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'resources/general_widget.ui'
 #
-# Created: Sat Jan 29 18:04:52 2011
+# Created: Tue Mar  1 15:56:03 2011
 #      by: PyQt4 UI code generator 4.7.4
 #
 # WARNING! All changes made in this file will be lost!
@@ -167,7 +167,7 @@ class Ui_Form(object):
 "</style></head><body style=\" font-family:\'Ubuntu\'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
 "<p align=\"right\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:11pt; font-weight:600;\">OpenSesame [version]</span></p>\n"
 "<p align=\"right\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600; font-style:italic;\">[codename]</span></p>\n"
-"<p align=\"right\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Copyright Sebastiaan Mathôt (2010)</p>\n"
+"<p align=\"right\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Copyright Sebastiaan Mathôt (2010-2011)</p>\n"
 "<p align=\"right\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><a href=\"http://www.cogsci.nl/opensesame\"><span style=\" text-decoration: underline; color:#0000ff;\">http://www.cogsci.nl/opensesame</span></a></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
 
 import icons_rc
