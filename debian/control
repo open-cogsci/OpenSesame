@@ -12,5 +12,9 @@ Package: opensesame
 Architecture: all
 XB-Python-Version: ${python:Versions}
 Depends: ${misc:Depends}, ${python:Depends}, python-qt4, python-pygame, python-numpy
-Description: OpenSesame is a graphical experiment builder
- [please add me]
+Description: graphical experiment builder for the social sciences
+ This graphical environment provides an easy to use, point-and-click interface
+ for creating psychological experiments. In addition to a powerful sketchpad for
+ creating visual stimuli, OpenSesame features a sampler and synthesizer for
+ sound playback. For more complex tasks, OpenSesame supports Python
+ scripting using the built-in editor with syntax highlighting.
