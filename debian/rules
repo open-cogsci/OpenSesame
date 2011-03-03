@@ -4,6 +4,19 @@
 %:
 	dh $@
 
+override_dh_auto_clean:
+	dh_auto_clean
+	# restore old Qt wrappers
+	[ -d debian/temp_store ] && cp debian/temp_store/* libqtopensesame/
+	-rm -rf debian/temp_store
+
+override_dh_auto_build:
+	# move pre-generated Qt wrappers aside
+	mkdir -p debian/temp_store
+	cp -t debian/temp_store libqtopensesame/*_ui.py libqtopensesame/icons_rc.py
+	# update PyQt wrappers
+	./compile_ui.sh
+	dh_auto_build
 
 override_dh_install:
 	dh_install

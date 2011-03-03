@@ -3,7 +3,7 @@ Section: science
 Priority: extra
 Maintainer: Sebastiaan Mathot <s.mathot@cogsci.nl>
 Uploaders: Michael Hanke <mih@debian.org>
-Build-Depends: debhelper (>= 7.0.50~), python-support
+Build-Depends: debhelper (>= 7.0.50~), python-support, pyqt4-dev-tools
 XS-Python-Version: >= 2.6
 Standards-Version: 3.9.1
 Homepage: http://www.cogsci.nl/software/opensesame
