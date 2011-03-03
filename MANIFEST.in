@@ -2,7 +2,6 @@ include data/opensesame.desktop
 include resources/*.png
 include resources/*.opensesame
 include resources/*.ttf
-include resources/README
 include resources/tips.txt
 include examples/*
 include help/*.html

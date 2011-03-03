@@ -35,7 +35,7 @@ setup(name="opensesame",
 	data_files=[
 		("/usr/share/opensesame", ["COPYING"]),
 		("/usr/share/applications", ["data/opensesame.desktop"]),
-		("/usr/share/opensesame/resources", glob.glob("resources/*.png") + glob.glob("resources/*.opensesame") + glob.glob("resources/*.ttf") + ["resources/README", "resources/tips.txt"]),
+		("/usr/share/opensesame/resources", glob.glob("resources/*.png") + glob.glob("resources/*.opensesame") + glob.glob("resources/*.ttf") + ["resources/tips.txt"]),
 		("/usr/share/opensesame/help", glob.glob("help/*.html")),
 		("/usr/share/opensesame/sounds", glob.glob("sounds/*")),
 		("/usr/share/opensesame/examples", glob.glob("examples/*")),
