@@ -23,3 +23,6 @@ override_dh_install:
 	# cleanups
 	# no duplicate license info
 	-rm debian/opensesame/usr/share/opensesame/COPYING
+	# we don't want to included sound sample, but links to /usr/share/sounds
+	# directly
+	-rm -rf debian/opensesame/usr/share/opensesame/sounds
