@@ -47,7 +47,7 @@ class video_player(item.item):
 		"""
 		
 		# The version of the plug-in
-		self.version = 0.10
+		self.version = 0.11
 			
 		# First we set the plug-ins properties
 		self.item_type = "video_player"
@@ -75,6 +75,30 @@ class video_player(item.item):
 		
 		# Open the video file
 		self.video = cv.CreateFileCapture(path)
+				
+		# Convert the string to a boolean, for slightly faster
+		# evaluations in the run phase
+		self._fullscreen = self.fullscreen == "yes"
+		
+		# The dimensions of the video
+		self._w = cv.GetCaptureProperty(self.video, cv.CV_CAP_PROP_FRAME_WIDTH)
+		self._h = cv.GetCaptureProperty(self.video, cv.CV_CAP_PROP_FRAME_HEIGHT)				
+				
+		if self._fullscreen:
+		
+			# In fullscreen mode, the video is always shown in the top-left and the
+			# temporary images need to be fullscreen size
+			self._x = 0
+			self._y = 0		
+			self.src_tmp = cv.CreateMat(self.experiment.height, self.experiment.width, cv.CV_8UC3)
+			self.src_rgb = cv.CreateMat(self.experiment.height, self.experiment.width, cv.CV_8UC3)			
+		else:
+		
+			# Otherwise the location of the video depends on its dimensions and the
+			# temporary image is the same size as the video
+			self._x = max(0, (self.experiment.width - self._w) / 2)
+			self._y = max(0, (self.experiment.height - self._h) / 2)
+			self.src_rgb = cv.CreateMat(self._h, self._w, cv.CV_8UC3)
 		
 		# Report success
 		return True
@@ -90,29 +114,31 @@ class video_player(item.item):
 		
 		t = pygame.time.get_ticks()
 		start_t = t
-				
+						
 		# Loop until a key is pressed
 		go = True
 		while go:
 		
-			# Getting the video from the file onto the PyGame canvas is a bit complicated:
-			# http://opencv.willowgarage.com/documentation/python/cookbook.html#opencv-to-pygame
-			src = cv.QueryFrame(self.video)
-			src_rgb = cv.CreateMat(src.height, src.width, cv.CV_8UC3)
-			cv.CvtColor(src, src_rgb, cv.CV_BGR2RGB)
-			pg_img = pygame.image.frombuffer(src_rgb.tostring(), cv.GetSize(src_rgb), "RGB")
+			# Get the frame		
+			self.src = cv.QueryFrame(self.video)
 			
-			# In fullscreen mode, the surface is converted to the pixel format of the display surface
-			# and scaled directly onto the display surface
-			if self.fullscreen == "yes":
-				pg_img = pg_img.convert(self.experiment.surface)
-				pygame.transform.scale(pg_img, (self.experiment.width, self.experiment.height), self.experiment.surface)
-
-			# In unscaled mode, the surface is blitted onto the center of the display
+			# Check for the end of the video
+			if self.src == None:
+				break		
+					
+			# Resize if requested and convert the resulting image to
+			# RGB format, which is compatible with PyGame
+			if self._fullscreen:
+				cv.Resize(self.src, self.src_tmp)
+				cv.CvtColor(self.src_tmp, self.src_rgb, cv.CV_BGR2RGB)
 			else:
-				self.experiment.surface.blit(pg_img, ((self.experiment.width - pg_img.get_width()) / 2, (self.experiment.height - pg_img.get_height()) / 2))	
-	
-			# Show the changes
+				cv.CvtColor(self.src, self.src_rgb, cv.CV_BGR2RGB)
+				
+			# Convert the image to PyGame format
+			pg_img = pygame.image.frombuffer(self.src_rgb.tostring(), cv.GetSize(self.src_rgb), "RGB")
+										
+			# Show the video frame!
+			self.experiment.surface.blit(pg_img, (self._x, self._y))	
 			pygame.display.flip()
 		
 			# Pause before jumping to the next frame

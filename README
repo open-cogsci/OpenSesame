@@ -1,0 +1,60 @@
+1 DEPENDENCIES
+
+If you want to run OpenSesame from source, you need to have 
+the following packages installed. OpenSesame has been tested
+with the listed versions. For more information about running
+OpenSesame from source, see
+
+- <http://www.cogsci.nl/blog/tutorials/111-running-opensesame-from-source>
+
+2.1 PYTHON (2.6)
+
+- <http://www.python.org/>
+
+2.1 PYGAME (>= 1.8.1)
+
+- <http://www.pygame.org/>
+
+2.2 PYTHON-QT4 (4.7.4)
+
+- <http://www.riverbankcomputing.co.uk/software/pyqt/>
+
+2.3 NUMPY (1.3.0)
+
+- <http://numpy.scipy.org/>
+
+2.4 PYSERIAL (2.3)
+
+PySerial is optional, but is required for communication
+with external devices, such as the SR Box.
+
+- <http://pyserial.sourceforge.net/>
+
+2 CREDITS AND LICENSE INFORMATION
+
+OpenSesame includes work of others. All credits go
+to the respective authors. (You do not need to install
+the packages below, as they are included.)
+
+2.1 FONTS
+
+The fonts (resources/*.ttf) are the Droid fonts and
+are released under the Apache License 2.0
+- <http://www.droidfonts.com/>
+- <http://www.apache.org/licenses/LICENSE-2.0>
+
+2.2 SOUNDS
+
+The sounds have been taken from the default Gnome sounds and
+the Kopete instant messenger sounds. They are released under the
+GNU General Public License.
+- <http://www.gnome.org/>
+- <http://kopete.kde.org/>
+- <http://www.gnu.org/licenses/gpl.html>
+
+2.3 ICONS
+
+The icons have been taken from the Faenza icon set. They are
+released under the GNU general public license.
+- <http://tiheum.deviantart.com/art/Faenza-Icons-173323228>
+- <http://www.gnu.org/licenses/gpl.html>

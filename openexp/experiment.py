@@ -37,6 +37,8 @@ class experiment:
 		self.bg_color = 0, 0, 0
 		self.fg_color = 255, 255, 255
 		self.sound_freq = 48000
+		self.sound_sample_size = -16 # Negative values means signed sample values, see PyGame doc
+		self.sound_channels = 2
 		self.sound_buf_size = 512
 		self.resources = {}
 		
@@ -67,8 +69,8 @@ class experiment:
 		"""
 		
 		sampler.freq = self.sound_freq
-		print "experiment.init_sound(): sampling freq = %d, buffer size = %d" % (self.sound_freq, self.sound_buf_size)
-		pygame.mixer.pre_init(frequency=self.sound_freq, buffer=self.sound_buf_size)
+		print "experiment.init_sound(): sampling freq = %d, buffer size = %d" % (self.sound_freq, self.sound_buf_size)		
+		pygame.mixer.pre_init(self.sound_freq, self.sound_sample_size, self.sound_channels, self.sound_buf_size)
 		
 	def init_icon(self):
 	
