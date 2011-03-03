@@ -23,4 +23,3 @@ override_dh_install:
 	# cleanups
 	# no duplicate license info
 	-rm debian/opensesame/usr/share/opensesame/COPYING
-	-rm debian/opensesame/usr/share/opensesame/resources/README
