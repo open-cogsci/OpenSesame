@@ -57,9 +57,9 @@ if __name__ == "__main__":
 		
 	# Run the experiment if it has been specified on the
 	# command line
-	if "--run" in sys.argv:
+	if myapp.options.run:
 		myapp.run_experiment()
-	elif "--run-in-window" in sys.argv:
+	elif myapp.options.run_in_window:
 		myapp.run_experiment(False)
 	else:	
 		myapp.check_update(always = False)	

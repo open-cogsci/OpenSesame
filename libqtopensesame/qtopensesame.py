@@ -44,6 +44,7 @@ import libqtopensesame.inline_editor
 import libqtopensesame.syntax_highlighter
 import openexp.exceptions
 import traceback
+import optparse
 
 class general_header_widget(qtitem.header_widget):
 
@@ -283,8 +284,33 @@ class qtopensesame(QtGui.QMainWindow):
 		self.set_status("Welcome to OpenSesame %s" % self.version)			
 		self.restore_state()		
 		self.set_unsaved(False)				
-		self.start_autosave_timer()					
-					
+		self.start_autosave_timer()	
+				
+		# Parse the command line options			
+		parser = optparse.OptionParser("usage: opensesame [experiment] [options]", version = "%s '%s'" % (self.version, self.codename))
+
+		parser.set_defaults(debug = False)
+		parser.set_defaults(run = False)
+		parser.set_defaults(run_in_window = False)
+		
+		group = optparse.OptionGroup(parser, "Immediately run an experiment")
+		group.add_option("-r", "--run", action = "store_true", dest = "run", help = "Run fullscreen")
+		group.add_option("-w", "--run-in-window", action = "store_true", dest = "run_in_window", help = "Run in window")		
+		parser.add_option_group(group)		
+		
+		group = optparse.OptionGroup(parser, "Miscellaneous options")
+		group.add_option("-d", "--debug", action = "store_true", dest = "debug", help = "Print lots of debugging messages to the standard output")
+		parser.add_option_group(group)		
+		
+		group = optparse.OptionGroup(parser, "Miscellaneous options")
+		group.add_option("--pylink", action = "store_true", dest = "pylink", help = "Load PyLink before PyGame (necessary for using the Eyelink plug-ins in non-dummy mode)")				
+		parser.add_option_group(group)
+
+		self.options, args = parser.parse_args(sys.argv)
+		
+		if self.options.run and self.options.run_in_window:
+			parser.error("Options -r / --run and -w / --run-in-window are mutually exclusive.")
+		
 	def restore_state(self):
 	
 		"""

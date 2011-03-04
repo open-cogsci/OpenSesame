@@ -11,6 +11,7 @@
 - Added immediate rename option, to rename items as soon as they are created (default = off)
 - Fixed openexp.experiment.sound_init() to be compatible with older PyGame versions (tested on 1.8.1)
 - Added sound_sample_size and sound_channels to sound settings in openexp.experiment
+- Switched to optparse module for parsing command line arguments
 
 0.22 "Axiomatic Axelrod"
 - Added search capabilities to inline_editor and a notification of unapplied changes

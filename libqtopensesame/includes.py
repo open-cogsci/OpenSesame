@@ -34,7 +34,6 @@ import sys
 if "--pylink" in sys.argv:
 	try:
 		exec("import pylink") # This makes sure that py2exe doesn't try to include pylink
-		print "includes: imported pylink module. Install the eyelink plug-in to enable eyelink functionality"
 	except:
 		print "includes: failed to import pylink module. You will not be able to use eyelink connectivity"
 
@@ -55,6 +54,5 @@ from libqtopensesame import\
 
 try:
 	import serial
-	print "includes: imported serial module"
 except:
 	print "includes: failed to import 'serial' modukes. You will not be able to use serial/ parallel port connectivity"

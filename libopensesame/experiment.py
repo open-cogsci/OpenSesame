@@ -62,7 +62,9 @@ class experiment(item.item, openexp.experiment.experiment):
 		self.total_response_time = 0
 		self.total_responses = 0
 		
-		self.debug = "--debug" in sys.argv
+		# This is some duplication of the option parser in qtopensesame,
+		# but nevertheless keep it so we don't need qtopensesame
+		self.debug = "--debug" in sys.argv or "-d" in sys.argv
 
 		# Pool folder
 		if pool_folder == None:
@@ -89,8 +91,7 @@ class experiment(item.item, openexp.experiment.experiment):
 			self.set("subject_parity", "even")
 				
 		self.resolution = self.width, self.height
-
-		
+				
 	def module_container(self):
 	
 		"""
