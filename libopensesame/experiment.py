@@ -334,23 +334,63 @@ class experiment(item.item, openexp.experiment.experiment):
 				best_match = s
 		return best_match
 		
-	def sanitize(self, string, strict = False):
+	def sanitize(self, s, strict = False):
 	
 		"""
 		Remove invalid characters from the string
 		"""
+
+		# As a first attempt, try to convert the message
+		# simply to a string
+		try:
+			string = str(s)			
+			
+		except:
 		
-		string = str(string)
+			# If this doesn't work and the message isn't a QString either,
+			# give up and return a warning string			
+			if not hasattr(s, "toUtf8"):
+				return "Error: Unable to create readable text from string"
+				
+			# Otherwise, walk through all characters and convert the unknown
+			# characters to unicode notation. In strict mode unicode is ignored.
+			string = ""			
+			for i in range(s.count()):
+				c = s.at(i)
+				if c.unicode() > 127:
+					if not strict:
+						string += "U+%.4X" % c.unicode()
+				else:
+					string += c
 		
+		# Walk through the string and strip out
+		# quotes, slashes and newlines. In strict
+		# mode we even only accept alphanumeric
+		# characters and underscores
 		s = ""
 		for c in string:
 			if strict:
 				if c.isalnum() or c == "_":
 					s += c
-			else:
-				if c not in ("\"", "\\", "\n"):
-					s += c
+			elif c not in ("\"", "\\", "\n"):
+				s += c
 		return s
+		
+	def unsanitize(self, s):
+	
+		"""
+		Convert the unicode notation back to actual unicode encoding
+		"""
+		
+		s = unicode(s)
+				
+		while s.find("U+") >= 0:
+			i = s.find("U+")			
+			entity = s[i:i+6]
+			print entity, "->", unichr(int(entity[2:], 16))
+			s = s.replace(entity, unichr(int(entity[2:], 16)))
+			
+		return s			
 		
 	def get_file(self, path):
 	

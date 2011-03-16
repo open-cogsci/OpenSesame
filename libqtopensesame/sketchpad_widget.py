@@ -593,7 +593,7 @@ class sketchpad_widget(QtGui.QWidget):
 				
 			item["x"] = to_pos[0]
 			item["y"] = to_pos[1]
-			item["text"] = self.sketchpad.experiment.sanitize(str(text))
+			item["text"] = text
 			item["center"] = self.center
 			item["font_family"] = self.font_family
 			item["font_size"] = self.font_size
@@ -771,7 +771,7 @@ class sketchpad_widget(QtGui.QWidget):
 			font_family = "times"
 	
 		font = QtGui.QFont(font_family, font_size)
-		text_item = self.scene.addText(text, font)
+		text_item = self.scene.addText(self.sketchpad.experiment.unsanitize(text), font)
 		text_item.setDefaultTextColor(QtGui.QColor(color))
 		
 		if center:

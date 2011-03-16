@@ -135,7 +135,7 @@ class sketchpad(item.item):
 					self.canvas.line(_item["x1"], _item["y1"], _item["x2"], _item["y2"])
 				elif _item["type"] == "textline":
 					self.canvas.set_font(_item["font_family"], _item["font_size"])
-					self.canvas.text(str(_item["text"]), _item["center"] == 1, _item["x"], _item["y"])
+					self.canvas.text(self.experiment.unsanitize(str(_item["text"])), _item["center"] == 1, _item["x"], _item["y"])
 				elif _item["type"] == "image":
 					try:
 						self.canvas.image(self.experiment.get_file(_item["file"]), _item["center"] == 1, _item["x"], _item["y"], _item["scale"])
@@ -426,7 +426,7 @@ class sketchpad(item.item):
 		elif _item["type"] == "line":
 			return "draw line %s %s %s %s penwidth=%s color=%s show_if=\"%s\"" % (_item["x1"], _item["y1"], _item["x2"], _item["y2"], _item["penwidth"], _item["color"], _item["show_if"])
 		elif _item["type"] == "textline":
-			return "draw textline %s %s \"%s\" center=%d color=%s font_family=%s font_size=%s show_if=\"%s\"" % (_item["x"], _item["y"], _item["text"], _item["center"], _item["color"], _item["font_family"], _item["font_size"], _item["show_if"])	
+			return "draw textline %s %s \"%s\" center=%d color=%s font_family=%s font_size=%s show_if=\"%s\"" % (_item["x"], _item["y"], self.experiment.sanitize(_item["text"]), _item["center"], _item["color"], _item["font_family"], _item["font_size"], _item["show_if"])	
 		elif _item["type"] == "image":
 			return "draw image %s %s \"%s\" scale=%s center=%d show_if=\"%s\"" % (_item["x"], _item["y"], _item["file"], _item["scale"], _item["center"], _item["show_if"])							
 		elif _item["type"] == "gabor":
