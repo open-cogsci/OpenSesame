@@ -1,5 +1,6 @@
 #!/bin/bash
 pyuic4 resources/opensesame.ui > libqtopensesame/opensesame_ui.py
+pyuic4 resources/opensesamerun.ui > libqtopensesame/opensesamerun_ui.py
 pyuic4 resources/general_widget.ui > libqtopensesame/general_widget_ui.py
 pyuic4 resources/sketchpad_widget.ui > libqtopensesame/sketchpad_widget_ui.py
 pyuic4 resources/sampler_widget.ui > libqtopensesame/sampler_widget_ui.py

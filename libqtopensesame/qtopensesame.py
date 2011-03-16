@@ -30,6 +30,7 @@ import serial
 import libopensesame.exceptions
 import libopensesame.experiment
 import libopensesame.plugins
+import libopensesame.misc
 import os.path
 import os
 import sys
@@ -166,8 +167,8 @@ class qtopensesame(QtGui.QMainWindow):
 						
 		# Set some initial variables
 		self.current_path = None
-		self.version = "0.23-pre1"
-		self.codename = "Blue Beck"
+		self.version = libopensesame.misc.version
+		self.codename = libopensesame.misc.codename
 		self.lock_refresh = False
 		self.auto_check_update = True
 		self.show_startup_tip = True
@@ -1369,11 +1370,7 @@ class qtopensesame(QtGui.QMainWindow):
 				return
 					
 			# Set the subject nr and parity
-			exp.set("subject_nr", subject_nr)		
-			if subject_nr % 2 == 0:
-				exp.set("subject_parity", "even")
-			else:
-				exp.set("subject_parity", "odd")
+			exp.set_subject(subject_nr)		
 		
 			# Suggested filename
 			suggested_path = os.path.join(str(self.default_logfile_folder), "subject-%d.csv" % subject_nr)

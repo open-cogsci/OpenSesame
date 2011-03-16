@@ -23,27 +23,11 @@ import os.path
 from PyQt4 import QtGui, QtCore
 import sys
 import libqtopensesame.qtopensesame
+import libopensesame.misc		
 
 if __name__ == "__main__":
 
-	# A horrifyingly ugly hack to change the working directory
-	# under Windows
-	if os.name == "nt":
-		try:	
-			# Extract the part of the description containing the path
-			s = str(libqtopensesame.qtopensesame)
-			i = s.find("from '") + 6
-			j = s.find("'>'") - 1
-			s = s[i:j]
-			# Go up the tree until the path of the current script
-			while not os.path.exists(os.path.join(s, "opensesame")) and not os.path.exists(os.path.join(s, "opensesame.exe")):
-				s = os.path.dirname(s)
-			os.chdir(s)
-			if s not in sys.path:
-				sys.path.append(s)
-			print "opensesame: Changing working directory to '%s'" % s
-		except Exception as e:
-			print "opensesame: Failed to change working directory:", e				
+	libopensesame.misc.change_working_dir()
 
 	app = QtGui.QApplication(sys.argv)		
 	myapp = libqtopensesame.qtopensesame.qtopensesame()

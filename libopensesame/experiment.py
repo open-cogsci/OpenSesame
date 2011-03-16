@@ -106,7 +106,20 @@ class experiment(item.item, openexp.experiment.experiment):
 		Specifies which class from the plugin should be loaded
 		"""
 		
-		return ""		
+		return ""
+		
+	def set_subject(self, nr):
+	
+		"""
+		Set the subject number and parity
+		"""
+		
+		# Set the subject nr and parity
+		self.set("subject_nr", nr)		
+		if nr % 2 == 0:
+			self.set("subject_parity", "even")
+		else:
+			self.set("subject_parity", "odd")		
 					
 	def read_definition(self, s, skip_empty_lines):
 	

@@ -1,0 +1,75 @@
+#!/usr/bin/env python
+#-*- coding:utf-8 -*-
+
+"""
+This file is part of OpenSesame.
+
+OpenSesame is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+OpenSesame is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
+"""
+
+import os
+import os.path
+import sys
+import libqtopensesame.qtopensesamerun
+import libopensesame.misc
+import libopensesame.experiment
+
+if __name__ == "__main__":
+
+	libopensesame.misc.change_working_dir()
+	
+	options = libopensesame.misc.opensesamerun_options()
+	
+	app = None	
+			
+	while not libopensesame.misc.opensesamerun_ready(options):
+	
+		try:
+			from PyQt4 import QtGui, QtCore
+			int("x")
+		except:
+			libopensesame.misc.messagebox("OpenSesame Run", "Incorrect or missing options.\n\nRun 'opensesame --help' from a terminal (or command prompt) to see a list of available options, or install Python Qt4 to enable the graphical user interface.")
+			quit()
+	
+		if app == None:
+			app = QtGui.QApplication(sys.argv)		
+			myapp = libqtopensesame.qtopensesamerun.qtopensesamerun(options)
+	
+		QtCore.QObject.connect(app, QtCore.SIGNAL("quit()"), myapp.close)		
+		myapp.show()
+		app.exec_()	
+		options = myapp.options	
+		
+		if not myapp.run:
+			quit()
+	
+	try:
+		exp = libopensesame.experiment.experiment("Experiment", options.experiment)
+	except libopensesame.exceptions.script_error as e:
+		libopensesame.misc.messagebox("OpenSesame Run", libopensesame.misc.strip_tags(e))
+		quit()
+		
+	exp.set_subject(options.subject)
+	exp.fullscreen = options.fullscreen
+	exp.logfile = options.logfile
+	
+	try:
+		exp.run()
+	except Exception as e:	
+		try:
+			exp.end()
+		except Exception as f:
+			libopensesame.misc.messagebox("OpenSesame Run", libopensesame.misc.strip_tags(f))						
+		libopensesame.misc.messagebox("OpenSesame Run", libopensesame.misc.strip_tags(e))
+		
