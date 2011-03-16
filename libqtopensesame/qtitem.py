@@ -320,7 +320,7 @@ class qtitem(object):
 		if self.experiment.debug:
 			print "qtitem.apply_script_changes():", self.name				
 				
-		script = str(self.edit_script.edit.toPlainText())
+		script = self.experiment.usanitize(self.edit_script.edit.toPlainText())
 		
 		# Create a new item and make it a clone of the current item
 		item = self.experiment.main_window.add_item(self.item_type, False)

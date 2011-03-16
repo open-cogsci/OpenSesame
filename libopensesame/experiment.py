@@ -334,24 +334,23 @@ class experiment(item.item, openexp.experiment.experiment):
 				best_match = s
 		return best_match
 		
-	def sanitize(self, s, strict = False):
+	def usanitize(self, s, strict = False):
 	
 		"""
-		Remove invalid characters from the string
+		Convert all special characters to 
+		U+XXXX notation
 		"""
-
-		# As a first attempt, try to convert the message
-		# simply to a string
+	
 		try:
-			string = str(s)			
-			
-		except:
-		
+			string = str(s)
+									
+		except:		
+	
 			# If this doesn't work and the message isn't a QString either,
 			# give up and return a warning string			
 			if not hasattr(s, "toUtf8"):
 				return "Error: Unable to create readable text from string"
-				
+			
 			# Otherwise, walk through all characters and convert the unknown
 			# characters to unicode notation. In strict mode unicode is ignored.
 			string = ""			
@@ -361,7 +360,18 @@ class experiment(item.item, openexp.experiment.experiment):
 					if not strict:
 						string += "U+%.4X" % c.unicode()
 				else:
-					string += c
+					string += c.toLatin1()
+				
+		return string
+			
+		
+	def sanitize(self, s, strict = False):
+	
+		"""
+		Remove invalid characters from the string
+		"""
+
+		string = self.usanitize(s, strict)
 		
 		# Walk through the string and strip out
 		# quotes, slashes and newlines. In strict
@@ -387,7 +397,6 @@ class experiment(item.item, openexp.experiment.experiment):
 		while s.find("U+") >= 0:
 			i = s.find("U+")			
 			entity = s[i:i+6]
-			print entity, "->", unichr(int(entity[2:], 16))
 			s = s.replace(entity, unichr(int(entity[2:], 16)))
 			
 		return s			

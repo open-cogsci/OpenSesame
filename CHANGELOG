@@ -14,6 +14,7 @@
 - Switched to optparse module for parsing command line arguments
 - Added opensesamerun to run experiments standalone
 - Added unicode support to sketchpads to allow for special characters
+- Fixed a bug where applying a script with special characters caused an error
 
 0.22 "Axiomatic Axelrod"
 - Added search capabilities to inline_editor and a notification of unapplied changes
