@@ -194,46 +194,48 @@ class qtopensesame(QtGui.QMainWindow):
 		# Set the window message
 		self.window_message("Welcome to OpenSesame %s" % self.version)
 		
-		# Make the connections
-		QtCore.QObject.connect(self.ui.tabwidget, QtCore.SIGNAL("tabCloseRequested(int)"), self.close_tab)
-		QtCore.QObject.connect(self.ui.action_quit, QtCore.SIGNAL("triggered()"), self.close)		
-		QtCore.QObject.connect(self.ui.action_run, QtCore.SIGNAL("triggered()"), self.run_experiment)
-		QtCore.QObject.connect(self.ui.action_run_in_window, QtCore.SIGNAL("triggered()"), self.run_experiment_in_window)
-		QtCore.QObject.connect(self.ui.action_new, QtCore.SIGNAL("triggered()"), self.new_file)
-		QtCore.QObject.connect(self.ui.action_open, QtCore.SIGNAL("triggered()"), self.open_file)
-		QtCore.QObject.connect(self.ui.action_save, QtCore.SIGNAL("triggered()"), self.save_file)
-		QtCore.QObject.connect(self.ui.action_save_as, QtCore.SIGNAL("triggered()"), self.save_file_as)		
-
-		QtCore.QObject.connect(self.ui.action_help, QtCore.SIGNAL("triggered()"), self.open_general_help_tab)
-		QtCore.QObject.connect(self.ui.action_about, QtCore.SIGNAL("triggered()"), self.about)
-		QtCore.QObject.connect(self.ui.action_contribute, QtCore.SIGNAL("triggered()"), self.open_contribute_tab)
-		QtCore.QObject.connect(self.ui.action_submit_a_bug, QtCore.SIGNAL("triggered()"), self.open_bug_tab)
-
-		QtCore.QObject.connect(self.ui.action_close_all_tabs, QtCore.SIGNAL("triggered()"), self.close_all_tabs)
-		QtCore.QObject.connect(self.ui.action_close_other_tabs, QtCore.SIGNAL("triggered()"), self.close_other_tabs)		
-		QtCore.QObject.connect(self.ui.action_show_text_in_toolbar, QtCore.SIGNAL("triggered()"), self.show_text_in_toolbar)
-		QtCore.QObject.connect(self.ui.action_show_variable_inspector, QtCore.SIGNAL("triggered()"), self.refresh_variable_inspector)
-		QtCore.QObject.connect(self.ui.action_show_pool, QtCore.SIGNAL("triggered()"), self.refresh_pool)
-		QtCore.QObject.connect(self.ui.action_show_stdout, QtCore.SIGNAL("triggered()"), self.refresh_stdout)
+		# Make the connections		
+		self.ui.tabwidget.tabCloseRequested.connect(self.close_tab)
+		self.ui.itemtree.itemClicked.connect(self.open_item)				
 		
-		QtCore.QObject.connect(self.ui.action_check_for_update, QtCore.SIGNAL("triggered()"), self.check_update)
-		QtCore.QObject.connect(self.ui.action_set_autosave_interval, QtCore.SIGNAL("triggered()"), self.set_autosave_interval)
-		QtCore.QObject.connect(self.ui.action_open_autosave_folder, QtCore.SIGNAL("triggered()"), self.open_autosave_folder)
-		QtCore.QObject.connect(self.ui.action_immediate_rename, QtCore.SIGNAL("triggered()"), self.set_immediate_rename)
+		self.ui.action_quit.triggered.connect(self.close)		
+		self.ui.action_new.triggered.connect(self.new_file)
+		self.ui.action_open.triggered.connect(self.open_file)
+		self.ui.action_save.triggered.connect(self.save_file)
+		self.ui.action_save_as.triggered.connect(self.save_file_as)		
 		
-		QtCore.QObject.connect(self.ui.action_add_loop, QtCore.SIGNAL("triggered()"), self.drag_loop)
-		QtCore.QObject.connect(self.ui.action_add_sequence, QtCore.SIGNAL("triggered()"), self.drag_sequence)		
-		QtCore.QObject.connect(self.ui.action_add_sketchpad, QtCore.SIGNAL("triggered()"), self.drag_sketchpad)
-		QtCore.QObject.connect(self.ui.action_add_feedback, QtCore.SIGNAL("triggered()"), self.drag_feedback)
-		QtCore.QObject.connect(self.ui.action_add_sampler, QtCore.SIGNAL("triggered()"), self.drag_sampler)
-		QtCore.QObject.connect(self.ui.action_add_synth, QtCore.SIGNAL("triggered()"), self.drag_synth)				
-		QtCore.QObject.connect(self.ui.action_add_keyboard_response, QtCore.SIGNAL("triggered()"), self.drag_keyboard_response)
-		QtCore.QObject.connect(self.ui.action_add_mouse_response, QtCore.SIGNAL("triggered()"), self.drag_mouse_response)
-		QtCore.QObject.connect(self.ui.action_add_logger, QtCore.SIGNAL("triggered()"), self.drag_logger)
-		QtCore.QObject.connect(self.ui.action_add_inline_script, QtCore.SIGNAL("triggered()"), self.drag_inline_script)
-		QtCore.QObject.connect(self.ui.action_add_plugin, QtCore.SIGNAL("triggered()"), self.choose_and_add_plugin)
+		self.ui.action_run.triggered.connect(self.run_experiment)
+		self.ui.action_run_in_window.triggered.connect(self.run_experiment_in_window)	
+		self.ui.action_opensesamerun_exec.triggered.connect(self.set_opensesamerun_exec)
 		
-		QtCore.QObject.connect(self.ui.itemtree, QtCore.SIGNAL("itemClicked(QTreeWidgetItem *, int)"), self.open_item)
+		self.ui.action_close_all_tabs.triggered.connect(self.close_all_tabs)
+		self.ui.action_close_other_tabs.triggered.connect(self.close_other_tabs)		
+		self.ui.action_show_text_in_toolbar.triggered.connect(self.show_text_in_toolbar)
+		self.ui.action_show_variable_inspector.triggered.connect(self.refresh_variable_inspector)
+		self.ui.action_show_pool.triggered.connect(self.refresh_pool)
+		self.ui.action_show_stdout.triggered.connect(self.refresh_stdout)
+							
+		self.ui.action_help.triggered.connect(self.open_general_help_tab)
+		self.ui.action_about.triggered.connect(self.about)
+		self.ui.action_contribute.triggered.connect(self.open_contribute_tab)
+		self.ui.action_submit_a_bug.triggered.connect(self.open_bug_tab)		
+		
+		self.ui.action_check_for_update.triggered.connect(self.check_update)
+		self.ui.action_set_autosave_interval.triggered.connect(self.set_autosave_interval)
+		self.ui.action_open_autosave_folder.triggered.connect(self.open_autosave_folder)
+		self.ui.action_immediate_rename.triggered.connect(self.set_immediate_rename)
+		
+		self.ui.action_add_loop.triggered.connect(self.drag_loop)
+		self.ui.action_add_sequence.triggered.connect(self.drag_sequence)
+		self.ui.action_add_sketchpad.triggered.connect(self.drag_sketchpad)
+		self.ui.action_add_feedback.triggered.connect(self.drag_feedback)
+		self.ui.action_add_sampler.triggered.connect(self.drag_sampler)
+		self.ui.action_add_synth.triggered.connect(self.drag_synth)				
+		self.ui.action_add_keyboard_response.triggered.connect(self.drag_keyboard_response)
+		self.ui.action_add_mouse_response.triggered.connect(self.drag_mouse_response)
+		self.ui.action_add_logger.triggered.connect(self.drag_logger)
+		self.ui.action_add_inline_script.triggered.connect(self.drag_inline_script)
+		self.ui.action_add_plugin.triggered.connect(self.choose_and_add_plugin)				
 		
 		self.ui.action_auto_check_update.triggered.connect(self.set_auto_check_update)
 		self.ui.action_show_random_tip.triggered.connect(self.show_random_tip)
@@ -331,8 +333,11 @@ class qtopensesame(QtGui.QMainWindow):
 		self.default_logfile_folder = settings.value("default_logfile_folder", self.home_folder).toString()
 		self.autosave_interval = settings.value("autosave_interval", 10 * 60 * 1000).toInt()[0] # Every 10 minutes
 		self.immediate_rename = settings.value("immediate_rename", False).toBool()
+		self.opensesamerun_exec = str(settings.value("opensesamerun_exec", "").toString())
+		self.ui.action_opensesamerun.setChecked(settings.value("opensesamerun", False).toBool())
 		
 		self.ui.action_auto_check_update.setChecked(self.auto_check_update)
+		self.ui.action_opensesamerun_exec.setEnabled(self.ui.action_opensesamerun.isChecked())
 		
 		settings.endGroup();
 		
@@ -355,8 +360,26 @@ class qtopensesame(QtGui.QMainWindow):
 		settings.setValue("default_logfile_folder", self.default_logfile_folder)
 		settings.setValue("autosave_interval", self.autosave_interval)
 		settings.setValue("immediate_rename", self.immediate_rename)
+		settings.setValue("opensesamerun", self.ui.action_opensesamerun.isChecked())
+		settings.setValue("opensesamerun_exec", self.opensesamerun_exec)
 		settings.endGroup()
-				
+		
+	def set_opensesamerun_exec(self):
+	
+		"""
+		A dialog for setting the command for opensesamerun
+		"""
+		
+		s, ok = QtGui.QInputDialog.getText(self.ui.centralwidget, "Set run command", "Enter a command to execute for running the experiment as an external process (e.g., 'c:\\Python26\\python.exe opensesamerun' or 'opensesamerun.exe').\nLeave this field blank to let OpenSesame autodetect the opensesamerun command.", text = self.opensesamerun_exec)
+		if not ok:
+			return
+
+		try:
+			self.opensesamerun_exec = str(s)	
+		except:
+			self.experiment.notify("You entered an invalid string")
+			self.opensesamerun = ""
+									
 	def set_autosave_interval(self):
 	
 		"""
@@ -436,11 +459,13 @@ class qtopensesame(QtGui.QMainWindow):
 			except:
 				self.set_status("Failed to save backup")
 		
+			autosave_path = self.current_path		
 			self.current_path = _current_path
 			self.set_unsaved(_unsaved_changes)
 			self.window_message(_window_msg)
 			
-		self.start_autosave_timer()
+		self.start_autosave_timer()		
+		return autosave_path
 		
 	def save_unsaved_changes(self):
 	
@@ -1337,13 +1362,91 @@ class qtopensesame(QtGui.QMainWindow):
 					if self.experiment.items[item].get_ready():
 						redo = True
 						break
+						
+	def call_opensesamerun(self, exp):
+	
+		"""
+		Runs the experiment as a separate process by
+		calling opensesamerun		
+		"""
+		
+		# Temporary file for the standard output
+		stdout = tempfile.mktemp(suffix = ".stdout")
+		
+		# Save the experiment in a temporary location
+		path = tempfile.mktemp(suffix = ".opensesame.tar.gz")		
+		exp.save(path, True)
+		
+		if self.experiment.debug:
+			print "qtopensesame.call_opensesamrun(): experiment saved as '%s'" % path		
+			
+		# Determine the name of the executable					
+		if self.opensesamerun_exec == "":
+			if os.name == "nt":		
+				cmd = ["opensesamerun.exe"]
+			else:
+				cmd = ["opensesamerun"]
+		else:		
+			cmd = self.opensesamerun_exec.split()
+		
+		cmd += [path, "--logfile=%s" % exp.logfile, "--subject=%s" % exp.subject_nr]
+		
+		if self.experiment.debug:
+			cmd.append("--debug")			
+		if exp.fullscreen:
+			cmd.append("--fullscreen")
+		if "--pylink" in sys.argv:
+			cmd.append("--pylink")
+			
+		if self.experiment.debug:
+			print "qtopensesame.call_opensesamrun(): spawning opensesamerun as a separate process"
+			
+		# Call opensesamerun and wait for the process to complete
+		try:
+			p = subprocess.Popen(cmd, stdout = open(stdout, "w"))
+		except:
+			self.experiment.notify("<b>Failed to start opensesamerun</b><br />Please make sure that opensesamerun (or opensesamerun.exe) is present in the path, manually specify the run command, or deselect the 'Run as separate process' option.<br><pre>%s</pre>" % (" ".join(cmd)))
+			try:
+				os.remove(path)
+				os.remove(stdout)
+			except:
+				pass			
+			return False
+			
+		retcode = p.wait()
+		
+		if self.experiment.debug:
+			print "qtopensesame.call_opensesamrun(): opensesamerun returned %d" % retcode					
+			
+		print
+		print open(stdout, "r").read()
+		print
+			
+		# Clean up the temporary file
+		try:
+			os.remove(path)		
+			os.remove(stdout)
+		except:
+			pass
+		return True
+			
+	def experiment_finished(self, exp):
+	
+		"""
+		Inform the user that the experiment was successfully terminated
+		"""
 					
+		# Report success and copy the logfile to the filepool if necessary
+		resp = QtGui.QMessageBox.question(self.ui.centralwidget, "Finished!", "The experiment is finished and data has been logged to '%s'. Do you want to copy the logfile to the file pool?" % exp.logfile, QtGui.QMessageBox.Yes, QtGui.QMessageBox.No)
+		if resp == QtGui.QMessageBox.Yes:
+			self.copy_to_pool(exp.logfile)
+								
 	def run_experiment(self, fullscreen = True):
 	
 		"""
 		Run the experiment		
 		"""
-		
+				
 		# Before we run the experiment, we parse it in three steps
 		# 1) Apply any pending changes
 		# 2) Convert the experiment to a string
@@ -1405,42 +1508,44 @@ class qtopensesame(QtGui.QMainWindow):
 		# Suspend autosave
 		if self.autosave_timer != None:
 			if self.experiment.debug:
-				print "qtopnsesame.run_experiment(): stopping autosave timer"
-			self.autosave_timer.stop()		
-			
+				print "qtopensesame.run_experiment(): stopping autosave timer"
+			self.autosave_timer.stop()
+								
+		exp.auto_response = self.ui.action_enable_auto_response.isChecked()
+
 		# Reroute the standard output to the debug window
 		buf = output_buffer(self.ui.edit_stdout)
 		sys.stdout = buf			
 		
-		exp.auto_response = self.ui.action_enable_auto_response.isChecked()
+		if self.ui.action_opensesamerun.isChecked():		
+			# Optionally, the experiment is run as a separate process
+			if self.call_opensesamerun(exp):
+				self.experiment_finished(exp)
+					
+		else:					
+			try:			
+				exp.run()
+				self.experiment_finished(exp)
 			
-		try:			
-			exp.run()
-			
-			# Report success and copy the logfile to the filepool if necessary
-			resp = QtGui.QMessageBox.question(self.ui.centralwidget, "Finished!", "The experiment is finished and data has been logged to '%s'. Do you want to copy the logfile to the file pool?" % exp.logfile, QtGui.QMessageBox.Yes, QtGui.QMessageBox.No)
-			if resp == QtGui.QMessageBox.Yes:
-				self.copy_to_pool(exp.logfile)
-			
-		except Exception as e:
+			except Exception as e:
 		
-			# Make sure that the experiment cleans up, even though it crashed
-			try:
-				exp.end()
-			except Exception as _e:
-				if self.experiment.debug:
-					print "qtopensesame.run_experiment(): experiment.end() caused an exception: %s" % _e
+				# Make sure that the experiment cleans up, even though it crashed
+				try:
+					exp.end()
+				except Exception as _e:
+					if self.experiment.debug:
+						print "qtopensesame.run_experiment(): experiment.end() caused an exception: %s" % _e
 			
-			# Report the error
-			if isinstance(e, libopensesame.exceptions.runtime_error):
-				self.experiment.notify(str(e))
-			elif isinstance(e, openexp.exceptions.openexp_error):
-				print str(e)
-				self.experiment.notify("<b>Error</b>: OpenExp error<br /><b>Description</b>: %s" % e)
-			else:			
-				self.experiment.notify("An unexpected error occurred, which was not caught by OpenSesame. This should not happen! Message:<br/><b>%s</b>" % e)
-				for s in traceback.format_exc(e).split("\n"):
-					print s					
+				# Report the error
+				if isinstance(e, libopensesame.exceptions.runtime_error):
+					self.experiment.notify(str(e))
+				elif isinstance(e, openexp.exceptions.openexp_error):
+					print str(e)
+					self.experiment.notify("<b>Error</b>: OpenExp error<br /><b>Description</b>: %s" % e)
+				else:			
+					self.experiment.notify("An unexpected error occurred, which was not caught by OpenSesame. This should not happen! Message:<br/><b>%s</b>" % e)
+					for s in traceback.format_exc(e).split("\n"):
+						print s					
 			
 		# Undo the standard output rerouting
 		sys.stdout = sys.__stdout__	

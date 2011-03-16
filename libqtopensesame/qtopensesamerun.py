@@ -36,7 +36,10 @@ class qtopensesamerun(QtGui.QMainWindow):
 		# Setup the UI
 		self.ui = opensesamerun_ui.Ui_MainWindow()
 		self.ui.setupUi(self)		
-		self.ui.button_run.clicked.connect(self.run)		
+		self.ui.button_run.clicked.connect(self.run)
+		
+		self.ui.button_browse_experiment.clicked.connect(self.browse_experiment)
+		self.ui.button_browse_logfile.clicked.connect(self.browse_logfile)
 		
 		self.options = options
 		
@@ -46,6 +49,31 @@ class qtopensesamerun(QtGui.QMainWindow):
 		self.ui.checkbox_pylink.setChecked(self.options.pylink)				
 		self.ui.spinbox_subject_nr.setValue(int(self.options.subject))
 		self.ui.edit_logfile.setText(self.options.logfile)
+		
+	def browse_experiment(self):
+	
+		"""
+		Locate the experiment file
+		"""
+		
+		file_type_filter = "OpenSesame files (*.opensesame.tar.gz *.opensesame);;OpenSesame script and file pool (*.opensesame.tar.gz);;OpenSesame script (*.opensesame)"				
+		path = QtGui.QFileDialog.getOpenFileName(self, "Open experiment file", filter = file_type_filter)
+		if path == "":
+			return
+			
+		self.ui.edit_experiment.setText(path)
+		
+	def browse_logfile(self):
+	
+		"""
+		Locate the logfile
+		"""
+			
+		path = QtGui.QFileDialog.getSaveFileName(self, "Choose a location for the logfile")
+		if path == "":
+			return
+			
+		self.ui.edit_logfile.setText(path)		
 		
 	def show(self):
 	

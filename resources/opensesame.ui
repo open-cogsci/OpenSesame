@@ -61,6 +61,9 @@
     <addaction name="action_run"/>
     <addaction name="action_run_in_window"/>
     <addaction name="separator"/>
+    <addaction name="action_opensesamerun"/>
+    <addaction name="action_opensesamerun_exec"/>
+    <addaction name="separator"/>
     <addaction name="action_enable_auto_response"/>
    </widget>
    <widget class="QMenu" name="menu_items">
@@ -974,6 +977,23 @@ Tip 2: You can execute Python commands using the field above. For more informati
     <string>Immediately rename new items</string>
    </property>
   </action>
+  <action name="action_opensesamerun">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Run as separate process</string>
+   </property>
+  </action>
+  <action name="action_opensesamerun_exec">
+   <property name="icon">
+    <iconset resource="icons.qrc">
+     <normaloff>:/icons/execute.png</normaloff>:/icons/execute.png</iconset>
+   </property>
+   <property name="text">
+    <string>Specify run command</string>
+   </property>
+  </action>
  </widget>
  <customwidgets>
   <customwidget>
@@ -1020,6 +1040,22 @@ Tip 2: You can execute Python commands using the field above. For more informati
     <hint type="destinationlabel">
      <x>499</x>
      <y>594</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>action_opensesamerun</sender>
+   <signal>triggered(bool)</signal>
+   <receiver>action_opensesamerun_exec</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>-1</x>
+     <y>-1</y>
     </hint>
    </hints>
   </connection>

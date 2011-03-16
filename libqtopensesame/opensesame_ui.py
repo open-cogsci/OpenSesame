@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'resources/opensesame.ui'
 #
-# Created: Tue Mar  8 15:27:02 2011
+# Created: Wed Mar 16 16:54:34 2011
 #      by: PyQt4 UI code generator 4.7.4
 #
 # WARNING! All changes made in this file will be lost!
@@ -418,6 +418,12 @@ class Ui_MainWindow(object):
         self.action_immediate_rename = QtGui.QAction(MainWindow)
         self.action_immediate_rename.setCheckable(True)
         self.action_immediate_rename.setObjectName("action_immediate_rename")
+        self.action_opensesamerun = QtGui.QAction(MainWindow)
+        self.action_opensesamerun.setCheckable(True)
+        self.action_opensesamerun.setObjectName("action_opensesamerun")
+        self.action_opensesamerun_exec = QtGui.QAction(MainWindow)
+        self.action_opensesamerun_exec.setIcon(icon3)
+        self.action_opensesamerun_exec.setObjectName("action_opensesamerun_exec")
         self.menu_file.addAction(self.action_new)
         self.menu_file.addAction(self.action_open)
         self.menu_file.addAction(self.action_save)
@@ -426,6 +432,9 @@ class Ui_MainWindow(object):
         self.menu_file.addAction(self.action_quit)
         self.menu_run.addAction(self.action_run)
         self.menu_run.addAction(self.action_run_in_window)
+        self.menu_run.addSeparator()
+        self.menu_run.addAction(self.action_opensesamerun)
+        self.menu_run.addAction(self.action_opensesamerun_exec)
         self.menu_run.addSeparator()
         self.menu_run.addAction(self.action_enable_auto_response)
         self.menu_items.addAction(self.action_add_loop)
@@ -486,6 +495,7 @@ class Ui_MainWindow(object):
         self.tabwidget.setCurrentIndex(-1)
         QtCore.QObject.connect(self.button_variables_clear, QtCore.SIGNAL("clicked()"), self.edit_variable_filter.clear)
         QtCore.QObject.connect(self.button_clear_stdout, QtCore.SIGNAL("clicked()"), self.edit_stdout.clear)
+        QtCore.QObject.connect(self.action_opensesamerun, QtCore.SIGNAL("triggered(bool)"), self.action_opensesamerun_exec.setEnabled)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
@@ -583,6 +593,8 @@ class Ui_MainWindow(object):
         self.action_submit_a_bug.setText(QtGui.QApplication.translate("MainWindow", "Submit a bug", None, QtGui.QApplication.UnicodeUTF8))
         self.action_contribute.setText(QtGui.QApplication.translate("MainWindow", "Contribute", None, QtGui.QApplication.UnicodeUTF8))
         self.action_immediate_rename.setText(QtGui.QApplication.translate("MainWindow", "Immediately rename new items", None, QtGui.QApplication.UnicodeUTF8))
+        self.action_opensesamerun.setText(QtGui.QApplication.translate("MainWindow", "Run as separate process", None, QtGui.QApplication.UnicodeUTF8))
+        self.action_opensesamerun_exec.setText(QtGui.QApplication.translate("MainWindow", "Specify run command", None, QtGui.QApplication.UnicodeUTF8))
 
 from tree_overview import tree_overview
 from toolbar_items import toolbar_items

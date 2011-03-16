@@ -51,13 +51,13 @@ if __name__ == "__main__":
 		options = myapp.options	
 		
 		if not myapp.run:
-			quit()
+			exit()
 	
 	try:
 		exp = libopensesame.experiment.experiment("Experiment", options.experiment)
 	except libopensesame.exceptions.script_error as e:
 		libopensesame.misc.messagebox("OpenSesame Run", libopensesame.misc.strip_tags(e))
-		quit()
+		exit()
 		
 	exp.set_subject(options.subject)
 	exp.fullscreen = options.fullscreen

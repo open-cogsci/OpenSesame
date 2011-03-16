@@ -15,6 +15,7 @@
 - Added opensesamerun to run experiments standalone
 - Added unicode support to sketchpads to allow for special characters
 - Fixed a bug where applying a script with special characters caused an error
+- Added the run as separate process option to the opensesame gui
 
 0.22 "Axiomatic Axelrod"
 - Added search capabilities to inline_editor and a notification of unapplied changes

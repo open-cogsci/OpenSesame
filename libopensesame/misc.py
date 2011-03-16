@@ -23,6 +23,7 @@ import os.path
 import sys
 import optparse
 import re
+import libqtopensesame
 from Tkinter import *
 
 version = "0.23-pre1"
