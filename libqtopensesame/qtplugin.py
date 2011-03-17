@@ -41,6 +41,7 @@ class qtplugin(qtitem.qtitem):
 		self.auto_line_edit = {}
 		self.auto_combobox = {}
 		self.auto_spinbox = {}
+		self.auto_slider = {}		
 		self.lock = False
 			
 		qtitem.qtitem.__init__(self)
@@ -75,6 +76,13 @@ class qtplugin(qtitem.qtitem):
 					 spinbox.setValue(self.get(var))
 				except Exception as e:
 					self.experiment.notify("Failed to set control '%s': %s" % (var, e))				
+										
+		for var, slider in self.auto_slider.iteritems():
+			if self.has(var):
+				try:
+					slider.setValue(self.get(var))
+				except Exception as e:
+					self.experiment.notify("Failed to set control '%s': %s" % (var, e))
 				
 	def apply_edit_changes(self, rebuild = True):
 	
@@ -100,6 +108,9 @@ class qtplugin(qtitem.qtitem):
 		for var, spinbox in self.auto_spinbox.iteritems():
 			self.set(var, spinbox.value())
 			
+		for var, slider in self.auto_slider.iteritems():
+			self.set(var, slider.value())
+
 		return True
 		
 	def add_control(self, label, widget, tooltip, default, min_width = None):
@@ -175,6 +186,46 @@ class qtplugin(qtitem.qtitem):
 			self.auto_spinbox[var] = spinbox
 			
 		return spinbox
+		
+	def add_slider_control(self, var, label, min_val, max_val, default_val = None, left_label = "",right_label = "", tooltip = None, default = None):
+
+		"""
+		Adds a QSpinBox slider
+		"""
+
+		slider = QtGui.QSlider(QtCore.Qt.Horizontal)
+		slider.setFocusPolicy(QtCore.Qt.NoFocus)
+		slider.setGeometry(30, 40, 100, 30)
+		slider.setRange(min_val, max_val)
+		slider.setSingleStep(1000)
+		if default_val != None:
+			slider.setValue(default_val)
+
+		#Take care of layout
+		layout = QtGui.QHBoxLayout() 
+		layout.setMargin(0) 
+		layout.setSpacing(5)
+
+		if left_label:
+			llabel = QtGui.QLabel() 
+			llabel.setText(left_label) 
+			layout.addWidget(llabel) 
+			layout.addWidget(slider)
+
+		if right_label:
+			rlabel = QtGui.QLabel() 
+			rlabel.setText(right_label) 
+			layout.addWidget(rlabel)  
+
+		slider.valueChanged.connect(self.apply_edit_changes)
+
+		if var != None:
+			self.auto_slider[var] = slider
+
+		widget = QtGui.QWidget()
+		widget.setLayout(layout)
+
+		self.add_control(label, widget, tooltip, default) 		
 		
 	def add_filepool_control(self, var, label, click_func, tooltip = None, default = None):
 	
