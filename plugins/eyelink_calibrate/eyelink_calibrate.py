@@ -35,6 +35,8 @@ class eyelink_calibrate(item.item):
 		Constructor
 		"""
 		
+		self.version = 0.12
+				
 		# The item_typeshould match the name of the module
 		self.item_type = "eyelink_calibrate"
 		
@@ -79,8 +81,10 @@ class eyelink_calibrate(item.item):
 					data_file += c
 			data_file += ".edf"
 			
-			print "eyelink_calibrate(): logging tracker data as %s" % data_file
+			if len(data_file) > 12:
+				raise exceptions.runtime_error("The Eyelink does not support filenames longer than 12 characters (including the extension). The name of the current logfile ('%s') is therefore too long. Please run the experiment again and choose a shorter name for the logfile." % os.path.basename(self.get("logfile")))
 			
+			print "eyelink_calibrate(): logging tracker data as %s" % data_file			
 		
 			if self.experiment.debug:
 				print "eyelink_calibrate(): loading libeyelink"
@@ -164,8 +168,7 @@ class qteyelink_calibrate(eyelink_calibrate, qtplugin.qtplugin):
 		self.add_combobox_control("tracker_attached", "Tracked attached", [self._text_attached, self._text_not_attached], tooltip = "Indicates if the tracker is attached")
 		self.add_line_edit_control("sacc_vel_thresh", "Saccade velocity threshold", default = self.get("sacc_vel_thresh"), tooltip = "Saccade detection parameter")
 		self.add_line_edit_control("sacc_acc_thresh", "Saccade acceleration threshold", default = self.get("sacc_acc_thresh"), tooltip = "Saccade detection parameter")
-		#self.add_combobox_control("restart", "Restart OpenSesame after experiment", ["Yes", "No"], tooltip = "Restart OpenSesame after experiment")
-		self.add_text("\nThis plug-in starts the Eyelink calibration/ tracker setup. If necessary, it also establishes a connection to the Eyelink.")		
+		self.add_text("<small><b>Eyelink OpenSesame plug-in v%.2f</b></small>" % self.version)		
 		
 		# Add a stretch to the edit_vbox, so that the controls do not
 		# stretch to the bottom of the window.

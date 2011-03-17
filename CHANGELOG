@@ -16,6 +16,8 @@
 - Added unicode support to sketchpads to allow for special characters
 - Fixed a bug where applying a script with special characters caused an error
 - Added the run as separate process option to the opensesame gui
+- Added slider control to qtplugin
+- Made graphics mode configurable
 
 0.22 "Axiomatic Axelrod"
 - Added search capabilities to inline_editor and a notification of unapplied changes

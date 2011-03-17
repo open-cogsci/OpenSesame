@@ -71,15 +71,9 @@ class libeyelink:
 			except Exception as e:
 				raise exceptions.runtime_error("Failed to connect to the tracker: %s" % e)
 				
-			#graphics_env = eyelink_graphics(self.resolution[0], self.resolution[1], _eyelink)
 			graphics_env = eyelink_graphics(_eyelink)
 			pylink.openGraphicsEx(graphics_env)	
-		
-			# Open the graphics and put the Eyelink in offline mode
-			#pylink.openGraphics()
-			
-		print "X"
-			
+					
 		pylink.getEYELINK().openDataFile(self.data_file)		     
 		pylink.flushGetkeyQueue()
 		pylink.getEYELINK().setOfflineMode()
@@ -121,17 +115,7 @@ class libeyelink:
 
 		# Not sure what this means. Maybe the button that is used to end drift correction?
 		self.send_command("button_function 5 'accept_target_fixation'")
-		
-		print "Z"
-
-		# Set the calibration colors and the size of the dot used during calibration
-		#pylink.pylink.setCalibrationColors(fg_color, bg_color)
-		#pylink.pylink.setTargetSize(16, 2)
-		#pylink.pylink.setCalibrationSounds("", "", ""); # Default sounds
-		#pylink.pylink.setDriftCorrectSounds("", "", ""); # Default sounds
-		
-		print "Y"				  		
-			
+					
 		if not self.connected():
 			raise exceptions.runtime_error("Failed to connect to the eyetracker")
 			
@@ -410,10 +394,6 @@ class libeyelink:
 		print "libeyelink: closing eyelink"
 		pylink.getEYELINK().close();
 		pylink.msecDelay(100)		
-
-		# Close the graphics
-		#print "libeyelink: closing eyelink graphics"
-		#pylink.pylink.closeGraphics()
 	
 	def set_eye_used(self):
 
