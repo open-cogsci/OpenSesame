@@ -29,6 +29,10 @@ class tip_dialog(QtGui.QDialog):
 
 	def __init__(self, main_window):
 	
+		"""
+		Constructor
+		"""
+	
 		QtGui.QDialog.__init__(self, main_window)
 	
 		self.main_window = main_window
@@ -61,18 +65,30 @@ class tip_dialog(QtGui.QDialog):
 		
 	def set_startup_tip(self):
 	
-		self.main_window.show_startup_tip = self.ui.checkbox_show_startup_tip.isChecked()
+		"""
+		Toggle showing tips on startu[
+		"""
+	
+		self.main_window.show_startup_tip = self.ui.checkbox_show_startup_tip.isChecked()		
+		self.main_window.update_preferences_tab()
 		
 	def set_tip(self):
+	
+		"""
+		Randomly set a tip
+		"""
 	
 		if random.choice( (True, False) ):
 			s = cowsay.cowsay(self.tips[self.i], 55)
 		else:
-			s = cowsay.tuxsay(self.tips[self.i], 55)	
-			
+			s = cowsay.tuxsay(self.tips[self.i], 55)			
 		self.ui.textedit_tip.setPlainText(s)			
 		
 	def next_tip(self):
+	
+		"""
+		Advance to the next tip
+		"""
 	
 		if self.i >= len(self.tips) - 1:
 			self.i = 0
@@ -81,6 +97,10 @@ class tip_dialog(QtGui.QDialog):
 		self.set_tip()
 		
 	def prev_tip(self):
+	
+		"""
+		Go to the previous tip
+		"""
 	
 		if self.i <= 0:
 			self.i = len(self.tips) - 1

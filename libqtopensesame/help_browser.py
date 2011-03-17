@@ -24,13 +24,15 @@ class help_browser(QtGui.QTextBrowser):
 	A HTML browser for viewing help files
 	"""
 	
-	def __init__(self, path, substitutions = [], parent = None):
+	def __init__(self, path, item, substitutions = [], parent = None):
 	
 		"""
 		Constructor
 		"""
 	
 		QtGui.QTextBrowser.__init__(self, parent)
+		
+		self.tab_name = "__help__%s__" % item
 		
 		self.setOpenExternalLinks(True)
 		

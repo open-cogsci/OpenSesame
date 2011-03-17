@@ -1,5 +1,7 @@
 <RCC>
   <qresource prefix="icons">
+    <file>update.png</file>
+    <file>options_large.png</file>
     <file>close.png</file>
     <file>search.png</file>
     <file>replace.png</file>

@@ -61,9 +61,6 @@
     <addaction name="action_run"/>
     <addaction name="action_run_in_window"/>
     <addaction name="separator"/>
-    <addaction name="action_opensesamerun"/>
-    <addaction name="action_opensesamerun_exec"/>
-    <addaction name="separator"/>
     <addaction name="action_enable_auto_response"/>
    </widget>
    <widget class="QMenu" name="menu_items">
@@ -93,8 +90,6 @@
     <addaction name="action_show_variable_inspector"/>
     <addaction name="action_show_pool"/>
     <addaction name="action_show_stdout"/>
-    <addaction name="separator"/>
-    <addaction name="action_show_text_in_toolbar"/>
    </widget>
    <widget class="QMenu" name="menu_help">
     <property name="title">
@@ -110,15 +105,12 @@
    </widget>
    <widget class="QMenu" name="menu_tools">
     <property name="title">
-     <string>Options</string>
+     <string>Tools</string>
     </property>
     <addaction name="action_check_for_update"/>
-    <addaction name="action_auto_check_update"/>
-    <addaction name="separator"/>
-    <addaction name="action_immediate_rename"/>
-    <addaction name="separator"/>
-    <addaction name="action_set_autosave_interval"/>
     <addaction name="action_open_autosave_folder"/>
+    <addaction name="separator"/>
+    <addaction name="action_preferences"/>
    </widget>
    <addaction name="menu_file"/>
    <addaction name="menu_run"/>
@@ -768,18 +760,6 @@ Tip 2: You can execute Python commands using the field above. For more informati
     <string>About</string>
    </property>
   </action>
-  <action name="action_show_text_in_toolbar">
-   <property name="checkable">
-    <bool>true</bool>
-   </property>
-   <property name="icon">
-    <iconset resource="icons.qrc">
-     <normaloff>:/icons/text_large.png</normaloff>:/icons/text_large.png</iconset>
-   </property>
-   <property name="text">
-    <string>Show text in toolbar</string>
-   </property>
-  </action>
   <action name="action_add_mouse_response">
    <property name="icon">
     <iconset resource="icons.qrc">
@@ -810,7 +790,7 @@ Tip 2: You can execute Python commands using the field above. For more informati
      <normaloff>:/icons/update_large.png</normaloff>:/icons/update_large.png</iconset>
    </property>
    <property name="text">
-    <string>Check for updates now</string>
+    <string>Check for updates</string>
    </property>
   </action>
   <action name="action_show_variable_inspector">
@@ -904,23 +884,6 @@ Tip 2: You can execute Python commands using the field above. For more informati
     <string>Plugins</string>
    </property>
   </action>
-  <action name="action_add_plugin">
-   <property name="icon">
-    <iconset resource="icons.qrc">
-     <normaloff>:/icons/plugins_large.png</normaloff>:/icons/plugins_large.png</iconset>
-   </property>
-   <property name="text">
-    <string>Add plugin ...</string>
-   </property>
-  </action>
-  <action name="action_auto_check_update">
-   <property name="checkable">
-    <bool>true</bool>
-   </property>
-   <property name="text">
-    <string>Check for updates on start-up</string>
-   </property>
-  </action>
   <action name="action_show_random_tip">
    <property name="icon">
     <iconset resource="icons.qrc">
@@ -933,22 +896,13 @@ Tip 2: You can execute Python commands using the field above. For more informati
     <string>Show a random tip</string>
    </property>
   </action>
-  <action name="action_set_autosave_interval">
-   <property name="icon">
-    <iconset resource="icons.qrc">
-     <normaloff>:/icons/time_large.png</normaloff>:/icons/time_large.png</iconset>
-   </property>
-   <property name="text">
-    <string>Set auto-save interval</string>
-   </property>
-  </action>
   <action name="action_open_autosave_folder">
    <property name="icon">
     <iconset resource="icons.qrc">
      <normaloff>:/icons/pool_large.png</normaloff>:/icons/pool_large.png</iconset>
    </property>
    <property name="text">
-    <string>Open auto-save folder</string>
+    <string>Open backup folder</string>
    </property>
   </action>
   <action name="action_submit_a_bug">
@@ -969,29 +923,13 @@ Tip 2: You can execute Python commands using the field above. For more informati
     <string>Contribute</string>
    </property>
   </action>
-  <action name="action_immediate_rename">
-   <property name="checkable">
-    <bool>true</bool>
-   </property>
-   <property name="text">
-    <string>Immediately rename new items</string>
-   </property>
-  </action>
-  <action name="action_opensesamerun">
-   <property name="checkable">
-    <bool>true</bool>
-   </property>
-   <property name="text">
-    <string>Run as separate process</string>
-   </property>
-  </action>
-  <action name="action_opensesamerun_exec">
+  <action name="action_preferences">
    <property name="icon">
     <iconset resource="icons.qrc">
-     <normaloff>:/icons/execute.png</normaloff>:/icons/execute.png</iconset>
+     <normaloff>:/icons/options_large.png</normaloff>:/icons/options_large.png</iconset>
    </property>
    <property name="text">
-    <string>Specify run command</string>
+    <string>Preferences</string>
    </property>
   </action>
  </widget>
@@ -1040,22 +978,6 @@ Tip 2: You can execute Python commands using the field above. For more informati
     <hint type="destinationlabel">
      <x>499</x>
      <y>594</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>action_opensesamerun</sender>
-   <signal>triggered(bool)</signal>
-   <receiver>action_opensesamerun_exec</receiver>
-   <slot>setEnabled(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>-1</x>
-     <y>-1</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>-1</x>
-     <y>-1</y>
     </hint>
    </hints>
   </connection>

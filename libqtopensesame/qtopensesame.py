@@ -43,6 +43,7 @@ import random
 import time
 import libqtopensesame.inline_editor
 import libqtopensesame.syntax_highlighter
+import libqtopensesame.preferences_widget
 import openexp.exceptions
 import traceback
 import optparse
@@ -206,11 +207,10 @@ class qtopensesame(QtGui.QMainWindow):
 		
 		self.ui.action_run.triggered.connect(self.run_experiment)
 		self.ui.action_run_in_window.triggered.connect(self.run_experiment_in_window)	
-		self.ui.action_opensesamerun_exec.triggered.connect(self.set_opensesamerun_exec)
+		self.ui.action_enable_auto_response.triggered.connect(self.set_auto_response)
 		
 		self.ui.action_close_all_tabs.triggered.connect(self.close_all_tabs)
 		self.ui.action_close_other_tabs.triggered.connect(self.close_other_tabs)		
-		self.ui.action_show_text_in_toolbar.triggered.connect(self.show_text_in_toolbar)
 		self.ui.action_show_variable_inspector.triggered.connect(self.refresh_variable_inspector)
 		self.ui.action_show_pool.triggered.connect(self.refresh_pool)
 		self.ui.action_show_stdout.triggered.connect(self.refresh_stdout)
@@ -221,9 +221,8 @@ class qtopensesame(QtGui.QMainWindow):
 		self.ui.action_submit_a_bug.triggered.connect(self.open_bug_tab)		
 		
 		self.ui.action_check_for_update.triggered.connect(self.check_update)
-		self.ui.action_set_autosave_interval.triggered.connect(self.set_autosave_interval)
 		self.ui.action_open_autosave_folder.triggered.connect(self.open_autosave_folder)
-		self.ui.action_immediate_rename.triggered.connect(self.set_immediate_rename)
+		self.ui.action_preferences.triggered.connect(self.open_preferences_tab)
 		
 		self.ui.action_add_loop.triggered.connect(self.drag_loop)
 		self.ui.action_add_sequence.triggered.connect(self.drag_sequence)
@@ -235,9 +234,7 @@ class qtopensesame(QtGui.QMainWindow):
 		self.ui.action_add_mouse_response.triggered.connect(self.drag_mouse_response)
 		self.ui.action_add_logger.triggered.connect(self.drag_logger)
 		self.ui.action_add_inline_script.triggered.connect(self.drag_inline_script)
-		self.ui.action_add_plugin.triggered.connect(self.choose_and_add_plugin)				
 		
-		self.ui.action_auto_check_update.triggered.connect(self.set_auto_check_update)
 		self.ui.action_show_random_tip.triggered.connect(self.show_random_tip)
 				
 		# Setup the variable inspector
@@ -334,11 +331,16 @@ class qtopensesame(QtGui.QMainWindow):
 		self.autosave_interval = settings.value("autosave_interval", 10 * 60 * 1000).toInt()[0] # Every 10 minutes
 		self.immediate_rename = settings.value("immediate_rename", False).toBool()
 		self.opensesamerun_exec = str(settings.value("opensesamerun_exec", "").toString())
-		self.ui.action_opensesamerun.setChecked(settings.value("opensesamerun", False).toBool())
+		self.opensesamerun = settings.value("opensesamerun", False).toBool()
+		self.experiment.auto_response = settings.value("auto_response", False).toBool()
 		
-		self.ui.action_auto_check_update.setChecked(self.auto_check_update)
-		self.ui.action_opensesamerun_exec.setEnabled(self.ui.action_opensesamerun.isChecked())
-		
+		self.ui.action_enable_auto_response.setChecked(self.experiment.auto_response)
+
+		if settings.value("toolbar_text", False).toBool():
+			self.ui.toolbar_main.setToolButtonStyle(QtCore.Qt.ToolButtonTextUnderIcon)
+		else:
+			self.ui.toolbar_main.setToolButtonStyle(QtCore.Qt.ToolButtonIconOnly)
+				
 		settings.endGroup();
 		
 	def save_state(self):
@@ -360,48 +362,22 @@ class qtopensesame(QtGui.QMainWindow):
 		settings.setValue("default_logfile_folder", self.default_logfile_folder)
 		settings.setValue("autosave_interval", self.autosave_interval)
 		settings.setValue("immediate_rename", self.immediate_rename)
-		settings.setValue("opensesamerun", self.ui.action_opensesamerun.isChecked())
+		settings.setValue("opensesamerun", self.opensesamerun)
 		settings.setValue("opensesamerun_exec", self.opensesamerun_exec)
+		
+		settings.setValue("auto_response", self.experiment.auto_response)
+		settings.setValue("toolbar_text", self.ui.toolbar_main.toolButtonStyle() == QtCore.Qt.ToolButtonTextUnderIcon)
+		
 		settings.endGroup()
 		
-	def set_opensesamerun_exec(self):
+	def set_auto_response(self):
 	
 		"""
-		A dialog for setting the command for opensesamerun
+		Toggle the auto response option
 		"""
-		
-		s, ok = QtGui.QInputDialog.getText(self.ui.centralwidget, "Set run command", "Enter a command to execute for running the experiment as an external process (e.g., 'c:\\Python26\\python.exe opensesamerun' or 'opensesamerun.exe').\nLeave this field blank to let OpenSesame autodetect the opensesamerun command.", text = self.opensesamerun_exec)
-		if not ok:
-			return
-
-		try:
-			self.opensesamerun_exec = str(s)	
-		except:
-			self.experiment.notify("You entered an invalid string")
-			self.opensesamerun = ""
-									
-	def set_autosave_interval(self):
 	
-		"""
-		A dialog for setting the autosave interval
-		"""
-		
-		i, ok = QtGui.QInputDialog.getInt(self.ui.centralwidget, "Set auto-save interval", "How often (in minutes) do you want OpenSesame to make a backup of your experiment? Enter '0' to turn off auto-save.", self.autosave_interval / (60 * 1000), min = 0)
-		if not ok:
-			return
-			
-		# Cancel the old timer if necessary
-		if self.autosave_timer != None:
-			if self.experiment.debug:
-				print "qtopensesame.set_autosave_interval(): cancelling auto-save timer"
-			self.autosave_timer.stop()
-			self.autosave_timer = None
-	
-		# Convert the interval to milliseconds
-		self.autosave_interval = i * 60 * 1000
-			
-		# Start the timer
-		self.start_autosave_timer()
+		self.experiment.auto_response = self.ui.action_enable_auto_response.isChecked()
+		self.update_preferences_tab()		
 			
 	def open_autosave_folder(self):
 	
@@ -420,7 +396,6 @@ class qtopensesame(QtGui.QMainWindow):
 		Construct the autosave timer, if autosave is enabled
 		"""			
 		
-		# Start auto save timer
 		if self.autosave_interval > 0:
 			if self.experiment.debug:
 				print "qtopensesame.start_autosave_timer(): starting auto-save timer (interval = %d ms)" % self.autosave_interval
@@ -547,17 +522,7 @@ class qtopensesame(QtGui.QMainWindow):
 		a.adjustSize()
 		a.exec_()		
 		self.auto_check_update = a.ui.checkbox_auto_check_update.isChecked()
-		self.ui.action_auto_check_update.setChecked(self.auto_check_update)
-		
-	def set_auto_check_update(self):
-	
-		"""
-		Set the autocheck update based on the menu
-		"""
-		
-		self.auto_check_update = self.ui.action_auto_check_update.isChecked()
-		if self.experiment.debug:
-			print "qtopensesame.set_auto_check_update(): set to %s" % self.auto_check_update
+		self.update_preferences_tab()	
 		
 	def check_update(self, dummy = None, always = True):
 	
@@ -606,19 +571,14 @@ class qtopensesame(QtGui.QMainWindow):
 		Open a help tab for the specified item
 		"""
 		
-		for i in range(self.experiment.ui.tabwidget.count()):
-			w = self.experiment.ui.tabwidget.widget(i)
-			if hasattr(w, "help_%s" % item):
-				self.experiment.ui.tabwidget.setCurrentIndex(i)
-				return
-						
-		
-		path = self.experiment.help("%s.html" % item)
-		text = libqtopensesame.help_browser.help_browser(path, [("[version]", self.version), ("[codename]", self.codename)])
-				
-		exec("text.help_%s = True" % item)
-		index = self.experiment.ui.tabwidget.addTab(text, self.experiment.icon("help"), title)
-		self.experiment.ui.tabwidget.setCurrentIndex(index)
+		i = self.get_tab_index("__help__%s__" % item)
+		if i != None:
+			self.switch_tab(i)
+		else:								
+			path = self.experiment.help("%s.html" % item)
+			text = libqtopensesame.help_browser.help_browser(path, item, [("[version]", self.version), ("[codename]", self.codename)])
+			index = self.experiment.ui.tabwidget.addTab(text, self.experiment.icon("help"), title)
+			self.switch_tab(index)
 		
 	def open_general_help_tab(self):			
 	
@@ -643,6 +603,64 @@ class qtopensesame(QtGui.QMainWindow):
 	def about(self):
 	
 		self.open_help_tab("About", "about")
+		
+	def open_preferences_tab(self):
+	
+		"""
+		Open the preferences tab
+		"""
+		
+		i = self.get_tab_index("__preferences__")
+		if i != None:
+			self.switch_tab(i)
+		else:		
+			index = self.experiment.ui.tabwidget.addTab(libqtopensesame.preferences_widget.preferences_widget(self), self.experiment.icon("options"), "Preferences")
+			self.switch_tab(index)
+		
+	def update_preferences_tab(self):
+	
+		"""
+		If the preferences tab is open, make sure that
+		its controls are updated to match potential changes
+		"""
+
+		w = self.get_tab_widget("__preferences__")
+		if w != None:			
+			w.set_controls()
+								
+	def get_tab_widget(self, tab_name):
+	
+		"""
+		Return the widget of a tab or None
+		if the tab is not found
+		"""
+		
+		for i in range(self.experiment.ui.tabwidget.count()):
+			w = self.experiment.ui.tabwidget.widget(i)
+			if hasattr(w, "tab_name") and w.tab_name == tab_name:
+				return self.experiment.ui.tabwidget.widget(i)
+		return None
+		
+	def get_tab_index(self, tab_name):
+	
+		"""
+		Return the index of a tab or None
+		if the tab is not found
+		"""
+		
+		for i in range(self.experiment.ui.tabwidget.count()):
+			w = self.experiment.ui.tabwidget.widget(i)
+			if hasattr(w, "tab_name") and w.tab_name == tab_name:
+				return i
+		return None		
+		
+	def switch_tab(self, index):
+	
+		"""
+		Switch to the tab at the given position
+		"""
+		
+		self.experiment.ui.tabwidget.setCurrentIndex(index)		
 				
 	def show_text_in_toolbar(self):
 	
@@ -849,8 +867,7 @@ class qtopensesame(QtGui.QMainWindow):
 		Open a file
 		"""		
 		
-		if path == None:
-			path, file_typw = QtGui.QFileDialog.getOpenFileNameAndFilter(self.ui.centralwidget, "Open file", QtCore.QString(), self.file_type_filter)
+		path, file_type = QtGui.QFileDialog.getOpenFileNameAndFilter(self.ui.centralwidget, "Open file", QtCore.QString(), self.file_type_filter)
 		if path == None or path == "":
 			return				
 			
@@ -1284,7 +1301,7 @@ class qtopensesame(QtGui.QMainWindow):
 			self.refresh()
 			
 		self.close_all_tabs()
-		self.open_general_tab()
+		self.open_general_tab()		
 		
 	def build_item_list(self, name = None):
 	
@@ -1370,13 +1387,10 @@ class qtopensesame(QtGui.QMainWindow):
 		calling opensesamerun		
 		"""
 		
-		# Temporary file for the standard output
-		stdout = tempfile.mktemp(suffix = ".stdout")
-		
-		# Save the experiment in a temporary location
-		path = tempfile.mktemp(suffix = ".opensesame.tar.gz")		
-		exp.save(path, True)
-		
+		# Temporary file for the standard output and experiment
+		stdout = tempfile.mktemp(suffix = ".stdout")		
+		path = tempfile.mktemp(suffix = ".opensesame.tar.gz")				
+		exp.save(path, True)		
 		if self.experiment.debug:
 			print "qtopensesame.call_opensesamrun(): experiment saved as '%s'" % path		
 			
@@ -1428,6 +1442,7 @@ class qtopensesame(QtGui.QMainWindow):
 			os.remove(stdout)
 		except:
 			pass
+			
 		return True
 			
 	def experiment_finished(self, exp):
@@ -1511,13 +1526,13 @@ class qtopensesame(QtGui.QMainWindow):
 				print "qtopensesame.run_experiment(): stopping autosave timer"
 			self.autosave_timer.stop()
 								
-		exp.auto_response = self.ui.action_enable_auto_response.isChecked()
+		exp.auto_response = self.experiment.auto_response
 
 		# Reroute the standard output to the debug window
 		buf = output_buffer(self.ui.edit_stdout)
 		sys.stdout = buf			
 		
-		if self.ui.action_opensesamerun.isChecked():		
+		if self.opensesamerun:
 			# Optionally, the experiment is run as a separate process
 			if self.call_opensesamerun(exp):
 				self.experiment_finished(exp)

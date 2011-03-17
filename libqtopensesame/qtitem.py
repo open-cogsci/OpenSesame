@@ -147,19 +147,16 @@ class qtitem(object):
 		"""
 		Open the help tab
 		"""
-		
-		for i in range(self.experiment.ui.tabwidget.count()):
-			w = self.experiment.ui.tabwidget.widget(i)
-			if hasattr(w, "help_item") and w.help_item == self.name:
-				self.experiment.ui.tabwidget.setCurrentIndex(i)
-				return
-			
-		path = self.experiment.help(self.item_type + ".html")		
-		text = libqtopensesame.help_browser.help_browser(path)
-		text.help_item = self.name
-		
-		index = self.experiment.ui.tabwidget.addTab(text, self.experiment.icon("help"), self.name)
-		self.experiment.ui.tabwidget.setCurrentIndex(index)		
+				
+		i = self.experiment.main_window.get_tab_index("__help__%s__" % self.item_type)
+		if i != None:
+			self.experiment.main_window.switch_tab(i)
+		else:			
+			path = self.experiment.help(self.item_type + ".html")		
+			text = libqtopensesame.help_browser.help_browser(path, self.item_type)
+			text.help_item = self.name		
+			index = self.experiment.ui.tabwidget.addTab(text, self.experiment.icon("help"), self.name)
+			self.experiment.ui.tabwidget.setCurrentIndex(index)		
 						
 	def init_edit_widget(self, stretch = True):
 	
