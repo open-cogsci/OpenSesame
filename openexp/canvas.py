@@ -33,12 +33,16 @@ class canvas:
 		Initializes the canvas
 		"""
 		
+		if experiment.mode_opengl == "yes":
+			raise openexp.exceptions.canvas_error("Sorry! The openexp.canvas class cannot be used when the display is in OpenGL mode. This means that you cannot use sketchpad and feedbacks items (and other items that rely on the canvas) when OpenGL is enabled (mode_opengl = 'yes').<br /><br />You may want to use PyOpenGL instead of the canvas class or, if you don't need fancy OpenGL stuff, set mode_opengl back to 'no'.")
+		
 		self.experiment = experiment
 		self.fgcolor = self.color(fgcolor)
 		self.bgcolor = self.color(bgcolor)
 		self.penwidth = 1
 		self.antialias = True
-		self.surface = self.experiment.surface.copy()
+		
+		self.surface = self.experiment.surface.copy()					
 		self.font = self.experiment.font
 		self.clear()
 		
@@ -96,7 +100,7 @@ class canvas:
 		which the display whas shown. Waits for
 		v-sync if enabled.		
 		"""
-		
+
 		self.experiment.surface.blit(self.surface, (0, 0))		
 		pygame.display.flip()
 		return pygame.time.get_ticks()

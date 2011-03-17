@@ -42,6 +42,12 @@ class experiment:
 		self.sound_buf_size = 512
 		self.resources = {}
 		
+		# The default display modes, corresponding to the PyGame set_mode arguments:
+		# http://www.pygame.org/docs/ref/display.html#pygame.display.set_mode
+		self.mode_hwsurface = "yes"
+		self.mode_doublebuf = "yes"
+		self.mode_opengl = "no"
+		
 		self.resolution = 1024, 768
 		self.fullscreen = False
 		self.title = "OpenExp"
@@ -94,11 +100,16 @@ class experiment:
 
 		self.init_icon()		
 		
+		mode = 0		
+		if self.mode_hwsurface == "yes":
+			mode = mode | pygame.HWSURFACE			
+		if self.mode_doublebuf == "yes":
+			mode = mode | pygame.DOUBLEBUF			
+		if self.mode_opengl == "yes":
+			mode = mode | pygame.OPENGL
 		if self.fullscreen:
-			mode = pygame.FULLSCREEN | pygame.HWSURFACE | pygame.DOUBLEBUF
-		else:
-			mode = pygame.HWSURFACE | pygame.DOUBLEBUF			
-			
+			mode = mode | pygame.fullscreen
+					
 		if pygame.display.mode_ok(self.resolution, mode):	
 			print "experiment.init_display(): display mode ok"
 		else:
