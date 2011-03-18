@@ -18,6 +18,7 @@
 - Added the run as separate process option to the opensesame gui
 - Added slider control to qtplugin
 - Made graphics mode configurable
+- Added preferences tab and removed some of the options from the menu
 
 0.22 "Axiomatic Axelrod"
 - Added search capabilities to inline_editor and a notification of unapplied changes

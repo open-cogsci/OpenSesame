@@ -187,7 +187,7 @@ class qtplugin(qtitem.qtitem):
 			
 		return spinbox
 		
-	def add_slider_control(self, var, label, min_val, max_val, default_val = None, left_label = "",right_label = "", tooltip = None, default = None):
+	def add_slider_control(self, var, label, min_val, max_val, left_label = "",right_label = "", tooltip = None, default = None):
 
 		"""
 		Adds a QSpinBox slider
@@ -198,8 +198,8 @@ class qtplugin(qtitem.qtitem):
 		slider.setGeometry(30, 40, 100, 30)
 		slider.setRange(min_val, max_val)
 		slider.setSingleStep(1000)
-		if default_val != None:
-			slider.setValue(default_val)
+		if default != None:
+			slider.setValue(default)
 
 		#Take care of layout
 		layout = QtGui.QHBoxLayout() 
