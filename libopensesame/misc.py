@@ -24,6 +24,7 @@ import sys
 import optparse
 import re
 import libqtopensesame
+import openexp.experiment
 from Tkinter import *
 
 version = "0.23-pre1"
@@ -157,4 +158,12 @@ def strip_tags(s):
 	"""
 
 	return re.compile(r'<.*?>').sub('', str(s).replace("<br />", "\n").replace("<br>", "\n"))
+	
+def resource(name):
+
+	"""
+	A hacky way to get a resource using the functionality from openexp
+	"""
+
+	return openexp.experiment.experiment.resource(openexp.experiment.experiment(), name)
 

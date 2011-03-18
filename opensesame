@@ -24,15 +24,29 @@ from PyQt4 import QtGui, QtCore
 import sys
 import libqtopensesame.qtopensesame
 import libopensesame.misc		
+import time
 
 if __name__ == "__main__":
 
 	libopensesame.misc.change_working_dir()
 
-	app = QtGui.QApplication(sys.argv)		
+	app = QtGui.QApplication(sys.argv)	
+	
+	# Show the splash screen
+	splash = QtGui.QSplashScreen(QtGui.QPixmap(libopensesame.misc.resource("splash.png")), QtCore.Qt.WindowStaysOnTopHint)
+	splash.show()	
+	app.processEvents()
+		
 	myapp = libqtopensesame.qtopensesame.qtopensesame()
 	QtCore.QObject.connect(app, QtCore.SIGNAL("quit()"), myapp.close)		
-	myapp.show()		
+	
+	myapp.show()	
+	
+	# Wait and hide the splash
+	t = time.time()	
+	while time.time() - t < 0.5:
+		app.processEvents()	
+	splash.finish(myapp)
 	
 	# Open an experiment if it has been specified as a command
 	# line argument

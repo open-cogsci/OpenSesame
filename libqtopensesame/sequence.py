@@ -166,6 +166,7 @@ class items_linedit(QtGui.QLineEdit):
 	
 		self.setText(cond)
 		self.sequence.items[self.item] = self.sequence.items[self.item][0], str(self.text())
+		self.sequence.script_widget()
 				
 class sequence(libopensesame.sequence.sequence, libqtopensesame.qtitem.qtitem):
 

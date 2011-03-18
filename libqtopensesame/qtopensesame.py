@@ -867,7 +867,8 @@ class qtopensesame(QtGui.QMainWindow):
 		Open a file
 		"""		
 		
-		path, file_type = QtGui.QFileDialog.getOpenFileNameAndFilter(self.ui.centralwidget, "Open file", QtCore.QString(), self.file_type_filter)
+		if path == None:
+			path, file_type = QtGui.QFileDialog.getOpenFileNameAndFilter(self.ui.centralwidget, "Open file", QtCore.QString(), self.file_type_filter)
 		if path == None or path == "":
 			return				
 			
