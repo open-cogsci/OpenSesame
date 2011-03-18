@@ -893,7 +893,7 @@ class qtopensesame(QtGui.QMainWindow):
 		
 		self.default_logfile_folder = os.path.dirname(self.current_path)
 				
-	def save_file(self, overwrite = True):
+	def save_file(self, dummy = 0, overwrite = True):
 	
 		"""
 		Save a file
@@ -918,6 +918,7 @@ class qtopensesame(QtGui.QMainWindow):
 		except Exception as e:
 			self.experiment.notify("Failed to save file. Error: %s" % e)
 			return
+			
 		if resp == False:
 			resp = QtGui.QMessageBox.question(self.ui.centralwidget, "File exists", "A file with that name already exists. Overwite?", QtGui.QMessageBox.Yes, QtGui.QMessageBox.No)
 			if resp == QtGui.QMessageBox.No:
@@ -955,7 +956,7 @@ class qtopensesame(QtGui.QMainWindow):
 		path, file_type = QtGui.QFileDialog.getSaveFileNameAndFilter(self.ui.centralwidget, "Save file as ...", path, self.file_type_filter)
 		if path != None and path != "":				
 			self.current_path = str(path)
-			self.save_file(False)
+			self.save_file(overwrite = False)
 			
 	def close_all_tabs(self):
 	
