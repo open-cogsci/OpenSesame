@@ -93,10 +93,7 @@ class inline_script(item.item):
 		self.collect_prepare = False
 		
 		for line in string.split("\n"):		
-			#self.parse_variable(line)
-			#l = shlex.split(line)			
-			
-			#if len(l) == 1 and l[0] == "__end__":
+
 			if line.strip() == "__end__":
 				self.collect_run = False
 				self.collect_prepare = False			
@@ -107,11 +104,9 @@ class inline_script(item.item):
 			if self.collect_prepare:
 				self.prepare_script += "%s\n" % line[1:]
 			
-			#if len(l) == 1 and l[0] == "__run__":				
 			if line.strip() == "__run__":
 				self.collect_run = True
 				
-			#if len(l) == 1 and l[0] == "__prepare__":				
 			if line.strip() == "__prepare__":			
 				self.collect_prepare = True		
 				

@@ -1458,7 +1458,7 @@ class qtopensesame(QtGui.QMainWindow):
 		if resp == QtGui.QMessageBox.Yes:
 			self.copy_to_pool(exp.logfile)
 								
-	def run_experiment(self, fullscreen = True):
+	def run_experiment(self, dummy = None, fullscreen = True):
 	
 		"""
 		Run the experiment		
@@ -1583,7 +1583,7 @@ class qtopensesame(QtGui.QMainWindow):
 		Run the experiment in a window
 		"""
 	
-		self.run_experiment(False)
+		self.run_experiment(fullscreen = False)
 				
 	def refresh(self, changed_item = None, refresh_edit = True, refresh_script = True):
 	

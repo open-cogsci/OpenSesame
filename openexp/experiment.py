@@ -102,18 +102,22 @@ class experiment:
 		
 		mode = 0		
 		if self.mode_hwsurface == "yes":
-			mode = mode | pygame.HWSURFACE			
+			mode = mode | pygame.HWSURFACE	
+			print "experiment.init_display(): video mode: using hardware surface"
 		if self.mode_doublebuf == "yes":
 			mode = mode | pygame.DOUBLEBUF			
+			print "experiment.init_display(): video mode: using double buffering"
 		if self.mode_opengl == "yes":
 			mode = mode | pygame.OPENGL
+			print "experiment.init_display(): video mode: using opengl"
 		if self.fullscreen:
-			mode = mode | pygame.fullscreen
+			mode = mode | pygame.FULLSCREEN
+			print "experiment.init_display(): video mode: going fullscreen"
 					
 		if pygame.display.mode_ok(self.resolution, mode):	
-			print "experiment.init_display(): display mode ok"
+			print "experiment.init_display(): video mode ok"
 		else:
-			print "experiment.init_display(): warning: display mode not ok"
+			print "experiment.init_display(): warning: video mode not ok"
 							
 		self.window = pygame.display.set_mode(self.resolution, mode)					
 		pygame.display.set_caption(self.title)
