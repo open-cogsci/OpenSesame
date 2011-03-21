@@ -55,8 +55,8 @@ class inline_script(libopensesame.inline_script.inline_script, libqtopensesame.q
 			else:
 				raise libopensesame.exceptions.script_error("You're not allowed to use the \"\"\" way to define strings. This confuses OpenSesame :$ Sorry!")
 				
-		self.prepare_script = sp
-		self.run_script = sr
+		self._prepare = sp
+		self._run = sr
 		self.lock = True
 		self._var_info = None		
 		self.experiment.main_window.refresh(self.name)		
@@ -137,9 +137,9 @@ class inline_script(libopensesame.inline_script.inline_script, libqtopensesame.q
 		
 		if not self.lock:
 			self.textedit_prepare.edit.clear()
-			self.textedit_prepare.edit.insertPlainText(self.prepare_script)
+			self.textedit_prepare.edit.insertPlainText(self._prepare)
 			self.textedit_run.edit.clear()
-			self.textedit_run.edit.insertPlainText(self.run_script)								
+			self.textedit_run.edit.insertPlainText(self._run)								
 								
 		return self._edit_widget		
 		

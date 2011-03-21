@@ -38,6 +38,7 @@ class item(openexp.trial.trial):
 		self.experiment = experiment
 		self.debug = "--debug" in sys.argv
 		self.count = 0
+		self.reserved_words = "run", "prepare", "get", "set", "has"
 		
 		if not hasattr(self, "item_type"):		
 			self.item_type = "item"
@@ -118,7 +119,19 @@ class item(openexp.trial.trial):
 		Translates the variables back into a string
 		"""
 		
-		return "set %s \"%s\"\n" % (var, self.variables[var])
+		# Multiline variables are stored as a block
+		if type(self.variables[var]) == str and "\n" in self.variables[var]:
+			s = "__%s__\n" % var
+			for l in self.variables[var].split("\n"):
+				s += "\t%s\n" % l
+			if s[-1] != "\n":
+				s += "\n"
+			s += "\t__end__\n"
+			return s
+		
+		# Regular variables
+		else:		
+			return "set %s \"%s\"\n" % (var, self.variables[var])
 		
 	def from_string(self, string):
 	
@@ -126,9 +139,32 @@ class item(openexp.trial.trial):
 		Reads variables from the string
 		"""
 		
+		textblock_var = None
 		self.variables = {}
 		for line in string.split("\n"):
-			self.parse_variable(line)			
+		
+			# The end of a textblock
+			if line.strip() == "__end__":
+				self.set(textblock_var, textblock_val)
+				textblock_var = None
+				
+			# The beginning of a textblock
+			elif line.strip()[:2] == "__" and line.strip()[-2:] == "__":
+				textblock_var = line.strip()[2:-2]				
+				if textblock_var in self.reserved_words:
+					textblock_var = "_" + textblock_var				
+				if textblock_var != "":
+					textblock_val = ""
+				else:
+					textblock_var = None
+				
+			# Collect the contents of a textblock
+			elif textblock_var != None:
+				textblock_val += line[1:] + "\n"
+				
+			# Parse regular variables
+			else:
+				self.parse_variable(line)
 		
 	def to_string(self, item_type = None):
 	
@@ -144,8 +180,8 @@ class item(openexp.trial.trial):
 			s += "\t# %s\n" % comment.strip()
 		for var in self.variables:
 			s += "\t" + self.variable_to_string(var)
-		return s		
-		
+		return s
+				
 	def set(self, var, val):
 	
 		"""
@@ -158,8 +194,7 @@ class item(openexp.trial.trial):
 		elif type(val) == int:
 			exec("self.%s = %d" % (var, val))
 		else:
-			val = val.replace("\"", "'")
-			exec("self.%s = \"%s\"" % (var, val))
+			exec("self.%s = \"\"\"%s\"\"\"" % (var, val))
 		
 		self.variables[var] = val			
 		
@@ -190,7 +225,7 @@ class item(openexp.trial.trial):
 			try:
 				val = eval("self.experiment.%s" % var)
 			except:						
-				raise exceptions.runtime_error("Variable '%s' is not set in item '%s'.<br /><br />Make sure that you have spelled and capitalized the variable name correctly. You may wish to use the variable inspector (Control + I) to find the intended variable." % (var, self.name))
+				raise exceptions.runtime_error("Variable '%s' is not set in item '%s'.<br /><br />You are trying to use a variable that does not exist. Make sure that you have spelled and capitalized the variable name correctly. You may wish to use the variable inspector (Control + I) to find the intended variable." % (var, self.name))
 				
 		# Process variables, indicated like [varname]
 		if self.experiment.running and type(val) == str and len(val) > 3 and val[0] == "[" and val[-1] == "]":
@@ -358,7 +393,7 @@ class item(openexp.trial.trial):
 	
 		if len(l) != 3:
 		
-			raise exceptions.runtime_error("Failed to evaluate '%s' in item '%s'<br />Make sure that the expression is correctly formatted and that the use of whitespace is correct (e.g., '[dummy] = 1' is correct, '[dummy]=1' is not)" % (s, self.name))
+			raise exceptions.runtime_error("Failed to evaluate '%s' in item '%s'<br /><br />Make sure that the expression is correctly formatted and that the use of whitespace is correct (e.g., '[dummy] = 1' is correct, '[dummy]=1' is not)" % (s, self.name))
 		
 		else:
 		
@@ -382,7 +417,7 @@ class item(openexp.trial.trial):
 			try:		
 				return eval("\"%s\" %s \"%s\"" % (a, b, c))
 			except:
-				raise exceptions.runtime_error("Failed to evaluate '%s' in item '%s'<br />Make sure that the expression is correctly formatted and that the use of whitespace is correct (e.g., '[dummy] = 1' is correct, '[dummy]=1' is not)" % (s, self.name))
+				raise exceptions.runtime_error("Failed to evaluate '%s' in item '%s'<br /><br />Make sure that the expression is correctly formatted and that the use of whitespace is correct (e.g., '[dummy] = 1' is correct, '[dummy]=1' is not)" % (s, self.name))
 	
 		return True				
 		

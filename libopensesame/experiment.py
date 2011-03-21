@@ -121,7 +121,7 @@ class experiment(item.item, openexp.experiment.experiment):
 		else:
 			self.set("subject_parity", "odd")		
 					
-	def read_definition(self, s, skip_empty_lines):
+	def read_definition(self, s):
 	
 		"""
 		Extract a single definition from the string
@@ -137,7 +137,7 @@ class experiment(item.item, openexp.experiment.experiment):
 			if len(line) > 0:
 				if line[0] != "\t":
 					break
-				elif len(line.strip()) > 0 or not skip_empty_lines:	
+				else:	
 					def_str += line + "\n"
 			line = next(s, None)
 			if line == None:
@@ -216,10 +216,9 @@ class experiment(item.item, openexp.experiment.experiment):
 					if len(l) != 3:
 						raise exceptions.script_error("Failed to parse definition '%s'" % line)
 						
-					#item_type = self.guess(l[1], self.known_item_types)
 					item_type = l[1]
 					item_name = self.sanitize(l[2])
-					line, def_str = self.read_definition(s, l[1] != "inline_script")
+					line, def_str = self.read_definition(s)
 					get_next = False
 					self.parse_definition(item_type, item_name, def_str)
 								

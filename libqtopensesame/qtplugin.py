@@ -16,7 +16,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from PyQt4 import QtCore, QtGui
-from libqtopensesame import qtitem
+from libqtopensesame import qtitem, inline_editor
 import os.path
 
 class qtplugin(qtitem.qtitem):
@@ -41,7 +41,9 @@ class qtplugin(qtitem.qtitem):
 		self.auto_line_edit = {}
 		self.auto_combobox = {}
 		self.auto_spinbox = {}
-		self.auto_slider = {}		
+		self.auto_slider = {}
+		self.auto_editor = {}
+		
 		self.lock = False
 			
 		qtitem.qtitem.__init__(self)
@@ -83,6 +85,13 @@ class qtplugin(qtitem.qtitem):
 					slider.setValue(self.get(var))
 				except Exception as e:
 					self.experiment.notify("Failed to set control '%s': %s" % (var, e))
+					
+		for var, editor in self.auto_editor.iteritems():
+			if self.has(var):
+				try:
+					editor.edit.setPlainText(self.get(var))
+				except Exception as e:
+					self.experiment.notify("Failed to set control '%s': %s" % (var, e))
 				
 	def apply_edit_changes(self, rebuild = True):
 	
@@ -110,6 +119,10 @@ class qtplugin(qtitem.qtitem):
 			
 		for var, slider in self.auto_slider.iteritems():
 			self.set(var, slider.value())
+			
+		for var, editor in self.auto_editor.iteritems():
+			self.set(var, str(editor.edit.toPlainText()))
+			editor.setModified(False)
 
 		return True
 		
@@ -190,7 +203,7 @@ class qtplugin(qtitem.qtitem):
 	def add_slider_control(self, var, label, min_val, max_val, left_label = "",right_label = "", tooltip = None, default = None):
 
 		"""
-		Adds a QSpinBox slider
+		Adds a QSlider
 		"""
 
 		slider = QtGui.QSlider(QtCore.Qt.Horizontal)
@@ -251,9 +264,26 @@ class qtplugin(qtitem.qtitem):
 		
 		widget = QtGui.QWidget()
 		widget.setLayout(hbox)
-		
+				
 		self.add_control(label, widget, tooltip, default)		
 		
+	def add_editor_control(self, var, label, tooltip = None, default = None):
+	
+		"""
+		Adds a texteditor
+		"""
+	
+		label = QtGui.QLabel(label)
+	
+		editor = inline_editor.inline_editor(self.experiment)
+		editor.apply.clicked.connect(self.apply_edit_changes)
+		
+		if var != None:
+			self.auto_editor[var] = editor
+		
+		self.edit_vbox.addWidget(label)			
+		self.edit_vbox.addWidget(editor)	
+				
 	def add_text(self, msg):
 	
 		"""

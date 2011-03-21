@@ -31,8 +31,8 @@ class inline_script(item.item):
 		self.description = "Executes Python code"
 		self.item_type = "inline_script"		
 		
-		self.prepare_script = ""
-		self.run_script = ""
+		self._prepare = ""
+		self._run = ""
 		self._var_info = None
 		
 		item.item.__init__(self, name, experiment, string)		
@@ -64,7 +64,7 @@ class inline_script(item.item):
 		item.item.prepare(self)		
 		
 		try:
-			exec(self.prepare_script)
+			exec(self._prepare)
 		except Exception as e:
 			
 			raise exceptions.inline_error(self.name, "prepare", e)
@@ -77,61 +77,11 @@ class inline_script(item.item):
 		Execute the run script
 		"""		
 		try:
-			exec(self.run_script)
+			exec(self._run)
 		except Exception as e:		
 			raise exceptions.inline_error(self.name, "run", e)
 		
-		return True
-		
-	def from_string(self, string):
-	
-		"""
-		Read the inline_script from a string
-		"""
-	
-		self.collect_run = False
-		self.collect_prepare = False
-		
-		for line in string.split("\n"):		
-
-			if line.strip() == "__end__":
-				self.collect_run = False
-				self.collect_prepare = False			
-			
-			if self.collect_run:
-				self.run_script += "%s\n" % line[1:]
-				
-			if self.collect_prepare:
-				self.prepare_script += "%s\n" % line[1:]
-			
-			if line.strip() == "__run__":
-				self.collect_run = True
-				
-			if line.strip() == "__prepare__":			
-				self.collect_prepare = True		
-				
-			if not self.collect_run and not self.collect_prepare:
-				self.parse_variable(line)						
-												
-	def to_string(self):
-	
-		"""
-		Encode the inline_script back into a string
-		"""
-	
-		s = item.item.to_string(self, "inline_script")
-		
-		s += "\t__prepare__\n"		
-		for line in self.prepare_script.split("\n"):
-			s += "\t%s\n" % line		
-		s += "\t__end__\n"
-
-		s += "\t__run__\n"		
-		for line in self.run_script.split("\n"):
-			s += "\t%s\n" % line		
-		s += "\t__end__\n"
-		
-		return s
+		return True		
 		
 	def var_info(self):
 	
@@ -146,7 +96,7 @@ class inline_script(item.item):
 		
 		l = item.item.var_info(self)
 
-		m = re.findall("self.experiment.set\(\"(\w+)\"(\s*),(\s*)(\"*)([^\"\)]*)(\"*)", self.prepare_script + self.run_script)
+		m = re.findall("self.experiment.set\(\"(\w+)\"(\s*),(\s*)(\"*)([^\"\)]*)(\"*)", self._prepare + self._run)
 		for var, s1, s2, q1, val, q2 in m:
 			if q1 != "\"":
 				val = "<i>Set to [%s]</i>" % val
