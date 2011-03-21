@@ -358,7 +358,7 @@ class item(openexp.trial.trial):
 	
 		if len(l) != 3:
 		
-			raise exceptions.runtime_error("Failed to evaluate '%s' in item '%s'" % (s, self.name))
+			raise exceptions.runtime_error("Failed to evaluate '%s' in item '%s'<br />Make sure that the expression is correctly formatted and that the use of whitespace is correct (e.g., '[dummy] = 1' is correct, '[dummy]=1' is not)" % (s, self.name))
 		
 		else:
 		
@@ -382,7 +382,7 @@ class item(openexp.trial.trial):
 			try:		
 				return eval("\"%s\" %s \"%s\"" % (a, b, c))
 			except:
-				raise exceptions.runtime_error("Failed to evaluate '%s' in sequence item '%s'" % (s, self.name))
+				raise exceptions.runtime_error("Failed to evaluate '%s' in item '%s'<br />Make sure that the expression is correctly formatted and that the use of whitespace is correct (e.g., '[dummy] = 1' is correct, '[dummy]=1' is not)" % (s, self.name))
 	
 		return True				
 		
