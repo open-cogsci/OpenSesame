@@ -47,10 +47,22 @@
     <property name="title">
      <string>File</string>
     </property>
+    <widget class="QMenu" name="menu_recent_files">
+     <property name="title">
+      <string>Recent files</string>
+     </property>
+     <property name="icon">
+      <iconset resource="icons.qrc">
+       <normaloff>:/icons/recent_large.png</normaloff>:/icons/recent_large.png</iconset>
+     </property>
+     <addaction name="actionDummy"/>
+    </widget>
     <addaction name="action_new"/>
     <addaction name="action_open"/>
     <addaction name="action_save"/>
     <addaction name="action_save_as"/>
+    <addaction name="separator"/>
+    <addaction name="menu_recent_files"/>
     <addaction name="separator"/>
     <addaction name="action_quit"/>
    </widget>
@@ -930,6 +942,11 @@ Tip 2: You can execute Python commands using the field above. For more informati
    </property>
    <property name="text">
     <string>Preferences</string>
+   </property>
+  </action>
+  <action name="actionDummy">
+   <property name="text">
+    <string>Dummy</string>
    </property>
   </action>
  </widget>

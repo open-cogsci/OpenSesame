@@ -143,7 +143,32 @@ class plugin_action(QtGui.QAction):
 		to the experiment
 		"""
 	
-		self.main_window.drag_item(self.plugin)			
+		self.main_window.drag_item(self.plugin)
+		
+class recent_action(QtGui.QAction):
+
+	"""
+	Menu entry for recent files
+	"""
+	
+	def __init__(self, path, main_window, menu):
+	
+		"""
+		Constructor
+		"""
+		
+		QtGui.QAction.__init__(self, os.path.basename(path), menu)
+		self.main_window = main_window
+		self.triggered.connect(self.open_file)
+		self.path = path
+		
+	def open_file(self, dummy = None):
+	
+		"""
+		Open the file
+		"""
+		
+		self.main_window.open_file(path = self.path)
 								
 class qtopensesame(QtGui.QMainWindow):
 
@@ -278,13 +303,14 @@ class qtopensesame(QtGui.QMainWindow):
 		self.refresh()
 
 		# Build the items toolbar		
-		self.ui.toolbar_items.build()
+		self.ui.toolbar_items.build()		
 					
 		self.ui.edit_stdout.setPlainText("You can print to this debug window using the Python 'print [msg]' statement in inline_script items or the interpreter field above.\n")						
 		self.set_status("Welcome to OpenSesame %s" % self.version)			
 		self.restore_state()		
 		self.set_unsaved(False)				
 		self.start_autosave_timer()	
+		self.update_recent_files()		
 				
 		# Parse the command line options			
 		parser = optparse.OptionParser("usage: opensesame [experiment] [options]", version = "%s '%s'" % (self.version, self.codename))
@@ -334,6 +360,12 @@ class qtopensesame(QtGui.QMainWindow):
 		self.opensesamerun = settings.value("opensesamerun", False).toBool()
 		self.experiment.auto_response = settings.value("auto_response", False).toBool()
 		
+		# Unpack the string with recent files and only remember those that still exist
+		self.recent_files = []
+		for path in str(settings.value("recent_files", "").toString()).split(";;"):
+			if os.path.exists(path):
+				self.recent_files.append(path)		
+		
 		self.ui.action_enable_auto_response.setChecked(self.experiment.auto_response)
 
 		if settings.value("toolbar_text", False).toBool():
@@ -367,6 +399,7 @@ class qtopensesame(QtGui.QMainWindow):
 		
 		settings.setValue("auto_response", self.experiment.auto_response)
 		settings.setValue("toolbar_text", self.ui.toolbar_main.toolButtonStyle() == QtCore.Qt.ToolButtonTextUnderIcon)
+		settings.setValue("recent_files", ";;".join(self.recent_files))
 		
 		settings.endGroup()
 		
@@ -838,6 +871,32 @@ class qtopensesame(QtGui.QMainWindow):
 			self.save_unsaved_changes()					
 			self.save_state()
 			e.accept()			
+			
+	def update_recent_files(self):
+	
+		"""
+		Recreate the list with recent documents
+		"""
+				
+		# Add the current path to the front of the list
+		if self.current_path != None and os.path.exists(self.current_path):		
+			if self.current_path in self.recent_files:		
+				self.recent_files.remove(self.current_path)
+			self.recent_files.insert(0, self.current_path)			
+			
+		# Trim the list
+		self.recent_files = self.recent_files[:5]
+			
+		# Build the menu
+		self.ui.menu_recent_files.clear()			
+		if len(self.recent_files) == 0:
+			a = QtGui.QAction("(No recent files)", self.ui.menu_recent_files)
+			a.setDisabled(True)
+			self.ui.menu_recent_files.addAction(a)		
+		else:
+			for path in self.recent_files:
+				self.ui.menu_recent_files.addAction(recent_action(path, self, self.ui.menu_recent_files))
+					
 		
 	def new_file(self):
 	
@@ -861,11 +920,13 @@ class qtopensesame(QtGui.QMainWindow):
 		
 		self.set_status("Started a new experiment")
 		
-	def open_file(self, path = None):
+	def open_file(self, dummy = None, path = None):
 	
 		"""
 		Open a file
 		"""		
+		
+		self.save_unsaved_changes()
 		
 		if path == None:
 			path, file_type = QtGui.QFileDialog.getOpenFileNameAndFilter(self.ui.centralwidget, "Open file", QtCore.QString(), self.file_type_filter)
@@ -892,9 +953,10 @@ class qtopensesame(QtGui.QMainWindow):
 		self.set_status("Opened %s" % self.current_path)					
 		self.set_unsaved(False)		
 		
+		self.update_recent_files()		
 		self.default_logfile_folder = os.path.dirname(self.current_path)
 				
-	def save_file(self, dummy = 0, overwrite = True):
+	def save_file(self, dummy = None, overwrite = True):
 	
 		"""
 		Save a file
@@ -940,6 +1002,7 @@ class qtopensesame(QtGui.QMainWindow):
 		else:
 			self.current_path = resp
 			
+		self.update_recent_files()			
 		self.set_unsaved(False)				
 		self.window_message(self.current_path)
 				
