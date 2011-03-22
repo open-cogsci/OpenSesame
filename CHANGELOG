@@ -21,6 +21,9 @@
 - Added preferences tab and removed some of the options from the menu
 - Fixed a bug where changes to the "Run if" statement weren't automatically applied
 - Added splash screen
+- Added video files as known file types to the file pool
+- Added recent files dialog
+- Added editor to the qtplugins automatic controls
 
 0.22 "Axiomatic Axelrod"
 - Added search capabilities to inline_editor and a notification of unapplied changes

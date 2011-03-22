@@ -16,7 +16,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from PyQt4 import QtCore, QtGui
-from libqtopensesame import qtitem, inline_editor
+from libqtopensesame import qtitem, inline_editor, syntax_highlighter
 import os.path
 
 class qtplugin(qtitem.qtitem):
@@ -89,7 +89,7 @@ class qtplugin(qtitem.qtitem):
 		for var, editor in self.auto_editor.iteritems():
 			if self.has(var):
 				try:
-					editor.edit.setPlainText(self.get(var))
+					editor.edit.setPlainText(str(self.get(var)))
 				except Exception as e:
 					self.experiment.notify("Failed to set control '%s': %s" % (var, e))
 				
@@ -267,7 +267,7 @@ class qtplugin(qtitem.qtitem):
 				
 		self.add_control(label, widget, tooltip, default)		
 		
-	def add_editor_control(self, var, label, tooltip = None, default = None):
+	def add_editor_control(self, var, label, syntax = False, tooltip = None, default = None):
 	
 		"""
 		Adds a texteditor
@@ -277,6 +277,8 @@ class qtplugin(qtitem.qtitem):
 	
 		editor = inline_editor.inline_editor(self.experiment)
 		editor.apply.clicked.connect(self.apply_edit_changes)
+		if syntax:
+			syntax_highlighter.syntax_highlighter(editor.edit.document(), syntax_highlighter.python_keywords)
 		
 		if var != None:
 			self.auto_editor[var] = editor
@@ -313,4 +315,18 @@ class qtplugin(qtitem.qtitem):
 		
 		return widget
 		
+	def get_ready(self):
+	
+		"""
+		Apply pending script changes
+		"""
+		
+		for var, editor in self.auto_editor.iteritems():
+			if editor.isModified():
+				if self.experiment.debug:
+					print "qtplugin.finalize(): applying pending Python script changes"
+				self.apply_edit_changes()
+				return True
+			
+		return qtitem.qtitem.get_ready(self)		
 		

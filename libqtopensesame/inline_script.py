@@ -40,23 +40,16 @@ class inline_script(libopensesame.inline_script.inline_script, libqtopensesame.q
 	def apply_edit_changes(self, dummy = None, dummy2 = None, catch = True):
 	
 		"""
-		Read the logvar table
+		Apply changes to the script items
 		"""	
 				
 		libqtopensesame.qtitem.qtitem.apply_edit_changes(self, False)
 		
 		sp = str(self.textedit_prepare.edit.toPlainText())
 		sr = str(self.textedit_run.edit.toPlainText())				
-		
-		if "\"\"\"" in sp + sr:
-			if catch:
-				self.experiment.notify("You're not allowed to use the \"\"\" way to define strings. This confuses OpenSesame :$ Sorry!")
-				return		
-			else:
-				raise libopensesame.exceptions.script_error("You're not allowed to use the \"\"\" way to define strings. This confuses OpenSesame :$ Sorry!")
-				
-		self._prepare = sp
-		self._run = sr
+						
+		self.set("_prepare", sp)
+		self.set("_run", sr)
 		self.lock = True
 		self._var_info = None		
 		self.experiment.main_window.refresh(self.name)		
@@ -64,15 +57,7 @@ class inline_script(libopensesame.inline_script.inline_script, libqtopensesame.q
 		
 		self.textedit_prepare.setModified(False)
 		self.textedit_run.setModified(False)
-		
-	def strip_script_line(self, s):
-	
-		"""
-		Strips the unwanted characters from the script line
-		"""
-		
-		return s + "\n"				
-				
+						
 	def init_edit_widget(self):
 	
 		"""
@@ -136,10 +121,8 @@ class inline_script(libopensesame.inline_script.inline_script, libqtopensesame.q
 		libqtopensesame.qtitem.qtitem.edit_widget(self, False)				
 		
 		if not self.lock:
-			self.textedit_prepare.edit.clear()
-			self.textedit_prepare.edit.insertPlainText(self._prepare)
-			self.textedit_run.edit.clear()
-			self.textedit_run.edit.insertPlainText(self._run)								
+			self.textedit_prepare.edit.setPlainText(str(self._prepare))
+			self.textedit_run.edit.setPlainText(str(self._run))	
 								
 		return self._edit_widget		
 		

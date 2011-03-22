@@ -31,6 +31,7 @@ import pyffmpeg
 import pygame
 from pygame.locals import *
 import pyaudio
+import os.path
 
 class media_player(item.item):
 	
@@ -42,7 +43,7 @@ class media_player(item.item):
 		"""
 
 		# The version of the plug-in
-		self.version = 0.10
+		self.version = 0.11
 		
 		self.mp = pyffmpeg.FFMpegReader(0,False)
 		self.videoTrack = None
@@ -61,6 +62,7 @@ class media_player(item.item):
 		self.audioCorrection = 150000
 		self.video_src = ""
 		self.sendInfoToEyelink = "yes"
+		self.event_handler = ""
 
 		# The parent handles the rest of the construction
 		item.item.__init__(self, name, experiment, string)
@@ -73,12 +75,17 @@ class media_player(item.item):
 				
 		# Pass the word on to the parent
 		item.item.prepare(self)
+		
+		# Strip white spaces from the event handler, to make sure that it's empty when playing
+		self.event_handler = self.event_handler.strip()
 
 		# Find the full path to the video file. This will point to some
 		# temporary folder where the file pool has been placed
 		path = self.experiment.get_file(self.video_src)
 
 		# Open the video file
+		if not os.path.exists(path) or self.video_src.strip() == "":
+			raise exceptions.runtime_error("Video file '%s' was not found in video_player '%s' (or no video file was specified)." % (os.path.basename(path), self.name))
 		self.load(path)
 
 		# Report success
@@ -178,9 +185,31 @@ class media_player(item.item):
 		"""
 		Continues playback
 		"""
-		self.paused = False       
+		self.paused = False
+
+	def handleEvent(self, event):
+		"""
+		Allow the user to insert custom code
+		"""
+		video = self.videoTrack
+		audio = self.audioTrack
+		frame_no = self.videoTrack.get_current_frame_frameno()
+
+		continue_playback = True
+                
+		try:
+			exec(self.event_handler)
+		except Exception as e:
+			raise exceptions.runtime_error("Error while executing event handling code: %s" % e)
+		
+		if type(continue_playback) != bool:
+			continue_playback = False
+		
+		return continue_playback
+                
+
 	
-	def run(self, eventHandler=None):
+	def run(self):
 		"""
 		Starts the playback of the video file. You can specify an optional callable object to handle events between frames (like keypresses)
 		This function needs to return a boolean, because it determines if playback is continued or stopped. If no callable object is provided
@@ -192,45 +221,56 @@ class media_player(item.item):
 			print "media_player.run(): Audio delay: %d" % (300000-self.audioCorrection)
 		
 		if self.file_loaded:
-			self.videoTrack.seek_to_frame(1)    #To prevent reading before the first frame which happens occasionally with some files
+			try:
+				self.videoTrack.seek_to_frame(1)    #To prevent reading before the first frame which happens occasionally with some files
+			except IOError:
+				try:
+					self.videoTrack.seek_to_frame(10)
+				except IOError:
+					raise exceptions.runtime_error("Could not read the first frames of the video file")
+				     
 			self.playing = True
 			startTime = pygame.time.get_ticks()			
 			while self.playing:
 				self.frame_calc_start = pygame.time.get_ticks()
-				try:
-					if self.paused == False:
-						self.mp.step()  # Retrieve the audio and video frame and handle them                  
-				except IOError as e:
-					self.playing = False
-					if self.experiment.debug:
-						print "media_player.run(): an IOError was caught: %s" % e
-					#raise exceptions.runtime_error("Error playing back video file")
-				else:
-					if callable(eventHandler):
-						result = eventHandler()
-						if type(result) == bool:
-							self.playing = result
-						else:
-							raise exceptions.runtime_error("Invalid return type of specified event handler: must be bool")
-							self.playing = False
-					else:                 
-						e = pygame.event.poll()
-						if e.type== pygame.KEYDOWN and self.duration == "keypress":
-							self.playing = False
-						if self.sendInfoToEyelink == "yes" and hasattr(self.experiment,"eyelink") and self.experiment.eyelink.connected():
-							frame_no = self.videoTrack.get_current_frame_frameno()
-							self.experiment.eyelink.log("MSG videoframe %s" % frame_no)
-							self.experiment.eyelink.status_msg("videoframe %s" % frame_no )
+				
+				# Advance to the next frame if the player isn't paused
+				if not self.paused:				
+					try:
+						self.mp.step()
+					except IOError as e:
+						self.playing = False
+						if self.experiment.debug:
+							print "media_player.run(): an IOError was caught: %s" % e
+							
+					if self.sendInfoToEyelink == "yes" and hasattr(self.experiment,"eyelink") and self.experiment.eyelink.connected():
+						frame_no = self.videoTrack.get_current_frame_frameno()
+						self.experiment.eyelink.log("MSG videoframe %s" % frame_no)
+						self.experiment.eyelink.status_msg("videoframe %s" % frame_no )
 							
 					#Sleep for remainder of a frame duration that's left after all the processing time. This is only necessary when there is no sound stream
 					sleeptime = int(self.frameTime - pygame.time.get_ticks() + self.frame_calc_start)
 					if sleeptime > 0:
 						pygame.time.wait(sleeptime)                
+
 					# Check if max duration has been set, and exit if exceeded
 					if type(self.duration) == int:
 						if pygame.time.get_ticks() - startTime > (self.duration*1000):
+							self.playing = False							
+				
+				# Process all events
+				for event in pygame.event.get():		
+					if event.type == pygame.KEYDOWN or event.type == pygame.MOUSEBUTTONDOWN:												
+						if self.event_handler != "":
+							self.playing = self.handleEvent(event)
+						elif event.type == pygame.KEYDOWN and self.duration == "keypress":
 							self.playing = False
-						
+						elif event.type == pygame.MOUSEBUTTONDOWN and self.duration == "mouseclick":
+							self.playing = False
+							
+						# Catch escape presses
+						if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:							
+							raise exceptions.runtime_error("The escape key was pressed")									
 							
 			# Clean up on aisle 4!
 			if self.hasSound:
@@ -279,7 +319,6 @@ class qtmedia_player(media_player, qtplugin.qtplugin):
 		# a number of functions which directly create controls, which are automatically
 		# applied etc. A list of functions can be found here:
 		# http://files.cogsci.nl/software/opensesame/doc/libqtopensesame/libqtopensesame.qtplugin.html
-		self.add_text("<small><b>Media Player OpenSesame Plugin v%.2f, Copyright (2011) Daniel Schreij</b></small>" % self.version)
 		self.add_filepool_control("video_src", "Video file", self.browse_video, default = "", tooltip = "A video file")						
 		self.add_combobox_control("fullscreen", "Resize to fit screen", ["yes", "no"], tooltip = "Resize the video to fit the full screen")
 		self.add_combobox_control("playaudio", "Play audio", ["yes", "no"], tooltip = "Specifies if the video has to be played with audio, or in silence")
@@ -288,11 +327,9 @@ class qtmedia_player(media_player, qtplugin.qtplugin):
 		else:
 			self.add_spinbox_control("audioCorrection", "Audio delay", 0, 300000, tooltip = "Specify audio delay relative to video")
 		self.add_combobox_control("sendInfoToEyelink", "Send frame no. to EyeLink", ["yes", "no"], tooltip = "If an eyelink is connected, then it will receive the number of each displayed frame as a msg event.\r\nYou can also see this information in the eyelink's status message box.\r\nThis option requires the installation of the OpenSesame EyeLink plugin and an established connection to the EyeLink.")       		
-		self.add_line_edit_control("duration", "Duration", tooltip = "Expecting a value in seconds, 'keypress' or 'mouseclick'")				
-
-		# Add a stretch to the edit_vbox, so that the controls do not
-		# stretch to the bottom of the window.
-		self.edit_vbox.addStretch()		
+		self.add_line_edit_control("duration", "Duration", tooltip = "Expecting a value in seconds, 'keypress' or 'mouseclick'")
+		self.add_editor_control("event_handler", "Custom Python code for handling keypress and mouseclick events (See Help for more information)", syntax = True, tooltip = "Specify how you would like to handle events like mouse clicks or keypresses. When set, this overrides the Duration attribute")
+		self.add_text("<small><b>Media Player OpenSesame Plugin v%.2f, Copyright (2011) Daniel Schreij</b></small>" % self.version)
 		
 		# Unlock
 		self.lock = True
@@ -320,7 +357,7 @@ class qtmedia_player(media_player, qtplugin.qtplugin):
 		
 		# Abort if the parent reports failure of if the controls are locked
 		if not qtplugin.qtplugin.apply_edit_changes(self, False) or self.lock:
-				return False
+			return False
 						
 		# Refresh the main window, so that changes become visible everywhere
 		self.experiment.main_window.refresh(self.name)		

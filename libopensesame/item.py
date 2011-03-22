@@ -120,7 +120,7 @@ class item(openexp.trial.trial):
 		"""
 		
 		# Multiline variables are stored as a block
-		if type(self.variables[var]) == str and "\n" in self.variables[var]:
+		if type(self.variables[var]) == str and ("\n" in self.variables[var] or "\"" in self.variables[var]):
 			s = "__%s__\n" % var
 			for l in self.variables[var].split("\n"):
 				s += "\t%s\n" % l
@@ -138,7 +138,7 @@ class item(openexp.trial.trial):
 		"""
 		Reads variables from the string
 		"""
-		
+				
 		textblock_var = None
 		self.variables = {}
 		for line in string.split("\n"):
@@ -157,10 +157,18 @@ class item(openexp.trial.trial):
 					textblock_val = ""
 				else:
 					textblock_var = None
+					
+				# We cannot just strip the multiline code, because that may mess
+				# up indentation. So we have to detect if the string is indented
+				# based on the opening __varname__ line.
+				strip_tab = line[0] == "\t"
 				
 			# Collect the contents of a textblock
 			elif textblock_var != None:
-				textblock_val += line[1:] + "\n"
+				if strip_tab:
+					textblock_val += line[1:] + "\n"
+				else:
+					textblock_val += line + "\n"
 				
 			# Parse regular variables
 			else:
@@ -180,6 +188,7 @@ class item(openexp.trial.trial):
 			s += "\t# %s\n" % comment.strip()
 		for var in self.variables:
 			s += "\t" + self.variable_to_string(var)
+						
 		return s
 				
 	def set(self, var, val):
@@ -194,7 +203,7 @@ class item(openexp.trial.trial):
 		elif type(val) == int:
 			exec("self.%s = %d" % (var, val))
 		else:
-			exec("self.%s = \"\"\"%s\"\"\"" % (var, val))
+			exec("self.%s = \"\"\"%s\"\"\"" % (var, val.replace("\"", "\\\"")))
 		
 		self.variables[var] = val			
 		

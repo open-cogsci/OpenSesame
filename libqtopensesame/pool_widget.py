@@ -35,6 +35,7 @@ class pool_widget(QtGui.QWidget):
 			"sound" : (".ogg", ".wav"), \
 			"text" : (".txt", ".csv", ".tsv"), \
 			"python" : (".py", ".pyc"), \
+			"video" : (".avi", ".mpg", ".wmv", ".mpeg", ".mov", ".ogv"), \
 			}
 		
 		self.main_window = main_window

@@ -348,7 +348,9 @@ class qtitem(object):
 		Strips the unwanted characters from the script line
 		"""
 		
-		return s.strip() + "\n"		
+		if len(s) > 0 and s[0] == "\t":
+			return s[1:] + "\n"
+		return s + "\n"
 		
 	def init_script_widget(self):
 	
@@ -360,7 +362,7 @@ class qtitem(object):
 		libqtopensesame.syntax_highlighter.syntax_highlighter(self.edit_script.edit.document(), libqtopensesame.syntax_highlighter.opensesame_keywords)
 
 		script = ""		
-		for s in self.to_string().split("\n")[1:]:
+		for s in self.to_string().split("\n")[1:]:			
 			script += self.strip_script_line(s)
 			
 		self.edit_script.edit.setPlainText(script)

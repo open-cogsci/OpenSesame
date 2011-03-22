@@ -182,10 +182,12 @@ class experiment(item.item, openexp.experiment.experiment):
 				{"item_type" : item_type, "item_name" : item_name, "string" : string}		
 			
 			if self.debug:
-				self.items[item_name] = eval(cmd)
+				bytecode = compile(cmd, "<string>", "eval")
+				self.items[item_name] = eval(bytecode)
 			else:			
 				try:
-					self.items[item_name] = eval(cmd)
+					bytecode = compile(cmd, "<string>", "eval")
+					self.items[item_name] = eval(bytecode)
 				except Exception as e:
 					raise exceptions.script_error("Failed to instantiate module '%s' as '%s': %s" % (item_type, item_name, e))
 			

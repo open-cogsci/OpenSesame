@@ -61,12 +61,21 @@ class inline_script(item.item):
 		Execute the prepare script
 		"""	
 		
-		item.item.prepare(self)		
+		item.item.prepare(self)
 		
 		try:
-			exec(self._prepare)
+			self.cprepare = compile(self._prepare, "<string>", "exec")
 		except Exception as e:
+			raise exceptions.inline_error(self.name, "prepare", e)
 			
+		try:
+			self.crun = compile(self._run, "<string>", "exec")
+		except Exception as e:
+			raise exceptions.inline_error(self.name, "run", e)			
+		
+		try:
+			exec(self.cprepare)
+		except Exception as e:			
 			raise exceptions.inline_error(self.name, "prepare", e)
 				
 		return True
@@ -77,7 +86,7 @@ class inline_script(item.item):
 		Execute the run script
 		"""		
 		try:
-			exec(self._run)
+			exec(self.crun)
 		except Exception as e:		
 			raise exceptions.inline_error(self.name, "run", e)
 		
