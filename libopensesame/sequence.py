@@ -41,8 +41,8 @@ class sequence(item.item):
 		# Flush the responses to catch escape presses
 		openexp.response.flush()
 		
-		for item, cond in self.items:		
-			if self.match(cond):	
+		for item, cond in self._items:		
+			if eval(cond):	
 				self.experiment.items[item].run()
 		return True							
 		
@@ -80,13 +80,16 @@ class sequence(item.item):
 		"""
 		
 		item.item.prepare(self)
-	
+		
+		self._items = []
 		for _item, cond in self.items:
 			if _item not in self.experiment.items:			
 				raise exceptions.runtime_error("Could not find item '%s', which is called by loop item '%s'" % (_item, self.name))
 			if not self.experiment.items[_item].prepare():			
 				raise exceptions.runtime_error("Failed to prepare item '%s', which is called by sequence item '%s'" % (_item, self.name))
 				
+			self._items.append( (_item, self.compile_cond(cond)) )
+															
 		return True
 			
 	def to_string(self):

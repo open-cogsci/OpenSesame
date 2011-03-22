@@ -24,6 +24,7 @@
 - Added video files as known file types to the file pool
 - Added recent files dialog
 - Added editor to the qtplugins automatic controls
+- Byte-compile all inline_scripts, conditional statements, etc.
 
 0.22 "Axiomatic Axelrod"
 - Added search capabilities to inline_editor and a notification of unapplied changes

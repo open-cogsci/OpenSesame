@@ -109,7 +109,9 @@ class pool_widget(QtGui.QWidget):
 						shutil.copyfile(path, os.path.join(self.main_window.experiment.pool_folder, basename))				
 				else:
 					shutil.copyfile(path, os.path.join(self.main_window.experiment.pool_folder, basename))		
-		self.refresh()	
+					
+		self.refresh()		
+		self.select(basename)
 
 	def select_and_add(self, dummy = None):
 	
@@ -118,6 +120,15 @@ class pool_widget(QtGui.QWidget):
 		"""
 		
 		self.add(QtGui.QFileDialog.getOpenFileNames(self.main_window.ui.centralwidget, "Add files to pool"))
+		
+	def select(self, fname):
+	
+		"""
+		Select a specific file in the file pool
+		"""
+
+		for i in range(self.ui.list_pool.count()):
+			self.ui.list_pool.setCurrentItem(self.ui.list_pool.item(i))
 		
 	def file_type(self, fname):
 	

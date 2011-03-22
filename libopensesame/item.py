@@ -124,8 +124,13 @@ class item(openexp.trial.trial):
 			s = "__%s__\n" % var
 			for l in self.variables[var].split("\n"):
 				s += "\t%s\n" % l
-			if s[-1] != "\n":
-				s += "\n"
+				
+			while s[-1] in ("\t", "\n"):
+				s = s[:-1]
+			s += "\n"
+				
+			#if s[-1] != "\n":
+			#	s += "\n"
 			s += "\t__end__\n"
 			return s
 		
@@ -428,8 +433,45 @@ class item(openexp.trial.trial):
 			except:
 				raise exceptions.runtime_error("Failed to evaluate '%s' in item '%s'<br /><br />Make sure that the expression is correctly formatted and that the use of whitespace is correct (e.g., '[dummy] = 1' is correct, '[dummy]=1' is not)" % (s, self.name))
 	
-		return True				
+		return True	
 		
+	def compile_cond(self, cond):
+
+		"""
+		Create byte compiled code for a given conditional statement
+		"""
+			
+		l = []
+		i = 0
+		for word in shlex.split(cond):
+	
+			# Replace the variables
+			if len(word) > 2 and word[0] == "[" and word[-1] == "]":
+				l.append("str(self.get(\"%s\"))" % word[1:-1])
+			elif word == "=":
+				l.append("==")
+			elif word.lower() == "always":
+				l.append("True")
+			elif word.lower() in ("and", "or", "is", "not", "true", "false", "!=", "==", "=", "<", ">", ">=", "<=", "+", "-", "(", ")", "/", "*", "%", "~", "**", "^"):
+				l.append(word.capitalize())
+			else:
+				# For backwards compatibility, the first word is interpreted as a variable name
+				if i == 0:
+					l.append("str(self.get(\"%s\"))" % word)
+				else:
+					l.append("\"%s\"" % word)
+				
+			i += 1
+	
+		code = " ".join(l)
+		if self.experiment.debug and code != "True":
+			print "item.compile_cond(): '%s' => '%s'" % (cond, code)
+		try:
+			bytecode = compile(code, "<sequence conditional statement", "eval")
+		except:
+			raise exceptions.runtime_error("'%s' is not a valid conditional statement in sequence item '%s'" % (cond, self.name))
+		return bytecode		
+				
 	def var_info(self):
 	
 		"""

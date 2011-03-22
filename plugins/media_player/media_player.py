@@ -76,8 +76,11 @@ class media_player(item.item):
 		# Pass the word on to the parent
 		item.item.prepare(self)
 		
-		# Strip white spaces from the event handler, to make sure that it's empty when playing
-		self.event_handler = self.event_handler.strip()
+		# Byte-compile the event handling code (if any)
+		if self.event_handler.strip() != "":
+			self._event_handler = compile(self.event_handler, "<string>", "exec")
+		else:
+			self._event_handler = None
 
 		# Find the full path to the video file. This will point to some
 		# temporary folder where the file pool has been placed
@@ -198,7 +201,7 @@ class media_player(item.item):
 		continue_playback = True
                 
 		try:
-			exec(self.event_handler)
+			exec(self._event_handler)
 		except Exception as e:
 			raise exceptions.runtime_error("Error while executing event handling code: %s" % e)
 		
@@ -261,7 +264,7 @@ class media_player(item.item):
 				# Process all events
 				for event in pygame.event.get():		
 					if event.type == pygame.KEYDOWN or event.type == pygame.MOUSEBUTTONDOWN:												
-						if self.event_handler != "":
+						if self._event_handler != None:
 							self.playing = self.handleEvent(event)
 						elif event.type == pygame.KEYDOWN and self.duration == "keypress":
 							self.playing = False
