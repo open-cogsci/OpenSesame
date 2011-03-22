@@ -55,7 +55,8 @@ if os.name == "nt":
 		keyboard_response,\
 		mouse_response,\
 		inline_script,\
-		sampler
+		sampler,\
+		synth
 		
 	try:
 		import pyffmpeg
@@ -66,6 +67,11 @@ if os.name == "nt":
 		import pyaudio
 	except:
 		print "includes: failed to import 'pyaudio'. You will not be able to use the media_player plug-in."		
+		
+	try:
+		import cv
+	except:
+		print "includes: failed to import 'cv' (opencv)."
 		
 	try:
 		import serial

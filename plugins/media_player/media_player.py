@@ -129,7 +129,7 @@ class media_player(item.item):
 			try:
 				del TS_VIDEO_RGB24['audio1']
 				self.mp.open(vfile)
-			except IOError:
+			except Exception:
 				raise exceptions.runtime_error("Error opening video file. Please make sure a video file is specified and that it is of a supported format")              
 			else:
 				self.videoTrack = self.mp.get_tracks()[0]

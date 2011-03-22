@@ -131,7 +131,7 @@ class pool_widget(QtGui.QWidget):
 		for i in range(self.ui.list_pool.count()):
 			item = self.ui.list_pool.item(i)
 			if str(item.text()) == fname:
-				self.ui.list_pool.setCurrentItem()
+				self.ui.list_pool.setCurrentItem(item)
 		
 	def file_type(self, fname):
 	
