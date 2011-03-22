@@ -39,7 +39,7 @@ class notepad(item.item):
 		self.item_type = "notepad"
 		
 		# Provide a short accurate description of the items functionality
-		self.description = "A simple notepad, to document your experiment. This plug-in does nothing."
+		self.description = "A simple notepad to document your experiment. This plug-in does nothing."
 				
 		# The parent handles the rest of the contruction
 		item.item.__init__(self, name, experiment, string)					
