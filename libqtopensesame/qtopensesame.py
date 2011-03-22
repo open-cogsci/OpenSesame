@@ -450,6 +450,7 @@ class qtopensesame(QtGui.QMainWindow):
 		
 		if not self.unsaved_changes:
 			self.set_status("No unsaved changes, skipping backup")
+			autosave_path = ""			
 		else:
 			
 			_current_path = self.current_path
