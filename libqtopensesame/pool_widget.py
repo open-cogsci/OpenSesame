@@ -94,7 +94,8 @@ class pool_widget(QtGui.QWidget):
 		"""
 		Add a list of files
 		"""
-		
+
+		basename = ""
 		for path in files:
 			path = str(path)
 			basename = os.path.basename(path)
@@ -128,7 +129,9 @@ class pool_widget(QtGui.QWidget):
 		"""
 
 		for i in range(self.ui.list_pool.count()):
-			self.ui.list_pool.setCurrentItem(self.ui.list_pool.item(i))
+			item = self.ui.list_pool.item(i)
+			if str(item.text()) == fname:
+				self.ui.list_pool.setCurrentItem()
 		
 	def file_type(self, fname):
 	
