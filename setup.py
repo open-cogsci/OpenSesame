@@ -4,9 +4,10 @@ from distutils.core import setup
 import glob
 import os
 import os.path
+import libopensesame.misc
 
 # Not all plugins are included
-included_plugins = ["advanced_delay", "external_script", "fixation_dot", "text_display", "text_input"]
+included_plugins = ["advanced_delay", "external_script", "fixation_dot", "text_display", "text_input", "notepad"]
 
 def plugins():
 	"""
@@ -24,7 +25,7 @@ def plugins():
 
 setup(name="opensesame",
 
-	version = "0.23-pre1",
+	version = libopensesame.misc.version,
 	description = "A graphical experiment builder for the social sciences",
 	author = "Sebastiaan Mathot",
 	author_email = "s.mathot@cogsci.nl",

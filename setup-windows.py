@@ -45,7 +45,7 @@ for f in os.listdir("resources"):
 
 
 # Copy the plug-ins
-included_plugins = ["advanced_delay", "external_script", "fixation_dot", "text_display", "text_input"]
+included_plugins = ["advanced_delay", "external_script", "fixation_dot", "text_display", "text_input", "notepad"]
 for plugin in included_plugins:
 	shutil.copytree(os.path.join("plugins", plugin), os.path.join("dist", "plugins", plugin))
 
