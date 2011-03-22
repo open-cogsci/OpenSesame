@@ -343,7 +343,6 @@ class item(openexp.trial.trial):
 	
 		pass
 		
-
 	def eval_text(self, text, round_float = False):
 	
 		"""
@@ -383,89 +382,60 @@ class item(openexp.trial.trial):
 		
 		# Return the result
 		return self.auto_type(text)
-		
-	def match(self, s):
-	
-		"""
-		Evaluate conditional statements, e.g.,
-		[test] = 1 or [test] = 2
-		[response_time] > 512
-		"""
-		
-		if s == "always":
-			return True
-
-		l = s.split(" and ")
-		if len(l) > 1:
-			return self.match(l[0]) and self.match(l[1])
-		
-		l = l[0].split(" or ")
-		if len(l) > 1:
-			return self.match(l[0]) or self.match(l[1])
-		
-		l = l[0].split()
-	
-		if len(l) != 3:
-		
-			raise exceptions.runtime_error("Failed to evaluate '%s' in item '%s'<br /><br />Make sure that the expression is correctly formatted and that the use of whitespace is correct (e.g., '[dummy] = 1' is correct, '[dummy]=1' is not)" % (s, self.name))
-		
-		else:
-		
-			a = l[0]
-			# For backward compatibility, brackets around the first variable
-			# are not required
-			if a[0] == "[":
-				a = self.get(a[1:-1])
-			elif self.has(a):			
-				a = self.get(a)
-				
-			c = l[2]
-			if c[0] == "[":
-				c = self.get(c[1:-1])
-	
-			if l[1] == "=":
-				b = "=="
-			else:
-				b = l[1]
-		
-			try:		
-				return eval("\"%s\" %s \"%s\"" % (a, b, c))
-			except:
-				raise exceptions.runtime_error("Failed to evaluate '%s' in item '%s'<br /><br />Make sure that the expression is correctly formatted and that the use of whitespace is correct (e.g., '[dummy] = 1' is correct, '[dummy]=1' is not)" % (s, self.name))
-	
-		return True	
-		
-	def compile_cond(self, cond):
+			
+	def compile_cond(self, cond, bytecode = True):
 
 		"""
 		Create byte compiled code for a given conditional statement
 		"""
-			
+		
+		src = cond
+		
+		operators = "!=", "==", "=", "<", ">", ">=", "<=", "+", "-", "(", ")", "/", "*", "%", "~", "**", "^"
+		op_chars = "!", "=", "=", "<", ">", "+", "-", "(", ")", "/", "*", "%", "~", "*", "^"
+		whitespace = " ", "\t", "\n"
+		keywords = "and", "or", "is", "not", "true", "false"
+
+		# Try to fix missing spaces
+		redo = True
+		while redo:		
+			redo = False
+			for i in range(len(cond)):		
+				if cond[i] in op_chars:		
+					if i != 0 and cond[i-1] not in op_chars + whitespace:
+						cond = cond[:i] + " " + cond[i:]
+						redo = True
+						break				
+					if i < len(cond) - 1 and cond[i+1] not in op_chars + whitespace:
+						cond = cond[:i+1] + " " + cond[i+1:]
+						redo = True
+						break
+		
+		# Rebuild the conditional string
 		l = []
 		i = 0
 		for word in shlex.split(cond):
-	
-			# Replace the variables
 			if len(word) > 2 and word[0] == "[" and word[-1] == "]":
 				l.append("str(self.get(\"%s\"))" % word[1:-1])
 			elif word == "=":
 				l.append("==")
 			elif word.lower() == "always":
 				l.append("True")
-			elif word.lower() in ("and", "or", "is", "not", "true", "false", "!=", "==", "=", "<", ">", ">=", "<=", "+", "-", "(", ")", "/", "*", "%", "~", "**", "^"):
+			elif word.lower() in operators + keywords:
 				l.append(word.capitalize())
 			else:
 				# For backwards compatibility, the first word is interpreted as a variable name
 				if i == 0:
 					l.append("str(self.get(\"%s\"))" % word)
 				else:
-					l.append("\"%s\"" % word)
-				
+					l.append("\"%s\"" % word)				
 			i += 1
 	
 		code = " ".join(l)
 		if self.experiment.debug and code != "True":
-			print "item.compile_cond(): '%s' => '%s'" % (cond, code)
+			print "item.compile_cond(): '%s' => '%s'" % (src, code)			
+		if not bytecode:
+			return code			
 		try:
 			bytecode = compile(code, "<sequence conditional statement", "eval")
 		except:

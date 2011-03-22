@@ -96,7 +96,7 @@ class sketchpad(item.item):
 
 		for _item in self.items:
 		
-			if self.match(_item["show_if"]):
+			if eval(self.compile_cond(_item["show_if"])):
 		
 				# Replace all variables by the actual values. In text, floats should
 				# be rounded, but not in other variables
