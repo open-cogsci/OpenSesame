@@ -179,7 +179,7 @@ class experiment(item.item, openexp.experiment.experiment):
 				raise exceptions.script_error("Failed to import module '%s' as '%s'" % (item_type, item_name))
 		
 			cmd = "%(item_type)s.%(item_type)s(\"%(item_name)s\", self, \"\"\"%(string)s\"\"\")" % \
-				{"item_type" : item_type, "item_name" : item_name, "string" : string}		
+				{"item_type" : item_type, "item_name" : item_name, "string" : string.replace("\"", "\\\"")}		
 			
 			if self.debug:
 				bytecode = compile(cmd, "<string>", "eval")

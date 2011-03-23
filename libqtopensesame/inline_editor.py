@@ -217,6 +217,66 @@ class inline_editor(QFrame):
 	 
 			self.setExtraSelections([hi_selection])
 			
+		def indent(self):
+		
+			"""
+			Indent the text one level
+			"""
+	
+			c = self.textCursor()
+			p = c.position()	
+			c.beginEditBlock()									
+			
+			if c.hasSelection():			
+				# Prepend a tab and replace all add a new tab after every newline
+				s = "\t" + str(c.selection().toPlainText()).replace("\n", "\n\t")
+				c.insertText(s)
+				c.setPosition(c.position() - len(s))
+				c.setPosition(c.position() + len(s), QtGui.QTextCursor.KeepAnchor)
+				
+			else:			
+				# If there is no selection, simply insert a tab
+				self.insertPlainText("\t")				
+			
+			c.endEditBlock()								
+			self.setTextCursor(c)
+			self.setFocus()
+			self.editor.setModified(True)
+		
+		def unindent(self):
+	
+			"""
+			Unindent the text one level
+			"""
+	
+			c = self.textCursor()
+			p = c.position()
+			c.beginEditBlock()					
+			
+			if c.hasSelection():
+
+				# Remove the tabs at the beginning of each line and the tab leading the selection
+				s = str(c.selection().toPlainText()).replace("\n\t", "\n")			
+				if s[0] == "\t":
+					s = s[1:]
+				c.insertText(s)
+				c.setPosition(c.position() - len(s))
+				c.setPosition(c.position() + len(s), QtGui.QTextCursor.KeepAnchor)
+				
+			else:						
+				# Delete a tab if it leads the current line
+				block = c.block()
+				c.movePosition(QtGui.QTextCursor.StartOfLine)
+				s = str(c.block().text())
+				if len(s) > 0 and s[0] == "\t":
+					c.deleteChar()				
+				c.setPosition(p)					
+						
+			c.endEditBlock()						
+			self.setTextCursor(c)
+			self.setFocus()
+			self.editor.setModified(True)
+						
 		def keyPressEvent(self, e):
 		
 			"""
@@ -232,52 +292,33 @@ class inline_editor(QFrame):
 			if e.key() not in range(QtCore.Qt.Key_Home, QtCore.Qt.Key_Direction_R):		
 				self.editor.setModified(True)
 
-			# If there is no selection, don't do anything special
-			c = self.textCursor()					
-			p = c.position()	
-			
-			if c.selection().isEmpty():
+			c = self.textCursor()			
+			if not c.hasSelection():
 			
 				# Auto indent after a return
-				if e.key() == QtCore.Qt.Key_Return and c.block().length() > 0:
-					
+				if e.key() == QtCore.Qt.Key_Return and c.block().length() > 0:					
 					s = str(c.block().text())
 					n_tab = 0
 					self.insertPlainText("\n")
-
 					if s != "":
 						while s[0] == "\t":
 							s = s[1:]
-							self.insertPlainText("\t")										
-				
+							self.insertPlainText("\t")				
 					e.ignore()
+					self.setFocus()					
 					return
-		
-			else:
+															
+			# Selection indent/ unindent
+			if e.key() == QtCore.Qt.Key_Tab:											
+				if e.modifiers() == QtCore.Qt.MetaModifier:
+					self.unindent()
+				else:
+					self.indent()
+				e.ignore()
+				self.setFocus()
+				return
 			
-				# Selection indent/ unindent
-				if e.key() == QtCore.Qt.Key_Tab:
-			
-					c.beginEditBlock()								
-				
-					if e.modifiers() == QtCore.Qt.MetaModifier:
-						s = str(c.selection().toPlainText()).replace("\n\t", "\n")
-						if s[0] == "\t":
-							s = s[1:]
-					else:		
-						s = "\t" + str(c.selection().toPlainText()).replace("\n", "\n\t")
-					
-					# Replace the selection and select the new text
-					c.insertText(s)
-					c.setPosition(c.position() - len(s))
-					c.setPosition(c.position() + len(s), QtGui.QTextCursor.KeepAnchor)
-					c.endEditBlock()
-			
-					self.setTextCursor(c)				
-
-					e.ignore()					
-					return
-				
+			self.setFocus()	
 			QPlainTextEdit.keyPressEvent(self, e)
 									
 		def focusOutEvent(self, event):
@@ -374,6 +415,16 @@ class inline_editor(QFrame):
 		self.replace_button.setToolTip("Replace")
 		self.replace_button.clicked.connect(self.perform_replace)
 		
+		self.indent_button = QtGui.QPushButton(self.experiment.icon("indent"), "")
+		self.indent_button.setIconSize(QtCore.QSize(16, 16))
+		self.indent_button.setToolTip("Indent one level (tab)")
+		self.indent_button.clicked.connect(self.edit.indent)
+		
+		self.unindent_button = QtGui.QPushButton(self.experiment.icon("unindent"), "")
+		self.unindent_button.setIconSize(QtCore.QSize(16, 16))
+		self.unindent_button.setToolTip("Unindent one level (super + tab)")
+		self.unindent_button.clicked.connect(self.edit.unindent)		
+		
 		self.modified = self.experiment.label_image("unsaved_changes")
 		self.modified.setToolTip("Press Alt + A to apply unsaved changes")
 		self.modified.hide()
@@ -387,6 +438,8 @@ class inline_editor(QFrame):
 		search_hbox.addWidget(self.search)
 		search_hbox.addWidget(self.search_button)
 		search_hbox.addWidget(self.replace_button)
+		search_hbox.addWidget(self.indent_button)
+		search_hbox.addWidget(self.unindent_button)
 		search_hbox.addStretch()		
 		search_hbox.addWidget(self.modified)				
 		search_hbox.addWidget(self.apply)
@@ -408,7 +461,7 @@ class inline_editor(QFrame):
 	 
 		self.edit.blockCountChanged.connect(self.number_bar.adjustWidth)
 		self.edit.updateRequest.connect(self.number_bar.updateContents)
-		
+				
 	def perform_search(self):
 	
 		"""
