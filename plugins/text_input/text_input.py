@@ -15,14 +15,14 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
-from libopensesame import item, exceptions
+from libopensesame import item, exceptions, generic_response
 from libqtopensesame import qtplugin
 import openexp.canvas
 import openexp.response
 import os.path
 from PyQt4 import QtGui, QtCore
 
-class text_input(item.item):
+class text_input(item.item, generic_response.generic_response):
 
 	"""
 	This class (the class with the same name as the module)
@@ -78,7 +78,8 @@ class text_input(item.item):
 		question = self.eval_text(self.get("question"))
 		
 		resp = ""
-		response = ""	
+		response = ""
+		response_time = None	
 		while resp != "return":
 			
 			# Fill the canvas and put it to the screen
@@ -106,6 +107,9 @@ class text_input(item.item):
 			time, key = openexp.response.get_key()
 			resp = openexp.response.key_name(key)
 			mods = openexp.response.key_mods()
+			
+			if response_time == None:
+				response_time = time
 										
 			# Process the response
 			if resp == "backspace":
@@ -115,9 +119,24 @@ class text_input(item.item):
 				response += " "				
 			elif len(resp) == 1:
 				response += openexp.response.map_key(key, mods)
+						
+		# If no start response interval has been set, set it to the onset of
+		# the current response item
+		if self.experiment.start_response_interval == None:
+			self.experiment.start_response_interval = self.get("time_%s" % self.name)
+			
+		# Do some bookkeeping
+		self.experiment.response_time = response_time - self.experiment.start_response_interval		
+		self.experiment.total_response_time += self.experiment.response_time
+		self.experiment.total_responses += 1
+		self.experiment.response = response
 				
-		# Store the response
-		self.experiment.set("response", response)
+		if self.has("correct_response"):
+			correct_response = self.get("correct_response")
+		else:
+			correct_response = "undefined"
+			
+		self.process_response(correct_response)							
 						
 		# Report success
 		return True

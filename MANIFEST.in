@@ -12,5 +12,6 @@ recursive-include plugins/external_script *
 recursive-include plugins/fixation_dot *
 recursive-include plugins/text_display *
 recursive-include plugins/text_input *
+recursive-include plugins/notepad *
 recursive-exclude plugins *.pyc
 recursive-exclude plugins */resources/*
