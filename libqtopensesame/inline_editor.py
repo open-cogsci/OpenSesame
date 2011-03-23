@@ -300,23 +300,26 @@ class inline_editor(QFrame):
 					s = str(c.block().text())
 					n_tab = 0
 					self.insertPlainText("\n")
-					if s != "":
-						while s[0] == "\t":
+					if len(s) > 0:
+						while len(s) > 0 and s[0] == "\t":
 							s = s[1:]
 							self.insertPlainText("\t")				
 					e.ignore()
 					self.setFocus()					
-					return
-															
+					return																									
+																			
 			# Selection indent/ unindent
-			if e.key() == QtCore.Qt.Key_Tab:											
+			if e.key() == QtCore.Qt.Key_Tab:
 				if e.modifiers() == QtCore.Qt.MetaModifier:
 					self.unindent()
-				else:
+					e.ignore()
+					self.setFocus()
+					return					
+				elif c.hasSelection():
 					self.indent()
-				e.ignore()
-				self.setFocus()
-				return
+					e.ignore()
+					self.setFocus()
+					return
 			
 			self.setFocus()	
 			QPlainTextEdit.keyPressEvent(self, e)

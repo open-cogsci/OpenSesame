@@ -395,6 +395,7 @@ class item(openexp.trial.trial):
 		op_chars = "!", "=", "=", "<", ">", "+", "-", "(", ")", "/", "*", "%", "~", "*", "^"
 		whitespace = " ", "\t", "\n"
 		keywords = "and", "or", "is", "not", "true", "false"
+		capitalize = "true", "false", "none"
 
 		# Try to fix missing spaces
 		redo = True
@@ -422,7 +423,10 @@ class item(openexp.trial.trial):
 			elif word.lower() == "always":
 				l.append("True")
 			elif word.lower() in operators + keywords:
-				l.append(word.capitalize())
+				if word.lower() in capitalize:
+					l.append(word.capitalize())
+				else:
+					l.append(word.lower())
 			else:
 				# For backwards compatibility, the first word is interpreted as a variable name
 				if i == 0:
