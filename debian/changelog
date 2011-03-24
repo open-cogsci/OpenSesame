@@ -1,0 +1,5 @@
+opensesame (0.22+git9-g8633c14-1) unstable; urgency=low
+
+  * Initial release (Closes: #611640).
+
+ -- Michael Hanke <mih@debian.org>  Wed, 02 Mar 2011 16:33:10 -0500
