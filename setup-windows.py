@@ -43,9 +43,8 @@ for f in os.listdir("resources"):
 	if os.path.splitext(f)[1] in [".png", ".ttf", ".opensesame"] or f in ("README", "tips.txt"):
 		shutil.copyfile(os.path.join("resources", f), os.path.join("dist", "resources", f))
 
-
 # Copy the plug-ins
-included_plugins = ["advanced_delay", "external_script", "fixation_dot", "text_display", "text_input", "notepad"]
+included_plugins = ["advanced_delay", "external_script", "fixation_dot", "text_display", "text_input", "notepad", "media_player"]
 for plugin in included_plugins:
 	shutil.copytree(os.path.join("plugins", plugin), os.path.join("dist", "plugins", plugin))
 

@@ -76,4 +76,4 @@ if os.name == "nt":
 	try:
 		import serial
 	except:
-		print "includes: failed to import 'serial' modukle. You will not be able to use serial/ parallel port connectivity"
+		print "includes: failed to import 'serial' module. You will not be able to use serial/ parallel port connectivity"

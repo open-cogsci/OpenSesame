@@ -129,8 +129,8 @@ class media_player(item.item):
 			try:
 				del TS_VIDEO_RGB24['audio1']
 				self.mp.open(vfile)
-			except Exception:
-				raise exceptions.runtime_error("Error opening video file. Please make sure a video file is specified and that it is of a supported format")              
+			except Exception as e:
+				raise exceptions.runtime_error("Error opening video file. Please make sure a video file is specified and that it is of a supported format.<br><br>Error: %s" % e)
 			else:
 				self.videoTrack = self.mp.get_tracks()[0]
 				self.hasSound = False
@@ -388,12 +388,4 @@ class qtmedia_player(media_player, qtplugin.qtplugin):
 		
 		# Return the _edit_widget
 		return self._edit_widget
-
-	
-if __name__ == "__main__":
-	vfile = sys.argv[1]
-
-	player = media_player(vfile)
-	player.play()
-	pygame.quit()
 

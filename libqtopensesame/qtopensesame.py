@@ -463,7 +463,7 @@ class qtopensesame(QtGui.QMainWindow):
 				print "qtopensesame.autosave(): saving backup as %s" % self.current_path
 					
 			try:
-				self.save_file(False)
+				self.save_file(False, remember = False)
 				self.set_status("Backup saved as %s" % self.current_path)					
 			except:
 				self.set_status("Failed to save backup")
@@ -957,7 +957,7 @@ class qtopensesame(QtGui.QMainWindow):
 		self.update_recent_files()		
 		self.default_logfile_folder = os.path.dirname(self.current_path)
 				
-	def save_file(self, dummy = None, overwrite = True):
+	def save_file(self, dummy = None, overwrite = True, remember = True):
 	
 		"""
 		Save a file
@@ -1003,7 +1003,8 @@ class qtopensesame(QtGui.QMainWindow):
 		else:
 			self.current_path = resp
 			
-		self.update_recent_files()			
+		if remember:
+			self.update_recent_files()			
 		self.set_unsaved(False)				
 		self.window_message(self.current_path)
 				
