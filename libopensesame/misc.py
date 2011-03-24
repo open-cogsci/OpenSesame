@@ -27,7 +27,7 @@ import libqtopensesame
 import openexp.experiment
 from Tkinter import *
 
-version = "0.23-pre4"
+version = "0.23-pre5"
 codename = "Blue Beck"
 
 def change_working_dir():
