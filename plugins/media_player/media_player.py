@@ -235,7 +235,22 @@ class media_player(item.item):
 			self.playing = True
 			startTime = pygame.time.get_ticks()			
 			while self.playing:
+									
 				self.frame_calc_start = pygame.time.get_ticks()
+								
+				# Process all events
+				for event in pygame.event.get():		
+					if event.type == pygame.KEYDOWN or event.type == pygame.MOUSEBUTTONDOWN:												
+						if self._event_handler != None:
+							self.playing = self.handleEvent(event)
+						elif event.type == pygame.KEYDOWN and self.duration == "keypress":
+							self.playing = False
+						elif event.type == pygame.MOUSEBUTTONDOWN and self.duration == "mouseclick":
+							self.playing = False
+							
+						# Catch escape presses
+						if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:							
+							raise exceptions.runtime_error("The escape key was pressed")													
 				
 				# Advance to the next frame if the player isn't paused
 				if not self.paused:				
@@ -251,30 +266,16 @@ class media_player(item.item):
 						self.experiment.eyelink.log("MSG videoframe %s" % frame_no)
 						self.experiment.eyelink.status_msg("videoframe %s" % frame_no )
 							
-					#Sleep for remainder of a frame duration that's left after all the processing time. This is only necessary when there is no sound stream
-					sleeptime = int(self.frameTime - pygame.time.get_ticks() + self.frame_calc_start)
-					if sleeptime > 0:
-						pygame.time.wait(sleeptime)                
-
 					# Check if max duration has been set, and exit if exceeded
 					if type(self.duration) == int:
 						if pygame.time.get_ticks() - startTime > (self.duration*1000):
 							self.playing = False							
-				
-				# Process all events
-				for event in pygame.event.get():		
-					if event.type == pygame.KEYDOWN or event.type == pygame.MOUSEBUTTONDOWN:												
-						if self._event_handler != None:
-							self.playing = self.handleEvent(event)
-						elif event.type == pygame.KEYDOWN and self.duration == "keypress":
-							self.playing = False
-						elif event.type == pygame.MOUSEBUTTONDOWN and self.duration == "mouseclick":
-							self.playing = False
 							
-						# Catch escape presses
-						if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:							
-							raise exceptions.runtime_error("The escape key was pressed")									
-							
+					#Sleep for remainder of a frame duration that's left after all the processing time. This is only necessary when there is no sound stream
+					sleeptime = int(self.frameTime - pygame.time.get_ticks() + self.frame_calc_start)
+					if sleeptime > 0:
+						pygame.time.wait(sleeptime)                
+														
 			# Clean up on aisle 4!
 			if self.hasSound:
 				if hasattr(self,"audiostream"):                

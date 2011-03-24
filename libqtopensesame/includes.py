@@ -60,20 +60,34 @@ if os.name == "nt":
 		
 	try:
 		import pyffmpeg
+		import pyffmpeg_numpybindings
+		from audioqueue import AudioQueue, Queue_Empty, Queue_Full		
 	except:
-		print "includes: failed to import 'pyffmpeg'. You will not be able to use the media_player plug-in."
+		print "includes: failed to import 'pyffmpeg' <http://code.google.com/p/pyffmpeg/>. You will not be able to use the media_player plug-in."
+
+	try:
+		import PIL
+		import PIL.Image
+	except:
+		print "includes: failed to import 'PIL' <http://www.pythonware.com/products/pil/>. You will not be able the Python Imaging library."
 		
 	try:
 		import pyaudio
 	except:
-		print "includes: failed to import 'pyaudio'. You will not be able to use the media_player plug-in."		
+		print "includes: failed to import 'pyaudio' <http://people.csail.mit.edu/hubert/pyaudio/>. You will not be able to use portaudio and the media_player plug-in."	
+		
+	try:
+		import OpenGL
+	except:
+		print "includes: failed to import 'OpenGL' <http://pyopengl.sourceforge.net/>. You will not be able to use OpenGL."		
 		
 	try:
 		import cv
 	except:
-		print "includes: failed to import 'cv' (opencv)."
+		print "includes: failed to import 'cv' <http://opencv.willowgarage.com/wiki/>. You will not be able to use the Open Computer Vision libraries."
 		
 	try:
 		import serial
 	except:
-		print "includes: failed to import 'serial' module. You will not be able to use serial/ parallel port connectivity"
+		print "includes: failed to import 'serial' module <http://pyserial.sourceforge.net/>. You will not be able to use serial/ parallel port connectivity."
+
