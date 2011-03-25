@@ -59,7 +59,7 @@ class qtplugin(qtitem.qtitem):
 		for var, edit in self.auto_line_edit.iteritems():
 			if self.has(var):
 				try:
-					edit.setText(str(self.get(var)))
+					edit.setText(self.experiment.unsanitize(self.get(var)))
 				except Exception as e:
 					self.experiment.notify("Failed to set control '%s': %s" % (var, e))
 			else:
@@ -68,7 +68,7 @@ class qtplugin(qtitem.qtitem):
 		for var, combobox in self.auto_combobox.iteritems():
 			if self.has(var):
 				try:
-					 combobox.setCurrentIndex(combobox.findText(str(self.get(var))))
+					 combobox.setCurrentIndex(combobox.findText(self.experiment.unsanitize(self.get(var))))
 				except Exception as e:
 					self.experiment.notify("Failed to set control '%s': %s" % (var, e))
 				
@@ -89,7 +89,7 @@ class qtplugin(qtitem.qtitem):
 		for var, editor in self.auto_editor.iteritems():
 			if self.has(var):
 				try:
-					editor.edit.setPlainText(str(self.get(var)))
+					editor.edit.setPlainText(self.experiment.unsanitize(self.get(var)))
 				except Exception as e:
 					self.experiment.notify("Failed to set control '%s': %s" % (var, e))
 				
@@ -103,7 +103,7 @@ class qtplugin(qtitem.qtitem):
 			return False
 			
 		for var, edit in self.auto_line_edit.iteritems():
-			val = str(edit.text()).strip()
+			val = self.experiment.usanitize(edit.text()).strip()
 			if val != "":
 				self.set(var, val)
 			elif self.experiment.has(var) or edit.default == None:
@@ -112,7 +112,7 @@ class qtplugin(qtitem.qtitem):
 				self.set(var, edit.default)
 			
 		for var, combobox in self.auto_combobox.iteritems():
-			self.set(var, str(combobox.currentText()))
+			self.set(var, self.experiment.usanitize(combobox.currentText()))
 			
 		for var, spinbox in self.auto_spinbox.iteritems():
 			self.set(var, spinbox.value())
@@ -121,7 +121,7 @@ class qtplugin(qtitem.qtitem):
 			self.set(var, slider.value())
 			
 		for var, editor in self.auto_editor.iteritems():
-			self.set(var, str(editor.edit.toPlainText()))
+			self.set(var, self.experiment.usanitize(editor.edit.toPlainText()))
 			editor.setModified(False)
 
 		return True

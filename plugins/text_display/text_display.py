@@ -65,7 +65,7 @@ class text_display(item.item):
 		self.c.set_font(self.get("font_family"), self.get("font_size"))
 		
 		# Split the content by line separator <br />
-		content = self.eval_text(self.get("content")).split("<br />")
+		content = self.experiment.unsanitize(self.eval_text(self.get("content"))).split("<br />")
 		
 		if self.get("align") != "center":
 			max_width = 0
@@ -141,12 +141,9 @@ class qttext_display(text_display, qtplugin.qtplugin):
 		self.add_spinbox_control("font_size", "Font size", 1, 512, suffix = "pt", tooltip = "The font size")
 		self.add_combobox_control("align", "Text alignment", ["left", "center", "right"], tooltip = "Text alignment")		
 		
-		# Content editor
-		self.plaintext_content = QtGui.QPlainTextEdit()	
-		self.plaintext_content.setToolTip("The text to be displayed")		
-		self.edit_vbox.addWidget(self.plaintext_content)
-		self.edit_vbox.addWidget(self.apply_button())				
-		
+		# Content editor		
+		self.add_editor_control("content", "Text", tooltip = "The text to be displayed")
+				
 		self.lock = False		
 		
 	def apply_edit_changes(self):
@@ -158,9 +155,6 @@ class qttext_display(text_display, qtplugin.qtplugin):
 		if not qtplugin.qtplugin.apply_edit_changes(self, False) or self.lock:
 			return		
 			
-		content = str(self.plaintext_content.toPlainText()).replace("\n", "<br />")
-		self.set("content", content)		
-		
 		self.experiment.main_window.refresh(self.name)		
 
 	def edit_widget(self):
@@ -172,9 +166,6 @@ class qttext_display(text_display, qtplugin.qtplugin):
 		self.lock = True
 
 		qtplugin.qtplugin.edit_widget(self)
-		
-		content = self.get("content").replace("<br />", "\n")
-		self.plaintext_content.setPlainText(content)
 		
 		self.lock = False
 		
