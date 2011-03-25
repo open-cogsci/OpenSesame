@@ -39,25 +39,25 @@ if __name__ == "__main__":
 			from PyQt4 import QtGui, QtCore
 		except:
 			libopensesame.misc.messagebox("OpenSesame Run", "Incorrect or missing options.\n\nRun 'opensesame --help' from a terminal (or command prompt) to see a list of available options, or install Python Qt4 to enable the graphical user interface.")
-			quit()
+			sys.exit()
 	
 		if app == None:
 			app = QtGui.QApplication(sys.argv)		
 			myapp = libqtopensesame.qtopensesamerun.qtopensesamerun(options)
 	
-		QtCore.QObject.connect(app, QtCore.SIGNAL("quit()"), myapp.close)		
+		QtCore.QObject.connect(app, QtCore.SIGNAL("sys.exit()"), myapp.close)
 		myapp.show()
 		app.exec_()	
 		options = myapp.options	
 		
 		if not myapp.run:
-			quit()
+			sys.exit()
 	
 	try:
 		exp = libopensesame.experiment.experiment("Experiment", options.experiment)
 	except libopensesame.exceptions.script_error as e:
 		libopensesame.misc.messagebox("OpenSesame Run", libopensesame.misc.strip_tags(e))
-		quit()
+		sys.exit()
 		
 	exp.set_subject(options.subject)
 	exp.fullscreen = options.fullscreen
