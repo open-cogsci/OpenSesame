@@ -84,10 +84,10 @@ class media_player(item.item):
 
 		# Find the full path to the video file. This will point to some
 		# temporary folder where the file pool has been placed
-		path = self.experiment.get_file(self.video_src)
+		path = self.experiment.get_file(str(self.get("video_src")))
 
 		# Open the video file
-		if not os.path.exists(path) or self.video_src.strip() == "":
+		if not os.path.exists(path) or str(self.get("video_src")).strip() == "":
 			raise exceptions.runtime_error("Video file '%s' was not found in video_player '%s' (or no video file was specified)." % (os.path.basename(path), self.name))
 		self.load(path)
 
@@ -209,7 +209,15 @@ class media_player(item.item):
 			continue_playback = False
 		
 		return continue_playback
-                
+
+        def rewind(self):
+                try:
+                        self.videoTrack.seek_to_frame(1)    #To prevent reading before the first frame which happens occasionally with some files
+                except IOError:
+                        try:
+                                self.videoTrack.seek_to_frame(10)
+                        except IOError:
+                                raise exceptions.runtime_error("Could not read the first frames of the video file")
 
 	
 	def run(self):
@@ -224,14 +232,8 @@ class media_player(item.item):
 			print "media_player.run(): Audio delay: %d" % (300000-self.audioCorrection)
 		
 		if self.file_loaded:
-			try:
-				self.videoTrack.seek_to_frame(1)    #To prevent reading before the first frame which happens occasionally with some files
-			except IOError:
-				try:
-					self.videoTrack.seek_to_frame(10)
-				except IOError:
-					raise exceptions.runtime_error("Could not read the first frames of the video file")
-				     
+			self.rewind()   #Make sure pointer is at the beginning of the video file
+			
 			self.playing = True
 			startTime = pygame.time.get_ticks()			
 			while self.playing:
@@ -243,9 +245,9 @@ class media_player(item.item):
 					if event.type == pygame.KEYDOWN or event.type == pygame.MOUSEBUTTONDOWN:												
 						if self._event_handler != None:
 							self.playing = self.handleEvent(event)
-						elif event.type == pygame.KEYDOWN and self.duration == "keypress":
+						elif event.type == pygame.KEYDOWN and self.get("duration") == "keypress":
 							self.playing = False
-						elif event.type == pygame.MOUSEBUTTONDOWN and self.duration == "mouseclick":
+						elif event.type == pygame.MOUSEBUTTONDOWN and self.get("duration") == "mouseclick":
 							self.playing = False
 							
 						# Catch escape presses
@@ -267,22 +269,17 @@ class media_player(item.item):
 						self.experiment.eyelink.status_msg("videoframe %s" % frame_no )
 							
 					# Check if max duration has been set, and exit if exceeded
-					if type(self.duration) == int:
-						if pygame.time.get_ticks() - startTime > (self.duration*1000):
+					if type(self.get("duration")) == int:
+						if pygame.time.get_ticks() - startTime > (self.get("duration")*1000):
 							self.playing = False							
 							
 					#Sleep for remainder of a frame duration that's left after all the processing time. This is only necessary when there is no sound stream
 					sleeptime = int(self.frameTime - pygame.time.get_ticks() + self.frame_calc_start)
 					if sleeptime > 0:
 						pygame.time.wait(sleeptime)                
-														
-			# Clean up on aisle 4!
-			if self.hasSound:
-				if hasattr(self,"audiostream"):                
-					self.audiostream.close()
-					self.audioTrack.close()
-			self.videoTrack.close()
-			self.mp.close()
+                        
+			self.rewind()  #Rewind, if it needs to be played again in a next trial/block
+			
 			return True
 		else:
 			raise exceptions.runtime_error("No video loaded")
