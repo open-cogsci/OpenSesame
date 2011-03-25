@@ -1516,10 +1516,16 @@ class qtopensesame(QtGui.QMainWindow):
 				os.remove(path)
 				os.remove(stdout)
 			except:
-				pass			
+				pass
 			return False
 			
-		retcode = p.wait()
+		# Wait for OpenSesame run to complete, process events in the meantime, to make
+		# sure that the new process is shown (otherwise it will crash on Windows).
+		retcode = None
+		while retcode == None:
+			retcode = p.poll()
+			QtGui.QApplication.processEvents()			
+			time.sleep(1)
 		
 		if self.experiment.debug:
 			print "qtopensesame.call_opensesamrun(): opensesamerun returned %d" % retcode					
@@ -1657,7 +1663,7 @@ class qtopensesame(QtGui.QMainWindow):
 		# Undo the standard output rerouting
 		sys.stdout = sys.__stdout__	
 		
-		# Resume autosave
+		# Resume autosave, but not if opensesamerun is called
 		if self.autosave_timer != None:
 			if self.experiment.debug:
 				print "qtopnsesame.run_experiment(): resuming autosave timer"		

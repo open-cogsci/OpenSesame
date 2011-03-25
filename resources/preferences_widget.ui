@@ -24,8 +24,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>535</width>
-        <height>552</height>
+        <width>522</width>
+        <height>553</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -40,10 +40,7 @@
          <property name="title">
           <string>Miscellaneous</string>
          </property>
-         <layout class="QFormLayout" name="formLayout_2">
-          <property name="fieldGrowthPolicy">
-           <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
-          </property>
+         <layout class="QFormLayout" name="formLayout_3">
           <property name="leftMargin">
            <number>0</number>
           </property>
@@ -60,24 +57,24 @@
             </property>
            </widget>
           </item>
-          <item row="1" column="0" colspan="2">
+          <item row="1" column="0">
            <widget class="QCheckBox" name="checkbox_autoresponse">
             <property name="text">
              <string>Enable auto-response</string>
             </property>
            </widget>
           </item>
-          <item row="3" column="0" colspan="2">
-           <widget class="QCheckBox" name="checkbox_toolbar_text">
-            <property name="text">
-             <string>Show text in toolbar</string>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="0" colspan="2">
+          <item row="2" column="0">
            <widget class="QCheckBox" name="checkbox_show_random_tips">
             <property name="text">
              <string>Show random tips on start-up</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="0">
+           <widget class="QCheckBox" name="checkbox_toolbar_text">
+            <property name="text">
+             <string>Show text in toolbar</string>
             </property>
            </widget>
           </item>
@@ -98,7 +95,7 @@
          <property name="flat">
           <bool>false</bool>
          </property>
-         <layout class="QFormLayout" name="formLayout">
+         <layout class="QFormLayout" name="formLayout_2">
           <property name="horizontalSpacing">
            <number>6</number>
           </property>
@@ -114,7 +111,21 @@
           <property name="bottomMargin">
            <number>0</number>
           </property>
-          <item row="2" column="1">
+          <item row="0" column="0">
+           <widget class="QCheckBox" name="checkbox_enable_autosave">
+            <property name="text">
+             <string>Automatically create backups</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QLabel" name="label_autosave_interval">
+            <property name="text">
+             <string>Auto-save interval:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1">
            <widget class="QSpinBox" name="spinbox_autosave_interval">
             <property name="suffix">
              <string> minute(s)</string>
@@ -134,20 +145,6 @@
            </widget>
           </item>
           <item row="2" column="0">
-           <widget class="QLabel" name="label_autosave_interval">
-            <property name="text">
-             <string>Auto-save interval:</string>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="0" colspan="2">
-           <widget class="QCheckBox" name="checkbox_enable_autosave">
-            <property name="text">
-             <string>Automatically create backups</string>
-            </property>
-           </widget>
-          </item>
-          <item row="3" column="0" colspan="2">
            <widget class="QPushButton" name="button_browse_autosave">
             <property name="text">
              <string>Open backup folder</string>
@@ -172,10 +169,7 @@
          <property name="title">
           <string>Updates</string>
          </property>
-         <layout class="QFormLayout" name="formLayout_3">
-          <property name="fieldGrowthPolicy">
-           <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
-          </property>
+         <layout class="QFormLayout" name="formLayout">
           <property name="leftMargin">
            <number>0</number>
           </property>
@@ -185,14 +179,14 @@
           <property name="bottomMargin">
            <number>0</number>
           </property>
-          <item row="0" column="0" colspan="2">
+          <item row="0" column="0">
            <widget class="QCheckBox" name="checkbox_auto_update_check">
             <property name="text">
              <string>Check for updates on start-up</string>
             </property>
            </widget>
           </item>
-          <item row="1" column="0" colspan="2">
+          <item row="1" column="0">
            <widget class="QPushButton" name="button_update_check">
             <property name="text">
              <string>Check for updates now</string>
@@ -211,36 +205,72 @@
          <property name="title">
           <string>Run options</string>
          </property>
-         <layout class="QFormLayout" name="formLayout_4">
-          <property name="fieldGrowthPolicy">
-           <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
+         <layout class="QGridLayout" name="gridLayout">
+          <property name="leftMargin">
+           <number>0</number>
+          </property>
+          <property name="topMargin">
+           <number>9</number>
+          </property>
+          <property name="rightMargin">
+           <number>0</number>
+          </property>
+          <property name="bottomMargin">
+           <number>0</number>
           </property>
           <item row="0" column="0" colspan="2">
+           <widget class="QLabel" name="label">
+            <property name="text">
+             <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Ubuntu'; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-style:italic;&quot;&gt;If you experience stability issues, most notably crashes when you run an experiment for the second time in a single session of OpenSesame, you can enable the 'Run experiments in a separate process' option.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+            </property>
+            <property name="wordWrap">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0" colspan="2">
            <widget class="QCheckBox" name="checkbox_opensesamerun">
             <property name="text">
              <string>Run experiments in a separate process</string>
             </property>
            </widget>
           </item>
-          <item row="1" column="0" colspan="2">
+          <item row="2" column="0" colspan="2">
            <widget class="QCheckBox" name="checkbox_auto_opensesamerun_exec">
             <property name="text">
              <string>Auto-detect the run command</string>
             </property>
            </widget>
           </item>
-          <item row="2" column="0">
+          <item row="3" column="0">
            <widget class="QLabel" name="label_opensesamerun_exec">
             <property name="text">
              <string>Custom run command:</string>
             </property>
            </widget>
           </item>
-          <item row="2" column="1">
+          <item row="3" column="1">
            <widget class="QLineEdit" name="edit_opensesamerun_exec"/>
           </item>
          </layout>
         </widget>
+       </item>
+       <item>
+        <spacer name="verticalSpacer">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
        </item>
       </layout>
      </widget>
