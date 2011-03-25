@@ -1048,10 +1048,35 @@ class qtopensesame(QtGui.QMainWindow):
 	def close_tab(self, index):
 	
 		"""
-		Close a tabe
+		Close a tab
 		"""
 	
 		self.ui.tabwidget.removeTab(index)		
+		
+	def close_item_tab(self, item, close_edit = True, close_script = True):
+	
+		"""
+		Close a tab that matches a specific item (either edit or script)
+		"""
+		
+		if self.experiment.debug:
+			print "qtopensesame.close_item_tab(): closing tabs for '%s'" % item
+		
+		# There's a kind of double loop, because the indices change
+		# after a deletion
+		redo = True
+		while redo:
+			redo = False
+			for i in range(self.ui.tabwidget.count()):		
+					w = self.ui.tabwidget.widget(i)													
+					if close_edit and hasattr(w, "edit_item") and w.edit_item == item:
+						self.close_tab(i)
+						redo = True
+						break						
+					if close_script and hasattr(w, "script_item") and w.script_item == item:
+						self.close_tab(i)
+						redo = True
+						break
 		
 	def apply_general_script(self):
 	

@@ -150,6 +150,7 @@ class tree_overview(QtGui.QTreeWidget):
 			self.main_window.experiment.items[item_name].open_help_tab()
 		elif action == delete_text:
 			self.main_window.experiment.items[parent_name].delete(index)
+			self.main_window.close_item_tab(item_name)
 			
 	def rename(self, old_name):
 	

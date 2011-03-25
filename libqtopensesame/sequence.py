@@ -71,6 +71,7 @@ class action_button(QtGui.QPushButton):
 				return				
 												
 		elif cmd == "delete":
+			self.sequence.experiment.main_window.close_item_tab(self.sequence.items[row][0])		
 			self.sequence.items.remove(self.sequence.items[row])
 		elif cmd == "up" and row > 0:
 			tmp = self.sequence.items[row - 1]

@@ -20,7 +20,7 @@ setup(
 
 	# Use 'console' to have the programs run in a terminal and
 	# 'windows' to run them normally.
-	console = [{
+	windows = [{
 		"script" : "opensesame",
 		'icon_resources': [(0, os.path.join("resources", "opensesame.ico"))],
 		},{
