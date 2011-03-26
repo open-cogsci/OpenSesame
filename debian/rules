@@ -1,0 +1,46 @@
+#!/usr/bin/make -f
+
+srcpkg = $(shell LC_ALL=C dpkg-parsechangelog | grep '^Source:' | cut -d ' ' -f 2,2)
+debver = $(shell LC_ALL=C dpkg-parsechangelog | grep '^Version:' | cut -d ' ' -f 2,2 )
+upstreamver = $(shell echo $(debver) | cut -d '-' -f 1,1 )
+
+# this figures out the last merge point from 'master' into the Debian branch and
+# then described this commit relative to the last release tag (V...)
+# If this should make any sense the local master branch must track upstreams
+# master.
+gitver = $(shell [ -x /usr/bin/git ] && git describe --tags --match 'release/*' $$(git merge-base -a HEAD master) | sed -e 's,^release/,,' -e 's/-/+git/')
+
+
+# one ring to rule them all ...
+%:
+	dh $@
+
+override_dh_auto_clean:
+	dh_auto_clean
+	# restore old Qt wrappers
+	[ -d debian/temp_store ] && cp debian/temp_store/* libqtopensesame/ || true
+	-rm -rf debian/temp_store
+
+override_dh_auto_build:
+	# move pre-generated Qt wrappers aside
+	mkdir -p debian/temp_store
+	cp -t debian/temp_store libqtopensesame/*_ui.py libqtopensesame/icons_rc.py
+	# update PyQt wrappers
+	./compile_ui.sh
+	dh_auto_build
+
+override_dh_install:
+	dh_install
+	# cleanups
+	# no duplicate license info
+	-rm debian/opensesame/usr/share/opensesame/COPYING
+	# we don't want to included sound sample, but links to /usr/share/sounds
+	# directly
+	-rm -rf debian/opensesame/usr/share/opensesame/sounds
+
+# make orig tarball from repository content
+get-orig-source:
+	# orig tarball, turn directory into something nicer
+	git archive --format=tar --prefix=$(srcpkg)-$(gitver)/ HEAD | \
+		gzip -9 > $(srcpkg)_$(gitver).orig.tar.gz
+
