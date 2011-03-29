@@ -122,6 +122,10 @@ class template(openexp.canvas.canvas):
 		
 		"""
 		Puts the canvas onto the screen.
+		
+		Returns:
+		A timestamp containing the time at which the canvas actually appeared
+		on the screen (or a best guess).
 		"""
 
 		pass
