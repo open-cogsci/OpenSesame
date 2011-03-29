@@ -26,8 +26,15 @@ pre-specified average duration plus a random margin.</P>
 <UL>
 	<LI><P><I>Duration</I> is the average duration of the delay in
 	milliseconds.</P>
-	<LI><P><I>Standard deviation</I> is the standard deviation of the
-	actual delay.</P>
+	<LI><P><I>Jitter</I> is the size of the variation in the
+	delay in milliseconds.</P>
+	<LI><P><I>Jitter mode</I> is the how the jitter is calculated:</P>
+	  <UL>
+	    <LI><P><I>Standard deviation</I> will draw the variation
+		from a Gaussian distribution with Jitter as the the standard deviation.</P>
+	    <LI><P><I>Uniform</I> will draw the variation in duration
+		from a uniform distribution.</P>
+	  </UL>
 </UL>
 </BODY>
 </HTML>
