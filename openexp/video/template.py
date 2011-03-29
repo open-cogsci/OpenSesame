@@ -20,10 +20,14 @@ import openexp.canvas
 class template(openexp.canvas.canvas):
 
 	"""
-	This class serves as a template for creating OpenSesame video back-ends. Let's say
+	This class serves as a template for creating OpenSesame video backends. Let's say
 	you want to create a dummy backend. First, create dummy.py in the openexp.video
 	folder. In dummy.py, create a dummy class, which is derived from openexp.canvas.canvas
 	and which implements all the functions specified below.
+	
+	After you have done this, the new backend can be activated by adding "set video_backend dummy"
+	to the general script. This will make OpenSesame use the dummy class instead of the default
+	legacy backend.
 		
 	A few guidelines:
 	-- Catch exceptions wherever possible and raise an openexp.exceptions.canvas_error
