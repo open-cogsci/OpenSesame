@@ -53,22 +53,31 @@ if __name__ == "__main__":
 		if not myapp.run:
 			sys.exit()
 	
-	try:
+	if options.debug:
 		exp = libopensesame.experiment.experiment("Experiment", options.experiment)
-	except libopensesame.exceptions.script_error as e:
-		libopensesame.misc.messagebox("OpenSesame Run", libopensesame.misc.strip_tags(e))
-		sys.exit()
-		
-	exp.set_subject(options.subject)
-	exp.fullscreen = options.fullscreen
-	exp.logfile = options.logfile
-	
-	try:
+		exp.set_subject(options.subject)
+		exp.fullscreen = options.fullscreen
+		exp.logfile = options.logfile
 		exp.run()
-	except Exception as e:	
+		exp.end()
+			
+	else:
 		try:
-			exp.end()
-		except Exception as f:
-			libopensesame.misc.messagebox("OpenSesame Run", libopensesame.misc.strip_tags(f))						
-		libopensesame.misc.messagebox("OpenSesame Run", libopensesame.misc.strip_tags(e))
+			exp = libopensesame.experiment.experiment("Experiment", options.experiment)
+		except libopensesame.exceptions.script_error as e:
+			libopensesame.misc.messagebox("OpenSesame Run", libopensesame.misc.strip_tags(e))
+			sys.exit()
+		
+		exp.set_subject(options.subject)
+		exp.fullscreen = options.fullscreen
+		exp.logfile = options.logfile
+	
+		try:
+			exp.run()
+		except Exception as e:	
+			try:
+				exp.end()
+			except Exception as f:
+				libopensesame.misc.messagebox("OpenSesame Run", libopensesame.misc.strip_tags(f))						
+			libopensesame.misc.messagebox("OpenSesame Run", libopensesame.misc.strip_tags(e))
 		

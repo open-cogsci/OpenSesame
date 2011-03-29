@@ -42,14 +42,11 @@ class experiment:
 		self.sound_buf_size = 512
 		self.resources = {}
 		
-		# The default display modes, corresponding to the PyGame set_mode arguments:
-		# http://www.pygame.org/docs/ref/display.html#pygame.display.set_mode
-		self.mode_hwsurface = "yes"
-		self.mode_doublebuf = "yes"
-		self.mode_opengl = "no"
-		
+		# Display parameters
+		self.video_backend = "legacy"		
 		self.resolution = 1024, 768
 		self.fullscreen = False
+		
 		self.title = "OpenExp"
 					
 		self.font_size = 18
@@ -95,82 +92,8 @@ class experiment:
 		Initializes the display
 		"""
 				
-		pygame.init()
+		canvas.init_display(self)
 		response.init_key_codes()
-
-		self.init_icon()		
-		
-		mode = 0		
-		if self.mode_hwsurface == "yes":
-			mode = mode | pygame.HWSURFACE	
-			print "experiment.init_display(): video mode: using hardware surface"
-		if self.mode_doublebuf == "yes":
-			mode = mode | pygame.DOUBLEBUF			
-			print "experiment.init_display(): video mode: using double buffering"
-		if self.mode_opengl == "yes":
-			mode = mode | pygame.OPENGL
-			print "experiment.init_display(): video mode: using opengl"
-		if self.fullscreen:
-			mode = mode | pygame.FULLSCREEN
-			print "experiment.init_display(): video mode: going fullscreen"
-					
-		if pygame.display.mode_ok(self.resolution, mode):	
-			print "experiment.init_display(): video mode ok"
-		else:
-			print "experiment.init_display(): warning: video mode not ok"
-							
-		self.window = pygame.display.set_mode(self.resolution, mode)					
-		pygame.display.set_caption(self.title)
-		pygame.mouse.set_visible(False)
-		self.surface = pygame.display.get_surface()
-
-		self.font = pygame.font.Font(self.resource("%s.ttf" % self.font_family), self.font_size)		
-
-		# If no fonts are found, fall back to the default font
-		if self.font == None:
-			self.font = pygame.font.Font(None, self.font_size)
-			
-		# Don't ask for the logfile in debug mode
-		if defaultlog or self.logfile != None:
-			return
-			
-		# The initial screen allows us to set fullscreen etc
-		c = canvas.canvas(self)
-		key = None
-		while key != pygame.K_RETURN:
-			
-			c.clear()
-			c.textline("Press the tab-key to toggle fullscreen", -2)						
-			if self.logfile == None:
-				c.textline("Please enter a name for the logfile", -1)
-			else:
-				c.textline("The current logfile is '%s'" % self.logfile, -1)				
-			c.textline("Press return to start the experiment", 1)
-			c.show()		
-			
-			time, key = response.get_key()
-			
-			if key == pygame.K_TAB:
-				self.fullscreen = not self.fullscreen
-				if self.fullscreen:
-					self.window = pygame.display.set_mode(self.resolution, pygame.FULLSCREEN | pygame.HWSURFACE)
-				else:
-					self.window = pygame.display.set_mode(self.resolution)
-				key = None
-					
-			if key in range(97, 123) + range(48, 58) + [pygame.K_PERIOD, pygame.K_MINUS]:
-				if self.logfile == None:
-					self.logfile = ""
-				self.logfile += chr(key)								
-				key = None
-				
-			if key == pygame.K_BACKSPACE:
-				if self.logfile != None:
-					if len(self.logfile) == 1:
-						self.logfile = None
-					else:
-						self.logfile = self.logfile[:-1]
-				key = None
 				
 	def init_trials(self):
 		
@@ -202,7 +125,7 @@ class experiment:
 		"""
 		
 		self.init_experiment()
-		self.init_sound()		
+		self.init_sound()				
 		self.init_display()		
 		self.init_trials()		
 		self.init_log()
@@ -347,7 +270,7 @@ class experiment:
 			pass
 			
 		pygame.mixer.quit()
-		pygame.display.quit()		
+		canvas.close_display(self)
 		
 	def resource(self, name):
 	
