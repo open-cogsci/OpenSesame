@@ -130,10 +130,15 @@ class template(openexp.canvas.canvas):
 
 		pass
 		
-	def clear(self):
+	def clear(self, color = None):
 		
 		"""
 		Clears the canvas with the current background color.
+		
+		Keyword arguments:
+		color -- A custom background color to be used. This does not affect the
+				 default background color as set by set_bgcolor().
+				 (Default = None)
 		"""
 		
 		pass
@@ -183,7 +188,7 @@ class template(openexp.canvas.canvas):
 		
 		pass
 		
-	def fixdot(self, x = None, y = None):
+	def fixdot(self, x = None, y = None, color = None):
 		
 		"""
 		Draws a standard fixation dot, which is a big circle (r = 8px) with the
@@ -192,10 +197,13 @@ class template(openexp.canvas.canvas):
 		Keyword arguments:
 		x -- The center X coordinate. None = center (default = None)
 		y -- The center Y coordinate. None = center (default = None)
+		color -- A custom human readable foreground color. This does not affect the
+				 default foreground color as set by set_fgcolor(). (Default = None)
 		"""
+		
 		pass		
 		
-	def circle(self, x, y, r, fill = False):
+	def circle(self, x, y, r, fill = False, color = None):
 		
 		"""
 		Draws a circle.
@@ -207,11 +215,13 @@ class template(openexp.canvas.canvas):
 		
 		Keyword arguments:
 		fill -- A boolean indicating whether the circle is outlined (False) or filled (True)
+		color -- A custom human readable foreground color. This does not affect the
+				 default foreground color as set by set_fgcolor(). (Default = None)
 		"""
 		
 		pass
 
-	def line(self, sx, sy, ex, ey):
+	def line(self, sx, sy, ex, ey, color = None):
 		
 		"""
 		Draws a line. Should accept parameters where sx > ex or sy > ey as well.
@@ -221,11 +231,15 @@ class template(openexp.canvas.canvas):
 		sy -- The top coordinate
 		ex -- The right coordinate
 		ey -- The bottom coordinate
+		
+		Keyword arguments:
+		color -- A custom human readable foreground color. This does not affect the
+				 default foreground color as set by set_fgcolor(). (Default = None)		
 		"""
 		
 		pass
 		
-	def arrow(self, sx, sy, ex, ey, arrow_size = 5):
+	def arrow(self, sx, sy, ex, ey, arrow_size = 5, color = None):
 		
 		"""
 		Draws an arrow. An arrow is a line, with an arrowhead at (ex, ey). The angle between
@@ -239,11 +253,13 @@ class template(openexp.canvas.canvas):
 		
 		Keyword arguments:
 		arrow_size -- The length of the arrowhead lines (default = 5)
+		color -- A custom human readable foreground color. This does not affect the
+				 default foreground color as set by set_fgcolor(). (Default = None)		
 		"""
 		
 		pass
 		
-	def rect(self, x, y, w, h, fill = False):
+	def rect(self, x, y, w, h, fill = False, color = None):
 		
 		"""
 		Draws a rectangle. Should accept parameters where w < 0 or h < 0 as well.
@@ -256,11 +272,13 @@ class template(openexp.canvas.canvas):
 				
 		Keyword arguments:
 		fill -- A boolean indicating whether the rectangle is outlined (False) or filled (True)
+		color -- A custom human readable foreground color. This does not affect the
+				 default foreground color as set by set_fgcolor(). (Default = None)		
 		"""
 		
 		pass
 			
-	def ellipse(self, x, y, w, h, fill = False):
+	def ellipse(self, x, y, w, h, fill = False, color = None):
 		
 		"""
 		Draws an ellipse. Should accept parameters where w < 0 or h < 0 as well.
@@ -273,6 +291,8 @@ class template(openexp.canvas.canvas):
 				
 		Keyword arguments:
 		fill -- A boolean indicating whether the ellipse is outlined (False) or filled (True)
+		color -- A custom human readable foreground color. This does not affect the
+				 default foreground color as set by set_fgcolor(). (Default = None)		
 		"""
 		
 		pass	
@@ -291,7 +311,7 @@ class template(openexp.canvas.canvas):
 		
 		pass
 		
-	def text(self, text, center = True, x = None, y = None):
+	def text(self, text, center = True, x = None, y = None, color = None):
 		
 		"""
 		Draws text.
@@ -304,11 +324,13 @@ class template(openexp.canvas.canvas):
 				  or top-left (default = True)
 		x -- The X coordinate. None = center. (default = None)
 		y -- The Y coordinate. None = center. (default = None)
+		color -- A custom human readable foreground color. This does not affect the
+				 default foreground color as set by set_fdcolor(). (Default = None)		
 		"""
 			
 		pass
 		
-	def textline(self, text, line):
+	def textline(self, text, line, color = None):
 		
 		"""
 		A convenience function that draws a line of text based on a 
@@ -319,6 +341,8 @@ class template(openexp.canvas.canvas):
 		Arguments:
 		text -- The text string
 		line -- A line number, where 0 is the center and > 0 is below the center.
+		color -- A custom human readable foreground color. This does not affect the
+				 default foreground color as set by set_fdcolor(). (Default = None)		
 		"""
 		
 		pass
