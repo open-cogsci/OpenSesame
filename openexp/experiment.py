@@ -43,7 +43,8 @@ class experiment:
 		self.resources = {}
 		
 		# Display parameters
-		self.video_backend = "legacy"		
+		#self.video_backend = "legacy"		
+		self.video_backend = "opengl"
 		self.resolution = 1024, 768
 		self.fullscreen = False
 		
