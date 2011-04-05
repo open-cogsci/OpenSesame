@@ -125,16 +125,21 @@ class opengl(openexp.canvas.canvas):
 		
 		return pygame.time.get_ticks()
 		
-	def clear(self):
+	def clear(self, color = None):
 		
 		"""
 		Clears the canvas
 		"""
+		if color is None:
+			color = self.bgcolor
+		else:
+			color = self.color(color)
+			
 		# clear the showable list
 		self.showables = []
 		surface = pygame.Surface(self.experiment.resolution)
 		#surface = pygame.Surface(self.experiment.resolution, SRCALPHA)
-		surface.fill(self.bgcolor)
+		surface.fill(color)
 		self.showables.append((libopengl.LowImage(surface),
 				       (0,0)))
 
