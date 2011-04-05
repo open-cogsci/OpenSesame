@@ -49,7 +49,7 @@ class canvas:
 	def show(self):
 		pass
 		
-	def clear(self):
+	def clear(self, color = None):
 		pass
 		
 	def set_penwidth(self, penwidth):
@@ -64,31 +64,31 @@ class canvas:
 	def set_font(self, style, size):
 		pass
 		
-	def fixdot(self, x = None, y = None):
+	def fixdot(self, x = None, y = None, color = None):
 		pass	
 		
-	def circle(self, x, y, r, fill = False):
+	def circle(self, x, y, r, fill = False, color = None):
 		pass
 
-	def line(self, sx, sy, ex, ey):
+	def line(self, sx, sy, ex, ey, color = None):
 		pass
 		
-	def arrow(self, sx, sy, ex, ey, arrow_size = 5):
+	def arrow(self, sx, sy, ex, ey, arrow_size = 5, color = None):
 		pass	
 		
-	def rect(self, x, y, w, h, fill = False):
+	def rect(self, x, y, w, h, fill = False, color = None):
 		pass
 			
-	def ellipse(self, x, y, w, h, fill = False):
+	def ellipse(self, x, y, w, h, fill = False, color = None):
 		pass		
 			
 	def text_size(self, text):
 		pass
 		
-	def text(self, text, center = True, x = None, y = None):
+	def text(self, text, center = True, x = None, y = None, color = None):
 		pass
 		
-	def textline(self, text, line):
+	def textline(self, text, line, color = None):
 		pass
 		
 	def image(self, fname, center = True, x = None, y = None, scale = None):

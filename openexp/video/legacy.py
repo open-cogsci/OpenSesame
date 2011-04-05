@@ -109,13 +109,18 @@ class legacy(openexp.canvas.canvas):
 		pygame.display.flip()
 		return pygame.time.get_ticks()
 		
-	def clear(self):
+	def clear(self, color = None):
 		
 		"""
 		Clears the canvas
 		"""
 		
-		self.surface.fill(self.bgcolor)
+		if color != None:
+			color = self.color(color)
+		else:
+			color = self.bgcolor
+		
+		self.surface.fill(color)
 		
 	def set_penwidth(self, penwidth):
 		
@@ -154,11 +159,16 @@ class legacy(openexp.canvas.canvas):
 		
 		self.font = pygame.font.Font(self.experiment.resource("%s.ttf" % style), size)
 		
-	def fixdot(self, x = None, y = None):
+	def fixdot(self, x = None, y = None, color = None):
 		
 		"""
 		Draws a fixation dot
 		"""
+
+		if color != None:
+			color = self.color(color)
+		else:
+			color = self.fgcolor
 		
 		if x == None:
 			x = self.xcenter()
@@ -166,71 +176,93 @@ class legacy(openexp.canvas.canvas):
 		if y == None:
 			y = self.ycenter()
 					
-		pygame.draw.circle(self.surface, self.fgcolor, (x, y), 8, 0)
+		pygame.draw.circle(self.surface, color, (x, y), 8, 0)
 		pygame.draw.circle(self.surface, self.bgcolor, (x, y), 2, 0)		
 		
-	def circle(self, x, y, r, fill = False):
+	def circle(self, x, y, r, fill = False, color = None):
 		
 		"""
 		Draws a circle
 		"""
-		
-		self.ellipse(x - r, y - r, 2 * r, 2 * r, fill)
+						
+		self.ellipse(x - r, y - r, 2 * r, 2 * r, fill = fill, color = color)
 
-	def line(self, sx, sy, ex, ey):
+	def line(self, sx, sy, ex, ey, color = None):
 		
 		"""
 		Draws a line
 		"""
 		
-		pygame.draw.line(self.surface, self.fgcolor, (sx, sy), (ex, ey), self.penwidth)
+		if color != None:
+			color = self.color(color)
+		else:
+			color = self.fgcolor
+				
+		pygame.draw.line(self.surface, color, (sx, sy), (ex, ey), self.penwidth)
 		
-	def arrow(self, sx, sy, ex, ey, arrow_size = 5):
+	def arrow(self, sx, sy, ex, ey, arrow_size = 5, color = None):
 		
 		"""
 		Draws an arrow
 		"""
 		
-		pygame.draw.line(self.surface, self.fgcolor, (sx, sy), (ex, ey), self.penwidth)
+		if color != None:
+			color = self.color(color)
+		else:
+			color = self.fgcolor		
+		
+		pygame.draw.line(self.surface, color, (sx, sy), (ex, ey), self.penwidth)
 		a = math.atan2(ey - sy, ex - sx)
 		
 		_sx = ex + arrow_size * math.cos(a + math.radians(135))
 		_sy = ey + arrow_size * math.sin(a + math.radians(135))
-		pygame.draw.line(self.surface, self.fgcolor, (_sx, _sy), (ex, ey), self.penwidth)		
+		pygame.draw.line(self.surface, color, (_sx, _sy), (ex, ey), self.penwidth)		
 		
 		_sx = ex + arrow_size * math.cos(a + math.radians(225))
 		_sy = ey + arrow_size * math.sin(a + math.radians(225))
-		pygame.draw.line(self.surface, self.fgcolor, (_sx, _sy), (ex, ey), self.penwidth)		
+		pygame.draw.line(self.surface, color, (_sx, _sy), (ex, ey), self.penwidth)		
 		
-	def rect(self, x, y, w, h, fill = False):
+	def rect(self, x, y, w, h, fill = False, color = None):
 		
 		"""
 		Draws a rectangle
 		"""
-		if fill:
-			pygame.draw.rect(self.surface, self.fgcolor, (x, y, w, h), 0)
+		
+		if color != None:
+			color = self.color(color)
 		else:
-			pygame.draw.rect(self.surface, self.fgcolor, (x, y, w, h), self.penwidth)
+			color = self.fgcolor		
+		
+		if fill:
+			pygame.draw.rect(self.surface, color, (x, y, w, h), 0)
+		else:
+			pygame.draw.rect(self.surface, color, (x, y, w, h), self.penwidth)
 			
-	def ellipse(self, x, y, w, h, fill = False):
+	def ellipse(self, x, y, w, h, fill = False, color = None):
 		
 		"""
 		Draws an ellipse
 		"""
 		
+		if color != None:
+			color = self.color(color)
+		else:
+			color = self.fgcolor
+				
 		x = int(x)
 		y = int(y)
 		w = int(w)
 		h = int(h)
 		
 		if fill:
-			pygame.draw.ellipse(self.surface, self.fgcolor, (x, y, w, h), 0)
+			pygame.draw.ellipse(self.surface, color, (x, y, w, h), 0)
 		else:
 			# Because the default way of drawing thick lines gives ugly results
-			# for ellipses, we draw thick circles manually
+			# for ellipses, we draw thick ellipses manually, by drawing an ellipse
+			# with the background color inside of it
 			i = self.penwidth / 2
 			j = self.penwidth - i			
-			pygame.draw.ellipse(self.surface, self.fgcolor, (x-i, y-i, w+2*i, h+2*i), 0)
+			pygame.draw.ellipse(self.surface, color, (x-i, y-i, w+2*i, h+2*i), 0)
 			pygame.draw.ellipse(self.surface, self.bgcolor, (x+j, y+j, w-2*j, h-2*j), 0)			
 			
 	def text_size(self, text):
@@ -242,13 +274,18 @@ class legacy(openexp.canvas.canvas):
 		
 		return self.font.size(text)				
 		
-	def text(self, text, center = True, x = None, y = None):
+	def text(self, text, center = True, x = None, y = None, color = None):
 		
 		"""
 		Draws text
 		"""
+		
+		if color != None:
+			color = self.color(color)
+		else:
+			color = self.fgcolor		
 			
-		surface = self.font.render(text, self.antialias, self.fgcolor)
+		surface = self.font.render(text, self.antialias, color)
 		size = self.font.size(text)
 		
 		if x == None:
@@ -263,7 +300,7 @@ class legacy(openexp.canvas.canvas):
 			
 		self.surface.blit(surface, (x, y))
 		
-	def textline(self, text, line):
+	def textline(self, text, line, color = None):
 		
 		"""
 		Draws text. The position is specified by line, where
@@ -271,7 +308,7 @@ class legacy(openexp.canvas.canvas):
 		"""
 		
 		size = self.font.size(text)
-		self.text(text, True, self.xcenter(), self.ycenter() + 1.5 * line * size[1])
+		self.text(text, True, self.xcenter(), self.ycenter() + 1.5 * line * size[1], color = color)
 		
 	def image(self, fname, center = True, x = None, y = None, scale = None):
 		
