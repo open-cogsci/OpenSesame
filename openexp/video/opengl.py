@@ -457,6 +457,8 @@ def init_display(experiment):
 	
 	# Determine the video mode
 	mode = pygame.HWSURFACE | pygame.DOUBLEBUF | pygame.OPENGL
+	if experiment.fullscreen:
+		mode = mode | pygame.FULLSCREEN
 	if pygame.display.mode_ok(experiment.resolution, mode):	
 		print "video.opengl.init_display(): video mode ok"
 	else:
