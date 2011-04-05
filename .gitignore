@@ -1,0 +1,9 @@
+*.orig
+*~
+*.py[co]
+\#*
+\.\#*
+build
+_build
+*.so
+
