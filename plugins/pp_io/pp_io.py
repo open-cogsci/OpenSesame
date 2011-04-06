@@ -61,14 +61,7 @@ class pp_io(item.item):
 		self.description = "Allows setting pins on the parallel port"
 		
 		# Set some item-specific variables
-		global _pp
-		if _pp is None:
-			try:
-				_pp = parallel.Parallel()
-			except OSError:
-				warnings.warn("Could not access /dev/parport0.")
-		self.pp = _pp
-		self.value = 0
+		self.value = 1
 		self.duration = 1
 		
 		# The parent handles the rest of the contruction
@@ -82,7 +75,17 @@ class pp_io(item.item):
 		
 		# Pass the word on to the parent
 		item.item.prepare(self)		
-				
+
+		# get the global pp instance and initialize it if
+		# necessary
+		global _pp
+		if _pp is None:
+			try:
+				_pp = parallel.Parallel()
+			except OSError:
+				warnings.warn("Could not access /dev/parport0.")
+		self.pp = _pp
+
 		# This function prepares a self._duration_func() function based
 		# on the compensation and duration variables.
 		self.prepare_duration()
