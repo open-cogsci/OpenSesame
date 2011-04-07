@@ -18,7 +18,6 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 from libopensesame import item, exceptions
 import openexp.canvas
 import openexp.exceptions
-import openexp.response
 import shlex
 
 class sketchpad(item.item):

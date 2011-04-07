@@ -15,7 +15,7 @@ You should have received a copy of the GNU General Public License
 along with openexp.  If not, see <http://www.gnu.org/licenses/>.
 """
 
-from openexp import trial, response, canvas, sampler
+from openexp import trial, canvas, sampler
 import warnings
 import random
 import os.path
@@ -43,8 +43,10 @@ class experiment:
 		self.resources = {}
 		
 		# Display parameters
-		#self.video_backend = "legacy"		
-		self.video_backend = "opengl"
+		self.canvas_backend = "legacy"
+		self.keyboard_backend = "legacy"
+		self.mouse_backend = "legacy"
+		self.sound_backend = "legacy"		
 		self.resolution = 1024, 768
 		self.fullscreen = False
 		
@@ -94,7 +96,6 @@ class experiment:
 		"""
 				
 		canvas.init_display(self)
-		response.init_key_codes()
 				
 	def init_trials(self):
 		

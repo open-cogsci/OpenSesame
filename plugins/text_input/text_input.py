@@ -18,7 +18,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 from libopensesame import item, exceptions, generic_response
 from libqtopensesame import qtplugin
 import openexp.canvas
-import openexp.response
+import openexp.keyboard
 import os.path
 from PyQt4 import QtGui, QtCore
 
@@ -104,9 +104,9 @@ class text_input(item.item, generic_response.generic_response):
 			c.show()		
 			
 			# Get the response and the moderators (shift etc.)
-			time, key = openexp.response.get_key()
-			resp = openexp.response.key_name(key)
-			mods = openexp.response.key_mods()
+			key, time = self._keyboard.get_key()
+			resp = self._keyboard.to_chr(key)
+			mods = self._keyboard.get_mods()
 			
 			if response_time == None:
 				response_time = time
@@ -118,7 +118,7 @@ class text_input(item.item, generic_response.generic_response):
 			elif resp == "space":
 				response += " "				
 			elif len(resp) == 1:
-				response += openexp.response.map_key(key, mods)
+				response += self._keyboard.shift(key, mods)
 						
 		# If no start response interval has been set, set it to the onset of
 		# the current response item

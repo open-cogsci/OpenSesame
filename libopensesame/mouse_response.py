@@ -16,7 +16,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame import item, exceptions, generic_response
-import openexp.response
+import openexp.mouse
 import openexp.exceptions
 
 class mouse_response(item.item, generic_response.generic_response):
@@ -50,6 +50,7 @@ class mouse_response(item.item, generic_response.generic_response):
 		"""
 		
 		item.item.prepare(self)		
+		self._mouse = openexp.mouse.mouse(self.experiment)		
 		
 		self._allowed_responses = []					 
 		if self.has("allowed_responses"):
@@ -76,9 +77,11 @@ class mouse_response(item.item, generic_response.generic_response):
 		if self.experiment.auto_response:
 			self._resp_func = self.auto_responder
 		else:
-			self._resp_func = openexp.response.get_mouse		
+			self._resp_func = self._mouse.get_click
 
 		self.prepare_timeout()			
+		self._mouse.set_timeout(self._timeout)
+		self._mouse.set_buttonlist(self._allowed_responses)
 						
 		return True		
 						
@@ -92,7 +95,7 @@ class mouse_response(item.item, generic_response.generic_response):
 		self.set_item_onset()
 				
 		if self.show_cursor == "yes":
-			openexp.response.set_mouse_cursor_visible(True)
+			self._mouse.set_visible()
 		
 		# If no start response interval has been set, set it to the onset of
 		# the current response item
@@ -100,7 +103,7 @@ class mouse_response(item.item, generic_response.generic_response):
 			self.experiment.start_response_interval = self.get("time_%s" % self.name)
 
 		# Get the response
-		self.experiment.end_response_interval, resp, pos = self._resp_func(self._allowed_responses, self._timeout)
+		resp, pos, self.experiment.end_response_interval = self._resp_func()
 		
 		# Do some bookkeeping
 		self.experiment.response_time = self.experiment.end_response_interval - self.experiment.start_response_interval	
@@ -121,7 +124,7 @@ class mouse_response(item.item, generic_response.generic_response):
 			
 		self.process_response(correct_response)	
 		
-		openexp.response.set_mouse_cursor_visible(False)				
+		self._mouse.set_visible(False)				
 				
 		# Report success
 		return True

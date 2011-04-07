@@ -16,8 +16,8 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame import item, exceptions
-import openexp.response
 import shlex
+import openexp.keyboard
 import random
 
 class loop(item.item):
@@ -68,7 +68,7 @@ class loop(item.item):
 				
 					if cycle not in self.matrix:
 						self.matrix[cycle] = {}
-					self.matrix[cycle][var] = val
+					self.matrix[cycle][var] = val					
 					
 	def run(self):
 	
@@ -99,6 +99,9 @@ class loop(item.item):
 		if self.order == "random":
 			random.shuffle(l)
 			
+		# Create a keyboard to flush responses between cycles
+		self._keyboard = openexp.keyboard.keyboard(self.experiment)
+			
 		# Walk through the list
 		for j, i in l:
 			if self.item in self.experiment.items:
@@ -113,7 +116,7 @@ class loop(item.item):
 							exec("self.experiment.%s = %s" % (var, val))
 							
 				# Flush the responses to catch escape presses
-				openexp.response.flush()							
+				self._keyboard.flush()			
 		
 				if eval("self.experiment.items[\"%s\"].prepare()" % self.item):
 					exec("self.experiment.items[\"%s\"].run()" % self.item)

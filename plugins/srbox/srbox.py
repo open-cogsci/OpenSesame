@@ -20,16 +20,16 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 
 from libopensesame import item, generic_response, exceptions
 from libqtopensesame import qtplugin
+import openexp.keyboard
 import serial
 import time
 import os
 import os.path
-import openexp.response
 import pygame
 
 from PyQt4 import QtGui, QtCore
 
-version = 0.13
+version = 0.14
 
 class srbox(item.item, generic_response.generic_response):
 
@@ -97,7 +97,8 @@ class srbox(item.item, generic_response.generic_response):
 		
 		if self.has("dummy") and self.get("dummy") == "yes":
 			
-			self._resp_func = openexp.response.get_key
+			self._keyboard = openexp.keyboard.keyboard(self.experiment)
+			self._resp_func = self._keyboard.get_key
 			
 		else:
 		
@@ -140,7 +141,7 @@ class srbox(item.item, generic_response.generic_response):
 		self.set_item_onset()
 
 		# Flush the keyboard so we can use the escape key		
-		openexp.response.flush()
+		self._keyboard.flush()
 		
 		# If no start response interval has been set, set it to the onset of
 		# the current response item
@@ -150,9 +151,9 @@ class srbox(item.item, generic_response.generic_response):
 		if self.has("dummy") and self.get("dummy") == "yes":
 		
 			# In dummy mode, we simply take the numeric keys from the keyboard instead of an sr-box
-			self.experiment.end_response_interval, resp = self._resp_func(None, self._timeout)
+			resp, self.experiment.end_response_interval = self._resp_func(None, self._timeout)
 			try:
-				resp = int(openexp.response.key_name(resp))
+				resp = int(self._keyboard.to_chr(resp))
 			except:
 				raise exceptions.runtime_error("An error occured in srbox '%s': Only number keys are accepted in dummy mode" % self.name)
 				

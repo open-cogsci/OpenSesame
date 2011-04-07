@@ -16,7 +16,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame import item, exceptions, generic_response
-import openexp.response
+import openexp.keyboard
 import openexp.exceptions
 
 class keyboard_response(item.item, generic_response.generic_response):
@@ -42,10 +42,12 @@ class keyboard_response(item.item, generic_response.generic_response):
 		"""
 		
 		item.item.prepare(self)		
+		self._keyboard = openexp.keyboard.keyboard(self.experiment)		
 				 
 		if self.has("allowed_responses"):
 			l = str(self.get("allowed_responses")).split(";")
-			self._allowed_responses = openexp.response.keys(l)
+			#self._allowed_responses = openexp.response.keys(l)
+			self._allowed_responses = l
 			if len(self._allowed_responses) == 0:
 				raise exceptions.runtime_error("'%s' are not valid allowed responses in keyboard_response '%s'" % (self.get("allowed_responses"), self.name))
 		else:
@@ -54,9 +56,11 @@ class keyboard_response(item.item, generic_response.generic_response):
 		if self.experiment.auto_response:
 			self._resp_func = self.auto_responder
 		else:
-			self._resp_func = openexp.response.get_key
+			self._resp_func = self._keyboard.get_key
 			
-		self.prepare_timeout()
+		self.prepare_timeout()		
+		self._keyboard.set_timeout(self._timeout)
+		self._keyboard.set_keylist(self._allowed_responses)
 			
 		return True		
 				
@@ -72,7 +76,7 @@ class keyboard_response(item.item, generic_response.generic_response):
 		# Flush responses, to make sure that earlier responses
 		# are not carried over
 		if self.get("flush") == "yes":
-			openexp.response.flush()		
+			self._keyboard.flush()		
 		
 		# If no start response interval has been set, set it to the onset of
 		# the current response item
@@ -81,7 +85,7 @@ class keyboard_response(item.item, generic_response.generic_response):
 
 		# Get the response
 		try:
-			self.experiment.end_response_interval, resp = self._resp_func(self._allowed_responses, self._timeout)
+			resp, self.experiment.end_response_interval = self._resp_func()
 		except openexp.exceptions.response_error as e:
 			raise exceptions.runtime_error("The 'escape' key was pressed.")
 		
@@ -89,12 +93,15 @@ class keyboard_response(item.item, generic_response.generic_response):
 		self.experiment.response_time = self.experiment.end_response_interval - self.experiment.start_response_interval		
 		self.experiment.total_response_time += self.experiment.response_time
 		self.experiment.total_responses += 1
-		self.experiment.response = openexp.response.key_name(resp)
-				
+		self.experiment.response = self._keyboard.to_chr(resp)
+						
 		if self.has("correct_response"):
 			correct_response = self.get("correct_response")
 		else:
 			correct_response = "undefined"
+			
+		print "response:", self.experiment.response
+		print "correct:", correct_response
 			
 		self.process_response(correct_response)
 				

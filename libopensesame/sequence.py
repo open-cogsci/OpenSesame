@@ -15,8 +15,8 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
-import openexp.response
 from libopensesame import item, exceptions
+import openexp.keyboard
 import shlex
 
 class sequence(item.item):
@@ -39,7 +39,7 @@ class sequence(item.item):
 		"""
 	
 		# Flush the responses to catch escape presses
-		openexp.response.flush()
+		self._keyboard.flush()
 		
 		for item, cond in self._items:		
 			if eval(cond):	
@@ -80,6 +80,9 @@ class sequence(item.item):
 		"""
 		
 		item.item.prepare(self)
+		
+		# Create a keyboard to flush responses at the start of the run phase
+		self._keyboard = openexp.keyboard.keyboard(self.experiment)
 		
 		self._items = []
 		for _item, cond in self.items:
