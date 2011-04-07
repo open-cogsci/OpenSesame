@@ -18,7 +18,6 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 from libopensesame import item, exceptions
 import shlex
 import openexp.sampler
-import openexp.response
 
 class sampler(item.item):
 
@@ -76,9 +75,11 @@ class sampler(item.item):
 			self.block = True
 			self._duration_func = self.dummy
 		elif dur == "keypress":
-			self._duration_func = self.experiment.wait
+			self._keyboard = openexp.keyboard.keyboard(self.experiment)
+			self._duration_func = self._keyboard.get_key
 		elif dur == "mouseclick":
-			self._duration_func = openexp.response.get_mouse
+			self._mouse = openexp.mouse.mouse(self.experiment)
+			self._duration_func = self._mouse.get_click
 		else:
 			try:				
 				self._duration = int(self.get("duration"))			

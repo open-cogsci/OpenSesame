@@ -18,7 +18,6 @@ along with openexp.  If not, see <http://www.gnu.org/licenses/>.
 import pygame
 from pygame.locals import *
 import openexp.exceptions
-import openexp.response
 import numpy
 import os.path
 
@@ -151,7 +150,7 @@ class sampler:
 		
 		if block:
 			while pygame.mixer.get_busy():
-				openexp.response.flush()
+				pass
 	
 freq = 48000
 

@@ -16,89 +16,32 @@ along with openexp.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 import openexp.exceptions
+import tempfile
+import pygame
 
 temp_files = []
 
 class canvas:
+
+	"""
+	Based on the canvas_backend variable in the experiment, this class
+	morphs into the appropriate canvas backend class.
+	"""
 	
 	def __init__(self, experiment, bgcolor = "black", fgcolor = "white"):
 	
-		try:
-			exec("from openexp.video import %s" % experiment.video_backend)
-			self.__class__ = eval("%s.%s" % (experiment.video_backend, experiment.video_backend))
-		except Exception as e:
-			raise openexp.exceptions.canvas_error("Failed to import 'openexp.video.%s' as video backend.<br /><br />Error: %s" % (experiment.video_backend, e))		
-											
-		exec("openexp.video.%s.%s.__init__(self, experiment, bgcolor, fgcolor)" % (experiment.video_backend, experiment.video_backend))	
-			
-	def color(self, color):
-		pass
-				
-	def flip(self, x = True, y = False):
-		pass		
-		
-	def copy(self, canvas):
-		pass
-		
-	def xcenter(self):
-		pass	
-		
-	def ycenter(self):
-		pass
-		
-	def show(self):
-		pass
-		
-	def clear(self, color = None):
-		pass
-		
-	def set_penwidth(self, penwidth):
-		pass
-		
-	def set_fgcolor(self, color):
-		pass
-		
-	def set_bgcolor(self, color):
-		pass
-		
-	def set_font(self, style, size):
-		pass
-		
-	def fixdot(self, x = None, y = None, color = None):
-		pass	
-		
-	def circle(self, x, y, r, fill = False, color = None):
-		pass
+		if experiment.debug:
+			print "canvas.__init__(): morphing into openexp._canvas.%s" % experiment.canvas_backend		
+			exec("import openexp._canvas.%s" % experiment.canvas_backend)
+			self.__class__ = eval("openexp._canvas.%s.%s" % (experiment.canvas_backend, experiment.canvas_backend))				
+		else:
+			try:
+				exec("import openexp._canvas.%s" % experiment.canvas_backend)
+				self.__class__ = eval("openexp._canvas.%s.%s" % (experiment.canvas_backend, experiment.canvas_backend))				
+			except Exception as e:
+				raise openexp.exceptions.canvas_error("Failed to import 'openexp._canvas.%s' as video backend.<br /><br />Error: %s" % (experiment.canvas_backend, e))													
 
-	def line(self, sx, sy, ex, ey, color = None):
-		pass
-		
-	def arrow(self, sx, sy, ex, ey, arrow_size = 5, color = None):
-		pass	
-		
-	def rect(self, x, y, w, h, fill = False, color = None):
-		pass
-			
-	def ellipse(self, x, y, w, h, fill = False, color = None):
-		pass		
-			
-	def text_size(self, text):
-		pass
-		
-	def text(self, text, center = True, x = None, y = None, color = None):
-		pass
-		
-	def textline(self, text, line, color = None):
-		pass
-		
-	def image(self, fname, center = True, x = None, y = None, scale = None):
-		pass
-							
-	def gabor(self, x, y, orient, freq, env = "gaussian", size = 96, stdev = 12, phase = 0, col1 = "white", col2 = "black", bgmode = "avg"):
-		pass
-		
-	def noise_patch(self, x, y, env = "gaussian", size = 96, stdev = 12, col1 = "white", col2 = "black", bgmode = "avg"):
-		pass
+		exec("openexp._canvas.%s.%s.__init__(self, experiment, bgcolor, fgcolor)" % (experiment.canvas_backend, experiment.canvas_backend))				
 		
 def init_display(experiment):
 
@@ -107,10 +50,10 @@ def init_display(experiment):
 	"""
 
 	try:
-		exec("from openexp.video import %s" % experiment.video_backend)
-		exec("openexp.video.%s.init_display(experiment)" % experiment.video_backend)
+		exec("import openexp._canvas.%s" % experiment.canvas_backend)
+		exec("openexp._canvas.%s.init_display(experiment)" % experiment.canvas_backend)
 	except Exception as e:
-		raise openexp.exceptions.canvas_error("Failed to call openexp.video.%s.init_display()<br /><br />Error: %s" % (experiment.video_backend, e))				
+		raise openexp.exceptions.canvas_error("Failed to call openexp._canvas.%s.init_display()<br /><br />Error: %s" % (experiment.canvas_backend, e))				
 		
 def close_display(experiment):
 
@@ -119,10 +62,10 @@ def close_display(experiment):
 	"""
 
 	try:
-		exec("from openexp.video import %s" % experiment.video_backend)
-		exec("openexp.video.%s.close_display(experiment)" % experiment.video_backend)
+		exec("import openexp._canvas.%s" % experiment.canvas_backend)
+		exec("openexp._canvas.%s.close_display(experiment)" % experiment.canvas_backend)
 	except Exception as e:
-		raise openexp.exceptions.canvas_error("Failed to call openexp.video.%s.close_display()<br /><br />Error: %s" % (experiment.video_backend, e))						
+		raise openexp.exceptions.canvas_error("Failed to call openexp._canvas.%s.close_display()<br /><br />Error: %s" % (experiment.canvas_backend, e))						
 		
 def clean_up(verbose = False):
 	
@@ -143,4 +86,38 @@ def clean_up(verbose = False):
 		except:
 			if verbose:
 				print "canvas.clean_up(): failed to remove '%s'" % path
-				
+						
+def gabor_file(orient, freq, env = "gaussian", size = 96, stdev = 12, phase = 0, col1 = "white", col2 = "black", bgmode = "avg"):
+
+	"""
+	Creates a temporary file containing a Gabor patch.
+	See canvas.gabor()
+	"""
+	
+	global temp_files
+	import openexp._canvas.legacy
+	surface = openexp._canvas.legacy._gabor(orient, freq, env, size, stdev, phase, col1, col2, bgmode)
+	
+	tmp = tempfile.mkstemp(suffix = ".png")	[1]
+	pygame.image.save(surface, tmp)
+	temp_files.append(tmp)
+	
+	return tmp
+	
+def noise_file(env = "gaussian", size = 96, stdev = 12, col1 = "white", col2 = "black", bgmode = "avg"):
+
+	"""
+	Creates a temporary file containing a noise patch.
+	See canvas.noise_patch()
+	"""
+	
+	global temp_files	
+	import openexp._canvas.legacy	
+	surface = openexp._canvas.legacy._noise_patch(env, size, stdev, col1, col2, bgmode)
+	
+	tmp = tempfile.mkstemp(suffix = ".png")	[1]
+	pygame.image.save(surface, tmp)
+	temp_files.append(tmp)
+	
+	return tmp
+					

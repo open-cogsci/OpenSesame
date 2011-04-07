@@ -16,6 +16,8 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 import openexp.trial
+import openexp.mouse
+import openexp.keyboard
 from libopensesame import exceptions
 import shlex
 import sys
@@ -279,7 +281,7 @@ class item(openexp.trial.trial):
 		
 		if time == None:
 			time = self.time()	
-		exec("self.experiment.time_%s = %d" % (self.name, time))
+		exec("self.experiment.time_%s = %d" % (self.name, time))		
 		
 	def prepare_duration(self):
 	
@@ -303,13 +305,15 @@ class item(openexp.trial.trial):
 				self._duration_func = self.sleep_for_duration
 				self._duration = 500
 			else:
-				self._duration_func = self.experiment.wait
+				self._keyboard = openexp.keyboard.keyboard(self.experiment)
+				self._duration_func = self._keyboard.get_key
 		elif dur == "mouseclick":
 			if self.experiment.auto_response:
 				self._duration_func = self.sleep_for_duration
 				self._duration = 500
 			else:		
-				self._duration_func = openexp.response.get_mouse
+				self._mouse = openexp.mouse.mouse(self.experiment)
+				self._duration_func = self._mouse.get_click
 		else:
 			try:				
 				self._duration = int(self.get("duration"))			

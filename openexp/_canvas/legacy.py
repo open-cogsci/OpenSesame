@@ -26,12 +26,44 @@ import os
 import os.path
 import tempfile
 
-class legacy(openexp.canvas.canvas):
+class legacy:
+
+	"""
+	The legacy backend is the default backend which uses PyGame to handle all
+	display operations.	
+	
+	This class serves as a template for creating OpenSesame video backends. Let's say
+	you want to create a dummy backend. First, create dummy.py in the openexp.video
+	folder. In dummy.py, create a dummy class, which is derived from openexp.canvas.canvas
+	and which implements all the functions specified below.
+	
+	After you have done this, the new backend can be activated by adding "set video_backend dummy"
+	to the general script. This will make OpenSesame use the dummy class instead of the default
+	legacy backend.
+		
+	A few guidelines:
+	-- Catch exceptions wherever possible and raise an openexp.exceptions.canvas_error
+	   with a clear and descriptive error message.
+	-- If you create a temporary file, add its path to the openexp.canvas.temp_files list.
+	-- Do not deviate from the guidelines. All back-ends should be interchangeable and 
+	   transparent to OpenSesame. You are free to add functionality to this class, to be 
+	   used in inline scripts, but this should not break the basic functionality.
+	-- Print debugging output only if experiment.debug == True and preferrably in the
+	   following format: "template.__init__(): Debug message here".
+	"""
 	
 	def __init__(self, experiment, bgcolor = "black", fgcolor = "white"):
 		
 		"""
-		Initializes the canvas
+		Initializes the canvas. The specified colors should be used as a 
+		default for subsequent drawing operations.
+		
+		Arguments:
+		experiment -- an instance of libopensesame.experiment.experiment
+		
+		Keyword arguments:
+		bgcolor -- a human-readable background color (default = "black")
+		fgcolor -- a human-readable foreground color (default = "white")
 		"""
 		
 		self.experiment = experiment
@@ -60,14 +92,19 @@ class legacy(openexp.canvas.canvas):
 		
 		Returns:
 		A color in the back-end format
-		"""	
+		"""
 	
 		return _color(color)				
 		
 	def flip(self, x = True, y = False):
 		
 		"""
-		Flips the canvas along the x- or y-axis
+		Flips the canvas along the x- and/ or y-axis. Note: This does not refresh the display,
+		like e.g., pygame.display.flip(), which is handled by show().
+		
+		Keyword arguments:
+		x -- A boolean indicating whether the canvas should be flipped horizontally (default = True)
+		y -- A boolean indicating whether the canvas should be flipped vertically (default = False)
 		"""
 		
 		self.surface = pygame.transform.flip(self.surface, x, y)
@@ -76,7 +113,10 @@ class legacy(openexp.canvas.canvas):
 	def copy(self, canvas):
 	
 		"""
-		Copies the contents of another canvas
+		Turn the current canvas into a copy of the passed canvas.
+		
+		Arguments:
+		canvas -- The canvas to copy.
 		"""
 		
 		self.surface = canvas.surface.copy()
@@ -84,7 +124,8 @@ class legacy(openexp.canvas.canvas):
 	def xcenter(self):
 		
 		"""
-		Returns the center X coordinate of the canvas
+		Returns:
+		The center X coordinate in pixels.
 		"""
 		
 		return self.experiment.resolution[0] / 2
@@ -92,7 +133,8 @@ class legacy(openexp.canvas.canvas):
 	def ycenter(self):
 		
 		"""
-		Returns the center Y coordinate of the canvas
+		Returns:
+		The center Y coordinate in pixels.
 		"""
 		
 		return self.experiment.resolution[1] / 2	
@@ -100,9 +142,11 @@ class legacy(openexp.canvas.canvas):
 	def show(self):
 		
 		"""
-		Shows the canvas and returns the time at
-		which the display whas shown. Waits for
-		v-sync if enabled.		
+		Puts the canvas onto the screen.
+		
+		Returns:
+		A timestamp containing the time at which the canvas actually appeared
+		on the screen (or a best guess).
 		"""
 
 		self.experiment.surface.blit(self.surface, (0, 0))		
@@ -112,7 +156,12 @@ class legacy(openexp.canvas.canvas):
 	def clear(self, color = None):
 		
 		"""
-		Clears the canvas
+		Clears the canvas with the current background color.
+		
+		Keyword arguments:
+		color -- A custom background color to be used. This does not affect the
+				 default background color as set by set_bgcolor().
+				 (Default = None)
 		"""
 		
 		if color != None:
@@ -125,7 +174,10 @@ class legacy(openexp.canvas.canvas):
 	def set_penwidth(self, penwidth):
 		
 		"""
-		Sets the pen width
+		Sets the pen width for subsequent drawing operations.
+		
+		Arguments:
+		penwidth -- A pen width in pixels
 		"""
 		
 		self.penwidth = penwidth
@@ -133,7 +185,10 @@ class legacy(openexp.canvas.canvas):
 	def set_fgcolor(self, color):
 		
 		"""
-		Sets the foreground color
+		Sets the foreground color for subsequent drawing operations.
+		
+		Arguments:
+		color -- A human readable color
 		"""
 		
 		self.fgcolor = self.color(color)		
@@ -141,7 +196,10 @@ class legacy(openexp.canvas.canvas):
 	def set_bgcolor(self, color):
 		
 		"""
-		Sets the background color
+		Sets the background color for subsequent drawing operations.
+		
+		Arguments:
+		color -- A human readable color
 		"""
 
 		self.bgcolor = self.color(color)	
@@ -149,12 +207,11 @@ class legacy(openexp.canvas.canvas):
 	def set_font(self, style, size):
 	
 		"""
-		Sets the font style and size. OpenExp searches
-		for a [style].ttf font in the resources folder. 		
-		Possible styles are
-		sans
-		serif
-		mono
+		Sets the font for subsequent drawing operations.
+		
+		Arguments:
+		style -- A font located in the resources folder (without the .ttf extension)
+		size -- A font size in pixels		
 		"""
 		
 		self.font = pygame.font.Font(self.experiment.resource("%s.ttf" % style), size)
@@ -162,7 +219,14 @@ class legacy(openexp.canvas.canvas):
 	def fixdot(self, x = None, y = None, color = None):
 		
 		"""
-		Draws a fixation dot
+		Draws a standard fixation dot, which is a big circle (r = 8px) with the
+		foreground color and a smaller circle (r = 2px) of the background color.
+		
+		Keyword arguments:
+		x -- The center X coordinate. None = center (default = None)
+		y -- The center Y coordinate. None = center (default = None)
+		color -- A custom human readable foreground color. This does not affect the
+				 default foreground color as set by set_fgcolor(). (Default = None)
 		"""
 
 		if color != None:
@@ -182,7 +246,17 @@ class legacy(openexp.canvas.canvas):
 	def circle(self, x, y, r, fill = False, color = None):
 		
 		"""
-		Draws a circle
+		Draws a circle.
+		
+		Arguments:
+		x -- The center X coordinate
+		y -- The center Y coordinate
+		r -- The radius
+		
+		Keyword arguments:
+		fill -- A boolean indicating whether the circle is outlined (False) or filled (True)
+		color -- A custom human readable foreground color. This does not affect the
+				 default foreground color as set by set_fgcolor(). (Default = None)
 		"""
 						
 		self.ellipse(x - r, y - r, 2 * r, 2 * r, fill = fill, color = color)
@@ -190,7 +264,17 @@ class legacy(openexp.canvas.canvas):
 	def line(self, sx, sy, ex, ey, color = None):
 		
 		"""
-		Draws a line
+		Draws a line. Should accept parameters where sx > ex or sy > ey as well.
+		
+		Arguments:
+		sx -- The left coordinate
+		sy -- The top coordinate
+		ex -- The right coordinate
+		ey -- The bottom coordinate
+		
+		Keyword arguments:
+		color -- A custom human readable foreground color. This does not affect the
+				 default foreground color as set by set_fgcolor(). (Default = None)		
 		"""
 		
 		if color != None:
@@ -203,7 +287,19 @@ class legacy(openexp.canvas.canvas):
 	def arrow(self, sx, sy, ex, ey, arrow_size = 5, color = None):
 		
 		"""
-		Draws an arrow
+		Draws an arrow. An arrow is a line, with an arrowhead at (ex, ey). The angle between
+		the arrowhead lines and the arrow line is 45 degrees.
+		
+		Arguments:
+		sx -- The left coordinate
+		sy -- The top coordinate
+		ex -- The right coordinate
+		ey -- The bottom coordinate
+		
+		Keyword arguments:
+		arrow_size -- The length of the arrowhead lines (default = 5)
+		color -- A custom human readable foreground color. This does not affect the
+				 default foreground color as set by set_fgcolor(). (Default = None)		
 		"""
 		
 		if color != None:
@@ -225,7 +321,18 @@ class legacy(openexp.canvas.canvas):
 	def rect(self, x, y, w, h, fill = False, color = None):
 		
 		"""
-		Draws a rectangle
+		Draws a rectangle. Should accept parameters where w < 0 or h < 0 as well.
+		
+		Arguments:
+		x -- The left X coordinate.
+		y -- The top Y coordinate.
+		w -- The width.
+		h -- The height.
+				
+		Keyword arguments:
+		fill -- A boolean indicating whether the rectangle is outlined (False) or filled (True)
+		color -- A custom human readable foreground color. This does not affect the
+				 default foreground color as set by set_fgcolor(). (Default = None)		
 		"""
 		
 		if color != None:
@@ -241,7 +348,18 @@ class legacy(openexp.canvas.canvas):
 	def ellipse(self, x, y, w, h, fill = False, color = None):
 		
 		"""
-		Draws an ellipse
+		Draws an ellipse. Should accept parameters where w < 0 or h < 0 as well.
+		
+		Arguments:
+		x -- The left X coordinate.
+		y -- The top Y coordinate.
+		w -- The width.
+		h -- The height.
+				
+		Keyword arguments:
+		fill -- A boolean indicating whether the ellipse is outlined (False) or filled (True)
+		color -- A custom human readable foreground color. This does not affect the
+				 default foreground color as set by set_fgcolor(). (Default = None)		
 		"""
 		
 		if color != None:
@@ -268,8 +386,13 @@ class legacy(openexp.canvas.canvas):
 	def text_size(self, text):
 	
 		"""
-		Returns the size of a string of text in
-		pixels as a (w, h) tuple
+		Determines the size of a text string in pixels.
+		
+		Arguments:
+		text -- The text string
+		
+		Returns:
+		A (width, height) tuple containing the dimensions of the text string
 		"""
 		
 		return self.font.size(text)				
@@ -277,7 +400,18 @@ class legacy(openexp.canvas.canvas):
 	def text(self, text, center = True, x = None, y = None, color = None):
 		
 		"""
-		Draws text
+		Draws text.
+		
+		Arguments:
+		text -- The text string
+		
+		Keyword arguments:
+		center -- A boolean indicating whether the coordinates reflect the center (True)
+				  or top-left (default = True)
+		x -- The X coordinate. None = center. (default = None)
+		y -- The Y coordinate. None = center. (default = None)
+		color -- A custom human readable foreground color. This does not affect the
+				 default foreground color as set by set_fdcolor(). (Default = None)		
 		"""
 		
 		if color != None:
@@ -303,8 +437,16 @@ class legacy(openexp.canvas.canvas):
 	def textline(self, text, line, color = None):
 		
 		"""
-		Draws text. The position is specified by line, where
-		0 is the central line, < 0 is above and > 0 is below.
+		A convenience function that draws a line of text based on a 
+		line number. The text strings are centered on the X-axis and
+		vertically spaced with 1.5 the line height as determined by
+		text_size().
+		
+		Arguments:
+		text -- The text string
+		line -- A line number, where 0 is the center and > 0 is below the center.
+		color -- A custom human readable foreground color. This does not affect the
+				 default foreground color as set by set_fdcolor(). (Default = None)		
 		"""
 		
 		size = self.font.size(text)
@@ -313,7 +455,18 @@ class legacy(openexp.canvas.canvas):
 	def image(self, fname, center = True, x = None, y = None, scale = None):
 		
 		"""
-		Draws an image from file
+		Draws an image from file. This function does not look in the file
+		pool, but takes an absolute path.
+		
+		Arguments:
+		fname -- The path of the file
+		
+		Keyword arguments:
+		center -- A boolean indicating whether the given coordinates reflect the
+				  center (True) or the top-left (False) of the image. (default = True)
+		x -- The X coordinate. None = center. (default = None)
+		y -- The Y coordinate. None = center. (default = None)
+		scale -- The scaling factor of the image. 1.0 or None = no scaling, 2.0 = twice as large, etc. (default = None)
 		"""
 		
 		try:
@@ -344,16 +497,22 @@ class legacy(openexp.canvas.canvas):
 		"""
 		Draws a Gabor patch. This function is derived from the online Gabor patch generator
 		<http://www.cogsci.nl/software/online-gabor-patch-generator>	
-	
-		orient: orientation in degrees [0 .. 360]
-		freq: frequency in cycles/px
-		env: envelope (gaussian/ linear/ circular/ rectangle)
-		size: size in px
-		stdev: standard deviation of the gaussian (only applicable if env == gaussian)
-		phase: phase [0 .. 1]
-		col1: color of tops
-		col2: color of troughs
-		bgmode: color of the background (avg/ col2)
+		
+		Arguments:
+		x -- The center X coordinate
+		y -- The center Y coordinate
+		orient -- Orientation in degrees [0 .. 360]
+		freq -- Frequency in cycles/px of the sinusoid
+		
+		Keyword arguments:	
+		env -- Any of the following: "gaussian", "linear", "circular", "rectangle" (default = "gaussian")
+		size -- Size in pixels (default = 96)
+		stdev -- Standard deviation in pixels of the gaussian. Only applicable if env = "gaussian". (default = 12)
+		phase -- Phase of the sinusoid [0.0 .. 1.0] (default = 0)
+		col1: -- Human readable color for the tops (default = "white")
+		col2 -- Human readable color for the troughs (default = "black")
+		bgmode -- Specifies whether the background is the average of col1 and col2 (bgmode = "avg", a typical Gabor patch)
+				  or equal to col2 ("col2"), useful for blending into the background. (default = "avg")
 		"""	
 	
 		surface = _gabor(orient, freq, env, size, stdev, phase, col1, col2, bgmode)
@@ -362,8 +521,22 @@ class legacy(openexp.canvas.canvas):
 	def noise_patch(self, x, y, env = "gaussian", size = 96, stdev = 12, col1 = "white", col2 = "black", bgmode = "avg"):
 	
 		"""
-		Draws a patch of noise, with an envelope applied over it.
-		"""
+		Draws a patch of noise, with an envelope.
+		
+		Arguments:
+		x -- The center X coordinate
+		y -- The center Y coordinate
+		
+		Keyword arguments:	
+		env -- Any of the following: "gaussian", "linear", "circular", "rectangle" (default = "gaussian")
+		size -- Size in pixels (default = 96)
+		stdev -- Standard deviation in pixels of the gaussian. Only applicable if env = "gaussian". (default = 12)
+		phase -- Phase of the sinusoid [0.0 .. 1.0] (default = 0)
+		col1: -- Human readable color for the tops (default = "white")
+		col2 -- Human readable color for the troughs (default = "black")
+		bgmode -- Specifies whether the background is the average of col1 and col2 (bgmode = "avg", a typical Gabor patch)
+				  or equal to col2 ("col2"), useful for blending into the background. (default = "avg")
+		"""	
 		
 		surface = _noise_patch(env, size, stdev, col1, col2, bgmode)
 		self.surface.blit(surface, (x - 0.5 * size, y - 0.5 * size))
@@ -372,12 +545,13 @@ class legacy(openexp.canvas.canvas):
 Static methods
 """
 
-canvas_cache = {}
-
 def init_display(experiment):
 
 	"""
-	Initializes the display
+	Initialize the display before the experiment begins.
+	
+	Arguments:
+	experiment -- An instance of libopensesame.experiment.experiment	
 	"""
 			
 	# Intialize PyGame
@@ -395,6 +569,9 @@ def init_display(experiment):
 		print "video.legacy.init_display(): video mode ok"
 	else:
 		print "video.legacy.init_display(): warning: video mode not ok"
+		
+	if experiment.fullscreen:
+		mode = mode | pygame.FULLSCREEN
 						
 	# Create the window and the surface
 	experiment.window = pygame.display.set_mode(experiment.resolution, mode)					
@@ -410,10 +587,20 @@ def init_display(experiment):
 def close_display(experiment):
 
 	"""
-	Close the display
+	Close the display after the experiment is finished.
+	
+	Arguments:
+	experiment -- An instance of libopensesame.experiment.experiment	
 	"""
 	
 	pygame.display.quit()
+	
+"""
+The functions below are specific to the legacy backend and do not have
+to be implemented in other backends.
+"""
+	
+canvas_cache = {}
 				
 def _color(color):
 
@@ -577,33 +764,3 @@ def _noise_patch(env = "gaussian", size = 96, stdev = 12, col1 = "white", col2 =
 	del px
 	return surface
 
-def gabor_file(orient, freq, env = "gaussian", size = 96, stdev = 12, phase = 0, col1 = "white", col2 = "black", bgmode = "avg"):
-
-	"""
-	Creates a temporary file containing a Gabor patch.
-	See canvas.gabor()
-	"""
-	
-	surface = _gabor(orient, freq, env, size, stdev, phase, col1, col2, bgmode)
-	
-	tmp = tempfile.mkstemp(suffix = ".png")	[1]
-	pygame.image.save(surface, tmp)
-	openexp.canvas.temp_files.append(tmp)
-	
-	return tmp
-	
-def noise_file(env = "gaussian", size = 96, stdev = 12, col1 = "white", col2 = "black", bgmode = "avg"):
-
-	"""
-	Creates a temporary file containing a noise patch.
-	See canvas.noise_patch()
-	"""
-	
-	surface = _noise_patch(env, size, stdev, col1, col2, bgmode)
-	
-	tmp = tempfile.mkstemp(suffix = ".png")	[1]
-	pygame.image.save(surface, tmp)
-	openexp.canvas.temp_files.append(tmp)
-	
-	return tmp
-	

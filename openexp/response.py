@@ -15,6 +15,9 @@ You should have received a copy of the GNU General Public License
 along with openexp.  If not, see <http://www.gnu.org/licenses/>.
 """
 
+print "*** openexp.response: This module is deprecated and may be removed in future versions of OpenSesame. Please use openexp.keyboard and/ or openexp.mouse instead."
+
+import openexp.exceptions	
 import warnings
 import pygame
 from pygame.locals import *
@@ -148,48 +151,7 @@ def set_mouse_cursor_visible(visible = True):
 	Sets the visibility of the mouse cursor
 	"""
 	
-	pygame.mouse.set_visible(visible)
-				
-def open_bbox():
-
-	"""
-	This function needs to be called to open the connection
-	to the button box
-	"""
-
-	import serial
-	global bbox
-	bbox = serial.Serial(0)
-	
-def close_bbox():
-
-	"""
-	This function needs to be called to close the connection
-	to the button box
-	"""
-	
-	global bbox
-	
-	bbox.close()
-				
-def get_bbox(min_time = 5):
-
-	"""
-	Waits until a key on the buttonbox has been pressed.
-	Returns a timestamp and the pressed button (0 = left, 1 = right).
-	The min_time specifies the fastest respons that is allows, which
-	provides a way of flushing responses.
-	"""
-	
-	global bbox
-	
-	start_time = pygame.time.get_ticks()	
-	while True:
-		bbox.read(1)
-		resp = ord(bbox.read(1))
-		time = pygame.time.get_ticks()				
-		if time - start_time >= min_time or min_time == None:		
-			return time, 2 - resp			
+	pygame.mouse.set_visible(visible)				
 				
 def flush():
 
@@ -249,3 +211,4 @@ def key_name(k):
 	
 	return pygame.key.name(k)
 
+init_key_codes()
