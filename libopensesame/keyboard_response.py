@@ -100,9 +100,6 @@ class keyboard_response(item.item, generic_response.generic_response):
 		else:
 			correct_response = "undefined"
 			
-		print "response:", self.experiment.response
-		print "correct:", correct_response
-			
 		self.process_response(correct_response)
 				
 		# Report success
