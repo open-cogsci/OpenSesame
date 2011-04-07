@@ -201,7 +201,7 @@ class opengl(openexp.canvas.canvas):
 		pygame.draw.circle(surface, self.bgcolor, (r1, r1), r2, 0)
 
 		self.showables.append((libopengl.LowImage(surface),
-				       (x,y)))
+				       (x-r1,y-r1)))
 		
 	def circle(self, x, y, r, fill = False):
 		
@@ -216,29 +216,33 @@ class opengl(openexp.canvas.canvas):
 		"""
 		Draws a line
 		"""
-		dy = abs(ey - sy)
-		dx = abs(ex - sx)
+		dy = abs(ey - sy) + 2*self.penwidth + 1
+		dx = abs(ex - sx) + 2*self.penwidth + 1
+		print dx,dy
 		surface = pygame.Surface((dx,dy), SRCALPHA)
 
 		if sx < ex:
-			s_sx = 0
-			s_ex = dx
+			s_sx = self.penwidth
+			s_ex = dx - self.penwidth - 1
 		else:
-			s_sx = dx
-			s_ex = 0
+			s_sx = dx - self.penwidth - 1
+			s_ex = self.penwidth
 		if sy < ey:
-			s_sy = 0
-			s_ey = dy
+			s_sy = self.penwidth
+			s_ey = dy - self.penwidth - 1
 		else:
-			s_sy = dy
-			s_ey = 0
-			
+			s_sy = dy - self.penwidth - 1
+			s_ey = self.penwidth
+
+		print self.penwidth,(s_sx,s_sy),(s_ex,s_ey)
+		
 		pygame.draw.line(surface, self.fgcolor,
 				 (s_sx, s_sy), (s_ex, s_ey),
 				 self.penwidth)
 
 		self.showables.append((libopengl.LowImage(surface),
-				       (min(sx,ex),min(sy,ey))))
+				       (min(sx,ex)-self.penwidth,
+					min(sy,ey)-self.penwidth)))
 
 	def arrow(self, sx, sy, ex, ey, arrow_size = 5):
 		
@@ -246,22 +250,22 @@ class opengl(openexp.canvas.canvas):
 		Draws an arrow
 		"""
 		
-		dy = abs(ey - sy)
-		dx = abs(ex - sx)
+		dy = abs(ey - sy) + 2*arrow_size
+		dx = abs(ex - sx) + 2*arrow_size
 		surface = pygame.Surface((dx,dy), SRCALPHA)
 
 		if sx < ex:
-			s_sx = 0
-			s_ex = dx
+			s_sx = arrow_size
+			s_ex = dx - arrow_size
 		else:
-			s_sx = dx
-			s_ex = 0
+			s_sx = dx - arrow_size
+			s_ex = arrow_size
 		if sy < ey:
-			s_sy = 0
-			s_ey = dy
+			s_sy = arrow_size
+			s_ey = dy - arrow_size
 		else:
-			s_sy = dy
-			s_ey = 0
+			s_sy = dy - arrow_size
+			s_ey = arrow_size
 			
 		pygame.draw.line(surface, self.fgcolor,
 				 (s_sx, s_sy), (s_ex, s_ey),
@@ -280,20 +284,27 @@ class opengl(openexp.canvas.canvas):
 				 (_sx, _sy), (s_ex, s_ey), self.penwidth)		
 
 		self.showables.append((libopengl.LowImage(surface),
-				       (min(sx,ex),min(sy,ey))))
+				       (min(sx,ex)+arrow_size,
+					min(sy,ey)+arrow_size)))
 
 	def rect(self, x, y, w, h, fill = False):
 		
 		"""
 		Draws a rectangle
 		"""
-		surface = pygame.Surface((w,h), SRCALPHA)
 		if fill:
+			surface = pygame.Surface((w,h), SRCALPHA)
 			pygame.draw.rect(surface, self.fgcolor, (0, 0, w, h), 0)
+			loc = (x,y)
 		else:
-			pygame.draw.rect(surface, self.fgcolor, (0, 0, w, h), self.penwidth)
+			surface = pygame.Surface((w+2*self.penwidth,h+2*self.penwidth),
+						 SRCALPHA)
+			pygame.draw.rect(surface, self.fgcolor,
+					 (self.penwidth, self.penwidth, w, h), self.penwidth)
+			loc = (x-self.penwidth,y-self.penwidth)
+			
 		self.showables.append((libopengl.LowImage(surface),
-				       (x,y)))
+				       loc))
 
 	def ellipse(self, x, y, w, h, fill = False):
 		
@@ -306,8 +317,6 @@ class opengl(openexp.canvas.canvas):
 		w = int(w)
 		h = int(h)
 
-		# PBS: needs tweaking to get drawing inside rect correct
-
 		if fill:
 			surface = pygame.Surface((w,h), SRCALPHA)
 			pygame.draw.ellipse(surface, self.fgcolor, (0, 0, w, h), 0)
@@ -318,12 +327,14 @@ class opengl(openexp.canvas.canvas):
 			i = self.penwidth / 2.
 			j = self.penwidth - i
 
-			#fgrect = (0, 0, w+2*i, h+2*i)
-			#bgrect = (0+j, 0+j, w-2*j, h-2*j)
-			fgrect = (0, 0, w+2*i, h+2*i)
-			bgrect = (0+2*j, 0+2*j, w-2*j, h-2*j)
-			loc = (x-i,y-j)
-			surface = pygame.Surface((w+2*i,h+2*j), SRCALPHA)
+			fgrect = (self.penwidth-i, self.penwidth-i,
+				  self.penwidth+w+2*i, self.penwidth+h+2*i)
+			bgrect = (self.penwidth+j, self.penwidth+j,
+				  self.penwidth+w-2*j, self.penwidth+h-2*j)
+			loc = (x-self.penwidth-i,y-self.penwidth-j)
+			surface = pygame.Surface((w+2*self.penwidth+2,
+						  h+2*self.penwidth+2),
+						 SRCALPHA)
 			pygame.draw.ellipse(surface, self.fgcolor,
 					    fgrect, 0)
 			pygame.draw.ellipse(surface, self.bgcolor,
@@ -465,7 +476,10 @@ def init_display(experiment):
 		print "video.opengl.init_display(): warning: video mode not ok"
 
 	# Set the sync to VBL
-	# PBS: Currently only for linux, must add in for OSX
+
+	# PBS: Currently only for linux, must add in for OSX, but that
+	# takes Objective C code.
+	
 	# Set for nVidia linux
 	val = "1"
 	os.environ["__GL_SYNC_TO_VBLANK"] = val
