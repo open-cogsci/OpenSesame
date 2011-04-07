@@ -46,6 +46,7 @@ class keyboard_response(item.item, generic_response.generic_response):
 				 
 		if self.has("allowed_responses"):
 			l = str(self.get("allowed_responses")).split(";")
+			#self._allowed_responses = openexp.response.keys(l)
 			self._allowed_responses = l
 			if len(self._allowed_responses) == 0:
 				raise exceptions.runtime_error("'%s' are not valid allowed responses in keyboard_response '%s'" % (self.get("allowed_responses"), self.name))
