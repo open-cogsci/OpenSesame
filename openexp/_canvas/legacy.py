@@ -67,8 +67,8 @@ class legacy:
 		"""
 		
 		self.experiment = experiment
-		self.fgcolor = self.color(fgcolor)
-		self.bgcolor = self.color(bgcolor)
+		self.set_fgcolor(fgcolor)
+		self.set_bgcolor(bgcolor)
 		self.penwidth = 1
 		self.antialias = True
 		
@@ -108,8 +108,7 @@ class legacy:
 		"""
 		
 		self.surface = pygame.transform.flip(self.surface, x, y)
-		
-		
+				
 	def copy(self, canvas):
 	
 		"""
@@ -138,6 +137,15 @@ class legacy:
 		"""
 		
 		return self.experiment.resolution[1] / 2	
+		
+	def prepare(self):
+	
+		"""
+		This is the place to finish up pending canvas operations (if any),
+		so that a subsequent call to show() is extra fast.
+		"""
+		
+		pass
 		
 	def show(self):
 		
@@ -551,7 +559,10 @@ def init_display(experiment):
 	Initialize the display before the experiment begins.
 	
 	Arguments:
-	experiment -- An instance of libopensesame.experiment.experiment	
+	experiment -- An instance of libopensesame.experiment.experiment. The following properties are
+				  of particular importance: experimnent.fullscreen (bool), experiment.width (int) and
+				  experiment.height (int). The experiment also contains default font settings as
+				  experriment.font_family (str) and experiment.font_size (int).
 	"""
 			
 	# Intialize PyGame
@@ -582,7 +593,12 @@ def init_display(experiment):
 	# Create a font, falling back to the default font
 	experiment.font = pygame.font.Font(experiment.resource("%s.ttf" % experiment.font_family), experiment.font_size)			
 	if experiment.font == None:
+		if experiment.debug:
+			print "legacy.init_display(): '%s.ttf' not found, falling back to default font" % experiment.font_family
 		experiment.font = pygame.font.Font(None, experiment.font_size)
+		
+	# Set the time function to use pygame
+	experiment._time_func = pygame.time.get_ticks
 		
 def close_display(experiment):
 

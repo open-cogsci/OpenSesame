@@ -51,9 +51,9 @@ class trial:
 		
 		"""
 		Returns a timestamp of the current time
-		"""
+		"""	
 		
-		return pygame.time.get_ticks()
+		return self.experiment._time_func()
 	
 	def log(self, msg):
 		

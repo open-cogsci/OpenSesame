@@ -260,7 +260,17 @@ class experiment:
 		such as a buttonbox press.
 		"""
 		
-		response.get_key()		
+		response.get_key()	
+		
+	def _time(self):
+	
+		"""
+		This function is used for timing, but should be set
+		by the canvas backend. See openexp._canvas.legacy.init_display()
+		for an example.
+		"""
+		
+		raise openexp.exceptions.openexp_error("experiment._time(): This function should be set by the canvas backend.")
 		
 	def end(self):
 	

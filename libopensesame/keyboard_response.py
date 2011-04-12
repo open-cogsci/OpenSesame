@@ -93,7 +93,7 @@ class keyboard_response(item.item, generic_response.generic_response):
 		self.experiment.total_response_time += self.experiment.response_time
 		self.experiment.total_responses += 1
 		self.experiment.response = self._keyboard.to_chr(resp)
-						
+		
 		if self.has("correct_response"):
 			correct_response = self.get("correct_response")
 		else:

@@ -154,6 +154,7 @@ class sketchpad(item.item):
 					
 					
 		self.prepare_duration()
+		self.canvas.prepare()
 											
 		return True		
 		

@@ -49,23 +49,31 @@ def init_display(experiment):
 	Call the init_display function from the back-end
 	"""
 
-	try:
+	if experiment.debug:
 		exec("import openexp._canvas.%s" % experiment.canvas_backend)
 		exec("openexp._canvas.%s.init_display(experiment)" % experiment.canvas_backend)
-	except Exception as e:
-		raise openexp.exceptions.canvas_error("Failed to call openexp._canvas.%s.init_display()<br /><br />Error: %s" % (experiment.canvas_backend, e))				
+	else:
+		try:
+			exec("import openexp._canvas.%s" % experiment.canvas_backend)
+			exec("openexp._canvas.%s.init_display(experiment)" % experiment.canvas_backend)
+		except Exception as e:
+			raise openexp.exceptions.canvas_error("Failed to call openexp._canvas.%s.init_display()<br /><br />Error: %s" % (experiment.canvas_backend, e))				
 		
 def close_display(experiment):
 
 	"""
 	Call the close_display function from the back-end
 	"""
-
-	try:
+	
+	if experiment.debug:
 		exec("import openexp._canvas.%s" % experiment.canvas_backend)
 		exec("openexp._canvas.%s.close_display(experiment)" % experiment.canvas_backend)
-	except Exception as e:
-		raise openexp.exceptions.canvas_error("Failed to call openexp._canvas.%s.close_display()<br /><br />Error: %s" % (experiment.canvas_backend, e))						
+	else:
+		try:
+			exec("import openexp._canvas.%s" % experiment.canvas_backend)
+			exec("openexp._canvas.%s.close_display(experiment)" % experiment.canvas_backend)
+		except Exception as e:
+			raise openexp.exceptions.canvas_error("Failed to call openexp._canvas.%s.close_display()<br /><br />Error: %s" % (experiment.canvas_backend, e))						
 		
 def clean_up(verbose = False):
 	

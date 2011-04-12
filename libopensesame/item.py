@@ -281,7 +281,7 @@ class item(openexp.trial.trial):
 		
 		if time == None:
 			time = self.time()	
-		exec("self.experiment.time_%s = %d" % (self.name, time))		
+		exec("self.experiment.time_%s = %f" % (self.name, time))		
 		
 	def prepare_duration(self):
 	

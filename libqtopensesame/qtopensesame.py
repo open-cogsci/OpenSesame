@@ -1666,7 +1666,7 @@ class qtopensesame(QtGui.QMainWindow):
 		# Resume autosave, but not if opensesamerun is called
 		if self.autosave_timer != None:
 			if self.experiment.debug:
-				print "qtopnsesame.run_experiment(): resuming autosave timer"		
+				print "qtopensesame.run_experiment(): resuming autosave timer"		
 			self.autosave_timer.start()
 			
 		# Restart the experiment if necessary
