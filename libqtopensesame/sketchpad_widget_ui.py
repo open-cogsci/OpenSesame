@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'resources/sketchpad_widget.ui'
 #
-# Created: Fri Mar 25 15:35:52 2011
+# Created: Tue Apr 12 17:50:14 2011
 #      by: PyQt4 UI code generator 4.7.4
 #
 # WARNING! All changes made in this file will be lost!

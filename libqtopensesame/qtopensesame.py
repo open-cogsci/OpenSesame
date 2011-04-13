@@ -1170,6 +1170,21 @@ class qtopensesame(QtGui.QMainWindow):
 		# Set the start point
 		start = self.experiment.sanitize(self.general_ui.combobox_start.currentText())
 		self.experiment.set("start", start)
+		
+		# Sets the backend and gives a notification on change
+		if self.general_ui.combobox_backend.isEnabled():
+			canvas_backends = "legacy", "opengl", "psycho"
+			keyboard_backends = "legacy", "legacy", "psycho"
+			mouse_backends = "legacy", "legacy", "psycho"
+			index = self.general_ui.combobox_backend.currentIndex()
+			canvas_backend = canvas_backends[index]
+			keyboard_backend = keyboard_backends[index]
+			mouse_backend = mouse_backends[index]
+			if self.experiment.canvas_backend != canvas_backend:
+				self.experiment.set("canvas_backend", canvas_backend)
+				self.experiment.set("keyboard_backend", keyboard_backend)
+				self.experiment.set("mouse_backend", mouse_backend)
+				self.experiment.notify("You have selected a different backend. A restart of OpenSesame is recommended.")
 			
 		# Set the display width
 		width = self.general_ui.spinbox_width.value()
@@ -1231,7 +1246,8 @@ class qtopensesame(QtGui.QMainWindow):
 		self.general_ui.setupUi(w)
 		self.general_ui.edit_foreground.editingFinished.connect(self.apply_general_changes)
 		self.general_ui.edit_background.editingFinished.connect(self.apply_general_changes)	
-		self.general_ui.combobox_start.currentIndexChanged.connect(self.apply_general_changes)				
+		self.general_ui.combobox_start.currentIndexChanged.connect(self.apply_general_changes)
+		self.general_ui.combobox_backend.currentIndexChanged.connect(self.apply_general_changes)										
 		self.general_ui.spinbox_width.valueChanged.connect(self.apply_general_changes)
 		self.general_ui.spinbox_height.valueChanged.connect(self.apply_general_changes)
 		self.general_ui.spinbox_compensation.valueChanged.connect(self.apply_general_changes)
@@ -1265,6 +1281,17 @@ class qtopensesame(QtGui.QMainWindow):
 
 		# Select the start item		
 		self.experiment.item_combobox(self.experiment.start, [], self.general_ui.combobox_start)
+		
+		# Set the backend control
+		self.general_ui.combobox_backend.setEnabled(True)
+		if self.experiment.canvas_backend == "legacy":
+			self.general_ui.combobox_backend.setCurrentIndex(0)
+		elif self.experiment.canvas_backend == "opengl":
+			self.general_ui.combobox_backend.setCurrentIndex(1)
+		elif self.experiment.canvas_backend == "psycho":
+			self.general_ui.combobox_backend.setCurrentIndex(2)
+		else:
+			self.general_ui.combobox_backend.setEnabled(False)
 		
 		# Set the resolution
 		try:

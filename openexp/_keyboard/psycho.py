@@ -17,6 +17,7 @@ along with openexp.  If not, see <http://www.gnu.org/licenses/>.
 
 import openexp.exceptions
 from psychopy import event
+import pyglet.window.key
 
 class psycho:
 
@@ -56,6 +57,12 @@ class psycho:
 		if keylist == None:
 			self._keylist = None
 		else:
+			for key in keylist:
+				try:
+					eval("pyglet.window.key.%s" % key.upper())
+				except:
+					raise openexp.exceptions.response_error("The key '%s' is not recognized by the psycho keyboard backend. Please refer to <a href='http://pyglet.org/doc/api/pyglet.window.key-module.html'>http://pyglet.org/doc/api/pyglet.window.key-module.html</a> for a list of valid keys." % key)
+		
 			self._keylist = keylist
 							
 	def set_timeout(self, timeout = None):
