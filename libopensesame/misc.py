@@ -65,7 +65,7 @@ def opensesamerun_options():
 	parser = optparse.OptionParser("usage: opensesamerun [experiment] [options]", version = "%s '%s'" % (version, codename))
 
 	parser.set_defaults(subject = 0)
-	parser.set_defaults(logfile = "subject0.csv")
+	parser.set_defaults(logfile = None)
 	parser.set_defaults(debug = False)
 	parser.set_defaults(fullscreen = False)
 	parser.set_defaults(pylink = False)
@@ -94,6 +94,10 @@ def opensesamerun_options():
 	parser.add_option_group(group)
 
 	options, args = parser.parse_args(sys.argv)
+	
+	# Set the default logfile based on the subject nr
+	if options.logfile == None:
+		options.logfile = "subject%s.csv" % options.subject
 	
 	if len(sys.argv) > 1 and os.path.exists:
 		options.experiment = sys.argv[1]

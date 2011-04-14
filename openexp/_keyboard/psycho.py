@@ -16,10 +16,11 @@ along with openexp.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 import openexp.exceptions
+import openexp._keyboard.legacy
 from psychopy import event
 import pyglet.window.key
 
-class psycho:
+class psycho(openexp._keyboard.legacy.legacy):
 
 	"""
 	This is a canvas backend which uses PsychoPy
@@ -39,6 +40,9 @@ class psycho:
 		timeout -- an integer value specifying a timeout in milliseconds or
 				   None for no timeout (default = None)
 		"""	
+		
+		if experiment.canvas_backend != "psycho":
+			raise openexp.exceptions.response_error("The psycho keyboard backend must be used in combination with the psycho canvas backend!")		
 		
 		self.experiment = experiment
 		self.set_keylist(keylist)

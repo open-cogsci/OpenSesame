@@ -43,7 +43,7 @@ class psycho(openexp._canvas.legacy.legacy):
 		"""
 		
 		self.experiment = experiment
-		self.min_penwidth = 1.5
+		self.min_penwidth = 1
 		self.set_fgcolor(fgcolor)
 		self.set_bgcolor(bgcolor)
 		self.set_penwidth(1)
@@ -309,10 +309,10 @@ class psycho(openexp._canvas.legacy.legacy):
 			color = self.color(color)
 			
 		if not fill:			
-			self.shapestim( [[x, y], [x+w, y], [x+w, y+h], [x, y+h], [x,y]], color)
+			self.shapestim( [[x, y], [x+w, y], [x+w, y+h], [x, y+h]], color, close = True)
 		else:
 			pos = x + w/2 - self.xcenter(), self.ycenter() - y - h/2
-			stim = visual.PatchStim(win = self.experiment.window, pos = pos, size = [w, h], color = color, tex = None)
+			stim = visual.PatchStim(win = self.experiment.window, pos = pos, size = [w, h], color = color, tex = None, interpolate = False)
 			self.stim_list.append(stim)
 			
 	def ellipse(self, x, y, w, h, fill = False, color = None):
@@ -339,11 +339,11 @@ class psycho(openexp._canvas.legacy.legacy):
 			
 		pos = x - self.xcenter() + w/2, self.ycenter() - y - h/2
 
-		stim = visual.PatchStim(win = self.experiment.window, mask = "circle", pos = pos, size = [w, h], color = color, tex = None)
+		stim = visual.PatchStim(win = self.experiment.window, mask = "circle", pos = pos, size = [w, h], color = color, tex = None, interpolate = True)
 		self.stim_list.append(stim)
 		
 		if not fill:
-			stim = visual.PatchStim(win = self.experiment.window, mask = "circle", pos = pos, size = [w-2*self.penwidth, h-2*self.penwidth], color = self.bgcolor, tex = None)
+			stim = visual.PatchStim(win = self.experiment.window, mask = "circle", pos = pos, size = [w-2*self.penwidth, h-2*self.penwidth], color = self.bgcolor, tex = None, interpolate = True)
 			self.stim_list.append(stim)			
 			
 	def text_size(self, text):
@@ -506,7 +506,7 @@ class psycho(openexp._canvas.legacy.legacy):
 		stim = visual.SimpleImageStim(win = self.experiment.window, image = pil_img, pos = pos)
 		self.stim_list.append(stim)
 		
-	def shapestim(self, vertices, color = None, fill = False, fix_coor = True):
+	def shapestim(self, vertices, color = None, fill = False, fix_coor = True, close = False):
 	
 		"""
 		* Note: Specific to the PsychoPy backend, primarily intended for internal use. Using this function
@@ -539,7 +539,7 @@ class psycho(openexp._canvas.legacy.legacy):
 		else:
 			fill = None		
 			
-		stim = visual.ShapeStim(self.experiment.window, units = "pix", lineWidth = self.penwidth, vertices = _vertices, lineColor = color, closeShape = False, fillColor = fill)
+		stim = visual.ShapeStim(self.experiment.window, units = "pix", lineWidth = self.penwidth, vertices = _vertices, lineColor = color, closeShape = close, fillColor = fill, interpolate = False)
 		self.stim_list.append(stim)
 
 """
@@ -564,17 +564,25 @@ def init_display(experiment):
 	global _experiment
 	_experiment = experiment	
 	
+	# Set the PsychoPy monitor, default to testMonitor
 	if experiment.has("psychopy_monitor"):
 		monitor = experiment.get("psychopy_monitor")
 	else:
 		monitor = "testMonitor"
 		
+	# Set the PsychoPy wintype, default to PyGlet
 	if experiment.has("psychopy_wintype"):
 		wintype = experiment.get("psychopy_wintype")
 	else:
 		wintype = "pyglet"
+		
+	# Set the PsychoPy waitblanking option, default to True
+	if experiment.has("psychopy_waitblanking") and experiment.get("psychopy_waitblanking") == "no":
+		waitblanking = False
+	else:
+		waitblanking = True
 			
-	experiment.window = visual.Window( [experiment.width, experiment.height], fullscr = experiment.fullscreen, monitor = monitor, units = "pix", winType = "pyglet")
+	experiment.window = visual.Window( [experiment.width, experiment.height], waitBlanking = waitblanking, fullscr = experiment.fullscreen, monitor = monitor, units = "pix", winType = "pyglet")
 	experiment.clock = core.Clock()	
 	experiment._time_func = _time
 				
