@@ -92,17 +92,19 @@ class pool_widget(QtGui.QWidget):
 	def add(self, files):
 	
 		"""
-		Add a list of files
+		Add a list of files to the pool.
+		
+		Arguments:
+		files - A list of paths
 		"""
 
 		basename = ""
 		for path in files:
-			path = str(path)
+			path = unicode(path)
 			basename = os.path.basename(path)
 			if not os.path.isfile(path):
 				self.main_window.experiment.notify("'%s' is not a regular file and could not be added to the file pool." % path)
-			else:
-			
+			else:			
 				# If a similar file already exists in the pool, ask before overwriting
 				if os.path.exists(os.path.join(self.main_window.experiment.pool_folder, basename)):
 					resp = QtGui.QMessageBox.question(self, "Overwrite", "A file named '%s' already exists in the pool. Do you want to overwrite this file?" % basename, QtGui.QMessageBox.Yes, QtGui.QMessageBox.No)

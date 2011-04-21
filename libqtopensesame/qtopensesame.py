@@ -362,7 +362,7 @@ class qtopensesame(QtGui.QMainWindow):
 		
 		# Unpack the string with recent files and only remember those that still exist
 		self.recent_files = []
-		for path in str(settings.value("recent_files", "").toString()).split(";;"):
+		for path in unicode(settings.value("recent_files", "").toString()).split(";;"):
 			if os.path.exists(path):
 				self.recent_files.append(path)		
 		
@@ -924,7 +924,11 @@ class qtopensesame(QtGui.QMainWindow):
 	def open_file(self, dummy = None, path = None):
 	
 		"""
-		Open a file
+		Opens a .opensesame or .opensesame.tar.gz file
+		
+		Keyword arguments:
+		dummy -- An unused argument which is passed by the signal (default = None)
+		path -- The path to the file. If None, a file dialog is presented (default = None)
 		"""		
 		
 		self.save_unsaved_changes()
@@ -934,26 +938,24 @@ class qtopensesame(QtGui.QMainWindow):
 		if path == None or path == "":
 			return				
 			
-		self.set_status("Opening ...")						
-			
+		path = unicode(path)
+		self.set_status("Opening ...")									
 		self.close_all_tabs()			
 	
 		try:
-			exp = experiment.experiment(self, "Experiment", str(path))
+			exp = experiment.experiment(self, "Experiment", path)
 		except Exception as e:
 			self.experiment.notify("<b>Error:</b> Failed to open '%s'<br /><b>Description:</b> %s<br /><br />Make sure that the file is in .opensesame or .opensesame.tar.gz format. If you should be able to open this file, but can't, please go to http://www.cogsci.nl/opensesame to find out how to recover your experiment and file a bug report." % (path, e))
 			return						
 		
-		self.current_path = str(path)		
+		self.current_path = path
 		self.experiment = exp
 		self.header_widget.item = self.experiment
 		self.refresh()
 		self.open_general_tab()					
-		self.window_message(self.current_path)
-		
+		self.window_message(self.current_path)		
 		self.set_status("Opened %s" % self.current_path)					
 		self.set_unsaved(False)		
-		
 		self.update_recent_files()		
 		self.default_logfile_folder = os.path.dirname(self.current_path)
 				
@@ -1021,7 +1023,7 @@ class qtopensesame(QtGui.QMainWindow):
 	
 		path, file_type = QtGui.QFileDialog.getSaveFileNameAndFilter(self.ui.centralwidget, "Save file as ...", path, self.file_type_filter)
 		if path != None and path != "":				
-			self.current_path = str(path)
+			self.current_path = unicode(path)
 			self.save_file(overwrite = False)
 			
 	def close_all_tabs(self):

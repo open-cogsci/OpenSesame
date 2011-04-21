@@ -65,7 +65,7 @@ class text_display(item.item):
 		self.c.set_font(self.get("font_family"), self.get("font_size"))
 		
 		# Split the content by line separator <br />
-		content = self.experiment.unsanitize(self.eval_text(self.get("content"))).split("<br />")
+		content = self.experiment.unsanitize(self.eval_text(self.get("content"))).split("\n")
 		
 		if self.get("align") != "center":
 			max_width = 0

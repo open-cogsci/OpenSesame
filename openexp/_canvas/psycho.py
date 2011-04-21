@@ -582,9 +582,13 @@ def init_display(experiment):
 	else:
 		waitblanking = True
 			
-	experiment.window = visual.Window( [experiment.width, experiment.height], waitBlanking = waitblanking, fullscr = experiment.fullscreen, monitor = monitor, units = "pix", winType = "pyglet")
+	experiment.window = visual.Window( [experiment.width, experiment.height], waitBlanking = waitblanking, fullscr = experiment.fullscreen, monitor = monitor, units = "pix", winType = "pyglet")		
 	experiment.clock = core.Clock()	
 	experiment._time_func = _time
+
+	# If pyglet is being used, change the window caption. Don't know how to do this for pygame (regular set_caption() is ineffective)
+	if wintype == "pyglet":
+		experiment.window.winHandle.set_caption("OpenSesame (PsychoPy backend)")
 				
 def close_display(experiment):
 

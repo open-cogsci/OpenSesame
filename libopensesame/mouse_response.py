@@ -27,6 +27,7 @@ class mouse_response(item.item, generic_response.generic_response):
 		Initialize the loop
 		"""
 		
+		self.flush = "yes"		
 		self.show_cursor = "yes"
 		self.item_type = "mouse_response"
 		self.timeout = "infinite"	
@@ -51,6 +52,11 @@ class mouse_response(item.item, generic_response.generic_response):
 		
 		item.item.prepare(self)		
 		self._mouse = openexp.mouse.mouse(self.experiment)		
+		
+		# Flush responses, to make sure that earlier responses
+		# are not carried over
+		if self.get("flush") == "yes":
+			self._mouse.flush()				
 		
 		self._allowed_responses = []					 
 		if self.has("allowed_responses"):

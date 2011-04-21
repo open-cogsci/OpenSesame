@@ -435,20 +435,17 @@ class experiment(item.item, openexp.experiment.experiment):
 		
 		# If the extension is .opensesame, save the script
 		# as plain text
-		if ext == ".opensesame":
-		
+		if ext == ".opensesame":		
 			if os.path.exists(path) and not overwrite:
-				return False
-				
+				return False				
 			if self.debug:
-				print "experiment.open(): saving as .opensesame file"		
-						
+				print "experiment.open(): saving as .opensesame file"								
 			f = open(path, "w")
 			f.write(self.to_string())
 			f.close()
 			return path
 
-		
+		# Use the .opensesame.tar.gz extension by default
 		if path[-len(".opensesame.tar.gz"):] != ".opensesame.tar.gz":
 			path += ".opensesame.tar.gz"
 			
@@ -458,18 +455,26 @@ class experiment(item.item, openexp.experiment.experiment):
 		if self.debug:
 			print "experiment.open(): saving as .opensesame.tar.gz file"		
 					
-		script = self.to_string()
-		
+		# Write the script to a text file
+		script = self.to_string()				
 		script_path = os.path.join(self.pool_folder, "script.opensesame")
 		f = open(script_path, "w")
 		f.write(script)
 		f.close()
-
-		tar = tarfile.open(path, "w:gz")
+		
+		# Create the archive in a a temporary folder and move it
+		# afterwards. This hack is needed, because tarfile fails
+		# on a Unicode path.
+		tmp_path = tempfile.mktemp(suffix = ".opensesame.tar.gz")
+		tar = tarfile.open(tmp_path, "w:gz")
 		tar.add(script_path, "script.opensesame")
 		os.remove(script_path)
 		tar.add(self.pool_folder, "pool", True)
-		tar.close()
+		tar.close()		
+		
+		# Move the file to the intended location
+		shutil.move(tmp_path, path)
+		
 		return path
 
 	def open(self, path):
@@ -482,7 +487,7 @@ class experiment(item.item, openexp.experiment.experiment):
 		
 		# If the path is not a path at all, but a string containing
 		# the script, return it
-		if type(path) != str or not os.path.exists(path):
+		if (type(path) != str and type(path) != unicode) or not os.path.exists(path):
 			if self.debug:
 				print "experiment.open(): opening from string"
 			return path

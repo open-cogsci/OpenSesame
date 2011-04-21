@@ -1,3 +1,6 @@
+0.14
+- Switch to the new backend independent measure
+
 0.13
 - Add dummy mode so you can test your experiment without an sr-box
 

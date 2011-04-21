@@ -1,4 +1,10 @@
-0.24 "C C"
+0.24 "Cody Crick"
+- Added back-end independence
+- Added experimental PsychoPy backend (psycho)
+- Added experimental OpenGL backend (psycho)
+- Fixed a bug in the logger where a variable could be logged multiple times
+- Fixed a bug in the text_display plug-in where multiple lines weren't split properly
+- Fixed a bug where filenames with special characters weren't handled properly
 
 0.23 "Blue Beck"
 - Fixed a bug where no items could be added if the main sequence was replaced

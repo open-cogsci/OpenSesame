@@ -47,7 +47,7 @@ class logger(item.item):
 			if self.get("auto_log") == "yes":
 				self.logvars = []
 				for logvar, val, item in self.experiment.var_list():
-					if self.has(logvar):
+					if self.has(logvar) and logvar not in self.logvars:
 						self.logvars.append(logvar)			
 						if self.experiment.debug:
 							print "logger.run(): auto-logging '%s'" % logvar			

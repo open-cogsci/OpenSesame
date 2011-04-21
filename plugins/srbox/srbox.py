@@ -25,11 +25,12 @@ import serial
 import time
 import os
 import os.path
-import pygame
 
 from PyQt4 import QtGui, QtCore
 
 version = 0.14
+
+_time_func = None
 
 class srbox(item.item, generic_response.generic_response):
 
@@ -69,6 +70,10 @@ class srbox(item.item, generic_response.generic_response):
 		Prepare the item.
 		"""
 		
+		global _time_func
+		
+		_time_func = self.experiment._time_func
+		
 		# Pass the word on to the parent
 		item.item.prepare(self)
 		
@@ -94,10 +99,9 @@ class srbox(item.item, generic_response.generic_response):
 		
 		if self.experiment.debug:
 			print "srbox.prepare(): allowed responses set to %s" % self._allowed_responses		
-		
-		if self.has("dummy") and self.get("dummy") == "yes":
-			
-			self._keyboard = openexp.keyboard.keyboard(self.experiment)
+
+		self._keyboard = openexp.keyboard.keyboard(self.experiment)		
+		if self.has("dummy") and self.get("dummy") == "yes":			
 			self._resp_func = self._keyboard.get_key
 			
 		else:
@@ -140,7 +144,7 @@ class srbox(item.item, generic_response.generic_response):
 		# Set the onset time
 		self.set_item_onset()
 
-		# Flush the keyboard so we can use the escape key		
+		# Flush the keyboard so we can use the escape key
 		self._keyboard.flush()
 		
 		# If no start response interval has been set, set it to the onset of
@@ -423,17 +427,17 @@ def srbox_get(allowed_keys = None, timeout = None, debug = True):
 	Returns a timestamp, buttonlist tuple.
 	"""		
 
-	global _srbox, KEY1, KEY2, KEY3, KEY4, KEY5
+	global _srbox, KEY1, KEY2, KEY3, KEY4, KEY5, _time_func
 
 	# Flush the input
 	#_srbox.flushInput()
 			
-	c = pygame.time.get_ticks()
+	c = _time_func()
 	t = c
 	while timeout == None or t - c < timeout:
 
 		j = _srbox.read(1)
-		t = pygame.time.get_ticks()
+		t = _time_func()
 		if j != "" and j != '\x00':				
 			k = ord(j)
 			
