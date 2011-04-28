@@ -52,11 +52,14 @@ class sampler(item.item):
 		
 		if sample == "":
 			raise exceptions.runtime_error("No sample has been specified in sampler '%s'" % self.name)
-	
-		try:
-			self.sampler = openexp.sampler.sampler(sample)
-		except Exception as e:
-			raise exceptions.runtime_error("Failed to load sample in sampler '%s': %s" % (self.name, e))
+
+		if self.experiment.debug:
+			self.sampler = openexp.sampler.sampler(self.experiment, sample)	
+		else:
+			try:
+				self.sampler = openexp.sampler.sampler(self.experimentsample)
+			except Exception as e:		
+				raise exceptions.runtime_error("Failed to load sample in sampler '%s': %s" % (self.name, e))
 			
 		pan = self.get("pan")
 		if pan == -20:

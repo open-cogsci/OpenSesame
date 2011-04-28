@@ -50,7 +50,7 @@ class synth(item.item):
 		item.item.prepare(self)		
 		
 		try:
-			self.synth = openexp.synth.synth(self.get("osc"), self.get("freq"), self.get("length"), self.get("attack"), self.get("decay"))
+			self.synth = openexp.synth.synth(self.experiment, self.get("osc"), self.get("freq"), self.get("length"), self.get("attack"), self.get("decay"))
 		except Exception as e:
 			raise exceptions.runtime_error("Failed to generate sound in synth '%s': %s" % (self.name, e))
 			

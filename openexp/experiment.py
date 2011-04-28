@@ -46,7 +46,8 @@ class experiment:
 		self.canvas_backend = "legacy"
 		self.keyboard_backend = "legacy"
 		self.mouse_backend = "legacy"
-		self.sound_backend = "legacy"
+		self.sampler_backend = "legacy"
+		self.synth_backend = "legacy"
 
 		# Display parameters
 		self.resolution = 1024, 768
