@@ -167,11 +167,54 @@ class legacy:
 		block -- If True, block until the sound is finished. (default == False)
 		"""
 	
-		self.sound.play(maxtime = self._stop_after, fade_ms = self._fade_in)
-		
+		self.sound.play(maxtime = self._stop_after, fade_ms = self._fade_in)		
 		if block:
-			while pygame.mixer.get_busy():
-				pass
+			self.wait()
+						
+	def stop(self):
+	
+		"""
+		Stops the currently playing sound (if any)
+		"""
+		
+		pygame.mixer.stop()
+		
+	def pause(self):
+	
+		"""
+		Pauses playback (if any)
+		"""
+		
+		pygame.mixer.pause()
+		
+	def resume(self):
+	
+		"""
+		Resumes playback (if any)
+		"""
+		
+		pygame.mixer.unpause()
+		
+	def is_playing(self):
+	
+		"""
+		Checks if a sound is currently playing
+		
+		Returns:
+		True if a sound is playing, False if not
+		"""
+		
+		return pygame.mixer.get_busy()		
+		
+	def wait(self):
+	
+		"""
+		Blocks until the sound has finished playing or
+		returns right away if no sound is playing
+		"""
+		
+		while pygame.mixer.get_busy():
+			pass
 	
 freq = 48000
 

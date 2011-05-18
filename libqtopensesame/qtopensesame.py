@@ -1158,13 +1158,17 @@ class qtopensesame(QtGui.QMainWindow):
 	
 		"""
 		Sets the experiment variables based on the controls
+		of the general tab
+		
+		dummy -- an unused parameter that is passed by the signal
 		"""
 		
+		# Skip if the general tab is locked and lock it otherwise
 		if self.ignore_general_changes:
-			return
-		
+			return		
 		self.ignore_general_changes = True		
 		
+		# Set the title and the description
 		title = self.experiment.sanitize(self.header_widget.edit_name.text())
 		self.experiment.set("title", title)
 		desc = self.experiment.sanitize(self.header_widget.edit_desc.text())
@@ -1172,7 +1176,16 @@ class qtopensesame(QtGui.QMainWindow):
 				
 		# Set the start point
 		start = self.experiment.sanitize(self.general_ui.combobox_start.currentText())
-		self.experiment.set("start", start)		
+		self.experiment.set("start", start)
+		
+		# Set the backend
+		i = self.general_ui.combobox_backend.currentIndex()
+		backend = openexp.backend_info.backend_list.values()[i]
+		self.experiment.set("canvas_backend", backend["canvas"])
+		self.experiment.set("keyboard_backend", backend["keyboard"])
+		self.experiment.set("mouse_backend", backend["mouse"])
+		self.experiment.set("sampler_backend", backend["sampler"])
+		self.experiment.set("synth_backend", backend["synth"])
 			
 		# Set the display width
 		width = self.general_ui.spinbox_width.value()
@@ -1196,6 +1209,7 @@ class qtopensesame(QtGui.QMainWindow):
 		background = self.experiment.sanitize(self.general_ui.edit_background.text())
 		self.experiment.set("background", background)
 
+		# Refresh the interface and unlock the general tab
 		self.refresh()
 		self.ignore_general_changes = False					
 				
@@ -1237,6 +1251,7 @@ class qtopensesame(QtGui.QMainWindow):
 		self.general_ui.label_opensesame.setText(unicode(self.general_ui.label_opensesame.text()).replace("[version]", self.version).replace("[codename]", self.codename))
 		
 		# Set the backend combobox
+		self.general_ui.combobox_backend.currentIndexChanged.connect(self.apply_general_changes)
 		for backend in openexp.backend_info.backend_list:
 			desc = openexp.backend_info.backend_list[backend]["description"]
 			self.general_ui.combobox_backend.addItem("%s -- %s" % (backend, desc))		
@@ -1269,6 +1284,7 @@ class qtopensesame(QtGui.QMainWindow):
 		# Select the start item		
 		self.experiment.item_combobox(self.experiment.start, [], self.general_ui.combobox_start)
 		
+		# Select the backend
 		backend = openexp.backend_info.match(self.experiment)
 		if backend == "custom":
 			self.general_ui.combobox_backend.setDisabled(True)
