@@ -46,10 +46,8 @@ class sampler(item.item):
 		Prepare the sampler
 		"""			
 		
-		item.item.prepare(self)		
-			
-		sample = self.experiment.get_file(self.get("sample"))
-		
+		item.item.prepare(self)					
+		sample = self.experiment.get_file(self.eval_text(self.sample))		
 		if sample == "":
 			raise exceptions.runtime_error("No sample has been specified in sampler '%s'" % self.name)
 

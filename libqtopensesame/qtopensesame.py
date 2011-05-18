@@ -45,6 +45,7 @@ import libqtopensesame.inline_editor
 import libqtopensesame.syntax_highlighter
 import libqtopensesame.preferences_widget
 import openexp.exceptions
+import openexp.backend_info
 import traceback
 import optparse
 
@@ -1171,22 +1172,7 @@ class qtopensesame(QtGui.QMainWindow):
 				
 		# Set the start point
 		start = self.experiment.sanitize(self.general_ui.combobox_start.currentText())
-		self.experiment.set("start", start)
-		
-		# Sets the backend and gives a notification on change
-		if self.general_ui.combobox_backend.isEnabled():
-			canvas_backends = "legacy", "opengl", "psycho"
-			keyboard_backends = "legacy", "legacy", "psycho"
-			mouse_backends = "legacy", "legacy", "psycho"
-			index = self.general_ui.combobox_backend.currentIndex()
-			canvas_backend = canvas_backends[index]
-			keyboard_backend = keyboard_backends[index]
-			mouse_backend = mouse_backends[index]
-			if self.experiment.canvas_backend != canvas_backend:
-				self.experiment.set("canvas_backend", canvas_backend)
-				self.experiment.set("keyboard_backend", keyboard_backend)
-				self.experiment.set("mouse_backend", mouse_backend)
-				self.experiment.notify("You have selected a different backend. A restart of OpenSesame is recommended.")
+		self.experiment.set("start", start)		
 			
 		# Set the display width
 		width = self.general_ui.spinbox_width.value()
@@ -1215,28 +1201,23 @@ class qtopensesame(QtGui.QMainWindow):
 				
 	def init_general_tab(self):
 	
-		"""
-		Create the controls in the general tab
-		"""
+		"""Initializes the general tab"""
 		
 		# Set the header, with the icon, label and script button
-		self.header_widget = general_header_widget(self.experiment)
-		
+		self.header_widget = general_header_widget(self.experiment)		
 		button_help = QtGui.QPushButton(self.experiment.icon("help"), "")
 		button_help.setIconSize(QtCore.QSize(16, 16))
 		button_help.clicked.connect(self.open_general_help_tab)
-		button_help.setToolTip("Tell me more about OpenSesame!")
-		
+		button_help.setToolTip("Tell me more about OpenSesame!")		
 		header_hbox = QtGui.QHBoxLayout()
 		header_hbox.addWidget(self.experiment.label_image("experiment_large"))
 		header_hbox.addWidget(self.header_widget)		
 		header_hbox.addStretch()
 		header_hbox.addWidget(button_help)
-		header_hbox.setContentsMargins(0, 0, 0, 16)	
-		
+		header_hbox.setContentsMargins(0, 0, 0, 16)			
 		header_widget = QtGui.QWidget()
-		header_widget.setLayout(header_hbox)		
-		
+		header_widget.setLayout(header_hbox)
+				
 		# Script editor		
 		self.edit_script = libqtopensesame.inline_editor.inline_editor(self.experiment)
 		self.edit_script.apply.clicked.connect(self.apply_general_script)
@@ -1249,12 +1230,16 @@ class qtopensesame(QtGui.QMainWindow):
 		self.general_ui.edit_foreground.editingFinished.connect(self.apply_general_changes)
 		self.general_ui.edit_background.editingFinished.connect(self.apply_general_changes)	
 		self.general_ui.combobox_start.currentIndexChanged.connect(self.apply_general_changes)
-		self.general_ui.combobox_backend.currentIndexChanged.connect(self.apply_general_changes)										
 		self.general_ui.spinbox_width.valueChanged.connect(self.apply_general_changes)
 		self.general_ui.spinbox_height.valueChanged.connect(self.apply_general_changes)
 		self.general_ui.spinbox_compensation.valueChanged.connect(self.apply_general_changes)
 		self.general_ui.checkbox_show_script.toggled.connect(self.toggle_script_editor)						
 		self.general_ui.label_opensesame.setText(unicode(self.general_ui.label_opensesame.text()).replace("[version]", self.version).replace("[codename]", self.codename))
+		
+		# Set the backend combobox
+		for backend in openexp.backend_info.backend_list:
+			desc = openexp.backend_info.backend_list[backend]["description"]
+			self.general_ui.combobox_backend.addItem("%s -- %s" % (backend, desc))		
 		
 		vbox = QtGui.QVBoxLayout()
 		vbox.addWidget(header_widget)
@@ -1270,31 +1255,29 @@ class qtopensesame(QtGui.QMainWindow):
 		
 	def general_widget(self):
 	
-		"""
-		Set the controls of the general tab based on the variables
-		"""
+		"""Set the controls of the general tab based on the variables"""
 		
 		if self.experiment.debug:
 			print "qtopensesame.general_widget()"
 		
+		# Lock the general tab to prevent a recursive loop
 		self.ignore_general_changes = True
 		
+		# Set the header containing the titel etc
 		self.set_header_label()
 
 		# Select the start item		
 		self.experiment.item_combobox(self.experiment.start, [], self.general_ui.combobox_start)
 		
-		# Set the backend control
-		self.general_ui.combobox_backend.setEnabled(True)
-		if self.experiment.canvas_backend == "legacy":
-			self.general_ui.combobox_backend.setCurrentIndex(0)
-		elif self.experiment.canvas_backend == "opengl":
-			self.general_ui.combobox_backend.setCurrentIndex(1)
-		elif self.experiment.canvas_backend == "psycho":
-			self.general_ui.combobox_backend.setCurrentIndex(2)
+		backend = openexp.backend_info.match(self.experiment)
+		if backend == "custom":
+			self.general_ui.combobox_backend.setDisabled(True)
 		else:
-			self.general_ui.combobox_backend.setEnabled(False)
-		
+			self.general_ui.combobox_backend.setDisabled(False)
+			desc = openexp.backend_info.backend_list[backend]["description"]
+			i = self.general_ui.combobox_backend.findText("%s -- %s" % (backend, desc))
+			self.general_ui.combobox_backend.setCurrentIndex(i)
+				
 		# Set the resolution
 		try:
 			self.general_ui.spinbox_width.setValue(int(self.experiment.width))
@@ -1311,20 +1294,20 @@ class qtopensesame(QtGui.QMainWindow):
 		# Set the colors		
 		self.general_ui.edit_foreground.setText(str(self.experiment.foreground))
 		self.general_ui.edit_background.setText(str(self.experiment.background))
-						
+			
+		# Re-generate the opensesame script
 		try:
 			self.edit_script.edit.setPlainText(self.experiment.to_string())
 		except libopensesame.exceptions.script_error as e:
 			self.experiment.notify("</>Failed to generate script:</b> %s" % e)
 			self.edit_script.edit.setText("Failed to generate script!")
 
+		# Release the general tab
 		self.ignore_general_changes = False		
 		
 	def open_general_tab(self, reopen = False, index = None, focus = True):
 	
-		"""
-		Opens the general tab
-		"""
+		"""Shows the general tab"""
 		
 		for i in range(self.experiment.ui.tabwidget.count()):
 			w = self.ui.tabwidget.widget(i)
@@ -1346,9 +1329,7 @@ class qtopensesame(QtGui.QMainWindow):
 		
 	def init_unused_tab(self):
 	
-		"""
-		Build the unused tab
-		"""
+		"""Initializes the unused tab"""
 		
 		# Set the header, with the icon, label and script button
 		header_hbox = QtGui.QHBoxLayout()
@@ -1382,7 +1363,12 @@ class qtopensesame(QtGui.QMainWindow):
 	def open_unused_tab(self, reopen = False, index = None, focus = True):
 	
 		"""
-		Open the unused tab
+		Shows the unused tab
+		
+		Keyword arguments:
+		reopen -- indicates if the tab should be closed and reopened if it's already open (default = False)
+		index -- indicates a specific position where the tab should be inserted (default = None)
+		focus -- indocates whether the tab should be shown immediately (default = True)
 		"""
 		
 		for i in range(self.experiment.ui.tabwidget.count()):
@@ -1403,9 +1389,7 @@ class qtopensesame(QtGui.QMainWindow):
 					
 	def purge_unused(self):
 	
-		"""
-		Purge all unused items
-		"""		
+		"""Remove all unused items from the items list"""		
 		
 		resp = QtGui.QMessageBox.question(self.ui.centralwidget, "Permanently delete items?", "Are you sure you want to permanently delete all unused items? This action cannot be undone.", QtGui.QMessageBox.Yes, QtGui.QMessageBox.No)
 		if resp == QtGui.QMessageBox.No:
@@ -1427,7 +1411,10 @@ class qtopensesame(QtGui.QMainWindow):
 	def build_item_list(self, name = None):
 	
 		"""
-		Refresh the item list
+		Refreshes the item list
+		
+		Keyword arguments:
+		name -- a name of the item that has called the build (default = None)
 		"""
 		
 		if self.experiment.debug:
@@ -1438,7 +1425,10 @@ class qtopensesame(QtGui.QMainWindow):
 	def select_item(self, name):
 	
 		"""
-		Select an item from the itemlist
+		Selects an item from the itemlist and opens the corresponding edit tab
+		
+		Arguments:
+		name -- the name of the item
 		"""
 		
 		if self.experiment.debug:
@@ -1451,10 +1441,16 @@ class qtopensesame(QtGui.QMainWindow):
 		if name in self.experiment.items:
 			self.experiment.items[name].open_edit_tab()
 					
-	def open_item(self, widget, column):
+	def open_item(self, widget, dummy = None):
 	
 		"""
-		Open a tab belonging to a widget
+		Open a tab belonging to a widget in the item tree
+		
+		Arguments:
+		widget -- a QTreeWidgetItem
+		
+		Keyword arguments:
+		dummy -- an unused parameter which is passed on automatically by the signaller
 		"""
 	
 		if widget.name == "__general__":
@@ -1468,6 +1464,9 @@ class qtopensesame(QtGui.QMainWindow):
 	
 		"""
 		Copy a file to the file pool
+		
+		Arguments:
+		fname -- full path to file		
 		"""
 		
 		renamed = False
@@ -1484,9 +1483,7 @@ class qtopensesame(QtGui.QMainWindow):
 		
 	def get_ready(self):
 	
-		"""
-		Finalize all items, to prepare for running or saving
-		"""
+		"""Give all items the opportunity to get ready for running or saving"""
 		
 		# Redo the get_ready loop until no items report having done
 		# anything		
@@ -1504,8 +1501,10 @@ class qtopensesame(QtGui.QMainWindow):
 	def call_opensesamerun(self, exp):
 	
 		"""
-		Runs the experiment as a separate process by
-		calling opensesamerun		
+		Runs an experiment using opensesamerun
+		
+		Arguments:
+		exp -- an instance of libopensesame.experiment.experiment
 		"""
 		
 		# Temporary file for the standard output and experiment
@@ -1575,7 +1574,11 @@ class qtopensesame(QtGui.QMainWindow):
 	def experiment_finished(self, exp):
 	
 		"""
-		Inform the user that the experiment was successfully terminated
+		Presents a dialog informing the user that the experiment is finished and
+		ask if the logfile should be copied to the file pool
+		
+		Arguments:
+		exp -- an instance of libopensesame.experiment.experiment
 		"""
 					
 		# Report success and copy the logfile to the filepool if necessary
@@ -1586,7 +1589,11 @@ class qtopensesame(QtGui.QMainWindow):
 	def run_experiment(self, dummy = None, fullscreen = True):
 	
 		"""
-		Run the experiment		
+		Runs the current experiment
+		
+		Keyword arguments:
+		dummy -- a dummy argument that is passed by signaler (default = None)
+		fullscreen -- a boolean to indicate if the window should be fullscreen (default = True)
 		"""
 				
 		# Before we run the experiment, we parse it in three steps
@@ -1704,17 +1711,19 @@ class qtopensesame(QtGui.QMainWindow):
 			
 	def run_experiment_in_window(self):
 	
-		"""
-		Run the experiment in a window
-		"""
+		"""Runs the experiment in a window"""
 	
 		self.run_experiment(fullscreen = False)
 				
 	def refresh(self, changed_item = None, refresh_edit = True, refresh_script = True):
 	
 		"""
-		Refresh all parts of the interface that may have changed
-		because of a changed item
+		Refreshes all parts of the interface that may have changed because of a changed item
+		
+		Keyword arguments:
+		changed_item -- the name of a specific item that should be refreshed (default = None)
+		refresh_edit -- a boolean to indicate if the edit tabs should be refreshed (default = True)
+		refresh_script -- a boolean to indicate if the script tabs should be refreshed (default = True)
 		"""
 		
 		# Make sure the refresh does not get caught in
@@ -1749,21 +1758,24 @@ class qtopensesame(QtGui.QMainWindow):
 					if w.script_item in self.experiment.items:
 						self.experiment.items[w.script_item].script_widget()						
 						
-		self.ui.tabwidget.setCurrentIndex(index)
-						
-		self.build_item_list()
-		
+		self.ui.tabwidget.setCurrentIndex(index)						
+		self.build_item_list()		
 		self.refresh_variable_inspector()
 		self.refresh_pool()
 		self.set_unsaved()
-		
+				
 		self.lock_refresh = False
 		
 	def hard_refresh(self, changed_item):
 	
 		"""
-		Closes and reopens the script and edit tab for the
-		changed item
+		Closes and reopens the tabs for a changed item. This is different
+		from the normal refresh in the sense that here the tabs are reinitialized
+		from scratch which is necessary if a new instance of the item has been
+		created.
+		
+		Arguments:
+		changed_item -- the name of the changed item
 		"""
 		
 		# Make sure the refresh does not get caught in
@@ -1807,45 +1819,46 @@ class qtopensesame(QtGui.QMainWindow):
 	
 		"""
 		Adds a list of plugins to a menu
+		
+		Arguments:
+		menu -- a QMenu instance
 		"""	
 		
 		cat_menu = {}
-
 		for plugin in libopensesame.plugins.list_plugins():
 			if self.experiment.debug:
-				print "qtopensesame.refresh_plugins(): found plugin '%s'" % plugin
-							
-			cat = libopensesame.plugins.plugin_category(plugin)
-			
+				print "qtopensesame.refresh_plugins(): found plugin '%s'" % plugin							
+			cat = libopensesame.plugins.plugin_category(plugin)			
 			if cat not in cat_menu:
 				cat_menu[cat] = QtGui.QMenu(cat)			
-				cat_menu[cat] = menu.addMenu(self.experiment.icon("plugins_large"), cat)
-							
+				cat_menu[cat] = menu.addMenu(self.experiment.icon("plugins_large"), cat)							
 			cat_menu[cat].addAction(plugin_action(self, cat_menu[cat], plugin))		
-		
-	def choose_and_add_plugin(self):
-	
-		"""
-		Ask the user which plugin to add and do it
-		"""
-		
-		menu = QtGui.QMenu()
-		self.populate_plugin_menu(menu)			
-		menu.exec_(menu.mapFromGlobal(QtGui.QCursor.pos()))
-								
+										
 	def add_item(self, item_type, refresh = True):
 	
 		"""
-		A generic function to add items
+		Adds a new item to the item list
+		
+		Arguments:
+		item_type -- the type of the item to add
+		
+		Keyword arguments:
+		refresh -- a bool to indicate if the interface should be refreshed (default = True)
+		
+		Returns:
+		The name of the new item
 		"""
-
-		name = self.experiment.unique_name("%s" % item_type)
-				
+		
 		if self.experiment.debug:	
-			print "qtopensesame.add_item(): adding %s" % item_type		
-					
+			print "qtopensesame.add_item(): adding %s" % item_type				
+
+		# Get a unique name
+		name = self.experiment.unique_name("%s" % item_type)
+							
+		# If the item type is a plugin, we need to use the plugin mechanism		
 		if libopensesame.plugins.is_plugin(item_type):
 		
+			# In debug mode, exceptions are not caught
 			if self.experiment.debug:
 				item = libopensesame.plugins.load_plugin(item_type, name, self.experiment, None, self.experiment.item_prefix())				
 			else:
@@ -1855,12 +1868,13 @@ class qtopensesame(QtGui.QMainWindow):
 					self.experiment.notify("Failed to load plugin '%s'. Error: %s" % (item_type, e))
 					return
 
-		else:				
+		else:
+			# Load a core item
 			exec("from libqtopensesame import %s" % item_type)					
 			name = self.experiment.unique_name("%s" % item_type)
 			item = eval("%s.%s(name, self.experiment)" % (item_type, item_type))
 			
-		# Ask for a new name
+		# Optionally, ask for a new name right away
 		if self.immediate_rename:
 			name, ok = QtGui.QInputDialog.getText(self, "New name", "Please enter a name for the new %s" % item_type, text = name)
 			if not ok:
@@ -1868,7 +1882,10 @@ class qtopensesame(QtGui.QMainWindow):
 			name = str(name)
 			item.name = name		
 			
+		# Add the item to the item list
 		self.experiment.items[name] = item
+		
+		# Optionally, refresh the interface
 		if refresh:		
 			item.open_edit_tab()		
 			self.refresh()		
@@ -1879,8 +1896,14 @@ class qtopensesame(QtGui.QMainWindow):
 	def add_loop(self, refresh = True, parent = None):
 	
 		"""
-		Add a loop item. Also ask for an item to
-		fill the loop with.
+		Add a loop item and ask for an item to fill the loop with
+		
+		Keyword arguments:
+		refresh -- a bool to indicate if the interface should be refreshed (default = True)
+		parent -- the parent item for the new loop (default = None)
+		
+		Returns:
+		The name of the new loop
 		"""
 
 		d = new_loop_sequence_dialog.new_loop_sequence_dialog(self, self.experiment, "loop", parent)
@@ -1906,8 +1929,14 @@ class qtopensesame(QtGui.QMainWindow):
 	def add_sequence(self, refresh = True, parent = None):
 	
 		"""
-		Add a sequence item. Also ask for an item to
-		fill the sequence with.
+		Add a sequence item and ask for an item to fill the loop with
+		
+		Keyword arguments:
+		refresh -- a bool to indicate if the interface should be refreshed (default = True)
+		parent -- the parent item for the new sequence (default = None)
+		
+		Returns:
+		The name of the new sequence
 		"""
 
 		d = new_loop_sequence_dialog.new_loop_sequence_dialog(self, self.experiment, "sequence", parent)
@@ -1933,71 +1962,131 @@ class qtopensesame(QtGui.QMainWindow):
 	def add_sketchpad(self, refresh = True, parent = None):
 	
 		"""
-		Add a sketchpad item
-		"""
+		Add a sketchpad item and ask for an item to fill the loop with
+		
+		Keyword arguments:
+		refresh -- a bool to indicate if the interface should be refreshed (default = True)
+		parent -- the parent item for the new item (default = None)
+		
+		Returns:
+		
+		The name of the new item
+		"""		
 		
 		return self.add_item("sketchpad", refresh)
 		
 	def add_feedback(self, refresh = True, parent = None):
 	
 		"""
-		Add a feedback item
-		"""
+		Add a feedback item and ask for an item to fill the loop with
 		
+		Keyword arguments:
+		refresh -- a bool to indicate if the interface should be refreshed (default = True)
+		parent -- the parent item for the new item (default = None)
+		
+		Returns:
+		The name of the new item
+		"""			
 		return self.add_item("feedback", refresh)		
 		
 	def add_sampler(self, refresh = True, parent = None):
 	
 		"""
-		Add a feedback item
-		"""
+		Add a sampler item and ask for an item to fill the loop with
 		
+		Keyword arguments:
+		refresh -- a bool to indicate if the interface should be refreshed (default = True)
+		parent -- the parent item for the new item (default = None)
+		
+		Returns:
+		The name of the new item
+		"""	
+				
 		return self.add_item("sampler", refresh)	
 		
 	def add_synth(self, refresh = True, parent = None):
 	
 		"""
-		Add a feedback item
-		"""
+		Add a synth item and ask for an item to fill the loop with
 		
+		Keyword arguments:
+		refresh -- a bool to indicate if the interface should be refreshed (default = True)
+		parent -- the parent item for the new item (default = None)
+		
+		Returns:
+		The name of the new item
+		"""	
+				
 		return self.add_item("synth", refresh)					
 		
 	def add_keyboard_response(self, refresh = True, parent = None):
 	
 		"""
-		Add a keyboard item
-		"""
-				
+		Add a keyboard_response item and ask for an item to fill the loop with
+		
+		Keyword arguments:
+		refresh -- a bool to indicate if the interface should be refreshed (default = True)
+		parent -- the parent item for the new item (default = None)
+		
+		Returns:
+		The name of the new item
+		"""	
+						
 		return self.add_item("keyboard_response", refresh)
 		
 	def add_mouse_response(self, refresh = True, parent = None):
 	
 		"""
-		Add a keyboard item
-		"""
-				
+		Add a mouse_response item and ask for an item to fill the loop with
+		
+		Keyword arguments:
+		refresh -- a bool to indicate if the interface should be refreshed (default = True)
+		parent -- the parent item for the new item (default = None)
+		
+		Returns:
+		The name of the new item
+		"""	
+						
 		return self.add_item("mouse_response", refresh)		
 		
 	def add_logger(self, refresh = True, parent = None):
 	
 		"""
-		Add a logger item
-		"""														
+		Add a logger item and ask for an item to fill the loop with
 		
+		Keyword arguments:
+		refresh -- a bool to indicate if the interface should be refreshed (default = True)
+		parent -- the parent item for the new item (default = None)
+		
+		Returns:
+		The name of the new item
+		"""	
+				
 		return self.add_item("logger", refresh)
 		
 	def add_inline_script(self, refresh = True, parent = None):
 	
 		"""
-		Add a inline script item
-		"""										
+		Add an inline_script item and ask for an item to fill the loop with
 		
+		Keyword arguments:
+		refresh -- a bool to indicate if the interface should be refreshed (default = True)
+		parent -- the parent item for the new item (default = None)
+		
+		Returns:
+		The name of the new item
+		"""	
+				
 		return self.add_item("inline_script", refresh)
 		
 	def drop_item(self, add_func):
 		
 		"""
-		Create a new item based on a drop
+		Create a new item after an item has been dragged and dropped from the toolbar.
+		The necessary information is stored in the itemtree.
+		
+		Arguments:
+		add_func -- a function to call to create the new item
 		"""
 	
 		if self.experiment.debug:
@@ -2079,7 +2168,10 @@ class qtopensesame(QtGui.QMainWindow):
 	def drag_item(self, add_func):
 	
 		"""
-		Drag and drop an item type
+		Drag an item from the item toolbar
+		
+		Arguments:
+		add_func -- a function to create a new item, if the item is dropped
 		"""												
 		
 		if self.experiment.debug:
@@ -2117,81 +2209,61 @@ class qtopensesame(QtGui.QMainWindow):
 
 	def drag_loop(self):
 	
-		"""
-		Drag a new loop
-		"""
+		"""Drag a new loop"""
 	
 		self.drag_item(self.add_loop)
 		
 	def drag_sequence(self):
 	
-		"""
-		Drag a new sequence
-		"""
+		"""Drag a new sequence"""
 	
 		self.drag_item(self.add_sequence)		
 		
 	def drag_sketchpad(self):
 	
-		"""
-		Drag a new sketchpad
-		"""
+		"""Drag a new sketchpad"""
 	
 		self.drag_item(self.add_sketchpad)		
 		
 	def drag_feedback(self):
 	
-		"""
-		Drag a new feedback
-		"""
+		"""Drag a new feedback"""
 	
 		self.drag_item(self.add_feedback)		
 		
 	def drag_sampler(self):
 	
-		"""
-		Drag a new sampler
-		"""
+		"""Drag a new sampler"""
 	
 		self.drag_item(self.add_sampler)		
 		
 	def drag_synth(self):
 	
-		"""
-		Drag a new synth
-		"""
+		"""Drag a new synth"""
 	
 		self.drag_item(self.add_synth)		
 		
 	def drag_keyboard_response(self):
 	
-		"""
-		Drag a new keyboard_response
-		"""
+		"""Drag a new keyboard_response"""
 	
 		self.drag_item(self.add_keyboard_response)		
 		
 	def drag_mouse_response(self):
 	
-		"""
-		Drag a new mouse_response
-		"""
+		"""Drag a new mouse_response"""
 	
 		self.drag_item(self.add_mouse_response)		
 		
 	def drag_logger(self):
 	
-		"""
-		Drag a new logger
-		"""
+		"""Drag a new logger"""
 	
 		self.drag_item(self.add_logger)
 		
 	def drag_inline_script(self):
 	
-		"""
-		Drag a new inline_script
-		"""
+		"""Drag a new inline_script"""
 	
 		self.drag_item(self.add_inline_script)
 		

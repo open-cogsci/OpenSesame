@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'resources/general_widget.ui'
 #
-# Created: Tue Apr 12 17:50:14 2011
+# Created: Thu Apr 28 16:16:38 2011
 #      by: PyQt4 UI code generator 4.7.4
 #
 # WARNING! All changes made in this file will be lost!
@@ -88,9 +88,6 @@ class Ui_Form(object):
         self.gridLayout.addWidget(self.label_8, 1, 0, 1, 1)
         self.combobox_backend = QtGui.QComboBox(self.widget)
         self.combobox_backend.setObjectName("combobox_backend")
-        self.combobox_backend.addItem("")
-        self.combobox_backend.addItem("")
-        self.combobox_backend.addItem("")
         self.gridLayout.addWidget(self.combobox_backend, 1, 1, 1, 5)
         self.verticalLayout.addWidget(self.widget)
         self.checkbox_show_script = QtGui.QCheckBox(Form)
@@ -173,10 +170,7 @@ class Ui_Form(object):
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:\'Ubuntu\'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Back-end</p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:8pt; font-style:italic;\">The layer controlling input and the display</span></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
-        self.combobox_backend.setItemText(0, QtGui.QApplication.translate("Form", "Legacy (PyGame without OpenGL)", None, QtGui.QApplication.UnicodeUTF8))
-        self.combobox_backend.setItemText(1, QtGui.QApplication.translate("Form", "OpenGL (PyGame with OpenGL)", None, QtGui.QApplication.UnicodeUTF8))
-        self.combobox_backend.setItemText(2, QtGui.QApplication.translate("Form", "Psycho (PsychoPy with PyGlet)", None, QtGui.QApplication.UnicodeUTF8))
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:8pt; font-style:italic;\">The layer controlling display, sound and input</span></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
         self.checkbox_show_script.setToolTip(QtGui.QApplication.translate("Form", "Toggle the visibility of the script editor", None, QtGui.QApplication.UnicodeUTF8))
         self.checkbox_show_script.setText(QtGui.QApplication.translate("Form", "Show script editor", None, QtGui.QApplication.UnicodeUTF8))
         self.label_opensesame.setText(QtGui.QApplication.translate("Form", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
