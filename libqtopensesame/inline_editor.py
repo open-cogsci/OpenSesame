@@ -229,7 +229,7 @@ class inline_editor(QFrame):
 			
 			if c.hasSelection():			
 				# Prepend a tab and replace all add a new tab after every newline
-				s = "\t" + str(c.selection().toPlainText()).replace("\n", "\n\t")
+				s = "\t" + unicode(c.selection().toPlainText()).replace("\n", "\n\t")
 				c.insertText(s)
 				c.setPosition(c.position() - len(s))
 				c.setPosition(c.position() + len(s), QtGui.QTextCursor.KeepAnchor)
@@ -246,7 +246,7 @@ class inline_editor(QFrame):
 		def unindent(self):
 	
 			"""
-			Unindent the text one level
+			Unindents selected text one level
 			"""
 	
 			c = self.textCursor()
@@ -256,7 +256,7 @@ class inline_editor(QFrame):
 			if c.hasSelection():
 
 				# Remove the tabs at the beginning of each line and the tab leading the selection
-				s = str(c.selection().toPlainText()).replace("\n\t", "\n")			
+				s = unicode(c.selection().toPlainText()).replace("\n\t", "\n")			
 				if s[0] == "\t":
 					s = s[1:]
 				c.insertText(s)
@@ -267,7 +267,7 @@ class inline_editor(QFrame):
 				# Delete a tab if it leads the current line
 				block = c.block()
 				c.movePosition(QtGui.QTextCursor.StartOfLine)
-				s = str(c.block().text())
+				s = unicode(c.block().text())
 				if len(s) > 0 and s[0] == "\t":
 					c.deleteChar()				
 				c.setPosition(p)					
@@ -280,8 +280,11 @@ class inline_editor(QFrame):
 		def keyPressEvent(self, e):
 		
 			"""
-			Capture keypresses to implement selection indentation
+			Captures keypresses to implement selection indentation
 			and auto indentation
+			
+			Arguments:
+			e -- a keypress even
 			"""			
 
 			# Process the Alt + A shortcut to apply changes
@@ -297,7 +300,7 @@ class inline_editor(QFrame):
 			
 				# Auto indent after a return
 				if e.key() == QtCore.Qt.Key_Return and c.block().length() > 0:					
-					s = str(c.block().text())
+					s = unicode(c.block().text())
 					n_tab = 0
 					self.insertPlainText("\n")
 					if len(s) > 0:
@@ -324,10 +327,13 @@ class inline_editor(QFrame):
 			self.setFocus()	
 			QPlainTextEdit.keyPressEvent(self, e)
 									
-		def focusOutEvent(self, event):
+		def focusOutEvent(self, e):
 		
 			"""
 			Tell the outside world that focus has been lost
+			
+			Arguments:
+			e -- A focusout event
 			"""
 		
 			self.emit(QtCore.SIGNAL("focusLost"))
@@ -335,7 +341,7 @@ class inline_editor(QFrame):
 		def currentLine(self):
 		
 			"""
-			Get the current line number
+			Returns the current line number
 			"""
 		
 			return self.document().findBlock(self.textCursor().position()).blockNumber() + 1
@@ -343,7 +349,7 @@ class inline_editor(QFrame):
 		def numberbarPaint(self, number_bar, event):
 		
 			"""
-			Pain the line numbers
+			Paints the line numbers
 			"""
 		
 			font_metrics = self.fontMetrics()
