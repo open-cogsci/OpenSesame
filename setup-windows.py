@@ -20,7 +20,7 @@ setup(
 
 	# Use 'console' to have the programs run in a terminal and
 	# 'windows' to run them normally.
-	windows = [{
+	console = [{
 		"script" : "opensesame",
 		'icon_resources': [(0, os.path.join("resources", "opensesame.ico"))],
 		},{
@@ -56,6 +56,7 @@ shutil.copytree("help", os.path.join("dist", "help"))
 shutil.copyfile("""C:\Python26\Lib\site-packages\pygame\SDL_ttf.dll""", """dist\SDL_ttf.dll""")
 shutil.copyfile("""C:\Python26\Lib\site-packages\pygame\libfreetype-6.dll""", """dist\libfreetype-6.dll""")
 shutil.copyfile("""C:\Python26\Lib\site-packages\pygame\libogg-0.dll""", """dist\libogg-0.dll""")
+shutil.copyfile("""C:\Python26\Lib\site-packages\parallel\simpleio.dll""", """dist\simpleio.dll""")
 
 # Give the build a proper name
 shutil.move("dist", "opensesame_%s-win32" % libopensesame.misc.version)

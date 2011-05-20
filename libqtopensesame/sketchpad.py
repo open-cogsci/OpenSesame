@@ -111,7 +111,7 @@ class sketchpad(libopensesame.sketchpad.sketchpad, libqtopensesame.qtitem.qtitem
 		QtCore.QObject.connect(self.popout_button, QtCore.SIGNAL("clicked()"), self.popout)		
 		self.edit_grid.addWidget(self.popout_button, row, 0)				
 		
-		self.tools_widget = libqtopensesame.sketchpad_widget.sketchpad_widget(self)		
+		self.tools_widget = libqtopensesame.sketchpad_widget.sketchpad_widget(self)
 		self.edit_vbox.addWidget(self.tools_widget)
 											
 	def edit_widget(self):

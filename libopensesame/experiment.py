@@ -197,6 +197,9 @@ class experiment(item.item, openexp.experiment.experiment):
 		Reads an experiment from a string
 		"""				
 	
+		if self.debug:
+			print "experiment.from_string(): building experiment"
+	
 		s = iter(string.split("\n"));
 	
 		line = next(s, None)

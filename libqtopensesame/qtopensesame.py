@@ -26,7 +26,6 @@ from libqtopensesame import includes,\
 	experiment,\
 	new_loop_sequence_dialog
 	
-import serial
 import libopensesame.exceptions
 import libopensesame.experiment
 import libopensesame.plugins
@@ -1166,7 +1165,7 @@ class qtopensesame(QtGui.QMainWindow):
 		# Skip if the general tab is locked and lock it otherwise
 		if self.ignore_general_changes:
 			return		
-		self.ignore_general_changes = True		
+		self.ignore_general_changes = True	
 		
 		# Set the title and the description
 		title = self.experiment.sanitize(self.header_widget.edit_name.text())
@@ -1251,10 +1250,10 @@ class qtopensesame(QtGui.QMainWindow):
 		self.general_ui.label_opensesame.setText(unicode(self.general_ui.label_opensesame.text()).replace("[version]", self.version).replace("[codename]", self.codename))
 		
 		# Set the backend combobox
-		self.general_ui.combobox_backend.currentIndexChanged.connect(self.apply_general_changes)
 		for backend in openexp.backend_info.backend_list:
 			desc = openexp.backend_info.backend_list[backend]["description"]
 			self.general_ui.combobox_backend.addItem("%s -- %s" % (backend, desc))		
+		self.general_ui.combobox_backend.currentIndexChanged.connect(self.apply_general_changes)			
 		
 		vbox = QtGui.QVBoxLayout()
 		vbox.addWidget(header_widget)

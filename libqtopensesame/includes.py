@@ -57,6 +57,13 @@ if os.name == "nt":
 		inline_script,\
 		sampler,\
 		synth
+
+	import openexp,\
+		openexp._canvas.legacy,\
+		openexp._keyboard.legacy,\
+		openexp._mouse.legacy,\
+		openexp._sampler.legacy,\
+		openexp._synth.legacy
 		
 	try:
 		import pyffmpeg
@@ -89,5 +96,10 @@ if os.name == "nt":
 	try:
 		import serial
 	except:
-		print "includes: failed to import 'serial' module <http://pyserial.sourceforge.net/>. You will not be able to use serial/ parallel port connectivity."
+		print "includes: failed to import 'serial' module <http://pyserial.sourceforge.net/>. You will not be able to use serial port connectivity."
+
+	try:
+		import parallel
+	except:
+		print "includes: failed to import 'parallel' module <http://pyserial.sourceforge.net/pyparallel.html>. You will not be able to use parallel port connectivity."
 
