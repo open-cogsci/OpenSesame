@@ -347,10 +347,18 @@ class item(openexp.trial.trial):
 	
 		pass
 		
-	def eval_text(self, text, round_float = False):
+	def eval_text(self, text, round_float = False, soft_ignore = False, quote_str = False):
 	
 		"""
 		Replace variables in the text by the actual values
+		
+		Arguments:
+		text -- the text to be evaluated
+		
+		Keyword arguments:
+		round_float -- a boolean indicating whether float values should be rounded to a precision of [round_decimals] (default = False)
+		soft_ignore -- a boolean indicating whether missing variables should be ignored, rather than cause an exception (default = False)
+		quote_str -- a boolean indicating whether string variables should be quoted
 		"""
 		
 		# If the text is not a string, there cannot be any variables,
@@ -363,26 +371,35 @@ class item(openexp.trial.trial):
 			float_template = "%%.%sf" % self.get("round_decimals")
 			
 		s = ""
+		start = 0
 		while True:
 		
 			# Find the start and end of a variable definition
-			start = text.find("[")
+			start = text.find("[", start + 1)
 			if start < 0:
 				break				
-			end = text.find("]")
+			end = text.find("]", start + 1)
 			if end < 0:
 				raise exceptions.runtime_error("Missing closing bracket ']' in item '%s'" % self.name)			
 			var = text[start+1:end]
 			
-			# Get the variable
-			val = self.get(var)
-				
-			# Round floats
-			if round_float and type(val) == float:
-				val = float_template % val
+			# Replace the variable with its value, unless the variable
+			# does not exist or we are ignoring missing variables
+			if not soft_ignore or self.has(var):
 			
-			# Replace the variable name with the value
-			text = text[:start] + str(val) + text[1+end:]
+				# Get the variable
+				val = self.get(var)
+				
+				# Quote strings if necessary
+				if type(val) == str and quote_str:
+					val = "\'" + val + "\'"
+				
+				# Round floats
+				if round_float and type(val) == float:
+					val = float_template % val
+			
+				# Replace the variable name with the value
+				text = text[:start] + str(val) + text[1+end:]
 		
 		# Return the result
 		return self.auto_type(text)

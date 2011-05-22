@@ -65,21 +65,24 @@ class sketchpad(libopensesame.sketchpad.sketchpad, libqtopensesame.qtitem.qtitem
 	def static_items(self):
 		
 		"""
-		Returns all items that do not contain variables
-		in their definitions, except for text items, which
-		are always returned.
+		Returns a list of items which are 'static' in the sense that they don't contain variables
+		that make it hard to draw them onto a sketchpad. Variables in text and show_if properties
+		are allowed.
+		
+		Returns:
+		A list of static items
 		"""
 		
 		l = []
-		for item in self.items:
-		
+		for item in self.items:		
 			static = True
 			for var in item:
 				if var != "text" and var != "show_if" and type(item[var]) == str and item[var].find("[") >= 0:
+					if self.experiment.debug:
+						print "sketchpad.static_items(): variable property: %s = %s" % (var, item[var])
 					static = False
 			if static:
-				l.append(item)
-				
+				l.append(item)				
 		return l
 		
 

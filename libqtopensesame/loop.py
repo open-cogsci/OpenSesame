@@ -98,52 +98,7 @@ class loop(libopensesame.loop.loop, libqtopensesame.qtitem.qtitem):
 		
 		libqtopensesame.qtitem.qtitem.rename(self, from_name, to_name)
 		if self.item == from_name:
-			self.item = to_name	
-			
-	def add_cycle(self):
-	
-		"""
-		Add a cycle
-		"""
-	
-		self.set("cycles", self.get("cycles") + 1)
-		self.refresh_loop_table()
-		self.apply_edit_changes()		
-		
-	def add_cycles(self):
-	
-		"""
-		Add multiple cycles
-		"""
-		
-		nr, ok = QtGui.QInputDialog.getInt(self._edit_widget, "Add multiple cycles", "How many cycles do you want to add?", min=1)
-		if ok:
-			self.set("cycles", self.get("cycles") + nr)
-			self.refresh_loop_table()
-			self.apply_edit_changes()			
-		
-	def remove_cycle(self):
-	
-		"""
-		Remove a cycle
-		"""
-		
-		cycle_count = self.get("cycles") - 1
-		if cycle_count < 0:
-			return
-		self.set("cycles", cycle_count)
-		
-		l = []
-		for i in self.matrix:
-			if i >= cycle_count:
-				l.append(i)	
-		
-		for i in l:
-			del self.matrix[i]
-				
-		self.refresh_loop_table()
-		self.apply_edit_changes()
-		
+			self.item = to_name			
 		
 	def add_cyclevar(self):
 	
@@ -254,7 +209,8 @@ class loop(libopensesame.loop.loop, libqtopensesame.qtitem.qtitem):
 	def cyclevar_count(self):
 	
 		"""
-		Returns the number of cycle vars
+		Returns:
+		The number of variables in the loop table
 		"""
 		
 		l = []
@@ -264,16 +220,54 @@ class loop(libopensesame.loop.loop, libqtopensesame.qtitem.qtitem):
 				if var not in l:
 					l.append(var)
 					c += 1
-		return c		
+		return c
 		
 	def cycle_count(self):
 	
 		"""
-		Returns the number of cycles
+		Returns:
+		The number of cycles				
 		"""
 		
 		return max(self.get("cycles"), len(self.matrix))
-			
+		
+	def set_cycle_count(self, cycles, confirm = True):
+	
+		"""
+		Sets the nr of cycles and truncates data if necessary
+		
+		Arguments:
+		cycles -- the number of cycles
+		
+		Keyword arguments:
+		confirm -- indicates if confirmation is required before data is removed from the table (default = True)
+		"""
+				
+		cont = True
+		while cont:
+			cont = False
+			for i in self.matrix:
+				if i >= cycles:	
+				
+					# Check if the cells that will be removed are not simply empty	
+					empty = True
+					for var in self.matrix[i]:							
+						if self.matrix[i][var] != "":
+							empty = False
+							
+					# Ask for confirmation (only the first time)
+					if not empty and confirm:
+						resp = QtGui.QMessageBox.question(self.experiment.ui.centralwidget, "Remove cycles?", "By reducing the number of cycles, data will be lost from the table. Do you wish to continue?", QtGui.QMessageBox.Yes, QtGui.QMessageBox.No)
+						if resp == QtGui.QMessageBox.No:
+							return
+						confirm = False
+						
+					# Delete the cycle and restart the loop
+					del self.matrix[i]
+					cont = True
+					break
+					
+		self.set("cycles", cycles)					
 		
 	def refresh_loop_table(self, lock = True):
 	
@@ -398,23 +392,29 @@ class loop(libopensesame.loop.loop, libqtopensesame.qtitem.qtitem):
 		row = 3
 		self.edit_grid.addWidget(QtGui.QLabel("Item to run"), row, 0)
 		self.edit_item = self.experiment.item_combobox(self.item, [self.name])
-		self.edit_item.setToolTip("Select the item that is called by the loop")
-		
+		self.edit_item.setToolTip("Select the item that is called by the loop")		
 		QtCore.QObject.connect(self.edit_item, QtCore.SIGNAL("currentIndexChanged(int)"), self.apply_edit_changes)
 		self.edit_grid.addWidget(self.edit_item, row, 1)
 				
 		row += 1
-		self.edit_grid.addWidget(QtGui.QLabel("Repeat"), row, 0)
+		self.edit_grid.addWidget(QtGui.QLabel("Cycles"), row, 0)		
+		self.spin_cycles = QtGui.QSpinBox()
+		self.spin_cycles.setMinimum(1)
+		self.spin_cycles.setMaximum(1000000)
+		self.spin_cycles.setToolTip("The number of cycles")
+		self.spin_cycles.editingFinished.connect(self.apply_edit_changes)
+		self.edit_grid.addWidget(self.spin_cycles, row, 1)
 		
+		row += 1
+		self.edit_grid.addWidget(QtGui.QLabel("Repeat"), row, 0)		
 		self.spin_repeat = QtGui.QDoubleSpinBox()
 		self.spin_repeat.setMinimum(0)
 		self.spin_repeat.setMaximum(1000000)
 		self.spin_repeat.setToolTip("The number of times that all cycles are repeat. The number of times that the 'item to run' is executed is [repeat] x [number of cycles]. Values below 1 mean that not all cycles are executed.")		
-		self.spin_repeat.valueChanged.connect(self.apply_edit_changes)
+		self.spin_repeat.editingFinished.connect(self.apply_edit_changes)
 		self.edit_grid.addWidget(self.spin_repeat, row, 1)
-		
-		row += 1
-		
+				
+		row += 1		
 		self.combobox_order = QtGui.QComboBox()
 		self.combobox_order.addItem("random")
 		self.combobox_order.setItemIcon(0, self.experiment.icon("random"))
@@ -428,21 +428,9 @@ class loop(libopensesame.loop.loop, libqtopensesame.qtitem.qtitem):
 		self.edit_grid.addWidget(self.combobox_order, row, 1)													
 		
 		row += 1
-		self.button_add_cycle = QtGui.QPushButton(self.experiment.icon("add"), "Add cycle")
-		self.button_add_cycle.setIconSize(QtCore.QSize(16,16))
-		self.button_add_cycle.setToolTip("Add a single cycle")
-		QtCore.QObject.connect(self.button_add_cycle, QtCore.SIGNAL("clicked()"), self.add_cycle)
-
-		self.button_add_cycles = QtGui.QPushButton(self.experiment.icon("add"), "Add multiple cycles")
-		self.button_add_cycles.setIconSize(QtCore.QSize(16,16))
-		self.button_add_cycles.setToolTip("Add multiple single cycles")		
-		QtCore.QObject.connect(self.button_add_cycles, QtCore.SIGNAL("clicked()"), self.add_cycles)
-
-		self.button_remove_cycle = QtGui.QPushButton(self.experiment.icon("delete"), "Remove cycle")
-		self.button_remove_cycle.setIconSize(QtCore.QSize(16,16))
-		self.button_remove_cycle.setToolTip("Remove the last cycle")		
-		QtCore.QObject.connect(self.button_remove_cycle, QtCore.SIGNAL("clicked()"), self.remove_cycle)		
-
+		self.label_summary = QtGui.QLabel()
+		self.edit_grid.addWidget(self.label_summary, row, 1)
+		
 		self.button_add_cyclevar = QtGui.QPushButton(self.experiment.icon("add"), "Add variable")
 		self.button_add_cyclevar.setIconSize(QtCore.QSize(16,16))
 		self.button_add_cyclevar.setToolTip("Add a variable")		
@@ -464,9 +452,6 @@ class loop(libopensesame.loop.loop, libqtopensesame.qtitem.qtitem):
 		QtCore.QObject.connect(self.button_wizard, QtCore.SIGNAL("clicked()"), self.wizard)		
 				
 		hbox = QtGui.QHBoxLayout()		
-		hbox.addWidget(self.button_add_cycle)
-		hbox.addWidget(self.button_add_cycles)
-		hbox.addWidget(self.button_remove_cycle)
 		hbox.addWidget(self.button_add_cyclevar)
 		hbox.addWidget(self.button_rename_cyclevar)		
 		hbox.addWidget(self.button_remove_cyclevar)
@@ -492,10 +477,8 @@ class loop(libopensesame.loop.loop, libqtopensesame.qtitem.qtitem):
 		Set the controls from the variables
 		"""
 		
-		self.lock = True
-		
-		libqtopensesame.qtitem.qtitem.edit_widget(self)
-		
+		self.lock = True		
+		libqtopensesame.qtitem.qtitem.edit_widget(self)		
 		self.refresh_loop_table(lock = False)
 		
 		self.edit_item.deleteLater()
@@ -507,6 +490,8 @@ class loop(libopensesame.loop.loop, libqtopensesame.qtitem.qtitem):
 		# loop. Not sure why.
 		# self.experiment.item_combobox(self.item, self.parents(), self.edit_item)
 		
+		self.spin_cycles.setValue(self.cycle_count())
+		
 		try:
 			self.spin_repeat.setValue(float(self.get("repeat")))
 		except:
@@ -514,8 +499,9 @@ class loop(libopensesame.loop.loop, libqtopensesame.qtitem.qtitem):
 			self.spin_repeat.setValue(1)
 			self.set("repeat", 1)
 			
-		self.combobox_order.setCurrentIndex(self.combobox_order.findText(str(self.get("order"))))								
-		
+		self.label_summary.setText("<small><b>%s</b> will be called <b>%s</b> x <b>%s</b> = <b>%s</b> times in <b>%s</b> order</small>" % (self.item, self.cycles, self.repeat, int(self.cycles * self.repeat), self.order))
+			
+		self.combobox_order.setCurrentIndex(self.combobox_order.findText(str(self.get("order"))))										
 		self.lock = False
 		return self._edit_widget
 		
@@ -535,24 +521,23 @@ class loop(libopensesame.loop.loop, libqtopensesame.qtitem.qtitem):
 		self.set("item", item)		
 		self.set("repeat", self.spin_repeat.value()) 
 		self.set("order", str(self.combobox_order.currentText()))
-		
+				
 		self.matrix = {}
 		for row in range(self.loop_table.rowCount()):
 			self.matrix[row] = {}
-			for col in range(self.loop_table.columnCount()):							
-										
-				var = str(self.loop_table.horizontalHeaderItem(col).text())
-				
+			for col in range(self.loop_table.columnCount()):																	
+				var = str(self.loop_table.horizontalHeaderItem(col).text())				
 				cell = self.loop_table.item(row, col)
 				if cell == None:
 					val = ""
 				else:				
-					val = self.auto_type(str(self.loop_table.item(row, col).text()))
-					
+					val = self.auto_type(str(self.loop_table.item(row, col).text()))					
 				self.matrix[row][var] = val
 				
 		row = self.loop_table.currentRow()
 		column = self.loop_table.currentColumn()
+		
+		self.set_cycle_count(self.spin_cycles.value())		
 				
 		self.experiment.main_window.refresh(self.name)
 		

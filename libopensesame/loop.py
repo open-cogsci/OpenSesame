@@ -18,14 +18,27 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 from libopensesame import item, exceptions
 import shlex
 import openexp.keyboard
-import random
+from random import *
+from math import *
 
 class loop(item.item):
+
+	"""
+	A loop item runs a single other item multiple
+	times, while varying independent variables
+	"""
 
 	def __init__(self, name, experiment, string = None):
 	
 		"""
-		Initialize the loop
+		Constructor
+		
+		Arguments:
+		name -- the name of the item
+		experiment -- an instance of libopensesame.experiment
+		
+		Keyword arguments:
+		string -- a string with the item definition (default = None)
 		"""
 	
 		self.cycles = 1
@@ -40,7 +53,10 @@ class loop(item.item):
 	def from_string(self, string):
 	
 		"""
-		Read a loop from a string
+		Create a loop from a definition in a string
+		
+		Arguments:
+		string -- the definition of the loop
 		"""
 
 		for i in string.split("\n"):
@@ -74,6 +90,9 @@ class loop(item.item):
 	
 		"""
 		Run the loop
+		
+		Returns:
+		True on success, False on failure
 		"""
 	
 		# First generate a list
@@ -91,13 +110,13 @@ class loop(item.item):
 		partial_repeats = self.repeat - whole_repeats
 		if partial_repeats > 0:
 			all_cycles = range(self.cycles)
-			sample = random.sample(all_cycles, int(len(all_cycles) * partial_repeats))
+			sample = sample(all_cycles, int(len(all_cycles) * partial_repeats))
 			for i in sample:
 				l.append( (j, i) )
 						
 		# Randomize the list if necessary
 		if self.order == "random":
-			random.shuffle(l)
+			shuffle(l)
 			
 		# Create a keyboard to flush responses between cycles
 		self._keyboard = openexp.keyboard.keyboard(self.experiment)
@@ -110,10 +129,20 @@ class loop(item.item):
 				if i in self.matrix:
 					for var in self.matrix[i]:
 						val = self.matrix[i][var]
-						if type(val) == str:
-							exec("self.experiment.%s = \"%s\"" % (var, val))
-						else:
-							exec("self.experiment.%s = %s" % (var, val))
+						
+						# By starting with an "=" sign, users can incorporate a Python
+						# statement, for example to call functions from the random or
+						# math module
+						if type(val) == str and len(val) > 2 and val[0] == "=":
+							code = "%s" % self.eval_text(val[1:], soft_ignore = True, quote_str = True)
+							if self.experiment.debug:
+								print "loop.run(): evaluating '%s'" % code								
+							try:
+								val = eval(code)
+							except Exception as e:
+								raise exceptions.runtime_error("Failed to evaluate '%s' in loop item '%s': %s" % (code, self.name, e))							
+								
+						self.experiment.set(var, val)
 							
 				# Flush the responses to catch escape presses
 				self._keyboard.flush()			
@@ -131,7 +160,10 @@ class loop(item.item):
 	def to_string(self):
 	
 		"""
-		Encode as string
+		Create a string with the definition of the loop
+		
+		Returns:
+		A string with the definition
 		"""
 	
 		s = item.item.to_string(self, "loop")
@@ -144,20 +176,19 @@ class loop(item.item):
 	def var_info(self):
 	
 		"""
-		Give a list of dictionaries with variable descriptions
+		Describe the variables specific to the loop
+		
+		Returns:
+		A list of (variable name, description) tuples
 		"""
 		
 		l = item.item.var_info(self)
-
 		var_list = {}
-
 		for i in self.matrix:
 			for var in self.matrix[i]:
 				if var not in var_list:
 					var_list[var] = []
-				var_list[var].append(str(self.matrix[i][var]))
-				
+				var_list[var].append(str(self.matrix[i][var]))				
 		for var in var_list:
-			l.append( (var, "<i>" + ", ".join(var_list[var]) + "</i>"))
-		
-		return l		
+			l.append( (var, "<i>" + ", ".join(var_list[var]) + "</i>"))		
+		return l

@@ -37,6 +37,7 @@ import imp
 import shutil
 import urllib
 import tempfile
+import traceback
 import subprocess
 import random
 import time
@@ -946,6 +947,11 @@ class qtopensesame(QtGui.QMainWindow):
 			exp = experiment.experiment(self, "Experiment", path)
 		except Exception as e:
 			self.experiment.notify("<b>Error:</b> Failed to open '%s'<br /><b>Description:</b> %s<br /><br />Make sure that the file is in .opensesame or .opensesame.tar.gz format. If you should be able to open this file, but can't, please go to http://www.cogsci.nl/opensesame to find out how to recover your experiment and file a bug report." % (path, e))
+			# Print the traceback in debug mode
+			if self.experiment.debug:
+				l = traceback.format_exc(e).split("\n")		
+				for r in l:
+					print r						
 			return						
 		
 		self.current_path = path
@@ -1243,9 +1249,9 @@ class qtopensesame(QtGui.QMainWindow):
 		self.general_ui.edit_foreground.editingFinished.connect(self.apply_general_changes)
 		self.general_ui.edit_background.editingFinished.connect(self.apply_general_changes)	
 		self.general_ui.combobox_start.currentIndexChanged.connect(self.apply_general_changes)
-		self.general_ui.spinbox_width.valueChanged.connect(self.apply_general_changes)
-		self.general_ui.spinbox_height.valueChanged.connect(self.apply_general_changes)
-		self.general_ui.spinbox_compensation.valueChanged.connect(self.apply_general_changes)
+		self.general_ui.spinbox_width.editingFinished.connect(self.apply_general_changes)
+		self.general_ui.spinbox_height.editingFinished.connect(self.apply_general_changes)
+		self.general_ui.spinbox_compensation.editingFinished.connect(self.apply_general_changes)
 		self.general_ui.checkbox_show_script.toggled.connect(self.toggle_script_editor)						
 		self.general_ui.label_opensesame.setText(unicode(self.general_ui.label_opensesame.text()).replace("[version]", self.version).replace("[codename]", self.codename))
 		

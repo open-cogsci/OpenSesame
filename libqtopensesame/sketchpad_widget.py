@@ -592,7 +592,7 @@ class sketchpad_widget(QtGui.QWidget):
 				return				
 			item["x"] = to_pos[0]
 			item["y"] = to_pos[1]
-			item["text"] = text
+			item["text"] = self.sketchpad.experiment.sanitize(text)
 			item["center"] = self.center
 			item["font_family"] = self.font_family
 			item["font_size"] = self.font_size
