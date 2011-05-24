@@ -581,6 +581,9 @@ def init_display(experiment):
 		waitblanking = False
 	else:
 		waitblanking = True
+		
+	if experiment.debug:
+		print "openexp._canvas.psycho.init_display(): creating a %s display" % wintype
 			
 	experiment.window = visual.Window( [experiment.width, experiment.height], waitBlanking = waitblanking, fullscr = experiment.fullscreen, monitor = monitor, units = "pix", winType = "pyglet")		
 	experiment.clock = core.Clock()	
