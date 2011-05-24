@@ -36,7 +36,7 @@ import os
 if "--pylink" in sys.argv:
 	try:
 		exec("import pylink") # This makes sure that py2exe doesn't try to include pylink
-	except:
+	except Exception as e:
 		print "includes: failed to import pylink module. You will not be able to use eyelink connectivity"
 
 # Explicitly importing these modules ensures that Py2exe will
@@ -69,15 +69,15 @@ if "--preload" in sys.argv:
 			openexp._mouse.legacy,\
 			openexp._sampler.legacy,\
 			openexp._synth.legacy
-	except:
-		print "includes: failed to import 'legacy' back-end"
+	except Exception as e:
+		print "includes: failed to import 'legacy' back-end. Error: %s" % e
 		
 	print "includes: preloading 'opengl' back-end"	
 	try:
 		import openexp,\
 			openexp._canvas.opengl
-	except:
-		print "includes: failed to import 'opengl' back-end"
+	except Exception as e:
+		print "includes: failed to import 'opengl' back-end. Error: %s" % e
 		
 	print "includes: preloading 'psycho' back-end"	
 	try:
@@ -87,52 +87,61 @@ if "--preload" in sys.argv:
 				openexp._canvas.psycho,\
 				openexp._keyboard.psycho,\
 				openexp._mouse.psycho
-	except:
-		print "includes: failed to import 'psycho' back-end"				
+	except Exception as e:
+		print "includes: failed to import 'psycho' back-end. Error: %s" % e			
+		
+	print "includes: preloading 'psychopy'"
+	try:
+		with warnings.catch_warnings():
+			warnings.simplefilter("ignore")	
+			from psychopy import core, visual, data, event, filters, gui, hardware, log, misc, monitors, sound, platform_specific # info, serial and parallel produce errors
+			from platform_specific.win32 import *
+	except Exception as e:
+		print "includes: failed to import 'psychopy' <http://www.psychopy.org/>. You will not be able to use PsychoPy or the psycho back-end. Error: %s" % e
 		
 	print "includes: preloading 'pyffmpeg'"
 	try:
 		import pyffmpeg
 		import pyffmpeg_numpybindings
 		from audioqueue import AudioQueue, Queue_Empty, Queue_Full		
-	except:
-		print "includes: failed to import 'pyffmpeg' <http://code.google.com/p/pyffmpeg/>. You will not be able to use the media_player plug-in."
+	except Exception as e:
+		print "includes: failed to import 'pyffmpeg' <http://code.google.com/p/pyffmpeg/>. You will not be able to use the media_player plug-in. Error: %s" % e
 		
 	print "includes: preloading 'PIL'"
 	try:
 		import PIL
 		import PIL.Image
-	except:
-		print "includes: failed to import 'PIL' <http://www.pythonware.com/products/pil/>. You will not be able the Python Imaging library."
+	except Exception as e:
+		print "includes: failed to import 'PIL' <http://www.pythonware.com/products/pil/>. You will not be able the Python Imaging library. Error: %s" % e
 		
 	print "includes: preloading 'pyaudio'"		
 	try:
 		import pyaudio
-	except:
-		print "includes: failed to import 'pyaudio' <http://people.csail.mit.edu/hubert/pyaudio/>. You will not be able to use portaudio and the media_player plug-in."	
+	except Exception as e:
+		print "includes: failed to import 'pyaudio' <http://people.csail.mit.edu/hubert/pyaudio/>. You will not be able to use portaudio and the media_player plug-in. Error: %s" % e
 		
 	print "includes: preloading 'OpenGL'"		
 	try:
 		import OpenGL
-	except:
-		print "includes: failed to import 'OpenGL' <http://pyopengl.sourceforge.net/>. You will not be able to use OpenGL."		
+	except Exception as e:
+		print "includes: failed to import 'OpenGL' <http://pyopengl.sourceforge.net/>. You will not be able to use OpenGL. Error: %s" % e
 		
 	print "includes: preloading 'cv'"		
 	try:
 		import cv
-	except:
-		print "includes: failed to import 'cv' <http://opencv.willowgarage.com/wiki/>. You will not be able to use the Open Computer Vision libraries."
+	except Exception as e:
+		print "includes: failed to import 'cv' <http://opencv.willowgarage.com/wiki/>. You will not be able to use the Open Computer Vision libraries. Error: %s" % e
 		
 	print "includes: preloading 'serial'"		
 	try:
 		import serial
-	except:
-		print "includes: failed to import 'serial' module <http://pyserial.sourceforge.net/>. You will not be able to use serial port connectivity."
+	except Exception as e:
+		print "includes: failed to import 'serial' module <http://pyserial.sourceforge.net/>. You will not be able to use serial port connectivity. Error: %s" % e
 
 	print "includes: preloading 'parallel'"
 	try:
 		import parallel
-	except:
-		print "includes: failed to import 'parallel' module <http://pyserial.sourceforge.net/pyparallel.html>. You will not be able to use parallel port connectivity."
+	except Exception as e:
+		print "includes: failed to import 'parallel' module <http://pyserial.sourceforge.net/pyparallel.html>. You will not be able to use parallel port connectivity. Error: %s" % e
 
 	print "includes: ... done"

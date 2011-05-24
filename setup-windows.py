@@ -57,6 +57,7 @@ shutil.copyfile("""C:\Python26\Lib\site-packages\pygame\SDL_ttf.dll""", """dist\
 shutil.copyfile("""C:\Python26\Lib\site-packages\pygame\libfreetype-6.dll""", """dist\libfreetype-6.dll""")
 shutil.copyfile("""C:\Python26\Lib\site-packages\pygame\libogg-0.dll""", """dist\libogg-0.dll""")
 shutil.copyfile("""C:\Python26\Lib\site-packages\parallel\simpleio.dll""", """dist\simpleio.dll""")
+shutil.copyfile("""C:\Python26\Lib\site-packages\PsychoPy-1.64.00-py2.6.egg\psychopy\preferences\Windows.spec""", """dist\resources\Windows.spec""")
 
 # Give the build a proper name
 shutil.move("dist", "opensesame_%s-win32" % libopensesame.misc.version)

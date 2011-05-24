@@ -41,8 +41,8 @@ psycho = {
 	"canvas" : "psycho", \
 	"keyboard" : "psycho", \
 	"mouse" : "psycho", \
-	"sampler" : "psycho", \
-	"synth" : "psycho" \
+	"sampler" : "legacy", \
+	"synth" : "legacy" \
 	}
 	
 backend_list = {"legacy" : legacy, "opengl" : opengl, "psycho" : psycho}

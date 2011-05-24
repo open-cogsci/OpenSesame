@@ -19,7 +19,7 @@ import pygame
 import math
 import openexp._canvas.legacy
 import openexp.exceptions
-from psychopy import visual, core
+from psychopy import core, visual
 from PIL import Image
 
 class psycho(openexp._canvas.legacy.legacy):
@@ -589,6 +589,8 @@ def init_display(experiment):
 	# If pyglet is being used, change the window caption. Don't know how to do this for pygame (regular set_caption() is ineffective)
 	if wintype == "pyglet":
 		experiment.window.winHandle.set_caption("OpenSesame (PsychoPy backend)")
+		
+	pygame.mixer.init()	
 				
 def close_display(experiment):
 
