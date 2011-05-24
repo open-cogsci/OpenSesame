@@ -20,12 +20,11 @@ import openexp.exceptions
 import openexp._mouse.legacy
 from psychopy import event
 
-class psycho(openexp._mouse.legacy.legacy)
+class psycho(openexp._mouse.legacy.legacy):
 
 	"""
 	This is a mouse backend which uses PsychoPy
 	"""
-
 
 	def __init__(self, experiment, buttonlist = None, timeout = None, visible = False):
 	

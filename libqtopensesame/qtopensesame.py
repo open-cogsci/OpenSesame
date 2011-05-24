@@ -327,6 +327,7 @@ class qtopensesame(QtGui.QMainWindow):
 		
 		group = optparse.OptionGroup(parser, "Miscellaneous options")
 		group.add_option("-d", "--debug", action = "store_true", dest = "debug", help = "Print lots of debugging messages to the standard output")
+		group.add_option("-p", "--preload", action = "store_true", dest = "preload", help = "Preload Python modules")
 		parser.add_option_group(group)		
 		
 		group = optparse.OptionGroup(parser, "Miscellaneous options")

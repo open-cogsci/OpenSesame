@@ -16,7 +16,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 legacy = {
-	"description" : "Original backend using PyGame", \
+	"description" : "Default PyGame backend, a safe choice", \
 	"authors" : ["Sebastiaan Mathot"], \
 	"canvas" : "legacy", \
 	"keyboard" : "legacy", \
@@ -36,7 +36,7 @@ opengl = {
 	}	
 
 psycho = {
-	"description" : "Uses PsychoPy in PyGlet window mode", \
+	"description" : "Uses PsychoPy", \
 	"authors" : ["Sebastiaan Mathot", "Jonathan Peirce"], \
 	"canvas" : "psycho", \
 	"keyboard" : "psycho", \
