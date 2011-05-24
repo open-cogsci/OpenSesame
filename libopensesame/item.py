@@ -371,7 +371,7 @@ class item(openexp.trial.trial):
 			float_template = "%%.%sf" % self.get("round_decimals")
 			
 		s = ""
-		start = 0
+		start = -1
 		while True:
 		
 			# Find the start and end of a variable definition

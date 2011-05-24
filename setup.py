@@ -31,7 +31,7 @@ setup(name="opensesame",
 	author_email = "s.mathot@cogsci.nl",
 	url = "http://www.cogsci.nl",
 	scripts = ["opensesame", "opensesamerun"],
-	packages = ["openexp", "libopensesame", "libqtopensesame"],
+	packages = ["openexp", "openexp._canvas", "openexp._keyboard", "openexp._mouse", "openexp._sampler", "openexp._synth", "libopensesame", "libqtopensesame"],
 	package_dir = {"openexp" : "openexp", "libopensesame" : "libopensesame", "libqtopensesame" : "libqtopensesame"},
 	data_files=[
 		("/usr/share/opensesame", ["COPYING"]),
