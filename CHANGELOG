@@ -3,9 +3,8 @@
 - Added experimental PsychoPy backend (psycho)
 - Added experimental OpenGL backend (psycho)
 - Added Python functions to the loop item
-- Fixed a bug where variables in text where intepreted as keywords if an '=' sign is part of the text
-- Fixed a bug where the sketchpad_widget showed quoted text as though the quotes hadn't been removed (even though they are removed)
 - Improved interface for the loop item
+- Improved startup time under windows
 
 0.23 "Blue Beck"
 - Fixed a bug where no items could be added if the main sequence was replaced

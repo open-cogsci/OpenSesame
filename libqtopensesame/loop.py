@@ -267,7 +267,19 @@ class loop(libopensesame.loop.loop, libqtopensesame.qtitem.qtitem):
 					cont = True
 					break
 					
-		self.set("cycles", cycles)					
+		self.set("cycles", cycles)	
+		
+	def call_count(self):
+	
+		"""
+		The nr of times that the target item is called in total,
+		which depends on the repeat and cycles
+		
+		Returns:
+		The nr of calls
+		"""
+		
+		return int(self.cycles * self.repeat)
 		
 	def refresh_loop_table(self, lock = True):
 	
@@ -499,7 +511,7 @@ class loop(libopensesame.loop.loop, libqtopensesame.qtitem.qtitem):
 			self.spin_repeat.setValue(1)
 			self.set("repeat", 1)
 			
-		self.label_summary.setText("<small><b>%s</b> will be called <b>%s</b> x <b>%s</b> = <b>%s</b> times in <b>%s</b> order</small>" % (self.item, self.cycles, self.repeat, int(self.cycles * self.repeat), self.order))
+		self.label_summary.setText("<small><b>%s</b> will be called <b>%s</b> x <b>%s</b> = <b>%s</b> times in <b>%s</b> order</small>" % (self.item, self.cycles, self.repeat, self.call_count(), self.order))
 			
 		self.combobox_order.setCurrentIndex(self.combobox_order.findText(str(self.get("order"))))										
 		self.lock = False
@@ -537,34 +549,44 @@ class loop(libopensesame.loop.loop, libqtopensesame.qtitem.qtitem):
 		row = self.loop_table.currentRow()
 		column = self.loop_table.currentColumn()
 		
-		self.set_cycle_count(self.spin_cycles.value())		
-				
+		self.set_cycle_count(self.spin_cycles.value())						
 		self.experiment.main_window.refresh(self.name)
-		
-		self.loop_table.setCurrentCell(row, column)
-		
+		self.loop_table.setCurrentCell(row, column)		
 		self.lock = False
+		
+	def item_tree_info(self):
+	
+		"""
+		Returns an info string for the item tree widget
+		
+		Returns:
+		An info string
+		"""
+		
+		return "%s, %s" % (self.call_count(), self.order)
 		
 	def build_item_tree(self, toplevel, items):
 	
 		"""
 		Construct an item tree
+		
+		Keyword arguments:
+		toplevel -- the toplevel widget (default = None)
+		items -- a list of items that have been added, to prevent recursion (default = [])
+		
+		Returns:
+		An updated list of items that have been added
 		"""
-	
-		widget = QtGui.QTreeWidgetItem(toplevel)
-		widget.setText(0, self.name)
-		widget.setIcon(0, self.experiment.icon("loop"))
-		widget.name = self.name
-		widget.setToolTip(0, "Type: %s\nDescription: %s" % (self.item_type, self.description))		
-		toplevel.addChild(widget)	
-	
+			
+		widget = self.item_tree_widget(toplevel)
+		toplevel.addChild(widget)		
+		
 		if self.item in self.experiment.items and self.item != None and self.item.strip() != "":
 			if self.experiment.items[self.item] not in items:
 				items.append(self.experiment.items[self.item])
-			self.experiment.items[self.item].build_item_tree(widget, items)
+			self.experiment.items[self.item].build_item_tree(widget, items)			
 			
-		widget.setExpanded(True)			
-					
+		widget.setExpanded(True)								
 		return items										
 				
 	def is_offspring(self, item):

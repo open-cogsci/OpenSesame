@@ -428,18 +428,67 @@ class qtitem(object):
 		if self.name == from_name:
 			self.name = to_name
 			
+	def item_tree_info(self):
+	
+		"""
+		Returns an info string for the item tree widget
+		
+		Returns:
+		An info string
+		"""
+		
+		return ""
+			
+	def item_tree_widget(self, toplevel, icon = None, name = None, tooltip = None, info = None):
+	
+		"""
+		Create a single item tree widget
+		
+		Arguments:
+		toplevel -- the toplevel item
+		
+		Keyword arguments:
+		icon -- an icon name or None for default (default = None)
+		name -- the name of the item or None for default (default = None)
+		info -- info for the second column or None for default (default = None)
+		tooltip -- the tooltip or None for default (default = None)
+		
+		Returns:
+		A QTreeWidgetItem
+		"""
+		
+		if name == None:
+			name = self.name
+		if icon == None:
+			icon = self.item_type
+		if tooltip == None:
+			tooltip = "Type: %s\nDescription: %s" % (self.item_type, self.description)
+		if info == None:
+			info = self.item_tree_info()
+		font = QtGui.QFont()
+		font.setPointSize(8)
+		font.setItalic(True)
+		widget = QtGui.QTreeWidgetItem(toplevel)
+		widget.setText(0, name)
+		widget.setIcon(0, self.experiment.icon(icon))
+		widget.setText(1, info)
+		widget.setFont(1, font)
+		widget.name = name
+		widget.setToolTip(0, tooltip)
+		widget.setToolTip(1, tooltip)
+		return widget	
+			
 	def build_item_tree(self, toplevel = None, items = []):
 	
 		"""
 		Construct an item tree
+		
+		Keyword arguments:
+		toplevel -- the toplevel widget (default = None)
+		items -- a list of items that have been added, to prevent recursion (default = [])		
 		"""
 	
-		widget = QtGui.QTreeWidgetItem(toplevel)
-		widget.setText(0, self.name)
-		widget.setIcon(0, self.experiment.icon(self.item_type))
-		widget.name = self.name
-		widget.setToolTip(0, "Type: %s\nDescription: %s" % (self.item_type, self.description))
-		toplevel.addChild(widget)	
+		toplevel.addChild(self.item_tree_widget(toplevel))	
 				
 	def is_offspring(self, item):
 	

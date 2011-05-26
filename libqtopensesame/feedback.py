@@ -114,3 +114,16 @@ class feedback(libopensesame.feedback.feedback, libqtopensesame.qtitem.qtitem):
 		self.tools_widget.refresh()			
 								
 		return self._edit_widget
+		
+	def item_tree_info(self):
+	
+		"""
+		Returns an info string for the item tree widget
+		
+		Returns:
+		An info string
+		"""
+		
+		if type(self.duration) == int:
+			return "%s ms" % self.duration
+		return "%s" % self.duration				

@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'resources/opensesame.ui'
 #
-# Created: Thu Apr 28 16:16:38 2011
+# Created: Thu May 26 13:16:06 2011
 #      by: PyQt4 UI code generator 4.7.4
 #
 # WARNING! All changes made in this file will be lost!
@@ -59,11 +59,12 @@ class Ui_MainWindow(object):
         self.verticalLayout.setObjectName("verticalLayout")
         self.itemtree = tree_overview(self.dock_widget_overview)
         self.itemtree.setAcceptDrops(True)
+        self.itemtree.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff)
         self.itemtree.setAlternatingRowColors(True)
         self.itemtree.setAutoExpandDelay(4)
         self.itemtree.setAnimated(True)
+        self.itemtree.setHeaderHidden(True)
         self.itemtree.setObjectName("itemtree")
-        self.itemtree.header().setVisible(False)
         self.verticalLayout.addWidget(self.itemtree)
         self.dock_overview.setWidget(self.dock_widget_overview)
         MainWindow.addDockWidget(QtCore.Qt.DockWidgetArea(1), self.dock_overview)
@@ -408,6 +409,9 @@ class Ui_MainWindow(object):
         self.action_preferences.setObjectName("action_preferences")
         self.actionDummy = QtGui.QAction(MainWindow)
         self.actionDummy.setObjectName("actionDummy")
+        self.action_show_info_in_overview = QtGui.QAction(MainWindow)
+        self.action_show_info_in_overview.setCheckable(True)
+        self.action_show_info_in_overview.setObjectName("action_show_info_in_overview")
         self.menu_recent_files.addAction(self.actionDummy)
         self.menu_file.addAction(self.action_new)
         self.menu_file.addAction(self.action_open)
@@ -439,6 +443,8 @@ class Ui_MainWindow(object):
         self.menu_view.addAction(self.action_show_variable_inspector)
         self.menu_view.addAction(self.action_show_pool)
         self.menu_view.addAction(self.action_show_stdout)
+        self.menu_view.addSeparator()
+        self.menu_view.addAction(self.action_show_info_in_overview)
         self.menu_help.addAction(self.action_help)
         self.menu_help.addAction(self.action_show_random_tip)
         self.menu_help.addSeparator()
@@ -486,7 +492,8 @@ class Ui_MainWindow(object):
         self.menu_help.setTitle(QtGui.QApplication.translate("MainWindow", "Help and feedback", None, QtGui.QApplication.UnicodeUTF8))
         self.menu_tools.setTitle(QtGui.QApplication.translate("MainWindow", "Tools", None, QtGui.QApplication.UnicodeUTF8))
         self.dock_overview.setWindowTitle(QtGui.QApplication.translate("MainWindow", "Overview", None, QtGui.QApplication.UnicodeUTF8))
-        self.itemtree.headerItem().setText(0, QtGui.QApplication.translate("MainWindow", "1", None, QtGui.QApplication.UnicodeUTF8))
+        self.itemtree.headerItem().setText(0, QtGui.QApplication.translate("MainWindow", "Name", None, QtGui.QApplication.UnicodeUTF8))
+        self.itemtree.headerItem().setText(1, QtGui.QApplication.translate("MainWindow", "Info", None, QtGui.QApplication.UnicodeUTF8))
         self.dock_variable_inspector.setWindowTitle(QtGui.QApplication.translate("MainWindow", "Variable inspector", None, QtGui.QApplication.UnicodeUTF8))
         self.label_3.setText(QtGui.QApplication.translate("MainWindow", "Variable inspector", None, QtGui.QApplication.UnicodeUTF8))
         self.edit_variable_filter.setToolTip(QtGui.QApplication.translate("MainWindow", "Enter a filter", None, QtGui.QApplication.UnicodeUTF8))
@@ -569,6 +576,7 @@ class Ui_MainWindow(object):
         self.action_contribute.setText(QtGui.QApplication.translate("MainWindow", "Contribute", None, QtGui.QApplication.UnicodeUTF8))
         self.action_preferences.setText(QtGui.QApplication.translate("MainWindow", "Preferences", None, QtGui.QApplication.UnicodeUTF8))
         self.actionDummy.setText(QtGui.QApplication.translate("MainWindow", "Dummy", None, QtGui.QApplication.UnicodeUTF8))
+        self.action_show_info_in_overview.setText(QtGui.QApplication.translate("MainWindow", "Show info in overview", None, QtGui.QApplication.UnicodeUTF8))
 
 from tree_overview import tree_overview
 from toolbar_items import toolbar_items

@@ -81,6 +81,13 @@ class experiment(libopensesame.experiment.experiment):
 	
 		"""
 		Construct an item tree
+		
+		Keyword arguments:
+		toplevel -- the toplevel widget (default = None)
+		items -- a list of items that have been added, to prevent recursion (default = [])
+		
+		Returns:
+		An updated list of items that have been added
 		"""
 		
 		self.ui.itemtree.clear()
@@ -101,19 +108,30 @@ class experiment(libopensesame.experiment.experiment):
 		widget.setExpanded(True)
 			
 		# Next build a tree with left over items
+		
 		self.unused_widget = QtGui.QTreeWidgetItem(self.ui.itemtree)
 		self.unused_widget.setText(0, "Unused items")
 		self.unused_widget.setIcon(0, self.icon("unused"))		
 		self.unused_widget.name = "__unused__"
 		self.unused_widget.setToolTip(0, "Unused items")
+		self.unused_widget.setToolTip(1, "Unused items")		
+		
 		self.ui.itemtree.insertTopLevelItem(1, widget)		
 
 		self.unused_items = []
+		c = 0
 		for i in self.items:
 			if self.items[i] not in items:
 				self.unused_items.append(i)
 				self.items[i].build_item_tree(self.unused_widget, items)
-		self.unused_widget.setExpanded(False)		
+				c += 1
+		self.unused_widget.setExpanded(False)
+		
+		font = QtGui.QFont()
+		font.setPointSize(8)
+		font.setItalic(True)
+		self.unused_widget.setText(1, str(c))
+		self.unused_widget.setFont(1, font)		
 		
 		return items							
 		

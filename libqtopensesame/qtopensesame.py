@@ -51,15 +51,15 @@ import optparse
 
 class general_header_widget(qtitem.header_widget):
 
-	"""
-	Provides the clickable title and description for
-	the experiment
-	"""
+	"""The widget containing the clickable title and description of the experiment"""
 
 	def __init__(self, item):
 	
 		"""
 		Constructor
+		
+		Arguments:
+		item -- the experiment
 		"""
 	
 		qtitem.header_widget.__init__(self, item)
@@ -67,13 +67,9 @@ class general_header_widget(qtitem.header_widget):
 
 	def restore_name(self):
 	
-		"""
-		Apply the name change and revert the edit
-		back to the label
-		"""
+		"""Apply the name change, hide the editable title and show the label"""
 	
-		self.item.main_window.apply_general_changes()
-	
+		self.item.main_window.apply_general_changes()	
 		self.label_name.setText("<font size='5'><b>%s</b> - Experiment</font>&nbsp;&nbsp;&nbsp;<font color='gray'><i>Click to edit</i></font>" % self.item.get("title"))
 		self.label_name.show()
 		self.edit_name.setText(self.item.get("title"))
@@ -81,13 +77,9 @@ class general_header_widget(qtitem.header_widget):
 				
 	def restore_desc(self):			
 	
-		"""
-		Apply the description change and revert the edit
-		back to the label
-		"""	
+		"""Apply the description change, hide the editable description and show the label"""
 		
 		self.item.main_window.apply_general_changes()		
-
 		self.label_desc.setText(self.item.get("description"))	
 		self.label_desc.show()
 		self.edit_desc.setText(self.item.get("description"))		
@@ -95,15 +87,15 @@ class general_header_widget(qtitem.header_widget):
 
 class output_buffer:
 
-	"""
-	The output buffer is used to capture the standard
-	output and reroute it to the debug window
-	"""
+	"""Used to capture the standard output and reroute it to the debug window"""
 
 	def __init__(self, plaintext):
 	
 		"""
 		Constructor
+		
+		Keyword arguments:
+		plaintext -- a QPlainTextEdit widget
 		"""
 	
 		self.plaintext = plaintext
@@ -111,7 +103,10 @@ class output_buffer:
 	def write(self, s):
 	
 		"""
-		Reroute to the debug window
+		Write a string
+		
+		Arguments:
+		s -- a string
 		"""
 	
 		if s.strip() != "":
@@ -120,14 +115,17 @@ class output_buffer:
 			
 class plugin_action(QtGui.QAction):
 
-	"""
-	Menu entry for plugin
-	"""
+	"""Menu action for a plugin"""
 
 	def __init__(self, main_window, menu, plugin):
 	
 		"""
 		Constructor
+		
+		Arguments:
+		main_window -- the main window
+		menu -- the menu into which the action should be inserted
+		plugin -- the name of the plugin
 		"""
 	
 		self.main_window = main_window
@@ -140,22 +138,27 @@ class plugin_action(QtGui.QAction):
 	def add_plugin(self, dummy = None):
 	
 		"""
-		When menu item is selected, add the plugin
-		to the experiment
+		Start a drag to add the plugin to the experiment
+		
+		Keyword arguments:
+		dummy -- a dummy argument passed by the signal handler (default = None)
 		"""
 	
 		self.main_window.drag_item(self.plugin)
 		
 class recent_action(QtGui.QAction):
 
-	"""
-	Menu entry for recent files
-	"""
+	"""Menu action for a recently opened file"""
 	
 	def __init__(self, path, main_window, menu):
 	
 		"""
 		Constructor
+		
+		Arguments:
+		path -- path to the recent file
+		main_window -- the main window
+		menu -- the menu into which the action should be inserted
 		"""
 		
 		QtGui.QAction.__init__(self, os.path.basename(path), menu)
@@ -167,15 +170,16 @@ class recent_action(QtGui.QAction):
 	
 		"""
 		Open the file
+		
+		Keyword arguments:
+		dummy -- a dummy argument passed by the signal handler (default = None)
 		"""
 		
 		self.main_window.open_file(path = self.path)
 								
 class qtopensesame(QtGui.QMainWindow):
 
-	"""
-	The main class of the OpenSesame GUI.
-	"""
+	"""The main class of the OpenSesame GUI"""
 	
 	def __init__(self, parent = None):
 		
@@ -265,6 +269,7 @@ class qtopensesame(QtGui.QMainWindow):
 		self.ui.action_add_inline_script.triggered.connect(self.drag_inline_script)
 		
 		self.ui.action_show_random_tip.triggered.connect(self.show_random_tip)
+		self.ui.action_show_info_in_overview.triggered.connect(self.toggle_overview_info)
 				
 		# Setup the variable inspector
 		self.ui.button_help_variables.clicked.connect(self.open_variables_help_tab)		
@@ -361,7 +366,7 @@ class qtopensesame(QtGui.QMainWindow):
 		self.immediate_rename = settings.value("immediate_rename", False).toBool()
 		self.opensesamerun_exec = str(settings.value("opensesamerun_exec", "").toString())
 		self.opensesamerun = settings.value("opensesamerun", False).toBool()
-		self.experiment.auto_response = settings.value("auto_response", False).toBool()
+		self.experiment.auto_response = settings.value("auto_response", False).toBool()		
 		
 		# Unpack the string with recent files and only remember those that still exist
 		self.recent_files = []
@@ -370,12 +375,14 @@ class qtopensesame(QtGui.QMainWindow):
 				self.recent_files.append(path)		
 		
 		self.ui.action_enable_auto_response.setChecked(self.experiment.auto_response)
+		self.ui.action_show_info_in_overview.setChecked(settings.value("overview_info", False).toBool())
+		self.toggle_overview_info()		
 
 		if settings.value("toolbar_text", False).toBool():
 			self.ui.toolbar_main.setToolButtonStyle(QtCore.Qt.ToolButtonTextUnderIcon)
 		else:
 			self.ui.toolbar_main.setToolButtonStyle(QtCore.Qt.ToolButtonIconOnly)
-				
+							
 		settings.endGroup();
 		
 	def save_state(self):
@@ -397,6 +404,7 @@ class qtopensesame(QtGui.QMainWindow):
 		settings.setValue("immediate_rename", self.immediate_rename)
 		settings.setValue("opensesamerun", self.opensesamerun)
 		settings.setValue("opensesamerun_exec", self.opensesamerun_exec)
+		settings.setValue("overview_info", self.overview_info)
 		
 		settings.setValue("auto_response", self.experiment.auto_response)
 		settings.setValue("toolbar_text", self.ui.toolbar_main.toolButtonStyle() == QtCore.Qt.ToolButtonTextUnderIcon)
@@ -542,6 +550,23 @@ class qtopensesame(QtGui.QMainWindow):
 		self.immediate_rename = self.ui.action_immediate_rename.isChecked()
 		if self.experiment.debug:
 			print "qtopensesame.set_immediate_rename(): set to %s" % self.immediate_rename
+			
+	def toggle_overview_info(self):
+	
+		"""Set the visibility of the info column in the overview based on the menu action"""
+		
+		self.overview_info = self.ui.action_show_info_in_overview.isChecked()		
+		if self.overview_info:
+			self.ui.itemtree.setColumnCount(2)
+			self.ui.itemtree.setHeaderHidden(False)
+			self.ui.itemtree.resizeColumnToContents(0)						
+			if self.ui.itemtree.columnWidth(1) < 100:
+				self.ui.itemtree.setColumnWidth(1, 100)
+		else:		
+			self.ui.itemtree.setColumnCount(1)
+			self.ui.itemtree.setHeaderHidden(True)
+		if self.experiment.debug:
+			print "qtopensesame.toggle_overview_info(): set to %s" % self.overview_info
 		
 	def update_dialog(self, message):
 	
@@ -1476,8 +1501,7 @@ class qtopensesame(QtGui.QMainWindow):
 		"""
 		
 		if self.experiment.debug:
-			print "qtopensesame.build_item_list(): %s" % name
-		
+			print "qtopensesame.build_item_list(): %s" % name		
 		self.experiment.build_item_tree()
 			
 	def select_item(self, name):

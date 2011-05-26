@@ -32,10 +32,7 @@ codename = "Cody Crick"
 
 def change_working_dir():
 
-	"""
-	A horrifyingly ugly hack to change the working directory
-	under Windows
-	"""
+	"""A horrifyingly ugly hack to change the working directory under Windows"""
 	
 	if os.name == "nt":
 		try:	
@@ -56,9 +53,7 @@ def change_working_dir():
 			
 def opensesamerun_options():
 
-	"""
-	Parse the command line options for opensesamerun
-	"""
+	"""Parse the command line options for opensesamerun"""
 	
 	global version, codename
 
@@ -124,7 +119,13 @@ def opensesamerun_options():
 def opensesamerun_ready(options):
 	
 	"""
-	Check if the opensesamerun options are sufficient to run the experiment
+	Check if the opensesamerun options are sufficiently complete to run the experiment
+	
+	Arguments:
+	options -- a dictionary containing the options
+	
+	Returns:
+	True or False, depending on whether the options are sufficient
 	"""
 
 	# Check if the experiment exists	
@@ -144,6 +145,10 @@ def messagebox(title, msg):
 
 	"""
 	Presents a simple tk messagebox
+	
+	Arguments:
+	title -- the title of the messagebox
+	msg -- the message
 	"""
 	
 	root = Tk()
@@ -151,14 +156,19 @@ def messagebox(title, msg):
 	l = Label(root, text = msg, justify = LEFT, padx = 8, pady = 8, wraplength = 300)
 	l.pack()
 	b = Button(root, text = "Ok", command = root.quit)
-	b.pack(side = RIGHT)
-	
+	b.pack(side = RIGHT)	
 	root.mainloop()
 	
 def strip_tags(s):
 
 	"""
 	Strip html tags from a string and convert breaks to newlines.
+	
+	Arguments:
+	s -- the string to be stripped
+	
+	Returns:
+	The stripped string
 	"""
 
 	return re.compile(r'<.*?>').sub('', str(s).replace("<br />", "\n").replace("<br>", "\n"))
@@ -167,6 +177,12 @@ def resource(name):
 
 	"""
 	A hacky way to get a resource using the functionality from openexp
+	
+	Arguments:
+	name -- the name of the requested resource
+	
+	Returns:
+	The full path to the resource
 	"""
 
 	return openexp.experiment.experiment.resource(openexp.experiment.experiment(), name)
