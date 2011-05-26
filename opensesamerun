@@ -40,7 +40,8 @@ if __name__ == "__main__":
 	while not libopensesame.misc.opensesamerun_ready(options):
 	
 		# If PyQt4 is not available (e.g., this might be the case on Mac OS)
-		# give an error instead of showing a GUI
+		# give an error instead of showing a GUI. This makes sure that even
+		# without PyQt4, people can still run experiments.
 		try:
 			from PyQt4 import QtGui, QtCore
 		except:
@@ -56,7 +57,7 @@ if __name__ == "__main__":
 		app.exec_()	
 		
 		# Update the options from the GUI
-		options = myapp.options	
+		options = myapp.options
 		
 		# Exit if the GUI was canceled
 		if not myapp.run:
@@ -70,7 +71,7 @@ if __name__ == "__main__":
 		exp.fullscreen = options.fullscreen
 		exp.logfile = options.logfile
 		exp.run()
-		exp.end()
+		exp.end()		
 			
 	else:
 	
@@ -95,6 +96,7 @@ if __name__ == "__main__":
 			try:
 				exp.end()
 			except Exception as f:
-				libopensesame.misc.messagebox("OpenSesame Run", libopensesame.misc.strip_tags(f))						
+				libopensesame.misc.messagebox("OpenSesame Run", libopensesame.misc.strip_tags(f))					
 			libopensesame.misc.messagebox("OpenSesame Run", libopensesame.misc.strip_tags(e))
 		
+	libopensesame.experiment.clean_up(exp.debug)

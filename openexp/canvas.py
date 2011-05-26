@@ -18,17 +18,17 @@ along with openexp.  If not, see <http://www.gnu.org/licenses/>.
 import openexp.exceptions
 import tempfile
 import pygame
+import os
 
-temp_files = []
+temp_files = [] # Contains a list of temporary files that should be cleaned up
 
 class canvas:
 
-	"""
-	Based on the canvas_backend variable in the experiment, this class
-	morphs into the appropriate canvas backend class.
-	"""
+	"""A 'magic' class that morphs into the approriate backend from openexp._canvas"""
 	
 	def __init__(self, experiment, bgcolor = "black", fgcolor = "white"):
+	
+		"""Constructor"""
 	
 		if experiment.debug:
 			print "canvas.__init__(): morphing into openexp._canvas.%s" % experiment.canvas_backend		
@@ -45,9 +45,7 @@ class canvas:
 		
 def init_display(experiment):
 
-	"""
-	Call the init_display function from the back-end
-	"""
+	"""Call the back-end specific init_display function"""
 
 	if experiment.debug:
 		exec("import openexp._canvas.%s" % experiment.canvas_backend)
@@ -61,9 +59,7 @@ def init_display(experiment):
 		
 def close_display(experiment):
 
-	"""
-	Call the close_display function from the back-end
-	"""
+	"""Call the back-end specific close_display function"""
 	
 	if experiment.debug:
 		exec("import openexp._canvas.%s" % experiment.canvas_backend)
@@ -79,6 +75,9 @@ def clean_up(verbose = False):
 	
 	"""
 	Cleans up the temporary pool folders
+	
+	Keyword arguments:
+	verbose -- a boolean indicating if debugging output should be provided (default = False)
 	"""
 	
 	global temp_files
@@ -91,15 +90,20 @@ def clean_up(verbose = False):
 			print "canvas.clean_up(): removing '%s'" % path
 		try:
 			os.remove(path)
-		except:
+		except Exception as e:
 			if verbose:
-				print "canvas.clean_up(): failed to remove '%s'" % path
+				print "canvas.clean_up(): failed to remove '%s': %s" % (path, e)
 						
 def gabor_file(orient, freq, env = "gaussian", size = 96, stdev = 12, phase = 0, col1 = "white", col2 = "black", bgmode = "avg"):
 
 	"""
 	Creates a temporary file containing a Gabor patch.
-	See canvas.gabor()
+
+	Keyword arguments:
+	See canvas.noise_patch()
+	
+	Returns:
+	A path to the image file
 	"""
 	
 	global temp_files
@@ -116,7 +120,12 @@ def noise_file(env = "gaussian", size = 96, stdev = 12, col1 = "white", col2 = "
 
 	"""
 	Creates a temporary file containing a noise patch.
+	
+	Keyword arguments:
 	See canvas.noise_patch()
+	
+	Returns:
+	A path to the image file
 	"""
 	
 	global temp_files	

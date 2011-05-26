@@ -149,7 +149,7 @@ class item(openexp.trial.trial):
 		textblock_var = None
 		self.variables = {}
 		for line in string.split("\n"):
-		
+				
 			# The end of a textblock
 			if line.strip() == "__end__":
 				self.set(textblock_var, textblock_val)

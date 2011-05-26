@@ -62,7 +62,7 @@ class inline_script(item.item):
 		"""	
 		
 		item.item.prepare(self)
-		
+				
 		try:
 			self.cprepare = compile(self._prepare, "<string>", "exec")
 		except Exception as e:

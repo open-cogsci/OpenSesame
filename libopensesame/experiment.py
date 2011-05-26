@@ -27,7 +27,7 @@ import tarfile
 import tempfile
 import imp
 
-pool_folders = []
+pool_folders = [] # Contains a list of all pool folders, which need to be removed on program exit
 
 class experiment(item.item, openexp.experiment.experiment):
 
@@ -520,7 +520,7 @@ class experiment(item.item, openexp.experiment.experiment):
 		if path[-len(ext):] != ext:
 			if self.debug:
 				print "experiment.open(): opening .opensesame file"		
-			return open(path, "r").read()
+			return open(path, "rU").read()
 			
 		if self.debug:
 			print "experiment.open(): opening .opensesame.tar.gz file"		
@@ -540,7 +540,7 @@ class experiment(item.item, openexp.experiment.experiment):
 		
 		script_path = os.path.join(self.pool_folder, "script.opensesame")
 		tar.extract("script.opensesame", self.pool_folder)
-		script = open(script_path, "r").read()
+		script = open(script_path, "rU").read()
 		os.remove(script_path)
 		return script
 		
