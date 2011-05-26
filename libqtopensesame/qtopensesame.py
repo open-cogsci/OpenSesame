@@ -560,8 +560,8 @@ class qtopensesame(QtGui.QMainWindow):
 			self.ui.itemtree.setColumnCount(2)
 			self.ui.itemtree.setHeaderHidden(False)
 			self.ui.itemtree.resizeColumnToContents(0)						
-			if self.ui.itemtree.columnWidth(1) < 100:
-				self.ui.itemtree.setColumnWidth(1, 100)
+			if self.ui.itemtree.columnWidth(1) < 20:
+				self.ui.itemtree.setColumnWidth(1, 20)
 		else:		
 			self.ui.itemtree.setColumnCount(1)
 			self.ui.itemtree.setHeaderHidden(True)

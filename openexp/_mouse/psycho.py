@@ -48,8 +48,8 @@ class psycho(openexp._mouse.legacy.legacy):
 		self.experiment = experiment						
 		self.set_buttonlist(buttonlist)
 		self.set_timeout(timeout)
-		self.set_visible(visible)
 		self.mouse = event.Mouse(visible = False, win = self.experiment.window)
+		self.set_visible(visible)		
 				
 	def set_buttonlist(self, buttonlist = None):
 	
@@ -93,7 +93,7 @@ class psycho(openexp._mouse.legacy.legacy):
 		"""	
 	
 		self.visible = visible
-		self.mouse.setVisible(visible)				
+		self.mouse.setVisible(visible)		
 		
 	def get_click(self, buttonlist = None, timeout = None, visible = None):
 	
@@ -126,16 +126,16 @@ class psycho(openexp._mouse.legacy.legacy):
 		
 		start_time = 1000.0 * self.experiment.clock.getTime()
 		time = start_time	
-	
+		self.mouse.clickReset()
 		while timeout == None or time - start_time < timeout:
-			time = pygame.time.get_ticks()
-			for event in pygame.event.get():			
-				if event.type == KEYDOWN and event.key == pygame.K_ESCAPE:
-					raise openexp.exceptions.response_error("The escape key was pressed.")										
-				if event.type == MOUSEBUTTONDOWN:
-					if buttonlist == None or event.button in buttonlist:
-						pygame.mouse.set_visible(self.visible)
-						return event.button, event.pos, time
+			time = 1000.0 * self.experiment.clock.getTime()			
+			buttons, times = self.mouse.getPressed(getTime = True)
+			if buttons[0] and (buttonlist == None or 1 in buttonlist):
+				return 1, self.mouse.getPos(), time
+			if buttons[1] and (buttonlist == None or 2 in buttonlist):
+				return 2, self.mouse.getPos(), time
+			if buttons[2] and (buttonlist == None or 1 in buttonlist):
+				return 3, self.mouse.getPos(), time							
 					
 		self.mouse.setVisible(self.visible)					
 		return None, None, time					

@@ -585,7 +585,8 @@ def init_display(experiment):
 	if experiment.debug:
 		print "openexp._canvas.psycho.init_display(): creating a %s display" % wintype
 			
-	experiment.window = visual.Window( [experiment.width, experiment.height], waitBlanking = waitblanking, fullscr = experiment.fullscreen, monitor = monitor, units = "pix", winType = "pyglet")		
+	experiment.window = visual.Window( [experiment.width, experiment.height], waitBlanking = waitblanking, fullscr = experiment.fullscreen, monitor = monitor, units = "pix", winType = "pyglet")
+	experiment.window.setMouseVisible(False)
 	experiment.clock = core.Clock()	
 	experiment._time_func = _time
 
@@ -604,7 +605,11 @@ def close_display(experiment):
 	experiment -- An instance of libopensesame.experiment.experiment	
 	"""
 	
-	experiment.window.close()	
+	# This causes a (harmless) exception in some cases, so we catch it to prevent confusion 
+	try:
+		experiment.window.close()
+	except:
+		pass
 	
 def _time():
 

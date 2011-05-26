@@ -145,5 +145,7 @@ class sketchpad(libopensesame.sketchpad.sketchpad, libqtopensesame.qtitem.qtitem
 		"""
 		
 		if type(self.duration) == int:
+			if self.duration <= 0:
+				return "no delay"
 			return "%s ms" % self.duration
-		return "%s" % self.duration		
+		return "until %s" % self.duration		

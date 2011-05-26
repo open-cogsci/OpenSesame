@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'resources/opensesame.ui'
 #
-# Created: Thu May 26 13:16:06 2011
+# Created: Thu May 26 13:31:41 2011
 #      by: PyQt4 UI code generator 4.7.4
 #
 # WARNING! All changes made in this file will be lost!
@@ -59,7 +59,6 @@ class Ui_MainWindow(object):
         self.verticalLayout.setObjectName("verticalLayout")
         self.itemtree = tree_overview(self.dock_widget_overview)
         self.itemtree.setAcceptDrops(True)
-        self.itemtree.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff)
         self.itemtree.setAlternatingRowColors(True)
         self.itemtree.setAutoExpandDelay(4)
         self.itemtree.setAnimated(True)
@@ -411,6 +410,7 @@ class Ui_MainWindow(object):
         self.actionDummy.setObjectName("actionDummy")
         self.action_show_info_in_overview = QtGui.QAction(MainWindow)
         self.action_show_info_in_overview.setCheckable(True)
+        self.action_show_info_in_overview.setIcon(icon19)
         self.action_show_info_in_overview.setObjectName("action_show_info_in_overview")
         self.menu_recent_files.addAction(self.actionDummy)
         self.menu_file.addAction(self.action_new)
@@ -473,6 +473,7 @@ class Ui_MainWindow(object):
         self.toolbar_main.addAction(self.action_show_pool)
         self.toolbar_main.addAction(self.action_show_variable_inspector)
         self.toolbar_main.addAction(self.action_show_stdout)
+        self.toolbar_main.addAction(self.action_show_info_in_overview)
         self.toolbar_main.addSeparator()
         self.toolbar_main.addAction(self.action_help)
 
