@@ -112,16 +112,16 @@ class opengl(openexp.canvas.canvas):
 		which the display whas shown. Waits for
 		v-sync if enabled.		
 		"""
-		#stime = pygame.time.get_ticks()
+		stime = pygame.time.get_ticks()
 		for s,loc in self.showables:
 			s.show(loc[0],loc[1])
-		#etime = pygame.time.get_ticks()
-		#print "Show:",stime, etime-stime
+		etime = pygame.time.get_ticks()
+		print "Show:",stime, etime-stime
 		
-		#stime = pygame.time.get_ticks()
+		stime = pygame.time.get_ticks()
 		libopengl.doBlockingFlip()
-		#etime = pygame.time.get_ticks()
-		#print "Flip:",stime, etime-stime
+		etime = pygame.time.get_ticks()
+		print "Flip:",stime, etime-stime
 		
 		return pygame.time.get_ticks()
 		
@@ -218,7 +218,6 @@ class opengl(openexp.canvas.canvas):
 		"""
 		dy = abs(ey - sy) + 2*self.penwidth + 1
 		dx = abs(ex - sx) + 2*self.penwidth + 1
-		print dx,dy
 		surface = pygame.Surface((dx,dy), SRCALPHA)
 
 		if sx < ex:
@@ -234,13 +233,11 @@ class opengl(openexp.canvas.canvas):
 			s_sy = dy - self.penwidth - 1
 			s_ey = self.penwidth
 
-		print self.penwidth,(s_sx,s_sy),(s_ex,s_ey)
-		
 		pygame.draw.line(surface, self.fgcolor,
 				 (s_sx, s_sy), (s_ex, s_ey),
 				 self.penwidth)
 
-		self.showables.append((libopengl.LowImage(surface),
+		self.showables.append((libopengl.LowImage(surface,interpolate=False),
 				       (min(sx,ex)-self.penwidth,
 					min(sy,ey)-self.penwidth)))
 
