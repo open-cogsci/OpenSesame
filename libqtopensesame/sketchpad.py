@@ -24,57 +24,57 @@ from PyQt4 import QtCore, QtGui
 class sketchpad(libopensesame.sketchpad.sketchpad, libqtopensesame.qtitem.qtitem):
 
 	def __init__(self, name, experiment, string = None):
-	
+
 		"""
-		Initialize the experiment		
+		Initialize the experiment
 		"""
-		
+
 		libopensesame.sketchpad.sketchpad.__init__(self, name, experiment, string)
 		libqtopensesame.qtitem.qtitem.__init__(self)
-		
+
 	def apply_edit_changes(self):
-	
+
 		"""
 		Apply changes to the edit widget
 		"""
-		
+
 		if not libqtopensesame.qtitem.qtitem.apply_edit_changes(self, False):
 			return
-		
+
 		dur = str(self.edit_duration.text()).strip()
 		if dur.strip() != "":
 			self.set("duration", dur)
-			
+
 		if self.checkbox_start_response_interval.isChecked():
 			self.set("start_response_interval", "yes")
 		else:
 			self.set("start_response_interval", "no")
-			
+
 		self.experiment.main_window.refresh(self.name)
-		
+
 	def popout(self):
-	
+
 		"""
 		Opens a new window for the editor
 		"""
-		
+
 		a = libqtopensesame.sketchpad_dialog.sketchpad_dialog(self.experiment.ui.centralwidget, self);
 		a.exec_()
 		self.apply_edit_changes()
-		
+
 	def static_items(self):
-		
+
 		"""
 		Returns a list of items which are 'static' in the sense that they don't contain variables
 		that make it hard to draw them onto a sketchpad. Variables in text and show_if properties
 		are allowed.
-		
+
 		Returns:
 		A list of static items
 		"""
-		
+
 		l = []
-		for item in self.items:		
+		for item in self.items:
 			static = True
 			for var in item:
 				if var != "text" and var != "show_if" and type(item[var]) == str and item[var].find("[") >= 0:
@@ -82,43 +82,43 @@ class sketchpad(libopensesame.sketchpad.sketchpad, libqtopensesame.qtitem.qtitem
 						print "sketchpad.static_items(): variable property: %s = %s" % (var, item[var])
 					static = False
 			if static:
-				l.append(item)				
+				l.append(item)
 		return l
-		
+
 
 	def init_edit_widget(self):
-	
+
 		"""
 		Build the edit widget
 		"""
-		
+
 		libqtopensesame.qtitem.qtitem.init_edit_widget(self, False)
-		
-		row = 3		
+
+		row = 3
 		self.edit_grid.addWidget(QtGui.QLabel("Duration"), row, 0)
 		self.edit_duration = QtGui.QLineEdit()
 		self.edit_duration.setToolTip("A numeric value (duration in milliseconds), 'keypress', 'mouseclick', or '[variable_name]'")
 		QtCore.QObject.connect(self.edit_duration, QtCore.SIGNAL("editingFinished()"), self.apply_edit_changes)
-		self.edit_grid.addWidget(self.edit_duration, row, 1)				
-		
+		self.edit_grid.addWidget(self.edit_duration, row, 1)
+
 		row += 1
 		self.checkbox_start_response_interval = QtGui.QCheckBox("Start response interval")
-		self.checkbox_start_response_interval.setToolTip("If checked, the response items will use the onset of the sketchpad to determine response time")		
-		self.edit_grid.addWidget(self.checkbox_start_response_interval, row, 0)		
-		QtCore.QObject.connect(self.checkbox_start_response_interval, QtCore.SIGNAL("stateChanged(int)"), self.apply_edit_changes)		
-		
+		self.checkbox_start_response_interval.setToolTip("If checked, the response items will use the onset of the sketchpad to determine response time")
+		self.edit_grid.addWidget(self.checkbox_start_response_interval, row, 0)
+		QtCore.QObject.connect(self.checkbox_start_response_interval, QtCore.SIGNAL("stateChanged(int)"), self.apply_edit_changes)
+
 		row += 1
 		self.popout_button = QtGui.QPushButton(self.experiment.icon(self.item_type), "Open editor in new window")
 		self.popout_button.setIconSize(QtCore.QSize(16,16))
 		self.popout_button.setToolTip("Open the sketchpad editor in a new window")
-		QtCore.QObject.connect(self.popout_button, QtCore.SIGNAL("clicked()"), self.popout)		
-		self.edit_grid.addWidget(self.popout_button, row, 0)				
-		
+		QtCore.QObject.connect(self.popout_button, QtCore.SIGNAL("clicked()"), self.popout)
+		self.edit_grid.addWidget(self.popout_button, row, 0)
+
 		self.tools_widget = libqtopensesame.sketchpad_widget.sketchpad_widget(self)
 		self.edit_vbox.addWidget(self.tools_widget)
-											
+
 	def edit_widget(self):
-	
+
 		"""
 		Refresh and return the edit widget
 		"""
@@ -128,24 +128,29 @@ class sketchpad(libopensesame.sketchpad.sketchpad, libqtopensesame.qtitem.qtitem
 		if self.has("duration"):
 			dur = self.get("duration")
 		else:
-			dur = ""		
-		self.edit_duration.setText(str(dur))		
+			dur = ""
+		self.edit_duration.setText(str(dur))
 		self.checkbox_start_response_interval.setChecked(self.get("start_response_interval") == "yes")
 		self.tools_widget.refresh()
-						
+
 		return self._edit_widget
-		
+
 	def item_tree_info(self):
-	
+
 		"""
 		Returns an info string for the item tree widget
-		
+
 		Returns:
 		An info string
 		"""
-		
+
 		if type(self.duration) == int:
 			if self.duration <= 0:
 				return "no delay"
 			return "%s ms" % self.duration
-		return "until %s" % self.duration		
+
+		if "[" in self.duration:
+			return "variable duration"
+
+		return "until %s" % self.duration
+
