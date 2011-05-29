@@ -17,16 +17,26 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 
 import libopensesame.sketchpad
 import libqtopensesame.qtitem
+import libqtopensesame.feedpad
 import libqtopensesame.sketchpad_widget
 import libqtopensesame.sketchpad_dialog
 from PyQt4 import QtCore, QtGui
 
-class sketchpad(libopensesame.sketchpad.sketchpad, libqtopensesame.qtitem.qtitem):
+class sketchpad(libopensesame.sketchpad.sketchpad, libqtopensesame.feedpad.feedpad, libqtopensesame.qtitem.qtitem):
+
+	"""The GUI controls for the sketchpad"""
 
 	def __init__(self, name, experiment, string = None):
 
 		"""
-		Initialize the experiment
+		Constructor
+
+		Arguments:
+		name -- the name of the item
+		experiment -- an instance of libopensesame.experiment
+
+		Keyword arguments:
+		string -- a string with the item definition (default = None)
 		"""
 
 		libopensesame.sketchpad.sketchpad.__init__(self, name, experiment, string)
@@ -34,9 +44,7 @@ class sketchpad(libopensesame.sketchpad.sketchpad, libqtopensesame.qtitem.qtitem
 
 	def apply_edit_changes(self):
 
-		"""
-		Apply changes to the edit widget
-		"""
+		"""Apply changes to the controls"""
 
 		if not libqtopensesame.qtitem.qtitem.apply_edit_changes(self, False):
 			return
@@ -52,45 +60,25 @@ class sketchpad(libopensesame.sketchpad.sketchpad, libqtopensesame.qtitem.qtitem
 
 		self.experiment.main_window.refresh(self.name)
 
-	def popout(self):
+	def edit_widget(self):
 
-		"""
-		Opens a new window for the editor
-		"""
+		"""Update the controls based on the items settings"""
 
-		a = libqtopensesame.sketchpad_dialog.sketchpad_dialog(self.experiment.ui.centralwidget, self);
-		a.exec_()
-		self.apply_edit_changes()
+		libqtopensesame.qtitem.qtitem.edit_widget(self)
 
-	def static_items(self):
+		if self.has("duration"):
+			dur = self.get("duration")
+		else:
+			dur = ""
+		self.edit_duration.setText(str(dur))
+		self.checkbox_start_response_interval.setChecked(self.get("start_response_interval") == "yes")
+		self.tools_widget.refresh()
 
-		"""
-		Returns a list of items which are 'static' in the sense that they don't contain variables
-		that make it hard to draw them onto a sketchpad. Variables in text and show_if properties
-		are allowed.
-
-		Returns:
-		A list of static items
-		"""
-
-		l = []
-		for item in self.items:
-			static = True
-			for var in item:
-				if var != "text" and var != "show_if" and type(item[var]) == str and item[var].find("[") >= 0:
-					if self.experiment.debug:
-						print "sketchpad.static_items(): variable property: %s = %s" % (var, item[var])
-					static = False
-			if static:
-				l.append(item)
-		return l
-
+		return self._edit_widget
 
 	def init_edit_widget(self):
 
-		"""
-		Build the edit widget
-		"""
+		"""Construct the edit widget that contains the controls"""
 
 		libqtopensesame.qtitem.qtitem.init_edit_widget(self, False)
 
@@ -116,41 +104,4 @@ class sketchpad(libopensesame.sketchpad.sketchpad, libqtopensesame.qtitem.qtitem
 
 		self.tools_widget = libqtopensesame.sketchpad_widget.sketchpad_widget(self)
 		self.edit_vbox.addWidget(self.tools_widget)
-
-	def edit_widget(self):
-
-		"""
-		Refresh and return the edit widget
-		"""
-
-		libqtopensesame.qtitem.qtitem.edit_widget(self)
-
-		if self.has("duration"):
-			dur = self.get("duration")
-		else:
-			dur = ""
-		self.edit_duration.setText(str(dur))
-		self.checkbox_start_response_interval.setChecked(self.get("start_response_interval") == "yes")
-		self.tools_widget.refresh()
-
-		return self._edit_widget
-
-	def item_tree_info(self):
-
-		"""
-		Returns an info string for the item tree widget
-
-		Returns:
-		An info string
-		"""
-
-		if type(self.duration) == int:
-			if self.duration <= 0:
-				return "no delay"
-			return "%s ms" % self.duration
-
-		if "[" in self.duration:
-			return "variable duration"
-
-		return "until %s" % self.duration
 
