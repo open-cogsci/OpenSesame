@@ -49,6 +49,14 @@ def clearScreen(color):
             lastclearcolor = color
         lastclearimage.show(0, 0)
 
+gl_version = None
+def getGLVersion():
+    # !!! You must have an active GL context to call this method !!!
+    global gl_version
+    if gl_version is None:
+        # store version
+        gl_version = float(glGetString(GL_VERSION).split()[0])
+    return gl_version
 
 def doBlockingFlip():
     """
@@ -79,19 +87,24 @@ def doBlockingFlip():
 
 class OGLSprite:
     """Implement the ugly details of "blitting" to OpenGL"""
-    def __init__(self, surf, mipmap=None):
+    def __init__(self, surf, mipmap=None, interpolate=True):
         """OGLSprite(self, surf, mipmap=None) -> OGLSprite
         
         Create a drawable texture out of a given surface."""
 
         w, h = surf.get_width(), surf.get_height()
-        w2, h2 = 1, 1
-        while w2 < w: w2 <<= 1
-        while h2 < h: h2 <<= 1
+        if getGLVersion() >= 2.1:
+            w2 = w
+            h2 = h
+            img = surf
+        else:
+            # must use power of 2
+            w2, h2 = 1, 1
+            while w2 < w: w2 <<= 1
+            while h2 < h: h2 <<= 1
+            img = pygame.Surface((w2, h2), SRCALPHA, 32)
+            img.blit(surf, (0,0))
 
-        img = pygame.Surface((w2, h2), SRCALPHA, 32)
-        
-        img.blit(surf, (0,0))
         rgba = pygame.image.tostring(img, "RGBA", 0)
 
         #assign a texture
@@ -108,8 +121,18 @@ class OGLSprite:
         else:
             glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, w2, h2, 0, GL_RGBA, GL_UNSIGNED_BYTE, rgba)
 
-        glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR)  
-        glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR) 
+        if interpolate:
+            smoothing = GL_LINEAR
+            glEnable(GL_LINE_SMOOTH)
+            glEnable(GL_POLYGON_SMOOTH)
+        else:
+            smoothing = GL_NEAREST
+            glDisable(GL_LINE_SMOOTH)
+            glDisable(GL_POLYGON_SMOOTH)
+        glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, smoothing)
+        glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, smoothing)
+        #glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR)
+        #glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR)
 
         self.mipmap = mipmap
         self.srcsize = w, h
@@ -130,12 +153,18 @@ class OGLSprite:
             raise TypeError("Cannot update a mipmap enabled OGLSprite")
 
         w, h = surf.get_width(), surf.get_height()
-        w2, h2 = 1, 1
-        while w2 < w: w2 <<= 1
-        while h2 < h: h2 <<= 1
+        if getGLVersion() >= 2.1:
+            w2 = w
+            h2 = h
+            img = surf
+        else:
+            # must use power of 2
+            w2, h2 = 1, 1
+            while w2 < w: w2 <<= 1
+            while h2 < h: h2 <<= 1
+            img = pygame.Surface((w2, h2), SRCALPHA, 32)
+            img.blit(surf, (0,0))
 
-        img = pygame.Surface((w2, h2), SRCALPHA, surf)
-        img.blit(surf, (0,0))
         rgba = pygame.image.tostring(img, "RGBA", 0)
 
         glBindTexture(GL_TEXTURE_2D, self.texid)
@@ -233,7 +262,7 @@ class LowImage:
     """
     Low level representation of an image.
     """
-    def __init__(self, *args):
+    def __init__(self, *args, **kwargs):
         """
         Create LowImage.
         """
@@ -249,7 +278,11 @@ class LowImage:
                 raise ValueError, "Invalid type for LowImage constructor argument."
         else:
             raise ValueError, "Invalid number of arguments for LowImage constructor."
-        self.gl_texture = OGLSprite(self.surf)
+        if kwargs.has_key('interpolate'):
+            interpolate = kwargs['interpolate']
+        else:
+            interpolate = True
+        self.gl_texture = OGLSprite(self.surf, interpolate=interpolate)
         self.gl_texture_dirty = False
 
 	# this next line supposedly breaks on OSX, set to none if this is the case

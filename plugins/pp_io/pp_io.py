@@ -39,13 +39,6 @@ except ImportError:
 
 # we only want one instance of pp, so here's a global var
 _pp = None
-
-def clean_up_the_mess():
-	global _pp
-	if self.experiment.debug:
-		print "pp_io.clean_up_this_mess(): deleting _pp"
-	if not _pp is None:
-		del _pp
 	
 class pp_io(item.item):
 
@@ -75,8 +68,15 @@ class pp_io(item.item):
 		item.item.__init__(self, name, experiment, string)
 
 		# add cleanup code
-		self.experiment.cleanup_functions.append(clean_up_the_mess)
+		self.experiment.cleanup_functions.append(self.clean_up_the_mess)
 						
+	def clean_up_the_mess(self):
+		global _pp
+		if self.experiment.debug:
+			print "pp_io.clean_up_this_mess(): deleting _pp"
+		if not _pp is None:
+			del _pp
+
 	def prepare(self):
 	
 		"""
