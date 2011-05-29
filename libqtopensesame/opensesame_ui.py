@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'resources/opensesame.ui'
 #
-# Created: Fri May 27 12:38:21 2011
+# Created: Sun May 29 15:09:18 2011
 #      by: PyQt4 UI code generator 4.7.4
 #
 # WARNING! All changes made in this file will be lost!
@@ -410,7 +410,9 @@ class Ui_MainWindow(object):
         self.actionDummy.setObjectName("actionDummy")
         self.action_show_info_in_overview = QtGui.QAction(MainWindow)
         self.action_show_info_in_overview.setCheckable(True)
-        self.action_show_info_in_overview.setIcon(icon19)
+        icon31 = QtGui.QIcon()
+        icon31.addPixmap(QtGui.QPixmap(":/icons/item_info_large.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.action_show_info_in_overview.setIcon(icon31)
         self.action_show_info_in_overview.setObjectName("action_show_info_in_overview")
         self.menu_recent_files.addAction(self.actionDummy)
         self.menu_file.addAction(self.action_new)
@@ -439,12 +441,11 @@ class Ui_MainWindow(object):
         self.menu_items.addAction(self.actionPlugins)
         self.menu_view.addAction(self.action_close_all_tabs)
         self.menu_view.addAction(self.action_close_other_tabs)
+        self.menu_view.addAction(self.action_show_info_in_overview)
         self.menu_view.addSeparator()
         self.menu_view.addAction(self.action_show_variable_inspector)
         self.menu_view.addAction(self.action_show_pool)
         self.menu_view.addAction(self.action_show_stdout)
-        self.menu_view.addSeparator()
-        self.menu_view.addAction(self.action_show_info_in_overview)
         self.menu_help.addAction(self.action_help)
         self.menu_help.addAction(self.action_show_random_tip)
         self.menu_help.addSeparator()
@@ -470,10 +471,11 @@ class Ui_MainWindow(object):
         self.toolbar_main.addAction(self.action_run_in_window)
         self.toolbar_main.addSeparator()
         self.toolbar_main.addAction(self.action_close_other_tabs)
+        self.toolbar_main.addAction(self.action_show_info_in_overview)
+        self.toolbar_main.addSeparator()
         self.toolbar_main.addAction(self.action_show_pool)
         self.toolbar_main.addAction(self.action_show_variable_inspector)
         self.toolbar_main.addAction(self.action_show_stdout)
-        self.toolbar_main.addAction(self.action_show_info_in_overview)
         self.toolbar_main.addSeparator()
         self.toolbar_main.addAction(self.action_help)
 

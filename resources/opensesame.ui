@@ -98,12 +98,11 @@
     </property>
     <addaction name="action_close_all_tabs"/>
     <addaction name="action_close_other_tabs"/>
+    <addaction name="action_show_info_in_overview"/>
     <addaction name="separator"/>
     <addaction name="action_show_variable_inspector"/>
     <addaction name="action_show_pool"/>
     <addaction name="action_show_stdout"/>
-    <addaction name="separator"/>
-    <addaction name="action_show_info_in_overview"/>
    </widget>
    <widget class="QMenu" name="menu_help">
     <property name="title">
@@ -570,10 +569,11 @@ Tip 2: You can execute Python commands using the field above. For more informati
    <addaction name="action_run_in_window"/>
    <addaction name="separator"/>
    <addaction name="action_close_other_tabs"/>
+   <addaction name="action_show_info_in_overview"/>
+   <addaction name="separator"/>
    <addaction name="action_show_pool"/>
    <addaction name="action_show_variable_inspector"/>
    <addaction name="action_show_stdout"/>
-   <addaction name="action_show_info_in_overview"/>
    <addaction name="separator"/>
    <addaction name="action_help"/>
   </widget>
@@ -963,7 +963,7 @@ Tip 2: You can execute Python commands using the field above. For more informati
    </property>
    <property name="icon">
     <iconset resource="icons.qrc">
-     <normaloff>:/icons/about_large.png</normaloff>:/icons/about_large.png</iconset>
+     <normaloff>:/icons/item_info_large.png</normaloff>:/icons/item_info_large.png</iconset>
    </property>
    <property name="text">
     <string>Show info in overview</string>

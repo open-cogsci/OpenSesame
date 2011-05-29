@@ -23,12 +23,22 @@ import sip
 
 class action_button(QtGui.QPushButton):
 
-	"""
-	The action buttons are used for the up/ down/ remove
-	buttons in the item list
-	"""
+	"""Used for the up/ down/ remove buttons in the sequence item list"""
 
 	def __init__(self, sequence, icon, string, parent = None, tooltip = None):
+
+		"""
+		Constructor
+
+		Arguments:
+		sequence -- a sequence item
+		icon -- the icon to be used
+		string -- the text for the button
+
+		Keyword arguments:
+		parent -- a parent widget (default = None)
+		tooltip -- a tooltip (default = None)
+		"""
 
 		QtGui.QPushButton.__init__(self, icon, "", parent)
 		self.setToolTip(string)
@@ -40,13 +50,14 @@ class action_button(QtGui.QPushButton):
 
 	def action(self):
 
+		"""Handles a button click"""
+
 		cmd, row = self.data
 		if cmd == "add":
 			if row == "existing":
-
 				item = str(self.sequence.combobox_items.currentText())
-
 				self.sequence.items.append( (item, "always") )
+
 			elif row == "new":
 
 				item_type = str(self.sequence.combobox_item_type.currentText())
@@ -104,12 +115,24 @@ class action_button(QtGui.QPushButton):
 
 class items_combobox(QtGui.QComboBox):
 
-	"""
-	The items_combobox-es are used to select items in
-	the item list
-	"""
+	"""Used to select items in the item list"""
 
 	def __init__(self, item, items, sequence, select, exclude, parent = None, tooltip = None):
+
+		"""
+		Constructor
+
+		Arguments:
+		item -- the index of the item in the sequence
+		items -- a list of available items
+		sequence -- a sequence item
+		select -- the currently selected item
+		exclude -- a list of items that should be excluded
+
+		Keyword arguments:
+		parent -- a parent widget (default = None)
+		tooltip -- a tooptip (default = None)
+		"""
 
 		QtGui.QComboBox.__init__(self, parent)
 		self.sequence = sequence
@@ -132,24 +155,39 @@ class items_combobox(QtGui.QComboBox):
 
 	def action(self, dummy = None):
 
-		cur = str(self.currentText())
+		"""
+		Handles a changed selection
 
+		Keyword arguments:
+		dummy -- a dummy parameter that is passed by the signal handler (default = None)
+		"""
+
+		cur = str(self.currentText())
 		if cur == "Select item":
 			self.sequence.items[self.item] = "undefined", "always"
 		else:
 			self.sequence.items[self.item] = str(self.currentText()), self.sequence.items[self.item][1]
-
 		self.sequence.experiment.build_item_tree()
 		self.sequence.script_widget()
 
 class items_linedit(QtGui.QLineEdit):
 
-	"""
-	The items_linedits are used to change the conditions
-	in the item list
-	"""
+	"""Used for the 'Run if' conditions in the item list"""
 
 	def __init__(self, item, sequence, text, parent = None, tooltip = None):
+
+		"""
+		Constructor
+
+		Arguments:
+		item -- the index of the item in the sequence
+		sequence -- the sequence
+		text -- the current 'Run if' condition
+
+		Keyword arguments:
+		parent -- a parent item (default = None)
+		tooltip -- a tooltip (default = None)
+		"""
 
 		QtGui.QLineEdit.__init__(self, text, parent)
 		self.item = item
@@ -160,21 +198,35 @@ class items_linedit(QtGui.QLineEdit):
 
 	def action(self, dummy = None):
 
-		cond = self.sequence.experiment.sanitize(str(self.text()).strip())
+		"""
+		Handles a text change
 
+		Keyword arguments:
+		dummy -- a dummy parameter passed by the signal handler (default = None)
+		"""
+
+		cond = self.sequence.experiment.sanitize(str(self.text()).strip())
 		if cond == "":
 			cond = "always"
-
 		self.setText(cond)
 		self.sequence.items[self.item] = self.sequence.items[self.item][0], str(self.text())
 		self.sequence.script_widget()
 
 class sequence(libopensesame.sequence.sequence, libqtopensesame.qtitem.qtitem):
 
+	"""GUI controls for the sequence item"""
+
 	def __init__(self, name, experiment, string = None):
 
 		"""
-		Initialize the experiment
+		Constructor
+
+		Arguments:
+		name -- the name of the item
+		experiment -- an instance of libopensesame.experiment
+
+		Keyword arguments:
+		string -- a string with the item definition (default = None)
 		"""
 
 		self._active = True
@@ -184,8 +236,18 @@ class sequence(libopensesame.sequence.sequence, libqtopensesame.qtitem.qtitem):
 	def action_button(self, icon, label, data, tooltip = None):
 
 		"""
-		Creates a simple pushbutton connected to a
-		method
+		Creates a simple pushbutton with a specific function
+
+		Arguments:
+		icon -- the icon
+		label -- the label
+		data -- a (function, parameter) tuple, such as ("add", "existing")
+
+		Keyword arguments:
+		tooltip -- a tooltip (default = None)
+
+		Returns:
+		An action_button
 		"""
 
 		b = action_button(self, self.experiment.icon(icon), label, tooltip = tooltip)
@@ -194,9 +256,7 @@ class sequence(libopensesame.sequence.sequence, libqtopensesame.qtitem.qtitem):
 
 	def init_edit_widget(self):
 
-		"""
-		Build the edit widget
-		"""
+		"""Construct the edit_widget that contains the controls"""
 
 		libqtopensesame.qtitem.qtitem.init_edit_widget(self, False)
 
@@ -234,7 +294,10 @@ class sequence(libopensesame.sequence.sequence, libqtopensesame.qtitem.qtitem):
 	def edit_widget(self):
 
 		"""
-		Create a sequence edit widget
+		Update the edit_widget to reflect changes in the item
+
+		Returns:
+		The edit widget
 		"""
 
 		if not self._active:
@@ -274,45 +337,31 @@ class sequence(libopensesame.sequence.sequence, libqtopensesame.qtitem.qtitem):
 
 		return self._edit_widget
 
-	def move(self, from_item, to_item):
-
-		"""
-		Move a from_item to the positon of to_item
-		"""
-
-		for item, cond in self.items:
-			if item == from_item:
-				break
-		self.items.remove( (item, cond) )
-
-		i = 0
-		for item, _cond in self.items:
-			if item == to_item:
-				break
-			i += 1
-
-		self.items.insert(i, (from_item, cond) )
-
 	def delete(self, index):
 
 		"""
 		Delete an item from the sequence
+
+		Arguments:
+		index -- the index of the item to be deleted
 		"""
 
 		if self.debug:
 			print "sequence.delete(): deleting %s (%d) from sequence %s" % (self.items[index], index, self.name)
-
 		del self.items[index]
 		self.experiment.main_window.refresh(self.name)
 
 	def rename(self, from_name, to_name):
 
 		"""
-		Renames an item
+		Rename an item
+
+		Arguments:
+		from_name -- the original name
+		to_name -- the new name
 		"""
 
 		libqtopensesame.qtitem.qtitem.rename(self, from_name, to_name)
-
 		new_items = []
 		for item, cond in self.items:
 			if item == from_name:
@@ -324,14 +373,17 @@ class sequence(libopensesame.sequence.sequence, libqtopensesame.qtitem.qtitem):
 	def build_item_tree(self, toplevel, items):
 
 		"""
-		Construct an item tree
+		Construct the item tree
+
+		Arguments:
+		toplevel -- the toplevel widget
+		items -- a list of items that have already been added to the item tree (to avoid recursion)
+
+		Returns:
+		The updated list of added items
 		"""
 
-		widget = QtGui.QTreeWidgetItem(toplevel)
-		widget.setText(0, self.name)
-		widget.setIcon(0, self.experiment.icon("sequence"))
-		widget.name = self.name
-		widget.setToolTip(0, "Type: %s\nDescription: %s" % (self.item_type, self.description))
+		widget = self.item_tree_widget(toplevel)
 		toplevel.addChild(widget)
 
 		for item, cond in self.items:
@@ -342,14 +394,18 @@ class sequence(libopensesame.sequence.sequence, libqtopensesame.qtitem.qtitem):
 				self.experiment.items[item].build_item_tree(widget, items)
 
 		widget.setExpanded(True)
-
 		return items
 
 	def is_offspring(self, item):
 
 		"""
-		Checks if the item is offspring
-		of the current item
+		Checks if the item is offspring of the current item
+
+		Arguments:
+		item -- the item to be checked
+
+		Returns:
+		True if the item is offspring of the current item, False otherwise
 		"""
 
 		for i, cond in self.items:
@@ -366,5 +422,5 @@ class sequence(libopensesame.sequence.sequence, libqtopensesame.qtitem.qtitem):
 		An info string
 		"""
 
-		return str(len(self.items))
+		return "%s items" % len(self.items)
 
