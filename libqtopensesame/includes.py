@@ -44,7 +44,7 @@ if "--pylink" in sys.argv:
 
 if "--preload" in sys.argv:
 
-	print "includes: preloading modules ..."		
+	print "includes: preloading modules ..."
 	print "includes: preloading libqtopensesame modules"
 	from libqtopensesame import\
 		qtplugin,\
@@ -61,7 +61,7 @@ if "--preload" in sys.argv:
 		sampler,\
 		synth
 
-	print "includes: preloading 'legacy' back-end"	
+	print "includes: preloading 'legacy' back-end"
 	try:
 		import openexp,\
 			openexp._canvas.legacy,\
@@ -71,68 +71,68 @@ if "--preload" in sys.argv:
 			openexp._synth.legacy
 	except Exception as e:
 		print "includes: failed to import 'legacy' back-end. Error: %s" % e
-		
-	print "includes: preloading 'opengl' back-end"	
+
+	print "includes: preloading 'opengl' back-end"
 	try:
 		import openexp,\
 			openexp._canvas.opengl
 	except Exception as e:
 		print "includes: failed to import 'opengl' back-end. Error: %s" % e
-		
-	print "includes: preloading 'psycho' back-end"	
+
+	print "includes: preloading 'psycho' back-end"
 	try:
 		with warnings.catch_warnings():
-			warnings.simplefilter("ignore")	
+			warnings.simplefilter("ignore")
 			import openexp,\
 				openexp._canvas.psycho,\
 				openexp._keyboard.psycho,\
 				openexp._mouse.psycho
 	except Exception as e:
-		print "includes: failed to import 'psycho' back-end. Error: %s" % e			
-		
+		print "includes: failed to import 'psycho' back-end. Error: %s" % e
+
 	print "includes: preloading 'psychopy'"
 	try:
 		with warnings.catch_warnings():
-			warnings.simplefilter("ignore")	
+			warnings.simplefilter("ignore")
 			from psychopy import core, visual, data, event, filters, gui, hardware, log, misc, monitors, sound, platform_specific # info, serial and parallel produce errors
-			from platform_specific.win32 import *
 	except Exception as e:
 		print "includes: failed to import 'psychopy' <http://www.psychopy.org/>. You will not be able to use PsychoPy or the psycho back-end. Error: %s" % e
-		
+
 	print "includes: preloading 'pyffmpeg'"
 	try:
 		import pyffmpeg
 		import pyffmpeg_numpybindings
-		from audioqueue import AudioQueue, Queue_Empty, Queue_Full		
+		from audioqueue import AudioQueue, Queue_Empty, Queue_Full
 	except Exception as e:
 		print "includes: failed to import 'pyffmpeg' <http://code.google.com/p/pyffmpeg/>. You will not be able to use the media_player plug-in. Error: %s" % e
-		
+
 	print "includes: preloading 'PIL'"
 	try:
 		import PIL
 		import PIL.Image
 	except Exception as e:
 		print "includes: failed to import 'PIL' <http://www.pythonware.com/products/pil/>. You will not be able the Python Imaging library. Error: %s" % e
-		
-	print "includes: preloading 'pyaudio'"		
+
+	print "includes: preloading 'pyaudio'"
 	try:
 		import pyaudio
 	except Exception as e:
 		print "includes: failed to import 'pyaudio' <http://people.csail.mit.edu/hubert/pyaudio/>. You will not be able to use portaudio and the media_player plug-in. Error: %s" % e
-		
-	print "includes: preloading 'OpenGL'"		
+
+	print "includes: preloading 'OpenGL'"
 	try:
 		import OpenGL
+		from OpenGL.platform import win32
 	except Exception as e:
 		print "includes: failed to import 'OpenGL' <http://pyopengl.sourceforge.net/>. You will not be able to use OpenGL. Error: %s" % e
-		
-	print "includes: preloading 'cv'"		
+
+	print "includes: preloading 'cv'"
 	try:
 		import cv
 	except Exception as e:
 		print "includes: failed to import 'cv' <http://opencv.willowgarage.com/wiki/>. You will not be able to use the Open Computer Vision libraries. Error: %s" % e
-		
-	print "includes: preloading 'serial'"		
+
+	print "includes: preloading 'serial'"
 	try:
 		import serial
 	except Exception as e:
@@ -145,3 +145,4 @@ if "--preload" in sys.argv:
 		print "includes: failed to import 'parallel' module <http://pyserial.sourceforge.net/pyparallel.html>. You will not be able to use parallel port connectivity. Error: %s" % e
 
 	print "includes: ... done"
+

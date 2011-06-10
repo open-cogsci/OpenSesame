@@ -35,7 +35,7 @@ setup(
 		'includes': 'sip, pygame',
 		"dll_excludes" : ["MSVCP90.DLL"]
 		}
-	},		
+	},
 )
 
 # Only copy the relevant resources, to keep the folder clean
@@ -44,11 +44,16 @@ for f in os.listdir("resources"):
 		shutil.copyfile(os.path.join("resources", f), os.path.join("dist", "resources", f))
 
 # Copy the plug-ins
-included_plugins = ["advanced_delay", "external_script", "fixation_dot", "text_display", "text_input", "notepad", "media_player", "srbox"]
+included_plugins = ["advanced_delay", "external_script", "fixation_dot", "text_display", "text_input", "notepad", "srbox"]
 for plugin in included_plugins:
 	shutil.copytree(os.path.join("plugins", plugin), os.path.join("dist", "plugins", plugin))
 
-shutil.copyfile("README", os.path.join("dist", "README"))	
+#shutil.copytree("""..\media_player\*.py""", """dist\plugins\media_player""")
+#shutil.copytree("""..\media_player\*.png""", """dist\plugins\media_player""")
+#shutil.copytree("""..\media_player\info.txt""", """dist\plugins\media_player""")
+#shutil.copytree("""..\media_player\*.html""", """dist\plugins\media_player""")
+
+shutil.copyfile("README", os.path.join("dist", "README"))
 shutil.copyfile("COPYING", os.path.join("dist", "COPYING"))
 shutil.copytree("examples", os.path.join("dist", "examples"))
 shutil.copytree("sounds", os.path.join("dist", "sounds"))
