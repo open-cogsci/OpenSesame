@@ -30,49 +30,49 @@ class eyelink_calibrate(item.item):
 	"""
 
 	def __init__(self, name, experiment, string = None):
-	
+
 		"""
 		Constructor
 		"""
-		
-		self.version = 0.12
-				
+
+		self.version = 0.13
+
 		# The item_typeshould match the name of the module
 		self.item_type = "eyelink_calibrate"
-		
+
 		self._text_attached = "Yes"
 		self._text_not_attached = "No (dummy mode)"
 		self.tracker_attached = self._text_attached
 		self.sacc_vel_thresh = 35
 		self.sacc_acc_thresh = 9500
-		
+
 		# This options makes OpenSesame restart automatically after each session,
 		# but this is not neessary anymore
 		self.restart = "No"
-		
+
 		# Provide a short accurate description of the items functionality
 		self.description = "Calibration/ initialization plugin for the Eyelink series of eye trackers (SR-Research)"
 
 		# The parent handles the rest of the contruction
 		item.item.__init__(self, name, experiment, string)
-						
+
 	def prepare(self):
-	
+
 		"""
 		Prepare the item. In this case this means drawing a fixation
 		dot to an offline canvas.
 		"""
-		
+
 		# Pass the word on to the parent
-		item.item.prepare(self)		
-		
+		item.item.prepare(self)
+
 		# Create an eyelink instance if it doesn't exist yet. Libeyelink is
 		# dynamically loaded
-		path = os.path.join(os.path.dirname(__file__), "libeyelink.py")						
-		libeyelink = imp.load_source("libeyelink", path)			
-										
+		path = os.path.join(os.path.dirname(__file__), "libeyelink.py")
+		libeyelink = imp.load_source("libeyelink", path)
+
 		if self.get("tracker_attached") == self._text_attached:
-					
+
 			# The edf logfile has the same name as the opensesame log, but with a different extension
 			# We also filter out characters that are not supported
 			data_file = ""
@@ -80,60 +80,60 @@ class eyelink_calibrate(item.item):
 				if c.isalnum():
 					data_file += c
 			data_file += ".edf"
-			
+
 			if len(data_file) > 12:
 				raise exceptions.runtime_error("The Eyelink does not support filenames longer than 12 characters (including the extension). The name of the current logfile ('%s') is therefore too long. Please run the experiment again and choose a shorter name for the logfile." % os.path.basename(self.get("logfile")))
-			
-			print "eyelink_calibrate(): logging tracker data as %s" % data_file			
-		
+
+			print "eyelink_calibrate(): logging tracker data as %s" % data_file
+
 			if self.experiment.debug:
 				print "eyelink_calibrate(): loading libeyelink"
-								
+
 			self.experiment.eyelink = libeyelink.libeyelink( (self.get("width"), self.get("height")), data_file = data_file, saccade_velocity_threshold = self.get("sacc_vel_thresh"), saccade_acceleration_threshold = self.get("sacc_acc_thresh"))
 			self.experiment.cleanup_functions.append(self.close)
-			
+
 			if self.get("restart") == "Yes":
 				self.experiment.restart = True
 		else:
-		
+
 			if self.experiment.debug:
 				print "eyelink_calibrate.prepare(): loading libeyelink (dummy mode)"
-		
+
 			self.experiment.eyelink = libeyelink.libeyelink_dummy()
-		
+
 		# Report success
 		return True
-		
+
 	def close(self):
-	
+
 		"""
 		Perform some cleanup functions to make sure that we don't leave
 		OpenSesame and the eyelink in a mess
 		"""
 
 		if self.experiment.debug:
-			print "eyelink_calibrate.close(): starting eyelink deinitialisation"		
+			print "eyelink_calibrate.close(): starting eyelink deinitialisation"
 		self.sleep(100)
 		self.experiment.eyelink.close()
 		self.experiment.eyelink = None
 		if self.experiment.debug:
-			print "eyelink_calibrate.close(): finished eyelink deinitialisation"		
+			print "eyelink_calibrate.close(): finished eyelink deinitialisation"
 		self.sleep(100)
-				
+
 	def run(self):
-	
+
 		"""
 		Run the item. In this case this means putting the offline canvas
 		to the display and waiting for the specified duration.
 		"""
-		
+
 		self.set_item_onset()
-		
+
 		self.experiment.eyelink.calibrate()
-		
+
 		# Report success
 		return True
-					
+
 class qteyelink_calibrate(eyelink_calibrate, qtplugin.qtplugin):
 
 	"""
@@ -144,74 +144,72 @@ class qteyelink_calibrate(eyelink_calibrate, qtplugin.qtplugin):
 	"""
 
 	def __init__(self, name, experiment, string = None):
-	
+
 		"""
 		Constructor
 		"""
-		
-		# Pass the word on to the parents		
-		eyelink_calibrate.__init__(self, name, experiment, string)		
-		qtplugin.qtplugin.__init__(self, __file__)	
-		
+
+		# Pass the word on to the parents
+		eyelink_calibrate.__init__(self, name, experiment, string)
+		qtplugin.qtplugin.__init__(self, __file__)
+
 	def init_edit_widget(self):
-	
+
 		"""
 		This function creates the controls for the edit
 		widget.
 		"""
-		
+
 		# Lock the widget until we're doing creating it
 		self.lock = True
-		
-		# Pass the word on to the parent		
-		qtplugin.qtplugin.init_edit_widget(self, False)			
+
+		# Pass the word on to the parent
+		qtplugin.qtplugin.init_edit_widget(self, False)
 		self.add_combobox_control("tracker_attached", "Tracked attached", [self._text_attached, self._text_not_attached], tooltip = "Indicates if the tracker is attached")
 		self.add_line_edit_control("sacc_vel_thresh", "Saccade velocity threshold", default = self.get("sacc_vel_thresh"), tooltip = "Saccade detection parameter")
 		self.add_line_edit_control("sacc_acc_thresh", "Saccade acceleration threshold", default = self.get("sacc_acc_thresh"), tooltip = "Saccade detection parameter")
-		self.add_text("<small><b>Eyelink OpenSesame plug-in v%.2f</b></small>" % self.version)		
-		
+		self.add_text("<small><b>Eyelink OpenSesame plug-in v%.2f</b></small>" % self.version)
+
 		# Add a stretch to the edit_vbox, so that the controls do not
 		# stretch to the bottom of the window.
-		self.edit_vbox.addStretch()		
-		
+		self.edit_vbox.addStretch()
+
 		# Unlock
-		self.lock = True		
-		
+		self.lock = True
+
 	def apply_edit_changes(self):
-	
+
 		"""
 		Set the variables based on the controls
 		"""
-		
+
 		# Abort if the parent reports failure of if the controls are locked
 		if not qtplugin.qtplugin.apply_edit_changes(self, False) or self.lock:
 			return False
-				
+
 		# Refresh the main window, so that changes become visible everywhere
-		self.experiment.main_window.refresh(self.name)		
-		
+		self.experiment.main_window.refresh(self.name)
+
 		# Report success
 		return True
 
 	def edit_widget(self):
-	
+
 		"""
 		Set the controls based on the variables
 		"""
-		
+
 		# Lock the controls, otherwise a recursive loop might aris
 		# in which updating the controls causes the variables to be
 		# updated, which causes the controls to be updated, etc...
 		self.lock = True
-		
+
 		# Let the parent handle everything
-		qtplugin.qtplugin.edit_widget(self)				
-		
+		qtplugin.qtplugin.edit_widget(self)
+
 		# Unlock
 		self.lock = False
-		
+
 		# Return the _edit_widget
 		return self._edit_widget
-		
-		
 

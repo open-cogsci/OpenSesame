@@ -1,3 +1,6 @@
+0.13
+- Fixed a bug where the drift-correction cross was always presented in the center
+
 0.12
 - Fixed a papercut where logfiles longer than 8 characters caused a bad value result
 - Cleaned up some code and ugly print messages
@@ -6,3 +9,4 @@
 
 0.10
 - First working version
+
