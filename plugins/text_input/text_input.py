@@ -77,7 +77,7 @@ class text_input(item.item, generic_response.generic_response):
 
 		margin = 32
 
-		question = self.eval_text(self.get("question"))
+		question = self.experiment.unsanitize(self.eval_text(self.get("question")))
 
 		resp = ""
 		response = ""
