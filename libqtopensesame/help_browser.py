@@ -23,29 +23,28 @@ class help_browser(QtGui.QTextBrowser):
 	"""
 	A HTML browser for viewing help files
 	"""
-	
+
 	def __init__(self, path, item, substitutions = [], parent = None):
-	
+
 		"""
 		Constructor
 		"""
-	
+
 		QtGui.QTextBrowser.__init__(self, parent)
-		
+
 		self.tab_name = "__help__%s__" % item
-		
+
 		self.setOpenExternalLinks(True)
-		
-		if os.path.exists(path):			
+
+		if os.path.exists(path):
 			html = open(path, "r").read()
-		else:		
-			html = "<b>No help available</b>"		
-			
-		html += "<hr /><p><i>Could not find an answer? You can ask questions and find more documentation on <a href='http://www.cogsci.nl/opensesame'>www.cogsci.nl/opensesame</a>.</i></p>"			
-		
+		else:
+			html = "<b>No help available</b>"
+
+		html += "<hr /><p><i>Could not find an answer? You can ask questions and find more information in the documentation center at <a href='http://osdoc.cogsci.nl/'>http://osdoc.cogsci.nl/</a>.</i></p>"
+
 		for old, new in substitutions:
 			html = html.replace(old, new)
-		
+
 		self.setHtml(html)
-		
-		
+
