@@ -22,18 +22,18 @@ import openexp.exceptions
 class mouse_response(item.item, generic_response.generic_response):
 
 	def __init__(self, name, experiment, string = None):
-	
+
 		"""
 		Initialize the loop
 		"""
-		
-		self.flush = "yes"		
+
+		self.flush = "yes"
 		self.show_cursor = "yes"
 		self.item_type = "mouse_response"
-		self.timeout = "infinite"	
+		self.timeout = "infinite"
 		self.description = "Collects mouse responses"
 		self.auto_response = 1
-		
+
 		self.resp_codes = {}
 		self.resp_codes[None] = "timeout"
 		self.resp_codes[1] = "left_button"
@@ -41,26 +41,26 @@ class mouse_response(item.item, generic_response.generic_response):
 		self.resp_codes[3] = "right_button"
 		self.resp_codes[4] = "scroll_up"
 		self.resp_codes[5] = "scroll_down"
-		
-		item.item.__init__(self, name, experiment, string)	
-		
+
+		item.item.__init__(self, name, experiment, string)
+
 	def prepare(self):
-	
+
 		"""
 		Prepare the allowed responses for the mouse_response item
 		"""
-		
-		item.item.prepare(self)		
-		self._mouse = openexp.mouse.mouse(self.experiment)		
-		
+
+		item.item.prepare(self)
+		self._mouse = openexp.mouse.mouse(self.experiment)
+
 		# Flush responses, to make sure that earlier responses
 		# are not carried over
 		if self.get("flush") == "yes":
-			self._mouse.flush()				
-		
-		self._allowed_responses = []					 
+			self._mouse.flush()
+
+		self._allowed_responses = []
 		if self.has("allowed_responses"):
-			for r in str(self.get("allowed_responses")).split(";"):			
+			for r in str(self.get("allowed_responses")).split(";"):
 				if r in self.resp_codes.values():
 					for code, resp in self.resp_codes.items():
 						if resp == r:
@@ -73,36 +73,36 @@ class mouse_response(item.item, generic_response.generic_response):
 						else:
 							raise exceptions.runtime_error("Unknown allowed_response '%s' in mouse_response item '%s'" % (r, self.name))
 					except ValueError:
-						raise exceptions.runtime_error("Unknown allowed_response '%s' in mouse_response item '%s'" % (r, self.name))						
-					
+						raise exceptions.runtime_error("Unknown allowed_response '%s' in mouse_response item '%s'" % (r, self.name))
+
 			if len(self._allowed_responses) == 0:
 				raise exceptions.runtime_error("'%s' are not valid allowed responses in keyboard_response '%s'" % (self.get("allowed_responses"), self.name))
 		else:
 			self._allowed_responses = None
-			
+
 		if self.experiment.auto_response:
 			self._resp_func = self.auto_responder
 		else:
 			self._resp_func = self._mouse.get_click
 
-		self.prepare_timeout()			
+		self.prepare_timeout()
 		self._mouse.set_timeout(self._timeout)
 		self._mouse.set_buttonlist(self._allowed_responses)
-						
-		return True		
-						
+
+		return True
+
 	def run(self):
-	
+
 		"""
 		Run the mouse_response item
 		"""
-	
+
 		# Record the onset of the current item
 		self.set_item_onset()
-				
+
 		if self.show_cursor == "yes":
 			self._mouse.set_visible()
-		
+
 		# If no start response interval has been set, set it to the onset of
 		# the current response item
 		if self.experiment.start_response_interval == None:
@@ -110,46 +110,43 @@ class mouse_response(item.item, generic_response.generic_response):
 
 		# Get the response
 		resp, pos, self.experiment.end_response_interval = self._resp_func()
-		
+
 		# Do some bookkeeping
-		self.experiment.response_time = self.experiment.end_response_interval - self.experiment.start_response_interval	
 		self.experiment.cursor_x = pos[0]
 		self.experiment.cursor_y = pos[1]
-		self.experiment.total_response_time += self.experiment.response_time
-		self.experiment.total_responses += 1
 		self.experiment.response = self.resp_codes[resp]
-				
+
 		if self.has("correct_response"):
-			correct_response = self.get("correct_response")			
+			correct_response = self.get("correct_response")
 			try:
 				correct_response = self.resp_codes[int(correct_response)]
 			except:
-				pass			
+				pass
 		else:
 			correct_response = "undefined"
-			
-		self.process_response(correct_response)	
-		
-		self._mouse.set_visible(False)				
-				
+
+		self.process_response(correct_response)
+
+		self._mouse.set_visible(False)
+
 		# Report success
 		return True
-				
+
 	def to_string(self):
-	
+
 		"""
 		Encode the keyboard_response as string
 		"""
-	
+
 		s = item.item.to_string(self, "mouse_response")
 		return s
-		
+
 	def var_info(self):
-	
+
 		"""
 		Give a list of dictionaries with variable descriptions
 		"""
-		
+
 		l = item.item.var_info(self)
 		l.append( ("response", "<i>Depends on response</i>") )
 		l.append( ("correct", "<i>Depends on response</i>") )
@@ -157,8 +154,9 @@ class mouse_response(item.item, generic_response.generic_response):
 		l.append( ("cursor_x", "<i>Depends on response</i>") )
 		l.append( ("cursor_y", "<i>Depends on response</i>") )
 		l.append( ("average_response_time", "<i>Depends on response</i>") )
-		l.append( ("avg_rt", "<i>Depends on response</i>") )		
-		l.append( ("accuracy", "<i>Depends on response</i>") )		
-		l.append( ("acc", "<i>Depends on response</i>") )		
-						
-		return l					
+		l.append( ("avg_rt", "<i>Depends on response</i>") )
+		l.append( ("accuracy", "<i>Depends on response</i>") )
+		l.append( ("acc", "<i>Depends on response</i>") )
+
+		return l
+

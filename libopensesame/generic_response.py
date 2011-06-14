@@ -19,11 +19,11 @@ import random
 
 class generic_response:
 
+	"""Deals with overlapping functionality for response items"""
+
 	def prepare_timeout(self):
-	
-		"""
-		Prepares the response timeout
-		"""
+
+		"""Prepares the response timeout"""
 
 		if self.get("timeout") == "infinite":
 			self._timeout = None
@@ -31,46 +31,57 @@ class generic_response:
 			try:
 				self._timeout = int(self.get("timeout"))
 			except:
-				raise exceptions.runtime_error("'%s' is not a valid timeout in keyboard_response '%s'. Expecting a positive integer or 'infinite'." % (self.get("timeout"), self.name))				
+				raise exceptions.runtime_error("'%s' is not a valid timeout in keyboard_response '%s'. Expecting a positive integer or 'infinite'." % (self.get("timeout"), self.name))
 			if self._timeout < 0:
-				raise exceptions.runtime_error("'%s' is not a valid timeout in keyboard_response '%s'. Expecting a positive integer or 'infinite'." % (self.get("timeout"), self.name))											
-				
+				raise exceptions.runtime_error("'%s' is not a valid timeout in keyboard_response '%s'. Expecting a positive integer or 'infinite'." % (self.get("timeout"), self.name))
+
 	def auto_responder(self, allowed_responses, timeout):
-	
+
 		"""
 		Mimick participant responses
-		"""			
-		
+
+		Arguments:
+		allowed_responses -- a list with allowed responses
+		timeout -- the timout
+
+		Returns:
+		A simulated (response_time, response) tuple
+		"""
+
 		if timeout == None:
 			self.sleep(random.randint(200, 1000))
 		else:
 			self.sleep(random.randint(min(timeout, 200), timeout))
-		
+
 		if allowed_responses == None:
 			return self.auto_response
-			
+
 		return self.time(), random.choice(allowed_responses)
-				
+
 	def process_response(self, correct_response):
-	
+
 		"""
-		Does some bookkeeping for the response
-		collection.
+		Does some bookkeeping necessary for response collection
+
+		Arguments:
+		correct_response -- the correct response
 		"""
-	
+
 		if correct_response == "undefined":
-			self.experiment.correct = "undefined"		
+			self.experiment.correct = "undefined"
 		else:
 			if self.experiment.response == correct_response:
 				self.experiment.correct = 1
 				self.experiment.total_correct += 1
 			else:
 				self.experiment.correct = 0
-				
+
+		self.experiment.response_time = self.experiment.end_response_interval - self.experiment.start_response_interval
+		self.experiment.total_response_time += self.experiment.response_time
+		self.experiment.total_responses += 1
 		self.experiment.acc = 100.0 * self.experiment.total_correct / self.experiment.total_responses
 		self.experiment.avg_rt = self.experiment.total_response_time / self.experiment.total_responses
-		
 		self.experiment.accuracy = self.experiment.acc
 		self.experiment.average_response_time = self.experiment.avg_rt
-				
-		self.experiment.start_response_interval = None								
+		self.experiment.start_response_interval = None
+

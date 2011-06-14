@@ -22,28 +22,28 @@ import openexp.exceptions
 class keyboard_response(item.item, generic_response.generic_response):
 
 	def __init__(self, name, experiment, string = None):
-	
+
 		"""
 		Initialize the loop
 		"""
-		
+
 		self.flush = "yes"
-		self.item_type = "keyboard_response"		
+		self.item_type = "keyboard_response"
 		self.description = "Collects keyboard responses"
 		self.timeout = "infinite"
 		self.auto_response = 97 # 'a'
-		
+
 		item.item.__init__(self, name, experiment, string)
-		
+
 	def prepare(self):
-	
+
 		"""
 		Prepare the keyboard response item
 		"""
-		
-		item.item.prepare(self)		
-		self._keyboard = openexp.keyboard.keyboard(self.experiment)		
-				 
+
+		item.item.prepare(self)
+		self._keyboard = openexp.keyboard.keyboard(self.experiment)
+
 		if self.has("allowed_responses"):
 			l = str(self.get("allowed_responses")).split(";")
 			self._allowed_responses = l
@@ -51,32 +51,32 @@ class keyboard_response(item.item, generic_response.generic_response):
 				raise exceptions.runtime_error("'%s' are not valid allowed responses in keyboard_response '%s'" % (self.get("allowed_responses"), self.name))
 		else:
 			self._allowed_responses = None
-			
+
 		if self.experiment.auto_response:
 			self._resp_func = self.auto_responder
 		else:
 			self._resp_func = self._keyboard.get_key
-			
-		self.prepare_timeout()		
+
+		self.prepare_timeout()
 		self._keyboard.set_timeout(self._timeout)
 		self._keyboard.set_keylist(self._allowed_responses)
-			
-		return True		
-				
+
+		return True
+
 	def run(self):
-	
+
 		"""
 		Run the keyboard response item
 		"""
-	
+
 		# Record the onset of the current item
 		self.set_item_onset()
 
 		# Flush responses, to make sure that earlier responses
 		# are not carried over
 		if self.get("flush") == "yes":
-			self._keyboard.flush()		
-		
+			self._keyboard.flush()
+
 		# If no start response interval has been set, set it to the onset of
 		# the current response item
 		if self.experiment.start_response_interval == None:
@@ -87,45 +87,41 @@ class keyboard_response(item.item, generic_response.generic_response):
 			resp, self.experiment.end_response_interval = self._resp_func()
 		except openexp.exceptions.response_error as e:
 			raise exceptions.runtime_error("The 'escape' key was pressed.")
-		
-		# Do some bookkeeping
-		self.experiment.response_time = self.experiment.end_response_interval - self.experiment.start_response_interval		
-		self.experiment.total_response_time += self.experiment.response_time
-		self.experiment.total_responses += 1
+
 		self.experiment.response = self._keyboard.to_chr(resp)
-		
 		if self.has("correct_response"):
 			correct_response = self.get("correct_response")
 		else:
 			correct_response = "undefined"
-			
+
 		self.process_response(correct_response)
-				
+
 		# Report success
 		return True
-				
+
 	def to_string(self):
-	
+
 		"""
 		Encode the keyboard_response as string
 		"""
-	
+
 		s = item.item.to_string(self, "keyboard_response")
 		return s
-		
+
 	def var_info(self):
-	
+
 		"""
 		Give a list of dictionaries with variable descriptions
 		"""
-		
+
 		l = item.item.var_info(self)
 		l.append( ("response", "<i>Depends on response</i>") )
 		l.append( ("correct", "<i>Depends on response</i>") )
 		l.append( ("response_time", "<i>Depends on response</i>") )
 		l.append( ("average_response_time", "<i>Depends on response</i>") )
-		l.append( ("avg_rt", "<i>Depends on response</i>") )		
-		l.append( ("accuracy", "<i>Depends on response</i>") )		
-		l.append( ("acc", "<i>Depends on response</i>") )		
-		
-		return l			
+		l.append( ("avg_rt", "<i>Depends on response</i>") )
+		l.append( ("accuracy", "<i>Depends on response</i>") )
+		l.append( ("acc", "<i>Depends on response</i>") )
+
+		return l
+
