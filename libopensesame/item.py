@@ -256,6 +256,7 @@ class item(openexp.trial.trial):
 		"""
 		Check if the variable exists
 		"""
+		
 		return hasattr(self, var) or hasattr(self.experiment, var)
 				
 	def auto_type(self, val):
@@ -282,67 +283,7 @@ class item(openexp.trial.trial):
 		if time == None:
 			time = self.time()	
 		exec("self.experiment.time_%s = %f" % (self.name, time))		
-		
-	def prepare_duration(self):
-	
-		"""
-		Sets the _duration_func based on the
-		duration and compensation variables
-		"""
-		
-		# Prepare the duration function
-		if self.has("compensation"):
-			try:
-				self._compensation = int(self.get("compensation"))
-			except:
-				raise exceptions.runtime_error("Variable 'compensation' should be numeric and not '%s' in %s item'%s'" % (self.get("compensation"), self.item_type, self.name))
-		else:
-			self._compensation = 0
-			
-		dur = self.get("duration")
-		if dur == "keypress":
-			if self.experiment.auto_response:
-				self._duration_func = self.sleep_for_duration
-				self._duration = 500
-			else:
-				self._keyboard = openexp.keyboard.keyboard(self.experiment)
-				self._duration_func = self._keyboard.get_key
-		elif dur == "mouseclick":
-			if self.experiment.auto_response:
-				self._duration_func = self.sleep_for_duration
-				self._duration = 500
-			else:		
-				self._mouse = openexp.mouse.mouse(self.experiment)
-				self._duration_func = self._mouse.get_click
-		else:
-			try:				
-				self._duration = int(self.get("duration"))			
-			except:
-				raise exceptions.runtime_error("Invalid duration '%s' in sketchpad '%s'. Expecting a positive number or 'keypress'." % (self.get("duration"), self.name))					
-			if self._duration == 0:
-				self._duration_func = self.dummy
-			else:
-				if self._compensation != 0:
-					self._duration_func = self.sleep_for_comp_duration
-				else:
-					self._duration_func = self.sleep_for_duration		
-
-	def sleep_for_duration(self):
-	
-		"""
-		Sleep for a specified time
-		"""
-		
-		self.sleep(self._duration)	
-		
-	def sleep_for_comp_duration(self):
-	
-		"""
-		Sleep for a specified time
-		"""
-		
-		self.sleep(self._duration - self._compensation)					
-		
+				
 	def dummy(self):
 	
 		pass

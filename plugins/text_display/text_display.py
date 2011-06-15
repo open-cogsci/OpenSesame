@@ -88,11 +88,7 @@ class text_display(item.item, generic_response.generic_response):
 			
 			line_nr += 1			
 		
-		# This function prepares a self._duration_func() function based
-		# on the compensation and duration variables.
-		self.prepare_duration()
-		
-		# Report success
+		generic_response.generic_response.prepare(self)		
 		return True
 				
 	def run(self):
@@ -104,34 +100,8 @@ class text_display(item.item, generic_response.generic_response):
 		
 		# Show the canvas
 		self.set_item_onset(self.c.show())
-
-		# Set the start of the response interval
-		if self.experiment.start_response_interval == None:
-			sri = self.get("time_%s" % self.name)
-		else:
-			sri = self.experiment.start_response_interval
-		
-		# And wait
-		retval = self._duration_func()
-
-		# Set the correct response
-		if self.has("correct_response"):
-			correct_response = self.get("correct_response")
-		else:
-			correct_response = "undefined"		
-
-		# Process responses if requested
-		if self.get("duration") == "keypress":
-			self.experiment.start_response_interval = sri			
-			key, self.experiment.end_response_interval = retval
-			self.experiment.response = self._keyboard.to_chr(key)
-			self.process_response(correct_response)
-		elif self.get("duration") == "mouseclick":
-			self.experiment.start_response_interval = sri			
-			self.experiment.response, pos, self.experiment.end_response_interval = retval
-			self.process_response(correct_response)					
-		
-		# Report success
+		self.set_sri()
+		self.process_response()					
 		return True
 					
 class qttext_display(text_display, qtplugin.qtplugin):

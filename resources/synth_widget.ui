@@ -322,6 +322,9 @@ p, li { white-space: pre-wrap; }
 color: rgb(255, 255, 255);</string>
         </property>
         <layout class="QHBoxLayout" name="horizontalLayout">
+         <property name="margin">
+          <number>5</number>
+         </property>
          <item>
           <widget class="QLabel" name="label_3">
            <property name="sizePolicy">
@@ -555,6 +558,9 @@ color: rgb(255, 255, 255);</string>
 color: rgb(255, 255, 255);</string>
         </property>
         <layout class="QHBoxLayout" name="horizontalLayout_2">
+         <property name="margin">
+          <number>5</number>
+         </property>
          <item>
           <widget class="QLabel" name="label_5">
            <property name="sizePolicy">

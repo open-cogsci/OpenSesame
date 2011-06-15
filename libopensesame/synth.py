@@ -15,7 +15,7 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
-from libopensesame import sampler, exceptions, item
+from libopensesame import sampler, exceptions, item, generic_response
 import shlex
 import openexp.synth
 
@@ -71,10 +71,10 @@ class synth(sampler.sampler, item.item):
 			pan = "left"
 		elif pan == 20:
 			pan = "right"
+			
 		self.sampler.pan(pan)
-		self.sampler.volume(self.get("volume"))
-		
-		self.set_duration()	
+		self.sampler.volume(self.get("volume"))		
+		generic_response.generic_response.prepare(self)
 								
 		return True
 		

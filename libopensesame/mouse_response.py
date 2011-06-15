@@ -33,6 +33,7 @@ class mouse_response(item.item, generic_response.generic_response):
 		self.timeout = "infinite"
 		self.description = "Collects mouse responses"
 		self.auto_response = 1
+		self.duration = "mouseclick"
 
 		self.resp_codes = {}
 		self.resp_codes[None] = "timeout"
@@ -40,7 +41,7 @@ class mouse_response(item.item, generic_response.generic_response):
 		self.resp_codes[2] = "middle_button"
 		self.resp_codes[3] = "right_button"
 		self.resp_codes[4] = "scroll_up"
-		self.resp_codes[5] = "scroll_down"
+		self.resp_codes[5] = "scroll_down"		
 
 		item.item.__init__(self, name, experiment, string)
 
@@ -51,46 +52,9 @@ class mouse_response(item.item, generic_response.generic_response):
 		"""
 
 		item.item.prepare(self)
-		self._mouse = openexp.mouse.mouse(self.experiment)
-
-		# Flush responses, to make sure that earlier responses
-		# are not carried over
-		if self.get("flush") == "yes":
-			self._mouse.flush()
-
-		self._allowed_responses = []
-		if self.has("allowed_responses"):
-			for r in str(self.get("allowed_responses")).split(";"):
-				if r in self.resp_codes.values():
-					for code, resp in self.resp_codes.items():
-						if resp == r:
-							self._allowed_responses.append(code)
-				else:
-					try:
-						r = int(r)
-						if r in self.resp_codes:
-							self._allowed_responses.append(r)
-						else:
-							raise exceptions.runtime_error("Unknown allowed_response '%s' in mouse_response item '%s'" % (r, self.name))
-					except ValueError:
-						raise exceptions.runtime_error("Unknown allowed_response '%s' in mouse_response item '%s'" % (r, self.name))
-
-			if len(self._allowed_responses) == 0:
-				raise exceptions.runtime_error("'%s' are not valid allowed responses in keyboard_response '%s'" % (self.get("allowed_responses"), self.name))
-		else:
-			self._allowed_responses = None
-
-		if self.experiment.auto_response:
-			self._resp_func = self.auto_responder
-		else:
-			self._resp_func = self._mouse.get_click
-
-		self.prepare_timeout()
-		self._mouse.set_timeout(self._timeout)
-		self._mouse.set_buttonlist(self._allowed_responses)
-
+		generic_response.generic_response.prepare(self)
 		return True
-
+					
 	def run(self):
 
 		"""
@@ -103,30 +67,13 @@ class mouse_response(item.item, generic_response.generic_response):
 		if self.show_cursor == "yes":
 			self._mouse.set_visible()
 
-		# If no start response interval has been set, set it to the onset of
-		# the current response item
-		if self.experiment.start_response_interval == None:
-			self.experiment.start_response_interval = self.get("time_%s" % self.name)
+		# Flush responses, to make sure that earlier responses
+		# are not carried over
+		if self.get("flush") == "yes":
+			self._mouse.flush()			
 
-		# Get the response
-		resp, pos, self.experiment.end_response_interval = self._resp_func()
-
-		# Do some bookkeeping
-		self.experiment.cursor_x = pos[0]
-		self.experiment.cursor_y = pos[1]
-		self.experiment.response = self.resp_codes[resp]
-
-		if self.has("correct_response"):
-			correct_response = self.get("correct_response")
-			try:
-				correct_response = self.resp_codes[int(correct_response)]
-			except:
-				pass
-		else:
-			correct_response = "undefined"
-
-		self.process_response(correct_response)
-
+		self.set_sri()
+		self.process_response()
 		self._mouse.set_visible(False)
 
 		# Report success

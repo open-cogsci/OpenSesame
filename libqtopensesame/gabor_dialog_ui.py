@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'resources/gabor_dialog.ui'
 #
-# Created: Wed Jun 15 13:23:13 2011
+# Created: Wed Jun 15 14:15:00 2011
 #      by: PyQt4 UI code generator 4.8.3
 #
 # WARNING! All changes made in this file will be lost!
@@ -30,6 +30,7 @@ class Ui_Dialog(object):
 "color: rgb(255, 255, 255);"))
         self.widget_2.setObjectName(_fromUtf8("widget_2"))
         self.horizontalLayout = QtGui.QHBoxLayout(self.widget_2)
+        self.horizontalLayout.setMargin(5)
         self.horizontalLayout.setMargin(0)
         self.horizontalLayout.setObjectName(_fromUtf8("horizontalLayout"))
         self.label = QtGui.QLabel(self.widget_2)

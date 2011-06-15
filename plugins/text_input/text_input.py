@@ -44,6 +44,7 @@ class text_input(item.item, generic_response.generic_response):
 		self.frame_width = 3
 		self.font_family = "sans"
 		self.font_size = 24
+		self.duration = "dummy"
 
 		# Provide a short accurate description of the items functionality
 		self.description = "Provides a simple text input"
@@ -59,6 +60,11 @@ class text_input(item.item, generic_response.generic_response):
 		"""
 
 		self.set_item_onset(self.time())
+
+		# If no start response interval has been set, set it to the onset of
+		# the current response item
+		if self.experiment.start_response_interval == None:
+			self.experiment.start_response_interval = self.get("time_%s" % self.name)		
 
 		self._keyboard = openexp.keyboard.keyboard(self.experiment)
 
@@ -122,21 +128,9 @@ class text_input(item.item, generic_response.generic_response):
 			elif len(resp) == 1:
 				response += self._keyboard.shift(key, mods)
 
-		# If no start response interval has been set, set it to the onset of
-		# the current response item
-		if self.experiment.start_response_interval == None:
-			self.experiment.start_response_interval = self.get("time_%s" % self.name)
-
-		# Do some bookkeeping
 		self.experiment.set("response", response)
-		self.experiment.end_response_interval = response_time
-		
-		if self.has("correct_response"):
-			correct_response = self.get("correct_response")
-		else:
-			correct_response = "undefined"
-
-		self.process_response(correct_response)
+		self.experiment.end_response_interval = response_time		
+		self.response_bookkeeping()
 
 		# Report success
 		return True

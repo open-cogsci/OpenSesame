@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'resources/opensesamerun.ui'
 #
-# Created: Wed Jun 15 13:23:12 2011
+# Created: Wed Jun 15 14:14:59 2011
 #      by: PyQt4 UI code generator 4.8.3
 #
 # WARNING! All changes made in this file will be lost!
@@ -30,7 +30,7 @@ class Ui_MainWindow(object):
 "color: rgb(255, 255, 255);"))
         self.widget_5.setObjectName(_fromUtf8("widget_5"))
         self.horizontalLayout_5 = QtGui.QHBoxLayout(self.widget_5)
-        self.horizontalLayout_5.setMargin(4)
+        self.horizontalLayout_5.setMargin(5)
         self.horizontalLayout_5.setMargin(0)
         self.horizontalLayout_5.setObjectName(_fromUtf8("horizontalLayout_5"))
         self.label_5 = QtGui.QLabel(self.widget_5)

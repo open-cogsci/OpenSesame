@@ -15,12 +15,12 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
-from libopensesame import item, exceptions
+from libopensesame import item, exceptions, generic_response
 import openexp.canvas
 import openexp.exceptions
 import shlex
 
-class sketchpad(item.item):
+class sketchpad(item.item, generic_response.generic_response):
 
 	def __init__(self, name, experiment, string = None):
 		
@@ -151,10 +151,14 @@ class sketchpad(item.item):
 					self.canvas.gabor(_item["x"], _item["y"], _item["orient"], _item["freq"], _item["env"], _item["size"], _item["stdev"], _item["phase"], _item["color1"], _item["color2"], _item["bgmode"])
 				elif _item["type"] == "noise":
 					self.canvas.noise_patch(_item["x"], _item["y"], _item["env"], _item["size"], _item["stdev"], _item["color1"], _item["color2"], _item["bgmode"])
+
+		if self.start_response_interval == "yes":
+			self._reset = True
+		else:
+			self._reset = False
 					
-					
-		self.prepare_duration()
 		self.canvas.prepare()
+		generic_response.generic_response.prepare(self)		
 											
 		return True		
 		
@@ -164,13 +168,9 @@ class sketchpad(item.item):
 		Show the display
 		"""				
 	
-		# Show
-		self.set_item_onset(self.canvas.show())			
-		if self.start_response_interval == "yes":
-			self.experiment.start_response_interval = self.get("time_%s" % self.name)
-
-		# And wait
-		self._duration_func()		
+		self.set_item_onset(self.canvas.show())
+		self.set_sri(self._reset)
+		self.process_response()		
 			
 		return True		
 		

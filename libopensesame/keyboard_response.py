@@ -32,6 +32,7 @@ class keyboard_response(item.item, generic_response.generic_response):
 		self.description = "Collects keyboard responses"
 		self.timeout = "infinite"
 		self.auto_response = 97 # 'a'
+		self.duration = "keypress"
 
 		item.item.__init__(self, name, experiment, string)
 
@@ -42,25 +43,7 @@ class keyboard_response(item.item, generic_response.generic_response):
 		"""
 
 		item.item.prepare(self)
-		self._keyboard = openexp.keyboard.keyboard(self.experiment)
-
-		if self.has("allowed_responses"):
-			l = str(self.get("allowed_responses")).split(";")
-			self._allowed_responses = l
-			if len(self._allowed_responses) == 0:
-				raise exceptions.runtime_error("'%s' are not valid allowed responses in keyboard_response '%s'" % (self.get("allowed_responses"), self.name))
-		else:
-			self._allowed_responses = None
-
-		if self.experiment.auto_response:
-			self._resp_func = self.auto_responder
-		else:
-			self._resp_func = self._keyboard.get_key
-
-		self.prepare_timeout()
-		self._keyboard.set_timeout(self._timeout)
-		self._keyboard.set_keylist(self._allowed_responses)
-
+		generic_response.generic_response.prepare(self)
 		return True
 
 	def run(self):
@@ -77,24 +60,8 @@ class keyboard_response(item.item, generic_response.generic_response):
 		if self.get("flush") == "yes":
 			self._keyboard.flush()
 
-		# If no start response interval has been set, set it to the onset of
-		# the current response item
-		if self.experiment.start_response_interval == None:
-			self.experiment.start_response_interval = self.get("time_%s" % self.name)
-
-		# Get the response
-		try:
-			resp, self.experiment.end_response_interval = self._resp_func()
-		except openexp.exceptions.response_error as e:
-			raise exceptions.runtime_error("The 'escape' key was pressed.")
-
-		self.experiment.response = self._keyboard.to_chr(resp)
-		if self.has("correct_response"):
-			correct_response = self.get("correct_response")
-		else:
-			correct_response = "undefined"
-
-		self.process_response(correct_response)
+		self.set_sri()
+		self.process_response()
 
 		# Report success
 		return True

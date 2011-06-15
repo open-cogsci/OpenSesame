@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'resources/synth_widget.ui'
 #
-# Created: Wed Jun 15 13:23:13 2011
+# Created: Wed Jun 15 14:15:00 2011
 #      by: PyQt4 UI code generator 4.8.3
 #
 # WARNING! All changes made in this file will be lost!
@@ -137,6 +137,7 @@ class Ui_Form(object):
 "color: rgb(255, 255, 255);"))
         self.widget.setObjectName(_fromUtf8("widget"))
         self.horizontalLayout = QtGui.QHBoxLayout(self.widget)
+        self.horizontalLayout.setMargin(5)
         self.horizontalLayout.setMargin(0)
         self.horizontalLayout.setObjectName(_fromUtf8("horizontalLayout"))
         self.label_3 = QtGui.QLabel(self.widget)
@@ -242,6 +243,7 @@ class Ui_Form(object):
 "color: rgb(255, 255, 255);"))
         self.widget_2.setObjectName(_fromUtf8("widget_2"))
         self.horizontalLayout_2 = QtGui.QHBoxLayout(self.widget_2)
+        self.horizontalLayout_2.setMargin(5)
         self.horizontalLayout_2.setMargin(0)
         self.horizontalLayout_2.setObjectName(_fromUtf8("horizontalLayout_2"))
         self.label_5 = QtGui.QLabel(self.widget_2)

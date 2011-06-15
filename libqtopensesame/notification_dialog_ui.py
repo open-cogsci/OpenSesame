@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'resources/notification_dialog.ui'
 #
-# Created: Wed Jun 15 13:23:13 2011
+# Created: Wed Jun 15 14:15:00 2011
 #      by: PyQt4 UI code generator 4.8.3
 #
 # WARNING! All changes made in this file will be lost!
@@ -31,7 +31,7 @@ class Ui_Dialog(object):
 "background-color: #729fcf;"))
         self.widget.setObjectName(_fromUtf8("widget"))
         self.horizontalLayout = QtGui.QHBoxLayout(self.widget)
-        self.horizontalLayout.setMargin(4)
+        self.horizontalLayout.setMargin(5)
         self.horizontalLayout.setMargin(0)
         self.horizontalLayout.setObjectName(_fromUtf8("horizontalLayout"))
         self.label = QtGui.QLabel(self.widget)

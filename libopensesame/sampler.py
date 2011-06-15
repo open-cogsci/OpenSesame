@@ -49,29 +49,12 @@ class sampler(item.item, generic_response.generic_response):
 
 		item.item.__init__(self, name, experiment, string)
 
-	def set_duration(self):
+	def prepare_duration_sound(self):
 
-		"""Set the duration function"""
+		"""Set the duration function for 'sound' duration"""
 
-		dur = self.get("duration")
-		if dur == "sound":
-			self.block = True
-			self._duration_func = self.dummy
-		elif dur == "keypress":
-			self._keyboard = openexp.keyboard.keyboard(self.experiment)
-			self._duration_func = self._keyboard.get_key
-		elif dur == "mouseclick":
-			self._mouse = openexp.mouse.mouse(self.experiment)
-			self._duration_func = self._mouse.get_click
-		else:
-			try:				
-				self._duration = int(self.get("duration"))			
-			except:
-				raise exceptions.runtime_error("Invalid duration '%s' in sketchpad '%s'. Expecting a positive number or 'keypress'." % (self.get("duration"), self.name))					
-			if self._duration == 0:
-				self._duration_func = self.dummy
-			else:
-				self._duration_func = self.sleep_for_duration		
+		self.block = True
+		self._duration_func = self.dummy
 		
 	def prepare(self):
 	
@@ -100,14 +83,13 @@ class sampler(item.item, generic_response.generic_response):
 			pan = "left"
 		elif pan == 20:
 			pan = "right"
-		self.sampler.pan(pan)
-		self.sampler.volume(self.get("volume"))			
 			
+		self.sampler.pan(pan)
+		self.sampler.volume(self.get("volume"))						
 		self.sampler.pitch(self.get("pitch"))
 		self.sampler.fade_in(self.get("fade_in"))
-		self.sampler.stop_after(self.get("stop_after"))
-		
-		self.set_duration()
+		self.sampler.stop_after(self.get("stop_after"))		
+		generic_response.generic_response.prepare(self)
 		
 		return True						
 				
@@ -121,35 +103,9 @@ class sampler(item.item, generic_response.generic_response):
 		"""
 	
 		self.set_item_onset(self.time())
-
-		# Set the start of the response interval
-		if self.experiment.start_response_interval == None:
-			sri = self.get("time_%s" % self.name)
-		else:
-			sri = self.experiment.start_response_interval
-		
-		self.sampler.play(self.block)
-	
-		# And wait
-		retval = self._duration_func()
-
-		# Set the correct response
-		if self.has("correct_response"):
-			correct_response = self.get("correct_response")
-		else:
-			correct_response = "undefined"		
-
-		# Process responses if requested
-		if self.get("duration") == "keypress":
-			self.experiment.start_response_interval = sri			
-			key, self.experiment.end_response_interval = retval
-			self.experiment.response = self._keyboard.to_chr(key)
-			self.process_response(correct_response)
-		elif self.get("duration") == "mouseclick":
-			self.experiment.start_response_interval = sri			
-			self.experiment.response, pos, self.experiment.end_response_interval = retval
-			self.process_response(correct_response)			
-			
+		self.set_sri()		
+		self.sampler.play(self.block)	
+		self.process_response()			
 		return True
 	
 

@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'resources/sketchpad_widget.ui'
 #
-# Created: Wed Jun 15 13:23:13 2011
+# Created: Wed Jun 15 14:14:59 2011
 #      by: PyQt4 UI code generator 4.8.3
 #
 # WARNING! All changes made in this file will be lost!
@@ -330,7 +330,7 @@ class Ui_Form(object):
         self.frame_notification.setObjectName(_fromUtf8("frame_notification"))
         self.horizontalLayout_3 = QtGui.QHBoxLayout(self.frame_notification)
         self.horizontalLayout_3.setSpacing(8)
-        self.horizontalLayout_3.setMargin(4)
+        self.horizontalLayout_3.setMargin(5)
         self.horizontalLayout_3.setObjectName(_fromUtf8("horizontalLayout_3"))
         self.label_10 = QtGui.QLabel(self.frame_notification)
         sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Fixed, QtGui.QSizePolicy.Preferred)

@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'resources/start_new_dialog.ui'
 #
-# Created: Wed Jun 15 13:23:14 2011
+# Created: Wed Jun 15 14:15:01 2011
 #      by: PyQt4 UI code generator 4.8.3
 #
 # WARNING! All changes made in this file will be lost!
@@ -27,11 +27,12 @@ class Ui_Dialog(object):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.widget_2.sizePolicy().hasHeightForWidth())
         self.widget_2.setSizePolicy(sizePolicy)
-        self.widget_2.setStyleSheet(_fromUtf8("background-color: #3465a4;\n"
+        self.widget_2.setStyleSheet(_fromUtf8("background-color: #729fcf;\n"
 "color: rgb(255, 255, 255);"))
         self.widget_2.setObjectName(_fromUtf8("widget_2"))
         self.horizontalLayout = QtGui.QHBoxLayout(self.widget_2)
-        self.horizontalLayout.setContentsMargins(9, -1, -1, -1)
+        self.horizontalLayout.setMargin(5)
+        self.horizontalLayout.setMargin(0)
         self.horizontalLayout.setObjectName(_fromUtf8("horizontalLayout"))
         self.label_3 = QtGui.QLabel(self.widget_2)
         sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Fixed, QtGui.QSizePolicy.Preferred)
