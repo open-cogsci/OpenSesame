@@ -24,7 +24,8 @@ from libqtopensesame import includes,\
 	pool_widget,\
 	qtitem,\
 	experiment,\
-	new_loop_sequence_dialog
+	new_loop_sequence_dialog,\
+	start_new_dialog
 
 import libopensesame.exceptions
 import libopensesame.experiment
@@ -543,6 +544,18 @@ class qtopensesame(QtGui.QMainWindow):
 		elif self.experiment.debug:
 			print "qtopensesame.show_random_tip(): skipping random tip"
 
+	def start_new_wizard(self, dummy = None):
+
+		"""
+		Presents a start new-experiment-wizard type of dialog
+
+		Keywords arguments:
+		dummy -- a dummy argument passed by the signal handler
+		"""
+
+		d = start_new_dialog.start_new_dialog(self)
+		d.exec_()			
+
 	def set_immediate_rename(self):
 
 		"""Set the immediate rename option based on the status of the menu action"""
@@ -632,17 +645,6 @@ class qtopensesame(QtGui.QMainWindow):
 		else:
 			if always:
 				self.update_dialog(" ... and is happy to report that you are running the most recent version of OpenSesame.")
-
-	def start_new_wizard(self, dummy = None):
-
-		"""
-		Presents a start new-experiment-wizard type of dialog
-
-		Keywords arguments:
-		dummy -- a dummy argument passed by the signal handler
-		"""
-
-		pass
 
 	def open_help_tab(self, title, item):
 
@@ -970,21 +972,9 @@ class qtopensesame(QtGui.QMainWindow):
 
 		"""Discard the current experiment and start with a new file"""
 
-		resp = QtGui.QMessageBox.question(self.ui.centralwidget, "New file", "Are you sure you want to create a new experiment? You will lose any unsaved changes to your currently opened experiment.", QtGui.QMessageBox.Yes, QtGui.QMessageBox.No)
-		if resp == QtGui.QMessageBox.No:
-			return
+		self.start_new_wizard() # Simply start the new wizard
 
-		self.close_all_tabs()
-		self.current_path = None
-		self.experiment = experiment.experiment(self, "New experiment", open(self.experiment.resource("default.opensesame"), "r").read())
-		self.header_widget.item = self.experiment
-		self.refresh()
-		self.open_general_tab()
-		self.window_message("New experiment")
-		self.set_unsaved(True)
-		self.set_status("Started a new experiment")
-
-	def open_file(self, dummy = None, path = None):
+	def open_file(self, dummy = None, path = None, add_to_recent = True):
 
 		"""
 		Open a .opensesame or .opensesame.tar.gz file
@@ -1024,7 +1014,8 @@ class qtopensesame(QtGui.QMainWindow):
 		self.window_message(self.current_path)
 		self.set_status("Opened %s" % self.current_path)
 		self.set_unsaved(False)
-		self.update_recent_files()
+		if add_to_recent:
+			self.update_recent_files()
 		self.default_logfile_folder = os.path.dirname(self.current_path)
 
 	def save_file(self, dummy = None, overwrite = True, remember = True):

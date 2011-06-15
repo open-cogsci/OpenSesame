@@ -41,9 +41,12 @@ if __name__ == "__main__":
 	splash.finish(myapp)
 
 	# Open an experiment if it has been specified as a command
-	# line argument
+	# line argument and suppress the new wizard in that case
 	if len(sys.argv) >= 2 and os.path.isfile(sys.argv[1]):
+		new_wizard = False
 		myapp.open_file(path = sys.argv[1])
+	else:
+		new_wizard = True
 
 	# Run the experiment if it has been specified on the
 	# command line
@@ -54,7 +57,8 @@ if __name__ == "__main__":
 	else:
 		myapp.check_update(always = False)
 		myapp.show_random_tip(always = False)
-		myapp.start_new_wizard()
+		if new_wizard:
+			myapp.start_new_wizard()
 
 	sys.exit(app.exec_())
 
