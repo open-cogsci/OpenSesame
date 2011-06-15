@@ -15,16 +15,25 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
-from libopensesame import item, exceptions
+from libopensesame import item, exceptions, generic_response
 import shlex
 import openexp.sampler
 
-class sampler(item.item):
+class sampler(item.item, generic_response.generic_response):
+
+	"""Sound playback item"""
 
 	def __init__(self, name, experiment, string = None):
 	
 		"""
-		Initialize the sampler
+		Constructor
+
+		Arguments:
+		name -- the name of the item
+		experiment -- the experiment
+
+		Keyword arguments:
+		string -- definition string for the item
 		"""
 
 		self.description = "Plays a sound file in .wav or .ogg format"		
@@ -37,13 +46,40 @@ class sampler(item.item):
 		self.stop_after = 0
 		self.duration = "sound"
 		self.block = False
-		
-		item.item.__init__(self, name, experiment, string)		
+
+		item.item.__init__(self, name, experiment, string)
+
+	def set_duration(self):
+
+		"""Set the duration function"""
+
+		dur = self.get("duration")
+		if dur == "sound":
+			self.block = True
+			self._duration_func = self.dummy
+		elif dur == "keypress":
+			self._keyboard = openexp.keyboard.keyboard(self.experiment)
+			self._duration_func = self._keyboard.get_key
+		elif dur == "mouseclick":
+			self._mouse = openexp.mouse.mouse(self.experiment)
+			self._duration_func = self._mouse.get_click
+		else:
+			try:				
+				self._duration = int(self.get("duration"))			
+			except:
+				raise exceptions.runtime_error("Invalid duration '%s' in sketchpad '%s'. Expecting a positive number or 'keypress'." % (self.get("duration"), self.name))					
+			if self._duration == 0:
+				self._duration_func = self.dummy
+			else:
+				self._duration_func = self.sleep_for_duration		
 		
 	def prepare(self):
 	
 		"""
-		Prepare the sampler
+		Prepare for playback
+
+		Returns:
+		True on success, False on failure
 		"""			
 		
 		item.item.prepare(self)					
@@ -71,25 +107,7 @@ class sampler(item.item):
 		self.sampler.fade_in(self.get("fade_in"))
 		self.sampler.stop_after(self.get("stop_after"))
 		
-		dur = self.get("duration")
-		if dur == "sound":
-			self.block = True
-			self._duration_func = self.dummy
-		elif dur == "keypress":
-			self._keyboard = openexp.keyboard.keyboard(self.experiment)
-			self._duration_func = self._keyboard.get_key
-		elif dur == "mouseclick":
-			self._mouse = openexp.mouse.mouse(self.experiment)
-			self._duration_func = self._mouse.get_click
-		else:
-			try:				
-				self._duration = int(self.get("duration"))			
-			except:
-				raise exceptions.runtime_error("Invalid duration '%s' in sketchpad '%s'. Expecting a positive number or 'keypress'." % (self.get("duration"), self.name))					
-			if self._duration == 0:
-				self._duration_func = self.dummy
-			else:
-				self._duration_func = self.sleep_for_duration		
+		self.set_duration()
 		
 		return True						
 				
@@ -97,13 +115,40 @@ class sampler(item.item):
 	
 		"""
 		Play the sample
+
+		Returns:
+		True on success, False on failure		
 		"""
 	
 		self.set_item_onset(self.time())
+
+		# Set the start of the response interval
+		if self.experiment.start_response_interval == None:
+			sri = self.get("time_%s" % self.name)
+		else:
+			sri = self.experiment.start_response_interval
+		
 		self.sampler.play(self.block)
 	
 		# And wait
-		self._duration_func()		
+		retval = self._duration_func()
+
+		# Set the correct response
+		if self.has("correct_response"):
+			correct_response = self.get("correct_response")
+		else:
+			correct_response = "undefined"		
+
+		# Process responses if requested
+		if self.get("duration") == "keypress":
+			self.experiment.start_response_interval = sri			
+			key, self.experiment.end_response_interval = retval
+			self.experiment.response = self._keyboard.to_chr(key)
+			self.process_response(correct_response)
+		elif self.get("duration") == "mouseclick":
+			self.experiment.start_response_interval = sri			
+			self.experiment.response, pos, self.experiment.end_response_interval = retval
+			self.process_response(correct_response)			
 			
 		return True
 	
