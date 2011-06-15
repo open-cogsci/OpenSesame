@@ -171,11 +171,6 @@ class srbox(item.item, generic_response.generic_response):
 			except Exception as e:
 				raise exceptions.runtime_error("An error occured in srbox '%s': %s." % (self.name, e))
 
-		# Do some bookkeeping
-		self.experiment.response_time = self.experiment.end_response_interval - self.experiment.start_response_interval
-		self.experiment.total_response_time += self.experiment.response_time
-		self.experiment.total_responses += 1
-
 		if self.experiment.debug:
 			print "srbox.run(): received %s" % resp
 
@@ -184,32 +179,10 @@ class srbox(item.item, generic_response.generic_response):
 		else:
 			self.experiment.response = resp
 
-		if self.has("correct_response"):
-			correct_response = self.get("correct_response")
-		else:
-			correct_response = "undefined"
-
-		self.process_response(correct_response)
-
+		generic_response.generic_response.response_bookkeeping(self)
+			
 		# Report success
 		return True
-
-	def var_info(self):
-
-		"""
-		Give a list of dictionaries with variable descriptions
-		"""
-
-		l = item.item.var_info(self)
-		l.append( ("response", "<i>Depends on response</i>") )
-		l.append( ("correct", "<i>Depends on response</i>") )
-		l.append( ("response_time", "<i>Depends on response</i>") )
-		l.append( ("average_response_time", "<i>Depends on response</i>") )
-		l.append( ("avg_rt", "<i>Depends on response</i>") )
-		l.append( ("accuracy", "<i>Depends on response</i>") )
-		l.append( ("acc", "<i>Depends on response</i>") )
-
-		return l
 
 class qtsrbox(srbox, qtplugin.qtplugin):
 
