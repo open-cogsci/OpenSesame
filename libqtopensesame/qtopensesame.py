@@ -1005,18 +1005,22 @@ class qtopensesame(QtGui.QMainWindow):
 				for r in l:
 					print r
 			return
-
-		self.current_path = path
+		
 		self.experiment = exp
 		self.header_widget.item = self.experiment
 		self.refresh()
 		self.open_general_tab()
-		self.window_message(self.current_path)
-		self.set_status("Opened %s" % self.current_path)
+		self.set_status("Opened %s" % path)
 		self.set_unsaved(False)
+
 		if add_to_recent:
+			self.current_path = path
+			self.window_message(self.current_path)			
 			self.update_recent_files()
-		self.default_logfile_folder = os.path.dirname(self.current_path)
+			self.default_logfile_folder = os.path.dirname(self.current_path)
+		else:
+			self.window_message("New experiment")			
+			self.current_path = None
 
 	def save_file(self, dummy = None, overwrite = True, remember = True):
 
