@@ -147,16 +147,9 @@ class mouse_response(item.item, generic_response.generic_response):
 		Give a list of dictionaries with variable descriptions
 		"""
 
-		l = item.item.var_info(self)
-		l.append( ("response", "<i>Depends on response</i>") )
-		l.append( ("correct", "<i>Depends on response</i>") )
-		l.append( ("response_time", "<i>Depends on response</i>") )
+		l = generic_response.generic_response.var_info(self)
 		l.append( ("cursor_x", "<i>Depends on response</i>") )
 		l.append( ("cursor_y", "<i>Depends on response</i>") )
-		l.append( ("average_response_time", "<i>Depends on response</i>") )
-		l.append( ("avg_rt", "<i>Depends on response</i>") )
-		l.append( ("accuracy", "<i>Depends on response</i>") )
-		l.append( ("acc", "<i>Depends on response</i>") )
 
 		return l
 

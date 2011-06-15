@@ -38,7 +38,7 @@ class text_input(item.item, generic_response.generic_response):
 
 		# The item_typeshould match the name of the module
 		self.item_type = "text_input"
-		self.question = "Your question goes here..."
+		self._question = "Your question goes here..."
 		self.linewidth = 600
 		self.frame = "yes"
 		self.frame_width = 3
@@ -77,7 +77,7 @@ class text_input(item.item, generic_response.generic_response):
 
 		margin = 32
 
-		question = self.experiment.unsanitize(self.eval_text(self.get("question")))
+		question = self.experiment.unsanitize(self.eval_text(self.get("_question")))
 
 		resp = ""
 		response = ""
@@ -128,11 +128,9 @@ class text_input(item.item, generic_response.generic_response):
 			self.experiment.start_response_interval = self.get("time_%s" % self.name)
 
 		# Do some bookkeeping
-		self.experiment.response_time = response_time - self.experiment.start_response_interval
-		self.experiment.total_response_time += self.experiment.response_time
-		self.experiment.total_responses += 1
-		self.experiment.response = response
-
+		self.experiment.set("response", response)
+		self.experiment.end_response_interval = response_time
+		
 		if self.has("correct_response"):
 			correct_response = self.get("correct_response")
 		else:
@@ -196,7 +194,7 @@ class qttext_input(text_input, qtplugin.qtplugin):
 		# - creates a QLineEdit
 		# qtplugin.add_spinbox_control(varname, label, min, max, suffix = suffix, prefix = prefix)
 
-		self.add_editor_control("question", "Question", default = "Your question?", tooltip = "The question to be displayed above the input field")
+		self.add_editor_control("_question", "Question", default = "Your question?", tooltip = "The question to be displayed above the input field")
 		self.add_spinbox_control("linewidth", "Maximum line width", 100, 2000, suffix = "px", tooltip = "The maximum width of the input field in pixels")
 		self.add_combobox_control("frame", "Draw frame", ["yes", "no"], tooltip = "If 'yes', a rectangular frame will be drawn around the input field")
 		self.add_spinbox_control("frame_width", "Frame width", 1, 512, suffix = "px", tooltip = "The width of the frame (if enabled)")

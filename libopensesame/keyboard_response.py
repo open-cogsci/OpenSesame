@@ -108,20 +108,4 @@ class keyboard_response(item.item, generic_response.generic_response):
 		s = item.item.to_string(self, "keyboard_response")
 		return s
 
-	def var_info(self):
-
-		"""
-		Give a list of dictionaries with variable descriptions
-		"""
-
-		l = item.item.var_info(self)
-		l.append( ("response", "<i>Depends on response</i>") )
-		l.append( ("correct", "<i>Depends on response</i>") )
-		l.append( ("response_time", "<i>Depends on response</i>") )
-		l.append( ("average_response_time", "<i>Depends on response</i>") )
-		l.append( ("avg_rt", "<i>Depends on response</i>") )
-		l.append( ("accuracy", "<i>Depends on response</i>") )
-		l.append( ("acc", "<i>Depends on response</i>") )
-
-		return l
 

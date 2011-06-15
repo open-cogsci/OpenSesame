@@ -16,13 +16,13 @@ along with opensesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 
-from libopensesame import item
+from libopensesame import item, generic_response
 from libqtopensesame import qtplugin
 import openexp.canvas
 import os.path
 from PyQt4 import QtGui, QtCore
 
-class text_display(item.item):
+class text_display(item.item, generic_response.generic_response):
 
 	"""
 	This class handles the basic functionality of the
@@ -104,9 +104,32 @@ class text_display(item.item):
 		
 		# Show the canvas
 		self.set_item_onset(self.c.show())
+
+		# Set the start of the response interval
+		if self.experiment.start_response_interval == None:
+			sri = self.get("time_%s" % self.name)
+		else:
+			sri = self.experiment.start_response_interval
 		
-		# This function has been prepared by self.prepare_duration()
-		self._duration_func()
+		# And wait
+		retval = self._duration_func()
+
+		# Set the correct response
+		if self.has("correct_response"):
+			correct_response = self.get("correct_response")
+		else:
+			correct_response = "undefined"		
+
+		# Process responses if requested
+		if self.get("duration") == "keypress":
+			self.experiment.start_response_interval = sri			
+			key, self.experiment.end_response_interval = retval
+			self.experiment.response = self._keyboard.to_chr(key)
+			self.process_response(correct_response)
+		elif self.get("duration") == "mouseclick":
+			self.experiment.start_response_interval = sri			
+			self.experiment.response, pos, self.experiment.end_response_interval = retval
+			self.process_response(correct_response)					
 		
 		# Report success
 		return True

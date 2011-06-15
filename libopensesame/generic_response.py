@@ -76,12 +76,32 @@ class generic_response:
 			else:
 				self.experiment.correct = 0
 
-		self.experiment.response_time = self.experiment.end_response_interval - self.experiment.start_response_interval
+		self.experiment.set("response_time", self.experiment.end_response_interval - self.experiment.start_response_interval)
 		self.experiment.total_response_time += self.experiment.response_time
 		self.experiment.total_responses += 1
-		self.experiment.acc = 100.0 * self.experiment.total_correct / self.experiment.total_responses
-		self.experiment.avg_rt = self.experiment.total_response_time / self.experiment.total_responses
-		self.experiment.accuracy = self.experiment.acc
-		self.experiment.average_response_time = self.experiment.avg_rt
+		self.experiment.set("acc", 100.0 * self.experiment.total_correct / self.experiment.total_responses)
+		self.experiment.set("avg_rt", self.experiment.total_response_time / self.experiment.total_responses)
+		self.experiment.set("accuracy", self.experiment.acc)
+		self.experiment.set("average_response_time", self.experiment.avg_rt)
 		self.experiment.start_response_interval = None
 
+
+	def var_info(self):
+
+		"""
+		Return a list of dictionaries with variable descriptions
+
+		Returns:
+		A list of (name, description) tuples
+		"""
+
+		l = item.item.var_info(self)
+		l.append( ("response", "<i>Depends on response</i>") )
+		l.append( ("correct", "<i>Depends on response</i>") )
+		l.append( ("response_time", "<i>Depends on response</i>") )
+		l.append( ("average_response_time", "<i>Depends on response</i>") )
+		l.append( ("avg_rt", "<i>Depends on response</i>") )
+		l.append( ("accuracy", "<i>Depends on response</i>") )
+		l.append( ("acc", "<i>Depends on response</i>") )
+
+		return l
