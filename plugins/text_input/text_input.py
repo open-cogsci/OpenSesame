@@ -137,11 +137,7 @@ class text_input(item.item, generic_response.generic_response):
 
 	def var_info(self):
 
-		"""
-		Add 'response' to the variables
-		"""
-
-		return item.item.var_info(self) + [("response", "<i>Determined at runtime</i>")]
+		return generic_response.generic_response.var_info(self)
 
 class qttext_input(text_input, qtplugin.qtplugin):
 

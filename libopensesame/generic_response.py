@@ -311,7 +311,7 @@ class generic_response:
 		A list of (name, description) tuples
 		"""
 
-		l = item.item.var_info(self)
+		l = []
 		l.append( ("response", "<i>Depends on response</i>") )
 		l.append( ("correct", "<i>Depends on response</i>") )
 		l.append( ("response_time", "<i>Depends on response</i>") )

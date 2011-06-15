@@ -103,6 +103,10 @@ class text_display(item.item, generic_response.generic_response):
 		self.set_sri()
 		self.process_response()					
 		return True
+
+	def var_info(self):
+
+		return generic_response.generic_response.var_info(self)	
 					
 class qttext_display(text_display, qtplugin.qtplugin):
 

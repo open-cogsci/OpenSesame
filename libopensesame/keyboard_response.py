@@ -75,4 +75,6 @@ class keyboard_response(item.item, generic_response.generic_response):
 		s = item.item.to_string(self, "keyboard_response")
 		return s
 
+	def var_info(self):
 
+		return generic_response.generic_response.var_info(self)

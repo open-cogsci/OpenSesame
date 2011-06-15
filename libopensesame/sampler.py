@@ -108,4 +108,6 @@ class sampler(item.item, generic_response.generic_response):
 		self.process_response()			
 		return True
 	
+	def var_info(self):
 
+		return generic_response.generic_response.var_info(self)
