@@ -21,10 +21,19 @@ import openexp.exceptions
 
 class keyboard_response(item.item, generic_response.generic_response):
 
+	"""An item for collection keyboard responses"""
+
 	def __init__(self, name, experiment, string = None):
 
 		"""
-		Initialize the loop
+		Constructor
+
+		Arguments:
+		name -- the name of the item
+		experiment -- the experiment
+
+		Keyword arguments:
+		string -- item definition string
 		"""
 
 		self.flush = "yes"
@@ -39,7 +48,10 @@ class keyboard_response(item.item, generic_response.generic_response):
 	def prepare(self):
 
 		"""
-		Prepare the keyboard response item
+		Prepare the item
+
+		Returns:
+		True on success, False on failure
 		"""
 
 		item.item.prepare(self)
@@ -49,7 +61,10 @@ class keyboard_response(item.item, generic_response.generic_response):
 	def run(self):
 
 		"""
-		Run the keyboard response item
+		Runs the item
+
+		Returns:
+		True on success, False on failure
 		"""
 
 		# Record the onset of the current item
@@ -65,15 +80,6 @@ class keyboard_response(item.item, generic_response.generic_response):
 
 		# Report success
 		return True
-
-	def to_string(self):
-
-		"""
-		Encode the keyboard_response as string
-		"""
-
-		s = item.item.to_string(self, "keyboard_response")
-		return s
 
 	def var_info(self):
 
