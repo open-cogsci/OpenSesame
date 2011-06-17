@@ -42,6 +42,7 @@ import traceback
 import subprocess
 import random
 import time
+import platform
 import libqtopensesame.inline_editor
 import libqtopensesame.syntax_highlighter
 import libqtopensesame.preferences_widget
@@ -210,13 +211,18 @@ class qtopensesame(QtGui.QMainWindow):
 		self.default_logfile_folder = ""
 		self.unsaved_changes = False
 
-		# Determine the users home folder
-		if os.name == "nt":
+		# Determine the home folder
+		if platform.system() == "Windows":
 			self.home_folder = os.environ["USERPROFILE"]
+		elif platform.system() == "Darwin":
+			self.home_folder = os.environ["HOME"]
+		elif platform.system() == "Linux":
+			self.home_folder = os.environ["HOME"]
 		else:
 			self.home_folder = os.environ["HOME"]
+			print "qtopensesame.__init__(): unknown platform '%s', using '%s' as home folder" % (platfornm.system(), self.home_folder)
 
-		# Determine autosave_folder
+		# Determine autosave_folder		
 		if not os.path.exists(os.path.join(self.home_folder, ".opensesame")):
 			os.mkdir(os.path.join(self.home_folder, ".opensesame"))
 		if not os.path.exists(os.path.join(self.home_folder, ".opensesame", "backup")):
