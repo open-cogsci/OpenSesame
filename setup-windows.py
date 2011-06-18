@@ -47,12 +47,16 @@ for f in os.listdir("resources"):
 included_plugins = ["advanced_delay", "external_script", "fixation_dot", "text_display", "text_input", "notepad", "srbox"]
 for plugin in included_plugins:
 	shutil.copytree(os.path.join("plugins", plugin), os.path.join("dist", "plugins", plugin))
+invalid bac
+# Copy the media_player separately
+os.mkdir("dist\plugins\media_player")
+shutil.copyfile("""..\media_player\media_player.py""", """dist\plugins\media_player\media_player.py""")
+shutil.copyfile("""..\media_player\media_player.html""", """dist\plugins\media_player\media_player.html""")
+shutil.copyfile("""..\media_player\media_player.png""", """dist\plugins\media_player\media_player.png""")
+shutil.copyfile("""..\media_player\media_player_large.png""", """dist\plugins\media_player\media_player_large.png""")
+shutil.copyfile("""..\media_player\info.txt""", """dist\plugins\media_player\info.txt""")	
 
-#shutil.copytree("""..\media_player\*.py""", """dist\plugins\media_player""")
-#shutil.copytree("""..\media_player\*.png""", """dist\plugins\media_player""")
-#shutil.copytree("""..\media_player\info.txt""", """dist\plugins\media_player""")
-#shutil.copytree("""..\media_player\*.html""", """dist\plugins\media_player""")
-
+# Copy Remaining resources and dll that have been missed by Py2exe
 shutil.copyfile("README", os.path.join("dist", "README"))
 shutil.copyfile("COPYING", os.path.join("dist", "COPYING"))
 shutil.copytree("examples", os.path.join("dist", "examples"))
@@ -63,7 +67,4 @@ shutil.copyfile("""C:\Python26\Lib\site-packages\pygame\libfreetype-6.dll""", ""
 shutil.copyfile("""C:\Python26\Lib\site-packages\pygame\libogg-0.dll""", """dist\libogg-0.dll""")
 shutil.copyfile("""C:\Python26\Lib\site-packages\parallel\simpleio.dll""", """dist\simpleio.dll""")
 shutil.copyfile("""C:\Python26\Lib\site-packages\PsychoPy-1.64.00-py2.6.egg\psychopy\preferences\Windows.spec""", """dist\\resources\Windows.spec""")
-
-# Give the build a proper name
-shutil.move("dist", "opensesame_%s-win32" % libopensesame.misc.version)
 
