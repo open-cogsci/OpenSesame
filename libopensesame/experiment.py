@@ -35,8 +35,9 @@ class experiment(item.item, openexp.experiment.experiment):
 
 	def __init__(self, name, string = None, pool_folder = None):
 	
-		"""
-		Constructor
+		"""<DOC>
+		Constructor. The experiment is created automatically be OpenSesame and
+		you will generally not need to create it yourself.
 		
 		Arguments:
 		name -- the name of the experiment
@@ -44,7 +45,7 @@ class experiment(item.item, openexp.experiment.experiment):
 		Keyword arguments:
 		string -- a string containing the experiment definition (default = None)
 		pool_folder -- a specific folder to be used for the file pool (default = None)
-		"""
+		</DOC>"""
 		
 		global pool_folders
 		
@@ -112,12 +113,12 @@ class experiment(item.item, openexp.experiment.experiment):
 		
 	def set_subject(self, nr):
 	
-		"""
+		"""<DOC>
 		Set the subject number and parity (even/ odd)
 		
 		Arguments:
 		nr -- the subject nr
-		"""
+		</DOC>"""
 		
 		# Set the subject nr and parity
 		self.set("subject_nr", nr)		
@@ -308,7 +309,7 @@ class experiment(item.item, openexp.experiment.experiment):
 			
 	def usanitize(self, s, strict = False):
 	
-		"""
+		"""<DOC>
 		Convert all special characters to U+XXXX notation
 		
 		Arguments:
@@ -319,7 +320,7 @@ class experiment(item.item, openexp.experiment.experiment):
 		
 		Returns:
 		The sanitized string
-		"""
+		</DOC>"""
 	
 		try:
 			string = str(s)
@@ -347,7 +348,7 @@ class experiment(item.item, openexp.experiment.experiment):
 		
 	def sanitize(self, s, strict = False):
 	
-		"""
+		"""<DOC>
 		Remove invalid characters (notably quotes) from the string. This is
 		stricter than usanitize(), because it removes also quotes and optionally
 		all alphanumeric characters.
@@ -360,7 +361,7 @@ class experiment(item.item, openexp.experiment.experiment):
 		
 		Returns:
 		The sanitized string
-		"""
+		</DOC>"""
 
 		string = self.usanitize(s, strict)
 		
@@ -379,7 +380,7 @@ class experiment(item.item, openexp.experiment.experiment):
 		
 	def unsanitize(self, s):
 	
-		"""
+		"""<DOC>
 		Convert the U+XXXX notation back to actual Unicode encoding
 		
 		Arguments:
@@ -387,7 +388,7 @@ class experiment(item.item, openexp.experiment.experiment):
 		
 		Returns:
 		The restored Unicode string
-		"""
+		</DOC>"""
 		
 		s = unicode(s)
 				
@@ -400,16 +401,17 @@ class experiment(item.item, openexp.experiment.experiment):
 		
 	def get_file(self, path):
 	
-		"""
-		Returns the path to a file. First checks if the file is
-		in the file pool, otherwise simply return the path.
+		"""<DOC>
+		Returns the path to a file. First checks if the file is in the file pool
+		and, if present, return the full path to the file in the pool.
+		Otherwise, simply return the path.
 		
 		Arguments:
 		path -- the filename
 		
 		Returns:
-		The path to the file
-		"""
+		The full path to the file
+		</DOC>"""
 		
 		if os.path.exists(os.path.join(self.pool_folder, path)):
 			return os.path.join(self.pool_folder, path)
@@ -417,12 +419,12 @@ class experiment(item.item, openexp.experiment.experiment):
 		
 	def file_in_pool(self, path):
 	
-		"""
+		"""<DOC>
 		Checks if a file is in the file pool
 		
 		Returns:
 		A boolean indicating if the file is in the pool
-		"""
+		</DOC>"""
 	
 		return os.path.exists(os.path.join(self.pool_folder, path))
 		

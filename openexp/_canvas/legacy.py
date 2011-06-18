@@ -54,7 +54,7 @@ class legacy:
 	
 	def __init__(self, experiment, bgcolor = "black", fgcolor = "white"):
 		
-		"""
+		"""<DOC>
 		Initializes the canvas. The specified colors should be used as a 
 		default for subsequent drawing operations.
 		
@@ -64,7 +64,7 @@ class legacy:
 		Keyword arguments:
 		bgcolor -- a human-readable background color (default = "black")
 		fgcolor -- a human-readable foreground color (default = "white")
-		"""
+		</DOC>"""
 		
 		self.experiment = experiment
 		self.set_fgcolor(fgcolor)
@@ -98,64 +98,64 @@ class legacy:
 		
 	def flip(self, x = True, y = False):
 		
-		"""
+		"""<DOC>
 		Flips the canvas along the x- and/ or y-axis. Note: This does not refresh the display,
 		like e.g., pygame.display.flip(), which is handled by show().
 		
 		Keyword arguments:
 		x -- A boolean indicating whether the canvas should be flipped horizontally (default = True)
 		y -- A boolean indicating whether the canvas should be flipped vertically (default = False)
-		"""
+		</DOC>"""
 		
 		self.surface = pygame.transform.flip(self.surface, x, y)
 				
 	def copy(self, canvas):
 	
-		"""
+		"""<DOC>
 		Turn the current canvas into a copy of the passed canvas.
 		
 		Arguments:
 		canvas -- The canvas to copy.
-		"""
+		</DOC>"""
 		
 		self.surface = canvas.surface.copy()
 		
 	def xcenter(self):
 		
-		"""
+		"""<DOC>
 		Returns:
 		The center X coordinate in pixels.
-		"""
+		</DOC>"""
 		
 		return self.experiment.resolution[0] / 2
 	
 	def ycenter(self):
 		
-		"""
+		"""<DOC>
 		Returns:
 		The center Y coordinate in pixels.
-		"""
+		</DOC>"""
 		
 		return self.experiment.resolution[1] / 2	
 		
 	def prepare(self):
 	
-		"""
-		This is the place to finish up pending canvas operations (if any),
+		"""<DOC>
+		Finishes up pending canvas operations (if any),
 		so that a subsequent call to show() is extra fast.
-		"""
+		</DOC>"""
 		
 		pass
 		
 	def show(self):
 		
-		"""
+		"""<DOC>
 		Puts the canvas onto the screen.
 		
 		Returns:
 		A timestamp containing the time at which the canvas actually appeared
 		on the screen (or a best guess).
-		"""
+		</DOC>"""
 
 		self.experiment.surface.blit(self.surface, (0, 0))		
 		pygame.display.flip()
@@ -163,14 +163,14 @@ class legacy:
 		
 	def clear(self, color = None):
 		
-		"""
+		"""<DOC>
 		Clears the canvas with the current background color.
 		
 		Keyword arguments:
 		color -- A custom background color to be used. This does not affect the
 				 default background color as set by set_bgcolor().
 				 (Default = None)
-		"""
+		</DOC>"""
 		
 		if color != None:
 			color = self.color(color)
@@ -181,52 +181,52 @@ class legacy:
 		
 	def set_penwidth(self, penwidth):
 		
-		"""
+		"""<DOC>
 		Sets the pen width for subsequent drawing operations.
 		
 		Arguments:
 		penwidth -- A pen width in pixels
-		"""
+		</DOC>"""
 		
 		self.penwidth = penwidth
 		
 	def set_fgcolor(self, color):
 		
-		"""
+		"""<DOC>
 		Sets the foreground color for subsequent drawing operations.
 		
 		Arguments:
 		color -- A human readable color
-		"""
+		</DOC>"""
 		
 		self.fgcolor = self.color(color)		
 		
 	def set_bgcolor(self, color):
 		
-		"""
+		"""<DOC>
 		Sets the background color for subsequent drawing operations.
 		
 		Arguments:
 		color -- A human readable color
-		"""
+		</DOC>"""
 
 		self.bgcolor = self.color(color)	
 		
 	def set_font(self, style, size):
 	
-		"""
+		"""<DOC>
 		Sets the font for subsequent drawing operations.
 		
 		Arguments:
 		style -- A font located in the resources folder (without the .ttf extension)
 		size -- A font size in pixels		
-		"""
+		</DOC>"""
 		
 		self.font = pygame.font.Font(self.experiment.resource("%s.ttf" % style), size)
 		
 	def fixdot(self, x = None, y = None, color = None):
 		
-		"""
+		"""<DOC>
 		Draws a standard fixation dot, which is a big circle (r = 8px) with the
 		foreground color and a smaller circle (r = 2px) of the background color.
 		
@@ -235,7 +235,7 @@ class legacy:
 		y -- The center Y coordinate. None = center (default = None)
 		color -- A custom human readable foreground color. This does not affect the
 				 default foreground color as set by set_fgcolor(). (Default = None)
-		"""
+		</DOC>"""
 
 		if color != None:
 			color = self.color(color)
@@ -253,7 +253,7 @@ class legacy:
 		
 	def circle(self, x, y, r, fill = False, color = None):
 		
-		"""
+		"""<DOC>
 		Draws a circle.
 		
 		Arguments:
@@ -265,13 +265,13 @@ class legacy:
 		fill -- A boolean indicating whether the circle is outlined (False) or filled (True)
 		color -- A custom human readable foreground color. This does not affect the
 				 default foreground color as set by set_fgcolor(). (Default = None)
-		"""
+		</DOC>"""
 						
 		self.ellipse(x - r, y - r, 2 * r, 2 * r, fill = fill, color = color)
 
 	def line(self, sx, sy, ex, ey, color = None):
 		
-		"""
+		"""<DOC>
 		Draws a line. Should accept parameters where sx > ex or sy > ey as well.
 		
 		Arguments:
@@ -283,7 +283,7 @@ class legacy:
 		Keyword arguments:
 		color -- A custom human readable foreground color. This does not affect the
 				 default foreground color as set by set_fgcolor(). (Default = None)		
-		"""
+		</DOC>"""
 		
 		if color != None:
 			color = self.color(color)
@@ -294,7 +294,7 @@ class legacy:
 		
 	def arrow(self, sx, sy, ex, ey, arrow_size = 5, color = None):
 		
-		"""
+		"""<DOC>
 		Draws an arrow. An arrow is a line, with an arrowhead at (ex, ey). The angle between
 		the arrowhead lines and the arrow line is 45 degrees.
 		
@@ -308,7 +308,7 @@ class legacy:
 		arrow_size -- The length of the arrowhead lines (default = 5)
 		color -- A custom human readable foreground color. This does not affect the
 				 default foreground color as set by set_fgcolor(). (Default = None)		
-		"""
+		</DOC>"""
 		
 		if color != None:
 			color = self.color(color)
@@ -328,7 +328,7 @@ class legacy:
 		
 	def rect(self, x, y, w, h, fill = False, color = None):
 		
-		"""
+		"""<DOC>
 		Draws a rectangle. Should accept parameters where w < 0 or h < 0 as well.
 		
 		Arguments:
@@ -341,7 +341,7 @@ class legacy:
 		fill -- A boolean indicating whether the rectangle is outlined (False) or filled (True)
 		color -- A custom human readable foreground color. This does not affect the
 				 default foreground color as set by set_fgcolor(). (Default = None)		
-		"""
+		</DOC>"""
 		
 		if color != None:
 			color = self.color(color)
@@ -355,7 +355,7 @@ class legacy:
 			
 	def ellipse(self, x, y, w, h, fill = False, color = None):
 		
-		"""
+		"""<DOC>
 		Draws an ellipse. Should accept parameters where w < 0 or h < 0 as well.
 		
 		Arguments:
@@ -368,7 +368,7 @@ class legacy:
 		fill -- A boolean indicating whether the ellipse is outlined (False) or filled (True)
 		color -- A custom human readable foreground color. This does not affect the
 				 default foreground color as set by set_fgcolor(). (Default = None)		
-		"""
+		</DOC>"""
 		
 		if color != None:
 			color = self.color(color)
@@ -393,7 +393,7 @@ class legacy:
 			
 	def text_size(self, text):
 	
-		"""
+		"""<DOC>
 		Determines the size of a text string in pixels.
 		
 		Arguments:
@@ -401,13 +401,13 @@ class legacy:
 		
 		Returns:
 		A (width, height) tuple containing the dimensions of the text string
-		"""
+		</DOC>"""
 		
 		return self.font.size(text)				
 		
 	def text(self, text, center = True, x = None, y = None, color = None):
 		
-		"""
+		"""<DOC>
 		Draws text.
 		
 		Arguments:
@@ -420,7 +420,7 @@ class legacy:
 		y -- The Y coordinate. None = center. (default = None)
 		color -- A custom human readable foreground color. This does not affect the
 				 default foreground color as set by set_fdcolor(). (Default = None)		
-		"""
+		</DOC>"""
 		
 		if color != None:
 			color = self.color(color)
@@ -444,7 +444,7 @@ class legacy:
 		
 	def textline(self, text, line, color = None):
 		
-		"""
+		"""<DOC>
 		A convenience function that draws a line of text based on a 
 		line number. The text strings are centered on the X-axis and
 		vertically spaced with 1.5 the line height as determined by
@@ -455,14 +455,14 @@ class legacy:
 		line -- A line number, where 0 is the center and > 0 is below the center.
 		color -- A custom human readable foreground color. This does not affect the
 				 default foreground color as set by set_fdcolor(). (Default = None)		
-		"""
+		</DOC>"""
 		
 		size = self.font.size(text)
 		self.text(text, True, self.xcenter(), self.ycenter() + 1.5 * line * size[1], color = color)
 		
 	def image(self, fname, center = True, x = None, y = None, scale = None):
 		
-		"""
+		"""<DOC>
 		Draws an image from file. This function does not look in the file
 		pool, but takes an absolute path.
 		
@@ -475,7 +475,7 @@ class legacy:
 		x -- The X coordinate. None = center. (default = None)
 		y -- The Y coordinate. None = center. (default = None)
 		scale -- The scaling factor of the image. 1.0 or None = no scaling, 2.0 = twice as large, etc. (default = None)
-		"""
+		</DOC>"""
 		
 		try:
 			surface = pygame.image.load(fname)
@@ -502,7 +502,7 @@ class legacy:
 					
 	def gabor(self, x, y, orient, freq, env = "gaussian", size = 96, stdev = 12, phase = 0, col1 = "white", col2 = "black", bgmode = "avg"):
 	
-		"""
+		"""<DOC>
 		Draws a Gabor patch. This function is derived from the online Gabor patch generator
 		<http://www.cogsci.nl/software/online-gabor-patch-generator>	
 		
@@ -521,14 +521,14 @@ class legacy:
 		col2 -- Human readable color for the troughs (default = "black")
 		bgmode -- Specifies whether the background is the average of col1 and col2 (bgmode = "avg", a typical Gabor patch)
 				  or equal to col2 ("col2"), useful for blending into the background. (default = "avg")
-		"""	
+		</DOC>"""	
 	
 		surface = _gabor(orient, freq, env, size, stdev, phase, col1, col2, bgmode)
 		self.surface.blit(surface, (x - 0.5 * size, y - 0.5 * size))
 		
 	def noise_patch(self, x, y, env = "gaussian", size = 96, stdev = 12, col1 = "white", col2 = "black", bgmode = "avg"):
 	
-		"""
+		"""<DOC>
 		Draws a patch of noise, with an envelope.
 		
 		Arguments:
@@ -544,7 +544,7 @@ class legacy:
 		col2 -- Human readable color for the troughs (default = "black")
 		bgmode -- Specifies whether the background is the average of col1 and col2 (bgmode = "avg", a typical Gabor patch)
 				  or equal to col2 ("col2"), useful for blending into the background. (default = "avg")
-		"""	
+		</DOC>"""	
 		
 		surface = _noise_patch(env, size, stdev, col1, col2, bgmode)
 		self.surface.blit(surface, (x - 0.5 * size, y - 0.5 * size))

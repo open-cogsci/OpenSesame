@@ -50,7 +50,7 @@ class legacy:
 
 	def __init__(self, experiment, keylist = None, timeout = None):
 
-		"""
+		"""<DOC>
 		Intializes the keyboard object.
 
 		Arguments:
@@ -61,7 +61,7 @@ class legacy:
 				   to accept all keys (default = None)
 		timeout -- an integer value specifying a timeout in milliseconds or
 				   None for no timeout (default = None)
-		"""
+		</DOC>"""
 
 		self.experiment = experiment
 		self.set_keylist(keylist)
@@ -78,13 +78,13 @@ class legacy:
 
 	def set_keylist(self, keylist = None):
 
-		"""
+		"""<DOC>
 		Sets a list of accepted keys
 
 		Keyword arguments:
 		keylist -- a list of human readable keys that are accepted or None
 				   to accept all keys (default = None)
-		"""
+		</DOC>"""
 
 		if keylist == None:
 			self._keylist = None
@@ -95,19 +95,19 @@ class legacy:
 
 	def set_timeout(self, timeout = None):
 
-		"""
+		"""<DOC>
 		Sets a timeout
 
 		Keyword arguments:
 		timeout -- an integer value specifying a timeout in milliseconds or
 				   None for no timeout (default = None)
-		"""
+		</DOC>"""
 
 		self.timeout = timeout
 
 	def get_key(self, keylist = None, timeout = None):
 
-		"""
+		"""<DOC>
 		Waits for keyboard input
 
 		Keyword arguments:
@@ -120,7 +120,7 @@ class legacy:
 
 		Returns:
 		A (key, timestamp) tuple. The key is None if a timeout occurs.
-		"""
+		</DOC>"""
 
 		if keylist == None:
 			keylist = self._keylist
@@ -143,14 +143,14 @@ class legacy:
 
 	def get_mods(self):
 
-		"""
+		"""<DOC>
 		Returns a list of keyboard moderators (e.g., shift, alt, etc.) that are
 		currently pressed.
 
 		Returns:
 		A list of keyboard moderators. An empty list is returned if no moderators
 		are pressed.
-		"""
+		</DOC>"""
 
 		l = []
 		mods = pygame.key.get_mods()
@@ -166,7 +166,7 @@ class legacy:
 
 	def shift(self, key, mods = ["shift"]):
 
-		"""
+		"""<DOC>
 		Returns the character that results from pressing a key together with the
 		moderators, typically a shift. E.g., "3" + "Shift" -> "#". This function
 		is not particularly elegant as it does not take locales into account and
@@ -180,7 +180,7 @@ class legacy:
 
 		Returns:
 		The character that results from combining the input key with shift.
-		"""
+		</DOC>"""
 
 		if chr(key).isalpha():
 			if "shift" in mods:
@@ -197,7 +197,7 @@ class legacy:
 
 	def to_int(self, key):
 
-		"""
+		"""<DOC>
 		Returns the ASCII key code of a given key
 
 		Arguments:
@@ -205,7 +205,7 @@ class legacy:
 
 		Returns:
 		A key in ASCII keycode notation
-		"""
+		</DOC>"""
 
 		if type(key) == int:
 			return key
@@ -215,7 +215,7 @@ class legacy:
 
 	def to_chr(self, key):
 
-		"""
+		"""<DOC>
 		Returns the character notation of a given key
 
 		Arguments:
@@ -223,7 +223,7 @@ class legacy:
 
 		Returns:
 		A key in character notation
-		"""
+		</DOC>"""
 
 		if key == None:
 			return "timeout"
@@ -233,13 +233,13 @@ class legacy:
 
 	def flush(self):
 
-		"""
+		"""<DOC>
 		Clears all pending input, not limited to the keyboard
 
 		Returns:
 		True if a key had been pressed (i.e., if there was something
 		to flush) and False otherwise
-		"""
+		</DOC>"""
 
 		keypressed = False
 		for event in pygame.event.get():

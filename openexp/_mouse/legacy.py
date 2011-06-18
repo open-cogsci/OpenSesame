@@ -42,7 +42,7 @@ class legacy:
 
 	def __init__(self, experiment, buttonlist = None, timeout = None, visible = False):
 	
-		"""
+		"""<DOC>
 		Intializes the mouse object
 		
 		Arguments:
@@ -54,7 +54,7 @@ class legacy:
 		timeout -- an integer value specifying a timeout in milliseconds or
 				   None for no timeout (default = None)
 		visible -- a boolean indicating the visibility of the cursor (default = False)
-		"""	
+		</DOC>"""	
 	
 		self.experiment = experiment
 		self.set_buttonlist(buttonlist)
@@ -63,13 +63,13 @@ class legacy:
 				
 	def set_buttonlist(self, buttonlist = None):
 	
-		"""
+		"""<DOC>
 		Sets a list of accepted buttons
 
 		Keyword arguments:
 		buttonlist -- a list of buttons that are accepted or None to accept
 					  all input (default = None)
-		"""	
+		</DOC>"""	
 	
 		if buttonlist == None:
 			self.buttonlist = None
@@ -83,31 +83,31 @@ class legacy:
 		
 	def set_timeout(self, timeout = None):	
 	
-		"""
+		"""<DOC>
 		Sets a timeout
 		
 		Keyword arguments:
 		timeout -- an integer value specifying a timeout in milliseconds or
 				   None for no timeout (default = None)		
-		"""
+		</DOC>"""
 			
 		self.timeout = timeout
 				
 	def set_visible(self, visible = False):
 	
-		"""
+		"""<DOC>
 		Sets the visibility of the cursor
 		
 		Keyword arguments:
 		visible -- A boolean indicating the visibility of the cursor (default = False)
-		"""	
+		</DOC>"""	
 	
 		self.visible = visible
 		pygame.mouse.set_visible(visible)				
 		
 	def get_click(self, buttonlist = None, timeout = None, visible = None):
 	
-		"""
+		"""<DOC>
 		Waits for mouse input
 		
 		Keyword arguments:
@@ -124,7 +124,7 @@ class legacy:
 		Returns:
 		A (button, position, timestamp) tuple. The button and position are None if
 		a timeout occurs. Position is an (x, y) tuple in screen coordinates.
-		"""		
+		</DOC>"""		
 	
 		if buttonlist == None:
 			buttonlist = self.buttonlist
@@ -152,24 +152,24 @@ class legacy:
 		
 	def get_pos(self):
 	
-		"""
+		"""<DOC>
 		Returns the current location of the cursor
 		
 		Returns:
 		A (position, timestamp) tuple.
-		"""	
+		</DOC>"""	
 	
 		pass
 		
 	def flush(self):
 	
-		"""
+		"""<DOC>
 		Clears all pending input, not limited to the mouse
 		
 		Returns:
 		True if a button had been clicked (i.e., if there was something
 		to flush) and False otherwise
-		"""	
+		</DOC>"""	
 	
 		buttonclicked = False
 		for event in pygame.event.get():

@@ -30,7 +30,7 @@ class legacy(openexp._sampler.legacy.legacy):
 
 	def __init__(self, experiment, osc = "sine", freq = 440, length = 100, attack = 0, decay = 5):
 	
-		"""
+		"""<DOC>
 		Initialize the synthesizer
 		
 		Arguments:
@@ -42,7 +42,7 @@ class legacy(openexp._sampler.legacy.legacy):
 		length -- the length of the sound in milliseconds (default = 100)
 		attack -- the attack (fade-in) time in milliseconds (default = 0)
 		decay -- the decay (fade-out) time in milliseconds (default = 5)
-		"""
+		</DOC>"""
 	
 		openexp._sampler.legacy.legacy.__init__(self, experiment, None)
 		
@@ -89,7 +89,7 @@ class legacy(openexp._sampler.legacy.legacy):
 		
 	def key_to_freq(self, key):
 	
-		"""
+		"""<DOC>
 		Convert a key (e.g., A1) to a frequency
 		
 		Arguments:
@@ -97,7 +97,7 @@ class legacy(openexp._sampler.legacy.legacy):
 		
 		Returns:
 		An int containing the frequency in Hertz
-		"""
+		</DOC>"""
 		
 		if type(key) != str or len(key) < 2:
 			raise openexp.exceptions.synth_error("synth.key_to_freq(): '%s' is not a valid note, expecting something like 'A1'")			

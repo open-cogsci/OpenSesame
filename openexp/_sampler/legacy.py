@@ -31,13 +31,13 @@ class legacy:
 
 	def __init__(self, experiment, src):
 	
-		"""
+		"""<DOC>		
 		Initialize the sampler with a specified file
 		
 		Arguments:
 		experiment -- An instance of libopensesame.experiment.experiment
 		src -- A path to a .wav or .ogg file
-		"""		
+		</DOC>"""		
 		
 		if src != None:
 			if not os.path.exists(src):
@@ -55,12 +55,12 @@ class legacy:
 		
 	def stop_after(self, ms):
 	
-		"""
+		"""<DOC>
 		Specify a duration after which the sampler stops playing
 		
 		Arguments:
 		ms -- A duration in milliseconds
-		"""
+		</DOC>"""
 	
 		if type(ms) != int or ms < 0:
 			raise openexp.exceptions.sample_error("openexp._sampler.legacy.stop_after() requires a positive integer")
@@ -69,12 +69,12 @@ class legacy:
 
 	def fade_in(self, ms):
 	
-		"""
+		"""<DOC>
 		Set the fade-in time in milliseconds
 		
 		Arguments:
 		ms - A duration in milliseconds
-		"""	
+		</DOC>"""	
 	
 		if type(ms) != int or ms < 0:
 			raise openexp.exceptions.sample_error("openexp._sampler.legacy.fade_in() requires a positive integer")
@@ -83,12 +83,12 @@ class legacy:
 		
 	def volume(self, vol):
 	
-		"""
+		"""<DOC>
 		Set the volume
 		
 		Arguments:
 		vol -- A volume between 0.0 and 1.0
-		"""
+		</DOC>"""
 	
 		if type(vol) not in (int, float) or vol < 0 or vol > 1:
 			raise openexp.exceptions.sample_error("openexp._sampler.legacy.volume() requires a number between 0.0 and 1.0")
@@ -98,12 +98,12 @@ class legacy:
 		
 	def pitch(self, p):
 		
-		"""
+		"""<DOC>
 		Set the relative pitch of the sample
 		
 		Arguments:
 		p -- The pitch. p > 1.0 slows the sample down, p < 1.0 speeds the sample up
-		"""
+		</DOC>"""
 		
 		if type(p) not in (int, float) or p <= 0:
 			raise openexp.exceptions.sample_error("openexp._sampler.legacy.pitch() requires a positive number")		
@@ -121,7 +121,7 @@ class legacy:
 		
 	def pan(self, p):
 	
-		"""
+		"""<DOC>
 		Sets the panning of the sample. The volume of the "unpanned" channel
 		decreases, the volume of the other channel remains the same. To fully
 		mute one channel specify "left" (mutes right, pans to left) or "right"
@@ -129,7 +129,7 @@ class legacy:
 		
 		Arguments:
 		p -- Panning. A float (p < 0 = to left, p > 0 = to right) or string ("left" or "right")
-		"""
+		</DOC>"""
 		
 		if type(p) not in (int, float) and p not in ("left", "right"):
 			raise openexp.exceptions.sample_error("openexp._sampler.legacy.pan() requires a number or 'left', 'right'")		
@@ -160,12 +160,12 @@ class legacy:
 		
 	def play(self, block = False):
 	
-		"""
+		"""<DOC>
 		Play the sound
 		
 		Keyword arguments:
 		block -- If True, block until the sound is finished. (default == False)
-		"""
+		</DOC>"""
 	
 		self.sound.play(maxtime = self._stop_after, fade_ms = self._fade_in)		
 		if block:
@@ -173,45 +173,45 @@ class legacy:
 						
 	def stop(self):
 	
-		"""
+		"""<DOC>
 		Stops the currently playing sound (if any)
-		"""
+		</DOC>"""
 		
 		pygame.mixer.stop()
 		
 	def pause(self):
 	
-		"""
+		"""<DOC>
 		Pauses playback (if any)
-		"""
+		</DOC>"""
 		
 		pygame.mixer.pause()
 		
 	def resume(self):
 	
-		"""
+		"""<DOC>
 		Resumes playback (if any)
-		"""
+		</DOC>"""
 		
 		pygame.mixer.unpause()
 		
 	def is_playing(self):
 	
-		"""
+		"""<DOC>
 		Checks if a sound is currently playing
 		
 		Returns:
 		True if a sound is playing, False if not
-		"""
+		</DOC>"""
 		
 		return pygame.mixer.get_busy()		
 		
 	def wait(self):
 	
-		"""
+		"""<DOC>
 		Blocks until the sound has finished playing or
 		returns right away if no sound is playing
-		"""
+		</DOC>"""
 		
 		while pygame.mixer.get_busy():
 			pass
