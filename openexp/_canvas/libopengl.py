@@ -54,8 +54,12 @@ def getGLVersion():
     # !!! You must have an active GL context to call this method !!!
     global gl_version
     if gl_version is None:
-        # store version
-        gl_version = float(glGetString(GL_VERSION).split()[0])
+        # Determine the version. This kind of an ugly hack to make sure
+        # that versions like 1.1.1 can be represented as a float (i.e., strip
+        # the final digit
+        v = glGetString(GL_VERSION)
+        v = ".".join(v.split(".")[:2])		
+        gl_version = float(v)
     return gl_version
 
 def doBlockingFlip():

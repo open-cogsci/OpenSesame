@@ -47,7 +47,7 @@ for f in os.listdir("resources"):
 included_plugins = ["advanced_delay", "external_script", "fixation_dot", "text_display", "text_input", "notepad", "srbox"]
 for plugin in included_plugins:
 	shutil.copytree(os.path.join("plugins", plugin), os.path.join("dist", "plugins", plugin))
-invalid bac
+
 # Copy the media_player separately
 os.mkdir("dist\plugins\media_player")
 shutil.copyfile("""..\media_player\media_player.py""", """dist\plugins\media_player\media_player.py""")
