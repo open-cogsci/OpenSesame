@@ -15,13 +15,13 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
-from libopensesame import item
+from libopensesame import item, generic_response
 from libqtopensesame import qtplugin
 import openexp.canvas
 import os.path
 from PyQt4 import QtGui, QtCore
 
-class fixation_dot(item.item):
+class fixation_dot(item.item, generic_response.generic_response):
 
 	"""
 	This class (the class with the same name as the module)
@@ -90,9 +90,7 @@ class fixation_dot(item.item):
 			self.c.line(self._x - 5, self._y, self._x + 5, self._y)
 			self.c.line(self._x, self._y - 5, self._x, self._y + 5)
 
-		# This function prepares a self._duration_func() function based
-		# on the compensation and duration variables.
-		self.prepare_duration()
+		generic_response.generic_response.prepare(self)		
 
 		# Report success
 		return True
@@ -104,13 +102,9 @@ class fixation_dot(item.item):
 		to the display and waiting for the specified duration.
 		"""
 
-		# Show the canvas
 		self.set_item_onset(self.c.show())
-
-		# This function has been prepared by self.prepare_duration()
-		self._duration_func()
-
-		# Report success
+		self.set_sri()
+		self.process_response()
 		return True
 
 class qtfixation_dot(fixation_dot, qtplugin.qtplugin):

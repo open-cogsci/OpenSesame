@@ -63,10 +63,6 @@ class legacy:
 				   None for no timeout (default = None)
 		</DOC>"""
 
-		self.experiment = experiment
-		self.set_keylist(keylist)
-		self.set_timeout(timeout)
-
 		# Create a dictionary to map character representations to
 		# ASCII codes
 		self.key_codes = {}
@@ -75,6 +71,10 @@ class legacy:
 				code = eval("pygame.%s" % i)
 				name = pygame.key.name(code)
 				self.key_codes[name] = code
+
+		self.experiment = experiment
+		self.set_keylist(keylist)
+		self.set_timeout(timeout)				
 
 	def set_keylist(self, keylist = None):
 
