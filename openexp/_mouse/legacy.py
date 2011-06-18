@@ -159,7 +159,7 @@ class legacy:
 		A (position, timestamp) tuple.
 		</DOC>"""	
 	
-		pass
+		return pygame.mouse.get_pos(), self.experiment.time()
 		
 	def flush(self):
 	
