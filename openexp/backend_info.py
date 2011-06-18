@@ -15,6 +15,9 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
+import sys
+import os.path
+
 legacy = {
 	"description" : "Default PyGame backend, a safe choice", \
 	"authors" : ["Sebastiaan Mathot"], \
@@ -45,8 +48,15 @@ psycho = {
 	"synth" : "legacy" \
 	}
 	
-backend_list = {"legacy" : legacy, "opengl" : opengl, "psycho" : psycho}
-	
+backend_list = {}
+backend_list["legacy"] = legacy
+backend_list["psycho"] = psycho
+
+# PyOpenGL doesn't play nice with Py2exe, so for now it's just not available
+# in the Windows package
+if os.path.basename(sys.argv[0]) != "opensesame.exe":
+	backend_list["opengl"] = opengl
+
 def match(experiment):
 
 	"""

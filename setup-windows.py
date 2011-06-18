@@ -32,7 +32,7 @@ setup(
 		'compressed' : True,
 		'optimize': 2,
 		'bundle_files': 3,
-		'includes': 'sip, pygame',
+		'includes': 'sip, pygame, ctypes, weakref',
 		"dll_excludes" : ["MSVCP90.DLL"]
 		}
 	},
