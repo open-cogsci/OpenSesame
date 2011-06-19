@@ -65,11 +65,11 @@ class sampler(item.item, generic_response.generic_response):
 		True on success, False on failure
 		"""			
 		
-		item.item.prepare(self)					
+		item.item.prepare(self)
+		
+		if self.sample.strip() == "":
+			raise exceptions.runtime_error("No sample has been specified in sampler '%s'" % self.name)		
 		sample = self.experiment.get_file(self.eval_text(self.sample))		
-		if sample == "":
-			raise exceptions.runtime_error("No sample has been specified in sampler '%s'" % self.name)
-
 		if self.experiment.debug:
 			self.sampler = openexp.sampler.sampler(self.experiment, sample)	
 		else:
