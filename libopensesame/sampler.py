@@ -74,7 +74,7 @@ class sampler(item.item, generic_response.generic_response):
 			self.sampler = openexp.sampler.sampler(self.experiment, sample)	
 		else:
 			try:
-				self.sampler = openexp.sampler.sampler(self.experimentsample)
+				self.sampler = openexp.sampler.sampler(self.experiment, sample)
 			except Exception as e:		
 				raise exceptions.runtime_error("Failed to load sample in sampler '%s': %s" % (self.name, e))
 			
