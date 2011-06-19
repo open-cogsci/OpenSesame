@@ -18,6 +18,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 import random
 import openexp.keyboard
 import openexp.mouse
+from libopensesame import exceptions
 
 class generic_response:
 
@@ -198,8 +199,9 @@ class generic_response:
 				self._allowed_responses = l
 				
 			elif dur == "mouseclick":
-
+				
 				# Prepare valid mouseclick responses
+				self._allowed_responses = []
 				for r in str(self.get("allowed_responses")).split(";"):
 					if r in self.resp_codes.values():
 						for code, resp in self.resp_codes.items():
