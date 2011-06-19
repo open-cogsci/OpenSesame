@@ -41,10 +41,6 @@ class opengl(openexp._canvas.legacy.legacy):
 		self.bgcolor = self.color(bgcolor)
 		self.penwidth = 1
 		self.antialias = True
-
-		#self.surface = self.experiment.surface.copy()
-		#self.surface = pygame.Surface(self.experiment.resolution, SRCALPHA)
-
 		self.font = self.experiment.font
 
 		# set to have no objects
@@ -112,17 +108,10 @@ class opengl(openexp._canvas.legacy.legacy):
 		which the display whas shown. Waits for
 		v-sync if enabled.
 		"""
-		stime = pygame.time.get_ticks()
+
 		for s,loc in self.showables:
 			s.show(loc[0],loc[1])
-		etime = pygame.time.get_ticks()
-		print "Show:",stime, etime-stime
-
-		stime = pygame.time.get_ticks()
 		libopengl.doBlockingFlip()
-		etime = pygame.time.get_ticks()
-		print "Flip:",stime, etime-stime
-
 		return pygame.time.get_ticks()
 
 	def clear(self, color = None):
@@ -138,11 +127,8 @@ class opengl(openexp._canvas.legacy.legacy):
 		# clear the showable list
 		self.showables = []
 		surface = pygame.Surface(self.experiment.resolution)
-		#surface = pygame.Surface(self.experiment.resolution, SRCALPHA)
 		surface.fill(color)
-		self.showables.append((libopengl.LowImage(surface),
-				       (0,0)))
-
+		self.showables.append((libopengl.LowImage(surface), (0,0)))
 
 	def set_penwidth(self, penwidth):
 

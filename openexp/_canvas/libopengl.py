@@ -58,7 +58,7 @@ def getGLVersion():
         # that versions like 1.1.1 can be represented as a float (i.e., strip
         # the final digit
         v = glGetString(GL_VERSION)
-        v = ".".join(v.split(".")[:2])		
+        v = ".".join(v.split()[0].split(".")[:2])		
         gl_version = float(v)
     return gl_version
 

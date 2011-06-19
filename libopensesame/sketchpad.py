@@ -87,11 +87,14 @@ class sketchpad(item.item, generic_response.generic_response):
 		
 		item.item.prepare(self)		
 
-		# Build the canvas	
-		try:
+		# Build the canvas. Do not catch errors in debug mode					
+		if self.experiment.debug:
 			self.canvas = openexp.canvas.canvas(self.experiment, self.get("background"), self.get("foreground"))
-		except ValueError as e:
-			raise exceptions.runtime_error("An invalid background or foreground color has been specified")			
+		else:
+			try:
+				self.canvas = openexp.canvas.canvas(self.experiment, self.get("background"), self.get("foreground"))
+			except ValueError as e:
+				raise exceptions.runtime_error("An invalid background or foreground color has been specified")			
 
 		for _item in self.items:
 		

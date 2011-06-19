@@ -389,9 +389,11 @@ class psycho(openexp._canvas.legacy.legacy):
 			color = self.fgcolor
 		else:
 			color = self.color(color)
-			
+
 		pos = x - self.xcenter(), self.ycenter() - y		
 		stim = visual.TextStim(win = self.experiment.window, text = text, alignHoriz = halign, alignVert = valign, pos = pos, color = color)
+		stim.setFont(self.experiment.resource("%s.ttf" % self.font_style)) # The font appears to be ignored
+		stim.setHeight(self.font_size)
 		self.stim_list.append(stim)
 		
 	def textline(self, text, line, color = None):
@@ -433,7 +435,7 @@ class psycho(openexp._canvas.legacy.legacy):
 				
 		w, h = im.size				
 		if scale != None:
-			im = im.resize( (w * scale, h * scale), Image.ANTIALIAS)		
+			im = im.resize( (int(w * scale), int(h * scale)), Image.ANTIALIAS)		
 		w, h = im.size
 		
 		# Calculate the position			
@@ -442,8 +444,8 @@ class psycho(openexp._canvas.legacy.legacy):
 		if y == None:
 			y = self.ycenter()			
 		if not center:
-			x -= w/2
-			y -= h/2			
+			x += w/2
+			y += h/2			
 		pos = x - self.xcenter(), self.ycenter() - y
 				
 		stim = visual.SimpleImageStim(win = self.experiment.window, image = im, pos = pos)
