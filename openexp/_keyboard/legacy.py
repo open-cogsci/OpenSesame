@@ -130,7 +130,7 @@ class legacy:
 		start_time = pygame.time.get_ticks()
 		time = start_time
 
-		while timeout == None or time - start_time < timeout:
+		while timeout == None or time - start_time <= timeout:
 			time = pygame.time.get_ticks()
 			for event in pygame.event.get():
 				if event.type == KEYDOWN:

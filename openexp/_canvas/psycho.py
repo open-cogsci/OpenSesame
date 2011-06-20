@@ -47,7 +47,8 @@ class psycho(openexp._canvas.legacy.legacy):
 		self.set_fgcolor(fgcolor)
 		self.set_bgcolor(bgcolor)
 		self.set_penwidth(1)
-		self.clear()
+		self.set_font(self.experiment.font_family, self.experiment.font_size)		
+		self.clear()		
 				
 	def color(self, color):
 	
@@ -389,6 +390,11 @@ class psycho(openexp._canvas.legacy.legacy):
 			color = self.fgcolor
 		else:
 			color = self.color(color)
+
+		if x == None:
+			x = self.xcenter()
+		if y == None:
+			y = self.ycenter()
 
 		pos = x - self.xcenter(), self.ycenter() - y		
 		stim = visual.TextStim(win = self.experiment.window, text = text, alignHoriz = halign, alignVert = valign, pos = pos, color = color)
