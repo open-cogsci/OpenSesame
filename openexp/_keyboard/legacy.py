@@ -175,7 +175,7 @@ class legacy:
 		Arguments:
 		key -- A character
 
-		Keywords arguments:
+		Keyword arguments:
 		mods -- a list of keyboard moderators (default = ["shift"])
 
 		Returns:

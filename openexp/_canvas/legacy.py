@@ -329,7 +329,7 @@ class legacy:
 	def rect(self, x, y, w, h, fill = False, color = None):
 		
 		"""<DOC>
-		Draws a rectangle. Should accept parameters where w < 0 or h < 0 as well.
+		Draws a rectangle. Accepts parameters where w < 0 or h < 0 as well.
 		
 		Arguments:
 		x -- The left X coordinate.
@@ -356,7 +356,7 @@ class legacy:
 	def ellipse(self, x, y, w, h, fill = False, color = None):
 		
 		"""<DOC>
-		Draws an ellipse. Should accept parameters where w < 0 or h < 0 as well.
+		Draws an ellipse. Accepts parameters where w < 0 or h < 0 as well.
 		
 		Arguments:
 		x -- The left X coordinate.

@@ -20,7 +20,7 @@ setup(
 
 	# Use 'console' to have the programs run in a terminal and
 	# 'windows' to run them normally.
-	console = [{
+	windows = [{
 		"script" : "opensesame",
 		'icon_resources': [(0, os.path.join("resources", "opensesame.ico"))],
 		},{
@@ -54,7 +54,7 @@ shutil.copyfile("""..\media_player\media_player.py""", """dist\plugins\media_pla
 shutil.copyfile("""..\media_player\media_player.html""", """dist\plugins\media_player\media_player.html""")
 shutil.copyfile("""..\media_player\media_player.png""", """dist\plugins\media_player\media_player.png""")
 shutil.copyfile("""..\media_player\media_player_large.png""", """dist\plugins\media_player\media_player_large.png""")
-shutil.copyfile("""..\media_player\info.txt""", """dist\plugins\media_player\info.txt""")	
+shutil.copyfile("""..\media_player\info.txt""", """dist\plugins\media_player\info.txt""")
 
 # Copy Remaining resources and dll that have been missed by Py2exe
 shutil.copyfile("README", os.path.join("dist", "README"))

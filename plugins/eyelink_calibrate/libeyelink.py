@@ -40,16 +40,22 @@ class libeyelink:
 
 	def __init__(self, resolution, data_file = "default.edf", fg_color = (255, 255, 255), bg_color = (0, 0, 0), saccade_velocity_threshold = 35, saccade_acceleration_threshold = 9500):
 
-		"""
-		Initializes the connection to the Eyelink
+		"""<DOC>
+		Constructor. Initializes the connection to the Eyelink
 	
-		Parameters:
-		_resolution: (width, height) tuple
-		_data_file: the name of the EDF file
+		Arguments:
+		resolution -- (width, height) tuple
+
+		Keyword arguments:
+		data_file -- the name of the EDF file (default.edf)
+		fg_color -- the foreground color for the calibration screen (default = 255, 255, 255)
+		bg_color -- the background color for the calibration screen (default = 0, 0, 0)
+		saccade_velocity_threshold -- velocity threshold used for saccade detection (default = 35)
+		saccade_acceleration_threshold -- acceleration threshold used for saccade detection (default = 9500)
 	
 		Returns:
 		True on connection success and False on connection failure       
-		"""
+		</DOC>"""
 		
 		global _eyelink
 	
@@ -122,69 +128,70 @@ class libeyelink:
 	
 	def send_command(self, cmd):
 
-		"""
-		Writes a message to the eyelink
+		"""<DOC>
+		Sends a command to the eyelink
 	
-		In:
-		cmd: the eyelink command to be executed
-		"""
+		Arguments:
+		cmd -- the eyelink command to be executed
+		</DOC>"""
 	
 		pylink.getEYELINK().sendCommand(cmd)
 	
 	def log(self, msg):
 
-		"""
+		"""<DOC>
 		Writes a message to the eyelink data file
 	
-		In:
-		msg: the message to be logged
-		"""
+		Arguments:
+		msg -- the message to be logged
+		</DOC>"""
 
 		pylink.getEYELINK().sendMessage(msg)
 	
 	def log_var(self, var, val):
 
-		"""
-		Writes a variable to the eyelink data file
+		"""<DOC>
+		Writes a variable to the eyelink data file. This is a shortcut for
+		eyelink.log("var %s %s" % (var, val))
 	
-		In:
-		var: the variable name
-		val: the value
-		"""
+		Arguments:
+		var -- the variable name
+		val -- the value
+		</DOC>"""
 
 		pylink.getEYELINK().sendMessage("var %s %s" % (var, val))
 	
 	def status_msg(self, msg):
 
-		"""
+		"""<DOC>
 		Sets the eyelink status message, which is displayed on the 
-		eyelink pc
+		eyelink experimenter pc
 	
-		In:
-		msg: the status message
-		"""
+		Arguments:
+		msg -- the status message
+		</DOC>"""
 	
 		pylink.getEYELINK().sendCommand("record_status_message '%s'" % msg)
 	
 	def connected(self):
 
-		"""
-		Returs the status of the eyelink connection.
+		"""<DOC>
+		Returs the status of the eyelink connection
 	
 		Returns:
 		True if connected, False otherwise
-		"""
+		</DOC>"""
 	
 		return pylink.getEYELINK().isConnected()
 		
 	def calibrate(self):
 
-		"""
+		"""<DOC>
 		Starts eyelink calibration
 	
 		Exceptions:
 		Raises an exceptions.runtime_error on failure		
-		"""
+		</DOC>"""
 	
 		if self.recording:
 			raise exceptions.runtime_error("Trying to calibrate after recording has started")	
@@ -193,17 +200,23 @@ class libeyelink:
 	
 	def drift_correction(self, pos = None, fix_triggered = False):
 
-		"""
-		Performs drift correction and falls back
-		to the calibration screen if necessary
+		"""<DOC>
+		Performs drift correction and falls back to the calibration screen if
+		necessary
 	
-		In:
-		pos (optional): the coordinate (x,y tuple) of the drift correction dot
-		fix_triggered (optional): True indicates that drift correction should be fixation triggered
+		Keyword arguments:
+		pos -- the coordinate (x,y tuple) of the drift correction dot or None
+			   for the display center (default = None)
+		fix_triggered -- a boolean indicating whether drift correction should
+						 be fixation triggered, rather than spacebar triggered
+						 (default = False)
+
+		Returns:
+		True on success, False on failure
 	
 		Exceptions:
-		Raises an exceptions.runtime_error on failure	
-		"""
+		Raises an exceptions.runtime_error on error
+		</DOC>"""
 		
 		if self.recording:
 			raise exceptions.runtime_error("Trying to do drift correction after recording has started")
@@ -232,12 +245,15 @@ class libeyelink:
 			
 	def prepare_drift_correction(self, pos):
 
-		"""
+		"""<DOC>
 		Puts the tracker in drift correction mode
 	
-		In:
-		pos: the reference point
-		"""
+		Arguments:
+		pos -- the reference point
+	
+		Exceptions:
+		Raises an exceptions.runtime_error on error	
+		</DOC>"""
 
 		# Start collecting samples in drift correction mode
 		self.send_command("heuristic_filter = ON")	
@@ -251,20 +267,25 @@ class libeyelink:
 			
 	def fix_triggered_drift_correction(self, pos = None, min_samples = 30, max_dev = 60, reset_threshold = 10):
 
-		"""
-		Performs fixation triggered drift correction
-		and falls back to the calibration screen if
-		necessary
+		"""<DOC>
+		Performs fixation triggered drift correction and falls back to the
+		calibration screen if necessary
 	
-		In:
-		pos (optional): the coordinate (x,y tuple) of the drift correction dot
-		min_samples (optional): the minimum nr of stable samples that should be acquired
-		max_dev (optional): the maximum allowed deviation
-		reset_threshold (optional): the maximum allowed deviation from one sample to the next
+		Keyword arguments:
+		pos -- the coordinate (x,y tuple) of the drift correction dot or None
+			   for the display center (default = None)
+		min_samples -- the minimum nr of stable samples that should be acquired
+					   (default = 30)
+		max_dev -- the maximum allowed deviation (default = 60)
+		reset_threshold -- the maximum allowed deviation from one sample to the
+						   next (default = 10)
+	
+		Returns:
+		True on success, False on failure
 	
 		Exceptions:
-		Raises an exceptions.runtime_error on failure	
-		"""	
+		Raises an exceptions.runtime_error on error
+		</DOC>"""
 	
 		if self.recording:
 			raise exceptions.runtime_error("Trying to do drift correction after recording has started")
@@ -342,12 +363,12 @@ class libeyelink:
 	
 	def start_recording(self):
 
-		"""
+		"""<DOC>
 		Starts recording of gaze samples
 	
 		Exceptions:
 		Raises an exceptions.runtime_error on failure
-		"""
+		</DOC>"""
 	
 		self.recording = True
 
@@ -365,9 +386,9 @@ class libeyelink:
 		
 	def stop_recording(self):
 
-		"""
+		"""<DOC>
 		Stop recording of gaze samples
-		"""
+		</DOC>"""
 	
 		self.recording = False	
 
@@ -377,9 +398,9 @@ class libeyelink:
 
 	def close(self):
 
-		"""
+		"""<DOC>
 		Close the connection with the eyelink
-		"""
+		</DOC>"""
 	
 		if self.recording:
 			self.stop_recording()
@@ -397,14 +418,14 @@ class libeyelink:
 	
 	def set_eye_used(self):
 
-		"""
-		Sets the eye_used variable, which specifies which
-		eye is being tracked. If both eyes are being tracked,
+		"""<DOC>
+		Sets the eye_used variable, based on the eyelink's report, which
+		specifies which eye is being tracked. If both eyes are being tracked,
 		the left eye is used.
 	
 		Exceptions:
 		Raises an exceptions.runtime_error on failure	
-		"""
+		<DOC>"""
 
 		self.eye_used = pylink.getEYELINK().eyeAvailable()
 		if self.eye_used == self.right_eye:
@@ -417,7 +438,7 @@ class libeyelink:
 	
 	def sample(self):
 
-		"""
+		"""<DOC>
 		Gets the most recent gaze sample from the eyelink
 	
 		Returns:
@@ -425,7 +446,7 @@ class libeyelink:
 	
 		Exceptions:
 		Raises an exceptions.runtime_error on failure		
-		"""	
+		</DOC>"""
 	
 		if not self.recording:
 			raise exceptions.runtime_error("Please start recording before collecting eyelink data")
@@ -444,15 +465,15 @@ class libeyelink:
 	
 	def wait_for_event(self, event):
 
-		"""
+		"""<DOC>
 		Waits until an event has occurred
 	
-		In:
-		event: eyelink event, like pylink.STARTSACC
+		Arguments:
+		event -- eyelink event, like pylink.STARTSACC
 	
 		Exceptions:
 		Raises an exceptions.runtime_error on failure			
-		"""
+		</DOC>"""
 
 		if not self.recording:
 			raise exceptions.runtime_error("Please start recording before collecting eyelink data")	
@@ -468,7 +489,7 @@ class libeyelink:
 	
 	def wait_for_saccade_start(self):
 
-		"""
+		"""<DOC>
 		Waits for a saccade start
 	
 		Returns:
@@ -476,14 +497,14 @@ class libeyelink:
 		
 		Exceptions:
 		Raises an exceptions.runtime_error on failure			
-		"""
+		</DOC>"""
 	
 		d = self.wait_for_event(pylink.STARTSACC)
 		return d.getTime(), d.getStartGaze()
 	
 	def wait_for_saccade_end(self):
 
-		"""
+		"""<DOC>
 		Waits for a saccade end
 	
 		Returns:
@@ -491,14 +512,14 @@ class libeyelink:
 		
 		Exceptions:
 		Raises an exceptions.runtime_error on failure			
-		"""
+		</DOC>"""
 	
 		d = self.wait_for_event(pylink.ENDSACC)
 		return d.getTime(), d.getStartGaze(), d.getEndGaze()
 	
 	def wait_for_fixation_start(self):
 
-		"""
+		"""<DOC>
 		Waits for a fixation start
 	
 		Returns:
@@ -506,7 +527,7 @@ class libeyelink:
 		
 		Exceptions:
 		Raises an exceptions.runtime_error on failure			
-		"""
+		</DOC>"""
 	
 		d = self.wait_for_event(pylink.STARTFIX)		
 		return d.getTime(), d.getStartGaze()
@@ -514,7 +535,7 @@ class libeyelink:
 	
 	def wait_for_fixation_end(self):
 
-		"""
+		"""<DOC>
 		Waits for a fixation end
 	
 		Returns:
@@ -522,14 +543,14 @@ class libeyelink:
 		
 		Exceptions:
 		Raises an exceptions.runtime_error on failure			
-		"""
+		</DOC>"""
 	
 		d = self.wait_for_event(pylink.ENDFIX)	
 		return d.getTime(), d.getStartGaze(), d.getEndGaze()
 	
 	def wait_for_blink_start(self):
 
-		"""
+		"""<DOC>
 		Waits for a blink start
 	
 		Returns:
@@ -537,14 +558,14 @@ class libeyelink:
 		
 		Exceptions:
 		Raises an exceptions.runtime_error on failure			
-		"""
+		</DOC>"""
 
 		d = self.wait_for_event(pylink.STARTBLINK)	
 		return d.getTime()
 	
 	def wait_for_blink_end(self):
 
-		"""
+		"""<DOC>
 		Waits for a blink end
 	
 		Returns:
@@ -552,7 +573,7 @@ class libeyelink:
 		
 		Exceptions:
 		Raises an exceptions.runtime_error on failure			
-		"""
+		</DOC>"""
 
 		d = self.wait_for_event(pylink.ENDBLINK)	
 		return d.getTime()
