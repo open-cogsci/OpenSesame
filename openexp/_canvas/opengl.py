@@ -30,13 +30,19 @@ import libopengl
 
 class opengl(openexp._canvas.legacy.legacy):
 
-	def __init__(self, experiment, bgcolor = "black", fgcolor = "white"):
+	def __init__(self, experiment, bgcolor = None, fgcolor = None):
 
 		"""
 		Initializes the canvas
 		"""
 
 		self.experiment = experiment
+		
+		if fgcolor == None:
+			fgcolor = self.experiment.get("foreground")
+		if bgcolor == None:
+			bgcolor = self.experiment.get("background")	
+			
 		self.fgcolor = self.color(fgcolor)
 		self.bgcolor = self.color(bgcolor)
 		self.penwidth = 1

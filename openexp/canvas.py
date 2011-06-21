@@ -26,7 +26,7 @@ class canvas:
 
 	"""A 'magic' class that morphs into the approriate backend from openexp._canvas"""
 	
-	def __init__(self, experiment, bgcolor = "black", fgcolor = "white"):
+	def __init__(self, experiment, bgcolor = None, fgcolor = None):
 	
 		"""Constructor"""
 	

@@ -28,7 +28,7 @@ class psycho(openexp._canvas.legacy.legacy):
 	This is a canvas backend which uses PsychoPy (with Pyglet).
 	"""
 	
-	def __init__(self, experiment, bgcolor = "black", fgcolor = "white"):
+	def __init__(self, experiment, bgcolor = None, fgcolor = None):
 		
 		"""
 		Initializes the canvas. The specified colors should be used as a 
@@ -38,12 +38,18 @@ class psycho(openexp._canvas.legacy.legacy):
 		experiment -- an instance of libopensesame.experiment.experiment
 		
 		Keyword arguments:
-		bgcolor -- a human-readable background color (default = "black")
-		fgcolor -- a human-readable foreground color (default = "white")
+		bgcolor -- a human-readable background color or None to use experiment
+				   default (default = None)
+		fgcolor -- a human-readable foreground color or None to use experiment
+				   default (default = None)
 		"""
 		
 		self.experiment = experiment
 		self.min_penwidth = 1
+		if fgcolor == None:
+			fgcolor = self.experiment.get("foreground")
+		if bgcolor == None:
+			bgcolor = self.experiment.get("background")			
 		self.set_fgcolor(fgcolor)
 		self.set_bgcolor(bgcolor)
 		self.set_penwidth(1)

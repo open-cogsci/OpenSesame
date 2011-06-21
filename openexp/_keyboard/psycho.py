@@ -177,7 +177,10 @@ class psycho(openexp._keyboard.legacy.legacy):
 		
 		Returns:
 		A key in character notation
-		"""	
+		"""
+
+		if key == None:
+			return "timeout"
 	
 		return key
 		
