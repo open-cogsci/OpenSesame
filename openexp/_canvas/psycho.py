@@ -423,8 +423,7 @@ class psycho(openexp._canvas.legacy.legacy):
 				 default foreground color as set by set_fdcolor(). (Default = None)		
 		"""
 		
-		# TODO
-		raise openexp.exceptions.canvas_error("openexp._canvas.psycho.textline(): not implemented!")
+		self.text(text, True, self.xcenter(), self.ycenter() + 1.5 * line * self.font_size, color = color)
 		
 	def image(self, fname, center = True, x = None, y = None, scale = None):
 		
