@@ -99,7 +99,7 @@ class psycho(openexp._canvas.legacy.legacy):
 		canvas -- The canvas to copy.
 		"""
 		
-		self.stim_list = canvas.stim_list
+		self.stim_list = canvas.stim_list + []
 		self.bgcolor = canvas.bgcolor
 		self.fgcolor = canvas.fgcolor
 		self.penwidth = canvas.penwidth
