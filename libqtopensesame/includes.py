@@ -141,6 +141,7 @@ if "--preload" in sys.argv:
 	print "includes: preloading 'parallel'"
 	try:
 		import parallel
+		import parallel.parallelutil
 	except Exception as e:
 		print "includes: failed to import 'parallel' module <http://pyserial.sourceforge.net/pyparallel.html>. You will not be able to use parallel port connectivity. Error: %s" % e
 

@@ -65,6 +65,12 @@ shutil.copytree("help", os.path.join("dist", "help"))
 shutil.copyfile("""C:\Python26\Lib\site-packages\pygame\SDL_ttf.dll""", """dist\SDL_ttf.dll""")
 shutil.copyfile("""C:\Python26\Lib\site-packages\pygame\libfreetype-6.dll""", """dist\libfreetype-6.dll""")
 shutil.copyfile("""C:\Python26\Lib\site-packages\pygame\libogg-0.dll""", """dist\libogg-0.dll""")
+
+# Required by pyparallel
 shutil.copyfile("""C:\Python26\Lib\site-packages\parallel\simpleio.dll""", """dist\simpleio.dll""")
+
+# Required by psychopy
 shutil.copyfile("""C:\Python26\Lib\site-packages\PsychoPy-1.64.00-py2.6.egg\psychopy\preferences\Windows.spec""", """dist\\resources\Windows.spec""")
 
+# Provides easy access to the parallel port
+shutil.copyfile("dll\inpout32.dll", """dist\inpout32.dll""")
