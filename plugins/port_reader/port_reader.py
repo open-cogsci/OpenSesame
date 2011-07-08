@@ -15,8 +15,7 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
-import openexp.keyboard
-from libopensesame import item, generic_response
+from libopensesame import item, generic_response, exceptions
 from libqtopensesame import qtplugin
 from PyQt4 import QtGui, QtCore
 try:
@@ -63,6 +62,9 @@ class port_reader(item.item, generic_response.generic_response):
 			val = self._port.Inp32(self.port)
 			time = self.time()
 			if val != self.resting_value:
+				break
+			if self._timeout != None and time - self.sri > self._timeout:
+				val = "timeout"
 				break
 		return val, time
 

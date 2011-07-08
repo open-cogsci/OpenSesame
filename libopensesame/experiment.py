@@ -426,7 +426,7 @@ class experiment(item.item, openexp.experiment.experiment):
 		A boolean indicating if the file is in the pool
 		</DOC>"""
 	
-		return os.path.exists(os.path.join(self.pool_folder, path))
+		return os.path.exists(self.get_file(path))
 		
 	def save(self, path, overwrite = False):
 	
