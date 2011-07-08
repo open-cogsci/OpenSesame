@@ -56,6 +56,7 @@ class experiment(item.item, openexp.experiment.experiment):
 		self.start_response_interval = None
 		self.cleanup_functions = []
 		self.restart = False
+		self.experiment_path = None
 		
 		# Set default variables
 		self.compensation = 0		
@@ -403,7 +404,7 @@ class experiment(item.item, openexp.experiment.experiment):
 	
 		"""<DOC>
 		Returns the path to a file. First checks if the file is in the file pool
-		and, if present, return the full path to the file in the pool.
+		and then the folder of the current experiment (if any)
 		Otherwise, simply return the path.
 		
 		Arguments:
@@ -415,7 +416,10 @@ class experiment(item.item, openexp.experiment.experiment):
 		
 		if os.path.exists(os.path.join(self.pool_folder, path)):
 			return os.path.join(self.pool_folder, path)
-		return path
+		elif self.experiment_path != None and os.path.exists(os.path.join(self.experiment_path, path)):
+			return os.path.join(self.experiment_path, path)
+		else:
+			return path
 		
 	def file_in_pool(self, path):
 	
@@ -460,6 +464,7 @@ class experiment(item.item, openexp.experiment.experiment):
 			f = open(path, "w")
 			f.write(self.to_string())
 			f.close()
+			self.experiment_path = os.path.dirname(path)
 			return path
 
 		# Use the .opensesame.tar.gz extension by default
@@ -477,7 +482,7 @@ class experiment(item.item, openexp.experiment.experiment):
 		script_path = os.path.join(self.pool_folder, "script.opensesame")
 		f = open(script_path, "w")
 		f.write(script)
-		f.close()
+		f.close()		
 		
 		# Create the archive in a a temporary folder and move it
 		# afterwards. This hack is needed, because tarfile fails
@@ -491,7 +496,8 @@ class experiment(item.item, openexp.experiment.experiment):
 		
 		# Move the file to the intended location
 		shutil.move(tmp_path, path)
-		
+
+		self.experiment_path = os.path.dirname(path)
 		return path
 
 	def open(self, path):
@@ -514,6 +520,7 @@ class experiment(item.item, openexp.experiment.experiment):
 		if (type(path) != str and type(path) != unicode) or not os.path.exists(path):
 			if self.debug:
 				print "experiment.open(): opening from string"
+			self.experiment_path = None
 			return path
 		
 		# If the file is a regular text script,
@@ -522,6 +529,7 @@ class experiment(item.item, openexp.experiment.experiment):
 		if path[-len(ext):] != ext:
 			if self.debug:
 				print "experiment.open(): opening .opensesame file"		
+			self.experiment_path = os.path.dirname(path)
 			return open(path, "rU").read()
 			
 		if self.debug:
@@ -544,6 +552,7 @@ class experiment(item.item, openexp.experiment.experiment):
 		tar.extract("script.opensesame", self.pool_folder)
 		script = open(script_path, "rU").read()
 		os.remove(script_path)
+		self.experiment_path = os.path.dirname(path)		
 		return script
 		
 	def var_info(self):

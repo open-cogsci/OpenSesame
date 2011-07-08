@@ -1697,6 +1697,7 @@ class qtopensesame(QtGui.QMainWindow):
 			self.get_ready()
 			script = self.experiment.to_string()
 			exp = libopensesame.experiment.experiment("Experiment", script, self.experiment.pool_folder)
+			exp.experiment_path = self.experiment.experiment_path
 		except libopensesame.exceptions.script_error as e:
 			self.experiment.notify(str(e))
 			return
