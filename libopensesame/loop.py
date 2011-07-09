@@ -107,8 +107,8 @@ class loop(item.item):
 		partial_repeats = self.repeat - whole_repeats
 		if partial_repeats > 0:
 			all_cycles = range(self.cycles)
-			sample = sample(all_cycles, int(len(all_cycles) * partial_repeats))
-			for i in sample:
+			_sample = sample(all_cycles, int(len(all_cycles) * partial_repeats))
+			for i in _sample:
 				l.append( (j, i) )
 
 		# Randomize the list if necessary

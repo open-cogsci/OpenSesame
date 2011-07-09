@@ -569,6 +569,7 @@ class loop(libopensesame.loop.loop, libqtopensesame.qtitem.qtitem):
 		column = self.loop_table.currentColumn()
 
 		self.set_cycle_count(self.spin_cycles.value())
+		self.refresh_loop_table()
 		self.experiment.main_window.refresh(self.name)
 		self.loop_table.setCurrentCell(row, column)
 		self.lock = False
