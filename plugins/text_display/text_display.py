@@ -67,8 +67,6 @@ class text_display(item.item, generic_response.generic_response):
 		
 		content = self.experiment.unsanitize(self.eval_text(self.get("content"))).split("\n")
 
-		print content
-
 		# Do line wrapping
 		_content = []
 		for line in content:
