@@ -15,17 +15,25 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
-from libopensesame import item, exceptions
+from libopensesame import sampler, exceptions, item, generic_response
 import shlex
 import openexp.synth
-import openexp.response
 
-class synth(item.item):
+class synth(sampler.sampler, item.item):
+
+	"""Plays a synthesized sound"""
 
 	def __init__(self, name, experiment, string = None):
 	
 		"""
-		Initialize the synth
+		Constructor
+
+		Arguments:
+		name -- the name of the item
+		experiment -- the experiment
+
+		Keyword arguments:
+		string -- definition string for the item
 		"""
 
 		self.description = "A basic sound synthesizer"		
@@ -45,13 +53,16 @@ class synth(item.item):
 	def prepare(self):
 	
 		"""
-		Prepare the synth
-		"""
+		Prepare for playback
+
+		Returns:
+		True on success, False on failure
+		"""		
 
 		item.item.prepare(self)		
 		
 		try:
-			self.synth = openexp.synth.synth(self.get("osc"), self.get("freq"), self.get("length"), self.get("attack"), self.get("decay"))
+			self.sampler = openexp.synth.synth(self.experiment, self.get("osc"), self.get("freq"), self.get("length"), self.get("attack"), self.get("decay"))
 		except Exception as e:
 			raise exceptions.runtime_error("Failed to generate sound in synth '%s': %s" % (self.name, e))
 			
@@ -60,42 +71,11 @@ class synth(item.item):
 			pan = "left"
 		elif pan == 20:
 			pan = "right"
-		self.synth.pan(pan)
-		self.synth.volume(self.get("volume"))
-		
-		dur = self.get("duration")
-		if dur == "sound":
-			self.block = True
-			self._duration_func = self.dummy
-		elif dur == "keypress":
-			self._duration_func = self.experiment.wait
-		elif dur == "mouseclick":
-			self._duration_func = openexp.response.get_mouse
-		else:
-			try:				
-				self._duration = int(self.get("duration"))			
-			except:
-				raise exceptions.runtime_error("Invalid duration '%s' in sketchpad '%s'. Expecting a positive number or 'keypress'." % (self.get("duration"), self.name))					
-			if self._duration == 0:
-				self._duration_func = self.dummy
-			else:
-				self._duration_func = self.sleep_for_duration		
+			
+		self.sampler.pan(pan)
+		self.sampler.volume(self.get("volume"))		
+		generic_response.generic_response.prepare(self)
 								
 		return True
-		
-	def run(self):
-	
-		"""
-		Play the sample
-		"""
-	
-		self.set_item_onset(self.time())	
-		self.synth.play(self.block)
-	
-		# And wait
-		self._duration_func()		
-			
-		return True
-	
 		
 

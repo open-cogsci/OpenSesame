@@ -22,47 +22,67 @@ import re
 
 class inline_script(item.item):
 
+	"""Allows users to use Python code in their experiments"""
+
 	def __init__(self, name, experiment, string = None):
 	
-		"""
-		Initialize the inline_script
-		"""
+		"""<DOC>
+		Constructor. You will generally not create an
+		inline_script item yourself, but use OpenSesame to create a body
+		for the prepare() and run() functions.
+
+		Arguments:
+		name -- the name of the item
+		experiment -- the experiment
+		
+		Keyword arguments:
+		string -- an item definition string (default = None)			
+		</DOC>"""
 
 		self.description = "Executes Python code"
-		self.item_type = "inline_script"		
-		
+		self.item_type = "inline_script"			
 		self._prepare = ""
 		self._run = ""
-		self._var_info = None
-		
+		self._var_info = None	
 		item.item.__init__(self, name, experiment, string)		
 		
-	def copy_sketchpad(self, item_name):
+	def copy_sketchpad(self, sketchpad_name):
 	
-		"""
-		A convenience function which copies the canvas from a sketchpad
-		"""
+		"""<DOC>
+		Create a canvas that is a copy from the canvas of a sketchpad item
+
+		Arguments:
+		sketchpad_name -- the name of the sketchpad
+
+		Returns:
+		An openexp canvas
+		</DOC>"""
 		
 		c = self.offline_canvas()
-		c.copy(self.experiment.items[item_name].canvas)
+		c.copy(self.experiment.items[sketchpad_name].canvas)
 		return c
 		
 	def offline_canvas(self):
 	
-		"""
-		A convenience function to create a new offline canvas
-		"""
+		"""<DOC>
+		Create an empty canvas
+
+		Returns:
+		An openexp canvas
+		</DOC>"""
 	
 		return canvas.canvas(self.experiment, self.get("background"), self.get("foreground"))
 		
 	def prepare(self):
 	
-		"""
-		Execute the prepare script
-		"""	
+		"""<DOC>
+		Execute the prepare script. The code that you enter in the 'prepare'
+		tab of an inline_script item in the GUI is used as a body for this
+		function.
+		</DOC>"""	
 		
 		item.item.prepare(self)
-		
+				
 		try:
 			self.cprepare = compile(self._prepare, "<string>", "exec")
 		except Exception as e:
@@ -82,9 +102,12 @@ class inline_script(item.item):
 		
 	def run(self):
 	
-		"""
-		Execute the run script
-		"""		
+		"""<DOC>
+		Execute the run script. The code that you enter in the 'run'
+		tab of an inline_script item in the GUI is used as a body for this
+		function.
+		</DOC>"""
+		
 		try:
 			exec(self.crun)
 		except Exception as e:		
@@ -96,6 +119,9 @@ class inline_script(item.item):
 	
 		"""
 		Give a list of dictionaries with variable descriptions
+
+		Returns:
+		A list of (variable, description) tuples
 		"""
 		
 		# Don't parse the script if it isn't necessary, since

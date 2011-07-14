@@ -16,6 +16,8 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 import openexp.trial
+import openexp.mouse
+import openexp.keyboard
 from libopensesame import exceptions
 import shlex
 import sys
@@ -31,7 +33,14 @@ class item(openexp.trial.trial):
 	def __init__(self, name, experiment, string = None):
 	
 		"""
-		Generic item initialization
+		Constructor
+
+		Arguments:
+		name -- the name of the item
+		experiment -- the experiment
+		
+		Keyword arguments:
+		string -- an item definition string (default = None)			
 		"""
 	
 		self.name = name
@@ -55,9 +64,11 @@ class item(openexp.trial.trial):
 	def prepare(self):
 	
 		"""
-		Derived classes should use this function
-		to prepare the item for speedy execution
-		during the run phase.
+		Derived classes should use this function to prepare the item for speedy
+		execution during the run phase.
+
+		Returns:
+		True on succes, False on failure
 		"""
 		
 		self.experiment.set("count_%s" % self.name, self.count)
@@ -68,8 +79,11 @@ class item(openexp.trial.trial):
 	def run(self):
 	
 		"""
-		Derived classes should use this function
-		to perform the item specific function.
+		Derived classes should use this function to perform the item specific
+		function.
+
+		Returns:
+		True on succes, False on failure		
 		"""
 	
 		return True		
@@ -77,7 +91,13 @@ class item(openexp.trial.trial):
 	def parse_variable(self, line):
 	
 		"""
-		Reads a single variable from a single line
+		Reads a single variable from a single definition line
+
+		Arguments:
+		line -- a single definition line
+
+		Returns:
+		True on succes, False on failure
 		"""
 		
 		# It is a little ugly to call parse_comment() here, but otherwise
@@ -102,7 +122,13 @@ class item(openexp.trial.trial):
 	def parse_comment(self, line):
 	
 		"""
-		Parses comments, indicated by # // or '
+		Parses comments from a single definition line, indicated by # // or '
+		
+		Arguments:
+		line -- a single definition line
+
+		Returns:
+		True on succes, False on failure
 		"""
 		
 		if len(line) > 0 and line[0] == "#":
@@ -116,7 +142,13 @@ class item(openexp.trial.trial):
 	def variable_to_string(self, var):
 	
 		"""
-		Translates the variables back into a string
+		Encode a variable into a definition string
+
+		Arguments:
+		var -- the variable to encode
+
+		Returns:
+		A definition string
 		"""
 		
 		# Multiline variables are stored as a block
@@ -141,13 +173,16 @@ class item(openexp.trial.trial):
 	def from_string(self, string):
 	
 		"""
-		Reads variables from the string
+		Read the item from a definition string
+
+		Arguments:
+		string -- the definition string		
 		"""
 				
 		textblock_var = None
 		self.variables = {}
 		for line in string.split("\n"):
-		
+				
 			# The end of a textblock
 			if line.strip() == "__end__":
 				self.set(textblock_var, textblock_val)
@@ -182,7 +217,14 @@ class item(openexp.trial.trial):
 	def to_string(self, item_type = None):
 	
 		"""
-		Translates the item back into a string
+		Encode the item into a definition string
+
+		Keyword arguments:
+		item_type -- the type of the item or None for autodetect
+					 (default = None)
+
+		Returns:
+		The definition string
 		"""
 		
 		if item_type == None:
@@ -198,9 +240,17 @@ class item(openexp.trial.trial):
 				
 	def set(self, var, val):
 	
-		"""
-		Set a variable
-		"""
+		"""<DOC>
+		Set a variable. Note: if you want to set a variable so that it is
+		available in other items as well (notably the logger item, so you can
+		log the variable), you need to use the set function from the experiment.
+		So, in an inline_script item you would generally set a variable with
+		self.experiment.set(), rather than self.set().
+
+		Arguments:
+		var -- the name of the variable
+		val -- the value
+		</DOC>"""
 	
 		val = self.auto_type(val)		
 		if type(val) == float:
@@ -214,13 +264,15 @@ class item(openexp.trial.trial):
 		
 	def unset(self, var):
 	
-		"""
-		Unset a variable
-		"""
+		"""<DOC>
+		Unset (forget) a variable
+
+		Arguments:
+		var -- the name of the variable
+		</DOC>"""
 		
 		if var in self.variables:
-			del self.variables[var]
-			
+			del self.variables[var]			
 		try:				
 			exec("del self.%s" % var)
 		except:
@@ -228,10 +280,18 @@ class item(openexp.trial.trial):
 						
 	def get(self, var):
 	
-		"""
-		Retrieve a variable. First check the item, and
-		fall back to the experiment.
-		"""
+		"""<DOC>
+		Return the value of a variable. Checks first if the variable exists
+		'locally' in the item and, if not, checks if the vaiable exists
+		'globally' in the experiment. Raises a runtime_error if the variable
+		is not found.
+
+		Arguments:
+		var -- the name of the variable
+
+		Returns:
+		The value
+		</DOC>"""
 	
 		if hasattr(self, var):		
 			val = eval("self.%s" % var)
@@ -239,29 +299,41 @@ class item(openexp.trial.trial):
 			try:
 				val = eval("self.experiment.%s" % var)
 			except:						
-				raise exceptions.runtime_error("Variable '%s' is not set in item '%s'.<br /><br />You are trying to use a variable that does not exist. Make sure that you have spelled and capitalized the variable name correctly. You may wish to use the variable inspector (Control + I) to find the intended variable." % (var, self.name))
-				
+				raise exceptions.runtime_error("Variable '%s' is not set in item '%s'.<br /><br />You are trying to use a variable that does not exist. Make sure that you have spelled and capitalized the variable name correctly. You may wish to use the variable inspector (Control + I) to find the intended variable." % (var, self.name))				
 		# Process variables, indicated like [varname]
 		if self.experiment.running and type(val) == str and len(val) > 3 and val[0] == "[" and val[-1] == "]":
 			if val[1:-1] == var:
 				raise exceptions.runtime_error("Variable '%s' is defined in terms of itself (e.g., 'var = [var]') in item '%s'" % (var, self.name))
-			val = self.get(val[1:-1])
-		
+			val = self.get(val[1:-1])		
 		return val
 		
 	def has(self, var):
 	
-		"""
-		Check if the variable exists
-		"""
+		"""<DOC>
+		Checks if a variable exists (either in the item or the experiment).
+
+		Arguments:
+		var -- the name of the variable
+
+		Returns:
+		True if the variable exists, False if not
+		</DOC>"""
+		
 		return hasattr(self, var) or hasattr(self.experiment, var)
 				
 	def auto_type(self, val):
 	
-		"""
-		Automatically convert a string to
-		the appropriate type
-		"""	
+		"""<DOC>
+		Convert a value into the 'best fitting' type that is compatible with the
+		value. E.g., auto_type('1') -> int, auto_type('1.2') -> float and
+		auto_type('one') -> string
+
+		Arguments:
+		val -- a value
+
+		Returns:
+		The same value converted to the 'best fitting' type
+		</DOC>"""	
 		
 		try:
 			if int(float(val)) == float(val):
@@ -274,80 +346,42 @@ class item(openexp.trial.trial):
 	def set_item_onset(self, time = None):
 	
 		"""
-		Used to record the time at which an item appears
+		Set a timestamp for the item's executions
+
+		Keyword arguments:
+		time -- the timestamp or None to use the current time (default = None)
 		"""
 		
 		if time == None:
 			time = self.time()	
-		exec("self.experiment.time_%s = %d" % (self.name, time))
-		
-	def prepare_duration(self):
-	
-		"""
-		Sets the _duration_func based on the
-		duration and compensation variables
-		"""
-		
-		# Prepare the duration function
-		if self.has("compensation"):
-			try:
-				self._compensation = int(self.get("compensation"))
-			except:
-				raise exceptions.runtime_error("Variable 'compensation' should be numeric and not '%s' in %s item'%s'" % (self.get("compensation"), self.item_type, self.name))
-		else:
-			self._compensation = 0
-			
-		dur = self.get("duration")
-		if dur == "keypress":
-			if self.experiment.auto_response:
-				self._duration_func = self.sleep_for_duration
-				self._duration = 500
-			else:
-				self._duration_func = self.experiment.wait
-		elif dur == "mouseclick":
-			if self.experiment.auto_response:
-				self._duration_func = self.sleep_for_duration
-				self._duration = 500
-			else:		
-				self._duration_func = openexp.response.get_mouse
-		else:
-			try:				
-				self._duration = int(self.get("duration"))			
-			except:
-				raise exceptions.runtime_error("Invalid duration '%s' in sketchpad '%s'. Expecting a positive number or 'keypress'." % (self.get("duration"), self.name))					
-			if self._duration == 0:
-				self._duration_func = self.dummy
-			else:
-				if self._compensation != 0:
-					self._duration_func = self.sleep_for_comp_duration
-				else:
-					self._duration_func = self.sleep_for_duration		
-
-	def sleep_for_duration(self):
-	
-		"""
-		Sleep for a specified time
-		"""
-		
-		self.sleep(self._duration)	
-		
-	def sleep_for_comp_duration(self):
-	
-		"""
-		Sleep for a specified time
-		"""
-		
-		self.sleep(self._duration - self._compensation)					
-		
+		exec("self.experiment.time_%s = %f" % (self.name, time))		
+				
 	def dummy(self):
+
+		"""Dummy function"""
 	
 		pass
 		
-	def eval_text(self, text, round_float = False):
+	def eval_text(self, text, round_float = False, soft_ignore = False, quote_str = False):
 	
-		"""
+		"""<DOC>
 		Replace variables in the text by the actual values
-		"""
+		
+		Arguments:
+		text -- the text to be evaluated
+		
+		Keyword arguments:
+		round_float -- a boolean indicating whether float values should be
+					   rounded to a precision of [round_decimals]
+					   (default = False)
+		soft_ignore -- a boolean indicating whether missing variables should be
+					   ignored, rather than cause an exception (default = False)
+		quote_str -- a boolean indicating whether string variables should be
+					 quoted (default = False)
+
+		Returns:
+		The evaluated string
+		</DOC>"""
 		
 		# If the text is not a string, there cannot be any variables,
 		# so return right away
@@ -359,26 +393,35 @@ class item(openexp.trial.trial):
 			float_template = "%%.%sf" % self.get("round_decimals")
 			
 		s = ""
+		start = -1
 		while True:
 		
 			# Find the start and end of a variable definition
-			start = text.find("[")
+			start = text.find("[", start + 1)
 			if start < 0:
 				break				
-			end = text.find("]")
+			end = text.find("]", start + 1)
 			if end < 0:
 				raise exceptions.runtime_error("Missing closing bracket ']' in item '%s'" % self.name)			
 			var = text[start+1:end]
 			
-			# Get the variable
-			val = self.get(var)
-				
-			# Round floats
-			if round_float and type(val) == float:
-				val = float_template % val
+			# Replace the variable with its value, unless the variable
+			# does not exist or we are ignoring missing variables
+			if not soft_ignore or self.has(var):
 			
-			# Replace the variable name with the value
-			text = text[:start] + str(val) + text[1+end:]
+				# Get the variable
+				val = self.get(var)
+				
+				# Quote strings if necessary
+				if type(val) == str and quote_str:
+					val = "\'" + val + "\'"
+				
+				# Round floats
+				if round_float and type(val) == float:
+					val = float_template % val
+			
+				# Replace the variable name with the value
+				text = text[:start] + str(val) + text[1+end:]
 		
 		# Return the result
 		return self.auto_type(text)
@@ -386,7 +429,18 @@ class item(openexp.trial.trial):
 	def compile_cond(self, cond, bytecode = True):
 
 		"""
-		Create byte compiled code for a given conditional statement
+		Create Python code for a given conditional statement
+
+		Arguments:
+		cond -- the conditional statement (e.g., '[correct] = 1')
+
+		Keyword arguments:
+		bytecode -- a boolean indicating whether the generated code should be
+					byte compiled (default = True)
+
+		Returns:
+		Python code (possibly byte compiled) that reflects the conditional
+		statement
 		"""
 		
 		src = cond
@@ -450,6 +504,9 @@ class item(openexp.trial.trial):
 	
 		"""
 		Give a list of dictionaries with variable descriptions
+
+		Returns:
+		A list of (variable, description) tuples
 		"""
 		
 		return [ ("time_%s" % self.name, "<i>Determined at runtime</i>"), ("count_%s" % self.name, "<i>Determined at runtime</i>") ]

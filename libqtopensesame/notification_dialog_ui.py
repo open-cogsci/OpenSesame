@@ -2,41 +2,47 @@
 
 # Form implementation generated from reading ui file 'resources/notification_dialog.ui'
 #
-# Created: Fri Mar 25 15:35:53 2011
-#      by: PyQt4 UI code generator 4.7.4
+# Created: Wed Jun 15 14:15:00 2011
+#      by: PyQt4 UI code generator 4.8.3
 #
 # WARNING! All changes made in this file will be lost!
 
 from PyQt4 import QtCore, QtGui
 
+try:
+    _fromUtf8 = QtCore.QString.fromUtf8
+except AttributeError:
+    _fromUtf8 = lambda s: s
+
 class Ui_Dialog(object):
     def setupUi(self, Dialog):
-        Dialog.setObjectName("Dialog")
+        Dialog.setObjectName(_fromUtf8("Dialog"))
         Dialog.resize(400, 300)
         self.verticalLayout = QtGui.QVBoxLayout(Dialog)
         self.verticalLayout.setMargin(8)
-        self.verticalLayout.setObjectName("verticalLayout")
+        self.verticalLayout.setObjectName(_fromUtf8("verticalLayout"))
         self.widget = QtGui.QWidget(Dialog)
         sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Preferred, QtGui.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.widget.sizePolicy().hasHeightForWidth())
         self.widget.setSizePolicy(sizePolicy)
-        self.widget.setStyleSheet("color: rgb(255, 255, 255);\n"
-"background-color: #729fcf;")
-        self.widget.setObjectName("widget")
+        self.widget.setStyleSheet(_fromUtf8("color: rgb(255, 255, 255);\n"
+"background-color: #729fcf;"))
+        self.widget.setObjectName(_fromUtf8("widget"))
         self.horizontalLayout = QtGui.QHBoxLayout(self.widget)
-        self.horizontalLayout.setMargin(4)
-        self.horizontalLayout.setObjectName("horizontalLayout")
+        self.horizontalLayout.setMargin(5)
+        self.horizontalLayout.setMargin(0)
+        self.horizontalLayout.setObjectName(_fromUtf8("horizontalLayout"))
         self.label = QtGui.QLabel(self.widget)
         sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Fixed, QtGui.QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.label.sizePolicy().hasHeightForWidth())
         self.label.setSizePolicy(sizePolicy)
-        self.label.setText("")
-        self.label.setPixmap(QtGui.QPixmap(":/icons/about_large.png"))
-        self.label.setObjectName("label")
+        self.label.setText(_fromUtf8(""))
+        self.label.setPixmap(QtGui.QPixmap(_fromUtf8(":/icons/about_large.png")))
+        self.label.setObjectName(_fromUtf8("label"))
         self.horizontalLayout.addWidget(self.label)
         self.label_2 = QtGui.QLabel(self.widget)
         font = QtGui.QFont()
@@ -44,24 +50,24 @@ class Ui_Dialog(object):
         font.setWeight(75)
         font.setBold(True)
         self.label_2.setFont(font)
-        self.label_2.setObjectName("label_2")
+        self.label_2.setObjectName(_fromUtf8("label_2"))
         self.horizontalLayout.addWidget(self.label_2)
         self.verticalLayout.addWidget(self.widget)
         self.textedit_notification = QtGui.QTextBrowser(Dialog)
         font = QtGui.QFont()
-        font.setFamily("Monospace")
+        font.setFamily(_fromUtf8("Monospace"))
         self.textedit_notification.setFont(font)
-        self.textedit_notification.setObjectName("textedit_notification")
+        self.textedit_notification.setObjectName(_fromUtf8("textedit_notification"))
         self.verticalLayout.addWidget(self.textedit_notification)
         self.buttonBox = QtGui.QDialogButtonBox(Dialog)
         self.buttonBox.setOrientation(QtCore.Qt.Horizontal)
         self.buttonBox.setStandardButtons(QtGui.QDialogButtonBox.Close)
-        self.buttonBox.setObjectName("buttonBox")
+        self.buttonBox.setObjectName(_fromUtf8("buttonBox"))
         self.verticalLayout.addWidget(self.buttonBox)
 
         self.retranslateUi(Dialog)
-        QtCore.QObject.connect(self.buttonBox, QtCore.SIGNAL("accepted()"), Dialog.accept)
-        QtCore.QObject.connect(self.buttonBox, QtCore.SIGNAL("rejected()"), Dialog.reject)
+        QtCore.QObject.connect(self.buttonBox, QtCore.SIGNAL(_fromUtf8("accepted()")), Dialog.accept)
+        QtCore.QObject.connect(self.buttonBox, QtCore.SIGNAL(_fromUtf8("rejected()")), Dialog.reject)
         QtCore.QMetaObject.connectSlotsByName(Dialog)
 
     def retranslateUi(self, Dialog):

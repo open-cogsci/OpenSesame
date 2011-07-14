@@ -32,7 +32,7 @@ class advanced_delay(item.item):
 		self.item_type = "advanced_delay"
 		self.description = "Waits for a specified duration"
 		self.duration = 1000
-		self.stdev = 0
+		self.jitter = 0
 		item.item.__init__(self, name, experiment, string)
 				
 	def prepare(self):
@@ -44,9 +44,12 @@ class advanced_delay(item.item):
 		item.item.prepare(self)		
 		
 		try:
-			self._duration = int(self.get("duration") + random.gauss(0, self.get("stdev")))
+			if self.get("jitter_mode") is "Uniform":
+				self._duration = int(self.get("duration") + random.uniform(0, self.get("jitter")) - self.get("jitter")*0.5)
+			else:
+				self._duration = int(self.get("duration") + random.gauss(0, self.get("jitter")))
 		except:
-			raise exceptions.runtime_error("Invalid duration and/ or standard deviation in advanced_delay '%s'" % self.name)
+			raise exceptions.runtime_error("Invalid duration and/ or jitter in advanced_delay '%s'" % self.name)
 
 		if self._duration < 0:
 			self._duration = 0
@@ -98,7 +101,8 @@ class qtadvanced_delay(advanced_delay, qtplugin.qtplugin):
 		qtplugin.qtplugin.init_edit_widget(self, False)
 		
 		self.add_spinbox_control("duration", "Duration", 0, 1000000, suffix = "ms", tooltip = "The averege duration in milliseconds")
-		self.add_spinbox_control("stdev", "Standard devation", 0, 1000000, suffix = "ms", tooltip = "The standard deviation of the actual duration in milliseconds")		
+		self.add_spinbox_control("jitter", "Jitter", 0, 1000000, suffix = "ms", tooltip = "The jitter of the actual duration in milliseconds (depends on Jitter mode)")
+		self.add_combobox_control("jitter_mode", "Jitter mode", ["Std. Dev.", "Uniform"], tooltip = "The mode of determining the duration (see Help)")
 		
 		self.edit_vbox.addStretch()		
 		self.lock = False

@@ -23,44 +23,42 @@ import os.path
 from PyQt4 import QtGui, QtCore
 import sys
 import libqtopensesame.qtopensesame
-import libopensesame.misc		
+import libopensesame.misc
 import time
 
 if __name__ == "__main__":
 
-	libopensesame.misc.change_working_dir()
+	libopensesame.misc.change_working_dir()	
+	app = QtGui.QApplication(sys.argv)
 
-	app = QtGui.QApplication(sys.argv)	
-	
-	# Show the splash screen
+	# Show the splash screen, run the app and hide the splash
 	splash = QtGui.QSplashScreen(QtGui.QPixmap(libopensesame.misc.resource("splash.png")), QtCore.Qt.WindowStaysOnTopHint)
-	splash.show()	
+	splash.show()
 	app.processEvents()
-		
 	myapp = libqtopensesame.qtopensesame.qtopensesame()
-	QtCore.QObject.connect(app, QtCore.SIGNAL("quit()"), myapp.close)		
-	
-	myapp.show()	
-	
-	# Wait and hide the splash
-	#t = time.time()	
-	#while time.time() - t < 0.5:
-	#	app.processEvents()	
+	QtCore.QObject.connect(app, QtCore.SIGNAL("quit()"), myapp.close)
+	myapp.show()
 	splash.finish(myapp)
-	
+
 	# Open an experiment if it has been specified as a command
-	# line argument
+	# line argument and suppress the new wizard in that case
 	if len(sys.argv) >= 2 and os.path.isfile(sys.argv[1]):
+		new_wizard = False
 		myapp.open_file(path = sys.argv[1])
-		
+	else:
+		new_wizard = True
+
 	# Run the experiment if it has been specified on the
 	# command line
 	if myapp.options.run:
 		myapp.run_experiment()
 	elif myapp.options.run_in_window:
 		myapp.run_experiment(False)
-	else:	
-		myapp.check_update(always = False)	
-		myapp.show_random_tip(always = False)	
-		
+	else:
+		myapp.check_update(always = False)
+		myapp.show_random_tip(always = False)
+		if new_wizard:
+			myapp.start_new_wizard()
+
 	sys.exit(app.exec_())
+

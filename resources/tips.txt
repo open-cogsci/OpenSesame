@@ -37,3 +37,18 @@ Each version of OpenSesame has a codename that is two word alliteration, where t
 You can select elements from the sketchpad using right-click to edit or delete them directly.
 
 By default, OpenSesame automatically picks a name for a new item. However, if you enable the "Immediately rename" option (Options -> Immediately rename new items) you will be asked to give a new name to items the moment they are created.
+
+If you are a PsychoPy user, you can use all PsychoPy functions from within OpenSesame by selecting the 'psycho' back-end in the general tab.
+
+You can use functions to assign values to variables in the loop table. For example, to assign a random value between 0 and 100 to a variable in a loop, enter '=randint(0,100)' in the corresponding cell of the loop table. You can use any valid Python statement in this way.
+
+You can use an Eyelink eyetracker (SR Research) in OpenSesame by installing the Eyelink plug-ins, which can be found on the OpenSesame website.
+
+You can use a Serial Response Box (Psychology Software Tools) in OpenSesame by installing the SR Box plug-in, which can be found on the OpenSesame website.
+
+You can play videos with the Media Player plug-in. This plug-in is bundled with the Windows package. Linux and Mac OS users can download the plug-in from the OpenSesame website.
+
+You can use the free Mantra object tracker in OpenSesame by installing the Mantra plug-ins, which can be found on the OpenSesame website.
+
+You can find a lot of information in the OpenSesame documentation center at http://osdoc.cogsci.nl/
+

@@ -1,3 +1,7 @@
+0.14
+- Switch to the new backend independent measure
+- Upped the maximum button number to 255 (to accomodate button boxes that use weird numbering)
+
 0.13
 - Add dummy mode so you can test your experiment without an sr-box
 
@@ -5,9 +9,10 @@
 - Removed small wait before getting response
 - Timeout now returns None
 
-0.11			
+0.11
 - Fixed a bug which could cause the plug-in to wait eternally for a key-release (now max 50ms)
 - Added version description to the interface
 
 0.10
 - First relatively stable version
+

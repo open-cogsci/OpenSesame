@@ -20,75 +20,88 @@ import shlex
 
 class logger(item.item):
 
+	"""The logger item logs variables to a plain text .csv file"""
+
 	def __init__(self, name, experiment, string = None):
-	
+
 		"""
-		Initialize the logger
+		Constructor
+
+		Arguments:
+		name -- the name of the item
+		experiment -- the experiment
+
+		Keyword arguments:
+		string -- the definition string for the item (default = None)
 		"""
 
 		self.logvars = []
 		self.log_started = False
-		self.description = "Logs experimental data"		
+		self.description = "Logs experimental data"
 		self.item_type = "logger"
 		self.use_quotes = "yes"
 		self.auto_log = "yes"
-		item.item.__init__(self, name, experiment, string)				
-		
+		self.ignore_missing = "no"
+		item.item.__init__(self, name, experiment, string)
+
 	def run(self):
-	
-		"""
-		Do the actual logging
-		"""
-					
+
+		"""Log the selected variables"""
+
 		if not self.log_started:
 			self.log_started = True
-						
+
 			# If auto logging is enabled, collect all variables
 			if self.get("auto_log") == "yes":
 				self.logvars = []
 				for logvar, val, item in self.experiment.var_list():
-					if self.has(logvar):
-						self.logvars.append(logvar)			
+					if (self.has(logvar) or self.get("ignore_missing") == "yes") and logvar not in self.logvars:
+						self.logvars.append(logvar)
 						if self.experiment.debug:
-							print "logger.run(): auto-logging '%s'" % logvar			
-							
+							print "logger.run(): auto-logging '%s'" % logvar
+
 			# Sort the logvars to ascertain a consistent ordering
 			self.logvars = sorted(self.logvars)
-													
+
 			# Draw the first line with variables
 			self.log(",".join(self.logvars))
-									
+
 		l = []
 		for var in self.logvars:
 			try:
 				l.append(str(self.get(var)))
 			except exceptions.runtime_error as e:
-				raise exceptions.runtime_error("Logger '%s' tries to log the variable '%s', but this variable is not available. Please deselect '%s' in logger '%s'." % (self.name, var, var, self.name))
+				if self.get("ignore_missing") == "yes":
+					l.append("NA")
+				else:
+					raise exceptions.runtime_error("Logger '%s' tries to log the variable '%s', but this variable is not available. Please deselect '%s' in logger '%s' or enable the 'Use NA for variables that have not been set' option." % (self.name, var, var, self.name))
 		if self.get("use_quotes") == "yes":
 			self.log("\"" + ("\",\"".join(l)) + "\"")
-		else:				
+		else:
 			self.log(",".join(l))
-		
+
 	def from_string(self, string):
-	
-		"""
-		Read the logger from a string
-		"""
-	
+
+		"""Parse the logger from a definition string"""
+
 		self.logvars = []
-		for line in string.split("\n"):		
-			self.parse_variable(line)		
+		for line in string.split("\n"):
+			self.parse_variable(line)
 			l = shlex.split(line)
 			if len(l) > 1 and l[0] == "log":
 				self.logvars.append(l[1])
-				
+
 	def to_string(self):
-	
+
 		"""
-		Encode the logger back into a string
+		Encode the logger back into a definition string
+
+		Returns:
+		A definition string
 		"""
-	
+
 		s = item.item.to_string(self, "logger")
 		for logvar in self.logvars:
 			s += "\t" + "log \"%s\"\n" % logvar
 		return s
+

@@ -1,8 +1,0 @@
-0.12
-- Fixed a papercut where logfiles longer than 8 characters caused a bad value result
-- Cleaned up some code and ugly print messages
-
-0.11
-
-0.10
-- First working version

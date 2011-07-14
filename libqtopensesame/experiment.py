@@ -23,70 +23,92 @@ import os.path
 
 class experiment(libopensesame.experiment.experiment):
 
+	"""Contains various GUI controls for the experiment"""
+
 	def __init__(self, main_window, name, string = None, pool_folder = None):
-	
+
 		"""
-		Initialize the experiment		
+		Constructor
+
+		Arguments:
+		main_window -- the GUI main window
+		name -- the name of the experiment
+
+		Keyword arguments:
+		string -- a definition string for the experiment (default = None)
+		pool_folder -- a path to be used for the file pool (default = None)
 		"""
-		
+
 		self.main_window = main_window
 		self.ui = self.main_window.ui
 		self.unused_items = []
 		self.core_items = "loop", "sequence", "sketchpad", "feedback", "sampler", "synth", "keyboard_response", "mouse_response", "logger", "inline_script"
 		libopensesame.experiment.experiment.__init__(self, name, string, pool_folder)
-				
+
 	def help(self, name):
-	
+
 		"""
-		Get a file from the help folder
+		Return the full path to a help file
+
+		Arguments:
+		name -- the name of the help file (e.g., "sequence.html")
+
+		Returns:
+		The full path to the help file or an empty string if the
+		help file was not found
 		"""
-		
+
+		# Check in the subfolder of the current path, which is
+		# where the helpfile will be on Windows
 		path = os.path.join("help", name)
-		
 		if os.path.exists(path):
 			return path
-		
+
+		# Check in the shared folders
 		if os.name == "posix":
 			path = "/usr/share/opensesame/help/%s" % name
-			
 			if os.path.exists(path):
 				return path
-	
+
 		# Fall back to the resource folder if the help
 		# file is not found
 		try:
 			return self.resource(name)
 		except:
-			pass			
-			
-		return ""				
-		
+			pass
+
+		# Return an empty string if not found
+		return ""
+
 	def module_container(self):
-	
-		"""
-		Specifies where the experiment looks for modules
-		"""
-	
+
+		"""Specifies the module that is used to get items from"""
+
 		return "libqtopensesame"
-		
+
 	def item_prefix(self):
-	
-		"""
-		Specifies which class from the plugin should be loaded
-		"""
-		
-		return "qt"		
-		
+
+		"""A prefix that should be added to classes for plugins"""
+
+		return "qt"
+
 	def build_item_tree(self, toplevel = None, items = []):
-	
+
 		"""
 		Construct an item tree
+
+		Keyword arguments:
+		toplevel -- the toplevel widget (default = None)
+		items -- a list of items that have been added, to prevent recursion (default = [])
+
+		Returns:
+		An updated list of items that have been added
 		"""
-		
+
 		self.ui.itemtree.clear()
-	
+
 		items = []
-		
+
 		# First build the tree of the experiment
 		widget = QtGui.QTreeWidgetItem(self.ui.itemtree)
 		widget.setText(0, self.title)
@@ -94,46 +116,65 @@ class experiment(libopensesame.experiment.experiment):
 		widget.setToolTip(0, "General options")
 		widget.name = "__general__"
 		self.ui.itemtree.insertTopLevelItem(0, widget)
-		
-		if self.start in self.items:		
-			items.append(self.items[self.start])					
-			self.items[self.start].build_item_tree(widget, items)			
+
+		if self.start in self.items:
+			items.append(self.items[self.start])
+			self.items[self.start].build_item_tree(widget, items)
 		widget.setExpanded(True)
-			
+
 		# Next build a tree with left over items
+
 		self.unused_widget = QtGui.QTreeWidgetItem(self.ui.itemtree)
 		self.unused_widget.setText(0, "Unused items")
-		self.unused_widget.setIcon(0, self.icon("unused"))		
+		self.unused_widget.setIcon(0, self.icon("unused"))
 		self.unused_widget.name = "__unused__"
 		self.unused_widget.setToolTip(0, "Unused items")
-		self.ui.itemtree.insertTopLevelItem(1, widget)		
+		self.unused_widget.setToolTip(1, "Unused items")
+
+		self.ui.itemtree.insertTopLevelItem(1, widget)
 
 		self.unused_items = []
+		c = 0
 		for i in self.items:
 			if self.items[i] not in items:
 				self.unused_items.append(i)
 				self.items[i].build_item_tree(self.unused_widget, items)
-		self.unused_widget.setExpanded(False)		
-		
-		return items							
-		
+				c += 1
+		self.unused_widget.setExpanded(False)
+
+		font = QtGui.QFont()
+		font.setPointSize(8)
+		font.setItalic(True)
+
+		if c > 0:
+			self.unused_widget.setText(1, "contains items")
+		else:
+			self.unused_widget.setText(1, "empty")
+		self.unused_widget.setFont(1, font)
+
+		return items
+
 	def rename(self, from_name, to_name):
-	
+
 		"""
-		Renames an item
+		Rename an item
+
+		Arguments:
+		from_name -- the original name
+		to_name -- the new name
 		"""
-		
+
 		to_name = self.sanitize(to_name, True)
-		
+
 		if self.debug:
 			print "experiment.rename(): from '%s' to '%s'" % (from_name, to_name)
-		
+
 		if self.get("start") == from_name:
 			self.set("start", to_name)
-		
+
 		for item in self.items:
 			self.items[item].rename(from_name, to_name)
-			
+
 		new_items = {}
 		for item in self.items:
 			if item == from_name:
@@ -141,7 +182,7 @@ class experiment(libopensesame.experiment.experiment):
 			else:
 				new_items[item] = self.items[item]
 		self.items = new_items
-		
+
 		for i in range(self.experiment.ui.tabwidget.count()):
 			w = self.experiment.ui.tabwidget.widget(i)
 			if hasattr(w, "edit_item") and w.edit_item == from_name:
@@ -151,56 +192,81 @@ class experiment(libopensesame.experiment.experiment):
 			if hasattr(w, "script_item") and w.script_item == from_name:
 				w.script_item = to_name
 				self.experiment.ui.tabwidget.setTabText(i, to_name)
-				
+
 		self.main_window.refresh()
-		
+
 	def unique_name(self, name):
-	
+
 		"""
-		Create a unique name resembling the
-		preferred name
+		Return a unique name that resembles the desired name
+
+		Arguments:
+		name -- the desired name
+
+		Returns:
+		The unique name
 		"""
-		
+
 		for item in self.items:
 			if item == name:
 				name = "_" + name
 				return self.unique_name(name)
 		return name
-		
+
 	def icon(self, name):
-	
+
 		"""
-		Find and return an icon belonging to
-		the name
+		Return a QIcon for the given name
+
+		Arguments:
+		name -- the name (e.g., "sequence")
+
+		Returns:
+		A QIcon
 		"""
-		
+
 		return QtGui.QIcon(self.resource("%s.png" % name))
-		
+
 	def label_image(self, name):
-	
+
 		"""
-		Find and return a pixmap belonging to
-		the name
+		Return a QLabel with a pixmap for the given name
+
+		Arguments:
+		name -- the name (e.g., "sequence")
+
+		Returns:
+		A QLabel
 		"""
-				
+
 		label = QtGui.QLabel()
 		label.setPixmap(QtGui.QPixmap(self.resource("%s.png" % name)))
-		
+
 		return label
-		
+
 	def item_combobox(self, select, exclude = [], c = None):
-	
+
 		"""
 		Returns a combobox with all the items of the experiment
+
+		Arguments:
+		select -- the item to be selected initially
+
+		Keyword arguments:
+		exclude -- a list of items that should not be included in the list (default = [])
+		c -- a QComboBox that should be cleared and re-filled (default = None)
+
+		Returns:
+		A QComboBox
 		"""
-		
+
 		if c == None:
 			c = QtGui.QComboBox(self.ui.centralwidget)
 		else:
 			c.clear()
-			
+
 		item_dict = {}
-			
+
 		i = 0
 		for item in self.experiment.items:
 			if item not in exclude:
@@ -208,7 +274,7 @@ class experiment(libopensesame.experiment.experiment):
 				if item_type not in item_dict:
 					item_dict[item_type] = []
 				item_dict[item_type].append(item)
-			
+
 		for item_type in item_dict:
 			for item in sorted(item_dict[item_type]):
 				c.addItem(item)
@@ -217,73 +283,93 @@ class experiment(libopensesame.experiment.experiment):
 					c.setCurrentIndex(i)
 				i += 1
 		return c
-		
+
 	def item_type_combobox(self, core_items = True, plugins = True, c = None, select = None):
-	
+
 		"""
-		Returns a combobox with all plugins
+		Returns a combobox with all the item types and plug-ins
+
+		Keyword arguments:
+		core_items -- a boolean indicating if core items should be included (default = True)
+		plugins -- a boolean indicating if plug-ins should be inculuded (default = True)
+		c -- a QComboBox that should be cleared and re-filled (default = None)
+		select -- the item that should be selected initially (default = None)
+
+		Returns:
+		A QComboBox
 		"""
-		
+
 		if c == None:
 			c = QtGui.QComboBox(self.ui.centralwidget)
 		else:
 			c.clear()
-			
-		i = 0		
-		
+
+		i = 0
+
 		for item in ["loop", "sequence", "sketchpad", "feedback", "sampler", "synth", "keyboard_response", "mouse_response", "logger", "inline_script"]:
 			c.addItem(item)
 			c.setItemIcon(i, self.icon(item))
 			if item == select:
 				c.setCurrentIndex(i)
 			i += 1
-			
+
 		if core_items and plugins:
 			c.addItem("")
-			i += 1		
-		
+			i += 1
+
 		for plugin in libopensesame.plugins.list_plugins():
 			c.addItem(plugin)
 			c.setItemIcon(i, QtGui.QIcon(libopensesame.plugins.plugin_icon_small(plugin)))
 			if plugin == select:
-				c.setCurrentIndex(i)			
+				c.setCurrentIndex(i)
 			i += 1
-		return c		
-		
+		return c
+
 	def combobox_text_select(self, combobox, text):
-	
+
 		"""
-		Select and item from the combobox based on text
+		Find a text in a combobox and select the corresponding item
+
+		Arguments:
+		combobox -- a QComboBox
+		text -- a text string to select
 		"""
-		
+
 		combobox.setCurrentIndex(0)
 		for i in range(combobox.count()):
 			if str(combobox.itemText(i)) == text:
 				combobox.setCurrentIndex(i)
-				break		
-		
+				break
+
 	def notify(self, message):
-	
+
 		"""
-		Presents a notification dialog
+		Present a default notification dialog
+
+		Arguments:
+		message -- the message to be shown
 		"""
-		
-		a = QtGui.QDialog(self.main_window)	
+
+		a = QtGui.QDialog(self.main_window)
 		a.ui = notification_dialog_ui.Ui_Dialog()
-		a.ui.setupUi(a)	
+		a.ui.setupUi(a)
 		a.ui.textedit_notification.setHtml(message)
 		a.adjustSize()
 		a.show()
-		
+
 	def clear_widget(self, widget):
-	
+
 		"""
-		Clears the layout in a widget
+		Explicitly clears the layout in a widget. This is necessary
+		in some weird cases.
+
+		Arguments:
+		widget -- the QWidget to be cleared
 		"""
-		
+
 		if widget != None:
 			layout = widget.layout()
-			if layout != None:				
+			if layout != None:
 				while layout.count() > 0:
 					item = layout.takeAt(0)
 					if not item:
@@ -291,7 +377,6 @@ class experiment(libopensesame.experiment.experiment):
 					w = item.widget()
 					self.clear_widget(w)
 					if w:
-						w.deleteLater()		
-						QtCore.QCoreApplication.sendPostedEvents(w, QtCore.QEvent.DeferredDelete)			
-						
+						w.deleteLater()
+						QtCore.QCoreApplication.sendPostedEvents(w, QtCore.QEvent.DeferredDelete)
 

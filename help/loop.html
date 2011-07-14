@@ -6,7 +6,7 @@
 	<META NAME="GENERATOR" CONTENT="LibreOffice 3.3  (Linux)">
 	<META NAME="AUTHOR" CONTENT="Sebastiaan Mathot">
 	<META NAME="CREATED" CONTENT="20101128;13435600">
-	<META NAME="CHANGED" CONTENT="20110129;17521700">
+	<META NAME="CHANGED" CONTENT="20110521;16144900">
 	<STYLE TYPE="text/css">
 	<!--
 		@page { margin: 0.79in }
@@ -18,6 +18,7 @@
 		H2.western { font-family: "Albany", sans-serif; font-size: 14pt; font-style: italic }
 		H2.cjk { font-family: "HG Mincho Light J"; font-size: 14pt; font-style: italic }
 		H2.ctl { font-family: "Arial Unicode MS"; font-size: 14pt; font-style: italic }
+		PRE.cjk { font-family: "Droid Sans Fallback", monospace }
 		A:link { so-language: zxx }
 	-->
 	</STYLE>
@@ -36,8 +37,8 @@ for example, be a sequence corresponding to a trial.</P>
 columns in the table. You can add and remove variables using the <B>add
 variable</B> and <B>remove variable</B> buttons. The rows in the
 table correspond to cycles, i.e. to one time that the item to run is
-called. You can add and remove cycles using the <B>add cycle</B> and
-<B>remove cycle</B> buttons.</P>
+called. You can specify the number of cycles by entering a number in
+the <B>cycles</B> input field.</P>
 <P>The <B>repeat</B> option corresponds to the number of times that
 all cycles should be executed. You can set this to a non-integer
 value. For example, by setting repeat to 0.5, half of all cycles will
@@ -46,6 +47,22 @@ be executed.</P>
 executed sequentially or in random order. Randomization is complete,
 that is, all the complete list of [number of cycles] x [repeat]
 trials is randomized.</P>
+<H2 CLASS="western">Using functions</H2>
+<P>Most of the time you will enter static values into the loop table.
+For example, you may have a variable called 'cue', which is either
+'right' or 'left'. However, you can also use functions instead of
+static values. This is handled, similarly as in most spreadsheets, by
+prepending an '=' character. For example, to draw a random number
+between 0 and 100, you can enter the following into a cell in the
+loop table:</P>
+<PRE CLASS="western">=randint(0,100)</PRE><P>
+More generally,you can enter any valid Python statement after the '='
+sign. An overview of of useful functions can be found in the Python
+documentation:</P>
+<UL>
+	<LI><P>Random functions: <a href="http://docs.python.org/library/random.html">http://docs.python.org/library/random.html</a></P>
+	<LI><P>Mathematical: <a href="http://docs.python.org/library/math.html">http://docs.python.org/library/math.html</a></P>
+</UL>
 <H2 CLASS="western"><B>Convenient ways of creating a large loop table</B></H2>
 <P STYLE="font-weight: normal">If you have multiple variables, each
 with multiple levels, it is a daunting task to manually create the
@@ -61,3 +78,4 @@ spreadsheet (e.g., OpenOffice Calc or Microsoft Excel) and paste it
 into the loop table.</P>
 </BODY>
 </HTML>
+

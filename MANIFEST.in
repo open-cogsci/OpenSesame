@@ -3,7 +3,8 @@ include resources/*.png
 include resources/*.opensesame
 include resources/*.ttf
 include resources/tips.txt
-include examples/*
+include examples/*.opensesame
+include examples/*.opensesame.tar.gz
 include help/*.html
 include sounds/*
 include COPYING
@@ -13,5 +14,6 @@ recursive-include plugins/fixation_dot *
 recursive-include plugins/text_display *
 recursive-include plugins/text_input *
 recursive-include plugins/notepad *
+recursive-include plugins/srbox *
 recursive-exclude plugins *.pyc
 recursive-exclude plugins */resources/*

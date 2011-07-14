@@ -18,16 +18,25 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 from libqtopensesame import pool_widget_ui
 from PyQt4 import QtCore, QtGui
 import os
+import platform
 import os.path
 import shutil
 import subprocess
 
 class pool_widget(QtGui.QWidget):
 
+	"""The file pool widget"""
+
 	def __init__(self, main_window, parent = None):
 	
 		"""
-		Initialize the sketchpad widget
+		Constructur
+
+		Arguments:
+		main_window -- the GUI main window
+
+		Keyword arguments:
+		parent -- a parent widget (default = None)
 		"""
 		
 		# Known image and sound extensions
@@ -54,18 +63,14 @@ class pool_widget(QtGui.QWidget):
 		
 	def help(self):
 	
-		"""
-		Open the help tab
-		"""
+		"""Open the help tab"""
 	
 		self.main_window.open_help_tab("Help: File pool", "pool")
 		
 		
 	def set_view(self):
 	
-		"""
-		Set the viewmode (list/ icons)
-		"""
+		"""Set the viewmode (list/ icons) based on the gui control"""
 	
 		if self.ui.combobox_view.currentIndex() == 0:
 			self.ui.list_pool.setViewMode(QtGui.QListView.ListMode)
@@ -74,14 +79,13 @@ class pool_widget(QtGui.QWidget):
 		
 	def browse(self):
 	
-		"""
-		Open the pool folder in the file manager. The exact method
-		depends on the OS.
-		"""
+		"""Open the pool folder in the file manager in an OS specific way"""
 		
-		if os.name == "posix":
+		if platform.system() == "Linux":
 			pid = subprocess.Popen(["xdg-open", self.main_window.experiment.pool_folder]).pid
-		elif os.name == "nt":
+		elif platform.system() == "Darwin":
+			pid = subprocess.Popen(["open", self.main_window.experiment.pool_folder]).pid		
+		elif platform.system() == "Windows":
 			os.startfile(self.main_window.experiment.pool_folder)
 		else:
 			self.main_window.experiment.notify("I'm sorry, but I don't know how to open the pool folder on your platform!")
@@ -92,17 +96,19 @@ class pool_widget(QtGui.QWidget):
 	def add(self, files):
 	
 		"""
-		Add a list of files
+		Add a list of files to the pool.
+		
+		Arguments:
+		files - A list of paths
 		"""
 
 		basename = ""
 		for path in files:
-			path = str(path)
+			path = unicode(path)
 			basename = os.path.basename(path)
 			if not os.path.isfile(path):
 				self.main_window.experiment.notify("'%s' is not a regular file and could not be added to the file pool." % path)
-			else:
-			
+			else:			
 				# If a similar file already exists in the pool, ask before overwriting
 				if os.path.exists(os.path.join(self.main_window.experiment.pool_folder, basename)):
 					resp = QtGui.QMessageBox.question(self, "Overwrite", "A file named '%s' already exists in the pool. Do you want to overwrite this file?" % basename, QtGui.QMessageBox.Yes, QtGui.QMessageBox.No)
@@ -118,6 +124,9 @@ class pool_widget(QtGui.QWidget):
 	
 		"""
 		Add one or more files to the pool
+
+		Keyword arguments:
+		dummy -- a dummy argument passed py the signal handler (default == None)
 		"""
 		
 		self.add(QtGui.QFileDialog.getOpenFileNames(self.main_window.ui.centralwidget, "Add files to pool"))
@@ -126,6 +135,9 @@ class pool_widget(QtGui.QWidget):
 	
 		"""
 		Select a specific file in the file pool
+
+		Arguments:
+		fname -- the file to be selected
 		"""
 
 		for i in range(self.ui.list_pool.count()):
@@ -137,6 +149,12 @@ class pool_widget(QtGui.QWidget):
 	
 		"""
 		Determine the type of a file based on the extension
+
+		Arguments:
+		fname -- the file under investigation
+
+		Returns:
+		A string with the filetype or "unknown"
 		"""
 		
 		ext = os.path.splitext(fname)[1].lower()
@@ -149,9 +167,7 @@ class pool_widget(QtGui.QWidget):
 		
 	def refresh(self):
 	
-		"""
-		Refresh the contents of the pool widget
-		"""
+		"""Refresh the contents of the pool widget"""
 		
 		filt = str(self.ui.edit_pool_filter.text()).lower()
 		
@@ -173,18 +189,27 @@ class pool_widget(QtGui.QWidget):
 	def open_file(self, path):
 	
 		"""
-		Open a file in a platform specific way		
+		Open a file in a platform specific way
+
+		Arguments:
+		path -- the full path to the file to be opened
 		"""
-		if os.name == "nt":
+		
+		if platform.system() == "Windows":
 			os.startfile(path)
-		elif os.name == "posix":
+		elif platform.system() == "Linux":
 			subprocess.Popen(["xdg-open", path]).pid		
+		elif platform.system() == "Darwin":
+			subprocess.Popen(["open", path]).pid			
 				
 	def activate_file(self, item):
 	
 		"""
 		Is called when a file is double-clicked or
 		otherwise activated and opens the file.
+
+		Arguments:
+		item -- a listWidgetItem
 		"""
 		
 		self.open_file(item.path)
@@ -192,7 +217,10 @@ class pool_widget(QtGui.QWidget):
 	def contextMenuEvent(self, event):
 	
 		"""
-		Present a context menu offering rename and remove
+		Presents a context menu
+
+		Arguments:
+		event -- a mouseClickEvent
 		"""
 		
 		item = self.ui.list_pool.itemAt(self.ui.list_pool.mapFromGlobal(event.globalPos()))
@@ -212,7 +240,10 @@ class pool_widget(QtGui.QWidget):
 	def context_action(self, action):
 	
 		"""
-		Perform an action from the context menu, i.e., remove or rename
+		Perform a conext menu action
+
+		Arguments:
+		action -- the action to be performed
 		"""
 		
 		a = str(action.text())
@@ -270,6 +301,9 @@ class pool_widget(QtGui.QWidget):
 	
 		"""
 		Accept an incoming drag that precedes a drop
+
+		Arguments:
+		event -- a drag event
 		"""
 	
 		event.acceptProposedAction()
@@ -278,6 +312,9 @@ class pool_widget(QtGui.QWidget):
 	
 		"""
 		Accept an incoming drop
+
+		Arguments:
+		event -- a drop event		
 		"""
 	
 		files = []
@@ -289,8 +326,10 @@ class pool_widget(QtGui.QWidget):
 def select_from_pool(main_window):
 
 	"""
-	A static function which presents the select from pool
-	dialog
+	A static function that presents the select from pool dialog
+
+	Arguments:
+	main_window -- the GUI main window
 	"""
 	
 	d = QtGui.QDialog(main_window.ui.centralwidget)	

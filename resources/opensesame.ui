@@ -98,6 +98,7 @@
     </property>
     <addaction name="action_close_all_tabs"/>
     <addaction name="action_close_other_tabs"/>
+    <addaction name="action_show_info_in_overview"/>
     <addaction name="separator"/>
     <addaction name="action_show_variable_inspector"/>
     <addaction name="action_show_pool"/>
@@ -158,12 +159,17 @@
        <property name="animated">
         <bool>true</bool>
        </property>
-       <attribute name="headerVisible">
-        <bool>false</bool>
-       </attribute>
+       <property name="headerHidden">
+        <bool>true</bool>
+       </property>
        <column>
         <property name="text">
-         <string>1</string>
+         <string>Name</string>
+        </property>
+       </column>
+       <column>
+        <property name="text">
+         <string>Info</string>
         </property>
        </column>
       </widget>
@@ -563,6 +569,8 @@ Tip 2: You can execute Python commands using the field above. For more informati
    <addaction name="action_run_in_window"/>
    <addaction name="separator"/>
    <addaction name="action_close_other_tabs"/>
+   <addaction name="action_show_info_in_overview"/>
+   <addaction name="separator"/>
    <addaction name="action_show_pool"/>
    <addaction name="action_show_variable_inspector"/>
    <addaction name="action_show_stdout"/>
@@ -947,6 +955,18 @@ Tip 2: You can execute Python commands using the field above. For more informati
   <action name="actionDummy">
    <property name="text">
     <string>Dummy</string>
+   </property>
+  </action>
+  <action name="action_show_info_in_overview">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="icons.qrc">
+     <normaloff>:/icons/item_info_large.png</normaloff>:/icons/item_info_large.png</iconset>
+   </property>
+   <property name="text">
+    <string>Show info in overview</string>
    </property>
   </action>
  </widget>

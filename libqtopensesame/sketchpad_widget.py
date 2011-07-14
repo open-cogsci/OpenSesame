@@ -46,14 +46,20 @@ class remove_item_button(QtGui.QPushButton):
 class canvas(QtGui.QGraphicsScene):
 
 	"""
-	The canvas is the scene on which the stimuli
-	are painted
+	A custom QGraphicsScene on which the sketchpad is drawn
 	"""
 
 	def __init__(self, sketchpad_widget, parent = None):
 	
 		"""
 		Constructor
+		
+		Arguments:
+		sketchpad_widget -- the sketchpad_widget of which the canvas is part
+		
+		
+		Keyword arguments:
+		parent -- the parent item (default = None)
 		"""
 	
 		self.sketchpad_widget = sketchpad_widget
@@ -72,7 +78,15 @@ class canvas(QtGui.QGraphicsScene):
 	def cursor_pos(self, e):
 	
 		"""
-		Get the cursor position
+		Gets the position of the mouse cursor. This position
+		takes into account the reference frame (relative/ absolute)
+		and the grid
+		
+		Arguments:
+		e -- a mouseMoveEvent
+		
+		Returns:
+		an (x, y) tuple with the the coordinates of the mouse cursor
 		"""
 	
 		pos = e.scenePos().toPoint()
@@ -91,21 +105,27 @@ class canvas(QtGui.QGraphicsScene):
 	def mouseMoveEvent(self, e):
 	
 		"""
-		Update cursor position
+		Update the text widget with the cursor position
+		
+		Arguments:
+		e -- a mouseMoveEvent
 		"""	
 	
 		x, y = self.cursor_pos(e)		
 		if x == None:
 			text = "(0, 0)"
 		else:		
-			text = "(%d, %d)" % (x, y)
-					
+			text = "(%d, %d)" % (x, y)					
 		self.sketchpad_widget.ui.label_mouse_pos.setText(text)
 				
 	def mousePressEvent(self, e):
 	
 		"""
-		Capture mouse presses
+		Handle mouse presses to start/ finish drawing
+		or present a context menu
+		
+		Arguments:
+		e -- a mousePressEvent
 		"""
 				
 		if e.button() == QtCore.Qt.RightButton:
@@ -117,6 +137,9 @@ class canvas(QtGui.QGraphicsScene):
 	
 		"""
 		Handle drawing operations
+		
+		Arguments:
+		e -- a mousePressEvent
 		"""
 		
 		x, y = self.cursor_pos(e)		
@@ -144,6 +167,9 @@ class canvas(QtGui.QGraphicsScene):
 	
 		"""
 		Show the context menu
+		
+		Arguments:
+		e -- a mousePressEvent
 		"""
 
 		# First clear the grid, so we don't select the grid items		
@@ -194,6 +220,9 @@ class canvas(QtGui.QGraphicsScene):
 		
 		"""
 		Delete an item from the sketchpad
+		
+		Arguments:
+		item -- the item to be deleted
 		"""
 		
 		s = self.sketchpad_widget.sketchpad.item_to_string(item)
@@ -213,20 +242,18 @@ class canvas(QtGui.QGraphicsScene):
 	def edit_item(self, item):
 	
 		"""
-		Present an input dialog to edit the item
+		Present an input dialog to edit an item
+		
+		Arguments:
+		item -- the item to edit
 		"""				
 		
-		s = self.sketchpad_widget.sketchpad.item_to_string(self.sketchpad_widget.sketchpad.unfix_coordinates(item))
-		
+		s = self.sketchpad_widget.sketchpad.item_to_string(self.sketchpad_widget.sketchpad.unfix_coordinates(item))		
 		s, ok = QtGui.QInputDialog.getText(self.sketchpad_widget.sketchpad.experiment.main_window.ui.centralwidget, "Edit item", "Please edit the item", text = s)
 		
-		if ok:					
-		
-			# Keep a backup
-			tmp = self.sketchpad_widget.sketchpad.items[:]
-				
-			self.delete_item(item)
-			
+		if ok:							
+			tmp = self.sketchpad_widget.sketchpad.items[:] # Keep a backup
+			self.delete_item(item)			
 			try:
 				self.sketchpad_widget.sketchpad.from_string(str(s))
 			except exceptions.script_error as e:
@@ -288,10 +315,18 @@ class canvas(QtGui.QGraphicsScene):
 
 class sketchpad_widget(QtGui.QWidget):
 
-	def __init__(self, sketchpad, parent = None):
+	"""A custom widget contain the sketchpad canvas controls, etc."""
+
+	def __init__(self, sketchpad, parent = None, embed = True):
 	
 		"""
-		Initialize the sketchpad widget
+		Constructor
+		
+		Arguments:
+		sketchpad -- a libopensesame.sketchpad instance
+		
+		Keyword arguments:
+		parent -- a parent widget (default = None)
 		"""
 			
 		QtGui.QWidget.__init__(self, parent)
@@ -302,6 +337,7 @@ class sketchpad_widget(QtGui.QWidget):
 		self.ui.view.setViewportMargins(0, 0, 0, 0)
 		
 		self.sketchpad = sketchpad
+		self.embed = embed
 		
 		self.zoom = 1.0
 		self.scene = canvas(self)		
@@ -322,7 +358,7 @@ class sketchpad_widget(QtGui.QWidget):
 		QtCore.QObject.connect(self.ui.button_gabor, QtCore.SIGNAL("clicked()"), self.set_gabor)		
 		QtCore.QObject.connect(self.ui.button_noise_patch, QtCore.SIGNAL("clicked()"), self.set_noise)		
 				
-		QtCore.QObject.connect(self.ui.button_edit_script, QtCore.SIGNAL("clicked()"), self.sketchpad.open_script_tab)
+		QtCore.QObject.connect(self.ui.button_edit_script, QtCore.SIGNAL("clicked()"), self.edit_script)
 		
 		QtCore.QObject.connect(self.ui.edit_color, QtCore.SIGNAL("editingFinished()"), self.set_tool)
 		QtCore.QObject.connect(self.ui.spin_penwidth, QtCore.SIGNAL("valueChanged(int)"), self.set_tool)
@@ -342,12 +378,17 @@ class sketchpad_widget(QtGui.QWidget):
 		self.set_line()
 		self.refresh()
 		
+	def edit_script(self):
+	
+		"""Show the edit script tab and, if not embedded, close the current window"""
+		
+		if not self.embed:
+			self.parent().accept()	
+		self.sketchpad.open_script_tab()
 		
 	def unset_all(self):
 	
-		"""
-		Untoggle all buttons
-		"""
+		"""Untoggle all buttons"""
 	
 		self.ui.button_line.setChecked(False)
 		self.ui.button_rect.setChecked(False)
@@ -380,139 +421,100 @@ class sketchpad_widget(QtGui.QWidget):
 		
 	def set_rect(self):
 	
-		"""
-		Activate the rect button
-		"""
+		"""Activate the rect button"""
 	
 		self.unset_all()
-		self.ui.button_rect.setChecked(True)		
-		
+		self.ui.button_rect.setChecked(True)				
 		self.ui.edit_color.show()
 		self.ui.spin_penwidth.show()
 		self.ui.checkbox_fill.show()
-
 		self.ui.label_color.show()
-		self.ui.label_penwidth.show()
-				
+		self.ui.label_penwidth.show()				
 		self.set_tool()				
 		
 	def set_ellipse(self):
 	
-		"""
-		Activate the ellipse button
-		"""
+		"""Activate the ellipse button"""
 	
 		self.unset_all()
-		self.ui.button_ellipse.setChecked(True)
-		
+		self.ui.button_ellipse.setChecked(True)		
 		self.ui.edit_color.show()
 		self.ui.spin_penwidth.show()
 		self.ui.checkbox_fill.show()
-
 		self.ui.label_color.show()
-		self.ui.label_penwidth.show()		
-				
+		self.ui.label_penwidth.show()						
 		self.set_tool()
 		
 	def set_line(self):
 	
-		"""
-		Activate the line button
-		"""
-	
+		"""Activate the line button"""
+			
 		self.unset_all()
-		self.ui.button_line.setChecked(True)
-		
+		self.ui.button_line.setChecked(True)		
 		self.ui.edit_color.show()
 		self.ui.spin_penwidth.show()
-
 		self.ui.label_color.show()
-		self.ui.label_penwidth.show()		
-		
+		self.ui.label_penwidth.show()				
 		self.set_tool()
 		
 	def set_arrow(self):
 	
-		"""
-		Activate the line button
-		"""
+		"""Activate the line button"""
 	
 		self.unset_all()
 		self.ui.button_arrow.setChecked(True)
-
 		self.ui.edit_color.show()
 		self.ui.spin_penwidth.show()
 		self.ui.spin_arrow_size.show()
-
 		self.ui.label_color.show()
 		self.ui.label_penwidth.show()			
-		self.ui.label_arrow_size.show()
-		
+		self.ui.label_arrow_size.show()		
 		self.set_tool()		
 		
 	def set_circle(self):
 	
-		"""
-		Activate the circle button
-		"""
+		"""Activate the circle button"""
 	
 		self.unset_all()
-		self.ui.button_circle.setChecked(True)
-		
+		self.ui.button_circle.setChecked(True)		
 		self.ui.edit_color.show()
 		self.ui.spin_penwidth.show()
 		self.ui.checkbox_fill.show()
-
 		self.ui.label_color.show()
-		self.ui.label_penwidth.show()				
-					
+		self.ui.label_penwidth.show()									
 		self.set_tool()
 		
 	def set_fixdot(self):
 	
-		"""
-		Activate the fixdot button
-		"""
+		"""Activate the fixdot button"""
 	
 		self.unset_all()
 		self.ui.button_fixdot.setChecked(True)
-
 		self.ui.edit_color.show()
-
 		self.ui.label_color.show()
-		
 		self.set_tool()
 		
 	def set_image(self):
 	
-		"""
-		Activate the image button
-		"""
+		"""Activate the image button"""
 	
 		self.unset_all()
-		self.ui.button_image.setChecked(True)
-		
+		self.ui.button_image.setChecked(True)		
 		self.ui.spin_scale.show()
-		self.ui.checkbox_center.show()
-		
-		self.ui.label_scale.show()
-		
+		self.ui.checkbox_center.show()		
+		self.ui.label_scale.show()		
 		self.set_tool()
 		
 	def set_textline(self):
 	
-		"""
-		Activate the textline button
-		"""
+		"""Activate the textline button"""
 	
 		self.unset_all()
-		self.ui.button_textline.setChecked(True)
-		
+		self.ui.button_textline.setChecked(True)		
 		self.ui.edit_color.show()
 		self.ui.checkbox_center.show()
 		self.ui.combobox_font_family.show()
-		self.ui.spin_font_size.show()
-		
+		self.ui.spin_font_size.show()		
 		self.ui.label_color.show()
 		self.ui.label_font_size.show()
 		self.ui.label_font_family.show()
@@ -520,9 +522,7 @@ class sketchpad_widget(QtGui.QWidget):
 		
 	def set_gabor(self):
 	
-		"""
-		Activate the textline button
-		"""
+		"""Activate the textline button"""
 	
 		self.unset_all()
 		self.ui.button_gabor.setChecked(True)		
@@ -531,9 +531,7 @@ class sketchpad_widget(QtGui.QWidget):
 		
 	def set_noise(self):
 	
-		"""
-		Activate the textline button
-		"""
+		"""Activate the textline button"""
 	
 		self.unset_all()
 		self.ui.button_noise_patch.setChecked(True)		
@@ -544,6 +542,10 @@ class sketchpad_widget(QtGui.QWidget):
 	
 		"""
 		Add an item to the sketchpad item list
+		
+		Arguments:
+		from_pos -- an (x, y) tuple containing the top-left corner
+		to_pos -- an (x, y) tuple containing the bottom-right corner
 		"""
 	
 		item = {}
@@ -553,8 +555,7 @@ class sketchpad_widget(QtGui.QWidget):
 		item["penwidth"] = self.penwidth
 		item["show_if"] = self.show_if	
 		
-		if self.tool in ("ellipse", "rect"):
-		
+		if self.tool in ("ellipse", "rect"):		
 			if to_pos[0] > from_pos[0]:						
 				item["x"] = from_pos[0]
 				item["w"] = to_pos[0] - from_pos[0]
@@ -585,71 +586,66 @@ class sketchpad_widget(QtGui.QWidget):
 			item["y"] = from_pos[1]
 			item["r"] = 2 * math.sqrt( (from_pos[0] - to_pos[0]) ** 2 + (from_pos[1] - to_pos[1]) ** 2 )
 			
-		elif self.tool == "textline":
-		
+		elif self.tool == "textline":		
 			text, ok = QtGui.QInputDialog.getText(self.ui.view, "New textline", "Please enter a text for the textline")
 			if not ok:
-				return
-				
+				return				
 			item["x"] = to_pos[0]
 			item["y"] = to_pos[1]
-			item["text"] = text
+			item["text"] = self.sketchpad.experiment.sanitize(text)
 			item["center"] = self.center
 			item["font_family"] = self.font_family
 			item["font_size"] = self.font_size
 			
 		elif self.tool == "image":
-		
-			#path = QtGui.QFileDialog.getOpenFileName(self.ui.view, "Please select an image to add to the sketchpad")
 			path = pool_widget.select_from_pool(self.sketchpad.experiment.main_window)
 			if path == None or str(path) == "":
-				return				 			
-					
+				return				 								
 			item["x"] = to_pos[0]
 			item["y"] = to_pos[1]
 			item["file"] = str(path)
 			item["scale"] = self.scale
 			item["center"] = self.center
 			
-		elif self.tool == "gabor":
-		
+		elif self.tool == "gabor":		
 			item["x"] = to_pos[0]
 			item["y"] = to_pos[1]
 			item = self.gabor_dialog(item)
 			if item == None:
 				return
 				
-		elif self.tool == "noise":
-		
+		elif self.tool == "noise":		
 			item["x"] = to_pos[0]
 			item["y"] = to_pos[1]
 			item = self.noise_dialog(item)
 			if item == None:
 				return		
 					
-		item = self.sketchpad.unfix_coordinates(item)
-		
-		self.sketchpad.items.append(item)
-		
+		item = self.sketchpad.unfix_coordinates(item)	
+		self.sketchpad.items.append(item)		
 		self.sketchpad.apply_edit_changes()
 		self.refresh()
 		
 	def gabor_dialog(self, item):
 	
 		"""
-		Presents the Gabor dialog and returns the
-		Gabor sketchpad item
+		Presents the Gabor dialog and adds the relevant
+		parameters to an item
+		
+		Arguments:
+		item -- the item to be filled in
+		
+		Returns:
+		The passed item, but filled in with all the relevant parameters
 		"""
 		
 		d = QtGui.QDialog(self)		
 		d.ui = gabor_dialog_ui.Ui_Dialog()
 		d.ui.setupUi(d)
 		resp = d.exec_()
-		if resp == QtGui.QDialog.Accepted:
-		
+		if resp == QtGui.QDialog.Accepted:		
 			env = ["gaussian", "linear", "circle", "rectangle"]
-			bgmode = ["avg", "col2"]			
-		
+			bgmode = ["avg", "col2"]					
 			item["orient"] = d.ui.spin_orient.value()
 			item["size"] = d.ui.spin_size.value()
 			item["env"] = env[d.ui.combobox_env.currentIndex()]
@@ -658,152 +654,120 @@ class sketchpad_widget(QtGui.QWidget):
 			item["phase"] = d.ui.spin_phase.value()			
 			item["color1"] = str(d.ui.edit_color1.text())
 			item["color2"] = str(d.ui.edit_color2.text())
-			item["bgmode"] = bgmode[d.ui.combobox_bgmode.currentIndex()]
-			
-			return item
-			
+			item["bgmode"] = bgmode[d.ui.combobox_bgmode.currentIndex()]			
+			return item			
 		return None
 		
 	def noise_dialog(self, item):
 	
 		"""
-		Presents the Gabor dialog and returns the
-		Gabor sketchpad item
+		Presents the noise dialog and adds the relevant
+		parameters to an item
+		
+		Arguments:
+		item -- the item to be filled in
+		
+		Returns:
+		The passed item, but filled in with all the relevant parameters
 		"""
 		
 		d = QtGui.QDialog(self)		
 		d.ui = noise_patch_dialog_ui.Ui_Dialog()
 		d.ui.setupUi(d)
 		resp = d.exec_()
-		if resp == QtGui.QDialog.Accepted:
-		
+		if resp == QtGui.QDialog.Accepted:		
 			env = ["gaussian", "linear", "circle", "rectangle"]
-			bgmode = ["avg", "col2"]			
-		
+			bgmode = ["avg", "col2"]					
 			item["size"] = d.ui.spin_size.value()
 			item["env"] = env[d.ui.combobox_env.currentIndex()]
 			item["stdev"] = d.ui.spin_stdev.value()
 			item["color1"] = str(d.ui.edit_color1.text())
 			item["color2"] = str(d.ui.edit_color2.text())
-			item["bgmode"] = bgmode[d.ui.combobox_bgmode.currentIndex()]
-			
-			return item
-			
+			item["bgmode"] = bgmode[d.ui.combobox_bgmode.currentIndex()]			
+			return item			
 		return None		
 		
 	def rect(self, x, y, w, h, pen, brush):
 	
-		"""
-		Draw rectangle
-		"""
+		"""Draw rectangle"""
 	
 		return self.scene.addRect(x, y, w, h, pen, brush)	
 		
 	def ellipse(self, x, y, w, h, pen, brush):
 	
-		"""
-		Draw ellipse
-		"""
+		"""Draw ellipse"""
 	
 		return self.scene.addEllipse(x, y, w, h, pen, brush)
 				
 	def fixdot(self, x, y, color):
 	
-		"""
-		Draw fixation dot
-		"""
+		"""Draw fixation dot"""
 	
-		color = QtGui.QColor(color)
-	
+		color = QtGui.QColor(color)	
 		pen = QtGui.QPen()
 		pen.setColor(color)
-
 		brush = QtGui.QBrush()		
 		brush.setColor(color)
-		brush.setStyle(QtCore.Qt.SolidPattern)	
-			
+		brush.setStyle(QtCore.Qt.SolidPattern)				
 		r1 = 8
 		r2 = 2
-		i = self.scene.addEllipse(x - r1, y - r1, 2*r1, 2*r1, pen, brush)
-		
+		i = self.scene.addEllipse(x - r1, y - r1, 2*r1, 2*r1, pen, brush)		
 		brush.setColor(QtGui.QColor(self.sketchpad.get("background")))
-
-		self.scene.addEllipse(x - r2, y - r2, 2*r2, 2*r2, pen, brush)	
-		
+		self.scene.addEllipse(x - r2, y - r2, 2*r2, 2*r2, pen, brush)			
 		return i
 
 	def arrow(self, sx, sy, ex, ey, arrow_size, pen):
 	
-		"""
-		Draw arrow
-		"""
+		"""Draw arrow"""
 	
-		i = self.scene.addLine(sx, sy, ex, ey, pen)
-		
-		a = math.atan2(ey - sy, ex - sx)
-		
+		i = self.scene.addLine(sx, sy, ex, ey, pen)		
+		a = math.atan2(ey - sy, ex - sx)		
 		_sx = ex + arrow_size * math.cos(a + math.radians(135))
 		_sy = ey + arrow_size * math.sin(a + math.radians(135))
-		self.scene.addLine(_sx, _sy, ex, ey, pen)		
-		
+		self.scene.addLine(_sx, _sy, ex, ey, pen)				
 		_sx = ex + arrow_size * math.cos(a + math.radians(225))
 		_sy = ey + arrow_size * math.sin(a + math.radians(225))
-		self.scene.addLine(_sx, _sy, ex, ey, pen)	
-		
+		self.scene.addLine(_sx, _sy, ex, ey, pen)			
 		return i	
 		
 	def line(self, x1, y1, x2, y2, pen):
 	
-		"""
-		Draw line
-		"""
+		"""Draw line"""
 	
 		return self.scene.addLine(x1, y1, x2, y2, pen)
 		
 	def textline(self, text, center, x, y, color, font_family, font_size):
 	
-		"""
-		Draw textline
-		"""
+		"""Draw textline"""
 		
-		# Windows doesn't recognize serif
 		if font_family == "serif" and os.name == "nt":
-			font_family = "times"
-	
+			font_family = "times" # WINDOWS HACK: Windows doesn't recognize serif
 		font = QtGui.QFont(font_family, font_size)
 		text_item = self.scene.addText(self.sketchpad.experiment.unsanitize(text), font)
-		text_item.setDefaultTextColor(QtGui.QColor(color))
-		
+		text_item.setDefaultTextColor(QtGui.QColor(color))		
 		if center:
 			r = text_item.boundingRect()
 			text_item.setPos(x - 0.5 * r.width(), y - 0.5 * r.height())
 		else:
-			text_item.setPos(x, y)
-			
+			text_item.setPos(x, y)			
 		return text_item
 		
 	def image(self, path, center, x, y, scale):
 	
-		"""
-		Draw image
-		"""
+		"""Draw image"""
 	
 		pixmap = QtGui.QPixmap(path)
 		pixmap = pixmap.scaledToWidth(pixmap.width() * scale)
-		_item = self.scene.addPixmap(pixmap)
-		
+		_item = self.scene.addPixmap(pixmap)		
 		if center:
 			_item.setPos(x - 0.5 * pixmap.width(), y - 0.5 * pixmap.height())
 		else:
-			_item.setPos(x, y)
-			
+			_item.setPos(x, y)			
 		return _item
 			
 	def gabor(self, item):
 	
-		"""
-		Draw gabor patch
-		"""
+		"""Draw gabor patch"""
 		
 		path = openexp.canvas.gabor_file(item["orient"], item["freq"], item["env"], item["size"], item["stdev"], item["phase"], item["color1"], item["color2"], item["bgmode"])
 		pixmap = QtGui.QPixmap(path)
@@ -813,9 +777,7 @@ class sketchpad_widget(QtGui.QWidget):
 		
 	def noise(self, item):
 	
-		"""
-		Draw noise patch
-		"""
+		"""Draw noise patch"""
 		
 		path = openexp.canvas.noise_file(item["env"], item["size"], item["stdev"], item["color1"], item["color2"], item["bgmode"])
 		pixmap = QtGui.QPixmap(path)
@@ -825,9 +787,7 @@ class sketchpad_widget(QtGui.QWidget):
 		
 	def refresh(self):
 	
-		"""
-		Draw the picture and fill the item list
-		"""
+		"""(Re)draw the canvas and fill the item list"""
 		
 		self.scene.clear()		
 		
@@ -942,9 +902,7 @@ class sketchpad_widget(QtGui.QWidget):
 		
 	def set_tool(self, dummy = None):
 	
-		"""
-		Set the tool according to the options in the widget
-		"""
+		"""Set the current tool according to the options in the widget"""
 		
 		self.penwidth = self.ui.spin_penwidth.value()
 		self.color = str(self.ui.edit_color.text())
@@ -999,11 +957,7 @@ class sketchpad_widget(QtGui.QWidget):
 			self.scene.oneshot = True
 			
 		self.refresh()
-			
-	
-		
-			
-	
+
 		
 		
 

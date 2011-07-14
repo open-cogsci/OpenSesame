@@ -2,46 +2,53 @@
 
 # Form implementation generated from reading ui file 'resources/loop_wizard_dialog.ui'
 #
-# Created: Fri Mar 25 15:35:53 2011
-#      by: PyQt4 UI code generator 4.7.4
+# Created: Wed Jun 15 14:15:00 2011
+#      by: PyQt4 UI code generator 4.8.3
 #
 # WARNING! All changes made in this file will be lost!
 
 from PyQt4 import QtCore, QtGui
 
+try:
+    _fromUtf8 = QtCore.QString.fromUtf8
+except AttributeError:
+    _fromUtf8 = lambda s: s
+
 class Ui_Dialog(object):
     def setupUi(self, Dialog):
-        Dialog.setObjectName("Dialog")
+        Dialog.setObjectName(_fromUtf8("Dialog"))
         Dialog.resize(442, 426)
         self.verticalLayout = QtGui.QVBoxLayout(Dialog)
-        self.verticalLayout.setObjectName("verticalLayout")
+        self.verticalLayout.setObjectName(_fromUtf8("verticalLayout"))
         self.widget = QtGui.QWidget(Dialog)
-        self.widget.setObjectName("widget")
+        self.widget.setObjectName(_fromUtf8("widget"))
         self.horizontalLayout = QtGui.QHBoxLayout(self.widget)
         self.horizontalLayout.setMargin(0)
-        self.horizontalLayout.setObjectName("horizontalLayout")
+        self.horizontalLayout.setMargin(0)
+        self.horizontalLayout.setObjectName(_fromUtf8("horizontalLayout"))
         self.label = QtGui.QLabel(self.widget)
         sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Fixed, QtGui.QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.label.sizePolicy().hasHeightForWidth())
         self.label.setSizePolicy(sizePolicy)
-        self.label.setText("")
-        self.label.setPixmap(QtGui.QPixmap(":/icons/wizard_large.png"))
-        self.label.setObjectName("label")
+        self.label.setText(_fromUtf8(""))
+        self.label.setPixmap(QtGui.QPixmap(_fromUtf8(":/icons/wizard_large.png")))
+        self.label.setObjectName(_fromUtf8("label"))
         self.horizontalLayout.addWidget(self.label)
         self.label_2 = QtGui.QLabel(self.widget)
         self.label_2.setWordWrap(True)
-        self.label_2.setObjectName("label_2")
+        self.label_2.setObjectName(_fromUtf8("label_2"))
         self.horizontalLayout.addWidget(self.label_2)
         self.verticalLayout.addWidget(self.widget)
         self.widget_2 = QtGui.QWidget(Dialog)
-        self.widget_2.setObjectName("widget_2")
+        self.widget_2.setObjectName(_fromUtf8("widget_2"))
         self.horizontalLayout_2 = QtGui.QHBoxLayout(self.widget_2)
         self.horizontalLayout_2.setMargin(0)
-        self.horizontalLayout_2.setObjectName("horizontalLayout_2")
+        self.horizontalLayout_2.setMargin(0)
+        self.horizontalLayout_2.setObjectName(_fromUtf8("horizontalLayout_2"))
         self.checkBox = QtGui.QCheckBox(self.widget_2)
-        self.checkBox.setObjectName("checkBox")
+        self.checkBox.setObjectName(_fromUtf8("checkBox"))
         self.horizontalLayout_2.addWidget(self.checkBox)
         spacerItem = QtGui.QSpacerItem(40, 20, QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
         self.horizontalLayout_2.addItem(spacerItem)
@@ -49,7 +56,7 @@ class Ui_Dialog(object):
         self.table_example = good_looking_table(Dialog)
         self.table_example.setEditTriggers(QtGui.QAbstractItemView.NoEditTriggers)
         self.table_example.setGridStyle(QtCore.Qt.DotLine)
-        self.table_example.setObjectName("table_example")
+        self.table_example.setObjectName(_fromUtf8("table_example"))
         self.table_example.setColumnCount(10)
         self.table_example.setRowCount(12)
         item = QtGui.QTableWidgetItem()
@@ -123,7 +130,7 @@ class Ui_Dialog(object):
         self.verticalLayout.addWidget(self.table_example)
         self.table_wizard = good_looking_table(Dialog)
         self.table_wizard.setGridStyle(QtCore.Qt.DotLine)
-        self.table_wizard.setObjectName("table_wizard")
+        self.table_wizard.setObjectName(_fromUtf8("table_wizard"))
         self.table_wizard.setColumnCount(0)
         self.table_wizard.setRowCount(0)
         self.table_wizard.horizontalHeader().setVisible(False)
@@ -132,13 +139,13 @@ class Ui_Dialog(object):
         self.buttonBox = QtGui.QDialogButtonBox(Dialog)
         self.buttonBox.setOrientation(QtCore.Qt.Horizontal)
         self.buttonBox.setStandardButtons(QtGui.QDialogButtonBox.Cancel|QtGui.QDialogButtonBox.Ok)
-        self.buttonBox.setObjectName("buttonBox")
+        self.buttonBox.setObjectName(_fromUtf8("buttonBox"))
         self.verticalLayout.addWidget(self.buttonBox)
 
         self.retranslateUi(Dialog)
-        QtCore.QObject.connect(self.buttonBox, QtCore.SIGNAL("accepted()"), Dialog.accept)
-        QtCore.QObject.connect(self.buttonBox, QtCore.SIGNAL("rejected()"), Dialog.reject)
-        QtCore.QObject.connect(self.checkBox, QtCore.SIGNAL("toggled(bool)"), self.table_example.setVisible)
+        QtCore.QObject.connect(self.buttonBox, QtCore.SIGNAL(_fromUtf8("accepted()")), Dialog.accept)
+        QtCore.QObject.connect(self.buttonBox, QtCore.SIGNAL(_fromUtf8("rejected()")), Dialog.reject)
+        QtCore.QObject.connect(self.checkBox, QtCore.SIGNAL(_fromUtf8("toggled(bool)")), self.table_example.setVisible)
         QtCore.QMetaObject.connectSlotsByName(Dialog)
 
     def retranslateUi(self, Dialog):

@@ -15,13 +15,12 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
-from libopensesame import item, exceptions
+from libopensesame import item, exceptions, generic_response
 import openexp.canvas
 import openexp.exceptions
-import openexp.response
 import shlex
 
-class sketchpad(item.item):
+class sketchpad(item.item, generic_response.generic_response):
 
 	def __init__(self, name, experiment, string = None):
 		
@@ -88,11 +87,14 @@ class sketchpad(item.item):
 		
 		item.item.prepare(self)		
 
-		# Build the canvas	
-		try:
+		# Build the canvas. Do not catch errors in debug mode					
+		if self.experiment.debug:
 			self.canvas = openexp.canvas.canvas(self.experiment, self.get("background"), self.get("foreground"))
-		except ValueError as e:
-			raise exceptions.runtime_error("An invalid background or foreground color has been specified")			
+		else:
+			try:
+				self.canvas = openexp.canvas.canvas(self.experiment, self.get("background"), self.get("foreground"))
+			except ValueError as e:
+				raise exceptions.runtime_error("An invalid background or foreground color has been specified")			
 
 		for _item in self.items:
 		
@@ -152,9 +154,14 @@ class sketchpad(item.item):
 					self.canvas.gabor(_item["x"], _item["y"], _item["orient"], _item["freq"], _item["env"], _item["size"], _item["stdev"], _item["phase"], _item["color1"], _item["color2"], _item["bgmode"])
 				elif _item["type"] == "noise":
 					self.canvas.noise_patch(_item["x"], _item["y"], _item["env"], _item["size"], _item["stdev"], _item["color1"], _item["color2"], _item["bgmode"])
+
+		if self.start_response_interval == "yes":
+			self._reset = True
+		else:
+			self._reset = False
 					
-					
-		self.prepare_duration()
+		self.canvas.prepare()
+		generic_response.generic_response.prepare(self)		
 											
 		return True		
 		
@@ -164,21 +171,19 @@ class sketchpad(item.item):
 		Show the display
 		"""				
 	
-		# Show
-		self.set_item_onset(self.canvas.show())			
-		if self.start_response_interval == "yes":
-			self.experiment.start_response_interval = self.get("time_%s" % self.name)
-
-		# And wait
-		self._duration_func()		
+		self.set_item_onset(self.canvas.show())
+		self.set_sri(self._reset)
+		self.process_response()		
 			
 		return True		
 		
-	def parse_item(self, l):
+	def parse_item(self, l, line):
 	
 		"""
-		Parse the generic draw attributes, that apply
-		to all drawing primitives
+		A generic parse attribute, which reads the definition of an element
+		
+		Arguments:
+		l -- a list of words
 		"""
 		
 		item = {}
@@ -205,12 +210,24 @@ class sketchpad(item.item):
 		
 		item["show_if"] = "always"
 		
-		for i in l:				
+		for i in l:	
+												
 			j = i.find("=")
 			if j != -1:
-				var = i[:j]
-				val = i[j+1:]
-				item[var] = self.auto_type(val)
+			
+				# UGLY HACK: if the string appears to be plain text,
+				# rather than a keyword, for example something like
+				# 'accuracy = [acc]%', do not parse it as a keyword-
+				# value pair. The string needs to occur only once in
+				# the full line, both quoted and unquoted.
+				q = "\"" + i + "\""
+				if line.count(q) == 1 and line.count(i) == 1:
+					if self.experiment.debug:
+						print "sketchpad.parse_item(): '%s' does not appear to be a keyword-value pair in string '%s'" % (i, line)
+				else:				
+					var = i[:j]
+					val = i[j+1:]
+					item[var] = self.auto_type(val)
 			
 		return item
 		
@@ -357,6 +374,9 @@ class sketchpad(item.item):
 	
 		"""
 		Read a sketchpad from string
+		
+		Arguments:
+		string -- the string containing the sketchpad definition
 		"""
 		
 		for line in string.split("\n"):
@@ -366,7 +386,7 @@ class sketchpad(item.item):
 										
 					if l[0] == "draw":
 				
-						item = self.parse_item(l)
+						item = self.parse_item(l, line)
 						if l[1] in ("circle",):
 							item = self.parse_circle(line, l, item)
 						elif l[1] in ("rectangle", "rect"):
@@ -426,9 +446,9 @@ class sketchpad(item.item):
 		elif _item["type"] == "line":
 			return "draw line %s %s %s %s penwidth=%s color=%s show_if=\"%s\"" % (_item["x1"], _item["y1"], _item["x2"], _item["y2"], _item["penwidth"], _item["color"], _item["show_if"])
 		elif _item["type"] == "textline":
-			return "draw textline %s %s \"%s\" center=%d color=%s font_family=%s font_size=%s show_if=\"%s\"" % (_item["x"], _item["y"], self.experiment.sanitize(_item["text"]), _item["center"], _item["color"], _item["font_family"], _item["font_size"], _item["show_if"])	
+			return "draw textline %s %s \"%s\" center=%s color=%s font_family=%s font_size=%s show_if=\"%s\"" % (_item["x"], _item["y"], self.experiment.sanitize(_item["text"]), _item["center"], _item["color"], _item["font_family"], _item["font_size"], _item["show_if"])	
 		elif _item["type"] == "image":
-			return "draw image %s %s \"%s\" scale=%s center=%d show_if=\"%s\"" % (_item["x"], _item["y"], _item["file"], _item["scale"], _item["center"], _item["show_if"])							
+			return "draw image %s %s \"%s\" scale=%s center=%s show_if=\"%s\"" % (_item["x"], _item["y"], _item["file"], _item["scale"], _item["center"], _item["show_if"])							
 		elif _item["type"] == "gabor":
 			return "draw gabor %(x)s %(y)s orient=%(orient)s freq=%(freq)s env=%(env)s size=%(size)s stdev=%(stdev)s phase=%(phase)s color1=%(color1)s color2=%(color2)s bgmode=%(bgmode)s show_if=\"%(show_if)s\"" % _item
 		elif _item["type"] == "noise":

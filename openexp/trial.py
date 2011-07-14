@@ -19,11 +19,20 @@ import pygame
 import os
 
 class trial:
+
+	"""
+	Contains some basic functionality, but is essentially a remnant of the
+	time when the openexp libraries were used to create an entire experiment,
+	rather than as a back-end for the new, more advanced libopensesame modules
+	"""
 	
 	def __init__(self, experiment):
 		
 		"""
-		Initializes the trial
+		Constructor
+
+		Arguments:
+		experiment -- the experiment
 		"""
 		
 		self.rt = 0
@@ -33,58 +42,61 @@ class trial:
 		
 	def run(self):
 		
-		"""
-		Override this function to implement the trial
-		"""
+		"""Override this function to implement a trial"""
 		
-		None
+		pass
 		
 	def sleep(self, ms):
 		
-		"""
-		Sleeps for a given time
-		"""
+		"""<DOC>
+		Sleep for a specified duration
+
+		Arguments:
+		ms -- a duration in milliseconds
+		</DOC>"""
 		
 		pygame.time.delay(ms)
 		
 	def time(self):
 		
-		"""
-		Returns a timestamp of the current time
-		"""
+		"""<DOC>
+		Return current time
+
+		Returns:
+		A timestamp of the current time
+		</DOC>"""
 		
-		return pygame.time.get_ticks()
+		return self.experiment._time_func()
 	
 	def log(self, msg):
 		
-		"""
+		"""<DOC>
 		Write a message to the log file
-		"""
+
+		msg -- a message
+		</DOC>"""
 		
 		self.experiment.log.write("%s\n" % msg)
 		
 	def flush_log(self):
 		
-		"""
-		Makes sure that the log is written to disk
-		"""
+		"""<DOC>
+		Force any pending write operations to the log file to be written
+		to disk
+		</DOC>"""
 		
 		self.experiment.log.flush()
 		os.fsync(self.experiment.log)
 		
 	def prepare(self):
 		
-		"""
-		Do some preparatory stuff before running the trial
-		"""
+		"""Do some preparatory stuff before running the trial"""
 		
 		self.log("start_trial = %d" % self.trialid)
 		
 	def finalize(self):
 		
-		"""
-		Do some finalizing after running the trial
-		"""
+		"""Do some finalizing after running the trial"""
 		
 		self.log("rt = %d" % self.rt)
 		self.log("correct = %s" % self.correct)

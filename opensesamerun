@@ -27,48 +27,76 @@ import libopensesame.experiment
 
 if __name__ == "__main__":
 
+	# A hack to make sure the working directory is correct under Windows
 	libopensesame.misc.change_working_dir()
 	
+	# Parse the command line options
 	options = libopensesame.misc.opensesamerun_options()
 	
-	app = None	
+	app = None
 			
+	# If the command line options haven't provided sufficient information to
+	# run right away, present a GUI
 	while not libopensesame.misc.opensesamerun_ready(options):
 	
+		# If PyQt4 is not available (e.g., this might be the case on Mac OS)
+		# give an error instead of showing a GUI. This makes sure that even
+		# without PyQt4, people can still run experiments.
 		try:
 			from PyQt4 import QtGui, QtCore
 		except:
 			libopensesame.misc.messagebox("OpenSesame Run", "Incorrect or missing options.\n\nRun 'opensesame --help' from a terminal (or command prompt) to see a list of available options, or install Python Qt4 to enable the graphical user interface.")
 			sys.exit()
 	
+		# Create the GUI and show it
 		if app == None:
 			app = QtGui.QApplication(sys.argv)		
-			myapp = libqtopensesame.qtopensesamerun.qtopensesamerun(options)
-	
+			myapp = libqtopensesame.qtopensesamerun.qtopensesamerun(options)	
 		QtCore.QObject.connect(app, QtCore.SIGNAL("sys.exit()"), myapp.close)
 		myapp.show()
 		app.exec_()	
-		options = myapp.options	
 		
+		# Update the options from the GUI
+		options = myapp.options
+		
+		# Exit if the GUI was canceled
 		if not myapp.run:
 			sys.exit()
 	
-	try:
-		exp = libopensesame.experiment.experiment("Experiment", options.experiment)
-	except libopensesame.exceptions.script_error as e:
-		libopensesame.misc.messagebox("OpenSesame Run", libopensesame.misc.strip_tags(e))
-		sys.exit()
-		
-	exp.set_subject(options.subject)
-	exp.fullscreen = options.fullscreen
-	exp.logfile = options.logfile
+	if options.debug:
 	
-	try:
+		# In debug mode, don't try to catch any exceptions
+		exp = libopensesame.experiment.experiment("Experiment", options.experiment)
+		exp.set_subject(options.subject)
+		exp.fullscreen = options.fullscreen
+		exp.logfile = options.logfile
 		exp.run()
-	except Exception as e:	
+		exp.end()		
+			
+	else:
+	
+		# Try to parse the experiment from a file
 		try:
-			exp.end()
-		except Exception as f:
-			libopensesame.misc.messagebox("OpenSesame Run", libopensesame.misc.strip_tags(f))						
-		libopensesame.misc.messagebox("OpenSesame Run", libopensesame.misc.strip_tags(e))
+			exp = libopensesame.experiment.experiment("Experiment", options.experiment)
+		except libopensesame.exceptions.script_error as e:
+			libopensesame.misc.messagebox("OpenSesame Run", libopensesame.misc.strip_tags(e))
+			sys.exit()
 		
+		# Set some options
+		exp.set_subject(options.subject)
+		exp.fullscreen = options.fullscreen
+		exp.logfile = options.logfile
+	
+		# Try to run the experiment
+		try:
+			exp.run()
+		except Exception as e:
+		
+			# Try to nicely end the experiment, even though an exception occurred
+			try:
+				exp.end()
+			except Exception as f:
+				libopensesame.misc.messagebox("OpenSesame Run", libopensesame.misc.strip_tags(f))					
+			libopensesame.misc.messagebox("OpenSesame Run", libopensesame.misc.strip_tags(e))
+		
+	libopensesame.experiment.clean_up(exp.debug)

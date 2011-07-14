@@ -1,3 +1,11 @@
+0.24 "Cody Crick"
+- Added back-end independence
+- Added experimental PsychoPy backend (psycho)
+- Added experimental OpenGL backend (psycho)
+- Added Python functions to the loop item
+- Improved interface for the loop item
+- Improved startup time under windows
+
 0.23 "Blue Beck"
 - Fixed a bug where no items could be added if the main sequence was replaced
 - Fixed a bug where the autosave timer continued while the experiment was running
