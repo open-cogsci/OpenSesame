@@ -71,6 +71,7 @@ class legacy:
 				code = eval("pygame.%s" % i)
 				name = pygame.key.name(code)
 				self.key_codes[name] = code
+				self.key_codes[i[2:].lower()] = code
 
 		self.experiment = experiment
 		self.set_keylist(keylist)
