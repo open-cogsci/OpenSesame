@@ -24,16 +24,19 @@ from PyQt4 import QtGui, QtCore
 
 class text_input(item.item, generic_response.generic_response):
 
-	"""
-	This class (the class with the same name as the module)
-	handles the basic functionality of the item. It does
-	not deal with GUI stuff.
-	"""
+	"""A text input display"""
 
 	def __init__(self, name, experiment, string = None):
 
 		"""
 		Constructor
+
+		Arguments:
+		name -- the name of the item
+		experiment -- the experiment instance
+
+		Keyword arguments:
+		string -- a definition string
 		"""
 
 		# The item_typeshould match the name of the module
@@ -55,8 +58,10 @@ class text_input(item.item, generic_response.generic_response):
 	def run(self):
 
 		"""
-		Run the item. In this case this means putting the offline canvas
-		to the display and waiting for the specified duration.
+		Run the item
+
+		Returns:
+		True on success, False on failure
 		"""
 
 		self.set_item_onset(self.time())
@@ -128,7 +133,7 @@ class text_input(item.item, generic_response.generic_response):
 			elif len(resp) == 1:
 				response += self._keyboard.shift(key, mods)
 
-		self.experiment.set("response", response)
+		self.experiment.set("response", self.experiment.usanitize(self.experiment.sanitize(response)))
 		self.experiment.end_response_interval = response_time		
 		self.response_bookkeeping()
 

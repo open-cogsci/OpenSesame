@@ -46,7 +46,12 @@ for f in os.listdir("resources"):
 # Copy the plug-ins
 included_plugins = ["advanced_delay", "external_script", "fixation_dot", "text_display", "text_input", "notepad", "srbox", "port_reader"]
 for plugin in included_plugins:
+	print "copying plugin", plugin
 	shutil.copytree(os.path.join("plugins", plugin), os.path.join("dist", "plugins", plugin))
+	for path in os.listdir(os.path.join("plugins", plugin)):
+		if path[-1] == "~" or os.path.splitext(path)[1] in [".pyc"]:
+			print "removing file", path
+			os.remove(os.path.join("dist", "plugins", plugin, path))
 
 # Copy the media_player separately
 os.mkdir("dist\plugins\media_player")
@@ -74,3 +79,4 @@ shutil.copyfile("""C:\Python26\Lib\site-packages\PsychoPy-1.64.00-py2.6.egg\psyc
 
 # Provides easy access to the parallel port
 shutil.copyfile("dll\inpout32.dll", """dist\inpout32.dll""")
+
