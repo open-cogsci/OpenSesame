@@ -138,6 +138,12 @@ class generic_response:
 		self.experiment.set("average_response_time", self.experiment.avg_rt)
 		self.experiment.start_response_interval = None
 
+		# Also save response variables with the item name as a suffix, to prevent
+		# multiple responses overwriting each other
+		self.experiment.set("response_%s" % self.get("name"), self.get("response"))
+		self.experiment.set("response_time_%s" % self.get("name"), self.get("response_time"))
+		self.experiment.set("correct_%s" % self.get("name"), self.get("correct"))
+
 	def set_sri(self, reset = False):
 
 		"""
@@ -314,6 +320,9 @@ class generic_response:
 		"""
 
 		l = []
+		l.append( ("response_%s" % self.get("name"), "<i>Depends on response</i>") )
+		l.append( ("correct_%s" % self.get("name"), "<i>Depends on response</i>") )
+		l.append( ("response_time_%s" % self.get("name"), "<i>Depends on response</i>") )		
 		l.append( ("response", "<i>Depends on response</i>") )
 		l.append( ("correct", "<i>Depends on response</i>") )
 		l.append( ("response_time", "<i>Depends on response</i>") )
