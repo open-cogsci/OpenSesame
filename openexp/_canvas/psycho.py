@@ -459,7 +459,7 @@ class psycho(openexp._canvas.legacy.legacy):
 			y += h/2			
 		pos = x - self.xcenter(), self.ycenter() - y
 				
-		stim = visual.SimpleImageStim(win = self.experiment.window, image = im, pos = pos)
+		stim = visual.PatchStim(win = self.experiment.window, tex = fname, pos = pos)
 		self.stim_list.append(stim)
 					
 	def gabor(self, x, y, orient, freq, env = "gaussian", size = 96, stdev = 12, phase = 0, col1 = "white", col2 = "black", bgmode = "avg"):
