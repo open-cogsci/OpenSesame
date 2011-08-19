@@ -24,7 +24,7 @@ import sys
 import optparse
 import re
 import libqtopensesame
-import openexp.experiment
+import libopensesame.experiment
 from Tkinter import *
 
 version = "0.25-pre1"
@@ -185,5 +185,5 @@ def resource(name):
 	The full path to the resource
 	"""
 
-	return openexp.experiment.experiment.resource(openexp.experiment.experiment(), name)
+	return libopensesame.experiment.experiment.resource(libopensesame.experiment.experiment("dummy"), name)
 

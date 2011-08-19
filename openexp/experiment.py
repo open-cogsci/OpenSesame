@@ -110,30 +110,3 @@ class experiment:
 		pygame.mixer.quit()
 		canvas.close_display(self)
 		
-	def resource(self, name):
-	
-		"""
-		Retrieve a file from the resources folder
-		
-		Arguments:
-		name -- the file name
-		
-		Returns:
-		The full path to the file in the resources folder
-		"""
-		
-		if name in self.resources:
-			return self.resources[name]
-		
-		path = os.path.join("resources", name)
-		
-		if os.path.exists(path):
-			return os.path.join("resources", name)		
-		
-		if os.name == "posix":
-			path = "/usr/share/opensesame/resources/%s" % name
-			if os.path.exists(path):
-				return path				
-				
-		raise Exception("The resource '%s' could not be found in libqtopensesame.experiment.resource()" % name)
-		

@@ -399,6 +399,36 @@ class experiment(item.item, openexp.experiment.experiment):
 			s = s.replace(entity, unichr(int(entity[2:], 16)))
 			
 		return s			
+
+	def resource(self, name):
+	
+		"""
+		Retrieve a file from the resources folder
+		
+		Arguments:
+		name -- the file name
+		
+		Returns:
+		The full path to the file in the resources folder
+		"""
+		
+		if name in self.resources:
+			return self.resources[name]
+
+		if os.path.exists(self.get_file(name)):
+			return self.get_file(name)
+		
+		path = os.path.join("resources", name)
+		
+		if os.path.exists(path):
+			return os.path.join("resources", name)		
+		
+		if os.name == "posix":
+			path = "/usr/share/opensesame/resources/%s" % name
+			if os.path.exists(path):
+				return path				
+				
+		raise Exception("The resource '%s' could not be found in libqtopensesame.experiment.resource()" % name)			
 		
 	def get_file(self, path):
 	
