@@ -62,10 +62,11 @@ class sketchpad(item.item, generic_response.generic_response):
 		item = item.copy()
 		if self.get("coordinates") == "relative":
 			for var in item:
-				if var in ["x", "x1", "x2"]:
-					item[var] += self.get("width") / 2
-				if var in ["y", "y1", "y2"]:
-					item[var] += self.get("height") / 2
+				if type(item[var]) in (int, float):				
+					if var in ["x", "x1", "x2"]:
+						item[var] += self.get("width") / 2
+					if var in ["y", "y1", "y2"]:
+						item[var] += self.get("height") / 2
 		return item
 		
 	def check_type(self, item):

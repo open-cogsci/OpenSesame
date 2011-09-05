@@ -228,8 +228,8 @@ class canvas(QtGui.QGraphicsScene):
 		s = self.sketchpad_widget.sketchpad.item_to_string(item)
 		
 		# Walk through all items and find the matching one
-		for i in self.sketchpad_widget.sketchpad.items:		
-		
+		for i in self.sketchpad_widget.sketchpad.items:	
+
 			# We have to fix the coordinates, because the items in the widget
 			# are not relative, whereas the items in the sketchpats are					
 			j = self.sketchpad_widget.sketchpad.fix_coordinates(i)

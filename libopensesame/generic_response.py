@@ -263,6 +263,7 @@ class generic_response:
 		if self.experiment.auto_response:
 
 			# Auto-response
+			self._keyboard = openexp.keyboard.keyboard(self.experiment)
 			self._duration_func = self.sleep_for_duration
 			self._duration = 500
 		else:
