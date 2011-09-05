@@ -511,7 +511,7 @@ class loop(libopensesame.loop.loop, libqtopensesame.qtitem.qtitem):
 		self.refresh_loop_table(lock = False)
 
 		self.edit_item.deleteLater()
-		self.edit_item = self.experiment.item_combobox(self.item, [self.name])
+		self.edit_item = self.experiment.item_combobox(self.item, exclude=self.parents())
 		QtCore.QObject.connect(self.edit_item, QtCore.SIGNAL("currentIndexChanged(int)"), self.apply_edit_changes)
 		self.edit_grid.addWidget(self.edit_item, 3, 1)
 
