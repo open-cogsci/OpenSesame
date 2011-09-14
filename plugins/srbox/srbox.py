@@ -157,7 +157,9 @@ class srbox(item.item, generic_response.generic_response):
 			# In dummy mode, we simply take the numeric keys from the keyboard instead of an sr-box
 			resp, self.experiment.end_response_interval = self._resp_func(None, self._timeout)
 			try:
-				resp = int(self._keyboard.to_chr(resp))
+				resp = self._keyboard.to_chr(resp)
+				if resp != "timeout":
+					resp = int(resp)
 			except:
 				raise exceptions.runtime_error("An error occured in srbox '%s': Only number keys are accepted in dummy mode" % self.name)
 

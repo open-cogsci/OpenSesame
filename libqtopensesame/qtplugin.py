@@ -348,7 +348,6 @@ class qtplugin(qtitem.qtitem):
 		label = QtGui.QLabel(label)	
 		editor = inline_editor.inline_editor(self.experiment)
 		editor.apply.clicked.connect(self.apply_edit_changes)
-		print dir(editor.edit)
 		QtCore.QObject.connect(editor.edit, QtCore.SIGNAL("focusLost"), self.apply_edit_changes)		
 		if syntax:
 			syntax_highlighter.syntax_highlighter(editor.edit.document(), syntax_highlighter.python_keywords)		
