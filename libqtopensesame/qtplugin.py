@@ -21,15 +21,15 @@ import os.path
 
 class qtplugin(qtitem.qtitem):
 
-	"""
-	The qtplugin item provides basic functionality for
-	creating the GUI aspect of plugins
-	"""
+	"""Provides basic functionality for plugin GUIs"""
 
 	def __init__(self, plugin_file):
 	
 		"""
 		Constructor
+
+		Arguments:
+		plugin_file -- path to the plugin script
 		"""
 	
 		# These lines makes sure that the icons and help file are recognized by
@@ -50,9 +50,7 @@ class qtplugin(qtitem.qtitem):
 		
 	def edit_widget(self):
 	
-		"""
-		Sets the controls from the variables
-		"""
+		"""Update the GUI controls"""
 		
 		qtitem.qtitem.edit_widget(self)
 		
@@ -93,10 +91,13 @@ class qtplugin(qtitem.qtitem):
 				except Exception as e:
 					self.experiment.notify("Failed to set control '%s': %s" % (var, e))
 				
-	def apply_edit_changes(self, rebuild = True):
+	def apply_edit_changes(self, rebuild=True):
 	
 		"""
-		Sets the variables from the controls
+		Apply the controls
+
+		Keyword arguments:
+		rebuild -- deprecated (does nothing) (default=True)
 		"""		
 		
 		if not qtitem.qtitem.apply_edit_changes(self, False) or self.lock:
@@ -126,11 +127,19 @@ class qtplugin(qtitem.qtitem):
 
 		return True
 		
-	def add_control(self, label, widget, tooltip, default, min_width = None):
+	def add_control(self, label, widget, tooltip, default, min_width=None):
 	
 		"""
-		Add a label and an editable widget to
-		the control panel.
+		Add a generic control
+
+		Arguments:
+		label -- a text label
+		widget -- a control widget
+		tooltip -- a tooltip string
+		default -- a default value
+
+		Keyword arguments:
+		min_width -- a minimum width for the widget (default=None)
 		"""
 		
 		if tooltip != None:
@@ -145,10 +154,19 @@ class qtplugin(qtitem.qtitem):
 		self.edit_grid.addWidget(QtGui.QLabel(label), row, 0)
 		self.edit_grid.addWidget(widget, row, 1)
 		
-	def add_line_edit_control(self, var, label, tooltip = None, default = None, min_width = None):
+	def add_line_edit_control(self, var, label, tooltip=None, default=None, min_width=None):
 	
 		"""
 		Adds a QLineEdit control
+
+		Arguments:
+		var -- name of the associated variable
+		label -- a label
+
+		Keyword arguments:
+		tooltip -- a tooltip (default=None)
+		default -- a default value (default=None)
+		min_width -- a minimum width for the widget (default=None)		
 		"""		
 		
 		edit = QtGui.QLineEdit()
@@ -164,6 +182,14 @@ class qtplugin(qtitem.qtitem):
 	
 		"""
 		Adds a QComboBox control
+
+		Arguments:
+		var -- name of the associated variable
+		label -- a label
+		options -- a list of options
+
+		Keyword arguments:
+		tooltip -- a tooltip (default=None)		
 		"""
 		
 		combobox = QtGui.QComboBox()
@@ -177,10 +203,21 @@ class qtplugin(qtitem.qtitem):
 				
 		return combobox
 		
-	def add_spinbox_control(self, var, label, min_val, max_val, prefix = "", suffix = "", tooltip = None):
+	def add_spinbox_control(self, var, label, min_val, max_val, prefix="", suffix="", tooltip=None):
 	
 		"""
 		Adds a QSpinBox control
+
+		Arguments:
+		var -- name of the associated variable
+		label -- a label
+		min_val -- minimum value
+		max_val -- maximum value		
+
+		Keyword arguments:
+		prefix -- a prefix string
+		suffix -- a suffix string
+		tooltip -- a tooltip (default=None)
 		"""
 		
 		spinbox = QtGui.QSpinBox()
@@ -200,11 +237,24 @@ class qtplugin(qtitem.qtitem):
 			
 		return spinbox
 		
-	def add_slider_control(self, var, label, min_val, max_val, left_label = "",right_label = "", tooltip = None, default = None):
+	def add_slider_control(self, var, label, min_val, max_val, left_label="", right_label="", tooltip=None, default=None):
 
 		"""
-		Adds a QSlider
-		"""
+		Adds a QSlider control
+
+		Arguments:
+		var -- name of the associated variable
+		label -- a label
+		min_val -- minimum value
+		max_val -- maximum value		
+
+		Keyword arguments:
+		left_label -- a label for the left side
+		right_label -- a label for the right side
+		prefix -- a prefix string
+		tooltip -- a tooltip (default=None)
+		default -- a default value (default=None)
+		"""		
 
 		slider = QtGui.QSlider(QtCore.Qt.Horizontal)
 		slider.setFocusPolicy(QtCore.Qt.NoFocus)
@@ -240,10 +290,21 @@ class qtplugin(qtitem.qtitem):
 
 		self.add_control(label, widget, tooltip, default) 		
 		
-	def add_filepool_control(self, var, label, click_func, tooltip = None, default = None):
+	def add_filepool_control(self, var, label, click_func, tooltip=None, default=None):
 	
 		"""
-		Adds a control to select a file from the file pool
+		Adds a control to select a file from the file pool. This is not fully
+		automated, and a function has to specified that is called when a file
+		is selected.
+
+		Arguments:
+		var -- name of the associated variable
+		label -- a label
+		click_func -- a function to be called when a file is selected
+
+		Keyword arguments:
+		tooltip -- a tooltip (default=None)
+		default -- a default value (default=None)			
 		"""
 		
 		edit = QtGui.QLineEdit()
@@ -267,38 +328,60 @@ class qtplugin(qtitem.qtitem):
 				
 		self.add_control(label, widget, tooltip, default)		
 		
-	def add_editor_control(self, var, label, syntax = False, tooltip = None, default = None):
+	def add_editor_control(self, var, label, syntax=False, tooltip=None, default=None):
 	
 		"""
-		Adds a texteditor
+		Adds a texteditor control (an extended QPlainTextEdit)
+
+		Arguments:
+		var -- name of the associated variable
+		label -- a label
+
+
+		Keyword arguments:
+		syntax -- a boolean indicating whether Python syntax highlighting
+				  should be activated (default=False)
+		tooltip -- a tooltip (default=None)
+		default -- a default value (default=None)						
 		"""
 	
-		label = QtGui.QLabel(label)
-	
+		label = QtGui.QLabel(label)	
 		editor = inline_editor.inline_editor(self.experiment)
 		editor.apply.clicked.connect(self.apply_edit_changes)
+		print dir(editor.edit)
+		QtCore.QObject.connect(editor.edit, QtCore.SIGNAL("focusLost"), self.apply_edit_changes)		
 		if syntax:
-			syntax_highlighter.syntax_highlighter(editor.edit.document(), syntax_highlighter.python_keywords)
-		
+			syntax_highlighter.syntax_highlighter(editor.edit.document(), syntax_highlighter.python_keywords)		
 		if var != None:
-			self.auto_editor[var] = editor
-		
+			self.auto_editor[var] = editor		
 		self.edit_vbox.addWidget(label)			
-		self.edit_vbox.addWidget(editor)	
+		self.edit_vbox.addWidget(editor)		
 				
 	def add_text(self, msg):
 	
 		"""
-		Adds a QLabel for descriptions
+		Adds a QLabel (for descriptions, no control)
+
+		Arguments:
+		msg -- text
 		"""	
 		
 		row = self.edit_grid.rowCount()				
 		self.edit_vbox.addWidget(QtGui.QLabel(msg))	
 			
-	def apply_button(self, label = "Apply", icon = "apply", tooltip = "Apply changes"):
+	def apply_button(self, label="Apply", icon="apply", tooltip="Apply changes"):
 	
 		"""
-		Returns a right-outlined apply button
+		Returns a right-outlined apply button. The widget is not added
+		automatically to the controls.
+
+		Keyword arguments:
+		label -- a button label (default="Apply")
+		icon -- an icon name (default="Apply")
+		tooltip -- a tooltip (default="Apply changes")
+
+		Returns:
+		A QPushButton
 		"""
 
 		button_apply = QtGui.QPushButton(label)
@@ -319,6 +402,9 @@ class qtplugin(qtitem.qtitem):
 	
 		"""
 		Apply pending script changes
+
+		Returns:
+		True if changes have been made, False otherwise
 		"""
 		
 		for var, editor in self.auto_editor.iteritems():
