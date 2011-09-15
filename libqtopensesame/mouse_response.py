@@ -21,20 +21,26 @@ from PyQt4 import QtCore, QtGui
 
 class mouse_response(libopensesame.mouse_response.mouse_response, libqtopensesame.qtitem.qtitem):
 
-	def __init__(self, name, experiment, string = None):
+	"""mouse_response item GUI"""
+
+	def __init__(self, name, experiment, string=None):
 	
 		"""
-		Initialize the experiment		
-		"""
+		Constructor
 		
+		Arguments:
+		name -- item name
+		experiment -- experiment instance	
+		
+		Keywords arguments:
+		string -- a definition string (default=None)	
+		"""		
 		libopensesame.mouse_response.mouse_response.__init__(self, name, experiment, string)
 		libqtopensesame.qtitem.qtitem.__init__(self)		
 
 	def apply_edit_changes(self):
 	
-		"""
-		Apply changes to the edit widget
-		"""
+		"""Apply controls"""
 		
 		libqtopensesame.qtitem.qtitem.apply_edit_changes(self)
 		
@@ -65,10 +71,8 @@ class mouse_response(libopensesame.mouse_response.mouse_response, libqtopensesam
 
 	def init_edit_widget(self):
 	
-		"""
-		Build the edit widget
-		"""
-		
+		"""Initialize controls"""
+				
 		libqtopensesame.qtitem.qtitem.init_edit_widget(self, False)
 		
 		row = 3
@@ -107,7 +111,10 @@ class mouse_response(libopensesame.mouse_response.mouse_response, libqtopensesam
 	def edit_widget(self):
 	
 		"""
-		Refresh and return the edit widget
+		Update controls
+		
+		Returns:
+		Controls QWidget
 		"""
 
 		libqtopensesame.qtitem.qtitem.edit_widget(self)
