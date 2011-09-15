@@ -46,7 +46,23 @@ class psycho(openexp._keyboard.legacy.legacy):
 		
 		self.experiment = experiment
 		self.set_keylist(keylist)
-		self.set_timeout(timeout)		
+		self.set_timeout(timeout)
+		
+	def valid_keys(self):
+	
+		"""
+		Generates a list of valid key names
+		
+		Returns:
+		A list of names
+		"""
+		
+		l = []
+		for i in dir(pyglet.window.key):
+			print i
+			if type(eval("pyglet.window.key.%s" % i)) == int:
+				l.append(i)
+		return l
 				
 	def set_keylist(self, keylist = None):
 	
@@ -180,9 +196,26 @@ class psycho(openexp._keyboard.legacy.legacy):
 		"""
 
 		if key == None:
-			return "timeout"
-	
+			return "timeout"	
 		return key
+		
+	def synonyms(self, key):
+	
+		"""
+		Gives a list of synonyms for a key, either codes or names
+		
+		Returns:
+		A list of synonyms
+		"""
+		
+		if key == int:
+			l = [pyglet.window.key.symbol_string(key).lower()]
+			if l[-1].upper() != l[-1].lower():
+				l.append(l[-1].upper())			
+			return l
+		if key.upper() == key.lower():
+			return key	
+		return [key.upper(), key.lower()]
 		
 	def flush(self):
 	

@@ -84,6 +84,7 @@ class generic_response:
 		self.experiment.start_response_interval = self.sri			
 		key, self.experiment.end_response_interval = retval
 		self.experiment.response = self._keyboard.to_chr(key)
+		self.synonyms = self._keyboard.synonyms(self.experiment.response)		
 
 	def process_response_mouseclick(self, retval):
 
@@ -98,6 +99,7 @@ class generic_response:
 
 		# Wait for a fixed duration
 		retval = self._duration_func()
+		self.synonyms = None
 
 		# If the duration function did not give any kind of return value
 		# there is no response to process
@@ -125,11 +127,18 @@ class generic_response:
 		if correct_response == "undefined":
 			self.experiment.correct = "undefined"
 		else:
-			if self.experiment.response == correct_response:
-				self.experiment.correct = 1
-				self.experiment.total_correct += 1
+			if self.synonyms != None:
+				if correct_response in self.synonyms:
+					self.experiment.correct = 1
+					self.experiment.total_correct += 1
+				else:
+					self.experiment.correct = 0			
 			else:
-				self.experiment.correct = 0
+				if self.experiment.response == correct_response:
+					self.experiment.correct = 1
+					self.experiment.total_correct += 1
+				else:
+					self.experiment.correct = 0
 
 		self.experiment.set("response_time", self.experiment.end_response_interval - self.experiment.start_response_interval)
 		self.experiment.total_response_time += self.experiment.response_time
@@ -263,14 +272,9 @@ class generic_response:
 		"""Prepare a keypress duration"""
 
 		if self.experiment.auto_response:
-
-			# Auto-response
 			self._keyboard = openexp.keyboard.keyboard(self.experiment)
-			#self._duration_func = self.sleep_for_duration
 			self._duration_func = self.auto_responder
-			#self._duration = 500
 		else:
-
 			# Prepare keypress
 			self._keyboard = openexp.keyboard.keyboard(self.experiment)
 			self._keyboard.set_timeout(self._timeout)
@@ -282,13 +286,8 @@ class generic_response:
 		"""Prepare a mouseclick duration"""
 
 		if self.experiment.auto_response:
-
-			# Auto-response
-			#self._duration_func = self.sleep_for_duration
 			self._duration_func = self.auto_responder
-			#self._duration = 500
 		else:		
-
 			# Prepare mouseclick
 			self._mouse = openexp.mouse.mouse(self.experiment)
 			self._mouse.set_timeout(self._timeout)

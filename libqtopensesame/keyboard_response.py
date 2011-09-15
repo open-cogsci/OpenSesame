@@ -17,7 +17,9 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 
 import libopensesame.keyboard_response
 import libqtopensesame.qtitem
+from openexp.keyboard import keyboard
 from PyQt4 import QtCore, QtGui
+import cgi
 
 class keyboard_response(libopensesame.keyboard_response.keyboard_response, libqtopensesame.qtitem.qtitem):
 
@@ -72,7 +74,7 @@ class keyboard_response(libopensesame.keyboard_response.keyboard_response, libqt
 		libqtopensesame.qtitem.qtitem.init_edit_widget(self, False)
 		
 		row = 3
-		
+				
 		self.edit_grid.addWidget(QtGui.QLabel("Correct response"), row, 0)
 		self.edit_correct_response = QtGui.QLineEdit()
 		self.edit_correct_response.setToolTip("Set the correct response, e.g., 'z', '/', or 'space'")		
@@ -93,8 +95,14 @@ class keyboard_response(libopensesame.keyboard_response.keyboard_response, libqt
 		self.edit_timeout = QtGui.QLineEdit()
 		self.edit_timeout.setToolTip("Set the response timeout in milliseconds, or 'infinite'")		
 		QtCore.QObject.connect(self.edit_timeout, QtCore.SIGNAL("editingFinished()"), self.apply_edit_changes)
-		self.edit_grid.addWidget(self.edit_timeout, row, 1)		
+		self.edit_grid.addWidget(self.edit_timeout, row, 1)	
 		
+		row += 1							
+		
+		button_list_keys = QtGui.QPushButton(self.experiment.icon("info"), "List available keys")
+		button_list_keys.clicked.connect(self.list_keys)
+		self.edit_grid.addWidget(button_list_keys, row, 1)
+				
 		self.edit_vbox.addStretch()
 							
 	def edit_widget(self):
@@ -128,4 +136,17 @@ class keyboard_response(libopensesame.keyboard_response.keyboard_response, libqt
 		
 		return self._edit_widget
 		
+	def list_keys(self):
+	
+		"""Show a dialog with available key names"""
+		
+		my_keyboard = keyboard(self.experiment)
+		s = "The following keys have been detected. Note that different backends may use slightly different names.<br /><br />"
+		s += "Keyboard backend: %s<br/><br />" % self.get("keyboard_backend")
+		for name in sorted(my_keyboard.valid_keys()):			
+			s += "Key: <b>%s</b><br />" % cgi.escape(str(name))
+			syn = my_keyboard.synonyms(name)
+			if syn != [name]:
+				s += "(or %s)<br />" % (", ".join([cgi.escape(str(x)) for x in syn]))
+		self.experiment.notify(s)
 	
