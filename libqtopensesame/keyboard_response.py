@@ -21,10 +21,19 @@ from PyQt4 import QtCore, QtGui
 
 class keyboard_response(libopensesame.keyboard_response.keyboard_response, libqtopensesame.qtitem.qtitem):
 
-	def __init__(self, name, experiment, string = None):
+	"""keyboard_response item GUI"""
+
+	def __init__(self, name, experiment, string=None):
 	
 		"""
-		Initialize the experiment		
+		Constructor
+		
+		Arguments:
+		name -- item name
+		experiment -- experiment instance	
+		
+		Keywords arguments:
+		string -- a definition string (default=None)	
 		"""
 		
 		libopensesame.keyboard_response.keyboard_response.__init__(self, name, experiment, string)
@@ -32,9 +41,7 @@ class keyboard_response(libopensesame.keyboard_response.keyboard_response, libqt
 
 	def apply_edit_changes(self):
 	
-		"""
-		Apply changes to the edit widget
-		"""
+		"""Apply controls"""
 		
 		libqtopensesame.qtitem.qtitem.apply_edit_changes(self)
 		
@@ -42,7 +49,7 @@ class keyboard_response(libopensesame.keyboard_response.keyboard_response, libqt
 		if cr.strip() != "":
 			self.set("correct_response", cr)
 		else:
-			self.unset("allowed_responses")
+			self.unset("correct_response")
 		
 		ar = str(self.edit_allowed_responses.text()).strip()
 		if ar.strip() != "":
@@ -60,9 +67,7 @@ class keyboard_response(libopensesame.keyboard_response.keyboard_response, libqt
 
 	def init_edit_widget(self):
 	
-		"""
-		Build the edit widget
-		"""
+		"""Initialize controls"""
 		
 		libqtopensesame.qtitem.qtitem.init_edit_widget(self, False)
 		
@@ -95,7 +100,10 @@ class keyboard_response(libopensesame.keyboard_response.keyboard_response, libqt
 	def edit_widget(self):
 	
 		"""
-		Refresh and return the edit widget
+		Update controls
+		
+		Returns:
+		Controls QWidget
 		"""
 
 		libqtopensesame.qtitem.qtitem.edit_widget(self)
