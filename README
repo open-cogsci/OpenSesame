@@ -1,60 +1,56 @@
-1 DEPENDENCIES
+Copyright, 2010-2011, Sebastiaan Mathot
+<http://www.cogsci.nl/smathot>
 
-If you want to run OpenSesame from source, you need to have 
-the following packages installed. OpenSesame has been tested
-with the listed versions. For more information about running
-OpenSesame from source, see
+1. ABOUT
+========
+OpenSesame is a graphical experiment builder. OpenSesame provides an easy to
+use, point-and-click interface for creating psychological experiments.
 
-- <http://www.cogsci.nl/blog/tutorials/111-running-opensesame-from-source>
+2. LICENSE
+==========
+OpenSesame is freely available under the General Public Licence 3. For the full
+license, see the file COPYING in the root of the source tree.
 
-1.1 PYTHON (2.6)
+3. INSTALLATION
+===============
+Binary packages of OpenSesame for Windows, Mac OS, and Linux can be found here:
+- <http://osdoc.cogsci.nl/getting-started/getting-opensesame>
 
-- <http://www.python.org/>
+Instructions for running OpenSesame from source can be found here:
+- <http://osdoc.cogsci.nl/getting-started/running-from-source>
 
-1.1 PYGAME (>= 1.8.1)
+4. DEPENDENCIES
+===============
+OpenSesame requires (at least) the following packages:
+- Python (2.X) <http://www.python.org/>
+- PyGame (>= 1.8.1) <http://www.pygame.org/>
+- PyQt4 (>= 4.7.4) <http://www.riverbankcomputing.co.uk/software/pyqt/>
+- NumPy (>= 1.3.0) <http://numpy.scipy.org/>
 
-- <http://www.pygame.org/>
+5. CREDITS
+==========
+OpenSesame includes work of others. All credits go to the respective authors.
+(You do not need to install the packages below, as they are included.)
 
-1.2 PYTHON-QT4 (4.7.4)
-
-- <http://www.riverbankcomputing.co.uk/software/pyqt/>
-
-1.3 NUMPY (1.3.0)
-
-- <http://numpy.scipy.org/>
-
-1.4 PYSERIAL (2.3)
-
-PySerial is optional, but is required for communication
-with external devices, such as the SR Box.
-
-- <http://pyserial.sourceforge.net/>
-
-2 CREDITS AND LICENSE INFORMATION
-
-OpenSesame includes work of others. All credits go
-to the respective authors. (You do not need to install
-the packages below, as they are included.)
-
-2.1 FONTS
-
+5.1. FONTS
+==========
 The fonts (resources/*.ttf) are the Droid fonts and
 are released under the Apache License 2.0
 - <http://www.droidfonts.com/>
 - <http://www.apache.org/licenses/LICENSE-2.0>
 
-2.2 SOUNDS
-
-The sounds have been taken from the default Gnome sounds and
-the Kopete instant messenger sounds. They are released under the
-GNU General Public License.
+5.2. SOUNDS
+===========
+The sounds have been taken from the default Gnome sounds and the Kopete instant
+messenger sounds. They are released under the GNU General Public License.
 - <http://www.gnome.org/>
 - <http://kopete.kde.org/>
 - <http://www.gnu.org/licenses/gpl.html>
 
-2.3 ICONS
-
-The icons have been taken from the Faenza icon set. They are
-released under the GNU general public license.
+5.3 ICONS
+=========
+The icons have been taken from the Faenza and Gnome icon sets. They are released
+under the GNU general public license.
 - <http://tiheum.deviantart.com/art/Faenza-Icons-173323228>
+- <http://www.gnome.org/>
 - <http://www.gnu.org/licenses/gpl.html>
