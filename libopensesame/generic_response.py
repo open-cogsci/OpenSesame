@@ -37,6 +37,8 @@ class generic_response:
 	- media_player
 	- srbox
 	"""
+	
+	auto_response = "a"
 
 	def prepare_timeout(self):
 
@@ -52,28 +54,28 @@ class generic_response:
 			if self._timeout < 0:
 				raise exceptions.runtime_error("'%s' is not a valid timeout in keyboard_response '%s'. Expecting a positive integer or 'infinite'." % (self.get("timeout"), self.name))
 
-	def auto_responder(self, allowed_responses, timeout):
+	def auto_responder(self):
 
 		"""
 		Mimick participant responses
-
-		Arguments:
-		allowed_responses -- a list with allowed responses
-		timeout -- the timout
 
 		Returns:
 		A simulated (response_time, response) tuple
 		"""
 
-		if timeout == None:
+		if self._timeout == None:
 			self.sleep(random.randint(200, 1000))
 		else:
-			self.sleep(random.randint(min(timeout, 200), timeout))
-
-		if allowed_responses == None:
-			return self.auto_response
-
-		return self.time(), random.choice(allowed_responses)
+			self.sleep(random.randint(min(self._timeout, 200), self._timeout))
+			
+		if self._allowed_responses == None:
+			resp = self.auto_response
+		else:
+			resp = random.choice(self._allowed_responses)
+		
+		if self.experiment.debug:
+			print "generic_response.auto_responder(): responding '%s'" % resp
+		return resp, self.time()
 
 	def process_response_keypress(self, retval):
 
@@ -264,8 +266,9 @@ class generic_response:
 
 			# Auto-response
 			self._keyboard = openexp.keyboard.keyboard(self.experiment)
-			self._duration_func = self.sleep_for_duration
-			self._duration = 500
+			#self._duration_func = self.sleep_for_duration
+			self._duration_func = self.auto_responder
+			#self._duration = 500
 		else:
 
 			# Prepare keypress
@@ -281,8 +284,9 @@ class generic_response:
 		if self.experiment.auto_response:
 
 			# Auto-response
-			self._duration_func = self.sleep_for_duration
-			self._duration = 500
+			#self._duration_func = self.sleep_for_duration
+			self._duration_func = self.auto_responder
+			#self._duration = 500
 		else:		
 
 			# Prepare mouseclick

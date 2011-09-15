@@ -560,7 +560,8 @@ class qtopensesame(QtGui.QMainWindow):
 		"""
 
 		d = start_new_dialog.start_new_dialog(self)
-		d.exec_()			
+		d.exec_()
+		self.set_auto_response()
 
 	def set_immediate_rename(self):
 
@@ -1027,6 +1028,8 @@ class qtopensesame(QtGui.QMainWindow):
 		else:
 			self.window_message("New experiment")			
 			self.current_path = None
+			
+		self.set_auto_response()
 
 	def save_file(self, dummy = None, overwrite = True, remember = True):
 
