@@ -43,8 +43,8 @@ class experiment(item.item, openexp.experiment.experiment):
 		name -- the name of the experiment
 		
 		Keyword arguments:
-		string -- a string containing the experiment definition (default = None)
-		pool_folder -- a specific folder to be used for the file pool (default = None)
+		string -- a string containing the experiment definition (default=None)
+		pool_folder -- a specific folder to be used for the file pool (default=None)
 		</DOC>"""
 		
 		global pool_folders
@@ -193,7 +193,8 @@ class experiment(item.item, openexp.experiment.experiment):
 				if not self.debug:
 					exec("from %s import %s" % (self.module_container(), item_type))
 			except:
-				raise exceptions.script_error("Failed to import module '%s' as '%s'" % (item_type, item_name))
+				raise exceptions.script_error("Failed to import item '%s' as '%s'. " % (item_type, item_name)
+					+ "Perhaps the experiment requires a plug-in that is not available on your system.", full=False)
 		
 			cmd = "%(item_type)s.%(item_type)s(\"%(item_name)s\", self, \"\"\"%(string)s\"\"\")" % \
 				{"item_type" : item_type, "item_name" : item_name, "string" : string.replace("\"", "\\\"")}		
