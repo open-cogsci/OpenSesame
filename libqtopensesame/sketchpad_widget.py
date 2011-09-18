@@ -24,12 +24,18 @@ import os
 
 class remove_item_button(QtGui.QPushButton):
 
-	"""
-	A button to remove items from
-	the sketchpad
-	"""
+	"""A button to remove items from the sketchpad"""
 
 	def __init__(self, sketchpad_widget, item):
+	
+		"""
+		Constructor
+		
+		Arguments:
+		sketchpad_widget -- the sketchpad widget
+		item -- the item of the sketchpad widget
+		"""
+				
 	
 		self.sketchpad_widget = sketchpad_widget
 		self.item = item
@@ -38,6 +44,8 @@ class remove_item_button(QtGui.QPushButton):
 		self.setIconSize(QtCore.QSize(16,16))
 		
 	def remove_item(self):
+	
+		"""Is called when the remove button is clicked"""
 	
 		self.sketchpad_widget.sketchpad.items.remove(self.item)				
 		self.sketchpad_widget.refresh()
@@ -644,7 +652,7 @@ class sketchpad_widget(QtGui.QWidget):
 		d.ui.setupUi(d)
 		resp = d.exec_()
 		if resp == QtGui.QDialog.Accepted:		
-			env = ["gaussian", "linear", "circle", "rectangle"]
+			env = ["gaussian", "linear", "circular", "rectangle"]
 			bgmode = ["avg", "col2"]					
 			item["orient"] = d.ui.spin_orient.value()
 			item["size"] = d.ui.spin_size.value()
@@ -676,7 +684,7 @@ class sketchpad_widget(QtGui.QWidget):
 		d.ui.setupUi(d)
 		resp = d.exec_()
 		if resp == QtGui.QDialog.Accepted:		
-			env = ["gaussian", "linear", "circle", "rectangle"]
+			env = ["gaussian", "linear", "circular", "rectangle"]
 			bgmode = ["avg", "col2"]					
 			item["size"] = d.ui.spin_size.value()
 			item["env"] = env[d.ui.combobox_env.currentIndex()]
