@@ -203,7 +203,7 @@ color: rgb(255, 255, 255);</string>
                </font>
               </property>
               <property name="text">
-               <string>Experiments</string>
+               <string>Recent experiments</string>
               </property>
              </widget>
             </item>

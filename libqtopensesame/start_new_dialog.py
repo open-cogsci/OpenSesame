@@ -46,6 +46,9 @@ class start_new_dialog(QtGui.QDialog):
 			item.setText(os.path.basename(f))
 			item.file = f
 			item.setIcon(self.main_window.experiment.icon("experiment"))
+			
+		if len(self.main_window.recent_files) == 0:
+			self.ui.button_recent.setDisabled(True)
 
 		for f in templates:
 			item = QtGui.QListWidgetItem(self.ui.list_templates)
@@ -75,11 +78,9 @@ class start_new_dialog(QtGui.QDialog):
 		"""Open the selected file"""
 
 		item = self.ui.list_recent.currentItem()
-		if item == None:
-			self.browse()
-		else:
+		if item != None:
 			self.main_window.open_file(path = self.ui.list_recent.currentItem().file)
-		self.close()
+			self.close()
 
 	def browse(self):
 
