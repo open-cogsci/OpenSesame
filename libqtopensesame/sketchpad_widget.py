@@ -819,18 +819,22 @@ class sketchpad_widget(QtGui.QWidget):
 		if self.show_grid and self.zoom * self.scene.grid >= 5:		
 			self.scene.draw_grid()						
 		
-		# Draw all items
-		static_items = self.sketchpad.static_items()
-			
+		# Set the notifications
+		notifications = []
+		static_items = self.sketchpad.static_items()			
 		not_shown = len(self.sketchpad.items) - len(static_items)
 		if not_shown > 1:
-			self.ui.frame_notification.setVisible(True)
-			self.ui.label_notification.setText("%d objects are not shown, because they are defined using variables." % not_shown)
+			notifications.append("%d objects are not shown, because they are defined using variables." % not_shown)
 		elif not_shown == 1:
+			notifications.append("One object is not shown, because it is defined using variables.")
+		if self.sketchpad.items_out_of_bounds() > 0:
+			notifications.append("Some objects will not be visible (or partly) because they fall outside of the screen boundaries.")			
+		if len(notifications) > 0:
 			self.ui.frame_notification.setVisible(True)
-			self.ui.label_notification.setText("One object is not shown, because it is defined using variables.")
+			self.ui.label_notification.setText("\n".join(notifications))
 		else:
 			self.ui.frame_notification.setVisible(False)
+		
 		
 		self.item_list = []
 		for item in static_items:
