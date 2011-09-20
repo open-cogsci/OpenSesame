@@ -23,12 +23,12 @@ class draggable_handle(QtGui.QPushButton):
 	def __init__(self, item, parent=None):
 
 		item_type = parent._list.sequence.experiment.items[item[0]].item_type
-		QtGui.QPushButton.__init__(self, parent._list.sequence.experiment.icon(item_type+"_large"), "", parent)        
+		QtGui.QPushButton.__init__(self, parent._list.sequence.experiment.icon("handle"), "", parent)        
 		self.setAcceptDrops(True)
 		self.setFlat(True)
 		self.setCursor(QtCore.Qt.OpenHandCursor)
 		self.container = parent
-		self.setIconSize(QtCore.QSize(32,32))
+		self.setIconSize(QtCore.QSize(16,32))
 		self.setSizePolicy(QtGui.QSizePolicy.Fixed, QtGui.QSizePolicy.Fixed)
 		
 	def index_from_mime_data(self, mime_data):
