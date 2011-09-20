@@ -83,7 +83,7 @@ class draggable_handle(QtGui.QLabel):
 		from_index = self.index_from_mime_data(e.mimeData())
 		if from_index >= 0:
 			e.accept()
-			self.container._list.sequence.swap(from_index, self.container.index)
+			self.container._list.sequence.move(from_index, self.container.index)
 		else:
 			e.ignore()
 		
@@ -102,7 +102,6 @@ class draggable_handle(QtGui.QLabel):
 		drag.setMimeData(mime_data)
 		drag.setHotSpot(e.pos() - self.rect().topLeft())
 		dropAction = drag.start(QtCore.Qt.MoveAction)
-		self.setDown(False)
 		
 class remove_button(QtGui.QPushButton):
 
@@ -238,7 +237,8 @@ class draggable_list(QtGui.QWidget):
 		self.items = []
 		self.sequence = sequence
 		self._layout = QtGui.QVBoxLayout()				
-		self._layout.setContentsMargins(0, 0, 0, 0)
+		self._layout.setContentsMargins(0, 0, 0, 16)
+		self._layout.setSpacing(0)
 		self.setLayout(self._layout)
 		self.widgets = []			
 				

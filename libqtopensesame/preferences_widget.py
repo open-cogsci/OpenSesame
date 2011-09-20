@@ -21,14 +21,15 @@ import os
 
 class preferences_widget(QtGui.QWidget):
 
-	"""
-	Displayed in the preferences tab
-	"""
+	"""The widget displayed in the preferences tab"""
 
 	def __init__(self, parent):
 	
 		"""
 		Constructor
+		
+		Arguments:
+		parent -- the parent widget
 		"""
 		
 		QtGui.QWidget.__init__(self, parent)
@@ -54,12 +55,11 @@ class preferences_widget(QtGui.QWidget):
 		self.ui.edit_opensesamerun_exec.editingFinished.connect(self.apply)			
 		self.ui.button_browse_autosave.clicked.connect(self.main_window.open_autosave_folder)	
 		self.ui.button_update_check.clicked.connect(self.main_window.check_update)
+		self.ui.combobox_style.currentIndexChanged.connect(self.apply)
 				
 	def set_controls(self):
 	
-		"""
-		Set the controls based on the current preferences
-		"""
+		"""Update the controls"""
 		
 		if self.main_window.experiment.debug:
 			print "preferences_widget.set_controls(): setting controls"
@@ -88,11 +88,13 @@ class preferences_widget(QtGui.QWidget):
 			self.ui.edit_opensesamerun_exec.setDisabled(True)
 			self.ui.label_opensesamerun_exec.setDisabled(True)
 			
+		self.ui.combobox_style.addItem("Default")
+		for style in QtGui.QStyleFactory.keys():
+			self.ui.combobox_style.addItem(style)
+			
 	def apply(self):
 	
-		"""
-		Set the preferences based on the controls and save
-		"""
+		"""Apply the controls"""
 		
 		if self.main_window.experiment.debug:
 			print "preferences_widget.apply(): applying controls"		
@@ -129,5 +131,10 @@ class preferences_widget(QtGui.QWidget):
 				else:
 					self.ui.edit_opensesamerun_exec.setText("opensesamerun")
 			self.main_window.opensesamerun_exec = str(self.ui.edit_opensesamerun_exec.text())
+			
+		self.main_window.style = self.ui.combobox_style.currentText()
+		if self.main_window.style == "default":
+			self.main_window.style = ""
+		self.main_window.set_style()
 			
 		self.main_window.save_state()

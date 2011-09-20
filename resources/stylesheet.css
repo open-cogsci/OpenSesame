@@ -1,12 +1,6 @@
 #sequence_container {
-	border: 2px solid #d3d7cf;
-	border-radius: 4px;
-	background: #d3d7cf;	
-}
-
-#sequence_container:hover {
-	border: 2px solid #babdb6;
-	background: #d3d7cf;
+	border: none;
+	border-bottom: 1px dotted black;
 }
 
 

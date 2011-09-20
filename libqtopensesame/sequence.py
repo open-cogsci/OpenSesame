@@ -82,136 +82,7 @@ class action_button(QtGui.QPushButton):
 					self.sequence.experiment.main_window.select_item(self.sequence.name)
 				return
 
-		elif cmd == "delete":
-			self.sequence.experiment.main_window.close_item_tab(self.sequence.items[row][0])
-			self.sequence.items.remove(self.sequence.items[row])
-		elif cmd == "up" and row > 0:
-			tmp = self.sequence.items[row - 1]
-			self.sequence.items[row - 1] = self.sequence.items[row]
-			self.sequence.items[row] = tmp
-		elif cmd == "down" and row < len(self.sequence.items) - 1:
-			tmp = self.sequence.items[row + 1]
-			self.sequence.items[row + 1] = self.sequence.items[row]
-			self.sequence.items[row] = tmp
-		elif cmd == "top":
-			tmp = self.sequence.items[row]
-			self.sequence.items.remove(tmp)
-			self.sequence.items = [tmp] + self.sequence.items
-		elif cmd == "bottom":
-			tmp = self.sequence.items[row]
-			self.sequence.items.remove(tmp)
-			self.sequence.items.append(tmp)
-		elif cmd == "rename":
-
-			old_name = self.sequence.items[row][0]
-			new_name, ok = QtGui.QInputDialog.getText(self.sequence.experiment.main_window.ui.centralwidget, "Rename", "Please enter a new name", text = old_name)
-			new_name = str(new_name)
-			if ok and new_name != old_name:
-				if new_name in self.sequence.experiment.items:
-					self.sequence.experiment.notify("An item named '%s' already exists!" % new_name)
-				else:
-					self.sequence.experiment.rename(old_name, new_name)
-
 		self.sequence.experiment.main_window.refresh(self.sequence.name)
-
-class items_combobox(QtGui.QComboBox):
-
-	"""Used to select items in the item list"""
-
-	def __init__(self, item, items, sequence, select, exclude, parent = None, tooltip = None):
-
-		"""
-		Constructor
-
-		Arguments:
-		item -- the index of the item in the sequence
-		items -- a list of available items
-		sequence -- a sequence item
-		select -- the currently selected item
-		exclude -- a list of items that should be excluded
-
-		Keyword arguments:
-		parent -- a parent widget (default = None)
-		tooltip -- a tooptip (default = None)
-		"""
-
-		QtGui.QComboBox.__init__(self, parent)
-		self.sequence = sequence
-		self.item = item
-
-		self.addItem("Select item")
-		if tooltip != None:
-			self.setToolTip(tooltip)
-
-		i = 1
-		for item in items:
-			if item not in exclude:
-				self.addItem(item)
-				self.setItemIcon(i, self.sequence.experiment.icon(self.sequence.experiment.items[item].item_type))
-				if self.sequence.experiment.items[item].name == select:
-					self.setCurrentIndex(i)
-				i += 1
-
-		QtCore.QObject.connect(self, QtCore.SIGNAL("currentIndexChanged(int)"), self.action)
-
-	def action(self, dummy = None):
-
-		"""
-		Handles a changed selection
-
-		Keyword arguments:
-		dummy -- a dummy parameter that is passed by the signal handler (default = None)
-		"""
-
-		cur = str(self.currentText())
-		if cur == "Select item":
-			self.sequence.items[self.item] = "undefined", "always"
-		else:
-			self.sequence.items[self.item] = str(self.currentText()), self.sequence.items[self.item][1]
-		self.sequence.experiment.build_item_tree()
-		self.sequence.script_widget()
-
-class items_linedit(QtGui.QLineEdit):
-
-	"""Used for the 'Run if' conditions in the item list"""
-
-	def __init__(self, item, sequence, text, parent = None, tooltip = None):
-
-		"""
-		Constructor
-
-		Arguments:
-		item -- the index of the item in the sequence
-		sequence -- the sequence
-		text -- the current 'Run if' condition
-
-		Keyword arguments:
-		parent -- a parent item (default = None)
-		tooltip -- a tooltip (default = None)
-		"""
-
-		QtGui.QLineEdit.__init__(self, text, parent)
-		self.item = item
-		self.sequence = sequence
-		QtCore.QObject.connect(self, QtCore.SIGNAL("editingFinished()"), self.action)
-		if tooltip != None:
-			self.setToolTip(tooltip)
-
-	def action(self, dummy = None):
-
-		"""
-		Handles a text change
-
-		Keyword arguments:
-		dummy -- a dummy parameter passed by the signal handler (default = None)
-		"""
-
-		cond = self.sequence.experiment.sanitize(str(self.text()).strip())
-		if cond == "":
-			cond = "always"
-		self.setText(cond)
-		self.sequence.items[self.item] = self.sequence.items[self.item][0], str(self.text())
-		self.sequence.script_widget()
 
 class sequence(libopensesame.sequence.sequence, libqtopensesame.qtitem.qtitem):
 
@@ -310,47 +181,24 @@ class sequence(libopensesame.sequence.sequence, libqtopensesame.qtitem.qtitem):
 
 		libqtopensesame.qtitem.qtitem.edit_widget(self)
 		self.experiment.item_combobox(None, self.parents(), self.combobox_items)
-		self.experiment.clear_widget(self._widget)
-		
+		self.experiment.clear_widget(self._widget)		
 		self.draggable_list.refresh()
-		
-		"""
-		if len(self.items) == 0:
-			self._grid.addWidget(QtGui.QLabel("<b>The sequence is empty!</b><br />You can add items to the sequence using the buttons below."), 0, 0)
-		else:
-			self._grid.addWidget(QtGui.QLabel("#"), 0, 0)
-			self._grid.addWidget(QtGui.QLabel("Item"), 0, 1)
-			self._grid.addWidget(QtGui.QLabel("Run if ... "), 0, 2)
-			row = 1
-			for item, cond in self.items:
-				self.items_combobox = items_combobox(row-1, self.experiment.items, self, item, self.parents(), tooltip = "Select item")
-				self._grid.addWidget(QtGui.QLabel("%d" % row), row, 0)
-				self._grid.addWidget(self.items_combobox, row, 1)
-				self._grid.addWidget(items_linedit(row-1, self, cond, tooltip = "A simple conditional statement, e.g., 'correct = 1'"), row, 2)
-				self._grid.addWidget(self.action_button("top", "", ("top", row-1), tooltip = "Move item to top"), row, 3)
-				self._grid.addWidget(self.action_button("up", "", ("up", row-1), tooltip = "Move item one position up"), row, 4)
-				self._grid.addWidget(self.action_button("down", "", ("down", row-1), tooltip = "Move item one position down"), row, 5)
-				self._grid.addWidget(self.action_button("bottom", "", ("bottom", row-1), tooltip = "Move item to bottom"), row, 6)
-				self._grid.addWidget(self.action_button("rename", "", ("rename", row-1), tooltip = "Rename item"), row, 7)
-				self._grid.addWidget(self.action_button("delete", "", ("delete", row-1), tooltip = "Remove item from sequence"), row, 8)
-				row += 1
-		"""
 		self._active = True
 
 		return self._edit_widget
-		
-	def swap(self, index1, index2):
+				
+	def move(self, from_index, to_index):
 	
 		"""
 		Swaps to items from the sequence
 		
 		Arguments:
-		index1 -- the index of the first item
-		index2 -- the index of the second item		
+		from_index -- the old index
+		to_index -- the new index
 		"""
-	
-		self.items[index1], self.items[index2] = self.items[index2], self.items[index1]
-		self.experiment.main_window.refresh(self.name)		
+
+		self.items.insert(to_index, self.items.pop(from_index))
+		self.experiment.main_window.refresh(self.name)
 
 	def delete(self, index):
 
@@ -383,7 +231,7 @@ class sequence(libopensesame.sequence.sequence, libqtopensesame.qtitem.qtitem):
 			self.items[index] = self.items[index][0], s
 			self.experiment.main_window.refresh(self.name)		
 
-	def rename(self, from_name, to_name):
+	def _xrename(self, from_name, to_name):
 
 		"""
 		Rename an item

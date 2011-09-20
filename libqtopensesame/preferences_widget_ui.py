@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'resources/preferences_widget.ui'
 #
-# Created: Sun Sep 18 16:13:47 2011
+# Created: Tue Sep 20 13:59:52 2011
 #      by: PyQt4 UI code generator 4.8.3
 #
 # WARNING! All changes made in this file will be lost!
@@ -24,7 +24,7 @@ class Ui_Form(object):
         self.scrollArea.setWidgetResizable(True)
         self.scrollArea.setObjectName(_fromUtf8("scrollArea"))
         self.scrollAreaWidgetContents = QtGui.QWidget()
-        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 522, 553))
+        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 525, 642))
         self.scrollAreaWidgetContents.setObjectName(_fromUtf8("scrollAreaWidgetContents"))
         self.verticalLayout_2 = QtGui.QVBoxLayout(self.scrollAreaWidgetContents)
         self.verticalLayout_2.setObjectName(_fromUtf8("verticalLayout_2"))
@@ -51,6 +51,17 @@ class Ui_Form(object):
         self.checkbox_toolbar_text.setObjectName(_fromUtf8("checkbox_toolbar_text"))
         self.formLayout_3.setWidget(3, QtGui.QFormLayout.LabelRole, self.checkbox_toolbar_text)
         self.verticalLayout_2.addWidget(self.groupBox_2)
+        self.groupBox_5 = QtGui.QGroupBox(self.scrollAreaWidgetContents)
+        self.groupBox_5.setObjectName(_fromUtf8("groupBox_5"))
+        self.formLayout_4 = QtGui.QFormLayout(self.groupBox_5)
+        self.formLayout_4.setObjectName(_fromUtf8("formLayout_4"))
+        self.label_2 = QtGui.QLabel(self.groupBox_5)
+        self.label_2.setObjectName(_fromUtf8("label_2"))
+        self.formLayout_4.setWidget(0, QtGui.QFormLayout.LabelRole, self.label_2)
+        self.combobox_style = QtGui.QComboBox(self.groupBox_5)
+        self.combobox_style.setObjectName(_fromUtf8("combobox_style"))
+        self.formLayout_4.setWidget(0, QtGui.QFormLayout.FieldRole, self.combobox_style)
+        self.verticalLayout_2.addWidget(self.groupBox_5)
         self.groupBox = QtGui.QGroupBox(self.scrollAreaWidgetContents)
         sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Preferred, QtGui.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
@@ -145,6 +156,8 @@ class Ui_Form(object):
         self.checkbox_autoresponse.setText(QtGui.QApplication.translate("Form", "Enable auto-response", None, QtGui.QApplication.UnicodeUTF8))
         self.checkbox_show_random_tips.setText(QtGui.QApplication.translate("Form", "Show random tips on start-up", None, QtGui.QApplication.UnicodeUTF8))
         self.checkbox_toolbar_text.setText(QtGui.QApplication.translate("Form", "Show text in toolbar", None, QtGui.QApplication.UnicodeUTF8))
+        self.groupBox_5.setTitle(QtGui.QApplication.translate("Form", "Appearance", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_2.setText(QtGui.QApplication.translate("Form", "Interface style", None, QtGui.QApplication.UnicodeUTF8))
         self.groupBox.setTitle(QtGui.QApplication.translate("Form", "Backups", None, QtGui.QApplication.UnicodeUTF8))
         self.checkbox_enable_autosave.setText(QtGui.QApplication.translate("Form", "Automatically create backups", None, QtGui.QApplication.UnicodeUTF8))
         self.label_autosave_interval.setText(QtGui.QApplication.translate("Form", "Auto-save interval:", None, QtGui.QApplication.UnicodeUTF8))

@@ -310,7 +310,7 @@ class qtopensesame(QtGui.QMainWindow):
 		
 		# Set the style sheet
 		self.setStyleSheet(open(self.experiment.resource("stylesheet.css")).read())
-
+		
 		# After starting OpenSesame, the general tab is visible
 		self.open_general_tab()
 
@@ -377,6 +377,7 @@ class qtopensesame(QtGui.QMainWindow):
 		self.opensesamerun_exec = str(settings.value("opensesamerun_exec", "").toString())
 		self.opensesamerun = settings.value("opensesamerun", False).toBool()
 		self.experiment.auto_response = settings.value("auto_response", False).toBool()
+		self.style = settings.value("style", "").toString()
 
 		# Unpack the string with recent files and only remember those that still exist
 		self.recent_files = []
@@ -393,7 +394,8 @@ class qtopensesame(QtGui.QMainWindow):
 		else:
 			self.ui.toolbar_main.setToolButtonStyle(QtCore.Qt.ToolButtonIconOnly)
 
-		settings.endGroup();
+		settings.endGroup()
+		self.set_style()
 
 	def save_state(self):
 
@@ -419,8 +421,21 @@ class qtopensesame(QtGui.QMainWindow):
 		settings.setValue("auto_response", self.experiment.auto_response)
 		settings.setValue("toolbar_text", self.ui.toolbar_main.toolButtonStyle() == QtCore.Qt.ToolButtonTextUnderIcon)
 		settings.setValue("recent_files", ";;".join(self.recent_files))
+		settings.setValue("style", self.style)
 
 		settings.endGroup()
+		
+	def set_style(self):
+	
+		"""Appply the application style"""
+		
+		if self.style in QtGui.QStyleFactory.keys():
+			self.setStyle(QtGui.QStyleFactory.create(self.style))
+			if self.experiment.debug:
+				print "qtopensesame.set_style(): using style '%s'" % self.style
+		else:
+			if self.experiment.debug:
+				print "qtopensesame.set_style(): ignoring unknown style '%s'" % self.style		
 
 	def set_auto_response(self):
 
