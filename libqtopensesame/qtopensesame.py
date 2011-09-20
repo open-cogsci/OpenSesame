@@ -307,6 +307,9 @@ class qtopensesame(QtGui.QMainWindow):
 		# Initialize the tabs
 		self.init_general_tab()
 		self.init_unused_tab()
+		
+		# Set the style sheet
+		self.setStyleSheet(open(self.experiment.resource("stylesheet.css")).read())
 
 		# After starting OpenSesame, the general tab is visible
 		self.open_general_tab()

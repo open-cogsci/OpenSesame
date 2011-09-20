@@ -18,20 +18,35 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 import sip
 from PyQt4 import QtGui, QtCore
 
-class draggable_handle(QtGui.QPushButton):
+class draggable_handle(QtGui.QLabel):
 
-	def __init__(self, item, parent=None):
+	"""The draggable handles for re-ordering the list"""
 
-		item_type = parent._list.sequence.experiment.items[item[0]].item_type
-		QtGui.QPushButton.__init__(self, parent._list.sequence.experiment.icon("handle"), "", parent)        
+	def __init__(self, parent=None):
+	
+		"""
+		Constructor
+		
+		Keywords arguments:
+		parent -- the parent widget
+		"""
+
+		QtGui.QLabel.__init__(self)
+		self.setPixmap(QtGui.QPixmap(parent._list.sequence.experiment.resource("handle.png")))
 		self.setAcceptDrops(True)
-		self.setFlat(True)
 		self.setCursor(QtCore.Qt.OpenHandCursor)
 		self.container = parent
-		self.setIconSize(QtCore.QSize(16,32))
 		self.setSizePolicy(QtGui.QSizePolicy.Fixed, QtGui.QSizePolicy.Fixed)
+		self.setToolTip("Drag this item to re-order")
 		
 	def index_from_mime_data(self, mime_data):
+	
+		"""
+		Extract the item index from a mime data
+		
+		Returns:
+		An item index or -1 if the mime data was invalid
+		"""
 	
 		if mime_data.hasText():
 			l = mime_data.text().split(" ")
@@ -44,12 +59,26 @@ class draggable_handle(QtGui.QPushButton):
 					
 	def dragEnterEvent(self, e):
 	
+		"""
+		Handle incoming drags
+		
+		Arguments:
+		e -- a QDragEvent		
+		"""
+	
 		if self.index_from_mime_data(e.mimeData()) >= 0:		
 			e.accept()						
 		else:
 			e.ignore()
 
 	def dropEvent(self, e):
+	
+		"""
+		Handle incoming drops
+		
+		Arguments:
+		e -- a QDragEvent		
+		"""	
 	
 		from_index = self.index_from_mime_data(e.mimeData())
 		if from_index >= 0:
@@ -59,6 +88,13 @@ class draggable_handle(QtGui.QPushButton):
 			e.ignore()
 		
 	def mouseMoveEvent(self, e):
+	
+		"""
+		Start drags
+		
+		Arguments:
+		e -- a QMouseEvent
+		"""	
 	
 		mime_data = QtCore.QMimeData()
 		mime_data.setText("__osdrag__ %d" % self.container.index)		
@@ -70,56 +106,133 @@ class draggable_handle(QtGui.QPushButton):
 		
 class remove_button(QtGui.QPushButton):
 
+	"""Item remove button"""
+
 	def __init__(self, parent):
+	
+		"""
+		Constructor
+		
+		Arguments:
+		parent -- the parent container
+		"""
 
 		QtGui.QPushButton.__init__(self, parent._list.sequence.experiment.icon("delete"), "", parent)
 		self.container = parent	
 		self.setFlat(True)
 		self.setSizePolicy(QtGui.QSizePolicy.Fixed, QtGui.QSizePolicy.Fixed)
 		self.clicked.connect(self.remove)
+		self.setToolTip("Remove this item")
 		
 	def remove(self):
+	
+		"""Remove the item from the sequence"""
 	
 		self.container._list.sequence.delete(self.container.index)
 		
 class run_if_edit(QtGui.QLineEdit):
 
+	"""Item 'run if' edit"""
+
 	def __init__(self, parent):
+	
+		"""
+		Constructor
+		
+		Arguments:
+		parent -- the parent container
+		"""	
 	
 		QtGui.QLineEdit.__init__(self, parent.item[1])
 		self.container = parent	
 		self.setSizePolicy(QtGui.QSizePolicy.Fixed, QtGui.QSizePolicy.Fixed)		
 		self.editingFinished.connect(self.change)
+		self.setToolTip("Run this item only under the following conditions")
 		
 	def change(self):
 	
+		"""Apply changes"""
+	
 		self.container._list.sequence.set_run_if(self.container.index, self.text())
-							
+		
+class open_button(QtGui.QPushButton):
+	
+	"""A button containing the item icon and name"""
+
+	def __init__(self, item, parent):
+	
+		"""
+		Constructor
+		
+		Arguments:
+		item -- the item tuple (name, run_if)
+		parent -- the parent container
+		"""				
+	
+		item_type = parent._list.sequence.experiment.items[item[0]].item_type
+		icon = parent._list.sequence.experiment.icon(item_type)
+		QtGui.QPushButton.__init__(self, icon, item[0], parent)
+		self.setObjectName("sequence_open_button")
+		self.container = parent
+		self.item = item
+		self.setSizePolicy(QtGui.QSizePolicy.Fixed, QtGui.QSizePolicy.Fixed)
+		self.setFlat(True)
+		self.setIconSize(QtCore.QSize(16,16))
+		self.clicked.connect(self.open_item_tab)
+		self.setToolTip("Click to edit this item")
+		
+	def open_item_tab(self):
+	
+		"""Open the item's tab"""
+		
+		self.container._list.sequence.experiment.items[self.item[0]].open_edit_tab()
+									
 class draggable_widget_container(QtGui.QFrame):
+
+	"""A container for a single item"""
 
 	def __init__(self, parent, item, index):
 	
+		"""
+		Constructor
+		
+		Arguments:
+		parent -- the parent draggable_list
+		item -- the item tuple (name, run_if)
+		index -- the index of the item in the sequence
+		"""
+	
 		QtGui.QFrame.__init__(self, parent)
+		self.setObjectName("sequence_container")
 		self.item = item
 		self.setFrameStyle(QtGui.QFrame.Panel)
 		self._list = parent
-		self.handle = draggable_handle(self.item, self)
-		
+		self.handle = draggable_handle(self)		
 		self.remove_button = remove_button(self)
-		self.run_if_edit = run_if_edit(self)
-		
+		self.run_if_edit = run_if_edit(self)		
 		self.index = index
 		self._layout = QtGui.QHBoxLayout()		
 		self._layout.addWidget(self.handle)
-		self._layout.addWidget(QtGui.QLabel(self.item[0]))
+		self._layout.addWidget(open_button(item, self))
+		self._layout.addStretch()
+		self._layout.addWidget(QtGui.QLabel("<small><i>Run if</i></small>"))
 		self._layout.addWidget(self.run_if_edit)
 		self._layout.addWidget(self.remove_button)
 		self.setLayout(self._layout)	
-		self._layout.setContentsMargins(2, 2, 2, 2)
+		self._layout.setContentsMargins(4, 4, 4, 4)		
 
 class draggable_list(QtGui.QWidget):
 
+	"""The main draggable list"""
+
 	def __init__(self, sequence):
+	
+		"""
+		Constructor
+		
+		Arguments:
+		sequence -- the parent sequence item
+		"""
 	
 		QtGui.QWidget.__init__(self)
 		self.items = []
@@ -127,10 +240,12 @@ class draggable_list(QtGui.QWidget):
 		self._layout = QtGui.QVBoxLayout()				
 		self._layout.setContentsMargins(0, 0, 0, 0)
 		self.setLayout(self._layout)
-		self.widgets = []	
+		self.widgets = []			
 				
 	def refresh(self):
 	
+		"""Refresh the view"""
+		
 		for widget in self.widgets:
 			self._layout.removeWidget(widget)
 			widget.hide()
