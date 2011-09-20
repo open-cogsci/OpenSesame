@@ -57,7 +57,7 @@ if __name__ == "__main__":
 	else:
 		myapp.check_update(always = False)
 		myapp.show_random_tip(always = False)
-		if new_wizard:
+		if new_wizard and not myapp.experiment.debug:
 			myapp.start_new_wizard()
 
 	sys.exit(app.exec_())

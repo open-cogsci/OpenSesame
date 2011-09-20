@@ -18,6 +18,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 import libopensesame.sequence
 import libopensesame.plugins
 import libqtopensesame.qtitem
+import libqtopensesame.draggables
 from PyQt4 import QtCore, QtGui
 import sip
 
@@ -282,6 +283,9 @@ class sequence(libopensesame.sequence.sequence, libqtopensesame.qtitem.qtitem):
 		grid.addWidget(self.action_button("add", "Create and append  new item to sequence", ("add", "new")), 1, 2)
 
 		grid.setColumnStretch(3, 10)
+		
+		self.draggable_list = libqtopensesame.draggables.draggable_list(self)
+		self.edit_vbox.addWidget(self.draggable_list)
 
 		grid_widget = QtGui.QFrame()
 		grid_widget.setLayout(grid)
@@ -302,25 +306,23 @@ class sequence(libopensesame.sequence.sequence, libqtopensesame.qtitem.qtitem):
 
 		if not self._active:
 			return self._edit_widget
-
 		self._active = False
 
 		libqtopensesame.qtitem.qtitem.edit_widget(self)
-
 		self.experiment.item_combobox(None, self.parents(), self.combobox_items)
 		self.experiment.clear_widget(self._widget)
-
+		
+		self.draggable_list.refresh()
+		
+		"""
 		if len(self.items) == 0:
 			self._grid.addWidget(QtGui.QLabel("<b>The sequence is empty!</b><br />You can add items to the sequence using the buttons below."), 0, 0)
-
 		else:
 			self._grid.addWidget(QtGui.QLabel("#"), 0, 0)
 			self._grid.addWidget(QtGui.QLabel("Item"), 0, 1)
 			self._grid.addWidget(QtGui.QLabel("Run if ... "), 0, 2)
-
 			row = 1
 			for item, cond in self.items:
-
 				self.items_combobox = items_combobox(row-1, self.experiment.items, self, item, self.parents(), tooltip = "Select item")
 				self._grid.addWidget(QtGui.QLabel("%d" % row), row, 0)
 				self._grid.addWidget(self.items_combobox, row, 1)
@@ -332,10 +334,23 @@ class sequence(libopensesame.sequence.sequence, libqtopensesame.qtitem.qtitem):
 				self._grid.addWidget(self.action_button("rename", "", ("rename", row-1), tooltip = "Rename item"), row, 7)
 				self._grid.addWidget(self.action_button("delete", "", ("delete", row-1), tooltip = "Remove item from sequence"), row, 8)
 				row += 1
-
+		"""
 		self._active = True
 
 		return self._edit_widget
+		
+	def swap(self, index1, index2):
+	
+		"""
+		Swaps to items from the sequence
+		
+		Arguments:
+		index1 -- the index of the first item
+		index2 -- the index of the second item		
+		"""
+	
+		self.items[index1], self.items[index2] = self.items[index2], self.items[index1]
+		self.experiment.main_window.refresh(self.name)		
 
 	def delete(self, index):
 
@@ -350,6 +365,23 @@ class sequence(libopensesame.sequence.sequence, libqtopensesame.qtitem.qtitem):
 			print "sequence.delete(): deleting %s (%d) from sequence %s" % (self.items[index], index, self.name)
 		del self.items[index]
 		self.experiment.main_window.refresh(self.name)
+		
+	def set_run_if(self, index, s):
+	
+		"""
+		Change the 'run if' statement of an item
+		
+		Arguments:
+		index -- the index of the item
+		s -- the new run if statement
+		"""
+	
+		s = self.experiment.sanitize(s)
+		if s == "":
+			s = "always"
+		if s != self.items[index][1]:
+			self.items[index] = self.items[index][0], s
+			self.experiment.main_window.refresh(self.name)		
 
 	def rename(self, from_name, to_name):
 
