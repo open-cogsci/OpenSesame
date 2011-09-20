@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'resources/preferences_widget.ui'
 #
-# Created: Tue Sep 20 13:59:52 2011
+# Created: Tue Sep 20 14:32:28 2011
 #      by: PyQt4 UI code generator 4.8.3
 #
 # WARNING! All changes made in this file will be lost!
@@ -24,7 +24,7 @@ class Ui_Form(object):
         self.scrollArea.setWidgetResizable(True)
         self.scrollArea.setObjectName(_fromUtf8("scrollArea"))
         self.scrollAreaWidgetContents = QtGui.QWidget()
-        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 525, 642))
+        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 525, 633))
         self.scrollAreaWidgetContents.setObjectName(_fromUtf8("scrollAreaWidgetContents"))
         self.verticalLayout_2 = QtGui.QVBoxLayout(self.scrollAreaWidgetContents)
         self.verticalLayout_2.setObjectName(_fromUtf8("verticalLayout_2"))
@@ -54,6 +54,7 @@ class Ui_Form(object):
         self.groupBox_5 = QtGui.QGroupBox(self.scrollAreaWidgetContents)
         self.groupBox_5.setObjectName(_fromUtf8("groupBox_5"))
         self.formLayout_4 = QtGui.QFormLayout(self.groupBox_5)
+        self.formLayout_4.setContentsMargins(0, -1, 0, 0)
         self.formLayout_4.setObjectName(_fromUtf8("formLayout_4"))
         self.label_2 = QtGui.QLabel(self.groupBox_5)
         self.label_2.setObjectName(_fromUtf8("label_2"))

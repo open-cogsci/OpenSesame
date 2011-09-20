@@ -18,6 +18,8 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 import sip
 from PyQt4 import QtGui, QtCore
 
+drop_target = None
+
 class draggable_handle(QtGui.QLabel):
 
 	"""The draggable handles for re-ordering the list"""
@@ -38,6 +40,25 @@ class draggable_handle(QtGui.QLabel):
 		self.container = parent
 		self.setSizePolicy(QtGui.QSizePolicy.Fixed, QtGui.QSizePolicy.Fixed)
 		self.setToolTip("Drag this item to re-order")
+		
+	def valid_drag(self, mime_data):
+	
+		"""
+		Checks if mime data corresponds to a valid drag operation
+		
+		Arguments:
+		mime_data -- the mime data
+		
+		Returns:
+		True or False		
+		"""
+	
+		if mime_data.hasText():
+			l = mime_data.text().split(" ")
+			if len(l) == 2 and l[0] in ["__osdrag__", "__osnew__"]:
+				return True
+		return False
+		
 		
 	def index_from_mime_data(self, mime_data):
 	
@@ -65,8 +86,8 @@ class draggable_handle(QtGui.QLabel):
 		Arguments:
 		e -- a QDragEvent		
 		"""
-	
-		if self.index_from_mime_data(e.mimeData()) >= 0:		
+		
+		if self.valid_drag(e.mimeData()):
 			e.accept()						
 		else:
 			e.ignore()
@@ -79,11 +100,18 @@ class draggable_handle(QtGui.QLabel):
 		Arguments:
 		e -- a QDragEvent		
 		"""	
-	
-		from_index = self.index_from_mime_data(e.mimeData())
-		if from_index >= 0:
-			e.accept()
-			self.container._list.sequence.move(from_index, self.container.index)
+		
+		global drop_target
+			
+		if self.valid_drag(e.mimeData()):		
+			from_index = self.index_from_mime_data(e.mimeData())
+			if from_index >= 0:		
+				e.accept()
+				self.container._list.sequence.move(from_index, self.container.index)
+			else:
+				drop_target = self.container._list.sequence.name, self.container.index, False
+				e.setDropAction(QtCore.Qt.CopyAction)
+				e.accept()
 		else:
 			e.ignore()
 		

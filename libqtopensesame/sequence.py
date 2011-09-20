@@ -132,27 +132,17 @@ class sequence(libopensesame.sequence.sequence, libqtopensesame.qtitem.qtitem):
 
 		libqtopensesame.qtitem.qtitem.init_edit_widget(self, False)
 
-		self._widget = QtGui.QFrame()
-		self._widget.setFrameStyle(QtGui.QFrame.StyledPanel)
-		self._grid = QtGui.QGridLayout(self._widget)
-		self._widget.setLayout(self._grid)
-
-		self.edit_vbox.addWidget(self._widget)
-
 		self.combobox_item_type = self.experiment.item_type_combobox()
 		self.combobox_items = QtGui.QComboBox()
 
 		grid = QtGui.QGridLayout()
 		grid.setMargin(0)
-
 		grid.addWidget(QtGui.QLabel("Append existing item"), 0, 0)
 		grid.addWidget(self.combobox_items, 0, 1)
 		grid.addWidget(self.action_button("add", "Append existing item to sequence", ("add", "existing")), 0, 2)
-
 		grid.addWidget(QtGui.QLabel("Append new item"), 1, 0)
 		grid.addWidget(self.combobox_item_type, 1, 1)
 		grid.addWidget(self.action_button("add", "Create and append  new item to sequence", ("add", "new")), 1, 2)
-
 		grid.setColumnStretch(3, 10)
 		
 		self.draggable_list = libqtopensesame.draggables.draggable_list(self)
@@ -181,7 +171,6 @@ class sequence(libopensesame.sequence.sequence, libqtopensesame.qtitem.qtitem):
 
 		libqtopensesame.qtitem.qtitem.edit_widget(self)
 		self.experiment.item_combobox(None, self.parents(), self.combobox_items)
-		self.experiment.clear_widget(self._widget)		
 		self.draggable_list.refresh()
 		self._active = True
 

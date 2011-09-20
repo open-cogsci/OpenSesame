@@ -25,7 +25,7 @@
         <x>0</x>
         <y>0</y>
         <width>525</width>
-        <height>642</height>
+        <height>633</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -87,6 +87,15 @@
           <string>Appearance</string>
          </property>
          <layout class="QFormLayout" name="formLayout_4">
+          <property name="leftMargin">
+           <number>0</number>
+          </property>
+          <property name="rightMargin">
+           <number>0</number>
+          </property>
+          <property name="bottomMargin">
+           <number>0</number>
+          </property>
           <item row="0" column="0">
            <widget class="QLabel" name="label_2">
             <property name="text">

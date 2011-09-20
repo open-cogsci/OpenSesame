@@ -16,18 +16,19 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from PyQt4 import QtCore, QtGui
+from libqtopensesame import draggables
 
 class tree_overview(QtGui.QTreeWidget):
 
-	"""
-	This class implements the drag-and-droppable
-	overview tree.
-	"""
+	"""The drag-and-droppable overview tree"""
 
 	def __init__(self, parent):
 	
 		"""
 		Constructor
+		
+		Arguments:
+		parent -- the parent item
 		"""
 	
 		QtGui.QTreeWidget.__init__(self, parent)
@@ -36,6 +37,9 @@ class tree_overview(QtGui.QTreeWidget):
 		
 		"""
 		Accept an incoming drag event
+		
+		Arguments:
+		e -- a QDragEvent
 		"""
 	
 		if e.mimeData().hasText():	
@@ -47,38 +51,52 @@ class tree_overview(QtGui.QTreeWidget):
 	def dragMoveEvent(self, e):
 	
 		"""
-		Highlight the appropriate item
-		while a drop is being moved.
+		Highlight the appropriate item while a drop is being moved
+		
+		Arguments:
+		e -- a QDragEvent		
 		"""
 	
-		if e.mimeData().hasText():
-		
+		if e.mimeData().hasText():		
 			e.setDropAction(QtCore.Qt.CopyAction)						
 			for item in self.selectedItems():
-				item.setSelected(False)
-			
+				item.setSelected(False)			
 			item = self.itemAt(e.pos())
 			if item != None:
 				item.setSelected(True)			
-			e.accept()
-			
-		else:
-		
+			e.accept()			
+		else:		
 			e.ignore()		
 
 	def dropEvent(self, e):
 	
 		"""
 		Accept a drop event
+		
+		Arguments:
+		e -- a QDragEvent			
 		"""
 	
 		if e.mimeData().hasText():	
-			e.setDropAction(QtCore.Qt.CopyAction)
+			s = e.mimeData().text()
+			e.setDropAction(QtCore.Qt.CopyAction)			
+
+			item = self.itemAt(e.pos())					
+			index = 0
+			while True:			
+				item_name = str(item.text(0))
+				if item_name not in self.main_window.experiment.items:
+					e.ignore()
+					return
+				item_type = self.main_window.experiment.items[item_name].item_type
+				if item_type == "sequence":
+					break
+				index = item.parent().indexOfChild(item)
+				item = item.parent()
 			
-			item = self.itemAt(e.pos())
 			if item != None:
 				item.setSelected(True)
-				self.drop_target = item
+				draggables.drop_target = item_name, index, True
 				e.accept()
 			else:
 				e.ignore()
@@ -156,6 +174,9 @@ class tree_overview(QtGui.QTreeWidget):
 	
 		"""
 		Rename an item
+		
+		Arguments:
+		old_name -- the old name of the to-be-renamed item
 		"""
 	
 		new_name, ok = QtGui.QInputDialog.getText(self.main_window.ui.centralwidget, "Rename", "Please enter a new name", text = old_name)

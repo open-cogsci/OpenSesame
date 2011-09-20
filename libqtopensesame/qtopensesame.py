@@ -46,6 +46,7 @@ import platform
 import libqtopensesame.inline_editor
 import libqtopensesame.syntax_highlighter
 import libqtopensesame.preferences_widget
+import libqtopensesame.draggables
 import openexp.exceptions
 import openexp.backend_info
 import traceback
@@ -2193,92 +2194,36 @@ class qtopensesame(QtGui.QMainWindow):
 		"""
 
 		return self.add_item("inline_script", refresh)
-
+		
 	def drop_item(self, add_func):
 
 		"""
-		Create a new item after an item has been dragged and dropped from the toolbar.
-		The necessary information is stored in the itemtree.
+		Create a new item after an item has been dragged and dropped from the
+		toolbar. The necessary information is stored in the itemtree.
 
 		Arguments:
 		add_func -- a function to call to create the new item
 		"""
-
+		
 		if self.experiment.debug:
-			print "qtopensesame.drag_item(): dropping"
+			print "qtopensesame.drop_item(): dropping from toolbar"		
+		
+		# Determine the drop target
+		target, index, select = libqtopensesame.draggables.drop_target
 
-		# Check if the overview tree has set a target for the drop
-		if self.ui.itemtree.drop_target == None:
-			return
-
-		# Retrieve the target
-		target_item = self.ui.itemtree.drop_target
-		target = str(target_item.text(0))
-
-		# If the target is not an item, return
-		if target not in self.experiment.items:
-			return
-
-		# If the target is not a loop or sequence, get the underlying loop or sequence
-		if self.experiment.items[target].item_type not in ("sequence", "loop"):
-			real_target_item = target_item
-			real_target = target
-			target_item = target_item.parent()
-			target = str(target_item.text(0))
-
-			# Determine the position in the sequence
-			index = 0
-			for child in target_item.takeChildren():
-				if child == real_target_item:
-					break
-				index += 1
-
-		else:
-
-			# By default insert the item at the top of the sequence
-			index = 0
-
-		# If the target is not an item and is not the main experiment, return
-		if target not in self.experiment.items and target_item.parent() != None:
-			if self.experiment.debug:
-				print "qtopensesame.drop_item(): failed to drop onto %s" % target
-			return
-
-		# Create a new item
+		# Create a new item and return if it fails
 		if type(add_func) != str:
 			new_item = add_func(False, parent = target)
 		else:
 			new_item = self.add_item(add_func, False)
-
-		# If cancelled, just return
 		if new_item == None:
 			self.refresh(target)
 			return
-
-		# If the target has no parent, it is the main experiment. In this case, we have
-		# to change the entry point of the experiment
-		if target_item.parent() == None:
-
-			if self.experiment.debug:
-				print "qtopensesame.drop_item(): changing experiment entry point to %s" % target
-			self.experiment.set("start", new_item)
-
-		# Otherwise we add the new item to the parent sequence or the loop
-		else:
-
-			if self.experiment.debug:
-				print "qtopensesame.drop_item(): dropping onto %s" % target
-
-			# If the target is a sequence insert the new item
-			if self.experiment.items[target].item_type == "sequence":
-				self.experiment.items[target].items.insert(index, (new_item, "always"))
-
-			# If the target is a loop, replace the loop item
-			if self.experiment.items[target].item_type == "loop":
-				self.experiment.items[target].item = new_item
-
+			
+		self.experiment.items[target].items.insert(index, (new_item, "always"))		
 		self.refresh(target)
-		self.select_item(new_item)
+		if select:
+			self.select_item(new_item)					
 
 	def drag_item(self, add_func):
 
@@ -2293,21 +2238,18 @@ class qtopensesame(QtGui.QMainWindow):
 			print "qtopensesame.drag_item(): dragging"
 
 		# Reset the drop target
-		self.ui.itemtree.drop_target = None
+		libqtopensesame.draggables.drop_target = None
 
 		# Start the drop action
 		d = QtGui.QDrag(self.ui.centralwidget)
 		m = QtCore.QMimeData()
-		m.setText("new_item")
+		m.setText("__osnew__ %s" % add_func)
 		d.setMimeData(m)
 
 		# Check if the drop was successful
 		if d.start(QtCore.Qt.CopyAction) == QtCore.Qt.CopyAction:
-
 			self.drop_item(add_func)
-
 		else:
-
 			# Create a new item
 			if type(add_func) != str:
 				new_item = add_func(False)
