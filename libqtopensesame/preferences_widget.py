@@ -49,6 +49,7 @@ class preferences_widget(QtGui.QWidget):
 		self.ui.checkbox_toolbar_text.toggled.connect(self.apply)
 		self.ui.checkbox_enable_autosave.toggled.connect(self.apply)
 		self.ui.spinbox_autosave_interval.valueChanged.connect(self.apply)
+		self.ui.spinbox_autosave_max_age.valueChanged.connect(self.apply)
 		self.ui.checkbox_auto_update_check.toggled.connect(self.apply)		
 		self.ui.checkbox_opensesamerun.toggled.connect(self.apply)
 		self.ui.checkbox_auto_opensesamerun_exec.toggled.connect(self.apply)						
@@ -69,7 +70,8 @@ class preferences_widget(QtGui.QWidget):
 		self.ui.checkbox_show_random_tips.setChecked(self.main_window.show_startup_tip)
 		self.ui.checkbox_toolbar_text.setChecked(self.main_window.ui.toolbar_main.toolButtonStyle() == QtCore.Qt.ToolButtonTextUnderIcon)		
 		self.ui.checkbox_enable_autosave.setChecked(self.main_window.autosave_interval > 0)
-		self.ui.spinbox_autosave_interval.setValue(self.main_window.autosave_interval / 60000) # Show in minutes, not milliseconds		
+		self.ui.spinbox_autosave_interval.setValue(self.main_window.autosave_interval / 60000) # Show in minutes, not milliseconds
+		self.ui.spinbox_autosave_max_age.setValue(self.main_window.autosave_max_age)
 		self.ui.checkbox_auto_update_check.setChecked(self.main_window.auto_check_update)		
 		self.ui.checkbox_opensesamerun.setChecked(self.main_window.opensesamerun)				
 		self.ui.checkbox_auto_opensesamerun_exec.setChecked(self.main_window.opensesamerun_exec == "")
@@ -120,6 +122,7 @@ class preferences_widget(QtGui.QWidget):
 			self.main_window.autosave_interval = 60000 * self.ui.spinbox_autosave_interval.value()
 		else:
 			self.main_window.autosave_interval = 0
+		self.main_window.autosave_max_age = self.ui.spinbox_autosave_max_age.value()			
 		self.main_window.start_autosave_timer()
 			
 		self.main_window.auto_check_update = self.ui.checkbox_auto_update_check.isChecked()

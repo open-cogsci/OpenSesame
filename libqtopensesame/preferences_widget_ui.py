@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'resources/preferences_widget.ui'
 #
-# Created: Tue Sep 20 14:32:28 2011
+# Created: Wed Sep 21 16:59:41 2011
 #      by: PyQt4 UI code generator 4.8.3
 #
 # WARNING! All changes made in this file will be lost!
@@ -24,7 +24,7 @@ class Ui_Form(object):
         self.scrollArea.setWidgetResizable(True)
         self.scrollArea.setObjectName(_fromUtf8("scrollArea"))
         self.scrollAreaWidgetContents = QtGui.QWidget()
-        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 525, 633))
+        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 525, 666))
         self.scrollAreaWidgetContents.setObjectName(_fromUtf8("scrollAreaWidgetContents"))
         self.verticalLayout_2 = QtGui.QVBoxLayout(self.scrollAreaWidgetContents)
         self.verticalLayout_2.setObjectName(_fromUtf8("verticalLayout_2"))
@@ -92,7 +92,15 @@ class Ui_Form(object):
         icon.addPixmap(QtGui.QPixmap(_fromUtf8(":/icons/browse.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.button_browse_autosave.setIcon(icon)
         self.button_browse_autosave.setObjectName(_fromUtf8("button_browse_autosave"))
-        self.formLayout_2.setWidget(2, QtGui.QFormLayout.LabelRole, self.button_browse_autosave)
+        self.formLayout_2.setWidget(3, QtGui.QFormLayout.LabelRole, self.button_browse_autosave)
+        self.label_3 = QtGui.QLabel(self.groupBox)
+        self.label_3.setObjectName(_fromUtf8("label_3"))
+        self.formLayout_2.setWidget(2, QtGui.QFormLayout.LabelRole, self.label_3)
+        self.spinbox_autosave_max_age = QtGui.QSpinBox(self.groupBox)
+        self.spinbox_autosave_max_age.setMinimum(1)
+        self.spinbox_autosave_max_age.setMaximum(365)
+        self.spinbox_autosave_max_age.setObjectName(_fromUtf8("spinbox_autosave_max_age"))
+        self.formLayout_2.setWidget(2, QtGui.QFormLayout.FieldRole, self.spinbox_autosave_max_age)
         self.verticalLayout_2.addWidget(self.groupBox)
         self.groupBox_3 = QtGui.QGroupBox(self.scrollAreaWidgetContents)
         sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Preferred, QtGui.QSizePolicy.Fixed)
@@ -165,6 +173,8 @@ class Ui_Form(object):
         self.spinbox_autosave_interval.setSuffix(QtGui.QApplication.translate("Form", " minute(s)", None, QtGui.QApplication.UnicodeUTF8))
         self.spinbox_autosave_interval.setPrefix(QtGui.QApplication.translate("Form", "every ", None, QtGui.QApplication.UnicodeUTF8))
         self.button_browse_autosave.setText(QtGui.QApplication.translate("Form", "Open backup folder", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_3.setText(QtGui.QApplication.translate("Form", "Clean backups after:", None, QtGui.QApplication.UnicodeUTF8))
+        self.spinbox_autosave_max_age.setSuffix(QtGui.QApplication.translate("Form", " day(s)", None, QtGui.QApplication.UnicodeUTF8))
         self.groupBox_3.setTitle(QtGui.QApplication.translate("Form", "Updates", None, QtGui.QApplication.UnicodeUTF8))
         self.checkbox_auto_update_check.setText(QtGui.QApplication.translate("Form", "Check for updates on start-up", None, QtGui.QApplication.UnicodeUTF8))
         self.button_update_check.setText(QtGui.QApplication.translate("Form", "Check for updates now", None, QtGui.QApplication.UnicodeUTF8))

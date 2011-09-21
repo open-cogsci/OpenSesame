@@ -25,7 +25,7 @@
         <x>0</x>
         <y>0</y>
         <width>525</width>
-        <height>633</height>
+        <height>666</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -172,7 +172,7 @@
             </property>
            </widget>
           </item>
-          <item row="2" column="0">
+          <item row="3" column="0">
            <widget class="QPushButton" name="button_browse_autosave">
             <property name="text">
              <string>Open backup folder</string>
@@ -180,6 +180,26 @@
             <property name="icon">
              <iconset resource="icons.qrc">
               <normaloff>:/icons/browse.png</normaloff>:/icons/browse.png</iconset>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="0">
+           <widget class="QLabel" name="label_3">
+            <property name="text">
+             <string>Clean backups after:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="1">
+           <widget class="QSpinBox" name="spinbox_autosave_max_age">
+            <property name="suffix">
+             <string> day(s)</string>
+            </property>
+            <property name="minimum">
+             <number>1</number>
+            </property>
+            <property name="maximum">
+             <number>365</number>
             </property>
            </widget>
           </item>

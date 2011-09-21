@@ -330,6 +330,7 @@ class qtopensesame(QtGui.QMainWindow):
 		self.set_unsaved(False)
 		self.start_autosave_timer()
 		self.update_recent_files()
+		self.clean_autosave()
 
 		# Parse the command line options
 		parser = optparse.OptionParser("usage: opensesame [experiment] [options]", version = "%s '%s'" % (self.version, self.codename))
@@ -373,6 +374,7 @@ class qtopensesame(QtGui.QMainWindow):
 		self.show_startup_tip = settings.value("show_startup_tip", True).toBool()
 		self.default_logfile_folder = settings.value("default_logfile_folder", self.home_folder).toString()
 		self.autosave_interval = settings.value("autosave_interval", 10 * 60 * 1000).toInt()[0] # Every 10 minutes
+		self.autosave_max_age = settings.value("autosave_max_age", 7).toInt()[0]
 		self.immediate_rename = settings.value("immediate_rename", False).toBool()
 		self.opensesamerun_exec = str(settings.value("opensesamerun_exec", "").toString())
 		self.opensesamerun = settings.value("opensesamerun", False).toBool()
@@ -413,6 +415,7 @@ class qtopensesame(QtGui.QMainWindow):
 		settings.setValue("show_startup_tip", self.show_startup_tip)
 		settings.setValue("default_logfile_folder", self.default_logfile_folder)
 		settings.setValue("autosave_interval", self.autosave_interval)
+		settings.setValue("autosave_max_age", self.autosave_max_age)
 		settings.setValue("immediate_rename", self.immediate_rename)
 		settings.setValue("opensesamerun", self.opensesamerun)
 		settings.setValue("opensesamerun_exec", self.opensesamerun_exec)
@@ -423,7 +426,7 @@ class qtopensesame(QtGui.QMainWindow):
 		settings.setValue("recent_files", ";;".join(self.recent_files))
 		settings.setValue("style", self.style)
 
-		settings.endGroup()
+		settings.endGroup()	
 		
 	def set_debug(self):
 		
@@ -431,7 +434,7 @@ class qtopensesame(QtGui.QMainWindow):
 	
 		s = "[Version information: "
 		s += "OpenSesame %s" % self.version
-		s += "; Python %d.%d.%d" % (sys.version_info.major, sys.version_info.minor, sys.version_info.micro)
+		s += "; Python %d.%d.%d" % (sys.version_info[0], sys.version_info[1], sys.version_info[2])
 		s += "; PyQt %s" % QtCore.PYQT_VERSION_STR		
 		try:
 			import pygame
@@ -523,6 +526,23 @@ class qtopensesame(QtGui.QMainWindow):
 
 		self.start_autosave_timer()
 		return autosave_path
+		
+	def clean_autosave(self):
+	
+		"""Remove old files from the back-up folder"""
+		
+		for path in os.listdir(self.autosave_folder):
+			_path = os.path.join(self.autosave_folder, path)		
+			t = os.path.getctime(_path)
+			age = (time.time() - t)/(60*60*24)
+			if age > self.autosave_max_age:
+				if self.experiment.debug:
+					print "qtopensesame.clean_autosave(): removing '%s'" % path
+				try:
+					os.remove(_path)
+				except:
+					if self.experiment.debug:
+						print "qtopensesame.clean_autosave(): failed to remove '%s'" % path
 
 	def save_unsaved_changes(self):
 
