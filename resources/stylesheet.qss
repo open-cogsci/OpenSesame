@@ -1,0 +1,8 @@
+#sequence_container {
+	border: none;
+	border-bottom-color: black;
+	border-bottom-width: 1px;		
+	border-bottom-style: dotted;
+}
+
+

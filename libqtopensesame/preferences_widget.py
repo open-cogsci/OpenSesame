@@ -88,8 +88,16 @@ class preferences_widget(QtGui.QWidget):
 			self.ui.edit_opensesamerun_exec.setDisabled(True)
 			self.ui.label_opensesamerun_exec.setDisabled(True)
 			
+		i = 0
+		if self.main_window.style == "":
+			self.ui.combobox_style.addItem("[Default]")
+			self.ui.combobox_style.setCurrentIndex(i)
+			i += 1
 		for style in QtGui.QStyleFactory.keys():
 			self.ui.combobox_style.addItem(style)
+			if self.main_window.style == str(style):
+				self.ui.combobox_style.setCurrentIndex(i)
+			i += 1
 			
 	def apply(self):
 	

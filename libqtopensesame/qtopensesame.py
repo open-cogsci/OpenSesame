@@ -310,7 +310,7 @@ class qtopensesame(QtGui.QMainWindow):
 		self.init_unused_tab()
 		
 		# Set the style sheet
-		self.setStyleSheet(open(self.experiment.resource("stylesheet.css")).read())
+		self.setStyleSheet(open(self.experiment.resource("stylesheet.qss")).read())
 		
 		# After starting OpenSesame, the general tab is visible
 		self.open_general_tab()
@@ -324,8 +324,7 @@ class qtopensesame(QtGui.QMainWindow):
 
 		# Build the items toolbar
 		self.ui.toolbar_items.build()
-
-		self.ui.edit_stdout.setPlainText("You can print to this debug window using the Python 'print [msg]' statement in inline_script items or the interpreter field above.\n")
+		self.set_debug()
 		self.set_status("Welcome to OpenSesame %s" % self.version)
 		self.restore_state()
 		self.set_unsaved(False)
@@ -425,6 +424,32 @@ class qtopensesame(QtGui.QMainWindow):
 		settings.setValue("style", self.style)
 
 		settings.endGroup()
+		
+	def set_debug(self):
+		
+		"""Initialize the debug window"""
+	
+		s = "[Version information: "
+		s += "OpenSesame %s" % self.version
+		s += "; Python %d.%d.%d" % (sys.version_info.major, sys.version_info.minor, sys.version_info.micro)
+		s += "; PyQt %s" % QtCore.PYQT_VERSION_STR		
+		try:
+			import pygame
+			s += "; PyGame %s" % pygame.ver
+		except:
+			s += "; PyGame not available"
+		try:
+			import OpenGL
+			s += "; PyOpenGL %s" % OpenGL.__version__
+		except:
+			s += "; PyOpenGL not available"			
+		try:
+			import psychopy
+			s += "; PsychoPy %s" % psychopy.__version__
+		except:
+			s += "; PsychoPy not available"						
+		s += "]\n\nYou can print to this debug window using the Python 'print [msg]' statement in inline_script items or the interpreter field above.\n"
+		self.ui.edit_stdout.setPlainText(s)
 		
 	def set_style(self):
 	
