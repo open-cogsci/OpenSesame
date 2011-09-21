@@ -199,12 +199,15 @@ class loop(libopensesame.loop.loop, libqtopensesame.qtitem.qtitem):
 		if var_list == None:
 			return
 
-		old_var, ok = QtGui.QInputDialog.getItem(self.experiment.ui.centralwidget, "Rename variable", "Which variable do you want to rename?", var_list)
+		old_var, ok = QtGui.QInputDialog.getItem(self.experiment.ui.centralwidget, "Rename variable", "Which variable do you want to rename?", var_list, editable=False)
 		if ok:
-			new_var, ok = QtGui.QInputDialog.getText(self.loop_table, 'New variable', 'Enter a new variable name', text = old_var)
-			if ok and new_var != old_var:
+			_new_var, ok = QtGui.QInputDialog.getText(self.loop_table, 'New variable', 'Enter a new variable name', text = old_var)
+			if ok and _new_var != old_var:
 				old_var = str(old_var)
-				new_var = str(new_var)
+				new_var = self.experiment.sanitize(_new_var, strict=True)
+				if _new_var != new_var or new_var == "":
+					self.experiment.notify("Please use only letters, numbers and underscores")
+					return				
 				if new_var in var_list:
 					self.experiment.notify("A variable with the name '%s' already exists" % new_var)
 					return
