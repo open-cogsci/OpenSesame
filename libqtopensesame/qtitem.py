@@ -251,7 +251,7 @@ class qtitem(object):
 
 		# Pass on the word
 		self.experiment.main_window.set_unsaved()
-		self.experiment.rename(self.name, new_name)
+		self.experiment.rename(self.name, new_name)		
 
 	def apply_edit_changes(self, rebuild = True):
 
@@ -412,10 +412,10 @@ class qtitem(object):
 		if focus:
 			self.experiment.ui.tabwidget.setCurrentIndex(self.script_tab_index)
 
-	def close_script_tab(self, index = None):
+	def close_script_tab(self, index=None):
 
 		"""
-		Closes the script tab
+		Close the script tab
 		"""
 
 		pass
@@ -423,11 +423,28 @@ class qtitem(object):
 	def rename(self, from_name, to_name):
 
 		"""
-		Renames an item
+		Rename an item
+		
+		Arguments:
+		from_name -- the old item name
+		to_name -- the new item name
 		"""
 
 		if self.name == from_name:
 			self.name = to_name
+			
+	def rename_var(self, item, from_name, to_name):
+	
+		"""
+		A notification that a variable has been renamed
+		
+		Arguments:
+		item -- the item doing the renaming		
+		from_name -- the old variable name
+		to_name -- the new variable name
+		"""
+	
+		pass
 
 	def item_tree_info(self):
 

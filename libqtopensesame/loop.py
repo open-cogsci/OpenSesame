@@ -168,8 +168,29 @@ class loop(libopensesame.loop.loop, libqtopensesame.qtitem.qtitem):
 					var_list.append(var)
 		if len(var_list) == 0:
 			return None
-		return var_list
+		return var_list		
+		
+		
+	def rename_var(self, item, from_name, to_name):
+	
+		"""
+		A notification that a variable has been renamed
+		
+		Arguments:
+		item -- the item doing the renaming		
+		from_name -- the old variable name
+		to_name -- the new variable name
+		"""
 
+		# Only accept renames from this item
+		if item != self.name:
+			return	
+		for i in self.matrix:
+			if from_name in self.matrix[i]:
+				val = self.matrix[i][from_name]
+				del self.matrix[i][from_name]
+				self.matrix[i][to_name] = val
+		
 	def rename_cyclevar(self):
 
 		"""Present a dialog and rename a variable"""
@@ -178,23 +199,17 @@ class loop(libopensesame.loop.loop, libqtopensesame.qtitem.qtitem):
 		if var_list == None:
 			return
 
-		old_var, ok = QtGui.QInputDialog.getItem(self.experiment.ui.centralwidget, "Remove variable", "Which variable do you want to rename?", var_list)
+		old_var, ok = QtGui.QInputDialog.getItem(self.experiment.ui.centralwidget, "Rename variable", "Which variable do you want to rename?", var_list)
 		if ok:
 			new_var, ok = QtGui.QInputDialog.getText(self.loop_table, 'New variable', 'Enter a new variable name', text = old_var)
 			if ok and new_var != old_var:
 				old_var = str(old_var)
 				new_var = str(new_var)
-
 				if new_var in var_list:
 					self.experiment.notify("A variable with the name '%s' already exists" % new_var)
 					return
-
-				for i in self.matrix:
-					if old_var in self.matrix[i]:
-						val = self.matrix[i][old_var]
-						del self.matrix[i][old_var]
-						self.matrix[i][new_var] = val
-
+			for item in self.experiment.items.values():
+				item.rename_var(self.name, old_var, new_var)
 			self.refresh_loop_table()
 			self.apply_edit_changes()
 
