@@ -1876,15 +1876,19 @@ class qtopensesame(QtGui.QMainWindow):
 
 		self.run_experiment(fullscreen = False)
 
-	def refresh(self, changed_item = None, refresh_edit = True, refresh_script = True):
+	def refresh(self, changed_item=None, refresh_edit=True, refresh_script=True):
 
 		"""
-		Refreshes all parts of the interface that may have changed because of a changed item
+		Refreshes all parts of the interface that may have changed because of a
+		changed item
 
 		Keyword arguments:
-		changed_item -- the name of a specific item that should be refreshed (default = None)
-		refresh_edit -- a boolean to indicate if the edit tabs should be refreshed (default = True)
-		refresh_script -- a boolean to indicate if the script tabs should be refreshed (default = True)
+		changed_item -- the name of a specific item that should be refreshed
+						(default = None)
+		refresh_edit -- a boolean to indicate if the edit tabs should be
+						refreshed (default = True)
+		refresh_script -- a boolean to indicate if the script tabs should be
+						  refreshed (default = True)
 		"""
 
 		# Make sure the refresh does not get caught in

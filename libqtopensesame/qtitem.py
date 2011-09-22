@@ -433,6 +433,21 @@ class qtitem(object):
 		if self.name == from_name:
 			self.name = to_name
 			
+	def delete(self, item_name, item_parent=None, index=None):	
+	
+		"""
+		Delete an item
+		
+		Arguments:
+		item_name -- the name of the item to be deleted
+		
+		Keywords arguments:
+		item_parent -- the parent item (default=None)
+		index -- the index of the item in the parent (default=None)
+		"""
+		
+		pass
+			
 	def rename_var(self, item, from_name, to_name):
 	
 		"""

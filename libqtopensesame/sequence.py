@@ -134,6 +134,15 @@ class sequence(libopensesame.sequence.sequence, libqtopensesame.qtitem.qtitem):
 
 		self.combobox_item_type = self.experiment.item_type_combobox()
 		self.combobox_items = QtGui.QComboBox()
+		
+		self.frame_empty = QtGui.QFrame()
+		self.frame_empty.setFrameStyle(QtGui.QFrame.Panel)
+		l = QtGui.QHBoxLayout()
+		self.frame_empty.setLayout(l)
+		l.addWidget(self.experiment.label_image("info"))
+		l.addWidget(QtGui.QLabel("The sequence is empty"))
+		l.addStretch()
+		
 
 		grid = QtGui.QGridLayout()
 		grid.setMargin(0)
@@ -146,6 +155,7 @@ class sequence(libopensesame.sequence.sequence, libqtopensesame.qtitem.qtitem):
 		grid.setColumnStretch(3, 10)
 		
 		self.draggable_list = libqtopensesame.draggables.draggable_list(self)
+		self.edit_vbox.addWidget(self.frame_empty)
 		self.edit_vbox.addWidget(self.draggable_list)
 
 		grid_widget = QtGui.QFrame()
@@ -172,6 +182,7 @@ class sequence(libopensesame.sequence.sequence, libqtopensesame.qtitem.qtitem):
 		libqtopensesame.qtitem.qtitem.edit_widget(self)
 		self.experiment.item_combobox(None, self.parents(), self.combobox_items)
 		self.draggable_list.refresh()
+		self.frame_empty.setVisible(len(self.items) == 0)
 		self._active = True
 
 		return self._edit_widget
@@ -187,21 +198,7 @@ class sequence(libopensesame.sequence.sequence, libqtopensesame.qtitem.qtitem):
 		"""
 
 		self.items.insert(to_index, self.items.pop(from_index))
-		self.experiment.main_window.refresh(self.name)
-
-	def delete(self, index):
-
-		"""
-		Delete an item from the sequence
-
-		Arguments:
-		index -- the index of the item to be deleted
-		"""
-
-		if self.debug:
-			print "sequence.delete(): deleting %s (%d) from sequence %s" % (self.items[index], index, self.name)
-		del self.items[index]
-		self.experiment.main_window.refresh(self.name)
+		self.experiment.main_window.refresh(self.name)		
 		
 	def set_run_if(self, index, s):
 	
@@ -220,7 +217,7 @@ class sequence(libopensesame.sequence.sequence, libqtopensesame.qtitem.qtitem):
 			self.items[index] = self.items[index][0], s
 			self.experiment.main_window.refresh(self.name)		
 
-	def _xrename(self, from_name, to_name):
+	def rename(self, from_name, to_name):
 
 		"""
 		Rename an item
@@ -237,7 +234,33 @@ class sequence(libopensesame.sequence.sequence, libqtopensesame.qtitem.qtitem):
 				new_items.append( (to_name, cond) )
 			else:
 				new_items.append( (item, cond) )
-		self.items = new_items
+		self.items = new_items		
+		
+	def delete(self, item_name, item_parent=None, index=None):	
+	
+		"""
+		Delete an item
+		
+		Arguments:
+		item_name -- the name of the item to be deleted
+		
+		Keywords arguments:
+		item_parent -- the parent item (default=None)
+		index -- the index of the item in the parent (default=None)
+		"""
+		
+		if item_parent == None or (item_parent == self.name and index == None):
+			redo = True
+			while redo:
+				redo = False
+				for i in range(len(self.items)):
+					if self.items[i][0] == item_name:
+						self.items = self.items[:i]+self.items[i+1:]
+						redo = True
+						break
+		elif item_parent == self.name and index != None:
+			if self.items[index][0] == item_name:
+				self.items = self.items[:index]+self.items[index+1:]
 
 	def build_item_tree(self, toplevel, items):
 

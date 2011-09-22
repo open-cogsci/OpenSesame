@@ -17,6 +17,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 
 import sip
 from PyQt4 import QtGui, QtCore
+from libqtopensesame import item_context_menu
 
 drop_target = None
 
@@ -131,32 +132,6 @@ class draggable_handle(QtGui.QLabel):
 		drag.setHotSpot(e.pos() - self.rect().topLeft())
 		dropAction = drag.start(QtCore.Qt.MoveAction)
 		
-class remove_button(QtGui.QPushButton):
-
-	"""Item remove button"""
-
-	def __init__(self, parent):
-	
-		"""
-		Constructor
-		
-		Arguments:
-		parent -- the parent container
-		"""
-
-		QtGui.QPushButton.__init__(self, parent._list.sequence.experiment.icon("delete"), "", parent)
-		self.container = parent	
-		self.setFlat(True)
-		self.setSizePolicy(QtGui.QSizePolicy.Fixed, QtGui.QSizePolicy.Fixed)
-		self.clicked.connect(self.remove)
-		self.setToolTip("Remove this item")
-		
-	def remove(self):
-	
-		"""Remove the item from the sequence"""
-	
-		self.container._list.sequence.delete(self.container.index)
-		
 class run_if_edit(QtGui.QLineEdit):
 
 	"""Item 'run if' edit"""
@@ -213,6 +188,23 @@ class open_button(QtGui.QPushButton):
 		"""Open the item's tab"""
 		
 		self.container._list.sequence.experiment.items[self.item[0]].open_edit_tab()
+		
+	def mousePressEvent(self, e):
+	
+		"""
+		Open the tab on a left click and show the context menu on a right click
+		
+		Arguments:
+		e -- a QMouseEvent
+		"""
+		
+		if e.button() == QtCore.Qt.LeftButton:
+			QtGui.QPushButton.mousePressEvent(self, e)
+		elif e.button() == QtCore.Qt.RightButton:
+			item = self.container._list.sequence.experiment.items[self.item[0]]
+			m = item_context_menu.item_context_menu("Item", self, item,
+				self.container._list.sequence.name, self.container.index)
+			m.popup(e.globalPos())
 									
 class draggable_widget_container(QtGui.QFrame):
 
@@ -235,7 +227,6 @@ class draggable_widget_container(QtGui.QFrame):
 		self.setFrameStyle(QtGui.QFrame.Panel)
 		self._list = parent
 		self.handle = draggable_handle(self)		
-		self.remove_button = remove_button(self)
 		self.run_if_edit = run_if_edit(self)		
 		self.index = index
 		self._layout = QtGui.QHBoxLayout()		
@@ -244,7 +235,6 @@ class draggable_widget_container(QtGui.QFrame):
 		self._layout.addStretch()
 		self._layout.addWidget(QtGui.QLabel("<small><i>Run if</i></small>"))
 		self._layout.addWidget(self.run_if_edit)
-		self._layout.addWidget(self.remove_button)
 		self.setLayout(self._layout)	
 		self._layout.setContentsMargins(4, 4, 4, 4)		
 

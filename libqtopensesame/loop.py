@@ -115,6 +115,22 @@ class loop(libopensesame.loop.loop, libqtopensesame.qtitem.qtitem):
 		libqtopensesame.qtitem.qtitem.rename(self, from_name, to_name)
 		if self.item == from_name:
 			self.item = to_name
+			
+	def delete(self, item_name, item_parent=None, index=None):	
+	
+		"""
+		Delete an item
+		
+		Arguments:
+		item_name -- the name of the item to be deleted
+		
+		Keywords arguments:
+		item_parent -- the parent item (default=None)
+		index -- the index of the item in the parent (default=None)
+		"""	
+		
+		if self.item == item_name and item_parent == self.name:
+			self.item = ""			
 
 	def add_cyclevar(self):
 

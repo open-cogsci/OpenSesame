@@ -194,6 +194,27 @@ class experiment(libopensesame.experiment.experiment):
 				self.experiment.ui.tabwidget.setTabText(i, to_name)
 
 		self.main_window.refresh()
+		
+	def delete(self, item_name, item_parent=None, index=None):
+	
+		"""
+		Delete an item
+		
+		Arguments:
+		item_name -- the name of the item to be deleted
+		
+		Keywords arguments:
+		item_parent -- the parent item (default=None)
+		index -- the index of the item in the parent (default=None)
+		"""
+		
+		if self.start == item_name:
+			self.notify("You cannot delete the entry point of the experiment. In order to change the entry point item, please open the General Tab and select a different item.")
+			return		
+		for item in self.items:
+			self.items[item].delete(item_name, item_parent, index)
+		self.main_window.refresh()
+		self.main_window.close_item_tab(item_name)				
 
 	def unique_name(self, name):
 
@@ -244,16 +265,16 @@ class experiment(libopensesame.experiment.experiment):
 
 		return label
 
-	def item_combobox(self, select, exclude = [], c = None):
+	def item_combobox(self, select=None, exclude = [], c = None):
 
 		"""
 		Returns a combobox with all the items of the experiment
 
-		Arguments:
-		select -- the item to be selected initially
-
 		Keyword arguments:
-		exclude -- a list of items that should not be included in the list (default = [])
+		select -- the item to be selected initially	or None to select nothing
+				  (default=None)
+		exclude -- a list of items that should not be included in the list
+				   (default=[])
 		c -- a QComboBox that should be cleared and re-filled (default = None)
 
 		Returns:
@@ -266,8 +287,14 @@ class experiment(libopensesame.experiment.experiment):
 			c.clear()
 
 		item_dict = {}
-
 		i = 0
+		
+		if select != None and select not in self.experiment.items:
+			c.addItem("[Please select an item]")
+			c.setCurrentIndex(0)
+			c.setItemIcon(i, self.icon("down"))
+			i += 1
+
 		for item in self.experiment.items:
 			if item not in exclude:
 				item_type = self.experiment.items[item].item_type
