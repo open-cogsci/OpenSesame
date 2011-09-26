@@ -6,7 +6,9 @@ import py2exe
 import os
 import os.path
 import shutil
+import libqtopensesame.qtopensesame
 import libopensesame.misc
+import psychopy
 
 # Create empty destination folders
 if os.path.exists("dist"):
@@ -40,11 +42,14 @@ setup(
 
 # Only copy the relevant resources, to keep the folder clean
 for f in os.listdir("resources"):
-	if os.path.splitext(f)[1] in [".png", ".ttf", ".opensesame"] or f in ("README", "tips.txt"):
+	if os.path.splitext(f)[1] in [".png", ".ttf", ".opensesame", ".qss"] or f in ("README", "tips.txt"):
 		shutil.copyfile(os.path.join("resources", f), os.path.join("dist", "resources", f))
 
 # Copy the plug-ins
-included_plugins = ["advanced_delay", "external_script", "fixation_dot", "text_display", "text_input", "notepad", "srbox", "port_reader"]
+included_plugins = ["advanced_delay", "external_script", "fixation_dot",
+	"text_display", "text_input", "notepad", "srbox", "port_reader",
+	"reset_feedback"]
+	
 for plugin in included_plugins:
 	print "copying plugin", plugin
 	shutil.copytree(os.path.join("plugins", plugin), os.path.join("dist", "plugins", plugin))
@@ -75,7 +80,7 @@ shutil.copyfile("""C:\Python26\Lib\site-packages\pygame\libogg-0.dll""", """dist
 shutil.copyfile("""C:\Python26\Lib\site-packages\parallel\simpleio.dll""", """dist\simpleio.dll""")
 
 # Required by psychopy
-shutil.copyfile("""C:\Python26\Lib\site-packages\PsychoPy-1.64.00-py2.6.egg\psychopy\preferences\Windows.spec""", """dist\\resources\Windows.spec""")
+shutil.copyfile("""C:\Python26\Lib\site-packages\PsychoPy-%s-py2.6.egg\psychopy\preferences\Windows.spec""" % psychopy.__version__, """dist\\resources\Windows.spec""")
 
 # Provides easy access to the parallel port
 shutil.copyfile("dll\inpout32.dll", """dist\inpout32.dll""")
