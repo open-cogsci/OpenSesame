@@ -131,6 +131,7 @@ class item(openexp.trial.trial):
 		True on succes, False on failure
 		"""
 		
+		line = line.strip()
 		if len(line) > 0 and line[0] == "#":
 			self.comments.append(line[1:])
 			return True

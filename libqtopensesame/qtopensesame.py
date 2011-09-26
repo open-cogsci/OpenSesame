@@ -1113,8 +1113,11 @@ class qtopensesame(QtGui.QMainWindow):
 			return
 
 		try:
+			# Get ready, generate the script and see if the script can be
+			# re-parsed
 			self.get_ready()
 			script = self.experiment.to_string()
+			experiment.experiment(self, "Experiment", script) # Re-parse
 		except libopensesame.exceptions.script_error as e:
 			self.experiment.notify("Could not save file, because the script could not be generated. The following error occured:<br/>%s" % e)
 			return
