@@ -92,6 +92,8 @@ class generic_response:
 
 		self.experiment.start_response_interval = self.sri			
 		self.experiment.response, pos, self.experiment.end_response_interval = retval		
+		self.experiment.cursor_x = pos[0]
+		self.experiment.cursor_y = pos[1]
 		
 	def process_response(self):
 
