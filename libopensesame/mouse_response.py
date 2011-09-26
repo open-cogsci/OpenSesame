@@ -80,7 +80,7 @@ class mouse_response(item.item, generic_response.generic_response):
 		self.set_item_onset()
 
 		if self.show_cursor == "yes":
-			self._mouse.set_visible()
+			self._mouse.set_visible(True)
 
 		# Flush responses, to make sure that earlier responses
 		# are not carried over

@@ -83,13 +83,13 @@ class psycho(openexp._mouse.legacy.legacy):
 			
 		self.timeout = timeout
 				
-	def set_visible(self, visible = False):
+	def set_visible(self, visible = True):
 	
 		"""
 		Sets the visibility of the cursor
 		
 		Keyword arguments:
-		visible -- A boolean indicating the visibility of the cursor (default = False)
+		visible -- A boolean indicating the visibility of the cursor (default = True)
 		"""	
 	
 		self.visible = visible

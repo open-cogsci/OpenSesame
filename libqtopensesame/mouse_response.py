@@ -101,10 +101,16 @@ class mouse_response(libopensesame.mouse_response.mouse_response, libqtopensesam
 
 		row += 1
 
-		self.checkbox_show_cursor = QtGui.QCheckBox("Show mouse cursor")
+		self.checkbox_show_cursor = QtGui.QCheckBox("Visible mouse cursor")
 		self.checkbox_show_cursor.setToolTip("If checked, the mouse cursor will be visible")
 		QtCore.QObject.connect(self.checkbox_show_cursor, QtCore.SIGNAL("stateChanged(int)"), self.apply_edit_changes)
-		self.edit_grid.addWidget(self.checkbox_show_cursor, row, 0)		
+		self.edit_grid.addWidget(self.checkbox_show_cursor, row, 1)		
+		
+		row += 1
+
+		l = QtGui.QLabel("<small><i><b>Note:</b> On some systems the cursor may not appear, despite being set to 'visible'. If this happens, please refer to the documentation for more information.</i></small>")
+		l.setWordWrap(True)
+		self.edit_grid.addWidget(l, row, 1)
 		
 		self.edit_vbox.addStretch()
 							
