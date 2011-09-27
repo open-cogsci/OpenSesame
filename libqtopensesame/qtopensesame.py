@@ -1102,8 +1102,10 @@ class qtopensesame(QtGui.QMainWindow):
 
 		Keyword arguments:
 		dummy -- a dummy argument passed by the signal handler (default = None)
-		overwrite -- a boolean indicating whether other files should be overwritten without asking (default = True)
-		remember -- a boolean indicating whether the file should be included in the list of recent files (default = True)
+		overwrite -- a boolean indicating whether other files should be
+					 overwritten without asking (default = True)
+		remember -- a boolean indicating whether the file should be included in
+					the list of recent files (default = True)
 		"""
 
 		self.set_status("Saving ...")
@@ -1112,9 +1114,9 @@ class qtopensesame(QtGui.QMainWindow):
 			self.save_file_as()
 			return
 
+		# Get ready, generate the script and see if the script can be
+		# re-parsed. If not, throw an error.
 		try:
-			# Get ready, generate the script and see if the script can be
-			# re-parsed
 			self.get_ready()
 			script = self.experiment.to_string()
 			experiment.experiment(self, "Experiment", script) # Re-parse
@@ -1122,6 +1124,7 @@ class qtopensesame(QtGui.QMainWindow):
 			self.experiment.notify("Could not save file, because the script could not be generated. The following error occured:<br/>%s" % e)
 			return
 
+		# Try to save the experiment if it doesn't exist already
 		try:
 			resp = self.experiment.save(self.current_path, overwrite)
 			self.set_status("Saved as %s" % self.current_path)
@@ -1163,9 +1166,12 @@ class qtopensesame(QtGui.QMainWindow):
 		else:
 			path = self.current_path
 		path, file_type = QtGui.QFileDialog.getSaveFileNameAndFilter(self.ui.centralwidget, "Save file as ...", path, self.file_type_filter)
-		if path != None and path != "":
-			self.current_path = unicode(path)
-			self.save_file(overwrite = False)
+		if path != None and path != "":			
+			path = unicode(path)
+			if path[-18:].lower() != ".opensesame.tar.gz" and path[-11:].lower() != ".opensesame":
+				path += ".opensesame.tar.gz"
+			self.current_path = path			
+			self.save_file(overwrite=False)
 
 	def close_all_tabs(self):
 
