@@ -48,6 +48,8 @@ class text_input(item.item, generic_response.generic_response):
 		self.font_family = "sans"
 		self.font_size = 24
 		self.duration = "dummy"
+		self.accept_on = "return press"
+		self.timeout = 1000
 
 		# Provide a short accurate description of the items functionality
 		self.description = "Provides a simple text input"
@@ -93,7 +95,13 @@ class text_input(item.item, generic_response.generic_response):
 		resp = ""
 		response = ""
 		response_time = None
-		while resp != "return":
+		while True:
+		
+			if self._check_return and resp == "return":
+				break
+		
+			if self._check_timeout and self.time() - self.experiment.start_response_interval > self.timeout:
+				break
 
 			# Fill the canvas and put it to the screen
 			c.clear()
@@ -138,6 +146,22 @@ class text_input(item.item, generic_response.generic_response):
 		self.response_bookkeeping()
 
 		# Report success
+		return True
+		
+	def prepare(self):
+	
+		"""Prepare for the run phase"""
+		
+		if self.get("accept_on") != "return press":
+			self._check_timeout = True
+		else:
+			self._check_timeout = False
+			
+		if self.get("accept_on") != "timeout":
+			self._check_return = True
+		else:
+			self._check_return = False			
+	
 		return True
 
 	def var_info(self):
@@ -197,6 +221,8 @@ class qttext_input(text_input, qtplugin.qtplugin):
 		self.add_line_edit_control("background", "Background", tooltip = "Expecting a colorname (e.g., 'blue') or an HTML color (e.g., '#0000FF')")
 		self.add_combobox_control("font_family", "Font family", ["mono", "sans", "serif"], tooltip = "The font style")
 		self.add_spinbox_control("font_size", "Font size", 1, 512, suffix = "pt", tooltip = "The font size")
+		self.add_combobox_control("accept_on", "Accept on", ["return press", "timeout", "return press or timeout"], tooltip = "Indicates when the input text should be accepted")
+		self.add_spinbox_control("timeout", "Timeout (if applicable)", 1, 100000, suffix = "ms", tooltip = "Timeout value")		
 
 		# Add a stretch to the edit_vbox, so that the controls do not
 		# stretch to the bottom of the window.
