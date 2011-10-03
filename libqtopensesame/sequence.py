@@ -143,15 +143,18 @@ class sequence(libopensesame.sequence.sequence, libqtopensesame.qtitem.qtitem):
 		l.addWidget(QtGui.QLabel("The sequence is empty"))
 		l.addStretch()
 		
+		self.button_existing = self.action_button("add", "Append existing item to sequence", ("add", "existing"))
+		self.button_new = self.action_button("add", "Create and append  new item to sequence", ("add", "new"))
+		
 
 		grid = QtGui.QGridLayout()
 		grid.setMargin(0)
 		grid.addWidget(QtGui.QLabel("Append existing item"), 0, 0)
 		grid.addWidget(self.combobox_items, 0, 1)
-		grid.addWidget(self.action_button("add", "Append existing item to sequence", ("add", "existing")), 0, 2)
+		grid.addWidget(self.button_existing, 0, 2)
 		grid.addWidget(QtGui.QLabel("Append new item"), 1, 0)
 		grid.addWidget(self.combobox_item_type, 1, 1)
-		grid.addWidget(self.action_button("add", "Create and append  new item to sequence", ("add", "new")), 1, 2)
+		grid.addWidget(self.button_new, 1, 2)
 		grid.setColumnStretch(3, 10)
 		
 		self.draggable_list = libqtopensesame.draggables.draggable_list(self)
@@ -181,6 +184,13 @@ class sequence(libopensesame.sequence.sequence, libqtopensesame.qtitem.qtitem):
 
 		libqtopensesame.qtitem.qtitem.edit_widget(self)
 		self.experiment.item_combobox(None, self.parents(), self.combobox_items)
+		if self.combobox_items.count() == 0:
+			self.combobox_items.setDisabled(True)
+			self.button_existing.setDisabled(True)
+		else:
+			self.combobox_items.setDisabled(False)
+			self.button_existing.setDisabled(False)
+		
 		self.draggable_list.refresh()
 		self.frame_empty.setVisible(len(self.items) == 0)
 		self._active = True

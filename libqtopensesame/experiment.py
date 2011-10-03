@@ -309,6 +309,7 @@ class experiment(libopensesame.experiment.experiment):
 				if self.experiment.items[item].name == select:
 					c.setCurrentIndex(i)
 				i += 1
+				
 		return c
 
 	def item_type_combobox(self, core_items = True, plugins = True, c = None, select = None):
