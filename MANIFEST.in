@@ -17,5 +17,6 @@ recursive-include plugins/text_input *
 recursive-include plugins/notepad *
 recursive-include plugins/srbox *
 recursive-include plugins/reset_feedback *
+recursive-exclude plugins *.csv
 recursive-exclude plugins *.pyc
 recursive-exclude plugins */resources/*

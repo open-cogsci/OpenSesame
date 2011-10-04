@@ -47,6 +47,7 @@ import libqtopensesame.inline_editor
 import libqtopensesame.syntax_highlighter
 import libqtopensesame.preferences_widget
 import libqtopensesame.draggables
+import libqtopensesame.pyterm
 import openexp.exceptions
 import openexp.backend_info
 import traceback
@@ -87,34 +88,6 @@ class general_header_widget(qtitem.header_widget):
 		self.label_desc.show()
 		self.edit_desc.setText(self.item.get("description"))
 		self.edit_desc.hide()
-
-class output_buffer:
-
-	"""Used to capture the standard output and reroute it to the debug window"""
-
-	def __init__(self, plaintext):
-
-		"""
-		Constructor
-
-		Keyword arguments:
-		plaintext -- a QPlainTextEdit widget
-		"""
-
-		self.plaintext = plaintext
-
-	def write(self, s):
-
-		"""
-		Write a string
-
-		Arguments:
-		s -- a string
-		"""
-
-		if s.strip() != "":
-			self.plaintext.appendPlainText(s.strip())
-			QtGui.QApplication.processEvents()
 
 class plugin_action(QtGui.QAction):
 
@@ -211,7 +184,7 @@ class qtopensesame(QtGui.QMainWindow):
 		self.show_startup_tip = True
 		self.default_logfile_folder = ""
 		self.unsaved_changes = False
-
+		
 		# Determine the home folder
 		if platform.system() == "Windows":
 			self.home_folder = os.environ["USERPROFILE"]
@@ -278,6 +251,8 @@ class qtopensesame(QtGui.QMainWindow):
 
 		self.ui.action_show_random_tip.triggered.connect(self.show_random_tip)
 		self.ui.action_show_info_in_overview.triggered.connect(self.toggle_overview_info)
+		
+		self.ui.button_help_stdout.clicked.connect(self.open_stdout_help_tab)		
 
 		# Setup the variable inspector
 		self.ui.button_help_variables.clicked.connect(self.open_variables_help_tab)
@@ -289,22 +264,10 @@ class qtopensesame(QtGui.QMainWindow):
 		self.ui.pool_widget = pool_widget.pool_widget(self)
 		self.ui.dock_pool.setWidget(self.ui.pool_widget)
 
-		# Setup the debug window
-		if os.name == "posix":
-			font = QtGui.QFont("mono")
-		else:
-			font = QtGui.QFont("courier")
-		self.ui.dock_stdout.visibilityChanged.connect(self.ui.action_show_stdout.setChecked)
-		self.ui.button_help_stdout.clicked.connect(self.open_stdout_help_tab)
-		self.ui.edit_stdout.setFont(font)
-		self.ui.edit_python_command.setFont(font)
-		self.ui.edit_python_command.returnPressed.connect(self.execute_interpreter)
-		self.ui.button_python_execute.clicked.connect(self.execute_interpreter)
-
 		# Create the initial experiment
 		self.experiment = experiment.experiment(self, "New experiment")
 		self.experiment.from_string(open(self.experiment.resource("default.opensesame"), "r").read())
-
+		
 		# Initialize the tabs
 		self.init_general_tab()
 		self.init_unused_tab()
@@ -324,7 +287,6 @@ class qtopensesame(QtGui.QMainWindow):
 
 		# Build the items toolbar
 		self.ui.toolbar_items.build()
-		self.set_debug()
 		self.set_status("Welcome to OpenSesame %s" % self.version)
 		self.restore_state()
 		self.set_unsaved(False)
@@ -427,37 +389,6 @@ class qtopensesame(QtGui.QMainWindow):
 		settings.setValue("style", self.style)
 
 		settings.endGroup()	
-		
-	def set_debug(self):
-		
-		"""Initialize the debug window"""
-	
-		s = "[Version information: "
-		s += "OpenSesame %s" % self.version
-		s += "; Python %d.%d.%d" % (sys.version_info[0], sys.version_info[1], sys.version_info[2])
-		s += "; PyQt %s" % QtCore.PYQT_VERSION_STR		
-		try:
-			import pygame
-			s += "; PyGame %s" % pygame.ver
-		except:
-			s += "; PyGame not available"
-		try:
-			import OpenGL
-			s += "; PyOpenGL %s" % OpenGL.__version__
-		except:
-			s += "; PyOpenGL not available"			
-		try:
-			import psychopy
-			s += "; PsychoPy %s" % psychopy.__version__
-		except:
-			s += "; PsychoPy not available"						
-		try:
-			import pyglet
-			s += "; Pyglet %s" % pyglet.version
-		except:
-			s += "; Pyglet not available"
-		s += "]\n\nYou can print to this debug window using the Python 'print [msg]' statement in inline_script items or the interpreter field above.\n"
-		self.ui.edit_stdout.setPlainText(s)
 		
 	def set_style(self):
 	
@@ -855,28 +786,6 @@ class qtopensesame(QtGui.QMainWindow):
 		else:
 			style = QtCore.Qt.ToolButtonIconOnly
 		self.ui.toolbar_main.setToolButtonStyle(style)
-
-	def execute_interpreter(self, dummy = None):
-
-		"""
-		Reads a single Python command from the interpreter input and
-		writes the result to the output window by rerouting the standard
-		out
-
-		Keyword arguments:
-		dummy -- a dummy argument passed by the signal handler
-		"""
-
-		cmd = str(self.ui.edit_python_command.text())
-		buf = output_buffer(self.ui.edit_stdout)
-		sys.stdout = buf
-		print "> %s" % cmd
-		try:
-			exec(cmd)
-		except Exception as e:
-			print "> Error: %s" % e
-		sys.stdout = sys.__stdout__
-		self.ui.edit_python_command.clear()
 
 	def refresh_plugins(self, dummy = None):
 
@@ -1838,7 +1747,7 @@ class qtopensesame(QtGui.QMainWindow):
 		exp.auto_response = self.experiment.auto_response
 
 		# Reroute the standard output to the debug window
-		buf = output_buffer(self.ui.edit_stdout)
+		buf = libqtopensesame.pyterm.output_buffer(self.ui.edit_stdout)
 		sys.stdout = buf
 
 		if self.opensesamerun:
@@ -1873,6 +1782,7 @@ class qtopensesame(QtGui.QMainWindow):
 
 		# Undo the standard output rerouting
 		sys.stdout = sys.__stdout__
+		self.ui.edit_stdout.show_prompt()
 
 		# Resume autosave, but not if opensesamerun is called
 		if self.autosave_timer != None:
