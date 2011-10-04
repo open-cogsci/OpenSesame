@@ -18,7 +18,39 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 import code
 import sys
 import os
+import time
 from PyQt4 import QtGui, QtCore
+
+def modules():
+
+	"""Print version info"""
+
+	import libqtopensesame.qtopensesame
+	from libopensesame.misc import version as osversion
+	s = "OpenSesame %s" % osversion
+	s += "\nPython %d.%d.%d" % (sys.version_info[0], sys.version_info[1], sys.version_info[2])
+	s += "\nPyQt %s" % QtCore.PYQT_VERSION_STR		
+	try:
+		import pygame
+		s += "\nPyGame %s" % pygame.ver
+	except:
+		s += "\nPyGame not available"
+	try:
+		import OpenGL
+		s += "\nPyOpenGL %s" % OpenGL.__version__
+	except:
+		s += "\nPyOpenGL not available"			
+	try:
+		import psychopy
+		s += "\nPsychoPy %s" % psychopy.__version__
+	except:
+		s += "\nPsychoPy not available"						
+	try:
+		import pyglet
+		s += "\nPyglet %s" % pyglet.version
+	except:
+		s += "\nPyglet not available"
+	print s
 
 class output_buffer:
 
@@ -38,12 +70,14 @@ class output_buffer:
 	def readline(self):
 	
 		"""Input is crudely supported through an input dialog"""
-	
-		s, ok = QtGui.QInputDialog.getText(self.plaintext, "The interpreter asks for input", "Input")
-		if ok:
-			return str(s) + "\n"
-		else:
-			return "\n"
+		
+		self.plaintext._input = ""
+		self.plaintext.collect_input = True
+		while len(self.plaintext._input) == 0 or self.plaintext._input[-1] != "\n":
+			time.sleep(0.01)
+			QtGui.QApplication.processEvents()
+		self.plaintext.collect_input = False
+		return self.plaintext._input
 		
 	def write(self, s):
 
@@ -55,7 +89,6 @@ class output_buffer:
 		"""
 
 		if s.strip() != "":
-			#self.plaintext.appendHtml(s.replace(" ", "&nbsp;"))
 			self.plaintext.appendPlainText(s)
 			QtGui.QApplication.processEvents()
 
@@ -66,14 +99,13 @@ class pyterm(code.InteractiveConsole):
 	def __init__(self, textedit=None):
 	
 		"""Constructor"""	
+		
+		global modules
 	
-		code.InteractiveConsole.__init__(self)
+		self._locals = {"modules" : modules}
+		code.InteractiveConsole.__init__(self, self._locals)
 		self.textedit = textedit
-		
-	def push(self, cmd):
-	
-		code.InteractiveConsole.push(self, cmd)
-		
+				
 	def write(self, s):
 	
 		"""
@@ -104,6 +136,8 @@ class console(QtGui.QPlainTextEdit):
 		else:
 			font = QtGui.QFont("courier")
 		self.setFont(font)		
+		self.collect_input = False
+		self._input = ""
 		
 		self.prompt = ">>> "
 		self.pyterm = pyterm()
@@ -124,42 +158,11 @@ class console(QtGui.QPlainTextEdit):
 		"""Print welcome information"""
 	
 		s = "Python %d.%d.%d" % (sys.version_info[0], sys.version_info[1], sys.version_info[2])
-		s += "\nUse the 'print [msg]' statement in inline_script items to print to this debug window."		 
-		s += '\nType "modules" for details about installed modules and version information.'
-		
+		s += "\nUse the \"print [msg]\" statement in inline_script items to print to this debug window."		 
+		s += "\nType \"help()\", \"copyright()\", \"credits()\" or \"license()\" for more information."
+		s += "\nType \"modules()\" for details about installed modules and version information."
 		self.insertPlainText(s)			
-		
-	def show_version(self):
 	
-		"""Print version info"""
-
-		from libopensesame.misc import version as osversion
-		s = "OpenSesame %s" % osversion
-		s += "\nPython %d.%d.%d" % (sys.version_info[0], sys.version_info[1], sys.version_info[2])
-		s += "\nPyQt %s" % QtCore.PYQT_VERSION_STR		
-		try:
-			import pygame
-			s += "\nPyGame %s" % pygame.ver
-		except:
-			s += "\nPyGame not available"
-		try:
-			import OpenGL
-			s += "\nPyOpenGL %s" % OpenGL.__version__
-		except:
-			s += "\nPyOpenGL not available"			
-		try:
-			import psychopy
-			s += "\nPsychoPy %s" % psychopy.__version__
-		except:
-			s += "\nPsychoPy not available"						
-		try:
-			import pyglet
-			s += "\nPyglet %s" % pyglet.version
-		except:
-			s += "\nPyglet not available"
-		self.appendPlainText(s)
-		self.show_prompt()
-		
 	def show_prompt(self):
 	
 		"""Show a prompt"""
@@ -175,21 +178,28 @@ class console(QtGui.QPlainTextEdit):
 		e -- a QKeyEvent
 		"""
 	
-		self.jump_to_end()		
-		if e.key() in [QtCore.Qt.Key_Enter, QtCore.Qt.Key_Return]:		
-			self.execute()			
-		elif e.key() not in [QtCore.Qt.Key_Left, QtCore.Qt.Key_Backspace]\
-			or self.textCursor().columnNumber() > len(self.prompt):
-			QtGui.QPlainTextEdit.keyPressEvent(self, e)
+		# Emulate the standard input
+		if self.collect_input:
+			if e.key() in [QtCore.Qt.Key_Enter, QtCore.Qt.Key_Return]:
+				self._input += "\n"
+			else:
+				self._input += str(e.text())
+				QtGui.QPlainTextEdit.keyPressEvent(self, e)	
+				
+		# Emulate the console
+		else:
+			self.jump_to_end()		
+			if e.key() in [QtCore.Qt.Key_Enter, QtCore.Qt.Key_Return]:		
+				self.execute()			
+			elif e.key() not in [QtCore.Qt.Key_Left, QtCore.Qt.Key_Backspace]\
+				or self.textCursor().positionInBlock() > len(self.prompt):
+				QtGui.QPlainTextEdit.keyPressEvent(self, e)			
 		
 	def execute(self):
 	
 		"""Execute a command"""
 	
 		s = str(self.document().lastBlock().text())[len(self.prompt):]
-		if s == "modules":
-			self.show_version()
-			return		
 		buf = output_buffer(self)
 		sys.stdout = buf
 		sys.stdin = buf
