@@ -393,7 +393,7 @@ class inline_editor(QFrame):
 	 
 			painter.end()
  
-	def __init__(self, experiment):
+	def __init__(self, experiment, notification=None):
 
 		"""
 		Constructor of the main class, which wraps around
@@ -441,7 +441,7 @@ class inline_editor(QFrame):
 		self.apply = QtGui.QPushButton(self.experiment.icon("apply"), "Apply")
 		self.apply.setToolTip("Press Alt + A to apply unsaved changes")
 		self.apply.setIconSize(QtCore.QSize(16, 16))
-				
+						
 		search_widget = QtGui.QWidget()
 		search_hbox = QtGui.QHBoxLayout(search_widget)
 		search_hbox.addWidget(self.search)
@@ -449,7 +449,9 @@ class inline_editor(QFrame):
 		search_hbox.addWidget(self.replace_button)
 		search_hbox.addWidget(self.indent_button)
 		search_hbox.addWidget(self.unindent_button)
-		search_hbox.addStretch()		
+		if notification != None:
+			search_hbox.addWidget(QtGui.QLabel("<small>%s</small>" % notification))				
+		search_hbox.addStretch()						
 		search_hbox.addWidget(self.modified)				
 		search_hbox.addWidget(self.apply)
 		search_hbox.setContentsMargins(0, 0, 0, 0)		

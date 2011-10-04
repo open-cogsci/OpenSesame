@@ -69,9 +69,16 @@ shutil.copyfile("""..\media_player\info.txt""", """dist\plugins\media_player\inf
 # Copy Remaining resources and dll that have been missed by Py2exe
 shutil.copyfile("README", os.path.join("dist", "README"))
 shutil.copyfile("COPYING", os.path.join("dist", "COPYING"))
-shutil.copytree("examples", os.path.join("dist", "examples"))
 shutil.copytree("sounds", os.path.join("dist", "sounds"))
 shutil.copytree("help", os.path.join("dist", "help"))
+
+# Copy the examples
+shutil.copytree("examples", os.path.join("dist", "examples"))
+for path in os.listdir(os.path.join("dist", "examples")):
+		if path[-1] == "~" or os.path.splitext(path)[1] not in [".opensesame", ".gz"]:
+			print "removing file", path
+			os.remove(os.path.join("dist", "examples", path))
+
 shutil.copyfile("""C:\Python26\Lib\site-packages\pygame\SDL_ttf.dll""", """dist\SDL_ttf.dll""")
 shutil.copyfile("""C:\Python26\Lib\site-packages\pygame\libfreetype-6.dll""", """dist\libfreetype-6.dll""")
 shutil.copyfile("""C:\Python26\Lib\site-packages\pygame\libogg-0.dll""", """dist\libogg-0.dll""")

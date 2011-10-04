@@ -451,6 +451,11 @@ class qtopensesame(QtGui.QMainWindow):
 			s += "; PsychoPy %s" % psychopy.__version__
 		except:
 			s += "; PsychoPy not available"						
+		try:
+			import pyglet
+			s += "; Pyglet %s" % pyglet.version
+		except:
+			s += "; Pyglet not available"
 		s += "]\n\nYou can print to this debug window using the Python 'print [msg]' statement in inline_script items or the interpreter field above.\n"
 		self.ui.edit_stdout.setPlainText(s)
 		

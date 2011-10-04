@@ -145,5 +145,11 @@ if "--preload" in sys.argv:
 	except Exception as e:
 		print "includes: failed to import 'parallel' module <http://pyserial.sourceforge.net/pyparallel.html>. You will not be able to use parallel port connectivity. Error: %s" % e
 
+	print "includes: preloading 'pyglet'"
+	try:
+		import pyglet
+	except Exception as e:
+		print "includes: failed to import 'pyglet' module <http://www.pyglet.org/>. You will not be able to use PsychoPy. Error: %s" % e
+
 	print "includes: ... done"
 

@@ -20,15 +20,25 @@ import libqtopensesame.qtitem
 import libqtopensesame.inline_editor
 import random
 import re
+import sys
 from PyQt4 import QtCore, QtGui
 import libqtopensesame.syntax_highlighter
 
 class inline_script(libopensesame.inline_script.inline_script, libqtopensesame.qtitem.qtitem):
 
-	def __init__(self, name, experiment, string = None):
+	"""The inline_script GUI controls"""
+
+	def __init__(self, name, experiment, string=None):
 	
 		"""
-		Initialize the experiment		
+		Constructor
+		
+		Arguments:
+		name -- the item name
+		experiment -- the experiment
+		
+		Keywords arguments:
+		string -- definition string
 		"""
 		
 		libopensesame.inline_script.inline_script.__init__(self, name, experiment, string)
@@ -37,10 +47,15 @@ class inline_script(libopensesame.inline_script.inline_script, libqtopensesame.q
 		self._var_info = None
 		random.seed()
 		
-	def apply_edit_changes(self, dummy = None, dummy2 = None, catch = True):
+	def apply_edit_changes(self, dummy=None, dummy2=None, catch=True):
 	
 		"""
-		Apply changes to the script items
+		Apply the controls
+		
+		Keywords arguments:
+		dummy -- dummy argument
+		dummy2 -- dummy argument
+		catch -- deprecated argument
 		"""	
 				
 		libqtopensesame.qtitem.qtitem.apply_edit_changes(self, False)
@@ -60,15 +75,14 @@ class inline_script(libopensesame.inline_script.inline_script, libqtopensesame.q
 						
 	def init_edit_widget(self):
 	
-		"""
-		Build the edit widget
-		"""
+		"""Construct the GUI controls"""
 		
 		libqtopensesame.qtitem.qtitem.init_edit_widget(self, False)
 		
 		tabwidget_script = QtGui.QTabWidget(self._edit_widget)
-		
-		self.textedit_prepare = libqtopensesame.inline_editor.inline_editor(self.experiment)
+		py_ver = "Python %d.%d.%d" % (sys.version_info[0], sys.version_info[1], sys.version_info[2])
+				
+		self.textedit_prepare = libqtopensesame.inline_editor.inline_editor(self.experiment, notification=py_ver)
 		self.textedit_prepare.apply.clicked.connect(self.apply_edit_changes)
 		QtCore.QObject.connect(self.textedit_prepare.edit, QtCore.SIGNAL("focusLost"), self.apply_edit_changes)		
 		libqtopensesame.syntax_highlighter.syntax_highlighter(self.textedit_prepare.edit.document(), libqtopensesame.syntax_highlighter.python_keywords)
@@ -88,7 +102,7 @@ class inline_script(libopensesame.inline_script.inline_script, libqtopensesame.q
 		
 		tabwidget_script.addTab(widget, self.experiment.icon("inline_script"), "Prepare phase")
 						
-		self.textedit_run = libqtopensesame.inline_editor.inline_editor(self.experiment)
+		self.textedit_run = libqtopensesame.inline_editor.inline_editor(self.experiment, notification=py_ver)
 		self.textedit_run.apply.clicked.connect(self.apply_edit_changes)	
 		QtCore.QObject.connect(self.textedit_run.edit, QtCore.SIGNAL("focusLost"), self.apply_edit_changes)
 		libqtopensesame.syntax_highlighter.syntax_highlighter(self.textedit_run.edit.document(), libqtopensesame.syntax_highlighter.python_keywords)
@@ -113,9 +127,10 @@ class inline_script(libopensesame.inline_script.inline_script, libqtopensesame.q
 	def edit_widget(self):
 	
 		"""
-		Refresh the edit widget
-		with current information
-		and return it
+		Update the GUI controls
+		
+		Returns:
+		The control QWidget
 		"""	
 		
 		libqtopensesame.qtitem.qtitem.edit_widget(self, False)				
@@ -129,9 +144,7 @@ class inline_script(libopensesame.inline_script.inline_script, libqtopensesame.q
 				
 	def get_ready(self):
 	
-		"""
-		Apply pending script changes
-		"""
+		"""Apply pending script changes"""
 		
 		if self.textedit_prepare.isModified() or self.textedit_run.isModified():
 			if self.experiment.debug:
