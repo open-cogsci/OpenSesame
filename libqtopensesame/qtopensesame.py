@@ -48,6 +48,7 @@ import libqtopensesame.syntax_highlighter
 import libqtopensesame.preferences_widget
 import libqtopensesame.draggables
 import libqtopensesame.pyterm
+from libqtopensesame import config
 import openexp.exceptions
 import openexp.backend_info
 import traceback
@@ -168,7 +169,7 @@ class qtopensesame(QtGui.QMainWindow):
 
 		# Construct the parent
 		QtGui.QMainWindow.__init__(self, parent)
-
+		
 		# Setup the UI
 		self.ui = opensesame_ui.Ui_MainWindow()
 		self.ui.setupUi(self)
@@ -340,8 +341,8 @@ class qtopensesame(QtGui.QMainWindow):
 		self.immediate_rename = settings.value("immediate_rename", False).toBool()
 		self.opensesamerun_exec = str(settings.value("opensesamerun_exec", "").toString())
 		self.opensesamerun = settings.value("opensesamerun", False).toBool()
-		self.experiment.auto_response = settings.value("auto_response", False).toBool()
-		self.style = settings.value("style", "").toString()
+		self.experiment.auto_response = settings.value("auto_response", False).toBool()		
+		self.style = settings.value("style", "").toString()				
 
 		# Unpack the string with recent files and only remember those that still exist
 		self.recent_files = []
@@ -357,6 +358,8 @@ class qtopensesame(QtGui.QMainWindow):
 			self.ui.toolbar_main.setToolButtonStyle(QtCore.Qt.ToolButtonTextUnderIcon)
 		else:
 			self.ui.toolbar_main.setToolButtonStyle(QtCore.Qt.ToolButtonIconOnly)
+			
+		config.restore_config(settings)
 
 		settings.endGroup()
 		self.set_style()
@@ -388,6 +391,8 @@ class qtopensesame(QtGui.QMainWindow):
 		settings.setValue("recent_files", ";;".join(self.recent_files))
 		settings.setValue("style", self.style)
 
+		config.save_config(settings)
+
 		settings.endGroup()	
 		
 	def set_style(self):
@@ -401,6 +406,7 @@ class qtopensesame(QtGui.QMainWindow):
 		else:
 			if self.experiment.debug:
 				print "qtopensesame.set_style(): ignoring unknown style '%s'" % self.style		
+			self.style = ""				
 
 	def set_auto_response(self):
 
@@ -559,8 +565,11 @@ class qtopensesame(QtGui.QMainWindow):
 		dummy -- a dummy argument passed by the signal handler
 		"""
 
-		d = start_new_dialog.start_new_dialog(self)
-		d.exec_()
+		if config.get_config("new_experiment_dialog"):
+			d = start_new_dialog.start_new_dialog(self)
+			d.exec_()
+		else:
+			self.open_file(path=self.experiment.resource("default.opensesame"))
 		self.set_auto_response()
 
 	def set_immediate_rename(self):
@@ -1296,9 +1305,8 @@ class qtopensesame(QtGui.QMainWindow):
 		header_widget.setLayout(header_hbox)
 
 		# Script editor
-		self.edit_script = libqtopensesame.inline_editor.inline_editor(self.experiment)
+		self.edit_script = libqtopensesame.inline_editor.inline_editor(self.experiment, syntax="opensesame")
 		self.edit_script.apply.clicked.connect(self.apply_general_script)
-		libqtopensesame.syntax_highlighter.syntax_highlighter(self.edit_script.edit.document(), libqtopensesame.syntax_highlighter.opensesame_keywords)
 
 		# The rest of the controls from the UI file
 		w = QtGui.QWidget()

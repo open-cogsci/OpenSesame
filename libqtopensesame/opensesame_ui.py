@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'resources/opensesame.ui'
 #
-# Created: Tue Oct  4 16:57:56 2011
+# Created: Wed Oct  5 16:30:49 2011
 #      by: PyQt4 UI code generator 4.8.3
 #
 # WARNING! All changes made in this file will be lost!
@@ -63,6 +63,7 @@ class Ui_MainWindow(object):
         self.verticalLayout = QtGui.QVBoxLayout(self.dock_widget_overview)
         self.verticalLayout.setObjectName(_fromUtf8("verticalLayout"))
         self.itemtree = tree_overview(self.dock_widget_overview)
+        self.itemtree.setMinimumSize(QtCore.QSize(200, 0))
         self.itemtree.setAcceptDrops(True)
         self.itemtree.setAlternatingRowColors(True)
         self.itemtree.setAutoExpandDelay(4)

@@ -359,8 +359,7 @@ class qtitem(object):
 		Build the script widget
 		"""
 
-		self.edit_script = libqtopensesame.inline_editor.inline_editor(self.experiment)
-		libqtopensesame.syntax_highlighter.syntax_highlighter(self.edit_script.edit.document(), libqtopensesame.syntax_highlighter.opensesame_keywords)
+		self.edit_script = libqtopensesame.inline_editor.inline_editor(self.experiment, syntax="opensesame")
 
 		script = ""
 		for s in self.to_string().split("\n")[1:]:

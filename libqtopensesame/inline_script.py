@@ -17,12 +17,11 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 
 import libopensesame.inline_script
 import libqtopensesame.qtitem
-import libqtopensesame.inline_editor
 import random
 import re
 import sys
 from PyQt4 import QtCore, QtGui
-import libqtopensesame.syntax_highlighter
+from libqtopensesame.inline_editor import inline_editor
 
 class inline_script(libopensesame.inline_script.inline_script, libqtopensesame.qtitem.qtitem):
 
@@ -81,12 +80,11 @@ class inline_script(libopensesame.inline_script.inline_script, libqtopensesame.q
 		
 		tabwidget_script = QtGui.QTabWidget(self._edit_widget)
 		py_ver = "Python %d.%d.%d" % (sys.version_info[0], sys.version_info[1], sys.version_info[2])
-				
-		self.textedit_prepare = libqtopensesame.inline_editor.inline_editor(self.experiment, notification=py_ver)
+		
+		self.textedit_prepare = inline_editor(self.experiment, notification=py_ver, syntax="python")
 		self.textedit_prepare.apply.clicked.connect(self.apply_edit_changes)
 		QtCore.QObject.connect(self.textedit_prepare.edit, QtCore.SIGNAL("focusLost"), self.apply_edit_changes)		
-		libqtopensesame.syntax_highlighter.syntax_highlighter(self.textedit_prepare.edit.document(), libqtopensesame.syntax_highlighter.python_keywords)
-		
+				
 		hbox = QtGui.QHBoxLayout()
 		hbox.addStretch()
 		hbox.setContentsMargins(0, 0, 0, 0)
@@ -101,11 +99,10 @@ class inline_script(libopensesame.inline_script.inline_script, libqtopensesame.q
 		widget.setLayout(vbox)
 		
 		tabwidget_script.addTab(widget, self.experiment.icon("inline_script"), "Prepare phase")
-						
-		self.textedit_run = libqtopensesame.inline_editor.inline_editor(self.experiment, notification=py_ver)
-		self.textedit_run.apply.clicked.connect(self.apply_edit_changes)	
-		QtCore.QObject.connect(self.textedit_run.edit, QtCore.SIGNAL("focusLost"), self.apply_edit_changes)
-		libqtopensesame.syntax_highlighter.syntax_highlighter(self.textedit_run.edit.document(), libqtopensesame.syntax_highlighter.python_keywords)
+								
+		self.textedit_run = inline_editor(self.experiment, notification=py_ver, syntax="python")
+		self.textedit_run.apply.clicked.connect(self.apply_edit_changes)
+		QtCore.QObject.connect(self.textedit_run.edit, QtCore.SIGNAL("focusLost"), self.apply_edit_changes)				
 		
 		hbox = QtGui.QHBoxLayout()
 		hbox.addStretch()
