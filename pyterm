@@ -26,7 +26,7 @@ if __name__ == "__main__":
 
 	app = QtGui.QApplication(sys.argv)
 	widget = console()
-	widget.resize(500, 300)
+	widget.resize(640, 480)
 	widget.setWindowTitle('OpenSesame Python interpreter')
 	widget.show()
 	sys.exit(app.exec_())

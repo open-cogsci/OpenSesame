@@ -138,7 +138,7 @@ class console(QtGui.QPlainTextEdit):
 		self.setFont(font)		
 		self.collect_input = False
 		self._input = ""
-		
+		self.history = []		
 		self.prompt = ">>> "
 		self.pyterm = pyterm()
 		self.pyterm.textedit = self
@@ -157,17 +157,17 @@ class console(QtGui.QPlainTextEdit):
 		
 		"""Print welcome information"""
 	
-		s = "Python %d.%d.%d" % (sys.version_info[0], sys.version_info[1], sys.version_info[2])
-		s += "\nUse the \"print [msg]\" statement in inline_script items to print to this debug window."		 
-		s += "\nType \"help()\", \"copyright()\", \"credits()\" or \"license()\" for more information."
-		s += "\nType \"modules()\" for details about installed modules and version information."
+		s = "Python %d.%d.%d" % (sys.version_info[0], sys.version_info[1], sys.version_info[2]) \
+			+ "\nType \"help()\", \"copyright()\", \"credits()\" or \"license()\" for more information." \
+			+ "\nType \"modules()\" for details about installed modules and version information." \
+			+ "\nUse the \"print [msg]\" statement in inline_script items to print to this debug window."
 		self.insertPlainText(s)			
 	
-	def show_prompt(self):
+	def show_prompt(self, suffix=""):
 	
 		"""Show a prompt"""
 	
-		self.appendPlainText(self.prompt)
+		self.appendPlainText(self.prompt+suffix)
 		
 	def keyPressEvent(self, e):
 	
@@ -183,13 +183,17 @@ class console(QtGui.QPlainTextEdit):
 			if e.key() in [QtCore.Qt.Key_Enter, QtCore.Qt.Key_Return]:
 				self._input += "\n"
 			else:
-				self._input += str(e.text())
+				self._input += unicode(e.text())
 				QtGui.QPlainTextEdit.keyPressEvent(self, e)	
 				
 		# Emulate the console
 		else:
 			self.jump_to_end()		
-			if e.key() in [QtCore.Qt.Key_Enter, QtCore.Qt.Key_Return]:		
+			if e.key() == QtCore.Qt.Key_Up:			
+				if len(self.history) > 0:
+					cmd = self.history.pop()
+					self.show_prompt(cmd)			
+			elif e.key() in [QtCore.Qt.Key_Enter, QtCore.Qt.Key_Return]:		
 				self.execute()			
 			elif e.key() not in [QtCore.Qt.Key_Left, QtCore.Qt.Key_Backspace]\
 				or self.textCursor().positionInBlock() > len(self.prompt):
@@ -199,7 +203,14 @@ class console(QtGui.QPlainTextEdit):
 	
 		"""Execute a command"""
 	
-		s = str(self.document().lastBlock().text())[len(self.prompt):]
+		try:
+			s = unicode(self.document().lastBlock().text())[len(self.prompt):]
+		except:
+			self.appendPlainText("Error: Command contains invalid characters")
+			self.show_prompt()
+			return			
+		if len(s) > 0:
+			self.history.append(s)
 		buf = output_buffer(self)
 		sys.stdout = buf
 		sys.stdin = buf
