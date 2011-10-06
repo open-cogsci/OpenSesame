@@ -18,7 +18,7 @@
     <normaloff>:/icons/experiment.png</normaloff>:/icons/experiment.png</iconset>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <layout class="QHBoxLayout" name="horizontalLayout">
+   <layout class="QVBoxLayout" name="verticalLayout_6">
     <item>
      <widget class="QTabWidget" name="tabwidget">
       <property name="currentIndex">
@@ -132,7 +132,7 @@
    <addaction name="menu_tools"/>
    <addaction name="menu_help"/>
   </widget>
-  <widget class="QStatusBar" name="statusbar"/>
+  <widget class="statusbar" name="statusbar"/>
   <widget class="QDockWidget" name="dock_overview">
    <property name="features">
     <set>QDockWidget::DockWidgetFloatable|QDockWidget::DockWidgetMovable</set>
@@ -982,6 +982,11 @@ background-color: #729fcf;</string>
    <class>console</class>
    <extends>QPlainTextEdit</extends>
    <header>pyterm.h</header>
+  </customwidget>
+  <customwidget>
+   <class>statusbar</class>
+   <extends>QStatusBar</extends>
+   <header>statusbar.h</header>
   </customwidget>
  </customwidgets>
  <resources>

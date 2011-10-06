@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'resources/opensesame.ui'
 #
-# Created: Wed Oct  5 16:30:49 2011
+# Created: Thu Oct  6 17:05:32 2011
 #      by: PyQt4 UI code generator 4.8.3
 #
 # WARNING! All changes made in this file will be lost!
@@ -23,13 +23,13 @@ class Ui_MainWindow(object):
         MainWindow.setWindowIcon(icon)
         self.centralwidget = QtGui.QWidget(MainWindow)
         self.centralwidget.setObjectName(_fromUtf8("centralwidget"))
-        self.horizontalLayout = QtGui.QHBoxLayout(self.centralwidget)
-        self.horizontalLayout.setObjectName(_fromUtf8("horizontalLayout"))
+        self.verticalLayout_6 = QtGui.QVBoxLayout(self.centralwidget)
+        self.verticalLayout_6.setObjectName(_fromUtf8("verticalLayout_6"))
         self.tabwidget = QtGui.QTabWidget(self.centralwidget)
         self.tabwidget.setTabsClosable(True)
         self.tabwidget.setMovable(True)
         self.tabwidget.setObjectName(_fromUtf8("tabwidget"))
-        self.horizontalLayout.addWidget(self.tabwidget)
+        self.verticalLayout_6.addWidget(self.tabwidget)
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtGui.QMenuBar(MainWindow)
         self.menubar.setGeometry(QtCore.QRect(0, 0, 1000, 25))
@@ -52,7 +52,7 @@ class Ui_MainWindow(object):
         self.menu_tools = QtGui.QMenu(self.menubar)
         self.menu_tools.setObjectName(_fromUtf8("menu_tools"))
         MainWindow.setMenuBar(self.menubar)
-        self.statusbar = QtGui.QStatusBar(MainWindow)
+        self.statusbar = statusbar(MainWindow)
         self.statusbar.setObjectName(_fromUtf8("statusbar"))
         MainWindow.setStatusBar(self.statusbar)
         self.dock_overview = QtGui.QDockWidget(MainWindow)
@@ -585,6 +585,7 @@ class Ui_MainWindow(object):
         self.actionDummy.setText(QtGui.QApplication.translate("MainWindow", "Dummy", None, QtGui.QApplication.UnicodeUTF8))
         self.action_show_info_in_overview.setText(QtGui.QApplication.translate("MainWindow", "Show info in overview", None, QtGui.QApplication.UnicodeUTF8))
 
+from statusbar import statusbar
 from tree_overview import tree_overview
 from pyterm import console
 from toolbar_items import toolbar_items

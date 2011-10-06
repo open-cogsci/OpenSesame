@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'resources/new_loop_sequence.ui'
 #
-# Created: Wed Oct  5 16:30:50 2011
+# Created: Thu Oct  6 17:05:33 2011
 #      by: PyQt4 UI code generator 4.8.3
 #
 # WARNING! All changes made in this file will be lost!

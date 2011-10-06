@@ -209,7 +209,7 @@ class qtopensesame(QtGui.QMainWindow):
 
 		# Set the window message
 		self.window_message("Welcome to OpenSesame %s" % self.version)
-
+		
 		# Make the connections
 		self.ui.tabwidget.tabCloseRequested.connect(self.close_tab)
 		self.ui.itemtree.itemClicked.connect(self.open_item)
@@ -320,7 +320,7 @@ class qtopensesame(QtGui.QMainWindow):
 
 		if self.options.run and self.options.run_in_window:
 			parser.error("Options -r / --run and -w / --run-in-window are mutually exclusive.")
-
+			
 	def restore_state(self):
 
 		"""Restore the current window to the saved state"""
@@ -394,6 +394,21 @@ class qtopensesame(QtGui.QMainWindow):
 		config.save_config(settings)
 
 		settings.endGroup()	
+		
+	def set_busy(self, state=True):
+	
+		"""
+		Show/ hide the busy notification
+		
+		Keywords arguments:
+		state -- indicates the busy status (default=True)
+		"""
+		
+		if state:
+			self.set_status("Busy ...", status="busy")
+		else:
+			self.set_status("Done!")
+		QtGui.QApplication.processEvents()
 		
 	def set_style(self):
 	
@@ -508,7 +523,7 @@ class qtopensesame(QtGui.QMainWindow):
 		self.unsaved_changes = unsaved_changes
 		self.window_message()
 
-	def set_status(self, msg, timeout = 5000):
+	def set_status(self, msg, timeout=5000, status="ready"):
 
 		"""
 		Print a text message to the statusbar
@@ -520,7 +535,7 @@ class qtopensesame(QtGui.QMainWindow):
 		timeout -- a value in milliseconds after which the message is removed (default = 5000)
 		"""
 
-		self.ui.statusbar.showMessage(msg, timeout)
+		self.ui.statusbar.set_status(msg, timeout=timeout, status=status)
 
 	def window_message(self, msg = None):
 
@@ -1832,6 +1847,7 @@ class qtopensesame(QtGui.QMainWindow):
 			return
 		self.lock_refresh = True
 
+		self.set_busy(True)
 		if self.experiment.debug:
 			print "qtopensesame.refresh(): %s" % changed_item
 
@@ -1863,8 +1879,8 @@ class qtopensesame(QtGui.QMainWindow):
 		self.refresh_variable_inspector()
 		self.refresh_pool()
 		self.set_unsaved()
-
 		self.lock_refresh = False
+		self.set_busy(False)		
 
 	def hard_refresh(self, changed_item):
 
@@ -1876,14 +1892,15 @@ class qtopensesame(QtGui.QMainWindow):
 
 		Arguments:
 		changed_item -- the name of the changed item
-		"""
+		"""		
 
 		# Make sure the refresh does not get caught in
 		# a recursive loop
 		if self.lock_refresh:
 			return
 		self.lock_refresh = True
-
+		
+		self.set_busy(True)
 		if self.experiment.debug:
 			print "qtopensesame.hard_refresh(): %s" % changed_item
 
@@ -1914,6 +1931,7 @@ class qtopensesame(QtGui.QMainWindow):
 		self.ui.tabwidget.setCurrentIndex(index)
 
 		self.lock_refresh = False
+		self.set_busy(False)		
 
 	def populate_plugin_menu(self, menu):
 
