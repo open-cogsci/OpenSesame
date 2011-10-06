@@ -171,16 +171,19 @@ class toolbar_items(QtGui.QToolBar):
 			content.append(widget_item(self.main_window.experiment.resource("%s_large.png" % item), item, self.main_window))
 		self.add_content(content)
 		
-		# Create a dictionary of plugins by categorie
+		# Create a dictionary of plugins by category. We also maintain a list
+		# to preserve the order of the categories.
+		cat_list = []
 		cat_dict = {}
 		for plugin in libopensesame.plugins.list_plugins():
 			cat = libopensesame.plugins.plugin_category(plugin)
 			if cat not in cat_dict:
 				cat_dict[cat] = []
+				cat_list.append(cat)
 			cat_dict[cat].append(plugin)
 	
 		# Add the plugins	
-		for cat in cat_dict:
+		for cat in cat_list:
 			self.addSeparator()
 			if self.orientation() == QtCore.Qt.Vertical:
 				self.addWidget(toolbar_label("<small>%s</small>" % cat))			
