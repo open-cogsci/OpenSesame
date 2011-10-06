@@ -25,9 +25,7 @@ import numpy as np
 
 class psycho(openexp._canvas.legacy.legacy):
 
-	"""
-	This is a canvas backend which uses PsychoPy (with Pyglet).
-	"""
+	"""This is a canvas backend built on top of PsychoPy (with Pyglet)"""
 	
 	def __init__(self, experiment, bgcolor = None, fgcolor = None):
 		
@@ -89,7 +87,7 @@ class psycho(openexp._canvas.legacy.legacy):
 		"""
 		
 		# TODO
-		raise openexp.exceptions.canvas_error("openexp._canvas.psycho.flip(): not implemented!")		
+		raise openexp.exceptions.canvas_error("openexp._canvas.psycho.flip(): the flip() function has not been implemented for the psycho back-end!")		
 		
 	def copy(self, canvas):
 	
@@ -153,9 +151,12 @@ class psycho(openexp._canvas.legacy.legacy):
 		if color != None:
 			color = self.color(color)
 		else:
-			color = self.bgcolor
-		# The background is simply a rectangle, because of the awkward double flip required by set_color()			
-		self.rect(0, 0, self.experiment.width, self.experiment.height, color = color, fill = True)
+			color = self.bgcolor		
+		if self.experiment.background != color:
+			# The background is simply a rectangle, because of the double flip
+			# required by set_color()			
+			self.rect(0, 0, self.experiment.width, self.experiment.height, \
+				color=color, fill=True)
 		
 	def set_penwidth(self, penwidth):
 		
@@ -640,7 +641,10 @@ def init_display(experiment):
 	if experiment.debug:
 		print "openexp._canvas.psycho.init_display(): creating a %s display" % wintype
 			
-	experiment.window = visual.Window( [experiment.width, experiment.height], waitBlanking = waitblanking, fullscr = experiment.fullscreen, monitor = monitor, units = "pix", winType = "pyglet")
+	experiment.window = visual.Window( [experiment.width, experiment.height], \
+		waitBlanking=waitblanking, fullscr=experiment.fullscreen, \
+		monitor=monitor, units="pix", winType="pyglet", \
+		rgb=experiment.background)
 	experiment.window.setMouseVisible(False)
 	experiment.clock = core.Clock()	
 	experiment._time_func = _time
