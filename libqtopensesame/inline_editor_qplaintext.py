@@ -478,6 +478,8 @@ class inline_editor(QFrame):
 			syntax_highlighter(self.edit.document(), python_keywords)
 		elif syntax == "opensesame":
 			syntax_highlighter(self.edit.document(), opensesame_keywords)
+			
+		self.toolbar_hbox = search_hbox
 				
 	def perform_search(self):
 	

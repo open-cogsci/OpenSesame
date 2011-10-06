@@ -1549,7 +1549,7 @@ class qtopensesame(QtGui.QMainWindow):
 		elif widget.name == "__unused__":
 			self.open_unused_tab()
 		else:
-			self.experiment.items[widget.name].open_edit_tab()
+			self.experiment.items[widget.name].open_tab()
 
 	def copy_to_pool(self, fname):
 
@@ -1867,9 +1867,9 @@ class qtopensesame(QtGui.QMainWindow):
 
 		"""
 		Closes and reopens the tabs for a changed item. This is different
-		from the normal refresh in the sense that here the tabs are reinitialized
-		from scratch which is necessary if a new instance of the item has been
-		created.
+		from the normal refresh in the sense that here the tabs are
+		reinitialized from scratch which is necessary if a new instance of the
+		item has been created.
 
 		Arguments:
 		changed_item -- the name of the changed item

@@ -187,7 +187,7 @@ class open_button(QtGui.QPushButton):
 	
 		"""Open the item's tab"""
 		
-		self.container._list.sequence.experiment.items[self.item[0]].open_edit_tab()
+		self.container._list.sequence.experiment.items[self.item[0]].open_tab()
 		
 	def mousePressEvent(self, e):
 	

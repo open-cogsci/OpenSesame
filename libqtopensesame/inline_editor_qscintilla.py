@@ -325,7 +325,9 @@ class inline_editor(QtGui.QFrame):
 		vbox.addWidget(main_widget)
 		vbox.addWidget(search_widget)		
 		vbox.setSpacing(4)
-		vbox.setMargin(0)		
+		vbox.setMargin(0)
+		
+		self.toolbar_hbox = search_hbox
 	 				
 	def perform_search(self, term=None):
 	

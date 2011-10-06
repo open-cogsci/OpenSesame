@@ -57,7 +57,7 @@ class header_widget(QtGui.QWidget):
 		self.edit_desc = QtGui.QLineEdit(self.item.description)
 		self.edit_desc.editingFinished.connect(self.restore_desc)
 		self.edit_desc.hide()
-
+		
 		vbox = QtGui.QVBoxLayout()
 		vbox.setContentsMargins(8, 0, 0, 0)
 		vbox.setSpacing(0)
@@ -137,7 +137,8 @@ class qtitem(object):
 		self.init_script_widget()
 		self.script_tab = None
 		self.lock = False
-
+		self.edit_mode = "edit"
+		
 		if self.experiment.debug:
 			print "qtitem.__init__(): created %s" % self.name
 
@@ -154,7 +155,16 @@ class qtitem(object):
 			text.help_item = self.name
 			index = self.experiment.ui.tabwidget.addTab(text, self.experiment.icon("help"), self.name)
 			self.experiment.ui.tabwidget.setCurrentIndex(index)
-
+			
+	def open_tab(self):
+	
+		"""Opens the correct tab based on the current edit mode"""
+	
+		if self.edit_mode == "edit":
+			self.open_edit_tab()
+		else:
+			self.open_script_tab()
+			
 	def init_edit_widget(self, stretch=True):
 
 		"""Build the GUI controls"""
@@ -211,9 +221,8 @@ class qtitem(object):
 
 		if self.experiment.debug and not stretch:
 			print "*** qtitem.edit_widget(): passing the stretch argument is deprecated"
-		if self.experiment.debug:
-			print "qtitem.edit_widget(): %s" % self.name
 		self.header.restore_name(False)
+		self._edit_widget.edit_item = self.name
 		return self._edit_widget
 
 	def apply_name_change(self, rebuild=True):
@@ -273,7 +282,7 @@ class qtitem(object):
 		if rebuild:
 			self.experiment.main_window.build_item_list()
 		self.experiment.main_window.set_unsaved()
-		return True
+		return True				
 
 	def close_edit_tab(self, index=None):
 
@@ -295,9 +304,20 @@ class qtitem(object):
 		index -- the index of the tab (if it is already open) (default=None)
 		focus -- indicates whether the tab should receive focus (default=True)
 		"""
-
+		
 		if self.experiment.debug:
-			print "qtitem.open_edit_tab():", self.name
+			print "qtitem.open_edit_tab(): %s (#%s)" % (self.name, hash(self))		
+			
+		self.edit_mode = "edit"
+				
+		# Close the script tab
+		for i in range(self.experiment.ui.tabwidget.count()):
+			w = self.experiment.ui.tabwidget.widget(i)
+			if hasattr(w, "script_item") and w.script_item == self.name:
+				self.experiment.ui.tabwidget.removeTab(i)
+				if index == None:
+					index = i
+				break
 
 		for i in range(self.experiment.ui.tabwidget.count()):
 			w = self.experiment.ui.tabwidget.widget(i)
@@ -305,15 +325,20 @@ class qtitem(object):
 				index = i
 
 		widget = self.edit_widget()
-
 		if index == None:
 			self.edit_tab_index = self.experiment.ui.tabwidget.addTab(widget, self.experiment.icon(self.item_type), "%s" % self.name)
 		else:
 			self.experiment.ui.tabwidget.insertTab(index, widget, self.experiment.icon(self.item_type), "%s" % self.name)
 			self.edit_tab_index = index
-
 		if focus:
 			self.experiment.ui.tabwidget.setCurrentIndex(self.edit_tab_index)
+			
+	def apply_script_and_close(self):
+	
+		"""Applies script changes and opens the edit tab"""
+	
+		self.apply_script_changes()
+		self.experiment.main_window.select_item(self.name)
 
 	def apply_script_changes(self, rebuild=True, catch=True):
 
@@ -330,12 +355,10 @@ class qtitem(object):
 
 		if self.experiment.debug:
 			print "qtitem.apply_script_changes():", self.name
-
 		script = self.experiment.usanitize(self.edit_script.edit.toPlainText())
-
+		
 		# Create a new item and make it a clone of the current item
 		item = self.experiment.main_window.add_item(self.item_type, False)
-
 		if catch:
 			try:
 				self.experiment.items[item].from_string(script)
@@ -344,14 +367,13 @@ class qtitem(object):
 				return
 		else:
 			self.experiment.items[item].from_string(script)
-
 		self.edit_script.setModified(False)
 		self.experiment.items[item].name = self.name
-
+		
 		# Replace the current item
 		self.experiment.items[self.name] = self.experiment.items[item]
 		del self.experiment.items[item]
-
+		
 		# Refresh the experiment
 		self.experiment.main_window.hard_refresh(self.name)
 		self.experiment.main_window.refresh(self.name)
@@ -381,8 +403,24 @@ class qtitem(object):
 		for s in self.to_string().split("\n")[1:]:
 			script += self.strip_script_line(s)
 		self.edit_script.edit.setPlainText(script)
-		self.edit_script.apply.clicked.connect(self.apply_script_changes)
+		self.edit_script.apply.clicked.connect(self.apply_script_changes)		
+		
+		button = QtGui.QPushButton(self.experiment.icon("apply"), "Apply and close")
+		button.setToolTip("Open GUI controls")
+		button.setIconSize(QtCore.QSize(16, 16))
+		button.clicked.connect(self.apply_script_and_close)
+		self.edit_script.toolbar_hbox.addWidget(button)		
+		
+		hbox = QtGui.QHBoxLayout()		
+		hbox.addWidget(self.experiment.label_image("%s" % self.item_type))
+		hbox.addWidget(QtGui.QLabel("Editing script for <b>%s</b> (%s)" % (self.name, self.item_type)))
+		hbox.addStretch()
+		hbox.setContentsMargins(0,0,0,0)
+		hwidget = QtGui.QWidget()
+		hwidget.setLayout(hbox)
+		
 		vbox = QtGui.QVBoxLayout()
+		vbox.addWidget(hwidget)
 		vbox.addWidget(self.edit_script)
 		self._script_widget = QtGui.QWidget()
 		self._script_widget.setLayout(vbox)
@@ -397,12 +435,11 @@ class qtitem(object):
 		The QWidget containing the script tab		
 		"""
 
-		if self.experiment.debug:
-			print "qtitem.script_widget(): %s" % self.name
 		script = ""
 		for s in self.to_string().split("\n")[1:]:
 			script += self.strip_script_line(s)
 		self.edit_script.edit.setPlainText(script)
+		self._script_widget.script_item = self.name		
 		return self._script_widget
 
 	def open_script_tab(self, index=None, focus=True):
@@ -414,18 +451,30 @@ class qtitem(object):
 		index -- the index of the tab (if it is already open) (default=None)
 		focus -- indicates whether the tab should receive focus (default=True)		
 		"""
+		
+		if self.experiment.debug:
+			print "qtitem.open_script_tab(): %s (#%s)" % (self.name, hash(self))		
+			
+		self.edit_mode = "script"			
 
+		# Close the edit tab
+		for i in range(self.experiment.ui.tabwidget.count()):
+			w = self.experiment.ui.tabwidget.widget(i)
+			if hasattr(w, "edit_item") and w.edit_item == self.name:
+				self.experiment.ui.tabwidget.removeTab(i)
+				if index == None:
+					index = i
+				break
+				
 		for i in range(self.experiment.ui.tabwidget.count()):
 			w = self.experiment.ui.tabwidget.widget(i)
 			if hasattr(w, "script_item") and w.script_item == self.name:
 				index = i
-				
 		if index == None:
 			self.script_tab_index = self.experiment.ui.tabwidget.addTab(self.script_widget(), self.experiment.icon("script"), "%s" % self.name)
 		else:
 			self.script_tab_index = index
 			self.experiment.ui.tabwidget.insertTab(index, self.script_widget(), self.experiment.icon("script"), "%s" % self.name)
-
 		if focus:
 			self.experiment.ui.tabwidget.setCurrentIndex(self.script_tab_index)
 
