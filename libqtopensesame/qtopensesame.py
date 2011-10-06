@@ -845,7 +845,8 @@ class qtopensesame(QtGui.QMainWindow):
 		Refresh the file pool
 
 		Keyword arguments:
-		make_visible -- an optional boolean that sets the visibility of the file pool (default = None)
+		make_visible -- an optional boolean that sets the visibility of the file
+						pool (default = None)
 		"""
 
 		if make_visible != None:
@@ -859,7 +860,8 @@ class qtopensesame(QtGui.QMainWindow):
 	def refresh_variable_inspector(self, dummy = None):
 
 		"""
-		Refresh the variable inspector and sets the visibility based on the menu action status
+		Refresh the variable inspector and sets the visibility based on the menu
+		action status
 
 		Keyword arguments:
 		dummy -- a dummy argument passed by the signal handler
@@ -868,6 +870,9 @@ class qtopensesame(QtGui.QMainWindow):
 		if not self.ui.action_show_variable_inspector.isChecked():
 			self.ui.dock_variable_inspector.setVisible(False)
 			return
+		scrollpos = self.ui.table_variables.verticalScrollBar().sliderPosition()
+		col = self.ui.table_variables.currentColumn()
+		row = self.ui.table_variables.currentRow()
 		self.ui.dock_variable_inspector.setVisible(True)
 		filt = str(self.ui.edit_variable_filter.text())
 		i = 0
@@ -878,6 +883,8 @@ class qtopensesame(QtGui.QMainWindow):
 			self.ui.table_variables.setCellWidget(i, 2, QtGui.QLabel(" %s " % item))
 			i += 1
 		self.ui.table_variables.setRowCount(i)
+		self.ui.table_variables.setCurrentCell(row, col)
+		self.ui.table_variables.verticalScrollBar().setSliderPosition(scrollpos)
 
 	def restart(self):
 
