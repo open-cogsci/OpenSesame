@@ -27,7 +27,7 @@ import libqtopensesame
 import libopensesame.experiment
 from Tkinter import *
 
-version = "0.25-pre5"
+version = "0.25-pre6"
 codename = "Dashy Darwin"
 
 def change_working_dir():

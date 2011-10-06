@@ -10,6 +10,6 @@ Homepage: http://www.cogsci.nl
 Package: opensesame
 Architecture: all
 XB-Python-Version: ${python:Versions}
-Depends: ${misc:Depends}, ${python:Depends}, python-qt4, python-pygame, python-numpy, python-tk
+Depends: ${misc:Depends}, ${python:Depends}, python-qt4, python-pygame, python-numpy, python-tk, python-qscintilla2
 Description: OpenSesame is a graphical experiment builder
 
