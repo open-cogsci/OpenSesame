@@ -570,7 +570,7 @@ class qtopensesame(QtGui.QMainWindow):
 			d.exec_()
 		else:
 			self.open_file(path=self.experiment.resource("default.opensesame"))
-			self.setWindowTitle("New experiment")
+			self.window_message("New experiment")
 			self.current_path = None
 		self.set_auto_response()
 
