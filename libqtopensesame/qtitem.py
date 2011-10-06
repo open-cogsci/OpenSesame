@@ -358,7 +358,7 @@ class qtitem(object):
 		script = self.experiment.usanitize(self.edit_script.edit.toPlainText())
 		
 		# Create a new item and make it a clone of the current item
-		item = self.experiment.main_window.add_item(self.item_type, False)
+		item = self.experiment.main_window.add_item(self.item_type, False, name=self.name)
 		if catch:
 			try:
 				self.experiment.items[item].from_string(script)
@@ -373,6 +373,7 @@ class qtitem(object):
 		# Replace the current item
 		self.experiment.items[self.name] = self.experiment.items[item]
 		del self.experiment.items[item]
+		self.experiment.items[self.name].init_script_widget()
 		
 		# Refresh the experiment
 		self.experiment.main_window.hard_refresh(self.name)
@@ -406,14 +407,14 @@ class qtitem(object):
 		self.edit_script.apply.clicked.connect(self.apply_script_changes)		
 		
 		button = QtGui.QPushButton(self.experiment.icon("apply"), "Apply and close")
-		button.setToolTip("Open GUI controls")
+		button.setToolTip("Apply changes and resume normal editing")
 		button.setIconSize(QtCore.QSize(16, 16))
 		button.clicked.connect(self.apply_script_and_close)
 		self.edit_script.toolbar_hbox.addWidget(button)		
 		
 		hbox = QtGui.QHBoxLayout()		
 		hbox.addWidget(self.experiment.label_image("%s" % self.item_type))
-		hbox.addWidget(QtGui.QLabel("Editing script for <b>%s</b> (%s)" % (self.name, self.item_type)))
+		hbox.addWidget(QtGui.QLabel("Editing script for <b>%s</b> - %s" % (self.name, self.item_type)))
 		hbox.addStretch()
 		hbox.setContentsMargins(0,0,0,0)
 		hwidget = QtGui.QWidget()

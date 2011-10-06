@@ -241,6 +241,21 @@ class scintilla(QsciScintilla):
 			self.set_layout()
 			self.cfg_ver = get_config("cfg_ver")
 		QsciScintilla.focusInEvent(self, e)
+		
+	def keyPressEvent(self, e):
+	
+		"""
+		Captures keypresses to implement apply (Alt+A
+		
+		Arguments:
+		e -- a keypress even
+		"""			
+
+		# Process the Alt + A shortcut to apply changes
+		if e.key() == QtCore.Qt.Key_A and e.modifiers() == QtCore.Qt.AltModifier:
+			self._parent.apply.clicked.emit(True)
+			return
+		QsciScintilla.keyPressEvent(self, e)
 				 		
 class inline_editor(QtGui.QFrame):	
 

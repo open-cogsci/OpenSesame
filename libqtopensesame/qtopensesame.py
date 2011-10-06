@@ -1931,7 +1931,7 @@ class qtopensesame(QtGui.QMainWindow):
 				cat_menu[cat] = menu.addMenu(self.experiment.icon("plugins_large"), cat)
 			cat_menu[cat].addAction(plugin_action(self, cat_menu[cat], plugin))
 
-	def add_item(self, item_type, refresh = True):
+	def add_item(self, item_type, refresh=True, name=None):
 
 		"""
 		Adds a new item to the item list
@@ -1940,17 +1940,19 @@ class qtopensesame(QtGui.QMainWindow):
 		item_type -- the type of the item to add
 
 		Keyword arguments:
-		refresh -- a bool to indicate if the interface should be refreshed (default = True)
+		refresh -- a bool to indicate if the interface should be refreshed
+				   (default=True)
+		name -- a custom name to give the item (default=None)
 
 		Returns:
 		The name of the new item
 		"""
 
-		if self.experiment.debug:
-			print "qtopensesame.add_item(): adding %s" % item_type
-
-		# Get a unique name
+		# Get a unique name if none has been specified
 		name = self.experiment.unique_name("%s" % item_type)
+			
+		if self.experiment.debug:
+			print "qtopensesame.add_item(): adding %s (%s)" % (name, item_type)
 
 		# If the item type is a plugin, we need to use the plugin mechanism
 		if libopensesame.plugins.is_plugin(item_type):
