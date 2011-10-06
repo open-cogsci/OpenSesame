@@ -145,30 +145,55 @@ class scintilla(QsciScintilla):
 		self.setFont(font)
 		self.setMarginsFont(font)		
 		self.setTabWidth(4)
-		if get_config("scintilla_line_numbers"):
-			self.setMarginWidth(0, fm.width( "0000" ))
-			self.setMarginLineNumbers(0, True)
+		
+		# Set line numbers
+		self.setMarginWidth(0, fm.width( "0000" ))		
+		self.setMarginLineNumbers(0, get_config("scintilla_line_numbers"))
+			
+		# Set the right margin
 		self.SendScintilla(QsciScintilla.SCI_SETHSCROLLBAR, 0) # Disable scrollbar
+		self.setEdgeColumn(80)
 		if get_config("scintilla_right_margin"):
-			self.setEdgeMode(QsciScintilla.EdgeLine)
-			self.setEdgeColumn(80)
+			self.setEdgeMode(QsciScintilla.EdgeBackground)			
+		else:
+			self.setEdgeMode(QsciScintilla.EdgeNone)			
 
+		# Set EOL visibility		
 		self.setEolVisibility(get_config("scintilla_eol_visible"))
+		
+		# Set whitespace visibility
 		if get_config("scintilla_whitespace_visible"):
-			self.setWhitespaceVisibility(QsciScintilla.WsVisible)		
+			self.setWhitespaceVisibility(QsciScintilla.WsVisible)
+		else:
+			self.setWhitespaceVisibility(QsciScintilla.WsInvisible)
+			
+		# Set indentation guides
 		self.setIndentationGuides(get_config("scintilla_indentation_guides"))		
+		
+		# Set auto indent
 		self.setAutoIndent(get_config("scintilla_auto_indent"))
 
+		# Set folding
 		if get_config("scintilla_folding"):
-			self.setFolding(QsciScintilla.BoxedTreeFoldStyle)
+			self.setFolding(QsciScintilla.CircledTreeFoldStyle)
+		else:
+			self.setFolding(QsciScintilla.NoFoldStyle)
+			
+		# Set brace matching
 		if get_config("scintilla_brace_match"):
 			self.setBraceMatching(QsciScintilla.SloppyBraceMatch)
+		else:
+			self.setBraceMatching(QsciScintilla.NoBraceMatch)
 			
-		if get_config("scintilla_syntax_highlighting") and self.syntax == "python" or self.syntax == "opensesame":
+		# Set syntax highlightinh
+		if get_config("scintilla_syntax_highlighting") and (self.syntax == "python" or self.syntax == "opensesame"):
 			self.setLexer(python_lexer(font))
 			for i in range(16): # There are 16 properties that need to be forced
 				self.SendScintilla(QsciScintilla.SCI_STYLESETFONT, i, font.family())
 				self.SendScintilla(QsciScintilla.SCI_STYLESETSIZE, i, font.pointSize())
+		else:
+			self.setLexer(None)
+			self.SendScintilla(QsciScintilla.SCI_CLEARDOCUMENTSTYLE)
 		
 	def toPlainText(self):
 	
@@ -207,6 +232,7 @@ class scintilla(QsciScintilla):
 	
 		"""Refresh the layout on a focus in event"""
 		
+		self.set_layout()
 		QsciScintilla.focusInEvent(self, e)
 				 		
 class inline_editor(QtGui.QFrame):	
