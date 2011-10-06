@@ -179,7 +179,7 @@ class open_button(QtGui.QPushButton):
 		self.item = item
 		self.setSizePolicy(QtGui.QSizePolicy.Fixed, QtGui.QSizePolicy.Fixed)
 		self.setFlat(True)
-		self.setIconSize(QtCore.QSize(16,16))
+		self.setIconSize(QtCore.QSize(32,16))
 		self.clicked.connect(self.open_item_tab)
 		self.setToolTip("Click to edit this item")
 		
@@ -271,8 +271,13 @@ class draggable_list(QtGui.QWidget):
 		self.widgets = []
 		
 		for i in range(len(self.sequence.items)):
-			widget = draggable_widget_container(self, self.sequence.items[i], i)
-			self.widgets.append(widget)
-			self._layout.addWidget(widget)
+			item_name = self.sequence.items[i][0]
+			if  item_name not in self.sequence.experiment.items:
+				self.sequence.experiment.notify("Unkown item '%s' in sequence '%s'. You can fix this using the script editor." \
+					% (item_name, self.sequence.name))
+			else:				
+				widget = draggable_widget_container(self, self.sequence.items[i], i)
+				self.widgets.append(widget)
+				self._layout.addWidget(widget)
 		
 
