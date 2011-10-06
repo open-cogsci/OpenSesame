@@ -175,6 +175,7 @@ class qtopensesame(QtGui.QMainWindow):
 		self.ui.setupUi(self)
 		self.ui.toolbar_items.main_window = self
 		self.ui.itemtree.main_window = self
+		self.ui.table_variables.main_window = self
 
 		# Set some initial variables
 		self.current_path = None
@@ -867,9 +868,13 @@ class qtopensesame(QtGui.QMainWindow):
 		dummy -- a dummy argument passed by the signal handler
 		"""
 
-		if not self.ui.action_show_variable_inspector.isChecked():
+		if self.ui.action_show_variable_inspector.isChecked():
+			self.ui.dock_variable_inspector.setVisible(True)
+			self.ui.table_variables.refresh()
+		else:			
 			self.ui.dock_variable_inspector.setVisible(False)
-			return
+				
+		"""
 		scrollpos = self.ui.table_variables.verticalScrollBar().sliderPosition()
 		col = self.ui.table_variables.currentColumn()
 		row = self.ui.table_variables.currentRow()
@@ -885,6 +890,7 @@ class qtopensesame(QtGui.QMainWindow):
 		self.ui.table_variables.setRowCount(i)
 		self.ui.table_variables.setCurrentCell(row, col)
 		self.ui.table_variables.verticalScrollBar().setSliderPosition(scrollpos)
+		"""
 
 	def restart(self):
 

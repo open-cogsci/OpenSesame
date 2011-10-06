@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'resources/opensesame.ui'
 #
-# Created: Thu Oct  6 17:05:32 2011
+# Created: Thu Oct  6 17:59:41 2011
 #      by: PyQt4 UI code generator 4.8.3
 #
 # WARNING! All changes made in this file will be lost!
@@ -145,25 +145,19 @@ class Ui_MainWindow(object):
         self.button_help_variables.setObjectName(_fromUtf8("button_help_variables"))
         self.horizontalLayout_2.addWidget(self.button_help_variables)
         self.verticalLayout_2.addWidget(self.widget)
-        self.table_variables = QtGui.QTableWidget(self.dock_widget_variable_inspector)
+        self.table_variables = variable_inspector(self.dock_widget_variable_inspector)
         self.table_variables.setAlternatingRowColors(True)
         self.table_variables.setShowGrid(True)
         self.table_variables.setGridStyle(QtCore.Qt.DotLine)
         self.table_variables.setObjectName(_fromUtf8("table_variables"))
         self.table_variables.setColumnCount(3)
-        self.table_variables.setRowCount(1)
-        item = QtGui.QTableWidgetItem()
-        self.table_variables.setVerticalHeaderItem(0, item)
+        self.table_variables.setRowCount(0)
         item = QtGui.QTableWidgetItem()
         self.table_variables.setHorizontalHeaderItem(0, item)
         item = QtGui.QTableWidgetItem()
         self.table_variables.setHorizontalHeaderItem(1, item)
         item = QtGui.QTableWidgetItem()
         self.table_variables.setHorizontalHeaderItem(2, item)
-        item = QtGui.QTableWidgetItem()
-        self.table_variables.setItem(0, 0, item)
-        item = QtGui.QTableWidgetItem()
-        self.table_variables.setItem(0, 2, item)
         self.table_variables.horizontalHeader().setSortIndicatorShown(True)
         self.table_variables.horizontalHeader().setStretchLastSection(True)
         self.table_variables.verticalHeader().setVisible(False)
@@ -511,15 +505,9 @@ class Ui_MainWindow(object):
         self.button_variables_clear.setToolTip(QtGui.QApplication.translate("MainWindow", "Clear filter", None, QtGui.QApplication.UnicodeUTF8))
         self.button_help_variables.setToolTip(QtGui.QApplication.translate("MainWindow", "Help", None, QtGui.QApplication.UnicodeUTF8))
         self.table_variables.setSortingEnabled(True)
-        self.table_variables.verticalHeaderItem(0).setText(QtGui.QApplication.translate("MainWindow", "test", None, QtGui.QApplication.UnicodeUTF8))
         self.table_variables.horizontalHeaderItem(0).setText(QtGui.QApplication.translate("MainWindow", "Variable", None, QtGui.QApplication.UnicodeUTF8))
         self.table_variables.horizontalHeaderItem(1).setText(QtGui.QApplication.translate("MainWindow", "Value", None, QtGui.QApplication.UnicodeUTF8))
         self.table_variables.horizontalHeaderItem(2).setText(QtGui.QApplication.translate("MainWindow", "In item", None, QtGui.QApplication.UnicodeUTF8))
-        __sortingEnabled = self.table_variables.isSortingEnabled()
-        self.table_variables.setSortingEnabled(False)
-        self.table_variables.item(0, 0).setText(QtGui.QApplication.translate("MainWindow", "test", None, QtGui.QApplication.UnicodeUTF8))
-        self.table_variables.item(0, 2).setText(QtGui.QApplication.translate("MainWindow", "test", None, QtGui.QApplication.UnicodeUTF8))
-        self.table_variables.setSortingEnabled(__sortingEnabled)
         self.dock_pool.setWindowTitle(QtGui.QApplication.translate("MainWindow", "File pool", None, QtGui.QApplication.UnicodeUTF8))
         self.dock_stdout.setWindowTitle(QtGui.QApplication.translate("MainWindow", "Debug window", None, QtGui.QApplication.UnicodeUTF8))
         self.label_4.setText(QtGui.QApplication.translate("MainWindow", "Debug window", None, QtGui.QApplication.UnicodeUTF8))
@@ -586,6 +574,7 @@ class Ui_MainWindow(object):
         self.action_show_info_in_overview.setText(QtGui.QApplication.translate("MainWindow", "Show info in overview", None, QtGui.QApplication.UnicodeUTF8))
 
 from statusbar import statusbar
+from variable_inspector import variable_inspector
 from tree_overview import tree_overview
 from pyterm import console
 from toolbar_items import toolbar_items
