@@ -154,7 +154,7 @@ class scintilla(QsciScintilla):
 		self.SendScintilla(QsciScintilla.SCI_SETHSCROLLBAR, 0) # Disable scrollbar
 		self.setEdgeColumn(80)
 		if get_config("scintilla_right_margin"):
-			self.setEdgeMode(QsciScintilla.EdgeBackground)			
+			self.setEdgeMode(QsciScintilla.EdgeLine)			
 		else:
 			self.setEdgeMode(QsciScintilla.EdgeNone)			
 
@@ -175,7 +175,7 @@ class scintilla(QsciScintilla):
 
 		# Set folding
 		if get_config("scintilla_folding"):
-			self.setFolding(QsciScintilla.CircledTreeFoldStyle)
+			self.setFolding(QsciScintilla.BoxedTreeFoldStyle)
 		else:
 			self.setFolding(QsciScintilla.NoFoldStyle)
 			
