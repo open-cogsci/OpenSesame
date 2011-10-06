@@ -339,6 +339,18 @@ class qtitem(object):
 	
 		self.apply_script_changes()
 		self.experiment.main_window.select_item(self.name)
+		
+	def ignore_script_and_close(self):
+	
+		"""Applies script changes and opens the edit tab"""
+			
+		if self.edit_script.edit.isModified():
+			resp = QtGui.QMessageBox.question(self.experiment.main_window.ui.centralwidget, "Forget changes?",\
+				"Are you sure you want to forget all changes to the script?", QtGui.QMessageBox.Yes, QtGui.QMessageBox.No)
+			if resp == QtGui.QMessageBox.No:
+				return
+		self.experiment.main_window.select_item(self.name)
+		
 
 	def apply_script_changes(self, rebuild=True, catch=True):
 
@@ -411,6 +423,12 @@ class qtitem(object):
 		button.setIconSize(QtCore.QSize(16, 16))
 		button.clicked.connect(self.apply_script_and_close)
 		self.edit_script.toolbar_hbox.addWidget(button)		
+		
+		button = QtGui.QPushButton(self.experiment.icon("close"), "Forget changes and close")
+		button.setToolTip("Ignore changes and resume normal editing")
+		button.setIconSize(QtCore.QSize(16, 16))
+		button.clicked.connect(self.ignore_script_and_close)
+		self.edit_script.toolbar_hbox.addWidget(button)				
 		
 		hbox = QtGui.QHBoxLayout()		
 		hbox.addWidget(self.experiment.label_image("%s" % self.item_type))
