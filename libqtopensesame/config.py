@@ -16,6 +16,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 config = {
+	"cfg_ver" : 0,
 	"scintilla_line_numbers" : True,
 	"scintilla_right_margin" : False,
 	"scintilla_eol_visible" : False,
@@ -29,7 +30,7 @@ config = {
 	"scintilla_font_family" : "courier",
 	"scintilla_font_size" : 10,
 	"new_experiment_dialog" : True,
-	}	
+	}
 
 def get_config(setting):
 
@@ -52,7 +53,8 @@ def set_config(setting, value):
 	value -- the setting value
 	"""	
 	
-	config[setting] = value	
+	config[setting] = value
+	config["cfg_ver"] += 1
 	
 def restore_config(settings):
 

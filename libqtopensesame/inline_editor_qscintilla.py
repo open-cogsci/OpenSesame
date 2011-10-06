@@ -116,6 +116,7 @@ class scintilla(QsciScintilla):
 		self.syntax = syntax
 		self.textChanged.connect(self.parent().setModified)
 		self.refresh_layout = True
+		self.cfg_ver = get_config("cfg_ver")
 				
 	def paintEvent(self, e):
 	
@@ -129,6 +130,9 @@ class scintilla(QsciScintilla):
 	def set_layout(self):
 	
 		"""Initialize the editor layout"""
+		
+		if self._parent.experiment.debug:
+			print "scintilla.set_layout(): resetting the scintilla layout"
 		
 		if get_config("scintilla_custom_font"):
 			font_family = get_config("scintilla_font_family")			
@@ -232,7 +236,10 @@ class scintilla(QsciScintilla):
 	
 		"""Refresh the layout on a focus in event"""
 		
-		self.set_layout()
+		# Only update the layout if the config is outdated
+		if self.cfg_ver != get_config("cfg_ver"):
+			self.set_layout()
+			self.cfg_ver = get_config("cfg_ver")
 		QsciScintilla.focusInEvent(self, e)
 				 		
 class inline_editor(QtGui.QFrame):	
