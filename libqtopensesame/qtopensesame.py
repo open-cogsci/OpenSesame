@@ -1087,10 +1087,11 @@ class qtopensesame(QtGui.QMainWindow):
 		"""Save the current experiment after asking for a file name"""
 
 		if self.current_path == None:
-			path = self.home_folder
+			path = os.path.join(self.home_folder, self.experiment.sanitize(self.experiment.name, strict=True))
 		else:
 			path = self.current_path
-		path, file_type = QtGui.QFileDialog.getSaveFileNameAndFilter(self.ui.centralwidget, "Save file as ...", path, self.file_type_filter)
+		path, file_type = QtGui.QFileDialog.getSaveFileNameAndFilter(self.ui.centralwidget, \
+			"Save file as ...", path, self.file_type_filter)
 		if path != None and path != "":			
 			path = unicode(path)
 			if path[-18:].lower() != ".opensesame.tar.gz" and path[-11:].lower() != ".opensesame":
