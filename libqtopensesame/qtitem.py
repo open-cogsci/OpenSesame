@@ -131,9 +131,7 @@ class qtitem(object):
 
 	def __init__(self):
 
-		"""
-		Initialize the qtitem
-		"""
+		"""Constructor"""
 
 		self.init_edit_widget()
 		self.init_script_widget()
@@ -145,9 +143,7 @@ class qtitem(object):
 
 	def open_help_tab(self):
 
-		"""
-		Open the help tab
-		"""
+		"""Open the help tab"""
 
 		i = self.experiment.main_window.get_tab_index("__help__%s__" % self.item_type)
 		if i != None:
@@ -159,11 +155,9 @@ class qtitem(object):
 			index = self.experiment.ui.tabwidget.addTab(text, self.experiment.icon("help"), self.name)
 			self.experiment.ui.tabwidget.setCurrentIndex(index)
 
-	def init_edit_widget(self, stretch = True):
+	def init_edit_widget(self, stretch=True):
 
-		"""
-		Build the init widget
-		"""
+		"""Build the GUI controls"""
 
 		self.header = header_widget(self)
 
@@ -206,28 +200,29 @@ class qtitem(object):
 
 		return self._edit_widget
 
-	def edit_widget(self, stretch = True):
+	def edit_widget(self, stretch=True):
 
 		"""
-		A dummy edit widget
+		A dummy edit widget, to be overridden
+		
+		Keywords arguments:
+		stretch -- a deprecated argument (default=True)
 		"""
 
 		if self.experiment.debug and not stretch:
 			print "*** qtitem.edit_widget(): passing the stretch argument is deprecated"
-
 		if self.experiment.debug:
 			print "qtitem.edit_widget(): %s" % self.name
-
 		self.header.restore_name(False)
-		#self.header.edit_name.setText(self.name)
-		#self.header.edit_desc.setText(self.description)
-
 		return self._edit_widget
 
-	def apply_name_change(self, rebuild = True):
+	def apply_name_change(self, rebuild=True):
 
 		"""
-		Is called when the name of an item needs to be changed
+		Apply an item name change
+		
+		Keywords arguments:
+		rebuild -- a deprecated argument (default=True)
 		"""
 
 		new_name = self.experiment.sanitize(str(self.header.edit_name.text()).strip(), True)
@@ -253,10 +248,14 @@ class qtitem(object):
 		self.experiment.main_window.set_unsaved()
 		self.experiment.rename(self.name, new_name)		
 
-	def apply_edit_changes(self, rebuild = True):
+	def apply_edit_changes(self, rebuild=True):
 
 		"""
-		Is called when changes are made to the item
+		Apply the GUI controls
+		
+		Keywords arguments:
+		rebuild -- specifies whether the overview area (item list) should be
+				   rebuild (default=True)
 		"""
 
 		if self.experiment.debug:
@@ -276,18 +275,25 @@ class qtitem(object):
 		self.experiment.main_window.set_unsaved()
 		return True
 
-	def close_edit_tab(self, index = None):
+	def close_edit_tab(self, index=None):
 
 		"""
-		Closes the edit tab
+		Closes the edit tab (does nothing by default)
+		
+		Keywords arguments:
+		index -- the index of the tab in the tab area (default=None)
 		"""
 
 		pass
 
-	def open_edit_tab(self, index = None, focus = True):
+	def open_edit_tab(self, index=None, focus=True):
 
 		"""
-		Opens a tab containing the edit widget
+		Opens/ shows the GUI control tab
+		
+		Keywords arguments:
+		index -- the index of the tab (if it is already open) (default=None)
+		focus -- indicates whether the tab should receive focus (default=True)
 		"""
 
 		if self.experiment.debug:
@@ -309,10 +315,17 @@ class qtitem(object):
 		if focus:
 			self.experiment.ui.tabwidget.setCurrentIndex(self.edit_tab_index)
 
-	def apply_script_changes(self, rebuild = True, catch = True):
+	def apply_script_changes(self, rebuild=True, catch=True):
 
 		"""
-		Reloads the item based on the new script
+		Apply changes to the script, by regenerating the item from the script
+		
+		Keywords arguments:
+		rebuild -- specifies whether the overview area (item list) should be
+				   rebuild (default=True)
+		catch -- indicates if exceptions should be caught and shown in a
+				 notification dialog (True) or not be caught (False)
+				 (default=True)
 		"""
 
 		if self.experiment.debug:
@@ -346,7 +359,13 @@ class qtitem(object):
 	def strip_script_line(self, s):
 
 		"""
-		Strips the unwanted characters from the script line
+		Strips unwanted characters from a line of script
+		
+		Arguments:
+		s -- a line of script
+		
+		Returns:
+		A stripped line of script
 		"""
 
 		if len(s) > 0 and s[0] == "\t":
@@ -355,22 +374,16 @@ class qtitem(object):
 
 	def init_script_widget(self):
 
-		"""
-		Build the script widget
-		"""
+		"""Build the script tab"""
 
 		self.edit_script = libqtopensesame.inline_editor.inline_editor(self.experiment, syntax="opensesame")
-
 		script = ""
 		for s in self.to_string().split("\n")[1:]:
 			script += self.strip_script_line(s)
-
 		self.edit_script.edit.setPlainText(script)
 		self.edit_script.apply.clicked.connect(self.apply_script_changes)
-
 		vbox = QtGui.QVBoxLayout()
 		vbox.addWidget(self.edit_script)
-
 		self._script_widget = QtGui.QWidget()
 		self._script_widget.setLayout(vbox)
 		self._script_widget.script_item = self.name
@@ -378,30 +391,35 @@ class qtitem(object):
 	def script_widget(self):
 
 		"""
-		Creates the script widget
+		Update the script tab
+		
+		Returns:
+		The QWidget containing the script tab		
 		"""
 
 		if self.experiment.debug:
 			print "qtitem.script_widget(): %s" % self.name
-
 		script = ""
 		for s in self.to_string().split("\n")[1:]:
 			script += self.strip_script_line(s)
 		self.edit_script.edit.setPlainText(script)
-
 		return self._script_widget
 
-	def open_script_tab(self, index = None, focus = True):
+	def open_script_tab(self, index=None, focus=True):
 
 		"""
-		Opens a tab containing the script widget
+		Open/ show the script tab
+				
+		Keywords arguments:
+		index -- the index of the tab (if it is already open) (default=None)
+		focus -- indicates whether the tab should receive focus (default=True)		
 		"""
 
 		for i in range(self.experiment.ui.tabwidget.count()):
 			w = self.experiment.ui.tabwidget.widget(i)
 			if hasattr(w, "script_item") and w.script_item == self.name:
 				index = i
-
+				
 		if index == None:
 			self.script_tab_index = self.experiment.ui.tabwidget.addTab(self.script_widget(), self.experiment.icon("script"), "%s" % self.name)
 		else:
@@ -414,7 +432,10 @@ class qtitem(object):
 	def close_script_tab(self, index=None):
 
 		"""
-		Close the script tab
+		Close the script tab (does nothing by defaut)
+		
+		Keywords arguments:
+		index -- the index of the tab in the tab area (default=None)
 		"""
 
 		pass
@@ -422,7 +443,7 @@ class qtitem(object):
 	def rename(self, from_name, to_name):
 
 		"""
-		Rename an item
+		Handle the renaming of an item (not necesarrily the currnet item)
 		
 		Arguments:
 		from_name -- the old item name
@@ -435,7 +456,7 @@ class qtitem(object):
 	def delete(self, item_name, item_parent=None, index=None):	
 	
 		"""
-		Delete an item
+		Delete an item (not necessarily the current one)
 		
 		Arguments:
 		item_name -- the name of the item to be deleted
@@ -525,8 +546,14 @@ class qtitem(object):
 	def is_offspring(self, item):
 
 		"""
-		Checks if the item is offspring
-		of the current item
+		Checks if the item is offspring of the current item, in the sense that
+		the current item is contained by the item
+		
+		Arguments:
+		item -- the potential offspring
+		
+		Returns:
+		True if the current item is offspring of the item, False otherwise
 		"""
 
 		return False
@@ -534,9 +561,11 @@ class qtitem(object):
 	def parents(self):
 
 		"""
-		Gives a list of all the items
-		that the current sequences is connected
-		with upstream
+		Creates a list of all the items	that the current sequences is connected
+		to upstream
+		
+		Returns:
+		A list of item names
 		"""
 
 		l = [self.name]
@@ -545,11 +574,17 @@ class qtitem(object):
 				l.append(item)
 		return l
 
-	def variable_vars(self, exclude = []):
+	def variable_vars(self, exclude=[]):
 
 		"""
-		Returns True if one of the variables is defined in terms
-		of another variable, e.g., 'set duration [soa]'
+		Determines if one of the variables of the current item is defined in
+		terms of another variable
+		
+		Keywords arguments:
+		exclude -- a list of variables that should not be checked
+		
+		Returns:
+		True if there are variably defined variables, False otherwise
 		"""
 
 		for var in self.variables:
@@ -563,12 +598,15 @@ class qtitem(object):
 		This function should be overridden to do any last-minute stuff that
 		and item should do before an experiment is actually run, such as
 		applying pending script changes.
+		
+		Returns:
+		True if some action has been taken, False if nothing was done
 		"""
 
 		if self.edit_script.isModified():
 			if self.experiment.debug:
 				print "inline_script.finalize(): applying pending OpenSesame script changes"
-			self.apply_script_changes(catch = False)
+			self.apply_script_changes(catch=False)
 			return True
 		return False
 
