@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>775</width>
+    <width>794</width>
     <height>580</height>
    </rect>
   </property>
@@ -195,8 +195,19 @@ p, li { white-space: pre-wrap; }
         </property>
        </widget>
       </item>
-      <item row="1" column="1" colspan="5">
+      <item row="1" column="1" colspan="4">
        <widget class="QComboBox" name="combobox_backend"/>
+      </item>
+      <item row="1" column="5">
+       <widget class="QPushButton" name="button_backend_settings">
+        <property name="text">
+         <string>Back-end settings</string>
+        </property>
+        <property name="icon">
+         <iconset resource="icons.qrc">
+          <normaloff>:/icons/options.png</normaloff>:/icons/options.png</iconset>
+        </property>
+       </widget>
       </item>
      </layout>
     </widget>

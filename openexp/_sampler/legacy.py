@@ -21,12 +21,27 @@ import openexp.exceptions
 import numpy
 import os.path
 
+# The settings variable is used by the GUI to provide a list of back-end
+# settings
+settings = {
+	"sound_buf_size" : {
+		"name" : "Sound buffer size",
+		"description" : "The size of the internal sound buffer (increase if sound playback is choppy)",
+		"default" : 1024
+		},
+	"sampling_frequency" : {
+		"name" : "Sampling frequence",
+		"description" : "Determines the sound quality",
+		"default" : 48000
+		}
+	}
+
 class legacy:
 
 	"""
-	The sampler loads a sound file in .ogg or .wav format
-	from disk and plays it. The sampler offers a number of 
-	basic operations, such as pitch, panning, and fade in.
+	The sampler loads a sound file in .ogg or .wav format from disk and plays
+	it back. The sampler offers a number of basic operations, such as pitch,
+	panning, and fade in.
 	"""
 
 	def __init__(self, experiment, src):

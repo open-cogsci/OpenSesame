@@ -46,6 +46,7 @@ import platform
 import libqtopensesame.inline_editor
 import libqtopensesame.syntax_highlighter
 import libqtopensesame.preferences_widget
+import libqtopensesame.general_properties
 import libqtopensesame.draggables
 import libqtopensesame.pyterm
 from libqtopensesame import config
@@ -1300,7 +1301,10 @@ class qtopensesame(QtGui.QMainWindow):
 	def init_general_tab(self):
 
 		"""Initializes the general tab"""
+		
+		self.general_tab_widget = libqtopensesame.general_properties.general_properties(self)
 
+		"""
 		# Set the header, with the icon, label and script button
 		self.header_widget = general_header_widget(self.experiment)
 		button_help = QtGui.QPushButton(self.experiment.icon("help"), "")
@@ -1350,11 +1354,15 @@ class qtopensesame(QtGui.QMainWindow):
 		self.general_tab_widget.general_tab = True
 
 		self.toggle_script_editor()
+		"""
 
 	def general_widget(self):
 
 		"""Set the controls of the general tab based on the variables"""
+		
+		self.general_tab_widget.refresh()
 
+		"""
 		if self.experiment.debug:
 			print "qtopensesame.general_widget()"
 
@@ -1403,6 +1411,7 @@ class qtopensesame(QtGui.QMainWindow):
 
 		# Release the general tab
 		self.ignore_general_changes = False
+		"""
 
 	def open_general_tab(self, reopen = False, index = None, focus = True):
 
@@ -1414,7 +1423,7 @@ class qtopensesame(QtGui.QMainWindow):
 		index -- the position of the tab (default = None)
 		focus -- a boolean indicating whether the general tab should receive focus (defaut = True)
 		"""
-
+		
 		for i in range(self.experiment.ui.tabwidget.count()):
 			w = self.ui.tabwidget.widget(i)
 			if hasattr(w, "general_tab"):
