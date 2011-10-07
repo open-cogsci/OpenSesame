@@ -55,42 +55,6 @@ import openexp.backend_info
 import traceback
 import optparse
 
-class general_header_widget(qtitem.header_widget):
-
-	"""The widget containing the clickable title and description of the experiment"""
-
-	def __init__(self, item):
-
-		"""
-		Constructor
-
-		Arguments:
-		item -- the experiment
-		"""
-
-		qtitem.header_widget.__init__(self, item)
-		self.label_name.setText("<font size='5'><b>%s</b> - Experiment</font>&nbsp;&nbsp;&nbsp;<font color='gray'><i>Click to edit</i></font>" % self.item.get("title"))
-
-	def restore_name(self):
-
-		"""Apply the name change, hide the editable title and show the label"""
-
-		self.item.main_window.apply_general_changes()
-		self.label_name.setText("<font size='5'><b>%s</b> - Experiment</font>&nbsp;&nbsp;&nbsp;<font color='gray'><i>Click to edit</i></font>" % self.item.get("title"))
-		self.label_name.show()
-		self.edit_name.setText(self.item.get("title"))
-		self.edit_name.hide()
-
-	def restore_desc(self):
-
-		"""Apply the description change, hide the editable description and show the label"""
-
-		self.item.main_window.apply_general_changes()
-		self.label_desc.setText(self.item.get("description"))
-		self.label_desc.show()
-		self.edit_desc.setText(self.item.get("description"))
-		self.edit_desc.hide()
-
 class plugin_action(QtGui.QAction):
 
 	"""Menu action for a plugin"""
@@ -1013,7 +977,7 @@ class qtopensesame(QtGui.QMainWindow):
 			return
 		
 		self.experiment = exp
-		self.header_widget.item = self.experiment
+		self.general_tab_widget.header_widget.item = self.experiment
 		self.refresh()
 		self.open_general_tab()
 		self.set_status("Opened %s" % path)
@@ -1169,24 +1133,6 @@ class qtopensesame(QtGui.QMainWindow):
 						redo = True
 						break
 
-	def apply_general_script(self):
-
-		"""Regenerate the entire experiment based on the general script"""
-
-		script = str(self.edit_script.edit.toPlainText())
-
-		try:
-			tmp = experiment.experiment(self, self.experiment.title, script, self.experiment.pool_folder)
-		except libopensesame.exceptions.script_error as error:
-			self.experiment.notify("Could not parse script: %s" % error)
-			self.edit_script.edit.setText(self.experiment.to_string())
-			return
-
-		self.experiment = tmp
-		self.close_other_tabs()
-		self.edit_script.setModified(False)
-		self.refresh()
-
 	def update_resolution(self, width, height):
 
 		"""
@@ -1221,197 +1167,17 @@ class qtopensesame(QtGui.QMainWindow):
 		self.experiment = tmp
 		self.refresh()
 
-	def set_header_label(self):
-
-		"""Set the general header based on the experiment title and description"""
-
-		self.header_widget.edit_name.setText(self.experiment.title)
-		self.header_widget.label_name.setText("<font size='5'><b>%s</b> - Experiment</font>&nbsp;&nbsp;&nbsp;<font color='gray'><i>Click to edit</i></font>" % self.experiment.title)
-		self.header_widget.edit_desc.setText(self.experiment.description)
-		self.header_widget.label_desc.setText(self.experiment.description)
-
-	def toggle_script_editor(self):
-
-		"""Sets the visibility of the script editor based on the checkbox state"""
-
-		show = self.general_ui.checkbox_show_script.isChecked()
-
-		self.edit_script.setVisible(show)
-		self.general_ui.spacer.setVisible(not show)
-
-	def apply_general_changes(self, dummy = None):
-
-		"""
-		Sets the experiment variables based on the controls	of the general tab
-
-		Keyword arguments:
-		dummy -- an unused parameter that is passed by the signal
-		"""
-
-		# Skip if the general tab is locked and lock it otherwise
-		if self.ignore_general_changes:
-			return
-		self.ignore_general_changes = True
-
-		# Set the title and the description
-		title = self.experiment.sanitize(self.header_widget.edit_name.text())
-		self.experiment.set("title", title)
-		desc = self.experiment.sanitize(self.header_widget.edit_desc.text())
-		self.experiment.set("description", desc)
-
-		# Set the start point
-		start = self.experiment.sanitize(self.general_ui.combobox_start.currentText())
-		self.experiment.set("start", start)
-
-		# Set the backend
-		i = self.general_ui.combobox_backend.currentIndex()
-		backend = openexp.backend_info.backend_list.values()[i]
-		self.experiment.set("canvas_backend", backend["canvas"])
-		self.experiment.set("keyboard_backend", backend["keyboard"])
-		self.experiment.set("mouse_backend", backend["mouse"])
-		self.experiment.set("sampler_backend", backend["sampler"])
-		self.experiment.set("synth_backend", backend["synth"])
-
-		# Set the display width
-		width = self.general_ui.spinbox_width.value()
-		if self.experiment.get("width") != width:
-			self.update_resolution(width, self.experiment.get("height"))
-
-		# Set the display height
-		height = self.general_ui.spinbox_height.value()
-		if self.experiment.get("height") != height:
-			self.update_resolution(self.experiment.get("width"), height)
-
-		# Set the timing compensation
-		comp = self.general_ui.spinbox_compensation.value()
-		self.experiment.set("compensation", comp)
-
-		# Set the foreground color
-		foreground = self.experiment.sanitize(self.general_ui.edit_foreground.text())
-		self.experiment.set("foreground", foreground)
-
-		# Set the background color
-		background = self.experiment.sanitize(self.general_ui.edit_background.text())
-		self.experiment.set("background", background)
-
-		# Refresh the interface and unlock the general tab
-		self.refresh()
-		self.ignore_general_changes = False
-
 	def init_general_tab(self):
 
 		"""Initializes the general tab"""
 		
 		self.general_tab_widget = libqtopensesame.general_properties.general_properties(self)
 
-		"""
-		# Set the header, with the icon, label and script button
-		self.header_widget = general_header_widget(self.experiment)
-		button_help = QtGui.QPushButton(self.experiment.icon("help"), "")
-		button_help.setIconSize(QtCore.QSize(16, 16))
-		button_help.clicked.connect(self.open_general_help_tab)
-		button_help.setToolTip("Tell me more about OpenSesame!")
-		header_hbox = QtGui.QHBoxLayout()
-		header_hbox.addWidget(self.experiment.label_image("experiment_large"))
-		header_hbox.addWidget(self.header_widget)
-		header_hbox.addStretch()
-		header_hbox.addWidget(button_help)
-		header_hbox.setContentsMargins(0, 0, 0, 16)
-		header_widget = QtGui.QWidget()
-		header_widget.setLayout(header_hbox)
-
-		# Script editor
-		self.edit_script = libqtopensesame.inline_editor.inline_editor(self.experiment, syntax="opensesame")
-		self.edit_script.apply.clicked.connect(self.apply_general_script)
-
-		# The rest of the controls from the UI file
-		w = QtGui.QWidget()
-		self.general_ui = general_widget_ui.Ui_Form()
-		self.general_ui.setupUi(w)
-		self.general_ui.edit_foreground.editingFinished.connect(self.apply_general_changes)
-		self.general_ui.edit_background.editingFinished.connect(self.apply_general_changes)
-		self.general_ui.combobox_start.currentIndexChanged.connect(self.apply_general_changes)
-		self.general_ui.spinbox_width.editingFinished.connect(self.apply_general_changes)
-		self.general_ui.spinbox_height.editingFinished.connect(self.apply_general_changes)
-		self.general_ui.spinbox_compensation.editingFinished.connect(self.apply_general_changes)
-		self.general_ui.checkbox_show_script.toggled.connect(self.toggle_script_editor)
-		self.general_ui.label_opensesame.setText(unicode(self.general_ui.label_opensesame.text()).replace("[version]", self.version).replace("[codename]", self.codename))
-
-		# Set the backend combobox
-		for backend in openexp.backend_info.backend_list:
-			desc = openexp.backend_info.backend_list[backend]["description"]
-			self.general_ui.combobox_backend.addItem("%s -- %s" % (backend, desc))
-		self.general_ui.combobox_backend.currentIndexChanged.connect(self.apply_general_changes)
-
-		vbox = QtGui.QVBoxLayout()
-		vbox.addWidget(header_widget)
-		vbox.addWidget(w)
-		vbox.addWidget(self.edit_script)
-		vbox.setMargin(16)
-
-		self.general_tab_widget = QtGui.QWidget()
-		self.general_tab_widget.setLayout(vbox)
-		self.general_tab_widget.general_tab = True
-
-		self.toggle_script_editor()
-		"""
-
 	def general_widget(self):
 
 		"""Set the controls of the general tab based on the variables"""
 		
 		self.general_tab_widget.refresh()
-
-		"""
-		if self.experiment.debug:
-			print "qtopensesame.general_widget()"
-
-		# Lock the general tab to prevent a recursive loop
-		self.ignore_general_changes = True
-
-		# Set the header containing the titel etc
-		self.set_header_label()
-
-		# Select the start item
-		self.experiment.item_combobox(self.experiment.start, [], self.general_ui.combobox_start)
-
-		# Select the backend
-		backend = openexp.backend_info.match(self.experiment)
-		if backend == "custom":
-			self.general_ui.combobox_backend.setDisabled(True)
-		else:
-			self.general_ui.combobox_backend.setDisabled(False)
-			desc = openexp.backend_info.backend_list[backend]["description"]
-			i = self.general_ui.combobox_backend.findText("%s -- %s" % (backend, desc))
-			self.general_ui.combobox_backend.setCurrentIndex(i)
-
-		# Set the resolution
-		try:
-			self.general_ui.spinbox_width.setValue(int(self.experiment.width))
-			self.general_ui.spinbox_height.setValue(int(self.experiment.height))
-		except:
-			self.experiment.notify("Failed to parse the resolution. Expecting positive numeric values.")
-
-		# Set the timing compensation
-		try:
-			self.general_ui.spinbox_compensation.setValue(int(self.experiment.compensation))
-		except:
-			self.experiment.notify("Failed to parse timing compensation. Expecting a numeric value.")
-
-		# Set the colors
-		self.general_ui.edit_foreground.setText(str(self.experiment.foreground))
-		self.general_ui.edit_background.setText(str(self.experiment.background))
-
-		# Re-generate the opensesame script
-		try:
-			self.edit_script.edit.setPlainText(self.experiment.to_string())
-		except libopensesame.exceptions.script_error as e:
-			self.experiment.notify("</>Failed to generate script:</b> %s" % e)
-			self.edit_script.edit.setText("Failed to generate script!")
-
-		# Release the general tab
-		self.ignore_general_changes = False
-		"""
 
 	def open_general_tab(self, reopen = False, index = None, focus = True):
 
@@ -1854,7 +1620,7 @@ class qtopensesame(QtGui.QMainWindow):
 		if self.experiment.debug:
 			print "qtopensesame.refresh(): %s" % changed_item
 
-		self.set_header_label()
+		self.general_tab_widget.set_header_label()
 
 		index = self.ui.tabwidget.currentIndex()
 
@@ -1907,7 +1673,7 @@ class qtopensesame(QtGui.QMainWindow):
 		if self.experiment.debug:
 			print "qtopensesame.hard_refresh(): %s" % changed_item
 
-		self.set_header_label()
+		self.general_tab_widget.set_header_label()
 
 		index = self.ui.tabwidget.currentIndex()
 
