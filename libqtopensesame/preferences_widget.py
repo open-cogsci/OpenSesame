@@ -17,6 +17,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 
 import libqtopensesame.preferences_widget_ui
 from libqtopensesame import config
+from libopensesame import plugins
 from PyQt4 import QtCore, QtGui
 import os
 
@@ -39,10 +40,9 @@ class preferences_widget(QtGui.QWidget):
 		
 		# Setup the GUI
 		self.ui = libqtopensesame.preferences_widget_ui.Ui_Form()
-		self.ui.setupUi(self)		
+		self.ui.setupUi(self)
+		self.lock = False
 		
-		self.set_controls()
-			
 		# Connect the controls
 		self.ui.checkbox_immediately_rename.toggled.connect(self.apply)
 		self.ui.checkbox_autoresponse.toggled.connect(self.apply)
@@ -73,14 +73,28 @@ class preferences_widget(QtGui.QWidget):
 		self.ui.font_scintilla_font_family.currentFontChanged.connect(self.apply)
 		self.ui.spinbox_scintilla_font_size.valueChanged.connect(self.apply)
 		
+		# Construct the plugin section
+		self.checkbox_plugins = {}		
+		self.ui.edit_plugin_folders.setText("; ".join(plugins.plugin_folders(only_existing=False)))
+		for plugin in sorted(plugins.list_plugins(filter_disabled=False)):
+			self.checkbox_plugins[plugin] = QtGui.QCheckBox(plugin)
+			self.checkbox_plugins[plugin].toggled.connect(self.apply)
+			self.ui.layout_plugin_list.addWidget(self.checkbox_plugins[plugin])
+		
 		try:
 			import libqtopensesame.inline_editor_qscintilla as dummy
 		except:
 			self.ui.groupbox_scintilla.hide()
+			
+		self.set_controls()						
 				
 	def set_controls(self):
 	
 		"""Update the controls"""
+		
+		if self.lock:
+			return
+		self.lock = True
 		
 		if self.main_window.experiment.debug:
 			print "preferences_widget.set_controls(): setting controls"
@@ -111,7 +125,7 @@ class preferences_widget(QtGui.QWidget):
 		self.ui.checkbox_scintilla_whitespace_visible.setChecked(config.get_config("scintilla_whitespace_visible"))		
 		self.ui.font_scintilla_font_family.setCurrentFont(QtGui.QFont(config.get_config("scintilla_font_family")))
 		self.ui.spinbox_scintilla_font_size.setValue(config.get_config("scintilla_font_size"))
-		
+				
 		# Disable some of the controls, if they depend on other controls
 		if self.main_window.autosave_interval <= 0:
 			self.ui.spinbox_autosave_interval.setDisabled(True)	
@@ -135,10 +149,20 @@ class preferences_widget(QtGui.QWidget):
 			if self.main_window.style == str(style):
 				self.ui.combobox_style.setCurrentIndex(i)
 			i += 1
+
+		# Set the plugin status			
+		for plugin in plugins.list_plugins(filter_disabled=False):
+			self.checkbox_plugins[plugin].setChecked(not plugins.plugin_disabled(plugin))
+			
+		self.lock = False			
 			
 	def apply(self):
 	
 		"""Apply the controls"""
+		
+		if self.lock:
+			return
+		self.lock = True
 		
 		if self.main_window.experiment.debug:
 			print "preferences_widget.apply(): applying controls"		
@@ -190,7 +214,16 @@ class preferences_widget(QtGui.QWidget):
 		config.set_config("scintilla_whitespace_visible", self.ui.checkbox_scintilla_whitespace_visible.isChecked())		
 		config.set_config("scintilla_font_family", str(self.ui.font_scintilla_font_family.currentFont().family()))
 		config.set_config("scintilla_font_size", self.ui.spinbox_scintilla_font_size.value())								
+		
+		# Create a semicolon-separated list of disabled plugins
+		l = []
+		for plugin in plugins.list_plugins(filter_disabled=False):
+			if not self.checkbox_plugins[plugin].isChecked():
+				l.append(plugin)
+		config.set_config("disabled_plugins", ";".join(l))		
 				
 		self.main_window.style = self.ui.combobox_style.currentText()
 		self.main_window.set_style()									
 		self.main_window.save_state()
+		
+		self.lock = False

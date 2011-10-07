@@ -30,6 +30,7 @@ config = {
 	"scintilla_font_family" : "courier",
 	"scintilla_font_size" : 10,
 	"new_experiment_dialog" : True,
+	"disabled_plugins" : "",
 	}
 
 def get_config(setting):

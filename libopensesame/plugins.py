@@ -23,11 +23,15 @@ import imp
 _list = None
 _folders = {}
 _properties = {}
-		
-def plugin_folders():
+	
+def plugin_folders(only_existing=True):
 
 	"""
 	Returns a list of plugin folders
+	
+	Keywords arguments:
+	only_existing -- specifies if only existing folders should be returned
+					 (default=True)
 	
 	Returns:
 	A list of folders
@@ -35,23 +39,23 @@ def plugin_folders():
 	
 	l = []
 	
-	path = "plugins"
-	if os.path.exists(path):
+	path = os.path.join(os.getcwd(), "plugins")
+	if not only_existing or os.path.exists(path):
 		l.append(path)
 				
 	if os.name == "posix":
 	
 		path = os.path.join(os.environ["HOME"], ".opensesame", "plugins")
-		if os.path.exists(path):
+		if not only_existing or os.path.exists(path):
 			l.append(path)	
 	
 		path = "/usr/share/opensesame/plugins"
-		if os.path.exists(path):
+		if not only_existing or os.path.exists(path):
 			l.append(path)
 									
 	elif os.name == "nt":
 		path = os.path.join(os.environ["USERPROFILE"], ".opensesame", "plugins")
-		if os.path.exists(path):
+		if not only_existing or os.path.exists(path):
 			l.append(path)		
 			
 	return l
@@ -66,6 +70,25 @@ def is_plugin(item_type):
 	"""
 
 	return plugin_folder(item_type) != None
+	
+def plugin_disabled(plugin):
+	
+	"""
+	Checks if a plugin has been disabled. If the config module cannot be loaded
+	the return value is False.
+	
+	Arguments:
+	plugin -- the plugin to check
+	
+	Returns:
+	True if the plugin has been disabled, False otherwise
+	"""
+
+	try:
+		from libqtopensesame import config
+		return plugin in config.get_config("disabled_plugins").split(";")
+	except:
+		return False
 	
 def plugin_property(plugin, _property, default=0):
 
@@ -111,7 +134,7 @@ def plugin_category(plugin):
 	
 	return plugin_property(plugin, "category", default="Miscellaneous")
 	
-def list_plugins():
+def list_plugins(filter_disabled=True):
 
 	"""
 	Returns a list of plugins
@@ -120,10 +143,9 @@ def list_plugins():
 	A list of plugins (item_types)
 	"""
 	
-	global _list
-	
+	global _list	
 	if _list != None:
-		return _list
+		return [plugin for plugin in _list if not (filter_disabled and plugin_disabled(plugin))]
 	
 	plugins = []
 	for folder in plugin_folders():
@@ -136,7 +158,7 @@ def list_plugins():
 	# Sort (inversely) by priority
 	plugins.sort(key=lambda p: -p[1])
 	_list = [plugin[0] for plugin in plugins]
-	return _list
+	return [plugin for plugin in _list if not (filter_disabled and plugin_disabled(plugin))]
 	
 def plugin_folder(plugin):
 	

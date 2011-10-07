@@ -281,15 +281,15 @@ class qtopensesame(QtGui.QMainWindow):
 		self.open_general_tab()
 
 		# Refresh all aspects of the GUI
-		self.refresh_plugins()
 		self.refresh_pool()
 		self.refresh_stdout()
 		self.refresh_variable_inspector()				
 
 		# Build the items toolbar
-		self.ui.toolbar_items.build()
 		self.set_status("Welcome to OpenSesame %s" % self.version)
 		self.restore_state()
+		self.ui.toolbar_items.build()		
+		self.refresh_plugins()		
 		self.set_unsaved(False)
 		self.start_autosave_timer()
 		self.update_recent_files()
