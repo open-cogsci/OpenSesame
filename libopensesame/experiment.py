@@ -596,18 +596,16 @@ class experiment(item.item, openexp.experiment.experiment):
 		A list of tuples
 		"""
 		
-		l = []
-		
+		l = []		
 		for var in self.variables:
-			l.append( (var, self.variables[var]) )
-		
+			l.append( (var, self.variables[var]) )		
 		return l											
 		
-	def var_list(self, filt = ""):
+	def var_list(self, filt=""):
 
 		"""	
-		Return a list of (name, value, description) tuples with variable descriptions
-		for all items
+		Return a list of (name, value, description) tuples with variable
+		descriptions for all items
 		
 		Keyword arguments:
 		filt -- a search string to filter by
@@ -616,20 +614,20 @@ class experiment(item.item, openexp.experiment.experiment):
 		A list of tuples
 		"""
 		
-		l = []
-		
-		i = 0
+		l = []		
+		i = 0		
 		for item in self.items:
 			var_list = self.items[item].var_info()
 			for var, val in var_list:
 				if filt in str(var).lower() or filt in str(val).lower() or filt in item.lower():
 					l.append( (var, val, item) )
-				
+					
+		# Global variables are defined in the experiment class itself
 		var_list = self.var_info()
 		for var, val in var_list:
 			if filt in str(var).lower() or filt in str(val).lower() or filt in "global":
 				l.append( (var, val, "global") )
-				
+								
 		return l
 		
 def clean_up(verbose = False):

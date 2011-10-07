@@ -106,6 +106,10 @@ class fixation_dot(item.item, generic_response.generic_response):
 		self.set_sri()
 		self.process_response()
 		return True
+		
+	def var_info(self):
+
+		return generic_response.generic_response.var_info(self)			
 
 class qtfixation_dot(fixation_dot, qtplugin.qtplugin):
 

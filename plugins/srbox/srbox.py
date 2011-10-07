@@ -28,8 +28,6 @@ import os.path
 
 from PyQt4 import QtGui, QtCore
 
-version = 0.14
-
 _time_func = None
 
 class srbox(item.item, generic_response.generic_response):
@@ -185,6 +183,10 @@ class srbox(item.item, generic_response.generic_response):
 			
 		# Report success
 		return True
+		
+	def var_info(self):
+
+		return generic_response.generic_response.var_info(self)			
 
 class qtsrbox(srbox, qtplugin.qtplugin):
 
@@ -240,7 +242,6 @@ class qtsrbox(srbox, qtplugin.qtplugin):
 		self.add_line_edit_control("allowed_responses", "Allowed responses", tooltip = "Expecting a semicolon-separated list of button numbers, e.g., 1;3;4")
 		self.add_line_edit_control("timeout", "Timeout", tooltip = "Expecting a value in milliseconds or 'infinite'", default = "infinite")
 		self.add_line_edit_control("lights", "Turn on lights", tooltip = "Expecting a semicolon-separated list of light numbers, e.g., 1;3;4")
-		self.add_text("<small><b>SRBox OpenSesame Plugin v%.2f</b></small>" % version)
 
 		# Add a stretch to the edit_vbox, so that the controls do not
 		# stretch to the bottom of the window.

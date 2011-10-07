@@ -510,5 +510,6 @@ class item(openexp.trial.trial):
 		A list of (variable, description) tuples
 		"""
 		
-		return [ ("time_%s" % self.name, "<i>Determined at runtime</i>"), ("count_%s" % self.name, "<i>Determined at runtime</i>") ]
+		return [ ("time_%s" % self.name, "[Timestamp of last call]"), \
+			("count_%s" % self.name, "[Timestamp of last call]") ]
 		

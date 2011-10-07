@@ -326,15 +326,14 @@ class generic_response:
 		"""
 
 		l = []
-		l.append( ("response_%s" % self.get("name"), "<i>Depends on response</i>") )
-		l.append( ("correct_%s" % self.get("name"), "<i>Depends on response</i>") )
-		l.append( ("response_time_%s" % self.get("name"), "<i>Depends on response</i>") )		
-		l.append( ("response", "<i>Depends on response</i>") )
-		l.append( ("correct", "<i>Depends on response</i>") )
-		l.append( ("response_time", "<i>Depends on response</i>") )
-		l.append( ("average_response_time", "<i>Depends on response</i>") )
-		l.append( ("avg_rt", "<i>Depends on response</i>") )
-		l.append( ("accuracy", "<i>Depends on response</i>") )
-		l.append( ("acc", "<i>Depends on response</i>") )
-
+		l.append( ("response_%s" % self.get("name"), "[Depends on response]") )
+		l.append( ("correct_%s" % self.get("name"), "[Depends on response]") )
+		l.append( ("response_time_%s" % self.get("name"), "[Depends on response]") )		
+		l.append( ("response", "[Depends on response]") )
+		l.append( ("correct", "[Depends on response]") )
+		l.append( ("response_time", "[Depends on response]") )
+		l.append( ("average_response_time", "[Depends on response]") )
+		l.append( ("avg_rt", "[Depends on response]") )
+		l.append( ("accuracy", "[Depends on response]") )
+		l.append( ("acc", "[Depends on response]") )
 		return l

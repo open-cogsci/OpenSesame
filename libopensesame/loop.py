@@ -187,6 +187,6 @@ class loop(item.item):
 					var_list[var] = []
 				var_list[var].append(str(self.matrix[i][var]))
 		for var in var_list:
-			l.append( (var, "<i>" + ", ".join(var_list[var]) + "</i>"))
+			l.append( (var, "[" + ", ".join(var_list[var]) + "]"))
 		return l
 

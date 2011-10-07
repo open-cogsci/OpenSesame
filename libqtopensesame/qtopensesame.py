@@ -196,7 +196,7 @@ class qtopensesame(QtGui.QMainWindow):
 			self.home_folder = os.environ["HOME"]
 		else:
 			self.home_folder = os.environ["HOME"]
-			print "qtopensesame.__init__(): unknown platform '%s', using '%s' as home folder" % (platfornm.system(), self.home_folder)
+			print "qtopensesame.__init__(): unknown platform '%s', using '%s' as home folder" % (platform.system(), self.home_folder)
 
 		# Determine autosave_folder		
 		if not os.path.exists(os.path.join(self.home_folder, ".opensesame")):
@@ -268,7 +268,7 @@ class qtopensesame(QtGui.QMainWindow):
 
 		# Create the initial experiment
 		self.experiment = experiment.experiment(self, "New experiment")
-		self.experiment.from_string(open(self.experiment.resource("default.opensesame"), "r").read())
+		self.experiment.from_string(open(self.experiment.resource("default.opensesame"), "r").read())		
 		
 		# Initialize the tabs
 		self.init_general_tab()
@@ -282,10 +282,9 @@ class qtopensesame(QtGui.QMainWindow):
 
 		# Refresh all aspects of the GUI
 		self.refresh_plugins()
-		self.refresh_variable_inspector()
 		self.refresh_pool()
 		self.refresh_stdout()
-		self.refresh()
+		self.refresh_variable_inspector()				
 
 		# Build the items toolbar
 		self.ui.toolbar_items.build()
@@ -294,7 +293,7 @@ class qtopensesame(QtGui.QMainWindow):
 		self.set_unsaved(False)
 		self.start_autosave_timer()
 		self.update_recent_files()
-		self.clean_autosave()
+		self.clean_autosave()					
 
 		# Parse the command line options
 		parser = optparse.OptionParser("usage: opensesame [experiment] [options]", version = "%s '%s'" % (self.version, self.codename))
@@ -872,25 +871,7 @@ class qtopensesame(QtGui.QMainWindow):
 			self.ui.dock_variable_inspector.setVisible(True)
 			self.ui.table_variables.refresh()
 		else:			
-			self.ui.dock_variable_inspector.setVisible(False)
-				
-		"""
-		scrollpos = self.ui.table_variables.verticalScrollBar().sliderPosition()
-		col = self.ui.table_variables.currentColumn()
-		row = self.ui.table_variables.currentRow()
-		self.ui.dock_variable_inspector.setVisible(True)
-		filt = str(self.ui.edit_variable_filter.text())
-		i = 0
-		for var, val, item in self.experiment.var_list(filt):
-			self.ui.table_variables.insertRow(i)
-			self.ui.table_variables.setCellWidget(i, 0, QtGui.QLabel(" %s " % var))
-			self.ui.table_variables.setCellWidget(i, 1, QtGui.QLabel(" %s " % val))
-			self.ui.table_variables.setCellWidget(i, 2, QtGui.QLabel(" %s " % item))
-			i += 1
-		self.ui.table_variables.setRowCount(i)
-		self.ui.table_variables.setCurrentCell(row, col)
-		self.ui.table_variables.verticalScrollBar().setSliderPosition(scrollpos)
-		"""
+			self.ui.dock_variable_inspector.setVisible(False)			
 
 	def restart(self):
 

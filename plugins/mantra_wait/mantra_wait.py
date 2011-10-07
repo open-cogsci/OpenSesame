@@ -137,13 +137,13 @@ class mantra_wait(item.item):
 		"""
 		
 		l = item.item.var_info(self)
-		l.append( ("response_time", "<i>Depends on response</i>") )		
-		l.append( ("smov_x", "<i>Depends on response</i>") )
-		l.append( ("smov_y", "<i>Depends on response</i>") )
-		l.append( ("smov_z", "<i>Depends on response</i>") )
-		l.append( ("emov_x", "<i>Depends on response</i>") )
-		l.append( ("emov_y", "<i>Depends on response</i>") )
-		l.append( ("emov_z", "<i>Depends on response</i>") )
+		l.append( ("response_time", "[Depends on response]") )		
+		l.append( ("smov_x", "[Depends on response]") )
+		l.append( ("smov_y", "[Depends on response]") )
+		l.append( ("smov_z", "[Depends on response]") )
+		l.append( ("emov_x", "[Depends on response]") )
+		l.append( ("emov_y", "[Depends on response]") )
+		l.append( ("emov_z", "[Depends on response]") )
 		
 		return l			
 					

@@ -104,8 +104,7 @@ class mouse_response(item.item, generic_response.generic_response):
 		"""
 
 		l = generic_response.generic_response.var_info(self)
-		l.append( ("cursor_x", "<i>Depends on response</i>") )
-		l.append( ("cursor_y", "<i>Depends on response</i>") )
-
+		l.append( ("cursor_x", "[Depends on response]") )
+		l.append( ("cursor_y", "[Depends on response]") )
 		return l
 

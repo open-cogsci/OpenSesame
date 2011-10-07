@@ -65,6 +65,9 @@ class variable_inspector(QtGui.QTableWidget):
 	
 		"""Updates and restores the variable inspector"""
 		
+		if self.main_window.experiment.debug:
+			print "variable_inspector.refresh()"
+		
 		if self.unsorted:
 			self.sortItems(0, QtCore.Qt.AscendingOrder)
 			self.unsorted = False
