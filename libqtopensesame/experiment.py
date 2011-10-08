@@ -17,7 +17,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 
 import libopensesame.experiment
 import libopensesame.plugins
-from libqtopensesame import notification_dialog_ui
+from libqtopensesame import notification_dialog_ui, text_input_dialog_ui
 from PyQt4 import QtCore, QtGui
 import os.path
 
@@ -405,6 +405,51 @@ class experiment(libopensesame.experiment.experiment):
 		a.ui.textedit_notification.setHtml(message)
 		a.adjustSize()
 		a.show()
+		
+	def text_input(self, title, message=None, content=""):
+	
+		"""
+		Pops up a text input dialog
+		
+		Arguments:
+		title -- the title for the dialog
+		
+		Keywords arguments:
+		message -- a text message (default=None)
+		contents -- the initial contents (default="")
+		
+		Returns:
+		A string of text or None if cancel was pressed
+		"""
+		
+		a = QtGui.QDialog(self.main_window)
+		a.ui = text_input_dialog_ui.Ui_Dialog()
+		a.ui.setupUi(a)
+		if message != None:
+			a.ui.label_message.setText(message)
+		a.ui.textedit_input.setText(content)
+		a.ui.textedit_input.setFont(self.monospace())
+		a.adjustSize()
+		if a.exec_() == QtGui.QDialog.Accepted:
+			return self.usanitize(a.ui.textedit_input.toPlainText())					
+		return None
+		
+	def monospace(self):
+	
+		"""
+		Determines the OS specific monospace font
+		
+		Returns:
+		A QFont
+		"""
+		
+		if os.name == "posix":
+			font_family = "mono"
+		else:
+			font_family = "courier"
+		font = QtGui.QFont(font_family)				
+		font.setFixedPitch(True)
+		return font
 
 	def clear_widget(self, widget):
 

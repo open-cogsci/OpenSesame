@@ -50,6 +50,35 @@ class remove_item_button(QtGui.QPushButton):
 		self.sketchpad_widget.sketchpad.items.remove(self.item)				
 		self.sketchpad_widget.refresh()
 		
+class edit_item_button(QtGui.QPushButton):
+
+	"""A button to edit items in the sketchpad"""
+
+	def __init__(self, sketchpad_widget, item):
+	
+		"""
+		Constructor
+		
+		Arguments:
+		sketchpad_widget -- the sketchpad widget
+		item -- the item of the sketchpad widget
+		"""
+				
+	
+		self.sketchpad_widget = sketchpad_widget
+		self.item = item
+		QtGui.QPushButton.__init__(self, self.sketchpad_widget.sketchpad.experiment.icon("edit"), "")
+		QtCore.QObject.connect(self, QtCore.SIGNAL("clicked()"), self.edit_item)
+		self.setIconSize(QtCore.QSize(16,16))
+		
+	def edit_item(self):
+	
+		"""Is called when the edit button is clicked"""
+	
+		print self.item
+		self.sketchpad_widget.scene.edit_item(self.sketchpad_widget.sketchpad.fix_coordinates(self.item))
+		self.sketchpad_widget.sketchpad.apply_edit_changes()								
+		self.sketchpad_widget.refresh()		
 
 class canvas(QtGui.QGraphicsScene):
 
@@ -257,16 +286,16 @@ class canvas(QtGui.QGraphicsScene):
 		"""				
 		
 		s = self.sketchpad_widget.sketchpad.item_to_string(self.sketchpad_widget.sketchpad.unfix_coordinates(item))		
-		s, ok = QtGui.QInputDialog.getText(self.sketchpad_widget.sketchpad.experiment.main_window.ui.centralwidget, "Edit item", "Please edit the item", text = s)
-		
-		if ok:							
-			tmp = self.sketchpad_widget.sketchpad.items[:] # Keep a backup
-			self.delete_item(item)			
-			try:
-				self.sketchpad_widget.sketchpad.from_string(str(s))
-			except exceptions.script_error as e:
-				self.sketchpad_widget.sketchpad.items = tmp
-				self.sketchpad_widget.sketchpad.experiment.notify(str(e))
+		s = self.sketchpad_widget.sketchpad.experiment.text_input("Edit sketchpad element", message="Element script", content=s)
+		if s == None:
+			return		
+		tmp = self.sketchpad_widget.sketchpad.items[:] # Keep a backup
+		self.delete_item(item)			
+		try:
+			self.sketchpad_widget.sketchpad.from_string(str(s))
+		except exceptions.script_error as e:
+			self.sketchpad_widget.sketchpad.items = tmp
+			self.sketchpad_widget.sketchpad.experiment.notify(str(e))
 						
 	def draw_grid(self):
 	
@@ -900,8 +929,9 @@ class sketchpad_widget(QtGui.QWidget):
 		
 			hbox = QtGui.QHBoxLayout()			
 			hbox.setContentsMargins(0, 0, 0, 0)
-			hbox.addWidget(remove_item_button(self, item))
+			hbox.addWidget(edit_item_button(self, item))
 			hbox.addWidget(edit)			
+			hbox.addWidget(remove_item_button(self, item))
 			
 			widget = QtGui.QWidget()
 			widget.setLayout(hbox)

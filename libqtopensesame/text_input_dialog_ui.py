@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'resources/notification_dialog.ui'
+# Form implementation generated from reading ui file 'resources/text_input_dialog.ui'
 #
 # Created: Sat Oct  8 21:12:52 2011
 #      by: PyQt4 UI code generator 4.8.3
@@ -44,24 +44,21 @@ class Ui_Dialog(object):
         self.label.setPixmap(QtGui.QPixmap(_fromUtf8(":/icons/about_large.png")))
         self.label.setObjectName(_fromUtf8("label"))
         self.horizontalLayout.addWidget(self.label)
-        self.label_2 = QtGui.QLabel(self.widget)
+        self.label_message = QtGui.QLabel(self.widget)
         font = QtGui.QFont()
         font.setPointSize(11)
         font.setWeight(75)
         font.setBold(True)
-        self.label_2.setFont(font)
-        self.label_2.setObjectName(_fromUtf8("label_2"))
-        self.horizontalLayout.addWidget(self.label_2)
+        self.label_message.setFont(font)
+        self.label_message.setObjectName(_fromUtf8("label_message"))
+        self.horizontalLayout.addWidget(self.label_message)
         self.verticalLayout.addWidget(self.widget)
-        self.textedit_notification = QtGui.QTextBrowser(Dialog)
-        font = QtGui.QFont()
-        font.setFamily(_fromUtf8("Monospace"))
-        self.textedit_notification.setFont(font)
-        self.textedit_notification.setObjectName(_fromUtf8("textedit_notification"))
-        self.verticalLayout.addWidget(self.textedit_notification)
+        self.textedit_input = QtGui.QTextEdit(Dialog)
+        self.textedit_input.setObjectName(_fromUtf8("textedit_input"))
+        self.verticalLayout.addWidget(self.textedit_input)
         self.buttonBox = QtGui.QDialogButtonBox(Dialog)
         self.buttonBox.setOrientation(QtCore.Qt.Horizontal)
-        self.buttonBox.setStandardButtons(QtGui.QDialogButtonBox.Close)
+        self.buttonBox.setStandardButtons(QtGui.QDialogButtonBox.Cancel|QtGui.QDialogButtonBox.Ok)
         self.buttonBox.setObjectName(_fromUtf8("buttonBox"))
         self.verticalLayout.addWidget(self.buttonBox)
 
@@ -72,6 +69,6 @@ class Ui_Dialog(object):
 
     def retranslateUi(self, Dialog):
         Dialog.setWindowTitle(QtGui.QApplication.translate("Dialog", "OpenSesame says ...", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_2.setText(QtGui.QApplication.translate("Dialog", "OpenSesame says ...", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_message.setText(QtGui.QApplication.translate("Dialog", "OpenSesame says ...", None, QtGui.QApplication.UnicodeUTF8))
 
 import icons_rc
