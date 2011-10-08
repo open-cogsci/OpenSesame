@@ -44,17 +44,16 @@ class header_widget(QtGui.QWidget):
 		self.setToolTip("Click to edit")
 		self.item = item
 		self.label_name = QtGui.QLabel()
-		self.label_name.setText("<font size='5'><b>%s</b> - %s</font>&nbsp;&nbsp;&nbsp;<font color='gray'><i>Click to edit</i></font>" % (self.item.name, self.item.item_type.replace("_", " ").title()))
 		self.label_name.id = "name"
 
-		self.edit_name = QtGui.QLineEdit(self.item.name)
+		self.edit_name = QtGui.QLineEdit()
 		self.edit_name.editingFinished.connect(self.restore_name)
 		self.edit_name.hide()
 
-		self.label_desc = QtGui.QLabel(self.item.description)
+		self.label_desc = QtGui.QLabel()
 		self.label_desc.id = "desc"
 
-		self.edit_desc = QtGui.QLineEdit(self.item.description)
+		self.edit_desc = QtGui.QLineEdit()
 		self.edit_desc.editingFinished.connect(self.restore_desc)
 		self.edit_desc.hide()
 		
@@ -66,7 +65,18 @@ class header_widget(QtGui.QWidget):
 		vbox.addWidget(self.label_desc)
 		vbox.addWidget(self.edit_desc)
 
+		self.refresh()
 		self.setLayout(vbox)
+		
+	def refresh(self):
+	
+		"""Update the header"""
+		
+		self.edit_name.setText(self.item.name)
+		self.label_name.setText("<font size='5'><b>%s</b> - %s</font>&nbsp;&nbsp;&nbsp;<font color='gray'><i>Click to edit</i></font>" \
+			% (self.item.name, self.item.item_type.replace("_", " ").title()))			
+		self.edit_desc.setText(self.item.description)			
+		self.label_desc.setText(self.item.description)			
 
 	def restore_name(self, apply_name_change = True):
 
@@ -79,10 +89,7 @@ class header_widget(QtGui.QWidget):
 
 		if apply_name_change:
 			self.item.apply_name_change()
-
-		self.label_name.setText("<font size='5'><b>%s</b> - %s</font>&nbsp;&nbsp;&nbsp;<font color='gray'><i>Click to edit</i></font>" % (self.item.name, self.item.item_type.replace("_", " ").title()))
 		self.label_name.show()
-		self.edit_name.setText(self.item.name)
 		self.edit_name.hide()
 
 	def restore_desc(self):
@@ -90,9 +97,7 @@ class header_widget(QtGui.QWidget):
 		"""Apply the description change and revert the edit	back to the label"""
 
 		self.item.apply_edit_changes()
-		self.label_desc.setText(self.item.description)
 		self.label_desc.show()
-		self.edit_desc.setText(self.item.description)
 		self.edit_desc.hide()
 
 	def mousePressEvent(self, event):
@@ -222,6 +227,7 @@ class qtitem(object):
 		if self.experiment.debug and not stretch:
 			print "*** qtitem.edit_widget(): passing the stretch argument is deprecated"
 		self.header.restore_name(False)
+		self.header.refresh()
 		self._edit_widget.edit_item = self.name
 		return self._edit_widget
 
@@ -234,28 +240,19 @@ class qtitem(object):
 		rebuild -- a deprecated argument (default=True)
 		"""
 
-		new_name = self.experiment.sanitize(str(self.header.edit_name.text()).strip(), True)
-
+		new_name = self.experiment.sanitize(self.header.edit_name.text(), strict=True)
 		# Do nothing is the name stays the same
 		if new_name == self.name:
 			self.header.edit_name.setText(self.name)
 			return
-
-		# Make sure the name is not empty
-		if new_name == "":
-			self.experiment.notify("An item must have a (non-empty) name")
+		valid = self.experiment.check_name(new_name)
+		if valid != True:
+			self.experiment.notify(valid)
 			self.header.edit_name.setText(self.name)
-			return
-
-		# Make sure the name is not taken
-		if new_name in self.experiment.items:
-			self.experiment.notify("An item named '%s' already exists" % new_name)
-			self.header.edit_name.setText(self.name)
-			return
-
-		# Pass on the word
-		self.experiment.main_window.set_unsaved()
-		self.experiment.rename(self.name, new_name)		
+		else:
+			# Pass on the word
+			self.experiment.main_window.set_unsaved()
+			self.experiment.rename(self.name, new_name)		
 
 	def apply_edit_changes(self, rebuild=True):
 
@@ -357,7 +354,6 @@ class qtitem(object):
 				return
 		self.experiment.main_window.select_item(self.name)
 		
-
 	def apply_script_changes(self, rebuild=True, catch=True):
 
 		"""

@@ -88,8 +88,12 @@ class item_context_menu(QtGui.QMenu):
 	
 		new_name, ok = QtGui.QInputDialog.getText(self, "Rename", "Please enter a new name", text=self.item.name)
 		new_name = self.item.experiment.sanitize(new_name, strict=True)
-		if ok and new_name != self.item.name:
-			if new_name in self.item.experiment.items:
-				self.item.experiment.notify("An item named '%s' already exists!" % new_name)					
-			else:			
-				self.item.experiment.rename(self.item.name, new_name)
+		if ok:
+			valid = self.item.experiment.check_name(new_name)
+			if valid != True:
+				self.item.experiment.notify(valid)
+			else:
+				# Pass on the word
+				self.item.experiment.main_window.set_unsaved()
+				self.item.experiment.rename(self.item.name, new_name)				
+

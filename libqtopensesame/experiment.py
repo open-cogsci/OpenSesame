@@ -195,6 +195,27 @@ class experiment(libopensesame.experiment.experiment):
 
 		self.main_window.refresh()
 		
+	def check_name(self, name):
+	
+		"""
+		Checks whether a given name is allowed. Reasons for not being allowed
+		are invalid characters or match with an existing name.
+		
+		Arguments:
+		name -- the name to check
+		
+		Returns:
+		True if the name is allowed, False otherwise
+		"""
+		
+		if name.strip() == "":
+			return "Empty names are not allowed"
+		if name.lower() in [item.lower() for item in self.items.keys()]:
+			return "An item with that name already exists"	
+		if name != self.sanitize(name, strict=True):
+			return "Name contains special characters. Only alphanumeric characters and underscores are allowed."
+		return True
+		
 	def delete(self, item_name, item_parent=None, index=None):
 	
 		"""
