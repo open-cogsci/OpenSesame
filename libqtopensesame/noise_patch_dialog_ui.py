@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'resources/noise_patch_dialog.ui'
 #
-# Created: Fri Oct  7 13:07:46 2011
+# Created: Sat Oct  8 16:34:35 2011
 #      by: PyQt4 UI code generator 4.8.3
 #
 # WARNING! All changes made in this file will be lost!

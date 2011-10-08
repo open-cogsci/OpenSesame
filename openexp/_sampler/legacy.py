@@ -21,21 +21,6 @@ import openexp.exceptions
 import numpy
 import os.path
 
-# The settings variable is used by the GUI to provide a list of back-end
-# settings
-settings = {
-	"sound_buf_size" : {
-		"name" : "Sound buffer size",
-		"description" : "The size of the internal sound buffer (increase if sound playback is choppy)",
-		"default" : 1024
-		},
-	"sampling_frequency" : {
-		"name" : "Sampling frequence",
-		"description" : "Determines the sound quality",
-		"default" : 48000
-		}
-	}
-
 class legacy:
 
 	"""
@@ -43,7 +28,33 @@ class legacy:
 	it back. The sampler offers a number of basic operations, such as pitch,
 	panning, and fade in.
 	"""
+	
 
+	# The settings variable is used by the GUI to provide a list of back-end
+	# settings
+	settings = {
+		"sound_buf_size" : {
+			"name" : "Sound buffer size",
+			"description" : "Size of the sound buffer (increase if playback is choppy)",
+			"default" : 1024
+			},
+		"sampling_frequency" : {
+			"name" : "Sampling frequency",
+			"description" : "Determines the sampling rate",
+			"default" : 48000
+			},
+		"sound_sample_size" : {
+			"name" : "Sample size",
+			"description" : "Determines the bith depth (negative = signed)",
+			"default" : -16
+			},
+		"sound_channels" : {
+			"name" : "The number of sound channels",
+			"description" : "1 = mono, 2 = stereo",
+			"default" : 2
+			},
+		}
+		
 	def __init__(self, experiment, src):
 	
 		"""<DOC>		
@@ -231,7 +242,29 @@ class legacy:
 		while pygame.mixer.get_busy():
 			pass
 	
-freq = 48000
+def init_sound(experiment):
 
+	"""
+	Initialize the pygame mixer before the experiment begins.
 	
+	Arguments:
+	experiment -- An instance of libopensesame.experiment.experiment
+	"""
+	
+	print "openexp.sampler._legacy.init_sound(): sampling freq = %d, buffer size = %d" \
+		% (experiment.sound_freq, experiment.sound_buf_size)		
+	pygame.mixer.pre_init(experiment.sound_freq, experiment.sound_sample_size, \
+		experiment.sound_channels, experiment.sound_buf_size)
+
+
+def close_sound(experiment):
+
+	"""
+	Close the mixer after the experiment is finished.
+	
+	Arguments:
+	experiment -- An instance of libopensesame.experiment.experiment	
+	"""
+	
+	pygame.mixer.quit()
 

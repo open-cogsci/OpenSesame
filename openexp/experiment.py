@@ -65,9 +65,7 @@ class experiment:
 	
 		"""Intialize the pygame mixer"""
 		
-		sampler.freq = self.sound_freq
-		print "experiment.init_sound(): sampling freq = %d, buffer size = %d" % (self.sound_freq, self.sound_buf_size)		
-		pygame.mixer.pre_init(self.sound_freq, self.sound_sample_size, self.sound_channels, self.sound_buf_size)
+		sampler.init_sound(self)
 				
 	def init_display(self, defaultlog = False):
 		
@@ -107,6 +105,6 @@ class experiment:
 		except:
 			pass
 			
-		pygame.mixer.quit()
+		sampler.close_sound(self)
 		canvas.close_display(self)
 		

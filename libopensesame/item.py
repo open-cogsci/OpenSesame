@@ -308,6 +308,39 @@ class item(openexp.trial.trial):
 			val = self.get(val[1:-1])		
 		return val
 		
+	def get_check(self, var, default=None, valid=None):
+	
+		"""<DOC>
+		Similar to get(), but falls back to a default if the variable has not
+		been set. It also raises an error if the value is not part of the valid
+		list.
+		
+		Arguments:
+		var -- the name of the variable
+		default -- a default 'fallback' value or None for no fallback, in which
+				   case an exception is rased if the value does not exist.
+		valid -- a list of allowed values (or None for no restrictions). An
+				 exception is raised if the value is not an allowed value.
+				 
+		Exceptions:
+		Raises a runtime_error if the variable is not defined and there is no
+		default value, or if the variable value is not part of the 'valid' list.
+				 
+		Returns:
+		The value
+		</DOC>"""
+		
+		if default == None:
+			val = self.get(var)
+		elif self.has(var):
+			val = self.get(var)
+		else:
+			val = default
+		if valid != None and val not in valid:
+			raise exceptions.runtime_error("Variable '%s' is '%s', expecting '%s'" \
+				% (var, val, " or ".join(valid)))
+		return val
+		
 	def has(self, var):
 	
 		"""<DOC>

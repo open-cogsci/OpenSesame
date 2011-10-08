@@ -24,9 +24,9 @@ import random
 
 class legacy(openexp._sampler.legacy.legacy):
 
-	"""
-	The synth generates a sound
-	"""
+	"""The synth generates a sound"""
+	
+	settings = None
 
 	def __init__(self, experiment, osc = "sine", freq = 440, length = 100, attack = 0, decay = 5):
 	

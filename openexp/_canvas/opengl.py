@@ -35,6 +35,8 @@ class opengl(openexp._canvas.legacy.legacy):
 	Implements an OpenGL canvas. See openexp._canvas.legacy for a full
 	explanation of all parameters	
 	"""
+	
+	settings = None
 
 	def __init__(self, experiment, bgcolor = None, fgcolor = None):
 

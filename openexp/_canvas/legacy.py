@@ -78,6 +78,21 @@ class legacy:
 	   following format: "template.__init__(): Debug message here".
 	"""
 	
+	# The settings variable is used by the GUI to provide a list of back-end
+	# settings
+	settings = {
+		"pygame_hwsurface" : {
+			"name" : "Hardware surface",
+			"description" : "Create a hardware surface",
+			"default" : "yes"
+			},
+		"pygame_doublebuf" : {
+			"name" : "Double buffering",
+			"description" : "Use double buffering",
+			"default" : "yes"
+			},			
+		}	
+	
 	def __init__(self, experiment, bgcolor = None, fgcolor = None):
 		
 		"""<DOC>
@@ -616,11 +631,23 @@ def init_display(experiment):
 	pygame.display.set_icon(surf)
 	
 	# Determine the video mode
-	mode = pygame.HWSURFACE | pygame.DOUBLEBUF
-	if pygame.display.mode_ok(experiment.resolution, mode):	
-		print "video.legacy.init_display(): video mode ok"
+	mode = 0
+	if experiment.get_check("pygame_hwsurface", "yes", ["yes", "no"]) == "yes":
+		mode = mode | pygame.HWSURFACE
+		print "openexp._canvas.legacy.init_display(): enabling hardware surface"
 	else:
-		print "video.legacy.init_display(): warning: video mode not ok"
+		print "openexp._canvas.legacy.init_display(): not enabling hardware surface"
+		
+	if experiment.get_check("pygame_doublebuf", "yes", ["yes", "no"]) == "yes":
+		mode = mode | pygame.DOUBLEBUF	
+		print "openexp._canvas.legacy.init_display(): enabling double buffering"
+	else:
+		print "openexp._canvas.legacy.init_display(): not enabling double buffering"
+
+	if pygame.display.mode_ok(experiment.resolution, mode):	
+		print "openexp._canvas.legacy.init_display(): video mode ok"
+	else:
+		print "openexp._canvas.legacy.init_display(): warning: video mode not ok"
 		
 	if experiment.fullscreen:
 		mode = mode | pygame.FULLSCREEN
@@ -635,7 +662,7 @@ def init_display(experiment):
 	experiment.font = pygame.font.Font(experiment.resource("%s.ttf" % experiment.font_family), experiment.font_size)			
 	if experiment.font == None:
 		if experiment.debug:
-			print "legacy.init_display(): '%s.ttf' not found, falling back to default font" % experiment.font_family
+			print "openexp._canvas.init_display(): '%s.ttf' not found, falling back to default font" % experiment.font_family
 		experiment.font = pygame.font.Font(None, experiment.font_size)
 		
 	# Set the time function to use pygame

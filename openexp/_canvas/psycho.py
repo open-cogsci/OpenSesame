@@ -27,6 +27,26 @@ class psycho(openexp._canvas.legacy.legacy):
 
 	"""This is a canvas backend built on top of PsychoPy (with Pyglet)"""
 	
+	# The settings variable is used by the GUI to provide a list of back-end
+	# settings
+	settings = {
+		"psychopy_waitblanking" : {
+			"name" : "Wait for blanking",
+			"description" : "Block until the display has been shown",
+			"default" : "yes"
+			},
+		"psychopy_wintype" : {
+			"name" : "Window type",
+			"description" : "'pygame' or 'pyglet'",
+			"default" : "pyglet"
+			},			
+		"psychopy_monitor" : {
+			"name" : "Monitor",
+			"description" : "Virtual monitor",
+			"default" : "testMonitor"
+			},						
+		}		
+	
 	def __init__(self, experiment, bgcolor = None, fgcolor = None):
 		
 		"""
@@ -620,30 +640,18 @@ def init_display(experiment):
 	global _experiment
 	_experiment = experiment	
 	
-	# Set the PsychoPy monitor, default to testMonitor
-	if experiment.has("psychopy_monitor"):
-		monitor = experiment.get("psychopy_monitor")
-	else:
-		monitor = "testMonitor"
+	# Set the PsychoPy monitor, default to testMonitor	
+	monitor = experiment.get_check("psychopy_monitor", "testMonitor")
+	wintype = experiment.get_check("psychopy_wintype", "pyglet", ["pyglet", "pygame"])
+	waitblanking = experiment.get_check("psychopy_waitblanking", "yes", ["yes", "no"]) == "yes"
 		
-	# Set the PsychoPy wintype, default to PyGlet
-	if experiment.has("psychopy_wintype"):
-		wintype = experiment.get("psychopy_wintype")
-	else:
-		wintype = "pyglet"
-		
-	# Set the PsychoPy waitblanking option, default to True
-	if experiment.has("psychopy_waitblanking") and experiment.get("psychopy_waitblanking") == "no":
-		waitblanking = False
-	else:
-		waitblanking = True
-		
-	if experiment.debug:
-		print "openexp._canvas.psycho.init_display(): creating a %s display" % wintype
+	print "openexp._canvas.psycho.init_display(): window type = %s" % wintype
+	print "openexp._canvas.psycho.init_display(): waitblanking = %s" % waitblanking
+	print "openexp._canvas.psycho.init_display(): monitor = %s" % monitor
 			
 	experiment.window = visual.Window( [experiment.width, experiment.height], \
 		waitBlanking=waitblanking, fullscr=experiment.fullscreen, \
-		monitor=monitor, units="pix", winType="pyglet", \
+		monitor=monitor, units="pix", winType=wintype, \
 		rgb=experiment.background)
 	experiment.window.setMouseVisible(False)
 	experiment.clock = core.Clock()	
