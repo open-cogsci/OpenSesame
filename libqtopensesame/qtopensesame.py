@@ -222,14 +222,16 @@ class qtopensesame(QtGui.QMainWindow):
 		self.ui.button_help_stdout.clicked.connect(self.open_stdout_help_tab)		
 
 		# Setup the variable inspector
+		self.ui.dock_variable_inspector.hide()
 		self.ui.button_help_variables.clicked.connect(self.open_variables_help_tab)
 		self.ui.dock_variable_inspector.visibilityChanged.connect(self.ui.action_show_variable_inspector.setChecked)
 		self.ui.edit_variable_filter.textChanged.connect(self.refresh_variable_inspector)
 
 		# Setup the file pool
+		self.ui.dock_pool.hide()
 		self.ui.dock_pool.visibilityChanged.connect(self.ui.action_show_pool.setChecked)
 		self.ui.pool_widget = pool_widget.pool_widget(self)
-		self.ui.dock_pool.setWidget(self.ui.pool_widget)
+		self.ui.dock_pool.setWidget(self.ui.pool_widget)		
 
 		# Create the initial experiment
 		self.experiment = experiment.experiment(self, "New experiment")
