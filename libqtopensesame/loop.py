@@ -140,7 +140,7 @@ class loop(libopensesame.loop.loop, libqtopensesame.qtitem.qtitem):
 
 		if ok:
 			l = self.cyclevar_list()
-			var_name = str(var_name)
+			var_name = self.experiment.sanitize(var_name)
 
 			# Split by space, because a name may be followed by a default value
 			if len(var_name.split()) > 1:
@@ -150,7 +150,7 @@ class loop(libopensesame.loop.loop, libqtopensesame.qtitem.qtitem):
 				default = ""
 
 			# Check for valid variable names
-			var_name = self.experiment.sanitize(var_name, True)
+			var_name = self.experiment.sanitize(var_name, strict=True)
 			if var_name == "":
 				self.experiment.notify("Variable names must consist of alphanumeric characters and underscores, and must not be empty")
 				return
@@ -596,7 +596,7 @@ class loop(libopensesame.loop.loop, libqtopensesame.qtitem.qtitem):
 				if cell == None:
 					val = ""
 				else:
-					val = self.auto_type(str(self.loop_table.item(row, col).text()))
+					val = self.auto_type(self.experiment.usanitize(self.loop_table.item(row, col).text()))
 				self.matrix[row][var] = val
 
 		row = self.loop_table.currentRow()

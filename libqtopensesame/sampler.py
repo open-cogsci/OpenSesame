@@ -23,10 +23,19 @@ from PyQt4 import QtCore, QtGui
 
 class sampler(libopensesame.sampler.sampler, libqtopensesame.qtitem.qtitem):
 
-	def __init__(self, name, experiment, string = None):
+	"""GUI controls for the sampler item"""
+
+	def __init__(self, name, experiment, string=None):
 	
 		"""
-		Initialize the experiment		
+		Constructor
+		
+		Arguments:
+		name -- the item name
+		experiment -- the experiment
+		
+		Keywords arguments:
+		string -- definition string (default=None)
 		"""
 		
 		libopensesame.sampler.sampler.__init__(self, name, experiment, string)
@@ -35,9 +44,7 @@ class sampler(libopensesame.sampler.sampler, libqtopensesame.qtitem.qtitem):
 				
 	def init_edit_widget(self):
 	
-		"""
-		Build the edit widget
-		"""
+		"""Build the GUI controls"""
 		
 		libqtopensesame.qtitem.qtitem.init_edit_widget(self, False)
 				
@@ -65,75 +72,62 @@ class sampler(libopensesame.sampler.sampler, libqtopensesame.qtitem.qtitem):
 					
 	def browse_sample(self):
 	
-		"""
-		Present a file dialog to browse for the sample
-		"""
+		"""Present a file dialog to browse for the sample"""
 		
 		s = libqtopensesame.pool_widget.select_from_pool(self.experiment.main_window)
 		if str(s) == "":
-			return
-			
+			return			
 		self.sampler_widget.ui.edit_sample.setText(s)
 		self.apply_edit_changes()
 		
 	def edit_widget(self):
 	
 		"""
-		Refresh the edit widget
-		with current information
-		and return it
+		Refresh the GUI controls
+		
+		Returns:
+		A QWidget with the controls
 		"""	
 		
-		self.lock = True
-		
-		libqtopensesame.qtitem.qtitem.edit_widget(self)		
-				
-		if self.variable_vars(["sample", "duration"]):
-			
+		self.lock = True		
+		libqtopensesame.qtitem.qtitem.edit_widget(self)						
+		if self.variable_vars(["sample", "duration"]):			
 			self.sampler_widget.ui.frame_notification.setVisible(True)
 			self.sampler_widget.ui.frame_controls.setVisible(False)
 			
-		else:
-		
+		else:		
 			self.sampler_widget.ui.frame_notification.setVisible(False)
-			self.sampler_widget.ui.frame_controls.setVisible(True)			
-		
+			self.sampler_widget.ui.frame_controls.setVisible(True)					
 			self.sampler_widget.ui.edit_sample.setText(self.get("sample"))
-			self.sampler_widget.ui.edit_duration.setText(str(self.get("duration")))
-		
+			self.sampler_widget.ui.edit_duration.setText(str(self.get("duration")))		
 			self.sampler_widget.ui.spin_pan.setValue(self.get("pan"))
 			self.sampler_widget.ui.spin_volume.setValue(100.0 * self.get("volume"))
 			self.sampler_widget.ui.spin_pitch.setValue(100.0 * self.get("pitch"))
 			self.sampler_widget.ui.spin_fade_in.setValue(self.get("fade_in"))
 			self.sampler_widget.ui.spin_stop_after.setValue(self.get("stop_after"))
-
 			self.sampler_widget.ui.dial_pan.setValue(self.get("pan"))
 			self.sampler_widget.ui.dial_volume.setValue(100.0 * self.get("volume"))
-			self.sampler_widget.ui.dial_pitch.setValue(100.0 * self.get("pitch"))
-			
-		self.lock = False
-		
+			self.sampler_widget.ui.dial_pitch.setValue(100.0 * self.get("pitch"))			
+		self.lock = False		
 		return self._edit_widget
 
-
-	def apply_edit_changes(self, i = None, j = None):
+	def apply_edit_changes(self, dummy1=None, dummy2=None):
 	
 		"""
-		Apply the changes to the sampler controls
+		Apply the GUI controls
+		
+		Keywords arguments:
+		dummy1 -- a dummy argument (default=None)
+		dummy2 -- a dummy argument (default=None)
 		"""	
 		
 		if not libqtopensesame.qtitem.qtitem.apply_edit_changes(self, False) or self.lock:
-			return
-		
-		self.set("sample", str(self.sampler_widget.ui.edit_sample.text()))
-		
-		dur = str(self.sampler_widget.ui.edit_duration.text())
-		if type(self.auto_type(dur)) not in (int, float) and dur not in ("keypress", "mouseclick", "sound"):
-			self.experiment.notify("'%s' is not a valid duration. Exception a positive number (duration in ms) or 'keypress', 'mouseclick', or 'sound'" % dur)
-			self.sampler_widget.ui.edit_duration.setText(self.get("duration"))
-		else:
-			self.set("duration", dur)			
-		
+			return		
+		self.set("sample", self.usanitize(self.sampler_widget.ui.edit_sample.text()))		
+		dur = self.sanitize(self.sampler_widget.ui.edit_duration.text(), strict=True)
+		if dur == "":
+			dur = "sound"
+		self.set("duration", dur)					
 		self.set("pan", self.sampler_widget.ui.spin_pan.value())
 		self.set("pitch", .01 * self.sampler_widget.ui.spin_pitch.value())
 		self.set("volume", .01 * self.sampler_widget.ui.spin_volume.value())
@@ -142,17 +136,18 @@ class sampler(libopensesame.sampler.sampler, libqtopensesame.qtitem.qtitem):
 		
 		self.experiment.main_window.refresh(self.name)			
 						
-	def apply_dials(self, i = None):
+	def apply_dials(self, dummy=None):
 	
 		"""
-		Read the dials and use those to set the spinboxes
+		Set the spinbox values based on the dials
+		
+		Keywords arguments:
+		dummy -- a dummy argument (default=None)
 		"""
 		
 		if self.lock:
 			return
-
 		self.set("pan", self.sampler_widget.ui.dial_pan.value())
 		self.set("pitch", .01 * self.sampler_widget.ui.dial_pitch.value())
-		self.set("volume", .01 * self.sampler_widget.ui.dial_volume.value())
-		
+		self.set("volume", .01 * self.sampler_widget.ui.dial_volume.value())		
 		self.edit_widget()

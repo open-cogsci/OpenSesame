@@ -44,13 +44,13 @@ class mouse_response(libopensesame.mouse_response.mouse_response, libqtopensesam
 		
 		libqtopensesame.qtitem.qtitem.apply_edit_changes(self)
 		
-		cr = str(self.edit_correct_response.text()).strip()
+		cr = self.usanitize(self.edit_correct_response.text())
 		if cr.strip() != "":
 			self.set("correct_response", cr)
 		else:
 			self.unset("correct_response")
 		
-		ar = str(self.edit_allowed_responses.text()).strip()
+		ar = self.usanitize(self.edit_allowed_responses.text())
 		if ar.strip() != "":
 			self.set("allowed_responses", ar)
 		else:
@@ -61,7 +61,7 @@ class mouse_response(libopensesame.mouse_response.mouse_response, libqtopensesam
 		else:
 			self.set("show_cursor", "no")
 			
-		to = str(self.edit_timeout.text()).strip()
+		to = self.sanitize(self.edit_timeout.text(), strict=True)
 		if to.strip() != "":
 			self.set("timeout", to)
 		else:

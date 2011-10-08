@@ -46,8 +46,7 @@ class feedback(libopensesame.feedback.feedback, libqtopensesame.feedpad.feedpad,
 		"""Apply changes to the controls"""
 
 		libqtopensesame.qtitem.qtitem.apply_edit_changes(self)
-
-		dur = str(self.edit_duration.text()).strip()
+		dur = self.experiment.sanitize(self.edit_duration.text(), strict=True)
 		if dur.strip() != "":
 			self.set("duration", dur)
 		if self.checkbox_reset.isChecked():

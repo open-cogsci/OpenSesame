@@ -47,19 +47,19 @@ class keyboard_response(libopensesame.keyboard_response.keyboard_response, libqt
 		
 		libqtopensesame.qtitem.qtitem.apply_edit_changes(self)
 		
-		cr = str(self.edit_correct_response.text()).strip()
+		cr = self.usanitize(self.edit_correct_response.text())
 		if cr.strip() != "":
 			self.set("correct_response", cr)
 		else:
 			self.unset("correct_response")
 		
-		ar = str(self.edit_allowed_responses.text()).strip()
+		ar = self.usanitize(self.edit_allowed_responses.text())
 		if ar.strip() != "":
 			self.set("allowed_responses", ar)
 		else:
 			self.unset("allowed_responses")
 			
-		to = str(self.edit_timeout.text()).strip()
+		to = self.sanitize(self.edit_timeout.text(), strict=True)
 		if to.strip() != "":
 			self.set("timeout", to)
 		else:
@@ -87,8 +87,8 @@ class keyboard_response(libopensesame.keyboard_response.keyboard_response, libqt
 		self.edit_allowed_responses = QtGui.QLineEdit()
 		self.edit_allowed_responses.setToolTip("Set the allowed responses seperated by a semi-colon, e.g., 'z;/'")		
 		QtCore.QObject.connect(self.edit_allowed_responses, QtCore.SIGNAL("editingFinished()"), self.apply_edit_changes)
-		self.edit_grid.addWidget(self.edit_allowed_responses, row, 1)		
-
+		self.edit_grid.addWidget(self.edit_allowed_responses, row, 1)					
+		
 		row += 1		
 		
 		self.edit_grid.addWidget(QtGui.QLabel("Timeout"), row, 0)

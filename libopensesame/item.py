@@ -21,6 +21,7 @@ import openexp.keyboard
 from libopensesame import exceptions
 import shlex
 import sys
+import pygame
 
 class item(openexp.trial.trial):
 
@@ -545,4 +546,113 @@ class item(openexp.trial.trial):
 		
 		return [ ("time_%s" % self.name, "[Timestamp of last item call]"), \
 			("count_%s" % self.name, "[Number of item calls]") ]
+		
+	def usanitize(self, s, strict = False):
+	
+		"""<DOC>
+		Convert all special characters to U+XXXX notation
+		
+		Arguments:
+		s -- the string to be santized
+		
+		Keyword arguments:
+		strict -- if True, special characters are ignored rather than recoded (default = False)
+		
+		Returns:
+		The sanitized string
+		</DOC>"""
+	
+		try:
+			string = str(s)
+									
+		except:		
+	
+			# If this doesn't work and the message isn't a QString either,
+			# give up and return a warning string			
+			if not hasattr(s, "toUtf8"):
+				return "Error: Unable to create readable text from string"
+			
+			# Otherwise, walk through all characters and convert the unknown
+			# characters to unicode notation. In strict mode unicode is ignored.
+			string = ""			
+			for i in range(s.count()):
+				c = s.at(i)
+				if c.unicode() > 127:
+					if not strict:
+						string += "U+%.4X" % c.unicode()
+				else:
+					string += c.toLatin1()
+				
+		return string
+			
+		
+	def sanitize(self, s, strict = False):
+	
+		"""<DOC>
+		Remove invalid characters (notably quotes) from the string. This is
+		stricter than usanitize(), because it removes also quotes and optionally
+		all alphanumeric characters.
+		
+		Arguments:
+		s -- the string to be sanitized
+		
+		Keyword arguments:
+		strict -- If True, all but underscores and alphanumeric characters are stripped (default = False)
+		
+		Returns:
+		The sanitized string
+		</DOC>"""
+
+		string = self.usanitize(s, strict)
+		
+		# Walk through the string and strip out
+		# quotes, slashes and newlines. In strict
+		# mode we even only accept alphanumeric
+		# characters and underscores
+		s = ""
+		for c in string:
+			if strict:
+				if c.isalnum() or c == "_":
+					s += c
+			elif c not in ("\"", "\\", "\n"):
+				s += c
+		return s
+		
+	def unsanitize(self, s):
+	
+		"""<DOC>
+		Convert the U+XXXX notation back to actual Unicode encoding
+		
+		Arguments:
+		s -- the input string
+		
+		Returns:
+		The restored Unicode string
+		</DOC>"""
+		
+		s = unicode(s)
+				
+		while s.find("U+") >= 0:
+			i = s.find("U+")			
+			entity = s[i:i+6]
+			s = s.replace(entity, unichr(int(entity[2:], 16)))
+			
+		return s
+		
+	def color_check(self, s):
+	
+		"""<DOC>		
+		Checks whether a string is a valid color name
+		
+		Arguments:
+		s -- the string to check
+		
+		Returns:
+		True i the string is a color, False otherwise		
+		</DOC>"""
+		
+		try:
+			pygame.Color(s)
+		except:
+			raise exceptions.script_error("'%s' is not a valid color. See http://www.w3schools.com/html/html_colornames.asp for an overview of valid color names" % s)
 		

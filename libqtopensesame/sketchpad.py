@@ -48,16 +48,13 @@ class sketchpad(libopensesame.sketchpad.sketchpad, libqtopensesame.feedpad.feedp
 
 		if not libqtopensesame.qtitem.qtitem.apply_edit_changes(self, False):
 			return
-
-		dur = str(self.edit_duration.text()).strip()
+		dur = self.experiment.sanitize(self.edit_duration.text(), strict=True)
 		if dur.strip() != "":
 			self.set("duration", dur)
-
 		if self.checkbox_start_response_interval.isChecked():
 			self.set("start_response_interval", "yes")
 		else:
 			self.set("start_response_interval", "no")
-
 		self.experiment.main_window.refresh(self.name)
 
 	def edit_widget(self):

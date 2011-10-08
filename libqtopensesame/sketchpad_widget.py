@@ -917,8 +917,14 @@ class sketchpad_widget(QtGui.QWidget):
 		"""Set the current tool according to the options in the widget"""
 		
 		self.penwidth = self.ui.spin_penwidth.value()
-		self.color = str(self.ui.edit_color.text())
-		
+		self.color = self.sketchpad.experiment.sanitize(self.ui.edit_color.text())
+		try:
+			self.sketchpad.experiment.color_check(self.color)
+		except Exception as e:
+			self.sketchpad.experiment.notify(str(e))
+			self.ui.edit_color.setText("white")
+			self.color = "white"
+				
 		self.show_grid = self.ui.checkbox_show_grid.isChecked()
 		
 		if self.ui.checkbox_fill.isChecked():
@@ -935,7 +941,7 @@ class sketchpad_widget(QtGui.QWidget):
 		self.zoom = self.ui.spin_zoom.value() * 0.01
 		self.font_family = str(self.ui.combobox_font_family.currentText())
 		self.font_size = self.ui.spin_font_size.value()
-		self.show_if = str(self.ui.edit_show_if.text())
+		self.show_if = self.sketchpad.experiment.sanitize(self.ui.edit_show_if.text())
 			
 		if self.ui.button_line.isChecked():
 			self.tool = "line"
