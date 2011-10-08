@@ -55,7 +55,7 @@ class replace_dialog(QtGui.QDialog):
 		True if the string was found, False otherwise
 		"""
 	
-		return self.parent().perform_search(self.ui.edit_search.text())
+		return self.parent().perform_search(term=self.ui.edit_search.text())
 
 	def replace(self):
 	
@@ -117,6 +117,7 @@ class scintilla(QsciScintilla):
 		self.textChanged.connect(self.parent().setModified)
 		self.refresh_layout = True
 		self.cfg_ver = get_config("cfg_ver")
+		self.setUtf8(True)
 				
 	def paintEvent(self, e):
 	
@@ -209,7 +210,7 @@ class scintilla(QsciScintilla):
 		"""
 	
 		try:
-			return str(self.text())
+			return self._parent.experiment.usanitize(self.text())
 		except:
 			return ""
 			
@@ -344,7 +345,7 @@ class inline_editor(QtGui.QFrame):
 		
 		self.toolbar_hbox = search_hbox
 	 				
-	def perform_search(self, term=None):
+	def perform_search(self, event=None, term=None):
 	
 		"""
 		Select the text based on the search term
