@@ -185,5 +185,12 @@ def resource(name):
 	The full path to the resource
 	"""
 
-	return libopensesame.experiment.experiment.resource(libopensesame.experiment.experiment("dummy"), name)
+	path = os.path.join("resources", name)		
+	if os.path.exists(path):
+		return os.path.join("resources", name)				
+	if os.name == "posix":
+		path = "/usr/share/opensesame/resources/%s" % name
+		if os.path.exists(path):
+			return path				
+	return None
 

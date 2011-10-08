@@ -234,8 +234,8 @@ class qtopensesame(QtGui.QMainWindow):
 		self.ui.dock_pool.setWidget(self.ui.pool_widget)		
 
 		# Create the initial experiment
-		self.experiment = experiment.experiment(self, "New experiment")
-		self.experiment.from_string(open(self.experiment.resource("default.opensesame"), "r").read())		
+		self.experiment = experiment.experiment(self, "New experiment", \
+			open(libopensesame.misc.resource("default.opensesame"), "r").read())
 		
 		# Initialize the tabs
 		self.init_general_tab()

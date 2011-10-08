@@ -413,23 +413,15 @@ class experiment(item.item, openexp.experiment.experiment):
 		The full path to the file in the resources folder
 		"""
 		
-		if name in self.resources:
-			return self.resources[name]
-
-		if os.path.exists(self.get_file(name)):
-			return self.get_file(name)
-		
-		path = os.path.join("resources", name)
-		
-		if os.path.exists(path):
-			return os.path.join("resources", name)		
-		
-		if os.name == "posix":
-			path = "/usr/share/opensesame/resources/%s" % name
-			if os.path.exists(path):
-				return path				
-				
-		raise Exception("The resource '%s' could not be found in libqtopensesame.experiment.resource()" % name)			
+		if self != None:
+			if name in self.resources:
+				return self.resources[name]
+			if os.path.exists(self.get_file(name)):
+				return self.get_file(name)		
+		path = misc.resource(name)
+		if path == None:
+			raise Exception("The resource '%s' could not be found in libqtopensesame.experiment.resource()" % name)			
+		return path
 		
 	def get_file(self, path):
 	
