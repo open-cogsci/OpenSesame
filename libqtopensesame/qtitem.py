@@ -324,7 +324,13 @@ class qtitem(object):
 			if hasattr(w, "edit_item") and w.edit_item == self.name:
 				index = i
 
-		widget = self.edit_widget()
+		try:
+			widget = self.edit_widget()
+		except Exception as e:
+			self.experiment.notify("%s (Edit the script to fix this)" % e)
+			self.open_script_tab()
+			return
+			
 		if index == None:
 			self.edit_tab_index = self.experiment.ui.tabwidget.addTab(widget, self.experiment.icon(self.item_type), "%s" % self.name)
 		else:
