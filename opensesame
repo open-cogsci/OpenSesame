@@ -55,12 +55,14 @@ if __name__ == "__main__":
 	elif myapp.options.run_in_window:
 		myapp.run_experiment(False)
 	else:
-		myapp.check_update(always = False)
-		myapp.show_random_tip(always = False)
-		if new_wizard and not myapp.experiment.debug:
-			myapp.start_new_wizard()
+		myapp.check_update(always=False)
+		myapp.show_random_tip(always=False)
+		if new_wizard:
+			myapp.start_new_wizard(first_run=True)
 		else:
+			myapp.open_general_tab()
 			myapp.refresh()
+			
 
 	sys.exit(app.exec_())
 

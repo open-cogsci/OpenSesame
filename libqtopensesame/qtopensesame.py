@@ -242,14 +242,6 @@ class qtopensesame(QtGui.QMainWindow):
 		# Set the style sheet
 		self.setStyleSheet(open(self.experiment.resource("stylesheet.qss")).read())
 		
-		# After starting OpenSesame, the general tab is visible
-		self.open_general_tab()
-
-		# Refresh all aspects of the GUI
-		self.refresh_pool()
-		self.refresh_stdout()
-		self.refresh_variable_inspector()				
-
 		# Build the items toolbar
 		self.set_status("Welcome to OpenSesame %s" % self.version)
 		self.restore_state()
@@ -536,19 +528,22 @@ class qtopensesame(QtGui.QMainWindow):
 		elif self.experiment.debug:
 			print "qtopensesame.show_random_tip(): skipping random tip"
 
-	def start_new_wizard(self, dummy = None):
+	def start_new_wizard(self, dummy=None, first_run=False):
 
 		"""
 		Presents a start new-experiment-wizard type of dialog
 
 		Keywords arguments:
-		dummy -- a dummy argument passed by the signal handler
+		dummy -- a dummy argument passed by the signal handler (default=None)
+		first_run -- indicates if the program has just started, in which case
+					 we should not fall back to loading the template, because
+					 it was already loaded on startup.
 		"""
 
 		if config.get_config("new_experiment_dialog"):
 			d = start_new_dialog.start_new_dialog(self)
 			d.exec_()
-		else:
+		elif first_run:
 			self.open_file(path=self.experiment.resource("default.opensesame"))
 			self.window_message("New experiment")
 			self.current_path = None
