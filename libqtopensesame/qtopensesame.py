@@ -528,22 +528,19 @@ class qtopensesame(QtGui.QMainWindow):
 		elif self.experiment.debug:
 			print "qtopensesame.show_random_tip(): skipping random tip"
 
-	def start_new_wizard(self, dummy=None, first_run=False):
+	def start_new_wizard(self, dummy=None):
 
 		"""
 		Presents a start new-experiment-wizard type of dialog
 
 		Keywords arguments:
 		dummy -- a dummy argument passed by the signal handler (default=None)
-		first_run -- indicates if the program has just started, in which case
-					 we should not fall back to loading the template, because
-					 it was already loaded on startup.
 		"""
 
 		if config.get_config("new_experiment_dialog"):
 			d = start_new_dialog.start_new_dialog(self)
 			d.exec_()
-		elif first_run:
+		else:
 			self.open_file(path=self.experiment.resource("default.opensesame"))
 			self.window_message("New experiment")
 			self.current_path = None

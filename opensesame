@@ -58,7 +58,7 @@ if __name__ == "__main__":
 		myapp.check_update(always=False)
 		myapp.show_random_tip(always=False)
 		if new_wizard:
-			myapp.start_new_wizard(first_run=True)
+			myapp.start_new_wizard()
 		else:
 			myapp.open_general_tab()
 			myapp.refresh()
