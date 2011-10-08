@@ -31,6 +31,7 @@ config = {
 	"scintilla_font_size" : 10,
 	"new_experiment_dialog" : True,
 	"disabled_plugins" : "",
+	"version_check_url" : "http://files.cogsci.nl/software/opensesame/MOST_RECENT_VERSION.TXT"
 	}
 
 def get_config(setting):

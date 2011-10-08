@@ -611,10 +611,10 @@ class qtopensesame(QtGui.QMainWindow):
 			return
 
 		if self.experiment.debug:
-			print "qtopensesame.check_update(): opening http://files.cogsci.nl/software/opensesame/MOST_RECENT_VERSION.TXT"
+			print "qtopensesame.check_update(): opening %s" % config.get_config("version_check_url")
 
 		try:
-			fd = urllib.urlopen("http://files.cogsci.nl/software/opensesame/MOST_RECENT_VERSION.TXT")
+			fd = urllib.urlopen(config.get_config("version_check_url"))
 			mrv = float(fd.read().strip())
 		except Exception as e:
 			if always:
@@ -623,7 +623,7 @@ class qtopensesame(QtGui.QMainWindow):
 
 		try:
 			if len(self.version.split("-")) == 2:
-				cv = float(self.version.split("-")[0]) - 0.01
+				cv = float(self.version.split("-")[0]) - 0.01 + 0.00001 * int(self.version.split("-")[1][3:])
 				if self.experiment.debug:
 					print "qtopensesame.check_update(): you are running a pre-release version, identifying as %s" % cv
 			else:
