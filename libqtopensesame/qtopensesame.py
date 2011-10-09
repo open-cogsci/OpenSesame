@@ -1987,7 +1987,11 @@ class qtopensesame(QtGui.QMainWindow):
 			self.refresh(target)
 			return
 			
-		self.experiment.items[target].items.insert(index, (new_item, "always"))		
+		if target == "__start__":
+			self.experiment.start = new_item
+		else:
+			self.experiment.items[target].items.insert(index, (new_item, "always"))		
+			
 		self.refresh(target)
 		if select:
 			self.select_item(new_item)					

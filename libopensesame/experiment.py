@@ -60,6 +60,7 @@ class experiment(item.item, openexp.experiment.experiment):
 		self.experiment_path = None
 		
 		# Set default variables
+		self.coordinates = "relative"
 		self.compensation = 0		
 		self.width = 1024
 		self.height = 768
