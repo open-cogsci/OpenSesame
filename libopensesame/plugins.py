@@ -17,7 +17,6 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 
 import os
 import os.path
-import imp
 
 # Caching variables
 _list = None
@@ -222,6 +221,7 @@ def import_plugin(plugin):
 	plugin -- the name of the plugin
 	"""
 	
+	import imp
 	path = os.path.join(plugin_folder(plugin), "%s.py" % plugin)
 	return imp.load_source(plugin, path)
 	

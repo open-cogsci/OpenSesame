@@ -22,8 +22,6 @@ loaded at runtime, and therefore escape the detection of py2exe.
 """
 
 import sys
-import warnings
-import os
 
 # Below is a quick hack to deal with pylinks quirky behavior.
 # Pylink needs to be imported prior to pygame, otherwise it
@@ -43,6 +41,8 @@ if "--pylink" in sys.argv:
 # bundle them. This is therefore only required for Windows.
 
 if "--preload" in sys.argv:
+
+	import warnings
 
 	print "includes: preloading modules ..."
 	print "includes: preloading libqtopensesame modules"

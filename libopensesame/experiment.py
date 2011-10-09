@@ -17,16 +17,12 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 
 from libopensesame import misc, item, exceptions, plugins
 import openexp.experiment
-import openexp.canvas
 import os.path
 import shutil
 import sys
-import shlex
 import time
 import tarfile
 import tempfile
-import imp
-import pygame
 
 pool_folders = [] # Contains a list of all pool folders, which need to be removed on program exit
 
@@ -221,6 +217,8 @@ class experiment(item.item, openexp.experiment.experiment):
 		Arguments:
 		string -- the definition string
 		"""				
+	
+		import shlex
 	
 		if self.debug:
 			print "experiment.from_string(): building experiment"
@@ -543,6 +541,7 @@ def clean_up(verbose = False):
 	verbose -- a boolean indicating if debugging output should be given (default = False)
 	"""
 	
+	from openexp import canvas
 	global pool_folders
 	
 	if verbose:
@@ -556,7 +555,7 @@ def clean_up(verbose = False):
 		except:
 			if verbose:
 				print "experiment.clean_up(): failed to remove '%s'" % path
-				
-	openexp.canvas.clean_up(verbose)
+								
+	canvas.clean_up(verbose)
 	
 

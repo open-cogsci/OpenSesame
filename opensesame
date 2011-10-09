@@ -18,51 +18,48 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
-import os
-import os.path
-from PyQt4 import QtGui, QtCore
-import sys
-import libqtopensesame.qtopensesame
-import libopensesame.misc
-import time
-
 if __name__ == "__main__":
 
-	libopensesame.misc.change_working_dir()	
+	# First, load a minimum number of modules and show an empty app window. This
+	# gives the user the feeling of a snappy response.
+	import sys
+	from PyQt4 import QtGui, QtCore
+	from libqtopensesame.qtopensesame import qtopensesame
 	app = QtGui.QApplication(sys.argv)
-
-	# Show the splash screen, run the app and hide the splash
-	splash = QtGui.QSplashScreen(QtGui.QPixmap(libopensesame.misc.resource("splash.png")), QtCore.Qt.WindowStaysOnTopHint)
-	splash.show()
+	opensesame = qtopensesame()
+	opensesame.show()
 	app.processEvents()
-	myapp = libqtopensesame.qtopensesame.qtopensesame()
-	QtCore.QObject.connect(app, QtCore.SIGNAL("quit()"), myapp.close)
-	myapp.show()
-	splash.finish(myapp)
 
-	# Open an experiment if it has been specified as a command
-	# line argument and suppress the new wizard in that case
+	# Now that the window is shown, load the remaining modules and resume the
+	# GUI initialization.
+	from libopensesame.misc import change_working_dir
+	import os
+	import os.path
+	change_working_dir()		
+	opensesame.resume_init()
+	QtCore.QObject.connect(app, QtCore.SIGNAL("quit()"), opensesame.close)	
+
+	# Open an experiment if it has been specified as a command line argument and
+	# suppress the new wizard in that case.
 	if len(sys.argv) >= 2 and os.path.isfile(sys.argv[1]):
 		new_wizard = False
-		myapp.open_file(path = sys.argv[1])
+		opensesame.open_file(path=sys.argv[1])
 	else:
 		new_wizard = True
 
-	# Run the experiment if it has been specified on the
-	# command line
-	if myapp.options.run:
-		myapp.run_experiment()
-	elif myapp.options.run_in_window:
-		myapp.run_experiment(False)
-	else:
-		myapp.check_update(always=False)
-		myapp.show_random_tip(always=False)
+	# Run the app (the startup method depends on command line parameters)
+	if opensesame.options.run:
+		opensesame.run_experiment()		
+	elif opensesame.options.run_in_window:
+		opensesame.run_experiment(False)
+	else:	
+		opensesame.check_update(always=False)
+		opensesame.show_random_tip(always=False)
 		if new_wizard:
-			myapp.start_new_wizard()
+			opensesame.start_new_wizard()
 		else:
-			myapp.open_general_tab()
-			myapp.refresh()
-			
-
+			opensesame.open_general_tab()
+			opensesame.refresh()
+	# Exit using the application exit status
 	sys.exit(app.exec_())
 

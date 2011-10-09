@@ -17,7 +17,6 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 
 import libopensesame.experiment
 import libopensesame.plugins
-from libqtopensesame import notification_dialog_ui, text_input_dialog_ui
 from PyQt4 import QtCore, QtGui
 import os.path
 
@@ -398,7 +397,9 @@ class experiment(libopensesame.experiment.experiment):
 		Arguments:
 		message -- the message to be shown
 		"""
-
+		
+		from libqtopensesame import notification_dialog_ui
+		
 		a = QtGui.QDialog(self.main_window)
 		a.ui = notification_dialog_ui.Ui_Dialog()
 		a.ui.setupUi(a)
@@ -421,6 +422,8 @@ class experiment(libopensesame.experiment.experiment):
 		Returns:
 		A string of text or None if cancel was pressed
 		"""
+		
+		from libqtopensesame import text_input_dialog_ui		
 		
 		a = QtGui.QDialog(self.main_window)
 		a.ui = text_input_dialog_ui.Ui_Dialog()
