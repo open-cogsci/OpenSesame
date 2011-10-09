@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'resources/text_input_dialog.ui'
 #
-# Created: Sat Oct  8 21:12:52 2011
+# Created: Sun Oct  9 13:29:05 2011
 #      by: PyQt4 UI code generator 4.8.3
 #
 # WARNING! All changes made in this file will be lost!
@@ -17,7 +17,7 @@ except AttributeError:
 class Ui_Dialog(object):
     def setupUi(self, Dialog):
         Dialog.setObjectName(_fromUtf8("Dialog"))
-        Dialog.resize(400, 300)
+        Dialog.resize(608, 233)
         self.verticalLayout = QtGui.QVBoxLayout(Dialog)
         self.verticalLayout.setMargin(8)
         self.verticalLayout.setObjectName(_fromUtf8("verticalLayout"))

@@ -176,10 +176,12 @@ class experiment(item.item, openexp.experiment.experiment):
 			# Load a plug-in	
 			if self.debug:
 				print "experiment.parse_definition(): loading plugin '%s'" % item_type
-			try:
 				item = plugins.load_plugin(item_type, item_name, self, string, self.item_prefix())
-			except:
-				raise exceptions.script_error("Failed load plugin '%s'" % item_type)				
+			else:
+				try:
+					item = plugins.load_plugin(item_type, item_name, self, string, self.item_prefix())
+				except:
+					raise exceptions.script_error("Failed load plugin '%s'" % item_type)				
 			self.items[item_name] = item			
 									
 		else:				

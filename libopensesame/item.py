@@ -355,6 +355,41 @@ class item(openexp.trial.trial):
 		</DOC>"""
 		
 		return hasattr(self, var) or hasattr(self.experiment, var)
+		
+	def get_refs(self, text):
+	
+		"""<DOC>
+		Returns a list of variables that are referred to by the string. (E.g.,
+		'this is a [variable]')
+		
+		Arguments:
+		text -- a string of text
+		
+		Returns:
+		A list of variable names or an empty list if the string contains no
+		references.		
+		</DOC>"""
+		
+		# If the text is not a string, there cannot be any variables,
+		# so return right away
+		if type(text) != str:
+			return []
+						
+		l = []
+		s = ""
+		start = -1
+		while True:		
+			# Find the start and end of a variable definition
+			start = text.find("[", start + 1)
+			if start < 0:
+				break				
+			end = text.find("]", start + 1)
+			if end < 0:
+				raise exceptions.runtime_error("Missing closing bracket ']' in string '%s', in item '%s'" % (text, self.name))
+			var = text[start+1:end]
+			l.append(var)
+			var = var[end:]				
+		return l
 				
 	def auto_type(self, val):
 	
@@ -437,7 +472,7 @@ class item(openexp.trial.trial):
 				break				
 			end = text.find("]", start + 1)
 			if end < 0:
-				raise exceptions.runtime_error("Missing closing bracket ']' in item '%s'" % self.name)			
+				exceptions.runtime_error("Missing closing bracket ']' in string '%s', in item '%s'" % (text, self.name))			
 			var = text[start+1:end]
 			
 			# Replace the variable with its value, unless the variable

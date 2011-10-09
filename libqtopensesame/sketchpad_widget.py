@@ -40,7 +40,7 @@ class remove_item_button(QtGui.QPushButton):
 		self.sketchpad_widget = sketchpad_widget
 		self.item = item
 		QtGui.QPushButton.__init__(self, self.sketchpad_widget.sketchpad.experiment.icon("delete"), "")
-		QtCore.QObject.connect(self, QtCore.SIGNAL("clicked()"), self.remove_item)
+		self.clicked.connect(self.remove_item)
 		self.setIconSize(QtCore.QSize(16,16))
 		
 	def remove_item(self):
@@ -68,48 +68,42 @@ class edit_item_button(QtGui.QPushButton):
 		self.sketchpad_widget = sketchpad_widget
 		self.item = item
 		QtGui.QPushButton.__init__(self, self.sketchpad_widget.sketchpad.experiment.icon("edit"), "")
-		QtCore.QObject.connect(self, QtCore.SIGNAL("clicked()"), self.edit_item)
+		self.clicked.connect(self.edit_item)
 		self.setIconSize(QtCore.QSize(16,16))
 		
 	def edit_item(self):
 	
 		"""Is called when the edit button is clicked"""
 	
-		print self.item
 		self.sketchpad_widget.scene.edit_item(self.sketchpad_widget.sketchpad.fix_coordinates(self.item))
 		self.sketchpad_widget.sketchpad.apply_edit_changes()								
 		self.sketchpad_widget.refresh()		
 
 class canvas(QtGui.QGraphicsScene):
 
-	"""
-	A custom QGraphicsScene on which the sketchpad is drawn
-	"""
+	"""The QGraphicsScene on which the sketchpad is drawn"""
 
-	def __init__(self, sketchpad_widget, parent = None):
+	def __init__(self, sketchpad_widget, parent=None):
 	
 		"""
 		Constructor
 		
 		Arguments:
 		sketchpad_widget -- the sketchpad_widget of which the canvas is part
-		
-		
+				
 		Keyword arguments:
-		parent -- the parent item (default = None)
+		parent -- the parent QWidget (default=None)
 		"""
 	
 		self.sketchpad_widget = sketchpad_widget
-		self.grid = 10
-		
+		self.grid = 10		
 		self.r = 4
 		self.pen = pen = QtGui.QPen()
 		self.grid_color = "green"		
 		self.pen.setColor(QtGui.QColor(self.grid_color))		
 		self.oneshot = False
 		self.from_pos = None
-		self.grid_list = []
-		
+		self.grid_list = []		
 		QtGui.QGraphicsScene.__init__(self, parent)
 		
 	def cursor_pos(self, e):
@@ -120,10 +114,10 @@ class canvas(QtGui.QGraphicsScene):
 		and the grid
 		
 		Arguments:
-		e -- a mouseMoveEvent
+		e -- a QMouseEvent
 		
 		Returns:
-		an (x, y) tuple with the the coordinates of the mouse cursor
+		An (x, y) tuple with the the coordinates of the mouse cursor
 		"""
 	
 		pos = e.scenePos().toPoint()
@@ -145,7 +139,7 @@ class canvas(QtGui.QGraphicsScene):
 		Update the text widget with the cursor position
 		
 		Arguments:
-		e -- a mouseMoveEvent
+		e -- a QMouseEvent
 		"""	
 	
 		x, y = self.cursor_pos(e)		
@@ -162,7 +156,7 @@ class canvas(QtGui.QGraphicsScene):
 		or present a context menu
 		
 		Arguments:
-		e -- a mousePressEvent
+		e -- a QMouseEvent
 		"""
 				
 		if e.button() == QtCore.Qt.RightButton:
@@ -176,13 +170,12 @@ class canvas(QtGui.QGraphicsScene):
 		Handle drawing operations
 		
 		Arguments:
-		e -- a mousePressEvent
+		e -- a QMouseEvent
 		"""
 		
-		x, y = self.cursor_pos(e)		
-				
+		x, y = self.cursor_pos(e)								
 		if x == None:
-			return
+			return			
 			
 		if self.sketchpad_widget.sketchpad.get("coordinates") == "relative":
 			x += 0.5 * self.sketchpad_widget.sketchpad.get("width")
@@ -206,7 +199,7 @@ class canvas(QtGui.QGraphicsScene):
 		Show the context menu
 		
 		Arguments:
-		e -- a mousePressEvent
+		e -- a QMouseEvent
 		"""
 
 		# First clear the grid, so we don't select the grid items		
@@ -299,9 +292,7 @@ class canvas(QtGui.QGraphicsScene):
 						
 	def draw_grid(self):
 	
-		"""
-		Draw the grid
-		"""
+		"""Draw the grid"""
 		
 		self.grid_list = []
 	
@@ -384,31 +375,30 @@ class sketchpad_widget(QtGui.QWidget):
 		self.vbox_items = QtGui.QVBoxLayout()
 		self.ui.widget_items.setLayout(self.vbox_items)
 		
-		QtCore.QObject.connect(self.ui.button_line, QtCore.SIGNAL("clicked()"), self.set_line)
-		QtCore.QObject.connect(self.ui.button_rect, QtCore.SIGNAL("clicked()"), self.set_rect)
-		QtCore.QObject.connect(self.ui.button_ellipse, QtCore.SIGNAL("clicked()"), self.set_ellipse)
-		QtCore.QObject.connect(self.ui.button_circle, QtCore.SIGNAL("clicked()"), self.set_circle)
-		QtCore.QObject.connect(self.ui.button_arrow, QtCore.SIGNAL("clicked()"), self.set_arrow)
-		QtCore.QObject.connect(self.ui.button_textline, QtCore.SIGNAL("clicked()"), self.set_textline)
-		QtCore.QObject.connect(self.ui.button_fixdot, QtCore.SIGNAL("clicked()"), self.set_fixdot)
-		QtCore.QObject.connect(self.ui.button_image, QtCore.SIGNAL("clicked()"), self.set_image)
-		QtCore.QObject.connect(self.ui.button_gabor, QtCore.SIGNAL("clicked()"), self.set_gabor)		
-		QtCore.QObject.connect(self.ui.button_noise_patch, QtCore.SIGNAL("clicked()"), self.set_noise)		
-				
-		QtCore.QObject.connect(self.ui.button_edit_script, QtCore.SIGNAL("clicked()"), self.edit_script)
-		
-		QtCore.QObject.connect(self.ui.edit_color, QtCore.SIGNAL("editingFinished()"), self.set_tool)
-		QtCore.QObject.connect(self.ui.spin_penwidth, QtCore.SIGNAL("valueChanged(int)"), self.set_tool)
-		QtCore.QObject.connect(self.ui.spin_zoom, QtCore.SIGNAL("valueChanged(int)"), self.set_tool)
-		QtCore.QObject.connect(self.ui.spin_scale, QtCore.SIGNAL("valueChanged(double)"), self.set_tool)
-		QtCore.QObject.connect(self.ui.spin_grid, QtCore.SIGNAL("valueChanged(int)"), self.set_tool)		
-		QtCore.QObject.connect(self.ui.spin_arrow_size, QtCore.SIGNAL("valueChanged(int)"), self.set_tool)
-		QtCore.QObject.connect(self.ui.checkbox_fill, QtCore.SIGNAL("stateChanged(int)"), self.set_tool)
-		QtCore.QObject.connect(self.ui.checkbox_center, QtCore.SIGNAL("stateChanged(int)"), self.set_tool)
-		QtCore.QObject.connect(self.ui.checkbox_show_grid, QtCore.SIGNAL("stateChanged(int)"), self.set_tool)
-		QtCore.QObject.connect(self.ui.combobox_font_family, QtCore.SIGNAL("currentIndexChanged(int)"), self.set_tool)
-		QtCore.QObject.connect(self.ui.spin_font_size, QtCore.SIGNAL("valueChanged(int)"), self.set_tool)		
-		QtCore.QObject.connect(self.ui.edit_show_if, QtCore.SIGNAL("editingFinished()"), self.set_tool)
+		self.ui.button_line.clicked.connect(self.set_line)
+		self.ui.button_rect.clicked.connect(self.set_rect)
+		self.ui.button_ellipse.clicked.connect(self.set_ellipse)
+		self.ui.button_circle.clicked.connect(self.set_circle)
+		self.ui.button_arrow.clicked.connect(self.set_arrow)
+		self.ui.button_textline.clicked.connect(self.set_textline)
+		self.ui.button_fixdot.clicked.connect(self.set_fixdot)
+		self.ui.button_image.clicked.connect(self.set_image)
+		self.ui.button_gabor.clicked.connect(self.set_gabor)		
+		self.ui.button_noise_patch.clicked.connect(self.set_noise)						
+		self.ui.button_edit_script.clicked.connect(self.edit_script)
+		self.ui.button_colorpicker.clicked.connect(self.colorpicker)		
+		self.ui.edit_color.editingFinished.connect(self.set_tool)
+		self.ui.spin_penwidth.valueChanged.connect(self.set_tool)
+		self.ui.spin_zoom.valueChanged.connect(self.set_tool)
+		self.ui.spin_scale.valueChanged.connect(self.set_tool)
+		self.ui.spin_grid.valueChanged.connect(self.set_tool)		
+		self.ui.spin_arrow_size.valueChanged.connect(self.set_tool)
+		self.ui.checkbox_fill.stateChanged.connect(self.set_tool)
+		self.ui.checkbox_center.stateChanged.connect(self.set_tool)
+		self.ui.checkbox_show_grid.stateChanged.connect(self.set_tool)
+		self.ui.combobox_font_family.currentIndexChanged.connect(self.set_tool)
+		self.ui.spin_font_size.valueChanged.connect(self.set_tool)		
+		self.ui.edit_show_if.editingFinished.connect(self.set_tool)
 		
 		self.ui.edit_color.setText(self.sketchpad.get("foreground"))
 		
@@ -422,6 +412,16 @@ class sketchpad_widget(QtGui.QWidget):
 		if not self.embed:
 			self.parent().accept()	
 		self.sketchpad.open_script_tab()
+		
+	def colorpicker(self):
+	
+		"""Show a dialog and select a color"""
+		
+		color = self.sketchpad.experiment.colorpicker(initial_color=self.color)
+		if color == None:
+			return
+		self.ui.edit_color.setText(color)
+		self.set_tool()
 		
 	def unset_all(self):
 	
@@ -446,6 +446,7 @@ class sketchpad_widget(QtGui.QWidget):
 		self.ui.spin_arrow_size.hide()
 		self.ui.checkbox_fill.hide()
 		self.ui.checkbox_center.hide()
+		self.ui.button_colorpicker.hide()
 		
 		self.ui.label_options.hide()
 		self.ui.label_font_size.hide()
@@ -455,7 +456,6 @@ class sketchpad_widget(QtGui.QWidget):
 		self.ui.label_scale.hide()
 		self.ui.label_arrow_size.hide()
 		
-		
 	def set_rect(self):
 	
 		"""Activate the rect button"""
@@ -463,6 +463,7 @@ class sketchpad_widget(QtGui.QWidget):
 		self.unset_all()
 		self.ui.button_rect.setChecked(True)				
 		self.ui.edit_color.show()
+		self.ui.button_colorpicker.show()
 		self.ui.spin_penwidth.show()
 		self.ui.checkbox_fill.show()
 		self.ui.label_color.show()
@@ -476,6 +477,7 @@ class sketchpad_widget(QtGui.QWidget):
 		self.unset_all()
 		self.ui.button_ellipse.setChecked(True)		
 		self.ui.edit_color.show()
+		self.ui.button_colorpicker.show()		
 		self.ui.spin_penwidth.show()
 		self.ui.checkbox_fill.show()
 		self.ui.label_color.show()
@@ -489,6 +491,7 @@ class sketchpad_widget(QtGui.QWidget):
 		self.unset_all()
 		self.ui.button_line.setChecked(True)		
 		self.ui.edit_color.show()
+		self.ui.button_colorpicker.show()		
 		self.ui.spin_penwidth.show()
 		self.ui.label_color.show()
 		self.ui.label_penwidth.show()				
@@ -501,6 +504,7 @@ class sketchpad_widget(QtGui.QWidget):
 		self.unset_all()
 		self.ui.button_arrow.setChecked(True)
 		self.ui.edit_color.show()
+		self.ui.button_colorpicker.show()		
 		self.ui.spin_penwidth.show()
 		self.ui.spin_arrow_size.show()
 		self.ui.label_color.show()
@@ -515,6 +519,7 @@ class sketchpad_widget(QtGui.QWidget):
 		self.unset_all()
 		self.ui.button_circle.setChecked(True)		
 		self.ui.edit_color.show()
+		self.ui.button_colorpicker.show()		
 		self.ui.spin_penwidth.show()
 		self.ui.checkbox_fill.show()
 		self.ui.label_color.show()
@@ -528,6 +533,7 @@ class sketchpad_widget(QtGui.QWidget):
 		self.unset_all()
 		self.ui.button_fixdot.setChecked(True)
 		self.ui.edit_color.show()
+		self.ui.button_colorpicker.show()		
 		self.ui.label_color.show()
 		self.set_tool()
 		
@@ -549,6 +555,7 @@ class sketchpad_widget(QtGui.QWidget):
 		self.unset_all()
 		self.ui.button_textline.setChecked(True)		
 		self.ui.edit_color.show()
+		self.ui.button_colorpicker.show()		
 		self.ui.checkbox_center.show()
 		self.ui.combobox_font_family.show()
 		self.ui.spin_font_size.show()		
@@ -948,12 +955,15 @@ class sketchpad_widget(QtGui.QWidget):
 		
 		self.penwidth = self.ui.spin_penwidth.value()
 		self.color = self.sketchpad.experiment.sanitize(self.ui.edit_color.text())
+		refs = []
 		try:
-			self.sketchpad.experiment.color_check(self.color)
+			refs = self.sketchpad.experiment.get_refs(self.color)
+			self.sketchpad.experiment.color_check(self.color)			
 		except Exception as e:
-			self.sketchpad.experiment.notify(str(e))
-			self.ui.edit_color.setText("white")
-			self.color = "white"
+			if refs == []:
+				self.sketchpad.experiment.notify(str(e))
+				self.ui.edit_color.setText("white")
+				self.color = "white"
 				
 		self.show_grid = self.ui.checkbox_show_grid.isChecked()
 		

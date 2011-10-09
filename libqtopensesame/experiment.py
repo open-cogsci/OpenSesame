@@ -434,6 +434,30 @@ class experiment(libopensesame.experiment.experiment):
 			return self.usanitize(a.ui.textedit_input.toPlainText())					
 		return None
 		
+	def colorpicker(self, title="Pick a color", initial_color=None):
+	
+		"""
+		Pops up a colorpicker dialog and returns a color in hexadecimal RGB
+		notation
+				
+		Keywords arguments:
+		title -- title of the dialog (default='Pick a color')
+		initial_color -- the color to start with (default=None)
+		
+		Returns:
+		A color string or None if the dialog was cancelled
+		"""
+		
+		try:
+			self.color_check(initial_color)
+		except:
+			initial_color = "white"
+		color = QtGui.QColorDialog.getColor(QtGui.QColor(initial_color), \
+			self.main_window, title)
+		if color.isValid():
+			return self.sanitize(color.name())
+		return None
+		
 	def monospace(self):
 	
 		"""

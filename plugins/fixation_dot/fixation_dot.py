@@ -160,8 +160,8 @@ class qtfixation_dot(fixation_dot, qtplugin.qtplugin):
 		self.add_combobox_control("style", "Style", ["default", "filled", "filled-small", "empty", "empty-small", "cross", "cross-small"], tooltip = "Style of the fixation dot")
 		self.add_spinbox_control("penwidth", "Pen width", 1, 100, suffix = "px", tooltip = "Pen width")
 		self.add_line_edit_control("duration", "Duration", tooltip = "Expecting a value in milliseconds, 'keypress' or 'mouseclick'")
-		self.add_line_edit_control("foreground", "Foreground", tooltip = "Expecting a colorname (e.g., 'blue') or an HTML color (e.g., '#0000FF')")
-		self.add_line_edit_control("background", "Background", tooltip = "Expecting a colorname (e.g., 'blue') or an HTML color (e.g., '#0000FF')")
+		self.add_color_edit_control("foreground", "Foreground", tooltip = "Expecting a colorname (e.g., 'blue') or an HTML color (e.g., '#0000FF')")
+		self.add_color_edit_control("background", "Background", tooltip = "Expecting a colorname (e.g., 'blue') or an HTML color (e.g., '#0000FF')")
 		self.add_line_edit_control("x", "X-coordinate", tooltip = "X-coordinate of the dot (e.g., 0)")
 		self.add_line_edit_control("y", "Y-coordinate", tooltip = "Y-coordinate of the dot (e.g., 0)")
 

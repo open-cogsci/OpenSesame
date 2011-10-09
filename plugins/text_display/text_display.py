@@ -163,8 +163,8 @@ class qttext_display(text_display, qtplugin.qtplugin):
 		qtplugin.qtplugin.init_edit_widget(self, False)
 		
 		self.add_line_edit_control("duration", "Duration", tooltip = "Expecting a value in milliseconds, 'keypress' or 'mouseclick'")
-		self.add_line_edit_control("foreground", "Foreground", tooltip = "Expecting a colorname (e.g., 'blue') or an HTML color (e.g., '#0000FF')")
-		self.add_line_edit_control("background", "Background", tooltip = "Expecting a colorname (e.g., 'blue') or an HTML color (e.g., '#0000FF')")		
+		self.add_color_edit_control("foreground", "Foreground", tooltip = "Expecting a colorname (e.g., 'blue') or an HTML color (e.g., '#0000FF')")
+		self.add_color_edit_control("background", "Background", tooltip = "Expecting a colorname (e.g., 'blue') or an HTML color (e.g., '#0000FF')")		
 		self.add_combobox_control("font_family", "Font family", ["mono", "sans", "serif"], tooltip = "The font style")
 		self.add_spinbox_control("font_size", "Font size", 1, 512, suffix = "pt", tooltip = "The font size")
 		self.add_spinbox_control("maxchar", "Wrap line after", 1, 1000, suffix = " characters", tooltip = "Maximum number of characters per line")

@@ -16,7 +16,8 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from PyQt4 import QtCore, QtGui
-from libqtopensesame import qtitem, inline_editor, syntax_highlighter
+from libqtopensesame import qtitem, inline_editor, syntax_highlighter, \
+	color_edit
 import os.path
 
 class qtplugin(qtitem.qtitem):
@@ -171,12 +172,34 @@ class qtplugin(qtitem.qtitem):
 		
 		edit = QtGui.QLineEdit()
 		edit.editingFinished.connect(self.apply_edit_changes)
-		self.add_control(label, edit, tooltip, default, min_width)
-		
+		self.add_control(label, edit, tooltip, default, min_width)		
 		if var != None:
-			self.auto_line_edit[var] = edit
-		
+			self.auto_line_edit[var] = edit		
 		return edit
+		
+	def add_color_edit_control(self, var, label, tooltip=None, default=None, min_width=None):
+	
+		"""
+		Adds a colorpicker control, consisting of a QLineEdit and QColorDialog.
+		Some basic checking is done to ascertain that only valid color names or
+		variably defined entries are accepted.		
+		
+		Arguments:
+		var -- name of the associated variable
+		label -- a label
+
+		Keyword arguments:
+		tooltip -- a tooltip (default=None)
+		default -- a default value (default=None)
+		min_width -- a minimum width for the widget (default=None)				
+		"""
+		
+		edit = color_edit.color_edit(self.experiment)
+		QtCore.QObject.connect(edit, QtCore.SIGNAL("set_color"), self.apply_edit_changes)
+		self.add_control(label, edit, tooltip, default, min_width)		
+		if var != None:
+			self.auto_line_edit[var] = edit		
+		return edit		
 		
 	def add_combobox_control(self, var, label, options, tooltip = None):
 	
@@ -355,7 +378,7 @@ class qtplugin(qtitem.qtitem):
 		if var != None:
 			self.auto_editor[var] = editor		
 		self.edit_vbox.addWidget(label)			
-		self.edit_vbox.addWidget(editor)		
+		self.edit_vbox.addWidget(editor)					
 				
 	def add_text(self, msg):
 	
@@ -415,4 +438,4 @@ class qtplugin(qtitem.qtitem):
 				return True
 			
 		return qtitem.qtitem.get_ready(self)		
-		
+				
