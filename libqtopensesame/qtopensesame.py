@@ -1617,22 +1617,16 @@ class qtopensesame(QtGui.QMainWindow):
 		self.general_tab_widget.set_header_label()
 
 		index = self.ui.tabwidget.currentIndex()
-
 		for i in range(self.ui.tabwidget.count()):
-
 				w = self.ui.tabwidget.widget(i)
-
 				if hasattr(w, "general_tab"):
 					self.general_widget()
-
 				# For now the unused tab doesn't need to be refreshed
 				if hasattr(w, "unused_tab"):
 					pass
-
 				if refresh_edit and hasattr(w, "edit_item") and (changed_item == None or w.edit_item == changed_item):
 					if w.edit_item in self.experiment.items:
 						self.experiment.items[w.edit_item].edit_widget()
-
 				if refresh_script and hasattr(w, "script_item") and (changed_item == None or w.script_item == changed_item):
 					if w.script_item in self.experiment.items:
 						self.experiment.items[w.script_item].script_widget()
@@ -1770,7 +1764,6 @@ class qtopensesame(QtGui.QMainWindow):
 
 		# Optionally, refresh the interface
 		if refresh:
-			item.open_edit_tab()
 			self.refresh()
 			self.select_item(name)
 

@@ -81,9 +81,12 @@ class tree_overview(QtGui.QTreeWidget):
 		if e.mimeData().hasText():	
 			s = e.mimeData().text()
 			e.setDropAction(QtCore.Qt.CopyAction)			
-
 			item = self.itemAt(e.pos())
 			
+			if item == None:
+				e.ignore()
+				return			
+
 			# Accept a drop on the toplevel item
 			if item.parent() == None:
 				draggables.drop_target = "__start__", None, True
@@ -123,7 +126,7 @@ class tree_overview(QtGui.QTreeWidget):
 		target_item = self.itemAt(e.pos())		
 		item_name = str(target_item.text(0))
 		parent_item = target_item.parent()
-		if parent_item == None:
+		if parent_item != None:
 			parent_name = str(parent_item.text(0))		
 		else:
 			parent_name = None

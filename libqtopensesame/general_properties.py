@@ -18,7 +18,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 from PyQt4 import QtCore, QtGui
 from libopensesame import misc
 import libopensesame.exceptions
-from libqtopensesame import general_widget_ui
+from libqtopensesame import general_widget_ui, color_edit
 from libqtopensesame.inline_editor import inline_editor
 from libqtopensesame import qtitem, experiment
 import openexp.backend_info
@@ -63,8 +63,18 @@ class general_properties(QtGui.QWidget):
 		w = QtGui.QWidget()
 		self.ui = general_widget_ui.Ui_Form()
 		self.ui.setupUi(w)
-		self.ui.edit_foreground.editingFinished.connect(self.apply_changes)
-		self.ui.edit_background.editingFinished.connect(self.apply_changes)
+
+		# The foeground and background widgets get a special treatment		
+		self.ui.edit_foreground = color_edit.color_edit(self.main_window.experiment)
+		self.ui.edit_background = color_edit.color_edit(self.main_window.experiment)
+		self.ui.edit_foreground.setSizePolicy(QtGui.QSizePolicy.Fixed, QtGui.QSizePolicy.Fixed)
+		self.ui.edit_background.setSizePolicy(QtGui.QSizePolicy.Fixed, QtGui.QSizePolicy.Fixed)
+		self.ui.layout_general_properties.addWidget(self.ui.edit_foreground, 3, 5)
+		self.ui.layout_general_properties.addWidget(self.ui.edit_background, 4, 5)
+		QtCore.QObject.connect(self.ui.edit_foreground, QtCore.SIGNAL("set_color"), self.apply_changes)
+		QtCore.QObject.connect(self.ui.edit_background, QtCore.SIGNAL("set_color"), self.apply_changes)
+		
+		# Connect the rest
 		self.ui.combobox_start.currentIndexChanged.connect(self.apply_changes)
 		self.ui.spinbox_width.editingFinished.connect(self.apply_changes)
 		self.ui.spinbox_height.editingFinished.connect(self.apply_changes)
@@ -187,6 +197,7 @@ class general_properties(QtGui.QWidget):
 			return
 		self.lock = True
 
+		rebuild_item_tree = False
 		self.main_window.set_busy(True)
 		# Set the title and the description
 		title = self.main_window.experiment.sanitize(self.header_widget.edit_name.text())
@@ -196,6 +207,8 @@ class general_properties(QtGui.QWidget):
 
 		# Set the start point
 		start = self.main_window.experiment.sanitize(self.ui.combobox_start.currentText())
+		if self. main_window.experiment.get("start") != start:
+			rebuild_item_tree = True
 		self.main_window.experiment.set("start", start)
 
 		# Set the backend
@@ -223,14 +236,33 @@ class general_properties(QtGui.QWidget):
 
 		# Set the foreground color
 		foreground = self.main_window.experiment.sanitize(self.ui.edit_foreground.text())
+		refs = []
+		try:
+			refs = self.main_window.experiment.get_refs(foreground)
+			self.main_window.experiment.color_check(foreground)			
+		except Exception as e:
+			if refs == []:
+				self.main_window.experiment.notify(str(e))
+				foreground = self.main_window.experiment.get("foreground")
+				self.ui.edit_foreground.setText(foreground)
 		self.main_window.experiment.set("foreground", foreground)
 
 		# Set the background color
 		background = self.main_window.experiment.sanitize(self.ui.edit_background.text())
+		refs = []
+		try:
+			refs = self.main_window.experiment.get_refs(background)
+			self.main_window.experiment.color_check(background)			
+		except Exception as e:
+			if refs == []:
+				self.main_window.experiment.notify(str(e))
+				background = self.main_window.experiment.get("background")
+				self.ui.edit_background.setText(background)
+		self.main_window.experiment.set("background", foreground)		
 		self.main_window.experiment.set("background", background)
 
-		# Refresh the interface and unlock the general tab
-		self.refresh()
+		# Refresh the interface and unlock the general tab		
+		self.main_window.refresh()
 		self.lock = False	
 		self.main_window.set_busy(False)
 		
@@ -239,7 +271,7 @@ class general_properties(QtGui.QWidget):
 		"""Update the controls of the general tab"""
 	
 		if self.main_window.experiment.debug:
-			print "qtopensesame.general_widget()"
+			print "general_properties.refresh()"
 
 		# Lock the general tab to prevent a recursive loop
 		self.lock = True
@@ -285,7 +317,6 @@ class general_properties(QtGui.QWidget):
 			self.edit_script.edit.setText("Failed to generate script!")
 			
 		self.init_backend_settings()
-		self.main_window.refresh_variable_inspector()
 
 		# Release the general tab
 		self.lock = False		

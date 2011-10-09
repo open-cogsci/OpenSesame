@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'resources/general_widget.ui'
 #
-# Created: Sun Oct  9 13:29:05 2011
+# Created: Sun Oct  9 18:02:29 2011
 #      by: PyQt4 UI code generator 4.8.3
 #
 # WARNING! All changes made in this file will be lost!
@@ -28,29 +28,29 @@ class Ui_Form(object):
         sizePolicy.setHeightForWidth(self.widget.sizePolicy().hasHeightForWidth())
         self.widget.setSizePolicy(sizePolicy)
         self.widget.setObjectName(_fromUtf8("widget"))
-        self.gridLayout = QtGui.QGridLayout(self.widget)
-        self.gridLayout.setMargin(0)
-        self.gridLayout.setMargin(0)
-        self.gridLayout.setObjectName(_fromUtf8("gridLayout"))
+        self.layout_general_properties = QtGui.QGridLayout(self.widget)
+        self.layout_general_properties.setMargin(0)
+        self.layout_general_properties.setMargin(0)
+        self.layout_general_properties.setObjectName(_fromUtf8("layout_general_properties"))
         self.label = QtGui.QLabel(self.widget)
         self.label.setObjectName(_fromUtf8("label"))
-        self.gridLayout.addWidget(self.label, 0, 0, 1, 1)
+        self.layout_general_properties.addWidget(self.label, 0, 0, 1, 1)
         self.combobox_start = QtGui.QComboBox(self.widget)
         self.combobox_start.setObjectName(_fromUtf8("combobox_start"))
-        self.gridLayout.addWidget(self.combobox_start, 0, 1, 1, 5)
+        self.layout_general_properties.addWidget(self.combobox_start, 0, 1, 1, 5)
         self.label_2 = QtGui.QLabel(self.widget)
         self.label_2.setObjectName(_fromUtf8("label_2"))
-        self.gridLayout.addWidget(self.label_2, 3, 0, 1, 1)
+        self.layout_general_properties.addWidget(self.label_2, 3, 0, 1, 1)
         self.spinbox_width = QtGui.QSpinBox(self.widget)
         self.spinbox_width.setMinimum(1)
         self.spinbox_width.setMaximum(10000)
         self.spinbox_width.setObjectName(_fromUtf8("spinbox_width"))
-        self.gridLayout.addWidget(self.spinbox_width, 3, 1, 1, 1)
+        self.layout_general_properties.addWidget(self.spinbox_width, 3, 1, 1, 1)
         self.spinbox_height = QtGui.QSpinBox(self.widget)
         self.spinbox_height.setMinimum(1)
         self.spinbox_height.setMaximum(10000)
         self.spinbox_height.setObjectName(_fromUtf8("spinbox_height"))
-        self.gridLayout.addWidget(self.spinbox_height, 3, 3, 1, 1)
+        self.layout_general_properties.addWidget(self.spinbox_height, 3, 3, 1, 1)
         self.label_3 = QtGui.QLabel(self.widget)
         sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Fixed, QtGui.QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
@@ -58,43 +58,27 @@ class Ui_Form(object):
         sizePolicy.setHeightForWidth(self.label_3.sizePolicy().hasHeightForWidth())
         self.label_3.setSizePolicy(sizePolicy)
         self.label_3.setObjectName(_fromUtf8("label_3"))
-        self.gridLayout.addWidget(self.label_3, 3, 2, 1, 1)
+        self.layout_general_properties.addWidget(self.label_3, 3, 2, 1, 1)
         self.label_6 = QtGui.QLabel(self.widget)
         self.label_6.setObjectName(_fromUtf8("label_6"))
-        self.gridLayout.addWidget(self.label_6, 4, 0, 1, 1)
+        self.layout_general_properties.addWidget(self.label_6, 4, 0, 1, 1)
         self.spinbox_compensation = QtGui.QSpinBox(self.widget)
         self.spinbox_compensation.setMinimum(-100)
         self.spinbox_compensation.setMaximum(100)
         self.spinbox_compensation.setObjectName(_fromUtf8("spinbox_compensation"))
-        self.gridLayout.addWidget(self.spinbox_compensation, 4, 1, 1, 3)
+        self.layout_general_properties.addWidget(self.spinbox_compensation, 4, 1, 1, 3)
         self.label_5 = QtGui.QLabel(self.widget)
         self.label_5.setObjectName(_fromUtf8("label_5"))
-        self.gridLayout.addWidget(self.label_5, 4, 4, 1, 1)
-        self.edit_background = QtGui.QLineEdit(self.widget)
-        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Preferred, QtGui.QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.edit_background.sizePolicy().hasHeightForWidth())
-        self.edit_background.setSizePolicy(sizePolicy)
-        self.edit_background.setObjectName(_fromUtf8("edit_background"))
-        self.gridLayout.addWidget(self.edit_background, 4, 5, 1, 1)
-        self.edit_foreground = QtGui.QLineEdit(self.widget)
-        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Preferred, QtGui.QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.edit_foreground.sizePolicy().hasHeightForWidth())
-        self.edit_foreground.setSizePolicy(sizePolicy)
-        self.edit_foreground.setObjectName(_fromUtf8("edit_foreground"))
-        self.gridLayout.addWidget(self.edit_foreground, 3, 5, 1, 1)
+        self.layout_general_properties.addWidget(self.label_5, 4, 4, 1, 1)
         self.label_4 = QtGui.QLabel(self.widget)
         self.label_4.setObjectName(_fromUtf8("label_4"))
-        self.gridLayout.addWidget(self.label_4, 3, 4, 1, 1)
+        self.layout_general_properties.addWidget(self.label_4, 3, 4, 1, 1)
         self.label_8 = QtGui.QLabel(self.widget)
         self.label_8.setObjectName(_fromUtf8("label_8"))
-        self.gridLayout.addWidget(self.label_8, 5, 0, 1, 1)
+        self.layout_general_properties.addWidget(self.label_8, 5, 0, 1, 1)
         self.combobox_backend = QtGui.QComboBox(self.widget)
         self.combobox_backend.setObjectName(_fromUtf8("combobox_backend"))
-        self.gridLayout.addWidget(self.combobox_backend, 5, 1, 1, 5)
+        self.layout_general_properties.addWidget(self.combobox_backend, 5, 1, 1, 5)
         self.verticalLayout.addWidget(self.widget)
         self.group_backend_settings = QtGui.QGroupBox(Form)
         self.group_backend_settings.setCheckable(True)
@@ -206,52 +190,26 @@ class Ui_Form(object):
 
     def retranslateUi(self, Form):
         Form.setWindowTitle(QtGui.QApplication.translate("Form", "Form", None, QtGui.QApplication.UnicodeUTF8))
-        self.label.setText(QtGui.QApplication.translate("Form", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
-"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
-"p, li { white-space: pre-wrap; }\n"
-"</style></head><body style=\" font-family:\'Ubuntu\'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Entry point</p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:8pt; font-style:italic;\">first item to run</span></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
+        self.label.setText(QtGui.QApplication.translate("Form", "Entry point<br />\n"
+"<small><i>First item to run</i></small>", None, QtGui.QApplication.UnicodeUTF8))
         self.combobox_start.setToolTip(QtGui.QApplication.translate("Form", "This is item (typically a sequence) is the starting point for your experiment.", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_2.setText(QtGui.QApplication.translate("Form", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
-"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
-"p, li { white-space: pre-wrap; }\n"
-"</style></head><body style=\" font-family:\'Ubuntu\'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Display resolution</p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:8pt; font-style:italic;\">in pixels (width x height)</span></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_2.setText(QtGui.QApplication.translate("Form", "Display resolution<br />\n"
+"<small><i>In pixels (width x height)</i></small>", None, QtGui.QApplication.UnicodeUTF8))
         self.spinbox_width.setToolTip(QtGui.QApplication.translate("Form", "The display resolution (width) in pixels", None, QtGui.QApplication.UnicodeUTF8))
         self.spinbox_width.setSuffix(QtGui.QApplication.translate("Form", "px", None, QtGui.QApplication.UnicodeUTF8))
         self.spinbox_height.setToolTip(QtGui.QApplication.translate("Form", "The display resolution (height) in pixels", None, QtGui.QApplication.UnicodeUTF8))
         self.spinbox_height.setSuffix(QtGui.QApplication.translate("Form", "px", None, QtGui.QApplication.UnicodeUTF8))
         self.label_3.setText(QtGui.QApplication.translate("Form", "x", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_6.setText(QtGui.QApplication.translate("Form", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
-"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
-"p, li { white-space: pre-wrap; }\n"
-"</style></head><body style=\" font-family:\'Ubuntu\'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Timing compensation</p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:8pt; font-style:italic;\">in milliseconds</span></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_6.setText(QtGui.QApplication.translate("Form", "Timing compensation<br />\n"
+"<small><i>In milliseconds</i></small>", None, QtGui.QApplication.UnicodeUTF8))
         self.spinbox_compensation.setToolTip(QtGui.QApplication.translate("Form", "Automatic timing compensation. Positive values will decrease durations, negative values will increase durations (of sketchpads etc.)", None, QtGui.QApplication.UnicodeUTF8))
         self.spinbox_compensation.setSuffix(QtGui.QApplication.translate("Form", "ms", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_5.setText(QtGui.QApplication.translate("Form", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
-"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
-"p, li { white-space: pre-wrap; }\n"
-"</style></head><body style=\" font-family:\'Ubuntu\'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Background color</p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:8pt; font-style:italic;\">E.g., &quot;black&quot; or &quot;#000000&quot;</span></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
-        self.edit_background.setToolTip(QtGui.QApplication.translate("Form", "Default background color", None, QtGui.QApplication.UnicodeUTF8))
-        self.edit_foreground.setToolTip(QtGui.QApplication.translate("Form", "Default foreground color", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_4.setText(QtGui.QApplication.translate("Form", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
-"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
-"p, li { white-space: pre-wrap; }\n"
-"</style></head><body style=\" font-family:\'Ubuntu\'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Foreground color</p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:8pt; font-style:italic;\">E.g., &quot;white&quot; or &quot;#FFFFFF&quot;</span></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_8.setText(QtGui.QApplication.translate("Form", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
-"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
-"p, li { white-space: pre-wrap; }\n"
-"</style></head><body style=\" font-family:\'Ubuntu\'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Back-end</p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:8pt; font-style:italic;\">The layer controlling display, sound and input</span></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_5.setText(QtGui.QApplication.translate("Form", "Default background color<br />\n"
+"<small><i>E.g., \"black\" or \"#000000\"</i></small>", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_4.setText(QtGui.QApplication.translate("Form", "Default foreground color<br />\n"
+"<small><i>E.g., \"white\" or \"#ffffff\"</i></small>", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_8.setText(QtGui.QApplication.translate("Form", "Back-end<br />\n"
+"<small><i>Handles display, sound, and input</i></small>", None, QtGui.QApplication.UnicodeUTF8))
         self.group_backend_settings.setTitle(QtGui.QApplication.translate("Form", "Show back-end settings and info", None, QtGui.QApplication.UnicodeUTF8))
         self.group_canvas.setTitle(QtGui.QApplication.translate("Form", "Canvas", None, QtGui.QApplication.UnicodeUTF8))
         self.label_canvas.setText(QtGui.QApplication.translate("Form", "TextLabel", None, QtGui.QApplication.UnicodeUTF8))

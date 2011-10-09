@@ -565,7 +565,7 @@ class item(openexp.trial.trial):
 		if not bytecode:
 			return code			
 		try:
-			bytecode = compile(code, "<sequence conditional statement", "eval")
+			bytecode = compile(code, "<conditional statement>", "eval")
 		except:
 			raise exceptions.runtime_error("'%s' is not a valid conditional statement in sequence item '%s'" % (cond, self.name))
 		return bytecode		
@@ -585,13 +585,15 @@ class item(openexp.trial.trial):
 	def usanitize(self, s, strict = False):
 	
 		"""<DOC>
-		Convert all special characters to U+XXXX notation
+		Convert all special characters to U+XXXX notation. Note that this
+		function can rely on the Qt4 QString class.
 		
 		Arguments:
 		s -- the string to be santized
 		
 		Keyword arguments:
-		strict -- if True, special characters are ignored rather than recoded (default = False)
+		strict -- if True, special characters are ignored rather than recoded
+				  (default = False)
 		
 		Returns:
 		The sanitized string
