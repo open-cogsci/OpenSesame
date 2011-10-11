@@ -60,6 +60,9 @@ if __name__ == "__main__":
 		else:
 			opensesame.open_general_tab()
 			opensesame.refresh()
+			
+	opensesame.restore_window_state()
+			
 	# Exit using the application exit status
 	sys.exit(app.exec_())
 

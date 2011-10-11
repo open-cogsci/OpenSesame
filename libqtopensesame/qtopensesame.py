@@ -259,7 +259,16 @@ class qtopensesame(QtGui.QMainWindow):
 		parser.add_option_group(group)
 		self.options, args = parser.parse_args(sys.argv)
 		if self.options.run and self.options.run_in_window:
-			parser.error("Options -r / --run and -w / --run-in-window are mutually exclusive.")		
+			parser.error("Options -r / --run and -w / --run-in-window are mutually exclusive.")
+			
+	def restore_window_state(self):
+	
+		"""
+		This is done separately from the rest of the restoration, because if we
+		don't wait until the end, the window gets distorted again.
+		"""
+	
+		self.restoreState(self._initial_window_state)
 			
 	def restore_state(self):
 
@@ -272,7 +281,7 @@ class qtopensesame(QtGui.QMainWindow):
 		settings.beginGroup("MainWindow");
 		self.resize(settings.value("size", QtCore.QSize(1000, 600)).toSize())
 		self.move(settings.value("pos", QtCore.QPoint(200, 200)).toPoint())
-		self.restoreState(settings.value("state").toByteArray())
+		self._initial_window_state = settings.value("state").toByteArray()
 		self.auto_check_update = settings.value("auto_check_update", True).toBool()
 		self.show_startup_tip = settings.value("show_startup_tip", True).toBool()
 		self.default_logfile_folder = settings.value("default_logfile_folder", self.home_folder).toString()
