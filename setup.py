@@ -8,12 +8,18 @@ import libqtopensesame.qtopensesame
 import libopensesame.misc
 
 # Not all plugins are included
-included_plugins = ["advanced_delay", "external_script", "fixation_dot", "text_display", "text_input", "notepad"]
+included_plugins = ["advanced_delay", "external_script", "fixation_dot", \
+	"text_display", "text_input", "notepad", "reset_feedback"]
 
 def plugins():
+
 	"""
 	Create a list of all plugins that need to be included in the release
+	
+	Returns:
+	A list of plugins
 	"""
+	
 	global included_plugins
 
 	l = []
