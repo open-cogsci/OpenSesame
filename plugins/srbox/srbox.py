@@ -1,6 +1,3 @@
-#!/usr/bin/env python
-#-*- coding:utf-8 -*-
-
 """
 This file is part of OpenSesame.
 
@@ -21,27 +18,26 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 from libopensesame import item, generic_response, exceptions
 from libqtopensesame import qtplugin
 import openexp.keyboard
-import serial
-import time
+import imp
 import os
 import os.path
-
 from PyQt4 import QtGui, QtCore
-
-_time_func = None
 
 class srbox(item.item, generic_response.generic_response):
 
-	"""
-	This class (the class with the same name as the module)
-	handles the basic functionality of the item. It does
-	not deal with GUI stuff.
-	"""
+	"""A plug-in for using the serial response box"""
 
-	def __init__(self, name, experiment, string = None):
+	def __init__(self, name, experiment, string=None):
 
 		"""
 		Constructor
+		
+		Arguments:
+		name -- item name
+		experiment -- opensesame experiment
+		
+		Keywords arguments:
+		string -- definition string (default=None)
 		"""
 
 		# The item_typeshould match the name of the module
@@ -56,25 +52,21 @@ class srbox(item.item, generic_response.generic_response):
 		self.dev = "autodetect"
 		self.dummy = "no"
 
-		# The connection to the box
-		_srbox = None
-
 		# The parent handles the rest of the contruction
 		item.item.__init__(self, name, experiment, string)
-
+		
 	def prepare(self):
 
 		"""
-		Prepare the item.
+		Prepare the item
+		
+		Returns:
+		True on success, False on failure		
 		"""
-
-		global _time_func
-
-		_time_func = self.experiment._time_func
 
 		# Pass the word on to the parent
 		item.item.prepare(self)
-
+				
 		# Prepare the allowed responses
 		if self.has("allowed_responses"):
 			self._allowed_responses = []
@@ -84,12 +76,9 @@ class srbox(item.item, generic_response.generic_response):
 						r = int(r)
 					except:
 						raise exceptions.runtime_error("'%s' is not a valid response in srbox '%s'. Expecting a number in the range 0 .. 5." % (r, self.name))
-
 					if r < 0 or r > 255:
 						raise exceptions.runtime_error("'%s' is not a valid response in srbox '%s'. Expecting a number in the range 0 .. 5." % (r, self.name))
-
 					self._allowed_responses.append(r)
-
 			if len(self._allowed_responses) == 0:
 				self._allowed_responses = None
 		else:
@@ -103,13 +92,17 @@ class srbox(item.item, generic_response.generic_response):
 			self._resp_func = self._keyboard.get_key
 
 		else:
-
-			global _srbox
-
-			if _srbox == None:
-				srbox_init(self.dev, self.experiment.debug)
-				if _srbox == None:
-					raise exceptions.runtime_error("Failed to open the serial response box in srbox '%s'" % self.name)
+		
+			# Prepare the device string
+			dev = self.get("dev")
+			if dev == "autodetect":
+				dev = None
+		
+			# Dynamically load an srbox instance
+			if not hasattr(self.experiment, "srbox"):				
+				path = os.path.join(os.path.dirname(__file__), "libsrbox.py")
+				_srbox = imp.load_source("libsrbox", path)
+				self.experiment.srbox = _srbox.libsrbox(self.experiment, dev)
 
 			# Prepare the light byte
 			s = "010" # Control string
@@ -126,7 +119,7 @@ class srbox(item.item, generic_response.generic_response):
 			if self.experiment.auto_response:
 				self._resp_func = self.auto_responder
 			else:
-				self._resp_func = srbox_get
+				self._resp_func = self.experiment.srbox.get_button_press
 
 		self.prepare_timeout()
 
@@ -136,7 +129,10 @@ class srbox(item.item, generic_response.generic_response):
 	def run(self):
 
 		"""
-		Run the item.
+		Run the item
+		
+		Returns:
+		True on success, False on failure				
 		"""
 
 		# Set the onset time
@@ -164,16 +160,16 @@ class srbox(item.item, generic_response.generic_response):
 		else:
 			# Get the response
 			try:
-				srbox_send(self._lights, self.experiment.debug)
-				srbox_start(self.experiment.debug)
-				self.experiment.end_response_interval, resp = self._resp_func(self._allowed_responses, self._timeout)
-				srbox_stop(self.experiment.debug)
+				self.experiment.srbox.send(self._lights)
+				self.experiment.srbox.start()
+				self.experiment.end_response_interval, resp = \
+					self._resp_func(self._allowed_responses, self._timeout)
+				self.experiment.srbox.stop()
 			except Exception as e:
 				raise exceptions.runtime_error("An error occured in srbox '%s': %s." % (self.name, e))
 
 		if self.experiment.debug:
 			print "srbox.run(): received %s" % resp
-
 		if type(resp) == list:
 			self.experiment.response = resp[0]
 		else:
@@ -286,186 +282,4 @@ class qtsrbox(srbox, qtplugin.qtplugin):
 		# Return the _edit_widget
 		return self._edit_widget
 
-"""
-Static functions. These functions handle the actual communication
-with the SR Box.
-"""
-
-_srbox = None
-
-KEY1 = int('11111110', 2)
-KEY2 = int('11111101', 2)
-KEY3 = int('11111011', 2)
-KEY4 = int('11110111', 2)
-KEY5 = int('11101111', 2)
-
-# The PST sr box only supports five keys, but some
-# of the VU boxes use higher key numbers.
-KEY6 = int('11011111', 2)
-KEY7 = int('10111111', 2)
-KEY8 = int('01111111', 2)
-
-def srbox_init(dev = None, debug = True):
-
-	"""
-	Intialize the SR box
-	"""
-
-	global _srbox
-
-	# If a device has been specified, use it
-	if dev not in (None, "", "autodetect"):
-		try:
-			_srbox = serial.Serial(dev, timeout = 0, baudrate = 19200)
-		except Exception as e:
-			_srbox = None
-			if debug:
-				print "srbox.srbox_init(): %s" % e
-			return
-
-	else:
-
-		# Else determine the common name of the
-		# serial devices on the current platform
-		if os.name == "nt":
-
-			# And find the first accessible device
-			for i in range(255):
-				try:
-					dev = "COM%d" % i
-					_srbox = serial.Serial(dev, timeout = 0, baudrate = 19200)
-					break
-				except Exception as e:
-					_srbox = None
-					pass
-
-		elif os.name == "posix":
-
-			for path in os.listdir("/dev"):
-				if path[:3] == "tty":
-					try:
-						dev = "/dev/%s" % path
-						_srbox = serial.Serial(dev, timeout = 0, baudrate = 19200)
-						break
-					except Exception as e:
-						_srbox = None
-						pass
-		else:
-			return
-
-	if debug:
-		print "srbox.srbox_init(): Using device %s" % dev
-
-	# Turn off all lights
-	if _srbox != None:
-		_srbox.write('\x64')
-
-def srbox_send(ch, debug = True):
-
-	"""
-	Sends a single character
-	"""
-
-	global _srbox
-
-	_srbox.write(ch)
-
-def srbox_start(debug = True):
-
-	"""
-	Make the sr box start sending bytes
-	"""
-
-	global _srbox
-
-	# Write the start byte
-	_srbox.write('\xA0')
-	_srbox.flushOutput()
-	_srbox.flushInput()
-
-def srbox_stop(debug = True):
-
-	"""
-	Make the sr box stop sending bytes
-	"""
-
-	global _srbox
-
-	# Write the stop byte and flush the input
-	_srbox.write('\x20')
-	_srbox.flushOutput()
-	_srbox.flushInput()
-
-def srbox_get(allowed_keys = None, timeout = None, debug = True):
-
-	"""
-	Get a buttonclick from the SR box. There are 5 possible buttons.
-	Returns a timestamp, buttonlist tuple.
-	"""
-
-	global _srbox, KEY1, KEY2, KEY3, KEY4, KEY5, _time_func
-
-	# Flush the input
-	#_srbox.flushInput()
-
-	c = _time_func()
-	t = c
-	while timeout == None or t - c < timeout:
-
-		j = _srbox.read(1)
-		t = _time_func()
-		if j != "" and j != '\x00':
-			k = ord(j)
-
-			if k != 0:
-				l = []
-				if k | KEY1 == 255 and (allowed_keys == None or 1 in allowed_keys):
-					l.append(1)
-				if k | KEY2 == 255 and (allowed_keys == None or 2 in allowed_keys):
-					l.append(2)
-				if k | KEY3 == 255 and (allowed_keys == None or 3 in allowed_keys):
-					l.append(3)
-				if k | KEY4 == 255 and (allowed_keys == None or 4 in allowed_keys):
-					l.append(4)
-				if k | KEY5 == 255 and (allowed_keys == None or 5 in allowed_keys):
-					l.append(5)
-				if k | KEY6 == 255 and (allowed_keys == None or 6 in allowed_keys):
-					l.append(6)
-				if k | KEY7 == 255 and (allowed_keys == None or 7 in allowed_keys):
-					l.append(7)
-				if k | KEY8 == 255 and (allowed_keys == None or 8 in allowed_keys):
-					l.append(8)
-				if len(l) > 0:
-					return t, l
-
-	return t, None
-
-if __name__ == "__main__":
-
-	"""
-	Call the plugin as main script to do some testing.
-	"""
-
-	print "Initializing ... "
-	srbox_init()
-
-	if _srbox == None:
-		print "Error"
-		quit()
-
-	print "Done"
-	print "Starting ..."
-	srbox_start()
-	print "Done"
-	print "Getting ..."
-	while True:
-		time, resp = srbox_get()
-		print resp
-		if 1 in resp:
-			break
-		break
-	print "Done"
-	print "Stopping ..."
-	srbox_stop()
-	print "Done"
 
