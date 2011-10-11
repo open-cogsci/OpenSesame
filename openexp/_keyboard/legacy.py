@@ -124,6 +124,9 @@ class legacy:
 		timeout -- an integer value specifying a timeout in milliseconds or
 				   None to use the default. This parameter does not change the
 				   default timeout. (default = None)
+				   
+		Exceptions:
+		A response_error if 'escape' was pressed				   
 
 		Returns:
 		A (key, timestamp) tuple. The key is None if a timeout occurs.
@@ -272,6 +275,9 @@ class legacy:
 
 		"""<DOC>
 		Clears all pending input, not limited to the keyboard
+		
+		Exceptions:
+		A response_error if 'escape' was pressed		
 
 		Returns:
 		True if a key had been pressed (i.e., if there was something
@@ -284,6 +290,5 @@ class legacy:
 				keypressed = True
 				if event.key == pygame.K_ESCAPE:
 					raise openexp.exceptions.response_error("The escape key was pressed.")
-
 		return keypressed
 

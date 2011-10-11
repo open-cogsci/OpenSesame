@@ -109,6 +109,9 @@ class psycho(openexp._keyboard.legacy.legacy):
 				   None to use the default. This parameter does not change the
 				   default timeout. (default = None)		
 				   
+		Exceptions:
+		A response_error if 'escape' was pressed				   
+				   
 		Returns:
 		A (key, timestamp) tuple. The key is None if a timeout occurs.
 		"""	
@@ -221,12 +224,18 @@ class psycho(openexp._keyboard.legacy.legacy):
 		"""
 		Clears all pending input, not limited to the keyboard
 		
+		Exceptions:
+		A response_error if 'escape' was pressed
+		
 		Returns:
 		True if a key had been pressed (i.e., if there was something
 		to flush) and False otherwise
 		"""	
-		
-		keypressed = len(event.getKeys()) > 0
-		event.clearEvents()
+
+		keypressed = False
+		for key in event.getKeys():
+			if key == "escape":
+				raise openexp.exceptions.response_error("The escape key was pressed.")
+			keypressed = True		
 		return keypressed
 
