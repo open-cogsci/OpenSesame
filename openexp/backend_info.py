@@ -51,11 +51,7 @@ psycho = {
 backend_list = {}
 backend_list["legacy"] = legacy
 backend_list["psycho"] = psycho
-
-# PyOpenGL doesn't play nice with Py2exe, so for now it's just not available
-# in the Windows package
-if os.path.basename(sys.argv[0]) != "opensesame.exe":
-	backend_list["opengl"] = opengl
+backend_list["opengl"] = opengl
 
 def match(experiment):
 

@@ -40,7 +40,7 @@ if "--pylink" in sys.argv:
 # Explicitly importing these modules ensures that Py2exe will
 # bundle them. This is therefore only required for Windows.
 
-if "--preload" in sys.argv:
+if "--preload" in sys.argv:	
 
 	import warnings
 
@@ -119,10 +119,17 @@ if "--preload" in sys.argv:
 	except Exception as e:
 		print "includes: failed to import 'pyaudio' <http://people.csail.mit.edu/hubert/pyaudio/>. You will not be able to use portaudio and the media_player plug-in. Error: %s" % e
 
-	print "includes: preloading 'OpenGL'"
+	# OpenGL requires hacks to work with Py2Exe. The approach here is based on
+	# information from <http://www.py2exe.org/index.cgi/PyOpenGL>
+	print "includes: preloading 'OpenGL'"	
 	try:
-		import OpenGL
+		from OpenGL.GL import *
 		from OpenGL.platform import win32
+	except AttributeError:
+		pass	
+	try:
+		from ctypes import util
+		import OpenGL
 	except Exception as e:
 		print "includes: failed to import 'OpenGL' <http://pyopengl.sourceforge.net/>. You will not be able to use OpenGL. Error: %s" % e
 

@@ -25,7 +25,6 @@ except:
     print "Warning: OpenGL.GLU did not import correctly."
     GLU = None
 
-
 lastclearcolor = None
 lastclearimage = None
 def clearScreen(color):
