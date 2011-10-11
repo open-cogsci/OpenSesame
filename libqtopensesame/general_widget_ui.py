@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'resources/general_widget.ui'
 #
-# Created: Sun Oct  9 18:02:29 2011
+# Created: Tue Oct 11 17:30:34 2011
 #      by: PyQt4 UI code generator 4.8.3
 #
 # WARNING! All changes made in this file will be lost!
@@ -85,13 +85,13 @@ class Ui_Form(object):
         self.group_backend_settings.setChecked(False)
         self.group_backend_settings.setObjectName(_fromUtf8("group_backend_settings"))
         self.verticalLayout_4 = QtGui.QVBoxLayout(self.group_backend_settings)
-        self.verticalLayout_4.setContentsMargins(0, -1, 0, 0)
+        self.verticalLayout_4.setMargin(4)
         self.verticalLayout_4.setObjectName(_fromUtf8("verticalLayout_4"))
         self.scrollarea_backend_settings = QtGui.QScrollArea(self.group_backend_settings)
         self.scrollarea_backend_settings.setWidgetResizable(True)
         self.scrollarea_backend_settings.setObjectName(_fromUtf8("scrollarea_backend_settings"))
         self.scrollAreaWidgetContents = QtGui.QWidget()
-        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 819, 262))
+        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 811, 262))
         self.scrollAreaWidgetContents.setObjectName(_fromUtf8("scrollAreaWidgetContents"))
         self.verticalLayout_7 = QtGui.QVBoxLayout(self.scrollAreaWidgetContents)
         self.verticalLayout_7.setObjectName(_fromUtf8("verticalLayout_7"))
@@ -147,8 +147,9 @@ class Ui_Form(object):
         self.group_script.setCheckable(True)
         self.group_script.setChecked(False)
         self.group_script.setObjectName(_fromUtf8("group_script"))
-        self.verticalLayout_3 = QtGui.QVBoxLayout(self.group_script)
-        self.verticalLayout_3.setObjectName(_fromUtf8("verticalLayout_3"))
+        self.layout_script = QtGui.QVBoxLayout(self.group_script)
+        self.layout_script.setMargin(4)
+        self.layout_script.setObjectName(_fromUtf8("layout_script"))
         self.verticalLayout.addWidget(self.group_script)
         self.spacer = QtGui.QWidget(Form)
         sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Preferred, QtGui.QSizePolicy.Expanding)

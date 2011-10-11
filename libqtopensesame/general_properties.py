@@ -55,10 +55,6 @@ class general_properties(QtGui.QWidget):
 		header_widget = QtGui.QWidget()
 		header_widget.setLayout(header_hbox)
 
-		# Script editor
-		self.edit_script = inline_editor(self.main_window.experiment, syntax="opensesame")
-		self.edit_script.apply.clicked.connect(self.apply_script)
-
 		# The rest of the controls from the UI file
 		w = QtGui.QWidget()
 		self.ui = general_widget_ui.Ui_Form()
@@ -88,12 +84,15 @@ class general_properties(QtGui.QWidget):
 			desc = openexp.backend_info.backend_list[backend]["description"]
 			self.ui.combobox_backend.addItem("%s -- %s" % (backend, desc))
 		self.ui.combobox_backend.currentIndexChanged.connect(self.apply_changes)
-
+		
+		# Script editor
+		self.edit_script = inline_editor(self.main_window.experiment, syntax="opensesame")
+		self.edit_script.apply.clicked.connect(self.apply_script)		
+		self.ui.layout_script.addWidget(self.edit_script)
+		
 		vbox = QtGui.QVBoxLayout()
 		vbox.addWidget(header_widget)
 		vbox.addWidget(w)
-		vbox.addWidget(self.edit_script)
-		vbox.setMargin(16)
 
 		self.setLayout(vbox)
 		self.general_tab = True
@@ -133,6 +132,14 @@ class general_properties(QtGui.QWidget):
 					label.setText("Settings for %s:" % backend)
 					layout.addWidget(settings_widget(self.main_window.experiment, \
 						_backend.settings, self))
+						
+	def toggle_spacer(self):
+	
+		"""Sets the visibility of the spacer"""
+		
+		hide = self.ui.group_backend_settings.isChecked() or \
+			self.ui.group_script.isChecked()
+		self.ui.spacer.setVisible(not hide)
 		
 	def toggle_backend_settings(self):
 
@@ -144,6 +151,7 @@ class general_properties(QtGui.QWidget):
 			self.init_backend_settings(force=True)
 			self.main_window.set_busy(False)
 		self.ui.scrollarea_backend_settings.setVisible(show)
+		self.toggle_spacer()
 		
 	def toggle_script_editor(self):
 
@@ -151,7 +159,7 @@ class general_properties(QtGui.QWidget):
 
 		show = self.ui.group_script.isChecked()
 		self.edit_script.setVisible(show)
-		self.ui.spacer.setVisible(not show)
+		self.toggle_spacer()
 		
 	def set_header_label(self):
 

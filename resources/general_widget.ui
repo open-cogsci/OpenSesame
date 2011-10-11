@@ -163,14 +163,8 @@
       <bool>false</bool>
      </property>
      <layout class="QVBoxLayout" name="verticalLayout_4">
-      <property name="leftMargin">
-       <number>0</number>
-      </property>
-      <property name="rightMargin">
-       <number>0</number>
-      </property>
-      <property name="bottomMargin">
-       <number>0</number>
+      <property name="margin">
+       <number>4</number>
       </property>
       <item>
        <widget class="QScrollArea" name="scrollarea_backend_settings">
@@ -182,7 +176,7 @@
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>819</width>
+           <width>811</width>
            <height>262</height>
           </rect>
          </property>
@@ -330,7 +324,11 @@
      <property name="checked">
       <bool>false</bool>
      </property>
-     <layout class="QVBoxLayout" name="verticalLayout_3"/>
+     <layout class="QVBoxLayout" name="layout_script">
+      <property name="margin">
+       <number>4</number>
+      </property>
+     </layout>
     </widget>
    </item>
    <item>
