@@ -168,6 +168,6 @@ class libsrbox:
 					if k | self.BUTTON8 == 255 and (allowed_buttons == None or 8 in allowed_buttons):
 						l.append(8)
 					if len(l) > 0:
-						return t, l
+						return l, t
 
-		return t, None
+		return None, t

@@ -162,7 +162,7 @@ class srbox(item.item, generic_response.generic_response):
 			try:
 				self.experiment.srbox.send(self._lights)
 				self.experiment.srbox.start()
-				self.experiment.end_response_interval, resp = \
+				resp, self.experiment.end_response_interval = \
 					self._resp_func(self._allowed_responses, self._timeout)
 				self.experiment.srbox.stop()
 			except Exception as e:
