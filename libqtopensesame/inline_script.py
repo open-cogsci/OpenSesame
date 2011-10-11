@@ -118,6 +118,7 @@ class inline_script(libopensesame.inline_script.inline_script, libqtopensesame.q
 		widget.setLayout(vbox)
 		
 		tabwidget_script.addTab(widget, self.experiment.icon("inline_script"), "Run phase")		
+		tabwidget_script.setCurrentIndex(1)
 		
 		self.edit_vbox.addWidget(tabwidget_script)
 		
