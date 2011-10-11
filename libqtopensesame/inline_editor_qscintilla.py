@@ -256,6 +256,9 @@ class scintilla(QsciScintilla):
 		if e.key() == QtCore.Qt.Key_A and e.modifiers() == QtCore.Qt.AltModifier:
 			self._parent.apply.clicked.emit(True)
 			return
+		if e.key() == QtCore.Qt.Key_F and e.modifiers() == QtCore.Qt.ControlModifier:
+			self._parent.perform_replace()
+			return			
 		QsciScintilla.keyPressEvent(self, e)
 				 		
 class inline_editor(QtGui.QFrame):	
