@@ -117,8 +117,14 @@ class inline_script(libopensesame.inline_script.inline_script, libqtopensesame.q
 		widget = QtGui.QWidget()
 		widget.setLayout(vbox)
 		
-		tabwidget_script.addTab(widget, self.experiment.icon("inline_script"), "Run phase")		
-		tabwidget_script.setCurrentIndex(1)
+		tabwidget_script.addTab(widget, self.experiment.icon("inline_script"), "Run phase")			
+		
+		# Switch to the run script by default, unless there is only content for
+		# the prepare script.
+		if self._run == "" and self._prepare != "":
+			tabwidget_script.setCurrentIndex(0)		
+		else:
+			tabwidget_script.setCurrentIndex(1)
 		
 		self.edit_vbox.addWidget(tabwidget_script)
 		
@@ -131,14 +137,11 @@ class inline_script(libopensesame.inline_script.inline_script, libqtopensesame.q
 		The control QWidget
 		"""	
 		
-		libqtopensesame.qtitem.qtitem.edit_widget(self, False)				
-		
+		libqtopensesame.qtitem.qtitem.edit_widget(self, False)						
 		if not self.lock:
-			self.textedit_prepare.edit.setPlainText(str(self._prepare))
-			self.textedit_run.edit.setPlainText(str(self._run))	
-								
-		return self._edit_widget		
-		
+			self.textedit_prepare.edit.setPlainText(self.unsanitize(str(self._prepare)))
+			self.textedit_run.edit.setPlainText(self.unsanitize(str(self._run)))								
+		return self._edit_widget				
 				
 	def get_ready(self):
 	
@@ -148,7 +151,6 @@ class inline_script(libopensesame.inline_script.inline_script, libqtopensesame.q
 			if self.experiment.debug:
 				print "inline_script.finalize(): applying pending Python script changes"
 			self.apply_edit_changes(catch = False)
-			return True
-			
+			return True			
 		return libqtopensesame.qtitem.qtitem.get_ready(self)
 			
