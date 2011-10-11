@@ -136,7 +136,8 @@ class loop(libopensesame.loop.loop, libqtopensesame.qtitem.qtitem):
 
 		"""Present a dialog and add a variable"""
 
-		var_name, ok = QtGui.QInputDialog.getText(self.loop_table, 'New variable', 'Enter a variable name, optionally followed by a default value (i.e., \"varname defaultvalue\")')
+		var_name, ok = QtGui.QInputDialog.getText(self.loop_table, 'New variable', \
+			'Enter a variable name, optionally followed by a default value (i.e., \"varname defaultvalue\")')
 
 		if ok:
 			l = self.cyclevar_list()
@@ -373,7 +374,8 @@ class loop(libopensesame.loop.loop, libqtopensesame.qtitem.qtitem):
 		for cycle in self.matrix:
 			for var in self.matrix[cycle]:
 				col = column_order.index(var)
-				self.loop_table.setItem(cycle, col, QtGui.QTableWidgetItem(str(self.matrix[cycle][var])))
+				self.loop_table.setItem(cycle, col, \
+					QtGui.QTableWidgetItem(self.unsanitize(self.matrix[cycle][var])))
 
 		# Store the number of cycles and the column order
 		self.set("cycles", max(self.get("cycles"), self.cycle_count()))
