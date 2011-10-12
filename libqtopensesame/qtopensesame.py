@@ -16,7 +16,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from PyQt4 import QtCore, QtGui
-from libqtopensesame import experiment, includes
+from libqtopensesame import includes, experiment
 import libopensesame.exceptions
 import libopensesame.experiment
 import libopensesame.plugins
