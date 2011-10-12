@@ -18,7 +18,7 @@
     <normaloff>:/icons/experiment.png</normaloff>:/icons/experiment.png</iconset>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <layout class="QHBoxLayout" name="horizontalLayout">
+   <layout class="QVBoxLayout" name="verticalLayout_6">
     <item>
      <widget class="QTabWidget" name="tabwidget">
       <property name="currentIndex">
@@ -40,7 +40,7 @@
      <x>0</x>
      <y>0</y>
      <width>1000</width>
-     <height>23</height>
+     <height>25</height>
     </rect>
    </property>
    <widget class="QMenu" name="menu_file">
@@ -132,7 +132,7 @@
    <addaction name="menu_tools"/>
    <addaction name="menu_help"/>
   </widget>
-  <widget class="QStatusBar" name="statusbar"/>
+  <widget class="statusbar" name="statusbar"/>
   <widget class="QDockWidget" name="dock_overview">
    <property name="features">
     <set>QDockWidget::DockWidgetFloatable|QDockWidget::DockWidgetMovable</set>
@@ -147,6 +147,12 @@
     <layout class="QVBoxLayout" name="verticalLayout">
      <item>
       <widget class="tree_overview" name="itemtree">
+       <property name="minimumSize">
+        <size>
+         <width>200</width>
+         <height>0</height>
+        </size>
+       </property>
        <property name="acceptDrops">
         <bool>true</bool>
        </property>
@@ -311,7 +317,7 @@ background-color: #729fcf;</string>
       </widget>
      </item>
      <item>
-      <widget class="QTableWidget" name="table_variables">
+      <widget class="variable_inspector" name="table_variables">
        <property name="alternatingRowColors">
         <bool>true</bool>
        </property>
@@ -336,11 +342,6 @@ background-color: #729fcf;</string>
        <attribute name="verticalHeaderCascadingSectionResizes">
         <bool>true</bool>
        </attribute>
-       <row>
-        <property name="text">
-         <string>test</string>
-        </property>
-       </row>
        <column>
         <property name="text">
          <string>Variable</string>
@@ -356,16 +357,6 @@ background-color: #729fcf;</string>
          <string>In item</string>
         </property>
        </column>
-       <item row="0" column="0">
-        <property name="text">
-         <string>test</string>
-        </property>
-       </item>
-       <item row="0" column="2">
-        <property name="text">
-         <string>test</string>
-        </property>
-       </item>
       </widget>
      </item>
     </layout>
@@ -438,102 +429,93 @@ background-color: #729fcf;</string>
       </widget>
      </item>
      <item>
-      <widget class="QWidget" name="widget_3" native="true">
-       <layout class="QHBoxLayout" name="horizontalLayout_4">
-        <property name="spacing">
-         <number>2</number>
-        </property>
+      <widget class="QWidget" name="widget_5" native="true">
+       <layout class="QHBoxLayout" name="horizontalLayout_6">
         <property name="margin">
          <number>0</number>
         </property>
         <item>
-         <widget class="QLineEdit" name="edit_python_command">
-          <property name="toolTip">
-           <string>Enter a Python command</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QPushButton" name="button_python_execute">
-          <property name="toolTip">
-           <string>Execute</string>
-          </property>
-          <property name="text">
-           <string/>
-          </property>
-          <property name="icon">
-           <iconset resource="icons.qrc">
-            <normaloff>:/icons/execute.png</normaloff>:/icons/execute.png</iconset>
-          </property>
-          <property name="iconSize">
-           <size>
-            <width>16</width>
-            <height>16</height>
-           </size>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QPushButton" name="button_clear_stdout">
-          <property name="toolTip">
-           <string>Clear debug window</string>
-          </property>
-          <property name="text">
-           <string/>
-          </property>
-          <property name="icon">
-           <iconset resource="icons.qrc">
-            <normaloff>:/icons/clear.png</normaloff>:/icons/clear.png</iconset>
-          </property>
-          <property name="iconSize">
-           <size>
-            <width>16</width>
-            <height>16</height>
-           </size>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QPushButton" name="button_help_stdout">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
-          <property name="toolTip">
-           <string>Help</string>
-          </property>
-          <property name="text">
-           <string/>
-          </property>
-          <property name="icon">
-           <iconset resource="icons.qrc">
-            <normaloff>:/icons/help.png</normaloff>:/icons/help.png</iconset>
-          </property>
-          <property name="iconSize">
-           <size>
-            <width>16</width>
-            <height>16</height>
-           </size>
-          </property>
-          <property name="flat">
+         <widget class="console" name="edit_stdout">
+          <property name="readOnly">
            <bool>false</bool>
           </property>
          </widget>
         </item>
+        <item>
+         <widget class="QWidget" name="widget_3" native="true">
+          <layout class="QVBoxLayout" name="verticalLayout_5">
+           <property name="spacing">
+            <number>2</number>
+           </property>
+           <property name="margin">
+            <number>0</number>
+           </property>
+           <item>
+            <widget class="QPushButton" name="button_help_stdout">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="toolTip">
+              <string>Help</string>
+             </property>
+             <property name="text">
+              <string/>
+             </property>
+             <property name="icon">
+              <iconset resource="icons.qrc">
+               <normaloff>:/icons/help.png</normaloff>:/icons/help.png</iconset>
+             </property>
+             <property name="iconSize">
+              <size>
+               <width>16</width>
+               <height>16</height>
+              </size>
+             </property>
+             <property name="flat">
+              <bool>false</bool>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="button_clear_stdout">
+             <property name="toolTip">
+              <string>Clear debug window</string>
+             </property>
+             <property name="text">
+              <string/>
+             </property>
+             <property name="icon">
+              <iconset resource="icons.qrc">
+               <normaloff>:/icons/clear.png</normaloff>:/icons/clear.png</iconset>
+             </property>
+             <property name="iconSize">
+              <size>
+               <width>16</width>
+               <height>16</height>
+              </size>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <spacer name="verticalSpacer">
+             <property name="orientation">
+              <enum>Qt::Vertical</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>20</width>
+               <height>40</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+          </layout>
+         </widget>
+        </item>
        </layout>
-      </widget>
-     </item>
-     <item>
-      <widget class="QPlainTextEdit" name="edit_stdout">
-       <property name="readOnly">
-        <bool>true</bool>
-       </property>
-       <property name="plainText">
-        <string>Tip 1: You can use the &quot;print [msg]&quot; statement in inline_script items to print to the debug window.
-Tip 2: You can execute Python commands using the field above. For more information, see &lt;http://docs.python.org/tutorial/&gt;.</string>
-       </property>
       </widget>
      </item>
     </layout>
@@ -980,6 +962,21 @@ Tip 2: You can execute Python commands using the field above. For more informati
    <class>toolbar_items</class>
    <extends>QToolBar</extends>
    <header>toolbar_items.h</header>
+  </customwidget>
+  <customwidget>
+   <class>console</class>
+   <extends>QPlainTextEdit</extends>
+   <header>pyterm.h</header>
+  </customwidget>
+  <customwidget>
+   <class>statusbar</class>
+   <extends>QStatusBar</extends>
+   <header>statusbar.h</header>
+  </customwidget>
+  <customwidget>
+   <class>variable_inspector</class>
+   <extends>QTableWidget</extends>
+   <header>variable_inspector.h</header>
   </customwidget>
  </customwidgets>
  <resources>

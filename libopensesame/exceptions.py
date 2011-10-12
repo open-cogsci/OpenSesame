@@ -25,13 +25,16 @@ class script_error(Exception):
 	fails.
 	"""
 
-	def __init__(self, value):
+	def __init__(self, value, full=True):
 
 		self.value = value
+		self.full = full
 
 	def __str__(self):
 
-		return "<b>Error:</b> Script error<br /><b>Description</b>: %s" % self.value
+		if self.full:
+			return "<b>Error:</b> Script error<br /><b>Description</b>: %s" % self.value
+		return str(self.value)
 
 class runtime_error(Exception):
 

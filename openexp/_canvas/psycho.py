@@ -21,12 +21,31 @@ import openexp._canvas.legacy
 import openexp.exceptions
 from psychopy import core, visual
 from PIL import Image
+import numpy as np
 
 class psycho(openexp._canvas.legacy.legacy):
 
-	"""
-	This is a canvas backend which uses PsychoPy (with Pyglet).
-	"""
+	"""This is a canvas backend built on top of PsychoPy (with Pyglet)"""
+	
+	# The settings variable is used by the GUI to provide a list of back-end
+	# settings
+	settings = {
+		"psychopy_waitblanking" : {
+			"name" : "Wait for blanking",
+			"description" : "Block until the display has been shown",
+			"default" : "yes"
+			},
+		"psychopy_wintype" : {
+			"name" : "Window type",
+			"description" : "'pygame' or 'pyglet'",
+			"default" : "pyglet"
+			},			
+		"psychopy_monitor" : {
+			"name" : "Monitor",
+			"description" : "Virtual monitor",
+			"default" : "testMonitor"
+			},						
+		}		
 	
 	def __init__(self, experiment, bgcolor = None, fgcolor = None):
 		
@@ -88,7 +107,7 @@ class psycho(openexp._canvas.legacy.legacy):
 		"""
 		
 		# TODO
-		raise openexp.exceptions.canvas_error("openexp._canvas.psycho.flip(): not implemented!")		
+		raise openexp.exceptions.canvas_error("openexp._canvas.psycho.flip(): the flip() function has not been implemented for the psycho back-end!")		
 		
 	def copy(self, canvas):
 	
@@ -152,9 +171,12 @@ class psycho(openexp._canvas.legacy.legacy):
 		if color != None:
 			color = self.color(color)
 		else:
-			color = self.bgcolor
-		# The background is simply a rectangle, because of the awkward double flip required by set_color()			
-		self.rect(0, 0, self.experiment.width, self.experiment.height, color = color, fill = True)
+			color = self.bgcolor		
+		if self.experiment.background != color:
+			# The background is simply a rectangle, because of the double flip
+			# required by set_color()			
+			self.rect(0, 0, self.experiment.width, self.experiment.height, \
+				color=color, fill=True)
 		
 	def set_penwidth(self, penwidth):
 		
@@ -459,14 +481,13 @@ class psycho(openexp._canvas.legacy.legacy):
 			y += h/2			
 		pos = x - self.xcenter(), self.ycenter() - y
 				
-		stim = visual.SimpleImageStim(win = self.experiment.window, image = im, pos = pos)
+		stim = visual.PatchStim(win = self.experiment.window, tex = fname, pos = pos)
 		self.stim_list.append(stim)
-					
-	def gabor(self, x, y, orient, freq, env = "gaussian", size = 96, stdev = 12, phase = 0, col1 = "white", col2 = "black", bgmode = "avg"):
+		
+	def gabor(self, x, y, orient, freq, env="gaussian", size=96, stdev=12, phase=0, col1="white", col2=None, bgmode=None):
 	
 		"""
-		Draws a Gabor patch. This function is derived from the online Gabor patch generator
-		<http://www.cogsci.nl/software/online-gabor-patch-generator>	
+		Draws a Gabor patch. 
 		
 		Arguments:
 		x -- The center X coordinate
@@ -486,11 +507,10 @@ class psycho(openexp._canvas.legacy.legacy):
 		"""	
 	
 		pos = x - self.xcenter(), self.ycenter() - y		
-		surface = openexp._canvas.legacy._gabor(orient, freq, env, size, stdev, phase, col1, col2, bgmode)
-		string = pygame.image.tostring(surface, "RGB")
-		pil_img = Image.fromstring("RGB", (surface.get_width(), surface.get_height()), string)
-		stim = visual.SimpleImageStim(win = self.experiment.window, image = pil_img, pos = pos)
-		self.stim_list.append(stim)
+		_env, _size, s = self.env_to_mask(env, size, stdev)				
+		p = visual.PatchStim(win=self.experiment.window, pos=pos, ori=-orient,
+			mask=_env, size=_size, sf=freq, phase=phase, color=col1)
+		self.stim_list.append(p)
 		
 	def noise_patch(self, x, y, env = "gaussian", size = 96, stdev = 12, col1 = "white", col2 = "black", bgmode = "avg"):
 	
@@ -512,12 +532,55 @@ class psycho(openexp._canvas.legacy.legacy):
 				  or equal to col2 ("col2"), useful for blending into the background. (default = "avg")
 		"""	
 		
-		pos = x - self.xcenter(), self.ycenter() - y		
-		surface = openexp._canvas.legacy._noise_patch(env, size, stdev, col1, col2, bgmode)
-		string = pygame.image.tostring(surface, "RGB")
-		pil_img = Image.fromstring("RGB", (surface.get_width(), surface.get_height()), string)
-		stim = visual.SimpleImageStim(win = self.experiment.window, image = pil_img, pos = pos)
-		self.stim_list.append(stim)
+		pos = x - self.xcenter(), self.ycenter() - y				
+		_env, _size, s = self.env_to_mask(env, size, stdev)			
+		tex = 2*(np.random.random([s,s])-0.5)
+		p = visual.PatchStim(win=self.experiment.window, tex=tex, pos=pos,
+			mask=_env, size=_size, color=col1)		
+		self.stim_list.append(p)	
+		
+	def env_to_mask(self, env, size, stdev):
+	
+		"""
+		Converts an envelope name to a PsychoPy mask. Also returns the
+		appropriate patch size and the smallest power-of-two size
+		
+		Arguments:
+		env -- an envelope name
+		size -- a size value
+		
+		Returns:
+		A (psychopy_mask, mask_size, power_of_two_size) tuple
+		"""						
+		
+		env = openexp._canvas.legacy._match_env(env)
+		
+		# Get the smallest power-of-two size
+		i = 2
+		while size / (i) > 0:
+			i = 2*i
+		print "size:", i
+		s = i
+				
+		# Create a PsychoPy mask
+		if env == "c":
+			_env = "circle"
+			_size = size
+		elif env == "g":	
+			_env = "gauss"
+			_size = 6*stdev
+		elif env == "r":
+			_env = "None"
+			_size = size
+		elif env == "l":			
+			_env = np.zeros([s,s])
+			for x in range(s):
+				for y in range(s):
+					r = np.sqrt((x-s/2)**2+(y-s/2)**2)
+					_env[x,y] = (max(0, (0.5*s-r) / (0.5*s))-0.5)*2
+			_size = size
+			
+		return	(_env, _size, s)		
 		
 	def shapestim(self, vertices, color = None, fill = False, fix_coor = True, close = False):
 	
@@ -577,28 +640,19 @@ def init_display(experiment):
 	global _experiment
 	_experiment = experiment	
 	
-	# Set the PsychoPy monitor, default to testMonitor
-	if experiment.has("psychopy_monitor"):
-		monitor = experiment.get("psychopy_monitor")
-	else:
-		monitor = "testMonitor"
+	# Set the PsychoPy monitor, default to testMonitor	
+	monitor = experiment.get_check("psychopy_monitor", "testMonitor")
+	wintype = experiment.get_check("psychopy_wintype", "pyglet", ["pyglet", "pygame"])
+	waitblanking = experiment.get_check("psychopy_waitblanking", "yes", ["yes", "no"]) == "yes"
 		
-	# Set the PsychoPy wintype, default to PyGlet
-	if experiment.has("psychopy_wintype"):
-		wintype = experiment.get("psychopy_wintype")
-	else:
-		wintype = "pyglet"
-		
-	# Set the PsychoPy waitblanking option, default to True
-	if experiment.has("psychopy_waitblanking") and experiment.get("psychopy_waitblanking") == "no":
-		waitblanking = False
-	else:
-		waitblanking = True
-		
-	if experiment.debug:
-		print "openexp._canvas.psycho.init_display(): creating a %s display" % wintype
+	print "openexp._canvas.psycho.init_display(): window type = %s" % wintype
+	print "openexp._canvas.psycho.init_display(): waitblanking = %s" % waitblanking
+	print "openexp._canvas.psycho.init_display(): monitor = %s" % monitor
 			
-	experiment.window = visual.Window( [experiment.width, experiment.height], waitBlanking = waitblanking, fullscr = experiment.fullscreen, monitor = monitor, units = "pix", winType = "pyglet")
+	experiment.window = visual.Window( [experiment.width, experiment.height], \
+		waitBlanking=waitblanking, fullscr=experiment.fullscreen, \
+		monitor=monitor, units="pix", winType=wintype, \
+		rgb=experiment.background)
 	experiment.window.setMouseVisible(False)
 	experiment.clock = core.Clock()	
 	experiment._time_func = _time

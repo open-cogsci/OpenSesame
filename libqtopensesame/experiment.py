@@ -17,7 +17,6 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 
 import libopensesame.experiment
 import libopensesame.plugins
-from libqtopensesame import notification_dialog_ui
 from PyQt4 import QtCore, QtGui
 import os.path
 
@@ -194,6 +193,48 @@ class experiment(libopensesame.experiment.experiment):
 				self.experiment.ui.tabwidget.setTabText(i, to_name)
 
 		self.main_window.refresh()
+		
+	def check_name(self, name):
+	
+		"""
+		Checks whether a given name is allowed. Reasons for not being allowed
+		are invalid characters or match with an existing name.
+		
+		Arguments:
+		name -- the name to check
+		
+		Returns:
+		True if the name is allowed, False otherwise
+		"""
+		
+		if name.strip() == "":
+			return "Empty names are not allowed"
+		if name.lower() in [item.lower() for item in self.items.keys()]:
+			return "An item with that name already exists"	
+		if name != self.sanitize(name, strict=True):
+			return "Name contains special characters. Only alphanumeric characters and underscores are allowed."
+		return True
+		
+	def delete(self, item_name, item_parent=None, index=None):
+	
+		"""
+		Delete an item
+		
+		Arguments:
+		item_name -- the name of the item to be deleted
+		
+		Keywords arguments:
+		item_parent -- the parent item (default=None)
+		index -- the index of the item in the parent (default=None)
+		"""
+		
+		if self.start == item_name:
+			self.notify("You cannot delete the entry point of the experiment. In order to change the entry point item, please open the General Tab and select a different item.")
+			return		
+		for item in self.items:
+			self.items[item].delete(item_name, item_parent, index)
+		self.main_window.refresh()
+		self.main_window.close_item_tab(item_name)				
 
 	def unique_name(self, name):
 
@@ -244,16 +285,16 @@ class experiment(libopensesame.experiment.experiment):
 
 		return label
 
-	def item_combobox(self, select, exclude = [], c = None):
+	def item_combobox(self, select=None, exclude = [], c = None):
 
 		"""
 		Returns a combobox with all the items of the experiment
 
-		Arguments:
-		select -- the item to be selected initially
-
 		Keyword arguments:
-		exclude -- a list of items that should not be included in the list (default = [])
+		select -- the item to be selected initially	or None to select nothing
+				  (default=None)
+		exclude -- a list of items that should not be included in the list
+				   (default=[])
 		c -- a QComboBox that should be cleared and re-filled (default = None)
 
 		Returns:
@@ -266,8 +307,14 @@ class experiment(libopensesame.experiment.experiment):
 			c.clear()
 
 		item_dict = {}
-
 		i = 0
+		
+		if select != None and select not in self.experiment.items:
+			c.addItem("[Please select an item]")
+			c.setCurrentIndex(0)
+			c.setItemIcon(i, self.icon("down"))
+			i += 1
+
 		for item in self.experiment.items:
 			if item not in exclude:
 				item_type = self.experiment.items[item].item_type
@@ -282,6 +329,7 @@ class experiment(libopensesame.experiment.experiment):
 				if self.experiment.items[item].name == select:
 					c.setCurrentIndex(i)
 				i += 1
+				
 		return c
 
 	def item_type_combobox(self, core_items = True, plugins = True, c = None, select = None):
@@ -349,13 +397,86 @@ class experiment(libopensesame.experiment.experiment):
 		Arguments:
 		message -- the message to be shown
 		"""
-
+		
+		from libqtopensesame import notification_dialog_ui
+		
 		a = QtGui.QDialog(self.main_window)
 		a.ui = notification_dialog_ui.Ui_Dialog()
 		a.ui.setupUi(a)
 		a.ui.textedit_notification.setHtml(message)
 		a.adjustSize()
 		a.show()
+		
+	def text_input(self, title, message=None, content=""):
+	
+		"""
+		Pops up a text input dialog
+		
+		Arguments:
+		title -- the title for the dialog
+		
+		Keywords arguments:
+		message -- a text message (default=None)
+		contents -- the initial contents (default="")
+		
+		Returns:
+		A string of text or None if cancel was pressed
+		"""
+		
+		from libqtopensesame import text_input_dialog_ui		
+		
+		a = QtGui.QDialog(self.main_window)
+		a.ui = text_input_dialog_ui.Ui_Dialog()
+		a.ui.setupUi(a)
+		if message != None:
+			a.ui.label_message.setText(message)
+		a.ui.textedit_input.setText(content)
+		a.ui.textedit_input.setFont(self.monospace())
+		a.adjustSize()
+		if a.exec_() == QtGui.QDialog.Accepted:
+			return self.usanitize(a.ui.textedit_input.toPlainText())					
+		return None
+		
+	def colorpicker(self, title="Pick a color", initial_color=None):
+	
+		"""
+		Pops up a colorpicker dialog and returns a color in hexadecimal RGB
+		notation
+				
+		Keywords arguments:
+		title -- title of the dialog (default='Pick a color')
+		initial_color -- the color to start with (default=None)
+		
+		Returns:
+		A color string or None if the dialog was cancelled
+		"""
+		
+		try:
+			self.color_check(initial_color)
+		except:
+			initial_color = "white"
+		color = QtGui.QColorDialog.getColor(QtGui.QColor(initial_color), \
+			self.main_window, title)
+		if color.isValid():
+			return self.sanitize(color.name())
+		return None
+		
+	def monospace(self):
+	
+		"""
+		Determines the OS specific monospace font
+		
+		Returns:
+		A QFont
+		"""
+		
+		if os.name == "posix":
+			font_family = "mono"
+		else:
+			font_family = "courier"
+		font = QtGui.QFont(font_family)				
+		font.setFixedPitch(True)
+		return font
 
 	def clear_widget(self, widget):
 

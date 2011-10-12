@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'resources/gabor_dialog.ui'
 #
-# Created: Wed Jun 15 14:15:00 2011
+# Created: Tue Oct 11 17:30:35 2011
 #      by: PyQt4 UI code generator 4.8.3
 #
 # WARNING! All changes made in this file will be lost!
@@ -17,7 +17,7 @@ except AttributeError:
 class Ui_Dialog(object):
     def setupUi(self, Dialog):
         Dialog.setObjectName(_fromUtf8("Dialog"))
-        Dialog.resize(450, 479)
+        Dialog.resize(476, 510)
         self.verticalLayout = QtGui.QVBoxLayout(Dialog)
         self.verticalLayout.setObjectName(_fromUtf8("verticalLayout"))
         self.widget_2 = QtGui.QWidget(Dialog)
@@ -58,6 +58,7 @@ class Ui_Dialog(object):
         self.widget.setFont(font)
         self.widget.setObjectName(_fromUtf8("widget"))
         self.formLayout = QtGui.QFormLayout(self.widget)
+        self.formLayout.setFieldGrowthPolicy(QtGui.QFormLayout.AllNonFixedFieldsGrow)
         self.formLayout.setMargin(0)
         self.formLayout.setVerticalSpacing(12)
         self.formLayout.setObjectName(_fromUtf8("formLayout"))
@@ -125,6 +126,9 @@ class Ui_Dialog(object):
         self.edit_color2.setObjectName(_fromUtf8("edit_color2"))
         self.formLayout.setWidget(7, QtGui.QFormLayout.FieldRole, self.edit_color2)
         self.label_11 = QtGui.QLabel(self.widget)
+        font = QtGui.QFont()
+        font.setPointSize(9)
+        self.label_11.setFont(font)
         self.label_11.setObjectName(_fromUtf8("label_11"))
         self.formLayout.setWidget(8, QtGui.QFormLayout.LabelRole, self.label_11)
         self.combobox_bgmode = QtGui.QComboBox(self.widget)
@@ -133,6 +137,20 @@ class Ui_Dialog(object):
         self.combobox_bgmode.addItem(_fromUtf8(""))
         self.formLayout.setWidget(8, QtGui.QFormLayout.FieldRole, self.combobox_bgmode)
         self.verticalLayout.addWidget(self.widget)
+        self.widget_3 = QtGui.QWidget(Dialog)
+        self.widget_3.setObjectName(_fromUtf8("widget_3"))
+        self.verticalLayout_2 = QtGui.QVBoxLayout(self.widget_3)
+        self.verticalLayout_2.setMargin(0)
+        self.verticalLayout_2.setObjectName(_fromUtf8("verticalLayout_2"))
+        self.label_12 = QtGui.QLabel(self.widget_3)
+        font = QtGui.QFont()
+        font.setPointSize(9)
+        font.setItalic(True)
+        self.label_12.setFont(font)
+        self.label_12.setWordWrap(True)
+        self.label_12.setObjectName(_fromUtf8("label_12"))
+        self.verticalLayout_2.addWidget(self.label_12)
+        self.verticalLayout.addWidget(self.widget_3)
         self.buttonBox = QtGui.QDialogButtonBox(Dialog)
         self.buttonBox.setOrientation(QtCore.Qt.Horizontal)
         self.buttonBox.setStandardButtons(QtGui.QDialogButtonBox.Cancel|QtGui.QDialogButtonBox.Ok)
@@ -189,19 +207,24 @@ class Ui_Dialog(object):
         self.label_10.setText(QtGui.QApplication.translate("Dialog", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
-"</style></head><body style=\" font-family:\'Ubuntu\'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Color 1</p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-style:italic;\">E.g., \'white\' or \'#FFFFFF\'</span></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
+"</style></head><body style=\" font-family:\'Ubuntu\'; font-size:8pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt;\">Color 1</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt; font-style:italic;\">E.g., \'white\' or \'#FFFFFF\'</span></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
         self.edit_color1.setText(QtGui.QApplication.translate("Dialog", "white", None, QtGui.QApplication.UnicodeUTF8))
         self.label_9.setText(QtGui.QApplication.translate("Dialog", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:\'Ubuntu\'; font-size:8pt; font-weight:400; font-style:normal;\">\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt;\">Color 2</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt;\">Color 2 *</span></p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt; font-style:italic;\">E.g., \'black\' or \'#000000\'</span></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
         self.edit_color2.setText(QtGui.QApplication.translate("Dialog", "black", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_11.setText(QtGui.QApplication.translate("Dialog", "Background color", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_11.setText(QtGui.QApplication.translate("Dialog", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"</style></head><body style=\" font-family:\'Ubuntu\'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Background color *</p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
         self.combobox_bgmode.setItemText(0, QtGui.QApplication.translate("Dialog", "Color average", None, QtGui.QApplication.UnicodeUTF8))
         self.combobox_bgmode.setItemText(1, QtGui.QApplication.translate("Dialog", "Color 2", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_12.setText(QtGui.QApplication.translate("Dialog", "* Has no effect in psycho back-end", None, QtGui.QApplication.UnicodeUTF8))
 
 import icons_rc

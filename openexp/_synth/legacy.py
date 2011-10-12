@@ -24,9 +24,9 @@ import random
 
 class legacy(openexp._sampler.legacy.legacy):
 
-	"""
-	The synth generates a sound
-	"""
+	"""The synth generates a sound"""
+	
+	settings = None
 
 	def __init__(self, experiment, osc = "sine", freq = 440, length = 100, attack = 0, decay = 5):
 	
@@ -66,12 +66,12 @@ class legacy(openexp._sampler.legacy.legacy):
 	
 		l = []
 
-		attack = attack * openexp.sampler.freq / 1000
-		decay = decay * openexp.sampler.freq / 1000
+		attack = attack * self.experiment.get("sound_freq") / 1000
+		decay = decay * self.experiment.get("sound_freq") / 1000
 		amp = 32767 / 2
-		sps = openexp.sampler.freq # samples per second
+		sps = self.experiment.get("sound_freq") # samples per second
 		cps = float(sps / freq) # cycles per sample
-		slen = openexp.sampler.freq * length / 1000 # nr of samples
+		slen = self.experiment.get("sound_freq") * length / 1000 # nr of samples
 	
 		for i in range(slen):
 			p = float((i % cps)) / cps * 2 * math.pi

@@ -27,6 +27,7 @@ class feedback(sketchpad.sketchpad):
 		"""
 
 		self.description = "Provides feedback to the participant"		
+		self.reset_variables = "yes"		
 		sketchpad.sketchpad.__init__(self, name, experiment, string)				
 		self.item_type = "feedback"			
 		
@@ -51,10 +52,15 @@ class feedback(sketchpad.sketchpad):
 		except exceptions.script_error as e:
 			raise exceptions.runtime_error("Failed to create feedback item '%s'" % self.name)
 			
-		# Reset the bookkeeping
-		self.experiment.total_responses = 0
-		self.experiment.total_correct = 0
-		self.experiment.total_response_time = 0
+		if self.reset_variables == "yes":
+			# Reset the bookkeeping
+			self.experiment.total_responses = 0
+			self.experiment.total_correct = 0
+			self.experiment.total_response_time = 0
+			self.experiment.avg_rt = 0
+			self.experiment.average_response_time = 0
+			self.experiment.accuracy = 0
+			self.experiment.acc = 0
 			
 		return sketchpad.sketchpad.run(self)			
 						

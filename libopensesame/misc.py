@@ -24,11 +24,11 @@ import sys
 import optparse
 import re
 import libqtopensesame
-import openexp.experiment
+import libopensesame.experiment
 from Tkinter import *
 
-version = "0.24"
-codename = "Cody Crick"
+version = "0.25-pre7"
+codename = "Dashy Darwin"
 
 def change_working_dir():
 
@@ -185,5 +185,12 @@ def resource(name):
 	The full path to the resource
 	"""
 
-	return openexp.experiment.experiment.resource(openexp.experiment.experiment(), name)
+	path = os.path.join("resources", name)		
+	if os.path.exists(path):
+		return os.path.join("resources", name)				
+	if os.name == "posix":
+		path = "/usr/share/opensesame/resources/%s" % name
+		if os.path.exists(path):
+			return path				
+	return None
 

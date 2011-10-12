@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'resources/loop_wizard_dialog.ui'
 #
-# Created: Wed Jun 15 14:15:00 2011
+# Created: Tue Oct 11 17:30:35 2011
 #      by: PyQt4 UI code generator 4.8.3
 #
 # WARNING! All changes made in this file will be lost!

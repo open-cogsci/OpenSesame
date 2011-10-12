@@ -24,15 +24,19 @@ from PyQt4 import QtGui, QtCore
 
 class text_display(item.item, generic_response.generic_response):
 
-	"""
-	This class handles the basic functionality of the
-	item. It does not deal with GUI stuff.	
-	"""
+	"""Basic text display plug-in"""
 
-	def __init__(self, name, experiment, string = None):
+	def __init__(self, name, experiment, string=None):
 	
 		"""
 		Constructor
+
+		Arguments:
+		name -- name of the item
+		experiment -- an experiment instance
+
+		Keyword arguments:
+		string -- a definition string (default=None)
 		"""
 		
 		self.item_type = "text_display"
@@ -54,8 +58,10 @@ class text_display(item.item, generic_response.generic_response):
 	def prepare(self):
 	
 		"""
-		Prepare the item. In this case this means drawing a fixation
-		dot to an offline canvas.
+		Prepare a canvas
+
+		Returns:
+		True
 		"""
 		
 		# Pass the word on to the parent
@@ -110,8 +116,10 @@ class text_display(item.item, generic_response.generic_response):
 	def run(self):
 	
 		"""
-		Run the item. In this case this means putting the offline canvas
-		to the display and waiting for the specified duration.
+		Show the canvas
+
+		Returns:
+		True
 		"""
 		
 		# Show the canvas
@@ -126,10 +134,19 @@ class text_display(item.item, generic_response.generic_response):
 					
 class qttext_display(text_display, qtplugin.qtplugin):
 
+	"""Plug-in GUI"""
+
 	def __init__(self, name, experiment, string = None):
 	
 		"""
-		Initialize the GUI part of the plugin
+		Constructor
+
+		Arguments:
+		name -- name of the item
+		experiment -- an experiment instance
+
+		Keyword arguments:
+		string -- a definition string (default=None)
 		"""
 		
 		# Pass the word on to the parents		
@@ -138,9 +155,7 @@ class qttext_display(text_display, qtplugin.qtplugin):
 		
 	def init_edit_widget(self):
 	
-		"""
-		Build the edit widget
-		"""
+		"""Build the controls"""
 		
 		self.lock = True
 		
@@ -148,8 +163,8 @@ class qttext_display(text_display, qtplugin.qtplugin):
 		qtplugin.qtplugin.init_edit_widget(self, False)
 		
 		self.add_line_edit_control("duration", "Duration", tooltip = "Expecting a value in milliseconds, 'keypress' or 'mouseclick'")
-		self.add_line_edit_control("foreground", "Foreground", tooltip = "Expecting a colorname (e.g., 'blue') or an HTML color (e.g., '#0000FF')")
-		self.add_line_edit_control("background", "Background", tooltip = "Expecting a colorname (e.g., 'blue') or an HTML color (e.g., '#0000FF')")		
+		self.add_color_edit_control("foreground", "Foreground", tooltip = "Expecting a colorname (e.g., 'blue') or an HTML color (e.g., '#0000FF')")
+		self.add_color_edit_control("background", "Background", tooltip = "Expecting a colorname (e.g., 'blue') or an HTML color (e.g., '#0000FF')")		
 		self.add_combobox_control("font_family", "Font family", ["mono", "sans", "serif"], tooltip = "The font style")
 		self.add_spinbox_control("font_size", "Font size", 1, 512, suffix = "pt", tooltip = "The font size")
 		self.add_spinbox_control("maxchar", "Wrap line after", 1, 1000, suffix = " characters", tooltip = "Maximum number of characters per line")
@@ -162,25 +177,17 @@ class qttext_display(text_display, qtplugin.qtplugin):
 		
 	def apply_edit_changes(self):
 	
-		"""
-		Apply changes to the edit widget
-		"""
+		"""Apply the controls"""
 		
 		if not qtplugin.qtplugin.apply_edit_changes(self, False) or self.lock:
-			return		
-			
+			return					
 		self.experiment.main_window.refresh(self.name)		
 
 	def edit_widget(self):
 	
-		"""
-		Refresh and return the edit widget
-		"""
+		"""Update the controls"""
 		
 		self.lock = True
-
-		qtplugin.qtplugin.edit_widget(self)
-		
-		self.lock = False
-		
+		qtplugin.qtplugin.edit_widget(self)		
+		self.lock = False		
 		return self._edit_widget

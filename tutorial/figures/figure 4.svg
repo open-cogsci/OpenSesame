@@ -1,0 +1,924 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="744.09448819"
+   height="1052.3622047"
+   id="svg2"
+   version="1.1"
+   inkscape:version="0.48.1 r9760"
+   sodipodi:docname="figure 3.svg">
+  <defs
+     id="defs4">
+    <marker
+       inkscape:stockid="Arrow1Lend"
+       orient="auto"
+       refY="0.0"
+       refX="0.0"
+       id="Arrow1Lend"
+       style="overflow:visible;">
+      <path
+         id="path4312"
+         d="M 0.0,0.0 L 5.0,-5.0 L -12.5,0.0 L 5.0,5.0 L 0.0,0.0 z "
+         style="fill-rule:evenodd;stroke:#000000;stroke-width:1.0pt;marker-start:none;"
+         transform="scale(0.8) rotate(180) translate(12.5,0)" />
+    </marker>
+    <marker
+       inkscape:stockid="Arrow1Lend"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="Arrow1Lend-9"
+       style="overflow:visible">
+      <path
+         inkscape:connector-curvature="0"
+         id="path4312-6"
+         d="M 0,0 5,-5 -12.5,0 5,5 0,0 z"
+         style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt;marker-start:none"
+         transform="matrix(-0.8,0,0,-0.8,-10,0)" />
+    </marker>
+    <marker
+       inkscape:stockid="Arrow1Lend"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="Arrow1Lend-1"
+       style="overflow:visible">
+      <path
+         inkscape:connector-curvature="0"
+         id="path4312-3"
+         d="M 0,0 5,-5 -12.5,0 5,5 0,0 z"
+         style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt;marker-start:none"
+         transform="matrix(-0.8,0,0,-0.8,-10,0)" />
+    </marker>
+    <marker
+       inkscape:stockid="Arrow1Lend"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="Arrow1Lend-7"
+       style="overflow:visible">
+      <path
+         inkscape:connector-curvature="0"
+         id="path4312-9"
+         d="M 0,0 5,-5 -12.5,0 5,5 0,0 z"
+         style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt;marker-start:none"
+         transform="matrix(-0.8,0,0,-0.8,-10,0)" />
+    </marker>
+    <marker
+       inkscape:stockid="Arrow1Lend"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="Arrow1Lend-3"
+       style="overflow:visible">
+      <path
+         inkscape:connector-curvature="0"
+         id="path4312-8"
+         d="M 0,0 5,-5 -12.5,0 5,5 0,0 z"
+         style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt;marker-start:none"
+         transform="matrix(-0.8,0,0,-0.8,-10,0)" />
+    </marker>
+    <marker
+       inkscape:stockid="Arrow1Lend"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="Arrow1Lend-4"
+       style="overflow:visible">
+      <path
+         inkscape:connector-curvature="0"
+         id="path4312-83"
+         d="M 0,0 5,-5 -12.5,0 5,5 0,0 z"
+         style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt;marker-start:none"
+         transform="matrix(-0.8,0,0,-0.8,-10,0)" />
+    </marker>
+    <marker
+       inkscape:stockid="Arrow1Lend"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="Arrow1Lend-42"
+       style="overflow:visible">
+      <path
+         inkscape:connector-curvature="0"
+         id="path4312-37"
+         d="M 0,0 5,-5 -12.5,0 5,5 0,0 z"
+         style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt;marker-start:none"
+         transform="matrix(-0.8,0,0,-0.8,-10,0)" />
+    </marker>
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="1"
+     inkscape:pageshadow="2"
+     inkscape:zoom="1.32"
+     inkscape:cx="358.40543"
+     inkscape:cy="850.81883"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     inkscape:window-width="1366"
+     inkscape:window-height="712"
+     inkscape:window-x="0"
+     inkscape:window-y="25"
+     inkscape:window-maximized="1">
+    <inkscape:grid
+       type="xygrid"
+       id="grid2985"
+       empspacing="4"
+       visible="true"
+       enabled="true"
+       snapvisiblegridlinesonly="true"
+       spacingx="10px"
+       spacingy="10px" />
+  </sodipodi:namedview>
+  <metadata
+     id="metadata7">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <rect
+       style="fill:#eeeeec;stroke:#2e3436;stroke-width:2;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       id="rect4894-5"
+       width="160"
+       height="50"
+       x="308.11035"
+       y="25.1073"
+       rx="10.551724"
+       inkscape:export-filename="/home/sebastiaan/git/opensesame/tutorial/figure 3.png"
+       inkscape:export-xdpi="300.07928"
+       inkscape:export-ydpi="300.07928" />
+    <g
+       id="g3166"
+       transform="translate(0,-6)"
+       inkscape:export-filename="/home/sebastiaan/git/opensesame/tutorial/figure 3.png"
+       inkscape:export-xdpi="300.07928"
+       inkscape:export-ydpi="300.07928">
+      <text
+         inkscape:export-ydpi="149.96078"
+         inkscape:export-xdpi="149.96078"
+         sodipodi:linespacing="125%"
+         id="text2987"
+         y="52.362183"
+         x="340"
+         style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+         xml:space="preserve"><tspan
+           id="tspan3006"
+           y="52.362183"
+           x="340"
+           sodipodi:role="line"><tspan
+             style="font-weight:bold"
+             id="tspan3102">General properties</tspan></tspan><tspan
+           y="67.362183"
+           x="340"
+           sodipodi:role="line"
+           id="tspan3100">Tutorial 2: Gaze cuing</tspan></text>
+      <image
+         inkscape:export-ydpi="149.96078"
+         inkscape:export-xdpi="149.96078"
+         inkscape:export-filename="/home/sebastiaan/Graduates/opensesame/tutorial2/text2987.png"
+         width="16"
+         height="16"
+         xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABHNCSVQICAgIfAhkiAAAAt9JREFU OI0lks9uG1Uchb87c8djexzbGadJnNKURrSki0pIiC0LuucN6HvwFDwEG3Yg9iCgiE2q7lpaRSRN qjTNP8d/Znxn7tx7fyy8OEff6iw+HfX9T69/6A7y76IoGqFAsYr3jrpcAJBma8SxRgBhVSGEm+Vs 8qOuot6z2cytoxSxAqVWK8vFlMv3RwBs3tujuzYEARHBCyCSp1HvmZ5b8kgFNI7Z5ANpO6M33CBC 6N/ZASBCiMVTTK+pq5Is38GhVe3ItXWBVCuK6QXGVJiyZHl7zt44597eGgDvLxccHZ9gQ4xEMXJ7 QTrcwTpBOx/QkWKYb6B0SnAN33zeYxSX/Prn3wjw7ddf8GD7Pr+/LYh0wqDfo3AB54XI+RWouIVS 8HAz5enjnDdXDZfdfa66+7y99jx9nPNwMyVSoOIU5wXnA7q2FruYU14t0ZHiyf4I8Q1VSPhkewgI VVgivuHJVsSr01vmsyk+7iJpH21MSXF+TKedkq8PGfcTZouSSCnSdnclUQyzRcm4nxBEmE6nmOqC 3vgzNCohW99Ga4UohWssPk6YF4ZrqQBIIkOQHq6xiIppreVEHQGVEOlEs3t3i93tEUoJh6cfabdi fF1wc3bE9dl/hLqk04o5PP2IUsLu9ojdu1voRBMZG5gYsJLgg+LFSYFZLukP+hhbU1vLcNDHGMPB yQIfFFYSJgaMDejGeYoKltMJvi5ZePjl+Sse7O7waDwA4F5W8/NfxxxOOkhcUFohtHMa59HWBWIF HQkAtLIhr4uUdy/esDNaHem3gwXL7i6trENdVSAB23isC2jrPErBen+DrqpIkgTdalMUm/zz4QwQ xuNHDNb6ZLaiaRqW0mY6b7DOo83tuQn9O52zEBj1EhojlLaghacSjQLOFx67KMhaMYlOuClqattQ z6+Mvv33j5fZp199adKsPb0UFAqlIEtj7m90ADi5nlDWnomAIIDC1WVVvjt4+T9eZoYmm6vCLAAA AABJRU5ErkJggg== "
+         id="image2999"
+         x="320"
+         y="42.362183" />
+    </g>
+    <rect
+       style="fill:#eeeeec;stroke:#2e3436;stroke-width:2;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       id="rect4894"
+       width="600"
+       height="100"
+       x="88.110352"
+       y="92.362183"
+       rx="10.551724"
+       inkscape:export-filename="/home/sebastiaan/git/opensesame/tutorial/figure 3.png"
+       inkscape:export-xdpi="300.07928"
+       inkscape:export-ydpi="300.07928" />
+    <rect
+       style="fill:#eeeeec;stroke:#2e3436;stroke-width:2;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       id="rect4894-6-1"
+       width="729.99969"
+       height="100.00012"
+       x="23.110504"
+       y="372.36218"
+       rx="10.551724"
+       inkscape:export-filename="/home/sebastiaan/git/opensesame/tutorial/figure 3.png"
+       inkscape:export-xdpi="300.07928"
+       inkscape:export-ydpi="300.07928" />
+    <rect
+       style="fill:#eeeeec;stroke:#2e3436;stroke-width:2;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       id="rect4894-6"
+       width="380"
+       height="100"
+       x="198.11035"
+       y="232.36218"
+       rx="10.551724"
+       inkscape:export-filename="/home/sebastiaan/git/opensesame/tutorial/figure 3.png"
+       inkscape:export-xdpi="300.07928"
+       inkscape:export-ydpi="300.07928" />
+    <image
+       y="102.36218"
+       x="98.110352"
+       id="image3016"
+       xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABHNCSVQICAgIfAhkiAAAApFJREFU OI2Vk71rU1EYh597c0IsMWn0RoMfDSGoLZoURYcINX6L1slB/wEXv8YWHMTBwUkXwSgKgv9BBaUO BUuFWoygJNHGpNRqEAnWUhLS6Dnn3uNQjUgXfcf35fe831Y+nz+qtb7heV4//2G2bReEEEPWxMRE IZFIpGOxGLZt/5PY8zzq9Tpzc3NFIaVMO46DlPJX2PD0TY7i3Dhf5mcB2BBNkk4c4PjOC4AFgOM4 VCqVtHBdF9d1Afja+MTd0YssuFWiPX42J5crWlqc5unbAi/Lo5w7cZt14Ti/dUJrjTEGMORGLyEj H+jp6WJjMI1tieWSw5oup8i32gdyo5e4emYEsNBaYyulMMbwOJ9j0ZohHBMoaYgHMyRDWZKhLPFg BiUN4Zhg0ZrhcT6HMQalFLbruhhjmK5PEozaSOkhpUcinGFLJMuWSJZEONPxB6M20/VJjDF/t/B5 YYbVIfje9jAebFy9g1AgCkDzxzztlodlAzZ8XpjBGLPcwm+A5RNIBRF6uTlY7ogBQoEoNwfLROhF KrB8YiUg6exmqelRa5a5Mza0Yvd3xoaoNcssNT2Szu6VgP54lsa8xjWGyY8jPJq63xE/mrrP5McR XGNozGv649mVgIG+U6TWH6JR19gBiwfj1yjOTlGcneLB+DXsgEWjrkmtP8RA36kOoDNEJRXnj13n 1pPLvK49Y1XI5srDs8u3ucblW81j16aDnD92HSUVwB+AUgohBH6riyun7/Hi/RjP3z3hXesVANvX DrJv4CR7e4/Qbrc72bXWCCFEpVAobEulUvj9flqtFnuS+8lsO4zP5wPAdV201rRaLQCUUpRKJYQQ FREMBoer1eqNUqm09Z9e8ZcFAoFqd3f38E/azXsEysNVdQAAAABJRU5ErkJggg== "
+       height="16"
+       width="16"
+       inkscape:export-filename="/home/sebastiaan/git/opensesame/tutorial/figure 3.png"
+       inkscape:export-xdpi="300.07928"
+       inkscape:export-ydpi="300.07928" />
+    <text
+       xml:space="preserve"
+       style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+       x="118.11035"
+       y="112.36218"
+       id="text2987-5"
+       sodipodi:linespacing="125%"
+       inkscape:export-filename="/home/sebastiaan/git/opensesame/tutorial/figure 3.png"
+       inkscape:export-xdpi="300.07928"
+       inkscape:export-ydpi="300.07928"><tspan
+         sodipodi:role="line"
+         x="118.11035"
+         y="112.36218"
+         id="tspan3006-4"
+         style="font-weight:bold">Sequence</tspan><tspan
+         sodipodi:role="line"
+         x="118.11035"
+         y="127.36218"
+         id="tspan3064">experiment</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+       x="118.11035"
+       y="166.36218"
+       id="text3077"
+       sodipodi:linespacing="125%"
+       inkscape:export-filename="/home/sebastiaan/git/opensesame/tutorial/figure 3.png"
+       inkscape:export-xdpi="300.07928"
+       inkscape:export-ydpi="300.07928"><tspan
+         sodipodi:role="line"
+         id="tspan3079"
+         x="118.11035"
+         y="166.36218"
+         style="font-weight:bold">Text_display</tspan><tspan
+         sodipodi:role="line"
+         x="118.11035"
+         y="181.36218"
+         id="tspan3081">instructions</tspan></text>
+    <image
+       y="156.36218"
+       x="208.11035"
+       id="image3091"
+       xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABHNCSVQICAgIfAhkiAAAAXdJREFU OI2dUb1KA0EYnOwtxIBwiIX5PUEtTZk2Kax8Cx9BQSsLsbDUZ8gTCHbW1wUL9SxEBUk2HjktRCKK 3H7frkXImT8TdGCL+Zadb2Y2dXpxsqOeb49ePzoZANj09mGMwSwIIQIp5W7q+Gzrc34hnSkVVuAI BxulbVhrpz4mIrTbbURRdCNf3p4y+dV1hO8BjGXorEYcxxBCTBXJ5/NQSpUlEaOrIxjLAACtNXzf nxmhVquBmSGZGMQ6uejbr1aryUwpBc/zEu77Pqy1ICJIIk62DwqM9jCJa617DoxhjEIpNZVba3sR iGmig2KxmMzCMEShUEh4q9X6icBkhv79LxGSDtiORwjDcCofcDDcQX9TLpdLZlEUIZvN/hKB//8L Ezvoo9FoDPFmszlZgJhBmiBkCgDgOA4qlcqY4Ci01iAiiEV36Su870LHBGMY1tqZJ45jBEEAKeW9 XFsuH949Xh1cnnfmAKB+XQcRzXSQTqcfXNfd+waT7zVut+ET2wAAAABJRU5ErkJggg== "
+       height="16"
+       width="16"
+       inkscape:export-filename="/home/sebastiaan/git/opensesame/tutorial/figure 3.png"
+       inkscape:export-xdpi="300.07928"
+       inkscape:export-ydpi="300.07928" />
+    <text
+       xml:space="preserve"
+       style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+       x="228.11035"
+       y="166.36218"
+       id="text3077-8"
+       sodipodi:linespacing="125%"
+       inkscape:export-filename="/home/sebastiaan/git/opensesame/tutorial/figure 3.png"
+       inkscape:export-xdpi="300.07928"
+       inkscape:export-ydpi="300.07928"><tspan
+         sodipodi:role="line"
+         id="tspan3079-6"
+         x="228.11035"
+         y="166.36218"
+         style="font-weight:bold">Loop</tspan><tspan
+         sodipodi:role="line"
+         x="228.11035"
+         y="181.36218"
+         id="tspan3081-7">practice_loop</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+       x="328.11035"
+       y="166.36218"
+       id="text3077-3"
+       sodipodi:linespacing="125%"
+       inkscape:export-filename="/home/sebastiaan/git/opensesame/tutorial/figure 3.png"
+       inkscape:export-xdpi="300.07928"
+       inkscape:export-ydpi="300.07928"><tspan
+         sodipodi:role="line"
+         id="tspan3079-1"
+         x="328.11035"
+         y="166.36218"
+         style="font-weight:bold">Text_display</tspan><tspan
+         sodipodi:role="line"
+         x="328.11035"
+         y="181.36218"
+         id="tspan3081-9">end_of_practice</tspan></text>
+    <image
+       y="156.36218"
+       x="428.11035"
+       id="image3091-1"
+       xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABHNCSVQICAgIfAhkiAAAAXdJREFU OI2dUb1KA0EYnOwtxIBwiIX5PUEtTZk2Kax8Cx9BQSsLsbDUZ8gTCHbW1wUL9SxEBUk2HjktRCKK 3H7frkXImT8TdGCL+Zadb2Y2dXpxsqOeb49ePzoZANj09mGMwSwIIQIp5W7q+Gzrc34hnSkVVuAI BxulbVhrpz4mIrTbbURRdCNf3p4y+dV1hO8BjGXorEYcxxBCTBXJ5/NQSpUlEaOrIxjLAACtNXzf nxmhVquBmSGZGMQ6uejbr1aryUwpBc/zEu77Pqy1ICJIIk62DwqM9jCJa617DoxhjEIpNZVba3sR iGmig2KxmMzCMEShUEh4q9X6icBkhv79LxGSDtiORwjDcCofcDDcQX9TLpdLZlEUIZvN/hKB//8L Ezvoo9FoDPFmszlZgJhBmiBkCgDgOA4qlcqY4Ci01iAiiEV36Su870LHBGMY1tqZJ45jBEEAKeW9 XFsuH949Xh1cnnfmAKB+XQcRzXSQTqcfXNfd+waT7zVut+ET2wAAAABJRU5ErkJggg== "
+       height="16"
+       width="16"
+       inkscape:export-filename="/home/sebastiaan/git/opensesame/tutorial/figure 3.png"
+       inkscape:export-xdpi="300.07928"
+       inkscape:export-ydpi="300.07928" />
+    <text
+       xml:space="preserve"
+       style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+       x="448.11035"
+       y="166.36218"
+       id="text3077-8-09"
+       sodipodi:linespacing="125%"
+       inkscape:export-filename="/home/sebastiaan/git/opensesame/tutorial/figure 3.png"
+       inkscape:export-xdpi="300.07928"
+       inkscape:export-ydpi="300.07928"><tspan
+         sodipodi:role="line"
+         id="tspan3079-6-4"
+         x="448.11035"
+         y="166.36218"
+         style="font-weight:bold">Loop</tspan><tspan
+         sodipodi:role="line"
+         x="448.11035"
+         y="181.36218"
+         id="tspan3081-7-5">experimental_loop</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+       x="578.11035"
+       y="166.36218"
+       id="text3077-3-0"
+       sodipodi:linespacing="125%"
+       inkscape:export-filename="/home/sebastiaan/git/opensesame/tutorial/figure 3.png"
+       inkscape:export-xdpi="300.07928"
+       inkscape:export-ydpi="300.07928"><tspan
+         sodipodi:role="line"
+         id="tspan3079-1-0"
+         x="578.11035"
+         y="166.36218"
+         style="font-weight:bold">Text_display</tspan><tspan
+         sodipodi:role="line"
+         x="578.11035"
+         y="181.36218"
+         id="tspan3081-9-3">end_of_experiment</tspan></text>
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-end:url(#Arrow1Lend)"
+       d="m 98.110352,142.36218 579.999998,0"
+       id="path4302-8"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cc"
+       inkscape:export-filename="/home/sebastiaan/git/opensesame/tutorial/figure 3.png"
+       inkscape:export-xdpi="300.07928"
+       inkscape:export-ydpi="300.07928" />
+    <text
+       xml:space="preserve"
+       style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:end;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:end;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+       x="678.11035"
+       y="122.36218"
+       id="text4937"
+       sodipodi:linespacing="125%"
+       inkscape:export-filename="/home/sebastiaan/git/opensesame/tutorial/figure 3.png"
+       inkscape:export-xdpi="300.07928"
+       inkscape:export-ydpi="300.07928"><tspan
+         sodipodi:role="line"
+         x="678.11035"
+         y="122.36218"
+         id="tspan4941"
+         style="font-style:italic;text-align:end;text-anchor:end">The highest level of the experiment</tspan></text>
+    <image
+       width="16"
+       height="16"
+       xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABHNCSVQICAgIfAhkiAAAAgdJREFU OI2VkkFoE0EUhv+d7CbFFFPcSqqhuFEMKIkH68FTEcGDFq968uDBu4IFwZ7FQ0+VnkSkIAiFeJWK IkRtAim21EXJrmaTJkTSJJWibd2dN7seUgNbN1B/mMv73/8Nb+ZJxWLxEhFNu657Bv8hxtiqLMt3 pVwut6ppWiYej4Mxtq+w67poNpuoVCqfZMdxMqqqwnGcwGYhXNx/tAAAeHj7cq+uqioMw8jIQggI IfretrBooLG+CUkCdmyOgbC8C+7mGBHB87zAs/lzB6/zJZw7nQDnhGpjw+cTERjnvC/g+ctlTIyf QkobBpFAudbx+ZxzMCFEYNiqd1CpdzA+dhzHjgxBCIFyre3rEUJA/jvCXj3JFnDj6hgAD6MjXcC3 tZavl4iCAR+WLQwdHEBKOwzP8xBWQhhRB2HV2yASCIVYf4DDCU+zi5i4kEZu6WuvrsgSftsOqt83 kEyo/QHZVys4MTqMrW0bW9t2rz54INwdo9qCdvRQMKD94xfeFkqYmbqGsBLyjfXxcw2FFQtmdR0X z6eCAY/n3+P6lbNQZPbPuyQTKogIhtXseUTUXaS1Rhs3783hTf4L5l7kUa61fN/1bsnEnQfzEEJA N+q4NfUMtu2AiCDNzs6WkslkKp1OQ1GU4H3eI845dF2HZVmGHI1GJ03TnNZ1/eS+0ruKRCJmLBab /AN/o3+HCeh+EAAAAABJRU5ErkJggg== "
+       id="image3191"
+       x="98.110352"
+       y="156.36218"
+       inkscape:export-filename="/home/sebastiaan/git/opensesame/tutorial/figure 3.png"
+       inkscape:export-xdpi="300.07928"
+       inkscape:export-ydpi="300.07928" />
+    <image
+       width="16"
+       height="16"
+       xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABHNCSVQICAgIfAhkiAAAAgdJREFU OI2VkkFoE0EUhv+d7CbFFFPcSqqhuFEMKIkH68FTEcGDFq968uDBu4IFwZ7FQ0+VnkSkIAiFeJWK IkRtAim21EXJrmaTJkTSJJWibd2dN7seUgNbN1B/mMv73/8Nb+ZJxWLxEhFNu657Bv8hxtiqLMt3 pVwut6ppWiYej4Mxtq+w67poNpuoVCqfZMdxMqqqwnGcwGYhXNx/tAAAeHj7cq+uqioMw8jIQggI IfretrBooLG+CUkCdmyOgbC8C+7mGBHB87zAs/lzB6/zJZw7nQDnhGpjw+cTERjnvC/g+ctlTIyf QkobBpFAudbx+ZxzMCFEYNiqd1CpdzA+dhzHjgxBCIFyre3rEUJA/jvCXj3JFnDj6hgAD6MjXcC3 tZavl4iCAR+WLQwdHEBKOwzP8xBWQhhRB2HV2yASCIVYf4DDCU+zi5i4kEZu6WuvrsgSftsOqt83 kEyo/QHZVys4MTqMrW0bW9t2rz54INwdo9qCdvRQMKD94xfeFkqYmbqGsBLyjfXxcw2FFQtmdR0X z6eCAY/n3+P6lbNQZPbPuyQTKogIhtXseUTUXaS1Rhs3783hTf4L5l7kUa61fN/1bsnEnQfzEEJA N+q4NfUMtu2AiCDNzs6WkslkKp1OQ1GU4H3eI845dF2HZVmGHI1GJ03TnNZ1/eS+0ruKRCJmLBab /AN/o3+HCeh+EAAAAABJRU5ErkJggg== "
+       id="image3191-0"
+       x="308.11035"
+       y="156.36218"
+       inkscape:export-filename="/home/sebastiaan/git/opensesame/tutorial/figure 3.png"
+       inkscape:export-xdpi="300.07928"
+       inkscape:export-ydpi="300.07928" />
+    <image
+       width="16"
+       height="16"
+       xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABHNCSVQICAgIfAhkiAAAAgdJREFU OI2VkkFoE0EUhv+d7CbFFFPcSqqhuFEMKIkH68FTEcGDFq968uDBu4IFwZ7FQ0+VnkSkIAiFeJWK IkRtAim21EXJrmaTJkTSJJWibd2dN7seUgNbN1B/mMv73/8Nb+ZJxWLxEhFNu657Bv8hxtiqLMt3 pVwut6ppWiYej4Mxtq+w67poNpuoVCqfZMdxMqqqwnGcwGYhXNx/tAAAeHj7cq+uqioMw8jIQggI IfretrBooLG+CUkCdmyOgbC8C+7mGBHB87zAs/lzB6/zJZw7nQDnhGpjw+cTERjnvC/g+ctlTIyf QkobBpFAudbx+ZxzMCFEYNiqd1CpdzA+dhzHjgxBCIFyre3rEUJA/jvCXj3JFnDj6hgAD6MjXcC3 tZavl4iCAR+WLQwdHEBKOwzP8xBWQhhRB2HV2yASCIVYf4DDCU+zi5i4kEZu6WuvrsgSftsOqt83 kEyo/QHZVys4MTqMrW0bW9t2rz54INwdo9qCdvRQMKD94xfeFkqYmbqGsBLyjfXxcw2FFQtmdR0X z6eCAY/n3+P6lbNQZPbPuyQTKogIhtXseUTUXaS1Rhs3783hTf4L5l7kUa61fN/1bsnEnQfzEEJA N+q4NfUMtu2AiCDNzs6WkslkKp1OQ1GU4H3eI845dF2HZVmGHI1GJ03TnNZ1/eS+0ruKRCJmLBab /AN/o3+HCeh+EAAAAABJRU5ErkJggg== "
+       id="image3191-0-3"
+       x="558.11035"
+       y="156.36218"
+       inkscape:export-filename="/home/sebastiaan/git/opensesame/tutorial/figure 3.png"
+       inkscape:export-xdpi="300.07928"
+       inkscape:export-ydpi="300.07928" />
+    <image
+       y="382.36218"
+       x="33.110504"
+       id="image3016-0-6"
+       xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABHNCSVQICAgIfAhkiAAAApFJREFU OI2Vk71rU1EYh597c0IsMWn0RoMfDSGoLZoURYcINX6L1slB/wEXv8YWHMTBwUkXwSgKgv9BBaUO BUuFWoygJNHGpNRqEAnWUhLS6Dnn3uNQjUgXfcf35fe831Y+nz+qtb7heV4//2G2bReEEEPWxMRE IZFIpGOxGLZt/5PY8zzq9Tpzc3NFIaVMO46DlPJX2PD0TY7i3Dhf5mcB2BBNkk4c4PjOC4AFgOM4 VCqVtHBdF9d1Afja+MTd0YssuFWiPX42J5crWlqc5unbAi/Lo5w7cZt14Ti/dUJrjTEGMORGLyEj H+jp6WJjMI1tieWSw5oup8i32gdyo5e4emYEsNBaYyulMMbwOJ9j0ZohHBMoaYgHMyRDWZKhLPFg BiUN4Zhg0ZrhcT6HMQalFLbruhhjmK5PEozaSOkhpUcinGFLJMuWSJZEONPxB6M20/VJjDF/t/B5 YYbVIfje9jAebFy9g1AgCkDzxzztlodlAzZ8XpjBGLPcwm+A5RNIBRF6uTlY7ogBQoEoNwfLROhF KrB8YiUg6exmqelRa5a5Mza0Yvd3xoaoNcssNT2Szu6VgP54lsa8xjWGyY8jPJq63xE/mrrP5McR XGNozGv649mVgIG+U6TWH6JR19gBiwfj1yjOTlGcneLB+DXsgEWjrkmtP8RA36kOoDNEJRXnj13n 1pPLvK49Y1XI5srDs8u3ucblW81j16aDnD92HSUVwB+AUgohBH6riyun7/Hi/RjP3z3hXesVANvX DrJv4CR7e4/Qbrc72bXWCCFEpVAobEulUvj9flqtFnuS+8lsO4zP5wPAdV201rRaLQCUUpRKJYQQ FREMBoer1eqNUqm09Z9e8ZcFAoFqd3f38E/azXsEysNVdQAAAABJRU5ErkJggg== "
+       height="16"
+       width="16"
+       inkscape:export-filename="/home/sebastiaan/git/opensesame/tutorial/figure 3.png"
+       inkscape:export-xdpi="300.07928"
+       inkscape:export-ydpi="300.07928" />
+    <text
+       xml:space="preserve"
+       style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+       x="53.110504"
+       y="392.36218"
+       id="text2987-5-6-4"
+       sodipodi:linespacing="125%"
+       inkscape:export-filename="/home/sebastiaan/git/opensesame/tutorial/figure 3.png"
+       inkscape:export-xdpi="300.07928"
+       inkscape:export-ydpi="300.07928"><tspan
+         sodipodi:role="line"
+         x="53.110504"
+         y="392.36218"
+         id="tspan3006-4-9-3"
+         style="font-weight:bold">Sequence</tspan><tspan
+         sodipodi:role="line"
+         x="53.110504"
+         y="407.36218"
+         id="tspan3064-2-36">trial_sequence</tspan></text>
+    <image
+       y="436.36218"
+       x="33.110504"
+       id="image3074-0"
+       xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABHNCSVQICAgIfAhkiAAAAfJJREFU OI2dkr1rk1EUh5+8uU3MB431taZGYzNUUDS1ksmqi1CxhQj6FwhOOjlYEC0FO5YuDoKLYATXgpNQ EWoma6TDm7gkgol1MH5QwYrt/XodQlJiQYwHznI4v+f+zjk3UCqVJrTWC9baUXoIx3E8IcTNQLFY 9DKZTDaZTOI4zj+JrbU0m03q9XpZSCmzrusipezFAK7rUq1Ws8IYgzGmJzFAW+dorfF9v5PKWpbX G2xaxb2PeR6uTeH7kuCPl/hWdfVqrXGU6i4+/lTnYvkZ840i39QHvqsG4ss80XKevrVC92NKIYwx LZqFwkqAfUMppvYc4fzACEejzwngYzffo6JlrBog9PoBW7mr4AiMMYj2CKvvNHcKklPZCIvXzzBb f0MsuUUExd7PS2wcf0L80WX63i6jdx9Dj5xGa70NOJFxmJkwjI8Z7i7C7XyOsGgt7Gd6nOjTW/w6 N4sePItK56C9gzZg7tIrVmdWOBRRTEa+Egpuz+oHBCo4iQnuZ9eNJfovXOssseMgcyBEeGOLSMxh cCiE7/vdZ0sdxMbjmNRJzHByJ+DK/bFOczrbvwOgRocBWH8x1yr8Cfif6ACUUgghehZrrXGEEFXP 85BSdn2Sv6WUEs/zEEJURSwWm67VaguVSuVwLw7C4XAtkUhM/wavQlvSKnhaxAAAAABJRU5ErkJg gg== "
+       height="16"
+       width="16"
+       inkscape:export-filename="/home/sebastiaan/git/opensesame/tutorial/figure 3.png"
+       inkscape:export-xdpi="300.07928"
+       inkscape:export-ydpi="300.07928" />
+    <text
+       xml:space="preserve"
+       style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+       x="53.110504"
+       y="446.36218"
+       id="text3077-9"
+       sodipodi:linespacing="125%"
+       inkscape:export-filename="/home/sebastiaan/git/opensesame/tutorial/figure 3.png"
+       inkscape:export-xdpi="300.07928"
+       inkscape:export-ydpi="300.07928"><tspan
+         sodipodi:role="line"
+         id="tspan3079-3"
+         x="53.110504"
+         y="446.36218"
+         style="font-weight:bold">Sketchpad</tspan><tspan
+         sodipodi:role="line"
+         x="53.110504"
+         y="461.36218"
+         id="tspan3081-0">fixation_dot</tspan></text>
+    <image
+       y="436.36218"
+       x="123.1105"
+       id="image3074-0-2"
+       xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABHNCSVQICAgIfAhkiAAAAfJJREFU OI2dkr1rk1EUh5+8uU3MB431taZGYzNUUDS1ksmqi1CxhQj6FwhOOjlYEC0FO5YuDoKLYATXgpNQ EWoma6TDm7gkgol1MH5QwYrt/XodQlJiQYwHznI4v+f+zjk3UCqVJrTWC9baUXoIx3E8IcTNQLFY 9DKZTDaZTOI4zj+JrbU0m03q9XpZSCmzrusipezFAK7rUq1Ws8IYgzGmJzFAW+dorfF9v5PKWpbX G2xaxb2PeR6uTeH7kuCPl/hWdfVqrXGU6i4+/lTnYvkZ840i39QHvqsG4ss80XKevrVC92NKIYwx LZqFwkqAfUMppvYc4fzACEejzwngYzffo6JlrBog9PoBW7mr4AiMMYj2CKvvNHcKklPZCIvXzzBb f0MsuUUExd7PS2wcf0L80WX63i6jdx9Dj5xGa70NOJFxmJkwjI8Z7i7C7XyOsGgt7Gd6nOjTW/w6 N4sePItK56C9gzZg7tIrVmdWOBRRTEa+Egpuz+oHBCo4iQnuZ9eNJfovXOssseMgcyBEeGOLSMxh cCiE7/vdZ0sdxMbjmNRJzHByJ+DK/bFOczrbvwOgRocBWH8x1yr8Cfif6ACUUgghehZrrXGEEFXP 85BSdn2Sv6WUEs/zEEJURSwWm67VaguVSuVwLw7C4XAtkUhM/wavQlvSKnhaxAAAAABJRU5ErkJg gg== "
+       height="16"
+       width="16"
+       inkscape:export-filename="/home/sebastiaan/git/opensesame/tutorial/figure 3.png"
+       inkscape:export-xdpi="300.07928"
+       inkscape:export-ydpi="300.07928" />
+    <text
+       xml:space="preserve"
+       style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+       x="143.1105"
+       y="446.36218"
+       id="text3077-9-8"
+       sodipodi:linespacing="125%"
+       inkscape:export-filename="/home/sebastiaan/git/opensesame/tutorial/figure 3.png"
+       inkscape:export-xdpi="300.07928"
+       inkscape:export-ydpi="300.07928"><tspan
+         sodipodi:role="line"
+         id="tspan3079-3-2"
+         x="143.1105"
+         y="446.36218"
+         style="font-weight:bold">Sketchpad</tspan><tspan
+         sodipodi:role="line"
+         x="143.1105"
+         y="461.36218"
+         id="tspan3081-0-7">neutral_gaze</tspan></text>
+    <image
+       y="436.36218"
+       x="223.1105"
+       id="image3074-0-2-0"
+       xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABHNCSVQICAgIfAhkiAAAAfJJREFU OI2dkr1rk1EUh5+8uU3MB431taZGYzNUUDS1ksmqi1CxhQj6FwhOOjlYEC0FO5YuDoKLYATXgpNQ EWoma6TDm7gkgol1MH5QwYrt/XodQlJiQYwHznI4v+f+zjk3UCqVJrTWC9baUXoIx3E8IcTNQLFY 9DKZTDaZTOI4zj+JrbU0m03q9XpZSCmzrusipezFAK7rUq1Ws8IYgzGmJzFAW+dorfF9v5PKWpbX G2xaxb2PeR6uTeH7kuCPl/hWdfVqrXGU6i4+/lTnYvkZ840i39QHvqsG4ss80XKevrVC92NKIYwx LZqFwkqAfUMppvYc4fzACEejzwngYzffo6JlrBog9PoBW7mr4AiMMYj2CKvvNHcKklPZCIvXzzBb f0MsuUUExd7PS2wcf0L80WX63i6jdx9Dj5xGa70NOJFxmJkwjI8Z7i7C7XyOsGgt7Gd6nOjTW/w6 N4sePItK56C9gzZg7tIrVmdWOBRRTEa+Egpuz+oHBCo4iQnuZ9eNJfovXOssseMgcyBEeGOLSMxh cCiE7/vdZ0sdxMbjmNRJzHByJ+DK/bFOczrbvwOgRocBWH8x1yr8Cfif6ACUUgghehZrrXGEEFXP 85BSdn2Sv6WUEs/zEEJURSwWm67VaguVSuVwLw7C4XAtkUhM/wavQlvSKnhaxAAAAABJRU5ErkJg gg== "
+       height="16"
+       width="16"
+       inkscape:export-filename="/home/sebastiaan/git/opensesame/tutorial/figure 3.png"
+       inkscape:export-xdpi="300.07928"
+       inkscape:export-ydpi="300.07928" />
+    <text
+       xml:space="preserve"
+       style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+       x="243.1105"
+       y="446.36218"
+       id="text3077-9-8-1"
+       sodipodi:linespacing="125%"
+       inkscape:export-filename="/home/sebastiaan/git/opensesame/tutorial/figure 3.png"
+       inkscape:export-xdpi="300.07928"
+       inkscape:export-ydpi="300.07928"><tspan
+         sodipodi:role="line"
+         id="tspan3079-3-2-5"
+         x="243.1105"
+         y="446.36218"
+         style="font-weight:bold">Sketchpad</tspan><tspan
+         sodipodi:role="line"
+         x="243.1105"
+         y="461.36218"
+         id="tspan3081-0-7-2">gaze_cue</tspan></text>
+    <image
+       y="436.36218"
+       x="313.1105"
+       id="image3074-0-2-01"
+       xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABHNCSVQICAgIfAhkiAAAAfJJREFU OI2dkr1rk1EUh5+8uU3MB431taZGYzNUUDS1ksmqi1CxhQj6FwhOOjlYEC0FO5YuDoKLYATXgpNQ EWoma6TDm7gkgol1MH5QwYrt/XodQlJiQYwHznI4v+f+zjk3UCqVJrTWC9baUXoIx3E8IcTNQLFY 9DKZTDaZTOI4zj+JrbU0m03q9XpZSCmzrusipezFAK7rUq1Ws8IYgzGmJzFAW+dorfF9v5PKWpbX G2xaxb2PeR6uTeH7kuCPl/hWdfVqrXGU6i4+/lTnYvkZ840i39QHvqsG4ss80XKevrVC92NKIYwx LZqFwkqAfUMppvYc4fzACEejzwngYzffo6JlrBog9PoBW7mr4AiMMYj2CKvvNHcKklPZCIvXzzBb f0MsuUUExd7PS2wcf0L80WX63i6jdx9Dj5xGa70NOJFxmJkwjI8Z7i7C7XyOsGgt7Gd6nOjTW/w6 N4sePItK56C9gzZg7tIrVmdWOBRRTEa+Egpuz+oHBCo4iQnuZ9eNJfovXOssseMgcyBEeGOLSMxh cCiE7/vdZ0sdxMbjmNRJzHByJ+DK/bFOczrbvwOgRocBWH8x1yr8Cfif6ACUUgghehZrrXGEEFXP 85BSdn2Sv6WUEs/zEEJURSwWm67VaguVSuVwLw7C4XAtkUhM/wavQlvSKnhaxAAAAABJRU5ErkJg gg== "
+       height="16"
+       width="16"
+       inkscape:export-filename="/home/sebastiaan/git/opensesame/tutorial/figure 3.png"
+       inkscape:export-xdpi="300.07928"
+       inkscape:export-ydpi="300.07928" />
+    <text
+       xml:space="preserve"
+       style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+       x="333.1105"
+       y="446.36218"
+       id="text3077-9-8-6"
+       sodipodi:linespacing="125%"
+       inkscape:export-filename="/home/sebastiaan/git/opensesame/tutorial/figure 3.png"
+       inkscape:export-xdpi="300.07928"
+       inkscape:export-ydpi="300.07928"><tspan
+         sodipodi:role="line"
+         id="tspan3079-3-2-0"
+         x="333.1105"
+         y="446.36218"
+         style="font-weight:bold">Sketchpad</tspan><tspan
+         sodipodi:role="line"
+         x="333.1105"
+         y="461.36218"
+         id="tspan3081-0-7-28">target</tspan></text>
+    <image
+       y="436.36218"
+       x="403.1105"
+       id="image3429"
+       xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABHNCSVQICAgIfAhkiAAAArtJREFU OI2Nkk9LK1kQxU/duZ2+6WD6hQ4xoTtxIQoKghFx5VqYT/A+2axdz9qFX0BQojA7JRhIE8VASEi6 TUz/ubfrLeYl895uCmrxo+ocKOrQ8/PzX7Va7buU0hVC4P9UURTQWkfz+fxvGgwGkyiKvr29vQmt NRERNkbMDAAgoq2QmSGl5Ha7XbiuuxDGmNpoNBJhGAoAAoAYDoc0HA6pKArBzFtmZgFAhGEoRqOR MMbUpNYaWZZRrVajRqOBIAiQJAkxMxzHweHh4ZY386+vL8qyjLTWLIqiAABEUQTP85BlGaIoQhzH aLfb0Fpv2fM85HmOxWKxPUkaY6CUwmAw4MFgQABgjAEA9Pt9MPNvbIyBEIL39vZgjAE9Pj7mlmXR +/u7uLm5QafToSAIkGUZHh4esL+/D9/3kWUZer0ezs/POQgC+L5f5HnO0hiDcrmM09NTDsOQjo6O 4LouHMdBHMfc7XapWq3CcRwsl0u+urriUqmE+XyOJEkgfv4U6/UaaZpitVrB8zzMZjMsl8vfeLOT JAm01iiKAnR3d5dXKhVar9d0e3tLk8mElFLI8/xnFJhs20aaprBtmy8vL9n3fSileLVa/XsCALy8 vMD3fWo2m8jzHFJK1Ot16vf7+Pj4wPHxMZrNJs1mM4qiqDg7O4MxBpKZURQFkiRBq9XCer1GpVJB p9NBq9WC67oYDod8cnJCu7u7eH19RRiG/6XSGINNx3GMi4sLWJYFKSWSJMF0OkUURVBKQUqJ6XSK XzVSa400TblUKtH9/T0/PT3RJvvMjDRNGQCur68hhECe59ztdpGmKWutIcfjcdJoNNTBwQGXy2Va rVb8q4HjOFBKYT6fMzOjUqkgCAL+/PzEZDJJ/qjX638qpRrGGLmzs8Ou63K1Wt22Uooty9qybdu8 WCwwHo/TXq/3zw/7Z8znP18Z8wAAAABJRU5ErkJggg== "
+       height="16"
+       width="16"
+       inkscape:export-filename="/home/sebastiaan/git/opensesame/tutorial/figure 3.png"
+       inkscape:export-xdpi="300.07928"
+       inkscape:export-ydpi="300.07928" />
+    <text
+       xml:space="preserve"
+       style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+       x="423.1105"
+       y="446.36218"
+       id="text3077-9-8-6-3"
+       sodipodi:linespacing="125%"
+       inkscape:export-filename="/home/sebastiaan/git/opensesame/tutorial/figure 3.png"
+       inkscape:export-xdpi="300.07928"
+       inkscape:export-ydpi="300.07928"><tspan
+         sodipodi:role="line"
+         id="tspan3079-3-2-0-9"
+         x="423.1105"
+         y="446.36218"
+         style="font-weight:bold">Keyboard_response</tspan><tspan
+         sodipodi:role="line"
+         x="423.1105"
+         y="461.36218"
+         id="tspan3081-0-7-28-1">keyboard_response</tspan></text>
+    <image
+       y="436.36218"
+       x="553.11047"
+       id="image3464"
+       xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABHNCSVQICAgIfAhkiAAAAn5JREFU OI2Vk91LFFEYxn8zjrOrqX24Ji1YtuayICtaIoTQVSlRCUEI0a1Bf0De9hfobUTQhXS/NyEUmZUY QklJ1uq44O76haK2uLrrzDkzZ7rY1YSufOFwLt7n/Hh4z/NqY88e3pJKDWua1s4Jyvf9n5W6/tQ4 8NyRtnhnvKau7iTv2c/n23/P/RgxlOvFtcI2+Z3MUbM6HKWu4zbVDU2g6RzsrLH36wP76dkjTUWw BuV6ccO2bez8zr9G6w0KTVeZnJxhfv41nucRi8Xo6uxGN0N4c2MASOFg2zaGIxykcABway6Q80O8 efGSTCZDS0sLpmmSSCSYmprifv8d6k+FMXNpABzhoAtHIMuQlBti/ONn0uk0vb29NDY2UltbS19f H7lcjrfvJ1gQDUd64Qh0IQRu+aQ28iSTSSKRCKZpkkwmsSwLpRTRaBTLslha30IIiSsEQpQBh8Tl 5WWKxSKGYRAOh6mqqsL3fZqbmzEMA9u2yWazCKfsQAiMQwCAs72MEB6pVIquri4GBwfRdZ1MJoNl WXiex5/1LOq8joISQEqJKwUA3edckqtFlFIkEgkikQiBQADLstjc3ORgb5fucBBXmqWfkBJDSHnk IH7lEt3bS3xdz7O25lMoFEqh2d+nkM/ReraCnraLFLZW8JVCHAeojgEW7SDX7/Zw+dMo77J7rK/u 4QNnAnDvskb85gO+20FCoR5qZ0dLAFme6MTMAv0Dj5ie/kKkSuNJTOL74AO6VgrZ+HGNoyGFLM1A Cgd96xuvnm9BboVY0wHyWO698v2fRkq0x9fqrFh9ZfR0UD/RMu3aioUduWgElDs0tyGHPUXrSQAV OqmaCm3oL4a1ektywRI5AAAAAElFTkSuQmCC "
+       height="16"
+       width="16"
+       inkscape:export-filename="/home/sebastiaan/git/opensesame/tutorial/figure 3.png"
+       inkscape:export-xdpi="300.07928"
+       inkscape:export-ydpi="300.07928" />
+    <text
+       xml:space="preserve"
+       style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+       x="573.11047"
+       y="446.36218"
+       id="text3077-9-8-6-3-9"
+       sodipodi:linespacing="125%"
+       inkscape:export-filename="/home/sebastiaan/git/opensesame/tutorial/figure 3.png"
+       inkscape:export-xdpi="300.07928"
+       inkscape:export-ydpi="300.07928"><tspan
+         sodipodi:role="line"
+         id="tspan3079-3-2-0-9-8"
+         x="573.11047"
+         y="446.36218"
+         style="font-weight:bold">Sampler</tspan><tspan
+         sodipodi:role="line"
+         x="573.11047"
+         y="461.36218"
+         id="tspan3493"
+         style="font-style:normal">incorrect_response</tspan></text>
+    <image
+       y="436.36218"
+       x="683.11047"
+       id="image3505"
+       xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABHNCSVQICAgIfAhkiAAAAlJJREFU OI19kstrE1EUxr/bTOZmJmk6JBMdkUJpbLD1QSyIDygt1T60iCDozp0rt9K/wJ00/0HBjSBurIgW raKL2ARK1D4wNLGthdBSW0MLYZrcm8y9LmKrY6xnc+Bwv9/5Pu4huVyu33GchJQyjgOqiXOEnz8F 5xyloRGIcBiEkFmPx3OviTGWsCwrPjMzg2g0in91nxCQzUHI5SUsplOIRqNIJpNxxliCZDIZ2dXV BSnlQQaQTqfh9/vxcHwcY4kEPF4vCCHIZrNQGGNwHOdAMQDoqoNCoQCqNkEAIEIAABhjUKrVKsSv wYupuQZx0McwbNyHXtQwy1vwbDKDa0NnoCgKqtWqG3D18qkGAOWLYI+nEVzx4dbtJwi1xyCEgBCi DuCc7+d/+Wa+AdDbmkREUbG2q2E+X4PybQE3r1+AlBKcc7eDK5dO/iWXCC0/gONVYR/uRs/5YzBN c/99Q4TJtwsuuRkoY0T7BMWrIrt7FLkPObQYW/tRK5VKPcIeYLj/hAvg53OwJzaxlqc4PTCIWPc5 qKqKUqkE27axs7PjdvDq3RcXYLgjA4OGsVoG5lclFr9/xPb2D1w82w5N0+oO/gQM9nW6AM3lMgrG HdiHPqPVUlCr2ThihsA5RzAYBKW0Dtj7hdfvsy6AxaehFVewZPTAXyxC13VEIhG0tbVB13VIKd0O BnqPuwBTjyawuaXB7DQRCoUQi8VgGAYA/L4DQkh+fX09ZllWww303bgLxdfsmu0t29jYACEkr1BK R1Op1BhjrKOB8J+ilH4NBAKjPwEKli2852jcRwAAAABJRU5ErkJggg== "
+       height="16"
+       width="16"
+       inkscape:export-filename="/home/sebastiaan/git/opensesame/tutorial/figure 3.png"
+       inkscape:export-xdpi="300.07928"
+       inkscape:export-ydpi="300.07928" />
+    <text
+       xml:space="preserve"
+       style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+       x="703.11047"
+       y="446.36218"
+       id="text3077-9-8-6-3-2"
+       sodipodi:linespacing="125%"
+       inkscape:export-filename="/home/sebastiaan/git/opensesame/tutorial/figure 3.png"
+       inkscape:export-xdpi="300.07928"
+       inkscape:export-ydpi="300.07928"><tspan
+         sodipodi:role="line"
+         id="tspan3079-3-2-0-9-3"
+         x="703.11047"
+         y="446.36218"
+         style="font-weight:bold">Logger</tspan><tspan
+         sodipodi:role="line"
+         x="703.11047"
+         y="461.36218"
+         id="tspan3081-0-7-28-1-5">logger</tspan></text>
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-end:url(#Arrow1Lend)"
+       d="m 33.110504,422.36218 699.999996,0"
+       id="path4302"
+       inkscape:connector-curvature="0"
+       inkscape:export-filename="/home/sebastiaan/git/opensesame/tutorial/figure 3.png"
+       inkscape:export-xdpi="300.07928"
+       inkscape:export-ydpi="300.07928" />
+    <text
+       xml:space="preserve"
+       style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:end;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:end;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+       x="743.11047"
+       y="392.36218"
+       id="text4937-4-7"
+       sodipodi:linespacing="125%"
+       inkscape:export-filename="/home/sebastiaan/git/opensesame/tutorial/figure 3.png"
+       inkscape:export-xdpi="300.07928"
+       inkscape:export-ydpi="300.07928"><tspan
+         sodipodi:role="line"
+         x="743.11047"
+         y="392.36218"
+         style="font-style:italic;text-align:end;text-anchor:end"
+         id="tspan4966-6">A single trial</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+       x="154"
+       y="352.36218"
+       id="text4994"
+       sodipodi:linespacing="125%"
+       inkscape:export-filename="/home/sebastiaan/git/opensesame/tutorial/figure 3.png"
+       inkscape:export-xdpi="300.07928"
+       inkscape:export-ydpi="300.07928"><tspan
+         sodipodi:role="line"
+         id="tspan4996"
+         x="154"
+         y="352.36218"
+         style="font-size:10px">Repeatedly calls</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+       x="134"
+       y="212.36218"
+       id="text4994-0"
+       sodipodi:linespacing="125%"
+       inkscape:export-filename="/home/sebastiaan/git/opensesame/tutorial/figure 3.png"
+       inkscape:export-xdpi="300.07928"
+       inkscape:export-ydpi="300.07928"><tspan
+         sodipodi:role="line"
+         id="tspan4996-7"
+         x="134"
+         y="212.36218"
+         style="font-size:10px">Repeatedly calls</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+       x="308"
+       y="216.36218"
+       id="text4994-7"
+       sodipodi:linespacing="125%"
+       inkscape:export-filename="/home/sebastiaan/git/opensesame/tutorial/figure 3.png"
+       inkscape:export-xdpi="300.07928"
+       inkscape:export-ydpi="300.07928"><tspan
+         sodipodi:role="line"
+         id="tspan4996-3"
+         x="308"
+         y="216.36218"
+         style="font-size:10px">Repeatedly calls</tspan></text>
+    <image
+       y="246.36218"
+       x="218.11035"
+       id="image3016-0"
+       xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABHNCSVQICAgIfAhkiAAAApFJREFU OI2Vk71rU1EYh597c0IsMWn0RoMfDSGoLZoURYcINX6L1slB/wEXv8YWHMTBwUkXwSgKgv9BBaUO BUuFWoygJNHGpNRqEAnWUhLS6Dnn3uNQjUgXfcf35fe831Y+nz+qtb7heV4//2G2bReEEEPWxMRE IZFIpGOxGLZt/5PY8zzq9Tpzc3NFIaVMO46DlPJX2PD0TY7i3Dhf5mcB2BBNkk4c4PjOC4AFgOM4 VCqVtHBdF9d1Afja+MTd0YssuFWiPX42J5crWlqc5unbAi/Lo5w7cZt14Ti/dUJrjTEGMORGLyEj H+jp6WJjMI1tieWSw5oup8i32gdyo5e4emYEsNBaYyulMMbwOJ9j0ZohHBMoaYgHMyRDWZKhLPFg BiUN4Zhg0ZrhcT6HMQalFLbruhhjmK5PEozaSOkhpUcinGFLJMuWSJZEONPxB6M20/VJjDF/t/B5 YYbVIfje9jAebFy9g1AgCkDzxzztlodlAzZ8XpjBGLPcwm+A5RNIBRF6uTlY7ogBQoEoNwfLROhF KrB8YiUg6exmqelRa5a5Mza0Yvd3xoaoNcssNT2Szu6VgP54lsa8xjWGyY8jPJq63xE/mrrP5McR XGNozGv649mVgIG+U6TWH6JR19gBiwfj1yjOTlGcneLB+DXsgEWjrkmtP8RA36kOoDNEJRXnj13n 1pPLvK49Y1XI5srDs8u3ucblW81j16aDnD92HSUVwB+AUgohBH6riyun7/Hi/RjP3z3hXesVANvX DrJv4CR7e4/Qbrc72bXWCCFEpVAobEulUvj9flqtFnuS+8lsO4zP5wPAdV201rRaLQCUUpRKJYQQ FREMBoer1eqNUqm09Z9e8ZcFAoFqd3f38E/azXsEysNVdQAAAABJRU5ErkJggg== "
+       height="16"
+       width="16"
+       inkscape:export-filename="/home/sebastiaan/git/opensesame/tutorial/figure 3.png"
+       inkscape:export-xdpi="300.07928"
+       inkscape:export-ydpi="300.07928" />
+    <text
+       xml:space="preserve"
+       style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+       x="238.11035"
+       y="256.36218"
+       id="text2987-5-6"
+       sodipodi:linespacing="125%"
+       inkscape:export-filename="/home/sebastiaan/git/opensesame/tutorial/figure 3.png"
+       inkscape:export-xdpi="300.07928"
+       inkscape:export-ydpi="300.07928"><tspan
+         sodipodi:role="line"
+         x="238.11035"
+         y="256.36218"
+         id="tspan3006-4-9"
+         style="font-weight:bold">Sequence</tspan><tspan
+         sodipodi:role="line"
+         x="238.11035"
+         y="271.36218"
+         id="tspan3064-2">block_sequence</tspan></text>
+    <image
+       y="296.36218"
+       x="362.11035"
+       id="image3091-6"
+       xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABHNCSVQICAgIfAhkiAAAAXdJREFU OI2dUb1KA0EYnOwtxIBwiIX5PUEtTZk2Kax8Cx9BQSsLsbDUZ8gTCHbW1wUL9SxEBUk2HjktRCKK 3H7frkXImT8TdGCL+Zadb2Y2dXpxsqOeb49ePzoZANj09mGMwSwIIQIp5W7q+Gzrc34hnSkVVuAI BxulbVhrpz4mIrTbbURRdCNf3p4y+dV1hO8BjGXorEYcxxBCTBXJ5/NQSpUlEaOrIxjLAACtNXzf nxmhVquBmSGZGMQ6uejbr1aryUwpBc/zEu77Pqy1ICJIIk62DwqM9jCJa617DoxhjEIpNZVba3sR iGmig2KxmMzCMEShUEh4q9X6icBkhv79LxGSDtiORwjDcCofcDDcQX9TLpdLZlEUIZvN/hKB//8L Ezvoo9FoDPFmszlZgJhBmiBkCgDgOA4qlcqY4Ci01iAiiEV36Su870LHBGMY1tqZJ45jBEEAKeW9 XFsuH949Xh1cnnfmAKB+XQcRzXSQTqcfXNfd+waT7zVut+ET2wAAAABJRU5ErkJggg== "
+       height="16"
+       width="16"
+       inkscape:export-filename="/home/sebastiaan/git/opensesame/tutorial/figure 3.png"
+       inkscape:export-xdpi="300.07928"
+       inkscape:export-ydpi="300.07928" />
+    <text
+       xml:space="preserve"
+       style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+       x="382.11035"
+       y="306.36218"
+       id="text3077-8-0"
+       sodipodi:linespacing="125%"
+       inkscape:export-filename="/home/sebastiaan/git/opensesame/tutorial/figure 3.png"
+       inkscape:export-xdpi="300.07928"
+       inkscape:export-ydpi="300.07928"><tspan
+         sodipodi:role="line"
+         id="tspan3079-6-6"
+         x="382.11035"
+         y="306.36218"
+         style="font-weight:bold">Loop</tspan><tspan
+         sodipodi:role="line"
+         x="382.11035"
+         y="321.36218"
+         id="tspan3081-7-4">block_loop</tspan></text>
+    <image
+       y="296.36218"
+       x="482.11035"
+       id="image3180"
+       xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABHNCSVQICAgIfAhkiAAAAq1JREFU OI1VkztvXFUUhb99zn3M9WseHgcIlklBECYNUkQNQlRU/IEg/gENEi0dJT8iEjWiDCmpEEoKRJQC yQbF8VjjjMe+M3fuPa9NMQbFu1na0lpLW1tryU/PvvxhZ1Q+MEZ2AUC4if+N3sCU9NXVrHsoP//9 xaso9VBJspYZjBhEzGsmimoiaUJJ1/ZGrW5fZF2Yj5ImRAwiFqKhqQOrJhB8RETIC0O1mdPbtGBA NaLqxch8lDnv/he3i8j05IquddhcqMotgrZkbUk9X5KVMBxvUFRC0kTQgAlBiUGoLwJHz2cslg3k ns3eLp8efsve1l0+fPMr9nbeo3ULJieXNHUiBiEEJYsx4X3i9HhBiI6NssfB8D7v3vqYnfwOh7c/ Z5jdI5oldTymXl4wmy4Y3arAJkwMUF84FnWLGMU7ZT4R+uYDJmenUN/GOc+LoxldA2KVrnM0C08M rC9YNR7vArY0ZBZSMaPVKZP6GT0zZJksJ/4xKnOyXAkh0rYeW1oy7wMilpQMznkGvTGfHH7NaHuf wuww2nmb2eUpB6OPOLp6hHORGA2qQvAB+9mD8XdGChaXAe8dV80507MZ3Qp+/eNHxv19Hv7yDZPF U7IeBJcQLai2M4I65PtH72smBe1lwdnLOWpbBr07mNAn2HP65TvM+B2bKTEq6nNG4z5ZzxHUkXnv CZLIt+Ct/V1evjhnevUXiJLllllzTLVRoo2Q2x6D3W0kd7S+RTVe/4BENIqxCUXxnaGqKiQqhRUy Cjb7FeWmEFmy6jpU19zM+bDOPopvADXs7g0YjDewdp24mDpCWrD0/jrGipJQhWw+8autoa3EKIgw eKNEbKBeTdck9LqAui7V9Z6SsrhIq+z5b6snB/eK+2VleogDlq8J1pIbbUZBwK20/edP/+RfqT+N XDAMyYkAAAAASUVORK5CYII= "
+       height="16"
+       width="16"
+       inkscape:export-filename="/home/sebastiaan/git/opensesame/tutorial/figure 3.png"
+       inkscape:export-xdpi="300.07928"
+       inkscape:export-ydpi="300.07928" />
+    <text
+       xml:space="preserve"
+       style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+       x="502.11035"
+       y="306.36218"
+       id="text2987-5-6-5"
+       sodipodi:linespacing="125%"
+       inkscape:export-filename="/home/sebastiaan/git/opensesame/tutorial/figure 3.png"
+       inkscape:export-xdpi="300.07928"
+       inkscape:export-ydpi="300.07928"><tspan
+         sodipodi:role="line"
+         x="502.11035"
+         y="306.36218"
+         id="tspan3064-2-3"
+         style="font-weight:bold">Feedback</tspan><tspan
+         sodipodi:role="line"
+         x="502.11035"
+         y="321.36218"
+         id="tspan3209">feedback</tspan></text>
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-end:url(#Arrow1Lend)"
+       d="m 218.11035,282.36218 334,0"
+       id="path4302-8-0"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cc"
+       inkscape:export-filename="/home/sebastiaan/git/opensesame/tutorial/figure 3.png"
+       inkscape:export-xdpi="300.07928"
+       inkscape:export-ydpi="300.07928" />
+    <text
+       xml:space="preserve"
+       style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:end;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:end;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+       x="558.11035"
+       y="252.36218"
+       id="text4937-4"
+       sodipodi:linespacing="125%"
+       inkscape:export-filename="/home/sebastiaan/git/opensesame/tutorial/figure 3.png"
+       inkscape:export-xdpi="300.07928"
+       inkscape:export-ydpi="300.07928"><tspan
+         sodipodi:role="line"
+         x="558.11035"
+         y="252.36218"
+         id="tspan4941-6"
+         style="font-style:italic;text-align:end;text-anchor:end">A single block of trials,</tspan><tspan
+         sodipodi:role="line"
+         x="558.11035"
+         y="267.36218"
+         style="font-style:italic;text-align:end;text-anchor:end"
+         id="tspan4966">followed by feedback</tspan></text>
+    <image
+       y="296.36218"
+       x="218.11035"
+       id="image3100"
+       xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABHNCSVQICAgIfAhkiAAAAzNJREFU OI1lkt9PW3UAxT/3e0sppS1QKKNlHcimYEdwDOKbY86oyfyxJcxf0ZHoyx5901f+Ax/8A3wwMUZf zDZ/DOeisi26TIGNwQIsjVAGK9D2csvt7b3f+/36MLcYPck55+mc5CTH+GZh4pNEsvGsEEa7UlAp NGEVopTXI2gF4aiiMSZJ52yMkCZ/vQ2zQZMZKluEdz8zzv91eicw7DZZN43714boTz/PM0PDdHSk EEIgpY9t21y+MsVqYYU3xyfY2d5meu4r+l5YLoXqspKs2xEeXBvl9Zcn6HviIPW6i+NUUUohhCAa jfLG+NusrxfIZg+QiMf58adW6rKSDHm+x/bMMG+dPse+zi52dyvMzM6Qz9/DrlaJNTeTyw0y0D9A KpXi3/B8D1Hd6CATe5ZMOoNllbn43QV+mz+PFb9M7ug+Ss59fp3+hW+/v0i1aj8OK6WQUhPay/dy 5tSLuK7LnYV51kp/0j24x5Ndr7F4o8r4Kw9n/RdSSoJAEQpqUZqaovh+ncW7d/FjC1jFXloyOWz7 ZyyrQrm8878C3/cJJIQCN4IQBkopHGcPlbJQ4RKu3iLVG/DD1AWcPQ+tATRaPyJIqQgF2sOtuwgR oqWlFdfPcvzpD0nG9xN+KsHx0W5K1gaz61+S350CI0DWBfGWZqSvME+c6ZvsjA3QnkyChrm5RQq7 v1OvwdXbX9DRsp/Ppz5iZ02j1o/g23GMaJlowkRqD/PEOx2T1UI7A/39pNMZrC2PtfwGG/Y8nthk bbVAUE4zNvwuJ186hb1tYtU2aWgtIQMfc+x9c3Irb6DcKNlslsHBIXq6B7CLJu6DFD2dRxh/9T1G R0YRwmTl3grb9dvoWJEgkISk9DEPXmf6RiORSISRoyP09PRw6NAHCGGilML3PSyrwqWpS9ycv0Ji dAnfk2g0xsdfd2thCHQtjrs8RCpymGPHniOV6iQRT+A4DkvLS8zdusWGc5Pm3CyYPhqF1mCc+7TT ibWZTYYwIWjAqKbxNruQTiPKC4MZYLYVCSWLNLQV0YYGDUppqmVVM8bOxq8eOBweaWwSEQzj4Uv0 Y0H/448MNBjg1bS7esf/4280So/EQ2A4QwAAAABJRU5ErkJggg== "
+       height="16"
+       width="16"
+       inkscape:export-filename="/home/sebastiaan/git/opensesame/tutorial/figure 3.png"
+       inkscape:export-xdpi="300.07928"
+       inkscape:export-ydpi="300.07928" />
+    <text
+       xml:space="preserve"
+       style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+       x="238.11035"
+       y="306.36218"
+       id="text3077-8-0-8"
+       sodipodi:linespacing="125%"
+       inkscape:export-filename="/home/sebastiaan/git/opensesame/tutorial/figure 3.png"
+       inkscape:export-xdpi="300.07928"
+       inkscape:export-ydpi="300.07928"><tspan
+         sodipodi:role="line"
+         id="tspan3079-6-6-1"
+         x="238.11035"
+         y="306.36218"
+         style="font-weight:bold">Reset_feedback</tspan><tspan
+         sodipodi:role="line"
+         x="238.11035"
+         y="321.36218"
+         id="tspan3081-7-4-9">reset_feedback</tspan></text>
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-end:url(#Arrow1Lend)"
+       d="m 320,52.362183 c -64.76054,30.321105 -170.97939,1.583262 -220,40"
+       id="path4302-8-0-3-8-0"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cc"
+       inkscape:export-filename="/home/sebastiaan/git/opensesame/tutorial/figure 3.png"
+       inkscape:export-xdpi="300.07928"
+       inkscape:export-ydpi="300.07928" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-end:url(#Arrow1Lend)"
+       d="m 210,172.36218 c -2.57767,31.822 4.745,43.84333 10,60"
+       id="path4302-8-0-3"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cc"
+       inkscape:export-filename="/home/sebastiaan/git/opensesame/tutorial/figure 3.png"
+       inkscape:export-xdpi="300.07928"
+       inkscape:export-ydpi="300.07928" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-end:url(#Arrow1Lend)"
+       d="m 430,172.36218 c -4.8812,59.73834 -160.46575,13.02573 -210,60"
+       id="path4302-8-0-3-8"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cc"
+       inkscape:export-filename="/home/sebastiaan/git/opensesame/tutorial/figure 3.png"
+       inkscape:export-xdpi="300.07928"
+       inkscape:export-ydpi="300.07928" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-end:url(#Arrow1Lend)"
+       d="m 370,312.36218 c -67.5932,52.59705 -252.90001,3.15198 -330,60"
+       id="path4302-8-0-3-8-5"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cc"
+       inkscape:export-filename="/home/sebastiaan/git/opensesame/tutorial/figure 3.png"
+       inkscape:export-xdpi="300.07928"
+       inkscape:export-ydpi="300.07928" />
+  </g>
+</svg>

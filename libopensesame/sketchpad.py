@@ -62,10 +62,11 @@ class sketchpad(item.item, generic_response.generic_response):
 		item = item.copy()
 		if self.get("coordinates") == "relative":
 			for var in item:
-				if var in ["x", "x1", "x2"]:
-					item[var] += self.get("width") / 2
-				if var in ["y", "y1", "y2"]:
-					item[var] += self.get("height") / 2
+				if type(item[var]) in (int, float):				
+					if var in ["x", "x1", "x2"]:
+						item[var] += self.get("width") / 2
+					if var in ["y", "y1", "y2"]:
+						item[var] += self.get("height") / 2
 		return item
 		
 	def check_type(self, item):
@@ -460,9 +461,20 @@ class sketchpad(item.item, generic_response.generic_response):
 		Encode sketchpad as string
 		"""
 	
-		s = item.item.to_string(self, self.item_type)
-				
+		s = item.item.to_string(self, self.item_type)				
 		for _item in self.items:
-			s += "\t%s\n" % self.item_to_string(_item)				
-				
+			s += "\t%s\n" % self.item_to_string(_item)								
 		return s
+		
+	def var_info(self):
+	
+		"""
+		Return a list of dictionaries with variable descriptions
+
+		Returns:
+		A list of (name, description) tuples
+		"""	
+		
+		if self.get("duration") in ["keypress", "mouseclick"]:
+			return generic_response.generic_response.var_info(self)
+		return item.item.var_info(self)

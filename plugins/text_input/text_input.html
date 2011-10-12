@@ -3,10 +3,10 @@
 <HEAD>
 	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
 	<TITLE></TITLE>
-	<META NAME="GENERATOR" CONTENT="OpenOffice.org 3.2  (Linux)">
+	<META NAME="GENERATOR" CONTENT="LibreOffice 3.3  (Unix)">
 	<META NAME="CREATED" CONTENT="0;0">
-	<META NAME="CHANGEDBY" CONTENT="Sebastiaan Mathôt">
-	<META NAME="CHANGED" CONTENT="20101215;15171200">
+	<META NAME="CHANGEDBY" CONTENT="Sebastiaan Mathot">
+	<META NAME="CHANGED" CONTENT="20110929;13565300">
 	<STYLE TYPE="text/css">
 	<!--
 		@page { margin: 0.79in }
@@ -31,7 +31,7 @@ options are available:</P>
 	lines.</SPAN></P>
 	<LI><P><I>Draw frame </I><SPAN STYLE="font-style: normal">indicates
 	if a rectangular frame should be drawn around the input field.</SPAN></P>
-	<LI><P><I>Frame width</I><SPAN STYLE="font-style: normal"> indicates
+	<LI><P><I>Frame width</I> <SPAN STYLE="font-style: normal">indicates
 	the thickness of the frame (if enabled).</SPAN></P>
 	<LI><P><I>Foreground color</I> <SPAN STYLE="font-style: normal">should
 	be an English color name (e.g., 'blue') or an HTML color value
@@ -43,14 +43,21 @@ options are available:</P>
 	sans or serif.</SPAN></P>
 	<LI><P><I>Font size </I><SPAN STYLE="font-style: normal">reflects
 	the size of the font in points.</SPAN></P>
+	<LI><P><I>Accept on</I><SPAN STYLE="font-style: normal"> indicates
+	whether the user input should be accepted after a Return (Enter) key
+	press, a specified interval (timeout) or after one of both.</SPAN></P>
+	<LI><P><I><SPAN STYLE="text-decoration: none">Timeout</SPAN></I><SPAN STYLE="font-style: normal">
+	indicates the timeout value. This is applicable only if </SPAN><I>Accept
+	on</I><SPAN STYLE="font-style: normal"> is set to </SPAN><I>timeout</I><SPAN STYLE="font-style: normal">
+	or </SPAN><I>return press or timeout</I><SPAN STYLE="font-style: normal">.</SPAN></P>
 </UL>
-<P><SPAN STYLE="font-style: normal">Variables</SPAN></P>
+<P STYLE="font-style: normal">Variables</P>
 <UL>
-	<LI><P><I>Response</I><SPAN STYLE="font-style: normal"> contains the
+	<LI><P><I>response</I> <SPAN STYLE="font-style: normal">contains the
 	line of the text that the participant has entered.</SPAN></P>
-</UL>
-<UL>
-	<P></P>
+	<LI><P><I>response_time</I><SPAN STYLE="font-style: normal">
+	contains the time between the start of the response interval and the
+	first key press.</SPAN></P>
 </UL>
 </BODY>
 </HTML>

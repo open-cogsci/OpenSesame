@@ -17,14 +17,25 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 
 import libopensesame.keyboard_response
 import libqtopensesame.qtitem
+from openexp.keyboard import keyboard
 from PyQt4 import QtCore, QtGui
+import cgi
 
 class keyboard_response(libopensesame.keyboard_response.keyboard_response, libqtopensesame.qtitem.qtitem):
 
-	def __init__(self, name, experiment, string = None):
+	"""keyboard_response item GUI"""
+
+	def __init__(self, name, experiment, string=None):
 	
 		"""
-		Initialize the experiment		
+		Constructor
+		
+		Arguments:
+		name -- item name
+		experiment -- experiment instance	
+		
+		Keywords arguments:
+		string -- a definition string (default=None)	
 		"""
 		
 		libopensesame.keyboard_response.keyboard_response.__init__(self, name, experiment, string)
@@ -32,42 +43,43 @@ class keyboard_response(libopensesame.keyboard_response.keyboard_response, libqt
 
 	def apply_edit_changes(self):
 	
-		"""
-		Apply changes to the edit widget
-		"""
+		"""Apply controls"""
 		
 		libqtopensesame.qtitem.qtitem.apply_edit_changes(self)
 		
-		cr = str(self.edit_correct_response.text()).strip()
+		cr = self.usanitize(self.edit_correct_response.text())
 		if cr.strip() != "":
 			self.set("correct_response", cr)
 		else:
-			self.unset("allowed_responses")
+			self.unset("correct_response")
 		
-		ar = str(self.edit_allowed_responses.text()).strip()
+		ar = self.usanitize(self.edit_allowed_responses.text())
 		if ar.strip() != "":
 			self.set("allowed_responses", ar)
 		else:
 			self.unset("allowed_responses")
 			
-		to = str(self.edit_timeout.text()).strip()
+		to = self.sanitize(self.edit_timeout.text(), strict=True)
 		if to.strip() != "":
 			self.set("timeout", to)
 		else:
 			self.set("timeout", "infinite")		
 			
+		if self.checkbox_flush.isChecked():
+			self.set("flush", "yes")
+		else:
+			self.set("flush", "no")
+			
 		self.experiment.main_window.refresh(self.name)			
 
 	def init_edit_widget(self):
 	
-		"""
-		Build the edit widget
-		"""
+		"""Initialize controls"""
 		
 		libqtopensesame.qtitem.qtitem.init_edit_widget(self, False)
 		
 		row = 3
-		
+				
 		self.edit_grid.addWidget(QtGui.QLabel("Correct response"), row, 0)
 		self.edit_correct_response = QtGui.QLineEdit()
 		self.edit_correct_response.setToolTip("Set the correct response, e.g., 'z', '/', or 'space'")		
@@ -80,22 +92,37 @@ class keyboard_response(libopensesame.keyboard_response.keyboard_response, libqt
 		self.edit_allowed_responses = QtGui.QLineEdit()
 		self.edit_allowed_responses.setToolTip("Set the allowed responses seperated by a semi-colon, e.g., 'z;/'")		
 		QtCore.QObject.connect(self.edit_allowed_responses, QtCore.SIGNAL("editingFinished()"), self.apply_edit_changes)
-		self.edit_grid.addWidget(self.edit_allowed_responses, row, 1)		
-
+		self.edit_grid.addWidget(self.edit_allowed_responses, row, 1)					
+		
 		row += 1		
 		
 		self.edit_grid.addWidget(QtGui.QLabel("Timeout"), row, 0)
 		self.edit_timeout = QtGui.QLineEdit()
 		self.edit_timeout.setToolTip("Set the response timeout in milliseconds, or 'infinite'")		
 		QtCore.QObject.connect(self.edit_timeout, QtCore.SIGNAL("editingFinished()"), self.apply_edit_changes)
-		self.edit_grid.addWidget(self.edit_timeout, row, 1)		
+		self.edit_grid.addWidget(self.edit_timeout, row, 1)	
 		
+		row += 1							
+		
+		self.checkbox_flush = QtGui.QCheckBox("Flush pending key presses")
+		self.checkbox_flush.toggled.connect(self.apply_edit_changes)
+		self.edit_grid.addWidget(self.checkbox_flush, row, 1)
+		
+		row += 1							
+		
+		button_list_keys = QtGui.QPushButton(self.experiment.icon("info"), "List available keys")
+		button_list_keys.clicked.connect(self.list_keys)
+		self.edit_grid.addWidget(button_list_keys, row, 1)
+				
 		self.edit_vbox.addStretch()
 							
 	def edit_widget(self):
 	
 		"""
-		Refresh and return the edit widget
+		Update controls
+		
+		Returns:
+		Controls QWidget
 		"""
 
 		libqtopensesame.qtitem.qtitem.edit_widget(self)
@@ -118,6 +145,21 @@ class keyboard_response(libopensesame.keyboard_response.keyboard_response, libqt
 			to = ""		
 		self.edit_timeout.setText(str(to))
 		
+		self.checkbox_flush.setChecked(self.get("flush") == "yes")
+		
 		return self._edit_widget
 		
+	def list_keys(self):
+	
+		"""Show a dialog with available key names"""
+		
+		my_keyboard = keyboard(self.experiment)
+		s = "The following keys have been detected. Note that different backends may use slightly different names.<br /><br />"
+		s += "Keyboard backend: %s<br/><br />" % self.get("keyboard_backend")
+		for name in sorted(my_keyboard.valid_keys()):			
+			s += "Key: <b>%s</b><br />" % cgi.escape(str(name))
+			syn = my_keyboard.synonyms(name)
+			if syn != [name]:
+				s += "(or %s)<br />" % (", ".join([cgi.escape(str(x)) for x in syn]))
+		self.experiment.notify(s)
 	

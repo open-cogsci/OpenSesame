@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'resources/start_new_dialog.ui'
 #
-# Created: Wed Jun 15 14:15:01 2011
+# Created: Tue Oct 11 17:30:35 2011
 #      by: PyQt4 UI code generator 4.8.3
 #
 # WARNING! All changes made in this file will be lost!
@@ -171,7 +171,7 @@ class Ui_Dialog(object):
         self.label_4.setText(QtGui.QApplication.translate("Dialog", "How would you like to begin?", None, QtGui.QApplication.UnicodeUTF8))
         self.label_5.setText(QtGui.QApplication.translate("Dialog", "Templates", None, QtGui.QApplication.UnicodeUTF8))
         self.button_template.setText(QtGui.QApplication.translate("Dialog", "Start with template", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_2.setText(QtGui.QApplication.translate("Dialog", "Experiments", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_2.setText(QtGui.QApplication.translate("Dialog", "Recent experiments", None, QtGui.QApplication.UnicodeUTF8))
         self.button_recent.setText(QtGui.QApplication.translate("Dialog", "Open", None, QtGui.QApplication.UnicodeUTF8))
         self.button_browse.setText(QtGui.QApplication.translate("Dialog", "Browse", None, QtGui.QApplication.UnicodeUTF8))
 

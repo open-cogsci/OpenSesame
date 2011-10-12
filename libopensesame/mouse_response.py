@@ -65,6 +65,7 @@ class mouse_response(item.item, generic_response.generic_response):
 
 		item.item.prepare(self)
 		generic_response.generic_response.prepare(self)
+		self._flush = self.get("flush") == "yes"		
 		return True
 					
 	def run(self):
@@ -80,11 +81,11 @@ class mouse_response(item.item, generic_response.generic_response):
 		self.set_item_onset()
 
 		if self.show_cursor == "yes":
-			self._mouse.set_visible()
+			self._mouse.set_visible(True)
 
 		# Flush responses, to make sure that earlier responses
 		# are not carried over
-		if self.get("flush") == "yes":
+		if self._flush:
 			self._mouse.flush()			
 
 		self.set_sri()
@@ -104,8 +105,7 @@ class mouse_response(item.item, generic_response.generic_response):
 		"""
 
 		l = generic_response.generic_response.var_info(self)
-		l.append( ("cursor_x", "<i>Depends on response</i>") )
-		l.append( ("cursor_y", "<i>Depends on response</i>") )
-
+		l.append( ("cursor_x", "[Depends on response]") )
+		l.append( ("cursor_y", "[Depends on response]") )
 		return l
 

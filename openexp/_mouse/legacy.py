@@ -93,13 +93,13 @@ class legacy:
 			
 		self.timeout = timeout
 				
-	def set_visible(self, visible = False):
+	def set_visible(self, visible = True):
 	
 		"""<DOC>
 		Sets the visibility of the cursor
 		
 		Keyword arguments:
-		visible -- A boolean indicating the visibility of the cursor (default = False)
+		visible -- A boolean indicating the visibility of the cursor (default = True)
 		</DOC>"""	
 	
 		self.visible = visible

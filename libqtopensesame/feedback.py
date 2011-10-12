@@ -46,11 +46,13 @@ class feedback(libopensesame.feedback.feedback, libqtopensesame.feedpad.feedpad,
 		"""Apply changes to the controls"""
 
 		libqtopensesame.qtitem.qtitem.apply_edit_changes(self)
-
-		dur = str(self.edit_duration.text()).strip()
+		dur = self.experiment.sanitize(self.edit_duration.text(), strict=True)
 		if dur.strip() != "":
 			self.set("duration", dur)
-
+		if self.checkbox_reset.isChecked():
+			self.set("reset_variables", "yes")
+		else:
+			self.set("reset_variables", "no")
 		self.experiment.main_window.refresh(self.name)
 
 	def edit_widget(self):
@@ -58,14 +60,9 @@ class feedback(libopensesame.feedback.feedback, libqtopensesame.feedpad.feedpad,
 		"""Update the controls based on the items settings"""
 
 		libqtopensesame.qtitem.qtitem.edit_widget(self)
-
-		if self.has("duration"):
-			dur = self.get("duration")
-		else:
-			dur = ""
-		self.edit_duration.setText(str(dur))
+		self.edit_duration.setText(str(self.get_check("duration", "keypress")))
+		self.checkbox_reset.setChecked(self.get_check("reset_variables", valid=["yes", "no"]) == "yes")
 		self.tools_widget.refresh()
-
 		return self._edit_widget
 
 	def init_edit_widget(self):
@@ -80,6 +77,11 @@ class feedback(libopensesame.feedback.feedback, libqtopensesame.feedpad.feedpad,
 		self.edit_duration = QtGui.QLineEdit()
 		QtCore.QObject.connect(self.edit_duration, QtCore.SIGNAL("editingFinished()"), self.apply_edit_changes)
 		self.edit_grid.addWidget(self.edit_duration, row, 1)
+		
+		row += 1
+		self.checkbox_reset = QtGui.QCheckBox("Reset feedback variables")
+		self.checkbox_reset.toggled.connect(self.apply_edit_changes)
+		self.edit_grid.addWidget(self.checkbox_reset, row, 0)
 
 		row += 1
 		self.popout_button = QtGui.QPushButton(self.experiment.icon(self.item_type), "Open editor in new window")

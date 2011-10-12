@@ -7,6 +7,7 @@ pyuic4 resources/sampler_widget.ui > libqtopensesame/sampler_widget_ui.py
 pyuic4 resources/synth_widget.ui > libqtopensesame/synth_widget_ui.py
 pyuic4 resources/pool_widget.ui > libqtopensesame/pool_widget_ui.py
 pyuic4 resources/notification_dialog.ui > libqtopensesame/notification_dialog_ui.py
+pyuic4 resources/text_input_dialog.ui > libqtopensesame/text_input_dialog_ui.py
 pyuic4 resources/update_dialog.ui > libqtopensesame/update_dialog_ui.py
 pyuic4 resources/tip_dialog.ui > libqtopensesame/tip_dialog_ui.py
 pyuic4 resources/loop_wizard_dialog.ui > libqtopensesame/loop_wizard_dialog_ui.py

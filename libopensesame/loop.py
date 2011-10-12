@@ -141,9 +141,6 @@ class loop(item.item):
 
 						self.experiment.set(var, val)
 
-				# Flush the responses to catch escape presses
-				self._keyboard.flush()
-
 				if eval("self.experiment.items[\"%s\"].prepare()" % self.item):
 					exec("self.experiment.items[\"%s\"].run()" % self.item)
 				else:
@@ -187,6 +184,6 @@ class loop(item.item):
 					var_list[var] = []
 				var_list[var].append(str(self.matrix[i][var]))
 		for var in var_list:
-			l.append( (var, "<i>" + ", ".join(var_list[var]) + "</i>"))
+			l.append( (var, "[" + ", ".join(var_list[var]) + "]"))
 		return l
 

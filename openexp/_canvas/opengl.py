@@ -25,16 +25,20 @@ import subprocess
 import os
 import os.path
 import tempfile
+import copy
 
 import libopengl
 
 class opengl(openexp._canvas.legacy.legacy):
 
-	def __init__(self, experiment, bgcolor = None, fgcolor = None):
+	"""
+	Implements an OpenGL canvas. See openexp._canvas.legacy for a full
+	explanation of all parameters	
+	"""
+	
+	settings = None
 
-		"""
-		Initializes the canvas
-		"""
+	def __init__(self, experiment, bgcolor = None, fgcolor = None):
 
 		self.experiment = experiment
 		
@@ -55,66 +59,42 @@ class opengl(openexp._canvas.legacy.legacy):
 
 	def color(self, color):
 
-		"""
-		Transforms a "human readable" color into the format that
-		is used by the back-end (e.g., a PyGame color).
-
-		Arguments:
-		color -- A color in one the following formats (by example):
-			255, 255, 255 (rgb)
-			255, 255, 255, 255 (rgba)
-			#f57900 (case-insensitive html)
-			100 (integer intensity value 0 .. 255, for gray-scale)
-			0.1 (float intensity value 0 .. 1.0, for gray-scale)
-
-		Returns:
-		A color in the back-end format
-		"""
+		"""see openexp._canvas.legacy"""
 
 		return openexp._canvas.legacy._color(color)
 
 	def flip(self, x = True, y = False):
 
-		"""
-		Flips the canvas along the x- or y-axis
-		"""
-
+		"""see openexp._canvas.legacy"""
+		
 		#self.surface = pygame.transform.flip(self.surface, x, y)
 		# will have to flip each object and adjust it's location accordingly
 		pass
 
 	def copy(self, canvas):
 
-		"""
-		Copies the contents of another canvas
-		"""
+		"""see openexp._canvas.legacy"""
+
 		# PBS: do we need a deep copy here
-		self.showables = [s.copy() for s in canvas.showables]
+		#self.showables = [s.copy() for s in canvas.showables]
+		self.showables = copy.deepcopy(canvas.showables)
 
 	def xcenter(self):
 
-		"""
-		Returns the center X coordinate of the canvas
-		"""
-
+		"""see openexp._canvas.legacy"""
+		
 		return self.experiment.resolution[0] / 2
 
 	def ycenter(self):
 
-		"""
-		Returns the center Y coordinate of the canvas
-		"""
-
+		"""see openexp._canvas.legacy"""
+		
 		return self.experiment.resolution[1] / 2
 
 	def show(self):
 
-		"""
-		Shows the canvas and returns the time at
-		which the display whas shown. Waits for
-		v-sync if enabled.
-		"""
-
+		"""see openexp._canvas.legacy"""
+		
 		for s,loc in self.showables:
 			s.show(loc[0],loc[1])
 		libopengl.doBlockingFlip()
@@ -122,9 +102,8 @@ class opengl(openexp._canvas.legacy.legacy):
 
 	def clear(self, color = None):
 
-		"""
-		Clears the canvas
-		"""
+		"""see openexp._canvas.legacy"""
+
 		if color is None:
 			color = self.bgcolor
 		else:
@@ -138,47 +117,35 @@ class opengl(openexp._canvas.legacy.legacy):
 
 	def set_penwidth(self, penwidth):
 
-		"""
-		Sets the pen width
-		"""
-
+		"""see openexp._canvas.legacy"""
+		
 		self.penwidth = penwidth
 
 	def set_fgcolor(self, color):
 
-		"""
-		Sets the foreground color
-		"""
-
+		"""see openexp._canvas.legacy"""
+		
 		self.fgcolor = self.color(color)
 
 	def set_bgcolor(self, color):
 
-		"""
-		Sets the background color
-		"""
-
+		"""see openexp._canvas.legacy"""
+		
 		self.bgcolor = self.color(color)
 
 	def set_font(self, style, size):
 
-		"""
-		Sets the font style and size. OpenExp searches
-		for a [style].ttf font in the resources folder.
-		Possible styles are
-		sans
-		serif
-		mono
-		"""
-
+		"""see openexp._canvas.legacy"""
+		
 		self.font = pygame.font.Font(self.experiment.resource("%s.ttf" % style), size)
 
-	def fixdot(self, x = None, y = None):
+	def fixdot(self, x = None, y = None, color = None):
 
-		"""
-		Draws a fixation dot
-		"""
+		"""see openexp._canvas.legacy"""
 
+		if color == None:
+			color = self.fgcolor
+		
 		if x == None:
 			x = self.xcenter()
 
@@ -189,25 +156,25 @@ class opengl(openexp._canvas.legacy.legacy):
 		r2 = 2
 		surface = pygame.Surface((r1*2,r1*2), SRCALPHA)
 
-		pygame.draw.circle(surface, self.fgcolor, (r1, r1), r1, 0)
+		pygame.draw.circle(surface, color, (r1, r1), r1, 0)
 		pygame.draw.circle(surface, self.bgcolor, (r1, r1), r2, 0)
 
 		self.showables.append((libopengl.LowImage(surface),
 				       (x-r1,y-r1)))
 
-	def circle(self, x, y, r, fill = False):
+	def circle(self, x, y, r, fill = False, color = None):
 
-		"""
-		Draws a circle
-		"""
+		"""see openexp._canvas.legacy"""
+		
+		self.ellipse(x - r, y - r, 2 * r, 2 * r, fill=fill, color=color)
 
-		self.ellipse(x - r, y - r, 2 * r, 2 * r, fill)
+	def line(self, sx, sy, ex, ey, color = None):
 
-	def line(self, sx, sy, ex, ey):
+		"""see openexp._canvas.legacy"""
 
-		"""
-		Draws a line
-		"""
+		if color == None:
+			color = self.fgcolor
+
 		dy = abs(ey - sy) + 2*self.penwidth + 1
 		dx = abs(ex - sx) + 2*self.penwidth + 1
 		surface = pygame.Surface((dx,dy), SRCALPHA)
@@ -225,20 +192,21 @@ class opengl(openexp._canvas.legacy.legacy):
 			s_sy = dy - self.penwidth - 1
 			s_ey = self.penwidth
 
-		pygame.draw.line(surface, self.fgcolor,
+		pygame.draw.line(surface, color,
 				 (s_sx, s_sy), (s_ex, s_ey),
 				 self.penwidth)
 
 		self.showables.append((libopengl.LowImage(surface,interpolate=False),
-				       (min(sx,ex)-self.penwidth,
-					min(sy,ey)-self.penwidth)))
+			(min(sx,ex)-self.penwidth,
+			min(sy,ey)-self.penwidth)))
 
-	def arrow(self, sx, sy, ex, ey, arrow_size = 5):
+	def arrow(self, sx, sy, ex, ey, arrow_size = 5, color = None):
 
-		"""
-		Draws an arrow
-		"""
+		"""see openexp._canvas.legacy"""
 
+		if color == None:
+			color = self.fgcolor		
+		
 		dy = abs(ey - sy) + 2*arrow_size
 		dx = abs(ex - sx) + 2*arrow_size
 		surface = pygame.Surface((dx,dy), SRCALPHA)
@@ -256,7 +224,7 @@ class opengl(openexp._canvas.legacy.legacy):
 			s_sy = dy - arrow_size
 			s_ey = arrow_size
 
-		pygame.draw.line(surface, self.fgcolor,
+		pygame.draw.line(surface, color,
 				 (s_sx, s_sy), (s_ex, s_ey),
 				 self.penwidth)
 
@@ -264,43 +232,46 @@ class opengl(openexp._canvas.legacy.legacy):
 
 		_sx = s_ex + arrow_size * math.cos(a + math.radians(135))
 		_sy = s_ey + arrow_size * math.sin(a + math.radians(135))
-		pygame.draw.line(surface, self.fgcolor,
+		pygame.draw.line(surface, color,
 				 (_sx, _sy), (s_ex, s_ey), self.penwidth)
 
 		_sx = s_ex + arrow_size * math.cos(a + math.radians(225))
 		_sy = s_ey + arrow_size * math.sin(a + math.radians(225))
-		pygame.draw.line(surface, self.fgcolor,
+		pygame.draw.line(surface, color,
 				 (_sx, _sy), (s_ex, s_ey), self.penwidth)
 
 		self.showables.append((libopengl.LowImage(surface),
 				       (min(sx,ex)+arrow_size,
 					min(sy,ey)+arrow_size)))
 
-	def rect(self, x, y, w, h, fill = False):
+	def rect(self, x, y, w, h, fill = False, color = None):
 
-		"""
-		Draws a rectangle
-		"""
+		"""see openexp._canvas.legacy"""
+
+		if color == None:
+			color = self.fgcolor		
+
 		if fill:
 			surface = pygame.Surface((w,h), SRCALPHA)
-			pygame.draw.rect(surface, self.fgcolor, (0, 0, w, h), 0)
+			pygame.draw.rect(surface, color, (0, 0, w, h), 0)
 			loc = (x,y)
 		else:
 			surface = pygame.Surface((w+2*self.penwidth,h+2*self.penwidth),
 						 SRCALPHA)
-			pygame.draw.rect(surface, self.fgcolor,
+			pygame.draw.rect(surface, color,
 					 (self.penwidth, self.penwidth, w, h), self.penwidth)
 			loc = (x-self.penwidth,y-self.penwidth)
 
 		self.showables.append((libopengl.LowImage(surface),
 				       loc))
 
-	def ellipse(self, x, y, w, h, fill = False):
+	def ellipse(self, x, y, w, h, fill = False, color = None):
 
-		"""
-		Draws an ellipse
-		"""
+		"""see openexp._canvas.legacy"""
 
+		if color == None:
+			color = self.fgcolor		
+			
 		x = int(x)
 		y = int(y)
 		w = int(w)
@@ -308,7 +279,7 @@ class opengl(openexp._canvas.legacy.legacy):
 
 		if fill:
 			surface = pygame.Surface((w,h), SRCALPHA)
-			pygame.draw.ellipse(surface, self.fgcolor, (0, 0, w, h), 0)
+			pygame.draw.ellipse(surface, color, (0, 0, w, h), 0)
 			loc = (x,y)
 		else:
 			# Because the default way of drawing thick lines gives ugly results
@@ -324,7 +295,7 @@ class opengl(openexp._canvas.legacy.legacy):
 			surface = pygame.Surface((w+2*self.penwidth+2,
 						  h+2*self.penwidth+2),
 						 SRCALPHA)
-			pygame.draw.ellipse(surface, self.fgcolor,
+			pygame.draw.ellipse(surface, color,
 					    fgrect, 0)
 			pygame.draw.ellipse(surface, self.bgcolor,
 					    bgrect, 0)
@@ -334,20 +305,18 @@ class opengl(openexp._canvas.legacy.legacy):
 
 	def text_size(self, text):
 
-		"""
-		Returns the size of a string of text in
-		pixels as a (w, h) tuple
-		"""
+		"""see openexp._canvas.legacy"""
 
 		return self.font.size(text)
 
-	def text(self, text, center = True, x = None, y = None):
+	def text(self, text, center = True, x = None, y = None, color = None):
 
-		"""
-		Draws text
-		"""
+		"""see openexp._canvas.legacy"""
 
-		surface = self.font.render(text, self.antialias, self.fgcolor)
+		if color == None:
+			color = self.fgcolor		
+			
+		surface = self.font.render(text, self.antialias, color)
 		size = self.font.size(text)
 
 		if x == None:
@@ -360,25 +329,19 @@ class opengl(openexp._canvas.legacy.legacy):
 			x -= size[0] / 2
 			y -= size[1] / 2
 
-		self.showables.append((libopengl.LowImage(surface),
-				       (x,y)))
+		self.showables.append((libopengl.LowImage(surface), (x,y)))
 
-	def textline(self, text, line):
+	def textline(self, text, line, color = None):
 
-		"""
-		Draws text. The position is specified by line, where
-		0 is the central line, < 0 is above and > 0 is below.
-		"""
+		"""see openexp._canvas.legacy"""
 
 		size = self.font.size(text)
-		self.text(text, True, self.xcenter(), self.ycenter() + 1.5 * line * size[1])
+		self.text(text, True, self.xcenter(), self.ycenter() + 1.5 * line * size[1], color=color)
 
 	def image(self, fname, center = True, x = None, y = None, scale = None):
 
-		"""
-		Draws an image from file
-		"""
-
+		"""see openexp._canvas.legacy"""
+		
 		try:
 			surface = pygame.image.load(fname)
 		except pygame.error as e:
@@ -401,7 +364,6 @@ class opengl(openexp._canvas.legacy.legacy):
 
 		self.showables.append((libopengl.LowImage(surface),
 				       (x,y)))
-
 
 	def gabor(self, x, y, orient, freq, env = "gaussian", size = 96, stdev = 12, phase = 0, col1 = "white", col2 = "black", bgmode = "avg"):
 

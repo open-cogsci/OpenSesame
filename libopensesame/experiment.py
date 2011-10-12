@@ -17,15 +17,12 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 
 from libopensesame import misc, item, exceptions, plugins
 import openexp.experiment
-import openexp.canvas
 import os.path
 import shutil
 import sys
-import shlex
 import time
 import tarfile
 import tempfile
-import imp
 
 pool_folders = [] # Contains a list of all pool folders, which need to be removed on program exit
 
@@ -43,8 +40,8 @@ class experiment(item.item, openexp.experiment.experiment):
 		name -- the name of the experiment
 		
 		Keyword arguments:
-		string -- a string containing the experiment definition (default = None)
-		pool_folder -- a specific folder to be used for the file pool (default = None)
+		string -- a string containing the experiment definition (default=None)
+		pool_folder -- a specific folder to be used for the file pool (default=None)
 		</DOC>"""
 		
 		global pool_folders
@@ -59,6 +56,7 @@ class experiment(item.item, openexp.experiment.experiment):
 		self.experiment_path = None
 		
 		# Set default variables
+		self.coordinates = "relative"
 		self.compensation = 0		
 		self.width = 1024
 		self.height = 768
@@ -175,10 +173,12 @@ class experiment(item.item, openexp.experiment.experiment):
 			# Load a plug-in	
 			if self.debug:
 				print "experiment.parse_definition(): loading plugin '%s'" % item_type
-			try:
 				item = plugins.load_plugin(item_type, item_name, self, string, self.item_prefix())
-			except:
-				raise exceptions.script_error("Failed load plugin '%s'" % item_type)				
+			else:
+				try:
+					item = plugins.load_plugin(item_type, item_name, self, string, self.item_prefix())
+				except:
+					raise exceptions.script_error("Failed load plugin '%s'" % item_type)				
 			self.items[item_name] = item			
 									
 		else:				
@@ -193,7 +193,8 @@ class experiment(item.item, openexp.experiment.experiment):
 				if not self.debug:
 					exec("from %s import %s" % (self.module_container(), item_type))
 			except:
-				raise exceptions.script_error("Failed to import module '%s' as '%s'" % (item_type, item_name))
+				raise exceptions.script_error("Failed to import item '%s' as '%s'. " % (item_type, item_name)
+					+ "Perhaps the experiment requires a plug-in that is not available on your system.", full=False)
 		
 			cmd = "%(item_type)s.%(item_type)s(\"%(item_name)s\", self, \"\"\"%(string)s\"\"\")" % \
 				{"item_type" : item_type, "item_name" : item_name, "string" : string.replace("\"", "\\\"")}		
@@ -216,6 +217,8 @@ class experiment(item.item, openexp.experiment.experiment):
 		Arguments:
 		string -- the definition string
 		"""				
+	
+		import shlex
 	
 		if self.debug:
 			print "experiment.from_string(): building experiment"
@@ -308,97 +311,27 @@ class experiment(item.item, openexp.experiment.experiment):
 			s += self.items[item].to_string() + "\n"
 		return s
 			
-	def usanitize(self, s, strict = False):
+	def resource(self, name):
 	
-		"""<DOC>
-		Convert all special characters to U+XXXX notation
+		"""
+		Retrieve a file from the resources folder
 		
 		Arguments:
-		s -- the string to be santized
-		
-		Keyword arguments:
-		strict -- if True, special characters are ignored rather than recoded (default = False)
+		name -- the file name
 		
 		Returns:
-		The sanitized string
-		</DOC>"""
-	
-		try:
-			string = str(s)
-									
-		except:		
-	
-			# If this doesn't work and the message isn't a QString either,
-			# give up and return a warning string			
-			if not hasattr(s, "toUtf8"):
-				return "Error: Unable to create readable text from string"
-			
-			# Otherwise, walk through all characters and convert the unknown
-			# characters to unicode notation. In strict mode unicode is ignored.
-			string = ""			
-			for i in range(s.count()):
-				c = s.at(i)
-				if c.unicode() > 127:
-					if not strict:
-						string += "U+%.4X" % c.unicode()
-				else:
-					string += c.toLatin1()
-				
-		return string
-			
+		The full path to the file in the resources folder
+		"""
 		
-	def sanitize(self, s, strict = False):
-	
-		"""<DOC>
-		Remove invalid characters (notably quotes) from the string. This is
-		stricter than usanitize(), because it removes also quotes and optionally
-		all alphanumeric characters.
-		
-		Arguments:
-		s -- the string to be sanitized
-		
-		Keyword arguments:
-		strict -- If True, all but underscores and alphanumeric characters are stripped (default = False)
-		
-		Returns:
-		The sanitized string
-		</DOC>"""
-
-		string = self.usanitize(s, strict)
-		
-		# Walk through the string and strip out
-		# quotes, slashes and newlines. In strict
-		# mode we even only accept alphanumeric
-		# characters and underscores
-		s = ""
-		for c in string:
-			if strict:
-				if c.isalnum() or c == "_":
-					s += c
-			elif c not in ("\"", "\\", "\n"):
-				s += c
-		return s
-		
-	def unsanitize(self, s):
-	
-		"""<DOC>
-		Convert the U+XXXX notation back to actual Unicode encoding
-		
-		Arguments:
-		s -- the input string
-		
-		Returns:
-		The restored Unicode string
-		</DOC>"""
-		
-		s = unicode(s)
-				
-		while s.find("U+") >= 0:
-			i = s.find("U+")			
-			entity = s[i:i+6]
-			s = s.replace(entity, unichr(int(entity[2:], 16)))
-			
-		return s			
+		if self != None:
+			if name in self.resources:
+				return self.resources[name]
+			if os.path.exists(self.get_file(name)):
+				return self.get_file(name)		
+		path = misc.resource(name)
+		if path == None:
+			raise Exception("The resource '%s' could not be found in libqtopensesame.experiment.resource()" % name)			
+		return path
 		
 	def get_file(self, path):
 	
@@ -565,18 +498,16 @@ class experiment(item.item, openexp.experiment.experiment):
 		A list of tuples
 		"""
 		
-		l = []
-		
+		l = []		
 		for var in self.variables:
-			l.append( (var, self.variables[var]) )
-		
+			l.append( (var, self.variables[var]) )		
 		return l											
 		
-	def var_list(self, filt = ""):
+	def var_list(self, filt=""):
 
 		"""	
-		Return a list of (name, value, description) tuples with variable descriptions
-		for all items
+		Return a list of (name, value, description) tuples with variable
+		descriptions for all items
 		
 		Keyword arguments:
 		filt -- a search string to filter by
@@ -585,20 +516,20 @@ class experiment(item.item, openexp.experiment.experiment):
 		A list of tuples
 		"""
 		
-		l = []
-		
-		i = 0
+		l = []		
+		i = 0		
 		for item in self.items:
 			var_list = self.items[item].var_info()
 			for var, val in var_list:
 				if filt in str(var).lower() or filt in str(val).lower() or filt in item.lower():
 					l.append( (var, val, item) )
-				
+					
+		# Global variables are defined in the experiment class itself
 		var_list = self.var_info()
 		for var, val in var_list:
 			if filt in str(var).lower() or filt in str(val).lower() or filt in "global":
 				l.append( (var, val, "global") )
-				
+								
 		return l
 		
 def clean_up(verbose = False):
@@ -610,6 +541,7 @@ def clean_up(verbose = False):
 	verbose -- a boolean indicating if debugging output should be given (default = False)
 	"""
 	
+	from openexp import canvas
 	global pool_folders
 	
 	if verbose:
@@ -623,7 +555,7 @@ def clean_up(verbose = False):
 		except:
 			if verbose:
 				print "experiment.clean_up(): failed to remove '%s'" % path
-				
-	openexp.canvas.clean_up(verbose)
+								
+	canvas.clean_up(verbose)
 	
 

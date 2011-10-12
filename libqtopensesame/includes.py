@@ -22,8 +22,6 @@ loaded at runtime, and therefore escape the detection of py2exe.
 """
 
 import sys
-import warnings
-import os
 
 # Below is a quick hack to deal with pylinks quirky behavior.
 # Pylink needs to be imported prior to pygame, otherwise it
@@ -42,7 +40,9 @@ if "--pylink" in sys.argv:
 # Explicitly importing these modules ensures that Py2exe will
 # bundle them. This is therefore only required for Windows.
 
-if "--preload" in sys.argv:
+if "--preload" in sys.argv:	
+
+	import warnings
 
 	print "includes: preloading modules ..."
 	print "includes: preloading libqtopensesame modules"
@@ -119,10 +119,17 @@ if "--preload" in sys.argv:
 	except Exception as e:
 		print "includes: failed to import 'pyaudio' <http://people.csail.mit.edu/hubert/pyaudio/>. You will not be able to use portaudio and the media_player plug-in. Error: %s" % e
 
-	print "includes: preloading 'OpenGL'"
+	# OpenGL requires hacks to work with Py2Exe. The approach here is based on
+	# information from <http://www.py2exe.org/index.cgi/PyOpenGL>
+	print "includes: preloading 'OpenGL'"	
 	try:
-		import OpenGL
+		from OpenGL.GL import *
 		from OpenGL.platform import win32
+	except AttributeError:
+		pass	
+	try:
+		from ctypes import util
+		import OpenGL
 	except Exception as e:
 		print "includes: failed to import 'OpenGL' <http://pyopengl.sourceforge.net/>. You will not be able to use OpenGL. Error: %s" % e
 
@@ -144,6 +151,12 @@ if "--preload" in sys.argv:
 		import parallel.parallelutil
 	except Exception as e:
 		print "includes: failed to import 'parallel' module <http://pyserial.sourceforge.net/pyparallel.html>. You will not be able to use parallel port connectivity. Error: %s" % e
+
+	print "includes: preloading 'pyglet'"
+	try:
+		import pyglet
+	except Exception as e:
+		print "includes: failed to import 'pyglet' module <http://www.pyglet.org/>. You will not be able to use PsychoPy. Error: %s" % e
 
 	print "includes: ... done"
 

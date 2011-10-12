@@ -19,35 +19,38 @@ from PyQt4 import QtCore, QtGui
 
 class good_looking_table(QtGui.QTableWidget):
 
-	"""
-	Extends the QTableWidget to handle copy-pasting, etc.
-	"""
+	"""Extended the QTableWidget for copy-pasting, etc."""
 	
-	def __init__(self, rows, columns = None, icons = {}, parent = None):
+	def __init__(self, rows, columns=None, icons={}, parent=None):
 	
 		"""
 		Constructor
+		
+		Arguments:
+		rows -- the number of rows
+		
+		Keywords arguments:
+		columns -- the number of columns or None for no columns (default=None)
+		icons -- a dictionary with QIcons for the various actions (default={})
+		parent -- the parent QWidget (default=None)
 		"""
 	
-		self.clipboard = QtGui.QApplication.clipboard
-	
-		self.menu = QtGui.QMenu()
+		self.clipboard = QtGui.QApplication.clipboard	
 		
+		# Set-up the context menu
+		self.menu = QtGui.QMenu()		
 		if "cut" in icons:
 			self.menu.addAction(icons["cut"], "Cut", self.cut)
 		else:		
-			self.menu.addAction("Cut", self.cut)					
-		
+			self.menu.addAction("Cut", self.cut)							
 		if "copy" in icons:
 			self.menu.addAction(icons["copy"], "Copy", self.copy)
 		else:
-			self.menu.addAction("Copy", self.copy)		
-			
+			self.menu.addAction("Copy", self.copy)					
 		if "paste" in icons:
 			self.menu.addAction(icons["paste"], "Paste", self.paste)
 		else:		
 			self.menu.addAction("Paste", self.paste)
-
 		if "clear" in icons:
 			self.menu.addAction(icons["clear"], "Clear", self._clear)
 		else:		
@@ -62,19 +65,25 @@ class good_looking_table(QtGui.QTableWidget):
 		self.setGridStyle(QtCore.Qt.DotLine)
 		self.setAlternatingRowColors(True)
 		
-	def contextMenuEvent(self, event):
+	def contextMenuEvent(self, e):
 	
 		"""
-		Present a context menu
+		Present the context menu
+		
+		Arguments:
+		e -- a QContentMenuEvent
 		"""
 	
-		self.pos = event.globalPos()
+		self.pos = e.globalPos()
 		self.menu.exec_(self.pos)
 		
 	def keyPressEvent(self, e):
 	
 		"""
-		Capture keypresses to copy paste stuff
+		Capture keypresses to handle copy, cut, and paste
+		
+		Arguments:
+		e -- a QKeyEvent
 		"""
 		
 		if e.key() == QtCore.Qt.Key_Delete:
@@ -94,48 +103,36 @@ class good_looking_table(QtGui.QTableWidget):
 			
 	def cut(self):
 	
-		"""
-		Copy and clear = cut
-		"""
+		"""Cuts text from the table into the clipboard (copy + clear = cut)"""
 	
 		self.copy()
 		self._clear()																		
 
 	def copy(self):
 	
-		"""
-		Copy data from the table into the clipboard
-		"""
+		"""Copies data from the table into the clipboard"""
 
-		selected_range = self.selectedRanges()[0]
-		
-		selection = ""
-		rows = []
+		selected_range = self.selectedRanges()[0]		
+		rows = QtCore.QStringList()
 		for row in range(selected_range.topRow(), selected_range.bottomRow() + 1):		
-			columns = []
+			columns = QtCore.QStringList()
 			for column in range(selected_range.leftColumn(), selected_range.rightColumn() + 1):	
 				item = self.item(row, column)
 				if item != None:
-					value = str(item.text())								
+					value = item.text()
 				else:
 					value = ""
 				columns.append(value)
-			selection += "\n"		
-			rows.append("\t".join(columns))		
-			
-		selection = "\n".join(rows)
-		 	
+			rows.append(columns.join("\t"))					
+		selection = rows.join("\n")		 	
 		self.clipboard().setText(selection)
 		
 	def paste(self):
 	
-		"""
-		Paste data from the clipboard into the table
-		"""
+		"""Paste text from the clipboard into the table"""
 			
 		selection = self.clipboard().mimeData().text()		
-		rows = selection.split("\n")	
-		
+		rows = selection.split("\n")			
 		current_row = self.currentRow()		
 		for row in rows:
 			cells = row.split("\t")			
@@ -144,17 +141,14 @@ class good_looking_table(QtGui.QTableWidget):
 				if current_column >= self.columnCount():
 					break
 				item = QtGui.QTableWidgetItem()
-				item.setText(str(cell))
+				item.setText(cell)
 				self.setItem(current_row, current_column, item)
-				current_column += 1
-				
+				current_column += 1				
 			current_row += 1		
 			
 	def _clear(self):
 	
-		"""
-		Clear the selected cells
-		"""
+		"""Clear the selected cells"""
 	
 		selected_range = self.selectedRanges()[0]
 		for row in range(selected_range.topRow(), selected_range.bottomRow() + 1):		
@@ -165,17 +159,12 @@ class good_looking_table(QtGui.QTableWidget):
 		
 if __name__ == "__main__":
 
-	"""
-	If called standalone, this class shows a demo table
-	"""
+	"""If called standalone, this class shows a demo table"""
 
 	import sys
-
 	app = QtGui.QApplication(sys.argv)
-
 	widget = good_looking_table(10, 10)
 	widget.setWindowTitle("Good looking table")
 	widget.show()
-
 	sys.exit(app.exec_())
 

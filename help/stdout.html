@@ -3,10 +3,11 @@
 <HEAD>
 	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
 	<TITLE></TITLE>
-	<META NAME="GENERATOR" CONTENT="LibreOffice 3.3  (Linux)">
+	<META NAME="GENERATOR" CONTENT="LibreOffice 3.3  (Unix)">
 	<META NAME="AUTHOR" CONTENT="Sebastiaan Mathôt">
 	<META NAME="CREATED" CONTENT="20101213;14244300">
-	<META NAME="CHANGED" CONTENT="20110129;17573300">
+	<META NAME="CHANGEDBY" CONTENT="Sebastiaan Mathot">
+	<META NAME="CHANGED" CONTENT="20111004;17025100">
 	<STYLE TYPE="text/css">
 	<!--
 		@page { margin: 0.79in }
@@ -15,34 +16,17 @@
 		H1.western { font-family: "Arial", sans-serif; font-size: 16pt }
 		H1.cjk { font-family: "DejaVu Sans"; font-size: 16pt }
 		H1.ctl { font-family: "Lohit Hindi"; font-size: 16pt }
-		H2 { margin-bottom: 0.08in }
-		H2.western { font-family: "Arial", sans-serif; font-size: 14pt; font-style: italic }
-		H2.cjk { font-family: "Droid Sans Fallback"; font-size: 14pt; font-style: italic }
-		H2.ctl { font-family: "Lohit Hindi"; font-size: 14pt; font-style: italic }
+		PRE.cjk { font-family: "WenQuanYi Zen Hei", monospace }
 		A:link { so-language: zxx }
 	-->
 	</STYLE>
 </HEAD>
 <BODY LANG="en-US" DIR="LTR">
 <H1 CLASS="western">Debug window</H1>
-<P STYLE="margin-bottom: 0in">All messages that are printed to the
-standard output during the experiment are shown in the debug window.</P>
-<H2 CLASS="western">Printing to the debug window in inline_script
-items</H2>
-<P>You can print to the debug window using the Python 'print [msg]'
-statement. For more information, see:
-<A HREF="http://docs.python.org/reference/simple_stmts.html#the-print-statement">http://docs.python.org/reference/simple_stmts.html#the-print-statement</A></P>
-<H2 CLASS="western">The Python interpreter</H2>
-<P>You can execute Python commands by typing them in the input field
-and pressing 'enter' or clicking on the 'execute' button. These
-commands are uncensored, so that, for example, the command</P>
-<P><FONT FACE="Courier 10 Pitch">quit()</FONT></P>
-<P>will cause OpenSesame to close (without cleaning up), and 
-</P>
-<P><FONT FACE="Courier 10 Pitch">self.experiment.run()</FONT></P>
-<P>will cause the experiment to run. For more information, see:
-<A HREF="http://docs.python.org/">http://docs.python.org/</A></P>
-<P><BR><BR>
-</P>
+<P STYLE="margin-bottom: 0in">The Debug window provides a basic
+Python interpreter. It is primarily useful for printing debugging
+messages from within inline_script items.</P>
+<P STYLE="margin-bottom: 0in">Example:</P>
+<PRE CLASS="western">print 'This is a debugging message'</PRE>
 </BODY>
 </HTML>

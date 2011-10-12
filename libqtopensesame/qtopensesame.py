@@ -16,104 +16,17 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from PyQt4 import QtCore, QtGui
-from libqtopensesame import includes,\
-	opensesame_ui,\
-	update_dialog_ui,\
-	tip_dialog,\
-	general_widget_ui,\
-	pool_widget,\
-	qtitem,\
-	experiment,\
-	new_loop_sequence_dialog,\
-	start_new_dialog
-
+from libqtopensesame import includes, experiment
 import libopensesame.exceptions
 import libopensesame.experiment
 import libopensesame.plugins
-import libopensesame.misc
 import os.path
 import os
 import sys
-import imp
-import shutil
-import urllib
-import tempfile
+import time
 import traceback
 import subprocess
-import random
-import time
-import platform
-import libqtopensesame.inline_editor
-import libqtopensesame.syntax_highlighter
-import libqtopensesame.preferences_widget
-import openexp.exceptions
-import openexp.backend_info
-import traceback
-import optparse
-
-class general_header_widget(qtitem.header_widget):
-
-	"""The widget containing the clickable title and description of the experiment"""
-
-	def __init__(self, item):
-
-		"""
-		Constructor
-
-		Arguments:
-		item -- the experiment
-		"""
-
-		qtitem.header_widget.__init__(self, item)
-		self.label_name.setText("<font size='5'><b>%s</b> - Experiment</font>&nbsp;&nbsp;&nbsp;<font color='gray'><i>Click to edit</i></font>" % self.item.get("title"))
-
-	def restore_name(self):
-
-		"""Apply the name change, hide the editable title and show the label"""
-
-		self.item.main_window.apply_general_changes()
-		self.label_name.setText("<font size='5'><b>%s</b> - Experiment</font>&nbsp;&nbsp;&nbsp;<font color='gray'><i>Click to edit</i></font>" % self.item.get("title"))
-		self.label_name.show()
-		self.edit_name.setText(self.item.get("title"))
-		self.edit_name.hide()
-
-	def restore_desc(self):
-
-		"""Apply the description change, hide the editable description and show the label"""
-
-		self.item.main_window.apply_general_changes()
-		self.label_desc.setText(self.item.get("description"))
-		self.label_desc.show()
-		self.edit_desc.setText(self.item.get("description"))
-		self.edit_desc.hide()
-
-class output_buffer:
-
-	"""Used to capture the standard output and reroute it to the debug window"""
-
-	def __init__(self, plaintext):
-
-		"""
-		Constructor
-
-		Keyword arguments:
-		plaintext -- a QPlainTextEdit widget
-		"""
-
-		self.plaintext = plaintext
-
-	def write(self, s):
-
-		"""
-		Write a string
-
-		Arguments:
-		s -- a string
-		"""
-
-		if s.strip() != "":
-			self.plaintext.appendPlainText(s.strip())
-			QtGui.QApplication.processEvents()
+from libqtopensesame import config
 
 class plugin_action(QtGui.QAction):
 
@@ -183,34 +96,44 @@ class qtopensesame(QtGui.QMainWindow):
 
 	"""The main class of the OpenSesame GUI"""
 
-	def __init__(self, parent = None):
+	def __init__(self, parent=None):
 
 		"""
-		Constructor
+		Constructor. This does very little, except prepare the app to be shown
+		as rapidly as possible. The actual GUI initialization is handled by
+		resume_init().
 
 		Keyword arguments:
 		parent -- a link to the parent window
 		"""
-
-		# Construct the parent
+		
 		QtGui.QMainWindow.__init__(self, parent)
-
+		
+	def resume_init(self):
+	
+		"""Resume GUI initialization"""
+		
+		from libopensesame import misc	
+		from libqtopensesame import pool_widget, opensesame_ui
+		import platform				
+		
 		# Setup the UI
 		self.ui = opensesame_ui.Ui_MainWindow()
 		self.ui.setupUi(self)
 		self.ui.toolbar_items.main_window = self
 		self.ui.itemtree.main_window = self
+		self.ui.table_variables.main_window = self
 
 		# Set some initial variables
 		self.current_path = None
-		self.version = libopensesame.misc.version
-		self.codename = libopensesame.misc.codename
+		self.version = misc.version
+		self.codename = misc.codename
 		self.lock_refresh = False
 		self.auto_check_update = True
 		self.show_startup_tip = True
 		self.default_logfile_folder = ""
 		self.unsaved_changes = False
-
+		
 		# Determine the home folder
 		if platform.system() == "Windows":
 			self.home_folder = os.environ["USERPROFILE"]
@@ -220,7 +143,8 @@ class qtopensesame(QtGui.QMainWindow):
 			self.home_folder = os.environ["HOME"]
 		else:
 			self.home_folder = os.environ["HOME"]
-			print "qtopensesame.__init__(): unknown platform '%s', using '%s' as home folder" % (platfornm.system(), self.home_folder)
+			print "qtopensesame.__init__(): unknown platform '%s', using '%s' as home folder" \
+				% (platform.system(), self.home_folder)
 
 		# Determine autosave_folder		
 		if not os.path.exists(os.path.join(self.home_folder, ".opensesame")):
@@ -234,36 +158,30 @@ class qtopensesame(QtGui.QMainWindow):
 
 		# Set the window message
 		self.window_message("Welcome to OpenSesame %s" % self.version)
-
+		
 		# Make the connections
 		self.ui.tabwidget.tabCloseRequested.connect(self.close_tab)
 		self.ui.itemtree.itemClicked.connect(self.open_item)
-
 		self.ui.action_quit.triggered.connect(self.close)
 		self.ui.action_new.triggered.connect(self.new_file)
 		self.ui.action_open.triggered.connect(self.open_file)
 		self.ui.action_save.triggered.connect(self.save_file)
 		self.ui.action_save_as.triggered.connect(self.save_file_as)
-
 		self.ui.action_run.triggered.connect(self.run_experiment)
 		self.ui.action_run_in_window.triggered.connect(self.run_experiment_in_window)
 		self.ui.action_enable_auto_response.triggered.connect(self.set_auto_response)
-
 		self.ui.action_close_all_tabs.triggered.connect(self.close_all_tabs)
 		self.ui.action_close_other_tabs.triggered.connect(self.close_other_tabs)
 		self.ui.action_show_variable_inspector.triggered.connect(self.refresh_variable_inspector)
 		self.ui.action_show_pool.triggered.connect(self.refresh_pool)
 		self.ui.action_show_stdout.triggered.connect(self.refresh_stdout)
-
 		self.ui.action_help.triggered.connect(self.open_general_help_tab)
 		self.ui.action_about.triggered.connect(self.about)
 		self.ui.action_contribute.triggered.connect(self.open_contribute_tab)
 		self.ui.action_submit_a_bug.triggered.connect(self.open_bug_tab)
-
 		self.ui.action_check_for_update.triggered.connect(self.check_update)
 		self.ui.action_open_autosave_folder.triggered.connect(self.open_autosave_folder)
 		self.ui.action_preferences.triggered.connect(self.open_preferences_tab)
-
 		self.ui.action_add_loop.triggered.connect(self.drag_loop)
 		self.ui.action_add_sequence.triggered.connect(self.drag_sequence)
 		self.ui.action_add_sketchpad.triggered.connect(self.drag_sketchpad)
@@ -274,86 +192,84 @@ class qtopensesame(QtGui.QMainWindow):
 		self.ui.action_add_mouse_response.triggered.connect(self.drag_mouse_response)
 		self.ui.action_add_logger.triggered.connect(self.drag_logger)
 		self.ui.action_add_inline_script.triggered.connect(self.drag_inline_script)
-
 		self.ui.action_show_random_tip.triggered.connect(self.show_random_tip)
-		self.ui.action_show_info_in_overview.triggered.connect(self.toggle_overview_info)
+		self.ui.action_show_info_in_overview.triggered.connect(self.toggle_overview_info)		
+		self.ui.button_help_stdout.clicked.connect(self.open_stdout_help_tab)		
 
 		# Setup the variable inspector
+		self.ui.dock_variable_inspector.hide()
 		self.ui.button_help_variables.clicked.connect(self.open_variables_help_tab)
 		self.ui.dock_variable_inspector.visibilityChanged.connect(self.ui.action_show_variable_inspector.setChecked)
 		self.ui.edit_variable_filter.textChanged.connect(self.refresh_variable_inspector)
 
-		# Setup the file pool
+		# Setup the file pool	
+		self.ui.dock_pool.hide()
 		self.ui.dock_pool.visibilityChanged.connect(self.ui.action_show_pool.setChecked)
 		self.ui.pool_widget = pool_widget.pool_widget(self)
-		self.ui.dock_pool.setWidget(self.ui.pool_widget)
-
-		# Setup the debug window
-		if os.name == "posix":
-			font = QtGui.QFont("mono")
-		else:
-			font = QtGui.QFont("courier")
-		self.ui.dock_stdout.visibilityChanged.connect(self.ui.action_show_stdout.setChecked)
-		self.ui.button_help_stdout.clicked.connect(self.open_stdout_help_tab)
-		self.ui.edit_stdout.setFont(font)
-		self.ui.edit_python_command.setFont(font)
-		self.ui.edit_python_command.returnPressed.connect(self.execute_interpreter)
-		self.ui.button_python_execute.clicked.connect(self.execute_interpreter)
+		self.ui.dock_pool.setWidget(self.ui.pool_widget)		
 
 		# Create the initial experiment
-		self.experiment = experiment.experiment(self, "New experiment")
-		self.experiment.from_string(open(self.experiment.resource("default.opensesame"), "r").read())
-
+		self.experiment = experiment.experiment(self, "New experiment", \
+			open(misc.resource("default.opensesame"), "r").read())
+		
 		# Initialize the tabs
 		self.init_general_tab()
 		self.init_unused_tab()
-
-		# After starting OpenSesame, the general tab is visible
-		self.open_general_tab()
-
-		# Refresh all aspects of the GUI
-		self.refresh_plugins()
-		self.refresh_variable_inspector()
-		self.refresh_pool()
-		self.refresh_stdout()
-		self.refresh()
-
+		
+		# Set the style sheet
+		self.setStyleSheet(open(self.experiment.resource("stylesheet.qss")).read())
+		
 		# Build the items toolbar
-		self.ui.toolbar_items.build()
-
-		self.ui.edit_stdout.setPlainText("You can print to this debug window using the Python 'print [msg]' statement in inline_script items or the interpreter field above.\n")
 		self.set_status("Welcome to OpenSesame %s" % self.version)
 		self.restore_state()
+		self.ui.toolbar_items.build()		
+		self.refresh_plugins()		
 		self.set_unsaved(False)
 		self.start_autosave_timer()
 		self.update_recent_files()
-
-		# Parse the command line options
-		parser = optparse.OptionParser("usage: opensesame [experiment] [options]", version = "%s '%s'" % (self.version, self.codename))
-
+		self.clean_autosave()					
+		self.parse_command_line()
+			
+	def parse_command_line(self):
+	
+		"""Parse command line options"""
+		
+		import optparse
+		
+		parser = optparse.OptionParser("usage: opensesame [experiment] [options]", \
+			version = "%s '%s'" % (self.version, self.codename))
 		parser.set_defaults(debug = False)
 		parser.set_defaults(run = False)
 		parser.set_defaults(run_in_window = False)
-
 		group = optparse.OptionGroup(parser, "Immediately run an experiment")
-		group.add_option("-r", "--run", action = "store_true", dest = "run", help = "Run fullscreen")
-		group.add_option("-w", "--run-in-window", action = "store_true", dest = "run_in_window", help = "Run in window")
+		group.add_option("-r", "--run", action="store_true", dest="run", \
+			help="Run fullscreen")
+		group.add_option("-w", "--run-in-window", action="store_true", \
+			dest="run_in_window", help="Run in window")
 		parser.add_option_group(group)
-
 		group = optparse.OptionGroup(parser, "Miscellaneous options")
-		group.add_option("-d", "--debug", action = "store_true", dest = "debug", help = "Print lots of debugging messages to the standard output")
-		group.add_option("-p", "--preload", action = "store_true", dest = "preload", help = "Preload Python modules")
+		group.add_option("-d", "--debug", action="store_true", dest="debug", \
+			help="Print lots of debugging messages to the standard output")
+		group.add_option("-p", "--preload", action="store_true", dest="preload", \
+			help="Preload Python modules")
 		parser.add_option_group(group)
-
 		group = optparse.OptionGroup(parser, "Miscellaneous options")
-		group.add_option("--pylink", action = "store_true", dest = "pylink", help = "Load PyLink before PyGame (necessary for using the Eyelink plug-ins in non-dummy mode)")
+		group.add_option("--pylink", action="store_true", dest="pylink", \
+			help="Load PyLink before PyGame (necessary for using the Eyelink plug-ins in non-dummy mode)")
 		parser.add_option_group(group)
-
 		self.options, args = parser.parse_args(sys.argv)
-
 		if self.options.run and self.options.run_in_window:
 			parser.error("Options -r / --run and -w / --run-in-window are mutually exclusive.")
-
+			
+	def restore_window_state(self):
+	
+		"""
+		This is done separately from the rest of the restoration, because if we
+		don't wait until the end, the window gets distorted again.
+		"""
+	
+		self.restoreState(self._initial_window_state)
+			
 	def restore_state(self):
 
 		"""Restore the current window to the saved state"""
@@ -365,15 +281,17 @@ class qtopensesame(QtGui.QMainWindow):
 		settings.beginGroup("MainWindow");
 		self.resize(settings.value("size", QtCore.QSize(1000, 600)).toSize())
 		self.move(settings.value("pos", QtCore.QPoint(200, 200)).toPoint())
-		self.restoreState(settings.value("state").toByteArray())
+		self._initial_window_state = settings.value("state").toByteArray()
 		self.auto_check_update = settings.value("auto_check_update", True).toBool()
 		self.show_startup_tip = settings.value("show_startup_tip", True).toBool()
 		self.default_logfile_folder = settings.value("default_logfile_folder", self.home_folder).toString()
 		self.autosave_interval = settings.value("autosave_interval", 10 * 60 * 1000).toInt()[0] # Every 10 minutes
+		self.autosave_max_age = settings.value("autosave_max_age", 7).toInt()[0]
 		self.immediate_rename = settings.value("immediate_rename", False).toBool()
 		self.opensesamerun_exec = str(settings.value("opensesamerun_exec", "").toString())
 		self.opensesamerun = settings.value("opensesamerun", False).toBool()
-		self.experiment.auto_response = settings.value("auto_response", False).toBool()
+		self.experiment.auto_response = settings.value("auto_response", False).toBool()		
+		self.style = settings.value("style", "").toString()				
 
 		# Unpack the string with recent files and only remember those that still exist
 		self.recent_files = []
@@ -389,8 +307,11 @@ class qtopensesame(QtGui.QMainWindow):
 			self.ui.toolbar_main.setToolButtonStyle(QtCore.Qt.ToolButtonTextUnderIcon)
 		else:
 			self.ui.toolbar_main.setToolButtonStyle(QtCore.Qt.ToolButtonIconOnly)
+			
+		config.restore_config(settings)
 
-		settings.endGroup();
+		settings.endGroup()
+		self.set_style()
 
 	def save_state(self):
 
@@ -408,6 +329,7 @@ class qtopensesame(QtGui.QMainWindow):
 		settings.setValue("show_startup_tip", self.show_startup_tip)
 		settings.setValue("default_logfile_folder", self.default_logfile_folder)
 		settings.setValue("autosave_interval", self.autosave_interval)
+		settings.setValue("autosave_max_age", self.autosave_max_age)
 		settings.setValue("immediate_rename", self.immediate_rename)
 		settings.setValue("opensesamerun", self.opensesamerun)
 		settings.setValue("opensesamerun_exec", self.opensesamerun_exec)
@@ -416,8 +338,39 @@ class qtopensesame(QtGui.QMainWindow):
 		settings.setValue("auto_response", self.experiment.auto_response)
 		settings.setValue("toolbar_text", self.ui.toolbar_main.toolButtonStyle() == QtCore.Qt.ToolButtonTextUnderIcon)
 		settings.setValue("recent_files", ";;".join(self.recent_files))
+		settings.setValue("style", self.style)
 
-		settings.endGroup()
+		config.save_config(settings)
+
+		settings.endGroup()	
+		
+	def set_busy(self, state=True):
+	
+		"""
+		Show/ hide the busy notification
+		
+		Keywords arguments:
+		state -- indicates the busy status (default=True)
+		"""
+		
+		if state:
+			self.set_status("Busy ...", status="busy")
+		else:
+			self.set_status("Done!")
+		QtGui.QApplication.processEvents()
+		
+	def set_style(self):
+	
+		"""Appply the application style"""
+		
+		if self.style in QtGui.QStyleFactory.keys():
+			self.setStyle(QtGui.QStyleFactory.create(self.style))
+			if self.experiment.debug:
+				print "qtopensesame.set_style(): using style '%s'" % self.style
+		else:
+			if self.experiment.debug:
+				print "qtopensesame.set_style(): ignoring unknown style '%s'" % self.style		
+			self.style = ""				
 
 	def set_auto_response(self):
 
@@ -479,6 +432,23 @@ class qtopensesame(QtGui.QMainWindow):
 
 		self.start_autosave_timer()
 		return autosave_path
+		
+	def clean_autosave(self):
+	
+		"""Remove old files from the back-up folder"""
+		
+		for path in os.listdir(self.autosave_folder):
+			_path = os.path.join(self.autosave_folder, path)		
+			t = os.path.getctime(_path)
+			age = (time.time() - t)/(60*60*24)
+			if age > self.autosave_max_age:
+				if self.experiment.debug:
+					print "qtopensesame.clean_autosave(): removing '%s'" % path
+				try:
+					os.remove(_path)
+				except:
+					if self.experiment.debug:
+						print "qtopensesame.clean_autosave(): failed to remove '%s'" % path
 
 	def save_unsaved_changes(self):
 
@@ -502,7 +472,7 @@ class qtopensesame(QtGui.QMainWindow):
 		self.unsaved_changes = unsaved_changes
 		self.window_message()
 
-	def set_status(self, msg, timeout = 5000):
+	def set_status(self, msg, timeout=5000, status="ready"):
 
 		"""
 		Print a text message to the statusbar
@@ -514,7 +484,7 @@ class qtopensesame(QtGui.QMainWindow):
 		timeout -- a value in milliseconds after which the message is removed (default = 5000)
 		"""
 
-		self.ui.statusbar.showMessage(msg, timeout)
+		self.ui.statusbar.set_status(msg, timeout=timeout, status=status)
 
 	def window_message(self, msg = None):
 
@@ -544,23 +514,33 @@ class qtopensesame(QtGui.QMainWindow):
 				  of the show tips on startup setting (default = True)
 		"""
 
+		from libqtopensesame import tip_dialog
+		
 		if always or self.show_startup_tip:
 			d = tip_dialog.tip_dialog(self)
 			d.exec_()
 		elif self.experiment.debug:
 			print "qtopensesame.show_random_tip(): skipping random tip"
 
-	def start_new_wizard(self, dummy = None):
+	def start_new_wizard(self, dummy=None):
 
 		"""
 		Presents a start new-experiment-wizard type of dialog
 
 		Keywords arguments:
-		dummy -- a dummy argument passed by the signal handler
+		dummy -- a dummy argument passed by the signal handler (default=None)
 		"""
+		
+		from libqtopensesame import start_new_dialog
 
-		d = start_new_dialog.start_new_dialog(self)
-		d.exec_()			
+		if config.get_config("new_experiment_dialog"):
+			d = start_new_dialog.start_new_dialog(self)
+			d.exec_()
+		else:
+			self.open_file(path=self.experiment.resource("default.opensesame"))
+			self.window_message("New experiment")
+			self.current_path = None
+		self.set_auto_response()
 
 	def set_immediate_rename(self):
 
@@ -596,6 +576,8 @@ class qtopensesame(QtGui.QMainWindow):
 		message -- the message to be displayed
 		"""
 
+		from libqtopensesame import update_dialog_ui
+		
 		a = QtGui.QDialog(self)
 		a.ui = update_dialog_ui.Ui_Dialog()
 		a.ui.setupUi(a)
@@ -617,6 +599,8 @@ class qtopensesame(QtGui.QMainWindow):
 				  regardless of the auto check update setting and the
 				  outcome of the update check
 		"""
+		
+		import urllib
 
 		if not always and not self.auto_check_update:
 			if self.experiment.debug:
@@ -624,10 +608,10 @@ class qtopensesame(QtGui.QMainWindow):
 			return
 
 		if self.experiment.debug:
-			print "qtopensesame.check_update(): opening http://files.cogsci.nl/software/opensesame/MOST_RECENT_VERSION.TXT"
+			print "qtopensesame.check_update(): opening %s" % config.get_config("version_check_url")
 
 		try:
-			fd = urllib.urlopen("http://files.cogsci.nl/software/opensesame/MOST_RECENT_VERSION.TXT")
+			fd = urllib.urlopen(config.get_config("version_check_url"))
 			mrv = float(fd.read().strip())
 		except Exception as e:
 			if always:
@@ -636,7 +620,7 @@ class qtopensesame(QtGui.QMainWindow):
 
 		try:
 			if len(self.version.split("-")) == 2:
-				cv = float(self.version.split("-")[0]) - 0.01
+				cv = float(self.version.split("-")[0]) - 0.01 + 0.00001 * int(self.version.split("-")[1][3:])
 				if self.experiment.debug:
 					print "qtopensesame.check_update(): you are running a pre-release version, identifying as %s" % cv
 			else:
@@ -711,12 +695,16 @@ class qtopensesame(QtGui.QMainWindow):
 	def open_preferences_tab(self):
 
 		"""Open the preferences tab"""
+		
+		from  libqtopensesame import preferences_widget
 
 		i = self.get_tab_index("__preferences__")
 		if i != None:
 			self.switch_tab(i)
 		else:
-			index = self.experiment.ui.tabwidget.addTab(libqtopensesame.preferences_widget.preferences_widget(self), self.experiment.icon("options"), "Preferences")
+			index = self.experiment.ui.tabwidget.addTab( \
+				preferences_widget.preferences_widget(self), \
+				self.experiment.icon("options"), "Preferences")
 			self.switch_tab(index)
 
 	def update_preferences_tab(self):
@@ -786,28 +774,6 @@ class qtopensesame(QtGui.QMainWindow):
 			style = QtCore.Qt.ToolButtonIconOnly
 		self.ui.toolbar_main.setToolButtonStyle(style)
 
-	def execute_interpreter(self, dummy = None):
-
-		"""
-		Reads a single Python command from the interpreter input and
-		writes the result to the output window by rerouting the standard
-		out
-
-		Keyword arguments:
-		dummy -- a dummy argument passed by the signal handler
-		"""
-
-		cmd = str(self.ui.edit_python_command.text())
-		buf = output_buffer(self.ui.edit_stdout)
-		sys.stdout = buf
-		print "> %s" % cmd
-		try:
-			exec(cmd)
-		except Exception as e:
-			print "> Error: %s" % e
-		sys.stdout = sys.__stdout__
-		self.ui.edit_python_command.clear()
-
 	def refresh_plugins(self, dummy = None):
 
 		"""
@@ -840,7 +806,8 @@ class qtopensesame(QtGui.QMainWindow):
 		Refresh the file pool
 
 		Keyword arguments:
-		make_visible -- an optional boolean that sets the visibility of the file pool (default = None)
+		make_visible -- an optional boolean that sets the visibility of the file
+						pool (default = None)
 		"""
 
 		if make_visible != None:
@@ -854,25 +821,18 @@ class qtopensesame(QtGui.QMainWindow):
 	def refresh_variable_inspector(self, dummy = None):
 
 		"""
-		Refresh the variable inspector and sets the visibility based on the menu action status
+		Refresh the variable inspector and sets the visibility based on the menu
+		action status
 
 		Keyword arguments:
 		dummy -- a dummy argument passed by the signal handler
 		"""
 
-		if not self.ui.action_show_variable_inspector.isChecked():
-			self.ui.dock_variable_inspector.setVisible(False)
-			return
-		self.ui.dock_variable_inspector.setVisible(True)
-		filt = str(self.ui.edit_variable_filter.text())
-		i = 0
-		for var, val, item in self.experiment.var_list(filt):
-			self.ui.table_variables.insertRow(i)
-			self.ui.table_variables.setCellWidget(i, 0, QtGui.QLabel(" %s " % var))
-			self.ui.table_variables.setCellWidget(i, 1, QtGui.QLabel(" %s " % val))
-			self.ui.table_variables.setCellWidget(i, 2, QtGui.QLabel(" %s " % item))
-			i += 1
-		self.ui.table_variables.setRowCount(i)
+		if self.ui.action_show_variable_inspector.isChecked():
+			self.ui.dock_variable_inspector.setVisible(True)
+			self.ui.table_variables.refresh()
+		else:			
+			self.ui.dock_variable_inspector.setVisible(False)			
 
 	def restart(self):
 
@@ -1013,7 +973,7 @@ class qtopensesame(QtGui.QMainWindow):
 			return
 		
 		self.experiment = exp
-		self.header_widget.item = self.experiment
+		self.general_tab_widget.header_widget.item = self.experiment
 		self.refresh()
 		self.open_general_tab()
 		self.set_status("Opened %s" % path)
@@ -1027,6 +987,8 @@ class qtopensesame(QtGui.QMainWindow):
 		else:
 			self.window_message("New experiment")			
 			self.current_path = None
+			
+		self.set_auto_response()
 
 	def save_file(self, dummy = None, overwrite = True, remember = True):
 
@@ -1035,8 +997,10 @@ class qtopensesame(QtGui.QMainWindow):
 
 		Keyword arguments:
 		dummy -- a dummy argument passed by the signal handler (default = None)
-		overwrite -- a boolean indicating whether other files should be overwritten without asking (default = True)
-		remember -- a boolean indicating whether the file should be included in the list of recent files (default = True)
+		overwrite -- a boolean indicating whether other files should be
+					 overwritten without asking (default = True)
+		remember -- a boolean indicating whether the file should be included in
+					the list of recent files (default = True)
 		"""
 
 		self.set_status("Saving ...")
@@ -1045,13 +1009,17 @@ class qtopensesame(QtGui.QMainWindow):
 			self.save_file_as()
 			return
 
+		# Get ready, generate the script and see if the script can be
+		# re-parsed. If not, throw an error.
 		try:
 			self.get_ready()
 			script = self.experiment.to_string()
+			experiment.experiment(self, "Experiment", script) # Re-parse
 		except libopensesame.exceptions.script_error as e:
 			self.experiment.notify("Could not save file, because the script could not be generated. The following error occured:<br/>%s" % e)
 			return
 
+		# Try to save the experiment if it doesn't exist already
 		try:
 			resp = self.experiment.save(self.current_path, overwrite)
 			self.set_status("Saved as %s" % self.current_path)
@@ -1089,13 +1057,17 @@ class qtopensesame(QtGui.QMainWindow):
 		"""Save the current experiment after asking for a file name"""
 
 		if self.current_path == None:
-			path = self.home_folder
+			path = os.path.join(self.home_folder, self.experiment.sanitize(self.experiment.title, strict=True))
 		else:
 			path = self.current_path
-		path, file_type = QtGui.QFileDialog.getSaveFileNameAndFilter(self.ui.centralwidget, "Save file as ...", path, self.file_type_filter)
-		if path != None and path != "":
-			self.current_path = unicode(path)
-			self.save_file(overwrite = False)
+		path, file_type = QtGui.QFileDialog.getSaveFileNameAndFilter(self.ui.centralwidget, \
+			"Save file as ...", path, self.file_type_filter)
+		if path != None and path != "":			
+			path = unicode(path)
+			if path[-18:].lower() != ".opensesame.tar.gz" and path[-11:].lower() != ".opensesame":
+				path += ".opensesame.tar.gz"
+			self.current_path = path			
+			self.save_file(overwrite=False)
 
 	def close_all_tabs(self):
 
@@ -1157,24 +1129,6 @@ class qtopensesame(QtGui.QMainWindow):
 						redo = True
 						break
 
-	def apply_general_script(self):
-
-		"""Regenerate the entire experiment based on the general script"""
-
-		script = str(self.edit_script.edit.toPlainText())
-
-		try:
-			tmp = experiment.experiment(self, self.experiment.title, script, self.experiment.pool_folder)
-		except libopensesame.exceptions.script_error as error:
-			self.experiment.notify("Could not parse script: %s" % error)
-			self.edit_script.edit.setText(self.experiment.to_string())
-			return
-
-		self.experiment = tmp
-		self.close_other_tabs()
-		self.edit_script.setModified(False)
-		self.refresh()
-
 	def update_resolution(self, width, height):
 
 		"""
@@ -1209,190 +1163,18 @@ class qtopensesame(QtGui.QMainWindow):
 		self.experiment = tmp
 		self.refresh()
 
-	def set_header_label(self):
-
-		"""Set the general header based on the experiment title and description"""
-
-		self.header_widget.edit_name.setText(self.experiment.title)
-		self.header_widget.label_name.setText("<font size='5'><b>%s</b> - Experiment</font>&nbsp;&nbsp;&nbsp;<font color='gray'><i>Click to edit</i></font>" % self.experiment.title)
-		self.header_widget.edit_desc.setText(self.experiment.description)
-		self.header_widget.label_desc.setText(self.experiment.description)
-
-	def toggle_script_editor(self):
-
-		"""Sets the visibility of the script editor based on the checkbox state"""
-
-		show = self.general_ui.checkbox_show_script.isChecked()
-
-		self.edit_script.setVisible(show)
-		self.general_ui.spacer.setVisible(not show)
-
-	def apply_general_changes(self, dummy = None):
-
-		"""
-		Sets the experiment variables based on the controls	of the general tab
-
-		Keyword arguments:
-		dummy -- an unused parameter that is passed by the signal
-		"""
-
-		# Skip if the general tab is locked and lock it otherwise
-		if self.ignore_general_changes:
-			return
-		self.ignore_general_changes = True
-
-		# Set the title and the description
-		title = self.experiment.sanitize(self.header_widget.edit_name.text())
-		self.experiment.set("title", title)
-		desc = self.experiment.sanitize(self.header_widget.edit_desc.text())
-		self.experiment.set("description", desc)
-
-		# Set the start point
-		start = self.experiment.sanitize(self.general_ui.combobox_start.currentText())
-		self.experiment.set("start", start)
-
-		# Set the backend
-		i = self.general_ui.combobox_backend.currentIndex()
-		backend = openexp.backend_info.backend_list.values()[i]
-		self.experiment.set("canvas_backend", backend["canvas"])
-		self.experiment.set("keyboard_backend", backend["keyboard"])
-		self.experiment.set("mouse_backend", backend["mouse"])
-		self.experiment.set("sampler_backend", backend["sampler"])
-		self.experiment.set("synth_backend", backend["synth"])
-
-		# Set the display width
-		width = self.general_ui.spinbox_width.value()
-		if self.experiment.get("width") != width:
-			self.update_resolution(width, self.experiment.get("height"))
-
-		# Set the display height
-		height = self.general_ui.spinbox_height.value()
-		if self.experiment.get("height") != height:
-			self.update_resolution(self.experiment.get("width"), height)
-
-		# Set the timing compensation
-		comp = self.general_ui.spinbox_compensation.value()
-		self.experiment.set("compensation", comp)
-
-		# Set the foreground color
-		foreground = self.experiment.sanitize(self.general_ui.edit_foreground.text())
-		self.experiment.set("foreground", foreground)
-
-		# Set the background color
-		background = self.experiment.sanitize(self.general_ui.edit_background.text())
-		self.experiment.set("background", background)
-
-		# Refresh the interface and unlock the general tab
-		self.refresh()
-		self.ignore_general_changes = False
-
 	def init_general_tab(self):
 
 		"""Initializes the general tab"""
-
-		# Set the header, with the icon, label and script button
-		self.header_widget = general_header_widget(self.experiment)
-		button_help = QtGui.QPushButton(self.experiment.icon("help"), "")
-		button_help.setIconSize(QtCore.QSize(16, 16))
-		button_help.clicked.connect(self.open_general_help_tab)
-		button_help.setToolTip("Tell me more about OpenSesame!")
-		header_hbox = QtGui.QHBoxLayout()
-		header_hbox.addWidget(self.experiment.label_image("experiment_large"))
-		header_hbox.addWidget(self.header_widget)
-		header_hbox.addStretch()
-		header_hbox.addWidget(button_help)
-		header_hbox.setContentsMargins(0, 0, 0, 16)
-		header_widget = QtGui.QWidget()
-		header_widget.setLayout(header_hbox)
-
-		# Script editor
-		self.edit_script = libqtopensesame.inline_editor.inline_editor(self.experiment)
-		self.edit_script.apply.clicked.connect(self.apply_general_script)
-		libqtopensesame.syntax_highlighter.syntax_highlighter(self.edit_script.edit.document(), libqtopensesame.syntax_highlighter.opensesame_keywords)
-
-		# The rest of the controls from the UI file
-		w = QtGui.QWidget()
-		self.general_ui = general_widget_ui.Ui_Form()
-		self.general_ui.setupUi(w)
-		self.general_ui.edit_foreground.editingFinished.connect(self.apply_general_changes)
-		self.general_ui.edit_background.editingFinished.connect(self.apply_general_changes)
-		self.general_ui.combobox_start.currentIndexChanged.connect(self.apply_general_changes)
-		self.general_ui.spinbox_width.editingFinished.connect(self.apply_general_changes)
-		self.general_ui.spinbox_height.editingFinished.connect(self.apply_general_changes)
-		self.general_ui.spinbox_compensation.editingFinished.connect(self.apply_general_changes)
-		self.general_ui.checkbox_show_script.toggled.connect(self.toggle_script_editor)
-		self.general_ui.label_opensesame.setText(unicode(self.general_ui.label_opensesame.text()).replace("[version]", self.version).replace("[codename]", self.codename))
-
-		# Set the backend combobox
-		for backend in openexp.backend_info.backend_list:
-			desc = openexp.backend_info.backend_list[backend]["description"]
-			self.general_ui.combobox_backend.addItem("%s -- %s" % (backend, desc))
-		self.general_ui.combobox_backend.currentIndexChanged.connect(self.apply_general_changes)
-
-		vbox = QtGui.QVBoxLayout()
-		vbox.addWidget(header_widget)
-		vbox.addWidget(w)
-		vbox.addWidget(self.edit_script)
-		vbox.setMargin(16)
-
-		self.general_tab_widget = QtGui.QWidget()
-		self.general_tab_widget.setLayout(vbox)
-		self.general_tab_widget.general_tab = True
-
-		self.toggle_script_editor()
+		
+		from libqtopensesame import general_properties		
+		self.general_tab_widget = general_properties.general_properties(self)
 
 	def general_widget(self):
 
 		"""Set the controls of the general tab based on the variables"""
-
-		if self.experiment.debug:
-			print "qtopensesame.general_widget()"
-
-		# Lock the general tab to prevent a recursive loop
-		self.ignore_general_changes = True
-
-		# Set the header containing the titel etc
-		self.set_header_label()
-
-		# Select the start item
-		self.experiment.item_combobox(self.experiment.start, [], self.general_ui.combobox_start)
-
-		# Select the backend
-		backend = openexp.backend_info.match(self.experiment)
-		if backend == "custom":
-			self.general_ui.combobox_backend.setDisabled(True)
-		else:
-			self.general_ui.combobox_backend.setDisabled(False)
-			desc = openexp.backend_info.backend_list[backend]["description"]
-			i = self.general_ui.combobox_backend.findText("%s -- %s" % (backend, desc))
-			self.general_ui.combobox_backend.setCurrentIndex(i)
-
-		# Set the resolution
-		try:
-			self.general_ui.spinbox_width.setValue(int(self.experiment.width))
-			self.general_ui.spinbox_height.setValue(int(self.experiment.height))
-		except:
-			self.experiment.notify("Failed to parse the resolution. Expecting positive numeric values.")
-
-		# Set the timing compensation
-		try:
-			self.general_ui.spinbox_compensation.setValue(int(self.experiment.compensation))
-		except:
-			self.experiment.notify("Failed to parse timing compensation. Expecting a numeric value.")
-
-		# Set the colors
-		self.general_ui.edit_foreground.setText(str(self.experiment.foreground))
-		self.general_ui.edit_background.setText(str(self.experiment.background))
-
-		# Re-generate the opensesame script
-		try:
-			self.edit_script.edit.setPlainText(self.experiment.to_string())
-		except libopensesame.exceptions.script_error as e:
-			self.experiment.notify("</>Failed to generate script:</b> %s" % e)
-			self.edit_script.edit.setText("Failed to generate script!")
-
-		# Release the general tab
-		self.ignore_general_changes = False
+		
+		self.general_tab_widget.refresh()
 
 	def open_general_tab(self, reopen = False, index = None, focus = True):
 
@@ -1404,7 +1186,7 @@ class qtopensesame(QtGui.QMainWindow):
 		index -- the position of the tab (default = None)
 		focus -- a boolean indicating whether the general tab should receive focus (defaut = True)
 		"""
-
+		
 		for i in range(self.experiment.ui.tabwidget.count()):
 			w = self.ui.tabwidget.widget(i)
 			if hasattr(w, "general_tab"):
@@ -1551,7 +1333,7 @@ class qtopensesame(QtGui.QMainWindow):
 		elif widget.name == "__unused__":
 			self.open_unused_tab()
 		else:
-			self.experiment.items[widget.name].open_edit_tab()
+			self.experiment.items[widget.name].open_tab()
 
 	def copy_to_pool(self, fname):
 
@@ -1561,6 +1343,8 @@ class qtopensesame(QtGui.QMainWindow):
 		Arguments:
 		fname -- full path to file
 		"""
+		
+		import shutil
 
 		renamed = False
 		_fname = os.path.basename(fname)
@@ -1599,6 +1383,8 @@ class qtopensesame(QtGui.QMainWindow):
 		Arguments:
 		exp -- an instance of libopensesame.experiment.experiment
 		"""
+		
+		import tempfile
 
 		# Temporary file for the standard output and experiment
 		stdout = tempfile.mktemp(suffix = ".stdout")
@@ -1688,6 +1474,9 @@ class qtopensesame(QtGui.QMainWindow):
 		dummy -- a dummy argument that is passed by signaler (default = None)
 		fullscreen -- a boolean to indicate if the window should be fullscreen (default = True)
 		"""
+		
+		import openexp.exceptions
+		from libqtopensesame import pyterm				
 
 		# Before we run the experiment, we parse it in three steps
 		# 1) Apply any pending changes
@@ -1757,7 +1546,7 @@ class qtopensesame(QtGui.QMainWindow):
 		exp.auto_response = self.experiment.auto_response
 
 		# Reroute the standard output to the debug window
-		buf = output_buffer(self.ui.edit_stdout)
+		buf = pyterm.output_buffer(self.ui.edit_stdout)
 		sys.stdout = buf
 
 		if self.opensesamerun:
@@ -1792,6 +1581,7 @@ class qtopensesame(QtGui.QMainWindow):
 
 		# Undo the standard output rerouting
 		sys.stdout = sys.__stdout__
+		self.ui.edit_stdout.show_prompt()
 
 		# Resume autosave, but not if opensesamerun is called
 		if self.autosave_timer != None:
@@ -1809,15 +1599,19 @@ class qtopensesame(QtGui.QMainWindow):
 
 		self.run_experiment(fullscreen = False)
 
-	def refresh(self, changed_item = None, refresh_edit = True, refresh_script = True):
+	def refresh(self, changed_item=None, refresh_edit=True, refresh_script=True):
 
 		"""
-		Refreshes all parts of the interface that may have changed because of a changed item
+		Refreshes all parts of the interface that may have changed because of a
+		changed item
 
 		Keyword arguments:
-		changed_item -- the name of a specific item that should be refreshed (default = None)
-		refresh_edit -- a boolean to indicate if the edit tabs should be refreshed (default = True)
-		refresh_script -- a boolean to indicate if the script tabs should be refreshed (default = True)
+		changed_item -- the name of a specific item that should be refreshed
+						(default = None)
+		refresh_edit -- a boolean to indicate if the edit tabs should be
+						refreshed (default = True)
+		refresh_script -- a boolean to indicate if the script tabs should be
+						  refreshed (default = True)
 		"""
 
 		# Make sure the refresh does not get caught in
@@ -1826,28 +1620,23 @@ class qtopensesame(QtGui.QMainWindow):
 			return
 		self.lock_refresh = True
 
+		self.set_busy(True)
 		if self.experiment.debug:
 			print "qtopensesame.refresh(): %s" % changed_item
 
-		self.set_header_label()
+		self.general_tab_widget.set_header_label()
 
 		index = self.ui.tabwidget.currentIndex()
-
 		for i in range(self.ui.tabwidget.count()):
-
 				w = self.ui.tabwidget.widget(i)
-
 				if hasattr(w, "general_tab"):
 					self.general_widget()
-
 				# For now the unused tab doesn't need to be refreshed
 				if hasattr(w, "unused_tab"):
 					pass
-
 				if refresh_edit and hasattr(w, "edit_item") and (changed_item == None or w.edit_item == changed_item):
 					if w.edit_item in self.experiment.items:
 						self.experiment.items[w.edit_item].edit_widget()
-
 				if refresh_script and hasattr(w, "script_item") and (changed_item == None or w.script_item == changed_item):
 					if w.script_item in self.experiment.items:
 						self.experiment.items[w.script_item].script_widget()
@@ -1857,31 +1646,32 @@ class qtopensesame(QtGui.QMainWindow):
 		self.refresh_variable_inspector()
 		self.refresh_pool()
 		self.set_unsaved()
-
 		self.lock_refresh = False
+		self.set_busy(False)		
 
 	def hard_refresh(self, changed_item):
 
 		"""
 		Closes and reopens the tabs for a changed item. This is different
-		from the normal refresh in the sense that here the tabs are reinitialized
-		from scratch which is necessary if a new instance of the item has been
-		created.
+		from the normal refresh in the sense that here the tabs are
+		reinitialized from scratch which is necessary if a new instance of the
+		item has been created.
 
 		Arguments:
 		changed_item -- the name of the changed item
-		"""
+		"""		
 
 		# Make sure the refresh does not get caught in
 		# a recursive loop
 		if self.lock_refresh:
 			return
 		self.lock_refresh = True
-
+		
+		self.set_busy(True)
 		if self.experiment.debug:
 			print "qtopensesame.hard_refresh(): %s" % changed_item
 
-		self.set_header_label()
+		self.general_tab_widget.set_header_label()
 
 		index = self.ui.tabwidget.currentIndex()
 
@@ -1908,6 +1698,7 @@ class qtopensesame(QtGui.QMainWindow):
 		self.ui.tabwidget.setCurrentIndex(index)
 
 		self.lock_refresh = False
+		self.set_busy(False)		
 
 	def populate_plugin_menu(self, menu):
 
@@ -1928,7 +1719,7 @@ class qtopensesame(QtGui.QMainWindow):
 				cat_menu[cat] = menu.addMenu(self.experiment.icon("plugins_large"), cat)
 			cat_menu[cat].addAction(plugin_action(self, cat_menu[cat], plugin))
 
-	def add_item(self, item_type, refresh = True):
+	def add_item(self, item_type, refresh=True, name=None):
 
 		"""
 		Adds a new item to the item list
@@ -1937,17 +1728,19 @@ class qtopensesame(QtGui.QMainWindow):
 		item_type -- the type of the item to add
 
 		Keyword arguments:
-		refresh -- a bool to indicate if the interface should be refreshed (default = True)
+		refresh -- a bool to indicate if the interface should be refreshed
+				   (default=True)
+		name -- a custom name to give the item (default=None)
 
 		Returns:
 		The name of the new item
 		"""
 
-		if self.experiment.debug:
-			print "qtopensesame.add_item(): adding %s" % item_type
-
-		# Get a unique name
+		# Get a unique name if none has been specified
 		name = self.experiment.unique_name("%s" % item_type)
+			
+		if self.experiment.debug:
+			print "qtopensesame.add_item(): adding %s (%s)" % (name, item_type)
 
 		# If the item type is a plugin, we need to use the plugin mechanism
 		if libopensesame.plugins.is_plugin(item_type):
@@ -1981,7 +1774,6 @@ class qtopensesame(QtGui.QMainWindow):
 
 		# Optionally, refresh the interface
 		if refresh:
-			item.open_edit_tab()
 			self.refresh()
 			self.select_item(name)
 
@@ -2000,24 +1792,21 @@ class qtopensesame(QtGui.QMainWindow):
 		The name of the new loop
 		"""
 
+		from libqtopensesame import new_loop_sequence_dialog
+		
 		d = new_loop_sequence_dialog.new_loop_sequence_dialog(self, self.experiment, "loop", parent)
 		d.exec_()
-
 		if d.action == "cancel":
 			return None
-
 		loop = self.add_item("loop", False)
-
 		if d.action == "new":
 			item_name = self.add_item(d.item_type, False)
 			self.experiment.items[loop].set("item", item_name)
 		else:
 			self.experiment.items[loop].set("item", d.item_name)
-
 		if refresh:
 			self.refresh()
 			self.select_item(loop)
-
 		return loop
 
 	def add_sequence(self, refresh = True, parent = None):
@@ -2032,21 +1821,19 @@ class qtopensesame(QtGui.QMainWindow):
 		Returns:
 		The name of the new sequence
 		"""
+		
+		from libqtopensesame import new_loop_sequence_dialog
 
 		d = new_loop_sequence_dialog.new_loop_sequence_dialog(self, self.experiment, "sequence", parent)
 		d.exec_()
-
 		if d.action == "cancel":
 			return None
-
 		seq = self.add_item("sequence", False)
-
 		if d.action == "new":
 			item_name = self.add_item(d.item_type, False)
 			self.experiment.items[seq].items.append((item_name, "always"))
 		else:
 			self.experiment.items[seq].items.append((d.item_name, "always"))
-
 		if refresh:
 			self.refresh()
 			self.select_item(seq)
@@ -2172,92 +1959,42 @@ class qtopensesame(QtGui.QMainWindow):
 		"""
 
 		return self.add_item("inline_script", refresh)
-
+		
 	def drop_item(self, add_func):
 
 		"""
-		Create a new item after an item has been dragged and dropped from the toolbar.
-		The necessary information is stored in the itemtree.
+		Create a new item after an item has been dragged and dropped from the
+		toolbar. The necessary information is stored in the itemtree.
 
 		Arguments:
 		add_func -- a function to call to create the new item
 		"""
-
+		
+		from libqtopensesame import draggables
+		
 		if self.experiment.debug:
-			print "qtopensesame.drag_item(): dropping"
+			print "qtopensesame.drop_item(): dropping from toolbar"		
+		
+		# Determine the drop target
+		target, index, select = draggables.drop_target
 
-		# Check if the overview tree has set a target for the drop
-		if self.ui.itemtree.drop_target == None:
-			return
-
-		# Retrieve the target
-		target_item = self.ui.itemtree.drop_target
-		target = str(target_item.text(0))
-
-		# If the target is not an item, return
-		if target not in self.experiment.items:
-			return
-
-		# If the target is not a loop or sequence, get the underlying loop or sequence
-		if self.experiment.items[target].item_type not in ("sequence", "loop"):
-			real_target_item = target_item
-			real_target = target
-			target_item = target_item.parent()
-			target = str(target_item.text(0))
-
-			# Determine the position in the sequence
-			index = 0
-			for child in target_item.takeChildren():
-				if child == real_target_item:
-					break
-				index += 1
-
-		else:
-
-			# By default insert the item at the top of the sequence
-			index = 0
-
-		# If the target is not an item and is not the main experiment, return
-		if target not in self.experiment.items and target_item.parent() != None:
-			if self.experiment.debug:
-				print "qtopensesame.drop_item(): failed to drop onto %s" % target
-			return
-
-		# Create a new item
+		# Create a new item and return if it fails
 		if type(add_func) != str:
 			new_item = add_func(False, parent = target)
 		else:
 			new_item = self.add_item(add_func, False)
-
-		# If cancelled, just return
 		if new_item == None:
 			self.refresh(target)
 			return
-
-		# If the target has no parent, it is the main experiment. In this case, we have
-		# to change the entry point of the experiment
-		if target_item.parent() == None:
-
-			if self.experiment.debug:
-				print "qtopensesame.drop_item(): changing experiment entry point to %s" % target
-			self.experiment.set("start", new_item)
-
-		# Otherwise we add the new item to the parent sequence or the loop
+			
+		if target == "__start__":
+			self.experiment.start = new_item
 		else:
-
-			if self.experiment.debug:
-				print "qtopensesame.drop_item(): dropping onto %s" % target
-
-			# If the target is a sequence insert the new item
-			if self.experiment.items[target].item_type == "sequence":
-				self.experiment.items[target].items.insert(index, (new_item, "always"))
-
-			# If the target is a loop, replace the loop item
-			if self.experiment.items[target].item_type == "loop":
-				self.experiment.items[target].item = new_item
-
+			self.experiment.items[target].items.insert(index, (new_item, "always"))		
+			
 		self.refresh(target)
-		self.select_item(new_item)
+		if select:
+			self.select_item(new_item)					
 
 	def drag_item(self, add_func):
 
@@ -2267,26 +2004,25 @@ class qtopensesame(QtGui.QMainWindow):
 		Arguments:
 		add_func -- a function to create a new item, if the item is dropped
 		"""
-
+		
+		from libqtopensesame import draggables
+		
 		if self.experiment.debug:
 			print "qtopensesame.drag_item(): dragging"
 
 		# Reset the drop target
-		self.ui.itemtree.drop_target = None
+		draggables.drop_target = None
 
 		# Start the drop action
 		d = QtGui.QDrag(self.ui.centralwidget)
 		m = QtCore.QMimeData()
-		m.setText("new_item")
+		m.setText("__osnew__ %s" % add_func)
 		d.setMimeData(m)
 
 		# Check if the drop was successful
 		if d.start(QtCore.Qt.CopyAction) == QtCore.Qt.CopyAction:
-
 			self.drop_item(add_func)
-
 		else:
-
 			# Create a new item
 			if type(add_func) != str:
 				new_item = add_func(False)

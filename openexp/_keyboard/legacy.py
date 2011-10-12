@@ -42,7 +42,7 @@ class legacy:
 	"""
 
 	key_map = {
-		"1" : "!", "2" : "@", "3" : "#", "4" : "$", "5" : "%",\
+		"1" : "!", "2" : "@", "3" : "#", "4" : "$", "5" : "%", \
 		"6" : "^", "7" : "&", "8" : "*", "9" : "(", "0" : ")", \
 		"-" : "_", "=" : "+", "[" : "{", "]" : "}", "\\" : "|", \
 		";" : ":", "\"" : "'", "," : "<", "." : ">", "/" : "?"
@@ -65,17 +65,24 @@ class legacy:
 
 		# Create a dictionary to map character representations to
 		# ASCII codes
+		pygame.init()
 		self.key_codes = {}
 		for i in dir(pygame):
 			if i[:2] == "K_":
 				code = eval("pygame.%s" % i)
-				name = pygame.key.name(code)
-				self.key_codes[name] = code
+				name1 = pygame.key.name(code).lower()
+				name2 = name1.upper()
+				name3 = i[2:].lower()
+				name4 = name3.upper()
+				self.key_codes[name1] = code
+				self.key_codes[name2] = code
+				self.key_codes[name3] = code
+				self.key_codes[name4] = code				
 
 		self.experiment = experiment
 		self.set_keylist(keylist)
-		self.set_timeout(timeout)				
-
+		self.set_timeout(timeout)
+		
 	def set_keylist(self, keylist = None):
 
 		"""<DOC>
@@ -117,6 +124,9 @@ class legacy:
 		timeout -- an integer value specifying a timeout in milliseconds or
 				   None to use the default. This parameter does not change the
 				   default timeout. (default = None)
+				   
+		Exceptions:
+		A response_error if 'escape' was pressed				   
 
 		Returns:
 		A (key, timestamp) tuple. The key is None if a timeout occurs.
@@ -209,6 +219,8 @@ class legacy:
 
 		if type(key) == int:
 			return key
+		if key == "timeout":
+			return None
 		if key not in self.key_codes:
 			raise openexp.exceptions.response_error("'%s' is not a valid keyboard input character." % key)
 		return self.key_codes[key]
@@ -220,7 +232,7 @@ class legacy:
 
 		Arguments:
 		key -- a key in character or ASCII keycode notation
-
+		
 		Returns:
 		A key in character notation
 		</DOC>"""
@@ -230,11 +242,42 @@ class legacy:
 		if type(key) == str or type(key) == chr:
 			return key
 		return pygame.key.name(key)
+		
+	def valid_keys(self):
+	
+		"""<DOC>
+		Generates a list of valid key names
+		
+		Returns:
+		A list of valid key names
+		</DOC>"""
+		
+		return self.key_codes							
+		
+	def synonyms(self, key):
+	
+		"""
+		Gives a list of synonyms for a key, either codes or names
+		
+		Returns:
+		A list of synonyms
+		"""
+		
+		if type(key) == str:
+			return self.synonyms(self.to_int(key))			
+		l = []
+		for name, code in self.key_codes.iteritems():
+			if code == key:
+				l.append(name)
+		return l
 
 	def flush(self):
 
 		"""<DOC>
 		Clears all pending input, not limited to the keyboard
+		
+		Exceptions:
+		A response_error if 'escape' was pressed		
 
 		Returns:
 		True if a key had been pressed (i.e., if there was something
@@ -247,6 +290,5 @@ class legacy:
 				keypressed = True
 				if event.key == pygame.K_ESCAPE:
 					raise openexp.exceptions.response_error("The escape key was pressed.")
-
 		return keypressed
 

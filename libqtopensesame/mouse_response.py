@@ -21,30 +21,36 @@ from PyQt4 import QtCore, QtGui
 
 class mouse_response(libopensesame.mouse_response.mouse_response, libqtopensesame.qtitem.qtitem):
 
-	def __init__(self, name, experiment, string = None):
+	"""mouse_response item GUI"""
+
+	def __init__(self, name, experiment, string=None):
 	
 		"""
-		Initialize the experiment		
-		"""
+		Constructor
 		
+		Arguments:
+		name -- item name
+		experiment -- experiment instance	
+		
+		Keywords arguments:
+		string -- a definition string (default=None)	
+		"""		
 		libopensesame.mouse_response.mouse_response.__init__(self, name, experiment, string)
 		libqtopensesame.qtitem.qtitem.__init__(self)		
 
 	def apply_edit_changes(self):
 	
-		"""
-		Apply changes to the edit widget
-		"""
+		"""Apply controls"""
 		
 		libqtopensesame.qtitem.qtitem.apply_edit_changes(self)
 		
-		cr = str(self.edit_correct_response.text()).strip()
+		cr = self.usanitize(self.edit_correct_response.text())
 		if cr.strip() != "":
 			self.set("correct_response", cr)
 		else:
 			self.unset("correct_response")
 		
-		ar = str(self.edit_allowed_responses.text()).strip()
+		ar = self.usanitize(self.edit_allowed_responses.text())
 		if ar.strip() != "":
 			self.set("allowed_responses", ar)
 		else:
@@ -55,20 +61,23 @@ class mouse_response(libopensesame.mouse_response.mouse_response, libqtopensesam
 		else:
 			self.set("show_cursor", "no")
 			
-		to = str(self.edit_timeout.text()).strip()
+		to = self.sanitize(self.edit_timeout.text(), strict=True)
 		if to.strip() != "":
 			self.set("timeout", to)
 		else:
-			self.set("timeout", "infinite")					
+			self.set("timeout", "infinite")		
+			
+		if self.checkbox_flush.isChecked():
+			self.set("flush", "yes")
+		else:
+			self.set("flush", "no")						
 			
 		self.experiment.main_window.refresh(self.name)			
 
 	def init_edit_widget(self):
 	
-		"""
-		Build the edit widget
-		"""
-		
+		"""Initialize controls"""
+				
 		libqtopensesame.qtitem.qtitem.init_edit_widget(self, False)
 		
 		row = 3
@@ -97,17 +106,32 @@ class mouse_response(libopensesame.mouse_response.mouse_response, libqtopensesam
 
 		row += 1
 
-		self.checkbox_show_cursor = QtGui.QCheckBox("Show mouse cursor")
+		self.checkbox_show_cursor = QtGui.QCheckBox("Visible mouse cursor")
 		self.checkbox_show_cursor.setToolTip("If checked, the mouse cursor will be visible")
 		QtCore.QObject.connect(self.checkbox_show_cursor, QtCore.SIGNAL("stateChanged(int)"), self.apply_edit_changes)
-		self.edit_grid.addWidget(self.checkbox_show_cursor, row, 0)		
+		self.edit_grid.addWidget(self.checkbox_show_cursor, row, 1)		
+		
+		row += 1							
+		
+		self.checkbox_flush = QtGui.QCheckBox("Flush pending mouse clicks")
+		self.checkbox_flush.toggled.connect(self.apply_edit_changes)
+		self.edit_grid.addWidget(self.checkbox_flush, row, 1)		
+		
+		row += 1
+
+		l = QtGui.QLabel("<small><i><b>Note:</b> On some systems the cursor may not appear, despite being set to 'visible'. If this happens, please refer to the documentation for more information.</i></small>")
+		l.setWordWrap(True)
+		self.edit_grid.addWidget(l, row, 1)
 		
 		self.edit_vbox.addStretch()
 							
 	def edit_widget(self):
 	
 		"""
-		Refresh and return the edit widget
+		Update controls
+		
+		Returns:
+		Controls QWidget
 		"""
 
 		libqtopensesame.qtitem.qtitem.edit_widget(self)
@@ -128,7 +152,9 @@ class mouse_response(libopensesame.mouse_response.mouse_response, libqtopensesam
 			to = self.get("timeout")
 		else:
 			to = ""		
-		self.edit_timeout.setText(str(to))			
+		self.edit_timeout.setText(str(to))	
+		
+		self.checkbox_flush.setChecked(self.get("flush") == "yes")				
 		
 		return self._edit_widget
 		

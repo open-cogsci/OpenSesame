@@ -75,6 +75,7 @@ class syntax_highlighter (QSyntaxHighlighter):
         '\{', '\}', '\(', '\)', '\[', '\]',
     ]
     def __init__(self, document, keywords):
+    
         QSyntaxHighlighter.__init__(self, document)
 
         # Multi-line strings (expression, flag, style)

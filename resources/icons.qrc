@@ -1,5 +1,7 @@
 <RCC>
   <qresource prefix="icons">
+    <file>colorpicker.png</file>
+    <file>options.png</file>
     <file>item_info_large.png</file>
     <file>recent_large.png</file>
     <file>update.png</file>

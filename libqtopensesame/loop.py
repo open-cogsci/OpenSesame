@@ -26,7 +26,7 @@ class loop_table(libqtopensesame.good_looking_table.good_looking_table):
 
 	"""The looptable extends the QtTableWidget to allow copying and pasting"""
 
-	def __init__(self, loop, rows, columns, parent = None):
+	def __init__(self, loop, rows, columns, parent=None):
 
 		"""
 		Constructor
@@ -37,7 +37,7 @@ class loop_table(libqtopensesame.good_looking_table.good_looking_table):
 		columns -- the nr of columns
 
 		Keyword arguments:
-		parent -- parent QWidget (default = None)
+		parent -- parent QWidget (default=None)
 		"""
 
 		self.pos = None
@@ -115,16 +115,33 @@ class loop(libopensesame.loop.loop, libqtopensesame.qtitem.qtitem):
 		libqtopensesame.qtitem.qtitem.rename(self, from_name, to_name)
 		if self.item == from_name:
 			self.item = to_name
+			
+	def delete(self, item_name, item_parent=None, index=None):	
+	
+		"""
+		Delete an item
+		
+		Arguments:
+		item_name -- the name of the item to be deleted
+		
+		Keywords arguments:
+		item_parent -- the parent item (default=None)
+		index -- the index of the item in the parent (default=None)
+		"""	
+		
+		if self.item == item_name and item_parent == self.name:
+			self.item = ""			
 
 	def add_cyclevar(self):
 
 		"""Present a dialog and add a variable"""
 
-		var_name, ok = QtGui.QInputDialog.getText(self.loop_table, 'New variable', 'Enter a variable name, optionally followed by a default value (i.e., \"varname defaultvalue\")')
+		var_name, ok = QtGui.QInputDialog.getText(self.loop_table, 'New variable', \
+			'Enter a variable name, optionally followed by a default value (i.e., \"varname defaultvalue\")')
 
 		if ok:
 			l = self.cyclevar_list()
-			var_name = str(var_name)
+			var_name = self.experiment.sanitize(var_name)
 
 			# Split by space, because a name may be followed by a default value
 			if len(var_name.split()) > 1:
@@ -134,7 +151,7 @@ class loop(libopensesame.loop.loop, libqtopensesame.qtitem.qtitem):
 				default = ""
 
 			# Check for valid variable names
-			var_name = self.experiment.sanitize(var_name, True)
+			var_name = self.experiment.sanitize(var_name, strict=True)
 			if var_name == "":
 				self.experiment.notify("Variable names must consist of alphanumeric characters and underscores, and must not be empty")
 				return
@@ -168,8 +185,29 @@ class loop(libopensesame.loop.loop, libqtopensesame.qtitem.qtitem):
 					var_list.append(var)
 		if len(var_list) == 0:
 			return None
-		return var_list
+		return var_list		
+		
+		
+	def rename_var(self, item, from_name, to_name):
+	
+		"""
+		A notification that a variable has been renamed
+		
+		Arguments:
+		item -- the item doing the renaming		
+		from_name -- the old variable name
+		to_name -- the new variable name
+		"""
 
+		# Only accept renames from this item
+		if item != self.name:
+			return	
+		for i in self.matrix:
+			if from_name in self.matrix[i]:
+				val = self.matrix[i][from_name]
+				del self.matrix[i][from_name]
+				self.matrix[i][to_name] = val
+		
 	def rename_cyclevar(self):
 
 		"""Present a dialog and rename a variable"""
@@ -178,23 +216,20 @@ class loop(libopensesame.loop.loop, libqtopensesame.qtitem.qtitem):
 		if var_list == None:
 			return
 
-		old_var, ok = QtGui.QInputDialog.getItem(self.experiment.ui.centralwidget, "Remove variable", "Which variable do you want to rename?", var_list)
+		old_var, ok = QtGui.QInputDialog.getItem(self.experiment.ui.centralwidget, "Rename variable", "Which variable do you want to rename?", var_list, editable=False)
 		if ok:
-			new_var, ok = QtGui.QInputDialog.getText(self.loop_table, 'New variable', 'Enter a new variable name', text = old_var)
-			if ok and new_var != old_var:
+			_new_var, ok = QtGui.QInputDialog.getText(self.loop_table, 'New variable', 'Enter a new variable name', text = old_var)
+			if ok and _new_var != old_var:
 				old_var = str(old_var)
-				new_var = str(new_var)
-
+				new_var = self.experiment.sanitize(_new_var, strict=True)
+				if _new_var != new_var or new_var == "":
+					self.experiment.notify("Please use only letters, numbers and underscores")
+					return				
 				if new_var in var_list:
 					self.experiment.notify("A variable with the name '%s' already exists" % new_var)
 					return
-
-				for i in self.matrix:
-					if old_var in self.matrix[i]:
-						val = self.matrix[i][old_var]
-						del self.matrix[i][old_var]
-						self.matrix[i][new_var] = val
-
+			for item in self.experiment.items.values():
+				item.rename_var(self.name, old_var, new_var)
 			self.refresh_loop_table()
 			self.apply_edit_changes()
 
@@ -206,7 +241,8 @@ class loop(libopensesame.loop.loop, libqtopensesame.qtitem.qtitem):
 		if var_list == None:
 			return
 
-		var, ok = QtGui.QInputDialog.getItem(self.experiment.ui.centralwidget, "Remove variable", "Which variable do you want to remove?", var_list)
+		var, ok = QtGui.QInputDialog.getItem(self.experiment.ui.centralwidget, \
+			"Remove variable", "Which variable do you want to remove?", var_list)
 		if ok:
 			var = str(var)
 			for i in self.matrix:
@@ -272,7 +308,8 @@ class loop(libopensesame.loop.loop, libqtopensesame.qtitem.qtitem):
 
 					# Ask for confirmation (only the first time)
 					if not empty and confirm:
-						resp = QtGui.QMessageBox.question(self.experiment.ui.centralwidget, "Remove cycles?", "By reducing the number of cycles, data will be lost from the table. Do you wish to continue?", QtGui.QMessageBox.Yes, QtGui.QMessageBox.No)
+						resp = QtGui.QMessageBox.question(self.experiment.ui.centralwidget, \
+							"Remove cycles?", "By reducing the number of cycles, data will be lost from the table. Do you wish to continue?", QtGui.QMessageBox.Yes, QtGui.QMessageBox.No)
 						if resp == QtGui.QMessageBox.No:
 							return
 						confirm = False
@@ -339,7 +376,8 @@ class loop(libopensesame.loop.loop, libqtopensesame.qtitem.qtitem):
 		for cycle in self.matrix:
 			for var in self.matrix[cycle]:
 				col = column_order.index(var)
-				self.loop_table.setItem(cycle, col, QtGui.QTableWidgetItem(str(self.matrix[cycle][var])))
+				self.loop_table.setItem(cycle, col, \
+					QtGui.QTableWidgetItem(self.unsanitize(self.matrix[cycle][var])))
 
 		# Store the number of cycles and the column order
 		self.set("cycles", max(self.get("cycles"), self.cycle_count()))
@@ -398,12 +436,12 @@ class loop(libopensesame.loop.loop, libqtopensesame.qtitem.qtitem):
 					item = a.ui.table_wizard.item(row, col)
 					if item == None:
 						break
-					s = str(item.text())
+					s = item.text()
 					if row == 0:
 						var = self.experiment.sanitize(s, True)
 						var_dict[var] = []
 					elif var != None:
-						var_dict[var].append(self.experiment.sanitize(s))
+						var_dict[var].append(self.experiment.usanitize(s))
 
 			self.i = 0
 			self.matrix = {}
@@ -511,7 +549,7 @@ class loop(libopensesame.loop.loop, libqtopensesame.qtitem.qtitem):
 		self.refresh_loop_table(lock = False)
 
 		self.edit_item.deleteLater()
-		self.edit_item = self.experiment.item_combobox(self.item, [self.name])
+		self.edit_item = self.experiment.item_combobox(self.item, exclude=self.parents())
 		QtCore.QObject.connect(self.edit_item, QtCore.SIGNAL("currentIndexChanged(int)"), self.apply_edit_changes)
 		self.edit_grid.addWidget(self.edit_item, 3, 1)
 
@@ -562,7 +600,7 @@ class loop(libopensesame.loop.loop, libqtopensesame.qtitem.qtitem):
 				if cell == None:
 					val = ""
 				else:
-					val = self.auto_type(str(self.loop_table.item(row, col).text()))
+					val = self.auto_type(self.experiment.usanitize(self.loop_table.item(row, col).text()))
 				self.matrix[row][var] = val
 
 		row = self.loop_table.currentRow()

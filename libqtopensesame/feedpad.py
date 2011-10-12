@@ -33,9 +33,9 @@ class feedpad:
 	def static_items(self):
 
 		"""
-		Returns a list of items which are 'static' in the sense that they don't contain variables
-		that make it hard to draw them onto a sketchpad. Variables in text and show_if properties
-		are allowed.
+		Returns a list of items which are 'static' in the sense that they don't
+		contain variables that make it hard to draw them onto a sketchpad.
+		Variables in text and show_if properties are allowed.
 
 		Returns:
 		A list of static items
@@ -52,6 +52,23 @@ class feedpad:
 			if static:
 				l.append(item)
 		return l
+		
+	def items_out_of_bounds(self):
+	
+		"""
+		Returns a count of items that are 'out of bounds' in the sense that the
+		coordinates fall outside of the screen boundaries.
+		
+		Returns:
+		The nr of items the are out of bounds
+		"""
+		
+		xc = self.get("width")/2
+		yc = self.get("height")/2		
+		return sum( ["x" in i and "y" in i		
+			and ( (type(i["x"]) != str and abs(i["x"]) > xc)
+				or (type(i["y"]) != str and abs(i["y"]) > yc) )
+			for i in self.items] )
 
 	def item_tree_info(self):
 

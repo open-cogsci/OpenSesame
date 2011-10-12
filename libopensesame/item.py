@@ -21,6 +21,7 @@ import openexp.keyboard
 from libopensesame import exceptions
 import shlex
 import sys
+import pygame
 
 class item(openexp.trial.trial):
 
@@ -131,6 +132,7 @@ class item(openexp.trial.trial):
 		True on succes, False on failure
 		"""
 		
+		line = line.strip()
 		if len(line) > 0 and line[0] == "#":
 			self.comments.append(line[1:])
 			return True
@@ -307,6 +309,39 @@ class item(openexp.trial.trial):
 			val = self.get(val[1:-1])		
 		return val
 		
+	def get_check(self, var, default=None, valid=None):
+	
+		"""<DOC>
+		Similar to get(), but falls back to a default if the variable has not
+		been set. It also raises an error if the value is not part of the valid
+		list.
+		
+		Arguments:
+		var -- the name of the variable
+		default -- a default 'fallback' value or None for no fallback, in which
+				   case an exception is rased if the value does not exist.
+		valid -- a list of allowed values (or None for no restrictions). An
+				 exception is raised if the value is not an allowed value.
+				 
+		Exceptions:
+		Raises a runtime_error if the variable is not defined and there is no
+		default value, or if the variable value is not part of the 'valid' list.
+				 
+		Returns:
+		The value
+		</DOC>"""
+		
+		if default == None:
+			val = self.get(var)
+		elif self.has(var):
+			val = self.get(var)
+		else:
+			val = default
+		if valid != None and val not in valid:
+			raise exceptions.runtime_error("Variable '%s' is '%s', expecting '%s'" \
+				% (var, val, " or ".join(valid)))
+		return val
+		
 	def has(self, var):
 	
 		"""<DOC>
@@ -320,6 +355,41 @@ class item(openexp.trial.trial):
 		</DOC>"""
 		
 		return hasattr(self, var) or hasattr(self.experiment, var)
+		
+	def get_refs(self, text):
+	
+		"""<DOC>
+		Returns a list of variables that are referred to by the string. (E.g.,
+		'this is a [variable]')
+		
+		Arguments:
+		text -- a string of text
+		
+		Returns:
+		A list of variable names or an empty list if the string contains no
+		references.		
+		</DOC>"""
+		
+		# If the text is not a string, there cannot be any variables,
+		# so return right away
+		if type(text) != str:
+			return []
+						
+		l = []
+		s = ""
+		start = -1
+		while True:		
+			# Find the start and end of a variable definition
+			start = text.find("[", start + 1)
+			if start < 0:
+				break				
+			end = text.find("]", start + 1)
+			if end < 0:
+				raise exceptions.runtime_error("Missing closing bracket ']' in string '%s', in item '%s'" % (text, self.name))
+			var = text[start+1:end]
+			l.append(var)
+			var = var[end:]				
+		return l
 				
 	def auto_type(self, val):
 	
@@ -402,7 +472,7 @@ class item(openexp.trial.trial):
 				break				
 			end = text.find("]", start + 1)
 			if end < 0:
-				raise exceptions.runtime_error("Missing closing bracket ']' in item '%s'" % self.name)			
+				exceptions.runtime_error("Missing closing bracket ']' in string '%s', in item '%s'" % (text, self.name))			
 			var = text[start+1:end]
 			
 			# Replace the variable with its value, unless the variable
@@ -495,7 +565,7 @@ class item(openexp.trial.trial):
 		if not bytecode:
 			return code			
 		try:
-			bytecode = compile(code, "<sequence conditional statement", "eval")
+			bytecode = compile(code, "<conditional statement>", "eval")
 		except:
 			raise exceptions.runtime_error("'%s' is not a valid conditional statement in sequence item '%s'" % (cond, self.name))
 		return bytecode		
@@ -509,5 +579,117 @@ class item(openexp.trial.trial):
 		A list of (variable, description) tuples
 		"""
 		
-		return [ ("time_%s" % self.name, "<i>Determined at runtime</i>"), ("count_%s" % self.name, "<i>Determined at runtime</i>") ]
+		return [ ("time_%s" % self.name, "[Timestamp of last item call]"), \
+			("count_%s" % self.name, "[Number of item calls]") ]
+		
+	def usanitize(self, s, strict = False):
+	
+		"""<DOC>
+		Convert all special characters to U+XXXX notation. Note that this
+		function can rely on the Qt4 QString class.
+		
+		Arguments:
+		s -- the string to be santized
+		
+		Keyword arguments:
+		strict -- if True, special characters are ignored rather than recoded
+				  (default = False)
+		
+		Returns:
+		The sanitized string
+		</DOC>"""
+	
+		try:
+			string = str(s)
+									
+		except:		
+	
+			# If this doesn't work and the message isn't a QString either,
+			# give up and return a warning string			
+			if not hasattr(s, "toUtf8"):
+				return "Error: Unable to create readable text from string"
+			
+			# Otherwise, walk through all characters and convert the unknown
+			# characters to unicode notation. In strict mode unicode is ignored.
+			string = ""			
+			for i in range(s.count()):
+				c = s.at(i)
+				if c.unicode() > 127:
+					if not strict:
+						string += "U+%.4X" % c.unicode()
+				else:
+					string += c.toLatin1()
+				
+		return string
+			
+		
+	def sanitize(self, s, strict = False):
+	
+		"""<DOC>
+		Remove invalid characters (notably quotes) from the string. This is
+		stricter than usanitize(), because it removes also quotes and optionally
+		all alphanumeric characters.
+		
+		Arguments:
+		s -- the string to be sanitized
+		
+		Keyword arguments:
+		strict -- If True, all but underscores and alphanumeric characters are stripped (default = False)
+		
+		Returns:
+		The sanitized string
+		</DOC>"""
+
+		string = self.usanitize(s, strict)
+		
+		# Walk through the string and strip out
+		# quotes, slashes and newlines. In strict
+		# mode we even only accept alphanumeric
+		# characters and underscores
+		s = ""
+		for c in string:
+			if strict:
+				if c.isalnum() or c == "_":
+					s += c
+			elif c not in ("\"", "\\", "\n"):
+				s += c
+		return s
+		
+	def unsanitize(self, s):
+	
+		"""<DOC>
+		Convert the U+XXXX notation back to actual Unicode encoding
+		
+		Arguments:
+		s -- the input string
+		
+		Returns:
+		The restored Unicode string
+		</DOC>"""
+		
+		s = unicode(s)
+				
+		while s.find("U+") >= 0:
+			i = s.find("U+")			
+			entity = s[i:i+6]
+			s = s.replace(entity, unichr(int(entity[2:], 16)))
+			
+		return s
+		
+	def color_check(self, s):
+	
+		"""<DOC>		
+		Checks whether a string is a valid color name
+		
+		Arguments:
+		s -- the string to check
+		
+		Returns:
+		True i the string is a color, False otherwise		
+		</DOC>"""
+		
+		try:
+			pygame.Color(s)
+		except:
+			raise exceptions.script_error("'%s' is not a valid color. See http://www.w3schools.com/html/html_colornames.asp for an overview of valid color names" % s)
 		

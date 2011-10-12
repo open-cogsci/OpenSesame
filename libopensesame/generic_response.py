@@ -37,6 +37,8 @@ class generic_response:
 	- media_player
 	- srbox
 	"""
+	
+	auto_response = "a"
 
 	def prepare_timeout(self):
 
@@ -52,28 +54,28 @@ class generic_response:
 			if self._timeout < 0:
 				raise exceptions.runtime_error("'%s' is not a valid timeout in keyboard_response '%s'. Expecting a positive integer or 'infinite'." % (self.get("timeout"), self.name))
 
-	def auto_responder(self, allowed_responses, timeout):
+	def auto_responder(self):
 
 		"""
 		Mimick participant responses
-
-		Arguments:
-		allowed_responses -- a list with allowed responses
-		timeout -- the timout
 
 		Returns:
 		A simulated (response_time, response) tuple
 		"""
 
-		if timeout == None:
+		if self._timeout == None:
 			self.sleep(random.randint(200, 1000))
 		else:
-			self.sleep(random.randint(min(timeout, 200), timeout))
-
-		if allowed_responses == None:
-			return self.auto_response
-
-		return self.time(), random.choice(allowed_responses)
+			self.sleep(random.randint(min(self._timeout, 200), self._timeout))
+			
+		if self._allowed_responses == None:
+			resp = self.auto_response
+		else:
+			resp = random.choice(self._allowed_responses)
+		
+		if self.experiment.debug:
+			print "generic_response.auto_responder(): responding '%s'" % resp
+		return resp, self.time()
 
 	def process_response_keypress(self, retval):
 
@@ -82,6 +84,7 @@ class generic_response:
 		self.experiment.start_response_interval = self.sri			
 		key, self.experiment.end_response_interval = retval
 		self.experiment.response = self._keyboard.to_chr(key)
+		self.synonyms = self._keyboard.synonyms(self.experiment.response)		
 
 	def process_response_mouseclick(self, retval):
 
@@ -89,6 +92,8 @@ class generic_response:
 
 		self.experiment.start_response_interval = self.sri			
 		self.experiment.response, pos, self.experiment.end_response_interval = retval		
+		self.experiment.cursor_x = pos[0]
+		self.experiment.cursor_y = pos[1]
 		
 	def process_response(self):
 
@@ -96,6 +101,7 @@ class generic_response:
 
 		# Wait for a fixed duration
 		retval = self._duration_func()
+		self.synonyms = None
 
 		# If the duration function did not give any kind of return value
 		# there is no response to process
@@ -123,11 +129,18 @@ class generic_response:
 		if correct_response == "undefined":
 			self.experiment.correct = "undefined"
 		else:
-			if self.experiment.response == correct_response:
-				self.experiment.correct = 1
-				self.experiment.total_correct += 1
+			if self.synonyms != None:
+				if correct_response in self.synonyms:
+					self.experiment.correct = 1
+					self.experiment.total_correct += 1
+				else:
+					self.experiment.correct = 0			
 			else:
-				self.experiment.correct = 0
+				if self.experiment.response == correct_response:
+					self.experiment.correct = 1
+					self.experiment.total_correct += 1
+				else:
+					self.experiment.correct = 0
 
 		self.experiment.set("response_time", self.experiment.end_response_interval - self.experiment.start_response_interval)
 		self.experiment.total_response_time += self.experiment.response_time
@@ -137,6 +150,12 @@ class generic_response:
 		self.experiment.set("accuracy", self.experiment.acc)
 		self.experiment.set("average_response_time", self.experiment.avg_rt)
 		self.experiment.start_response_interval = None
+
+		# Also save response variables with the item name as a suffix, to prevent
+		# multiple responses overwriting each other
+		self.experiment.set("response_%s" % self.get("name"), self.get("response"))
+		self.experiment.set("response_time_%s" % self.get("name"), self.get("response_time"))
+		self.experiment.set("correct_%s" % self.get("name"), self.get("correct"))
 
 	def set_sri(self, reset = False):
 
@@ -255,12 +274,9 @@ class generic_response:
 		"""Prepare a keypress duration"""
 
 		if self.experiment.auto_response:
-
-			# Auto-response
-			self._duration_func = self.sleep_for_duration
-			self._duration = 500
+			self._keyboard = openexp.keyboard.keyboard(self.experiment)
+			self._duration_func = self.auto_responder
 		else:
-
 			# Prepare keypress
 			self._keyboard = openexp.keyboard.keyboard(self.experiment)
 			self._keyboard.set_timeout(self._timeout)
@@ -272,12 +288,8 @@ class generic_response:
 		"""Prepare a mouseclick duration"""
 
 		if self.experiment.auto_response:
-
-			# Auto-response
-			self._duration_func = self.sleep_for_duration
-			self._duration = 500
+			self._duration_func = self.auto_responder
 		else:		
-
 			# Prepare mouseclick
 			self._mouse = openexp.mouse.mouse(self.experiment)
 			self._mouse.set_timeout(self._timeout)
@@ -314,12 +326,14 @@ class generic_response:
 		"""
 
 		l = []
-		l.append( ("response", "<i>Depends on response</i>") )
-		l.append( ("correct", "<i>Depends on response</i>") )
-		l.append( ("response_time", "<i>Depends on response</i>") )
-		l.append( ("average_response_time", "<i>Depends on response</i>") )
-		l.append( ("avg_rt", "<i>Depends on response</i>") )
-		l.append( ("accuracy", "<i>Depends on response</i>") )
-		l.append( ("acc", "<i>Depends on response</i>") )
-
+		l.append( ("response_%s" % self.get("name"), "[Depends on response]") )
+		l.append( ("correct_%s" % self.get("name"), "[Depends on response]") )
+		l.append( ("response_time_%s" % self.get("name"), "[Depends on response]") )		
+		l.append( ("response", "[Depends on response]") )
+		l.append( ("correct", "[Depends on response]") )
+		l.append( ("response_time", "[Depends on response]") )
+		l.append( ("average_response_time", "[Depends on response]") )
+		l.append( ("avg_rt", "[Depends on response]") )
+		l.append( ("accuracy", "[Depends on response]") )
+		l.append( ("acc", "[Depends on response]") )
 		return l

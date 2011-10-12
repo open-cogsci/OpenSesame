@@ -77,7 +77,7 @@ class advanced_delay(item.item):
 		Add 'response' to the variables
 		"""
 		
-		return item.item.var_info(self) + [("delay_%s" % self.name, "<i>Determined at runtime</i>")]		
+		return item.item.var_info(self) + [("delay_%s" % self.name, "[Determined at runtime]")]		
 					
 class qtadvanced_delay(advanced_delay, qtplugin.qtplugin):
 

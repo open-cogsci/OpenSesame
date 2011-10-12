@@ -24,16 +24,19 @@ from PyQt4 import QtGui, QtCore
 
 class text_input(item.item, generic_response.generic_response):
 
-	"""
-	This class (the class with the same name as the module)
-	handles the basic functionality of the item. It does
-	not deal with GUI stuff.
-	"""
+	"""A text input display"""
 
 	def __init__(self, name, experiment, string = None):
 
 		"""
 		Constructor
+
+		Arguments:
+		name -- the name of the item
+		experiment -- the experiment instance
+
+		Keyword arguments:
+		string -- a definition string
 		"""
 
 		# The item_typeshould match the name of the module
@@ -45,6 +48,8 @@ class text_input(item.item, generic_response.generic_response):
 		self.font_family = "sans"
 		self.font_size = 24
 		self.duration = "dummy"
+		self.accept_on = "return press"
+		self.timeout = 1000
 
 		# Provide a short accurate description of the items functionality
 		self.description = "Provides a simple text input"
@@ -55,8 +60,10 @@ class text_input(item.item, generic_response.generic_response):
 	def run(self):
 
 		"""
-		Run the item. In this case this means putting the offline canvas
-		to the display and waiting for the specified duration.
+		Run the item
+
+		Returns:
+		True on success, False on failure
 		"""
 
 		self.set_item_onset(self.time())
@@ -88,7 +95,13 @@ class text_input(item.item, generic_response.generic_response):
 		resp = ""
 		response = ""
 		response_time = None
-		while resp != "return":
+		while True:
+		
+			if self._check_return and resp == "return":
+				break
+		
+			if self._check_timeout and self.time() - self.experiment.start_response_interval > self.timeout:
+				break
 
 			# Fill the canvas and put it to the screen
 			c.clear()
@@ -128,11 +141,27 @@ class text_input(item.item, generic_response.generic_response):
 			elif len(resp) == 1:
 				response += self._keyboard.shift(key, mods)
 
-		self.experiment.set("response", response)
+		self.experiment.set("response", self.experiment.usanitize(self.experiment.sanitize(response)))
 		self.experiment.end_response_interval = response_time		
 		self.response_bookkeeping()
 
 		# Report success
+		return True
+		
+	def prepare(self):
+	
+		"""Prepare for the run phase"""
+		
+		if self.get("accept_on") != "return press":
+			self._check_timeout = True
+		else:
+			self._check_timeout = False
+			
+		if self.get("accept_on") != "timeout":
+			self._check_return = True
+		else:
+			self._check_return = False			
+	
 		return True
 
 	def var_info(self):
@@ -188,10 +217,12 @@ class qttext_input(text_input, qtplugin.qtplugin):
 		self.add_spinbox_control("linewidth", "Maximum line width", 100, 2000, suffix = "px", tooltip = "The maximum width of the input field in pixels")
 		self.add_combobox_control("frame", "Draw frame", ["yes", "no"], tooltip = "If 'yes', a rectangular frame will be drawn around the input field")
 		self.add_spinbox_control("frame_width", "Frame width", 1, 512, suffix = "px", tooltip = "The width of the frame (if enabled)")
-		self.add_line_edit_control("foreground", "Foreground", tooltip = "Expecting a colorname (e.g., 'blue') or an HTML color (e.g., '#0000FF')")
-		self.add_line_edit_control("background", "Background", tooltip = "Expecting a colorname (e.g., 'blue') or an HTML color (e.g., '#0000FF')")
+		self.add_color_edit_control("foreground", "Foreground", tooltip = "Expecting a colorname (e.g., 'blue') or an HTML color (e.g., '#0000FF')")
+		self.add_color_edit_control("background", "Background", tooltip = "Expecting a colorname (e.g., 'blue') or an HTML color (e.g., '#0000FF')")
 		self.add_combobox_control("font_family", "Font family", ["mono", "sans", "serif"], tooltip = "The font style")
 		self.add_spinbox_control("font_size", "Font size", 1, 512, suffix = "pt", tooltip = "The font size")
+		self.add_combobox_control("accept_on", "Accept on", ["return press", "timeout", "return press or timeout"], tooltip = "Indicates when the input text should be accepted")
+		self.add_spinbox_control("timeout", "Timeout (if applicable)", 1, 100000, suffix = "ms", tooltip = "Timeout value")		
 
 		# Add a stretch to the edit_vbox, so that the controls do not
 		# stretch to the bottom of the window.

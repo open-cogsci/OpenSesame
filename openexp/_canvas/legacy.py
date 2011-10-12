@@ -26,6 +26,32 @@ import os
 import os.path
 import tempfile
 
+# Translation mapping from envelope names
+env_synonyms = {}
+env_synonyms["c"] = "c"
+env_synonyms["circular"] = "c"
+env_synonyms["round"] = "c"
+
+env_synonyms["g"] = "g"
+env_synonyms["gaussian"] = "g"
+env_synonyms["gauss"] = "g"
+env_synonyms["normal"] = "g"
+
+env_synonyms["r"] = "r"
+env_synonyms["rectangular"] = "r"
+env_synonyms["rectangle"] = "r"
+
+env_synonyms["g"] = "g"
+env_synonyms["rect"] = "g"
+env_synonyms["square"] = "g"
+env_synonyms[None] = "g"
+
+env_synonyms["l"] = "l"
+env_synonyms["linear"] = "l"
+env_synonyms["lin"] = "l"
+env_synonyms["ln"] = "l"
+env_synonyms["l"] = "l"
+
 class legacy:
 
 	"""
@@ -51,6 +77,21 @@ class legacy:
 	-- Print debugging output only if experiment.debug == True and preferrably in the
 	   following format: "template.__init__(): Debug message here".
 	"""
+	
+	# The settings variable is used by the GUI to provide a list of back-end
+	# settings
+	settings = {
+		"pygame_hwsurface" : {
+			"name" : "Hardware surface",
+			"description" : "Create a hardware surface",
+			"default" : "yes"
+			},
+		"pygame_doublebuf" : {
+			"name" : "Double buffering",
+			"description" : "Use double buffering",
+			"default" : "yes"
+			},			
+		}	
 	
 	def __init__(self, experiment, bgcolor = None, fgcolor = None):
 		
@@ -511,8 +552,10 @@ class legacy:
 	def gabor(self, x, y, orient, freq, env = "gaussian", size = 96, stdev = 12, phase = 0, col1 = "white", col2 = "black", bgmode = "avg"):
 	
 		"""<DOC>
-		Draws a Gabor patch. This function is derived from the online Gabor patch generator
-		<http://www.cogsci.nl/software/online-gabor-patch-generator>	
+		Draws a Gabor patch. There is a slight difference between the
+		implementation of the Gabor patch in the legacy/ opengl back-end and the
+		psycho back-end. In the psycho back-end, no background is draw and the
+		col2 and bgmode parameters are ignored.
 		
 		Arguments:
 		x -- The center X coordinate
@@ -521,14 +564,19 @@ class legacy:
 		freq -- Frequency in cycles/px of the sinusoid
 		
 		Keyword arguments:	
-		env -- Any of the following: "gaussian", "linear", "circular", "rectangle" (default = "gaussian")
+		env -- Any of the following: "gaussian", "linear", "circular",
+			   "rectangle" (default = "gaussian")
 		size -- Size in pixels (default = 96)
-		stdev -- Standard deviation in pixels of the gaussian. Only applicable if env = "gaussian". (default = 12)
+		stdev -- Standard deviation in pixels of the gaussian. Only applicable
+				 if env = "gaussian". (default = 12)
 		phase -- Phase of the sinusoid [0.0 .. 1.0] (default = 0)
 		col1: -- Human readable color for the tops (default = "white")
-		col2 -- Human readable color for the troughs (default = "black")
-		bgmode -- Specifies whether the background is the average of col1 and col2 (bgmode = "avg", a typical Gabor patch)
-				  or equal to col2 ("col2"), useful for blending into the background. (default = "avg")
+		col2 -- Human readable color for the troughs. Note: This parameter is
+				ignored by the psycho back-end. (default = "black")
+		bgmode -- Specifies whether the background is the average of col1 and
+				  col2 (bgmode = "avg", a typical Gabor patch) or equal to col2
+				  ("col2"), useful for blending into the background. Note: this
+				  paramter is ignored by the psycho backend. (default = "avg")
 		</DOC>"""	
 	
 		surface = _gabor(orient, freq, env, size, stdev, phase, col1, col2, bgmode)
@@ -583,11 +631,23 @@ def init_display(experiment):
 	pygame.display.set_icon(surf)
 	
 	# Determine the video mode
-	mode = pygame.HWSURFACE | pygame.DOUBLEBUF
-	if pygame.display.mode_ok(experiment.resolution, mode):	
-		print "video.legacy.init_display(): video mode ok"
+	mode = 0
+	if experiment.get_check("pygame_hwsurface", "yes", ["yes", "no"]) == "yes":
+		mode = mode | pygame.HWSURFACE
+		print "openexp._canvas.legacy.init_display(): enabling hardware surface"
 	else:
-		print "video.legacy.init_display(): warning: video mode not ok"
+		print "openexp._canvas.legacy.init_display(): not enabling hardware surface"
+		
+	if experiment.get_check("pygame_doublebuf", "yes", ["yes", "no"]) == "yes":
+		mode = mode | pygame.DOUBLEBUF	
+		print "openexp._canvas.legacy.init_display(): enabling double buffering"
+	else:
+		print "openexp._canvas.legacy.init_display(): not enabling double buffering"
+
+	if pygame.display.mode_ok(experiment.resolution, mode):	
+		print "openexp._canvas.legacy.init_display(): video mode ok"
+	else:
+		print "openexp._canvas.legacy.init_display(): warning: video mode not ok"
 		
 	if experiment.fullscreen:
 		mode = mode | pygame.FULLSCREEN
@@ -602,7 +662,7 @@ def init_display(experiment):
 	experiment.font = pygame.font.Font(experiment.resource("%s.ttf" % experiment.font_family), experiment.font_size)			
 	if experiment.font == None:
 		if experiment.debug:
-			print "legacy.init_display(): '%s.ttf' not found, falling back to default font" % experiment.font_family
+			print "openexp._canvas.init_display(): '%s.ttf' not found, falling back to default font" % experiment.font_family
 		experiment.font = pygame.font.Font(None, experiment.font_size)
 		
 	# Set the time function to use pygame
@@ -655,6 +715,8 @@ def _gabor(orient, freq, env = "gaussian", size = 96, stdev = 12, phase = 0, col
 	Returns a pygame surface containing a Gabor patch
 	See canvas.gabor()
 	"""
+	
+	env = _match_env(env)
 		
 	# Generating a Gabor patch takes quite some time, so keep
 	# a cache of previously generated Gabor patches to speed up
@@ -694,11 +756,11 @@ def _gabor(orient, freq, env = "gaussian", size = 96, stdev = 12, phase = 0, col
 			amp = 0.5 + 0.5 * math.cos(2.0 * math.pi * (ux * freq + phase))
 			
 			# The envelope adjustment
-			if env == "gaussian":
+			if env == "g":
 				f = math.exp(-0.5 * (ux / stdev) ** 2 - 0.5 * (uy / stdev) ** 2)
-			elif env == "linear":
+			elif env == "l":
 				f = max(0, (0.5 * size - r) / (0.5 * size))
-			elif env == "circle":
+			elif env == "c":
 				if (r > 0.5 * size):
 					f = 0.0
 				else:
@@ -730,6 +792,8 @@ def _noise_patch(env = "gaussian", size = 96, stdev = 12, col1 = "white", col2 =
 	See canvas.noise_patch()
 	"""
 	
+	env = _match_env(env)	
+	
 	# Generating a noise patch takes quite some time, so keep
 	# a cache of previously generated noise patches to speed up
 	# the process.	
@@ -759,11 +823,11 @@ def _noise_patch(env = "gaussian", size = 96, stdev = 12, col1 = "white", col2 =
 			amp = random.random()
 			
 			# The envelope adjustment
-			if env == "gaussian":
+			if env == "g":
 				f = math.exp(-0.5 * (ux / stdev) ** 2 - 0.5 * (uy / stdev) ** 2)
-			elif env == "linear":
+			elif env == "l":
 				f = max(0, (0.5 * size - r) / (0.5 * size))
-			elif env == "circle":
+			elif env == "c":
 				if (r > 0.5 * size):
 					f = 0.0
 				else:
@@ -788,3 +852,22 @@ def _noise_patch(env = "gaussian", size = 96, stdev = 12, col1 = "white", col2 =
 	del px
 	return surface
 
+def _match_env(env):
+
+	"""
+	Allows for easy translation between various envelope names
+	
+	Arguments:
+	env -- an envelope name
+	
+	Exception:
+	Throws a canvas_error if an unknown envelope was specified
+	
+	Returns:
+	A standard envelope name ("c", "g", "r" or "l")	
+	"""
+	
+	global env_synonyms	
+	if env not in env_synonyms:
+		raise openexp.exceptions.canvas_error("'%s' is not a valid envelope" % env)	
+	return env_synonyms[env]

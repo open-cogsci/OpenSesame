@@ -21,26 +21,39 @@ import shlex
 
 class sequence(item.item):
 
-	def __init__(self, name, experiment, string = None):
+	"""The sequence item"""
+
+	def __init__(self, name, experiment, string=None):
 	
 		"""
-		Initialize the sequence
+		Constructor
+		
+		Arguments:
+		name -- the item name
+		experiment the opensesame experiment
+		
+		Keywords arguments:
+		string -- a definition string (default=None)
 		"""
 	
 		self.items = []		
 		self.item_type = "sequence"		
 		self.description = "Runs a number of items in sequence"		
+		self.flush_keyboard = "yes"
 		item.item.__init__(self, name, experiment, string)
 				
 	def run(self):
 	
 		"""
-		Run all items	
+		Run the sequence
+		
+		Returns:
+		True on success, False on failure
 		"""
 	
-		# Flush the responses to catch escape presses
-		self._keyboard.flush()
-		
+		# Optionally flush the responses to catch escape presses
+		if self._keyboard != None:
+			self._keyboard.flush()		
 		for item, cond in self._items:		
 			if eval(cond):	
 				self.experiment.items[item].run()
@@ -49,21 +62,28 @@ class sequence(item.item):
 	def parse_run(self, i):
 	
 		"""
-		Parse a run line
+		Parse a run line from the definition script
+		
+		Arguments:
+		i -- a list of words, corresponding to a single script line
+		
+		Returns:
+		A (item_name, conditional) tuple
 		"""
 	
 		name = i[1]
-		cond = "always"
-		
+		cond = "always"		
 		if len(i) > 2:
-			cond = i[2]
-	
+			cond = i[2]	
 		return i[1], cond 
 		
 	def from_string(self, string):
 	
 		"""
-		Read the sequence from a string
+		Parses a definition string
+		
+		Arguments:
+		string -- a definition string
 		"""
 	
 		for i in string.split("\n"):
@@ -76,20 +96,30 @@ class sequence(item.item):
 	def prepare(self):
 	
 		"""
-		Prepare all items in the sequence
+		Prepare the sequence
+		
+		Returns:
+		True on success, False on failure
 		"""
 		
 		item.item.prepare(self)
 		
-		# Create a keyboard to flush responses at the start of the run phase
-		self._keyboard = openexp.keyboard.keyboard(self.experiment)
+		if self.get("flush_keyboard") == "yes":		
+			# Create a keyboard to flush responses at the start of the run phase
+			self._keyboard = openexp.keyboard.keyboard(self.experiment)
+		else:
+			self._keyboard = None
 		
 		self._items = []
 		for _item, cond in self.items:
 			if _item not in self.experiment.items:			
-				raise exceptions.runtime_error("Could not find item '%s', which is called by loop item '%s'" % (_item, self.name))
+				raise exceptions.runtime_error( \
+					"Could not find item '%s', which is called by sequence item '%s'" \
+					% (_item, self.name))
 			if not self.experiment.items[_item].prepare():			
-				raise exceptions.runtime_error("Failed to prepare item '%s', which is called by sequence item '%s'" % (_item, self.name))
+				raise exceptions.runtime_error( \
+					"Failed to prepare item '%s', which is called by sequence item '%s'" \
+					% (_item, self.name))
 				
 			self._items.append( (_item, self.compile_cond(cond)) )
 															
@@ -98,7 +128,10 @@ class sequence(item.item):
 	def to_string(self):
 	
 		"""
-		Encode the sequence as string
+		Encode the sequence as a definition string
+		
+		Returns:
+		A definition string
 		"""
 	
 		s = item.item.to_string(self, "sequence")

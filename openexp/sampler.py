@@ -33,10 +33,35 @@ class sampler:
 				exec("import openexp._sampler.%s" % experiment.sampler_backend)
 				self.__class__ = eval("openexp._sampler.%s.%s" % (experiment.sampler_backend, experiment.sampler_backend))
 			except Exception as e:
-				raise openexp.exceptions.canvas_error("Failed to import 'openexp._sampler.%s' as sampler backend.<br /><br />Error: %s" % (experiment.backend, e))	
+				raise openexp.exceptions.sample_error("Failed to import 'openexp._sampler.%s' as sampler backend.<br /><br />Error: %s" % (experiment.sampler_backend, e))	
 											
-		exec("openexp._sampler.%s.%s.__init__(self, experiment, src)" % (experiment.sampler_backend, experiment.sampler_backend))
-				
-
+		exec("openexp._sampler.%s.%s.__init__(self, experiment, src)" % (experiment.sampler_backend, experiment.sampler_backend))				
 		
+def init_sound(experiment):
+
+	"""Call the back-end specific init_sound function"""
+
+	if experiment.debug:
+		exec("import openexp._sampler.%s" % experiment.sampler_backend)
+		exec("openexp._sampler.%s.init_sound(experiment)" % experiment.sampler_backend)
+	else:
+		try:
+			exec("import openexp._sampler.%s" % experiment.sampler_backend)
+			exec("openexp._sampler.%s.init_sound(experiment)" % experiment.sampler_backend)
+		except Exception as e:
+			raise openexp.exceptions.sample_error("Failed to call openexp._sampler.%s.init_sound()<br /><br />Error: %s" % (experiment.sampler_backend, e))				
+
+def close_sound(experiment):
+
+	"""Call the back-end specific close_sound function"""
+
+	if experiment.debug:
+		exec("import openexp._sampler.%s" % experiment.sampler_backend)
+		exec("openexp._sampler.%s.close_sound(experiment)" % experiment.sampler_backend)
+	else:
+		try:
+			exec("import openexp._sampler.%s" % experiment.sampler_backend)
+			exec("openexp._sampler.%s.close_sound(experiment)" % experiment.sampler_backend)
+		except Exception as e:
+			raise openexp.exceptions.sample_error("Failed to call openexp._sampler.%s.close_sound()<br /><br />Error: %s" % (experiment.sampler_backend, e))				
 

@@ -134,7 +134,7 @@ class inline_script(item.item):
 		m = re.findall("self.experiment.set\(\"(\w+)\"(\s*),(\s*)(\"*)([^\"\)]*)(\"*)", self._prepare + self._run)
 		for var, s1, s2, q1, val, q2 in m:
 			if q1 != "\"":
-				val = "<i>Set to [%s]</i>" % val
+				val = "[Set to '%s']" % val
 			l.append( (var, val) )		
 		self._var_info = l
 		

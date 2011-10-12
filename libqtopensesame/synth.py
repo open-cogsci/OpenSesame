@@ -22,10 +22,19 @@ from PyQt4 import QtCore, QtGui
 
 class synth(libopensesame.synth.synth, libqtopensesame.qtitem.qtitem):
 
+	"""GUI controls for the synth item"""
+
 	def __init__(self, name, experiment, string = None):
 	
 		"""
-		Initialize the experiment		
+		Constructor
+		
+		Arguments:
+		name -- the item name
+		experiment -- the experiment
+		
+		Keywords arguments:
+		string -- definition string (default=None)
 		"""
 		
 		libopensesame.synth.synth.__init__(self, name, experiment, string)
@@ -34,9 +43,7 @@ class synth(libopensesame.synth.synth, libqtopensesame.qtitem.qtitem):
 						
 	def init_edit_widget(self):
 	
-		"""
-		Build the edit widget
-		"""
+		"""Build the GUI controls"""
 		
 		libqtopensesame.qtitem.qtitem.init_edit_widget(self, False)
 				
@@ -69,9 +76,7 @@ class synth(libopensesame.synth.synth, libqtopensesame.qtitem.qtitem):
 		
 	def set_sine(self):
 	
-		"""
-		Set the oscillator
-		"""
+		"""Select the sine oscillator"""
 		
 		self.synth_widget.ui.button_sine.setChecked(True)
 		self.synth_widget.ui.button_saw.setChecked(False)
@@ -83,9 +88,7 @@ class synth(libopensesame.synth.synth, libqtopensesame.qtitem.qtitem):
 		
 	def set_saw(self):
 	
-		"""
-		Set the oscillator
-		"""
+		"""Select the saw oscillator"""
 
 		self.synth_widget.ui.button_sine.setChecked(False)
 		self.synth_widget.ui.button_saw.setChecked(True)
@@ -97,9 +100,7 @@ class synth(libopensesame.synth.synth, libqtopensesame.qtitem.qtitem):
 		
 	def set_square(self):
 	
-		"""
-		Set the oscillator
-		"""
+		"""Select the square oscillator"""
 
 		self.synth_widget.ui.button_sine.setChecked(False)
 		self.synth_widget.ui.button_saw.setChecked(False)
@@ -111,9 +112,7 @@ class synth(libopensesame.synth.synth, libqtopensesame.qtitem.qtitem):
 		
 	def set_white_noise(self):
 	
-		"""
-		Set the oscillator
-		"""
+		"""Select the white noise oscillator"""
 
 		self.synth_widget.ui.button_sine.setChecked(False)
 		self.synth_widget.ui.button_saw.setChecked(False)
@@ -125,40 +124,31 @@ class synth(libopensesame.synth.synth, libqtopensesame.qtitem.qtitem):
 						
 	def edit_widget(self):
 	
-		"""
-		Refresh the edit widget
-		with current information
-		and return it
-		"""	
+		"""Refresh the GUI controls"""	
 		
 		self.lock = True		
 		
 		libqtopensesame.qtitem.qtitem.edit_widget(self, False)		
 				
-		if self.variable_vars(["duration", "freq"]):
-			
+		if self.variable_vars(["duration", "freq"]):			
 			self.synth_widget.ui.frame_notification.setVisible(True)
 			self.synth_widget.ui.frame_controls.setVisible(False)
 			
 		else:
 		
 			self.synth_widget.ui.frame_notification.setVisible(False)
-			self.synth_widget.ui.frame_controls.setVisible(True)		
-		
+			self.synth_widget.ui.frame_controls.setVisible(True)				
 			self.synth_widget.ui.edit_freq.setText(str(self.get("freq")))		
 			self.synth_widget.ui.edit_duration.setText(str(self.get("duration")))		
-
 			self.synth_widget.ui.spin_attack.setValue(self.get("attack"))
 			self.synth_widget.ui.spin_decay.setValue(self.get("decay"))		
 			self.synth_widget.ui.spin_pan.setValue(self.get("pan"))
 			self.synth_widget.ui.spin_volume.setValue(100.0 * self.get("volume"))
 			self.synth_widget.ui.spin_length.setValue(self.get("length"))
-
 			self.synth_widget.ui.dial_attack.setValue(self.get("attack"))
 			self.synth_widget.ui.dial_decay.setValue(self.get("decay"))
 			self.synth_widget.ui.dial_pan.setValue(self.get("pan"))
-			self.synth_widget.ui.dial_volume.setValue(100.0 * self.get("volume"))			
-						
+			self.synth_widget.ui.dial_volume.setValue(100.0 * self.get("volume"))									
 			self.synth_widget.ui.button_sine.setChecked(self.get("osc") == "sine")
 			self.synth_widget.ui.button_saw.setChecked(self.get("osc") == "saw")
 			self.synth_widget.ui.button_square.setChecked(self.get("osc") == "square")
@@ -169,23 +159,24 @@ class synth(libopensesame.synth.synth, libqtopensesame.qtitem.qtitem):
 		return self._edit_widget
 
 
-	def apply_edit_changes(self, i = None, j = None):
+	def apply_edit_changes(self, dummy1=None, dummy2=None):
 	
 		"""
-		Apply the changes to the synth controls
+		Apply the GUI controls
+		
+		Keywords arguments:
+		dummy1 -- a dummy argument (default=None)
+		dummy2 -- a dummy argument (default=None)
 		"""	
 		
 		if not libqtopensesame.qtitem.qtitem.apply_edit_changes(self) or self.lock:
 			return
 			
-		self.set("freq", str(self.synth_widget.ui.edit_freq.text()))
-		
-		dur = str(self.synth_widget.ui.edit_duration.text())
-		if type(self.auto_type(dur)) not in (int, float) and dur not in ("keypress", "mouseclick", "sound"):
-			self.experiment.notify("'%s' is not a valid duration. Exception a positive number (duration in ms) or 'keypress', 'mouseclick', or 'sound'" % dur)
-			self.synth_widget.ui.edit_duration.setText(self.get("duration"))
-		else:
-			self.set("duration", dur)			
+		self.set("freq", self.sanitize(self.synth_widget.ui.edit_freq.text(), strict=True))		
+		dur = self.sanitize(self.synth_widget.ui.edit_duration.text(), strict=True)
+		if dur == "":
+			dur = "sound"
+		self.set("duration", dur)		
 
 		self.set("attack", self.synth_widget.ui.spin_attack.value())
 		self.set("decay", self.synth_widget.ui.spin_decay.value())		
@@ -204,18 +195,19 @@ class synth(libopensesame.synth.synth, libqtopensesame.qtitem.qtitem):
 		
 		self.experiment.main_window.refresh(self.name)			
 						
-	def apply_dials(self, i = None):
+	def apply_dials(self, dummy=None):
 	
 		"""
-		Read the dials and use those to set the spinboxes
+		Set the spinbox values based on the dials
+		
+		Keywords arguments:
+		dummy -- a dummy argument (default=None)
 		"""
 		
 		if self.lock:
-			return
-		
+			return		
 		self.set("attack", self.synth_widget.ui.dial_attack.value())
 		self.set("decay", self.synth_widget.ui.dial_decay.value())
 		self.set("pan", self.synth_widget.ui.dial_pan.value())
-		self.set("volume", .01 * self.synth_widget.ui.dial_volume.value())
-		
+		self.set("volume", .01 * self.synth_widget.ui.dial_volume.value())		
 		self.edit_widget()
