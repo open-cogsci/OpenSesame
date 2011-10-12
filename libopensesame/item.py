@@ -544,8 +544,10 @@ class item(openexp.trial.trial):
 				l.append("str(self.get(\"%s\"))" % word[1:-1])
 			elif word == "=":
 				l.append("==")
-			elif word.lower() == "always":
+			elif word.lower() in ("always", "true", "yes"):
 				l.append("True")
+			elif word.lower() in ("never", "false", "no"):
+				l.append("False")
 			elif word.lower() in operators + keywords:
 				if word.lower() in capitalize:
 					l.append(word.capitalize())

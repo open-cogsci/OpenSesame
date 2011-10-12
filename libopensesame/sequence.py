@@ -72,7 +72,7 @@ class sequence(item.item):
 		"""
 	
 		name = i[1]
-		cond = "always"		
+		cond = "always"
 		if len(i) > 2:
 			cond = i[2]	
 		return i[1], cond 
