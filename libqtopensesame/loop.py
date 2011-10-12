@@ -436,12 +436,12 @@ class loop(libopensesame.loop.loop, libqtopensesame.qtitem.qtitem):
 					item = a.ui.table_wizard.item(row, col)
 					if item == None:
 						break
-					s = str(item.text())
+					s = item.text()
 					if row == 0:
 						var = self.experiment.sanitize(s, True)
 						var_dict[var] = []
 					elif var != None:
-						var_dict[var].append(self.experiment.sanitize(s))
+						var_dict[var].append(self.experiment.usanitize(s))
 
 			self.i = 0
 			self.matrix = {}
