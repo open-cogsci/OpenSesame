@@ -26,7 +26,7 @@ class loop_table(libqtopensesame.good_looking_table.good_looking_table):
 
 	"""The looptable extends the QtTableWidget to allow copying and pasting"""
 
-	def __init__(self, loop, rows, columns, parent = None):
+	def __init__(self, loop, rows, columns, parent=None):
 
 		"""
 		Constructor
@@ -37,7 +37,7 @@ class loop_table(libqtopensesame.good_looking_table.good_looking_table):
 		columns -- the nr of columns
 
 		Keyword arguments:
-		parent -- parent QWidget (default = None)
+		parent -- parent QWidget (default=None)
 		"""
 
 		self.pos = None
@@ -241,7 +241,8 @@ class loop(libopensesame.loop.loop, libqtopensesame.qtitem.qtitem):
 		if var_list == None:
 			return
 
-		var, ok = QtGui.QInputDialog.getItem(self.experiment.ui.centralwidget, "Remove variable", "Which variable do you want to remove?", var_list)
+		var, ok = QtGui.QInputDialog.getItem(self.experiment.ui.centralwidget, \
+			"Remove variable", "Which variable do you want to remove?", var_list)
 		if ok:
 			var = str(var)
 			for i in self.matrix:
@@ -307,7 +308,8 @@ class loop(libopensesame.loop.loop, libqtopensesame.qtitem.qtitem):
 
 					# Ask for confirmation (only the first time)
 					if not empty and confirm:
-						resp = QtGui.QMessageBox.question(self.experiment.ui.centralwidget, "Remove cycles?", "By reducing the number of cycles, data will be lost from the table. Do you wish to continue?", QtGui.QMessageBox.Yes, QtGui.QMessageBox.No)
+						resp = QtGui.QMessageBox.question(self.experiment.ui.centralwidget, \
+							"Remove cycles?", "By reducing the number of cycles, data will be lost from the table. Do you wish to continue?", QtGui.QMessageBox.Yes, QtGui.QMessageBox.No)
 						if resp == QtGui.QMessageBox.No:
 							return
 						confirm = False
