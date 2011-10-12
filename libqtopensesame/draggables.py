@@ -236,7 +236,10 @@ class draggable_widget_container(QtGui.QFrame):
 		self._layout.addWidget(QtGui.QLabel("<small><i>Run if</i></small>"))
 		self._layout.addWidget(self.run_if_edit)
 		self.setLayout(self._layout)	
-		self._layout.setContentsMargins(4, 4, 4, 4)		
+		self._layout.setContentsMargins(4, 4, 4, 4)
+		self.setMinimumSize(100,32)
+		self.setSizePolicy(QtGui.QSizePolicy.MinimumExpanding, \
+			QtGui.QSizePolicy.Fixed)
 
 class draggable_list(QtGui.QWidget):
 
@@ -255,10 +258,12 @@ class draggable_list(QtGui.QWidget):
 		self.items = []
 		self.sequence = sequence
 		self._layout = QtGui.QVBoxLayout()				
-		self._layout.setContentsMargins(0, 0, 0, 16)
+		self._layout.setContentsMargins(4, 4, 4, 16)
 		self._layout.setSpacing(0)
 		self.setLayout(self._layout)
-		self.widgets = []			
+		self.widgets = []
+		self.setSizePolicy(QtGui.QSizePolicy.MinimumExpanding, \
+			QtGui.QSizePolicy.MinimumExpanding)
 				
 	def refresh(self):
 	
@@ -279,5 +284,9 @@ class draggable_list(QtGui.QWidget):
 				widget = draggable_widget_container(self, self.sequence.items[i], i)
 				self.widgets.append(widget)
 				self._layout.addWidget(widget)
+				
+		spacer = QtGui.QWidget()
+		self.widgets.append(spacer)
+		self._layout.addWidget(spacer)
 		
 

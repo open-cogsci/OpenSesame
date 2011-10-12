@@ -170,14 +170,18 @@ class sequence(libopensesame.sequence.sequence, libqtopensesame.qtitem.qtitem):
 		grid.setColumnStretch(3, 10)
 		
 		self.draggable_list = libqtopensesame.draggables.draggable_list(self)
+		scroll_area = QtGui.QScrollArea()
+		scroll_area.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff)
+		scroll_area.setVerticalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOn)
+		scroll_area.setWidgetResizable(True)
+		scroll_area.setWidget(self.draggable_list)		
 		self.edit_vbox.addWidget(self.frame_empty)
-		self.edit_vbox.addWidget(self.draggable_list)
+		self.edit_vbox.addWidget(scroll_area)
 
 		grid_widget = QtGui.QFrame()
 		grid_widget.setLayout(grid)
 		
 		self.edit_vbox.addWidget(grid_widget)
-		self.edit_vbox.addStretch()
 
 		return self._edit_widget
 
