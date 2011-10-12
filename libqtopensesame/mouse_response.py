@@ -65,7 +65,12 @@ class mouse_response(libopensesame.mouse_response.mouse_response, libqtopensesam
 		if to.strip() != "":
 			self.set("timeout", to)
 		else:
-			self.set("timeout", "infinite")					
+			self.set("timeout", "infinite")		
+			
+		if self.checkbox_flush.isChecked():
+			self.set("flush", "yes")
+		else:
+			self.set("flush", "no")						
 			
 		self.experiment.main_window.refresh(self.name)			
 
@@ -106,6 +111,12 @@ class mouse_response(libopensesame.mouse_response.mouse_response, libqtopensesam
 		QtCore.QObject.connect(self.checkbox_show_cursor, QtCore.SIGNAL("stateChanged(int)"), self.apply_edit_changes)
 		self.edit_grid.addWidget(self.checkbox_show_cursor, row, 1)		
 		
+		row += 1							
+		
+		self.checkbox_flush = QtGui.QCheckBox("Flush pending mouse clicks")
+		self.checkbox_flush.toggled.connect(self.apply_edit_changes)
+		self.edit_grid.addWidget(self.checkbox_flush, row, 1)		
+		
 		row += 1
 
 		l = QtGui.QLabel("<small><i><b>Note:</b> On some systems the cursor may not appear, despite being set to 'visible'. If this happens, please refer to the documentation for more information.</i></small>")
@@ -141,7 +152,9 @@ class mouse_response(libopensesame.mouse_response.mouse_response, libqtopensesam
 			to = self.get("timeout")
 		else:
 			to = ""		
-		self.edit_timeout.setText(str(to))			
+		self.edit_timeout.setText(str(to))	
+		
+		self.checkbox_flush.setChecked(self.get("flush") == "yes")				
 		
 		return self._edit_widget
 		

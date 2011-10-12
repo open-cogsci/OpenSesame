@@ -141,9 +141,6 @@ class loop(item.item):
 
 						self.experiment.set(var, val)
 
-				# Flush the responses to catch escape presses
-				self._keyboard.flush()
-
 				if eval("self.experiment.items[\"%s\"].prepare()" % self.item):
 					exec("self.experiment.items[\"%s\"].run()" % self.item)
 				else:

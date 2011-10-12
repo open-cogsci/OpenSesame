@@ -65,6 +65,11 @@ class keyboard_response(libopensesame.keyboard_response.keyboard_response, libqt
 		else:
 			self.set("timeout", "infinite")		
 			
+		if self.checkbox_flush.isChecked():
+			self.set("flush", "yes")
+		else:
+			self.set("flush", "no")
+			
 		self.experiment.main_window.refresh(self.name)			
 
 	def init_edit_widget(self):
@@ -96,6 +101,12 @@ class keyboard_response(libopensesame.keyboard_response.keyboard_response, libqt
 		self.edit_timeout.setToolTip("Set the response timeout in milliseconds, or 'infinite'")		
 		QtCore.QObject.connect(self.edit_timeout, QtCore.SIGNAL("editingFinished()"), self.apply_edit_changes)
 		self.edit_grid.addWidget(self.edit_timeout, row, 1)	
+		
+		row += 1							
+		
+		self.checkbox_flush = QtGui.QCheckBox("Flush pending key presses")
+		self.checkbox_flush.toggled.connect(self.apply_edit_changes)
+		self.edit_grid.addWidget(self.checkbox_flush, row, 1)
 		
 		row += 1							
 		
@@ -133,6 +144,8 @@ class keyboard_response(libopensesame.keyboard_response.keyboard_response, libqt
 		else:
 			to = ""		
 		self.edit_timeout.setText(str(to))
+		
+		self.checkbox_flush.setChecked(self.get("flush") == "yes")
 		
 		return self._edit_widget
 		

@@ -131,6 +131,17 @@ class sequence(libopensesame.sequence.sequence, libqtopensesame.qtitem.qtitem):
 		"""Construct the edit_widget that contains the controls"""
 
 		libqtopensesame.qtitem.qtitem.init_edit_widget(self, False)
+		
+		# Flush keyboard checkbox
+		self.checkbox_flush_keyboard = QtGui.QCheckBox( \
+			"Flush pending key presses at sequence start")
+		self.checkbox_flush_keyboard.toggled.connect(self.apply_edit_changes)				
+		form_layout = QtGui.QFormLayout()
+		form_layout.setContentsMargins(0, 0, 0, 0)
+		form_layout.addRow(self.checkbox_flush_keyboard)
+		form_widget = QtGui.QWidget()
+		form_widget.setLayout(form_layout)		
+		self.edit_vbox.addWidget(form_widget)		
 
 		self.combobox_item_type = self.experiment.item_type_combobox()
 		self.combobox_items = QtGui.QComboBox()
@@ -143,10 +154,11 @@ class sequence(libopensesame.sequence.sequence, libqtopensesame.qtitem.qtitem):
 		l.addWidget(QtGui.QLabel("The sequence is empty"))
 		l.addStretch()
 		
-		self.button_existing = self.action_button("add", "Append existing item to sequence", ("add", "existing"))
-		self.button_new = self.action_button("add", "Create and append  new item to sequence", ("add", "new"))
+		self.button_existing = self.action_button("add", \
+			"Append existing item to sequence", ("add", "existing"))
+		self.button_new = self.action_button("add", \
+			"Create and append  new item to sequence", ("add", "new"))
 		
-
 		grid = QtGui.QGridLayout()
 		grid.setMargin(0)
 		grid.addWidget(QtGui.QLabel("Append existing item"), 0, 0)
@@ -163,7 +175,7 @@ class sequence(libopensesame.sequence.sequence, libqtopensesame.qtitem.qtitem):
 
 		grid_widget = QtGui.QFrame()
 		grid_widget.setLayout(grid)
-
+		
 		self.edit_vbox.addWidget(grid_widget)
 		self.edit_vbox.addStretch()
 
@@ -190,12 +202,25 @@ class sequence(libopensesame.sequence.sequence, libqtopensesame.qtitem.qtitem):
 		else:
 			self.combobox_items.setDisabled(False)
 			self.button_existing.setDisabled(False)
+			
+		self.checkbox_flush_keyboard.setChecked( \
+			self.get("flush_keyboard") == "yes")
 		
 		self.draggable_list.refresh()
 		self.frame_empty.setVisible(len(self.items) == 0)
 		self._active = True
 
 		return self._edit_widget
+		
+	def apply_edit_changes(self):
+	
+		"""Apply controls"""
+						
+		libqtopensesame.qtitem.qtitem.apply_edit_changes(self)		
+		if self.checkbox_flush_keyboard.isChecked():
+			self.set("flush_keyboard", "yes")
+		else:
+			self.set("flush_keyboard", "no")		
 				
 	def move(self, from_index, to_index):
 	

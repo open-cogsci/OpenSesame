@@ -56,6 +56,7 @@ class keyboard_response(item.item, generic_response.generic_response):
 
 		item.item.prepare(self)
 		generic_response.generic_response.prepare(self)
+		self._flush = self.get("flush") == "yes"
 		return True
 
 	def run(self):
@@ -72,7 +73,7 @@ class keyboard_response(item.item, generic_response.generic_response):
 
 		# Flush responses, to make sure that earlier responses
 		# are not carried over
-		if self.get("flush") == "yes":
+		if self._flush:
 			self._keyboard.flush()
 
 		self.set_sri()
