@@ -10,7 +10,6 @@ upstreamver = $(shell echo $(debver) | cut -d '-' -f 1,1 )
 # master.
 gitver = $(shell [ -x /usr/bin/git ] && git describe --tags --match 'release/*' $$(git merge-base -a HEAD master) | sed -e 's,^release/,,' -e 's/-/+git/')
 
-
 # one ring to rule them all ...
 %:
 	dh $@
@@ -23,8 +22,7 @@ override_dh_auto_clean:
 
 override_dh_auto_build:
 	# move pre-generated Qt wrappers aside
-	mkdir -p debian/temp_store
-	cp -t debian/temp_store libqtopensesame/*_ui.py libqtopensesame/icons_rc.py
+	-rm libqtopensesame/*_ui.py libqtopensesame/icons_rc.py
 	# update PyQt wrappers
 	./compile_ui.sh
 	dh_auto_build
