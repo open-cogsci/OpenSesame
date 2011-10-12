@@ -23,9 +23,9 @@ if __name__ == "__main__":
 	# First, load a minimum number of modules and show an empty app window. This
 	# gives the user the feeling of a snappy response.
 	import sys
-	from PyQt4 import QtGui, QtCore
-	from libqtopensesame.qtopensesame import qtopensesame
+	from PyQt4 import QtGui
 	app = QtGui.QApplication(sys.argv)
+	from libqtopensesame.qtopensesame import qtopensesame	
 	opensesame = qtopensesame()
 	opensesame.show()
 	app.processEvents()
@@ -33,14 +33,14 @@ if __name__ == "__main__":
 	# Now that the window is shown, load the remaining modules and resume the
 	# GUI initialization.
 	from libopensesame.misc import change_working_dir
-	import os
-	import os.path
-	change_working_dir()		
+	change_working_dir()			
 	opensesame.resume_init()
+	from PyQt4 import QtCore	
 	QtCore.QObject.connect(app, QtCore.SIGNAL("quit()"), opensesame.close)	
 
 	# Open an experiment if it has been specified as a command line argument and
 	# suppress the new wizard in that case.
+	import os.path	
 	if len(sys.argv) >= 2 and os.path.isfile(sys.argv[1]):
 		new_wizard = False
 		opensesame.open_file(path=sys.argv[1])
