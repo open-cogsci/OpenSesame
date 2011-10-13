@@ -59,9 +59,9 @@ if __name__ == "__main__":
 			opensesame.start_new_wizard()
 		else:
 			opensesame.open_general_tab()
-			opensesame.refresh()
 			
 	opensesame.restore_window_state()
+	opensesame.refresh()	
 			
 	# Exit using the application exit status
 	sys.exit(app.exec_())
