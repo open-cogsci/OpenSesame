@@ -45,7 +45,8 @@ if __name__ == "__main__":
 		try:
 			from PyQt4 import QtGui, QtCore
 		except:
-			libopensesame.misc.messagebox("OpenSesame Run", "Incorrect or missing options.\n\nRun 'opensesame --help' from a terminal (or command prompt) to see a list of available options, or install Python Qt4 to enable the graphical user interface.")
+			libopensesame.misc.messagebox("OpenSesame Run", \
+				"Incorrect or missing options.\n\nRun 'opensesame --help' from a terminal (or command prompt) to see a list of available options, or install Python Qt4 to enable the graphical user interface.")
 			sys.exit()
 	
 		# Create the GUI and show it

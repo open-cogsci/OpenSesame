@@ -21,11 +21,6 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 import os
 import os.path
 import sys
-import optparse
-import re
-import libqtopensesame
-import libopensesame.experiment
-from Tkinter import *
 
 version = "0.25-pre7"
 codename = "Dashy Darwin"
@@ -33,6 +28,8 @@ codename = "Dashy Darwin"
 def change_working_dir():
 
 	"""A horrifyingly ugly hack to change the working directory under Windows"""
+	
+	import libqtopensesame	
 
 	if os.name == "nt":
 		try:
@@ -42,7 +39,8 @@ def change_working_dir():
 			j = s.find("'>'") - 1
 			s = s[i:j]
 			# Go up the tree until the path of the current script
-			while not os.path.exists(os.path.join(s, "opensesame")) and not os.path.exists(os.path.join(s, "opensesame.exe")):
+			while not os.path.exists(os.path.join(s, "opensesame")) and \
+				not os.path.exists(os.path.join(s, "opensesame.exe")):
 				s = os.path.dirname(s)
 			os.chdir(s)
 			if s not in sys.path:
@@ -55,9 +53,11 @@ def opensesamerun_options():
 
 	"""Parse the command line options for opensesamerun"""
 
+	import optparse
 	global version, codename
 
-	parser = optparse.OptionParser("usage: opensesamerun [experiment] [options]", version = "%s '%s'" % (version, codename))
+	parser = optparse.OptionParser("usage: opensesamerun [experiment] [options]", \
+		version = "%s '%s'" % (version, codename))
 
 	parser.set_defaults(subject = 0)
 	parser.set_defaults(logfile = None)
@@ -67,27 +67,22 @@ def opensesamerun_options():
 	parser.set_defaults(width = 1024)
 	parser.set_defaults(height = 768)
 	parser.set_defaults(custom_resolution = False)
-
 	group = optparse.OptionGroup(parser, "Subject and log file options")
 	group.add_option("-s", "--subject", action = "store", dest = "subject", help = "Subject number")
 	group.add_option("-l", "--logfile", action = "store", dest = "logfile", help = "Logfile")
 	parser.add_option_group(group)
-
 	group = optparse.OptionGroup(parser, "Display options")
 	group.add_option("-f", "--fullscreen", action = "store_true", dest = "fullscreen", help = "Run fullscreen")
 	group.add_option("-c", "--custom_resolution", action = "store_true", dest = "custom_resolution", help = "Do not use the display resolution specified in the experiment file")
 	group.add_option("-w", "--width", action = "store", dest = "width", help = "Display width")
 	group.add_option("-e", "--height", action = "store", dest = "height", help = "Display height")
 	parser.add_option_group(group)
-
 	group = optparse.OptionGroup(parser, "Miscellaneous options")
 	group.add_option("-d", "--debug", action = "store_true", dest = "debug", help = "Print lots of debugging messages to the standard output")
 	parser.add_option_group(group)
-
 	group = optparse.OptionGroup(parser, "Miscellaneous options")
 	group.add_option("--pylink", action = "store_true", dest = "pylink", help = "Load PyLink before PyGame (necessary for using the Eyelink plug-ins in non-dummy mode)")
 	parser.add_option_group(group)
-
 	options, args = parser.parse_args(sys.argv)
 
 	# Set the default logfile based on the subject nr
@@ -151,12 +146,14 @@ def messagebox(title, msg):
 	msg -- the message
 	"""
 
-	root = Tk()
+	import Tkinter
+	root = Tkinter.Tk()
 	root.title(title)
-	l = Label(root, text = msg, justify = LEFT, padx = 8, pady = 8, wraplength = 300)
+	l = Tkinter.Label(root, text=msg, justify=Tkinter.LEFT, padx=8, pady=8, \
+		wraplength=300)
 	l.pack()
-	b = Button(root, text = "Ok", command = root.quit)
-	b.pack(side = RIGHT)
+	b = Tkinter.Button(root, text="Ok", command=root.quit)
+	b.pack(side=Tkinter.RIGHT)
 	root.mainloop()
 
 def strip_tags(s):
@@ -171,6 +168,7 @@ def strip_tags(s):
 	The stripped string
 	"""
 
+	import re
 	return re.compile(r'<.*?>').sub('', str(s).replace("<br />", "\n").replace("<br>", "\n"))
 
 def resource(name):
