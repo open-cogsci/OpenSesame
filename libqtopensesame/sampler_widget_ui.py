@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'resources/sampler_widget.ui'
 #
-# Created: Wed Oct 12 16:54:49 2011
+# Created: Thu Oct 13 14:45:45 2011
 #      by: PyQt4 UI code generator 4.8.3
 #
 # WARNING! All changes made in this file will be lost!
