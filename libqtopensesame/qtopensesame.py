@@ -208,6 +208,9 @@ class qtopensesame(QtGui.QMainWindow):
 		self.ui.pool_widget = pool_widget.pool_widget(self)
 		self.ui.dock_pool.setWidget(self.ui.pool_widget)		
 
+		# Uncheck the debug window button on debug window close
+		self.ui.dock_stdout.visibilityChanged.connect(self.ui.action_show_stdout.setChecked)
+		
 		# Create the initial experiment
 		self.experiment = experiment.experiment(self, "New experiment", \
 			open(misc.resource("default.opensesame"), "r").read())
