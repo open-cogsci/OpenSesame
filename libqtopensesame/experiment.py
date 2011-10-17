@@ -302,8 +302,10 @@ class experiment(libopensesame.experiment.experiment):
 		"""
 
 		if c == None:
+			index = 0
 			c = QtGui.QComboBox(self.ui.centralwidget)
 		else:
+			index = max(0, c.currentIndex())
 			c.clear()
 
 		item_dict = {}
@@ -327,9 +329,10 @@ class experiment(libopensesame.experiment.experiment):
 				c.addItem(item)
 				c.setItemIcon(i, self.icon(self.experiment.items[item].item_type))
 				if self.experiment.items[item].name == select:
-					c.setCurrentIndex(i)
+					index = i
 				i += 1
 				
+		c.setCurrentIndex(index)
 		return c
 
 	def item_type_combobox(self, core_items = True, plugins = True, c = None, select = None):
