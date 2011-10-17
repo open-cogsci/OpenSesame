@@ -350,8 +350,7 @@ class experiment(item.item, openexp.experiment.experiment):
 		if type(path) != str:
 			raise exceptions.runtime_error( \
 				"A string should be passed to experiment.get_file(), not '%s'" \
-				% path)
-		
+				% path)		
 		if os.path.exists(os.path.join(self.pool_folder, path)):
 			return os.path.join(self.pool_folder, path)
 		elif self.experiment_path != None and os.path.exists(os.path.join(self.experiment_path, path)):
