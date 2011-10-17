@@ -1003,12 +1003,12 @@ class qtopensesame(QtGui.QMainWindow):
 					the list of recent files (default = True)
 		"""
 
-		self.set_status("Saving ...")
-
 		if self.current_path == None:
 			self.save_file_as()
 			return
 
+		self.set_busy(True)
+		
 		# Get ready, generate the script and see if the script can be
 		# re-parsed. If not, throw an error.
 		try:
@@ -1017,6 +1017,7 @@ class qtopensesame(QtGui.QMainWindow):
 			experiment.experiment(self, "Experiment", script) # Re-parse
 		except libopensesame.exceptions.script_error as e:
 			self.experiment.notify("Could not save file, because the script could not be generated. The following error occured:<br/>%s" % e)
+			self.set_busy(False)
 			return
 
 		# Try to save the experiment if it doesn't exist already
@@ -1025,14 +1026,18 @@ class qtopensesame(QtGui.QMainWindow):
 			self.set_status("Saved as %s" % self.current_path)
 		except Exception as e:
 			self.experiment.notify("Failed to save file. Error: %s" % e)
+			self.set_busy(False)			
 			return
 
 		if resp == False:
-			resp = QtGui.QMessageBox.question(self.ui.centralwidget, "File exists", "A file with that name already exists. Overwite?", QtGui.QMessageBox.Yes, QtGui.QMessageBox.No)
+			resp = QtGui.QMessageBox.question(self.ui.centralwidget, "File exists", \
+				"A file with that name already exists. Overwite?", QtGui.QMessageBox.Yes, \
+				QtGui.QMessageBox.No)
 			if resp == QtGui.QMessageBox.No:
 				self.window_message("Unsaved")
 				self.current_path = None
 				self.set_status("Not saved")
+				self.set_busy(False)				
 				return
 			else:
 				try:
@@ -1042,6 +1047,7 @@ class qtopensesame(QtGui.QMainWindow):
 				except Exception as e:
 					self.experiment.notify("Failed to save file. Error: %s" % e)
 					self.set_status("Not saved")
+			self.set_busy(False)				
 			return
 
 		else:
@@ -1051,6 +1057,7 @@ class qtopensesame(QtGui.QMainWindow):
 			self.update_recent_files()
 		self.set_unsaved(False)
 		self.window_message(self.current_path)
+		self.set_busy(False)
 
 	def save_file_as(self):
 
