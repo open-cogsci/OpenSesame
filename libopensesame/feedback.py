@@ -42,12 +42,12 @@ class feedback(sketchpad.sketchpad):
 		
 		"""
 		Prepare for running. In the case of the feedback display, this means
-		doing nothin
+		doing nothing
 		
 		Returns:
 		True
 		"""
-		
+				
 		return True
 		
 	def run(self):
@@ -64,15 +64,10 @@ class feedback(sketchpad.sketchpad):
 				return False
 		except exceptions.script_error as e:
 			raise exceptions.runtime_error("Failed to create feedback item '%s'" % self.name)						
-		return sketchpad.sketchpad.run(self)			
+		if not sketchpad.sketchpad.run(self):
+			return False			
 		
+		# Reset the bookkeeping		
 		if self.reset_variables == "yes":
-			# Reset the bookkeeping
-			self.experiment.total_responses = 0
-			self.experiment.total_correct = 0
-			self.experiment.total_response_time = 0
-			self.experiment.avg_rt = 0
-			self.experiment.average_response_time = 0
-			self.experiment.accuracy = 0
-			self.experiment.acc = 0		
+			self.experiment.reset_feedback()
 						

@@ -56,12 +56,7 @@ class reset_feedback(item.item):
 
 		"""Reset the feedback variables"""
 		
-		self.experiment.total_response_time = 0
-		self.experiment.total_responses = 0
-		self.experiment.acc = "undefined"
-		self.experiment.avg_rt = "undefined"
-		self.experiment.accuracy = "undefined"
-		self.experiment.average_response_time = "undefined"		
+		self.experiment.reset_feedback()
 		return True
 
 class qtreset_feedback(reset_feedback, qtplugin.qtplugin):

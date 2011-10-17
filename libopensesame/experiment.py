@@ -492,6 +492,18 @@ class experiment(item.item, openexp.experiment.experiment):
 		self.experiment_path = os.path.dirname(path)		
 		return script
 		
+	def reset_feedback(self):
+	
+		"""Reset the feedback variables (acc, avg_rt, etc.)"""
+		
+		self.total_responses = 0
+		self.total_correct = 0
+		self.total_response_time = 0
+		self.avg_rt = "undefined"
+		self.average_response_time = "undefined"
+		self.accuracy = "undefined"
+		self.acc = "undefined"	
+		
 	def var_info(self):
 	
 		"""
