@@ -16,9 +16,6 @@ gitver = $(shell [ -x /usr/bin/git ] && git describe --tags --match 'release/*' 
 
 override_dh_auto_clean:
 	dh_auto_clean
-	# restore old Qt wrappers
-	[ -d debian/temp_store ] && cp debian/temp_store/* libqtopensesame/ || true
-	-rm -rf debian/temp_store
 
 override_dh_auto_build:
 	# move pre-generated Qt wrappers aside

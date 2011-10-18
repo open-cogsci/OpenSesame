@@ -2,8 +2,8 @@
 
 # Form implementation generated from reading ui file 'resources/general_widget.ui'
 #
-# Created: Thu Oct 13 14:45:45 2011
-#      by: PyQt4 UI code generator 4.8.3
+# Created: Mon Oct 17 17:15:03 2011
+#      by: PyQt4 UI code generator 4.8.5
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -18,6 +18,7 @@ class Ui_Form(object):
     def setupUi(self, Form):
         Form.setObjectName(_fromUtf8("Form"))
         Form.resize(839, 749)
+        Form.setWindowTitle(QtGui.QApplication.translate("Form", "Form", None, QtGui.QApplication.UnicodeUTF8))
         self.verticalLayout = QtGui.QVBoxLayout(Form)
         self.verticalLayout.setMargin(0)
         self.verticalLayout.setObjectName(_fromUtf8("verticalLayout"))
@@ -33,20 +34,29 @@ class Ui_Form(object):
         self.layout_general_properties.setMargin(0)
         self.layout_general_properties.setObjectName(_fromUtf8("layout_general_properties"))
         self.label = QtGui.QLabel(self.widget)
+        self.label.setText(QtGui.QApplication.translate("Form", "Entry point<br />\n"
+"<small><i>First item to run</i></small>", None, QtGui.QApplication.UnicodeUTF8))
         self.label.setObjectName(_fromUtf8("label"))
         self.layout_general_properties.addWidget(self.label, 0, 0, 1, 1)
         self.combobox_start = QtGui.QComboBox(self.widget)
+        self.combobox_start.setToolTip(QtGui.QApplication.translate("Form", "This is item (typically a sequence) is the starting point for your experiment.", None, QtGui.QApplication.UnicodeUTF8))
         self.combobox_start.setObjectName(_fromUtf8("combobox_start"))
         self.layout_general_properties.addWidget(self.combobox_start, 0, 1, 1, 5)
         self.label_2 = QtGui.QLabel(self.widget)
+        self.label_2.setText(QtGui.QApplication.translate("Form", "Display resolution<br />\n"
+"<small><i>In pixels (width x height)</i></small>", None, QtGui.QApplication.UnicodeUTF8))
         self.label_2.setObjectName(_fromUtf8("label_2"))
         self.layout_general_properties.addWidget(self.label_2, 3, 0, 1, 1)
         self.spinbox_width = QtGui.QSpinBox(self.widget)
+        self.spinbox_width.setToolTip(QtGui.QApplication.translate("Form", "The display resolution (width) in pixels", None, QtGui.QApplication.UnicodeUTF8))
+        self.spinbox_width.setSuffix(QtGui.QApplication.translate("Form", "px", None, QtGui.QApplication.UnicodeUTF8))
         self.spinbox_width.setMinimum(1)
         self.spinbox_width.setMaximum(10000)
         self.spinbox_width.setObjectName(_fromUtf8("spinbox_width"))
         self.layout_general_properties.addWidget(self.spinbox_width, 3, 1, 1, 1)
         self.spinbox_height = QtGui.QSpinBox(self.widget)
+        self.spinbox_height.setToolTip(QtGui.QApplication.translate("Form", "The display resolution (height) in pixels", None, QtGui.QApplication.UnicodeUTF8))
+        self.spinbox_height.setSuffix(QtGui.QApplication.translate("Form", "px", None, QtGui.QApplication.UnicodeUTF8))
         self.spinbox_height.setMinimum(1)
         self.spinbox_height.setMaximum(10000)
         self.spinbox_height.setObjectName(_fromUtf8("spinbox_height"))
@@ -57,23 +67,34 @@ class Ui_Form(object):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.label_3.sizePolicy().hasHeightForWidth())
         self.label_3.setSizePolicy(sizePolicy)
+        self.label_3.setText(QtGui.QApplication.translate("Form", "x", None, QtGui.QApplication.UnicodeUTF8))
         self.label_3.setObjectName(_fromUtf8("label_3"))
         self.layout_general_properties.addWidget(self.label_3, 3, 2, 1, 1)
         self.label_6 = QtGui.QLabel(self.widget)
+        self.label_6.setText(QtGui.QApplication.translate("Form", "Timing compensation<br />\n"
+"<small><i>In milliseconds</i></small>", None, QtGui.QApplication.UnicodeUTF8))
         self.label_6.setObjectName(_fromUtf8("label_6"))
         self.layout_general_properties.addWidget(self.label_6, 4, 0, 1, 1)
         self.spinbox_compensation = QtGui.QSpinBox(self.widget)
+        self.spinbox_compensation.setToolTip(QtGui.QApplication.translate("Form", "Automatic timing compensation. Positive values will decrease durations, negative values will increase durations (of sketchpads etc.)", None, QtGui.QApplication.UnicodeUTF8))
+        self.spinbox_compensation.setSuffix(QtGui.QApplication.translate("Form", "ms", None, QtGui.QApplication.UnicodeUTF8))
         self.spinbox_compensation.setMinimum(-100)
         self.spinbox_compensation.setMaximum(100)
         self.spinbox_compensation.setObjectName(_fromUtf8("spinbox_compensation"))
         self.layout_general_properties.addWidget(self.spinbox_compensation, 4, 1, 1, 3)
         self.label_5 = QtGui.QLabel(self.widget)
+        self.label_5.setText(QtGui.QApplication.translate("Form", "Default background color<br />\n"
+"<small><i>E.g., \"black\" or \"#000000\"</i></small>", None, QtGui.QApplication.UnicodeUTF8))
         self.label_5.setObjectName(_fromUtf8("label_5"))
         self.layout_general_properties.addWidget(self.label_5, 4, 4, 1, 1)
         self.label_4 = QtGui.QLabel(self.widget)
+        self.label_4.setText(QtGui.QApplication.translate("Form", "Default foreground color<br />\n"
+"<small><i>E.g., \"white\" or \"#ffffff\"</i></small>", None, QtGui.QApplication.UnicodeUTF8))
         self.label_4.setObjectName(_fromUtf8("label_4"))
         self.layout_general_properties.addWidget(self.label_4, 3, 4, 1, 1)
         self.label_8 = QtGui.QLabel(self.widget)
+        self.label_8.setText(QtGui.QApplication.translate("Form", "Back-end<br />\n"
+"<small><i>Handles display, sound, and input</i></small>", None, QtGui.QApplication.UnicodeUTF8))
         self.label_8.setObjectName(_fromUtf8("label_8"))
         self.layout_general_properties.addWidget(self.label_8, 5, 0, 1, 1)
         self.combobox_backend = QtGui.QComboBox(self.widget)
@@ -81,6 +102,7 @@ class Ui_Form(object):
         self.layout_general_properties.addWidget(self.combobox_backend, 5, 1, 1, 5)
         self.verticalLayout.addWidget(self.widget)
         self.group_backend_settings = QtGui.QGroupBox(Form)
+        self.group_backend_settings.setTitle(QtGui.QApplication.translate("Form", "Show back-end settings and info", None, QtGui.QApplication.UnicodeUTF8))
         self.group_backend_settings.setCheckable(True)
         self.group_backend_settings.setChecked(False)
         self.group_backend_settings.setObjectName(_fromUtf8("group_backend_settings"))
@@ -96,47 +118,57 @@ class Ui_Form(object):
         self.verticalLayout_7 = QtGui.QVBoxLayout(self.scrollAreaWidgetContents)
         self.verticalLayout_7.setObjectName(_fromUtf8("verticalLayout_7"))
         self.group_canvas = QtGui.QGroupBox(self.scrollAreaWidgetContents)
+        self.group_canvas.setTitle(QtGui.QApplication.translate("Form", "Canvas", None, QtGui.QApplication.UnicodeUTF8))
         self.group_canvas.setObjectName(_fromUtf8("group_canvas"))
         self.layout_canvas = QtGui.QVBoxLayout(self.group_canvas)
         self.layout_canvas.setContentsMargins(0, -1, 0, 0)
         self.layout_canvas.setObjectName(_fromUtf8("layout_canvas"))
         self.label_canvas = QtGui.QLabel(self.group_canvas)
+        self.label_canvas.setText(QtGui.QApplication.translate("Form", "TextLabel", None, QtGui.QApplication.UnicodeUTF8))
         self.label_canvas.setObjectName(_fromUtf8("label_canvas"))
         self.layout_canvas.addWidget(self.label_canvas)
         self.verticalLayout_7.addWidget(self.group_canvas)
         self.group_keyboard = QtGui.QGroupBox(self.scrollAreaWidgetContents)
+        self.group_keyboard.setTitle(QtGui.QApplication.translate("Form", "Keyboard", None, QtGui.QApplication.UnicodeUTF8))
         self.group_keyboard.setObjectName(_fromUtf8("group_keyboard"))
         self.layout_keyboard = QtGui.QVBoxLayout(self.group_keyboard)
         self.layout_keyboard.setContentsMargins(0, -1, 0, 0)
         self.layout_keyboard.setObjectName(_fromUtf8("layout_keyboard"))
         self.label_keyboard = QtGui.QLabel(self.group_keyboard)
+        self.label_keyboard.setText(QtGui.QApplication.translate("Form", "TextLabel", None, QtGui.QApplication.UnicodeUTF8))
         self.label_keyboard.setObjectName(_fromUtf8("label_keyboard"))
         self.layout_keyboard.addWidget(self.label_keyboard)
         self.verticalLayout_7.addWidget(self.group_keyboard)
         self.group_mouse = QtGui.QGroupBox(self.scrollAreaWidgetContents)
+        self.group_mouse.setTitle(QtGui.QApplication.translate("Form", "Mouse", None, QtGui.QApplication.UnicodeUTF8))
         self.group_mouse.setObjectName(_fromUtf8("group_mouse"))
         self.layout_mouse = QtGui.QVBoxLayout(self.group_mouse)
         self.layout_mouse.setContentsMargins(0, -1, 0, 0)
         self.layout_mouse.setObjectName(_fromUtf8("layout_mouse"))
         self.label_mouse = QtGui.QLabel(self.group_mouse)
+        self.label_mouse.setText(QtGui.QApplication.translate("Form", "TextLabel", None, QtGui.QApplication.UnicodeUTF8))
         self.label_mouse.setObjectName(_fromUtf8("label_mouse"))
         self.layout_mouse.addWidget(self.label_mouse)
         self.verticalLayout_7.addWidget(self.group_mouse)
         self.group_sampler = QtGui.QGroupBox(self.scrollAreaWidgetContents)
+        self.group_sampler.setTitle(QtGui.QApplication.translate("Form", "Sampler", None, QtGui.QApplication.UnicodeUTF8))
         self.group_sampler.setObjectName(_fromUtf8("group_sampler"))
         self.layout_sampler = QtGui.QVBoxLayout(self.group_sampler)
         self.layout_sampler.setContentsMargins(0, -1, 0, 0)
         self.layout_sampler.setObjectName(_fromUtf8("layout_sampler"))
         self.label_sampler = QtGui.QLabel(self.group_sampler)
+        self.label_sampler.setText(QtGui.QApplication.translate("Form", "TextLabel", None, QtGui.QApplication.UnicodeUTF8))
         self.label_sampler.setObjectName(_fromUtf8("label_sampler"))
         self.layout_sampler.addWidget(self.label_sampler)
         self.verticalLayout_7.addWidget(self.group_sampler)
         self.group_synth = QtGui.QGroupBox(self.scrollAreaWidgetContents)
+        self.group_synth.setTitle(QtGui.QApplication.translate("Form", "Synth", None, QtGui.QApplication.UnicodeUTF8))
         self.group_synth.setObjectName(_fromUtf8("group_synth"))
         self.layout_synth = QtGui.QVBoxLayout(self.group_synth)
         self.layout_synth.setContentsMargins(0, -1, 0, 0)
         self.layout_synth.setObjectName(_fromUtf8("layout_synth"))
         self.label_synth = QtGui.QLabel(self.group_synth)
+        self.label_synth.setText(QtGui.QApplication.translate("Form", "TextLabel", None, QtGui.QApplication.UnicodeUTF8))
         self.label_synth.setObjectName(_fromUtf8("label_synth"))
         self.layout_synth.addWidget(self.label_synth)
         self.verticalLayout_7.addWidget(self.group_synth)
@@ -144,6 +176,7 @@ class Ui_Form(object):
         self.verticalLayout_4.addWidget(self.scrollarea_backend_settings)
         self.verticalLayout.addWidget(self.group_backend_settings)
         self.group_script = QtGui.QGroupBox(Form)
+        self.group_script.setTitle(QtGui.QApplication.translate("Form", "Show script editor", None, QtGui.QApplication.UnicodeUTF8))
         self.group_script.setCheckable(True)
         self.group_script.setChecked(False)
         self.group_script.setObjectName(_fromUtf8("group_script"))
@@ -181,6 +214,14 @@ class Ui_Form(object):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.label_opensesame.sizePolicy().hasHeightForWidth())
         self.label_opensesame.setSizePolicy(sizePolicy)
+        self.label_opensesame.setText(QtGui.QApplication.translate("Form", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"</style></head><body style=\" font-family:\'Ubuntu\'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
+"<p align=\"right\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:11pt; font-weight:600;\">OpenSesame [version]</span></p>\n"
+"<p align=\"right\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600; font-style:italic;\">[codename]</span></p>\n"
+"<p align=\"right\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Copyright Sebastiaan Mathôt (2010-2011)</p>\n"
+"<p align=\"right\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><a href=\"http://www.cogsci.nl/opensesame\"><span style=\" text-decoration: underline; color:#0000ff;\">http://www.cogsci.nl/opensesame</span></a></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
         self.label_opensesame.setAlignment(QtCore.Qt.AlignBottom|QtCore.Qt.AlignRight|QtCore.Qt.AlignTrailing)
         self.label_opensesame.setObjectName(_fromUtf8("label_opensesame"))
         self.verticalLayout_2.addWidget(self.label_opensesame)
@@ -190,46 +231,6 @@ class Ui_Form(object):
         QtCore.QMetaObject.connectSlotsByName(Form)
 
     def retranslateUi(self, Form):
-        Form.setWindowTitle(QtGui.QApplication.translate("Form", "Form", None, QtGui.QApplication.UnicodeUTF8))
-        self.label.setText(QtGui.QApplication.translate("Form", "Entry point<br />\n"
-"<small><i>First item to run</i></small>", None, QtGui.QApplication.UnicodeUTF8))
-        self.combobox_start.setToolTip(QtGui.QApplication.translate("Form", "This is item (typically a sequence) is the starting point for your experiment.", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_2.setText(QtGui.QApplication.translate("Form", "Display resolution<br />\n"
-"<small><i>In pixels (width x height)</i></small>", None, QtGui.QApplication.UnicodeUTF8))
-        self.spinbox_width.setToolTip(QtGui.QApplication.translate("Form", "The display resolution (width) in pixels", None, QtGui.QApplication.UnicodeUTF8))
-        self.spinbox_width.setSuffix(QtGui.QApplication.translate("Form", "px", None, QtGui.QApplication.UnicodeUTF8))
-        self.spinbox_height.setToolTip(QtGui.QApplication.translate("Form", "The display resolution (height) in pixels", None, QtGui.QApplication.UnicodeUTF8))
-        self.spinbox_height.setSuffix(QtGui.QApplication.translate("Form", "px", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_3.setText(QtGui.QApplication.translate("Form", "x", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_6.setText(QtGui.QApplication.translate("Form", "Timing compensation<br />\n"
-"<small><i>In milliseconds</i></small>", None, QtGui.QApplication.UnicodeUTF8))
-        self.spinbox_compensation.setToolTip(QtGui.QApplication.translate("Form", "Automatic timing compensation. Positive values will decrease durations, negative values will increase durations (of sketchpads etc.)", None, QtGui.QApplication.UnicodeUTF8))
-        self.spinbox_compensation.setSuffix(QtGui.QApplication.translate("Form", "ms", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_5.setText(QtGui.QApplication.translate("Form", "Default background color<br />\n"
-"<small><i>E.g., \"black\" or \"#000000\"</i></small>", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_4.setText(QtGui.QApplication.translate("Form", "Default foreground color<br />\n"
-"<small><i>E.g., \"white\" or \"#ffffff\"</i></small>", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_8.setText(QtGui.QApplication.translate("Form", "Back-end<br />\n"
-"<small><i>Handles display, sound, and input</i></small>", None, QtGui.QApplication.UnicodeUTF8))
-        self.group_backend_settings.setTitle(QtGui.QApplication.translate("Form", "Show back-end settings and info", None, QtGui.QApplication.UnicodeUTF8))
-        self.group_canvas.setTitle(QtGui.QApplication.translate("Form", "Canvas", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_canvas.setText(QtGui.QApplication.translate("Form", "TextLabel", None, QtGui.QApplication.UnicodeUTF8))
-        self.group_keyboard.setTitle(QtGui.QApplication.translate("Form", "Keyboard", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_keyboard.setText(QtGui.QApplication.translate("Form", "TextLabel", None, QtGui.QApplication.UnicodeUTF8))
-        self.group_mouse.setTitle(QtGui.QApplication.translate("Form", "Mouse", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_mouse.setText(QtGui.QApplication.translate("Form", "TextLabel", None, QtGui.QApplication.UnicodeUTF8))
-        self.group_sampler.setTitle(QtGui.QApplication.translate("Form", "Sampler", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_sampler.setText(QtGui.QApplication.translate("Form", "TextLabel", None, QtGui.QApplication.UnicodeUTF8))
-        self.group_synth.setTitle(QtGui.QApplication.translate("Form", "Synth", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_synth.setText(QtGui.QApplication.translate("Form", "TextLabel", None, QtGui.QApplication.UnicodeUTF8))
-        self.group_script.setTitle(QtGui.QApplication.translate("Form", "Show script editor", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_opensesame.setText(QtGui.QApplication.translate("Form", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
-"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
-"p, li { white-space: pre-wrap; }\n"
-"</style></head><body style=\" font-family:\'Ubuntu\'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
-"<p align=\"right\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:11pt; font-weight:600;\">OpenSesame [version]</span></p>\n"
-"<p align=\"right\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600; font-style:italic;\">[codename]</span></p>\n"
-"<p align=\"right\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Copyright Sebastiaan Mathôt (2010-2011)</p>\n"
-"<p align=\"right\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><a href=\"http://www.cogsci.nl/opensesame\"><span style=\" text-decoration: underline; color:#0000ff;\">http://www.cogsci.nl/opensesame</span></a></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
+        pass
 
 import icons_rc

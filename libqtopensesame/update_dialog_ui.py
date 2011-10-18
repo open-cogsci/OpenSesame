@@ -2,8 +2,8 @@
 
 # Form implementation generated from reading ui file 'resources/update_dialog.ui'
 #
-# Created: Thu Oct 13 14:45:46 2011
-#      by: PyQt4 UI code generator 4.8.3
+# Created: Mon Oct 17 17:15:04 2011
+#      by: PyQt4 UI code generator 4.8.5
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -18,6 +18,7 @@ class Ui_Dialog(object):
     def setupUi(self, Dialog):
         Dialog.setObjectName(_fromUtf8("Dialog"))
         Dialog.resize(400, 299)
+        Dialog.setWindowTitle(QtGui.QApplication.translate("Dialog", "OpenSesame has checked for updates ...", None, QtGui.QApplication.UnicodeUTF8))
         self.verticalLayout = QtGui.QVBoxLayout(Dialog)
         self.verticalLayout.setMargin(8)
         self.verticalLayout.setObjectName(_fromUtf8("verticalLayout"))
@@ -47,9 +48,10 @@ class Ui_Dialog(object):
         self.label_2 = QtGui.QLabel(self.widget)
         font = QtGui.QFont()
         font.setPointSize(11)
-        font.setWeight(75)
         font.setBold(True)
+        font.setWeight(75)
         self.label_2.setFont(font)
+        self.label_2.setText(QtGui.QApplication.translate("Dialog", "OpenSesame has checked for updates ...", None, QtGui.QApplication.UnicodeUTF8))
         self.label_2.setObjectName(_fromUtf8("label_2"))
         self.horizontalLayout.addWidget(self.label_2)
         self.verticalLayout.addWidget(self.widget)
@@ -60,6 +62,7 @@ class Ui_Dialog(object):
         self.textedit_notification.setObjectName(_fromUtf8("textedit_notification"))
         self.verticalLayout.addWidget(self.textedit_notification)
         self.checkbox_auto_check_update = QtGui.QCheckBox(Dialog)
+        self.checkbox_auto_check_update.setText(QtGui.QApplication.translate("Dialog", "Check for updates on start-up", None, QtGui.QApplication.UnicodeUTF8))
         self.checkbox_auto_check_update.setObjectName(_fromUtf8("checkbox_auto_check_update"))
         self.verticalLayout.addWidget(self.checkbox_auto_check_update)
         self.buttonBox = QtGui.QDialogButtonBox(Dialog)
@@ -74,8 +77,6 @@ class Ui_Dialog(object):
         QtCore.QMetaObject.connectSlotsByName(Dialog)
 
     def retranslateUi(self, Dialog):
-        Dialog.setWindowTitle(QtGui.QApplication.translate("Dialog", "OpenSesame has checked for updates ...", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_2.setText(QtGui.QApplication.translate("Dialog", "OpenSesame has checked for updates ...", None, QtGui.QApplication.UnicodeUTF8))
-        self.checkbox_auto_check_update.setText(QtGui.QApplication.translate("Dialog", "Check for updates on start-up", None, QtGui.QApplication.UnicodeUTF8))
+        pass
 
 import icons_rc
