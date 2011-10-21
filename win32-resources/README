@@ -1,0 +1,12 @@
+WIN32 BUILD RESOURCES
+=====================
+You can build OpenSesame for Windows by executing the following command from the
+OpenSesame root folder.
+
+c:\Python26\Python.exe win32-resources\setup.py py2exe
+
+The build script makes a couple of assumptions:
+- Python 2.6 is installed in c:\Python26
+- Py2exe is installed
+- The media_player plugin source is located in the same folder as OpenSesame, 
+  e.g, "c:\git\opensesame" and "c:\git\media_player"
