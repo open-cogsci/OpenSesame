@@ -2,8 +2,8 @@
 
 # Form implementation generated from reading ui file 'resources/start_new_dialog.ui'
 #
-# Created: Thu Oct 13 14:45:46 2011
-#      by: PyQt4 UI code generator 4.8.3
+# Created: Mon Oct 17 17:15:04 2011
+#      by: PyQt4 UI code generator 4.8.5
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -18,6 +18,7 @@ class Ui_Dialog(object):
     def setupUi(self, Dialog):
         Dialog.setObjectName(_fromUtf8("Dialog"))
         Dialog.resize(669, 255)
+        Dialog.setWindowTitle(QtGui.QApplication.translate("Dialog", "New experiment", None, QtGui.QApplication.UnicodeUTF8))
         self.verticalLayout_2 = QtGui.QVBoxLayout(Dialog)
         self.verticalLayout_2.setSpacing(12)
         self.verticalLayout_2.setObjectName(_fromUtf8("verticalLayout_2"))
@@ -47,9 +48,10 @@ class Ui_Dialog(object):
         self.label_4 = QtGui.QLabel(self.widget_2)
         font = QtGui.QFont()
         font.setPointSize(11)
-        font.setWeight(75)
         font.setBold(True)
+        font.setWeight(75)
         self.label_4.setFont(font)
+        self.label_4.setText(QtGui.QApplication.translate("Dialog", "How would you like to begin?", None, QtGui.QApplication.UnicodeUTF8))
         self.label_4.setObjectName(_fromUtf8("label_4"))
         self.horizontalLayout.addWidget(self.label_4)
         self.verticalLayout_2.addWidget(self.widget_2)
@@ -88,9 +90,10 @@ class Ui_Dialog(object):
         self.label_5 = QtGui.QLabel(self.widget_4)
         font = QtGui.QFont()
         font.setPointSize(16)
-        font.setWeight(75)
         font.setBold(True)
+        font.setWeight(75)
         self.label_5.setFont(font)
+        self.label_5.setText(QtGui.QApplication.translate("Dialog", "Templates", None, QtGui.QApplication.UnicodeUTF8))
         self.label_5.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
         self.label_5.setObjectName(_fromUtf8("label_5"))
         self.horizontalLayout_4.addWidget(self.label_5)
@@ -100,6 +103,7 @@ class Ui_Dialog(object):
         self.list_templates.setObjectName(_fromUtf8("list_templates"))
         self.verticalLayout.addWidget(self.list_templates)
         self.button_template = QtGui.QPushButton(self.frame_2)
+        self.button_template.setText(QtGui.QApplication.translate("Dialog", "Start with template", None, QtGui.QApplication.UnicodeUTF8))
         icon = QtGui.QIcon()
         icon.addPixmap(QtGui.QPixmap(_fromUtf8(":/icons/wizard.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.button_template.setIcon(icon)
@@ -133,9 +137,10 @@ class Ui_Dialog(object):
         self.label_2 = QtGui.QLabel(self.widget_5)
         font = QtGui.QFont()
         font.setPointSize(16)
-        font.setWeight(75)
         font.setBold(True)
+        font.setWeight(75)
         self.label_2.setFont(font)
+        self.label_2.setText(QtGui.QApplication.translate("Dialog", "Recent experiments", None, QtGui.QApplication.UnicodeUTF8))
         self.label_2.setObjectName(_fromUtf8("label_2"))
         self.horizontalLayout_5.addWidget(self.label_2)
         self.verticalLayout_3.addWidget(self.widget_5)
@@ -150,12 +155,14 @@ class Ui_Dialog(object):
         self.horizontalLayout_3.setMargin(0)
         self.horizontalLayout_3.setObjectName(_fromUtf8("horizontalLayout_3"))
         self.button_recent = QtGui.QPushButton(self.widget_3)
+        self.button_recent.setText(QtGui.QApplication.translate("Dialog", "Open", None, QtGui.QApplication.UnicodeUTF8))
         icon1 = QtGui.QIcon()
         icon1.addPixmap(QtGui.QPixmap(_fromUtf8(":/icons/browse.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.button_recent.setIcon(icon1)
         self.button_recent.setObjectName(_fromUtf8("button_recent"))
         self.horizontalLayout_3.addWidget(self.button_recent)
         self.button_browse = QtGui.QPushButton(self.widget_3)
+        self.button_browse.setText(QtGui.QApplication.translate("Dialog", "Browse", None, QtGui.QApplication.UnicodeUTF8))
         self.button_browse.setIcon(icon1)
         self.button_browse.setObjectName(_fromUtf8("button_browse"))
         self.horizontalLayout_3.addWidget(self.button_browse)
@@ -167,12 +174,6 @@ class Ui_Dialog(object):
         QtCore.QMetaObject.connectSlotsByName(Dialog)
 
     def retranslateUi(self, Dialog):
-        Dialog.setWindowTitle(QtGui.QApplication.translate("Dialog", "New experiment", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_4.setText(QtGui.QApplication.translate("Dialog", "How would you like to begin?", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_5.setText(QtGui.QApplication.translate("Dialog", "Templates", None, QtGui.QApplication.UnicodeUTF8))
-        self.button_template.setText(QtGui.QApplication.translate("Dialog", "Start with template", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_2.setText(QtGui.QApplication.translate("Dialog", "Recent experiments", None, QtGui.QApplication.UnicodeUTF8))
-        self.button_recent.setText(QtGui.QApplication.translate("Dialog", "Open", None, QtGui.QApplication.UnicodeUTF8))
-        self.button_browse.setText(QtGui.QApplication.translate("Dialog", "Browse", None, QtGui.QApplication.UnicodeUTF8))
+        pass
 
 import icons_rc

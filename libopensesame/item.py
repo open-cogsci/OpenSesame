@@ -20,6 +20,7 @@ import openexp.mouse
 import openexp.keyboard
 from libopensesame import exceptions
 import shlex
+import os
 import sys
 import pygame
 
@@ -621,10 +622,10 @@ class item(openexp.trial.trial):
 						string += "U+%.4X" % c.unicode()
 				else:
 					string += c.toLatin1()
+		# Return and make sure we use the \n character for newlines, to avoid
+		# trouble with compilation
+		return string.replace(os.linesep, "\n")
 				
-		return string
-			
-		
 	def sanitize(self, s, strict = False):
 	
 		"""<DOC>
