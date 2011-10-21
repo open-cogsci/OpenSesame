@@ -1,5 +1,9 @@
-opensesame (0.25-pre8) unstable; urgency=low
+opensesame (0.25-pre9) unstable; urgency=low
 
+  [ Michael Hanke ]
   * Initial release (Closes: #611640).
 
- -- Michael Hanke <mih@debian.org>  Wed, 02 Mar 2011 16:33:10 -0500
+  [ Sebastiaan Mathot ]
+  * 
+
+ -- Sebastiaan Mathot <sebastiaan@dragonfly>  Fri, 21 Oct 2011 15:41:55 +0200
