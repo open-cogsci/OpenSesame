@@ -110,4 +110,4 @@ shutil.copyfile("""C:\Python26\Lib\site-packages\parallel\simpleio.dll""", """di
 shutil.copyfile("""C:\Python26\Lib\site-packages\PsychoPy-%s-py2.6.egg\psychopy\preferences\Windows.spec""" % psychopy.__version__, """dist\\resources\Windows.spec""")
 
 # Provides easy access to the parallel port
-shutil.copyfile("win32-resources\inpout32.dll", """dist\inpout32.dll""")
+shutil.copyfile("win32-resources\inpout32.dll", "dist\inpout32.dll")
