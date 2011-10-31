@@ -3,18 +3,19 @@
 <HEAD>
 	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
 	<TITLE></TITLE>
-	<META NAME="GENERATOR" CONTENT="LibreOffice 3.3  (Linux)">
+	<META NAME="GENERATOR" CONTENT="LibreOffice 3.4  (Linux)">
 	<META NAME="AUTHOR" CONTENT="Sebastiaan Mathot">
 	<META NAME="CREATED" CONTENT="20101128;13435600">
-	<META NAME="CHANGED" CONTENT="20110529;13475200">
+	<META NAME="CHANGEDBY" CONTENT="Sebastiaan Mathot">
+	<META NAME="CHANGED" CONTENT="20111031;12365200">
 	<STYLE TYPE="text/css">
 	<!--
 		@page { margin: 0.79in }
-		P { margin-bottom: 0.08in }
 		H1 { margin-bottom: 0.08in }
 		H1.western { font-family: "Arial", sans-serif; font-size: 16pt }
 		H1.cjk { font-family: "DejaVu Sans"; font-size: 16pt }
 		H1.ctl { font-family: "Lohit Hindi"; font-size: 16pt }
+		P { margin-bottom: 0.08in }
 		H2.western { font-family: "Albany", sans-serif; font-size: 14pt; font-style: italic }
 		H2.cjk { font-family: "HG Mincho Light J"; font-size: 14pt; font-style: italic }
 		H2.ctl { font-family: "Arial Unicode MS"; font-size: 14pt; font-style: italic }
@@ -24,17 +25,18 @@
 </HEAD>
 <BODY LANG="en-US" DIR="LTR">
 <H1 CLASS="western">Logger items</H1>
-<P>Typically, you will not only want participants to provide
-responses during an experiment, you will also want to log those
-responses to a data file for analysis. This is where the logger item
-comes in.</P>
+<P>Typically, you will not only want participants to respond during
+an experiment, you will also want to log their responses to a data
+file for analysis. This is where the logger item comes in.</P>
+<P STYLE="text-decoration: none"><I><B>Always triple-check whether
+OpenSesame has logged all relevant variables!</B></I></P>
 <H2 CLASS="western">Selecting variables</H2>
 <P>In the logger item you can indicate which variables you wish to
-log. By default the logger tries to autodetect and log all variables.
-This is a safe bet, but results in large datafiles, with lots of
-unnecessary information. 
+log. By default the logger tries to auto-detect and log all
+variables. This is a safe bet, but results in large datafiles, with
+lots of unnecessary information. 
 </P>
-<P>If you deselect the autodetect option, you can select variables
+<P>If you deselect the auto-detect option, you can select variables
 from the list, which contains all (global) variables that OpenSesame
 is aware of. If, for some reason, the variable that you want to log
 does not appear in the list, you can add it using the <B>Add custom
@@ -49,17 +51,9 @@ variables that have not been set option</B><SPAN STYLE="font-weight: normal">,
 in which case missing variables are assigned the value 'NA'. This is
 convenient if you want to log a variable that is set only later in
 the experiment.</SPAN></P>
-<H2 CLASS="western"><B>Special variables</B></H2>
-<UL>
-	<LI><P><B>time_[name of item]</B> <SPAN STYLE="font-weight: normal">variables
-	contain the timestamp of when an item has been run for the last
-	time. This can be useful if you have doubts about the timing of your
-	experiment.</SPAN></P>
-	<LI><P><B>count_[name of item]</B> <SPAN STYLE="font-weight: normal">variables
-	contain the number of times that an item has been run. This can be
-	useful as a trial or block counter. </SPAN>
-	</P>
-</UL>
+<P><SPAN STYLE="font-weight: normal">You can find out more about
+variables in OpenSesame on the website
+&lt;<A HREF="http://osdoc.cogsci.nl/usage/variables-and-conditional-qifq-statements">http://osdoc.cogsci.nl/usage/variables-and-conditional-qifq-statements</A>&gt;.</SPAN></P>
 <H2 CLASS="western">Format of the logfile</H2>
 <P STYLE="font-weight: normal">The logfile is in plain-text,
 comma-separated format. This format can be viewed in most

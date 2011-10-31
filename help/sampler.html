@@ -3,26 +3,28 @@
 <HEAD>
 	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
 	<TITLE></TITLE>
-	<META NAME="GENERATOR" CONTENT="OpenOffice.org 3.2  (Linux)">
+	<META NAME="GENERATOR" CONTENT="LibreOffice 3.4  (Linux)">
 	<META NAME="AUTHOR" CONTENT="Sebastiaan Mathôt">
 	<META NAME="CREATED" CONTENT="20101203;12295000">
-	<META NAME="CHANGEDBY" CONTENT="Sebastiaan Mathôt">
-	<META NAME="CHANGED" CONTENT="20101203;12325200">
+	<META NAME="CHANGEDBY" CONTENT="Sebastiaan Mathot">
+	<META NAME="CHANGED" CONTENT="20111031;12455900">
 	<STYLE TYPE="text/css">
 	<!--
 		@page { margin: 0.79in }
-		P { margin-bottom: 0.08in }
 		H1 { margin-bottom: 0.08in }
 		H1.western { font-family: "Arial", sans-serif; font-size: 16pt }
 		H1.cjk { font-family: "DejaVu Sans"; font-size: 16pt }
 		H1.ctl { font-family: "Lohit Hindi"; font-size: 16pt }
+		P { margin-bottom: 0.08in }
+		H2.cjk { font-family: "Droid Sans Fallback" }
+		H2.ctl { font-family: "Lohit Hindi" }
 		A:link { so-language: zxx }
 	-->
 	</STYLE>
 </HEAD>
 <BODY LANG="en-US" DIR="LTR">
 <H1 CLASS="western">Sampler items</H1>
-<P>Sampler items allow you to play a sound file. You can adjust a
+<P>Sampler items allow you to play sound files. You can adjust a
 number of parameters. Only files in .wav or .ogg format can be used.
 If you need to convert sound files, for example from .mp3 format, you
 can use Audacity &lt;<A HREF="http://audacity.sourceforge.net/">http://audacity.sourceforge.net/</A>&gt;,
@@ -33,7 +35,7 @@ an excellent open-source sound editor.</P>
 	(positive values) channel down. Setting pan to -20 or 20 completely
 	mutes the right or left channel, respectively.</P>
 	<LI><P><B>Pitch</B> indicates the speed at which the sample is
-	played.  Values higher than 100% indicate a speed-up, values lower
+	played. Values higher than 100% indicate a speed-up, values lower
 	than 100% indicate a slowing down.</P>
 	<LI><P><B>Stop after</B> indicates how long the sample should be
 	played. For example, a value of 100ms means that the sample will be
@@ -49,5 +51,12 @@ an excellent open-source sound editor.</P>
 	keyboard press, 'mouseclick', to wait for a mouse click, or 'sound',
 	to wait until the sampler has finished playing.</P>
 </UL>
+<H2 CLASS="western">Sampling rate</H2>
+<P>Sound files are always played back at the sampling rate that is
+used by the OpenSesame sampler back-end. If your sample appears to be
+sped up or slowed down, you can adjust the sampling rate of your
+sound file in a sound editor or change the sampling rate used by the
+OpenSesame sampler back-end (under 'Show back-end settings and info'
+in the General tab).</P>
 </BODY>
 </HTML>

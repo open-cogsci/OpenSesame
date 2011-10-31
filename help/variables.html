@@ -3,18 +3,19 @@
 <HEAD>
 	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
 	<TITLE></TITLE>
-	<META NAME="GENERATOR" CONTENT="LibreOffice 3.3  (Linux)">
+	<META NAME="GENERATOR" CONTENT="LibreOffice 3.4  (Linux)">
 	<META NAME="AUTHOR" CONTENT="Sebastiaan Mathôt">
 	<META NAME="CREATED" CONTENT="20101213;14321500">
-	<META NAME="CHANGED" CONTENT="20110129;17580600">
+	<META NAME="CHANGEDBY" CONTENT="Sebastiaan Mathot">
+	<META NAME="CHANGED" CONTENT="20111031;12514700">
 	<STYLE TYPE="text/css">
 	<!--
 		@page { margin: 0.79in }
-		P { margin-bottom: 0.08in }
 		H1 { margin-bottom: 0.08in }
 		H1.western { font-family: "Arial", sans-serif; font-size: 16pt }
 		H1.cjk { font-family: "DejaVu Sans"; font-size: 16pt }
 		H1.ctl { font-family: "Lohit Hindi"; font-size: 16pt }
+		P { margin-bottom: 0.08in }
 		H2 { margin-bottom: 0.08in }
 		H2.western { font-family: "Arial", sans-serif; font-size: 14pt; font-style: italic }
 		H2.cjk { font-family: "Droid Sans Fallback"; font-size: 14pt; font-style: italic }
@@ -33,7 +34,7 @@ sketchpad item) are not shown. The variable inspector tries to
 extract variables created in an inline_script item, although slight
 mistakes may occur.</P>
 <P STYLE="margin-bottom: 0in">For more information, see
-<A HREF="http://www.cogsci.nl/blog/tutorials/106-using-variables-and-conditionals-qif-statementsq-in-opensesame">http://www.cogsci.nl/blog/tutorials/106-using-variables-and-conditionals-qif-statementsq-in-opensesame</A>.</P>
+&lt;<A HREF="http://osdoc.cogsci.nl/usage/variables-and-conditional-qifq-statements">http://osdoc.cogsci.nl/usage/variables-and-conditional-qifq-statements</A>&gt;.</P>
 <H2 CLASS="western">Using variables in an inline_script item</H2>
 <P>The preferred way to set variables in an inline script item is by
 using:</P>
@@ -47,7 +48,7 @@ using:</P>
 <P>and</P>
 <P><FONT FACE="Courier 10 Pitch">value = self.experiment.var_name</FONT></P>
 <P>This will usually work equally well, but is not preferred as it
-circumvents OpenSesame's interval variable management system.</P>
+circumvents OpenSesame's internal variable management system.</P>
 <H2 CLASS="western">Why use self.experiment.set(), instead of
 self.set()?</H2>
 <P>The command</P>

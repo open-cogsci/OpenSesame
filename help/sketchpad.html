@@ -3,18 +3,19 @@
 <HEAD>
 	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
 	<TITLE></TITLE>
-	<META NAME="GENERATOR" CONTENT="LibreOffice 3.3  (Linux)">
+	<META NAME="GENERATOR" CONTENT="LibreOffice 3.4  (Linux)">
 	<META NAME="AUTHOR" CONTENT="Sebastiaan Mathot">
 	<META NAME="CREATED" CONTENT="20101128;13435600">
-	<META NAME="CHANGED" CONTENT="20110129;17563300">
+	<META NAME="CHANGEDBY" CONTENT="Sebastiaan Mathot">
+	<META NAME="CHANGED" CONTENT="20111031;12492400">
 	<STYLE TYPE="text/css">
 	<!--
 		@page { margin: 0.79in }
-		P { margin-bottom: 0.08in }
 		H1 { margin-bottom: 0.08in }
 		H1.western { font-family: "Arial", sans-serif; font-size: 16pt }
 		H1.cjk { font-family: "DejaVu Sans"; font-size: 16pt }
 		H1.ctl { font-family: "Lohit Hindi"; font-size: 16pt }
+		P { margin-bottom: 0.08in }
 		H2.western { font-family: "Albany", sans-serif; font-size: 14pt; font-style: italic }
 		H2.cjk { font-family: "HG Mincho Light J"; font-size: 14pt; font-style: italic }
 		H2.ctl { font-family: "Arial Unicode MS"; font-size: 14pt; font-style: italic }
@@ -29,11 +30,8 @@ of stimulus displays based on which a participant makes a response.
 For example, you may present strings of text, geometric shapes or
 bitmap images. This is where the sketchpad item comes in.</P>
 <P><SPAN STYLE="font-weight: normal">The sketchpad provides simple
-built-in </SPAN><B>drawing </B><SPAN STYLE="font-weight: normal">options,
-which allow you to very easily draw stimulus displays. In text
-strings you can also use variables. For example, if you add the text
-'Data is logged to [logfile]', '[logfile]' will be replaced by the
-name of the currently active logfile.</SPAN></P>
+built-in </SPAN><B>drawing tools</B><SPAN STYLE="font-weight: normal">,
+which allow you to very easily draw stimulus displays.</SPAN></P>
 <P><SPAN STYLE="font-weight: normal">The sketchpad also has an option
 </SPAN><B>Start response interval</B><SPAN STYLE="font-weight: normal">.
 If you select this option, OpenSesame will start timing from moment
@@ -41,10 +39,10 @@ the sketchpad is presented. This is convenient if you want to record
 response time from the presentation of a particular sketchpad.</SPAN></P>
 <P><SPAN STYLE="font-weight: normal">The </SPAN><B>Duration</B> <SPAN STYLE="font-weight: normal">entry
 can be set to any positive numeric value which reflects the duration
-of the sketchpad in ms. If you want no duration, for example, because
+of the sketchpad in ms. If you want no duration, for example because
 the next is a keyboard_response, you can enter '0'. You can also
-enter 'keypress' or 'mouseclick' to show the sketchpad until
-respectively a key is pressed or a mouse button is clicked.</SPAN></P>
+enter 'keypress' or 'mouseclick' to show the sketchpad until a key is
+pressed or a mouse button is clicked, respectively.</SPAN></P>
 <H2 CLASS="western"><B>Conditional statements (show if ...)</B></H2>
 <P STYLE="font-weight: normal">You can use the 'Show if' input field
 in the sketchpad to specify conditions under which items should be
@@ -64,6 +62,7 @@ statements are (note that no quotes are required and that variable
 names should be placed between square brackets):</P>
 <UL>
 	<LI><P><FONT FACE="Courier New, monospace">always</FONT></P>
+	<LI><P><FONT FACE="Courier New, monospace">never</FONT></P>
 	<LI><P><FONT FACE="Courier New, monospace">[variable_name] = value</FONT></P>
 	<LI><P><FONT FACE="Courier New, monospace">[variable_name] != value
 	or [another_variable_name] = another_value</FONT></P>
@@ -71,6 +70,6 @@ names should be placed between square brackets):</P>
 </UL>
 <P STYLE="margin-bottom: 0in">For more information about conditional
 statements, see
-<A HREF="http://www.cogsci.nl/blog/tutorials/106-using-variables-and-conditionals-qif-statementsq-in-opensesame">http://www.cogsci.nl/blog/tutorials/106-using-variables-and-conditionals-qif-statementsq-in-opensesame</A>.</P>
+&lt;<A HREF="http://osdoc.cogsci.nl/usage/variables-and-conditional-qifq-statements">http://osdoc.cogsci.nl/usage/variables-and-conditional-qifq-statements</A>&gt;.</P>
 </BODY>
 </HTML>

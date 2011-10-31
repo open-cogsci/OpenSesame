@@ -3,9 +3,10 @@
 <HEAD>
 	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
 	<TITLE></TITLE>
-	<META NAME="GENERATOR" CONTENT="LibreOffice 3.3  (Linux)">
+	<META NAME="GENERATOR" CONTENT="LibreOffice 3.4  (Linux)">
 	<META NAME="CREATED" CONTENT="0;0">
-	<META NAME="CHANGED" CONTENT="20110521;16024600">
+	<META NAME="CHANGEDBY" CONTENT="Sebastiaan Mathot">
+	<META NAME="CHANGED" CONTENT="20111031;12214200">
 	<STYLE TYPE="text/css">
 	<!--
 		H2.western { font-family: "Albany", sans-serif; font-size: 14pt; font-style: italic }
@@ -33,14 +34,12 @@ sciences. That is, with OpenSesame you can create psychological
 experiments in a point-and-click way. For more complex tasks,
 OpenSesame supports Python inline coding &lt;<A HREF="http://www.python.org/">http://www.python.org/</A>&gt;.</P>
 <H2 CLASS="western">Getting started</H2>
-<P>The best way to get started is to follow one of the tutorials and/
-or look at example experiments. These can be found at
-&lt;<A HREF="http://www.cogsci.nl/opensesame">http://www.cogsci.nl/opensesame</A>&gt;</P>
+<P>The best way to get started is to follow the tutorial and/ or take
+a look at example experiments. This, and much more, can be found in
+the OpenSesame documentation area &lt;<A HREF="http://osdoc.cogsci.nl/">http://osdoc.cogsci.nl/</A>&gt;</P>
 <H2 CLASS="western">The interface</H2>
 <P>The graphical interface consists of the following parts. You can
-get detailed help on the <I>file pool</I>, the <I>variable inspector</I>,
-and the <I>debug window</I> by clicking on the help buttons in the
-corresponding areas.</P>
+get context sensitive help by clicking on the blue help icons.</P>
 <UL>
 	<LI><P>The <I>menu</I> (at the top of the window) offers a variety
 	of options, such as opening and closing files, inserting items (see
@@ -48,77 +47,71 @@ corresponding areas.</P>
 	closed.</P>
 	<LI><P>The <I>main toolbar </I><SPAN STYLE="font-style: normal">(the
 	big buttons below the menu) offers a selection of the most relevant
-	options from the menu. The main toolbar cannot be hidden, but can be
-	moved or detached from the main window.</SPAN></P>
+	options from the menu. The main toolbar cannot be hidden, but it can
+	be moved or detached from the main window.</SPAN></P>
 	<LI><P><SPAN STYLE="font-style: normal">The </SPAN><I>item toolbar</I>
 	<SPAN STYLE="font-style: normal">(the big buttons on the left of the
 	window) displays a list of available items. You can drag items from
 	the items toolbar into the overview of the experiment. The items
-	toolbar cannot be hidden, but can be moved or detached from the main
-	window.</SPAN></P>
+	toolbar cannot be hidden, but it can be moved or detached from the
+	main window.</SPAN></P>
 	<LI><P><SPAN STYLE="font-style: normal">The </SPAN><I>tab area</I>
-	<SPAN STYLE="font-style: normal">contains the tabs which are used to
+	<SPAN STYLE="font-style: normal">contains the tabs that are used to
 	edit the experiment. If you click on an item in the 'overview'
 	window, a corresponding tab will be opened in the tab area. Help is
 	displayed in the tab area as well. The tab area cannot be moved or
 	hidden.</SPAN></P>
-	<LI><P><SPAN STYLE="font-style: normal">The </SPAN><I>overview</I>
+	<LI><P><SPAN STYLE="font-style: normal">The </SPAN><I>overview area</I>
 	<SPAN STYLE="font-style: normal">provides an overview of your
 	experiment. The structure of your experiment is visualized as a
-	tree. The overview item cannot be hidden but can be moved or
+	tree. The overview item cannot be hidden but it can be moved or
 	detached from the main window.</SPAN></P>
 	<LI><P><SPAN STYLE="font-style: normal">The </SPAN><I>file pool</I>
-	<SPAN STYLE="font-style: normal">provides an overview of the files
-	which are bundled with your experiment. If you save your experiment
-	in the .opensesame.tar.gz format, the file pool will be saved along
-	with your experiment. The file pool can be hidden (Ctrl+P), moved,
-	and detached from the main window.</SPAN></P>
+	(Control + P) <SPAN STYLE="font-style: normal">provides an overview
+	of the files that are bundled with your experiment. If you save your
+	experiment in the .opensesame.tar.gz format, the file pool will be
+	saved along with your experiment. The file pool can be hidden,
+	moved, and detached from the main window.</SPAN></P>
 	<LI><P><SPAN STYLE="font-style: normal">The </SPAN><I>variable
-	inspector</I> <SPAN STYLE="font-style: normal">provides an overview
-	of the variables that are used in your experiment. The variable
-	inspector can be hidden (Ctrl+I), moved, and detached from the main
+	inspector</I> (Control + I) <SPAN STYLE="font-style: normal">provides
+	an overview of the variables that are used in your experiment. The
+	variable inspector can be hidden, moved, and detached from the main
 	window.</SPAN></P>
 	<LI><P><SPAN STYLE="font-style: normal">The </SPAN><I>debug window</I>
-	<SPAN STYLE="font-style: normal">shows the messages that are written
-	to the standard output during an experiment. This is mostly useful
-	for debugging inline_script items. A simple Python interpreter is
-	provided as well. The debug window can be hidden (Ctrl+D), moved,
-	and detached from the main window.</SPAN></P>
+	(Control + D) <SPAN STYLE="font-style: normal">shows the messages
+	that are written to the standard output during an experiment. This
+	is mostly useful for debugging inline_script items. A Python
+	interpreter is provided as well. The debug window can be hidden,
+	moved, and detached from the main window.</SPAN></P>
 </UL>
 <H2 CLASS="western">Items</H2>
 <P>Items are the building blocks of your experiment. There are 10
-core items, which provide the basic functionality that is necessary
-to create an experiment. Core items can be added to your experiment
+core items that provide the basic functionality that is necessary to
+create an experiment. Core items can be added to your experiment
 using the corresponding toolbar buttons.</P>
 <UL>
 	<LI><P>The <I>loop </I>item runs another item multiple times. You
-	can also define independent variables here. A loop can, for example,
-	be used for a block of trials.</P>
+	can also define independent variables in the loop item.</P>
 	<LI><P>The <I>sequence</I> item runs multiple other items in
-	sequence. A sequence can, for example, be used for a single trial.</P>
+	sequence.</P>
 	<LI><P>The <I>sketchpad</I> item presents visual stimuli. A built-in
 	drawing tool allows you to easily create stimulus displays.</P>
 	<LI><P>The <I>feedback</I> item is similar to a sketchpad, but is
 	not prepared in advance. Therefore, a feedback item can be used to
-	present feedback to the participants. However, a feedback item is
-	not suitable for presenting visual stimuli with millisecond
-	precision.</P>
-	<LI><P>The <I>sampler</I> item plays a single sound file.</P>
+	present feedback to the participants.</P>
+	<LI><P>The <I>sampler</I> item plays back a single sound file.</P>
 	<LI><P>The <I>synth</I> item generates a single sound.</P>
 	<LI><P>The <I>keyboard_response </I><SPAN STYLE="font-style: normal">item</SPAN>
-	collects key press responses</P>
+	collects key press responses.</P>
 	<LI><P>The <I>mouse_response</I> item collects mouse clicks.</P>
 	<LI><P>The <I>logger</I> item writes variables to the log file.</P>
 	<LI><P>The <I>inline_script</I> item allows you execute arbitrary
 	Python code.</P>
 </UL>
-<P>If installed, plug-in items provide additional functionality, such
-as integration of Eyelink eyetrackers, a Mantra object tracker or a
-Serial Response Box (SR Box). Plug-ins appear alongside the core
-items in the item toolbar. An overview of available plug-ins can be
-found online &lt;<A HREF="http://www.cogsci.nl/opensesame">http://www.cogsci.nl/opensesame</A>&gt;</P>
-<P>You can get detailed help on each item by clicking on the help
-button at the top-right of an item's tab.</P>
+<P>If installed, plug-in items provide additional functionality.
+Plug-ins appear alongside the core items in the item toolbar. An
+overview of available plug-ins can be found online
+&lt;<A HREF="http://osdoc.cogsci.nl/plug-ins/list-of-available-plug-ins">http://osdoc.cogsci.nl/plug-ins/list-of-available-plug-ins</A>&gt;.</P>
 <H2 CLASS="western">Running your experiment</H2>
 <P>You can run your experiment in full-screen mode (Run → Run
 fullscreen) or in a window (Run → Run in window). When the
