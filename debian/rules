@@ -16,20 +16,24 @@ gitver = $(shell [ -x /usr/bin/git ] && git describe --tags --match 'release/*' 
 
 override_dh_auto_clean:
 	dh_auto_clean
+	# restore old Qt wrappers
+	[ -d debian/temp_store ] && cp debian/temp_store/* libqtopensesame/ || true
+	-rm -rf debian/temp_store
 
 override_dh_auto_build:
 	# move pre-generated Qt wrappers aside
-	-rm libqtopensesame/*_ui.py libqtopensesame/icons_rc.py
+	mkdir -p debian/temp_store
+	cp -t debian/temp_store libqtopensesame/*_ui.py libqtopensesame/icons_rc.py
 	# update PyQt wrappers
 	./compile_ui.sh
 	dh_auto_build
-
+	
 override_dh_install:
 	dh_install
 	# cleanups
 	# no duplicate license info
 	-rm debian/opensesame/usr/share/opensesame/COPYING
-	# we don't want to included sound sample, but links to /usr/share/sounds
+	# we don't want to included sound samples, but links to /usr/share/sounds
 	# directly
 	-rm -rf debian/opensesame/usr/share/opensesame/sounds
 

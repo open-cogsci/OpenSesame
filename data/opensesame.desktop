@@ -1,18 +1,10 @@
-
 [Desktop Entry]
 Name=OpenSesame
-Comment=Graphical Experiment Builder
+GenericName=Experiment Builder
+Comment=Graphical experiment builder for the social sciences
 TryExec=opensesame
 Exec=opensesame
 Icon=applications-science
 Type=Application
-X-GNOME-DocPath=
-X-GNOME-Bugzilla-Bugzilla=
-X-GNOME-Bugzilla-Product=
-X-GNOME-Bugzilla-Component=
-X-GNOME-Bugzilla-Version=
-Categories=GNOME;GTK;Utility;
+Categories=Development;IDE;Science
 StartupNotify=true
-X-Ubuntu-Gettext-Domain=opensesame
-Name[en_US]=OpenSesame
-
