@@ -20,31 +20,36 @@ import os.path
 
 class help_browser(QtGui.QTextBrowser):
 
-	"""
-	A HTML browser for viewing help files
-	"""
+	"""An HTML browser for viewing help files"""
 
 	def __init__(self, path, item, substitutions = [], parent = None):
 
 		"""
 		Constructor
+		
+		Arguments:
+		path -- the full path to the help file
+		item -- the name of the item
+		
+		Keyword arguments:
+		substitutions -- a list of (old, new) tuples that need to be replaced in
+						 the text (default=[])
+		parent -- the parent QWidget (default=None)
 		"""
 
 		QtGui.QTextBrowser.__init__(self, parent)
-
 		self.tab_name = "__help__%s__" % item
-
 		self.setOpenExternalLinks(True)
-
 		if os.path.exists(path):
 			html = open(path, "r").read()
 		else:
 			html = "<b>No help available</b>"
-
-		html += "<hr /><p><i>Could not find an answer? You can ask questions and find more information in the documentation center at <a href='http://osdoc.cogsci.nl/'>http://osdoc.cogsci.nl/</a>.</i></p>"
-
+		html += "<hr /><p><i>Could not find an answer? You can find more " \
+			+ "information in the documentation center at " \
+			+ "<a href='http://osdoc.cogsci.nl/'>http://osdoc.cogsci.nl/</a> " \
+			+ "and ask question on the forum at " \
+			+ "<a href='http://forum.cogsci.nl/'>http://forum.cogsci.nl/</a>.</i></p>"
 		for old, new in substitutions:
 			html = html.replace(old, new)
-
 		self.setHtml(html)
 
