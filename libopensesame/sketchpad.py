@@ -485,6 +485,8 @@ class sketchpad(item.item, generic_response.generic_response):
 				l = shlex.split(line)
 				if len(l) > 0:										
 					if l[0] == "draw":
+						if len(l) == 1:
+							raise exceptions.script_error("Incomplete draw command '%s'" % line)
 						item = self.parse_item(l, line)
 						if l[1] in ("circle",):
 							item = self.parse_circle(line, l, item)
