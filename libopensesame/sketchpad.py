@@ -22,14 +22,35 @@ import shlex
 
 class sketchpad(item.item, generic_response.generic_response):
 
-	def __init__(self, name, experiment, string = None):
+	"""
+	Sketchpad item
+	
+	TODO
+	The term 'item' is used for sketchpad 'elements'. This is confusing, because
+	'item' is also used for the higher level items, such as sketchpads. This
+	terminology should be changed.
+	"""
+
+	def __init__(self, name, experiment, string=None):
+	
+		"""
+		Constructor
+		
+		Arguments:
+		name -- name of the item
+		experiment -- experiment
+		
+		Keyword arguments:
+		string -- definition string (default=None)
+		"""
 		
 		self.duration = "keypress"
 		self.start_response_interval = "no"
 		self.items = []
 		self.item_type = "sketchpad"
-		self.numeric_attrs = "x", "y", "x1", "y1", "r", "w", "h", "scale", "font_size", "penwidth", "arrow_size", "center", "fill", "orient", "freq", "phase", "stdev", "size"
-		
+		self.numeric_attrs = "x", "y", "x1", "y1", "r", "w", "h", "scale", \
+			"font_size", "penwidth", "arrow_size", "center", "fill", "orient", \
+			"freq", "phase", "stdev", "size"		
 		if not hasattr(self, "description"):
 			self.description = "Displays stimuli"		
 		item.item.__init__(self, name, experiment, string)
@@ -37,9 +58,14 @@ class sketchpad(item.item, generic_response.generic_response):
 	def unfix_coordinates(self, item):
 	
 		"""
-		Interprets the coordinates based on whether coordinates
-		is set to absolute or relative.
-		Raw coordinates -> Raw/ relative
+		Interprets the coordinates based on whether 'coordinates' is set to
+		absolute or relative. Raw coordinates -> Raw/ relative
+		
+		Arguments:
+		item -- a sketchpad element
+		
+		Returns:
+		The 'unfixed' sketchpad element
 		"""
 		
 		item = item.copy()
@@ -54,9 +80,14 @@ class sketchpad(item.item, generic_response.generic_response):
 	def fix_coordinates(self, item):
 	
 		"""
-		Interprets the coordinates based on whether coordinates
-		is set to absolute or relative.
-		Raw/ relative -> Raw coordinates
+		Interprets the coordinates based on whether 'coordinates' is set to
+		absolute or relative. Raw/ relative -> Raw coordinates
+		
+		Arguments:
+		item -- a sketchpad element
+		
+		Returns:
+		The 'fixed' sketchpad element		
 		"""
 		
 		item = item.copy()
@@ -72,7 +103,13 @@ class sketchpad(item.item, generic_response.generic_response):
 	def check_type(self, item):
 	
 		"""
-		Throw an exception if an attribute which should be numeric is not
+		Checks whether the attributes of an element are valid
+		
+		Arguments:
+		item -- a sketchpad element
+		
+		Exceptions:
+		Throws a runtime_error if an attribute which should be numeric is not
 		"""
 		
 		for attr in item:
@@ -82,8 +119,10 @@ class sketchpad(item.item, generic_response.generic_response):
 	def prepare(self):			
 	
 		"""
-		Draw the canvas in preparation, so we can dump
-		it without delay in the run phase
+		Draw the canvas, so we can show it without delay in the run phase
+		
+		Returns:
+		True on success, False on failure
 		"""
 		
 		item.item.prepare(self)		
@@ -169,13 +208,15 @@ class sketchpad(item.item, generic_response.generic_response):
 	def run(self):
 	
 		"""
-		Show the display
+		Show the canvas
+		
+		Returns:
+		True on success, False on failure
 		"""				
 	
 		self.set_item_onset(self.canvas.show())
 		self.set_sri(self._reset)
-		self.process_response()		
-			
+		self.process_response()					
 		return True		
 		
 	def parse_item(self, l, line):
@@ -185,6 +226,10 @@ class sketchpad(item.item, generic_response.generic_response):
 		
 		Arguments:
 		l -- a list of words
+		line -- the definition line
+		
+		Returns:
+		A sketchpad element
 		"""
 		
 		item = {}
@@ -236,24 +281,38 @@ class sketchpad(item.item, generic_response.generic_response):
 	
 		"""
 		Parse a rectangle
+		
+		Arguments:
+		line -- a definition line
+		l -- a definition list
+		item -- sketchpad element to finish
+		item_type -- type of the current item
+		
+		Returns:
+		A finished sketchpad element
 		"""
 		
 		if len(l) < 6:
-			raise exceptions.script_error("Invalid draw %s command '%s', expecting 'draw %s [x] [y] [w] [h]'" % (item_type, line, item_type))
-			
-		item["type"] = item_type
-			
+			raise exceptions.script_error("Invalid draw %s command '%s', expecting 'draw %s [x] [y] [w] [h]'" % (item_type, line, item_type))			
+		item["type"] = item_type		
 		item["x"] = self.auto_type(l[2])
 		item["y"] = self.auto_type(l[3])
 		item["w"] = self.auto_type(l[4])
-		item["h"] = self.auto_type(l[5])
-		
+		item["h"] = self.auto_type(l[5])		
 		return item
 		
 	def parse_circle(self, line, l, item):
 	
 		"""
 		Parse a circle
+		
+		Arguments:
+		line -- a definition line
+		l -- a definition list
+		item -- sketchpad element to finish
+		
+		Returns:
+		A finished sketchpad element
 		"""
 		
 		if len(l) < 5:
@@ -270,6 +329,14 @@ class sketchpad(item.item, generic_response.generic_response):
 	
 		"""
 		Parse fixation dot
+
+		Arguments:
+		line -- a definition line
+		l -- a definition list
+		item -- sketchpad element to finish
+		
+		Returns:
+		A finished sketchpad element
 		"""
 	
 		item["type"] = "fixdot"				
@@ -285,6 +352,15 @@ class sketchpad(item.item, generic_response.generic_response):
 		
 		"""
 		Parse a line or arrow
+
+		Arguments:
+		line -- a definition line
+		l -- a definition list
+		item -- sketchpad element to finish
+		item_type -- type of the current item
+		
+		Returns:
+		A finished sketchpad element
 		"""
 		
 		if len(l) < 6:
@@ -303,11 +379,18 @@ class sketchpad(item.item, generic_response.generic_response):
 	
 		"""
 		Parse text
+
+		Arguments:
+		line -- a definition line
+		l -- a definition list
+		item -- sketchpad element to finish
+		
+		Returns:
+		A finished sketchpad element
 		"""
 	
 		if len(l) < 3:
-			raise exceptions.script_error("Invalid draw textline command '%s', expecting 'draw textline [x] [y] [text]' or 'draw textline [text]'" % line)
-			
+			raise exceptions.script_error("Invalid draw textline command '%s', expecting 'draw textline [x] [y] [text]' or 'draw textline [text]'" % line)			
 		item["type"] = "textline"
 		try:
 			item["x"] = self.auto_type(l[2])
@@ -316,19 +399,25 @@ class sketchpad(item.item, generic_response.generic_response):
 		except:
 			item["x"] = self.get("width") / 2
 			item["y"] = self.get("height") / 2	
-			item["text"] = l[2]
-						
+			item["text"] = l[2]						
 		return item
 		
 	def parse_image(self, line, l, item):
 	
 		"""
 		Parse image
+		
+		Arguments:
+		line -- a definition line
+		l -- a definition list
+		item -- sketchpad element to finish
+		
+		Returns:
+		A finished sketchpad element
 		"""
 	
 		if len(l) < 3:
-			raise exceptions.script_error("Invalid draw image command '%s', expecting 'draw image [x] [y] [file]' or 'draw textline [file]'" % line)
-			
+			raise exceptions.script_error("Invalid draw image command '%s', expecting 'draw image [x] [y] [file]' or 'draw textline [file]'" % line)			
 		item["type"] = "image"
 		try:
 			item["x"] = self.auto_type(l[2])
@@ -337,38 +426,49 @@ class sketchpad(item.item, generic_response.generic_response):
 		except:
 			item["x"] = self.get("width") / 2
 			item["y"] = self.get("height") / 2	
-			item["file"] = l[2]
-						
+			item["file"] = l[2]			
 		return item		
 		
 	def parse_gabor(self, line, l, item):
 	
 		"""
 		Parse Gabor patch				
+		
+		Arguments:
+		line -- a definition line
+		l -- a definition list
+		item -- sketchpad element to finish
+		
+		Returns:
+		A finished sketchpad element
 		"""
 		
 		if len(l) < 4:
-			raise exceptions.script_error("Invalid draw image command '%s', expecting 'draw gabor [x] [y] [orient] [freq]'" % line)
-			
+			raise exceptions.script_error("Invalid draw image command '%s', expecting 'draw gabor [x] [y] [orient] [freq]'" % line)			
 		item["type"] = "gabor"
 		item["x"] = self.auto_type(l[2])
-		item["y"] = self.auto_type(l[3])						
-		
+		item["y"] = self.auto_type(l[3])								
 		return item
 		
 	def parse_noise(self, line, l, item):
 	
 		"""
-		Parse Gabor patch				
+		Parse noise patch				
+
+		Arguments:
+		line -- a definition line
+		l -- a definition list
+		item -- sketchpad element to finish
+		
+		Returns:
+		A finished sketchpad element
 		"""
 		
 		if len(l) < 4:
-			raise exceptions.script_error("Invalid draw image command '%s', expecting 'draw noise [x] [y]'" % line)
-			
+			raise exceptions.script_error("Invalid draw image command '%s', expecting 'draw noise [x] [y]'" % line)			
 		item["type"] = "noise"
 		item["x"] = self.auto_type(l[2])
-		item["y"] = self.auto_type(l[3])						
-		
+		item["y"] = self.auto_type(l[3])								
 		return item				
 			
 	def from_string(self, string):
@@ -383,10 +483,8 @@ class sketchpad(item.item, generic_response.generic_response):
 		for line in string.split("\n"):
 			if not self.parse_variable(line):
 				l = shlex.split(line)
-				if len(l) > 0:
-										
+				if len(l) > 0:										
 					if l[0] == "draw":
-				
 						item = self.parse_item(l, line)
 						if l[1] in ("circle",):
 							item = self.parse_circle(line, l, item)
@@ -410,11 +508,8 @@ class sketchpad(item.item, generic_response.generic_response):
 							item = self.parse_noise(line, l, item)
 						else:
 							raise exceptions.script_error("Unknown draw command '%s'" % line)
-
-						self.items.append(item)
-					
-					else:
-					
+						self.items.append(item)					
+					else:					
 						raise exceptions.script_error("Unknown command '%s'" % line)
 					
 	def relativize(self, item, compensation, varlist):
@@ -431,7 +526,13 @@ class sketchpad(item.item, generic_response.generic_response):
 	def item_to_string(self, _item):
 	
 		"""
-		Encode item as string
+		Encode an element as string
+		
+		Arguments:
+		_item -- the sketchpad element
+		
+		Returns:
+		A definition string
 		"""
 				
 		if _item["type"] == "rect":
@@ -459,6 +560,9 @@ class sketchpad(item.item, generic_response.generic_response):
 	
 		"""
 		Encode sketchpad as string
+		
+		Returns:
+		A definition string
 		"""
 	
 		s = item.item.to_string(self, self.item_type)				
