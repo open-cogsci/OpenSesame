@@ -40,6 +40,9 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE
 
+NOTE
+This editor will be replaced with the inline_editor_qscintilla. Right now, it
+serves as a fallback only.
 """
  
 from PyQt4.Qt import QFrame
