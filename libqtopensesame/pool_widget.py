@@ -196,7 +196,11 @@ class pool_widget(QtGui.QWidget):
 		"""
 		
 		if platform.system() == "Windows":
-			os.startfile(path)
+			try:
+				os.startfile(path)
+			except:
+				self.main_window.experiment.notify( \
+					"Don't know how to open '%s'" % os.path.basename(path))
 		elif platform.system() == "Linux":
 			subprocess.Popen(["xdg-open", path]).pid		
 		elif platform.system() == "Darwin":
