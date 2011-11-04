@@ -415,24 +415,24 @@ class qtopensesame(QtGui.QMainWindow):
 		if not self.unsaved_changes:
 			self.set_status("No unsaved changes, skipping backup")
 			autosave_path = ""
-
 		else:
 			_current_path = self.current_path
 			_unsaved_changes = self.unsaved_changes
 			_window_msg = self.window_msg
-			self.current_path = os.path.join(self.autosave_folder, "%s.opensesame.tar.gz" % str(time.ctime()).replace(":", "_"))
+			self.current_path = os.path.join(self.autosave_folder, \
+				"%s.opensesame.tar.gz" % str(time.ctime()).replace(":", "_"))
 			if self.experiment.debug:
-				print "qtopensesame.autosave(): saving backup as %s" % self.current_path
+				print "qtopensesame.autosave(): saving backup as %s" \
+					% self.current_path
 			try:
-				self.save_file(False, remember = False)
+				self.save_file(False, remember=False, catch=False)
 				self.set_status("Backup saved as %s" % self.current_path)
 			except:
-				self.set_status("Failed to save backup")
+				self.set_status("Failed to save backup ...")
 			autosave_path = self.current_path
 			self.current_path = _current_path
 			self.set_unsaved(_unsaved_changes)
 			self.window_message(_window_msg)
-
 		self.start_autosave_timer()
 		return autosave_path
 		
@@ -463,13 +463,14 @@ class qtopensesame(QtGui.QMainWindow):
 		if resp == QtGui.QMessageBox.Yes:
 			self.save_file()
 
-	def set_unsaved(self, unsaved_changes = True):
+	def set_unsaved(self, unsaved_changes=True):
 
 		"""
 		Set the unsaved changes status
 
 		Keyword arguments:
-		unsaved_changes -- a boolean indicating if there are unsaved changes (default = True)
+		unsaved_changes -- a boolean indicating if there are unsaved changes
+						   (default=True)
 		"""
 
 		self.unsaved_changes = unsaved_changes
@@ -994,17 +995,19 @@ class qtopensesame(QtGui.QMainWindow):
 			
 		self.set_auto_response()
 
-	def save_file(self, dummy = None, overwrite = True, remember = True):
+	def save_file(self, dummy=None, overwrite=True, remember=True, catch=True):
 
 		"""
 		Save the current experiment
 
 		Keyword arguments:
-		dummy -- a dummy argument passed by the signal handler (default = None)
+		dummy -- a dummy argument passed by the signal handler (default=None)
 		overwrite -- a boolean indicating whether other files should be
-					 overwritten without asking (default = True)
+					 overwritten without asking (default=True)
 		remember -- a boolean indicating whether the file should be included in
-					the list of recent files (default = True)
+					the list of recent files (default=True)
+		catch -- a boolean indicating whether exceptions should be caught and
+				 displayed in a notification (default=True)
 		"""
 
 		if self.current_path == None:
@@ -1020,6 +1023,8 @@ class qtopensesame(QtGui.QMainWindow):
 			script = self.experiment.to_string()
 			experiment.experiment(self, "Experiment", script) # Re-parse
 		except libopensesame.exceptions.script_error as e:
+			if not catch:
+				raise e
 			self.experiment.notify("Could not save file, because the script could not be generated. The following error occured:<br/>%s" % e)
 			self.set_busy(False)
 			return
@@ -1029,6 +1034,8 @@ class qtopensesame(QtGui.QMainWindow):
 			resp = self.experiment.save(self.current_path, overwrite)
 			self.set_status("Saved as %s" % self.current_path)
 		except Exception as e:
+			if not catch:
+				raise e
 			self.experiment.notify("Failed to save file. Error: %s" % e)
 			self.set_busy(False)			
 			return
@@ -1049,6 +1056,8 @@ class qtopensesame(QtGui.QMainWindow):
 					self.window_message(self.current_path)
 					self.set_status("Saved as %s" % self.current_path)
 				except Exception as e:
+					if not catch:
+						raise e
 					self.experiment.notify("Failed to save file. Error: %s" % e)
 					self.set_status("Not saved")
 			self.set_busy(False)				

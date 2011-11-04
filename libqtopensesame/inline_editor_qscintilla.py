@@ -412,6 +412,8 @@ class inline_editor(QtGui.QFrame):
 
 		self.modified.setVisible(modified)
 		self.edit.setModified(modified)
+		if modified and not self.experiment.main_window.unsaved_changes:
+			self.experiment.main_window.set_unsaved(True)
 
 	def indent(self):
 	
