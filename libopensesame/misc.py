@@ -22,7 +22,7 @@ import os
 import os.path
 import sys
 
-version = "0.25-pre10"
+version = "0.25-pre11"
 codename = "Dashy Darwin"
 
 def change_working_dir():
