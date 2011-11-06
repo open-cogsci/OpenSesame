@@ -38,25 +38,19 @@ class header_widget(QtGui.QWidget):
 		"""
 
 		QtGui.QWidget.__init__(self)
-
 		self.setCursor(QtCore.Qt.IBeamCursor)
-
 		self.setToolTip("Click to edit")
 		self.item = item
 		self.label_name = QtGui.QLabel()
 		self.label_name.id = "name"
-
 		self.edit_name = QtGui.QLineEdit()
 		self.edit_name.editingFinished.connect(self.restore_name)
 		self.edit_name.hide()
-
 		self.label_desc = QtGui.QLabel()
 		self.label_desc.id = "desc"
-
 		self.edit_desc = QtGui.QLineEdit()
 		self.edit_desc.editingFinished.connect(self.restore_desc)
 		self.edit_desc.hide()
-		
 		vbox = QtGui.QVBoxLayout()
 		vbox.setContentsMargins(8, 0, 0, 0)
 		vbox.setSpacing(0)
@@ -64,19 +58,18 @@ class header_widget(QtGui.QWidget):
 		vbox.addWidget(self.edit_name)
 		vbox.addWidget(self.label_desc)
 		vbox.addWidget(self.edit_desc)
-
 		self.refresh()
 		self.setLayout(vbox)
-		
+
 	def refresh(self):
-	
+
 		"""Update the header"""
-		
+
 		self.edit_name.setText(self.item.name)
 		self.label_name.setText("<font size='5'><b>%s</b> - %s</font>&nbsp;&nbsp;&nbsp;<font color='gray'><i>Click to edit</i></font>" \
-			% (self.item.name, self.item.item_type.replace("_", " ").title()))			
-		self.edit_desc.setText(self.item.description)			
-		self.label_desc.setText(self.item.description)			
+			% (self.item.name, self.item.item_type.replace("_", " ").title()))
+		self.edit_desc.setText(self.item.description)
+		self.label_desc.setText(self.item.description)
 
 	def restore_name(self, apply_name_change = True):
 
@@ -272,14 +265,16 @@ class qtitem(object):
 				print "qtitem.apply_edit_changes(): skipping, because refresh in progress"
 			return False
 
-		self.set("description", self.experiment.sanitize(str(self.header.edit_desc.text()).strip()))
+		self.set("description", \
+			self.experiment.sanitize(str(self.header.edit_desc.text()).strip()))
 		if self.description == "":
 			self.description = "No description"
+		self.header.label_desc.setText(self.description)
 
 		if rebuild:
 			self.experiment.main_window.build_item_list()
 		self.experiment.main_window.set_unsaved()
-		return True				
+		return True
 
 	def close_edit_tab(self, index=None):
 
