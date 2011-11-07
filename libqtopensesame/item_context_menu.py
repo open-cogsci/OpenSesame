@@ -87,7 +87,8 @@ class item_context_menu(QtGui.QMenu):
 		"""Rename an item"""
 	
 		new_name, ok = QtGui.QInputDialog.getText(self, "Rename", "Please enter a new name", text=self.item.name)
-		new_name = self.item.experiment.sanitize(new_name, strict=True)
+		new_name = self.item.experiment.sanitize(new_name, strict=True, \
+			allow_vars=False)
 		if ok:
 			valid = self.item.experiment.check_name(new_name)
 			if valid != True:

@@ -208,13 +208,16 @@ class general_properties(QtGui.QWidget):
 		rebuild_item_tree = False
 		self.main_window.set_busy(True)
 		# Set the title and the description
-		title = self.main_window.experiment.sanitize(self.header_widget.edit_name.text())
+		title = self.main_window.experiment.sanitize( \
+			self.header_widget.edit_name.text())
 		self.main_window.experiment.set("title", title)
-		desc = self.main_window.experiment.sanitize(self.header_widget.edit_desc.text())
+		desc = self.main_window.experiment.sanitize( \
+			self.header_widget.edit_desc.text())
 		self.main_window.experiment.set("description", desc)
 
 		# Set the start point
-		start = self.main_window.experiment.sanitize(self.ui.combobox_start.currentText())
+		start = self.main_window.experiment.sanitize( \
+			self.ui.combobox_start.currentText())
 		if self. main_window.experiment.get("start") != start:
 			rebuild_item_tree = True
 		self.main_window.experiment.set("start", start)

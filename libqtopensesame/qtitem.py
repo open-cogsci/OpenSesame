@@ -233,7 +233,8 @@ class qtitem(object):
 		rebuild -- a deprecated argument (default=True)
 		"""
 
-		new_name = self.experiment.sanitize(self.header.edit_name.text(), strict=True)
+		new_name = self.experiment.sanitize(self.header.edit_name.text(), \
+			strict=True, allow_vars=False)
 		# Do nothing is the name stays the same
 		if new_name == self.name:
 			self.header.edit_name.setText(self.name)

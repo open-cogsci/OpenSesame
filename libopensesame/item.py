@@ -626,7 +626,7 @@ class item(openexp.trial.trial):
 		# trouble with compilation
 		return string.replace(os.linesep, "\n")
 				
-	def sanitize(self, s, strict = False):
+	def sanitize(self, s, strict=False, allow_vars=True):
 	
 		"""<DOC>
 		Remove invalid characters (notably quotes) from the string. This is
@@ -637,7 +637,10 @@ class item(openexp.trial.trial):
 		s -- the string to be sanitized
 		
 		Keyword arguments:
-		strict -- If True, all but underscores and alphanumeric characters are stripped (default = False)
+		strict -- If True, all but underscores and alphanumeric characters are
+				  stripped (default=False)
+		allow_vars -- If True, square brackets are not sanitized, so you can use
+					  variables (default=True)
 		
 		Returns:
 		The sanitized string
@@ -652,7 +655,7 @@ class item(openexp.trial.trial):
 		s = ""
 		for c in string:
 			if strict:
-				if c.isalnum() or c == "_":
+				if c.isalnum() or c == "_" or (allow_vars and c in "[]"):
 					s += c
 			elif c not in ("\"", "\\", "\n"):
 				s += c

@@ -255,11 +255,14 @@ class logger(libopensesame.logger.logger, libqtopensesame.qtitem.qtitem):
 
 		"""Select a custom variable by name that is not recognized"""
 
-		var, ok = QtGui.QInputDialog.getText(self.experiment.main_window.ui.centralwidget, "Add custom variable", "Which variable do you wish to log?")
+		var, ok = QtGui.QInputDialog.getText( \
+			self.experiment.main_window.ui.centralwidget, \
+			"Add custom variable", "Which variable do you wish to log?")
 		if ok:
-			var = self.experiment.sanitize(var, True)
+			var = self.experiment.sanitize(var, strict=True, allow_vars=False)
 			if var == "":
-				self.experiment.notify("The variable name you entered was not valid. A variable name may consist of characters, numbers and underscores.")
+				self.experiment.notify( \
+					"The variable name you entered was not valid. A variable name may consist of characters, numbers and underscores.")
 				return
 			if var not in self.logvars:
 				self.logvars.append(var)

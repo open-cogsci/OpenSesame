@@ -151,7 +151,8 @@ class loop(libopensesame.loop.loop, libqtopensesame.qtitem.qtitem):
 				default = ""
 
 			# Check for valid variable names
-			var_name = self.experiment.sanitize(var_name, strict=True)
+			var_name = self.experiment.sanitize(var_name, strict=True, \
+				allow_vars=False)
 			if var_name == "":
 				self.experiment.notify("Variable names must consist of alphanumeric characters and underscores, and must not be empty")
 				return
@@ -221,7 +222,8 @@ class loop(libopensesame.loop.loop, libqtopensesame.qtitem.qtitem):
 			_new_var, ok = QtGui.QInputDialog.getText(self.loop_table, 'New variable', 'Enter a new variable name', text = old_var)
 			if ok and _new_var != old_var:
 				old_var = str(old_var)
-				new_var = self.experiment.sanitize(_new_var, strict=True)
+				new_var = self.experiment.sanitize(_new_var, strict=True, \
+					allow_vars=False)
 				if _new_var != new_var or new_var == "":
 					self.experiment.notify("Please use only letters, numbers and underscores")
 					return				
