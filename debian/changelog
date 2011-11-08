@@ -1,9 +1,28 @@
-opensesame (0.25-pre10) unstable; urgency=low
+opensesame (0.25-pre11-1) unstable; urgency=low
 
-  [ Michael Hanke ]
+  * Loads of bug-fixes.
+  * Editor component now uses Scintilla.
+    
+ -- Sebastiaan Mathot <s.mathot@cogsci.nl>  Tue, 08 Nov 2011 12:48:24 +0100
+
+opensesame (0.24-1) unstable; urgency=low
+
+  * New upstream release. Added new PsychoPy and OpenGL backends.
+  * Bumped Standards-version to 3.9.2; no changes necessary.
+
+ -- Michael Hanke <mih@debian.org>  Wed, 20 Jul 2011 14:47:21 -0400
+
+opensesame (0.23+git1-g0212357-1) unstable; urgency=low
+
+  * New upstream release. Package from subsequent Git commit as upstream removed
+    pre-generated PDFs after the 0.23 release.
+  * Added python-pygame, python-numpy and python-tk as a build-dependency,
+    because they are now required by setup.py.
+
+ -- Michael Hanke <mih@debian.org>  Wed, 06 Apr 2011 21:10:09 -0400
+
+opensesame (0.22+git9-g8633c14-1) unstable; urgency=low
+
   * Initial release (Closes: #611640).
 
-  [ Sebastiaan Mathot ]
-  * 
-
- -- Sebastiaan Mathot <sebastiaan@snoop>  Fri, 04 Nov 2011 12:21:55 +0100
+ -- Michael Hanke <mih@debian.org>  Wed, 02 Mar 2011 16:33:10 -0500
