@@ -50,7 +50,7 @@ class srbox(item.item, generic_response.generic_response):
 		self.timeout = "infinite"
 		self.lights = ""
 		self.dev = "autodetect"
-		self.dummy = "no"
+		self.dummy = "no"		
 
 		# The parent handles the rest of the contruction
 		item.item.__init__(self, name, experiment, string)

@@ -129,7 +129,7 @@ class generic_response:
 		if correct_response == "undefined":
 			self.experiment.correct = "undefined"
 		else:
-			if self.synonyms != None:
+			if hasattr(self, "synonyms") and self.synonyms != None:
 				if correct_response in self.synonyms:
 					self.experiment.correct = 1
 					self.experiment.total_correct += 1
