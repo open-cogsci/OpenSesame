@@ -49,7 +49,8 @@ class psycho(openexp._mouse.legacy.legacy):
 		self.set_buttonlist(buttonlist)
 		self.set_timeout(timeout)
 		self.mouse = event.Mouse(visible = False, win = self.experiment.window)
-		self.set_visible(visible)		
+		self.set_visible(visible)
+		event.mouseButtons = [0, 0, 0]	
 				
 	def set_buttonlist(self, buttonlist = None):
 	
@@ -125,20 +126,30 @@ class psycho(openexp._mouse.legacy.legacy):
 		self.mouse.setVisible(visible)	
 		
 		start_time = 1000.0 * self.experiment.clock.getTime()
-		time = start_time	
+		time = start_time			
+		button = None
+		pos = None
 		self.mouse.clickReset()
 		while timeout == None or time - start_time < timeout:
 			time = 1000.0 * self.experiment.clock.getTime()			
-			buttons, times = self.mouse.getPressed(getTime = True)
+			buttons, times = self.mouse.getPressed(getTime=True)
 			if buttons[0] and (buttonlist == None or 1 in buttonlist):
-				return 1, self.mouse.getPos(), time
+				button = 1
+				pos = self.mouse.getPos()
+				break
 			if buttons[1] and (buttonlist == None or 2 in buttonlist):
-				return 2, self.mouse.getPos(), time
+				button = 2
+				pos = self.mouse.getPos()
+				break
 			if buttons[2] and (buttonlist == None or 1 in buttonlist):
-				return 3, self.mouse.getPos(), time							
-					
+				button = 3
+				pos = self.mouse.getPos()
+				break
+		if pos != None:
+			pos = pos[0]+self.experiment.width/2, \
+				self.experiment.height/2-pos[1]
 		self.mouse.setVisible(self.visible)					
-		return None, None, time					
+		return button, pos, time					
 		
 	def get_pos(self):
 	
@@ -151,7 +162,7 @@ class psycho(openexp._mouse.legacy.legacy):
 	
 		x, y = self.mouse.getPos()
 		t = self.experiment.time()
-		x = x - self.experiment.width/2
+		x = x + self.experiment.width/2
 		y = self.experiment.height/2 - y
 		return (x, y), t
 		
@@ -165,5 +176,6 @@ class psycho(openexp._mouse.legacy.legacy):
 		to flush) and False otherwise
 		"""	
 	
+		event.mouseButtons = [0,0,0]
 		event.clearEvents()
 		return False
