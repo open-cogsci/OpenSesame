@@ -210,6 +210,10 @@ class qtopensesame(QtGui.QMainWindow):
 
 		# Uncheck the debug window button on debug window close
 		self.ui.dock_stdout.visibilityChanged.connect(self.ui.action_show_stdout.setChecked)
+
+		# On Mac OS (darwin) hide, the run in Window functionality
+		if sys.platform == "darwin":
+			self.ui.action_run_in_window.setDisabled(True)
 		
 		# Create the initial experiment
 		self.experiment = experiment.experiment(self, "New experiment", \
