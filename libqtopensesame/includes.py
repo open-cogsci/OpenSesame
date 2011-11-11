@@ -158,5 +158,14 @@ if "--preload" in sys.argv:
 	except Exception as e:
 		print "includes: failed to import 'pyglet' module <http://www.pyglet.org/>. You will not be able to use PsychoPy. Error: %s" % e
 
-	print "includes: ... done"
+	print "includes: preloading modules required by questionnaire plug-ins"
+	try:
+		import htmllib
+		import htmlentitydefs
+		import HTMLParser
+		import sgmllib
+		import markupbase
+	except Exception as e:
+		print "includes: failed to import modules required by questionnaire plug-ins" 
 
+	print "includes: ... done"
