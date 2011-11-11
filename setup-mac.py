@@ -56,7 +56,8 @@ setup(
     data_files = ['opensesame.py'],
     options = {'py2app' : {'argv_emulation': False, 
 		'includes' : ['sip', 'PyQt4.QtGui', 'PyQt4.QtCore', 'pygame', 'numpy', \
-			'serial', 'openexp', 'libqtopensesame', 'libopensesame', 'cv' \
+			'serial', 'openexp', 'libqtopensesame', 'libopensesame', 'cv', \
+			"cv2"
 			],
 		'resources' : ['qt_menu.nib', 'resources', 'examples', 'sounds', \
 			'plugins', 'help', 'data'
