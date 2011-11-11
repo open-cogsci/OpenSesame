@@ -1,4 +1,4 @@
-opensesame (0.25-pre14-1) unstable; urgency=low
+opensesame (0.25-1) unstable; urgency=low
 
   * Loads of bug-fixes.
   * Editor component now uses Scintilla.
