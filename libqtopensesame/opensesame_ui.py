@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'resources/opensesame.ui'
 #
-# Created: Fri Nov 11 12:19:17 2011
+# Created: Wed Dec 14 16:16:19 2011
 #      by: PyQt4 UI code generator 4.8.5
 #
 # WARNING! All changes made in this file will be lost!
@@ -33,7 +33,7 @@ class Ui_MainWindow(object):
         self.verticalLayout_6.addWidget(self.tabwidget)
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtGui.QMenuBar(MainWindow)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 1000, 25))
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 1000, 24))
         self.menubar.setObjectName(_fromUtf8("menubar"))
         self.menu_file = QtGui.QMenu(self.menubar)
         self.menu_file.setTitle(QtGui.QApplication.translate("MainWindow", "File", None, QtGui.QApplication.UnicodeUTF8))
@@ -64,7 +64,7 @@ class Ui_MainWindow(object):
         self.statusbar.setObjectName(_fromUtf8("statusbar"))
         MainWindow.setStatusBar(self.statusbar)
         self.dock_overview = QtGui.QDockWidget(MainWindow)
-        self.dock_overview.setFeatures(QtGui.QDockWidget.DockWidgetFloatable|QtGui.QDockWidget.DockWidgetMovable)
+        self.dock_overview.setFeatures(QtGui.QDockWidget.AllDockWidgetFeatures)
         self.dock_overview.setWindowTitle(QtGui.QApplication.translate("MainWindow", "Overview", None, QtGui.QApplication.UnicodeUTF8))
         self.dock_overview.setObjectName(_fromUtf8("dock_overview"))
         self.dock_widget_overview = QtGui.QWidget()
@@ -499,6 +499,11 @@ class Ui_MainWindow(object):
         self.action_show_info_in_overview.setIcon(icon30)
         self.action_show_info_in_overview.setText(QtGui.QApplication.translate("MainWindow", "Show info in overview", None, QtGui.QApplication.UnicodeUTF8))
         self.action_show_info_in_overview.setObjectName(_fromUtf8("action_show_info_in_overview"))
+        self.action_show_overview = QtGui.QAction(MainWindow)
+        self.action_show_overview.setCheckable(True)
+        self.action_show_overview.setText(QtGui.QApplication.translate("MainWindow", "Show overview area", None, QtGui.QApplication.UnicodeUTF8))
+        self.action_show_overview.setShortcut(QtGui.QApplication.translate("MainWindow", "Ctrl+Shift+O", None, QtGui.QApplication.UnicodeUTF8))
+        self.action_show_overview.setObjectName(_fromUtf8("action_show_overview"))
         self.menu_recent_files.addAction(self.actionDummy)
         self.menu_file.addAction(self.action_new)
         self.menu_file.addAction(self.action_open)
@@ -528,6 +533,7 @@ class Ui_MainWindow(object):
         self.menu_view.addAction(self.action_close_other_tabs)
         self.menu_view.addAction(self.action_show_info_in_overview)
         self.menu_view.addSeparator()
+        self.menu_view.addAction(self.action_show_overview)
         self.menu_view.addAction(self.action_show_variable_inspector)
         self.menu_view.addAction(self.action_show_pool)
         self.menu_view.addAction(self.action_show_stdout)
