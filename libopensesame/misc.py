@@ -22,14 +22,14 @@ import os
 import os.path
 import sys
 
-version = "0.25"
-codename = "Dashy Darwin"
+version = "0.26-pre1"
+codename = "Earnest Einstein"
 
 def change_working_dir():
 
 	"""A horrifyingly ugly hack to change the working directory under Windows"""
-	
-	import libqtopensesame	
+
+	import libqtopensesame
 
 	if os.name == "nt":
 		try:
@@ -183,12 +183,12 @@ def resource(name):
 	The full path to the resource
 	"""
 
-	path = os.path.join("resources", name)		
+	path = os.path.join("resources", name)
 	if os.path.exists(path):
-		return os.path.join("resources", name)				
+		return os.path.join("resources", name)
 	if os.name == "posix":
 		path = "/usr/share/opensesame/resources/%s" % name
 		if os.path.exists(path):
-			return path				
+			return path
 	return None
 
