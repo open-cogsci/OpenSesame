@@ -800,7 +800,6 @@ class qtopensesame(QtGui.QMainWindow):
 			return
 		self.ui.dock_overview.setVisible(True)
 
-
 	def refresh_plugins(self, dummy=None):
 
 		"""
@@ -1162,22 +1161,22 @@ class qtopensesame(QtGui.QMainWindow):
 		while redo:
 			redo = False
 			for i in range(self.ui.tabwidget.count()):
-					w = self.ui.tabwidget.widget(i)
-					if close_edit and hasattr(w, "edit_item") and w.edit_item == item:
-						self.close_tab(i)
-						redo = True
-						break
-					if close_script and hasattr(w, "script_item") and w.script_item == item:
-						self.close_tab(i)
-						redo = True
-						break
+				w = self.ui.tabwidget.widget(i)
+				if close_edit and hasattr(w, "edit_item") and w.edit_item == item:
+					self.close_tab(i)
+					redo = True
+					break
+				if close_script and hasattr(w, "script_item") and w.script_item == item:
+					self.close_tab(i)
+					redo = True
+					break
 
 	def update_resolution(self, width, height):
 
 		"""
 		Updates the resolution in a way that preserves display centering. This
-		is kind of a quick hack. First generate the script, change the resolution
-		in the script and then re-parse the script.
+		is kind of a quick hack. First generate the script, change the
+		resolution in the script and then re-parse the script.
 
 		Arguments:
 		width -- the display width in pixels

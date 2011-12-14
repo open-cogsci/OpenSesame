@@ -29,16 +29,16 @@ class general_properties(QtGui.QWidget):
 	"""The QWidget for the general properties tab"""
 
 	def __init__(self, parent=None):
-	
+
 		"""
 		Constructor
-		
+
 		Keywords arguments:
 		parent -- the parent QWidget
 		"""
-	
+
 		self.main_window = parent
-		QtGui.QWidget.__init__(self)		
+		QtGui.QWidget.__init__(self)
 
 		# Set the header, with the icon, label and script button
 		self.header_widget = general_header_widget(self.main_window.experiment)
@@ -60,7 +60,7 @@ class general_properties(QtGui.QWidget):
 		self.ui = general_widget_ui.Ui_Form()
 		self.ui.setupUi(w)
 
-		# The foeground and background widgets get a special treatment		
+		# The foeground and background widgets get a special treatment
 		self.ui.edit_foreground = color_edit.color_edit(self.main_window.experiment)
 		self.ui.edit_background = color_edit.color_edit(self.main_window.experiment)
 		self.ui.edit_foreground.setSizePolicy(QtGui.QSizePolicy.Fixed, QtGui.QSizePolicy.Fixed)
@@ -69,7 +69,7 @@ class general_properties(QtGui.QWidget):
 		self.ui.layout_general_properties.addWidget(self.ui.edit_background, 4, 5)
 		QtCore.QObject.connect(self.ui.edit_foreground, QtCore.SIGNAL("set_color"), self.apply_changes)
 		QtCore.QObject.connect(self.ui.edit_background, QtCore.SIGNAL("set_color"), self.apply_changes)
-		
+
 		# Connect the rest
 		self.ui.combobox_start.currentIndexChanged.connect(self.apply_changes)
 		self.ui.spinbox_width.editingFinished.connect(self.apply_changes)
@@ -84,12 +84,12 @@ class general_properties(QtGui.QWidget):
 			desc = openexp.backend_info.backend_list[backend]["description"]
 			self.ui.combobox_backend.addItem("%s -- %s" % (backend, desc))
 		self.ui.combobox_backend.currentIndexChanged.connect(self.apply_changes)
-		
+
 		# Script editor
 		self.edit_script = inline_editor(self.main_window.experiment, syntax="opensesame")
-		self.edit_script.apply.clicked.connect(self.apply_script)		
+		self.edit_script.apply.clicked.connect(self.apply_script)
 		self.ui.layout_script.addWidget(self.edit_script)
-		
+
 		vbox = QtGui.QVBoxLayout()
 		vbox.addWidget(header_widget)
 		vbox.addWidget(w)
@@ -99,17 +99,17 @@ class general_properties(QtGui.QWidget):
 
 		self.toggle_script_editor()
 		self.toggle_backend_settings()
-		
+
 	def init_backend_settings(self, force=False):
-	
+
 		"""
 		(Re-)initialize the backend settings controls
-		
+
 		Keywords arguments:
 		force -- indicates if the initialization should occur even if the
 				 controls are not shown (default=False)
 		"""
-		
+
 		if force or self.ui.group_backend_settings.isChecked():
 			for backend_type in ["canvas", "keyboard", "mouse", "synth", "sampler"]:
 				backend = self.main_window.experiment.get("%s_backend" % backend_type)
@@ -119,28 +119,28 @@ class general_properties(QtGui.QWidget):
 				layout = eval("self.ui.layout_%s" % backend_type)
 				label = eval("self.ui.label_%s" % backend_type)
 
-				# Horribly ugly wayo clear the previous settings						
+				# Horribly ugly wayo clear the previous settings
 				while layout.count() > 1:
 					w = layout.itemAt(1)
 					layout.removeItem(w)
 					w.widget().hide()
 					sip.delete(w)
-			
+
 				if not hasattr(_backend, "settings") or _backend.settings == None:
 					label.setText("No settings for %s" % backend)
 				else:
 					label.setText("Settings for %s:" % backend)
 					layout.addWidget(settings_widget(self.main_window.experiment, \
 						_backend.settings, self))
-						
+
 	def toggle_spacer(self):
-	
+
 		"""Sets the visibility of the spacer"""
-		
+
 		hide = self.ui.group_backend_settings.isChecked() or \
 			self.ui.group_script.isChecked()
 		self.ui.spacer.setVisible(not hide)
-		
+
 	def toggle_backend_settings(self):
 
 		"""Sets the visibility of the script editor based on the checkbox state"""
@@ -152,7 +152,7 @@ class general_properties(QtGui.QWidget):
 			self.main_window.set_busy(False)
 		self.ui.scrollarea_backend_settings.setVisible(show)
 		self.toggle_spacer()
-		
+
 	def toggle_script_editor(self):
 
 		"""Sets the visibility of the script editor based on the checkbox state"""
@@ -160,7 +160,7 @@ class general_properties(QtGui.QWidget):
 		show = self.ui.group_script.isChecked()
 		self.edit_script.setVisible(show)
 		self.toggle_spacer()
-		
+
 	def set_header_label(self):
 
 		"""Set the general header based on the experiment title and description"""
@@ -168,18 +168,18 @@ class general_properties(QtGui.QWidget):
 		self.header_widget.edit_name.setText(self.main_window.experiment.title)
 		self.header_widget.label_name.setText("<font size='5'><b>%s</b> - Experiment</font>&nbsp;&nbsp;&nbsp;<font color='gray'><i>Click to edit</i></font>" % self.main_window.experiment.title)
 		self.header_widget.edit_desc.setText(self.main_window.experiment.description)
-		self.header_widget.label_desc.setText(self.main_window.experiment.description)					
-		
+		self.header_widget.label_desc.setText(self.main_window.experiment.description)
+
 	def open_help_tab(self):
-	
+
 		"""Open the general help tab"""
-	
+
 		self.main_window.open_general_help_tab()
-		
-	def apply_script(self):	
-	
+
+	def apply_script(self):
+
 		"""Apply changes to the general script"""
-		
+
 		self.main_window.set_busy(True)
 		script = str(self.edit_script.edit.toPlainText())
 		try:
@@ -195,9 +195,9 @@ class general_properties(QtGui.QWidget):
 		self.edit_script.setModified(False)
 		self.main_window.refresh()
 		self.main_window.set_busy(False)
-		
+
 	def apply_changes(self):
-	
+
 		"""Apply changes to the general tab"""
 
 		# Skip if the general tab is locked and lock it otherwise
@@ -234,7 +234,7 @@ class general_properties(QtGui.QWidget):
 		# Set the display width
 		width = self.ui.spinbox_width.value()
 		if self.main_window.experiment.get("width") != width:
-			self.update_resolution(width, self.main_window.experiment.get("height"))
+			self.main_window.update_resolution(width, self.main_window.experiment.get("height"))
 
 		# Set the display height
 		height = self.ui.spinbox_height.value()
@@ -250,7 +250,7 @@ class general_properties(QtGui.QWidget):
 		refs = []
 		try:
 			refs = self.main_window.experiment.get_refs(foreground)
-			self.main_window.experiment.color_check(foreground)			
+			self.main_window.experiment.color_check(foreground)
 		except Exception as e:
 			if refs == []:
 				self.main_window.experiment.notify(str(e))
@@ -263,24 +263,24 @@ class general_properties(QtGui.QWidget):
 		refs = []
 		try:
 			refs = self.main_window.experiment.get_refs(background)
-			self.main_window.experiment.color_check(background)			
+			self.main_window.experiment.color_check(background)
 		except Exception as e:
 			if refs == []:
 				self.main_window.experiment.notify(str(e))
 				background = self.main_window.experiment.get("background")
 				self.ui.edit_background.setText(background)
-		self.main_window.experiment.set("background", foreground)		
+		self.main_window.experiment.set("background", foreground)
 		self.main_window.experiment.set("background", background)
 
-		# Refresh the interface and unlock the general tab		
+		# Refresh the interface and unlock the general tab
 		self.main_window.refresh()
-		self.lock = False	
+		self.lock = False
 		self.main_window.set_busy(False)
-		
+
 	def refresh(self):
-	
+
 		"""Update the controls of the general tab"""
-	
+
 		if self.main_window.experiment.debug:
 			print "general_properties.refresh()"
 
@@ -326,78 +326,77 @@ class general_properties(QtGui.QWidget):
 		except libopensesame.exceptions.script_error as e:
 			self.main_window.experiment.notify("</>Failed to generate script:</b> %s" % e)
 			self.edit_script.edit.setText("Failed to generate script!")
-			
+
 		self.init_backend_settings()
 
 		# Release the general tab
-		self.lock = False		
-		
-		
+		self.lock = False
+
 class settings_edit(QtGui.QLineEdit):
 
 	"""An edit widget for a single variable"""
 
 	def __init__(self, experiment, var, val, parent=None):
-	
+
 		"""
 		Constructor
-		
+
 		Arguments:
 		experiment -- the experiment
 		var -- the variable name
 		val -- the variable value
-		
+
 		Keywords arguments:
 		parent -- parent QWidget (default=None)
-		"""	
-	
+		"""
+
 		QtGui.QLineEdit.__init__(self, str(val))
 		self._parent = parent
 		self.var = var
 		self.experiment = experiment
 		self.editingFinished.connect(self.apply_setting)
-		
+
 	def apply_setting(self):
-	
+
 		"""Apply changes"""
-	
+
 		self.experiment.set(self.var, self.experiment.sanitize(self.text()))
 		self._parent._parent.refresh()
-		
+
 class settings_widget(QtGui.QWidget):
 
 	"""A widget containing a number of settings"""
 
 	def __init__(self, experiment, settings, parent=None):
-	
+
 		"""
 		Constructor
-		
+
 		Arguments:
 		experiment -- the experiment
 		settings -- the settings dictionary
-		
+
 		Keywords arguments:
 		parent -- parent QWidget (default=None)
 		"""
-	
+
 		QtGui.QWidget.__init__(self, parent)
 		self._parent = parent
 		self.experiment = experiment
-		self.settings = settings		
+		self.settings = settings
 		self.layout = QtGui.QFormLayout(self)
 		self.setLayout(self.layout)
 		for var, desc in settings.items():
 			if self.experiment.has(var):
 				val = self.experiment.get(var)
-			else:				
+			else:
 				val = desc["default"]
 			label = QtGui.QLabel()
 			label.setText("%(name)s<br /><small><i>%(description)s</i></small>" % desc)
 			label.setTextFormat(QtCore.Qt.RichText)
 			edit = settings_edit(self.experiment, var, val, self)
-			self.layout.addRow(label, edit)								
-		
+			self.layout.addRow(label, edit)
+
 class general_header_widget(qtitem.header_widget):
 
 	"""The widget containing the clickable title and description of the experiment"""
@@ -432,4 +431,4 @@ class general_header_widget(qtitem.header_widget):
 		self.label_desc.setText(self.item.get("description"))
 		self.label_desc.show()
 		self.edit_desc.setText(self.item.get("description"))
-		self.edit_desc.hide()		
+		self.edit_desc.hide()
