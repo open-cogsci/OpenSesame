@@ -61,7 +61,7 @@ class logger(item.item):
 							print "logger.run(): auto-logging '%s'" % logvar
 
 			# Sort the logvars to ascertain a consistent ordering
-			self.logvars = sorted(self.logvars)
+			self.logvars.sort()
 
 			# Draw the first line with variables
 			self.log(",".join(self.logvars))
