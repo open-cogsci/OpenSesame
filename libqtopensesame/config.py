@@ -15,8 +15,28 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
+from PyQt4 import QtCore
+import libopensesame.misc
+
+# Determine the sip api that is used, because this depends on whether or not
+# IPython is loaded
+import sip
+api = sip.getapi('QString')
+if api not in (1,2):
+	raise Exception('config: unknown api %s' % api)
+
 config = {
 	"cfg_ver" : 0,
+	"_initial_window_state" : QtCore.QByteArray(),
+	"auto_update_check" : True,
+	"auto_response" : False,
+	"autosave_interval" : 10 * 60 * 1000,
+	"autosave_max_age" : 7,
+	"default_logfile_folder" : libopensesame.misc.home_folder(),
+	"disabled_plugins" : "",
+	"immediate_rename" : False,
+	"overview_info" : False,
+	"recent_files" : "",
 	"scintilla_line_numbers" : True,
 	"scintilla_right_margin" : False,
 	"scintilla_eol_visible" : False,
@@ -29,65 +49,98 @@ config = {
 	"scintilla_custom_font" : False,
 	"scintilla_font_family" : "courier",
 	"scintilla_font_size" : 10,
+	"show_startup_tip" : True,
+	"style" : "",
+	"toolbar_text" : False,
 	"new_experiment_dialog" : True,
-	"disabled_plugins" : "",
-	"version_check_url" : "http://files.cogsci.nl/software/opensesame/MOST_RECENT_VERSION.TXT"
+	"opensesamerun" : False,
+	"opensesamerun_exec" : "",
+	"pos" : QtCore.QPoint(200, 200),
+	"size" : QtCore.QSize(1000, 600),
+	"version_check_url" : \
+		"http://files.cogsci.nl/software/opensesame/MOST_RECENT_VERSION.TXT"
 	}
 
 def get_config(setting):
 
 	"""
 	Retrieve a setting
-	
+
 	Returns:
 	A setting or False if the setting does not exist
 	"""
 
 	return config[setting]
-	
+
 def set_config(setting, value):
 
 	"""
 	Set a setting
-	
+
 	Arguments:
 	setting -- the setting name
 	value -- the setting value
-	"""	
-	
+	"""
+
 	config[setting] = value
 	config["cfg_ver"] += 1
-	
+
 def restore_config(settings):
 
 	"""
 	Restore settings from a QSetting
-	
+
 	Arguments:
 	settings -- a QSetting
 	"""
 
+	global api
 	for setting, default in config.items():
-		if type(default) == bool:
-			value = settings.value(setting, default).toBool()
-		elif type(default) == str:
-			try:
-				value = str(settings.value(setting, default).toString())
-			except:
-				value = default
-		elif type(default) == int:
-			value = settings.value(setting, default).toInt()[0]	
+		value = settings.value(setting, default)
+
+		# The older (default) api requires an explicit type conversion
+		if api == 1:
+			if type(default) == bool:
+				value = value.toBool()
+			elif type(default) == str:
+				try:
+					value = str(value.toString())
+				except:
+					value = default
+			elif type(default) == int:
+				value = value.toInt()[0]
+			elif type(default) == QtCore.QPoint:
+				value = value.toPoint()
+			elif type(default) == QtCore.QSize:
+				value = value.toSize()
+			elif type(default) == QtCore.QByteArray:
+				value = value.toByteArray()
+
+		# The newer api returns some things as strings, so we still have to do
+		# some type conversion
+		else:
+			if type(default) == bool:
+				if value == 'false':
+					value = False
+				else:
+					value = True
+			elif type(default) == int:
+				value = int(value)
+
+		print setting, value, default
+
 		set_config(setting, value)
-	
+
 def save_config(settings):
 
 	"""
 	Save settings to a QSetting
-	
+
 	Arguments:
 	setting -- a QSetting
 	"""
-	
+
 	for setting, value in config.items():
-		settings.setValue(setting, value)
+		if setting != "cfg_ver":
+			settings.setValue(setting, value)
 
