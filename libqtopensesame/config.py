@@ -127,8 +127,6 @@ def restore_config(settings):
 			elif type(default) == int:
 				value = int(value)
 
-		print setting, value, default
-
 		set_config(setting, value)
 
 def save_config(settings):
