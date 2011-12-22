@@ -192,3 +192,25 @@ def resource(name):
 			return path
 	return None
 
+def home_folder():
+
+	"""
+	Determines the home folder
+
+	Returns:
+	A path to the home folder
+	"""
+
+	import platform
+
+	# Determine the home folder
+	if platform.system() == "Windows":
+		return os.environ["USERPROFILE"]
+	if platform.system() == "Darwin":
+		return os.environ["HOME"]
+	if platform.system() == "Linux":
+		return os.environ["HOME"]
+	home_folder = os.environ["HOME"]
+	print "qtopensesame.__init__(): unknown platform '%s', using '%s' as home folder" \
+		% (platform.system(), home_folder)
+	return home_folder

@@ -20,6 +20,7 @@ from libqtopensesame import includes, experiment
 import libopensesame.exceptions
 import libopensesame.experiment
 import libopensesame.plugins
+import libopensesame.misc
 import os.path
 import os
 import sys
@@ -135,16 +136,7 @@ class qtopensesame(QtGui.QMainWindow):
 		self.unsaved_changes = False
 
 		# Determine the home folder
-		if platform.system() == "Windows":
-			self.home_folder = os.environ["USERPROFILE"]
-		elif platform.system() == "Darwin":
-			self.home_folder = os.environ["HOME"]
-		elif platform.system() == "Linux":
-			self.home_folder = os.environ["HOME"]
-		else:
-			self.home_folder = os.environ["HOME"]
-			print "qtopensesame.__init__(): unknown platform '%s', using '%s' as home folder" \
-				% (platform.system(), self.home_folder)
+		self.home_folder = libopensesame.misc.home_folder()
 
 		# Determine autosave_folder
 		if not os.path.exists(os.path.join(self.home_folder, ".opensesame")):
@@ -268,6 +260,8 @@ class qtopensesame(QtGui.QMainWindow):
 		group = optparse.OptionGroup(parser, "Miscellaneous options")
 		group.add_option("--pylink", action="store_true", dest="pylink", \
 			help="Load PyLink before PyGame (necessary for using the Eyelink plug-ins in non-dummy mode)")
+		group.add_option("--ipython", action="store_true", dest="ipython", \
+			help="Enable the IPython interpreter")
 		parser.add_option_group(group)
 		self.options, args = parser.parse_args(sys.argv)
 		if self.options.run and self.options.run_in_window:
@@ -290,37 +284,37 @@ class qtopensesame(QtGui.QMainWindow):
 			print "qtopensesame.restore_state()"
 
 		settings = QtCore.QSettings("cogscinl", "opensesame")
-		settings.beginGroup("MainWindow");
-		self.resize(settings.value("size", QtCore.QSize(1000, 600)).toSize())
-		self.move(settings.value("pos", QtCore.QPoint(200, 200)).toPoint())
-		self._initial_window_state = settings.value("state").toByteArray()
-		self.auto_check_update = settings.value("auto_check_update", True).toBool()
-		self.show_startup_tip = settings.value("show_startup_tip", True).toBool()
-		self.default_logfile_folder = settings.value("default_logfile_folder", self.home_folder).toString()
-		self.autosave_interval = settings.value("autosave_interval", 10 * 60 * 1000).toInt()[0] # Every 10 minutes
-		self.autosave_max_age = settings.value("autosave_max_age", 7).toInt()[0]
-		self.immediate_rename = settings.value("immediate_rename", False).toBool()
-		self.opensesamerun_exec = str(settings.value("opensesamerun_exec", "").toString())
-		self.opensesamerun = settings.value("opensesamerun", False).toBool()
-		self.experiment.auto_response = settings.value("auto_response", False).toBool()
-		self.style = settings.value("style", "").toString()
+		settings.beginGroup("MainWindow")
+		config.restore_config(settings)
+
+		self.resize(config.get_config("size"))
+		self.move(config.get_config("pos"))
+		self._initial_window_state = config.get_config("_initial_window_state")
+		self.auto_check_update = config.get_config("auto_update_check")
+		self.show_startup_tip = config.get_config("show_startup_tip")
+		self.default_logfile_folder = config.get_config("default_logfile_folder")
+		self.autosave_interval = config.get_config("autosave_interval")
+		self.autosave_max_age = config.get_config("autosave_max_age")
+		self.immediate_rename = config.get_config("immediate_rename")
+		self.opensesamerun_exec = config.get_config("opensesamerun_exec")
+		self.opensesamerun = config.get_config("opensesamerun")
+		self.experiment.auto_response = config.get_config("auto_response")
+		self.style = config.get_config("style")
 
 		# Unpack the string with recent files and only remember those that still exist
 		self.recent_files = []
-		for path in unicode(settings.value("recent_files", "").toString()).split(";;"):
+		for path in config.get_config("recent_files").split(";;"):
 			if os.path.exists(path):
 				self.recent_files.append(path)
 
 		self.ui.action_enable_auto_response.setChecked(self.experiment.auto_response)
-		self.ui.action_show_info_in_overview.setChecked(settings.value("overview_info", False).toBool())
+		self.ui.action_show_info_in_overview.setChecked(config.get_config("overview_info"))
 		self.toggle_overview_info()
 
-		if settings.value("toolbar_text", False).toBool():
+		if config.get_config("toolbar_text"):
 			self.ui.toolbar_main.setToolButtonStyle(QtCore.Qt.ToolButtonTextUnderIcon)
 		else:
 			self.ui.toolbar_main.setToolButtonStyle(QtCore.Qt.ToolButtonIconOnly)
-
-		config.restore_config(settings)
 
 		settings.endGroup()
 		self.set_style()
@@ -334,9 +328,11 @@ class qtopensesame(QtGui.QMainWindow):
 
 		settings = QtCore.QSettings("cogscinl", "opensesame")
 		settings.beginGroup("MainWindow")
+
+		config.save_config(settings)
 		settings.setValue("size", self.size())
 		settings.setValue("pos", self.pos())
-		settings.setValue("state", self.saveState())
+		settings.setValue("_initial_window_state", self.saveState())
 		settings.setValue("auto_check_update", self.auto_check_update)
 		settings.setValue("show_startup_tip", self.show_startup_tip)
 		settings.setValue("default_logfile_folder", self.default_logfile_folder)
@@ -350,7 +346,6 @@ class qtopensesame(QtGui.QMainWindow):
 		settings.setValue("toolbar_text", self.ui.toolbar_main.toolButtonStyle() == QtCore.Qt.ToolButtonTextUnderIcon)
 		settings.setValue("recent_files", ";;".join(self.recent_files))
 		settings.setValue("style", self.style)
-		config.save_config(settings)
 		settings.endGroup()
 
 	def set_busy(self, state=True):
@@ -1503,7 +1498,9 @@ class qtopensesame(QtGui.QMainWindow):
 		"""
 
 		# Report success and copy the logfile to the filepool if necessary
-		resp = QtGui.QMessageBox.question(self.ui.centralwidget, "Finished!", "The experiment is finished and data has been logged to '%s'. Do you want to copy the logfile to the file pool?" % exp.logfile, QtGui.QMessageBox.Yes, QtGui.QMessageBox.No)
+		resp = QtGui.QMessageBox.question(self.ui.centralwidget, "Finished!", \
+			"The experiment is finished and data has been logged to '%s'. Do you want to copy the logfile to the file pool?" \
+			% exp.logfile, QtGui.QMessageBox.Yes, QtGui.QMessageBox.No)
 		if resp == QtGui.QMessageBox.Yes:
 			self.copy_to_pool(exp.logfile)
 
@@ -1514,7 +1511,8 @@ class qtopensesame(QtGui.QMainWindow):
 
 		Keyword arguments:
 		dummy -- a dummy argument that is passed by signaler (default = None)
-		fullscreen -- a boolean to indicate if the window should be fullscreen (default = True)
+		fullscreen -- a boolean to indicate if the window should be fullscreen
+					  (default = True)
 		"""
 
 		import openexp.exceptions
@@ -1523,11 +1521,13 @@ class qtopensesame(QtGui.QMainWindow):
 		# Before we run the experiment, we parse it in three steps
 		# 1) Apply any pending changes
 		# 2) Convert the experiment to a string
-		# 3) Parse the string into a new experiment (with all the GUI stuff stripped off)
+		# 3) Parse the string into a new experiment (with all the GUI stuff
+		#    stripped off)
 		try:
 			self.get_ready()
 			script = self.experiment.to_string()
-			exp = libopensesame.experiment.experiment("Experiment", script, self.experiment.pool_folder)
+			exp = libopensesame.experiment.experiment("Experiment", script, \
+				self.experiment.pool_folder)
 			exp.experiment_path = self.experiment.experiment_path
 		except libopensesame.exceptions.script_error as e:
 			self.experiment.notify(str(e))
@@ -1542,7 +1542,8 @@ class qtopensesame(QtGui.QMainWindow):
 		else:
 
 			# Get the participant number
-			subject_nr, ok = QtGui.QInputDialog.getInt(self.ui.centralwidget, "Subject number", "Please enter the subject number", min = 0)
+			subject_nr, ok = QtGui.QInputDialog.getInt(self.ui.centralwidget, \
+				"Subject number", "Please enter the subject number", min = 0)
 			if not ok:
 				return
 
@@ -1550,11 +1551,15 @@ class qtopensesame(QtGui.QMainWindow):
 			exp.set_subject(subject_nr)
 
 			# Suggested filename
-			suggested_path = os.path.join(str(self.default_logfile_folder), "subject-%d.csv" % subject_nr)
+			suggested_path = os.path.join(str(self.default_logfile_folder), \
+				"subject-%d.csv" % subject_nr)
 
 			# Get the data file
 			csv_filter = "Comma-separated values (*.csv)"
-			logfile = str(QtGui.QFileDialog.getSaveFileName(self.ui.centralwidget, "Choose location for logfile (press 'escape' for default location)", suggested_path, filter = csv_filter, selectedFilter = csv_filter))
+			logfile = unicode(QtGui.QFileDialog.getSaveFileName(self.ui.centralwidget, \
+				"Choose location for logfile (press 'escape' for default location)", \
+				suggested_path, filter=csv_filter))
+
 			if logfile == "":
 				try:
 					# Sometimes this fails, e.g. if the default folder is "/"

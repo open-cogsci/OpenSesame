@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'resources/opensesame.ui'
 #
-# Created: Wed Dec 14 16:16:19 2011
+# Created: Wed Dec 14 17:07:30 2011
 #      by: PyQt4 UI code generator 4.8.5
 #
 # WARNING! All changes made in this file will be lost!
@@ -27,6 +27,8 @@ class Ui_MainWindow(object):
         self.verticalLayout_6 = QtGui.QVBoxLayout(self.centralwidget)
         self.verticalLayout_6.setObjectName(_fromUtf8("verticalLayout_6"))
         self.tabwidget = QtGui.QTabWidget(self.centralwidget)
+        self.tabwidget.setAccessibleName(QtGui.QApplication.translate("MainWindow", "Tab area", None, QtGui.QApplication.UnicodeUTF8))
+        self.tabwidget.setAccessibleDescription(QtGui.QApplication.translate("MainWindow", "The tab area contains the graphical control tabs for items", None, QtGui.QApplication.UnicodeUTF8))
         self.tabwidget.setTabsClosable(True)
         self.tabwidget.setMovable(True)
         self.tabwidget.setObjectName(_fromUtf8("tabwidget"))
@@ -64,6 +66,8 @@ class Ui_MainWindow(object):
         self.statusbar.setObjectName(_fromUtf8("statusbar"))
         MainWindow.setStatusBar(self.statusbar)
         self.dock_overview = QtGui.QDockWidget(MainWindow)
+        self.dock_overview.setAccessibleName(QtGui.QApplication.translate("MainWindow", "Overview area", None, QtGui.QApplication.UnicodeUTF8))
+        self.dock_overview.setAccessibleDescription(QtGui.QApplication.translate("MainWindow", "Provides an overview of the experiment", None, QtGui.QApplication.UnicodeUTF8))
         self.dock_overview.setFeatures(QtGui.QDockWidget.AllDockWidgetFeatures)
         self.dock_overview.setWindowTitle(QtGui.QApplication.translate("MainWindow", "Overview", None, QtGui.QApplication.UnicodeUTF8))
         self.dock_overview.setObjectName(_fromUtf8("dock_overview"))
@@ -85,6 +89,8 @@ class Ui_MainWindow(object):
         self.dock_overview.setWidget(self.dock_widget_overview)
         MainWindow.addDockWidget(QtCore.Qt.DockWidgetArea(1), self.dock_overview)
         self.dock_variable_inspector = QtGui.QDockWidget(MainWindow)
+        self.dock_variable_inspector.setAccessibleName(QtGui.QApplication.translate("MainWindow", "Variable inspector", None, QtGui.QApplication.UnicodeUTF8))
+        self.dock_variable_inspector.setAccessibleDescription(QtGui.QApplication.translate("MainWindow", "A list of variables that have detected in the experiment", None, QtGui.QApplication.UnicodeUTF8))
         self.dock_variable_inspector.setAllowedAreas(QtCore.Qt.AllDockWidgetAreas)
         self.dock_variable_inspector.setWindowTitle(QtGui.QApplication.translate("MainWindow", "Variable inspector", None, QtGui.QApplication.UnicodeUTF8))
         self.dock_variable_inspector.setObjectName(_fromUtf8("dock_variable_inspector"))
@@ -134,10 +140,12 @@ class Ui_MainWindow(object):
         self.horizontalLayout_2.addWidget(self.label)
         self.edit_variable_filter = QtGui.QLineEdit(self.widget)
         self.edit_variable_filter.setToolTip(QtGui.QApplication.translate("MainWindow", "Enter a filter", None, QtGui.QApplication.UnicodeUTF8))
+        self.edit_variable_filter.setAccessibleName(QtGui.QApplication.translate("MainWindow", "Variable search box", None, QtGui.QApplication.UnicodeUTF8))
         self.edit_variable_filter.setObjectName(_fromUtf8("edit_variable_filter"))
         self.horizontalLayout_2.addWidget(self.edit_variable_filter)
         self.button_variables_clear = QtGui.QPushButton(self.widget)
         self.button_variables_clear.setToolTip(QtGui.QApplication.translate("MainWindow", "Clear filter", None, QtGui.QApplication.UnicodeUTF8))
+        self.button_variables_clear.setAccessibleName(QtGui.QApplication.translate("MainWindow", "Clear variable search box", None, QtGui.QApplication.UnicodeUTF8))
         self.button_variables_clear.setText(_fromUtf8(""))
         icon2 = QtGui.QIcon()
         icon2.addPixmap(QtGui.QPixmap(_fromUtf8(":/icons/clear.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
@@ -152,6 +160,7 @@ class Ui_MainWindow(object):
         sizePolicy.setHeightForWidth(self.button_help_variables.sizePolicy().hasHeightForWidth())
         self.button_help_variables.setSizePolicy(sizePolicy)
         self.button_help_variables.setToolTip(QtGui.QApplication.translate("MainWindow", "Help", None, QtGui.QApplication.UnicodeUTF8))
+        self.button_help_variables.setAccessibleName(QtGui.QApplication.translate("MainWindow", "Variable inspector help", None, QtGui.QApplication.UnicodeUTF8))
         self.button_help_variables.setText(_fromUtf8(""))
         icon3 = QtGui.QIcon()
         icon3.addPixmap(QtGui.QPixmap(_fromUtf8(":/icons/help.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
@@ -162,6 +171,7 @@ class Ui_MainWindow(object):
         self.horizontalLayout_2.addWidget(self.button_help_variables)
         self.verticalLayout_2.addWidget(self.widget)
         self.table_variables = variable_inspector(self.dock_widget_variable_inspector)
+        self.table_variables.setAccessibleName(QtGui.QApplication.translate("MainWindow", "Variable inspector table", None, QtGui.QApplication.UnicodeUTF8))
         self.table_variables.setAlternatingRowColors(True)
         self.table_variables.setShowGrid(True)
         self.table_variables.setGridStyle(QtCore.Qt.DotLine)
@@ -194,6 +204,8 @@ class Ui_MainWindow(object):
         self.dock_pool.setWidget(self.dock_pool_widget)
         MainWindow.addDockWidget(QtCore.Qt.DockWidgetArea(2), self.dock_pool)
         self.dock_stdout = QtGui.QDockWidget(MainWindow)
+        self.dock_stdout.setAccessibleName(QtGui.QApplication.translate("MainWindow", "Debug window", None, QtGui.QApplication.UnicodeUTF8))
+        self.dock_stdout.setAccessibleDescription(QtGui.QApplication.translate("MainWindow", "A Python intepreter that is also used for displaying debugging output", None, QtGui.QApplication.UnicodeUTF8))
         self.dock_stdout.setFeatures(QtGui.QDockWidget.AllDockWidgetFeatures)
         self.dock_stdout.setWindowTitle(QtGui.QApplication.translate("MainWindow", "Debug window", None, QtGui.QApplication.UnicodeUTF8))
         self.dock_stdout.setObjectName(_fromUtf8("dock_stdout"))
@@ -253,6 +265,7 @@ class Ui_MainWindow(object):
         sizePolicy.setHeightForWidth(self.button_help_stdout.sizePolicy().hasHeightForWidth())
         self.button_help_stdout.setSizePolicy(sizePolicy)
         self.button_help_stdout.setToolTip(QtGui.QApplication.translate("MainWindow", "Help", None, QtGui.QApplication.UnicodeUTF8))
+        self.button_help_stdout.setAccessibleName(QtGui.QApplication.translate("MainWindow", "Debug window help", None, QtGui.QApplication.UnicodeUTF8))
         self.button_help_stdout.setText(_fromUtf8(""))
         self.button_help_stdout.setIcon(icon3)
         self.button_help_stdout.setIconSize(QtCore.QSize(16, 16))
@@ -261,6 +274,7 @@ class Ui_MainWindow(object):
         self.verticalLayout_5.addWidget(self.button_help_stdout)
         self.button_clear_stdout = QtGui.QPushButton(self.widget_3)
         self.button_clear_stdout.setToolTip(QtGui.QApplication.translate("MainWindow", "Clear debug window", None, QtGui.QApplication.UnicodeUTF8))
+        self.button_clear_stdout.setAccessibleName(QtGui.QApplication.translate("MainWindow", "Clear debug window", None, QtGui.QApplication.UnicodeUTF8))
         self.button_clear_stdout.setText(_fromUtf8(""))
         self.button_clear_stdout.setIcon(icon2)
         self.button_clear_stdout.setIconSize(QtCore.QSize(16, 16))
