@@ -214,3 +214,39 @@ def home_folder():
 	print "qtopensesame.__init__(): unknown platform '%s', using '%s' as home folder" \
 		% (platform.system(), home_folder)
 	return home_folder
+
+def module_versions():
+
+	"""
+	Get version info
+
+	Returns:
+	A string with version numbers
+	"""
+
+	from PyQt4 import QtCore
+
+	s = "OpenSesame %s" % version
+	s += "\nPython %d.%d.%d" % (sys.version_info[0], sys.version_info[1], sys.version_info[2])
+	s += "\nPyQt %s" % QtCore.PYQT_VERSION_STR
+	try:
+		import pygame
+		s += "\nPyGame %s" % pygame.ver
+	except:
+		s += "\nPyGame not available"
+	try:
+		import OpenGL
+		s += "\nPyOpenGL %s" % OpenGL.__version__
+	except:
+		s += "\nPyOpenGL not available"
+	try:
+		import psychopy
+		s += "\nPsychoPy %s" % psychopy.__version__
+	except:
+		s += "\nPsychoPy not available"
+	try:
+		import pyglet
+		s += "\nPyglet %s" % pyglet.version
+	except:
+		s += "\nPyglet not available"
+	return s
