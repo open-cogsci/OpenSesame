@@ -24,77 +24,77 @@ class tree_overview(QtGui.QTreeWidget):
 	"""The drag-and-droppable overview tree"""
 
 	def __init__(self, parent):
-	
+
 		"""
 		Constructor
-		
+
 		Arguments:
 		parent -- the parent item
 		"""
-	
+
 		QtGui.QTreeWidget.__init__(self, parent)
-		
+
 	def dragEnterEvent(self, e):
-		
+
 		"""
 		Accept an incoming drag event
-		
+
 		Arguments:
 		e -- a QDragEvent
 		"""
-	
-		if e.mimeData().hasText():	
+
+		if e.mimeData().hasText():
 			e.setDropAction(QtCore.Qt.CopyAction)
 			e.accept()
 		else:
 			e.ignore()
 
 	def dragMoveEvent(self, e):
-	
+
 		"""
 		Highlight the appropriate item while a drop is being moved
-		
+
 		Arguments:
-		e -- a QDragEvent		
+		e -- a QDragEvent
 		"""
-	
-		if e.mimeData().hasText():		
-			e.setDropAction(QtCore.Qt.CopyAction)						
+
+		if e.mimeData().hasText():
+			e.setDropAction(QtCore.Qt.CopyAction)
 			for item in self.selectedItems():
-				item.setSelected(False)			
+				item.setSelected(False)
 			item = self.itemAt(e.pos())
 			if item != None:
-				item.setSelected(True)			
-			e.accept()			
-		else:		
-			e.ignore()		
+				item.setSelected(True)
+			e.accept()
+		else:
+			e.ignore()
 
 	def dropEvent(self, e):
-	
+
 		"""
 		Accept a drop event
-		
+
 		Arguments:
-		e -- a QDragEvent			
+		e -- a QDragEvent
 		"""
-	
-		if e.mimeData().hasText():	
+
+		if e.mimeData().hasText():
 			s = e.mimeData().text()
-			e.setDropAction(QtCore.Qt.CopyAction)			
+			e.setDropAction(QtCore.Qt.CopyAction)
 			item = self.itemAt(e.pos())
-			
+
 			if item == None:
 				e.ignore()
-				return			
+				return
 
 			# Accept a drop on the toplevel item
 			if item.parent() == None:
 				draggables.drop_target = "__start__", None, True
 				e.accept()
 				return
-				
+
 			index = 0
-			while True:			
+			while True:
 				item_name = str(item.text(0))
 				if item_name not in self.main_window.experiment.items:
 					e.ignore()
@@ -104,7 +104,7 @@ class tree_overview(QtGui.QTreeWidget):
 					break
 				index = item.parent().indexOfChild(item)
 				item = item.parent()
-			
+
 			if item != None:
 				item.setSelected(True)
 				draggables.drop_target = item_name, index, True
@@ -113,21 +113,23 @@ class tree_overview(QtGui.QTreeWidget):
 				e.ignore()
 		else:
 			e.ignore()
-			
+
 	def contextMenuEvent(self, e):
-	
+
 		"""
 		Show a context menu
-		
+
 		Arguments:
 		e -- the content menu event
 		"""
-	
-		target_item = self.itemAt(e.pos())		
+
+		target_item = self.itemAt(e.pos())
+		if target_item == None:
+			return
 		item_name = str(target_item.text(0))
 		parent_item = target_item.parent()
 		if parent_item != None:
-			parent_name = str(parent_item.text(0))		
+			parent_name = str(parent_item.text(0))
 		else:
 			parent_name = None
 		index = None
@@ -144,10 +146,10 @@ class tree_overview(QtGui.QTreeWidget):
 					if child == target_item:
 						break
 					index += 1
-		
+
 		if item_name not in self.main_window.experiment.items:
 			return
 		item = self.main_window.experiment.items[item_name]
 		m = item_context_menu.item_context_menu("Item", self, item, parent_name, index)
 		m.popup(e.globalPos())
-								
+
