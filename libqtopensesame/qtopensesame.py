@@ -1273,15 +1273,18 @@ class qtopensesame(QtGui.QMainWindow):
 		self.unused_tab_widget.setLayout(vbox)
 		self.unused_tab_widget.unused_tab = True
 
-	def open_unused_tab(self, reopen = False, index = None, focus = True):
+	def open_unused_tab(self, reopen=False, index=None, focus=True):
 
 		"""
 		Shows the unused tab
 
 		Keyword arguments:
-		reopen -- indicates if the tab should be closed and reopened if it's already open (default = False)
-		index -- indicates a specific position where the tab should be inserted (default = None)
-		focus -- indocates whether the tab should be shown immediately (default = True)
+		reopen -- indicates if the tab should be closed and reopened if it's
+				  already open (default=False)
+		index -- indicates a specific position where the tab should be inserted
+				 (default=None)
+		focus -- indocates whether the tab should be shown immediately
+				 (default=True)
 		"""
 
 		for i in range(self.experiment.ui.tabwidget.count()):
@@ -1293,9 +1296,11 @@ class qtopensesame(QtGui.QMainWindow):
 					self.ui.tabwidget.setCurrentIndex(i)
 
 		if index == None:
-			index = self.ui.tabwidget.addTab(self.unused_tab_widget, self.experiment.icon("unused"), "General properties")
+			index = self.ui.tabwidget.addTab(self.unused_tab_widget, \
+				self.experiment.icon("unused"), "Unused items")
 		else:
-			self.ui.tabwidget.insertTab(index, self.unused_tab_widget, self.experiment.icon("unused"), "General properties")
+			self.ui.tabwidget.insertTab(index, self.unused_tab_widget, \
+				self.experiment.icon("unused"), "Unused items")
 
 		if focus:
 			self.ui.tabwidget.setCurrentIndex(index)
