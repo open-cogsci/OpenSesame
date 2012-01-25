@@ -961,20 +961,22 @@ class qtopensesame(QtGui.QMainWindow):
 
 		self.start_new_wizard() # Simply start the new wizard
 
-	def open_file(self, dummy = None, path = None, add_to_recent = True):
+	def open_file(self, dummy=None, path=None, add_to_recent=True):
 
 		"""
 		Open a .opensesame or .opensesame.tar.gz file
 
 		Keyword arguments:
-		dummy -- An unused argument which is passed by the signal (default = None)
-		path -- The path to the file. If None, a file dialog is presented (default = None)
+		dummy -- An unused argument which is passed by the signal (default=None)
+		path -- The path to the file. If None, a file dialog is presented
+				(default=None)
 		"""
 
 		self.save_unsaved_changes()
 
 		if path == None:
-			path, file_type = QtGui.QFileDialog.getOpenFileNameAndFilter(self.ui.centralwidget, "Open file", QtCore.QString(), self.file_type_filter)
+			path = QtGui.QFileDialog.getOpenFileName(self.ui.centralwidget, \
+				"Open file", filter=self.file_type_filter)
 		if path == None or path == "":
 			return
 
