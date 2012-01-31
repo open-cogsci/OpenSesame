@@ -115,22 +115,22 @@ class loop(libopensesame.loop.loop, libqtopensesame.qtitem.qtitem):
 		libqtopensesame.qtitem.qtitem.rename(self, from_name, to_name)
 		if self.item == from_name:
 			self.item = to_name
-			
-	def delete(self, item_name, item_parent=None, index=None):	
-	
+
+	def delete(self, item_name, item_parent=None, index=None):
+
 		"""
 		Delete an item
-		
+
 		Arguments:
 		item_name -- the name of the item to be deleted
-		
+
 		Keywords arguments:
 		item_parent -- the parent item (default=None)
 		index -- the index of the item in the parent (default=None)
-		"""	
-		
+		"""
+
 		if self.item == item_name and item_parent == self.name:
-			self.item = ""			
+			self.item = ""
 
 	def add_cyclevar(self):
 
@@ -186,29 +186,29 @@ class loop(libopensesame.loop.loop, libqtopensesame.qtitem.qtitem):
 					var_list.append(var)
 		if len(var_list) == 0:
 			return None
-		return var_list		
-		
-		
+		return var_list
+
+
 	def rename_var(self, item, from_name, to_name):
-	
+
 		"""
 		A notification that a variable has been renamed
-		
+
 		Arguments:
-		item -- the item doing the renaming		
+		item -- the item doing the renaming
 		from_name -- the old variable name
 		to_name -- the new variable name
 		"""
 
 		# Only accept renames from this item
 		if item != self.name:
-			return	
+			return
 		for i in self.matrix:
 			if from_name in self.matrix[i]:
 				val = self.matrix[i][from_name]
 				del self.matrix[i][from_name]
 				self.matrix[i][to_name] = val
-		
+
 	def rename_cyclevar(self):
 
 		"""Present a dialog and rename a variable"""
@@ -226,7 +226,7 @@ class loop(libopensesame.loop.loop, libqtopensesame.qtitem.qtitem):
 					allow_vars=False)
 				if _new_var != new_var or new_var == "":
 					self.experiment.notify("Please use only letters, numbers and underscores")
-					return				
+					return
 				if new_var in var_list:
 					self.experiment.notify("A variable with the name '%s' already exists" % new_var)
 					return
@@ -258,7 +258,7 @@ class loop(libopensesame.loop.loop, libqtopensesame.qtitem.qtitem):
 
 		"""
 		Count the number of variables in the loop
-		
+
 		Returns:
 		The number of variables
 		"""
@@ -277,7 +277,7 @@ class loop(libopensesame.loop.loop, libqtopensesame.qtitem.qtitem):
 		"""
 		Count the number of cycles, which is the maximum of the table length
 		and the 'cycles' variables
-		
+
 		Returns:
 		The number of cycles
 		"""
@@ -450,7 +450,7 @@ class loop(libopensesame.loop.loop, libqtopensesame.qtitem.qtitem):
 			self.wizard_process(var_dict)
 			self.set_cycle_count(len(self.matrix))
 			self.spin_cycles.setValue(self.cycle_count())
-			self.refresh_loop_table()			
+			self.refresh_loop_table()
 
 	def init_edit_widget(self):
 
@@ -640,12 +640,10 @@ class loop(libopensesame.loop.loop, libqtopensesame.qtitem.qtitem):
 
 		widget = self.item_tree_widget(toplevel)
 		toplevel.addChild(widget)
-
 		if self.item in self.experiment.items and self.item != None and self.item.strip() != "":
 			if self.experiment.items[self.item] not in items:
 				items.append(self.experiment.items[self.item])
 			self.experiment.items[self.item].build_item_tree(widget, items)
-
 		widget.setExpanded(True)
 		return items
 

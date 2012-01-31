@@ -216,10 +216,17 @@ class logger(libopensesame.logger.logger, libqtopensesame.qtitem.qtitem):
 
 	def suggest_variables(self):
 
-		"""Smart select all variables that should probably be logged"""
+		"""
+		Smart select all variables that should probably be logged. Variables in
+		unused items are ignored.
+		"""
 
 		i = 0
 		for item in self.experiment.items:
+			if item in self.experiment.unused_items:
+				if self.experiment.debug:
+					print "logger.suggest_variables(): ignoring variables from '%s'" % item
+				continue
 			if self.experiment.items[item].item_type in ("loop", "keyboard_response", "mouse_response"):
 				for var, val in self.experiment.items[item].var_info():
 					if var not in self.logvars and var != "time_%s" % item and var != "count_%s" % item:
@@ -268,26 +275,26 @@ class logger(libopensesame.logger.logger, libqtopensesame.qtitem.qtitem):
 				self.logvars.append(var)
 				self.edit_widget()
 				self.experiment.main_window.refresh(self.name)
-				
+
 	def rename_var(self, item, from_name, to_name):
-	
+
 		"""
 		A notification that a variable has been renamed
-		
+
 		Arguments:
-		item -- the item doing the renaming		
+		item -- the item doing the renaming
 		from_name -- the old variable name
 		to_name -- the new variable name
 		"""
-	
+
 		if from_name in self.logvars:
 			if self.experiment.debug:
-				print "logger.rename_var(): '%s' has been renamed to '%s'" % (from_name, to_name)				
+				print "logger.rename_var(): '%s' has been renamed to '%s'" % (from_name, to_name)
 			resp = QtGui.QMessageBox.question(self.experiment.main_window, "Use new name in logger?",
 				"Do you want to use the new name in the logger item '%s' as well?" % self.name,
 				QtGui.QMessageBox.Yes, QtGui.QMessageBox.No)
 			if resp == QtGui.QMessageBox.No:
-				return				
+				return
 			self.logvars.remove(from_name)
 			self.logvars.append(to_name)
 			self.edit_widget()

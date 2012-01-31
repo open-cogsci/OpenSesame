@@ -91,21 +91,21 @@ class experiment(libopensesame.experiment.experiment):
 
 		return "qt"
 
-	def build_item_tree(self, toplevel = None, items = []):
+	def build_item_tree(self, toplevel=None, items=[]):
 
 		"""
 		Construct an item tree
 
 		Keyword arguments:
 		toplevel -- the toplevel widget (default = None)
-		items -- a list of items that have been added, to prevent recursion (default = [])
+		items -- a list of items that have been added, to prevent recursion
+				 (default=[])
 
 		Returns:
 		An updated list of items that have been added
 		"""
 
 		self.ui.itemtree.clear()
-
 		items = []
 
 		# First build the tree of the experiment
@@ -122,14 +122,12 @@ class experiment(libopensesame.experiment.experiment):
 		widget.setExpanded(True)
 
 		# Next build a tree with left over items
-
 		self.unused_widget = QtGui.QTreeWidgetItem(self.ui.itemtree)
 		self.unused_widget.setText(0, "Unused items")
 		self.unused_widget.setIcon(0, self.icon("unused"))
 		self.unused_widget.name = "__unused__"
 		self.unused_widget.setToolTip(0, "Unused items")
 		self.unused_widget.setToolTip(1, "Unused items")
-
 		self.ui.itemtree.insertTopLevelItem(1, widget)
 
 		self.unused_items = []
@@ -193,48 +191,48 @@ class experiment(libopensesame.experiment.experiment):
 				self.experiment.ui.tabwidget.setTabText(i, to_name)
 
 		self.main_window.refresh()
-		
+
 	def check_name(self, name):
-	
+
 		"""
 		Checks whether a given name is allowed. Reasons for not being allowed
 		are invalid characters or match with an existing name.
-		
+
 		Arguments:
 		name -- the name to check
-		
+
 		Returns:
 		True if the name is allowed, False otherwise
 		"""
-		
+
 		if name.strip() == "":
 			return "Empty names are not allowed"
 		if name.lower() in [item.lower() for item in self.items.keys()]:
-			return "An item with that name already exists"	
+			return "An item with that name already exists"
 		if name != self.sanitize(name, strict=True, allow_vars=False):
 			return "Name contains special characters. Only alphanumeric characters and underscores are allowed."
 		return True
-		
+
 	def delete(self, item_name, item_parent=None, index=None):
-	
+
 		"""
 		Delete an item
-		
+
 		Arguments:
 		item_name -- the name of the item to be deleted
-		
+
 		Keywords arguments:
 		item_parent -- the parent item (default=None)
 		index -- the index of the item in the parent (default=None)
 		"""
-		
+
 		if self.start == item_name:
 			self.notify("You cannot delete the entry point of the experiment. In order to change the entry point item, please open the General Tab and select a different item.")
-			return		
+			return
 		for item in self.items:
 			self.items[item].delete(item_name, item_parent, index)
 		self.main_window.refresh()
-		self.main_window.close_item_tab(item_name)				
+		self.main_window.close_item_tab(item_name)
 
 	def unique_name(self, name):
 
@@ -310,7 +308,7 @@ class experiment(libopensesame.experiment.experiment):
 
 		item_dict = {}
 		i = 0
-		
+
 		if select != None and select not in self.experiment.items:
 			c.addItem("[Please select an item]")
 			c.setCurrentIndex(0)
@@ -331,7 +329,7 @@ class experiment(libopensesame.experiment.experiment):
 				if self.experiment.items[item].name == select:
 					index = i
 				i += 1
-				
+
 		c.setCurrentIndex(index)
 		return c
 
@@ -400,34 +398,34 @@ class experiment(libopensesame.experiment.experiment):
 		Arguments:
 		message -- the message to be shown
 		"""
-		
+
 		from libqtopensesame import notification_dialog_ui
-		
+
 		a = QtGui.QDialog(self.main_window)
 		a.ui = notification_dialog_ui.Ui_Dialog()
 		a.ui.setupUi(a)
 		a.ui.textedit_notification.setHtml(message)
 		a.adjustSize()
 		a.show()
-		
+
 	def text_input(self, title, message=None, content=""):
-	
+
 		"""
 		Pops up a text input dialog
-		
+
 		Arguments:
 		title -- the title for the dialog
-		
+
 		Keywords arguments:
 		message -- a text message (default=None)
 		contents -- the initial contents (default="")
-		
+
 		Returns:
 		A string of text or None if cancel was pressed
 		"""
-		
-		from libqtopensesame import text_input_dialog_ui		
-		
+
+		from libqtopensesame import text_input_dialog_ui
+
 		a = QtGui.QDialog(self.main_window)
 		a.ui = text_input_dialog_ui.Ui_Dialog()
 		a.ui.setupUi(a)
@@ -437,23 +435,23 @@ class experiment(libopensesame.experiment.experiment):
 		a.ui.textedit_input.setFont(self.monospace())
 		a.adjustSize()
 		if a.exec_() == QtGui.QDialog.Accepted:
-			return self.usanitize(a.ui.textedit_input.toPlainText())					
+			return self.usanitize(a.ui.textedit_input.toPlainText())
 		return None
-		
+
 	def colorpicker(self, title="Pick a color", initial_color=None):
-	
+
 		"""
 		Pops up a colorpicker dialog and returns a color in hexadecimal RGB
 		notation
-				
+
 		Keywords arguments:
 		title -- title of the dialog (default='Pick a color')
 		initial_color -- the color to start with (default=None)
-		
+
 		Returns:
 		A color string or None if the dialog was cancelled
 		"""
-		
+
 		try:
 			self.color_check(initial_color)
 		except:
@@ -463,21 +461,21 @@ class experiment(libopensesame.experiment.experiment):
 		if color.isValid():
 			return self.sanitize(color.name())
 		return None
-		
+
 	def monospace(self):
-	
+
 		"""
 		Determines the OS specific monospace font
-		
+
 		Returns:
 		A QFont
 		"""
-		
+
 		if os.name == "posix":
 			font_family = "mono"
 		else:
 			font_family = "courier"
-		font = QtGui.QFont(font_family)				
+		font = QtGui.QFont(font_family)
 		font.setFixedPitch(True)
 		return font
 
