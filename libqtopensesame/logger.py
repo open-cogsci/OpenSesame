@@ -88,9 +88,12 @@ class logger(libopensesame.logger.logger, libqtopensesame.qtitem.qtitem):
 		self.checkbox_auto_log.stateChanged.connect(self.apply_edit_changes)
 		self.checkbox_unicode = QtGui.QCheckBox(u"Allow special characters in log file (e.g., write '\xe9' instead of 'U+00E9')")
 		self.checkbox_unicode.stateChanged.connect(self.apply_edit_changes)
+		self.checkbox_use_quotes = QtGui.QCheckBox("Put quotes around values")
+		self.checkbox_use_quotes.stateChanged.connect(self.apply_edit_changes)
 		vbox.addWidget(self.checkbox_ignore_missing)
 		vbox.addWidget(self.checkbox_auto_log)
 		vbox.addWidget(self.checkbox_unicode)
+		vbox.addWidget(self.checkbox_use_quotes)
 		vbox.addWidget(self.logvar_buttons)
 		vbox.addWidget(self.logvar_table)
 
@@ -123,6 +126,7 @@ class logger(libopensesame.logger.logger, libqtopensesame.qtitem.qtitem):
 
 		self.checkbox_ignore_missing.setChecked(self.get("ignore_missing") == "yes")
 		self.checkbox_unicode.setChecked(self.get("unicode") == "yes")
+		self.checkbox_use_quotes.setChecked(self.get("use_quotes") == "yes")
 
 		self.logvar_table.setRowCount(0)
 		self.logvar_table.setHorizontalHeaderItem(0, QtGui.QTableWidgetItem(""))
@@ -203,6 +207,11 @@ class logger(libopensesame.logger.logger, libqtopensesame.qtitem.qtitem):
 			self.set("unicode", "yes")
 		else:
 			self.set("unicode", "no")
+
+		if self.checkbox_use_quotes.isChecked():
+			self.set("use_quotes", "yes")
+		else:
+			self.set("use_quotes", "no")
 
 		self.logvars = []
 		for row in range(self.logvar_table.rowCount()):
