@@ -52,7 +52,6 @@ class logger(libopensesame.logger.logger, libqtopensesame.qtitem.qtitem):
 		self.logvar_table = QtGui.QTableWidget(255, 3)
 		self.logvar_table.horizontalHeader().setStretchLastSection(True)
 		self.logvar_table.verticalHeader().setVisible(False)
-
 		self.logvar_table.setGridStyle(QtCore.Qt.NoPen)
 		self.logvar_table.setAlternatingRowColors(True)
 		self.logvar_table.setColumnWidth(0, 24)
@@ -64,19 +63,15 @@ class logger(libopensesame.logger.logger, libqtopensesame.qtitem.qtitem):
 		button_add = QtGui.QPushButton(self.experiment.icon("add"), "Add custom variable")
 		button_add.clicked.connect(self.add_custom)
 		button_add.setToolTip("Add an arbitrary variable by name")
-
 		button_suggest = QtGui.QPushButton(self.experiment.icon("apply"), "Smart select")
 		button_suggest.clicked.connect(self.suggest_variables)
 		button_suggest.setToolTip("Automatically select (likely) relevant variables")
-
 		button_select_all = QtGui.QPushButton(self.experiment.icon("apply"), "Select all")
 		button_select_all.clicked.connect(self.select_all)
 		button_select_all.setToolTip("Select all variables")
-
 		button_deselect_all = QtGui.QPushButton(self.experiment.icon("clear"), "Deselect all")
 		button_deselect_all.clicked.connect(self.deselect_all)
 		button_deselect_all.setToolTip("Deselect all variables")
-
 		hbox = QtGui.QHBoxLayout()
 		hbox.addWidget(button_select_all)
 		hbox.addWidget(button_deselect_all)
@@ -87,15 +82,15 @@ class logger(libopensesame.logger.logger, libqtopensesame.qtitem.qtitem):
 
 		self.logvar_buttons = QtGui.QWidget()
 		self.logvar_buttons.setLayout(hbox)
-
 		self.checkbox_ignore_missing = QtGui.QCheckBox("Use 'NA' for variables that have not been set")
 		self.checkbox_ignore_missing.stateChanged.connect(self.apply_edit_changes)
-
 		self.checkbox_auto_log = QtGui.QCheckBox("Automatically detect and log all variables")
 		self.checkbox_auto_log.stateChanged.connect(self.apply_edit_changes)
-
+		self.checkbox_unicode = QtGui.QCheckBox(u"Allow special characters in log file (e.g., write '\xe9' instead of 'U+00E9')")
+		self.checkbox_unicode.stateChanged.connect(self.apply_edit_changes)
 		vbox.addWidget(self.checkbox_ignore_missing)
 		vbox.addWidget(self.checkbox_auto_log)
+		vbox.addWidget(self.checkbox_unicode)
 		vbox.addWidget(self.logvar_buttons)
 		vbox.addWidget(self.logvar_table)
 
@@ -127,9 +122,9 @@ class logger(libopensesame.logger.logger, libqtopensesame.qtitem.qtitem):
 			self.logvar_table.setEnabled(True)
 
 		self.checkbox_ignore_missing.setChecked(self.get("ignore_missing") == "yes")
+		self.checkbox_unicode.setChecked(self.get("unicode") == "yes")
 
 		self.logvar_table.setRowCount(0)
-
 		self.logvar_table.setHorizontalHeaderItem(0, QtGui.QTableWidgetItem(""))
 		self.logvar_table.setHorizontalHeaderItem(1, QtGui.QTableWidgetItem("Variable"))
 		self.logvar_table.setHorizontalHeaderItem(2, QtGui.QTableWidgetItem("Source item(s)"))
@@ -203,6 +198,11 @@ class logger(libopensesame.logger.logger, libqtopensesame.qtitem.qtitem):
 			self.set("ignore_missing", "yes")
 		else:
 			self.set("ignore_missing", "no")
+
+		if self.checkbox_unicode.isChecked():
+			self.set("unicode", "yes")
+		else:
+			self.set("unicode", "no")
 
 		self.logvars = []
 		for row in range(self.logvar_table.rowCount()):

@@ -41,6 +41,7 @@ class logger(item.item):
 		self.item_type = "logger"
 		self.use_quotes = "yes"
 		self.auto_log = "yes"
+		self.unicode = "no"
 		self.ignore_missing = "no"
 		item.item.__init__(self, name, experiment, string)
 
@@ -50,7 +51,10 @@ class logger(item.item):
 
 		if not self.log_started:
 			self.log_started = True
-
+			# The log file is ascii by default, so if Unicode is enabled we
+			# need to re-initialize the log file.
+			if self.get("unicode") == "yes":
+				self.experiment.init_log(codec="utf-8")
 			# If auto logging is enabled, collect all variables
 			if self.get("auto_log") == "yes":
 				self.logvars = []
@@ -59,22 +63,24 @@ class logger(item.item):
 						self.logvars.append(logvar)
 						if self.experiment.debug:
 							print "logger.run(): auto-logging '%s'" % logvar
-
 			# Sort the logvars to ascertain a consistent ordering
 			self.logvars.sort()
-
 			# Draw the first line with variables
 			self.log(",".join(self.logvars))
 
 		l = []
 		for var in self.logvars:
 			try:
-				l.append(str(self.get(var)))
+				val = str(self.get(var))
 			except exceptions.runtime_error as e:
 				if self.get("ignore_missing") == "yes":
 					l.append("NA")
 				else:
 					raise exceptions.runtime_error("Logger '%s' tries to log the variable '%s', but this variable is not available. Please deselect '%s' in logger '%s' or enable the 'Use NA for variables that have not been set' option." % (self.name, var, var, self.name))
+			if self.get("unicode") == "yes":
+				val = self.unsanitize(val)
+			l.append(val)
+
 		if self.get("use_quotes") == "yes":
 			self.log("\"" + ("\",\"".join(l)) + "\"")
 		else:
