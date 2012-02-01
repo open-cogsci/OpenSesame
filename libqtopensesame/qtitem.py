@@ -136,7 +136,7 @@ class qtitem(object):
 		self.script_tab = None
 		self.lock = False
 		self.edit_mode = "edit"
-		
+
 		if self.experiment.debug:
 			print "qtitem.__init__(): created %s" % self.name
 
@@ -153,16 +153,16 @@ class qtitem(object):
 			text.help_item = self.name
 			index = self.experiment.ui.tabwidget.addTab(text, self.experiment.icon("help"), self.name)
 			self.experiment.ui.tabwidget.setCurrentIndex(index)
-			
+
 	def open_tab(self):
-	
+
 		"""Opens the correct tab based on the current edit mode"""
-	
+
 		if self.edit_mode == "edit":
 			self.open_edit_tab()
 		else:
 			self.open_script_tab()
-			
+
 	def init_edit_widget(self, stretch=True):
 
 		"""Build the GUI controls"""
@@ -212,7 +212,7 @@ class qtitem(object):
 
 		"""
 		A dummy edit widget, to be overridden
-		
+
 		Keywords arguments:
 		stretch -- a deprecated argument (default=True)
 		"""
@@ -228,7 +228,7 @@ class qtitem(object):
 
 		"""
 		Apply an item name change
-		
+
 		Keywords arguments:
 		rebuild -- a deprecated argument (default=True)
 		"""
@@ -246,13 +246,13 @@ class qtitem(object):
 		else:
 			# Pass on the word
 			self.experiment.main_window.set_unsaved()
-			self.experiment.rename(self.name, new_name)		
+			self.experiment.rename(self.name, new_name)
 
 	def apply_edit_changes(self, rebuild=True):
 
 		"""
 		Apply the GUI controls
-		
+
 		Keywords arguments:
 		rebuild -- specifies whether the overview area (item list) should be
 				   rebuild (default=True)
@@ -281,7 +281,7 @@ class qtitem(object):
 
 		"""
 		Closes the edit tab (does nothing by default)
-		
+
 		Keywords arguments:
 		index -- the index of the tab in the tab area (default=None)
 		"""
@@ -292,17 +292,17 @@ class qtitem(object):
 
 		"""
 		Opens/ shows the GUI control tab
-		
+
 		Keywords arguments:
 		index -- the index of the tab (if it is already open) (default=None)
 		focus -- indicates whether the tab should receive focus (default=True)
 		"""
-		
+
 		if self.experiment.debug:
-			print "qtitem.open_edit_tab(): %s (#%s)" % (self.name, hash(self))		
-			
+			print "qtitem.open_edit_tab(): %s (#%s)" % (self.name, hash(self))
+
 		self.edit_mode = "edit"
-				
+
 		# Close the script tab
 		for i in range(self.experiment.ui.tabwidget.count()):
 			w = self.experiment.ui.tabwidget.widget(i)
@@ -323,7 +323,7 @@ class qtitem(object):
 			self.experiment.notify("%s (Edit the script to fix this)" % e)
 			self.open_script_tab()
 			return
-			
+
 		if index == None:
 			self.edit_tab_index = self.experiment.ui.tabwidget.addTab(widget, self.experiment.icon(self.item_type), "%s" % self.name)
 		else:
@@ -331,30 +331,30 @@ class qtitem(object):
 			self.edit_tab_index = index
 		if focus:
 			self.experiment.ui.tabwidget.setCurrentIndex(self.edit_tab_index)
-			
+
 	def apply_script_and_close(self):
-	
+
 		"""Applies script changes and opens the edit tab"""
-	
+
 		self.apply_script_changes()
 		self.experiment.main_window.select_item(self.name)
-		
+
 	def ignore_script_and_close(self):
-	
+
 		"""Applies script changes and opens the edit tab"""
-			
+
 		if self.edit_script.edit.isModified():
 			resp = QtGui.QMessageBox.question(self.experiment.main_window.ui.centralwidget, "Forget changes?",\
 				"Are you sure you want to forget all changes to the script?", QtGui.QMessageBox.Yes, QtGui.QMessageBox.No)
 			if resp == QtGui.QMessageBox.No:
 				return
 		self.experiment.main_window.select_item(self.name)
-		
+
 	def apply_script_changes(self, rebuild=True, catch=True):
 
 		"""
 		Apply changes to the script, by regenerating the item from the script
-		
+
 		Keywords arguments:
 		rebuild -- specifies whether the overview area (item list) should be
 				   rebuild (default=True)
@@ -366,7 +366,7 @@ class qtitem(object):
 		if self.experiment.debug:
 			print "qtitem.apply_script_changes():", self.name
 		script = self.experiment.usanitize(self.edit_script.edit.toPlainText())
-		
+
 		# Create a new item and make it a clone of the current item
 		item = self.experiment.main_window.add_item(self.item_type, False, name=self.name)
 		if catch:
@@ -379,12 +379,12 @@ class qtitem(object):
 			self.experiment.items[item].from_string(script)
 		self.edit_script.setModified(False)
 		self.experiment.items[item].name = self.name
-		
+
 		# Replace the current item
 		self.experiment.items[self.name] = self.experiment.items[item]
 		del self.experiment.items[item]
 		self.experiment.items[self.name].init_script_widget()
-		
+
 		# Refresh the experiment
 		self.experiment.main_window.hard_refresh(self.name)
 		self.experiment.main_window.refresh(self.name)
@@ -393,10 +393,10 @@ class qtitem(object):
 
 		"""
 		Strips unwanted characters from a line of script
-		
+
 		Arguments:
 		s -- a line of script
-		
+
 		Returns:
 		A stripped line of script
 		"""
@@ -409,33 +409,37 @@ class qtitem(object):
 
 		"""Build the script tab"""
 
-		self.edit_script = libqtopensesame.inline_editor.inline_editor(self.experiment, syntax="opensesame")
+		self.edit_script = libqtopensesame.inline_editor.inline_editor( \
+			self.experiment, syntax="opensesame")
 		script = ""
 		for s in self.to_string().split("\n")[1:]:
 			script += self.strip_script_line(s)
-		self.edit_script.edit.setPlainText(script)
-		self.edit_script.apply.clicked.connect(self.apply_script_changes)		
-		
-		button = QtGui.QPushButton(self.experiment.icon("apply"), "Apply and close")
+		self.edit_script.edit.setPlainText(script, set_modified=False)
+		self.edit_script.apply.clicked.connect(self.apply_script_changes)
+
+		button = QtGui.QPushButton(self.experiment.icon("apply"), \
+			"Apply and close")
 		button.setToolTip("Apply changes and resume normal editing")
 		button.setIconSize(QtCore.QSize(16, 16))
 		button.clicked.connect(self.apply_script_and_close)
-		self.edit_script.toolbar_hbox.addWidget(button)		
-		
-		button = QtGui.QPushButton(self.experiment.icon("close"), "Forget changes and close")
+		self.edit_script.toolbar_hbox.addWidget(button)
+
+		button = QtGui.QPushButton(self.experiment.icon("close"), \
+			"Forget changes and close")
 		button.setToolTip("Ignore changes and resume normal editing")
 		button.setIconSize(QtCore.QSize(16, 16))
 		button.clicked.connect(self.ignore_script_and_close)
-		self.edit_script.toolbar_hbox.addWidget(button)				
-		
-		hbox = QtGui.QHBoxLayout()		
+		self.edit_script.toolbar_hbox.addWidget(button)
+
+		hbox = QtGui.QHBoxLayout()
 		hbox.addWidget(self.experiment.label_image("%s" % self.item_type))
-		hbox.addWidget(QtGui.QLabel("Editing script for <b>%s</b> - %s" % (self.name, self.item_type)))
+		hbox.addWidget(QtGui.QLabel("Editing script for <b>%s</b> - %s" % \
+			(self.name, self.item_type)))
 		hbox.addStretch()
 		hbox.setContentsMargins(0,0,0,0)
 		hwidget = QtGui.QWidget()
 		hwidget.setLayout(hbox)
-		
+
 		vbox = QtGui.QVBoxLayout()
 		vbox.addWidget(hwidget)
 		vbox.addWidget(self.edit_script)
@@ -447,32 +451,32 @@ class qtitem(object):
 
 		"""
 		Update the script tab
-		
+
 		Returns:
-		The QWidget containing the script tab		
+		The QWidget containing the script tab
 		"""
 
 		script = ""
 		for s in self.to_string().split("\n")[1:]:
 			script += self.strip_script_line(s)
 		self.edit_script.edit.setPlainText(script)
-		self._script_widget.script_item = self.name		
+		self._script_widget.script_item = self.name
 		return self._script_widget
 
 	def open_script_tab(self, index=None, focus=True):
 
 		"""
 		Open/ show the script tab
-				
+
 		Keywords arguments:
 		index -- the index of the tab (if it is already open) (default=None)
-		focus -- indicates whether the tab should receive focus (default=True)		
+		focus -- indicates whether the tab should receive focus (default=True)
 		"""
-		
+
 		if self.experiment.debug:
-			print "qtitem.open_script_tab(): %s (#%s)" % (self.name, hash(self))		
-			
-		self.edit_mode = "script"			
+			print "qtitem.open_script_tab(): %s (#%s)" % (self.name, hash(self))
+
+		self.edit_mode = "script"
 
 		# Close the edit tab
 		for i in range(self.experiment.ui.tabwidget.count()):
@@ -482,7 +486,7 @@ class qtitem(object):
 				if index == None:
 					index = i
 				break
-				
+
 		for i in range(self.experiment.ui.tabwidget.count()):
 			w = self.experiment.ui.tabwidget.widget(i)
 			if hasattr(w, "script_item") and w.script_item == self.name:
@@ -499,7 +503,7 @@ class qtitem(object):
 
 		"""
 		Close the script tab (does nothing by defaut)
-		
+
 		Keywords arguments:
 		index -- the index of the tab in the tab area (default=None)
 		"""
@@ -510,7 +514,7 @@ class qtitem(object):
 
 		"""
 		Handle the renaming of an item (not necesarrily the currnet item)
-		
+
 		Arguments:
 		from_name -- the old item name
 		to_name -- the new item name
@@ -518,33 +522,33 @@ class qtitem(object):
 
 		if self.name == from_name:
 			self.name = to_name
-			
-	def delete(self, item_name, item_parent=None, index=None):	
-	
+
+	def delete(self, item_name, item_parent=None, index=None):
+
 		"""
 		Delete an item (not necessarily the current one)
-		
+
 		Arguments:
 		item_name -- the name of the item to be deleted
-		
+
 		Keywords arguments:
 		item_parent -- the parent item (default=None)
 		index -- the index of the item in the parent (default=None)
 		"""
-		
+
 		pass
-			
+
 	def rename_var(self, item, from_name, to_name):
-	
+
 		"""
 		A notification that a variable has been renamed
-		
+
 		Arguments:
-		item -- the item doing the renaming		
+		item -- the item doing the renaming
 		from_name -- the old variable name
 		to_name -- the new variable name
 		"""
-	
+
 		pass
 
 	def item_tree_info(self):
@@ -614,10 +618,10 @@ class qtitem(object):
 		"""
 		Checks if the item is offspring of the current item, in the sense that
 		the current item is contained by the item
-		
+
 		Arguments:
 		item -- the potential offspring
-		
+
 		Returns:
 		True if the current item is offspring of the item, False otherwise
 		"""
@@ -629,7 +633,7 @@ class qtitem(object):
 		"""
 		Creates a list of all the items	that the current sequences is connected
 		to upstream
-		
+
 		Returns:
 		A list of item names
 		"""
@@ -645,10 +649,10 @@ class qtitem(object):
 		"""
 		Determines if one of the variables of the current item is defined in
 		terms of another variable
-		
+
 		Keywords arguments:
 		exclude -- a list of variables that should not be checked
-		
+
 		Returns:
 		True if there are variably defined variables, False otherwise
 		"""
@@ -664,7 +668,7 @@ class qtitem(object):
 		This function should be overridden to do any last-minute stuff that
 		and item should do before an experiment is actually run, such as
 		applying pending script changes.
-		
+
 		Returns:
 		True if some action has been taken, False if nothing was done
 		"""

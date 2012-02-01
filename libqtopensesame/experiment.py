@@ -502,3 +502,20 @@ class experiment(libopensesame.experiment.experiment):
 						w.deleteLater()
 						QtCore.QCoreApplication.sendPostedEvents(w, QtCore.QEvent.DeferredDelete)
 
+	def show_stack(self):
+
+		"""
+		Gets the name of the function that is calling this function. For
+		debugging purposed.
+
+		Returns:
+		A function name
+		"""
+
+		if self._stack:
+			import inspect
+			stack = inspect.stack()
+			print " ->",
+			for i in range(2, min(len(stack), 7)):
+				print "%s()" % stack[i][3],
+			print

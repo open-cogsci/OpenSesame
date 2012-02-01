@@ -183,8 +183,9 @@ class general_properties(QtGui.QWidget):
 		self.main_window.set_busy(True)
 		script = str(self.edit_script.edit.toPlainText())
 		try:
-			tmp = experiment.experiment(self.main_window, self.main_window.experiment.title, \
-				script, self.main_window.experiment.pool_folder)
+			tmp = experiment.experiment(self.main_window, \
+				self.main_window.experiment.title, 	script, \
+				self.main_window.experiment.pool_folder)
 		except libopensesame.exceptions.script_error as error:
 			self.main_window.experiment.notify("Could not parse script: %s" % error)
 			self.edit_script.edit.setText(self.main_window.experiment.to_string())
@@ -234,19 +235,22 @@ class general_properties(QtGui.QWidget):
 		# Set the display width
 		width = self.ui.spinbox_width.value()
 		if self.main_window.experiment.get("width") != width:
-			self.main_window.update_resolution(width, self.main_window.experiment.get("height"))
+			self.main_window.update_resolution(width, \
+				self.main_window.experiment.get("height"))
 
 		# Set the display height
 		height = self.ui.spinbox_height.value()
 		if self.main_window.experiment.get("height") != height:
-			self.main_window.update_resolution(self.main_window.experiment.get("width"), height)
+			self.main_window.update_resolution( \
+				self.main_window.experiment.get("width"), height)
 
 		# Set the timing compensation
 		comp = self.ui.spinbox_compensation.value()
 		self.main_window.experiment.set("compensation", comp)
 
 		# Set the foreground color
-		foreground = self.main_window.experiment.sanitize(self.ui.edit_foreground.text())
+		foreground = self.main_window.experiment.sanitize( \
+			self.ui.edit_foreground.text())
 		refs = []
 		try:
 			refs = self.main_window.experiment.get_refs(foreground)
@@ -259,7 +263,8 @@ class general_properties(QtGui.QWidget):
 		self.main_window.experiment.set("foreground", foreground)
 
 		# Set the background color
-		background = self.main_window.experiment.sanitize(self.ui.edit_background.text())
+		background = self.main_window.experiment.sanitize( \
+			self.ui.edit_background.text())
 		refs = []
 		try:
 			refs = self.main_window.experiment.get_refs(background)
@@ -291,7 +296,8 @@ class general_properties(QtGui.QWidget):
 		self.set_header_label()
 
 		# Select the start item
-		self.main_window.experiment.item_combobox(self.main_window.experiment.start, [], self.ui.combobox_start)
+		self.main_window.experiment.item_combobox(self.main_window.experiment.start, \
+			[], self.ui.combobox_start)
 
 		# Select the backend
 		backend = openexp.backend_info.match(self.main_window.experiment)
@@ -322,7 +328,8 @@ class general_properties(QtGui.QWidget):
 
 		# Re-generate the opensesame script
 		try:
-			self.edit_script.edit.setPlainText(self.main_window.experiment.to_string())
+			self.edit_script.edit.setPlainText( \
+				self.main_window.experiment.to_string(), set_modified=False)
 		except libopensesame.exceptions.script_error as e:
 			self.main_window.experiment.notify("</>Failed to generate script:</b> %s" % e)
 			self.edit_script.edit.setText("Failed to generate script!")

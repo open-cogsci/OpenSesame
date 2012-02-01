@@ -228,11 +228,11 @@ class qtopensesame(QtGui.QMainWindow):
 		self.restore_state()
 		self.ui.toolbar_items.build()
 		self.refresh_plugins()
-		self.set_unsaved(False)
 		self.start_autosave_timer()
 		self.update_recent_files()
 		self.clean_autosave()
 		self.parse_command_line()
+		self.set_unsaved(False)
 
 	def parse_command_line(self):
 
@@ -254,10 +254,10 @@ class qtopensesame(QtGui.QMainWindow):
 		group = optparse.OptionGroup(parser, "Miscellaneous options")
 		group.add_option("-d", "--debug", action="store_true", dest="debug", \
 			help="Print lots of debugging messages to the standard output")
+		group.add_option("-s", "--stack", action="store_true", dest="_stack", \
+			help="Print stack trace (only in debug mode)")
 		group.add_option("-p", "--preload", action="store_true", dest="preload", \
 			help="Preload Python modules")
-		parser.add_option_group(group)
-		group = optparse.OptionGroup(parser, "Miscellaneous options")
 		group.add_option("--pylink", action="store_true", dest="pylink", \
 			help="Load PyLink before PyGame (necessary for using the Eyelink plug-ins in non-dummy mode)")
 		group.add_option("--ipython", action="store_true", dest="ipython", \
@@ -460,7 +460,9 @@ class qtopensesame(QtGui.QMainWindow):
 
 		if not self.unsaved_changes:
 			return
-		resp = QtGui.QMessageBox.question(self.ui.centralwidget, "Save changes?", "Your experiment contains unsaved changes. Do you want to save your experiment?", QtGui.QMessageBox.Yes, QtGui.QMessageBox.No)
+		resp = QtGui.QMessageBox.question(self.ui.centralwidget, "Save changes?", \
+			"Your experiment contains unsaved changes. Do you want to save your experiment?", \
+			QtGui.QMessageBox.Yes, QtGui.QMessageBox.No)
 		if resp == QtGui.QMessageBox.Yes:
 			self.save_file()
 
@@ -476,6 +478,9 @@ class qtopensesame(QtGui.QMainWindow):
 
 		self.unsaved_changes = unsaved_changes
 		self.window_message()
+		if self.experiment.debug:
+			print "qtopensesame.set_unsaved(): unsaved = %s" % unsaved_changes
+			self.experiment.show_stack()
 
 	def set_status(self, msg, timeout=5000, status="ready"):
 
@@ -486,7 +491,8 @@ class qtopensesame(QtGui.QMainWindow):
 		msg -- a string with the message
 
 		Keyword arguments:
-		timeout -- a value in milliseconds after which the message is removed (default = 5000)
+		timeout -- a value in milliseconds after which the message is removed
+				   (default=5000)
 		"""
 
 		self.ui.statusbar.set_status(msg, timeout=timeout, status=status)
@@ -502,7 +508,6 @@ class qtopensesame(QtGui.QMainWindow):
 
 		if msg != None:
 			self.window_msg = msg
-
 		if self.unsaved_changes:
 			self.setWindowTitle("%s [unsaved]" % self.window_msg)
 		else:
@@ -1000,7 +1005,6 @@ class qtopensesame(QtGui.QMainWindow):
 		self.refresh()
 		self.open_general_tab()
 		self.set_status("Opened %s" % path)
-		self.set_unsaved(False)
 
 		if add_to_recent:
 			self.current_path = path
@@ -1012,6 +1016,7 @@ class qtopensesame(QtGui.QMainWindow):
 			self.current_path = None
 
 		self.set_auto_response()
+		self.set_unsaved(False)
 
 	def save_file(self, dummy=None, overwrite=True, remember=True, catch=True):
 
@@ -1328,13 +1333,13 @@ class qtopensesame(QtGui.QMainWindow):
 		self.close_all_tabs()
 		self.open_general_tab()
 
-	def build_item_list(self, name = None):
+	def build_item_list(self, name=None):
 
 		"""
 		Refreshes the item list
 
 		Keyword arguments:
-		name -- a name of the item that has called the build (default = None)
+		name -- a name of the item that has called the build (default=None)
 		"""
 
 		if self.experiment.debug:
@@ -1355,7 +1360,8 @@ class qtopensesame(QtGui.QMainWindow):
 
 		if name in self.experiment.unused_items:
 			self.experiment.unused_widget.setExpanded(True)
-		for item in self.ui.itemtree.findItems(name, QtCore.Qt.MatchFlags(QtCore.Qt.MatchRecursive)):
+		for item in self.ui.itemtree.findItems(name, \
+			QtCore.Qt.MatchFlags(QtCore.Qt.MatchRecursive)):
 			self.ui.itemtree.setCurrentItem(item)
 		if name in self.experiment.items:
 			self.experiment.items[name].open_edit_tab()
@@ -1677,6 +1683,7 @@ class qtopensesame(QtGui.QMainWindow):
 		self.set_busy(True)
 		if self.experiment.debug:
 			print "qtopensesame.refresh(): %s" % changed_item
+			self.experiment.show_stack()
 
 		self.general_tab_widget.set_header_label()
 
@@ -1699,7 +1706,7 @@ class qtopensesame(QtGui.QMainWindow):
 		self.build_item_list()
 		self.refresh_variable_inspector()
 		self.refresh_pool()
-		self.set_unsaved()
+		#self.set_unsaved()
 		self.lock_refresh = False
 		self.set_busy(False)
 
@@ -1825,6 +1832,7 @@ class qtopensesame(QtGui.QMainWindow):
 
 		# Add the item to the item list
 		self.experiment.items[name] = item
+		self.set_unsaved()
 
 		# Optionally, refresh the interface
 		if refresh:

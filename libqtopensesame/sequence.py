@@ -131,21 +131,21 @@ class sequence(libopensesame.sequence.sequence, libqtopensesame.qtitem.qtitem):
 		"""Construct the edit_widget that contains the controls"""
 
 		libqtopensesame.qtitem.qtitem.init_edit_widget(self, False)
-		
+
 		# Flush keyboard checkbox
 		self.checkbox_flush_keyboard = QtGui.QCheckBox( \
 			"Flush pending key presses at sequence start")
-		self.checkbox_flush_keyboard.toggled.connect(self.apply_edit_changes)				
+		self.checkbox_flush_keyboard.toggled.connect(self.apply_edit_changes)
 		form_layout = QtGui.QFormLayout()
 		form_layout.setContentsMargins(0, 0, 0, 0)
 		form_layout.addRow(self.checkbox_flush_keyboard)
 		form_widget = QtGui.QWidget()
-		form_widget.setLayout(form_layout)		
-		self.edit_vbox.addWidget(form_widget)		
+		form_widget.setLayout(form_layout)
+		self.edit_vbox.addWidget(form_widget)
 
 		self.combobox_item_type = self.experiment.item_type_combobox()
 		self.combobox_items = QtGui.QComboBox()
-		
+
 		self.frame_empty = QtGui.QFrame()
 		self.frame_empty.setFrameStyle(QtGui.QFrame.Panel)
 		l = QtGui.QHBoxLayout()
@@ -153,12 +153,12 @@ class sequence(libopensesame.sequence.sequence, libqtopensesame.qtitem.qtitem):
 		l.addWidget(self.experiment.label_image("info"))
 		l.addWidget(QtGui.QLabel("The sequence is empty"))
 		l.addStretch()
-		
+
 		self.button_existing = self.action_button("add", \
 			"Append existing item to sequence", ("add", "existing"))
 		self.button_new = self.action_button("add", \
 			"Create and append  new item to sequence", ("add", "new"))
-		
+
 		grid = QtGui.QGridLayout()
 		grid.setMargin(0)
 		grid.addWidget(QtGui.QLabel("Append existing item"), 0, 0)
@@ -168,19 +168,19 @@ class sequence(libopensesame.sequence.sequence, libqtopensesame.qtitem.qtitem):
 		grid.addWidget(self.combobox_item_type, 1, 1)
 		grid.addWidget(self.button_new, 1, 2)
 		grid.setColumnStretch(3, 10)
-		
+
 		self.draggable_list = libqtopensesame.draggables.draggable_list(self)
 		scroll_area = QtGui.QScrollArea()
 		scroll_area.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff)
 		scroll_area.setVerticalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOn)
 		scroll_area.setWidgetResizable(True)
-		scroll_area.setWidget(self.draggable_list)		
+		scroll_area.setWidget(self.draggable_list)
 		self.edit_vbox.addWidget(self.frame_empty)
 		self.edit_vbox.addWidget(scroll_area)
 
 		grid_widget = QtGui.QFrame()
 		grid_widget.setLayout(grid)
-		
+
 		self.edit_vbox.addWidget(grid_widget)
 
 		return self._edit_widget
@@ -206,55 +206,59 @@ class sequence(libopensesame.sequence.sequence, libqtopensesame.qtitem.qtitem):
 		else:
 			self.combobox_items.setDisabled(False)
 			self.button_existing.setDisabled(False)
-			
+
 		self.checkbox_flush_keyboard.setChecked( \
 			self.get("flush_keyboard") == "yes")
-		
+
 		self.draggable_list.refresh()
 		self.frame_empty.setVisible(len(self.items) == 0)
 		self._active = True
 
 		return self._edit_widget
-		
+
 	def apply_edit_changes(self):
-	
+
 		"""Apply controls"""
-						
-		libqtopensesame.qtitem.qtitem.apply_edit_changes(self)		
+
+		if not self._active:
+			return
+		libqtopensesame.qtitem.qtitem.apply_edit_changes(self)
 		if self.checkbox_flush_keyboard.isChecked():
 			self.set("flush_keyboard", "yes")
 		else:
-			self.set("flush_keyboard", "no")		
-				
+			self.set("flush_keyboard", "no")
+
 	def move(self, from_index, to_index):
-	
+
 		"""
 		Swaps to items from the sequence
-		
+
 		Arguments:
 		from_index -- the old index
 		to_index -- the new index
 		"""
 
 		self.items.insert(to_index, self.items.pop(from_index))
-		self.experiment.main_window.refresh(self.name)		
-		
+		self.experiment.main_window.refresh(self.name)
+		self.experiment.main_window.set_unsaved()
+
 	def set_run_if(self, index, s):
-	
+
 		"""
 		Change the 'run if' statement of an item
-		
+
 		Arguments:
 		index -- the index of the item
 		s -- the new run if statement
 		"""
-	
+
 		s = self.experiment.sanitize(s)
 		if s == "":
 			s = "always"
 		if s != self.items[index][1]:
 			self.items[index] = self.items[index][0], s
-			self.experiment.main_window.refresh(self.name)		
+			self.experiment.main_window.refresh(self.name)
+			self.experiment.main_window.set_unsaved()
 
 	def rename(self, from_name, to_name):
 
@@ -273,21 +277,21 @@ class sequence(libopensesame.sequence.sequence, libqtopensesame.qtitem.qtitem):
 				new_items.append( (to_name, cond) )
 			else:
 				new_items.append( (item, cond) )
-		self.items = new_items		
-		
-	def delete(self, item_name, item_parent=None, index=None):	
-	
+		self.items = new_items
+
+	def delete(self, item_name, item_parent=None, index=None):
+
 		"""
 		Delete an item
-		
+
 		Arguments:
 		item_name -- the name of the item to be deleted
-		
+
 		Keywords arguments:
 		item_parent -- the parent item (default=None)
 		index -- the index of the item in the parent (default=None)
 		"""
-		
+
 		if item_parent == None or (item_parent == self.name and index == None):
 			redo = True
 			while redo:

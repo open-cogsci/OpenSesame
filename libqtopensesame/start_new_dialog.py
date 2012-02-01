@@ -25,16 +25,16 @@ class start_new_dialog(QtGui.QDialog):
 	"""Start new dialog presented when starting with a clean experiment"""
 
 	def __init__(self, main_window):
-	
+
 		"""
 		Constructor
 
 		Arguments:
 		main_window -- a the main ui
 		"""
-	
+
 		QtGui.QDialog.__init__(self, main_window)
-	
+
 		self.main_window = main_window
 		self.ui = start_new_dialog_ui.Ui_Dialog()
 		self.ui.setupUi(self)
@@ -46,7 +46,7 @@ class start_new_dialog(QtGui.QDialog):
 			item.setText(os.path.basename(f))
 			item.file = f
 			item.setIcon(self.main_window.experiment.icon("experiment"))
-			
+
 		if len(self.main_window.recent_files) == 0:
 			self.ui.button_recent.setDisabled(True)
 
@@ -61,7 +61,7 @@ class start_new_dialog(QtGui.QDialog):
 		self.ui.list_templates.setCurrentRow(0)
 
 		self.ui.list_recent.itemDoubleClicked.connect(self.open_recent)
-		self.ui.list_templates.itemDoubleClicked.connect(self.open_template)		
+		self.ui.list_templates.itemDoubleClicked.connect(self.open_template)
 		self.ui.button_template.clicked.connect(self.open_template)
 		self.ui.button_recent.clicked.connect(self.open_recent)
 		self.ui.button_browse.clicked.connect(self.browse)
@@ -70,9 +70,10 @@ class start_new_dialog(QtGui.QDialog):
 
 		"""Open the selected template"""
 
-		self.main_window.open_file(path = self.ui.list_templates.currentItem().file, add_to_recent = False)
+		self.main_window.open_file(path=self.ui.list_templates.currentItem().file, \
+			add_to_recent=False)
 		self.close()
-		
+
 	def open_recent(self):
 
 		"""Open the selected file"""
