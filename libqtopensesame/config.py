@@ -35,6 +35,7 @@ config = {
 	"default_logfile_folder" : libopensesame.misc.home_folder(),
 	"disabled_plugins" : "",
 	"immediate_rename" : False,
+	"onetabmode" : False,
 	"overview_info" : False,
 	"recent_files" : "",
 	"scintilla_line_numbers" : True,

@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'resources/opensesame.ui'
 #
-# Created: Wed Dec 14 17:07:30 2011
+# Created: Wed Feb  1 18:37:54 2012
 #      by: PyQt4 UI code generator 4.8.5
 #
 # WARNING! All changes made in this file will be lost!
@@ -518,6 +518,14 @@ class Ui_MainWindow(object):
         self.action_show_overview.setText(QtGui.QApplication.translate("MainWindow", "Show overview area", None, QtGui.QApplication.UnicodeUTF8))
         self.action_show_overview.setShortcut(QtGui.QApplication.translate("MainWindow", "Ctrl+Shift+O", None, QtGui.QApplication.UnicodeUTF8))
         self.action_show_overview.setObjectName(_fromUtf8("action_show_overview"))
+        self.action_onetabmode = QtGui.QAction(MainWindow)
+        self.action_onetabmode.setCheckable(True)
+        icon31 = QtGui.QIcon()
+        icon31.addPixmap(QtGui.QPixmap(_fromUtf8(":/icons/onetabmode_large.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.action_onetabmode.setIcon(icon31)
+        self.action_onetabmode.setText(QtGui.QApplication.translate("MainWindow", "One tab mode", None, QtGui.QApplication.UnicodeUTF8))
+        self.action_onetabmode.setToolTip(QtGui.QApplication.translate("MainWindow", "Enable one tab mode", None, QtGui.QApplication.UnicodeUTF8))
+        self.action_onetabmode.setObjectName(_fromUtf8("action_onetabmode"))
         self.menu_recent_files.addAction(self.actionDummy)
         self.menu_file.addAction(self.action_new)
         self.menu_file.addAction(self.action_open)
@@ -545,6 +553,7 @@ class Ui_MainWindow(object):
         self.menu_items.addAction(self.actionPlugins)
         self.menu_view.addAction(self.action_close_all_tabs)
         self.menu_view.addAction(self.action_close_other_tabs)
+        self.menu_view.addAction(self.action_onetabmode)
         self.menu_view.addAction(self.action_show_info_in_overview)
         self.menu_view.addSeparator()
         self.menu_view.addAction(self.action_show_overview)
@@ -576,6 +585,7 @@ class Ui_MainWindow(object):
         self.toolbar_main.addAction(self.action_run_in_window)
         self.toolbar_main.addSeparator()
         self.toolbar_main.addAction(self.action_close_other_tabs)
+        self.toolbar_main.addAction(self.action_onetabmode)
         self.toolbar_main.addAction(self.action_show_info_in_overview)
         self.toolbar_main.addSeparator()
         self.toolbar_main.addAction(self.action_show_pool)

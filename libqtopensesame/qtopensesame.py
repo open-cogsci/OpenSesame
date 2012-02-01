@@ -164,6 +164,7 @@ class qtopensesame(QtGui.QMainWindow):
 		self.ui.action_enable_auto_response.triggered.connect(self.set_auto_response)
 		self.ui.action_close_all_tabs.triggered.connect(self.close_all_tabs)
 		self.ui.action_close_other_tabs.triggered.connect(self.close_other_tabs)
+		self.ui.action_onetabmode.triggered.connect(self.toggle_onetabmode)
 		self.ui.action_show_overview.triggered.connect(self.toggle_overview)
 		self.ui.action_show_variable_inspector.triggered.connect(self.refresh_variable_inspector)
 		self.ui.action_show_pool.triggered.connect(self.refresh_pool)
@@ -188,6 +189,7 @@ class qtopensesame(QtGui.QMainWindow):
 		self.ui.action_show_random_tip.triggered.connect(self.show_random_tip)
 		self.ui.action_show_info_in_overview.triggered.connect(self.toggle_overview_info)
 		self.ui.button_help_stdout.clicked.connect(self.open_stdout_help_tab)
+		self.ui.tabwidget.currentChanged.connect(self.tab_index_changed)
 
 		# Setup the overview area
 		self.ui.dock_overview.show()
@@ -206,7 +208,8 @@ class qtopensesame(QtGui.QMainWindow):
 		self.ui.dock_pool.setWidget(self.ui.pool_widget)
 
 		# Uncheck the debug window button on debug window close
-		self.ui.dock_stdout.visibilityChanged.connect(self.ui.action_show_stdout.setChecked)
+		self.ui.dock_stdout.visibilityChanged.connect( \
+			self.ui.action_show_stdout.setChecked)
 
 		# On Mac OS (darwin) hide, the run in Window functionality
 		if sys.platform == "darwin":
@@ -309,13 +312,13 @@ class qtopensesame(QtGui.QMainWindow):
 
 		self.ui.action_enable_auto_response.setChecked(self.experiment.auto_response)
 		self.ui.action_show_info_in_overview.setChecked(config.get_config("overview_info"))
+		self.ui.action_onetabmode.setChecked(config.get_config("onetabmode"))
 		self.toggle_overview_info()
 
 		if config.get_config("toolbar_text"):
 			self.ui.toolbar_main.setToolButtonStyle(QtCore.Qt.ToolButtonTextUnderIcon)
 		else:
 			self.ui.toolbar_main.setToolButtonStyle(QtCore.Qt.ToolButtonIconOnly)
-
 		settings.endGroup()
 		self.set_style()
 
@@ -576,6 +579,26 @@ class qtopensesame(QtGui.QMainWindow):
 			self.ui.itemtree.setHeaderHidden(True)
 		if self.experiment.debug:
 			print "qtopensesame.toggle_overview_info(): set to %s" % self.overview_info
+
+	def toggle_onetabmode(self):
+
+		"""Toggles onetabmode"""
+
+		config.set_config("onetabmode", self.ui.action_onetabmode.isChecked())
+		if config.get_config("onetabmode"):
+			self.close_other_tabs()
+
+	def tab_index_changed(self, index):
+
+		"""
+		Monitors tab index changes, closing other tabs if onetabmode is enabled
+
+		Arguments:
+		index -- the index of the new tab
+		"""
+
+		if config.get_config("onetabmode"):
+			self.close_other_tabs()
 
 	def update_dialog(self, message):
 
@@ -1123,6 +1146,9 @@ class qtopensesame(QtGui.QMainWindow):
 	def close_other_tabs(self):
 
 		"""Close all tabs except the currently active one"""
+
+		if self.experiment.debug:
+			print "qtopensesame.close_other_tabs(): closing non-selected tabs"
 
 		while self.ui.tabwidget.count() > 0 and self.ui.tabwidget.currentIndex() != 0:
 			self.close_tab(0)
@@ -1808,12 +1834,15 @@ class qtopensesame(QtGui.QMainWindow):
 
 			# In debug mode, exceptions are not caught
 			if self.experiment.debug:
-				item = libopensesame.plugins.load_plugin(item_type, name, self.experiment, None, self.experiment.item_prefix())
+				item = libopensesame.plugins.load_plugin(item_type, name, \
+					self.experiment, None, self.experiment.item_prefix())
 			else:
 				try:
-					item = libopensesame.plugins.load_plugin(item_type, name, self.experiment, None, self.experiment.item_prefix())
+					item = libopensesame.plugins.load_plugin(item_type, name, \
+						self.experiment, None, self.experiment.item_prefix())
 				except Exception as e:
-					self.experiment.notify("Failed to load plugin '%s'. Error: %s" % (item_type, e))
+					self.experiment.notify("Failed to load plugin '%s'. Error: %s" \
+						% (item_type, e))
 					return
 
 		else:
@@ -1824,7 +1853,9 @@ class qtopensesame(QtGui.QMainWindow):
 
 		# Optionally, ask for a new name right away
 		if self.immediate_rename:
-			name, ok = QtGui.QInputDialog.getText(self, "New name", "Please enter a name for the new %s" % item_type, text = name)
+			name, ok = QtGui.QInputDialog.getText(self, \
+				"New name", "Please enter a name for the new %s" % item_type, \
+				text=name)
 			if not ok:
 				return None
 			name = str(name)

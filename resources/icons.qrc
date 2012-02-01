@@ -1,5 +1,6 @@
 <RCC>
   <qresource prefix="icons">
+    <file>onetabmode_large.png</file>
     <file>colorpicker.png</file>
     <file>options.png</file>
     <file>item_info_large.png</file>

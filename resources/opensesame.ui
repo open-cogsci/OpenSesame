@@ -104,6 +104,7 @@
     </property>
     <addaction name="action_close_all_tabs"/>
     <addaction name="action_close_other_tabs"/>
+    <addaction name="action_onetabmode"/>
     <addaction name="action_show_info_in_overview"/>
     <addaction name="separator"/>
     <addaction name="action_show_overview"/>
@@ -594,6 +595,7 @@ background-color: #729fcf;</string>
    <addaction name="action_run_in_window"/>
    <addaction name="separator"/>
    <addaction name="action_close_other_tabs"/>
+   <addaction name="action_onetabmode"/>
    <addaction name="action_show_info_in_overview"/>
    <addaction name="separator"/>
    <addaction name="action_show_pool"/>
@@ -1003,6 +1005,21 @@ background-color: #729fcf;</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+Shift+O</string>
+   </property>
+  </action>
+  <action name="action_onetabmode">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="icons.qrc">
+     <normaloff>:/icons/onetabmode_large.png</normaloff>:/icons/onetabmode_large.png</iconset>
+   </property>
+   <property name="text">
+    <string>One tab mode</string>
+   </property>
+   <property name="toolTip">
+    <string>Enable one tab mode</string>
    </property>
   </action>
  </widget>
