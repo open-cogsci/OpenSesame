@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'resources/opensesame.ui'
 #
-# Created: Wed Feb  1 18:37:54 2012
+# Created: Thu Feb  2 20:46:15 2012
 #      by: PyQt4 UI code generator 4.8.5
 #
 # WARNING! All changes made in this file will be lost!
@@ -386,7 +386,7 @@ class Ui_MainWindow(object):
         self.action_add_inline_script.setObjectName(_fromUtf8("action_add_inline_script"))
         self.action_close_all_tabs = QtGui.QAction(MainWindow)
         icon16 = QtGui.QIcon()
-        icon16.addPixmap(QtGui.QPixmap(_fromUtf8(":/icons/close_large.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon16.addPixmap(QtGui.QPixmap(_fromUtf8(":/icons/closeothertabs_large.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.action_close_all_tabs.setIcon(icon16)
         self.action_close_all_tabs.setText(QtGui.QApplication.translate("MainWindow", "Close all tabs", None, QtGui.QApplication.UnicodeUTF8))
         self.action_close_all_tabs.setObjectName(_fromUtf8("action_close_all_tabs"))
@@ -416,7 +416,7 @@ class Ui_MainWindow(object):
         self.action_add_mouse_response.setObjectName(_fromUtf8("action_add_mouse_response"))
         self.action_run_in_window = QtGui.QAction(MainWindow)
         icon20 = QtGui.QIcon()
-        icon20.addPixmap(QtGui.QPixmap(_fromUtf8(":/icons/window_large.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon20.addPixmap(QtGui.QPixmap(_fromUtf8(":/icons/runinwindow_large.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.action_run_in_window.setIcon(icon20)
         self.action_run_in_window.setText(QtGui.QApplication.translate("MainWindow", "Run in window", None, QtGui.QApplication.UnicodeUTF8))
         self.action_run_in_window.setToolTip(QtGui.QApplication.translate("MainWindow", "Run in window (Control+W)", None, QtGui.QApplication.UnicodeUTF8))

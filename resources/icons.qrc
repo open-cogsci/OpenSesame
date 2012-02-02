@@ -1,5 +1,7 @@
 <RCC>
   <qresource prefix="icons">
+    <file>runinwindow_large.png</file>
+    <file>closeothertabs_large.png</file>
     <file>onetabmode_large.png</file>
     <file>colorpicker.png</file>
     <file>options.png</file>
@@ -40,7 +42,6 @@
     <file>variable_inspector.png</file>
     <file>variable_inspector_large.png</file>
     <file>update_large.png</file>
-    <file>window_large.png</file>
     <file>apply.png</file>
     <file>mouse_response.png</file>
     <file>mouse_response_large.png</file>

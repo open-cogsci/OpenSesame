@@ -768,7 +768,7 @@ background-color: #729fcf;</string>
   <action name="action_close_all_tabs">
    <property name="icon">
     <iconset resource="icons.qrc">
-     <normaloff>:/icons/close_large.png</normaloff>:/icons/close_large.png</iconset>
+     <normaloff>:/icons/closeothertabs_large.png</normaloff>:/icons/closeothertabs_large.png</iconset>
    </property>
    <property name="text">
     <string>Close all tabs</string>
@@ -777,7 +777,7 @@ background-color: #729fcf;</string>
   <action name="action_close_other_tabs">
    <property name="icon">
     <iconset resource="icons.qrc">
-     <normaloff>:/icons/close_large.png</normaloff>:/icons/close_large.png</iconset>
+     <normaloff>:/icons/closeothertabs_large.png</normaloff>:/icons/closeothertabs_large.png</iconset>
    </property>
    <property name="text">
     <string>Close other tabs</string>
@@ -819,7 +819,7 @@ background-color: #729fcf;</string>
   <action name="action_run_in_window">
    <property name="icon">
     <iconset resource="icons.qrc">
-     <normaloff>:/icons/window_large.png</normaloff>:/icons/window_large.png</iconset>
+     <normaloff>:/icons/runinwindow_large.png</normaloff>:/icons/runinwindow_large.png</iconset>
    </property>
    <property name="text">
     <string>Run in window</string>
