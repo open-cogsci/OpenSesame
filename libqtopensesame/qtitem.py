@@ -22,7 +22,7 @@ import libopensesame.exceptions
 import libqtopensesame.inline_editor
 import libqtopensesame.help_browser
 import libqtopensesame.syntax_highlighter
-
+from libopensesame import debug
 
 class header_widget(QtGui.QWidget):
 
@@ -136,9 +136,7 @@ class qtitem(object):
 		self.script_tab = None
 		self.lock = False
 		self.edit_mode = "edit"
-
-		if self.experiment.debug:
-			print "qtitem.__init__(): created %s" % self.name
+		debug.msg("created %s" % self.name)
 
 	def open_help_tab(self):
 
@@ -217,8 +215,9 @@ class qtitem(object):
 		stretch -- a deprecated argument (default=True)
 		"""
 
-		if self.experiment.debug and not stretch:
-			print "*** qtitem.edit_widget(): passing the stretch argument is deprecated"
+		if not stretch:
+			debug.msg("passing the stretch argument is deprecated", \
+				reason="deprecation")
 		self.header.restore_name(False)
 		self.header.refresh()
 		self._edit_widget.edit_item = self.name
@@ -258,12 +257,9 @@ class qtitem(object):
 				   rebuild (default=True)
 		"""
 
-		if self.experiment.debug:
-			print "qtitem.apply_edit_changes():", self.name
-
+		debug.msg(self.name)
 		if self.experiment.main_window.lock_refresh:
-			if self.experiment.debug:
-				print "qtitem.apply_edit_changes(): skipping, because refresh in progress"
+			debug.msg("skipping, because refresh in progress")
 			return False
 
 		self.set("description", \
@@ -298,8 +294,7 @@ class qtitem(object):
 		focus -- indicates whether the tab should receive focus (default=True)
 		"""
 
-		if self.experiment.debug:
-			print "qtitem.open_edit_tab(): %s (#%s)" % (self.name, hash(self))
+		debug.msg("%s (#%s)" % (self.name, hash(self)))
 
 		self.edit_mode = "edit"
 
@@ -363,8 +358,7 @@ class qtitem(object):
 				 (default=True)
 		"""
 
-		if self.experiment.debug:
-			print "qtitem.apply_script_changes():", self.name
+		debug.msg(self.name)
 		script = self.experiment.usanitize(self.edit_script.edit.toPlainText())
 
 		# Create a new item and make it a clone of the current item
@@ -473,9 +467,7 @@ class qtitem(object):
 		focus -- indicates whether the tab should receive focus (default=True)
 		"""
 
-		if self.experiment.debug:
-			print "qtitem.open_script_tab(): %s (#%s)" % (self.name, hash(self))
-
+		debug.msg("%s (#%s)" % (self.name, hash(self)))
 		self.edit_mode = "script"
 
 		# Close the edit tab
@@ -674,8 +666,7 @@ class qtitem(object):
 		"""
 
 		if self.edit_script.isModified():
-			if self.experiment.debug:
-				print "inline_script.finalize(): applying pending OpenSesame script changes"
+			debug.msg("applying pending script changes")
 			self.apply_script_changes(catch=False)
 			return True
 		return False

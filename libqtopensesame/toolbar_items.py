@@ -17,6 +17,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 
 from PyQt4 import QtCore, QtGui
 import libopensesame.plugins
+from libopensesame import debug
 
 class widget_item(QtGui.QLabel):
 
@@ -72,8 +73,7 @@ class widget_item(QtGui.QLabel):
 			else:
 				self.main_window.drop_item(self.item)
 		else:
-			if self.main_window.experiment.debug:
-				print "widget_item.mouseMoveEvent(): drop cancelled"
+			debug.msg("drop cancelled")
 
 class toolbar_label(QtGui.QFrame):
 
@@ -190,9 +190,7 @@ class toolbar_items(QtGui.QToolBar):
 				self.addWidget(toolbar_label("<small>%s</small>" % cat))
 			content = []
 			for plugin in cat_dict[cat]:
-				if self.main_window.experiment.debug:
-					print "toolbar_items.build(): adding plugin '%s'" % plugin
-
+				debug.msg("adding plugin '%s'" % plugin)
 				content.append(widget_item(libopensesame.plugins.plugin_icon_large(plugin), plugin, self.main_window))
 			self.add_content(content)
 

@@ -15,7 +15,7 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
-from libopensesame import item, generic_response, exceptions
+from libopensesame import item, generic_response, exceptions, debug
 from libqtopensesame import qtplugin
 import openexp.keyboard
 import imp
@@ -31,11 +31,11 @@ class srbox(item.item, generic_response.generic_response):
 
 		"""
 		Constructor
-		
+
 		Arguments:
 		name -- item name
 		experiment -- opensesame experiment
-		
+
 		Keywords arguments:
 		string -- definition string (default=None)
 		"""
@@ -50,23 +50,23 @@ class srbox(item.item, generic_response.generic_response):
 		self.timeout = "infinite"
 		self.lights = ""
 		self.dev = "autodetect"
-		self.dummy = "no"		
+		self.dummy = "no"
 
 		# The parent handles the rest of the contruction
 		item.item.__init__(self, name, experiment, string)
-		
+
 	def prepare(self):
 
 		"""
 		Prepare the item
-		
+
 		Returns:
-		True on success, False on failure		
+		True on success, False on failure
 		"""
 
 		# Pass the word on to the parent
 		item.item.prepare(self)
-				
+
 		# Prepare the allowed responses
 		if self.has("allowed_responses"):
 			self._allowed_responses = []
@@ -84,22 +84,21 @@ class srbox(item.item, generic_response.generic_response):
 		else:
 			self._allowed_responses = None
 
-		if self.experiment.debug:
-			print "srbox.prepare(): allowed responses set to %s" % self._allowed_responses
+		debug.msg("allowed responses set to %s" % self._allowed_responses)
 
 		self._keyboard = openexp.keyboard.keyboard(self.experiment)
 		if self.has("dummy") and self.get("dummy") == "yes":
 			self._resp_func = self._keyboard.get_key
 
 		else:
-		
+
 			# Prepare the device string
 			dev = self.get("dev")
 			if dev == "autodetect":
 				dev = None
-		
+
 			# Dynamically load an srbox instance
-			if not hasattr(self.experiment, "srbox"):				
+			if not hasattr(self.experiment, "srbox"):
 				path = os.path.join(os.path.dirname(__file__), "libsrbox.py")
 				_srbox = imp.load_source("libsrbox", path)
 				self.experiment.srbox = _srbox.libsrbox(self.experiment, dev)
@@ -112,8 +111,7 @@ class srbox(item.item, generic_response.generic_response):
 				else:
 					s += "0"
 			self._lights = chr(int(s, 2))
-			if self.experiment.debug:
-				print "srbox.prepare(): lights string set to %s (%s)" % (s, self.get("lights"))
+			debug.msg("lights string set to %s (%s)" % (s, self.get("lights")))
 
 			# Prepare auto response
 			if self.experiment.auto_response:
@@ -130,9 +128,9 @@ class srbox(item.item, generic_response.generic_response):
 
 		"""
 		Run the item
-		
+
 		Returns:
-		True on success, False on failure				
+		True on success, False on failure
 		"""
 
 		# Set the onset time
@@ -168,21 +166,20 @@ class srbox(item.item, generic_response.generic_response):
 			except Exception as e:
 				raise exceptions.runtime_error("An error occured in srbox '%s': %s." % (self.name, e))
 
-		if self.experiment.debug:
-			print "srbox.run(): received %s" % resp
+		debug.msg("received %s" % resp)
 		if type(resp) == list:
 			self.experiment.response = resp[0]
 		else:
 			self.experiment.response = resp
 
 		generic_response.generic_response.response_bookkeeping(self)
-			
+
 		# Report success
 		return True
-		
+
 	def var_info(self):
 
-		return generic_response.generic_response.var_info(self)			
+		return generic_response.generic_response.var_info(self)
 
 class qtsrbox(srbox, qtplugin.qtplugin):
 

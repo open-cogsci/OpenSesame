@@ -15,7 +15,7 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
-from libopensesame import item, exceptions
+from libopensesame import item, exceptions, debug
 import shlex
 import openexp.keyboard
 from random import *
@@ -132,8 +132,7 @@ class loop(item.item):
 						# math module
 						if type(val) == str and len(val) > 2 and val[0] == "=":
 							code = "%s" % self.eval_text(val[1:], soft_ignore = True, quote_str = True)
-							if self.experiment.debug:
-								print "loop.run(): evaluating '%s'" % code
+							debug.msg("evaluating '%s'" % code)
 							try:
 								val = eval(code)
 							except Exception as e:

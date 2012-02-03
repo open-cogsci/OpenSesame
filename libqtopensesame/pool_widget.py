@@ -15,6 +15,7 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
+from libopensesame import debug
 from libqtopensesame import pool_widget_ui
 from PyQt4 import QtCore, QtGui
 import os
@@ -90,8 +91,7 @@ class pool_widget(QtGui.QWidget):
 		else:
 			self.main_window.experiment.notify("I'm sorry, but I don't know how to open the pool folder on your platform!")
 
-		if self.main_window.experiment.debug:
-			print "pool_widget.browse(): pool folder opened in file manager"
+		debug.msg("pool folder opened in file manager")
 
 	def add(self, files):
 
@@ -273,11 +273,9 @@ class pool_widget(QtGui.QWidget):
 			try:
 				for f in l:
 					os.remove(os.path.join(self.main_window.experiment.pool_folder, f))
-				if self.main_window.experiment.debug:
-					print "pool_widget.context_action(): removed '%s'" % self.context_target
+				debug.msg("removed '%s'" % self.context_target)
 			except:
-				if self.main_window.experiment.debug:
-					print "pool_widget.context_action(): failed to remove '%s'" % self.context_target
+				debug.msg("failed to remove '%s'" % self.context_target)
 		else:
 
 			# Rename the file
@@ -290,12 +288,13 @@ class pool_widget(QtGui.QWidget):
 					return
 
 				try:
-					os.rename(f, os.path.join(self.main_window.experiment.pool_folder, new_name))
-					if self.main_window.experiment.debug:
-						print "pool_widget.context_action(): renamed '%s' to '%s'" % (self.context_target, new_name)
+					os.rename(f, os.path.join( \
+						self.main_window.experiment.pool_folder, new_name))
+					debug.msg("renamed '%s' to '%s'" % (self.context_target, \
+						new_name))
 				except:
-					if self.main_window.experiment.debug:
-						print "pool_widget.context_action(): failed to rename '%s' to '%s'" % (self.context_target, new_name)
+					debug.msg("failed to rename '%s' to '%s'" % \
+						(self.context_target, new_name))
 
 		self.main_window.set_unsaved()
 		self.refresh()

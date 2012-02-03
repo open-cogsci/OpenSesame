@@ -15,7 +15,7 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
-from libopensesame import exceptions
+from libopensesame import debug, exceptions
 import serial
 import os
 
@@ -36,10 +36,10 @@ class libsrbox:
 
 		"""<DOC>
 		Constructor. Connects to the SR Box.
-		
+
 		Arguments:
 		experiment -- opensesame experiment
-		
+
 		Keywords arguments:
 		dev -- the srbox device port or None for auto-detect (default=None)
 		</DOC>"""
@@ -85,8 +85,7 @@ class libsrbox:
 
 		if self._srbox == None:
 			raise exceptions.runtime_error("libsrbox failed to auto-detect an SR Box. Please specify a device.")
-		if self.experiment.debug:
-			print "srbox.srbox_init(): Using device %s" % dev
+		debug.msg("using device %s" % dev)
 		# Turn off all lights
 		if self._srbox != None:
 			self._srbox.write('\x64')
@@ -95,7 +94,7 @@ class libsrbox:
 
 		"""<DOC>
 		Send a single character
-		
+
 		Arguments:
 		ch -- the character to send
 		</DOC>"""
@@ -128,13 +127,13 @@ class libsrbox:
 
 		"""<DOC>
 		Get a button press from the SR box
-		
+
 		Keywords arguments:
 		allowed_buttons -- A list of buttons that are accepted or None to accept
 						   all buttons. Valid buttons are integers 1 through 8.
 						   (default=None)
 		timeout -- a timeout value or None for no timeout (default=None)
-		
+
 		Returns:
 		A timestamp, buttonlist tuple. The buttonlist consists of a list of
 		button numbers.

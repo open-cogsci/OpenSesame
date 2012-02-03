@@ -15,6 +15,7 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
+from libopensesame import debug
 import libopensesame.experiment
 import libopensesame.plugins
 from PyQt4 import QtCore, QtGui
@@ -162,9 +163,7 @@ class experiment(libopensesame.experiment.experiment):
 		"""
 
 		to_name = self.sanitize(to_name, True)
-
-		if self.debug:
-			print "experiment.rename(): from '%s' to '%s'" % (from_name, to_name)
+		debug.msg("from '%s' to '%s'" % (from_name, to_name))
 
 		if self.get("start") == from_name:
 			self.set("start", to_name)
@@ -502,20 +501,3 @@ class experiment(libopensesame.experiment.experiment):
 						w.deleteLater()
 						QtCore.QCoreApplication.sendPostedEvents(w, QtCore.QEvent.DeferredDelete)
 
-	def show_stack(self):
-
-		"""
-		Gets the name of the function that is calling this function. For
-		debugging purposed.
-
-		Returns:
-		A function name
-		"""
-
-		if self._stack:
-			import inspect
-			stack = inspect.stack()
-			print " ->",
-			for i in range(2, min(len(stack), 7)):
-				print "%s()" % stack[i][3],
-			print

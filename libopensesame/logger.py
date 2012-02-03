@@ -15,7 +15,7 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
-from libopensesame import item, exceptions
+from libopensesame import item, exceptions, debug
 import shlex
 
 class logger(item.item):
@@ -61,8 +61,7 @@ class logger(item.item):
 				for logvar, val, item in self.experiment.var_list():
 					if (self.has(logvar) or self.get("ignore_missing") == "yes") and logvar not in self.logvars:
 						self.logvars.append(logvar)
-						if self.experiment.debug:
-							print "logger.run(): auto-logging '%s'" % logvar
+						debug.msg("auto-logging '%s'" % logvar)
 			# Sort the logvars to ascertain a consistent ordering
 			self.logvars.sort()
 			# Draw the first line with variables

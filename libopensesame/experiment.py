@@ -15,7 +15,7 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
-from libopensesame import misc, item, exceptions, plugins
+from libopensesame import misc, item, exceptions, plugins, debug
 import openexp.experiment
 import os.path
 import shutil
@@ -78,14 +78,11 @@ class experiment(item.item, openexp.experiment.experiment):
 		if pool_folder == None:
 			self.pool_folder = tempfile.mkdtemp(".opensesame_pool")
 			pool_folders.append(self.pool_folder)
-			if self.debug:
-				print "experiment.__init__(): creating new pool folder"
+			debug.msg("creating new pool folder")
 		else:
-			if self.debug:
-				print "experiment.__init__(): reusing existing pool folder"
+			debug.msg("reusing existing pool folder")
 			self.pool_folder = pool_folder
-		if self.debug:
-			print "experiment.__init__(): pool folder is '%s'" % self.pool_folder
+		debug.msg("pool folder is '%s'" % self.pool_folder)
 
 		openexp.experiment.experiment.__init__(self)
 		string = self.open(string)
@@ -172,8 +169,8 @@ class experiment(item.item, openexp.experiment.experiment):
 		if plugins.is_plugin(item_type):
 
 			# Load a plug-in
-			if self.debug:
-				print "experiment.parse_definition(): loading plugin '%s'" % item_type
+			if debug.enabled:
+				debug.msg("loading plugin '%s'" % item_type)
 				item = plugins.load_plugin(item_type, item_name, self, string, self.item_prefix())
 			else:
 				try:
@@ -185,10 +182,8 @@ class experiment(item.item, openexp.experiment.experiment):
 		else:
 
 			# Load the module from the regular items
-			if self.debug:
-				print "experiment.parse_definition(): loading core plugin '%s'" % item_type
-
-			if self.debug:
+			debug.msg("loading core plugin '%s'" % item_type)
+			if debug.enabled:
 				exec("from %s import %s" % (self.module_container(), item_type))
 			try:
 				if not self.debug:
@@ -200,7 +195,7 @@ class experiment(item.item, openexp.experiment.experiment):
 			cmd = "%(item_type)s.%(item_type)s(\"%(item_name)s\", self, \"\"\"%(string)s\"\"\")" % \
 				{"item_type" : item_type, "item_name" : item_name, "string" : string.replace("\"", "\\\"")}
 
-			if self.debug:
+			if debug.enabled:
 				bytecode = compile(cmd, "<string>", "eval")
 				self.items[item_name] = eval(bytecode)
 			else:
@@ -220,10 +215,7 @@ class experiment(item.item, openexp.experiment.experiment):
 		"""
 
 		import shlex
-
-		if self.debug:
-			print "experiment.from_string(): building experiment"
-
+		debug.msg("building experiment")
 		s = iter(string.split("\n"));
 		line = next(s, None)
 		while line != None:
@@ -277,8 +269,7 @@ class experiment(item.item, openexp.experiment.experiment):
 
 		while len(self.cleanup_functions) > 0:
 			func = self.cleanup_functions.pop()
-			if self.debug:
-				print "experiment.cleanup(): calling cleanup function"
+			debug.msg("calling cleanup function")
 			func()
 
 	def end(self):
@@ -386,8 +377,7 @@ class experiment(item.item, openexp.experiment.experiment):
 		The path on successfull saving or False otherwise
 		"""
 
-		if self.debug:
-			print "experiment.open(): asked to save '%s'" % path
+		debug.msg("asked to save '%s'" % path)
 
 		# Determine the extension
 		ext = os.path.splitext(path)[1].lower()
@@ -397,8 +387,7 @@ class experiment(item.item, openexp.experiment.experiment):
 		if ext == ".opensesame":
 			if os.path.exists(path) and not overwrite:
 				return False
-			if self.debug:
-				print "experiment.open(): saving as .opensesame file"
+			debug.msg("saving as .opensesame file")
 			f = open(path, "w")
 			f.write(self.to_string())
 			f.close()
@@ -412,8 +401,7 @@ class experiment(item.item, openexp.experiment.experiment):
 		if os.path.exists(path) and not overwrite:
 			return False
 
-		if self.debug:
-			print "experiment.open(): saving as .opensesame.tar.gz file"
+		debug.msg("saving as .opensesame.tar.gz file")
 
 		# Write the script to a text file
 		script = self.to_string()
@@ -456,8 +444,7 @@ class experiment(item.item, openexp.experiment.experiment):
 		# If the path is not a path at all, but a string containing
 		# the script, return it
 		if (type(path) != str and type(path) != unicode) or not os.path.exists(path):
-			if self.debug:
-				print "experiment.open(): opening from string"
+			debug.msg("opening from string")
 			self.experiment_path = None
 			return path
 
@@ -465,13 +452,11 @@ class experiment(item.item, openexp.experiment.experiment):
 		# read it and return it
 		ext = ".opensesame.tar.gz"
 		if path[-len(ext):] != ext:
-			if self.debug:
-				print "experiment.open(): opening .opensesame file"
+			debug.msg("opening .opensesame file")
 			self.experiment_path = os.path.dirname(path)
 			return open(path, "rU").read()
 
-		if self.debug:
-			print "experiment.open(): opening .opensesame.tar.gz file"
+		debug.msg("opening .opensesame.tar.gz file")
 
 		# If the file is a .tar.gz archive, extract
 		# the pool to the pool folder and return the
@@ -480,8 +465,7 @@ class experiment(item.item, openexp.experiment.experiment):
 		for name in tar.getnames():
 			folder, fname = os.path.split(name)
 			if folder == "pool":
-				if self.debug:
-					print "experiment.open(): extracting '%s'" % name
+				debug.msg("extracting '%s'" % name)
 				tar.extract(name, self.pool_folder)
 				os.rename(os.path.join(self.pool_folder, name), os.path.join(self.pool_folder, fname))
 				os.rmdir(os.path.join(self.pool_folder, folder))

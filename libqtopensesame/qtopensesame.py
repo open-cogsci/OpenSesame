@@ -28,6 +28,7 @@ import time
 import traceback
 import subprocess
 from libqtopensesame import config
+from libopensesame import debug
 
 class plugin_action(QtGui.QAction):
 
@@ -283,8 +284,7 @@ class qtopensesame(QtGui.QMainWindow):
 
 		"""Restore the current window to the saved state"""
 
-		if self.experiment.debug:
-			print "qtopensesame.restore_state()"
+		debug.msg()
 
 		settings = QtCore.QSettings("cogscinl", "opensesame")
 		settings.beginGroup("MainWindow")
@@ -326,8 +326,7 @@ class qtopensesame(QtGui.QMainWindow):
 
 		"""Restores the state of the current window"""
 
-		if self.experiment.debug:
-			print "qtopensesame.save_state()"
+		debug.msg()
 
 		settings = QtCore.QSettings("cogscinl", "opensesame")
 		settings.beginGroup("MainWindow")
@@ -372,11 +371,9 @@ class qtopensesame(QtGui.QMainWindow):
 
 		if self.style in QtGui.QStyleFactory.keys():
 			self.setStyle(QtGui.QStyleFactory.create(self.style))
-			if self.experiment.debug:
-				print "qtopensesame.set_style(): using style '%s'" % self.style
+			debug.msg("using style '%s'" % self.style)
 		else:
-			if self.experiment.debug:
-				print "qtopensesame.set_style(): ignoring unknown style '%s'" % self.style
+			debug.msg("ignoring unknown style '%s'" % self.style)
 			self.style = ""
 
 	def set_auto_response(self):
@@ -400,16 +397,14 @@ class qtopensesame(QtGui.QMainWindow):
 		"""If autosave is enabled, construct and start the autosave timer"""
 
 		if self.autosave_interval > 0:
-			if self.experiment.debug:
-				print "qtopensesame.start_autosave_timer(): starting auto-save timer (interval = %d ms)" % self.autosave_interval
+			debug.msg("autosave interval = %d ms" % self.autosave_interval)
 			self.autosave_timer = QtCore.QTimer()
 			self.autosave_timer.setInterval(self.autosave_interval)
 			self.autosave_timer.setSingleShot(True)
 			self.autosave_timer.timeout.connect(self.autosave)
 			self.autosave_timer.start()
 		else:
-			if self.experiment.debug:
-				print "qtopensesame.start_autosave_timer(): auto-save disabled"
+			debug.msg("autosave disabled")
 			self.autosave_timer = None
 
 	def autosave(self):
@@ -425,9 +420,7 @@ class qtopensesame(QtGui.QMainWindow):
 			_window_msg = self.window_msg
 			self.current_path = os.path.join(self.autosave_folder, \
 				"%s.opensesame.tar.gz" % str(time.ctime()).replace(":", "_"))
-			if self.experiment.debug:
-				print "qtopensesame.autosave(): saving backup as %s" \
-					% self.current_path
+			debug.msg("saving backup as %s" % self.current_path)
 			try:
 				self.save_file(False, remember=False, catch=False)
 				self.set_status("Backup saved as %s" % self.current_path)
@@ -449,13 +442,12 @@ class qtopensesame(QtGui.QMainWindow):
 			t = os.path.getctime(_path)
 			age = (time.time() - t)/(60*60*24)
 			if age > self.autosave_max_age:
-				if self.experiment.debug:
-					print "qtopensesame.clean_autosave(): removing '%s'" % path
+				debug.msg("removing '%s'" % path)
 				try:
 					os.remove(_path)
 				except:
-					if self.experiment.debug:
-						print "qtopensesame.clean_autosave(): failed to remove '%s'" % path
+					debug.msg("failed to remove '%s'" \
+						% path)
 
 	def save_unsaved_changes(self):
 
@@ -481,9 +473,7 @@ class qtopensesame(QtGui.QMainWindow):
 
 		self.unsaved_changes = unsaved_changes
 		self.window_message()
-		if self.experiment.debug:
-			print "qtopensesame.set_unsaved(): unsaved = %s" % unsaved_changes
-			self.experiment.show_stack()
+		debug.msg("unsaved = %s" % unsaved_changes)
 
 	def set_status(self, msg, timeout=5000, status="ready"):
 
@@ -532,8 +522,6 @@ class qtopensesame(QtGui.QMainWindow):
 		if always or self.show_startup_tip:
 			d = tip_dialog.tip_dialog(self)
 			d.exec_()
-		elif self.experiment.debug:
-			print "qtopensesame.show_random_tip(): skipping random tip"
 
 	def start_new_wizard(self, dummy=None):
 
@@ -560,8 +548,7 @@ class qtopensesame(QtGui.QMainWindow):
 		"""Set the immediate rename option based on the status of the menu action"""
 
 		self.immediate_rename = self.ui.action_immediate_rename.isChecked()
-		if self.experiment.debug:
-			print "qtopensesame.set_immediate_rename(): set to %s" % self.immediate_rename
+		debug.msg("set to %s" % self.immediate_rename)
 
 	def toggle_overview_info(self):
 
@@ -577,8 +564,7 @@ class qtopensesame(QtGui.QMainWindow):
 		else:
 			self.ui.itemtree.setColumnCount(1)
 			self.ui.itemtree.setHeaderHidden(True)
-		if self.experiment.debug:
-			print "qtopensesame.toggle_overview_info(): set to %s" % self.overview_info
+		debug.msg("set to %s" % self.overview_info)
 
 	def toggle_onetabmode(self):
 
@@ -636,12 +622,10 @@ class qtopensesame(QtGui.QMainWindow):
 		import urllib
 
 		if not always and not self.auto_check_update:
-			if self.experiment.debug:
-				print "qtopensesame.check_update(): skipping update check"
+			debug.msg("skipping update check")
 			return
 
-		if self.experiment.debug:
-			print "qtopensesame.check_update(): opening %s" % config.get_config("version_check_url")
+		debug.msg("opening %s" % config.get_config("version_check_url"))
 
 		try:
 			fd = urllib.urlopen(config.get_config("version_check_url"))
@@ -654,13 +638,12 @@ class qtopensesame(QtGui.QMainWindow):
 		try:
 			if len(self.version.split("-")) == 2:
 				cv = float(self.version.split("-")[0]) - 0.01 + 0.00001 * int(self.version.split("-")[1][3:])
-				if self.experiment.debug:
-					print "qtopensesame.check_update(): you are running a pre-release version, identifying as %s" % cv
+				debug.msg("you are running a pre-release version, identifying as %s" \
+					% cv)
 			else:
 				cv = float(self.version)
 		except:
-			if self.experiment.debug:
-				print "qtopensesame.check_update(): version is not numeric"
+			debug.msg("version is not numeric")
 			return
 
 		if mrv > float(cv):
@@ -904,8 +887,7 @@ class qtopensesame(QtGui.QMainWindow):
 				py_exe = os.path.join(d, "python.exe")
 				if os.path.exists(py_exe):
 					break
-			if self.experiment.debug:
-				print "qtopensesame.restart(): located python.exe as '%s'" % py_exe
+			debug.msg("located python.exe as '%s'" % py_exe)
 			cmd.append(py_exe)
 
 		if sys.argv[0] == "opensesame" and os.name != "nt":
@@ -913,13 +895,12 @@ class qtopensesame(QtGui.QMainWindow):
 
 		cmd.append(sys.argv[0])
 		cmd.append(self.current_path)
-		if self.experiment.debug:
+		if debug.enabled:
 			cmd.append("--debug")
 
-		if self.experiment.debug:
-			print "qtopensesame.restart(): restarting with command '%s'" % cmd
+		debug.msg("restarting with command '%s'" % cmd)
 
-		libopensesame.experiment.clean_up(self.experiment.debug)
+		libopensesame.experiment.clean_up(debug.enabled)
 		self.save_state()
 		subprocess.Popen(cmd)
 		QtCore.QCoreApplication.quit()
@@ -931,7 +912,7 @@ class qtopensesame(QtGui.QMainWindow):
 		resp = QtGui.QMessageBox.question(self.ui.centralwidget, "Quit?", "Are you sure you want to quit OpenSesame?", QtGui.QMessageBox.Yes, QtGui.QMessageBox.No)
 		if resp == QtGui.QMessageBox.No:
 			return
-		libopensesame.experiment.clean_up(self.experiment.debug)
+		libopensesame.experiment.clean_up(debug.enabled)
 		self.save_unsaved_changes()
 		self.save_state()
 		QtCore.QCoreApplication.quit()
@@ -945,8 +926,8 @@ class qtopensesame(QtGui.QMainWindow):
 		e -- the closeEvent
 		"""
 
-		if self.experiment.debug:
-			libopensesame.experiment.clean_up(self.experiment.debug)
+		if debug.enabled:
+			libopensesame.experiment.clean_up(debug.enabled)
 			self.save_state()
 			e.accept()
 			return
@@ -955,7 +936,7 @@ class qtopensesame(QtGui.QMainWindow):
 		if resp == QtGui.QMessageBox.No:
 			e.ignore()
 		else:
-			libopensesame.experiment.clean_up(self.experiment.debug)
+			libopensesame.experiment.clean_up(debug.enabled)
 			self.save_unsaved_changes()
 			self.save_state()
 			e.accept()
@@ -1017,7 +998,7 @@ class qtopensesame(QtGui.QMainWindow):
 		except Exception as e:
 			self.experiment.notify("<b>Error:</b> Failed to open '%s'<br /><b>Description:</b> %s<br /><br />Make sure that the file is in .opensesame or .opensesame.tar.gz format. If you should be able to open this file, but can't, please go to http://www.cogsci.nl/opensesame to find out how to recover your experiment and file a bug report." % (path, e))
 			# Print the traceback in debug mode
-			if self.experiment.debug:
+			if debug.enabled:
 				l = traceback.format_exc(e).split("\n")
 				for r in l:
 					print r
@@ -1147,8 +1128,7 @@ class qtopensesame(QtGui.QMainWindow):
 
 		"""Close all tabs except the currently active one"""
 
-		if self.experiment.debug:
-			print "qtopensesame.close_other_tabs(): closing non-selected tabs"
+		debug.msg("closing non-selected tabs")
 
 		while self.ui.tabwidget.count() > 0 and self.ui.tabwidget.currentIndex() != 0:
 			self.close_tab(0)
@@ -1180,8 +1160,7 @@ class qtopensesame(QtGui.QMainWindow):
 		close_script -- a boolean indicating whether the script tab should be close (default = True)
 		"""
 
-		if self.experiment.debug:
-			print "qtopensesame.close_item_tab(): closing tabs for '%s'" % item
+		debug.msg("closing tabs for '%s'" % item)
 
 		# There's a kind of double loop, because the indices change
 		# after a deletion
@@ -1211,8 +1190,7 @@ class qtopensesame(QtGui.QMainWindow):
 		height -- the display height in pixels
 		"""
 
-		if self.experiment.debug:
-			print "qtopensesame.update_resolution(): changing resolution to %d x %d" % (width, height)
+		debug.msg("changing resolution to %d x %d" % (width, height))
 
 		try:
 			script = self.experiment.to_string()
@@ -1368,8 +1346,7 @@ class qtopensesame(QtGui.QMainWindow):
 		name -- a name of the item that has called the build (default=None)
 		"""
 
-		if self.experiment.debug:
-			print "qtopensesame.build_item_list(): %s" % name
+		debug.msg(name)
 		self.experiment.build_item_tree()
 
 	def select_item(self, name):
@@ -1381,8 +1358,7 @@ class qtopensesame(QtGui.QMainWindow):
 		name -- the name of the item
 		"""
 
-		if self.experiment.debug:
-			print "qtopensesame.select_item(): %s" % name
+		debug.msg(name)
 
 		if name in self.experiment.unused_items:
 			self.experiment.unused_widget.setExpanded(True)
@@ -1466,8 +1442,7 @@ class qtopensesame(QtGui.QMainWindow):
 		stdout = tempfile.mktemp(suffix = ".stdout")
 		path = tempfile.mktemp(suffix = ".opensesame.tar.gz")
 		exp.save(path, True)
-		if self.experiment.debug:
-			print "qtopensesame.call_opensesamrun(): experiment saved as '%s'" % path
+		debug.msg("experiment saved as '%s'" % path)
 
 		# Determine the name of the executable
 		if self.opensesamerun_exec == "":
@@ -1480,15 +1455,14 @@ class qtopensesame(QtGui.QMainWindow):
 
 		cmd += [path, "--logfile=%s" % exp.logfile, "--subject=%s" % exp.subject_nr]
 
-		if self.experiment.debug:
+		if debug.enabled:
 			cmd.append("--debug")
 		if exp.fullscreen:
 			cmd.append("--fullscreen")
 		if "--pylink" in sys.argv:
 			cmd.append("--pylink")
 
-		if self.experiment.debug:
-			print "qtopensesame.call_opensesamrun(): spawning opensesamerun as a separate process"
+		debug.msg("spawning opensesamerun as a separate process")
 
 		# Call opensesamerun and wait for the process to complete
 		try:
@@ -1510,8 +1484,7 @@ class qtopensesame(QtGui.QMainWindow):
 			QtGui.QApplication.processEvents()
 			time.sleep(1)
 
-		if self.experiment.debug:
-			print "qtopensesame.call_opensesamrun(): opensesamerun returned %d" % retcode
+		debug.msg("opensesamerun returned %d" % retcode)
 
 		print
 		print open(stdout, "r").read()
@@ -1572,8 +1545,7 @@ class qtopensesame(QtGui.QMainWindow):
 			self.experiment.notify(str(e))
 			return
 
-		if self.experiment.debug:
-
+		if debug.enabled:
 			exp.set("subject_nr", 999)
 			exp.set("subject_parity", "odd")
 			logfile = os.path.join(str(self.default_logfile_folder), "debug.csv")
@@ -1625,8 +1597,7 @@ class qtopensesame(QtGui.QMainWindow):
 
 		# Suspend autosave
 		if self.autosave_timer != None:
-			if self.experiment.debug:
-				print "qtopensesame.run_experiment(): stopping autosave timer"
+			debug.msg("stopping autosave timer")
 			self.autosave_timer.stop()
 
 		exp.auto_response = self.experiment.auto_response
@@ -1651,8 +1622,7 @@ class qtopensesame(QtGui.QMainWindow):
 				try:
 					exp.end()
 				except Exception as _e:
-					if self.experiment.debug:
-						print "qtopensesame.run_experiment(): experiment.end() caused an exception: %s" % _e
+					debug.msg("exception: %s" % _e)
 
 				# Report the error
 				if isinstance(e, libopensesame.exceptions.runtime_error):
@@ -1671,8 +1641,7 @@ class qtopensesame(QtGui.QMainWindow):
 
 		# Resume autosave, but not if opensesamerun is called
 		if self.autosave_timer != None:
-			if self.experiment.debug:
-				print "qtopensesame.run_experiment(): resuming autosave timer"
+			debug.msg("resuming autosave timer")
 			self.autosave_timer.start()
 
 		# Restart the experiment if necessary
@@ -1707,10 +1676,7 @@ class qtopensesame(QtGui.QMainWindow):
 		self.lock_refresh = True
 
 		self.set_busy(True)
-		if self.experiment.debug:
-			print "qtopensesame.refresh(): %s" % changed_item
-			self.experiment.show_stack()
-
+		debug.msg(changed_item)
 		self.general_tab_widget.set_header_label()
 
 		index = self.ui.tabwidget.currentIndex()
@@ -1755,8 +1721,7 @@ class qtopensesame(QtGui.QMainWindow):
 		self.lock_refresh = True
 
 		self.set_busy(True)
-		if self.experiment.debug:
-			print "qtopensesame.hard_refresh(): %s" % changed_item
+		debug.msg(changed_item)
 
 		self.general_tab_widget.set_header_label()
 
@@ -1767,16 +1732,14 @@ class qtopensesame(QtGui.QMainWindow):
 				w = self.ui.tabwidget.widget(i)
 
 				if hasattr(w, "edit_item") and (changed_item == None or w.edit_item == changed_item) and w.edit_item in self.experiment.items:
-					if self.experiment.debug:
-						print "qtopensesame.hard_refresh(): reopening edit tab %s" % changed_item
+					debug.msg("reopening edit tab %s" % changed_item)
 					self.ui.tabwidget.removeTab(i)
 					self.experiment.items[w.edit_item].open_edit_tab(i, False)
 					w = self.ui.tabwidget.widget(i)
 					w.edit_item = changed_item
 
 				if hasattr(w, "script_item") and (changed_item == None or w.script_item == changed_item) and w.script_item in self.experiment.items:
-					if self.experiment.debug:
-						print "qtopensesame.hard_refresh(): reopening script tab %s" % changed_item
+					debug.msg("reopening script tab %s" % changed_item)
 					self.ui.tabwidget.removeTab(i)
 					self.experiment.items[w.script_item].open_script_tab(i, False)
 					w = self.ui.tabwidget.widget(i)
@@ -1798,8 +1761,7 @@ class qtopensesame(QtGui.QMainWindow):
 
 		cat_menu = {}
 		for plugin in libopensesame.plugins.list_plugins():
-			if self.experiment.debug:
-				print "qtopensesame.refresh_plugins(): found plugin '%s'" % plugin
+			debug.msg("found plugin '%s'" % plugin)
 			cat = libopensesame.plugins.plugin_category(plugin)
 			if cat not in cat_menu:
 				cat_menu[cat] = QtGui.QMenu(cat)
@@ -1826,14 +1788,13 @@ class qtopensesame(QtGui.QMainWindow):
 		# Get a unique name if none has been specified
 		name = self.experiment.unique_name("%s" % item_type)
 
-		if self.experiment.debug:
-			print "qtopensesame.add_item(): adding %s (%s)" % (name, item_type)
+		debug.msg("adding %s (%s)" % (name, item_type))
 
 		# If the item type is a plugin, we need to use the plugin mechanism
 		if libopensesame.plugins.is_plugin(item_type):
 
 			# In debug mode, exceptions are not caught
-			if self.experiment.debug:
+			if debug.enabled:
 				item = libopensesame.plugins.load_plugin(item_type, name, \
 					self.experiment, None, self.experiment.item_prefix())
 			else:
@@ -1867,6 +1828,7 @@ class qtopensesame(QtGui.QMainWindow):
 
 		# Optionally, refresh the interface
 		if refresh:
+			debug.msg("refresh")
 			self.refresh()
 			self.select_item(name)
 
@@ -2065,8 +2027,7 @@ class qtopensesame(QtGui.QMainWindow):
 
 		from libqtopensesame import draggables
 
-		if self.experiment.debug:
-			print "qtopensesame.drop_item(): dropping from toolbar"
+		debug.msg("dropping from toolbar")
 
 		# Determine the drop target
 		target, index, select = draggables.drop_target
@@ -2100,8 +2061,7 @@ class qtopensesame(QtGui.QMainWindow):
 
 		from libqtopensesame import draggables
 
-		if self.experiment.debug:
-			print "qtopensesame.drag_item(): dragging"
+		debug.msg("dragging")
 
 		# Reset the drop target
 		draggables.drop_target = None
@@ -2123,10 +2083,7 @@ class qtopensesame(QtGui.QMainWindow):
 				new_item = self.add_item(add_func, False)
 
 			if new_item != None:
-
-				if self.experiment.debug:
-					print "qtopensesame.drag_item(): adding to unused"
-
+				debug.msg("adding to unused")
 				self.refresh()
 				self.select_item(new_item)
 

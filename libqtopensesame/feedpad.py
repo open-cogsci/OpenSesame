@@ -15,6 +15,7 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
+from libopensesame import debug
 import libqtopensesame.sketchpad_dialog
 import libqtopensesame.qtitem
 
@@ -46,26 +47,25 @@ class feedpad:
 			static = True
 			for var in item:
 				if var != "text" and var != "show_if" and type(item[var]) == str and item[var].find("[") >= 0:
-					if self.experiment.debug:
-						print "sketchpad.static_items(): variable property: %s = %s" % (var, item[var])
+					debug.msg("variable property: %s = %s" % (var, item[var]))
 					static = False
 			if static:
 				l.append(item)
 		return l
-		
+
 	def items_out_of_bounds(self):
-	
+
 		"""
 		Returns a count of items that are 'out of bounds' in the sense that the
 		coordinates fall outside of the screen boundaries.
-		
+
 		Returns:
 		The nr of items the are out of bounds
 		"""
-		
+
 		xc = self.get("width")/2
-		yc = self.get("height")/2		
-		return sum( ["x" in i and "y" in i		
+		yc = self.get("height")/2
+		return sum( ["x" in i and "y" in i
 			and ( (type(i["x"]) != str and abs(i["x"]) > xc)
 				or (type(i["y"]) != str and abs(i["y"]) > yc) )
 			for i in self.items] )

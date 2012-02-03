@@ -15,6 +15,7 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
+from libopensesame import debug
 from PyQt4 import QtCore, QtGui
 from libopensesame import misc
 import libopensesame.exceptions
@@ -286,8 +287,7 @@ class general_properties(QtGui.QWidget):
 
 		"""Update the controls of the general tab"""
 
-		if self.main_window.experiment.debug:
-			print "general_properties.refresh()"
+		debug.msg()
 
 		# Lock the general tab to prevent a recursive loop
 		self.lock = True

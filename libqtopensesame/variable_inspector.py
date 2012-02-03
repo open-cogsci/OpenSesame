@@ -15,6 +15,7 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
+from libopensesame import debug
 from PyQt4 import QtCore, QtGui
 
 class sortable(QtGui.QTableWidgetItem):
@@ -22,27 +23,27 @@ class sortable(QtGui.QTableWidgetItem):
 	"""A sortable tablewidget"""
 
 	def __init__(self, text, sort_key):
-	
+
 		"""
 		Constructor
-		
+
 		Arguments:
 		text -- the cell text
 		sort_key -- the key to use for sorting
 		"""
-	
+
 		QtGui.QTableWidgetItem.__init__(self, str(text), QtGui.QTableWidgetItem.UserType)
 		self.sort_key = sort_key
 
 	def __lt__(self, other):
-	
+
 		"""
 		Sort operator (less than)
-		
+
 		Arguments:
 		other -- the other sortable
 		"""
-	
+
 		return self.sort_key < other.sort_key
 
 class variable_inspector(QtGui.QTableWidget):
@@ -50,24 +51,23 @@ class variable_inspector(QtGui.QTableWidget):
 	"""The table for the variable inspector"""
 
 	def __init__(self, parent=None):
-	
+
 		"""
 		Constructor
-		
+
 		Keywords arguments:
 		parent -- the parent QWidget
 		"""
-	
+
 		QtGui.QTableWidget.__init__(self, parent)
 		self.unsorted = True
-		
+
 	def refresh(self):
-	
+
 		"""Updates and restores the variable inspector"""
-		
-		if self.main_window.experiment.debug:
-			print "variable_inspector.refresh()"
-		
+
+		debug.msg()
+
 		if self.unsorted:
 			self.sortItems(0, QtCore.Qt.AscendingOrder)
 			self.unsorted = False
@@ -83,8 +83,8 @@ class variable_inspector(QtGui.QTableWidget):
 			self.setItem(i, 1, sortable(val, "%s_%s_%s" % (val,var,item)))
 			self.setItem(i, 2, sortable(item, "%s_%s_%s" % (item,var,val)))
 			i += 1
-		self.setRowCount(i)					
-		self.setSortingEnabled(True)					
+		self.setRowCount(i)
+		self.setSortingEnabled(True)
 		self.setCurrentCell(row, col)
-		self.verticalScrollBar().setSliderPosition(scrollpos)	
+		self.verticalScrollBar().setSliderPosition(scrollpos)
 

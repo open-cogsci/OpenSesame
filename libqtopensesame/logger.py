@@ -15,6 +15,7 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
+from libopensesame import debug
 import libopensesame.logger
 import libqtopensesame.qtitem
 from PyQt4 import QtCore, QtGui
@@ -233,8 +234,7 @@ class logger(libopensesame.logger.logger, libqtopensesame.qtitem.qtitem):
 		i = 0
 		for item in self.experiment.items:
 			if item in self.experiment.unused_items:
-				if self.experiment.debug:
-					print "logger.suggest_variables(): ignoring variables from '%s'" % item
+				debug.msg("ignoring variables from '%s'" % item)
 				continue
 			if self.experiment.items[item].item_type in ("loop", "keyboard_response", "mouse_response"):
 				for var, val in self.experiment.items[item].var_info():
@@ -297,8 +297,7 @@ class logger(libopensesame.logger.logger, libqtopensesame.qtitem.qtitem):
 		"""
 
 		if from_name in self.logvars:
-			if self.experiment.debug:
-				print "logger.rename_var(): '%s' has been renamed to '%s'" % (from_name, to_name)
+			debug.msg("'%s' has been renamed to '%s'" % (from_name, to_name))
 			resp = QtGui.QMessageBox.question(self.experiment.main_window, "Use new name in logger?",
 				"Do you want to use the new name in the logger item '%s' as well?" % self.name,
 				QtGui.QMessageBox.Yes, QtGui.QMessageBox.No)

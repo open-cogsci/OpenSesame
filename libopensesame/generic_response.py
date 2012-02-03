@@ -18,7 +18,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 import random
 import openexp.keyboard
 import openexp.mouse
-from libopensesame import exceptions
+from libopensesame import exceptions, debug
 
 class generic_response:
 
@@ -37,7 +37,7 @@ class generic_response:
 	- media_player
 	- srbox
 	"""
-	
+
 	auto_response = "a"
 
 	def prepare_timeout(self):
@@ -67,34 +67,33 @@ class generic_response:
 			self.sleep(random.randint(200, 1000))
 		else:
 			self.sleep(random.randint(min(self._timeout, 200), self._timeout))
-			
+
 		if self._allowed_responses == None:
 			resp = self.auto_response
 		else:
 			resp = random.choice(self._allowed_responses)
-		
-		if self.experiment.debug:
-			print "generic_response.auto_responder(): responding '%s'" % resp
+
+		debug.msg("generic_response.auto_responder(): responding '%s'" % resp)
 		return resp, self.time()
 
 	def process_response_keypress(self, retval):
 
 		"""Process a keypress response"""
 
-		self.experiment.start_response_interval = self.sri			
+		self.experiment.start_response_interval = self.sri
 		key, self.experiment.end_response_interval = retval
 		self.experiment.response = self._keyboard.to_chr(key)
-		self.synonyms = self._keyboard.synonyms(self.experiment.response)		
+		self.synonyms = self._keyboard.synonyms(self.experiment.response)
 
 	def process_response_mouseclick(self, retval):
 
 		"""Process a mouseclick response"""
 
-		self.experiment.start_response_interval = self.sri			
-		self.experiment.response, pos, self.experiment.end_response_interval = retval		
+		self.experiment.start_response_interval = self.sri
+		self.experiment.response, pos, self.experiment.end_response_interval = retval
 		self.experiment.cursor_x = pos[0]
 		self.experiment.cursor_y = pos[1]
-		
+
 	def process_response(self):
 
 		"""A generic method for handling response collection"""
@@ -124,8 +123,8 @@ class generic_response:
 		if self.has("correct_response"):
 			correct_response = self.get("correct_response")
 		else:
-			correct_response = "undefined"			
-		
+			correct_response = "undefined"
+
 		if correct_response == "undefined":
 			self.experiment.correct = "undefined"
 		else:
@@ -134,7 +133,7 @@ class generic_response:
 					self.experiment.correct = 1
 					self.experiment.total_correct += 1
 				else:
-					self.experiment.correct = 0			
+					self.experiment.correct = 0
 			else:
 				if self.experiment.response == correct_response:
 					self.experiment.correct = 1
@@ -174,7 +173,7 @@ class generic_response:
 		if self.experiment.start_response_interval == None:
 			self.sri = self.get("time_%s" % self.name)
 		else:
-			self.sri = self.experiment.start_response_interval		
+			self.sri = self.experiment.start_response_interval
 
 	def prepare_timeout(self):
 
@@ -189,7 +188,7 @@ class generic_response:
 			except:
 				raise exceptions.runtime_error("'%s' is not a valid timeout in item '%s'. Expecting a positive integer or 'infinite'." % (self.get("timeout"), self.name))
 			if self._timeout < 0:
-				raise exceptions.runtime_error("'%s' is not a valid timeout in item '%s'. Expecting a positive integer or 'infinite'." % (self.get("timeout"), self.name))				
+				raise exceptions.runtime_error("'%s' is not a valid timeout in item '%s'. Expecting a positive integer or 'infinite'." % (self.get("timeout"), self.name))
 
 	def prepare_compensation(self):
 
@@ -209,16 +208,16 @@ class generic_response:
 		"""Prepare the allowed responses"""
 
 		# Prepare the allowed responses
-		dur = self.get("duration")				
+		dur = self.get("duration")
 		if self.has("allowed_responses"):
 			if dur == "keypress":
 
 				# Prepare valid keypress responses
 				l = str(self.get("allowed_responses")).split(";")
 				self._allowed_responses = l
-				
+
 			elif dur == "mouseclick":
-				
+
 				# Prepare valid mouseclick responses
 				self._allowed_responses = []
 				for r in str(self.get("allowed_responses")).split(";"):
@@ -240,7 +239,7 @@ class generic_response:
 			if len(self._allowed_responses) == 0:
 				raise exceptions.runtime_error("'%s' are not valid allowed responses in keyboard_response '%s'" % (self.get("allowed_responses"), self.name))
 		else:
-			self._allowed_responses = None		
+			self._allowed_responses = None
 
 	def prepare_duration(self):
 
@@ -249,7 +248,7 @@ class generic_response:
 		if type(self.get("duration")) == int:
 
 			# Prepare a duration in milliseconds
-			self._duration = int(self.get("duration"))			
+			self._duration = int(self.get("duration"))
 			if self._duration == 0:
 				self._duration_func = self.dummy
 			else:
@@ -289,32 +288,32 @@ class generic_response:
 
 		if self.experiment.auto_response:
 			self._duration_func = self.auto_responder
-		else:		
+		else:
 			# Prepare mouseclick
 			self._mouse = openexp.mouse.mouse(self.experiment)
 			self._mouse.set_timeout(self._timeout)
-			self._mouse.set_buttonlist(self._allowed_responses)				
+			self._mouse.set_buttonlist(self._allowed_responses)
 			self._duration_func = self._mouse.get_click
 
 	def prepare(self):
-	
+
 		"""A generic method for preparing a response item"""
 
 		self.prepare_timeout()
 		self.prepare_allowed_responses()
-		self.prepare_duration()			
+		self.prepare_duration()
 
 	def sleep_for_duration(self):
-	
+
 		"""Sleep for a specified time"""
-		
-		self.sleep(self._duration)	
-		
+
+		self.sleep(self._duration)
+
 	def sleep_for_comp_duration(self):
-	
+
 		"""Sleep for a specified time, taking the compensation into account"""
-		
-		self.sleep(self._duration - self._compensation)									
+
+		self.sleep(self._duration - self._compensation)
 
 	def var_info(self):
 
@@ -328,7 +327,7 @@ class generic_response:
 		l = []
 		l.append( ("response_%s" % self.get("name"), "[Depends on response]") )
 		l.append( ("correct_%s" % self.get("name"), "[Depends on response]") )
-		l.append( ("response_time_%s" % self.get("name"), "[Depends on response]") )		
+		l.append( ("response_time_%s" % self.get("name"), "[Depends on response]") )
 		l.append( ("response", "[Depends on response]") )
 		l.append( ("correct", "[Depends on response]") )
 		l.append( ("response_time", "[Depends on response]") )
