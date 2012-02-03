@@ -212,6 +212,20 @@ class qtopensesame(QtGui.QMainWindow):
 		self.ui.dock_stdout.visibilityChanged.connect( \
 			self.ui.action_show_stdout.setChecked)
 
+		# Initialize keyboard shortcuts
+		self.ui.shortcut_itemtree = QtGui.QShortcut( \
+			QtGui.QKeySequence(), self, self.ui.itemtree.setFocus)
+		self.ui.shortcut_tabwidget = QtGui.QShortcut( \
+			QtGui.QKeySequence(), self, self.ui.tabwidget.setFocus)
+		self.ui.shortcut_stdout = QtGui.QShortcut( \
+			QtGui.QKeySequence(), self, self.ui.edit_stdout.setFocus)
+		self.ui.shortcut_variables = QtGui.QShortcut( \
+			QtGui.QKeySequence(), self, \
+			self.ui.edit_variable_filter.setFocus)
+		self.ui.shortcut_pool = QtGui.QShortcut( \
+			QtGui.QKeySequence(), self, \
+			self.ui.pool_widget.ui.edit_pool_filter.setFocus)
+
 		# On Mac OS (darwin) hide, the run in Window functionality
 		if sys.platform == "darwin":
 			self.ui.action_run_in_window.setDisabled(True)
@@ -303,6 +317,18 @@ class qtopensesame(QtGui.QMainWindow):
 		self.opensesamerun = config.get_config("opensesamerun")
 		self.experiment.auto_response = config.get_config("auto_response")
 		self.style = config.get_config("style")
+
+		# Set the keyboard shortcuts
+		self.ui.shortcut_itemtree.setKey(QtGui.QKeySequence( \
+			config.get_config("shortcut_itemtree")))
+		self.ui.shortcut_tabwidget.setKey(QtGui.QKeySequence( \
+			config.get_config("shortcut_tabwidget")))
+		self.ui.shortcut_stdout.setKey(QtGui.QKeySequence( \
+			config.get_config("shortcut_stdout")))
+		self.ui.shortcut_pool.setKey(QtGui.QKeySequence( \
+			config.get_config("shortcut_pool")))
+		self.ui.shortcut_variables.setKey(QtGui.QKeySequence( \
+			config.get_config("shortcut_variables")))
 
 		# Unpack the string with recent files and only remember those that still exist
 		self.recent_files = []

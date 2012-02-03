@@ -115,18 +115,19 @@ class tree_overview(QtGui.QTreeWidget):
 		else:
 			e.ignore()
 
-	def contextMenuEvent(self, e):
+	def context_menu(self, item, pos=None):
 
 		"""
-		Show a context menu
+		Present a context menu for an item.
 
 		Arguments:
-		e -- the content menu event
+		item -- a QTreeWidgetItem
+
+		Keyword arguments:
+		A position for the top-left of the menu (default=None)
 		"""
 
-		target_item = self.itemAt(e.pos())
-		if target_item == None:
-			return
+		target_item = item
 		item_name = str(target_item.text(0))
 		parent_item = target_item.parent()
 		if parent_item != None:
@@ -135,7 +136,8 @@ class tree_overview(QtGui.QTreeWidget):
 			parent_name = None
 		index = None
 		if parent_name in self.main_window.experiment.items:
-			parent_type = self.main_window.experiment.items[parent_name].item_type
+			parent_type = \
+				self.main_window.experiment.items[parent_name].item_type
 
 			# If the parent is a sequence, get the position of the item in the
 			# sequence, because the name by itself is ambiguous since the name
@@ -151,8 +153,26 @@ class tree_overview(QtGui.QTreeWidget):
 		if item_name not in self.main_window.experiment.items:
 			return
 		item = self.main_window.experiment.items[item_name]
-		m = item_context_menu.item_context_menu("Item", self, item, parent_name, index)
-		m.popup(e.globalPos())
+		m = item_context_menu.item_context_menu("Item", self, item, \
+			parent_name, index)
+
+		if pos == None:
+			m.popup(self.mapToGlobal(self.pos()))
+		else:
+			m.popup(pos)
+
+	def contextMenuEvent(self, e):
+
+		"""
+		Show a context menu at the cursor position
+
+		Arguments:
+		e -- the content menu event
+		"""
+
+		item = self.itemAt(e.pos())
+		self.context_menu(item, e.globalPos())
+
 
 	def keyPressEvent(self, e):
 
@@ -166,5 +186,8 @@ class tree_overview(QtGui.QTreeWidget):
 		QtGui.QTreeWidget.keyPressEvent(self, e)
 		if e.key() in [QtCore.Qt.Key_Up, QtCore.Qt.Key_Down, \
 			QtCore.Qt.Key_PageUp, QtCore.Qt.Key_PageDown, QtCore.Qt.Key_Home, \
-			QtCore.Qt.Key_End]:
+			QtCore.Qt.Key_End, QtCore.Qt.Key_Return]:
 			self.main_window.open_item(self.currentItem())
+		elif e.key() == QtCore.Qt.Key_Space:
+			self.context_menu(self.currentItem())
+
