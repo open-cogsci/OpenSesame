@@ -228,10 +228,10 @@ class scintilla(QsciScintilla):
 		"""
 
 		if not set_modified:
-			self.textChanged.disconnect()
+			_m = self.isModified()
 		self.setText(s)
 		if not set_modified:
-			self.textChanged.connect(self._parent.setModified)
+			self.setModified(_m)
 
 	def focusOutEvent(self, e):
 

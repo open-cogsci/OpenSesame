@@ -1416,6 +1416,7 @@ class qtopensesame(QtGui.QMainWindow):
 
 		# Redo the get_ready loop until no items report having done
 		# anything
+		debug.msg()
 		redo = True
 		done = []
 		while redo:
@@ -1424,6 +1425,7 @@ class qtopensesame(QtGui.QMainWindow):
 				if item not in done:
 					done.append(item)
 					if self.experiment.items[item].get_ready():
+						debug.msg("'%s' did something" % item)
 						redo = True
 						break
 
@@ -1698,7 +1700,6 @@ class qtopensesame(QtGui.QMainWindow):
 		self.build_item_list()
 		self.refresh_variable_inspector()
 		self.refresh_pool()
-		#self.set_unsaved()
 		self.lock_refresh = False
 		self.set_busy(False)
 
@@ -1722,22 +1723,17 @@ class qtopensesame(QtGui.QMainWindow):
 
 		self.set_busy(True)
 		debug.msg(changed_item)
-
 		self.general_tab_widget.set_header_label()
-
 		index = self.ui.tabwidget.currentIndex()
 
 		for i in range(self.ui.tabwidget.count()):
-
 				w = self.ui.tabwidget.widget(i)
-
 				if hasattr(w, "edit_item") and (changed_item == None or w.edit_item == changed_item) and w.edit_item in self.experiment.items:
 					debug.msg("reopening edit tab %s" % changed_item)
 					self.ui.tabwidget.removeTab(i)
 					self.experiment.items[w.edit_item].open_edit_tab(i, False)
 					w = self.ui.tabwidget.widget(i)
 					w.edit_item = changed_item
-
 				if hasattr(w, "script_item") and (changed_item == None or w.script_item == changed_item) and w.script_item in self.experiment.items:
 					debug.msg("reopening script tab %s" % changed_item)
 					self.ui.tabwidget.removeTab(i)
@@ -1746,7 +1742,6 @@ class qtopensesame(QtGui.QMainWindow):
 					w.script_item = changed_item
 
 		self.ui.tabwidget.setCurrentIndex(index)
-
 		self.lock_refresh = False
 		self.set_busy(False)
 
@@ -2034,7 +2029,7 @@ class qtopensesame(QtGui.QMainWindow):
 
 		# Create a new item and return if it fails
 		if type(add_func) != str:
-			new_item = add_func(False, parent = target)
+			new_item = add_func(False, parent=target)
 		else:
 			new_item = self.add_item(add_func, False)
 		if new_item == None:
@@ -2044,7 +2039,8 @@ class qtopensesame(QtGui.QMainWindow):
 		if target == "__start__":
 			self.experiment.start = new_item
 		else:
-			self.experiment.items[target].items.insert(index, (new_item, "always"))
+			self.experiment.items[target].items.insert(index, (new_item, \
+				"always"))
 
 		self.refresh(target)
 		if select:

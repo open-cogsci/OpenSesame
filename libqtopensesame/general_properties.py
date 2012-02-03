@@ -296,8 +296,8 @@ class general_properties(QtGui.QWidget):
 		self.set_header_label()
 
 		# Select the start item
-		self.main_window.experiment.item_combobox(self.main_window.experiment.start, \
-			[], self.ui.combobox_start)
+		self.main_window.experiment.item_combobox( \
+			self.main_window.experiment.start, [], self.ui.combobox_start)
 
 		# Select the backend
 		backend = openexp.backend_info.match(self.main_window.experiment)
@@ -311,27 +311,35 @@ class general_properties(QtGui.QWidget):
 
 		# Set the resolution
 		try:
-			self.ui.spinbox_width.setValue(int(self.main_window.experiment.width))
-			self.ui.spinbox_height.setValue(int(self.main_window.experiment.height))
+			self.ui.spinbox_width.setValue(int( \
+				self.main_window.experiment.width))
+			self.ui.spinbox_height.setValue(int( \
+				self.main_window.experiment.height))
 		except:
-			self.main_window.experiment.notify("Failed to parse the resolution. Expecting positive numeric values.")
+			self.main_window.experiment.notify( \
+				"Failed to parse the resolution. Expecting positive numeric values.")
 
 		# Set the timing compensation
 		try:
-			self.ui.spinbox_compensation.setValue(int(self.main_window.experiment.compensation))
+			self.ui.spinbox_compensation.setValue(int( \
+				self.main_window.experiment.compensation))
 		except:
-			self.main_window.experiment.notify("Failed to parse timing compensation. Expecting a numeric value.")
+			self.main_window.experiment.notify( \
+				"Failed to parse timing compensation. Expecting a numeric value.")
 
 		# Set the colors
-		self.ui.edit_foreground.setText(str(self.main_window.experiment.foreground))
-		self.ui.edit_background.setText(str(self.main_window.experiment.background))
+		self.ui.edit_foreground.setText(str( \
+			self.main_window.experiment.foreground))
+		self.ui.edit_background.setText(str( \
+			self.main_window.experiment.background))
 
 		# Re-generate the opensesame script
 		try:
 			self.edit_script.edit.setPlainText( \
 				self.main_window.experiment.to_string(), set_modified=False)
 		except libopensesame.exceptions.script_error as e:
-			self.main_window.experiment.notify("</>Failed to generate script:</b> %s" % e)
+			self.main_window.experiment.notify( \
+				"</>Failed to generate script:</b> %s" % e)
 			self.edit_script.edit.setText("Failed to generate script!")
 
 		self.init_backend_settings()
