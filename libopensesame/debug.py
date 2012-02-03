@@ -44,7 +44,8 @@ def msg(msg="", reason=None):
 	if reason != None:
 		print "[%s]" % reason,
 	print "%s: %s" % (parse_stack(st[1]), msg)
-	st = st[1:]
+	st = st[2:]
+	st.reverse()
 	if stack:
 		i = 1
 		while len(st) > 0:
