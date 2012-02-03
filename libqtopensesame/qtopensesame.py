@@ -312,8 +312,9 @@ class qtopensesame(QtGui.QMainWindow):
 
 		self.ui.action_enable_auto_response.setChecked(self.experiment.auto_response)
 		self.ui.action_show_info_in_overview.setChecked(config.get_config("overview_info"))
-		self.ui.action_onetabmode.setChecked(config.get_config("onetabmode"))
 		self.toggle_overview_info()
+		self.ui.action_onetabmode.setChecked(config.get_config("onetabmode"))
+		self.toggle_onetabmode()
 
 		if config.get_config("toolbar_text"):
 			self.ui.toolbar_main.setToolButtonStyle(QtCore.Qt.ToolButtonTextUnderIcon)
@@ -1373,7 +1374,7 @@ class qtopensesame(QtGui.QMainWindow):
 		if name in self.experiment.items:
 			self.experiment.items[name].open_edit_tab()
 
-	def open_item(self, widget, dummy = None):
+	def open_item(self, widget, dummy=None):
 
 		"""
 		Open a tab belonging to a widget in the item tree
