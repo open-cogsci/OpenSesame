@@ -61,4 +61,6 @@ if enabled:
 	else:
 		msg("debug mode enabled (stacktrace off)")
 else:
-	msg = lambda x: None
+	# Replace the message function with a dummy function to turn off debugging
+	# output
+	msg = lambda x=None: None
