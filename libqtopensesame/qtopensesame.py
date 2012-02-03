@@ -573,6 +573,11 @@ class qtopensesame(QtGui.QMainWindow):
 		config.set_config("onetabmode", self.ui.action_onetabmode.isChecked())
 		if config.get_config("onetabmode"):
 			self.close_other_tabs()
+			if self.ui.tabwidget.count() == 0:
+				self.open_general_tab()
+		self.ui.tabwidget.setTabsClosable(not config.get_config("onetabmode"))
+		self.ui.action_close_other_tabs.setEnabled( \
+			not config.get_config("onetabmode"))
 
 	def tab_index_changed(self, index):
 
