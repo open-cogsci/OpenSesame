@@ -17,6 +17,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 
 from PyQt4 import QtCore, QtGui
 from libqtopensesame import draggables, item_context_menu
+from libopensesame import debug
 
 
 class tree_overview(QtGui.QTreeWidget):
@@ -153,3 +154,17 @@ class tree_overview(QtGui.QTreeWidget):
 		m = item_context_menu.item_context_menu("Item", self, item, parent_name, index)
 		m.popup(e.globalPos())
 
+	def keyPressEvent(self, e):
+
+		"""
+		Capture key presses to auto-activate selected items
+
+		Arguments:
+		e -- a QKeyEvent
+		"""
+
+		QtGui.QTreeWidget.keyPressEvent(self, e)
+		if e.key() in [QtCore.Qt.Key_Up, QtCore.Qt.Key_Down, \
+			QtCore.Qt.Key_PageUp, QtCore.Qt.Key_PageDown, QtCore.Qt.Key_Home, \
+			QtCore.Qt.Key_End]:
+			self.main_window.open_item(self.currentItem())
