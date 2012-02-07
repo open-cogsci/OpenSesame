@@ -345,14 +345,16 @@ class inline_editor(QtGui.QFrame):
 		search_hbox.addWidget(self.indent_button)
 		search_hbox.addWidget(self.unindent_button)
 		if notification != None:
-			search_hbox.addWidget(QtGui.QLabel("<small>%s</small>" % notification))
+			search_hbox.addWidget(QtGui.QLabel("<small>%s</small>" % \
+				notification))
 		search_hbox.addStretch()
 		search_hbox.addWidget(self.modified)
 		search_hbox.addWidget(self.apply)
 		search_hbox.setContentsMargins(0, 0, 0, 0)
 
 	 	main_widget = QtGui.QFrame()
-	 	main_widget.setFrameStyle(QtGui.QFrame.StyledPanel | QtGui.QFrame.Sunken)
+	 	main_widget.setFrameStyle(QtGui.QFrame.StyledPanel | \
+			QtGui.QFrame.Sunken)
 		main_hbox = QtGui.QHBoxLayout(main_widget)
 		main_hbox.setSpacing(0)
 		main_hbox.setMargin(0)
