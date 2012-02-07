@@ -71,13 +71,15 @@ class replace_dialog(QtGui.QDialog):
 		"""
 
 		if self.ui.edit_search.text() in self.ui.edit_replace.text():
-			QtGui.QMessageBox.information(self, "Oops!", "The replacement string cannot contain the search string.")
+			QtGui.QMessageBox.information(self, "Oops!", \
+				"The replacement string cannot contain the search string.")
 			return
 		i = 0
 		while self.search():
 			i += 1
 			self.replace()
-		QtGui.QMessageBox.information(self, "Replace all", "%d occurence(s) have been replaced" % i)
+		QtGui.QMessageBox.information(self, "Replace all", \
+			"%d occurence(s) have been replaced" % i)
 
 class python_lexer(QsciLexerPython):
 
@@ -156,7 +158,7 @@ class scintilla(QsciScintilla):
 		self.setMarginLineNumbers(0, get_config("scintilla_line_numbers"))
 
 		# Set the right margin
-		self.SendScintilla(QsciScintilla.SCI_SETHSCROLLBAR, 0) # Disable scrollbar
+		self.SendScintilla(QsciScintilla.SCI_SETHSCROLLBAR, 0)
 		self.setEdgeColumn(80)
 		if get_config("scintilla_right_margin"):
 			self.setEdgeMode(QsciScintilla.EdgeLine)
@@ -191,11 +193,14 @@ class scintilla(QsciScintilla):
 			self.setBraceMatching(QsciScintilla.NoBraceMatch)
 
 		# Set syntax highlightinh
-		if get_config("scintilla_syntax_highlighting") and (self.syntax == "python" or self.syntax == "opensesame"):
+		if get_config("scintilla_syntax_highlighting") and \
+			(self.syntax == "python" or self.syntax == "opensesame"):
 			self.setLexer(python_lexer(font))
-			for i in range(16): # There are 16 properties that need to be forced
-				self.SendScintilla(QsciScintilla.SCI_STYLESETFONT, i, font.family())
-				self.SendScintilla(QsciScintilla.SCI_STYLESETSIZE, i, font.pointSize())
+			for i in range(16): # There are properties that need to be forced
+				self.SendScintilla(QsciScintilla.SCI_STYLESETFONT, i, \
+					font.family())
+				self.SendScintilla(QsciScintilla.SCI_STYLESETSIZE, i, \
+					font.pointSize())
 		else:
 			self.setLexer(None)
 			self.SendScintilla(QsciScintilla.SCI_CLEARDOCUMENTSTYLE)
@@ -260,10 +265,12 @@ class scintilla(QsciScintilla):
 		"""
 
 		# Process the Alt + A shortcut to apply changes
-		if e.key() == QtCore.Qt.Key_A and e.modifiers() == QtCore.Qt.AltModifier:
+		if e.key() == QtCore.Qt.Key_A and \
+			e.modifiers() == QtCore.Qt.AltModifier:
 			self._parent.apply.clicked.emit(True)
 			return
-		if e.key() == QtCore.Qt.Key_F and e.modifiers() == QtCore.Qt.ControlModifier:
+		if e.key() == QtCore.Qt.Key_F and \
+			e.modifiers() == QtCore.Qt.ControlModifier:
 			self._parent.perform_replace()
 			return
 		QsciScintilla.keyPressEvent(self, e)
@@ -298,22 +305,26 @@ class inline_editor(QtGui.QFrame):
 		self.search.returnPressed.connect(self.perform_search)
 		self.search.setToolTip("Enter a search term")
 
-		self.search_button = QtGui.QPushButton(self.experiment.icon("search"), "")
+		self.search_button = QtGui.QPushButton(self.experiment.icon("search"), \
+			"")
 		self.search_button.setIconSize(QtCore.QSize(16, 16))
 		self.search_button.setToolTip("Search")
 		self.search_button.clicked.connect(self.perform_search)
 
-		self.replace_button = QtGui.QPushButton(self.experiment.icon("replace"), "")
+		self.replace_button = QtGui.QPushButton( \
+			self.experiment.icon("replace"), "")
 		self.replace_button.setIconSize(QtCore.QSize(16, 16))
 		self.replace_button.setToolTip("Replace")
 		self.replace_button.clicked.connect(self.perform_replace)
 
-		self.indent_button = QtGui.QPushButton(self.experiment.icon("indent"), "")
+		self.indent_button = QtGui.QPushButton(self.experiment.icon("indent"), \
+			"")
 		self.indent_button.setIconSize(QtCore.QSize(16, 16))
 		self.indent_button.setToolTip("Indent one level (tab)")
 		self.indent_button.clicked.connect(self.indent)
 
-		self.unindent_button = QtGui.QPushButton(self.experiment.icon("unindent"), "")
+		self.unindent_button = QtGui.QPushButton( \
+			self.experiment.icon("unindent"), "")
 		self.unindent_button.setIconSize(QtCore.QSize(16, 16))
 		self.unindent_button.setToolTip("Unindent one level (super + tab)")
 		self.unindent_button.clicked.connect(self.unindent)
