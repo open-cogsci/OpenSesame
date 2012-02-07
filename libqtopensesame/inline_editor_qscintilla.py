@@ -20,6 +20,7 @@ from PyQt4 import QtGui, QtCore
 from PyQt4.Qsci import QsciScintilla, QsciScintillaBase, QsciLexerPython
 from libqtopensesame import replace_dialog_ui
 from libqtopensesame.config import get_config, set_config
+from libopensesame import debug
 
 class replace_dialog(QtGui.QDialog):
 
@@ -234,9 +235,10 @@ class scintilla(QsciScintilla):
 
 		if not set_modified:
 			_m = self.isModified()
+		debug.msg("set_modified = %s" % set_modified)
 		self.setText(s)
 		if not set_modified:
-			self.setModified(_m)
+			self._parent.setModified(_m)
 
 	def focusOutEvent(self, e):
 
