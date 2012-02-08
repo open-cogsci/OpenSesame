@@ -83,6 +83,10 @@ class inline_script(item.item):
 
 		item.item.prepare(self)
 
+		# Convenience variables
+		exp = self.experiment
+		win = self.experiment.window
+
 		try:
 			self.cprepare = compile(self._prepare, "<string>", "exec")
 		except Exception as e:
@@ -107,6 +111,10 @@ class inline_script(item.item):
 		tab of an inline_script item in the GUI is used as a body for this
 		function.
 		</DOC>"""
+
+		# Convenience variables
+		exp = self.experiment
+		win = self.experiment.window
 
 		try:
 			exec(self.crun)

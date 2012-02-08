@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'resources/replace_dialog.ui'
 #
-# Created: Thu Feb  2 20:46:17 2012
+# Created: Wed Feb  8 18:21:34 2012
 #      by: PyQt4 UI code generator 4.8.5
 #
 # WARNING! All changes made in this file will be lost!

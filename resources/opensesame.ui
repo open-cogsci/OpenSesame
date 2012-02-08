@@ -618,7 +618,7 @@ background-color: #729fcf;</string>
   <action name="action_open">
    <property name="icon">
     <iconset resource="icons.qrc">
-     <normaloff>:/icons/open.png</normaloff>:/icons/open.png</iconset>
+     <normaloff>:/icons/open_large.png</normaloff>:/icons/open_large.png</iconset>
    </property>
    <property name="text">
     <string>Open</string>
@@ -633,7 +633,7 @@ background-color: #729fcf;</string>
   <action name="action_save">
    <property name="icon">
     <iconset resource="icons.qrc">
-     <normaloff>:/icons/save.png</normaloff>:/icons/save.png</iconset>
+     <normaloff>:/icons/save_large.png</normaloff>:/icons/save_large.png</iconset>
    </property>
    <property name="text">
     <string>Save</string>
@@ -648,7 +648,7 @@ background-color: #729fcf;</string>
   <action name="action_save_as">
    <property name="icon">
     <iconset resource="icons.qrc">
-     <normaloff>:/icons/save.png</normaloff>:/icons/save.png</iconset>
+     <normaloff>:/icons/saveas_large.png</normaloff>:/icons/saveas_large.png</iconset>
    </property>
    <property name="text">
     <string>Save as</string>
@@ -767,7 +767,7 @@ background-color: #729fcf;</string>
   </action>
   <action name="action_close_all_tabs">
    <property name="icon">
-    <iconset resource="icons.qrc">
+    <iconset>
      <normaloff>:/icons/closeothertabs_large.png</normaloff>:/icons/closeothertabs_large.png</iconset>
    </property>
    <property name="text">
@@ -777,7 +777,7 @@ background-color: #729fcf;</string>
   <action name="action_close_other_tabs">
    <property name="icon">
     <iconset resource="icons.qrc">
-     <normaloff>:/icons/closeothertabs_large.png</normaloff>:/icons/closeothertabs_large.png</iconset>
+     <normaloff>:/icons/close_large.png</normaloff>:/icons/close_large.png</iconset>
    </property>
    <property name="text">
     <string>Close other tabs</string>
@@ -990,7 +990,7 @@ background-color: #729fcf;</string>
    </property>
    <property name="icon">
     <iconset resource="icons.qrc">
-     <normaloff>:/icons/item_info_large.png</normaloff>:/icons/item_info_large.png</iconset>
+     <normaloff>:/icons/iteminfo_large.png</normaloff>:/icons/iteminfo_large.png</iconset>
    </property>
    <property name="text">
     <string>Show info in overview</string>
@@ -1061,12 +1061,12 @@ background-color: #729fcf;</string>
    <slot>clear()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>245</x>
-     <y>405</y>
+     <x>950</x>
+     <y>178</y>
     </hint>
     <hint type="destinationlabel">
-     <x>125</x>
-     <y>405</y>
+     <x>869</x>
+     <y>177</y>
     </hint>
    </hints>
   </connection>
@@ -1077,8 +1077,8 @@ background-color: #729fcf;</string>
    <slot>clear()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>948</x>
-     <y>662</y>
+     <x>990</x>
+     <y>557</y>
     </hint>
     <hint type="destinationlabel">
      <x>499</x>

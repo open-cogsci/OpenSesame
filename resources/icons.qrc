@@ -1,12 +1,13 @@
 <RCC>
   <qresource prefix="icons">
+    <file>save_large.png</file>
+    <file>saveas_large.png</file>
     <file>runinwindow_large.png</file>
-    <file>closeothertabs_large.png</file>
     <file>onetabmode_large.png</file>
     <file>colorpicker.png</file>
     <file>options.png</file>
-    <file>item_info_large.png</file>
     <file>recent_large.png</file>
+    <file>iteminfo_large.png</file>
     <file>update.png</file>
     <file>options_large.png</file>
     <file>close.png</file>
@@ -76,9 +77,7 @@
     <file>logger.png</file>
     <file>loop_large.png</file>
     <file>loop.png</file>
-    <file>open.png</file>
-    <file>opensesame.ui</file>
-    <file>save.png</file>
+    <file>open_large.png</file>
     <file>script_large.png</file>
     <file>script.png</file>
     <file>sequence_large.png</file>

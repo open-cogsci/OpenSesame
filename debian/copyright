@@ -31,6 +31,8 @@ Licenses: GPL-2+
 
 Files: resources/*.png
 Copyright: 2010-2011 Matthieu James <matthieu.james@gmail.com>
+   2012 Daniel Fore <Daniel.p.Fore@gmail.com>
+   2012 Sebastiaan Mathot <s.mathot@cogsci.nl>
 Licenses: GPL-3
 
 Files: debian/*
