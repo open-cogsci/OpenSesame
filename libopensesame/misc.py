@@ -25,6 +25,8 @@ import sys
 version = "0.26-pre1"
 codename = "Earnest Einstein"
 
+use_global_resources = "--no-global-resources" not in sys.argv
+
 def change_working_dir():
 
 	"""A horrifyingly ugly hack to change the working directory under Windows"""
@@ -183,10 +185,11 @@ def resource(name):
 	The full path to the resource
 	"""
 
+	global use_global_resources
 	path = os.path.join("resources", name)
 	if os.path.exists(path):
 		return os.path.join("resources", name)
-	if os.name == "posix":
+	if os.name == "posix" and use_global_resources:
 		path = "/usr/share/opensesame/resources/%s" % name
 		if os.path.exists(path):
 			return path

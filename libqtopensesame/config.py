@@ -57,6 +57,7 @@ config = {
 	"shortcut_variables" : "Ctrl+5",
 	"show_startup_tip" : True,
 	"style" : "",
+	"theme" : "default",
 	"toolbar_text" : False,
 	"new_experiment_dialog" : True,
 	"opensesamerun" : False,

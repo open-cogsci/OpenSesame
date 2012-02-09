@@ -23,7 +23,7 @@ class widget_item(QtGui.QLabel):
 
 	"""A draggable toolbar icon"""
 
-	def __init__(self, icon, item, main_window):
+	def __init__(self, pixmap, item, main_window):
 
 		"""
 		Constructor
@@ -36,7 +36,8 @@ class widget_item(QtGui.QLabel):
 
 		self.main_window = main_window
 		self.item = item
-		self.pixmap = QtGui.QPixmap(icon)
+		#self.pixmap = QtGui.QPixmap(icon)
+		self.pixmap = pixmap
 
 		QtGui.QLabel.__init__(self)
 		self.setMargin(6)
@@ -169,7 +170,8 @@ class toolbar_items(QtGui.QToolBar):
 		# Add the core items
 		content = []
 		for item in self.main_window.experiment.core_items:
-			content.append(widget_item(self.main_window.experiment.resource("%s_large.png" % item), item, self.main_window))
+			content.append(widget_item(self.main_window.theme.qpixmap( \
+				"os-%s" % item), item, self.main_window))
 		self.add_content(content)
 
 		# Create a dictionary of plugins by category. We also maintain a list
@@ -191,7 +193,9 @@ class toolbar_items(QtGui.QToolBar):
 			content = []
 			for plugin in cat_dict[cat]:
 				debug.msg("adding plugin '%s'" % plugin)
-				content.append(widget_item(libopensesame.plugins.plugin_icon_large(plugin), plugin, self.main_window))
+				pixmap = QtGui.QPixmap( \
+					libopensesame.plugins.plugin_icon_large(plugin))
+				content.append(widget_item(pixmap, plugin, self.main_window))
 			self.add_content(content)
 
 

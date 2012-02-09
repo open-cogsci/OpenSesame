@@ -112,7 +112,7 @@ class experiment(libopensesame.experiment.experiment):
 		# First build the tree of the experiment
 		widget = QtGui.QTreeWidgetItem(self.ui.itemtree)
 		widget.setText(0, self.title)
-		widget.setIcon(0, self.icon("experiment"))
+		widget.setIcon(0, self.icon("os-experiment"))
 		widget.setToolTip(0, "General options")
 		widget.name = "__general__"
 		self.ui.itemtree.insertTopLevelItem(0, widget)
@@ -263,7 +263,14 @@ class experiment(libopensesame.experiment.experiment):
 		A QIcon
 		"""
 
-		return QtGui.QIcon(self.resource("%s.png" % name))
+
+		# TODO This hack is necessary to avoid breaking compatibility with the
+		# old resources system, but plug-ins should not do this anymore!
+		if (name+".png") in self.resources:
+			return QtGui.QIcon(self.resource(name+".png"))
+
+		#debug.msg(reason="deprecated")
+		return self.main_window.theme.qicon(name)
 
 	def label_image(self, name):
 
@@ -276,11 +283,15 @@ class experiment(libopensesame.experiment.experiment):
 		Returns:
 		A QLabel
 		"""
-
-		label = QtGui.QLabel()
-		label.setPixmap(QtGui.QPixmap(self.resource("%s.png" % name)))
-
-		return label
+		
+		# TODO This hack is necessary to avoid breaking compatibility with the
+		# old resources system, but plug-ins should not do this anymore!
+		if (name+"_large.png") in self.resources:
+			l = QtGui.QLabel()
+			l.setPixmap(QtGui.QPixmap(self.resource(name+"_large.png")))
+			return l
+			
+		return self.main_window.theme.qlabel(name)
 
 	def item_combobox(self, select=None, exclude = [], c = None):
 

@@ -35,8 +35,9 @@ class draggable_handle(QtGui.QLabel):
 		"""
 
 		QtGui.QLabel.__init__(self)
-		self.setPixmap(QtGui.QPixmap( \
-			parent._list.sequence.experiment.resource("handle.png")))
+		self.setPixmap( \
+			parent._list.sequence.experiment.main_window.theme.qpixmap( \
+			"handle"))
 		self.setAcceptDrops(True)
 		self.setCursor(QtCore.Qt.OpenHandCursor)
 		self.container = parent

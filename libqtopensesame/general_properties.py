@@ -48,7 +48,7 @@ class general_properties(QtGui.QWidget):
 		button_help.clicked.connect(self.open_help_tab)
 		button_help.setToolTip("Tell me more about OpenSesame!")
 		header_hbox = QtGui.QHBoxLayout()
-		header_hbox.addWidget(self.main_window.experiment.label_image("experiment_large"))
+		header_hbox.addWidget(self.main_window.experiment.label_image("experiment"))
 		header_hbox.addWidget(self.header_widget)
 		header_hbox.addStretch()
 		header_hbox.addWidget(button_help)

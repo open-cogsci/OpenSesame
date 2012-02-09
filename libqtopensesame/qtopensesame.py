@@ -229,6 +229,8 @@ class qtopensesame(QtGui.QMainWindow):
 		# On Mac OS (darwin) hide, the run in Window functionality
 		if sys.platform == "darwin":
 			self.ui.action_run_in_window.setDisabled(True)
+			
+		self.load_theme()			
 
 		# Create the initial experiment
 		self.experiment = experiment.experiment(self, "New experiment", \
@@ -237,9 +239,6 @@ class qtopensesame(QtGui.QMainWindow):
 		# Initialize the tabs
 		self.init_general_tab()
 		self.init_unused_tab()
-
-		# Set the style sheet
-		self.setStyleSheet(open(self.experiment.resource("stylesheet.qss")).read())
 
 		# Build the items toolbar
 		self.set_status("Welcome to OpenSesame %s" % self.version)
@@ -251,6 +250,14 @@ class qtopensesame(QtGui.QMainWindow):
 		self.clean_autosave()
 		self.parse_command_line()
 		self.set_unsaved(False)
+		
+	def load_theme(self):
+	
+		"""Load the icons and qss style"""
+		
+		# Load the theme
+		from libqtopensesame.theme import theme
+		self.theme = theme(self)		
 
 	def parse_command_line(self):
 
@@ -280,6 +287,8 @@ class qtopensesame(QtGui.QMainWindow):
 			help="Load PyLink before PyGame (necessary for using the Eyelink plug-ins in non-dummy mode)")
 		group.add_option("--ipython", action="store_true", dest="ipython", \
 			help="Enable the IPython interpreter")
+		group.add_option("--no-global-resources", action="store_true", dest="no_global_resources", \
+			help="Do not use global resources on *nix")
 		parser.add_option_group(group)
 		self.options, args = parser.parse_args(sys.argv)
 		if self.options.run and self.options.run_in_window:

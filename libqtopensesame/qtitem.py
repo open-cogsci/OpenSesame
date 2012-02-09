@@ -168,7 +168,7 @@ class qtitem(object):
 		self.header = header_widget(self)
 
 		self.header_hbox = QtGui.QHBoxLayout()
-		self.header_hbox.addWidget(self.experiment.label_image("%s_large" % self.item_type))
+		self.header_hbox.addWidget(self.experiment.label_image(self.item_type))
 		self.header_hbox.addWidget(self.header)
 		self.header_hbox.addStretch()
 		self.header_hbox.setContentsMargins(0, 0, 0, 16)
@@ -176,13 +176,15 @@ class qtitem(object):
 		button = QtGui.QPushButton(self.experiment.icon("script"), "")
 		button.setToolTip("Edit script")
 		button.setIconSize(QtCore.QSize(16, 16))
-		QtCore.QObject.connect(button, QtCore.SIGNAL("clicked()"), self.open_script_tab)
+		QtCore.QObject.connect(button, QtCore.SIGNAL("clicked()"), \
+			self.open_script_tab)
 		self.header_hbox.addWidget(button)
 
 		button = QtGui.QPushButton(self.experiment.icon("help"), "")
 		button.setToolTip("Tell me more about the %s item" % self.item_type)
 		button.setIconSize(QtCore.QSize(16, 16))
-		QtCore.QObject.connect(button, QtCore.SIGNAL("clicked()"), self.open_help_tab)
+		QtCore.QObject.connect(button, QtCore.SIGNAL("clicked()"), \
+			self.open_help_tab)
 		self.header_hbox.addWidget(button)
 
 		self.header_widget = QtGui.QWidget()
@@ -554,7 +556,8 @@ class qtitem(object):
 
 		return ""
 
-	def item_tree_widget(self, toplevel, icon = None, name = None, tooltip = None, info = None):
+	def item_tree_widget(self, toplevel, icon=None, name=None, tooltip=None, \
+		info=None):
 
 		"""
 		Create a single item tree widget
@@ -563,10 +566,10 @@ class qtitem(object):
 		toplevel -- the toplevel item
 
 		Keyword arguments:
-		icon -- an icon name or None for default (default = None)
-		name -- the name of the item or None for default (default = None)
-		info -- info for the second column or None for default (default = None)
-		tooltip -- the tooltip or None for default (default = None)
+		icon -- an icon name or None for default (default=None)
+		name -- the name of the item or None for default (default=None)
+		info -- info for the second column or None for default (default=None)
+		tooltip -- the tooltip or None for default (default=None)
 
 		Returns:
 		A QTreeWidgetItem
@@ -577,7 +580,8 @@ class qtitem(object):
 		if icon == None:
 			icon = self.item_type
 		if tooltip == None:
-			tooltip = "Type: %s\nDescription: %s" % (self.item_type, self.description)
+			tooltip = "Type: %s\nDescription: %s" % (self.item_type, \
+				self.description)
 		if info == None:
 			info = self.item_tree_info()
 		font = QtGui.QFont()

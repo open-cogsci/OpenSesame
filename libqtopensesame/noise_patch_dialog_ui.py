@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'resources/noise_patch_dialog.ui'
+# Form implementation generated from reading ui file 'resources/ui/noise_patch_dialog.ui'
 #
-# Created: Wed Feb  8 18:21:34 2012
+# Created: Thu Feb  9 17:10:47 2012
 #      by: PyQt4 UI code generator 4.8.5
 #
 # WARNING! All changes made in this file will be lost!
