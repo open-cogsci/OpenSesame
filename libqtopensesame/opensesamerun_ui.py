@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'resources/ui/opensesamerun.ui'
 #
-# Created: Fri Feb 10 16:26:08 2012
+# Created: Fri Feb 10 18:09:44 2012
 #      by: PyQt4 UI code generator 4.8.5
 #
 # WARNING! All changes made in this file will be lost!
@@ -17,7 +17,7 @@ except AttributeError:
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName(_fromUtf8("MainWindow"))
-        MainWindow.resize(372, 375)
+        MainWindow.resize(396, 376)
         MainWindow.setWindowTitle(QtGui.QApplication.translate("MainWindow", "OpenSesame Run", None, QtGui.QApplication.UnicodeUTF8))
         icon = QtGui.QIcon()
         icon.addPixmap(QtGui.QPixmap(_fromUtf8(":/icons/experiment.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
@@ -34,16 +34,16 @@ class Ui_MainWindow(object):
         self.horizontalLayout_5.setMargin(5)
         self.horizontalLayout_5.setMargin(0)
         self.horizontalLayout_5.setObjectName(_fromUtf8("horizontalLayout_5"))
-        self.label_5 = QtGui.QLabel(self.widget_5)
+        self.label_opensesamerun = QtGui.QLabel(self.widget_5)
         sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Fixed, QtGui.QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.label_5.sizePolicy().hasHeightForWidth())
-        self.label_5.setSizePolicy(sizePolicy)
-        self.label_5.setText(_fromUtf8(""))
-        self.label_5.setPixmap(QtGui.QPixmap(_fromUtf8(":/icons/experiment_large.png")))
-        self.label_5.setObjectName(_fromUtf8("label_5"))
-        self.horizontalLayout_5.addWidget(self.label_5)
+        sizePolicy.setHeightForWidth(self.label_opensesamerun.sizePolicy().hasHeightForWidth())
+        self.label_opensesamerun.setSizePolicy(sizePolicy)
+        self.label_opensesamerun.setText(_fromUtf8(""))
+        self.label_opensesamerun.setPixmap(QtGui.QPixmap(_fromUtf8(":/icons/experiment_large.png")))
+        self.label_opensesamerun.setObjectName(_fromUtf8("label_opensesamerun"))
+        self.horizontalLayout_5.addWidget(self.label_opensesamerun)
         self.label_6 = QtGui.QLabel(self.widget_5)
         self.label_6.setText(QtGui.QApplication.translate("MainWindow", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
@@ -234,4 +234,3 @@ class Ui_MainWindow(object):
     def retranslateUi(self, MainWindow):
         pass
 
-import icons_rc
