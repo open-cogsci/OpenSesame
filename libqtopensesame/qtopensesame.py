@@ -2100,7 +2100,7 @@ class qtopensesame(QtGui.QMainWindow):
 			return
 
 		if target == "__start__":
-			self.experiment.start = new_item
+			self.experiment.set("start", new_item)
 		else:
 			self.experiment.items[target].items.insert(index, (new_item, \
 				"always"))
