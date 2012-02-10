@@ -69,7 +69,7 @@ class theme:
 		return QtGui.QIcon.fromTheme(name, QtGui.QIcon(os.path.join( \
 			misc.resource("theme"), "fallback.png")))
 			
-	def qpixmap(self, icon):
+	def qpixmap(self, icon, size=None):
 	
 		"""
 		Get an icon from the theme
@@ -77,15 +77,24 @@ class theme:
 		Arguments:
 		icon -- the icon name
 		
+		Keyword arguments:
+		size -- the size of the icon or None for default (default=None)
+		
 		Returns:
 		A QPixmap		
 		"""	
 		
-		if icon in self.icon_map:
-			name, size = self.icon_map[icon]
+		if size == None:
+			if icon in self.icon_map:
+				name, size = self.icon_map[icon]
+			else:
+				name = icon
+				size = self.default_icon_size			
 		else:
-			name = icon
-			size = self.default_icon_size
+			if icon in self.icon_map:
+				name = self.icon_map[icon][0]
+			else:
+				name = icon					
 		return QtGui.QIcon.fromTheme(name, QtGui.QIcon(os.path.join( \
 			misc.resource("theme"), "fallback.png"))).pixmap(size)
 			
@@ -155,4 +164,16 @@ class theme:
 		debug.msg(path)
 		self.main_window.setStyleSheet(open(path).read())
 		
+	def set_toolbar_size(self, size):
+	
+		"""
+		Control the size of the icons in the toolbar
 		
+		Arguments:
+		size -- a size in pixels		
+		"""
+	
+		self.main_window.ui.toolbar_main.setIconSize(QtCore.QSize(size, size))
+		self.main_window.ui.toolbar_items.setIconSize(QtCore.QSize(size, size))
+		self.main_window.ui.toolbar_items.build()
+

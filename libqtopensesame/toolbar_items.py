@@ -18,6 +18,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 from PyQt4 import QtCore, QtGui
 import libopensesame.plugins
 from libopensesame import debug
+from libqtopensesame import config
 
 class widget_item(QtGui.QLabel):
 
@@ -36,7 +37,6 @@ class widget_item(QtGui.QLabel):
 
 		self.main_window = main_window
 		self.item = item
-		#self.pixmap = QtGui.QPixmap(icon)
 		self.pixmap = pixmap
 
 		QtGui.QLabel.__init__(self)
@@ -154,7 +154,7 @@ class toolbar_items(QtGui.QToolBar):
 		Populate the toolbar with items (core and plugins)
 
 		Keywords arguments:
-		dummy -- a dummy argument
+		dummy -- a dummy argument (default=None)
 		"""
 
 		# Only do something if the main_window has been attached
@@ -170,8 +170,9 @@ class toolbar_items(QtGui.QToolBar):
 		# Add the core items
 		content = []
 		for item in self.main_window.experiment.core_items:
-			content.append(widget_item(self.main_window.theme.qpixmap( \
-				"os-%s" % item), item, self.main_window))
+			content.append(widget_item(self.main_window.theme.qpixmap(item, \
+				size=config.get_config("toolbar_size")), item, \
+				self.main_window))
 		self.add_content(content)
 
 		# Create a dictionary of plugins by category. We also maintain a list
@@ -193,8 +194,12 @@ class toolbar_items(QtGui.QToolBar):
 			content = []
 			for plugin in cat_dict[cat]:
 				debug.msg("adding plugin '%s'" % plugin)
-				pixmap = QtGui.QPixmap( \
-					libopensesame.plugins.plugin_icon_large(plugin))
+				if config.get_config("toolbar_size") == 16:
+					pixmap = QtGui.QPixmap( \
+						libopensesame.plugins.plugin_icon_small(plugin))
+				else:
+					pixmap = QtGui.QPixmap( \
+						libopensesame.plugins.plugin_icon_large(plugin))					
 				content.append(widget_item(pixmap, plugin, self.main_window))
 			self.add_content(content)
 

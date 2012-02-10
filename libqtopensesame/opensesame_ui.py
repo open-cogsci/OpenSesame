@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'resources/ui/opensesame.ui'
 #
-# Created: Fri Feb 10 15:18:06 2012
+# Created: Fri Feb 10 16:03:08 2012
 #      by: PyQt4 UI code generator 4.8.5
 #
 # WARNING! All changes made in this file will be lost!
@@ -529,6 +529,10 @@ class Ui_MainWindow(object):
         self.action_onetabmode.setText(QtGui.QApplication.translate("MainWindow", "One tab mode", None, QtGui.QApplication.UnicodeUTF8))
         self.action_onetabmode.setToolTip(QtGui.QApplication.translate("MainWindow", "Enable one tab mode", None, QtGui.QApplication.UnicodeUTF8))
         self.action_onetabmode.setObjectName(_fromUtf8("action_onetabmode"))
+        self.action_compact_toolbar = QtGui.QAction(MainWindow)
+        self.action_compact_toolbar.setCheckable(True)
+        self.action_compact_toolbar.setText(QtGui.QApplication.translate("MainWindow", "Compact toolbar", None, QtGui.QApplication.UnicodeUTF8))
+        self.action_compact_toolbar.setObjectName(_fromUtf8("action_compact_toolbar"))
         self.menu_recent_files.addAction(self.actionDummy)
         self.menu_file.addAction(self.action_new)
         self.menu_file.addAction(self.action_open)
@@ -558,6 +562,7 @@ class Ui_MainWindow(object):
         self.menu_view.addAction(self.action_close_other_tabs)
         self.menu_view.addAction(self.action_onetabmode)
         self.menu_view.addAction(self.action_show_info_in_overview)
+        self.menu_view.addAction(self.action_compact_toolbar)
         self.menu_view.addSeparator()
         self.menu_view.addAction(self.action_show_overview)
         self.menu_view.addAction(self.action_show_variable_inspector)
