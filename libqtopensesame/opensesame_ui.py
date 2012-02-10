@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'resources/ui/opensesame.ui'
 #
-# Created: Thu Feb  9 17:10:46 2012
+# Created: Fri Feb 10 15:18:06 2012
 #      by: PyQt4 UI code generator 4.8.5
 #
 # WARNING! All changes made in this file will be lost!
@@ -135,7 +135,6 @@ class Ui_MainWindow(object):
         self.horizontalLayout_2.setObjectName(_fromUtf8("horizontalLayout_2"))
         self.label_variables_search = QtGui.QLabel(self.widget)
         self.label_variables_search.setText(_fromUtf8(""))
-        self.label_variables_search.setPixmap(QtGui.QPixmap(_fromUtf8(":/icons/variable_inspector.png")))
         self.label_variables_search.setObjectName(_fromUtf8("label_variables_search"))
         self.horizontalLayout_2.addWidget(self.label_variables_search)
         self.edit_variable_filter = QtGui.QLineEdit(self.widget)

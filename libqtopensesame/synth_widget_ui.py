@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'resources/ui/synth_widget.ui'
 #
-# Created: Thu Feb  9 17:10:46 2012
+# Created: Fri Feb 10 15:18:07 2012
 #      by: PyQt4 UI code generator 4.8.5
 #
 # WARNING! All changes made in this file will be lost!
@@ -174,16 +174,16 @@ class Ui_Form(object):
         self.horizontalLayout.setMargin(5)
         self.horizontalLayout.setMargin(0)
         self.horizontalLayout.setObjectName(_fromUtf8("horizontalLayout"))
-        self.label_3 = QtGui.QLabel(self.widget)
+        self.label_synth = QtGui.QLabel(self.widget)
         sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Fixed, QtGui.QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.label_3.sizePolicy().hasHeightForWidth())
-        self.label_3.setSizePolicy(sizePolicy)
-        self.label_3.setText(_fromUtf8(""))
-        self.label_3.setPixmap(QtGui.QPixmap(_fromUtf8(":/icons/synth.png")))
-        self.label_3.setObjectName(_fromUtf8("label_3"))
-        self.horizontalLayout.addWidget(self.label_3)
+        sizePolicy.setHeightForWidth(self.label_synth.sizePolicy().hasHeightForWidth())
+        self.label_synth.setSizePolicy(sizePolicy)
+        self.label_synth.setText(_fromUtf8(""))
+        self.label_synth.setPixmap(QtGui.QPixmap(_fromUtf8(":/icons/synth.png")))
+        self.label_synth.setObjectName(_fromUtf8("label_synth"))
+        self.horizontalLayout.addWidget(self.label_synth)
         self.label_9 = QtGui.QLabel(self.widget)
         font = QtGui.QFont()
         font.setPointSize(11)
@@ -289,16 +289,16 @@ class Ui_Form(object):
         self.horizontalLayout_2.setMargin(5)
         self.horizontalLayout_2.setMargin(0)
         self.horizontalLayout_2.setObjectName(_fromUtf8("horizontalLayout_2"))
-        self.label_5 = QtGui.QLabel(self.widget_2)
+        self.label_synth_script = QtGui.QLabel(self.widget_2)
         sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Fixed, QtGui.QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.label_5.sizePolicy().hasHeightForWidth())
-        self.label_5.setSizePolicy(sizePolicy)
-        self.label_5.setText(_fromUtf8(""))
-        self.label_5.setPixmap(QtGui.QPixmap(_fromUtf8(":/icons/about_large.png")))
-        self.label_5.setObjectName(_fromUtf8("label_5"))
-        self.horizontalLayout_2.addWidget(self.label_5)
+        sizePolicy.setHeightForWidth(self.label_synth_script.sizePolicy().hasHeightForWidth())
+        self.label_synth_script.setSizePolicy(sizePolicy)
+        self.label_synth_script.setText(_fromUtf8(""))
+        self.label_synth_script.setPixmap(QtGui.QPixmap(_fromUtf8(":/icons/about_large.png")))
+        self.label_synth_script.setObjectName(_fromUtf8("label_synth_script"))
+        self.horizontalLayout_2.addWidget(self.label_synth_script)
         self.label_15 = QtGui.QLabel(self.widget_2)
         self.label_15.setText(QtGui.QApplication.translate("Form", "One of the controls is defined using variables and therefore the controls are disabled. Use the script editor to edit the synth.", None, QtGui.QApplication.UnicodeUTF8))
         self.label_15.setWordWrap(True)

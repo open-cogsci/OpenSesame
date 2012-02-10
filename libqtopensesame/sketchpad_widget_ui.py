@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'resources/ui/sketchpad_widget.ui'
 #
-# Created: Thu Feb  9 17:10:46 2012
+# Created: Fri Feb 10 15:18:07 2012
 #      by: PyQt4 UI code generator 4.8.5
 #
 # WARNING! All changes made in this file will be lost!
@@ -418,7 +418,7 @@ class Ui_Form(object):
         self.scrollArea.setWidgetResizable(True)
         self.scrollArea.setObjectName(_fromUtf8("scrollArea"))
         self.scrollAreaWidgetContents = QtGui.QWidget()
-        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 839, 226))
+        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 849, 238))
         self.scrollAreaWidgetContents.setObjectName(_fromUtf8("scrollAreaWidgetContents"))
         self.verticalLayout_5 = QtGui.QVBoxLayout(self.scrollAreaWidgetContents)
         self.verticalLayout_5.setObjectName(_fromUtf8("verticalLayout_5"))
@@ -447,4 +447,3 @@ class Ui_Form(object):
     def retranslateUi(self, Form):
         pass
 
-import icons_rc

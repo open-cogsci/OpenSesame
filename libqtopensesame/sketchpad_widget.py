@@ -1,3 +1,5 @@
+#-*- coding:utf-8 -*-
+
 """
 This file is part of OpenSesame.
 
@@ -15,7 +17,10 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
-from libopensesame import exceptions
+__author__ = "Sebastiaan Mathot"
+__license__ = "GPLv3"
+
+from libopensesame import exceptions, debug
 from libqtopensesame import sketchpad_widget_ui, gabor_dialog_ui, noise_patch_dialog_ui, pool_widget
 import openexp.canvas
 from PyQt4 import QtCore, QtGui
@@ -404,6 +409,7 @@ class sketchpad_widget(QtGui.QWidget):
 		
 		self.set_line()
 		self.refresh()
+		self.sketchpad.experiment.main_window.theme.load_icons(self.ui)
 		
 	def edit_script(self):
 	
@@ -686,6 +692,7 @@ class sketchpad_widget(QtGui.QWidget):
 		d = QtGui.QDialog(self)		
 		d.ui = gabor_dialog_ui.Ui_Dialog()
 		d.ui.setupUi(d)
+		self.sketchpad.experiment.main_window.theme.load_icons(d.ui)
 		resp = d.exec_()
 		if resp == QtGui.QDialog.Accepted:		
 			env = ["gaussian", "linear", "circular", "rectangle"]
@@ -718,6 +725,7 @@ class sketchpad_widget(QtGui.QWidget):
 		d = QtGui.QDialog(self)		
 		d.ui = noise_patch_dialog_ui.Ui_Dialog()
 		d.ui.setupUi(d)
+		self.sketchpad.experiment.main_window.theme.load_icons(d.ui)
 		resp = d.exec_()
 		if resp == QtGui.QDialog.Accepted:		
 			env = ["gaussian", "linear", "circular", "rectangle"]

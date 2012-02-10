@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'resources/ui/pool_widget.ui'
 #
-# Created: Thu Feb  9 17:10:46 2012
+# Created: Fri Feb 10 15:18:07 2012
 #      by: PyQt4 UI code generator 4.8.5
 #
 # WARNING! All changes made in this file will be lost!
@@ -30,16 +30,16 @@ class Ui_Form(object):
         self.horizontalLayout.setMargin(5)
         self.horizontalLayout.setMargin(0)
         self.horizontalLayout.setObjectName(_fromUtf8("horizontalLayout"))
-        self.label = QtGui.QLabel(self.widget)
+        self.label_pool = QtGui.QLabel(self.widget)
         sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Fixed, QtGui.QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.label.sizePolicy().hasHeightForWidth())
-        self.label.setSizePolicy(sizePolicy)
-        self.label.setText(_fromUtf8(""))
-        self.label.setPixmap(QtGui.QPixmap(_fromUtf8(":/icons/pool_large.png")))
-        self.label.setObjectName(_fromUtf8("label"))
-        self.horizontalLayout.addWidget(self.label)
+        sizePolicy.setHeightForWidth(self.label_pool.sizePolicy().hasHeightForWidth())
+        self.label_pool.setSizePolicy(sizePolicy)
+        self.label_pool.setText(_fromUtf8(""))
+        self.label_pool.setPixmap(QtGui.QPixmap(_fromUtf8(":/icons/pool_large.png")))
+        self.label_pool.setObjectName(_fromUtf8("label_pool"))
+        self.horizontalLayout.addWidget(self.label_pool)
         self.label_3 = QtGui.QLabel(self.widget)
         self.label_3.setText(QtGui.QApplication.translate("Form", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
@@ -62,11 +62,11 @@ class Ui_Form(object):
         self.horizontalLayout_3.setMargin(0)
         self.horizontalLayout_3.setMargin(0)
         self.horizontalLayout_3.setObjectName(_fromUtf8("horizontalLayout_3"))
-        self.label_2 = QtGui.QLabel(self.widget_pool)
-        self.label_2.setText(_fromUtf8(""))
-        self.label_2.setPixmap(QtGui.QPixmap(_fromUtf8(":/icons/variable_inspector.png")))
-        self.label_2.setObjectName(_fromUtf8("label_2"))
-        self.horizontalLayout_3.addWidget(self.label_2)
+        self.label_pool_search = QtGui.QLabel(self.widget_pool)
+        self.label_pool_search.setText(_fromUtf8(""))
+        self.label_pool_search.setPixmap(QtGui.QPixmap(_fromUtf8(":/icons/variable_inspector.png")))
+        self.label_pool_search.setObjectName(_fromUtf8("label_pool_search"))
+        self.horizontalLayout_3.addWidget(self.label_pool_search)
         self.edit_pool_filter = QtGui.QLineEdit(self.widget_pool)
         self.edit_pool_filter.setToolTip(QtGui.QApplication.translate("Form", "Enter a filter", None, QtGui.QApplication.UnicodeUTF8))
         self.edit_pool_filter.setObjectName(_fromUtf8("edit_pool_filter"))

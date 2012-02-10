@@ -272,9 +272,6 @@ background-color: #729fcf;</string>
           <property name="text">
            <string/>
           </property>
-          <property name="pixmap">
-           <pixmap>:/icons/variable_inspector.png</pixmap>
-          </property>
          </widget>
         </item>
         <item>

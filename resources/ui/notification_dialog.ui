@@ -34,7 +34,7 @@ background-color: #729fcf;</string>
        <number>5</number>
       </property>
       <item>
-       <widget class="QLabel" name="label">
+       <widget class="QLabel" name="label_notification">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
           <horstretch>0</horstretch>
@@ -45,7 +45,7 @@ background-color: #729fcf;</string>
          <string/>
         </property>
         <property name="pixmap">
-         <pixmap resource="icons.qrc">:/icons/about_large.png</pixmap>
+         <pixmap>:/icons/about_large.png</pixmap>
         </property>
        </widget>
       </item>
@@ -87,9 +87,7 @@ background-color: #729fcf;</string>
    </item>
   </layout>
  </widget>
- <resources>
-  <include location="icons.qrc"/>
- </resources>
+ <resources/>
  <connections>
   <connection>
    <sender>buttonBox</sender>

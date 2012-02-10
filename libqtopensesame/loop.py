@@ -50,8 +50,10 @@ class loop_table(libqtopensesame.good_looking_table.good_looking_table):
 		icons["paste"] = self.loop.experiment.icon("paste")
 		icons["clear"] = self.loop.experiment.icon("clear")
 
-		libqtopensesame.good_looking_table.good_looking_table.__init__(self, rows, columns, icons, parent)
-		QtCore.QObject.connect(self, QtCore.SIGNAL("cellChanged(int, int)"), self.apply_changes)
+		libqtopensesame.good_looking_table.good_looking_table.__init__(self, \
+			rows, columns, icons, parent)
+		QtCore.QObject.connect(self, QtCore.SIGNAL("cellChanged(int, int)"), \
+			self.apply_changes)
 
 	def paste(self):
 
@@ -311,7 +313,8 @@ class loop(libopensesame.loop.loop, libqtopensesame.qtitem.qtitem):
 					# Ask for confirmation (only the first time)
 					if not empty and confirm:
 						resp = QtGui.QMessageBox.question(self.experiment.ui.centralwidget, \
-							"Remove cycles?", "By reducing the number of cycles, data will be lost from the table. Do you wish to continue?", QtGui.QMessageBox.Yes, QtGui.QMessageBox.No)
+							"Remove cycles?", "By reducing the number of cycles, data will be lost from the table. Do you wish to continue?", \
+							QtGui.QMessageBox.Yes, QtGui.QMessageBox.No)
 						if resp == QtGui.QMessageBox.No:
 							return
 						confirm = False
@@ -423,6 +426,7 @@ class loop(libopensesame.loop.loop, libqtopensesame.qtitem.qtitem):
 		a = QtGui.QDialog(self.experiment.main_window.ui.centralwidget)
 		a.ui = libqtopensesame.loop_wizard_dialog_ui.Ui_Dialog()
 		a.ui.setupUi(a)
+		self.experiment.main_window.theme.load_icons(a.ui)
 		a.ui.table_example.hide()
 
 		a.ui.table_wizard.setRowCount(255)

@@ -38,6 +38,7 @@ class start_new_dialog(QtGui.QDialog):
 		self.main_window = main_window
 		self.ui = start_new_dialog_ui.Ui_Dialog()
 		self.ui.setupUi(self)
+		self.main_window.theme.load_icons(self.ui)
 
 		templates = ("default.opensesame", "Default template"), ("extended_template.opensesame", "Extended template")
 

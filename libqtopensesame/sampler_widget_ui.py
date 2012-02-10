@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'resources/ui/sampler_widget.ui'
 #
-# Created: Thu Feb  9 17:10:46 2012
+# Created: Fri Feb 10 15:18:07 2012
 #      by: PyQt4 UI code generator 4.8.5
 #
 # WARNING! All changes made in this file will be lost!
@@ -40,16 +40,16 @@ class Ui_Form(object):
         self.horizontalLayout_2.setMargin(5)
         self.horizontalLayout_2.setMargin(0)
         self.horizontalLayout_2.setObjectName(_fromUtf8("horizontalLayout_2"))
-        self.label_10 = QtGui.QLabel(self.widget_2)
+        self.label_script = QtGui.QLabel(self.widget_2)
         sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Fixed, QtGui.QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.label_10.sizePolicy().hasHeightForWidth())
-        self.label_10.setSizePolicy(sizePolicy)
-        self.label_10.setText(_fromUtf8(""))
-        self.label_10.setPixmap(QtGui.QPixmap(_fromUtf8(":/icons/about_large.png")))
-        self.label_10.setObjectName(_fromUtf8("label_10"))
-        self.horizontalLayout_2.addWidget(self.label_10)
+        sizePolicy.setHeightForWidth(self.label_script.sizePolicy().hasHeightForWidth())
+        self.label_script.setSizePolicy(sizePolicy)
+        self.label_script.setText(_fromUtf8(""))
+        self.label_script.setPixmap(QtGui.QPixmap(_fromUtf8(":/icons/about_large.png")))
+        self.label_script.setObjectName(_fromUtf8("label_script"))
+        self.horizontalLayout_2.addWidget(self.label_script)
         self.label_15 = QtGui.QLabel(self.widget_2)
         self.label_15.setText(QtGui.QApplication.translate("Form", "One of the controls is defined using variables and therefore the controls are disabled. Use the script editor to edit the sampler.", None, QtGui.QApplication.UnicodeUTF8))
         self.label_15.setWordWrap(True)
@@ -207,16 +207,16 @@ class Ui_Form(object):
         self.horizontalLayout.setMargin(5)
         self.horizontalLayout.setMargin(0)
         self.horizontalLayout.setObjectName(_fromUtf8("horizontalLayout"))
-        self.label_3 = QtGui.QLabel(self.widget)
+        self.label_sampler = QtGui.QLabel(self.widget)
         sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Fixed, QtGui.QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.label_3.sizePolicy().hasHeightForWidth())
-        self.label_3.setSizePolicy(sizePolicy)
-        self.label_3.setText(_fromUtf8(""))
-        self.label_3.setPixmap(QtGui.QPixmap(_fromUtf8(":/icons/sampler.png")))
-        self.label_3.setObjectName(_fromUtf8("label_3"))
-        self.horizontalLayout.addWidget(self.label_3)
+        sizePolicy.setHeightForWidth(self.label_sampler.sizePolicy().hasHeightForWidth())
+        self.label_sampler.setSizePolicy(sizePolicy)
+        self.label_sampler.setText(_fromUtf8(""))
+        self.label_sampler.setPixmap(QtGui.QPixmap(_fromUtf8(":/icons/sampler.png")))
+        self.label_sampler.setObjectName(_fromUtf8("label_sampler"))
+        self.horizontalLayout.addWidget(self.label_sampler)
         self.label_9 = QtGui.QLabel(self.widget)
         font = QtGui.QFont()
         font.setPointSize(11)

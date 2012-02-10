@@ -28,7 +28,7 @@ color: rgb(255, 255, 255);</string>
        <number>5</number>
       </property>
       <item>
-       <widget class="QLabel" name="label">
+       <widget class="QLabel" name="label_pool">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
           <horstretch>0</horstretch>
@@ -39,7 +39,7 @@ color: rgb(255, 255, 255);</string>
          <string/>
         </property>
         <property name="pixmap">
-         <pixmap resource="icons.qrc">:/icons/pool_large.png</pixmap>
+         <pixmap>:/icons/pool_large.png</pixmap>
         </property>
        </widget>
       </item>
@@ -74,12 +74,12 @@ p, li { white-space: pre-wrap; }
        <number>0</number>
       </property>
       <item>
-       <widget class="QLabel" name="label_2">
+       <widget class="QLabel" name="label_pool_search">
         <property name="text">
          <string/>
         </property>
         <property name="pixmap">
-         <pixmap resource="icons.qrc">:/icons/variable_inspector.png</pixmap>
+         <pixmap>:/icons/variable_inspector.png</pixmap>
         </property>
        </widget>
       </item>
@@ -105,7 +105,7 @@ p, li { white-space: pre-wrap; }
          <string/>
         </property>
         <property name="icon">
-         <iconset resource="icons.qrc">
+         <iconset>
           <normaloff>:/icons/clear.png</normaloff>:/icons/clear.png</iconset>
         </property>
         <property name="iconSize">
@@ -125,7 +125,7 @@ p, li { white-space: pre-wrap; }
          <string/>
         </property>
         <property name="icon">
-         <iconset resource="icons.qrc">
+         <iconset>
           <normaloff>:/icons/help.png</normaloff>:/icons/help.png</iconset>
         </property>
         <property name="iconSize">
@@ -160,7 +160,7 @@ p, li { white-space: pre-wrap; }
          <string/>
         </property>
         <property name="icon">
-         <iconset resource="icons.qrc">
+         <iconset>
           <normaloff>:/icons/add.png</normaloff>:/icons/add.png</iconset>
         </property>
        </widget>
@@ -171,7 +171,7 @@ p, li { white-space: pre-wrap; }
          <string/>
         </property>
         <property name="icon">
-         <iconset resource="icons.qrc">
+         <iconset>
           <normaloff>:/icons/refresh.png</normaloff>:/icons/refresh.png</iconset>
         </property>
        </widget>
@@ -185,7 +185,7 @@ p, li { white-space: pre-wrap; }
          <string/>
         </property>
         <property name="icon">
-         <iconset resource="icons.qrc">
+         <iconset>
           <normaloff>:/icons/browse.png</normaloff>:/icons/browse.png</iconset>
         </property>
         <property name="iconSize">
@@ -209,7 +209,7 @@ p, li { white-space: pre-wrap; }
           <string>View as list</string>
          </property>
          <property name="icon">
-          <iconset resource="icons.qrc">
+          <iconset>
            <normaloff>:/icons/variable_inspector.png</normaloff>:/icons/variable_inspector.png</iconset>
          </property>
         </item>
@@ -218,7 +218,7 @@ p, li { white-space: pre-wrap; }
           <string>View as icons</string>
          </property>
          <property name="icon">
-          <iconset resource="icons.qrc">
+          <iconset>
            <normaloff>:/icons/variable_inspector.png</normaloff>:/icons/variable_inspector.png</iconset>
          </property>
         </item>

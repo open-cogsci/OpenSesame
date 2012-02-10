@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'resources/ui/notification_dialog.ui'
 #
-# Created: Thu Feb  9 17:10:46 2012
+# Created: Fri Feb 10 15:18:07 2012
 #      by: PyQt4 UI code generator 4.8.5
 #
 # WARNING! All changes made in this file will be lost!
@@ -35,16 +35,16 @@ class Ui_Dialog(object):
         self.horizontalLayout.setMargin(5)
         self.horizontalLayout.setMargin(0)
         self.horizontalLayout.setObjectName(_fromUtf8("horizontalLayout"))
-        self.label = QtGui.QLabel(self.widget)
+        self.label_notification = QtGui.QLabel(self.widget)
         sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Fixed, QtGui.QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.label.sizePolicy().hasHeightForWidth())
-        self.label.setSizePolicy(sizePolicy)
-        self.label.setText(_fromUtf8(""))
-        self.label.setPixmap(QtGui.QPixmap(_fromUtf8(":/icons/about_large.png")))
-        self.label.setObjectName(_fromUtf8("label"))
-        self.horizontalLayout.addWidget(self.label)
+        sizePolicy.setHeightForWidth(self.label_notification.sizePolicy().hasHeightForWidth())
+        self.label_notification.setSizePolicy(sizePolicy)
+        self.label_notification.setText(_fromUtf8(""))
+        self.label_notification.setPixmap(QtGui.QPixmap(_fromUtf8(":/icons/about_large.png")))
+        self.label_notification.setObjectName(_fromUtf8("label_notification"))
+        self.horizontalLayout.addWidget(self.label_notification)
         self.label_2 = QtGui.QLabel(self.widget)
         font = QtGui.QFont()
         font.setPointSize(11)
@@ -75,4 +75,3 @@ class Ui_Dialog(object):
     def retranslateUi(self, Dialog):
         pass
 
-import icons_rc

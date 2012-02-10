@@ -42,6 +42,7 @@ class preferences_widget(QtGui.QWidget):
 		# Setup the GUI
 		self.ui = libqtopensesame.preferences_widget_ui.Ui_Form()
 		self.ui.setupUi(self)
+		self.main_window.theme.load_icons(self.ui)
 		self.lock = False
 
 		# Connect the controls

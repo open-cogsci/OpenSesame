@@ -27,10 +27,17 @@ from PyQt4 import QtGui, QtCore
 
 class theme:
 
+	"""Handles the GUI theme"""
+
+	default_icon_size = 32
+
 	def __init__(self, main_window):
 	
 		"""
 		Constructor
+		
+		Arguments:
+		main_window -- the main_window object
 		"""
 
 		self.main_window = main_window
@@ -41,9 +48,19 @@ class theme:
 		
 		self.load_qss()
 		self.load_icon_map()
-		self.load_icons()
+		self.load_icons(self.main_window.ui)
 				
 	def qicon(self, icon):
+	
+		"""
+		Get an icon from the theme
+		
+		Arguments:
+		icon -- the icon name
+		
+		Returns:
+		A QIcon
+		"""	
 	
 		if icon in self.icon_map:
 			name, size = self.icon_map[icon]
@@ -53,16 +70,36 @@ class theme:
 			misc.resource("theme"), "fallback.png")))
 			
 	def qpixmap(self, icon):
+	
+		"""
+		Get an icon from the theme
+		
+		Arguments:
+		icon -- the icon name
+		
+		Returns:
+		A QPixmap		
+		"""	
 		
 		if icon in self.icon_map:
 			name, size = self.icon_map[icon]
 		else:
 			name = icon
-			size = 32
+			size = self.default_icon_size
 		return QtGui.QIcon.fromTheme(name, QtGui.QIcon(os.path.join( \
 			misc.resource("theme"), "fallback.png"))).pixmap(size)
 			
 	def qlabel(self, icon):
+	
+		"""
+		Get an icon from the theme
+		
+		Arguments:
+		icon -- the icon name
+		
+		Returns:
+		A QLabel		
+		"""
 	
 		l = QtGui.QLabel()
 		l.setPixmap(self.qpixmap(icon))
@@ -70,11 +107,20 @@ class theme:
 		
 	def load_icon_map(self):
 	
-		QtGui.QIcon.setThemeSearchPaths(QtGui.QIcon.themeSearchPaths() \
-			+ [self.theme_folder])
-		QtGui.QIcon.setThemeName("oscustom")
+		"""Load the icon map"""
+	
+		if os.path.exists(os.path.join(self.theme_folder, "os-custom-icons")):
+			debug.msg("using custom icon theme")
+			QtGui.QIcon.setThemeSearchPaths(QtGui.QIcon.themeSearchPaths() \
+				+ [self.theme_folder])
+			QtGui.QIcon.setThemeName("os-custom-icons")
+		else:
+			debug.msg("using default icon theme, icons may be missing", \
+				reason="warning")
 		self.icon_map = {}
-		for l in open(os.path.join(self.theme_folder, "icon_map.csv")):
+		path = os.path.join(self.theme_folder, "icon_map.csv")
+		debug.msg(path)
+		for l in open(path):
 			l = l.split(",")			
 			if len(l) == 3:
 				try:
@@ -83,20 +129,30 @@ class theme:
 					size = 32
 				self.icon_map[l[0].strip()] = l[1].strip(), size
 		
-	def load_icons(self):
+	def load_icons(self, ui):
 	
-		for i in dir(self.main_window.ui):
+		"""
+		Add icons to all icon supporting widgets in a ui object
+				
+		Arguments:
+		ui -- the ui object to load icons into
+		"""
+		
+		debug.msg()	
+		for i in dir(ui):
 			if i in self.icon_map:			
-				a = getattr(self.main_window.ui, i)
+				a = getattr(ui, i)
 				if hasattr(a, "setIcon"):
-					a.setIcon(self.qicon(self.icon_map[i][0]))
+					a.setIcon(self.qicon(i))
 				elif hasattr(a, "setPixmap"):
-					a.setPixmap(self.qpixmap(self.icon_map[i][0]))
-						
+					a.setPixmap(self.qpixmap(i))
+																		
 	def load_qss(self):
 	
+		"""Load the stylesheet"""
+			
 		path = os.path.join(self.theme_folder, "stylesheet.qss")
-		debug.msg("reading '%s'" % path)
+		debug.msg(path)
 		self.main_window.setStyleSheet(open(path).read())
 		
 		

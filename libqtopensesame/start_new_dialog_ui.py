@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'resources/ui/start_new_dialog.ui'
 #
-# Created: Thu Feb  9 17:10:47 2012
+# Created: Fri Feb 10 15:18:08 2012
 #      by: PyQt4 UI code generator 4.8.5
 #
 # WARNING! All changes made in this file will be lost!
@@ -35,16 +35,16 @@ class Ui_Dialog(object):
         self.horizontalLayout.setMargin(5)
         self.horizontalLayout.setMargin(0)
         self.horizontalLayout.setObjectName(_fromUtf8("horizontalLayout"))
-        self.label_3 = QtGui.QLabel(self.widget_2)
+        self.label_start_new = QtGui.QLabel(self.widget_2)
         sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Fixed, QtGui.QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.label_3.sizePolicy().hasHeightForWidth())
-        self.label_3.setSizePolicy(sizePolicy)
-        self.label_3.setText(_fromUtf8(""))
-        self.label_3.setPixmap(QtGui.QPixmap(_fromUtf8(":/icons/experiment_large.png")))
-        self.label_3.setObjectName(_fromUtf8("label_3"))
-        self.horizontalLayout.addWidget(self.label_3)
+        sizePolicy.setHeightForWidth(self.label_start_new.sizePolicy().hasHeightForWidth())
+        self.label_start_new.setSizePolicy(sizePolicy)
+        self.label_start_new.setText(_fromUtf8(""))
+        self.label_start_new.setPixmap(QtGui.QPixmap(_fromUtf8(":/icons/experiment_large.png")))
+        self.label_start_new.setObjectName(_fromUtf8("label_start_new"))
+        self.horizontalLayout.addWidget(self.label_start_new)
         self.label_4 = QtGui.QLabel(self.widget_2)
         font = QtGui.QFont()
         font.setPointSize(11)

@@ -98,7 +98,7 @@
                      <string/>
                     </property>
                     <property name="icon">
-                     <iconset resource="icons.qrc">
+                     <iconset>
                       <normaloff>:/icons/line_large.png</normaloff>:/icons/line_large.png</iconset>
                     </property>
                     <property name="iconSize">
@@ -127,7 +127,7 @@
                      <string/>
                     </property>
                     <property name="icon">
-                     <iconset resource="icons.qrc">
+                     <iconset>
                       <normaloff>:/icons/arrow_large.png</normaloff>:/icons/arrow_large.png</iconset>
                     </property>
                     <property name="iconSize">
@@ -153,7 +153,7 @@
                      <string/>
                     </property>
                     <property name="icon">
-                     <iconset resource="icons.qrc">
+                     <iconset>
                       <normaloff>:/icons/textline_large.png</normaloff>:/icons/textline_large.png</iconset>
                     </property>
                     <property name="iconSize">
@@ -179,7 +179,7 @@
                      <string/>
                     </property>
                     <property name="icon">
-                     <iconset resource="icons.qrc">
+                     <iconset>
                       <normaloff>:/icons/image_large.png</normaloff>:/icons/image_large.png</iconset>
                     </property>
                     <property name="iconSize">
@@ -205,7 +205,7 @@
                      <string/>
                     </property>
                     <property name="icon">
-                     <iconset resource="icons.qrc">
+                     <iconset>
                       <normaloff>:/icons/gabor.png</normaloff>:/icons/gabor.png</iconset>
                     </property>
                     <property name="iconSize">
@@ -231,7 +231,7 @@
                      <string/>
                     </property>
                     <property name="icon">
-                     <iconset resource="icons.qrc">
+                     <iconset>
                       <normaloff>:/icons/rectangle_large.png</normaloff>:/icons/rectangle_large.png</iconset>
                     </property>
                     <property name="iconSize">
@@ -257,7 +257,7 @@
                      <string/>
                     </property>
                     <property name="icon">
-                     <iconset resource="icons.qrc">
+                     <iconset>
                       <normaloff>:/icons/ellipse_large.png</normaloff>:/icons/ellipse_large.png</iconset>
                     </property>
                     <property name="iconSize">
@@ -283,7 +283,7 @@
                      <string/>
                     </property>
                     <property name="icon">
-                     <iconset resource="icons.qrc">
+                     <iconset>
                       <normaloff>:/icons/circle_large.png</normaloff>:/icons/circle_large.png</iconset>
                     </property>
                     <property name="iconSize">
@@ -309,7 +309,7 @@
                      <string/>
                     </property>
                     <property name="icon">
-                     <iconset resource="icons.qrc">
+                     <iconset>
                       <normaloff>:/icons/fixdot_large.png</normaloff>:/icons/fixdot_large.png</iconset>
                     </property>
                     <property name="iconSize">
@@ -338,7 +338,7 @@
                      <string/>
                     </property>
                     <property name="icon">
-                     <iconset resource="icons.qrc">
+                     <iconset>
                       <normaloff>:/icons/noise_patch.png</normaloff>:/icons/noise_patch.png</iconset>
                     </property>
                     <property name="iconSize">
@@ -590,7 +590,7 @@
                      <string/>
                     </property>
                     <property name="icon">
-                     <iconset resource="icons.qrc">
+                     <iconset>
                       <normaloff>:/icons/colorpicker.png</normaloff>:/icons/colorpicker.png</iconset>
                     </property>
                    </widget>
@@ -759,7 +759,7 @@
                   <string/>
                  </property>
                  <property name="pixmap">
-                  <pixmap resource="icons.qrc">:/icons/about_large.png</pixmap>
+                  <pixmap>:/icons/about_large.png</pixmap>
                  </property>
                 </widget>
                </item>
@@ -785,7 +785,7 @@
                   <string>Edit script</string>
                  </property>
                  <property name="icon">
-                  <iconset resource="icons.qrc">
+                  <iconset>
                    <normaloff>:/icons/script.png</normaloff>:/icons/script.png</iconset>
                  </property>
                 </widget>
@@ -803,8 +803,8 @@
                 <rect>
                  <x>0</x>
                  <y>0</y>
-                 <width>839</width>
-                 <height>226</height>
+                 <width>849</width>
+                 <height>238</height>
                 </rect>
                </property>
                <layout class="QVBoxLayout" name="verticalLayout_5">
@@ -842,8 +842,6 @@
    </item>
   </layout>
  </widget>
- <resources>
-  <include location="icons.qrc"/>
- </resources>
+ <resources/>
  <connections/>
 </ui>

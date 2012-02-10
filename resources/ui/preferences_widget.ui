@@ -24,8 +24,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>727</width>
-        <height>1003</height>
+        <width>721</width>
+        <height>981</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -406,7 +406,7 @@
              <string>Open backup folder</string>
             </property>
             <property name="icon">
-             <iconset resource="icons.qrc">
+             <iconset>
               <normaloff>:/icons/browse.png</normaloff>:/icons/browse.png</iconset>
             </property>
            </widget>
@@ -478,7 +478,7 @@
              <string>Check for updates now</string>
             </property>
             <property name="icon">
-             <iconset resource="icons.qrc">
+             <iconset>
               <normaloff>:/icons/update.png</normaloff>:/icons/update.png</iconset>
             </property>
            </widget>
@@ -558,9 +558,7 @@ p, li { white-space: pre-wrap; }
    </item>
   </layout>
  </widget>
- <resources>
-  <include location="icons.qrc"/>
- </resources>
+ <resources/>
  <connections>
   <connection>
    <sender>checkbox_opensesamerun</sender>

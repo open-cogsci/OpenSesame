@@ -34,7 +34,7 @@ color: rgb(255, 255, 255);</string>
        <number>5</number>
       </property>
       <item>
-       <widget class="QLabel" name="label_3">
+       <widget class="QLabel" name="label_start_new">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
           <horstretch>0</horstretch>
@@ -45,7 +45,7 @@ color: rgb(255, 255, 255);</string>
          <string/>
         </property>
         <property name="pixmap">
-         <pixmap resource="icons.qrc">:/icons/experiment_large.png</pixmap>
+         <pixmap>:/icons/experiment_large.png</pixmap>
         </property>
        </widget>
       </item>
@@ -108,7 +108,7 @@ color: rgb(255, 255, 255);</string>
                <string/>
               </property>
               <property name="pixmap">
-               <pixmap resource="icons.qrc">:/icons/wizard_large.png</pixmap>
+               <pixmap>:/icons/wizard_large.png</pixmap>
               </property>
               <property name="alignment">
                <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
@@ -148,7 +148,7 @@ color: rgb(255, 255, 255);</string>
             <string>Start with template</string>
            </property>
            <property name="icon">
-            <iconset resource="icons.qrc">
+            <iconset>
              <normaloff>:/icons/wizard.png</normaloff>:/icons/wizard.png</iconset>
            </property>
           </widget>
@@ -189,7 +189,7 @@ color: rgb(255, 255, 255);</string>
                <string/>
               </property>
               <property name="pixmap">
-               <pixmap resource="icons.qrc">:/icons/experiment_large.png</pixmap>
+               <pixmap>:/icons/experiment_large.png</pixmap>
               </property>
              </widget>
             </item>
@@ -229,7 +229,7 @@ color: rgb(255, 255, 255);</string>
                <string>Open</string>
               </property>
               <property name="icon">
-               <iconset resource="icons.qrc">
+               <iconset>
                 <normaloff>:/icons/browse.png</normaloff>:/icons/browse.png</iconset>
               </property>
              </widget>
@@ -240,7 +240,7 @@ color: rgb(255, 255, 255);</string>
                <string>Browse</string>
               </property>
               <property name="icon">
-               <iconset resource="icons.qrc">
+               <iconset>
                 <normaloff>:/icons/browse.png</normaloff>:/icons/browse.png</iconset>
               </property>
              </widget>

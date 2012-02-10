@@ -122,6 +122,7 @@ class qtopensesame(QtGui.QMainWindow):
 		# Setup the UI
 		self.ui = opensesame_ui.Ui_MainWindow()
 		self.ui.setupUi(self)
+		self.load_theme()				
 		self.ui.toolbar_items.main_window = self
 		self.ui.itemtree.main_window = self
 		self.ui.table_variables.main_window = self
@@ -151,6 +152,9 @@ class qtopensesame(QtGui.QMainWindow):
 
 		# Set the window message
 		self.window_message("Welcome to OpenSesame %s" % self.version)
+		
+		# Set the window icon
+		self.setWindowIcon(self.theme.qicon("opensesame"))
 
 		# Make the connections
 		self.ui.tabwidget.tabCloseRequested.connect(self.close_tab)
@@ -228,9 +232,7 @@ class qtopensesame(QtGui.QMainWindow):
 
 		# On Mac OS (darwin) hide, the run in Window functionality
 		if sys.platform == "darwin":
-			self.ui.action_run_in_window.setDisabled(True)
-			
-		self.load_theme()			
+			self.ui.action_run_in_window.setDisabled(True)				
 
 		# Create the initial experiment
 		self.experiment = experiment.experiment(self, "New experiment", \
@@ -754,7 +756,7 @@ class qtopensesame(QtGui.QMainWindow):
 
 		"""Open the preferences tab"""
 
-		from  libqtopensesame import preferences_widget
+		from libqtopensesame import preferences_widget
 
 		i = self.get_tab_index("__preferences__")
 		if i != None:
@@ -1298,7 +1300,7 @@ class qtopensesame(QtGui.QMainWindow):
 
 		# Set the header, with the icon, label and script button
 		header_hbox = QtGui.QHBoxLayout()
-		header_hbox.addWidget(self.experiment.label_image("unused_large"))
+		header_hbox.addWidget(self.experiment.label_image("unused"))
 		header_label = QtGui.QLabel()
 		header_label.setText("<b><font size='5'>Unused</font></b>")
 		header_hbox.addWidget(header_label)
@@ -1306,9 +1308,11 @@ class qtopensesame(QtGui.QMainWindow):
 		header_widget = QtGui.QWidget()
 		header_widget.setLayout(header_hbox)
 
-		purge_button = QtGui.QPushButton(self.experiment.icon("purge"), "Permanently delete unused items")
+		purge_button = QtGui.QPushButton(self.experiment.icon("purge"), \
+			"Permanently delete unused items")
 		purge_button.setIconSize(QtCore.QSize(16, 16))
-		QtCore.QObject.connect(purge_button, QtCore.SIGNAL("clicked()"), self.purge_unused)
+		QtCore.QObject.connect(purge_button, QtCore.SIGNAL("clicked()"), \
+			self.purge_unused)
 
 		purge_hbox = QtGui.QHBoxLayout()
 		purge_hbox.addWidget(purge_button)
@@ -1801,7 +1805,8 @@ class qtopensesame(QtGui.QMainWindow):
 			cat = libopensesame.plugins.plugin_category(plugin)
 			if cat not in cat_menu:
 				cat_menu[cat] = QtGui.QMenu(cat)
-				cat_menu[cat] = menu.addMenu(self.experiment.icon("plugins_large"), cat)
+				cat_menu[cat] = menu.addMenu(self.experiment.icon("plugin"), \
+					cat)
 			cat_menu[cat].addAction(plugin_action(self, cat_menu[cat], plugin))
 
 	def add_item(self, item_type, refresh=True, name=None):

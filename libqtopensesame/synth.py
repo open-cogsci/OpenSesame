@@ -50,6 +50,7 @@ class synth(libopensesame.synth.synth, libqtopensesame.qtitem.qtitem):
 		self.synth_widget = QtGui.QWidget()
 		self.synth_widget.ui = libqtopensesame.synth_widget_ui.Ui_Form()
 		self.synth_widget.ui.setupUi(self.synth_widget)
+		self.experiment.main_window.theme.load_icons(self.synth_widget.ui)
 
 		self.synth_widget.ui.spin_attack.valueChanged.connect(self.apply_edit_changes)
 		self.synth_widget.ui.spin_decay.valueChanged.connect(self.apply_edit_changes)

@@ -60,7 +60,8 @@ class pool_widget(QtGui.QWidget):
 		self.ui.button_browse_pool.clicked.connect(self.browse)
 		self.ui.edit_pool_filter.textChanged.connect(self.refresh)
 		self.ui.combobox_view.currentIndexChanged.connect(self.set_view)
-		self.ui.list_pool.itemActivated.connect(self.activate_file)
+		self.ui.list_pool.itemActivated.connect(self.activate_file)		
+		self.main_window.theme.load_icons(self.ui)
 
 	def help(self):
 

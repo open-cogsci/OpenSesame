@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'resources/ui/loop_wizard_dialog.ui'
 #
-# Created: Thu Feb  9 17:10:47 2012
+# Created: Fri Feb 10 15:18:07 2012
 #      by: PyQt4 UI code generator 4.8.5
 #
 # WARNING! All changes made in this file will be lost!
@@ -27,16 +27,16 @@ class Ui_Dialog(object):
         self.horizontalLayout.setMargin(0)
         self.horizontalLayout.setMargin(0)
         self.horizontalLayout.setObjectName(_fromUtf8("horizontalLayout"))
-        self.label = QtGui.QLabel(self.widget)
+        self.label_wizard = QtGui.QLabel(self.widget)
         sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Fixed, QtGui.QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.label.sizePolicy().hasHeightForWidth())
-        self.label.setSizePolicy(sizePolicy)
-        self.label.setText(_fromUtf8(""))
-        self.label.setPixmap(QtGui.QPixmap(_fromUtf8(":/icons/wizard_large.png")))
-        self.label.setObjectName(_fromUtf8("label"))
-        self.horizontalLayout.addWidget(self.label)
+        sizePolicy.setHeightForWidth(self.label_wizard.sizePolicy().hasHeightForWidth())
+        self.label_wizard.setSizePolicy(sizePolicy)
+        self.label_wizard.setText(_fromUtf8(""))
+        self.label_wizard.setPixmap(QtGui.QPixmap(_fromUtf8(":/icons/wizard_large.png")))
+        self.label_wizard.setObjectName(_fromUtf8("label_wizard"))
+        self.horizontalLayout.addWidget(self.label_wizard)
         self.label_2 = QtGui.QLabel(self.widget)
         self.label_2.setText(QtGui.QApplication.translate("Dialog", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
