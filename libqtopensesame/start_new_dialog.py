@@ -40,7 +40,9 @@ class start_new_dialog(QtGui.QDialog):
 		self.ui.setupUi(self)
 		self.main_window.theme.load_icons(self.ui)
 
-		templates = ("default.opensesame", "Default template"), ("extended_template.opensesame", "Extended template")
+		templates = (os.path.join("templates", "default.opensesame"), \
+			"Default template"), (os.path.join("templates", \
+			"extended_template.opensesame"), "Extended template")
 
 		for f in self.main_window.recent_files:
 			item = QtGui.QListWidgetItem(self.ui.list_recent)

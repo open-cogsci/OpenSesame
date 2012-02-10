@@ -237,7 +237,8 @@ class qtopensesame(QtGui.QMainWindow):
 
 		# Create the initial experiment
 		self.experiment = experiment.experiment(self, "New experiment", \
-			open(misc.resource("default.opensesame"), "r").read())
+			open(misc.resource(os.path.join("templates", \
+				"default.opensesame")), "r").read())
 
 		# Initialize the tabs
 		self.init_general_tab()
@@ -579,7 +580,8 @@ class qtopensesame(QtGui.QMainWindow):
 			d = start_new_dialog.start_new_dialog(self)
 			d.exec_()
 		else:
-			self.open_file(path=self.experiment.resource("default.opensesame"))
+			self.open_file(path=self.experiment.resource(os.path.join( \
+				"templates", "default.opensesame")))
 			self.window_message("New experiment")
 			self.current_path = None
 		self.set_auto_response()

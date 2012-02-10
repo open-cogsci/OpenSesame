@@ -95,7 +95,7 @@ class experiment(item.item, openexp.experiment.experiment):
 			self.set("subject_parity", "even")
 
 		self.resolution = self.width, self.height
-
+		
 	def module_container(self):
 
 		"""Specify the module that contains the item modules"""
