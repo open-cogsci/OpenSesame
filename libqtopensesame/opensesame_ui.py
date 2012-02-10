@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'resources/ui/opensesame.ui'
 #
-# Created: Fri Feb 10 16:03:08 2012
+# Created: Fri Feb 10 16:26:08 2012
 #      by: PyQt4 UI code generator 4.8.5
 #
 # WARNING! All changes made in this file will be lost!
@@ -619,4 +619,3 @@ from variable_inspector import variable_inspector
 from tree_overview import tree_overview
 from pyterm import console
 from toolbar_items import toolbar_items
-import icons_rc

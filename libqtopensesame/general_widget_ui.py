@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'resources/ui/general_widget.ui'
 #
-# Created: Fri Feb 10 16:03:08 2012
+# Created: Fri Feb 10 16:26:09 2012
 #      by: PyQt4 UI code generator 4.8.5
 #
 # WARNING! All changes made in this file will be lost!
@@ -70,18 +70,6 @@ class Ui_Form(object):
         self.label_3.setText(QtGui.QApplication.translate("Form", "x", None, QtGui.QApplication.UnicodeUTF8))
         self.label_3.setObjectName(_fromUtf8("label_3"))
         self.layout_general_properties.addWidget(self.label_3, 3, 2, 1, 1)
-        self.label_6 = QtGui.QLabel(self.widget)
-        self.label_6.setText(QtGui.QApplication.translate("Form", "Timing compensation<br />\n"
-"<small><i>In milliseconds</i></small>", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_6.setObjectName(_fromUtf8("label_6"))
-        self.layout_general_properties.addWidget(self.label_6, 4, 0, 1, 1)
-        self.spinbox_compensation = QtGui.QSpinBox(self.widget)
-        self.spinbox_compensation.setToolTip(QtGui.QApplication.translate("Form", "Automatic timing compensation. Positive values will decrease durations, negative values will increase durations (of sketchpads etc.)", None, QtGui.QApplication.UnicodeUTF8))
-        self.spinbox_compensation.setSuffix(QtGui.QApplication.translate("Form", "ms", None, QtGui.QApplication.UnicodeUTF8))
-        self.spinbox_compensation.setMinimum(-100)
-        self.spinbox_compensation.setMaximum(100)
-        self.spinbox_compensation.setObjectName(_fromUtf8("spinbox_compensation"))
-        self.layout_general_properties.addWidget(self.spinbox_compensation, 4, 1, 1, 3)
         self.label_5 = QtGui.QLabel(self.widget)
         self.label_5.setText(QtGui.QApplication.translate("Form", "Default background color<br />\n"
 "<small><i>E.g., \"black\" or \"#000000\"</i></small>", None, QtGui.QApplication.UnicodeUTF8))
@@ -96,10 +84,10 @@ class Ui_Form(object):
         self.label_8.setText(QtGui.QApplication.translate("Form", "Back-end<br />\n"
 "<small><i>Handles display, sound, and input</i></small>", None, QtGui.QApplication.UnicodeUTF8))
         self.label_8.setObjectName(_fromUtf8("label_8"))
-        self.layout_general_properties.addWidget(self.label_8, 5, 0, 1, 1)
+        self.layout_general_properties.addWidget(self.label_8, 4, 0, 1, 1)
         self.combobox_backend = QtGui.QComboBox(self.widget)
         self.combobox_backend.setObjectName(_fromUtf8("combobox_backend"))
-        self.layout_general_properties.addWidget(self.combobox_backend, 5, 1, 1, 5)
+        self.layout_general_properties.addWidget(self.combobox_backend, 4, 1, 1, 3)
         self.verticalLayout.addWidget(self.widget)
         self.group_backend_settings = QtGui.QGroupBox(Form)
         self.group_backend_settings.setTitle(QtGui.QApplication.translate("Form", "Show back-end settings and info", None, QtGui.QApplication.UnicodeUTF8))
@@ -113,7 +101,7 @@ class Ui_Form(object):
         self.scrollarea_backend_settings.setWidgetResizable(True)
         self.scrollarea_backend_settings.setObjectName(_fromUtf8("scrollarea_backend_settings"))
         self.scrollAreaWidgetContents = QtGui.QWidget()
-        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 811, 262))
+        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 821, 273))
         self.scrollAreaWidgetContents.setObjectName(_fromUtf8("scrollAreaWidgetContents"))
         self.verticalLayout_7 = QtGui.QVBoxLayout(self.scrollAreaWidgetContents)
         self.verticalLayout_7.setObjectName(_fromUtf8("verticalLayout_7"))
@@ -233,4 +221,3 @@ class Ui_Form(object):
     def retranslateUi(self, Form):
         pass
 
-import icons_rc

@@ -75,7 +75,6 @@ class general_properties(QtGui.QWidget):
 		self.ui.combobox_start.currentIndexChanged.connect(self.apply_changes)
 		self.ui.spinbox_width.editingFinished.connect(self.apply_changes)
 		self.ui.spinbox_height.editingFinished.connect(self.apply_changes)
-		self.ui.spinbox_compensation.editingFinished.connect(self.apply_changes)
 		self.ui.group_script.toggled.connect(self.toggle_script_editor)
 		self.ui.group_backend_settings.toggled.connect(self.toggle_backend_settings)
 		self.ui.label_opensesame.setText(unicode(self.ui.label_opensesame.text()).replace("[version]", misc.version).replace("[codename]", misc.codename))
@@ -245,10 +244,6 @@ class general_properties(QtGui.QWidget):
 			self.main_window.update_resolution( \
 				self.main_window.experiment.get("width"), height)
 
-		# Set the timing compensation
-		comp = self.ui.spinbox_compensation.value()
-		self.main_window.experiment.set("compensation", comp)
-
 		# Set the foreground color
 		foreground = self.main_window.experiment.sanitize( \
 			self.ui.edit_foreground.text())
@@ -318,14 +313,6 @@ class general_properties(QtGui.QWidget):
 		except:
 			self.main_window.experiment.notify( \
 				"Failed to parse the resolution. Expecting positive numeric values.")
-
-		# Set the timing compensation
-		try:
-			self.ui.spinbox_compensation.setValue(int( \
-				self.main_window.experiment.compensation))
-		except:
-			self.main_window.experiment.notify( \
-				"Failed to parse timing compensation. Expecting a numeric value.")
 
 		# Set the colors
 		self.ui.edit_foreground.setText(str( \

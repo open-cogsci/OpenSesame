@@ -97,30 +97,6 @@
         </property>
        </widget>
       </item>
-      <item row="4" column="0">
-       <widget class="QLabel" name="label_6">
-        <property name="text">
-         <string>Timing compensation&lt;br /&gt;
-&lt;small&gt;&lt;i&gt;In milliseconds&lt;/i&gt;&lt;/small&gt;</string>
-        </property>
-       </widget>
-      </item>
-      <item row="4" column="1" colspan="3">
-       <widget class="QSpinBox" name="spinbox_compensation">
-        <property name="toolTip">
-         <string>Automatic timing compensation. Positive values will decrease durations, negative values will increase durations (of sketchpads etc.)</string>
-        </property>
-        <property name="suffix">
-         <string>ms</string>
-        </property>
-        <property name="minimum">
-         <number>-100</number>
-        </property>
-        <property name="maximum">
-         <number>100</number>
-        </property>
-       </widget>
-      </item>
       <item row="4" column="4">
        <widget class="QLabel" name="label_5">
         <property name="text">
@@ -137,7 +113,7 @@
         </property>
        </widget>
       </item>
-      <item row="5" column="0">
+      <item row="4" column="0">
        <widget class="QLabel" name="label_8">
         <property name="text">
          <string>Back-end&lt;br /&gt;
@@ -145,7 +121,7 @@
         </property>
        </widget>
       </item>
-      <item row="5" column="1" colspan="5">
+      <item row="4" column="1" colspan="3">
        <widget class="QComboBox" name="combobox_backend"/>
       </item>
      </layout>
@@ -176,8 +152,8 @@
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>811</width>
-           <height>262</height>
+           <width>821</width>
+           <height>273</height>
           </rect>
          </property>
          <layout class="QVBoxLayout" name="verticalLayout_7">
@@ -396,8 +372,6 @@ p, li { white-space: pre-wrap; }
    </item>
   </layout>
  </widget>
- <resources>
-  <include location="icons.qrc"/>
- </resources>
+ <resources/>
  <connections/>
 </ui>

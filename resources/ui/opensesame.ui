@@ -1056,9 +1056,7 @@ background-color: #729fcf;</string>
    <header>variable_inspector.h</header>
   </customwidget>
  </customwidgets>
- <resources>
-  <include location="icons.qrc"/>
- </resources>
+ <resources/>
  <connections>
   <connection>
    <sender>button_variables_clear</sender>
