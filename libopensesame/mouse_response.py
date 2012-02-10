@@ -1,3 +1,5 @@
+#-*- coding:utf-8 -*-
+
 """
 This file is part of OpenSesame.
 
@@ -14,6 +16,9 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
+
+__author__ = "Sebastiaan Mathot"
+__license__ = "GPLv3"
 
 from libopensesame import item, exceptions, generic_response
 import openexp.mouse

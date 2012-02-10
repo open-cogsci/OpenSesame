@@ -178,3 +178,25 @@ class legacy:
 			if event.type == MOUSEBUTTONDOWN:
 				buttonclicked = True
 		return buttonclicked
+		
+	def synonyms(self, button):
+	
+		"""<DOC>
+		Gives a list of synonyms for a mouse button. For example, 1 and
+		'left_click' are synonyms.
+		
+		Arguments:
+		button -- a button value
+		
+		Returns:
+		A list of synonyms
+		</DOC>
+		"""
+				
+		button_map = [ (1, "left_button"), (2, "middle_button"), (3, "right_button"), \
+			(4, "scroll_up"), (5, "scroll_down") ]
+		for bm in button_map:
+			if button in bm:
+				return bm
+		return []
+

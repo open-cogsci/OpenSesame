@@ -23,19 +23,8 @@ from libopensesame import exceptions, debug
 class generic_response:
 
 	"""
-	Deals with overlapping functionality for response items, such as
-
-	Core items:
-	- keyboard_response
-	- mouse_response
-	- synth
-	- sampler (via synth)
-
-	(Known) plug-ins
-	- text_input
-	- text_display
-	- media_player
-	- srbox
+	Deals with overlapping functionality for items that are able to process a
+	reponse.
 	"""
 
 	auto_response = "a"
@@ -50,9 +39,13 @@ class generic_response:
 			try:
 				self._timeout = int(self.get("timeout"))
 			except:
-				raise exceptions.runtime_error("'%s' is not a valid timeout in keyboard_response '%s'. Expecting a positive integer or 'infinite'." % (self.get("timeout"), self.name))
+				raise exceptions.runtime_error( \
+					"'%s' is not a valid timeout in keyboard_response '%s'. Expecting a positive integer or 'infinite'." \
+					% (self.get("timeout"), self.name))
 			if self._timeout < 0:
-				raise exceptions.runtime_error("'%s' is not a valid timeout in keyboard_response '%s'. Expecting a positive integer or 'infinite'." % (self.get("timeout"), self.name))
+				raise exceptions.runtime_error( \
+					"'%s' is not a valid timeout in keyboard_response '%s'. Expecting a positive integer or 'infinite'." \
+					% (self.get("timeout"), self.name))
 
 	def auto_responder(self):
 
@@ -90,7 +83,9 @@ class generic_response:
 		"""Process a mouseclick response"""
 
 		self.experiment.start_response_interval = self.sri
-		self.experiment.response, pos, self.experiment.end_response_interval = retval
+		self.experiment.response, pos, self.experiment.end_response_interval = \
+			retval
+		self.synonyms = self._mouse.synonyms(self.experiment.response)
 		self.experiment.cursor_x = pos[0]
 		self.experiment.cursor_y = pos[1]
 
@@ -111,7 +106,9 @@ class generic_response:
 		if hasattr(self, process_func):
 			exec("self.%s(retval)" % process_func)
 		else:
-			raise exceptions.runtime_error("Don't know how to process responses for duration '%s' in item '%s'" % (self.get("duration"), self.name))
+			raise exceptions.runtime_error( \
+				"Don't know how to process responses for duration '%s' in item '%s'" \
+				% (self.get("duration"), self.name))
 
 		self.response_bookkeeping()
 
@@ -128,7 +125,7 @@ class generic_response:
 		if correct_response == "undefined":
 			self.experiment.correct = "undefined"
 		else:
-			if hasattr(self, "synonyms") and self.synonyms != None:
+			if hasattr(self, "synonyms") and self.synonyms != None:						
 				if correct_response in self.synonyms:
 					self.experiment.correct = 1
 					self.experiment.total_correct += 1
@@ -141,34 +138,42 @@ class generic_response:
 				else:
 					self.experiment.correct = 0
 
-		self.experiment.set("response_time", self.experiment.end_response_interval - self.experiment.start_response_interval)
+		self.experiment.set("response_time", \
+			self.experiment.end_response_interval - \
+			self.experiment.start_response_interval)
 		self.experiment.total_response_time += self.experiment.response_time
 		self.experiment.total_responses += 1
-		self.experiment.set("acc", 100.0 * self.experiment.total_correct / self.experiment.total_responses)
-		self.experiment.set("avg_rt", self.experiment.total_response_time / self.experiment.total_responses)
+		self.experiment.set("acc", 100.0 * self.experiment.total_correct / \
+			self.experiment.total_responses)
+		self.experiment.set("avg_rt", self.experiment.total_response_time / \
+			self.experiment.total_responses)
 		self.experiment.set("accuracy", self.experiment.acc)
 		self.experiment.set("average_response_time", self.experiment.avg_rt)
 		self.experiment.start_response_interval = None
 
-		# Also save response variables with the item name as a suffix, to prevent
-		# multiple responses overwriting each other
-		self.experiment.set("response_%s" % self.get("name"), self.get("response"))
-		self.experiment.set("response_time_%s" % self.get("name"), self.get("response_time"))
-		self.experiment.set("correct_%s" % self.get("name"), self.get("correct"))
+		# Also save response variables with the item name as a suffix, to
+		# prevent multiple responses overwriting each other
+		self.experiment.set("response_%s" % self.get("name"), \
+			self.get("response"))
+		self.experiment.set("response_time_%s" % self.get("name"), \
+			self.get("response_time"))
+		self.experiment.set("correct_%s" % self.get("name"), \
+			self.get("correct"))
 
-	def set_sri(self, reset = False):
+	def set_sri(self, reset=False):
 
 		"""
 		Sets the start of the response interval
 
 		Keyword arguments:
 		reset -- determines whether the start of the response interval should
-				 should be reset to the start of the current item (default = False)
+				 be reset to the start of the current item (default=False)
 		"""
 
 		if reset:
 			self.sri = self.get("time_%s" % self.name)
-			self.experiment.start_response_interval = self.get("time_%s" % self.name)
+			self.experiment.start_response_interval = self.get("time_%s" % \
+				self.name)
 
 		if self.experiment.start_response_interval == None:
 			self.sri = self.get("time_%s" % self.name)
@@ -186,9 +191,13 @@ class generic_response:
 			try:
 				self._timeout = int(self.get("timeout"))
 			except:
-				raise exceptions.runtime_error("'%s' is not a valid timeout in item '%s'. Expecting a positive integer or 'infinite'." % (self.get("timeout"), self.name))
+				raise exceptions.runtime_error( \
+					"'%s' is not a valid timeout in item '%s'. Expecting a positive integer or 'infinite'." \
+					% (self.get("timeout"), self.name))
 			if self._timeout < 0:
-				raise exceptions.runtime_error("'%s' is not a valid timeout in item '%s'. Expecting a positive integer or 'infinite'." % (self.get("timeout"), self.name))
+				raise exceptions.runtime_error( \
+					"'%s' is not a valid timeout in item '%s'. Expecting a positive integer or 'infinite'." \
+					% (self.get("timeout"), self.name))
 
 	def prepare_compensation(self):
 
@@ -199,7 +208,9 @@ class generic_response:
 			try:
 				self._compensation = int(self.get("compensation"))
 			except:
-				raise exceptions.runtime_error("Variable 'compensation' should be numeric and not '%s' in %s item '%s'" % (self.get("compensation"), self.item_type, self.name))
+				raise exceptions.runtime_error( \
+					"Variable 'compensation' should be numeric and not '%s' in %s item '%s'" \
+					% (self.get("compensation"), self.item_type, self.name))
 		else:
 			self._compensation = 0
 
@@ -231,13 +242,19 @@ class generic_response:
 							if r in self.resp_codes:
 								self._allowed_responses.append(r)
 							else:
-								raise exceptions.runtime_error("Unknown allowed_response '%s' in mouse_response item '%s'" % (r, self.name))
+								raise exceptions.runtime_error( \
+									"Unknown allowed_response '%s' in mouse_response item '%s'" \
+									% (r, self.name))
 						except ValueError:
-							raise exceptions.runtime_error("Unknown allowed_response '%s' in mouse_response item '%s'" % (r, self.name))
+							raise exceptions.runtime_error( \
+								"Unknown allowed_response '%s' in mouse_response item '%s'" \
+								% (r, self.name))
 
 			# If allowed responses are provided, the list should not be empty
 			if len(self._allowed_responses) == 0:
-				raise exceptions.runtime_error("'%s' are not valid allowed responses in keyboard_response '%s'" % (self.get("allowed_responses"), self.name))
+				raise exceptions.runtime_error( \
+					"'%s' are not valid allowed responses in keyboard_response '%s'" \
+					% (self.get("allowed_responses"), self.name))
 		else:
 			self._allowed_responses = None
 
@@ -266,18 +283,18 @@ class generic_response:
 			if hasattr(self, prepare_func):
 				exec("self.%s()" % prepare_func)
 			else:
-				raise exceptions.runtime_error("'%s' is not a valid duration in item '%s'" % (self.get("duration"), self.name))
+				raise exceptions.runtime_error( \
+					"'%s' is not a valid duration in item '%s'" % \
+					(self.get("duration"), self.name))
 
 	def prepare_duration_keypress(self):
 
 		"""Prepare a keypress duration"""
 
-		if self.experiment.auto_response:
-			self._keyboard = openexp.keyboard.keyboard(self.experiment)
+		self._keyboard = openexp.keyboard.keyboard(self.experiment)
+		if self.experiment.auto_response:			
 			self._duration_func = self.auto_responder
 		else:
-			# Prepare keypress
-			self._keyboard = openexp.keyboard.keyboard(self.experiment)
 			self._keyboard.set_timeout(self._timeout)
 			self._keyboard.set_keylist(self._allowed_responses)
 			self._duration_func = self._keyboard.get_key
@@ -286,11 +303,11 @@ class generic_response:
 
 		"""Prepare a mouseclick duration"""
 
+		self._mouse = openexp.mouse.mouse(self.experiment)
 		if self.experiment.auto_response:
 			self._duration_func = self.auto_responder
 		else:
-			# Prepare mouseclick
-			self._mouse = openexp.mouse.mouse(self.experiment)
+			# Prepare mouseclick			
 			self._mouse.set_timeout(self._timeout)
 			self._mouse.set_buttonlist(self._allowed_responses)
 			self._duration_func = self._mouse.get_click
@@ -327,7 +344,8 @@ class generic_response:
 		l = []
 		l.append( ("response_%s" % self.get("name"), "[Depends on response]") )
 		l.append( ("correct_%s" % self.get("name"), "[Depends on response]") )
-		l.append( ("response_time_%s" % self.get("name"), "[Depends on response]") )
+		l.append( ("response_time_%s" % self.get("name"), \
+			"[Depends on response]") )
 		l.append( ("response", "[Depends on response]") )
 		l.append( ("correct", "[Depends on response]") )
 		l.append( ("response_time", "[Depends on response]") )
