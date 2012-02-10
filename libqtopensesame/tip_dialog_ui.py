@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'resources/ui/tip_dialog.ui'
 #
-# Created: Fri Feb 10 18:09:44 2012
+# Created: Fri Feb 10 22:50:02 2012
 #      by: PyQt4 UI code generator 4.8.5
 #
 # WARNING! All changes made in this file will be lost!

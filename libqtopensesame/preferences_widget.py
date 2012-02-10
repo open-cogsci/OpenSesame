@@ -1,3 +1,5 @@
+#-*- coding:utf-8 -*-
+
 """
 This file is part of OpenSesame.
 
@@ -14,6 +16,9 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
+
+__author__ = "Sebastiaan Mathot"
+__license__ = "GPLv3"
 
 from libopensesame import debug
 import libqtopensesame.preferences_widget_ui
@@ -50,6 +55,7 @@ class preferences_widget(QtGui.QWidget):
 		self.ui.checkbox_autoresponse.toggled.connect(self.apply)
 		self.ui.checkbox_show_random_tips.toggled.connect(self.apply)
 		self.ui.checkbox_toolbar_text.toggled.connect(self.apply)
+		self.ui.checkbox_small_toolbar.toggled.connect(self.apply)
 		self.ui.checkbox_enable_autosave.toggled.connect(self.apply)
 		self.ui.spinbox_autosave_interval.valueChanged.connect(self.apply)
 		self.ui.spinbox_autosave_max_age.valueChanged.connect(self.apply)
@@ -57,8 +63,10 @@ class preferences_widget(QtGui.QWidget):
 		self.ui.checkbox_opensesamerun.toggled.connect(self.apply)
 		self.ui.checkbox_auto_opensesamerun_exec.toggled.connect(self.apply)
 		self.ui.edit_opensesamerun_exec.editingFinished.connect(self.apply)
-		self.ui.button_browse_autosave.clicked.connect(self.main_window.open_autosave_folder)
-		self.ui.button_update_check.clicked.connect(self.main_window.check_update)
+		self.ui.button_browse_autosave.clicked.connect( \
+			self.main_window.open_autosave_folder)
+		self.ui.button_update_check.clicked.connect( \
+			self.main_window.check_update)
 		self.ui.combobox_style.currentIndexChanged.connect(self.apply)
 
 		self.ui.checkbox_new_experiment_dialog.toggled.connect(self.apply)
@@ -67,7 +75,8 @@ class preferences_widget(QtGui.QWidget):
 		self.ui.checkbox_scintilla_custom_font.toggled.connect(self.apply)
 		self.ui.checkbox_scintilla_eol_visible.toggled.connect(self.apply)
 		self.ui.checkbox_scintilla_folding.toggled.connect(self.apply)
-		self.ui.checkbox_scintilla_indentation_guides.toggled.connect(self.apply)
+		self.ui.checkbox_scintilla_indentation_guides.toggled.connect( \
+			self.apply)
 		self.ui.checkbox_scintilla_line_numbers.toggled.connect(self.apply)
 		self.ui.checkbox_scintilla_right_margin.toggled.connect(self.apply)
 		self.ui.checkbox_scintilla_syntax_highlighting.toggled.connect(self.apply)
@@ -103,6 +112,8 @@ class preferences_widget(QtGui.QWidget):
 		self.ui.checkbox_autoresponse.setChecked(self.main_window.experiment.auto_response)
 		self.ui.checkbox_show_random_tips.setChecked(self.main_window.show_startup_tip)
 		self.ui.checkbox_toolbar_text.setChecked(self.main_window.ui.toolbar_main.toolButtonStyle() == QtCore.Qt.ToolButtonTextUnderIcon)
+		self.ui.checkbox_small_toolbar.setChecked( \
+			config.get_config("toolbar_size") == 16)		
 		self.ui.checkbox_enable_autosave.setChecked(self.main_window.autosave_interval > 0)
 		self.ui.spinbox_autosave_interval.setValue(self.main_window.autosave_interval / 60000) # Show in minutes, not milliseconds
 		self.ui.spinbox_autosave_max_age.setValue(self.main_window.autosave_max_age)
@@ -174,11 +185,18 @@ class preferences_widget(QtGui.QWidget):
 			self.main_window.ui.toolbar_main.setToolButtonStyle(QtCore.Qt.ToolButtonTextUnderIcon)
 		else:
 			self.main_window.ui.toolbar_main.setToolButtonStyle(QtCore.Qt.ToolButtonIconOnly)
+		
+		if self.ui.checkbox_small_toolbar.isChecked():
+			config.set_config("toolbar_size", 16)
+		else:
+			config.set_config("toolbar_size", 32)
+		self.main_window.theme.set_toolbar_size(config.get_config( \
+			"toolbar_size"))		
 
 		if self.ui.checkbox_enable_autosave.isChecked():
 			self.main_window.autosave_interval = 60000 * self.ui.spinbox_autosave_interval.value()
 		else:
-			self.main_window.autosave_interval = 0
+			self.main_window.autosave_interval = 0						
 		self.main_window.autosave_max_age = self.ui.spinbox_autosave_max_age.value()
 		self.main_window.start_autosave_timer()
 

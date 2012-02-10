@@ -25,7 +25,7 @@
         <x>0</x>
         <y>0</y>
         <width>721</width>
-        <height>981</height>
+        <height>1008</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -78,10 +78,17 @@
             </property>
            </widget>
           </item>
-          <item row="4" column="0">
+          <item row="5" column="0">
            <widget class="QCheckBox" name="checkbox_new_experiment_dialog">
             <property name="text">
              <string>Show 'New experiment' dialog on start-up</string>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="0">
+           <widget class="QCheckBox" name="checkbox_small_toolbar">
+            <property name="text">
+             <string>Small icons in toolbar</string>
             </property>
            </widget>
           </item>

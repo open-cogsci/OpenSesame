@@ -106,7 +106,6 @@
     <addaction name="action_close_other_tabs"/>
     <addaction name="action_onetabmode"/>
     <addaction name="action_show_info_in_overview"/>
-    <addaction name="action_compact_toolbar"/>
     <addaction name="separator"/>
     <addaction name="action_show_overview"/>
     <addaction name="action_show_variable_inspector"/>

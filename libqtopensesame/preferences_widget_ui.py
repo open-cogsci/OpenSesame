@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'resources/ui/preferences_widget.ui'
 #
-# Created: Fri Feb 10 18:09:45 2012
+# Created: Fri Feb 10 22:50:02 2012
 #      by: PyQt4 UI code generator 4.8.5
 #
 # WARNING! All changes made in this file will be lost!
@@ -25,7 +25,7 @@ class Ui_Form(object):
         self.scrollArea.setWidgetResizable(True)
         self.scrollArea.setObjectName(_fromUtf8("scrollArea"))
         self.scrollAreaWidgetContents = QtGui.QWidget()
-        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 721, 981))
+        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 721, 1008))
         self.scrollAreaWidgetContents.setObjectName(_fromUtf8("scrollAreaWidgetContents"))
         self.verticalLayout_2 = QtGui.QVBoxLayout(self.scrollAreaWidgetContents)
         self.verticalLayout_2.setObjectName(_fromUtf8("verticalLayout_2"))
@@ -59,7 +59,11 @@ class Ui_Form(object):
         self.checkbox_new_experiment_dialog = QtGui.QCheckBox(self.groupBox_2)
         self.checkbox_new_experiment_dialog.setText(QtGui.QApplication.translate("Form", "Show \'New experiment\' dialog on start-up", None, QtGui.QApplication.UnicodeUTF8))
         self.checkbox_new_experiment_dialog.setObjectName(_fromUtf8("checkbox_new_experiment_dialog"))
-        self.formLayout_3.setWidget(4, QtGui.QFormLayout.LabelRole, self.checkbox_new_experiment_dialog)
+        self.formLayout_3.setWidget(5, QtGui.QFormLayout.LabelRole, self.checkbox_new_experiment_dialog)
+        self.checkbox_small_toolbar = QtGui.QCheckBox(self.groupBox_2)
+        self.checkbox_small_toolbar.setText(QtGui.QApplication.translate("Form", "Small icons in toolbar", None, QtGui.QApplication.UnicodeUTF8))
+        self.checkbox_small_toolbar.setObjectName(_fromUtf8("checkbox_small_toolbar"))
+        self.formLayout_3.setWidget(4, QtGui.QFormLayout.LabelRole, self.checkbox_small_toolbar)
         self.verticalLayout_2.addWidget(self.groupBox_2)
         self.line = QtGui.QFrame(self.scrollAreaWidgetContents)
         self.line.setFrameShape(QtGui.QFrame.HLine)

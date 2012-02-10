@@ -170,7 +170,6 @@ class qtopensesame(QtGui.QMainWindow):
 		self.ui.action_close_all_tabs.triggered.connect(self.close_all_tabs)
 		self.ui.action_close_other_tabs.triggered.connect(self.close_other_tabs)
 		self.ui.action_onetabmode.triggered.connect(self.toggle_onetabmode)
-		self.ui.action_compact_toolbar.triggered.connect(self.toggle_compact_toolbar)
 		self.ui.action_show_overview.triggered.connect(self.toggle_overview)
 		self.ui.action_show_variable_inspector.triggered.connect(self.refresh_variable_inspector)
 		self.ui.action_show_pool.triggered.connect(self.refresh_pool)
@@ -355,7 +354,6 @@ class qtopensesame(QtGui.QMainWindow):
 		self.ui.action_compact_toolbar.setChecked( \
 			config.get_config("toolbar_size") == 16)
 		self.toggle_onetabmode()
-		self.toggle_compact_toolbar()
 
 		if config.get_config("toolbar_text"):
 			self.ui.toolbar_main.setToolButtonStyle(QtCore.Qt.ToolButtonTextUnderIcon)
@@ -363,6 +361,7 @@ class qtopensesame(QtGui.QMainWindow):
 			self.ui.toolbar_main.setToolButtonStyle(QtCore.Qt.ToolButtonIconOnly)
 		settings.endGroup()
 		self.set_style()
+		self.theme.set_toolbar_size(config.get_config("toolbar_size"))
 
 	def save_state(self):
 
@@ -622,18 +621,6 @@ class qtopensesame(QtGui.QMainWindow):
 		self.ui.action_close_other_tabs.setEnabled( \
 			not config.get_config("onetabmode"))
 			
-	def toggle_compact_toolbar(self):
-
-		"""Toggles compact toolbar"""
-
-		if self.ui.action_compact_toolbar.isChecked():
-			size = 16
-		else:
-			size = 32
-		debug.msg("size = %d" % size)
-		config.set_config("toolbar_size", size)
-		self.theme.set_toolbar_size(size)	
-
 	def tab_index_changed(self, index):
 
 		"""

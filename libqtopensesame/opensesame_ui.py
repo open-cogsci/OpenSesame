@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'resources/ui/opensesame.ui'
 #
-# Created: Fri Feb 10 18:09:43 2012
+# Created: Fri Feb 10 22:50:01 2012
 #      by: PyQt4 UI code generator 4.8.5
 #
 # WARNING! All changes made in this file will be lost!
@@ -562,7 +562,6 @@ class Ui_MainWindow(object):
         self.menu_view.addAction(self.action_close_other_tabs)
         self.menu_view.addAction(self.action_onetabmode)
         self.menu_view.addAction(self.action_show_info_in_overview)
-        self.menu_view.addAction(self.action_compact_toolbar)
         self.menu_view.addSeparator()
         self.menu_view.addAction(self.action_show_overview)
         self.menu_view.addAction(self.action_show_variable_inspector)
