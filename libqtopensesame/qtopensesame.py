@@ -1101,7 +1101,9 @@ class qtopensesame(QtGui.QMainWindow):
 			self.save_file_as()
 			return
 
+		# Indicate that we're busy
 		self.set_busy(True)
+		QtGui.QApplication.processEvents()
 
 		# Get ready, generate the script and see if the script can be
 		# re-parsed. If not, throw an error.
@@ -1112,7 +1114,9 @@ class qtopensesame(QtGui.QMainWindow):
 		except libopensesame.exceptions.script_error as e:
 			if not catch:
 				raise e
-			self.experiment.notify("Could not save file, because the script could not be generated. The following error occured:<br/>%s" % e)
+			self.experiment.notify( \
+				"Could not save file, because the script could not be generated. The following error occured:<br/>%s" \
+				% e)
 			self.set_busy(False)
 			return
 
@@ -1127,10 +1131,12 @@ class qtopensesame(QtGui.QMainWindow):
 			self.set_busy(False)
 			return
 
+		# If the file already exists, confirm that it should be overwritten
 		if resp == False:
-			resp = QtGui.QMessageBox.question(self.ui.centralwidget, "File exists", \
-				"A file with that name already exists. Overwite?", QtGui.QMessageBox.Yes, \
-				QtGui.QMessageBox.No)
+			resp = QtGui.QMessageBox.question(self.ui.centralwidget, \
+				"File exists", \
+				"A file with that name already exists. Overwite?", \
+				QtGui.QMessageBox.Yes, QtGui.QMessageBox.No)
 			if resp == QtGui.QMessageBox.No:
 				self.window_message("Unsaved")
 				self.current_path = None
@@ -1139,7 +1145,8 @@ class qtopensesame(QtGui.QMainWindow):
 				return
 			else:
 				try:
-					self.current_path = self.experiment.save(self.current_path, True)
+					self.current_path = self.experiment.save( \
+						self.current_path, True)
 					self.window_message(self.current_path)
 					self.set_status("Saved as %s" % self.current_path)
 				except Exception as e:
@@ -1167,13 +1174,30 @@ class qtopensesame(QtGui.QMainWindow):
 			path = os.path.join(self.home_folder, self.experiment.sanitize( \
 				self.experiment.title, strict=True, allow_vars=False))
 		else:
-			path = self.current_path
-		path, file_type = QtGui.QFileDialog.getSaveFileNameAndFilter(self.ui.centralwidget, \
-			"Save file as ...", path, self.file_type_filter)
+			path = self.current_path		
+		path, file_type = QtGui.QFileDialog.getSaveFileNameAndFilter( \
+			self.ui.centralwidget, "Save file as ...", path, \
+			self.file_type_filter)
+							
 		if path != None and path != "":
 			path = unicode(path)
-			if path[-18:].lower() != ".opensesame.tar.gz" and path[-11:].lower() != ".opensesame":
-				path += ".opensesame.tar.gz"
+			
+			# If the extension has not been explicitly typed in, set it based
+			# on the selected filter and, if no filter has been set, based on
+			# whether there is content in the file pool
+			if path[-18:].lower() != ".opensesame.tar.gz" and \
+				path[-11:].lower() != ".opensesame":
+				debug.msg("automagically determing file type")			
+				if "(*.opensesame)" in file_type:
+					path += ".opensesame"
+				elif "(*.opensesame.tar.gz)" in file_type:
+					path += ".opensesame.tar.gz"
+				elif len(os.listdir(self.experiment.pool_folder)) == 0:
+					path += ".opensesame"
+				else:
+					path += ".opensesame.tar.gz"
+				debug.msg(path)
+					
 			self.current_path = path
 			self.save_file(overwrite=False)
 
