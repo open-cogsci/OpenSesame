@@ -55,7 +55,7 @@ class trial:
 		ms -- a duration in milliseconds
 		</DOC>"""
 
-		pygame.time.delay(ms)
+		pass # This function will be assigned at runtime
 
 	def time(self):
 
@@ -66,7 +66,7 @@ class trial:
 		A timestamp of the current time
 		</DOC>"""
 
-		return self.experiment._time_func()
+		pass # This function will be assigned at runtime
 
 	def log(self, msg):
 

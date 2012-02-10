@@ -656,6 +656,7 @@ def init_display(experiment):
 	experiment.window.setMouseVisible(False)
 	experiment.clock = core.Clock()	
 	experiment._time_func = _time
+	experiment._sleep_func = _sleep
 
 	# If pyglet is being used, change the window caption. Don't know how to do this for pygame (regular set_caption() is ineffective)
 	if wintype == "pyglet":
@@ -686,4 +687,15 @@ def _time():
 	"""
 
 	global _experiment
-	return 1000.0 * _experiment.clock.getTime()
+	return 1000.0*_experiment.clock.getTime()
+	
+def _sleep(ms):
+
+	"""
+	Waits for a specified period of time, using the PsychoPy wait() function
+	
+	Arguments:
+	ms -- in milliseconds
+	"""
+		
+	core.wait(.001*ms)

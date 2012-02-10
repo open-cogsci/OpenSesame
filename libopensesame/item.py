@@ -61,7 +61,7 @@ class item(openexp.trial.trial):
 		self.comments = []
 
 		if string != None:
-			self.from_string(string)
+			self.from_string(string)			
 
 	def prepare(self):
 
@@ -73,6 +73,10 @@ class item(openexp.trial.trial):
 		True on succes, False on failure
 		"""
 
+		#global _time_func, _sleep_func
+		self.time = self.experiment._time_func
+		self.sleep = self.experiment._sleep_func
+		
 		self.experiment.set("count_%s" % self.name, self.count)
 		self.count += 1
 

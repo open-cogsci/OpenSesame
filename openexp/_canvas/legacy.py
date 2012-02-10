@@ -665,8 +665,9 @@ def init_display(experiment):
 			print "openexp._canvas.init_display(): '%s.ttf' not found, falling back to default font" % experiment.font_family
 		experiment.font = pygame.font.Font(None, experiment.font_size)
 		
-	# Set the time function to use pygame
+	# Set the time functions to use pygame
 	experiment._time_func = pygame.time.get_ticks
+	experiment._sleep_func = pygame.time.delay
 		
 def close_display(experiment):
 

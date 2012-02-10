@@ -15,7 +15,7 @@ You should have received a copy of the GNU General Public License
 along with openexp.  If not, see <http://www.gnu.org/licenses/>.
 """
 
-from openexp import trial, canvas, sampler
+from openexp import trial, canvas, sampler, exceptions
 import warnings
 import random
 import os
@@ -104,8 +104,8 @@ class experiment:
 
 		print "experiment.init_log(): using '%s' as logfile (%s)" % \
 			(self.logfile, self.logfile_codec)
-
-	def _time(self):
+			
+	def _sleep_func(self, ms):
 
 		"""
 		This function is used for timing, but should be set
@@ -113,7 +113,20 @@ class experiment:
 		for an example.
 		"""
 
-		raise openexp.exceptions.openexp_error("experiment._time(): This function should be set by the canvas backend.")
+		raise exceptions.openexp_error( \
+			"experiment._sleep_func(): This function should be set by the canvas backend.")
+			
+
+	def _time_func(self):
+
+		"""
+		This function is used for timing, but should be set
+		by the canvas backend. See openexp._canvas.legacy.init_display()
+		for an example.
+		"""
+
+		raise exceptions.openexp_error( \
+			"experiment._time_func(): This function should be set by the canvas backend.")
 
 	def end(self):
 
