@@ -52,13 +52,12 @@ class qtopensesame(QtGui.QMainWindow):
 		"""Resume GUI initialization"""
 
 		from libopensesame import misc
-		from libqtopensesame import pool_widget, opensesame_ui
+		from libqtopensesame import pool_widget, opensesame_ui, theme
 		import platform
 
 		# Setup the UI
 		self.ui = opensesame_ui.Ui_MainWindow()
-		self.ui.setupUi(self)
-		self.load_theme()				
+		self.ui.setupUi(self)			
 		self.ui.toolbar_items.main_window = self
 		self.ui.itemtree.main_window = self
 		self.ui.table_variables.main_window = self
@@ -72,6 +71,12 @@ class qtopensesame(QtGui.QMainWindow):
 		self.show_startup_tip = True
 		self.default_logfile_folder = ""
 		self.unsaved_changes = False
+		
+		# Parse the command line
+		self.parse_command_line()
+		
+		# Load a theme
+		self.theme = theme.theme(self, self.options._theme)		
 
 		# Determine the home folder
 		self.home_folder = libopensesame.misc.home_folder()
@@ -180,8 +185,7 @@ class qtopensesame(QtGui.QMainWindow):
 		self.init_unused_tab()
 
 		# Build the items toolbar
-		self.set_status("Welcome to OpenSesame %s" % self.version)
-		self.parse_command_line()
+		self.set_status("Welcome to OpenSesame %s" % self.version)		
 		self.restore_state()
 		self.refresh_plugins()
 		self.start_autosave_timer()
@@ -189,14 +193,6 @@ class qtopensesame(QtGui.QMainWindow):
 		self.clean_autosave()		
 		self.set_unsaved(False)
 		
-	def load_theme(self):
-	
-		"""Load the icons and qss style"""
-		
-		# Load the theme
-		from libqtopensesame.theme import theme
-		self.theme = theme(self)		
-
 	def parse_command_line(self):
 
 		"""Parse command line options"""
@@ -216,7 +212,9 @@ class qtopensesame(QtGui.QMainWindow):
 		parser.add_option_group(group)
 		group = optparse.OptionGroup(parser, "Miscellaneous options")
 		group.add_option("-c", "--config", action="store", dest="_config", \
-			help="Set a configuration option, e.g, '--config auto_update_check=False;scintilla_font_size=10'. For a complete list of configuration options, please refer to the source of config.py.")		
+			help="Set a configuration option, e.g, '--config auto_update_check=False;scintilla_font_size=10'. For a complete list of configuration options, please refer to the source of config.py.")
+		group.add_option("-t", "--theme", action="store", dest="_theme", \
+			help="Specify a GUI theme")							
 		group.add_option("-d", "--debug", action="store_true", dest="debug", \
 			help="Print lots of debugging messages to the standard output")
 		group.add_option("-s", "--stack", action="store_true", dest="_stack", \

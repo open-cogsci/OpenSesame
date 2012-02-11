@@ -1,0 +1,79 @@
+STRUCTURE OF OPENSESAME THEMES
+==============================
+
+1. ABOUT THEMES
+===============
+OpenSesame themes provide a stylesheet and an icon theme. The aim is to be as
+standards-compliant as possible, but still provide sufficient flexibility to
+allow for custom icons, etc.
+
+2. STRUCTURE OF A THEME
+=======================
+A theme consists of a folder in the theme folder within the resources folder.
+For this example, let's assume that the resources folder is located here:
+
+	/usr/share/opensesame/resources
+
+Assuming that your theme is named 'my_theme', the theme folder would be:
+
+	/usr/share/opensesame/resources/my_theme
+
+2.1. THEME INFO
+===============
+The theme info file provides some information about the theme. It must be named
+as follows:
+
+	/usr/share/opensesame/resources/my_theme/__theme__.py
+
+The theme info file must contain at least the following lines:
+
+	qss = "stylesheet.qss"
+	icon_map = "icon_map.csv"
+	icon_theme = "os-custom-icons"	
+	
+You are free to choose different file names.
+
+2.2. STYLESHEET
+===============
+The stylesheet is typically placed here (depening on the theme info file):
+
+	/usr/share/opensesame/resources/my_theme/stylesheet.qss
+	
+See the Qt documentation for a description of the QSS format:
+
+	<http://developer.qt.nokia.com/doc/qt-4.8/stylesheet-reference.html>
+	
+2.3. ICON MAP
+=============
+The icon map is typically placed here (depening on the theme info file):
+
+	/usr/share/opensesame/resources/my_theme/icon_map.csv
+
+The icon map provides a mapping between various icon names (aliases) that are
+used within OpenSesame and the actual icon names from the icon theme. It
+consists of a 3 column comma-separated text file, with lines like so:
+
+	status_busy,emblem-synchronizing,16
+	
+This line means that when the 'status_busy' icon is used in OpenSesame, actually
+the emblem-synchronizing icon is taken from the icon theme. It also means that
+when OpenSesame detects a QWidget in the GUI that is named 'status_busy' and
+that can take an icon (e.g., a QLabel) the QWidget is automatically styled with
+the appropriate icon. The last column specifies a size, which is used only if a
+size is not automatically determined (e.g., button icons have a fixed size). The
+size column can be left blank, in which case a default is chosen.
+
+2.4. ICON THEME
+===============
+The icon theme is typically placed here (depening on the theme info file):
+
+	/usr/share/opensesame/resources/my_theme/os-custom-icons/
+	
+The icon theme must conform to the FreeDesktop icon theme specification:
+
+	<http://standards.freedesktop.org/icon-theme-spec/\
+		icon-theme-spec-latest.html>
+
+3. EXAMPLE
+==========
+The 'default' theme can serve as an example.

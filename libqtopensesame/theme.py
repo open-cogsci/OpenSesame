@@ -21,6 +21,7 @@ __author__ = "Sebastiaan Mathot"
 __license__ = "GPLv3"
 
 import os.path
+import imp
 from libopensesame import debug, misc
 from libqtopensesame import config
 from PyQt4 import QtGui, QtCore
@@ -31,21 +32,37 @@ class theme:
 
 	default_icon_size = 32
 
-	def __init__(self, main_window):
+	def __init__(self, main_window, theme=None):
 	
 		"""
 		Constructor
 		
 		Arguments:
 		main_window -- the main_window object
+		
+		Keyword arguments:
+		theme -- the theme to be used or None to use config (default=None)
 		"""
 
 		self.main_window = main_window
-		self.theme = config.get_config("theme")
+		if theme == None:
+			self.theme = config.get_config("theme")
+		else:
+			self.theme = theme
 		self.theme_folder = misc.resource(os.path.join("theme", \
 			self.theme))
-		debug.msg("theme folder = '%s'" % self.theme_folder)
-		
+		debug.msg("theme = '%s' (%s)" % (self.theme, self.theme_folder))			
+		if self.theme_folder == None or not os.path.exists(self.theme_folder):			
+			debug.msg("theme '%s' does not exist, using 'default'" % theme, reason="warning")
+			self.theme = "default"
+			self.theme_folder = misc.resource(os.path.join("theme", \
+				self.theme))						
+		self.theme_info = os.path.join(self.theme_folder, "__theme__.py")
+		if os.path.exists(self.theme_info):						
+			info = imp.load_source(self.theme, self.theme_info)
+			self._qss = info.qss
+			self._icon_map = info.icon_map
+			self._icon_theme = info.icon_theme							
 		self.load_qss()
 		self.load_icon_map()
 		self.load_icons(self.main_window.ui)
@@ -118,16 +135,16 @@ class theme:
 	
 		"""Load the icon map"""
 	
-		if os.path.exists(os.path.join(self.theme_folder, "os-custom-icons")):
+		if os.path.exists(os.path.join(self.theme_folder, self._icon_theme)):
 			debug.msg("using custom icon theme")
 			QtGui.QIcon.setThemeSearchPaths(QtGui.QIcon.themeSearchPaths() \
 				+ [self.theme_folder])
-			QtGui.QIcon.setThemeName("os-custom-icons")
+			QtGui.QIcon.setThemeName(self._icon_theme)
 		else:
 			debug.msg("using default icon theme, icons may be missing", \
 				reason="warning")
 		self.icon_map = {}
-		path = os.path.join(self.theme_folder, "icon_map.csv")
+		path = os.path.join(self.theme_folder, self._icon_map)		
 		debug.msg(path)
 		for l in open(path):
 			l = l.split(",")			
@@ -165,7 +182,7 @@ class theme:
 	
 		"""Load the stylesheet"""
 			
-		path = os.path.join(self.theme_folder, "stylesheet.qss")
+		path = os.path.join(self.theme_folder, self._qss)
 		debug.msg(path)
 		self.main_window.setStyleSheet(open(path).read())
 		
