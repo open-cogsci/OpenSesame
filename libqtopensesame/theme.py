@@ -136,7 +136,12 @@ class theme:
 					size = int(l[2])
 				except:
 					size = 32
-				self.icon_map[l[0].strip()] = l[1].strip(), size
+				alias = l[0].strip()
+				name = l[1].strip()
+				if alias in self.icon_map:
+					debug.msg("alias '%s' already in icon map, overwriting", \
+						reason="warning")
+				self.icon_map[alias] = name, size
 		
 	def load_icons(self, ui):
 	
@@ -147,7 +152,7 @@ class theme:
 		ui -- the ui object to load icons into
 		"""
 		
-		debug.msg()	
+		debug.msg()
 		for i in dir(ui):
 			if i in self.icon_map:			
 				a = getattr(ui, i)
