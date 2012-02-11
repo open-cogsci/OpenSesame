@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>495</width>
-    <height>330</height>
+    <width>583</width>
+    <height>292</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -34,7 +34,7 @@ background-color: #729fcf;</string>
        <number>5</number>
       </property>
       <item>
-       <widget class="QLabel" name="label">
+       <widget class="QLabel" name="label_startup_tip">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
           <horstretch>0</horstretch>
@@ -45,7 +45,7 @@ background-color: #729fcf;</string>
          <string/>
         </property>
         <property name="pixmap">
-         <pixmap resource="icons.qrc">:/icons/about_large.png</pixmap>
+         <pixmap>:/icons/about_large.png</pixmap>
         </property>
        </widget>
       </item>
@@ -113,7 +113,7 @@ background-color: #729fcf;</string>
          <string>Previous</string>
         </property>
         <property name="icon">
-         <iconset resource="icons.qrc">
+         <iconset>
           <normaloff>:/icons/previous.png</normaloff>:/icons/previous.png</iconset>
         </property>
        </widget>
@@ -130,7 +130,7 @@ background-color: #729fcf;</string>
          <string>Next</string>
         </property>
         <property name="icon">
-         <iconset resource="icons.qrc">
+         <iconset>
           <normaloff>:/icons/next.png</normaloff>:/icons/next.png</iconset>
         </property>
        </widget>
@@ -147,7 +147,7 @@ background-color: #729fcf;</string>
          <string>Close</string>
         </property>
         <property name="icon">
-         <iconset resource="icons.qrc">
+         <iconset>
           <normaloff>:/icons/delete.png</normaloff>:/icons/delete.png</iconset>
         </property>
        </widget>
@@ -157,9 +157,7 @@ background-color: #729fcf;</string>
    </item>
   </layout>
  </widget>
- <resources>
-  <include location="icons.qrc"/>
- </resources>
+ <resources/>
  <connections>
   <connection>
    <sender>button_close</sender>

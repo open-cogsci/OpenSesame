@@ -256,8 +256,6 @@ color: rgb(255, 255, 255);</string>
    </item>
   </layout>
  </widget>
- <resources>
-  <include location="icons.qrc"/>
- </resources>
+ <resources/>
  <connections/>
 </ui>

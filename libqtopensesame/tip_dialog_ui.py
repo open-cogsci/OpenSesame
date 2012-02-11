@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'resources/ui/tip_dialog.ui'
 #
-# Created: Fri Feb 10 22:50:02 2012
+# Created: Sat Feb 11 17:44:24 2012
 #      by: PyQt4 UI code generator 4.8.5
 #
 # WARNING! All changes made in this file will be lost!
@@ -17,7 +17,7 @@ except AttributeError:
 class Ui_Dialog(object):
     def setupUi(self, Dialog):
         Dialog.setObjectName(_fromUtf8("Dialog"))
-        Dialog.resize(495, 330)
+        Dialog.resize(583, 292)
         Dialog.setWindowTitle(QtGui.QApplication.translate("Dialog", "Did you now that?", None, QtGui.QApplication.UnicodeUTF8))
         self.verticalLayout = QtGui.QVBoxLayout(Dialog)
         self.verticalLayout.setMargin(8)
@@ -35,16 +35,16 @@ class Ui_Dialog(object):
         self.horizontalLayout.setMargin(5)
         self.horizontalLayout.setMargin(0)
         self.horizontalLayout.setObjectName(_fromUtf8("horizontalLayout"))
-        self.label = QtGui.QLabel(self.widget)
+        self.label_startup_tip = QtGui.QLabel(self.widget)
         sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Fixed, QtGui.QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.label.sizePolicy().hasHeightForWidth())
-        self.label.setSizePolicy(sizePolicy)
-        self.label.setText(_fromUtf8(""))
-        self.label.setPixmap(QtGui.QPixmap(_fromUtf8(":/icons/about_large.png")))
-        self.label.setObjectName(_fromUtf8("label"))
-        self.horizontalLayout.addWidget(self.label)
+        sizePolicy.setHeightForWidth(self.label_startup_tip.sizePolicy().hasHeightForWidth())
+        self.label_startup_tip.setSizePolicy(sizePolicy)
+        self.label_startup_tip.setText(_fromUtf8(""))
+        self.label_startup_tip.setPixmap(QtGui.QPixmap(_fromUtf8(":/icons/about_large.png")))
+        self.label_startup_tip.setObjectName(_fromUtf8("label_startup_tip"))
+        self.horizontalLayout.addWidget(self.label_startup_tip)
         self.label_2 = QtGui.QLabel(self.widget)
         font = QtGui.QFont()
         font.setPointSize(11)
@@ -118,4 +118,3 @@ class Ui_Dialog(object):
     def retranslateUi(self, Dialog):
         pass
 
-import icons_rc

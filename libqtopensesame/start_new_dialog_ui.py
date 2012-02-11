@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'resources/ui/start_new_dialog.ui'
 #
-# Created: Fri Feb 10 22:50:02 2012
+# Created: Sat Feb 11 17:44:24 2012
 #      by: PyQt4 UI code generator 4.8.5
 #
 # WARNING! All changes made in this file will be lost!
@@ -176,4 +176,3 @@ class Ui_Dialog(object):
     def retranslateUi(self, Dialog):
         pass
 
-import icons_rc

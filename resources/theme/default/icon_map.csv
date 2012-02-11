@@ -139,3 +139,8 @@ button_browse_logfile,document-open,
 button_browse_experiment,document-open,
 button_cancel,gtk-cancel,
 button_run,os-run,
+,,
+label_startup_tip,help-faq,32
+button_close,gtk-close,
+button_next,gtk-go-forward-ltr,
+button_prev,gtk-go-forward-rtl,
