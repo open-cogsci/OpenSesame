@@ -30,70 +30,6 @@ import subprocess
 from libqtopensesame import config
 from libopensesame import debug
 
-class plugin_action(QtGui.QAction):
-
-	"""Menu action for a plugin"""
-
-	def __init__(self, main_window, menu, plugin):
-
-		"""
-		Constructor
-
-		Arguments:
-		main_window -- the main window
-		menu -- the menu into which the action should be inserted
-		plugin -- the name of the plugin
-		"""
-
-		self.main_window = main_window
-		icon = QtGui.QIcon(libopensesame.plugins.plugin_icon_large(plugin))
-		self.plugin = plugin
-		QtGui.QAction.__init__(self, icon, "Add %s" % plugin, menu)
-
-		self.triggered.connect(self.add_plugin)
-
-	def add_plugin(self, dummy = None):
-
-		"""
-		Start a drag to add the plugin to the experiment
-
-		Keyword arguments:
-		dummy -- a dummy argument passed by the signal handler (default = None)
-		"""
-
-		self.main_window.drag_item(self.plugin)
-
-class recent_action(QtGui.QAction):
-
-	"""Menu action for a recently opened file"""
-
-	def __init__(self, path, main_window, menu):
-
-		"""
-		Constructor
-
-		Arguments:
-		path -- path to the recent file
-		main_window -- the main window
-		menu -- the menu into which the action should be inserted
-		"""
-
-		QtGui.QAction.__init__(self, os.path.basename(path), menu)
-		self.main_window = main_window
-		self.triggered.connect(self.open_file)
-		self.path = path
-
-	def open_file(self, dummy = None):
-
-		"""
-		Open the file
-
-		Keyword arguments:
-		dummy -- a dummy argument passed by the signal handler (default = None)
-		"""
-
-		self.main_window.open_file(path = self.path)
-
 class qtopensesame(QtGui.QMainWindow):
 
 	"""The main class of the OpenSesame GUI"""
@@ -998,6 +934,8 @@ class qtopensesame(QtGui.QMainWindow):
 	def update_recent_files(self):
 
 		"""Recreate the list with recent documents"""
+		
+		from libqtopensesame.recent_action import recent_action
 
 		# Add the current path to the front of the list
 		if self.current_path != None and os.path.exists(self.current_path):
@@ -1833,6 +1771,8 @@ class qtopensesame(QtGui.QMainWindow):
 		Arguments:
 		menu -- a QMenu instance
 		"""
+		
+		from libqtopensesame.plugin_action import plugin_action
 
 		cat_menu = {}
 		for plugin in libopensesame.plugins.list_plugins():
