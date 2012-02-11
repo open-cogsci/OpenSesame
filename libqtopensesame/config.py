@@ -17,6 +17,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 
 from PyQt4 import QtCore
 import libopensesame.misc
+from libopensesame import debug
 
 # Determine the sip api that is used, because this depends on whether or not
 # IPython is loaded
@@ -150,3 +151,41 @@ def save_config(settings):
 		if setting != "cfg_ver":
 			settings.setValue(setting, value)
 
+def parse_cmdline_args(args):
+
+	"""
+	Apply settings that were specified on the command line. The expected format
+	is as follows: [name]=[val];[name]=[val];...
+	
+	Arguments:
+	args -- the string of arguments
+	"""
+	
+	if args == None:		
+		return
+		
+	for arg in args.split(";"):
+		a = arg.split("=")
+		if len(a) == 2:
+		
+			# Automagically determine the data type
+			if a[1] == "True":
+				val = True
+			elif a[1] == "False":
+				val = False
+			else:
+				try:
+					val = int(a[1])
+				except:
+					try:
+						val = float(a[1])
+					except:
+						val = a[1]
+				
+			# Apply the argument		
+			try:
+				set_config(a[0], val)
+				debug.msg("%s = %s" % (a[0], val))
+			except:
+				debug.msg("Failed to parse argument: %s" % arg)
+				

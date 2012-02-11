@@ -245,12 +245,12 @@ class qtopensesame(QtGui.QMainWindow):
 
 		# Build the items toolbar
 		self.set_status("Welcome to OpenSesame %s" % self.version)
+		self.parse_command_line()
 		self.restore_state()
 		self.refresh_plugins()
 		self.start_autosave_timer()
 		self.update_recent_files()
-		self.clean_autosave()
-		self.parse_command_line()
+		self.clean_autosave()		
 		self.set_unsaved(False)
 		
 	def load_theme(self):
@@ -269,9 +269,9 @@ class qtopensesame(QtGui.QMainWindow):
 
 		parser = optparse.OptionParser("usage: opensesame [experiment] [options]", \
 			version = "%s '%s'" % (self.version, self.codename))
-		parser.set_defaults(debug = False)
-		parser.set_defaults(run = False)
-		parser.set_defaults(run_in_window = False)
+		parser.set_defaults(debug=False)
+		parser.set_defaults(run=False)
+		parser.set_defaults(run_in_window=False)
 		group = optparse.OptionGroup(parser, "Immediately run an experiment")
 		group.add_option("-r", "--run", action="store_true", dest="run", \
 			help="Run fullscreen")
@@ -279,6 +279,8 @@ class qtopensesame(QtGui.QMainWindow):
 			dest="run_in_window", help="Run in window")
 		parser.add_option_group(group)
 		group = optparse.OptionGroup(parser, "Miscellaneous options")
+		group.add_option("-c", "--config", action="store", dest="_config", \
+			help="Set a configuration option, e.g, '--config auto_update_check=False;scintilla_font_size=10'. For a complete list of configuration options, please refer to the source of config.py.")		
 		group.add_option("-d", "--debug", action="store_true", dest="debug", \
 			help="Print lots of debugging messages to the standard output")
 		group.add_option("-s", "--stack", action="store_true", dest="_stack", \
@@ -292,7 +294,7 @@ class qtopensesame(QtGui.QMainWindow):
 		group.add_option("--no-global-resources", action="store_true", dest="no_global_resources", \
 			help="Do not use global resources on *nix")
 		parser.add_option_group(group)
-		self.options, args = parser.parse_args(sys.argv)
+		self.options, args = parser.parse_args(sys.argv)	
 		if self.options.run and self.options.run_in_window:
 			parser.error("Options -r / --run and -w / --run-in-window are mutually exclusive.")
 
@@ -314,7 +316,12 @@ class qtopensesame(QtGui.QMainWindow):
 		settings = QtCore.QSettings("cogscinl", "opensesame")
 		settings.beginGroup("MainWindow")
 		config.restore_config(settings)
+		
+		# Force configuration options that were set via the command line
+		config.parse_cmdline_args(self.options._config)
 
+		# Some old-style settings are not handled via get_config, but using
+		# properties of the main_window object.
 		self.resize(config.get_config("size"))
 		self.move(config.get_config("pos"))
 		self._initial_window_state = config.get_config("_initial_window_state")
