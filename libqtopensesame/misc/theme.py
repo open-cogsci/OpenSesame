@@ -53,7 +53,8 @@ class theme:
 			self.theme))
 		debug.msg("theme = '%s' (%s)" % (self.theme, self.theme_folder))			
 		if self.theme_folder == None or not os.path.exists(self.theme_folder):			
-			debug.msg("theme '%s' does not exist, using 'default'" % theme, reason="warning")
+			debug.msg("theme '%s' does not exist, using 'default'" % theme, \
+				reason="warning")
 			self.theme = "default"
 			self.theme_folder = misc.resource(os.path.join("theme", \
 				self.theme))						
@@ -156,8 +157,8 @@ class theme:
 				alias = l[0].strip()
 				name = l[1].strip()
 				if alias in self.icon_map:
-					debug.msg("alias '%s' already in icon map, overwriting", \
-						reason="warning")
+					debug.msg("alias '%s' already in icon map, overwriting" % \
+						alias, reason="warning")
 				self.icon_map[alias] = name, size
 		
 	def load_icons(self, ui):
