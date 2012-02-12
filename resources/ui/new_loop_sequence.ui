@@ -32,7 +32,7 @@
          <string/>
         </property>
         <property name="pixmap">
-         <pixmap resource="icons.qrc">:/icons/loop_large.png</pixmap>
+         <pixmap>:/icons/loop_large.png</pixmap>
         </property>
        </widget>
       </item>
@@ -99,7 +99,7 @@
             <string>Create</string>
            </property>
            <property name="icon">
-            <iconset resource="icons.qrc">
+            <iconset>
              <normaloff>:/icons/add.png</normaloff>:/icons/add.png</iconset>
            </property>
            <property name="iconSize">
@@ -140,7 +140,7 @@
             <string>Select</string>
            </property>
            <property name="icon">
-            <iconset resource="icons.qrc">
+            <iconset>
              <normaloff>:/icons/apply.png</normaloff>:/icons/apply.png</iconset>
            </property>
            <property name="iconSize">
@@ -182,7 +182,7 @@
          <string>Cancel</string>
         </property>
         <property name="icon">
-         <iconset resource="icons.qrc">
+         <iconset>
           <normaloff>:/icons/delete.png</normaloff>:/icons/delete.png</iconset>
         </property>
         <property name="iconSize">
@@ -198,9 +198,7 @@
    </item>
   </layout>
  </widget>
- <resources>
-  <include location="icons.qrc"/>
- </resources>
+ <resources/>
  <connections>
   <connection>
    <sender>button_cancel</sender>

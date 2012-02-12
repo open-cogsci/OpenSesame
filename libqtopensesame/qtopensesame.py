@@ -16,7 +16,9 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from PyQt4 import QtCore, QtGui
-from libqtopensesame import includes, experiment
+from libqtopensesame.misc import includes, config
+from libqtopensesame.items import experiment
+from libopensesame import debug, exceptions
 import libopensesame.exceptions
 import libopensesame.experiment
 import libopensesame.plugins
@@ -27,8 +29,6 @@ import sys
 import time
 import traceback
 import subprocess
-from libqtopensesame import config
-from libopensesame import debug
 
 class qtopensesame(QtGui.QMainWindow):
 
@@ -52,7 +52,9 @@ class qtopensesame(QtGui.QMainWindow):
 		"""Resume GUI initialization"""
 
 		from libopensesame import misc
-		from libqtopensesame import pool_widget, opensesame_ui, theme
+		from libqtopensesame.widgets import pool_widget
+		from libqtopensesame.ui import opensesame_ui
+		from libqtopensesame.misc import  theme
 		import platform
 
 		# Setup the UI
@@ -499,7 +501,7 @@ class qtopensesame(QtGui.QMainWindow):
 				  of the show tips on startup setting (default = True)
 		"""
 
-		from libqtopensesame import tip_dialog
+		from libqtopensesame.dialogs import tip_dialog
 
 		if always or self.show_startup_tip:
 			d = tip_dialog.tip_dialog(self)
@@ -514,7 +516,7 @@ class qtopensesame(QtGui.QMainWindow):
 		dummy -- a dummy argument passed by the signal handler (default=None)
 		"""
 
-		from libqtopensesame import start_new_dialog
+		from libqtopensesame.dialogs import start_new_dialog
 
 		if config.get_config("new_experiment_dialog"):
 			d = start_new_dialog.start_new_dialog(self)
@@ -583,7 +585,7 @@ class qtopensesame(QtGui.QMainWindow):
 		message -- the message to be displayed
 		"""
 
-		from libqtopensesame import update_dialog_ui
+		from libqtopensesame.ui import update_dialog_ui
 
 		a = QtGui.QDialog(self)
 		a.ui = update_dialog_ui.Ui_Dialog()
@@ -701,7 +703,7 @@ class qtopensesame(QtGui.QMainWindow):
 
 		"""Open the preferences tab"""
 
-		from libqtopensesame import preferences_widget
+		from libqtopensesame.widgets import preferences_widget
 
 		i = self.get_tab_index("__preferences__")
 		if i != None:
@@ -933,7 +935,7 @@ class qtopensesame(QtGui.QMainWindow):
 
 		"""Recreate the list with recent documents"""
 		
-		from libqtopensesame.recent_action import recent_action
+		from libqtopensesame.actions import recent_action
 
 		# Add the current path to the front of the list
 		if self.current_path != None and os.path.exists(self.current_path):
@@ -952,7 +954,9 @@ class qtopensesame(QtGui.QMainWindow):
 			self.ui.menu_recent_files.addAction(a)
 		else:
 			for path in self.recent_files:
-				self.ui.menu_recent_files.addAction(recent_action(path, self, self.ui.menu_recent_files))
+				self.ui.menu_recent_files.addAction( \
+					recent_action.recent_action(path, self, \
+					self.ui.menu_recent_files))
 
 	def new_file(self):
 
@@ -1229,7 +1233,7 @@ class qtopensesame(QtGui.QMainWindow):
 
 		"""Initializes the general tab"""
 
-		from libqtopensesame import general_properties
+		from libqtopensesame.widgets import general_properties
 		self.general_tab_widget = general_properties.general_properties(self)
 
 	def general_widget(self):
@@ -1546,7 +1550,7 @@ class qtopensesame(QtGui.QMainWindow):
 		"""
 
 		import openexp.exceptions
-		from libqtopensesame import pyterm
+		from libqtopensesame.widgets import pyterm
 
 		# Before we run the experiment, we parse it in three steps
 		# 1) Apply any pending changes
@@ -1770,8 +1774,8 @@ class qtopensesame(QtGui.QMainWindow):
 		menu -- a QMenu instance
 		"""
 		
-		from libqtopensesame.plugin_action import plugin_action
-
+		from libqtopensesame.actions import plugin_action
+		
 		cat_menu = {}
 		for plugin in libopensesame.plugins.list_plugins():
 			debug.msg("found plugin '%s'" % plugin)
@@ -1780,7 +1784,8 @@ class qtopensesame(QtGui.QMainWindow):
 				cat_menu[cat] = QtGui.QMenu(cat)
 				cat_menu[cat] = menu.addMenu(self.experiment.icon("plugin"), \
 					cat)
-			cat_menu[cat].addAction(plugin_action(self, cat_menu[cat], plugin))
+			cat_menu[cat].addAction(plugin_action.plugin_action(self, \
+				cat_menu[cat], plugin))
 
 	def add_item(self, item_type, refresh=True, name=None):
 
@@ -1822,7 +1827,7 @@ class qtopensesame(QtGui.QMainWindow):
 
 		else:
 			# Load a core item
-			exec("from libqtopensesame import %s" % item_type)
+			exec("from libqtopensesame.items import %s" % item_type)
 			name = self.experiment.unique_name("%s" % item_type)
 			item = eval("%s.%s(name, self.experiment)" % (item_type, item_type))
 
@@ -1861,7 +1866,7 @@ class qtopensesame(QtGui.QMainWindow):
 		The name of the new loop
 		"""
 
-		from libqtopensesame import new_loop_sequence_dialog
+		from libqtopensesame.dialogs import new_loop_sequence_dialog
 
 		d = new_loop_sequence_dialog.new_loop_sequence_dialog(self, self.experiment, "loop", parent)
 		d.exec_()
@@ -1891,7 +1896,7 @@ class qtopensesame(QtGui.QMainWindow):
 		The name of the new sequence
 		"""
 
-		from libqtopensesame import new_loop_sequence_dialog
+		from libqtopensesame.dialogs import new_loop_sequence_dialog
 
 		d = new_loop_sequence_dialog.new_loop_sequence_dialog(self, self.experiment, "sequence", parent)
 		d.exec_()
@@ -2039,7 +2044,7 @@ class qtopensesame(QtGui.QMainWindow):
 		add_func -- a function to call to create the new item
 		"""
 
-		from libqtopensesame import draggables
+		from libqtopensesame.widgets import draggables
 
 		debug.msg("dropping from toolbar")
 
@@ -2074,7 +2079,7 @@ class qtopensesame(QtGui.QMainWindow):
 		add_func -- a function to create a new item, if the item is dropped
 		"""
 
-		from libqtopensesame import draggables
+		from libqtopensesame.widgets import draggables
 
 		debug.msg("dragging")
 

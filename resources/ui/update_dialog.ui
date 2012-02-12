@@ -45,7 +45,7 @@ background-color: #729fcf;</string>
          <string/>
         </property>
         <property name="pixmap">
-         <pixmap resource="icons.qrc">:/icons/update_large.png</pixmap>
+         <pixmap>:/icons/update_large.png</pixmap>
         </property>
        </widget>
       </item>
@@ -94,9 +94,7 @@ background-color: #729fcf;</string>
    </item>
   </layout>
  </widget>
- <resources>
-  <include location="icons.qrc"/>
- </resources>
+ <resources/>
  <connections>
   <connection>
    <sender>buttonBox</sender>

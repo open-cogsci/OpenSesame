@@ -1,3 +1,5 @@
+For changes after 0.25, please refer to GitHub
+
 0.24 "Cody Crick"
 - Added back-end independence
 - Added experimental PsychoPy backend (psycho)

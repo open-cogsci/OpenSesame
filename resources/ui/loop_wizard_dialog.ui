@@ -297,9 +297,7 @@ p, li { white-space: pre-wrap; }
    <header location="global">good_looking_table.h</header>
   </customwidget>
  </customwidgets>
- <resources>
-  <include location="icons.qrc"/>
- </resources>
+ <resources/>
  <connections>
   <connection>
    <sender>buttonBox</sender>

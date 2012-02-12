@@ -16,7 +16,8 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from PyQt4 import QtCore, QtGui
-from libqtopensesame import opensesamerun_ui, theme
+from libqtopensesame.ui import opensesamerun_ui
+from libqtopensesame.misc import theme
 
 class qtopensesamerun(QtGui.QMainWindow):
 

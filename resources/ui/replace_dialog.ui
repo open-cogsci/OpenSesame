@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>390</width>
-    <height>107</height>
+    <width>396</width>
+    <height>109</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -66,7 +66,7 @@
          <string>Search</string>
         </property>
         <property name="icon">
-         <iconset resource="icons.qrc">
+         <iconset>
           <normaloff>:/icons/search.png</normaloff>:/icons/search.png</iconset>
         </property>
        </widget>
@@ -80,7 +80,7 @@
          <string>Replace</string>
         </property>
         <property name="icon">
-         <iconset resource="icons.qrc">
+         <iconset>
           <normaloff>:/icons/replace.png</normaloff>:/icons/replace.png</iconset>
         </property>
        </widget>
@@ -94,7 +94,7 @@
          <string>Replace all</string>
         </property>
         <property name="icon">
-         <iconset resource="icons.qrc">
+         <iconset>
           <normaloff>:/icons/replace.png</normaloff>:/icons/replace.png</iconset>
         </property>
        </widget>
@@ -108,7 +108,7 @@
          <string>Close</string>
         </property>
         <property name="icon">
-         <iconset resource="icons.qrc">
+         <iconset>
           <normaloff>:/icons/close.png</normaloff>:/icons/close.png</iconset>
         </property>
        </widget>
@@ -118,9 +118,7 @@
    </item>
   </layout>
  </widget>
- <resources>
-  <include location="icons.qrc"/>
- </resources>
+ <resources/>
  <connections>
   <connection>
    <sender>button_close</sender>

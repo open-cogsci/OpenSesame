@@ -20,4 +20,11 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 __author__ = "Sebastiaan Mathot"
 __license__ = "GPLv3"
 
-from libqtopensesame.items import qtplugin
+import sys
+from libopensesame import debug
+
+for redirect in ["pyterm",  "statusbar", "tree_overview", "toolbar_items", "variable_inspector"]:
+	debug.msg("redirect '%s' module to libqtopensesame.widgets" % redirect)
+	exec("from libqtopensesame.widgets import %s" % (redirect))
+	sys.modules[redirect] = eval(redirect)
+	
