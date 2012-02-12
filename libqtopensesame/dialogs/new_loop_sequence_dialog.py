@@ -20,25 +20,36 @@ from libqtopensesame.ui import new_loop_sequence_ui
 
 class new_loop_sequence_dialog(QtGui.QDialog):
 
-	"""
-	The dialog that is presented after a new loop or
-	sequence is created, in which the user indicates
-	the initial item.
-	"""
+	"""Dialog to select an item-to-run for a new sequence or loop item"""
 
 	def __init__(self, parent, experiment, item_type, _parent):
+
+		"""
+		Constructor
+		
+		Arguments:
+		parent -- the parent QWidget
+		experiment -- the experiment object
+		item_type -- 'sequence' or 'loop'
+		_parent -- the parent item, i.e. the item above the current item in the
+				   experiment hierarchy		
+		"""	
 	
 		QtGui.QDialog.__init__(self, parent)
 		self.experiment = experiment
 		self._parent = _parent
 		self.ui = new_loop_sequence_ui.Ui_Dialog()
 		self.ui.setupUi(self)
+		self.experiment.main_window.theme.load_icons(self.ui)
 		
-		self.ui.label_icon.setPixmap(QtGui.QPixmap(self.experiment.resource("%s_large.png" % item_type)))
+		self.ui.label_icon.setPixmap(QtGui.QPixmap(self.experiment.resource( \
+			"%s_large.png" % item_type)))
 		self.action = "cancel"
 		
-		QtCore.QObject.connect(self.ui.button_new, QtCore.SIGNAL("clicked()"), self.new_item)
-		QtCore.QObject.connect(self.ui.button_select, QtCore.SIGNAL("clicked()"), self.select_item)
+		QtCore.QObject.connect(self.ui.button_new, QtCore.SIGNAL("clicked()"), \
+			self.new_item)
+		QtCore.QObject.connect(self.ui.button_select, \
+			QtCore.SIGNAL("clicked()"), self.select_item)
 		
 		if item_type == "loop":
 			s = "A loop needs another item to run, usually a sequence. You can create a new item or select an existing item to add to the loop."
@@ -49,7 +60,8 @@ class new_loop_sequence_dialog(QtGui.QDialog):
 			
 		self.ui.label_explanation.setText(s)
 		
-		self.experiment.item_type_combobox(True, True, self.ui.combobox_new, select)
+		self.experiment.item_type_combobox(True, True, self.ui.combobox_new, \
+			select)
 		
 		# The parents list is excluded from the list of possible children, but
 		# this list if empty if there are no parents or the parent is the main

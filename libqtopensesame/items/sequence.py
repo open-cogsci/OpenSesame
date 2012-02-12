@@ -154,9 +154,9 @@ class sequence(libopensesame.sequence.sequence, qtitem.qtitem):
 		l.addWidget(QtGui.QLabel("The sequence is empty"))
 		l.addStretch()
 
-		self.button_existing = self.action_button("add", \
+		self.button_existing = self.action_button("button_select", \
 			"Append existing item to sequence", ("add", "existing"))
-		self.button_new = self.action_button("add", \
+		self.button_new = self.action_button("button_new", \
 			"Create and append  new item to sequence", ("add", "new"))
 
 		grid = QtGui.QGridLayout()

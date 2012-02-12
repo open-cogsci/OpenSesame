@@ -45,6 +45,7 @@ button_cancel,gtk-cancel,
 button_circle,os-circle,
 button_clear_stdout,edit-clear,
 button_close,gtk-close,
+button_close,gtk-close,
 button_colorpicker,text-x-css,16
 button_ellipse,os-ellipse,
 button_fixdot,os-fixdot,
@@ -54,6 +55,7 @@ button_help_stdout,help-contents,
 button_help_variables,help-contents,
 button_image,os-image,
 button_line,os-line,
+button_new,list-add,
 button_next,gtk-go-forward-ltr,
 button_noise_patch,os-noise,
 button_pool_add,gtk-add,16
@@ -62,9 +64,13 @@ button_prev,gtk-go-forward-rtl,
 button_recent,document-open-recent,
 button_rect,os-rect,
 button_refresh,view-refresh,16
+button_replace,edit-find-replace,
+button_replace_all,edit-find-replace,
 button_run,os-run,
 button_saw,os-saw,
 button_script,utilities-terminal,
+button_search,edit-find,
+button_select,gtk-ok,
 button_sine,os-sine,
 button_square,os-square,
 button_template,emblem-favorite,
@@ -97,6 +103,7 @@ label_startup_tip,help-faq,32
 label_stdout,bug-buddy,
 label_synth,os-synth,32
 label_synth_script,utilities-terminal,32
+label_update_dialog,system-software-update,32
 label_variables,system-search,
 label_variables_search,edit-find,16
 label_wizard,emblem-favorite,32

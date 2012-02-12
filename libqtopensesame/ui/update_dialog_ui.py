@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'resources/ui/update_dialog.ui'
 #
-# Created: Sun Feb 12 13:21:16 2012
+# Created: Sun Feb 12 14:56:59 2012
 #      by: PyQt4 UI code generator 4.8.5
 #
 # WARNING! All changes made in this file will be lost!
@@ -35,16 +35,16 @@ class Ui_Dialog(object):
         self.horizontalLayout.setMargin(5)
         self.horizontalLayout.setMargin(0)
         self.horizontalLayout.setObjectName(_fromUtf8("horizontalLayout"))
-        self.label = QtGui.QLabel(self.widget)
+        self.label_update_dialog = QtGui.QLabel(self.widget)
         sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Fixed, QtGui.QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.label.sizePolicy().hasHeightForWidth())
-        self.label.setSizePolicy(sizePolicy)
-        self.label.setText(_fromUtf8(""))
-        self.label.setPixmap(QtGui.QPixmap(_fromUtf8(":/icons/update_large.png")))
-        self.label.setObjectName(_fromUtf8("label"))
-        self.horizontalLayout.addWidget(self.label)
+        sizePolicy.setHeightForWidth(self.label_update_dialog.sizePolicy().hasHeightForWidth())
+        self.label_update_dialog.setSizePolicy(sizePolicy)
+        self.label_update_dialog.setText(_fromUtf8(""))
+        self.label_update_dialog.setPixmap(QtGui.QPixmap(_fromUtf8(":/icons/update_large.png")))
+        self.label_update_dialog.setObjectName(_fromUtf8("label_update_dialog"))
+        self.horizontalLayout.addWidget(self.label_update_dialog)
         self.label_2 = QtGui.QLabel(self.widget)
         font = QtGui.QFont()
         font.setPointSize(11)

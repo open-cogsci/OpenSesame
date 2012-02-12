@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'resources/ui/synth_widget.ui'
 #
-# Created: Sun Feb 12 13:21:16 2012
+# Created: Sun Feb 12 14:56:59 2012
 #      by: PyQt4 UI code generator 4.8.5
 #
 # WARNING! All changes made in this file will be lost!

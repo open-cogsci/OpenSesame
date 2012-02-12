@@ -39,6 +39,7 @@ class replace_dialog(QtGui.QDialog):
 		self.edit = parent.edit
 		self.ui = replace_dialog_ui.Ui_Dialog()
 		self.ui.setupUi(self)
+		parent.experiment.main_window.theme.load_icons(self.ui)
 		self.adjustSize()
 
 		self.ui.edit_search.setText(parent.search.text())
