@@ -113,7 +113,7 @@ def restore_config(settings):
 				value = value.toBool()
 			elif type(default) == str:
 				try:
-					value = str(value.toString())
+					value = unicode(value.toString())
 				except:
 					value = default
 			elif type(default) == int:

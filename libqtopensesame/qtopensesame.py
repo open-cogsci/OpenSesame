@@ -286,9 +286,12 @@ class qtopensesame(QtGui.QMainWindow):
 
 		# Unpack the string with recent files and only remember those that still exist
 		self.recent_files = []
-		for path in config.get_config("recent_files").split(";;"):
+		for path in config.get_config("recent_files").split(";;"):		
 			if os.path.exists(path):
+				debug.msg("adding recent file '%s'" % path)
 				self.recent_files.append(path)
+			else:
+				debug.msg("missing recent file '%s'" % path)
 
 		self.ui.action_enable_auto_response.setChecked(self.experiment.auto_response)
 		self.ui.action_show_info_in_overview.setChecked(config.get_config("overview_info"))
@@ -329,7 +332,9 @@ class qtopensesame(QtGui.QMainWindow):
 		settings.setValue("opensesamerun_exec", self.opensesamerun_exec)
 		settings.setValue("overview_info", self.overview_info)
 		settings.setValue("auto_response", self.experiment.auto_response)
-		settings.setValue("toolbar_text", self.ui.toolbar_main.toolButtonStyle() == QtCore.Qt.ToolButtonTextUnderIcon)
+		settings.setValue("toolbar_text", \
+			self.ui.toolbar_main.toolButtonStyle() == \
+			QtCore.Qt.ToolButtonTextUnderIcon)		
 		settings.setValue("recent_files", ";;".join(self.recent_files))
 		settings.setValue("style", self.style)
 		settings.endGroup()
@@ -1567,13 +1572,13 @@ class qtopensesame(QtGui.QMainWindow):
 				self.experiment.pool_folder)
 			exp.experiment_path = self.experiment.experiment_path
 		except libopensesame.exceptions.script_error as e:
-			self.experiment.notify(str(e))
+			self.experiment.notify(unicode(e))
 			return
 
 		if debug.enabled:
 			exp.set("subject_nr", 999)
 			exp.set("subject_parity", "odd")
-			logfile = os.path.join(str(self.default_logfile_folder), "debug.csv")
+			logfile = os.path.join(unicode(self.default_logfile_folder), "debug.csv")
 
 		else:
 
@@ -1587,8 +1592,9 @@ class qtopensesame(QtGui.QMainWindow):
 			exp.set_subject(subject_nr)
 
 			# Suggested filename
-			suggested_path = os.path.join(str(self.default_logfile_folder), \
-				"subject-%d.csv" % subject_nr)
+			suggested_path = os.path.join( \
+				unicode(self.default_logfile_folder), "subject-%d.csv" \
+				% subject_nr)
 
 			# Get the data file
 			csv_filter = "Comma-separated values (*.csv)"
