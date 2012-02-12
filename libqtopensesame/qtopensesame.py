@@ -322,7 +322,7 @@ class qtopensesame(QtGui.QMainWindow):
 		settings.setValue("size", self.size())
 		settings.setValue("pos", self.pos())
 		settings.setValue("_initial_window_state", self.saveState())
-		settings.setValue("auto_check_update", self.auto_check_update)
+		settings.setValue("auto_update_check", self.auto_check_update)
 		settings.setValue("show_startup_tip", self.show_startup_tip)
 		settings.setValue("default_logfile_folder", self.default_logfile_folder)
 		settings.setValue("autosave_interval", self.autosave_interval)
