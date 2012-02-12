@@ -657,10 +657,12 @@ class qtopensesame(QtGui.QMainWindow):
 		if i != None:
 			self.switch_tab(i)
 		else:
-			from libqtopensesame.help_browser import help_browser
+			from libqtopensesame.widgets import help_browser
 			path = self.experiment.help("%s.html" % item)
-			text = help_browser(path, item, [("[version]", self.version), ("[codename]", self.codename)])
-			index = self.experiment.ui.tabwidget.addTab(text, self.experiment.icon("help"), title)
+			text = help_browser.help_browser(path, item, [("[version]", \
+				self.version), ("[codename]", self.codename)])
+			index = self.experiment.ui.tabwidget.addTab(text, \
+				self.experiment.icon("help"), title)
 			self.switch_tab(index)
 
 	def open_general_help_tab(self):
