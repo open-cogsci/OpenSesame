@@ -20,4 +20,6 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 __author__ = "Sebastiaan Mathot"
 __license__ = "GPLv3"
 
+# Redirect qtplugin so that the old way of from libqtopensesame import qtplugin
+# still works.
 from libqtopensesame.items import qtplugin
