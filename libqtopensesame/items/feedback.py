@@ -44,7 +44,7 @@ class feedback(libopensesame.feedback.feedback, feedpad.feedpad, qtitem.qtitem):
 
 		"""Apply changes to the controls"""
 
-		libqtopensesame.qtitem.qtitem.apply_edit_changes(self)
+		qtitem.qtitem.apply_edit_changes(self)
 		dur = self.experiment.sanitize(self.edit_duration.text(), strict=True)
 		if dur.strip() != "":
 			self.set("duration", dur)
@@ -58,7 +58,7 @@ class feedback(libopensesame.feedback.feedback, feedpad.feedpad, qtitem.qtitem):
 
 		"""Update the controls based on the items settings"""
 
-		libqtopensesame.qtitem.qtitem.edit_widget(self)
+		qtitem.qtitem.edit_widget(self)
 		self.edit_duration.setText(str(self.get_check("duration", "keypress")))
 		self.checkbox_reset.setChecked(self.get_check("reset_variables", valid=["yes", "no"]) == "yes")
 		self.tools_widget.refresh()
@@ -68,7 +68,7 @@ class feedback(libopensesame.feedback.feedback, feedpad.feedpad, qtitem.qtitem):
 
 		"""Construct the edit widget that contains the controls"""
 
-		libqtopensesame.qtitem.qtitem.init_edit_widget(self, False)
+		qtitem.qtitem.init_edit_widget(self, False)
 
 		row = 0
 
@@ -88,6 +88,6 @@ class feedback(libopensesame.feedback.feedback, feedpad.feedpad, qtitem.qtitem):
 		QtCore.QObject.connect(self.popout_button, QtCore.SIGNAL("clicked()"), self.popout)
 		self.edit_grid.addWidget(self.popout_button, row, 0)
 
-		self.tools_widget = libqtopensesame.sketchpad_widget.sketchpad_widget(self)
+		self.tools_widget = sketchpad_widget.sketchpad_widget(self)
 		self.edit_vbox.addWidget(self.tools_widget)
 

@@ -23,7 +23,10 @@ __license__ = "GPLv3"
 import sys
 from libopensesame import debug
 
-for redirect in ["pyterm",  "statusbar", "tree_overview", "toolbar_items", "variable_inspector"]:
+# The UI files expect the widgets to be in the same package. This redirect
+# allows the UI files to use widgets from the libqtopensesame.widgets package.
+for redirect in ["pyterm",  "statusbar", "tree_overview", "toolbar_items", \
+	"variable_inspector", "good_looking_table"]:
 	debug.msg("redirect '%s' module to libqtopensesame.widgets" % redirect)
 	exec("from libqtopensesame.widgets import %s" % (redirect))
 	sys.modules[redirect] = eval(redirect)
