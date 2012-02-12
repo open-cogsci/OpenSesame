@@ -45,7 +45,6 @@ button_cancel,gtk-cancel,
 button_circle,os-circle,
 button_clear_stdout,edit-clear,
 button_close,gtk-close,
-button_close,gtk-close,
 button_colorpicker,text-x-css,16
 button_ellipse,os-ellipse,
 button_fixdot,os-fixdot,
