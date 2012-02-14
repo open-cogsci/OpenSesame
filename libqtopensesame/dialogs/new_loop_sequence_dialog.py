@@ -40,12 +40,10 @@ class new_loop_sequence_dialog(QtGui.QDialog):
 		self._parent = _parent
 		self.ui = new_loop_sequence_ui.Ui_Dialog()
 		self.ui.setupUi(self)
-		self.experiment.main_window.theme.load_icons(self.ui)
-		
-		self.ui.label_icon.setPixmap(QtGui.QPixmap(self.experiment.resource( \
-			"%s_large.png" % item_type)))
-		self.action = "cancel"
-		
+		self.experiment.main_window.theme.load_icons(self.ui)		
+		self.ui.label_icon.setPixmap( \
+			self.experiment.main_window.theme.qpixmap(item_type))
+		self.action = "cancel"		
 		QtCore.QObject.connect(self.ui.button_new, QtCore.SIGNAL("clicked()"), \
 			self.new_item)
 		QtCore.QObject.connect(self.ui.button_select, \
