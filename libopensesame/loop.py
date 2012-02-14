@@ -1,3 +1,5 @@
+#-*- coding:utf-8 -*-
+
 """
 This file is part of OpenSesame.
 
@@ -15,6 +17,9 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
+__author__ = "Sebastiaan Mathot"
+__license__ = "GPLv3"
+
 from libopensesame import item, exceptions, debug
 import shlex
 import openexp.keyboard
@@ -23,7 +28,7 @@ from math import *
 
 class loop(item.item):
 
-	"""A loop item runs a single other item multiple times, while varying independent variables"""
+	"""A loop item runs a single other item multiple times"""
 
 	def __init__(self, name, experiment, string = None):
 
@@ -42,6 +47,7 @@ class loop(item.item):
 		self.repeat = 1
 		self.matrix = {}
 		self.order = "random"
+		self.prepare_all = "no"
 		self.description = "Repeatedly runs another item"
 		self.item_type = "loop"
 		self.item = ""
@@ -87,9 +93,13 @@ class loop(item.item):
 
 		"""
 		Run the loop
+		
+		Exceptions:
+		A runtime_error is raised on an error
 
 		Returns:
-		True on success, False on failure
+		True on success. False is never actually returned, since a runtime_error
+		is raised on failure.
 		"""
 
 		# First generate a list
@@ -118,37 +128,90 @@ class loop(item.item):
 		# Create a keyboard to flush responses between cycles
 		self._keyboard = openexp.keyboard.keyboard(self.experiment)
 
-		# Walk through the list
-		for j, i in l:
-			if self.item in self.experiment.items:
+		# Make sure the item to run exists		
+		if self.item not in self.experiment.items:
+			raise exceptions.runtime_error( \
+				"Could not find item '%s', which is called by loop item '%s'" \
+				% (self.item, self.name))			
+				
+		if self.prepare_all == "yes":
+			return self.run_prepared(l)
+		return self.run_unprepared(l)
+		
+	def apply_cycle(self, cycle):
+	
+		"""
+		Set all the loop variables according to the cycle
+		
+		Arguments:
+		cycle -- the cycle nr
+		"""
+		
+		# If the cycle is not defined, we don't have to do anything
+		if cycle not in self.matrix:
+			return
+			
+		# Otherwise apply all variables from the cycle
+		for var in self.matrix[cycle]:
+			val = self.matrix[cycle][var]
 
-				# Set the variables from the matrix
-				if i in self.matrix:
-					for var in self.matrix[i]:
-						val = self.matrix[i][var]
+			# By starting with an "=" sign, users can incorporate a
+			# Python statement, for example to call functions from
+			# the random or math module
+			if type(val) == str and len(val) > 2 and val[0] == "=":
+				code = "%s" % self.eval_text(val[1:], \
+					soft_ignore=True, quote_str=True)
+				debug.msg("evaluating '%s'" % code)
+				try:
+					val = eval(code)
+				except Exception as e:
+					raise exceptions.runtime_error( \
+						"Failed to evaluate '%s' in loop item '%s': %s" \
+						% (code, self.name, e))
 
-						# By starting with an "=" sign, users can incorporate a Python
-						# statement, for example to call functions from the random or
-						# math module
-						if type(val) == str and len(val) > 2 and val[0] == "=":
-							code = "%s" % self.eval_text(val[1:], soft_ignore = True, quote_str = True)
-							debug.msg("evaluating '%s'" % code)
-							try:
-								val = eval(code)
-							except Exception as e:
-								raise exceptions.runtime_error("Failed to evaluate '%s' in loop item '%s': %s" % (code, self.name, e))
+			# Set it!
+			self.experiment.set(var, val)		
+		
+	def run_prepared(self, run_list):
+	
+		"""
+		Runs the loop 'prepared', all iterations are prepared beforehand, and
+		executed in one go.
+		
+		Exceptions:
+		A runtime_error is raised on an error
 
-						self.experiment.set(var, val)
+		Returns:
+		True on success. False is never actually returned, since a runtime_error
+		is raised on failure.
+		"""
+			
+		raise exceptions.runtime_error("Not implemented!")
+								
+	def run_unprepared(self, run_list):
+	
+		"""
+		Runs the loop 'unprepared', i.e. every iteration of the item to run is
+		prepared before it is run.
+		
+		Exceptions:
+		A runtime_error is raised on an error
 
-				if eval("self.experiment.items[\"%s\"].prepare()" % self.item):
-					exec("self.experiment.items[\"%s\"].run()" % self.item)
-				else:
-					raise exceptions.runtime_error("Failed to prepare item '%s', which is called by loop item '%s'" % (self.item, self.name))
-
+		Returns:
+		True on success. False is never actually returned, since a runtime_error
+		is raised on failure.
+		"""
+		
+		_item = self.experiment.items[self.item]		
+		for repeat, cycle in run_list:
+			self.apply_cycle(cycle)
+			if _item.prepare():
+				_item.run()
 			else:
-				raise exceptions.runtime_error("Could not find item '%s', which is called by loop item '%s'" % (self.item, self.name))
-
-		return True
+				raise exceptions.runtime_error( \
+					"Failed to prepare item '%s', which is called by loop item '%s'" \
+					% (self.item, self.name))
+		return True		
 
 	def to_string(self):
 

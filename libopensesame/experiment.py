@@ -322,7 +322,9 @@ class experiment(item.item, openexp.experiment.experiment):
 				return self.get_file(name)
 		path = misc.resource(name)
 		if path == None:
-			raise Exception("The resource '%s' could not be found in libqtopensesame.experiment.resource()" % name)
+			raise Exception( \
+				"The resource '%s' could not be found in libopensesame.experiment.resource()" \
+				% name)
 		return path
 
 	def get_file(self, path):

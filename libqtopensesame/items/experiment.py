@@ -25,7 +25,7 @@ class experiment(libopensesame.experiment.experiment):
 
 	"""Contains various GUI controls for the experiment"""
 
-	def __init__(self, main_window, name, string = None, pool_folder = None):
+	def __init__(self, main_window, name, string=None, pool_folder=None):
 
 		"""
 		Constructor
@@ -35,15 +35,18 @@ class experiment(libopensesame.experiment.experiment):
 		name -- the name of the experiment
 
 		Keyword arguments:
-		string -- a definition string for the experiment (default = None)
-		pool_folder -- a path to be used for the file pool (default = None)
+		string -- a definition string for the experiment (default=None)
+		pool_folder -- a path to be used for the file pool (default=None)
 		"""
 
 		self.main_window = main_window
 		self.ui = self.main_window.ui
 		self.unused_items = []
-		self.core_items = "loop", "sequence", "sketchpad", "feedback", "sampler", "synth", "keyboard_response", "mouse_response", "logger", "inline_script"
-		libopensesame.experiment.experiment.__init__(self, name, string, pool_folder)
+		self.core_items = "loop", "sequence", "sketchpad", "feedback", \
+			"sampler", "synth", "keyboard_response", "mouse_response", \
+			"logger", "inline_script"
+		libopensesame.experiment.experiment.__init__(self, name, string, \
+			pool_folder)
 
 	def help(self, name):
 
