@@ -1,3 +1,5 @@
+#-*- coding:utf-8 -*-
+
 """
 This file is part of OpenSesame.
 
@@ -14,6 +16,9 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
+
+__author__ = "Sebastiaan Mathot"
+__license__ = "GPLv3"
 
 import copy
 import libopensesame.loop
@@ -219,18 +224,24 @@ class loop(libopensesame.loop.loop, qtitem.qtitem):
 		if var_list == None:
 			return
 
-		old_var, ok = QtGui.QInputDialog.getItem(self.experiment.ui.centralwidget, "Rename variable", "Which variable do you want to rename?", var_list, editable=False)
+		old_var, ok = QtGui.QInputDialog.getItem( \
+			self.experiment.ui.centralwidget, "Rename variable", \
+			"Which variable do you want to rename?", var_list, editable=False)
 		if ok:
-			_new_var, ok = QtGui.QInputDialog.getText(self.loop_table, 'New variable', 'Enter a new variable name', text = old_var)
+			_new_var, ok = QtGui.QInputDialog.getText(self.loop_table, \
+				'New variable', 'Enter a new variable name', text=old_var)
 			if ok and _new_var != old_var:
 				old_var = str(old_var)
 				new_var = self.experiment.sanitize(_new_var, strict=True, \
 					allow_vars=False)
 				if _new_var != new_var or new_var == "":
-					self.experiment.notify("Please use only letters, numbers and underscores")
+					self.experiment.notify( \
+						"Please use only letters, numbers and underscores")
 					return
 				if new_var in var_list:
-					self.experiment.notify("A variable with the name '%s' already exists" % new_var)
+					self.experiment.notify( \
+						"A variable with the name '%s' already exists" % \
+						new_var)
 					return
 			for item in self.experiment.items.values():
 				item.rename_var(self.name, old_var, new_var)
@@ -246,7 +257,8 @@ class loop(libopensesame.loop.loop, qtitem.qtitem):
 			return
 
 		var, ok = QtGui.QInputDialog.getItem(self.experiment.ui.centralwidget, \
-			"Remove variable", "Which variable do you want to remove?", var_list)
+			"Remove variable", "Which variable do you want to remove?", \
+			var_list)
 		if ok:
 			var = str(var)
 			for i in self.matrix:
@@ -286,7 +298,7 @@ class loop(libopensesame.loop.loop, qtitem.qtitem):
 
 		return max(self.get("cycles"), len(self.matrix))
 
-	def set_cycle_count(self, cycles, confirm = True):
+	def set_cycle_count(self, cycles, confirm=True):
 
 		"""
 		Sets the nr of cycles and truncates data if necessary
@@ -295,7 +307,8 @@ class loop(libopensesame.loop.loop, qtitem.qtitem):
 		cycles -- the number of cycles
 
 		Keyword arguments:
-		confirm -- indicates if confirmation is required before data is removed from the table (default = True)
+		confirm -- indicates if confirmation is required before data is removed
+				   from the table (default=True)
 		"""
 
 		cont = True
@@ -353,7 +366,8 @@ class loop(libopensesame.loop.loop, qtitem.qtitem):
 
 		# Don't clear and resize the table if this is not necessary, because
 		# this makes the cursor jump
-		if self.loop_table.rowCount() != self.cycles or self.loop_table.columnCount() != self.cyclevar_count():
+		if self.loop_table.rowCount() != self.cycles or \
+			self.loop_table.columnCount() != self.cyclevar_count():
 			self.loop_table.clear()
 			self.loop_table.setRowCount(self.cycles)
 			self.loop_table.setColumnCount(self.cyclevar_count())
@@ -372,7 +386,8 @@ class loop(libopensesame.loop.loop, qtitem.qtitem):
 		# Create the column headers
 		i = 0
 		for var in column_order:
-			self.loop_table.setHorizontalHeaderItem(i, QtGui.QTableWidgetItem(var))
+			self.loop_table.setHorizontalHeaderItem(i, \
+				QtGui.QTableWidgetItem(var))
 			i += 1
 
 		# Fill the table
@@ -382,7 +397,8 @@ class loop(libopensesame.loop.loop, qtitem.qtitem):
 			for var in self.matrix[cycle]:
 				col = column_order.index(var)
 				self.loop_table.setItem(cycle, col, \
-					QtGui.QTableWidgetItem(self.unsanitize(self.matrix[cycle][var])))
+					QtGui.QTableWidgetItem(self.unsanitize( \
+						self.matrix[cycle][var])))
 
 		# Store the number of cycles and the column order
 		self.set("cycles", max(self.get("cycles"), self.cycle_count()))
@@ -468,7 +484,8 @@ class loop(libopensesame.loop.loop, qtitem.qtitem):
 		self.edit_grid.addWidget(QtGui.QLabel("Item to run"), row, 0)
 		self.edit_item = self.experiment.item_combobox(self.item, [self.name])
 		self.edit_item.setToolTip("Select the item that is called by the loop")
-		QtCore.QObject.connect(self.edit_item, QtCore.SIGNAL("currentIndexChanged(int)"), self.apply_edit_changes)
+		QtCore.QObject.connect(self.edit_item, QtCore.SIGNAL( \
+			"currentIndexChanged(int)"), self.apply_edit_changes)
 		self.edit_grid.addWidget(self.edit_item, row, 1)
 
 		row += 1
@@ -485,7 +502,8 @@ class loop(libopensesame.loop.loop, qtitem.qtitem):
 		self.spin_repeat = QtGui.QDoubleSpinBox()
 		self.spin_repeat.setMinimum(0)
 		self.spin_repeat.setMaximum(1000000)
-		self.spin_repeat.setToolTip("The number of times that all cycles are repeat. The number of times that the 'item to run' is executed is [repeat] x [number of cycles]. Values below 1 mean that not all cycles are executed.")
+		self.spin_repeat.setToolTip( \
+			"The number of times that all cycles are repeat. The number of times that the 'item to run' is executed is [repeat] x [number of cycles]. Values below 1 mean that not all cycles are executed.")
 		self.spin_repeat.editingFinished.connect(self.apply_edit_changes)
 		self.edit_grid.addWidget(self.spin_repeat, row, 1)
 
@@ -495,36 +513,47 @@ class loop(libopensesame.loop.loop, qtitem.qtitem):
 		self.combobox_order.setItemIcon(0, self.experiment.icon("random"))
 		self.combobox_order.addItem("sequential")
 		self.combobox_order.setItemIcon(1, self.experiment.icon("sequential"))
-		self.combobox_order.setToolTip("The order in which the cycles are executed. If set to random, ranomization occurs over all [repeat] x [number of cycles] runs.")
+		self.combobox_order.setToolTip( \
+			"The order in which the cycles are executed. If set to random, ranomization occurs over all [repeat] x [number of cycles] runs.")
 
 		self.edit_grid.addWidget(QtGui.QLabel("Order"), row, 0)
 		self.edit_grid.addWidget(self.combobox_order, row, 1)
-		QtCore.QObject.connect(self.combobox_order, QtCore.SIGNAL("currentIndexChanged(int)"), self.apply_edit_changes)
+		QtCore.QObject.connect(self.combobox_order, \
+			QtCore.SIGNAL("currentIndexChanged(int)"), self.apply_edit_changes)
 		self.edit_grid.addWidget(self.combobox_order, row, 1)
 
 		row += 1
 		self.label_summary = QtGui.QLabel()
 		self.edit_grid.addWidget(self.label_summary, row, 1)
 
-		self.button_add_cyclevar = QtGui.QPushButton(self.experiment.icon("add"), "Add variable")
+		self.button_add_cyclevar = QtGui.QPushButton( \
+			self.experiment.icon("add"), "Add variable")
 		self.button_add_cyclevar.setIconSize(QtCore.QSize(16,16))
 		self.button_add_cyclevar.setToolTip("Add a variable")
-		QtCore.QObject.connect(self.button_add_cyclevar, QtCore.SIGNAL("clicked()"), self.add_cyclevar)
+		QtCore.QObject.connect(self.button_add_cyclevar, \
+			QtCore.SIGNAL("clicked()"), self.add_cyclevar)
 
-		self.button_rename_cyclevar = QtGui.QPushButton(self.experiment.icon("rename"), "Rename variable")
+		self.button_rename_cyclevar = QtGui.QPushButton( \
+			self.experiment.icon("rename"), "Rename variable")
 		self.button_rename_cyclevar.setIconSize(QtCore.QSize(16,16))
 		self.button_rename_cyclevar.setToolTip("Rename a variable")
-		QtCore.QObject.connect(self.button_rename_cyclevar, QtCore.SIGNAL("clicked()"), self.rename_cyclevar)
+		QtCore.QObject.connect(self.button_rename_cyclevar, \
+			QtCore.SIGNAL("clicked()"), self.rename_cyclevar)
 
-		self.button_remove_cyclevar = QtGui.QPushButton(self.experiment.icon("delete"), "Remove variable")
+		self.button_remove_cyclevar = QtGui.QPushButton( \
+			self.experiment.icon("delete"), "Remove variable")
 		self.button_remove_cyclevar.setIconSize(QtCore.QSize(16,16))
 		self.button_remove_cyclevar.setToolTip("Remove a variable")
-		QtCore.QObject.connect(self.button_remove_cyclevar, QtCore.SIGNAL("clicked()"), self.remove_cyclevar)
+		QtCore.QObject.connect(self.button_remove_cyclevar, \
+			QtCore.SIGNAL("clicked()"), self.remove_cyclevar)
 
-		self.button_wizard = QtGui.QPushButton(self.experiment.icon("wizard"), "Variable wizard")
+		self.button_wizard = QtGui.QPushButton(self.experiment.icon("wizard"), \
+			"Variable wizard")
 		self.button_wizard.setIconSize(QtCore.QSize(16,16))
-		self.button_wizard.setToolTip("Easy way to create large variable tables")
-		QtCore.QObject.connect(self.button_wizard, QtCore.SIGNAL("clicked()"), self.wizard)
+		self.button_wizard.setToolTip( \
+			"An easy way to create large variable tables")
+		QtCore.QObject.connect(self.button_wizard, QtCore.SIGNAL("clicked()"), \
+			self.wizard)
 
 		hbox = QtGui.QHBoxLayout()
 		hbox.addWidget(self.button_add_cyclevar)
@@ -555,8 +584,10 @@ class loop(libopensesame.loop.loop, qtitem.qtitem):
 		self.refresh_loop_table(lock = False)
 
 		self.edit_item.deleteLater()
-		self.edit_item = self.experiment.item_combobox(self.item, exclude=self.parents())
-		QtCore.QObject.connect(self.edit_item, QtCore.SIGNAL("currentIndexChanged(int)"), self.apply_edit_changes)
+		self.edit_item = self.experiment.item_combobox(self.item, \
+			exclude=self.parents())
+		QtCore.QObject.connect(self.edit_item, \
+			QtCore.SIGNAL("currentIndexChanged(int)"), self.apply_edit_changes)
 		self.edit_grid.addWidget(self.edit_item, 3, 1)
 
 		# For some reason, refilling the combobox, rather than recreating it, causes a nasty
@@ -568,13 +599,19 @@ class loop(libopensesame.loop.loop, qtitem.qtitem):
 		try:
 			self.spin_repeat.setValue(float(self.get("repeat")))
 		except:
-			self.experiment.notify("'%s' is not a valid value for repeat. Expecting a positive numeric value.")
+			self.experiment.notify( \
+				"'%s' is not a valid value for repeat. Expecting a positive numeric value." \
+				% self.get("repeat"))
 			self.spin_repeat.setValue(1)
 			self.set("repeat", 1)
 
-		self.label_summary.setText("<small><b>%s</b> will be called <b>%s</b> x <b>%s</b> = <b>%s</b> times in <b>%s</b> order</small>" % (self.item, self.cycles, self.repeat, self.call_count(), self.order))
+		self.label_summary.setText( \
+			"<small><b>%s</b> will be called <b>%s</b> x <b>%s</b> = <b>%s</b> times in <b>%s</b> order</small>" \
+			% (self.item, self.cycles, self.repeat, self.call_count(), \
+			self.order))
 
-		self.combobox_order.setCurrentIndex(self.combobox_order.findText(str(self.get("order"))))
+		self.combobox_order.setCurrentIndex(self.combobox_order.findText( \
+			str(self.get("order"))))
 		self.lock = False
 		return self._edit_widget
 
@@ -606,7 +643,8 @@ class loop(libopensesame.loop.loop, qtitem.qtitem):
 				if cell == None:
 					val = ""
 				else:
-					val = self.auto_type(self.experiment.usanitize(self.loop_table.item(row, col).text()))
+					val = self.auto_type(self.experiment.usanitize( \
+						self.loop_table.item(row, col).text()))
 				self.matrix[row][var] = val
 
 		row = self.loop_table.currentRow()
@@ -636,7 +674,8 @@ class loop(libopensesame.loop.loop, qtitem.qtitem):
 
 		Keyword arguments:
 		toplevel -- the toplevel widget (default = None)
-		items -- a list of items that have been added, to prevent recursion (default = [])
+		items -- a list of items that have been added, to prevent recursion
+				 (default=[])
 
 		Returns:
 		An updated list of items that have been added
@@ -644,7 +683,8 @@ class loop(libopensesame.loop.loop, qtitem.qtitem):
 
 		widget = self.item_tree_widget(toplevel)
 		toplevel.addChild(widget)
-		if self.item in self.experiment.items and self.item != None and self.item.strip() != "":
+		if self.item in self.experiment.items and self.item != None and \
+			self.item.strip() != "":
 			if self.experiment.items[self.item] not in items:
 				items.append(self.experiment.items[self.item])
 			self.experiment.items[self.item].build_item_tree(widget, items)
@@ -663,5 +703,6 @@ class loop(libopensesame.loop.loop, qtitem.qtitem):
 		True if the passed item is offspring, False otherwise
 		"""
 
-		return self.item == item or (self.item in self.experiment.items and self.experiment.items[self.item].is_offspring(item))
+		return self.item == item or (self.item in self.experiment.items and \
+			self.experiment.items[self.item].is_offspring(item))
 

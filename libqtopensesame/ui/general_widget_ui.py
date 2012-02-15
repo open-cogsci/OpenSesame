@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'resources/ui/general_widget.ui'
 #
-# Created: Sun Feb 12 14:56:59 2012
+# Created: Wed Feb 15 17:55:56 2012
 #      by: PyQt4 UI code generator 4.8.5
 #
 # WARNING! All changes made in this file will be lost!
@@ -75,16 +75,16 @@ class Ui_Form(object):
 "<small><i>E.g., \"black\" or \"#000000\"</i></small>", None, QtGui.QApplication.UnicodeUTF8))
         self.label_5.setObjectName(_fromUtf8("label_5"))
         self.layout_general_properties.addWidget(self.label_5, 4, 4, 1, 1)
-        self.label_4 = QtGui.QLabel(self.widget)
-        self.label_4.setText(QtGui.QApplication.translate("Form", "Default foreground color<br />\n"
-"<small><i>E.g., \"white\" or \"#ffffff\"</i></small>", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_4.setObjectName(_fromUtf8("label_4"))
-        self.layout_general_properties.addWidget(self.label_4, 3, 4, 1, 1)
         self.label_8 = QtGui.QLabel(self.widget)
         self.label_8.setText(QtGui.QApplication.translate("Form", "Back-end<br />\n"
 "<small><i>Handles display, sound, and input</i></small>", None, QtGui.QApplication.UnicodeUTF8))
         self.label_8.setObjectName(_fromUtf8("label_8"))
         self.layout_general_properties.addWidget(self.label_8, 4, 0, 1, 1)
+        self.label_4 = QtGui.QLabel(self.widget)
+        self.label_4.setText(QtGui.QApplication.translate("Form", "Default foreground color<br />\n"
+"<small><i>E.g., \"white\" or \"#ffffff\"</i></small>", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_4.setObjectName(_fromUtf8("label_4"))
+        self.layout_general_properties.addWidget(self.label_4, 3, 4, 1, 1)
         self.combobox_backend = QtGui.QComboBox(self.widget)
         self.combobox_backend.setObjectName(_fromUtf8("combobox_backend"))
         self.layout_general_properties.addWidget(self.combobox_backend, 4, 1, 1, 3)

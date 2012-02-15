@@ -45,6 +45,7 @@ class loop(item.item):
 
 		self.cycles = 1
 		self.repeat = 1
+		self.skip = 0
 		self.matrix = {}
 		self.order = "random"
 		self.description = "Repeatedly runs another item"

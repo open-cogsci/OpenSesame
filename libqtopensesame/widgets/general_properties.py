@@ -60,6 +60,7 @@ class general_properties(QtGui.QWidget):
 		w = QtGui.QWidget()
 		self.ui = general_widget_ui.Ui_Form()
 		self.ui.setupUi(w)
+		self.main_window.theme.load_icons(self.ui)
 
 		# The foeground and background widgets get a special treatment
 		self.ui.edit_foreground = color_edit.color_edit(self.main_window.experiment)

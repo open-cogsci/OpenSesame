@@ -105,19 +105,19 @@
         </property>
        </widget>
       </item>
-      <item row="3" column="4">
-       <widget class="QLabel" name="label_4">
-        <property name="text">
-         <string>Default foreground color&lt;br /&gt;
-&lt;small&gt;&lt;i&gt;E.g., &quot;white&quot; or &quot;#ffffff&quot;&lt;/i&gt;&lt;/small&gt;</string>
-        </property>
-       </widget>
-      </item>
       <item row="4" column="0">
        <widget class="QLabel" name="label_8">
         <property name="text">
          <string>Back-end&lt;br /&gt;
 &lt;small&gt;&lt;i&gt;Handles display, sound, and input&lt;/i&gt;&lt;/small&gt;</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="4">
+       <widget class="QLabel" name="label_4">
+        <property name="text">
+         <string>Default foreground color&lt;br /&gt;
+&lt;small&gt;&lt;i&gt;E.g., &quot;white&quot; or &quot;#ffffff&quot;&lt;/i&gt;&lt;/small&gt;</string>
         </property>
        </widget>
       </item>
