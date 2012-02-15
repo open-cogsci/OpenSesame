@@ -47,7 +47,6 @@ class loop(item.item):
 		self.repeat = 1
 		self.matrix = {}
 		self.order = "random"
-		self.prepare_all = "no"
 		self.description = "Repeatedly runs another item"
 		self.item_type = "loop"
 		self.item = ""
@@ -134,10 +133,18 @@ class loop(item.item):
 				"Could not find item '%s', which is called by loop item '%s'" \
 				% (self.item, self.name))			
 				
-		if self.prepare_all == "yes":
-			return self.run_prepared(l)
-		return self.run_unprepared(l)
-		
+		# And run!
+		_item = self.experiment.items[self.item]		
+		for repeat, cycle in l:
+			self.apply_cycle(cycle)
+			if _item.prepare():
+				_item.run()
+			else:
+				raise exceptions.runtime_error( \
+					"Failed to prepare item '%s', which is called by loop item '%s'" \
+					% (self.item, self.name))
+		return True
+							
 	def apply_cycle(self, cycle):
 	
 		"""
@@ -170,48 +177,7 @@ class loop(item.item):
 						% (code, self.name, e))
 
 			# Set it!
-			self.experiment.set(var, val)		
-		
-	def run_prepared(self, run_list):
-	
-		"""
-		Runs the loop 'prepared', all iterations are prepared beforehand, and
-		executed in one go.
-		
-		Exceptions:
-		A runtime_error is raised on an error
-
-		Returns:
-		True on success. False is never actually returned, since a runtime_error
-		is raised on failure.
-		"""
-			
-		raise exceptions.runtime_error("Not implemented!")
-								
-	def run_unprepared(self, run_list):
-	
-		"""
-		Runs the loop 'unprepared', i.e. every iteration of the item to run is
-		prepared before it is run.
-		
-		Exceptions:
-		A runtime_error is raised on an error
-
-		Returns:
-		True on success. False is never actually returned, since a runtime_error
-		is raised on failure.
-		"""
-		
-		_item = self.experiment.items[self.item]		
-		for repeat, cycle in run_list:
-			self.apply_cycle(cycle)
-			if _item.prepare():
-				_item.run()
-			else:
-				raise exceptions.runtime_error( \
-					"Failed to prepare item '%s', which is called by loop item '%s'" \
-					% (self.item, self.name))
-		return True		
+			self.experiment.set(var, val)												
 
 	def to_string(self):
 
