@@ -3,19 +3,20 @@
 <HEAD>
 	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
 	<TITLE></TITLE>
-	<META NAME="GENERATOR" CONTENT="LibreOffice 3.4  (Linux)">
+	<META NAME="GENERATOR" CONTENT="LibreOffice 3.4  (Unix)">
 	<META NAME="AUTHOR" CONTENT="Sebastiaan Mathot">
 	<META NAME="CREATED" CONTENT="20101128;13435600">
 	<META NAME="CHANGEDBY" CONTENT="Sebastiaan Mathot">
-	<META NAME="CHANGED" CONTENT="20111031;12404000">
+	<META NAME="CHANGED" CONTENT="20120216;16430800">
+	<META NAME="CHANGEDBY" CONTENT="Sebastiaan Mathot">
 	<STYLE TYPE="text/css">
 	<!--
 		@page { margin: 0.79in }
+		P { margin-bottom: 0.08in }
 		H1 { margin-bottom: 0.08in }
 		H1.western { font-family: "Arial", sans-serif; font-size: 16pt }
 		H1.cjk { font-family: "DejaVu Sans"; font-size: 16pt }
 		H1.ctl { font-family: "Lohit Hindi"; font-size: 16pt }
-		P { margin-bottom: 0.08in }
 		H2.western { font-family: "Albany", sans-serif; font-size: 14pt; font-style: italic }
 		H2.cjk { font-family: "HG Mincho Light J"; font-size: 14pt; font-style: italic }
 		H2.ctl { font-family: "Arial Unicode MS"; font-size: 14pt; font-style: italic }
@@ -27,13 +28,11 @@
 <BODY LANG="en-US" DIR="LTR">
 <H1 CLASS="western">Loop items</H1>
 <P>In an experiment you will generally want to repeat the same type
-of trial while manipulating a number of independent variables. For
-example, you may present a cue followed by a target stimulus, while
-varying the interval between the cue and the target. This is where
-the loop item comes in.</P>
+of trial while manipulating a number of independent variables. This
+is where the loop item comes in.</P>
 <P>The loop item is always attached to another item, the <B>item to
-run</B>. This is the item that is called by the loop item. This can,
-for example, be a sequence corresponding to a trial.</P>
+run</B>. This is the item that is called by the loop item. This will
+typically be a <B>sequence</B> item, but it doesn't have to be.</P>
 <P>In the loop item you can specify variables, which are displayed as
 columns in the table. You can add and remove variables using the <B>add
 variable</B> and <B>remove variable</B> buttons. The rows in the
@@ -48,6 +47,14 @@ be executed.</P>
 executed sequentially or in random order. Randomization is complete,
 that is, all the complete list of [number of cycles] x [repeat]
 trials is randomized.</P>
+<P>If the order is set to 'sequential', you have two more options.
+The <B>skip</B> option allows you to skip the first X number of
+cycles. This can be convenient, for example when you want to resume a
+previously interrupted session. You can also check the <B>offset mode</B>
+checkbox. If offset mode is enabled, the skipped cycles are not
+really skipped, but executed at the end of the loop. This can be
+convenient if you want each participant to start at a different
+cycle, but to keep the overall length of the loop equal.</P>
 <H2 CLASS="western">Using functions</H2>
 <P>Most of the time you will enter static values into the loop table.
 For example, you may have a variable called 'cue', which is either
