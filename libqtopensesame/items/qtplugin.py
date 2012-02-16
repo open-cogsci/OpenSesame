@@ -41,58 +41,14 @@ class qtplugin(qtitem.qtitem):
 		self.experiment.resources["%s_large.png" % self.item_type] = os.path.join(os.path.split(plugin_file)[0], "%s_large.png" % self.item_type)
 		self.experiment.resources["%s.html" % self.item_type] = os.path.join(os.path.split(plugin_file)[0], "%s.html" % self.item_type)
 
-		self.auto_line_edit = {}
-		self.auto_combobox = {}
-		self.auto_spinbox = {}
-		self.auto_slider = {}
-		self.auto_editor = {}
-
 		self.lock = False
-
 		qtitem.qtitem.__init__(self)
 
 	def edit_widget(self):
 
 		"""Update the GUI controls"""
 
-		qtitem.qtitem.edit_widget(self)
-
-		for var, edit in self.auto_line_edit.iteritems():
-			if self.has(var):
-				try:
-					edit.setText(self.experiment.unsanitize(self.get(var)))
-				except Exception as e:
-					self.experiment.notify("Failed to set control '%s': %s" % (var, e))
-			else:
-				edit.setText("")
-
-		for var, combobox in self.auto_combobox.iteritems():
-			if self.has(var):
-				try:
-					 combobox.setCurrentIndex(combobox.findText(self.experiment.unsanitize(self.get(var))))
-				except Exception as e:
-					self.experiment.notify("Failed to set control '%s': %s" % (var, e))
-
-		for var, spinbox in self.auto_spinbox.iteritems():
-			if self.has(var):
-				try:
-					 spinbox.setValue(self.get(var))
-				except Exception as e:
-					self.experiment.notify("Failed to set control '%s': %s" % (var, e))
-
-		for var, slider in self.auto_slider.iteritems():
-			if self.has(var):
-				try:
-					slider.setValue(self.get(var))
-				except Exception as e:
-					self.experiment.notify("Failed to set control '%s': %s" % (var, e))
-
-		for var, editor in self.auto_editor.iteritems():
-			if self.has(var):
-				try:
-					editor.edit.setPlainText(self.experiment.unsanitize(self.get(var)))
-				except Exception as e:
-					self.experiment.notify("Failed to set control '%s': %s" % (var, e))
+		self.auto_edit_widget()
 
 	def apply_edit_changes(self, rebuild=True):
 
@@ -103,32 +59,7 @@ class qtplugin(qtitem.qtitem):
 		rebuild -- deprecated (does nothing) (default=True)
 		"""
 
-		if not qtitem.qtitem.apply_edit_changes(self, False) or self.lock:
-			return False
-
-		for var, edit in self.auto_line_edit.iteritems():
-			val = self.experiment.usanitize(edit.text()).strip()
-			if val != "":
-				self.set(var, val)
-			elif self.experiment.has(var) or edit.default == None:
-				self.unset(var)
-			else:
-				self.set(var, edit.default)
-
-		for var, combobox in self.auto_combobox.iteritems():
-			self.set(var, self.experiment.usanitize(combobox.currentText()))
-
-		for var, spinbox in self.auto_spinbox.iteritems():
-			self.set(var, spinbox.value())
-
-		for var, slider in self.auto_slider.iteritems():
-			self.set(var, slider.value())
-
-		for var, editor in self.auto_editor.iteritems():
-			self.set(var, self.experiment.usanitize(editor.edit.toPlainText()))
-			editor.setModified(False)
-
-		return True
+		return self.auto_apply_edit_changes(rebuild)	
 
 	def add_control(self, label, widget, tooltip, default, min_width=None):
 

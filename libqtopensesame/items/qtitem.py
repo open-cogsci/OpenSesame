@@ -19,116 +19,25 @@ from PyQt4 import QtCore, QtGui
 import os.path
 import sip
 from libopensesame import debug, exceptions
-from libqtopensesame.widgets import inline_editor, help_browser
+from libqtopensesame.widgets import inline_editor, help_browser, header_widget
 from libqtopensesame.misc import syntax_highlighter
-
-class header_widget(QtGui.QWidget):
-
-	"""Provides clickable and editable labels for the item's name and description"""
-
-	def __init__(self, item):
-
-		"""
-		Constructor
-
-		Arguments:
-		item -- the item to provide a header for
-		"""
-
-		QtGui.QWidget.__init__(self)
-		self.setCursor(QtCore.Qt.IBeamCursor)
-		self.setToolTip("Click to edit")
-		self.item = item
-		self.label_name = QtGui.QLabel()
-		self.label_name.id = "name"
-		self.edit_name = QtGui.QLineEdit()
-		self.edit_name.editingFinished.connect(self.restore_name)
-		self.edit_name.hide()
-		self.label_desc = QtGui.QLabel()
-		self.label_desc.id = "desc"
-		self.edit_desc = QtGui.QLineEdit()
-		self.edit_desc.editingFinished.connect(self.restore_desc)
-		self.edit_desc.hide()
-		vbox = QtGui.QVBoxLayout()
-		vbox.setContentsMargins(8, 0, 0, 0)
-		vbox.setSpacing(0)
-		vbox.addWidget(self.label_name)
-		vbox.addWidget(self.edit_name)
-		vbox.addWidget(self.label_desc)
-		vbox.addWidget(self.edit_desc)
-		self.refresh()
-		self.setLayout(vbox)
-
-	def refresh(self):
-
-		"""Update the header"""
-
-		self.edit_name.setText(self.item.name)
-		self.label_name.setText("<font size='5'><b>%s</b> - %s</font>&nbsp;&nbsp;&nbsp;<font color='gray'><i>Click to edit</i></font>" \
-			% (self.item.name, self.item.item_type.replace("_", " ").title()))
-		self.edit_desc.setText(self.item.description)
-		self.label_desc.setText(self.item.description)
-
-	def restore_name(self, apply_name_change = True):
-
-		"""
-		Apply the name change and revert the edit control back to the static label
-
-		Keywords arguments:
-		apply_name_change -- indicates of the name change should be applied (default = True)
-		"""
-
-		if apply_name_change:
-			self.item.apply_name_change()
-		self.label_name.show()
-		self.edit_name.hide()
-
-	def restore_desc(self):
-
-		"""Apply the description change and revert the edit	back to the label"""
-
-		self.item.apply_edit_changes()
-		self.label_desc.show()
-		self.edit_desc.hide()
-
-	def mousePressEvent(self, event):
-
-		"""
-		Change the label into an edit for the name or
-		the description, depending on where has been
-		clicked
-
-		Arguments:
-		event -- the mouseClickEvent
-		"""
-
-		target = self.childAt(event.pos())
-
-		if target != None and hasattr(target, "id"):
-			if target.id == "name":
-				self.restore_desc()
-				self.label_name.hide()
-				self.edit_name.show()
-				self.edit_name.selectAll()
-				self.edit_name.setFocus()
-			else:
-				self.restore_name()
-				self.label_desc.hide()
-				self.edit_desc.show()
-				self.edit_desc.selectAll()
-				self.edit_desc.setFocus()
 
 class qtitem(object):
 
-	"""
-	The qtitem provides a base class for all
-	other items
-	"""
+	"""Base class for the GUI controls of other items"""
 
 	def __init__(self):
 
 		"""Constructor"""
 
+		# The auto-widgets are stored in name -> (var, widget) dictionaries
+		self.auto_line_edit = {}
+		self.auto_combobox = {}
+		self.auto_spinbox = {}
+		self.auto_slider = {}
+		self.auto_editor = {}
+		self.auto_checkbox = {}
+					
 		self.init_edit_widget()
 		self.init_script_widget()
 		self.script_tab = None
@@ -140,14 +49,16 @@ class qtitem(object):
 
 		"""Open the help tab"""
 
-		i = self.experiment.main_window.get_tab_index("__help__%s__" % self.item_type)
+		i = self.experiment.main_window.get_tab_index("__help__%s__" \
+			% self.item_type)
 		if i != None:
 			self.experiment.main_window.switch_tab(i)
 		else:
 			path = self.experiment.help(self.item_type + ".html")
 			text = help_browser.help_browser(path, self.item_type)
 			text.help_item = self.name
-			index = self.experiment.ui.tabwidget.addTab(text, self.experiment.icon("help"), self.name)
+			index = self.experiment.ui.tabwidget.addTab(text, \
+				self.experiment.icon("help"), self.name)
 			self.experiment.ui.tabwidget.setCurrentIndex(index)
 
 	def open_tab(self):
@@ -163,7 +74,7 @@ class qtitem(object):
 
 		"""Build the GUI controls"""
 
-		self.header = header_widget(self)
+		self.header = header_widget.header_widget(self)
 
 		self.header_hbox = QtGui.QHBoxLayout()
 		self.header_hbox.addWidget(self.experiment.label_image(self.item_type))
@@ -221,6 +132,7 @@ class qtitem(object):
 		self.header.restore_name(False)
 		self.header.refresh()
 		self._edit_widget.edit_item = self.name
+		self.auto_edit_widget()
 		return self._edit_widget
 
 	def apply_name_change(self, rebuild=True):
@@ -267,6 +179,8 @@ class qtitem(object):
 		if self.description == "":
 			self.description = "No description"
 		self.header.label_desc.setText(self.description)
+		
+		self.auto_apply_edit_changes()
 
 		if rebuild:
 			self.experiment.main_window.build_item_list()
@@ -320,9 +234,11 @@ class qtitem(object):
 			return
 
 		if index == None:
-			self.edit_tab_index = self.experiment.ui.tabwidget.addTab(widget, self.experiment.icon(self.item_type), "%s" % self.name)
+			self.edit_tab_index = self.experiment.ui.tabwidget.addTab(widget, \
+				self.experiment.icon(self.item_type), "%s" % self.name)
 		else:
-			self.experiment.ui.tabwidget.insertTab(index, widget, self.experiment.icon(self.item_type), "%s" % self.name)
+			self.experiment.ui.tabwidget.insertTab(index, widget, \
+				self.experiment.icon(self.item_type), "%s" % self.name)
 			self.edit_tab_index = index
 		if focus:
 			self.experiment.ui.tabwidget.setCurrentIndex(self.edit_tab_index)
@@ -339,8 +255,11 @@ class qtitem(object):
 		"""Applies script changes and opens the edit tab"""
 
 		if self.edit_script.edit.isModified():
-			resp = QtGui.QMessageBox.question(self.experiment.main_window.ui.centralwidget, "Forget changes?",\
-				"Are you sure you want to forget all changes to the script?", QtGui.QMessageBox.Yes, QtGui.QMessageBox.No)
+			resp = QtGui.QMessageBox.question( \
+				self.experiment.main_window.ui.centralwidget, \
+				"Forget changes?", \
+				"Are you sure you want to forget all changes to the script?", \
+				QtGui.QMessageBox.Yes, QtGui.QMessageBox.No)
 			if resp == QtGui.QMessageBox.No:
 				return
 		self.experiment.main_window.select_item(self.name)
@@ -362,7 +281,8 @@ class qtitem(object):
 		script = self.experiment.usanitize(self.edit_script.edit.toPlainText())
 
 		# Create a new item and make it a clone of the current item
-		item = self.experiment.main_window.add_item(self.item_type, False, name=self.name)
+		item = self.experiment.main_window.add_item(self.item_type, False, \
+			name=self.name)
 		if catch:
 			try:
 				self.experiment.items[item].from_string(script)
@@ -484,10 +404,14 @@ class qtitem(object):
 			if hasattr(w, "script_item") and w.script_item == self.name:
 				index = i
 		if index == None:
-			self.script_tab_index = self.experiment.ui.tabwidget.addTab(self.script_widget(), self.experiment.icon("script"), "%s" % self.name)
+			self.script_tab_index = self.experiment.ui.tabwidget.addTab( \
+				self.script_widget(), self.experiment.icon("script"), "%s" \
+				% self.name)
 		else:
 			self.script_tab_index = index
-			self.experiment.ui.tabwidget.insertTab(index, self.script_widget(), self.experiment.icon("script"), "%s" % self.name)
+			self.experiment.ui.tabwidget.insertTab(index, \
+				self.script_widget(), self.experiment.icon("script"), "%s" \
+				% self.name)
 		if focus:
 			self.experiment.ui.tabwidget.setCurrentIndex(self.script_tab_index)
 
@@ -595,14 +519,15 @@ class qtitem(object):
 		widget.setToolTip(1, tooltip)
 		return widget
 
-	def build_item_tree(self, toplevel = None, items = []):
+	def build_item_tree(self, toplevel=None, items=[]):
 
 		"""
 		Construct an item tree
 
 		Keyword arguments:
 		toplevel -- the toplevel widget (default = None)
-		items -- a list of items that have been added, to prevent recursion (default = [])
+		items -- a list of items that have been added, to prevent recursion
+				 (default=[])
 		"""
 
 		toplevel.addChild(self.item_tree_widget(toplevel))
@@ -673,3 +598,145 @@ class qtitem(object):
 			return True
 		return False
 
+	def auto_edit_widget(self):
+
+		"""Update the GUI controls based on the auto-widgets"""
+
+		for var, edit in self.auto_line_edit.iteritems():
+			if self.has(var):
+				try:
+					edit.setText(self.experiment.unsanitize(self.get(var)))
+				except Exception as e:
+					self.experiment.notify("Failed to set control '%s': %s" \
+						% (var, e))
+			else:
+				edit.setText("")
+
+		for var, combobox in self.auto_combobox.iteritems():
+			if self.has(var):
+				try:
+					 combobox.setCurrentIndex(combobox.findText( \
+					 	self.experiment.unsanitize(self.get(var))))
+				except Exception as e:
+					self.experiment.notify("Failed to set control '%s': %s" \
+						% (var, e))
+
+		for var, spinbox in self.auto_spinbox.iteritems():
+			if self.has(var):
+				try:
+					 spinbox.setValue(self.get(var))
+				except Exception as e:
+					self.experiment.notify("Failed to set control '%s': %s" \
+						% (var, e))
+
+		for var, slider in self.auto_slider.iteritems():
+			if self.has(var):
+				try:
+					slider.setValue(self.get(var))
+				except Exception as e:
+					self.experiment.notify("Failed to set control '%s': %s" \
+						% (var, e))
+						
+		for var, checkbox in self.auto_checkbox.iteritems():
+			if self.has(var):
+				try:
+					checkbox.setChecked(self.get(var) == "yes")
+				except Exception as e:
+					self.experiment.notify("Failed to set control '%s': %s" \
+						% (var, e))						
+
+		for var, editor in self.auto_editor.iteritems():
+			if self.has(var):
+				try:
+					editor.edit.setPlainText(self.experiment.unsanitize( \
+						self.get(var)))
+				except Exception as e:
+					self.experiment.notify("Failed to set control '%s': %s" \
+						% (var, e))
+
+	def auto_apply_edit_changes(self, rebuild=True):
+
+		"""
+		Apply the auto-widget controls
+
+		Keyword arguments:
+		rebuild -- deprecated (does nothing) (default=True)
+		"""
+
+		for var, edit in self.auto_line_edit.iteritems():
+			if type(var) == str:
+				val = self.experiment.usanitize(edit.text()).strip()
+				if val != "":
+					self.set(var, val)
+				elif self.experiment.has(var) or edit.default == None:
+					self.unset(var)
+				else:
+					self.set(var, edit.default)
+
+		for var, combobox in self.auto_combobox.iteritems():
+			if type(var) == str:
+				self.set(var, self.experiment.usanitize(combobox.currentText()))
+
+		for var, spinbox in self.auto_spinbox.iteritems():
+			if type(var) == str:
+				self.set(var, spinbox.value())
+
+		for var, slider in self.auto_slider.iteritems():
+			if type(var) == str:
+				self.set(var, slider.value())
+				
+		for var, checkbox in self.auto_checkbox.iteritems():
+			if type(var) == str:
+				if checkbox.isChecked():
+					val = "yes"
+				else:
+					val = "no"
+				self.set(var, val)				
+
+		for var, editor in self.auto_editor.iteritems():
+			if type(var) == str:
+				self.set(var, self.experiment.usanitize( \
+					editor.edit.toPlainText()))
+				editor.setModified(False)
+		
+	def auto_add_widget(self, widget, var=None):
+	
+		"""
+		Add a widget to the list of auto-widgets
+		
+		Arguments:
+		widget -- a QWidget
+		
+		Keyword arguments:
+		var -- the variable to be linked to the widget (default=None)
+		"""
+		
+		# Use the object id as a fallback name
+		if var == None:
+			var = id(widget)
+			debug.msg(var)
+		
+		if isinstance(widget, QtGui.QSpinBox) or isinstance(widget, \
+			QtGui.QDoubleSpinBox):
+			widget.valueChanged.connect(self.apply_edit_changes)
+			self.auto_spinbox[var] = widget
+			
+		elif isinstance(widget, QtGui.QComboBox):
+			widget.currentIndexChanged.connect(self.apply_edit_changes)
+			self.auto_combobox[var] = widget
+			
+		elif isinstance(widget, QtGui.QSlider):
+			widget.valueChanged.connect(self.apply_edit_changes)
+			self.auto_slider[var] = widget
+			
+		elif isinstance(widget, QtGui.QLineEdit):
+			widget.editingFinished.connect(self.apply_edit_changes)
+			self.auto_line_edit[var] = widget
+			
+		elif isinstance(widget, QtGui.QCheckBox):
+			widget.toggled.connect(self.apply_edit_changes)
+			self.auto_checkbox[var] = widget
+									
+		else:
+			raise Exception("Cannot auto-add widget of type %s" % widget)
+			

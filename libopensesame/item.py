@@ -359,7 +359,8 @@ class item(openexp.trial.trial):
 		True if the variable exists, False if not
 		</DOC>"""
 
-		return hasattr(self, var) or hasattr(self.experiment, var)
+		return type(var) == str and (hasattr(self, var) or \
+			hasattr(self.experiment, var))
 
 	def get_refs(self, text):
 

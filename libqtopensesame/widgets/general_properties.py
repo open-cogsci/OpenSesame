@@ -20,8 +20,8 @@ from PyQt4 import QtCore, QtGui
 from libopensesame import misc
 import libopensesame.exceptions
 from libqtopensesame.ui import general_widget_ui
-from libqtopensesame.widgets import color_edit, inline_editor
-from libqtopensesame.items import qtitem, experiment
+from libqtopensesame.widgets import color_edit, inline_editor, header_widget
+from libqtopensesame.items import experiment
 import openexp.backend_info
 import sip
 
@@ -400,7 +400,7 @@ class settings_widget(QtGui.QWidget):
 			edit = settings_edit(self.experiment, var, val, self)
 			self.layout.addRow(label, edit)
 
-class general_header_widget(qtitem.header_widget):
+class general_header_widget(header_widget.header_widget):
 
 	"""The widget containing the clickable title and description of the experiment"""
 
@@ -413,7 +413,7 @@ class general_header_widget(qtitem.header_widget):
 		item -- the experiment
 		"""
 
-		qtitem.header_widget.__init__(self, item)
+		header_widget.header_widget.__init__(self, item)
 		self.label_name.setText("<font size='5'><b>%s</b> - Experiment</font>&nbsp;&nbsp;&nbsp;<font color='gray'><i>Click to edit</i></font>" % self.item.get("title"))
 
 	def restore_name(self):
