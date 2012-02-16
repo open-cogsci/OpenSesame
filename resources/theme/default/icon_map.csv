@@ -72,7 +72,7 @@ button_search,edit-find,
 button_select,gtk-ok,
 button_sine,os-sine,
 button_square,os-square,
-button_template,emblem-favorite,
+button_template,star,
 button_textline,os-textline,
 button_variables_clear,edit-clear,
 button_white_noise,os-white_noise,
@@ -97,7 +97,7 @@ label_pool,folder-saved-search,
 label_pool_search,edit-find,16
 label_sampler,os-sampler,
 label_script,utilities-terminal,
-label_start_new,emblem-favorite,32
+label_start_new,star,32
 label_startup_tip,help-faq,32
 label_stdout,bug-buddy,
 label_synth,os-synth,32
@@ -105,7 +105,7 @@ label_synth_script,utilities-terminal,32
 label_update_dialog,system-software-update,32
 label_variables,system-search,
 label_variables_search,edit-find,16
-label_wizard,emblem-favorite,32
+label_wizard,star,32
 logger,os-logger,
 loop,os-loop,
 mouse_response,os-mouse_response,
@@ -133,4 +133,9 @@ unindent,format-indent-less,
 unsaved_changes,emblem-important,16
 unused,user-trash,
 video,video-x-generic,
-wizard,emblem-favorite,
+wizard,star,
+label_info,help-about,16
+button_add_cyclevar,gtk-add,
+button_remove_cyclevar,gtk-remove,
+button_rename_cyclevar,gtk-edit,
+button_wizard,star,

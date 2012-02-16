@@ -46,6 +46,7 @@ class loop(item.item):
 		self.cycles = 1
 		self.repeat = 1
 		self.skip = 0
+		self.offset = "no"
 		self.matrix = {}
 		self.order = "random"
 		self.description = "Repeatedly runs another item"
@@ -124,7 +125,17 @@ class loop(item.item):
 		# Randomize the list if necessary
 		if self.order == "random":
 			shuffle(l)
-
+			
+		# In sequential order, the offset and the skip are relevant
+		else:			
+			if len(l) < self.skip:
+				raise exceptions.runtime_error("The value of skip is too high in loop item '%s': You cannot skip more cycles than there are." \
+					% self.name)
+			if self.offset == "yes":
+				l = l[self.skip:] + l[:self.skip]
+			else:
+				l = l[self.skip:]
+				
 		# Create a keyboard to flush responses between cycles
 		self._keyboard = openexp.keyboard.keyboard(self.experiment)
 

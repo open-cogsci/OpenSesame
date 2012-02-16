@@ -17,5 +17,6 @@ pyuic4 resources/ui/noise_patch_dialog.ui > libqtopensesame/ui/noise_patch_dialo
 pyuic4 resources/ui/new_loop_sequence.ui > libqtopensesame/ui/new_loop_sequence_ui.py
 pyuic4 resources/ui/preferences_widget.ui > libqtopensesame/ui/preferences_widget_ui.py
 pyuic4 resources/ui/start_new_dialog.ui > libqtopensesame/ui/start_new_dialog_ui.py
+pyuic4 resources/ui/loop_widget.ui > libqtopensesame/ui/loop_widget_ui.py
 
 

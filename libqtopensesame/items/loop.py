@@ -23,71 +23,10 @@ __license__ = "GPLv3"
 import copy
 import libopensesame.loop
 from libqtopensesame.items import qtitem
-from libqtopensesame.ui import loop_wizard_dialog_ui
-from libqtopensesame.widgets import good_looking_table
+from libqtopensesame.ui import loop_wizard_dialog_ui, loop_widget_ui
+from libqtopensesame.widgets import loop_table
+from libopensesame import debug
 from PyQt4 import QtCore, QtGui
-
-class loop_table(good_looking_table.good_looking_table):
-
-	"""The looptable extends the QtTableWidget to allow copying and pasting"""
-
-	def __init__(self, loop, rows, columns, parent=None):
-
-		"""
-		Constructor
-
-		Arguments:
-		loop -- the loop item
-		rows -- the nr of rows
-		columns -- the nr of columns
-
-		Keyword arguments:
-		parent -- parent QWidget (default=None)
-		"""
-
-		self.pos = None
-		self.loop = loop
-		self.lock = False
-
-		icons = {}
-		icons["cut"] = self.loop.experiment.icon("cut")
-		icons["copy"] = self.loop.experiment.icon("copy")
-		icons["paste"] = self.loop.experiment.icon("paste")
-		icons["clear"] = self.loop.experiment.icon("clear")
-
-		good_looking_table.good_looking_table.__init__(self, \
-			rows, columns, icons, parent)
-		QtCore.QObject.connect(self, QtCore.SIGNAL("cellChanged(int, int)"), \
-			self.apply_changes)
-
-	def paste(self):
-
-		"""Paste data from the clipboard into the table"""
-
-		self.lock = True
-		good_looking_table.good_looking_table.paste(self)
-		self.lock = False
-		self.apply_changes()
-
-	def _clear(self):
-
-		"""Clear the table"""
-
-		self.lock = True
-		good_looking_table.good_looking_table._clear(self)
-		self.lock = False
-		self.apply_changes()
-
-	def apply_changes(self):
-
-		"""
-		Apply changes to the table and make sure that the cursor is restored to
-		its previous position
-		"""
-
-		if self.lock:
-			return
-		self.loop.apply_edit_changes()
 
 class loop(libopensesame.loop.loop, qtitem.qtitem):
 
@@ -161,12 +100,14 @@ class loop(libopensesame.loop.loop, qtitem.qtitem):
 			var_name = self.experiment.sanitize(var_name, strict=True, \
 				allow_vars=False)
 			if var_name == "":
-				self.experiment.notify("Variable names must consist of alphanumeric characters and underscores, and must not be empty")
+				self.experiment.notify( \
+					"Variable names must consist of alphanumeric characters and underscores, and must not be empty")
 				return
 
 			# Check if the variable already exists
 			if l != None and var_name in l:
-				self.experiment.notify("A variable with the name '%s' already exists" % var_name)
+				self.experiment.notify( \
+					"A variable with the name '%s' already exists" % var_name)
 				return
 
 			for i in range(self.cycles):
@@ -311,6 +252,7 @@ class loop(libopensesame.loop.loop, qtitem.qtitem):
 				   from the table (default=True)
 		"""
 
+		debug.msg("cycles = %d" % cycles)
 		cont = True
 		while cont:
 			cont = False
@@ -325,7 +267,8 @@ class loop(libopensesame.loop.loop, qtitem.qtitem):
 
 					# Ask for confirmation (only the first time)
 					if not empty and confirm:
-						resp = QtGui.QMessageBox.question(self.experiment.ui.centralwidget, \
+						resp = QtGui.QMessageBox.question( \
+							self.experiment.ui.centralwidget, \
 							"Remove cycles?", "By reducing the number of cycles, data will be lost from the table. Do you wish to continue?", \
 							QtGui.QMessageBox.Yes, QtGui.QMessageBox.No)
 						if resp == QtGui.QMessageBox.No:
@@ -349,6 +292,9 @@ class loop(libopensesame.loop.loop, qtitem.qtitem):
 		The nr of calls
 		"""
 
+		# Skipping trials only occurs in sequential order and offset != yes
+		if self.order == "sequential" and self.offset != "yes":
+			return int(self.cycles * self.repeat - self.skip)
 		return int(self.cycles * self.repeat)
 
 	def refresh_loop_table(self, lock = True):
@@ -389,7 +335,7 @@ class loop(libopensesame.loop.loop, qtitem.qtitem):
 			self.loop_table.setHorizontalHeaderItem(i, \
 				QtGui.QTableWidgetItem(var))
 			i += 1
-
+			
 		# Fill the table
 		var_columns = {}
 		new_column = 0
@@ -407,7 +353,7 @@ class loop(libopensesame.loop.loop, qtitem.qtitem):
 		if lock:
 			self.lock = False
 
-	def wizard_process(self, d, l = []):
+	def wizard_process(self, d, l=[]):
 
 		"""
 		Rebuilds the loop table based on a dictionary of variables and levels
@@ -418,7 +364,7 @@ class loop(libopensesame.loop.loop, qtitem.qtitem):
 		Keyword arguments:
 		l -- a list of variables and values (default = [])
 		"""
-
+		
 		if len(d) == 0:
 			for var, val in l:
 				if self.i not in self.matrix:
@@ -426,30 +372,27 @@ class loop(libopensesame.loop.loop, qtitem.qtitem):
 				self.matrix[self.i][var] = val
 			self.i += 1
 			return
-
 		var = d.keys()[0]
-
 		for val in d[var]:
 			_d = copy.copy(d)
 			del _d[var]
-
 			self.wizard_process(_d, l + [(var, val)])
 
 	def wizard(self):
 
 		"""Present the variable wizard dialog"""
 
+		# Set up the wizard dialog
 		a = QtGui.QDialog(self.experiment.main_window.ui.centralwidget)
 		a.ui = loop_wizard_dialog_ui.Ui_Dialog()
 		a.ui.setupUi(a)
 		self.experiment.main_window.theme.load_icons(a.ui)
 		a.ui.table_example.hide()
-
 		a.ui.table_wizard.setRowCount(255)
 		a.ui.table_wizard.setColumnCount(255)
 
-		if a.exec_() == QtGui.QDialog.Accepted:
-
+		if a.exec_() == QtGui.QDialog.Accepted:		
+			debug.msg("filling loop table")
 			# First read the table into a dictionary of variables
 			var_dict = {}
 			for col in range(a.ui.table_wizard.columnCount()):
@@ -464,12 +407,14 @@ class loop(libopensesame.loop.loop, qtitem.qtitem):
 						var_dict[var] = []
 					elif var != None:
 						var_dict[var].append(self.experiment.usanitize(s))
-
+			# Then fill the loop table
 			self.i = 0
 			self.matrix = {}
 			self.wizard_process(var_dict)
 			self.set_cycle_count(len(self.matrix))
-			self.spin_cycles.setValue(self.cycle_count())
+			self.lock = True		
+			self.loop_widget.ui.spin_cycles.setValue(self.cycle_count())
+			self.lock = False
 			self.refresh_loop_table()
 
 	def init_edit_widget(self):
@@ -479,100 +424,38 @@ class loop(libopensesame.loop.loop, qtitem.qtitem):
 		self.lock = True
 
 		qtitem.qtitem.init_edit_widget(self, False)
-
-		row = 3
-		self.edit_grid.addWidget(QtGui.QLabel("Item to run"), row, 0)
-		self.edit_item = self.experiment.item_combobox(self.item, [self.name])
-		self.edit_item.setToolTip("Select the item that is called by the loop")
-		QtCore.QObject.connect(self.edit_item, QtCore.SIGNAL( \
-			"currentIndexChanged(int)"), self.apply_edit_changes)
-		self.edit_grid.addWidget(self.edit_item, row, 1)
-
-		row += 1
-		self.edit_grid.addWidget(QtGui.QLabel("Cycles"), row, 0)
-		self.spin_cycles = QtGui.QSpinBox()
-		self.spin_cycles.setMinimum(1)
-		self.spin_cycles.setMaximum(1000000)
-		self.spin_cycles.setToolTip("The number of cycles")
-		self.spin_cycles.editingFinished.connect(self.apply_edit_changes)
-		self.edit_grid.addWidget(self.spin_cycles, row, 1)
-
-		row += 1
-		self.edit_grid.addWidget(QtGui.QLabel("Repeat"), row, 0)
-		self.spin_repeat = QtGui.QDoubleSpinBox()
-		self.spin_repeat.setMinimum(0)
-		self.spin_repeat.setMaximum(1000000)
-		self.spin_repeat.setToolTip( \
-			"The number of times that all cycles are repeat. The number of times that the 'item to run' is executed is [repeat] x [number of cycles]. Values below 1 mean that not all cycles are executed.")
-		self.spin_repeat.editingFinished.connect(self.apply_edit_changes)
-		self.edit_grid.addWidget(self.spin_repeat, row, 1)
-
-		row += 1
-		self.combobox_order = QtGui.QComboBox()
-		self.combobox_order.addItem("random")
-		self.combobox_order.setItemIcon(0, self.experiment.icon("random"))
-		self.combobox_order.addItem("sequential")
-		self.combobox_order.setItemIcon(1, self.experiment.icon("sequential"))
-		self.combobox_order.setToolTip( \
-			"The order in which the cycles are executed. If set to random, ranomization occurs over all [repeat] x [number of cycles] runs.")
-
-		self.edit_grid.addWidget(QtGui.QLabel("Order"), row, 0)
-		self.edit_grid.addWidget(self.combobox_order, row, 1)
-		QtCore.QObject.connect(self.combobox_order, \
-			QtCore.SIGNAL("currentIndexChanged(int)"), self.apply_edit_changes)
-		self.edit_grid.addWidget(self.combobox_order, row, 1)
-
-		row += 1
-		self.label_summary = QtGui.QLabel()
-		self.edit_grid.addWidget(self.label_summary, row, 1)
-
-		self.button_add_cyclevar = QtGui.QPushButton( \
-			self.experiment.icon("add"), "Add variable")
-		self.button_add_cyclevar.setIconSize(QtCore.QSize(16,16))
-		self.button_add_cyclevar.setToolTip("Add a variable")
-		QtCore.QObject.connect(self.button_add_cyclevar, \
-			QtCore.SIGNAL("clicked()"), self.add_cyclevar)
-
-		self.button_rename_cyclevar = QtGui.QPushButton( \
-			self.experiment.icon("rename"), "Rename variable")
-		self.button_rename_cyclevar.setIconSize(QtCore.QSize(16,16))
-		self.button_rename_cyclevar.setToolTip("Rename a variable")
-		QtCore.QObject.connect(self.button_rename_cyclevar, \
-			QtCore.SIGNAL("clicked()"), self.rename_cyclevar)
-
-		self.button_remove_cyclevar = QtGui.QPushButton( \
-			self.experiment.icon("delete"), "Remove variable")
-		self.button_remove_cyclevar.setIconSize(QtCore.QSize(16,16))
-		self.button_remove_cyclevar.setToolTip("Remove a variable")
-		QtCore.QObject.connect(self.button_remove_cyclevar, \
-			QtCore.SIGNAL("clicked()"), self.remove_cyclevar)
-
-		self.button_wizard = QtGui.QPushButton(self.experiment.icon("wizard"), \
-			"Variable wizard")
-		self.button_wizard.setIconSize(QtCore.QSize(16,16))
-		self.button_wizard.setToolTip( \
-			"An easy way to create large variable tables")
-		QtCore.QObject.connect(self.button_wizard, QtCore.SIGNAL("clicked()"), \
+		self.loop_widget = QtGui.QWidget()
+		self.loop_widget.ui = loop_widget_ui.Ui_loop_widget()
+		self.loop_widget.ui.setupUi(self.loop_widget)
+		self.experiment.main_window.theme.load_icons(self.loop_widget.ui)
+		self.edit_vbox.addWidget(self.loop_widget)
+		
+		self.auto_add_widget(self.loop_widget.ui.spin_cycles)		
+		self.auto_add_widget(self.loop_widget.ui.spin_repeat, "repeat")
+		self.auto_add_widget(self.loop_widget.ui.spin_skip, "skip")
+		self.auto_add_widget(self.loop_widget.ui.combobox_item, "item")
+		self.auto_add_widget(self.loop_widget.ui.combobox_order, "order")
+		self.auto_add_widget(self.loop_widget.ui.checkbox_offset, "offset")
+		
+		self.loop_widget.ui.button_add_cyclevar.clicked.connect( \
+			self.add_cyclevar)
+		self.loop_widget.ui.button_rename_cyclevar.clicked.connect( \
+			self.rename_cyclevar)			
+		self.loop_widget.ui.button_remove_cyclevar.clicked.connect( \
+			self.remove_cyclevar)			
+		self.loop_widget.ui.button_wizard.clicked.connect( \
 			self.wizard)
+		
+		self.loop_widget.ui.combobox_order.setItemIcon(0, \
+			self.experiment.icon("random"))
+		self.loop_widget.ui.combobox_order.setItemIcon(1, \
+			self.experiment.icon("sequential"))
 
-		hbox = QtGui.QHBoxLayout()
-		hbox.addWidget(self.button_add_cyclevar)
-		hbox.addWidget(self.button_rename_cyclevar)
-		hbox.addWidget(self.button_remove_cyclevar)
-		hbox.addStretch()
-		hbox.addWidget(self.button_wizard)
-		hbox.setMargin(0)
-
-		widget = QtGui.QWidget()
-		widget.setLayout(hbox)
-		self.edit_vbox.addSpacing(16)
-		self.edit_vbox.addWidget(widget)
-
-		self.loop_table = loop_table(self, self.cycles, self.cyclevar_count())
+		self.loop_table = loop_table.loop_table(self, self.cycles, \
+			self.cyclevar_count())
 		self.edit_vbox.addWidget(self.loop_table)
-
-		self.lock = False
-
+		
+		self.lock = False				
 		return self._edit_widget
 
 	def edit_widget(self):
@@ -580,38 +463,41 @@ class loop(libopensesame.loop.loop, qtitem.qtitem):
 		"""Set the loop controls from the variables"""
 
 		self.lock = True
+		debug.msg()			
+		# Update the item combobox
+		self.experiment.item_combobox(self.item, self.parents(), \
+			self.loop_widget.ui.combobox_item)
 		qtitem.qtitem.edit_widget(self)
-		self.refresh_loop_table(lock = False)
-
-		self.edit_item.deleteLater()
-		self.edit_item = self.experiment.item_combobox(self.item, \
-			exclude=self.parents())
-		QtCore.QObject.connect(self.edit_item, \
-			QtCore.SIGNAL("currentIndexChanged(int)"), self.apply_edit_changes)
-		self.edit_grid.addWidget(self.edit_item, 3, 1)
-
-		# For some reason, refilling the combobox, rather than recreating it, causes a nasty
-		# loop. Not sure why.
-		# self.experiment.item_combobox(self.item, self.parents(), self.edit_item)
-
-		self.spin_cycles.setValue(self.cycle_count())
-
-		try:
-			self.spin_repeat.setValue(float(self.get("repeat")))
-		except:
-			self.experiment.notify( \
-				"'%s' is not a valid value for repeat. Expecting a positive numeric value." \
-				% self.get("repeat"))
-			self.spin_repeat.setValue(1)
-			self.set("repeat", 1)
-
-		self.label_summary.setText( \
-			"<small><b>%s</b> will be called <b>%s</b> x <b>%s</b> = <b>%s</b> times in <b>%s</b> order</small>" \
-			% (self.item, self.cycles, self.repeat, self.call_count(), \
-			self.order))
-
-		self.combobox_order.setCurrentIndex(self.combobox_order.findText( \
-			str(self.get("order"))))
+		self.refresh_loop_table(lock=False)		
+		self.loop_widget.ui.spin_cycles.setValue(self.cycle_count())
+		
+		if self.get("order") == "random":
+			self.loop_widget.ui.label_skip.setDisabled(True)
+			self.loop_widget.ui.spin_skip.setDisabled(True)
+			self.loop_widget.ui.checkbox_offset.setDisabled(True)
+		else:
+			self.loop_widget.ui.label_skip.setDisabled(False)
+			self.loop_widget.ui.spin_skip.setDisabled(False)
+			self.loop_widget.ui.checkbox_offset.setDisabled( \
+				self.get("skip") < 1)
+	
+		# Update the summary
+		cc = self.call_count()					
+		if self.order == "sequential" and self.offset != "yes":
+			s = "<b>%s</b> will be called <b>%s</b> x <b>%s</b> - <b>%s</b> = <b>%s</b> times in <b>%s</b> order" \
+				% (self.item, self.cycles, self.repeat, self.skip, cc, \
+				self.order)
+		else:			
+			s = "<b>%s</b> will be called <b>%s</b> x <b>%s</b> = <b>%s</b> times in <b>%s</b> order" \
+				% (self.item, self.cycles, self.repeat, cc, self.order)	
+		if self.order == "sequential" and self.skip > 0:
+			s += " starting at cycle <b>%d</b>" % self.skip
+			if self.offset == "yes" and self.skip >= cc:
+				s += " <font color='red'><b>(too many cycles skipped)</b></font>"	
+		if cc < 1:
+			s += " <font color='red'><b>(zero or negative length)</b></font>"		
+		self.loop_widget.ui.label_summary.setText("<small>%s</small>" % s)				
+		
 		self.lock = False
 		return self._edit_widget
 
@@ -624,15 +510,10 @@ class loop(libopensesame.loop.loop, qtitem.qtitem):
 		dummy -- a dummy argument passed by the signal handler (default = None)
 		"""
 
-		if not qtitem.qtitem.apply_edit_changes(self, False) or self.lock:
+		if self.lock or not qtitem.qtitem.apply_edit_changes(self, False):
 			return
 
 		self.lock = True
-
-		item = str(self.edit_item.currentText())
-		self.set("item", item)
-		self.set("repeat", self.spin_repeat.value())
-		self.set("order", str(self.combobox_order.currentText()))
 
 		self.matrix = {}
 		for row in range(self.loop_table.rowCount()):
@@ -650,7 +531,7 @@ class loop(libopensesame.loop.loop, qtitem.qtitem):
 		row = self.loop_table.currentRow()
 		column = self.loop_table.currentColumn()
 
-		self.set_cycle_count(self.spin_cycles.value())
+		self.set_cycle_count(self.loop_widget.ui.spin_cycles.value())
 		self.refresh_loop_table()
 		self.experiment.main_window.refresh(self.name)
 		self.loop_table.setCurrentCell(row, column)
