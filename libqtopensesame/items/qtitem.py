@@ -210,9 +210,8 @@ class qtitem(object):
 
 		debug.msg("%s (#%s)" % (self.name, hash(self)))
 
-		self.edit_mode = "edit"
-
-		# Close the script tab
+		# Switch to edit mode and close the script tab if it was open
+		self.edit_mode = "edit"		
 		for i in range(self.experiment.ui.tabwidget.count()):
 			w = self.experiment.ui.tabwidget.widget(i)
 			if hasattr(w, "script_item") and w.script_item == self.name:
@@ -221,11 +220,13 @@ class qtitem(object):
 					index = i
 				break
 
+		# Focus the edit tab, instead of reopening, if it was already open
 		for i in range(self.experiment.ui.tabwidget.count()):
 			w = self.experiment.ui.tabwidget.widget(i)
 			if hasattr(w, "edit_item") and w.edit_item == self.name:
 				index = i
 
+		# Refresh the controls on the tab
 		try:
 			widget = self.edit_widget()
 		except Exception as e:
@@ -233,6 +234,7 @@ class qtitem(object):
 			self.open_script_tab()
 			return
 
+		# Open the tab or focus the tab if it was already open
 		if index == None:
 			self.edit_tab_index = self.experiment.ui.tabwidget.addTab(widget, \
 				self.experiment.icon(self.item_type), "%s" % self.name)
@@ -714,7 +716,7 @@ class qtitem(object):
 		# Use the object id as a fallback name
 		if var == None:
 			var = id(widget)
-			debug.msg(var)
+		debug.msg(var)
 		
 		if isinstance(widget, QtGui.QSpinBox) or isinstance(widget, \
 			QtGui.QDoubleSpinBox):
