@@ -59,7 +59,7 @@ config = {
 	"show_startup_tip" : True,
 	"style" : "",
 	"theme" : "default",
-	"toolbar_size" : 16,
+	"toolbar_size" : 32,
 	"toolbar_text" : False,
 	"new_experiment_dialog" : True,
 	"opensesamerun" : False,

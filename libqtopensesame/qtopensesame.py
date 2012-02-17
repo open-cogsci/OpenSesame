@@ -292,7 +292,7 @@ class qtopensesame(QtGui.QMainWindow):
 				self.recent_files.append(path)
 			else:
 				debug.msg("missing recent file '%s'" % path)
-
+				
 		self.ui.action_enable_auto_response.setChecked(self.experiment.auto_response)
 		self.ui.action_show_info_in_overview.setChecked(config.get_config("overview_info"))
 		self.toggle_overview_info()
