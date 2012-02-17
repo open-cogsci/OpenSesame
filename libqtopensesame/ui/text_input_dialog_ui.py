@@ -2,8 +2,8 @@
 
 # Form implementation generated from reading ui file 'resources/ui/text_input_dialog.ui'
 #
-# Created: Fri Feb 17 15:04:45 2012
-#      by: PyQt4 UI code generator 4.9.1
+# Created: Fri Feb 17 20:14:52 2012
+#      by: PyQt4 UI code generator 4.8.5
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -18,6 +18,7 @@ class Ui_Dialog(object):
     def setupUi(self, Dialog):
         Dialog.setObjectName(_fromUtf8("Dialog"))
         Dialog.resize(608, 233)
+        Dialog.setWindowTitle(QtGui.QApplication.translate("Dialog", "OpenSesame says ...", None, QtGui.QApplication.UnicodeUTF8))
         self.verticalLayout = QtGui.QVBoxLayout(Dialog)
         self.verticalLayout.setMargin(8)
         self.verticalLayout.setObjectName(_fromUtf8("verticalLayout"))
@@ -50,6 +51,7 @@ class Ui_Dialog(object):
         font.setBold(True)
         font.setWeight(75)
         self.label_message.setFont(font)
+        self.label_message.setText(QtGui.QApplication.translate("Dialog", "OpenSesame says ...", None, QtGui.QApplication.UnicodeUTF8))
         self.label_message.setObjectName(_fromUtf8("label_message"))
         self.horizontalLayout.addWidget(self.label_message)
         self.verticalLayout.addWidget(self.widget)
@@ -68,6 +70,5 @@ class Ui_Dialog(object):
         QtCore.QMetaObject.connectSlotsByName(Dialog)
 
     def retranslateUi(self, Dialog):
-        Dialog.setWindowTitle(QtGui.QApplication.translate("Dialog", "OpenSesame says ...", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_message.setText(QtGui.QApplication.translate("Dialog", "OpenSesame says ...", None, QtGui.QApplication.UnicodeUTF8))
+        pass
 

@@ -28,6 +28,8 @@ import fnmatch
 import libqtopensesame.qtopensesame
 import libopensesame.misc
 
+share_folder = "/usr/share/opensesame"
+
 # Not all plugins are included
 included_plugins = [ \
 	"advanced_delay", \
@@ -49,15 +51,16 @@ def resources():
 	A list of resource files
 	"""
 	
-	matches = []
+	l = []
 	for root, dirnames, filenames in os.walk("resources"):
 		print root
 		if root in ["resources/bak", "resources/ui"]:
 			continue
 		for f in filenames:			
 			if os.path.splitext(f)[1] not in [".csv"] or f  in ["icon_map.csv"]:
-				matches.append(os.path.join(root, f))
-	return matches
+				l.append( (os.path.join(share_folder, root), [os.path.join( \
+					root, f)] ) )
+	return l
 			
 def plugins():
 
@@ -72,7 +75,7 @@ def plugins():
 	l = []
 	for plugin in os.listdir("plugins"):
 		if plugin in included_plugins:
-			l.append( ("/usr/share/opensesame/plugins/%s" % plugin, \
+			l.append( (os.path.join(share_folder, "plugins", plugin), \
 				glob.glob("plugins/%s/*" % plugin)) )
 	return l
 
@@ -104,13 +107,12 @@ setup(name="opensesame",
 	data_files=[
 		("/usr/share/opensesame", ["COPYING"]),
 		("/usr/share/applications", ["data/opensesame.desktop"]),
-		("/usr/share/opensesame/resources", resources()),
 		("/usr/share/opensesame/help", glob.glob("help/*.html")),
 		("/usr/share/opensesame/sounds", glob.glob("sounds/*")),
 		("/usr/share/opensesame/examples", \
 			glob.glob("examples/*.opensesame") + \
 			glob.glob("examples/*.opensesame.tar.gz")),
-		] + plugins()
+		] + plugins() + resources()
 	)
 
 
