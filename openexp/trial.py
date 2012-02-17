@@ -17,6 +17,7 @@ along with openexp.  If not, see <http://www.gnu.org/licenses/>.
 
 import pygame
 import os
+from openexp import exceptions
 
 class trial:
 
@@ -55,7 +56,8 @@ class trial:
 		ms -- a duration in milliseconds
 		</DOC>"""
 
-		pass # This function will be assigned at runtime
+		raise exceptions.openexp_error( \
+			"trial.sleep(): This function should be set by the canvas backend.")
 
 	def time(self):
 
@@ -66,7 +68,8 @@ class trial:
 		A timestamp of the current time
 		</DOC>"""
 
-		pass # This function will be assigned at runtime
+		raise exceptions.openexp_error( \
+			"trial.time(): This function should be set by the canvas backend.")
 
 	def log(self, msg):
 

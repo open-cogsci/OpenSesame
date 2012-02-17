@@ -64,7 +64,8 @@ class libsrbox:
 				for i in range(255):
 					try:
 						dev = "COM%d" % i
-						self._srbox = serial.Serial(dev, timeout = 0, baudrate = 19200)
+						self._srbox = serial.Serial(dev, timeout=0, \
+							baudrate=19200)
 						break
 					except Exception as e:
 						self._srbox = None
@@ -75,7 +76,8 @@ class libsrbox:
 					if path[:3] == "tty":
 						try:
 							dev = "/dev/%s" % path
-							self._srbox = serial.Serial(dev, timeout = 0, baudrate = 19200)
+							self._srbox = serial.Serial(dev, timeout=0, \
+								baudrate=19200)
 							break
 						except Exception as e:
 							self._srbox = None
@@ -167,6 +169,16 @@ class libsrbox:
 					if k | self.BUTTON8 == 255 and (allowed_buttons == None or 8 in allowed_buttons):
 						l.append(8)
 					if len(l) > 0:
+						print "L=%s T=%s" % (l, t)
 						return l, t
 
 		return None, t
+
+	def close(self):
+
+		"""<DOC>
+		Close the connection to the srbox. This (sometimes?) required in order
+		to re-use the SR Box in the same session of OpenSesame.
+		</DOC>"""
+
+		self._srbox.close()

@@ -102,6 +102,7 @@ class srbox(item.item, generic_response.generic_response):
 				path = os.path.join(os.path.dirname(__file__), "libsrbox.py")
 				_srbox = imp.load_source("libsrbox", path)
 				self.experiment.srbox = _srbox.libsrbox(self.experiment, dev)
+				self.experiment.cleanup_functions.append(self.close)
 
 			# Prepare the light byte
 			s = "010" # Control string
@@ -142,18 +143,22 @@ class srbox(item.item, generic_response.generic_response):
 		# If no start response interval has been set, set it to the onset of
 		# the current response item
 		if self.experiment.start_response_interval == None:
-			self.experiment.start_response_interval = self.get("time_%s" % self.name)
+			self.experiment.start_response_interval = self.get("time_%s" \
+				% self.name)
 
 		if self.has("dummy") and self.get("dummy") == "yes":
 
-			# In dummy mode, we simply take the numeric keys from the keyboard instead of an sr-box
-			resp, self.experiment.end_response_interval = self._resp_func(None, self._timeout)
+			# In dummy mode, we simply take the numeric keys from the keyboard
+			resp, self.experiment.end_response_interval = self._resp_func( \
+				None, self._timeout)
 			try:
 				resp = self._keyboard.to_chr(resp)
 				if resp != "timeout":
 					resp = int(resp)
 			except:
-				raise exceptions.runtime_error("An error occured in srbox '%s': Only number keys are accepted in dummy mode" % self.name)
+				raise exceptions.runtime_error( \
+					"An error occured in srbox '%s': Only number keys are accepted in dummy mode" \
+					% self.name)
 
 		else:
 			# Get the response
@@ -164,7 +169,8 @@ class srbox(item.item, generic_response.generic_response):
 					self._resp_func(self._allowed_responses, self._timeout)
 				self.experiment.srbox.stop()
 			except Exception as e:
-				raise exceptions.runtime_error("An error occured in srbox '%s': %s." % (self.name, e))
+				raise exceptions.runtime_error( \
+					"An error occured in srbox '%s': %s." % (self.name, e))
 
 		debug.msg("received %s" % resp)
 		if type(resp) == list:
@@ -176,6 +182,20 @@ class srbox(item.item, generic_response.generic_response):
 
 		# Report success
 		return True
+
+	def close(self):
+
+		"""Neatly close the connection to the srbox"""
+
+		if not hasattr(self.experiment, "srbox") or \
+			self.experiment.srbox == None:
+				debug.msg("no active srbox")
+				return		
+		try:
+			self.experiment.srbox.close()
+			debug.msg("srbox closed")
+		except:
+			debug.msg("failed to close srbox")
 
 	def var_info(self):
 
