@@ -21,12 +21,6 @@
    <layout class="QVBoxLayout" name="verticalLayout_6">
     <item>
      <widget class="QTabWidget" name="tabwidget">
-      <property name="accessibleName">
-       <string>Tab area</string>
-      </property>
-      <property name="accessibleDescription">
-       <string>The tab area contains the graphical control tabs for items</string>
-      </property>
       <property name="currentIndex">
        <number>-1</number>
       </property>
@@ -35,6 +29,12 @@
       </property>
       <property name="movable">
        <bool>true</bool>
+      </property>
+      <property name="accessibleName" stdset="0">
+       <string/>
+      </property>
+      <property name="accessibleDescription" stdset="0">
+       <string/>
       </property>
      </widget>
     </item>
@@ -46,7 +46,7 @@
      <x>0</x>
      <y>0</y>
      <width>1000</width>
-     <height>24</height>
+     <height>18</height>
     </rect>
    </property>
    <widget class="QMenu" name="menu_file">
@@ -142,17 +142,17 @@
   </widget>
   <widget class="statusbar" name="statusbar"/>
   <widget class="QDockWidget" name="dock_overview">
-   <property name="accessibleName">
-    <string>Overview area</string>
-   </property>
-   <property name="accessibleDescription">
-    <string>Provides an overview of the experiment</string>
-   </property>
    <property name="features">
     <set>QDockWidget::AllDockWidgetFeatures</set>
    </property>
    <property name="windowTitle">
     <string>Overview</string>
+   </property>
+   <property name="accessibleName" stdset="0">
+    <string/>
+   </property>
+   <property name="accessibleDescription" stdset="0">
+    <string/>
    </property>
    <attribute name="dockWidgetArea">
     <number>1</number>
@@ -198,17 +198,17 @@
    </widget>
   </widget>
   <widget class="QDockWidget" name="dock_variable_inspector">
-   <property name="accessibleName">
-    <string>Variable inspector</string>
-   </property>
-   <property name="accessibleDescription">
-    <string>A list of variables that have detected in the experiment</string>
-   </property>
    <property name="allowedAreas">
     <set>Qt::AllDockWidgetAreas</set>
    </property>
    <property name="windowTitle">
     <string>Variable inspector</string>
+   </property>
+   <property name="accessibleName" stdset="0">
+    <string/>
+   </property>
+   <property name="accessibleDescription" stdset="0">
+    <string/>
    </property>
    <attribute name="dockWidgetArea">
     <number>2</number>
@@ -279,8 +279,8 @@ background-color: #729fcf;</string>
           <property name="toolTip">
            <string>Enter a filter</string>
           </property>
-          <property name="accessibleName">
-           <string>Variable search box</string>
+          <property name="accessibleName" stdset="0">
+           <string/>
           </property>
          </widget>
         </item>
@@ -288,9 +288,6 @@ background-color: #729fcf;</string>
          <widget class="QPushButton" name="button_variables_clear">
           <property name="toolTip">
            <string>Clear filter</string>
-          </property>
-          <property name="accessibleName">
-           <string>Clear variable search box</string>
           </property>
           <property name="text">
            <string/>
@@ -305,6 +302,9 @@ background-color: #729fcf;</string>
             <height>16</height>
            </size>
           </property>
+          <property name="accessibleName" stdset="0">
+           <string/>
+          </property>
          </widget>
         </item>
         <item>
@@ -317,9 +317,6 @@ background-color: #729fcf;</string>
           </property>
           <property name="toolTip">
            <string>Help</string>
-          </property>
-          <property name="accessibleName">
-           <string>Variable inspector help</string>
           </property>
           <property name="text">
            <string/>
@@ -337,6 +334,9 @@ background-color: #729fcf;</string>
           <property name="flat">
            <bool>false</bool>
           </property>
+          <property name="accessibleName" stdset="0">
+           <string/>
+          </property>
          </widget>
         </item>
        </layout>
@@ -344,9 +344,6 @@ background-color: #729fcf;</string>
      </item>
      <item>
       <widget class="variable_inspector" name="table_variables">
-       <property name="accessibleName">
-        <string>Variable inspector table</string>
-       </property>
        <property name="alternatingRowColors">
         <bool>true</bool>
        </property>
@@ -358,6 +355,9 @@ background-color: #729fcf;</string>
        </property>
        <property name="sortingEnabled">
         <bool>true</bool>
+       </property>
+       <property name="accessibleName" stdset="0">
+        <string/>
        </property>
        <attribute name="horizontalHeaderShowSortIndicator" stdset="0">
         <bool>true</bool>
@@ -403,17 +403,17 @@ background-color: #729fcf;</string>
    </widget>
   </widget>
   <widget class="QDockWidget" name="dock_stdout">
-   <property name="accessibleName">
-    <string>Debug window</string>
-   </property>
-   <property name="accessibleDescription">
-    <string>A Python intepreter that is also used for displaying debugging output</string>
-   </property>
    <property name="features">
     <set>QDockWidget::AllDockWidgetFeatures</set>
    </property>
    <property name="windowTitle">
     <string>Debug window</string>
+   </property>
+   <property name="accessibleName" stdset="0">
+    <string/>
+   </property>
+   <property name="accessibleDescription" stdset="0">
+    <string/>
    </property>
    <attribute name="dockWidgetArea">
     <number>8</number>
@@ -496,9 +496,6 @@ background-color: #729fcf;</string>
              <property name="toolTip">
               <string>Help</string>
              </property>
-             <property name="accessibleName">
-              <string>Debug window help</string>
-             </property>
              <property name="text">
               <string/>
              </property>
@@ -515,14 +512,14 @@ background-color: #729fcf;</string>
              <property name="flat">
               <bool>false</bool>
              </property>
+             <property name="accessibleName" stdset="0">
+              <string/>
+             </property>
             </widget>
            </item>
            <item>
             <widget class="QPushButton" name="button_clear_stdout">
              <property name="toolTip">
-              <string>Clear debug window</string>
-             </property>
-             <property name="accessibleName">
               <string>Clear debug window</string>
              </property>
              <property name="text">
@@ -537,6 +534,9 @@ background-color: #729fcf;</string>
                <width>16</width>
                <height>16</height>
               </size>
+             </property>
+             <property name="accessibleName" stdset="0">
+              <string/>
              </property>
             </widget>
            </item>
