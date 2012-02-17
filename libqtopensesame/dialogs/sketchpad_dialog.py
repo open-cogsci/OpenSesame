@@ -38,7 +38,7 @@ class sketchpad_dialog(QtGui.QDialog):
 			QtCore.Qt.WindowMinMaxButtonsHint | QtCore.Qt.WindowCloseButtonHint)
 		self.sketchpad = sketchpad
 		self.tools_widget = sketchpad_widget.sketchpad_widget(self.sketchpad, \
-			parent=self, embed=alse)							
+			parent=self, embed=False)							
 		self.close_button = QtGui.QPushButton( \
 			self.sketchpad.experiment.icon("close"), "Close")
 		self.close_button.setIconSize(QtCore.QSize(16,16))
