@@ -35,26 +35,8 @@ class good_looking_table(QtGui.QTableWidget):
 		parent -- the parent QWidget (default=None)
 		"""
 	
-		self.clipboard = QtGui.QApplication.clipboard	
-		
-		# Set-up the context menu
-		self.menu = QtGui.QMenu()		
-		if "cut" in icons:
-			self.menu.addAction(icons["cut"], "Cut", self.cut)
-		else:		
-			self.menu.addAction("Cut", self.cut)							
-		if "copy" in icons:
-			self.menu.addAction(icons["copy"], "Copy", self.copy)
-		else:
-			self.menu.addAction("Copy", self.copy)					
-		if "paste" in icons:
-			self.menu.addAction(icons["paste"], "Paste", self.paste)
-		else:		
-			self.menu.addAction("Paste", self.paste)
-		if "clear" in icons:
-			self.menu.addAction(icons["clear"], "Clear", self._clear)
-		else:		
-			self.menu.addAction("Clear", self._clear)
+		self.clipboard = QtGui.QApplication.clipboard			
+		self.build_context_menu(icons)
 		
 		# If there is only one parameter, this is the parent
 		if columns == None:
@@ -64,6 +46,34 @@ class good_looking_table(QtGui.QTableWidget):
 			
 		self.setGridStyle(QtCore.Qt.DotLine)
 		self.setAlternatingRowColors(True)
+
+	def build_context_menu(self, icons={}):
+
+		"""
+		Build the context menu
+
+		Keyword arguments:
+		icons -- a dictionary with icon names (default={})
+		"""
+
+		self.menu = QtGui.QMenu()		
+		if "cut" in icons:
+			self.menu.addAction(icons["cut"], "Cut", self.cut)
+		else:		
+			self.menu.addAction("Cut", self.cut)							
+		if "copy" in icons:
+			self.menu.addAction(icons["copy"], "Copy", self.copy)
+		else:
+			self.menu.addAction("Copy", self.copy)					
+
+		if "paste" in icons:
+			self.menu.addAction(icons["paste"], "Paste", self.paste)
+		else:		
+			self.menu.addAction("Paste", self.paste)
+		if "clear" in icons:
+			self.menu.addAction(icons["clear"], "Clear", self._clear)
+		else:		
+			self.menu.addAction("Clear", self._clear)		
 		
 	def contextMenuEvent(self, e):
 	

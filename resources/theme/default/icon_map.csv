@@ -72,10 +72,10 @@ button_run,os-run,
 button_saw,os-saw,
 button_script,utilities-terminal,
 button_search,edit-find,
-button_select,gtk-ok,
+button_select,dialog-ok,
 button_sine,os-sine,
 button_square,os-square,
-button_template,star,
+button_template,gnome-app-install-star,
 button_textline,os-textline,
 button_variables_clear,edit-clear,
 button_white_noise,os-white_noise,
@@ -85,7 +85,8 @@ close,list-remove,
 colorpicker,text-css,16
 copy,edit-copy,
 cut,edit-cut,
-delete,gtk-delete,
+delete,list-remove,
+edit,gtk-edit,
 experiment,os-experiment,
 feedback,os-feedback,
 handle,os-handle,
@@ -103,7 +104,7 @@ label_pool,folder-saved-search,
 label_pool_search,edit-find,16
 label_sampler,os-sampler,
 label_script,utilities-terminal,
-label_start_new,star,32
+label_start_new,gnome-app-install-star,32
 label_startup_tip,help-about,32
 label_stdout,bug-buddy,
 label_synth,os-synth,32
@@ -111,7 +112,7 @@ label_synth_script,utilities-terminal,32
 label_update_dialog,update-manager,32
 label_variables,system-search,
 label_variables_search,edit-find,16
-label_wizard,star,32
+label_wizard,gnome-app-install-star,32
 logger,os-logger,
 loop,os-loop,
 mouse_response,os-mouse_response,
@@ -139,5 +140,5 @@ unindent,format-indent-less,
 unsaved_changes,emblem-important,16
 unused,user-trash,
 video,video-x-generic,
-wizard,star,
+wizard,gnome-app-install-star,
 

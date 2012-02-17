@@ -70,7 +70,9 @@ class action_button(QtGui.QPushButton):
 				# The sequence and loop are a bit different, because they need
 				# an extra dialog when they are created
 				if item_type in ("sequence", "loop"):
-					item = eval("self.sequence.experiment.main_window.add_%s(False, \"%s\")" % (item_type, self.sequence.name))
+					item = eval( \
+						"self.sequence.experiment.main_window.add_%s(False, \"%s\")" \
+						% (item_type, self.sequence.name))
 				else:
 					item = self.sequence.experiment.main_window.add_item(item_type, False)
 
@@ -78,8 +80,10 @@ class action_button(QtGui.QPushButton):
 				# and select it.
 				if item != None:
 					self.sequence.items.append( (item, "always") )
-					self.sequence.experiment.main_window.refresh(self.sequence.name)
-					self.sequence.experiment.main_window.select_item(self.sequence.name)
+					self.sequence.experiment.main_window.refresh( \
+						self.sequence.name)
+					self.sequence.experiment.main_window.select_item( \
+						self.sequence.name)
 				return
 
 		self.sequence.experiment.main_window.refresh(self.sequence.name)
@@ -122,7 +126,8 @@ class sequence(libopensesame.sequence.sequence, qtitem.qtitem):
 		An action_button
 		"""
 
-		b = action_button(self, self.experiment.icon(icon), label, tooltip = tooltip)
+		b = action_button(self, self.experiment.icon(icon), label, \
+			tooltip=tooltip)
 		b.data = data
 		return b
 

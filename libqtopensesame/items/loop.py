@@ -382,11 +382,19 @@ class loop(libopensesame.loop.loop, qtitem.qtitem):
 
 		"""Present the variable wizard dialog"""
 
+		icons = {}
+		icons["cut"] = self.experiment.icon("cut")
+		icons["copy"] = self.experiment.icon("copy")
+		icons["paste"] = self.experiment.icon("paste")
+		icons["clear"] = self.experiment.icon("clear")		
+
 		# Set up the wizard dialog
 		a = QtGui.QDialog(self.experiment.main_window.ui.centralwidget)
 		a.ui = loop_wizard_dialog_ui.Ui_Dialog()
 		a.ui.setupUi(a)
 		self.experiment.main_window.theme.load_icons(a.ui)
+		a.ui.table_example.build_context_menu(icons)
+		a.ui.table_wizard.build_context_menu(icons)
 		a.ui.table_example.hide()
 		a.ui.table_wizard.setRowCount(255)
 		a.ui.table_wizard.setColumnCount(255)
