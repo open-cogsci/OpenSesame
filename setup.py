@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 #-*- coding:utf-8 -*-
 
 """
@@ -17,10 +16,15 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
+
+__author__ = "Sebastiaan Mathot"
+__license__ = "GPLv3"
+
 from distutils.core import setup
 import glob
 import os
 import os.path
+import fnmatch
 import libqtopensesame.qtopensesame
 import libopensesame.misc
 
@@ -31,11 +35,30 @@ included_plugins = [ \
 	"fixation_dot", \
 	"notepad", \
 	"reset_feedback", \
-	"srbox", \	
+	"srbox", \
 	"text_display", \
 	"text_input", \
 	]
+	
+def resources():
 
+	"""
+	Create a list of all resource files that need to be included
+	
+	Returns:
+	A list of resource files
+	"""
+	
+	matches = []
+	for root, dirnames, filenames in os.walk("resources"):
+		print root
+		if root in ["resources/bak", "resources/ui"]:
+			continue
+		for f in filenames:			
+			if os.path.splitext(f)[1] not in [".csv"] or f  in ["icon_map.csv"]:
+				matches.append(os.path.join(root, f))
+	return matches
+			
 def plugins():
 
 	"""
@@ -61,19 +84,27 @@ setup(name="opensesame",
 	author_email = "s.mathot@cogsci.nl",
 	url = "http://www.cogsci.nl/",
 	scripts = ["opensesame", "opensesamerun"],
-	packages = ["openexp", "openexp._canvas", "openexp._keyboard", \
-		"openexp._mouse", "openexp._sampler", "openexp._synth", "libopensesame", \
-		"libqtopensesame"],
+	packages = ["openexp", \
+		"openexp._canvas", \
+		"openexp._keyboard", \
+		"openexp._mouse", \
+		"openexp._sampler", \
+		"openexp._synth", \
+		"libopensesame", \
+		"libqtopensesame", \
+		"libqtopensesame.actions", \
+		"libqtopensesame.dialogs", \
+		"libqtopensesame.items", \
+		"libqtopensesame.misc", \
+		"libqtopensesame.ui", \
+		"libqtopensesame.widgets", \
+		],
 	package_dir = {"openexp" : "openexp", "libopensesame" : "libopensesame", \
 		"libqtopensesame" : "libqtopensesame"},
 	data_files=[
 		("/usr/share/opensesame", ["COPYING"]),
 		("/usr/share/applications", ["data/opensesame.desktop"]),
-		("/usr/share/opensesame/resources", glob.glob("resources/*.png")
-			+ glob.glob("resources/*.opensesame")
-			+ glob.glob("resources/*.ttf")
-			+ glob.glob("resources/*.qss")
-			+ ["resources/tips.txt"]),
+		("/usr/share/opensesame/resources", resources()),
 		("/usr/share/opensesame/help", glob.glob("help/*.html")),
 		("/usr/share/opensesame/sounds", glob.glob("sounds/*")),
 		("/usr/share/opensesame/examples", \

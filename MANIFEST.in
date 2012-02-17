@@ -1,9 +1,11 @@
 include data/opensesame.desktop
-include resources/*.png
-include resources/*.opensesame
 include resources/*.ttf
-include resources/*.qss
 include resources/tips.txt
+include resources/templates/*.opensesame
+recursive-include resources/theme/*
+recursive-exclude resources/theme *~
+recursive-exclude resources/theme *.pyc
+recursive-exclude resources/theme *.pyo
 include examples/*.opensesame
 include examples/*.opensesame.tar.gz
 include help/*.html
@@ -17,6 +19,8 @@ recursive-include plugins/text_input *
 recursive-include plugins/notepad *
 recursive-include plugins/srbox *
 recursive-include plugins/reset_feedback *
+recursive-exclude plugins *~
 recursive-exclude plugins *.csv
 recursive-exclude plugins *.pyc
+recursive-exclude plugins *.pyo
 recursive-exclude plugins */resources/*
