@@ -141,4 +141,5 @@ unsaved_changes,emblem-important,16
 unused,user-trash,
 video,video-x-generic,
 wizard,gnome-app-install-star,
-
+button_update_check,update-manager,
+button_browse_autosave,folder-open,
