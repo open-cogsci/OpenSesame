@@ -668,6 +668,8 @@ def init_display(experiment):
 	# Set the time functions to use pygame
 	experiment._time_func = pygame.time.get_ticks
 	experiment._sleep_func = pygame.time.delay
+	experiment.time = experiment._time_func
+	experiment.sleep = experiment._sleep_func
 		
 def close_display(experiment):
 

@@ -657,6 +657,8 @@ def init_display(experiment):
 	experiment.clock = core.Clock()	
 	experiment._time_func = _time
 	experiment._sleep_func = _sleep
+	experiment.time = experiment._time_func
+	experiment.sleep = experiment._sleep_func	
 
 	# If pyglet is being used, change the window caption. Don't know how to do this for pygame (regular set_caption() is ineffective)
 	if wintype == "pyglet":
