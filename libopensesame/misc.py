@@ -26,12 +26,13 @@ version = "0.26-pre1"
 codename = "Earnest Einstein"
 
 use_global_resources = "--no-global-resources" not in sys.argv
+from libopensesame import debug
 
 def change_working_dir():
 
 	"""A horrifyingly ugly hack to change the working directory under Windows"""
 
-	import libqtopensesame
+	import libqtopensesame.qtopensesame
 
 	if os.name == "nt":
 		try:
@@ -42,14 +43,16 @@ def change_working_dir():
 			s = s[i:j]
 			# Go up the tree until the path of the current script
 			while not os.path.exists(os.path.join(s, "opensesame")) and \
-				not os.path.exists(os.path.join(s, "opensesame.exe")):
+				not os.path.exists(os.path.join(s, "opensesame.exe"))and \
+				not os.path.exists(os.path.join(s, "opensesamerun")) and \
+				not os.path.exists(os.path.join(s, "opensesamerun.exe")):
 				s = os.path.dirname(s)
 			os.chdir(s)
 			if s not in sys.path:
 				sys.path.append(s)
-			print "misc.change_working_dir(): Changing working directory to '%s'" % s
+			debug.msg(s)
 		except Exception as e:
-			print "misc.change_working_dir(): Failed to change working directory:", e
+			debug.msg("failed to change working directory: %s" % e)
 
 def opensesamerun_options():
 
