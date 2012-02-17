@@ -45,22 +45,7 @@ if "--preload" in sys.argv:
 	import warnings
 
 	print "includes: preloading modules ..."
-	print "includes: preloading libqtopensesame modules"
-	from libqtopensesame.items import\
-		qtplugin,\
-		pool_widget,\
-		qtitem,\
-		sketchpad,\
-		feedback,\
-		logger,\
-		loop,\
-		sequence,\
-		keyboard_response,\
-		mouse_response,\
-		inline_script,\
-		sampler,\
-		synth
-
+	
 	print "includes: preloading 'legacy' back-end"
 	try:
 		import openexp,\
