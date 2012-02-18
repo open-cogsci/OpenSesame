@@ -53,7 +53,6 @@ class pool_widget(QtGui.QWidget):
 		QtGui.QWidget.__init__(self, parent)
 		self.ui = pool_widget_ui.Ui_Form()
 		self.ui.setupUi(self)
-
 		self.ui.button_pool_add.clicked.connect(self.select_and_add)
 		self.ui.button_refresh.clicked.connect(self.refresh)
 		self.ui.button_help_pool.clicked.connect(self.help)
@@ -62,6 +61,11 @@ class pool_widget(QtGui.QWidget):
 		self.ui.combobox_view.currentIndexChanged.connect(self.set_view)
 		self.ui.list_pool.itemActivated.connect(self.activate_file)		
 		self.main_window.theme.apply_theme(self)
+		
+		self.ui.combobox_view.setItemIcon(0, self.main_window.theme.qicon( \
+			"view-list-details-symbolic"))
+		self.ui.combobox_view.setItemIcon(1, self.main_window.theme.qicon( \
+			"view-list-icons-symbolic"))
 
 	def help(self):
 
@@ -84,13 +88,16 @@ class pool_widget(QtGui.QWidget):
 		"""Open the pool folder in the file manager in an OS specific way"""
 
 		if platform.system() == "Linux":
-			pid = subprocess.Popen(["xdg-open", self.main_window.experiment.pool_folder]).pid
+			pid = subprocess.Popen(["xdg-open", \
+				self.main_window.experiment.pool_folder]).pid
 		elif platform.system() == "Darwin":
-			pid = subprocess.Popen(["open", self.main_window.experiment.pool_folder]).pid
+			pid = subprocess.Popen(["open", \
+				self.main_window.experiment.pool_folder]).pid
 		elif platform.system() == "Windows":
 			os.startfile(self.main_window.experiment.pool_folder)
 		else:
-			self.main_window.experiment.notify("I'm sorry, but I don't know how to open the pool folder on your platform!")
+			self.main_window.experiment.notify( \
+				"I'm sorry, but I don't know how to open the pool folder on your platform!")
 
 		debug.msg("pool folder opened in file manager")
 
@@ -108,15 +115,22 @@ class pool_widget(QtGui.QWidget):
 			path = unicode(path)
 			basename = os.path.basename(path)
 			if not os.path.isfile(path):
-				self.main_window.experiment.notify("'%s' is not a regular file and could not be added to the file pool." % path)
+				self.main_window.experiment.notify( \
+					"'%s' is not a regular file and could not be added to the file pool." \
+					% path)
 			else:
 				# If a similar file already exists in the pool, ask before overwriting
-				if os.path.exists(os.path.join(self.main_window.experiment.pool_folder, basename)):
-					resp = QtGui.QMessageBox.question(self, "Overwrite", "A file named '%s' already exists in the pool. Do you want to overwrite this file?" % basename, QtGui.QMessageBox.Yes, QtGui.QMessageBox.No)
+				if os.path.exists(os.path.join( \
+					self.main_window.experiment.pool_folder, basename)):
+					resp = QtGui.QMessageBox.question(self, "Overwrite", \
+						"A file named '%s' already exists in the pool. Do you want to overwrite this file?" \
+						% basename, QtGui.QMessageBox.Yes, QtGui.QMessageBox.No)
 					if resp == QtGui.QMessageBox.Yes:
-						shutil.copyfile(path, os.path.join(self.main_window.experiment.pool_folder, basename))
+						shutil.copyfile(path, os.path.join( \
+							self.main_window.experiment.pool_folder, basename))
 				else:
-					shutil.copyfile(path, os.path.join(self.main_window.experiment.pool_folder, basename))
+					shutil.copyfile(path, os.path.join( \
+						self.main_window.experiment.pool_folder, basename))
 
 		self.refresh()
 		self.select(basename)
@@ -130,7 +144,8 @@ class pool_widget(QtGui.QWidget):
 		dummy -- a dummy argument passed py the signal handler (default == None)
 		"""
 
-		self.add(QtGui.QFileDialog.getOpenFileNames(self.main_window.ui.centralwidget, "Add files to pool"))
+		self.add(QtGui.QFileDialog.getOpenFileNames( \
+			self.main_window.ui.centralwidget, "Add files to pool"))
 
 	def select(self, fname):
 
@@ -184,7 +199,8 @@ class pool_widget(QtGui.QWidget):
 				icon = self.main_window.experiment.icon(self.file_type(fname))
 				item = QtGui.QListWidgetItem(icon, fname)
 				item.icon = icon
-				item.path = os.path.join(self.main_window.experiment.pool_folder, fname)
+				item.path = os.path.join( \
+					self.main_window.experiment.pool_folder, fname)
 				self.ui.list_pool.addItem(item)
 
 	def open_file(self, path):
@@ -228,7 +244,8 @@ class pool_widget(QtGui.QWidget):
 		event -- a mouseClickEvent
 		"""
 
-		item = self.ui.list_pool.itemAt(self.ui.list_pool.mapFromGlobal(event.globalPos()))
+		item = self.ui.list_pool.itemAt(self.ui.list_pool.mapFromGlobal( \
+			event.globalPos()))
 		if item == None:
 			return
 
@@ -236,7 +253,8 @@ class pool_widget(QtGui.QWidget):
 		menu = QtGui.QMenu()
 		menu.addAction(item.icon, "Open")
 		menu.addSeparator()
-		menu.addAction(self.main_window.experiment.icon("delete"), "Remove from pool")
+		menu.addAction(self.main_window.experiment.icon("delete"), \
+			"Remove from pool")
 		menu.addAction(self.main_window.experiment.icon("rename"), "Rename")
 		menu.triggered.connect(self.context_action)
 		self.context_target = str(item.text())
@@ -252,7 +270,8 @@ class pool_widget(QtGui.QWidget):
 		"""
 
 		a = str(action.text())
-		f = os.path.join(self.main_window.experiment.pool_folder, self.context_target)
+		f = os.path.join(self.main_window.experiment.pool_folder, \
+			self.context_target)
 
 		if a == "Open":
 
@@ -266,26 +285,35 @@ class pool_widget(QtGui.QWidget):
 				l.append(str(item.text()))
 
 			# Ask for confirmation
-			resp = QtGui.QMessageBox.question(self, "Remove", "<p>Are you sure you want to remove the following files from the file pool? This operation will only affect the OpenSesame file pool, not the original files on your disk.</p><p><b> - %s</b></p>" % ("<br /> - ".join(l)), QtGui.QMessageBox.Yes, QtGui.QMessageBox.No)
+			resp = QtGui.QMessageBox.question(self, "Remove", \
+				"<p>Are you sure you want to remove the following files from the file pool? This operation will only affect the OpenSesame file pool, not the original files on your disk.</p><p><b> - %s</b></p>" \
+				% ("<br /> - ".join(l)), QtGui.QMessageBox.Yes, \
+				QtGui.QMessageBox.No)
 			if resp == QtGui.QMessageBox.No:
 				return
 
 			# Remove the files
 			try:
 				for f in l:
-					os.remove(os.path.join(self.main_window.experiment.pool_folder, f))
+					os.remove(os.path.join( \
+						self.main_window.experiment.pool_folder, f))
 				debug.msg("removed '%s'" % self.context_target)
 			except:
 				debug.msg("failed to remove '%s'" % self.context_target)
 		else:
 
 			# Rename the file
-			new_name, ok = QtGui.QInputDialog.getText(self, "Rename", "Please enter a new name for '%s'" % self.context_target, text = self.context_target)
+			new_name, ok = QtGui.QInputDialog.getText(self, "Rename", \
+				"Please enter a new name for '%s'" \
+				% self.context_target, text = self.context_target)
 			if ok:
 				new_name = str(new_name)
 
-				if os.path.exists(os.path.join(self.main_window.experiment.pool_folder, new_name)):
-					self.main_window.experiment.notify("There already is a file named '%s' in the file pool" % new_name)
+				if os.path.exists(os.path.join( \
+					self.main_window.experiment.pool_folder, new_name)):
+					self.main_window.experiment.notify( \
+						"There already is a file named '%s' in the file pool" \
+						% new_name)
 					return
 
 				try:
