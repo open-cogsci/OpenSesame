@@ -595,7 +595,7 @@ class qtopensesame(QtGui.QMainWindow):
 		a = QtGui.QDialog(self)
 		a.ui = update_dialog_ui.Ui_Dialog()
 		a.ui.setupUi(a)
-		self.theme.load_icons(a.ui)
+		self.theme.apply_theme(a)
 		a.ui.checkbox_auto_check_update.setChecked(self.auto_check_update)
 		a.ui.textedit_notification.setHtml(message)
 		a.adjustSize()

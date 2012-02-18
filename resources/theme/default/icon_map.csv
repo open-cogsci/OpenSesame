@@ -104,7 +104,7 @@ label_pool,folder-saved-search,
 label_pool_search,edit-find,16
 label_sampler,os-sampler,
 label_script,utilities-terminal,
-label_start_new,gnome-app-install-star,32
+label_start_new,os-experiment,32
 label_startup_tip,help-about,32
 label_stdout,bug-buddy,
 label_synth,os-synth,32
@@ -143,3 +143,5 @@ video,video-x-generic,
 wizard,gnome-app-install-star,
 button_update_check,update-manager,
 button_browse_autosave,folder-open,
+label_recent,document-open-recent,32
+label_template,gnome-app-install-star,32

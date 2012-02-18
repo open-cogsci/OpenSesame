@@ -61,12 +61,25 @@ class theme:
 		self.theme_info = os.path.join(self.theme_folder, "__theme__.py")
 		if os.path.exists(self.theme_info):						
 			info = imp.load_source(self.theme, self.theme_info)
-			self._qss = info.qss
+			self._qss = path = \
+				open(os.path.join(self.theme_folder, info.qss)).read()
 			self._icon_map = info.icon_map
-			self._icon_theme = info.icon_theme							
-		self.load_qss()
+			self._icon_theme = info.icon_theme									
 		self.load_icon_map()
-		self.load_icons(self.main_window.ui)
+		self.apply_theme(self.main_window)
+		
+	def apply_theme(self, widget):
+	
+		"""
+		Apply the theme to a QWidget, i.e. load the stylesheet and the icons
+		
+		Arguments:
+		widget -- a QWidget
+		"""
+				
+		widget.setStyleSheet(self._qss)
+		if hasattr(widget, "ui"):
+			self.load_icons(widget.ui)
 				
 	def qicon(self, icon):
 	
@@ -177,15 +190,7 @@ class theme:
 				if hasattr(a, "setIcon"):
 					a.setIcon(self.qicon(i))
 				elif hasattr(a, "setPixmap"):
-					a.setPixmap(self.qpixmap(i))
-																		
-	def load_qss(self):
-	
-		"""Load the stylesheet"""
-			
-		path = os.path.join(self.theme_folder, self._qss)
-		debug.msg(path)
-		self.main_window.setStyleSheet(open(path).read())
+					a.setPixmap(self.qpixmap(i))																								
 		
 	def set_toolbar_size(self, size):
 	

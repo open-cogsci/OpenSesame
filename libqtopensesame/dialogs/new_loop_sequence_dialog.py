@@ -40,7 +40,7 @@ class new_loop_sequence_dialog(QtGui.QDialog):
 		self._parent = _parent
 		self.ui = new_loop_sequence_ui.Ui_Dialog()
 		self.ui.setupUi(self)
-		self.experiment.main_window.theme.load_icons(self.ui)		
+		self.experiment.main_window.theme.apply_theme(self)		
 		self.ui.label_icon.setPixmap( \
 			self.experiment.main_window.theme.qpixmap(item_type))
 		self.action = "cancel"		

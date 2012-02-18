@@ -417,7 +417,7 @@ class experiment(libopensesame.experiment.experiment):
 		a = QtGui.QDialog(self.main_window)
 		a.ui = notification_dialog_ui.Ui_Dialog()
 		a.ui.setupUi(a)
-		self.main_window.theme.load_icons(a.ui)
+		self.main_window.theme.apply_theme(a)
 		a.ui.textedit_notification.setHtml(message)
 		a.adjustSize()
 		a.show()

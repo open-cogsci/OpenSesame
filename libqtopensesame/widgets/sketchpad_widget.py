@@ -411,7 +411,7 @@ class sketchpad_widget(QtGui.QWidget):
 		
 		self.set_line()
 		self.refresh()
-		self.sketchpad.experiment.main_window.theme.load_icons(self.ui)
+		self.sketchpad.experiment.main_window.theme.apply_theme(self)
 		
 	def edit_script(self):
 	
@@ -694,7 +694,7 @@ class sketchpad_widget(QtGui.QWidget):
 		d = QtGui.QDialog(self)		
 		d.ui = gabor_dialog_ui.Ui_Dialog()
 		d.ui.setupUi(d)
-		self.sketchpad.experiment.main_window.theme.load_icons(d.ui)
+		self.sketchpad.experiment.main_window.theme.apply_theme(d)
 		resp = d.exec_()
 		if resp == QtGui.QDialog.Accepted:		
 			env = ["gaussian", "linear", "circular", "rectangle"]
@@ -727,7 +727,7 @@ class sketchpad_widget(QtGui.QWidget):
 		d = QtGui.QDialog(self)		
 		d.ui = noise_patch_dialog_ui.Ui_Dialog()
 		d.ui.setupUi(d)
-		self.sketchpad.experiment.main_window.theme.load_icons(d.ui)
+		self.sketchpad.experiment.main_window.theme.apply_theme(d)
 		resp = d.exec_()
 		if resp == QtGui.QDialog.Accepted:		
 			env = ["gaussian", "linear", "circular", "rectangle"]

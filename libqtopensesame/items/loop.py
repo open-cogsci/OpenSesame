@@ -392,7 +392,7 @@ class loop(libopensesame.loop.loop, qtitem.qtitem):
 		a = QtGui.QDialog(self.experiment.main_window.ui.centralwidget)
 		a.ui = loop_wizard_dialog_ui.Ui_Dialog()
 		a.ui.setupUi(a)
-		self.experiment.main_window.theme.load_icons(a.ui)
+		self.experiment.main_window.theme.apply_theme(a)
 		a.ui.table_example.build_context_menu(icons)
 		a.ui.table_wizard.build_context_menu(icons)
 		a.ui.table_example.hide()
@@ -435,7 +435,7 @@ class loop(libopensesame.loop.loop, qtitem.qtitem):
 		self.loop_widget = QtGui.QWidget()
 		self.loop_widget.ui = loop_widget_ui.Ui_loop_widget()
 		self.loop_widget.ui.setupUi(self.loop_widget)
-		self.experiment.main_window.theme.load_icons(self.loop_widget.ui)
+		self.experiment.main_window.theme.apply_theme(self.loop_widget)
 		self.edit_vbox.addWidget(self.loop_widget)
 		
 		self.auto_add_widget(self.loop_widget.ui.spin_cycles)		

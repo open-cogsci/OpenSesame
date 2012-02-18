@@ -44,7 +44,7 @@ class tip_dialog(QtGui.QDialog):
 		self.main_window = main_window
 		self.ui = tip_dialog_ui.Ui_Dialog()
 		self.ui.setupUi(self)
-		self.main_window.theme.load_icons(self.ui)
+		self.main_window.theme.apply_theme(self)
 		self.i = 0
 		self.ui.checkbox_show_startup_tip.setChecked( \
 			self.main_window.show_startup_tip)		
