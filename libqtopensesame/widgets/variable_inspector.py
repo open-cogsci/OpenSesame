@@ -1,3 +1,5 @@
+#-*- coding:utf-8 -*-
+
 """
 This file is part of OpenSesame.
 
@@ -14,6 +16,9 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
+
+__author__ = "Sebastiaan Mathot"
+__license__ = "GPLv3"
 
 from libopensesame import debug
 from PyQt4 import QtCore, QtGui
@@ -32,7 +37,8 @@ class sortable(QtGui.QTableWidgetItem):
 		sort_key -- the key to use for sorting
 		"""
 
-		QtGui.QTableWidgetItem.__init__(self, str(text), QtGui.QTableWidgetItem.UserType)
+		QtGui.QTableWidgetItem.__init__(self, str(text), \
+			QtGui.QTableWidgetItem.UserType)
 		self.sort_key = sort_key
 
 	def __lt__(self, other):
@@ -67,7 +73,6 @@ class variable_inspector(QtGui.QTableWidget):
 		"""Updates and restores the variable inspector"""
 
 		debug.msg()
-
 		if self.unsorted:
 			self.sortItems(0, QtCore.Qt.AscendingOrder)
 			self.unsorted = False
