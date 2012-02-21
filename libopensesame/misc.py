@@ -22,7 +22,7 @@ import os
 import os.path
 import sys
 
-version = "0.26-pre1"
+version = "0.26-pre2"
 codename = "Earnest Einstein"
 
 use_global_resources = "--no-global-resources" not in sys.argv
