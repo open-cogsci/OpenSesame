@@ -23,4 +23,4 @@ __license__ = "GPLv3"
 # Redirect certain things so that the old way of from libqtopensesame import
 # qtplugin still works.
 from libqtopensesame.items import qtplugin
-from libqtopensesame.widgets import inline_editor
+from libqtopensesame.widgets import inline_editor, pool_widget
