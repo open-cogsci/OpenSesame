@@ -22,6 +22,7 @@ loaded at runtime, and therefore escape the detection of py2exe.
 """
 
 import sys
+from libopensesame import debug
 
 # Below is a quick hack to deal with pylinks quirky behavior.
 # Pylink needs to be imported prior to pygame, otherwise it
@@ -35,7 +36,7 @@ if "--pylink" in sys.argv:
 	try:
 		exec("import pylink") # This makes sure that py2exe doesn't try to include pylink
 	except Exception as e:
-		print "includes: failed to import pylink module. You will not be able to use eyelink connectivity"
+		debug.msg("failed to import pylink module. You will not be able to use eyelink connectivity")
 
 # Explicitly importing these modules ensures that Py2exe will
 # bundle them. This is therefore only required for Windows.
@@ -44,9 +45,8 @@ if "--preload" in sys.argv:
 
 	import warnings
 
-	print "includes: preloading modules ..."
-	
-	print "includes: preloading 'legacy' back-end"
+	debug.msg("preloading modules ...")	
+	debug.msg("preloading 'legacy' back-end")
 	try:
 		import openexp,\
 			openexp._canvas.legacy,\
@@ -55,16 +55,16 @@ if "--preload" in sys.argv:
 			openexp._sampler.legacy,\
 			openexp._synth.legacy
 	except Exception as e:
-		print "includes: failed to import 'legacy' back-end. Error: %s" % e
+		debug.msg("failed to import 'legacy' back-end. Error: %s" % e)
 
-	print "includes: preloading 'opengl' back-end"
+	debug.msg("preloading 'opengl' back-end")
 	try:
 		import openexp,\
 			openexp._canvas.opengl
 	except Exception as e:
-		print "includes: failed to import 'opengl' back-end. Error: %s" % e
+		debug.msg("failed to import 'opengl' back-end. Error: %s" % e)
 
-	print "includes: preloading 'psycho' back-end"
+	debug.msg("preloading 'psycho' back-end")
 	try:
 		with warnings.catch_warnings():
 			warnings.simplefilter("ignore")
@@ -73,40 +73,40 @@ if "--preload" in sys.argv:
 				openexp._keyboard.psycho,\
 				openexp._mouse.psycho
 	except Exception as e:
-		print "includes: failed to import 'psycho' back-end. Error: %s" % e
+		debug.msg("failed to import 'psycho' back-end. Error: %s" % e)
 
-	print "includes: preloading 'psychopy'"
+	debug.msg("preloading 'psychopy'")
 	try:
 		with warnings.catch_warnings():
 			warnings.simplefilter("ignore")
 			from psychopy import core, visual, data, event, filters, gui, hardware, log, misc, monitors, sound, platform_specific # info, serial and parallel produce errors
 	except Exception as e:
-		print "includes: failed to import 'psychopy' <http://www.psychopy.org/>. You will not be able to use PsychoPy or the psycho back-end. Error: %s" % e
+		debug.msg("failed to import 'psychopy' <http://www.psychopy.org/>. You will not be able to use PsychoPy or the psycho back-end. Error: %s" % e)
 
-	print "includes: preloading 'pyffmpeg'"
+	debug.msg("preloading 'pyffmpeg'")
 	try:
 		import pyffmpeg
 		import pyffmpeg_numpybindings
 		from audioqueue import AudioQueue, Queue_Empty, Queue_Full
 	except Exception as e:
-		print "includes: failed to import 'pyffmpeg' <http://code.google.com/p/pyffmpeg/>. You will not be able to use the media_player plug-in. Error: %s" % e
+		debug.msg("failed to import 'pyffmpeg' <http://code.google.com/p/pyffmpeg/>. You will not be able to use the media_player plug-in. Error: %s" % e)
 
-	print "includes: preloading 'PIL'"
+	debug.msg("preloading 'PIL'")
 	try:
 		import PIL
 		import PIL.Image
 	except Exception as e:
-		print "includes: failed to import 'PIL' <http://www.pythonware.com/products/pil/>. You will not be able the Python Imaging library. Error: %s" % e
+		debug.msg("failed to import 'PIL' <http://www.pythonware.com/products/pil/>. You will not be able the Python Imaging library. Error: %s" % e)
 
-	print "includes: preloading 'pyaudio'"
+	debug.msg("preloading 'pyaudio'")
 	try:
 		import pyaudio
 	except Exception as e:
-		print "includes: failed to import 'pyaudio' <http://people.csail.mit.edu/hubert/pyaudio/>. You will not be able to use portaudio and the media_player plug-in. Error: %s" % e
+		debug.msg("failed to import 'pyaudio' <http://people.csail.mit.edu/hubert/pyaudio/>. You will not be able to use portaudio and the media_player plug-in. Error: %s" % e)
 
 	# OpenGL requires hacks to work with Py2Exe. The approach here is based on
 	# information from <http://www.py2exe.org/index.cgi/PyOpenGL>
-	print "includes: preloading 'OpenGL'"	
+	debug.msg("preloading 'OpenGL'")
 	try:
 		from OpenGL.GL import *
 		from OpenGL.platform import win32
@@ -116,34 +116,34 @@ if "--preload" in sys.argv:
 		from ctypes import util
 		import OpenGL
 	except Exception as e:
-		print "includes: failed to import 'OpenGL' <http://pyopengl.sourceforge.net/>. You will not be able to use OpenGL. Error: %s" % e
+		debug.msg("failed to import 'OpenGL' <http://pyopengl.sourceforge.net/>. You will not be able to use OpenGL. Error: %s" % e)
 
-	print "includes: preloading 'cv'"
+	debug.msg("preloading 'cv'")
 	try:
 		import cv
 	except Exception as e:
-		print "includes: failed to import 'cv' <http://opencv.willowgarage.com/wiki/>. You will not be able to use the Open Computer Vision libraries. Error: %s" % e
+		debug.msg("failed to import 'cv' <http://opencv.willowgarage.com/wiki/>. You will not be able to use the Open Computer Vision libraries. Error: %s" % e)
 
-	print "includes: preloading 'serial'"
+	debug.msg("preloading 'serial'")
 	try:
 		import serial
 	except Exception as e:
-		print "includes: failed to import 'serial' module <http://pyserial.sourceforge.net/>. You will not be able to use serial port connectivity. Error: %s" % e
+		debug.msg("failed to import 'serial' module <http://pyserial.sourceforge.net/>. You will not be able to use serial port connectivity. Error: %s" % e)
 
-	print "includes: preloading 'parallel'"
+	debug.msg("preloading 'parallel'")
 	try:
 		import parallel
 		import parallel.parallelutil
 	except Exception as e:
-		print "includes: failed to import 'parallel' module <http://pyserial.sourceforge.net/pyparallel.html>. You will not be able to use parallel port connectivity. Error: %s" % e
+		debug.msg("failed to import 'parallel' module <http://pyserial.sourceforge.net/pyparallel.html>. You will not be able to use parallel port connectivity. Error: %s" % e)
 
-	print "includes: preloading 'pyglet'"
+	debug.msg("preloading 'pyglet'")
 	try:
 		import pyglet
 	except Exception as e:
-		print "includes: failed to import 'pyglet' module <http://www.pyglet.org/>. You will not be able to use PsychoPy. Error: %s" % e
+		debug.msg("failed to import 'pyglet' module <http://www.pyglet.org/>. You will not be able to use PsychoPy. Error: %s" % e)
 
-	print "includes: preloading modules required by questionnaire plug-ins"
+	debug.msg("preloading modules required by questionnaire plug-ins")
 	try:
 		import htmllib
 		import htmlentitydefs
@@ -151,6 +151,13 @@ if "--preload" in sys.argv:
 		import sgmllib
 		import markupbase
 	except Exception as e:
-		print "includes: failed to import modules required by questionnaire plug-ins" 
+		debug.msg("failed to import modules required by questionnaire plug-ins")
 
-	print "includes: ... done"
+	debug.msg("preloading IPython")
+	try:
+		from IPython.frontend.qt.console.ipython_widget import IPythonWidget
+		from IPython.frontend.qt.kernelmanager import QtKernelManager
+		from IPython.utils.localinterfaces import LOCALHOST
+	except Exception as e:
+		debug.msg("failed to import IPython <http://www.ipython.org/>. You will not be able to use the IPython console. Error: %s" % e)		
+
