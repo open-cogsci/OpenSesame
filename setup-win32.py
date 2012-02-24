@@ -22,6 +22,7 @@ from distutils.core import setup
 import glob
 import py2exe
 import os
+import sys
 import os.path
 import shutil
 import libqtopensesame.qtopensesame
@@ -30,13 +31,14 @@ import psychopy
 import urllib
 
 # Some settings
-include_plugins = True
-include_media_player = False
-include_examples = True
-include_sounds = True
-include_faenza = True
-include_inpout32 = True
-include_simpleio = False
+include_plugins = "--no-plugins" not in sys.argv
+include_media_player = "--no-media-player" not in sys.argv
+include_media_player_vlc = "--no-media-player-vlc" not in sys.argv
+include_examples = "--no-examples" not in sys.argv
+include_sounds = "--no-sounds" not in sys.argv
+include_faenza = "--no-faenza" not in sys.argv
+include_inpout32 = "--no-inpout32" not in sys.argv
+include_simpleio = "--no-simpleio" not in sys.argv
 python_folder = "C:\\Python27"
 python_version = "2.7"
 
@@ -162,6 +164,22 @@ if include_media_player:
 		"""dist\plugins\media_player\media_player_large.png""")
 	shutil.copyfile("""..\media_player\info.txt""", \
 		"""dist\plugins\media_player\info.txt""")
+
+if include_media_player_vlc:
+	print "copying media_player_vlc"
+	os.mkdir("dist\plugins\media_player_vlc")
+	shutil.copyfile("""..\media_player_vlc\vlc.py""", \
+		"""dist\plugins\media_player_vlc\vlc.py""")	
+	shutil.copyfile("""..\media_player_vlc\media_player_vlc.py""", \
+		"""dist\plugins\media_player_vlc\media_player_vlc.py""")
+	shutil.copyfile("""..\media_player_vlc\media_player_vlc.html""", \
+		"""dist\plugins\media_player_vlc\media_player_vlc.html""")
+	shutil.copyfile("""..\media_player_vlc\media_player_vlc.png""", \
+		"""dist\plugins\media_player_vlc\media_player_vlc.png""")
+	shutil.copyfile("""..\media_player_vlc\media_player_vlc_large.png""", \
+		"""dist\plugins\media_player_vlc\media_player_vlc_large.png""")
+	shutil.copyfile("""..\media_player_vlc\info.txt""", \
+		"""dist\plugins\media_player_vlc\info.txt""")		
 
 if include_examples:
 	print "copying examples"
