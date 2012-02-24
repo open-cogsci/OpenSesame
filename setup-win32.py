@@ -22,7 +22,6 @@ from distutils.core import setup
 import glob
 import py2exe
 import os
-import sys
 import os.path
 import shutil
 import libqtopensesame.qtopensesame
@@ -31,16 +30,16 @@ import psychopy
 import urllib
 
 # Some settings
-include_plugins = "--no-plugins" not in sys.argv
-include_media_player = "--no-media-player" not in sys.argv
-include_media_player_vlc = "--no-media-player-vlc" not in sys.argv
-include_examples = "--no-examples" not in sys.argv
-include_sounds = "--no-sounds" not in sys.argv
-include_faenza = "--no-faenza" not in sys.argv
-include_inpout32 = "--no-inpout32" not in sys.argv
-include_simpleio = "--no-simpleio" not in sys.argv
-python_folder = "C:\\Python27"
-python_version = "2.7"
+include_plugins = True
+include_media_player = True
+include_media_player_vlc = True
+include_examples = True
+include_sounds = True
+include_faenza = True
+include_inpout32 = True
+include_simpleio = False
+python_folder = "C:\\Python26"
+python_version = "2.6"
 
 # Create empty destination folders
 if os.path.exists("dist"):
@@ -77,7 +76,7 @@ setup(
 			"OpenGL.arrays.numpymodule, OpenGL.arrays.lists, " + \
 			"OpenGL.arrays.numbers, OpenGL.arrays.strings, OpenGL.GL, " + \
 			"OpenGL.GLU",
-		"dll_excludes" : ["MSVCP90.DLL"]
+		"dll_excludes" : ["MSVCP90.DLL", "libzmq.dll"]
 		}
 	},
 )
@@ -168,8 +167,8 @@ if include_media_player:
 if include_media_player_vlc:
 	print "copying media_player_vlc"
 	os.mkdir("dist\plugins\media_player_vlc")
-	shutil.copyfile("""..\media_player_vlc\vlc.py""", \
-		"""dist\plugins\media_player_vlc\vlc.py""")	
+	shutil.copyfile("""..\media_player_vlc\\vlc.py""", \
+		"""dist\plugins\media_player_vlc\\vlc.py""")	
 	shutil.copyfile("""..\media_player_vlc\media_player_vlc.py""", \
 		"""dist\plugins\media_player_vlc\media_player_vlc.py""")
 	shutil.copyfile("""..\media_player_vlc\media_player_vlc.html""", \
