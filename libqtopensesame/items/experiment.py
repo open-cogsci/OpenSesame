@@ -1,3 +1,5 @@
+#-*- coding:utf-8 -*-
+
 """
 This file is part of OpenSesame.
 
@@ -14,6 +16,9 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
+
+__author__ = "Sebastiaan Mathot"
+__license__ = "GPLv3"
 
 from libopensesame import debug
 import libopensesame.experiment
@@ -168,12 +173,14 @@ class experiment(libopensesame.experiment.experiment):
 		to_name = self.sanitize(to_name, True)
 		debug.msg("from '%s' to '%s'" % (from_name, to_name))
 
+		# Make sure the entry point is updated when renamed
 		if self.get("start") == from_name:
 			self.set("start", to_name)
 
+		# This only changes the name in the object, it doesn't update the GUI
+		# in case a tab is opened
 		for item in self.items:
 			self.items[item].rename(from_name, to_name)
-
 		new_items = {}
 		for item in self.items:
 			if item == from_name:
@@ -182,6 +189,7 @@ class experiment(libopensesame.experiment.experiment):
 				new_items[item] = self.items[item]
 		self.items = new_items
 
+		# Walk through all open tabs to open them when needed
 		for i in range(self.experiment.ui.tabwidget.count()):
 			w = self.experiment.ui.tabwidget.widget(i)
 			if hasattr(w, "edit_item") and w.edit_item == from_name:

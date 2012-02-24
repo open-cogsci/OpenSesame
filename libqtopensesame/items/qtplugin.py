@@ -1,3 +1,5 @@
+#-*- coding:utf-8 -*-
+
 """
 This file is part of OpenSesame.
 
@@ -14,6 +16,9 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
+
+__author__ = "Sebastiaan Mathot"
+__license__ = "GPLv3"
 
 from PyQt4 import QtCore, QtGui
 from libqtopensesame.items import qtitem
@@ -37,9 +42,15 @@ class qtplugin(qtitem.qtitem):
 
 		# These lines makes sure that the icons and help file are recognized by
 		# OpenSesame.
-		self.experiment.resources["%s.png" % self.item_type] = os.path.join(os.path.split(plugin_file)[0], "%s.png" % self.item_type)
-		self.experiment.resources["%s_large.png" % self.item_type] = os.path.join(os.path.split(plugin_file)[0], "%s_large.png" % self.item_type)
-		self.experiment.resources["%s.html" % self.item_type] = os.path.join(os.path.split(plugin_file)[0], "%s.html" % self.item_type)
+		self.experiment.resources["%s.png" % self.item_type] = \
+			os.path.join(os.path.split(plugin_file)[0], "%s.png" \
+			% self.item_type)
+		self.experiment.resources["%s_large.png" % self.item_type] = \
+			os.path.join(os.path.split(plugin_file)[0], "%s_large.png" \
+			% self.item_type)
+		self.experiment.resources["%s.html" % self.item_type] = \
+			os.path.join(os.path.split(plugin_file)[0], "%s.html" \
+			% self.item_type)
 
 		self.lock = False
 		qtitem.qtitem.__init__(self)
@@ -48,6 +59,7 @@ class qtplugin(qtitem.qtitem):
 
 		"""Update the GUI controls"""
 
+		qtitem.qtitem.edit_widget(self)
 		self.auto_edit_widget()
 
 	def apply_edit_changes(self, rebuild=True):
@@ -59,7 +71,8 @@ class qtplugin(qtitem.qtitem):
 		rebuild -- deprecated (does nothing) (default=True)
 		"""
 
-		return self.auto_apply_edit_changes(rebuild)	
+		return qtitem.qtitem.apply_edit_changes(self, rebuild) and \
+			self.auto_apply_edit_changes(rebuild)	
 
 	def add_control(self, label, widget, tooltip, default, min_width=None):
 
@@ -88,7 +101,8 @@ class qtplugin(qtitem.qtitem):
 		self.edit_grid.addWidget(QtGui.QLabel(label), row, 0)
 		self.edit_grid.addWidget(widget, row, 1)
 
-	def add_line_edit_control(self, var, label, tooltip=None, default=None, min_width=None):
+	def add_line_edit_control(self, var, label, tooltip=None, default=None, \
+		min_width=None):
 
 		"""
 		Adds a QLineEdit control
@@ -110,7 +124,8 @@ class qtplugin(qtitem.qtitem):
 			self.auto_line_edit[var] = edit
 		return edit
 
-	def add_color_edit_control(self, var, label, tooltip=None, default=None, min_width=None):
+	def add_color_edit_control(self, var, label, tooltip=None, default=None, \
+		min_width=None):
 
 		"""
 		Adds a colorpicker control, consisting of a QLineEdit and QColorDialog.
@@ -128,7 +143,8 @@ class qtplugin(qtitem.qtitem):
 		"""
 
 		edit = color_edit.color_edit(self.experiment)
-		QtCore.QObject.connect(edit, QtCore.SIGNAL("set_color"), self.apply_edit_changes)
+		QtCore.QObject.connect(edit, QtCore.SIGNAL("set_color"), \
+			self.apply_edit_changes)
 		self.add_control(label, edit, tooltip, default, min_width)
 		if var != None:
 			self.auto_line_edit[var] = edit
@@ -159,7 +175,8 @@ class qtplugin(qtitem.qtitem):
 
 		return combobox
 
-	def add_spinbox_control(self, var, label, min_val, max_val, prefix="", suffix="", tooltip=None):
+	def add_spinbox_control(self, var, label, min_val, max_val, prefix="", \
+		suffix="", tooltip=None):
 
 		"""
 		Adds a QSpinBox control
@@ -193,7 +210,8 @@ class qtplugin(qtitem.qtitem):
 
 		return spinbox
 
-	def add_slider_control(self, var, label, min_val, max_val, left_label="", right_label="", tooltip=None, default=None):
+	def add_slider_control(self, var, label, min_val, max_val, left_label="", \
+		right_label="", tooltip=None, default=None):
 
 		"""
 		Adds a QSlider control
@@ -246,7 +264,8 @@ class qtplugin(qtitem.qtitem):
 
 		self.add_control(label, widget, tooltip, default)
 
-	def add_filepool_control(self, var, label, click_func, tooltip=None, default=None):
+	def add_filepool_control(self, var, label, click_func, tooltip=None, \
+		default=None):
 
 		"""
 		Adds a control to select a file from the file pool. This is not fully
@@ -284,7 +303,8 @@ class qtplugin(qtitem.qtitem):
 
 		self.add_control(label, widget, tooltip, default)
 
-	def add_editor_control(self, var, label, syntax=False, tooltip=None, default=None):
+	def add_editor_control(self, var, label, syntax=False, tooltip=None, \
+		default=None):
 
 		"""
 		Adds a texteditor control (an extended QPlainTextEdit)
@@ -303,11 +323,13 @@ class qtplugin(qtitem.qtitem):
 
 		label = QtGui.QLabel(label)
 		if syntax:
-			editor = inline_editor.inline_editor(self.experiment, syntax="python")
+			editor = inline_editor.inline_editor(self.experiment, \
+				syntax="python")
 		else:
 			editor = inline_editor.inline_editor(self.experiment)
 		editor.apply.clicked.connect(self.apply_edit_changes)
-		QtCore.QObject.connect(editor.edit, QtCore.SIGNAL("focusLost"), self.apply_edit_changes)
+		QtCore.QObject.connect(editor.edit, QtCore.SIGNAL("focusLost"), \
+			self.apply_edit_changes)
 		if var != None:
 			self.auto_editor[var] = editor
 		self.edit_vbox.addWidget(label)
@@ -325,7 +347,8 @@ class qtplugin(qtitem.qtitem):
 		row = self.edit_grid.rowCount()
 		self.edit_vbox.addWidget(QtGui.QLabel(msg))
 
-	def apply_button(self, label="Apply", icon="apply", tooltip="Apply changes"):
+	def apply_button(self, label="Apply", icon="apply", \
+		tooltip="Apply changes"):
 
 		"""
 		Returns a right-outlined apply button. The widget is not added

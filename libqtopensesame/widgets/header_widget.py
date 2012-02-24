@@ -21,6 +21,7 @@ __author__ = "Sebastiaan Mathot"
 __license__ = "GPLv3"
 
 from PyQt4 import QtCore, QtGui
+from libopensesame import debug
 
 class header_widget(QtGui.QWidget):
 
@@ -82,6 +83,7 @@ class header_widget(QtGui.QWidget):
 							 (default=True)
 		"""
 
+		debug.msg("apply_name_change = %s" % apply_name_change)
 		if apply_name_change:
 			self.item.apply_name_change()
 		self.label_name.show()
