@@ -466,10 +466,11 @@ class psycho(openexp._canvas.legacy.legacy):
 		
 		im = Image.open(fname)
 				
-		w, h = im.size				
 		if scale != None:
-			im = im.resize( (int(w * scale), int(h * scale)), Image.ANTIALIAS)		
-		w, h = im.size
+			w = im.size[0] * scale
+			h = im.size[1] * scale
+		else:
+			w, h = im.size				
 		
 		# Calculate the position			
 		if x == None:
@@ -481,7 +482,7 @@ class psycho(openexp._canvas.legacy.legacy):
 			y += h/2			
 		pos = x - self.xcenter(), self.ycenter() - y
 				
-		stim = visual.PatchStim(win = self.experiment.window, tex = fname, pos = pos)
+		stim = visual.PatchStim(win = self.experiment.window, tex = fname, pos = pos, size=(w,h))
 		self.stim_list.append(stim)
 		
 	def gabor(self, x, y, orient, freq, env="gaussian", size=96, stdev=12, phase=0, col1="white", col2=None, bgmode=None):
