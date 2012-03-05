@@ -116,7 +116,7 @@ class qtplugin(qtitem.qtitem):
 		"""
 
 		edit = QtGui.QLineEdit()
-		edit.setText(self.get(var))		
+		edit.setText(str(self.get(var)))		
 		edit.editingFinished.connect(self.apply_edit_changes)
 		self.add_control(label, edit, tooltip, min_width)
 		if var != None:
@@ -142,7 +142,7 @@ class qtplugin(qtitem.qtitem):
 		"""
 
 		edit = color_edit.color_edit(self.experiment)
-		edit.setText(self.get(var))				
+		edit.setText(str(self.get(var)))
 		QtCore.QObject.connect(edit, QtCore.SIGNAL("set_color"), \
 			self.apply_edit_changes)
 		self.add_control(label, edit, tooltip, min_width)
@@ -276,7 +276,7 @@ class qtplugin(qtitem.qtitem):
 		"""
 
 		edit = QtGui.QLineEdit()		
-		edit.setText(self.get(var))		
+		edit.setText(str(self.get(var)))
 		edit.editingFinished.connect(self.apply_edit_changes)
 		if var != None:
 			self.auto_line_edit[var] = edit
@@ -315,7 +315,7 @@ class qtplugin(qtitem.qtitem):
 				syntax="python")
 		else:
 			editor = inline_editor.inline_editor(self.experiment)			
-		editor.setText(self.get(var))						
+		editor.setText(str(self.get(var)))
 		editor.apply.clicked.connect(self.apply_edit_changes)
 		QtCore.QObject.connect(editor.edit, QtCore.SIGNAL("focusLost"), \
 			self.apply_edit_changes)
