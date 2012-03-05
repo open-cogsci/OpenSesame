@@ -231,13 +231,16 @@ class qtitem(object):
 			if hasattr(w, "edit_item") and w.edit_item == self.name:
 				index = i
 
-		# Refresh the controls on the tab
-		try:
+		# Refresh the controls on the tab. In debug mode don't catch any errors
+		if debug.enabled:
 			widget = self.edit_widget()
-		except Exception as e:
-			self.experiment.notify("%s (Edit the script to fix this)" % e)
-			self.open_script_tab()
-			return
+		else:
+			try:
+				widget = self.edit_widget()
+			except Exception as e:
+				self.experiment.notify("%s (Edit the script to fix this)" % e)
+				self.open_script_tab()
+				return
 
 		# Open the tab or focus the tab if it was already open
 		if index == None:
@@ -737,7 +740,6 @@ class qtitem(object):
 		
 		if isinstance(widget, QtGui.QSpinBox) or isinstance(widget, \
 			QtGui.QDoubleSpinBox):
-			#widget.valueChanged.connect(self.apply_edit_changes)
 			widget.editingFinished.connect(self.apply_edit_changes)
 			self.auto_spinbox[var] = widget
 			
@@ -746,7 +748,6 @@ class qtitem(object):
 			self.auto_combobox[var] = widget
 			
 		elif isinstance(widget, QtGui.QSlider):
-			#widget.valueChanged.connect(self.apply_edit_changes)
 			widget.editingFinished.connect(self.apply_edit_changes)
 			self.auto_slider[var] = widget
 			

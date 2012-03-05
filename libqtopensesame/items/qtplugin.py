@@ -195,7 +195,7 @@ class qtplugin(qtitem.qtitem):
 		spinbox.setMinimum(min_val)
 		spinbox.setMaximum(max_val)
 		spinbox.setValue(self.get(var))				
-		spinbox.valueChanged.connect(self.apply_edit_changes)
+		spinbox.editingFinished.connect(self.apply_edit_changes)
 		if prefix != "":
 			spinbox.setPrefix(prefix)
 		if suffix != "":
@@ -247,7 +247,7 @@ class qtplugin(qtitem.qtitem):
 			rlabel.setText(right_label)
 			layout.addWidget(rlabel)
 
-		slider.valueChanged.connect(self.apply_edit_changes)
+		slider.editingFinished.connect(self.apply_edit_changes)
 
 		if var != None:
 			self.auto_slider[var] = slider
