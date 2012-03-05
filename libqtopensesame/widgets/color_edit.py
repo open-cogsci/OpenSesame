@@ -37,6 +37,7 @@ class color_edit(QtGui.QWidget):
 		self.experiment = experiment
 		self.edit = QtGui.QLineEdit()
 		self.edit.editingFinished.connect(self.apply)
+		self.editingFinished = self.edit.editingFinished
 		self.button = QtGui.QPushButton()
 		self.button.setIcon(self.experiment.icon("colorpicker"))
 		self.button.setIconSize(QtCore.QSize(16,16))		
@@ -55,7 +56,7 @@ class color_edit(QtGui.QWidget):
 		if color == None:
 			return
 		self.setText(color)
-		self.apply()
+		self.apply()		
 
 	def text(self):
 	

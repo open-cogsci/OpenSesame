@@ -74,7 +74,7 @@ class qtplugin(qtitem.qtitem):
 		return qtitem.qtitem.apply_edit_changes(self, rebuild) and \
 			self.auto_apply_edit_changes(rebuild)	
 
-	def add_control(self, label, widget, tooltip, default, min_width=None):
+	def add_control(self, label, widget, tooltip, min_width=None):
 
 		"""
 		Add a generic control
@@ -83,7 +83,6 @@ class qtplugin(qtitem.qtitem):
 		label -- a text label
 		widget -- a control widget
 		tooltip -- a tooltip string
-		default -- a default value
 
 		Keyword arguments:
 		min_width -- a minimum width for the widget (default=None)
@@ -96,7 +95,6 @@ class qtplugin(qtitem.qtitem):
 				pass
 		if min_width != None:
 			widget.setMinimumWidth(min_width)
-		widget.default = default
 		row = self.edit_grid.rowCount()
 		self.edit_grid.addWidget(QtGui.QLabel(label), row, 0)
 		self.edit_grid.addWidget(widget, row, 1)
@@ -118,12 +116,9 @@ class qtplugin(qtitem.qtitem):
 		"""
 
 		edit = QtGui.QLineEdit()
-		if default != None:
-			edit.setText(default)
-		else:
-			edit.setText(self.get(var))		
+		edit.setText(self.get(var))		
 		edit.editingFinished.connect(self.apply_edit_changes)
-		self.add_control(label, edit, tooltip, default, min_width)
+		self.add_control(label, edit, tooltip, min_width)
 		if var != None:
 			self.auto_line_edit[var] = edit
 		return edit
@@ -147,13 +142,10 @@ class qtplugin(qtitem.qtitem):
 		"""
 
 		edit = color_edit.color_edit(self.experiment)
-		if default != None:
-			edit.setText(default)
-		else:
-			edit.setText(self.get(var))				
+		edit.setText(self.get(var))				
 		QtCore.QObject.connect(edit, QtCore.SIGNAL("set_color"), \
 			self.apply_edit_changes)
-		self.add_control(label, edit, tooltip, default, min_width)
+		self.add_control(label, edit, tooltip, min_width)
 		if var != None:
 			self.auto_line_edit[var] = edit
 		return edit
@@ -176,11 +168,9 @@ class qtplugin(qtitem.qtitem):
 		for o in options:
 			combobox.addItem(o)			
 		combobox.currentIndexChanged.connect(self.apply_edit_changes)			
-		self.add_control(label, combobox, tooltip, None)
-
+		self.add_control(label, combobox, tooltip)
 		if var != None:
 			self.auto_combobox[var] = combobox
-
 		return combobox
 
 	def add_spinbox_control(self, var, label, min_val, max_val, prefix="", \
@@ -206,17 +196,13 @@ class qtplugin(qtitem.qtitem):
 		spinbox.setMaximum(max_val)
 		spinbox.setValue(self.get(var))				
 		spinbox.valueChanged.connect(self.apply_edit_changes)
-
 		if prefix != "":
 			spinbox.setPrefix(prefix)
 		if suffix != "":
 			spinbox.setSuffix(suffix)
-
-		self.add_control(label, spinbox, tooltip, None)
-
+		self.add_control(label, spinbox, tooltip)
 		if var != None:
 			self.auto_spinbox[var] = spinbox
-
 		return spinbox
 
 	def add_slider_control(self, var, label, min_val, max_val, left_label="", \
@@ -244,10 +230,7 @@ class qtplugin(qtitem.qtitem):
 		slider.setGeometry(30, 40, 100, 30)
 		slider.setRange(min_val, max_val)
 		slider.setSingleStep(1000)
-		if default != None:
-			slider.setValue(default)
-		else:
-			slider.setValue(self.get(var))
+		slider.setValue(self.get(var))
 		#Take care of layout
 		layout = QtGui.QHBoxLayout()
 		layout.setMargin(0)
@@ -272,7 +255,7 @@ class qtplugin(qtitem.qtitem):
 		widget = QtGui.QWidget()
 		widget.setLayout(layout)
 
-		self.add_control(label, widget, tooltip, default)
+		self.add_control(label, widget, tooltip)
 
 	def add_filepool_control(self, var, label, click_func, tooltip=None, \
 		default=None):
@@ -292,32 +275,21 @@ class qtplugin(qtitem.qtitem):
 		default -- a default value (default=None)
 		"""
 
-		edit = QtGui.QLineEdit()
-		
-		if default != None:
-			edit.setText(default)
-		else:
-			edit.setText(self.get(var))
-		
+		edit = QtGui.QLineEdit()		
+		edit.setText(self.get(var))		
 		edit.editingFinished.connect(self.apply_edit_changes)
-		edit.default = default
-
 		if var != None:
 			self.auto_line_edit[var] = edit
-
 		button = QtGui.QPushButton(self.experiment.icon("browse"), "Browse")
 		button.setIconSize(QtCore.QSize(16, 16))
 		button.clicked.connect(click_func)
-
 		hbox = QtGui.QHBoxLayout()
 		hbox.setMargin(0)
 		hbox.addWidget(edit)
 		hbox.addWidget(button)
-
 		widget = QtGui.QWidget()
 		widget.setLayout(hbox)
-
-		self.add_control(label, widget, tooltip, default)
+		self.add_control(label, widget, tooltip)
 
 	def add_editor_control(self, var, label, syntax=False, tooltip=None, \
 		default=None):
@@ -342,13 +314,8 @@ class qtplugin(qtitem.qtitem):
 			editor = inline_editor.inline_editor(self.experiment, \
 				syntax="python")
 		else:
-			editor = inline_editor.inline_editor(self.experiment)
-			
-		if default != None:
-			editor.setText(default)
-		else:
-			editor.setText(self.get(var))			
-			
+			editor = inline_editor.inline_editor(self.experiment)			
+		editor.setText(self.get(var))						
 		editor.apply.clicked.connect(self.apply_edit_changes)
 		QtCore.QObject.connect(editor.edit, QtCore.SIGNAL("focusLost"), \
 			self.apply_edit_changes)

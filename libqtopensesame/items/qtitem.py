@@ -139,7 +139,7 @@ class qtitem(object):
 		self._edit_widget.edit_item = self.name
 		self.auto_edit_widget()
 		return self._edit_widget
-
+		
 	def apply_name_change(self, rebuild=True):
 
 		"""
@@ -286,7 +286,7 @@ class qtitem(object):
 
 		debug.msg(self.name)
 		script = self.experiment.usanitize(self.edit_script.edit.toPlainText())
-
+		
 		# Create a new item and make it a clone of the current item
 		item = self.experiment.main_window.add_item(self.item_type, False, \
 			name=self.name)
@@ -609,8 +609,10 @@ class qtitem(object):
 
 		"""Update the GUI controls based on the auto-widgets"""
 
+		debug.msg()
 		for var, edit in self.auto_line_edit.iteritems():
-			if self.has(var):
+			edit.editingFinished.disconnect()		
+			if self.has(var):			
 				try:
 					edit.setText(self.experiment.unsanitize(self.get(var)))
 				except Exception as e:
@@ -618,39 +620,48 @@ class qtitem(object):
 						% (var, e))
 			else:
 				edit.setText("")
+			edit.editingFinished.connect(self.apply_edit_changes)				
 
 		for var, combobox in self.auto_combobox.iteritems():
+			combobox.currentIndexChanged.disconnect()
 			if self.has(var):
 				try:
-					 combobox.setCurrentIndex(combobox.findText( \
-					 	self.experiment.unsanitize(self.get(var))))
+					combobox.setCurrentIndex(combobox.findText( \
+						self.experiment.unsanitize(self.get(var))))
 				except Exception as e:
 					self.experiment.notify("Failed to set control '%s': %s" \
 						% (var, e))
+			combobox.currentIndexChanged.connect(self.apply_edit_changes)	
 
 		for var, spinbox in self.auto_spinbox.iteritems():
+			spinbox.valueChanged.disconnect()
 			if self.has(var):
 				try:
-					 spinbox.setValue(self.get(var))
+					spinbox.setValue(self.get(var))
 				except Exception as e:
 					self.experiment.notify("Failed to set control '%s': %s" \
 						% (var, e))
+			spinbox.valueChanged.connect(self.apply_edit_changes)
 
 		for var, slider in self.auto_slider.iteritems():
+			slider.valueChanged.disconnect()
 			if self.has(var):
 				try:
 					slider.setValue(self.get(var))
 				except Exception as e:
 					self.experiment.notify("Failed to set control '%s': %s" \
 						% (var, e))
+			slider.valueChanged.connect(self.apply_edit_changes)
 						
 		for var, checkbox in self.auto_checkbox.iteritems():
+			checkbox.toggled.disconnect()
 			if self.has(var):
 				try:
 					checkbox.setChecked(self.get(var) == "yes")
 				except Exception as e:
 					self.experiment.notify("Failed to set control '%s': %s" \
-						% (var, e))						
+						% (var, e))		
+			checkbox.toggled.connect(self.apply_edit_changes)
 
 		for var, editor in self.auto_editor.iteritems():
 			if self.has(var):

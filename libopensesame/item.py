@@ -189,6 +189,7 @@ class item(openexp.trial.trial):
 		string -- the definition string
 		"""
 
+		debug.msg()
 		textblock_var = None
 		self.variables = {}
 		for line in string.split("\n"):
@@ -223,7 +224,7 @@ class item(openexp.trial.trial):
 			# Parse regular variables
 			else:
 				self.parse_variable(line)
-
+					
 	def to_string(self, item_type = None):
 
 		"""

@@ -1387,7 +1387,6 @@ class qtopensesame(QtGui.QMainWindow):
 		"""
 
 		debug.msg(name)
-
 		if name in self.experiment.unused_items:
 			self.experiment.unused_widget.setExpanded(True)
 		for item in self.ui.itemtree.findItems(name, \

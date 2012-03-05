@@ -45,10 +45,10 @@ class text_display(item.item, generic_response.generic_response):
 		self.align = "center"
 		self.content = "Enter your text here."
 		self.maxchar = 50
-		
+				
 		# Pass the word on to the parent		
 		item.item.__init__(self, name, experiment, string)
-		
+				
 		# These lines makes sure that the icons and help file are recognized by
 		# OpenSesame. Copy-paste these lines at the end of your plugin's
 		# constructor
