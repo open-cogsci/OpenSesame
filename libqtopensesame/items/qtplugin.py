@@ -118,6 +118,10 @@ class qtplugin(qtitem.qtitem):
 		"""
 
 		edit = QtGui.QLineEdit()
+		if default != None:
+			edit.setText(default)
+		else:
+			edit.setText(self.get(var))		
 		edit.editingFinished.connect(self.apply_edit_changes)
 		self.add_control(label, edit, tooltip, default, min_width)
 		if var != None:
@@ -143,6 +147,10 @@ class qtplugin(qtitem.qtitem):
 		"""
 
 		edit = color_edit.color_edit(self.experiment)
+		if default != None:
+			edit.setText(default)
+		else:
+			edit.setText(self.get(var))				
 		QtCore.QObject.connect(edit, QtCore.SIGNAL("set_color"), \
 			self.apply_edit_changes)
 		self.add_control(label, edit, tooltip, default, min_width)
@@ -165,9 +173,9 @@ class qtplugin(qtitem.qtitem):
 		"""
 
 		combobox = QtGui.QComboBox()
-		combobox.currentIndexChanged.connect(self.apply_edit_changes)
 		for o in options:
-			combobox.addItem(o)
+			combobox.addItem(o)			
+		combobox.currentIndexChanged.connect(self.apply_edit_changes)			
 		self.add_control(label, combobox, tooltip, None)
 
 		if var != None:
@@ -196,6 +204,7 @@ class qtplugin(qtitem.qtitem):
 		spinbox = QtGui.QSpinBox()
 		spinbox.setMinimum(min_val)
 		spinbox.setMaximum(max_val)
+		spinbox.setValue(self.get(var))				
 		spinbox.valueChanged.connect(self.apply_edit_changes)
 
 		if prefix != "":
@@ -237,7 +246,8 @@ class qtplugin(qtitem.qtitem):
 		slider.setSingleStep(1000)
 		if default != None:
 			slider.setValue(default)
-
+		else:
+			slider.setValue(self.get(var))
 		#Take care of layout
 		layout = QtGui.QHBoxLayout()
 		layout.setMargin(0)
@@ -283,6 +293,12 @@ class qtplugin(qtitem.qtitem):
 		"""
 
 		edit = QtGui.QLineEdit()
+		
+		if default != None:
+			edit.setText(default)
+		else:
+			edit.setText(self.get(var))
+		
 		edit.editingFinished.connect(self.apply_edit_changes)
 		edit.default = default
 
@@ -327,6 +343,12 @@ class qtplugin(qtitem.qtitem):
 				syntax="python")
 		else:
 			editor = inline_editor.inline_editor(self.experiment)
+			
+		if default != None:
+			editor.setText(default)
+		else:
+			editor.setText(self.get(var))			
+			
 		editor.apply.clicked.connect(self.apply_edit_changes)
 		QtCore.QObject.connect(editor.edit, QtCore.SIGNAL("focusLost"), \
 			self.apply_edit_changes)
