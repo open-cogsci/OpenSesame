@@ -37,6 +37,7 @@ class notepad(item.item):
 		
 		# The item_typeshould match the name of the module
 		self.item_type = "notepad"
+		self.note = "Type your note here"
 		
 		# Provide a short accurate description of the items functionality
 		self.description = "A simple notepad to document your experiment. This plug-in does nothing."
