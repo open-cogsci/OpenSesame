@@ -114,11 +114,13 @@ class item(openexp.trial.trial):
 		try:
 			l = shlex.split(line.strip())
 		except Exception as e:
-			raise exceptions.script_error("Error parsing '%s' in item '%s': %s" % (line, self.name, e))
+			raise exceptions.script_error( \
+				"Error parsing '%s' in item '%s': %s" % (line, self.name, e))
 
 		if len(l) > 0 and l[0] == "set":
 			if len(l) != 3:
-				raise exceptions.script_error("Error parsing variable definition: '%s'" % line)
+				raise exceptions.script_error( \
+					"Error parsing variable definition: '%s'" % line)
 			else:
 				self.set(l[1], l[2])
 				return True
@@ -159,7 +161,8 @@ class item(openexp.trial.trial):
 		"""
 
 		# Multiline variables are stored as a block
-		if type(self.variables[var]) == str and ("\n" in self.variables[var] or "\"" in self.variables[var]):
+		if type(self.variables[var]) == str and ("\n" in self.variables[var] \
+			or "\"" in self.variables[var]):
 			s = "__%s__\n" % var
 			for l in self.variables[var].split("\n"):
 				s += "\t%s\n" % l
@@ -306,11 +309,16 @@ class item(openexp.trial.trial):
 			try:
 				val = eval("self.experiment.%s" % var)
 			except:
-				raise exceptions.runtime_error("Variable '%s' is not set in item '%s'.<br /><br />You are trying to use a variable that does not exist. Make sure that you have spelled and capitalized the variable name correctly. You may wish to use the variable inspector (Control + I) to find the intended variable." % (var, self.name))
+				raise exceptions.runtime_error( \
+					"Variable '%s' is not set in item '%s'.<br /><br />You are trying to use a variable that does not exist. Make sure that you have spelled and capitalized the variable name correctly. You may wish to use the variable inspector (Control + I) to find the intended variable." \
+					% (var, self.name))
 		# Process variables, indicated like [varname]
-		if self.experiment.running and type(val) == str and len(val) > 3 and val[0] == "[" and val[-1] == "]":
+		if self.experiment.running and type(val) == str and len(val) > 3 and \
+			val[0] == "[" and val[-1] == "]":
 			if val[1:-1] == var:
-				raise exceptions.runtime_error("Variable '%s' is defined in terms of itself (e.g., 'var = [var]') in item '%s'" % (var, self.name))
+				raise exceptions.runtime_error( \
+					"Variable '%s' is defined in terms of itself (e.g., 'var = [var]') in item '%s'" \
+					% (var, self.name))
 			val = self.get(val[1:-1])
 		return val
 
@@ -343,8 +351,9 @@ class item(openexp.trial.trial):
 		else:
 			val = default
 		if valid != None and val not in valid:
-			raise exceptions.runtime_error("Variable '%s' is '%s', expecting '%s'" \
-				% (var, val, " or ".join(valid)))
+			raise exceptions.runtime_error( \
+				"Variable '%s' is '%s', expecting '%s'" % (var, val, \
+				" or ".join(valid)))
 		return val
 
 	def has(self, var):
@@ -391,7 +400,9 @@ class item(openexp.trial.trial):
 				break
 			end = text.find("]", start + 1)
 			if end < 0:
-				raise exceptions.runtime_error("Missing closing bracket ']' in string '%s', in item '%s'" % (text, self.name))
+				raise exceptions.runtime_error( \
+					"Missing closing bracket ']' in string '%s', in item '%s'" \
+					% (text, self.name))
 			var = text[start+1:end]
 			l.append(var)
 			var = var[end:]
@@ -438,7 +449,7 @@ class item(openexp.trial.trial):
 
 		pass
 
-	def eval_text(self, text, round_float = False, soft_ignore = False, quote_str = False):
+	def eval_text(self, text, round_float=False, soft_ignore=False, quote_str=False):
 
 		"""<DOC>
 		Replace variables in the text by the actual values
@@ -478,7 +489,9 @@ class item(openexp.trial.trial):
 				break
 			end = text.find("]", start + 1)
 			if end < 0:
-				exceptions.runtime_error("Missing closing bracket ']' in string '%s', in item '%s'" % (text, self.name))
+				exceptions.runtime_error( \
+					"Missing closing bracket ']' in string '%s', in item '%s'" \
+					% (text, self.name))
 			var = text[start+1:end]
 
 			# Replace the variable with its value, unless the variable
@@ -521,8 +534,10 @@ class item(openexp.trial.trial):
 
 		src = cond
 
-		operators = "!=", "==", "=", "<", ">", ">=", "<=", "+", "-", "(", ")", "/", "*", "%", "~", "**", "^"
-		op_chars = "!", "=", "=", "<", ">", "+", "-", "(", ")", "/", "*", "%", "~", "*", "^"
+		operators = "!=", "==", "=", "<", ">", ">=", "<=", "+", "-", "(", ")", \
+			"/", "*", "%", "~", "**", "^"
+		op_chars = "!", "=", "=", "<", ">", "+", "-", "(", ")", "/", "*", "%", \
+			"~", "*", "^"
 		whitespace = " ", "\t", "\n"
 		keywords = "and", "or", "is", "not", "true", "false"
 		capitalize = "true", "false", "none"
@@ -537,7 +552,7 @@ class item(openexp.trial.trial):
 						cond = cond[:i] + " " + cond[i:]
 						redo = True
 						break
-					if i < len(cond) - 1 and cond[i+1] not in op_chars + whitespace:
+					if i < len(cond)-1 and cond[i+1] not in op_chars+whitespace:
 						cond = cond[:i+1] + " " + cond[i+1:]
 						redo = True
 						break
@@ -560,7 +575,8 @@ class item(openexp.trial.trial):
 				else:
 					l.append(word.lower())
 			else:
-				# For backwards compatibility, the first word is interpreted as a variable name
+				# For backwards compatibility, the first word is interpreted as
+				# a variable name
 				if i == 0:
 					l.append("str(self.get(\"%s\"))" % word)
 				else:
@@ -575,7 +591,9 @@ class item(openexp.trial.trial):
 		try:
 			bytecode = compile(code, "<conditional statement>", "eval")
 		except:
-			raise exceptions.runtime_error("'%s' is not a valid conditional statement in sequence item '%s'" % (cond, self.name))
+			raise exceptions.runtime_error( \
+				"'%s' is not a valid conditional statement in sequence item '%s'" \
+				% (cond, self.name))
 		return bytecode
 
 	def var_info(self):
@@ -702,5 +720,7 @@ class item(openexp.trial.trial):
 		try:
 			pygame.Color(s)
 		except:
-			raise exceptions.script_error("'%s' is not a valid color. See http://www.w3schools.com/html/html_colornames.asp for an overview of valid color names" % s)
+			raise exceptions.script_error( \
+				"'%s' is not a valid color. See http://www.w3schools.com/html/html_colornames.asp for an overview of valid color names" \
+				% s)
 
