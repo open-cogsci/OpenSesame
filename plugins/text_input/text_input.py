@@ -71,12 +71,14 @@ class text_input(item.item, generic_response.generic_response):
 		# If no start response interval has been set, set it to the onset of
 		# the current response item
 		if self.experiment.start_response_interval == None:
-			self.experiment.start_response_interval = self.get("time_%s" % self.name)		
+			self.experiment.start_response_interval = self.get("time_%s" % \
+				self.name)		
 
 		self._keyboard = openexp.keyboard.keyboard(self.experiment)
 
 		# Create a canvas
-		c = openexp.canvas.canvas(self.experiment, self.get("background"), self.get("foreground"))
+		c = openexp.canvas.canvas(self.experiment, self.get("background"), \
+			self.get("foreground"))
 		c.set_font(self.get("font_family"), self.get("font_size"))
 		c.set_penwidth(self.get("frame_width"))
 
@@ -86,11 +88,14 @@ class text_input(item.item, generic_response.generic_response):
 		maxchar = self.get("linewidth") / w
 
 		if maxchar < 2:
-			raise exceptions.runtime_error("The maximum line width is too small (or the font is too large) in text_input '%s'" % self.name)
+			raise exceptions.runtime_error( \
+				"The maximum line width is too small (or the font is too large) in text_input '%s'" \
+				% self.name)
 
 		margin = 32
 
-		question = self.experiment.unsanitize(self.eval_text(self.get("_question")))
+		question = self.experiment.unsanitize(self.eval_text(self.get( \
+			"_question")))
 
 		resp = ""
 		response = ""
@@ -100,7 +105,8 @@ class text_input(item.item, generic_response.generic_response):
 			if self._check_return and resp == "return":
 				break
 		
-			if self._check_timeout and self.time() - self.experiment.start_response_interval > self.timeout:
+			if self._check_timeout and self.time() - \
+				self.experiment.start_response_interval > self.timeout:
 				break
 
 			# Fill the canvas and put it to the screen
@@ -110,7 +116,9 @@ class text_input(item.item, generic_response.generic_response):
 			l = 0
 			for s in _s.split("\n"):
 				while len(s) > 0:
-					c.text(s[:maxchar], False, c.xcenter() - self.get("linewidth") / 2, c.ycenter() + h * l - self.get("linewidth") / 2)
+					c.text(s[:maxchar], False, c.xcenter() - \
+						self.get("linewidth") / 2, c.ycenter() + h * l - \
+						self.get("linewidth") / 2)
 					s = s[maxchar:]
 					l += 1
 				l += 1
@@ -141,7 +149,8 @@ class text_input(item.item, generic_response.generic_response):
 			elif len(resp) == 1:
 				response += self._keyboard.shift(key, mods)
 
-		self.experiment.set("response", self.experiment.usanitize(self.experiment.sanitize(response)))
+		self.experiment.set("response", self.experiment.usanitize( \
+			self.experiment.sanitize(response)))
 		self.experiment.end_response_interval = response_time		
 		self.response_bookkeeping()
 
@@ -152,16 +161,15 @@ class text_input(item.item, generic_response.generic_response):
 	
 		"""Prepare for the run phase"""
 		
+		item.item.prepare(self)		
 		if self.get("accept_on") != "return press":
 			self._check_timeout = True
 		else:
-			self._check_timeout = False
-			
+			self._check_timeout = False			
 		if self.get("accept_on") != "timeout":
 			self._check_return = True
 		else:
-			self._check_return = False			
-	
+			self._check_return = False				
 		return True
 
 	def var_info(self):
