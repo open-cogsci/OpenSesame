@@ -560,9 +560,17 @@ class legacy:
 				"'%s' is not a supported image format" % fname)
 
 		if scale != None:
-			surface = pygame.transform.smoothscale(surface, \
-				(int(surface.get_width()*scale), \
-				int(surface.get_height()*scale)))
+			try:
+				surface = pygame.transform.smoothscale(surface, \
+					(int(surface.get_width()*scale), \
+					int(surface.get_height()*scale)))
+			except:
+				debug.msg("smooth scaling failed for '%s'" % fname, reason=\
+					"warning")
+				surface = pygame.transform.scale(surface, \
+					(int(surface.get_width()*scale), \
+					int(surface.get_height()*scale)))
+
 
 		size = surface.get_size()
 		
