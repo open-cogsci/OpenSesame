@@ -822,7 +822,6 @@ class sketchpad_widget(QtGui.QWidget):
 			# image with PyGame and converting it to a QPixmap. In addition, we
 			# notify the user that he/ she is using a funky bitmap.
 			import pygame
-			from pygame.locals import *
 			im = pygame.image.load(path)
 			data = pygame.image.tostring(im, "RGBA")
 			size = im.get_size()
