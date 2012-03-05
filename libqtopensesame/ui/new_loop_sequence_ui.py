@@ -2,8 +2,8 @@
 
 # Form implementation generated from reading ui file 'resources/ui/new_loop_sequence.ui'
 #
-# Created: Wed Feb 22 16:41:30 2012
-#      by: PyQt4 UI code generator 4.8.5
+# Created: Mon Mar  5 11:58:09 2012
+#      by: PyQt4 UI code generator 4.9.1
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -18,7 +18,6 @@ class Ui_Dialog(object):
     def setupUi(self, Dialog):
         Dialog.setObjectName(_fromUtf8("Dialog"))
         Dialog.resize(411, 197)
-        Dialog.setWindowTitle(QtGui.QApplication.translate("Dialog", "Dialog", None, QtGui.QApplication.UnicodeUTF8))
         self.verticalLayout = QtGui.QVBoxLayout(Dialog)
         self.verticalLayout.setObjectName(_fromUtf8("verticalLayout"))
         self.widget_3 = QtGui.QWidget(Dialog)
@@ -38,8 +37,6 @@ class Ui_Dialog(object):
         self.label_icon.setObjectName(_fromUtf8("label_icon"))
         self.horizontalLayout_3.addWidget(self.label_icon)
         self.label_explanation = QtGui.QLabel(self.widget_3)
-        self.label_explanation.setText(QtGui.QApplication.translate("Dialog", "Explanation\n"
-"", None, QtGui.QApplication.UnicodeUTF8))
         self.label_explanation.setWordWrap(True)
         self.label_explanation.setObjectName(_fromUtf8("label_explanation"))
         self.horizontalLayout_3.addWidget(self.label_explanation)
@@ -54,7 +51,6 @@ class Ui_Dialog(object):
         self.horizontalLayout.setMargin(0)
         self.horizontalLayout.setObjectName(_fromUtf8("horizontalLayout"))
         self.groupBox = QtGui.QGroupBox(self.widget_2)
-        self.groupBox.setTitle(QtGui.QApplication.translate("Dialog", "Create new item to use", None, QtGui.QApplication.UnicodeUTF8))
         self.groupBox.setObjectName(_fromUtf8("groupBox"))
         self.verticalLayout_2 = QtGui.QVBoxLayout(self.groupBox)
         self.verticalLayout_2.setContentsMargins(0, 8, 0, 0)
@@ -63,7 +59,6 @@ class Ui_Dialog(object):
         self.combobox_new.setObjectName(_fromUtf8("combobox_new"))
         self.verticalLayout_2.addWidget(self.combobox_new)
         self.button_new = QtGui.QPushButton(self.groupBox)
-        self.button_new.setText(QtGui.QApplication.translate("Dialog", "Create", None, QtGui.QApplication.UnicodeUTF8))
         icon = QtGui.QIcon()
         icon.addPixmap(QtGui.QPixmap(_fromUtf8(":/icons/add.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.button_new.setIcon(icon)
@@ -72,7 +67,6 @@ class Ui_Dialog(object):
         self.verticalLayout_2.addWidget(self.button_new)
         self.horizontalLayout.addWidget(self.groupBox)
         self.groupBox_2 = QtGui.QGroupBox(self.widget_2)
-        self.groupBox_2.setTitle(QtGui.QApplication.translate("Dialog", "Select existing item to use", None, QtGui.QApplication.UnicodeUTF8))
         self.groupBox_2.setObjectName(_fromUtf8("groupBox_2"))
         self.verticalLayout_3 = QtGui.QVBoxLayout(self.groupBox_2)
         self.verticalLayout_3.setContentsMargins(0, 8, 0, 0)
@@ -81,7 +75,6 @@ class Ui_Dialog(object):
         self.combobox_select.setObjectName(_fromUtf8("combobox_select"))
         self.verticalLayout_3.addWidget(self.combobox_select)
         self.button_select = QtGui.QPushButton(self.groupBox_2)
-        self.button_select.setText(QtGui.QApplication.translate("Dialog", "Select", None, QtGui.QApplication.UnicodeUTF8))
         icon1 = QtGui.QIcon()
         icon1.addPixmap(QtGui.QPixmap(_fromUtf8(":/icons/apply.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.button_select.setIcon(icon1)
@@ -99,7 +92,6 @@ class Ui_Dialog(object):
         spacerItem1 = QtGui.QSpacerItem(40, 20, QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
         self.horizontalLayout_2.addItem(spacerItem1)
         self.button_cancel = QtGui.QPushButton(self.widget)
-        self.button_cancel.setText(QtGui.QApplication.translate("Dialog", "Cancel", None, QtGui.QApplication.UnicodeUTF8))
         icon2 = QtGui.QIcon()
         icon2.addPixmap(QtGui.QPixmap(_fromUtf8(":/icons/delete.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.button_cancel.setIcon(icon2)
@@ -113,5 +105,12 @@ class Ui_Dialog(object):
         QtCore.QMetaObject.connectSlotsByName(Dialog)
 
     def retranslateUi(self, Dialog):
-        pass
+        Dialog.setWindowTitle(QtGui.QApplication.translate("Dialog", "Dialog", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_explanation.setText(QtGui.QApplication.translate("Dialog", "Explanation\n"
+"", None, QtGui.QApplication.UnicodeUTF8))
+        self.groupBox.setTitle(QtGui.QApplication.translate("Dialog", "Create new item to use", None, QtGui.QApplication.UnicodeUTF8))
+        self.button_new.setText(QtGui.QApplication.translate("Dialog", "Create", None, QtGui.QApplication.UnicodeUTF8))
+        self.groupBox_2.setTitle(QtGui.QApplication.translate("Dialog", "Select existing item to use", None, QtGui.QApplication.UnicodeUTF8))
+        self.button_select.setText(QtGui.QApplication.translate("Dialog", "Select", None, QtGui.QApplication.UnicodeUTF8))
+        self.button_cancel.setText(QtGui.QApplication.translate("Dialog", "Cancel", None, QtGui.QApplication.UnicodeUTF8))
 

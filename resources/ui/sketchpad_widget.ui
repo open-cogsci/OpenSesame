@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>851</width>
-    <height>598</height>
+    <width>1053</width>
+    <height>635</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -748,7 +748,7 @@
                 <number>5</number>
                </property>
                <item>
-                <widget class="QLabel" name="label_10">
+                <widget class="QLabel" name="pixmap_notification">
                  <property name="sizePolicy">
                   <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
                    <horstretch>0</horstretch>
@@ -767,6 +767,12 @@
                 <widget class="QLabel" name="label_notification">
                  <property name="text">
                   <string>[nr] objects are not shown, because their definition contains variables.</string>
+                 </property>
+                 <property name="wordWrap">
+                  <bool>true</bool>
+                 </property>
+                 <property name="openExternalLinks">
+                  <bool>true</bool>
                  </property>
                 </widget>
                </item>
@@ -803,8 +809,8 @@
                 <rect>
                  <x>0</x>
                  <y>0</y>
-                 <width>849</width>
-                 <height>238</height>
+                 <width>1051</width>
+                 <height>266</height>
                 </rect>
                </property>
                <layout class="QVBoxLayout" name="verticalLayout_5">

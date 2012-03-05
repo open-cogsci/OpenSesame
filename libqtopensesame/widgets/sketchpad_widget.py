@@ -239,8 +239,12 @@ class canvas(QtGui.QGraphicsScene):
 					
 					# Show the context menu
 					menu = QtGui.QMenu()
-					menu.addAction(self.sketchpad_widget.sketchpad.experiment.icon("delete"), "Delete")
-					menu.addAction(self.sketchpad_widget.sketchpad.experiment.icon("edit"), "Edit")
+					menu.addAction( \
+						self.sketchpad_widget.sketchpad.experiment.icon( \
+						"delete"), "Delete")
+					menu.addAction( \
+						self.sketchpad_widget.sketchpad.experiment.icon( \
+						"edit"), "Edit")
 					action = menu.exec_(e.screenPos())
 					
 					# Execute the chosen action
@@ -811,7 +815,26 @@ class sketchpad_widget(QtGui.QWidget):
 		"""Draw image"""
 	
 		pixmap = QtGui.QPixmap(path)
-		pixmap = pixmap.scaledToWidth(pixmap.width() * scale)
+		
+		if pixmap.isNull():
+			# Qt4 cannot handle certain funky bitmaps that PyGame can. So if
+			# loading the image directly fails, we fall back to loading the
+			# image with PyGame and converting it to a QPixmap. In addition, we
+			# notify the user that he/ she is using a funky bitmap.
+			import pygame
+			from pygame.locals import *
+			im = pygame.image.load(path)
+			data = pygame.image.tostring(im, "RGBA")
+			size = im.get_size()
+			image = QtGui.QImage(data, size[0], size[1], \
+				QtGui.QImage.Format_ARGB32)
+			pixmap = QtGui.QPixmap.fromImage(image)						
+			self.notifications.append( \
+				"Funky image alert: '%s' has a non-standard format. It is recommended to convert this image to .png format, for example with Gimp <http://www.gimp.org/>." \
+				% os.path.basename(path))
+			
+		w = pixmap.width()*scale
+		pixmap = pixmap.scaledToWidth(w)		
 		_item = self.scene.addPixmap(pixmap)		
 		if center:
 			_item.setPos(x - 0.5 * pixmap.width(), y - 0.5 * pixmap.height())
@@ -823,20 +846,25 @@ class sketchpad_widget(QtGui.QWidget):
 	
 		"""Draw gabor patch"""
 		
-		path = openexp.canvas.gabor_file(item["orient"], item["freq"], item["env"], item["size"], item["stdev"], item["phase"], item["color1"], item["color2"], item["bgmode"])
+		path = openexp.canvas.gabor_file(item["orient"], item["freq"], \
+			item["env"], item["size"], item["stdev"], item["phase"], \
+			item["color1"], item["color2"], item["bgmode"])
 		pixmap = QtGui.QPixmap(path)
 		_item = self.scene.addPixmap(pixmap)		
-		_item.setPos(item["x"] - 0.5 * pixmap.width(), item["y"] - 0.5 * pixmap.height())
+		_item.setPos(item["x"]-0.5*pixmap.width(), \
+			item["y"]-0.5*pixmap.height())
 		return _item
 		
 	def noise(self, item):
 	
 		"""Draw noise patch"""
 		
-		path = openexp.canvas.noise_file(item["env"], item["size"], item["stdev"], item["color1"], item["color2"], item["bgmode"])
+		path = openexp.canvas.noise_file(item["env"], item["size"], \
+			item["stdev"], item["color1"], item["color2"], item["bgmode"])
 		pixmap = QtGui.QPixmap(path)
 		_item = self.scene.addPixmap(pixmap)		
-		_item.setPos(item["x"] - 0.5 * pixmap.width(), item["y"] - 0.5 * pixmap.height())
+		_item.setPos(item["x"]-0.5*pixmap.width(), \
+			item["y"]-0.5*pixmap.height())
 		return _item		
 		
 	def refresh(self):
@@ -865,96 +893,103 @@ class sketchpad_widget(QtGui.QWidget):
 		if self.show_grid and self.zoom * self.scene.grid >= 5:		
 			self.scene.draw_grid()						
 		
-		# Set the notifications
-		notifications = []
+		# Initialize the notifications
+		self.notifications = []
 		static_items = self.sketchpad.static_items()			
 		not_shown = len(self.sketchpad.items) - len(static_items)
 		if not_shown > 1:
-			notifications.append("%d objects are not shown, because they are defined using variables." % not_shown)
+			self.notifications.append( \
+				"%d objects are not shown, because they are defined using variables." \
+				% not_shown)
 		elif not_shown == 1:
-			notifications.append("One object is not shown, because it is defined using variables.")
+			self.notifications.append( \
+				"One object is not shown, because it is defined using variables.")
 		if self.sketchpad.items_out_of_bounds() > 0:
-			notifications.append("Some objects will not be visible (or partly) because they fall outside of the screen boundaries.")			
-		if len(notifications) > 0:
-			self.ui.frame_notification.setVisible(True)
-			self.ui.label_notification.setText("\n".join(notifications))
-		else:
-			self.ui.frame_notification.setVisible(False)
+			self.notifications.append( \
+				"Some objects will not be visible (or partly) because they fall outside of the screen boundaries.")			
 		
-		
+		# Walk through all items and show them
 		self.item_list = []
-		for item in static_items:
-		
-			g = None		
-		
-			try:
-			
-				s = self.sketchpad.item_to_string(item)				
-		
-				item = self.sketchpad.fix_coordinates(item)
-		
+		for item in static_items:		
+			g = None				
+			try:			
+				s = self.sketchpad.item_to_string(item)						
+				item = self.sketchpad.fix_coordinates(item)		
+				
+				# Set the pen and the brush
 				pen = QtGui.QPen()
 				pen.setWidth(item["penwidth"])
 				pen.setColor(QtGui.QColor(item["color"]))
-
 				brush = QtGui.QBrush()		
 				if item["fill"] == 1:
 					brush.setColor(QtGui.QColor(item["color"]))
-					brush.setStyle(QtCore.Qt.SolidPattern)		
-										
+					brush.setStyle(QtCore.Qt.SolidPattern)											
+					
 				if item["type"] == "rect":
-					g = self.rect(item["x"], item["y"], item["w"], item["h"], pen, brush)
+					g = self.rect(item["x"], item["y"], item["w"], item["h"], \
+						pen, brush)
 				elif item["type"] == "circle":
-					g = self.ellipse(item["x"] - 0.5 * item["r"], item["y"] - 0.5 * item["r"], item["r"], item["r"], pen, brush)
+					g = self.ellipse(item["x"]-0.5*item["r"], \
+						item["y"]-0.5*item["r"], item["r"], item["r"], pen, \
+						brush)
 				elif item["type"] == "ellipse":
-					g = self.ellipse(item["x"], item["y"], item["w"], item["h"], pen, brush)
+					g = self.ellipse(item["x"], item["y"], item["w"], \
+						item["h"], pen, brush)
 				elif item["type"] == "fixdot":
 					g = self.fixdot(item["x"], item["y"], item["color"])
 				elif item["type"] == "arrow":
-					g = self.arrow(item["x1"], item["y1"], item["x2"], item["y2"], item["arrow_size"], pen)
+					g = self.arrow(item["x1"], item["y1"], item["x2"], \
+						item["y2"], item["arrow_size"], pen)
 				elif item["type"] == "line":
-					g = self.line(item["x1"], item["y1"], item["x2"], item["y2"], pen)
+					g = self.line(item["x1"], item["y1"], item["x2"], \
+						item["y2"], pen)
 				elif item["type"] == "textline":
-					g = self.textline(item["text"], item["center"] == 1, item["x"], item["y"], item["color"], item["font_family"], item["font_size"])
+					g = self.textline(item["text"], item["center"]==1, \
+						item["x"], item["y"], item["color"], \
+						item["font_family"], item["font_size"])
 				elif item["type"] == "image":
-					g = self.image(self.sketchpad.experiment.get_file(item["file"]), item["center"] == 1, item["x"], item["y"], item["scale"])
+					g = self.image(self.sketchpad.experiment.get_file( \
+						item["file"]), item["center"]==1, item["x"], \
+						item["y"], item["scale"])
 				elif item["type"] == "gabor":
 					g = self.gabor(item)
 				elif item["type"] == "noise":
 					g = self.noise(item)
 				else:
 					print "Could not find", item["type"]
-				
-			except Exception as e:
 			
-				print "sketchpad_widget.refresh(): exception caught: %s" % e
-				
-				self.ui.frame_notification.setVisible(True)									
-				self.ui.label_notification.setText("Failed to parse the following item (use 'Edit script' to fix/ remove this line):\n'%s'" % s)
-				
+			except Exception as e:
+				debug.msg("exception caught: %s" % e)
+				self.notifications.append("Failed to parse the following item (use 'Edit script' to fix/ remove this line):\n'%s'" \
+					% s)
+									
+			# Add a tooltip to the scene element
 			if g != None:
 				g.setToolTip(s)
 				self.item_list.append( (g, item) )
 				
-		self.sketchpad.experiment.clear_widget(self.ui.widget_items)			
-				
+		# Show the notifications (if any)
+		if len(self.notifications) > 0:
+			self.ui.frame_notification.setVisible(True)
+			self.ui.label_notification.setText("\n- ".join(["Notifications:"] + \
+				self.notifications))
+		else:
+			self.ui.frame_notification.setVisible(False)				
+							
+		# Add the items to the list below the sketchpad
+		self.sketchpad.experiment.clear_widget(self.ui.widget_items)					
 		row = 0 
-		for item in self.sketchpad.items:
-		
+		for item in self.sketchpad.items:		
 			edit = QtGui.QLineEdit(self.sketchpad.item_to_string(item))
-			edit.setReadOnly(True)
-		
+			edit.setReadOnly(True)		
 			hbox = QtGui.QHBoxLayout()			
 			hbox.setContentsMargins(0, 0, 0, 0)
 			hbox.addWidget(edit_item_button(self, item))
 			hbox.addWidget(edit)			
-			hbox.addWidget(remove_item_button(self, item))
-			
+			hbox.addWidget(remove_item_button(self, item))			
 			widget = QtGui.QWidget()
-			widget.setLayout(hbox)
-			
-			self.vbox_items.addWidget(widget)
-				
+			widget.setLayout(hbox)			
+			self.vbox_items.addWidget(widget)				
 		self.vbox_items.addStretch()
 				
 		return True

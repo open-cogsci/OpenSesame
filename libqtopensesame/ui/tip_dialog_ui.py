@@ -2,8 +2,8 @@
 
 # Form implementation generated from reading ui file 'resources/ui/tip_dialog.ui'
 #
-# Created: Wed Feb 22 16:41:30 2012
-#      by: PyQt4 UI code generator 4.8.5
+# Created: Mon Mar  5 11:58:09 2012
+#      by: PyQt4 UI code generator 4.9.1
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -18,7 +18,6 @@ class Ui_Dialog(object):
     def setupUi(self, Dialog):
         Dialog.setObjectName(_fromUtf8("Dialog"))
         Dialog.resize(583, 292)
-        Dialog.setWindowTitle(QtGui.QApplication.translate("Dialog", "Did you now that?", None, QtGui.QApplication.UnicodeUTF8))
         self.verticalLayout = QtGui.QVBoxLayout(Dialog)
         self.verticalLayout.setMargin(8)
         self.verticalLayout.setObjectName(_fromUtf8("verticalLayout"))
@@ -51,7 +50,6 @@ class Ui_Dialog(object):
         font.setBold(True)
         font.setWeight(75)
         self.label_2.setFont(font)
-        self.label_2.setText(QtGui.QApplication.translate("Dialog", "Did you know that?", None, QtGui.QApplication.UnicodeUTF8))
         self.label_2.setObjectName(_fromUtf8("label_2"))
         self.horizontalLayout.addWidget(self.label_2)
         self.verticalLayout.addWidget(self.widget)
@@ -62,7 +60,6 @@ class Ui_Dialog(object):
         self.textedit_tip.setObjectName(_fromUtf8("textedit_tip"))
         self.verticalLayout.addWidget(self.textedit_tip)
         self.checkbox_show_startup_tip = QtGui.QCheckBox(Dialog)
-        self.checkbox_show_startup_tip.setText(QtGui.QApplication.translate("Dialog", "Show random tip on start-up", None, QtGui.QApplication.UnicodeUTF8))
         self.checkbox_show_startup_tip.setObjectName(_fromUtf8("checkbox_show_startup_tip"))
         self.verticalLayout.addWidget(self.checkbox_show_startup_tip)
         self.widget_2 = QtGui.QWidget(Dialog)
@@ -79,7 +76,6 @@ class Ui_Dialog(object):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.button_prev.sizePolicy().hasHeightForWidth())
         self.button_prev.setSizePolicy(sizePolicy)
-        self.button_prev.setText(QtGui.QApplication.translate("Dialog", "Previous", None, QtGui.QApplication.UnicodeUTF8))
         icon = QtGui.QIcon()
         icon.addPixmap(QtGui.QPixmap(_fromUtf8(":/icons/previous.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.button_prev.setIcon(icon)
@@ -91,7 +87,6 @@ class Ui_Dialog(object):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.button_next.sizePolicy().hasHeightForWidth())
         self.button_next.setSizePolicy(sizePolicy)
-        self.button_next.setText(QtGui.QApplication.translate("Dialog", "Next", None, QtGui.QApplication.UnicodeUTF8))
         icon1 = QtGui.QIcon()
         icon1.addPixmap(QtGui.QPixmap(_fromUtf8(":/icons/next.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.button_next.setIcon(icon1)
@@ -103,7 +98,6 @@ class Ui_Dialog(object):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.button_close.sizePolicy().hasHeightForWidth())
         self.button_close.setSizePolicy(sizePolicy)
-        self.button_close.setText(QtGui.QApplication.translate("Dialog", "Close", None, QtGui.QApplication.UnicodeUTF8))
         icon2 = QtGui.QIcon()
         icon2.addPixmap(QtGui.QPixmap(_fromUtf8(":/icons/delete.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.button_close.setIcon(icon2)
@@ -116,5 +110,10 @@ class Ui_Dialog(object):
         QtCore.QMetaObject.connectSlotsByName(Dialog)
 
     def retranslateUi(self, Dialog):
-        pass
+        Dialog.setWindowTitle(QtGui.QApplication.translate("Dialog", "Did you now that?", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_2.setText(QtGui.QApplication.translate("Dialog", "Did you know that?", None, QtGui.QApplication.UnicodeUTF8))
+        self.checkbox_show_startup_tip.setText(QtGui.QApplication.translate("Dialog", "Show random tip on start-up", None, QtGui.QApplication.UnicodeUTF8))
+        self.button_prev.setText(QtGui.QApplication.translate("Dialog", "Previous", None, QtGui.QApplication.UnicodeUTF8))
+        self.button_next.setText(QtGui.QApplication.translate("Dialog", "Next", None, QtGui.QApplication.UnicodeUTF8))
+        self.button_close.setText(QtGui.QApplication.translate("Dialog", "Close", None, QtGui.QApplication.UnicodeUTF8))
 
