@@ -155,10 +155,10 @@ class scintilla(QsciScintilla):
 
 		# Set line numbers
 		self.setMarginWidth(0, fm.width( "0000" ))
-		self.setMarginLineNumbers(0, config.get_config("scintilla_line_numbers"))
+		self.setMarginLineNumbers(0, config.get_config( \
+			"scintilla_line_numbers"))
 
 		# Set the right margin
-		self.SendScintilla(QsciScintilla.SCI_SETHSCROLLBAR, 0)
 		self.setEdgeColumn(80)
 		if config.get_config("scintilla_right_margin"):
 			self.setEdgeMode(QsciScintilla.EdgeLine)
@@ -175,7 +175,8 @@ class scintilla(QsciScintilla):
 			self.setWhitespaceVisibility(QsciScintilla.WsInvisible)
 
 		# Set indentation guides
-		self.setIndentationGuides(config.get_config("scintilla_indentation_guides"))
+		self.setIndentationGuides(config.get_config( \
+			"scintilla_indentation_guides"))
 
 		# Set auto indent
 		self.setAutoIndent(config.get_config("scintilla_auto_indent"))
