@@ -25,6 +25,7 @@ import subprocess
 import os
 import os.path
 import tempfile
+from libopensesame import debug
 
 # Translation mapping from envelope names
 env_synonyms = {}
@@ -58,24 +59,27 @@ class legacy:
 	The legacy backend is the default backend which uses PyGame to handle all
 	display operations.	
 	
-	This class serves as a template for creating OpenSesame video backends. Let's say
-	you want to create a dummy backend. First, create dummy.py in the openexp.video
-	folder. In dummy.py, create a dummy class, which is derived from openexp.canvas.canvas
-	and which implements all the functions specified below.
+	This class serves as a template for creating OpenSesame video backends.
+	Let's say you want to create a dummy backend. First, create dummy.py in the
+	openexp.video folder. In dummy.py, create a dummy class, which is derived
+	from openexp.canvas.canvas and which implements all the functions specified
+	below.
 	
-	After you have done this, the new backend can be activated by adding "set video_backend dummy"
-	to the general script. This will make OpenSesame use the dummy class instead of the default
-	legacy backend.
+	After you have done this, the new backend can be activated by adding
+	"set video_backend dummy" to the general script. This will make OpenSesame
+	use the dummy class instead of the default legacy backend.
 		
 	A few guidelines:
-	-- Catch exceptions wherever possible and raise an openexp.exceptions.canvas_error
-	   with a clear and descriptive error message.
-	-- If you create a temporary file, add its path to the openexp.canvas.temp_files list.
-	-- Do not deviate from the guidelines. All back-ends should be interchangeable and 
-	   transparent to OpenSesame. You are free to add functionality to this class, to be 
-	   used in inline scripts, but this should not break the basic functionality.
-	-- Print debugging output only if experiment.debug == True and preferrably in the
-	   following format: "template.__init__(): Debug message here".
+	-- Catch exceptions wherever possible and raise an
+	   openexp.exceptions.canvas_error with a clear and descriptive error
+	   message.
+	-- If you create a temporary file, add its path to the
+	   openexp.canvas.temp_files list.
+	-- Do not deviate from the guidelines. All back-ends should be
+	   interchangeable and transparent to OpenSesame. You are free to add
+	   functionality to this class, to be used in inline scripts, but this
+	   should not break the basic functionality.
+	-- Print debugging output using the debug.msg() function
 	"""
 	
 	# The settings variable is used by the GUI to provide a list of back-end
@@ -93,20 +97,20 @@ class legacy:
 			},			
 		}	
 	
-	def __init__(self, experiment, bgcolor = None, fgcolor = None):
+	def __init__(self, experiment, bgcolor=None, fgcolor=None):
 		
 		"""<DOC>
-		Initializes the canvas. The specified colors should be used as a 
-		default for subsequent drawing operations.
+		Initializes the canvas. The specified colors should be used as a default
+		for subsequent drawing operations
 		
 		Arguments:
 		experiment -- an instance of libopensesame.experiment.experiment
 		
 		Keyword arguments:
 		bgcolor -- a human-readable background color or None to use experiment
-				   default (default = None)
+				   default (default=None)
 		fgcolor -- a human-readable foreground color or None to use experiment
-				   default (default = None)
+				   default (default=None)
 		</DOC>"""
 		
 		self.experiment = experiment
@@ -128,8 +132,8 @@ class legacy:
 	def color(self, color):
 	
 		"""
-		Transforms a "human readable" color into the format that
-		is used by the back-end (e.g., a PyGame color).
+		Transforms a "human readable" color into the format that is used by the
+		back-end (e.g., a PyGame color)
 		
 		Arguments:
 		color -- A color in one the following formats (by example):
@@ -145,15 +149,18 @@ class legacy:
 	
 		return _color(color)				
 		
-	def flip(self, x = True, y = False):
+	def flip(self, x=True, y=False):
 		
 		"""<DOC>
-		Flips the canvas along the x- and/ or y-axis. Note: This does not refresh the display,
-		like e.g., pygame.display.flip(), which is handled by show().
+		Flips the canvas along the x- and/ or y-axis. Note: This does not
+		refresh the display, like e.g., pygame.display.flip(), which is handled
+		by show().
 		
 		Keyword arguments:
-		x -- A boolean indicating whether the canvas should be flipped horizontally (default = True)
-		y -- A boolean indicating whether the canvas should be flipped vertically (default = False)
+		x -- A boolean indicating whether the canvas should be flipped
+			 horizontally (default=True)
+		y -- A boolean indicating whether the canvas should be flipped
+			 vertically (default=False)
 		</DOC>"""
 		
 		self.surface = pygame.transform.flip(self.surface, x, y)
@@ -190,8 +197,8 @@ class legacy:
 	def prepare(self):
 	
 		"""<DOC>
-		Finishes up pending canvas operations (if any),
-		so that a subsequent call to show() is extra fast.
+		Finishes up pending canvas operations (if any), so that a subsequent
+		call to show() is extra fast.
 		</DOC>"""
 		
 		pass
@@ -199,26 +206,26 @@ class legacy:
 	def show(self):
 		
 		"""<DOC>
-		Puts the canvas onto the screen.
+		Puts ('flips') the canvas onto the screen
 		
 		Returns:
-		A timestamp containing the time at which the canvas actually appeared
-		on the screen (or a best guess).
+		A timestamp containing the time at which the canvas actually appeared on
+		the screen (or a best guess).
 		</DOC>"""
 
 		self.experiment.surface.blit(self.surface, (0, 0))		
 		pygame.display.flip()
 		return pygame.time.get_ticks()
 		
-	def clear(self, color = None):
+	def clear(self, color=None):
 		
 		"""<DOC>
-		Clears the canvas with the current background color.
+		Clears the canvas with the current background color
 		
 		Keyword arguments:
 		color -- A custom background color to be used. This does not affect the
 				 default background color as set by set_bgcolor().
-				 (Default = None)
+				 (Default=None)
 		</DOC>"""
 		
 		if color != None:
@@ -267,23 +274,26 @@ class legacy:
 		Sets the font for subsequent drawing operations.
 		
 		Arguments:
-		style -- A font located in the resources folder (without the .ttf extension)
+		style -- A font located in the resources folder (without the .ttf
+				 extension)
 		size -- A font size in pixels		
 		</DOC>"""
 		
-		self.font = pygame.font.Font(self.experiment.resource("%s.ttf" % style), size)
+		self.font = pygame.font.Font(self.experiment.resource( \
+			"%s.ttf" % style), size)
 		
-	def fixdot(self, x = None, y = None, color = None):
+	def fixdot(self, x=None, y=None, color=None):
 		
 		"""<DOC>
 		Draws a standard fixation dot, which is a big circle (r = 8px) with the
-		foreground color and a smaller circle (r = 2px) of the background color.
+		foreground color and a smaller circle (r = 2px) of the background color
 		
 		Keyword arguments:
-		x -- The center X coordinate. None = center (default = None)
-		y -- The center Y coordinate. None = center (default = None)
-		color -- A custom human readable foreground color. This does not affect the
-				 default foreground color as set by set_fgcolor(). (Default = None)
+		x -- The center X coordinate. None = center (default=None)
+		y -- The center Y coordinate. None = center (default=None)
+		color -- A custom human readable foreground color. This does not affect
+				 the default foreground color as set by set_fgcolor(). 
+				 (Default=None)
 		</DOC>"""
 
 		if color != None:
@@ -300,7 +310,7 @@ class legacy:
 		pygame.draw.circle(self.surface, color, (x, y), 8, 0)
 		pygame.draw.circle(self.surface, self.bgcolor, (x, y), 2, 0)		
 		
-	def circle(self, x, y, r, fill = False, color = None):
+	def circle(self, x, y, r, fill=False, color=None):
 		
 		"""<DOC>
 		Draws a circle.
@@ -311,14 +321,16 @@ class legacy:
 		r -- The radius
 		
 		Keyword arguments:
-		fill -- A boolean indicating whether the circle is outlined (False) or filled (True)
-		color -- A custom human readable foreground color. This does not affect the
-				 default foreground color as set by set_fgcolor(). (Default = None)
+		fill -- A boolean indicating whether the circle is outlined (False) or
+				filled (True)
+		color -- A custom human readable foreground color. This does not affect
+				 the default foreground color as set by set_fgcolor().
+				 (Default=None)
 		</DOC>"""
 						
-		self.ellipse(x - r, y - r, 2 * r, 2 * r, fill = fill, color = color)
+		self.ellipse(x-r, y-r, 2*r, 2*r, fill=fill, color=color)
 
-	def line(self, sx, sy, ex, ey, color = None):
+	def line(self, sx, sy, ex, ey, color=None):
 		
 		"""<DOC>
 		Draws a line. Should accept parameters where sx > ex or sy > ey as well.
@@ -330,8 +342,9 @@ class legacy:
 		ey -- The bottom coordinate
 		
 		Keyword arguments:
-		color -- A custom human readable foreground color. This does not affect the
-				 default foreground color as set by set_fgcolor(). (Default = None)		
+		color -- A custom human readable foreground color. This does not affect
+				 the default foreground color as set by set_fgcolor().
+				 (Default=None)		
 		</DOC>"""
 		
 		if color != None:
@@ -341,11 +354,11 @@ class legacy:
 				
 		pygame.draw.line(self.surface, color, (sx, sy), (ex, ey), self.penwidth)
 		
-	def arrow(self, sx, sy, ex, ey, arrow_size = 5, color = None):
+	def arrow(self, sx, sy, ex, ey, arrow_size=5, color=None):
 		
 		"""<DOC>
-		Draws an arrow. An arrow is a line, with an arrowhead at (ex, ey). The angle between
-		the arrowhead lines and the arrow line is 45 degrees.
+		Draws an arrow. An arrow is a line, with an arrowhead at (ex, ey). The
+		angle between the arrowhead lines and the arrow line is 45 degrees.
 		
 		Arguments:
 		sx -- The left coordinate
@@ -354,9 +367,10 @@ class legacy:
 		ey -- The bottom coordinate
 		
 		Keyword arguments:
-		arrow_size -- The length of the arrowhead lines (default = 5)
-		color -- A custom human readable foreground color. This does not affect the
-				 default foreground color as set by set_fgcolor(). (Default = None)		
+		arrow_size -- The length of the arrowhead lines (default=5)
+		color -- A custom human readable foreground color. This does not affect
+				 the default foreground color as set by set_fgcolor().
+				 (Default=None)		
 		</DOC>"""
 		
 		if color != None:
@@ -369,13 +383,15 @@ class legacy:
 		
 		_sx = ex + arrow_size * math.cos(a + math.radians(135))
 		_sy = ey + arrow_size * math.sin(a + math.radians(135))
-		pygame.draw.line(self.surface, color, (_sx, _sy), (ex, ey), self.penwidth)		
+		pygame.draw.line(self.surface, color, (_sx, _sy), (ex, ey), \
+			self.penwidth)		
 		
 		_sx = ex + arrow_size * math.cos(a + math.radians(225))
 		_sy = ey + arrow_size * math.sin(a + math.radians(225))
-		pygame.draw.line(self.surface, color, (_sx, _sy), (ex, ey), self.penwidth)		
+		pygame.draw.line(self.surface, color, (_sx, _sy), (ex, ey), \
+			self.penwidth)		
 		
-	def rect(self, x, y, w, h, fill = False, color = None):
+	def rect(self, x, y, w, h, fill=False, color=None):
 		
 		"""<DOC>
 		Draws a rectangle. Accepts parameters where w < 0 or h < 0 as well.
@@ -387,9 +403,11 @@ class legacy:
 		h -- The height.
 				
 		Keyword arguments:
-		fill -- A boolean indicating whether the rectangle is outlined (False) or filled (True)
-		color -- A custom human readable foreground color. This does not affect the
-				 default foreground color as set by set_fgcolor(). (Default = None)		
+		fill -- A boolean indicating whether the rectangle is outlined (False)
+				or filled (True)
+		color -- A custom human readable foreground color. This does not affect
+				 the default foreground color as set by set_fgcolor().
+				 (Default=None)		
 		</DOC>"""
 		
 		if color != None:
@@ -402,7 +420,7 @@ class legacy:
 		else:
 			pygame.draw.rect(self.surface, color, (x, y, w, h), self.penwidth)
 			
-	def ellipse(self, x, y, w, h, fill = False, color = None):
+	def ellipse(self, x, y, w, h, fill=False, color=None):
 		
 		"""<DOC>
 		Draws an ellipse. Accepts parameters where w < 0 or h < 0 as well.
@@ -414,9 +432,11 @@ class legacy:
 		h -- The height.
 				
 		Keyword arguments:
-		fill -- A boolean indicating whether the ellipse is outlined (False) or filled (True)
-		color -- A custom human readable foreground color. This does not affect the
-				 default foreground color as set by set_fgcolor(). (Default = None)		
+		fill -- A boolean indicating whether the ellipse is outlined (False) or
+				filled (True)
+		color -- A custom human readable foreground color. This does not affect
+				 the default foreground color as set by set_fgcolor().
+				 (Default=None)		
 		</DOC>"""
 		
 		if color != None:
@@ -437,8 +457,10 @@ class legacy:
 			# with the background color inside of it
 			i = self.penwidth / 2
 			j = self.penwidth - i			
-			pygame.draw.ellipse(self.surface, color, (x-i, y-i, w+2*i, h+2*i), 0)
-			pygame.draw.ellipse(self.surface, self.bgcolor, (x+j, y+j, w-2*j, h-2*j), 0)			
+			pygame.draw.ellipse(self.surface, color, (x-i, y-i, w+2*i, h+2*i), \
+				0)
+			pygame.draw.ellipse(self.surface, self.bgcolor, (x+j, y+j, w-2*j, \
+				h-2*j), 0)			
 			
 	def text_size(self, text):
 	
@@ -454,7 +476,7 @@ class legacy:
 		
 		return self.font.size(text)				
 		
-	def text(self, text, center = True, x = None, y = None, color = None):
+	def text(self, text, center=True, x=None, y=None, color=None):
 		
 		"""<DOC>
 		Draws text.
@@ -463,12 +485,13 @@ class legacy:
 		text -- The text string
 		
 		Keyword arguments:
-		center -- A boolean indicating whether the coordinates reflect the center (True)
-				  or top-left (default = True)
+		center -- A boolean indicating whether the coordinates reflect the
+				  center (True) or top-left (default = True)
 		x -- The X coordinate. None = center. (default = None)
 		y -- The Y coordinate. None = center. (default = None)
-		color -- A custom human readable foreground color. This does not affect the
-				 default foreground color as set by set_fdcolor(). (Default = None)		
+		color -- A custom human readable foreground color. This does not affect
+				 the default foreground color as set by set_fdcolor().
+				 (Default=None)		
 		</DOC>"""
 		
 		if color != None:
@@ -491,48 +514,55 @@ class legacy:
 			
 		self.surface.blit(surface, (x, y))
 		
-	def textline(self, text, line, color = None):
+	def textline(self, text, line, color=None):
 		
 		"""<DOC>
-		A convenience function that draws a line of text based on a 
-		line number. The text strings are centered on the X-axis and
-		vertically spaced with 1.5 the line height as determined by
-		text_size().
+		A convenience function that draws a line of text based on a line number.
+		The text strings are centered on the X-axis and vertically spaced with
+		1.5 the line height as determined by text_size().
 		
 		Arguments:
 		text -- The text string
-		line -- A line number, where 0 is the center and > 0 is below the center.
-		color -- A custom human readable foreground color. This does not affect the
-				 default foreground color as set by set_fdcolor(). (Default = None)		
+		line -- A line number, where 0 is the center and > 0 is below the
+				center.
+		color -- A custom human readable foreground color. This does not affect
+				 the default foreground color as set by set_fdcolor().
+				 (Default=None)		
 		</DOC>"""
 		
 		size = self.font.size(text)
-		self.text(text, True, self.xcenter(), self.ycenter() + 1.5 * line * size[1], color = color)
+		self.text(text, True, self.xcenter(), self.ycenter()+1.5*line*size[1], \
+			color=color)
 		
-	def image(self, fname, center = True, x = None, y = None, scale = None):
+	def image(self, fname, center=True, x=None, y=None, scale=None):
 		
 		"""<DOC>
-		Draws an image from file. This function does not look in the file
-		pool, but takes an absolute path.
+		Draws an image from file. This function does not look in the file pool,
+		but takes an absolute path.
 		
 		Arguments:
 		fname -- The path of the file
 		
 		Keyword arguments:
 		center -- A boolean indicating whether the given coordinates reflect the
-				  center (True) or the top-left (False) of the image. (default = True)
-		x -- The X coordinate. None = center. (default = None)
-		y -- The Y coordinate. None = center. (default = None)
-		scale -- The scaling factor of the image. 1.0 or None = no scaling, 2.0 = twice as large, etc. (default = None)
+				  center (True) or the top-left (False) of the image
+				  (default=True)
+		x -- The X coordinate. None = center. (default=None)
+		y -- The Y coordinate. None = center. (default=None)
+		scale -- The scaling factor of the image. 1.0 or None = no scaling, 2.0
+				 = twice as large, etc. (default=None)
 		</DOC>"""
 		
 		try:
 			surface = pygame.image.load(fname)
 		except pygame.error as e:
-			raise openexp.exceptions.canvas_error("'%s' is not a supported image format" % fname)
+			raise openexp.exceptions.canvas_error( \
+				"'%s' is not a supported image format" % fname)
 
 		if scale != None:
-			surface = pygame.transform.smoothscale(surface, (int(surface.get_width() * scale), int(surface.get_height() * scale)))
+			surface = pygame.transform.smoothscale(surface, \
+				(int(surface.get_width()*scale), \
+				int(surface.get_height()*scale)))
 
 		size = surface.get_size()
 		
@@ -549,7 +579,7 @@ class legacy:
 		self.surface.blit(surface, (x, y))
 		
 					
-	def gabor(self, x, y, orient, freq, env = "gaussian", size = 96, stdev = 12, phase = 0, col1 = "white", col2 = "black", bgmode = "avg"):
+	def gabor(self, x, y, orient, freq, env="gaussian", size=96, stdev=12, phase=0, col1="white", col2="black", bgmode="avg"):
 	
 		"""<DOC>
 		Draws a Gabor patch. There is a slight difference between the
@@ -565,24 +595,25 @@ class legacy:
 		
 		Keyword arguments:	
 		env -- Any of the following: "gaussian", "linear", "circular",
-			   "rectangle" (default = "gaussian")
-		size -- Size in pixels (default = 96)
+			   "rectangle" (default="gaussian")
+		size -- Size in pixels (default=96)
 		stdev -- Standard deviation in pixels of the gaussian. Only applicable
-				 if env = "gaussian". (default = 12)
-		phase -- Phase of the sinusoid [0.0 .. 1.0] (default = 0)
-		col1: -- Human readable color for the tops (default = "white")
+				 if env = "gaussian". (default=12)
+		phase -- Phase of the sinusoid [0.0 .. 1.0] (default=0)
+		col1: -- Human readable color for the tops (default="white")
 		col2 -- Human readable color for the troughs. Note: This parameter is
-				ignored by the psycho back-end. (default = "black")
+				ignored by the psycho back-end. (default="black")
 		bgmode -- Specifies whether the background is the average of col1 and
 				  col2 (bgmode = "avg", a typical Gabor patch) or equal to col2
 				  ("col2"), useful for blending into the background. Note: this
-				  paramter is ignored by the psycho backend. (default = "avg")
+				  paramter is ignored by the psycho backend. (default="avg")
 		</DOC>"""	
 	
-		surface = _gabor(orient, freq, env, size, stdev, phase, col1, col2, bgmode)
+		surface = _gabor(orient, freq, env, size, stdev, phase, col1, col2, \
+			bgmode)
 		self.surface.blit(surface, (x - 0.5 * size, y - 0.5 * size))
 		
-	def noise_patch(self, x, y, env = "gaussian", size = 96, stdev = 12, col1 = "white", col2 = "black", bgmode = "avg"):
+	def noise_patch(self, x, y, env="gaussian", size=96, stdev=12, col1="white", col2="black", bgmode="avg"):
 	
 		"""<DOC>
 		Draws a patch of noise, with an envelope.
@@ -592,14 +623,18 @@ class legacy:
 		y -- The center Y coordinate
 		
 		Keyword arguments:	
-		env -- Any of the following: "gaussian", "linear", "circular", "rectangle" (default = "gaussian")
-		size -- Size in pixels (default = 96)
-		stdev -- Standard deviation in pixels of the gaussian. Only applicable if env = "gaussian". (default = 12)
-		phase -- Phase of the sinusoid [0.0 .. 1.0] (default = 0)
-		col1: -- Human readable color for the tops (default = "white")
-		col2 -- Human readable color for the troughs (default = "black")
-		bgmode -- Specifies whether the background is the average of col1 and col2 (bgmode = "avg", a typical Gabor patch)
-				  or equal to col2 ("col2"), useful for blending into the background. (default = "avg")
+		env -- Any of the following: "gaussian", "linear", "circular",
+			   "rectangle" (default="gaussian")
+		size -- Size in pixels (default=96)
+		stdev -- Standard deviation in pixels of the gaussian. Only applicable
+				 if env = "gaussian". (default=12)
+		phase -- Phase of the sinusoid [0.0 .. 1.0] (default=0)
+		col1: -- Human readable color for the tops (default="white")
+		col2 -- Human readable color for the troughs (default="black")
+		bgmode -- Specifies whether the background is the average of col1 and
+				  col2 (bgmode="avg", a typical Gabor patch) or equal to col2
+				  ("col2"), useful for blending into the background.
+				  (default="avg")
 		</DOC>"""	
 		
 		surface = _noise_patch(env, size, stdev, col1, col2, bgmode)
@@ -615,10 +650,12 @@ def init_display(experiment):
 	Initialize the display before the experiment begins.
 	
 	Arguments:
-	experiment -- An instance of libopensesame.experiment.experiment. The following properties are
-				  of particular importance: experimnent.fullscreen (bool), experiment.width (int) and
-				  experiment.height (int). The experiment also contains default font settings as
-				  experriment.font_family (str) and experiment.font_size (int).
+	experiment -- An instance of libopensesame.experiment.experiment. The
+				  following properties are of particular importance:
+				  experiment.fullscreen (bool), experiment.width (int) and
+				  experiment.height (int). The experiment also contains default
+				  font settings as experiment.font_family (str) and
+				  experiment.font_size (int).
 	"""
 			
 	# Intialize PyGame
@@ -659,10 +696,11 @@ def init_display(experiment):
 	experiment.surface = pygame.display.get_surface()
 
 	# Create a font, falling back to the default font
-	experiment.font = pygame.font.Font(experiment.resource("%s.ttf" % experiment.font_family), experiment.font_size)			
+	experiment.font = pygame.font.Font(experiment.resource("%s.ttf" \
+		% experiment.font_family), experiment.font_size)			
 	if experiment.font == None:
-		if experiment.debug:
-			print "openexp._canvas.init_display(): '%s.ttf' not found, falling back to default font" % experiment.font_family
+		debug.msg("'%s.ttf' not found, falling back to default font" \
+			% experiment.font_family)
 		experiment.font = pygame.font.Font(None, experiment.font_size)
 		
 	# Set the time functions to use pygame
@@ -683,8 +721,8 @@ def close_display(experiment):
 	pygame.display.quit()
 	
 """
-The functions below are specific to the legacy backend and do not have
-to be implemented in other backends.
+The functions below are specific to the legacy backend and do not have to be
+implemented in other backends.
 """
 	
 canvas_cache = {}
