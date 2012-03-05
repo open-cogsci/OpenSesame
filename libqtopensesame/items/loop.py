@@ -517,10 +517,10 @@ class loop(libopensesame.loop.loop, qtitem.qtitem):
 		Keyword arguments:
 		dummy -- a dummy argument passed by the signal handler (default = None)
 		"""
-
+		
 		if self.lock or not qtitem.qtitem.apply_edit_changes(self, False):
 			return
-
+			
 		self.lock = True
 
 		self.matrix = {}
@@ -544,7 +544,7 @@ class loop(libopensesame.loop.loop, qtitem.qtitem):
 		self.experiment.main_window.refresh(self.name)
 		self.loop_table.setCurrentCell(row, column)
 		self.lock = False
-
+		
 	def item_tree_info(self):
 
 		"""

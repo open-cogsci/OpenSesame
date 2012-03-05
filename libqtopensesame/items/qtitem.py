@@ -634,24 +634,24 @@ class qtitem(object):
 			combobox.currentIndexChanged.connect(self.apply_edit_changes)	
 
 		for var, spinbox in self.auto_spinbox.iteritems():
-			spinbox.valueChanged.disconnect()
+			spinbox.editingFinished.disconnect()
 			if self.has(var):
 				try:
 					spinbox.setValue(self.get(var))
 				except Exception as e:
 					self.experiment.notify("Failed to set control '%s': %s" \
 						% (var, e))
-			spinbox.valueChanged.connect(self.apply_edit_changes)
+			spinbox.editingFinished.connect(self.apply_edit_changes)
 
 		for var, slider in self.auto_slider.iteritems():
-			slider.valueChanged.disconnect()
+			slider.editingFinished.disconnect()
 			if self.has(var):
 				try:
 					slider.setValue(self.get(var))
 				except Exception as e:
 					self.experiment.notify("Failed to set control '%s': %s" \
 						% (var, e))
-			slider.valueChanged.connect(self.apply_edit_changes)
+			slider.editingFinished.connect(self.apply_edit_changes)
 						
 		for var, checkbox in self.auto_checkbox.iteritems():
 			checkbox.toggled.disconnect()
@@ -681,6 +681,7 @@ class qtitem(object):
 		rebuild -- deprecated (does nothing) (default=True)
 		"""
 
+		debug.msg()
 		for var, edit in self.auto_line_edit.iteritems():
 			if type(var) == str:
 				val = self.experiment.usanitize(edit.text()).strip()
@@ -736,7 +737,8 @@ class qtitem(object):
 		
 		if isinstance(widget, QtGui.QSpinBox) or isinstance(widget, \
 			QtGui.QDoubleSpinBox):
-			widget.valueChanged.connect(self.apply_edit_changes)
+			#widget.valueChanged.connect(self.apply_edit_changes)
+			widget.editingFinished.connect(self.apply_edit_changes)
 			self.auto_spinbox[var] = widget
 			
 		elif isinstance(widget, QtGui.QComboBox):
@@ -744,7 +746,8 @@ class qtitem(object):
 			self.auto_combobox[var] = widget
 			
 		elif isinstance(widget, QtGui.QSlider):
-			widget.valueChanged.connect(self.apply_edit_changes)
+			#widget.valueChanged.connect(self.apply_edit_changes)
+			widget.editingFinished.connect(self.apply_edit_changes)
 			self.auto_slider[var] = widget
 			
 		elif isinstance(widget, QtGui.QLineEdit):

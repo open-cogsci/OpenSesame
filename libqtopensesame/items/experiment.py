@@ -124,12 +124,12 @@ class experiment(libopensesame.experiment.experiment):
 		widget.setToolTip(0, "General options")
 		widget.name = "__general__"
 		self.ui.itemtree.insertTopLevelItem(0, widget)
-
+		
 		if self.start in self.items:
 			items.append(self.items[self.start])
 			self.items[self.start].build_item_tree(widget, items)
 		widget.setExpanded(True)
-
+		
 		# Next build a tree with left over items
 		self.unused_widget = QtGui.QTreeWidgetItem(self.ui.itemtree)
 		self.unused_widget.setText(0, "Unused items")
@@ -138,7 +138,7 @@ class experiment(libopensesame.experiment.experiment):
 		self.unused_widget.setToolTip(0, "Unused items")
 		self.unused_widget.setToolTip(1, "Unused items")
 		self.ui.itemtree.insertTopLevelItem(1, widget)
-
+		
 		self.unused_items = []
 		c = 0
 		for i in self.items:
@@ -147,7 +147,7 @@ class experiment(libopensesame.experiment.experiment):
 				self.items[i].build_item_tree(self.unused_widget, items)
 				c += 1
 		self.unused_widget.setExpanded(False)
-
+		
 		font = QtGui.QFont()
 		font.setPointSize(8)
 		font.setItalic(True)
@@ -157,7 +157,7 @@ class experiment(libopensesame.experiment.experiment):
 		else:
 			self.unused_widget.setText(1, "empty")
 		self.unused_widget.setFont(1, font)
-
+		
 		return items
 
 	def rename(self, from_name, to_name):
