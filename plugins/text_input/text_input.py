@@ -221,7 +221,6 @@ class qttext_input(text_input, qtplugin.qtplugin):
 		# - creates a QLineEdit
 		# qtplugin.add_spinbox_control(varname, label, min, max, suffix = suffix, prefix = prefix)
 
-		self.add_editor_control("_question", "Question", default = "Your question?", tooltip = "The question to be displayed above the input field")
 		self.add_spinbox_control("linewidth", "Maximum line width", 100, 2000, suffix = "px", tooltip = "The maximum width of the input field in pixels")
 		self.add_combobox_control("frame", "Draw frame", ["yes", "no"], tooltip = "If 'yes', a rectangular frame will be drawn around the input field")
 		self.add_spinbox_control("frame_width", "Frame width", 1, 512, suffix = "px", tooltip = "The width of the frame (if enabled)")
@@ -231,10 +230,7 @@ class qttext_input(text_input, qtplugin.qtplugin):
 		self.add_spinbox_control("font_size", "Font size", 1, 512, suffix = "pt", tooltip = "The font size")
 		self.add_combobox_control("accept_on", "Accept on", ["return press", "timeout", "return press or timeout"], tooltip = "Indicates when the input text should be accepted")
 		self.add_spinbox_control("timeout", "Timeout (if applicable)", 1, 100000, suffix = "ms", tooltip = "Timeout value")		
-
-		# Add a stretch to the edit_vbox, so that the controls do not
-		# stretch to the bottom of the window.
-		self.edit_vbox.addStretch()
+		self.add_editor_control("_question", "Question", default = "Your question?", tooltip = "The question to be displayed above the input field")
 
 		self.lock = False
 
