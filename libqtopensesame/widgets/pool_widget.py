@@ -15,7 +15,7 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
-from libopensesame import debug
+from libopensesame import debug, misc
 from libqtopensesame.ui import pool_widget_ui
 from PyQt4 import QtCore, QtGui
 import os
@@ -86,20 +86,8 @@ class pool_widget(QtGui.QWidget):
 	def browse(self):
 
 		"""Open the pool folder in the file manager in an OS specific way"""
-
-		if platform.system() == "Linux":
-			pid = subprocess.Popen(["xdg-open", \
-				self.main_window.experiment.pool_folder]).pid
-		elif platform.system() == "Darwin":
-			pid = subprocess.Popen(["open", \
-				self.main_window.experiment.pool_folder]).pid
-		elif platform.system() == "Windows":
-			os.startfile(self.main_window.experiment.pool_folder)
-		else:
-			self.main_window.experiment.notify( \
-				"I'm sorry, but I don't know how to open the pool folder on your platform!")
-
-		debug.msg("pool folder opened in file manager")
+		
+		misc.open_url(self.main_window.experiment.pool_folder)
 
 	def add(self, files):
 
@@ -212,16 +200,7 @@ class pool_widget(QtGui.QWidget):
 		path -- the full path to the file to be opened
 		"""
 
-		if platform.system() == "Windows":
-			try:
-				os.startfile(path)
-			except:
-				self.main_window.experiment.notify( \
-					"Don't know how to open '%s'" % os.path.basename(path))
-		elif platform.system() == "Linux":
-			subprocess.Popen(["xdg-open", path]).pid
-		elif platform.system() == "Darwin":
-			subprocess.Popen(["open", path]).pid
+		misc.open_url(path)
 
 	def activate_file(self, item):
 
