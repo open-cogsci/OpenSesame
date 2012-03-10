@@ -29,6 +29,8 @@ import sip
 class general_properties(QtGui.QWidget):
 
 	"""The QWidget for the general properties tab"""
+	
+	backend_format = "%s [%s]"
 
 	def __init__(self, parent=None):
 
@@ -100,7 +102,9 @@ class general_properties(QtGui.QWidget):
 		# Set the backend combobox
 		for backend in openexp.backend_info.backend_list:
 			desc = openexp.backend_info.backend_list[backend]["description"]
-			self.ui.combobox_backend.addItem("%s -- %s" % (backend, desc))
+			icon = openexp.backend_info.backend_list[backend]["icon"]
+			self.ui.combobox_backend.addItem(self.main_window.theme.qicon( \
+				icon), self.backend_format % (backend, desc))
 		self.ui.combobox_backend.currentIndexChanged.connect(self.apply_changes)
 
 		# Script editor
@@ -341,7 +345,8 @@ class general_properties(QtGui.QWidget):
 		else:
 			self.ui.combobox_backend.setDisabled(False)
 			desc = openexp.backend_info.backend_list[backend]["description"]
-			i = self.ui.combobox_backend.findText("%s -- %s" % (backend, desc))
+			i = self.ui.combobox_backend.findText(self.backend_format \
+				% (backend, desc))
 			self.ui.combobox_backend.setCurrentIndex(i)
 
 		# Set the resolution

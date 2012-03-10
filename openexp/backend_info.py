@@ -19,33 +19,36 @@ import sys
 import os.path
 
 legacy = {
-	"description" : "Uses PyGame, maximum stability", \
+	"description" : "uses PyGame, maximum stability", \
 	"authors" : ["Sebastiaan Mathot"], \
 	"canvas" : "legacy", \
 	"keyboard" : "legacy", \
 	"mouse" : "legacy", \
 	"sampler" : "legacy", \
-	"synth" : "legacy" \
+	"synth" : "legacy", \
+	"icon" : "os-pygame"
 	}
 	
 opengl = {
-	"description" : "Uses PyGame and OpenGL", \
+	"description" : "uses PyGame and OpenGL", \
 	"authors" : ["Sebastiaan Mathot", "Per Sederberg"], \
 	"canvas" : "opengl", \
 	"keyboard" : "legacy", \
 	"mouse" : "legacy", \
 	"sampler" : "legacy", \
-	"synth" : "legacy" \
+	"synth" : "legacy", \
+	"icon" : "os-pygame"	
 	}	
 
 psycho = {
-	"description" : "Uses PsychoPy, increased temporal precision", \
+	"description" : "uses PsychoPy, increased temporal precision", \
 	"authors" : ["Sebastiaan Mathot", "Jonathan Peirce"], \
 	"canvas" : "psycho", \
 	"keyboard" : "psycho", \
 	"mouse" : "psycho", \
 	"sampler" : "legacy", \
-	"synth" : "legacy" \
+	"synth" : "legacy", \
+	"icon" : "os-psychopy"	
 	}
 	
 backend_list = {}
