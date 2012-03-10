@@ -66,6 +66,9 @@ config = {
 	"opensesamerun_exec" : "",
 	"pos" : QtCore.QPoint(200, 200),
 	"size" : QtCore.QSize(1000, 600),
+	"url_website" : "http://www.cogsci.nl/opensesame",
+	"url_facebook" : "http://www.facebook.com/cognitivescience",
+	"url_twitter" : "http://www.twitter.com/cogscinl",
 	"version_check_url" : \
 		"http://files.cogsci.nl/software/opensesame/MOST_RECENT_VERSION.TXT"
 	}

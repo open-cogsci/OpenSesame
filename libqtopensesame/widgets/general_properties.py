@@ -22,6 +22,7 @@ import libopensesame.exceptions
 from libqtopensesame.ui import general_widget_ui
 from libqtopensesame.widgets import color_edit, inline_editor, header_widget
 from libqtopensesame.items import experiment
+from libqtopensesame.misc import config
 import openexp.backend_info
 import sip
 
@@ -43,12 +44,14 @@ class general_properties(QtGui.QWidget):
 
 		# Set the header, with the icon, label and script button
 		self.header_widget = general_header_widget(self.main_window.experiment)
-		button_help = QtGui.QPushButton(self.main_window.experiment.icon("help"), "")
+		button_help = QtGui.QPushButton(self.main_window.experiment.icon( \
+			"help"), "")
 		button_help.setIconSize(QtCore.QSize(16, 16))
 		button_help.clicked.connect(self.open_help_tab)
 		button_help.setToolTip("Tell me more about OpenSesame!")
 		header_hbox = QtGui.QHBoxLayout()
-		header_hbox.addWidget(self.main_window.experiment.label_image("experiment"))
+		header_hbox.addWidget(self.main_window.experiment.label_image( \
+			"experiment"))
 		header_hbox.addWidget(self.header_widget)
 		header_hbox.addStretch()
 		header_hbox.addWidget(button_help)
@@ -63,22 +66,36 @@ class general_properties(QtGui.QWidget):
 		self.main_window.theme.apply_theme(self)
 
 		# The foeground and background widgets get a special treatment
-		self.ui.edit_foreground = color_edit.color_edit(self.main_window.experiment)
-		self.ui.edit_background = color_edit.color_edit(self.main_window.experiment)
-		self.ui.edit_foreground.setSizePolicy(QtGui.QSizePolicy.Fixed, QtGui.QSizePolicy.Fixed)
-		self.ui.edit_background.setSizePolicy(QtGui.QSizePolicy.Fixed, QtGui.QSizePolicy.Fixed)
-		self.ui.layout_general_properties.addWidget(self.ui.edit_foreground, 3, 5)
-		self.ui.layout_general_properties.addWidget(self.ui.edit_background, 4, 5)
-		QtCore.QObject.connect(self.ui.edit_foreground, QtCore.SIGNAL("set_color"), self.apply_changes)
-		QtCore.QObject.connect(self.ui.edit_background, QtCore.SIGNAL("set_color"), self.apply_changes)
+		self.ui.edit_foreground = color_edit.color_edit( \
+			self.main_window.experiment)
+		self.ui.edit_background = color_edit.color_edit( \
+			self.main_window.experiment)
+		self.ui.edit_foreground.setSizePolicy(QtGui.QSizePolicy.Fixed, \
+			QtGui.QSizePolicy.Fixed)
+		self.ui.edit_background.setSizePolicy(QtGui.QSizePolicy.Fixed, \
+			QtGui.QSizePolicy.Fixed)
+		self.ui.layout_general_properties.addWidget(self.ui.edit_foreground, \
+			3, 5)
+		self.ui.layout_general_properties.addWidget(self.ui.edit_background, \
+			4, 5)
+		QtCore.QObject.connect(self.ui.edit_foreground, QtCore.SIGNAL( \
+			"set_color"), self.apply_changes)
+		QtCore.QObject.connect(self.ui.edit_background, QtCore.SIGNAL( \
+			"set_color"), self.apply_changes)
 
 		# Connect the rest
 		self.ui.combobox_start.currentIndexChanged.connect(self.apply_changes)
 		self.ui.spinbox_width.editingFinished.connect(self.apply_changes)
 		self.ui.spinbox_height.editingFinished.connect(self.apply_changes)
 		self.ui.group_script.toggled.connect(self.toggle_script_editor)
-		self.ui.group_backend_settings.toggled.connect(self.toggle_backend_settings)
-		self.ui.label_opensesame.setText(unicode(self.ui.label_opensesame.text()).replace("[version]", misc.version).replace("[codename]", misc.codename))
+		self.ui.group_backend_settings.toggled.connect( \
+			self.toggle_backend_settings)
+		self.ui.label_opensesame.setText(unicode( \
+			self.ui.label_opensesame.text()).replace("[version]", \
+			misc.version).replace("[codename]", misc.codename))			
+		self.ui.label_website.mousePressEvent = self.open_website
+		self.ui.label_facebook.mousePressEvent = self.open_facebook
+		self.ui.label_twitter.mousePressEvent = self.open_twitter
 
 		# Set the backend combobox
 		for backend in openexp.backend_info.backend_list:
@@ -87,7 +104,8 @@ class general_properties(QtGui.QWidget):
 		self.ui.combobox_backend.currentIndexChanged.connect(self.apply_changes)
 
 		# Script editor
-		self.edit_script = inline_editor.inline_editor(self.main_window.experiment, syntax="opensesame")
+		self.edit_script = inline_editor.inline_editor( \
+			self.main_window.experiment, syntax="opensesame")
 		self.edit_script.apply.clicked.connect(self.apply_script)
 		self.ui.layout_script.addWidget(self.edit_script)
 
@@ -112,10 +130,12 @@ class general_properties(QtGui.QWidget):
 		"""
 
 		if force or self.ui.group_backend_settings.isChecked():
-			for backend_type in ["canvas", "keyboard", "mouse", "synth", "sampler"]:
-				backend = self.main_window.experiment.get("%s_backend" % backend_type)
-				exec("from openexp._%s.%s import %s as _backend" % (backend_type, \
-					backend, backend))
+			for backend_type in ["canvas", "keyboard", "mouse", "synth", \
+				"sampler"]:
+				backend = self.main_window.experiment.get("%s_backend" \
+					% backend_type)
+				exec("from openexp._%s.%s import %s as _backend" % ( \
+					backend_type, backend, backend))
 				group = eval("self.ui.group_%s" % backend_type)
 				layout = eval("self.ui.layout_%s" % backend_type)
 				label = eval("self.ui.label_%s" % backend_type)
@@ -127,12 +147,13 @@ class general_properties(QtGui.QWidget):
 					w.widget().hide()
 					sip.delete(w)
 
-				if not hasattr(_backend, "settings") or _backend.settings == None:
+				if not hasattr(_backend, "settings") or _backend.settings == \
+					None:
 					label.setText("No settings for %s" % backend)
 				else:
 					label.setText("Settings for %s:" % backend)
-					layout.addWidget(settings_widget(self.main_window.experiment, \
-						_backend.settings, self))
+					layout.addWidget(settings_widget( \
+						self.main_window.experiment, _backend.settings, self))
 
 	def toggle_spacer(self):
 
@@ -176,6 +197,24 @@ class general_properties(QtGui.QWidget):
 		"""Open the general help tab"""
 
 		self.main_window.open_general_help_tab()
+		
+	def open_website(self, dummy=None):
+	
+		"""Open the main website"""
+		
+		misc.open_url(config.get_config("url_website"))
+		
+	def open_facebook(self, dummy=None):
+	
+		"""Open Facebook page"""	
+
+		misc.open_url(config.get_config("url_facebook"))
+
+	def open_twitter(self, dummy=None):
+	
+		"""Open Twitter page"""	
+	
+		misc.open_url(config.get_config("url_twitter"))
 
 	def apply_script(self):
 

@@ -256,3 +256,24 @@ def module_versions():
 	except:
 		s += "\nPyglet not available"
 	return s
+	
+def open_url(url):
+
+	"""
+	Open a URL in an OS specific way. The URL can be a file, website, etc.
+	
+	Arguments:
+	url -- a url
+	"""
+
+	import platform
+	import subprocess
+	if platform.system() == "Linux":
+		pid = subprocess.Popen(["xdg-open", url]).pid
+	elif platform.system() == "Darwin":
+		pid = subprocess.Popen(["open", url]).pid
+	elif platform.system() == "Windows":
+		os.startfile(url)
+	else:
+		debug.msg("Failed to open '%s'" % url, reason="warning")
+	debug.msg(url)

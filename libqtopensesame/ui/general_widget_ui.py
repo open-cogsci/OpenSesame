@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'resources/ui/general_widget.ui'
 #
-# Created: Mon Mar  5 11:58:08 2012
+# Created: Sat Mar 10 17:29:36 2012
 #      by: PyQt4 UI code generator 4.9.1
 #
 # WARNING! All changes made in this file will be lost!
@@ -17,7 +17,7 @@ except AttributeError:
 class Ui_Form(object):
     def setupUi(self, Form):
         Form.setObjectName(_fromUtf8("Form"))
-        Form.resize(839, 749)
+        Form.resize(1017, 805)
         self.verticalLayout = QtGui.QVBoxLayout(Form)
         self.verticalLayout.setMargin(0)
         self.verticalLayout.setObjectName(_fromUtf8("verticalLayout"))
@@ -83,7 +83,7 @@ class Ui_Form(object):
         self.scrollarea_backend_settings.setWidgetResizable(True)
         self.scrollarea_backend_settings.setObjectName(_fromUtf8("scrollarea_backend_settings"))
         self.scrollAreaWidgetContents = QtGui.QWidget()
-        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 821, 273))
+        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 999, 302))
         self.scrollAreaWidgetContents.setObjectName(_fromUtf8("scrollAreaWidgetContents"))
         self.verticalLayout_7 = QtGui.QVBoxLayout(self.scrollAreaWidgetContents)
         self.verticalLayout_7.setObjectName(_fromUtf8("verticalLayout_7"))
@@ -166,16 +166,61 @@ class Ui_Form(object):
         self.verticalLayout_6.setObjectName(_fromUtf8("verticalLayout_6"))
         spacerItem = QtGui.QSpacerItem(20, 193, QtGui.QSizePolicy.Minimum, QtGui.QSizePolicy.Expanding)
         self.verticalLayout_6.addItem(spacerItem)
+        self.frame = QtGui.QFrame(self.widget_2)
+        self.frame.setFrameShape(QtGui.QFrame.HLine)
+        self.frame.setFrameShadow(QtGui.QFrame.Raised)
+        self.frame.setObjectName(_fromUtf8("frame"))
+        self.verticalLayout_6.addWidget(self.frame)
         self.verticalLayout_2.addWidget(self.widget_2)
-        self.label_opensesame = QtGui.QLabel(self.spacer)
-        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Preferred, QtGui.QSizePolicy.Fixed)
+        self.widget_3 = QtGui.QWidget(self.spacer)
+        self.widget_3.setObjectName(_fromUtf8("widget_3"))
+        self.horizontalLayout = QtGui.QHBoxLayout(self.widget_3)
+        self.horizontalLayout.setSpacing(0)
+        self.horizontalLayout.setMargin(0)
+        self.horizontalLayout.setMargin(0)
+        self.horizontalLayout.setObjectName(_fromUtf8("horizontalLayout"))
+        self.widget_5 = QtGui.QWidget(self.widget_3)
+        self.widget_5.setObjectName(_fromUtf8("widget_5"))
+        self.verticalLayout_3 = QtGui.QVBoxLayout(self.widget_5)
+        self.verticalLayout_3.setSpacing(0)
+        self.verticalLayout_3.setMargin(0)
+        self.verticalLayout_3.setMargin(0)
+        self.verticalLayout_3.setObjectName(_fromUtf8("verticalLayout_3"))
+        self.widget_4 = QtGui.QWidget(self.widget_5)
+        self.widget_4.setObjectName(_fromUtf8("widget_4"))
+        self.horizontalLayout_2 = QtGui.QHBoxLayout(self.widget_4)
+        self.horizontalLayout_2.setSpacing(4)
+        self.horizontalLayout_2.setMargin(0)
+        self.horizontalLayout_2.setMargin(0)
+        self.horizontalLayout_2.setObjectName(_fromUtf8("horizontalLayout_2"))
+        self.label_facebook = QtGui.QLabel(self.widget_4)
+        self.label_facebook.setObjectName(_fromUtf8("label_facebook"))
+        self.horizontalLayout_2.addWidget(self.label_facebook)
+        self.label_twitter = QtGui.QLabel(self.widget_4)
+        self.label_twitter.setObjectName(_fromUtf8("label_twitter"))
+        self.horizontalLayout_2.addWidget(self.label_twitter)
+        self.label_website = QtGui.QLabel(self.widget_4)
+        self.label_website.setObjectName(_fromUtf8("label_website"))
+        self.horizontalLayout_2.addWidget(self.label_website)
+        self.label_cogscinl = QtGui.QLabel(self.widget_4)
+        self.label_cogscinl.setObjectName(_fromUtf8("label_cogscinl"))
+        self.horizontalLayout_2.addWidget(self.label_cogscinl)
+        spacerItem1 = QtGui.QSpacerItem(40, 20, QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
+        self.horizontalLayout_2.addItem(spacerItem1)
+        self.verticalLayout_3.addWidget(self.widget_4)
+        self.horizontalLayout.addWidget(self.widget_5)
+        spacerItem2 = QtGui.QSpacerItem(40, 20, QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
+        self.horizontalLayout.addItem(spacerItem2)
+        self.label_opensesame = QtGui.QLabel(self.widget_3)
+        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Preferred, QtGui.QSizePolicy.Minimum)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.label_opensesame.sizePolicy().hasHeightForWidth())
         self.label_opensesame.setSizePolicy(sizePolicy)
         self.label_opensesame.setAlignment(QtCore.Qt.AlignBottom|QtCore.Qt.AlignRight|QtCore.Qt.AlignTrailing)
         self.label_opensesame.setObjectName(_fromUtf8("label_opensesame"))
-        self.verticalLayout_2.addWidget(self.label_opensesame)
+        self.horizontalLayout.addWidget(self.label_opensesame)
+        self.verticalLayout_2.addWidget(self.widget_3)
         self.verticalLayout.addWidget(self.spacer)
 
         self.retranslateUi(Form)
@@ -211,12 +256,13 @@ class Ui_Form(object):
         self.group_synth.setTitle(QtGui.QApplication.translate("Form", "Synth", None, QtGui.QApplication.UnicodeUTF8))
         self.label_synth.setText(QtGui.QApplication.translate("Form", "TextLabel", None, QtGui.QApplication.UnicodeUTF8))
         self.group_script.setTitle(QtGui.QApplication.translate("Form", "Show script editor", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_opensesame.setText(QtGui.QApplication.translate("Form", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
-"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
-"p, li { white-space: pre-wrap; }\n"
-"</style></head><body style=\" font-family:\'Ubuntu\'; font-size:10pt; font-weight:400; font-style:normal;\">\n"
-"<p align=\"right\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:11pt; font-weight:600;\">OpenSesame [version]</span></p>\n"
-"<p align=\"right\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt; font-weight:600; font-style:italic;\">[codename]</span></p>\n"
-"<p align=\"right\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt;\">Copyright Sebastiaan Mathôt (2010-2012)</span></p>\n"
-"<p align=\"right\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><a href=\"http://www.cogsci.nl/opensesame\"><span style=\" font-size:9pt; text-decoration: underline; color:#0000ff;\">http://www.cogsci.nl/opensesame</span></a></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_facebook.setToolTip(QtGui.QApplication.translate("Form", "Visit Facebook page", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_facebook.setText(QtGui.QApplication.translate("Form", "F", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_twitter.setToolTip(QtGui.QApplication.translate("Form", "Visit Twitter page", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_twitter.setText(QtGui.QApplication.translate("Form", "T", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_website.setToolTip(QtGui.QApplication.translate("Form", "Visit cogsci.nl", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_website.setText(QtGui.QApplication.translate("Form", "H", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_cogscinl.setText(QtGui.QApplication.translate("Form", "<html><head/><body><p>COGSCIdotNL // cognitive science and more</p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_opensesame.setText(QtGui.QApplication.translate("Form", "OpenSesame [version] [codename]\n"
+"Copyright Sebastiaan Mathôt (2010-2012)", None, QtGui.QApplication.UnicodeUTF8))
 

@@ -99,6 +99,7 @@ image,image-x-generic,
 indent,format-indent-more,
 inline_script,os-inline_script,
 keyboard_response,os-keyboard_response,
+label_facebook,facebook,24
 label_gabor,os-gabor,32
 label_info,help-about,16
 label_noise_patch,os-noise,32
@@ -115,9 +116,11 @@ label_stdout,bug-buddy,
 label_synth,os-synth,32
 label_synth_script,utilities-terminal,32
 label_template,gnome-app-install-star,32
+label_twitter,twitter,24
 label_update_dialog,update-manager,32
 label_variables_search,edit-find,16
 label_variables,system-search,
+label_website,os-experiment,24
 label_wizard,gnome-app-install-star,32
 logger,os-logger,
 loop,os-loop,
