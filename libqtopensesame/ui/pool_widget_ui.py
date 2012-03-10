@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'resources/ui/pool_widget.ui'
 #
-# Created: Sat Mar 10 17:29:37 2012
+# Created: Sat Mar 10 17:39:08 2012
 #      by: PyQt4 UI code generator 4.9.1
 #
 # WARNING! All changes made in this file will be lost!
@@ -101,6 +101,7 @@ class Ui_Form(object):
         icon2 = QtGui.QIcon()
         icon2.addPixmap(QtGui.QPixmap(_fromUtf8(":/icons/add.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.button_pool_add.setIcon(icon2)
+        self.button_pool_add.setIconSize(QtCore.QSize(16, 16))
         self.button_pool_add.setObjectName(_fromUtf8("button_pool_add"))
         self.horizontalLayout_2.addWidget(self.button_pool_add)
         self.button_refresh = QtGui.QPushButton(self.widget_2)
@@ -108,6 +109,7 @@ class Ui_Form(object):
         icon3 = QtGui.QIcon()
         icon3.addPixmap(QtGui.QPixmap(_fromUtf8(":/icons/refresh.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.button_refresh.setIcon(icon3)
+        self.button_refresh.setIconSize(QtCore.QSize(16, 16))
         self.button_refresh.setObjectName(_fromUtf8("button_refresh"))
         self.horizontalLayout_2.addWidget(self.button_refresh)
         self.button_browse_pool = QtGui.QPushButton(self.widget_2)

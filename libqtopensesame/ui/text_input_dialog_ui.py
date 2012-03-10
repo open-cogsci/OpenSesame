@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'resources/ui/text_input_dialog.ui'
 #
-# Created: Sat Mar 10 17:29:37 2012
+# Created: Sat Mar 10 17:39:08 2012
 #      by: PyQt4 UI code generator 4.9.1
 #
 # WARNING! All changes made in this file will be lost!
@@ -34,16 +34,16 @@ class Ui_Dialog(object):
         self.horizontalLayout.setMargin(5)
         self.horizontalLayout.setMargin(0)
         self.horizontalLayout.setObjectName(_fromUtf8("horizontalLayout"))
-        self.label = QtGui.QLabel(self.widget)
+        self.label_text_input = QtGui.QLabel(self.widget)
         sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Fixed, QtGui.QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.label.sizePolicy().hasHeightForWidth())
-        self.label.setSizePolicy(sizePolicy)
-        self.label.setText(_fromUtf8(""))
-        self.label.setPixmap(QtGui.QPixmap(_fromUtf8(":/icons/about_large.png")))
-        self.label.setObjectName(_fromUtf8("label"))
-        self.horizontalLayout.addWidget(self.label)
+        sizePolicy.setHeightForWidth(self.label_text_input.sizePolicy().hasHeightForWidth())
+        self.label_text_input.setSizePolicy(sizePolicy)
+        self.label_text_input.setText(_fromUtf8(""))
+        self.label_text_input.setPixmap(QtGui.QPixmap(_fromUtf8(":/icons/about_large.png")))
+        self.label_text_input.setObjectName(_fromUtf8("label_text_input"))
+        self.horizontalLayout.addWidget(self.label_text_input)
         self.label_message = QtGui.QLabel(self.widget)
         font = QtGui.QFont()
         font.setPointSize(11)

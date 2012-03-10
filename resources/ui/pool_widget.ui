@@ -163,6 +163,12 @@ p, li { white-space: pre-wrap; }
          <iconset>
           <normaloff>:/icons/add.png</normaloff>:/icons/add.png</iconset>
         </property>
+        <property name="iconSize">
+         <size>
+          <width>16</width>
+          <height>16</height>
+         </size>
+        </property>
        </widget>
       </item>
       <item>
@@ -173,6 +179,12 @@ p, li { white-space: pre-wrap; }
         <property name="icon">
          <iconset>
           <normaloff>:/icons/refresh.png</normaloff>:/icons/refresh.png</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>16</width>
+          <height>16</height>
+         </size>
         </property>
        </widget>
       </item>
