@@ -19,7 +19,7 @@ import sys
 import os.path
 
 legacy = {
-	"description" : "Default PyGame backend, a safe choice", \
+	"description" : "Uses PyGame, maximum stability", \
 	"authors" : ["Sebastiaan Mathot"], \
 	"canvas" : "legacy", \
 	"keyboard" : "legacy", \
@@ -29,7 +29,7 @@ legacy = {
 	}
 	
 opengl = {
-	"description" : "Uses PyGame in OpenGL mode", \
+	"description" : "Uses PyGame and OpenGL", \
 	"authors" : ["Sebastiaan Mathot", "Per Sederberg"], \
 	"canvas" : "opengl", \
 	"keyboard" : "legacy", \
@@ -39,7 +39,7 @@ opengl = {
 	}	
 
 psycho = {
-	"description" : "Uses PsychoPy", \
+	"description" : "Uses PsychoPy, increased temporal precision", \
 	"authors" : ["Sebastiaan Mathot", "Jonathan Peirce"], \
 	"canvas" : "psycho", \
 	"keyboard" : "psycho", \
