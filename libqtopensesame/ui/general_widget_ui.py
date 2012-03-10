@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'resources/ui/general_widget.ui'
 #
-# Created: Sat Mar 10 17:39:08 2012
+# Created: Sat Mar 10 17:45:47 2012
 #      by: PyQt4 UI code generator 4.9.1
 #
 # WARNING! All changes made in this file will be lost!
@@ -17,7 +17,7 @@ except AttributeError:
 class Ui_Form(object):
     def setupUi(self, Form):
         Form.setObjectName(_fromUtf8("Form"))
-        Form.resize(1017, 805)
+        Form.resize(807, 805)
         self.verticalLayout = QtGui.QVBoxLayout(Form)
         self.verticalLayout.setMargin(0)
         self.verticalLayout.setObjectName(_fromUtf8("verticalLayout"))
@@ -32,45 +32,40 @@ class Ui_Form(object):
         self.layout_general_properties.setMargin(0)
         self.layout_general_properties.setMargin(0)
         self.layout_general_properties.setObjectName(_fromUtf8("layout_general_properties"))
+        self.label_2 = QtGui.QLabel(self.widget)
+        self.label_2.setObjectName(_fromUtf8("label_2"))
+        self.layout_general_properties.addWidget(self.label_2, 4, 0, 1, 1)
+        self.combobox_backend = QtGui.QComboBox(self.widget)
+        self.combobox_backend.setObjectName(_fromUtf8("combobox_backend"))
+        self.layout_general_properties.addWidget(self.combobox_backend, 3, 1, 1, 3)
+        self.combobox_start = QtGui.QComboBox(self.widget)
+        self.combobox_start.setObjectName(_fromUtf8("combobox_start"))
+        self.layout_general_properties.addWidget(self.combobox_start, 0, 1, 1, 3)
         self.label = QtGui.QLabel(self.widget)
         self.label.setObjectName(_fromUtf8("label"))
         self.layout_general_properties.addWidget(self.label, 0, 0, 1, 1)
-        self.combobox_start = QtGui.QComboBox(self.widget)
-        self.combobox_start.setObjectName(_fromUtf8("combobox_start"))
-        self.layout_general_properties.addWidget(self.combobox_start, 0, 1, 1, 5)
-        self.label_2 = QtGui.QLabel(self.widget)
-        self.label_2.setObjectName(_fromUtf8("label_2"))
-        self.layout_general_properties.addWidget(self.label_2, 3, 0, 1, 1)
         self.spinbox_width = QtGui.QSpinBox(self.widget)
         self.spinbox_width.setMinimum(1)
         self.spinbox_width.setMaximum(10000)
         self.spinbox_width.setObjectName(_fromUtf8("spinbox_width"))
-        self.layout_general_properties.addWidget(self.spinbox_width, 3, 1, 1, 1)
+        self.layout_general_properties.addWidget(self.spinbox_width, 4, 1, 1, 1)
+        self.label_4 = QtGui.QLabel(self.widget)
+        self.label_4.setObjectName(_fromUtf8("label_4"))
+        self.layout_general_properties.addWidget(self.label_4, 4, 2, 1, 1)
+        self.label_8 = QtGui.QLabel(self.widget)
+        self.label_8.setObjectName(_fromUtf8("label_8"))
+        self.layout_general_properties.addWidget(self.label_8, 3, 0, 1, 1)
         self.spinbox_height = QtGui.QSpinBox(self.widget)
         self.spinbox_height.setMinimum(1)
         self.spinbox_height.setMaximum(10000)
         self.spinbox_height.setObjectName(_fromUtf8("spinbox_height"))
-        self.layout_general_properties.addWidget(self.spinbox_height, 3, 3, 1, 1)
-        self.label_3 = QtGui.QLabel(self.widget)
-        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Fixed, QtGui.QSizePolicy.Preferred)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.label_3.sizePolicy().hasHeightForWidth())
-        self.label_3.setSizePolicy(sizePolicy)
-        self.label_3.setObjectName(_fromUtf8("label_3"))
-        self.layout_general_properties.addWidget(self.label_3, 3, 2, 1, 1)
+        self.layout_general_properties.addWidget(self.spinbox_height, 5, 1, 1, 1)
         self.label_5 = QtGui.QLabel(self.widget)
         self.label_5.setObjectName(_fromUtf8("label_5"))
-        self.layout_general_properties.addWidget(self.label_5, 4, 4, 1, 1)
-        self.label_8 = QtGui.QLabel(self.widget)
-        self.label_8.setObjectName(_fromUtf8("label_8"))
-        self.layout_general_properties.addWidget(self.label_8, 4, 0, 1, 1)
-        self.label_4 = QtGui.QLabel(self.widget)
-        self.label_4.setObjectName(_fromUtf8("label_4"))
-        self.layout_general_properties.addWidget(self.label_4, 3, 4, 1, 1)
-        self.combobox_backend = QtGui.QComboBox(self.widget)
-        self.combobox_backend.setObjectName(_fromUtf8("combobox_backend"))
-        self.layout_general_properties.addWidget(self.combobox_backend, 4, 1, 1, 3)
+        self.layout_general_properties.addWidget(self.label_5, 5, 2, 1, 1)
+        self.label_3 = QtGui.QLabel(self.widget)
+        self.label_3.setObjectName(_fromUtf8("label_3"))
+        self.layout_general_properties.addWidget(self.label_3, 5, 0, 1, 1)
         self.verticalLayout.addWidget(self.widget)
         self.group_backend_settings = QtGui.QGroupBox(Form)
         self.group_backend_settings.setCheckable(True)
@@ -83,7 +78,7 @@ class Ui_Form(object):
         self.scrollarea_backend_settings.setWidgetResizable(True)
         self.scrollarea_backend_settings.setObjectName(_fromUtf8("scrollarea_backend_settings"))
         self.scrollAreaWidgetContents = QtGui.QWidget()
-        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 999, 302))
+        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 789, 285))
         self.scrollAreaWidgetContents.setObjectName(_fromUtf8("scrollAreaWidgetContents"))
         self.verticalLayout_7 = QtGui.QVBoxLayout(self.scrollAreaWidgetContents)
         self.verticalLayout_7.setObjectName(_fromUtf8("verticalLayout_7"))
@@ -228,22 +223,23 @@ class Ui_Form(object):
 
     def retranslateUi(self, Form):
         Form.setWindowTitle(QtGui.QApplication.translate("Form", "Form", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_2.setText(QtGui.QApplication.translate("Form", "Display width<br />\n"
+"<small><i>In pixels</i></small>", None, QtGui.QApplication.UnicodeUTF8))
+        self.combobox_start.setToolTip(QtGui.QApplication.translate("Form", "This is item (typically a sequence) is the starting point for your experiment.", None, QtGui.QApplication.UnicodeUTF8))
         self.label.setText(QtGui.QApplication.translate("Form", "Entry point<br />\n"
 "<small><i>First item to run</i></small>", None, QtGui.QApplication.UnicodeUTF8))
-        self.combobox_start.setToolTip(QtGui.QApplication.translate("Form", "This is item (typically a sequence) is the starting point for your experiment.", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_2.setText(QtGui.QApplication.translate("Form", "Display resolution<br />\n"
-"<small><i>In pixels (width x height)</i></small>", None, QtGui.QApplication.UnicodeUTF8))
         self.spinbox_width.setToolTip(QtGui.QApplication.translate("Form", "The display resolution (width) in pixels", None, QtGui.QApplication.UnicodeUTF8))
         self.spinbox_width.setSuffix(QtGui.QApplication.translate("Form", "px", None, QtGui.QApplication.UnicodeUTF8))
-        self.spinbox_height.setToolTip(QtGui.QApplication.translate("Form", "The display resolution (height) in pixels", None, QtGui.QApplication.UnicodeUTF8))
-        self.spinbox_height.setSuffix(QtGui.QApplication.translate("Form", "px", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_3.setText(QtGui.QApplication.translate("Form", "x", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_5.setText(QtGui.QApplication.translate("Form", "Default background color<br />\n"
-"<small><i>E.g., \"black\" or \"#000000\"</i></small>", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_8.setText(QtGui.QApplication.translate("Form", "Back-end<br />\n"
-"<small><i>Handles display, sound, and input</i></small>", None, QtGui.QApplication.UnicodeUTF8))
         self.label_4.setText(QtGui.QApplication.translate("Form", "Default foreground color<br />\n"
 "<small><i>E.g., \"white\" or \"#ffffff\"</i></small>", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_8.setText(QtGui.QApplication.translate("Form", "Back-end<br />\n"
+"<small><i>Handles display, sound, and input</i></small>", None, QtGui.QApplication.UnicodeUTF8))
+        self.spinbox_height.setToolTip(QtGui.QApplication.translate("Form", "The display resolution (height) in pixels", None, QtGui.QApplication.UnicodeUTF8))
+        self.spinbox_height.setSuffix(QtGui.QApplication.translate("Form", "px", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_5.setText(QtGui.QApplication.translate("Form", "Default background color<br />\n"
+"<small><i>E.g., \"black\" or \"#000000\"</i></small>", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_3.setText(QtGui.QApplication.translate("Form", "Display height<br />\n"
+"<small><i>In pixels</i></small>", None, QtGui.QApplication.UnicodeUTF8))
         self.group_backend_settings.setTitle(QtGui.QApplication.translate("Form", "Show back-end settings and info", None, QtGui.QApplication.UnicodeUTF8))
         self.group_canvas.setTitle(QtGui.QApplication.translate("Form", "Canvas", None, QtGui.QApplication.UnicodeUTF8))
         self.label_canvas.setText(QtGui.QApplication.translate("Form", "TextLabel", None, QtGui.QApplication.UnicodeUTF8))

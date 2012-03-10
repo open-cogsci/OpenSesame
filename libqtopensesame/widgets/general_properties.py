@@ -75,9 +75,9 @@ class general_properties(QtGui.QWidget):
 		self.ui.edit_background.setSizePolicy(QtGui.QSizePolicy.Fixed, \
 			QtGui.QSizePolicy.Fixed)
 		self.ui.layout_general_properties.addWidget(self.ui.edit_foreground, \
-			3, 5)
+			4, 3)
 		self.ui.layout_general_properties.addWidget(self.ui.edit_background, \
-			4, 5)
+			5, 3)
 		QtCore.QObject.connect(self.ui.edit_foreground, QtCore.SIGNAL( \
 			"set_color"), self.apply_changes)
 		QtCore.QObject.connect(self.ui.edit_background, QtCore.SIGNAL( \

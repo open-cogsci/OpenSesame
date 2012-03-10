@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1017</width>
+    <width>807</width>
     <height>805</height>
    </rect>
   </property>
@@ -29,6 +29,24 @@
       <property name="margin">
        <number>0</number>
       </property>
+      <item row="4" column="0">
+       <widget class="QLabel" name="label_2">
+        <property name="text">
+         <string>Display width&lt;br /&gt;
+&lt;small&gt;&lt;i&gt;In pixels&lt;/i&gt;&lt;/small&gt;</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="1" colspan="3">
+       <widget class="QComboBox" name="combobox_backend"/>
+      </item>
+      <item row="0" column="1" colspan="3">
+       <widget class="QComboBox" name="combobox_start">
+        <property name="toolTip">
+         <string>This is item (typically a sequence) is the starting point for your experiment.</string>
+        </property>
+       </widget>
+      </item>
       <item row="0" column="0">
        <widget class="QLabel" name="label">
         <property name="text">
@@ -37,22 +55,7 @@
         </property>
        </widget>
       </item>
-      <item row="0" column="1" colspan="5">
-       <widget class="QComboBox" name="combobox_start">
-        <property name="toolTip">
-         <string>This is item (typically a sequence) is the starting point for your experiment.</string>
-        </property>
-       </widget>
-      </item>
-      <item row="3" column="0">
-       <widget class="QLabel" name="label_2">
-        <property name="text">
-         <string>Display resolution&lt;br /&gt;
-&lt;small&gt;&lt;i&gt;In pixels (width x height)&lt;/i&gt;&lt;/small&gt;</string>
-        </property>
-       </widget>
-      </item>
-      <item row="3" column="1">
+      <item row="4" column="1">
        <widget class="QSpinBox" name="spinbox_width">
         <property name="toolTip">
          <string>The display resolution (width) in pixels</string>
@@ -68,7 +71,23 @@
         </property>
        </widget>
       </item>
-      <item row="3" column="3">
+      <item row="4" column="2">
+       <widget class="QLabel" name="label_4">
+        <property name="text">
+         <string>Default foreground color&lt;br /&gt;
+&lt;small&gt;&lt;i&gt;E.g., &quot;white&quot; or &quot;#ffffff&quot;&lt;/i&gt;&lt;/small&gt;</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="0">
+       <widget class="QLabel" name="label_8">
+        <property name="text">
+         <string>Back-end&lt;br /&gt;
+&lt;small&gt;&lt;i&gt;Handles display, sound, and input&lt;/i&gt;&lt;/small&gt;</string>
+        </property>
+       </widget>
+      </item>
+      <item row="5" column="1">
        <widget class="QSpinBox" name="spinbox_height">
         <property name="toolTip">
          <string>The display resolution (height) in pixels</string>
@@ -84,20 +103,7 @@
         </property>
        </widget>
       </item>
-      <item row="3" column="2">
-       <widget class="QLabel" name="label_3">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="text">
-         <string>x</string>
-        </property>
-       </widget>
-      </item>
-      <item row="4" column="4">
+      <item row="5" column="2">
        <widget class="QLabel" name="label_5">
         <property name="text">
          <string>Default background color&lt;br /&gt;
@@ -105,24 +111,13 @@
         </property>
        </widget>
       </item>
-      <item row="4" column="0">
-       <widget class="QLabel" name="label_8">
+      <item row="5" column="0">
+       <widget class="QLabel" name="label_3">
         <property name="text">
-         <string>Back-end&lt;br /&gt;
-&lt;small&gt;&lt;i&gt;Handles display, sound, and input&lt;/i&gt;&lt;/small&gt;</string>
+         <string>Display height&lt;br /&gt;
+&lt;small&gt;&lt;i&gt;In pixels&lt;/i&gt;&lt;/small&gt;</string>
         </property>
        </widget>
-      </item>
-      <item row="3" column="4">
-       <widget class="QLabel" name="label_4">
-        <property name="text">
-         <string>Default foreground color&lt;br /&gt;
-&lt;small&gt;&lt;i&gt;E.g., &quot;white&quot; or &quot;#ffffff&quot;&lt;/i&gt;&lt;/small&gt;</string>
-        </property>
-       </widget>
-      </item>
-      <item row="4" column="1" colspan="3">
-       <widget class="QComboBox" name="combobox_backend"/>
       </item>
      </layout>
     </widget>
@@ -152,8 +147,8 @@
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>999</width>
-           <height>302</height>
+           <width>789</width>
+           <height>285</height>
           </rect>
          </property>
          <layout class="QVBoxLayout" name="verticalLayout_7">
