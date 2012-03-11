@@ -266,6 +266,7 @@ def open_url(url):
 	url -- a url
 	"""
 
+	debug.msg(url)
 	import platform
 	import subprocess
 	if platform.system() == "Linux":
@@ -273,7 +274,9 @@ def open_url(url):
 	elif platform.system() == "Darwin":
 		pid = subprocess.Popen(["open", url]).pid
 	elif platform.system() == "Windows":
-		os.startfile(url)
+		try:
+			os.startfile(url)
+		except:
+			debug.msg("Failed to open '%s'" % url, reason="warning")
 	else:
 		debug.msg("Failed to open '%s'" % url, reason="warning")
-	debug.msg(url)
