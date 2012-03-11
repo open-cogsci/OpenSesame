@@ -28,6 +28,7 @@ class generic_response:
 	"""
 
 	auto_response = "a"
+	process_feedback = False
 
 	def prepare_timeout(self):
 
@@ -115,52 +116,58 @@ class generic_response:
 	def response_bookkeeping(self):
 
 		"""Do some bookkeeping for the response"""
-
-		# Set the correct response
-		if self.has("correct_response"):
-			correct_response = self.get("correct_response")
-		else:
-			correct_response = "undefined"
-
-		if correct_response == "undefined":
-			self.experiment.correct = "undefined"
-		else:
-			if hasattr(self, "synonyms") and self.synonyms != None:
-				if correct_response in self.synonyms or str(correct_response) \
-					in self.synonyms:
-					self.experiment.correct = 1
-					self.experiment.total_correct += 1
-				else:
-					self.experiment.correct = 0
-			else:
-				if self.experiment.response in (correct_response, \
-					str(correct_response)):
-					self.experiment.correct = 1
-					self.experiment.total_correct += 1
-				else:
-					self.experiment.correct = 0
-
+		
+		# The respone and response_time variables are always set, for every
+		# response item
 		self.experiment.set("response_time", \
 			self.experiment.end_response_interval - \
 			self.experiment.start_response_interval)
-		self.experiment.total_response_time += self.experiment.response_time
-		self.experiment.total_responses += 1
-		self.experiment.set("acc", 100.0 * self.experiment.total_correct / \
-			self.experiment.total_responses)
-		self.experiment.set("avg_rt", self.experiment.total_response_time / \
-			self.experiment.total_responses)
-		self.experiment.set("accuracy", self.experiment.acc)
-		self.experiment.set("average_response_time", self.experiment.avg_rt)
-		self.experiment.start_response_interval = None
-
-		# Also save response variables with the item name as a suffix, to
-		# prevent multiple responses overwriting each other
+		print "STR = %s (%s)" % (self.experiment.start_response_interval, self.name)			
+		print "END = %s (%s)" % (self.experiment.end_response_interval, self.name)
 		self.experiment.set("response_%s" % self.get("name"), \
 			self.get("response"))
 		self.experiment.set("response_time_%s" % self.get("name"), \
 			self.get("response_time"))
-		self.experiment.set("correct_%s" % self.get("name"), \
-			self.get("correct"))
+		self.experiment.start_response_interval = None									
+					
+		# But correctness information is only set for dedicated response items,
+		# such as keyboard_response items, because otherwise we might confound
+		# the feedback
+		if self.process_feedback:			
+			debug.msg("processing feedback for '%s'" % self.name)				
+			if self.has("correct_response"):
+				# If a correct_response has been defined, we use it to determine
+				# accuracy etc.
+				correct_response = self.get("correct_response")				
+				if hasattr(self, "synonyms") and self.synonyms != None:
+					if correct_response in self.synonyms or \
+						str(correct_response) in self.synonyms:
+						self.experiment.correct = 1
+						self.experiment.total_correct += 1
+					else:
+						self.experiment.correct = 0
+				else:
+					if self.experiment.response in (correct_response, \
+						str(correct_response)):
+						self.experiment.correct = 1
+						self.experiment.total_correct += 1
+					else:
+						self.experiment.correct = 0								
+			else:			
+				# If a correct_response hasn't been defined, we simply set
+				# correct to undefined
+				self.experiment.correct = "undefined"				
+			# Do some response bookkeeping
+			self.experiment.total_response_time += self.experiment.response_time
+			self.experiment.total_responses += 1
+			self.experiment.set("acc", 100.0 * self.experiment.total_correct / \
+				self.experiment.total_responses)
+			self.experiment.set("avg_rt", self.experiment.total_response_time / \
+				self.experiment.total_responses)
+			self.experiment.set("accuracy", self.experiment.acc)
+			self.experiment.set("average_response_time", self.experiment.avg_rt)
+			self.experiment.set("correct_%s" % self.get("name"), \
+				self.get("correct"))
 
 	def set_sri(self, reset=False):
 
@@ -344,15 +351,16 @@ class generic_response:
 		"""
 
 		l = []
-		l.append( ("response_%s" % self.get("name"), "[Depends on response]") )
-		l.append( ("correct_%s" % self.get("name"), "[Depends on response]") )
+		l.append( ("response", "[Depends on response]") )		
+		l.append( ("response_time", "[Depends on response]") )		
+		l.append( ("response_%s" % self.get("name"), "[Depends on response]") )		
 		l.append( ("response_time_%s" % self.get("name"), \
-			"[Depends on response]") )
-		l.append( ("response", "[Depends on response]") )
-		l.append( ("correct", "[Depends on response]") )
-		l.append( ("response_time", "[Depends on response]") )
-		l.append( ("average_response_time", "[Depends on response]") )
-		l.append( ("avg_rt", "[Depends on response]") )
-		l.append( ("accuracy", "[Depends on response]") )
-		l.append( ("acc", "[Depends on response]") )
+			"[Depends on response]") )			
+		if self.process_feedback:
+			l.append( ("correct", "[Depends on response]") )		
+			l.append( ("correct_%s" % self.get("name"), "[Depends on response]") )
+			l.append( ("average_response_time", "[Depends on response]") )
+			l.append( ("avg_rt", "[Depends on response]") )
+			l.append( ("accuracy", "[Depends on response]") )
+			l.append( ("acc", "[Depends on response]") )
 		return l

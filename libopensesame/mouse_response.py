@@ -48,6 +48,7 @@ class mouse_response(item.item, generic_response.generic_response):
 		self.description = "Collects mouse responses"
 		self.auto_response = 1
 		self.duration = "mouseclick"
+		self.process_feedback = True				
 
 		self.resp_codes = {}
 		self.resp_codes[None] = "timeout"

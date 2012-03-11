@@ -50,6 +50,7 @@ class port_reader(item.item, generic_response.generic_response):
 		self.auto_response = 255 # 'a'
 		self.duration = "portinput"
 		self.dummy = "no"
+		self.process_feedback = True				
 		
 		# The parent handles the rest of the contruction
 		item.item.__init__(self, name, experiment, string)

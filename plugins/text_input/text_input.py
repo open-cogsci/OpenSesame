@@ -50,6 +50,7 @@ class text_input(item.item, generic_response.generic_response):
 		self.duration = "dummy"
 		self.accept_on = "return press"
 		self.timeout = 1000
+		self.process_feedback = True				
 
 		# Provide a short accurate description of the items functionality
 		self.description = "Provides a simple text input"
