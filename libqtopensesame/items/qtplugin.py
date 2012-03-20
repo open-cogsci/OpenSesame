@@ -93,7 +93,7 @@ class qtplugin(qtitem.qtitem):
 				widget.setToolTip(tooltip)
 			except:
 				pass
-		if min_width != None:
+		if type(min_width) == int:
 			widget.setMinimumWidth(min_width)
 		row = self.edit_grid.rowCount()
 		self.edit_grid.addWidget(QtGui.QLabel(label), row, 0)
