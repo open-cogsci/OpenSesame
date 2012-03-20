@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'resources/ui/opensesame.ui'
 #
-# Created: Sat Mar 10 17:45:47 2012
+# Created: Tue Mar 20 15:10:14 2012
 #      by: PyQt4 UI code generator 4.9.1
 #
 # WARNING! All changes made in this file will be lost!

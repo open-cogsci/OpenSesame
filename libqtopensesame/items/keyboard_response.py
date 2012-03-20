@@ -21,7 +21,8 @@ from openexp.keyboard import keyboard
 from PyQt4 import QtCore, QtGui
 import cgi
 
-class keyboard_response(libopensesame.keyboard_response.keyboard_response, qtitem.qtitem):
+class keyboard_response(libopensesame.keyboard_response.keyboard_response, \
+	qtitem.qtitem):
 
 	"""keyboard_response item GUI"""
 
@@ -38,7 +39,8 @@ class keyboard_response(libopensesame.keyboard_response.keyboard_response, qtite
 		string -- a definition string (default=None)	
 		"""
 		
-		libopensesame.keyboard_response.keyboard_response.__init__(self, name, experiment, string)
+		libopensesame.keyboard_response.keyboard_response.__init__(self, name, \
+			experiment, string)
 		qtitem.qtitem.__init__(self)		
 
 	def apply_edit_changes(self):
@@ -82,24 +84,30 @@ class keyboard_response(libopensesame.keyboard_response.keyboard_response, qtite
 				
 		self.edit_grid.addWidget(QtGui.QLabel("Correct response"), row, 0)
 		self.edit_correct_response = QtGui.QLineEdit()
-		self.edit_correct_response.setToolTip("Set the correct response, e.g., 'z', '/', or 'space'")		
-		QtCore.QObject.connect(self.edit_correct_response, QtCore.SIGNAL("editingFinished()"), self.apply_edit_changes)
+		self.edit_correct_response.setToolTip( \
+			"Set the correct response, e.g., 'z', '/', or 'space'")		
+		QtCore.QObject.connect(self.edit_correct_response, QtCore.SIGNAL( \
+			"editingFinished()"), self.apply_edit_changes)
 		self.edit_grid.addWidget(self.edit_correct_response, row, 1)
 		
 		row += 1		
 		
 		self.edit_grid.addWidget(QtGui.QLabel("Allowed responses"), row, 0)
 		self.edit_allowed_responses = QtGui.QLineEdit()
-		self.edit_allowed_responses.setToolTip("Set the allowed responses seperated by a semi-colon, e.g., 'z;/'")		
-		QtCore.QObject.connect(self.edit_allowed_responses, QtCore.SIGNAL("editingFinished()"), self.apply_edit_changes)
+		self.edit_allowed_responses.setToolTip( \
+			"Set the allowed responses seperated by a semi-colon, e.g., 'z;/'")		
+		QtCore.QObject.connect(self.edit_allowed_responses, QtCore.SIGNAL( \
+			"editingFinished()"), self.apply_edit_changes)
 		self.edit_grid.addWidget(self.edit_allowed_responses, row, 1)					
 		
 		row += 1		
 		
 		self.edit_grid.addWidget(QtGui.QLabel("Timeout"), row, 0)
 		self.edit_timeout = QtGui.QLineEdit()
-		self.edit_timeout.setToolTip("Set the response timeout in milliseconds, or 'infinite'")		
-		QtCore.QObject.connect(self.edit_timeout, QtCore.SIGNAL("editingFinished()"), self.apply_edit_changes)
+		self.edit_timeout.setToolTip( \
+			"Set the response timeout in milliseconds, or 'infinite'")		
+		QtCore.QObject.connect(self.edit_timeout, QtCore.SIGNAL( \
+			"editingFinished()"), self.apply_edit_changes)
 		self.edit_grid.addWidget(self.edit_timeout, row, 1)	
 		
 		row += 1							
@@ -110,7 +118,9 @@ class keyboard_response(libopensesame.keyboard_response.keyboard_response, qtite
 		
 		row += 1							
 		
-		button_list_keys = QtGui.QPushButton(self.experiment.icon("info"), "List available keys")
+		button_list_keys = QtGui.QPushButton(self.experiment.icon("info"), \
+			"List available keys")
+		button_list_keys.setIconSize(QtCore.QSize(16,16))
 		button_list_keys.clicked.connect(self.list_keys)
 		self.edit_grid.addWidget(button_list_keys, row, 1)
 				
@@ -160,6 +170,7 @@ class keyboard_response(libopensesame.keyboard_response.keyboard_response, qtite
 			s += "Key: <b>%s</b><br />" % cgi.escape(str(name))
 			syn = my_keyboard.synonyms(name)
 			if syn != [name]:
-				s += "(or %s)<br />" % (", ".join([cgi.escape(str(x)) for x in syn]))
+				s += "(or %s)<br />" % (", ".join( \
+					[cgi.escape(str(x)) for x in syn]))
 		self.experiment.notify(s)
 	

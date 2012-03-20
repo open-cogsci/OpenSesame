@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'resources/ui/sketchpad_widget.ui'
 #
-# Created: Sat Mar 10 17:45:47 2012
+# Created: Tue Mar 20 15:10:14 2012
 #      by: PyQt4 UI code generator 4.9.1
 #
 # WARNING! All changes made in this file will be lost!
@@ -275,6 +275,7 @@ class Ui_Form(object):
         icon10 = QtGui.QIcon()
         icon10.addPixmap(QtGui.QPixmap(_fromUtf8(":/icons/colorpicker.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.button_colorpicker.setIcon(icon10)
+        self.button_colorpicker.setIconSize(QtCore.QSize(16, 16))
         self.button_colorpicker.setObjectName(_fromUtf8("button_colorpicker"))
         self.gridLayout_2.addWidget(self.button_colorpicker, 2, 2, 1, 1)
         self.checkbox_fill = QtGui.QCheckBox(self.frame_5)
@@ -363,6 +364,7 @@ class Ui_Form(object):
         icon11 = QtGui.QIcon()
         icon11.addPixmap(QtGui.QPixmap(_fromUtf8(":/icons/script.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.button_edit_script.setIcon(icon11)
+        self.button_edit_script.setIconSize(QtCore.QSize(16, 16))
         self.button_edit_script.setObjectName(_fromUtf8("button_edit_script"))
         self.horizontalLayout_3.addWidget(self.button_edit_script)
         self.verticalLayout_3.addWidget(self.frame_notification)
@@ -370,7 +372,7 @@ class Ui_Form(object):
         self.scrollArea.setWidgetResizable(True)
         self.scrollArea.setObjectName(_fromUtf8("scrollArea"))
         self.scrollAreaWidgetContents = QtGui.QWidget()
-        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 1051, 266))
+        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 1051, 289))
         self.scrollAreaWidgetContents.setObjectName(_fromUtf8("scrollAreaWidgetContents"))
         self.verticalLayout_5 = QtGui.QVBoxLayout(self.scrollAreaWidgetContents)
         self.verticalLayout_5.setObjectName(_fromUtf8("verticalLayout_5"))

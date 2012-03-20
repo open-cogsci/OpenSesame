@@ -151,6 +151,12 @@ color: rgb(255, 255, 255);</string>
             <iconset>
              <normaloff>:/icons/wizard.png</normaloff>:/icons/wizard.png</iconset>
            </property>
+           <property name="iconSize">
+            <size>
+             <width>16</width>
+             <height>16</height>
+            </size>
+           </property>
           </widget>
          </item>
         </layout>
@@ -247,6 +253,12 @@ color: rgb(255, 255, 255);</string>
                <iconset>
                 <normaloff>:/icons/browse.png</normaloff>:/icons/browse.png</iconset>
               </property>
+              <property name="iconSize">
+               <size>
+                <width>16</width>
+                <height>16</height>
+               </size>
+              </property>
              </widget>
             </item>
             <item>
@@ -257,6 +269,12 @@ color: rgb(255, 255, 255);</string>
               <property name="icon">
                <iconset>
                 <normaloff>:/icons/browse.png</normaloff>:/icons/browse.png</iconset>
+              </property>
+              <property name="iconSize">
+               <size>
+                <width>16</width>
+                <height>16</height>
+               </size>
               </property>
              </widget>
             </item>

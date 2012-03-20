@@ -125,6 +125,12 @@
         <property name="text">
          <string>Add variable</string>
         </property>
+        <property name="iconSize">
+         <size>
+          <width>16</width>
+          <height>16</height>
+         </size>
+        </property>
        </widget>
       </item>
       <item>
@@ -132,12 +138,24 @@
         <property name="text">
          <string>Rename variable</string>
         </property>
+        <property name="iconSize">
+         <size>
+          <width>16</width>
+          <height>16</height>
+         </size>
+        </property>
        </widget>
       </item>
       <item>
        <widget class="QPushButton" name="button_remove_cyclevar">
         <property name="text">
          <string>Remove variable</string>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>16</width>
+          <height>16</height>
+         </size>
         </property>
        </widget>
       </item>
@@ -158,6 +176,12 @@
        <widget class="QPushButton" name="button_wizard">
         <property name="text">
          <string>Variable wizard</string>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>16</width>
+          <height>16</height>
+         </size>
         </property>
        </widget>
       </item>

@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'resources/ui/loop_widget.ui'
 #
-# Created: Sat Mar 10 17:45:49 2012
+# Created: Tue Mar 20 15:10:16 2012
 #      by: PyQt4 UI code generator 4.9.1
 #
 # WARNING! All changes made in this file will be lost!
@@ -72,17 +72,21 @@ class Ui_loop_widget(object):
         self.horizontalLayout.setMargin(0)
         self.horizontalLayout.setObjectName(_fromUtf8("horizontalLayout"))
         self.button_add_cyclevar = QtGui.QPushButton(self.widget_buttons)
+        self.button_add_cyclevar.setIconSize(QtCore.QSize(16, 16))
         self.button_add_cyclevar.setObjectName(_fromUtf8("button_add_cyclevar"))
         self.horizontalLayout.addWidget(self.button_add_cyclevar)
         self.button_rename_cyclevar = QtGui.QPushButton(self.widget_buttons)
+        self.button_rename_cyclevar.setIconSize(QtCore.QSize(16, 16))
         self.button_rename_cyclevar.setObjectName(_fromUtf8("button_rename_cyclevar"))
         self.horizontalLayout.addWidget(self.button_rename_cyclevar)
         self.button_remove_cyclevar = QtGui.QPushButton(self.widget_buttons)
+        self.button_remove_cyclevar.setIconSize(QtCore.QSize(16, 16))
         self.button_remove_cyclevar.setObjectName(_fromUtf8("button_remove_cyclevar"))
         self.horizontalLayout.addWidget(self.button_remove_cyclevar)
         spacerItem = QtGui.QSpacerItem(40, 20, QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
         self.horizontalLayout.addItem(spacerItem)
         self.button_wizard = QtGui.QPushButton(self.widget_buttons)
+        self.button_wizard.setIconSize(QtCore.QSize(16, 16))
         self.button_wizard.setObjectName(_fromUtf8("button_wizard"))
         self.horizontalLayout.addWidget(self.button_wizard)
         self.gridLayout.addWidget(self.widget_buttons, 3, 0, 1, 1)

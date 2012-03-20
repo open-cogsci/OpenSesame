@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'resources/ui/start_new_dialog.ui'
 #
-# Created: Sat Mar 10 17:45:49 2012
+# Created: Tue Mar 20 15:10:16 2012
 #      by: PyQt4 UI code generator 4.9.1
 #
 # WARNING! All changes made in this file will be lost!
@@ -103,6 +103,7 @@ class Ui_Dialog(object):
         icon = QtGui.QIcon()
         icon.addPixmap(QtGui.QPixmap(_fromUtf8(":/icons/wizard.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.button_template.setIcon(icon)
+        self.button_template.setIconSize(QtCore.QSize(16, 16))
         self.button_template.setObjectName(_fromUtf8("button_template"))
         self.verticalLayout.addWidget(self.button_template)
         self.horizontalLayout_2.addWidget(self.frame_2)
@@ -160,10 +161,12 @@ class Ui_Dialog(object):
         icon1 = QtGui.QIcon()
         icon1.addPixmap(QtGui.QPixmap(_fromUtf8(":/icons/browse.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.button_recent.setIcon(icon1)
+        self.button_recent.setIconSize(QtCore.QSize(16, 16))
         self.button_recent.setObjectName(_fromUtf8("button_recent"))
         self.horizontalLayout_3.addWidget(self.button_recent)
         self.button_browse = QtGui.QPushButton(self.widget_3)
         self.button_browse.setIcon(icon1)
+        self.button_browse.setIconSize(QtCore.QSize(16, 16))
         self.button_browse.setObjectName(_fromUtf8("button_browse"))
         self.horizontalLayout_3.addWidget(self.button_browse)
         self.verticalLayout_3.addWidget(self.widget_3)
