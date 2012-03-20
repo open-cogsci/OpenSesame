@@ -61,16 +61,21 @@ class logger(libopensesame.logger.logger, qtitem.qtitem):
 		vbox = QtGui.QVBoxLayout()
 		vbox.setContentsMargins(0, 0, 0, 0)
 
-		button_add = QtGui.QPushButton(self.experiment.icon("add"), "Add custom variable")
+		button_add = QtGui.QPushButton(self.experiment.icon("add"), \
+			"Add custom variable")
 		button_add.clicked.connect(self.add_custom)
 		button_add.setToolTip("Add an arbitrary variable by name")
-		button_suggest = QtGui.QPushButton(self.experiment.icon("apply"), "Smart select")
+		button_suggest = QtGui.QPushButton(self.experiment.icon("apply"), \
+			"Smart select")
 		button_suggest.clicked.connect(self.suggest_variables)
-		button_suggest.setToolTip("Automatically select (likely) relevant variables")
-		button_select_all = QtGui.QPushButton(self.experiment.icon("apply"), "Select all")
+		button_suggest.setToolTip( \
+			"Automatically select (likely) relevant variables")
+		button_select_all = QtGui.QPushButton(self.experiment.icon("apply"), \
+			"Select all")
 		button_select_all.clicked.connect(self.select_all)
 		button_select_all.setToolTip("Select all variables")
-		button_deselect_all = QtGui.QPushButton(self.experiment.icon("clear"), "Deselect all")
+		button_deselect_all = QtGui.QPushButton(self.experiment.icon("clear"), \
+			"Deselect all")
 		button_deselect_all.clicked.connect(self.deselect_all)
 		button_deselect_all.setToolTip("Deselect all variables")
 		hbox = QtGui.QHBoxLayout()
@@ -83,11 +88,15 @@ class logger(libopensesame.logger.logger, qtitem.qtitem):
 
 		self.logvar_buttons = QtGui.QWidget()
 		self.logvar_buttons.setLayout(hbox)
-		self.checkbox_ignore_missing = QtGui.QCheckBox("Use 'NA' for variables that have not been set")
-		self.checkbox_ignore_missing.stateChanged.connect(self.apply_edit_changes)
-		self.checkbox_auto_log = QtGui.QCheckBox("Automatically detect and log all variables")
+		self.checkbox_ignore_missing = QtGui.QCheckBox( \
+			"Use 'NA' for variables that have not been set")
+		self.checkbox_ignore_missing.stateChanged.connect( \
+			self.apply_edit_changes)
+		self.checkbox_auto_log = QtGui.QCheckBox( \
+			"Automatically detect and log all variables")
 		self.checkbox_auto_log.stateChanged.connect(self.apply_edit_changes)
-		self.checkbox_unicode = QtGui.QCheckBox(u"Allow special characters in log file (e.g., write '\xe9' instead of 'U+00E9')")
+		self.checkbox_unicode = QtGui.QCheckBox( \
+			u"Allow special characters in log file (e.g., write '\xe9' instead of 'U+00E9')")
 		self.checkbox_unicode.stateChanged.connect(self.apply_edit_changes)
 		self.checkbox_use_quotes = QtGui.QCheckBox("Put quotes around values")
 		self.checkbox_use_quotes.stateChanged.connect(self.apply_edit_changes)
@@ -125,14 +134,17 @@ class logger(libopensesame.logger.logger, qtitem.qtitem):
 			self.logvar_buttons.setEnabled(True)
 			self.logvar_table.setEnabled(True)
 
-		self.checkbox_ignore_missing.setChecked(self.get("ignore_missing") == "yes")
+		self.checkbox_ignore_missing.setChecked( \
+			self.get("ignore_missing") == "yes")
 		self.checkbox_unicode.setChecked(self.get("unicode") == "yes")
 		self.checkbox_use_quotes.setChecked(self.get("use_quotes") == "yes")
 
 		self.logvar_table.setRowCount(0)
 		self.logvar_table.setHorizontalHeaderItem(0, QtGui.QTableWidgetItem(""))
-		self.logvar_table.setHorizontalHeaderItem(1, QtGui.QTableWidgetItem("Variable"))
-		self.logvar_table.setHorizontalHeaderItem(2, QtGui.QTableWidgetItem("Source item(s)"))
+		self.logvar_table.setHorizontalHeaderItem(1, QtGui.QTableWidgetItem( \
+			"Variable"))
+		self.logvar_table.setHorizontalHeaderItem(2, QtGui.QTableWidgetItem( \
+			"Source item(s)"))
 
 		# Fill the table
 		row = 0
@@ -236,9 +248,11 @@ class logger(libopensesame.logger.logger, qtitem.qtitem):
 			if item in self.experiment.unused_items:
 				debug.msg("ignoring variables from '%s'" % item)
 				continue
-			if self.experiment.items[item].item_type in ("loop", "keyboard_response", "mouse_response"):
+			if self.experiment.items[item].item_type in ("loop", \
+				"keyboard_response", "mouse_response"):
 				for var, val in self.experiment.items[item].var_info():
-					if var not in self.logvars and var != "time_%s" % item and var != "count_%s" % item:
+					if var not in self.logvars and var != "time_%s" % item and \
+						var != "count_%s" % item:
 						self.logvars.append(var)
 			if self.experiment.items[item].item_type == "sequence":
 				for var, val in self.experiment.items[item].var_info():
@@ -298,8 +312,10 @@ class logger(libopensesame.logger.logger, qtitem.qtitem):
 
 		if from_name in self.logvars:
 			debug.msg("'%s' has been renamed to '%s'" % (from_name, to_name))
-			resp = QtGui.QMessageBox.question(self.experiment.main_window, "Use new name in logger?",
-				"Do you want to use the new name in the logger item '%s' as well?" % self.name,
+			resp = QtGui.QMessageBox.question(self.experiment.main_window, \
+				"Use new name in logger?",
+				"Do you want to use the new name in the logger item '%s' as well?" \
+				% self.name,
 				QtGui.QMessageBox.Yes, QtGui.QMessageBox.No)
 			if resp == QtGui.QMessageBox.No:
 				return

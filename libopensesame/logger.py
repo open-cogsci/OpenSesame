@@ -42,7 +42,10 @@ class logger(item.item):
 		self.use_quotes = "yes"
 		self.auto_log = "yes"
 		self.unicode = "no"
-		self.ignore_missing = "no"
+		self.ignore_missing = "yes" # This means that missing variables should
+									# be ignored in the sense that they are
+									# assigned the value 'NA'. They are included
+									# in the logfile.
 		item.item.__init__(self, name, experiment, string)
 
 	def run(self):
@@ -59,7 +62,8 @@ class logger(item.item):
 			if self.get("auto_log") == "yes":
 				self.logvars = []
 				for logvar, val, item in self.experiment.var_list():
-					if (self.has(logvar) or self.get("ignore_missing") == "yes") and logvar not in self.logvars:
+					if (self.has(logvar) or self.get("ignore_missing") == \
+						"yes") and logvar not in self.logvars:
 						self.logvars.append(logvar)
 						debug.msg("auto-logging '%s'" % logvar)
 			# Sort the logvars to ascertain a consistent ordering
@@ -75,7 +79,9 @@ class logger(item.item):
 				if self.get("ignore_missing") == "yes":
 					l.append("NA")
 				else:
-					raise exceptions.runtime_error("Logger '%s' tries to log the variable '%s', but this variable is not available. Please deselect '%s' in logger '%s' or enable the 'Use NA for variables that have not been set' option." % (self.name, var, var, self.name))
+					raise exceptions.runtime_error( \
+						"Logger '%s' tries to log the variable '%s', but this variable is not available. Please deselect '%s' in logger '%s' or enable the 'Use NA for variables that have not been set' option." \
+						% (self.name, var, var, self.name))
 			if self.get("unicode") == "yes":
 				val = self.unsanitize(val)
 			l.append(val)
