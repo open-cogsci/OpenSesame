@@ -42,7 +42,8 @@ class psycho(openexp._keyboard.legacy.legacy):
 		"""
 
 		if experiment.canvas_backend != "psycho":
-			raise openexp.exceptions.response_error("The psycho keyboard backend must be used in combination with the psycho canvas backend!")
+			raise openexp.exceptions.response_error( \
+				"The psycho keyboard backend must be used in combination with the psycho canvas backend!")
 
 		self.experiment = experiment
 		self.set_keylist(keylist)
@@ -69,19 +70,19 @@ class psycho(openexp._keyboard.legacy.legacy):
 		Sets a list of accepted keys
 
 		Keyword arguments:
-		keylist -- a list of human readable keys that are accepted or None
-				   to accept all keys (default = None)
+		keylist -- a list of human readable keys that are accepted or None to
+				   accept all keys (default=None)
 		"""
 
 		if keylist == None:
 			self._keylist = None
 		else:
-			for key in keylist:
-				try:
-					eval("pyglet.window.key.%s" % key.upper())
-				except:
-					raise openexp.exceptions.response_error("The key '%s' is not recognized by the psycho keyboard backend. Please refer to <a href='http://pyglet.org/doc/api/pyglet.window.key-module.html'>http://pyglet.org/doc/api/pyglet.window.key-module.html</a> for a list of valid keys." % key)
-
+			for key in keylist:			
+				if not hasattr(pyglet.window.key, key.upper()) and not \
+					hasattr(pyglet.window.key, "NUM_%s" % key):
+					raise openexp.exceptions.response_error( \
+						"The key '%s' is not recognized by the psycho keyboard backend. Please refer to <a href='http://pyglet.org/doc/api/pyglet.window.key-module.html'>http://pyglet.org/doc/api/pyglet.window.key-module.html</a> for a list of valid keys." \
+						% key)
 			self._keylist = keylist
 
 	def set_timeout(self, timeout = None):
@@ -128,15 +129,16 @@ class psycho(openexp._keyboard.legacy.legacy):
 
 		start_time = 1000.0 * self.experiment.clock.getTime()
 		time = start_time
-
-		while timeout == None or time - start_time <= timeout:
+		
+		while timeout == None or time-start_time <= timeout:
 			time = 1000.0 * self.experiment.clock.getTime()
-			keys = event.getKeys(_keylist, timeStamped = self.experiment.clock)
+			keys = event.getKeys(_keylist, timeStamped=self.experiment.clock)
 			for key, time in keys:
 				time *= 1000.0
 				if key == "escape":
-					raise openexp.exceptions.response_error("The escape key was pressed.")
-				elif keylist == None or key in keylist:
+					raise openexp.exceptions.response_error( \
+						"The escape key was pressed.")
+				elif keylist == None or key in keylist:				
 					return key, time
 
 		return None, time
@@ -148,8 +150,8 @@ class psycho(openexp._keyboard.legacy.legacy):
 		currently pressed.
 
 		Returns:
-		A list of keyboard moderators. An empty list is returned if no moderators
-		are pressed.
+		A list of keyboard moderators. An empty list is returned if no
+		moderators are pressed.
 		"""
 
 		pass
@@ -235,7 +237,8 @@ class psycho(openexp._keyboard.legacy.legacy):
 		keypressed = False
 		for key in event.getKeys():
 			if key == "escape":
-				raise openexp.exceptions.response_error("The escape key was pressed.")
+				raise openexp.exceptions.response_error( \
+					"The escape key was pressed.")
 			keypressed = True
 		return keypressed
 
