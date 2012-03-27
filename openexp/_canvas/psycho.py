@@ -93,6 +93,17 @@ class psycho(openexp._canvas.legacy.legacy):
 		A color in the back-end format
 		"""
 	
+		if type(color) in (tuple, list):
+			# PsycoPy want tuples to be between 0 and 1, so we normalize the
+			# tuple if the format is incorrect (i.e. 0-255).
+			r = color[0]
+			g = color[1]
+			b = color[2]
+			if r>1 or g>1 or b>1:
+				r = 1.*r/255
+				g = 1.*g/255
+				b = 1.*b/255
+				color = r,g,b
 		return color
 		
 	def flip(self, x = True, y = False):
@@ -198,7 +209,7 @@ class psycho(openexp._canvas.legacy.legacy):
 		color -- A human readable color
 		"""
 		
-		self.fgcolor = color
+		self.fgcolor = self.color(color)
 		
 	def set_bgcolor(self, color):
 		
@@ -209,7 +220,7 @@ class psycho(openexp._canvas.legacy.legacy):
 		color -- A human readable color
 		"""
 
-		self.bgcolor = color
+		self.bgcolor = self.color(color)
 		
 	def set_font(self, style, size):
 	
