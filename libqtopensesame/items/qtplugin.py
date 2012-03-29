@@ -218,9 +218,8 @@ class qtplugin(qtitem.qtitem):
 		max_val -- maximum value
 
 		Keyword arguments:
-		left_label -- a label for the left side
-		right_label -- a label for the right side
-		prefix -- a prefix string
+		left_label -- a label for the left side (default="")
+		right_label -- a label for the right side (default="")
 		tooltip -- a tooltip (default=None)
 		default -- a default value (default=None)
 		"""
@@ -240,7 +239,7 @@ class qtplugin(qtitem.qtitem):
 			llabel = QtGui.QLabel()
 			llabel.setText(left_label)
 			layout.addWidget(llabel)
-			layout.addWidget(slider)
+		layout.addWidget(slider)
 
 		if right_label:
 			rlabel = QtGui.QLabel()

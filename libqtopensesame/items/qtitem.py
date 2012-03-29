@@ -647,14 +647,14 @@ class qtitem(object):
 			spinbox.editingFinished.connect(self.apply_edit_changes)
 
 		for var, slider in self.auto_slider.iteritems():
-			slider.editingFinished.disconnect()
+			slider.valueChanged.disconnect()
 			if self.has(var):
 				try:
 					slider.setValue(self.get(var))
 				except Exception as e:
 					self.experiment.notify("Failed to set control '%s': %s" \
 						% (var, e))
-			slider.editingFinished.connect(self.apply_edit_changes)
+			slider.valueChanged.connect(self.apply_edit_changes)
 						
 		for var, checkbox in self.auto_checkbox.iteritems():
 			checkbox.toggled.disconnect()
