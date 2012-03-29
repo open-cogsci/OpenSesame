@@ -122,8 +122,6 @@ class generic_response:
 		self.experiment.set("response_time", \
 			self.experiment.end_response_interval - \
 			self.experiment.start_response_interval)
-		print "STR = %s (%s)" % (self.experiment.start_response_interval, self.name)			
-		print "END = %s (%s)" % (self.experiment.end_response_interval, self.name)
 		self.experiment.set("response_%s" % self.get("name"), \
 			self.get("response"))
 		self.experiment.set("response_time_%s" % self.get("name"), \
