@@ -1,8 +1,8 @@
-opensesame (0.26-pre8-1) unstable; urgency=low
+opensesame (0.26-pre9-1) unstable; urgency=low
 
   * Loads of bug-fixes. 
 
- -- Sebastiaan Mathot <s.mathot@cogsci.nl>  Thu, 29 Mar 2012 13:04:26 +0200
+ -- Sebastiaan Mathot <s.mathot@cogsci.nl>  Thu, 29 Mar 2012 16:03:08 +0200
 
 opensesame (0.25-1) unstable; urgency=low
 
