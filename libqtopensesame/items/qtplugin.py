@@ -247,7 +247,7 @@ class qtplugin(qtitem.qtitem):
 			rlabel.setText(right_label)
 			layout.addWidget(rlabel)
 
-		slider.editingFinished.connect(self.apply_edit_changes)
+		slider.valueChanged.connect(self.apply_edit_changes)
 
 		if var != None:
 			self.auto_slider[var] = slider
