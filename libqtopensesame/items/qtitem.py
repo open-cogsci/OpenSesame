@@ -690,10 +690,13 @@ class qtitem(object):
 				val = self.experiment.usanitize(edit.text()).strip()
 				if val != "":
 					self.set(var, val)
-				elif self.experiment.has(var) or edit.default == None:
-					self.unset(var)
-				else:
+					
+				# If the variable has no value, we assign a default value if it 
+				# has been specified, and unset it otherwise.
+				elif hasattr(edit, "default"):
 					self.set(var, edit.default)
+				else:
+					self.unset(var)					
 
 		for var, combobox in self.auto_combobox.iteritems():
 			if type(var) == str:
