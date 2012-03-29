@@ -44,7 +44,8 @@ class srbox(item.item, generic_response.generic_response):
 		self.item_type = "srbox"
 
 		# Provide a short accurate description of the items functionality
-		self.description = "Collects input from a serial response box (Psychology Software Tools) or compatible devices"
+		self.description = \
+			"Collects input from a serial response box (Psychology Software Tools) or compatible devices"
 
 		# Set some item-specific variables
 		self.timeout = "infinite"
@@ -76,9 +77,13 @@ class srbox(item.item, generic_response.generic_response):
 					try:
 						r = int(r)
 					except:
-						raise exceptions.runtime_error("'%s' is not a valid response in srbox '%s'. Expecting a number in the range 0 .. 5." % (r, self.name))
+						raise exceptions.runtime_error( \
+							"'%s' is not a valid response in srbox '%s'. Expecting a number in the range 0 .. 5." \
+							% (r, self.name))
 					if r < 0 or r > 255:
-						raise exceptions.runtime_error("'%s' is not a valid response in srbox '%s'. Expecting a number in the range 0 .. 5." % (r, self.name))
+						raise exceptions.runtime_error( \
+							"'%s' is not a valid response in srbox '%s'. Expecting a number in the range 0 .. 5." \
+							% (r, self.name))
 					self._allowed_responses.append(r)
 			if len(self._allowed_responses) == 0:
 				self._allowed_responses = None
@@ -250,12 +255,20 @@ class qtsrbox(srbox, qtplugin.qtplugin):
 		# - creates a QLineEdit
 		# qtplugin.add_spinbox_control(varname, label, min, max, suffix = suffix, prefix = prefix)
 
-		self.add_combobox_control("dummy", "Dummy mode (use keyboard instead)", ["no", "yes"])
-		self.add_line_edit_control("dev", "Device name", tooltip = "Expecting a valid device name. Leave empty for autodetect.", default = "autodetect")
-		self.add_line_edit_control("correct_response", "Correct response", tooltip = "Expecting a button number (1 .. 5)")
-		self.add_line_edit_control("allowed_responses", "Allowed responses", tooltip = "Expecting a semicolon-separated list of button numbers, e.g., 1;3;4")
-		self.add_line_edit_control("timeout", "Timeout", tooltip = "Expecting a value in milliseconds or 'infinite'", default = "infinite")
-		self.add_line_edit_control("lights", "Turn on lights", tooltip = "Expecting a semicolon-separated list of light numbers, e.g., 1;3;4")
+		self.add_combobox_control("dummy", \
+			"Dummy mode (use keyboard instead)", ["no", "yes"])
+		self.add_line_edit_control("dev", "Device name", tooltip= \
+			"Expecting a valid device name. Leave empty for autodetect.", \
+			default="autodetect")
+		self.add_line_edit_control("correct_response", "Correct response", \
+			tooltip="Expecting a button number (1 .. 5)")
+		self.add_line_edit_control("allowed_responses", "Allowed responses", \
+			tooltip="Expecting a semicolon-separated list of button numbers, e.g., 1;3;4")
+		self.add_line_edit_control("timeout", "Timeout", \
+			tooltip="Expecting a value in milliseconds or 'infinite'", default \
+			="infinite")
+		self.add_line_edit_control("lights", "Turn on lights", tooltip= \
+			"Expecting a semicolon-separated list of light numbers, e.g., 1;3;4")
 
 		# Add a stretch to the edit_vbox, so that the controls do not
 		# stretch to the bottom of the window.
