@@ -92,11 +92,6 @@ class preferences_widget(QtGui.QWidget):
 			self.checkbox_plugins[plugin].toggled.connect(self.apply)
 			self.ui.layout_plugin_list.addWidget(self.checkbox_plugins[plugin])
 
-		try:
-			from libqtopensesame.widgets import inline_editor_qscintilla as dummy
-		except:
-			self.ui.groupbox_scintilla.hide()
-
 		self.set_controls()
 
 	def set_controls(self):
