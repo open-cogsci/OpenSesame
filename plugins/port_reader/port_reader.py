@@ -15,34 +15,38 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
-from libopensesame import item, generic_response, exceptions
+from libopensesame import item, generic_response, exceptions, debug
 from libqtopensesame import qtplugin
 from PyQt4 import QtGui, QtCore
 try:
 	from ctypes import windll
 except:
-	print "port_reader: failed to load ctypes.windll mode (only dummy mode will be available)"
-	pass
+	debug.msg("failed to load ctypes.windll mode (only dummy mode will be available)", \
+		reason="warning")
 
 class port_reader(item.item, generic_response.generic_response):
 
-	"""
-	This class (the class with the same name as the module)
-	handles the basic functionality of the item. It does
-	not deal with GUI stuff.
-	"""
+	"""A plug-in to collect responses from a port (Window only)"""
 
-	def __init__(self, name, experiment, string = None):
+	def __init__(self, name, experiment, string=None):
 	
 		"""
 		Constructor
+		
+		Arguments:
+		name -- item name
+		experiment -- experiment instance
+		
+		Keyword arguments:
+		string -- definition string (default=None)
 		"""
 		
 		# The item_typeshould match the name of the module
 		self.item_type = "port_reader"
 		
 		# Provide a short accurate description of the items functionality
-		self.description = "Collects input from a port for the purpose of response collection"
+		self.description = \
+			"Collects input from a port for the purpose of response collection"
 		
 		self.timeout = "infinite"
 		self.port = 889
@@ -80,7 +84,9 @@ class port_reader(item.item, generic_response.generic_response):
 			try:
 				self._port = windll.inpout32
 			except:
-				raise exceptions.runtime_error("Failed to load inpout32.dll in port_reader '%s'" % self.name)
+				raise exceptions.runtime_error( \
+					"Failed to load inpout32.dll in port_reader '%s'" \
+					% self.name)
 			self._duration_func = self.get_portinput
 
 	def process_response_portinput(self, retval):
@@ -129,17 +135,19 @@ class port_reader(item.item, generic_response.generic_response):
 					
 class qtport_reader(port_reader, qtplugin.qtplugin):
 
-	"""
-	This class (the class named qt[name of module] handles
-	the GUI part of the plugin. For more information about
-	GUI programming using PyQt4, see:
-	<http://www.riverbankcomputing.co.uk/static/Docs/PyQt4/html/classes.html>
-	"""
+	"""GUI controls for port_reader plug-in"""
 
-	def __init__(self, name, experiment, string = None):
+	def __init__(self, name, experiment, string=None):
 	
 		"""
 		Constructor
+		
+		Arguments:
+		name -- item name
+		experiment -- experiment instance
+		
+		Keyword arguments:
+		string -- definition string (default=None)
 		"""
 		
 		# Pass the word on to the parents		
@@ -148,10 +156,7 @@ class qtport_reader(port_reader, qtplugin.qtplugin):
 		
 	def init_edit_widget(self):
 	
-		"""
-		This function creates the controls for the edit
-		widget.
-		"""
+		"""Initialize GUI controls"""
 		
 		# Lock the widget until we're doing creating it
 		self.lock = True
@@ -173,11 +178,19 @@ class qtport_reader(port_reader, qtplugin.qtplugin):
 		# - creates a QLineEdit		
 		# qtplugin.add_spinbox_control(varname, label, min, max, suffix = suffix, prefix = prefix)
 		
-		self.add_combobox_control("dummy", "Dummy mode (use keyboard instead)", ["yes", "no"], tooltip = "Enable dummy mode for testing purposes")
-		self.add_spinbox_control("port", "Port number", 0, 1024, tooltip = "Expecting a valid port number", )
-		self.add_spinbox_control("resting_value", "Resting state value", 0, 255, tooltip = "A value that is read from the port when there is no input")
-		self.add_line_edit_control("correct_response", "Correct response", tooltip = "Expecting response values (0 .. 255)")
-		self.add_line_edit_control("timeout", "Timeout", tooltip = "Expecting a value in milliseconds or 'infinite'", default = "infinite")
+		self.add_combobox_control("dummy", \
+			"Dummy mode (use keyboard instead)", ["yes", "no"], \
+			tooltip="Enable dummy mode for testing purposes")
+		self.add_spinbox_control("port", "Port number", 0, 1024, tooltip= \
+			"Expecting a valid port number")
+		self.add_spinbox_control("resting_value", "Resting state value", 0, \
+			255, tooltip= \
+			"A value that is read from the port when there is no input")
+		self.add_line_edit_control("correct_response", "Correct response", \
+			tooltip="Expecting response values (0 .. 255)")
+		self.add_line_edit_control("timeout", "Timeout", tooltip= \
+			"Expecting a value in milliseconds or 'infinite'", default= \
+			"infinite")
 
 		# Add a stretch to the edit_vbox, so that the controls do not
 		# stretch to the bottom of the window.
@@ -188,9 +201,7 @@ class qtport_reader(port_reader, qtplugin.qtplugin):
 		
 	def apply_edit_changes(self):
 	
-		"""
-		Set the variables based on the controls
-		"""
+		"""Apply GUI controls"""
 		
 		# Abort if the parent reports failure of if the controls are locked
 		if not qtplugin.qtplugin.apply_edit_changes(self, False) or self.lock:
@@ -204,9 +215,7 @@ class qtport_reader(port_reader, qtplugin.qtplugin):
 
 	def edit_widget(self):
 	
-		"""
-		Set the controls based on the variables
-		"""
+		"""Update GUI controls"""
 		
 		# Lock the controls, otherwise a recursive loop might aris
 		# in which updating the controls causes the variables to be
