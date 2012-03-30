@@ -104,6 +104,12 @@ if "--preload" in sys.argv:
 	except Exception as e:
 		debug.msg("failed to import 'pyaudio' <http://people.csail.mit.edu/hubert/pyaudio/>. You will not be able to use portaudio and the media_player plug-in. Error: %s" % e)
 
+	debug.msg("preloading 'wave'")
+	try:
+		import wave
+	except Exception as e:
+		debug.msg("failed to import 'wave'. Error: %s" % e)
+
 	# OpenGL requires hacks to work with Py2Exe. The approach here is based on
 	# information from <http://www.py2exe.org/index.cgi/PyOpenGL>
 	debug.msg("preloading 'OpenGL'")
