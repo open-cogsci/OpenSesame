@@ -71,7 +71,8 @@ class inline_script(item.item):
 		An openexp canvas
 		</DOC>"""
 
-		return canvas.canvas(self.experiment, self.get("background"), self.get("foreground"))
+		return canvas.canvas(self.experiment, self.get("background"), \
+			self.get("foreground"))
 
 	def prepare(self):
 
@@ -139,10 +140,19 @@ class inline_script(item.item):
 
 		l = item.item.var_info(self)
 
-		m = re.findall("self.experiment.set\(\"(\w+)\"(\s*),(\s*)(\"*)([^\"\)]*)(\"*)", \
+		m = re.findall( \
+			"self.experiment.set\(\"(\w+)\"(\s*),(\s*)(\"*)([^\"\)]*)(\"*)", \
 			self._prepare + self._run) \
-			+ re.findall("self.experiment.set\('(\w+)'(\s*),(\s*)('*)([^'\)]*)('*)", \
-			self._prepare + self._run)
+			+ re.findall( \
+			"self.experiment.set\('(\w+)'(\s*),(\s*)('*)([^'\)]*)('*)", \
+			self._prepare + self._run) \
+			+ re.findall( \
+			"exp.set\(\"(\w+)\"(\s*),(\s*)(\"*)([^\"\)]*)(\"*)", \
+			self._prepare + self._run) \
+			+ re.findall( \
+			"exp.set\('(\w+)'(\s*),(\s*)('*)([^'\)]*)('*)", \
+			self._prepare + self._run)			
+			
 		for var, s1, s2, q1, val, q2 in m:
 			if q1 != "\"":
 				val = "[Set to '%s']" % val
