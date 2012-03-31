@@ -19,7 +19,8 @@ import libopensesame.mouse_response
 from libqtopensesame.items import qtitem
 from PyQt4 import QtCore, QtGui
 
-class mouse_response(libopensesame.mouse_response.mouse_response, qtitem.qtitem):
+class mouse_response(libopensesame.mouse_response.mouse_response,\
+	qtitem.qtitem):
 
 	"""mouse_response item GUI"""
 
@@ -35,13 +36,18 @@ class mouse_response(libopensesame.mouse_response.mouse_response, qtitem.qtitem)
 		Keywords arguments:
 		string -- a definition string (default=None)	
 		"""		
-		libopensesame.mouse_response.mouse_response.__init__(self, name, experiment, string)
-		qtitem.qtitem.__init__(self)		
+		libopensesame.mouse_response.mouse_response.__init__(self, name, \
+			experiment, string)
+		qtitem.qtitem.__init__(self)
+		self.lock = False
 
 	def apply_edit_changes(self):
 	
 		"""Apply controls"""
 		
+		if self.lock:
+			return
+		self.lock = True		
 		qtitem.qtitem.apply_edit_changes(self)
 		
 		cr = self.usanitize(self.edit_correct_response.text())
@@ -73,6 +79,7 @@ class mouse_response(libopensesame.mouse_response.mouse_response, qtitem.qtitem)
 			self.set("flush", "no")						
 			
 		self.experiment.main_window.refresh(self.name)			
+		self.lock = False
 
 	def init_edit_widget(self):
 	
@@ -82,18 +89,24 @@ class mouse_response(libopensesame.mouse_response.mouse_response, qtitem.qtitem)
 		
 		row = 3
 		
+		# TODO Update this to use auto-controls framework
+		
 		self.edit_grid.addWidget(QtGui.QLabel("Correct response"), row, 0)
 		self.edit_correct_response = QtGui.QLineEdit()
-		self.edit_correct_response.setToolTip("Set the correct response, e.g., 'left_button', 'middle_button', or 'scroll_down'")
-		QtCore.QObject.connect(self.edit_correct_response, QtCore.SIGNAL("editingFinished()"), self.apply_edit_changes)
+		self.edit_correct_response.setToolTip( \
+			"Set the correct response, e.g., 'left_button', 'middle_button', or 'scroll_down'")
+		QtCore.QObject.connect(self.edit_correct_response, QtCore.SIGNAL( \
+			"editingFinished()"), self.apply_edit_changes)
 		self.edit_grid.addWidget(self.edit_correct_response, row, 1)
 		
 		row += 1		
 		
 		self.edit_grid.addWidget(QtGui.QLabel("Allowed responses"), row, 0)
 		self.edit_allowed_responses = QtGui.QLineEdit()
-		self.edit_allowed_responses.setToolTip("Set the allowed responses seperated by a semi-colon, e.g., 'left_button;right_button'")
-		QtCore.QObject.connect(self.edit_allowed_responses, QtCore.SIGNAL("editingFinished()"), self.apply_edit_changes)
+		self.edit_allowed_responses.setToolTip( \
+			"Set the allowed responses seperated by a semi-colon, e.g., 'left_button;right_button'")
+		QtCore.QObject.connect(self.edit_allowed_responses, QtCore.SIGNAL( \
+			"editingFinished()"), self.apply_edit_changes)
 		self.edit_grid.addWidget(self.edit_allowed_responses, row, 1)		
 		
 		row += 1		
@@ -101,14 +114,15 @@ class mouse_response(libopensesame.mouse_response.mouse_response, qtitem.qtitem)
 		self.edit_grid.addWidget(QtGui.QLabel("Timeout"), row, 0)
 		self.edit_timeout = QtGui.QLineEdit()
 		self.edit_timeout.setToolTip("Set the response timeout in milliseconds, or 'infinite'")
-		QtCore.QObject.connect(self.edit_timeout, QtCore.SIGNAL("editingFinished()"), self.apply_edit_changes)
+		QtCore.QObject.connect(self.edit_timeout, QtCore.SIGNAL( \
+			"editingFinished()"), self.apply_edit_changes)
 		self.edit_grid.addWidget(self.edit_timeout, row, 1)			
 
 		row += 1
 
 		self.checkbox_show_cursor = QtGui.QCheckBox("Visible mouse cursor")
 		self.checkbox_show_cursor.setToolTip("If checked, the mouse cursor will be visible")
-		QtCore.QObject.connect(self.checkbox_show_cursor, QtCore.SIGNAL("stateChanged(int)"), self.apply_edit_changes)
+		self.checkbox_show_cursor.toggled.connect(self.apply_edit_changes)
 		self.edit_grid.addWidget(self.checkbox_show_cursor, row, 1)		
 		
 		row += 1							
@@ -119,7 +133,8 @@ class mouse_response(libopensesame.mouse_response.mouse_response, qtitem.qtitem)
 		
 		row += 1
 
-		l = QtGui.QLabel("<small><i><b>Note:</b> On some systems the cursor may not appear, despite being set to 'visible'. If this happens, please refer to the documentation for more information.</i></small>")
+		l = QtGui.QLabel( \
+			"<small><i><b>Note:</b> On some systems the cursor may not appear, despite being set to 'visible'. If this happens, please refer to the documentation for more information.</i></small>")
 		l.setWordWrap(True)
 		self.edit_grid.addWidget(l, row, 1)
 		
@@ -134,6 +149,9 @@ class mouse_response(libopensesame.mouse_response.mouse_response, qtitem.qtitem)
 		Controls QWidget
 		"""
 
+		if self.lock:
+			return
+		self.lock = True
 		qtitem.qtitem.edit_widget(self)
 
 		if hasattr(self, "correct_response"):
@@ -154,8 +172,9 @@ class mouse_response(libopensesame.mouse_response.mouse_response, qtitem.qtitem)
 			to = ""		
 		self.edit_timeout.setText(str(to))	
 		
-		self.checkbox_flush.setChecked(self.get("flush") == "yes")				
-		
+		self.checkbox_show_cursor.setChecked(self.get("show_cursor") == "yes")	
+		self.checkbox_flush.setChecked(self.get("flush") == "yes")	
+		self.lock = False							
 		return self._edit_widget
 		
 	
