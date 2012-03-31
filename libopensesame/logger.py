@@ -77,7 +77,7 @@ class logger(item.item):
 				val = str(self.get(var))
 			except exceptions.runtime_error as e:
 				if self.get("ignore_missing") == "yes":
-					l.append("NA")
+					val = "NA"
 				else:
 					raise exceptions.runtime_error( \
 						"Logger '%s' tries to log the variable '%s', but this variable is not available. Please deselect '%s' in logger '%s' or enable the 'Use NA for variables that have not been set' option." \
