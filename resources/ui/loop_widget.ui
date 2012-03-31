@@ -65,7 +65,11 @@
        </widget>
       </item>
       <item row="3" column="1">
-       <widget class="QSpinBox" name="spin_cycles"/>
+       <widget class="QSpinBox" name="spin_cycles">
+        <property name="maximum">
+         <number>10000</number>
+        </property>
+       </widget>
       </item>
       <item row="4" column="0">
        <widget class="QLabel" name="label_repeat">
@@ -81,6 +85,9 @@
         </property>
         <property name="suffix">
          <string> time(s)</string>
+        </property>
+        <property name="maximum">
+         <double>10000.000000000000000</double>
         </property>
        </widget>
       </item>

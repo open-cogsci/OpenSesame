@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'resources/ui/loop_widget.ui'
 #
-# Created: Thu Mar 29 15:31:23 2012
+# Created: Sat Mar 31 16:00:41 2012
 #      by: PyQt4 UI code generator 4.9.1
 #
 # WARNING! All changes made in this file will be lost!
@@ -46,12 +46,14 @@ class Ui_loop_widget(object):
         self.label_order.setObjectName(_fromUtf8("label_order"))
         self.gridLayout_2.addWidget(self.label_order, 0, 2, 1, 1)
         self.spin_cycles = QtGui.QSpinBox(self.widget_options)
+        self.spin_cycles.setMaximum(10000)
         self.spin_cycles.setObjectName(_fromUtf8("spin_cycles"))
         self.gridLayout_2.addWidget(self.spin_cycles, 3, 1, 1, 1)
         self.label_repeat = QtGui.QLabel(self.widget_options)
         self.label_repeat.setObjectName(_fromUtf8("label_repeat"))
         self.gridLayout_2.addWidget(self.label_repeat, 4, 0, 1, 1)
         self.spin_repeat = QtGui.QDoubleSpinBox(self.widget_options)
+        self.spin_repeat.setMaximum(10000.0)
         self.spin_repeat.setObjectName(_fromUtf8("spin_repeat"))
         self.gridLayout_2.addWidget(self.spin_repeat, 4, 1, 1, 1)
         self.label_skip = QtGui.QLabel(self.widget_options)
