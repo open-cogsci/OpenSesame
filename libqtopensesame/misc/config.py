@@ -58,7 +58,7 @@ config = {
 	"shortcut_variables" : "Ctrl+5",
 	"show_startup_tip" : True,
 	"style" : "",
-	"theme" : "default",
+	"theme" : "gnome",
 	"toolbar_size" : 32,
 	"toolbar_text" : False,
 	"new_experiment_dialog" : True,
@@ -72,7 +72,7 @@ config = {
 	"version_check_url" : \
 		"http://files.cogsci.nl/software/opensesame/MOST_RECENT_VERSION.TXT"
 	}
-
+	
 def get_config(setting):
 
 	"""
