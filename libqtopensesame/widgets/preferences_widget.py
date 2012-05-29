@@ -117,20 +117,34 @@ class preferences_widget(QtGui.QWidget):
 		self.ui.checkbox_auto_opensesamerun_exec.setChecked(self.main_window.opensesamerun_exec == "")
 		self.ui.edit_opensesamerun_exec.setText(self.main_window.opensesamerun_exec)
 
-		self.ui.checkbox_new_experiment_dialog.setChecked(config.get_config("new_experiment_dialog"))
-		self.ui.checkbox_scintilla_auto_indent.setChecked(config.get_config("scintilla_auto_indent"))
-		self.ui.checkbox_scintilla_brace_match.setChecked(config.get_config("scintilla_brace_match"))
-		self.ui.checkbox_scintilla_custom_font.setChecked(config.get_config("scintilla_custom_font"))
-		self.ui.checkbox_scintilla_eol_visible.setChecked(config.get_config("scintilla_eol_visible"))
-		self.ui.checkbox_scintilla_folding.setChecked(config.get_config("scintilla_folding"))
-		self.ui.checkbox_scintilla_indentation_guides.setChecked(config.get_config("scintilla_indentation_guides"))
-		self.ui.checkbox_scintilla_line_numbers.setChecked(config.get_config("scintilla_line_numbers"))
-		self.ui.checkbox_scintilla_right_margin.setChecked(config.get_config("scintilla_right_margin"))
-		self.ui.checkbox_scintilla_auto_indent.setChecked(config.get_config("scintilla_auto_indent"))
-		self.ui.checkbox_scintilla_syntax_highlighting.setChecked(config.get_config("scintilla_syntax_highlighting"))
-		self.ui.checkbox_scintilla_whitespace_visible.setChecked(config.get_config("scintilla_whitespace_visible"))
-		self.ui.font_scintilla_font_family.setCurrentFont(QtGui.QFont(config.get_config("scintilla_font_family")))
-		self.ui.spinbox_scintilla_font_size.setValue(config.get_config("scintilla_font_size"))
+		self.ui.checkbox_new_experiment_dialog.setChecked(config.get_config( \
+			"new_experiment_dialog"))
+		self.ui.checkbox_scintilla_auto_indent.setChecked(config.get_config( \
+			"scintilla_auto_indent"))
+		self.ui.checkbox_scintilla_brace_match.setChecked(config.get_config( \
+			"scintilla_brace_match"))
+		self.ui.checkbox_scintilla_custom_font.setChecked(config.get_config( \
+			"scintilla_custom_font"))
+		self.ui.checkbox_scintilla_eol_visible.setChecked(config.get_config( \
+			"scintilla_eol_visible"))
+		self.ui.checkbox_scintilla_folding.setChecked(config.get_config( \
+			"scintilla_folding"))
+		self.ui.checkbox_scintilla_indentation_guides.setChecked( \
+			config.get_config("scintilla_indentation_guides"))
+		self.ui.checkbox_scintilla_line_numbers.setChecked(config.get_config( \
+			"scintilla_line_numbers"))
+		self.ui.checkbox_scintilla_right_margin.setChecked(config.get_config( \
+			"scintilla_right_margin"))
+		self.ui.checkbox_scintilla_auto_indent.setChecked(config.get_config( \
+			"scintilla_auto_indent"))
+		self.ui.checkbox_scintilla_syntax_highlighting.setChecked( \
+			config.get_config("scintilla_syntax_highlighting"))
+		self.ui.checkbox_scintilla_whitespace_visible.setChecked( \
+			config.get_config("scintilla_whitespace_visible"))
+		self.ui.font_scintilla_font_family.setCurrentFont(QtGui.QFont( \
+			config.get_config("scintilla_font_family")))
+		self.ui.spinbox_scintilla_font_size.setValue(config.get_config( \
+			"scintilla_font_size"))
 
 		# Disable some of the controls, if they depend on other controls
 		if self.main_window.autosave_interval <= 0:
@@ -181,12 +195,15 @@ class preferences_widget(QtGui.QWidget):
 		else:
 			self.main_window.ui.toolbar_main.setToolButtonStyle(QtCore.Qt.ToolButtonIconOnly)
 		
+		old_size = config.get_config('toolbar_size')
 		if self.ui.checkbox_small_toolbar.isChecked():
-			config.set_config("toolbar_size", 16)
+			new_size = 16
 		else:
-			config.set_config("toolbar_size", 32)
-		self.main_window.theme.set_toolbar_size(config.get_config( \
-			"toolbar_size"))		
+			new_size = 32
+		if old_size != new_size:
+			config.set_config("toolbar_size", new_size)
+			self.main_window.theme.set_toolbar_size(config.get_config( \
+				"toolbar_size"))		
 
 		if self.ui.checkbox_enable_autosave.isChecked():
 			self.main_window.autosave_interval = 60000 * self.ui.spinbox_autosave_interval.value()
@@ -234,7 +251,6 @@ class preferences_widget(QtGui.QWidget):
 		config.set_config("disabled_plugins", ";".join(l))
 
 		self.main_window.style = self.ui.combobox_style.currentText()
-		self.main_window.set_style()
 		self.main_window.save_state()
 
 		self.lock = False

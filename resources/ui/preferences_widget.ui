@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>823</width>
+    <width>682</width>
     <height>965</height>
    </rect>
   </property>
@@ -23,9 +23,9 @@
       <property name="geometry">
        <rect>
         <x>0</x>
-        <y>0</y>
-        <width>790</width>
-        <height>954</height>
+        <y>-32</y>
+        <width>646</width>
+        <height>977</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -119,7 +119,7 @@
           <item row="0" column="0">
            <widget class="QLabel" name="label_2">
             <property name="text">
-             <string>Interface style</string>
+             <string>Interface style (requires restart)</string>
             </property>
            </widget>
           </item>
@@ -510,7 +510,7 @@ p, li { white-space: pre-wrap; }
              <item>
               <widget class="QLabel" name="label_plugin_dummy">
                <property name="text">
-                <string>Installed plug-ins (deactivation requires restart):</string>
+                <string>Installed plug-ins (requires restart):</string>
                </property>
               </widget>
              </item>

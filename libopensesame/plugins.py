@@ -83,11 +83,8 @@ def plugin_disabled(plugin):
 	True if the plugin has been disabled, False otherwise
 	"""
 
-	try:
-		from libqtopensesame import config
-		return plugin in config.get_config("disabled_plugins").split(";")
-	except:
-		return False
+	from libqtopensesame.misc import config
+	return plugin in config.get_config("disabled_plugins").split(";")
 	
 def plugin_property(plugin, _property, default=0):
 
@@ -144,7 +141,8 @@ def list_plugins(filter_disabled=True):
 	
 	global _list	
 	if _list != None:
-		return [plugin for plugin in _list if not (filter_disabled and plugin_disabled(plugin))]
+		return [plugin for plugin in _list if not (filter_disabled and \
+			plugin_disabled(plugin))]
 	
 	plugins = []
 	for folder in plugin_folders():
@@ -157,7 +155,8 @@ def list_plugins(filter_disabled=True):
 	# Sort (inversely) by priority
 	plugins.sort(key=lambda p: -p[1])
 	_list = [plugin[0] for plugin in plugins]
-	return [plugin for plugin in _list if not (filter_disabled and plugin_disabled(plugin))]
+	return [plugin for plugin in _list if not (filter_disabled and \
+		plugin_disabled(plugin))]
 	
 def plugin_folder(plugin):
 	
@@ -244,7 +243,8 @@ def load_plugin(plugin, item_name, experiment, string, prefix = ""):
 	"""
 
 	mod = import_plugin(plugin)
-	cmd = "mod.%(prefix)s%(plugin)s(item_name, experiment, string)" % {"plugin" : plugin, "prefix" : prefix}
+	cmd = "mod.%(prefix)s%(plugin)s(item_name, experiment, string)" % \
+		{"plugin" : plugin, "prefix" : prefix}
 	item = eval(cmd)
 	return item
 	

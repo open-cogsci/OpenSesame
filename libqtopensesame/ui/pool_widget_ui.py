@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'resources/ui/pool_widget.ui'
 #
-# Created: Sat Mar 31 16:00:40 2012
+# Created: Tue May 29 14:40:11 2012
 #      by: PyQt4 UI code generator 4.9.1
 #
 # WARNING! All changes made in this file will be lost!

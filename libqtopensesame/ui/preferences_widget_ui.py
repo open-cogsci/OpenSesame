@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'resources/ui/preferences_widget.ui'
 #
-# Created: Sat Mar 31 16:00:41 2012
+# Created: Tue May 29 14:40:12 2012
 #      by: PyQt4 UI code generator 4.9.1
 #
 # WARNING! All changes made in this file will be lost!
@@ -17,14 +17,14 @@ except AttributeError:
 class Ui_Form(object):
     def setupUi(self, Form):
         Form.setObjectName(_fromUtf8("Form"))
-        Form.resize(823, 965)
+        Form.resize(682, 965)
         self.verticalLayout = QtGui.QVBoxLayout(Form)
         self.verticalLayout.setObjectName(_fromUtf8("verticalLayout"))
         self.scrollArea = QtGui.QScrollArea(Form)
         self.scrollArea.setWidgetResizable(True)
         self.scrollArea.setObjectName(_fromUtf8("scrollArea"))
         self.scrollAreaWidgetContents = QtGui.QWidget()
-        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 790, 954))
+        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, -32, 646, 977))
         self.scrollAreaWidgetContents.setObjectName(_fromUtf8("scrollAreaWidgetContents"))
         self.verticalLayout_2 = QtGui.QVBoxLayout(self.scrollAreaWidgetContents)
         self.verticalLayout_2.setObjectName(_fromUtf8("verticalLayout_2"))
@@ -259,7 +259,7 @@ class Ui_Form(object):
         self.checkbox_new_experiment_dialog.setText(QtGui.QApplication.translate("Form", "Show \'New experiment\' dialog on start-up", None, QtGui.QApplication.UnicodeUTF8))
         self.checkbox_small_toolbar.setText(QtGui.QApplication.translate("Form", "Small icons in toolbar", None, QtGui.QApplication.UnicodeUTF8))
         self.groupBox_5.setTitle(QtGui.QApplication.translate("Form", "Appearance", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_2.setText(QtGui.QApplication.translate("Form", "Interface style", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_2.setText(QtGui.QApplication.translate("Form", "Interface style (requires restart)", None, QtGui.QApplication.UnicodeUTF8))
         self.groupbox_scintilla.setTitle(QtGui.QApplication.translate("Form", "Embedded text editor", None, QtGui.QApplication.UnicodeUTF8))
         self.checkbox_scintilla_line_numbers.setText(QtGui.QApplication.translate("Form", "Show line numbers", None, QtGui.QApplication.UnicodeUTF8))
         self.checkbox_scintilla_folding.setText(QtGui.QApplication.translate("Form", "Enable block folding", None, QtGui.QApplication.UnicodeUTF8))
@@ -296,5 +296,5 @@ class Ui_Form(object):
         self.label_opensesamerun_exec.setText(QtGui.QApplication.translate("Form", "Custom run command:", None, QtGui.QApplication.UnicodeUTF8))
         self.groupBox_6.setTitle(QtGui.QApplication.translate("Form", "Plug-ins", None, QtGui.QApplication.UnicodeUTF8))
         self.label_6.setText(QtGui.QApplication.translate("Form", "Plug-in folders:", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_plugin_dummy.setText(QtGui.QApplication.translate("Form", "Installed plug-ins (deactivation requires restart):", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_plugin_dummy.setText(QtGui.QApplication.translate("Form", "Installed plug-ins (requires restart):", None, QtGui.QApplication.UnicodeUTF8))
 

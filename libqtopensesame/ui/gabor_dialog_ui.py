@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'resources/ui/gabor_dialog.ui'
 #
-# Created: Sat Mar 31 16:00:41 2012
+# Created: Tue May 29 14:40:12 2012
 #      by: PyQt4 UI code generator 4.9.1
 #
 # WARNING! All changes made in this file will be lost!
