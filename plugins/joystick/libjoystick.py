@@ -276,7 +276,7 @@ class libjoystick:
 					if event.key == pygame.K_ESCAPE:
 						raise openexp.exceptions.response_error("The escape key was pressed.")
 				if event.type == JOYBUTTONDOWN:
-					if joybuttonlist == None or event.button in joybuttonlist:
+					if joybuttonlist == None or event.button + 1 in joybuttonlist:
 						eventtype = 'joybuttonpress'
 						bpress = event.button + 1
 						return eventtype, bpress, time
