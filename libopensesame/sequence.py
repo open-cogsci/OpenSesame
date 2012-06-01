@@ -57,7 +57,7 @@ class sequence(item.item):
 		for item, cond in self._items:		
 			if eval(cond):	
 				self.experiment.items[item].run()
-		return True							
+		return True				
 		
 	def parse_run(self, i):
 	
@@ -134,7 +134,7 @@ class sequence(item.item):
 		A definition string
 		"""
 	
-		s = item.item.to_string(self, "sequence")
+		s = item.item.to_string(self, self.item_type)
 		for _item, cond in self.items:
 			s += "\trun %s \"%s\"\n" % (_item, cond)
 		return s			
