@@ -35,15 +35,15 @@ class libjoystick:
 	backends. The new backend can be activated by adding "set keyboard_backend [name]"
 
 	A few guidelines:
-	-- Acceptable key-formats are characters and integers, interpreted as ASCII key codes.
-	-- Moderators are represented by the following strings: "shift", "alt", "control" and "meta"
-	-- Catch exceptions wherever possible and raise an openexp.exceptions.canvas_error
-	   with a clear and descriptive error message.
-	-- Do not deviate from the guidelines. All back-ends should be interchangeable and
-	   transparent to OpenSesame. You are free to add functionality to this class, to be
-	   used in inline scripts, but this should not break the basic functionality.
-	-- Print debugging output only if experiment.debug == True and preferrably in the
-	   following format: "template.__init__(): Debug message here".
+	--	Acceptable key-formats are characters and integers, interpreted as ASCII key codes.
+	--	Moderators are represented by the following strings: "shift", "alt", "control" and "meta"
+	--	Catch exceptions wherever possible and raise an openexp.exceptions.canvas_error
+		with a clear and descriptive error message.
+	--	Do not deviate from the guidelines. All back-ends should be interchangeable and
+		transparent to OpenSesame. You are free to add functionality to this class, to be
+		used in inline scripts, but this should not break the basic functionality.
+	--	Print debugging output only if experiment.debug == True and preferrably in the
+		following format: "template.__init__(): Debug message here".
 	"""
 	
 	def __init__(self, experiment, joybuttonlist = None, timeout = None):
@@ -52,13 +52,13 @@ class libjoystick:
 		Intializes the joystick object.
 
 		Arguments:
-		experiment    -- an instance of libopensesame.experiment.experiment
+		experiment		an instance of libopensesame.experiment.experiment
 
 		Keyword arguments:
-		joybuttonlist -- a list of buttons that are accepted or None to accept
-					     all keys (default = None)
-		timeout     -- an integer value specifying a timeout in milliseconds or
-				       None for no timeout (default = None)
+		joybuttonlist	a list of buttons that are accepted or None to accept
+						all keys (default = None)
+		timeout			an integer value specifying a timeout in milliseconds or
+						None for no timeout (default = None)
 		</DOC>"""
 
 		
@@ -77,8 +77,8 @@ class libjoystick:
 		Sets a list of accepted buttons
 
 		Keyword arguments:
-		joybuttonlist -- a list of button numbers that are accepted or
-				         None to accept all buttons (default = None)				         
+		joybuttonlist	a list of button numbers that are accepted or
+						None to accept all buttons (default = None)
 		</DOC>"""
 
 		if joybuttonlist == None or joybuttonlist == []:
@@ -94,8 +94,8 @@ class libjoystick:
 		Sets a timeout
 
 		Keyword arguments:
-		timeout -- an integer value specifying a timeout in milliseconds or
-				   None for no timeout (default = None)
+		timeout		an integer value specifying a timeout in milliseconds or
+					None for no timeout (default = None)
 		</DOC>"""
 
 		self.timeout = timeout
@@ -106,12 +106,12 @@ class libjoystick:
 		Waits for joystick button input
 
 		Keyword arguments:
-		joybuttonlist -- a list of button numbers that are accepted or
-						 None to use the default. This parameter does not
-						 change the default joybuttonlist. (default = None)
-		timeout       -- an integer value specifying a timeout in milliseconds
-		                 or None to use the default. This parameter does not
-		                 change the default timeout. (default = None)
+		joybuttonlist	a list of button numbers that are accepted or
+						None to use the default. This parameter does not
+						change the default joybuttonlist. (default = None)
+		timeout			an integer value specifying a timeout in milliseconds
+						or None to use the default. This parameter does not
+						change the default timeout. (default = None)
 
 		Returns:
 		A (joybutton, timestamp) tuple. The joybutton is None if a timeout occurs.
@@ -144,9 +144,9 @@ class libjoystick:
 		Waits for joystick axes movement
 
 		Keyword arguments:
-		timeout       -- an integer value specifying a timeout in milliseconds
-		                 or None to use the default. This parameter does not
-		                 change the default timeout. (default = None)
+		timeout			an integer value specifying a timeout in milliseconds
+						or None to use the default. This parameter does not
+						change the default timeout. (default = None)
 
 		Returns:
 		A (position, timestamp) tuple. The position is None if a timeout occurs.
@@ -178,9 +178,9 @@ class libjoystick:
 		Waits for joystick trackball movement
 
 		Keyword arguments:
-		timeout       -- an integer value specifying a timeout in milliseconds
-		                 or None to use the default. This parameter does not
-		                 change the default timeout. (default = None)
+		timeout			an integer value specifying a timeout in milliseconds
+						or None to use the default. This parameter does not
+						change the default timeout. (default = None)
 
 		Returns:
 		A (position, timestamp) tuple. The position is None if a timeout occurs.
@@ -212,9 +212,9 @@ class libjoystick:
 		Waits for joystick hat movement
 
 		Keyword arguments:
-		timeout       -- an integer value specifying a timeout in milliseconds
-		                 or None to use the default. This parameter does not
-		                 change the default timeout. (default = None)
+		timeout			an integer value specifying a timeout in milliseconds
+						or None to use the default. This parameter does not
+						change the default timeout. (default = None)
 
 		Returns:
 		A (position, timestamp) tuple. The position is None if a timeout occurs.
@@ -246,12 +246,12 @@ class libjoystick:
 		Waits for any joystick input (buttons, axes, hats or balls)
 
 		Keyword arguments:
-		joybuttonlist -- a list of button numbers that are accepted or
-						 None to use the default. This parameter does not
-						 change the default joybuttonlist. (default = None)
-		timeout       -- an integer value specifying a timeout in milliseconds
-		                 or None to use the default. This parameter does not
-		                 change the default timeout. (default = None)
+		joybuttonlist	a list of button numbers that are accepted or
+						None to use the default. This parameter does not
+						change the default joybuttonlist. (default = None)
+		timeout			an integer value specifying a timeout in milliseconds
+						or None to use the default. This parameter does not
+						change the default timeout. (default = None)
 
 		Returns:
 		A (event, value, timestamp) tuple. The value is None if a timeout occurs.
