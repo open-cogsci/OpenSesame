@@ -52,6 +52,7 @@ class loop(item.item):
 		self.description = "Repeatedly runs another item"
 		self.item_type = "loop"
 		self.item = ""
+		self.break_if = ""
 		item.item.__init__(self, name, experiment, string)
 
 	def from_string(self, string):
@@ -102,10 +103,15 @@ class loop(item.item):
 		True on success. False is never actually returned, since a runtime_error
 		is raised on failure.
 		"""
+		
+		# Prepare the break if condition
+		if self.break_if != "":
+			self._break_if = self.compile_cond(self.break_if)
+		else:
+			self._break_if = None
 
 		# First generate a list
 		l = []
-
 		j = 0
 
 		# Walk through all complete repeats
@@ -147,14 +153,16 @@ class loop(item.item):
 				
 		# And run!
 		_item = self.experiment.items[self.item]		
-		for repeat, cycle in l:
+		for repeat, cycle in l:					
 			self.apply_cycle(cycle)
+			if self._break_if != None and eval(self._break_if):
+				break
 			if _item.prepare():
 				_item.run()
 			else:
 				raise exceptions.runtime_error( \
 					"Failed to prepare item '%s', which is called by loop item '%s'" \
-					% (self.item, self.name))
+					% (self.item, self.name))								
 		return True
 							
 	def apply_cycle(self, cycle):

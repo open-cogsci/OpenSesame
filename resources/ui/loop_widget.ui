@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>760</width>
-    <height>159</height>
+    <width>811</width>
+    <height>318</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -20,108 +20,7 @@
    <property name="margin">
     <number>0</number>
    </property>
-   <item row="0" column="0">
-    <widget class="QWidget" name="widget_options" native="true">
-     <layout class="QGridLayout" name="gridLayout_2">
-      <property name="margin">
-       <number>0</number>
-      </property>
-      <item row="0" column="0">
-       <widget class="QLabel" name="label_item">
-        <property name="text">
-         <string>Item to run</string>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="1">
-       <widget class="QComboBox" name="combobox_item"/>
-      </item>
-      <item row="3" column="0">
-       <widget class="QLabel" name="label_cycles">
-        <property name="text">
-         <string>Cycles</string>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="3">
-       <widget class="QComboBox" name="combobox_order">
-        <item>
-         <property name="text">
-          <string>random</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>sequential</string>
-         </property>
-        </item>
-       </widget>
-      </item>
-      <item row="0" column="2">
-       <widget class="QLabel" name="label_order">
-        <property name="text">
-         <string>Order</string>
-        </property>
-       </widget>
-      </item>
-      <item row="3" column="1">
-       <widget class="QSpinBox" name="spin_cycles">
-        <property name="maximum">
-         <number>10000</number>
-        </property>
-       </widget>
-      </item>
-      <item row="4" column="0">
-       <widget class="QLabel" name="label_repeat">
-        <property name="text">
-         <string>Repeat</string>
-        </property>
-       </widget>
-      </item>
-      <item row="4" column="1">
-       <widget class="QDoubleSpinBox" name="spin_repeat">
-        <property name="prefix">
-         <string>each cycle </string>
-        </property>
-        <property name="suffix">
-         <string> time(s)</string>
-        </property>
-        <property name="maximum">
-         <double>10000.000000000000000</double>
-        </property>
-       </widget>
-      </item>
-      <item row="3" column="2">
-       <widget class="QLabel" name="label_skip">
-        <property name="text">
-         <string>At loop start, skip the</string>
-        </property>
-       </widget>
-      </item>
-      <item row="3" column="3">
-       <widget class="QSpinBox" name="spin_skip">
-        <property name="suffix">
-         <string> cycle(s)</string>
-        </property>
-        <property name="prefix">
-         <string>first </string>
-        </property>
-        <property name="maximum">
-         <number>10000</number>
-        </property>
-       </widget>
-      </item>
-      <item row="4" column="2" colspan="2">
-       <widget class="QCheckBox" name="checkbox_offset">
-        <property name="text">
-         <string>Run skipped cycles at end of loop (offset mode)</string>
-        </property>
-       </widget>
-      </item>
-     </layout>
-    </widget>
-   </item>
-   <item row="3" column="0">
+   <item row="6" column="0">
     <widget class="QWidget" name="widget_buttons" native="true">
      <layout class="QHBoxLayout" name="horizontalLayout">
       <property name="margin">
@@ -195,6 +94,148 @@
      </layout>
     </widget>
    </item>
+   <item row="2" column="0">
+    <widget class="QFrame" name="frame">
+     <property name="frameShape">
+      <enum>QFrame::StyledPanel</enum>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Raised</enum>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout">
+      <property name="margin">
+       <number>4</number>
+      </property>
+      <item>
+       <widget class="QCheckBox" name="checkbox_advanced">
+        <property name="text">
+         <string>Show advanced options</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QWidget" name="widget_advanced" native="true">
+        <layout class="QGridLayout" name="gridLayout_3">
+         <property name="margin">
+          <number>0</number>
+         </property>
+         <item row="1" column="1">
+          <widget class="QSpinBox" name="spin_skip">
+           <property name="suffix">
+            <string> cycle(s)</string>
+           </property>
+           <property name="prefix">
+            <string>first </string>
+           </property>
+           <property name="maximum">
+            <number>10000</number>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="0">
+          <widget class="QLabel" name="label_skip">
+           <property name="text">
+            <string>At loop start, skip the</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="0">
+          <widget class="QLabel" name="label">
+           <property name="text">
+            <string>Break if</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="1">
+          <widget class="QLineEdit" name="edit_break_if"/>
+         </item>
+         <item row="2" column="0" colspan="2">
+          <widget class="QCheckBox" name="checkbox_offset">
+           <property name="text">
+            <string>Run skipped cycles at end of loop (offset mode)</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item row="0" column="0">
+    <widget class="QWidget" name="widget_options" native="true">
+     <layout class="QGridLayout" name="gridLayout_2">
+      <property name="margin">
+       <number>0</number>
+      </property>
+      <item row="0" column="0">
+       <widget class="QLabel" name="label_item">
+        <property name="text">
+         <string>Item to run</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="QComboBox" name="combobox_item"/>
+      </item>
+      <item row="3" column="0">
+       <widget class="QLabel" name="label_cycles">
+        <property name="text">
+         <string>Cycles</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="3">
+       <widget class="QComboBox" name="combobox_order">
+        <item>
+         <property name="text">
+          <string>random</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>sequential</string>
+         </property>
+        </item>
+       </widget>
+      </item>
+      <item row="0" column="2">
+       <widget class="QLabel" name="label_order">
+        <property name="text">
+         <string>Order</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="1">
+       <widget class="QSpinBox" name="spin_cycles">
+        <property name="maximum">
+         <number>10000000</number>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="2">
+       <widget class="QLabel" name="label_repeat">
+        <property name="text">
+         <string>Repeat</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="3">
+       <widget class="QDoubleSpinBox" name="spin_repeat">
+        <property name="prefix">
+         <string>each cycle </string>
+        </property>
+        <property name="suffix">
+         <string> time(s)</string>
+        </property>
+        <property name="maximum">
+         <double>100000.000000000000000</double>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
    <item row="1" column="0">
     <widget class="QFrame" name="frame_summary">
      <property name="frameShape">
@@ -233,5 +274,22 @@
   </layout>
  </widget>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>checkbox_advanced</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>widget_advanced</receiver>
+   <slot>setVisible(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>379</x>
+     <y>83</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>379</x>
+     <y>144</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
 </ui>

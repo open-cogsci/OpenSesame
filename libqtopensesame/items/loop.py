@@ -434,8 +434,10 @@ class loop(libopensesame.loop.loop, qtitem.qtitem):
 		qtitem.qtitem.init_edit_widget(self, False)
 		self.loop_widget = QtGui.QWidget()
 		self.loop_widget.ui = loop_widget_ui.Ui_loop_widget()
-		self.loop_widget.ui.setupUi(self.loop_widget)
+		self.loop_widget.ui.setupUi(self.loop_widget)		
 		self.experiment.main_window.theme.apply_theme(self.loop_widget)
+		self.loop_widget.ui.widget_advanced.hide()		
+		
 		self.edit_vbox.addWidget(self.loop_widget)
 		
 		self.auto_add_widget(self.loop_widget.ui.spin_cycles)		
@@ -444,6 +446,7 @@ class loop(libopensesame.loop.loop, qtitem.qtitem):
 		self.auto_add_widget(self.loop_widget.ui.combobox_item, "item")
 		self.auto_add_widget(self.loop_widget.ui.combobox_order, "order")
 		self.auto_add_widget(self.loop_widget.ui.checkbox_offset, "offset")
+		self.auto_add_widget(self.loop_widget.ui.edit_break_if, "break_if")
 		
 		self.loop_widget.ui.button_add_cyclevar.clicked.connect( \
 			self.add_cyclevar)
@@ -488,7 +491,7 @@ class loop(libopensesame.loop.loop, qtitem.qtitem):
 			self.loop_widget.ui.spin_skip.setDisabled(False)
 			self.loop_widget.ui.checkbox_offset.setDisabled( \
 				self.get("skip") < 1)
-	
+				
 		# Update the summary
 		cc = self.call_count()					
 		if self.order == "sequential" and self.offset != "yes":
@@ -505,7 +508,6 @@ class loop(libopensesame.loop.loop, qtitem.qtitem):
 		if cc < 1:
 			s += " <font color='red'><b>(zero or negative length)</b></font>"		
 		self.loop_widget.ui.label_summary.setText("<small>%s</small>" % s)				
-		
 		self.lock = False
 		return self._edit_widget
 
