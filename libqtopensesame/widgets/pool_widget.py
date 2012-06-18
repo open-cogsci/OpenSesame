@@ -162,11 +162,9 @@ class pool_widget(QtGui.QWidget):
 		"""
 
 		ext = os.path.splitext(fname)[1].lower()
-
 		for file_type in self.exts:
 			if ext in self.exts[file_type]:
 				return file_type
-
 		return "unknown"
 
 	def refresh(self):
@@ -174,7 +172,6 @@ class pool_widget(QtGui.QWidget):
 		"""Refresh the contents of the pool widget"""
 
 		filt = str(self.ui.edit_pool_filter.text()).lower()
-
 		self.ui.list_pool.clear()
 
 		# This function can be called after the pool has been cleaned
@@ -227,8 +224,6 @@ class pool_widget(QtGui.QWidget):
 			event.globalPos()))
 		if item == None:
 			return
-
-
 		menu = QtGui.QMenu()
 		menu.addAction(item.icon, "Open")
 		menu.addSeparator()
@@ -253,7 +248,6 @@ class pool_widget(QtGui.QWidget):
 			self.context_target)
 
 		if a == "Open":
-
 			self.open_file(f)
 
 		elif a == "Remove from pool":
@@ -343,7 +337,6 @@ def select_from_pool(main_window):
 	"""
 
 	d = QtGui.QDialog(main_window.ui.centralwidget)
-
 	widget = pool_widget(main_window)
 	widget.refresh()
 	bbox = QtGui.QDialogButtonBox(d)
@@ -351,15 +344,12 @@ def select_from_pool(main_window):
 	bbox.addButton("Select", QtGui.QDialogButtonBox.AcceptRole)
 	bbox.accepted.connect(d.accept)
 	bbox.rejected.connect(d.reject)
-
 	vbox = QtGui.QVBoxLayout()
 	vbox.addWidget(widget)
 	vbox.addWidget(bbox)
-
 	d.setLayout(vbox)
 	d.setWindowTitle("Select file from pool")
 	res = d.exec_()
-
 	main_window.refresh_pool()
 
 	if res == QtGui.QDialog.Rejected:
