@@ -28,9 +28,9 @@ pool_folders = [] # Contains a list of all pool folders, which need to be remove
 
 class experiment(item.item, openexp.experiment.experiment):
 
-	"""The main experiment class, which essentially the first item to be called"""
+	"""The main experiment class, which is the first item to be called"""
 
-	def __init__(self, name, string = None, pool_folder = None):
+	def __init__(self, name, string=None, pool_folder=None):
 
 		"""<DOC>
 		Constructor. The experiment is created automatically be OpenSesame and
@@ -41,7 +41,8 @@ class experiment(item.item, openexp.experiment.experiment):
 
 		Keyword arguments:
 		string -- a string containing the experiment definition (default=None)
-		pool_folder -- a specific folder to be used for the file pool (default=None)
+		pool_folder -- a specific folder to be used for the file pool
+					   (default=None)
 		</DOC>"""
 
 		global pool_folders
@@ -88,9 +89,9 @@ class experiment(item.item, openexp.experiment.experiment):
 		string = self.open(string)
 		item.item.__init__(self, name, self, string)
 
+		# The subject nr is 0 by default
 		if not self.has("subject_nr"):
 			self.set("subject_nr", 0)
-
 		if not self.has("subject_parity"):
 			self.set("subject_parity", "even")
 
@@ -104,7 +105,10 @@ class experiment(item.item, openexp.experiment.experiment):
 
 	def item_prefix(self):
 
-		"""A prefix for the plug-in classes, so that [prefix][plugin] class is used instead of the [plugin] class"""
+		"""
+		A prefix for the plug-in classes, so that [prefix][plugin] class is used
+		instead of the [plugin] class
+		"""
 
 		return ""
 
@@ -171,12 +175,15 @@ class experiment(item.item, openexp.experiment.experiment):
 			# Load a plug-in
 			if debug.enabled:
 				debug.msg("loading plugin '%s'" % item_type)
-				item = plugins.load_plugin(item_type, item_name, self, string, self.item_prefix())
+				item = plugins.load_plugin(item_type, item_name, self, string, \
+					self.item_prefix())
 			else:
 				try:
-					item = plugins.load_plugin(item_type, item_name, self, string, self.item_prefix())
+					item = plugins.load_plugin(item_type, item_name, self, \
+						string, self.item_prefix())
 				except:
-					raise exceptions.script_error("Failed load plugin '%s'" % item_type)
+					raise exceptions.script_error("Failed load plugin '%s'" % \
+						item_type)
 			self.items[item_name] = item
 
 		else:
@@ -187,13 +194,19 @@ class experiment(item.item, openexp.experiment.experiment):
 				exec("from %s import %s" % (self.module_container(), item_type))
 			try:
 				if not self.debug:
-					exec("from %s import %s" % (self.module_container(), item_type))
+					exec("from %s import %s" % (self.module_container(), \
+						item_type))
 			except:
-				raise exceptions.script_error("Failed to import item '%s' as '%s'. " % (item_type, item_name)
-					+ "Perhaps the experiment requires a plug-in that is not available on your system.", full=False)
+				raise exceptions.script_error( \
+					"Failed to import item '%s' as '%s'. " \
+					% (item_type, item_name)
+					+ "Perhaps the experiment requires a plug-in that is not available on your system.", \
+					full=False)
 
-			cmd = "%(item_type)s.%(item_type)s(\"%(item_name)s\", self, \"\"\"%(string)s\"\"\")" % \
-				{"item_type" : item_type, "item_name" : item_name, "string" : string.replace("\"", "\\\"")}
+			cmd = "%(item_type)s.%(item_type)s(\"%(item_name)s\", self, \
+				\"\"\"%(string)s\"\"\")" % \
+				{"item_type" : item_type, "item_name" : item_name, \
+				"string" : string.replace("\"", "\\\"")}
 
 			if debug.enabled:
 				bytecode = compile(cmd, "<string>", "eval")
@@ -203,7 +216,9 @@ class experiment(item.item, openexp.experiment.experiment):
 					bytecode = compile(cmd, "<string>", "eval")
 					self.items[item_name] = eval(bytecode)
 				except Exception as e:
-					raise exceptions.script_error("Failed to instantiate module '%s' as '%s': %s" % (item_type, item_name, e))
+					raise exceptions.script_error( \
+						"Failed to instantiate module '%s' as '%s': %s" % \
+						(item_type, item_name, e))
 
 	def from_string(self, string):
 
@@ -224,7 +239,9 @@ class experiment(item.item, openexp.experiment.experiment):
 			try:
 				l = shlex.split(line)
 			except ValueError as e:
-				raise exceptions.script_error("Failed to parse line '%s'. Maybe it contains illegal characters or unclosed quotes?" % line)
+				raise exceptions.script_error( \
+					"Failed to parse line '%s'. Maybe it contains illegal characters or unclosed quotes?" \
+					% line)
 
 			if len(l) > 0:
 				self.parse_variable(line)
@@ -232,7 +249,9 @@ class experiment(item.item, openexp.experiment.experiment):
 				# Parse definitions
 				if l[0] == "define":
 					if len(l) != 3:
-						raise exceptions.script_error("Failed to parse definition '%s'" % line)
+						raise exceptions.script_error( \
+							"Failed to parse definition '%s'" \
+							% line)
 					item_type = l[1]
 					item_name = self.sanitize(l[2])
 					line, def_str = self.read_definition(s)
@@ -257,7 +276,9 @@ class experiment(item.item, openexp.experiment.experiment):
 			self.items[self.start].prepare()
 			self.items[self.start].run()
 		else:
-			raise exceptions.runtime_error("Could not find item '%s', which is the entry point of the experiment" % self.start)
+			raise exceptions.runtime_error( \
+				"Could not find item '%s', which is the entry point of the experiment" \
+				% self.start)
 
 		print "experiment.run(): experiment finished at %s" % time.ctime()
 
@@ -289,12 +310,11 @@ class experiment(item.item, openexp.experiment.experiment):
 		A definition string for the experiment
 		"""
 
-		s = "# Generated by OpenSesame %s (%s)\n" % (misc.version, misc.codename)
+		s = "# Generated by OpenSesame %s (%s)\n" % (misc.version, \
+			misc.codename)
 		s += "# %s (%s)\n" % (time.ctime(), os.name)
-		s += "# \n"
-		s += "# Copyright Sebastiaan Mathot (2010-2011)\n"
-		s += "# <http://www.cogsci.nl>\n"
-		s += "# \n"
+		s += "# <http://www.cogsci.nl/opensesame>\n"
+		s += "\n"
 
 		for var in self.variables:
 			s += self.variable_to_string(var)
@@ -347,7 +367,8 @@ class experiment(item.item, openexp.experiment.experiment):
 				% path)
 		if os.path.exists(os.path.join(self.pool_folder, path)):
 			return os.path.join(self.pool_folder, path)
-		elif self.experiment_path != None and os.path.exists(os.path.join(self.experiment_path, path)):
+		elif self.experiment_path != None and os.path.exists(os.path.join( \
+			self.experiment_path, path)):
 			return os.path.join(self.experiment_path, path)
 		else:
 			return path
@@ -363,7 +384,7 @@ class experiment(item.item, openexp.experiment.experiment):
 
 		return os.path.exists(self.get_file(path))
 
-	def save(self, path, overwrite = False):
+	def save(self, path, overwrite=False):
 
 		"""
 		Save the experiment to file. If no extension is provided,
@@ -373,7 +394,8 @@ class experiment(item.item, openexp.experiment.experiment):
 		path -- the target file to save to
 
 		Keyword arguments:
-		overwrite -- a boolean indicating if existing files should be overwritten (default = False)
+		overwrite -- a boolean indicating if existing files should be
+					 overwritten (default=False)
 
 		Returns:
 		The path on successfull saving or False otherwise
@@ -445,7 +467,8 @@ class experiment(item.item, openexp.experiment.experiment):
 
 		# If the path is not a path at all, but a string containing
 		# the script, return it
-		if (type(path) != str and type(path) != unicode) or not os.path.exists(path):
+		if (type(path) != str and type(path) != unicode) or not \
+			os.path.exists(path):
 			debug.msg("opening from string")
 			self.experiment_path = None
 			return path
@@ -469,7 +492,8 @@ class experiment(item.item, openexp.experiment.experiment):
 			if folder == "pool":
 				debug.msg("extracting '%s'" % name)
 				tar.extract(name, self.pool_folder)
-				os.rename(os.path.join(self.pool_folder, name), os.path.join(self.pool_folder, fname))
+				os.rename(os.path.join(self.pool_folder, name), os.path.join( \
+					self.pool_folder, fname))
 				os.rmdir(os.path.join(self.pool_folder, folder))
 
 		script_path = os.path.join(self.pool_folder, "script.opensesame")
@@ -524,24 +548,27 @@ class experiment(item.item, openexp.experiment.experiment):
 		for item in self.items:
 			var_list = self.items[item].var_info()
 			for var, val in var_list:
-				if filt in str(var).lower() or filt in str(val).lower() or filt in item.lower():
+				if filt in str(var).lower() or filt in str(val).lower() or \
+					filt in item.lower():
 					l.append( (var, val, item) )
 
 		# Global variables are defined in the experiment class itself
 		var_list = self.var_info()
 		for var, val in var_list:
-			if filt in str(var).lower() or filt in str(val).lower() or filt in "global":
+			if filt in str(var).lower() or filt in str(val).lower() or filt in \
+				"global":
 				l.append( (var, val, "global") )
 
 		return l
 
-def clean_up(verbose = False):
+def clean_up(verbose=False):
 
 	"""
 	Clean up the temporary pool folders
 
 	Keyword arguments:
-	verbose -- a boolean indicating if debugging output should be given (default = False)
+	verbose -- a boolean indicating if debugging output should be given
+			   (default=False)
 	"""
 
 	from openexp import canvas
