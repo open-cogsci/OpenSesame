@@ -87,8 +87,12 @@ class generic_response:
 		self.experiment.response, pos, self.experiment.end_response_interval = \
 			retval
 		self.synonyms = self._mouse.synonyms(self.experiment.response)
-		self.experiment.cursor_x = pos[0]
-		self.experiment.cursor_y = pos[1]
+		if pos != None:
+			self.experiment.cursor_x = pos[0]
+			self.experiment.cursor_y = pos[1]
+		else:
+			self.experiment.cursor_x = 'NA'
+			self.experiment.cursor_y = 'NA'
 
 	def process_response(self):
 
