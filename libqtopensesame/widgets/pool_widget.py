@@ -101,6 +101,7 @@ class pool_widget(QtGui.QWidget):
 		basename = ""
 		for path in files:
 			path = unicode(path)
+			debug.msg(path)			
 			basename = os.path.basename(path)
 			if not os.path.isfile(path):
 				self.main_window.experiment.notify( \
@@ -146,7 +147,7 @@ class pool_widget(QtGui.QWidget):
 
 		for i in range(self.ui.list_pool.count()):
 			item = self.ui.list_pool.item(i)
-			if str(item.text()) == fname:
+			if unicode(item.text()) == fname:
 				self.ui.list_pool.setCurrentItem(item)
 
 	def file_type(self, fname):
@@ -171,7 +172,7 @@ class pool_widget(QtGui.QWidget):
 
 		"""Refresh the contents of the pool widget"""
 
-		filt = str(self.ui.edit_pool_filter.text()).lower()
+		filt = unicode(self.ui.edit_pool_filter.text()).lower()
 		self.ui.list_pool.clear()
 
 		# This function can be called after the pool has been cleaned
@@ -179,9 +180,11 @@ class pool_widget(QtGui.QWidget):
 		if not os.path.exists(self.main_window.experiment.pool_folder):
 			return
 
-		for fname in os.listdir(self.main_window.experiment.pool_folder):
+		for fname in os.listdir(unicode( \
+			self.main_window.experiment.pool_folder)):
+			debug.msg(fname)
 			if filt in fname.lower():
-				icon = self.main_window.experiment.icon(self.file_type(fname))
+				icon = self.main_window.experiment.icon(self.file_type(fname))				
 				item = QtGui.QListWidgetItem(icon, fname)
 				item.icon = icon
 				item.path = os.path.join( \
@@ -231,7 +234,7 @@ class pool_widget(QtGui.QWidget):
 			"Remove from pool")
 		menu.addAction(self.main_window.experiment.icon("rename"), "Rename")
 		menu.triggered.connect(self.context_action)
-		self.context_target = str(item.text())
+		self.context_target = unicode(item.text())
 		menu.exec_(event.globalPos())
 
 	def context_action(self, action):
@@ -255,7 +258,7 @@ class pool_widget(QtGui.QWidget):
 			# Create a list of files to be removed
 			l = []
 			for item in self.ui.list_pool.selectedItems():
-				l.append(str(item.text()))
+				l.append(unicode(item.text()))
 
 			# Ask for confirmation
 			resp = QtGui.QMessageBox.question(self, "Remove", \
@@ -280,7 +283,7 @@ class pool_widget(QtGui.QWidget):
 				"Please enter a new name for '%s'" \
 				% self.context_target, text = self.context_target)
 			if ok:
-				new_name = str(new_name)
+				new_name = unicode(new_name)
 
 				if os.path.exists(os.path.join( \
 					self.main_window.experiment.pool_folder, new_name)):
@@ -358,4 +361,4 @@ def select_from_pool(main_window):
 	selected = widget.ui.list_pool.currentItem()
 	if selected == None:
 		return ""
-	return str(selected.text())
+	return unicode(selected.text())
