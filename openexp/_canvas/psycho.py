@@ -22,6 +22,7 @@ import openexp.exceptions
 from psychopy import core, visual
 from PIL import Image
 import numpy as np
+import os.path
 
 class psycho(openexp._canvas.legacy.legacy):
 
@@ -72,8 +73,12 @@ class psycho(openexp._canvas.legacy.legacy):
 		self.set_fgcolor(fgcolor)
 		self.set_bgcolor(bgcolor)
 		self.set_penwidth(1)
-		self.set_font(self.experiment.font_family, self.experiment.font_size)		
-		self.clear()		
+		self.set_font(self.experiment.font_family, self.experiment.font_size)						
+		# This font map converts the standard OpenSesame font names to ones that
+		# are acceptable to PsychoPy (or PyGlet actually). For now, the
+		# difference appears only to be capitalization.
+		self.font_map = {"sans" : "Sans", "serif" : "Serif", "mono" : "Mono"}		
+		self.clear()	
 				
 	def color(self, color):
 	
@@ -398,9 +403,9 @@ class psycho(openexp._canvas.legacy.legacy):
 		A (width, height) tuple containing the dimensions of the text string
 		"""
 		
-		# TODO
-		raise openexp.exceptions.canvas_error("openexp._canvas.psycho.text_size(): not implemented!")
-		
+		self.text(text)
+		return self.stim_list.pop().width		
+				
 	def text(self, text, center = True, x = None, y = None, color = None):
 		
 		"""
@@ -436,9 +441,10 @@ class psycho(openexp._canvas.legacy.legacy):
 			y = self.ycenter()
 
 		pos = x - self.xcenter(), self.ycenter() - y		
-		stim = visual.TextStim(win = self.experiment.window, text = text, alignHoriz = halign, alignVert = valign, pos = pos, color = color)
-		stim.setFont(self.experiment.resource("%s.ttf" % self.font_style)) # The font appears to be ignored
-		stim.setHeight(self.font_size)
+		stim = visual.TextStim(win = self.experiment.window, text=text, \
+			alignHoriz=halign, alignVert=valign, pos=pos, color=color, \
+			font=self.font_map[self.font_style], height=self.font_size, \
+			wrapWidth=self.experiment.width)
 		self.stim_list.append(stim)
 		
 	def textline(self, text, line, color = None):
