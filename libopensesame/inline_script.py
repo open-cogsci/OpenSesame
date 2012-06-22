@@ -82,27 +82,29 @@ class inline_script(item.item):
 		function.
 		</DOC>"""
 
-		item.item.prepare(self)
-
+		item.item.prepare(self)		
+		# Convert unicode notation back
+		self._run = self.unsanitize(self._run)
+		self._prepare = self.unsanitize(self._prepare)
 		# Convenience variables
 		exp = self.experiment
 		win = self.experiment.window
-
+		# Compile prepare script
 		try:
 			self.cprepare = compile(self._prepare, "<string>", "exec")
 		except Exception as e:
-			raise exceptions.inline_error(self.name, "prepare", e)
-
+			raise exceptions.inline_error(self.name, "prepare", e)			
+		# Compile run script
 		try:
 			self.crun = compile(self._run, "<string>", "exec")
 		except Exception as e:
 			raise exceptions.inline_error(self.name, "run", e)
-
+		# Run prepare script
 		try:
 			exec(self.cprepare)
 		except Exception as e:
 			raise exceptions.inline_error(self.name, "prepare", e)
-
+		# Report success
 		return True
 
 	def run(self):
