@@ -32,7 +32,7 @@ class loop(libopensesame.loop.loop, qtitem.qtitem):
 
 	"""The GUI for the loop item"""
 
-	def __init__(self, name, experiment, string = None):
+	def __init__(self, name, experiment, string=None):
 
 		"""
 		Constructor
@@ -47,6 +47,12 @@ class loop(libopensesame.loop.loop, qtitem.qtitem):
 
 		libopensesame.loop.loop.__init__(self, name, experiment, string)
 		qtitem.qtitem.__init__(self)
+		self.sanity_criteria['repeat'] = {'type' : [int, float], \
+			'msg' : 'Must be a numeric value'}
+		self.sanity_criteria['cycles'] = {'type' : int, \
+			'msg' : 'Must be a integer numeric value'}
+		self.sanity_criteria['skip'] = {'type' : int, \
+			'msg' : 'Must be a integer numeric value'}			
 
 	def rename(self, from_name, to_name):
 
@@ -291,11 +297,13 @@ class loop(libopensesame.loop.loop, qtitem.qtitem):
 		Returns:
 		The nr of calls
 		"""
-
-		# Skipping trials only occurs in sequential order and offset != yes
-		if self.order == "sequential" and self.offset != "yes":
-			return int(self.cycles * self.repeat - self.skip)
-		return int(self.cycles * self.repeat)
+		
+		try:
+			if self.order == "sequential" and self.offset != "yes":
+				return int(self.cycles * self.repeat - self.skip)
+			return int(self.cycles * self.repeat)
+		except:
+			return 0
 
 	def refresh_loop_table(self, lock = True):
 

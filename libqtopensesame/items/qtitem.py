@@ -42,6 +42,7 @@ class qtitem(object):
 		self.auto_slider = {}
 		self.auto_editor = {}
 		self.auto_checkbox = {}
+		self.sanity_criteria = {}
 					
 		self.init_edit_widget()
 		self.init_script_widget()
@@ -137,6 +138,9 @@ class qtitem(object):
 		self.header.restore_name(False)
 		self.header.refresh()
 		self._edit_widget.edit_item = self.name
+		if not self.sanity_check():
+			self.open_script_tab()
+			return
 		self.auto_edit_widget()
 		return self._edit_widget
 		
@@ -611,7 +615,7 @@ class qtitem(object):
 	def auto_edit_widget(self):
 
 		"""Update the GUI controls based on the auto-widgets"""
-
+		
 		debug.msg()
 		for var, edit in self.auto_line_edit.iteritems():
 			edit.editingFinished.disconnect()		
@@ -674,6 +678,36 @@ class qtitem(object):
 				except Exception as e:
 					self.experiment.notify("Failed to set control '%s': %s" \
 						% (var, e))
+						
+	def sanity_check(self):
+	
+		"""
+		Checks whether all variables match prespecified criteria and fall back
+		to the script editor otherwise. This is usefull to check that certain
+		variables are numeric, etc.		
+		"""
+
+		debug.msg()		
+		errors = []
+		for var_name, criteria in self.sanity_criteria.items():
+			msg = "Invalid or missing value for variable '%s' (edit script to fix this)" \
+				% var_name
+			if 'msg' in criteria:
+				msg += ': ' + criteria['msg']
+			if not self.has(var_name) and 'required' in criteria and \
+				criteria['required']:
+				self.experiment.notify(msg)
+				return False
+			else:
+				var = self.get(var_name)
+				if 'type' in criteria:
+					_type = criteria['type']
+					if type(_type) != list:
+						_type = [_type]
+				 	if type(var) not in _type:
+						self.experiment.notify(msg)
+						return False
+		return True
 
 	def auto_apply_edit_changes(self, rebuild=True):
 
