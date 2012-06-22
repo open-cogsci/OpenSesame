@@ -192,35 +192,31 @@ class item(openexp.trial.trial):
 		debug.msg()
 		textblock_var = None
 		self.variables = {}
-		for line in string.split("\n"):
-
+		for line in string.split("\n"):				
+			line_stripped = line.strip()
 			# The end of a textblock
-			if line.strip() == "__end__":
+			if line_stripped == "__end__":
 				self.set(textblock_var, textblock_val)
 				textblock_var = None
-
 			# The beginning of a textblock
-			elif line.strip()[:2] == "__" and line.strip()[-2:] == "__":
-				textblock_var = line.strip()[2:-2]
+			elif line_stripped[:2] == "__" and line_stripped[-2:] == "__":
+				textblock_var = line_stripped[2:-2]
 				if textblock_var in self.reserved_words:
 					textblock_var = "_" + textblock_var
 				if textblock_var != "":
 					textblock_val = ""
 				else:
 					textblock_var = None
-
 				# We cannot just strip the multiline code, because that may mess
 				# up indentation. So we have to detect if the string is indented
 				# based on the opening __varname__ line.
 				strip_tab = line[0] == "\t"
-
 			# Collect the contents of a textblock
 			elif textblock_var != None:
 				if strip_tab:
 					textblock_val += line[1:] + "\n"
 				else:
 					textblock_val += line + "\n"
-
 			# Parse regular variables
 			else:
 				self.parse_variable(line)
@@ -609,7 +605,7 @@ class item(openexp.trial.trial):
 		return [ ("time_%s" % self.name, "[Timestamp of last item call]"), \
 			("count_%s" % self.name, "[Number of item calls]") ]
 
-	def usanitize(self, s, strict = False):
+	def usanitize(self, s, strict=False):
 
 		"""<DOC>
 		Convert all special characters to U+XXXX notation. Note that this
@@ -627,21 +623,20 @@ class item(openexp.trial.trial):
 		</DOC>"""
 
 		try:
-			string = str(s)
-
+			# First try to see if a plain string conversion works, because it's
+			# faster. However, do convert slashes to unicode to avoid trouble.
+			string = str(s).replace("\\", "U+005C")
 		except:
-
 			# If this doesn't work and the message isn't a QString either,
 			# give up and return a warning string
 			if not hasattr(s, "toUtf8"):
 				return "Error: Unable to create readable text from string"
-
 			# Otherwise, walk through all characters and convert the unknown
 			# characters to unicode notation. In strict mode unicode is ignored.
 			string = ""
 			for i in range(s.count()):
 				c = s.at(i)
-				if c.unicode() > 127:
+				if c.unicode() > 127 or c.unicode() == 92:
 					if not strict:
 						string += "U+%.4X" % c.unicode()
 				else:
