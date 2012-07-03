@@ -19,6 +19,7 @@ import openexp.trial
 import openexp.mouse
 import openexp.keyboard
 from libopensesame import exceptions, debug
+import string
 import shlex
 import re
 import os
@@ -52,8 +53,17 @@ class item(openexp.trial.trial):
 		self.count = 0
 		self.reserved_words = "run", "prepare", "get", "set", "has"
 		
-		# A regular expression to detect Unicode notation in text (U+0123)
-		self._re = re.compile(r'U\+([A-F0-9][A-F0-9][A-F0-9][A-F0-9])')
+		# Strict no-variables is used to remove all characters except
+		# alphanumeric ones
+		self._re_sanitize_strict_novars = re.compile(r'[^\w]')		
+		# Strict with variables is used to remove all characters except
+		# alphanumeric ones and [] signs that indicate variables
+		self._re_sanitize_strict_vars = re.compile(r'[^\w\[\]]')		
+		# Loose is used to remove double-quotes, slashes, and newlines
+		self._re_sanitize_loose = re.compile(r'[\n\"\\]')		
+		# Unsanitization is used to replace U+XXXX unicode notation
+		self._re_unsanitize = re.compile( \
+			r'U\+([A-F0-9]{4})')		
 
 		if not hasattr(self, "item_type"):
 			self.item_type = "item"
@@ -625,29 +635,21 @@ class item(openexp.trial.trial):
 		Returns:
 		The sanitized string
 		</DOC>"""
-
-		try:
-			# First try to see if a plain string conversion works, because it's
-			# faster. However, do convert slashes to unicode to avoid trouble.
-			string = str(s).replace("\\", "U+005C")
-		except:
-			# If this doesn't work and the message isn't a QString either,
-			# give up and return a warning string
-			if not hasattr(s, "toUtf8"):
-				return "Error: Unable to create readable text from string"
-			# Otherwise, walk through all characters and convert the unknown
-			# characters to unicode notation. In strict mode unicode is ignored.
-			string = ""
-			for i in range(s.count()):
-				c = s.at(i)
-				if c.unicode() > 127 or c.unicode() == 92:
-					if not strict:
-						string += "U+%.4X" % c.unicode()
-				else:
-					string += c.toLatin1()
-		# Return and make sure we use the \n character for newlines, to avoid
-		# trouble with compilation
-		return string.replace(os.linesep, "\n")
+		
+		if type(s) not in (unicode, str):
+			try:
+				s = unicode(s)
+			except:
+				return "Error: Unable to create readable text from string"		
+		_s = ''
+		for ch in s:
+			# Encode non ASCII and slash characters
+			if ord(ch) > 127 or ord(ch) == 92:
+				if not strict:
+					_s += 'U+%.4X' % ord(ch)
+			else:
+				_s += ch
+		return _s.replace(os.linesep, "\n")
 
 	def sanitize(self, s, strict=False, allow_vars=True):
 
@@ -668,22 +670,16 @@ class item(openexp.trial.trial):
 		Returns:
 		The sanitized string
 		</DOC>"""
-
-		string = self.usanitize(s, strict)
-
-		# Walk through the string and strip out
-		# quotes, slashes and newlines. In strict
-		# mode we even only accept alphanumeric
-		# characters and underscores
-		s = ""
-		for c in string:
-			if strict:
-				if c.isalnum() or c == "_" or (allow_vars and c in "[]"):
-					s += c
-			elif c not in ("\"", "\\", "\n"):
-				s += c
-		return s
-
+		
+		s = unicode(s)
+		if strict:
+			if allow_vars:
+				return self._re_sanitize_strict_vars.sub('', s).lstrip( \
+					string.digits)
+			return self._re_sanitize_strict_novars.sub('', s).lstrip( \
+				string.digits)
+		return self._re_sanitize_loose.sub('', self.usanitize(s, strict))
+		
 	def unsanitize(self, s):
 
 		"""<DOC>
@@ -698,7 +694,7 @@ class item(openexp.trial.trial):
 
 		s = unicode(s)
 		while True:
-			m = self._re.search(s)
+			m = self._re_unsanitize.search(s)
 			if m == None:
 				break
 			s = s.replace(m.group(0), unichr(int(m.group(1), 16)), 1)
@@ -717,8 +713,10 @@ class item(openexp.trial.trial):
 		</DOC>"""
 
 		try:
+			if type(s) == unicode:
+				s = str(s)
 			pygame.Color(s)
-		except:
+		except Exception as e:
 			raise exceptions.script_error( \
 				"'%s' is not a valid color. See http://www.w3schools.com/html/html_colornames.asp for an overview of valid color names" \
 				% s)

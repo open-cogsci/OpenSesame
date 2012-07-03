@@ -93,12 +93,13 @@ class loop(libopensesame.loop.loop, qtitem.qtitem):
 
 		if ok:
 			l = self.cyclevar_list()
-			var_name = self.experiment.sanitize(var_name)
+			var_name = unicode(var_name)
 
 			# Split by space, because a name may be followed by a default value
-			if len(var_name.split()) > 1:
-				default = self.experiment.sanitize(var_name.split()[1])
-				var_name = var_name.split()[0]
+			_l = var_name.split()
+			if len(_l) > 1:
+				default = self.experiment.usanitize(_l[1])
+				var_name = _l[0]
 			else:
 				default = ""
 
