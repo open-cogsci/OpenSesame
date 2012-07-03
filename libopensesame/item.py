@@ -18,10 +18,9 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 import openexp.trial
 import openexp.mouse
 import openexp.keyboard
-from libopensesame import exceptions, debug
+from libopensesame import exceptions, debug, regexp
 import string
 import shlex
-import re
 import os
 import sys
 import pygame
@@ -53,18 +52,6 @@ class item(openexp.trial.trial):
 		self.count = 0
 		self.reserved_words = "run", "prepare", "get", "set", "has"
 		
-		# Strict no-variables is used to remove all characters except
-		# alphanumeric ones
-		self._re_sanitize_strict_novars = re.compile(r'[^\w]')		
-		# Strict with variables is used to remove all characters except
-		# alphanumeric ones and [] signs that indicate variables
-		self._re_sanitize_strict_vars = re.compile(r'[^\w\[\]]')		
-		# Loose is used to remove double-quotes, slashes, and newlines
-		self._re_sanitize_loose = re.compile(r'[\n\"\\]')		
-		# Unsanitization is used to replace U+XXXX unicode notation
-		self._re_unsanitize = re.compile( \
-			r'U\+([A-F0-9]{4})')		
-
 		if not hasattr(self, "item_type"):
 			self.item_type = "item"
 		if not hasattr(self, "description"):
@@ -481,49 +468,27 @@ class item(openexp.trial.trial):
 		The evaluated string
 		</DOC>"""
 
-		# If the text is not a string, there cannot be any variables,
-		# so return right away
-		if type(text) != str:
+		# If the text is not a string, there cannot be any variables, so return
+		if type(text) not in (str, unicode):
 			return self.auto_type(text)
-
 		# Prepare a template for rounding floats
 		if round_float:
 			float_template = "%%.%sf" % self.get("round_decimals")
-
-		s = ""
-		start = -1
-		while True:
-
-			# Find the start and end of a variable definition
-			start = text.find("[", start + 1)
-			if start < 0:
-				break
-			end = text.find("]", start + 1)
-			if end < 0:
-				exceptions.runtime_error( \
-					"Missing closing bracket ']' in string '%s', in item '%s'" \
-					% (text, self.name))
-			var = text[start+1:end]
-
-			# Replace the variable with its value, unless the variable
-			# does not exist or we are ignoring missing variables
+		# Find and replace all variables in the text
+		while True:		
+			m = regexp.find_variable.search(text)
+			if m == None:
+				break			
+			var = m.group(0)[1:-1]
 			if not soft_ignore or self.has(var):
-
-				# Get the variable
 				val = self.get(var)
-
 				# Quote strings if necessary
 				if type(val) == str and quote_str:
 					val = "\'" + val + "\'"
-
 				# Round floats
 				if round_float and type(val) == float:
-					val = float_template % val
-
-				# Replace the variable name with the value
-				text = text[:start] + str(val) + text[1+end:]
-
-		# Return the result
+					val = float_template % val					
+				text = text.replace(m.group(0), str(val), 1)
 		return self.auto_type(text)
 
 	def compile_cond(self, cond, bytecode = True):
@@ -674,11 +639,11 @@ class item(openexp.trial.trial):
 		s = unicode(s)
 		if strict:
 			if allow_vars:
-				return self._re_sanitize_strict_vars.sub('', s).lstrip( \
+				return regexp.sanitize_strict_vars.sub('', s).lstrip( \
 					string.digits)
-			return self._re_sanitize_strict_novars.sub('', s).lstrip( \
+			return regexp.sanitize_strict_novars.sub('', s).lstrip( \
 				string.digits)
-		return self._re_sanitize_loose.sub('', self.usanitize(s, strict))
+		return regexp.sanitize_loose.sub('', self.usanitize(s, strict))
 		
 	def unsanitize(self, s):
 
@@ -694,7 +659,7 @@ class item(openexp.trial.trial):
 
 		s = unicode(s)
 		while True:
-			m = self._re_unsanitize.search(s)
+			m = regexp.unsanitize.search(s)
 			if m == None:
 				break
 			s = s.replace(m.group(0), unichr(int(m.group(1), 16)), 1)
