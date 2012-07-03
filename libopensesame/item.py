@@ -20,6 +20,7 @@ import openexp.mouse
 import openexp.keyboard
 from libopensesame import exceptions, debug
 import shlex
+import re
 import os
 import sys
 import pygame
@@ -50,6 +51,9 @@ class item(openexp.trial.trial):
 		self.debug = debug.enabled
 		self.count = 0
 		self.reserved_words = "run", "prepare", "get", "set", "has"
+		
+		# A regular expression to detect Unicode notation in text (U+0123)
+		self._re = re.compile(r'U\+([A-F0-9][A-F0-9][A-F0-9][A-F0-9])')
 
 		if not hasattr(self, "item_type"):
 			self.item_type = "item"
@@ -693,12 +697,11 @@ class item(openexp.trial.trial):
 		</DOC>"""
 
 		s = unicode(s)
-
-		while s.find("U+") >= 0:
-			i = s.find("U+")
-			entity = s[i:i+6]
-			s = s.replace(entity, unichr(int(entity[2:], 16)))
-
+		while True:
+			m = self._re.search(s)
+			if m == None:
+				break
+			s = s.replace(m.group(0), unichr(int(m.group(1), 16)), 1)
 		return s
 
 	def color_check(self, s):
