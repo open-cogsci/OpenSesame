@@ -51,6 +51,7 @@ class item(openexp.trial.trial):
 		self.debug = debug.enabled
 		self.count = 0
 		self.reserved_words = "run", "prepare", "get", "set", "has"
+		self._get_lock = None
 		
 		if not hasattr(self, "item_type"):
 			self.item_type = "item"
@@ -267,7 +268,6 @@ class item(openexp.trial.trial):
 			exec("self.%s = %d" % (var, val))
 		else:
 			exec("self.%s = \"\"\"%s\"\"\"" % (var, val.replace("\"", "\\\"")))
-
 		self.variables[var] = val
 
 	def unset(self, var):
@@ -301,6 +301,12 @@ class item(openexp.trial.trial):
 		The value
 		</DOC>"""
 
+		# Avoid recursion
+		if var == self._get_lock:
+			raise exceptions.runtime_error( \
+				"Recursion detected! Is variable '%s' defined in terms of itself (e.g., 'var = [var]') in item '%s'" \
+				% (var, self.name))
+		# Get the variable				
 		if hasattr(self, var):
 			val = eval("self.%s" % var)
 		else:
@@ -310,14 +316,11 @@ class item(openexp.trial.trial):
 				raise exceptions.runtime_error( \
 					"Variable '%s' is not set in item '%s'.<br /><br />You are trying to use a variable that does not exist. Make sure that you have spelled and capitalized the variable name correctly. You may wish to use the variable inspector (Control + I) to find the intended variable." \
 					% (var, self.name))
-		# Process variables, indicated like [varname]
-		if self.experiment.running and type(val) == str and len(val) > 3 and \
-			val[0] == "[" and val[-1] == "]":
-			if val[1:-1] == var:
-				raise exceptions.runtime_error( \
-					"Variable '%s' is defined in terms of itself (e.g., 'var = [var]') in item '%s'" \
-					% (var, self.name))
-			val = self.get(val[1:-1])
+		# Lock to avoid recursion and start evaluating possible variables
+		self._get_lock = var
+		val = self.eval_text(val)
+		self._get_lock = None
+		# Done!
 		return val
 
 	def get_check(self, var, default=None, valid=None):
