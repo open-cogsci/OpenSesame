@@ -637,10 +637,8 @@ class item:
 		s = unicode(s)
 		if strict:
 			if allow_vars:
-				return regexp.sanitize_strict_vars.sub('', s).lstrip( \
-					string.digits)
-			return regexp.sanitize_strict_novars.sub('', s).lstrip( \
-				string.digits)
+				return regexp.sanitize_strict_vars.sub('', s)
+			return regexp.sanitize_strict_novars.sub('', s)
 		return regexp.sanitize_loose.sub('', self.usanitize(s, strict))
 		
 	def unsanitize(self, s):
