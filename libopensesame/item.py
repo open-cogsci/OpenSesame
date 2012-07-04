@@ -15,7 +15,6 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
-import openexp.trial
 import openexp.mouse
 import openexp.keyboard
 from libopensesame import exceptions, debug, regexp
@@ -25,15 +24,14 @@ import os
 import sys
 import pygame
 
-class item(openexp.trial.trial):
+class item:
 
 	"""
-	item is an abstract base class which provides basic
-	functionality to be used in derived classes, such
-	as sketchpad, keyboard_response, etc.
+	item is an abstract class that serves as the basis for all OpenSesame items,
+	such as sketchpad, keyboard_response, experiment, etc.
 	"""
 
-	def __init__(self, name, experiment, string = None):
+	def __init__(self, name, experiment, string=None):
 
 		"""
 		Constructor
@@ -75,13 +73,10 @@ class item(openexp.trial.trial):
 		True on succes, False on failure
 		"""
 
-		#global _time_func, _sleep_func
 		self.time = self.experiment._time_func
-		self.sleep = self.experiment._sleep_func
-		
+		self.sleep = self.experiment._sleep_func		
 		self.experiment.set("count_%s" % self.name, self.count)
 		self.count += 1
-
 		return True
 
 	def run(self):
@@ -689,3 +684,50 @@ class item(openexp.trial.trial):
 				"'%s' is not a valid color. See http://www.w3schools.com/html/html_colornames.asp for an overview of valid color names" \
 				% s)
 
+	def sleep(self, ms):
+
+		"""<DOC>
+		Sleep for a specified duration
+
+		Arguments:
+		ms -- a duration in milliseconds
+		</DOC>"""
+
+		# This function is set by item.prepare()
+		raise exceptions.openexp_error( \
+			"item.sleep(): This function should be set by the canvas backend.")
+
+	def time(self):
+
+		"""<DOC>
+		Return current time
+
+		Returns:
+		A timestamp of the current time
+		</DOC>"""
+
+		# This function is set by item.prepare()
+		raise exceptions.openexp_error( \
+			"item.time(): This function should be set by the canvas backend.")
+
+	def log(self, msg):
+
+		"""<DOC>
+		Write a message to the log file
+
+		msg -- a message
+		</DOC>"""
+
+		self.experiment._log.write(u"%s\n" % msg)
+
+	def flush_log(self):
+
+		"""<DOC>
+		Force any pending write operations to the log file to be written to disk
+		</DOC>"""
+
+		self.experiment._log.flush()
+		os.fsync(self.experiment._log)
+
+
+	
