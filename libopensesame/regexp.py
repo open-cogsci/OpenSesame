@@ -33,3 +33,6 @@ unsanitize = re.compile( \
 
 # Used to find variables in a string
 find_variable = re.compile(r'\[\w+\]')
+
+# Used to convert arbitrary strings into valid Python variable names
+sanitize_var_name = re.compile('\W|^(?=\d)')

@@ -256,6 +256,11 @@ class item:
 		val -- the value
 		</DOC>"""
 
+		if regexp.sanitize_var_name.sub('_', var) != var:
+			raise exceptions.runtime_error( \
+				'"%s" is not a valid variable name. Variable names must consist of alphanumeric characters and underscores, and may not start with a digit.' \
+				% var)
+						
 		val = self.auto_type(val)
 		if type(val) == float:
 			exec("self.%s = %f" % (var, val))
