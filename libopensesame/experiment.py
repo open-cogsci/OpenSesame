@@ -16,7 +16,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame import misc, item, exceptions, plugins, debug
-import openexp.experiment
+import random
 import os.path
 import shutil
 import sys
@@ -24,9 +24,10 @@ import time
 import tarfile
 import tempfile
 
-pool_folders = [] # Contains a list of all pool folders, which need to be removed on program exit
+# Contains a list of all pool folders, which need to be removed on program exit
+pool_folders = []
 
-class experiment(item.item, openexp.experiment.experiment):
+class experiment(item.item):
 
 	"""The main experiment class, which is the first item to be called"""
 
@@ -46,6 +47,8 @@ class experiment(item.item, openexp.experiment.experiment):
 		</DOC>"""
 
 		global pool_folders
+		
+		random.seed()		
 
 		self.items = {}
 		self.running = False
@@ -59,16 +62,47 @@ class experiment(item.item, openexp.experiment.experiment):
 		# Set default variables
 		self.coordinates = "relative"
 		self.compensation = 0
+		self.start = "main"
+		
+		# Sound parameters
+		self.sound_freq = 48000
+		self.sound_sample_size = -16 # Negative values means signed
+		self.sound_channels = 2
+		self.sound_buf_size = 512
+		self.resources = {}
+
+		# Backend parameters
+		self.canvas_backend = "legacy"
+		self.keyboard_backend = "legacy"
+		self.mouse_backend = "legacy"
+		self.sampler_backend = "legacy"
+		self.synth_backend = "legacy"
+
+		# Display parameters
 		self.width = 1024
 		self.height = 768
 		self.background = "black"
-		self.foreground = "white"
-		self.start = "main"
+		self.foreground = "white"		
+		self.resolution = self.width, self.height
+		self.fullscreen = False
+
+		# Font parameters
+		self.font_size = 18
+		self.font_family = "mono"
+
+		# Logfile parameters
+		self._log = None
+		self.logfile = None
+		self.logfile_codec = "ascii"		
 
 		# Variables used for bookkeeping responses
 		self.total_correct = 0
 		self.total_response_time = 0
 		self.total_responses = 0
+		
+		# Default subject info
+		self.subject_nr = 0
+		self.subject_parity = "even"
 
 		# This is some duplication of the option parser in qtopensesame,
 		# but nevertheless keep it so we don't need qtopensesame
@@ -84,18 +118,9 @@ class experiment(item.item, openexp.experiment.experiment):
 			debug.msg("reusing existing pool folder")
 			self.pool_folder = pool_folder
 		debug.msg("pool folder is '%s'" % self.pool_folder)
-
-		openexp.experiment.experiment.__init__(self)
+		
 		string = self.open(string)
 		item.item.__init__(self, name, self, string)
-
-		# The subject nr is 0 by default
-		if not self.has("subject_nr"):
-			self.set("subject_nr", 0)
-		if not self.has("subject_parity"):
-			self.set("subject_parity", "even")
-
-		self.resolution = self.width, self.height
 		
 	def module_container(self):
 
@@ -267,7 +292,7 @@ class experiment(item.item, openexp.experiment.experiment):
 
 		self.running = True
 		self.init_sound()
-		self.init_display(self.debug)
+		self.init_display()
 		self.init_log()
 
 		print "experiment.run(): experiment started at %s" % time.ctime()
@@ -560,6 +585,98 @@ class experiment(item.item, openexp.experiment.experiment):
 				l.append( (var, val, "global") )
 
 		return l
+				
+	def init_sound(self):
+
+		"""Intialize the sound backend"""
+
+		from openexp import sampler
+		sampler.init_sound(self)
+
+	def init_display(self):
+
+		"""Initialize the canvas backend"""
+
+		from openexp import canvas
+		canvas.init_display(self)
+
+	def init_log(self, codec="ascii"):
+
+		"""
+		Open the logile
+
+		Keyword arguments:
+		codec -- the character encoding to be used (default="ascii")
+		"""
+
+		# Do not open the logfile if it's already open with the correct codec
+		if self._log != None and codec == self.logfile_codec:
+			return
+
+		# Open the logfile
+		self.logfile_codec = codec
+		if self.logfile == None:
+			self.logfile = "defaultlog.txt"
+
+		# If a non-standard codec has been specified (such as utf-8) we need the
+		# codecs module to open the log file. For now, the regular open()
+		# function is used by default, to be safe. But this may be revised in
+		# future updates.
+		if self.logfile_codec != "ascii":
+			import codecs
+			self._log = codecs.open(self.logfile, "w", encoding=codec)
+		else:
+			self._log = open(self.logfile, "w")
+
+		print "experiment.init_log(): using '%s' as logfile (%s)" % \
+			(self.logfile, self.logfile_codec)
+						
+	def _sleep_func(self, ms):
+
+		"""
+		Sleeps for a specific time. 
+		
+		* This is a stub that should be replaced by a proper function by the
+		  canvas backend. See openexp._canvas.legacy.init_display()
+		
+		Arguments:
+		ms -- the sleep period
+		"""
+		
+		raise exceptions.runtime_error( \
+			"experiment._sleep_func(): This function should be set by the canvas backend." \
+			)			
+
+	def _time_func(self):
+
+		"""
+		Get the time
+		
+		* This is a stub that should be replaced by a proper function by the
+		  canvas backend. See openexp._canvas.legacy.init_display()
+		  
+		Returns:
+		A timestamp in milliseconds. Depending on the backend, this may be an
+		int or a float
+		"""
+
+		raise exceptions.runtime_error( \
+			"experiment._time_func(): This function should be set by the canvas backend." \
+			)
+
+	def end(self):
+
+		"""Gracefully end the experiment"""
+
+		from openexp import sampler, canvas
+		try:
+			self._log.flush()
+			os.fsync(self._log)
+			self._log.close()
+		except:
+			pass					
+		sampler.close_sound(self)
+		canvas.close_display(self)		
 
 def clean_up(verbose=False):
 
@@ -573,7 +690,6 @@ def clean_up(verbose=False):
 
 	from openexp import canvas
 	global pool_folders
-
 	if verbose:
 		print "experiment.clean_up()"
 
@@ -585,7 +701,6 @@ def clean_up(verbose=False):
 		except:
 			if verbose:
 				print "experiment.clean_up(): failed to remove '%s'" % path
-
 	canvas.clean_up(verbose)
 
 
