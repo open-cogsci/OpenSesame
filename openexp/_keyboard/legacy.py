@@ -26,29 +26,32 @@ class legacy:
 	keyboard input. This is essentially a class based on the openexp.response
 	module, which is now deprecated.
 
-	This class can serve as a template for creating new OpenSesame keyboard input
-	backends. The new backend can be activated by adding "set keyboard_backend [name]"
+	This class can serve as a template for creating new OpenSesame keyboard
+	input backends. The new backend can be activated by adding
+	"set keyboard_backend [name]" to the OpenSesame script
 
 	A few guidelines:
-	-- Acceptable key-formats are characters and integers, interpreted as ASCII key codes.
-	-- Moderators are represented by the following strings: "shift", "alt", "control" and "meta"
-	-- Catch exceptions wherever possible and raise an openexp.exceptions.canvas_error
-	   with a clear and descriptive error message.
-	-- Do not deviate from the guidelines. All back-ends should be interchangeable and
-	   transparent to OpenSesame. You are free to add functionality to this class, to be
-	   used in inline scripts, but this should not break the basic functionality.
-	-- Print debugging output only if experiment.debug == True and preferrably in the
-	   following format: "template.__init__(): Debug message here".
+	-- Acceptable key-formats are characters and integers, interpreted as ASCII
+	   key codes
+	-- Moderators are represented by the following strings: "shift", "alt",
+	   "control" and "meta"
+	-- Catch exceptions wherever possible and raise an
+	   openexp.exceptions.canvas_error with a clear and descriptive error
+	   message
+	-- Do not deviate from the guidelines. All back-ends should be
+	   interchangeable and transparent to OpenSesame. You are free to add
+	   functionality to this class, to be used in inline scripts, but this
+	   should not break the basic functionality.
 	"""
 
 	key_map = {
-		"1" : "!", "2" : "@", "3" : "#", "4" : "$", "5" : "%", \
-		"6" : "^", "7" : "&", "8" : "*", "9" : "(", "0" : ")", \
-		"-" : "_", "=" : "+", "[" : "{", "]" : "}", "\\" : "|", \
-		";" : ":", "\"" : "'", "," : "<", "." : ">", "/" : "?"
+		"1" : "!", "2" : "@", "3" : "#", "4" : "$", "5" : "%", "6" : "^", 
+		"7" : "&", "8" : "*", "9" : "(", "0" : ")", "-" : "_", "=" : "+",
+		"[" : "{", "]" : "}", "\\" : "|", ";" : ":", "\"" : "'", "," : "<",
+		"." : ">", "/" : "?"
 		}
 
-	def __init__(self, experiment, keylist = None, timeout = None):
+	def __init__(self, experiment, keylist=None, timeout=None):
 
 		"""<DOC>
 		Intializes the keyboard object.
@@ -57,10 +60,10 @@ class legacy:
 		experiment -- an instance of libopensesame.experiment.experiment
 
 		Keyword arguments:
-		keylist -- a list of human readable keys that are accepted or None
-				   to accept all keys (default = None)
-		timeout -- an integer value specifying a timeout in milliseconds or
-				   None for no timeout (default = None)
+		keylist -- a list of human readable keys that are accepted or None to
+				   accept all keys (default=None)
+		timeout -- an integer value specifying a timeout in milliseconds or None
+				   for no timeout (default=None)
 		</DOC>"""
 
 		# Create a dictionary to map character representations to
@@ -78,19 +81,18 @@ class legacy:
 				self.key_codes[name2] = code
 				self.key_codes[name3] = code
 				self.key_codes[name4] = code				
-
 		self.experiment = experiment
 		self.set_keylist(keylist)
 		self.set_timeout(timeout)
 		
-	def set_keylist(self, keylist = None):
+	def set_keylist(self, keylist=None):
 
 		"""<DOC>
 		Sets a list of accepted keys
 
 		Keyword arguments:
-		keylist -- a list of human readable keys that are accepted or None
-				   to accept all keys (default = None)
+		keylist -- a list of human readable keys that are accepted or None to
+				   accept all keys (default=None)
 		</DOC>"""
 
 		if keylist == None:
@@ -100,30 +102,30 @@ class legacy:
 			for key in keylist:
 				self._keylist.append(self.to_int(key))
 
-	def set_timeout(self, timeout = None):
+	def set_timeout(self, timeout=None):
 
 		"""<DOC>
 		Sets a timeout
 
 		Keyword arguments:
-		timeout -- an integer value specifying a timeout in milliseconds or
-				   None for no timeout (default = None)
+		timeout -- an integer value specifying a timeout in milliseconds or None
+				   for no timeout (default=None)
 		</DOC>"""
 
 		self.timeout = timeout
 
-	def get_key(self, keylist = None, timeout = None):
+	def get_key(self, keylist=None, timeout=None):
 
 		"""<DOC>
 		Waits for keyboard input
 
 		Keyword arguments:
-		keylist -- a list of human readable keys that are accepted or None
+		keylist -- a list of human readable keys that are accepted or None to
+				   use the default. This parameter does not change the default
+				   keylist. (default=None)
+		timeout -- an integer value specifying a timeout in milliseconds or None
 				   to use the default. This parameter does not change the
-				   default keylist. (default = None)
-		timeout -- an integer value specifying a timeout in milliseconds or
-				   None to use the default. This parameter does not change the
-				   default timeout. (default = None)
+				   default timeout. (default=None)
 				   
 		Exceptions:
 		A response_error if 'escape' was pressed				   
@@ -145,7 +147,8 @@ class legacy:
 			for event in pygame.event.get():
 				if event.type == KEYDOWN:
 					if event.key == pygame.K_ESCAPE:
-						raise openexp.exceptions.response_error("The escape key was pressed.")
+						raise openexp.exceptions.response_error( \
+							"The escape key was pressed.")
 					if keylist == None or event.key in keylist:
 						return event.key, time
 
@@ -158,8 +161,8 @@ class legacy:
 		currently pressed.
 
 		Returns:
-		A list of keyboard moderators. An empty list is returned if no moderators
-		are pressed.
+		A list of keyboard moderators. An empty list is returned if no
+		moderators are pressed.
 		</DOC>"""
 
 		l = []
@@ -174,7 +177,7 @@ class legacy:
 			l.append("meta")
 		return l
 
-	def shift(self, key, mods = ["shift"]):
+	def shift(self, key, mods=["shift"]):
 
 		"""<DOC>
 		Returns the character that results from pressing a key together with the
@@ -186,7 +189,7 @@ class legacy:
 		key -- A character
 
 		Keyword arguments:
-		mods -- a list of keyboard moderators (default = ["shift"])
+		mods -- a list of keyboard moderators (default=["shift"])
 
 		Returns:
 		The character that results from combining the input key with shift.
@@ -222,7 +225,8 @@ class legacy:
 		if key == "timeout":
 			return None
 		if key not in self.key_codes:
-			raise openexp.exceptions.response_error("'%s' is not a valid keyboard input character." % key)
+			raise openexp.exceptions.response_error( \
+				"'%s' is not a valid keyboard input character." % key)
 		return self.key_codes[key]
 
 	def to_chr(self, key):
@@ -289,6 +293,7 @@ class legacy:
 			if event.type == KEYDOWN:
 				keypressed = True
 				if event.key == pygame.K_ESCAPE:
-					raise openexp.exceptions.response_error("The escape key was pressed.")
+					raise openexp.exceptions.response_error( \
+						"The escape key was pressed.")
 		return keypressed
 
