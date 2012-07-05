@@ -136,7 +136,6 @@ class text_input(item.item, generic_response.generic_response):
 			# Get the response and the moderators (shift etc.)
 			key, time = self._keyboard.get_key()
 			resp = self._keyboard.to_chr(key)
-			mods = self._keyboard.get_mods()
 
 			if response_time == None:
 				response_time = time
@@ -148,7 +147,7 @@ class text_input(item.item, generic_response.generic_response):
 			elif resp == "space":
 				response += " "
 			elif len(resp) == 1:
-				response += self._keyboard.shift(key, mods)
+				response += key
 
 		self.experiment.set("response", self.experiment.usanitize( \
 			self.experiment.sanitize(response)))

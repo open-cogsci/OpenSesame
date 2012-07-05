@@ -172,7 +172,6 @@ class legacy:
 						key = pygame.key.name(event.key)
 					else:
 						key = event.unicode
-					print key, keylist
 					if keylist == None or key in keylist:
 						return key, time
 
@@ -219,18 +218,18 @@ class legacy:
 		The character that results from combining the input key with shift.
 		</DOC>"""
 
-		if chr(key).isalpha():
+		if key.isalpha():
 			if "shift" in mods:
-				return chr(key).upper()
+				return key.upper()
 			else:
-				return chr(key).lower()
+				return key.lower()
 
 		if "shift" in mods:
-			if chr(key) not in key_map:
+			if key not in key_map:
 				return ""
-			return key_map[chr(key)]
+			return key_map[key]
 
-		return chr(key)
+		return key
 
 	def to_int(self, key):
 
