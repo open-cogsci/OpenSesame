@@ -76,7 +76,7 @@ class generic_response:
 
 		self.experiment.start_response_interval = self.sri
 		key, self.experiment.end_response_interval = retval
-		self.experiment.response = self._keyboard.to_chr(key)
+		self.experiment.response = self.sanitize(key)
 		self.synonyms = self._keyboard.synonyms(self.experiment.response)
 
 	def process_response_mouseclick(self, retval):
@@ -235,7 +235,7 @@ class generic_response:
 			if dur == "keypress":
 
 				# Prepare valid keypress responses
-				l = str(self.get("allowed_responses")).split(";")
+				l = self.unsanitize(self.get("allowed_responses")).split(";")
 				self._allowed_responses = l
 
 			elif dur == "mouseclick":
