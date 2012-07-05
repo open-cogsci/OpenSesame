@@ -31,7 +31,7 @@ class qtplugin(qtitem.qtitem):
 
 	"""Provides basic functionality for plugin GUIs"""
 
-	def __init__(self, plugin_file):
+	def __init__(self, plugin_file=None):
 
 		"""
 		Constructor
@@ -40,17 +40,18 @@ class qtplugin(qtitem.qtitem):
 		plugin_file -- path to the plugin script
 		"""
 
-		# These lines makes sure that the icons and help file are recognized by
-		# OpenSesame.
-		self.experiment.resources["%s.png" % self.item_type] = \
-			os.path.join(os.path.split(plugin_file)[0], "%s.png" \
-			% self.item_type)
-		self.experiment.resources["%s_large.png" % self.item_type] = \
-			os.path.join(os.path.split(plugin_file)[0], "%s_large.png" \
-			% self.item_type)
-		self.experiment.resources["%s.html" % self.item_type] = \
-			os.path.join(os.path.split(plugin_file)[0], "%s.html" \
-			% self.item_type)
+		if plugin_file != None:
+			# These lines makes sure that the icons and help file are recognized by
+			# OpenSesame.
+			self.experiment.resources["%s.png" % self.item_type] = \
+				os.path.join(os.path.split(plugin_file)[0], "%s.png" \
+				% self.item_type)
+			self.experiment.resources["%s_large.png" % self.item_type] = \
+				os.path.join(os.path.split(plugin_file)[0], "%s_large.png" \
+				% self.item_type)
+			self.experiment.resources["%s.html" % self.item_type] = \
+				os.path.join(os.path.split(plugin_file)[0], "%s.html" \
+				% self.item_type)
 
 		self.lock = False
 		qtitem.qtitem.__init__(self)
@@ -122,7 +123,28 @@ class qtplugin(qtitem.qtitem):
 		if var != None:
 			self.auto_line_edit[var] = edit
 		return edit
+		
+	def add_checkbox_control(self, var, label, tooltip=None):
+	
+		"""
+		Adds a QCheckBox control
 
+		Arguments:
+		var -- name of the associated variable
+		label -- a label
+
+		Keyword arguments:
+		tooltip -- a tooltip (default=None)
+		"""
+		
+		checkbox = QtGui.QCheckBox(label)
+		checkbox.setChecked(str(self.get_check(var, 'yes')) == 'yes')
+		checkbox.toggled.connect(self.apply_edit_changes)
+		self.add_control('', checkbox, tooltip)
+		if var != None:
+			self.auto_checkbox[var] = checkbox
+		return checkbox
+		
 	def add_color_edit_control(self, var, label, tooltip=None, default=None, \
 		min_width=None):
 

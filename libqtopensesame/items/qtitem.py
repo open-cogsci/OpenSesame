@@ -707,6 +707,10 @@ class qtitem(object):
 				 	if type(var) not in _type:
 						self.experiment.notify(msg)
 						return False
+				if 'func' in criteria:
+					if not criteria['func'](var):
+						self.experiment.notify(msg)
+						return False
 		return True
 
 	def auto_apply_edit_changes(self, rebuild=True):
@@ -757,7 +761,7 @@ class qtitem(object):
 				self.set(var, self.experiment.usanitize( \
 					editor.edit.toPlainText()))
 				editor.setModified(False)
-		
+				
 	def auto_add_widget(self, widget, var=None):
 	
 		"""

@@ -1,3 +1,5 @@
+#-*- coding:utf-8 -*-
+
 """
 This file is part of OpenSesame.
 
@@ -16,11 +18,11 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 import libopensesame.mouse_response
-from libqtopensesame.items import qtitem
+from libqtopensesame.items import qtplugin
 from PyQt4 import QtCore, QtGui
 
-class mouse_response(libopensesame.mouse_response.mouse_response,\
-	qtitem.qtitem):
+class mouse_response(libopensesame.mouse_response.mouse_response, \
+	qtplugin.qtplugin):
 
 	"""mouse_response item GUI"""
 
@@ -38,107 +40,40 @@ class mouse_response(libopensesame.mouse_response.mouse_response,\
 		"""		
 		libopensesame.mouse_response.mouse_response.__init__(self, name, \
 			experiment, string)
-		qtitem.qtitem.__init__(self)
-		self.lock = False
+		qtplugin.qtplugin.__init__(self)
 
 	def apply_edit_changes(self):
 	
 		"""Apply controls"""
 		
-		if self.lock:
-			return
-		self.lock = True		
-		qtitem.qtitem.apply_edit_changes(self)
-		
-		cr = self.usanitize(self.edit_correct_response.text())
-		if cr.strip() != "":
-			self.set("correct_response", cr)
-		else:
-			self.unset("correct_response")
-		
-		ar = self.usanitize(self.edit_allowed_responses.text())
-		if ar.strip() != "":
-			self.set("allowed_responses", ar)
-		else:
-			self.unset("allowed_responses")			
-			
-		if self.checkbox_show_cursor.isChecked():
-			self.set("show_cursor", "yes")
-		else:
-			self.set("show_cursor", "no")
-			
-		to = self.sanitize(self.edit_timeout.text(), strict=True)
-		if to.strip() != "":
-			self.set("timeout", to)
-		else:
-			self.set("timeout", "infinite")		
-			
-		if self.checkbox_flush.isChecked():
-			self.set("flush", "yes")
-		else:
-			self.set("flush", "no")						
-			
-		self.experiment.main_window.refresh(self.name)			
-		self.lock = False
+		if not qtplugin.qtplugin.apply_edit_changes(self, False) or self.lock:
+			return False
+		self.experiment.main_window.refresh(self.name)
+		return True		
 
 	def init_edit_widget(self):
 	
 		"""Initialize controls"""
-				
-		qtitem.qtitem.init_edit_widget(self, False)
 		
-		row = 3
-		
-		# TODO Update this to use auto-controls framework
-		
-		self.edit_grid.addWidget(QtGui.QLabel("Correct response"), row, 0)
-		self.edit_correct_response = QtGui.QLineEdit()
-		self.edit_correct_response.setToolTip( \
-			"Set the correct response, e.g., 'left_button', 'middle_button', or 'scroll_down'")
-		QtCore.QObject.connect(self.edit_correct_response, QtCore.SIGNAL( \
-			"editingFinished()"), self.apply_edit_changes)
-		self.edit_grid.addWidget(self.edit_correct_response, row, 1)
-		
-		row += 1		
-		
-		self.edit_grid.addWidget(QtGui.QLabel("Allowed responses"), row, 0)
-		self.edit_allowed_responses = QtGui.QLineEdit()
-		self.edit_allowed_responses.setToolTip( \
-			"Set the allowed responses seperated by a semi-colon, e.g., 'left_button;right_button'")
-		QtCore.QObject.connect(self.edit_allowed_responses, QtCore.SIGNAL( \
-			"editingFinished()"), self.apply_edit_changes)
-		self.edit_grid.addWidget(self.edit_allowed_responses, row, 1)		
-		
-		row += 1		
-		
-		self.edit_grid.addWidget(QtGui.QLabel("Timeout"), row, 0)
-		self.edit_timeout = QtGui.QLineEdit()
-		self.edit_timeout.setToolTip("Set the response timeout in milliseconds, or 'infinite'")
-		QtCore.QObject.connect(self.edit_timeout, QtCore.SIGNAL( \
-			"editingFinished()"), self.apply_edit_changes)
-		self.edit_grid.addWidget(self.edit_timeout, row, 1)			
-
-		row += 1
-
-		self.checkbox_show_cursor = QtGui.QCheckBox("Visible mouse cursor")
-		self.checkbox_show_cursor.setToolTip("If checked, the mouse cursor will be visible")
-		self.checkbox_show_cursor.toggled.connect(self.apply_edit_changes)
-		self.edit_grid.addWidget(self.checkbox_show_cursor, row, 1)		
-		
-		row += 1							
-		
-		self.checkbox_flush = QtGui.QCheckBox("Flush pending mouse clicks")
-		self.checkbox_flush.toggled.connect(self.apply_edit_changes)
-		self.edit_grid.addWidget(self.checkbox_flush, row, 1)		
-		
-		row += 1
-
-		l = QtGui.QLabel( \
-			"<small><i><b>Note:</b> On some systems the cursor may not appear, despite being set to 'visible'. If this happens, please refer to the documentation for more information.</i></small>")
-		l.setWordWrap(True)
-		self.edit_grid.addWidget(l, row, 1)
-		
+		self.lock = True
+		qtplugin.qtplugin.init_edit_widget(self, False)		
+		# Use auto-controls for most stuff
+		self.add_line_edit_control('correct_response', 'Correct response',
+			tooltip='Set the correct response')
+		self.add_line_edit_control('allowed_responses', 'Allowed responses',
+			tooltip='Set the allowed responses seperated by a semi-colon, e.g., "left_button;right_button"' \
+			)
+		self.add_line_edit_control('timeout', 'Timeout',
+			tooltip='Set the response timeout in milliseconds, or "infinite"')
+		self.add_checkbox_control('visible', 'Visible mouse cursor',
+			tooltip='If checked, the mouse cursor will be visible')			
+		self.add_checkbox_control('flush', 'Flush pending mouse clicks',
+			tooltip='Flush pending mouse clicks')			
+		self.add_text( \
+			'<small><i><b>Note:</b> On some systems the cursor may not appear, despite being set to "visible". If this happens, please refer to the documentation for more information.</i></small>' \
+			)			
 		self.edit_vbox.addStretch()
+		self.lock = True							
 							
 	def edit_widget(self):
 	
@@ -148,33 +83,9 @@ class mouse_response(libopensesame.mouse_response.mouse_response,\
 		Returns:
 		Controls QWidget
 		"""
-
-		if self.lock:
-			return
+		
 		self.lock = True
-		qtitem.qtitem.edit_widget(self)
-
-		if hasattr(self, "correct_response"):
-			cr = self.get("correct_response")
-		else:
-			cr = ""		
-		self.edit_correct_response.setText(str(cr))		
-		
-		if hasattr(self, "allowed_responses"):
-			ar = self.get("allowed_responses")
-		else:
-			ar = ""		
-		self.edit_allowed_responses.setText(str(ar))	
-		
-		if hasattr(self, "timeout"):
-			to = self.get("timeout")
-		else:
-			to = ""		
-		self.edit_timeout.setText(str(to))	
-		
-		self.checkbox_show_cursor.setChecked(self.get("show_cursor") == "yes")	
-		self.checkbox_flush.setChecked(self.get("flush") == "yes")	
-		self.lock = False							
+		qtplugin.qtplugin.edit_widget(self)
+		self.lock = False
 		return self._edit_widget
-		
-	
+
