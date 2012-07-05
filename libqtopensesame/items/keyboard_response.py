@@ -164,13 +164,7 @@ class keyboard_response(libopensesame.keyboard_response.keyboard_response, \
 		"""Show a dialog with available key names"""
 		
 		my_keyboard = keyboard(self.experiment)
-		s = "The following keys have been detected. Note that different backends may use slightly different names.<br /><br />"
-		s += "Keyboard backend: %s<br/><br />" % self.get("keyboard_backend")
-		for name in sorted(my_keyboard.valid_keys()):			
-			s += "Key: <b>%s</b><br />" % cgi.escape(str(name))
-			syn = my_keyboard.synonyms(name)
-			if syn != [name]:
-				s += "(or %s)<br />" % (", ".join( \
-					[cgi.escape(str(x)) for x in syn]))
+		s = 'The following key names are valid:<br />' \
+			+ '<br />'.join(my_keyboard.valid_keys())
 		self.experiment.notify(s)
 	

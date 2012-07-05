@@ -15,9 +15,23 @@ You should have received a copy of the GNU General Public License
 along with openexp.  If not, see <http://www.gnu.org/licenses/>.
 """
 
+from string import whitespace
 import pygame
 from pygame.locals import *
 import openexp.keyboard
+
+# Whitespace and empty strings are not acceptable names for keys. These should
+# be converted to descriptions, e.g. '\t' to 'tab'
+invalid_unicode = [''] + list(whitespace)
+
+# This is a crude keymap that allows you to convert into the corresponding keys
+# plus shift
+key_map = {
+	"1" : "!", "2" : "@", "3" : "#", "4" : "$", "5" : "%", "6" : "^", 
+	"7" : "&", "8" : "*", "9" : "(", "0" : ")", "-" : "_", "=" : "+",
+	"[" : "{", "]" : "}", "\\" : "|", ";" : ":", "\"" : "'", "," : "<",
+	"." : ">", "/" : "?"
+	}
 
 class legacy:
 
@@ -43,18 +57,23 @@ class legacy:
 	   functionality to this class, to be used in inline scripts, but this
 	   should not break the basic functionality.
 	"""
-
-	key_map = {
-		"1" : "!", "2" : "@", "3" : "#", "4" : "$", "5" : "%", "6" : "^", 
-		"7" : "&", "8" : "*", "9" : "(", "0" : ")", "-" : "_", "=" : "+",
-		"[" : "{", "]" : "}", "\\" : "|", ";" : ":", "\"" : "'", "," : "<",
-		"." : ">", "/" : "?"
-		}
-
+	
 	def __init__(self, experiment, keylist=None, timeout=None):
 
 		"""<DOC>
 		Intializes the keyboard object.
+		
+		Keys can be identified either by character or name. This is case
+		insensitive. Naming keys using ASCII (integer) key codes is deprecated.
+
+		For example:
+		- The key 'a' is represented by 'a' and 'A'
+		- The up arrow is represented by 'up' and 'UP'
+		- The '/' key is represented by '/', 'slash', and 'SLASH'
+		- The spacebar is represented by 'space' and 'SPACE'
+		
+		For a complete list of available key names, click on the 'list available
+		keys' button the keyboard_response tab within OpenSesame.
 
 		Arguments:
 		experiment -- an instance of libopensesame.experiment.experiment
@@ -66,10 +85,9 @@ class legacy:
 				   for no timeout (default=None)
 		</DOC>"""
 
-		# Create a dictionary to map character representations to
-		# ASCII codes
 		pygame.init()
-		self.key_codes = {}
+		self.key_code_to_name = {}
+		self.key_name_to_code = {}		
 		for i in dir(pygame):
 			if i[:2] == "K_":
 				code = eval("pygame.%s" % i)
@@ -77,13 +95,14 @@ class legacy:
 				name2 = name1.upper()
 				name3 = i[2:].lower()
 				name4 = name3.upper()
-				self.key_codes[name1] = code
-				self.key_codes[name2] = code
-				self.key_codes[name3] = code
-				self.key_codes[name4] = code				
+				self.key_code_to_name[code] = name1, name2, name3, name4				
+				self.key_name_to_code[name1] = code
+				self.key_name_to_code[name2] = code
+				self.key_name_to_code[name3] = code
+				self.key_name_to_code[name4] = code				
 		self.experiment = experiment
 		self.set_keylist(keylist)
-		self.set_timeout(timeout)
+		self.set_timeout(timeout)		
 		
 	def set_keylist(self, keylist=None):
 
@@ -91,16 +110,16 @@ class legacy:
 		Sets a list of accepted keys
 
 		Keyword arguments:
-		keylist -- a list of human readable keys that are accepted or None to
-				   accept all keys (default=None)
+		keylist -- a list of keys that are accepted or None to accept all keys
+				   (default=None)
 		</DOC>"""
 
 		if keylist == None:
 			self._keylist = None
-		else:
+		else:			
 			self._keylist = []
 			for key in keylist:
-				self._keylist.append(self.to_int(key))
+				self._keylist += self.synonyms(key)
 
 	def set_timeout(self, timeout=None):
 
@@ -149,8 +168,12 @@ class legacy:
 					if event.key == pygame.K_ESCAPE:
 						raise openexp.exceptions.response_error( \
 							"The escape key was pressed.")
-					if keylist == None or event.key in keylist:
-						return event.key, time
+					if event.unicode in invalid_unicode:
+						key = pygame.key.name(event.key)
+					else:
+						key = event.unicode
+					if keylist == None or key in keylist:
+						return key, time
 
 		return None, time
 
@@ -202,50 +225,46 @@ class legacy:
 				return chr(key).lower()
 
 		if "shift" in mods:
-			if chr(key) not in self.key_map:
+			if chr(key) not in key_map:
 				return ""
-			return self.key_map[chr(key)]
+			return key_map[chr(key)]
 
 		return chr(key)
 
 	def to_int(self, key):
 
-		"""<DOC>
-		Returns the ASCII key code of a given key
-
+		"""<DOC>	
+		This function has been removed as of 0.26. Keys are now only referred to
+		by their name and/ or character
+		
 		Arguments:
-		key -- a key in character or ASCII keycode notation
-
-		Returns:
-		A key in ASCII keycode notation
+		key -- a key
+		
+		Exception:
+		This function always raises an exception
 		</DOC>"""
 
-		if type(key) == int:
-			return key
-		if key == "timeout":
-			return None
-		if key not in self.key_codes:
-			raise openexp.exceptions.response_error( \
-				"'%s' is not a valid keyboard input character." % key)
-		return self.key_codes[key]
+		raise openexp.exceptions.response_error( \
+			"keyboard.to_int() is deprecated")
 
 	def to_chr(self, key):
 
 		"""<DOC>
-		Returns the character notation of a given key
-
-		Arguments:
-		key -- a key in character or ASCII keycode notation
+		DEPRECATED
 		
+		This function is deprecated as of 0.26. Keys are now only referred to
+		by their name and/ or character and this conversion function is no
+		longer necessary. For backwards compatibility, the input argument is 
+		silently returned.
+		
+		Arguments:
+		key -- a key
+
 		Returns:
-		A key in character notation
+		The key		
 		</DOC>"""
 
-		if key == None:
-			return "timeout"
-		if type(key) == str or type(key) == chr:
-			return key
-		return pygame.key.name(key)
+		return key
 		
 	def valid_keys(self):
 	
@@ -256,7 +275,7 @@ class legacy:
 		A list of valid key names
 		</DOC>"""
 		
-		return self.key_codes							
+		return sorted(self.key_name_to_code.keys())
 		
 	def synonyms(self, key):
 	
@@ -267,13 +286,10 @@ class legacy:
 		A list of synonyms
 		"""
 		
-		if type(key) == str:
-			return self.synonyms(self.to_int(key))			
-		l = []
-		for name, code in self.key_codes.iteritems():
-			if code == key:
-				l.append(name)
-		return l
+		if key not in self.key_name_to_code:
+			raise openexp.exceptions.response_error('"%s" is not a valid key name' \
+				% key)
+		return self.key_code_to_name[self.key_name_to_code[key]]
 
 	def flush(self):
 
