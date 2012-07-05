@@ -1,3 +1,5 @@
+#-*- coding:utf-8 -*-
+
 """
 This file is part of OpenSesame.
 
@@ -16,16 +18,17 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 import libopensesame.sketchpad
-from libqtopensesame.items import qtitem, feedpad
+from libqtopensesame.items import qtplugin, feedpad
 from libqtopensesame.widgets import sketchpad_widget
 from libqtopensesame.dialogs import sketchpad_dialog
 from PyQt4 import QtCore, QtGui
 
-class sketchpad(libopensesame.sketchpad.sketchpad, feedpad.feedpad, qtitem.qtitem):
+class sketchpad(libopensesame.sketchpad.sketchpad, feedpad.feedpad, \
+	qtplugin.qtplugin):
 
 	"""The GUI controls for the sketchpad"""
 
-	def __init__(self, name, experiment, string = None):
+	def __init__(self, name, experiment, string=None):
 
 		"""
 		Constructor
@@ -38,66 +41,43 @@ class sketchpad(libopensesame.sketchpad.sketchpad, feedpad.feedpad, qtitem.qtite
 		string -- a string with the item definition (default = None)
 		"""
 
-		libopensesame.sketchpad.sketchpad.__init__(self, name, experiment, string)
-		qtitem.qtitem.__init__(self)
+		libopensesame.sketchpad.sketchpad.__init__(self, name, experiment, \
+			string)
+		qtplugin.qtplugin.__init__(self)
 
 	def apply_edit_changes(self):
 
 		"""Apply changes to the controls"""
-
-		if not qtitem.qtitem.apply_edit_changes(self, False):
-			return
-		dur = self.experiment.sanitize(self.edit_duration.text(), strict=True)
-		if dur.strip() != "":
-			self.set("duration", dur)
-		if self.checkbox_start_response_interval.isChecked():
-			self.set("start_response_interval", "yes")
-		else:
-			self.set("start_response_interval", "no")
+		
+		if not qtplugin.qtplugin.apply_edit_changes(self, False) or self.lock:
+			return False
 		self.experiment.main_window.refresh(self.name)
+		return True			
 
 	def edit_widget(self):
 
 		"""Update the controls based on the items settings"""
-
-		qtitem.qtitem.edit_widget(self)
-
-		if self.has("duration"):
-			dur = self.get("duration")
-		else:
-			dur = ""
-		self.edit_duration.setText(str(dur))
-		self.checkbox_start_response_interval.setChecked(self.get("start_response_interval") == "yes")
+		
+		self.lock = True
+		qtplugin.qtplugin.edit_widget(self)
+		self.lock = False
 		self.tools_widget.refresh()
-
-		return self._edit_widget
+		return self._edit_widget		
 
 	def init_edit_widget(self):
 
 		"""Construct the edit widget that contains the controls"""
 
-		qtitem.qtitem.init_edit_widget(self, False)
-
-		row = 3
-		self.edit_grid.addWidget(QtGui.QLabel("Duration"), row, 0)
-		self.edit_duration = QtGui.QLineEdit()
-		self.edit_duration.setToolTip("A numeric value (duration in milliseconds), 'keypress', 'mouseclick', or '[variable_name]'")
-		QtCore.QObject.connect(self.edit_duration, QtCore.SIGNAL("editingFinished()"), self.apply_edit_changes)
-		self.edit_grid.addWidget(self.edit_duration, row, 1)
-
-		row += 1
-		self.checkbox_start_response_interval = QtGui.QCheckBox("Start response interval")
-		self.checkbox_start_response_interval.setToolTip("If checked, the response items will use the onset of the sketchpad to determine response time")
-		self.edit_grid.addWidget(self.checkbox_start_response_interval, row, 0)
-		QtCore.QObject.connect(self.checkbox_start_response_interval, QtCore.SIGNAL("stateChanged(int)"), self.apply_edit_changes)
-
-		row += 1
+		qtplugin.qtplugin.init_edit_widget(self, False)		
+		self.add_line_edit_control('duration', 'Duration',
+			tooltip='A numeric value (duration in milliseconds), "keypress", or "mouseclick"' \
+			)
 		self.popout_button = QtGui.QPushButton(self.experiment.icon(self.item_type), "Open editor in new window")
 		self.popout_button.setIconSize(QtCore.QSize(16,16))
 		self.popout_button.setToolTip("Open the sketchpad editor in a new window")
 		QtCore.QObject.connect(self.popout_button, QtCore.SIGNAL("clicked()"), self.popout)
-		self.edit_grid.addWidget(self.popout_button, row, 0)
-
+		self.add_control('', self.popout_button, 
+			'Open the sketchpad editor in a new window')
 		self.tools_widget = sketchpad_widget.sketchpad_widget(self)
 		self.edit_vbox.addWidget(self.tools_widget)
 

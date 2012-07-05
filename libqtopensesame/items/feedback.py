@@ -1,3 +1,5 @@
+#-*- coding:utf-8 -*-
+
 """
 This file is part of OpenSesame.
 
@@ -16,11 +18,11 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 import libopensesame.feedback
-from libqtopensesame.items import qtitem, feedpad
+from libqtopensesame.items import qtplugin, feedpad
 from libqtopensesame.widgets import sketchpad_widget
 from PyQt4 import QtCore, QtGui
 
-class feedback(libopensesame.feedback.feedback, feedpad.feedpad, qtitem.qtitem):
+class feedback(libopensesame.feedback.feedback, feedpad.feedpad, qtplugin.qtplugin):
 
 	"""The GUI for the feedback item"""
 
@@ -38,56 +40,46 @@ class feedback(libopensesame.feedback.feedback, feedpad.feedpad, qtitem.qtitem):
 		"""
 
 		libopensesame.feedback.feedback.__init__(self, name, experiment, string)
-		qtitem.qtitem.__init__(self)
+		qtplugin.qtplugin.__init__(self)
 
 	def apply_edit_changes(self):
 
 		"""Apply changes to the controls"""
-
-		qtitem.qtitem.apply_edit_changes(self)
-		dur = self.experiment.sanitize(self.edit_duration.text(), strict=True)
-		if dur.strip() != "":
-			self.set("duration", dur)
-		if self.checkbox_reset.isChecked():
-			self.set("reset_variables", "yes")
-		else:
-			self.set("reset_variables", "no")
+		
+		if not qtplugin.qtplugin.apply_edit_changes(self, False) or self.lock:
+			return False
 		self.experiment.main_window.refresh(self.name)
+		return True			
 
 	def edit_widget(self):
 
 		"""Update the controls based on the items settings"""
-
-		qtitem.qtitem.edit_widget(self)
-		self.edit_duration.setText(str(self.get_check("duration", "keypress")))
-		self.checkbox_reset.setChecked(self.get_check("reset_variables", valid=["yes", "no"]) == "yes")
+		
+		self.lock = True
+		qtplugin.qtplugin.edit_widget(self)
+		self.lock = False
 		self.tools_widget.refresh()
 		return self._edit_widget
 
 	def init_edit_widget(self):
 
 		"""Construct the edit widget that contains the controls"""
-
-		qtitem.qtitem.init_edit_widget(self, False)
-
-		row = 0
-
-		self.edit_grid.addWidget(QtGui.QLabel("Duration"), row, 0)
-		self.edit_duration = QtGui.QLineEdit()
-		QtCore.QObject.connect(self.edit_duration, QtCore.SIGNAL("editingFinished()"), self.apply_edit_changes)
-		self.edit_grid.addWidget(self.edit_duration, row, 1)
 		
-		row += 1
-		self.checkbox_reset = QtGui.QCheckBox("Reset feedback variables")
-		self.checkbox_reset.toggled.connect(self.apply_edit_changes)
-		self.edit_grid.addWidget(self.checkbox_reset, row, 0)
-
-		row += 1
-		self.popout_button = QtGui.QPushButton(self.experiment.icon(self.item_type), "Open editor in new window")
-		self.popout_button.setIconSize(QtCore.QSize(16, 16))
+		qtplugin.qtplugin.init_edit_widget(self, False)
+		
+		self.add_line_edit_control('duration', 'Duration',
+			tooltip='A numeric value (duration in milliseconds), "keypress", or "mouseclick"' \
+			)
+		self.add_checkbox_control('reset_variables', 'Reset feedback variables',
+			tooltip='Reset feedback variables, such as "accuracy" and "avg_rt"')
+		self.popout_button = QtGui.QPushButton(self.experiment.icon( \
+			self.item_type), 'Open editor in new window')
+		self.popout_button.setIconSize(QtCore.QSize(16,16))
+		self.popout_button.setToolTip("Open the sketchpad editor in a new window")
 		QtCore.QObject.connect(self.popout_button, QtCore.SIGNAL("clicked()"), self.popout)
-		self.edit_grid.addWidget(self.popout_button, row, 0)
-
+		self.add_control('', self.popout_button,
+			'Open the feedback editor in a new window')
 		self.tools_widget = sketchpad_widget.sketchpad_widget(self)
-		self.edit_vbox.addWidget(self.tools_widget)
+		self.edit_vbox.addWidget(self.tools_widget)		
+
 
