@@ -1,3 +1,5 @@
+#-*- coding:utf-8 -*-
+
 """
 This file is part of openexp.
 
@@ -27,20 +29,34 @@ class legacy:
 	mouse input.
 
 	This class serves as a template for creating OpenSesame mouse input
-	backends. The new backend can be activated by adding "set mouse_backend dummy"
+	backends. The new backend can be activated by adding
+	"set mouse_backend dummy"
 				
 	A few guidelines:
-	-- Buttons are numbered as follows: 1 = left, 2 = middle, 3 = right, 4 = scroll up, 5 = scroll down
-	-- Catch exceptions wherever possible and raise an openexp.exceptions.canvas_error
-	   with a clear and descriptive error message.
-	-- Do not deviate from the guidelines. All back-ends should be interchangeable and 
-	   transparent to OpenSesame. You are free to add functionality to this class, to be 
-	   used in inline scripts, but this should not break the basic functionality.
-	-- Print debugging output only if experiment.debug == True and preferrably in the
-	   following format: "template.__init__(): Debug message here".	
+	-- Buttons are numbered as follows:
+		1 = left
+		2 = middle
+		3 = right
+		4 = scroll up
+		5 = scroll down
+	-- Catch exceptions wherever possible and raise an
+	   openexp.exceptions.canvas_error with a clear and descriptive error
+	   message.
+	-- Do not deviate from the guidelines. All back-ends should be
+	   interchangeable and transparent to OpenSesame. You are free to add
+	   functionality to this class, to be used in inline scripts, but this
+	   should not break the basic functionality.
 	"""
+	
+	settings = {
+		"custom_cursor" : {
+			"name" : "Custom cursor",
+			"description" : "Bypass the system mouse cursor",
+			"default" : "yes"
+			}
+		}
 
-	def __init__(self, experiment, buttonlist = None, timeout = None, visible = False):
+	def __init__(self, experiment, buttonlist=None, timeout=None, visible=False):
 	
 		"""<DOC>
 		Intializes the mouse object
@@ -49,17 +65,23 @@ class legacy:
 		experiment -- an instance of libopensesame.experiment.experiment
 		
 		Keyword arguments:
-		buttonlist -- a list of buttons that are accepted or None to accept
-					  all input (default = None)
-		timeout -- an integer value specifying a timeout in milliseconds or
-				   None for no timeout (default = None)
-		visible -- a boolean indicating the visibility of the cursor (default = False)
+		buttonlist -- a list of buttons that are accepted or None to accept all
+					  input (default = None)
+		timeout -- an integer value specifying a timeout in milliseconds or None
+				   for no timeout (default = None)
+		visible -- a boolean indicating the visibility of the cursor
+				   (default=False)
 		</DOC>"""	
 	
 		self.experiment = experiment
 		self.set_buttonlist(buttonlist)
 		self.set_timeout(timeout)
-		self.set_visible(visible)
+		self.set_visible(visible)		
+		if self.experiment.get_check('custom_cursor', 'yes') == 'yes':
+			self.cursor = pygame.image.load(self.experiment.resource( \
+				'cursor.png'))
+		else:
+			self.cursor = None
 				
 	def set_buttonlist(self, buttonlist = None):
 	
@@ -67,8 +89,8 @@ class legacy:
 		Sets a list of accepted buttons
 
 		Keyword arguments:
-		buttonlist -- a list of buttons that are accepted or None to accept
-					  all input (default = None)
+		buttonlist -- a list of buttons that are accepted or None to accept all
+					  input (default=None)
 		</DOC>"""	
 	
 		if buttonlist == None:
@@ -79,51 +101,53 @@ class legacy:
 				for b in buttonlist:
 					self.buttonlist.append(int(b))
 			except:
-				raise openexp.exceptions.response_error("The list of mousebuttons must be a list of numeric values")
+				raise openexp.exceptions.response_error( \
+					"The list of mousebuttons must be a list of numeric values")
 		
-	def set_timeout(self, timeout = None):	
+	def set_timeout(self, timeout=None):	
 	
 		"""<DOC>
 		Sets a timeout
 		
 		Keyword arguments:
-		timeout -- an integer value specifying a timeout in milliseconds or
-				   None for no timeout (default = None)		
+		timeout -- an integer value specifying a timeout in milliseconds or None
+				   for no timeout (default=None)		
 		</DOC>"""
 			
 		self.timeout = timeout
 				
-	def set_visible(self, visible = True):
+	def set_visible(self, visible=True):
 	
 		"""<DOC>
 		Sets the visibility of the cursor
 		
 		Keyword arguments:
-		visible -- A boolean indicating the visibility of the cursor (default = True)
+		visible -- A boolean indicating the visibility of the cursor
+				   (default=True)
 		</DOC>"""	
 	
 		self.visible = visible
-		pygame.mouse.set_visible(visible)				
+		pygame.mouse.set_visible(visible)						
 		
-	def get_click(self, buttonlist = None, timeout = None, visible = None):
+	def get_click(self, buttonlist=None, timeout=None, visible=None):
 	
 		"""<DOC>
 		Waits for mouse input
 		
 		Keyword arguments:
-		buttonlist -- a list of buttons that are accepted or None
-					  to use the default. This parameter does not change 
-					  default keylist. (default = None)
-		timeout -- an integer value specifying a timeout in milliseconds or
-				   None to use the default. This parameter does not change the
-				   default timeout. (default = None)		
-		visible -- a boolean indicating the visibility of the target or None
-				   to use the default. This parameter does not change the default 
-				   visibility (default = False)
+		buttonlist -- a list of buttons that are accepted or None to use the
+					  default. This parameter does not change  default keylist.
+					  (default=None)
+		timeout -- an integer value specifying a timeout in milliseconds or None
+				   to use the default. This parameter does not change the
+				   default timeout. (default=None)		
+		visible -- a boolean indicating the visibility of the target or None to
+				   use the default. This parameter does not change the default 
+				   visibility (default=False)
 				   
 		Returns:
-		A (button, position, timestamp) tuple. The button and position are None if
-		a timeout occurs. Position is an (x, y) tuple in screen coordinates.
+		A (button, position, timestamp) tuple. The button and position are None
+		if a timeout occurs. Position is an (x, y) tuple in screen coordinates.
 		</DOC>"""		
 	
 		if buttonlist == None:
@@ -132,23 +156,39 @@ class legacy:
 			timeout = self.timeout	
 		if visible == None:
 			visible = self.visible			
-		pygame.mouse.set_visible(visible)	
+		
+		if self.cursor == None:
+			pygame.mouse.set_visible(visible)
+		elif visible:
+			pygame.mouse.set_visible(False)
+			bg_surface = self.experiment.window.copy()
 		
 		start_time = pygame.time.get_ticks()
-		time = start_time	
-	
+		time = start_time
+		
 		while timeout == None or time - start_time < timeout:
-			time = pygame.time.get_ticks()
-			for event in pygame.event.get():			
+			time = pygame.time.get_ticks()						
+			
+			# Draw a cusom cursor if necessary
+			if self.cursor != None and visible:
+				surface = bg_surface.copy()
+				surface.blit(self.cursor, pygame.mouse.get_pos())
+				self.experiment.surface.blit(surface, (0,0))		
+				pygame.display.flip()
+			
+			# Process the input
+			for event in pygame.event.get():									
 				if event.type == KEYDOWN and event.key == pygame.K_ESCAPE:
-					raise openexp.exceptions.response_error("The escape key was pressed.")										
+					raise openexp.exceptions.response_error( \
+						"The escape key was pressed.")										
 				if event.type == MOUSEBUTTONDOWN:
 					if buttonlist == None or event.button in buttonlist:
 						pygame.mouse.set_visible(self.visible)
 						return event.button, event.pos, time
-					
-		pygame.mouse.set_visible(self.visible)					
-		return None, None, time					
+											
+		if self.cursor == None:
+			pygame.mouse.set_visible(self.visible)					
+		return None, None, time		
 		
 	def get_pos(self):
 	
@@ -174,7 +214,8 @@ class legacy:
 		buttonclicked = False
 		for event in pygame.event.get():
 			if event.type == KEYDOWN and event.key == pygame.K_ESCAPE:
-				raise openexp.exceptions.response_error("The escape key was pressed.")
+				raise openexp.exceptions.response_error( \
+					"The escape key was pressed.")
 			if event.type == MOUSEBUTTONDOWN:
 				buttonclicked = True
 		return buttonclicked
@@ -193,8 +234,8 @@ class legacy:
 		</DOC>
 		"""
 				
-		button_map = [ (1, "left_button"), (2, "middle_button"), (3, "right_button"), \
-			(4, "scroll_up"), (5, "scroll_down") ]
+		button_map = [ (1, "left_button"), (2, "middle_button"), (3, \
+			"right_button"), (4, "scroll_up"), (5, "scroll_down") ]
 		for bm in button_map:
 			if button in bm:
 				return bm

@@ -355,7 +355,9 @@ class qtplugin(qtitem.qtitem):
 		"""
 
 		row = self.edit_grid.rowCount()
-		self.edit_vbox.addWidget(QtGui.QLabel(msg))
+		label = QtGui.QLabel(msg)
+		label.setWordWrap(True)
+		self.edit_vbox.addWidget(label)
 
 	def apply_button(self, label="Apply", icon="apply", \
 		tooltip="Apply changes"):

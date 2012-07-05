@@ -65,12 +65,12 @@ class mouse_response(libopensesame.mouse_response.mouse_response, \
 			)
 		self.add_line_edit_control('timeout', 'Timeout',
 			tooltip='Set the response timeout in milliseconds, or "infinite"')
-		self.add_checkbox_control('visible', 'Visible mouse cursor',
+		self.add_checkbox_control('show_cursor', 'Visible mouse cursor',
 			tooltip='If checked, the mouse cursor will be visible')			
 		self.add_checkbox_control('flush', 'Flush pending mouse clicks',
 			tooltip='Flush pending mouse clicks')			
 		self.add_text( \
-			'<small><i><b>Note:</b> On some systems the cursor may not appear, despite being set to "visible". If this happens, please refer to the documentation for more information.</i></small>' \
+			'<small><i><b>Note:</b> Change the "custom cursor" option in the backend settings to switch between the system cursor and the custom OpenSesame cursor</i></small>' \
 			)			
 		self.edit_vbox.addStretch()
 		self.lock = True							

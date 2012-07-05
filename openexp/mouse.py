@@ -1,3 +1,5 @@
+#-*- coding:utf-8 -*-
+
 """
 This file is part of openexp.
 
@@ -14,6 +16,8 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with openexp.  If not, see <http://www.gnu.org/licenses/>.
 """
+
+from openexp import exceptions
 
 class mouse:
 
@@ -33,7 +37,7 @@ class mouse:
 				exec("import openexp._mouse.%s" % experiment.mouse_backend)
 				self.__class__ = eval("openexp._mouse.%s.%s" % (experiment.mouse_backend, experiment.mouse_backend))
 			except Exception as e:
-				raise openexp.exceptions.canvas_error("Failed to import 'openexp._mouse.%s' as mouse backend.<br /><br />Error: %s" % (experiment.backend, e))		
+				raise exceptions.canvas_error("Failed to import 'openexp._mouse.%s' as mouse backend.<br /><br />Error: %s" % (experiment.backend, e))		
 											
 		exec("openexp._mouse.%s.%s.__init__(self, experiment, buttonlist, timeout, visible)" % (experiment.mouse_backend, experiment.mouse_backend))
 				

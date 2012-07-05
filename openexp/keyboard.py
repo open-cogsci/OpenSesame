@@ -1,3 +1,5 @@
+#-*- coding:utf-8 -*-
+
 """
 This file is part of openexp.
 
@@ -14,6 +16,8 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with openexp.  If not, see <http://www.gnu.org/licenses/>.
 """
+
+from openexp import exceptions
 
 class keyboard:
 
@@ -33,7 +37,7 @@ class keyboard:
 				exec("import openexp._keyboard.%s" % experiment.keyboard_backend)
 				self.__class__ = eval("openexp._keyboard.%s.%s" % (experiment.keyboard_backend, experiment.keyboard_backend))
 			except Exception as e:
-				raise openexp.exceptions.canvas_error("Failed to import 'openexp._keyboard.%s' as keyboard backend.<br /><br />Error: %s" % (experiment.backend, e))		
+				raise exceptions.canvas_error("Failed to import 'openexp._keyboard.%s' as keyboard backend.<br /><br />Error: %s" % (experiment.backend, e))		
 															
 		exec("openexp._keyboard.%s.%s.__init__(self, experiment, keylist, timeout)" % (experiment.keyboard_backend, experiment.keyboard_backend))
 		
