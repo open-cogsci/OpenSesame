@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'resources/ui/sampler_widget.ui'
 #
-# Created: Mon Jun 18 16:48:45 2012
+# Created: Thu Jul  5 19:55:55 2012
 #      by: PyQt4 UI code generator 4.9.1
 #
 # WARNING! All changes made in this file will be lost!
@@ -14,18 +14,18 @@ try:
 except AttributeError:
     _fromUtf8 = lambda s: s
 
-class Ui_Form(object):
-    def setupUi(self, Form):
-        Form.setObjectName(_fromUtf8("Form"))
-        Form.resize(550, 436)
-        self.gridLayout = QtGui.QGridLayout(Form)
+class Ui_sampler_widget(object):
+    def setupUi(self, sampler_widget):
+        sampler_widget.setObjectName(_fromUtf8("sampler_widget"))
+        sampler_widget.resize(550, 436)
+        self.gridLayout = QtGui.QGridLayout(sampler_widget)
         self.gridLayout.setMargin(0)
         self.gridLayout.setObjectName(_fromUtf8("gridLayout"))
         spacerItem = QtGui.QSpacerItem(40, 20, QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
         self.gridLayout.addItem(spacerItem, 1, 2, 1, 1)
         spacerItem1 = QtGui.QSpacerItem(40, 20, QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
         self.gridLayout.addItem(spacerItem1, 1, 0, 1, 1)
-        self.frame_notification = QtGui.QFrame(Form)
+        self.frame_notification = QtGui.QFrame(sampler_widget)
         self.frame_notification.setFrameShape(QtGui.QFrame.NoFrame)
         self.frame_notification.setFrameShadow(QtGui.QFrame.Raised)
         self.frame_notification.setObjectName(_fromUtf8("frame_notification"))
@@ -61,7 +61,7 @@ class Ui_Form(object):
         self.horizontalLayout_2.addWidget(self.button_script)
         self.horizontalLayout_4.addWidget(self.widget_2)
         self.gridLayout.addWidget(self.frame_notification, 0, 1, 1, 1)
-        self.frame_controls = QtGui.QFrame(Form)
+        self.frame_controls = QtGui.QFrame(sampler_widget)
         sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Fixed, QtGui.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -196,41 +196,41 @@ class Ui_Form(object):
         self.gridLayout_3.addWidget(self.widget, 0, 0, 1, 3)
         self.gridLayout.addWidget(self.frame_controls, 1, 1, 1, 1)
 
-        self.retranslateUi(Form)
-        QtCore.QMetaObject.connectSlotsByName(Form)
+        self.retranslateUi(sampler_widget)
+        QtCore.QMetaObject.connectSlotsByName(sampler_widget)
 
-    def retranslateUi(self, Form):
-        Form.setWindowTitle(QtGui.QApplication.translate("Form", "Form", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_15.setText(QtGui.QApplication.translate("Form", "One of the controls is defined using variables and therefore the controls are disabled. Use the script editor to edit the sampler.", None, QtGui.QApplication.UnicodeUTF8))
-        self.button_script.setToolTip(QtGui.QApplication.translate("Form", "Edit the script to see the definition", None, QtGui.QApplication.UnicodeUTF8))
-        self.button_script.setText(QtGui.QApplication.translate("Form", "Edit script", None, QtGui.QApplication.UnicodeUTF8))
-        self.label.setText(QtGui.QApplication.translate("Form", "Sound file", None, QtGui.QApplication.UnicodeUTF8))
-        self.edit_sample.setToolTip(QtGui.QApplication.translate("Form", "The sound file. Expecting a .ogg or .wav file.", None, QtGui.QApplication.UnicodeUTF8))
-        self.button_browse_sample.setToolTip(QtGui.QApplication.translate("Form", "Select a sound file from the file pool", None, QtGui.QApplication.UnicodeUTF8))
-        self.button_browse_sample.setText(QtGui.QApplication.translate("Form", "Browse", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_7.setText(QtGui.QApplication.translate("Form", "Volume", None, QtGui.QApplication.UnicodeUTF8))
-        self.dial_volume.setToolTip(QtGui.QApplication.translate("Form", "Set the volume of the sound", None, QtGui.QApplication.UnicodeUTF8))
-        self.spin_volume.setToolTip(QtGui.QApplication.translate("Form", "Set the volume of the sound", None, QtGui.QApplication.UnicodeUTF8))
-        self.spin_volume.setSuffix(QtGui.QApplication.translate("Form", "%", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_8.setText(QtGui.QApplication.translate("Form", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+    def retranslateUi(self, sampler_widget):
+        sampler_widget.setWindowTitle(QtGui.QApplication.translate("sampler_widget", "Form", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_15.setText(QtGui.QApplication.translate("sampler_widget", "One of the controls is defined using variables and therefore the controls are disabled. Use the script editor to edit the sampler.", None, QtGui.QApplication.UnicodeUTF8))
+        self.button_script.setToolTip(QtGui.QApplication.translate("sampler_widget", "Edit the script to see the definition", None, QtGui.QApplication.UnicodeUTF8))
+        self.button_script.setText(QtGui.QApplication.translate("sampler_widget", "Edit script", None, QtGui.QApplication.UnicodeUTF8))
+        self.label.setText(QtGui.QApplication.translate("sampler_widget", "Sound file", None, QtGui.QApplication.UnicodeUTF8))
+        self.edit_sample.setToolTip(QtGui.QApplication.translate("sampler_widget", "The sound file. Expecting a .ogg or .wav file.", None, QtGui.QApplication.UnicodeUTF8))
+        self.button_browse_sample.setToolTip(QtGui.QApplication.translate("sampler_widget", "Select a sound file from the file pool", None, QtGui.QApplication.UnicodeUTF8))
+        self.button_browse_sample.setText(QtGui.QApplication.translate("sampler_widget", "Browse", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_7.setText(QtGui.QApplication.translate("sampler_widget", "Volume", None, QtGui.QApplication.UnicodeUTF8))
+        self.dial_volume.setToolTip(QtGui.QApplication.translate("sampler_widget", "Set the volume of the sound", None, QtGui.QApplication.UnicodeUTF8))
+        self.spin_volume.setToolTip(QtGui.QApplication.translate("sampler_widget", "Set the volume of the sound", None, QtGui.QApplication.UnicodeUTF8))
+        self.spin_volume.setSuffix(QtGui.QApplication.translate("sampler_widget", "%", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_8.setText(QtGui.QApplication.translate("sampler_widget", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:\'Ubuntu\'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
 "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Pan</p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_2.setText(QtGui.QApplication.translate("Form", "Pitch", None, QtGui.QApplication.UnicodeUTF8))
-        self.dial_pan.setToolTip(QtGui.QApplication.translate("Form", "Set the panning (left-right) of the sound", None, QtGui.QApplication.UnicodeUTF8))
-        self.dial_pitch.setToolTip(QtGui.QApplication.translate("Form", "Set the relative pitch of the sound (100% = original)", None, QtGui.QApplication.UnicodeUTF8))
-        self.spin_pan.setToolTip(QtGui.QApplication.translate("Form", "Set the panning (left-right) of the sound", None, QtGui.QApplication.UnicodeUTF8))
-        self.spin_pitch.setToolTip(QtGui.QApplication.translate("Form", "Set the relative pitch of the sound (100% = original)", None, QtGui.QApplication.UnicodeUTF8))
-        self.spin_pitch.setSuffix(QtGui.QApplication.translate("Form", "%", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_4.setText(QtGui.QApplication.translate("Form", "Stop after", None, QtGui.QApplication.UnicodeUTF8))
-        self.spin_stop_after.setToolTip(QtGui.QApplication.translate("Form", "Force playback to stop after a specified duration. 0ms corresponds to a full playback.", None, QtGui.QApplication.UnicodeUTF8))
-        self.spin_stop_after.setSuffix(QtGui.QApplication.translate("Form", "ms", None, QtGui.QApplication.UnicodeUTF8))
-        self.spin_fade_in.setToolTip(QtGui.QApplication.translate("Form", "The fade-in time of the sound.", None, QtGui.QApplication.UnicodeUTF8))
-        self.spin_fade_in.setSuffix(QtGui.QApplication.translate("Form", "ms", None, QtGui.QApplication.UnicodeUTF8))
-        self.edit_duration.setToolTip(QtGui.QApplication.translate("Form", "Set the duration of the sampler item. Expecting a duration in ms, \'sound\' (to wait until the sound is finished playing), \'keypress\', \'mouseclick\', or a variable (e.g., \'[sampler_dur]\').", None, QtGui.QApplication.UnicodeUTF8))
-        self.edit_duration.setText(QtGui.QApplication.translate("Form", "sound", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_5.setText(QtGui.QApplication.translate("Form", "Fade in", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_6.setText(QtGui.QApplication.translate("Form", "Duration", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_9.setText(QtGui.QApplication.translate("Form", "Sampler controls", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_2.setText(QtGui.QApplication.translate("sampler_widget", "Pitch", None, QtGui.QApplication.UnicodeUTF8))
+        self.dial_pan.setToolTip(QtGui.QApplication.translate("sampler_widget", "Set the panning (left-right) of the sound", None, QtGui.QApplication.UnicodeUTF8))
+        self.dial_pitch.setToolTip(QtGui.QApplication.translate("sampler_widget", "Set the relative pitch of the sound (100% = original)", None, QtGui.QApplication.UnicodeUTF8))
+        self.spin_pan.setToolTip(QtGui.QApplication.translate("sampler_widget", "Set the panning (left-right) of the sound", None, QtGui.QApplication.UnicodeUTF8))
+        self.spin_pitch.setToolTip(QtGui.QApplication.translate("sampler_widget", "Set the relative pitch of the sound (100% = original)", None, QtGui.QApplication.UnicodeUTF8))
+        self.spin_pitch.setSuffix(QtGui.QApplication.translate("sampler_widget", "%", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_4.setText(QtGui.QApplication.translate("sampler_widget", "Stop after", None, QtGui.QApplication.UnicodeUTF8))
+        self.spin_stop_after.setToolTip(QtGui.QApplication.translate("sampler_widget", "Force playback to stop after a specified duration. 0ms corresponds to a full playback.", None, QtGui.QApplication.UnicodeUTF8))
+        self.spin_stop_after.setSuffix(QtGui.QApplication.translate("sampler_widget", "ms", None, QtGui.QApplication.UnicodeUTF8))
+        self.spin_fade_in.setToolTip(QtGui.QApplication.translate("sampler_widget", "The fade-in time of the sound.", None, QtGui.QApplication.UnicodeUTF8))
+        self.spin_fade_in.setSuffix(QtGui.QApplication.translate("sampler_widget", "ms", None, QtGui.QApplication.UnicodeUTF8))
+        self.edit_duration.setToolTip(QtGui.QApplication.translate("sampler_widget", "Set the duration of the sampler item. Expecting a duration in ms, \'sound\' (to wait until the sound is finished playing), \'keypress\', \'mouseclick\', or a variable (e.g., \'[sampler_dur]\').", None, QtGui.QApplication.UnicodeUTF8))
+        self.edit_duration.setText(QtGui.QApplication.translate("sampler_widget", "sound", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_5.setText(QtGui.QApplication.translate("sampler_widget", "Fade in", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_6.setText(QtGui.QApplication.translate("sampler_widget", "Duration", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_9.setText(QtGui.QApplication.translate("sampler_widget", "Sampler controls", None, QtGui.QApplication.UnicodeUTF8))
 

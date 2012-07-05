@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>Dialog</class>
- <widget class="QDialog" name="Dialog">
+ <class>tip_dialog</class>
+ <widget class="QDialog" name="tip_dialog">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -162,7 +162,7 @@ background-color: #729fcf;</string>
   <connection>
    <sender>button_close</sender>
    <signal>clicked()</signal>
-   <receiver>Dialog</receiver>
+   <receiver>tip_dialog</receiver>
    <slot>close()</slot>
    <hints>
     <hint type="sourcelabel">

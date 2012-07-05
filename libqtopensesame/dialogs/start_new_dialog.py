@@ -37,7 +37,7 @@ class start_new_dialog(QtGui.QDialog):
 		QtGui.QDialog.__init__(self, main_window)
 
 		self.main_window = main_window
-		self.ui = start_new_dialog_ui.Ui_Dialog()
+		self.ui = start_new_dialog_ui.Ui_start_new_dialog()
 		self.ui.setupUi(self)
 		self.main_window.theme.apply_theme(self)
 

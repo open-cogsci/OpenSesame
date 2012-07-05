@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'resources/ui/gabor_dialog.ui'
 #
-# Created: Mon Jun 18 16:48:46 2012
+# Created: Thu Jul  5 19:55:56 2012
 #      by: PyQt4 UI code generator 4.9.1
 #
 # WARNING! All changes made in this file will be lost!
@@ -14,13 +14,13 @@ try:
 except AttributeError:
     _fromUtf8 = lambda s: s
 
-class Ui_Dialog(object):
-    def setupUi(self, Dialog):
-        Dialog.setObjectName(_fromUtf8("Dialog"))
-        Dialog.resize(476, 510)
-        self.verticalLayout = QtGui.QVBoxLayout(Dialog)
+class Ui_gabor_dialog(object):
+    def setupUi(self, gabor_dialog):
+        gabor_dialog.setObjectName(_fromUtf8("gabor_dialog"))
+        gabor_dialog.resize(476, 510)
+        self.verticalLayout = QtGui.QVBoxLayout(gabor_dialog)
         self.verticalLayout.setObjectName(_fromUtf8("verticalLayout"))
-        self.widget_2 = QtGui.QWidget(Dialog)
+        self.widget_2 = QtGui.QWidget(gabor_dialog)
         sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Preferred, QtGui.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -52,7 +52,7 @@ class Ui_Dialog(object):
         self.label_2.setObjectName(_fromUtf8("label_2"))
         self.horizontalLayout.addWidget(self.label_2)
         self.verticalLayout.addWidget(self.widget_2)
-        self.widget = QtGui.QWidget(Dialog)
+        self.widget = QtGui.QWidget(gabor_dialog)
         font = QtGui.QFont()
         font.setPointSize(8)
         self.widget.setFont(font)
@@ -137,7 +137,7 @@ class Ui_Dialog(object):
         self.combobox_bgmode.addItem(_fromUtf8(""))
         self.formLayout.setWidget(8, QtGui.QFormLayout.FieldRole, self.combobox_bgmode)
         self.verticalLayout.addWidget(self.widget)
-        self.widget_3 = QtGui.QWidget(Dialog)
+        self.widget_3 = QtGui.QWidget(gabor_dialog)
         self.widget_3.setObjectName(_fromUtf8("widget_3"))
         self.verticalLayout_2 = QtGui.QVBoxLayout(self.widget_3)
         self.verticalLayout_2.setMargin(0)
@@ -151,79 +151,79 @@ class Ui_Dialog(object):
         self.label_12.setObjectName(_fromUtf8("label_12"))
         self.verticalLayout_2.addWidget(self.label_12)
         self.verticalLayout.addWidget(self.widget_3)
-        self.buttonBox = QtGui.QDialogButtonBox(Dialog)
+        self.buttonBox = QtGui.QDialogButtonBox(gabor_dialog)
         self.buttonBox.setOrientation(QtCore.Qt.Horizontal)
         self.buttonBox.setStandardButtons(QtGui.QDialogButtonBox.Cancel|QtGui.QDialogButtonBox.Ok)
         self.buttonBox.setCenterButtons(False)
         self.buttonBox.setObjectName(_fromUtf8("buttonBox"))
         self.verticalLayout.addWidget(self.buttonBox)
 
-        self.retranslateUi(Dialog)
-        QtCore.QObject.connect(self.buttonBox, QtCore.SIGNAL(_fromUtf8("accepted()")), Dialog.accept)
-        QtCore.QObject.connect(self.buttonBox, QtCore.SIGNAL(_fromUtf8("rejected()")), Dialog.reject)
-        QtCore.QMetaObject.connectSlotsByName(Dialog)
+        self.retranslateUi(gabor_dialog)
+        QtCore.QObject.connect(self.buttonBox, QtCore.SIGNAL(_fromUtf8("accepted()")), gabor_dialog.accept)
+        QtCore.QObject.connect(self.buttonBox, QtCore.SIGNAL(_fromUtf8("rejected()")), gabor_dialog.reject)
+        QtCore.QMetaObject.connectSlotsByName(gabor_dialog)
 
-    def retranslateUi(self, Dialog):
-        Dialog.setWindowTitle(QtGui.QApplication.translate("Dialog", "Insert Gabor patch", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_2.setText(QtGui.QApplication.translate("Dialog", "Insert Gabor patch", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_3.setText(QtGui.QApplication.translate("Dialog", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+    def retranslateUi(self, gabor_dialog):
+        gabor_dialog.setWindowTitle(QtGui.QApplication.translate("gabor_dialog", "Insert Gabor patch", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_2.setText(QtGui.QApplication.translate("gabor_dialog", "Insert Gabor patch", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_3.setText(QtGui.QApplication.translate("gabor_dialog", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:\'Ubuntu\'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Orientation</p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-style:italic;\">in degrees (0 .. 360)</span></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
-        self.spin_orient.setSuffix(QtGui.QApplication.translate("Dialog", "deg", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_4.setText(QtGui.QApplication.translate("Dialog", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+        self.spin_orient.setSuffix(QtGui.QApplication.translate("gabor_dialog", "deg", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_4.setText(QtGui.QApplication.translate("gabor_dialog", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:\'Ubuntu\'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Size</p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-style:italic;\">in pixels</span></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
-        self.spin_size.setSuffix(QtGui.QApplication.translate("Dialog", "px", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_5.setText(QtGui.QApplication.translate("Dialog", "Envelope", None, QtGui.QApplication.UnicodeUTF8))
-        self.combobox_env.setItemText(0, QtGui.QApplication.translate("Dialog", "gaussian", None, QtGui.QApplication.UnicodeUTF8))
-        self.combobox_env.setItemText(1, QtGui.QApplication.translate("Dialog", "linear", None, QtGui.QApplication.UnicodeUTF8))
-        self.combobox_env.setItemText(2, QtGui.QApplication.translate("Dialog", "circular (sharp edge)", None, QtGui.QApplication.UnicodeUTF8))
-        self.combobox_env.setItemText(3, QtGui.QApplication.translate("Dialog", "rectangle (no envelope)", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_6.setText(QtGui.QApplication.translate("Dialog", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+        self.spin_size.setSuffix(QtGui.QApplication.translate("gabor_dialog", "px", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_5.setText(QtGui.QApplication.translate("gabor_dialog", "Envelope", None, QtGui.QApplication.UnicodeUTF8))
+        self.combobox_env.setItemText(0, QtGui.QApplication.translate("gabor_dialog", "gaussian", None, QtGui.QApplication.UnicodeUTF8))
+        self.combobox_env.setItemText(1, QtGui.QApplication.translate("gabor_dialog", "linear", None, QtGui.QApplication.UnicodeUTF8))
+        self.combobox_env.setItemText(2, QtGui.QApplication.translate("gabor_dialog", "circular (sharp edge)", None, QtGui.QApplication.UnicodeUTF8))
+        self.combobox_env.setItemText(3, QtGui.QApplication.translate("gabor_dialog", "rectangle (no envelope)", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_6.setText(QtGui.QApplication.translate("gabor_dialog", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:\'Ubuntu\'; font-size:8pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt;\">Standard deviation</span></p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt; font-style:italic;\">in pixels, only applies to the Gaussian envelope</span></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
-        self.spin_stdev.setSuffix(QtGui.QApplication.translate("Dialog", "px", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_7.setText(QtGui.QApplication.translate("Dialog", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+        self.spin_stdev.setSuffix(QtGui.QApplication.translate("gabor_dialog", "px", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_7.setText(QtGui.QApplication.translate("gabor_dialog", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:\'Ubuntu\'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Frequence</p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-style:italic;\">in cycles/ pixel</span></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_8.setText(QtGui.QApplication.translate("Dialog", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+        self.label_8.setText(QtGui.QApplication.translate("gabor_dialog", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:\'Ubuntu\'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Phase</p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-style:italic;\">in cycles (0 .. 1)</span></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_10.setText(QtGui.QApplication.translate("Dialog", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+        self.label_10.setText(QtGui.QApplication.translate("gabor_dialog", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:\'Ubuntu\'; font-size:8pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt;\">Color 1</span></p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt; font-style:italic;\">E.g., \'white\' or \'#FFFFFF\'</span></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
-        self.edit_color1.setText(QtGui.QApplication.translate("Dialog", "white", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_9.setText(QtGui.QApplication.translate("Dialog", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+        self.edit_color1.setText(QtGui.QApplication.translate("gabor_dialog", "white", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_9.setText(QtGui.QApplication.translate("gabor_dialog", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:\'Ubuntu\'; font-size:8pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt;\">Color 2 *</span></p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt; font-style:italic;\">E.g., \'black\' or \'#000000\'</span></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
-        self.edit_color2.setText(QtGui.QApplication.translate("Dialog", "black", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_11.setText(QtGui.QApplication.translate("Dialog", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+        self.edit_color2.setText(QtGui.QApplication.translate("gabor_dialog", "black", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_11.setText(QtGui.QApplication.translate("gabor_dialog", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:\'Ubuntu\'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Background color *</p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
-        self.combobox_bgmode.setItemText(0, QtGui.QApplication.translate("Dialog", "Color average", None, QtGui.QApplication.UnicodeUTF8))
-        self.combobox_bgmode.setItemText(1, QtGui.QApplication.translate("Dialog", "Color 2", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_12.setText(QtGui.QApplication.translate("Dialog", "* Has no effect in psycho back-end", None, QtGui.QApplication.UnicodeUTF8))
+        self.combobox_bgmode.setItemText(0, QtGui.QApplication.translate("gabor_dialog", "Color average", None, QtGui.QApplication.UnicodeUTF8))
+        self.combobox_bgmode.setItemText(1, QtGui.QApplication.translate("gabor_dialog", "Color 2", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_12.setText(QtGui.QApplication.translate("gabor_dialog", "* Has no effect in psycho back-end", None, QtGui.QApplication.UnicodeUTF8))
 

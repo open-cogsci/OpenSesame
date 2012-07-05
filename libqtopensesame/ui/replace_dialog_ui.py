@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'resources/ui/replace_dialog.ui'
 #
-# Created: Mon Jun 18 16:48:46 2012
+# Created: Thu Jul  5 19:55:56 2012
 #      by: PyQt4 UI code generator 4.9.1
 #
 # WARNING! All changes made in this file will be lost!
@@ -14,13 +14,13 @@ try:
 except AttributeError:
     _fromUtf8 = lambda s: s
 
-class Ui_Dialog(object):
-    def setupUi(self, Dialog):
-        Dialog.setObjectName(_fromUtf8("Dialog"))
-        Dialog.resize(396, 109)
-        self.verticalLayout = QtGui.QVBoxLayout(Dialog)
+class Ui_replace_dialog(object):
+    def setupUi(self, replace_dialog):
+        replace_dialog.setObjectName(_fromUtf8("replace_dialog"))
+        replace_dialog.resize(409, 111)
+        self.verticalLayout = QtGui.QVBoxLayout(replace_dialog)
         self.verticalLayout.setObjectName(_fromUtf8("verticalLayout"))
-        self.widget = QtGui.QWidget(Dialog)
+        self.widget = QtGui.QWidget(replace_dialog)
         self.widget.setObjectName(_fromUtf8("widget"))
         self.formLayout = QtGui.QFormLayout(self.widget)
         self.formLayout.setMargin(0)
@@ -39,7 +39,7 @@ class Ui_Dialog(object):
         self.edit_replace.setObjectName(_fromUtf8("edit_replace"))
         self.formLayout.setWidget(1, QtGui.QFormLayout.FieldRole, self.edit_replace)
         self.verticalLayout.addWidget(self.widget)
-        self.widget_2 = QtGui.QWidget(Dialog)
+        self.widget_2 = QtGui.QWidget(replace_dialog)
         self.widget_2.setObjectName(_fromUtf8("widget_2"))
         self.horizontalLayout = QtGui.QHBoxLayout(self.widget_2)
         self.horizontalLayout.setMargin(0)
@@ -69,22 +69,22 @@ class Ui_Dialog(object):
         self.horizontalLayout.addWidget(self.button_close)
         self.verticalLayout.addWidget(self.widget_2)
 
-        self.retranslateUi(Dialog)
-        QtCore.QObject.connect(self.button_close, QtCore.SIGNAL(_fromUtf8("clicked()")), Dialog.accept)
-        QtCore.QMetaObject.connectSlotsByName(Dialog)
+        self.retranslateUi(replace_dialog)
+        QtCore.QObject.connect(self.button_close, QtCore.SIGNAL(_fromUtf8("clicked()")), replace_dialog.accept)
+        QtCore.QMetaObject.connectSlotsByName(replace_dialog)
 
-    def retranslateUi(self, Dialog):
-        Dialog.setWindowTitle(QtGui.QApplication.translate("Dialog", "Search/ Replace", None, QtGui.QApplication.UnicodeUTF8))
-        self.label.setText(QtGui.QApplication.translate("Dialog", "Search for", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_2.setText(QtGui.QApplication.translate("Dialog", "Replace with", None, QtGui.QApplication.UnicodeUTF8))
-        self.edit_search.setToolTip(QtGui.QApplication.translate("Dialog", "Search term", None, QtGui.QApplication.UnicodeUTF8))
-        self.edit_replace.setToolTip(QtGui.QApplication.translate("Dialog", "Replacement term", None, QtGui.QApplication.UnicodeUTF8))
-        self.button_search.setToolTip(QtGui.QApplication.translate("Dialog", "Search and select a single occurence", None, QtGui.QApplication.UnicodeUTF8))
-        self.button_search.setText(QtGui.QApplication.translate("Dialog", "Search", None, QtGui.QApplication.UnicodeUTF8))
-        self.button_replace.setToolTip(QtGui.QApplication.translate("Dialog", "Replace the current selection", None, QtGui.QApplication.UnicodeUTF8))
-        self.button_replace.setText(QtGui.QApplication.translate("Dialog", "Replace", None, QtGui.QApplication.UnicodeUTF8))
-        self.button_replace_all.setToolTip(QtGui.QApplication.translate("Dialog", "Replace all occurences", None, QtGui.QApplication.UnicodeUTF8))
-        self.button_replace_all.setText(QtGui.QApplication.translate("Dialog", "Replace all", None, QtGui.QApplication.UnicodeUTF8))
-        self.button_close.setToolTip(QtGui.QApplication.translate("Dialog", "Close this dialog", None, QtGui.QApplication.UnicodeUTF8))
-        self.button_close.setText(QtGui.QApplication.translate("Dialog", "Close", None, QtGui.QApplication.UnicodeUTF8))
+    def retranslateUi(self, replace_dialog):
+        replace_dialog.setWindowTitle(QtGui.QApplication.translate("replace_dialog", "Search/ Replace", None, QtGui.QApplication.UnicodeUTF8))
+        self.label.setText(QtGui.QApplication.translate("replace_dialog", "Search for", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_2.setText(QtGui.QApplication.translate("replace_dialog", "Replace with", None, QtGui.QApplication.UnicodeUTF8))
+        self.edit_search.setToolTip(QtGui.QApplication.translate("replace_dialog", "Search term", None, QtGui.QApplication.UnicodeUTF8))
+        self.edit_replace.setToolTip(QtGui.QApplication.translate("replace_dialog", "Replacement term", None, QtGui.QApplication.UnicodeUTF8))
+        self.button_search.setToolTip(QtGui.QApplication.translate("replace_dialog", "Search and select a single occurence", None, QtGui.QApplication.UnicodeUTF8))
+        self.button_search.setText(QtGui.QApplication.translate("replace_dialog", "Search", None, QtGui.QApplication.UnicodeUTF8))
+        self.button_replace.setToolTip(QtGui.QApplication.translate("replace_dialog", "Replace the current selection", None, QtGui.QApplication.UnicodeUTF8))
+        self.button_replace.setText(QtGui.QApplication.translate("replace_dialog", "Replace", None, QtGui.QApplication.UnicodeUTF8))
+        self.button_replace_all.setToolTip(QtGui.QApplication.translate("replace_dialog", "Replace all occurences", None, QtGui.QApplication.UnicodeUTF8))
+        self.button_replace_all.setText(QtGui.QApplication.translate("replace_dialog", "Replace all", None, QtGui.QApplication.UnicodeUTF8))
+        self.button_close.setToolTip(QtGui.QApplication.translate("replace_dialog", "Close this dialog", None, QtGui.QApplication.UnicodeUTF8))
+        self.button_close.setText(QtGui.QApplication.translate("replace_dialog", "Close", None, QtGui.QApplication.UnicodeUTF8))
 

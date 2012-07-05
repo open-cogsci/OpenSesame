@@ -35,7 +35,7 @@ class qtopensesamerun(QtGui.QMainWindow):
 		QtGui.QMainWindow.__init__(self, parent)
 														
 		# Setup the UI
-		self.ui = opensesamerun_ui.Ui_MainWindow()
+		self.ui = opensesamerun_ui.Ui_opensesamerun_mainwindow()
 		self.ui.setupUi(self)		
 		self.ui.button_run.clicked.connect(self.run)
 		self.theme = theme.theme(self)

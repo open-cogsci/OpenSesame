@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'resources/ui/noise_patch_dialog.ui'
 #
-# Created: Mon Jun 18 16:48:46 2012
+# Created: Thu Jul  5 19:55:56 2012
 #      by: PyQt4 UI code generator 4.9.1
 #
 # WARNING! All changes made in this file will be lost!
@@ -14,13 +14,13 @@ try:
 except AttributeError:
     _fromUtf8 = lambda s: s
 
-class Ui_Dialog(object):
-    def setupUi(self, Dialog):
-        Dialog.setObjectName(_fromUtf8("Dialog"))
-        Dialog.resize(476, 384)
-        self.verticalLayout = QtGui.QVBoxLayout(Dialog)
+class Ui_noise_patch_dialog(object):
+    def setupUi(self, noise_patch_dialog):
+        noise_patch_dialog.setObjectName(_fromUtf8("noise_patch_dialog"))
+        noise_patch_dialog.resize(476, 384)
+        self.verticalLayout = QtGui.QVBoxLayout(noise_patch_dialog)
         self.verticalLayout.setObjectName(_fromUtf8("verticalLayout"))
-        self.widget_2 = QtGui.QWidget(Dialog)
+        self.widget_2 = QtGui.QWidget(noise_patch_dialog)
         sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Preferred, QtGui.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -52,7 +52,7 @@ class Ui_Dialog(object):
         self.label_2.setObjectName(_fromUtf8("label_2"))
         self.horizontalLayout.addWidget(self.label_2)
         self.verticalLayout.addWidget(self.widget_2)
-        self.widget = QtGui.QWidget(Dialog)
+        self.widget = QtGui.QWidget(noise_patch_dialog)
         font = QtGui.QFont()
         font.setPointSize(8)
         self.widget.setFont(font)
@@ -113,7 +113,7 @@ class Ui_Dialog(object):
         self.label_4.setObjectName(_fromUtf8("label_4"))
         self.formLayout.setWidget(0, QtGui.QFormLayout.LabelRole, self.label_4)
         self.verticalLayout.addWidget(self.widget)
-        self.widget_3 = QtGui.QWidget(Dialog)
+        self.widget_3 = QtGui.QWidget(noise_patch_dialog)
         self.widget_3.setObjectName(_fromUtf8("widget_3"))
         self.verticalLayout_2 = QtGui.QVBoxLayout(self.widget_3)
         self.verticalLayout_2.setMargin(0)
@@ -127,56 +127,56 @@ class Ui_Dialog(object):
         self.label_12.setObjectName(_fromUtf8("label_12"))
         self.verticalLayout_2.addWidget(self.label_12)
         self.verticalLayout.addWidget(self.widget_3)
-        self.buttonBox = QtGui.QDialogButtonBox(Dialog)
+        self.buttonBox = QtGui.QDialogButtonBox(noise_patch_dialog)
         self.buttonBox.setOrientation(QtCore.Qt.Horizontal)
         self.buttonBox.setStandardButtons(QtGui.QDialogButtonBox.Cancel|QtGui.QDialogButtonBox.Ok)
         self.buttonBox.setCenterButtons(False)
         self.buttonBox.setObjectName(_fromUtf8("buttonBox"))
         self.verticalLayout.addWidget(self.buttonBox)
 
-        self.retranslateUi(Dialog)
-        QtCore.QObject.connect(self.buttonBox, QtCore.SIGNAL(_fromUtf8("accepted()")), Dialog.accept)
-        QtCore.QObject.connect(self.buttonBox, QtCore.SIGNAL(_fromUtf8("rejected()")), Dialog.reject)
-        QtCore.QMetaObject.connectSlotsByName(Dialog)
+        self.retranslateUi(noise_patch_dialog)
+        QtCore.QObject.connect(self.buttonBox, QtCore.SIGNAL(_fromUtf8("accepted()")), noise_patch_dialog.accept)
+        QtCore.QObject.connect(self.buttonBox, QtCore.SIGNAL(_fromUtf8("rejected()")), noise_patch_dialog.reject)
+        QtCore.QMetaObject.connectSlotsByName(noise_patch_dialog)
 
-    def retranslateUi(self, Dialog):
-        Dialog.setWindowTitle(QtGui.QApplication.translate("Dialog", "Insert noise patch", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_2.setText(QtGui.QApplication.translate("Dialog", "Insert noise patch", None, QtGui.QApplication.UnicodeUTF8))
-        self.spin_size.setSuffix(QtGui.QApplication.translate("Dialog", "px", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_5.setText(QtGui.QApplication.translate("Dialog", "Envelope", None, QtGui.QApplication.UnicodeUTF8))
-        self.combobox_env.setItemText(0, QtGui.QApplication.translate("Dialog", "gaussian", None, QtGui.QApplication.UnicodeUTF8))
-        self.combobox_env.setItemText(1, QtGui.QApplication.translate("Dialog", "linear", None, QtGui.QApplication.UnicodeUTF8))
-        self.combobox_env.setItemText(2, QtGui.QApplication.translate("Dialog", "circular (sharp edge)", None, QtGui.QApplication.UnicodeUTF8))
-        self.combobox_env.setItemText(3, QtGui.QApplication.translate("Dialog", "rectangle (no envelope)", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_6.setText(QtGui.QApplication.translate("Dialog", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+    def retranslateUi(self, noise_patch_dialog):
+        noise_patch_dialog.setWindowTitle(QtGui.QApplication.translate("noise_patch_dialog", "Insert noise patch", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_2.setText(QtGui.QApplication.translate("noise_patch_dialog", "Insert noise patch", None, QtGui.QApplication.UnicodeUTF8))
+        self.spin_size.setSuffix(QtGui.QApplication.translate("noise_patch_dialog", "px", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_5.setText(QtGui.QApplication.translate("noise_patch_dialog", "Envelope", None, QtGui.QApplication.UnicodeUTF8))
+        self.combobox_env.setItemText(0, QtGui.QApplication.translate("noise_patch_dialog", "gaussian", None, QtGui.QApplication.UnicodeUTF8))
+        self.combobox_env.setItemText(1, QtGui.QApplication.translate("noise_patch_dialog", "linear", None, QtGui.QApplication.UnicodeUTF8))
+        self.combobox_env.setItemText(2, QtGui.QApplication.translate("noise_patch_dialog", "circular (sharp edge)", None, QtGui.QApplication.UnicodeUTF8))
+        self.combobox_env.setItemText(3, QtGui.QApplication.translate("noise_patch_dialog", "rectangle (no envelope)", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_6.setText(QtGui.QApplication.translate("noise_patch_dialog", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:\'Ubuntu\'; font-size:8pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt;\">Standard deviation</span></p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt; font-style:italic;\">in pixels, only applies to the Gaussian envelope</span></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
-        self.spin_stdev.setSuffix(QtGui.QApplication.translate("Dialog", "px", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_10.setText(QtGui.QApplication.translate("Dialog", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+        self.spin_stdev.setSuffix(QtGui.QApplication.translate("noise_patch_dialog", "px", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_10.setText(QtGui.QApplication.translate("noise_patch_dialog", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:\'Ubuntu\'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Color 1</p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-style:italic;\">E.g., \'white\' or \'#FFFFFF\'</span></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
-        self.edit_color1.setText(QtGui.QApplication.translate("Dialog", "white", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_9.setText(QtGui.QApplication.translate("Dialog", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+        self.edit_color1.setText(QtGui.QApplication.translate("noise_patch_dialog", "white", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_9.setText(QtGui.QApplication.translate("noise_patch_dialog", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:\'Ubuntu\'; font-size:8pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt;\">Color 2 *</span></p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:9pt; font-style:italic;\">E.g., \'black\' or \'#000000\'</span></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
-        self.edit_color2.setText(QtGui.QApplication.translate("Dialog", "black", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_11.setText(QtGui.QApplication.translate("Dialog", "Background color *", None, QtGui.QApplication.UnicodeUTF8))
-        self.combobox_bgmode.setItemText(0, QtGui.QApplication.translate("Dialog", "Color average", None, QtGui.QApplication.UnicodeUTF8))
-        self.combobox_bgmode.setItemText(1, QtGui.QApplication.translate("Dialog", "Color 2", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_4.setText(QtGui.QApplication.translate("Dialog", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+        self.edit_color2.setText(QtGui.QApplication.translate("noise_patch_dialog", "black", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_11.setText(QtGui.QApplication.translate("noise_patch_dialog", "Background color *", None, QtGui.QApplication.UnicodeUTF8))
+        self.combobox_bgmode.setItemText(0, QtGui.QApplication.translate("noise_patch_dialog", "Color average", None, QtGui.QApplication.UnicodeUTF8))
+        self.combobox_bgmode.setItemText(1, QtGui.QApplication.translate("noise_patch_dialog", "Color 2", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_4.setText(QtGui.QApplication.translate("noise_patch_dialog", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:\'Ubuntu\'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Size</p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-style:italic;\">in pixels</span></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_12.setText(QtGui.QApplication.translate("Dialog", "* Has no effect in psycho back-end", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_12.setText(QtGui.QApplication.translate("noise_patch_dialog", "* Has no effect in psycho back-end", None, QtGui.QApplication.UnicodeUTF8))
 

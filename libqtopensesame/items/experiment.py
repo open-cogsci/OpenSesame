@@ -422,7 +422,7 @@ class experiment(libopensesame.experiment.experiment):
 
 		from libqtopensesame.ui import notification_dialog_ui
 		a = QtGui.QDialog(self.main_window)
-		a.ui = notification_dialog_ui.Ui_Dialog()
+		a.ui = notification_dialog_ui.Ui_notification_dialog()
 		a.ui.setupUi(a)
 		self.main_window.theme.apply_theme(a)
 		a.ui.textedit_notification.setHtml(message)
@@ -447,7 +447,7 @@ class experiment(libopensesame.experiment.experiment):
 
 		from libqtopensesame.ui import text_input_dialog_ui
 		a = QtGui.QDialog(self.main_window)
-		a.ui = text_input_dialog_ui.Ui_Dialog()
+		a.ui = text_input_dialog_ui.Ui_text_input_dialog()
 		a.ui.setupUi(a)
 		self.main_window.theme.apply_theme(a)
 		if message != None:

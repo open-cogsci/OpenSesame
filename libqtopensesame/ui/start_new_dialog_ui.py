@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'resources/ui/start_new_dialog.ui'
 #
-# Created: Mon Jun 18 16:48:47 2012
+# Created: Thu Jul  5 19:55:56 2012
 #      by: PyQt4 UI code generator 4.9.1
 #
 # WARNING! All changes made in this file will be lost!
@@ -14,14 +14,14 @@ try:
 except AttributeError:
     _fromUtf8 = lambda s: s
 
-class Ui_Dialog(object):
-    def setupUi(self, Dialog):
-        Dialog.setObjectName(_fromUtf8("Dialog"))
-        Dialog.resize(669, 255)
-        self.verticalLayout_2 = QtGui.QVBoxLayout(Dialog)
+class Ui_start_new_dialog(object):
+    def setupUi(self, start_new_dialog):
+        start_new_dialog.setObjectName(_fromUtf8("start_new_dialog"))
+        start_new_dialog.resize(669, 255)
+        self.verticalLayout_2 = QtGui.QVBoxLayout(start_new_dialog)
         self.verticalLayout_2.setSpacing(12)
         self.verticalLayout_2.setObjectName(_fromUtf8("verticalLayout_2"))
-        self.widget_2 = QtGui.QWidget(Dialog)
+        self.widget_2 = QtGui.QWidget(start_new_dialog)
         sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Preferred, QtGui.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -53,7 +53,7 @@ class Ui_Dialog(object):
         self.label_4.setObjectName(_fromUtf8("label_4"))
         self.horizontalLayout.addWidget(self.label_4)
         self.verticalLayout_2.addWidget(self.widget_2)
-        self.widget = QtGui.QWidget(Dialog)
+        self.widget = QtGui.QWidget(start_new_dialog)
         self.widget.setObjectName(_fromUtf8("widget"))
         self.horizontalLayout_2 = QtGui.QHBoxLayout(self.widget)
         self.horizontalLayout_2.setSpacing(8)
@@ -173,16 +173,16 @@ class Ui_Dialog(object):
         self.horizontalLayout_2.addWidget(self.frame)
         self.verticalLayout_2.addWidget(self.widget)
 
-        self.retranslateUi(Dialog)
-        QtCore.QMetaObject.connectSlotsByName(Dialog)
+        self.retranslateUi(start_new_dialog)
+        QtCore.QMetaObject.connectSlotsByName(start_new_dialog)
 
-    def retranslateUi(self, Dialog):
-        Dialog.setWindowTitle(QtGui.QApplication.translate("Dialog", "New experiment", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_4.setText(QtGui.QApplication.translate("Dialog", "How would you like to begin?", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_5.setText(QtGui.QApplication.translate("Dialog", "Templates", None, QtGui.QApplication.UnicodeUTF8))
-        self.button_template.setText(QtGui.QApplication.translate("Dialog", "Start from template", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_or.setText(QtGui.QApplication.translate("Dialog", "or", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_2.setText(QtGui.QApplication.translate("Dialog", "Recent experiments", None, QtGui.QApplication.UnicodeUTF8))
-        self.button_recent.setText(QtGui.QApplication.translate("Dialog", "Open recent", None, QtGui.QApplication.UnicodeUTF8))
-        self.button_browse.setText(QtGui.QApplication.translate("Dialog", "Browse", None, QtGui.QApplication.UnicodeUTF8))
+    def retranslateUi(self, start_new_dialog):
+        start_new_dialog.setWindowTitle(QtGui.QApplication.translate("start_new_dialog", "New experiment", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_4.setText(QtGui.QApplication.translate("start_new_dialog", "How would you like to begin?", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_5.setText(QtGui.QApplication.translate("start_new_dialog", "Templates", None, QtGui.QApplication.UnicodeUTF8))
+        self.button_template.setText(QtGui.QApplication.translate("start_new_dialog", "Start from template", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_or.setText(QtGui.QApplication.translate("start_new_dialog", "or", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_2.setText(QtGui.QApplication.translate("start_new_dialog", "Recent experiments", None, QtGui.QApplication.UnicodeUTF8))
+        self.button_recent.setText(QtGui.QApplication.translate("start_new_dialog", "Open recent", None, QtGui.QApplication.UnicodeUTF8))
+        self.button_browse.setText(QtGui.QApplication.translate("start_new_dialog", "Browse", None, QtGui.QApplication.UnicodeUTF8))
 

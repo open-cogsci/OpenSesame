@@ -42,7 +42,7 @@ class tip_dialog(QtGui.QDialog):
 		QtGui.QDialog.__init__(self, main_window)
 	
 		self.main_window = main_window
-		self.ui = tip_dialog_ui.Ui_Dialog()
+		self.ui = tip_dialog_ui.Ui_tip_dialog()
 		self.ui.setupUi(self)
 		self.main_window.theme.apply_theme(self)
 		self.i = 0

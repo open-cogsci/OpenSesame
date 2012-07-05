@@ -45,7 +45,7 @@ class preferences_widget(QtGui.QWidget):
 		self.main_window = parent
 
 		# Setup the GUI
-		self.ui = preferences_widget_ui.Ui_Form()
+		self.ui = preferences_widget_ui.Ui_preferences_widget()
 		self.ui.setupUi(self)
 		self.main_window.theme.apply_theme(self)
 		self.lock = False

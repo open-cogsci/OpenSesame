@@ -37,7 +37,7 @@ class replace_dialog(QtGui.QDialog):
 
 		QtGui.QDialog.__init__(self, parent)
 		self.edit = parent.edit
-		self.ui = replace_dialog_ui.Ui_Dialog()
+		self.ui = replace_dialog_ui.Ui_replace_dialog()
 		self.ui.setupUi(self)
 		parent.experiment.main_window.theme.apply_theme(self)
 		self.adjustSize()

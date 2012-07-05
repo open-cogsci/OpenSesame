@@ -38,7 +38,7 @@ class new_loop_sequence_dialog(QtGui.QDialog):
 		QtGui.QDialog.__init__(self, parent)
 		self.experiment = experiment
 		self._parent = _parent
-		self.ui = new_loop_sequence_ui.Ui_Dialog()
+		self.ui = new_loop_sequence_ui.Ui_new_loop_sequence_dialog()
 		self.ui.setupUi(self)
 		self.experiment.main_window.theme.apply_theme(self)		
 		self.ui.label_icon.setPixmap( \

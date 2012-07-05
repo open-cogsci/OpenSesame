@@ -48,7 +48,7 @@ class synth(libopensesame.synth.synth, qtitem.qtitem):
 		qtitem.qtitem.init_edit_widget(self, False)
 				
 		self.synth_widget = QtGui.QWidget()
-		self.synth_widget.ui = synth_widget_ui.Ui_Form()
+		self.synth_widget.ui = synth_widget_ui.Ui_synth_widget()
 		self.synth_widget.ui.setupUi(self.synth_widget)
 		self.experiment.main_window.theme.apply_theme(self.synth_widget)
 

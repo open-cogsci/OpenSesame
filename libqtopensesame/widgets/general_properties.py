@@ -63,7 +63,7 @@ class general_properties(QtGui.QWidget):
 
 		# The rest of the controls from the UI file
 		w = QtGui.QWidget()
-		self.ui = general_widget_ui.Ui_Form()
+		self.ui = general_widget_ui.Ui_general_widget()
 		self.ui.setupUi(w)
 		self.main_window.theme.apply_theme(self)
 

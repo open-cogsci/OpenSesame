@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'resources/ui/text_input_dialog.ui'
 #
-# Created: Mon Jun 18 16:48:46 2012
+# Created: Thu Jul  5 19:55:55 2012
 #      by: PyQt4 UI code generator 4.9.1
 #
 # WARNING! All changes made in this file will be lost!
@@ -14,14 +14,14 @@ try:
 except AttributeError:
     _fromUtf8 = lambda s: s
 
-class Ui_Dialog(object):
-    def setupUi(self, Dialog):
-        Dialog.setObjectName(_fromUtf8("Dialog"))
-        Dialog.resize(608, 233)
-        self.verticalLayout = QtGui.QVBoxLayout(Dialog)
+class Ui_text_input_dialog(object):
+    def setupUi(self, text_input_dialog):
+        text_input_dialog.setObjectName(_fromUtf8("text_input_dialog"))
+        text_input_dialog.resize(608, 233)
+        self.verticalLayout = QtGui.QVBoxLayout(text_input_dialog)
         self.verticalLayout.setMargin(8)
         self.verticalLayout.setObjectName(_fromUtf8("verticalLayout"))
-        self.widget = QtGui.QWidget(Dialog)
+        self.widget = QtGui.QWidget(text_input_dialog)
         sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Preferred, QtGui.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -53,21 +53,21 @@ class Ui_Dialog(object):
         self.label_message.setObjectName(_fromUtf8("label_message"))
         self.horizontalLayout.addWidget(self.label_message)
         self.verticalLayout.addWidget(self.widget)
-        self.textedit_input = QtGui.QTextEdit(Dialog)
+        self.textedit_input = QtGui.QTextEdit(text_input_dialog)
         self.textedit_input.setObjectName(_fromUtf8("textedit_input"))
         self.verticalLayout.addWidget(self.textedit_input)
-        self.buttonBox = QtGui.QDialogButtonBox(Dialog)
+        self.buttonBox = QtGui.QDialogButtonBox(text_input_dialog)
         self.buttonBox.setOrientation(QtCore.Qt.Horizontal)
         self.buttonBox.setStandardButtons(QtGui.QDialogButtonBox.Cancel|QtGui.QDialogButtonBox.Ok)
         self.buttonBox.setObjectName(_fromUtf8("buttonBox"))
         self.verticalLayout.addWidget(self.buttonBox)
 
-        self.retranslateUi(Dialog)
-        QtCore.QObject.connect(self.buttonBox, QtCore.SIGNAL(_fromUtf8("accepted()")), Dialog.accept)
-        QtCore.QObject.connect(self.buttonBox, QtCore.SIGNAL(_fromUtf8("rejected()")), Dialog.reject)
-        QtCore.QMetaObject.connectSlotsByName(Dialog)
+        self.retranslateUi(text_input_dialog)
+        QtCore.QObject.connect(self.buttonBox, QtCore.SIGNAL(_fromUtf8("accepted()")), text_input_dialog.accept)
+        QtCore.QObject.connect(self.buttonBox, QtCore.SIGNAL(_fromUtf8("rejected()")), text_input_dialog.reject)
+        QtCore.QMetaObject.connectSlotsByName(text_input_dialog)
 
-    def retranslateUi(self, Dialog):
-        Dialog.setWindowTitle(QtGui.QApplication.translate("Dialog", "OpenSesame says ...", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_message.setText(QtGui.QApplication.translate("Dialog", "OpenSesame says ...", None, QtGui.QApplication.UnicodeUTF8))
+    def retranslateUi(self, text_input_dialog):
+        text_input_dialog.setWindowTitle(QtGui.QApplication.translate("text_input_dialog", "OpenSesame says ...", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_message.setText(QtGui.QApplication.translate("text_input_dialog", "OpenSesame says ...", None, QtGui.QApplication.UnicodeUTF8))
 

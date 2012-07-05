@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'resources/ui/update_dialog.ui'
 #
-# Created: Mon Jun 18 16:48:46 2012
+# Created: Thu Jul  5 19:55:55 2012
 #      by: PyQt4 UI code generator 4.9.1
 #
 # WARNING! All changes made in this file will be lost!
@@ -14,14 +14,14 @@ try:
 except AttributeError:
     _fromUtf8 = lambda s: s
 
-class Ui_Dialog(object):
-    def setupUi(self, Dialog):
-        Dialog.setObjectName(_fromUtf8("Dialog"))
-        Dialog.resize(400, 299)
-        self.verticalLayout = QtGui.QVBoxLayout(Dialog)
+class Ui_update_dialog(object):
+    def setupUi(self, update_dialog):
+        update_dialog.setObjectName(_fromUtf8("update_dialog"))
+        update_dialog.resize(400, 299)
+        self.verticalLayout = QtGui.QVBoxLayout(update_dialog)
         self.verticalLayout.setMargin(8)
         self.verticalLayout.setObjectName(_fromUtf8("verticalLayout"))
-        self.widget = QtGui.QWidget(Dialog)
+        self.widget = QtGui.QWidget(update_dialog)
         sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Preferred, QtGui.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -53,28 +53,28 @@ class Ui_Dialog(object):
         self.label_2.setObjectName(_fromUtf8("label_2"))
         self.horizontalLayout.addWidget(self.label_2)
         self.verticalLayout.addWidget(self.widget)
-        self.textedit_notification = QtGui.QTextBrowser(Dialog)
+        self.textedit_notification = QtGui.QTextBrowser(update_dialog)
         font = QtGui.QFont()
         font.setFamily(_fromUtf8("Monospace"))
         self.textedit_notification.setFont(font)
         self.textedit_notification.setObjectName(_fromUtf8("textedit_notification"))
         self.verticalLayout.addWidget(self.textedit_notification)
-        self.checkbox_auto_check_update = QtGui.QCheckBox(Dialog)
+        self.checkbox_auto_check_update = QtGui.QCheckBox(update_dialog)
         self.checkbox_auto_check_update.setObjectName(_fromUtf8("checkbox_auto_check_update"))
         self.verticalLayout.addWidget(self.checkbox_auto_check_update)
-        self.buttonBox = QtGui.QDialogButtonBox(Dialog)
+        self.buttonBox = QtGui.QDialogButtonBox(update_dialog)
         self.buttonBox.setOrientation(QtCore.Qt.Horizontal)
         self.buttonBox.setStandardButtons(QtGui.QDialogButtonBox.Close)
         self.buttonBox.setObjectName(_fromUtf8("buttonBox"))
         self.verticalLayout.addWidget(self.buttonBox)
 
-        self.retranslateUi(Dialog)
-        QtCore.QObject.connect(self.buttonBox, QtCore.SIGNAL(_fromUtf8("accepted()")), Dialog.accept)
-        QtCore.QObject.connect(self.buttonBox, QtCore.SIGNAL(_fromUtf8("rejected()")), Dialog.reject)
-        QtCore.QMetaObject.connectSlotsByName(Dialog)
+        self.retranslateUi(update_dialog)
+        QtCore.QObject.connect(self.buttonBox, QtCore.SIGNAL(_fromUtf8("accepted()")), update_dialog.accept)
+        QtCore.QObject.connect(self.buttonBox, QtCore.SIGNAL(_fromUtf8("rejected()")), update_dialog.reject)
+        QtCore.QMetaObject.connectSlotsByName(update_dialog)
 
-    def retranslateUi(self, Dialog):
-        Dialog.setWindowTitle(QtGui.QApplication.translate("Dialog", "OpenSesame has checked for updates ...", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_2.setText(QtGui.QApplication.translate("Dialog", "OpenSesame has checked for updates ...", None, QtGui.QApplication.UnicodeUTF8))
-        self.checkbox_auto_check_update.setText(QtGui.QApplication.translate("Dialog", "Check for updates on start-up", None, QtGui.QApplication.UnicodeUTF8))
+    def retranslateUi(self, update_dialog):
+        update_dialog.setWindowTitle(QtGui.QApplication.translate("update_dialog", "OpenSesame has checked for updates ...", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_2.setText(QtGui.QApplication.translate("update_dialog", "OpenSesame has checked for updates ...", None, QtGui.QApplication.UnicodeUTF8))
+        self.checkbox_auto_check_update.setText(QtGui.QApplication.translate("update_dialog", "Check for updates on start-up", None, QtGui.QApplication.UnicodeUTF8))
 

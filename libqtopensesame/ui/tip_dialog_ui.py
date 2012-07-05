@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'resources/ui/tip_dialog.ui'
 #
-# Created: Mon Jun 18 16:48:46 2012
+# Created: Thu Jul  5 19:55:55 2012
 #      by: PyQt4 UI code generator 4.9.1
 #
 # WARNING! All changes made in this file will be lost!
@@ -14,14 +14,14 @@ try:
 except AttributeError:
     _fromUtf8 = lambda s: s
 
-class Ui_Dialog(object):
-    def setupUi(self, Dialog):
-        Dialog.setObjectName(_fromUtf8("Dialog"))
-        Dialog.resize(583, 292)
-        self.verticalLayout = QtGui.QVBoxLayout(Dialog)
+class Ui_tip_dialog(object):
+    def setupUi(self, tip_dialog):
+        tip_dialog.setObjectName(_fromUtf8("tip_dialog"))
+        tip_dialog.resize(583, 292)
+        self.verticalLayout = QtGui.QVBoxLayout(tip_dialog)
         self.verticalLayout.setMargin(8)
         self.verticalLayout.setObjectName(_fromUtf8("verticalLayout"))
-        self.widget = QtGui.QWidget(Dialog)
+        self.widget = QtGui.QWidget(tip_dialog)
         sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Preferred, QtGui.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -53,16 +53,16 @@ class Ui_Dialog(object):
         self.label_2.setObjectName(_fromUtf8("label_2"))
         self.horizontalLayout.addWidget(self.label_2)
         self.verticalLayout.addWidget(self.widget)
-        self.textedit_tip = QtGui.QTextBrowser(Dialog)
+        self.textedit_tip = QtGui.QTextBrowser(tip_dialog)
         font = QtGui.QFont()
         font.setFamily(_fromUtf8("Monospace"))
         self.textedit_tip.setFont(font)
         self.textedit_tip.setObjectName(_fromUtf8("textedit_tip"))
         self.verticalLayout.addWidget(self.textedit_tip)
-        self.checkbox_show_startup_tip = QtGui.QCheckBox(Dialog)
+        self.checkbox_show_startup_tip = QtGui.QCheckBox(tip_dialog)
         self.checkbox_show_startup_tip.setObjectName(_fromUtf8("checkbox_show_startup_tip"))
         self.verticalLayout.addWidget(self.checkbox_show_startup_tip)
-        self.widget_2 = QtGui.QWidget(Dialog)
+        self.widget_2 = QtGui.QWidget(tip_dialog)
         self.widget_2.setObjectName(_fromUtf8("widget_2"))
         self.horizontalLayout_2 = QtGui.QHBoxLayout(self.widget_2)
         self.horizontalLayout_2.setMargin(0)
@@ -105,15 +105,15 @@ class Ui_Dialog(object):
         self.horizontalLayout_2.addWidget(self.button_close)
         self.verticalLayout.addWidget(self.widget_2)
 
-        self.retranslateUi(Dialog)
-        QtCore.QObject.connect(self.button_close, QtCore.SIGNAL(_fromUtf8("clicked()")), Dialog.close)
-        QtCore.QMetaObject.connectSlotsByName(Dialog)
+        self.retranslateUi(tip_dialog)
+        QtCore.QObject.connect(self.button_close, QtCore.SIGNAL(_fromUtf8("clicked()")), tip_dialog.close)
+        QtCore.QMetaObject.connectSlotsByName(tip_dialog)
 
-    def retranslateUi(self, Dialog):
-        Dialog.setWindowTitle(QtGui.QApplication.translate("Dialog", "Did you now that?", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_2.setText(QtGui.QApplication.translate("Dialog", "Did you know that?", None, QtGui.QApplication.UnicodeUTF8))
-        self.checkbox_show_startup_tip.setText(QtGui.QApplication.translate("Dialog", "Show random tip on start-up", None, QtGui.QApplication.UnicodeUTF8))
-        self.button_prev.setText(QtGui.QApplication.translate("Dialog", "Previous", None, QtGui.QApplication.UnicodeUTF8))
-        self.button_next.setText(QtGui.QApplication.translate("Dialog", "Next", None, QtGui.QApplication.UnicodeUTF8))
-        self.button_close.setText(QtGui.QApplication.translate("Dialog", "Close", None, QtGui.QApplication.UnicodeUTF8))
+    def retranslateUi(self, tip_dialog):
+        tip_dialog.setWindowTitle(QtGui.QApplication.translate("tip_dialog", "Did you now that?", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_2.setText(QtGui.QApplication.translate("tip_dialog", "Did you know that?", None, QtGui.QApplication.UnicodeUTF8))
+        self.checkbox_show_startup_tip.setText(QtGui.QApplication.translate("tip_dialog", "Show random tip on start-up", None, QtGui.QApplication.UnicodeUTF8))
+        self.button_prev.setText(QtGui.QApplication.translate("tip_dialog", "Previous", None, QtGui.QApplication.UnicodeUTF8))
+        self.button_next.setText(QtGui.QApplication.translate("tip_dialog", "Next", None, QtGui.QApplication.UnicodeUTF8))
+        self.button_close.setText(QtGui.QApplication.translate("tip_dialog", "Close", None, QtGui.QApplication.UnicodeUTF8))
 

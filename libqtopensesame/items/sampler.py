@@ -49,7 +49,7 @@ class sampler(libopensesame.sampler.sampler, qtitem.qtitem):
 		qtitem.qtitem.init_edit_widget(self, False)
 				
 		self.sampler_widget = QtGui.QWidget()
-		self.sampler_widget.ui = sampler_widget_ui.Ui_Form()
+		self.sampler_widget.ui = sampler_widget_ui.Ui_sampler_widget()
 		self.sampler_widget.ui.setupUi(self.sampler_widget)
 		self.experiment.main_window.theme.apply_theme(self.sampler_widget)
 		

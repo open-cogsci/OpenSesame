@@ -399,7 +399,7 @@ class loop(libopensesame.loop.loop, qtitem.qtitem):
 
 		# Set up the wizard dialog
 		a = QtGui.QDialog(self.experiment.main_window.ui.centralwidget)
-		a.ui = loop_wizard_dialog_ui.Ui_Dialog()
+		a.ui = loop_wizard_dialog_ui.Ui_loop_widget()
 		a.ui.setupUi(a)
 		self.experiment.main_window.theme.apply_theme(a)
 		a.ui.table_example.build_context_menu(icons)

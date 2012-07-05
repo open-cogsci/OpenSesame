@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>MainWindow</class>
- <widget class="QMainWindow" name="MainWindow">
+ <class>opensesamerun_mainwindow</class>
+ <widget class="QMainWindow" name="opensesamerun_mainwindow">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>396</width>
-    <height>376</height>
+    <width>429</width>
+    <height>381</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -389,7 +389,7 @@ p, li { white-space: pre-wrap; }
   <connection>
    <sender>button_cancel</sender>
    <signal>clicked()</signal>
-   <receiver>MainWindow</receiver>
+   <receiver>opensesamerun_mainwindow</receiver>
    <slot>close()</slot>
    <hints>
     <hint type="sourcelabel">

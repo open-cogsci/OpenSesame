@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'resources/ui/opensesamerun.ui'
 #
-# Created: Mon Jun 18 16:48:45 2012
+# Created: Thu Jul  5 19:55:55 2012
 #      by: PyQt4 UI code generator 4.9.1
 #
 # WARNING! All changes made in this file will be lost!
@@ -14,14 +14,14 @@ try:
 except AttributeError:
     _fromUtf8 = lambda s: s
 
-class Ui_MainWindow(object):
-    def setupUi(self, MainWindow):
-        MainWindow.setObjectName(_fromUtf8("MainWindow"))
-        MainWindow.resize(396, 376)
+class Ui_opensesamerun_mainwindow(object):
+    def setupUi(self, opensesamerun_mainwindow):
+        opensesamerun_mainwindow.setObjectName(_fromUtf8("opensesamerun_mainwindow"))
+        opensesamerun_mainwindow.resize(429, 381)
         icon = QtGui.QIcon()
         icon.addPixmap(QtGui.QPixmap(_fromUtf8(":/icons/experiment.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        MainWindow.setWindowIcon(icon)
-        self.centralwidget = QtGui.QWidget(MainWindow)
+        opensesamerun_mainwindow.setWindowIcon(icon)
+        self.centralwidget = QtGui.QWidget(opensesamerun_mainwindow)
         self.centralwidget.setObjectName(_fromUtf8("centralwidget"))
         self.verticalLayout = QtGui.QVBoxLayout(self.centralwidget)
         self.verticalLayout.setObjectName(_fromUtf8("verticalLayout"))
@@ -197,39 +197,39 @@ class Ui_MainWindow(object):
         self.button_run.setObjectName(_fromUtf8("button_run"))
         self.horizontalLayout_4.addWidget(self.button_run)
         self.verticalLayout.addWidget(self.widget_4)
-        MainWindow.setCentralWidget(self.centralwidget)
+        opensesamerun_mainwindow.setCentralWidget(self.centralwidget)
 
-        self.retranslateUi(MainWindow)
-        QtCore.QObject.connect(self.button_cancel, QtCore.SIGNAL(_fromUtf8("clicked()")), MainWindow.close)
+        self.retranslateUi(opensesamerun_mainwindow)
+        QtCore.QObject.connect(self.button_cancel, QtCore.SIGNAL(_fromUtf8("clicked()")), opensesamerun_mainwindow.close)
         QtCore.QObject.connect(self.checkbox_custom_resolution, QtCore.SIGNAL(_fromUtf8("toggled(bool)")), self.spinbox_width.setEnabled)
         QtCore.QObject.connect(self.checkbox_custom_resolution, QtCore.SIGNAL(_fromUtf8("toggled(bool)")), self.spinbox_height.setEnabled)
         QtCore.QObject.connect(self.checkbox_custom_resolution, QtCore.SIGNAL(_fromUtf8("toggled(bool)")), self.label_width.setEnabled)
         QtCore.QObject.connect(self.checkbox_custom_resolution, QtCore.SIGNAL(_fromUtf8("toggled(bool)")), self.label_height.setEnabled)
-        QtCore.QMetaObject.connectSlotsByName(MainWindow)
+        QtCore.QMetaObject.connectSlotsByName(opensesamerun_mainwindow)
 
-    def retranslateUi(self, MainWindow):
-        MainWindow.setWindowTitle(QtGui.QApplication.translate("MainWindow", "OpenSesame Run", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_6.setText(QtGui.QApplication.translate("MainWindow", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+    def retranslateUi(self, opensesamerun_mainwindow):
+        opensesamerun_mainwindow.setWindowTitle(QtGui.QApplication.translate("opensesamerun_mainwindow", "OpenSesame Run", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_6.setText(QtGui.QApplication.translate("opensesamerun_mainwindow", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:\'Ubuntu\'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:11pt; font-weight:600;\">OpenSesame Run</span></p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-style:italic;\">Run your OpenSesame experiment</span></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
-        self.groupBox_3.setTitle(QtGui.QApplication.translate("MainWindow", "Experiment, subject and log file", None, QtGui.QApplication.UnicodeUTF8))
-        self.button_browse_experiment.setText(QtGui.QApplication.translate("MainWindow", "Browse", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_7.setText(QtGui.QApplication.translate("MainWindow", "Experiment", None, QtGui.QApplication.UnicodeUTF8))
-        self.button_browse_logfile.setText(QtGui.QApplication.translate("MainWindow", "Browse", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_2.setText(QtGui.QApplication.translate("MainWindow", "Log file", None, QtGui.QApplication.UnicodeUTF8))
-        self.label.setText(QtGui.QApplication.translate("MainWindow", "Subject number", None, QtGui.QApplication.UnicodeUTF8))
-        self.groupBox_2.setTitle(QtGui.QApplication.translate("MainWindow", "Display", None, QtGui.QApplication.UnicodeUTF8))
-        self.checkbox_fullscreen.setText(QtGui.QApplication.translate("MainWindow", "Run fullscreen", None, QtGui.QApplication.UnicodeUTF8))
-        self.checkbox_custom_resolution.setText(QtGui.QApplication.translate("MainWindow", "Use custom display resolution", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_width.setText(QtGui.QApplication.translate("MainWindow", "Width", None, QtGui.QApplication.UnicodeUTF8))
-        self.spinbox_width.setSuffix(QtGui.QApplication.translate("MainWindow", "px", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_height.setText(QtGui.QApplication.translate("MainWindow", "Height", None, QtGui.QApplication.UnicodeUTF8))
-        self.spinbox_height.setSuffix(QtGui.QApplication.translate("MainWindow", "px", None, QtGui.QApplication.UnicodeUTF8))
-        self.groupBox.setTitle(QtGui.QApplication.translate("MainWindow", "Miscellaneous", None, QtGui.QApplication.UnicodeUTF8))
-        self.checkbox_pylink.setText(QtGui.QApplication.translate("MainWindow", "Enable PyLink module (required for the Eyelink plug-ins)", None, QtGui.QApplication.UnicodeUTF8))
-        self.button_cancel.setText(QtGui.QApplication.translate("MainWindow", "Cancel", None, QtGui.QApplication.UnicodeUTF8))
-        self.button_run.setText(QtGui.QApplication.translate("MainWindow", "Run", None, QtGui.QApplication.UnicodeUTF8))
+        self.groupBox_3.setTitle(QtGui.QApplication.translate("opensesamerun_mainwindow", "Experiment, subject and log file", None, QtGui.QApplication.UnicodeUTF8))
+        self.button_browse_experiment.setText(QtGui.QApplication.translate("opensesamerun_mainwindow", "Browse", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_7.setText(QtGui.QApplication.translate("opensesamerun_mainwindow", "Experiment", None, QtGui.QApplication.UnicodeUTF8))
+        self.button_browse_logfile.setText(QtGui.QApplication.translate("opensesamerun_mainwindow", "Browse", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_2.setText(QtGui.QApplication.translate("opensesamerun_mainwindow", "Log file", None, QtGui.QApplication.UnicodeUTF8))
+        self.label.setText(QtGui.QApplication.translate("opensesamerun_mainwindow", "Subject number", None, QtGui.QApplication.UnicodeUTF8))
+        self.groupBox_2.setTitle(QtGui.QApplication.translate("opensesamerun_mainwindow", "Display", None, QtGui.QApplication.UnicodeUTF8))
+        self.checkbox_fullscreen.setText(QtGui.QApplication.translate("opensesamerun_mainwindow", "Run fullscreen", None, QtGui.QApplication.UnicodeUTF8))
+        self.checkbox_custom_resolution.setText(QtGui.QApplication.translate("opensesamerun_mainwindow", "Use custom display resolution", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_width.setText(QtGui.QApplication.translate("opensesamerun_mainwindow", "Width", None, QtGui.QApplication.UnicodeUTF8))
+        self.spinbox_width.setSuffix(QtGui.QApplication.translate("opensesamerun_mainwindow", "px", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_height.setText(QtGui.QApplication.translate("opensesamerun_mainwindow", "Height", None, QtGui.QApplication.UnicodeUTF8))
+        self.spinbox_height.setSuffix(QtGui.QApplication.translate("opensesamerun_mainwindow", "px", None, QtGui.QApplication.UnicodeUTF8))
+        self.groupBox.setTitle(QtGui.QApplication.translate("opensesamerun_mainwindow", "Miscellaneous", None, QtGui.QApplication.UnicodeUTF8))
+        self.checkbox_pylink.setText(QtGui.QApplication.translate("opensesamerun_mainwindow", "Enable PyLink module (required for the Eyelink plug-ins)", None, QtGui.QApplication.UnicodeUTF8))
+        self.button_cancel.setText(QtGui.QApplication.translate("opensesamerun_mainwindow", "Cancel", None, QtGui.QApplication.UnicodeUTF8))
+        self.button_run.setText(QtGui.QApplication.translate("opensesamerun_mainwindow", "Run", None, QtGui.QApplication.UnicodeUTF8))
 

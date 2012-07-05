@@ -51,7 +51,7 @@ class pool_widget(QtGui.QWidget):
 		self.main_window = main_window
 
 		QtGui.QWidget.__init__(self, parent)
-		self.ui = pool_widget_ui.Ui_Form()
+		self.ui = pool_widget_ui.Ui_pool_widget()
 		self.ui.setupUi(self)
 		self.ui.button_pool_add.clicked.connect(self.select_and_add)
 		self.ui.button_refresh.clicked.connect(self.refresh)

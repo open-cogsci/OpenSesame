@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'resources/ui/preferences_widget.ui'
 #
-# Created: Mon Jun 18 16:48:46 2012
+# Created: Thu Jul  5 19:55:56 2012
 #      by: PyQt4 UI code generator 4.9.1
 #
 # WARNING! All changes made in this file will be lost!
@@ -14,17 +14,17 @@ try:
 except AttributeError:
     _fromUtf8 = lambda s: s
 
-class Ui_Form(object):
-    def setupUi(self, Form):
-        Form.setObjectName(_fromUtf8("Form"))
-        Form.resize(682, 965)
-        self.verticalLayout = QtGui.QVBoxLayout(Form)
+class Ui_preferences_widget(object):
+    def setupUi(self, preferences_widget):
+        preferences_widget.setObjectName(_fromUtf8("preferences_widget"))
+        preferences_widget.resize(682, 965)
+        self.verticalLayout = QtGui.QVBoxLayout(preferences_widget)
         self.verticalLayout.setObjectName(_fromUtf8("verticalLayout"))
-        self.scrollArea = QtGui.QScrollArea(Form)
+        self.scrollArea = QtGui.QScrollArea(preferences_widget)
         self.scrollArea.setWidgetResizable(True)
         self.scrollArea.setObjectName(_fromUtf8("scrollArea"))
         self.scrollAreaWidgetContents = QtGui.QWidget()
-        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, -32, 646, 977))
+        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 646, 977))
         self.scrollAreaWidgetContents.setObjectName(_fromUtf8("scrollAreaWidgetContents"))
         self.verticalLayout_2 = QtGui.QVBoxLayout(self.scrollAreaWidgetContents)
         self.verticalLayout_2.setObjectName(_fromUtf8("verticalLayout_2"))
@@ -239,7 +239,7 @@ class Ui_Form(object):
         self.scrollArea.setWidget(self.scrollAreaWidgetContents)
         self.verticalLayout.addWidget(self.scrollArea)
 
-        self.retranslateUi(Form)
+        self.retranslateUi(preferences_widget)
         QtCore.QObject.connect(self.checkbox_opensesamerun, QtCore.SIGNAL(_fromUtf8("toggled(bool)")), self.checkbox_auto_opensesamerun_exec.setEnabled)
         QtCore.QObject.connect(self.checkbox_auto_opensesamerun_exec, QtCore.SIGNAL(_fromUtf8("toggled(bool)")), self.label_opensesamerun_exec.setEnabled)
         QtCore.QObject.connect(self.checkbox_auto_opensesamerun_exec, QtCore.SIGNAL(_fromUtf8("toggled(bool)")), self.label_opensesamerun_exec.setDisabled)
@@ -247,54 +247,54 @@ class Ui_Form(object):
         QtCore.QObject.connect(self.checkbox_enable_autosave, QtCore.SIGNAL(_fromUtf8("toggled(bool)")), self.spinbox_autosave_interval.setEnabled)
         QtCore.QObject.connect(self.checkbox_enable_autosave, QtCore.SIGNAL(_fromUtf8("toggled(bool)")), self.label_autosave_interval.setEnabled)
         QtCore.QObject.connect(self.checkbox_scintilla_custom_font, QtCore.SIGNAL(_fromUtf8("toggled(bool)")), self.widget_scintilla_font.setEnabled)
-        QtCore.QMetaObject.connectSlotsByName(Form)
+        QtCore.QMetaObject.connectSlotsByName(preferences_widget)
 
-    def retranslateUi(self, Form):
-        Form.setWindowTitle(QtGui.QApplication.translate("Form", "Form", None, QtGui.QApplication.UnicodeUTF8))
-        self.groupBox_2.setTitle(QtGui.QApplication.translate("Form", "Miscellaneous", None, QtGui.QApplication.UnicodeUTF8))
-        self.checkbox_immediately_rename.setText(QtGui.QApplication.translate("Form", "Offer to rename new items immediately", None, QtGui.QApplication.UnicodeUTF8))
-        self.checkbox_autoresponse.setText(QtGui.QApplication.translate("Form", "Enable auto-response", None, QtGui.QApplication.UnicodeUTF8))
-        self.checkbox_show_random_tips.setText(QtGui.QApplication.translate("Form", "Show random tips on start-up", None, QtGui.QApplication.UnicodeUTF8))
-        self.checkbox_toolbar_text.setText(QtGui.QApplication.translate("Form", "Show text in toolbar", None, QtGui.QApplication.UnicodeUTF8))
-        self.checkbox_new_experiment_dialog.setText(QtGui.QApplication.translate("Form", "Show \'New experiment\' dialog on start-up", None, QtGui.QApplication.UnicodeUTF8))
-        self.checkbox_small_toolbar.setText(QtGui.QApplication.translate("Form", "Small icons in toolbar", None, QtGui.QApplication.UnicodeUTF8))
-        self.groupBox_5.setTitle(QtGui.QApplication.translate("Form", "Appearance", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_2.setText(QtGui.QApplication.translate("Form", "Interface style (requires restart)", None, QtGui.QApplication.UnicodeUTF8))
-        self.groupbox_scintilla.setTitle(QtGui.QApplication.translate("Form", "Embedded text editor", None, QtGui.QApplication.UnicodeUTF8))
-        self.checkbox_scintilla_line_numbers.setText(QtGui.QApplication.translate("Form", "Show line numbers", None, QtGui.QApplication.UnicodeUTF8))
-        self.checkbox_scintilla_folding.setText(QtGui.QApplication.translate("Form", "Enable block folding", None, QtGui.QApplication.UnicodeUTF8))
-        self.checkbox_scintilla_right_margin.setText(QtGui.QApplication.translate("Form", "Show right margin", None, QtGui.QApplication.UnicodeUTF8))
-        self.checkbox_scintilla_brace_match.setText(QtGui.QApplication.translate("Form", "Highlight matching braces", None, QtGui.QApplication.UnicodeUTF8))
-        self.checkbox_scintilla_eol_visible.setText(QtGui.QApplication.translate("Form", "Show end of lines", None, QtGui.QApplication.UnicodeUTF8))
-        self.checkbox_scintilla_syntax_highlighting.setText(QtGui.QApplication.translate("Form", "Enable syntax highlighting", None, QtGui.QApplication.UnicodeUTF8))
-        self.checkbox_scintilla_whitespace_visible.setText(QtGui.QApplication.translate("Form", "Show whitespace", None, QtGui.QApplication.UnicodeUTF8))
-        self.checkbox_scintilla_indentation_guides.setText(QtGui.QApplication.translate("Form", "Show indentation guides", None, QtGui.QApplication.UnicodeUTF8))
-        self.checkbox_scintilla_auto_indent.setText(QtGui.QApplication.translate("Form", "Auto indent", None, QtGui.QApplication.UnicodeUTF8))
-        self.checkbox_scintilla_custom_font.setText(QtGui.QApplication.translate("Form", "Use custom font", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_4.setText(QtGui.QApplication.translate("Form", "Font family", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_5.setText(QtGui.QApplication.translate("Form", "Font size", None, QtGui.QApplication.UnicodeUTF8))
-        self.spinbox_scintilla_font_size.setSuffix(QtGui.QApplication.translate("Form", " pt", None, QtGui.QApplication.UnicodeUTF8))
-        self.groupBox.setTitle(QtGui.QApplication.translate("Form", "Backups", None, QtGui.QApplication.UnicodeUTF8))
-        self.checkbox_enable_autosave.setText(QtGui.QApplication.translate("Form", "Automatically create backups", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_autosave_interval.setText(QtGui.QApplication.translate("Form", "Auto-save interval:", None, QtGui.QApplication.UnicodeUTF8))
-        self.spinbox_autosave_interval.setSuffix(QtGui.QApplication.translate("Form", " minute(s)", None, QtGui.QApplication.UnicodeUTF8))
-        self.spinbox_autosave_interval.setPrefix(QtGui.QApplication.translate("Form", "every ", None, QtGui.QApplication.UnicodeUTF8))
-        self.button_browse_autosave.setText(QtGui.QApplication.translate("Form", "Open backup folder", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_3.setText(QtGui.QApplication.translate("Form", "Clean backups after:", None, QtGui.QApplication.UnicodeUTF8))
-        self.spinbox_autosave_max_age.setSuffix(QtGui.QApplication.translate("Form", " day(s)", None, QtGui.QApplication.UnicodeUTF8))
-        self.groupBox_3.setTitle(QtGui.QApplication.translate("Form", "Updates", None, QtGui.QApplication.UnicodeUTF8))
-        self.checkbox_auto_update_check.setText(QtGui.QApplication.translate("Form", "Check for updates on start-up", None, QtGui.QApplication.UnicodeUTF8))
-        self.button_update_check.setText(QtGui.QApplication.translate("Form", "Check for updates now", None, QtGui.QApplication.UnicodeUTF8))
-        self.groupBox_4.setTitle(QtGui.QApplication.translate("Form", "Run options", None, QtGui.QApplication.UnicodeUTF8))
-        self.label.setText(QtGui.QApplication.translate("Form", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+    def retranslateUi(self, preferences_widget):
+        preferences_widget.setWindowTitle(QtGui.QApplication.translate("preferences_widget", "Form", None, QtGui.QApplication.UnicodeUTF8))
+        self.groupBox_2.setTitle(QtGui.QApplication.translate("preferences_widget", "Miscellaneous", None, QtGui.QApplication.UnicodeUTF8))
+        self.checkbox_immediately_rename.setText(QtGui.QApplication.translate("preferences_widget", "Offer to rename new items immediately", None, QtGui.QApplication.UnicodeUTF8))
+        self.checkbox_autoresponse.setText(QtGui.QApplication.translate("preferences_widget", "Enable auto-response", None, QtGui.QApplication.UnicodeUTF8))
+        self.checkbox_show_random_tips.setText(QtGui.QApplication.translate("preferences_widget", "Show random tips on start-up", None, QtGui.QApplication.UnicodeUTF8))
+        self.checkbox_toolbar_text.setText(QtGui.QApplication.translate("preferences_widget", "Show text in toolbar", None, QtGui.QApplication.UnicodeUTF8))
+        self.checkbox_new_experiment_dialog.setText(QtGui.QApplication.translate("preferences_widget", "Show \'New experiment\' dialog on start-up", None, QtGui.QApplication.UnicodeUTF8))
+        self.checkbox_small_toolbar.setText(QtGui.QApplication.translate("preferences_widget", "Small icons in toolbar", None, QtGui.QApplication.UnicodeUTF8))
+        self.groupBox_5.setTitle(QtGui.QApplication.translate("preferences_widget", "Appearance", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_2.setText(QtGui.QApplication.translate("preferences_widget", "Interface style (requires restart)", None, QtGui.QApplication.UnicodeUTF8))
+        self.groupbox_scintilla.setTitle(QtGui.QApplication.translate("preferences_widget", "Embedded text editor", None, QtGui.QApplication.UnicodeUTF8))
+        self.checkbox_scintilla_line_numbers.setText(QtGui.QApplication.translate("preferences_widget", "Show line numbers", None, QtGui.QApplication.UnicodeUTF8))
+        self.checkbox_scintilla_folding.setText(QtGui.QApplication.translate("preferences_widget", "Enable block folding", None, QtGui.QApplication.UnicodeUTF8))
+        self.checkbox_scintilla_right_margin.setText(QtGui.QApplication.translate("preferences_widget", "Show right margin", None, QtGui.QApplication.UnicodeUTF8))
+        self.checkbox_scintilla_brace_match.setText(QtGui.QApplication.translate("preferences_widget", "Highlight matching braces", None, QtGui.QApplication.UnicodeUTF8))
+        self.checkbox_scintilla_eol_visible.setText(QtGui.QApplication.translate("preferences_widget", "Show end of lines", None, QtGui.QApplication.UnicodeUTF8))
+        self.checkbox_scintilla_syntax_highlighting.setText(QtGui.QApplication.translate("preferences_widget", "Enable syntax highlighting", None, QtGui.QApplication.UnicodeUTF8))
+        self.checkbox_scintilla_whitespace_visible.setText(QtGui.QApplication.translate("preferences_widget", "Show whitespace", None, QtGui.QApplication.UnicodeUTF8))
+        self.checkbox_scintilla_indentation_guides.setText(QtGui.QApplication.translate("preferences_widget", "Show indentation guides", None, QtGui.QApplication.UnicodeUTF8))
+        self.checkbox_scintilla_auto_indent.setText(QtGui.QApplication.translate("preferences_widget", "Auto indent", None, QtGui.QApplication.UnicodeUTF8))
+        self.checkbox_scintilla_custom_font.setText(QtGui.QApplication.translate("preferences_widget", "Use custom font", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_4.setText(QtGui.QApplication.translate("preferences_widget", "Font family", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_5.setText(QtGui.QApplication.translate("preferences_widget", "Font size", None, QtGui.QApplication.UnicodeUTF8))
+        self.spinbox_scintilla_font_size.setSuffix(QtGui.QApplication.translate("preferences_widget", " pt", None, QtGui.QApplication.UnicodeUTF8))
+        self.groupBox.setTitle(QtGui.QApplication.translate("preferences_widget", "Backups", None, QtGui.QApplication.UnicodeUTF8))
+        self.checkbox_enable_autosave.setText(QtGui.QApplication.translate("preferences_widget", "Automatically create backups", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_autosave_interval.setText(QtGui.QApplication.translate("preferences_widget", "Auto-save interval:", None, QtGui.QApplication.UnicodeUTF8))
+        self.spinbox_autosave_interval.setSuffix(QtGui.QApplication.translate("preferences_widget", " minute(s)", None, QtGui.QApplication.UnicodeUTF8))
+        self.spinbox_autosave_interval.setPrefix(QtGui.QApplication.translate("preferences_widget", "every ", None, QtGui.QApplication.UnicodeUTF8))
+        self.button_browse_autosave.setText(QtGui.QApplication.translate("preferences_widget", "Open backup folder", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_3.setText(QtGui.QApplication.translate("preferences_widget", "Clean backups after:", None, QtGui.QApplication.UnicodeUTF8))
+        self.spinbox_autosave_max_age.setSuffix(QtGui.QApplication.translate("preferences_widget", " day(s)", None, QtGui.QApplication.UnicodeUTF8))
+        self.groupBox_3.setTitle(QtGui.QApplication.translate("preferences_widget", "Updates", None, QtGui.QApplication.UnicodeUTF8))
+        self.checkbox_auto_update_check.setText(QtGui.QApplication.translate("preferences_widget", "Check for updates on start-up", None, QtGui.QApplication.UnicodeUTF8))
+        self.button_update_check.setText(QtGui.QApplication.translate("preferences_widget", "Check for updates now", None, QtGui.QApplication.UnicodeUTF8))
+        self.groupBox_4.setTitle(QtGui.QApplication.translate("preferences_widget", "Run options", None, QtGui.QApplication.UnicodeUTF8))
+        self.label.setText(QtGui.QApplication.translate("preferences_widget", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:\'Ubuntu\'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-style:italic;\">If you experience stability issues, most notably crashes when you run an experiment for the second time in a single session of OpenSesame, you can enable the \'Run experiments in a separate process\' option.</span></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
-        self.checkbox_opensesamerun.setText(QtGui.QApplication.translate("Form", "Run experiments in a separate process", None, QtGui.QApplication.UnicodeUTF8))
-        self.checkbox_auto_opensesamerun_exec.setText(QtGui.QApplication.translate("Form", "Auto-detect the run command", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_opensesamerun_exec.setText(QtGui.QApplication.translate("Form", "Custom run command:", None, QtGui.QApplication.UnicodeUTF8))
-        self.groupBox_6.setTitle(QtGui.QApplication.translate("Form", "Plug-ins", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_6.setText(QtGui.QApplication.translate("Form", "Plug-in folders:", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_plugin_dummy.setText(QtGui.QApplication.translate("Form", "Installed plug-ins (requires restart):", None, QtGui.QApplication.UnicodeUTF8))
+        self.checkbox_opensesamerun.setText(QtGui.QApplication.translate("preferences_widget", "Run experiments in a separate process", None, QtGui.QApplication.UnicodeUTF8))
+        self.checkbox_auto_opensesamerun_exec.setText(QtGui.QApplication.translate("preferences_widget", "Auto-detect the run command", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_opensesamerun_exec.setText(QtGui.QApplication.translate("preferences_widget", "Custom run command:", None, QtGui.QApplication.UnicodeUTF8))
+        self.groupBox_6.setTitle(QtGui.QApplication.translate("preferences_widget", "Plug-ins", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_6.setText(QtGui.QApplication.translate("preferences_widget", "Plug-in folders:", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_plugin_dummy.setText(QtGui.QApplication.translate("preferences_widget", "Installed plug-ins (requires restart):", None, QtGui.QApplication.UnicodeUTF8))
 

@@ -58,7 +58,7 @@ class qtopensesame(QtGui.QMainWindow):
 		import platform
 
 		# Setup the UI
-		self.ui = opensesame_ui.Ui_MainWindow()
+		self.ui = opensesame_ui.Ui_opensesame_mainwindow()
 		self.ui.setupUi(self)			
 		self.ui.toolbar_items.main_window = self
 		self.ui.itemtree.main_window = self
@@ -594,7 +594,7 @@ class qtopensesame(QtGui.QMainWindow):
 		from libqtopensesame.ui import update_dialog_ui
 
 		a = QtGui.QDialog(self)
-		a.ui = update_dialog_ui.Ui_Dialog()
+		a.ui = update_dialog_ui.Ui_update_dialog()
 		a.ui.setupUi(a)
 		self.theme.apply_theme(a)
 		a.ui.checkbox_auto_check_update.setChecked(self.auto_check_update)

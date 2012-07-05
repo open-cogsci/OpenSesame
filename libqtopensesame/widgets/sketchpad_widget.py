@@ -371,7 +371,7 @@ class sketchpad_widget(QtGui.QWidget):
 		QtGui.QWidget.__init__(self, parent)
 												
 		# Setup the UI
-		self.ui = sketchpad_widget_ui.Ui_Form()
+		self.ui = sketchpad_widget_ui.Ui_sketchpad_widget()
 		self.ui.setupUi(self)
 		self.ui.view.setViewportMargins(0, 0, 0, 0)
 		
@@ -696,7 +696,7 @@ class sketchpad_widget(QtGui.QWidget):
 		"""
 		
 		d = QtGui.QDialog(self)		
-		d.ui = gabor_dialog_ui.Ui_Dialog()
+		d.ui = gabor_dialog_ui.Ui_gabor_dialog()
 		d.ui.setupUi(d)
 		self.sketchpad.experiment.main_window.theme.apply_theme(d)
 		resp = d.exec_()
@@ -729,7 +729,7 @@ class sketchpad_widget(QtGui.QWidget):
 		"""
 		
 		d = QtGui.QDialog(self)		
-		d.ui = noise_patch_dialog_ui.Ui_Dialog()
+		d.ui = noise_patch_dialog_ui.Ui_noise_patch_dialog()
 		d.ui.setupUi(d)
 		self.sketchpad.experiment.main_window.theme.apply_theme(d)
 		resp = d.exec_()
