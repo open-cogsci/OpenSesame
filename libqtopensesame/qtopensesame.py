@@ -1,3 +1,5 @@
+#-*- coding:utf-8 -*-
+
 """
 This file is part of OpenSesame.
 
@@ -34,18 +36,22 @@ class qtopensesame(QtGui.QMainWindow):
 
 	"""The main class of the OpenSesame GUI"""
 
-	def __init__(self, parent=None):
+	def __init__(self, app, parent=None):
 
 		"""
 		Constructor. This does very little, except prepare the app to be shown
 		as rapidly as possible. The actual GUI initialization is handled by
 		resume_init().
+		
+		Arguments:
+		app -- the QApplication
 
 		Keyword arguments:
 		parent -- a link to the parent window
 		"""
 
 		QtGui.QMainWindow.__init__(self, parent)
+		self.app = app
 
 	def resume_init(self):
 
@@ -54,9 +60,9 @@ class qtopensesame(QtGui.QMainWindow):
 		from libopensesame import misc
 		from libqtopensesame.widgets import pool_widget
 		from libqtopensesame.ui import opensesame_ui
-		from libqtopensesame.misc import  theme
-		import platform
-
+		from libqtopensesame.misc import theme
+		import platform			
+				
 		# Setup the UI
 		self.ui = opensesame_ui.Ui_opensesame_mainwindow()
 		self.ui.setupUi(self)			
@@ -227,12 +233,14 @@ class qtopensesame(QtGui.QMainWindow):
 			help="Load PyLink before PyGame (necessary for using the Eyelink plug-ins in non-dummy mode)")
 		group.add_option("--ipython", action="store_true", dest="ipython", \
 			help="Enable the IPython interpreter")
+		group.add_option("--no-locale", action="store_true", dest="no_locale", \
+			help="Do not load localization (default to English)")			
 		group.add_option("--no-global-resources", action="store_true", dest="no_global_resources", \
 			help="Do not use global resources on *nix")
 		parser.add_option_group(group)
 		self.options, args = parser.parse_args(sys.argv)	
 		if self.options.run and self.options.run_in_window:
-			parser.error("Options -r / --run and -w / --run-in-window are mutually exclusive.")
+			parser.error("Options -r / --run and -w / --run-in-window are mutually exclusive.")			
 
 	def restore_window_state(self):
 

@@ -28,21 +28,37 @@ if __name__ == "__main__":
 	if "--ipython" in sys.argv:
 		from IPython.frontend.qt.console.ipython_widget import IPythonWidget
 
-	from PyQt4 import QtGui
-	app = QtGui.QApplication(sys.argv)
+	# Do the basic window initialization
+	from PyQt4.QtGui import QApplication
+	app = QApplication(sys.argv)
 	from libqtopensesame.qtopensesame import qtopensesame
-	opensesame = qtopensesame()
+	opensesame = qtopensesame(app)	
 	opensesame.show()
 	app.processEvents()
+	
+	# Import the remaining modules
+	from PyQt4.QtCore import SIGNAL, QObject, QLocale, QTranslator	
+	from libopensesame.misc import change_working_dir, resource, debug
+	import os.path
+	
+	# Load the locale for UI translation
+	if '--no-locale' not in sys.argv:
+		locale = unicode(QLocale().system().name())
+		qm = resource(os.path.join('locale', locale) +'.qm')
+		if qm != None:
+			debug.msg('installing %s translator' % qm)
+			translator = QTranslator()
+			translator.load(qm)
+			app.installTranslator(translator)
+		else:
+			debug.msg('no translator found for %s' % self.locale)	
 
 	# Now that the window is shown, load the remaining modules and resume the
 	# GUI initialization.
-	from libopensesame.misc import change_working_dir
 	change_working_dir()
 	opensesame.resume_init()
-	from PyQt4 import QtCore
-	QtCore.QObject.connect(app, QtCore.SIGNAL("quit()"), opensesame.close)
-
+	QObject.connect(app, SIGNAL("quit()"), opensesame.close)
+	
 	# Open an experiment if it has been specified as a command line argument and
 	# suppress the new wizard in that case.
 	import os.path
