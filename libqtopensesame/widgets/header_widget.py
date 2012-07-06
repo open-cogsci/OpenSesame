@@ -22,6 +22,7 @@ __license__ = "GPLv3"
 
 from PyQt4 import QtCore, QtGui
 from libopensesame import debug
+from libqtopensesame.misc import _
 
 class header_widget(QtGui.QWidget):
 
@@ -38,7 +39,7 @@ class header_widget(QtGui.QWidget):
 
 		QtGui.QWidget.__init__(self)
 		self.setCursor(QtCore.Qt.IBeamCursor)
-		self.setToolTip("Click to edit")
+		self.setToolTip(_("Click to edit"))
 		self.item = item
 		self.label_name = QtGui.QLabel()
 		self.label_name.id = "name"

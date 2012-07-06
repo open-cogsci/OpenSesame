@@ -235,6 +235,8 @@ class qtopensesame(QtGui.QMainWindow):
 			help="Enable the IPython interpreter")
 		group.add_option("--no-locale", action="store_true", dest="no_locale", \
 			help="Do not load localization (default to English)")			
+		group.add_option("--catch-translatables", action="store_true", \
+			dest="catch_translatables", help="Log all translatable text")						
 		group.add_option("--no-global-resources", action="store_true", dest="no_global_resources", \
 			help="Do not use global resources on *nix")
 		parser.add_option_group(group)

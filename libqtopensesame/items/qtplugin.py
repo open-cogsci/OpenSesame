@@ -22,7 +22,7 @@ __license__ = "GPLv3"
 
 from PyQt4 import QtCore, QtGui
 from libqtopensesame.items import qtitem
-from libqtopensesame.misc import syntax_highlighter
+from libqtopensesame.misc import syntax_highlighter, _
 from libqtopensesame.widgets import color_edit, inline_editor
 import os.path
 from libopensesame import debug
@@ -91,13 +91,13 @@ class qtplugin(qtitem.qtitem):
 
 		if tooltip != None:
 			try:
-				widget.setToolTip(tooltip)
+				widget.setToolTip(_(tooltip))
 			except:
 				pass
 		if type(min_width) == int:
 			widget.setMinimumWidth(min_width)
 		row = self.edit_grid.rowCount()
-		self.edit_grid.addWidget(QtGui.QLabel(label), row, 0)
+		self.edit_grid.addWidget(QtGui.QLabel(_(label)), row, 0)
 		self.edit_grid.addWidget(widget, row, 1)
 
 	def add_line_edit_control(self, var, label, tooltip=None, default=None, \
@@ -137,7 +137,7 @@ class qtplugin(qtitem.qtitem):
 		tooltip -- a tooltip (default=None)
 		"""
 		
-		checkbox = QtGui.QCheckBox(label)
+		checkbox = QtGui.QCheckBox(_(label))
 		checkbox.setChecked(str(self.get_check(var, 'yes')) == 'yes')
 		checkbox.toggled.connect(self.apply_edit_changes)
 		self.add_control('', checkbox, tooltip)
@@ -375,7 +375,7 @@ class qtplugin(qtitem.qtitem):
 		A QPushButton
 		"""
 
-		button_apply = QtGui.QPushButton(label)
+		button_apply = QtGui.QPushButton(_(label))
 		button_apply.setIcon(self.experiment.icon(icon))
 		button_apply.setIconSize(QtCore.QSize(16, 16))
 		button_apply.clicked.connect(self.apply_edit_changes)

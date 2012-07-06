@@ -1621,6 +1621,19 @@ p, li { white-space: pre-wrap; }
     </message>
 </context>
 <context>
+    <name>script</name>
+    <message>
+        <location filename="translatables.py" line="28"/>
+        <source>Duration</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="translatables.py" line="29"/>
+        <source>Timeout</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>sketchpad_widget</name>
     <message>
         <location filename="sketchpad_widget.ui" line="14"/>

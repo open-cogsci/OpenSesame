@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS><TS version="2.0" language="nl" sourcelanguage="">
+<!DOCTYPE TS>
+<TS version="2.0" language="nl">
 <context>
     <name>gabor_dialog</name>
     <message>
@@ -285,7 +286,7 @@ p, li { white-space: pre-wrap; }
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;COGSCIdotNL // cognitive science and more&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
-    <message encoding="UTF-8">
+    <message utf8="true">
         <location filename="general_widget.ui" line="457"/>
         <source>OpenSesame [version] [codename]
 Copyright Sebastiaan Mathôt (2010-2012)</source>
@@ -1618,6 +1619,19 @@ p, li { white-space: pre-wrap; }
         <location filename="sampler_widget.ui" line="413"/>
         <source>Sampler controls</source>
         <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>script</name>
+    <message>
+        <location filename="translatables.py" line="28"/>
+        <source>Duration</source>
+        <translation>Duratie</translation>
+    </message>
+    <message>
+        <location filename="translatables.py" line="29"/>
+        <source>Timeout</source>
+        <translation>Timeout</translation>
     </message>
 </context>
 <context>

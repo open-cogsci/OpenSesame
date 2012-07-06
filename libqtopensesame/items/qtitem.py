@@ -25,7 +25,7 @@ import os.path
 import sip
 from libopensesame import debug, exceptions
 from libqtopensesame.widgets import inline_editor, help_browser, header_widget
-from libqtopensesame.misc import syntax_highlighter
+from libqtopensesame.misc import syntax_highlighter, _
 
 class qtitem(object):
 
@@ -89,14 +89,14 @@ class qtitem(object):
 		self.header_hbox.setContentsMargins(0, 0, 0, 16)
 
 		button = QtGui.QPushButton(self.experiment.icon("script"), "")
-		button.setToolTip("Edit script")
+		button.setToolTip(_("Edit script"))
 		button.setIconSize(QtCore.QSize(16, 16))
 		QtCore.QObject.connect(button, QtCore.SIGNAL("clicked()"), \
 			self.open_script_tab)
 		self.header_hbox.addWidget(button)
 
 		button = QtGui.QPushButton(self.experiment.icon("help"), "")
-		button.setToolTip("Tell me more about the %s item" % self.item_type)
+		button.setToolTip(_("Tell me more about the %s item") % self.item_type)
 		button.setIconSize(QtCore.QSize(16, 16))
 		QtCore.QObject.connect(button, QtCore.SIGNAL("clicked()"), \
 			self.open_help_tab)
@@ -271,8 +271,8 @@ class qtitem(object):
 		if self.edit_script.edit.isModified():
 			resp = QtGui.QMessageBox.question( \
 				self.experiment.main_window.ui.centralwidget, \
-				"Forget changes?", \
-				"Are you sure you want to forget all changes to the script?", \
+				_('Forget changes?'), \
+				_('Are you sure you want to forget all changes to the script?'), \
 				QtGui.QMessageBox.Yes, QtGui.QMessageBox.No)
 			if resp == QtGui.QMessageBox.No:
 				return

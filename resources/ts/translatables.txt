@@ -1,0 +1,18 @@
+Click to edit
+Edit script
+Tell me more about the %s item
+A numeric value (duration in milliseconds), "keypress", or "mouseclick"
+Duration
+Open the sketchpad editor in a new window
+Set the correct response
+Correct response
+Set the allowed responses seperated by a semi-colon, e.g., "z;/"
+Allowed responses
+Set the response timeout in milliseconds, or "infinite"
+Timeout
+Flush pending keypresses
+List available keys
+Set the allowed responses seperated by a semi-colon, e.g., "left_button;right_button"
+Visible mouse cursor
+If checked, the mouse cursor will be visible
+Flush pending mouse clicks
