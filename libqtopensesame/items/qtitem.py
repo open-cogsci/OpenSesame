@@ -25,7 +25,7 @@ import os.path
 import sip
 from libopensesame import debug, exceptions
 from libqtopensesame.widgets import inline_editor, help_browser, header_widget
-from libqtopensesame.misc import syntax_highlighter, _
+from libqtopensesame.misc import _
 
 class qtitem(object):
 

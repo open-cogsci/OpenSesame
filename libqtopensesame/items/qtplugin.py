@@ -22,7 +22,7 @@ __license__ = "GPLv3"
 
 from PyQt4 import QtCore, QtGui
 from libqtopensesame.items import qtitem
-from libqtopensesame.misc import syntax_highlighter, _
+from libqtopensesame.misc import _
 from libqtopensesame.widgets import color_edit, inline_editor
 import os.path
 from libopensesame import debug

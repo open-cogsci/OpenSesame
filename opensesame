@@ -51,7 +51,7 @@ if __name__ == "__main__":
 			translator.load(qm)
 			app.installTranslator(translator)
 		else:
-			debug.msg('no translator found for %s' % self.locale)	
+			debug.msg('no translator found for %s' % locale)	
 
 	# Now that the window is shown, load the remaining modules and resume the
 	# GUI initialization.
