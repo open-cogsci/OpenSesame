@@ -1051,7 +1051,7 @@ class qtopensesame(QtGui.QMainWindow):
 
 		try:
 			exp = experiment.experiment(self, "Experiment", path)
-		except Exception as e:
+		except Exception as e:			
 			self.experiment.notify( \
 				_("<b>Error:</b> Failed to open '%s'<br /><b>Description:</b> %s<br /><br />Make sure that the file is in .opensesame or .opensesame.tar.gz format. If you should be able to open this file, but can't, please go to http://www.cogsci.nl/opensesame to find out how to recover your experiment and file a bug report.") \
 				% (path, e))

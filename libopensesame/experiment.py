@@ -265,10 +265,9 @@ class experiment(item.item):
 			get_next = True
 			try:
 				l = shlex.split(line)
-			except ValueError as e:
+			except ValueError as e:									
 				raise exceptions.script_error( \
-					"Failed to parse line '%s'. Maybe it contains illegal characters or unclosed quotes?" \
-					% line)
+					"Failed to parse script. Maybe it contains illegal characters or unclosed quotes?")
 
 			if len(l) > 0:
 				self.parse_variable(line)
