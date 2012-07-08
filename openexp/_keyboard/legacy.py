@@ -290,8 +290,6 @@ class legacy:
 		
 		if key not in self.key_name_to_code:
 			return [key]
-			#raise openexp.exceptions.response_error('"%s" is not a valid key name' \
-			#	% key)
 		return self.key_code_to_name[self.key_name_to_code[key]]
 
 	def flush(self):

@@ -25,23 +25,12 @@ import pyglet.window.key
 class psycho(openexp._keyboard.legacy.legacy):
 
 	"""
-	This is a canvas backend which uses PsychoPy
+	This is a canvas backend that uses PsychoPy
 	"""
 
-	def __init__(self, experiment, keylist = None, timeout = None):
+	def __init__(self, experiment, keylist=None, timeout=None):
 
-		"""
-		Intializes the keyboard object.
-
-		Arguments:
-		experiment -- an instance of libopensesame.experiment.experiment
-
-		Keyword arguments:
-		keylist -- a list of human readable keys that are accepted or None
-				   to accept all keys (default = None)
-		timeout -- an integer value specifying a timeout in milliseconds or
-				   None for no timeout (default = None)
-		"""
+		"""See openexp._keyboard.legacy"""
 
 		if experiment.canvas_backend != "psycho":
 			raise openexp.exceptions.response_error( \
@@ -53,12 +42,7 @@ class psycho(openexp._keyboard.legacy.legacy):
 
 	def valid_keys(self):
 
-		"""
-		Generates a list of valid key names
-
-		Returns:
-		A list of names
-		"""
+		"""See openexp._keyboard.legacy"""
 
 		l = []
 		for i in dir(pyglet.window.key):
@@ -66,15 +50,9 @@ class psycho(openexp._keyboard.legacy.legacy):
 				l.append(i)
 		return l
 
-	def set_keylist(self, keylist = None):
+	def set_keylist(self, keylist=None):
 
-		"""
-		Sets a list of accepted keys
-
-		Keyword arguments:
-		keylist -- a list of human readable keys that are accepted or None to
-				   accept all keys (default=None)
-		"""
+		"""See openexp._keyboard.legacy"""
 
 		if keylist == None:
 			self._keylist = None
@@ -87,37 +65,15 @@ class psycho(openexp._keyboard.legacy.legacy):
 						% key)
 			self._keylist = keylist
 
-	def set_timeout(self, timeout = None):
+	def set_timeout(self, timeout=None):
 
-		"""
-		Sets a timeout
-
-		Keyword arguments:
-		timeout -- an integer value specifying a timeout in milliseconds or
-				   None for no timeout (default = None)
-		"""
+		"""See openexp._keyboard.legacy"""
 
 		self.timeout = timeout
 
-	def get_key(self, keylist = None, timeout = None):
+	def get_key(self, keylist=None, timeout=None):
 
-		"""
-		Waits for keyboard input
-
-		Keyword arguments:
-		keylist -- a list of human readable keys that are accepted or None
-				   to use the default. This parameter does not change the
-				   default keylist. (default = None)
-		timeout -- an integer value specifying a timeout in milliseconds or
-				   None to use the default. This parameter does not change the
-				   default timeout. (default = None)
-
-		Exceptions:
-		A response_error if 'escape' was pressed
-
-		Returns:
-		A (key, timestamp) tuple. The key is None if a timeout occurs.
-		"""
+		"""See openexp._keyboard.legacy"""
 
 		if keylist == None:
 			keylist = self._keylist
@@ -143,76 +99,25 @@ class psycho(openexp._keyboard.legacy.legacy):
 				elif keylist == None or key in keylist:				
 					return key, time
 
-		return None, time
+		return 'timeout', time
 
 	def get_mods(self):
 
-		"""
-		Returns a list of keyboard moderators (e.g., shift, alt, etc.) that are
-		currently pressed.
+		"""See openexp._keyboard.legacy"""
 
-		Returns:
-		A list of keyboard moderators. An empty list is returned if no
-		moderators are pressed.
-		"""
-
-		pass
+		# TODO: Accept moderator keys
+		return []
 
 	def shift(self, key):
 
-		"""
-		Returns the character that results from pressing a key together with the
-		shift moderator. E.g., "3" + "Shift" -> "#". This function is not
-		particularly elegant as it does not take locales into account and assumes
-		a standard US keyboard.
+		"""See openexp._keyboard.legacy"""
 
-		Arguments:
-		key -- A character
-
-		Returns:
-		The character that results from combining the input key with shift.
-		"""
-
-		pass
-
-	def to_int(self, key):
-
-		"""
-		Returns the ASCII key code of a given key
-
-		Arguments:
-		key -- a key in character or ASCII keycode notation
-
-		Returns:
-		A key in ASCII keycode notation
-		"""
-
-		return ord(key)
-
-	def to_chr(self, key):
-
-		"""
-		Returns the character notation of a given key
-
-		Arguments:
-		key -- a key in character or ASCII keycode notation
-
-		Returns:
-		A key in character notation
-		"""
-
-		if key == None:
-			return "timeout"
+		# TODO: Accept moderator keys
 		return key
 
 	def synonyms(self, key):
 
-		"""
-		Gives a list of synonyms for a key, either codes or names
-
-		Returns:
-		A list of synonyms
-		"""
+		"""See openexp._keyboard.legacy"""
 
 		if type(key) == int:
 			l = [pyglet.window.key.symbol_string(key).lower()]
@@ -225,16 +130,7 @@ class psycho(openexp._keyboard.legacy.legacy):
 
 	def flush(self):
 
-		"""
-		Clears all pending input, not limited to the keyboard
-
-		Exceptions:
-		A response_error if 'escape' was pressed
-
-		Returns:
-		True if a key had been pressed (i.e., if there was something
-		to flush) and False otherwise
-		"""
+		"""See openexp._keyboard.legacy"""
 
 		keypressed = False
 		for key in event.getKeys():
