@@ -282,7 +282,7 @@ class legacy:
 		</DOC>"""
 		
 		self.font = pygame.font.Font(self.experiment.resource( \
-			"%s.ttf" % style), size)
+			"%s.ttf" % style), size)			
 		
 	def fixdot(self, x=None, y=None, color=None):
 		
