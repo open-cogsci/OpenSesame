@@ -18,6 +18,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 import sip
 from PyQt4 import QtGui, QtCore
 from libqtopensesame.widgets import item_context_menu
+from libqtopensesame.misc import _
 
 drop_target = None
 
@@ -42,7 +43,7 @@ class draggable_handle(QtGui.QLabel):
 		self.setCursor(QtCore.Qt.OpenHandCursor)
 		self.container = parent
 		self.setSizePolicy(QtGui.QSizePolicy.Fixed, QtGui.QSizePolicy.Fixed)
-		self.setToolTip("Drag this item to re-order")
+		self.setToolTip(_("Drag this item to re-order"))
 
 	def valid_drag(self, mime_data):
 
@@ -110,9 +111,11 @@ class draggable_handle(QtGui.QLabel):
 			from_index = self.index_from_mime_data(e.mimeData())
 			if from_index >= 0:
 				e.accept()
-				self.container._list.sequence.move(from_index, self.container.index)
+				self.container._list.sequence.move(from_index, \
+					self.container.index)
 			else:
-				drop_target = self.container._list.sequence.name, self.container.index, False
+				drop_target = self.container._list.sequence.name, \
+					self.container.index, False
 				e.setDropAction(QtCore.Qt.CopyAction)
 				e.accept()
 		else:
@@ -151,7 +154,7 @@ class run_if_edit(QtGui.QLineEdit):
 		self.container = parent
 		self.setSizePolicy(QtGui.QSizePolicy.Fixed, QtGui.QSizePolicy.Fixed)
 		self.editingFinished.connect(self.change)
-		self.setToolTip("Run this item only under the following conditions")
+		self.setToolTip(_("Run this item only under the following conditions"))
 
 	def change(self):
 
@@ -184,7 +187,7 @@ class open_button(QtGui.QPushButton):
 		self.setFlat(True)
 		self.setIconSize(QtCore.QSize(32,16))
 		self.clicked.connect(self.open_item_tab)
-		self.setToolTip("Click to edit this item")
+		self.setToolTip(_("Click to edit this item"))
 
 	def open_item_tab(self):
 
@@ -236,7 +239,7 @@ class draggable_widget_container(QtGui.QFrame):
 		self._layout.addWidget(self.handle)
 		self._layout.addWidget(open_button(item, self))
 		self._layout.addStretch()
-		self._layout.addWidget(QtGui.QLabel("<small><i>Run if</i></small>"))
+		self._layout.addWidget(QtGui.QLabel(_("<small><i>Run if</i></small>")))
 		self._layout.addWidget(self.run_if_edit)
 		self.setLayout(self._layout)
 		self._layout.setContentsMargins(4, 4, 4, 4)
@@ -281,10 +284,12 @@ class draggable_list(QtGui.QWidget):
 		for i in range(len(self.sequence.items)):
 			item_name = self.sequence.items[i][0]
 			if  item_name not in self.sequence.experiment.items:
-				self.sequence.experiment.notify("Unkown item '%s' in sequence '%s'. You can fix this using the script editor." \
+				self.sequence.experiment.notify( \
+					_("Unkown item '%s' in sequence '%s'. You can fix this using the script editor.") \
 					% (item_name, self.sequence.name))
 			else:
-				widget = draggable_widget_container(self, self.sequence.items[i], i)
+				widget = draggable_widget_container(self, \
+					self.sequence.items[i], i)
 				self.widgets.append(widget)
 				self._layout.addWidget(widget)
 

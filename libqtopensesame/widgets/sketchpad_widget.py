@@ -24,6 +24,7 @@ from libopensesame import exceptions, debug
 from libqtopensesame.ui import sketchpad_widget_ui, gabor_dialog_ui, \
 	noise_patch_dialog_ui
 from libqtopensesame.widgets import pool_widget
+from libqtopensesame.misc import _
 import openexp.canvas
 from PyQt4 import QtCore, QtGui
 import math
@@ -46,7 +47,8 @@ class remove_item_button(QtGui.QPushButton):
 	
 		self.sketchpad_widget = sketchpad_widget
 		self.item = item
-		QtGui.QPushButton.__init__(self, self.sketchpad_widget.sketchpad.experiment.icon("delete"), "")
+		QtGui.QPushButton.__init__(self, \
+			self.sketchpad_widget.sketchpad.experiment.icon("delete"), "")
 		self.clicked.connect(self.remove_item)
 		self.setIconSize(QtCore.QSize(16,16))
 		
@@ -74,7 +76,8 @@ class edit_item_button(QtGui.QPushButton):
 	
 		self.sketchpad_widget = sketchpad_widget
 		self.item = item
-		QtGui.QPushButton.__init__(self, self.sketchpad_widget.sketchpad.experiment.icon("edit"), "")
+		QtGui.QPushButton.__init__(self, \
+			self.sketchpad_widget.sketchpad.experiment.icon("edit"), "")
 		self.clicked.connect(self.edit_item)
 		self.setIconSize(QtCore.QSize(16,16))
 		
@@ -82,7 +85,8 @@ class edit_item_button(QtGui.QPushButton):
 	
 		"""Is called when the edit button is clicked"""
 	
-		self.sketchpad_widget.scene.edit_item(self.sketchpad_widget.sketchpad.fix_coordinates(self.item))
+		self.sketchpad_widget.scene.edit_item( \
+			self.sketchpad_widget.sketchpad.fix_coordinates(self.item))
 		self.sketchpad_widget.sketchpad.apply_edit_changes()								
 		self.sketchpad_widget.refresh()		
 
@@ -188,12 +192,15 @@ class canvas(QtGui.QGraphicsScene):
 			x += 0.5 * self.sketchpad_widget.sketchpad.get("width")
 			y += 0.5 * self.sketchpad_widget.sketchpad.get("height")					
 			
-		if x < 0 or y < 0 or x >= self.sketchpad_widget.sketchpad.get("width") or y >= self.sketchpad_widget.sketchpad.get("height"):
-			self.sketchpad_widget.ui.label_mouse_pos.setText("(Out of sketchpad)")
+		if x < 0 or y < 0 or x >= self.sketchpad_widget.sketchpad.get("width") \
+			or y >= self.sketchpad_widget.sketchpad.get("height"):
+			self.sketchpad_widget.ui.label_mouse_pos.setText( \
+				_("(Out of sketchpad)"))
 			return
 			
 		if self.from_pos == None and not self.oneshot:
-			self.addEllipse(x - self.r, y - self.r, 2 * self.r, 2 * self.r, self.pen)
+			self.addEllipse(x - self.r, y - self.r, 2 * self.r, 2 * self.r, \
+				self.pen)
 			self.from_pos = x, y
 		else:
 			pos = self.from_pos
@@ -241,17 +248,17 @@ class canvas(QtGui.QGraphicsScene):
 					menu = QtGui.QMenu()
 					menu.addAction( \
 						self.sketchpad_widget.sketchpad.experiment.icon( \
-						"delete"), "Delete")
+						"delete"), _("Delete"))
 					menu.addAction( \
 						self.sketchpad_widget.sketchpad.experiment.icon( \
-						"edit"), "Edit")
+						"edit"), _("Edit"))
 					action = menu.exec_(e.screenPos())
 					
 					# Execute the chosen action
 					if action != None:						
-						if str(action.text()) == "Delete":													
+						if str(action.text()) == _("Delete"):										
 							self.delete_item(_item)						
-						elif str(action.text()) == "Edit":						
+						elif str(action.text()) == _("Edit"):						
 							self.edit_item(_item)
 					
 		self.sketchpad_widget.sketchpad.apply_edit_changes()			
@@ -289,8 +296,11 @@ class canvas(QtGui.QGraphicsScene):
 		item -- the item to edit
 		"""				
 		
-		s = self.sketchpad_widget.sketchpad.item_to_string(self.sketchpad_widget.sketchpad.unfix_coordinates(item))		
-		s = self.sketchpad_widget.sketchpad.experiment.text_input("Edit sketchpad element", message="Element script", content=s)
+		s = self.sketchpad_widget.sketchpad.item_to_string( \
+			self.sketchpad_widget.sketchpad.unfix_coordinates(item))		
+		s = self.sketchpad_widget.sketchpad.experiment.text_input( \
+			_("Edit sketchpad element"), message=_("Element script"), \
+			content=s)
 		if s == None:
 			return		
 		tmp = self.sketchpad_widget.sketchpad.items[:] # Keep a backup
@@ -356,7 +366,7 @@ class sketchpad_widget(QtGui.QWidget):
 
 	"""A custom widget contain the sketchpad canvas controls, etc."""
 
-	def __init__(self, sketchpad, parent = None, embed = True):
+	def __init__(self, sketchpad, parent=None, embed=True):
 	
 		"""
 		Constructor
@@ -365,7 +375,7 @@ class sketchpad_widget(QtGui.QWidget):
 		sketchpad -- a libopensesame.sketchpad instance
 		
 		Keyword arguments:
-		parent -- a parent widget (default = None)
+		parent -- a parent widget (default=None)
 		"""
 			
 		QtGui.QWidget.__init__(self, parent)
@@ -419,7 +429,9 @@ class sketchpad_widget(QtGui.QWidget):
 		
 	def edit_script(self):
 	
-		"""Show the edit script tab and, if not embedded, close the current window"""
+		"""
+		Show the edit script tab and, if not embedded, close the current window
+		"""
 		
 		if not self.embed:
 			self.parent().accept()	
@@ -643,7 +655,8 @@ class sketchpad_widget(QtGui.QWidget):
 			item["r"] = 2 * math.sqrt( (from_pos[0] - to_pos[0]) ** 2 + (from_pos[1] - to_pos[1]) ** 2 )
 			
 		elif self.tool == "textline":		
-			text, ok = QtGui.QInputDialog.getText(self.ui.view, "New textline", "Please enter a text for the textline")
+			text, ok = QtGui.QInputDialog.getText(self.ui.view, \
+				_("New textline"), _("Please enter a text for the textline"))
 			if not ok:
 				return				
 			item["x"] = to_pos[0]
@@ -829,7 +842,7 @@ class sketchpad_widget(QtGui.QWidget):
 				QtGui.QImage.Format_ARGB32)
 			pixmap = QtGui.QPixmap.fromImage(image)						
 			self.notifications.append( \
-				"Funky image alert: '%s' has a non-standard format. It is recommended to convert this image to .png format, for example with Gimp <http://www.gimp.org/>." \
+				_("Funky image alert: '%s' has a non-standard format. It is recommended to convert this image to .png format, for example with Gimp <http://www.gimp.org/>.") \
 				% os.path.basename(path))
 			
 		w = pixmap.width()*scale
@@ -898,14 +911,14 @@ class sketchpad_widget(QtGui.QWidget):
 		not_shown = len(self.sketchpad.items) - len(static_items)
 		if not_shown > 1:
 			self.notifications.append( \
-				"%d objects are not shown, because they are defined using variables." \
+				_("%d objects are not shown, because they are defined using variables.") \
 				% not_shown)
 		elif not_shown == 1:
 			self.notifications.append( \
-				"One object is not shown, because it is defined using variables.")
+				_("One object is not shown, because it is defined using variables."))
 		if self.sketchpad.items_out_of_bounds() > 0:
 			self.notifications.append( \
-				"Some objects will not be visible (or partly) because they fall outside of the screen boundaries.")			
+				_("Some objects will not be visible (or partly) because they fall outside of the screen boundaries."))
 		
 		# Walk through all items and show them
 		self.item_list = []
@@ -959,7 +972,8 @@ class sketchpad_widget(QtGui.QWidget):
 			
 			except Exception as e:
 				debug.msg("exception caught: %s" % e)
-				self.notifications.append("Failed to parse the following item (use 'Edit script' to fix/ remove this line):\n'%s'" \
+				self.notifications.append( \
+					_("Failed to parse the following item (use 'Edit script' to fix/ remove this line):\n'%s'") \
 					% s)
 									
 			# Add a tooltip to the scene element

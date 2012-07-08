@@ -18,7 +18,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 from PyQt4 import QtCore, QtGui
 import libopensesame.plugins
 from libopensesame import debug
-from libqtopensesame.misc import config
+from libqtopensesame.misc import config, _
 
 class widget_item(QtGui.QLabel):
 
@@ -41,7 +41,8 @@ class widget_item(QtGui.QLabel):
 
 		QtGui.QLabel.__init__(self)
 		self.setMargin(6)
-		self.setToolTip("Drag this <b>%s</b> item to the intended location in the overview area or into the item list of a sequence tab" \
+		self.setToolTip( \
+			_("Drag this <b>%s</b> item to the intended location in the overview area or into the item list of a sequence tab") \
 			% self.item)
 		self.setCursor(QtGui.QCursor(QtCore.Qt.OpenHandCursor))
 		self.setPixmap(self.pixmap)
@@ -165,7 +166,7 @@ class toolbar_items(QtGui.QToolBar):
 		self.clear()
 
 		if self.orientation() == QtCore.Qt.Vertical:
-			self.addWidget(toolbar_label("<small>Commonly used</small>"))
+			self.addWidget(toolbar_label(_("<small>Commonly used</small>")))
 
 		# Add the core items
 		content = []

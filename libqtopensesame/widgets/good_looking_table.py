@@ -99,13 +99,16 @@ class good_looking_table(QtGui.QTableWidget):
 		if e.key() == QtCore.Qt.Key_Delete:
 			self._clear()
 			e.ignore()		
-		elif e.modifiers() == QtCore.Qt.ControlModifier and e.key() == QtCore.Qt.Key_X:
+		elif e.modifiers() == QtCore.Qt.ControlModifier and e.key() == \
+			QtCore.Qt.Key_X:
 			self.cut()
 			e.ignore()			
-		elif e.modifiers() == QtCore.Qt.ControlModifier and e.key() == QtCore.Qt.Key_C:
+		elif e.modifiers() == QtCore.Qt.ControlModifier and e.key() == \
+			QtCore.Qt.Key_C:
 			self.copy()
 			e.ignore()
-		elif e.modifiers() == QtCore.Qt.ControlModifier and e.key() == QtCore.Qt.Key_V:
+		elif e.modifiers() == QtCore.Qt.ControlModifier and e.key() == \
+			QtCore.Qt.Key_V:
 			self.paste()
 			e.ignore()
 		else:
@@ -124,9 +127,11 @@ class good_looking_table(QtGui.QTableWidget):
 
 		selected_range = self.selectedRanges()[0]		
 		rows = QtCore.QStringList()
-		for row in range(selected_range.topRow(), selected_range.bottomRow() + 1):		
+		for row in range(selected_range.topRow(), selected_range.bottomRow() + \
+			1):		
 			columns = QtCore.QStringList()
-			for column in range(selected_range.leftColumn(), selected_range.rightColumn() + 1):	
+			for column in range(selected_range.leftColumn(), \
+				selected_range.rightColumn() + 1):	
 				item = self.item(row, column)
 				if item != None:
 					value = item.text()
@@ -161,8 +166,10 @@ class good_looking_table(QtGui.QTableWidget):
 		"""Clear the selected cells"""
 	
 		selected_range = self.selectedRanges()[0]
-		for row in range(selected_range.topRow(), selected_range.bottomRow() + 1):		
-			for column in range(selected_range.leftColumn(), selected_range.rightColumn() + 1):	
+		for row in range(selected_range.topRow(), selected_range.bottomRow() + \
+			1):		
+			for column in range(selected_range.leftColumn(), \
+				selected_range.rightColumn() + 1):	
 				item = self.item(row, column)
 				if item != None:
 					item.setText("")

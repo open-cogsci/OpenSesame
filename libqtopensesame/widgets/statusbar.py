@@ -21,6 +21,7 @@ __author__ = "Sebastiaan Mathot"
 __license__ = "GPLv3"
 
 from PyQt4 import QtCore, QtGui
+from libqtopensesame.misc import _
 
 class statusbar(QtGui.QStatusBar):
 
@@ -80,5 +81,5 @@ class statusbar(QtGui.QStatusBar):
 	
 		"""Clear the statusbar to a default ready message"""
 	
-		self.set_status("Ready", timeout=None)
+		self.set_status(_("Ready"), timeout=None)
 		

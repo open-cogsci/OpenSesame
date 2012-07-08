@@ -1,3 +1,5 @@
+#-*- coding:utf-8 -*-
+
 """
 This file is part of OpenSesame.
 
@@ -17,6 +19,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 
 from libopensesame import debug, misc
 from libqtopensesame.ui import pool_widget_ui
+from libqtopensesame.misc import _
 from PyQt4 import QtCore, QtGui
 import os
 import platform
@@ -111,8 +114,8 @@ class pool_widget(QtGui.QWidget):
 				# If a similar file already exists in the pool, ask before overwriting
 				if os.path.exists(os.path.join( \
 					self.main_window.experiment.pool_folder, basename)):
-					resp = QtGui.QMessageBox.question(self, "Overwrite", \
-						"A file named '%s' already exists in the pool. Do you want to overwrite this file?" \
+					resp = QtGui.QMessageBox.question(self, _("Overwrite"), \
+						_("A file named '%s' already exists in the pool. Do you want to overwrite this file?") \
 						% basename, QtGui.QMessageBox.Yes, QtGui.QMessageBox.No)
 					if resp == QtGui.QMessageBox.Yes:
 						shutil.copyfile(path, os.path.join( \
@@ -134,7 +137,7 @@ class pool_widget(QtGui.QWidget):
 		"""
 
 		self.add(QtGui.QFileDialog.getOpenFileNames( \
-			self.main_window.ui.centralwidget, "Add files to pool"))
+			self.main_window.ui.centralwidget, _("Add files to pool")))
 
 	def select(self, fname):
 
@@ -231,8 +234,8 @@ class pool_widget(QtGui.QWidget):
 		menu.addAction(item.icon, "Open")
 		menu.addSeparator()
 		menu.addAction(self.main_window.experiment.icon("delete"), \
-			"Remove from pool")
-		menu.addAction(self.main_window.experiment.icon("rename"), "Rename")
+			_("Remove from pool"))
+		menu.addAction(self.main_window.experiment.icon("rename"), _("Rename"))
 		menu.triggered.connect(self.context_action)
 		self.context_target = unicode(item.text())
 		menu.exec_(event.globalPos())
@@ -261,8 +264,8 @@ class pool_widget(QtGui.QWidget):
 				l.append(unicode(item.text()))
 
 			# Ask for confirmation
-			resp = QtGui.QMessageBox.question(self, "Remove", \
-				"<p>Are you sure you want to remove the following files from the file pool? This operation will only affect the OpenSesame file pool, not the original files on your disk.</p><p><b> - %s</b></p>" \
+			resp = QtGui.QMessageBox.question(self, _("Remove"), \
+				_("<p>Are you sure you want to remove the following files from the file pool? This operation will only affect the OpenSesame file pool, not the original files on your disk.</p><p><b> - %s</b></p>") \
 				% ("<br /> - ".join(l)), QtGui.QMessageBox.Yes, \
 				QtGui.QMessageBox.No)
 			if resp == QtGui.QMessageBox.No:
@@ -279,8 +282,8 @@ class pool_widget(QtGui.QWidget):
 		else:
 
 			# Rename the file
-			new_name, ok = QtGui.QInputDialog.getText(self, "Rename", \
-				"Please enter a new name for '%s'" \
+			new_name, ok = QtGui.QInputDialog.getText(self, _("Rename"), \
+				_("Please enter a new name for '%s'") \
 				% self.context_target, text = self.context_target)
 			if ok:
 				new_name = unicode(new_name)
@@ -288,7 +291,7 @@ class pool_widget(QtGui.QWidget):
 				if os.path.exists(os.path.join( \
 					self.main_window.experiment.pool_folder, new_name)):
 					self.main_window.experiment.notify( \
-						"There already is a file named '%s' in the file pool" \
+						_("There already is a file named '%s' in the file pool") \
 						% new_name)
 					return
 
@@ -343,15 +346,15 @@ def select_from_pool(main_window):
 	widget = pool_widget(main_window)
 	widget.refresh()
 	bbox = QtGui.QDialogButtonBox(d)
-	bbox.addButton("Cancel", QtGui.QDialogButtonBox.RejectRole)
-	bbox.addButton("Select", QtGui.QDialogButtonBox.AcceptRole)
+	bbox.addButton(_("Cancel"), QtGui.QDialogButtonBox.RejectRole)
+	bbox.addButton(_("Select"), QtGui.QDialogButtonBox.AcceptRole)
 	bbox.accepted.connect(d.accept)
 	bbox.rejected.connect(d.reject)
 	vbox = QtGui.QVBoxLayout()
 	vbox.addWidget(widget)
 	vbox.addWidget(bbox)
 	d.setLayout(vbox)
-	d.setWindowTitle("Select file from pool")
+	d.setWindowTitle(_("Select file from pool"))
 	res = d.exec_()
 	main_window.refresh_pool()
 

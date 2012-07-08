@@ -20,6 +20,7 @@ import sys
 import os
 import time
 from PyQt4 import QtGui, QtCore
+from libqtopensesame.misc import _
 
 def modules():
 
@@ -49,7 +50,8 @@ class output_buffer:
 
 		self.plaintext._input = ""
 		self.plaintext.collect_input = True
-		while len(self.plaintext._input) == 0 or self.plaintext._input[-1] != "\n":
+		while len(self.plaintext._input) == 0 or self.plaintext._input[-1] != \
+			"\n":
 			time.sleep(0.01)
 			QtGui.QApplication.processEvents()
 		self.plaintext.collect_input = False
@@ -133,7 +135,8 @@ class console(QtGui.QPlainTextEdit):
 
 		"""Print welcome information"""
 
-		s = "Python %d.%d.%d" % (sys.version_info[0], sys.version_info[1], sys.version_info[2]) \
+		s = "Python %d.%d.%d" % (sys.version_info[0], sys.version_info[1], \
+			sys.version_info[2]) \
 			+ "\nType \"help()\", \"copyright()\", \"credits()\" or \"license()\" for more information." \
 			+ "\nType \"modules()\" for details about installed modules and version information." \
 			+ "\nUse the \"print [msg]\" statement in inline_script items to print to this debug window."
@@ -182,7 +185,8 @@ class console(QtGui.QPlainTextEdit):
 		try:
 			s = unicode(self.document().lastBlock().text())[len(self.prompt):]
 		except:
-			self.appendPlainText("Error: Command contains invalid characters")
+			self.appendPlainText( \
+				_("Error: Command contains invalid characters"))
 			self.show_prompt()
 			return
 		if len(s) > 0:

@@ -16,6 +16,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from PyQt4 import QtCore, QtGui
+from libqtopensesame.misc import _
 
 class item_context_menu(QtGui.QMenu):
 
@@ -43,11 +44,11 @@ class item_context_menu(QtGui.QMenu):
 		self.index = index
 		
 		# The menu text
-		self.open_text = "Open %s" % item.name
-		self.edit_text = "Edit script"
-		self.rename_text = "Rename"
-		self.delete_text = "Delete"		
-		self.help_text = "%s help" % item.item_type.capitalize()		
+		self.open_text = _("Open %s") % item.name
+		self.edit_text = _("Edit script")
+		self.rename_text = _("Rename")
+		self.delete_text = _("Delete")
+		self.help_text = _("%s help") % item.item_type.capitalize()		
 
 		self.addAction(item.experiment.icon(item.item_type), self.open_text)
 		self.addAction(item.experiment.icon("script"), self.edit_text)
@@ -80,13 +81,15 @@ class item_context_menu(QtGui.QMenu):
 		elif action == self.help_text:
 			self.item.open_help_tab()
 		elif action == self.delete_text:
-			self.item.experiment.delete(self.item.name, self.parent_item, self.index)
+			self.item.experiment.delete(self.item.name, self.parent_item, \
+				self.index)
 		
 	def rename(self):
 	
 		"""Rename an item"""
 	
-		new_name, ok = QtGui.QInputDialog.getText(self, "Rename", "Please enter a new name", text=self.item.name)
+		new_name, ok = QtGui.QInputDialog.getText(self, _("Rename"), \
+			_("Please enter a new name"), text=self.item.name)
 		new_name = self.item.experiment.sanitize(new_name, strict=True, \
 			allow_vars=False)
 		if ok:

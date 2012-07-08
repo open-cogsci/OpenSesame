@@ -1,3 +1,5 @@
+#-*- coding:utf-8 -*-
+
 """
 This file is part of OpenSesame.
 
@@ -19,7 +21,7 @@ import os
 from PyQt4 import QtGui, QtCore
 from PyQt4.Qsci import QsciScintilla, QsciScintillaBase, QsciLexerPython
 from libqtopensesame.ui import replace_dialog_ui
-from libqtopensesame.misc import config
+from libqtopensesame.misc import config, _
 from libopensesame import debug
 
 class replace_dialog(QtGui.QDialog):
@@ -71,15 +73,15 @@ class replace_dialog(QtGui.QDialog):
 		"""
 
 		if self.ui.edit_search.text() in self.ui.edit_replace.text():
-			QtGui.QMessageBox.information(self, "Oops!", \
-				"The replacement string cannot contain the search string.")
+			QtGui.QMessageBox.information(self, _("Oops!"), \
+				_("The replacement string cannot contain the search string."))
 			return
 		i = 0
 		while self.search():
 			i += 1
 			self.replace()
-		QtGui.QMessageBox.information(self, "Replace all", \
-			"%d occurence(s) have been replaced" % i)
+		QtGui.QMessageBox.information(self, _("Replace all"), \
+			_("%d occurence(s) have been replaced" % i))
 
 class python_lexer(QsciLexerPython):
 
@@ -308,38 +310,39 @@ class inline_editor(QtGui.QFrame):
 		self.search = QtGui.QLineEdit()
 		self.search.setMaximumWidth(150)
 		self.search.returnPressed.connect(self.perform_search)
-		self.search.setToolTip("Enter a search term")
+		self.search.setToolTip(_("Enter a search term"))
 
 		self.search_button = QtGui.QPushButton(self.experiment.icon("search"), \
 			"")
 		self.search_button.setIconSize(QtCore.QSize(16, 16))
-		self.search_button.setToolTip("Search")
+		self.search_button.setToolTip(_("Search"))
 		self.search_button.clicked.connect(self.perform_search)
 
 		self.replace_button = QtGui.QPushButton( \
 			self.experiment.icon("replace"), "")
 		self.replace_button.setIconSize(QtCore.QSize(16, 16))
-		self.replace_button.setToolTip("Replace")
+		self.replace_button.setToolTip(_("Replace"))
 		self.replace_button.clicked.connect(self.perform_replace)
 
 		self.indent_button = QtGui.QPushButton(self.experiment.icon("indent"), \
 			"")
 		self.indent_button.setIconSize(QtCore.QSize(16, 16))
-		self.indent_button.setToolTip("Indent one level (tab)")
+		self.indent_button.setToolTip(_("Indent one level (tab)"))
 		self.indent_button.clicked.connect(self.indent)
 
 		self.unindent_button = QtGui.QPushButton( \
 			self.experiment.icon("unindent"), "")
 		self.unindent_button.setIconSize(QtCore.QSize(16, 16))
-		self.unindent_button.setToolTip("Unindent one level (super + tab)")
+		self.unindent_button.setToolTip(_("Unindent one level (super + tab)"))
 		self.unindent_button.clicked.connect(self.unindent)
 
 		self.modified = self.experiment.label_image("unsaved_changes")
-		self.modified.setToolTip("Press Alt + A to apply unsaved changes")
+		self.modified.setToolTip(_("Press Alt + A to apply unsaved changes"))
 		self.modified.hide()
 
-		self.apply = QtGui.QPushButton(self.experiment.icon("apply"), "Apply")
-		self.apply.setToolTip("Press Alt + A to apply unsaved changes")
+		self.apply = QtGui.QPushButton(self.experiment.icon("apply"), \
+			_("Apply"))
+		self.apply.setToolTip(_("Press Alt + A to apply unsaved changes"))
 		self.apply.setIconSize(QtCore.QSize(16, 16))
 
 		search_widget = QtGui.QWidget()

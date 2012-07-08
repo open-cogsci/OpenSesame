@@ -23,6 +23,7 @@ __license__ = "GPLv3"
 import copy
 import libopensesame.loop
 from libqtopensesame.items import qtitem
+from libqtopensesame.misc import _
 from libqtopensesame.ui import loop_wizard_dialog_ui, loop_widget_ui
 from libqtopensesame.widgets import loop_table
 from libopensesame import debug
@@ -88,8 +89,9 @@ class loop(libopensesame.loop.loop, qtitem.qtitem):
 
 		"""Present a dialog and add a variable"""
 
-		var_name, ok = QtGui.QInputDialog.getText(self.loop_table, 'New variable', \
-			'Enter a variable name, optionally followed by a default value (i.e., \"varname defaultvalue\")')
+		var_name, ok = QtGui.QInputDialog.getText(self.loop_table, \
+			_('New variable'), \
+			_('Enter a variable name, optionally followed by a default value (i.e., \"varname defaultvalue\")'))
 
 		if ok:
 			l = self.cyclevar_list()
@@ -114,7 +116,8 @@ class loop(libopensesame.loop.loop, qtitem.qtitem):
 			# Check if the variable already exists
 			if l != None and var_name in l:
 				self.experiment.notify( \
-					"A variable with the name '%s' already exists" % var_name)
+					_("A variable with the name '%s' already exists") \
+						% var_name)
 				return
 
 			for i in range(self.cycles):
@@ -173,22 +176,23 @@ class loop(libopensesame.loop.loop, qtitem.qtitem):
 			return
 
 		old_var, ok = QtGui.QInputDialog.getItem( \
-			self.experiment.ui.centralwidget, "Rename variable", \
-			"Which variable do you want to rename?", var_list, editable=False)
+			self.experiment.ui.centralwidget, _("Rename variable"), \
+			_("Which variable do you want to rename?"), var_list, \
+			editable=False)
 		if ok:
 			_new_var, ok = QtGui.QInputDialog.getText(self.loop_table, \
-				'New variable', 'Enter a new variable name', text=old_var)
+				_('New variable'), _('Enter a new variable name'), text=old_var)
 			if ok and _new_var != old_var:
 				old_var = str(old_var)
 				new_var = self.experiment.sanitize(_new_var, strict=True, \
 					allow_vars=False)
 				if _new_var != new_var or new_var == "":
 					self.experiment.notify( \
-						"Please use only letters, numbers and underscores")
+						_("Please use only letters, numbers and underscores"))
 					return
 				if new_var in var_list:
 					self.experiment.notify( \
-						"A variable with the name '%s' already exists" % \
+						_("A variable with the name '%s' already exists") % \
 						new_var)
 					return
 			for item in self.experiment.items.values():
@@ -205,7 +209,7 @@ class loop(libopensesame.loop.loop, qtitem.qtitem):
 			return
 
 		var, ok = QtGui.QInputDialog.getItem(self.experiment.ui.centralwidget, \
-			"Remove variable", "Which variable do you want to remove?", \
+			_("Remove variable"), _("Which variable do you want to remove?"), \
 			var_list)
 		if ok:
 			var = str(var)
@@ -266,7 +270,7 @@ class loop(libopensesame.loop.loop, qtitem.qtitem):
 			for i in self.matrix:
 				if i >= cycles:
 
-					# Check if the cells that will be removed are not simply empty
+					# Check if the cells that will be removed are not empty
 					empty = True
 					for var in self.matrix[i]:
 						if self.matrix[i][var] != "":
@@ -276,7 +280,8 @@ class loop(libopensesame.loop.loop, qtitem.qtitem):
 					if not empty and confirm:
 						resp = QtGui.QMessageBox.question( \
 							self.experiment.ui.centralwidget, \
-							"Remove cycles?", "By reducing the number of cycles, data will be lost from the table. Do you wish to continue?", \
+							_("Remove cycles?"), \
+							_("By reducing the number of cycles, data will be lost from the table. Do you wish to continue?"), \
 							QtGui.QMessageBox.Yes, QtGui.QMessageBox.No)
 						if resp == QtGui.QMessageBox.No:
 							return
@@ -504,19 +509,19 @@ class loop(libopensesame.loop.loop, qtitem.qtitem):
 		# Update the summary
 		cc = self.call_count()					
 		if self.order == "sequential" and self.offset != "yes":
-			s = "<b>%s</b> will be called <b>%s</b> x <b>%s</b> - <b>%s</b> = <b>%s</b> times in <b>%s</b> order" \
+			s = _("<b>%s</b> will be called <b>%s</b> x <b>%s</b> - <b>%s</b> = <b>%s</b> times in <b>%s</b> order") \
 				% (self.item, self.cycles, self.repeat, self.skip, cc, \
 				self.order)
 		else:			
-			s = "<b>%s</b> will be called <b>%s</b> x <b>%s</b> = <b>%s</b> times in <b>%s</b> order" \
+			s = _("<b>%s</b> will be called <b>%s</b> x <b>%s</b> = <b>%s</b> times in <b>%s</b> order") \
 				% (self.item, self.cycles, self.repeat, cc, self.order)	
 		if self.order == "sequential" and self.skip > 0:
-			s += " starting at cycle <b>%d</b>" % self.skip
+			s += _(" starting at cycle <b>%d</b>") % self.skip
 			if self.offset == "yes" and self.skip >= cc:
-				s += " <font color='red'><b>(too many cycles skipped)</b></font>"	
+				s += _(" <font color='red'><b>(too many cycles skipped)</b></font>")
 		if cc < 1:
-			s += " <font color='red'><b>(zero or negative length)</b></font>"		
-		self.loop_widget.ui.label_summary.setText("<small>%s</small>" % s)				
+			s += _(" <font color='red'><b>(zero or negative length)</b></font>")
+		self.loop_widget.ui.label_summary.setText("<small>%s</small>" % s)		
 		self.lock = False
 		return self._edit_widget
 

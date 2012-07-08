@@ -79,14 +79,16 @@ class preferences_widget(QtGui.QWidget):
 			self.apply)
 		self.ui.checkbox_scintilla_line_numbers.toggled.connect(self.apply)
 		self.ui.checkbox_scintilla_right_margin.toggled.connect(self.apply)
-		self.ui.checkbox_scintilla_syntax_highlighting.toggled.connect(self.apply)
+		self.ui.checkbox_scintilla_syntax_highlighting.toggled.connect( \
+			self.apply)
 		self.ui.checkbox_scintilla_whitespace_visible.toggled.connect(self.apply)
 		self.ui.font_scintilla_font_family.currentFontChanged.connect(self.apply)
 		self.ui.spinbox_scintilla_font_size.valueChanged.connect(self.apply)
 
 		# Construct the plugin section
 		self.checkbox_plugins = {}
-		self.ui.edit_plugin_folders.setText("; ".join(plugins.plugin_folders(only_existing=False)))
+		self.ui.edit_plugin_folders.setText("; ".join(plugins.plugin_folders( \
+			only_existing=False)))
 		for plugin in sorted(plugins.list_plugins(filter_disabled=False)):
 			self.checkbox_plugins[plugin] = QtGui.QCheckBox(plugin)
 			self.checkbox_plugins[plugin].toggled.connect(self.apply)
@@ -103,19 +105,31 @@ class preferences_widget(QtGui.QWidget):
 		self.lock = True
 		debug.msg()
 
-		self.ui.checkbox_immediately_rename.setChecked(self.main_window.immediate_rename)
-		self.ui.checkbox_autoresponse.setChecked(self.main_window.experiment.auto_response)
-		self.ui.checkbox_show_random_tips.setChecked(self.main_window.show_startup_tip)
-		self.ui.checkbox_toolbar_text.setChecked(self.main_window.ui.toolbar_main.toolButtonStyle() == QtCore.Qt.ToolButtonTextUnderIcon)
+		self.ui.checkbox_immediately_rename.setChecked( \
+			self.main_window.immediate_rename)
+		self.ui.checkbox_autoresponse.setChecked( \
+			self.main_window.experiment.auto_response)
+		self.ui.checkbox_show_random_tips.setChecked( \
+			self.main_window.show_startup_tip)
+		self.ui.checkbox_toolbar_text.setChecked( \
+			self.main_window.ui.toolbar_main.toolButtonStyle() == \
+			QtCore.Qt.ToolButtonTextUnderIcon)
 		self.ui.checkbox_small_toolbar.setChecked( \
 			config.get_config("toolbar_size") == 16)		
-		self.ui.checkbox_enable_autosave.setChecked(self.main_window.autosave_interval > 0)
-		self.ui.spinbox_autosave_interval.setValue(self.main_window.autosave_interval / 60000) # Show in minutes, not milliseconds
-		self.ui.spinbox_autosave_max_age.setValue(self.main_window.autosave_max_age)
-		self.ui.checkbox_auto_update_check.setChecked(self.main_window.auto_check_update)
-		self.ui.checkbox_opensesamerun.setChecked(self.main_window.opensesamerun)
-		self.ui.checkbox_auto_opensesamerun_exec.setChecked(self.main_window.opensesamerun_exec == "")
-		self.ui.edit_opensesamerun_exec.setText(self.main_window.opensesamerun_exec)
+		self.ui.checkbox_enable_autosave.setChecked( \
+			self.main_window.autosave_interval > 0)
+		self.ui.spinbox_autosave_interval.setValue( \
+			self.main_window.autosave_interval / 60000) # Show in minutes
+		self.ui.spinbox_autosave_max_age.setValue( \
+			self.main_window.autosave_max_age)
+		self.ui.checkbox_auto_update_check.setChecked( \
+			self.main_window.auto_check_update)
+		self.ui.checkbox_opensesamerun.setChecked( \
+			self.main_window.opensesamerun)
+		self.ui.checkbox_auto_opensesamerun_exec.setChecked( \
+			self.main_window.opensesamerun_exec == "")
+		self.ui.edit_opensesamerun_exec.setText( \
+			self.main_window.opensesamerun_exec)
 
 		self.ui.checkbox_new_experiment_dialog.setChecked(config.get_config( \
 			"new_experiment_dialog"))
@@ -172,7 +186,8 @@ class preferences_widget(QtGui.QWidget):
 
 		# Set the plugin status
 		for plugin in plugins.list_plugins(filter_disabled=False):
-			self.checkbox_plugins[plugin].setChecked(not plugins.plugin_disabled(plugin))
+			self.checkbox_plugins[plugin].setChecked(not \
+				plugins.plugin_disabled(plugin))
 
 		self.lock = False
 
@@ -185,15 +200,21 @@ class preferences_widget(QtGui.QWidget):
 		self.lock = True
 		debug.msg()
 
-		self.main_window.immediate_rename = self.ui.checkbox_immediately_rename.isChecked()
-		self.main_window.show_startup_tip = self.ui.checkbox_show_random_tips.isChecked()
-		self.main_window.experiment.auto_response = self.ui.checkbox_autoresponse.isChecked()
-		self.main_window.ui.action_enable_auto_response.setChecked(self.ui.checkbox_autoresponse.isChecked())
+		self.main_window.immediate_rename = \
+			self.ui.checkbox_immediately_rename.isChecked()
+		self.main_window.show_startup_tip = \
+			self.ui.checkbox_show_random_tips.isChecked()
+		self.main_window.experiment.auto_response = \
+			self.ui.checkbox_autoresponse.isChecked()
+		self.main_window.ui.action_enable_auto_response.setChecked( \
+			self.ui.checkbox_autoresponse.isChecked())
 
 		if self.ui.checkbox_toolbar_text.isChecked():
-			self.main_window.ui.toolbar_main.setToolButtonStyle(QtCore.Qt.ToolButtonTextUnderIcon)
+			self.main_window.ui.toolbar_main.setToolButtonStyle( \
+				QtCore.Qt.ToolButtonTextUnderIcon)
 		else:
-			self.main_window.ui.toolbar_main.setToolButtonStyle(QtCore.Qt.ToolButtonIconOnly)
+			self.main_window.ui.toolbar_main.setToolButtonStyle( \
+				QtCore.Qt.ToolButtonIconOnly)
 		
 		old_size = config.get_config('toolbar_size')
 		if self.ui.checkbox_small_toolbar.isChecked():
@@ -206,17 +227,25 @@ class preferences_widget(QtGui.QWidget):
 				"toolbar_size"))		
 
 		if self.ui.checkbox_enable_autosave.isChecked():
-			self.main_window.autosave_interval = 60000 * self.ui.spinbox_autosave_interval.value()
+			self.main_window.autosave_interval = 60000 * \
+				self.ui.spinbox_autosave_interval.value()
 		else:
 			self.main_window.autosave_interval = 0						
-		self.main_window.autosave_max_age = self.ui.spinbox_autosave_max_age.value()
+		self.main_window.autosave_max_age = \
+			self.ui.spinbox_autosave_max_age.value()
 		self.main_window.start_autosave_timer()
 
-		self.main_window.auto_check_update = self.ui.checkbox_auto_update_check.isChecked()
-		self.main_window.opensesamerun = self.ui.checkbox_opensesamerun.isChecked()
+		self.main_window.auto_check_update = \
+			self.ui.checkbox_auto_update_check.isChecked()
+		self.main_window.opensesamerun = \
+			self.ui.checkbox_opensesamerun.isChecked()
 
-		self.ui.edit_opensesamerun_exec.setEnabled(self.ui.checkbox_opensesamerun.isChecked() and not self.ui.checkbox_auto_opensesamerun_exec.isChecked())
-		self.ui.label_opensesamerun_exec.setEnabled(self.ui.checkbox_opensesamerun.isChecked() and not self.ui.checkbox_auto_opensesamerun_exec.isChecked())
+		self.ui.edit_opensesamerun_exec.setEnabled( \
+			self.ui.checkbox_opensesamerun.isChecked() and not \
+			self.ui.checkbox_auto_opensesamerun_exec.isChecked())
+		self.ui.label_opensesamerun_exec.setEnabled( \
+			self.ui.checkbox_opensesamerun.isChecked() and not \
+			self.ui.checkbox_auto_opensesamerun_exec.isChecked())
 
 		if self.ui.checkbox_auto_opensesamerun_exec.isChecked():
 			self.main_window.opensesamerun_exec = ""
@@ -224,24 +253,39 @@ class preferences_widget(QtGui.QWidget):
 		else:
 			if self.ui.edit_opensesamerun_exec.text() == "":
 				if os.name == "nt":
-					self.ui.edit_opensesamerun_exec.setText("opensesamerun.exe")
+					self.ui.edit_opensesamerun_exec.setText( \
+						"opensesamerun.exe")
 				else:
 					self.ui.edit_opensesamerun_exec.setText("opensesamerun")
-			self.main_window.opensesamerun_exec = str(self.ui.edit_opensesamerun_exec.text())
+			self.main_window.opensesamerun_exec = str( \
+				self.ui.edit_opensesamerun_exec.text())
 
-		config.set_config("new_experiment_dialog", self.ui.checkbox_new_experiment_dialog.isChecked())
-		config.set_config("scintilla_auto_indent", self.ui.checkbox_scintilla_auto_indent.isChecked())
-		config.set_config("scintilla_brace_match", self.ui.checkbox_scintilla_brace_match.isChecked())
-		config.set_config("scintilla_custom_font", self.ui.checkbox_scintilla_custom_font.isChecked())
-		config.set_config("scintilla_eol_visible", self.ui.checkbox_scintilla_eol_visible.isChecked())
-		config.set_config("scintilla_folding", self.ui.checkbox_scintilla_folding.isChecked())
-		config.set_config("scintilla_indentation_guides", self.ui.checkbox_scintilla_indentation_guides.isChecked())
-		config.set_config("scintilla_line_numbers", self.ui.checkbox_scintilla_line_numbers.isChecked())
-		config.set_config("scintilla_right_margin", self.ui.checkbox_scintilla_right_margin.isChecked())
-		config.set_config("scintilla_syntax_highlighting", self.ui.checkbox_scintilla_syntax_highlighting.isChecked())
-		config.set_config("scintilla_whitespace_visible", self.ui.checkbox_scintilla_whitespace_visible.isChecked())
-		config.set_config("scintilla_font_family", str(self.ui.font_scintilla_font_family.currentFont().family()))
-		config.set_config("scintilla_font_size", self.ui.spinbox_scintilla_font_size.value())
+		config.set_config("new_experiment_dialog", \
+			self.ui.checkbox_new_experiment_dialog.isChecked())
+		config.set_config("scintilla_auto_indent", \
+			self.ui.checkbox_scintilla_auto_indent.isChecked())
+		config.set_config("scintilla_brace_match", \
+			self.ui.checkbox_scintilla_brace_match.isChecked())
+		config.set_config("scintilla_custom_font", \
+			self.ui.checkbox_scintilla_custom_font.isChecked())
+		config.set_config("scintilla_eol_visible", \
+			self.ui.checkbox_scintilla_eol_visible.isChecked())
+		config.set_config("scintilla_folding", \
+			self.ui.checkbox_scintilla_folding.isChecked())
+		config.set_config("scintilla_indentation_guides", \
+			self.ui.checkbox_scintilla_indentation_guides.isChecked())
+		config.set_config("scintilla_line_numbers", \
+			self.ui.checkbox_scintilla_line_numbers.isChecked())
+		config.set_config("scintilla_right_margin", \
+			self.ui.checkbox_scintilla_right_margin.isChecked())
+		config.set_config("scintilla_syntax_highlighting", \
+			self.ui.checkbox_scintilla_syntax_highlighting.isChecked())
+		config.set_config("scintilla_whitespace_visible", \
+			self.ui.checkbox_scintilla_whitespace_visible.isChecked())
+		config.set_config("scintilla_font_family", str( \
+			self.ui.font_scintilla_font_family.currentFont().family()))
+		config.set_config("scintilla_font_size", \
+			self.ui.spinbox_scintilla_font_size.value())
 
 		# Create a semicolon-separated list of disabled plugins
 		l = []

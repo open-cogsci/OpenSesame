@@ -242,7 +242,8 @@ class qtitem(object):
 			try:
 				widget = self.edit_widget()
 			except Exception as e:
-				self.experiment.notify("%s (Edit the script to fix this)" % e)
+				self.experiment.notify(_("%s (Edit the script to fix this)") \
+					% e)
 				self.open_script_tab()
 				return
 
@@ -346,22 +347,22 @@ class qtitem(object):
 		self.edit_script.apply.clicked.connect(self.apply_script_changes)
 
 		button = QtGui.QPushButton(self.experiment.icon("apply"), \
-			"Apply and close")
-		button.setToolTip("Apply changes and resume normal editing")
+			_("Apply and close"))
+		button.setToolTip(_("Apply changes and resume normal editing"))
 		button.setIconSize(QtCore.QSize(16, 16))
 		button.clicked.connect(self.apply_script_and_close)
 		self.edit_script.toolbar_hbox.addWidget(button)
 
 		button = QtGui.QPushButton(self.experiment.icon("close"), \
-			"Forget changes and close")
-		button.setToolTip("Ignore changes and resume normal editing")
+			_("Forget changes and close"))
+		button.setToolTip(_("Ignore changes and resume normal editing"))
 		button.setIconSize(QtCore.QSize(16, 16))
 		button.clicked.connect(self.ignore_script_and_close)
 		self.edit_script.toolbar_hbox.addWidget(button)
 
 		hbox = QtGui.QHBoxLayout()
 		hbox.addWidget(self.experiment.label_image("%s" % self.item_type))
-		hbox.addWidget(QtGui.QLabel("Editing script for <b>%s</b> - %s" % \
+		hbox.addWidget(QtGui.QLabel(_("Editing script for <b>%s</b> - %s") % \
 			(self.name, self.item_type)))
 		hbox.addStretch()
 		hbox.setContentsMargins(0,0,0,0)
@@ -516,7 +517,7 @@ class qtitem(object):
 		if icon == None:
 			icon = self.item_type
 		if tooltip == None:
-			tooltip = "Type: %s\nDescription: %s" % (self.item_type, \
+			tooltip = _("Type: %s\nDescription: %s") % (self.item_type, \
 				self.description)
 		if info == None:
 			info = self.item_tree_info()
@@ -623,7 +624,7 @@ class qtitem(object):
 				try:
 					edit.setText(self.experiment.unsanitize(self.get(var)))
 				except Exception as e:
-					self.experiment.notify("Failed to set control '%s': %s" \
+					self.experiment.notify(_("Failed to set control '%s': %s") \
 						% (var, e))
 			else:
 				edit.setText("")
@@ -636,7 +637,7 @@ class qtitem(object):
 					combobox.setCurrentIndex(combobox.findText( \
 						self.experiment.unsanitize(self.get(var))))
 				except Exception as e:
-					self.experiment.notify("Failed to set control '%s': %s" \
+					self.experiment.notify(_("Failed to set control '%s': %s") \
 						% (var, e))
 			combobox.currentIndexChanged.connect(self.apply_edit_changes)	
 
@@ -646,7 +647,7 @@ class qtitem(object):
 				try:
 					spinbox.setValue(self.get(var))
 				except Exception as e:
-					self.experiment.notify("Failed to set control '%s': %s" \
+					self.experiment.notify(_("Failed to set control '%s': %s") \
 						% (var, e))
 			spinbox.editingFinished.connect(self.apply_edit_changes)
 
@@ -656,7 +657,7 @@ class qtitem(object):
 				try:
 					slider.setValue(self.get(var))
 				except Exception as e:
-					self.experiment.notify("Failed to set control '%s': %s" \
+					self.experiment.notify(_("Failed to set control '%s': %s") \
 						% (var, e))
 			slider.valueChanged.connect(self.apply_edit_changes)
 						
@@ -666,7 +667,7 @@ class qtitem(object):
 				try:
 					checkbox.setChecked(self.get(var) == "yes")
 				except Exception as e:
-					self.experiment.notify("Failed to set control '%s': %s" \
+					self.experiment.notify(_("Failed to set control '%s': %s") \
 						% (var, e))		
 			checkbox.toggled.connect(self.apply_edit_changes)
 
@@ -676,7 +677,7 @@ class qtitem(object):
 					editor.edit.setPlainText(self.experiment.unsanitize( \
 						self.get(var)))
 				except Exception as e:
-					self.experiment.notify("Failed to set control '%s': %s" \
+					self.experiment.notify(_("Failed to set control '%s': %s") \
 						% (var, e))
 						
 	def sanity_check(self):
@@ -690,7 +691,7 @@ class qtitem(object):
 		debug.msg()		
 		errors = []
 		for var_name, criteria in self.sanity_criteria.items():
-			msg = "Invalid or missing value for variable '%s' (edit script to fix this)" \
+			msg = _("Invalid or missing value for variable '%s' (edit script to fix this)") \
 				% var_name
 			if 'msg' in criteria:
 				msg += ': ' + criteria['msg']

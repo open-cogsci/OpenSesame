@@ -101,7 +101,7 @@ class keyboard_response(libopensesame.keyboard_response.keyboard_response, \
 		"""Show a dialog with available key names"""
 		
 		my_keyboard = keyboard(self.experiment)
-		s = 'The following key names are valid:<br />' \
+		s = _('The following key names are valid:<br />') \
 			+ '<br />'.join(my_keyboard.valid_keys())
 		self.experiment.notify(s)
 	

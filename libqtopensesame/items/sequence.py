@@ -19,6 +19,7 @@ import libopensesame.sequence
 import libopensesame.plugins
 from libqtopensesame.items import qtitem
 from libqtopensesame.widgets import draggables
+from libqtopensesame.misc import _
 from PyQt4 import QtCore, QtGui
 import sip
 
@@ -139,7 +140,7 @@ class sequence(libopensesame.sequence.sequence, qtitem.qtitem):
 
 		# Flush keyboard checkbox
 		self.checkbox_flush_keyboard = QtGui.QCheckBox( \
-			"Flush pending key presses at sequence start")
+			_("Flush pending key presses at sequence start"))
 		self.checkbox_flush_keyboard.toggled.connect(self.apply_edit_changes)
 		form_layout = QtGui.QFormLayout()
 		form_layout.setContentsMargins(0, 0, 0, 0)
@@ -156,20 +157,20 @@ class sequence(libopensesame.sequence.sequence, qtitem.qtitem):
 		l = QtGui.QHBoxLayout()
 		self.frame_empty.setLayout(l)
 		l.addWidget(self.experiment.label_image("info"))
-		l.addWidget(QtGui.QLabel("The sequence is empty"))
+		l.addWidget(QtGui.QLabel(_("The sequence is empty")))
 		l.addStretch()
 
 		self.button_existing = self.action_button("button_select", \
-			"Append existing item to sequence", ("add", "existing"))
+			_("Append existing item to sequence"), ("add", "existing"))
 		self.button_new = self.action_button("button_new", \
-			"Create and append  new item to sequence", ("add", "new"))
+			_("Create and append  new item to sequence"), ("add", "new"))
 
 		grid = QtGui.QGridLayout()
 		grid.setMargin(0)
-		grid.addWidget(QtGui.QLabel("Append existing item"), 0, 0)
+		grid.addWidget(QtGui.QLabel(_("Append existing item")), 0, 0)
 		grid.addWidget(self.combobox_items, 0, 1)
 		grid.addWidget(self.button_existing, 0, 2)
-		grid.addWidget(QtGui.QLabel("Append new item"), 1, 0)
+		grid.addWidget(QtGui.QLabel(_("Append new item")), 1, 0)
 		grid.addWidget(self.combobox_item_type, 1, 1)
 		grid.addWidget(self.button_new, 1, 2)
 		grid.setColumnStretch(3, 10)
@@ -317,7 +318,8 @@ class sequence(libopensesame.sequence.sequence, qtitem.qtitem):
 
 		Arguments:
 		toplevel -- the toplevel widget
-		items -- a list of items that have already been added to the item tree (to avoid recursion)
+		items -- a list of items that have already been added to the item tree
+				 (to avoid recursion)
 
 		Returns:
 		The updated list of added items
@@ -327,7 +329,8 @@ class sequence(libopensesame.sequence.sequence, qtitem.qtitem):
 		toplevel.addChild(widget)
 
 		for item, cond in self.items:
-			if item in self.experiment.items and self.experiment.items[item] not in items:
+			if item in self.experiment.items and self.experiment.items[item] \
+				not in items:
 				items.append(self.experiment.items[item])
 		for item, cond in self.items:
 			if item in self.experiment.items:
@@ -349,7 +352,8 @@ class sequence(libopensesame.sequence.sequence, qtitem.qtitem):
 		"""
 
 		for i, cond in self.items:
-			if i == item or (i in self.experiment.items and self.experiment.items[i].is_offspring(item)):
+			if i == item or (i in self.experiment.items and \
+				self.experiment.items[i].is_offspring(item)):
 				return True
 		return False
 

@@ -18,6 +18,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 from libopensesame import debug
 from libqtopensesame.dialogs import sketchpad_dialog
 from libqtopensesame.items import qtitem
+from libqtopensesame.misc import _
 
 class feedpad:
 
@@ -27,7 +28,8 @@ class feedpad:
 
 		"""Open a new window for the drawing tool"""
 
-		a = sketchpad_dialog.sketchpad_dialog(self.experiment.ui.centralwidget, self);
+		a = sketchpad_dialog.sketchpad_dialog( \
+			self.experiment.ui.centralwidget, self);
 		a.exec_()
 		self.apply_edit_changes()
 
@@ -46,7 +48,8 @@ class feedpad:
 		for item in self.items:
 			static = True
 			for var in item:
-				if var != "text" and var != "show_if" and type(item[var]) == str and item[var].find("[") >= 0:
+				if var != "text" and var != "show_if" and type(item[var]) == \
+					str and item[var].find("[") >= 0:
 					debug.msg("variable property: %s = %s" % (var, item[var]))
 					static = False
 			if static:
@@ -81,11 +84,11 @@ class feedpad:
 
 		if type(self.duration) == int:
 			if self.duration <= 0:
-				return "no delay"
+				return _("no delay")
 			return "%s ms" % self.duration
 
 		if "[" in self.duration:
-			return "variable duration"
+			return _("variable duration")
 
-		return "until %s" % self.duration
+		return _("until %s" % self.duration)
 

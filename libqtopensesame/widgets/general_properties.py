@@ -1,3 +1,5 @@
+#-*- coding:utf-8 -*-
+
 """
 This file is part of OpenSesame.
 
@@ -18,6 +20,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 from libopensesame import debug
 from PyQt4 import QtCore, QtGui
 from libopensesame import misc
+from libqtopensesame.misc import _
 import libopensesame.exceptions
 from libqtopensesame.ui import general_widget_ui
 from libqtopensesame.widgets import color_edit, inline_editor, header_widget
@@ -50,7 +53,7 @@ class general_properties(QtGui.QWidget):
 			"help"), "")
 		button_help.setIconSize(QtCore.QSize(16, 16))
 		button_help.clicked.connect(self.open_help_tab)
-		button_help.setToolTip("Tell me more about OpenSesame!")
+		button_help.setToolTip(_("Tell me more about OpenSesame!"))
 		header_hbox = QtGui.QHBoxLayout()
 		header_hbox.addWidget(self.main_window.experiment.label_image( \
 			"experiment"))
@@ -153,9 +156,9 @@ class general_properties(QtGui.QWidget):
 
 				if not hasattr(_backend, "settings") or _backend.settings == \
 					None:
-					label.setText("No settings for %s" % backend)
+					label.setText(_("No settings for %s") % backend)
 				else:
-					label.setText("Settings for %s:" % backend)
+					label.setText(_("Settings for %s:") % backend)
 					layout.addWidget(settings_widget( \
 						self.main_window.experiment, _backend.settings, self))
 
@@ -169,7 +172,9 @@ class general_properties(QtGui.QWidget):
 
 	def toggle_backend_settings(self):
 
-		"""Sets the visibility of the script editor based on the checkbox state"""
+		"""
+		Sets the visibility of the script editor based on the checkbox state
+		"""
 
 		show = self.ui.group_backend_settings.isChecked()
 		if show:
@@ -181,7 +186,9 @@ class general_properties(QtGui.QWidget):
 
 	def toggle_script_editor(self):
 
-		"""Sets the visibility of the script editor based on the checkbox state"""
+		"""
+		Sets the visibility of the script editor based on the checkbox state
+		"""
 
 		show = self.ui.group_script.isChecked()
 		self.edit_script.setVisible(show)
@@ -189,10 +196,14 @@ class general_properties(QtGui.QWidget):
 
 	def set_header_label(self):
 
-		"""Set the general header based on the experiment title and description"""
+		"""
+		Set the general header based on the experiment title and description
+		"""
 
 		self.header_widget.edit_name.setText(self.main_window.experiment.title)
-		self.header_widget.label_name.setText("<font size='5'><b>%s</b> - Experiment</font>&nbsp;&nbsp;&nbsp;<font color='gray'><i>Click to edit</i></font>" % self.main_window.experiment.title)
+		self.header_widget.label_name.setText( \
+			"<font size='5'><b>%s</b> - Experiment</font>&nbsp;&nbsp;&nbsp;<font color='gray'><i>Click to edit</i></font>" \
+			% self.main_window.experiment.title)
 		self.header_widget.edit_desc.setText(self.main_window.experiment.description)
 		self.header_widget.label_desc.setText(self.main_window.experiment.description)
 
@@ -231,8 +242,10 @@ class general_properties(QtGui.QWidget):
 				self.main_window.experiment.title, 	script, \
 				self.main_window.experiment.pool_folder)
 		except libopensesame.exceptions.script_error as error:
-			self.main_window.experiment.notify("Could not parse script: %s" % error)
-			self.edit_script.edit.setText(self.main_window.experiment.to_string())
+			self.main_window.experiment.notify(_("Could not parse script: %s") \
+				% error)
+			self.edit_script.edit.setText( \
+				self.main_window.experiment.to_string())
 			return
 
 		self.main_window.experiment = tmp
@@ -357,7 +370,7 @@ class general_properties(QtGui.QWidget):
 				self.main_window.experiment.height))
 		except:
 			self.main_window.experiment.notify( \
-				"Failed to parse the resolution. Expecting positive numeric values.")
+				_("Failed to parse the resolution. Expecting positive numeric values."))
 
 		# Set the colors
 		self.ui.edit_foreground.setText(str( \
@@ -371,8 +384,8 @@ class general_properties(QtGui.QWidget):
 				self.main_window.experiment.to_string(), set_modified=False)
 		except libopensesame.exceptions.script_error as e:
 			self.main_window.experiment.notify( \
-				"</>Failed to generate script:</b> %s" % e)
-			self.edit_script.edit.setText("Failed to generate script!")
+				_("</>Failed to generate script:</b> %s") % e)
+			self.edit_script.edit.setText(_("Failed to generate script!"))
 
 		self.init_backend_settings()
 
@@ -446,7 +459,9 @@ class settings_widget(QtGui.QWidget):
 
 class general_header_widget(header_widget.header_widget):
 
-	"""The widget containing the clickable title and description of the experiment"""
+	"""
+	The widget containing the clickable title and description of the experiment
+	"""
 
 	def __init__(self, item):
 
@@ -458,21 +473,27 @@ class general_header_widget(header_widget.header_widget):
 		"""
 
 		header_widget.header_widget.__init__(self, item)
-		self.label_name.setText("<font size='5'><b>%s</b> - Experiment</font>&nbsp;&nbsp;&nbsp;<font color='gray'><i>Click to edit</i></font>" % self.item.get("title"))
+		self.label_name.setText( \
+			"<font size='5'><b>%s</b> - Experiment</font>&nbsp;&nbsp;&nbsp;<font color='gray'><i>Click to edit</i></font>" \
+			% self.item.get("title"))
 
 	def restore_name(self):
 
 		"""Apply the name change, hide the editable title and show the label"""
 
 		self.item.main_window.general_tab_widget.apply_changes()
-		self.label_name.setText("<font size='5'><b>%s</b> - Experiment</font>&nbsp;&nbsp;&nbsp;<font color='gray'><i>Click to edit</i></font>" % self.item.get("title"))
+		self.label_name.setText( \
+			"<font size='5'><b>%s</b> - Experiment</font>&nbsp;&nbsp;&nbsp;<font color='gray'><i>Click to edit</i></font>" \
+			% self.item.get("title"))
 		self.label_name.show()
 		self.edit_name.setText(self.item.get("title"))
 		self.edit_name.hide()
 
 	def restore_desc(self):
 
-		"""Apply the description change, hide the editable description and show the label"""
+		"""
+		Apply the description change, hide the editable description and show the label
+		"""
 
 		self.item.main_window.general_tab_widget.apply_changes()
 		self.label_desc.setText(self.item.get("description"))

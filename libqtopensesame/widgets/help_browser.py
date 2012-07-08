@@ -1,3 +1,5 @@
+#-*- coding:utf-8 -*-
+
 """
 This file is part of OpenSesame.
 
@@ -17,12 +19,13 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 
 from PyQt4 import QtCore, QtGui
 import os.path
+from libqtopensesame.misc import _
 
 class help_browser(QtGui.QTextBrowser):
 
 	"""An HTML browser for viewing help files"""
 
-	def __init__(self, path, item, substitutions = [], parent = None):
+	def __init__(self, path, item, substitutions=[], parent=None):
 
 		"""
 		Constructor
@@ -43,12 +46,13 @@ class help_browser(QtGui.QTextBrowser):
 		if os.path.exists(path):
 			html = open(path, "r").read()
 		else:
-			html = "<b>No help available</b>"
-		html += "<hr /><p><i>Could not find an answer? You can find more " \
+			html = _("<b>No help available</b>")
+		html += _("<hr /><p><i>Could not find an answer? You can find more " \
 			+ "information in the documentation center at " \
 			+ "<a href='http://osdoc.cogsci.nl/'>http://osdoc.cogsci.nl/</a> " \
 			+ "and ask question on the forum at " \
-			+ "<a href='http://forum.cogsci.nl/'>http://forum.cogsci.nl/</a>.</i></p>"
+			+ "<a href='http://forum.cogsci.nl/'>http://forum.cogsci.nl/</a>."
+			+ "</i></p>")
 		for old, new in substitutions:
 			html = html.replace(old, new)
 		self.setHtml(html)

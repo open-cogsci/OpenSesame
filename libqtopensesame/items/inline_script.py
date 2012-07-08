@@ -1,3 +1,5 @@
+#-*- coding:utf-8 -*-
+
 """
 This file is part of OpenSesame.
 
@@ -18,6 +20,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 from libopensesame import debug
 import libopensesame.inline_script
 from libqtopensesame.items import qtitem
+from libqtopensesame.misc import _
 from libqtopensesame.widgets import inline_editor
 import random
 import re
@@ -101,7 +104,7 @@ class inline_script(libopensesame.inline_script.inline_script, qtitem.qtitem):
 		widget = QtGui.QWidget()
 		widget.setLayout(vbox)
 		tabwidget_script.addTab(widget, self.experiment.icon("inline_script"), \
-			"Prepare phase")
+			_("Prepare phase"))
 
 		# Construct run editor
 		self.textedit_run = inline_editor.inline_editor(self.experiment, \
@@ -120,7 +123,7 @@ class inline_script(libopensesame.inline_script.inline_script, qtitem.qtitem):
 		widget = QtGui.QWidget()
 		widget.setLayout(vbox)
 		tabwidget_script.addTab(widget, self.experiment.icon("inline_script"), \
-			"Run phase")
+			_("Run phase"))
 
 		# Switch to the run script by default, unless there is only content for
 		# the prepare script.

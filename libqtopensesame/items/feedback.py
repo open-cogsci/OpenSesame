@@ -22,11 +22,12 @@ from libqtopensesame.items import qtplugin, feedpad
 from libqtopensesame.widgets import sketchpad_widget
 from PyQt4 import QtCore, QtGui
 
-class feedback(libopensesame.feedback.feedback, feedpad.feedpad, qtplugin.qtplugin):
+class feedback(libopensesame.feedback.feedback, feedpad.feedpad, \
+	qtplugin.qtplugin):
 
 	"""The GUI for the feedback item"""
 
-	def __init__(self, name, experiment, string = None):
+	def __init__(self, name, experiment, string=None):
 
 		"""
 		Constructor

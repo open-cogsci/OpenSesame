@@ -35,8 +35,8 @@ if '--catch-translatables' in sys.argv:
 			print 'New translatable: '+s
 			f.close()
 		return s
-	
+
 else:
 	# A simple wrapper arround the translate function
 	from PyQt4.QtCore import QCoreApplication
-	_ = lambda s: QCoreApplication.translate('script', s)
+	_ = lambda s: unicode(QCoreApplication.translate('script', s))

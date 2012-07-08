@@ -355,7 +355,7 @@ class qtplugin(qtitem.qtitem):
 		"""
 
 		row = self.edit_grid.rowCount()
-		label = QtGui.QLabel(msg)
+		label = QtGui.QLabel(_(msg))
 		label.setWordWrap(True)
 		self.edit_vbox.addWidget(label)
 
