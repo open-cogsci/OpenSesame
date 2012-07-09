@@ -17,6 +17,7 @@ You should have received a copy of the GNU General Public License
 along with openexp.  If not, see <http://www.gnu.org/licenses/>.
 """
 
+import copy
 import openexp._canvas.legacy
 import openexp.exceptions
 from expyriment import control, stimuli, misc
@@ -62,7 +63,7 @@ class xpyriment(openexp._canvas.legacy.legacy):
 	
 		"""See openexp._canvas.legacy"""
 		
-		self.stim_list = canvas.stim_list
+		self.stim_list = copy.deepcopy(canvas.stim_list)
 		self.font_style = canvas.font_style
 		self.font_style = canvas.font_style
 		self.penwidth = canvas.penwidth
@@ -77,7 +78,6 @@ class xpyriment(openexp._canvas.legacy.legacy):
 		for stim in self.stim_list[:-1]:
 			stim.present(clear=False, update=False)
 		self.stim_list[-1].present(clear=False)
-		self.clear()
 		
 	def clear(self, color=None):
 	
