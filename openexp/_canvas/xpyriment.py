@@ -236,6 +236,7 @@ class xpyriment(openexp._canvas.legacy.legacy):
 		stim._surface = surface
 		stim.preload()
 		self.stim_list.append(stim)
+
 """
 Static methods
 """
@@ -258,10 +259,12 @@ def init_display(experiment):
 	experiment.time = experiment._time_func
 	experiment.sleep = experiment._sleep_func
 	experiment.window = exp.screen._surface
+	import pygame
+	pygame.display.set_caption('OpenSesame (Expyriment back-end)')
 				
 def close_display(experiment):
 
 	"""See openexp._canvas.legacy"""
 	
-	control.end(goodbye_text="Bye!", goodbye_delay=2000)
+	control.end()
 
