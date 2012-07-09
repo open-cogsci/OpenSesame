@@ -197,14 +197,45 @@ class xpyriment(openexp._canvas.legacy.legacy):
 			text_font=self.font_style, text_size=self.font_size)
 		self.stim_list.append(stim)
 		
+	def textline(self, text, line, color=None):
+		
+		"""See openexp._canvas.legacy"""
+		
+		size = self.text_size(text)
+		self.text(text, True, self.xcenter(), self.ycenter()+1.5*line*size[1], \
+			color=color)				
+		
 	def image(self, fname, center=True, x=None, y=None, scale=None):
 		
 		"""See openexp._canvas.legacy"""
 		
 		stim = stimuli.Picture(fname, position=c2p((x,y)))
 		if scale != None: stim.scale( (scale, scale) )
-		self.stim_list.append(stim)		
+		self.stim_list.append(stim)
+		
+	def gabor(self, x, y, orient, freq, env="gaussian", size=96, stdev=12, \
+		phase=0, col1="white", col2="black", bgmode="avg"):
 
+		"""See openexp._canvas.legacy"""
+		
+		surface = openexp._canvas.legacy._gabor(orient, freq, env, size, \
+			stdev, phase, col1, col2, bgmode)
+		stim = stimuli._visual.Visual(position=c2p((x,y)))
+		stim._surface = surface
+		stim.preload()		
+		self.stim_list.append(stim)
+		
+	def noise_patch(self, x, y, env="gaussian", size=96, stdev=12, \
+		col1="white", col2="black", bgmode="avg"):
+		
+		"""See openexp._canvas.legacy"""
+		
+		surface = openexp._canvas.legacy._noise_patch(env, size, stdev, col1, \
+			col2, bgmode)
+		stim = stimuli._visual.Visual(position=c2p((x,y)))
+		stim._surface = surface
+		stim.preload()
+		self.stim_list.append(stim)
 """
 Static methods
 """

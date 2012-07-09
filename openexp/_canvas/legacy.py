@@ -616,8 +616,7 @@ class legacy:
 			y -= size[1] / 2
 			
 		self.surface.blit(surface, (x, y))
-		
-					
+							
 	def gabor(self, x, y, orient, freq, env="gaussian", size=96, stdev=12, phase=0, col1="white", col2="black", bgmode="avg"):
 	
 		"""<DOC>
