@@ -110,10 +110,8 @@
     <property name="title">
      <string>Help and feedback</string>
     </property>
-    <addaction name="action_help"/>
-    <addaction name="separator"/>
     <addaction name="action_online_documentation"/>
-    <addaction name="action_online_forum"/>
+    <addaction name="action_help"/>
     <addaction name="separator"/>
     <addaction name="action_show_random_tip"/>
     <addaction name="separator"/>
@@ -992,7 +990,7 @@ background-color: #729fcf;</string>
   </action>
   <action name="action_online_documentation">
    <property name="text">
-    <string>Online documentation</string>
+    <string>Online help</string>
    </property>
   </action>
   <action name="action_online_forum">

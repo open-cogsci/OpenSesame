@@ -18,17 +18,19 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from PyQt4 import QtCore, QtGui, QtWebKit
+from libopensesame import debug
+from libqtopensesame.ui import webbrowser_widget_ui
 import os.path
 import sys
 
-class webbrowser(QtWebKit.QWebView):
+class webbrowser(QtGui.QWidget):
 
 	"""
 	A very basic wrapper around QWebView, which currently adds nothing. This is
 	used to add a browser tab to opensesame
 	"""
 
-	def __init(self, parent=None):
+	def __init__(self, parent):
 	
 		"""
 		Constructor
@@ -37,5 +39,70 @@ class webbrowser(QtWebKit.QWebView):
 		parent -- the parent QWidget (default=None)		
 		"""
 	
-		QtGui.QWebView.__init__(self, parent)						
-				
+		QtGui.QWidget.__init__(self, parent)							
+		self.main_window = parent
+		self.history = []
+		self.webview = QtWebKit.QWebView(self)
+		self.webview.loadProgress.connect(self.update_progressbar)
+		self.webview.loadStarted.connect(self.load_started)
+		self.webview.loadFinished.connect(self.load_finished)
+		self.webview.urlChanged.connect(self.url_changed)
+		self.ui = webbrowser_widget_ui.Ui_webbrowser_widget()
+		self.ui.setupUi(self)
+		self.ui.button_back.clicked.connect(self.webview.back)
+		self.ui.button_osdoc.clicked.connect(self.open_osdoc)
+		self.ui.button_forum.clicked.connect(self.open_forum)
+		self.ui.layout_main.addWidget(self.webview)
+		self.main_window.theme.apply_theme(self)	
+						
+	def load(self, url):
+	
+		"""
+		Load a webpage
+		
+		Arguments:
+		url -- the webpage to load
+		"""
+	
+		self.webview.load(QtCore.QUrl(url))
+		
+	def load_finished(self):
+	
+		"""Hide the statusbar to indicate that loading is finished"""
+
+		self.ui.label_load_progress.setText('Done')
+		
+	def update_progressbar(self, progress):
+	
+		"""
+		Update the progressbar to indicate the load progress
+		
+		Arguments:
+		progress -- the load progress
+		"""
+	
+		self.ui.label_load_progress.setText('%d%%' % progress)
+		
+	def load_started(self):
+	
+		"""Show the statusbar to indicate that loading has started"""
+
+		self.ui.label_load_progress.setText('Starting ...')
+		
+	def open_osdoc(self):
+	
+		"""Open osdoc.cogsci.nl"""
+	
+		self.load('http://osdoc.cogsci.nl/')
+
+	def open_forum(self):
+	
+		"""Open forum.cogsci.nl"""	
+	
+		self.load('http://forum.cogsci.nl/')
+
+	def url_changed(self, url):
+
+		"""Update the url bat"""	
+
+		self.ui.edit_url.setText(url.toString())

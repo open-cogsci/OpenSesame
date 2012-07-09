@@ -697,7 +697,7 @@ class qtopensesame(QtGui.QMainWindow):
 	
 		from libqtopensesame.widgets import webbrowser		
 		browser = webbrowser.webbrowser(self)
-		browser.load(QtCore.QUrl(url))
+		browser.load(url)
 		browser.show()
 		index = self.experiment.ui.tabwidget.addTab(browser, \
 				self.experiment.icon("web-browser"), url)

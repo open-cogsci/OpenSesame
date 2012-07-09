@@ -41,6 +41,7 @@ apply,document-save,
 browse,folder-open,
 button_add_cyclevar,list-add,
 button_arrow,os-arrow,
+button_back,go-previous,
 button_browse_autosave,folder-open,
 button_browse,document-open,
 button_browse_experiment,document-open,
@@ -54,6 +55,7 @@ button_colorpicker,applications-graphics,16
 button_edit_script,utilities-terminal,16
 button_ellipse,os-ellipse,
 button_fixdot,os-fixdot,
+button_forum,help-faq,
 button_gabor,os-gabor,
 button_help_pool,help-contents,16
 button_help_stdout,help-contents,
@@ -63,6 +65,7 @@ button_line,os-line,
 button_new,list-add,
 button_next,go-next,
 button_noise_patch,os-noise,
+button_osdoc,help-browser,
 button_pool_add,list-add,16
 button_pool_filter_clear,edit-clear,16
 button_prev,go-previous,

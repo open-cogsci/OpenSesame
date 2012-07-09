@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'resources/ui/opensesame.ui'
 #
-# Created: Mon Jul  9 13:58:19 2012
+# Created: Mon Jul  9 21:48:57 2012
 #      by: PyQt4 UI code generator 4.9.1
 #
 # WARNING! All changes made in this file will be lost!
@@ -470,10 +470,8 @@ class Ui_opensesame_mainwindow(object):
         self.menu_view.addAction(self.action_show_variable_inspector)
         self.menu_view.addAction(self.action_show_pool)
         self.menu_view.addAction(self.action_show_stdout)
-        self.menu_help.addAction(self.action_help)
-        self.menu_help.addSeparator()
         self.menu_help.addAction(self.action_online_documentation)
-        self.menu_help.addAction(self.action_online_forum)
+        self.menu_help.addAction(self.action_help)
         self.menu_help.addSeparator()
         self.menu_help.addAction(self.action_show_random_tip)
         self.menu_help.addSeparator()
@@ -605,7 +603,7 @@ class Ui_opensesame_mainwindow(object):
         self.action_onetabmode.setText(QtGui.QApplication.translate("opensesame_mainwindow", "One tab mode", None, QtGui.QApplication.UnicodeUTF8))
         self.action_onetabmode.setToolTip(QtGui.QApplication.translate("opensesame_mainwindow", "Enable one tab mode", None, QtGui.QApplication.UnicodeUTF8))
         self.action_compact_toolbar.setText(QtGui.QApplication.translate("opensesame_mainwindow", "Compact toolbar", None, QtGui.QApplication.UnicodeUTF8))
-        self.action_online_documentation.setText(QtGui.QApplication.translate("opensesame_mainwindow", "Online documentation", None, QtGui.QApplication.UnicodeUTF8))
+        self.action_online_documentation.setText(QtGui.QApplication.translate("opensesame_mainwindow", "Online help", None, QtGui.QApplication.UnicodeUTF8))
         self.action_online_forum.setText(QtGui.QApplication.translate("opensesame_mainwindow", "Online forum", None, QtGui.QApplication.UnicodeUTF8))
 
 from statusbar import statusbar
