@@ -131,8 +131,9 @@ class qtopensesame(QtGui.QMainWindow):
 		self.ui.action_show_stdout.triggered.connect(self.refresh_stdout)
 		self.ui.action_help.triggered.connect(self.open_general_help_tab)
 		self.ui.action_about.triggered.connect(self.about)
-		self.ui.action_contribute.triggered.connect(self.open_contribute_tab)
-		self.ui.action_submit_a_bug.triggered.connect(self.open_bug_tab)
+		self.ui.action_online_documentation.triggered.connect(self.browse_osdoc)
+		self.ui.action_online_forum.triggered.connect(self.browse_forum)
+		
 		self.ui.action_check_for_update.triggered.connect(self.check_update)
 		self.ui.action_open_autosave_folder.triggered.connect( \
 			self.open_autosave_folder)
@@ -691,6 +692,25 @@ class qtopensesame(QtGui.QMainWindow):
 				self.update_dialog( \
 					_(" ... and is happy to report that you are running the most recent version of OpenSesame."))
 
+
+	def open_browser_tab(self, url):
+	
+		from libqtopensesame.widgets import webbrowser		
+		browser = webbrowser.webbrowser(self)
+		browser.load(QtCore.QUrl(url))
+		browser.show()
+		index = self.experiment.ui.tabwidget.addTab(browser, \
+				self.experiment.icon("web-browser"), url)
+		self.switch_tab(index)
+
+	def browse_osdoc(self):
+	
+		self.open_browser_tab('http://osdoc.cogsci.nl')
+	
+	def browse_forum(self):
+	
+		self.open_browser_tab('http://forum.cogsci.nl')
+
 	def open_help_tab(self, title, item):
 
 		"""
@@ -731,18 +751,6 @@ class qtopensesame(QtGui.QMainWindow):
 		"""Open the variable inspector help tab"""
 
 		self.open_help_tab("Help: Variable inspector", "variables")
-
-	def open_contribute_tab(self):
-
-		"""Open the contribute help tab"""
-
-		self.open_help_tab("Contribute", "contribute")
-
-	def open_bug_tab(self):
-
-		"""Open the submit a bug help tab"""
-
-		self.open_help_tab("Submit a bug", "submit_a_bug")
 
 	def about(self):
 

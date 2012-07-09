@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'resources/ui/synth_widget.ui'
 #
-# Created: Thu Jul  5 19:55:55 2012
+# Created: Mon Jul  9 13:58:20 2012
 #      by: PyQt4 UI code generator 4.9.1
 #
 # WARNING! All changes made in this file will be lost!
@@ -278,11 +278,7 @@ class Ui_synth_widget(object):
         self.dial_volume.setToolTip(QtGui.QApplication.translate("synth_widget", "Set the volume of the sound", None, QtGui.QApplication.UnicodeUTF8))
         self.spin_volume.setToolTip(QtGui.QApplication.translate("synth_widget", "Set the volume of the sound", None, QtGui.QApplication.UnicodeUTF8))
         self.spin_volume.setSuffix(QtGui.QApplication.translate("synth_widget", "%", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_8.setText(QtGui.QApplication.translate("synth_widget", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
-"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
-"p, li { white-space: pre-wrap; }\n"
-"</style></head><body style=\" font-family:\'Ubuntu\'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
-"<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Pan</p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_8.setText(QtGui.QApplication.translate("synth_widget", "Pan", None, QtGui.QApplication.UnicodeUTF8))
         self.dial_pan.setToolTip(QtGui.QApplication.translate("synth_widget", "Set the panning (left-right) of the sound", None, QtGui.QApplication.UnicodeUTF8))
         self.spin_pan.setToolTip(QtGui.QApplication.translate("synth_widget", "Set the panning (left-right) of the sound", None, QtGui.QApplication.UnicodeUTF8))
         self.dial_decay.setToolTip(QtGui.QApplication.translate("synth_widget", "Set the decay (\"fade out\") of the sound", None, QtGui.QApplication.UnicodeUTF8))
@@ -299,12 +295,7 @@ class Ui_synth_widget(object):
         self.label_6.setText(QtGui.QApplication.translate("synth_widget", "Duration", None, QtGui.QApplication.UnicodeUTF8))
         self.spin_length.setToolTip(QtGui.QApplication.translate("synth_widget", "Set the length of the sound", None, QtGui.QApplication.UnicodeUTF8))
         self.spin_length.setSuffix(QtGui.QApplication.translate("synth_widget", "ms", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_2.setText(QtGui.QApplication.translate("synth_widget", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
-"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
-"p, li { white-space: pre-wrap; }\n"
-"</style></head><body style=\" font-family:\'Ubuntu\'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Frequency</p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:8pt; font-style:italic;\">In hertz (Hz) or by note, like \'A1\'</span></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_2.setText(QtGui.QApplication.translate("synth_widget", "Frequency<br /><small><i>in Hertz (Hz) or by note, like \'A1\'</i></small>", None, QtGui.QApplication.UnicodeUTF8))
         self.edit_freq.setToolTip(QtGui.QApplication.translate("synth_widget", "The frequence of the sound. Expecting a numeric value (frequency in Hertz) a note (like \'C#2\' and \'A1\') or a variable (like \'[freq]\')", None, QtGui.QApplication.UnicodeUTF8))
         self.edit_freq.setText(QtGui.QApplication.translate("synth_widget", "A1", None, QtGui.QApplication.UnicodeUTF8))
         self.label_9.setText(QtGui.QApplication.translate("synth_widget", "Synth controls", None, QtGui.QApplication.UnicodeUTF8))

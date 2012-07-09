@@ -18,6 +18,8 @@ action_enable_auto_response,input-keyboard,
 action_help,help-contents,
 action_new,document-new,
 action_onetabmode,os-one-tab-mode,
+action_online_documentation,web-browser,
+action_online_forum,web-browser,
 action_open_autosave_folder,folder-open,
 action_open,document-open,
 action_plugins,help-about,
@@ -116,6 +118,7 @@ label_stdout,bug-buddy,
 label_synth,os-synth,32
 label_synth_script,utilities-terminal,32
 label_template,gnome-app-install-star,32
+label_text_input,menu-editor,32
 label_twitter,twitter,24
 label_update_dialog,update-manager,32
 label_variables_search,edit-find,16
@@ -151,4 +154,4 @@ unsaved_changes,emblem-important,16
 unused,user-trash,
 video,video-x-generic,
 wizard,gnome-app-install-star,
-label_text_input,menu-editor,32
+

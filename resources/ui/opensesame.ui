@@ -40,7 +40,7 @@
      <x>0</x>
      <y>0</y>
      <width>1000</width>
-     <height>25</height>
+     <height>23</height>
     </rect>
    </property>
    <widget class="QMenu" name="menu_file">
@@ -111,10 +111,11 @@
      <string>Help and feedback</string>
     </property>
     <addaction name="action_help"/>
-    <addaction name="action_show_random_tip"/>
     <addaction name="separator"/>
-    <addaction name="action_submit_a_bug"/>
-    <addaction name="action_contribute"/>
+    <addaction name="action_online_documentation"/>
+    <addaction name="action_online_forum"/>
+    <addaction name="separator"/>
+    <addaction name="action_show_random_tip"/>
     <addaction name="separator"/>
     <addaction name="action_about"/>
    </widget>
@@ -561,6 +562,7 @@ background-color: #729fcf;</string>
    <addaction name="action_show_stdout"/>
    <addaction name="separator"/>
    <addaction name="action_help"/>
+   <addaction name="action_online_documentation"/>
   </widget>
   <widget class="toolbar_items" name="toolbar_items">
    <property name="windowTitle">
@@ -753,7 +755,7 @@ background-color: #729fcf;</string>
      <normaloff>:/icons/help_large.png</normaloff>:/icons/help_large.png</iconset>
    </property>
    <property name="text">
-    <string>Help</string>
+    <string>Offline help</string>
    </property>
   </action>
   <action name="action_about">
@@ -986,6 +988,16 @@ background-color: #729fcf;</string>
    </property>
    <property name="text">
     <string>Compact toolbar</string>
+   </property>
+  </action>
+  <action name="action_online_documentation">
+   <property name="text">
+    <string>Online documentation</string>
+   </property>
+  </action>
+  <action name="action_online_forum">
+   <property name="text">
+    <string>Online forum</string>
    </property>
   </action>
  </widget>

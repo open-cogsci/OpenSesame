@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'resources/ui/preferences_widget.ui'
 #
-# Created: Thu Jul  5 19:55:56 2012
+# Created: Mon Jul  9 13:58:21 2012
 #      by: PyQt4 UI code generator 4.9.1
 #
 # WARNING! All changes made in this file will be lost!
@@ -17,14 +17,14 @@ except AttributeError:
 class Ui_preferences_widget(object):
     def setupUi(self, preferences_widget):
         preferences_widget.setObjectName(_fromUtf8("preferences_widget"))
-        preferences_widget.resize(682, 965)
+        preferences_widget.resize(662, 947)
         self.verticalLayout = QtGui.QVBoxLayout(preferences_widget)
         self.verticalLayout.setObjectName(_fromUtf8("verticalLayout"))
         self.scrollArea = QtGui.QScrollArea(preferences_widget)
         self.scrollArea.setWidgetResizable(True)
         self.scrollArea.setObjectName(_fromUtf8("scrollArea"))
         self.scrollAreaWidgetContents = QtGui.QWidget()
-        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 646, 977))
+        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 629, 981))
         self.scrollAreaWidgetContents.setObjectName(_fromUtf8("scrollAreaWidgetContents"))
         self.verticalLayout_2 = QtGui.QVBoxLayout(self.scrollAreaWidgetContents)
         self.verticalLayout_2.setObjectName(_fromUtf8("verticalLayout_2"))
@@ -286,11 +286,7 @@ class Ui_preferences_widget(object):
         self.checkbox_auto_update_check.setText(QtGui.QApplication.translate("preferences_widget", "Check for updates on start-up", None, QtGui.QApplication.UnicodeUTF8))
         self.button_update_check.setText(QtGui.QApplication.translate("preferences_widget", "Check for updates now", None, QtGui.QApplication.UnicodeUTF8))
         self.groupBox_4.setTitle(QtGui.QApplication.translate("preferences_widget", "Run options", None, QtGui.QApplication.UnicodeUTF8))
-        self.label.setText(QtGui.QApplication.translate("preferences_widget", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
-"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
-"p, li { white-space: pre-wrap; }\n"
-"</style></head><body style=\" font-family:\'Ubuntu\'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-style:italic;\">If you experience stability issues, most notably crashes when you run an experiment for the second time in a single session of OpenSesame, you can enable the \'Run experiments in a separate process\' option.</span></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
+        self.label.setText(QtGui.QApplication.translate("preferences_widget", "<i>If you experience stability issues, you can enable the \'Run experiments in a separate process\' option. This essentially means that \'opensesamerun[.exe]\' is used to run your experiment.</i>", None, QtGui.QApplication.UnicodeUTF8))
         self.checkbox_opensesamerun.setText(QtGui.QApplication.translate("preferences_widget", "Run experiments in a separate process", None, QtGui.QApplication.UnicodeUTF8))
         self.checkbox_auto_opensesamerun_exec.setText(QtGui.QApplication.translate("preferences_widget", "Auto-detect the run command", None, QtGui.QApplication.UnicodeUTF8))
         self.label_opensesamerun_exec.setText(QtGui.QApplication.translate("preferences_widget", "Custom run command:", None, QtGui.QApplication.UnicodeUTF8))

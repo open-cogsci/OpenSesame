@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'resources/ui/opensesame.ui'
 #
-# Created: Thu Jul  5 19:55:55 2012
+# Created: Mon Jul  9 13:58:19 2012
 #      by: PyQt4 UI code generator 4.9.1
 #
 # WARNING! All changes made in this file will be lost!
@@ -32,7 +32,7 @@ class Ui_opensesame_mainwindow(object):
         self.verticalLayout_6.addWidget(self.tabwidget)
         opensesame_mainwindow.setCentralWidget(self.centralwidget)
         self.menubar = QtGui.QMenuBar(opensesame_mainwindow)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 1000, 25))
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 1000, 23))
         self.menubar.setObjectName(_fromUtf8("menubar"))
         self.menu_file = QtGui.QMenu(self.menubar)
         self.menu_file.setObjectName(_fromUtf8("menu_file"))
@@ -432,6 +432,10 @@ class Ui_opensesame_mainwindow(object):
         self.action_compact_toolbar = QtGui.QAction(opensesame_mainwindow)
         self.action_compact_toolbar.setCheckable(True)
         self.action_compact_toolbar.setObjectName(_fromUtf8("action_compact_toolbar"))
+        self.action_online_documentation = QtGui.QAction(opensesame_mainwindow)
+        self.action_online_documentation.setObjectName(_fromUtf8("action_online_documentation"))
+        self.action_online_forum = QtGui.QAction(opensesame_mainwindow)
+        self.action_online_forum.setObjectName(_fromUtf8("action_online_forum"))
         self.menu_recent_files.addAction(self.actionDummy)
         self.menu_file.addAction(self.action_new)
         self.menu_file.addAction(self.action_open)
@@ -467,10 +471,11 @@ class Ui_opensesame_mainwindow(object):
         self.menu_view.addAction(self.action_show_pool)
         self.menu_view.addAction(self.action_show_stdout)
         self.menu_help.addAction(self.action_help)
-        self.menu_help.addAction(self.action_show_random_tip)
         self.menu_help.addSeparator()
-        self.menu_help.addAction(self.action_submit_a_bug)
-        self.menu_help.addAction(self.action_contribute)
+        self.menu_help.addAction(self.action_online_documentation)
+        self.menu_help.addAction(self.action_online_forum)
+        self.menu_help.addSeparator()
+        self.menu_help.addAction(self.action_show_random_tip)
         self.menu_help.addSeparator()
         self.menu_help.addAction(self.action_about)
         self.menu_tools.addAction(self.action_check_for_update)
@@ -499,6 +504,7 @@ class Ui_opensesame_mainwindow(object):
         self.toolbar_main.addAction(self.action_show_stdout)
         self.toolbar_main.addSeparator()
         self.toolbar_main.addAction(self.action_help)
+        self.toolbar_main.addAction(self.action_online_documentation)
 
         self.retranslateUi(opensesame_mainwindow)
         self.tabwidget.setCurrentIndex(-1)
@@ -565,7 +571,7 @@ class Ui_opensesame_mainwindow(object):
         self.action_close_other_tabs.setText(QtGui.QApplication.translate("opensesame_mainwindow", "Close other tabs", None, QtGui.QApplication.UnicodeUTF8))
         self.action_close_other_tabs.setToolTip(QtGui.QApplication.translate("opensesame_mainwindow", "Close other tabs (Control+T)", None, QtGui.QApplication.UnicodeUTF8))
         self.action_close_other_tabs.setShortcut(QtGui.QApplication.translate("opensesame_mainwindow", "Ctrl+T", None, QtGui.QApplication.UnicodeUTF8))
-        self.action_help.setText(QtGui.QApplication.translate("opensesame_mainwindow", "Help", None, QtGui.QApplication.UnicodeUTF8))
+        self.action_help.setText(QtGui.QApplication.translate("opensesame_mainwindow", "Offline help", None, QtGui.QApplication.UnicodeUTF8))
         self.action_about.setText(QtGui.QApplication.translate("opensesame_mainwindow", "About", None, QtGui.QApplication.UnicodeUTF8))
         self.action_add_mouse_response.setText(QtGui.QApplication.translate("opensesame_mainwindow", "Add mouse response", None, QtGui.QApplication.UnicodeUTF8))
         self.action_run_in_window.setText(QtGui.QApplication.translate("opensesame_mainwindow", "Run in window", None, QtGui.QApplication.UnicodeUTF8))
@@ -599,6 +605,8 @@ class Ui_opensesame_mainwindow(object):
         self.action_onetabmode.setText(QtGui.QApplication.translate("opensesame_mainwindow", "One tab mode", None, QtGui.QApplication.UnicodeUTF8))
         self.action_onetabmode.setToolTip(QtGui.QApplication.translate("opensesame_mainwindow", "Enable one tab mode", None, QtGui.QApplication.UnicodeUTF8))
         self.action_compact_toolbar.setText(QtGui.QApplication.translate("opensesame_mainwindow", "Compact toolbar", None, QtGui.QApplication.UnicodeUTF8))
+        self.action_online_documentation.setText(QtGui.QApplication.translate("opensesame_mainwindow", "Online documentation", None, QtGui.QApplication.UnicodeUTF8))
+        self.action_online_forum.setText(QtGui.QApplication.translate("opensesame_mainwindow", "Online forum", None, QtGui.QApplication.UnicodeUTF8))
 
 from statusbar import statusbar
 from variable_inspector import variable_inspector

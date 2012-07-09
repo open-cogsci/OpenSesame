@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'resources/ui/sampler_widget.ui'
 #
-# Created: Thu Jul  5 19:55:55 2012
+# Created: Mon Jul  9 13:58:20 2012
 #      by: PyQt4 UI code generator 4.9.1
 #
 # WARNING! All changes made in this file will be lost!
@@ -212,11 +212,7 @@ class Ui_sampler_widget(object):
         self.dial_volume.setToolTip(QtGui.QApplication.translate("sampler_widget", "Set the volume of the sound", None, QtGui.QApplication.UnicodeUTF8))
         self.spin_volume.setToolTip(QtGui.QApplication.translate("sampler_widget", "Set the volume of the sound", None, QtGui.QApplication.UnicodeUTF8))
         self.spin_volume.setSuffix(QtGui.QApplication.translate("sampler_widget", "%", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_8.setText(QtGui.QApplication.translate("sampler_widget", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
-"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
-"p, li { white-space: pre-wrap; }\n"
-"</style></head><body style=\" font-family:\'Ubuntu\'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
-"<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Pan</p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_8.setText(QtGui.QApplication.translate("sampler_widget", "Pan", None, QtGui.QApplication.UnicodeUTF8))
         self.label_2.setText(QtGui.QApplication.translate("sampler_widget", "Pitch", None, QtGui.QApplication.UnicodeUTF8))
         self.dial_pan.setToolTip(QtGui.QApplication.translate("sampler_widget", "Set the panning (left-right) of the sound", None, QtGui.QApplication.UnicodeUTF8))
         self.dial_pitch.setToolTip(QtGui.QApplication.translate("sampler_widget", "Set the relative pitch of the sound (100% = original)", None, QtGui.QApplication.UnicodeUTF8))

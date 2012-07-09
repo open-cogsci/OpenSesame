@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'resources/ui/pool_widget.ui'
 #
-# Created: Thu Jul  5 19:55:55 2012
+# Created: Mon Jul  9 13:58:20 2012
 #      by: PyQt4 UI code generator 4.9.1
 #
 # WARNING! All changes made in this file will be lost!
@@ -151,12 +151,7 @@ class Ui_pool_widget(object):
 
     def retranslateUi(self, pool_widget):
         pool_widget.setWindowTitle(QtGui.QApplication.translate("pool_widget", "Form", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_3.setText(QtGui.QApplication.translate("pool_widget", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
-"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
-"p, li { white-space: pre-wrap; }\n"
-"</style></head><body style=\" font-family:\'Ubuntu\'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:11pt; font-weight:600;\">File pool</span></p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-style:italic;\">You can drag and drop files into the pool</span></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_3.setText(QtGui.QApplication.translate("pool_widget", "<b>File pool</b><br /><small><i>You can drag and drop files into the pool</i></small>", None, QtGui.QApplication.UnicodeUTF8))
         self.edit_pool_filter.setToolTip(QtGui.QApplication.translate("pool_widget", "Enter a filter", None, QtGui.QApplication.UnicodeUTF8))
         self.button_pool_filter_clear.setToolTip(QtGui.QApplication.translate("pool_widget", "Clear filter", None, QtGui.QApplication.UnicodeUTF8))
         self.button_help_pool.setToolTip(QtGui.QApplication.translate("pool_widget", "Help", None, QtGui.QApplication.UnicodeUTF8))

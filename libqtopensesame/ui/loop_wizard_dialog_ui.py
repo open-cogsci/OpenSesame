@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'resources/ui/loop_wizard_dialog.ui'
 #
-# Created: Thu Jul  5 19:55:55 2012
+# Created: Mon Jul  9 13:58:20 2012
 #      by: PyQt4 UI code generator 4.9.1
 #
 # WARNING! All changes made in this file will be lost!
@@ -17,7 +17,7 @@ except AttributeError:
 class Ui_loop_wizard_dialog(object):
     def setupUi(self, loop_wizard_dialog):
         loop_wizard_dialog.setObjectName(_fromUtf8("loop_wizard_dialog"))
-        loop_wizard_dialog.resize(442, 426)
+        loop_wizard_dialog.resize(478, 471)
         self.verticalLayout = QtGui.QVBoxLayout(loop_wizard_dialog)
         self.verticalLayout.setObjectName(_fromUtf8("verticalLayout"))
         self.widget = QtGui.QWidget(loop_wizard_dialog)
@@ -150,13 +150,7 @@ class Ui_loop_wizard_dialog(object):
 
     def retranslateUi(self, loop_wizard_dialog):
         loop_wizard_dialog.setWindowTitle(QtGui.QApplication.translate("loop_wizard_dialog", "Loop Variable Wizard", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_2.setText(QtGui.QApplication.translate("loop_wizard_dialog", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
-"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
-"p, li { white-space: pre-wrap; }\n"
-"</style></head><body style=\" font-family:\'Ubuntu\'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">Loop variable wizard</span></p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Enter the names of the variables (factors) in the first row in the table below. Under the variable names, enter the levels of the variables.</p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-style:italic;\">Note: This will overwrite the current loop table</span></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_2.setText(QtGui.QApplication.translate("loop_wizard_dialog", "<b>Loop variable wizard</b><br /><small>Enter the names of the variables (factors) in the first row in the table below. Under the variable names, enter the levels of the variables.<br /><i>Note: This will overwrite the current loop table</i></small>", None, QtGui.QApplication.UnicodeUTF8))
         self.checkBox.setText(QtGui.QApplication.translate("loop_wizard_dialog", "Show example", None, QtGui.QApplication.UnicodeUTF8))
         item = self.table_example.verticalHeaderItem(0)
         item.setText(QtGui.QApplication.translate("loop_wizard_dialog", "New Row", None, QtGui.QApplication.UnicodeUTF8))

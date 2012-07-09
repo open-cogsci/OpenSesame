@@ -18,6 +18,8 @@ action_enable_auto_response,input-keyboard,
 action_help,help-contents,
 action_new,document-new,
 action_onetabmode,os-one-tab-mode,
+action_online_documentation,web-browser,
+action_online_forum,web-browser,
 action_open_autosave_folder,folder-open,
 action_open,document-open,
 action_plugins,help-about,
@@ -116,10 +118,11 @@ label_stdout,os-debug,
 label_synth,os-synth,32
 label_synth_script,utilities-terminal,32
 label_template,bookmark-new,32
+label_text_input,menu-editor,32
 label_twitter,goa-account-twitter,24
 label_update_dialog,update-manager,32
-label_variables_search,edit-find,16
 label_variables,os-inspector,
+label_variables_search,edit-find,16
 label_website,os-experiment,24
 label_wizard,bookmark-new,32
 logger,os-logger,
@@ -150,7 +153,7 @@ unindent,format-indent-less,
 unsaved_changes,emblem-important,16
 unused,user-trash,
 video,video-x-generic,
-wizard,bookmark-new,
-label_text_input,menu-editor,32
 view-list-details-symbolic,format-justify-fill,
 view-list-icons-symbolic,format-justify-fill,
+wizard,bookmark-new,
+
