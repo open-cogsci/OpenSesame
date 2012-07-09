@@ -245,7 +245,7 @@ def init_display(experiment):
 
 	"""See openexp._canvas.legacy"""
 
-	global exp	
+	global exp
 	control.defaults.initialize_delay = 0
 	control.defaults.event_logging = 0
 	control.defaults.window_mode = not experiment.get('fullscreen')
@@ -254,7 +254,7 @@ def init_display(experiment):
 		experiment.get('height')
 	control.defaults.auto_create_subject_id = True	
 	exp = control.initialize()	
-	experiment._time_func = misc.Clock._cpu_time
+	experiment._time_func = _time
 	experiment._sleep_func = exp.clock.wait
 	experiment.time = experiment._time_func
 	experiment.sleep = experiment._sleep_func
@@ -267,4 +267,12 @@ def close_display(experiment):
 	"""See openexp._canvas.legacy"""
 	
 	control.end()
+	
+def _time():
+
+	"""See openexp._canvas.legacy"""
+
+	global exp
+	return exp.clock.time
+		
 
