@@ -462,7 +462,36 @@ class legacy:
 			pygame.draw.ellipse(self.surface, color, (x-i, y-i, w+2*i, h+2*i), \
 				0)
 			pygame.draw.ellipse(self.surface, self.bgcolor, (x+j, y+j, w-2*j, \
-				h-2*j), 0)			
+				h-2*j), 0)
+				
+	def polygon(self, vertices, fill=False, color=None):
+		
+		"""<DOC>
+		Draws a polygon that consists of multiple vertices (i.e. a shape of
+		points connected by lines)
+		
+		Arguments:
+		vertices -- a list of tuples, where each tuple corresponds to a vertex
+					For example, [(100,100), (200,100), (100,200)] will draw a
+					triangle.
+				
+		Keyword arguments:
+		fill -- A boolean indicating whether the rectangle is outlined (False)
+				or filled (True)
+		color -- A custom human readable foreground color. This does not affect
+				 the default foreground color as set by set_fgcolor().
+				 (Default=None)		
+		</DOC>"""
+		
+		if color != None:
+			color = self.color(color)
+		else:
+			color = self.fgcolor				
+		if fill:
+			width = 0
+		else:
+			width = self.penwidth
+		pygame.draw.polygon(self.surface, color, vertices, width)
 			
 	def text_size(self, text):
 	

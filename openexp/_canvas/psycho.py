@@ -250,6 +250,13 @@ class psycho(openexp._canvas.legacy.legacy):
 				interpolate=True)
 			self.stim_list.append(stim)			
 			
+	def polygon(self, vertices, fill=False, color=None):
+		
+		"""See openexp._canvas.legacy"""
+		
+		self.shapestim(vertices, fill=fill, color=color, fix_coor=True, \
+			close=True)
+				
 	def text_size(self, text):
 	
 		"""See openexp._canvas.legacy"""

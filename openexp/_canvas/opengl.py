@@ -164,12 +164,6 @@ class opengl(openexp._canvas.legacy.legacy):
 		self.showables.append((libopengl.LowImage(surface),
 				       (x-r1,y-r1)))
 
-	def circle(self, x, y, r, fill = False, color = None):
-
-		"""see openexp._canvas.legacy"""
-		
-		self.ellipse(x - r, y - r, 2 * r, 2 * r, fill=fill, color=color)
-
 	def line(self, sx, sy, ex, ey, color = None):
 
 		"""see openexp._canvas.legacy"""
@@ -304,6 +298,14 @@ class opengl(openexp._canvas.legacy.legacy):
 
 		self.showables.append((libopengl.LowImage(surface),
 				       loc))
+				       
+	def polygon(self, vertices, fill=False, color=None):
+		
+		"""see openexp._canvas.legacy"""
+				
+		# TODO
+		raise openexp.exceptions.canvas_error( \
+			"openexp._canvas.opengl.polygon() not implemented")
 
 	def text_size(self, text):
 
