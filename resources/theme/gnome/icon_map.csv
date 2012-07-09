@@ -129,7 +129,7 @@ opensesame,os-experiment,
 options,preferences-desktop,
 paste,edit-paste,
 pixmap_notification,starred,16
-plugin,extension,
+plugin,application-vnd.openofficeorg.extension,
 purge,user-trash,
 python,text-x-script,
 random,media-playlist-shuffle,
