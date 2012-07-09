@@ -44,7 +44,12 @@ class help_browser(QtGui.QTextBrowser):
 		self.tab_name = "__help__%s__" % item
 		self.setOpenExternalLinks(True)
 		if os.path.exists(path):
-			html = open(path, "r").read()
+			try:
+				html = unicode(open(path, "r").read())
+			except:
+				html = \
+					_('Error: "%s" file is not a plain-text ASCII-only file.' \
+					% path)
 		else:
 			html = _("<b>No help available</b>")
 		html += _("<hr /><p><i>Could not find an answer? You can find more " \
