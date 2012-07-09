@@ -53,9 +53,21 @@ psycho = {
 	"icon" : "os-psychopy"	
 	}
 	
+xpyriment = {
+	"description" : "uses Expyriment", \
+	"authors" : ["Sebastiaan Mathot"], \
+	"canvas" : "xpyriment", \
+	"keyboard" : "legacy", \
+	"mouse" : "legacy", \
+	"sampler" : "legacy", \
+	"synth" : "legacy", \
+	"icon" : "os-expyriment"
+	}	
+	
 backend_list = {}
 backend_list["legacy"] = legacy
 backend_list["opengl"] = opengl
+backend_list["xpyriment"] = xpyriment
 
 # So far, the psycho back-end doesn't work on Mac OS (darwin)
 if sys.platform != "darwin":
