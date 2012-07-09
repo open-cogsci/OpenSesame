@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS><TS version="2.0" language="nl" sourcelanguage="">
+<!DOCTYPE TS>
+<TS version="2.0" language="nl">
 <context>
     <name>gabor_dialog</name>
     <message>
@@ -9,140 +10,101 @@
     </message>
     <message>
         <location filename="gabor_dialog.ui" line="83"/>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Ubuntu&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Orientation&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-style:italic;&quot;&gt;in degrees (0 .. 360)&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <source>Orientation&lt;br /&gt;&lt;i&gt;in degrees (0 .. 360)&lt;/i&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="gabor_dialog.ui" line="95"/>
+        <location filename="gabor_dialog.ui" line="90"/>
         <source>deg</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="gabor_dialog.ui" line="105"/>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Ubuntu&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Size&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-style:italic;&quot;&gt;in pixels&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <location filename="gabor_dialog.ui" line="100"/>
+        <source>Size&lt;br /&gt;&lt;i&gt;in pixels&lt;/i&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="gabor_dialog.ui" line="176"/>
+        <location filename="gabor_dialog.ui" line="161"/>
         <source>px</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="gabor_dialog.ui" line="133"/>
+        <location filename="gabor_dialog.ui" line="123"/>
         <source>Envelope</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="gabor_dialog.ui" line="141"/>
+        <location filename="gabor_dialog.ui" line="131"/>
         <source>gaussian</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="gabor_dialog.ui" line="146"/>
+        <location filename="gabor_dialog.ui" line="136"/>
         <source>linear</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="gabor_dialog.ui" line="151"/>
+        <location filename="gabor_dialog.ui" line="141"/>
         <source>circular (sharp edge)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="gabor_dialog.ui" line="156"/>
+        <location filename="gabor_dialog.ui" line="146"/>
         <source>rectangle (no envelope)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="gabor_dialog.ui" line="164"/>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Ubuntu&apos;; font-size:8pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;Standard deviation&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt; font-style:italic;&quot;&gt;in pixels, only applies to the Gaussian envelope&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <location filename="gabor_dialog.ui" line="154"/>
+        <source>Standard deviation&lt;br /&gt;&lt;i&gt;in pixels, only applies to Gaussian envelope&lt;/i&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="gabor_dialog.ui" line="189"/>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Ubuntu&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Frequence&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-style:italic;&quot;&gt;in cycles/ pixel&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <location filename="gabor_dialog.ui" line="174"/>
+        <source>Frequency&lt;br /&gt;&lt;i&gt;in cycles/ px&lt;/i&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="gabor_dialog.ui" line="214"/>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Ubuntu&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Phase&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-style:italic;&quot;&gt;in cycles (0 .. 1)&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <location filename="gabor_dialog.ui" line="194"/>
+        <source>Phase&lt;br /&gt;&lt;i&gt;in cycles (0 .. 1)&lt;/i&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="gabor_dialog.ui" line="236"/>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Ubuntu&apos;; font-size:8pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;Color 1&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt; font-style:italic;&quot;&gt;E.g., &apos;white&apos; or &apos;#FFFFFF&apos;&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <location filename="gabor_dialog.ui" line="211"/>
+        <source>Color 1&lt;br /&gt;&lt;i&gt;e.g., &apos;white&apos; or &apos;#FFFFFF&apos;&lt;/i&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="gabor_dialog.ui" line="248"/>
+        <location filename="gabor_dialog.ui" line="218"/>
         <source>white</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="gabor_dialog.ui" line="255"/>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Ubuntu&apos;; font-size:8pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;Color 2 *&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt; font-style:italic;&quot;&gt;E.g., &apos;black&apos; or &apos;#000000&apos;&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <location filename="gabor_dialog.ui" line="225"/>
+        <source>Color 1&lt;br /&gt;&lt;i&gt;e.g., &apos;black&apos; or &apos;#000000&apos;&lt;/i&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="gabor_dialog.ui" line="267"/>
+        <location filename="gabor_dialog.ui" line="232"/>
         <source>black</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="gabor_dialog.ui" line="279"/>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Ubuntu&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Background color *&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <location filename="gabor_dialog.ui" line="244"/>
+        <source>Background color *</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="gabor_dialog.ui" line="291"/>
+        <location filename="gabor_dialog.ui" line="252"/>
         <source>Color average</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="gabor_dialog.ui" line="296"/>
+        <location filename="gabor_dialog.ui" line="257"/>
         <source>Color 2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="gabor_dialog.ui" line="316"/>
+        <location filename="gabor_dialog.ui" line="277"/>
         <source>* Has no effect in psycho back-end</source>
         <translation type="unfinished"></translation>
     </message>
@@ -285,7 +247,7 @@ p, li { white-space: pre-wrap; }
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;COGSCIdotNL // cognitive science and more&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
-    <message encoding="UTF-8">
+    <message utf8="true">
         <location filename="general_widget.ui" line="457"/>
         <source>OpenSesame [version] [codename]
 Copyright Sebastiaan Mathôt (2010-2012)</source>
@@ -409,72 +371,66 @@ Copyright Sebastiaan Mathôt (2010-2012)</source>
     </message>
     <message>
         <location filename="loop_wizard_dialog.ui" line="42"/>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Ubuntu&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Loop variable wizard&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Enter the names of the variables (factors) in the first row in the table below. Under the variable names, enter the levels of the variables.&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-style:italic;&quot;&gt;Note: This will overwrite the current loop table&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <source>&lt;b&gt;Loop variable wizard&lt;/b&gt;&lt;br /&gt;&lt;small&gt;Enter the names of the variables (factors) in the first row in the table below. Under the variable names, enter the levels of the variables.&lt;br /&gt;&lt;i&gt;Note: This will overwrite the current loop table&lt;/i&gt;&lt;/small&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="loop_wizard_dialog.ui" line="67"/>
+        <location filename="loop_wizard_dialog.ui" line="61"/>
         <source>Show example</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="loop_wizard_dialog.ui" line="158"/>
+        <location filename="loop_wizard_dialog.ui" line="152"/>
         <source>New Row</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="loop_wizard_dialog.ui" line="208"/>
+        <location filename="loop_wizard_dialog.ui" line="202"/>
         <source>New Column</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="loop_wizard_dialog.ui" line="213"/>
+        <location filename="loop_wizard_dialog.ui" line="207"/>
         <source>soa</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="loop_wizard_dialog.ui" line="218"/>
+        <location filename="loop_wizard_dialog.ui" line="212"/>
         <source>target</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="loop_wizard_dialog.ui" line="223"/>
+        <location filename="loop_wizard_dialog.ui" line="217"/>
         <source>cue</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="loop_wizard_dialog.ui" line="228"/>
+        <location filename="loop_wizard_dialog.ui" line="222"/>
         <source>0</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="loop_wizard_dialog.ui" line="238"/>
+        <location filename="loop_wizard_dialog.ui" line="232"/>
         <source>left</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="loop_wizard_dialog.ui" line="243"/>
+        <location filename="loop_wizard_dialog.ui" line="237"/>
         <source>100</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="loop_wizard_dialog.ui" line="253"/>
+        <location filename="loop_wizard_dialog.ui" line="247"/>
         <source>right</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="loop_wizard_dialog.ui" line="258"/>
+        <location filename="loop_wizard_dialog.ui" line="252"/>
         <source>500</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="loop_wizard_dialog.ui" line="263"/>
+        <location filename="loop_wizard_dialog.ui" line="257"/>
         <source>1000</source>
         <translation type="unfinished"></translation>
     </message>
@@ -526,7 +482,7 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="noise_patch_dialog.ui" line="142"/>
+        <location filename="noise_patch_dialog.ui" line="137"/>
         <source>px</source>
         <translation type="unfinished"></translation>
     </message>
@@ -557,71 +513,51 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="noise_patch_dialog.ui" line="130"/>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Ubuntu&apos;; font-size:8pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;Standard deviation&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt; font-style:italic;&quot;&gt;in pixels, only applies to the Gaussian envelope&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <source>Standard deviation&lt;br /&gt;&lt;i&gt;in pixels, only applies to Gaussian envelope&lt;/i&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="noise_patch_dialog.ui" line="155"/>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Ubuntu&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Color 1&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-style:italic;&quot;&gt;E.g., &apos;white&apos; or &apos;#FFFFFF&apos;&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <location filename="noise_patch_dialog.ui" line="150"/>
+        <source>Color 1&lt;br /&gt;&lt;i&gt;e.g., &apos;white&apos; or &apos;#FFFFFF&apos;&lt;/i&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="noise_patch_dialog.ui" line="167"/>
+        <location filename="noise_patch_dialog.ui" line="157"/>
         <source>white</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="noise_patch_dialog.ui" line="174"/>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Ubuntu&apos;; font-size:8pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;Color 2 *&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt; font-style:italic;&quot;&gt;E.g., &apos;black&apos; or &apos;#000000&apos;&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <location filename="noise_patch_dialog.ui" line="164"/>
+        <source>Color 2&lt;br /&gt;&lt;i&gt;e.g., &apos;black&apos; or &apos;#000000&apos;&lt;/i&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="noise_patch_dialog.ui" line="186"/>
+        <location filename="noise_patch_dialog.ui" line="171"/>
         <source>black</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="noise_patch_dialog.ui" line="198"/>
+        <location filename="noise_patch_dialog.ui" line="183"/>
         <source>Background color *</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="noise_patch_dialog.ui" line="206"/>
+        <location filename="noise_patch_dialog.ui" line="191"/>
         <source>Color average</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="noise_patch_dialog.ui" line="211"/>
+        <location filename="noise_patch_dialog.ui" line="196"/>
         <source>Color 2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="noise_patch_dialog.ui" line="219"/>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Ubuntu&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Size&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-style:italic;&quot;&gt;in pixels&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <location filename="noise_patch_dialog.ui" line="204"/>
+        <source>Size&lt;br /&gt;&lt;i&gt;in pixels&lt;/i&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="noise_patch_dialog.ui" line="243"/>
+        <location filename="noise_patch_dialog.ui" line="223"/>
         <source>* Has no effect in psycho back-end</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1066,86 +1002,81 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="opensesamerun.ui" line="51"/>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Ubuntu&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:11pt; font-weight:600;&quot;&gt;OpenSesame Run&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-style:italic;&quot;&gt;Run your OpenSesame experiment&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <source>&lt;b&gt;OpenSesame Run&lt;/b&gt;&lt;br /&gt;&lt;small&gt;&lt;i&gt;Run your OpenSesame experiment&lt;/i&gt;&lt;/small&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="opensesamerun.ui" line="66"/>
+        <location filename="opensesamerun.ui" line="61"/>
         <source>Experiment, subject and log file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="opensesamerun.ui" line="126"/>
+        <location filename="opensesamerun.ui" line="121"/>
         <source>Browse</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="opensesamerun.ui" line="110"/>
+        <location filename="opensesamerun.ui" line="105"/>
         <source>Experiment</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="opensesamerun.ui" line="140"/>
+        <location filename="opensesamerun.ui" line="135"/>
         <source>Log file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="opensesamerun.ui" line="154"/>
+        <location filename="opensesamerun.ui" line="149"/>
         <source>Subject number</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="opensesamerun.ui" line="164"/>
+        <location filename="opensesamerun.ui" line="159"/>
         <source>Display</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="opensesamerun.ui" line="185"/>
+        <location filename="opensesamerun.ui" line="180"/>
         <source>Run fullscreen</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="opensesamerun.ui" line="192"/>
+        <location filename="opensesamerun.ui" line="187"/>
         <source>Use custom display resolution</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="opensesamerun.ui" line="220"/>
+        <location filename="opensesamerun.ui" line="215"/>
         <source>Width</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="opensesamerun.ui" line="277"/>
+        <location filename="opensesamerun.ui" line="272"/>
         <source>px</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="opensesamerun.ui" line="261"/>
+        <location filename="opensesamerun.ui" line="256"/>
         <source>Height</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="opensesamerun.ui" line="312"/>
+        <location filename="opensesamerun.ui" line="307"/>
         <source>Miscellaneous</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="opensesamerun.ui" line="333"/>
+        <location filename="opensesamerun.ui" line="328"/>
         <source>Enable PyLink module (required for the Eyelink plug-ins)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="opensesamerun.ui" line="362"/>
+        <location filename="opensesamerun.ui" line="357"/>
         <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="opensesamerun.ui" line="373"/>
+        <location filename="opensesamerun.ui" line="368"/>
         <source>Run</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1159,46 +1090,41 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="pool_widget.ui" line="49"/>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Ubuntu&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:11pt; font-weight:600;&quot;&gt;File pool&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-style:italic;&quot;&gt;You can drag and drop files into the pool&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <source>&lt;b&gt;File pool&lt;/b&gt;&lt;br /&gt;&lt;small&gt;&lt;i&gt;You can drag and drop files into the pool&lt;/i&gt;&lt;/small&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="pool_widget.ui" line="89"/>
+        <location filename="pool_widget.ui" line="84"/>
         <source>Enter a filter</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="pool_widget.ui" line="102"/>
+        <location filename="pool_widget.ui" line="97"/>
         <source>Clear filter</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="pool_widget.ui" line="122"/>
+        <location filename="pool_widget.ui" line="117"/>
         <source>Help</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="pool_widget.ui" line="157"/>
+        <location filename="pool_widget.ui" line="152"/>
         <source>Add file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="pool_widget.ui" line="194"/>
+        <location filename="pool_widget.ui" line="189"/>
         <source>Open file pool in file manager</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="pool_widget.ui" line="221"/>
+        <location filename="pool_widget.ui" line="216"/>
         <source>View as list</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="pool_widget.ui" line="230"/>
+        <location filename="pool_widget.ui" line="225"/>
         <source>View as icons</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1387,40 +1313,36 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="preferences_widget.ui" line="431"/>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Ubuntu&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-style:italic;&quot;&gt;If you experience stability issues, most notably crashes when you run an experiment for the second time in a single session of OpenSesame, you can enable the &apos;Run experiments in a separate process&apos; option.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <source>&lt;i&gt;If you experience stability issues, you can enable the &apos;Run experiments in a separate process&apos; option. This essentially means that &apos;opensesamerun[.exe]&apos; is used to run your experiment.&lt;/i&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="preferences_widget.ui" line="445"/>
+        <location filename="preferences_widget.ui" line="441"/>
         <source>Run experiments in a separate process</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="preferences_widget.ui" line="452"/>
+        <location filename="preferences_widget.ui" line="448"/>
         <source>Auto-detect the run command</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="preferences_widget.ui" line="459"/>
+        <location filename="preferences_widget.ui" line="455"/>
         <source>Custom run command:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="preferences_widget.ui" line="472"/>
+        <location filename="preferences_widget.ui" line="468"/>
         <source>Plug-ins</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="preferences_widget.ui" line="493"/>
+        <location filename="preferences_widget.ui" line="489"/>
         <source>Plug-in folders:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="preferences_widget.ui" line="513"/>
+        <location filename="preferences_widget.ui" line="509"/>
         <source>Installed plug-ins (requires restart):</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1546,76 +1468,72 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="sampler_widget.ui" line="307"/>
+        <location filename="sampler_widget.ui" line="303"/>
         <source>%</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="sampler_widget.ui" line="226"/>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Ubuntu&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Pan&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <source>Pan</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="sampler_widget.ui" line="240"/>
+        <location filename="sampler_widget.ui" line="236"/>
         <source>Pitch</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="sampler_widget.ui" line="288"/>
+        <location filename="sampler_widget.ui" line="284"/>
         <source>Set the panning (left-right) of the sound</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="sampler_widget.ui" line="304"/>
+        <location filename="sampler_widget.ui" line="300"/>
         <source>Set the relative pitch of the sound (100% = original)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="sampler_widget.ui" line="323"/>
+        <location filename="sampler_widget.ui" line="319"/>
         <source>Stop after</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="sampler_widget.ui" line="330"/>
+        <location filename="sampler_widget.ui" line="326"/>
         <source>Force playback to stop after a specified duration. 0ms corresponds to a full playback.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="sampler_widget.ui" line="346"/>
+        <location filename="sampler_widget.ui" line="342"/>
         <source>ms</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="sampler_widget.ui" line="343"/>
+        <location filename="sampler_widget.ui" line="339"/>
         <source>The fade-in time of the sound.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="sampler_widget.ui" line="356"/>
+        <location filename="sampler_widget.ui" line="352"/>
         <source>Set the duration of the sampler item. Expecting a duration in ms, &apos;sound&apos; (to wait until the sound is finished playing), &apos;keypress&apos;, &apos;mouseclick&apos;, or a variable (e.g., &apos;[sampler_dur]&apos;).</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="sampler_widget.ui" line="359"/>
+        <location filename="sampler_widget.ui" line="355"/>
         <source>sound</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="sampler_widget.ui" line="366"/>
+        <location filename="sampler_widget.ui" line="362"/>
         <source>Fade in</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="sampler_widget.ui" line="373"/>
+        <location filename="sampler_widget.ui" line="369"/>
         <source>Duration</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="sampler_widget.ui" line="413"/>
+        <location filename="sampler_widget.ui" line="409"/>
         <source>Sampler controls</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2615,145 +2533,136 @@ Description: %s</source>
     </message>
     <message>
         <location filename="synth_widget.ui" line="123"/>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Ubuntu&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Pan&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <source>Pan</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="synth_widget.ui" line="156"/>
+        <location filename="synth_widget.ui" line="152"/>
         <source>Set the panning (left-right) of the sound</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="synth_widget.ui" line="240"/>
+        <location filename="synth_widget.ui" line="236"/>
         <source>Set the decay (&quot;fade out&quot;) of the sound</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="synth_widget.ui" line="227"/>
+        <location filename="synth_widget.ui" line="223"/>
         <source>Set the attack (&quot;fade in&quot;) of the sound</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="synth_widget.ui" line="207"/>
+        <location filename="synth_widget.ui" line="203"/>
         <source>Attack</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="synth_widget.ui" line="217"/>
+        <location filename="synth_widget.ui" line="213"/>
         <source>Decay</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="synth_widget.ui" line="286"/>
+        <location filename="synth_widget.ui" line="282"/>
         <source>ms</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="synth_widget.ui" line="259"/>
+        <location filename="synth_widget.ui" line="255"/>
         <source>Length</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="synth_widget.ui" line="266"/>
+        <location filename="synth_widget.ui" line="262"/>
         <source>Set the duration of the synth item. Expecting a duration in ms, &apos;sound&apos; (to wait until the sound is finished playing), &apos;keypress&apos;, &apos;mouseclick&apos;, or a variable (e.g., &apos;[synth_dur]&apos;).</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="synth_widget.ui" line="269"/>
+        <location filename="synth_widget.ui" line="265"/>
         <source>sound</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="synth_widget.ui" line="276"/>
+        <location filename="synth_widget.ui" line="272"/>
         <source>Duration</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="synth_widget.ui" line="283"/>
+        <location filename="synth_widget.ui" line="279"/>
         <source>Set the length of the sound</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="synth_widget.ui" line="299"/>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Ubuntu&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Frequency&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt; font-style:italic;&quot;&gt;In hertz (Hz) or by note, like &apos;A1&apos;&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <location filename="synth_widget.ui" line="295"/>
+        <source>Frequency&lt;br /&gt;&lt;small&gt;&lt;i&gt;in Hertz (Hz) or by note, like &apos;A1&apos;&lt;/i&gt;&lt;/small&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="synth_widget.ui" line="311"/>
+        <location filename="synth_widget.ui" line="302"/>
         <source>The frequence of the sound. Expecting a numeric value (frequency in Hertz) a note (like &apos;C#2&apos; and &apos;A1&apos;) or a variable (like &apos;[freq]&apos;)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="synth_widget.ui" line="314"/>
+        <location filename="synth_widget.ui" line="305"/>
         <source>A1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="synth_widget.ui" line="354"/>
+        <location filename="synth_widget.ui" line="345"/>
         <source>Synth controls</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="synth_widget.ui" line="376"/>
+        <location filename="synth_widget.ui" line="367"/>
         <source>Sine wave</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="synth_widget.ui" line="386"/>
+        <location filename="synth_widget.ui" line="377"/>
         <source>Sawtooth wave</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="synth_widget.ui" line="396"/>
+        <location filename="synth_widget.ui" line="387"/>
         <source>Square wave</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="synth_widget.ui" line="406"/>
+        <location filename="synth_widget.ui" line="397"/>
         <source>White noise</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="synth_widget.ui" line="416"/>
+        <location filename="synth_widget.ui" line="407"/>
         <source>Generate a sine wav</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="synth_widget.ui" line="445"/>
+        <location filename="synth_widget.ui" line="436"/>
         <source>Generate a sawtooth wave</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="synth_widget.ui" line="471"/>
+        <location filename="synth_widget.ui" line="462"/>
         <source>Generate a square wave</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="synth_widget.ui" line="497"/>
+        <location filename="synth_widget.ui" line="488"/>
         <source>Generate white noise</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="synth_widget.ui" line="583"/>
+        <location filename="synth_widget.ui" line="574"/>
         <source>One of the controls is defined using variables and therefore the controls are disabled. Use the script editor to edit the synth.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="synth_widget.ui" line="593"/>
+        <location filename="synth_widget.ui" line="584"/>
         <source>Edit the script to see the definition</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="synth_widget.ui" line="596"/>
+        <location filename="synth_widget.ui" line="587"/>
         <source>Edit script</source>
         <translation type="unfinished"></translation>
     </message>
