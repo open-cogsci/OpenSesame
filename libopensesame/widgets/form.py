@@ -63,7 +63,8 @@ class form:
 		self.margins = margins
 		n_cells = len(self.cols)*len(self.rows)
 		self.widgets = [None]*n_cells
-		self.span = [(1,1)]*n_cells			
+		self.span = [(1,1)]*n_cells	
+		self.canvas = canvas(self.experiment)				
 		
 	def _exec(self):
 	
@@ -78,7 +79,6 @@ class form:
 		
 	
 		i = 0
-		self.canvas = canvas(self.experiment)
 		self.mouse = mouse(self.experiment)	
 		while True:
 			self.render()					

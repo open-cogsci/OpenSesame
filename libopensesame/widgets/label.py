@@ -17,6 +17,7 @@ You should have received a copy of the GNU General Public License
 along with openexp.  If not, see <http://www.gnu.org/licenses/>.
 """
 
+import textwrap
 from widget import widget
 
 class label(widget):
@@ -56,11 +57,13 @@ class label(widget):
 		</DOC>"""
 	
 		x, y, w, h = self.rect
-		if self.center:
-			self.form.canvas.text(text, center=True, x=x+w/2, y=y+h/2)
-		else:
-			self.form.canvas.text(text, center=False, x=x+self.x_pad, \
-				y=y+self.y_pad)
+		for text in textwrap.wrap(text, self.max_len):
+			if self.center:
+				self.form.canvas.text(text, center=True, x=x+w/2, y=y+h/2)
+			else:
+				self.form.canvas.text(text, center=False, x=x+self.x_pad, \
+					y=y+self.y_pad)
+			y += self.text_height					
 		
 	def render(self):
 	
@@ -71,3 +74,24 @@ class label(widget):
 		if self.frame:
 			self.draw_frame(self.rect)
 		self.draw_text(self.text)
+		
+	def set_rect(self, rect):
+	
+		"""<DOC>
+		Sets the widget geometry
+		
+		Arguments:
+		rect -- a (left, top, width, height) tuple
+		</DOC>"""
+			
+		widget.set_rect(self, rect)		
+		# Some ugly code to determine the maximum number of characters that fit
+		# into the label
+		x, y, w, h = rect
+		self.text_height = self.form.canvas.text_size('WWWW')[1]		
+		self.max_len = 1
+		while True:
+			s = ''.join(['W']*self.max_len)
+			if self.form.canvas.text_size(s)[0] >= w-4*self.x_pad:
+				break
+			self.max_len += 1

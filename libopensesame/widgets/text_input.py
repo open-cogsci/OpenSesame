@@ -53,7 +53,8 @@ class text_input(label):
 		Draws the widget
 		</DOC>"""	
 
-		label.render(self)
+		if self.frame:
+			self.draw_frame(self.rect)
 		if self.text == '' and not self.focus:
 			self.draw_text(self.stub)	
 		elif self.focus:
@@ -72,9 +73,9 @@ class text_input(label):
 		</DOC>"""	
 		
 		self.focus = True
-		self.form.render()				
 		my_keyboard = keyboard(self.form.experiment)
 		while True:		
+			self.form.render()		
 			resp, time = my_keyboard.get_key()
 			try:
 				o = ord(resp)
@@ -95,6 +96,5 @@ class text_input(label):
 					return None
 			elif len(resp) == 1:
 				self.text += resp
-			self.form.render()
-			
 
+						
