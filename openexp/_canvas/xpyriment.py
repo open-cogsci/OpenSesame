@@ -20,7 +20,7 @@ along with openexp.  If not, see <http://www.gnu.org/licenses/>.
 import copy
 import openexp._canvas.legacy
 import openexp.exceptions
-from expyriment import control, stimuli, misc
+from expyriment import control, stimuli, misc, io
 from expyriment.misc.geometry import coordinates2position as c2p, \
 	points_to_vertices as p2v
 
@@ -246,6 +246,8 @@ def init_display(experiment):
 	"""See openexp._canvas.legacy"""
 
 	global exp
+	
+	io.defaults.mouse_track_button_events = False	
 	control.defaults.initialize_delay = 0
 	control.defaults.event_logging = 0
 	control.defaults.window_mode = not experiment.get('fullscreen')
@@ -259,9 +261,14 @@ def init_display(experiment):
 	experiment.time = experiment._time_func
 	experiment.sleep = experiment._sleep_func
 	experiment.window = exp.screen._surface
+	
+	# TODO: In order to set the window title and to allow mouse responses we
+	# need to bypass expyriment for now
 	import pygame
-	pygame.display.set_caption('OpenSesame (Expyriment back-end)')
-				
+	pygame.display.set_caption('OpenSesame (Expyriment backend)')
+	pygame.event.set_allowed(pygame.MOUSEBUTTONDOWN)
+	pygame.event.set_allowed(pygame.MOUSEBUTTONUP)
+					
 def close_display(experiment):
 
 	"""See openexp._canvas.legacy"""

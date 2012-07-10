@@ -177,7 +177,7 @@ class legacy:
 				pygame.display.flip()
 			
 			# Process the input
-			for event in pygame.event.get():									
+			for event in pygame.event.get():								
 				if event.type == KEYDOWN and event.key == pygame.K_ESCAPE:
 					raise openexp.exceptions.response_error( \
 						"The escape key was pressed.")										
