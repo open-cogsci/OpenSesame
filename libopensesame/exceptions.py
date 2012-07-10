@@ -19,12 +19,11 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 
 import traceback
 
-class script_error(Exception):
+class form_error(Exception):
 
 	"""
-	A script_error is thrown when parsing
-	a script using the from_string() functions
-	fails.
+	A form_error is thrown when parsing a script using the from_string()
+	functions fails
 	"""
 
 	def __init__(self, value, full=True):
@@ -35,15 +34,34 @@ class script_error(Exception):
 	def __str__(self):
 
 		if self.full:
-			return "<b>Error:</b> Script error<br /><b>Description</b>: %s" % self.value
+			return "<b>Error:</b> Form error<br /><b>Description</b>: %s" % \
+				self.value
+		return str(self.value)
+
+class script_error(Exception):
+
+	"""
+	A form_error is thrown when parsing a script using the from_string()
+	functions fails
+	"""
+
+	def __init__(self, value, full=True):
+
+		self.value = value
+		self.full = full
+
+	def __str__(self):
+
+		if self.full:
+			return "<b>Error:</b> Script error<br /><b>Description</b>: %s" % \
+				self.value
 		return str(self.value)
 
 class runtime_error(Exception):
 
 	"""
-	A runtime error is thrown when something
-	goes wrong while running a script, which
-	includes the preparation phase.
+	A runtime error is thrown when somethingg oes wrong while running a script,
+	which includes the preparation phase.
 	"""
 
 	def __init__(self, value):
@@ -52,14 +70,14 @@ class runtime_error(Exception):
 
 	def __str__(self):
 
-		return "<b>Error:</b> Runtime error<br /><b>Description</b>: %s" % self.value
+		return "<b>Error:</b> Runtime error<br /><b>Description</b>: %s" % \
+			self.value
 
 class inline_error(runtime_error):
 
 	"""
-	An inline error is thrown when something
-	goes wrong in an inline_script item. The
-	Python traceback is parsed and returned.
+	An inline error is thrown when something goes wrong in an inline_script
+	item. The Python traceback is parsed and returned.
 	"""
 
 	def __init__(self, item_name, phase, exception):
