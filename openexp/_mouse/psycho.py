@@ -24,45 +24,27 @@ from psychopy import event
 
 class psycho(openexp._mouse.legacy.legacy):
 
-	"""
-	This is a mouse backend which uses PsychoPy
-	"""
+	"""This is a mouse backend built on top of PsychoPy"""
 
-	def __init__(self, experiment, buttonlist = None, timeout = None, visible = False):
+	def __init__(self, experiment, buttonlist=None, timeout=None, \
+		visible=False):
 	
-		"""
-		Intializes the mouse object
-		
-		Arguments:
-		experiment -- an instance of libopensesame.experiment.experiment
-		
-		Keyword arguments:
-		buttonlist -- a list of buttons that are accepted or None to accept
-					  all input (default = None)
-		timeout -- an integer value specifying a timeout in milliseconds or
-				   None for no timeout (default = None)
-		visible -- a boolean indicating the visibility of the cursor (default = False)
-		"""
+		"""See openexp._mouse.legacy"""
 		
 		if experiment.canvas_backend != "psycho":
-			raise openexp.exceptions.response_error("The psycho mouse backend must be used in combination with the psycho canvas backend!")
+			raise openexp.exceptions.response_error( \
+				"The psycho mouse backend must be used in combination with the psycho canvas backend!")
 	
 		self.experiment = experiment						
 		self.set_buttonlist(buttonlist)
 		self.set_timeout(timeout)
-		self.mouse = event.Mouse(visible = False, win = self.experiment.window)
+		self.mouse = event.Mouse(visible=False, win=self.experiment.window)
 		self.set_visible(visible)
 		event.mouseButtons = [0, 0, 0]	
 				
-	def set_buttonlist(self, buttonlist = None):
+	def set_buttonlist(self, buttonlist=None):
 	
-		"""
-		Sets a list of accepted buttons
-
-		Keyword arguments:
-		buttonlist -- a list of buttons that are accepted or None to accept
-					  all input (default = None)
-		"""	
+		"""See openexp._mouse.legacy"""
 	
 		if buttonlist == None:
 			self.buttonlist = None
@@ -72,53 +54,26 @@ class psycho(openexp._mouse.legacy.legacy):
 				for b in buttonlist:
 					self.buttonlist.append(int(b))
 			except:
-				raise openexp.exceptions.response_error("The list of mousebuttons must be a list of numeric values")
+				raise openexp.exceptions.response_error( \
+					"The list of mousebuttons must be a list of numeric values")
 		
-	def set_timeout(self, timeout = None):	
+	def set_timeout(self, timeout=None):	
 	
-		"""
-		Sets a timeout
-		
-		Keyword arguments:
-		timeout -- an integer value specifying a timeout in milliseconds or
-				   None for no timeout (default = None)		
-		"""
+		"""See openexp._mouse.legacy"""
 			
 		self.timeout = timeout
 				
-	def set_visible(self, visible = True):
+	def set_visible(self, visible=True):
 	
-		"""
-		Sets the visibility of the cursor
-		
-		Keyword arguments:
-		visible -- A boolean indicating the visibility of the cursor (default = True)
-		"""	
+		"""See openexp._mouse.legacy"""
 	
 		self.visible = visible
 		self.mouse.setVisible(visible)		
 		
-	def get_click(self, buttonlist = None, timeout = None, visible = None):
+	def get_click(self, buttonlist=None, timeout=None, visible=None):
 	
-		"""
-		Waits for mouse input
+		"""See openexp._mouse.legacy"""
 		
-		Keyword arguments:
-		buttonlist -- a list of buttons that are accepted or None
-					  to use the default. This parameter does not change 
-					  default keylist. (default = None)
-		timeout -- an integer value specifying a timeout in milliseconds or
-				   None to use the default. This parameter does not change the
-				   default timeout. (default = None)		
-		visible -- a boolean indicating the visibility of the target or None
-				   to use the default. This parameter does not change the default 
-				   visibility (default = False)
-				   
-		Returns:
-		A (button, position, timestamp) tuple. The button and position are None if
-		a timeout occurs. Position is an (x, y) tuple in screen coordinates.
-		"""		
-	
 		if buttonlist == None:
 			buttonlist = self.buttonlist
 		if timeout == None:
@@ -155,12 +110,7 @@ class psycho(openexp._mouse.legacy.legacy):
 		
 	def get_pos(self):
 	
-		"""
-		Returns the current location of the cursor
-		
-		Returns:
-		A (position, timestamp) tuple.
-		"""	
+		"""See openexp._mouse.legacy"""
 	
 		x, y = self.mouse.getPos()
 		t = self.experiment.time()
@@ -170,13 +120,7 @@ class psycho(openexp._mouse.legacy.legacy):
 		
 	def flush(self):
 	
-		"""
-		Clears all pending input, not limited to the mouse
-		
-		Returns:
-		True if a button had been clicked (i.e., if there was something
-		to flush) and False otherwise
-		"""	
+		"""See openexp._mouse.legacy"""
 	
 		event.mouseButtons = [0,0,0]
 		event.clearEvents()
@@ -184,19 +128,10 @@ class psycho(openexp._mouse.legacy.legacy):
 		
 	def synonyms(self, button):
 	
-		"""
-		Gives a list of synonyms for a mouse button. For example, 1 and
-		'left_click' are synonyms.
-		
-		Arguments:
-		button -- a button value
-		
-		Returns:
-		A list of synonyms
-		"""
+		"""See openexp._mouse.legacy"""
 				
-		button_map = [ (1, "left_button"), (2, "middle_button"), (3, "right_button"), \
-			(4, "scroll_up"), (5, "scroll_down") ]
+		button_map = [ (1, "left_button"), (2, "middle_button"), (3, \
+			"right_button"), (4, "scroll_up"), (5, "scroll_down") ]
 		for bm in button_map:
 			if button in bm:
 				return bm
