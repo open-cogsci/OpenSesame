@@ -17,8 +17,3 @@ You should have received a copy of the GNU General Public License
 along with openexp.  If not, see <http://www.gnu.org/licenses/>.
 """
 
-from canvas import canvas
-from keyboard import keyboard
-from mouse import mouse
-from sampler import sampler
-from synth import synth
