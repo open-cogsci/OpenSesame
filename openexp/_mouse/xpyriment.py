@@ -25,7 +25,13 @@ from expyriment.misc.geometry import coordinates2position as c2p
 
 class xpyriment(openexp._mouse.legacy.legacy):
 
-	def __init__(self, experiment, buttonlist=None, timeout=None, visible=False):
+	"""
+	Mouse backend built on top of Expyriment. Contains only minor differences
+	from the legacy backend to re-implement the custom mouse cursor.
+	"""
+
+	def __init__(self, experiment, buttonlist=None, timeout=None, \
+		visible=False):
 	
 		"""See openexp._mouse.legacy"""		
 	
