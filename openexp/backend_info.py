@@ -58,7 +58,7 @@ xpyriment = {
 	"authors" : ["Sebastiaan Mathot"], \
 	"canvas" : "xpyriment", \
 	"keyboard" : "legacy", \
-	"mouse" : "legacy", \
+	"mouse" : "xpyriment", \
 	"sampler" : "legacy", \
 	"synth" : "legacy", \
 	"icon" : "os-expyriment"
