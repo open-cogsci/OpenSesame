@@ -43,8 +43,7 @@ class remove_item_button(QtGui.QPushButton):
 		sketchpad_widget -- the sketchpad widget
 		item -- the item of the sketchpad widget
 		"""
-				
-	
+					
 		self.sketchpad_widget = sketchpad_widget
 		self.item = item
 		QtGui.QPushButton.__init__(self, \
@@ -643,6 +642,10 @@ class sketchpad_widget(QtGui.QWidget):
 			item["center"] = self.center
 			item["font_family"] = self.font_family
 			item["font_size"] = self.font_size
+			item["font_italic"] = self.sketchpad.experiment.auto_type( \
+				self.font_italic)
+			item["font_bold"] = self.sketchpad.experiment.auto_type( \
+				self.font_bold)
 			
 		elif self.tool == "image":
 			path = pool_widget.select_from_pool(self.sketchpad.experiment.main_window)

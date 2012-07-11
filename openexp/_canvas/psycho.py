@@ -158,7 +158,7 @@ class psycho(openexp._canvas.legacy.legacy):
 
 		self.bgcolor = self.color(color)
 		
-	def set_font(self, style, size):
+	def set_font(self, style, size, italic=False, bold=False):
 	
 		"""See openexp._canvas.legacy"""
 		

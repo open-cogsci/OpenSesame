@@ -270,7 +270,7 @@ class legacy:
 
 		self.bgcolor = self.color(color)	
 		
-	def set_font(self, style, size):
+	def set_font(self, style, size, italic=False, bold=False):
 	
 		"""<DOC>
 		Sets the font for subsequent drawing operations.

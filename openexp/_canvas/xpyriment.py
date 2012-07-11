@@ -44,7 +44,7 @@ class xpyriment(openexp._canvas.legacy.legacy):
 		self.aa = 10
 		self.clear()
 		
-	def set_font(self, style, size):
+	def set_font(self, style, size, italic=False, bold=False):
 	
 		"""See openexp._canvas.legacy"""
 		
