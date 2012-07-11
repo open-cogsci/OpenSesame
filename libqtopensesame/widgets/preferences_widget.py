@@ -53,7 +53,6 @@ class preferences_widget(QtGui.QWidget):
 		# Connect the controls
 		self.ui.checkbox_immediately_rename.toggled.connect(self.apply)
 		self.ui.checkbox_autoresponse.toggled.connect(self.apply)
-		self.ui.checkbox_show_random_tips.toggled.connect(self.apply)
 		self.ui.checkbox_toolbar_text.toggled.connect(self.apply)
 		self.ui.checkbox_small_toolbar.toggled.connect(self.apply)
 		self.ui.checkbox_enable_autosave.toggled.connect(self.apply)
@@ -109,8 +108,6 @@ class preferences_widget(QtGui.QWidget):
 			self.main_window.immediate_rename)
 		self.ui.checkbox_autoresponse.setChecked( \
 			self.main_window.experiment.auto_response)
-		self.ui.checkbox_show_random_tips.setChecked( \
-			self.main_window.show_startup_tip)
 		self.ui.checkbox_toolbar_text.setChecked( \
 			self.main_window.ui.toolbar_main.toolButtonStyle() == \
 			QtCore.Qt.ToolButtonTextUnderIcon)
@@ -202,8 +199,6 @@ class preferences_widget(QtGui.QWidget):
 
 		self.main_window.immediate_rename = \
 			self.ui.checkbox_immediately_rename.isChecked()
-		self.main_window.show_startup_tip = \
-			self.ui.checkbox_show_random_tips.isChecked()
 		self.main_window.experiment.auto_response = \
 			self.ui.checkbox_autoresponse.isChecked()
 		self.main_window.ui.action_enable_auto_response.setChecked( \

@@ -25,7 +25,7 @@
         <x>0</x>
         <y>0</y>
         <width>629</width>
-        <height>981</height>
+        <height>953</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -41,6 +41,9 @@
           <string>Miscellaneous</string>
          </property>
          <layout class="QFormLayout" name="formLayout_3">
+          <property name="fieldGrowthPolicy">
+           <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
+          </property>
           <property name="leftMargin">
            <number>0</number>
           </property>
@@ -65,30 +68,23 @@
            </widget>
           </item>
           <item row="2" column="0">
-           <widget class="QCheckBox" name="checkbox_show_random_tips">
-            <property name="text">
-             <string>Show random tips on start-up</string>
-            </property>
-           </widget>
-          </item>
-          <item row="3" column="0">
            <widget class="QCheckBox" name="checkbox_toolbar_text">
             <property name="text">
              <string>Show text in toolbar</string>
             </property>
            </widget>
           </item>
-          <item row="5" column="0">
-           <widget class="QCheckBox" name="checkbox_new_experiment_dialog">
+          <item row="3" column="0">
+           <widget class="QCheckBox" name="checkbox_small_toolbar">
             <property name="text">
-             <string>Show 'New experiment' dialog on start-up</string>
+             <string>Small icons in toolbar</string>
             </property>
            </widget>
           </item>
           <item row="4" column="0">
-           <widget class="QCheckBox" name="checkbox_small_toolbar">
+           <widget class="QCheckBox" name="checkbox_new_experiment_dialog">
             <property name="text">
-             <string>Small icons in toolbar</string>
+             <string>Show 'New experiment' dialog on start-up</string>
             </property>
            </widget>
           </item>

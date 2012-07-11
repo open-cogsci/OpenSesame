@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'resources/ui/opensesame.ui'
 #
-# Created: Mon Jul  9 21:48:57 2012
+# Created: Wed Jul 11 14:17:31 2012
 #      by: PyQt4 UI code generator 4.9.1
 #
 # WARNING! All changes made in this file will be lost!
@@ -472,8 +472,6 @@ class Ui_opensesame_mainwindow(object):
         self.menu_view.addAction(self.action_show_stdout)
         self.menu_help.addAction(self.action_online_documentation)
         self.menu_help.addAction(self.action_help)
-        self.menu_help.addSeparator()
-        self.menu_help.addAction(self.action_show_random_tip)
         self.menu_help.addSeparator()
         self.menu_help.addAction(self.action_about)
         self.menu_tools.addAction(self.action_check_for_update)

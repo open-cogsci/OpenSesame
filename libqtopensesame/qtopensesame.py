@@ -76,7 +76,6 @@ class qtopensesame(QtGui.QMainWindow):
 		self.codename = misc.codename
 		self.lock_refresh = False
 		self.auto_check_update = True
-		self.show_startup_tip = True
 		self.default_logfile_folder = ""
 		self.unsaved_changes = False
 		
@@ -151,7 +150,6 @@ class qtopensesame(QtGui.QMainWindow):
 		self.ui.action_add_logger.triggered.connect(self.drag_logger)
 		self.ui.action_add_inline_script.triggered.connect( \
 			self.drag_inline_script)
-		self.ui.action_show_random_tip.triggered.connect(self.show_random_tip)
 		self.ui.action_show_info_in_overview.triggered.connect( \
 			self.toggle_overview_info)
 		self.ui.button_help_stdout.clicked.connect(self.open_stdout_help_tab)
@@ -290,7 +288,6 @@ class qtopensesame(QtGui.QMainWindow):
 		self.move(config.get_config("pos"))
 		self._initial_window_state = config.get_config("_initial_window_state")
 		self.auto_check_update = config.get_config("auto_update_check")
-		self.show_startup_tip = config.get_config("show_startup_tip")
 		self.default_logfile_folder = config.get_config( \
 			"default_logfile_folder")
 		self.autosave_interval = config.get_config("autosave_interval")
@@ -356,7 +353,6 @@ class qtopensesame(QtGui.QMainWindow):
 		settings.setValue("pos", self.pos())
 		settings.setValue("_initial_window_state", self.saveState())
 		settings.setValue("auto_update_check", self.auto_check_update)
-		settings.setValue("show_startup_tip", self.show_startup_tip)
 		settings.setValue("default_logfile_folder", self.default_logfile_folder)
 		settings.setValue("autosave_interval", self.autosave_interval)
 		settings.setValue("autosave_max_age", self.autosave_max_age)
@@ -532,23 +528,6 @@ class qtopensesame(QtGui.QMainWindow):
 			self.setWindowTitle(_("%s [unsaved]") % self.window_msg)
 		else:
 			self.setWindowTitle("%s" % self.window_msg)
-
-	def show_random_tip(self, dummy = None, always = True):
-
-		"""
-		Show a random tip dialog box
-
-		Keyword arguments:
-		dummy -- a dummy argument passed by the signal handler
-		always -- a boolean indicating if the tip should be shown regardless
-				  of the show tips on startup setting (default = True)
-		"""
-
-		from libqtopensesame.dialogs import tip_dialog
-
-		if always or self.show_startup_tip:
-			d = tip_dialog.tip_dialog(self)
-			d.exec_()
 
 	def start_new_wizard(self, dummy=None):
 

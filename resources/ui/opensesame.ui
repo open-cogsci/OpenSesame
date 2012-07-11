@@ -113,8 +113,6 @@
     <addaction name="action_online_documentation"/>
     <addaction name="action_help"/>
     <addaction name="separator"/>
-    <addaction name="action_show_random_tip"/>
-    <addaction name="separator"/>
     <addaction name="action_about"/>
    </widget>
    <widget class="QMenu" name="menu_tools">

@@ -75,7 +75,6 @@ if __name__ == "__main__":
 		opensesame.run_experiment(False)
 	else:
 		opensesame.check_update(always=False)
-		opensesame.show_random_tip(always=False)
 		if new_wizard:
 			opensesame.start_new_wizard()
 		else:

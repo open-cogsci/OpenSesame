@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'resources/ui/preferences_widget.ui'
 #
-# Created: Mon Jul  9 13:58:21 2012
+# Created: Wed Jul 11 14:16:34 2012
 #      by: PyQt4 UI code generator 4.9.1
 #
 # WARNING! All changes made in this file will be lost!
@@ -24,7 +24,7 @@ class Ui_preferences_widget(object):
         self.scrollArea.setWidgetResizable(True)
         self.scrollArea.setObjectName(_fromUtf8("scrollArea"))
         self.scrollAreaWidgetContents = QtGui.QWidget()
-        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 629, 981))
+        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 629, 953))
         self.scrollAreaWidgetContents.setObjectName(_fromUtf8("scrollAreaWidgetContents"))
         self.verticalLayout_2 = QtGui.QVBoxLayout(self.scrollAreaWidgetContents)
         self.verticalLayout_2.setObjectName(_fromUtf8("verticalLayout_2"))
@@ -36,6 +36,7 @@ class Ui_preferences_widget(object):
         self.groupBox_2.setSizePolicy(sizePolicy)
         self.groupBox_2.setObjectName(_fromUtf8("groupBox_2"))
         self.formLayout_3 = QtGui.QFormLayout(self.groupBox_2)
+        self.formLayout_3.setFieldGrowthPolicy(QtGui.QFormLayout.AllNonFixedFieldsGrow)
         self.formLayout_3.setContentsMargins(0, -1, 0, 0)
         self.formLayout_3.setObjectName(_fromUtf8("formLayout_3"))
         self.checkbox_immediately_rename = QtGui.QCheckBox(self.groupBox_2)
@@ -44,18 +45,15 @@ class Ui_preferences_widget(object):
         self.checkbox_autoresponse = QtGui.QCheckBox(self.groupBox_2)
         self.checkbox_autoresponse.setObjectName(_fromUtf8("checkbox_autoresponse"))
         self.formLayout_3.setWidget(1, QtGui.QFormLayout.LabelRole, self.checkbox_autoresponse)
-        self.checkbox_show_random_tips = QtGui.QCheckBox(self.groupBox_2)
-        self.checkbox_show_random_tips.setObjectName(_fromUtf8("checkbox_show_random_tips"))
-        self.formLayout_3.setWidget(2, QtGui.QFormLayout.LabelRole, self.checkbox_show_random_tips)
         self.checkbox_toolbar_text = QtGui.QCheckBox(self.groupBox_2)
         self.checkbox_toolbar_text.setObjectName(_fromUtf8("checkbox_toolbar_text"))
-        self.formLayout_3.setWidget(3, QtGui.QFormLayout.LabelRole, self.checkbox_toolbar_text)
-        self.checkbox_new_experiment_dialog = QtGui.QCheckBox(self.groupBox_2)
-        self.checkbox_new_experiment_dialog.setObjectName(_fromUtf8("checkbox_new_experiment_dialog"))
-        self.formLayout_3.setWidget(5, QtGui.QFormLayout.LabelRole, self.checkbox_new_experiment_dialog)
+        self.formLayout_3.setWidget(2, QtGui.QFormLayout.LabelRole, self.checkbox_toolbar_text)
         self.checkbox_small_toolbar = QtGui.QCheckBox(self.groupBox_2)
         self.checkbox_small_toolbar.setObjectName(_fromUtf8("checkbox_small_toolbar"))
-        self.formLayout_3.setWidget(4, QtGui.QFormLayout.LabelRole, self.checkbox_small_toolbar)
+        self.formLayout_3.setWidget(3, QtGui.QFormLayout.LabelRole, self.checkbox_small_toolbar)
+        self.checkbox_new_experiment_dialog = QtGui.QCheckBox(self.groupBox_2)
+        self.checkbox_new_experiment_dialog.setObjectName(_fromUtf8("checkbox_new_experiment_dialog"))
+        self.formLayout_3.setWidget(4, QtGui.QFormLayout.LabelRole, self.checkbox_new_experiment_dialog)
         self.verticalLayout_2.addWidget(self.groupBox_2)
         self.groupBox_5 = QtGui.QGroupBox(self.scrollAreaWidgetContents)
         self.groupBox_5.setObjectName(_fromUtf8("groupBox_5"))
@@ -254,10 +252,9 @@ class Ui_preferences_widget(object):
         self.groupBox_2.setTitle(QtGui.QApplication.translate("preferences_widget", "Miscellaneous", None, QtGui.QApplication.UnicodeUTF8))
         self.checkbox_immediately_rename.setText(QtGui.QApplication.translate("preferences_widget", "Offer to rename new items immediately", None, QtGui.QApplication.UnicodeUTF8))
         self.checkbox_autoresponse.setText(QtGui.QApplication.translate("preferences_widget", "Enable auto-response", None, QtGui.QApplication.UnicodeUTF8))
-        self.checkbox_show_random_tips.setText(QtGui.QApplication.translate("preferences_widget", "Show random tips on start-up", None, QtGui.QApplication.UnicodeUTF8))
         self.checkbox_toolbar_text.setText(QtGui.QApplication.translate("preferences_widget", "Show text in toolbar", None, QtGui.QApplication.UnicodeUTF8))
-        self.checkbox_new_experiment_dialog.setText(QtGui.QApplication.translate("preferences_widget", "Show \'New experiment\' dialog on start-up", None, QtGui.QApplication.UnicodeUTF8))
         self.checkbox_small_toolbar.setText(QtGui.QApplication.translate("preferences_widget", "Small icons in toolbar", None, QtGui.QApplication.UnicodeUTF8))
+        self.checkbox_new_experiment_dialog.setText(QtGui.QApplication.translate("preferences_widget", "Show \'New experiment\' dialog on start-up", None, QtGui.QApplication.UnicodeUTF8))
         self.groupBox_5.setTitle(QtGui.QApplication.translate("preferences_widget", "Appearance", None, QtGui.QApplication.UnicodeUTF8))
         self.label_2.setText(QtGui.QApplication.translate("preferences_widget", "Interface style (requires restart)", None, QtGui.QApplication.UnicodeUTF8))
         self.groupbox_scintilla.setTitle(QtGui.QApplication.translate("preferences_widget", "Embedded text editor", None, QtGui.QApplication.UnicodeUTF8))

@@ -59,7 +59,6 @@ config = {
 	"shortcut_stdout" : "Ctrl+3",
 	"shortcut_pool" : "Ctrl+4",
 	"shortcut_variables" : "Ctrl+5",
-	"show_startup_tip" : True,
 	"style" : "",
 	"theme" : "gnome",
 	"toolbar_size" : 32,
