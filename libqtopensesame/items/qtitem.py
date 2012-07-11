@@ -55,17 +55,8 @@ class qtitem(object):
 
 		"""Open the help tab"""
 
-		i = self.experiment.main_window.get_tab_index("__help__%s__" \
-			% self.item_type)
-		if i != None:
-			self.experiment.main_window.switch_tab(i)
-		else:
-			path = self.experiment.help(self.item_type + ".html")
-			text = help_browser.help_browser(path, self.item_type)
-			text.help_item = self.name
-			index = self.experiment.ui.tabwidget.addTab(text, \
-				self.experiment.icon("help"), self.name)
-			self.experiment.ui.tabwidget.setCurrentIndex(index)
+		path = self.experiment.help(self.item_type + ".html")
+		self.experiment.main_window.open_browser_tab(path)
 
 	def open_tab(self):
 
