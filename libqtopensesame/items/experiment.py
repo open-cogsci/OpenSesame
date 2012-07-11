@@ -237,7 +237,7 @@ class experiment(libopensesame.experiment.experiment):
 		"""
 
 		if self.start == item_name:
-			self.notify("You cannot delete the entry point of the experiment. In order to change the entry point item, please open the General Tab and select a different item.")
+			self.notify("You cannot delete the entry point of the experiment!")
 			return
 		for item in self.items:
 			self.items[item].delete(item_name, item_parent, index)
