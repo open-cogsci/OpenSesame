@@ -209,6 +209,8 @@ class xpyriment(openexp._canvas.legacy.legacy):
 		
 		"""See openexp._canvas.legacy"""
 		
+		if x == None: x = self.xcenter()
+		if y == None: y = self.ycenter()				
 		stim = stimuli.Picture(fname, position=c2p((x,y)))
 		if scale != None: stim.scale( (scale, scale) )
 		self.stim_list.append(stim)

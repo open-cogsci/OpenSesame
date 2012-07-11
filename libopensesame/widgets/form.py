@@ -66,22 +66,30 @@ class form:
 		self.span = [(1,1)]*n_cells	
 		self.canvas = canvas(self.experiment)				
 		
-	def _exec(self):
+	def _exec(self, focus_widget=None):
 	
 		"""<DOC>
 		Executes the form
+		
+		Keyword arguments:
+		focus_widget -- a widget that is in the form and should receive a
+						virtual mouse click when the form is opened. This allows
+						you to activate a text_input right away, for example, so
+						that the user doesn't have to click on it anymore.
 		
 		Returns:
 		Gives the return value of the form, which depends on how the user has
 		interacted with the widgets. For example, if the user has pressed a
 		button, the button text will be returned.
 		</DOC>"""
-		
-	
+			
 		i = 0
-		self.mouse = mouse(self.experiment)	
+		self.mouse = mouse(self.experiment)		
+		if focus_widget != None:
+			self.render()
+			focus_widget.on_mouse_click(None)		
 		while True:
-			self.render()					
+			self.render()
 			button, xy, time = self.mouse.get_click(visible=True)
 			pos = self.xy_to_index(xy)
 			if pos != None:

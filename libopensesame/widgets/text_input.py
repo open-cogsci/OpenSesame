@@ -54,7 +54,10 @@ class text_input(label):
 		</DOC>"""	
 
 		if self.frame:
-			self.draw_frame(self.rect)
+			if self.focus:
+				self.draw_frame(self.rect, penwidth=2)
+			else:
+				self.draw_frame(self.rect)
 		if self.text == '' and not self.focus:
 			self.draw_text(self.stub)	
 		elif self.focus:
