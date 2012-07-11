@@ -23,7 +23,7 @@ class color_edit(QtGui.QWidget):
 
 	"""A QWidget with a QLineEdit and a QPushButton that pops up a colorpicker"""
 
-	def __init__(self, experiment, parent=None):
+	def __init__(self, parent=None):
 	
 		"""
 		Constructor
@@ -36,12 +36,10 @@ class color_edit(QtGui.QWidget):
 		"""
 	
 		QtGui.QWidget.__init__(self, parent)		
-		self.experiment = experiment
 		self.edit = QtGui.QLineEdit()
 		self.edit.editingFinished.connect(self.apply)
 		self.editingFinished = self.edit.editingFinished
 		self.button = QtGui.QPushButton()
-		self.button.setIcon(self.experiment.icon("colorpicker"))
 		self.button.setIconSize(QtCore.QSize(16,16))		
 		self.button.clicked.connect(self.colorpicker)
 		layout = QtGui.QHBoxLayout()				
@@ -54,7 +52,8 @@ class color_edit(QtGui.QWidget):
 	
 		"""Pick a color with the colorpicker dialog"""
 	
-		color = self.experiment.colorpicker(self.experiment.sanitize(self.text()))
+		color = self.experiment.colorpicker(self.experiment.sanitize( \
+			self.text()))
 		if color == None:
 			return
 		self.setText(color)
@@ -87,3 +86,23 @@ class color_edit(QtGui.QWidget):
 		"""Emit a 'set_color' signal to indicate that a color has been picker"""		
 		
 		self.emit(QtCore.SIGNAL("set_color"))
+		
+	def initialize(self, experiment, color=None):
+	
+		"""
+		Initialize the widget
+		
+		Arguments:
+		experiment -- an opensesame experiment
+		
+		Keyword arguments:
+		color -- a color to start with or None for experiment foreground
+				 default (default=None)
+		"""
+	
+		self.experiment = experiment
+		if color == None:
+			color = self.experiment.get('foreground')
+		self.setText(color)
+		self.button.setIcon(self.experiment.icon("colorpicker"))
+		

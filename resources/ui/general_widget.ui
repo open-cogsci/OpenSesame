@@ -18,105 +18,188 @@
     <number>0</number>
    </property>
    <item>
-    <widget class="QWidget" name="widget" native="true">
+    <widget class="QWidget" name="widget_6" native="true">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
      </property>
-     <layout class="QGridLayout" name="layout_general_properties">
-      <property name="margin">
-       <number>0</number>
+     <layout class="QFormLayout" name="formLayout">
+      <property name="horizontalSpacing">
+       <number>6</number>
       </property>
-      <item row="4" column="0">
-       <widget class="QLabel" name="label_2">
-        <property name="text">
-         <string>Display width&lt;br /&gt;
-&lt;small&gt;&lt;i&gt;In pixels&lt;/i&gt;&lt;/small&gt;</string>
-        </property>
-       </widget>
-      </item>
-      <item row="3" column="1" colspan="3">
-       <widget class="QComboBox" name="combobox_backend"/>
-      </item>
-      <item row="0" column="1" colspan="3">
-       <widget class="QComboBox" name="combobox_start">
-        <property name="toolTip">
-         <string>This is item (typically a sequence) is the starting point for your experiment.</string>
-        </property>
-       </widget>
-      </item>
+      <property name="margin">
+       <number>4</number>
+      </property>
       <item row="0" column="0">
-       <widget class="QLabel" name="label">
-        <property name="text">
-         <string>Entry point&lt;br /&gt;
-&lt;small&gt;&lt;i&gt;First item to run&lt;/i&gt;&lt;/small&gt;</string>
+       <widget class="QGroupBox" name="groupBox">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
         </property>
+        <property name="title">
+         <string>Display resolution</string>
+        </property>
+        <layout class="QGridLayout" name="gridLayout_2">
+         <item row="0" column="0">
+          <widget class="QSpinBox" name="spinbox_width">
+           <property name="toolTip">
+            <string>The display resolution (width) in pixels</string>
+           </property>
+           <property name="suffix">
+            <string>px</string>
+           </property>
+           <property name="minimum">
+            <number>1</number>
+           </property>
+           <property name="maximum">
+            <number>10000</number>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="1">
+          <widget class="QLabel" name="label_6">
+           <property name="text">
+            <string>x</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="2">
+          <widget class="QSpinBox" name="spinbox_height">
+           <property name="toolTip">
+            <string>The display resolution (height) in pixels</string>
+           </property>
+           <property name="suffix">
+            <string>px</string>
+           </property>
+           <property name="minimum">
+            <number>1</number>
+           </property>
+           <property name="maximum">
+            <number>10000</number>
+           </property>
+          </widget>
+         </item>
+        </layout>
        </widget>
       </item>
-      <item row="4" column="1">
-       <widget class="QSpinBox" name="spinbox_width">
-        <property name="toolTip">
-         <string>The display resolution (width) in pixels</string>
+      <item row="0" column="1">
+       <widget class="QGroupBox" name="groupBox_4">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
         </property>
-        <property name="suffix">
-         <string>px</string>
+        <property name="title">
+         <string>Back-end</string>
         </property>
-        <property name="minimum">
-         <number>1</number>
-        </property>
-        <property name="maximum">
-         <number>10000</number>
-        </property>
+        <layout class="QGridLayout" name="gridLayout_4">
+         <item row="0" column="0">
+          <widget class="QComboBox" name="combobox_backend"/>
+         </item>
+        </layout>
        </widget>
       </item>
-      <item row="4" column="2">
-       <widget class="QLabel" name="label_4">
-        <property name="text">
-         <string>Default foreground color&lt;br /&gt;
-&lt;small&gt;&lt;i&gt;E.g., &quot;white&quot; or &quot;#ffffff&quot;&lt;/i&gt;&lt;/small&gt;</string>
+      <item row="1" column="0">
+       <widget class="QGroupBox" name="groupBox_3">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
         </property>
+        <property name="title">
+         <string>Default font</string>
+        </property>
+        <layout class="QGridLayout" name="gridLayout_3">
+         <item row="0" column="0">
+          <widget class="font_widget" name="widget_font" native="true">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="0">
+          <widget class="QLabel" name="label_7">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+           </property>
+           <property name="wordWrap">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+        </layout>
        </widget>
       </item>
-      <item row="3" column="0">
-       <widget class="QLabel" name="label_8">
-        <property name="text">
-         <string>Back-end&lt;br /&gt;
-&lt;small&gt;&lt;i&gt;Handles display, sound, and input&lt;/i&gt;&lt;/small&gt;</string>
+      <item row="1" column="1">
+       <widget class="QGroupBox" name="groupBox_2">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
         </property>
-       </widget>
-      </item>
-      <item row="5" column="1">
-       <widget class="QSpinBox" name="spinbox_height">
-        <property name="toolTip">
-         <string>The display resolution (height) in pixels</string>
+        <property name="title">
+         <string>Default colors</string>
         </property>
-        <property name="suffix">
-         <string>px</string>
-        </property>
-        <property name="minimum">
-         <number>1</number>
-        </property>
-        <property name="maximum">
-         <number>10000</number>
-        </property>
-       </widget>
-      </item>
-      <item row="5" column="2">
-       <widget class="QLabel" name="label_5">
-        <property name="text">
-         <string>Default background color&lt;br /&gt;
-&lt;small&gt;&lt;i&gt;E.g., &quot;black&quot; or &quot;#000000&quot;&lt;/i&gt;&lt;/small&gt;</string>
-        </property>
-       </widget>
-      </item>
-      <item row="5" column="0">
-       <widget class="QLabel" name="label_3">
-        <property name="text">
-         <string>Display height&lt;br /&gt;
-&lt;small&gt;&lt;i&gt;In pixels&lt;/i&gt;&lt;/small&gt;</string>
-        </property>
+        <layout class="QGridLayout" name="gridLayout">
+         <item row="0" column="0">
+          <widget class="QLabel" name="label_4">
+           <property name="text">
+            <string>Foreground</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="1">
+          <widget class="color_edit" name="edit_foreground" native="true"/>
+         </item>
+         <item row="1" column="0">
+          <widget class="QLabel" name="label_5">
+           <property name="text">
+            <string>Background</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="1">
+          <widget class="color_edit" name="edit_background" native="true"/>
+         </item>
+         <item row="2" column="0" colspan="2">
+          <widget class="QLabel" name="label_2">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="text">
+            <string>&lt;small&gt;&lt;i&gt;Valid colors are names (e.g., 'white') and HTML color codes (e.g., '#FF0000')&lt;/i&gt;&lt;/small&gt;</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+           </property>
+           <property name="wordWrap">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+        </layout>
        </widget>
       </item>
      </layout>
@@ -148,7 +231,7 @@
            <x>0</x>
            <y>0</y>
            <width>789</width>
-           <height>279</height>
+           <height>264</height>
           </rect>
          </property>
          <layout class="QVBoxLayout" name="verticalLayout_7">
@@ -470,6 +553,20 @@ Copyright Sebastiaan Mathôt (2010-2012)</string>
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>font_widget</class>
+   <extends>QWidget</extends>
+   <header>libqtopensesame.widgets.font_widget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>color_edit</class>
+   <extends>QWidget</extends>
+   <header>libqtopensesame.widgets.color_edit.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

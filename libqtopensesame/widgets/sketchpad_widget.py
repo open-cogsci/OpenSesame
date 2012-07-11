@@ -384,7 +384,7 @@ class sketchpad_widget(QtGui.QWidget):
 		self.ui = sketchpad_widget_ui.Ui_sketchpad_widget()
 		self.ui.setupUi(self)
 		self.ui.view.setViewportMargins(0, 0, 0, 0)
-		
+				
 		self.sketchpad = sketchpad
 		self.embed = embed
 		
@@ -396,6 +396,14 @@ class sketchpad_widget(QtGui.QWidget):
 		self.vbox_items = QtGui.QVBoxLayout()
 		self.ui.widget_items.setLayout(self.vbox_items)
 		
+		# Initialize custom color and font widgets
+		self.ui.edit_color.initialize(self.sketchpad.experiment)
+		QtCore.QObject.connect(self.ui.edit_color, QtCore.SIGNAL( \
+			"set_color"), self.set_tool)		
+		self.ui.widget_font.initialize(self.sketchpad.experiment)
+		QtCore.QObject.connect(self.ui.widget_font, QtCore.SIGNAL( \
+			"font_changed"), self.set_tool)		
+				
 		self.ui.button_line.clicked.connect(self.set_line)
 		self.ui.button_rect.clicked.connect(self.set_rect)
 		self.ui.button_ellipse.clicked.connect(self.set_ellipse)
@@ -407,8 +415,6 @@ class sketchpad_widget(QtGui.QWidget):
 		self.ui.button_gabor.clicked.connect(self.set_gabor)		
 		self.ui.button_noise_patch.clicked.connect(self.set_noise)						
 		self.ui.button_edit_script.clicked.connect(self.edit_script)
-		self.ui.button_colorpicker.clicked.connect(self.colorpicker)		
-		self.ui.edit_color.editingFinished.connect(self.set_tool)
 		self.ui.spin_penwidth.valueChanged.connect(self.set_tool)
 		self.ui.spin_zoom.valueChanged.connect(self.set_tool)
 		self.ui.spin_scale.valueChanged.connect(self.set_tool)
@@ -417,16 +423,12 @@ class sketchpad_widget(QtGui.QWidget):
 		self.ui.checkbox_fill.stateChanged.connect(self.set_tool)
 		self.ui.checkbox_center.stateChanged.connect(self.set_tool)
 		self.ui.checkbox_show_grid.stateChanged.connect(self.set_tool)
-		self.ui.combobox_font_family.currentIndexChanged.connect(self.set_tool)
-		self.ui.spin_font_size.valueChanged.connect(self.set_tool)		
 		self.ui.edit_show_if.editingFinished.connect(self.set_tool)
-		
-		self.ui.edit_color.setText(self.sketchpad.get("foreground"))
-		
+				
 		self.set_line()
 		self.refresh()
 		self.sketchpad.experiment.main_window.theme.apply_theme(self)
-		
+				
 	def edit_script(self):
 	
 		"""
@@ -435,17 +437,7 @@ class sketchpad_widget(QtGui.QWidget):
 		
 		if not self.embed:
 			self.parent().accept()	
-		self.sketchpad.open_script_tab()
-		
-	def colorpicker(self):
-	
-		"""Show a dialog and select a color"""
-		
-		color = self.sketchpad.experiment.colorpicker(initial_color=self.color)
-		if color == None:
-			return
-		self.ui.edit_color.setText(color)
-		self.set_tool()
+		self.sketchpad.open_script_tab()		
 		
 	def unset_all(self):
 	
@@ -462,19 +454,15 @@ class sketchpad_widget(QtGui.QWidget):
 		self.ui.button_gabor.setChecked(False)	
 		self.ui.button_noise_patch.setChecked(False)				
 		
-		self.ui.combobox_font_family.hide()
-		self.ui.spin_font_size.hide()		
 		self.ui.edit_color.hide()
 		self.ui.spin_penwidth.hide()
 		self.ui.spin_scale.hide()
 		self.ui.spin_arrow_size.hide()
 		self.ui.checkbox_fill.hide()
 		self.ui.checkbox_center.hide()
-		self.ui.button_colorpicker.hide()
+		self.ui.widget_font.hide()
 		
 		self.ui.label_options.hide()
-		self.ui.label_font_size.hide()
-		self.ui.label_font_family.hide()
 		self.ui.label_color.hide()
 		self.ui.label_penwidth.hide()
 		self.ui.label_scale.hide()
@@ -487,7 +475,6 @@ class sketchpad_widget(QtGui.QWidget):
 		self.unset_all()
 		self.ui.button_rect.setChecked(True)				
 		self.ui.edit_color.show()
-		self.ui.button_colorpicker.show()
 		self.ui.spin_penwidth.show()
 		self.ui.checkbox_fill.show()
 		self.ui.label_color.show()
@@ -501,7 +488,6 @@ class sketchpad_widget(QtGui.QWidget):
 		self.unset_all()
 		self.ui.button_ellipse.setChecked(True)		
 		self.ui.edit_color.show()
-		self.ui.button_colorpicker.show()		
 		self.ui.spin_penwidth.show()
 		self.ui.checkbox_fill.show()
 		self.ui.label_color.show()
@@ -515,7 +501,6 @@ class sketchpad_widget(QtGui.QWidget):
 		self.unset_all()
 		self.ui.button_line.setChecked(True)		
 		self.ui.edit_color.show()
-		self.ui.button_colorpicker.show()		
 		self.ui.spin_penwidth.show()
 		self.ui.label_color.show()
 		self.ui.label_penwidth.show()				
@@ -528,13 +513,12 @@ class sketchpad_widget(QtGui.QWidget):
 		self.unset_all()
 		self.ui.button_arrow.setChecked(True)
 		self.ui.edit_color.show()
-		self.ui.button_colorpicker.show()		
 		self.ui.spin_penwidth.show()
 		self.ui.spin_arrow_size.show()
 		self.ui.label_color.show()
 		self.ui.label_penwidth.show()			
 		self.ui.label_arrow_size.show()		
-		self.set_tool()		
+		self.set_tool()
 		
 	def set_circle(self):
 	
@@ -543,7 +527,6 @@ class sketchpad_widget(QtGui.QWidget):
 		self.unset_all()
 		self.ui.button_circle.setChecked(True)		
 		self.ui.edit_color.show()
-		self.ui.button_colorpicker.show()		
 		self.ui.spin_penwidth.show()
 		self.ui.checkbox_fill.show()
 		self.ui.label_color.show()
@@ -557,7 +540,6 @@ class sketchpad_widget(QtGui.QWidget):
 		self.unset_all()
 		self.ui.button_fixdot.setChecked(True)
 		self.ui.edit_color.show()
-		self.ui.button_colorpicker.show()		
 		self.ui.label_color.show()
 		self.set_tool()
 		
@@ -579,13 +561,9 @@ class sketchpad_widget(QtGui.QWidget):
 		self.unset_all()
 		self.ui.button_textline.setChecked(True)		
 		self.ui.edit_color.show()
-		self.ui.button_colorpicker.show()		
 		self.ui.checkbox_center.show()
-		self.ui.combobox_font_family.show()
-		self.ui.spin_font_size.show()		
 		self.ui.label_color.show()
-		self.ui.label_font_size.show()
-		self.ui.label_font_family.show()
+		self.ui.widget_font.show()
 		self.set_tool()
 		
 	def set_gabor(self):
@@ -814,7 +792,8 @@ class sketchpad_widget(QtGui.QWidget):
 		if font_family == "serif" and os.name == "nt":
 			font_family = "times" # WINDOWS HACK: Windows doesn't recognize serif
 		font = QtGui.QFont(font_family, font_size)
-		text_item = self.scene.addText(self.sketchpad.experiment.unsanitize(text), font)
+		text_item = self.scene.addText( \
+			self.sketchpad.experiment.unsanitize(text), font)
 		text_item.setDefaultTextColor(QtGui.QColor(color))		
 		if center:
 			r = text_item.boundingRect()
@@ -1037,9 +1016,12 @@ class sketchpad_widget(QtGui.QWidget):
 		self.scale = self.ui.spin_scale.value() * 0.01
 		self.scene.grid = self.ui.spin_grid.value()
 		self.zoom = self.ui.spin_zoom.value() * 0.01
-		self.font_family = str(self.ui.combobox_font_family.currentText())
-		self.font_size = self.ui.spin_font_size.value()
-		self.show_if = self.sketchpad.experiment.sanitize(self.ui.edit_show_if.text())
+		self.font_family = self.ui.widget_font.family
+		self.font_size = self.ui.widget_font.size
+		self.font_italic = self.ui.widget_font.italic
+		self.font_bold = self.ui.widget_font.bold
+		self.show_if = self.sketchpad.experiment.sanitize( \
+			self.ui.edit_show_if.text())
 			
 		if self.ui.button_line.isChecked():
 			self.tool = "line"

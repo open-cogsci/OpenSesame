@@ -70,26 +70,18 @@ class general_properties(QtGui.QWidget):
 		self.ui.setupUi(w)
 		self.main_window.theme.apply_theme(self)
 
-		# The foeground and background widgets get a special treatment
-		self.ui.edit_foreground = color_edit.color_edit( \
-			self.main_window.experiment)
-		self.ui.edit_background = color_edit.color_edit( \
-			self.main_window.experiment)
-		self.ui.edit_foreground.setSizePolicy(QtGui.QSizePolicy.Fixed, \
-			QtGui.QSizePolicy.Fixed)
-		self.ui.edit_background.setSizePolicy(QtGui.QSizePolicy.Fixed, \
-			QtGui.QSizePolicy.Fixed)
-		self.ui.layout_general_properties.addWidget(self.ui.edit_foreground, \
-			4, 3)
-		self.ui.layout_general_properties.addWidget(self.ui.edit_background, \
-			5, 3)
+		# Initialize the color and font widgets
+		self.ui.edit_foreground.initialize(self.main_window.experiment)
+		self.ui.edit_background.initialize(self.main_window.experiment)		
 		QtCore.QObject.connect(self.ui.edit_foreground, QtCore.SIGNAL( \
 			"set_color"), self.apply_changes)
 		QtCore.QObject.connect(self.ui.edit_background, QtCore.SIGNAL( \
-			"set_color"), self.apply_changes)
+			"set_color"), self.apply_changes)			
+		self.ui.widget_font.initialize(self.main_window.experiment)		
+		QtCore.QObject.connect(self.ui.widget_font, QtCore.SIGNAL( \
+			"font_changed"), self.apply_changes)			
 
 		# Connect the rest
-		self.ui.combobox_start.currentIndexChanged.connect(self.apply_changes)
 		self.ui.spinbox_width.editingFinished.connect(self.apply_changes)
 		self.ui.spinbox_height.editingFinished.connect(self.apply_changes)
 		self.ui.group_script.toggled.connect(self.toggle_script_editor)
@@ -263,6 +255,7 @@ class general_properties(QtGui.QWidget):
 			return
 		self.lock = True
 
+		debug.msg()
 		rebuild_item_tree = False
 		self.main_window.set_busy(True)
 		# Set the title and the description
@@ -272,13 +265,6 @@ class general_properties(QtGui.QWidget):
 		desc = self.main_window.experiment.sanitize( \
 			self.header_widget.edit_desc.text())
 		self.main_window.experiment.set("description", desc)
-
-		# Set the start point
-		start = self.main_window.experiment.sanitize( \
-			self.ui.combobox_start.currentText())
-		if self. main_window.experiment.get("start") != start:
-			rebuild_item_tree = True
-		self.main_window.experiment.set("start", start)
 
 		# Set the backend
 		i = self.ui.combobox_backend.currentIndex()
@@ -314,7 +300,7 @@ class general_properties(QtGui.QWidget):
 				foreground = self.main_window.experiment.get("foreground")
 				self.ui.edit_foreground.setText(foreground)
 		self.main_window.experiment.set("foreground", foreground)
-
+		
 		# Set the background color
 		background = self.main_window.experiment.sanitize( \
 			self.ui.edit_background.text())
@@ -329,7 +315,17 @@ class general_properties(QtGui.QWidget):
 				self.ui.edit_background.setText(background)
 		self.main_window.experiment.set("background", foreground)
 		self.main_window.experiment.set("background", background)
-
+		
+		# Set the font
+		self.main_window.experiment.set('font_family', \
+			self.ui.widget_font.family)		
+		self.main_window.experiment.set('font_size', \
+			self.ui.widget_font.size)
+		self.main_window.experiment.set('font_italic', \
+			self.ui.widget_font.italic)
+		self.main_window.experiment.set('font_bold', \
+			self.ui.widget_font.bold)
+			
 		# Refresh the interface and unlock the general tab
 		self.main_window.refresh()
 		self.lock = False
@@ -346,10 +342,6 @@ class general_properties(QtGui.QWidget):
 
 		# Set the header containing the titel etc
 		self.set_header_label()
-
-		# Select the start item
-		self.main_window.experiment.item_combobox( \
-			self.main_window.experiment.start, [], self.ui.combobox_start)
 
 		# Select the backend
 		backend = openexp.backend_info.match(self.main_window.experiment)

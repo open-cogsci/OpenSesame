@@ -416,7 +416,8 @@ class item:
 		"""<DOC>
 		Convert a value into the 'best fitting' type that is compatible with the
 		value. E.g., auto_type('1') -> int, auto_type('1.2') -> float and
-		auto_type('one') -> string
+		auto_type('one') -> string. Boolean values are converted to 'yes'/ 'no'.
+		
 
 		Arguments:
 		val -- a value
@@ -424,7 +425,12 @@ class item:
 		Returns:
 		The same value converted to the 'best fitting' type
 		</DOC>"""
-
+		
+		if type(val) == bool:
+			if val:
+				return 'yes'
+			else:
+				return 'no'
 		try:
 			if int(float(val)) == float(val):
 				return int(float(val))

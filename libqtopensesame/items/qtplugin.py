@@ -163,7 +163,8 @@ class qtplugin(qtitem.qtitem):
 		min_width -- a minimum width for the widget (default=None)
 		"""
 
-		edit = color_edit.color_edit(self.experiment)
+		edit = color_edit.color_edit()
+		edit.initialize(self.experiment)
 		edit.setText(str(self.get_check(var, "")))
 		QtCore.QObject.connect(edit, QtCore.SIGNAL("set_color"), \
 			self.apply_edit_changes)
