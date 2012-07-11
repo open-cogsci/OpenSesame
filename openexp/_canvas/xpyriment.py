@@ -49,7 +49,9 @@ class xpyriment(openexp._canvas.legacy.legacy):
 		"""See openexp._canvas.legacy"""
 		
 		self.font_style = style
-		self.font_size = size				
+		self.font_size = size
+		self.font_italic = italic
+		self.font_bold = bold		
 				
 	def flip(self, x=True, y=False):
 		
@@ -193,8 +195,13 @@ class xpyriment(openexp._canvas.legacy.legacy):
 			dx, dy = self.text_size(text)
 			dx /= 2
 			dy /= 2
+		try:
+			_font = self.experiment.resource("%s.ttf" % self.font_style)
+		except:
+			_font = self.font_style
 		stim = stimuli.TextLine(text, position=c2p((x+dx,y+dy)), text_colour=color, \
-			text_font=self.font_style, text_size=self.font_size)
+			text_font=_font, text_size=self.font_size, text_bold=\
+			self.font_bold, text_italic=self.font_italic)
 		self.stim_list.append(stim)
 		
 	def textline(self, text, line, color=None):
