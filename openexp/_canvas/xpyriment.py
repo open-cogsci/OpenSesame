@@ -252,7 +252,7 @@ def init_display(experiment):
 	io.defaults.mouse_track_button_events = False	
 	control.defaults.initialize_delay = 0
 	control.defaults.event_logging = 0
-	control.defaults.window_mode = not experiment.get('fullscreen')
+	control.defaults.window_mode = experiment.get('fullscreen') == 'no'
 	control.defaults.fast_quit = True
 	control.defaults.window_size = experiment.get('width'), \
 		experiment.get('height')

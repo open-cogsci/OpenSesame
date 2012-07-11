@@ -375,23 +375,16 @@ class legacy:
 				 (Default=None)		
 		</DOC>"""
 		
-		if color != None:
-			color = self.color(color)
-		else:
-			color = self.fgcolor		
-		
-		pygame.draw.line(self.surface, color, (sx, sy), (ex, ey), self.penwidth)
+		if color != None: color = self.color(color)
+		else: color = self.fgcolor		
+		self.line(sx, sy, ex, ey)		
 		a = math.atan2(ey - sy, ex - sx)
-		
 		_sx = ex + arrow_size * math.cos(a + math.radians(135))
 		_sy = ey + arrow_size * math.sin(a + math.radians(135))
-		pygame.draw.line(self.surface, color, (_sx, _sy), (ex, ey), \
-			self.penwidth)		
-		
+		self.line(_sx, _sy, ex, ey)
 		_sx = ex + arrow_size * math.cos(a + math.radians(225))
 		_sy = ey + arrow_size * math.sin(a + math.radians(225))
-		pygame.draw.line(self.surface, color, (_sx, _sy), (ex, ey), \
-			self.penwidth)		
+		self.line(_sx, _sy, ex, ey)
 		
 	def rect(self, x, y, w, h, fill=False, color=None):
 		
