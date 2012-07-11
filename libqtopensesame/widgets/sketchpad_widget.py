@@ -788,13 +788,18 @@ class sketchpad_widget(QtGui.QWidget):
 	
 		return self.scene.addLine(x1, y1, x2, y2, pen)
 		
-	def textline(self, text, center, x, y, color, font_family, font_size):
+	def textline(self, text, center, x, y, color, font_family, font_size, \
+		font_bold, font_italic):
 	
 		"""Draw textline"""
 		
 		if font_family == "serif" and os.name == "nt":
 			font_family = "times" # WINDOWS HACK: Windows doesn't recognize serif
-		font = QtGui.QFont(font_family, font_size)
+		if font_bold:
+			weight = QtGui.QFont.Bold
+		else:
+			weight = QtGui.QFont.Normal
+		font = QtGui.QFont(font_family, font_size, weight, font_italic)
 		text_item = self.scene.addText( \
 			self.sketchpad.experiment.unsanitize(text), font)
 		text_item.setDefaultTextColor(QtGui.QColor(color))		
@@ -940,7 +945,8 @@ class sketchpad_widget(QtGui.QWidget):
 				elif item["type"] == "textline":
 					g = self.textline(item["text"], item["center"]==1, \
 						item["x"], item["y"], item["color"], \
-						item["font_family"], item["font_size"])
+						item["font_family"], item["font_size"], \
+						item['font_bold'] == 'yes', item['font_italic'] == 'yes')
 				elif item["type"] == "image":
 					g = self.image(self.sketchpad.experiment.get_file( \
 						item["file"]), item["center"]==1, item["x"], \
