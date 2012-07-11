@@ -279,6 +279,10 @@ class legacy:
 		style -- A font located in the resources folder (without the .ttf
 				 extension)
 		size -- A font size in pixels		
+		
+		Keyword arguments:
+		italic -- indicates if the font should be italic (default=False)
+		bold -- indicates if the font should be bold (default=False)
 		</DOC>"""
 		
 		self.font = pygame.font.Font(self.experiment.resource( \
