@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'resources/ui/opensesame.ui'
 #
-# Created: Wed Jul 11 14:17:31 2012
+# Created: Fri Jul 13 15:12:18 2012
 #      by: PyQt4 UI code generator 4.9.1
 #
 # WARNING! All changes made in this file will be lost!
@@ -25,7 +25,7 @@ class Ui_opensesame_mainwindow(object):
         self.centralwidget.setObjectName(_fromUtf8("centralwidget"))
         self.verticalLayout_6 = QtGui.QVBoxLayout(self.centralwidget)
         self.verticalLayout_6.setObjectName(_fromUtf8("verticalLayout_6"))
-        self.tabwidget = QtGui.QTabWidget(self.centralwidget)
+        self.tabwidget = tab_widget(self.centralwidget)
         self.tabwidget.setTabsClosable(True)
         self.tabwidget.setMovable(True)
         self.tabwidget.setObjectName(_fromUtf8("tabwidget"))
@@ -604,8 +604,9 @@ class Ui_opensesame_mainwindow(object):
         self.action_online_documentation.setText(QtGui.QApplication.translate("opensesame_mainwindow", "Online help", None, QtGui.QApplication.UnicodeUTF8))
         self.action_online_forum.setText(QtGui.QApplication.translate("opensesame_mainwindow", "Online forum", None, QtGui.QApplication.UnicodeUTF8))
 
-from statusbar import statusbar
-from variable_inspector import variable_inspector
-from tree_overview import tree_overview
-from pyterm import console
-from toolbar_items import toolbar_items
+from libqtopensesame.widgets.statusbar import statusbar
+from libqtopensesame.widgets.tree_overview import tree_overview
+from libqtopensesame.widgets.tab_widget import tab_widget
+from libqtopensesame.widgets.variable_inspector import variable_inspector
+from libqtopensesame.widgets.toolbar_items import toolbar_items
+from libqtopensesame.widgets.pyterm import console

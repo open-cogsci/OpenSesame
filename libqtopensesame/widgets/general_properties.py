@@ -84,15 +84,14 @@ class general_properties(QtGui.QWidget):
 		# Connect the rest
 		self.ui.spinbox_width.editingFinished.connect(self.apply_changes)
 		self.ui.spinbox_height.editingFinished.connect(self.apply_changes)
-		self.ui.group_script.toggled.connect(self.toggle_script_editor)
-		self.ui.group_backend_settings.toggled.connect( \
-			self.toggle_backend_settings)
 		self.ui.label_opensesame.setText(unicode( \
 			self.ui.label_opensesame.text()).replace("[version]", \
 			misc.version).replace("[codename]", misc.codename))			
 		self.ui.label_website.mousePressEvent = self.open_website
 		self.ui.label_facebook.mousePressEvent = self.open_facebook
 		self.ui.label_twitter.mousePressEvent = self.open_twitter
+		self.ui.button_script_editor.clicked.connect( \
+			self.main_window.ui.tabwidget.open_general_script)
 
 		# Set the backend combobox
 		for backend in openexp.backend_info.backend_list:
@@ -102,21 +101,12 @@ class general_properties(QtGui.QWidget):
 				icon), self.backend_format % (backend, desc))
 		self.ui.combobox_backend.currentIndexChanged.connect(self.apply_changes)
 
-		# Script editor
-		self.edit_script = inline_editor.inline_editor( \
-			self.main_window.experiment, syntax="opensesame")
-		self.edit_script.apply.clicked.connect(self.apply_script)
-		self.ui.layout_script.addWidget(self.edit_script)
-
 		vbox = QtGui.QVBoxLayout()
 		vbox.addWidget(header_widget)
 		vbox.addWidget(w)
 
 		self.setLayout(vbox)
-		self.general_tab = True
-
-		self.toggle_script_editor()
-		self.toggle_backend_settings()
+		self.__general_tab__ = True
 
 	def init_backend_settings(self, force=False):
 
@@ -369,17 +359,6 @@ class general_properties(QtGui.QWidget):
 			self.main_window.experiment.foreground))
 		self.ui.edit_background.setText(str( \
 			self.main_window.experiment.background))
-
-		# Re-generate the opensesame script
-		try:
-			self.edit_script.edit.setPlainText( \
-				self.main_window.experiment.to_string(), set_modified=False)
-		except libopensesame.exceptions.script_error as e:
-			self.main_window.experiment.notify( \
-				_("</>Failed to generate script:</b> %s") % e)
-			self.edit_script.edit.setText(_("Failed to generate script!"))
-
-		self.init_backend_settings()
 
 		# Release the general tab
 		self.lock = False

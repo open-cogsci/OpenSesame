@@ -83,18 +83,20 @@ class header_widget(QtGui.QWidget):
 		apply_name_change -- indicates of the name change should be applied
 							 (default=True)
 		"""
-
+		
 		debug.msg("apply_name_change = %s" % apply_name_change)
 		if apply_name_change:
-			self.item.apply_name_change()
+			self.item.apply_name_change()			
+		self.refresh()					
 		self.label_name.show()
 		self.edit_name.hide()
 
 	def restore_desc(self):
 
 		"""Apply the description change and revert the edit	back to the label"""
-
-		self.item.apply_edit_changes()
+		
+		self.item.apply_edit_changes()			
+		self.refresh()
 		self.label_desc.show()
 		self.edit_desc.hide()
 

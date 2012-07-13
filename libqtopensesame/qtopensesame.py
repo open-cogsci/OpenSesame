@@ -60,8 +60,11 @@ class qtopensesame(QtGui.QMainWindow):
 		from libopensesame import misc
 		from libqtopensesame.widgets import pool_widget
 		from libqtopensesame.ui import opensesame_ui
-		from libqtopensesame.misc import theme
-		import platform			
+		from libqtopensesame.misc import theme, dispatch
+		import platform
+		
+		# Setup dispatch
+		self.dispatch = dispatch.dispatch(self)
 				
 		# Setup the UI
 		self.ui = opensesame_ui.Ui_opensesame_mainwindow()
@@ -69,6 +72,7 @@ class qtopensesame(QtGui.QMainWindow):
 		self.ui.toolbar_items.main_window = self
 		self.ui.itemtree.main_window = self
 		self.ui.table_variables.main_window = self
+		self.ui.tabwidget.main_window = self
 
 		# Set some initial variables
 		self.current_path = None
@@ -108,7 +112,6 @@ class qtopensesame(QtGui.QMainWindow):
 		self.setWindowIcon(self.theme.qicon("opensesame"))
 
 		# Make the connections
-		self.ui.tabwidget.tabCloseRequested.connect(self.close_tab)
 		self.ui.itemtree.itemClicked.connect(self.open_item)
 		self.ui.action_quit.triggered.connect(self.close)
 		self.ui.action_new.triggered.connect(self.new_file)
@@ -120,21 +123,27 @@ class qtopensesame(QtGui.QMainWindow):
 			self.run_experiment_in_window)
 		self.ui.action_enable_auto_response.triggered.connect( \
 			self.set_auto_response)
-		self.ui.action_close_all_tabs.triggered.connect(self.close_all_tabs)
-		self.ui.action_close_other_tabs.triggered.connect(self.close_other_tabs)
-		self.ui.action_onetabmode.triggered.connect(self.toggle_onetabmode)
+		self.ui.action_close_all_tabs.triggered.connect( \
+			self.ui.tabwidget.close_all)
+		self.ui.action_close_other_tabs.triggered.connect( \
+			self.ui.tabwidget.close_other)
+		self.ui.action_onetabmode.triggered.connect( \
+			self.ui.tabwidget.toggle_onetabmode)
 		self.ui.action_show_overview.triggered.connect(self.toggle_overview)
 		self.ui.action_show_variable_inspector.triggered.connect( \
 			self.refresh_variable_inspector)
 		self.ui.action_show_pool.triggered.connect(self.refresh_pool)
 		self.ui.action_show_stdout.triggered.connect(self.refresh_stdout)
-		self.ui.action_help.triggered.connect(self.open_general_help_tab)
-		self.ui.action_about.triggered.connect(self.about)
-		self.ui.action_online_documentation.triggered.connect(self.browse_osdoc)		
+		self.ui.action_help.triggered.connect( \
+			self.ui.tabwidget.open_general_help)
+		self.ui.action_about.triggered.connect(self.ui.tabwidget.open_about)
+		self.ui.action_online_documentation.triggered.connect( \
+			self.ui.tabwidget.open_osdoc)		
 		self.ui.action_check_for_update.triggered.connect(self.check_update)
 		self.ui.action_open_autosave_folder.triggered.connect( \
 			self.open_autosave_folder)
-		self.ui.action_preferences.triggered.connect(self.open_preferences_tab)
+		self.ui.action_preferences.triggered.connect( \
+			self.ui.tabwidget.open_preferences)
 		self.ui.action_add_loop.triggered.connect(self.drag_loop)
 		self.ui.action_add_sequence.triggered.connect(self.drag_sequence)
 		self.ui.action_add_sketchpad.triggered.connect(self.drag_sketchpad)
@@ -150,8 +159,8 @@ class qtopensesame(QtGui.QMainWindow):
 			self.drag_inline_script)
 		self.ui.action_show_info_in_overview.triggered.connect( \
 			self.toggle_overview_info)
-		self.ui.button_help_stdout.clicked.connect(self.open_stdout_help_tab)
-		self.ui.tabwidget.currentChanged.connect(self.tab_index_changed)
+		self.ui.button_help_stdout.clicked.connect( \
+			self.ui.tabwidget.open_stdout_help)
 
 		# Setup the overview area
 		self.ui.dock_overview.show()
@@ -161,7 +170,7 @@ class qtopensesame(QtGui.QMainWindow):
 		# Setup the variable inspector
 		self.ui.dock_variable_inspector.hide()
 		self.ui.button_help_variables.clicked.connect( \
-			self.open_variables_help_tab)
+			self.ui.tabwidget.open_variables_help)
 		self.ui.dock_variable_inspector.visibilityChanged.connect( \
 			self.ui.action_show_variable_inspector.setChecked)
 		self.ui.edit_variable_filter.textChanged.connect( \
@@ -200,10 +209,6 @@ class qtopensesame(QtGui.QMainWindow):
 		self.experiment = experiment.experiment(self, "New experiment", \
 			open(misc.resource(os.path.join("templates", \
 				"default.opensesame")), "r").read())
-
-		# Initialize the tabs
-		self.init_general_tab()
-		self.init_unused_tab()
 
 		# Build the items toolbar
 		self.set_status(_("Welcome to OpenSesame %s") % self.version)		
@@ -325,7 +330,7 @@ class qtopensesame(QtGui.QMainWindow):
 		self.ui.action_onetabmode.setChecked(config.get_config("onetabmode"))
 		self.ui.action_compact_toolbar.setChecked( \
 			config.get_config("toolbar_size") == 16)
-		self.toggle_onetabmode()
+		self.ui.tabwidget.toggle_onetabmode()
 
 		if config.get_config("toolbar_text"):
 			self.ui.toolbar_main.setToolButtonStyle( \
@@ -574,31 +579,6 @@ class qtopensesame(QtGui.QMainWindow):
 			self.ui.itemtree.setHeaderHidden(True)
 		debug.msg("set to %s" % self.overview_info)
 
-	def toggle_onetabmode(self):
-
-		"""Toggles onetabmode"""
-
-		config.set_config("onetabmode", self.ui.action_onetabmode.isChecked())
-		if config.get_config("onetabmode"):
-			self.close_other_tabs()
-			if self.ui.tabwidget.count() == 0:
-				self.open_general_tab()
-		self.ui.tabwidget.setTabsClosable(not config.get_config("onetabmode"))
-		self.ui.action_close_other_tabs.setEnabled( \
-			not config.get_config("onetabmode"))
-			
-	def tab_index_changed(self, index):
-
-		"""
-		Monitors tab index changes, closing other tabs if onetabmode is enabled
-
-		Arguments:
-		index -- the index of the new tab
-		"""
-
-		if config.get_config("onetabmode"):
-			self.close_other_tabs()
-
 	def update_dialog(self, message):
 
 		"""
@@ -669,81 +649,6 @@ class qtopensesame(QtGui.QMainWindow):
 				self.update_dialog( \
 					_(" ... and is happy to report that you are running the most recent version of OpenSesame."))
 
-	def open_browser_tab(self, url):
-	
-		"""
-		Open a browser tab to browse local or remote HTML files
-		
-		Argument:
-		url -- a url
-		"""
-	
-		from libqtopensesame.widgets import webbrowser		
-		browser = webbrowser.webbrowser(self)
-		browser.load(url)
-		browser.show()
-		index = self.experiment.ui.tabwidget.addTab(browser, \
-				self.experiment.icon("web-browser"), 'Help')
-		self.switch_tab(index)
-
-	def browse_osdoc(self):
-	
-		"""Open osdoc.cogsci.nl"""
-	
-		self.open_browser_tab('http://osdoc.cogsci.nl')
-	
-	def open_help_tab(self, title, item):
-
-		"""
-		Open a help tab for the specified item. Looks for a file
-		called [item].html in the resources folder.
-
-		Arguments:
-		title -- the tab title
-		item -- the item for which help should be displayed
-		"""
-
-		self.open_browser_tab(self.experiment.help("%s.html" % item))
-
-	def open_general_help_tab(self):
-
-		"""Open the general help tab"""
-
-		self.open_help_tab("Help: General", "general")
-
-	def open_stdout_help_tab(self):
-
-		"""Open the debug window help tab"""
-
-		self.open_help_tab("Help: Debug window", "stdout")
-
-	def open_variables_help_tab(self):
-
-		"""Open the variable inspector help tab"""
-
-		self.open_help_tab("Help: Variable inspector", "variables")
-
-	def about(self):
-
-		"""Open the about help tab"""
-
-		self.open_help_tab("About", "about")
-
-	def open_preferences_tab(self):
-
-		"""Open the preferences tab"""
-
-		from libqtopensesame.widgets import preferences_widget
-
-		i = self.get_tab_index("__preferences__")
-		if i != None:
-			self.switch_tab(i)
-		else:
-			index = self.experiment.ui.tabwidget.addTab( \
-				preferences_widget.preferences_widget(self), \
-				self.experiment.icon("options"), "Preferences")
-			self.switch_tab(index)
-
 	def update_preferences_tab(self):
 
 		"""
@@ -751,56 +656,9 @@ class qtopensesame(QtGui.QMainWindow):
 		to match potential changes to the preferences
 		"""
 
-		w = self.get_tab_widget("__preferences__")
+		w = self.ui.tabwidget.get_widget('__preferences__')
 		if w != None:
-			w.set_controls()
-
-	def get_tab_widget(self, tab_name):
-
-		"""
-		Return a specific tab
-
-		Arguments:
-		tab_name -- the tab_name of the widget
-
-		Returns:
-		The tab widget or None if the tab wasn't found
-		"""
-
-		for i in range(self.experiment.ui.tabwidget.count()):
-			w = self.experiment.ui.tabwidget.widget(i)
-			if hasattr(w, "tab_name") and w.tab_name == tab_name:
-				return self.experiment.ui.tabwidget.widget(i)
-		return None
-
-	def get_tab_index(self, tab_name):
-
-		"""
-		Return the index of a specific tab
-
-		Arguments:
-		tab_name -- the tab_name of the widget
-
-		Returns:
-		The index of the tab or None if the tab wasn't found
-		"""
-
-		for i in range(self.experiment.ui.tabwidget.count()):
-			w = self.experiment.ui.tabwidget.widget(i)
-			if hasattr(w, "tab_name") and w.tab_name == tab_name:
-				return i
-		return None
-
-	def switch_tab(self, index):
-
-		"""
-		Switch to a tab by index
-
-		Arguments:
-		index -- the index of the tab to switch to
-		"""
-
-		self.experiment.ui.tabwidget.setCurrentIndex(index)
+			w.set_controls()	
 
 	def show_text_in_toolbar(self):
 
@@ -1026,7 +884,7 @@ class qtopensesame(QtGui.QMainWindow):
 
 		path = unicode(path)
 		self.set_status("Opening ...")
-		self.close_all_tabs()
+		self.ui.tabwidget.close_all()
 
 		try:
 			exp = experiment.experiment(self, "Experiment", path)
@@ -1042,9 +900,8 @@ class qtopensesame(QtGui.QMainWindow):
 			return
 
 		self.experiment = exp
-		self.general_tab_widget.header_widget.item = self.experiment
 		self.refresh()
-		self.open_general_tab()
+		self.ui.tabwidget.open_general()
 		self.set_status("Opened %s" % path)
 
 		if add_to_recent:
@@ -1179,37 +1036,6 @@ class qtopensesame(QtGui.QMainWindow):
 			self.current_path = path
 			self.save_file(overwrite=False)
 
-	def close_all_tabs(self):
-
-		"""Close all tabs"""
-
-		while self.ui.tabwidget.count() > 0:
-			self.close_tab(0)
-
-	def close_other_tabs(self):
-
-		"""Close all tabs except the currently active one"""
-
-		debug.msg("closing non-selected tabs")
-
-		while self.ui.tabwidget.count() > 0 and \
-			self.ui.tabwidget.currentIndex() != 0:
-			self.close_tab(0)
-
-		while self.ui.tabwidget.count() > 1:
-			self.close_tab(1)
-
-	def close_tab(self, index):
-
-		"""
-		Close a specfic tab
-
-		Arguments:
-		index -- the index of the tab to be closed
-		"""
-
-		self.ui.tabwidget.removeTab(index)
-
 	def close_item_tab(self, item, close_edit=True, close_script=True):
 
 		"""
@@ -1236,12 +1062,12 @@ class qtopensesame(QtGui.QMainWindow):
 				w = self.ui.tabwidget.widget(i)
 				if close_edit and hasattr(w, "edit_item") and \
 					w.edit_item == item:
-					self.close_tab(i)
+					self.ui.tabWidget.removeTab(i)
 					redo = True
 					break
 				if close_script and hasattr(w, "script_item") and \
 					w.script_item == item:
-					self.close_tab(i)
+					self.ui.tabWidget.removeTab(i)
 					redo = True
 					break
 
@@ -1280,142 +1106,7 @@ class qtopensesame(QtGui.QMainWindow):
 			return
 
 		self.experiment = tmp
-		self.refresh()
-
-	def init_general_tab(self):
-
-		"""Initializes the general tab"""
-
-		from libqtopensesame.widgets import general_properties
-		self.general_tab_widget = general_properties.general_properties(self)
-
-	def general_widget(self):
-
-		"""Set the controls of the general tab based on the variables"""
-
-		self.general_tab_widget.refresh()
-
-	def open_general_tab(self, reopen=False, index=None, focus=True):
-
-		"""
-		Opens the general tab
-
-		Keyword arguments:
-		reopen -- a boolean indicating whether the tab should be closed and
-				  reopened if it is already open (default=False)
-		index -- the position of the tab (default = None)
-		focus -- a boolean indicating whether the general tab should receive
-				 focus (defaut=True)
-		"""
-
-		for i in range(self.experiment.ui.tabwidget.count()):
-			w = self.ui.tabwidget.widget(i)
-			if hasattr(w, "general_tab"):
-				if reopen:
-					self.ui.tabwidget.removeTab(i)
-				else:
-					self.ui.tabwidget.setCurrentIndex(i)
-
-		self.general_widget()
-		if index == None:
-			index = self.ui.tabwidget.addTab(self.general_tab_widget, \
-				self.experiment.icon("experiment"), _("General properties"))
-		else:
-			self.ui.tabwidget.insertTab(index, self.general_tab_widget, \
-				self.experiment.icon("experiment"), _("General properties"))
-		if focus:
-			self.ui.tabwidget.setCurrentIndex(index)
-
-	def init_unused_tab(self):
-
-		"""Initializes the unused tab"""
-
-		# Set the header, with the icon, label and script button
-		header_hbox = QtGui.QHBoxLayout()
-		header_hbox.addWidget(self.experiment.label_image("unused"))
-		header_label = QtGui.QLabel()
-		header_label.setText(_("<b><font size='5'>Unused</font></b>"))
-		header_hbox.addWidget(header_label)
-		header_hbox.addStretch()
-		header_widget = QtGui.QWidget()
-		header_widget.setLayout(header_hbox)
-
-		purge_button = QtGui.QPushButton(self.experiment.icon("purge"), \
-			_("Permanently delete unused items"))
-		purge_button.setIconSize(QtCore.QSize(16, 16))
-		QtCore.QObject.connect(purge_button, QtCore.SIGNAL("clicked()"), \
-			self.purge_unused)
-
-		purge_hbox = QtGui.QHBoxLayout()
-		purge_hbox.addWidget(purge_button)
-		purge_hbox.addStretch()
-		purge_widget = QtGui.QWidget()
-		purge_widget.setLayout(purge_hbox)
-
-		vbox = QtGui.QVBoxLayout()
-		vbox.addWidget(header_widget)
-		vbox.addWidget(purge_widget)
-		vbox.addStretch()
-
-		self.unused_tab_widget = QtGui.QWidget()
-		self.unused_tab_widget.setLayout(vbox)
-		self.unused_tab_widget.unused_tab = True
-
-	def open_unused_tab(self, reopen=False, index=None, focus=True):
-
-		"""
-		Shows the unused tab
-
-		Keyword arguments:
-		reopen -- indicates if the tab should be closed and reopened if it's
-				  already open (default=False)
-		index -- indicates a specific position where the tab should be inserted
-				 (default=None)
-		focus -- indocates whether the tab should be shown immediately
-				 (default=True)
-		"""
-
-		for i in range(self.experiment.ui.tabwidget.count()):
-			w = self.ui.tabwidget.widget(i)
-			if hasattr(w, "unused_tab"):
-				if reopen:
-					self.ui.tabwidget.removeTab(i)
-				else:
-					self.ui.tabwidget.setCurrentIndex(i)
-
-		if index == None:
-			index = self.ui.tabwidget.addTab(self.unused_tab_widget, \
-				self.experiment.icon("unused"), _("Unused items"))
-		else:
-			self.ui.tabwidget.insertTab(index, self.unused_tab_widget, \
-				self.experiment.icon("unused"), _("Unused items"))
-
-		if focus:
-			self.ui.tabwidget.setCurrentIndex(index)
-
-	def purge_unused(self):
-
-		"""Remove all unused items from the items list"""
-
-		resp = QtGui.QMessageBox.question(self.ui.centralwidget, \
-			_("Permanently delete items?"), \
-			_("Are you sure you want to permanently delete all unused items? This action cannot be undone."), \
-			QtGui.QMessageBox.Yes, QtGui.QMessageBox.No)
-		if resp == QtGui.QMessageBox.No:
-			return
-
-		# We need a loop, because items may become unused
-		# by deletion of their unused parent items
-		while len(self.experiment.unused_items) > 0:
-
-			for item in self.experiment.unused_items:
-				if item in self.experiment.items:
-					del self.experiment.items[item]
-
-			self.refresh()
-
-		self.close_all_tabs()
-		self.open_general_tab()
+		self.refresh()			
 
 	def build_item_list(self, name=None):
 
@@ -1461,9 +1152,9 @@ class qtopensesame(QtGui.QMainWindow):
 		"""
 
 		if widget.name == "__general__":
-			self.open_general_tab()
+			self.ui.tabwidget.open_general()
 		elif widget.name == "__unused__":
-			self.open_unused_tab()
+			self.ui.tabwidget.open_unused()
 		else:
 			self.experiment.items[widget.name].open_tab()
 
@@ -1777,24 +1468,23 @@ class qtopensesame(QtGui.QMainWindow):
 
 		self.set_busy(True)
 		debug.msg(changed_item)
-		self.general_tab_widget.set_header_label()
 
 		index = self.ui.tabwidget.currentIndex()
 		for i in range(self.ui.tabwidget.count()):
-				w = self.ui.tabwidget.widget(i)
-				if hasattr(w, "general_tab"):
-					self.general_widget()
-				# For now the unused tab doesn't need to be refreshed
-				if hasattr(w, "unused_tab"):
-					pass
-				if refresh_edit and hasattr(w, "edit_item") and (changed_item \
-					== None or w.edit_item == changed_item):
-					if w.edit_item in self.experiment.items:
-						self.experiment.items[w.edit_item].edit_widget()
-				if refresh_script and hasattr(w, "script_item") and ( \
-					changed_item == None or w.script_item == changed_item):
-					if w.script_item in self.experiment.items:
-						self.experiment.items[w.script_item].script_widget()
+			w = self.ui.tabwidget.widget(i)
+			if hasattr(w, "__general_tab__"):
+				w.refresh()
+			# For now the unused tab doesn't need to be refreshed
+			if hasattr(w, "__unused_tab__"):
+				pass
+			if refresh_edit and hasattr(w, "__edit_item__") and (changed_item \
+				== None or w.__edit_item__ == changed_item):
+				if w.__edit_item__ in self.experiment.items:
+					self.experiment.items[w.__edit_item__].edit_widget()
+			if refresh_script and hasattr(w, "__script_item__") and ( \
+				changed_item == None or w.__script_item__ == changed_item):
+				if w.__script_item__ in self.experiment.items:
+					self.experiment.items[w.__script_item__].script_widget()
 
 		self.ui.tabwidget.setCurrentIndex(index)
 		self.build_item_list()
@@ -1823,7 +1513,6 @@ class qtopensesame(QtGui.QMainWindow):
 
 		self.set_busy(True)
 		debug.msg(changed_item)
-		self.general_tab_widget.set_header_label()
 		index = self.ui.tabwidget.currentIndex()
 
 		for i in range(self.ui.tabwidget.count()):

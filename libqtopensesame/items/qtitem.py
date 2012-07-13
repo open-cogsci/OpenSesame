@@ -27,14 +27,25 @@ from libopensesame import debug, exceptions
 from libqtopensesame.widgets import inline_editor, help_browser, header_widget
 from libqtopensesame.misc import _
 
-class qtitem(object):
+class qtitem(QtCore.QObject):
 
 	"""Base class for the GUI controls of other items"""
+	
+	edit_change = QtCore.pyqtSignal(str)
+	name_change = QtCore.pyqtSignal(str, str)
 
 	def __init__(self):
 
 		"""Constructor"""
 
+		QtCore.QObject.__init__(self)
+		
+		# Connect signals
+		self.edit_change.connect( \
+			self.experiment.main_window.dispatch.edit_changed)				
+		self.name_change.connect( \
+			self.experiment.main_window.dispatch.name_changed)		
+		
 		# The auto-widgets are stored in name -> (var, widget) dictionaries
 		self.auto_line_edit = {}
 		self.auto_combobox = {}
@@ -49,8 +60,9 @@ class qtitem(object):
 		self.script_tab = None
 		self.lock = False
 		self.edit_mode = "edit"
-		debug.msg("created %s" % self.name)
-
+				
+		debug.msg("created %s" % self.name)				
+		
 	def open_help_tab(self):
 
 		"""Open the help tab"""
@@ -110,7 +122,7 @@ class qtitem(object):
 			self.edit_vbox.addStretch()
 		self._edit_widget = QtGui.QWidget()
 		self._edit_widget.setLayout(self.edit_vbox)
-		self._edit_widget.edit_item = self.name
+		self._edit_widget.__edit_item__ = self.name
 
 		return self._edit_widget
 
@@ -128,7 +140,7 @@ class qtitem(object):
 				reason="deprecation")
 		self.header.restore_name(False)
 		self.header.refresh()
-		self._edit_widget.edit_item = self.name
+		self._edit_widget.__edit_item__ = self.name
 		if not self.sanity_check():
 			self.open_script_tab()
 			return
@@ -143,10 +155,12 @@ class qtitem(object):
 		Keywords arguments:
 		rebuild -- a deprecated argument (default=True)
 		"""
-
+		
+		debug.msg()
+		
+		# Sanitize the name, check if it is new and valid, and if so, rename
 		new_name = self.experiment.sanitize(self.header.edit_name.text(), \
 			strict=True, allow_vars=False)
-		# Do nothing is the name stays the same
 		if new_name == self.name:
 			self.header.edit_name.setText(self.name)
 			return
@@ -154,10 +168,11 @@ class qtitem(object):
 		if valid != True:
 			self.experiment.notify(valid)
 			self.header.edit_name.setText(self.name)
-		else:
-			# Pass on the word
-			self.experiment.main_window.set_unsaved()
-			self.experiment.rename(self.name, new_name)
+			return			
+		old_name = self.name
+		self.name = new_name
+		self._edit_widget.__edit_item__	= new_name
+		self.name_change.emit(old_name, new_name)
 
 	def apply_edit_changes(self, rebuild=True):
 
@@ -173,20 +188,25 @@ class qtitem(object):
 		if self.experiment.main_window.lock_refresh:
 			debug.msg("skipping, because refresh in progress")
 			return False
-
+		self.auto_apply_edit_changes()		
 		self.set("description", \
 			self.experiment.sanitize(str(self.header.edit_desc.text()).strip()))
 		if self.description == "":
 			self.description = "No description"
 		self.header.label_desc.setText(self.description)
-		
-		self.auto_apply_edit_changes()
+		self.edit_change.emit(self.name)
 
-		if rebuild:
-			self.experiment.main_window.build_item_list()
-		self.experiment.main_window.set_unsaved()
+#			
+#		print 'yeah!'
+#		self.emit(QtCore.SIGNAL("change"))			
+#				
+#		self.auto_apply_edit_changes()
+
+#		if rebuild:
+#			self.experiment.main_window.build_item_list()
+#		self.experiment.main_window.set_unsaved()
 		return True
-
+	
 	def close_edit_tab(self, index=None):
 
 		"""
@@ -214,7 +234,7 @@ class qtitem(object):
 		self.edit_mode = "edit"		
 		for i in range(self.experiment.ui.tabwidget.count()):
 			w = self.experiment.ui.tabwidget.widget(i)
-			if hasattr(w, "script_item") and w.script_item == self.name:
+			if hasattr(w, "__script_item__") and w.__script_item__ == self.name:
 				self.experiment.ui.tabwidget.removeTab(i)
 				if index == None:
 					index = i
@@ -223,7 +243,7 @@ class qtitem(object):
 		# Focus the edit tab, instead of reopening, if it was already open
 		for i in range(self.experiment.ui.tabwidget.count()):
 			w = self.experiment.ui.tabwidget.widget(i)
-			if hasattr(w, "edit_item") and w.edit_item == self.name:
+			if hasattr(w, "__edit_item__") and w.__edit_item__ == self.name:
 				index = i
 
 		# Refresh the controls on the tab. In debug mode don't catch any errors
@@ -365,7 +385,7 @@ class qtitem(object):
 		vbox.addWidget(self.edit_script)
 		self._script_widget = QtGui.QWidget()
 		self._script_widget.setLayout(vbox)
-		self._script_widget.script_item = self.name
+		self._script_widget.__script_item__ = self.name
 
 	def script_widget(self):
 
@@ -380,7 +400,7 @@ class qtitem(object):
 		for s in self.to_string().split("\n")[1:]:
 			script += self.strip_script_line(s)
 		self.edit_script.edit.setPlainText(script)
-		self._script_widget.script_item = self.name
+		self._script_widget.__script_item__ = self.name
 		return self._script_widget
 
 	def open_script_tab(self, index=None, focus=True):
@@ -399,7 +419,7 @@ class qtitem(object):
 		# Close the edit tab
 		for i in range(self.experiment.ui.tabwidget.count()):
 			w = self.experiment.ui.tabwidget.widget(i)
-			if hasattr(w, "edit_item") and w.edit_item == self.name:
+			if hasattr(w, "__edit_item__") and w.__edit_item__ == self.name:
 				self.experiment.ui.tabwidget.removeTab(i)
 				if index == None:
 					index = i
@@ -407,7 +427,7 @@ class qtitem(object):
 
 		for i in range(self.experiment.ui.tabwidget.count()):
 			w = self.experiment.ui.tabwidget.widget(i)
-			if hasattr(w, "script_item") and w.script_item == self.name:
+			if hasattr(w, "__script_item__") and w.__script_item__ == self.name:
 				index = i
 		if index == None:
 			self.script_tab_index = self.experiment.ui.tabwidget.addTab( \
