@@ -35,6 +35,9 @@ import subprocess
 class qtopensesame(QtGui.QMainWindow):
 
 	"""The main class of the OpenSesame GUI"""
+	
+	# Set to False for release!
+	devmode = True
 
 	def __init__(self, app, parent=None):
 
@@ -813,7 +816,7 @@ class qtopensesame(QtGui.QMainWindow):
 		e -- the closeEvent
 		"""
 
-		if debug.enabled:
+		if debug.enabled or self.devmode:
 			libopensesame.experiment.clean_up(debug.enabled)
 			self.save_state()
 			e.accept()
