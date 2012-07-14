@@ -61,6 +61,7 @@ class experiment(item.item):
 		self.cleanup_functions = []
 		self.restart = False
 		self.experiment_path = None
+		self.title = 'My Experiment'
 
 		# Set default variables
 		self.coordinates = "relative"
