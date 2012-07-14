@@ -44,7 +44,7 @@ class general_script_editor(QtGui.QWidget):
 		self.ui.edit.applied.connect(self._apply)
 		self.ui.layout_vbox.addWidget(self.ui.edit)
 		self.main_window.theme.apply_theme(self)
-		self.tab_name = 'general_script_editor'
+		self.tab_name = '__general_script__'
 		
 	def _apply(self):
 	
