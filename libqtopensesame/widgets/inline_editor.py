@@ -290,6 +290,7 @@ class inline_editor(QtGui.QFrame):
 	"""The wrapper containing the editor and additional controls"""
 	
 	changed = QtCore.pyqtSignal()
+	applied = QtCore.pyqtSignal()
 
 	def __init__(self, experiment, notification=None, syntax=None):
 
@@ -350,7 +351,7 @@ class inline_editor(QtGui.QFrame):
 			_("Apply"))
 		self.apply.setToolTip(_("Press Alt + A to apply unsaved changes"))
 		self.apply.setIconSize(QtCore.QSize(16, 16))
-		self.apply.clicked.connect(self.changed.emit)
+		self.apply.clicked.connect(self._apply)
 
 		search_widget = QtGui.QWidget()
 		search_hbox = QtGui.QHBoxLayout(search_widget)
@@ -382,6 +383,13 @@ class inline_editor(QtGui.QFrame):
 		vbox.setMargin(0)
 
 		self.toolbar_hbox = search_hbox
+		
+	def _apply(self):
+	
+		"""When apply is clicked, two signals are sent"""
+	
+		self.changed.emit()
+		self.applied.emit()
 
 	def perform_search(self, event=None, term=None):
 
