@@ -31,21 +31,12 @@ class qtitem(QtCore.QObject):
 
 	"""Base class for the GUI controls of other items"""
 	
-	edit_change = QtCore.pyqtSignal(str)
-	name_change = QtCore.pyqtSignal(str, str)
-
 	def __init__(self):
 
 		"""Constructor"""
 
 		QtCore.QObject.__init__(self)
-		
-		# Connect signals
-		self.edit_change.connect( \
-			self.experiment.main_window.dispatch.edit_changed)				
-		self.name_change.connect( \
-			self.experiment.main_window.dispatch.name_changed)		
-		
+				
 		# The auto-widgets are stored in name -> (var, widget) dictionaries
 		self.auto_line_edit = {}
 		self.auto_combobox = {}
@@ -172,7 +163,8 @@ class qtitem(QtCore.QObject):
 		old_name = self.name
 		self.name = new_name
 		self._edit_widget.__edit_item__	= new_name
-		self.name_change.emit(old_name, new_name)
+		self.experiment.main_window.dispatch.event_name_change.emit(old_name, \
+			new_name)
 
 	def apply_edit_changes(self, rebuild=True):
 
@@ -194,17 +186,7 @@ class qtitem(QtCore.QObject):
 		if self.description == "":
 			self.description = "No description"
 		self.header.label_desc.setText(self.description)
-		self.edit_change.emit(self.name)
-
-#			
-#		print 'yeah!'
-#		self.emit(QtCore.SIGNAL("change"))			
-#				
-#		self.auto_apply_edit_changes()
-
-#		if rebuild:
-#			self.experiment.main_window.build_item_list()
-#		self.experiment.main_window.set_unsaved()
+		self.experiment.main_window.dispatch.event_simple_change.emit(self.name)
 		return True
 	
 	def close_edit_tab(self, index=None):
@@ -217,7 +199,7 @@ class qtitem(QtCore.QObject):
 		"""
 
 		pass
-
+		
 	def open_edit_tab(self, index=None, focus=True):
 
 		"""
