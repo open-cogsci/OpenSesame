@@ -177,6 +177,8 @@ class tab_widget(QtGui.QTabWidget):
 	
 		"""Opens the general script editor"""
 				
+		if self.switch('__general_script__'):
+			return
 		from libqtopensesame.widgets.general_script_editor import \
 			general_script_editor
 		self.add(general_script_editor(self.main_window), 'terminal', \
@@ -257,4 +259,7 @@ class tab_widget(QtGui.QTabWidget):
 
 		if config.get_config("onetabmode"):
 			self.close_other()
+		w = self.currentWidget()
+		if hasattr(w, 'on_activate'):
+			w.on_activate()
 
