@@ -52,7 +52,8 @@ class general_properties(QtGui.QWidget):
 		button_help = QtGui.QPushButton(self.main_window.experiment.icon( \
 			"help"), "")
 		button_help.setIconSize(QtCore.QSize(16, 16))
-		button_help.clicked.connect(self.open_help_tab)
+		button_help.clicked.connect( \
+			self.main_window.ui.tabwidget.open_general_help)
 		button_help.setToolTip(_("Tell me more about OpenSesame!"))
 		header_hbox = QtGui.QHBoxLayout()
 		header_hbox.addWidget(self.main_window.experiment.label_image( \
@@ -92,6 +93,8 @@ class general_properties(QtGui.QWidget):
 		self.ui.label_twitter.mousePressEvent = self.open_twitter
 		self.ui.button_script_editor.clicked.connect( \
 			self.main_window.ui.tabwidget.open_general_script)
+		self.ui.button_backend_settings.clicked.connect( \
+			self.main_window.ui.tabwidget.open_backend_settings)
 
 		# Set the backend combobox
 		for backend in openexp.backend_info.backend_list:
@@ -106,75 +109,8 @@ class general_properties(QtGui.QWidget):
 		vbox.addWidget(w)
 
 		self.setLayout(vbox)
-		self.__general_tab__ = True
-
-	def init_backend_settings(self, force=False):
-
-		"""
-		(Re-)initialize the backend settings controls
-
-		Keywords arguments:
-		force -- indicates if the initialization should occur even if the
-				 controls are not shown (default=False)
-		"""
-
-		if force or self.ui.group_backend_settings.isChecked():
-			for backend_type in ["canvas", "keyboard", "mouse", "synth", \
-				"sampler"]:
-				backend = self.main_window.experiment.get("%s_backend" \
-					% backend_type)
-				exec("from openexp._%s.%s import %s as _backend" % ( \
-					backend_type, backend, backend))
-				group = eval("self.ui.group_%s" % backend_type)
-				layout = eval("self.ui.layout_%s" % backend_type)
-				label = eval("self.ui.label_%s" % backend_type)
-
-				# Horribly ugly wayo clear the previous settings
-				while layout.count() > 1:
-					w = layout.itemAt(1)
-					layout.removeItem(w)
-					w.widget().hide()
-					sip.delete(w)
-
-				if not hasattr(_backend, "settings") or _backend.settings == \
-					None:
-					label.setText(_("No settings for %s") % backend)
-				else:
-					label.setText(_("Settings for %s:") % backend)
-					layout.addWidget(settings_widget( \
-						self.main_window.experiment, _backend.settings, self))
-
-	def toggle_spacer(self):
-
-		"""Sets the visibility of the spacer"""
-
-		hide = self.ui.group_backend_settings.isChecked() or \
-			self.ui.group_script.isChecked()
-		self.ui.spacer.setVisible(not hide)
-
-	def toggle_backend_settings(self):
-
-		"""
-		Sets the visibility of the script editor based on the checkbox state
-		"""
-
-		show = self.ui.group_backend_settings.isChecked()
-		if show:
-			self.main_window.set_busy(True)
-			self.init_backend_settings(force=True)
-			self.main_window.set_busy(False)
-		self.ui.scrollarea_backend_settings.setVisible(show)
-		self.toggle_spacer()
-
-	def toggle_script_editor(self):
-
-		"""
-		Sets the visibility of the script editor based on the checkbox state
-		"""
-
-		show = self.ui.group_script.isChecked()
-		self.edit_script.setVisible(show)
-		self.toggle_spacer()
+		self.tab_name = '__general_properties__'
+		self.on_activate = self.refresh
 
 	def set_header_label(self):
 
@@ -188,12 +124,6 @@ class general_properties(QtGui.QWidget):
 			% self.main_window.experiment.title)
 		self.header_widget.edit_desc.setText(self.main_window.experiment.description)
 		self.header_widget.label_desc.setText(self.main_window.experiment.description)
-
-	def open_help_tab(self):
-
-		"""Open the general help tab"""
-
-		self.main_window.open_general_help_tab()
 		
 	def open_website(self, dummy=None):
 	
@@ -212,29 +142,6 @@ class general_properties(QtGui.QWidget):
 		"""Open Twitter page"""	
 	
 		misc.open_url(config.get_config("url_twitter"))
-
-	def apply_script(self):
-
-		"""Apply changes to the general script"""
-
-		self.main_window.set_busy(True)
-		script = str(self.edit_script.edit.toPlainText())
-		try:
-			tmp = experiment.experiment(self.main_window, \
-				self.main_window.experiment.title, 	script, \
-				self.main_window.experiment.pool_folder)
-		except libopensesame.exceptions.script_error as error:
-			self.main_window.experiment.notify(_("Could not parse script: %s") \
-				% error)
-			self.edit_script.edit.setText( \
-				self.main_window.experiment.to_string())
-			return
-
-		self.main_window.experiment = tmp
-		self.main_window.close_other_tabs()
-		self.edit_script.setModified(False)
-		self.main_window.refresh()
-		self.main_window.set_busy(False)
 
 	def apply_changes(self):
 
@@ -362,71 +269,6 @@ class general_properties(QtGui.QWidget):
 
 		# Release the general tab
 		self.lock = False
-
-class settings_edit(QtGui.QLineEdit):
-
-	"""An edit widget for a single variable"""
-
-	def __init__(self, experiment, var, val, parent=None):
-
-		"""
-		Constructor
-
-		Arguments:
-		experiment -- the experiment
-		var -- the variable name
-		val -- the variable value
-
-		Keywords arguments:
-		parent -- parent QWidget (default=None)
-		"""
-
-		QtGui.QLineEdit.__init__(self, str(val))
-		self._parent = parent
-		self.var = var
-		self.experiment = experiment
-		self.editingFinished.connect(self.apply_setting)
-
-	def apply_setting(self):
-
-		"""Apply changes"""
-
-		self.experiment.set(self.var, self.experiment.sanitize(self.text()))
-		self._parent._parent.refresh()
-
-class settings_widget(QtGui.QWidget):
-
-	"""A widget containing a number of settings"""
-
-	def __init__(self, experiment, settings, parent=None):
-
-		"""
-		Constructor
-
-		Arguments:
-		experiment -- the experiment
-		settings -- the settings dictionary
-
-		Keywords arguments:
-		parent -- parent QWidget (default=None)
-		"""
-
-		QtGui.QWidget.__init__(self, parent)
-		self._parent = parent
-		self.experiment = experiment
-		self.settings = settings
-		self.layout = QtGui.QFormLayout(self)
-		self.setLayout(self.layout)
-		for var, desc in settings.items():
-			if self.experiment.has(var):
-				val = self.experiment.get(var)
-			else:
-				val = desc["default"]
-			label = QtGui.QLabel()
-			label.setText("%(name)s<br /><small><i>%(description)s</i></small>" % desc)
-			label.setTextFormat(QtCore.Qt.RichText)
-			edit = settings_edit(self.experiment, var, val, self)
-			self.layout.addRow(label, edit)
 
 class general_header_widget(header_widget.header_widget):
 
