@@ -54,6 +54,7 @@ button_colorpicker,text-css,16
 button_edit_script,utilities-terminal,16
 button_ellipse,os-ellipse,
 button_fixdot,os-fixdot,
+button_forum,help-faq,
 button_gabor,os-gabor,
 button_help_pool,help-contents,16
 button_help_stdout,help-contents,
@@ -63,6 +64,7 @@ button_line,os-line,
 button_new,list-add,
 button_next,go-next,
 button_noise_patch,os-noise,
+button_osdoc,help-browser,
 button_pool_add,list-add,16
 button_pool_filter_clear,edit-clear,16
 button_prev,go-previous,
@@ -123,6 +125,7 @@ label_twitter,twitter,24
 label_update_dialog,update-manager,32
 label_variables_search,edit-find,16
 label_variables,system-search,
+label_warning_icon,emblem-important,32
 label_website,os-experiment,24
 label_wizard,gnome-app-install-star,32
 logger,os-logger,
@@ -154,6 +157,4 @@ unsaved_changes,emblem-important,16
 unused,user-trash,
 video,video-x-generic,
 wizard,gnome-app-install-star,
-button_osdoc,help-browser,
-button_forum,help-faq,
 
