@@ -42,12 +42,22 @@ To handle this, we have the following events
 
 """
 
-class dispatch:
+from PyQt4 import QtCore
+from libqtopensesame.misc import _
+from libqtopensesame.items import experiment
+import libopensesame.exceptions
+
+class dispatch(QtCore.QObject):
 
 	"""
-	The dispatch is informed of changes and passes theses on to the various
+	The dispatch is informed of changes and passes these on to the various
 	parts of the GUI
 	"""
+	
+	event_name_change = QtCore.pyqtSignal(str, str)
+	event_regenerate = QtCore.pyqtSignal(str)	
+	event_script_change = QtCore.pyqtSignal(str)
+	event_simple_change = QtCore.pyqtSignal(str)
 		
 	def __init__(self, main_window):
 	
@@ -58,9 +68,48 @@ class dispatch:
 		main_window -- the main window
 		"""
 	
-		self.main_window = main_window
+		QtCore.QObject.__init__(self)
+		self.main_window = main_window	
+		self.event_name_change.connect(self.name_change)
+		self.event_regenerate.connect(self.regenerate)		
+		self.event_script_change.connect(self.script_change)
+		self.event_simple_change.connect(self.simple_change)
 		
-	def edit_changed(self, name):
+	def script_change(self, name):
+	
+		"""
+		Handles a change to an items script
+		
+		Arguments:
+		name -- the name of an item
+		"""
+	
+		pass
+		
+	def regenerate(self, script):
+	
+		"""Handles a full regeneration of the experiment"""
+		
+		self.main_window.set_busy(True)
+		script = str(script)
+		try:
+			# Generate the new experiment
+			tmp = experiment.experiment(self.main_window, \
+				self.main_window.experiment.title, 	script, \
+				self.main_window.experiment.pool_folder)
+		except libopensesame.exceptions.script_error as error:		
+			# If something is wrong with the script, notify the user
+			self.main_window.experiment.notify(_("Could not parse script: %s") \
+				% error)
+			return
+		# Apply the new experiment
+		self.main_window.experiment = tmp
+		self.main_window.experiment.build_item_tree()			
+		self.main_window.ui.tabwidget.close_all()
+		self.main_window.ui.tabwidget.open_general_script()
+		self.main_window.set_busy(False)
+		
+	def simple_change(self, name):
 	
 		"""
 		Handles simple changes to an item
@@ -71,7 +120,7 @@ class dispatch:
 	
 		self.main_window.refresh_variable_inspector()
 		
-	def name_changed(self, from_name, to_name):
+	def name_change(self, from_name, to_name):
 	
 		"""
 		Handles the name change of an item
@@ -96,5 +145,5 @@ class dispatch:
 		i = self.main_window.ui.tabwidget.get_item(to_name)
 		if i != None:		
 			self.main_window.ui.tabwidget.setTabText(i, to_name)
-		# Pass on to the edit changed phase
-		self.edit_changed(to_name)
+		# Also process simple changes
+		self.simple_change(to_name)
