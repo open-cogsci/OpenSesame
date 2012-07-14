@@ -59,7 +59,7 @@ class qtitem(QtCore.QObject):
 		"""Open the help tab"""
 
 		path = self.experiment.help(self.item_type + ".html")
-		self.experiment.main_window.open_browser_tab(path)
+		self.experiment.main_window.ui.tabwidget.open_browser(path)
 
 	def open_tab(self):
 
