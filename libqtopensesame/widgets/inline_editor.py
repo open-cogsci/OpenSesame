@@ -103,6 +103,8 @@ class python_lexer(QsciLexerPython):
 class scintilla(QsciScintilla):
 
 	"""The text editor"""
+	
+	focusLost = QtCore.pyqtSignal()
 
 	def __init__(self, parent=None, syntax=None):
 
@@ -250,6 +252,7 @@ class scintilla(QsciScintilla):
 		"""Send a focusLost signal if we lose focus"""
 
 		self.emit(QtCore.SIGNAL("focusLost"))
+		self.focusLost.emit()
 		QsciScintilla.focusOutEvent(self, e)
 
 	def focusInEvent(self, e):
@@ -285,6 +288,8 @@ class scintilla(QsciScintilla):
 class inline_editor(QtGui.QFrame):
 
 	"""The wrapper containing the editor and additional controls"""
+	
+	changed = QtCore.pyqtSignal()
 
 	def __init__(self, experiment, notification=None, syntax=None):
 
@@ -306,6 +311,7 @@ class inline_editor(QtGui.QFrame):
 		self.experiment = experiment
 		self.setFrameStyle(QtGui.QFrame.NoFrame)
 		self.edit = scintilla(self, syntax=syntax)
+		self.edit.focusLost.connect(self.changed.emit)
 
 		self.search = QtGui.QLineEdit()
 		self.search.setMaximumWidth(150)
@@ -344,6 +350,7 @@ class inline_editor(QtGui.QFrame):
 			_("Apply"))
 		self.apply.setToolTip(_("Press Alt + A to apply unsaved changes"))
 		self.apply.setIconSize(QtCore.QSize(16, 16))
+		self.apply.clicked.connect(self.changed.emit)
 
 		search_widget = QtGui.QWidget()
 		search_hbox = QtGui.QHBoxLayout(search_widget)
