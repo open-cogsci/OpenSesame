@@ -140,7 +140,7 @@ class tab_widget(QtGui.QTabWidget):
 		"""
 	
 		from libqtopensesame.widgets import webbrowser		
-		browser = webbrowser.webbrowser(self)
+		browser = webbrowser.webbrowser(self.main_window)
 		browser.load(url)
 		self.add(browser, "web-browser", 'Help')
 			
@@ -157,11 +157,21 @@ class tab_widget(QtGui.QTabWidget):
 
 		self.open_browser(self.main_window.experiment.help("%s.html" % item))
 		
+	def open_backend_settings(self):
+	
+		"""Opens the backend settings"""
+				
+		if self.switch('__backend_settings__'):
+			return
+		from libqtopensesame.widgets.backend_settings import backend_settings
+		self.add(backend_settings(self.main_window), 'backend', \
+			'Back-end settings')			
+		
 	def open_general(self):
 
 		"""Opens the general tab"""
 
-		if self.switch('__general__'):
+		if self.switch('__general_properties__'):
 			return			
 		from libqtopensesame.widgets.general_properties import general_properties
 		w = general_properties(self.main_window)		
@@ -230,7 +240,7 @@ class tab_widget(QtGui.QTabWidget):
 		True if the tab exists, False otherwise
 		"""
 		
-		i = self.get_index("__preferences__")
+		i = self.get_index(tab_name)
 		if i == None:
 			return False
 		self.setCurrentIndex(i)
