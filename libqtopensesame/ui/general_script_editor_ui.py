@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'resources/ui/general_script_editor.ui'
 #
-# Created: Sat Jul 14 13:21:07 2012
+# Created: Sat Jul 14 17:34:50 2012
 #      by: PyQt4 UI code generator 4.9.1
 #
 # WARNING! All changes made in this file will be lost!
@@ -29,6 +29,7 @@ class Ui_widget_general_script_editor(object):
         self.widget.setSizePolicy(sizePolicy)
         self.widget.setObjectName(_fromUtf8("widget"))
         self.horizontalLayout = QtGui.QHBoxLayout(self.widget)
+        self.horizontalLayout.setSpacing(16)
         self.horizontalLayout.setMargin(4)
         self.horizontalLayout.setMargin(0)
         self.horizontalLayout.setObjectName(_fromUtf8("horizontalLayout"))
@@ -57,6 +58,6 @@ class Ui_widget_general_script_editor(object):
     def retranslateUi(self, widget_general_script_editor):
         widget_general_script_editor.setWindowTitle(QtGui.QApplication.translate("widget_general_script_editor", "Form", None, QtGui.QApplication.UnicodeUTF8))
         self.label_warning_icon.setText(QtGui.QApplication.translate("widget_general_script_editor", "ICON", None, QtGui.QApplication.UnicodeUTF8))
-        self.label.setText(QtGui.QApplication.translate("widget_general_script_editor", "<h3>Here be dragons</h3><br />\n"
-"Editing the general script may cause your experiment to malfunction!", None, QtGui.QApplication.UnicodeUTF8))
+        self.label.setText(QtGui.QApplication.translate("widget_general_script_editor", "<b>General script editor</b><br />\n"
+"Edit your experiment in script form", None, QtGui.QApplication.UnicodeUTF8))
 
