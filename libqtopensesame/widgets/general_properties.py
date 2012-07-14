@@ -48,7 +48,8 @@ class general_properties(QtGui.QWidget):
 		QtGui.QWidget.__init__(self)
 
 		# Set the header, with the icon, label and script button
-		self.header_widget = general_header_widget(self.main_window.experiment)
+		self.header_widget = general_header_widget(self, \
+			self.main_window.experiment)
 		button_help = QtGui.QPushButton(self.main_window.experiment.icon( \
 			"help"), "")
 		button_help.setIconSize(QtCore.QSize(16, 16))
@@ -276,7 +277,7 @@ class general_header_widget(header_widget.header_widget):
 	The widget containing the clickable title and description of the experiment
 	"""
 
-	def __init__(self, item):
+	def __init__(self, general_tab, item):
 
 		"""
 		Constructor
@@ -286,6 +287,7 @@ class general_header_widget(header_widget.header_widget):
 		"""
 
 		header_widget.header_widget.__init__(self, item)
+		self.general_tab = general_tab
 		self.label_name.setText( \
 			"<font size='5'><b>%s</b> - Experiment</font>&nbsp;&nbsp;&nbsp;<font color='gray'><i>Click to edit</i></font>" \
 			% self.item.get("title"))
@@ -294,7 +296,7 @@ class general_header_widget(header_widget.header_widget):
 
 		"""Apply the name change, hide the editable title and show the label"""
 
-		self.item.main_window.general_tab_widget.apply_changes()
+		self.general_tab.apply_changes()						
 		self.label_name.setText( \
 			"<font size='5'><b>%s</b> - Experiment</font>&nbsp;&nbsp;&nbsp;<font color='gray'><i>Click to edit</i></font>" \
 			% self.item.get("title"))
@@ -308,7 +310,7 @@ class general_header_widget(header_widget.header_widget):
 		Apply the description change, hide the editable description and show the label
 		"""
 
-		self.item.main_window.general_tab_widget.apply_changes()
+		self.general_tab.apply_changes()						
 		self.label_desc.setText(self.item.get("description"))
 		self.label_desc.show()
 		self.edit_desc.setText(self.item.get("description"))
