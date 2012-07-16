@@ -63,7 +63,6 @@ config = {
 	"theme" : "gnome",
 	"toolbar_size" : 32,
 	"toolbar_text" : False,
-	"new_experiment_dialog" : True,
 	"opensesamerun" : False,
 	"opensesamerun_exec" : "",
 	"pos" : QtCore.QPoint(200, 200),

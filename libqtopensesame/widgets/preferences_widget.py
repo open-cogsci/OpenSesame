@@ -68,7 +68,6 @@ class preferences_widget(QtGui.QWidget):
 			self.main_window.check_update)
 		self.ui.combobox_style.currentIndexChanged.connect(self.apply)
 
-		self.ui.checkbox_new_experiment_dialog.toggled.connect(self.apply)
 		self.ui.checkbox_scintilla_auto_indent.toggled.connect(self.apply)
 		self.ui.checkbox_scintilla_brace_match.toggled.connect(self.apply)
 		self.ui.checkbox_scintilla_custom_font.toggled.connect(self.apply)
@@ -128,8 +127,6 @@ class preferences_widget(QtGui.QWidget):
 		self.ui.edit_opensesamerun_exec.setText( \
 			self.main_window.opensesamerun_exec)
 
-		self.ui.checkbox_new_experiment_dialog.setChecked(config.get_config( \
-			"new_experiment_dialog"))
 		self.ui.checkbox_scintilla_auto_indent.setChecked(config.get_config( \
 			"scintilla_auto_indent"))
 		self.ui.checkbox_scintilla_brace_match.setChecked(config.get_config( \
@@ -255,8 +252,6 @@ class preferences_widget(QtGui.QWidget):
 			self.main_window.opensesamerun_exec = str( \
 				self.ui.edit_opensesamerun_exec.text())
 
-		config.set_config("new_experiment_dialog", \
-			self.ui.checkbox_new_experiment_dialog.isChecked())
 		config.set_config("scintilla_auto_indent", \
 			self.ui.checkbox_scintilla_auto_indent.isChecked())
 		config.set_config("scintilla_brace_match", \
