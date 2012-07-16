@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'resources/ui/webbrowser_widget.ui'
 #
-# Created: Mon Jul  9 21:48:15 2012
+# Created: Mon Jul 16 15:25:23 2012
 #      by: PyQt4 UI code generator 4.9.1
 #
 # WARNING! All changes made in this file will be lost!
@@ -17,7 +17,7 @@ except AttributeError:
 class Ui_webbrowser_widget(object):
     def setupUi(self, webbrowser_widget):
         webbrowser_widget.setObjectName(_fromUtf8("webbrowser_widget"))
-        webbrowser_widget.resize(412, 452)
+        webbrowser_widget.resize(402, 326)
         self.layout_main = QtGui.QVBoxLayout(webbrowser_widget)
         self.layout_main.setMargin(4)
         self.layout_main.setObjectName(_fromUtf8("layout_main"))

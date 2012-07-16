@@ -23,12 +23,27 @@ from libqtopensesame.ui import webbrowser_widget_ui
 import os.path
 import sys
 
-class webbrowser(QtGui.QWidget):
+class small_webview(QtWebKit.QWebView):
 
 	"""
-	A very basic wrapper around QWebView, which currently adds nothing. This is
-	used to add a browser tab to opensesame
+	A wrapper around QWebView too override the sizeHint, which prevents the
+	browser from resizing to small sizes
 	"""
+
+	def sizeHint(self):
+	
+		"""
+		Give size hint
+		
+		Returns:
+		A QSize
+		"""
+	
+		return QtCore.QSize(100,100)
+
+class webbrowser(QtGui.QWidget):
+
+	"""A simple browser tab"""
 
 	def __init__(self, parent):
 	
@@ -41,18 +56,18 @@ class webbrowser(QtGui.QWidget):
 	
 		QtGui.QWidget.__init__(self, parent)							
 		self.main_window = parent
-		self.history = []
-		self.webview = QtWebKit.QWebView(self)
-		self.webview.loadProgress.connect(self.update_progressbar)
-		self.webview.loadStarted.connect(self.load_started)
-		self.webview.loadFinished.connect(self.load_finished)
-		self.webview.urlChanged.connect(self.url_changed)
 		self.ui = webbrowser_widget_ui.Ui_webbrowser_widget()
-		self.ui.setupUi(self)
-		self.ui.button_back.clicked.connect(self.webview.back)
+		self.ui.setupUi(self)		
+		
+		self.ui.webview = small_webview(self)		
+		self.ui.webview.loadProgress.connect(self.update_progressbar)
+		self.ui.webview.loadStarted.connect(self.load_started)
+		self.ui.webview.loadFinished.connect(self.load_finished)
+		self.ui.webview.urlChanged.connect(self.url_changed)
+		self.ui.layout_main.addWidget(self.ui.webview)
+		self.ui.button_back.clicked.connect(self.ui.webview.back)
 		self.ui.button_osdoc.clicked.connect(self.open_osdoc)
 		self.ui.button_forum.clicked.connect(self.open_forum)
-		self.ui.layout_main.addWidget(self.webview)
 		self.main_window.theme.apply_theme(self)	
 						
 	def load(self, url):
@@ -64,7 +79,7 @@ class webbrowser(QtGui.QWidget):
 		url -- the webpage to load
 		"""
 	
-		self.webview.load(QtCore.QUrl(url))
+		self.ui.webview.load(QtCore.QUrl(url))
 		
 	def load_finished(self):
 	
