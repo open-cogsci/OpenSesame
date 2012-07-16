@@ -359,14 +359,4 @@ class sequence(libopensesame.sequence.sequence, qtitem.qtitem):
 				return True
 		return False
 
-	def item_tree_info(self):
-
-		"""
-		Returns an info string for the item tree widget
-
-		Returns:
-		An info string
-		"""
-
-		return "%s items" % len(self.items)
 

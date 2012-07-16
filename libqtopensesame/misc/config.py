@@ -40,7 +40,6 @@ config = {
 	"immediate_rename" : False,
 	"locale" : "default",	
 	"onetabmode" : False,
-	"overview_info" : False,
 	"recent_files" : "",
 	"scintilla_line_numbers" : True,
 	"scintilla_right_margin" : False,

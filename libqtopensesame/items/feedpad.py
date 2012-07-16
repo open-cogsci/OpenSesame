@@ -75,22 +75,4 @@ class feedpad:
 				or (type(i["y"]) != str and abs(i["y"]) > yc) )
 			for i in self.items] )
 
-	def item_tree_info(self):
-
-		"""
-		Returns an info string for the item tree widget
-
-		Returns:
-		An info string
-		"""
-
-		if type(self.duration) == int:
-			if self.duration <= 0:
-				return _("no delay")
-			return "%s ms" % self.duration
-
-		if "[" in self.duration:
-			return _("variable duration")
-
-		return _("until %s" % self.duration)
 

@@ -160,8 +160,6 @@ class qtopensesame(QtGui.QMainWindow):
 		self.ui.action_add_logger.triggered.connect(self.drag_logger)
 		self.ui.action_add_inline_script.triggered.connect( \
 			self.drag_inline_script)
-		self.ui.action_show_info_in_overview.triggered.connect( \
-			self.toggle_overview_info)
 		self.ui.button_help_stdout.clicked.connect( \
 			self.ui.tabwidget.open_stdout_help)
 
@@ -328,9 +326,6 @@ class qtopensesame(QtGui.QMainWindow):
 				
 		self.ui.action_enable_auto_response.setChecked( \
 			self.experiment.auto_response)
-		self.ui.action_show_info_in_overview.setChecked(config.get_config( \
-			"overview_info"))
-		self.toggle_overview_info()
 		self.ui.action_onetabmode.setChecked(config.get_config("onetabmode"))
 		self.ui.action_compact_toolbar.setChecked( \
 			config.get_config("toolbar_size") == 16)
@@ -366,7 +361,6 @@ class qtopensesame(QtGui.QMainWindow):
 		settings.setValue("immediate_rename", self.immediate_rename)
 		settings.setValue("opensesamerun", self.opensesamerun)
 		settings.setValue("opensesamerun_exec", self.opensesamerun_exec)
-		settings.setValue("overview_info", self.overview_info)
 		settings.setValue("auto_response", self.experiment.auto_response)
 		settings.setValue("toolbar_text", \
 			self.ui.toolbar_main.toolButtonStyle() == \
@@ -546,25 +540,6 @@ class qtopensesame(QtGui.QMainWindow):
 
 		self.immediate_rename = self.ui.action_immediate_rename.isChecked()
 		debug.msg("set to %s" % self.immediate_rename)
-
-	def toggle_overview_info(self):
-
-		"""
-		Set the visibility of the info column in the overview based on the menu action
-		"""
-
-		self.overview_info = self.ui.action_show_info_in_overview.isChecked()
-		if self.overview_info:
-			self.ui.itemtree.setColumnCount(2)
-			self.ui.itemtree.setHeaderHidden(False)
-			self.ui.itemtree.setColumnWidth(0, 100)
-			self.ui.itemtree.resizeColumnToContents(0)			
-			if self.ui.itemtree.columnWidth(1) < 20:
-				self.ui.itemtree.setColumnWidth(1, 20)
-		else:
-			self.ui.itemtree.setColumnCount(1)
-			self.ui.itemtree.setHeaderHidden(True)
-		debug.msg("set to %s" % self.overview_info)
 
 	def update_dialog(self, message):
 

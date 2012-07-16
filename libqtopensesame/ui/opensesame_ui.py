@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'resources/ui/opensesame.ui'
 #
-# Created: Mon Jul 16 12:06:05 2012
+# Created: Mon Jul 16 13:05:03 2012
 #      by: PyQt4 UI code generator 4.9.1
 #
 # WARNING! All changes made in this file will be lost!
@@ -425,20 +425,14 @@ class Ui_opensesame_mainwindow(object):
         self.action_preferences.setObjectName(_fromUtf8("action_preferences"))
         self.actionDummy = QtGui.QAction(opensesame_mainwindow)
         self.actionDummy.setObjectName(_fromUtf8("actionDummy"))
-        self.action_show_info_in_overview = QtGui.QAction(opensesame_mainwindow)
-        self.action_show_info_in_overview.setCheckable(True)
-        icon32 = QtGui.QIcon()
-        icon32.addPixmap(QtGui.QPixmap(_fromUtf8(":/icons/iteminfo_large.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.action_show_info_in_overview.setIcon(icon32)
-        self.action_show_info_in_overview.setObjectName(_fromUtf8("action_show_info_in_overview"))
         self.action_show_overview = QtGui.QAction(opensesame_mainwindow)
         self.action_show_overview.setCheckable(True)
         self.action_show_overview.setObjectName(_fromUtf8("action_show_overview"))
         self.action_onetabmode = QtGui.QAction(opensesame_mainwindow)
         self.action_onetabmode.setCheckable(True)
-        icon33 = QtGui.QIcon()
-        icon33.addPixmap(QtGui.QPixmap(_fromUtf8(":/icons/onetabmode_large.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.action_onetabmode.setIcon(icon33)
+        icon32 = QtGui.QIcon()
+        icon32.addPixmap(QtGui.QPixmap(_fromUtf8(":/icons/onetabmode_large.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.action_onetabmode.setIcon(icon32)
         self.action_onetabmode.setObjectName(_fromUtf8("action_onetabmode"))
         self.action_compact_toolbar = QtGui.QAction(opensesame_mainwindow)
         self.action_compact_toolbar.setCheckable(True)
@@ -475,7 +469,6 @@ class Ui_opensesame_mainwindow(object):
         self.menu_view.addAction(self.action_close_all_tabs)
         self.menu_view.addAction(self.action_close_other_tabs)
         self.menu_view.addAction(self.action_onetabmode)
-        self.menu_view.addAction(self.action_show_info_in_overview)
         self.menu_view.addSeparator()
         self.menu_view.addAction(self.action_show_overview)
         self.menu_view.addAction(self.action_show_variable_inspector)
@@ -504,7 +497,6 @@ class Ui_opensesame_mainwindow(object):
         self.toolbar_main.addSeparator()
         self.toolbar_main.addAction(self.action_close_other_tabs)
         self.toolbar_main.addAction(self.action_onetabmode)
-        self.toolbar_main.addAction(self.action_show_info_in_overview)
         self.toolbar_main.addSeparator()
         self.toolbar_main.addAction(self.action_show_pool)
         self.toolbar_main.addAction(self.action_show_variable_inspector)
@@ -530,7 +522,6 @@ class Ui_opensesame_mainwindow(object):
         self.menu_tools.setTitle(QtGui.QApplication.translate("opensesame_mainwindow", "Tools", None, QtGui.QApplication.UnicodeUTF8))
         self.dock_overview.setWindowTitle(QtGui.QApplication.translate("opensesame_mainwindow", "Overview", None, QtGui.QApplication.UnicodeUTF8))
         self.itemtree.headerItem().setText(0, QtGui.QApplication.translate("opensesame_mainwindow", "Name", None, QtGui.QApplication.UnicodeUTF8))
-        self.itemtree.headerItem().setText(1, QtGui.QApplication.translate("opensesame_mainwindow", "Info", None, QtGui.QApplication.UnicodeUTF8))
         self.dock_variable_inspector.setWindowTitle(QtGui.QApplication.translate("opensesame_mainwindow", "Variable inspector", None, QtGui.QApplication.UnicodeUTF8))
         self.label_3.setText(QtGui.QApplication.translate("opensesame_mainwindow", "Variable inspector", None, QtGui.QApplication.UnicodeUTF8))
         self.edit_variable_filter.setToolTip(QtGui.QApplication.translate("opensesame_mainwindow", "Enter a filter", None, QtGui.QApplication.UnicodeUTF8))
@@ -606,7 +597,6 @@ class Ui_opensesame_mainwindow(object):
         self.action_contribute.setText(QtGui.QApplication.translate("opensesame_mainwindow", "Contribute", None, QtGui.QApplication.UnicodeUTF8))
         self.action_preferences.setText(QtGui.QApplication.translate("opensesame_mainwindow", "Preferences", None, QtGui.QApplication.UnicodeUTF8))
         self.actionDummy.setText(QtGui.QApplication.translate("opensesame_mainwindow", "Dummy", None, QtGui.QApplication.UnicodeUTF8))
-        self.action_show_info_in_overview.setText(QtGui.QApplication.translate("opensesame_mainwindow", "Show info in overview", None, QtGui.QApplication.UnicodeUTF8))
         self.action_show_overview.setText(QtGui.QApplication.translate("opensesame_mainwindow", "Show overview area", None, QtGui.QApplication.UnicodeUTF8))
         self.action_show_overview.setShortcut(QtGui.QApplication.translate("opensesame_mainwindow", "Ctrl+Shift+O", None, QtGui.QApplication.UnicodeUTF8))
         self.action_onetabmode.setText(QtGui.QApplication.translate("opensesame_mainwindow", "One tab mode", None, QtGui.QApplication.UnicodeUTF8))

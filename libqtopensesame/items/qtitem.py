@@ -308,10 +308,6 @@ class qtitem(QtCore.QObject):
 		self.experiment.items[self.name].init_script_widget()
 		self.experiment.main_window.dispatch.event_script_change.emit(self.name)
 		
-#		# Refresh the experiment
-#		self.experiment.main_window.hard_refresh(self.name)
-#		self.experiment.main_window.refresh(self.name)
-
 	def strip_script_line(self, s):
 
 		"""
@@ -476,19 +472,7 @@ class qtitem(QtCore.QObject):
 
 		pass
 
-	def item_tree_info(self):
-
-		"""
-		Returns an info string for the item tree widget
-
-		Returns:
-		An info string
-		"""
-
-		return ""
-
-	def item_tree_widget(self, toplevel, icon=None, name=None, tooltip=None, \
-		info=None):
+	def item_tree_widget(self, toplevel, icon=None, name=None, tooltip=None):
 
 		"""
 		Create a single item tree widget
@@ -499,7 +483,6 @@ class qtitem(QtCore.QObject):
 		Keyword arguments:
 		icon -- an icon name or None for default (default=None)
 		name -- the name of the item or None for default (default=None)
-		info -- info for the second column or None for default (default=None)
 		tooltip -- the tooltip or None for default (default=None)
 
 		Returns:
@@ -513,19 +496,14 @@ class qtitem(QtCore.QObject):
 		if tooltip == None:
 			tooltip = _("Type: %s\nDescription: %s") % (self.item_type, \
 				self.description)
-		if info == None:
-			info = self.item_tree_info()
 		font = QtGui.QFont()
 		font.setPointSize(8)
 		font.setItalic(True)
 		widget = QtGui.QTreeWidgetItem(toplevel)
 		widget.setText(0, name)
 		widget.setIcon(0, self.experiment.icon(icon))
-		widget.setText(1, info)
-		widget.setFont(1, font)
 		widget.name = name
 		widget.setToolTip(0, tooltip)
-		widget.setToolTip(1, tooltip)
 		return widget
 
 	def build_item_tree(self, toplevel=None, items=[]):

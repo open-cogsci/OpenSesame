@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'resources/ui/start_new_widget.ui'
 #
-# Created: Mon Jul 16 12:37:50 2012
+# Created: Mon Jul 16 12:41:19 2012
 #      by: PyQt4 UI code generator 4.9.1
 #
 # WARNING! All changes made in this file will be lost!
@@ -24,6 +24,7 @@ class Ui_widget_start_new(object):
         self.widget_main_container = QtGui.QWidget(widget_start_new)
         self.widget_main_container.setObjectName(_fromUtf8("widget_main_container"))
         self.layout_main = QtGui.QVBoxLayout(self.widget_main_container)
+        self.layout_main.setMargin(10)
         self.layout_main.setMargin(0)
         self.layout_main.setObjectName(_fromUtf8("layout_main"))
         spacerItem = QtGui.QSpacerItem(20, 40, QtGui.QSizePolicy.Minimum, QtGui.QSizePolicy.Preferred)

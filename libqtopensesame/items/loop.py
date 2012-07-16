@@ -559,18 +559,7 @@ class loop(libopensesame.loop.loop, qtitem.qtitem):
 		self.refresh_loop_table()
 		self.experiment.main_window.refresh(self.name)
 		self.loop_table.setCurrentCell(row, column)
-		self.lock = False
-		
-	def item_tree_info(self):
-
-		"""
-		Returns an info string for the item tree widget
-
-		Returns:
-		An info string
-		"""
-
-		return "%s, %s" % (self.call_count(), self.order)
+		self.lock = False	
 
 	def build_item_tree(self, toplevel, items):
 
