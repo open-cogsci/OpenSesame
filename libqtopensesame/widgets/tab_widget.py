@@ -36,7 +36,9 @@ class tab_widget(QtGui.QTabWidget):
 	
 		QtGui.QTabWidget.__init__(self, parent)		
 		self.tabCloseRequested.connect(self.removeTab)				
-		self.currentChanged.connect(self.index_changed)		
+		self.currentChanged.connect(self.index_changed)
+		self.setSizePolicy(QtGui.QSizePolicy.MinimumExpanding, \
+			QtGui.QSizePolicy.MinimumExpanding)
 		
 	def add(self, widget, icon, name):
 	
@@ -165,7 +167,13 @@ class tab_widget(QtGui.QTabWidget):
 			return
 		from libqtopensesame.widgets.backend_settings import backend_settings
 		self.add(backend_settings(self.main_window), 'backend', \
-			'Back-end settings')			
+			'Back-end settings')	
+			
+	def open_forum(self):
+	
+		"""Open osdoc.cogsci.nl"""
+	
+		self.open_browser('http://forum.cogsci.nl')								
 		
 	def open_general(self):
 
@@ -230,6 +238,16 @@ class tab_widget(QtGui.QTabWidget):
 		if not self.switch("__preferences__"):
 			self.add(preferences_widget.preferences_widget(self.main_window), \
 				"options", "Preferences")	
+				
+	def open_start_new(self):
+
+		"""Opens the unused tab"""
+
+		if self.switch('__start_new__'):
+			return			
+		from libqtopensesame.widgets.start_new_widget import start_new_widget
+		w = start_new_widget(self.main_window)		
+		self.add(w, 'os-experiment', 'Get started')
 		
 	def switch(self, tab_name):
 	
@@ -272,4 +290,5 @@ class tab_widget(QtGui.QTabWidget):
 		w = self.currentWidget()
 		if hasattr(w, 'on_activate'):
 			w.on_activate()
+			
 
