@@ -19,6 +19,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 
 import libopensesame.keyboard_response
 from libqtopensesame.items import qtplugin
+from libqtopensesame.misc import _
 from openexp.keyboard import keyboard
 from PyQt4 import QtCore, QtGui
 import cgi
