@@ -18,6 +18,12 @@
     <normaloff>:/icons/experiment.png</normaloff>:/icons/experiment.png</iconset>
   </property>
   <widget class="QWidget" name="centralwidget">
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
+   </property>
    <layout class="QVBoxLayout" name="verticalLayout_6">
     <item>
      <widget class="tab_widget" name="tabwidget">
@@ -40,7 +46,7 @@
      <x>0</x>
      <y>0</y>
      <width>1000</width>
-     <height>23</height>
+     <height>25</height>
     </rect>
    </property>
    <widget class="QMenu" name="menu_file">
@@ -133,6 +139,18 @@
   </widget>
   <widget class="statusbar" name="statusbar"/>
   <widget class="QDockWidget" name="dock_overview">
+   <property name="minimumSize">
+    <size>
+     <width>200</width>
+     <height>103</height>
+    </size>
+   </property>
+   <property name="maximumSize">
+    <size>
+     <width>350</width>
+     <height>524287</height>
+    </size>
+   </property>
    <property name="features">
     <set>QDockWidget::AllDockWidgetFeatures</set>
    </property>
@@ -146,12 +164,6 @@
     <layout class="QVBoxLayout" name="verticalLayout">
      <item>
       <widget class="tree_overview" name="itemtree">
-       <property name="minimumSize">
-        <size>
-         <width>200</width>
-         <height>0</height>
-        </size>
-       </property>
        <property name="acceptDrops">
         <bool>true</bool>
        </property>
@@ -362,6 +374,12 @@ background-color: #729fcf;</string>
    </widget>
   </widget>
   <widget class="QDockWidget" name="dock_pool">
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
+   </property>
    <property name="windowTitle">
     <string>File pool</string>
    </property>

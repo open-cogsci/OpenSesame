@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'resources/ui/opensesame.ui'
 #
-# Created: Fri Jul 13 15:12:18 2012
+# Created: Mon Jul 16 12:06:05 2012
 #      by: PyQt4 UI code generator 4.9.1
 #
 # WARNING! All changes made in this file will be lost!
@@ -22,6 +22,11 @@ class Ui_opensesame_mainwindow(object):
         icon.addPixmap(QtGui.QPixmap(_fromUtf8(":/icons/experiment.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         opensesame_mainwindow.setWindowIcon(icon)
         self.centralwidget = QtGui.QWidget(opensesame_mainwindow)
+        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.MinimumExpanding, QtGui.QSizePolicy.Preferred)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.centralwidget.sizePolicy().hasHeightForWidth())
+        self.centralwidget.setSizePolicy(sizePolicy)
         self.centralwidget.setObjectName(_fromUtf8("centralwidget"))
         self.verticalLayout_6 = QtGui.QVBoxLayout(self.centralwidget)
         self.verticalLayout_6.setObjectName(_fromUtf8("verticalLayout_6"))
@@ -32,7 +37,7 @@ class Ui_opensesame_mainwindow(object):
         self.verticalLayout_6.addWidget(self.tabwidget)
         opensesame_mainwindow.setCentralWidget(self.centralwidget)
         self.menubar = QtGui.QMenuBar(opensesame_mainwindow)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 1000, 23))
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 1000, 25))
         self.menubar.setObjectName(_fromUtf8("menubar"))
         self.menu_file = QtGui.QMenu(self.menubar)
         self.menu_file.setObjectName(_fromUtf8("menu_file"))
@@ -56,6 +61,8 @@ class Ui_opensesame_mainwindow(object):
         self.statusbar.setObjectName(_fromUtf8("statusbar"))
         opensesame_mainwindow.setStatusBar(self.statusbar)
         self.dock_overview = QtGui.QDockWidget(opensesame_mainwindow)
+        self.dock_overview.setMinimumSize(QtCore.QSize(200, 103))
+        self.dock_overview.setMaximumSize(QtCore.QSize(350, 524287))
         self.dock_overview.setFeatures(QtGui.QDockWidget.AllDockWidgetFeatures)
         self.dock_overview.setObjectName(_fromUtf8("dock_overview"))
         self.dock_widget_overview = QtGui.QWidget()
@@ -63,7 +70,6 @@ class Ui_opensesame_mainwindow(object):
         self.verticalLayout = QtGui.QVBoxLayout(self.dock_widget_overview)
         self.verticalLayout.setObjectName(_fromUtf8("verticalLayout"))
         self.itemtree = tree_overview(self.dock_widget_overview)
-        self.itemtree.setMinimumSize(QtCore.QSize(200, 0))
         self.itemtree.setAcceptDrops(True)
         self.itemtree.setAlternatingRowColors(True)
         self.itemtree.setAutoExpandDelay(4)
@@ -166,6 +172,11 @@ class Ui_opensesame_mainwindow(object):
         self.dock_variable_inspector.setWidget(self.dock_widget_variable_inspector)
         opensesame_mainwindow.addDockWidget(QtCore.Qt.DockWidgetArea(2), self.dock_variable_inspector)
         self.dock_pool = QtGui.QDockWidget(opensesame_mainwindow)
+        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Maximum, QtGui.QSizePolicy.Maximum)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.dock_pool.sizePolicy().hasHeightForWidth())
+        self.dock_pool.setSizePolicy(sizePolicy)
         self.dock_pool.setObjectName(_fromUtf8("dock_pool"))
         self.dock_pool_widget = QtGui.QWidget()
         self.dock_pool_widget.setObjectName(_fromUtf8("dock_pool_widget"))

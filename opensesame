@@ -75,10 +75,7 @@ if __name__ == "__main__":
 		opensesame.run_experiment(False)
 	else:
 		opensesame.check_update(always=False)
-		if new_wizard:
-			opensesame.start_new_wizard()
-		else:
-			opensesame.open_general_tab()
+		opensesame.ui.tabwidget.open_start_new()
 
 	opensesame.restore_window_state()
 	opensesame.refresh()

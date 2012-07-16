@@ -192,4 +192,4 @@ class tree_overview(QtGui.QTreeWidget):
 			self.main_window.open_item(self.currentItem())
 		elif e.key() == QtCore.Qt.Key_Space:
 			self.context_menu(self.currentItem())
-
+			

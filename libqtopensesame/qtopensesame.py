@@ -71,7 +71,7 @@ class qtopensesame(QtGui.QMainWindow):
 				
 		# Setup the UI
 		self.ui = opensesame_ui.Ui_opensesame_mainwindow()
-		self.ui.setupUi(self)			
+		self.ui.setupUi(self)		
 		self.ui.toolbar_items.main_window = self
 		self.ui.itemtree.main_window = self
 		self.ui.table_variables.main_window = self
@@ -274,6 +274,7 @@ class qtopensesame(QtGui.QMainWindow):
 		"""
 
 		self.restoreState(self._initial_window_state)
+		self.ui.itemtree.resize(200, 0)
 
 	def restore_state(self):
 
@@ -534,27 +535,6 @@ class qtopensesame(QtGui.QMainWindow):
 			self.setWindowTitle(_("%s [unsaved]") % self.window_msg)
 		else:
 			self.setWindowTitle("%s" % self.window_msg)
-
-	def start_new_wizard(self, dummy=None):
-
-		"""
-		Presents a start new-experiment-wizard type of dialog
-
-		Keywords arguments:
-		dummy -- a dummy argument passed by the signal handler (default=None)
-		"""
-
-		from libqtopensesame.dialogs import start_new_dialog
-
-		if config.get_config("new_experiment_dialog"):
-			d = start_new_dialog.start_new_dialog(self)
-			d.exec_()
-		else:
-			self.open_file(path=self.experiment.resource(os.path.join( \
-				"templates", "default.opensesame")))
-			self.window_message("New experiment")
-			self.current_path = None
-		self.set_auto_response()
 
 	def set_immediate_rename(self):
 
@@ -864,7 +844,7 @@ class qtopensesame(QtGui.QMainWindow):
 
 		"""Discard the current experiment and start with a new file"""
 
-		self.start_new_wizard() # Simply start the new wizard
+		self.ui.tabwidget.open_start_new()
 
 	def open_file(self, dummy=None, path=None, add_to_recent=True):
 
