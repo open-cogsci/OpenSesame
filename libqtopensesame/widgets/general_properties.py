@@ -62,7 +62,7 @@ class general_properties(QtGui.QWidget):
 		header_hbox.addWidget(self.header_widget)
 		header_hbox.addStretch()
 		header_hbox.addWidget(button_help)
-		header_hbox.setContentsMargins(0, 0, 0, 16)
+		header_hbox.setContentsMargins(0, 0, 0, 0)
 		header_widget = QtGui.QWidget()
 		header_widget.setLayout(header_hbox)
 
@@ -70,6 +70,7 @@ class general_properties(QtGui.QWidget):
 		w = QtGui.QWidget()
 		self.ui = general_widget_ui.Ui_general_widget()
 		self.ui.setupUi(w)
+		self.ui.widget_credits.initialize(self.main_window)
 		self.main_window.theme.apply_theme(self)
 
 		# Initialize the color and font widgets
@@ -86,12 +87,6 @@ class general_properties(QtGui.QWidget):
 		# Connect the rest
 		self.ui.spinbox_width.editingFinished.connect(self.apply_changes)
 		self.ui.spinbox_height.editingFinished.connect(self.apply_changes)
-		self.ui.label_opensesame.setText(unicode( \
-			self.ui.label_opensesame.text()).replace("[version]", \
-			misc.version).replace("[codename]", misc.codename))			
-		self.ui.label_website.mousePressEvent = self.open_website
-		self.ui.label_facebook.mousePressEvent = self.open_facebook
-		self.ui.label_twitter.mousePressEvent = self.open_twitter
 		self.ui.button_script_editor.clicked.connect( \
 			self.main_window.ui.tabwidget.open_general_script)
 		self.ui.button_backend_settings.clicked.connect( \
@@ -124,25 +119,7 @@ class general_properties(QtGui.QWidget):
 			"<font size='5'><b>%s</b> - Experiment</font>&nbsp;&nbsp;&nbsp;<font color='gray'><i>Click to edit</i></font>" \
 			% self.main_window.experiment.title)
 		self.header_widget.edit_desc.setText(self.main_window.experiment.description)
-		self.header_widget.label_desc.setText(self.main_window.experiment.description)
-		
-	def open_website(self, dummy=None):
-	
-		"""Open the main website"""
-		
-		misc.open_url(config.get_config("url_website"))
-		
-	def open_facebook(self, dummy=None):
-	
-		"""Open Facebook page"""	
-
-		misc.open_url(config.get_config("url_facebook"))
-
-	def open_twitter(self, dummy=None):
-	
-		"""Open Twitter page"""	
-	
-		misc.open_url(config.get_config("url_twitter"))
+		self.header_widget.label_desc.setText(self.main_window.experiment.description)		
 
 	def apply_changes(self):
 
