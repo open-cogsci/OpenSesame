@@ -483,7 +483,7 @@ class qtopensesame(QtGui.QMainWindow):
 		"""
 
 		if not self.unsaved_changes:
-			return
+			return True
 		resp = QtGui.QMessageBox.question(self.ui.centralwidget, \
 			_("Save changes?"), \
 			_("Your experiment contains unsaved changes. Do you want to save your experiment?"), \
@@ -867,7 +867,7 @@ class qtopensesame(QtGui.QMainWindow):
 
 		if path == None:
 			path = QtGui.QFileDialog.getOpenFileName(self.ui.centralwidget, \
-				"Open file", filter=self.file_type_filter)
+				_("Open file"), filter=self.file_type_filter)
 		if path == None or path == "":
 			return
 
