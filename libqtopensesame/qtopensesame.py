@@ -487,9 +487,13 @@ class qtopensesame(QtGui.QMainWindow):
 		resp = QtGui.QMessageBox.question(self.ui.centralwidget, \
 			_("Save changes?"), \
 			_("Your experiment contains unsaved changes. Do you want to save your experiment?"), \
-			QtGui.QMessageBox.Yes, QtGui.QMessageBox.No)
+			QtGui.QMessageBox.Yes, QtGui.QMessageBox.No, \
+				QtGui.QMessageBox.Cancel)
+		if resp == QtGui.QMessageBox.Cancel:
+			return False
 		if resp == QtGui.QMessageBox.Yes:
 			self.save_file()
+		return True
 
 	def set_unsaved(self, unsaved_changes=True):
 
@@ -857,7 +861,9 @@ class qtopensesame(QtGui.QMainWindow):
 				(default=None)
 		"""
 
-		self.save_unsaved_changes()
+		if not self.save_unsaved_changes():
+			self.ui.tabwidget.open_general()
+			return
 
 		if path == None:
 			path = QtGui.QFileDialog.getOpenFileName(self.ui.centralwidget, \

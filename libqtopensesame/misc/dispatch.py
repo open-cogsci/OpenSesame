@@ -108,6 +108,7 @@ class dispatch(QtCore.QObject):
 		self.main_window.ui.tabwidget.close_all()
 		self.main_window.ui.tabwidget.open_general_script()
 		self.main_window.set_busy(False)
+		self.main_window.set_unsaved()		
 		
 	def simple_change(self, name):
 	
@@ -119,6 +120,7 @@ class dispatch(QtCore.QObject):
 		"""
 	
 		self.main_window.refresh_variable_inspector()
+		self.main_window.set_unsaved()
 		
 	def name_change(self, from_name, to_name):
 	
@@ -130,6 +132,7 @@ class dispatch(QtCore.QObject):
 		to_name -- the new name		
 		"""
 	
+		self.main_window.set_busy(True)
 		from_name = str(from_name)
 		to_name = str(to_name)
 		# Rename the item in the experiment item list
@@ -147,3 +150,4 @@ class dispatch(QtCore.QObject):
 			self.main_window.ui.tabwidget.setTabText(i, to_name)
 		# Also process simple changes
 		self.simple_change(to_name)
+		self.main_window.set_busy(False)		
