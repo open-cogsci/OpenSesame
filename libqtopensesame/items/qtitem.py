@@ -295,7 +295,7 @@ class qtitem(QtCore.QObject):
 			try:
 				self.experiment.items[item].from_string(script)
 			except Exception as e:
-				self.experiment.notify(str(e))
+				self.experiment.notify(unicode(e))
 				return
 		else:
 			self.experiment.items[item].from_string(script)
@@ -306,10 +306,11 @@ class qtitem(QtCore.QObject):
 		self.experiment.items[self.name] = self.experiment.items[item]
 		del self.experiment.items[item]
 		self.experiment.items[self.name].init_script_widget()
-
-		# Refresh the experiment
-		self.experiment.main_window.hard_refresh(self.name)
-		self.experiment.main_window.refresh(self.name)
+		self.experiment.main_window.dispatch.event_script_change.emit(self.name)
+		
+#		# Refresh the experiment
+#		self.experiment.main_window.hard_refresh(self.name)
+#		self.experiment.main_window.refresh(self.name)
 
 	def strip_script_line(self, s):
 

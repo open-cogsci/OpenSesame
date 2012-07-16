@@ -84,7 +84,8 @@ class dispatch(QtCore.QObject):
 		name -- the name of an item
 		"""
 	
-		pass
+		self.main_window.experiment.build_item_tree()		
+		self.simple_change(name)
 		
 	def regenerate(self, script):
 	
