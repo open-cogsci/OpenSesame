@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'resources/ui/pool_widget.ui'
 #
-# Created: Mon Jul  9 13:58:20 2012
+# Created: Tue Jul 17 12:43:04 2012
 #      by: PyQt4 UI code generator 4.9.1
 #
 # WARNING! All changes made in this file will be lost!
@@ -21,28 +21,26 @@ class Ui_pool_widget(object):
         pool_widget.setAcceptDrops(True)
         self.verticalLayout = QtGui.QVBoxLayout(pool_widget)
         self.verticalLayout.setObjectName(_fromUtf8("verticalLayout"))
-        self.widget = QtGui.QWidget(pool_widget)
-        self.widget.setStyleSheet(_fromUtf8("background-color: #729fcf;\n"
-"color: rgb(255, 255, 255);"))
-        self.widget.setObjectName(_fromUtf8("widget"))
-        self.horizontalLayout = QtGui.QHBoxLayout(self.widget)
-        self.horizontalLayout.setMargin(5)
+        self.widget_header_box = QtGui.QWidget(pool_widget)
+        self.widget_header_box.setObjectName(_fromUtf8("widget_header_box"))
+        self.horizontalLayout = QtGui.QHBoxLayout(self.widget_header_box)
+        self.horizontalLayout.setSpacing(0)
+        self.horizontalLayout.setMargin(4)
         self.horizontalLayout.setMargin(0)
         self.horizontalLayout.setObjectName(_fromUtf8("horizontalLayout"))
-        self.label_pool = QtGui.QLabel(self.widget)
+        self.label_pool = QtGui.QLabel(self.widget_header_box)
         sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Fixed, QtGui.QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.label_pool.sizePolicy().hasHeightForWidth())
         self.label_pool.setSizePolicy(sizePolicy)
-        self.label_pool.setText(_fromUtf8(""))
         self.label_pool.setPixmap(QtGui.QPixmap(_fromUtf8(":/icons/pool_large.png")))
         self.label_pool.setObjectName(_fromUtf8("label_pool"))
         self.horizontalLayout.addWidget(self.label_pool)
-        self.label_3 = QtGui.QLabel(self.widget)
+        self.label_3 = QtGui.QLabel(self.widget_header_box)
         self.label_3.setObjectName(_fromUtf8("label_3"))
         self.horizontalLayout.addWidget(self.label_3)
-        self.verticalLayout.addWidget(self.widget)
+        self.verticalLayout.addWidget(self.widget_header_box)
         self.widget_pool = QtGui.QWidget(pool_widget)
         sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Preferred, QtGui.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
@@ -151,6 +149,7 @@ class Ui_pool_widget(object):
 
     def retranslateUi(self, pool_widget):
         pool_widget.setWindowTitle(QtGui.QApplication.translate("pool_widget", "Form", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_pool.setText(QtGui.QApplication.translate("pool_widget", "ICON", None, QtGui.QApplication.UnicodeUTF8))
         self.label_3.setText(QtGui.QApplication.translate("pool_widget", "<b>File pool</b><br /><small><i>You can drag and drop files into the pool</i></small>", None, QtGui.QApplication.UnicodeUTF8))
         self.edit_pool_filter.setToolTip(QtGui.QApplication.translate("pool_widget", "Enter a filter", None, QtGui.QApplication.UnicodeUTF8))
         self.button_pool_filter_clear.setToolTip(QtGui.QApplication.translate("pool_widget", "Clear filter", None, QtGui.QApplication.UnicodeUTF8))

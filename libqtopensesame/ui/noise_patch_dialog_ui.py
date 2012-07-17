@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'resources/ui/noise_patch_dialog.ui'
 #
-# Created: Mon Jul  9 13:58:21 2012
+# Created: Tue Jul 17 12:45:45 2012
 #      by: PyQt4 UI code generator 4.9.1
 #
 # WARNING! All changes made in this file will be lost!
@@ -20,20 +20,19 @@ class Ui_noise_patch_dialog(object):
         noise_patch_dialog.resize(476, 384)
         self.verticalLayout = QtGui.QVBoxLayout(noise_patch_dialog)
         self.verticalLayout.setObjectName(_fromUtf8("verticalLayout"))
-        self.widget_2 = QtGui.QWidget(noise_patch_dialog)
+        self.widget_header_box = QtGui.QWidget(noise_patch_dialog)
         sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Preferred, QtGui.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.widget_2.sizePolicy().hasHeightForWidth())
-        self.widget_2.setSizePolicy(sizePolicy)
-        self.widget_2.setStyleSheet(_fromUtf8("background-color: #4e9a06;\n"
-"color: rgb(255, 255, 255);"))
-        self.widget_2.setObjectName(_fromUtf8("widget_2"))
-        self.horizontalLayout = QtGui.QHBoxLayout(self.widget_2)
+        sizePolicy.setHeightForWidth(self.widget_header_box.sizePolicy().hasHeightForWidth())
+        self.widget_header_box.setSizePolicy(sizePolicy)
+        self.widget_header_box.setObjectName(_fromUtf8("widget_header_box"))
+        self.horizontalLayout = QtGui.QHBoxLayout(self.widget_header_box)
+        self.horizontalLayout.setSpacing(0)
         self.horizontalLayout.setMargin(5)
         self.horizontalLayout.setMargin(0)
         self.horizontalLayout.setObjectName(_fromUtf8("horizontalLayout"))
-        self.label_noise_patch = QtGui.QLabel(self.widget_2)
+        self.label_noise_patch = QtGui.QLabel(self.widget_header_box)
         sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Fixed, QtGui.QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -43,7 +42,7 @@ class Ui_noise_patch_dialog(object):
         self.label_noise_patch.setPixmap(QtGui.QPixmap(_fromUtf8(":/icons/noise_patch.png")))
         self.label_noise_patch.setObjectName(_fromUtf8("label_noise_patch"))
         self.horizontalLayout.addWidget(self.label_noise_patch)
-        self.label_2 = QtGui.QLabel(self.widget_2)
+        self.label_2 = QtGui.QLabel(self.widget_header_box)
         font = QtGui.QFont()
         font.setPointSize(11)
         font.setBold(True)
@@ -51,7 +50,7 @@ class Ui_noise_patch_dialog(object):
         self.label_2.setFont(font)
         self.label_2.setObjectName(_fromUtf8("label_2"))
         self.horizontalLayout.addWidget(self.label_2)
-        self.verticalLayout.addWidget(self.widget_2)
+        self.verticalLayout.addWidget(self.widget_header_box)
         self.widget = QtGui.QWidget(noise_patch_dialog)
         font = QtGui.QFont()
         font.setPointSize(8)

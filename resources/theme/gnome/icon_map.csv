@@ -38,6 +38,7 @@ action_show_variable_inspector,os-inspector,
 action_submit_a_bug,mail-send,
 add,list-add,
 apply,document-save,
+backend,applications-system,
 browse,folder-open,
 button_add_cyclevar,list-add,
 button_arrow,os-arrow,
@@ -104,8 +105,10 @@ image,image-x-generic,
 indent,format-indent-more,
 inline_script,os-inline_script,
 keyboard_response,os-keyboard_response,
+label_backend_icon,applications-system,32
 label_facebook,goa-account-facebook,24
 label_gabor,os-gabor,32
+label_get_started,os-experiment,32
 label_info,help-about,16
 label_noise_patch,os-noise,32
 label_notification,starred,
@@ -160,5 +163,4 @@ video,video-x-generic,
 view-list-details-symbolic,format-justify-fill,
 view-list-icons-symbolic,format-justify-fill,
 wizard,bookmark-new,
-backend,applications-system,
-label_backend_icon,applications-system,32
+

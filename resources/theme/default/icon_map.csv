@@ -105,6 +105,7 @@ inline_script,os-inline_script,
 keyboard_response,os-keyboard_response,
 label_facebook,facebook,24
 label_gabor,os-gabor,32
+label_get_started,os-experiment,32
 label_info,help-about,16
 label_noise_patch,os-noise,32
 label_notification,gtk-info,
