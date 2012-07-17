@@ -288,7 +288,7 @@ class item:
 		except:
 			pass
 
-	def get(self, var):
+	def get(self, var, _eval=True):
 
 		"""<DOC>
 		Return the value of a variable. Checks first if the variable exists
@@ -298,6 +298,8 @@ class item:
 
 		Arguments:
 		var -- the name of the variable
+		_eval -- indicates whether the variable should be evaluated, i.e.
+				 whether containing variables should be processed (default=True)		
 
 		Returns:
 		The value
@@ -318,14 +320,15 @@ class item:
 				raise exceptions.runtime_error( \
 					"Variable '%s' is not set in item '%s'.<br /><br />You are trying to use a variable that does not exist. Make sure that you have spelled and capitalized the variable name correctly. You may wish to use the variable inspector (Control + I) to find the intended variable." \
 					% (var, self.name))
-		# Lock to avoid recursion and start evaluating possible variables
-		self._get_lock = var
-		val = self.eval_text(val)
-		self._get_lock = None
-		# Done!
+		if _eval:					
+			# Lock to avoid recursion and start evaluating possible variables		
+			self._get_lock = var
+			val = self.eval_text(val)
+			self._get_lock = None
+			# Done!
 		return val
 
-	def get_check(self, var, default=None, valid=None):
+	def get_check(self, var, default=None, valid=None, _eval=True):
 
 		"""<DOC>
 		Similar to get(), but falls back to a default if the variable has not
@@ -338,6 +341,8 @@ class item:
 				   case an exception is rased if the value does not exist.
 		valid -- a list of allowed values (or None for no restrictions). An
 				 exception is raised if the value is not an allowed value.
+		_eval -- indicates whether the variable should be evaluated, i.e.
+				 whether containing variables should be processed (default=True)
 
 		Exceptions:
 		Raises a runtime_error if the variable is not defined and there is no
@@ -348,9 +353,9 @@ class item:
 		</DOC>"""
 
 		if default == None:
-			val = self.get(var)
+			val = self.get(var, _eval=_eval)
 		elif self.has(var):
-			val = self.get(var)
+			val = self.get(var, _eval=_eval)
 		else:
 			val = default
 		if valid != None and val not in valid:

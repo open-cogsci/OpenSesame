@@ -117,7 +117,7 @@ class qtplugin(qtitem.qtitem):
 		"""
 
 		edit = QtGui.QLineEdit()				
-		edit.setText(str(self.get_check(var, "")))		
+		edit.setText(str(self.get_check(var, "", _eval=False)))		
 		edit.editingFinished.connect(self.apply_edit_changes)
 		self.add_control(label, edit, tooltip, min_width)
 		if var != None:
@@ -138,7 +138,7 @@ class qtplugin(qtitem.qtitem):
 		"""
 		
 		checkbox = QtGui.QCheckBox(_(label))
-		checkbox.setChecked(str(self.get_check(var, 'yes')) == 'yes')
+		checkbox.setChecked(str(self.get_check(var, 'yes', _eval=False)) == 'yes')
 		checkbox.toggled.connect(self.apply_edit_changes)
 		self.add_control('', checkbox, tooltip)
 		if var != None:
@@ -165,7 +165,7 @@ class qtplugin(qtitem.qtitem):
 
 		edit = color_edit.color_edit()
 		edit.initialize(self.experiment)
-		edit.setText(str(self.get_check(var, "")))
+		edit.setText(str(self.get_check(var, "", _eval=False)))
 		QtCore.QObject.connect(edit, QtCore.SIGNAL("set_color"), \
 			self.apply_edit_changes)
 		self.add_control(label, edit, tooltip, min_width)
@@ -217,7 +217,7 @@ class qtplugin(qtitem.qtitem):
 		spinbox = QtGui.QSpinBox()
 		spinbox.setMinimum(min_val)
 		spinbox.setMaximum(max_val)
-		spinbox.setValue(self.get_check(var, min_val))
+		spinbox.setValue(self.get_check(var, min_val, _eval=False))
 		spinbox.editingFinished.connect(self.apply_edit_changes)
 		if prefix != "":
 			spinbox.setPrefix(prefix)
@@ -298,7 +298,7 @@ class qtplugin(qtitem.qtitem):
 		"""
 
 		edit = QtGui.QLineEdit()		
-		edit.setText(str(self.get_check(var, "")))
+		edit.setText(str(self.get_check(var, "", _eval=False)))
 		edit.editingFinished.connect(self.apply_edit_changes)
 		if var != None:
 			self.auto_line_edit[var] = edit
@@ -337,7 +337,7 @@ class qtplugin(qtitem.qtitem):
 				syntax="python")
 		else:
 			editor = inline_editor.inline_editor(self.experiment)			
-		editor.setText(str(self.get_check(var, "")))
+		editor.setText(str(self.get_check(var, "", _eval=False)))
 		editor.apply.clicked.connect(self.apply_edit_changes)
 		QtCore.QObject.connect(editor.edit, QtCore.SIGNAL("focusLost"), \
 			self.apply_edit_changes)
