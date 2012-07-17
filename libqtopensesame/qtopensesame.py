@@ -66,12 +66,15 @@ class qtopensesame(QtGui.QMainWindow):
 		from libqtopensesame.misc import theme, dispatch
 		import platform
 		
+		# Restore the configuration
+		self.restore_config()
+		
 		# Setup dispatch
 		self.dispatch = dispatch.dispatch(self)
 				
 		# Setup the UI
 		self.ui = opensesame_ui.Ui_opensesame_mainwindow()
-		self.ui.setupUi(self)		
+		self.ui.setupUi(self)	
 		self.ui.toolbar_items.main_window = self
 		self.ui.itemtree.main_window = self
 		self.ui.table_variables.main_window = self
@@ -263,6 +266,16 @@ class qtopensesame(QtGui.QMainWindow):
 		self.options, args = parser.parse_args(sys.argv)	
 		if self.options.run and self.options.run_in_window:
 			parser.error("Options -r / --run and -w / --run-in-window are mutually exclusive.")			
+			
+	def restore_config(self):
+	
+		"""Restores the configuration settings, but doesn't apply anything"""
+	
+		debug.msg()
+		settings = QtCore.QSettings("cogscinl", "opensesame")
+		settings.beginGroup("MainWindow")
+		config.restore_config(settings)
+		settings.endGroup()			
 
 	def restore_window_state(self):
 
@@ -280,10 +293,6 @@ class qtopensesame(QtGui.QMainWindow):
 
 		debug.msg()
 
-		settings = QtCore.QSettings("cogscinl", "opensesame")
-		settings.beginGroup("MainWindow")
-		config.restore_config(settings)
-		
 		# Force configuration options that were set via the command line
 		config.parse_cmdline_args(self.options._config)
 
@@ -337,7 +346,6 @@ class qtopensesame(QtGui.QMainWindow):
 		else:
 			self.ui.toolbar_main.setToolButtonStyle( \
 				QtCore.Qt.ToolButtonIconOnly)
-		settings.endGroup()
 		self.set_style()
 		self.theme.set_toolbar_size(config.get_config("toolbar_size"))
 
