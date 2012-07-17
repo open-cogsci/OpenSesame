@@ -17,6 +17,7 @@ You should have received a copy of the GNU General Public License
 along with openexp.  If not, see <http://www.gnu.org/licenses/>.
 """
 
+import numpy as np
 import copy
 import openexp._canvas.legacy
 import openexp.exceptions
@@ -41,6 +42,7 @@ class xpyriment(openexp._canvas.legacy.legacy):
 		self.set_bgcolor(bgcolor)
 		self.set_font(self.experiment.font_family, self.experiment.font_size)
 		self.penwidth = 1
+		self.ellipse_res = 100
 		self.aa = 10
 		self.clear()
 		
@@ -140,8 +142,10 @@ class xpyriment(openexp._canvas.legacy.legacy):
 		
 		"""See openexp._canvas.legacy"""
 		
-		# TODO
-		pass
+		l = np.linspace(0, 2*np.pi, self.ellipse_res)
+		_x = .5*np.cos(l)*w + x+.5*w
+		_y = .5*np.sin(l)*h + y+.5*h
+		self.polygon(zip(_x, _y), fill=fill, color=color)		
 			
 	def polygon(self, vertices, fill=False, color=None):
 		
