@@ -142,10 +142,21 @@ class xpyriment(openexp._canvas.legacy.legacy):
 		
 		"""See openexp._canvas.legacy"""
 		
-		l = np.linspace(0, 2*np.pi, self.ellipse_res)
-		_x = .5*np.cos(l)*w + x+.5*w
-		_y = .5*np.sin(l)*h + y+.5*h
-		self.polygon(zip(_x, _y), fill=fill, color=color)		
+		h *= .5
+		w *= .5
+		l = np.linspace(0, 2*np.pi, self.ellipse_res)		
+		if fill:
+			_x = np.cos(l)*w + x+w
+			_y = np.sin(l)*h + y+h
+		else:
+			x1 = np.cos(l)*w + x+w
+			y1 = np.sin(l)*h + y+h
+			l = np.linspace(2*np.pi, 0, self.ellipse_res)
+			x2 = np.cos(l)*(w-self.penwidth) + x+w
+			y2 = np.sin(l)*(h-self.penwidth) + y+h
+			_x = np.concatenate((x1, x2))
+			_y = np.concatenate((y1, y2))
+		self.polygon(zip(_x, _y), fill=True, color=color)
 			
 	def polygon(self, vertices, fill=False, color=None):
 		
