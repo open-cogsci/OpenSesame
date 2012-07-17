@@ -80,6 +80,7 @@ class xpyriment(openexp._canvas.legacy.legacy):
 		for stim in self.stim_list[:-1]:
 			stim.present(clear=False, update=False)
 		self.stim_list[-1].present(clear=False)
+		return self.experiment.time()
 		
 	def clear(self, color=None):
 	
