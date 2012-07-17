@@ -22,7 +22,7 @@ __license__ = "GPLv3"
 
 from libopensesame import debug
 from libqtopensesame.ui import preferences_widget_ui
-from libqtopensesame.misc import config
+from libqtopensesame.misc import config, theme
 from libopensesame import plugins
 from PyQt4 import QtCore, QtGui
 import os
@@ -67,6 +67,7 @@ class preferences_widget(QtGui.QWidget):
 		self.ui.button_update_check.clicked.connect( \
 			self.main_window.check_update)
 		self.ui.combobox_style.currentIndexChanged.connect(self.apply)
+		self.ui.combobox_theme.currentIndexChanged.connect(self.apply)
 
 		self.ui.checkbox_scintilla_auto_indent.toggled.connect(self.apply)
 		self.ui.checkbox_scintilla_brace_match.toggled.connect(self.apply)
@@ -167,6 +168,7 @@ class preferences_widget(QtGui.QWidget):
 			self.ui.edit_opensesamerun_exec.setDisabled(True)
 			self.ui.label_opensesamerun_exec.setDisabled(True)
 
+		# Set the style combobox
 		i = 0
 		if self.main_window.style == "":
 			self.ui.combobox_style.addItem("[Default]")
@@ -177,6 +179,14 @@ class preferences_widget(QtGui.QWidget):
 			if self.main_window.style == str(style):
 				self.ui.combobox_style.setCurrentIndex(i)
 			i += 1
+			
+		# Set the theme combobox
+		i = 0
+		for _theme in theme.available_themes:
+			self.ui.combobox_theme.addItem(_theme)
+			if config.get_config('theme') == _theme:
+				self.ui.combobox_theme.setCurrentIndex(i)
+			i += 1			
 
 		# Set the plugin status
 		for plugin in plugins.list_plugins(filter_disabled=False):
@@ -276,6 +286,7 @@ class preferences_widget(QtGui.QWidget):
 			self.ui.font_scintilla_font_family.currentFont().family()))
 		config.set_config("scintilla_font_size", \
 			self.ui.spinbox_scintilla_font_size.value())
+		config.set_config('theme', str(self.ui.combobox_theme.currentText()))
 
 		# Create a semicolon-separated list of disabled plugins
 		l = []

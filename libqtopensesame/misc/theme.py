@@ -26,6 +26,8 @@ from libopensesame import debug, misc
 from libqtopensesame.misc import config
 from PyQt4 import QtGui, QtCore
 
+available_themes = ['default', 'gnome']
+
 class theme:
 
 	"""Handles the GUI theme"""
