@@ -594,7 +594,8 @@ class qtitem(QtCore.QObject):
 			edit.editingFinished.disconnect()		
 			if self.has(var):			
 				try:
-					edit.setText(self.experiment.unsanitize(self.get(var)))
+					edit.setText(self.experiment.unsanitize(self.get(var, \
+						_eval=False)))
 				except Exception as e:
 					self.experiment.notify(_("Failed to set control '%s': %s") \
 						% (var, e))
@@ -607,7 +608,7 @@ class qtitem(QtCore.QObject):
 			if self.has(var):
 				try:
 					combobox.setCurrentIndex(combobox.findText( \
-						self.experiment.unsanitize(self.get(var))))
+						self.experiment.unsanitize(self.get(var, _eval=False))))
 				except Exception as e:
 					self.experiment.notify(_("Failed to set control '%s': %s") \
 						% (var, e))
@@ -617,7 +618,7 @@ class qtitem(QtCore.QObject):
 			spinbox.editingFinished.disconnect()
 			if self.has(var):
 				try:
-					spinbox.setValue(self.get(var))
+					spinbox.setValue(self.get(var, _eval=False))
 				except Exception as e:
 					self.experiment.notify(_("Failed to set control '%s': %s") \
 						% (var, e))
@@ -637,7 +638,7 @@ class qtitem(QtCore.QObject):
 			checkbox.toggled.disconnect()
 			if self.has(var):
 				try:
-					checkbox.setChecked(self.get(var) == "yes")
+					checkbox.setChecked(self.get(var, _eval=False) == "yes")
 				except Exception as e:
 					self.experiment.notify(_("Failed to set control '%s': %s") \
 						% (var, e))		
@@ -647,7 +648,7 @@ class qtitem(QtCore.QObject):
 			if self.has(var):
 				try:
 					editor.edit.setPlainText(self.experiment.unsanitize( \
-						self.get(var)))
+						self.get(var,_eval=False)))
 				except Exception as e:
 					self.experiment.notify(_("Failed to set control '%s': %s") \
 						% (var, e))
@@ -672,7 +673,7 @@ class qtitem(QtCore.QObject):
 				self.experiment.notify(msg)
 				return False
 			else:
-				var = self.get(var_name)
+				var = self.get(var_name, _eval=False)
 				if 'type' in criteria:
 					_type = criteria['type']
 					if type(_type) != list:

@@ -252,7 +252,7 @@ class qtplugin(qtitem.qtitem):
 		slider.setGeometry(30, 40, 100, 30)
 		slider.setRange(min_val, max_val)
 		slider.setSingleStep(1000)
-		slider.setValue(self.get(var))
+		slider.setValue(self.get(var, _eval=False))
 		#Take care of layout
 		layout = QtGui.QHBoxLayout()
 		layout.setMargin(0)
