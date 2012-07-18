@@ -28,7 +28,10 @@ class form_error(Exception):
 
 	def __init__(self, value, full=True):
 
-		self.value = unicode(value, errors='ignore')
+		if type(value) == str:
+			self.value = unicode(value, errors='ignore')
+		else:
+			self.value = value
 		self.full = full
 
 	def __str__(self):
@@ -47,7 +50,10 @@ class script_error(Exception):
 
 	def __init__(self, value, full=True):
 
-		self.value = unicode(value, errors='ignore')
+		if type(value) == str:
+			self.value = unicode(value, errors='ignore')
+		else:
+			self.value = value
 		self.full = full
 
 	def __str__(self):
@@ -66,7 +72,10 @@ class runtime_error(Exception):
 
 	def __init__(self, value):
 
-		self.value = unicode(value, errors='ignore')
+		if type(value) == str:
+			self.value = unicode(value, errors='ignore')
+		else:
+			self.value = value
 
 	def __str__(self):
 

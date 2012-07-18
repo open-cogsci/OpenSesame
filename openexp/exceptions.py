@@ -20,12 +20,15 @@ along with openexp.  If not, see <http://www.gnu.org/licenses/>.
 class openexp_error(Exception):
 
 	def __init__(self, value):
-	
-		self.value = value
+
+		if type(value) == str:
+			self.value = unicode(value, errors='ignore')
+		else:
+			self.value = value
 		
 	def __str__(self):
 	
-		return unicode(self.value, errors='ignore')
+		return self.value
 
 class canvas_error(openexp_error):
 
