@@ -25,7 +25,7 @@ class openexp_error(Exception):
 		
 	def __str__(self):
 	
-		return str(self.value)
+		return unicode(self.value, errors='ignore')
 
 class canvas_error(openexp_error):
 

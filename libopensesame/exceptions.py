@@ -28,7 +28,7 @@ class form_error(Exception):
 
 	def __init__(self, value, full=True):
 
-		self.value = value
+		self.value = unicode(value, errors='ignore')
 		self.full = full
 
 	def __str__(self):
@@ -36,7 +36,7 @@ class form_error(Exception):
 		if self.full:
 			return "<b>Error:</b> Form error<br /><b>Description</b>: %s" % \
 				self.value
-		return str(self.value)
+		return self.value
 
 class script_error(Exception):
 
@@ -47,7 +47,7 @@ class script_error(Exception):
 
 	def __init__(self, value, full=True):
 
-		self.value = value
+		self.value = unicode(value, errors='ignore')
 		self.full = full
 
 	def __str__(self):
@@ -55,7 +55,7 @@ class script_error(Exception):
 		if self.full:
 			return "<b>Error:</b> Script error<br /><b>Description</b>: %s" % \
 				self.value
-		return str(self.value)
+		return self.value
 
 class runtime_error(Exception):
 
@@ -66,7 +66,7 @@ class runtime_error(Exception):
 
 	def __init__(self, value):
 
-		self.value = value
+		self.value = unicode(value, errors='ignore')
 
 	def __str__(self):
 
