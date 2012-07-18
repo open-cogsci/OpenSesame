@@ -66,7 +66,7 @@ class experiment(item.item):
 		# Set default variables
 		self.coordinates = "relative"
 		self.compensation = 0
-		self.start = "main"
+		self.start = "experiment"
 		
 		# Sound parameters
 		self.sound_freq = 48000
@@ -262,7 +262,7 @@ class experiment(item.item):
 
 		import shlex
 		debug.msg("building experiment")
-		s = iter(string.split("\n"));
+		s = iter(str(string).split("\n"));
 		line = next(s, None)
 		while line != None:
 
@@ -285,8 +285,8 @@ class experiment(item.item):
 					item_type = l[1]
 					item_name = self.sanitize(l[2])
 					line, def_str = self.read_definition(s)
-					get_next = False
-					self.parse_definition(item_type, item_name, def_str)
+					get_next = False					
+					self.parse_definition(item_type, item_name, def_str)					
 
 			if get_next:
 				line = next(s, None)
