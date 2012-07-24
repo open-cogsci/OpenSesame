@@ -125,6 +125,51 @@ class item:
 				return True
 
 		return False
+		
+	def parse_keywords(self, line):
+	
+		"""
+		Parses keywords, e.g. 'my_keyword=my_value'
+		
+		Arguments:
+		line -- a single definition line
+
+		Returns:
+		A keyword => value dictionary		
+		"""
+		
+		# Parse keywords
+		l = shlex.split(line.strip())
+		keywords = {}	
+		for i in l:
+			j = i.find("=")
+			if j != -1:
+				# UGLY HACK: if the string appears to be plain text,
+				# rather than a keyword, for example something like
+				# 'accuracy = [acc]%', do not parse it as a keyword-
+				# value pair. The string needs to occur only once in
+				# the full line, both quoted and unquoted.
+				q = "\"" + i + "\""
+				if line.count(q) == 1 and line.count(i) == 1:
+					debug.msg( \
+						"'%s' does not appear to be a keyword-value pair in string '%s'" \
+						% (i, line))
+				else:
+					var = i[:j]
+					val = i[j+1:]
+					keywords[var] = self.auto_type(val)
+		return keywords	
+		
+	def parse_line(self, line):
+	
+		"""
+		Allows for arbitrary line parsing, for item-specific requirements
+
+		Arguments:
+		line -- a single definition line
+		"""
+		
+		pass
 
 	def parse_comment(self, line):
 
@@ -217,8 +262,8 @@ class item:
 				else:
 					textblock_val += line + "\n"
 			# Parse regular variables
-			else:
-				self.parse_variable(line)
+			elif not self.parse_variable(line):
+				self.parse_line(line)
 					
 	def to_string(self, item_type = None):
 
