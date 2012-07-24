@@ -64,7 +64,7 @@ class form:
 		n_cells = len(self.cols)*len(self.rows)
 		self.widgets = [None]*n_cells
 		self.span = [(1,1)]*n_cells	
-		self.canvas = canvas(self.experiment)				
+		self.canvas = canvas(self.experiment)								
 		
 	def _exec(self, focus_widget=None):
 	
@@ -93,9 +93,11 @@ class form:
 			button, xy, time = self.mouse.get_click(visible=True)
 			pos = self.xy_to_index(xy)
 			if pos != None:
-				resp = self.widgets[pos].on_mouse_click(xy)
-				if resp != None:
-					return resp		
+				w = self.widgets[pos]
+				if w != None:
+					resp = self.widgets[pos].on_mouse_click(xy)
+					if resp != None:
+						return resp
 		
 	def cell_index(self, pos):
 	
@@ -115,6 +117,23 @@ class form:
 		if type(pos) in (tuple, list) and len(pos) == 2:
 			return pos[1]*len(self.cols)+pos[0]
 		raise form_error('%s is an invalid position in the form' % pos)
+		
+	def get_cell(self, index):
+	
+		"""
+		Returns the position of a widget
+		
+		Arguments:
+		index -- the index of the widget
+		
+		Returns:
+		A (column, row, column_span, row_span) tuple
+		"""
+		
+		col = index % len(self.cols)
+		row = index / len(self.cols)		
+		colspan, rowspan = self.span[index]	
+		return col, row, colspan, rowspan		
 		
 	def get_rect(self, index):
 	
