@@ -24,19 +24,19 @@ class label(widget):
 
 	"""A simple non-interactive text label"""
 
-	def __init__(self, form, text, frame=False, center=False):
+	def __init__(self, form, text='label', frame=False, center=True):
 	
 		"""<DOC>
 		Constructor
 		
 		Arguments:
 		form -- the parent form
-		text -- a string of text
-		
+
 		Keyword arguments:
+		text -- a string of text (default='label')		
 		frame -- indicates whether a frame should be drawn around the widget
 				 (default=False)
-		center -- indicates whether the text should be centered (default=False)
+		center -- indicates whether the text should be centered (default=True)
 		</DOC>"""
 			
 		widget.__init__(self, form)
