@@ -41,8 +41,8 @@ class qtplugin(qtitem.qtitem):
 		"""
 
 		if plugin_file != None:
-			# These lines makes sure that the icons and help file are recognized by
-			# OpenSesame.
+			# These lines makes sure that the icons and help file are recognized
+			# by OpenSesame.
 			self.experiment.resources["%s.png" % self.item_type] = \
 				os.path.join(os.path.split(plugin_file)[0], "%s.png" \
 				% self.item_type)
@@ -359,6 +359,12 @@ class qtplugin(qtitem.qtitem):
 		label = QtGui.QLabel(_(msg))
 		label.setWordWrap(True)
 		self.edit_vbox.addWidget(label)
+		
+	def add_stretch(self):
+		
+		"""Pad empty space below the controls"""
+	
+		self.edit_vbox.addStretch()
 
 	def apply_button(self, label="Apply", icon="apply", \
 		tooltip="Apply changes"):
