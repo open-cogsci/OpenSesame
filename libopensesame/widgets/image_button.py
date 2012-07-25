@@ -23,16 +23,16 @@ class image_button(image):
 
 	"""A simple image button"""
 
-	def __init__(self, form, path, adjust=True, frame=False, image_id=None, var=None):
+	def __init__(self, form, path=None, adjust=True, frame=False, image_id=None, var=None):
 	
 		"""<DOC>
 		Constructor
 		
 		Arguments:
 		form -- the parent form
-		path -- the full path to the image
 		
 		Keyword arguments:
+		path -- the full path to the image (default=None)				
 		adjust -- indicates whether the image should be scaled according to the
 				  size of the widget (default=True)
 		frame -- indicates whether a frame should be drawn around the widget

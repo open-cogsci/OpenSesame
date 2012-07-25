@@ -23,16 +23,16 @@ class button(label):
 
 	"""A simple text button"""
 
-	def __init__(self, form, text, frame=True, center=True, var=None):
+	def __init__(self, form, text='button', frame=True, center=True, var=None):
 	
 		"""<DOC>
 		Constructor
 		
 		Arguments:
 		form -- the parent form
-		text -- a string of text
 		
 		Keyword arguments:
+		text -- button text (default='button')
 		frame -- indicates whether a frame should be drawn around the widget
 				 (default=False)
 		center -- indicates whether the text should be centered (default=False)

@@ -24,16 +24,16 @@ class checkbox(button, box_widget):
 
 	"""A checkbox widget"""
 
-	def __init__(self, form, text, frame=False, group=None, checked=False, var=None):
+	def __init__(self, form, text='checkbox', frame=False, group=None, checked=False, var=None):
 	
 		"""<DOC>
 		Constructor
 		
 		Arguments:
 		form -- the parent form
-		text -- a string of text
-		
+				
 		Keyword arguments:
+		text -- checkbox text (default='checkbox')		
 		frame -- indicates whether a frame should be drawn around the widget
 				 (default=False)
 		group -- if a group is specified, checking one checkbox from the group

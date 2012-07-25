@@ -19,21 +19,23 @@ along with openexp.  If not, see <http://www.gnu.org/licenses/>.
 
 from widget import widget
 from PIL import Image
+from libopensesame import exceptions
+import os
 
 class image(widget):
 
 	"""A simple non-interactive image widget"""
 
-	def __init__(self, form, path, adjust=True, frame=False):
+	def __init__(self, form, path=None, adjust=True, frame=False):
 	
 		"""<DOC>
 		Constructor
 		
 		Arguments:
 		form -- the parent form
-		path -- the full path to the image
 		
 		Keyword arguments:
+		path -- the full path to the image (default=None)		
 		adjust -- indicates whether the image should be scaled according to the
 				  size of the widget (default=True)
 		frame -- indicates whether a frame should be drawn around the widget
@@ -52,6 +54,10 @@ class image(widget):
 		Draws the widget
 		</DOC>"""	
 	
+		if not os.path.exists(self.path):
+			raise exceptions.runtime_error( \
+				'No valid path has been specified in image widget')
+		
 		x, y, w, h = self.rect
 		x += w/2
 		y += h/2
