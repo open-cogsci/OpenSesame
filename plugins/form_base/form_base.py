@@ -78,7 +78,7 @@ class form_base(item.item, generic_response.generic_response):
 			
 		# Parse the widget into a dictionary and store it in the list of
 		# widgets
-		w = self.parse_keywords(line)				
+		w = self.parse_keywords(line, unsanitize=True)				
 		w['type'] = l[5]
 		w['col'] = col
 		w['row'] = row
@@ -130,8 +130,8 @@ class form_base(item.item, generic_response.generic_response):
 		resp = self._form._exec()
 		rt = self.time() - sri
 		
-		self.experiment.set('response', resp)
-		self.experiment.set('response_%s' % self.name, resp)
+		self.experiment.set('response', self.usanitize(resp))
+		self.experiment.set('response_%s' % self.name, self.usanitize(resp))
 		self.experiment.set('response_time', rt)
 		self.experiment.set('response_time_%s' % self.name, rt)				
 		return True
