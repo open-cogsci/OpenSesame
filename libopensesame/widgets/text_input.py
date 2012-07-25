@@ -24,7 +24,7 @@ class text_input(label):
 
 	"""A multiline text input widget"""
 
-	def __init__(self, form, text='', frame=True, center=False, stub='Type here ...', return_accepts=False):
+	def __init__(self, form, text='', frame=True, center=False, stub='Type here ...', return_accepts=False, var=None):
 	
 		"""<DOC>
 		Constructor
@@ -39,6 +39,8 @@ class text_input(label):
 		center -- indicates whether the text should be centered (default=False)
 		stub -- a text string that should be shown whenever the user has not
 				entered any text (default='Type here ...')
+		var -- the name of the experimental variable that should be used to log
+			   the widget status (default=None)					
 		</DOC>"""		
 	
 		label.__init__(self, form, text, frame=frame, center=center)
@@ -46,6 +48,9 @@ class text_input(label):
 		self.stub = stub
 		self.prompt = '_'
 		self.return_accepts = return_accepts
+		self.var = var
+		self.text = text
+		self.set_var(text)
 		
 	def render(self):
 	
@@ -99,5 +104,5 @@ class text_input(label):
 					return None
 			elif len(resp) == 1:
 				self.text += resp
-
+			self.set_var(self.text)
 						

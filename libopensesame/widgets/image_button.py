@@ -23,7 +23,7 @@ class image_button(image):
 
 	"""A simple image button"""
 
-	def __init__(self, form, path, adjust=True, frame=False, image_id=None):
+	def __init__(self, form, path, adjust=True, frame=False, image_id=None, var=None):
 	
 		"""<DOC>
 		Constructor
@@ -39,6 +39,8 @@ class image_button(image):
 				 (default=False)
 		image_id -- an id to identify the image when it is clicked. If None, the
 					path to the image is used as id (default=None)
+		var -- the name of the experimental variable that should be used to log
+			   the widget status (default=None)					
 		</DOC>"""		
 	
 		image.__init__(self, form, path, adjust=adjust, frame=frame)
@@ -46,7 +48,9 @@ class image_button(image):
 			self.image_id = path
 		else:
 			self.image_id = image_id
-		self.type = 'image_button'					
+		self.type = 'image_button'
+		self.var = var
+		self.set_var(False)				
 				
 	def on_mouse_click(self, pos):
 	
@@ -58,5 +62,6 @@ class image_button(image):
 		pos -- an (x, y) tuple		
 		</DOC>"""	
 	
+		self.set_var(True)
 		return self.image_id
 

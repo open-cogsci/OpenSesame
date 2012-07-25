@@ -23,7 +23,7 @@ class button(label):
 
 	"""A simple text button"""
 
-	def __init__(self, form, text, frame=True, center=True):
+	def __init__(self, form, text, frame=True, center=True, var=None):
 	
 		"""<DOC>
 		Constructor
@@ -36,10 +36,14 @@ class button(label):
 		frame -- indicates whether a frame should be drawn around the widget
 				 (default=False)
 		center -- indicates whether the text should be centered (default=False)
+		var -- the name of the experimental variable that should be used to log
+			   the widget status (default=None)		
 		</DOC>"""	
 	
 		label.__init__(self, form, text, frame=frame, center=center)
-		self.type = 'button'		
+		self.type = 'button'
+		self.var = var
+		self.set_var(False)
 				
 	def on_mouse_click(self, pos):
 	
@@ -51,4 +55,5 @@ class button(label):
 		pos -- an (x, y) tuple		
 		</DOC>"""		
 	
+		self.set_var(True)
 		return self.text

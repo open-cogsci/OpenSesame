@@ -24,7 +24,7 @@ class checkbox(button, box_widget):
 
 	"""A checkbox widget"""
 
-	def __init__(self, form, text, frame=False, group=None, checked=False):
+	def __init__(self, form, text, frame=False, group=None, checked=False, var=None):
 	
 		"""<DOC>
 		Constructor
@@ -39,16 +39,19 @@ class checkbox(button, box_widget):
 		group -- if a group is specified, checking one checkbox from the group
 				 will uncheck all other checkboxes in that group (default=None)
 		checked -- the checked state of the checkbox (default=False)
+		var -- the name of the experimental variable that should be used to log
+			   the widget status (default=None)
 		</DOC>"""	
 	
 		button.__init__(self, form, text, frame=frame, center=False)
 		box_widget.__init__(self)
 		self.type = 'checkbox'
-		self.group = group
-		self.checked = checked
+		self.group = group		
 		self.box_size = 16
 		self.box_pad = self.x_pad
 		self.x_pad += self.x_pad + self.box_size
+		self.var = var
+		self.set_checked(checked)
 				
 	def on_mouse_click(self, pos):
 	
@@ -64,10 +67,10 @@ class checkbox(button, box_widget):
 			for widget in self.form.widgets:
 				if widget != None and widget.type == 'checkbox' and \
 					widget.group == self.group:
-					widget.checked = False	
-			self.checked = True
+					self.set_checked(False)
+			self.set_checked(True)
 		else:
-			self.checked = not self.checked
+			self.set_checked(not self.checked)
 				
 	def render(self):
 	
@@ -79,3 +82,15 @@ class checkbox(button, box_widget):
 		self.draw_box(self.checked, x+self.box_pad, y+self.y_pad)
 		self.draw_text(self.text)
 		
+	def set_checked(self, checked=True):
+	
+		"""<DOC>
+		Sets the checked status of the checkbox
+		
+		Keyword arguments:
+		checked -- the checked status (default=True)
+		</DOC>"""
+		
+		self.checked = checked
+		self.set_var(checked)
+

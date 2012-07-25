@@ -34,6 +34,7 @@ class widget:
 		self.form = form
 		self.rect = None
 		self.focus = False
+		self.var = None
 		
 	def draw_frame(self, rect=None, color=None, penwidth=None):
 	
@@ -87,3 +88,21 @@ class widget:
 		</DOC>"""
 			
 		self.rect = rect
+		
+	def set_var(self, val, var=None):
+	
+		"""<DOC>
+		Set an experimental variable
+		
+		Arguments:
+		val -- a value
+		
+		Keyword arguments:
+		var -- a variable name, or None to use widget default (default=None)		
+		</DOC>"""
+		
+		if var == None:
+			var = self.var
+		if var == None:
+			return
+		self.form.experiment.set(var, val)
