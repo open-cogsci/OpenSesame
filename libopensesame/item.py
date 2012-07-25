@@ -126,13 +126,17 @@ class item:
 
 		return False
 		
-	def parse_keywords(self, line):
+	def parse_keywords(self, line, unsanitize=False):
 	
 		"""
 		Parses keywords, e.g. 'my_keyword=my_value'
 		
 		Arguments:
 		line -- a single definition line
+		
+		Keyword arguments:
+		unsanitize -- indicates whether the values should be unsanitized
+					  (default=False)
 
 		Returns:
 		A keyword => value dictionary		
@@ -156,8 +160,10 @@ class item:
 						% (i, line))
 				else:
 					var = i[:j]
-					val = i[j+1:]
-					keywords[var] = self.auto_type(val)
+					val = self.auto_type(i[j+1:])
+					if unsanitize and type(val) == str:
+						val = self.unsanitize(val)
+					keywords[var] = val
 		return keywords	
 		
 	def parse_line(self, line):
