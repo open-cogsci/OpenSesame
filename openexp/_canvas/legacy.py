@@ -276,7 +276,6 @@ class legacy:
 		color -- A human readable color
 		</DOC>"""
 		
-		debug.msg(color)
 		self.fgcolor = self.color(color)		
 		
 	def set_bgcolor(self, color):

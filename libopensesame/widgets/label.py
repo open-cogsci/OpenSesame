@@ -61,6 +61,7 @@ class label(widget):
 		text -- the text to draw
 		</DOC>"""
 	
+		text = self.form.experiment.eval_text(text)
 		x, y, w, h = self.rect
 		if self.center:
 			x += w/2

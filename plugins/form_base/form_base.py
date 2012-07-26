@@ -151,7 +151,7 @@ class form_base(item.item, generic_response.generic_response):
 			raise exceptions.runtime_error( \
 				_('cols, rows, and margins should be numeric values separated by a semi-colon'))									
 		self._form = widgets.form(self.experiment, cols=cols, rows=rows, \
-			margins=margins, spacing=self.spacing)		
+			margins=margins, spacing=self.spacing)						
 		
 		# Prepare the widgets
 		for w in self._widgets:
