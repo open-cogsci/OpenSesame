@@ -48,7 +48,9 @@ class form_base(item.item, generic_response.generic_response):
 		self.cols = '2;2'
 		self.rows = '2;2'
 		self.spacing = 10
-		self.margins = '10;10;10;10'
+		self.focus_widget = None
+		self.theme = 'gray'
+		self.margins = '50;50;50;50'
 		self._widgets = []		
 		
 		item.item.__init__(self, name, experiment, string)				
@@ -127,7 +129,7 @@ class form_base(item.item, generic_response.generic_response):
 
 		sri = self.time()
 		self.set_item_onset(sri)
-		resp = self._form._exec()
+		resp = self._form._exec(focus_widget=self.focus_widget)
 		rt = self.time() - sri
 		
 		self.experiment.set('response', self.usanitize(resp))
@@ -151,7 +153,7 @@ class form_base(item.item, generic_response.generic_response):
 			raise exceptions.runtime_error( \
 				_('cols, rows, and margins should be numeric values separated by a semi-colon'))									
 		self._form = widgets.form(self.experiment, cols=cols, rows=rows, \
-			margins=margins, spacing=self.spacing)						
+			margins=margins, spacing=self.spacing, theme=self.theme)						
 		
 		# Prepare the widgets
 		for w in self._widgets:
@@ -170,6 +172,13 @@ class form_base(item.item, generic_response.generic_response):
 			# Translate paths into full file names
 			if 'path' in w:
 				w['path'] = self.experiment.get_file(w['path'])
+				
+			# Process focus keyword
+			if 'focus' in w:
+				focus = True
+				del w['focus']
+			else:
+				focus = False
 						
 			# Create the widget and add it to the form
 			try:
@@ -179,6 +188,10 @@ class form_base(item.item, generic_response.generic_response):
 					'Failed to create widget "%s": %s' % (_type, e))
 			self._form.set_widget(_w, (col, row), colspan=colspan, \
 					rowspan=rowspan)		
+					
+			# Add as focus widget
+			if focus:
+				self.focus_widget = _w
 		return True
 
 	def var_info(self):
