@@ -276,6 +276,7 @@ class legacy:
 		color -- A human readable color
 		</DOC>"""
 		
+		debug.msg(color)
 		self.fgcolor = self.color(color)		
 		
 	def set_bgcolor(self, color):
@@ -809,7 +810,11 @@ def _color(color):
 			return pygame.Color(color[0], color[1], color[2], color[3])
 		else:
 			return pygame.Color("white")
+	elif type(color) == pygame.Color:
+		return color
 	else:
+		debug.msg('Cannot interpret %s (%s), falling back to white' % (color, \
+			type(color)))
 		return pygame.Color("white")		
 				
 def _gabor(orient, freq, env = "gaussian", size = 96, stdev = 12, phase = 0, col1 = "white", col2 = "black", bgmode = "avg"):
