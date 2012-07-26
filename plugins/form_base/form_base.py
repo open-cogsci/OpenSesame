@@ -83,7 +83,7 @@ class form_base(item.item, generic_response.generic_response):
 		w['col'] = col
 		w['row'] = row
 		w['colspan'] = colspan
-		w['rowspan'] = rowspan
+		w['rowspan'] = rowspan		
 		self._widgets.append(w)						
 			
 	def to_string(self):
@@ -169,7 +169,7 @@ class form_base(item.item, generic_response.generic_response):
 			
 			# Translate paths into full file names
 			if 'path' in w:
-				w['path'] = self.experiment.get_file(w['path'])								
+				w['path'] = self.experiment.get_file(w['path'])
 						
 			# Create the widget and add it to the form
 			_w = eval('widgets.%s(self._form, **w)' % _type)

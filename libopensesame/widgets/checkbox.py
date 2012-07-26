@@ -70,7 +70,7 @@ class checkbox(button, box_widget):
 			for widget in self.form.widgets:
 				if widget != None and widget.type == 'checkbox' and \
 					widget.group == self.group:
-					self.set_checked(False)
+					widget.set_checked(False)
 			self.set_checked(True)
 		else:
 			self.set_checked(not self.checked)
