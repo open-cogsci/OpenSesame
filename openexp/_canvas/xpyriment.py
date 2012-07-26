@@ -117,7 +117,7 @@ class xpyriment(openexp._canvas.legacy.legacy):
 			if color != None: color = self.color(color)
 			else: color = self.fgcolor			
 			# The position of the stimulus is the center, not the top-left
-			pos = c2p((x+w/2,y+w/2))
+			pos = c2p((x+w/2,y+h/2))
 			stim = stimuli.Rectangle(size=(w,h), position=pos, colour= \
 				color, anti_aliasing=self.aa)
 			stim.preload()
