@@ -21,6 +21,7 @@ import numpy as np
 import copy
 import openexp._canvas.legacy
 import openexp.exceptions
+import pygame
 from expyriment import control, stimuli, misc, io
 from expyriment.misc.geometry import coordinates2position as c2p, \
 	points_to_vertices as p2v
@@ -224,7 +225,15 @@ class xpyriment(openexp._canvas.legacy.legacy):
 		"""See openexp._canvas.legacy"""
 		
 		if x == None: x = self.xcenter()
-		if y == None: y = self.ycenter()				
+		if y == None: y = self.ycenter()
+		if center == False:
+			surf = pygame.image.load(fname)
+			if scale == None:
+				x += surf.get_width()/2
+				y += surf.get_height()/2
+			else:
+				x += scale*surf.get_width()/2
+				y += scale*surf.get_height()/2			
 		stim = stimuli.Picture(fname, position=c2p((x,y)))
 		if scale != None: stim.scale( (scale, scale) )
 		self.stim_list.append(stim)
