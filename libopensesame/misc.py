@@ -83,6 +83,7 @@ def opensesamerun_options():
 	parser.add_option_group(group)
 	group = optparse.OptionGroup(parser, "Miscellaneous options")
 	group.add_option("-d", "--debug", action = "store_true", dest = "debug", help = "Print lots of debugging messages to the standard output")
+	group.add_option("--stack", action = "store_true", dest = "stack", help = "Print stack information")	
 	parser.add_option_group(group)
 	group = optparse.OptionGroup(parser, "Miscellaneous options")
 	group.add_option("--pylink", action = "store_true", dest = "pylink", help = "Load PyLink before PyGame (necessary for using the Eyelink plug-ins in non-dummy mode)")
