@@ -41,7 +41,10 @@ class text_input(label):
 				entered any text (default='Type here ...')
 		var -- the name of the experimental variable that should be used to log
 			   the widget status (default=None)					
-		</DOC>"""		
+		</DOC>"""
+		
+		if type(return_accepts) != bool:
+			return_accepts = return_accepts == 'yes'								
 	
 		label.__init__(self, form, text, frame=frame, center=center)
 		self.type = 'text_input'		

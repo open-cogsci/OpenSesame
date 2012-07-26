@@ -42,6 +42,11 @@ class image(widget):
 				 (default=False)
 		</DOC>"""		
 	
+		if type(adjust) != bool:
+			adjust = adjust == 'yes'			
+		if type(frame) != bool:
+			frame = frame == 'yes'						
+	
 		widget.__init__(self, form)
 		self.adjust = adjust
 		self.frame = frame

@@ -42,7 +42,10 @@ class checkbox(button, box_widget):
 		var -- the name of the experimental variable that should be used to log
 			   the widget status (default=None)
 		</DOC>"""	
-	
+		
+		if type(checked) != bool:
+			checked = checked == 'yes'			
+			
 		button.__init__(self, form, text, frame=frame, center=False)
 		box_widget.__init__(self)
 		self.type = 'checkbox'

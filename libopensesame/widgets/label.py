@@ -38,6 +38,11 @@ class label(widget):
 				 (default=False)
 		center -- indicates whether the text should be centered (default=True)
 		</DOC>"""
+
+		if type(frame) != bool:
+			frame = frame == 'yes'
+		if type(center) != bool:
+			center = center == 'yes'			
 			
 		widget.__init__(self, form)
 		self.type = 'label'		
@@ -46,7 +51,7 @@ class label(widget):
 		self.center = center
 		self.x_pad = 8
 		self.y_pad = 8
-		
+				
 	def draw_text(self, text):
 	
 		"""<DOC>
@@ -57,13 +62,14 @@ class label(widget):
 		</DOC>"""
 	
 		x, y, w, h = self.rect
-		for text in textwrap.wrap(text, self.max_len):
-			if self.center:
-				self.form.canvas.text(text, center=True, x=x+w/2, y=y+h/2)
-			else:
-				self.form.canvas.text(text, center=False, x=x+self.x_pad, \
-					y=y+self.y_pad)
-			y += self.text_height					
+		if self.center:
+			x += w/2
+			y += h/2
+		else:
+			x += self.x_pad
+			y += self.y_pad
+		w -= 2*self.x_pad							
+		self.form.canvas.text(text, center=self.center, x=x, y=y, max_width=w)		
 		
 	def render(self):
 	
@@ -74,24 +80,4 @@ class label(widget):
 		if self.frame:
 			self.draw_frame(self.rect)
 		self.draw_text(self.text)
-		
-	def set_rect(self, rect):
-	
-		"""<DOC>
-		Sets the widget geometry
-		
-		Arguments:
-		rect -- a (left, top, width, height) tuple
-		</DOC>"""
-			
-		widget.set_rect(self, rect)		
-		# Some ugly code to determine the maximum number of characters that fit
-		# into the label
-		x, y, w, h = rect
-		self.text_height = self.form.canvas.text_size('WWWW')[1]		
-		self.max_len = 1
-		while True:
-			s = ''.join(['W']*self.max_len)
-			if self.form.canvas.text_size(s)[0] >= w-4*self.x_pad:
-				break
-			self.max_len += 1
+

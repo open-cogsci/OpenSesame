@@ -43,6 +43,9 @@ class rating_scale(widget, box_widget):
 			   the widget status (default=None)								 
 		</DOC>"""	
 		
+		if type(click_accepts) != bool:
+			click_accepts = click_accepts == 'yes'					
+		
 		widget.__init__(self, form)
 		box_widget.__init__(self)
 		self.type = 'rating_scale'
