@@ -34,16 +34,14 @@ class experiment(item.item):
 
 	"""The main experiment class, which is the first item to be called"""
 
-	def __init__(self, name, string=None, pool_folder=None):
+	def __init__(self, name='experiment', string=None, pool_folder=None):
 
 		"""<DOC>
 		Constructor. The experiment is created automatically be OpenSesame and
 		you will generally not need to create it yourself.
 
-		Arguments:
-		name -- the name of the experiment
-
 		Keyword arguments:
+		name -- the name of the experiment (default='experiment')		
 		string -- a string containing the experiment definition (default=None)
 		pool_folder -- a specific folder to be used for the file pool
 					   (default=None)
@@ -76,7 +74,7 @@ class experiment(item.item):
 		self.resources = {}
 
 		# Backend parameters
-		self.canvas_backend = "legacy"
+		self.canvas_backend = "xpyriment"
 		self.keyboard_backend = "legacy"
 		self.mouse_backend = "legacy"
 		self.sampler_backend = "legacy"
