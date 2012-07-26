@@ -100,7 +100,8 @@ class html(HTMLParser):
 		else:
 			print 'Unrecognized tag:', tag
 				
-	def render(self, text, x, y, canvas):
+	def render(self, text, x, y, canvas, max_width=None, center=False, \
+		color=None):
 	
 		"""
 		Render an HTML formatted string onto a canvas
@@ -110,18 +111,44 @@ class html(HTMLParser):
 		x -- the left-most coordinate
 		y -- the top coordinate
 		canvas -- an openexp canvas
+		
+		Keyword arguments:
+		max_width -- the maximum width, after which line wrapping shoudl occur,
+					 or None to wrap at screen edge (default=None)
+		center -- indicates whether the text should be center aligned
+				  (default=False)
+		color -- indicates the color of the text or None for canvas default
+				 (default=None)
 		"""		
-	
+
 		debug.msg(text)
+		
+		# First save all the settings, so we don't mess up the canvas
+	
+		# Convert line breaks to HTML break tags
+		text = text.replace('\n', '<br />')
+
+		# Initialize the style	
 		self.canvas = canvas		
 		self.default_style = {
-			'style' : canvas.experiment.get('font_family'),
-			'bold' : canvas.experiment.get('font_bold') == 'yes',
-			'italic' : canvas.experiment.get('font_italic') == 'yes',			
-			'color' : canvas.experiment.get('foreground'),
-			'size' : canvas.experiment.get('font_size')
-			}	
-	
+			'style' : canvas.font_style,
+			'bold' : canvas.font_bold,
+			'italic' : canvas.font_italic,			
+			'color' : canvas.fgcolor,
+			'size' : canvas.font_size
+			}
+		backup_style = self.default_style.copy()
+			
+		# Optionally override color
+		if color != None:
+			self.default_style['color'] = color
+			
+		# Set the maximum width
+		if max_width == None:
+			max_x = canvas.experiment.width
+		else:
+			max_x = x + max_width
+			
 		# First parse the HTML
 		self.text = []
 		self.paragraph = []
@@ -131,28 +158,74 @@ class html(HTMLParser):
 		self.feed(text)
 		self.text.append(self.paragraph)
 		
+		# If we want to center the next, we need a dry run to calculate all the
+		# line lengths and determine the vertical and horizontal offset for each
+		# line
+		if center:
+			l_x_offset = []
+			_y = y
+			for paragraph in self.text:
+				_x = x
+				for word, style in paragraph:
+			
+					# Set the style
+					canvas.set_font(style['style'], int(style['size']), \
+						bold=style['bold'], italic=style['italic'])
+				
+					# Line wrap if we run out of the screen
+					dx, dy = canvas.text_size(word)
+					if _x+dx > max_x:
+						l_x_offset.append(-(_x-x)/2)
+						_x = x
+						_y += dy
+						word = word.lstrip()
+				
+					# Draw!
+					_x += dx
+				l_x_offset.append(-(_x-x)/2)
+				_y += dy			
+			l_x_offset.reverse()
+			y_offset = -(_y-y)/2
+			max_x = (max_x-x)/2+x
+		
+		
 		# Now render it onto the canvas
-		_y = y
+		if center:
+			_y = y+y_offset	
+		else:
+			_y = y
 		for paragraph in self.text:
-			_x = x
+			if center:
+				_x = x+l_x_offset.pop()
+			else:
+				_x = x
 			for word, style in paragraph:
 			
 				# Set the style
 				canvas.set_font(style['style'], int(style['size']), \
 					bold=style['bold'], italic=style['italic'])
-				canvas.set_fgcolor(str(style['color']))		
+				canvas.set_fgcolor(style['color'])		
 				
 				# Line wrap if we run out of the screen
 				dx, dy = canvas.text_size(word)
-				if _x+dx > canvas.experiment.get('width'):
-					_x = x
+				if _x+dx > max_x:
+					if center:
+						_x = x+l_x_offset.pop()
+					else:
+						_x = x
 					_y += dy
 					word = word.lstrip()
 				
 				# Draw!
-				canvas.text(word, center=False, x=_x, y=_y)
+				canvas._text(word, _x, _y)
 				_x += dx
 			_y += dy
+			
+		# Restore the canvas font and colors
+		canvas.set_fgcolor(backup_style['color'])
+		canvas.set_font(backup_style['style'], int(backup_style['size']), \
+			bold=backup_style['bold'], italic=backup_style['italic'])
+		
 				
 	def pop_style(self):
 	

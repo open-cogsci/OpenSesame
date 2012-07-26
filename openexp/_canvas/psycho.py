@@ -17,6 +17,7 @@ You should have received a copy of the GNU General Public License
 along with openexp.  If not, see <http://www.gnu.org/licenses/>.
 """
 
+import pyglet
 import pygame
 import math
 import openexp._canvas.legacy
@@ -102,19 +103,7 @@ class psycho(openexp._canvas.legacy.legacy):
 		self.stim_list = canvas.stim_list + []
 		self.bgcolor = canvas.bgcolor
 		self.fgcolor = canvas.fgcolor
-		self.penwidth = canvas.penwidth
-		
-	def xcenter(self):
-		
-		"""See openexp._canvas.legacy"""
-		
-		return self.experiment.resolution[0] / 2
-	
-	def ycenter(self):
-		
-		"""See openexp._canvas.legacy"""
-		
-		return self.experiment.resolution[1] / 2	
+		self.penwidth = canvas.penwidth		
 		
 	def show(self):
 		
@@ -138,32 +127,7 @@ class psycho(openexp._canvas.legacy.legacy):
 			# The background is simply a rectangle, because of the double flip
 			# required by set_color()			
 			self.rect(0, 0, self.experiment.width, self.experiment.height, \
-				color=color, fill=True)
-		
-	def set_penwidth(self, penwidth):
-		
-		"""See openexp._canvas.legacy"""
-		
-		self.penwidth = max(self.min_penwidth, penwidth)
-		
-	def set_fgcolor(self, color):
-		
-		"""See openexp._canvas.legacy"""
-		
-		self.fgcolor = self.color(color)
-		
-	def set_bgcolor(self, color):
-		
-		"""See openexp._canvas.legacy"""
-
-		self.bgcolor = self.color(color)
-		
-	def set_font(self, style, size, italic=False, bold=False):
-	
-		"""See openexp._canvas.legacy"""
-		
-		self.font_style = style
-		self.font_size = size
+				color=color, fill=True)			
 		
 	def fixdot(self, x=None, y=None, color=None):
 		
@@ -190,25 +154,7 @@ class psycho(openexp._canvas.legacy.legacy):
 		
 		if color == None:
 			color = self.fgcolor
-		self.shapestim( [[sx, sy], [ex, ey]], color = color)
-		
-	def arrow(self, sx, sy, ex, ey, arrow_size=5, color=None):
-		
-		"""See openexp._canvas.legacy"""
-		
-		if color != None:
-			color = self.color(color)
-		else:
-			color = self.fgcolor		
-		
-		self.line(sx, sy, ex, ey, color = color)
-		a = math.atan2(ey - sy, ex - sx)		
-		_sx = ex + arrow_size * math.cos(a + math.radians(135))
-		_sy = ey + arrow_size * math.sin(a + math.radians(135))
-		self.line(_sx, _sy, ex, ey, color = color)		
-		_sx = ex + arrow_size * math.cos(a + math.radians(225))
-		_sy = ey + arrow_size * math.sin(a + math.radians(225))
-		self.line(_sx, _sy, ex, ey, color = color)		
+		self.shapestim( [[sx, sy], [ex, ey]], color = color)		
 		
 	def rect(self, x, y, w, h, fill=False, color=None):
 		
@@ -261,42 +207,22 @@ class psycho(openexp._canvas.legacy.legacy):
 	
 		"""See openexp._canvas.legacy"""
 		
-		self.text(text)
+		self._text(text, 0, 0)
 		s = self.stim_list.pop()
-		return len(s.text)*s.height, s.height
-				
-	def text(self, text, center=True, x=None, y=None, color=None, html=False):
+		t = pyglet.font.Text(s._font, text)
+		return t.width, t.height				
 		
+	def _text(self, text, x, y):
+	
 		"""See openexp._canvas.legacy"""
 		
-		if html:
-			from libopensesame.html import html
-			html().render(text, x, y, self)
-			return				
-		
-		if center:
-			halign = "center"
-			valign = "center"
-		else:
-			halign = "left"
-			valign = "top"
-			
-		if color == None:
-			color = self.fgcolor
-		else:
-			color = self.color(color)
-
-		if x == None:
-			x = self.xcenter()
-		if y == None:
-			y = self.ycenter()
-
 		pos = x - self.xcenter(), self.ycenter() - y		
-		stim = visual.TextStim(win = self.experiment.window, text=text, \
-			alignHoriz=halign, alignVert=valign, pos=pos, color=color, \
+		stim = visual.TextStim(win=self.experiment.window, text=text, \
+			alignHoriz='left', alignVert='top', pos=pos, color=self.fgcolor, \
 			font=self.font_map[self.font_style], height=self.font_size, \
-			wrapWidth=self.experiment.width)
-		self.stim_list.append(stim)
+			wrapWidth=self.experiment.width, bold=self.font_bold, italic= \
+			self.font_italic)
+		self.stim_list.append(stim)				
 		
 	def textline(self, text, line, color=None):
 		

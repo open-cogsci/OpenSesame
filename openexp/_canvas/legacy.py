@@ -27,7 +27,7 @@ import subprocess
 import os
 import os.path
 import tempfile
-from libopensesame import debug
+from libopensesame import debug, html
 
 # Translation mapping from envelope names
 env_synonyms = {}
@@ -97,7 +97,10 @@ class legacy:
 			"description" : "Use double buffering",
 			"default" : "yes"
 			},			
-		}	
+		}
+		
+	# Initialize the html renderer
+	html = html.html()
 	
 	def __init__(self, experiment, bgcolor=None, fgcolor=None):
 		
@@ -128,7 +131,8 @@ class legacy:
 		self.antialias = True
 		
 		self.surface = self.experiment.surface.copy()					
-		self.font = self.experiment.font
+		self.set_font(self.experiment.font_family, self.experiment.font_size)
+
 		self.clear()
 		
 	def color(self, color):
@@ -149,7 +153,22 @@ class legacy:
 		A color in the back-end format
 		"""
 	
-		return _color(color)				
+		return _color(color)	
+		
+	def _font(self):
+	
+		"""
+		Create a PyGame font instance
+		
+		Returns:
+		A PyGame font
+		"""
+	
+		font = pygame.font.Font(self.experiment.resource( \
+			"%s.ttf" % self.font_style), self.font_size)			
+		font.set_bold(self.font_bold)
+		font.set_italic(self.font_italic)
+		return font
 		
 	def flip(self, x=True, y=False):
 		
@@ -284,10 +303,12 @@ class legacy:
 		italic -- indicates if the font should be italic (default=False)
 		bold -- indicates if the font should be bold (default=False)
 		</DOC>"""
-		
-		self.font = pygame.font.Font(self.experiment.resource( \
-			"%s.ttf" % style), size)			
-		
+				
+		self.font_style = style
+		self.font_size = size
+		self.font_italic = italic
+		self.font_bold = bold		
+				
 	def fixdot(self, x=None, y=None, color=None):
 		
 		"""<DOC>
@@ -502,9 +523,9 @@ class legacy:
 		A (width, height) tuple containing the dimensions of the text string
 		</DOC>"""
 		
-		return self.font.size(text)				
+		return self._font().size(text)				
 		
-	def text(self, text, center=True, x=None, y=None, color=None, html=False):
+	def text(self, text, center=True, x=None, y=None, max_width=None, color=None):
 		
 		"""<DOC>
 		Draws text.
@@ -514,38 +535,37 @@ class legacy:
 		
 		Keyword arguments:
 		center -- A boolean indicating whether the coordinates reflect the
-				  center (True) or top-left (default = True)
-		x -- The X coordinate. None = center. (default = None)
-		y -- The Y coordinate. None = center. (default = None)
+				  center (True) or top-left (default=True)
+		x -- The X coordinate. None = center. (default=None)
+		y -- The Y coordinate. None = center. (default=None)
+		max_width -- The maximum width of the text, before wrapping to a new
+					 line, or None to wrap at screen edge (default=None)
 		color -- A custom human readable foreground color. This does not affect
-				 the default foreground color as set by set_fdcolor().
+				 the default foreground color as set by set_fgcolor().
 				 (Default=None)		
-		html -- Indicates whether HTML tags should be parsed (default=False)
 		</DOC>"""
+							
+		if color != None: color = self.color(color)
+		else: color = self.fgcolor					
+		self.html.render(text, x, y, self, max_width=max_width, center=center, \
+			color=color)
+
+	def _text(self, text, x, y):			
+	
+		"""
+		A simple function that render a string of text with the canvas default
+		settings. This is the only function that needs to be re-implemented in
+		other back-ends, as it is the only function that should handle actual
+		text rendering.
 		
-		if html:
-			from libopensesame.html import html		
-			html().render(text, x, y, self)
-			return
-		
-		if color != None:
-			color = self.color(color)
-		else:
-			color = self.fgcolor		
+		Arguments:
+		text -- the text
+		x -- the x-coordinate
+		y -- the y-coordinate
+		"""		
 			
-		surface = self.font.render(text, self.antialias, color)
-		size = self.font.size(text)
-		
-		if x == None:
-			x = self.xcenter()
-			
-		if y == None:
-			y = self.ycenter()
-			
-		if center:
-			x -= size[0] / 2
-			y -= size[1] / 2
-			
+		font = self._font()
+		surface = font.render(text, self.antialias, self.fgcolor)
 		self.surface.blit(surface, (x, y))
 		
 	def textline(self, text, line, color=None):
@@ -564,7 +584,8 @@ class legacy:
 				 (Default=None)		
 		</DOC>"""
 		
-		size = self.font.size(text)
+		font = self._font()
+		size = font.size(text)
 		self.text(text, True, self.xcenter(), self.ycenter()+1.5*line*size[1], \
 			color=color)
 		
@@ -774,8 +795,8 @@ def _color(color):
 	See canvas.color()
 	"""
 
-	if type(color) == str:
-		return pygame.Color(color)
+	if type(color) in (str, unicode):
+		return pygame.Color(str(color))
 	elif type(color) == int:
 		pygame.Color(color, color, color, 255)
 	elif type(color) == float:

@@ -45,16 +45,7 @@ class xpyriment(openexp._canvas.legacy.legacy):
 		self.ellipse_res = 100
 		self.aa = 10
 		self.clear()
-		
-	def set_font(self, style, size, italic=False, bold=False):
-	
-		"""See openexp._canvas.legacy"""
-		
-		self.font_style = style
-		self.font_size = size
-		self.font_italic = italic
-		self.font_bold = bold		
-				
+						
 	def flip(self, x=True, y=False):
 		
 		"""See openexp._canvas.legacy"""
@@ -191,39 +182,34 @@ class xpyriment(openexp._canvas.legacy.legacy):
 	
 		"""See openexp._canvas.legacy"""
 		
-		self.text(text)
-		stim = self.stim_list.pop()		
-		return stim._create_surface().get_width(), \
-			stim._create_surface().get_height()
-				
-	def text(self, text, center=True, x=None, y=None, color=None, html=False):
+		try:
+			_font = self.experiment.resource("%s.ttf" % self.font_style)
+		except:
+			_font = self.font_style					
+		stim = stimuli.TextLine(text, text_font=_font, \
+			text_size=self.font_size, text_bold=self.font_bold, \
+			text_italic=self.font_italic)	
+		surf = stim._create_surface()
+		return surf.get_width(), surf.get_height()				
 		
+	def _text(self, text, x, y):
+	
 		"""See openexp._canvas.legacy"""
 		
-		if html:
-			from libopensesame.html import html
-			html().render(text, x, y, self)
-			return		
-		
-		if color != None: color = self.color(color)
-		else: color = self.fgcolor
-		if x == None: x = self.xcenter()
-		if y == None: y = self.ycenter()		
-		if center:
-			dx = 0		
-			dy = 0
-		else:
-			dx, dy = self.text_size(text)
-			dx /= 2
-			dy /= 2
 		try:
 			_font = self.experiment.resource("%s.ttf" % self.font_style)
 		except:
 			_font = self.font_style
-		stim = stimuli.TextLine(text, position=c2p((x+dx,y+dy)), text_colour=color, \
-			text_font=_font, text_size=self.font_size, text_bold=\
-			self.font_bold, text_italic=self.font_italic)
-		self.stim_list.append(stim)
+			
+		w, h = self.text_size(text)
+		x += w/2
+		y += h/2
+			
+		stim = stimuli.TextLine(text, position=c2p((x,y)), \
+			text_colour=self.fgcolor, text_font=_font, \
+			text_size=self.font_size, text_bold=self.font_bold, \
+			text_italic=self.font_italic)			
+		self.stim_list.append(stim)				
 		
 	def textline(self, text, line, color=None):
 		
