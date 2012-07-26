@@ -95,7 +95,9 @@ class form:
 		self.mouse = mouse(self.experiment)		
 		if focus_widget != None:
 			self.render()
-			focus_widget.on_mouse_click(None)		
+			resp = focus_widget.on_mouse_click(None)		
+			if resp != None:
+				return
 		while True:
 			self.render()
 			button, xy, time = self.mouse.get_click(visible=True)
