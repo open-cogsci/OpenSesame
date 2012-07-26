@@ -188,6 +188,9 @@ class form:
 		</DOC>"""
 	
 		index = self.cell_index(pos)
+		if index >= len(self.widgets):
+			raise form_error( \
+				'Widget position "%s" is outside of the form' % str(pos))			
 		self.widgets[index] = widget
 		self.span[index] = colspan, rowspan		
 		widget.set_rect(self.get_rect(index))		

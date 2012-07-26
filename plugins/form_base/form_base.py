@@ -172,7 +172,11 @@ class form_base(item.item, generic_response.generic_response):
 				w['path'] = self.experiment.get_file(w['path'])
 						
 			# Create the widget and add it to the form
-			_w = eval('widgets.%s(self._form, **w)' % _type)
+			try:
+				_w = eval('widgets.%s(self._form, **w)' % _type)
+			except Exception as e:
+				raise exceptions.runtime_error( \
+					'Failed to create widget "%s": %s' % (_type, e))
 			self._form.set_widget(_w, (col, row), colspan=colspan, \
 					rowspan=rowspan)		
 		return True
