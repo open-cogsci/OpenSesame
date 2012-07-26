@@ -191,14 +191,19 @@ class xpyriment(openexp._canvas.legacy.legacy):
 	
 		"""See openexp._canvas.legacy"""
 		
-		stim = stimuli.TextLine(text, text_font=self.font_style, text_size= \
-			self.font_size)
+		self.text(text)
+		stim = self.stim_list.pop()		
 		return stim._create_surface().get_width(), \
 			stim._create_surface().get_height()
 				
-	def text(self, text, center=True, x=None, y=None, color=None):
+	def text(self, text, center=True, x=None, y=None, color=None, html=False):
 		
 		"""See openexp._canvas.legacy"""
+		
+		if html:
+			from libopensesame.html import html
+			html().render(text, x, y, self)
+			return		
 		
 		if color != None: color = self.color(color)
 		else: color = self.fgcolor

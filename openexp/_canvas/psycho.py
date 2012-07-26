@@ -265,9 +265,14 @@ class psycho(openexp._canvas.legacy.legacy):
 		s = self.stim_list.pop()
 		return len(s.text)*s.height, s.height
 				
-	def text(self, text, center=True, x=None, y=None, color=None):
+	def text(self, text, center=True, x=None, y=None, color=None, html=False):
 		
 		"""See openexp._canvas.legacy"""
+		
+		if html:
+			from libopensesame.html import html
+			html().render(text, x, y, self)
+			return				
 		
 		if center:
 			halign = "center"

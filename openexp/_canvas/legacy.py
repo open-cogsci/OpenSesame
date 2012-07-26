@@ -504,7 +504,7 @@ class legacy:
 		
 		return self.font.size(text)				
 		
-	def text(self, text, center=True, x=None, y=None, color=None):
+	def text(self, text, center=True, x=None, y=None, color=None, html=False):
 		
 		"""<DOC>
 		Draws text.
@@ -520,7 +520,13 @@ class legacy:
 		color -- A custom human readable foreground color. This does not affect
 				 the default foreground color as set by set_fdcolor().
 				 (Default=None)		
+		html -- Indicates whether HTML tags should be parsed (default=False)
 		</DOC>"""
+		
+		if html:
+			from libopensesame.html import html		
+			html().render(text, x, y, self)
+			return
 		
 		if color != None:
 			color = self.color(color)
