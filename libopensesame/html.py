@@ -166,6 +166,7 @@ class html(HTMLParser):
 			_y = y
 			for paragraph in self.text:
 				_x = x
+				dy = 0
 				for word, style in paragraph:
 			
 					# Set the style

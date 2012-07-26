@@ -17,10 +17,10 @@ You should have received a copy of the GNU General Public License
 along with openexp.  If not, see <http://www.gnu.org/licenses/>.
 """
 
+from libopensesame import debug
 from widget import widget
-from box_widget import box_widget
 
-class rating_scale(widget, box_widget):
+class rating_scale(widget):
 
 	"""A simple rating scale/ Likert widget"""
 
@@ -47,7 +47,6 @@ class rating_scale(widget, box_widget):
 			click_accepts = click_accepts == 'yes'					
 		
 		widget.__init__(self, form)
-		box_widget.__init__(self)
 		self.type = 'rating_scale'
 		self.box_size = 16
 		self.click_accepts = click_accepts
@@ -55,6 +54,8 @@ class rating_scale(widget, box_widget):
 		self.var = var
 		if type(nodes) == int:
 			self.nodes = ['']*nodes
+		elif type(nodes) in (str, unicode):
+			self.nodes = nodes.split(';')
 		else:
 			self.nodes = nodes
 		self.set_value(None)
@@ -68,6 +69,7 @@ class rating_scale(widget, box_widget):
 		Arguments:
 		pos -- an (x, y) tuple		
 		</DOC>"""		
+	
 	
 		x, y = pos
 		i = 0
@@ -86,18 +88,20 @@ class rating_scale(widget, box_widget):
 		Draws the widget
 		</DOC>"""	
 	
+		# Some ugly maths, but basically it evely spaces the checkboxes and
+		# draws a frame around it.
 		x, y, w, h = self.rect		
-		w -= self.box_size		
 		cy = y+h/2
-		dx = 1*w/(len(self.nodes)-1)						
-		self.form.canvas.line(x, cy, x+w, cy)		
-		_x = x
+		_h = self.form.theme_engine.box_size()				
+		dx = (1*w-3*_h)/(len(self.nodes)-1)										
+		self.form.theme_engine.frame(x, cy-.5*_h, w, 2*_h, style='light')		
+		_x = x+_h
 		i = 0
 		for node in self.nodes:
-			self.draw_box(self.value == i, _x, cy)
+			self.form.theme_engine.box(_x, cy, checked=(self.value == i))
 			text_height = self.form.canvas.text_size(node)[1]
 			self.form.canvas.text(node, center=True, x=_x+self.box_size/2, \
-				y=cy-text_height/2)						
+				y=cy-text_height)						
 			self.pos_list.append( (_x, cy) )
 			_x += dx
 			i += 1

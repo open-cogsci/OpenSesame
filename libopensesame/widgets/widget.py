@@ -36,7 +36,7 @@ class widget:
 		self.focus = False
 		self.var = None
 		
-	def draw_frame(self, rect=None, color=None, penwidth=None):
+	def draw_frame(self, rect=None, style='normal'):
 	
 		"""<DOC>
 		Draws a simple frame around the widget
@@ -44,19 +44,11 @@ class widget:
 		Keyword arguments:
 		rect -- a (left, top, width, height) tuple for the frame geometry or
 				None to use the widget geometry (default=None)
-		color -- frame color or None to use experiment default (default=None)
-		penwidth -- frame width or None to use experiment default
-					(default=None)		
+		style -- 'normal', 'active', 'light' (default='normal')
 		</DOC>"""
-	
-		pw = self.form.canvas.penwidth
-		if penwidth != None:
-			self.form.canvas.set_penwidth(penwidth)
-		if rect == None:
-			rect = self.rect
+		
 		x, y, w, h = rect
-		self.form.canvas.rect(x, y, w, h, color=color)
-		self.form.canvas.set_penwidth(pw)				
+		self.form.theme_engine.frame(x, y, w, h, style=style)				
 								
 	def on_mouse_click(self, pos):
 	
@@ -74,7 +66,7 @@ class widget:
 		</DOC>"""
 	
 		if self.focus:
-			self.draw_frame(self.rect, penwidth=4)	
+			self.draw_frame(self.rect, focus=True)	
 		else:
 			self.draw_frame(self.rect)	
 		

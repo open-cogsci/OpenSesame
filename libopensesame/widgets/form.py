@@ -26,7 +26,7 @@ class form:
 	"""Implements a single form that acts as a container for widgets"""
 
 	def __init__(self, experiment, cols=2, rows=2, spacing=10, \
-		margins=(100, 100, 100, 100)):
+		margins=(100, 100, 100, 100), theme='gray'):
 		
 		"""<DOC>		
 		Constructor
@@ -44,6 +44,7 @@ class form:
 		margins -- The amount of empty space around the form. This is specified
 				   as a list, like so [top-margin, right-margin, bottom-margin,
 				   left-margin]. (default=[100, 100, 100, 100])
+		theme -- the theme for the widgets (default='gray')
 		</DOC>"""
 				
 		# Normalize the column and row sizes so that they add up to 1
@@ -64,7 +65,14 @@ class form:
 		n_cells = len(self.cols)*len(self.rows)
 		self.widgets = [None]*n_cells
 		self.span = [(1,1)]*n_cells	
-		self.canvas = canvas(self.experiment)								
+		self.canvas = canvas(self.experiment)		
+		
+		if theme == 'gray':
+			from themes.gray import gray
+			self.theme_engine = gray(self)
+		else:
+			from themes.plain import plain
+			self.theme_engine = plain(self)			
 		
 	def _exec(self, focus_widget=None):
 	

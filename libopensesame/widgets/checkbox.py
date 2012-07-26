@@ -18,9 +18,8 @@ along with openexp.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from button import button
-from box_widget import box_widget
 
-class checkbox(button, box_widget):
+class checkbox(button):
 
 	"""A checkbox widget"""
 
@@ -47,7 +46,6 @@ class checkbox(button, box_widget):
 			checked = checked == 'yes'			
 			
 		button.__init__(self, form, text, frame=frame, center=False)
-		box_widget.__init__(self)
 		self.type = 'checkbox'
 		self.group = group		
 		self.box_size = 16
@@ -82,7 +80,8 @@ class checkbox(button, box_widget):
 		</DOC>"""	
 	
 		x, y, w, h = self.rect
-		self.draw_box(self.checked, x+self.box_pad, y+self.y_pad)
+		self.form.theme_engine.box(x+self.box_pad, y+self.y_pad, \
+			checked=self.checked)
 		self.draw_text(self.text)
 		
 	def set_checked(self, checked=True):

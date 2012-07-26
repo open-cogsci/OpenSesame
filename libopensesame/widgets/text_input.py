@@ -63,9 +63,9 @@ class text_input(label):
 
 		if self.frame:
 			if self.focus:
-				self.draw_frame(self.rect, penwidth=2)
+				self.draw_frame(self.rect, style='active')
 			else:
-				self.draw_frame(self.rect)
+				self.draw_frame(self.rect, style='light')
 		if self.text == '' and not self.focus:
 			self.draw_text(self.stub)	
 		elif self.focus:
