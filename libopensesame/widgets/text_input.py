@@ -67,11 +67,11 @@ class text_input(label):
 			else:
 				self.draw_frame(self.rect, style='light')
 		if self.text == '' and not self.focus:
-			self.draw_text(self.stub)	
+			self.draw_text(self.stub, html=False)	
 		elif self.focus:
-			self.draw_text(self.text+self.prompt)	
+			self.draw_text(self.text+self.prompt, html=False)	
 		else:
-			self.draw_text(self.text)	
+			self.draw_text(self.text, html=False)	
 				
 	def on_mouse_click(self, pos):
 	
