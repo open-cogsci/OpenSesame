@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'resources/ui/general_widget.ui'
 #
-# Created: Sun Jul 15 12:48:32 2012
+# Created: Fri Jul 27 15:34:12 2012
 #      by: PyQt4 UI code generator 4.9.1
 #
 # WARNING! All changes made in this file will be lost!
@@ -30,7 +30,7 @@ class Ui_general_widget(object):
         self.widget_credits.setObjectName(_fromUtf8("widget_credits"))
         self.gridLayout_5.addWidget(self.widget_credits, 1, 0, 1, 1)
         self.widget_2 = QtGui.QWidget(general_widget)
-        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.MinimumExpanding, QtGui.QSizePolicy.Preferred)
+        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.widget_2.sizePolicy().hasHeightForWidth())
@@ -65,7 +65,7 @@ class Ui_general_widget(object):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.frame_resolution.sizePolicy().hasHeightForWidth())
         self.frame_resolution.setSizePolicy(sizePolicy)
-        self.frame_resolution.setFrameShape(QtGui.QFrame.StyledPanel)
+        self.frame_resolution.setFrameShape(QtGui.QFrame.NoFrame)
         self.frame_resolution.setObjectName(_fromUtf8("frame_resolution"))
         self.horizontalLayout_3 = QtGui.QHBoxLayout(self.frame_resolution)
         self.horizontalLayout_3.setMargin(0)
@@ -93,7 +93,7 @@ class Ui_general_widget(object):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.frame_colors.sizePolicy().hasHeightForWidth())
         self.frame_colors.setSizePolicy(sizePolicy)
-        self.frame_colors.setFrameShape(QtGui.QFrame.StyledPanel)
+        self.frame_colors.setFrameShape(QtGui.QFrame.NoFrame)
         self.frame_colors.setObjectName(_fromUtf8("frame_colors"))
         self.gridLayout_6 = QtGui.QGridLayout(self.frame_colors)
         self.gridLayout_6.setMargin(0)

@@ -83,7 +83,7 @@
             </sizepolicy>
            </property>
            <property name="frameShape">
-            <enum>QFrame::StyledPanel</enum>
+            <enum>QFrame::NoFrame</enum>
            </property>
            <layout class="QHBoxLayout" name="horizontalLayout_3">
             <property name="margin">
@@ -147,7 +147,7 @@
             </sizepolicy>
            </property>
            <property name="frameShape">
-            <enum>QFrame::StyledPanel</enum>
+            <enum>QFrame::NoFrame</enum>
            </property>
            <layout class="QGridLayout" name="gridLayout_6">
             <property name="margin">
