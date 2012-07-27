@@ -19,6 +19,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 
 from libopensesame import item, exceptions, generic_response, widgets
 from libqtopensesame import qtplugin
+from libqtopensesame.misc import _
 import openexp.canvas
 import openexp.keyboard
 import os.path
@@ -128,15 +129,8 @@ class form_base(item.item, generic_response.generic_response):
 		True on success, False on failure
 		"""
 
-		sri = self.time()
-		self.set_item_onset(sri)
-		resp = self._form._exec(focus_widget=self.focus_widget)
-		rt = self.time() - sri
-		
-		self.experiment.set('response', self.usanitize(resp))
-		self.experiment.set('response_%s' % self.name, self.usanitize(resp))
-		self.experiment.set('response_time', rt)
-		self.experiment.set('response_time_%s' % self.name, rt)				
+		self.set_item_onset()
+		self._form._exec(focus_widget=self.focus_widget)
 		return True
 		
 	def prepare(self):
@@ -147,9 +141,9 @@ class form_base(item.item, generic_response.generic_response):
 		
 		# Prepare the form
 		try:
-			cols = [float(i) for i in self.cols.split(';')]
-			rows = [float(i) for i in self.rows.split(';')]		
-			margins = [float(i) for i in self.margins.split(';')]		
+			cols = [float(i) for i in str(self.cols).split(';')]
+			rows = [float(i) for i in str(self.rows).split(';')]		
+			margins = [float(i) for i in str(self.margins).split(';')]		
 		except:
 			raise exceptions.runtime_error( \
 				_('cols, rows, and margins should be numeric values separated by a semi-colon'))									
@@ -157,8 +151,13 @@ class form_base(item.item, generic_response.generic_response):
 			margins=margins, spacing=self.spacing, theme=self.theme, item=self)						
 		
 		# Prepare the widgets
-		for w in self._widgets:
-			w = w.copy()
+		for _w in self._widgets:
+		
+			# Evaluate all keyword arguments
+			w = {}
+			for var, val in _w.iteritems():
+				w[var] = self.eval_text(val)		
+		
 			_type = w['type']
 			col = w['col']
 			row = w['row']
@@ -180,7 +179,7 @@ class form_base(item.item, generic_response.generic_response):
 				del w['focus']
 			else:
 				focus = False
-						
+										
 			# Create the widget and add it to the form
 			try:
 				_w = eval('widgets.%s(self._form, **w)' % _type)

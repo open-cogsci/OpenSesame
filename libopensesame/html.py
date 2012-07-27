@@ -100,7 +100,7 @@ class html(HTMLParser):
 		elif tag == 'u':
 			self.push_style(underline=True)				
 		else:
-			print 'Unrecognized tag:', tag
+			debug.msg('Unrecognized tag: %s')
 				
 	def render(self, text, x, y, canvas, max_width=None, center=False, \
 		color=None, html=True):
@@ -234,8 +234,7 @@ class html(HTMLParser):
 		canvas.set_fgcolor(backup_style['color'])
 		canvas.set_font(backup_style['style'], int(backup_style['size']), \
 			bold=backup_style['bold'], italic=backup_style['italic'])
-		
-				
+						
 	def pop_style(self):
 	
 		"""Pop a style from the style stack"""
