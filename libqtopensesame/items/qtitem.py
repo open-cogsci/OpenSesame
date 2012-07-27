@@ -24,7 +24,7 @@ from PyQt4 import QtCore, QtGui
 import os.path
 import sip
 from libopensesame import debug, exceptions
-from libqtopensesame.widgets import inline_editor, help_browser, header_widget
+from libqtopensesame.widgets import inline_editor, header_widget
 from libqtopensesame.misc import _
 
 class qtitem(QtCore.QObject):

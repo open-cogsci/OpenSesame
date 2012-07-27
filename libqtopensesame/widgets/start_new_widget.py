@@ -60,7 +60,7 @@ class start_new_widget(QtGui.QWidget):
 		# Initialize recent
 		if len(self.main_window.recent_files) == 0:
 			self.ui.list_recent.hide()
-			self.ui.label_recent.hide()
+			self.ui._label_recent.hide()
 		else:		
 			for f in self.main_window.recent_files:
 				item = QtGui.QListWidgetItem(self.ui.list_recent)
