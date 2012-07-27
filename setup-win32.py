@@ -31,15 +31,16 @@ import urllib
 
 # Some settings
 include_plugins = True
-include_media_player = True
+include_expyriment = True
+include_media_player = False
 include_media_player_vlc = False
 include_examples = True
 include_sounds = True
-include_faenza = True
+include_faenza = False
 include_inpout32 = True
-include_simpleio = False
-python_folder = "C:\\Python26"
-python_version = "2.6"
+include_simpleio = True
+python_folder = "C:\\Python27"
+python_version = "2.7"
 
 # Create empty destination folders
 if os.path.exists("dist"):
@@ -64,18 +65,27 @@ setup(
 		"compressed" : True,
 		"optimize": 2,
 		"bundle_files": 3,
-		"includes": "libqtopensesame.*, " + \
+		"excludes": "expyriment",
+		"includes" : 
+			"libopensesame, " + \
+			"libopensesame.widgets, libopensesame.widgets.themes, " +\
+			"libqtopensesame.*, " + \
 			"libqtopensesame.items.*, " + \
 			"libqtopensesame.widgets.*, " + \
 			"libqtopensesame.actions.*, " + \
 			"libqtopensesame.ui.*, " + \
 			"libqtopensesame.dialogs.*, " + \
 			"libqtopensesame.misc.*, " + \
-			"sip, pygame, ctypes, weakref, logging, " + \
+#			"expyriment, expyriment.stimuli, expyriment.stimuli.extras, " + \
+#			"expyriment.misc, expyriment.misc.extras, " + \
+#			"expyriment.io, expyriment.io.extras, " + \
+#			"expyriment.design, expyriment.design.extras, " + \
+#			"expyriment.control, " + \
+			"sip, pygame, ctypes, weakref, logging, uuid, " + \
 			"OpenGL.platform.win32, OpenGL.arrays.ctypesarrays, " + \
 			"OpenGL.arrays.numpymodule, OpenGL.arrays.lists, " + \
 			"OpenGL.arrays.numbers, OpenGL.arrays.strings, OpenGL.GL, " + \
-			"OpenGL.GLU",
+			"OpenGL.GLU, scipy.sparse.csgraph._validation",
 		"dll_excludes" : ["MSVCP90.DLL", "libzmq.dll"]
 		}
 	},
@@ -139,6 +149,10 @@ if include_plugins:
 		"srbox", \
 		"port_reader", \
 		"reset_feedback", \
+		"form_base", \
+		"form_text_input", \
+		"form_consent", \
+		"form_text_display"
 		]
 
 	for plugin in included_plugins:
@@ -188,6 +202,10 @@ if include_examples:
 			".gz"]:
 			print "removing file", path
 			os.remove(os.path.join("dist", "examples", path))
+
+if include_expyriment:
+	print "copying expyriment"	
+	shutil.copytree("expyriment", os.path.join("dist", "expyriment"))
 
 if include_sounds:
 	print "copying sounds"

@@ -62,6 +62,14 @@ if "--preload" in sys.argv:
 	debug.msg("preloading 'opengl' back-end")
 	try:
 		import openexp,\
+			openexp._canvas.xpyriment,\
+			openexp._mouse.xpyriment
+	except Exception as e:
+		debug.msg("failed to import 'xpyriment' back-end. Error: %s" % e)		
+
+	debug.msg("preloading 'opengl' back-end")
+	try:
+		import openexp,\
 			openexp._canvas.opengl
 	except Exception as e:
 		debug.msg("failed to import 'opengl' back-end. Error: %s" % e)
