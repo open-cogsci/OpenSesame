@@ -389,7 +389,7 @@ class experiment(item.item):
 		The full path to the file
 		</DOC>"""
 
-		if type(path) != str:
+		if type(path) not in(unicode, str):
 			raise exceptions.runtime_error( \
 				"A string should be passed to experiment.get_file(), not '%s'" \
 				% path)
