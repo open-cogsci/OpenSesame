@@ -61,7 +61,11 @@ class label(widget):
 		text -- the text to draw
 		</DOC>"""
 	
-		text = self.form.experiment.eval_text(text)
+		if self.form.item != None:
+			text = self.form.item.eval_text(text)
+		else:
+			text = self.form.experiment.eval_text(text)
+		text = self.form.experiment.unsanitize(text)
 		x, y, w, h = self.rect
 		if self.center:
 			x += w/2

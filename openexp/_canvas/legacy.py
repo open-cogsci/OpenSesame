@@ -546,7 +546,9 @@ class legacy:
 		</DOC>"""
 							
 		if color != None: color = self.color(color)
-		else: color = self.fgcolor					
+		else: color = self.fgcolor
+		if x == None: x = self.xcenter()
+		if y == None: y = self.ycenter()
 		self.html.render(text, x, y, self, max_width=max_width, center=center, \
 			color=color)
 

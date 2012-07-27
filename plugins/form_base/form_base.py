@@ -29,7 +29,8 @@ class form_base(item.item, generic_response.generic_response):
 
 	"""A text input display"""		
 	
-	def __init__(self, name, experiment, string=None):
+	def __init__(self, name, experiment, string=None, item_type='form_base', \
+		description='A generic form plug-in'):
 
 		"""
 		Constructor
@@ -42,8 +43,8 @@ class form_base(item.item, generic_response.generic_response):
 		string -- a definition string
 		"""
 
-		self.item_type = "form_base"
-		self.description = "A generic form plug-in"
+		self.item_type = item_type
+		self.description = description
 		
 		self.cols = '2;2'
 		self.rows = '2;2'
@@ -153,7 +154,7 @@ class form_base(item.item, generic_response.generic_response):
 			raise exceptions.runtime_error( \
 				_('cols, rows, and margins should be numeric values separated by a semi-colon'))									
 		self._form = widgets.form(self.experiment, cols=cols, rows=rows, \
-			margins=margins, spacing=self.spacing, theme=self.theme)						
+			margins=margins, spacing=self.spacing, theme=self.theme, item=self)						
 		
 		# Prepare the widgets
 		for w in self._widgets:

@@ -285,7 +285,6 @@ class qtopensesame(QtGui.QMainWindow):
 		"""
 
 		self.restoreState(self._initial_window_state)
-		self.ui.itemtree.resize(200, 0)
 
 	def restore_state(self):
 

@@ -26,7 +26,7 @@ class form:
 	"""Implements a single form that acts as a container for widgets"""
 
 	def __init__(self, experiment, cols=2, rows=2, spacing=10, \
-		margins=(100, 100, 100, 100), theme='gray'):
+		margins=(100, 100, 100, 100), theme='gray', item=None):
 		
 		"""<DOC>		
 		Constructor
@@ -45,6 +45,7 @@ class form:
 				   as a list, like so [top-margin, right-margin, bottom-margin,
 				   left-margin]. (default=[100, 100, 100, 100])
 		theme -- the theme for the widgets (default='gray')
+		item -- the item of which the form is part (default=None)
 		</DOC>"""
 				
 		# Normalize the column and row sizes so that they add up to 1
@@ -58,6 +59,7 @@ class form:
 			self.rows = [float(r)/sum(rows) for r in rows]			
 	
 		self.experiment = experiment
+		self.item = item
 		self.width = experiment.get('width')
 		self.height = experiment.get('height')		
 		self.spacing = spacing
