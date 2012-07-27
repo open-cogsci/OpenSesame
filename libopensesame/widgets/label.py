@@ -52,13 +52,16 @@ class label(widget):
 		self.x_pad = 8
 		self.y_pad = 8
 				
-	def draw_text(self, text):
+	def draw_text(self, text, html=True):
 	
 		"""<DOC>
 		Draws text in the widget
 		
 		Arguments:
 		text -- the text to draw
+		
+		Keyword arguments:
+		html -- indicates whether HTML should be parsed (default=True)
 		</DOC>"""
 	
 		if self.form.item != None:
@@ -74,7 +77,8 @@ class label(widget):
 			x += self.x_pad
 			y += self.y_pad
 		w -= 2*self.x_pad							
-		self.form.canvas.text(text, center=self.center, x=x, y=y, max_width=w)		
+		self.form.canvas.text(text, center=self.center, x=x, y=y, max_width=w, \
+			html=html)		
 		
 	def render(self):
 	

@@ -101,7 +101,7 @@ class html(HTMLParser):
 			print 'Unrecognized tag:', tag
 				
 	def render(self, text, x, y, canvas, max_width=None, center=False, \
-		color=None):
+		color=None, html=True):
 	
 		"""
 		Render an HTML formatted string onto a canvas
@@ -119,6 +119,7 @@ class html(HTMLParser):
 				  (default=False)
 		color -- indicates the color of the text or None for canvas default
 				 (default=None)
+		html -- indicates whether HTML should be parsed (default=True)				 
 		"""		
 
 		debug.msg(text)
@@ -154,8 +155,13 @@ class html(HTMLParser):
 		self.paragraph = []
 		self.style_stack = []
 		self.current_tag = None
-		self.push_style()				
-		self.feed(text)
+		self.push_style()
+		
+		# Optionally parse HTML
+		if html:			
+			self.feed(text)
+		else:
+			self.handle_data(text)
 		self.text.append(self.paragraph)
 		
 		# If we want to center the next, we need a dry run to calculate all the

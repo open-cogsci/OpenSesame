@@ -525,7 +525,7 @@ class legacy:
 		
 		return self._font().size(text)				
 		
-	def text(self, text, center=True, x=None, y=None, max_width=None, color=None):
+	def text(self, text, center=True, x=None, y=None, max_width=None, color=None, html=True):
 		
 		"""<DOC>
 		Draws text.
@@ -542,7 +542,8 @@ class legacy:
 					 line, or None to wrap at screen edge (default=None)
 		color -- A custom human readable foreground color. This does not affect
 				 the default foreground color as set by set_fgcolor().
-				 (Default=None)		
+				 (Default=None)
+		html -- Indicates whether HTML tags should be parsed (default=True)
 		</DOC>"""
 							
 		if color != None: color = self.color(color)
@@ -550,7 +551,7 @@ class legacy:
 		if x == None: x = self.xcenter()
 		if y == None: y = self.ycenter()
 		self.html.render(text, x, y, self, max_width=max_width, center=center, \
-			color=color)
+			color=color, html=html)
 
 	def _text(self, text, x, y):			
 	
