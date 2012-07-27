@@ -89,8 +89,10 @@ class html(HTMLParser):
 		self.current_tag = tag
 
 		if tag == 'span':
+			style = {}
 			for var, val in attrs:
-				self.push_style( **{var : val} )
+				style[var] = val
+			self.push_style(**style)
 		elif tag == 'b':
 			self.push_style(bold=True)
 		elif tag == 'i':
