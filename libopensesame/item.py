@@ -126,7 +126,7 @@ class item:
 
 		return False
 		
-	def parse_keywords(self, line, unsanitize=False):
+	def parse_keywords(self, line, unsanitize=False, _eval=True):
 	
 		"""
 		Parses keywords, e.g. 'my_keyword=my_value'
@@ -137,6 +137,7 @@ class item:
 		Keyword arguments:
 		unsanitize -- indicates whether the values should be unsanitized
 					  (default=False)
+		_eval -- indicates whether the values should be evaluated (default=True)
 
 		Returns:
 		A keyword => value dictionary		
@@ -163,6 +164,8 @@ class item:
 					val = self.auto_type(i[j+1:])
 					if unsanitize and type(val) == str:
 						val = self.unsanitize(val)
+					if _eval:
+						val = self.eval_text(val)
 					keywords[var] = val
 		return keywords	
 		
