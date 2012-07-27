@@ -1,135 +1,131 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
-<HTML>
-<HEAD>
-	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
-	<TITLE></TITLE>
-	<META NAME="GENERATOR" CONTENT="LibreOffice 3.4  (Linux)">
-	<META NAME="CREATED" CONTENT="0;0">
-	<META NAME="CHANGEDBY" CONTENT="Sebastiaan Mathot">
-	<META NAME="CHANGED" CONTENT="20111031;12214200">
-	<STYLE TYPE="text/css">
-	<!--
-		H2.western { font-family: "Albany", sans-serif; font-size: 14pt; font-style: italic }
-		H2.cjk { font-family: "HG Mincho Light J"; font-size: 14pt; font-style: italic }
-		H2.ctl { font-family: "Arial Unicode MS"; font-size: 14pt; font-style: italic }
-	-->
-	</STYLE>
-</HEAD>
-<BODY LANG="en-US" DIR="LTR">
-<H1>OpenSesame help</H1>
-<H2 CLASS="western">Contents</H2>
-<UL>
-	<LI><P>Introduction</P>
-	<LI><P>Getting started</P>
-	<LI><P>The interface</P>
-	<LI><P>Items</P>
-	<LI><P>Running your experiment</P>
-	<LI><P>Saving your experiment</P>
-	<LI><P>Credits</P>
-	<LI><P>License</P>
-</UL>
-<H2 CLASS="western">Introduction</H2>
-<P>OpenSesame is a graphical experiment builder for the social
-sciences. That is, with OpenSesame you can create psychological
-experiments in a point-and-click way. For more complex tasks,
-OpenSesame supports Python inline coding &lt;<A HREF="http://www.python.org/">http://www.python.org/</A>&gt;.</P>
-<H2 CLASS="western">Getting started</H2>
-<P>The best way to get started is to follow the tutorial and/ or take
-a look at example experiments. This, and much more, can be found in
-the OpenSesame documentation area &lt;<A HREF="http://osdoc.cogsci.nl/">http://osdoc.cogsci.nl/</A>&gt;</P>
-<H2 CLASS="western">The interface</H2>
-<P>The graphical interface consists of the following parts. You can
-get context sensitive help by clicking on the blue help icons.</P>
-<UL>
-	<LI><P>The <I>menu</I> (at the top of the window) offers a variety
-	of options, such as opening and closing files, inserting items (see
-	below) and checking for updates. The menu cannot be hidden or
-	closed.</P>
-	<LI><P>The <I>main toolbar </I><SPAN STYLE="font-style: normal">(the
-	big buttons below the menu) offers a selection of the most relevant
-	options from the menu. The main toolbar cannot be hidden, but it can
-	be moved or detached from the main window.</SPAN></P>
-	<LI><P><SPAN STYLE="font-style: normal">The </SPAN><I>item toolbar</I>
-	<SPAN STYLE="font-style: normal">(the big buttons on the left of the
-	window) displays a list of available items. You can drag items from
-	the items toolbar into the overview of the experiment. The items
-	toolbar cannot be hidden, but it can be moved or detached from the
-	main window.</SPAN></P>
-	<LI><P><SPAN STYLE="font-style: normal">The </SPAN><I>tab area</I>
-	<SPAN STYLE="font-style: normal">contains the tabs that are used to
-	edit the experiment. If you click on an item in the 'overview'
-	window, a corresponding tab will be opened in the tab area. Help is
-	displayed in the tab area as well. The tab area cannot be moved or
-	hidden.</SPAN></P>
-	<LI><P><SPAN STYLE="font-style: normal">The </SPAN><I>overview area</I>
-	<SPAN STYLE="font-style: normal">provides an overview of your
-	experiment. The structure of your experiment is visualized as a
-	tree. The overview item cannot be hidden but it can be moved or
-	detached from the main window.</SPAN></P>
-	<LI><P><SPAN STYLE="font-style: normal">The </SPAN><I>file pool</I>
-	(Control + P) <SPAN STYLE="font-style: normal">provides an overview
-	of the files that are bundled with your experiment. If you save your
-	experiment in the .opensesame.tar.gz format, the file pool will be
-	saved along with your experiment. The file pool can be hidden,
-	moved, and detached from the main window.</SPAN></P>
-	<LI><P><SPAN STYLE="font-style: normal">The </SPAN><I>variable
-	inspector</I> (Control + I) <SPAN STYLE="font-style: normal">provides
-	an overview of the variables that are used in your experiment. The
-	variable inspector can be hidden, moved, and detached from the main
-	window.</SPAN></P>
-	<LI><P><SPAN STYLE="font-style: normal">The </SPAN><I>debug window</I>
-	(Control + D) <SPAN STYLE="font-style: normal">shows the messages
-	that are written to the standard output during an experiment. This
-	is mostly useful for debugging inline_script items. A Python
-	interpreter is provided as well. The debug window can be hidden,
-	moved, and detached from the main window.</SPAN></P>
-</UL>
-<H2 CLASS="western">Items</H2>
-<P>Items are the building blocks of your experiment. There are 10
-core items that provide the basic functionality that is necessary to
-create an experiment. Core items can be added to your experiment
-using the corresponding toolbar buttons.</P>
-<UL>
-	<LI><P>The <I>loop </I>item runs another item multiple times. You
-	can also define independent variables in the loop item.</P>
-	<LI><P>The <I>sequence</I> item runs multiple other items in
-	sequence.</P>
-	<LI><P>The <I>sketchpad</I> item presents visual stimuli. A built-in
-	drawing tool allows you to easily create stimulus displays.</P>
-	<LI><P>The <I>feedback</I> item is similar to a sketchpad, but is
-	not prepared in advance. Therefore, a feedback item can be used to
-	present feedback to the participants.</P>
-	<LI><P>The <I>sampler</I> item plays back a single sound file.</P>
-	<LI><P>The <I>synth</I> item generates a single sound.</P>
-	<LI><P>The <I>keyboard_response </I><SPAN STYLE="font-style: normal">item</SPAN>
-	collects key press responses.</P>
-	<LI><P>The <I>mouse_response</I> item collects mouse clicks.</P>
-	<LI><P>The <I>logger</I> item writes variables to the log file.</P>
-	<LI><P>The <I>inline_script</I> item allows you execute arbitrary
-	Python code.</P>
-</UL>
-<P>If installed, plug-in items provide additional functionality.
-Plug-ins appear alongside the core items in the item toolbar. An
-overview of available plug-ins can be found online
-&lt;<A HREF="http://osdoc.cogsci.nl/plug-ins/list-of-available-plug-ins">http://osdoc.cogsci.nl/plug-ins/list-of-available-plug-ins</A>&gt;.</P>
-<H2 CLASS="western">Running your experiment</H2>
-<P>You can run your experiment in full-screen mode (Run -> Run
-fullscreen) or in a window (Run -> Run in window). When the
-'auto-response' option (Run -> Enable auto-response) is enabled,
-OpenSesame will simulate key press and mouse click responses, which
-can be useful when testing your experiment.</P>
-<H2 CLASS="western">Saving your experiment</H2>
-<P>Experiments can be saved in two file formats:</P>
-<UL>
-	<LI><P><I><SPAN STYLE="font-weight: normal">.opensesame </SPAN></I>files
-	contain only the experiment script. Therefore, the file pool will
-	not be saved along with your experiment when saving in .opensesame
-	format. The .opensesame format is a plain-text format.</P>
-	<LI><P><I><SPAN STYLE="font-weight: normal">.opensesame.tar.gz </SPAN></I>files
-	contain the experiment script and all the files from the file pool.
-	The .opensesame.tar.gz format is a .tar.gz compressed archive, which
-	can be opened with most file compression tools. For more
-	information, see &lt;<A HREF="http://www.gzip.org/">http://www.gzip.org/</A>&gt;.</P>
-</UL>
-</BODY>
-</HTML>
+<style type="text/css">
+	body { font-family: Verdana, Arial;	color: #2e3436; }	
+	h1 { font-size: 14pt; }
+	a { color: #2365a4; }
+	.mono { font-family: monospace; }	
+</style>
+
+<h1>OpenSesame help</h1>
+
+<p><i>This is the offline help page. If you are connected to the internet, you
+can browse the online documentation by clicking
+<a href='http://osdoc.cogsci.nl'>here</a>.</i></p>
+
+<h2>Introduction</h2>
+
+<p>OpenSesame is a graphical experiment builder for the social sciences. It
+allows you to easily create experiments, using a point-and-click graphical
+interface. For complex tasks, OpenSesame supports
+<a href='http://www.python.org/'>Python</a> scripting.</p>
+
+<h2>Getting started</h2>
+
+<p>The best way to get started is to follow the tutorial and/ or take a look at
+example experiments. This, and much more, can be found online in the
+<a href='http://osdoc.cogsci.nl'>OpenSesame documentation area</a>.
+
+<h2>Interface</h2>
+
+<p>The graphical interface consists of the following parts. You can get context
+sensitive help by clicking on the help icons at the top-right of each tab.</p>
+
+<ul>
+	<li>The <b>menu</b> (at the top of the window) offers a variety of options,
+	such as opening and closing files, inserting items (see below) and checking
+	for updates. The menu cannot be hidden or closed.</li>
+	
+	<li>The <b>main toolbar</b> (the big buttons below the menu) offers a
+	selection of the most relevant options from the menu. The main toolbar
+	cannot be hidden, but it can be moved or detached from the main window.</li>
+	
+	<li>The <b>item toolbar</b> (the big buttons on the left of the window)
+	displays a list of available items. You can drag items from the items
+	toolbar into the overview of the experiment. The items toolbar cannot be
+	hidden, but it can be moved or detached from the main window.</li>
+	
+	<li>The <b>tab area</b> contains the tabs that are used to edit the
+	experiment. If you click on an item in the 'overview' window, a
+	corresponding tab will be opened in the tab area. Help is displayed in the
+	tab area as well. The tab area cannot be moved or hidden.</li>
+	
+	<li>The <b>overview area</b> provides an overview of your experiment. The
+	structure of your experiment is visualized as a tree. The overview item
+	can be hidden, moved and detached from the main window.</li>
+	
+	<li>The <b>file pool</b> (Control + P) provides an overview of the files
+	that are bundled with your experiment. If you save your experiment in the
+	.opensesame.tar.gz format, the file pool will be saved along with your
+	experiment. The file pool can be hidden, moved, and detached from the main
+	window.</li>
+	
+	<li>The <b>variable inspector</b> (Control + I) provides an overview of the
+	variables that are used in your experiment. The variable inspector can be
+	hidden, moved, and detached from the main window.</li>
+
+	<li>The <b>debug window</b>. (Control + D) shows the messages that are
+	written to the standard output during an experiment. This is mostly useful
+	for debugging inline_script items. A Python interpreter is provided as
+	well. The debug window can be hidden, moved, and detached from the main
+	window.</li>
+</ul>
+
+<h2>Items</h2>
+
+<p>Items are the building blocks of your experiment. There are 10 core items
+that provide the basic functionality that is necessary to create an experiment.
+Core items can be dragged into to your experiment from the item toolbar.</p>
+
+<ul>
+	<li>The <b>loop</b> item runs another item multiple times. You can also
+	define independent variables in the loop item.</li>
+	
+	<li>The <b>sequence</b> item runs multiple other items in sequence.</li>
+	
+	<li>The <b>sketchpad</b> item presents visual stimuli. A built-in drawing
+	tool allows you to easily create stimulus displays.</li>
+	
+	<li>The <b>feedback</b> item is similar to a sketchpad, but is not prepared
+	in advance. Therefore, a feedback item can be used to present feedback to
+	the participants.</li>
+	
+	<li>The <b>sampler</b> item plays back a single sound file.</li>
+	
+	<li>The <b>synth</b> item generates a single sound.</li>
+	
+	<li>The <b>keyboard_response</b> item collects keypress responses.</li>
+	
+	<li>The <b>mouse_response</b> item collects mouseclick responses.</li>
+	
+	<li>The <b>logger</b> item writes variables to the log file.</li>
+	
+	<li>The <b>inline_script</b> item allows you to execute Python code and
+	offers a built-in programming editor.</li>
+</ul>
+
+<p>If installed, <b>plug-in</b> items provide additional functionality.
+Plug-ins appear alongside the core items in the item toolbar. An overview of
+available plug-ins can be found
+<a href='<http://osdoc.cogsci.nl/plug-ins/list-of-available-plug-ins'>online</a>.
+
+<h2>Running your experiment</h2>
+
+<p>You can run your experiment in full-screen mode (Control+R; Run -> Run
+fullscreen) or in a window (Control+W; Run -> Run in window). When the
+'auto-response' option (Run -> Enable auto-response) is enabled, OpenSesame will
+simulate keypress and mouseclick responses, which can be useful when testing
+your experiment.</p>
+
+<h2>Saving your experiment</h2>
+
+<p>Experiments can be saved in two file formats:</p>
+
+<ul>
+	<li><b>.opensesame</b> files contain only the experiment script. Therefore,
+	the file pool will not be saved along with your experiment when saving in
+	.opensesame format. The .opensesame format is a plain-text format.</li>
+	
+	<li>.opensesame.tar.gz files contain the experiment script and all the files
+	from the file pool. The .opensesame.tar.gz format is a .tar.gz compressed
+	archive, which can be opened with most file compression tools.</li>
+</ul>
+

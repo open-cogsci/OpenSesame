@@ -1,62 +1,55 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
-<HTML>
-<HEAD>
-	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
-	<TITLE></TITLE>
-	<META NAME="GENERATOR" CONTENT="LibreOffice 3.4  (Linux)">
-	<META NAME="AUTHOR" CONTENT="Sebastiaan Mathot">
-	<META NAME="CREATED" CONTENT="20101128;16570900">
-	<META NAME="CHANGEDBY" CONTENT="Sebastiaan Mathot">
-	<META NAME="CHANGED" CONTENT="20111031;12311500">
-	<STYLE TYPE="text/css">
-	<!--
-		@page { margin: 0.79in }
-		H1 { margin-bottom: 0.08in }
-		H1.western { font-family: "Arial", sans-serif; font-size: 16pt }
-		H1.cjk { font-family: "DejaVu Sans"; font-size: 16pt }
-		H1.ctl { font-family: "Lohit Hindi"; font-size: 16pt }
-		P { margin-bottom: 0.08in }
-		H2.western { font-family: "Albany", sans-serif; font-size: 14pt; font-style: italic }
-		H2.cjk { font-family: "HG Mincho Light J"; font-size: 14pt; font-style: italic }
-		H2.ctl { font-family: "Arial Unicode MS"; font-size: 14pt; font-style: italic }
-		A:link { so-language: zxx }
-	-->
-	</STYLE>
-</HEAD>
-<BODY LANG="en-US" DIR="LTR">
-<H1 CLASS="western">Keyboard_response items</H1>
-<P>In a psychological experiment you will generally want to record
-participants' responses. This is where the keyboard_response item
-comes in.</P>
-<H2 CLASS="western">Options</H2>
-<P>You can set the following options:</P>
-<UL>
-	<LI><P><B>Correct response</B> is the name of the expected response.
-	Usually you will set the correct_response variable elsewhere (e.g.,
-	in a loop item) and you can leave this field empty.</P>
-	<LI><P><B>Allowed responses</B> is a semicolon-separated list of
-	keys that are accepted, e.g., 'a;b;/'.</P>
-	<LI><P><B>Timeout</B> contains a maximum response time in
-	milliseconds or 'infinite' for no timeout.</P>
-</UL>
-<H2 CLASS="western">Variables set by keyboard_response</H2>
-<P>The keyboard_response item sets a number of variables based on
-your response.</P>
-<UL>
-	<LI><P><B>response</B> is the name of the response key.</P>
-	<LI><P><B>response_time</B> is the time between the start of the
-	response interval and the response.</P>
-	<LI><P><B>correct</B> is 1 if the response matches the
-	correct_response and 0 otherwise.</P>
-	<LI><P><B>avg_rt</B> / <B>average_response_time</B> is the average
-	response time since the last feedback item.</P>
-	<LI><P><B>acc</B> / <B>accuracy</B> is the average percentage of
-	correct responses since the last feedback item.</P>
-</UL>
-<H2 CLASS="western">List of key names</H2>
-<P>The key names depends on the platform and back-end that is being
-used (although most commonly used keys have the same name across
-platforms and back-ends). OpenSesame will attempt to auto-detect all
-valid key names if you click on the 'List available keys' button.</P>
-</BODY>
-</HTML>
+<style type="text/css">
+	body { font-family: Verdana, Arial;	color: #2e3436; }	
+	h1 { font-size: 14pt; }
+	a { color: #2365a4; }
+	.mono { font-family: monospace; }	
+</style>
+
+<h1>Keyboard_response items</h1>
+
+<p>The keyboard_response item is the primary way to collect keypress responses.
+</p>
+
+<h2>Options</h2>
+
+<ul>
+	<li><b>Correct response</b> is the name of the expected response. Usually 
+	you will set the correct_response variable elsewhere (e.g., in a loop item)
+	and you can leave this field empty.</li>
+
+	<li><b>Allowed responses</b> is a semicolon-separated list of keys that are
+	accepted, e.g., 'a;b;/'.</li>
+
+	<li><b>Timeout</b> contains a maximum response time in milliseconds or
+	'infinite' for no timeout.</li>
+
+	<li><b>Flush pending keypresses</b> indicates that old, pending responses
+	should be discarded.</li>
+</ul>
+
+<h2>Variables set by keyboard_response</h2>
+
+<ul>
+	<li><b>response</b> is the name of the response key.</li>
+
+	<li><b>response_time</b> is the time between the start of the response
+	interval and the response.</li>
+
+	<li><b>correct</b> is 1 if the response matches the correct_response and 0
+	otherwise.</li>
+
+	<li><b>avg_rt</b> or <b>average_response_time</b> is the average response
+	time since the last feedback item.</li>
+
+	<li><b>acc</b> or <b>accuracy</b> is the average percentage of correct
+	responses since the last feedback item.</li>
+</ul>
+
+<h2>Names of keys</h2>
+
+<p>Keys are generally identified by their character and/ or their description
+(depending on which is applicable). For example, the '/' key is identified as
+'slash' and '/'. The 'a' is just identified as 'a'. The left arrow is just
+identified as 'left'. For a full list of available key names, click on the 'List
+available keys' button.</p>
+

@@ -1,68 +1,60 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
-<HTML>
-<HEAD>
-	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
-	<TITLE></TITLE>
-	<META NAME="GENERATOR" CONTENT="LibreOffice 3.4  (Linux)">
-	<META NAME="AUTHOR" CONTENT="Sebastiaan Mathot">
-	<META NAME="CREATED" CONTENT="20101128;13435600">
-	<META NAME="CHANGEDBY" CONTENT="Sebastiaan Mathot">
-	<META NAME="CHANGED" CONTENT="20111031;12365200">
-	<STYLE TYPE="text/css">
-	<!--
-		@page { margin: 0.79in }
-		H1 { margin-bottom: 0.08in }
-		H1.western { font-family: "Arial", sans-serif; font-size: 16pt }
-		H1.cjk { font-family: "DejaVu Sans"; font-size: 16pt }
-		H1.ctl { font-family: "Lohit Hindi"; font-size: 16pt }
-		P { margin-bottom: 0.08in }
-		H2.western { font-family: "Albany", sans-serif; font-size: 14pt; font-style: italic }
-		H2.cjk { font-family: "HG Mincho Light J"; font-size: 14pt; font-style: italic }
-		H2.ctl { font-family: "Arial Unicode MS"; font-size: 14pt; font-style: italic }
-		A:link { so-language: zxx }
-	-->
-	</STYLE>
-</HEAD>
-<BODY LANG="en-US" DIR="LTR">
-<H1 CLASS="western">Logger items</H1>
-<P>Typically, you will not only want participants to respond during
-an experiment, you will also want to log their responses to a data
-file for analysis. This is where the logger item comes in.</P>
-<P STYLE="text-decoration: none"><I><B>Always triple-check whether
-OpenSesame has logged all relevant variables!</B></I></P>
-<H2 CLASS="western">Selecting variables</H2>
-<P>In the logger item you can indicate which variables you wish to
-log. By default the logger tries to auto-detect and log all
-variables. This is a safe bet, but results in large datafiles, with
-lots of unnecessary information. 
-</P>
-<P>If you deselect the auto-detect option, you can select variables
-from the list, which contains all (global) variables that OpenSesame
-is aware of. If, for some reason, the variable that you want to log
-does not appear in the list, you can add it using the <B>Add custom
-variable</B> button.</P>
-<P>If you are unsure which variables you want to log, you can click
-on the <B>Smart select</B> <SPAN STYLE="font-weight: normal">button,
-which will select all variables that are likely to be of interest.</SPAN></P>
-<P><SPAN STYLE="font-weight: normal">By default, the experiment is
-aborted if OpenSesame attempts to log a variable that has not been
-set. You can change this by enabling the </SPAN><B>Use 'NA' for
-variables that have not been set option</B><SPAN STYLE="font-weight: normal">,
-in which case missing variables are assigned the value 'NA'. This is
-convenient if you want to log a variable that is set only later in
-the experiment.</SPAN></P>
-<P><SPAN STYLE="font-weight: normal">You can find out more about
-variables in OpenSesame on the website
-&lt;<A HREF="http://osdoc.cogsci.nl/usage/variables-and-conditional-qifq-statements">http://osdoc.cogsci.nl/usage/variables-and-conditional-qifq-statements</A>&gt;.</SPAN></P>
-<H2 CLASS="western">Format of the logfile</H2>
-<P STYLE="font-weight: normal">The logfile is in plain-text,
-comma-separated format. This format can be viewed in most
-text-editors (although Windows Notepad may not handle the
-line-endings properly) and spreadsheets.</P>
-<H2 CLASS="western">Merging data files</H2>
-<P>If you prefer to have all participant data in a single
-spreadsheet, you can merge the OpenSesame logfiles using the online
-spreadsheet merger
-&lt;<A HREF="http://www.cogsci.nl/software/online-spreadsheet-merger">http://www.cogsci.nl/software/online-spreadsheet-merger</A>&gt;.</P>
-</BODY>
-</HTML>
+<style type="text/css">
+	body { font-family: Verdana, Arial;	color: #2e3436; }	
+	h1 { font-size: 14pt; }
+	h2 { font-size: 13pt; }
+	h3 { font-size: 12pt; }
+	a { color: #2365a4; }
+	.mono { font-family: monospace; }	
+</style>
+
+<h1>Logger items</h1>
+
+<p><i>Always triple-check whether OpenSesame has logged all relevant variables!
+</i></p>
+
+<p>The logger item is the primary way to log your data to file.</p>
+
+<h2>Selecting variables</h2>
+
+<p>In the logger item you can indicate which variables you wish to log. By
+default the logger tries to auto-detect and log all variables. This is a safe
+bet, but results in large datafiles, with lots of unnecessary information. If
+you deselect the auto-detect option, you can select variables from the list,
+which contains all (global) variables that OpenSesame is aware of. If, for some
+reason, the variable that you want to log does not appear in the list, you can
+add it using the 'Add custom variable' button. If you are unsure which variables
+you want to log, you can click on the Smart select button, which will select all
+variables that are likely to be of interest.</p>
+
+<h2>Options</h2>
+
+<ul>
+	<li><b>Use 'NA' for variables that have not been set</b> indicates that the
+	logger should not throw an exception when a variable has not been set. This
+	can be useful when you want to log a variable that has not been set the
+	first time that the logger item is called.</li>
+	
+	<li><b>Automatically detect and log all variables</b> indicates that the
+	logger should auto-detect and log all variables.</li>
+	
+	<li><b>Allow secial characters in log file</b> indicates that the logger
+	should not convert special characters to U+XXXX notation. This makes the
+	logfile easier to read if you use many special characters or a non-western
+	font.</li>
+	
+	<li><b>Put quotes around values</b> indicates that fields in the logfile
+	should be put in quotes.</li>
+</ul>
+
+<h2>Format of the logfile</h2>
+
+<p>The logfile is in plain-text, comma-separated format. This format can be
+viewed in most text-editors (although Windows Notepad may not handle the
+line-endings properly) and spreadsheets.</p>
+
+<h2>Merging data files</h2>
+
+<p>If you prefer to have all participant data in a single spreadsheet, you can
+merge the OpenSesame logfiles using the 
+<a href='http://www.cogsci.nl/software/online-spreadsheet-merger'>
+online spreadsheet merger</a>.</p>

@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'resources/ui/start_new_widget.ui'
 #
-# Created: Tue Jul 17 12:44:08 2012
+# Created: Fri Jul 27 17:33:42 2012
 #      by: PyQt4 UI code generator 4.9.1
 #
 # WARNING! All changes made in this file will be lost!
