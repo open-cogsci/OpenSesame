@@ -209,9 +209,9 @@ class item:
 		Returns:
 		A definition string
 		"""
-
+		
 		# Multiline variables are stored as a block
-		if type(self.variables[var]) == str and ("\n" in self.variables[var] \
+		if type(self.variables[var]) in (str, unicode) and ("\n" in self.variables[var] \
 			or "\"" in self.variables[var]):
 			s = "__%s__\n" % var
 			for l in self.variables[var].split("\n"):
@@ -493,7 +493,7 @@ class item:
 			else:
 				return float(val)
 		except:
-			return str(val)
+			return unicode(val)
 
 	def set_item_onset(self, time = None):
 
