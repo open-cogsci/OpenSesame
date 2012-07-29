@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'resources/ui/synth_widget.ui'
 #
-# Created: Mon Jul  9 13:58:20 2012
+# Created: Sat Mar 31 16:00:40 2012
 #      by: PyQt4 UI code generator 4.9.1
 #
 # WARNING! All changes made in this file will be lost!
@@ -14,16 +14,16 @@ try:
 except AttributeError:
     _fromUtf8 = lambda s: s
 
-class Ui_synth_widget(object):
-    def setupUi(self, synth_widget):
-        synth_widget.setObjectName(_fromUtf8("synth_widget"))
-        synth_widget.resize(715, 505)
-        self.gridLayout = QtGui.QGridLayout(synth_widget)
+class Ui_Form(object):
+    def setupUi(self, Form):
+        Form.setObjectName(_fromUtf8("Form"))
+        Form.resize(715, 505)
+        self.gridLayout = QtGui.QGridLayout(Form)
         self.gridLayout.setMargin(0)
         self.gridLayout.setObjectName(_fromUtf8("gridLayout"))
         spacerItem = QtGui.QSpacerItem(40, 20, QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
         self.gridLayout.addItem(spacerItem, 1, 0, 1, 1)
-        self.frame_controls = QtGui.QFrame(synth_widget)
+        self.frame_controls = QtGui.QFrame(Form)
         sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Fixed, QtGui.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -227,7 +227,7 @@ class Ui_synth_widget(object):
         self.gridLayout.addWidget(self.frame_controls, 1, 2, 1, 1)
         spacerItem1 = QtGui.QSpacerItem(40, 20, QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
         self.gridLayout.addItem(spacerItem1, 1, 3, 1, 1)
-        self.frame_notification = QtGui.QFrame(synth_widget)
+        self.frame_notification = QtGui.QFrame(Form)
         sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Preferred, QtGui.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -269,45 +269,54 @@ class Ui_synth_widget(object):
         self.horizontalLayout_3.addWidget(self.widget_2)
         self.gridLayout.addWidget(self.frame_notification, 0, 2, 1, 1)
 
-        self.retranslateUi(synth_widget)
-        QtCore.QMetaObject.connectSlotsByName(synth_widget)
+        self.retranslateUi(Form)
+        QtCore.QMetaObject.connectSlotsByName(Form)
 
-    def retranslateUi(self, synth_widget):
-        synth_widget.setWindowTitle(QtGui.QApplication.translate("synth_widget", "Form", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_7.setText(QtGui.QApplication.translate("synth_widget", "Volume", None, QtGui.QApplication.UnicodeUTF8))
-        self.dial_volume.setToolTip(QtGui.QApplication.translate("synth_widget", "Set the volume of the sound", None, QtGui.QApplication.UnicodeUTF8))
-        self.spin_volume.setToolTip(QtGui.QApplication.translate("synth_widget", "Set the volume of the sound", None, QtGui.QApplication.UnicodeUTF8))
-        self.spin_volume.setSuffix(QtGui.QApplication.translate("synth_widget", "%", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_8.setText(QtGui.QApplication.translate("synth_widget", "Pan", None, QtGui.QApplication.UnicodeUTF8))
-        self.dial_pan.setToolTip(QtGui.QApplication.translate("synth_widget", "Set the panning (left-right) of the sound", None, QtGui.QApplication.UnicodeUTF8))
-        self.spin_pan.setToolTip(QtGui.QApplication.translate("synth_widget", "Set the panning (left-right) of the sound", None, QtGui.QApplication.UnicodeUTF8))
-        self.dial_decay.setToolTip(QtGui.QApplication.translate("synth_widget", "Set the decay (\"fade out\") of the sound", None, QtGui.QApplication.UnicodeUTF8))
-        self.dial_attack.setToolTip(QtGui.QApplication.translate("synth_widget", "Set the attack (\"fade in\") of the sound", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_10.setText(QtGui.QApplication.translate("synth_widget", "Attack", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_11.setText(QtGui.QApplication.translate("synth_widget", "Decay", None, QtGui.QApplication.UnicodeUTF8))
-        self.spin_attack.setToolTip(QtGui.QApplication.translate("synth_widget", "Set the attack (\"fade in\") of the sound", None, QtGui.QApplication.UnicodeUTF8))
-        self.spin_attack.setSuffix(QtGui.QApplication.translate("synth_widget", "ms", None, QtGui.QApplication.UnicodeUTF8))
-        self.spin_decay.setToolTip(QtGui.QApplication.translate("synth_widget", "Set the decay (\"fade out\") of the sound", None, QtGui.QApplication.UnicodeUTF8))
-        self.spin_decay.setSuffix(QtGui.QApplication.translate("synth_widget", "ms", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_4.setText(QtGui.QApplication.translate("synth_widget", "Length", None, QtGui.QApplication.UnicodeUTF8))
-        self.edit_duration.setToolTip(QtGui.QApplication.translate("synth_widget", "Set the duration of the synth item. Expecting a duration in ms, \'sound\' (to wait until the sound is finished playing), \'keypress\', \'mouseclick\', or a variable (e.g., \'[synth_dur]\').", None, QtGui.QApplication.UnicodeUTF8))
-        self.edit_duration.setText(QtGui.QApplication.translate("synth_widget", "sound", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_6.setText(QtGui.QApplication.translate("synth_widget", "Duration", None, QtGui.QApplication.UnicodeUTF8))
-        self.spin_length.setToolTip(QtGui.QApplication.translate("synth_widget", "Set the length of the sound", None, QtGui.QApplication.UnicodeUTF8))
-        self.spin_length.setSuffix(QtGui.QApplication.translate("synth_widget", "ms", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_2.setText(QtGui.QApplication.translate("synth_widget", "Frequency<br /><small><i>in Hertz (Hz) or by note, like \'A1\'</i></small>", None, QtGui.QApplication.UnicodeUTF8))
-        self.edit_freq.setToolTip(QtGui.QApplication.translate("synth_widget", "The frequence of the sound. Expecting a numeric value (frequency in Hertz) a note (like \'C#2\' and \'A1\') or a variable (like \'[freq]\')", None, QtGui.QApplication.UnicodeUTF8))
-        self.edit_freq.setText(QtGui.QApplication.translate("synth_widget", "A1", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_9.setText(QtGui.QApplication.translate("synth_widget", "Synth controls", None, QtGui.QApplication.UnicodeUTF8))
-        self.label.setText(QtGui.QApplication.translate("synth_widget", "Sine wave", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_12.setText(QtGui.QApplication.translate("synth_widget", "Sawtooth wave", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_13.setText(QtGui.QApplication.translate("synth_widget", "Square wave", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_14.setText(QtGui.QApplication.translate("synth_widget", "White noise", None, QtGui.QApplication.UnicodeUTF8))
-        self.button_sine.setToolTip(QtGui.QApplication.translate("synth_widget", "Generate a sine wav", None, QtGui.QApplication.UnicodeUTF8))
-        self.button_saw.setToolTip(QtGui.QApplication.translate("synth_widget", "Generate a sawtooth wave", None, QtGui.QApplication.UnicodeUTF8))
-        self.button_square.setToolTip(QtGui.QApplication.translate("synth_widget", "Generate a square wave", None, QtGui.QApplication.UnicodeUTF8))
-        self.button_white_noise.setToolTip(QtGui.QApplication.translate("synth_widget", "Generate white noise", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_15.setText(QtGui.QApplication.translate("synth_widget", "One of the controls is defined using variables and therefore the controls are disabled. Use the script editor to edit the synth.", None, QtGui.QApplication.UnicodeUTF8))
-        self.button_script.setToolTip(QtGui.QApplication.translate("synth_widget", "Edit the script to see the definition", None, QtGui.QApplication.UnicodeUTF8))
-        self.button_script.setText(QtGui.QApplication.translate("synth_widget", "Edit script", None, QtGui.QApplication.UnicodeUTF8))
+    def retranslateUi(self, Form):
+        Form.setWindowTitle(QtGui.QApplication.translate("Form", "Form", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_7.setText(QtGui.QApplication.translate("Form", "Volume", None, QtGui.QApplication.UnicodeUTF8))
+        self.dial_volume.setToolTip(QtGui.QApplication.translate("Form", "Set the volume of the sound", None, QtGui.QApplication.UnicodeUTF8))
+        self.spin_volume.setToolTip(QtGui.QApplication.translate("Form", "Set the volume of the sound", None, QtGui.QApplication.UnicodeUTF8))
+        self.spin_volume.setSuffix(QtGui.QApplication.translate("Form", "%", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_8.setText(QtGui.QApplication.translate("Form", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"</style></head><body style=\" font-family:\'Ubuntu\'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
+"<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Pan</p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
+        self.dial_pan.setToolTip(QtGui.QApplication.translate("Form", "Set the panning (left-right) of the sound", None, QtGui.QApplication.UnicodeUTF8))
+        self.spin_pan.setToolTip(QtGui.QApplication.translate("Form", "Set the panning (left-right) of the sound", None, QtGui.QApplication.UnicodeUTF8))
+        self.dial_decay.setToolTip(QtGui.QApplication.translate("Form", "Set the decay (\"fade out\") of the sound", None, QtGui.QApplication.UnicodeUTF8))
+        self.dial_attack.setToolTip(QtGui.QApplication.translate("Form", "Set the attack (\"fade in\") of the sound", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_10.setText(QtGui.QApplication.translate("Form", "Attack", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_11.setText(QtGui.QApplication.translate("Form", "Decay", None, QtGui.QApplication.UnicodeUTF8))
+        self.spin_attack.setToolTip(QtGui.QApplication.translate("Form", "Set the attack (\"fade in\") of the sound", None, QtGui.QApplication.UnicodeUTF8))
+        self.spin_attack.setSuffix(QtGui.QApplication.translate("Form", "ms", None, QtGui.QApplication.UnicodeUTF8))
+        self.spin_decay.setToolTip(QtGui.QApplication.translate("Form", "Set the decay (\"fade out\") of the sound", None, QtGui.QApplication.UnicodeUTF8))
+        self.spin_decay.setSuffix(QtGui.QApplication.translate("Form", "ms", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_4.setText(QtGui.QApplication.translate("Form", "Length", None, QtGui.QApplication.UnicodeUTF8))
+        self.edit_duration.setToolTip(QtGui.QApplication.translate("Form", "Set the duration of the synth item. Expecting a duration in ms, \'sound\' (to wait until the sound is finished playing), \'keypress\', \'mouseclick\', or a variable (e.g., \'[synth_dur]\').", None, QtGui.QApplication.UnicodeUTF8))
+        self.edit_duration.setText(QtGui.QApplication.translate("Form", "sound", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_6.setText(QtGui.QApplication.translate("Form", "Duration", None, QtGui.QApplication.UnicodeUTF8))
+        self.spin_length.setToolTip(QtGui.QApplication.translate("Form", "Set the length of the sound", None, QtGui.QApplication.UnicodeUTF8))
+        self.spin_length.setSuffix(QtGui.QApplication.translate("Form", "ms", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_2.setText(QtGui.QApplication.translate("Form", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"</style></head><body style=\" font-family:\'Ubuntu\'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Frequency</p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:8pt; font-style:italic;\">In hertz (Hz) or by note, like \'A1\'</span></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
+        self.edit_freq.setToolTip(QtGui.QApplication.translate("Form", "The frequence of the sound. Expecting a numeric value (frequency in Hertz) a note (like \'C#2\' and \'A1\') or a variable (like \'[freq]\')", None, QtGui.QApplication.UnicodeUTF8))
+        self.edit_freq.setText(QtGui.QApplication.translate("Form", "A1", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_9.setText(QtGui.QApplication.translate("Form", "Synth controls", None, QtGui.QApplication.UnicodeUTF8))
+        self.label.setText(QtGui.QApplication.translate("Form", "Sine wave", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_12.setText(QtGui.QApplication.translate("Form", "Sawtooth wave", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_13.setText(QtGui.QApplication.translate("Form", "Square wave", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_14.setText(QtGui.QApplication.translate("Form", "White noise", None, QtGui.QApplication.UnicodeUTF8))
+        self.button_sine.setToolTip(QtGui.QApplication.translate("Form", "Generate a sine wav", None, QtGui.QApplication.UnicodeUTF8))
+        self.button_saw.setToolTip(QtGui.QApplication.translate("Form", "Generate a sawtooth wave", None, QtGui.QApplication.UnicodeUTF8))
+        self.button_square.setToolTip(QtGui.QApplication.translate("Form", "Generate a square wave", None, QtGui.QApplication.UnicodeUTF8))
+        self.button_white_noise.setToolTip(QtGui.QApplication.translate("Form", "Generate white noise", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_15.setText(QtGui.QApplication.translate("Form", "One of the controls is defined using variables and therefore the controls are disabled. Use the script editor to edit the synth.", None, QtGui.QApplication.UnicodeUTF8))
+        self.button_script.setToolTip(QtGui.QApplication.translate("Form", "Edit the script to see the definition", None, QtGui.QApplication.UnicodeUTF8))
+        self.button_script.setText(QtGui.QApplication.translate("Form", "Edit script", None, QtGui.QApplication.UnicodeUTF8))
 

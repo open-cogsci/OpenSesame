@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'resources/ui/new_loop_sequence.ui'
 #
-# Created: Mon Jul  9 13:58:21 2012
+# Created: Sat Mar 31 16:00:41 2012
 #      by: PyQt4 UI code generator 4.9.1
 #
 # WARNING! All changes made in this file will be lost!
@@ -14,13 +14,13 @@ try:
 except AttributeError:
     _fromUtf8 = lambda s: s
 
-class Ui_new_loop_sequence_dialog(object):
-    def setupUi(self, new_loop_sequence_dialog):
-        new_loop_sequence_dialog.setObjectName(_fromUtf8("new_loop_sequence_dialog"))
-        new_loop_sequence_dialog.resize(411, 197)
-        self.verticalLayout = QtGui.QVBoxLayout(new_loop_sequence_dialog)
+class Ui_Dialog(object):
+    def setupUi(self, Dialog):
+        Dialog.setObjectName(_fromUtf8("Dialog"))
+        Dialog.resize(411, 197)
+        self.verticalLayout = QtGui.QVBoxLayout(Dialog)
         self.verticalLayout.setObjectName(_fromUtf8("verticalLayout"))
-        self.widget_3 = QtGui.QWidget(new_loop_sequence_dialog)
+        self.widget_3 = QtGui.QWidget(Dialog)
         self.widget_3.setObjectName(_fromUtf8("widget_3"))
         self.horizontalLayout_3 = QtGui.QHBoxLayout(self.widget_3)
         self.horizontalLayout_3.setMargin(0)
@@ -43,7 +43,7 @@ class Ui_new_loop_sequence_dialog(object):
         self.verticalLayout.addWidget(self.widget_3)
         spacerItem = QtGui.QSpacerItem(20, 40, QtGui.QSizePolicy.Minimum, QtGui.QSizePolicy.Expanding)
         self.verticalLayout.addItem(spacerItem)
-        self.widget_2 = QtGui.QWidget(new_loop_sequence_dialog)
+        self.widget_2 = QtGui.QWidget(Dialog)
         self.widget_2.setObjectName(_fromUtf8("widget_2"))
         self.horizontalLayout = QtGui.QHBoxLayout(self.widget_2)
         self.horizontalLayout.setSpacing(12)
@@ -83,7 +83,7 @@ class Ui_new_loop_sequence_dialog(object):
         self.verticalLayout_3.addWidget(self.button_select)
         self.horizontalLayout.addWidget(self.groupBox_2)
         self.verticalLayout.addWidget(self.widget_2)
-        self.widget = QtGui.QWidget(new_loop_sequence_dialog)
+        self.widget = QtGui.QWidget(Dialog)
         self.widget.setObjectName(_fromUtf8("widget"))
         self.horizontalLayout_2 = QtGui.QHBoxLayout(self.widget)
         self.horizontalLayout_2.setMargin(0)
@@ -100,17 +100,17 @@ class Ui_new_loop_sequence_dialog(object):
         self.horizontalLayout_2.addWidget(self.button_cancel)
         self.verticalLayout.addWidget(self.widget)
 
-        self.retranslateUi(new_loop_sequence_dialog)
-        QtCore.QObject.connect(self.button_cancel, QtCore.SIGNAL(_fromUtf8("clicked()")), new_loop_sequence_dialog.accept)
-        QtCore.QMetaObject.connectSlotsByName(new_loop_sequence_dialog)
+        self.retranslateUi(Dialog)
+        QtCore.QObject.connect(self.button_cancel, QtCore.SIGNAL(_fromUtf8("clicked()")), Dialog.accept)
+        QtCore.QMetaObject.connectSlotsByName(Dialog)
 
-    def retranslateUi(self, new_loop_sequence_dialog):
-        new_loop_sequence_dialog.setWindowTitle(QtGui.QApplication.translate("new_loop_sequence_dialog", "Dialog", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_explanation.setText(QtGui.QApplication.translate("new_loop_sequence_dialog", "Explanation\n"
+    def retranslateUi(self, Dialog):
+        Dialog.setWindowTitle(QtGui.QApplication.translate("Dialog", "Dialog", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_explanation.setText(QtGui.QApplication.translate("Dialog", "Explanation\n"
 "", None, QtGui.QApplication.UnicodeUTF8))
-        self.groupBox.setTitle(QtGui.QApplication.translate("new_loop_sequence_dialog", "Create new item to use", None, QtGui.QApplication.UnicodeUTF8))
-        self.button_new.setText(QtGui.QApplication.translate("new_loop_sequence_dialog", "Create", None, QtGui.QApplication.UnicodeUTF8))
-        self.groupBox_2.setTitle(QtGui.QApplication.translate("new_loop_sequence_dialog", "Select existing item to use", None, QtGui.QApplication.UnicodeUTF8))
-        self.button_select.setText(QtGui.QApplication.translate("new_loop_sequence_dialog", "Select", None, QtGui.QApplication.UnicodeUTF8))
-        self.button_cancel.setText(QtGui.QApplication.translate("new_loop_sequence_dialog", "Cancel", None, QtGui.QApplication.UnicodeUTF8))
+        self.groupBox.setTitle(QtGui.QApplication.translate("Dialog", "Create new item to use", None, QtGui.QApplication.UnicodeUTF8))
+        self.button_new.setText(QtGui.QApplication.translate("Dialog", "Create", None, QtGui.QApplication.UnicodeUTF8))
+        self.groupBox_2.setTitle(QtGui.QApplication.translate("Dialog", "Select existing item to use", None, QtGui.QApplication.UnicodeUTF8))
+        self.button_select.setText(QtGui.QApplication.translate("Dialog", "Select", None, QtGui.QApplication.UnicodeUTF8))
+        self.button_cancel.setText(QtGui.QApplication.translate("Dialog", "Cancel", None, QtGui.QApplication.UnicodeUTF8))
 

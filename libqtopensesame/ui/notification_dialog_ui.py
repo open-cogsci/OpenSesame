@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'resources/ui/notification_dialog.ui'
 #
-# Created: Mon Jul  9 13:58:20 2012
+# Created: Sat Mar 31 16:00:40 2012
 #      by: PyQt4 UI code generator 4.9.1
 #
 # WARNING! All changes made in this file will be lost!
@@ -14,14 +14,14 @@ try:
 except AttributeError:
     _fromUtf8 = lambda s: s
 
-class Ui_notification_dialog(object):
-    def setupUi(self, notification_dialog):
-        notification_dialog.setObjectName(_fromUtf8("notification_dialog"))
-        notification_dialog.resize(400, 300)
-        self.verticalLayout = QtGui.QVBoxLayout(notification_dialog)
+class Ui_Dialog(object):
+    def setupUi(self, Dialog):
+        Dialog.setObjectName(_fromUtf8("Dialog"))
+        Dialog.resize(400, 300)
+        self.verticalLayout = QtGui.QVBoxLayout(Dialog)
         self.verticalLayout.setMargin(8)
         self.verticalLayout.setObjectName(_fromUtf8("verticalLayout"))
-        self.widget = QtGui.QWidget(notification_dialog)
+        self.widget = QtGui.QWidget(Dialog)
         sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Preferred, QtGui.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -53,24 +53,24 @@ class Ui_notification_dialog(object):
         self.label_2.setObjectName(_fromUtf8("label_2"))
         self.horizontalLayout.addWidget(self.label_2)
         self.verticalLayout.addWidget(self.widget)
-        self.textedit_notification = QtGui.QTextBrowser(notification_dialog)
+        self.textedit_notification = QtGui.QTextBrowser(Dialog)
         font = QtGui.QFont()
         font.setFamily(_fromUtf8("Monospace"))
         self.textedit_notification.setFont(font)
         self.textedit_notification.setObjectName(_fromUtf8("textedit_notification"))
         self.verticalLayout.addWidget(self.textedit_notification)
-        self.buttonBox = QtGui.QDialogButtonBox(notification_dialog)
+        self.buttonBox = QtGui.QDialogButtonBox(Dialog)
         self.buttonBox.setOrientation(QtCore.Qt.Horizontal)
         self.buttonBox.setStandardButtons(QtGui.QDialogButtonBox.Close)
         self.buttonBox.setObjectName(_fromUtf8("buttonBox"))
         self.verticalLayout.addWidget(self.buttonBox)
 
-        self.retranslateUi(notification_dialog)
-        QtCore.QObject.connect(self.buttonBox, QtCore.SIGNAL(_fromUtf8("accepted()")), notification_dialog.accept)
-        QtCore.QObject.connect(self.buttonBox, QtCore.SIGNAL(_fromUtf8("rejected()")), notification_dialog.reject)
-        QtCore.QMetaObject.connectSlotsByName(notification_dialog)
+        self.retranslateUi(Dialog)
+        QtCore.QObject.connect(self.buttonBox, QtCore.SIGNAL(_fromUtf8("accepted()")), Dialog.accept)
+        QtCore.QObject.connect(self.buttonBox, QtCore.SIGNAL(_fromUtf8("rejected()")), Dialog.reject)
+        QtCore.QMetaObject.connectSlotsByName(Dialog)
 
-    def retranslateUi(self, notification_dialog):
-        notification_dialog.setWindowTitle(QtGui.QApplication.translate("notification_dialog", "OpenSesame says ...", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_2.setText(QtGui.QApplication.translate("notification_dialog", "OpenSesame says ...", None, QtGui.QApplication.UnicodeUTF8))
+    def retranslateUi(self, Dialog):
+        Dialog.setWindowTitle(QtGui.QApplication.translate("Dialog", "OpenSesame says ...", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_2.setText(QtGui.QApplication.translate("Dialog", "OpenSesame says ...", None, QtGui.QApplication.UnicodeUTF8))
 

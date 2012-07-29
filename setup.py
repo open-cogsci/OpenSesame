@@ -31,16 +31,25 @@ import libopensesame.misc
 
 share_folder = "/usr/share/opensesame"
 
+exclude_resources = [
+	'.hidden',
+	]
+
 # Not all plugins are included
-included_plugins = [ \
-	"advanced_delay", \
-	"external_script", \
-	"fixation_dot", \
-	"notepad", \
-	"reset_feedback", \
-	"srbox", \
-	"text_display", \
-	"text_input", \
+included_plugins = [
+	"advanced_delay",
+	"external_script",
+	"fixation_dot",
+	"notepad",
+	"reset_feedback",
+	"srbox",
+	"text_display",
+	"text_input",
+	"form_base",
+	"form_consent",
+	"form_text_display",
+	"form_text_input",
+	"parallel",
 	]
 	
 def resources():
@@ -58,7 +67,8 @@ def resources():
 		if root in ["resources/bak", "resources/ui"]:
 			continue
 		for f in filenames:			
-			if os.path.splitext(f)[1] not in [".csv"] or f  in ["icon_map.csv"]:
+			if f not in exclude_resources and (os.path.splitext(f)[1] not in \
+				[".csv"] or f in ["icon_map.csv"]):
 				l.append( (os.path.join(share_folder, root), [os.path.join( \
 					root, f)] ) )
 	return l
@@ -88,20 +98,22 @@ setup(name="opensesame",
 	author_email = "s.mathot@cogsci.nl",
 	url = "http://www.cogsci.nl/",
 	scripts = ["opensesame", "opensesamerun"],
-	packages = ["openexp", \
-		"openexp._canvas", \
-		"openexp._keyboard", \
-		"openexp._mouse", \
-		"openexp._sampler", \
-		"openexp._synth", \
-		"libopensesame", \
-		"libqtopensesame", \
-		"libqtopensesame.actions", \
-		"libqtopensesame.dialogs", \
-		"libqtopensesame.items", \
-		"libqtopensesame.misc", \
-		"libqtopensesame.ui", \
-		"libqtopensesame.widgets", \
+	packages = ["openexp",
+		"openexp._canvas",
+		"openexp._keyboard",
+		"openexp._mouse",
+		"openexp._sampler",
+		"openexp._synth",
+		"libopensesame",
+		"libopensesame.widgets",
+		"libopensesame.widgets.themes",
+		"libqtopensesame",
+		"libqtopensesame.actions",
+		"libqtopensesame.dialogs",
+		"libqtopensesame.items",
+		"libqtopensesame.misc",
+		"libqtopensesame.ui",
+		"libqtopensesame.widgets",
 		],
 	package_dir = {"openexp" : "openexp", "libopensesame" : "libopensesame", \
 		"libqtopensesame" : "libqtopensesame"},
