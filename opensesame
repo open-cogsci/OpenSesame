@@ -22,7 +22,23 @@ if __name__ == "__main__":
 
 	# First, load a minimum number of modules and show an empty app window. This
 	# gives the user the feeling of a snappy response.
-	import sys
+	import os, sys
+
+	# Change the working directory on Windows. Depending on whether the
+	# application has been frozen by py2exe or not we need to use a different
+	# method of deducing the name to the main script.
+	# See also http://www.py2exe.org/index.cgi/HowToDetermineIfRunningFromExe
+	if os.name == "nt":
+		import imp
+		if (hasattr(sys, "frozen") or hasattr(sys, "importers") or \
+			imp.is_frozen("__main__")):
+			path = os.path.dirname(sys.executable)
+		else:
+			path = os.path.dirname(__file__)
+		if path != '':
+			os.chdir(path)
+			if path not in sys.path:
+				sys.path.append(path)			
 
 	# The IPython modules must be loaded before PyQt4
 	if "--ipython" in sys.argv:
@@ -38,7 +54,7 @@ if __name__ == "__main__":
 	
 	# Import the remaining modules
 	from PyQt4.QtCore import SIGNAL, QObject, QLocale, QTranslator	
-	from libopensesame.misc import change_working_dir, resource, debug
+	from libopensesame.misc import resource, debug
 	import os.path
 	
 	# Load the locale for UI translation
@@ -55,7 +71,6 @@ if __name__ == "__main__":
 
 	# Now that the window is shown, load the remaining modules and resume the
 	# GUI initialization.
-	change_working_dir()
 	opensesame.resume_init()
 	QObject.connect(app, SIGNAL("quit()"), opensesame.close)
 	

@@ -18,17 +18,31 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
-import os
-import os.path
-import sys
-import libqtopensesame.qtopensesamerun
-import libopensesame.misc
-import libopensesame.experiment
-
 if __name__ == "__main__":
 
-	# A hack to make sure the working directory is correct under Windows
-	libopensesame.misc.change_working_dir()
+	# First, load a minimum number of modules and show an empty app window. This
+	# gives the user the feeling of a snappy response.
+	import os, sys
+
+	# Change the working directory on Windows. Depending on whether the
+	# application has been frozen by py2exe or not we need to use a different
+	# method of deducing the name to the main script.
+	# See also http://www.py2exe.org/index.cgi/HowToDetermineIfRunningFromExe
+	if os.name == "nt":
+		import imp
+		if (hasattr(sys, "frozen") or hasattr(sys, "importers") or \
+			imp.is_frozen("__main__")):
+			path = os.path.dirname(sys.executable)
+		else:
+			path = os.path.dirname(__file__)
+		if path != '':
+			os.chdir(path)
+			if path not in sys.path:
+				sys.path.append(path)	
+
+	import libqtopensesame.qtopensesamerun
+	import libopensesame.misc
+	import libopensesame.experiment
 	
 	# Parse the command line options
 	options = libopensesame.misc.opensesamerun_options()
