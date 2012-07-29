@@ -18,7 +18,10 @@ along with openexp.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from widget import widget
-from PIL import Image
+try: # Try both import statements
+	from PIL import Image
+except:
+	import Image
 from libopensesame import exceptions
 import os
 

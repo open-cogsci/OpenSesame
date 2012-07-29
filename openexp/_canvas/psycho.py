@@ -23,7 +23,10 @@ import math
 import openexp._canvas.legacy
 import openexp.exceptions
 from psychopy import core, visual
-from PIL import Image
+try: # Try both import statements
+	from PIL import Image
+except:
+	import Image
 import numpy as np
 import os.path
 

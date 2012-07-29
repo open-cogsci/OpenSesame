@@ -38,7 +38,8 @@ if "--pylink" in sys.argv:
 	try:
 		exec("import pylink") # This makes sure that py2exe doesn't try to include pylink
 	except Exception as e:
-		debug.msg("failed to import pylink module. You will not be able to use eyelink connectivity")
+		debug.msg( \
+			"failed to import pylink module. You will not be able to use eyelink connectivity")
 
 # Explicitly importing these modules ensures that Py2exe will
 # bundle them. This is therefore only required for Windows.
@@ -103,8 +104,13 @@ if "--preload" in sys.argv:
 
 	debug.msg("preloading 'PIL'")
 	try:
-		import PIL
-		import PIL.Image
+		# The correct way to import PIL appears to depend on the version. So
+		# try both methods.
+		try:
+			import PIL
+			import PIL.Image
+		except:
+			import Image
 	except Exception as e:
 		debug.msg("failed to import 'PIL' <http://www.pythonware.com/products/pil/>. You will not be able the Python Imaging library. Error: %s" % e)
 
