@@ -19,10 +19,12 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from distutils.core import setup
+import distutils.sysconfig as sysconfig
+import compileall
 import glob
 import py2exe
 import os
-import os.path
+import sys
 import shutil
 import libqtopensesame.qtopensesame
 import libopensesame.misc
@@ -31,22 +33,129 @@ import urllib
 
 # Some settings
 include_plugins = True
-include_expyriment = True
 include_media_player = False
 include_media_player_vlc = False
 include_examples = True
 include_sounds = True
-include_faenza = False
+include_faenza = True
 include_inpout32 = True
 include_simpleio = True
 python_folder = "C:\\Python27"
 python_version = "2.7"
 
+# Packages that are too be copied for the site-packages folder, rather than
+# included by py2exe in the library .zip file
+copy_packages = [
+	'libopensesame',
+	'libqtopensesame',
+	'openexp',
+	'expyriment',
+	'psychopy',
+	'scipy',
+	'numpy',
+	'serial',
+	'parallel',
+	'OpenGL',
+	'pygame',
+	'pyglet'
+	]
+
+# Packages that are part of the standard Python packages, but should not be
+# included
+exclude_packages = [
+	'idlelib',
+	]
+
+# Packages that are not part of the standard Python packages (or not detected
+# as such), but should nevertheless be includes
+include_packages = [
+	'sip',
+	'pyaudio',
+	'PIL',
+	'Image',
+	'PyQt4.QtCore',
+	'PyQt4.QtGui',
+	'PyQt4.Qsci',
+	'PyQt4.QtWebKit',
+	'PyQt4.QtNetwork'
+	]
+
+exclude_dll = [
+	"MSVCP90.DLL",
+	"libzmq.dll",
+	]
+	
 # Create empty destination folders
 if os.path.exists("dist"):
 	shutil.rmtree("dist")
 os.mkdir("dist")
 os.mkdir(os.path.join("dist", "plugins"))
+
+# A filter to ignore non-relevant package files
+def ignore_package_files(folder, files):
+	l = []
+	for f in files:
+		if os.path.splitext(f)[1] in [".pyo", ".pyc"]:
+			l.append(f)
+	return l
+
+# A function to strip non-compiled scripts
+def strip_py(folder):
+	for path in os.listdir(folder):
+		path = os.path.join(folder, path)
+		if os.path.isdir(path):
+			strip_py(path)
+			continue
+		base, ext = os.path.splitext(path)
+		if ext == '.py' and os.path.exists(base+'.pyo'):
+			print 'stripping %s' % path
+			os.remove(path)
+
+# Copy packages	
+for pkg in copy_packages:
+	print 'copying packages %s ... ' % pkg
+	exec('import %s as _pkg' % pkg)
+	pkg_folder = os.path.dirname(_pkg.__file__)
+	pkg_target = os.path.join("dist", pkg)
+	shutil.copytree(pkg_folder, pkg_target, symlinks=True, \
+		ignore=ignore_package_files)
+	compileall.compile_dir(pkg_target, force=True)
+	strip_py(pkg_target)
+
+# Create a list of standard pakcages that should be included
+# http://stackoverflow.com/questions/6463918/how-can-i-get-a-list-of-all-the-python-standard-library-modules
+print 'detecting standard Python packages and modules ... '
+std_pkg = []
+std_lib = sysconfig.get_python_lib(standard_lib=True)
+for top, dirs, files in os.walk(std_lib):
+	for nm in files:
+		prefix = top[len(std_lib)+1:]
+		if prefix[:13] == 'site-packages':
+			continue
+		if nm == '__init__.py':
+			pkg = top[len(std_lib)+1:].replace(os.path.sep,'.')
+		elif nm[-3:] == '.py':
+			pkg =  os.path.join(prefix, nm)[:-3].replace(os.path.sep,'.')
+		elif nm[-3:] == '.so' and top[-11:] == 'lib-dynload':
+			pkg = nm[0:-3]
+		if pkg[0] == '_':
+			continue
+		exclude = False
+		for _pkg in exclude_packages:
+			if pkg.find(_pkg) == 0:
+				exclude = True
+				break
+		if exclude:
+			continue
+		try:
+			exec('import %s' % pkg)
+		except:
+			continue
+		print pkg			
+		std_pkg.append(pkg)
+for pkg in sys.builtin_module_names:
+	print pkg			
+	std_pkg.append(pkg)
 
 # Setup options
 setup(
@@ -65,32 +174,14 @@ setup(
 		"compressed" : True,
 		"optimize": 2,
 		"bundle_files": 3,
-		"excludes": "expyriment",
-		"includes" : 
-			"libopensesame, " + \
-			"libopensesame.widgets, libopensesame.widgets.themes, " +\
-			"libqtopensesame.*, " + \
-			"libqtopensesame.items.*, " + \
-			"libqtopensesame.widgets.*, " + \
-			"libqtopensesame.actions.*, " + \
-			"libqtopensesame.ui.*, " + \
-			"libqtopensesame.dialogs.*, " + \
-			"libqtopensesame.misc.*, " + \
-#			"expyriment, expyriment.stimuli, expyriment.stimuli.extras, " + \
-#			"expyriment.misc, expyriment.misc.extras, " + \
-#			"expyriment.io, expyriment.io.extras, " + \
-#			"expyriment.design, expyriment.design.extras, " + \
-#			"expyriment.control, " + \
-			"sip, pygame, ctypes, weakref, logging, uuid, " + \
-			"OpenGL.platform.win32, OpenGL.arrays.ctypesarrays, " + \
-			"OpenGL.arrays.numpymodule, OpenGL.arrays.lists, " + \
-			"OpenGL.arrays.numbers, OpenGL.arrays.strings, OpenGL.GL, " + \
-			"OpenGL.GLU, scipy.sparse.csgraph._validation",
-		"dll_excludes" : ["MSVCP90.DLL", "libzmq.dll"]
+		"excludes": copy_packages,
+		"includes" : std_pkg + include_packages,
+		"dll_excludes" : exclude_dll,
 		}
-	},
+	}
 )
 
+# A filter to ignore non-relevant resource files
 def ignore_resources(folder, files):
 	l = []
 	print "... %s" % folder
@@ -98,10 +189,13 @@ def ignore_resources(folder, files):
 		if os.path.splitext(f)[1] in [".csv", ".pyc"] and f not in \
 			["icon_map.csv"]:
 			l.append(f)
+		if 'Faenza' in folder and f == 'scalable':
+			l.append(f)
 		if f == "Faenza" and not include_faenza:
 			l.append(f)
 	return l
 
+# Copy resource files
 print "copying resources"
 shutil.copytree("resources", os.path.join("dist", "resources"), symlinks=True, \
 	ignore=ignore_resources)
@@ -125,18 +219,12 @@ if include_simpleio:
 	shutil.copyfile("""%s\Lib\site-packages\parallel\simpleio.dll""" \
 		% python_folder, """dist\simpleio.dll""")
 
-# Required by psychopy
-print "copying PsychoPy Windows.spec"
-shutil.copyfile( \
-	"""%s\Lib\site-packages\PsychoPy-%s-py%s.egg\psychopy\preferences\Windows.spec""" \
-	% (python_folder, psychopy.__version__, python_version), \
-	"""dist\\resources\Windows.spec""")
-
 if include_inpout32:
 	print "copying inpout32.dll"
 	urllib.urlretrieve ("http://files.cogsci.nl/misc/inpout32.dll", \
 		"dist\\inpout32.dll")
 
+# Include plug-ins
 if include_plugins:
 	print "copying plugins"
 	included_plugins = [ \
@@ -164,6 +252,7 @@ if include_plugins:
 				print "removing file", path
 				os.remove(os.path.join("dist", "plugins", plugin, path))
 
+# Include old media_player
 if include_media_player:
 	print "copying media_player"
 	os.mkdir("dist\plugins\media_player")
@@ -178,6 +267,7 @@ if include_media_player:
 	shutil.copyfile("""..\media_player\info.txt""", \
 		"""dist\plugins\media_player\info.txt""")
 
+# Include new vlc-based media player
 if include_media_player_vlc:
 	print "copying media_player_vlc"
 	os.mkdir("dist\plugins\media_player_vlc")
@@ -194,6 +284,7 @@ if include_media_player_vlc:
 	shutil.copyfile("""..\media_player_vlc\info.txt""", \
 		"""dist\plugins\media_player_vlc\info.txt""")		
 
+# Include examples
 if include_examples:
 	print "copying examples"
 	shutil.copytree("examples", os.path.join("dist", "examples"))
@@ -203,10 +294,7 @@ if include_examples:
 			print "removing file", path
 			os.remove(os.path.join("dist", "examples", path))
 
-if include_expyriment:
-	print "copying expyriment"	
-	shutil.copytree("expyriment", os.path.join("dist", "expyriment"))
-
+# Include sounds
 if include_sounds:
 	print "copying sounds"
 	shutil.copytree("sounds", os.path.join("dist", "sounds"))
