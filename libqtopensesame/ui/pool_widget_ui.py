@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'resources/ui/pool_widget.ui'
 #
-# Created: Sat Mar 31 16:00:40 2012
+# Created: Thu Aug  2 12:43:05 2012
 #      by: PyQt4 UI code generator 4.9.1
 #
 # WARNING! All changes made in this file will be lost!
@@ -14,36 +14,34 @@ try:
 except AttributeError:
     _fromUtf8 = lambda s: s
 
-class Ui_Form(object):
-    def setupUi(self, Form):
-        Form.setObjectName(_fromUtf8("Form"))
-        Form.resize(355, 291)
-        Form.setAcceptDrops(True)
-        self.verticalLayout = QtGui.QVBoxLayout(Form)
+class Ui_pool_widget(object):
+    def setupUi(self, pool_widget):
+        pool_widget.setObjectName(_fromUtf8("pool_widget"))
+        pool_widget.resize(355, 291)
+        pool_widget.setAcceptDrops(True)
+        self.verticalLayout = QtGui.QVBoxLayout(pool_widget)
         self.verticalLayout.setObjectName(_fromUtf8("verticalLayout"))
-        self.widget = QtGui.QWidget(Form)
-        self.widget.setStyleSheet(_fromUtf8("background-color: #729fcf;\n"
-"color: rgb(255, 255, 255);"))
-        self.widget.setObjectName(_fromUtf8("widget"))
-        self.horizontalLayout = QtGui.QHBoxLayout(self.widget)
-        self.horizontalLayout.setMargin(5)
+        self.widget_header_box = QtGui.QWidget(pool_widget)
+        self.widget_header_box.setObjectName(_fromUtf8("widget_header_box"))
+        self.horizontalLayout = QtGui.QHBoxLayout(self.widget_header_box)
+        self.horizontalLayout.setSpacing(0)
+        self.horizontalLayout.setMargin(4)
         self.horizontalLayout.setMargin(0)
         self.horizontalLayout.setObjectName(_fromUtf8("horizontalLayout"))
-        self.label_pool = QtGui.QLabel(self.widget)
+        self.label_pool = QtGui.QLabel(self.widget_header_box)
         sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Fixed, QtGui.QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.label_pool.sizePolicy().hasHeightForWidth())
         self.label_pool.setSizePolicy(sizePolicy)
-        self.label_pool.setText(_fromUtf8(""))
         self.label_pool.setPixmap(QtGui.QPixmap(_fromUtf8(":/icons/pool_large.png")))
         self.label_pool.setObjectName(_fromUtf8("label_pool"))
         self.horizontalLayout.addWidget(self.label_pool)
-        self.label_3 = QtGui.QLabel(self.widget)
+        self.label_3 = QtGui.QLabel(self.widget_header_box)
         self.label_3.setObjectName(_fromUtf8("label_3"))
         self.horizontalLayout.addWidget(self.label_3)
-        self.verticalLayout.addWidget(self.widget)
-        self.widget_pool = QtGui.QWidget(Form)
+        self.verticalLayout.addWidget(self.widget_header_box)
+        self.widget_pool = QtGui.QWidget(pool_widget)
         sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Preferred, QtGui.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -85,7 +83,7 @@ class Ui_Form(object):
         self.button_help_pool.setObjectName(_fromUtf8("button_help_pool"))
         self.horizontalLayout_3.addWidget(self.button_help_pool)
         self.verticalLayout.addWidget(self.widget_pool)
-        self.widget_2 = QtGui.QWidget(Form)
+        self.widget_2 = QtGui.QWidget(pool_widget)
         self.widget_2.setObjectName(_fromUtf8("widget_2"))
         self.horizontalLayout_2 = QtGui.QHBoxLayout(self.widget_2)
         self.horizontalLayout_2.setMargin(0)
@@ -133,7 +131,7 @@ class Ui_Form(object):
         self.combobox_view.addItem(icon5, _fromUtf8(""))
         self.horizontalLayout_2.addWidget(self.combobox_view)
         self.verticalLayout.addWidget(self.widget_2)
-        self.list_pool = QtGui.QListWidget(Form)
+        self.list_pool = QtGui.QListWidget(pool_widget)
         self.list_pool.setContextMenuPolicy(QtCore.Qt.ActionsContextMenu)
         self.list_pool.setAcceptDrops(True)
         self.list_pool.setAlternatingRowColors(True)
@@ -145,24 +143,20 @@ class Ui_Form(object):
         self.list_pool.setObjectName(_fromUtf8("list_pool"))
         self.verticalLayout.addWidget(self.list_pool)
 
-        self.retranslateUi(Form)
+        self.retranslateUi(pool_widget)
         QtCore.QObject.connect(self.button_pool_filter_clear, QtCore.SIGNAL(_fromUtf8("clicked()")), self.edit_pool_filter.clear)
-        QtCore.QMetaObject.connectSlotsByName(Form)
+        QtCore.QMetaObject.connectSlotsByName(pool_widget)
 
-    def retranslateUi(self, Form):
-        Form.setWindowTitle(QtGui.QApplication.translate("Form", "Form", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_3.setText(QtGui.QApplication.translate("Form", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
-"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
-"p, li { white-space: pre-wrap; }\n"
-"</style></head><body style=\" font-family:\'Ubuntu\'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:11pt; font-weight:600;\">File pool</span></p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-style:italic;\">You can drag and drop files into the pool</span></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
-        self.edit_pool_filter.setToolTip(QtGui.QApplication.translate("Form", "Enter a filter", None, QtGui.QApplication.UnicodeUTF8))
-        self.button_pool_filter_clear.setToolTip(QtGui.QApplication.translate("Form", "Clear filter", None, QtGui.QApplication.UnicodeUTF8))
-        self.button_help_pool.setToolTip(QtGui.QApplication.translate("Form", "Help", None, QtGui.QApplication.UnicodeUTF8))
-        self.button_pool_add.setToolTip(QtGui.QApplication.translate("Form", "Add file", None, QtGui.QApplication.UnicodeUTF8))
-        self.button_browse_pool.setToolTip(QtGui.QApplication.translate("Form", "Open file pool in file manager", None, QtGui.QApplication.UnicodeUTF8))
-        self.combobox_view.setItemText(0, QtGui.QApplication.translate("Form", "View as list", None, QtGui.QApplication.UnicodeUTF8))
-        self.combobox_view.setItemText(1, QtGui.QApplication.translate("Form", "View as icons", None, QtGui.QApplication.UnicodeUTF8))
+    def retranslateUi(self, pool_widget):
+        pool_widget.setWindowTitle(QtGui.QApplication.translate("pool_widget", "Form", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_pool.setText(QtGui.QApplication.translate("pool_widget", "ICON", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_3.setText(QtGui.QApplication.translate("pool_widget", "<b>File pool</b><br /><small><i>You can drag and drop files into the pool</i></small>", None, QtGui.QApplication.UnicodeUTF8))
+        self.edit_pool_filter.setToolTip(QtGui.QApplication.translate("pool_widget", "Enter a filter", None, QtGui.QApplication.UnicodeUTF8))
+        self.button_pool_filter_clear.setToolTip(QtGui.QApplication.translate("pool_widget", "Clear filter", None, QtGui.QApplication.UnicodeUTF8))
+        self.button_help_pool.setToolTip(QtGui.QApplication.translate("pool_widget", "Help", None, QtGui.QApplication.UnicodeUTF8))
+        self.button_pool_add.setToolTip(QtGui.QApplication.translate("pool_widget", "Add file", None, QtGui.QApplication.UnicodeUTF8))
+        self.button_browse_pool.setToolTip(QtGui.QApplication.translate("pool_widget", "Open file pool in file manager", None, QtGui.QApplication.UnicodeUTF8))
+        self.combobox_view.setItemText(0, QtGui.QApplication.translate("pool_widget", "View as list", None, QtGui.QApplication.UnicodeUTF8))
+        self.combobox_view.setItemText(1, QtGui.QApplication.translate("pool_widget", "View as icons", None, QtGui.QApplication.UnicodeUTF8))
         self.list_pool.setSortingEnabled(True)
 
