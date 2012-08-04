@@ -296,7 +296,7 @@ class experiment(item.item):
 		self.running = True
 		self.init_sound()
 		self.init_display()
-		self.init_log()
+		self.init_log(codec=self.logfile_codec)
 
 		print "experiment.run(): experiment started at %s" % time.ctime()
 
@@ -611,6 +611,13 @@ class experiment(item.item):
 		Keyword arguments:
 		codec -- the character encoding to be used (default="ascii")
 		"""
+		
+		# Raise an exception if the user tries to open the logfile with
+		# different codecs
+		if self._log != None and codec != self.logfile_codec:
+			raise exceptions.runtime_error( \
+				'Trying to open the log-file with codec "%s", but the log-file is already open with codec "%s". Are you perhaps using multiple logger items with conflicting settings?' \
+				% (codec, self.logfile_codec))
 
 		# Do not open the logfile if it's already open with the correct codec
 		if self._log != None and codec == self.logfile_codec:

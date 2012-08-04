@@ -56,10 +56,6 @@ class logger(item.item):
 
 		if not self.log_started:
 			self.log_started = True
-			# The log file is ascii by default, so if Unicode is enabled we
-			# need to re-initialize the log file.
-			if self.get("unicode") == "yes":
-				self.experiment.init_log(codec="utf-8")
 			# If auto logging is enabled, collect all variables
 			if self.get("auto_log") == "yes":
 				self.logvars = []

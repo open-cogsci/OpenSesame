@@ -138,7 +138,8 @@ class logger(libopensesame.logger.logger, qtitem.qtitem):
 
 		self.checkbox_ignore_missing.setChecked( \
 			self.get("ignore_missing") == "yes")
-		self.checkbox_unicode.setChecked(self.get("unicode") == "yes")
+		self.checkbox_unicode.setChecked(self.experiment.get("logfile_codec") \
+			== "utf-8")
 		self.checkbox_use_quotes.setChecked(self.get("use_quotes") == "yes")
 
 		self.logvar_table.setRowCount(0)
@@ -219,9 +220,9 @@ class logger(libopensesame.logger.logger, qtitem.qtitem):
 			self.set("ignore_missing", "no")
 
 		if self.checkbox_unicode.isChecked():
-			self.set("unicode", "yes")
+			self.experiment.set("logfile_codec", "utf-8")
 		else:
-			self.set("unicode", "no")
+			self.experiment.set("logfile_codec", "ascii")
 
 		if self.checkbox_use_quotes.isChecked():
 			self.set("use_quotes", "yes")
