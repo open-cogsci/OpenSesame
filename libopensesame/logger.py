@@ -80,7 +80,7 @@ class logger(item.item):
 					raise exceptions.runtime_error( \
 						"Logger '%s' tries to log the variable '%s', but this variable is not available. Please deselect '%s' in logger '%s' or enable the 'Use NA for variables that have not been set' option." \
 						% (self.name, var, var, self.name))
-			if self.get("unicode") == "yes":
+			if self.experiment.get("logfile_codec") == "utf-8":
 				val = self.unsanitize(val)
 			l.append(val)
 
