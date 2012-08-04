@@ -23,8 +23,26 @@ import openexp._canvas.legacy
 import openexp.exceptions
 import pygame
 from expyriment import control, stimuli, misc, io
-from expyriment.misc.geometry import coordinates2position as c2p, \
+from expyriment.misc.geometry import coordinates2position, \
 	points_to_vertices as p2v
+	
+	
+def c2p(pos):
+
+	"""
+	Converts coordinates (where 0,0 is the display center) to position (where
+	0,0 is the top-left). This function is used instead of coordinates2position,
+	because we want the virtual screen to be centered in fullscreen mode.
+	
+	Arguments:
+	pos -- an (x,y) tuple
+	
+	Returns:
+	An (x,y) tuple	
+	"""
+	
+	return pos[0] - control.defaults.window_size[0]/2, \
+		control.defaults.window_size[1]/2 - pos[1]
 
 class xpyriment(openexp._canvas.legacy.legacy):
 
