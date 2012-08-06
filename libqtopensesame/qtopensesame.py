@@ -256,8 +256,8 @@ class qtopensesame(QtGui.QMainWindow):
 			help="Load PyLink before PyGame (necessary for using the Eyelink plug-ins in non-dummy mode)")
 		group.add_option("--ipython", action="store_true", dest="ipython", \
 			help="Enable the IPython interpreter")
-		group.add_option("--no-locale", action="store_true", dest="no_locale", \
-			help="Do not load localization (default to English)")			
+		group.add_option("--locale", action="store_true", dest="locale", \
+			help="Specify localization")			
 		group.add_option("--catch-translatables", action="store_true", \
 			dest="catch_translatables", help="Log all translatable text")						
 		group.add_option("--no-global-resources", action="store_true", dest="no_global_resources", \

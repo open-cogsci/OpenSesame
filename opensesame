@@ -57,17 +57,20 @@ if __name__ == "__main__":
 	from libopensesame.misc import resource, debug
 	import os.path
 	
-	# Load the locale for UI translation
-	if '--no-locale' not in sys.argv:
-		locale = unicode(QLocale().system().name())
-		qm = resource(os.path.join('locale', locale) +'.qm')
-		if qm != None:
-			debug.msg('installing %s translator' % qm)
-			translator = QTranslator()
-			translator.load(qm)
-			app.installTranslator(translator)
-		else:
-			debug.msg('no translator found for %s' % locale)	
+	# Load the locale for UI translation. The locale can be specified on the
+	# command line using the --locale parameter
+	locale = unicode(QLocale().system().name())
+	for i in range(len(sys.argv)-1):
+		if sys.argv[i] == '--locale':
+			locale = sys.argv[i+1]	
+	qm = resource(os.path.join('locale', locale) +'.qm')
+	if qm != None:
+		debug.msg('installing %s translator' % qm)
+		translator = QTranslator()
+		translator.load(qm)
+		app.installTranslator(translator)
+	else:
+		debug.msg('no translator found for %s' % locale)	
 
 	# Now that the window is shown, load the remaining modules and resume the
 	# GUI initialization.
