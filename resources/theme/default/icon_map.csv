@@ -37,6 +37,7 @@ action_show_variable_inspector,system-search,
 action_submit_a_bug,mail-send,
 add,list-add,
 apply,dialog-apply,
+backend,applications-system,
 browse,folder-open,
 button_add_cyclevar,list-add,
 button_arrow,os-arrow,
@@ -54,7 +55,7 @@ button_colorpicker,text-css,16
 button_edit_script,utilities-terminal,16
 button_ellipse,os-ellipse,
 button_fixdot,os-fixdot,
-button_forum,help-faq,
+button_forum,gwibber,
 button_gabor,os-gabor,
 button_help_pool,help-contents,16
 button_help_stdout,help-contents,
@@ -103,6 +104,7 @@ image,image-x-generic,
 indent,format-indent-more,
 inline_script,os-inline_script,
 keyboard_response,os-keyboard_response,
+label_backend_icon,applications-system,32
 label_facebook,facebook,24
 label_gabor,os-gabor,32
 label_get_started,os-experiment,32
