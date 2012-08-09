@@ -88,7 +88,7 @@ class settings_edit(QtGui.QLineEdit):
 		"""Apply changes"""
 
 		self.experiment.set(self.var, self.experiment.sanitize(self.text()))
-		self._parent._parent.refresh()
+		self._parent._parent.main_window.refresh()
 
 class settings_widget(QtGui.QWidget):
 
