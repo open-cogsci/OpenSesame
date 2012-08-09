@@ -48,6 +48,14 @@ class xpyriment(openexp._canvas.legacy.legacy):
 
 	"""This is a canvas backend built on top of Expyriment"""	
 	
+	settings = {
+		"expyriment_opengl" : {
+			"name" : "Use OpenGL",
+			"description" : "Use OpenGL mode for better temporal precision",
+			"default" : "yes"
+			},
+		}
+	
 	def __init__(self, experiment, bgcolor=None, fgcolor=None):
 		
 		"""See openexp._canvas.legacy"""
@@ -290,6 +298,7 @@ def init_display(experiment):
 
 	global exp
 	
+	# Configure Expyriment
 	io.defaults.mouse_track_button_events = False	
 	control.defaults.initialize_delay = 0
 	control.defaults.event_logging = 0
@@ -298,6 +307,9 @@ def init_display(experiment):
 	control.defaults.window_size = experiment.get('width'), \
 		experiment.get('height')
 	control.defaults.auto_create_subject_id = True	
+	control.defaults.open_gl = experiment.get('expyriment_opengl') == 'yes'
+	
+	# Initialize
 	exp = control.initialize()	
 	experiment._time_func = _time
 	experiment._sleep_func = exp.clock.wait
