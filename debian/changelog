@@ -1,8 +1,9 @@
-opensesame (0.27-pre1-1) unstable; urgency=low
+opensesame (0.27~pre2-1) unstable; urgency=low
 
-  * Loads of bug-fixes.  
+  * Added Expyriment backend
+  * Improved internationalization
 
- -- Sebastiaan Mathot <s.mathot@cogsci.nl>  Sun, 29 Jul 2012 15:56:46 +0200
+ -- Sebastiaan Mathot <s.mathot@cogsci.nl>  Thu, 09 Aug 2012 17:16:03 +0200
 
 opensesame (0.26-2) unstable; urgency=low
 

@@ -2,12 +2,11 @@ Source: opensesame
 Section: science
 Priority: extra
 Maintainer: Sebastiaan Mathot <s.mathot@cogsci.nl>
-Uploaders: Michael Hanke <mih@debian.org>
 Build-Depends: debhelper (>= 7.0.50~), python-support, pyqt4-dev-tools,
-  python-all, python-qscintilla2
+  python-all, python-qscintilla2, python-pygame (>= 1.8.1~)
 XS-Python-Version: >= 2.6
-Standards-Version: 3.9.1
-Vcs-Git: git@github.com:smathot/OpenSesame.git
+Standards-Version: 3.9.3
+Vcs-Git: git://github.com:smathot/OpenSesame.git
 Homepage: http://www.cogsci.nl/software/opensesame
 
 Package: opensesame
@@ -17,7 +16,8 @@ Depends: ${misc:Depends}, ${python:Depends}, python-qt4,
   python-pygame (>= 1.8.1~), python-numpy (>= 1.3.0~), python-qscintilla2,
   gnome-icon-theme
 Recommends: python-serial (>= 2.3~), psychopy (>= 1.64.0),
-  python-pyaudio (>= 0.2.4), python-imaging (>= 1.1.7), python-opengl (>= 3.0.1)
+  python-pyaudio (>= 0.2.4), python-imaging (>= 1.1.7),
+  python-opengl (>= 3.0.1), expyriment (>= 0.5.2)
 Description: graphical experiment builder for the social sciences
  This graphical environment provides an easy to use, point-and-click interface
  for creating psychological experiments. In addition to a powerful sketchpad for
