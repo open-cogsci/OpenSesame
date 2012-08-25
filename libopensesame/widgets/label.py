@@ -51,6 +51,7 @@ class label(widget):
 		self.center = center
 		self.x_pad = 8
 		self.y_pad = 8
+		self.tab_str = '    ' # Replace tab characters by four spaces
 				
 	def draw_text(self, text, html=True):
 	
@@ -69,6 +70,7 @@ class label(widget):
 		else:
 			text = self.form.experiment.eval_text(text)
 		text = self.form.experiment.unsanitize(text)
+		text = text.replace('\t', self.tab_str)
 		x, y, w, h = self.rect
 		if self.center:
 			x += w/2
