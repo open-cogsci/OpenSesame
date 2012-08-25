@@ -307,7 +307,8 @@ def init_display(experiment):
 	control.defaults.window_size = experiment.get('width'), \
 		experiment.get('height')
 	control.defaults.auto_create_subject_id = True	
-	control.defaults.open_gl = experiment.get('expyriment_opengl') == 'yes'
+	control.defaults.open_gl = experiment.get_check('expyriment_opengl', \
+		xpyriment.settings['expyriment_opengl']['default']) == 'yes'
 	
 	# Initialize
 	exp = control.initialize()	
