@@ -17,6 +17,9 @@ You should have received a copy of the GNU General Public License
 along with openexp.  If not, see <http://www.gnu.org/licenses/>.
 """
 
+from form import form as _form
+from libopensesame.exceptions import form_error
+
 class widget:
 
 	"""The base class for all other widgets"""
@@ -35,6 +38,12 @@ class widget:
 		self.rect = None
 		self.focus = False
 		self.var = None
+		
+		# Check if the form parameter is valid
+		if not isinstance(form, _form):
+			raise form_error( \
+			'The first parameter passed to the constructor of a form widget should be a form, not "%s"' \
+			% form)
 		
 	def draw_frame(self, rect=None, style='normal'):
 	
