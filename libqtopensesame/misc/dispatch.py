@@ -58,6 +58,7 @@ class dispatch(QtCore.QObject):
 	event_regenerate = QtCore.pyqtSignal(str)	
 	event_script_change = QtCore.pyqtSignal(str)
 	event_simple_change = QtCore.pyqtSignal(str)
+	event_structure_change = QtCore.pyqtSignal(str)
 		
 	def __init__(self, main_window):
 	
@@ -74,6 +75,7 @@ class dispatch(QtCore.QObject):
 		self.event_regenerate.connect(self.regenerate)		
 		self.event_script_change.connect(self.script_change)
 		self.event_simple_change.connect(self.simple_change)
+		self.event_structure_change.connect(self.structure_change)
 		
 	def script_change(self, name):
 	
@@ -122,6 +124,19 @@ class dispatch(QtCore.QObject):
 	
 		self.main_window.refresh_variable_inspector()
 		self.main_window.set_unsaved()
+		
+		
+	def structure_change(self, name):
+		
+		"""
+		Handles changes to the structure of the experiment
+		
+		Arguments:
+		name -- the name of the item that caused the change
+		"""
+		
+		self.main_window.experiment.build_item_tree()
+		self.simple_change(name)
 		
 	def name_change(self, from_name, to_name):
 	

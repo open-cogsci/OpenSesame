@@ -457,10 +457,14 @@ class loop(libopensesame.loop.loop, qtitem.qtitem):
 		self.auto_add_widget(self.loop_widget.ui.spin_cycles)		
 		self.auto_add_widget(self.loop_widget.ui.spin_repeat, "repeat")
 		self.auto_add_widget(self.loop_widget.ui.spin_skip, "skip")
-		self.auto_add_widget(self.loop_widget.ui.combobox_item, "item")
 		self.auto_add_widget(self.loop_widget.ui.combobox_order, "order")
 		self.auto_add_widget(self.loop_widget.ui.checkbox_offset, "offset")
 		self.auto_add_widget(self.loop_widget.ui.edit_break_if, "break_if")
+		
+		# The item combobox needs special treatment, because it's changes
+		# must be visible in the item tree as well
+		self.loop_widget.ui.combobox_item.currentIndexChanged.connect( \
+			self.apply_item_change)
 		
 		self.loop_widget.ui.button_add_cyclevar.clicked.connect( \
 			self.add_cyclevar)
@@ -524,8 +528,18 @@ class loop(libopensesame.loop.loop, qtitem.qtitem):
 		self.loop_widget.ui.label_summary.setText("<small>%s</small>" % s)		
 		self.lock = False
 		return self._edit_widget
+	
+	def apply_item_change(self):
+		
+		"""Apply a change to the item to run	"""
+		
+		item = str(self.loop_widget.ui.combobox_item.currentText())
+		debug.msg(item)		
+		self.set('item', item)
+		self.experiment.main_window.dispatch.event_structure_change.emit( \
+			self.name)
 
-	def apply_edit_changes(self, dummy = None):
+	def apply_edit_changes(self, dummy=None):
 
 		"""
 		Set the variables from the controls
@@ -535,8 +549,9 @@ class loop(libopensesame.loop.loop, qtitem.qtitem):
 		"""
 		
 		if self.lock or not qtitem.qtitem.apply_edit_changes(self, False):
+			print 'locked!'
 			return
-			
+		
 		self.lock = True
 
 		self.matrix = {}
@@ -551,13 +566,12 @@ class loop(libopensesame.loop.loop, qtitem.qtitem):
 					val = self.auto_type(self.experiment.usanitize( \
 						self.loop_table.item(row, col).text()))
 				self.matrix[row][var] = val
-
+				
 		row = self.loop_table.currentRow()
 		column = self.loop_table.currentColumn()
-
+		
 		self.set_cycle_count(self.loop_widget.ui.spin_cycles.value())
 		self.refresh_loop_table()
-		self.experiment.main_window.refresh(self.name)
 		self.loop_table.setCurrentCell(row, column)
 		self.lock = False	
 
