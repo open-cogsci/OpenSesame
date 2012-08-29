@@ -23,7 +23,7 @@ class checkbox(button):
 
 	"""A checkbox widget"""
 
-	def __init__(self, form, text='checkbox', frame=False, group=None, checked=False, var=None):
+	def __init__(self, form, text='checkbox', frame=False, group=None, checked=False, click_accepts=False, var=None):
 	
 		"""<DOC>
 		Constructor
@@ -38,12 +38,16 @@ class checkbox(button):
 		group -- if a group is specified, checking one checkbox from the group
 				 will uncheck all other checkboxes in that group (default=None)
 		checked -- the checked state of the checkbox (default=False)
+		click_accepts -- indicates whether a click press should accept and
+					     close the form (default=False)		
 		var -- the name of the experimental variable that should be used to log
 			   the widget status (default=None)
 		</DOC>"""	
 		
 		if type(checked) != bool:
-			checked = checked == 'yes'			
+			checked = checked == 'yes'
+		if type(click_accepts) != bool:
+			click_accepts = click_accepts == 'yes'											
 			
 		button.__init__(self, form, text, frame=frame, center=False)
 		self.type = 'checkbox'
@@ -52,6 +56,7 @@ class checkbox(button):
 		self.box_pad = self.x_pad
 		self.x_pad += self.x_pad + self.box_size
 		self.var = var
+		self.click_accepts = click_accepts
 		self.set_checked(checked)
 				
 	def on_mouse_click(self, pos):
@@ -72,6 +77,8 @@ class checkbox(button):
 			self.set_checked(True)
 		else:
 			self.set_checked(not self.checked)
+		if self.click_accepts:
+			return self.text
 				
 	def render(self):
 	
