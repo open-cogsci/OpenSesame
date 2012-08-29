@@ -39,6 +39,8 @@ class text_input(label):
 		center -- indicates whether the text should be centered (default=False)
 		stub -- a text string that should be shown whenever the user has not
 				entered any text (default='Type here ...')
+		return_accepts -- indicates whether a return press should accept and
+						  close the form (default=False)
 		var -- the name of the experimental variable that should be used to log
 			   the widget status (default=None)					
 		</DOC>"""
