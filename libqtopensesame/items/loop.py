@@ -100,7 +100,7 @@ class loop(libopensesame.loop.loop, qtitem.qtitem):
 			# Split by space, because a name may be followed by a default value
 			_l = var_name.split()
 			if len(_l) > 1:
-				default = self.experiment.usanitize(_l[1])
+				default = _l[1]
 				var_name = _l[0]
 			else:
 				default = ""
@@ -183,7 +183,7 @@ class loop(libopensesame.loop.loop, qtitem.qtitem):
 			_new_var, ok = QtGui.QInputDialog.getText(self.loop_table, \
 				_('New variable'), _('Enter a new variable name'), text=old_var)
 			if ok and _new_var != old_var:
-				old_var = str(old_var)
+				old_var = unicode(old_var)
 				new_var = self.experiment.sanitize(_new_var, strict=True, \
 					allow_vars=False)
 				if _new_var != new_var or new_var == "":
@@ -212,7 +212,7 @@ class loop(libopensesame.loop.loop, qtitem.qtitem):
 			_("Remove variable"), _("Which variable do you want to remove?"), \
 			var_list)
 		if ok:
-			var = str(var)
+			var = unicode(var)
 			for i in self.matrix:
 				if var in self.matrix[i]:
 					del self.matrix[i][var]
@@ -336,7 +336,7 @@ class loop(libopensesame.loop.loop, qtitem.qtitem):
 		column_order = []
 		if self.cyclevar_list() != None:
 			if self.has("column_order"):
-				for var in str(self.get("column_order")).split(";"):
+				for var in self.get("column_order").split(";"):
 					if var in self.cyclevar_list():
 						column_order.append(var)
 			for var in self.cyclevar_list():
@@ -357,8 +357,7 @@ class loop(libopensesame.loop.loop, qtitem.qtitem):
 			for var in self.matrix[cycle]:
 				col = column_order.index(var)
 				self.loop_table.setItem(cycle, col, \
-					QtGui.QTableWidgetItem(self.unsanitize( \
-						self.matrix[cycle][var])))
+					QtGui.QTableWidgetItem(self.matrix[cycle][var]))
 
 		# Store the number of cycles and the column order
 		self.set("cycles", max(self.get("cycles"), self.cycle_count()))
@@ -423,12 +422,12 @@ class loop(libopensesame.loop.loop, qtitem.qtitem):
 					item = a.ui.table_wizard.item(row, col)
 					if item == None:
 						break
-					s = item.text()
+					s = unicode(item.text())
 					if row == 0:
 						var = self.experiment.sanitize(s, True)
 						var_dict[var] = []
 					elif var != None:
-						var_dict[var].append(self.experiment.usanitize(s))
+						var_dict[var].append(s)
 			# Then fill the loop table
 			self.i = 0
 			self.matrix = {}
@@ -533,7 +532,7 @@ class loop(libopensesame.loop.loop, qtitem.qtitem):
 		
 		"""Apply a change to the item to run	"""
 		
-		item = str(self.loop_widget.ui.combobox_item.currentText())
+		item = unicode(self.loop_widget.ui.combobox_item.currentText())
 		debug.msg(item)		
 		self.set('item', item)
 		self.experiment.main_window.dispatch.event_structure_change.emit( \
@@ -549,22 +548,20 @@ class loop(libopensesame.loop.loop, qtitem.qtitem):
 		"""
 		
 		if self.lock or not qtitem.qtitem.apply_edit_changes(self, False):
-			print 'locked!'
-			return
-		
+			return		
 		self.lock = True
 
+		# Walk through the loop table and apply all changes
 		self.matrix = {}
 		for row in range(self.loop_table.rowCount()):
 			self.matrix[row] = {}
 			for col in range(self.loop_table.columnCount()):
-				var = str(self.loop_table.horizontalHeaderItem(col).text())
+				var = unicode(self.loop_table.horizontalHeaderItem(col).text())
 				cell = self.loop_table.item(row, col)
 				if cell == None:
-					val = ""
+					val = u''
 				else:
-					val = self.auto_type(self.experiment.usanitize( \
-						self.loop_table.item(row, col).text()))
+					val = unicode(self.loop_table.item(row, col).text())
 				self.matrix[row][var] = val
 				
 		row = self.loop_table.currentRow()

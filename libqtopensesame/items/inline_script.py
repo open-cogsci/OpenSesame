@@ -64,8 +64,8 @@ class inline_script(libopensesame.inline_script.inline_script, qtitem.qtitem):
 
 		qtitem.qtitem.apply_edit_changes(self, False)
 
-		sp = str(self.textedit_prepare.edit.toPlainText())
-		sr = str(self.textedit_run.edit.toPlainText())
+		sp = self.textedit_prepare.edit.toPlainText()
+		sr = self.textedit_run.edit.toPlainText()
 
 		self.set("_prepare", sp)
 		self.set("_run", sr)
@@ -146,10 +146,8 @@ class inline_script(libopensesame.inline_script.inline_script, qtitem.qtitem):
 
 		qtitem.qtitem.edit_widget(self, False)
 		if not self.lock:
-			self.textedit_prepare.edit.setPlainText(self.unsanitize(str( \
-				self._prepare)))
-			self.textedit_run.edit.setPlainText(self.unsanitize(str( \
-				self._run)))
+			self.textedit_prepare.edit.setPlainText(	self._prepare)
+			self.textedit_run.edit.setPlainText(self._run)
 		return self._edit_widget
 
 	def get_ready(self):

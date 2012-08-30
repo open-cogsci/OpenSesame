@@ -255,18 +255,17 @@ class experiment(item.item):
 		Read the entire experiment from a string
 
 		Arguments:
-		string -- the definition string
+		string -- a definition string
 		"""
 
-		import shlex
 		debug.msg("building experiment")
-		s = iter(str(string).split("\n"));
+		s = iter(string.split("\n"));
 		line = next(s, None)
 		while line != None:
 
 			get_next = True
 			try:
-				l = shlex.split(line)
+				l = self.split(line)
 			except ValueError as e:									
 				raise exceptions.script_error( \
 					"Failed to parse script. Maybe it contains illegal characters or unclosed quotes?")
@@ -441,7 +440,7 @@ class experiment(item.item):
 				return False
 			debug.msg("saving as .opensesame file")
 			f = open(path, "w")
-			f.write(self.to_string())
+			f.write(self.usanitize(self.to_string()))
 			f.close()
 			self.experiment_path = os.path.dirname(path)
 			return path
@@ -481,23 +480,22 @@ class experiment(item.item):
 	def open(self, path):
 
 		"""
-		If the path exists, open the file, extract the pool
-		and return the contents of the script.opensesame.
-		Otherwise just return the input string, because it
-		probably was a definition to begin with
+		If the path exists, open the file, extract the pool and return the
+		contents of the script.opensesame. Otherwise just return the input
+		string, because it probably was a definition to begin with
 
 		Arguments:
 		path -- the file to be opened
 
 		Returns:
-		The defition string for the experiment
+		A unicode defition string
 		"""
 
 		# If the path is not a path at all, but a string containing
 		# the script, return it
-		if (type(path) != str and type(path) != unicode) or not \
-			os.path.exists(path):
-			debug.msg("opening from string")
+		
+		if type(path) != unicode or not os.path.exists(path):
+			debug.msg("opening from unicode string")
 			self.experiment_path = None
 			return path
 
@@ -507,7 +505,7 @@ class experiment(item.item):
 		if path[-len(ext):] != ext:
 			debug.msg("opening .opensesame file")
 			self.experiment_path = os.path.dirname(path)
-			return open(path, "rU").read()
+			return self.unsanitize(open(path, "rU").read())
 
 		debug.msg("opening .opensesame.tar.gz file")
 
@@ -526,7 +524,7 @@ class experiment(item.item):
 
 		script_path = os.path.join(self.pool_folder, "script.opensesame")
 		tar.extract("script.opensesame", self.pool_folder)
-		script = open(script_path, "rU").read()
+		script = self.unsanitize(open(script_path, "rU").read())
 		os.remove(script_path)
 		self.experiment_path = os.path.dirname(path)
 		return script

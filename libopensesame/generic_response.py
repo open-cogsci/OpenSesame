@@ -237,7 +237,7 @@ class generic_response:
 			if dur == "keypress":
 
 				# Prepare valid keypress responses
-				l = self.unsanitize(self.get("allowed_responses")).split(";")
+				l = self.get("allowed_responses").split(";")
 				self._allowed_responses = l
 
 			elif dur == "mouseclick":

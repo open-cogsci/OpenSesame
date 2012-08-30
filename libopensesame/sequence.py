@@ -19,7 +19,6 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 
 from libopensesame import item, exceptions
 import openexp.keyboard
-import shlex
 
 class sequence(item.item):
 
@@ -90,7 +89,7 @@ class sequence(item.item):
 	
 		for i in string.split("\n"):
 			self.parse_variable(i)
-			i = shlex.split(i.strip())
+			i = self.split(i.strip())
 			if len(i) > 0:
 				if i[0] == "run" and len(i) > 1:				
 					self.items.append(self.parse_run(i))			

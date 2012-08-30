@@ -126,8 +126,9 @@ class sampler(libopensesame.sampler.sampler, qtitem.qtitem):
 		
 		if not qtitem.qtitem.apply_edit_changes(self, False) or self.lock:
 			return		
-		self.set("sample", self.usanitize(self.sampler_widget.ui.edit_sample.text()))		
-		dur = self.sanitize(self.sampler_widget.ui.edit_duration.text(), strict=True)
+		self.set("sample", unicode(self.sampler_widget.ui.edit_sample.text()))		
+		dur = self.sanitize(self.sampler_widget.ui.edit_duration.text(), \
+			strict=True)
 		if dur == "":
 			dur = "sound"
 		self.set("duration", dur)					

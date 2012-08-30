@@ -21,7 +21,6 @@ import openexp.mouse
 import openexp.keyboard
 from libopensesame import exceptions, debug, regexp
 import string
-import shlex
 import os
 import sys
 import pygame
@@ -32,6 +31,8 @@ class item:
 	item is an abstract class that serves as the basis for all OpenSesame items,
 	such as sketchpad, keyboard_response, experiment, etc.
 	"""
+	
+	encoding = 'UTF-8'
 
 	def __init__(self, name, experiment, string=None):
 
@@ -111,7 +112,7 @@ class item:
 			return True
 
 		try:
-			l = shlex.split(line.strip())
+			l = self.split(line.strip())
 		except Exception as e:
 			raise exceptions.script_error( \
 				"Error parsing '%s' in item '%s': %s" % (line, self.name, e))
@@ -135,8 +136,7 @@ class item:
 		line -- a single definition line
 		
 		Keyword arguments:
-		unsanitize -- indicates whether the values should be unsanitized
-					  (default=False)
+		unsanitize -- DEPRECATED KEYWORD
 		_eval -- indicates whether the values should be evaluated
 				 (default=False)
 
@@ -145,7 +145,7 @@ class item:
 		"""
 		
 		# Parse keywords
-		l = shlex.split(line.strip())
+		l = self.split(line.strip())
 		keywords = {}	
 		for i in l:
 			j = i.find("=")
@@ -163,8 +163,6 @@ class item:
 				else:
 					var = i[:j]
 					val = self.auto_type(i[j+1:])
-					if unsanitize and type(val) == str:
-						val = self.unsanitize(val)
 					if _eval:
 						val = self.eval_text(val)
 					keywords[var] = val
@@ -213,26 +211,23 @@ class item:
 		Returns:
 		A definition string
 		"""
+				
+		val = self.unistr(self.variables[var])
 		
 		# Multiline variables are stored as a block
-		if type(self.variables[var]) in (str, unicode) and ("\n" in self.variables[var] \
-			or "\"" in self.variables[var]):
-			s = "__%s__\n" % var
-			for l in self.variables[var].split("\n"):
-				s += "\t%s\n" % l
-
-			while s[-1] in ("\t", "\n"):
+		if '\n' in val or '"' in val:
+			s = '__%s__\n' % var
+			for l in val.split('\n'):
+				s += '\t%s\n' % l
+			while s[-1] in ('\t', '\n'):
 				s = s[:-1]
-			s += "\n"
-
-			#if s[-1] != "\n":
-			#	s += "\n"
-			s += "\t__end__\n"
+			s += '\n'
+			s += '\t__end__\n'
 			return s
 
 		# Regular variables
 		else:
-			return "set %s \"%s\"\n" % (var, self.variables[var])
+			return 'set %s "%s"\n' % (var, val)
 
 	def from_string(self, string):
 
@@ -243,7 +238,7 @@ class item:
 		string -- the definition string
 		"""
 
-		debug.msg()
+		debug.msg()		
 		textblock_var = None
 		self.variables = {}
 		for line in string.split("\n"):				
@@ -320,12 +315,15 @@ class item:
 		val -- the value
 		</DOC>"""
 
+		# Make sure the variable name and the value are of the correct types
+		var = self.unistr(var)
+		val = self.auto_type(val)		
+		
 		if regexp.sanitize_var_name.sub('_', var) != var:
 			raise exceptions.runtime_error( \
 				'"%s" is not a valid variable name. Variable names must consist of alphanumeric characters and underscores, and may not start with a digit.' \
 				% var)
 						
-		val = self.auto_type(val)
 		if type(val) == float:
 			exec("self.%s = %f" % (var, val))
 		elif type(val) == int:
@@ -349,6 +347,7 @@ class item:
 		var -- the name of an OpenSesame variable
 		</DOC>"""
 
+		var = self.unistr(var)
 		if var in self.variables:
 			del self.variables[var]
 		try:
@@ -392,6 +391,7 @@ class item:
 		The value		
 		</DOC>"""
 
+		var = self.unistr(var)
 		# Avoid recursion
 		if var == self._get_lock:
 			raise exceptions.runtime_error( \
@@ -468,8 +468,8 @@ class item:
 		True if the variable exists, False if not
 		</DOC>"""
 
-		return type(var) == str and (hasattr(self, var) or \
-			hasattr(self.experiment, var))
+		var = self.unistr(var)
+		return hasattr(self, var) or hasattr(self.experiment, var)
 
 	def get_refs(self, text):
 
@@ -487,11 +487,8 @@ class item:
 		A list of variable names or an empty list if the string contains no
 		references.
 		</DOC>"""
-
-		# If the text is not a string, there cannot be any variables,
-		# so return right away
-		if type(text) != str:
-			return []
+		
+		text = self.unistr(text)
 
 		l = []
 		s = ""
@@ -532,23 +529,26 @@ class item:
 		The same value converted to the 'best fitting' type
 		</DOC>"""
 		
+		# Booleans are converted to True/ False
 		if type(val) == bool:
 			if val:
 				return u'yes'
 			else:
-				return u'no'
+				return u'no'			
+		# Try to convert the value to a numeric type
 		try:
+			# Check if the value can be converted to an int without loosing
+			# precision. If so, convert to int
 			if int(float(val)) == float(val):
 				return int(float(val))
+			# Else convert to float
 			else:
 				return float(val)
 		except:
-			try:
-				return unicode(val)
-			except:
-				return str(val)
+			# Else, fall back to unicde
+			return self.unistr(val)
 
-	def set_item_onset(self, time = None):
+	def set_item_onset(self, time=None):
 
 		"""
 		Set a timestamp for the item's executions
@@ -593,12 +593,14 @@ class item:
 					 surrounded by single quotes (default=False)
 
 		Returns:
-		The evaluated string
+		The evaluated tex
 		</DOC>"""
+		
+		# Only unicode needs to be evaluated
+		text = self.auto_type(text)
+		if type(text) != unicode:
+			return text
 
-		# If the text is not a string, there cannot be any variables, so return
-		if type(text) not in (str, unicode):
-			return self.auto_type(text)
 		# Prepare a template for rounding floats
 		if round_float:
 			float_template = "%%.%sf" % self.get("round_decimals")
@@ -611,12 +613,12 @@ class item:
 			if not soft_ignore or self.has(var):
 				val = self.get(var)
 				# Quote strings if necessary
-				if type(val) in (unicode, str) and quote_str:
+				if type(val) == unicode and quote_str:
 					val = "\'" + val + "\'"
 				# Round floats
 				if round_float and type(val) == float:
 					val = float_template % val					
-				text = text.replace(m.group(0), str(val), 1)
+				text = text.replace(m.group(0), val, 1)
 		return self.auto_type(text)
 
 	def compile_cond(self, cond, bytecode = True):
@@ -664,7 +666,7 @@ class item:
 		# Rebuild the conditional string
 		l = []
 		i = 0
-		for word in shlex.split(cond):
+		for word in self.split(cond):
 			if len(word) > 2 and word[0] == "[" and word[-1] == "]":
 				l.append("str(self.get(\"%s\"))" % word[1:-1])
 			elif word == "=":
@@ -712,34 +714,60 @@ class item:
 		return [ ("time_%s" % self.name, "[Timestamp of last item call]"), \
 			("count_%s" % self.name, "[Number of item calls]") ]
 
-	def usanitize(self, s, strict=False):
+	def sanitize(self, s, strict=False, allow_vars=True):
 
 		"""<DOC>
+		Remove invalid characters (notably quotes) from the string
+		
+		Example:
+		>>> # Prints 'Universit Aix-Marseille'
+		>>> print self.sanitize('\"Université Aix-Marseille\"')
+		>>> # Prints 'UniversitAixMarseille'
+		>>> print self.sanitize('\"Université Aix-Marseille\""', strict=True)		
+
+		Arguments:
+		s -- the string (unicode or str) to be sanitized
+
+		Keyword arguments:
+		strict -- If True, all except underscores and alphanumeric characters are
+				  stripped (default=False)
+		allow_vars -- If True, square brackets are not sanitized, so you can use
+					  variables (default=True)
+
+		Returns:
+		A sanitized unicode string
+		</DOC>"""
+				
+		s = self.unistr(s)
+		if strict:
+			if allow_vars:
+				return regexp.sanitize_strict_vars.sub('', s)
+			return regexp.sanitize_strict_novars.sub('', s)
+		return regexp.sanitize_loose.sub('', s)
+	
+	def usanitize(self, s, strict=False):
+
+		"""
 		Convert all special characters to U+XXXX notation, so that the resulting
 		string can be treated as plain ASCII text.
 		
-		Example:
-		>>> # Prints 'UniversitU+00C3U+00A9'
-		>>> print self.usanitize('Université')
-		>>> # Prints 'Universit'
-		>>> print self.usanitize('Université', strict=True)
-
 		Arguments:
-		s -- the string to be Unicode sanitized
+		s -- A unicode string to be santized
 
 		Keyword arguments:
 		strict -- if True, special characters are ignored rather than recoded
 				  (default=False)
 
 		Returns:
-		The sanitized string
-		</DOC>"""
+		A regular Python string with all special characters replaced by U+XXXX
+		notation
+		"""
 		
-		if type(s) not in (unicode, str):
-			try:
-				s = unicode(s)
-			except:
-				return "Error: Unable to create readable text from string"		
+		if type(s) != unicode:
+			raise exceptions.runtime_error( \
+			'usanitize() expects first argument to be unicode, not "%s"' \
+			% type(s))
+		
 		_s = ''
 		for ch in s:
 			# Encode non ASCII and slash characters
@@ -749,62 +777,75 @@ class item:
 			else:
 				_s += ch
 		return _s.replace(os.linesep, "\n")
-
-	def sanitize(self, s, strict=False, allow_vars=True):
-
-		"""<DOC>
-		Remove invalid characters (notably quotes) from the string. This is
-		stricter than usanitize(), because it removes also quotes and optionally
-		all alphanumeric characters.
-		
-		Example:
-		>>> # Prints 'UniversitU+00E9 Aix-Marseille'
-		>>> print self.sanitize('\"Université Aix-Marseille\"')
-		>>> # Prints 'UniversitAixMarseille'
-		>>> print self.sanitize('\"Université Aix-Marseille\""', strict=True)		
-
-		Arguments:
-		s -- the string to be sanitized
-
-		Keyword arguments:
-		strict -- If True, all except underscores and alphanumeric characters are
-				  stripped (default=False)
-		allow_vars -- If True, square brackets are not sanitized, so you can use
-					  variables (default=True)
-
-		Returns:
-		The sanitized string
-		</DOC>"""
-				
-		if strict:
-			if allow_vars:
-				return regexp.sanitize_strict_vars.sub('', s)
-			return regexp.sanitize_strict_novars.sub('', s)
-		return regexp.sanitize_loose.sub('', self.usanitize(s, strict))
+	
 		
 	def unsanitize(self, s):
 
-		"""<DOC>
+		"""
 		Converts the U+XXXX notation back to actual Unicode encoding
 
 		Arguments:
-		s -- the input string
+		s -- a regular string to be unsanitized
 		
-		Example:
-		>>> # Prints 'Université'
-		>>> self.unsanitize('UniversitU+00C3U+00A9')
-
 		Returns:
-		The restored Unicode string
-		</DOC>"""
+		A unicode string with special characters
+		"""
+		
+		if type(s) != str:
+			raise exceptions.runtime_error( \
+			'unsanitize() expects first argument to be str, not "%s"' \
+			% type(s))
 
-		s = unicode(s)
+		s = self.unistr(s)
 		while True:
 			m = regexp.unsanitize.search(s)
 			if m == None:
 				break
 			s = s.replace(m.group(0), unichr(int(m.group(1), 16)), 1)
 		return s
+	
+	def unistr(self, val):
+		
+		"""
+		Converts a variable type into a unicode string. This function is mostly
+		necessary to make sure that normal strings with special characters are
+		correctly encoded into unicode, and don't result in TypeErrors.
+		
+		Arguments:
+		val -- a value of any types
+		
+		Returns:
+		A unicode string
+		"""
+		
+		# Unicode strings cannot (and need not) be encoded again
+		if type(val) == unicode:
+			return val
+		# Regular strings need to be encoded using the correct encoding
+		if type(val) == str:
+			return unicode(val, encoding=self.encoding)
+		# For other types, the unicode representation doesn't require a specific
+		# encoding
+		return unicode(val)
+	
+	def split(self, u):
+		
+		"""
+		Splits a unicode string in the same way as shlex.split(). Unfortunately,
+		shlex doesn't handle unicode properly, so this wrapper function is
+		required.
+		
+		Arguments:
+		u -- a unicode string
+		
+		Returns:
+		A list of unicode strings, split as described here:
+		http://docs.python.org/library/shlex.html#shlex.split
+		"""
+		
+		import shlex
+		return [chunk.decode(self.encoding) for chunk in \
+			shlex.split(u.encode(self.encoding))]		
 
 	def color_check(self, col):
 
@@ -832,8 +873,8 @@ class item:
 			pygame.Color(col)
 		except Exception as e:
 			raise exceptions.script_error( \
-				"'%s' is not a valid color. See http://www.w3schools.com/html/html_colornames.asp for an overview of valid color names" \
-				% str(col))
+				u"'%s' is not a valid color. See http://www.w3schools.com/html/html_colornames.asp for an overview of valid color names" \
+				% self.unistr(col))
 
 	def sleep(self, ms):
 
@@ -849,7 +890,7 @@ class item:
 
 		# This function is set by item.prepare()
 		raise exceptions.openexp_error( \
-			"item.sleep(): This function should be set by the canvas backend.")
+			u'item.sleep(): This function should be set by the canvas backend.')
 
 	def time(self):
 

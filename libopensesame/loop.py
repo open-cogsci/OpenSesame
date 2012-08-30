@@ -21,7 +21,6 @@ __author__ = "Sebastiaan Mathot"
 __license__ = "GPLv3"
 
 from libopensesame import item, exceptions, debug
-import shlex
 import openexp.keyboard
 from random import *
 from math import *
@@ -69,7 +68,7 @@ class loop(item.item):
 			self.parse_variable(i)
 
 			# Extract the item to run
-			i = shlex.split(i.strip())
+			i = self.split(i.strip())
 			if len(i) > 0:
 				if i[0] == "run" and len(i) > 1:
 					self.item = i[1]

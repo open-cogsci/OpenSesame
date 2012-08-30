@@ -255,9 +255,9 @@ class canvas(QtGui.QGraphicsScene):
 					
 					# Execute the chosen action
 					if action != None:						
-						if str(action.text()) == _("Delete"):										
+						if unicode(action.text()) == _("Delete"):										
 							self.delete_item(_item)						
-						elif str(action.text()) == _("Edit"):						
+						elif unicode(action.text()) == _("Edit"):						
 							self.edit_item(_item)
 					
 		self.sketchpad_widget.sketchpad.apply_edit_changes()			
@@ -305,10 +305,10 @@ class canvas(QtGui.QGraphicsScene):
 		tmp = self.sketchpad_widget.sketchpad.items[:] # Keep a backup
 		self.delete_item(item)			
 		try:
-			self.sketchpad_widget.sketchpad.from_string(str(s))
+			self.sketchpad_widget.sketchpad.from_string(s)
 		except exceptions.script_error as e:
 			self.sketchpad_widget.sketchpad.items = tmp
-			self.sketchpad_widget.sketchpad.experiment.notify(str(e))
+			self.sketchpad_widget.sketchpad.experiment.notify(e)
 						
 	def draw_grid(self):
 	
@@ -649,11 +649,11 @@ class sketchpad_widget(QtGui.QWidget):
 			
 		elif self.tool == "image":
 			path = pool_widget.select_from_pool(self.sketchpad.experiment.main_window)
-			if path == None or str(path) == "":
+			if path == None or unicode(path) == "":
 				return				 								
 			item["x"] = to_pos[0]
 			item["y"] = to_pos[1]
-			item["file"] = str(path)
+			item["file"] = unicode(path)
 			item["scale"] = self.scale
 			item["center"] = self.center
 			
@@ -703,8 +703,8 @@ class sketchpad_widget(QtGui.QWidget):
 			item["stdev"] = d.ui.spin_stdev.value()
 			item["freq"] = d.ui.spin_freq.value()			
 			item["phase"] = d.ui.spin_phase.value()			
-			item["color1"] = str(d.ui.edit_color1.text())
-			item["color2"] = str(d.ui.edit_color2.text())
+			item["color1"] = unicode(d.ui.edit_color1.text())
+			item["color2"] = unicode(d.ui.edit_color2.text())
 			item["bgmode"] = bgmode[d.ui.combobox_bgmode.currentIndex()]			
 			return item			
 		return None
@@ -733,8 +733,8 @@ class sketchpad_widget(QtGui.QWidget):
 			item["size"] = d.ui.spin_size.value()
 			item["env"] = env[d.ui.combobox_env.currentIndex()]
 			item["stdev"] = d.ui.spin_stdev.value()
-			item["color1"] = str(d.ui.edit_color1.text())
-			item["color2"] = str(d.ui.edit_color2.text())
+			item["color1"] = unicode(d.ui.edit_color1.text())
+			item["color2"] = unicode(d.ui.edit_color2.text())
 			item["bgmode"] = bgmode[d.ui.combobox_bgmode.currentIndex()]			
 			return item			
 		return None		
@@ -800,8 +800,7 @@ class sketchpad_widget(QtGui.QWidget):
 		else:
 			weight = QtGui.QFont.Normal
 		font = QtGui.QFont(font_family, font_size, weight, font_italic)
-		text_item = self.scene.addText( \
-			self.sketchpad.experiment.unsanitize(text), font)
+		text_item = self.scene.addText(text, font)
 		text_item.setDefaultTextColor(QtGui.QColor(color))		
 		if center:
 			r = text_item.boundingRect()
@@ -1007,7 +1006,7 @@ class sketchpad_widget(QtGui.QWidget):
 			self.sketchpad.experiment.color_check(self.color)			
 		except Exception as e:
 			if refs == []:
-				self.sketchpad.experiment.notify(str(e))
+				self.sketchpad.experiment.notify(e)
 				self.ui.edit_color.setText("white")
 				self.color = "white"
 				

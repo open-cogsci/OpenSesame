@@ -69,7 +69,6 @@ class label(widget):
 			text = self.form.item.eval_text(text)
 		else:
 			text = self.form.experiment.eval_text(text)
-		text = self.form.experiment.unsanitize(text)
 		text = text.replace('\t', self.tab_str)
 		x, y, w, h = self.rect
 		if self.center:

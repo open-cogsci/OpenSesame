@@ -23,7 +23,6 @@ from libqtopensesame.misc import _
 import openexp.canvas
 import openexp.keyboard
 import os.path
-import shlex
 from PyQt4 import QtGui, QtCore
 
 class form_base(item.item, generic_response.generic_response):
@@ -66,7 +65,7 @@ class form_base(item.item, generic_response.generic_response):
 		line -- a single definition line
 		"""
 		
-		l = shlex.split(line.strip())
+		l = self.split(line.strip())
 		if len(l) < 6 or l[0] != 'widget':
 			return
 			
@@ -82,7 +81,7 @@ class form_base(item.item, generic_response.generic_response):
 			
 		# Parse the widget into a dictionary and store it in the list of
 		# widgets
-		w = self.parse_keywords(line, unsanitize=True)				
+		w = self.parse_keywords(line)				
 		w['type'] = l[5]
 		w['col'] = col
 		w['row'] = row
@@ -115,7 +114,7 @@ class form_base(item.item, generic_response.generic_response):
 			s += '\twidget %s %s %s %s %s' % (col, row, colspan, rowspan, \
 				_type)
 			for keyword, value in w.items():
-				s += ' %s="%s"' % (keyword, self.usanitize(value))
+				s += ' %s="%s"' % (keyword, value)
 			s += '\n'
 		s += '\n'
 		return s

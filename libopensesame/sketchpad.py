@@ -20,7 +20,6 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 from libopensesame import item, exceptions, generic_response, debug
 import openexp.canvas
 import openexp.exceptions
-import shlex
 
 class sketchpad(item.item, generic_response.generic_response):
 
@@ -202,9 +201,8 @@ class sketchpad(item.item, generic_response.generic_response):
 					self.canvas.set_font(_item["font_family"], \
 						_item["font_size"], _item['font_italic'] == 'yes', \
 						_item['font_bold'] == 'yes')
-					self.canvas.text(self.experiment.unsanitize( \
-						str(_item["text"])), _item["center"] == 1, _item["x"], \
-						_item["y"])
+					self.canvas.text(_item["text"], _item["center"] == 1, \
+						_item["x"], _item["y"])
 
 				elif _item["type"] == "image":
 					try:
@@ -529,9 +527,9 @@ class sketchpad(item.item, generic_response.generic_response):
 		string -- the string containing the sketchpad definition
 		"""
 
-		for line in string.split("\n"):
+		for line in string.split('\n'):
 			if not self.parse_variable(line):
-				l = shlex.split(line)
+				l = self.split(line)
 				if len(l) > 0:
 					if l[0] == "draw":
 						if len(l) == 1:

@@ -138,9 +138,6 @@ class scintilla(QsciScintilla):
 
 		"""Initialize the editor layout"""
 
-		if self._parent.experiment.debug:
-			print "scintilla.set_layout(): resetting the scintilla layout"
-
 		if config.get_config("scintilla_custom_font"):
 			font_family = config.get_config("scintilla_font_family")
 		elif os.name == "posix":
@@ -213,16 +210,13 @@ class scintilla(QsciScintilla):
 	def toPlainText(self):
 
 		"""
-		(For compatibility with QPlainTextEdit)
+		Convenience function for compatibility with QPlainTextEdit
 
 		Returns:
-		The contents of the editor
+		A unicode string with the editor contents
 		"""
-
-		try:
-			return self._parent.experiment.usanitize(self.text())
-		except:
-			return ""
+		
+		return unicode(self.text())
 
 	def setPlainText(self, s, set_modified=False):
 
@@ -239,8 +233,8 @@ class scintilla(QsciScintilla):
 
 		if not set_modified:
 			_m = self.isModified()
-			self.textChanged.disconnect()
-		self.setText(s)
+			self.textChanged.disconnect()		
+		self.setText(self._parent.experiment.unistr(s))
 		if not set_modified:
 			self.textChanged.connect(self._parent.setModified)
 			self._parent.setModified(_m)
@@ -420,7 +414,7 @@ class inline_editor(QtGui.QFrame):
 		The contents of the editor
 		"""
 
-		return unicode(self.edit.toPlainText())
+		return self.edit.toPlainText()
 
 	def setText(self, text):
 

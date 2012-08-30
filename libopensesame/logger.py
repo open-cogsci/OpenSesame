@@ -18,7 +18,6 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame import item, exceptions, debug
-import shlex
 
 class logger(item.item):
 
@@ -80,8 +79,8 @@ class logger(item.item):
 					raise exceptions.runtime_error( \
 						"Logger '%s' tries to log the variable '%s', but this variable is not available. Please deselect '%s' in logger '%s' or enable the 'Use NA for variables that have not been set' option." \
 						% (self.name, var, var, self.name))
-			if self.experiment.get("logfile_codec") == "utf-8":
-				val = self.unsanitize(val)
+			if self.experiment.get("logfile_codec") == "ascii":
+				val = self.usanitize(val)
 			l.append(val)
 
 		if self.get("use_quotes") == "yes":
@@ -96,7 +95,7 @@ class logger(item.item):
 		self.logvars = []
 		for line in string.split("\n"):
 			self.parse_variable(line)
-			l = shlex.split(line)
+			l = self.split(line)
 			if len(l) > 1 and l[0] == "log":
 				self.logvars.append(l[1])
 

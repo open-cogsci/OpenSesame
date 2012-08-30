@@ -77,8 +77,7 @@ class text_display(item.item, generic_response.generic_response):
 			self.get("background"), self.get("foreground"))		
 		self.c.set_font(self.get("font_family"), self.get("font_size"))
 		
-		content = self.experiment.unsanitize(self.eval_text( \
-			self.get("content"))).split("\n")
+		content = self.eval_text(self.get("content")).split("\n")
 
 		# Do line wrapping
 		_content = []

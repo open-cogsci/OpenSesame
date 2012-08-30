@@ -22,7 +22,6 @@ from libqtopensesame import qtplugin
 from openexp.canvas import canvas
 import openexp.keyboard
 import os.path
-import shlex
 from PyQt4 import QtGui, QtCore
 
 form_base = plugins.import_plugin('form_base')

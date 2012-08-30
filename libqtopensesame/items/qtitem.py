@@ -23,7 +23,7 @@ __license__ = "GPLv3"
 from PyQt4 import QtCore, QtGui
 import os.path
 import sip
-from libopensesame import debug, exceptions
+from libopensesame import debug, exceptions, item
 from libqtopensesame.widgets import inline_editor, header_widget
 from libqtopensesame.misc import _
 
@@ -286,7 +286,7 @@ class qtitem(QtCore.QObject):
 		"""
 
 		debug.msg(self.name)
-		script = self.experiment.usanitize(self.edit_script.edit.toPlainText())
+		script = self.edit_script.edit.toPlainText()
 		
 		# Create a new item and make it a clone of the current item
 		item = self.experiment.main_window.add_item(self.item_type, False, \
@@ -564,8 +564,10 @@ class qtitem(QtCore.QObject):
 		"""
 
 		for var in self.variables:
-			if var not in exclude and str(self.variables[var]).find("[") >= 0:
-				return True
+			if var not in exclude:
+				val = self.variables[var]
+				if '[' in val:
+					return True
 		return False
 
 	def get_ready(self):
@@ -594,8 +596,7 @@ class qtitem(QtCore.QObject):
 			edit.editingFinished.disconnect()		
 			if self.has(var):			
 				try:
-					edit.setText(self.experiment.unsanitize(self.get(var, \
-						_eval=False)))
+					edit.setText(self.get(var, _eval=False))
 				except Exception as e:
 					self.experiment.notify(_("Failed to set control '%s': %s") \
 						% (var, e))
@@ -608,7 +609,7 @@ class qtitem(QtCore.QObject):
 			if self.has(var):
 				try:
 					combobox.setCurrentIndex(combobox.findText( \
-						self.experiment.unsanitize(self.get(var, _eval=False))))
+						unicode(self.get(var, _eval=False))))
 				except Exception as e:
 					self.experiment.notify(_("Failed to set control '%s': %s") \
 						% (var, e))
@@ -647,8 +648,7 @@ class qtitem(QtCore.QObject):
 		for var, editor in self.auto_editor.iteritems():
 			if self.has(var):
 				try:
-					editor.edit.setPlainText(self.experiment.unsanitize( \
-						self.get(var,_eval=False)))
+					editor.edit.setPlainText(unicode(self.get(var,_eval=False)))
 				except Exception as e:
 					self.experiment.notify(_("Failed to set control '%s': %s") \
 						% (var, e))
@@ -699,7 +699,7 @@ class qtitem(QtCore.QObject):
 		debug.msg()
 		for var, edit in self.auto_line_edit.iteritems():
 			if type(var) == str:
-				val = self.experiment.usanitize(edit.text()).strip()
+				val = unicode(edit.text()).strip()
 				if val != "":
 					self.set(var, val)
 					
@@ -712,7 +712,7 @@ class qtitem(QtCore.QObject):
 
 		for var, combobox in self.auto_combobox.iteritems():
 			if type(var) == str:
-				self.set(var, self.experiment.usanitize(combobox.currentText()))
+				self.set(var, unicode(combobox.currentText()))
 
 		for var, spinbox in self.auto_spinbox.iteritems():
 			if type(var) == str:
@@ -732,8 +732,7 @@ class qtitem(QtCore.QObject):
 
 		for var, editor in self.auto_editor.iteritems():
 			if type(var) == str:
-				self.set(var, self.experiment.usanitize( \
-					editor.edit.toPlainText()))
+				self.set(var, editor.edit.toPlainText())
 				editor.setModified(False)
 				
 	def auto_add_widget(self, widget, var=None):

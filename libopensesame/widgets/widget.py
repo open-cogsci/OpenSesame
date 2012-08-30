@@ -106,4 +106,4 @@ class widget:
 			var = self.var
 		if var == None:
 			return
-		self.form.experiment.set(var, self.form.experiment.usanitize(val))
+		self.form.experiment.set(var, val)

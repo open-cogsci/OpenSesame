@@ -18,7 +18,6 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame import item, exceptions, generic_response, debug
-import shlex
 import openexp.sampler
 
 class sampler(item.item, generic_response.generic_response):

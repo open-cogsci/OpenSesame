@@ -456,7 +456,7 @@ class experiment(libopensesame.experiment.experiment):
 		a.ui.textedit_input.setFont(self.monospace())
 		a.adjustSize()
 		if a.exec_() == QtGui.QDialog.Accepted:
-			return self.usanitize(a.ui.textedit_input.toPlainText())
+			return unicode(a.ui.textedit_input.toPlainText())
 		return None
 
 	def colorpicker(self, title="Pick a color", initial_color=None):

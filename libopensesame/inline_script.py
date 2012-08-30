@@ -19,7 +19,6 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 
 from libopensesame import item, exceptions
 from openexp import canvas
-import shlex
 import re
 
 class inline_script(item.item):
@@ -85,9 +84,6 @@ class inline_script(item.item):
 		</DOC>"""
 
 		item.item.prepare(self)		
-		# Convert unicode notation back
-		self._run = self.unsanitize(self._run)
-		self._prepare = self.unsanitize(self._prepare)
 		# Convenience variables
 		exp = self.experiment
 		win = self.experiment.window
