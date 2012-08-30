@@ -649,7 +649,8 @@ class qtitem(QtCore.QObject):
 		for var, editor in self.auto_editor.iteritems():
 			if self.has(var):
 				try:
-					editor.edit.setPlainText(unicode(self.get(var,_eval=False)))
+					editor.edit.setPlainText(self.unistr(self.get(var, \
+						_eval=False)))
 				except Exception as e:
 					self.experiment.notify(_("Failed to set control '%s': %s") \
 						% (var, e))
