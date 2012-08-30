@@ -42,7 +42,6 @@ class logger(item.item):
 		self.item_type = "logger"
 		self.use_quotes = "yes"
 		self.auto_log = "yes"
-		self.unicode = "no"
 		self.ignore_missing = "yes" # This means that missing variables should
 									# be ignored in the sense that they are
 									# assigned the value 'NA'. They are included
@@ -79,9 +78,7 @@ class logger(item.item):
 					raise exceptions.runtime_error( \
 						u"Logger '%s' tries to log the variable '%s', but this variable is not available. Please deselect '%s' in logger '%s' or enable the 'Use NA for variables that have not been set' option." \
 						% (self.name, var, var, self.name))
-			if self.experiment.get('logfile_codec') == 'ascii':
-				val = self.usanitize(val)
-			l.append(val)
+		l.append(val)
 
 		if self.get('use_quotes') == 'yes':
 			self.log(u'"' + ('","'.join(l)) + '"')
@@ -93,10 +90,10 @@ class logger(item.item):
 		"""Parse the logger from a definition string"""
 
 		self.logvars = []
-		for line in string.split("\n"):
+		for line in string.split('\n'):
 			self.parse_variable(line)
 			l = self.split(line)
-			if len(l) > 1 and l[0] == "log":
+			if len(l) > 1 and l[0] == 'log':
 				self.logvars.append(l[1])
 
 	def to_string(self):
@@ -108,8 +105,8 @@ class logger(item.item):
 		A definition string
 		"""
 
-		s = item.item.to_string(self, "logger")
+		s = item.item.to_string(self, 'logger')
 		for logvar in self.logvars:
-			s += "\t" + "log \"%s\"\n" % logvar
+			s += u'\tlog "%s"\n' % logvar
 		return s
 

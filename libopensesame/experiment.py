@@ -26,6 +26,7 @@ import sys
 import time
 import tarfile
 import tempfile
+import codecs
 
 # Contains a list of all pool folders, which need to be removed on program exit
 pool_folders = []
@@ -97,7 +98,10 @@ class experiment(item.item):
 		# Logfile parameters
 		self._log = None
 		self.logfile = None
-		self.logfile_codec = "ascii"		
+		
+		# This is a dummy variable for backwards compatibility. The logfile 
+		# encoding is always utf-8, and this variable doesn't do anything.
+		self.logfile_codec = "utf-8"	
 
 		# Variables used for bookkeeping responses
 		self.total_correct = 0
@@ -294,7 +298,7 @@ class experiment(item.item):
 		self.running = True
 		self.init_sound()
 		self.init_display()
-		self.init_log(codec=self.logfile_codec)
+		self.init_log()
 
 		print "experiment.run(): experiment started at %s" % time.ctime()
 
@@ -597,41 +601,17 @@ class experiment(item.item):
 		from openexp import canvas
 		canvas.init_display(self)
 
-	def init_log(self, codec="ascii"):
+	def init_log(self):
 
-		"""
-		Open the logile
-
-		Keyword arguments:
-		codec -- the character encoding to be used (default="ascii")
-		"""
+		"""Open the logile"""
 		
-		# Raise an exception if the user tries to open the logfile with
-		# different codecs
-		if self._log != None and codec != self.logfile_codec:
-			raise exceptions.runtime_error( \
-				'Trying to open the log-file with codec "%s", but the log-file is already open with codec "%s". Are you perhaps using multiple logger items with conflicting settings?' \
-				% (codec, self.logfile_codec))
-
-		# Do not open the logfile if it's already open with the correct codec
-		if self._log != None and codec == self.logfile_codec:
+		# Do not open the logfile if it's already open
+		if self._log != None:
 			return
-
 		# Open the logfile
-		self.logfile_codec = codec
 		if self.logfile == None:
-			self.logfile = "defaultlog.txt"
-
-		# If a non-standard codec has been specified (such as utf-8) we need the
-		# codecs module to open the log file. For now, the regular open()
-		# function is used by default, to be safe. But this may be revised in
-		# future updates.
-		if self.logfile_codec != "ascii":
-			import codecs
-			self._log = codecs.open(self.logfile, "w", encoding=codec)
-		else:
-			self._log = open(self.logfile, "w")
-
+			self.logfile = u'defaultlog.txt'
+		self._log = codecs.open(self.logfile, 'w', encoding=self.encoding)
 		print "experiment.init_log(): using '%s' as logfile (%s)" % \
 			(self.logfile, self.logfile_codec)
 						
