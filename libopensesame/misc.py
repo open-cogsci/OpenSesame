@@ -36,7 +36,7 @@ def change_working_dir():
 	if os.name == "nt":
 		try:
 			# Extract the part of the description containing the path
-			s = str(libqtopensesame.qtopensesame)
+			s = unicode(libqtopensesame.qtopensesame)
 			i = s.find("from '") + 6
 			j = s.find("'>'") - 1
 			s = s[i:j]
@@ -174,7 +174,7 @@ def strip_tags(s):
 	"""
 
 	import re
-	return re.compile(r'<.*?>').sub('', str(s).replace("<br />", "\n").replace("<br>", "\n"))
+	return re.compile(r'<.*?>').sub('', s.replace("<br />", "\n").replace("<br>", "\n"))
 
 def resource(name):
 

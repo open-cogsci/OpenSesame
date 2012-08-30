@@ -73,7 +73,7 @@ class item_context_menu(QtGui.QMenu):
 		action = self.exec_(pos)
 		if action == None:
 			return					
-		action = str(action.text())		
+		action = unicode(action.text())		
 		if action == self.open_text:
 			self.item.open_edit_tab()
 		elif action == self.edit_text:

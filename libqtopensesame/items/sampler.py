@@ -78,7 +78,7 @@ class sampler(libopensesame.sampler.sampler, qtitem.qtitem):
 		"""Present a file dialog to browse for the sample"""
 		
 		s = pool_widget.select_from_pool(self.experiment.main_window)
-		if str(s) == "":
+		if unicode(s) == "":
 			return			
 		self.sampler_widget.ui.edit_sample.setText(s)
 		self.apply_edit_changes()
@@ -101,16 +101,23 @@ class sampler(libopensesame.sampler.sampler, qtitem.qtitem):
 		else:		
 			self.sampler_widget.ui.frame_notification.setVisible(False)
 			self.sampler_widget.ui.frame_controls.setVisible(True)					
-			self.sampler_widget.ui.edit_sample.setText(self.get("sample"))
-			self.sampler_widget.ui.edit_duration.setText(str(self.get("duration")))		
-			self.sampler_widget.ui.spin_pan.setValue(self.get("pan"))
-			self.sampler_widget.ui.spin_volume.setValue(100.0 * self.get("volume"))
-			self.sampler_widget.ui.spin_pitch.setValue(100.0 * self.get("pitch"))
-			self.sampler_widget.ui.spin_fade_in.setValue(self.get("fade_in"))
-			self.sampler_widget.ui.spin_stop_after.setValue(self.get("stop_after"))
-			self.sampler_widget.ui.dial_pan.setValue(self.get("pan"))
-			self.sampler_widget.ui.dial_volume.setValue(100.0 * self.get("volume"))
-			self.sampler_widget.ui.dial_pitch.setValue(100.0 * self.get("pitch"))			
+			self.sampler_widget.ui.edit_sample.setText(self.unistr(self.get( \
+				'sample')))
+			self.sampler_widget.ui.edit_duration.setText(self.unistr(self.get( \
+				'duration')))		
+			self.sampler_widget.ui.spin_pan.setValue(self.get('pan'))
+			self.sampler_widget.ui.spin_volume.setValue(100.0 * self.get( \
+				'volume'))
+			self.sampler_widget.ui.spin_pitch.setValue(100.0 * self.get( \
+				'pitch'))
+			self.sampler_widget.ui.spin_fade_in.setValue(self.get('fade_in'))
+			self.sampler_widget.ui.spin_stop_after.setValue(self.get( \
+				'stop_after'))
+			self.sampler_widget.ui.dial_pan.setValue(self.get('pan'))
+			self.sampler_widget.ui.dial_volume.setValue(100.0 * self.get( \
+				'volume'))
+			self.sampler_widget.ui.dial_pitch.setValue(100.0 * self.get( \
+				'pitch'))
 		self.lock = False		
 		return self._edit_widget
 

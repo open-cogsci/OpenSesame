@@ -176,7 +176,7 @@ class preferences_widget(QtGui.QWidget):
 			i += 1
 		for style in QtGui.QStyleFactory.keys():
 			self.ui.combobox_style.addItem(style)
-			if self.main_window.style == str(style):
+			if self.main_window.style == unicode(style):
 				self.ui.combobox_style.setCurrentIndex(i)
 			i += 1
 			
@@ -259,7 +259,7 @@ class preferences_widget(QtGui.QWidget):
 						"opensesamerun.exe")
 				else:
 					self.ui.edit_opensesamerun_exec.setText("opensesamerun")
-			self.main_window.opensesamerun_exec = str( \
+			self.main_window.opensesamerun_exec = unicode( \
 				self.ui.edit_opensesamerun_exec.text())
 
 		config.set_config("scintilla_auto_indent", \
@@ -282,11 +282,11 @@ class preferences_widget(QtGui.QWidget):
 			self.ui.checkbox_scintilla_syntax_highlighting.isChecked())
 		config.set_config("scintilla_whitespace_visible", \
 			self.ui.checkbox_scintilla_whitespace_visible.isChecked())
-		config.set_config("scintilla_font_family", str( \
+		config.set_config("scintilla_font_family", unicode( \
 			self.ui.font_scintilla_font_family.currentFont().family()))
 		config.set_config("scintilla_font_size", \
 			self.ui.spinbox_scintilla_font_size.value())
-		config.set_config('theme', str(self.ui.combobox_theme.currentText()))
+		config.set_config('theme', unicode(self.ui.combobox_theme.currentText()))
 
 		# Create a semicolon-separated list of disabled plugins
 		l = []

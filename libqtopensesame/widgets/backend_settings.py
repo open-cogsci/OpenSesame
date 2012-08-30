@@ -77,7 +77,7 @@ class settings_edit(QtGui.QLineEdit):
 		parent -- parent QWidget (default=None)
 		"""
 
-		QtGui.QLineEdit.__init__(self, str(val))
+		QtGui.QLineEdit.__init__(self, experiment.unistr(val))
 		self._parent = parent
 		self.var = var
 		self.experiment = experiment

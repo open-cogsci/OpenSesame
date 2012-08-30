@@ -171,7 +171,7 @@ class general_properties(QtGui.QWidget):
 			self.main_window.experiment.color_check(foreground)
 		except Exception as e:
 			if refs == []:
-				self.main_window.experiment.notify(str(e))
+				self.main_window.experiment.notify(e)
 				foreground = self.main_window.experiment.get("foreground")
 				self.ui.edit_foreground.setText(foreground)
 		self.main_window.experiment.set("foreground", foreground)
@@ -185,7 +185,7 @@ class general_properties(QtGui.QWidget):
 			self.main_window.experiment.color_check(background)
 		except Exception as e:
 			if refs == []:
-				self.main_window.experiment.notify(str(e))
+				self.main_window.experiment.notify(e)
 				background = self.main_window.experiment.get("background")
 				self.ui.edit_background.setText(background)
 		self.main_window.experiment.set("background", foreground)
@@ -240,9 +240,9 @@ class general_properties(QtGui.QWidget):
 				_("Failed to parse the resolution. Expecting positive numeric values."))
 
 		# Set the colors
-		self.ui.edit_foreground.setText(str( \
+		self.ui.edit_foreground.setText(self.main_window.experiment.unistr( \
 			self.main_window.experiment.foreground))
-		self.ui.edit_background.setText(str( \
+		self.ui.edit_background.setText(self.main_window.experiment.unistr( \
 			self.main_window.experiment.background))
 
 		# Release the general tab

@@ -59,12 +59,12 @@ class action_button(QtGui.QPushButton):
 		cmd, row = self.data
 		if cmd == "add":
 			if row == "existing":
-				item = str(self.sequence.combobox_items.currentText())
+				item = unicode(self.sequence.combobox_items.currentText())
 				self.sequence.items.append( (item, "always") )
 
 			elif row == "new":
 
-				item_type = str(self.sequence.combobox_item_type.currentText())
+				item_type = unicode(self.sequence.combobox_item_type.currentText())
 
 				# The separator has been selected
 				if item_type == "":

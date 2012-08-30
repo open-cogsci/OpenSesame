@@ -524,14 +524,14 @@ class sketchpad(item.item, generic_response.generic_response):
 		Read a sketchpad from string
 
 		Arguments:
-		string -- the string containing the sketchpad definition
+		string -- the unicode string containing the sketchpad definition
 		"""
-
-		for line in string.split('\n'):
+		
+		for line in string.split(u'\n'):
 			if not self.parse_variable(line):
 				l = self.split(line)
 				if len(l) > 0:
-					if l[0] == "draw":
+					if l[0] == u'draw':
 						if len(l) == 1:
 							raise exceptions.script_error( \
 								"Incomplete draw command '%s'" % line)
@@ -586,58 +586,59 @@ class sketchpad(item.item, generic_response.generic_response):
 		_item -- the sketchpad element
 
 		Returns:
-		A definition string
+		A definition unicode string
 		"""
 
 		if _item["type"] == "rect":
-			return "draw rect %s %s %s %s fill=%s penwidth=%s color=%s show_if=\"%s\"" \
+			return u"draw rect %s %s %s %s fill=%s penwidth=%s color=%s show_if=\"%s\"" \
 				% (_item["x"], _item["y"], _item["w"], _item["h"], \
-				_item["fill"], _item["penwidth"], _item["color"], _item["show_if"])
+				_item["fill"], _item["penwidth"], _item["color"], \
+				_item["show_if"])
 
 		elif _item["type"] == "circle":
-			return "draw circle %s %s %s fill=%s penwidth=%s color=%s show_if=\"%s\"" \
+			return u"draw circle %s %s %s fill=%s penwidth=%s color=%s show_if=\"%s\"" \
 				% (_item["x"], _item["y"], _item["r"], _item["fill"], \
 				_item["penwidth"], _item["color"], _item["show_if"])
 
 		elif _item["type"] == "ellipse":
-			return "draw ellipse %s %s %s %s fill=%s penwidth=%s color=%s show_if=\"%s\"" \
+			return u"draw ellipse %s %s %s %s fill=%s penwidth=%s color=%s show_if=\"%s\"" \
 				% (_item["x"], _item["y"], _item["w"], _item["h"], \
 				_item["fill"], _item["penwidth"], _item["color"], \
 				_item["show_if"])
 
 		elif _item["type"] == "fixdot":
-			return "draw fixdot %s %s color=%s show_if=\"%s\"" % (_item["x"], \
+			return u"draw fixdot %s %s color=%s show_if=\"%s\"" % (_item["x"], \
 				_item["y"], _item["color"], _item["show_if"])
 
 		elif _item["type"] == "arrow":
-			return "draw arrow %s %s %s %s penwidth=%s color=%s arrow_size=%s show_if=\"%s\"" \
+			return u"draw arrow %s %s %s %s penwidth=%s color=%s arrow_size=%s show_if=\"%s\"" \
 				% (_item["x1"], _item["y1"], _item["x2"], _item["y2"], \
 				_item["penwidth"], _item["color"], _item["arrow_size"], \
 				_item["show_if"])
 
 		elif _item["type"] == "line":
-			return "draw line %s %s %s %s penwidth=%s color=%s show_if=\"%s\"" \
+			return u"draw line %s %s %s %s penwidth=%s color=%s show_if=\"%s\"" \
 				% (_item["x1"], _item["y1"], _item["x2"], _item["y2"], \
 				_item["penwidth"], _item["color"], _item["show_if"])
 
 		elif _item["type"] == "textline":
-			return "draw textline %s %s \"%s\" center=%s color=%s font_family=%s font_size=%s font_italic=%s font_bold=%s show_if=\"%s\"" \
+			return u"draw textline %s %s \"%s\" center=%s color=%s font_family=%s font_size=%s font_italic=%s font_bold=%s show_if=\"%s\"" \
 				% (_item["x"], _item["y"], \
 				self.experiment.sanitize(_item["text"]), _item["center"], \
 				_item["color"], _item["font_family"], _item["font_size"], \
 				_item["font_italic"], _item["font_bold"], _item["show_if"])
 
 		elif _item["type"] == "image":
-			return "draw image %s %s \"%s\" scale=%s center=%s show_if=\"%s\"" \
+			return u"draw image %s %s \"%s\" scale=%s center=%s show_if=\"%s\"" \
 				% (_item["x"], _item["y"], _item["file"], _item["scale"], \
 				_item["center"], _item["show_if"])
 
 		elif _item["type"] == "gabor":
-			return "draw gabor %(x)s %(y)s orient=%(orient)s freq=%(freq)s env=%(env)s size=%(size)s stdev=%(stdev)s phase=%(phase)s color1=%(color1)s color2=%(color2)s bgmode=%(bgmode)s show_if=\"%(show_if)s\"" \
+			return u"draw gabor %(x)s %(y)s orient=%(orient)s freq=%(freq)s env=%(env)s size=%(size)s stdev=%(stdev)s phase=%(phase)s color1=%(color1)s color2=%(color2)s bgmode=%(bgmode)s show_if=\"%(show_if)s\"" \
 				% _item
 
 		elif _item["type"] == "noise":
-			return "draw noise %(x)s %(y)s env=%(env)s size=%(size)s stdev=%(stdev)s color1=%(color1)s color2=%(color2)s bgmode=%(bgmode)s show_if=\"%(show_if)s\"" \
+			return u"draw noise %(x)s %(y)s env=%(env)s size=%(size)s stdev=%(stdev)s color1=%(color1)s color2=%(color2)s bgmode=%(bgmode)s show_if=\"%(show_if)s\"" \
 				% _item
 
 	def to_string(self):
@@ -651,7 +652,7 @@ class sketchpad(item.item, generic_response.generic_response):
 
 		s = item.item.to_string(self, self.item_type)
 		for _item in self.items:
-			s += "\t%s\n" % self.item_to_string(_item)
+			s += u"\t%s\n" % self.item_to_string(_item)
 		return s
 
 	def var_info(self):

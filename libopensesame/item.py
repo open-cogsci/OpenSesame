@@ -110,17 +110,19 @@ class item:
 		# all from_string() derivatives need to be modified
 		if self.parse_comment(line):
 			return True
+						
 
+		l = self.split(line.strip())
 		try:
 			l = self.split(line.strip())
 		except Exception as e:
 			raise exceptions.script_error( \
-				"Error parsing '%s' in item '%s': %s" % (line, self.name, e))
+				u"Error parsing '%s' in item '%s': %s" % (line, self.name, e))
 
-		if len(l) > 0 and l[0] == "set":
+		if len(l) > 0 and l[0] == u'set':
 			if len(l) != 3:
 				raise exceptions.script_error( \
-					"Error parsing variable definition: '%s'" % line)
+					u"Error parsing variable definition: '%s'" % line)
 			else:
 				self.set(l[1], l[2])
 				return True
@@ -215,19 +217,18 @@ class item:
 		val = self.unistr(self.variables[var])
 		
 		# Multiline variables are stored as a block
-		if '\n' in val or '"' in val:
-			s = '__%s__\n' % var
-			for l in val.split('\n'):
+		if u'\n' in val or u'"' in val:
+			s = u'__%s__\n' % var
+			for l in val.split(u'\n'):
 				s += '\t%s\n' % l
-			while s[-1] in ('\t', '\n'):
+			while s[-1] in (u'\t', u'\n'):
 				s = s[:-1]
-			s += '\n'
-			s += '\t__end__\n'
+			s += u'\n\t__end__\n'
 			return s
 
 		# Regular variables
 		else:
-			return 'set %s "%s"\n' % (var, val)
+			return u'set %s "%s"\n' % (var, val)
 
 	def from_string(self, string):
 
@@ -241,31 +242,31 @@ class item:
 		debug.msg()		
 		textblock_var = None
 		self.variables = {}
-		for line in string.split("\n"):				
+		for line in string.split(u'\n'):				
 			line_stripped = line.strip()
 			# The end of a textblock
-			if line_stripped == "__end__":
+			if line_stripped == u'__end__':
 				self.set(textblock_var, textblock_val)
 				textblock_var = None
 			# The beginning of a textblock
-			elif line_stripped[:2] == "__" and line_stripped[-2:] == "__":
+			elif line_stripped[:2] == u'__' and line_stripped[-2:] == u'__':
 				textblock_var = line_stripped[2:-2]
 				if textblock_var in self.reserved_words:
-					textblock_var = "_" + textblock_var
-				if textblock_var != "":
-					textblock_val = ""
+					textblock_var = u'_' + textblock_var
+				if textblock_var != u'':
+					textblock_val = u''
 				else:
 					textblock_var = None
 				# We cannot just strip the multiline code, because that may mess
 				# up indentation. So we have to detect if the string is indented
 				# based on the opening __varname__ line.
-				strip_tab = line[0] == "\t"
+				strip_tab = line[0] == u'\t'
 			# Collect the contents of a textblock
 			elif textblock_var != None:
 				if strip_tab:
-					textblock_val += line[1:] + "\n"
+					textblock_val += line[1:] + u'\n'
 				else:
-					textblock_val += line + "\n"
+					textblock_val += line + '\n'
 			# Parse regular variables
 			elif not self.parse_variable(line):
 				self.parse_line(line)
@@ -279,18 +280,16 @@ class item:
 		item_type -- the type of the item or None for autodetect (default=None)
 
 		Returns:
-		The definition string
+		The unicode definition string
 		"""
 
 		if item_type == None:
 			item_type = self.item_type
-
-		s = "define %s %s\n" % (item_type, self.name)
+		s = u'define %s %s\n' % (item_type, self.name)
 		for comment in self.comments:
-			s += "\t# %s\n" % comment.strip()
+			s += u'\t# %s\n' % comment.strip()
 		for var in self.variables:
-			s += "\t" + self.variable_to_string(var)
-
+			s += u'\t' + self.variable_to_string(var)
 		return s
 
 	def set(self, var, val):
@@ -325,11 +324,11 @@ class item:
 				% var)
 						
 		if type(val) == float:
-			exec("self.%s = %f" % (var, val))
+			exec(u'self.%s = %f' % (var, val))
 		elif type(val) == int:
-			exec("self.%s = %d" % (var, val))
+			exec(u'self.%s = %d' % (var, val))
 		else:
-			exec("self.%s = \"\"\"%s\"\"\"" % (var, val.replace("\"", "\\\"")))
+			exec(u'self.%s = """%s"""' % (var, val.replace(u'"', u'\\\"')))
 		self.variables[var] = val
 
 	def unset(self, var):
@@ -351,7 +350,7 @@ class item:
 		if var in self.variables:
 			del self.variables[var]
 		try:
-			exec("del self.%s" % var)
+			exec(u'del self.%s' % var)
 		except:
 			pass
 
@@ -395,17 +394,17 @@ class item:
 		# Avoid recursion
 		if var == self._get_lock:
 			raise exceptions.runtime_error( \
-				"Recursion detected! Is variable '%s' defined in terms of itself (e.g., 'var = [var]') in item '%s'" \
+				u"Recursion detected! Is variable '%s' defined in terms of itself (e.g., 'var = [var]') in item '%s'" \
 				% (var, self.name))
 		# Get the variable				
 		if hasattr(self, var):
-			val = eval("self.%s" % var)
+			val = eval(u'self.%s' % var)
 		else:
 			try:
-				val = eval("self.experiment.%s" % var)
+				val = eval(u'self.experiment.%s' % var)
 			except:
 				raise exceptions.runtime_error( \
-					"Variable '%s' is not set in item '%s'.<br /><br />You are trying to use a variable that does not exist. Make sure that you have spelled and capitalized the variable name correctly. You may wish to use the variable inspector (Control + I) to find the intended variable." \
+					u"Variable '%s' is not set in item '%s'.<br /><br />You are trying to use a variable that does not exist. Make sure that you have spelled and capitalized the variable name correctly. You may wish to use the variable inspector (Control + I) to find the intended variable." \
 					% (var, self.name))
 		if _eval:					
 			# Lock to avoid recursion and start evaluating possible variables		
@@ -447,8 +446,8 @@ class item:
 			val = default
 		if valid != None and val not in valid:
 			raise exceptions.runtime_error( \
-				"Variable '%s' is '%s', expecting '%s'" % (var, val, \
-				" or ".join(valid)))
+				u"Variable '%s' is '%s', expecting '%s'" % (var, val, \
+				u" or ".join(valid)))
 		return val
 
 	def has(self, var):
@@ -491,17 +490,16 @@ class item:
 		text = self.unistr(text)
 
 		l = []
-		s = ""
 		start = -1
 		while True:
 			# Find the start and end of a variable definition
-			start = text.find("[", start + 1)
+			start = text.find(u'[', start + 1)
 			if start < 0:
 				break
-			end = text.find("]", start + 1)
+			end = text.find(u']', start + 1)
 			if end < 0:
 				raise exceptions.runtime_error( \
-					"Missing closing bracket ']' in string '%s', in item '%s'" \
+					u"Missing closing bracket ']' in string '%s', in item '%s'" \
 					% (text, self.name))
 			var = text[start+1:end]
 			l.append(var)
@@ -559,7 +557,7 @@ class item:
 
 		if time == None:
 			time = self.time()
-		exec("self.experiment.time_%s = %f" % (self.name, time))
+		exec(u'self.experiment.time_%s = %f' % (self.name, time))
 
 	def dummy(self):
 
@@ -603,7 +601,7 @@ class item:
 
 		# Prepare a template for rounding floats
 		if round_float:
-			float_template = "%%.%sf" % self.get("round_decimals")
+			float_template = u'%%.%sf' % self.get("round_decimals")
 		# Find and replace all variables in the text
 		while True:		
 			m = regexp.find_variable.search(text)
@@ -614,10 +612,12 @@ class item:
 				val = self.get(var)
 				# Quote strings if necessary
 				if type(val) == unicode and quote_str:
-					val = "\'" + val + "\'"
+					val = u"\'" + val + u"\'"
 				# Round floats
-				if round_float and type(val) == float:
-					val = float_template % val					
+				elif round_float and type(val) == float:
+					val = float_template % val
+				else:
+					val = self.unistr(val)
 				text = text.replace(m.group(0), val, 1)
 		return self.auto_type(text)
 
@@ -668,13 +668,13 @@ class item:
 		i = 0
 		for word in self.split(cond):
 			if len(word) > 2 and word[0] == "[" and word[-1] == "]":
-				l.append("str(self.get(\"%s\"))" % word[1:-1])
-			elif word == "=":
-				l.append("==")
-			elif word.lower() == "always":
-				l.append("True")
-			elif word.lower() == "never":
-				l.append("False")
+				l.append(u"self.unistr(self.get(\"%s\"))" % word[1:-1])
+			elif word == u"=":
+				l.append(u"==")
+			elif word.lower() == u"always":
+				l.append(u"True")
+			elif word.lower() == u"never":
+				l.append(u"False")
 			elif word.lower() in operators + keywords:
 				if word.lower() in capitalize:
 					l.append(word.capitalize())
@@ -684,9 +684,9 @@ class item:
 				# For backwards compatibility, the first word is interpreted as
 				# a variable name
 				if i == 0:
-					l.append("str(self.get(\"%s\"))" % word)
+					l.append(u"self.unistr(self.get(\"%s\"))" % word)
 				else:
-					l.append("\"%s\"" % word)
+					l.append(u"\"%s\"" % word)
 			i += 1
 
 		code = " ".join(l)
@@ -698,7 +698,7 @@ class item:
 			bytecode = compile(code, "<conditional statement>", "eval")
 		except:
 			raise exceptions.runtime_error( \
-				"'%s' is not a valid conditional statement in sequence item '%s'" \
+				u"'%s' is not a valid conditional statement in sequence item '%s'" \
 				% (cond, self.name))
 		return bytecode
 
@@ -711,8 +711,8 @@ class item:
 		A list of (variable, description) tuples
 		"""
 
-		return [ ("time_%s" % self.name, "[Timestamp of last item call]"), \
-			("count_%s" % self.name, "[Number of item calls]") ]
+		return [ (u"time_%s" % self.name, u"[Timestamp of last item call]"), \
+			(u"count_%s" % self.name, u"[Number of item calls]") ]
 
 	def sanitize(self, s, strict=False, allow_vars=True):
 
@@ -843,9 +843,9 @@ class item:
 		http://docs.python.org/library/shlex.html#shlex.split
 		"""
 		
-		import shlex
-		return [chunk.decode(self.encoding) for chunk in \
-			shlex.split(u.encode(self.encoding))]		
+		import shlex				
+		return [chunk.decode(self.encoding) for chunk in shlex.split(u.encode( \
+			self.encoding))]		
 
 	def color_check(self, col):
 
@@ -906,7 +906,7 @@ class item:
 
 		# This function is set by item.prepare()
 		raise exceptions.openexp_error( \
-			"item.time(): This function should be set by the canvas backend.")
+			u"item.time(): This function should be set by the canvas backend.")
 
 	def log(self, msg):
 

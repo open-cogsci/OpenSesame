@@ -407,7 +407,7 @@ class experiment(libopensesame.experiment.experiment):
 
 		combobox.setCurrentIndex(0)
 		for i in range(combobox.count()):
-			if str(combobox.itemText(i)) == text:
+			if unicode(combobox.itemText(i)) == text:
 				combobox.setCurrentIndex(i)
 				break
 
@@ -425,7 +425,7 @@ class experiment(libopensesame.experiment.experiment):
 		a.ui = notification_dialog_ui.Ui_notification_dialog()
 		a.ui.setupUi(a)
 		self.main_window.theme.apply_theme(a)
-		a.ui.textedit_notification.setHtml(message)
+		a.ui.textedit_notification.setHtml(self.unistr(message))
 		a.adjustSize()
 		a.show()
 

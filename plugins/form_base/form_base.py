@@ -140,9 +140,9 @@ class form_base(item.item, generic_response.generic_response):
 		
 		# Prepare the form
 		try:
-			cols = [float(i) for i in str(self.cols).split(';')]
-			rows = [float(i) for i in str(self.rows).split(';')]		
-			margins = [float(i) for i in str(self.margins).split(';')]		
+			cols = [float(i) for i in unicode(self.cols).split(';')]
+			rows = [float(i) for i in unicode(self.rows).split(';')]		
+			margins = [float(i) for i in unicode(self.margins).split(';')]		
 		except:
 			raise exceptions.runtime_error( \
 				_('cols, rows, and margins should be numeric values separated by a semi-colon'))									

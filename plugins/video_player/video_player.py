@@ -229,7 +229,7 @@ class qtvideo_player(video_player, qtplugin.qtplugin):
 		"""
 		
 		s = pool_widget.select_from_pool(self.experiment.main_window)
-		if str(s) == "":
+		if s == "":
 			return			
 		self.auto_line_edit["video_src"].setText(s)			
 		self.apply_edit_changes()	

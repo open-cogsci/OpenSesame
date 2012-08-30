@@ -95,18 +95,14 @@ class qtopensesamerun(QtGui.QMainWindow):
 		running later
 		"""
 	
-		self.run = True
-		
-		self.options.experiment = str(self.ui.edit_experiment.text())
+		self.run = True		
+		self.options.experiment = unicode(self.ui.edit_experiment.text())
 		self.options.subject = self.ui.spinbox_subject_nr.value()
-		self.options.logfile = str(self.ui.edit_logfile.text())
-		
+		self.options.logfile = unicode(self.ui.edit_logfile.text())		
 		self.options.fullscreen = self.ui.checkbox_fullscreen.isChecked()
 		self.options.custom_resolution = self.ui.checkbox_custom_resolution.isChecked()
 		self.options.width = self.ui.spinbox_width.value()
-		self.options.height = self.ui.spinbox_height.value()		
-		
-		self.options.pylink = self.ui.checkbox_pylink.isChecked()
-		
+		self.options.height = self.ui.spinbox_height.value()				
+		self.options.pylink = self.ui.checkbox_pylink.isChecked()		
 		self.close()
 

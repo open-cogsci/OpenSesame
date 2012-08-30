@@ -155,7 +155,7 @@ class qtexternal_script(external_script, qtplugin.qtplugin):
 		"""
 		
 		s = pool_widget.select_from_pool(self.experiment.main_window)
-		if str(s) == "":
+		if s == "":
 			return
 			
 		self.auto_line_edit["file"].setText(s)			

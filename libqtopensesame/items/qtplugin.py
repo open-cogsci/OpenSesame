@@ -117,7 +117,7 @@ class qtplugin(qtitem.qtitem):
 		"""
 
 		edit = QtGui.QLineEdit()				
-		edit.setText(str(self.get_check(var, "", _eval=False)))		
+		edit.setText(self.unistr(self.get_check(var, u'', _eval=False)))		
 		edit.editingFinished.connect(self.apply_edit_changes)
 		self.add_control(label, edit, tooltip, min_width)
 		if var != None:
@@ -138,7 +138,8 @@ class qtplugin(qtitem.qtitem):
 		"""
 		
 		checkbox = QtGui.QCheckBox(_(label))
-		checkbox.setChecked(str(self.get_check(var, 'yes', _eval=False)) == 'yes')
+		checkbox.setChecked(self.unistr(self.get_check(var, u'yes', \
+			_eval=False)) == u'yes')
 		checkbox.toggled.connect(self.apply_edit_changes)
 		self.add_control('', checkbox, tooltip)
 		if var != None:
@@ -165,8 +166,8 @@ class qtplugin(qtitem.qtitem):
 
 		edit = color_edit.color_edit()
 		edit.initialize(self.experiment)
-		edit.setText(str(self.get_check(var, "", _eval=False)))
-		QtCore.QObject.connect(edit, QtCore.SIGNAL("set_color"), \
+		edit.setText(self.unistr(self.get_check(var, u'', _eval=False)))
+		QtCore.QObject.connect(edit, QtCore.SIGNAL('set_color'), \
 			self.apply_edit_changes)
 		self.add_control(label, edit, tooltip, min_width)
 		if var != None:
@@ -298,11 +299,11 @@ class qtplugin(qtitem.qtitem):
 		"""
 
 		edit = QtGui.QLineEdit()		
-		edit.setText(str(self.get_check(var, "", _eval=False)))
+		edit.setText(self.unistr(self.get_check(var, u'', _eval=False)))
 		edit.editingFinished.connect(self.apply_edit_changes)
 		if var != None:
 			self.auto_line_edit[var] = edit
-		button = QtGui.QPushButton(self.experiment.icon("browse"), "Browse")
+		button = QtGui.QPushButton(self.experiment.icon(u'browse'), u'Browse')
 		button.setIconSize(QtCore.QSize(16, 16))
 		button.clicked.connect(click_func)
 		hbox = QtGui.QHBoxLayout()
@@ -337,9 +338,9 @@ class qtplugin(qtitem.qtitem):
 				syntax="python")
 		else:
 			editor = inline_editor.inline_editor(self.experiment)			
-		editor.setText(str(self.get_check(var, "", _eval=False)))
+		editor.setText(self.unistr(self.get_check(var, u'', _eval=False)))
 		editor.apply.clicked.connect(self.apply_edit_changes)
-		QtCore.QObject.connect(editor.edit, QtCore.SIGNAL("focusLost"), \
+		QtCore.QObject.connect(editor.edit, QtCore.SIGNAL('focusLost'), \
 			self.apply_edit_changes)
 		if var != None:
 			self.auto_editor[var] = editor

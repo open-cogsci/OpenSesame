@@ -71,22 +71,22 @@ class logger(item.item):
 		l = []
 		for var in self.logvars:
 			try:
-				val = str(self.get(var))
+				val = self.unistr(self.get(var))
 			except exceptions.runtime_error as e:
-				if self.get("ignore_missing") == "yes":
-					val = "NA"
+				if self.get('ignore_missing') == 'yes':
+					val = u'NA'
 				else:
 					raise exceptions.runtime_error( \
-						"Logger '%s' tries to log the variable '%s', but this variable is not available. Please deselect '%s' in logger '%s' or enable the 'Use NA for variables that have not been set' option." \
+						u"Logger '%s' tries to log the variable '%s', but this variable is not available. Please deselect '%s' in logger '%s' or enable the 'Use NA for variables that have not been set' option." \
 						% (self.name, var, var, self.name))
-			if self.experiment.get("logfile_codec") == "ascii":
+			if self.experiment.get('logfile_codec') == 'ascii':
 				val = self.usanitize(val)
 			l.append(val)
 
-		if self.get("use_quotes") == "yes":
-			self.log("\"" + ("\",\"".join(l)) + "\"")
+		if self.get('use_quotes') == 'yes':
+			self.log(u'"' + ('","'.join(l)) + '"')
 		else:
-			self.log(",".join(l))
+			self.log(u",".join(l))
 
 	def from_string(self, string):
 

@@ -37,7 +37,7 @@ class sortable(QtGui.QTableWidgetItem):
 		sort_key -- the key to use for sorting
 		"""
 
-		QtGui.QTableWidgetItem.__init__(self, str(text), \
+		QtGui.QTableWidgetItem.__init__(self, text, \
 			QtGui.QTableWidgetItem.UserType)
 		self.sort_key = sort_key
 
@@ -79,14 +79,15 @@ class variable_inspector(QtGui.QTableWidget):
 		scrollpos = self.verticalScrollBar().sliderPosition()
 		col = self.currentColumn()
 		row = self.currentRow()
-		filt = str(self.main_window.ui.edit_variable_filter.text())
+		filt = unicode(self.main_window.ui.edit_variable_filter.text())
 		self.setSortingEnabled(False)
 		i = 0
 		for var, val, item in self.main_window.experiment.var_list(filt):
 			self.insertRow(i)
-			self.setItem(i, 0, sortable(var, "%s_%s_%s" % (var,val,item)))
-			self.setItem(i, 1, sortable(val, "%s_%s_%s" % (val,var,item)))
-			self.setItem(i, 2, sortable(item, "%s_%s_%s" % (item,var,val)))
+			val = self.main_window.experiment.unistr(val)
+			self.setItem(i, 0, sortable(var, u'%s_%s_%s' % (var,val,item)))
+			self.setItem(i, 1, sortable(val, u'%s_%s_%s' % (val,var,item)))
+			self.setItem(i, 2, sortable(item, u'%s_%s_%s' % (item,var,val)))
 			i += 1
 		self.setRowCount(i)
 		self.setSortingEnabled(True)

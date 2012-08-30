@@ -446,7 +446,7 @@ class qtopensesame(QtGui.QMainWindow):
 			_unsaved_changes = self.unsaved_changes
 			_window_msg = self.window_msg
 			self.current_path = os.path.join(self.autosave_folder, \
-				"%s.opensesame.tar.gz" % str(time.ctime()).replace(":", "_"))
+				"%s.opensesame.tar.gz" % unicode(time.ctime()).replace(":", "_"))
 			debug.msg("saving backup as %s" % self.current_path)
 			try:
 				self.save_file(False, remember=False, catch=False)
@@ -911,30 +911,40 @@ class qtopensesame(QtGui.QMainWindow):
 		QtGui.QApplication.processEvents()
 
 		# Get ready, generate the script and see if the script can be
-		# re-parsed. If not, throw an error.
-		try:
+		# re-parsed. In debug mode any errors are not caught. Otherwise. a
+		# neat exception is thrown.
+		if self.experiment.debug:
 			self.get_ready()
 			script = self.experiment.to_string()
-			experiment.experiment(self, "Experiment", script) # Re-parse
-		except libopensesame.exceptions.script_error as e:
-			if not catch:
-				raise e
-			self.experiment.notify( \
-				_("Could not save file, because the script could not be generated. The following error occured:<br/>%s") \
-				% e)
-			self.set_busy(False)
-			return
+			experiment.experiment(self, "Experiment", script)
+		else:
+			try:
+				self.get_ready()
+				script = self.experiment.to_string()
+				experiment.experiment(self, "Experiment", script)
+			except libopensesame.exceptions.script_error as e:
+				if not catch:
+					raise e
+				self.experiment.notify( \
+					_("Could not save file, because the script could not be generated. The following error occured:<br/>%s") \
+					% e)
+				self.set_busy(False)
+				return
 
 		# Try to save the experiment if it doesn't exist already
-		try:
+		if self.experiment.debug:
 			resp = self.experiment.save(self.current_path, overwrite)
-			self.set_status(_("Saved as %s") % self.current_path)
-		except Exception as e:
-			if not catch:
-				raise e
-			self.experiment.notify(_("Failed to save file. Error: %s") % e)
-			self.set_busy(False)
-			return
+			self.set_status(_("Saved as %s") % self.current_path)			
+		else:
+			try:
+				resp = self.experiment.save(self.current_path, overwrite)
+				self.set_status(_("Saved as %s") % self.current_path)
+			except Exception as e:
+				if not catch:
+					raise e
+				self.experiment.notify(_("Failed to save file. Error: %s") % e)
+				self.set_busy(False)
+				return
 
 		# If the file already exists, confirm that it should be overwritten
 		if resp == False:
@@ -1383,9 +1393,9 @@ class qtopensesame(QtGui.QMainWindow):
 
 				# Report the error
 				if isinstance(e, libopensesame.exceptions.runtime_error):
-					self.experiment.notify(str(e))
+					self.experiment.notify(e)
 				elif isinstance(e, openexp.exceptions.openexp_error):
-					print str(e)
+					print unicode(e)
 					self.experiment.notify( \
 						_("<b>Error</b>: OpenExp error<br /><b>Description</b>: %s") \
 						% e)
@@ -1583,7 +1593,7 @@ class qtopensesame(QtGui.QMainWindow):
 				text=name)
 			if not ok:
 				return None
-			name = str(name)
+			name = unicode(name)
 			item.name = name
 
 		# Add the item to the item list

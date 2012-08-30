@@ -72,7 +72,7 @@ class joystick(item.item, generic_response.generic_response):
 		# Prepare the allowed responses
 		if self.has("allowed_responses"):
 			self._allowed_responses = []
-			for r in str(self.get("allowed_responses")).split(";"):
+			for r in self.unistr(self.get("allowed_responses")).split(";"):
 				if r.strip() != "":
 					try:
 						r = int(r)

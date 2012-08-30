@@ -141,8 +141,10 @@ class synth(libopensesame.synth.synth, qtitem.qtitem):
 		
 			self.synth_widget.ui.frame_notification.setVisible(False)
 			self.synth_widget.ui.frame_controls.setVisible(True)				
-			self.synth_widget.ui.edit_freq.setText(str(self.get("freq")))		
-			self.synth_widget.ui.edit_duration.setText(str(self.get("duration")))		
+			self.synth_widget.ui.edit_freq.setText(self.unistr(self.get( \
+				'freq')))		
+			self.synth_widget.ui.edit_duration.setText(self.unistr(self.get( \
+				'duration')))
 			self.synth_widget.ui.spin_attack.setValue(self.get("attack"))
 			self.synth_widget.ui.spin_decay.setValue(self.get("decay"))		
 			self.synth_widget.ui.spin_pan.setValue(self.get("pan"))

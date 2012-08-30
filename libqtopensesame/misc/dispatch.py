@@ -93,8 +93,7 @@ class dispatch(QtCore.QObject):
 	
 		"""Handles a full regeneration of the experiment"""
 		
-		self.main_window.set_busy(True)
-		script = str(script)
+		self.main_window.set_busy(True)		
 		try:
 			# Generate the new experiment
 			tmp = experiment.experiment(self.main_window, \
@@ -149,8 +148,6 @@ class dispatch(QtCore.QObject):
 		"""
 	
 		self.main_window.set_busy(True)
-		from_name = str(from_name)
-		to_name = str(to_name)
 		# Rename the item in the experiment item list
 		item = self.main_window.experiment.items[from_name]
 		del self.main_window.experiment.items[from_name]

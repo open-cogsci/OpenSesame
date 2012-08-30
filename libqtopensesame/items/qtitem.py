@@ -182,7 +182,8 @@ class qtitem(QtCore.QObject):
 			return False
 		self.auto_apply_edit_changes()		
 		self.set("description", \
-			self.experiment.sanitize(str(self.header.edit_desc.text()).strip()))
+			self.experiment.sanitize(unicode( \
+				self.header.edit_desc.text()).strip()))
 		if self.description == "":
 			self.description = "No description"
 		self.header.label_desc.setText(self.description)
@@ -596,7 +597,7 @@ class qtitem(QtCore.QObject):
 			edit.editingFinished.disconnect()		
 			if self.has(var):			
 				try:
-					edit.setText(self.get(var, _eval=False))
+					edit.setText(self.unistr(self.get(var, _eval=False)))
 				except Exception as e:
 					self.experiment.notify(_("Failed to set control '%s': %s") \
 						% (var, e))
@@ -609,7 +610,7 @@ class qtitem(QtCore.QObject):
 			if self.has(var):
 				try:
 					combobox.setCurrentIndex(combobox.findText( \
-						unicode(self.get(var, _eval=False))))
+						self.unistr(self.get(var, _eval=False))))
 				except Exception as e:
 					self.experiment.notify(_("Failed to set control '%s': %s") \
 						% (var, e))

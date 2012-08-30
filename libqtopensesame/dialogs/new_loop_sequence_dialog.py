@@ -75,15 +75,12 @@ class new_loop_sequence_dialog(QtGui.QDialog):
 	def new_item(self):
 	
 		self.action = "new"
-		self.item_type = str(self.ui.combobox_new.currentText())
-		
+		self.item_type = unicode(self.ui.combobox_new.currentText())		
 		self.accept()
-
 
 	def select_item(self):
 	
 		self.action = "select"
-		self.item_name = str(self.ui.combobox_select.currentText())
-		
+		self.item_name = unicode(self.ui.combobox_select.currentText())		
 		self.accept()
 

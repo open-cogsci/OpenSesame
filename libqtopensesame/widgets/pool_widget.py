@@ -249,7 +249,7 @@ class pool_widget(QtGui.QWidget):
 		action -- the action to be performed
 		"""
 
-		a = str(action.text())
+		a = unicode(action.text())
 		f = os.path.join(self.main_window.experiment.pool_folder, \
 			self.context_target)
 

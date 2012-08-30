@@ -72,7 +72,7 @@ class srbox(item.item, generic_response.generic_response):
 		# Prepare the allowed responses
 		if self.has("allowed_responses"):
 			self._allowed_responses = []
-			for r in str(self.get("allowed_responses")).split(";"):
+			for r in self.unistr(self.get("allowed_responses")).split(";"):
 				if r.strip() != "":
 					try:
 						r = int(r)
@@ -113,7 +113,7 @@ class srbox(item.item, generic_response.generic_response):
 			# Prepare the light byte
 			s = "010" # Control string
 			for i in range(5):
-				if str(5 - i) in str(self.get("lights")):
+				if unicode(5 - i) in unicode(self.get("lights")):
 					s += "1"
 				else:
 					s += "0"

@@ -229,7 +229,7 @@ class loop(item.item):
 			for var in self.matrix[i]:
 				if var not in var_list:
 					var_list[var] = []
-				var_list[var].append(str(self.matrix[i][var]))
+				var_list[var].append(self.unistr(self.matrix[i][var]))
 		for var in var_list:
 			l.append( (var, "[" + ", ".join(var_list[var]) + "]"))
 		return l

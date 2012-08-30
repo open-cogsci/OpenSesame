@@ -98,7 +98,7 @@ class tree_overview(QtGui.QTreeWidget):
 
 			index = 0
 			while True:
-				item_name = str(item.text(0))
+				item_name = unicode(item.text(0))
 				if item_name not in self.main_window.experiment.items:
 					e.ignore()
 					return
@@ -130,10 +130,10 @@ class tree_overview(QtGui.QTreeWidget):
 		"""
 
 		target_item = item
-		item_name = str(target_item.text(0))
+		item_name = unicode(target_item.text(0))
 		parent_item = target_item.parent()
 		if parent_item != None:
-			parent_name = str(parent_item.text(0))
+			parent_name = unicode(parent_item.text(0))
 		else:
 			parent_name = None
 		index = None

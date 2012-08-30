@@ -244,7 +244,7 @@ class generic_response:
 
 				# Prepare valid mouseclick responses
 				self._allowed_responses = []
-				for r in str(self.get("allowed_responses")).split(";"):
+				for r in self.get("allowed_responses").split(";"):
 					if r in self.resp_codes.values():
 						for code, resp in self.resp_codes.items():
 							if resp == r:
