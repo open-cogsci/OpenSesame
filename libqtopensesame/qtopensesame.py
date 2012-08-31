@@ -1801,6 +1801,8 @@ class qtopensesame(QtGui.QMainWindow):
 		debug.msg("dropping from toolbar")
 
 		# Determine the drop target
+		if draggables.drop_target == None:
+			return
 		target, index, select = draggables.drop_target
 
 		# Create a new item and return if it fails
