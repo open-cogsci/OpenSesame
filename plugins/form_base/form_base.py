@@ -17,7 +17,7 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
-from libopensesame import item, exceptions, generic_response, widgets
+from libopensesame import item, exceptions, widgets
 from libqtopensesame import qtplugin
 from libqtopensesame.misc import _
 import openexp.canvas
@@ -25,7 +25,7 @@ import openexp.keyboard
 import os.path
 from PyQt4 import QtGui, QtCore
 
-class form_base(item.item, generic_response.generic_response):
+class form_base(item.item):
 
 	"""A text input display"""		
 	
@@ -192,10 +192,6 @@ class form_base(item.item, generic_response.generic_response):
 			if focus:
 				self.focus_widget = _w
 		return True
-
-	def var_info(self):
-
-		return generic_response.generic_response.var_info(self)
 
 class qtform_base(form_base, qtplugin.qtplugin):
 

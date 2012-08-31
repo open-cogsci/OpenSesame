@@ -77,6 +77,16 @@ class checkbox(button):
 			self.set_checked(True)
 		else:
 			self.set_checked(not self.checked)
+			
+		# Set the response variable
+		l_val = []
+		for widget in self.form.widgets:		
+			if widget != None and widget.type == 'checkbox' and \
+				widget.group == self.group:
+				if widget.checked:
+					l_val.append(widget.text)
+		self.set_var(';'.join(l_val))
+			
 		if self.click_accepts:
 			return self.text
 				

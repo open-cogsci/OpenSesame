@@ -70,6 +70,18 @@ class form_text_input(form_base.form_base):
 		self._widgets = []
 		form_base.form_base.from_string(self, script)
 		
+	def var_info(self):
+		
+		"""
+		Return a list of dictionaries with variable descriptions
+
+		Returns:
+		A list of (name, description) tuples
+		"""
+		
+		return form_base.form_base.var_info(self) + \
+			[(self.get('form_var'), '[Depends on response]')]				
+		
 class qtform_text_input(form_text_input, qtplugin.qtplugin):
 
 	"""GUI controls"""
