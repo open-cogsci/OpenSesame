@@ -125,8 +125,9 @@ class html(HTMLParser):
 		"""		
 
 		debug.msg(text)
-		
-		# First save all the settings, so we don't mess up the canvas
+
+		# Make sure that it's a string
+		text = canvas.experiment.unistr(text)
 	
 		# Convert line breaks to HTML break tags
 		text = text.replace('\n', '<br />')
