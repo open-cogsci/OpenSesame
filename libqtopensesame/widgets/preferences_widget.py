@@ -105,7 +105,7 @@ class preferences_widget(QtGui.QWidget):
 		debug.msg()
 
 		self.ui.checkbox_immediately_rename.setChecked( \
-			self.main_window.immediate_rename)
+			config.get_config('immediate_rename'))
 		self.ui.checkbox_autoresponse.setChecked( \
 			self.main_window.experiment.auto_response)
 		self.ui.checkbox_toolbar_text.setChecked( \
@@ -114,19 +114,19 @@ class preferences_widget(QtGui.QWidget):
 		self.ui.checkbox_small_toolbar.setChecked( \
 			config.get_config("toolbar_size") == 16)		
 		self.ui.checkbox_enable_autosave.setChecked( \
-			self.main_window.autosave_interval > 0)
+			config.get_config('autosave_interval') > 0)
 		self.ui.spinbox_autosave_interval.setValue( \
-			self.main_window.autosave_interval / 60000) # Show in minutes
+			config.get_config('autosave_interval') / 60000) # Show in minutes
 		self.ui.spinbox_autosave_max_age.setValue( \
-			self.main_window.autosave_max_age)
-		self.ui.checkbox_auto_update_check.setChecked( \
-			self.main_window.auto_check_update)
+			config.get_config('autosave_max_age'))
+		self.ui.checkbox_auto_update_check.setChecked(config.get_config( \
+			'auto_update_check'))			
 		self.ui.checkbox_opensesamerun.setChecked( \
-			self.main_window.opensesamerun)
+			config.get_config('opensesamerun'))
 		self.ui.checkbox_auto_opensesamerun_exec.setChecked( \
-			self.main_window.opensesamerun_exec == "")
+			config.get_config('opensesamerun_exec') == '')			
 		self.ui.edit_opensesamerun_exec.setText( \
-			self.main_window.opensesamerun_exec)
+			config.get_config('opensesamerun_exec'))
 
 		self.ui.checkbox_scintilla_auto_indent.setChecked(config.get_config( \
 			"scintilla_auto_indent"))
@@ -156,27 +156,27 @@ class preferences_widget(QtGui.QWidget):
 			"scintilla_font_size"))
 
 		# Disable some of the controls, if they depend on other controls
-		if self.main_window.autosave_interval <= 0:
+		if config.get_config('autosave_interval') <= 0:
 			self.ui.spinbox_autosave_interval.setDisabled(True)
 
-		if not self.main_window.opensesamerun:
+		if not config.get_config('opensesamerun'):
 			self.ui.checkbox_auto_opensesamerun_exec.setDisabled(True)
 			self.ui.edit_opensesamerun_exec.setDisabled(True)
 			self.ui.label_opensesamerun_exec.setDisabled(True)
 
-		if self.main_window.opensesamerun_exec == "":
+		if config.get_config('opensesamerun_exec') == '':
 			self.ui.edit_opensesamerun_exec.setDisabled(True)
 			self.ui.label_opensesamerun_exec.setDisabled(True)
 
 		# Set the style combobox
 		i = 0
-		if self.main_window.style == "":
+		if config.get_config('style') == '':
 			self.ui.combobox_style.addItem("[Default]")
 			self.ui.combobox_style.setCurrentIndex(i)
 			i += 1
 		for style in QtGui.QStyleFactory.keys():
 			self.ui.combobox_style.addItem(style)
-			if self.main_window.style == unicode(style):
+			if config.set_config('style', unicode(style)):
 				self.ui.combobox_style.setCurrentIndex(i)
 			i += 1
 			
@@ -204,8 +204,8 @@ class preferences_widget(QtGui.QWidget):
 		self.lock = True
 		debug.msg()
 
-		self.main_window.immediate_rename = \
-			self.ui.checkbox_immediately_rename.isChecked()
+		config.set_config('immediate_rename', \
+			self.ui.checkbox_immediately_rename.isChecked())
 		self.main_window.experiment.auto_response = \
 			self.ui.checkbox_autoresponse.isChecked()
 		self.main_window.ui.action_enable_auto_response.setChecked( \
@@ -229,18 +229,18 @@ class preferences_widget(QtGui.QWidget):
 				"toolbar_size"))		
 
 		if self.ui.checkbox_enable_autosave.isChecked():
-			self.main_window.autosave_interval = 60000 * \
-				self.ui.spinbox_autosave_interval.value()
+			config.set_config('autosave_interval', 60000 * \
+				self.ui.spinbox_autosave_interval.value())
 		else:
-			self.main_window.autosave_interval = 0						
-		self.main_window.autosave_max_age = \
-			self.ui.spinbox_autosave_max_age.value()
+			config.set_config('autosave_interval', 0)	
+		config.set_config('autosave_max_age', \
+			self.ui.spinbox_autosave_max_age.value())
 		self.main_window.start_autosave_timer()
 
-		self.main_window.auto_check_update = \
-			self.ui.checkbox_auto_update_check.isChecked()
-		self.main_window.opensesamerun = \
-			self.ui.checkbox_opensesamerun.isChecked()
+		config.set_config('auto_update_check', \
+			self.ui.checkbox_auto_update_check.isChecked())
+		config.set_config('opensesamerun', \
+			self.ui.checkbox_opensesamerun.isChecked())
 
 		self.ui.edit_opensesamerun_exec.setEnabled( \
 			self.ui.checkbox_opensesamerun.isChecked() and not \
@@ -250,8 +250,8 @@ class preferences_widget(QtGui.QWidget):
 			self.ui.checkbox_auto_opensesamerun_exec.isChecked())
 
 		if self.ui.checkbox_auto_opensesamerun_exec.isChecked():
-			self.main_window.opensesamerun_exec = ""
-			self.ui.edit_opensesamerun_exec.setText("")
+			config.set_config('opensesamerun_exec', '')
+			self.ui.edit_opensesamerun_exec.setText('')
 		else:
 			if self.ui.edit_opensesamerun_exec.text() == "":
 				if os.name == "nt":
@@ -259,8 +259,8 @@ class preferences_widget(QtGui.QWidget):
 						"opensesamerun.exe")
 				else:
 					self.ui.edit_opensesamerun_exec.setText("opensesamerun")
-			self.main_window.opensesamerun_exec = unicode( \
-				self.ui.edit_opensesamerun_exec.text())
+			config.set_config('opensesamerun_exec', unicode( \
+				self.ui.edit_opensesamerun_exec.text()))
 
 		config.set_config("scintilla_auto_indent", \
 			self.ui.checkbox_scintilla_auto_indent.isChecked())
@@ -295,7 +295,7 @@ class preferences_widget(QtGui.QWidget):
 				l.append(plugin)
 		config.set_config("disabled_plugins", ";".join(l))
 
-		self.main_window.style = self.ui.combobox_style.currentText()
+		config.set_config('style', unicode(self.ui.combobox_style.currentText()))
 		self.main_window.save_state()
 
 		self.lock = False

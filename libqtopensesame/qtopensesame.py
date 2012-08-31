@@ -85,8 +85,6 @@ class qtopensesame(QtGui.QMainWindow):
 		self.version = misc.version
 		self.codename = misc.codename
 		self.lock_refresh = False
-		self.auto_check_update = True
-		self.default_logfile_folder = ""
 		self.unsaved_changes = False
 		
 		# Parse the command line
@@ -284,7 +282,7 @@ class qtopensesame(QtGui.QMainWindow):
 		don't wait until the end, the window gets distorted again.
 		"""
 
-		self.restoreState(self._initial_window_state)
+		self.restoreState(config.get_config('_initial_window_state'))
 
 	def restore_state(self):
 
@@ -295,21 +293,9 @@ class qtopensesame(QtGui.QMainWindow):
 		# Force configuration options that were set via the command line
 		config.parse_cmdline_args(self.options._config)
 
-		# Some old-style settings are not handled via get_config, but using
-		# properties of the main_window object.
 		self.resize(config.get_config("size"))
 		self.move(config.get_config("pos"))
-		self._initial_window_state = config.get_config("_initial_window_state")
-		self.auto_check_update = config.get_config("auto_update_check")
-		self.default_logfile_folder = config.get_config( \
-			"default_logfile_folder")
-		self.autosave_interval = config.get_config("autosave_interval")
-		self.autosave_max_age = config.get_config("autosave_max_age")
-		self.immediate_rename = config.get_config("immediate_rename")
-		self.opensesamerun_exec = config.get_config("opensesamerun_exec")
-		self.opensesamerun = config.get_config("opensesamerun")
 		self.experiment.auto_response = config.get_config("auto_response")
-		self.style = config.get_config("style")
 		
 		# Set the keyboard shortcuts
 		self.ui.shortcut_itemtree.setKey(QtGui.QKeySequence( \
@@ -356,24 +342,15 @@ class qtopensesame(QtGui.QMainWindow):
 
 		settings = QtCore.QSettings("cogscinl", "opensesame")
 		settings.beginGroup("MainWindow")
-
 		config.save_config(settings)
 		settings.setValue("size", self.size())
 		settings.setValue("pos", self.pos())
 		settings.setValue("_initial_window_state", self.saveState())
-		settings.setValue("auto_update_check", self.auto_check_update)
-		settings.setValue("default_logfile_folder", self.default_logfile_folder)
-		settings.setValue("autosave_interval", self.autosave_interval)
-		settings.setValue("autosave_max_age", self.autosave_max_age)
-		settings.setValue("immediate_rename", self.immediate_rename)
-		settings.setValue("opensesamerun", self.opensesamerun)
-		settings.setValue("opensesamerun_exec", self.opensesamerun_exec)
 		settings.setValue("auto_response", self.experiment.auto_response)
 		settings.setValue("toolbar_text", \
 			self.ui.toolbar_main.toolButtonStyle() == \
 			QtCore.Qt.ToolButtonTextUnderIcon)		
 		settings.setValue("recent_files", ";;".join(self.recent_files))
-		settings.setValue("style", self.style)
 		settings.endGroup()
 
 	def set_busy(self, state=True):
@@ -395,12 +372,12 @@ class qtopensesame(QtGui.QMainWindow):
 
 		"""Appply the application style"""
 
-		if self.style in QtGui.QStyleFactory.keys():
-			self.setStyle(QtGui.QStyleFactory.create(self.style))
-			debug.msg("using style '%s'" % self.style)
+		if config.get_config('style') in QtGui.QStyleFactory.keys():
+			self.setStyle(QtGui.QStyleFactory.create(config.get_config('style')))
+			debug.msg("using style '%s'" % config.get_config('style'))
 		else:
-			debug.msg("ignoring unknown style '%s'" % self.style)
-			self.style = ""
+			debug.msg("ignoring unknown style '%s'" % config.get_config('style'))
+			config.set_config('style', '')
 
 	def set_auto_response(self):
 
@@ -423,10 +400,12 @@ class qtopensesame(QtGui.QMainWindow):
 
 		"""If autosave is enabled, construct and start the autosave timer"""
 
-		if self.autosave_interval > 0:
-			debug.msg("autosave interval = %d ms" % self.autosave_interval)
+		if config.get_config('autosave_interval') > 0:
+			debug.msg("autosave interval = %d ms" % config.get_config( \
+				'autosave_interval'))
 			self.autosave_timer = QtCore.QTimer()
-			self.autosave_timer.setInterval(self.autosave_interval)
+			self.autosave_timer.setInterval(config.get_config( \
+				'autosave_interval'))
 			self.autosave_timer.setSingleShot(True)
 			self.autosave_timer.timeout.connect(self.autosave)
 			self.autosave_timer.start()
@@ -468,7 +447,7 @@ class qtopensesame(QtGui.QMainWindow):
 			_path = os.path.join(self.autosave_folder, path)
 			t = os.path.getctime(_path)
 			age = (time.time() - t)/(60*60*24)
-			if age > self.autosave_max_age:
+			if age > config.get_config('autosave_max_age'):
 				debug.msg("removing '%s'" % path)
 				try:
 					os.remove(_path)
@@ -545,8 +524,9 @@ class qtopensesame(QtGui.QMainWindow):
 
 		"""Set the immediate rename option based on the menu action"""
 
-		self.immediate_rename = self.ui.action_immediate_rename.isChecked()
-		debug.msg("set to %s" % self.immediate_rename)
+		config.set_config('immediate_rename', \
+			self.ui.action_immediate_rename.isChecked())
+		debug.msg("set to %s" % config.get_config('immediate_rename'))
 
 	def update_dialog(self, message):
 
@@ -563,11 +543,13 @@ class qtopensesame(QtGui.QMainWindow):
 		a.ui = update_dialog_ui.Ui_update_dialog()
 		a.ui.setupUi(a)
 		self.theme.apply_theme(a)
-		a.ui.checkbox_auto_check_update.setChecked(self.auto_check_update)
+		a.ui.checkbox_auto_check_update.setChecked(config.get_config( \
+			'auto_update_check'))
 		a.ui.textedit_notification.setHtml(message)
 		a.adjustSize()
 		a.exec_()
-		self.auto_check_update = a.ui.checkbox_auto_check_update.isChecked()
+		config.set_config('auto_update_check', \
+			a.ui.checkbox_auto_check_update.isChecked())
 		self.update_preferences_tab()
 
 	def check_update(self, dummy=None, always=True):
@@ -584,7 +566,7 @@ class qtopensesame(QtGui.QMainWindow):
 
 		import urllib
 
-		if not always and not self.auto_check_update:
+		if not always and not config.get_config('auto_update_check'):
 			debug.msg("skipping update check")
 			return
 
@@ -879,7 +861,8 @@ class qtopensesame(QtGui.QMainWindow):
 			self.current_path = path
 			self.window_message(self.current_path)
 			self.update_recent_files()
-			self.default_logfile_folder = os.path.dirname(self.current_path)
+			config.set_config('default_logfile_folder', os.path.dirname( \
+				self.current_path))
 		else:
 			self.window_message("New experiment")
 			self.current_path = None
@@ -1202,13 +1185,13 @@ class qtopensesame(QtGui.QMainWindow):
 		debug.msg("experiment saved as '%s'" % path)
 
 		# Determine the name of the executable
-		if self.opensesamerun_exec == "":
+		if config.get_config('opensesamerun_exec') == '':
 			if os.name == "nt":
 				cmd = ["opensesamerun.exe"]
 			else:
 				cmd = ["opensesamerun"]
 		else:
-			cmd = self.opensesamerun_exec.split()
+			cmd = config.get_config('opensesamerun_exec').split()
 
 		cmd += [path, "--logfile=%s" % exp.logfile, "--subject=%s" % exp.subject_nr]
 
@@ -1309,7 +1292,8 @@ class qtopensesame(QtGui.QMainWindow):
 		if debug.enabled:
 			exp.set("subject_nr", 999)
 			exp.set("subject_parity", "odd")
-			logfile = os.path.join(unicode(self.default_logfile_folder), "debug.csv")
+			logfile = os.path.join(config.get_config('default_logfile_folder'), \
+				u'debug.csv')
 
 		else:
 
@@ -1324,23 +1308,23 @@ class qtopensesame(QtGui.QMainWindow):
 			exp.set_subject(subject_nr)
 
 			# Suggested filename
-			suggested_path = os.path.join( \
-				unicode(self.default_logfile_folder), "subject-%d.csv" \
-				% subject_nr)
+			suggested_path = os.path.join(config.get_config( \
+				'default_logfile_folder'), u'subject-%d.csv' % subject_nr)
 
 			# Get the data file
-			csv_filter = "Comma-separated values (*.csv)"
-			logfile = unicode(QtGui.QFileDialog.getSaveFileName(self.ui.centralwidget, \
+			csv_filter = u'Comma-separated values (*.csv)'
+			logfile = unicode(QtGui.QFileDialog.getSaveFileName( \
+				self.ui.centralwidget, \
 				_("Choose location for logfile (press 'escape' for default location)"), \
 				suggested_path, filter=csv_filter))
 
-			if logfile == "":
+			if logfile == '':
 				try:
 					# Sometimes this fails, e.g. if the default folder is "/"
-					logfile = os.path.join(self.default_logfile_folder, \
-						"defaultlog.csv")
+					logfile = os.path.join(config.get_config( \
+						'default_logfile_folder'), u'defaultlog.csv')
 				except:
-					logfile = os.path.join(self.home_folder, "defaultlog.csv")
+					logfile = os.path.join(self.home_folder, u'defaultlog.csv')
 			else:
 				if os.path.splitext(logfile)[1].lower() not in (".csv", \
 					".txt", ".dat", ".log"):
@@ -1356,7 +1340,7 @@ class qtopensesame(QtGui.QMainWindow):
 			return
 
 		# Remember the location of the logfile
-		self.default_logfile_folder = os.path.split(logfile)[0]
+		config.set_config('default_logfile_folder', os.path.split(logfile)[0])
 
 		# Set fullscreen/ window mode
 		exp.fullscreen = fullscreen
@@ -1373,7 +1357,7 @@ class qtopensesame(QtGui.QMainWindow):
 		buf = pyterm.output_buffer(self.ui.edit_stdout)
 		sys.stdout = buf
 
-		if self.opensesamerun:
+		if config.get_config('opensesamerun'):
 			# Optionally, the experiment is run as a separate process
 			if self.call_opensesamerun(exp):
 				self.experiment_finished(exp)
@@ -1587,7 +1571,7 @@ class qtopensesame(QtGui.QMainWindow):
 			item = eval("%s.%s(name, self.experiment)" % (item_type, item_type))
 
 		# Optionally, ask for a new name right away
-		if self.immediate_rename:
+		if config.get_config('immediate_rename'):
 			name, ok = QtGui.QInputDialog.getText(self, _("New name"), \
 				_("Please enter a name for the new %s") % item_type, \
 				text=name)
