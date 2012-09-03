@@ -211,7 +211,7 @@ def home_folder():
 
 	# Determine the home folder
 	if platform.system() == "Windows":
-		return os.environ["USERPROFILE"]
+		return os.environ["APPDATA"]
 	if platform.system() == "Darwin":
 		return os.environ["HOME"]
 	if platform.system() == "Linux":
