@@ -28,8 +28,8 @@ class html(HTMLParser):
 	<i>, <br />, and <span>. For <span> you can pass size and style keywords.	
 	"""	
 	
-	valid_end_tags = 'i', 'b', 'span'
-	valid_start_tags = 'i', 'b', 'span', 'br'	
+	valid_end_tags = 'i', 'b', 'u', 'span'
+	valid_start_tags = 'i', 'b', 'u', 'span', 'br'	
 			
 	def handle_data(self, data):
 	
@@ -139,7 +139,8 @@ class html(HTMLParser):
 			'bold' : canvas.font_bold,
 			'italic' : canvas.font_italic,			
 			'color' : canvas.fgcolor,
-			'size' : canvas.font_size
+			'size' : canvas.font_size,
+			'underline' : canvas.font_underline
 			}
 		backup_style = self.default_style.copy()
 			
@@ -180,7 +181,8 @@ class html(HTMLParser):
 			
 					# Set the style
 					canvas.set_font(style['style'], int(style['size']), \
-						bold=style['bold'], italic=style['italic'])
+						bold=style['bold'], italic=style['italic'], underline= \
+						style['underline'])
 				
 					# Line wrap if we run out of the screen
 					dx, dy = canvas.text_size(word)
@@ -213,7 +215,8 @@ class html(HTMLParser):
 			
 				# Set the style
 				canvas.set_font(style['style'], int(style['size']), \
-					bold=style['bold'], italic=style['italic'])
+					bold=style['bold'], italic=style['italic'], underline= \
+					style['underline'])
 				canvas.set_fgcolor(style['color'])		
 				
 				# Line wrap if we run out of the screen

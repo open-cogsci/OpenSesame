@@ -168,6 +168,7 @@ class legacy:
 			"%s.ttf" % self.font_style), self.font_size)			
 		font.set_bold(self.font_bold)
 		font.set_italic(self.font_italic)
+		font.set_underline(self.font_underline)
 		return font
 		
 	def flip(self, x=True, y=False):
@@ -289,7 +290,7 @@ class legacy:
 
 		self.bgcolor = self.color(color)	
 		
-	def set_font(self, style, size, italic=False, bold=False):
+	def set_font(self, style, size, italic=False, bold=False, underline=False):
 	
 		"""<DOC>
 		Sets the font for subsequent drawing operations.
@@ -302,12 +303,14 @@ class legacy:
 		Keyword arguments:
 		italic -- indicates if the font should be italic (default=False)
 		bold -- indicates if the font should be bold (default=False)
+		underline -- indicates if the font should be underlined (default=False)
 		</DOC>"""
 				
 		self.font_style = style
 		self.font_size = size
 		self.font_italic = italic
-		self.font_bold = bold		
+		self.font_bold = bold
+		self.font_underline = underline
 				
 	def fixdot(self, x=None, y=None, color=None):
 		

@@ -94,6 +94,7 @@ class experiment(item.item):
 		self.font_family = "mono"
 		self.font_italic = "no"
 		self.font_bold = "no"
+		self.font_underline = "no"
 
 		# Logfile parameters
 		self._log = None

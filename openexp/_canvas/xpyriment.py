@@ -235,7 +235,7 @@ class xpyriment(openexp._canvas.legacy.legacy):
 		stim = stimuli.TextLine(text, position=c2p((x,y)), \
 			text_colour=self.fgcolor, text_font=_font, \
 			text_size=self.font_size, text_bold=self.font_bold, \
-			text_italic=self.font_italic)			
+			text_italic=self.font_italic, text_underline=self.font_underline)			
 		self.stim_list.append(stim)				
 		
 	def textline(self, text, line, color=None):
