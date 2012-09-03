@@ -16,6 +16,22 @@ GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
+
+ABOUT
+=====
+This script will create a binary Windows package of OpenSesame, using py2exe.
+If possible, dependencies are simply copied into a subfolder and compiled to
+.pyo format. If not possible, they are included in the library.zip file, which
+is the default py2exe way of including dependencies.
+
+USAGE
+=====
+Don't forget to invoke Python with the -O argument. Otherwise, the dependencies
+will be compiled to .pyc, instead of .pyo, and the .py source files will not be
+pruned. And that doesn't look very professional (although it does work).
+
+$ ./python -O setup-win32.py py2exe
+
 """
 
 from distutils.core import setup
@@ -64,6 +80,8 @@ copy_packages = [
 # included
 exclude_packages = [
 	'idlelib',
+	'antigravity', # Kind of funny, importing this opens: http://xkcd.com/353/
+	'test', # Avoid automated tests, because they take ages
 	]
 
 # Packages that are not part of the standard Python packages (or not detected
