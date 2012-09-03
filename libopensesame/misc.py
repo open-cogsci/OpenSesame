@@ -60,33 +60,44 @@ def opensesamerun_options():
 	import optparse
 	global version, codename
 
-	parser = optparse.OptionParser("usage: opensesamerun [experiment] [options]", \
-		version = "%s '%s'" % (version, codename))
+	parser = optparse.OptionParser( \
+		"usage: opensesamerun [experiment] [options]", version="%s '%s'" % \
+		(version, codename))
 
-	parser.set_defaults(subject = 0)
-	parser.set_defaults(logfile = None)
-	parser.set_defaults(debug = False)
-	parser.set_defaults(fullscreen = False)
-	parser.set_defaults(pylink = False)
-	parser.set_defaults(width = 1024)
-	parser.set_defaults(height = 768)
-	parser.set_defaults(custom_resolution = False)
+	parser.set_defaults(subject=0)
+	parser.set_defaults(logfile=None)
+	parser.set_defaults(debug=False)
+	parser.set_defaults(fullscreen=False)
+	parser.set_defaults(pylink=False)
+	parser.set_defaults(width=1024)
+	parser.set_defaults(height=768)
+	parser.set_defaults(custom_resolution=False)
 	group = optparse.OptionGroup(parser, "Subject and log file options")
-	group.add_option("-s", "--subject", action = "store", dest = "subject", help = "Subject number")
-	group.add_option("-l", "--logfile", action = "store", dest = "logfile", help = "Logfile")
+	group.add_option("-s", "--subject", action="store", dest="subject", help= \
+		"Subject number")
+	group.add_option("-l", "--logfile", action="store", dest="logfile", help= \
+		"Logfile")
 	parser.add_option_group(group)
 	group = optparse.OptionGroup(parser, "Display options")
-	group.add_option("-f", "--fullscreen", action = "store_true", dest = "fullscreen", help = "Run fullscreen")
-	group.add_option("-c", "--custom_resolution", action = "store_true", dest = "custom_resolution", help = "Do not use the display resolution specified in the experiment file")
-	group.add_option("-w", "--width", action = "store", dest = "width", help = "Display width")
-	group.add_option("-e", "--height", action = "store", dest = "height", help = "Display height")
+	group.add_option("-f", "--fullscreen", action="store_true", dest= \
+		"fullscreen", help="Run fullscreen")
+	group.add_option("-c", "--custom_resolution", action="store_true", dest= \
+		"custom_resolution", help= \
+		"Do not use the display resolution specified in the experiment file")
+	group.add_option("-w", "--width", action="store", dest="width", help= \
+		"Display width")
+	group.add_option("-e", "--height", action="store", dest="height", help= \
+		"Display height")
 	parser.add_option_group(group)
 	group = optparse.OptionGroup(parser, "Miscellaneous options")
-	group.add_option("-d", "--debug", action = "store_true", dest = "debug", help = "Print lots of debugging messages to the standard output")
-	group.add_option("--stack", action = "store_true", dest = "stack", help = "Print stack information")	
+	group.add_option("-d", "--debug", action="store_true", dest="debug", help= \
+		"Print lots of debugging messages to the standard output")
+	group.add_option("--stack", action="store_true", dest="stack", help= \
+		"Print stack information")	
 	parser.add_option_group(group)
 	group = optparse.OptionGroup(parser, "Miscellaneous options")
-	group.add_option("--pylink", action = "store_true", dest = "pylink", help = "Load PyLink before PyGame (necessary for using the Eyelink plug-ins in non-dummy mode)")
+	group.add_option("--pylink", action="store_true", dest="pylink", help= \
+		"Load PyLink before PyGame (necessary for using the Eyelink plug-ins in non-dummy mode)")
 	parser.add_option_group(group)
 	options, args = parser.parse_args(sys.argv)
 
@@ -119,7 +130,8 @@ def opensesamerun_options():
 def opensesamerun_ready(options):
 
 	"""
-	Check if the opensesamerun options are sufficiently complete to run the experiment
+	Check if the opensesamerun options are sufficiently complete to run the
+	experiment
 
 	Arguments:
 	options -- a dictionary containing the options
@@ -174,7 +186,8 @@ def strip_tags(s):
 	"""
 
 	import re
-	return re.compile(r'<.*?>').sub('', s.replace("<br />", "\n").replace("<br>", "\n"))
+	return re.compile(r'<.*?>').sub('', s.replace("<br />", "\n").replace( \
+		"<br>", "\n"))
 
 def resource(name):
 
@@ -233,7 +246,8 @@ def module_versions():
 	from PyQt4 import QtCore
 
 	s = "OpenSesame %s" % version
-	s += "\nPython %d.%d.%d" % (sys.version_info[0], sys.version_info[1], sys.version_info[2])
+	s += "\nPython %d.%d.%d" % (sys.version_info[0], sys.version_info[1], \
+		sys.version_info[2])
 	s += "\nPyQt %s" % QtCore.PYQT_VERSION_STR
 	try:
 		import pygame
