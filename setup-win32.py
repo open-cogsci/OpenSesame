@@ -227,20 +227,22 @@ if include_inpout32:
 # Include plug-ins
 if include_plugins:
 	print "copying plugins"
-	included_plugins = [ \
-		"advanced_delay", \
-		"external_script", \
+	included_plugins = [
+		"advanced_delay",
+		"external_script",
 		"fixation_dot",
-		"text_display", \
-		"text_input", \
-		"notepad", \
-		"srbox", \
-		"port_reader", \
-		"reset_feedback", \
-		"form_base", \
-		"form_text_input", \
-		"form_consent", \
-		"form_text_display"
+		"text_display",
+		"text_input",
+		"notepad",
+		"srbox",
+		"port_reader",
+		"reset_feedback",
+		"parallel",
+		"form_base",
+		"form_text_input",
+		"form_consent",
+		"form_text_display",
+		"form_multiple_choice"
 		]
 
 	for plugin in included_plugins:

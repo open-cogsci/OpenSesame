@@ -49,6 +49,7 @@ included_plugins = [
 	"form_consent",
 	"form_text_display",
 	"form_text_input",
+	"form_multiple_choice",
 	"parallel",
 	]
 	
