@@ -133,22 +133,25 @@ class text_input(item.item, generic_response.generic_response):
 			c.show()
 
 			# Get the response and the moderators (shift etc.)
-			key, time = self._keyboard.get_key()
-			resp = self._keyboard.to_chr(key)
+			resp, time = self._keyboard.get_key()
+			if len(resp) == 1:
+				o = ord(resp)
+			else:
+				o = -1
 
 			if response_time == None:
 				response_time = time
 
 			# Process the response
-			if resp == "backspace":
+			if resp == "backspace" or o == 8:
 				if len(response) > 0:
 					response = response[:-1]
 			elif resp == "space":
 				response += " "
 			elif len(resp) == 1:
-				response += key
+				response += resp
 
-		self.experiment.set("response", self.experiment.sanitize(response)))
+		self.experiment.set("response", self.experiment.sanitize(response))
 		self.experiment.end_response_interval = response_time
 		self.response_bookkeeping()
 
