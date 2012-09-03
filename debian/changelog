@@ -1,9 +1,11 @@
-opensesame (0.27~pre2-1) unstable; urgency=low
+opensesame (0.27~pre3-2) precise; urgency=low
 
   * Added Expyriment backend
-  * Improved internationalization
+  * Added form functionality
+  * Improved Unicode support
+  * Improved internationalization  
 
- -- Sebastiaan Mathot <s.mathot@cogsci.nl>  Thu, 09 Aug 2012 17:16:03 +0200
+ -- Sebastiaan Mathot <s.mathot@cogsci.nl>  Mon, 03 Sep 2012 17:43:06 +0200
 
 opensesame (0.26-2) unstable; urgency=low
 
