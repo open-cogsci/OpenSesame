@@ -78,7 +78,7 @@ class logger(item.item):
 					raise exceptions.runtime_error( \
 						u"Logger '%s' tries to log the variable '%s', but this variable is not available. Please deselect '%s' in logger '%s' or enable the 'Use NA for variables that have not been set' option." \
 						% (self.name, var, var, self.name))
-		l.append(val)
+			l.append(val)
 
 		if self.get('use_quotes') == 'yes':
 			self.log(u'"' + ('","'.join(l)) + '"')
