@@ -66,24 +66,26 @@ class unused_widget(QtGui.QWidget):
 		vbox.addStretch()
 		
 		self.setLayout(vbox)
-		self.__unused_tab__ = True		
+		self.__unused_tab__ = True
 
 	def purge_unused(self):
 
 		"""Remove all unused items from the items list"""
 
-		resp = QtGui.QMessageBox.question(self.ui.centralwidget, \
+		# Ask confirmation
+		resp = QtGui.QMessageBox.question(self.main_window.ui.centralwidget, \
 			_("Permanently delete items?"), \
 			_("Are you sure you want to permanently delete all unused items? This action cannot be undone."), \
 			QtGui.QMessageBox.Yes, QtGui.QMessageBox.No)
 		if resp == QtGui.QMessageBox.No:
 			return
-
-		# We need a loop, because items may become unused
-		# by deletion of their unused parent items
-		while len(self.experiment.unused_items) > 0:
-			for item in self.experiment.unused_items:
-				if item in self.experiment.items:
-					del self.experiment.items[item]
-			self.refresh()
-		self.ui.tab_widget.close_all()	
+		
+		# Retrieve and remove unused items
+		unused_items = self.main_window.ui.itemtree.unused_items()
+		for item in unused_items:
+			if item in self.experiment.items:
+				del self.experiment.items[item]
+				
+		# Notify dispatch
+		self.main_window.dispatch.event_structure_change.emit()
+		

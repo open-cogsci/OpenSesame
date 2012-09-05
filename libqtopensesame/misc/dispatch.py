@@ -54,11 +54,11 @@ class dispatch(QtCore.QObject):
 	parts of the GUI
 	"""
 	
-	event_name_change = QtCore.pyqtSignal(str, str)
-	event_regenerate = QtCore.pyqtSignal(str)	
-	event_script_change = QtCore.pyqtSignal(str)
-	event_simple_change = QtCore.pyqtSignal(str)
-	event_structure_change = QtCore.pyqtSignal(str)
+	event_name_change = QtCore.pyqtSignal([str, str], name='nameChange')
+	event_regenerate = QtCore.pyqtSignal([str], name='regenerate')
+	event_script_change = QtCore.pyqtSignal([], [str], name='scriptChange')
+	event_simple_change = QtCore.pyqtSignal([], [str], name='simpleChange')
+	event_structure_change = QtCore.pyqtSignal([], [str], name='structureChange')
 		
 	def __init__(self, main_window):
 	
@@ -76,19 +76,7 @@ class dispatch(QtCore.QObject):
 		self.event_script_change.connect(self.script_change)
 		self.event_simple_change.connect(self.simple_change)
 		self.event_structure_change.connect(self.structure_change)
-		
-	def script_change(self, name):
-	
-		"""
-		Handles a change to an items script
-		
-		Arguments:
-		name -- the name of an item
-		"""
-	
-		self.main_window.experiment.build_item_tree()		
-		self.simple_change(name)
-		
+						
 	def regenerate(self, script):
 	
 		"""Handles a full regeneration of the experiment"""
@@ -97,7 +85,7 @@ class dispatch(QtCore.QObject):
 		try:
 			# Generate the new experiment
 			tmp = experiment.experiment(self.main_window, \
-				self.main_window.experiment.title, 	script, \
+				self.main_window.experiment.title, script, \
 				self.main_window.experiment.pool_folder)
 		except libopensesame.exceptions.script_error as error:		
 			# If something is wrong with the script, notify the user
@@ -110,9 +98,21 @@ class dispatch(QtCore.QObject):
 		self.main_window.ui.tabwidget.close_all()
 		self.main_window.ui.tabwidget.open_general_script()
 		self.main_window.set_busy(False)
-		self.main_window.set_unsaved()		
+		self.main_window.set_unsaved()	
 		
-	def simple_change(self, name):
+	def script_change(self, name=None):
+	
+		"""
+		Handles a change to an items script
+		
+		Arguments:
+		name -- the name of an item
+		"""
+	
+		self.main_window.experiment.build_item_tree()		
+		self.simple_change(name)
+				
+	def simple_change(self, name=None):
 	
 		"""
 		Handles simple changes to an item
@@ -123,9 +123,8 @@ class dispatch(QtCore.QObject):
 	
 		self.main_window.refresh_variable_inspector()
 		self.main_window.set_unsaved()
-		
-		
-	def structure_change(self, name):
+			
+	def structure_change(self, name=None):
 		
 		"""
 		Handles changes to the structure of the experiment

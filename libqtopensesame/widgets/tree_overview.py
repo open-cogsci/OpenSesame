@@ -193,3 +193,32 @@ class tree_overview(QtGui.QTreeWidget):
 		elif e.key() == QtCore.Qt.Key_Space:
 			self.context_menu(self.currentItem())
 			
+	def recursive_children(self, item):
+		
+		"""
+		Get a list of unused items from the itemtree
+		
+		Returns:
+		A list of items (strings) that are children of the parent item
+		"""
+		
+		children = []
+		for i in range(item.childCount()):
+			child = item.child(i)
+			children.append(unicode(child.text(0)))
+			children += self.recursive_children(child)
+		return children
+	
+	def unused_items(self):
+		
+		"""
+		Get a list of unused items
+		
+		Returns:
+		A list of unused items (names as strings)
+		"""
+		
+		return self.main_window.ui.itemtree.recursive_children( \
+			self.main_window.ui.itemtree.topLevelItem( \
+				self.main_window.ui.itemtree.topLevelItemCount()-1))
+		
