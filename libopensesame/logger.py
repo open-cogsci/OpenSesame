@@ -23,7 +23,7 @@ class logger(item.item):
 
 	"""The logger item logs variables to a plain text .csv file"""
 
-	def __init__(self, name, experiment, string = None):
+	def __init__(self, name, experiment, string=None):
 
 		"""
 		Constructor
@@ -87,7 +87,12 @@ class logger(item.item):
 
 	def from_string(self, string):
 
-		"""Parse the logger from a definition string"""
+		"""
+		Parse the logger from a definition string
+		
+		Arguments:
+		string -- definition string
+		"""
 
 		self.logvars = []
 		for line in string.split('\n'):
