@@ -70,7 +70,6 @@ class general_properties(QtGui.QWidget):
 		w = QtGui.QWidget()
 		self.ui = general_widget_ui.Ui_general_widget()
 		self.ui.setupUi(w)
-		self.ui.widget_credits.initialize(self.main_window)
 		self.main_window.theme.apply_theme(self)
 
 		# Initialize the color and font widgets

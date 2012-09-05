@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'resources/ui/general_widget.ui'
 #
-# Created: Thu Aug  2 12:43:05 2012
+# Created: Mon Sep  3 22:36:03 2012
 #      by: PyQt4 UI code generator 4.9.1
 #
 # WARNING! All changes made in this file will be lost!
@@ -21,14 +21,6 @@ class Ui_general_widget(object):
         self.gridLayout_5 = QtGui.QGridLayout(general_widget)
         self.gridLayout_5.setMargin(0)
         self.gridLayout_5.setObjectName(_fromUtf8("gridLayout_5"))
-        self.widget_credits = credits_widget(general_widget)
-        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Preferred, QtGui.QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.widget_credits.sizePolicy().hasHeightForWidth())
-        self.widget_credits.setSizePolicy(sizePolicy)
-        self.widget_credits.setObjectName(_fromUtf8("widget_credits"))
-        self.gridLayout_5.addWidget(self.widget_credits, 1, 0, 1, 1)
         self.widget_2 = QtGui.QWidget(general_widget)
         sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
@@ -201,6 +193,5 @@ class Ui_general_widget(object):
         self.button_backend_settings.setText(QtGui.QApplication.translate("general_widget", "Back-end settings", None, QtGui.QApplication.UnicodeUTF8))
         self.button_script_editor.setText(QtGui.QApplication.translate("general_widget", "Script editor", None, QtGui.QApplication.UnicodeUTF8))
 
-from libqtopensesame.widgets.credits_widget import credits_widget
 from libqtopensesame.widgets.font_widget import font_widget
 from libqtopensesame.widgets.color_edit import color_edit

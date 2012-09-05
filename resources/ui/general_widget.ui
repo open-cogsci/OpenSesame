@@ -17,16 +17,6 @@
    <property name="margin">
     <number>0</number>
    </property>
-   <item row="1" column="0">
-    <widget class="credits_widget" name="widget_credits" native="true">
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
-    </widget>
-   </item>
    <item row="0" column="0">
     <widget class="QWidget" name="widget_2" native="true">
      <property name="sizePolicy">
@@ -313,12 +303,6 @@
    <class>color_edit</class>
    <extends>QWidget</extends>
    <header>libqtopensesame.widgets.color_edit.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>credits_widget</class>
-   <extends>QWidget</extends>
-   <header>libqtopensesame.widgets.credits_widget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>
