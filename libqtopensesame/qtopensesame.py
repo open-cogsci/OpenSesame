@@ -282,6 +282,7 @@ class qtopensesame(QtGui.QMainWindow):
 		don't wait until the end, the window gets distorted again.
 		"""
 
+		self.ui.tabwidget.restoreGeometry(config.get_config('_initial_window_geometry'))
 		self.restoreState(config.get_config('_initial_window_state'))
 
 	def restore_state(self):
@@ -339,12 +340,12 @@ class qtopensesame(QtGui.QMainWindow):
 		"""Restores the state of the current window"""
 
 		debug.msg()
-
 		settings = QtCore.QSettings("cogscinl", "opensesame")
 		settings.beginGroup("MainWindow")
 		config.save_config(settings)
 		settings.setValue("size", self.size())
 		settings.setValue("pos", self.pos())
+		settings.setValue("_initial_window_geometry", self.ui.tabwidget.saveGeometry())
 		settings.setValue("_initial_window_state", self.saveState())
 		settings.setValue("auto_response", self.experiment.auto_response)
 		settings.setValue("toolbar_text", \
@@ -870,15 +871,13 @@ class qtopensesame(QtGui.QMainWindow):
 		self.set_auto_response()
 		self.set_unsaved(False)
 
-	def save_file(self, dummy=None, overwrite=True, remember=True, catch=True):
+	def save_file(self, dummy=None, remember=True, catch=True):
 
 		"""
 		Save the current experiment
 
 		Keyword arguments:
 		dummy -- a dummy argument passed by the signal handler (default=None)
-		overwrite -- a boolean indicating whether other files should be
-					 overwritten without asking (default=True)
 		remember -- a boolean indicating whether the file should be included in
 					the list of recent files (default=True)
 		catch -- a boolean indicating whether exceptions should be caught and
@@ -916,11 +915,11 @@ class qtopensesame(QtGui.QMainWindow):
 
 		# Try to save the experiment if it doesn't exist already
 		if self.experiment.debug:
-			resp = self.experiment.save(self.current_path, overwrite)
+			resp = self.experiment.save(self.current_path, overwrite=True)
 			self.set_status(_("Saved as %s") % self.current_path)			
 		else:
 			try:
-				resp = self.experiment.save(self.current_path, overwrite)
+				resp = self.experiment.save(self.current_path, overwrite=True)
 				self.set_status(_("Saved as %s") % self.current_path)
 			except Exception as e:
 				if not catch:
@@ -928,36 +927,6 @@ class qtopensesame(QtGui.QMainWindow):
 				self.experiment.notify(_("Failed to save file. Error: %s") % e)
 				self.set_busy(False)
 				return
-
-		# If the file already exists, confirm that it should be overwritten
-		if resp == False:
-			resp = QtGui.QMessageBox.question(self.ui.centralwidget, \
-				_("File exists"), \
-				_("A file with that name already exists. Overwite?"), \
-				QtGui.QMessageBox.Yes, QtGui.QMessageBox.No)
-			if resp == QtGui.QMessageBox.No:
-				self.window_message("Unsaved")
-				self.current_path = None
-				self.set_status("Not saved")
-				self.set_busy(False)
-				return
-			else:
-				try:
-					self.current_path = self.experiment.save( \
-						self.current_path, True)
-					self.window_message(self.current_path)
-					self.set_status(_("Saved as %s") % self.current_path)
-				except Exception as e:
-					if not catch:
-						raise e
-					self.experiment.notify(_("Failed to save file. Error: %s") \
-						% e)
-					self.set_status(_("Not saved"))
-			self.set_busy(False)
-			return
-
-		else:
-			self.current_path = resp
 
 		if remember:
 			self.update_recent_files()
@@ -998,7 +967,7 @@ class qtopensesame(QtGui.QMainWindow):
 				debug.msg(path)
 					
 			self.current_path = path
-			self.save_file(overwrite=False)
+			self.save_file()
 
 	def close_item_tab(self, item, close_edit=True, close_script=True):
 
