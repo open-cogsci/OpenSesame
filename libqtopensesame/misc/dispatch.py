@@ -46,6 +46,7 @@ from PyQt4 import QtCore
 from libqtopensesame.misc import _
 from libqtopensesame.items import experiment
 import libopensesame.exceptions
+import sip
 
 class dispatch(QtCore.QObject):
 
@@ -56,9 +57,12 @@ class dispatch(QtCore.QObject):
 	
 	event_name_change = QtCore.pyqtSignal([str, str], name='nameChange')
 	event_regenerate = QtCore.pyqtSignal([str], name='regenerate')
-	event_script_change = QtCore.pyqtSignal([], [str], name='scriptChange')
-	event_simple_change = QtCore.pyqtSignal([], [str], name='simpleChange')
-	event_structure_change = QtCore.pyqtSignal([], [str], name='structureChange')
+	event_script_change = QtCore.pyqtSignal([str], [sip.voidptr], \
+		name='scriptChange')
+	event_simple_change = QtCore.pyqtSignal([str], [sip.voidptr], \
+		name='simpleChange')
+	event_structure_change = QtCore.pyqtSignal([str], [sip.voidptr], \
+		name='structureChange')
 		
 	def __init__(self, main_window):
 	
@@ -73,10 +77,13 @@ class dispatch(QtCore.QObject):
 		self.main_window = main_window	
 		self.event_name_change.connect(self.name_change)
 		self.event_regenerate.connect(self.regenerate)		
-		self.event_script_change.connect(self.script_change)
-		self.event_simple_change.connect(self.simple_change)
-		self.event_structure_change.connect(self.structure_change)
-						
+		self.event_script_change[str].connect(self.script_change)
+		self.event_script_change[sip.voidptr].connect(self.script_change)
+		self.event_simple_change[str].connect(self.simple_change)
+		self.event_simple_change[sip.voidptr].connect(self.simple_change)
+		self.event_structure_change[str].connect(self.structure_change)
+		self.event_structure_change[sip.voidptr].connect(self.structure_change)
+		
 	def regenerate(self, script):
 	
 		"""Handles a full regeneration of the experiment"""
