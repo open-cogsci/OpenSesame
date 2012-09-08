@@ -30,8 +30,6 @@ override_dh_auto_build:
 
 override_dh_install:
 	dh_install
-	# cleanups
-	# no duplicate license info
 	-rm debian/opensesame/usr/share/opensesame/COPYING
 	# These experiments contain images with an unspecified license
 	-rm debian/opensesame/usr/share/opensesame/examples/affordances_orientation*
