@@ -37,6 +37,7 @@ NEW STYLE
 from PyQt4 import QtCore
 import libopensesame.misc
 from libopensesame import debug, exceptions
+import platform
 import sip
 
 class config(object):
@@ -75,7 +76,7 @@ class config(object):
 		"shortcut_pool" : "Ctrl+4",
 		"shortcut_variables" : "Ctrl+5",
 		"style" : "",
-		"theme" : "gnome",
+		"theme" : "default",
 		"toolbar_size" : 32,
 		"toolbar_text" : False,
 		"opensesamerun" : False,
@@ -89,6 +90,13 @@ class config(object):
 			"http://files.cogsci.nl/software/opensesame/MOST_RECENT_VERSION.TXT"
 		}
 		
+	# OS specific override settings
+	config_linux = {
+		"theme" : "gnome"
+		}		
+	config_mac = {}
+	config_windows = {}
+		
 	def __init__(self):
 		
 		"""Constructor"""
@@ -98,6 +106,17 @@ class config(object):
 		object.__setattr__(self, 'api', sip.getapi('QString'))
 		if self.api not in (1,2):
 			raise Exception('config: unknown api %s' % self.api)	
+		
+		# Apply OS specific override settings
+		if platform.system() == "Windows":
+			for key, value in self.config_windows.iteritems():
+				self.config[key] = value
+		elif platform.system() == "Darwin":
+			for key, value in self.config_mac.iteritems():
+				self.config[key] = value
+		elif platform.system() == "Linux":			
+			for key, value in self.config_linux.iteritems():
+				self.config[key] = value
 		
 	def __getattr__(self, setting):
 		
