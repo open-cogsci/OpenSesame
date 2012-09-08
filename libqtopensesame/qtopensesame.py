@@ -19,6 +19,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 
 from PyQt4 import QtCore, QtGui
 from libqtopensesame.misc import includes, config, _
+from libqtopensesame.misc.config import cfg
 from libqtopensesame.items import experiment
 from libopensesame import debug, exceptions
 import libopensesame.exceptions
@@ -832,13 +833,15 @@ class qtopensesame(QtGui.QMainWindow):
 
 		if path == None:
 			path = QtGui.QFileDialog.getOpenFileName(self.ui.centralwidget, \
-				_("Open file"), filter=self.file_type_filter)
+				_("Open file"), filter=self.file_type_filter, directory= \
+				cfg.file_dialog_path)
 		if path == None or path == "":
 			return
 
 		path = unicode(path)
 		self.set_status("Opening ...")
-		self.ui.tabwidget.close_all()
+		self.ui.tabwidget.close_all()		
+		cfg.file_dialog_path = os.path.dirname(path)
 
 		try:
 			exp = experiment.experiment(self, "Experiment", path)
@@ -944,11 +947,12 @@ class qtopensesame(QtGui.QMainWindow):
 		else:
 			path = self.current_path		
 		path, file_type = QtGui.QFileDialog.getSaveFileNameAndFilter( \
-			self.ui.centralwidget, _("Save file as ..."), path, \
-			self.file_type_filter)
+			self.ui.centralwidget, _("Save file as ..."), directory= \
+			cfg.file_dialog_path, filter=self.file_type_filter)
 							
 		if path != None and path != "":
 			path = unicode(path)
+			cfg.file_dialog_path = os.path.dirname(path)
 			
 			# If the extension has not been explicitly typed in, set it based
 			# on the selected filter and, if no filter has been set, based on
