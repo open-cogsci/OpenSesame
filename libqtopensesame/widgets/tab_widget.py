@@ -290,5 +290,4 @@ class tab_widget(QtGui.QTabWidget):
 		w = self.currentWidget()
 		if hasattr(w, 'on_activate'):
 			w.on_activate()
-			
-
+	

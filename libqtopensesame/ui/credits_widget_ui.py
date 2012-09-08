@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'resources/ui/credits_widget.ui'
 #
-# Created: Sun Jul 15 12:36:52 2012
+# Created: Sat Sep  8 16:32:13 2012
 #      by: PyQt4 UI code generator 4.9.1
 #
 # WARNING! All changes made in this file will be lost!
@@ -17,7 +17,7 @@ except AttributeError:
 class Ui_widget_credits(object):
     def setupUi(self, widget_credits):
         widget_credits.setObjectName(_fromUtf8("widget_credits"))
-        widget_credits.resize(868, 320)
+        widget_credits.resize(868, 55)
         sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Preferred, QtGui.QSizePolicy.MinimumExpanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -26,7 +26,7 @@ class Ui_widget_credits(object):
         self.verticalLayout = QtGui.QVBoxLayout(widget_credits)
         self.verticalLayout.setMargin(0)
         self.verticalLayout.setObjectName(_fromUtf8("verticalLayout"))
-        spacerItem = QtGui.QSpacerItem(20, 40, QtGui.QSizePolicy.Minimum, QtGui.QSizePolicy.Expanding)
+        spacerItem = QtGui.QSpacerItem(20, 2, QtGui.QSizePolicy.Minimum, QtGui.QSizePolicy.Expanding)
         self.verticalLayout.addItem(spacerItem)
         self.widget_container = QtGui.QWidget(widget_credits)
         sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Preferred, QtGui.QSizePolicy.Fixed)

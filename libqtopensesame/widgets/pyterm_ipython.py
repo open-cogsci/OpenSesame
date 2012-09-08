@@ -92,3 +92,4 @@ class console(QWidget):
 		"""Shows a new prompt"""
 
 		self.console._show_interpreter_prompt()
+

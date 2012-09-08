@@ -56,6 +56,7 @@ class qtopensesame(QtGui.QMainWindow):
 
 		QtGui.QMainWindow.__init__(self, parent)
 		self.app = app
+		self.first_show = True		
 
 	def resume_init(self):
 
@@ -276,16 +277,6 @@ class qtopensesame(QtGui.QMainWindow):
 		config.restore_config(settings)
 		settings.endGroup()			
 
-	def restore_window_state(self):
-
-		"""
-		This is done separately from the rest of the restoration, because if we
-		don't wait until the end, the window gets distorted again.
-		"""
-
-		self.ui.tabwidget.restoreGeometry(config.get_config('_initial_window_geometry'))
-		self.restoreState(config.get_config('_initial_window_state'))
-
 	def restore_state(self):
 
 		"""Restore the current window to the saved state"""
@@ -295,25 +286,23 @@ class qtopensesame(QtGui.QMainWindow):
 		# Force configuration options that were set via the command line
 		config.parse_cmdline_args(self.options._config)
 
-		self.resize(config.get_config("size"))
-		self.move(config.get_config("pos"))
-		self.experiment.auto_response = config.get_config("auto_response")
+		self.resize(cfg.size)
+		self.move(cfg.pos)
+		self.experiment.auto_response = cfg.auto_response
 		
 		# Set the keyboard shortcuts
 		self.ui.shortcut_itemtree.setKey(QtGui.QKeySequence( \
-			config.get_config("shortcut_itemtree")))
+			cfg.shortcut_itemtree))
 		self.ui.shortcut_tabwidget.setKey(QtGui.QKeySequence( \
-			config.get_config("shortcut_tabwidget")))
-		self.ui.shortcut_stdout.setKey(QtGui.QKeySequence( \
-			config.get_config("shortcut_stdout")))
-		self.ui.shortcut_pool.setKey(QtGui.QKeySequence( \
-			config.get_config("shortcut_pool")))
+			cfg.shortcut_tabwidget))
+		self.ui.shortcut_stdout.setKey(QtGui.QKeySequence(cfg.shortcut_stdout))
+		self.ui.shortcut_pool.setKey(QtGui.QKeySequence(cfg.shortcut_pool))
 		self.ui.shortcut_variables.setKey(QtGui.QKeySequence( \
-			config.get_config("shortcut_variables")))
+			cfg.shortcut_variables))
 
 		# Unpack the string with recent files and only remember those that exist
 		self.recent_files = []
-		for path in config.get_config("recent_files").split(";;"):		
+		for path in cfg.recent_files.split(";;"):		
 			if os.path.exists(path):
 				debug.msg("adding recent file '%s'" % path)
 				self.recent_files.append(path)
@@ -322,19 +311,29 @@ class qtopensesame(QtGui.QMainWindow):
 				
 		self.ui.action_enable_auto_response.setChecked( \
 			self.experiment.auto_response)
-		self.ui.action_onetabmode.setChecked(config.get_config("onetabmode"))
+		self.ui.action_onetabmode.setChecked(cfg.onetabmode)
 		self.ui.action_compact_toolbar.setChecked( \
-			config.get_config("toolbar_size") == 16)
+			cfg.toolbar_size == 16)
 		self.ui.tabwidget.toggle_onetabmode()
 
-		if config.get_config("toolbar_text"):
+		if cfg.toolbar_text:
 			self.ui.toolbar_main.setToolButtonStyle( \
 				QtCore.Qt.ToolButtonTextUnderIcon)
 		else:
 			self.ui.toolbar_main.setToolButtonStyle( \
 				QtCore.Qt.ToolButtonIconOnly)
 		self.set_style()
-		self.theme.set_toolbar_size(config.get_config("toolbar_size"))
+		self.theme.set_toolbar_size(cfg.toolbar_size)
+		
+	def restore_window_state(self):
+
+		"""
+		This is done separately from the rest of the restoration, because if we
+		don't wait until the end, the window gets distorted again.
+		"""
+
+		self.restoreState(config.get_config('_initial_window_state'))		
+		self.restoreGeometry(config.get_config('_initial_window_geometry'))		
 
 	def save_state(self):
 
@@ -346,7 +345,7 @@ class qtopensesame(QtGui.QMainWindow):
 		config.save_config(settings)
 		settings.setValue("size", self.size())
 		settings.setValue("pos", self.pos())
-		settings.setValue("_initial_window_geometry", self.ui.tabwidget.saveGeometry())
+		settings.setValue("_initial_window_geometry", self.saveGeometry())
 		settings.setValue("_initial_window_state", self.saveState())
 		settings.setValue("auto_response", self.experiment.auto_response)
 		settings.setValue("toolbar_text", \
@@ -374,11 +373,11 @@ class qtopensesame(QtGui.QMainWindow):
 
 		"""Appply the application style"""
 
-		if config.get_config('style') in QtGui.QStyleFactory.keys():
-			self.setStyle(QtGui.QStyleFactory.create(config.get_config('style')))
-			debug.msg("using style '%s'" % config.get_config('style'))
+		if cfg.style in QtGui.QStyleFactory.keys():
+			self.setStyle(QtGui.QStyleFactory.create(cfg.style))
+			debug.msg("using style '%s'" % cfg.style)
 		else:
-			debug.msg("ignoring unknown style '%s'" % config.get_config('style'))
+			debug.msg("ignoring unknown style '%s'" % cfg.style)
 			config.set_config('style', '')
 
 	def set_auto_response(self):

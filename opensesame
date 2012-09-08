@@ -94,10 +94,10 @@ if __name__ == "__main__":
 	else:
 		opensesame.check_update(always=False)
 		opensesame.ui.tabwidget.open_start_new()
-
-	opensesame.restore_window_state()
-	opensesame.refresh()
+	
 	opensesame.show()
+	opensesame.restore_window_state()	
+	opensesame.refresh()
 
 	# Exit using the application exit status
 	sys.exit(app.exec_())

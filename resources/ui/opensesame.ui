@@ -27,6 +27,12 @@
    <layout class="QVBoxLayout" name="verticalLayout_6">
     <item>
      <widget class="tab_widget" name="tabwidget">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
       <property name="currentIndex">
        <number>-1</number>
       </property>
@@ -46,7 +52,7 @@
      <x>0</x>
      <y>0</y>
      <width>1000</width>
-     <height>25</height>
+     <height>23</height>
     </rect>
    </property>
    <widget class="QMenu" name="menu_file">
@@ -141,13 +147,7 @@
    <property name="minimumSize">
     <size>
      <width>200</width>
-     <height>103</height>
-    </size>
-   </property>
-   <property name="maximumSize">
-    <size>
-     <width>350</width>
-     <height>524287</height>
+     <height>113</height>
     </size>
    </property>
    <property name="features">
@@ -218,7 +218,7 @@
            </sizepolicy>
           </property>
           <property name="text">
-           <string>ICON</string>
+           <string/>
           </property>
           <property name="pixmap">
            <pixmap>:/icons/variable_inspector_large.png</pixmap>
@@ -413,7 +413,7 @@
            </sizepolicy>
           </property>
           <property name="text">
-           <string>ICON</string>
+           <string/>
           </property>
           <property name="pixmap">
            <pixmap>:/icons/stdout_large.png</pixmap>

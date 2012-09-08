@@ -222,3 +222,4 @@ class tree_overview(QtGui.QTreeWidget):
 			self.main_window.ui.itemtree.topLevelItem( \
 				self.main_window.ui.itemtree.topLevelItemCount()-1))
 		
+				
