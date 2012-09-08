@@ -24,6 +24,7 @@ import copy
 import libopensesame.loop
 from libqtopensesame.items import qtitem
 from libqtopensesame.misc import _
+from libqtopensesame.misc.config import cfg
 from libqtopensesame.ui import loop_wizard_dialog_ui, loop_widget_ui
 from libqtopensesame.widgets import loop_table
 from libopensesame import debug
@@ -336,7 +337,7 @@ class loop(libopensesame.loop.loop, qtitem.qtitem):
 		column_order = []
 		if self.cyclevar_list() != None:
 			if self.has("column_order"):
-				for var in self.get("column_order").split(";"):
+				for var in self.unistr(self.get("column_order")).split(";"):
 					if var in self.cyclevar_list():
 						column_order.append(var)
 			for var in self.cyclevar_list():
@@ -394,7 +395,7 @@ class loop(libopensesame.loop.loop, qtitem.qtitem):
 	def wizard(self):
 
 		"""Present the variable wizard dialog"""
-
+		
 		icons = {}
 		icons["cut"] = self.experiment.icon("cut")
 		icons["copy"] = self.experiment.icon("copy")
@@ -403,16 +404,18 @@ class loop(libopensesame.loop.loop, qtitem.qtitem):
 
 		# Set up the wizard dialog
 		a = QtGui.QDialog(self.experiment.main_window.ui.centralwidget)
-		a.ui = loop_wizard_dialog_ui.Ui_loop_widget()
-		a.ui.setupUi(a)
+		a.ui = loop_wizard_dialog_ui.Ui_loop_wizard_dialog()
+		a.ui.setupUi(a)		
 		self.experiment.main_window.theme.apply_theme(a)
 		a.ui.table_example.build_context_menu(icons)
 		a.ui.table_wizard.build_context_menu(icons)
 		a.ui.table_example.hide()
 		a.ui.table_wizard.setRowCount(255)
 		a.ui.table_wizard.setColumnCount(255)
-
+		
+		a.ui.table_wizard.set_contents(cfg.loop_wizard)		
 		if a.exec_() == QtGui.QDialog.Accepted:		
+			cfg.loop_wizard = a.ui.table_wizard.get_contents()
 			debug.msg("filling loop table")
 			# First read the table into a dictionary of variables
 			var_dict = {}
@@ -423,6 +426,8 @@ class loop(libopensesame.loop.loop, qtitem.qtitem):
 					if item == None:
 						break
 					s = unicode(item.text())
+					if s == u'':
+						break
 					if row == 0:
 						var = self.experiment.sanitize(s, True)
 						var_dict[var] = []
@@ -436,7 +441,7 @@ class loop(libopensesame.loop.loop, qtitem.qtitem):
 			self.lock = True		
 			self.loop_widget.ui.spin_cycles.setValue(self.cycle_count())
 			self.lock = False
-			self.refresh_loop_table()
+			self.refresh_loop_table()		
 
 	def init_edit_widget(self):
 

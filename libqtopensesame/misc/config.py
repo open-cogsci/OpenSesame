@@ -51,9 +51,10 @@ class config(object):
 		"autosave_max_age" : 7,
 		"default_logfile_folder" : libopensesame.misc.home_folder(),
 		"disabled_plugins" : "",
+		"file_dialog_path" : "",
 		"immediate_rename" : False,
 		"locale" : "default",
-		"loop_wizard" : u'', 
+		"loop_wizard" : QtCore.QStringList(),
 		"onetabmode" : False,
 		"recent_files" : "",
 		"scintilla_line_numbers" : True,
@@ -196,6 +197,8 @@ class config(object):
 					value = value.toByteArray()
 				elif type(default) == QtCore.QString:
 					value = value.toString()					
+				elif type(default) == QtCore.QStringList:
+					value = value.toStringList()
 				elif type(default) == unicode:
 					value = unicode(value.toString())
 					

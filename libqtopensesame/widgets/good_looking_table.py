@@ -38,14 +38,12 @@ class good_looking_table(QtGui.QTableWidget):
 		"""
 	
 		self.clipboard = QtGui.QApplication.clipboard			
-		self.build_context_menu(icons)
-		
+		self.build_context_menu(icons)		
 		# If there is only one parameter, this is the parent
 		if columns == None:
 			QtGui.QTableWidget.__init__(self, rows)
 		else:
-			QtGui.QTableWidget.__init__(self, rows, columns, parent)
-			
+			QtGui.QTableWidget.__init__(self, rows, columns, parent)						
 		self.setGridStyle(QtCore.Qt.DotLine)
 		self.setAlternatingRowColors(True)
 
@@ -67,7 +65,6 @@ class good_looking_table(QtGui.QTableWidget):
 			self.menu.addAction(icons["copy"], "Copy", self.copy)
 		else:
 			self.menu.addAction("Copy", self.copy)					
-
 		if "paste" in icons:
 			self.menu.addAction(icons["paste"], "Paste", self.paste)
 		else:		
@@ -127,32 +124,31 @@ class good_looking_table(QtGui.QTableWidget):
 	
 		"""Copies data from the table into the clipboard"""
 
-		selected_range = self.selectedRanges()[0]		
-		rows = QtCore.QStringList()
-		for row in range(selected_range.topRow(), selected_range.bottomRow() + \
-			1):		
-			columns = QtCore.QStringList()
-			for column in range(selected_range.leftColumn(), \
-				selected_range.rightColumn() + 1):	
+		_range = self.selectedRanges()[0]	
+		rows = []
+		for row in range(_range.topRow(), _range.bottomRow()+1):		
+			columns = []
+			for column in range(_range.leftColumn(), _range.rightColumn()+1):	
 				item = self.item(row, column)
 				if item != None:
-					value = item.text()
+					value = unicode(item.text())
+					print value
 				else:
-					value = ""
+					value = u''				
 				columns.append(value)
-			rows.append(columns.join("\t"))					
-		selection = rows.join("\n")		 	
+			rows.append(u'\t'.join(columns))					
+		selection = u'\n'.join(rows) 	
 		self.clipboard().setText(selection)
 		
 	def paste(self):
 	
 		"""Paste text from the clipboard into the table"""
 			
-		selection = self.clipboard().mimeData().text()		
-		rows = selection.split("\n")			
+		selection = unicode(self.clipboard().mimeData().text())
+		rows = selection.split(u'\n')	
 		current_row = self.currentRow()		
 		for row in rows:
-			cells = row.split("\t")			
+			cells = row.split(u'\t')			
 			current_column = self.currentColumn()
 			for cell in cells:
 				if current_column >= self.columnCount():
@@ -174,7 +170,48 @@ class good_looking_table(QtGui.QTableWidget):
 				selected_range.rightColumn() + 1):	
 				item = self.item(row, column)
 				if item != None:
-					item.setText("")
+					item.setText("")					
+					
+	def get_contents(self):
+		
+		"""
+		Get the contents of the table
+		
+		Returns:
+		A QVariant
+		"""
+		
+		contents = QtCore.QStringList()		
+		for row in range(self.rowCount()):
+			for column in range(self.columnCount()):		
+				i = self.item(row, column)
+				if i != None:
+					contents.append(i.text())
+				else:
+					contents.append(QtCore.QString())
+		return contents
+	
+	def set_contents(self, contents):
+		
+		"""
+		Set the table contents
+		
+		Arguments:
+		contents -- a QStringList
+		"""		
+		
+		column = 0
+		row = 0
+		for i in contents:			
+			# Set the item
+			item = QtGui.QTableWidgetItem()
+			item.setText(i)
+			self.setItem(row, column, item)			
+			# Advance to next cell with wraparound
+			column += 1
+			if column == self.columnCount():
+				row += 1
+				column = 0
 		
 if __name__ == "__main__":
 
@@ -184,6 +221,7 @@ if __name__ == "__main__":
 	app = QtGui.QApplication(sys.argv)
 	widget = good_looking_table(10, 10)
 	widget.setWindowTitle("Good looking table")
-	widget.show()
-	sys.exit(app.exec_())
+	widget.show()	
+	app.exec_()
+	print widget.get_contents()
 
