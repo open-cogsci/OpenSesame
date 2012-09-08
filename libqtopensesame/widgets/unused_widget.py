@@ -87,5 +87,5 @@ class unused_widget(QtGui.QWidget):
 				del self.experiment.items[item]
 				
 		# Notify dispatch
-		self.main_window.dispatch.event_structure_change.emit()
+		self.main_window.dispatch.event_structure_change.emit('')
 		
