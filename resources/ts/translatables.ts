@@ -174,72 +174,72 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="general_widget.ui" line="95"/>
+        <location filename="general_widget.ui" line="85"/>
         <source>The display resolution (width) in pixels</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="general_widget.ui" line="121"/>
+        <location filename="general_widget.ui" line="111"/>
         <source>px</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="general_widget.ui" line="118"/>
+        <location filename="general_widget.ui" line="108"/>
         <source>The display resolution (height) in pixels</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="general_widget.ui" line="66"/>
+        <location filename="general_widget.ui" line="56"/>
         <source>&lt;h3&gt;Back-end&lt;/h3&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="general_widget.ui" line="73"/>
+        <location filename="general_widget.ui" line="63"/>
         <source>&lt;h3&gt;Resolution&lt;/h3&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="general_widget.ui" line="111"/>
+        <location filename="general_widget.ui" line="101"/>
         <source>x</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="general_widget.ui" line="137"/>
+        <location filename="general_widget.ui" line="127"/>
         <source>&lt;h3&gt;Colors&lt;/h3&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="general_widget.ui" line="162"/>
+        <location filename="general_widget.ui" line="152"/>
         <source>Foreground</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="general_widget.ui" line="169"/>
+        <location filename="general_widget.ui" line="159"/>
         <source>Background</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="general_widget.ui" line="185"/>
+        <location filename="general_widget.ui" line="175"/>
         <source>&lt;small&gt;&lt;i&gt;Examples: &apos;white&apos;, &apos;#FFFFFF&apos;&lt;/i&gt;&lt;/small&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="general_widget.ui" line="201"/>
+        <location filename="general_widget.ui" line="191"/>
         <source>&lt;h3&gt;Font&lt;/h3&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="general_widget.ui" line="245"/>
+        <location filename="general_widget.ui" line="235"/>
         <source>&lt;h3&gt;Advanced&lt;/h3&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="general_widget.ui" line="283"/>
+        <location filename="general_widget.ui" line="273"/>
         <source>Back-end settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="general_widget.ui" line="290"/>
+        <location filename="general_widget.ui" line="280"/>
         <source>Script editor</source>
         <translation type="unfinished"></translation>
     </message>
@@ -568,37 +568,37 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="opensesame.ui" line="54"/>
+        <location filename="opensesame.ui" line="60"/>
         <source>File</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="opensesame.ui" line="58"/>
+        <location filename="opensesame.ui" line="64"/>
         <source>Recent files</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="opensesame.ui" line="77"/>
+        <location filename="opensesame.ui" line="83"/>
         <source>Run</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="opensesame.ui" line="86"/>
+        <location filename="opensesame.ui" line="92"/>
         <source>Items</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="opensesame.ui" line="103"/>
+        <location filename="opensesame.ui" line="109"/>
         <source>View</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="opensesame.ui" line="116"/>
+        <location filename="opensesame.ui" line="122"/>
         <source>Help and feedback</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="opensesame.ui" line="125"/>
+        <location filename="opensesame.ui" line="131"/>
         <source>Tools</source>
         <translation type="unfinished"></translation>
     </message>
@@ -970,11 +970,6 @@
     <message>
         <location filename="opensesame.ui" line="983"/>
         <source>Compact toolbar</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="opensesame.ui" line="416"/>
-        <source>ICON</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2413,9 +2408,6 @@ Description: %s</source>
     </message>
 </context>
 <context>
-    <name>start_new_dialog</name>
-</context>
-<context>
     <name>synth_widget</name>
     <message>
         <location filename="synth_widget.ui" line="14"/>
@@ -2580,9 +2572,6 @@ Description: %s</source>
         <source>OpenSesame says ...</source>
         <translation type="unfinished"></translation>
     </message>
-</context>
-<context>
-    <name>tip_dialog</name>
 </context>
 <context>
     <name>update_dialog</name>
@@ -2755,52 +2744,52 @@ Edit your experiment in script form</source>
 <context>
     <name>widget_start_new</name>
     <message>
-        <location filename="start_new_widget.ui" line="14"/>
+        <location filename="start_new_widget.ui" line="20"/>
         <source>Form</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="start_new_widget.ui" line="91"/>
+        <location filename="start_new_widget.ui" line="97"/>
         <source>&lt;h3&gt;New&lt;/h3&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="start_new_widget.ui" line="108"/>
+        <location filename="start_new_widget.ui" line="120"/>
         <source>&lt;h3&gt;Recent&lt;/h3&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="start_new_widget.ui" line="131"/>
+        <location filename="start_new_widget.ui" line="137"/>
         <source>&lt;h3&gt;Open&lt;/h3&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="start_new_widget.ui" line="138"/>
+        <location filename="start_new_widget.ui" line="144"/>
         <source>Open an existing experiment</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="start_new_widget.ui" line="145"/>
+        <location filename="start_new_widget.ui" line="151"/>
         <source>&lt;h3&gt;Help&lt;/h3&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="start_new_widget.ui" line="158"/>
+        <location filename="start_new_widget.ui" line="164"/>
         <source>Visit the documentation site</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="start_new_widget.ui" line="165"/>
+        <location filename="start_new_widget.ui" line="171"/>
         <source>Ask a question on the forum</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="start_new_widget.ui" line="190"/>
+        <location filename="start_new_widget.ui" line="196"/>
         <source>ICON</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="start_new_widget.ui" line="197"/>
+        <location filename="start_new_widget.ui" line="203"/>
         <source>&lt;b&gt;Get started!&lt;/b&gt;&lt;br /&gt;
 &lt;small&gt;&lt;i&gt;What would you like to do today?&lt;/i&gt;&lt;/small&gt;</source>
         <translation type="unfinished"></translation>

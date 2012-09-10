@@ -79,7 +79,7 @@
     <message>
         <location filename="gabor_dialog.ui" line="99"/>
         <source>Size&lt;br /&gt;&lt;i&gt;in pixels&lt;/i&gt;</source>
-        <translation>Dimensione&lt;br /&gt;in pixel&lt;/i&gt;</translation>
+        <translation>Dimensione&lt;br /&gt;&lt;i&gt;in pixel&lt;/i&gt;</translation>
     </message>
     <message>
         <location filename="gabor_dialog.ui" line="160"/>
@@ -232,7 +232,7 @@
     <message>
         <location filename="general_widget.ui" line="245"/>
         <source>&lt;h3&gt;Advanced&lt;/h3&gt;</source>
-        <translation>&lt;h3&gt;Avanzato&lt;/h3&gt;</translation>
+        <translation>&lt;h3&gt;Avanzate&lt;/h3&gt;</translation>
     </message>
     <message>
         <location filename="general_widget.ui" line="283"/>
@@ -617,7 +617,7 @@
     <message>
         <location filename="opensesame.ui" line="238"/>
         <source>Variable inspector</source>
-        <translation>Ispezionatore variabili</translation>
+        <translation>Ispezionatore di variabili</translation>
     </message>
     <message>
         <location filename="opensesame.ui" line="264"/>
@@ -847,12 +847,12 @@
     <message>
         <location filename="opensesame.ui" line="817"/>
         <source>Show variable inspector</source>
-        <translation>Mostra ispezionatore variabili</translation>
+        <translation>Mostra ispezionatore di variabili</translation>
     </message>
     <message>
         <location filename="opensesame.ui" line="820"/>
         <source>Show variable inspector (Control+I)</source>
-        <translation>Mostra ispezionatore variabili (Control+I)</translation>
+        <translation>Mostra ispezionatore di variabili (Control+I)</translation>
     </message>
     <message>
         <location filename="opensesame.ui" line="823"/>
@@ -1113,7 +1113,7 @@
     <message>
         <location filename="pool_widget.ui" line="151"/>
         <source>Add file</source>
-        <translation>Aggiungi gile</translation>
+        <translation>Aggiungi file</translation>
     </message>
     <message>
         <location filename="pool_widget.ui" line="188"/>
@@ -1186,7 +1186,7 @@
     <message>
         <location filename="preferences_widget.ui" line="179"/>
         <source>Enable block folding</source>
-        <translation>Abilita chiusura dei blocchi</translation>
+        <translation>Abilita raggruppamento blocchi</translation>
     </message>
     <message>
         <location filename="preferences_widget.ui" line="186"/>
@@ -1713,7 +1713,7 @@ Descrizione: %s</translation>
     <message>
         <location filename="translatables.py" line="43"/>
         <source>Flush pending key presses at sequence start</source>
-        <translation>A inizio sequenza, ripulisci la memoria dalle pressioni tasto in sospeso</translation>
+        <translation>A inizio sequenza, elimina pressioni tasto in sospeso</translation>
     </message>
     <message>
         <location filename="translatables.py" line="44"/>
@@ -1963,7 +1963,7 @@ Descrizione: %s</translation>
     <message>
         <location filename="translatables.py" line="99"/>
         <source>Drag this &lt;b&gt;%s&lt;/b&gt; item to the intended location in the overview area or into the item list of a sequence tab</source>
-        <translation>Trascina questo elemento &lt;b&gt;%s&lt;/b&gt; nella posizione voluta all&apos;interno dell&apos;area di overview o all&apos;interno della lista di elementi di una sequenza</translation>
+        <translation>Trascina questo elemento &lt;b&gt;%s&lt;/b&gt; nella posizione desiderata all&apos;interno dell&apos;area di overview o all&apos;interno della lista di elementi di una sequenza</translation>
     </message>
     <message>
         <location filename="translatables.py" line="100"/>
@@ -2323,7 +2323,7 @@ Descrizione: %s</translation>
     <message>
         <location filename="sketchpad_widget.ui" line="503"/>
         <source>Image scaling in %</source>
-        <translation>Scala dell&apos;immagine in %</translation>
+        <translation>Scalare dell&apos;immagine in %</translation>
     </message>
     <message>
         <location filename="sketchpad_widget.ui" line="579"/>
@@ -2481,7 +2481,7 @@ Descrizione: %s</translation>
     <message>
         <location filename="synth_widget.ui" line="262"/>
         <source>Set the duration of the synth item. Expecting a duration in ms, &apos;sound&apos; (to wait until the sound is finished playing), &apos;keypress&apos;, &apos;mouseclick&apos;, or a variable (e.g., &apos;[synth_dur]&apos;).</source>
-        <translation>Impostare la durata dell&apos;elemento sintetizzatore. È attesa una durata in ms, &apos;sound&apos; (attendi fino alla fine della riproduzione), &apos;keypress&apos;, &apos;mouseclick&apos;, o una variabile (ad es., &apos;[synth_dur]&apos;).</translation>
+        <translation>Imposta la durata dell&apos;elemento sintetizzatore. È atteso un valore in ms, &apos;sound&apos; (attendi fino alla fine della riproduzione), &apos;keypress&apos;, &apos;mouseclick&apos;, o una variabile (ad es., &apos;[synth_dur]&apos;).</translation>
     </message>
     <message>
         <location filename="synth_widget.ui" line="265"/>
@@ -2793,18 +2793,18 @@ Modifica il tuo esperimento in forma di script</translation>
     <message>
         <location filename="start_new_widget.ui" line="165"/>
         <source>Ask a question on the forum</source>
-        <translation>Fai una domanda nel forum</translation>
+        <translation>Chiedi nel forum</translation>
     </message>
     <message>
         <location filename="start_new_widget.ui" line="190"/>
         <source>ICON</source>
-        <translation>ICONE</translation>
+        <translation>ICON</translation>
     </message>
     <message>
         <location filename="start_new_widget.ui" line="197"/>
         <source>&lt;b&gt;Get started!&lt;/b&gt;&lt;br /&gt;
 &lt;small&gt;&lt;i&gt;What would you like to do today?&lt;/i&gt;&lt;/small&gt;</source>
-        <translation>&lt;b&gt;Iniziamo!&lt;/b&gt;&lt;br /&gt;
+        <translation>&lt;b&gt;Cominciamo!&lt;/b&gt;&lt;br /&gt;
 &lt;small&gt;&lt;i&gt;Cosa vorresti fare oggi?&lt;/i&gt;&lt;/small&gt;</translation>
     </message>
 </context>
