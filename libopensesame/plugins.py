@@ -55,7 +55,7 @@ def plugin_folders(only_existing=True):
 			l.append(path)
 									
 	elif os.name == "nt":
-		path = os.path.join(os.environ["USERPROFILE"], ".opensesame", "plugins")
+		path = os.path.join(os.environ["APPDATA"], ".opensesame", "plugins")
 		if not only_existing or os.path.exists(path):
 			l.append(path)		
 			
