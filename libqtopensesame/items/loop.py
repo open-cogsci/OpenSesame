@@ -575,7 +575,8 @@ class loop(libopensesame.loop.loop, qtitem.qtitem):
 		self.set_cycle_count(self.loop_widget.ui.spin_cycles.value())
 		self.refresh_loop_table()
 		self.loop_table.setCurrentCell(row, column)
-		self.lock = False	
+		self.lock = False
+		self.edit_widget()
 
 	def build_item_tree(self, toplevel, items):
 
