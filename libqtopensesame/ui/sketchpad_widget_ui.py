@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'resources/ui/sketchpad_widget.ui'
 #
-# Created: Thu Aug  2 12:43:05 2012
+# Created: Fri Sep 14 15:43:47 2012
 #      by: PyQt4 UI code generator 4.9.1
 #
 # WARNING! All changes made in this file will be lost!
@@ -201,6 +201,7 @@ class Ui_sketchpad_widget(object):
         self.edit_color.setObjectName(_fromUtf8("edit_color"))
         self.gridLayout_2.addWidget(self.edit_color, 2, 1, 1, 2)
         self.edit_show_if = QtGui.QLineEdit(self.frame_5)
+        self.edit_show_if.setText(_fromUtf8("always"))
         self.edit_show_if.setObjectName(_fromUtf8("edit_show_if"))
         self.gridLayout_2.addWidget(self.edit_show_if, 1, 1, 1, 2)
         self.label_show_if = QtGui.QLabel(self.frame_5)
@@ -342,7 +343,7 @@ class Ui_sketchpad_widget(object):
         self.scrollArea.setWidgetResizable(True)
         self.scrollArea.setObjectName(_fromUtf8("scrollArea"))
         self.scrollAreaWidgetContents = QtGui.QWidget()
-        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 1051, 421))
+        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 1047, 426))
         self.scrollAreaWidgetContents.setObjectName(_fromUtf8("scrollAreaWidgetContents"))
         self.verticalLayout_5 = QtGui.QVBoxLayout(self.scrollAreaWidgetContents)
         self.verticalLayout_5.setObjectName(_fromUtf8("verticalLayout_5"))
@@ -382,7 +383,6 @@ class Ui_sketchpad_widget(object):
         self.button_noise_patch.setToolTip(QtGui.QApplication.translate("sketchpad_widget", "Noise patch tool", None, QtGui.QApplication.UnicodeUTF8))
         self.label_options.setText(QtGui.QApplication.translate("sketchpad_widget", "Click on the sketchpad for options", None, QtGui.QApplication.UnicodeUTF8))
         self.label_arrow_size.setText(QtGui.QApplication.translate("sketchpad_widget", "Arrowhead size", None, QtGui.QApplication.UnicodeUTF8))
-        self.edit_show_if.setText(QtGui.QApplication.translate("sketchpad_widget", "always", None, QtGui.QApplication.UnicodeUTF8))
         self.label_show_if.setText(QtGui.QApplication.translate("sketchpad_widget", "Show if", None, QtGui.QApplication.UnicodeUTF8))
         self.label_color.setText(QtGui.QApplication.translate("sketchpad_widget", "Color", None, QtGui.QApplication.UnicodeUTF8))
         self.checkbox_center.setToolTip(QtGui.QApplication.translate("sketchpad_widget", "Center the object", None, QtGui.QApplication.UnicodeUTF8))

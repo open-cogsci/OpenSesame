@@ -407,7 +407,7 @@
                   <item row="1" column="1" colspan="2">
                    <widget class="QLineEdit" name="edit_show_if">
                     <property name="text">
-                     <string>always</string>
+                     <string notr="true">always</string>
                     </property>
                    </widget>
                   </item>
@@ -739,8 +739,8 @@
                 <rect>
                  <x>0</x>
                  <y>0</y>
-                 <width>1051</width>
-                 <height>421</height>
+                 <width>1047</width>
+                 <height>426</height>
                 </rect>
                </property>
                <layout class="QVBoxLayout" name="verticalLayout_5">
