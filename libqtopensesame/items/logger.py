@@ -20,6 +20,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 from libopensesame import debug
 import libopensesame.logger
 from libqtopensesame.items import qtitem
+from libqtopensesame.misc import _
 from PyQt4 import QtCore, QtGui
 
 class logger(libopensesame.logger.logger, qtitem.qtitem):
@@ -64,22 +65,22 @@ class logger(libopensesame.logger.logger, qtitem.qtitem):
 		vbox.setContentsMargins(0, 0, 0, 0)
 
 		button_add = QtGui.QPushButton(self.experiment.icon("add"), \
-			"Add custom variable")
+			_('Add custom variable'))
 		button_add.clicked.connect(self.add_custom)
-		button_add.setToolTip("Add an arbitrary variable by name")
+		button_add.setToolTip(_('Add an arbitrary variable by name'))
 		button_suggest = QtGui.QPushButton(self.experiment.icon("apply"), \
-			"Smart select")
+			_('Smart select'))
 		button_suggest.clicked.connect(self.suggest_variables)
 		button_suggest.setToolTip( \
 			"Automatically select (likely) relevant variables")
 		button_select_all = QtGui.QPushButton(self.experiment.icon("apply"), \
-			"Select all")
+			_('Select all'))
 		button_select_all.clicked.connect(self.select_all)
-		button_select_all.setToolTip("Select all variables")
+		button_select_all.setToolTip(_('Select all variables'))
 		button_deselect_all = QtGui.QPushButton(self.experiment.icon("clear"), \
-			"Deselect all")
+			_('Deselect all'))
 		button_deselect_all.clicked.connect(self.deselect_all)
-		button_deselect_all.setToolTip("Deselect all variables")
+		button_deselect_all.setToolTip(_('Deselect all variables'))
 		hbox = QtGui.QHBoxLayout()
 		hbox.addWidget(button_select_all)
 		hbox.addWidget(button_deselect_all)
@@ -91,13 +92,13 @@ class logger(libopensesame.logger.logger, qtitem.qtitem):
 		self.logvar_buttons = QtGui.QWidget()
 		self.logvar_buttons.setLayout(hbox)
 		self.checkbox_ignore_missing = QtGui.QCheckBox( \
-			"Use 'NA' for variables that have not been set")
+			_('Include variables with missing values'))			
 		self.checkbox_ignore_missing.stateChanged.connect( \
 			self.apply_edit_changes)
 		self.checkbox_auto_log = QtGui.QCheckBox( \
-			"Automatically detect and log all variables")
+			_('Automatically detect and log all variables'))
 		self.checkbox_auto_log.stateChanged.connect(self.apply_edit_changes)
-		self.checkbox_use_quotes = QtGui.QCheckBox("Put quotes around values")
+		self.checkbox_use_quotes = QtGui.QCheckBox(_('Put quotes around values'))
 		self.checkbox_use_quotes.stateChanged.connect(self.apply_edit_changes)
 		vbox.addWidget(self.checkbox_ignore_missing)
 		vbox.addWidget(self.checkbox_auto_log)
