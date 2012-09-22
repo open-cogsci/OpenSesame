@@ -80,12 +80,14 @@ class unused_widget(QtGui.QWidget):
 		if resp == QtGui.QMessageBox.No:
 			return
 		
-		# Retrieve and remove unused items
-		unused_items = self.main_window.ui.itemtree.unused_items()
-		for item in unused_items:
-			if item in self.experiment.items:
-				del self.experiment.items[item]
-				
+		# We need a loop, because items may become unused
+		# by deletion of their unused parent items
+		while len(self.main_window.experiment.unused_items) > 0:
+			for item in self.main_window.experiment.unused_items:
+				if item in self.main_window.experiment.items:
+					del self.main_window.experiment.items[item]
+			self.main_window.experiment.build_item_tree()
+						
 		# Notify dispatch
 		self.main_window.dispatch.event_structure_change.emit('')
 		
