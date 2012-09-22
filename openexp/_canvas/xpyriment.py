@@ -85,7 +85,7 @@ class xpyriment(openexp._canvas.legacy.legacy):
 	
 		"""See openexp._canvas.legacy"""
 		
-		self.stim_list = copy.deepcopy(canvas.stim_list)
+		self.stim_list = [stim.copy() for stim in canvas.stim_list]
 		self.font_style = canvas.font_style
 		self.font_style = canvas.font_style
 		self.penwidth = canvas.penwidth
