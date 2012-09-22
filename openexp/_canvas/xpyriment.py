@@ -67,7 +67,10 @@ class xpyriment(openexp._canvas.legacy.legacy):
 			bgcolor = self.experiment.get('background')
 		self.set_fgcolor(fgcolor)
 		self.set_bgcolor(bgcolor)
-		self.set_font(self.experiment.font_family, self.experiment.font_size)
+		self.set_font(style=self.experiment.font_family, size= \
+			self.experiment.font_size, bold=self.experiment.font_bold=='yes', \
+			italic=self.experiment.font_italic=='yes', underline= \
+			self.experiment.font_underline=='yes')
 		self.penwidth = 1
 		self.ellipse_res = 100
 		self.aa = 10

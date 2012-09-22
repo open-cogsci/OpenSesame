@@ -67,7 +67,10 @@ class psycho(openexp._canvas.legacy.legacy):
 		self.set_fgcolor(fgcolor)
 		self.set_bgcolor(bgcolor)
 		self.set_penwidth(1)
-		self.set_font(self.experiment.font_family, self.experiment.font_size)						
+		self.set_font(style=self.experiment.font_family, size= \
+			self.experiment.font_size, bold=self.experiment.font_bold=='yes', \
+			italic=self.experiment.font_italic=='yes', underline= \
+			self.experiment.font_underline=='yes')
 		# This font map converts the standard OpenSesame font names to ones that
 		# are acceptable to PsychoPy (or PyGlet actually). For now, the
 		# difference appears only to be capitalization.
