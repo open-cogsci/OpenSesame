@@ -197,6 +197,12 @@ class legacy:
 		</DOC>"""
 		
 		self.surface = canvas.surface.copy()
+		self.font_style = canvas.font_style
+		self.font_style = canvas.font_style
+		self.penwidth = canvas.penwidth
+		self.fgcolor = canvas.fgcolor
+		self.bgcolor = canvas.bgcolor	
+		
 		
 	def xcenter(self):
 		
