@@ -77,7 +77,7 @@ class experiment(item.item):
 		# Backend parameters
 		self.canvas_backend = "xpyriment"
 		self.keyboard_backend = "legacy"
-		self.mouse_backend = "legacy"
+		self.mouse_backend = "xpyriment"
 		self.sampler_backend = "legacy"
 		self.synth_backend = "legacy"
 
