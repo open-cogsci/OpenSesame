@@ -92,8 +92,8 @@ class tree_overview(QtGui.QTreeWidget):
 
 			# Accept a drop on the toplevel item
 			if item.parent() == None:
-				draggables.drop_target = "__start__", None, True
-				e.accept()
+				self.main_window.experiment.notify( \
+					'You cannot change the entry point of the experiment!')
 				return
 
 			index = 0
@@ -102,7 +102,8 @@ class tree_overview(QtGui.QTreeWidget):
 				if item_name not in self.main_window.experiment.items:
 					e.ignore()
 					return
-				item_type = self.main_window.experiment.items[item_name].item_type
+				item_type = \
+					self.main_window.experiment.items[item_name].item_type
 				if item_type == "sequence":
 					break
 				index = item.parent().indexOfChild(item)
