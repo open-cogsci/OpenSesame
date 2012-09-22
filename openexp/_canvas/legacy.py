@@ -116,23 +116,26 @@ class legacy:
 				   default (default=None)
 		fgcolor -- a human-readable foreground color or None to use experiment
 				   default (default=None)
+				   
+		Example:		
+		>>> from openexp.canvas import canvas
+		>>> my_canvas = canvas(exp)
 		</DOC>"""
 		
 		self.experiment = experiment
-
 		if fgcolor == None:
 			fgcolor = self.experiment.get("foreground")
 		if bgcolor == None:
 			bgcolor = self.experiment.get("background")
-
 		self.set_fgcolor(fgcolor)
 		self.set_bgcolor(bgcolor)
 		self.penwidth = 1
 		self.antialias = True
-		
 		self.surface = self.experiment.surface.copy()					
-		self.set_font(self.experiment.font_family, self.experiment.font_size)
-
+		self.set_font(style=self.experiment.font_family, size= \
+			self.experiment.font_size, bold=self.experiment.font_bold=='yes', \
+			italic=self.experiment.font_italic=='yes', underline= \
+			self.experiment.font_underline=='yes')
 		self.clear()
 		
 	def color(self, color):
@@ -183,6 +186,12 @@ class legacy:
 			 horizontally (default=True)
 		y -- A boolean indicating whether the canvas should be flipped
 			 vertically (default=False)
+			 
+		Example:
+		>>> from openexp.canvas import canvas
+		>>> my_canvas = canvas(exp)
+		>>> my_canvas.fixdot(x=100, color='green')
+		>>> my_canvas.flip(x=True)
 		</DOC>"""
 		
 		self.surface = pygame.transform.flip(self.surface, x, y)
@@ -190,10 +199,19 @@ class legacy:
 	def copy(self, canvas):
 	
 		"""<DOC>
-		Turn the current canvas into a copy of the passed canvas.
+		Turn the current canvas into a copy of the passed canvas. Note: If you
+		want to create a copy of a sketchpad canvas, you can also use the
+		inline_script.copy_sketchpad() function.
 		
 		Arguments:
-		canvas -- The canvas to copy.
+		canvas -- The canvas to copy
+		
+		Example:
+		>>> from openexp.canvas import canvas
+		>>> my_canvas = canvas(exp)
+		>>> my_canvas.fixdot(x=100, color='green')
+		>>> my_copied_canvas = canvas(exp)
+		>>> my_copied_canvas.copy(my_canvas)
 		</DOC>"""
 		
 		self.surface = canvas.surface.copy()
@@ -201,14 +219,22 @@ class legacy:
 		self.font_style = canvas.font_style
 		self.penwidth = canvas.penwidth
 		self.fgcolor = canvas.fgcolor
-		self.bgcolor = canvas.bgcolor	
-		
+		self.bgcolor = canvas.bgcolor		
 		
 	def xcenter(self):
 		
 		"""<DOC>
 		Returns:
 		The center X coordinate in pixels.
+		
+		Example:
+		>>> from openexp.canvas import canvas
+		>>> my_canvas = canvas(exp)
+		>>> x1 = my_canvas.xcenter() - 100
+		>>> y1 = my_canvas.ycenter() - 100
+		>>> x2 = my_canvas.xcenter() + 100
+		>>> y2 = my_canvas.ycenter() + 100
+		>>> my_canvas.line(x1, y1, x2, y2)
 		</DOC>"""
 		
 		return self.experiment.resolution[0] / 2
@@ -218,6 +244,15 @@ class legacy:
 		"""<DOC>
 		Returns:
 		The center Y coordinate in pixels.
+
+		Example:
+		>>> from openexp.canvas import canvas
+		>>> my_canvas = canvas(exp)
+		>>> x1 = my_canvas.xcenter() - 100
+		>>> y1 = my_canvas.ycenter() - 100
+		>>> x2 = my_canvas.xcenter() + 100
+		>>> y2 = my_canvas.ycenter() + 100
+		>>> my_canvas.line(x1, y1, x2, y2)
 		</DOC>"""
 		
 		return self.experiment.resolution[1] / 2	
@@ -226,7 +261,8 @@ class legacy:
 	
 		"""<DOC>
 		Finishes up pending canvas operations (if any), so that a subsequent
-		call to show() is extra fast.
+		call to show() is extra fast. It's generally not necessary to call this
+		function, unless you use a specific back-end that requires this.
 		</DOC>"""
 		
 		pass
@@ -239,6 +275,13 @@ class legacy:
 		Returns:
 		A timestamp containing the time at which the canvas actually appeared on
 		the screen (or a best guess).
+		
+		Example:
+		>>> from openexp.canvas import canvas
+		>>> my_canvas = canvas(exp)
+		>>> my_canvas.fixdot()
+		>>> t = my_canvas.show()
+		>>> exp.set('time_fixdot', t)
 		</DOC>"""
 
 		self.experiment.surface.blit(self.surface, (0, 0))		
@@ -248,19 +291,29 @@ class legacy:
 	def clear(self, color=None):
 		
 		"""<DOC>
-		Clears the canvas with the current background color
+		Clears the canvas with the current background color. Note that it is
+		generally better to use a different canvas for each experimental display,
+		than to use a single canvas and repeatedly clear and redraw it.
 		
 		Keyword arguments:
 		color -- A custom background color to be used. This does not affect the
 				 default background color as set by set_bgcolor().
 				 (Default=None)
+				 
+		>>> from openexp.canvas import canvas
+		>>> my_canvas = canvas(exp)
+		>>> my_canvas.fixdot(color='green')
+		>>> my_canvas.show()
+		>>> self.sleep(1000)
+		>>> my_canvas.clear()
+		>>> my_canvas.fixdot(color='red')
+		>>> my_canvas.show()
 		</DOC>"""
 		
 		if color != None:
 			color = self.color(color)
 		else:
 			color = self.bgcolor
-		
 		self.surface.fill(color)
 		
 	def set_penwidth(self, penwidth):
@@ -270,6 +323,11 @@ class legacy:
 		
 		Arguments:
 		penwidth -- A pen width in pixels
+		
+		>>> from openexp.canvas import canvas
+		>>> my_canvas = canvas(exp)
+		>>> my_canvas.set_penwidth(10)
+		>>> my_canvas.line(100, 100, 200, 200)
 		</DOC>"""
 		
 		self.penwidth = penwidth
@@ -280,7 +338,16 @@ class legacy:
 		Sets the foreground color for subsequent drawing operations.
 		
 		Arguments:
-		color -- A human readable color
+		color -- A color. Acceptable formats are human readable colors, such as
+				 'red', and HTML colors, such as '#FF0000'
+		
+		Example:
+		>>> from openexp.canvas import canvas
+		>>> my_canvas = canvas(exp)
+		>>> my_canvas.set_fgcolor('green')
+		>>> my_canvas.text('Green text', y=200)
+		>>> my_canvas.set_fgcolor('red`')
+		>>> my_canvas.text('Red text', y=400)
 		</DOC>"""
 		
 		self.fgcolor = self.color(color)		
@@ -288,35 +355,47 @@ class legacy:
 	def set_bgcolor(self, color):
 		
 		"""<DOC>
-		Sets the background color for subsequent drawing operations.
+		Sets the background color for the canvas
 		
 		Arguments:
-		color -- A human readable color
+		color -- A color. Acceptable formats are human readable colors, such as
+				 'red', and HTML colors, such as '#FF0000'
+				 
+		Example:
+		>>> from openexp.canvas import canvas
+		>>> my_canvas = canvas(exp)
+		>>> my_canvas.set_bgcolor('gray')
+		>>> my_canvas.clear()
 		</DOC>"""
 
 		self.bgcolor = self.color(color)	
 		
-	def set_font(self, style, size, italic=False, bold=False, underline=False):
+	def set_font(self, style=None, size=None, italic=None, bold=None, underline=None):
 	
 		"""<DOC>
 		Sets the font for subsequent drawing operations.
 		
-		Arguments:
-		style -- A font located in the resources folder (without the .ttf
-				 extension)
-		size -- A font size in pixels		
-		
 		Keyword arguments:
-		italic -- indicates if the font should be italic (default=False)
-		bold -- indicates if the font should be bold (default=False)
-		underline -- indicates if the font should be underlined (default=False)
+		style -- A font style. This can be one of the three standard styles
+				 ('mono', 'sans', or 'serif') or a system font (e.g., 'arial')
+				 (default=None)
+		size -- A font size in pixels (default=None)
+		italic -- indicates if the font should be italic (default=None)
+		bold -- indicates if the font should be bold (default=None)
+		underline -- indicates if the font should be underlined (default=None)
+		
+		Example:
+		>>> from openexp.canvas import canvas
+		>>> my_canvas = canvas(exp)
+		>>> my_canvas.set_font(style='serif', italic=True)
+		>>> my_canvas.text('Text in italic serif')
 		</DOC>"""
-				
-		self.font_style = style
-		self.font_size = size
-		self.font_italic = italic
-		self.font_bold = bold
-		self.font_underline = underline
+			
+		if style != None: self.font_style = style
+		if size != None: self.font_size = size
+		if italic != None: self.font_italic = italic
+		if bold != None: self.font_bold = bold
+		if underline != None: self.font_underline = underline
 				
 	def fixdot(self, x=None, y=None, color=None):
 		
@@ -330,6 +409,11 @@ class legacy:
 		color -- A custom human readable foreground color. This does not affect
 				 the default foreground color as set by set_fgcolor(). 
 				 (Default=None)
+		
+		Example:
+		>>> from openexp.canvas import canvas
+		>>> my_canvas = canvas(exp)
+		>>> my_canvas.fixdot()
 		</DOC>"""
 
 		if color != None:
@@ -358,10 +442,15 @@ class legacy:
 		
 		Keyword arguments:
 		fill -- A boolean indicating whether the circle is outlined (False) or
-				filled (True)
+				filled (True) (default=False)
 		color -- A custom human readable foreground color. This does not affect
 				 the default foreground color as set by set_fgcolor().
 				 (Default=None)
+				 
+		Example:
+		>>> from openexp.canvas import canvas
+		>>> my_canvas = canvas(exp)
+		>>> my_canvas.circle(100, 100, 50, fill=True, color='red')
 		</DOC>"""
 						
 		self.ellipse(x-r, y-r, 2*r, 2*r, fill=fill, color=color)
@@ -369,7 +458,7 @@ class legacy:
 	def line(self, sx, sy, ex, ey, color=None):
 		
 		"""<DOC>
-		Draws a line. Should accept parameters where sx > ex or sy > ey as well.
+		Draws a line
 		
 		Arguments:
 		sx -- The left coordinate
@@ -380,14 +469,20 @@ class legacy:
 		Keyword arguments:
 		color -- A custom human readable foreground color. This does not affect
 				 the default foreground color as set by set_fgcolor().
-				 (Default=None)		
+				 (Default=None)
+				 
+		Example:
+		>>> from openexp.canvas import canvas
+		>>> my_canvas = canvas(exp)
+		>>> w = self.get('width')
+		>>> h = self.get('height')
+		>>> my_canvas.line(0, 0, w, h)
 		</DOC>"""
 		
 		if color != None:
 			color = self.color(color)
 		else:
-			color = self.fgcolor
-				
+			color = self.fgcolor				
 		pygame.draw.line(self.surface, color, (sx, sy), (ex, ey), self.penwidth)
 		
 	def arrow(self, sx, sy, ex, ey, arrow_size=5, color=None):
@@ -404,9 +499,15 @@ class legacy:
 		
 		Keyword arguments:
 		arrow_size -- The length of the arrowhead lines (default=5)
-		color -- A custom human readable foreground color. This does not affect
-				 the default foreground color as set by set_fgcolor().
-				 (Default=None)		
+		color -- A custom foreground color. This does not affect the default
+				foreground color as set by set_fgcolor(). (Default=None)		
+				
+		Example:
+		>>> from openexp.canvas import canvas
+		>>> my_canvas = canvas(exp)
+		>>> w = self.get('width')/2
+		>>> h = self.get('height')/2
+		>>> my_canvas.line(0, 0, w, h, arrow_size=10)				
 		</DOC>"""
 		
 		if color != None: color = self.color(color)
@@ -423,7 +524,7 @@ class legacy:
 	def rect(self, x, y, w, h, fill=False, color=None):
 		
 		"""<DOC>
-		Draws a rectangle. Accepts parameters where w < 0 or h < 0 as well.
+		Draws a rectangle
 		
 		Arguments:
 		x -- The left X coordinate.
@@ -433,17 +534,22 @@ class legacy:
 				
 		Keyword arguments:
 		fill -- A boolean indicating whether the rectangle is outlined (False)
-				or filled (True)
-		color -- A custom human readable foreground color. This does not affect
-				 the default foreground color as set by set_fgcolor().
-				 (Default=None)		
+				or filled (True) (default=False)
+		color -- A custom foreground color. This does not affect the default
+				 foreground color as set by set_fgcolor(). (Default=None)		
+				 
+		Example:
+		>>> from openexp.canvas import canvas
+		>>> my_canvas = canvas(exp)
+		>>> w = self.get('width')-10
+		>>> h = self.get('height')-10
+		>>> my_canvas.rect(10, 10, w, h, fill=True)				 				 
 		</DOC>"""
 		
 		if color != None:
 			color = self.color(color)
 		else:
 			color = self.fgcolor		
-		
 		if fill:
 			pygame.draw.rect(self.surface, color, (x, y, w, h), 0)
 		else:
@@ -452,7 +558,7 @@ class legacy:
 	def ellipse(self, x, y, w, h, fill=False, color=None):
 		
 		"""<DOC>
-		Draws an ellipse. Accepts parameters where w < 0 or h < 0 as well.
+		Draws an ellipse
 		
 		Arguments:
 		x -- The left X coordinate.
@@ -462,28 +568,32 @@ class legacy:
 				
 		Keyword arguments:
 		fill -- A boolean indicating whether the ellipse is outlined (False) or
-				filled (True)
-		color -- A custom human readable foreground color. This does not affect
-				 the default foreground color as set by set_fgcolor().
-				 (Default=None)		
+				filled (True) (default=False)
+		color -- A custom foreground color. This does not affect the default
+				 foreground color as set by set_fgcolor(). (Default=None)
+				 
+		Example:
+		>>> from openexp.canvas import canvas
+		>>> my_canvas = canvas(exp)
+		>>> w = self.get('width')-10
+		>>> h = self.get('height')-10
+		>>> my_canvas.ellipse(10, 10, w, h, fill=True)					 
 		</DOC>"""
 		
 		if color != None:
 			color = self.color(color)
 		else:
-			color = self.fgcolor
-				
+			color = self.fgcolor				
 		x = int(x)
 		y = int(y)
 		w = int(w)
-		h = int(h)
-		
+		h = int(h)		
 		if fill:
 			pygame.draw.ellipse(self.surface, color, (x, y, w, h), 0)
 		else:
 			# Because the default way of drawing thick lines gives ugly results
-			# for ellipses, we draw thick ellipses manually, by drawing an ellipse
-			# with the background color inside of it
+			# for ellipses, we draw thick ellipses manually, by drawing an
+			# ellipse with the background color inside of it
 			i = self.penwidth / 2
 			j = self.penwidth - i			
 			pygame.draw.ellipse(self.surface, color, (x-i, y-i, w+2*i, h+2*i), \
@@ -504,10 +614,17 @@ class legacy:
 				
 		Keyword arguments:
 		fill -- A boolean indicating whether the rectangle is outlined (False)
-				or filled (True)
-		color -- A custom human readable foreground color. This does not affect
-				 the default foreground color as set by set_fgcolor().
-				 (Default=None)		
+				or filled (True) (default=False)
+		color -- A custom foreground color. This does not affect the default
+				 foreground color as set by set_fgcolor(). (Default=None)
+				 
+		Example:
+		>>> from openexp.canvas import canvas
+		>>> my_canvas = canvas(exp)
+		>>> n1 = 0,0
+		>>> n2 = 100, 100
+		>>> n3 = 0, 100
+		>>> my_canvas.polygon([n1, n2, n3])	
 		</DOC>"""
 		
 		if color != None:
@@ -530,6 +647,11 @@ class legacy:
 		
 		Returns:
 		A (width, height) tuple containing the dimensions of the text string
+		
+		Example:
+		>>> from openexp.canvas import canvas
+		>>> my_canvas = canvas(exp)
+		>>> w, h = my_canvas.text_size('Some text')
 		</DOC>"""
 		
 		return self._font().size(text)				
@@ -553,6 +675,11 @@ class legacy:
 				 the default foreground color as set by set_fgcolor().
 				 (Default=None)
 		html -- Indicates whether HTML tags should be parsed (default=True)
+		
+		Example:
+		>>> from openexp.canvas import canvas
+		>>> my_canvas = canvas(exp)
+		>>> my_canvas.text('Some text with <b>boldface</b> and <i>italics</i>')	
 		</DOC>"""
 							
 		if color != None: color = self.color(color)
@@ -565,7 +692,7 @@ class legacy:
 	def _text(self, text, x, y):			
 	
 		"""
-		A simple function that render a string of text with the canvas default
+		A simple function that renders a string of text with the canvas default
 		settings. This is the only function that needs to be re-implemented in
 		other back-ends, as it is the only function that should handle actual
 		text rendering.
@@ -591,13 +718,20 @@ class legacy:
 		text -- The text string
 		line -- A line number, where 0 is the center and > 0 is below the
 				center.
-		color -- A custom human readable foreground color. This does not affect
-				 the default foreground color as set by set_fdcolor().
-				 (Default=None)		
+				
+		Keyword arguments:
+		color -- A custom foreground color. This does not affect the default
+				foreground color as set by set_fgcolor(). (default=None)
+				 
+		Example:
+		>>> from openexp.canvas import canvas
+		>>> my_canvas = canvas(exp)
+		>>> my_canvas.textline('A line', 0)					 
+		>>> my_canvas.textline('Another line', 1)				 
 		</DOC>"""
 		
 		font = self._font()
-		size = font.size(text)
+		size = self.text_size(text)
 		self.text(text, True, self.xcenter(), self.ycenter()+1.5*line*size[1], \
 			color=color)
 		
@@ -618,6 +752,12 @@ class legacy:
 		y -- The Y coordinate. None = center. (default=None)
 		scale -- The scaling factor of the image. 1.0 or None = no scaling, 2.0
 				 = twice as large, etc. (default=None)
+				 
+		Example:
+		>>> from openexp.canvas import canvas
+		>>> my_canvas = canvas(exp)
+		>>> path = exp.get_file('image_in_pool.png')
+		>>> my_canvas.image(path)
 		</DOC>"""
 		
 		try:
@@ -638,28 +778,21 @@ class legacy:
 					(int(surface.get_width()*scale), \
 					int(surface.get_height()*scale)))
 
-
-		size = surface.get_size()
-		
+		size = surface.get_size()		
 		if x == None:
 			x = self.xcenter()
-			
 		if y == None:
 			y = self.ycenter()
-			
 		if center:
 			x -= size[0] / 2
-			y -= size[1] / 2
-			
+			y -= size[1] / 2			
 		self.surface.blit(surface, (x, y))
 							
 	def gabor(self, x, y, orient, freq, env="gaussian", size=96, stdev=12, phase=0, col1="white", col2="black", bgmode="avg"):
 	
 		"""<DOC>
-		Draws a Gabor patch. There is a slight difference between the
-		implementation of the Gabor patch in the legacy/ opengl back-end and the
-		psycho back-end. In the psycho back-end, no background is draw and the
-		col2 and bgmode parameters are ignored.
+		Draws a Gabor patch. The exact rendering of the Gabor patch depends on the
+		back-end.
 		
 		Arguments:
 		x -- The center X coordinate
@@ -674,13 +807,18 @@ class legacy:
 		stdev -- Standard deviation in pixels of the gaussian. Only applicable
 				 if env = "gaussian". (default=12)
 		phase -- Phase of the sinusoid [0.0 .. 1.0] (default=0)
-		col1: -- Human readable color for the tops (default="white")
+		col1 -- Human readable color for the tops (default="white")
 		col2 -- Human readable color for the troughs. Note: This parameter is
 				ignored by the psycho back-end. (default="black")
 		bgmode -- Specifies whether the background is the average of col1 and
 				  col2 (bgmode = "avg", a typical Gabor patch) or equal to col2
 				  ("col2"), useful for blending into the background. Note: this
 				  paramter is ignored by the psycho backend. (default="avg")
+				  
+		Example:
+		>>> from openexp.canvas import canvas
+		>>> my_canvas = canvas(exp)
+		>>> my_canvas.gabor(100, 100, 45, .05)
 		</DOC>"""	
 	
 		surface = _gabor(orient, freq, env, size, stdev, phase, col1, col2, \
@@ -690,7 +828,8 @@ class legacy:
 	def noise_patch(self, x, y, env="gaussian", size=96, stdev=12, col1="white", col2="black", bgmode="avg"):
 	
 		"""<DOC>
-		Draws a patch of noise, with an envelope.
+		Draws a patch of noise, with an envelope. The exact rendering of the noise
+		patch depends on the back-end.
 		
 		Arguments:
 		x -- The center X coordinate
@@ -703,12 +842,17 @@ class legacy:
 		stdev -- Standard deviation in pixels of the gaussian. Only applicable
 				 if env = "gaussian". (default=12)
 		phase -- Phase of the sinusoid [0.0 .. 1.0] (default=0)
-		col1: -- Human readable color for the tops (default="white")
+		col1 -- Human readable color for the tops (default="white")
 		col2 -- Human readable color for the troughs (default="black")
 		bgmode -- Specifies whether the background is the average of col1 and
 				  col2 (bgmode="avg", a typical Gabor patch) or equal to col2
 				  ("col2"), useful for blending into the background.
 				  (default="avg")
+				  
+		Example:
+		>>> from openexp.canvas import canvas
+		>>> my_canvas = canvas(exp)
+		>>> my_canvas.noise_patch(100, 100, env='circular')
 		</DOC>"""	
 		
 		surface = _noise_patch(env, size, stdev, col1, col2, bgmode)
