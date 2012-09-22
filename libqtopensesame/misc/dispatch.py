@@ -86,9 +86,15 @@ class dispatch(QtCore.QObject):
 		
 	def regenerate(self, script):
 	
-		"""Handles a full regeneration of the experiment"""
+		"""
+		Handles a full regeneration of the experiment
 		
+		Arguments:
+		script -- a definition string (unicode/ QString)
+		"""
+				
 		self.main_window.set_busy(True)		
+		script = self.main_window.experiment.unistr(script)
 		try:
 			# Generate the new experiment
 			tmp = experiment.experiment(self.main_window, \
