@@ -186,8 +186,8 @@ def strip_tags(s):
 	"""
 
 	import re
-	return re.compile(r'<.*?>').sub('', s.replace("<br />", "\n").replace( \
-		"<br>", "\n"))
+	return re.compile(r'<.*?>').sub('', unicode(s).replace("<br />", \
+		"\n").replace("<br>", "\n"))
 
 def resource(name):
 
