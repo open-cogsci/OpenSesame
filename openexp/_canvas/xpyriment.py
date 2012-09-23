@@ -226,7 +226,7 @@ class xpyriment(openexp._canvas.legacy.legacy):
 	
 		"""See openexp._canvas.legacy"""
 		
-		try:
+		try:			
 			_font = self.experiment.resource("%s.ttf" % self.font_style)
 		except:
 			_font = self.font_style
