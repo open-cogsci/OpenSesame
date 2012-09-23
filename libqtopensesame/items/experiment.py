@@ -74,7 +74,7 @@ class experiment(libopensesame.experiment.experiment):
 
 		# Check in the shared folders
 		if os.name == "posix":
-			path = "/usr/share/opensesame/help/%s" % name
+			path = u'/usr/share/opensesame/help/%s' % name
 			if os.path.exists(path):
 				return path
 
@@ -86,7 +86,7 @@ class experiment(libopensesame.experiment.experiment):
 			pass
 
 		# Return an empty string if not found
-		return ""
+		return u''
 
 	def module_container(self):
 
