@@ -320,6 +320,7 @@ def init_display(experiment):
 	experiment.time = experiment._time_func
 	experiment.sleep = experiment._sleep_func
 	experiment.window = exp.screen._surface
+	experiment.expyriment = exp
 	
 	# TODO: In order to set the window title and to allow mouse responses we
 	# need to bypass expyriment for now
