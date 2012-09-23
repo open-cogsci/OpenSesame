@@ -79,7 +79,7 @@ class legacy:
 		self.set_visible(visible)		
 		if self.experiment.get_check('custom_cursor', 'yes') == 'yes':
 			self.cursor = pygame.image.load(self.experiment.resource( \
-				'cursor.png'))
+				'cursor.png'))		
 		else:
 			self.cursor = None
 				

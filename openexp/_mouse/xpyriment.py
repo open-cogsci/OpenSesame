@@ -30,6 +30,14 @@ class xpyriment(openexp._mouse.legacy.legacy):
 	Mouse backend built on top of Expyriment. Contains only minor differences
 	from the legacy backend to re-implement the custom mouse cursor.
 	"""
+	
+	settings = {
+		"custom_cursor" : {
+			"name" : "Custom cursor",
+			"description" : "Bypass the system mouse cursor",
+			"default" : "no"
+			}
+		}	
 
 	def __init__(self, experiment, buttonlist=None, timeout=None, \
 		visible=False):
