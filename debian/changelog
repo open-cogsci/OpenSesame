@@ -3,9 +3,9 @@ opensesame (0.27~pre5-ubuntu1) precise; urgency=low
   * Added Expyriment backend
   * Added form functionality
   * Improved Unicode support
-  * Improved internationalization    
+  * Improved internationalization
 
- -- Sebastiaan Mathot <s.mathot@cogsci.nl>  Sat, 08 Sep 2012 19:08:08 +0200
+ -- Sebastiaan Mathot <s.mathot@cogsci.nl>  Sun, 23 Sep 2012 15:13:38 +0200
 
 opensesame (0.26-2) unstable; urgency=low
 
