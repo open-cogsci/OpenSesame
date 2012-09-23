@@ -40,7 +40,7 @@ class xpyriment(openexp._mouse.legacy.legacy):
 		self.set_buttonlist(buttonlist)
 		self.set_timeout(timeout)
 		self.set_visible(visible)		
-		if self.experiment.get_check('custom_cursor', 'yes') == 'yes':			
+		if self.experiment.get_check('custom_cursor', 'no') == 'yes':
 			if self.experiment.expyriment.screen._fullscreen:
 				raise exceptions.response_error( \
 					'The xpyriment mouse back-end does not support custom cursors in fullscreen mode (you can change this in the back-end settings)')
