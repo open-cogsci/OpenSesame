@@ -159,6 +159,8 @@ class dispatch(QtCore.QObject):
 		to_name -- the new name		
 		"""
 	
+		from_name = unicode(from_name)
+		to_name = unicode(to_name)
 		self.main_window.set_busy(True)
 		# Rename the item in the experiment item list
 		item = self.main_window.experiment.items[from_name]
