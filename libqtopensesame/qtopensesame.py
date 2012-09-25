@@ -941,10 +941,10 @@ class qtopensesame(QtGui.QMainWindow):
 		"""Save the current experiment after asking for a file name"""
 
 		if self.current_path == None:
-			path = os.path.join(self.home_folder, self.experiment.sanitize( \
+			cfg.file_dialog_path = os.path.join(self.home_folder, self.experiment.sanitize( \
 				self.experiment.title, strict=True, allow_vars=False))
 		else:
-			path = self.current_path		
+			cfg.file_dialog_path = self.current_path		
 		path, file_type = QtGui.QFileDialog.getSaveFileNameAndFilter( \
 			self.ui.centralwidget, _("Save file as ..."), directory= \
 			cfg.file_dialog_path, filter=self.file_type_filter)
