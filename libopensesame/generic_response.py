@@ -237,14 +237,16 @@ class generic_response:
 			if dur == "keypress":
 
 				# Prepare valid keypress responses
-				l = self.get("allowed_responses").split(";")
+				l = self.experiment.unistr(self.get("allowed_responses")).split( \
+					";")
 				self._allowed_responses = l
 
 			elif dur == "mouseclick":
 
 				# Prepare valid mouseclick responses
 				self._allowed_responses = []
-				for r in self.get("allowed_responses").split(";"):
+				for r in self.experiment.unistr(self.get( \
+					"allowed_responses")).split(";"):
 					if r in self.resp_codes.values():
 						for code, resp in self.resp_codes.items():
 							if resp == r:
