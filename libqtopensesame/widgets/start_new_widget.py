@@ -47,7 +47,10 @@ class start_new_widget(QtGui.QWidget):
 		self.ui.setupUi(self)
 		self.ui.widget_credits.initialize(self.main_window)
 		self.main_window.theme.apply_theme(self)
-		self.tab_name = '__start_new__'
+		if start:
+			self.tab_name = '__start_wizard__'
+		else:
+			self.tab_name = '__new_wizard__'
 
 		# Initialize templates
 		templates = (os.path.join("templates", "default.opensesame"), \
@@ -81,12 +84,20 @@ class start_new_widget(QtGui.QWidget):
 			self.main_window.ui.tabwidget.open_osdoc)
 		self.ui.button_forum.clicked.connect( \
 			self.main_window.ui.tabwidget.open_forum)
+		self.ui.button_cancel.clicked.connect(self.cancel)			
 			
 		# Show the correct header
 		if start:
 			self.ui.widget_header_new.hide()
 		else:
 			self.ui.widget_header_start.hide()
+			
+	def cancel(self):
+		
+		"""Cancel the start_new_wizard"""
+		
+		self.main_window.ui.tabwidget.close_current()
+		self.main_window.ui.tabwidget.open_general()
 
 	def open_template(self):
 

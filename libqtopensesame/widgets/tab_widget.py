@@ -61,6 +61,12 @@ class tab_widget(QtGui.QTabWidget):
 		while self.count() > 0:
 			self.removeTab(0)		
 			
+	def close_current(self):
+		
+		"""Close the current tab"""
+		
+		self.removeTab(self.currentIndex())
+			
 	def close_other(self):
 	
 		"""Close all tabs except for the currently opened one"""
@@ -250,8 +256,12 @@ class tab_widget(QtGui.QTabWidget):
 				 (False) (default=True)
 		"""
 
-		if self.switch('__start_new__'):
-			return			
+		if start:
+			if self.switch('__start_wizar__'):
+				return			
+		else:
+			if self.switch('__new_wizard__'):
+				return			 
 		from libqtopensesame.widgets.start_new_widget import start_new_widget
 		w = start_new_widget(self.main_window, start=start)		
 		self.add(w, 'os-experiment', 'Get started')

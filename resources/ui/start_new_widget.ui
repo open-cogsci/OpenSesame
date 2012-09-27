@@ -117,7 +117,10 @@
                 <widget class="QLabel" name="label_2">
                  <property name="text">
                   <string>&lt;b&gt;Get started!&lt;/b&gt;&lt;br /&gt;
-&lt;small&gt;&lt;i&gt;Tip: Select an item in the overview area to start working right away&lt;/i&gt;&lt;/small&gt;</string>
+&lt;small&gt;&lt;i&gt;Select an item in the overview area to start right away&lt;/i&gt;&lt;/small&gt;</string>
+                 </property>
+                 <property name="wordWrap">
+                  <bool>true</bool>
                  </property>
                 </widget>
                </item>
@@ -250,7 +253,23 @@
                 <widget class="QLabel" name="label">
                  <property name="text">
                   <string>&lt;b&gt;New expriment&lt;/b&gt;&lt;br /&gt;
-&lt;small&gt;&lt;i&gt;Tip: Close this tab/ switch to another tab to resume work on your current experiment&lt;/i&gt;&lt;/small&gt;</string>
+&lt;small&gt;&lt;i&gt;Click 'cancel' or close this tab to another tab to resume your current experiment&lt;/i&gt;&lt;/small&gt;</string>
+                 </property>
+                 <property name="wordWrap">
+                  <bool>true</bool>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QPushButton" name="button_cancel">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="text">
+                  <string>Cancel</string>
                  </property>
                 </widget>
                </item>

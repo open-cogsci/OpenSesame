@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'resources/ui/start_new_widget.ui'
 #
-# Created: Thu Sep 27 14:21:44 2012
+# Created: Thu Sep 27 14:35:08 2012
 #      by: PyQt4 UI code generator 4.9.1
 #
 # WARNING! All changes made in this file will be lost!
@@ -76,6 +76,7 @@ class Ui_widget_start_new(object):
         self.label_get_started.setObjectName(_fromUtf8("label_get_started"))
         self.horizontalLayout_2.addWidget(self.label_get_started)
         self.label_2 = QtGui.QLabel(self.widget_header_start)
+        self.label_2.setWordWrap(True)
         self.label_2.setObjectName(_fromUtf8("label_2"))
         self.horizontalLayout_2.addWidget(self.label_2)
         self.formLayout.setWidget(0, QtGui.QFormLayout.SpanningRole, self.widget_header_start)
@@ -138,8 +139,17 @@ class Ui_widget_start_new(object):
         self.label_start_new.setObjectName(_fromUtf8("label_start_new"))
         self.horizontalLayout_4.addWidget(self.label_start_new)
         self.label = QtGui.QLabel(self.widget_header_new)
+        self.label.setWordWrap(True)
         self.label.setObjectName(_fromUtf8("label"))
         self.horizontalLayout_4.addWidget(self.label)
+        self.button_cancel = QtGui.QPushButton(self.widget_header_new)
+        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Fixed, QtGui.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.button_cancel.sizePolicy().hasHeightForWidth())
+        self.button_cancel.setSizePolicy(sizePolicy)
+        self.button_cancel.setObjectName(_fromUtf8("button_cancel"))
+        self.horizontalLayout_4.addWidget(self.button_cancel)
         self.formLayout.setWidget(1, QtGui.QFormLayout.SpanningRole, self.widget_header_new)
         self.horizontalLayout.addWidget(self.widget_central_form)
         spacerItem3 = QtGui.QSpacerItem(0, 0, QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
@@ -159,7 +169,7 @@ class Ui_widget_start_new(object):
         widget_start_new.setWindowTitle(QtGui.QApplication.translate("widget_start_new", "Form", None, QtGui.QApplication.UnicodeUTF8))
         self.label_get_started.setText(QtGui.QApplication.translate("widget_start_new", "ICON", None, QtGui.QApplication.UnicodeUTF8))
         self.label_2.setText(QtGui.QApplication.translate("widget_start_new", "<b>Get started!</b><br />\n"
-"<small><i>Tip: Select an item in the overview area to start working right away</i></small>", None, QtGui.QApplication.UnicodeUTF8))
+"<small><i>Select an item in the overview area to start right away</i></small>", None, QtGui.QApplication.UnicodeUTF8))
         self.label_templates.setText(QtGui.QApplication.translate("widget_start_new", "<h3>New</h3>", None, QtGui.QApplication.UnicodeUTF8))
         self._label_recent.setText(QtGui.QApplication.translate("widget_start_new", "<h3>Recent</h3>", None, QtGui.QApplication.UnicodeUTF8))
         self.label_browse.setText(QtGui.QApplication.translate("widget_start_new", "<h3>Open</h3>", None, QtGui.QApplication.UnicodeUTF8))
@@ -169,6 +179,7 @@ class Ui_widget_start_new(object):
         self.button_forum.setText(QtGui.QApplication.translate("widget_start_new", "Ask a question on the forum", None, QtGui.QApplication.UnicodeUTF8))
         self.label_start_new.setText(QtGui.QApplication.translate("widget_start_new", "ICON", None, QtGui.QApplication.UnicodeUTF8))
         self.label.setText(QtGui.QApplication.translate("widget_start_new", "<b>New expriment</b><br />\n"
-"<small><i>Tip: Close this tab/ switch to another tab to resume work on your current experiment</i></small>", None, QtGui.QApplication.UnicodeUTF8))
+"<small><i>Click \'cancel\' or close this tab to another tab to resume your current experiment</i></small>", None, QtGui.QApplication.UnicodeUTF8))
+        self.button_cancel.setText(QtGui.QApplication.translate("widget_start_new", "Cancel", None, QtGui.QApplication.UnicodeUTF8))
 
 from libqtopensesame.widgets.credits_widget import credits_widget
