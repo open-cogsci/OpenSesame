@@ -93,7 +93,7 @@ if __name__ == "__main__":
 		opensesame.run_experiment(False)
 	else:
 		opensesame.check_update(always=False)
-		opensesame.ui.tabwidget.open_start_new()
+		opensesame.ui.tabwidget.open_start_new(start=True)
 
 	opensesame.restore_window_state()				
 	opensesame.refresh()			

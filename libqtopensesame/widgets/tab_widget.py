@@ -239,14 +239,21 @@ class tab_widget(QtGui.QTabWidget):
 			self.add(preferences_widget.preferences_widget(self.main_window), \
 				"options", "Preferences")	
 				
-	def open_start_new(self):
+	def open_start_new(self, start=False):
 
-		"""Opens the unused tab"""
+		"""
+		Opens the start new tab
+		
+		Keyword arguments:
+		start -- indicates whether the widget is opened because OpenSesame has
+				 started (True) or because the new button has been clicked
+				 (False) (default=True)
+		"""
 
 		if self.switch('__start_new__'):
 			return			
 		from libqtopensesame.widgets.start_new_widget import start_new_widget
-		w = start_new_widget(self.main_window)		
+		w = start_new_widget(self.main_window, start=start)		
 		self.add(w, 'os-experiment', 'Get started')
 		
 	def switch(self, tab_name):

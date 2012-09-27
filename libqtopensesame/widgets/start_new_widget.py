@@ -26,13 +26,18 @@ class start_new_widget(QtGui.QWidget):
 
 	"""Start new dialog presented when starting with a clean experiment"""
 	
-	def __init__(self, main_window):
+	def __init__(self, main_window, start=False):
 
 		"""
 		Constructor
 
 		Arguments:
 		main_window -- a the main ui
+		
+		Keyword arguments:
+		start -- indicates whether the widget is opened because OpenSesame has
+				 started (True) or because the new button has been clicked
+				 (False) (default=True)
 		"""
 
 		QtGui.QDialog.__init__(self, main_window)
@@ -76,6 +81,12 @@ class start_new_widget(QtGui.QWidget):
 			self.main_window.ui.tabwidget.open_osdoc)
 		self.ui.button_forum.clicked.connect( \
 			self.main_window.ui.tabwidget.open_forum)
+			
+		# Show the correct header
+		if start:
+			self.ui.widget_header_new.hide()
+		else:
+			self.ui.widget_header_start.hide()
 
 	def open_template(self):
 

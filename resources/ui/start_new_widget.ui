@@ -91,14 +91,63 @@
             <property name="margin">
              <number>0</number>
             </property>
-            <item row="2" column="0">
+            <item row="0" column="0" colspan="2">
+             <widget class="QWidget" name="widget_header_start" native="true">
+              <layout class="QHBoxLayout" name="horizontalLayout_2">
+               <property name="spacing">
+                <number>4</number>
+               </property>
+               <property name="margin">
+                <number>4</number>
+               </property>
+               <item>
+                <widget class="QLabel" name="label_get_started">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="text">
+                  <string>ICON</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLabel" name="label_2">
+                 <property name="text">
+                  <string>&lt;b&gt;Get started!&lt;/b&gt;&lt;br /&gt;
+&lt;small&gt;&lt;i&gt;Tip: Select an item in the overview area to start working right away&lt;/i&gt;&lt;/small&gt;</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </widget>
+            </item>
+            <item row="2" column="0" colspan="2">
+             <spacer name="verticalSpacer_2">
+              <property name="orientation">
+               <enum>Qt::Vertical</enum>
+              </property>
+              <property name="sizeType">
+               <enum>QSizePolicy::Fixed</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>20</width>
+                <height>8</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+            <item row="3" column="0">
              <widget class="QLabel" name="label_templates">
               <property name="text">
                <string>&lt;h3&gt;New&lt;/h3&gt;</string>
               </property>
              </widget>
             </item>
-            <item row="2" column="1">
+            <item row="3" column="1">
              <widget class="QListWidget" name="list_templates">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
@@ -114,14 +163,14 @@
               </property>
              </widget>
             </item>
-            <item row="4" column="0">
+            <item row="5" column="0">
              <widget class="QLabel" name="_label_recent">
               <property name="text">
                <string>&lt;h3&gt;Recent&lt;/h3&gt;</string>
               </property>
              </widget>
             </item>
-            <item row="4" column="1">
+            <item row="5" column="1">
              <widget class="QListWidget" name="list_recent">
               <property name="maximumSize">
                <size>
@@ -131,28 +180,28 @@
               </property>
              </widget>
             </item>
-            <item row="5" column="0">
+            <item row="6" column="0">
              <widget class="QLabel" name="label_browse">
               <property name="text">
                <string>&lt;h3&gt;Open&lt;/h3&gt;</string>
               </property>
              </widget>
             </item>
-            <item row="5" column="1">
+            <item row="6" column="1">
              <widget class="QCommandLinkButton" name="button_browse">
               <property name="text">
                <string>Open an existing experiment</string>
               </property>
              </widget>
             </item>
-            <item row="6" column="0">
+            <item row="7" column="0">
              <widget class="QLabel" name="label_help">
               <property name="text">
                <string>&lt;h3&gt;Help&lt;/h3&gt;</string>
               </property>
              </widget>
             </item>
-            <item row="6" column="1">
+            <item row="7" column="1">
              <widget class="QWidget" name="widget_3" native="true">
               <layout class="QHBoxLayout" name="horizontalLayout_3">
                <property name="margin">
@@ -175,17 +224,17 @@
               </layout>
              </widget>
             </item>
-            <item row="0" column="0" colspan="2">
-             <widget class="QWidget" name="widget_header_box" native="true">
-              <layout class="QHBoxLayout" name="horizontalLayout_2">
+            <item row="1" column="0" colspan="2">
+             <widget class="QWidget" name="widget_header_new" native="true">
+              <layout class="QHBoxLayout" name="horizontalLayout_4">
                <property name="spacing">
-                <number>0</number>
+                <number>4</number>
                </property>
                <property name="margin">
                 <number>4</number>
                </property>
                <item>
-                <widget class="QLabel" name="label_get_started">
+                <widget class="QLabel" name="label_start_new">
                  <property name="sizePolicy">
                   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                    <horstretch>0</horstretch>
@@ -198,31 +247,15 @@
                 </widget>
                </item>
                <item>
-                <widget class="QLabel" name="label_2">
+                <widget class="QLabel" name="label">
                  <property name="text">
-                  <string>&lt;b&gt;Get started!&lt;/b&gt;&lt;br /&gt;
-&lt;small&gt;&lt;i&gt;What would you like to do today?&lt;/i&gt;&lt;/small&gt;</string>
+                  <string>&lt;b&gt;New expriment&lt;/b&gt;&lt;br /&gt;
+&lt;small&gt;&lt;i&gt;Tip: Close this tab/ switch to another tab to resume work on your current experiment&lt;/i&gt;&lt;/small&gt;</string>
                  </property>
                 </widget>
                </item>
               </layout>
              </widget>
-            </item>
-            <item row="1" column="0" colspan="2">
-             <spacer name="verticalSpacer_2">
-              <property name="orientation">
-               <enum>Qt::Vertical</enum>
-              </property>
-              <property name="sizeType">
-               <enum>QSizePolicy::Fixed</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>20</width>
-                <height>8</height>
-               </size>
-              </property>
-             </spacer>
             </item>
            </layout>
           </widget>
