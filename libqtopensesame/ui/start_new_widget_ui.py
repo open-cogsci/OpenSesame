@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'resources/ui/start_new_widget.ui'
 #
-# Created: Thu Sep 27 14:35:08 2012
+# Created: Thu Sep 27 14:46:25 2012
 #      by: PyQt4 UI code generator 4.9.1
 #
 # WARNING! All changes made in this file will be lost!
@@ -179,7 +179,7 @@ class Ui_widget_start_new(object):
         self.button_forum.setText(QtGui.QApplication.translate("widget_start_new", "Ask a question on the forum", None, QtGui.QApplication.UnicodeUTF8))
         self.label_start_new.setText(QtGui.QApplication.translate("widget_start_new", "ICON", None, QtGui.QApplication.UnicodeUTF8))
         self.label.setText(QtGui.QApplication.translate("widget_start_new", "<b>New expriment</b><br />\n"
-"<small><i>Click \'cancel\' or close this tab to another tab to resume your current experiment</i></small>", None, QtGui.QApplication.UnicodeUTF8))
+"<small><i>Click \'cancel\' or close this tab to resume your current experiment</i></small>", None, QtGui.QApplication.UnicodeUTF8))
         self.button_cancel.setText(QtGui.QApplication.translate("widget_start_new", "Cancel", None, QtGui.QApplication.UnicodeUTF8))
 
 from libqtopensesame.widgets.credits_widget import credits_widget
