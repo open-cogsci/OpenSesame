@@ -86,7 +86,6 @@ class experiment(item.item):
 		self.height = 768
 		self.background = "black"
 		self.foreground = "white"		
-		self.resolution = self.width, self.height
 		self.fullscreen = False
 
 		# Font parameters
@@ -541,7 +540,7 @@ class experiment(item.item):
 		self.average_response_time = "undefined"
 		self.accuracy = "undefined"
 		self.acc = "undefined"
-
+		
 	def var_info(self):
 
 		"""

@@ -85,13 +85,13 @@ class opengl(openexp._canvas.legacy.legacy):
 
 		"""see openexp._canvas.legacy"""
 		
-		return self.experiment.resolution[0] / 2
+		return self.experiment.get('width') / 2
 
 	def ycenter(self):
 
 		"""see openexp._canvas.legacy"""
 		
-		return self.experiment.resolution[1] / 2
+		return self.experiment.get('height') / 2
 
 	def show(self):
 
@@ -425,7 +425,7 @@ def init_display(experiment):
 	mode = pygame.HWSURFACE | pygame.DOUBLEBUF | pygame.OPENGL
 	if experiment.fullscreen:
 		mode = mode | pygame.FULLSCREEN
-	if pygame.display.mode_ok(experiment.resolution, mode):
+	if pygame.display.mode_ok(experiment.resolution(), mode):
 		print "video.opengl.init_display(): video mode ok"
 	else:
 		print "video.opengl.init_display(): warning: video mode not ok"
@@ -442,7 +442,7 @@ def init_display(experiment):
 	os.environ["LIBGL_SYNC_REFRESH"] = val
 
 	# Create the window and the surface
-	experiment.window = pygame.display.set_mode(experiment.resolution, mode)
+	experiment.window = pygame.display.set_mode(experiment.resolution(), mode)
 	pygame.display.set_caption(experiment.title)
 	pygame.mouse.set_visible(False)
 	experiment.surface = pygame.display.get_surface()

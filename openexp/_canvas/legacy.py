@@ -237,7 +237,7 @@ class legacy:
 		>>> my_canvas.line(x1, y1, x2, y2)
 		</DOC>"""
 		
-		return self.experiment.resolution[0] / 2
+		return self.experiment.get('width') / 2
 	
 	def ycenter(self):
 		
@@ -255,7 +255,7 @@ class legacy:
 		>>> my_canvas.line(x1, y1, x2, y2)
 		</DOC>"""
 		
-		return self.experiment.resolution[1] / 2	
+		return self.experiment.get('height') / 2	
 		
 	def prepare(self):
 	
@@ -682,6 +682,7 @@ class legacy:
 		>>> my_canvas.text('Some text with <b>boldface</b> and <i>italics</i>')	
 		</DOC>"""
 							
+		print '%s, %s' % (x, y)
 		if color != None: color = self.color(color)
 		else: color = self.fgcolor
 		if x == None: x = self.xcenter()
@@ -899,7 +900,7 @@ def init_display(experiment):
 	else:
 		print "openexp._canvas.legacy.init_display(): not enabling double buffering"
 
-	if pygame.display.mode_ok(experiment.resolution, mode):	
+	if pygame.display.mode_ok(experiment.resolution(), mode):	
 		print "openexp._canvas.legacy.init_display(): video mode ok"
 	else:
 		print "openexp._canvas.legacy.init_display(): warning: video mode not ok"
@@ -908,7 +909,7 @@ def init_display(experiment):
 		mode = mode | pygame.FULLSCREEN
 						
 	# Create the window and the surface
-	experiment.window = pygame.display.set_mode(experiment.resolution, mode)					
+	experiment.window = pygame.display.set_mode(experiment.resolution(), mode)					
 	pygame.display.set_caption(experiment.title)
 	pygame.mouse.set_visible(False)
 	experiment.surface = pygame.display.get_surface()

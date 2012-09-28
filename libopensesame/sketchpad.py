@@ -29,7 +29,9 @@ class sketchpad(item.item, generic_response.generic_response):
 	TODO
 	The term 'item' is used for sketchpad 'elements'. This is confusing, because
 	'item' is also used for the higher level items, such as sketchpads. This
-	terminology should be changed.
+	terminology should be changed. Furthermore, the sketchpad elements should
+	ideally be handled by separate classes, rather than the chaotic ad-hoc 
+	implementation here and in the libqtopensesame.widgets.sketchpad_widget.
 	"""
 
 	def __init__(self, name, experiment, string=None):
