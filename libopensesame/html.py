@@ -115,7 +115,7 @@ class html(HTMLParser):
 		canvas -- an openexp canvas
 		
 		Keyword arguments:
-		max_width -- the maximum width, after which line wrapping shoudl occur,
+		max_width -- the maximum width, after which line wrapping should occur,
 					 or None to wrap at screen edge (default=None)
 		center -- indicates whether the text should be center aligned
 				  (default=False)
@@ -186,7 +186,7 @@ class html(HTMLParser):
 				
 					# Line wrap if we run out of the screen
 					dx, dy = canvas.text_size(word)
-					if _x+dx > max_x:
+					if _x+dx > max_x + (max_x-x):
 						l_x_offset.append(-(_x-x)/2)
 						_x = x
 						_y += dy
@@ -195,10 +195,11 @@ class html(HTMLParser):
 					# Draw!
 					_x += dx
 				l_x_offset.append(-(_x-x)/2)
+				#l_x_offset.append(-(_x-x)*2)
 				_y += dy			
 			l_x_offset.reverse()
 			y_offset = -(_y-y)/2
-			max_x = (max_x-x)/2+x
+			#max_x = (max_x-x)/2+x
 		
 		
 		# Now render it onto the canvas
