@@ -89,7 +89,9 @@ class form_consent(form_base.form_base):
 	
 		while True:
 			form_base.form_base.run(self)
-			if self.get('checkbox_status') == 'yes' and \
+			print 'cb: %s' % self.get('checkbox_status')
+			print 'ac: %s' % self.get('accept_status')
+			if self.get('checkbox_status') == self.get('checkbox_text') and \
 				self.get('accept_status') == 'yes':
 				break
 			c = canvas(self.experiment)
