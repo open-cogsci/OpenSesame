@@ -291,6 +291,28 @@ class item:
 		for var in self.variables:
 			s += u'\t' + self.variable_to_string(var)
 		return s
+	
+	def resolution(self):
+		
+		"""<DOC>
+		Return the display resolution and check whether the resolution is valid.		
+		
+		Note 1:
+		The meaning of 'resolution' depends on the back-end. For example, the
+		legacy and opengl back-ends change the actual resolution of the display,
+		whereas the other back-ends do not alter the actual display resolution,
+		but create a 'virtual display' with the requested resolution that is
+		presented in the center of the display.
+		
+		Returns:
+		A (width, height) tuple
+		</DOC>"""
+		
+		w = self.get('width')
+		h = self.get('height')
+		if type(w) != int or type(h) != int:
+			raise exceptions.runtime_error('(%s, %s) is not a valid resolution')
+		return w, h
 
 	def set(self, var, val):
 

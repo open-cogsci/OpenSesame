@@ -398,7 +398,7 @@ def init_display(experiment):
 	print "openexp._canvas.psycho.init_display(): waitblanking = %s" % waitblanking
 	print "openexp._canvas.psycho.init_display(): monitor = %s" % monitor
 			
-	experiment.window = visual.Window( [experiment.width, experiment.height], \
+	experiment.window = visual.Window( experiment.resolution(), \
 		waitBlanking=waitblanking, fullscr=experiment.fullscreen, \
 		monitor=monitor, units="pix", winType=wintype, \
 		rgb=experiment.background)

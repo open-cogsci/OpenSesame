@@ -307,8 +307,7 @@ def init_display(experiment):
 	control.defaults.event_logging = 0
 	control.defaults.window_mode = experiment.get('fullscreen') == 'no'
 	control.defaults.fast_quit = True
-	control.defaults.window_size = experiment.get('width'), \
-		experiment.get('height')
+	control.defaults.window_size = experiment.resolution()
 	control.defaults.auto_create_subject_id = True	
 	control.defaults.open_gl = experiment.get_check('expyriment_opengl', \
 		xpyriment.settings['expyriment_opengl']['default']) == 'yes'
