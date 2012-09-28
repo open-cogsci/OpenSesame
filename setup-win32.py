@@ -56,7 +56,7 @@ include_sounds = True
 include_faenza = True
 include_inpout32 = True
 include_simpleio = True
-python_folder = "C:\\Python27"
+python_folder = "C:\\Python_2.7.3-32"
 python_version = "2.7"
 
 # Packages that are too be copied for the site-packages folder, rather than
