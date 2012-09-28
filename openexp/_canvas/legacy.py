@@ -132,6 +132,7 @@ class legacy:
 		self.penwidth = 1
 		self.antialias = True
 		self.surface = self.experiment.surface.copy()					
+		self._current_font = None
 		self.set_font(style=self.experiment.font_family, size= \
 			self.experiment.font_size, bold=self.experiment.font_bold=='yes', \
 			italic=self.experiment.font_italic=='yes', underline= \
@@ -167,12 +168,13 @@ class legacy:
 		A PyGame font
 		"""
 	
-		font = pygame.font.Font(self.experiment.resource( \
-			"%s.ttf" % self.font_style), self.font_size)			
-		font.set_bold(self.font_bold)
-		font.set_italic(self.font_italic)
-		font.set_underline(self.font_underline)
-		return font
+		if self._current_font == None:			
+			self._current_font = pygame.font.Font(self.experiment.resource( \
+				"%s.ttf" % self.font_style), self.font_size)			
+			self._current_font.set_bold(self.font_bold)
+			self._current_font.set_italic(self.font_italic)
+			self._current_font.set_underline(self.font_underline)
+		return self._current_font
 		
 	def flip(self, x=True, y=False):
 		
