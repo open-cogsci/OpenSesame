@@ -47,7 +47,7 @@ button_browse,document-open,
 button_browse_experiment,document-open,
 button_browse_logfile,document-open,
 button_browse_pool,folder-open,16
-button_cancel,gtk-cancel,
+button_cancel,gtk-no,
 button_circle,os-circle,
 button_clear_stdout,edit-clear,
 button_close,window-close,
