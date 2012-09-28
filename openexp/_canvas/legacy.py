@@ -682,7 +682,6 @@ class legacy:
 		>>> my_canvas.text('Some text with <b>boldface</b> and <i>italics</i>')	
 		</DOC>"""
 							
-		print '%s, %s' % (x, y)
 		if color != None: color = self.color(color)
 		else: color = self.fgcolor
 		if x == None: x = self.xcenter()
