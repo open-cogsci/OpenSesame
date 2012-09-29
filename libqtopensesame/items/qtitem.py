@@ -338,6 +338,8 @@ class qtitem(QtCore.QObject):
 			script += self.strip_script_line(s)
 		self.edit_script.edit.setPlainText(script, set_modified=False)
 		self.edit_script.apply.clicked.connect(self.apply_script_changes)
+		QtCore.QObject.connect(self.edit_script.edit, QtCore.SIGNAL( \
+			"focusLost"), self.apply_script_changes)
 
 		button = QtGui.QPushButton(self.experiment.icon("apply"), \
 			_("Apply and close"))
