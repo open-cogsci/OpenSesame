@@ -202,6 +202,14 @@ class form:
 		if index >= len(self.widgets):
 			raise form_error( \
 				u'Widget position (%s, %s) is outside of the form' % pos)
+		if type(colspan) != int or colspan < 1 or colspan > len(self.cols):
+			raise form_error( \
+				u'Column span %s is invalid (i.e. too large, too small, or not a number)' \
+				% colspan)
+		if type(rowspan) != int or rowspan < 1 or rowspan > len(self.rows):
+			raise form_error( \
+				u'Row span %s is invalid (i.e. too large, too small, or not a number)' \
+				% rowspan)				
 		self.widgets[index] = widget
 		self.span[index] = colspan, rowspan		
 		widget.set_rect(self.get_rect(index))		
