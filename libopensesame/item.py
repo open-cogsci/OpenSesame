@@ -339,18 +339,13 @@ class item:
 		# Make sure the variable name and the value are of the correct types
 		var = self.unistr(var)
 		val = self.auto_type(val)		
-		
+		# Check whether the variable name is valid
 		if regexp.sanitize_var_name.sub('_', var) != var:
 			raise exceptions.runtime_error( \
 				'"%s" is not a valid variable name. Variable names must consist of alphanumeric characters and underscores, and may not start with a digit.' \
 				% var)
-						
-		if type(val) == float:
-			exec(u'self.%s = %f' % (var, val))
-		elif type(val) == int:
-			exec(u'self.%s = %d' % (var, val))
-		else:
-			exec(u'self.%s = """%s"""' % (var, val.replace(u'"', u'\\\"')))
+		# Register the variables
+		setattr(self, var, val)
 		self.variables[var] = val
 
 	def unset(self, var):
@@ -372,7 +367,7 @@ class item:
 		if var in self.variables:
 			del self.variables[var]
 		try:
-			exec(u'del self.%s' % var)
+			delattr(self, var)
 		except:
 			pass
 
@@ -419,11 +414,11 @@ class item:
 				u"Recursion detected! Is variable '%s' defined in terms of itself (e.g., 'var = [var]') in item '%s'" \
 				% (var, self.name))
 		# Get the variable				
-		if hasattr(self, var):
-			val = eval(u'self.%s' % var)
+		if hasattr(self, var):			
+			val = getattr(self, var)
 		else:
 			try:
-				val = eval(u'self.experiment.%s' % var)
+				val = getattr(self.experiment, var)				
 			except:
 				raise exceptions.runtime_error( \
 					u"Variable '%s' is not set in item '%s'.<br /><br />You are trying to use a variable that does not exist. Make sure that you have spelled and capitalized the variable name correctly. You may wish to use the variable inspector (Control + I) to find the intended variable." \
