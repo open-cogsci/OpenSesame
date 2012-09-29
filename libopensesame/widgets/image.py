@@ -86,8 +86,18 @@ class image(widget):
 		self.rect = rect	
 		if self.adjust:
 			x, y, w, h = self.rect
-			img = Image.open(self.path)
-			img_w, img_h = img.size
+			try:
+				img = Image.open(self.path)
+				img_w, img_h = img.size
+			except:				
+				try:
+					import pygame
+					img = pygame.image.load(self.path)
+				except:
+					raise exceptions.runtime_error( \
+						'Failed to open image "%s". Perhaps the file is not an image, or the image format is not supported.' \
+						% self.path)
+				img_w, img_h = img.get_width()			
 			scale_x = 1.*w/img_w
 			scale_y = 1.*h/img_h
 			self.scale = min(scale_x, scale_y)
