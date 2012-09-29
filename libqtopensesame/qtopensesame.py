@@ -127,6 +127,7 @@ class qtopensesame(QtGui.QMainWindow):
 		self.ui.action_run.triggered.connect(self.run_experiment)
 		self.ui.action_run_in_window.triggered.connect( \
 			self.run_experiment_in_window)
+		self.ui.action_run_quick.triggered.connect(self.run_quick)
 		self.ui.action_enable_auto_response.triggered.connect( \
 			self.set_auto_response)
 		self.ui.action_close_all_tabs.triggered.connect( \
@@ -1232,15 +1233,18 @@ class qtopensesame(QtGui.QMainWindow):
 		if resp == QtGui.QMessageBox.Yes:
 			self.copy_to_pool(exp.logfile)
 
-	def run_experiment(self, dummy=None, fullscreen=True):
+	def run_experiment(self, dummy=None, fullscreen=True, quick=False):
 
 		"""
 		Runs the current experiment
 
 		Keyword arguments:
-		dummy -- a dummy argument that is passed by signaler (default = None)
-		fullscreen -- a boolean to indicate if the window should be fullscreen
-					  (default = True)
+		dummy -- a dummy argument that is passed by signaler (default=None)
+		fullscreen -- a boolean to indicate whether the window should be
+					  fullscreen (default=True)
+		quick -- a boolean to indicate whether default should be used for the
+				 log-file and subject number. Mostly useful while testing the
+				 experiment (default=False)
 		"""
 
 		import openexp.exceptions
@@ -1261,11 +1265,11 @@ class qtopensesame(QtGui.QMainWindow):
 			self.experiment.notify(unicode(e))
 			return
 
-		if debug.enabled:
+		if quick:
 			exp.set("subject_nr", 999)
 			exp.set("subject_parity", "odd")
 			logfile = os.path.join(config.get_config('default_logfile_folder'), \
-				u'debug.csv')
+				config.get_config('quick_run_logfile'))				
 
 		else:
 
@@ -1379,7 +1383,13 @@ class qtopensesame(QtGui.QMainWindow):
 
 		"""Runs the experiment in a window"""
 
-		self.run_experiment(fullscreen = False)
+		self.run_experiment(fullscreen=False)
+		
+	def run_quick(self):
+		
+		"""Run the experiment without asking for subject nr and logfile"""
+		
+		self.run_experiment(fullscreen=False, quick=True)
 
 	def refresh(self, changed_item=None, refresh_edit=True, \
 		refresh_script=True):

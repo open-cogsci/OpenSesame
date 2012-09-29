@@ -57,6 +57,7 @@ class config(object):
 		"locale" : "default",
 		"loop_wizard" : QtCore.QStringList(),
 		"onetabmode" : False,
+		"quick_run_logfile": u"quickrun.csv",
 		"recent_files" : "",
 		"scintilla_line_numbers" : True,
 		"scintilla_right_margin" : False,
