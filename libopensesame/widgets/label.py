@@ -64,12 +64,12 @@ class label(widget):
 		Keyword arguments:
 		html -- indicates whether HTML should be parsed (default=True)
 		</DOC>"""
-	
+			
 		if self.form.item != None:
 			text = self.form.item.eval_text(text)
 		else:
 			text = self.form.experiment.eval_text(text)
-		text = text.replace('\t', self.tab_str)
+		text = self.form.experiment.unistr(text).replace('\t', self.tab_str)
 		x, y, w, h = self.rect
 		if self.center:
 			x += w/2
