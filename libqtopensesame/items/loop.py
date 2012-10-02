@@ -358,7 +358,8 @@ class loop(libopensesame.loop.loop, qtitem.qtitem):
 			for var in self.matrix[cycle]:
 				col = column_order.index(var)
 				self.loop_table.setItem(cycle, col, \
-					QtGui.QTableWidgetItem(self.matrix[cycle][var]))
+					QtGui.QTableWidgetItem(self.experiment.unistr( \
+						self.matrix[cycle][var])))
 
 		# Store the number of cycles and the column order
 		self.set("cycles", max(self.get("cycles"), self.cycle_count()))
