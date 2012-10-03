@@ -51,7 +51,7 @@ class feedpad:
 			static = True
 			for var in item:
 				if var != "text" and var != "show_if" and type(item[var]) == \
-					str and item[var].find("[") >= 0:
+					unicode and item[var].find("[") >= 0:
 					debug.msg("variable property: %s = %s" % (var, item[var]))
 					static = False
 			if static:
