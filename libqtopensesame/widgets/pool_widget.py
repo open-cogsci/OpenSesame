@@ -231,7 +231,7 @@ class pool_widget(QtGui.QWidget):
 		if item == None:
 			return
 		menu = QtGui.QMenu()
-		menu.addAction(item.icon, "Open")
+		menu.addAction(item.icon, _("Open"))
 		menu.addSeparator()
 		menu.addAction(self.main_window.experiment.icon("delete"), \
 			_("Remove from pool"))
@@ -253,10 +253,10 @@ class pool_widget(QtGui.QWidget):
 		f = os.path.join(self.main_window.experiment.pool_folder, \
 			self.context_target)
 
-		if a == "Open":
+		if a == _("Open"):
 			self.open_file(f)
 
-		elif a == "Remove from pool":
+		elif a == _("Remove from pool"):
 
 			# Create a list of files to be removed
 			l = []
