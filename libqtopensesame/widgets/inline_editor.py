@@ -20,68 +20,9 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 import os
 from PyQt4 import QtGui, QtCore
 from PyQt4.Qsci import QsciScintilla, QsciScintillaBase, QsciLexerPython
-from libqtopensesame.ui import replace_dialog_ui
 from libqtopensesame.misc import config, _
+from libqtopensesame.dialogs.replace_dialog import replace_dialog
 from libopensesame import debug
-
-class replace_dialog(QtGui.QDialog):
-
-	"""A search/ replace dialog"""
-
-	def __init__(self, parent=None):
-
-		"""
-		Constructor
-
-		Keywords arguments:
-		parent -- the parent QWidget
-		"""
-
-		QtGui.QDialog.__init__(self, parent)
-		self.edit = parent.edit
-		self.ui = replace_dialog_ui.Ui_replace_dialog()
-		self.ui.setupUi(self)
-		parent.experiment.main_window.theme.apply_theme(self)
-		self.adjustSize()
-		self.ui.edit_search.setText(parent.search.text())
-		self.ui.button_search.clicked.connect(self.search)
-		self.ui.button_replace.clicked.connect(self.replace)
-		self.ui.button_replace_all.clicked.connect(self.replace_all)
-
-	def search(self):
-
-		"""
-		Select text matching the search term
-
-		Returns:
-		True if the string was found, False otherwise
-		"""
-
-		return self.parent().perform_search(term=self.ui.edit_search.text())
-
-	def replace(self):
-
-		"""Replace the current selection with the replace term"""
-
-		self.parent().edit.replace(self.ui.edit_replace.text())
-
-	def replace_all(self):
-
-		"""
-		Iteratively replace all occurences of the search term with the
-		replace term
-		"""
-
-		if self.ui.edit_search.text() in self.ui.edit_replace.text():
-			QtGui.QMessageBox.information(self, _("Oops!"), \
-				_("The replacement string cannot contain the search string."))
-			return
-		i = 0
-		while self.search():
-			i += 1
-			self.replace()
-		QtGui.QMessageBox.information(self, _("Replace all"), \
-			_("%d occurence(s) have been replaced" % i))
 
 class python_lexer(QsciLexerPython):
 
