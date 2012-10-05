@@ -25,7 +25,7 @@ import os
 import sys
 import pygame
 
-class item:
+class item(object):
 
 	"""
 	item is an abstract class that serves as the basis for all OpenSesame items,
