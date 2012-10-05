@@ -163,6 +163,18 @@ class xpyriment(openexp._canvas.legacy.legacy):
 		
 		"""See openexp._canvas.legacy"""
 		
+		"""
+		if color != None: color = self.color(color)
+		else: color = self.fgcolor
+		if fill: line_width = 0
+		else: line_width = self.penwidth
+		pos = c2p((x+w/2,y+h/2))
+		stim = stimuli.Ellipse((w, h), colour=color, line_width=line_width, \
+			position=pos)
+		stim.preload()
+		self.stim_list.append(stim)		
+		"""
+		
 		h *= .5
 		w *= .5
 		l = np.linspace(0, 2*np.pi, self.ellipse_res)		
@@ -182,6 +194,28 @@ class xpyriment(openexp._canvas.legacy.legacy):
 	def polygon(self, vertices, fill=False, color=None):
 		
 		"""See openexp._canvas.legacy"""
+		
+		"""
+		if color != None: color = self.color(color)
+		else: color = self.fgcolor
+		if fill: line_width = 0
+		else: line_width = self.penwidth		
+		# The coordinate transformations are a bit awkard. Shape expects
+		# a list of vertices that start form (0,0), but the position of the
+		# shape is the center of the shape. So we first need to determine
+		# the center of the polygon=(min+max)/2 and then convert the list
+		# of vertices to a format that's acceptable to Shape			
+		center = (min(p[0] for p in vertices) + \
+			max(p[0] for p in vertices)) / 2, \
+			(min(p[1] for p in vertices) + \
+			max(p[1] for p in vertices)) / 2
+		stim = stimuli.Shape(colour=color, position=c2p(center), \
+			anti_aliasing=self.aa, line_width=line_width)
+		l = p2v([c2p(p) for p in vertices])		
+		for v in l: stim.add_vertex(v)
+		stim.preload()
+		self.stim_list.append(stim)				
+		"""
 		
 		if fill:
 			if color != None: color = self.color(color)
