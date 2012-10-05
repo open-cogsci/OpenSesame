@@ -1,4 +1,4 @@
-opensesame (0.27~pre10-ubuntu1) precise; urgency=low
+opensesame (0.27~pre12-ubuntu2) precise; urgency=low
 
   * Added Expyriment backend
   * Added form functionality
@@ -6,7 +6,7 @@ opensesame (0.27~pre10-ubuntu1) precise; urgency=low
   * Improved internationalization
   * Added quick run button
 
- -- Sebastiaan Mathot <s.mathot@cogsci.nl>  Sat, 29 Sep 2012 16:09:59 +0200
+ -- Sebastiaan Mathot <s.mathot@cogsci.nl>  Tue, 02 Oct 2012 11:47:48 +0200
 
 opensesame (0.26-2) unstable; urgency=low
 
