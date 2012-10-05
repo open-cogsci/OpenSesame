@@ -121,10 +121,10 @@ class xpyriment(openexp._canvas.legacy.legacy):
 		else: color = self.fgcolor		
 		if x == None: x = self.xcenter()			
 		if y == None: y = self.ycenter()					
-		stim = stimuli.Dot(8, colour=color, position=c2p((x,y)))
+		stim = stimuli.Circle(16, colour=color, position=c2p((x,y)))
 		stim.preload()		
 		self.stim_list.append(stim)
-		stim = stimuli.Dot(2, colour=self.bgcolor, position=c2p((x,y)))	
+		stim = stimuli.Circle(4, colour=self.bgcolor, position=c2p((x,y)))	
 		stim.preload()		
 		self.stim_list.append(stim)		
 		
@@ -163,7 +163,6 @@ class xpyriment(openexp._canvas.legacy.legacy):
 		
 		"""See openexp._canvas.legacy"""
 		
-		"""
 		if color != None: color = self.color(color)
 		else: color = self.fgcolor
 		if fill: line_width = 0
@@ -172,30 +171,12 @@ class xpyriment(openexp._canvas.legacy.legacy):
 		stim = stimuli.Ellipse((w, h), colour=color, line_width=line_width, \
 			position=pos)
 		stim.preload()
-		self.stim_list.append(stim)		
-		"""
-		
-		h *= .5
-		w *= .5
-		l = np.linspace(0, 2*np.pi, self.ellipse_res)		
-		if fill:
-			_x = np.cos(l)*w + x+w
-			_y = np.sin(l)*h + y+h
-		else:
-			x1 = np.cos(l)*w + x+w
-			y1 = np.sin(l)*h + y+h
-			l = np.linspace(2*np.pi, 0, self.ellipse_res)
-			x2 = np.cos(l)*(w-self.penwidth) + x+w
-			y2 = np.sin(l)*(h-self.penwidth) + y+h
-			_x = np.concatenate((x1, x2))
-			_y = np.concatenate((y1, y2))
-		self.polygon(zip(_x, _y), fill=True, color=color)
+		self.stim_list.append(stim)
 			
 	def polygon(self, vertices, fill=False, color=None):
 		
 		"""See openexp._canvas.legacy"""
 		
-		"""
 		if color != None: color = self.color(color)
 		else: color = self.fgcolor
 		if fill: line_width = 0
@@ -214,33 +195,7 @@ class xpyriment(openexp._canvas.legacy.legacy):
 		l = p2v([c2p(p) for p in vertices])		
 		for v in l: stim.add_vertex(v)
 		stim.preload()
-		self.stim_list.append(stim)				
-		"""
-		
-		if fill:
-			if color != None: color = self.color(color)
-			else: color = self.fgcolor			
-			# The coordinate transformations are a bit awkard. Shape expects
-			# a list of vertices that start form (0,0), but the position of the
-			# shape is the center of the shape. So we first need to determine
-			# the center of the polygon=(min+max)/2 and then convert the list
-			# of vertices to a format that's acceptable to Shape			
-			center = (min(p[0] for p in vertices) + \
-				max(p[0] for p in vertices)) / 2, \
-				(min(p[1] for p in vertices) + \
-				max(p[1] for p in vertices)) / 2
-			stim = stimuli.Shape(colour=color, position=c2p(center), \
-				anti_aliasing=self.aa)
-			l = p2v([c2p(p) for p in vertices])		
-			for v in l: stim.add_vertex(v)
-			stim.preload()
-			self.stim_list.append(stim)
-		else:
-			# Unfilled shapes are drawn using lines
-			for i in range(len(vertices)-1):
-				x1, y1 = vertices[i]
-				x2, y2 = vertices[i+1]
-				self.line(x1, y1, x2, y2, color=color)
+		self.stim_list.append(stim)						
 				
 	def text_size(self, text):
 	
