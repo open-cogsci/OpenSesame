@@ -477,8 +477,9 @@ class loop(libopensesame.loop.loop, qtitem.qtitem):
 			self.rename_cyclevar)			
 		self.loop_widget.ui.button_remove_cyclevar.clicked.connect( \
 			self.remove_cyclevar)			
-		self.loop_widget.ui.button_wizard.clicked.connect( \
-			self.wizard)
+		self.loop_widget.ui.button_wizard.clicked.connect(self.wizard)
+		self.loop_widget.ui.button_apply_weights.clicked.connect( \
+			self.apply_weights)
 		
 		self.loop_widget.ui.combobox_order.setItemIcon(0, \
 			self.experiment.icon("random"))
@@ -533,6 +534,48 @@ class loop(libopensesame.loop.loop, qtitem.qtitem):
 		self.loop_widget.ui.label_summary.setText("<small>%s</small>" % s)		
 		self.lock = False
 		return self._edit_widget
+	
+	def apply_weights(self):
+		
+		"""Repeat certain cycles based on the value in a particular column"""
+		
+		var_list = self.cyclevar_list()
+		if var_list == None:
+			return
+
+		weight_var, ok = QtGui.QInputDialog.getItem( \
+			self.experiment.ui.centralwidget, _("Apply weight"), \
+			_("Which variable contains the weights?"), var_list, \
+			editable=False)
+		if not ok:		
+			return
+		
+		self.matrix = {}
+		_row = 0
+		for row in range(self.loop_table.rowCount()):
+			self.matrix[_row] = {}
+			weight = 1
+			for col in range(self.loop_table.columnCount()):
+				var = unicode(self.loop_table.horizontalHeaderItem(col).text())
+				cell = self.loop_table.item(row, col)
+				if cell == None:
+					val = u''
+				else:
+					val = unicode(self.loop_table.item(row, col).text())
+				if var == weight_var:
+					try:
+						weight = int(val)
+					except:
+						weight = 1
+				self.matrix[_row][var] = val
+			_row += 1
+			while weight > 1:
+				weight -= 1				
+				if _row-1 in self.matrix:
+					self.matrix[_row] = self.matrix[_row-1]
+				_row += 1
+		self.set_cycle_count(_row)
+		self.edit_widget()
 	
 	def apply_item_change(self):
 		

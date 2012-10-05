@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'resources/ui/loop_widget.ui'
 #
-# Created: Thu Aug  2 12:43:07 2012
+# Created: Fri Oct  5 15:12:00 2012
 #      by: PyQt4 UI code generator 4.9.1
 #
 # WARNING! All changes made in this file will be lost!
@@ -40,6 +40,9 @@ class Ui_loop_widget(object):
         self.button_remove_cyclevar.setIconSize(QtCore.QSize(16, 16))
         self.button_remove_cyclevar.setObjectName(_fromUtf8("button_remove_cyclevar"))
         self.horizontalLayout.addWidget(self.button_remove_cyclevar)
+        self.button_apply_weights = QtGui.QPushButton(self.widget_buttons)
+        self.button_apply_weights.setObjectName(_fromUtf8("button_apply_weights"))
+        self.horizontalLayout.addWidget(self.button_apply_weights)
         spacerItem = QtGui.QSpacerItem(40, 20, QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
         self.horizontalLayout.addItem(spacerItem)
         self.button_wizard = QtGui.QPushButton(self.widget_buttons)
@@ -145,6 +148,7 @@ class Ui_loop_widget(object):
         self.button_add_cyclevar.setText(QtGui.QApplication.translate("loop_widget", "Add variable", None, QtGui.QApplication.UnicodeUTF8))
         self.button_rename_cyclevar.setText(QtGui.QApplication.translate("loop_widget", "Rename variable", None, QtGui.QApplication.UnicodeUTF8))
         self.button_remove_cyclevar.setText(QtGui.QApplication.translate("loop_widget", "Remove variable", None, QtGui.QApplication.UnicodeUTF8))
+        self.button_apply_weights.setText(QtGui.QApplication.translate("loop_widget", "Apply weights", None, QtGui.QApplication.UnicodeUTF8))
         self.button_wizard.setText(QtGui.QApplication.translate("loop_widget", "Variable wizard", None, QtGui.QApplication.UnicodeUTF8))
         self.checkbox_advanced.setText(QtGui.QApplication.translate("loop_widget", "Show advanced options", None, QtGui.QApplication.UnicodeUTF8))
         self.spin_skip.setSuffix(QtGui.QApplication.translate("loop_widget", " cycle(s)", None, QtGui.QApplication.UnicodeUTF8))

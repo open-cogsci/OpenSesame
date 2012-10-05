@@ -151,7 +151,7 @@ class loop(item.item):
 				% (self.item, self.name))			
 				
 		# And run!
-		_item = self.experiment.items[self.item]		
+		_item = self.experiment.items[self.item]						
 		for repeat, cycle in l:					
 			self.apply_cycle(cycle)
 			if self._break_if != None and eval(self._break_if):
@@ -161,7 +161,7 @@ class loop(item.item):
 			else:
 				raise exceptions.runtime_error( \
 					"Failed to prepare item '%s', which is called by loop item '%s'" \
-					% (self.item, self.name))								
+					% (self.item, self.name))				
 		return True
 							
 	def apply_cycle(self, cycle):
