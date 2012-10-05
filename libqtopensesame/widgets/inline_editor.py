@@ -156,8 +156,9 @@ class scintilla(QsciScintilla):
 		Returns:
 		A unicode string with the editor contents
 		"""
-		
-		return unicode(self.text())
+
+		# Make sure that operating specific eol's are converted to unix style
+		return  unicode(self.text()).replace(os.linesep, '\n')
 
 	def setPlainText(self, s, set_modified=False):
 
