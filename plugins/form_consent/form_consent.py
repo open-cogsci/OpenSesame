@@ -68,8 +68,8 @@ class form_consent(form_base.form_base):
 
 		if string == None:
 			string = default_script
-		form_base.form_base.__init__(self, name, experiment, string, \
-			item_type='form_consent', description='A simple consent form')			
+		super(form_consent, self).__init__(name, experiment, string, item_type= \
+			'form_consent', description='A simple consent form')			
 			
 	def from_string(self, script):
 	
@@ -81,16 +81,14 @@ class form_consent(form_base.form_base):
 		"""
 	
 		self._widgets = []
-		form_base.form_base.from_string(self, script)
+		super(form_consent, self).from_string(script)
 		
 	def run(self):
 	
 		"""Execute the consent form"""
 	
 		while True:
-			form_base.form_base.run(self)
-			print 'cb: %s' % self.get('checkbox_status')
-			print 'ac: %s' % self.get('accept_status')
+			super(form_consent, self).run()
 			if self.get('checkbox_status') == self.get('checkbox_text') and \
 				self.get('accept_status') == 'yes':
 				break
