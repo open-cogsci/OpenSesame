@@ -136,11 +136,12 @@ class sketchpad(item.item, generic_response.generic_response):
 		# Build the canvas. Do not catch errors in debug mode
 		if debug.enabled:
 			self.canvas = openexp.canvas.canvas(self.experiment, \
-				self.get("background"), self.get("foreground"))
+				self.get("background"), self.get("foreground"), auto_prepare=False)
 		else:
 			try:
 				self.canvas = openexp.canvas.canvas(self.experiment, \
-					self.get("background"), self.get("foreground"))
+					self.get("background"), self.get("foreground"), auto_prepare= \
+					False)
 			except ValueError as e:
 				raise exceptions.runtime_error( \
 					"Failed to create a canvas. This could be because the foreground or background color is not valid.")

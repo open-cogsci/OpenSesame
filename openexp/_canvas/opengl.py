@@ -40,7 +40,7 @@ class opengl(openexp._canvas.legacy.legacy):
 	
 	settings = None
 
-	def __init__(self, experiment, bgcolor = None, fgcolor = None):
+	def __init__(self, experiment, bgcolor=None, fgcolor=None, auto_prepare=True):
 
 		self.experiment = experiment
 		

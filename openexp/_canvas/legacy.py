@@ -102,7 +102,7 @@ class legacy:
 	# Initialize the html renderer
 	html = html.html()
 	
-	def __init__(self, experiment, bgcolor=None, fgcolor=None):
+	def __init__(self, experiment, bgcolor=None, fgcolor=None, auto_prepare=True):
 		
 		"""<DOC>
 		Initializes the canvas. The specified colors should be used as a default
@@ -116,10 +116,34 @@ class legacy:
 				   default (default=None)
 		fgcolor -- a human-readable foreground color or None to use experiment
 				   default (default=None)
+		auto_prepare -- Indicates whether the canvas should be automatically
+					   prepared after each drawing operation, so that canvas.show()
+					   will be maximally efficient. If auto_prepare is turned off,
+					   drawing operations may be more faster, but canvas.show()
+					   will take longer, unless canvas.prepare() is explicitly
+					   called in advance. Generally, it only makes sense to disable 
+					   auto_prepare when you want to draw a large number
+					   of stimuli, as in the second example below. Currently, the
+					   auto_prepare parameter only applies to the xpyriment, and is
+					   ignored by the other backends. (default=True)					    
 				   
 		Example:		
 		>>> from openexp.canvas import canvas
 		>>> my_canvas = canvas(exp)
+		>>> my_canvas.fixdot()
+		>>> my_canvas.show()
+		
+		Example:
+		>>> from openexp.canvas import canvas
+		>>> from random import randint
+		>>> my_canvas = canvas(exp, auto_prepare=False)
+		>>> for i in range(1000):
+		>>>		x = randint(0, self.get('width'))
+		>>>		y = randint(0, self.get('height'))
+		>>> 		my_canvas.fixdot(x, y)
+		>>> my_canvas.prepare()
+		>>> my_canvas.show()
+
 		</DOC>"""
 		
 		self.experiment = experiment

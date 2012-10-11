@@ -54,7 +54,7 @@ class psycho(openexp._canvas.legacy.legacy):
 			},						
 		}		
 	
-	def __init__(self, experiment, bgcolor=None, fgcolor=None):
+	def __init__(self, experiment, bgcolor=None, fgcolor=None, auto_prepare=True):
 		
 		"""See openexp._canvas.legacy"""
 		

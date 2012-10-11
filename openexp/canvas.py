@@ -28,7 +28,7 @@ class canvas:
 
 	"""A 'magic' class that morphs into the approriate backend from openexp._canvas"""
 	
-	def __init__(self, experiment, bgcolor = None, fgcolor = None):
+	def __init__(self, experiment, bgcolor=None, fgcolor=None, auto_prepare=True):
 	
 		"""Constructor"""
 	
@@ -43,7 +43,7 @@ class canvas:
 			except Exception as e:
 				raise openexp.exceptions.canvas_error("Failed to import 'openexp._canvas.%s' as video backend.<br /><br />Error: %s" % (experiment.canvas_backend, e))													
 
-		exec("openexp._canvas.%s.%s.__init__(self, experiment, bgcolor, fgcolor)" % (experiment.canvas_backend, experiment.canvas_backend))				
+		exec("openexp._canvas.%s.%s.__init__(self, experiment, bgcolor, fgcolor, auto_prepare)" % (experiment.canvas_backend, experiment.canvas_backend))				
 		
 def init_display(experiment):
 

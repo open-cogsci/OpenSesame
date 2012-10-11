@@ -63,17 +63,20 @@ class inline_script(item.item):
 		c.copy(self.experiment.items[sketchpad_name].canvas)
 		return c
 
-	def offline_canvas(self):
+	def offline_canvas(self, auto_prepare=True):
 
 		"""<DOC>
 		Create an empty canvas
+		
+		Keyword arguments:
+		auto_prepare -- Please see the canvas documentation (default=True)
 
 		Returns:
 		An openexp canvas
 		</DOC>"""
 
 		return canvas.canvas(self.experiment, self.get("background"), \
-			self.get("foreground"))
+			self.get("foreground"), auto_prepare=auto_prepare)
 
 	def prepare(self):
 

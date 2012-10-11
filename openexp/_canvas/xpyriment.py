@@ -56,11 +56,13 @@ class xpyriment(openexp._canvas.legacy.legacy):
 			},
 		}
 	
-	def __init__(self, experiment, bgcolor=None, fgcolor=None):
+	def __init__(self, experiment, bgcolor=None, fgcolor=None, auto_prepare=True):
 		
 		"""See openexp._canvas.legacy"""
 		
 		self.experiment = experiment
+		self.auto_prepare = auto_prepare
+		self.prepared = False
 		if fgcolor == None:
 			fgcolor = self.experiment.get('foreground')
 		if bgcolor == None:
@@ -94,15 +96,44 @@ class xpyriment(openexp._canvas.legacy.legacy):
 		self.penwidth = canvas.penwidth
 		self.aa = canvas.aa
 		self.fgcolor = canvas.fgcolor
-		self.bgcolor = canvas.bgcolor		
+		self.bgcolor = canvas.bgcolor
+		self.prepared = False
+		
+	def add_stim(self, stim, prepare=True):
+		
+		"""
+		Adds a stimulus to the stimulus list
+		
+		Arguments:
+		stim -- the stimulus
+		
+		Keyword arguments:
+		prepare -- indicates whether we should prepare (default=True)
+		"""
+		
+		self.stim_list.append(stim)
+		self.prepared = False
+		if prepare and self.auto_prepare:
+			self.prepare()
+		
+	def prepare(self):
+		
+		"""See openexp._canvas.legacy"""
+		
+		if not self.prepared:
+			self._canvas = stimuli.Canvas(self.experiment.expyriment.screen.size)
+			for stim in self.stim_list:
+				stim.plot(self._canvas)
+			self._canvas.preload()
+			self.prepared = True
+		return self.experiment.time()		
 		
 	def show(self):
 		
 		"""See openexp._canvas.legacy"""
 		
-		for stim in self.stim_list[:-1]:
-			stim.present(clear=False, update=False)
-		self.stim_list[-1].present(clear=False)
+		if not self.prepared: self.prepare()
+		self._canvas.present()
 		return self.experiment.time()
 		
 	def clear(self, color=None):
@@ -111,7 +142,8 @@ class xpyriment(openexp._canvas.legacy.legacy):
 		
 		if color != None: color = self.color(color)
 		else: color = self.bgcolor		
-		self.stim_list = [stimuli.BlankScreen(color)]
+		self.stim_list = []
+		self.add_stim(stimuli.BlankScreen(color))
 		
 	def fixdot(self, x=None, y=None, color=None):
 		
@@ -122,11 +154,9 @@ class xpyriment(openexp._canvas.legacy.legacy):
 		if x == None: x = self.xcenter()			
 		if y == None: y = self.ycenter()					
 		stim = stimuli.Circle(16, colour=color, position=c2p((x,y)))
-		stim.preload()		
-		self.stim_list.append(stim)
+		self.add_stim(stim, prepare=False)
 		stim = stimuli.Circle(4, colour=self.bgcolor, position=c2p((x,y)))	
-		stim.preload()		
-		self.stim_list.append(stim)		
+		self.add_stim(stim)
 		
 	def line(self, sx, sy, ex, ey, color=None):
 		
@@ -136,8 +166,7 @@ class xpyriment(openexp._canvas.legacy.legacy):
 		else: color = self.fgcolor		
 		stim = stimuli.Line(c2p((sx,sy)), c2p((ex,ey)), line_width= \
 			self.penwidth, colour=color, anti_aliasing=self.aa)
-		stim.preload()			
-		self.stim_list.append(stim)
+		self.add_stim(stim)
 		
 	def rect(self, x, y, w, h, fill=False, color=None):
 		
@@ -150,14 +179,11 @@ class xpyriment(openexp._canvas.legacy.legacy):
 			pos = c2p((x+w/2,y+h/2))
 			stim = stimuli.Rectangle(size=(w,h), position=pos, colour= \
 				color, anti_aliasing=self.aa)
-			stim.preload()
-			self.stim_list.append(stim)
-		# Unfilled shapes are drawn using lines			
+			self.add_stim(stim)
+
+		# Unfilled shapes are drawn using a polygon
 		else:
-			self.line(x, y, x+w, y, color=color)
-			self.line(x, y, x, y+h, color=color)
-			self.line(x+w, y, x+w, y+h, color=color)
-			self.line(x, y+h, x+w, y+h, color=color)
+			self.polygon( [(x,y), (x+w,y), (x+w,y+w), (x,y+w), (x,y)], color=color)
 			
 	def ellipse(self, x, y, w, h, fill=False, color=None):
 		
@@ -170,8 +196,7 @@ class xpyriment(openexp._canvas.legacy.legacy):
 		pos = c2p((x+w/2,y+h/2))
 		stim = stimuli.Ellipse((w, h), colour=color, line_width=line_width, \
 			position=pos)
-		stim.preload()
-		self.stim_list.append(stim)
+		self.add_stim(stim)
 			
 	def polygon(self, vertices, fill=False, color=None):
 		
@@ -194,8 +219,7 @@ class xpyriment(openexp._canvas.legacy.legacy):
 			anti_aliasing=self.aa, line_width=line_width)
 		l = p2v([c2p(p) for p in vertices])		
 		for v in l: stim.add_vertex(v)
-		stim.preload()
-		self.stim_list.append(stim)						
+		self.add_stim(stim)
 				
 	def text_size(self, text):
 	
@@ -228,7 +252,7 @@ class xpyriment(openexp._canvas.legacy.legacy):
 			text_colour=self.fgcolor, text_font=_font, \
 			text_size=self.font_size, text_bold=self.font_bold, \
 			text_italic=self.font_italic, text_underline=self.font_underline)			
-		self.stim_list.append(stim)				
+		self.add_stim(stim)
 		
 	def textline(self, text, line, color=None):
 		
@@ -254,7 +278,7 @@ class xpyriment(openexp._canvas.legacy.legacy):
 				y += scale*surf.get_height()/2			
 		stim = stimuli.Picture(fname, position=c2p((x,y)))
 		if scale != None: stim.scale( (scale, scale) )
-		self.stim_list.append(stim)
+		self.add_stim(stim)
 		
 	def gabor(self, x, y, orient, freq, env="gaussian", size=96, stdev=12, \
 		phase=0, col1="white", col2="black", bgmode="avg"):
@@ -265,8 +289,7 @@ class xpyriment(openexp._canvas.legacy.legacy):
 			stdev, phase, col1, col2, bgmode)
 		stim = stimuli._visual.Visual(position=c2p((x,y)))
 		stim._surface = surface
-		stim.preload()		
-		self.stim_list.append(stim)
+		self.add_stim(stim)
 		
 	def noise_patch(self, x, y, env="gaussian", size=96, stdev=12, \
 		col1="white", col2="black", bgmode="avg"):
@@ -277,8 +300,7 @@ class xpyriment(openexp._canvas.legacy.legacy):
 			col2, bgmode)
 		stim = stimuli._visual.Visual(position=c2p((x,y)))
 		stim._surface = surface
-		stim.preload()
-		self.stim_list.append(stim)
+		self.add_stim(stim)
 
 """
 Static methods
