@@ -571,7 +571,7 @@ class qtitem(QtCore.QObject):
 		for var in self.variables:
 			if var not in exclude:
 				val = self.variables[var]
-				if '[' in val:
+				if type(val) in (unicode, str) and '[' in val:
 					return True
 		return False
 
