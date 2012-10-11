@@ -102,15 +102,10 @@ class experiment(item.item):
 		# This is a dummy variable for backwards compatibility. The logfile 
 		# encoding is always utf-8, and this variable doesn't do anything.
 		self.logfile_codec = "utf-8"	
-
-		# Variables used for bookkeeping responses
-		self.total_correct = 0
-		self.total_response_time = 0
-		self.total_responses = 0
 		
 		# Default subject info
 		self.subject_nr = 0
-		self.subject_parity = "even"
+		self.subject_parity = "even"				
 
 		# This is some duplication of the option parser in qtopensesame,
 		# but nevertheless keep it so we don't need qtopensesame
@@ -295,10 +290,11 @@ class experiment(item.item):
 
 		"""Run the experiment"""
 
-		self.running = True
+		self.running = True		
 		self.init_sound()
 		self.init_display()
 		self.init_log()
+		self.reset_feedback()
 
 		print "experiment.run(): experiment started at %s" % time.ctime()
 

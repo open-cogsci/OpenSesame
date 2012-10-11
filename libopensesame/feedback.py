@@ -64,7 +64,8 @@ class feedback(sketchpad.sketchpad):
 			if not sketchpad.sketchpad.prepare(self):
 				return False
 		except exceptions.script_error as e:
-			raise exceptions.runtime_error("Failed to create feedback item '%s'" % self.name)						
+			raise exceptions.runtime_error("Failed to create feedback item '%s'" \
+				% self.name)						
 		if not sketchpad.sketchpad.run(self):
 			return False			
 		
