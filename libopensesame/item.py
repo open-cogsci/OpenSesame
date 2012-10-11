@@ -51,7 +51,14 @@ class item(object):
 		self.experiment = experiment
 		self.debug = debug.enabled
 		self.count = 0
-		self.reserved_words = "run", "prepare", "get", "set", "has"
+		
+		# A number of keywords are reserved, which means that they cannot be used
+		# as variable names
+		self.reserved_words = ['experiment', 'variables', 'comments', 'item_type']
+		for attr in dir(item):
+			if hasattr(getattr(item, attr), '__call__'):
+				self.reserved_words.append(attr)
+		
 		self._get_lock = None
 		
 		if not hasattr(self, "item_type"):
@@ -338,12 +345,18 @@ class item(object):
 
 		# Make sure the variable name and the value are of the correct types
 		var = self.unistr(var)
-		val = self.auto_type(val)		
+		val = self.auto_type(val)						
 		# Check whether the variable name is valid
 		if regexp.sanitize_var_name.sub('_', var) != var:
 			raise exceptions.runtime_error( \
 				'"%s" is not a valid variable name. Variable names must consist of alphanumeric characters and underscores, and may not start with a digit.' \
 				% var)
+		# Check whether the variable name is not protected
+		if var in self.reserved_words:
+			raise exceptions.runtime_error( \
+				'"%s" is a reserved keyword (i.e. it has a special meaning for OpenSesame), and therefore cannot be used as a variable name. Sorry!' \
+				% var)
+		
 		# Register the variables
 		setattr(self, var, val)
 		self.variables[var] = val
