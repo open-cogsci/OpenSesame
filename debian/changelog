@@ -1,12 +1,13 @@
-opensesame (0.27~pre12-ubuntu2) precise; urgency=low
+opensesame (0.27~pre13-ubuntu1) precise; urgency=low
 
   * Added Expyriment backend
   * Added form functionality
   * Improved Unicode support
   * Improved internationalization
   * Added quick run button
+  * Add ecological alternative to S&V template
 
- -- Sebastiaan Mathot <s.mathot@cogsci.nl>  Tue, 02 Oct 2012 11:47:48 +0200
+ -- Sebastiaan Mathot <s.mathot@cogsci.nl>  Thu, 11 Oct 2012 11:24:01 +0200
 
 opensesame (0.26-2) unstable; urgency=low
 
