@@ -66,7 +66,7 @@ class form:
 		n_cells = len(self.cols)*len(self.rows)
 		self.widgets = [None]*n_cells
 		self.span = [(1,1)]*n_cells	
-		self.canvas = canvas(self.experiment)		
+		self.canvas = canvas(self.experiment, auto_prepare=False)		
 		
 		if theme == 'gray':
 			from themes.gray import gray
@@ -181,7 +181,7 @@ class form:
 		for widget in self.widgets:
 			if widget != None:
 				widget.render()
-		self.canvas.show()				
+		self.canvas.show()		
 				
 	def set_widget(self, widget, pos, colspan=1, rowspan=1):
 	
