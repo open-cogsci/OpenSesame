@@ -552,7 +552,7 @@ class experiment(item.item):
 			l.append( (var, self.variables[var]) )
 		return l
 
-	def var_list(self, filt=""):
+	def var_list(self, filt=''):
 
 		"""
 		Return a list of (name, value, description) tuples with variable
@@ -565,22 +565,19 @@ class experiment(item.item):
 		A list of tuples
 		"""
 
-		l = []
-		i = 0
-		for item in self.items:
-			var_list = self.items[item].var_info()
-			for var, val in var_list:
-				if filt in var.lower() or filt in self.unistr(val).lower() or \
-					filt in item.lower():
-					l.append( (var, val, item) )
-
-		# Global variables are defined in the experiment class itself
-		var_list = self.var_info()
-		for var, val in var_list:
-			if filt in var.lower() or filt in self.unistr(val).lower() or filt in \
-				"global":
-				l.append( (var, val, "global") )
-
+		l = []				
+		# Create a dictionary of items that also includes the experiment
+		item_dict = dict(self.items.items() + [('global', self)]).items()
+		seen = []
+		for item_name, item in item_dict:
+			# Create a dictionary of variables that includes the broadcasted ones
+			# as wel as the indirectly registered ones (using item.set())
+			var_dict = item.var_info() + item.variables.items()
+			for var, val in var_dict:
+				if var not in seen and (filt in var.lower() or filt in \
+					self.unistr(val).lower() or filt in item_name.lower()):
+					l.append( (var, val, item_name) )
+					seen.append(var)
 		return l
 				
 	def init_sound(self):
