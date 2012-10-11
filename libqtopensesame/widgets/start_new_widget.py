@@ -55,7 +55,9 @@ class start_new_widget(QtGui.QWidget):
 		# Initialize templates
 		templates = (os.path.join("templates", "default.opensesame"), \
 			"Default template"), (os.path.join("templates", \
-			"extended_template.opensesame"), "Extended template")
+			"extended_template.opensesame"), "Extended template"), \
+			(os.path.join("templates", "eco_alt_template.opensesame.tar.gz"), \
+			"Stimulus set: An ecological alternative to Snodgrass & Vanderwart")
 		for f in templates:
 			item = QtGui.QListWidgetItem(self.ui.list_templates)
 			item.setText(f[1])

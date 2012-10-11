@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'resources/ui/start_new_widget.ui'
 #
-# Created: Thu Sep 27 14:46:25 2012
+# Created: Thu Oct 11 11:14:29 2012
 #      by: PyQt4 UI code generator 4.9.1
 #
 # WARNING! All changes made in this file will be lost!
@@ -17,7 +17,7 @@ except AttributeError:
 class Ui_widget_start_new(object):
     def setupUi(self, widget_start_new):
         widget_start_new.setObjectName(_fromUtf8("widget_start_new"))
-        widget_start_new.resize(995, 437)
+        widget_start_new.resize(1098, 366)
         sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -91,7 +91,7 @@ class Ui_widget_start_new(object):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.list_templates.sizePolicy().hasHeightForWidth())
         self.list_templates.setSizePolicy(sizePolicy)
-        self.list_templates.setMaximumSize(QtCore.QSize(16777215, 50))
+        self.list_templates.setMaximumSize(QtCore.QSize(16777215, 100))
         self.list_templates.setObjectName(_fromUtf8("list_templates"))
         self.formLayout.setWidget(3, QtGui.QFormLayout.FieldRole, self.list_templates)
         self._label_recent = QtGui.QLabel(self.widget_central_form)

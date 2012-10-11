@@ -43,3 +43,9 @@ Licenses: GPL-3
 Files: resources/ts/it_IT.ts
 Copyright: 2012, Andrea Epifani <andreaepifani@gmail.com>
 Licenses: GPL-3
+
+Files: resources/templates/eco_alt_template.opensesame.tar.gz
+Copyright: 2012, Francisco Javier Moreno-Martinez
+           2012, Pedro R. Montoro
+           2012, Sebastiaan Mathot <s.mathot@cogsci.nl>
+Licenses: CC-BY-3.0
