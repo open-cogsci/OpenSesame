@@ -175,26 +175,20 @@ class loop(item.item):
 		
 		# If the cycle is not defined, we don't have to do anything
 		if cycle not in self.matrix:
-			return
-			
+			return			
 		# Otherwise apply all variables from the cycle
 		for var in self.matrix[cycle]:
 			val = self.matrix[cycle][var]
-
 			# By starting with an "=" sign, users can incorporate a
 			# Python statement, for example to call functions from
 			# the random or math module
-			if type(val) == str and len(val) > 2 and val[0] == "=":
-				code = "%s" % self.eval_text(val[1:], \
-					soft_ignore=True, quote_str=True)
-				debug.msg("evaluating '%s'" % code)
+			if type(val) == unicode and len(val) > 1 and val[0] == "=":
 				try:
-					val = eval(code)
+					val = eval(val[1:])
 				except Exception as e:
 					raise exceptions.runtime_error( \
 						"Failed to evaluate '%s' in loop item '%s': %s" \
-						% (code, self.name, e))
-
+						% (val[1:], self.name, e))
 			# Set it!
 			self.experiment.set(var, val)												
 

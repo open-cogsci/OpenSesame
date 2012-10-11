@@ -669,59 +669,71 @@ class item(object):
 		"""
 
 		src = cond
+		
+		# If the conditional statement is preceded by a '=', it is interpreted as
+		# Python code, like 'self.get("correct") == 1'. In this case we only have
+		# to strip the preceding space
+		if len(src) > 0 and src[0] == '=':			
+			code = src[1:]
+			debug.msg('Python-style conditional statement: %s' % code)
+			
+		# Otherwise, it is interpreted as a traditional run if statement, like
+		# '[correct] = 1'
+		else:
+			operators = "!=", "==", "=", "<", ">", ">=", "<=", "+", "-", "(", \
+				")", "/", "*", "%", "~", "**", "^"
+			op_chars = "!", "=", "=", "<", ">", "+", "-", "(", ")", "/", "*", \
+				"%", "~", "*", "^"
+			whitespace = " ", "\t", "\n"
+			keywords = "and", "or", "is", "not", "true", "false"
+			capitalize = "true", "false", "none"
 
-		operators = "!=", "==", "=", "<", ">", ">=", "<=", "+", "-", "(", ")", \
-			"/", "*", "%", "~", "**", "^"
-		op_chars = "!", "=", "=", "<", ">", "+", "-", "(", ")", "/", "*", "%", \
-			"~", "*", "^"
-		whitespace = " ", "\t", "\n"
-		keywords = "and", "or", "is", "not", "true", "false"
-		capitalize = "true", "false", "none"
+			# Try to fix missing spaces
+			redo = True
+			while redo:
+				redo = False
+				for i in range(len(cond)):
+					if cond[i] in op_chars:
+						if i != 0 and cond[i-1] not in op_chars + whitespace:
+							cond = cond[:i] + " " + cond[i:]
+							redo = True
+							break
+						if i < len(cond)-1 and cond[i+1] not in \
+							op_chars+whitespace:
+							cond = cond[:i+1] + " " + cond[i+1:]
+							redo = True
+							break
 
-		# Try to fix missing spaces
-		redo = True
-		while redo:
-			redo = False
-			for i in range(len(cond)):
-				if cond[i] in op_chars:
-					if i != 0 and cond[i-1] not in op_chars + whitespace:
-						cond = cond[:i] + " " + cond[i:]
-						redo = True
-						break
-					if i < len(cond)-1 and cond[i+1] not in op_chars+whitespace:
-						cond = cond[:i+1] + " " + cond[i+1:]
-						redo = True
-						break
-
-		# Rebuild the conditional string
-		l = []
-		i = 0
-		for word in self.split(cond):
-			if len(word) > 2 and word[0] == "[" and word[-1] == "]":
-				l.append(u"self.unistr(self.get(\"%s\"))" % word[1:-1])
-			elif word == u"=":
-				l.append(u"==")
-			elif word.lower() == u"always":
-				l.append(u"True")
-			elif word.lower() == u"never":
-				l.append(u"False")
-			elif word.lower() in operators + keywords:
-				if word.lower() in capitalize:
-					l.append(word.capitalize())
+			# Rebuild the conditional string
+			l = []
+			i = 0
+			for word in self.split(cond):
+				if len(word) > 2 and word[0] == "[" and word[-1] == "]":
+					l.append(u"self.get('%s')" % word[1:-1])
+				elif word == u"=":
+					l.append(u"==")
+				elif word.lower() == u"always":
+					l.append(u"True")
+				elif word.lower() == u"never":
+					l.append(u"False")
+				elif word.lower() in operators + keywords:
+					if word.lower() in capitalize:
+						l.append(word.capitalize())
+					else:
+						l.append(word.lower())
 				else:
-					l.append(word.lower())
-			else:
-				# For backwards compatibility, the first word is interpreted as
-				# a variable name
-				if i == 0:
-					l.append(u"self.unistr(self.get(\"%s\"))" % word)
-				else:
-					l.append(u"\"%s\"" % word)
-			i += 1
+					val = self.auto_type(word)
+					if type(val) == unicode:						
+						l.append(u"\"%s\"" % word)
+					else:
+						l.append(self.unistr(word))
+				i += 1
 
-		code = " ".join(l)
-		if code != "True":
-			debug.msg("'%s' => '%s'" % (src, code))
+			code = " ".join(l)
+			if code != "True":
+				debug.msg("'%s' => '%s'" % (src, code))
+				
+		# Optionally compile the conditional statement to bytecode and return
 		if not bytecode:
 			return code
 		try:
