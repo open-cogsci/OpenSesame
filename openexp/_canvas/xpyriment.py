@@ -120,7 +120,8 @@ class xpyriment(openexp._canvas.legacy.legacy):
 		"""See openexp._canvas.legacy"""
 		
 		if not self.prepared:
-			self._canvas = stimuli.Canvas(self.experiment.expyriment.screen.size)
+			self._canvas = stimuli.Canvas( \
+				self.experiment.expyriment.screen.size, colour=self._canvas_color)
 			for stim in self.stim_list:
 				stim.plot(self._canvas)
 			self._canvas.preload()
@@ -139,10 +140,9 @@ class xpyriment(openexp._canvas.legacy.legacy):
 	
 		"""See openexp._canvas.legacy"""
 		
-		if color != None: color = self.color(color)
-		else: color = self.bgcolor		
+		if color != None: self._canvas_color = self.color(color)
+		else: self._canvas_color = self.bgcolor		
 		self.stim_list = []
-		self.add_stim(stimuli.BlankScreen(color))
 		
 	def fixdot(self, x=None, y=None, color=None):
 		
@@ -182,7 +182,14 @@ class xpyriment(openexp._canvas.legacy.legacy):
 
 		# Unfilled shapes are drawn using a polygon
 		else:
-			self.polygon( [(x,y), (x+w,y), (x+w,y+w), (x,y+w), (x,y)], color=color)
+			# For now, do not use a polygon, because it's really slow when
+			# rendering, which is particularly problematic for forms.
+			# self.polygon( [(x,y), (x+w,y), (x+w,y+w), (x,y+w), (x,y)], \
+			# color=color)
+			self.line(x, y, x+w, y, color=color)
+			self.line(x+w, y, x+w, y+h, color=color)
+			self.line(x, y+h, x+w, y+h, color=color)
+			self.line(x, y, x, y+h, color=color)
 			
 	def ellipse(self, x, y, w, h, fill=False, color=None):
 		
