@@ -26,7 +26,6 @@ from expyriment import control, stimuli, misc, io
 from expyriment.misc.geometry import coordinates2position, \
 	points_to_vertices as p2v
 	
-	
 def c2p(pos):
 
 	"""
@@ -310,7 +309,7 @@ def init_display(experiment):
 
 	"""See openexp._canvas.legacy"""
 
-	global exp
+	import pygame
 	
 	# Configure Expyriment
 	io.defaults.mouse_track_button_events = False	
@@ -325,16 +324,15 @@ def init_display(experiment):
 	
 	# Initialize
 	exp = control.initialize()	
-	experiment._time_func = _time
-	experiment._sleep_func = exp.clock.wait
+	experiment._time_func = pygame.time.get_ticks
+	experiment._sleep_func = pygame.time.delay
 	experiment.time = experiment._time_func
-	experiment.sleep = experiment._sleep_func
+	experiment.sleep = experiment._sleep_func	
 	experiment.window = exp.screen._surface
 	experiment.expyriment = exp
 	
 	# TODO: In order to set the window title and to allow mouse responses we
-	# need to bypass expyriment for now
-	import pygame
+	# need to bypass expyriment for now	
 	pygame.display.set_caption('OpenSesame (Expyriment backend)')
 	pygame.event.set_allowed(pygame.MOUSEBUTTONDOWN)
 	pygame.event.set_allowed(pygame.MOUSEBUTTONUP)
@@ -344,12 +342,3 @@ def close_display(experiment):
 	"""See openexp._canvas.legacy"""
 	
 	control.end()
-	
-def _time():
-
-	"""See openexp._canvas.legacy"""
-
-	global exp
-	return exp.clock.time
-		
-
