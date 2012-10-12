@@ -165,18 +165,16 @@ class legacy:
 
 		while timeout == None or time - start_time <= timeout:
 			time = pygame.time.get_ticks()
-			for event in pygame.event.get():
-				if event.type == KEYDOWN:
-					if event.key == pygame.K_ESCAPE:
-						raise openexp.exceptions.response_error( \
-							"The escape key was pressed.")
-					if event.unicode in invalid_unicode:
-						key = pygame.key.name(event.key)
-					else:
-						key = event.unicode
-					if keylist == None or key in keylist:
-						return key, time
-
+			for event in pygame.event.get(KEYDOWN):
+				if event.key == pygame.K_ESCAPE:
+					raise openexp.exceptions.response_error( \
+						"The escape key was pressed.")
+				if event.unicode in invalid_unicode:
+					key = pygame.key.name(event.key)
+				else:
+					key = event.unicode
+				if keylist == None or key in keylist:
+					return key, time
 		return None, time
 
 	def get_mods(self):
