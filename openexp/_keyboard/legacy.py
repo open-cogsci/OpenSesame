@@ -175,7 +175,7 @@ class legacy:
 					key = event.unicode
 				if keylist == None or key in keylist:
 					return key, time
-		return None, time
+		return 'timeout', time
 
 	def get_mods(self):
 
