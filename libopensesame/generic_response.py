@@ -359,12 +359,14 @@ class generic_response:
 		l = []
 		l.append( ("response", "[Depends on response]") )		
 		l.append( ("response_time", "[Depends on response]") )		
-		l.append( ("response_%s" % self.get("name"), "[Depends on response]") )		
-		l.append( ("response_time_%s" % self.get("name"), \
+		l.append( ("response_%s" % self.get("name", _eval=False), \
+			"[Depends on response]") )		
+		l.append( ("response_time_%s" % self.get("name", _eval=False), \
 			"[Depends on response]") )			
 		if self.process_feedback:
 			l.append( ("correct", "[Depends on response]") )		
-			l.append( ("correct_%s" % self.get("name"), "[Depends on response]") )
+			l.append( ("correct_%s" % self.get("name", _eval=False), \
+				"[Depends on response]") )
 			l.append( ("average_response_time", "[Depends on response]") )
 			l.append( ("avg_rt", "[Depends on response]") )
 			l.append( ("accuracy", "[Depends on response]") )
