@@ -63,8 +63,8 @@ class html(HTMLParser):
 			return
 	
 		if self.current_tag != tag:
-			print 'Warning: expecting closing tag for %s, got %s' % \
-				(self.current_tag, tag)
+			debug.msg('Warning: expecting closing tag for %s, got %s' % \
+				(self.current_tag, tag), reason='warning')
 	
 		self.pop_style()
 			
@@ -77,7 +77,7 @@ class html(HTMLParser):
 		tag -- the closing tag
 		attrs -- the tag attributes
 		"""	
-	
+		
 		if tag not in self.valid_start_tags:
 			return	
 	
@@ -176,7 +176,7 @@ class html(HTMLParser):
 			_y = y
 			for paragraph in self.text:
 				_x = x
-				dy = 0
+				dy = canvas.text_size('dummy')[1]				
 				for word, style in paragraph:
 			
 					# Set the style
@@ -195,12 +195,9 @@ class html(HTMLParser):
 					# Draw!
 					_x += dx
 				l_x_offset.append(-(_x-x)/2)
-				#l_x_offset.append(-(_x-x)*2)
 				_y += dy			
 			l_x_offset.reverse()
 			y_offset = -(_y-y)/2
-			#max_x = (max_x-x)/2+x
-		
 		
 		# Now render it onto the canvas
 		if center:
@@ -212,7 +209,7 @@ class html(HTMLParser):
 				_x = x+l_x_offset.pop()
 			else:
 				_x = x
-			dy = 0
+			dy = canvas.text_size('dummy')[1]
 			for word, style in paragraph:
 			
 				# Set the style
