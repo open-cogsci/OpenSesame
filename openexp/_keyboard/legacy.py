@@ -152,7 +152,7 @@ class legacy:
 		A response_error if 'escape' was pressed				   
 
 		Returns:
-		A (key, timestamp) tuple. The key is None if a timeout occurs.
+		A (key, timestamp) tuple. The key is 'timeout' if a timeout occurs.
 		</DOC>"""
 
 		if keylist == None:
@@ -175,7 +175,7 @@ class legacy:
 					key = event.unicode
 				if keylist == None or key in keylist:
 					return key, time
-		return 'timeout', time
+		return None, time
 
 	def get_mods(self):
 

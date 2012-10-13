@@ -99,7 +99,7 @@ class psycho(openexp._keyboard.legacy.legacy):
 				elif keylist == None or key in keylist:				
 					return key, time
 
-		return 'timeout', time
+		return None, time
 
 	def get_mods(self):
 
