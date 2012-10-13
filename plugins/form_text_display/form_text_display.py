@@ -96,11 +96,12 @@ class qtform_text_display(form_text_display, qtplugin.qtplugin):
 
 		self.lock = True
 		qtplugin.qtplugin.init_edit_widget(self, False)
-		self.add_line_edit_control('form_title', 'Form title', 'Form title')
+		self.add_line_edit_control('form_title', 'Form title', tooltip= \
+			'Form title')
 		self.add_line_edit_control('ok_text', 'Ok-button text', \
-			'Ok-button text')
+			tooltip='Ok-button text')
 		self.add_editor_control('form_text', 'Main form text', \
-			'Main form text')		
+			tooltip='Main form text')		
 		self.lock = False
 
 	def apply_edit_changes(self):

@@ -136,22 +136,23 @@ class qtform_multiple_choice(form_multiple_choice, qtplugin.qtplugin):
 
 		self.lock = True
 		qtplugin.qtplugin.init_edit_widget(self, False)
-		self.add_line_edit_control('form_title', 'Form title', 'Form title')
+		self.add_line_edit_control('form_title', 'Form title', tooltip= \
+			'Form title')
 		self.add_line_edit_control('form_var', 'Response variable', \
-			'Response variable')
+			tooltip='Response variable')
 		self.add_checkbox_control('allow_multiple', \
 			'Allow multiple options to be selected', \
-			'Allow multiple options to be selected',)
+			tooltip='Allow multiple options to be selected',)
 		self.add_checkbox_control('advance_immediately', \
 			'Advance immediately to the next item once a selection has been made', \
-			'Advance immediately to the next item once a selection has been made')
+			tooltip='Advance immediately to the next item once a selection has been made')
 		self.add_line_edit_control('button_text', 'Button text', \
-			'Text for the button to advance to the next item')
+			tooltip='Text for the button to advance to the next item')
 		self.add_editor_control('question', 'Your question', \
-			'Your question')		
+			tooltip='Your question')		
 		self.add_editor_control('options', \
 			'Response options (different options on different lines)', \
-			'Response options')					
+			tooltip='Response options')					
 		self.auto_apply_edit_changes()
 		self.lock = False
 

@@ -108,11 +108,12 @@ class qtform_text_input(form_text_input, qtplugin.qtplugin):
 
 		self.lock = True
 		qtplugin.qtplugin.init_edit_widget(self, False)
-		self.add_line_edit_control('form_title', 'Form title', 'Form title')
+		self.add_line_edit_control('form_title', 'Form title', tooltip= \
+			'Form title')
 		self.add_line_edit_control('form_var', 'Response variable', \
-			'Response variable')
+			tooltip='Response variable')
 		self.add_editor_control('form_question', 'Your question', \
-			'Your question')
+			tooltip='Your question')
 		self.lock = False
 
 	def apply_edit_changes(self):

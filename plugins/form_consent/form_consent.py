@@ -124,17 +124,18 @@ class qtform_consent(form_consent, qtplugin.qtplugin):
 
 		self.lock = True
 		qtplugin.qtplugin.init_edit_widget(self, False)
-		self.add_line_edit_control('form_title', 'Form title', 'Form title')
+		self.add_line_edit_control('form_title', 'Form title', tooltip= \
+			'Form title')
 		self.add_line_edit_control('checkbox_text', 'Checkbox text', \
-			'Checbox text')
+			tooltip='Checbox text')
 		self.add_line_edit_control('accept_text', 'Accept button text', \
-			'Accept button text')		
+			tooltip='Accept button text')		
 		self.add_line_edit_control('decline_text', 'Decline button text', \
-			'Decline button text')					
+			tooltip='Decline button text')					
 		self.add_line_edit_control('decline_message', 'Message on decline', \
-			'Shown when the participant does not accept the consent form')					
+			tooltip='Shown when the participant does not accept the consent form')					
 		self.add_editor_control('form_text', 'Consent form text', \
-			'Consent form text')		
+			tooltip='Consent form text')		
 		self.lock = False
 
 	def apply_edit_changes(self):
