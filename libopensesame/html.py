@@ -212,6 +212,7 @@ class html(HTMLParser):
 				_x = x+l_x_offset.pop()
 			else:
 				_x = x
+			dy = 0
 			for word, style in paragraph:
 			
 				# Set the style
