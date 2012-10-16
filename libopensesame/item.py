@@ -833,9 +833,9 @@ class item(object):
 		A unicode string with special characters
 		"""
 		
-		if type(s) != str:
+		if type(s) not in (str, unicode):
 			raise exceptions.runtime_error( \
-			'unsanitize() expects first argument to be str, not "%s"' \
+			'unsanitize() expects first argument to be unicode, not "%s"' \
 			% type(s))
 
 		s = self.unistr(s)
