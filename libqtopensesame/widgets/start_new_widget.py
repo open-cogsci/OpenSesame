@@ -19,6 +19,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 
 from PyQt4 import QtCore, QtGui
 from libqtopensesame.ui.start_new_widget_ui import Ui_widget_start_new
+from libqtopensesame.misc import template_info
 import random
 import os
 
@@ -52,16 +53,15 @@ class start_new_widget(QtGui.QWidget):
 		else:
 			self.tab_name = '__new_wizard__'
 
-		# Initialize templates
-		templates = (os.path.join("templates", "default.opensesame"), \
-			"Default template"), (os.path.join("templates", \
-			"extended_template.opensesame"), "Extended template"), \
-			(os.path.join("templates", "eco_alt_template.opensesame.tar.gz"), \
-			"Stimulus set: An ecological alternative to Snodgrass & Vanderwart")
-		for f in templates:
+		# Initialize templates						
+		for path, desc in template_info.templates:
+			try:
+				path = self.main_window.experiment.resource(path)
+			except:
+				continue
 			item = QtGui.QListWidgetItem(self.ui.list_templates)
-			item.setText(f[1])
-			item.file = self.main_window.experiment.resource(f[0])
+			item.setText(desc)
+			item.file = path
 			item.setIcon(self.main_window.experiment.icon("wizard"))
 			self.ui.list_templates.addItem(item)
 		self.ui.list_templates.setCurrentRow(0)
