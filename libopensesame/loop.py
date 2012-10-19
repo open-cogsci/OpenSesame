@@ -151,7 +151,7 @@ class loop(item.item):
 		# And run!
 		_item = self.experiment.items[self.item]						
 		while len(l) > 0:
-			cycle = l.pop()
+			cycle = l.pop(0)
 			self.apply_cycle(cycle)
 			if self._break_if != None and eval(self._break_if):
 				break
