@@ -249,6 +249,12 @@ def module_versions():
 	s += "\nPython %d.%d.%d" % (sys.version_info[0], sys.version_info[1], \
 		sys.version_info[2])
 		
+	try:
+		import cv
+		s += '\nOpenCV is installed (version is unknown)'
+	except:
+		s += '\nOpenCV is not available'
+		
 	# Expyriment
 	try:
 		_out = sys.stdout
@@ -257,28 +263,35 @@ def module_versions():
 		sys.stdout = _out
 		s += '\nExpyriment %s' % expyriment.get_version()
 	except:
-		s += '\nExpyriment is not availble'
+		s += '\nExpyriment is not availble (or version is unknown)'
+		
+	# NumPy
+	try:
+		import numpy
+		s += '\nNumPy %s' % numpy.version.version
+	except:
+		s += '\nNumPy is not available (or version is unknown)'
 		
 	# PyAudio
 	try:		
 		import pyaudio
 		s += "\nPyAudio %s" % pyaudio.__version__
 	except:
-		s += "\nPyAudio not available"
+		s += "\nPyAudio not available (or version is unknown)"
 
 	# PyGame
 	try:
 		import pygame
 		s += "\nPyGame %s" % pygame.ver
 	except:
-		s += "\nPyGame not available"
+		s += "\nPyGame not available (or version is unknown)"
 		
 	# PyOpenGL
 	try:
 		import OpenGL
 		s += "\nPyOpenGL %s" % OpenGL.__version__
 	except:
-		s += "\nPyOpenGL not available"
+		s += "\nPyOpenGL not available (or version is unknown)"
 		
 	# PyQt
 	s += "\nPyQt %s" % QtCore.PYQT_VERSION_STR		
@@ -288,21 +301,28 @@ def module_versions():
 		import serial
 		s += '\nPySerial %s' % serial.VERSION
 	except:
-		s += '\nPySerial not available'
+		s += '\nPySerial not available (or version is unknown)'
 
 	# PsychoPy
 	try:
 		import psychopy
 		s += "\nPsychoPy %s" % psychopy.__version__
 	except:
-		s += "\nPsychoPy not available"
+		s += "\nPsychoPy not available (or version is unknown)"
 
 	# Pyglet
 	try:
 		import pyglet
 		s += "\nPyglet %s" % pyglet.version
 	except:
-		s += "\nPyglet not available"
+		s += "\nPyglet not available (or version is unknown)"
+		
+	# SciPy
+	try:
+		import scipy
+		s += '\nSciPy %s' % scipy.version.version
+	except:
+		s += '\nScipy is not available (or version is unknown)'		
 		
 	return s
 	
