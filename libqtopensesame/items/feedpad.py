@@ -71,8 +71,8 @@ class feedpad:
 		xc = self.get("width")/2
 		yc = self.get("height")/2
 		return sum( ["x" in i and "y" in i
-			and ( (type(i["x"]) != str and abs(i["x"]) > xc)
-				or (type(i["y"]) != str and abs(i["y"]) > yc) )
+			and ( (type(i["x"]) not in (str, unicode) and abs(i["x"]) > xc)
+			or (type(i["y"]) not in (str, unicode) and abs(i["y"]) > yc) )
 			for i in self.items] )
 
 
