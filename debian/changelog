@@ -1,4 +1,4 @@
-opensesame (0.27~pre13-ubuntu1) precise; urgency=low
+opensesame (0.27~pre16-ubuntu1) precise; urgency=low
 
   * Added Expyriment backend
   * Added form functionality
@@ -7,7 +7,7 @@ opensesame (0.27~pre13-ubuntu1) precise; urgency=low
   * Added quick run button
   * Add ecological alternative to S&V template
 
- -- Sebastiaan Mathot <s.mathot@cogsci.nl>  Thu, 11 Oct 2012 11:24:01 +0200
+ -- Sebastiaan Mathot <s.mathot@cogsci.nl>  Fri, 19 Oct 2012 13:03:07 +0200
 
 opensesame (0.26-2) unstable; urgency=low
 

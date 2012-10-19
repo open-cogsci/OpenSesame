@@ -78,9 +78,6 @@ class item(object):
 		"""
 		Derived classes should use this function to prepare the item for speedy
 		execution during the run phase.
-
-		Returns:
-		True on succes, False on failure
 		"""
 
 		self.time = self.experiment._time_func
@@ -94,9 +91,6 @@ class item(object):
 		"""
 		Derived classes should use this function to perform the item specific
 		function.
-
-		Returns:
-		True on succes, False on failure
 		"""
 
 		return True

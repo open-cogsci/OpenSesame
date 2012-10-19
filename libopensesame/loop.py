@@ -109,15 +109,13 @@ class loop(item.item):
 		else:
 			self._break_if = None
 
-		# First generate a list
+		# First generate a list of cycle numbers
 		l = []
-		j = 0
-
 		# Walk through all complete repeats
 		whole_repeats = int(self.repeat)
 		for j in range(whole_repeats):
 			for i in range(self.cycles):
-				l.append( (j, i) )
+				l.append(i)
 
 		# Add the leftover repeats
 		partial_repeats = self.repeat - whole_repeats
@@ -125,7 +123,7 @@ class loop(item.item):
 			all_cycles = range(self.cycles)
 			_sample = sample(all_cycles, int(len(all_cycles) * partial_repeats))
 			for i in _sample:
-				l.append( (j, i) )
+				l.append(i)
 
 		# Randomize the list if necessary
 		if self.order == "random":
@@ -152,16 +150,19 @@ class loop(item.item):
 				
 		# And run!
 		_item = self.experiment.items[self.item]						
-		for repeat, cycle in l:					
+		while len(l) > 0:
+			cycle = l.pop()
 			self.apply_cycle(cycle)
 			if self._break_if != None and eval(self._break_if):
 				break
-			if _item.prepare():
-				_item.run()
-			else:
-				raise exceptions.runtime_error( \
-					"Failed to prepare item '%s', which is called by loop item '%s'" \
-					% (self.item, self.name))				
+			self.experiment.set('repeat_cycle', 0)
+			_item.prepare()
+			_item.run()
+			if self.experiment.get('repeat_cycle'):
+				debug.msg('repeating cycle %d' % cycle)
+				l.append(cycle)
+				if self.order == 'random':
+					shuffle(l)
 		return True
 							
 	def apply_cycle(self, cycle):
