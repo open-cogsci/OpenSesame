@@ -1,0 +1,11 @@
+<h1>Repeat_cycle</h1>
+
+<p>This plug-in allows you to repeat cycles from a <i>loop</i>. Most commonly, this will be to repeat a trial when a participant made a mistake or was too slow.</p>
+
+<p>For example, to repeat all trials on which a response slower than 3000ms was given, you add a <i>repeat_cycle</i> item after (typically) the <i>keyboard_response</i> and add the following <i>Repeat if</i> statement:</p>
+
+<pre>[response_time] > 3000</pre>
+
+<p>You can also force a cycle to be repeated by setting the variable <i>repeat_cycle</i> to <i>1</i> in an <i>inline_script</i>, like so:</p>
+
+<pre>exp.set('repeat_cycle', 1)</pre>

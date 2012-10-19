@@ -645,7 +645,7 @@ class item(object):
 				text = text.replace(m.group(0), val, 1)
 		return self.auto_type(text)
 
-	def compile_cond(self, cond, bytecode = True):
+	def compile_cond(self, cond, bytecode=True):
 
 		"""
 		Create Python code for a given conditional statement
