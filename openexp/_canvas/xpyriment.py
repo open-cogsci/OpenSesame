@@ -73,7 +73,6 @@ class xpyriment(openexp._canvas.legacy.legacy):
 			italic=self.experiment.font_italic=='yes', underline= \
 			self.experiment.font_underline=='yes')
 		self.penwidth = 1
-		self.ellipse_res = 100
 		self.aa = 10
 		self.clear()
 						
@@ -88,15 +87,22 @@ class xpyriment(openexp._canvas.legacy.legacy):
 	def copy(self, canvas):
 	
 		"""See openexp._canvas.legacy"""
-		
-		self.stim_list = [stim.copy() for stim in canvas.stim_list]
-		self.font_style = canvas.font_style
-		self.font_style = canvas.font_style
-		self.penwidth = canvas.penwidth
-		self.aa = canvas.aa
+
 		self.fgcolor = canvas.fgcolor
-		self.bgcolor = canvas.bgcolor
-		self.prepared = False
+		self.bgcolor = canvas.bgcolor		
+		self.font_style = canvas.font_style
+		self.font_size = canvas.font_size
+		self.font_italic = canvas.font_italic
+		self.font_bold = canvas.font_bold
+		self.font_underline = canvas.font_underline
+		self.penwidth = canvas.penwidth
+		self.auto_prepare = canvas.auto_prepare
+		self.aa = canvas.aa
+		self.prepared = False		
+		self.clear()
+		self.stim_list = [stim.copy() for stim in canvas.stim_list]		
+		if self.auto_prepare:
+			self.prepare()
 		
 	def add_stim(self, stim, prepare=True):
 		
@@ -121,7 +127,8 @@ class xpyriment(openexp._canvas.legacy.legacy):
 		
 		if not self.prepared:
 			self._canvas = stimuli.Canvas( \
-				self.experiment.expyriment.screen.size, colour=self._canvas_color)
+				self.experiment.expyriment.screen.size, colour= \
+				self._canvas_color)
 			for stim in self.stim_list:
 				stim.plot(self._canvas)
 			self._canvas.preload()
