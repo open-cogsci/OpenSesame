@@ -95,7 +95,8 @@ include_packages = [
 	'PyQt4.QtGui',
 	'PyQt4.Qsci',
 	'PyQt4.QtWebKit',
-	'PyQt4.QtNetwork'
+	'PyQt4.QtNetwork',
+	'cv2',
 	]
 
 exclude_dll = [
@@ -255,12 +256,13 @@ if include_plugins:
 		"srbox",
 		"port_reader",
 		"reset_feedback",
+		"repeat_cycle",
 		"parallel",
 		"form_base",
 		"form_text_input",
 		"form_consent",
 		"form_text_display",
-		"form_multiple_choice"
+		"form_multiple_choice",
 		]
 
 	for plugin in included_plugins:
