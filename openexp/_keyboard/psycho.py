@@ -27,6 +27,36 @@ class psycho(openexp._keyboard.legacy.legacy):
 	"""
 	This is a canvas backend that uses PsychoPy
 	"""
+	
+	# The keymap is an incomplete attempt at translating keys from the PyGame 
+	# names to the names used by PsychoPy
+	keymap = {
+		'!' : 'exclamation',
+		'"' : 'doublequote',
+		'#' : 'hash',
+		'$' : 'dollar',
+		'&' : 'ampersand',
+		'\'' : 'quoteleft',
+		'(' : None,
+		')' : None,
+		'*' : 'asterisk',
+		'+' : 'plus',
+		',' : 'comma',
+		'-' : 'minus',
+		'.' : None,
+		'/' : 'slash',
+		':' : 'colin',
+		';' : 'semicolon',
+		'=' : 'equal',
+		'>' : 'greater',
+		'?' : 'question',
+		'@' : 'at',
+		'[' : 'bracketleft',
+		'\\' : 'backslash',
+		']' : 'bracketright',
+		'^' : None,
+		'_' : 'underscore'
+		}	
 
 	def __init__(self, experiment, keylist=None, timeout=None):
 
@@ -38,7 +68,7 @@ class psycho(openexp._keyboard.legacy.legacy):
 
 		self.experiment = experiment
 		self.set_keylist(keylist)
-		self.set_timeout(timeout)
+		self.set_timeout(timeout)				
 
 	def valid_keys(self):
 
@@ -57,13 +87,18 @@ class psycho(openexp._keyboard.legacy.legacy):
 		if keylist == None:
 			self._keylist = None
 		else:
-			for key in keylist:			
-				if not hasattr(pyglet.window.key, key.upper()) and not \
-					hasattr(pyglet.window.key, "NUM_%s" % key):
-					raise openexp.exceptions.response_error( \
-						"The key '%s' is not recognized by the psycho keyboard backend. Please refer to <a href='http://pyglet.org/doc/api/pyglet.window.key-module.html'>http://pyglet.org/doc/api/pyglet.window.key-module.html</a> for a list of valid keys." \
-						% key)
-			self._keylist = keylist
+			_keylist = []
+			for key in keylist:
+				if key in self.keymap:
+					_keylist.append(self.keymap[key])
+				else:				
+					if not hasattr(pyglet.window.key, key.upper()) and not \
+						hasattr(pyglet.window.key, "NUM_%s" % key):
+						raise openexp.exceptions.response_error( \
+							"The key '%s' is not recognized by the psycho keyboard backend. Please refer to <a href='http://pyglet.org/doc/api/pyglet.window.key-module.html'>http://pyglet.org/doc/api/pyglet.window.key-module.html</a> for a list of valid keys." \
+							% key)
+					_keylist.append(key)
+			self._keylist = _keylist
 
 	def set_timeout(self, timeout=None):
 
@@ -84,7 +119,7 @@ class psycho(openexp._keyboard.legacy.legacy):
 			_keylist = None
 		else:
 			_keylist = keylist + ["escape"]
-
+			
 		start_time = 1000.0 * self.experiment.clock.getTime()
 		time = start_time
 		
@@ -124,9 +159,16 @@ class psycho(openexp._keyboard.legacy.legacy):
 			if l[-1].upper() != l[-1].lower():
 				l.append(l[-1].upper())
 			return l
-		if key.upper() == key.lower():
-			return key
-		return [key.upper(), key.lower()]
+		
+		l = [key.upper()]
+		if key.upper() != key.lower():
+			l.append(key.lower())
+		for char, name in self.keymap.items():
+			if key == char:
+				l.append(name)
+			if key.lower() == name:
+				l.append(char)												
+		return l
 
 	def flush(self):
 
