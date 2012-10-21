@@ -43,7 +43,7 @@ opengl = {
 	}	
 
 psycho = {
-	"description" : "uses PsychoPy, increased temporal precision", \
+	"description" : "uses PsychoPy, powerful stimulus generation", \
 	"authors" : ["Sebastiaan Mathot", "Jonathan Peirce"], \
 	"canvas" : "psycho", \
 	"keyboard" : "psycho", \
