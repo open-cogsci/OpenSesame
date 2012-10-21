@@ -335,6 +335,10 @@ def init_display(experiment):
 	control.defaults.auto_create_subject_id = True	
 	control.defaults.open_gl = experiment.get_check('expyriment_opengl', \
 		xpyriment.settings['expyriment_opengl']['default']) == 'yes'
+	control.defaults.audiosystem_sample_rate = experiment.get('sound_freq')
+	control.defaults.audiosystem_bit_depth = experiment.get('sound_sample_size')
+	control.defaults.audiosystem_channels = experiment.get('sound_channels')
+	control.defaults.audiosystem_buffer_size = experiment.get('sound_buf_size')
 	
 	# Initialize
 	exp = control.initialize()	
