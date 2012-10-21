@@ -249,12 +249,20 @@ def module_versions():
 	s += "\nPython %d.%d.%d" % (sys.version_info[0], sys.version_info[1], \
 		sys.version_info[2])
 		
+	# OpenCV
 	try:
 		import cv
-		s += '\nOpenCV is installed (version is unknown)'
+		s += '\nOpenCV is available (version is unknown)'
 	except:
 		s += '\nOpenCV is not available'
-		
+
+	# OpenCV 2
+	try:
+		import cv2
+		s += '\nOpenCV 2 is available (version is unknown)'
+	except:
+		s += '\nOpenCV 2 is not available'
+
 	# Expyriment
 	try:
 		_out = sys.stdout
@@ -263,7 +271,7 @@ def module_versions():
 		sys.stdout = _out
 		s += '\nExpyriment %s' % expyriment.get_version()
 	except:
-		s += '\nExpyriment is not availble (or version is unknown)'
+		s += '\nExpyriment is not available (or version is unknown)'
 		
 	# NumPy
 	try:
