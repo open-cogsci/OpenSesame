@@ -255,8 +255,12 @@ def init_sound(experiment):
 
 	print "openexp.sampler._legacy.init_sound(): sampling freq = %d, buffer size = %d" \
 		% (experiment.sound_freq, experiment.sound_buf_size)
+	if pygame.mixer.get_init():
+		print 'openexp.sampler._legacy.init_sound(): mixer already initialized, closing'
+		pygame.mixer.quit()
 	pygame.mixer.pre_init(experiment.sound_freq, experiment.sound_sample_size, \
-		experiment.sound_channels, experiment.sound_buf_size)
+		experiment.sound_channels, experiment.sound_buf_size)	
+	pygame.mixer.init()
 
 
 def close_sound(experiment):

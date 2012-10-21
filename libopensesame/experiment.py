@@ -290,9 +290,9 @@ class experiment(item.item):
 
 		"""Run the experiment"""
 
-		self.running = True		
-		self.init_sound()
+		self.running = True				
 		self.init_display()
+		self.init_sound()
 		self.init_log()
 		self.reset_feedback()
 
@@ -651,9 +651,9 @@ class experiment(item.item):
 			os.fsync(self._log)
 			self._log.close()
 		except:
-			pass					
+			pass									
 		sampler.close_sound(self)
-		canvas.close_display(self)		
+		canvas.close_display(self)	
 
 def clean_up(verbose=False):
 
