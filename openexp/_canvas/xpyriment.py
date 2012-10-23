@@ -98,11 +98,12 @@ class xpyriment(openexp._canvas.legacy.legacy):
 		self.penwidth = canvas.penwidth
 		self.auto_prepare = canvas.auto_prepare
 		self.aa = canvas.aa
-		self.prepared = False		
+		self.prepared = False				
 		self.clear()
 		self.stim_list = [stim.copy() for stim in canvas.stim_list]		
 		if self.auto_prepare:
 			self.prepare()
+		canvas.prepared = False			
 		
 	def add_stim(self, stim, prepare=True):
 		
@@ -233,6 +234,13 @@ class xpyriment(openexp._canvas.legacy.legacy):
 		l = p2v([c2p(p) for p in vertices])		
 		for v in l: stim.add_vertex(v)
 		self.add_stim(stim)
+		
+	def set_bgcolor(self, color):
+		
+		"""See openexp._canvas.set_bgcolor"""
+		
+		self.bgcolor = self.color(color)			
+		self._canvas_color = self.bgcolor
 				
 	def text_size(self, text):
 	
