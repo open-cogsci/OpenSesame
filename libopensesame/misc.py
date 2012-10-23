@@ -21,7 +21,7 @@ import os
 import os.path
 import sys
 
-version = "0.27~pre17"
+version = "0.27~pre18"
 codename = "Frisky Freud"
 
 use_global_resources = "--no-global-resources" not in sys.argv
