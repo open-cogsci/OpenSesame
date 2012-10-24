@@ -740,6 +740,8 @@ class qtitem(QtCore.QObject):
 			if type(var) == str:
 				self.set(var, editor.edit.toPlainText())
 				editor.setModified(False)
+
+		return True
 				
 	def auto_add_widget(self, widget, var=None):
 	
