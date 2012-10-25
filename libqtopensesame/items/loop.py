@@ -610,7 +610,9 @@ class loop(libopensesame.loop.loop, qtitem.qtitem):
 				if cell == None:
 					val = u''
 				else:
-					val = unicode(self.loop_table.item(row, col).text())
+					val = unicode(self.loop_table.item(row, col).text())										
+				if not self.sanitize_check(val):
+					val = self.sanitize(val)
 				self.matrix[row][var] = val
 				
 		row = self.loop_table.currentRow()
