@@ -49,7 +49,6 @@ class inline_script(libopensesame.inline_script.inline_script, qtitem.qtitem):
 		qtitem.qtitem.__init__(self)
 		self.lock = False
 		self._var_info = None
-		random.seed()
 
 	def apply_edit_changes(self, dummy=None, dummy2=None, catch=True):
 

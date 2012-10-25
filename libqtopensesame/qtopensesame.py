@@ -67,6 +67,10 @@ class qtopensesame(QtGui.QMainWindow):
 		from libqtopensesame.ui import opensesame_ui
 		from libqtopensesame.misc import theme, dispatch
 		import platform
+		import random
+		
+		# Initialize random number generator
+		random.seed()
 		
 		# Restore the configuration
 		self.restore_config()

@@ -19,7 +19,6 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame import misc, item, exceptions, plugins, debug
-import random
 import os.path
 import shutil
 import sys
@@ -50,8 +49,6 @@ class experiment(item.item):
 
 		global pool_folders
 		
-		random.seed()		
-
 		self.items = {}
 		self.running = False
 		self.auto_response = False
