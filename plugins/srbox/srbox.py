@@ -51,7 +51,7 @@ class srbox(item.item, generic_response.generic_response):
 		self.timeout = "infinite"
 		self.lights = ""
 		self.dev = "autodetect"
-		self.dummy = "no"
+		self._dummy = "no"
 		self.process_feedback = True				
 
 		# The parent handles the rest of the contruction
@@ -93,7 +93,7 @@ class srbox(item.item, generic_response.generic_response):
 		debug.msg("allowed responses set to %s" % self._allowed_responses)
 
 		self._keyboard = openexp.keyboard.keyboard(self.experiment)
-		if self.has("dummy") and self.get("dummy") == "yes":
+		if self.get('_dummy') == 'yes':
 			self._resp_func = self._keyboard.get_key
 
 		else:
@@ -152,7 +152,7 @@ class srbox(item.item, generic_response.generic_response):
 			self.experiment.start_response_interval = self.get("time_%s" \
 				% self.name)
 
-		if self.has("dummy") and self.get("dummy") == "yes":
+		if self.get('_dummy') == 'yes':
 
 			# In dummy mode, we simply take the numeric keys from the keyboard
 			resp, self.experiment.end_response_interval = self._resp_func( \
@@ -255,7 +255,7 @@ class qtsrbox(srbox, qtplugin.qtplugin):
 		# - creates a QLineEdit
 		# qtplugin.add_spinbox_control(varname, label, min, max, suffix = suffix, prefix = prefix)
 
-		self.add_combobox_control("dummy", \
+		self.add_combobox_control("_dummy", \
 			"Dummy mode (use keyboard instead)", ["no", "yes"])
 		self.add_line_edit_control("dev", "Device name", tooltip= \
 			"Expecting a valid device name. Leave empty for autodetect.", \
