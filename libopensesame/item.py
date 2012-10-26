@@ -748,36 +748,7 @@ class item(object):
 		"""
 
 		return [ (u"time_%s" % self.name, u"[Timestamp of last item call]"), \
-			(u"count_%s" % self.name, u"[Number of item calls]") ]
-			
-	def sanitize_check(self, s, strict=False, allow_vars=True, notify=True):
-		
-		"""
-		Checks whether a string is sane (i.e. unchanged by sanitize()) and
-		optionally presents a warning if it's notably
-		
-		Arguments: 
-		s -- the string to check
-		
-		Keyword arguments:
-		strict -- see sanitize()
-		allow_vars -- see sanitize()
-		notify -- indicates whether a notification should be presented if the 
-				  string is not sane.
-		
-		Returns:
-		True if s is sane, False otherwise
-		"""
-		
-		sane = s == self.sanitize(s, strict=strict, allow_vars=allow_vars)
-		if not sane and notify:
-			if strict:
-				self.experiment.notify(
-					'All non-alphanumeric characters except underscores have been stripped')
-			else:
-				self.experiment.notify(
-					'The following characters are not allowed and have been stripped: double-quote ("), backslash (\), and newline')
-		return sane
+			(u"count_%s" % self.name, u"[Number of item calls]") ]			
 
 	def sanitize(self, s, strict=False, allow_vars=True):
 
