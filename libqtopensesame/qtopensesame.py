@@ -67,6 +67,9 @@ class qtopensesame(QtGui.QMainWindow):
 		from libqtopensesame.ui import opensesame_ui
 		from libqtopensesame.misc import theme, dispatch
 		import platform
+
+		# Check the filesystem encoding for debugging purposes
+		debug.msg('filesystem encoding: %s' % sys.getfilesystemencoding())
 		
 		# Restore the configuration
 		self.restore_config()
@@ -442,6 +445,7 @@ class qtopensesame(QtGui.QMainWindow):
 		return autosave_path
 
 	def clean_autosave(self):
+
 
 		"""Remove old files from the back-up folder"""
 
