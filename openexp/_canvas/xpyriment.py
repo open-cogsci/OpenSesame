@@ -22,9 +22,13 @@ import copy
 import openexp._canvas.legacy
 import openexp.exceptions
 import pygame
-from expyriment import control, stimuli, misc, io
-from expyriment.misc.geometry import coordinates2position, \
-	points_to_vertices as p2v
+try:
+	from expyriment import control, stimuli, misc, io
+	from expyriment.misc.geometry import coordinates2position, \
+		points_to_vertices as p2v
+except:
+	raise openexp.exceptions.canvas_error(
+		'Failed to import expyriment, probably because it is not (correctly) installed. For installation instructions, please visit http://www.expyriment.org/.')
 	
 def c2p(pos):
 
