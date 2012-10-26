@@ -19,7 +19,6 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame import misc, item, exceptions, plugins, debug
-import random
 import os.path
 import shutil
 import sys
@@ -50,8 +49,6 @@ class experiment(item.item):
 
 		global pool_folders
 		
-		random.seed()		
-
 		self.items = {}
 		self.running = False
 		self.auto_response = False
@@ -323,8 +320,16 @@ class experiment(item.item):
 
 		"""Nicely end the experiment"""
 
-		self.running = False
-		openexp.experiment.experiment.end(self)
+		from openexp import sampler, canvas
+		self.running = False			
+		try:
+			self._log.flush()
+			os.fsync(self._log)
+			self._log.close()
+		except:
+			pass									
+		sampler.close_sound(self)
+		canvas.close_display(self)							
 		self.cleanup()
 
 	def to_string(self):
@@ -640,20 +645,6 @@ class experiment(item.item):
 		raise exceptions.runtime_error( \
 			"experiment._time_func(): This function should be set by the canvas backend." \
 			)
-
-	def end(self):
-
-		"""Gracefully end the experiment"""
-
-		from openexp import sampler, canvas
-		try:
-			self._log.flush()
-			os.fsync(self._log)
-			self._log.close()
-		except:
-			pass									
-		sampler.close_sound(self)
-		canvas.close_display(self)	
 
 def clean_up(verbose=False):
 

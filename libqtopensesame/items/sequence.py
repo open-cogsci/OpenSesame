@@ -259,8 +259,9 @@ class sequence(libopensesame.sequence.sequence, qtitem.qtitem):
 		index -- the index of the item
 		s -- the new run if statement
 		"""
-
-		s = self.experiment.sanitize(s)
+		
+		if not self.sanitize_check(s):
+			s = self.sanitize(s)
 		if s == "":
 			s = "always"
 		if s != self.items[index][1]:

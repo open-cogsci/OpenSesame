@@ -67,6 +67,13 @@ class qtopensesame(QtGui.QMainWindow):
 		from libqtopensesame.ui import opensesame_ui
 		from libqtopensesame.misc import theme, dispatch
 		import platform
+		import random
+		
+		# Initialize random number generator
+		random.seed()
+
+		# Check the filesystem encoding for debugging purposes
+		debug.msg('filesystem encoding: %s' % sys.getfilesystemencoding())
 		
 		# Restore the configuration
 		self.restore_config()
@@ -211,6 +218,7 @@ class qtopensesame(QtGui.QMainWindow):
 			self.ui.action_run_in_window.setDisabled(True)				
 
 		# Create the initial experiment
+
 		self.experiment = experiment.experiment(self, "New experiment", \
 			open(misc.resource(os.path.join("templates", \
 				"default.opensesame")), "r").read())
@@ -442,6 +450,7 @@ class qtopensesame(QtGui.QMainWindow):
 		return autosave_path
 
 	def clean_autosave(self):
+
 
 		"""Remove old files from the back-up folder"""
 
@@ -1362,7 +1371,7 @@ class qtopensesame(QtGui.QMainWindow):
 				else:
 					self.experiment.notify( \
 						_("An unexpected error occurred, which was not caught by OpenSesame. This should not happen! Message:<br/><b>%s</b>") \
-						% e)
+						% self.experiment.unistr(e))
 					for s in traceback.format_exc(e).split("\n"):
 						print s
 

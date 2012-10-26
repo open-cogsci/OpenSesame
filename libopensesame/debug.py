@@ -45,6 +45,9 @@ def msg(msg="", reason=None):
 	st = inspect.stack()
 	if reason != None:
 		print "[%s]" % reason,
+	# The terminal may not like anythin but plain ASCII
+	if isinstance(msg, unicode):
+		msg = msg.encode('ASCII', 'ignore')
 	print "%s: %s" % (parse_stack(st[1]), msg)
 	st = st[2:]
 	st.reverse()

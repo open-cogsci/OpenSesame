@@ -178,6 +178,7 @@ def plugin_folder(plugin):
 		return _folders[plugin]	
 	
 	for folder in plugin_folders():
+		plugin = str(plugin)
 		if os.path.exists(os.path.join(folder, plugin, "%s.py" % plugin)):
 			f = os.path.join(folder, plugin)
 			_folders[plugin] = f
@@ -223,6 +224,7 @@ def import_plugin(plugin):
 	"""
 	
 	import imp
+	plugin = str(plugin)
 	path = os.path.join(plugin_folder(plugin), "%s.py" % plugin)
 	return imp.load_source(plugin, path)
 	

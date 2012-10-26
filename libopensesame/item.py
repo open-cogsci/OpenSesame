@@ -748,7 +748,7 @@ class item(object):
 		"""
 
 		return [ (u"time_%s" % self.name, u"[Timestamp of last item call]"), \
-			(u"count_%s" % self.name, u"[Number of item calls]") ]
+			(u"count_%s" % self.name, u"[Number of item calls]") ]			
 
 	def sanitize(self, s, strict=False, allow_vars=True):
 
@@ -779,7 +779,7 @@ class item(object):
 			if allow_vars:
 				return regexp.sanitize_strict_vars.sub('', s)
 			return regexp.sanitize_strict_novars.sub('', s)
-		return regexp.sanitize_loose.sub('', s)
+		return regexp.sanitize_loose.sub('', s)	
 	
 	def usanitize(self, s, strict=False):
 
@@ -853,15 +853,25 @@ class item(object):
 		Returns:
 		A unicode string
 		"""
-		
+			
 		# Unicode strings cannot (and need not) be encoded again
-		if type(val) == unicode:
-			return val
+		if isinstance(val, unicode):
+			return val		
 		# Regular strings need to be encoded using the correct encoding
-		if type(val) == str:
-			return unicode(val, encoding=self.encoding)
+		if isinstance(val, str):
+			return unicode(val, encoding=self.encoding, errors='replace')
+		# Some types need to be converted to unicode, but require the encoding
+		# and errors parameters. Notable examples are Exceptions, which have
+		# strange characters under some locales, such as French. It even appears
+		# that, at least in some cases, they have to be encodeed to str first.
+		# Presumably, there is a better way to do this, but for now this at
+		# least gives sensible results.
+		try:
+			return unicode(str(val), encoding=self.encoding, errors='replace')
+		except:
+			pass
 		# For other types, the unicode representation doesn't require a specific
-		# encoding
+		# encoding. This mostly applies to non-stringy things, such as integers.
 		return unicode(val)
 	
 	def split(self, u):

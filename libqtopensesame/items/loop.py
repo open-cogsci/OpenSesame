@@ -434,6 +434,14 @@ class loop(libopensesame.loop.loop, qtitem.qtitem):
 						var_dict[var] = []
 					elif var != None:
 						var_dict[var].append(s)
+						
+			# If the variable wizard was not parsed correctly, provide a
+			# notification and do nothin
+			if len(var_dict) == 0:
+				self.experiment.notify(
+					_('You provided an empty or invalid variable definition. For an example of a valid variable definition, open the variable wizard and select "Show example".'))
+				return	
+						
 			# Then fill the loop table
 			self.i = 0
 			self.matrix = {}
@@ -610,7 +618,9 @@ class loop(libopensesame.loop.loop, qtitem.qtitem):
 				if cell == None:
 					val = u''
 				else:
-					val = unicode(self.loop_table.item(row, col).text())
+					val = unicode(self.loop_table.item(row, col).text())										
+				if not self.sanitize_check(val):
+					val = self.sanitize(val)
 				self.matrix[row][var] = val
 				
 		row = self.loop_table.currentRow()
