@@ -1366,7 +1366,7 @@ class qtopensesame(QtGui.QMainWindow):
 				else:
 					self.experiment.notify( \
 						_("An unexpected error occurred, which was not caught by OpenSesame. This should not happen! Message:<br/><b>%s</b>") \
-						% e)
+						% self.experiment.unistr(e))
 					for s in traceback.format_exc(e).split("\n"):
 						print s
 
