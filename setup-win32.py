@@ -72,8 +72,9 @@ copy_packages = [
 	'serial',
 	'parallel',
 	'OpenGL',
+	'PIL',
 	'pygame',
-	'pyglet'
+	'pyglet',
 	]
 
 # Packages that are part of the standard Python packages, but should not be
@@ -89,7 +90,6 @@ exclude_packages = [
 include_packages = [
 	'sip',
 	'pyaudio',
-	'PIL',
 	'Image',
 	'PyQt4.QtCore',
 	'PyQt4.QtGui',
@@ -232,6 +232,10 @@ shutil.copyfile("""%s\Lib\site-packages\pygame\libfreetype-6.dll""" \
 	% python_folder, """dist\libfreetype-6.dll""")
 shutil.copyfile("""%s\Lib\site-packages\pygame\libogg-0.dll""" \
 	% python_folder, """dist\libogg-0.dll""")
+	
+print "copying PIL.pth"
+shutil.copyfile("""%s\Lib\site-packages\PIL.pth""" \
+	% python_folder, """dist\PIL.pth""")
 
 if include_simpleio:
 	print "copying simpleio.dll"
