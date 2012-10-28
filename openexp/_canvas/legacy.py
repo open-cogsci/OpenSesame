@@ -943,10 +943,10 @@ def init_display(experiment):
 	if experiment.fullscreen:
 		mode = mode | pygame.FULLSCREEN
 		
-	if experiment.get('pygame_window_frame') == 'no':
+	if experiment.get_check('pygame_window_frame', 'yes', ['yes', 'no']) == 'no':
 		mode = mode | pygame.NOFRAME
 		
-	if experiment.get('pygame_window_pos') != 'auto':
+	if experiment.get_check('pygame_window_pos', 'auto') != 'auto':
 		os.environ['SDL_VIDEO_WINDOW_POS'] = experiment.get( \
 			'pygame_window_pos')
 						

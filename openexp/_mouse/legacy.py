@@ -161,7 +161,8 @@ class legacy:
 			timeout = self.timeout	
 		if visible == None:
 			visible = self.visible			
-		enable_escape = self.experiment.get('enable_escape') == 'yes'		
+		enable_escape = self.experiment.get_check('enable_escape', 'no', \
+			['yes', 'no']) == 'yes'		
 		if self.cursor == None:
 			pygame.mouse.set_visible(visible)
 		elif visible:
