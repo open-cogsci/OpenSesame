@@ -96,7 +96,17 @@ class legacy:
 			"name" : "Double buffering",
 			"description" : "Use double buffering",
 			"default" : "yes"
-			},			
+			},
+		"pygame_window_frame" : {
+			"name" : "Draw window frame",
+			"description" : "Draw a frame in window mode",
+			"default" : "yes",
+			},
+		"pygame_window_pos" : {
+			"name" : "Window position",
+			"description" : "Window position in window mode (format: 'x,y' or 'auto')",
+			"default" : "auto",
+			}			
 		}
 		
 	# Initialize the html renderer
@@ -932,6 +942,13 @@ def init_display(experiment):
 		
 	if experiment.fullscreen:
 		mode = mode | pygame.FULLSCREEN
+		
+	if experiment.get('pygame_window_frame') == 'no':
+		mode = mode | pygame.NOFRAME
+		
+	if experiment.get('pygame_window_pos') != 'auto':
+		os.environ['SDL_VIDEO_WINDOW_POS'] = experiment.get( \
+			'pygame_window_pos')
 						
 	# Create the window and the surface
 	experiment.window = pygame.display.set_mode(experiment.resolution(), mode)					
