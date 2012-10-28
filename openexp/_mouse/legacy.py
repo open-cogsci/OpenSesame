@@ -53,6 +53,11 @@ class legacy:
 			"name" : "Custom cursor",
 			"description" : "Bypass the system mouse cursor",
 			"default" : "yes"
+			},
+		"enable_escape" : {
+			"name" : "Enable escape",
+			"description" : "Abort the experiment when the upper left and right corners are clicked",
+			"default" : "no",
 			}
 		}
 
@@ -156,7 +161,7 @@ class legacy:
 			timeout = self.timeout	
 		if visible == None:
 			visible = self.visible			
-		
+		enable_escape = self.experiment.get('enable_escape') == 'yes'		
 		if self.cursor == None:
 			pygame.mouse.set_visible(visible)
 		elif visible:
@@ -181,7 +186,22 @@ class legacy:
 				if event.type == KEYDOWN and event.key == pygame.K_ESCAPE:
 					raise openexp.exceptions.response_error( \
 						"The escape key was pressed.")										
-				if event.type == MOUSEBUTTONDOWN:
+				if event.type == MOUSEBUTTONDOWN:					
+				
+					# Check escape sequence. If the top-left and top-right
+					# corner are clicked successively within 2000ms, the
+					# experiment is aborted
+					if enable_escape and event.pos[0] < 64 and event.pos[1] \
+						< 64:
+						_time = pygame.time.get_ticks()
+						while pygame.time.get_ticks() - _time < 2000:
+							for event in pygame.event.get():
+								if event.type == MOUSEBUTTONDOWN:
+									if event.pos[0] > self.experiment.get( \
+										'width')-64 and event.pos[1] < 64:
+										raise openexp.exceptions.response_error( \
+											"The escape sequence was clicked/ tapped")
+						
 					if buttonlist == None or event.button in buttonlist:
 						pygame.mouse.set_visible(self.visible)
 						return event.button, event.pos, time
