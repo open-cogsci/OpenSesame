@@ -30,7 +30,6 @@ import numpy as np
 import os.path
 
 try:
-	x
 	from psychopy import core, visual
 except:
 	raise openexp.exceptions.canvas_error(
