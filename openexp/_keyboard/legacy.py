@@ -154,16 +154,16 @@ class legacy:
 		Returns:
 		A (key, timestamp) tuple. The key is None if a timeout occurs.
 		</DOC>"""
+				
+		start_time = pygame.time.get_ticks()
+		time = start_time		
 
 		if keylist == None:
 			keylist = self._keylist
 		if timeout == None:
 			timeout = self.timeout
 
-		start_time = pygame.time.get_ticks()
-		time = start_time
-
-		while timeout == None or time - start_time <= timeout:
+		while timeout == None or time - start_time < timeout:
 			time = pygame.time.get_ticks()
 			for event in pygame.event.get(KEYDOWN):
 				if event.key == pygame.K_ESCAPE:
@@ -175,6 +175,7 @@ class legacy:
 					key = event.unicode
 				if keylist == None or key in keylist:
 					return key, time
+		
 		return None, time
 
 	def get_mods(self):

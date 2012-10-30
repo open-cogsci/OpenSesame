@@ -123,7 +123,7 @@ class psycho(openexp._keyboard.legacy.legacy):
 		start_time = 1000.0 * self.experiment.clock.getTime()
 		time = start_time
 		
-		while timeout == None or time-start_time <= timeout:
+		while timeout == None or time-start_time < timeout:
 			time = 1000.0 * self.experiment.clock.getTime()
 			keys = event.getKeys(_keylist, timeStamped=self.experiment.clock)
 			for key, time in keys:
