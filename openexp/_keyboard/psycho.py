@@ -76,7 +76,7 @@ class psycho(openexp._keyboard.legacy.legacy):
 
 		l = []
 		for i in dir(pyglet.window.key):
-			if type(eval("pyglet.window.key.%s" % i)) == int:
+			if isinstance(getattr(pyglet.window.key, i), int):
 				l.append(i)
 		return l
 
