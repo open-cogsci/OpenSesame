@@ -581,11 +581,16 @@ class item(object):
 
 		if time == None:
 			time = self.time()
-		exec(u'self.experiment.time_%s = %f' % (self.name, time))
+		setattr(self.experiment, 'time_%s' % self.name, time)
 
-	def dummy(self):
+	def dummy(self, **args):
 
-		"""Dummy function"""
+		"""
+		Dummy function
+		
+		Keyword arguments:
+		arguments -- accepts all keywords for compatibility		
+		"""
 
 		pass
 
