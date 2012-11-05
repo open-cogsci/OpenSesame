@@ -165,7 +165,9 @@ class legacy:
 
 		while timeout == None or time - start_time < timeout:
 			time = pygame.time.get_ticks()
-			for event in pygame.event.get(KEYDOWN):
+			for event in pygame.event.get():
+				if event.type != pygame.KEYDOWN:
+					continue
 				if event.key == pygame.K_ESCAPE:
 					raise openexp.exceptions.response_error( \
 						"The escape key was pressed.")
