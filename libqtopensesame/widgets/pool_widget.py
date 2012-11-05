@@ -20,6 +20,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 from libopensesame import debug, misc
 from libqtopensesame.ui import pool_widget_ui
 from libqtopensesame.misc import _
+from libqtopensesame.misc.config import cfg
 from PyQt4 import QtCore, QtGui
 import os
 import platform
@@ -134,11 +135,16 @@ class pool_widget(QtGui.QWidget):
 		Add one or more files to the pool
 
 		Keyword arguments:
-		dummy -- a dummy argument passed py the signal handler (default == None)
+		dummy -- a dummy argument passed py the signal handler (default=None)
 		"""
 
-		self.add(QtGui.QFileDialog.getOpenFileNames( \
-			self.main_window.ui.centralwidget, _("Add files to pool")))
+		path_list = QtGui.QFileDialog.getOpenFileNames( \
+			self.main_window.ui.centralwidget, _("Add files to pool"), \
+			directory=cfg.default_pool_folder)
+		if len(path_list) == 0:
+			return
+		cfg.default_pool_folder = os.path.dirname(unicode(path_list[0]))
+		self.add(path_list)
 
 	def select(self, fname):
 

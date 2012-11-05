@@ -51,6 +51,7 @@ class config(object):
 		"autosave_interval" : 10 * 60 * 1000,
 		"autosave_max_age" : 7,
 		"default_logfile_folder" : libopensesame.misc.home_folder(),
+		"default_pool_folder" : libopensesame.misc.home_folder(),
 		"disabled_plugins" : "",
 		"file_dialog_path" : "",
 		"immediate_rename" : False,
