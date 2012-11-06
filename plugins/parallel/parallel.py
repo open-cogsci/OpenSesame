@@ -69,18 +69,34 @@ class parallel(sequence.sequence):
 		if self._keyboard != None:
 			self._keyboard.flush()
 			
-		# Create a list of threads
+		# Do nothing if there are no items
+		if len(self._items) == 0:
+			return
+		
+		# The first item is the main item, which is not executed in a thread
+		item, cond = self._items[0]
+		if eval(cond):
+			main_item = self.experiment.items[item]
+		else:
+			main_item = None
+						
+		# Create a list of threads for the rest of the items
 		tl = []	
-		for item, cond in self._items:		
-			if eval(cond):				
-				tl.append(parallel_process(self.experiment.items[item]))
-				
+		if len(self._items) > 1:
+			for item, cond in self._items[1:]:		
+				if eval(cond):				
+					tl.append(parallel_process(self.experiment.items[item]))
+										
 		# Run all threads
 		for t in tl:
 			t.start()
 			
+		# Run the main item
+		if main_item != None:
+			main_item.run()
+					
 		# Wait for the threads to finish
-		while True:		
+		while True:
 			alive = False		
 			for t in tl:
 				if t.is_alive():
