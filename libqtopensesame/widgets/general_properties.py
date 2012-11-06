@@ -243,6 +243,9 @@ class general_properties(QtGui.QWidget):
 			self.main_window.experiment.foreground))
 		self.ui.edit_background.setText(self.main_window.experiment.unistr( \
 			self.main_window.experiment.background))
+			
+		# Set the font
+		self.ui.widget_font.initialize(self.main_window.experiment)
 
 		# Release the general tab
 		self.lock = False
