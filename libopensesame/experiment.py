@@ -140,10 +140,17 @@ class experiment(item.item):
 	def set_subject(self, nr):
 
 		"""<DOC>
-		Set the subject number and parity (even/ odd)
+		Set the subject number and parity (even/ odd). This function is
+		called automatically when an experiment is started, so you do not
+		generally need to call it yourself.
 
 		Arguments:
 		nr -- the subject nr
+		
+		Example:
+		>>> exp.set_subject(1)
+		>>> print 'Subject nr = %d' % exp.get('subject_nr')
+		>>> print 'Subject parity = %s' % exp.get('subject_parity')
 		</DOC>"""
 
 		# Set the subject nr and parity
@@ -388,6 +395,11 @@ class experiment(item.item):
 
 		Returns:
 		The full path to the file
+		
+		Example:		
+		>>> image_path = exp.get_file('my_image.png')
+		>>> my_canvas = exp.offline_canvas()
+		>>> my_canvas.image(image_path)
 		</DOC>"""
 
 		if type(path) not in(unicode, str):
@@ -409,6 +421,14 @@ class experiment(item.item):
 
 		Returns:
 		A boolean indicating if the file is in the pool
+		
+		Example:		
+		>>> if not exp.file_in_pool('my_image.png'):
+		>>> 	print 'my_image.png could not be found!'
+		>>> else:
+		>>> 	image_path = exp.get_file('my_image.png')
+		>>> 	my_canvas = exp.offline_canvas()
+		>>> 	my_canvas.image(image_path)		
 		</DOC>"""
 
 		return os.path.exists(self.get_file(path))

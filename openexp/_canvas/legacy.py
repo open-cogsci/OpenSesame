@@ -212,7 +212,7 @@ class legacy:
 		
 	def flip(self, x=True, y=False):
 		
-		"""<DOC>
+		"""
 		Flips the canvas along the x- and/ or y-axis. Note: This does not
 		refresh the display, like e.g., pygame.display.flip(), which is handled
 		by show().
@@ -228,7 +228,7 @@ class legacy:
 		>>> my_canvas = canvas(exp)
 		>>> my_canvas.fixdot(x=100, color='green')
 		>>> my_canvas.flip(x=True)
-		</DOC>"""
+		"""
 		
 		self.surface = pygame.transform.flip(self.surface, x, y)
 				
@@ -298,7 +298,8 @@ class legacy:
 		"""<DOC>
 		Finishes up pending canvas operations (if any), so that a subsequent
 		call to show() is extra fast. It's generally not necessary to call this
-		function, unless you use a specific back-end that requires this.
+		function, unless you use a specific back-end that requires this. Also,
+		see the note on auto_prepare under __init__().
 		</DOC>"""
 		
 		pass

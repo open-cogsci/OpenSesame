@@ -39,11 +39,17 @@ class legacy(openexp._sampler.legacy.legacy):
 		experiment -- an instance of libopensesame.experiment.experiment
 		
 		Keyword arguments:
-		osc -- oscillator, can be "sine", "saw", "square" or "white_noise" (default = "sine")
-		freq -- frequency, either an int (value in hertz) or a string ("A1", "eb2", etc.) (default = 440)
+		osc -- oscillator, can be "sine", "saw", "square" or "white_noise"
+			   (default = "sine")
+		freq -- frequency, either an int (value in hertz) or a string ("A1",
+				"eb2", etc.) (default = 440)
 		length -- the length of the sound in milliseconds (default = 100)
 		attack -- the attack (fade-in) time in milliseconds (default = 0)
 		decay -- the decay (fade-out) time in milliseconds (default = 5)
+		
+		Example:
+		>>> from openexp.synth import synth
+		>>> my_synth = synth(exp, freq='b2', length=500)
 		</DOC>"""
 	
 		openexp._sampler.legacy.legacy.__init__(self, experiment, None)
@@ -99,16 +105,23 @@ class legacy(openexp._sampler.legacy.legacy):
 		
 		Returns:
 		An int containing the frequency in Hertz
+		
+		Example:
+		>>> from openexp.synth import synth
+		>>> my_synth = synth(exp)
+		>>> print 'An a2 is %d Hz' % my_synth.key_to_freq('a2')
 		</DOC>"""
 		
 		if type(key) != str or len(key) < 2:
-			raise openexp.exceptions.synth_error("synth.key_to_freq(): '%s' is not a valid note, expecting something like 'A1'")			
+			raise openexp.exceptions.synth_error( \
+				"synth.key_to_freq(): '%s' is not a valid note, expecting something like 'A1'")			
 		
 		n = key[:-1].lower()
 		try:
 			o = int(key[-1])
 		except:
-			raise openexp.exceptions.synth_error("synth.key_to_freq(): '%s' is not a valid note, expecting something like 'A1'")								
+			raise openexp.exceptions.synth_error( \
+				"synth.key_to_freq(): '%s' is not a valid note, expecting something like 'A1'")								
 			
 		if n == "a":
 			f = 440.0

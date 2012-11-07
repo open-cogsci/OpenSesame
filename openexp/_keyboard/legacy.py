@@ -85,6 +85,10 @@ class legacy:
 				   accept all keys (default=None)
 		timeout -- an integer value specifying a timeout in milliseconds or None
 				   for no timeout (default=None)
+				   
+		Example:
+		>>> from openexp.keyboard import keyboard
+		>>> my_keyboard = keyboard(exp, keylist=['z', 'm'], timeout=2000)
 		</DOC>"""
 
 		pygame.init()
@@ -114,6 +118,11 @@ class legacy:
 		Keyword arguments:
 		keylist -- a list of keys that are accepted or None to accept all keys
 				   (default=None)
+				   
+		Example:
+		>>> from openexp.keyboard import keyboard
+		>>> my_keyboard = keyboard(exp)
+		>>> my_keyboard.set_keylist( ['z', 'm'] )
 		</DOC>"""
 
 		if keylist == None:
@@ -131,6 +140,11 @@ class legacy:
 		Keyword arguments:
 		timeout -- an integer value specifying a timeout in milliseconds or None
 				   for no timeout (default=None)
+				   
+		Example:
+		>>> from openexp.keyboard import keyboard
+		>>> my_keyboard = keyboard(exp)
+		>>> my_keyboard.set_timeout(2000)
 		</DOC>"""
 
 		self.timeout = timeout
@@ -153,6 +167,13 @@ class legacy:
 
 		Returns:
 		A (key, timestamp) tuple. The key is None if a timeout occurs.
+		
+		Example:
+		>>> from openexp.keyboard import keyboard
+		>>> my_keyboard = keyboard(exp, timeout=2000)
+		>>> response, timestamp = my_keyboard.get_key()
+		>>> if response == None:
+		>>> 	print 'A timeout occurred!'
 		</DOC>"""
 				
 		start_time = pygame.time.get_ticks()
@@ -189,6 +210,13 @@ class legacy:
 		Returns:
 		A list of keyboard moderators. An empty list is returned if no
 		moderators are pressed.
+		
+		Example:
+		>>> from openexp.keyboard import keyboard
+		>>> my_keyboard = keyboard(exp)
+		>>> moderators = my_keyboard.get_mods()
+		>>> if 'shift' in moderators:
+		>>> 	print 'The shift-key is down!'
 		</DOC>"""
 
 		l = []
@@ -205,7 +233,7 @@ class legacy:
 
 	def shift(self, key, mods=["shift"]):
 
-		"""<DOC>
+		"""
 		Returns the character that results from pressing a key together with the
 		moderators, typically a shift. E.g., "3" + "Shift" -> "#". This function
 		is not particularly elegant as it does not take locales into account and
@@ -219,7 +247,7 @@ class legacy:
 
 		Returns:
 		The character that results from combining the input key with shift.
-		</DOC>"""
+		"""
 
 		if key.isalpha():
 			if "shift" in mods:
@@ -236,7 +264,9 @@ class legacy:
 
 	def to_int(self, key):
 
-		"""<DOC>	
+		"""
+		DEPRECATED
+		
 		This function has been removed as of 0.26. Keys are now only referred to
 		by their name and/ or character
 		
@@ -245,14 +275,14 @@ class legacy:
 		
 		Exception:
 		This function always raises an exception
-		</DOC>"""
+		"""
 
 		raise openexp.exceptions.response_error( \
 			"keyboard.to_int() is deprecated")
 
 	def to_chr(self, key):
 
-		"""<DOC>
+		"""
 		DEPRECATED
 		
 		This function is deprecated as of 0.26. Keys are now only referred to
@@ -265,18 +295,18 @@ class legacy:
 
 		Returns:
 		The key		
-		</DOC>"""
+		"""
 
 		return key
 		
 	def valid_keys(self):
 	
-		"""<DOC>
-		Generates a list of valid key names
+		"""
+		Generates a list of valid key names. Mostly for use by the GUI.
 		
 		Returns:
 		A list of valid key names
-		</DOC>"""
+		"""
 		
 		return sorted(self.key_name_to_code.keys())
 		
@@ -304,6 +334,12 @@ class legacy:
 		Returns:
 		True if a key had been pressed (i.e., if there was something
 		to flush) and False otherwise
+		
+		Example:
+		>>> from openexp.keyboard import keyboard
+		>>> my_keyboard = keyboard(exp)
+		>>> my_keyboard.flush()
+		>>> response, timestamp = my_keyboard.get_key()
 		</DOC>"""
 
 		keypressed = False

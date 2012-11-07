@@ -65,6 +65,11 @@ class legacy:
 		Arguments:
 		experiment -- An instance of libopensesame.experiment.experiment
 		src -- A path to a .wav or .ogg file
+		
+		Example:
+		>>> from openexp.sampler import sampler
+		>>> src = exp.get_file('my_sound.ogg')
+		>>> my_sampler = sampler(exp, src)
 		</DOC>"""
 
 		if src != None:
@@ -88,6 +93,12 @@ class legacy:
 
 		Arguments:
 		ms -- A duration in milliseconds
+		
+		Example:
+		>>> from openexp.sampler import sampler
+		>>> src = exp.get_file('my_sound.ogg')
+		>>> my_sampler = sampler(exp, src)
+		>>> my_sampler.stop_after(100)		
 		</DOC>"""
 
 		if type(ms) != int or ms < 0:
@@ -102,6 +113,12 @@ class legacy:
 
 		Arguments:
 		ms - A duration in milliseconds
+		
+		Example:
+		>>> from openexp.sampler import sampler
+		>>> src = exp.get_file('my_sound.ogg')
+		>>> my_sampler = sampler(exp, src)
+		>>> my_sampler.fade_in(100)		
 		</DOC>"""
 
 		if type(ms) != int or ms < 0:
@@ -116,6 +133,12 @@ class legacy:
 
 		Arguments:
 		vol -- A volume between 0.0 and 1.0
+		
+		Example:
+		>>> from openexp.sampler import sampler
+		>>> src = exp.get_file('my_sound.ogg')
+		>>> my_sampler = sampler(exp, src)
+		>>> my_sampler.volume(0.5)
 		</DOC>"""
 
 		if type(vol) not in (int, float) or vol < 0 or vol > 1:
@@ -131,6 +154,12 @@ class legacy:
 
 		Arguments:
 		p -- The pitch. p > 1.0 slows the sample down, p < 1.0 speeds the sample up
+		
+		Example:
+		>>> from openexp.sampler import sampler
+		>>> src = exp.get_file('my_sound.ogg')
+		>>> my_sampler = sampler(exp, src)
+		>>> my_sampler.pitch(2.0)
 		</DOC>"""
 
 		if type(p) not in (int, float) or p <= 0:
@@ -156,7 +185,14 @@ class legacy:
 		(mutes left, pans to right").
 
 		Arguments:
-		p -- Panning. A float (p < 0 = to left, p > 0 = to right) or string ("left" or "right")
+		p -- Panning. A float (p < 0 = to left, p > 0 = to right) or string
+			 ("left" or "right")
+		
+		Example:
+		>>> from openexp.sampler import sampler
+		>>> src = exp.get_file('my_sound.ogg')
+		>>> my_sampler = sampler(exp, src)
+		>>> my_sampler.pan('left')
 		</DOC>"""
 
 		if type(p) not in (int, float) and p not in ("left", "right"):
@@ -193,6 +229,12 @@ class legacy:
 
 		Keyword arguments:
 		block -- If True, block until the sound is finished. (default == False)
+		
+		Example:
+		>>> from openexp.sampler import sampler
+		>>> src = exp.get_file('my_sound.ogg')
+		>>> my_sampler = sampler(exp, src)
+		>>> my_sampler.play()
 		</DOC>"""
 
 		self.sound.play(maxtime = self._stop_after, fade_ms = self._fade_in)
@@ -203,6 +245,14 @@ class legacy:
 
 		"""<DOC>
 		Stops the currently playing sound (if any)
+		
+		Example:
+		>>> from openexp.sampler import sampler
+		>>> src = exp.get_file('my_sound.ogg')
+		>>> my_sampler = sampler(exp, src)
+		>>> my_sampler.play()
+		>>> self.sleep(100)
+		>>> my_sampler.stop()
 		</DOC>"""
 
 		pygame.mixer.stop()
@@ -211,6 +261,16 @@ class legacy:
 
 		"""<DOC>
 		Pauses playback (if any)
+		
+		Example:
+		>>> from openexp.sampler import sampler
+		>>> src = exp.get_file('my_sound.ogg')
+		>>> my_sampler = sampler(exp, src)
+		>>> my_sampler.play()
+		>>> self.sleep(100)
+		>>> my_sampler.pause()				
+		>>> self.sleep(100)
+		>>> my_sampler.resume()				
 		</DOC>"""
 
 		pygame.mixer.pause()
@@ -219,6 +279,16 @@ class legacy:
 
 		"""<DOC>
 		Resumes playback (if any)
+		
+		Example:
+		>>> from openexp.sampler import sampler
+		>>> src = exp.get_file('my_sound.ogg')
+		>>> my_sampler = sampler(exp, src)
+		>>> my_sampler.play()
+		>>> self.sleep(100)
+		>>> my_sampler.pause()				
+		>>> self.sleep(100)
+		>>> my_sampler.resume()				
 		</DOC>"""
 
 		pygame.mixer.unpause()
@@ -230,6 +300,15 @@ class legacy:
 
 		Returns:
 		True if a sound is playing, False if not
+		
+		Example:
+		>>> from openexp.sampler import sampler
+		>>> src = exp.get_file('my_sound.ogg')
+		>>> my_sampler = sampler(exp, src)
+		>>> my_sampler.play()
+		>>> self.sleep(100)
+		>>> if not my_sampler.is_playing():
+		>>> 	print 'The sampler is still playing!'
 		</DOC>"""
 
 		return pygame.mixer.get_busy()
@@ -237,8 +316,16 @@ class legacy:
 	def wait(self):
 
 		"""<DOC>
-		Blocks until the sound has finished playing or
-		returns right away if no sound is playing
+		Blocks until the sound has finished playing or returns right away if no
+		sound is playing
+		
+		Example:
+		>>> from openexp.sampler import sampler
+		>>> src = exp.get_file('my_sound.ogg')
+		>>> my_sampler = sampler(exp, src)
+		>>> my_sampler.play()
+		>>> my_sampler.wait()
+		>>> print 'The sampler is finished!'
 		</DOC>"""
 
 		while pygame.mixer.get_busy():

@@ -321,10 +321,15 @@ class item(object):
 		Sets an OpenSesame variable
 		
 		If you want to set a variable so that it is available in other items as
-		well (such as the logger item, so you can log the variable), you need to
-		use the set() function from the experiment. So, in an inline_script item
-		you would generally set a variable with exp.set(), rather
+		well (such as the logger item, so you can log the variable), you need
+		to use the set() function from the experiment. So, in an inline_script
+		item you would generally set a variable with exp.set(), rather
 		than self.set().
+		
+		Please note that you can only set simple variable types (str, unicode,
+		float, and int). If you use the set function to save an object, it will
+		be converted to a string representation. To make complex variables
+		globally accessible in your experiment, please use the global keyword.
 		
 		The type of the value can be anything. However, see get() for an
 		explanation of how data-types are handled.
@@ -453,6 +458,10 @@ class item(object):
 				 exception is raised if the value is not an allowed value.				 
 		_eval -- indicates whether the variable should be evaluated, i.e.
 				 whether containing variables should be processed (default=True)
+				 
+		Example:		
+		>>> if self.get_check('cue', default='invalid') == 'valid':
+		>>>		print 'This is a validly cued trial'	
 
 		Exceptions:
 		Raises a runtime_error if the variable is not defined and there is no
