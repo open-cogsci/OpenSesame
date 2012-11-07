@@ -115,8 +115,7 @@ class legacy:
 	def __init__(self, experiment, bgcolor=None, fgcolor=None, auto_prepare=True):
 		
 		"""<DOC>
-		Initializes the canvas. The specified colors should be used as a default
-		for subsequent drawing operations
+		Initializes the canvas
 		
 		Arguments:
 		experiment -- an instance of libopensesame.experiment.experiment
@@ -337,6 +336,7 @@ class legacy:
 				 default background color as set by set_bgcolor().
 				 (Default=None)
 				 
+		Example:
 		>>> from openexp.canvas import canvas
 		>>> my_canvas = canvas(exp)
 		>>> my_canvas.fixdot(color='green')
