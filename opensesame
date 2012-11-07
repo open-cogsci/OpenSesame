@@ -23,6 +23,7 @@ if __name__ == "__main__":
 	# First, load a minimum number of modules and show an empty app window. This
 	# gives the user the feeling of a snappy response.
 	import os, sys
+	from libopensesame.misc import debug
 
 	# Change the working directory on Windows. Depending on whether the
 	# application has been frozen by py2exe or not we need to use a different
@@ -38,11 +39,17 @@ if __name__ == "__main__":
 		if path != '':
 			os.chdir(path)
 			if path not in sys.path:
-				sys.path.append(path)			
+				sys.path.append(path)				
 
 	# The IPython modules must be loaded before PyQt4
 	if "--ipython" in sys.argv:
-		from IPython.frontend.qt.console.ipython_widget import IPythonWidget
+		try:
+			from IPython.frontend.qt.console.ipython_widget import IPythonWidget
+			debug.msg('IPython loaded')
+		except:
+			sys.argv.remove('--ipython')
+			debug.msg('Failed to load IPython. Is IPython QtConsole installed?', \
+				reason='warning')
 
 	# Do the basic window initialization
 	from PyQt4.QtGui import QApplication
@@ -54,7 +61,7 @@ if __name__ == "__main__":
 	
 	# Import the remaining modules
 	from PyQt4.QtCore import SIGNAL, QObject, QLocale, QTranslator	
-	from libopensesame.misc import resource, debug
+	from libopensesame.misc import resource
 	import os.path
 	
 	# Load the locale for UI translation. The locale can be specified on the
