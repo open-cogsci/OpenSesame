@@ -39,6 +39,8 @@ import libopensesame.misc
 from libopensesame import debug, exceptions
 import platform
 import sip
+if sip.getapi('QString') == 2:
+	QtCore.QStringList = list
 
 class config(object):
 
@@ -103,8 +105,8 @@ class config(object):
 		
 		"""Constructor"""
 		
-		# Determine the sip api that is used, because this depends on whether or
-		# not IPython is loaded
+		# Determine the sip api that is used, because this depends on whether
+		# or not IPython is loaded
 		object.__setattr__(self, 'api', sip.getapi('QString'))
 		if self.api not in (1,2):
 			raise Exception('config: unknown api %s' % self.api)	
@@ -224,8 +226,8 @@ class config(object):
 					value = unicode(value.toString())
 					
 
-			# The newer api returns some things as strings, so we still have to do
-			# some type conversion
+			# The newer api returns some things as strings, so we still have to
+			# do some type conversion
 			else:
 				if type(default) == bool:
 					if value == 'false':
@@ -234,7 +236,7 @@ class config(object):
 						value = True
 				elif type(default) == int:
 					value = int(value)
-
+					
 			self.__setattr__(setting, value)
 			
 	def save(self, qsettings):
