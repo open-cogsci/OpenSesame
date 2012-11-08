@@ -184,7 +184,7 @@ class legacy:
 		if timeout == None:
 			timeout = self.timeout
 
-		while timeout == None or time - start_time < timeout:
+		while True:
 			time = pygame.time.get_ticks()
 			for event in pygame.event.get():
 				if event.type != pygame.KEYDOWN:
@@ -197,7 +197,9 @@ class legacy:
 				else:
 					key = event.unicode
 				if keylist == None or key in keylist:
-					return key, time
+					return key, time				
+			if timeout != None and time-start_time >= timeout:
+				break
 		
 		return None, time
 
