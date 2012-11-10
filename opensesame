@@ -23,7 +23,6 @@ if __name__ == "__main__":
 	# First, load a minimum number of modules and show an empty app window. This
 	# gives the user the feeling of a snappy response.
 	import os, sys
-	from libopensesame.misc import debug
 
 	# Change the working directory on Windows. Depending on whether the
 	# application has been frozen by py2exe or not we need to use a different
@@ -39,7 +38,10 @@ if __name__ == "__main__":
 		if path != '':
 			os.chdir(path)
 			if path not in sys.path:
-				sys.path.append(path)				
+				sys.path.append(path)
+				
+	# Load debug package (this must be after the working directory change)
+	from libopensesame.misc import debug
 
 	# The IPython modules must be loaded before PyQt4
 	if "--ipython" in sys.argv:
