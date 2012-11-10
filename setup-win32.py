@@ -118,7 +118,7 @@ def ignore_package_files(folder, files):
 			l.append(f)
 	return l
 
-# A function to strip non-compiled scripts
+# A function to strip non-compiled scripts and backup files
 def strip_py(folder):
 	for path in os.listdir(folder):
 		path = os.path.join(folder, path)
@@ -126,7 +126,8 @@ def strip_py(folder):
 			strip_py(path)
 			continue
 		base, ext = os.path.splitext(path)
-		if ext == '.py' and os.path.exists(base+'.pyo'):
+		if (ext in ('.py', '.pyc') and os.path.exists(base+'.pyo')) or \
+			path[-1] == '~':
 			print 'stripping %s' % path
 			os.remove(path)
 
