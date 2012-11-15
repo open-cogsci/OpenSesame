@@ -17,7 +17,7 @@ You should have received a copy of the GNU General Public License
 along with openexp.  If not, see <http://www.gnu.org/licenses/>.
 """
 
-from string import whitespace
+from string import whitespace, printable
 import pygame
 from pygame.locals import *
 import openexp.keyboard
@@ -192,7 +192,8 @@ class legacy:
 				if event.key == pygame.K_ESCAPE:
 					raise openexp.exceptions.response_error( \
 						"The escape key was pressed.")
-				if event.unicode in invalid_unicode:
+				if event.unicode in invalid_unicode or event.unicode not in \
+					printable:
 					key = pygame.key.name(event.key)
 				else:
 					key = event.unicode
