@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'resources/ui/loop_widget.ui'
 #
-# Created: Fri Oct  5 15:12:00 2012
+# Created: Thu Nov 15 18:03:35 2012
 #      by: PyQt4 UI code generator 4.9.1
 #
 # WARNING! All changes made in this file will be lost!
@@ -102,7 +102,9 @@ class Ui_loop_widget(object):
         self.combobox_order = QtGui.QComboBox(self.widget_options)
         self.combobox_order.setObjectName(_fromUtf8("combobox_order"))
         self.combobox_order.addItem(_fromUtf8(""))
+        self.combobox_order.setItemText(0, _fromUtf8("random"))
         self.combobox_order.addItem(_fromUtf8(""))
+        self.combobox_order.setItemText(1, _fromUtf8("sequential"))
         self.gridLayout_2.addWidget(self.combobox_order, 0, 3, 1, 1)
         self.label_order = QtGui.QLabel(self.widget_options)
         self.label_order.setObjectName(_fromUtf8("label_order"))
@@ -158,8 +160,6 @@ class Ui_loop_widget(object):
         self.checkbox_offset.setText(QtGui.QApplication.translate("loop_widget", "Run skipped cycles at end of loop (offset mode)", None, QtGui.QApplication.UnicodeUTF8))
         self.label_item.setText(QtGui.QApplication.translate("loop_widget", "Item to run", None, QtGui.QApplication.UnicodeUTF8))
         self.label_cycles.setText(QtGui.QApplication.translate("loop_widget", "Cycles", None, QtGui.QApplication.UnicodeUTF8))
-        self.combobox_order.setItemText(0, QtGui.QApplication.translate("loop_widget", "random", None, QtGui.QApplication.UnicodeUTF8))
-        self.combobox_order.setItemText(1, QtGui.QApplication.translate("loop_widget", "sequential", None, QtGui.QApplication.UnicodeUTF8))
         self.label_order.setText(QtGui.QApplication.translate("loop_widget", "Order", None, QtGui.QApplication.UnicodeUTF8))
         self.label_repeat.setText(QtGui.QApplication.translate("loop_widget", "Repeat", None, QtGui.QApplication.UnicodeUTF8))
         self.spin_repeat.setPrefix(QtGui.QApplication.translate("loop_widget", "each cycle ", None, QtGui.QApplication.UnicodeUTF8))
