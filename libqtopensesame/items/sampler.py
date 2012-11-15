@@ -102,22 +102,25 @@ class sampler(libopensesame.sampler.sampler, qtitem.qtitem):
 			self.sampler_widget.ui.frame_notification.setVisible(False)
 			self.sampler_widget.ui.frame_controls.setVisible(True)					
 			self.sampler_widget.ui.edit_sample.setText(self.unistr(self.get( \
-				'sample')))
+				'sample', _eval=False)))
 			self.sampler_widget.ui.edit_duration.setText(self.unistr(self.get( \
-				'duration')))		
-			self.sampler_widget.ui.spin_pan.setValue(self.get('pan'))
+				'duration', _eval=False)))		
+			self.sampler_widget.ui.spin_pan.setValue(self.get('pan', _eval= \
+				False))
 			self.sampler_widget.ui.spin_volume.setValue(100.0 * self.get( \
-				'volume'))
+				'volume', _eval=False))
 			self.sampler_widget.ui.spin_pitch.setValue(100.0 * self.get( \
-				'pitch'))
-			self.sampler_widget.ui.spin_fade_in.setValue(self.get('fade_in'))
+				'pitch', _eval=False))
+			self.sampler_widget.ui.spin_fade_in.setValue(self.get('fade_in', \
+				_eval=False))
 			self.sampler_widget.ui.spin_stop_after.setValue(self.get( \
-				'stop_after'))
-			self.sampler_widget.ui.dial_pan.setValue(self.get('pan'))
+				'stop_after', _eval=False))
+			self.sampler_widget.ui.dial_pan.setValue(self.get('pan', _eval= \
+				False))
 			self.sampler_widget.ui.dial_volume.setValue(100.0 * self.get( \
-				'volume'))
+				'volume', _eval=False))
 			self.sampler_widget.ui.dial_pitch.setValue(100.0 * self.get( \
-				'pitch'))
+				'pitch', _eval=False))
 		self.lock = False		
 		return self._edit_widget
 

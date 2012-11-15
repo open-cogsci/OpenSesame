@@ -47,33 +47,36 @@ class synth(libopensesame.synth.synth, qtitem.qtitem):
 	
 		"""Build the GUI controls"""
 		
-		qtitem.qtitem.init_edit_widget(self, False)
-				
+		qtitem.qtitem.init_edit_widget(self, False)				
 		self.synth_widget = QtGui.QWidget()
 		self.synth_widget.ui = synth_widget_ui.Ui_synth_widget()
 		self.synth_widget.ui.setupUi(self.synth_widget)
 		self.experiment.main_window.theme.apply_theme(self.synth_widget)
-
-		self.synth_widget.ui.spin_attack.valueChanged.connect(self.apply_edit_changes)
-		self.synth_widget.ui.spin_decay.valueChanged.connect(self.apply_edit_changes)
-		self.synth_widget.ui.spin_pan.valueChanged.connect(self.apply_edit_changes)
-		self.synth_widget.ui.spin_volume.valueChanged.connect(self.apply_edit_changes)
-		self.synth_widget.ui.spin_length.valueChanged.connect(self.apply_edit_changes)		
-		
-		self.synth_widget.ui.edit_freq.editingFinished.connect(self.apply_edit_changes)		
-		self.synth_widget.ui.edit_duration.editingFinished.connect(self.apply_edit_changes)		
-
+		self.synth_widget.ui.spin_attack.valueChanged.connect( \
+			self.apply_edit_changes)
+		self.synth_widget.ui.spin_decay.valueChanged.connect( \
+			self.apply_edit_changes)
+		self.synth_widget.ui.spin_pan.valueChanged.connect( \
+			self.apply_edit_changes)
+		self.synth_widget.ui.spin_volume.valueChanged.connect( \
+			self.apply_edit_changes)
+		self.synth_widget.ui.spin_length.valueChanged.connect( \
+			self.apply_edit_changes)				
+		self.synth_widget.ui.edit_freq.editingFinished.connect( \
+			self.apply_edit_changes)		
+		self.synth_widget.ui.edit_duration.editingFinished.connect( \
+			self.apply_edit_changes)		
 		self.synth_widget.ui.dial_attack.valueChanged.connect(self.apply_dials)
 		self.synth_widget.ui.dial_decay.valueChanged.connect(self.apply_dials)	
 		self.synth_widget.ui.dial_pan.valueChanged.connect(self.apply_dials)
-		self.synth_widget.ui.dial_volume.valueChanged.connect(self.apply_dials)
-		
-		self.synth_widget.ui.button_script.clicked.connect(self.open_script_tab)		
+		self.synth_widget.ui.dial_volume.valueChanged.connect(self.apply_dials)		
+		self.synth_widget.ui.button_script.clicked.connect( \
+			self.open_script_tab)		
 		self.synth_widget.ui.button_sine.clicked.connect(self.set_sine)
 		self.synth_widget.ui.button_saw.clicked.connect(self.set_saw)
 		self.synth_widget.ui.button_square.clicked.connect(self.set_square)
-		self.synth_widget.ui.button_white_noise.clicked.connect(self.set_white_noise)
-							
+		self.synth_widget.ui.button_white_noise.clicked.connect( \
+			self.set_white_noise)							
 		self.edit_vbox.addWidget(self.synth_widget)
 		self.edit_vbox.addStretch()
 		
@@ -142,22 +145,34 @@ class synth(libopensesame.synth.synth, qtitem.qtitem):
 			self.synth_widget.ui.frame_notification.setVisible(False)
 			self.synth_widget.ui.frame_controls.setVisible(True)				
 			self.synth_widget.ui.edit_freq.setText(self.unistr(self.get( \
-				'freq')))		
+				'freq', _eval=False)))		
 			self.synth_widget.ui.edit_duration.setText(self.unistr(self.get( \
-				'duration')))
-			self.synth_widget.ui.spin_attack.setValue(self.get("attack"))
-			self.synth_widget.ui.spin_decay.setValue(self.get("decay"))		
-			self.synth_widget.ui.spin_pan.setValue(self.get("pan"))
-			self.synth_widget.ui.spin_volume.setValue(100.0 * self.get("volume"))
-			self.synth_widget.ui.spin_length.setValue(self.get("length"))
-			self.synth_widget.ui.dial_attack.setValue(self.get("attack"))
-			self.synth_widget.ui.dial_decay.setValue(self.get("decay"))
-			self.synth_widget.ui.dial_pan.setValue(self.get("pan"))
-			self.synth_widget.ui.dial_volume.setValue(100.0 * self.get("volume"))									
-			self.synth_widget.ui.button_sine.setChecked(self.get("osc") == "sine")
-			self.synth_widget.ui.button_saw.setChecked(self.get("osc") == "saw")
-			self.synth_widget.ui.button_square.setChecked(self.get("osc") == "square")
-			self.synth_widget.ui.button_white_noise.setChecked(self.get("osc") == "white_noise")
+				'duration', _eval=False)))
+			self.synth_widget.ui.spin_attack.setValue(self.get("attack", \
+				_eval=False))
+			self.synth_widget.ui.spin_decay.setValue(self.get("decay", _eval= \
+				False))		
+			self.synth_widget.ui.spin_pan.setValue(self.get("pan", _eval=False))
+			self.synth_widget.ui.spin_volume.setValue(100.0 * self.get( \
+				"volume", _eval=False))
+			self.synth_widget.ui.spin_length.setValue(self.get("length", \
+				_eval=False))
+			self.synth_widget.ui.dial_attack.setValue(self.get("attack", \
+				_eval=False))
+			self.synth_widget.ui.dial_decay.setValue(self.get("decay", \
+				_eval=False))
+			self.synth_widget.ui.dial_pan.setValue(self.get("pan", _eval= \
+				False))
+			self.synth_widget.ui.dial_volume.setValue(100.0 * self.get( \
+				"volume", _eval=False))									
+			self.synth_widget.ui.button_sine.setChecked(self.get("osc", \
+				_eval=False) == "sine")
+			self.synth_widget.ui.button_saw.setChecked(self.get("osc", _eval= \
+				False) == "saw")
+			self.synth_widget.ui.button_square.setChecked(self.get("osc", \
+				_eval=False) == "square")
+			self.synth_widget.ui.button_white_noise.setChecked(self.get( \
+				"osc", _eval=False) == "white_noise")
 			
 		self.lock = False
 			
@@ -177,8 +192,10 @@ class synth(libopensesame.synth.synth, qtitem.qtitem):
 		if not qtitem.qtitem.apply_edit_changes(self) or self.lock:
 			return
 			
-		self.set("freq", self.sanitize(self.synth_widget.ui.edit_freq.text(), strict=True))		
-		dur = self.sanitize(self.synth_widget.ui.edit_duration.text(), strict=True)
+		self.set("freq", self.sanitize(self.synth_widget.ui.edit_freq.text(), \
+			strict=True))		
+		dur = self.sanitize(self.synth_widget.ui.edit_duration.text(), \
+			strict=True)
 		if dur == "":
 			dur = "sound"
 		self.set("duration", dur)		

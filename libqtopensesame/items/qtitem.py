@@ -634,7 +634,7 @@ class qtitem(QtCore.QObject):
 			slider.valueChanged.disconnect()
 			if self.has(var):
 				try:
-					slider.setValue(self.get(var))
+					slider.setValue(self.get(var, _eval=False))
 				except Exception as e:
 					self.experiment.notify(_("Failed to set control '%s': %s") \
 						% (var, e))

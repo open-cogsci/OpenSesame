@@ -69,13 +69,16 @@ class sketchpad(libopensesame.sketchpad.sketchpad, feedpad.feedpad, \
 		"""Construct the edit widget that contains the controls"""
 
 		qtplugin.qtplugin.init_edit_widget(self, False)		
-		self.add_line_edit_control('duration', 'Duration',
-			tooltip='A numeric value (duration in milliseconds), "keypress", or "mouseclick"' \
+		self.add_line_edit_control('duration', 'Duration', tooltip= \
+			'A numeric value (duration in milliseconds), "keypress", or "mouseclick"' \
 			)
-		self.popout_button = QtGui.QPushButton(self.experiment.icon(self.item_type), "Open editor in new window")
+		self.popout_button = QtGui.QPushButton(self.experiment.icon( \
+			self.item_type), "Open editor in new window")
 		self.popout_button.setIconSize(QtCore.QSize(16,16))
-		self.popout_button.setToolTip("Open the sketchpad editor in a new window")
-		QtCore.QObject.connect(self.popout_button, QtCore.SIGNAL("clicked()"), self.popout)
+		self.popout_button.setToolTip( \
+			"Open the sketchpad editor in a new window")
+		QtCore.QObject.connect(self.popout_button, \
+			QtCore.SIGNAL("clicked()"), self.popout)
 		self.add_control('', self.popout_button, 
 			'Open the sketchpad editor in a new window')
 		self.tools_widget = sketchpad_widget.sketchpad_widget(self)
