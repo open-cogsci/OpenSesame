@@ -452,7 +452,7 @@ class experiment(libopensesame.experiment.experiment):
 		self.main_window.theme.apply_theme(a)
 		if message != None:
 			a.ui.label_message.setText(message)
-		a.ui.textedit_input.setText(content)
+		a.ui.textedit_input.setPlainText(content)
 		a.ui.textedit_input.setFont(self.monospace())
 		a.adjustSize()
 		if a.exec_() == QtGui.QDialog.Accepted:

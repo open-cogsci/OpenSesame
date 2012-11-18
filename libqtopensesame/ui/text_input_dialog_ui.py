@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'resources/ui/text_input_dialog.ui'
 #
-# Created: Thu Aug  2 12:43:06 2012
+# Created: Sun Nov 18 18:16:40 2012
 #      by: PyQt4 UI code generator 4.9.1
 #
 # WARNING! All changes made in this file will be lost!
@@ -54,6 +54,7 @@ class Ui_text_input_dialog(object):
         self.horizontalLayout.addWidget(self.label_message)
         self.verticalLayout.addWidget(self.widget)
         self.textedit_input = QtGui.QTextEdit(text_input_dialog)
+        self.textedit_input.setAcceptRichText(False)
         self.textedit_input.setObjectName(_fromUtf8("textedit_input"))
         self.verticalLayout.addWidget(self.textedit_input)
         self.buttonBox = QtGui.QDialogButtonBox(text_input_dialog)
@@ -69,5 +70,5 @@ class Ui_text_input_dialog(object):
 
     def retranslateUi(self, text_input_dialog):
         text_input_dialog.setWindowTitle(QtGui.QApplication.translate("text_input_dialog", "OpenSesame says ...", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_message.setText(QtGui.QApplication.translate("text_input_dialog", "OpenSesame says ...", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_message.setText(QtGui.QApplication.translate("text_input_dialog", "Message", None, QtGui.QApplication.UnicodeUTF8))
 
