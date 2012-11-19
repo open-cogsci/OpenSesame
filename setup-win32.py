@@ -90,6 +90,7 @@ exclude_packages = [
 include_packages = [
 	'sip',
 	'pyaudio',
+	'cairo',
 	'Image',
 	'PyQt4.QtCore',
 	'PyQt4.QtGui',
