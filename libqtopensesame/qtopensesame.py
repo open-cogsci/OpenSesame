@@ -38,7 +38,7 @@ class qtopensesame(QtGui.QMainWindow):
 	"""The main class of the OpenSesame GUI"""
 	
 	# Set to False for release!
-	devmode = True
+	devmode = False
 
 	def __init__(self, app, parent=None):
 
