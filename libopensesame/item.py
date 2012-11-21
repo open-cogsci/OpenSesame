@@ -247,10 +247,17 @@ class item(object):
 			line_stripped = line.strip()
 			# The end of a textblock
 			if line_stripped == u'__end__':
-				self.set(textblock_var, textblock_val)
-				textblock_var = None
-			# The beginning of a textblock
-			elif line_stripped[:2] == u'__' and line_stripped[-2:] == u'__':
+				if textblock_var == None:
+					self.experiment.notify( \
+						'It appears that a textblock has been closed without being opened. The most likely reason is that you have used the string "__end__", which has a special meaning for OpenSesame.')
+				else:
+					self.set(textblock_var, textblock_val)
+					textblock_var = None
+			# The beginning of a textblock. A new textblock is only started when
+			# a textblock is not already ongoing, and only if the textblock start
+			# is of the format __VARNAME__
+			elif line_stripped[:2] == u'__' and line_stripped[-2:] == u'__' and \
+				textblock_var == None:
 				textblock_var = line_stripped[2:-2]
 				if textblock_var in self.reserved_words:
 					textblock_var = u'_' + textblock_var
