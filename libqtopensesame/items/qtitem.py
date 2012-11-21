@@ -293,7 +293,7 @@ class qtitem(QtCore.QObject):
 		
 		# Create a new item and make it a clone of the current item
 		item = self.experiment.main_window.add_item(self.item_type, False, \
-			name=self.name)
+			name=self.name, interactive=False)
 		if catch:
 			try:
 				self.experiment.items[item].from_string(script)

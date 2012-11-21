@@ -1516,7 +1516,7 @@ class qtopensesame(QtGui.QMainWindow):
 			cat_menu[cat].addAction(plugin_action.plugin_action(self, \
 				cat_menu[cat], plugin))
 
-	def add_item(self, item_type, refresh=True, name=None):
+	def add_item(self, item_type, refresh=True, name=None, interactive=True):
 
 		"""
 		Adds a new item to the item list
@@ -1528,6 +1528,10 @@ class qtopensesame(QtGui.QMainWindow):
 		refresh -- a bool to indicate if the interface should be refreshed
 				   (default=True)
 		name -- a custom name to give the item (default=None)
+		interactive -- indicates whether the GUI is allowed to be interactive.
+					   More specifically, this means that the GUI can ask for
+					   a new name, if the immediate rename option is enabled.
+					   (default=True)
 
 		Returns:
 		The name of the new item
@@ -1562,10 +1566,15 @@ class qtopensesame(QtGui.QMainWindow):
 			item = eval("%s.%s(name, self.experiment)" % (item_type, item_type))
 
 		# Optionally, ask for a new name right away
-		if config.get_config('immediate_rename'):
-			name, ok = QtGui.QInputDialog.getText(self, _("New name"), \
-				_("Please enter a name for the new %s") % item_type, \
-				text=name)
+		if interactive and config.get_config('immediate_rename'):
+			while True:
+				name, ok = QtGui.QInputDialog.getText(self, _("New name"), \
+					_("Please enter a name for the new %s") % item_type, \
+					text=name)
+				name = self.experiment.sanitize(unicode(name), strict=True, \
+					allow_vars=False)
+				if name not in self.experiment.items:
+					break				
 			if not ok:
 				return None
 			name = unicode(name)
