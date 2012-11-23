@@ -54,6 +54,7 @@ class pool_widget(QtGui.QWidget):
 			}
 
 		self.main_window = main_window
+		self.max_len = 5
 
 		QtGui.QWidget.__init__(self, parent)
 		self.ui = pool_widget_ui.Ui_pool_widget()
@@ -265,15 +266,19 @@ class pool_widget(QtGui.QWidget):
 
 		elif a == _("Remove from pool"):
 
-			# Create a list of files to be removed
+			# Create a list of files to be removed			
 			l = []
-			for item in self.ui.list_pool.selectedItems():
+			suffix = ''
+			for item in self.ui.list_pool.selectedItems()[:self.max_len]:
 				l.append(unicode(item.text()))
+			if len(self.ui.list_pool.selectedItems()) > self.max_len:				
+				suffix = _('And %d more file(s)') % \
+					(len(self.ui.list_pool.selectedItems())-self.max_len)
 
 			# Ask for confirmation
 			resp = QtGui.QMessageBox.question(self, _("Remove"), \
-				_("<p>Are you sure you want to remove the following files from the file pool? This operation will only affect the OpenSesame file pool, not the original files on your disk.</p><p><b> - %s</b></p>") \
-				% ("<br /> - ".join(l)), QtGui.QMessageBox.Yes, \
+				_("<p>Are you sure you want to remove the following files from the file pool? This operation will only affect the OpenSesame file pool, not the original files on your disk.</p><p><b> - %s</b></p><p>%s</p>") \
+				% ("<br /> - ".join(l), suffix), QtGui.QMessageBox.Yes, \
 				QtGui.QMessageBox.No)
 			if resp == QtGui.QMessageBox.No:
 				return
