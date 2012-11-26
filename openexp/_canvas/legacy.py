@@ -121,20 +121,22 @@ class legacy:
 		experiment -- an instance of libopensesame.experiment.experiment
 		
 		Keyword arguments:
-		bgcolor -- a human-readable background color or None to use experiment
-				   default (default=None)
-		fgcolor -- a human-readable foreground color or None to use experiment
-				   default (default=None)
-		auto_prepare -- Indicates whether the canvas should be automatically
-					   prepared after each drawing operation, so that canvas.show()
-					   will be maximally efficient. If auto_prepare is turned off,
-					   drawing operations may be more faster, but canvas.show()
-					   will take longer, unless canvas.prepare() is explicitly
-					   called in advance. Generally, it only makes sense to disable 
-					   auto_prepare when you want to draw a large number
-					   of stimuli, as in the second example below. Currently, the
-					   auto_prepare parameter only applies to the xpyriment, and is
-					   ignored by the other backends. (default=True)					    
+		bgcolor -- a human-readable background color or None to use #
+				   experiment default (default=None)
+		fgcolor -- a human-readable foreground color or None to use #
+				   experiment default (default=None)
+		auto_prepare -- Indicates whether the canvas should be automatically #
+					    prepared after each drawing operation, so that #
+					    `canvas.show()` will be maximally efficient. If #
+					    auto_prepare is turned off, drawing operations may #
+					    be more faster, but canvas.show() will take longer, #
+					    unless canvas.prepare() is explicitly called in #
+					    advance. Generally, it only makes sense to disable #
+					    auto_prepare when you want to draw a large number #
+						of stimuli, as in the second example below. #
+						Currently, the auto_prepare parameter only applies #
+						to the xpyriment, and is ignored by the other #
+						backends. (default=True)					    
 				   
 		Example:		
 		>>> from openexp.canvas import canvas
@@ -478,11 +480,11 @@ class legacy:
 		r -- The radius
 		
 		Keyword arguments:
-		fill -- A boolean indicating whether the circle is outlined (False) or
-				filled (True) (default=False)
-		color -- A custom human readable foreground color. This does not affect
-				 the default foreground color as set by set_fgcolor().
-				 (Default=None)
+		fill -- A boolean indicating whether the circle is outlined (False) #
+				or filled (True) (default=False)
+		color -- A custom human readable foreground color. This does not #
+				 affect the default foreground color as set by #
+				 set_fgcolor(). (Default=None) 
 				 
 		Example:
 		>>> from openexp.canvas import canvas
@@ -504,9 +506,9 @@ class legacy:
 		ey -- The bottom coordinate
 		
 		Keyword arguments:
-		color -- A custom human readable foreground color. This does not affect
-				 the default foreground color as set by set_fgcolor().
-				 (Default=None)
+		color -- A custom human readable foreground color. This does not #
+				 affect the default foreground color as set by #
+				 set_fgcolor(). (Default=None)
 				 
 		Example:
 		>>> from openexp.canvas import canvas
