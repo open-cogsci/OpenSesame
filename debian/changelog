@@ -1,4 +1,4 @@
-opensesame (0.27~pre27-ubuntu1) precise; urgency=low
+opensesame (0.27~pre29-ubuntu1) precise; urgency=low
 
   * Added Expyriment backend
   * Added form functionality
@@ -9,7 +9,7 @@ opensesame (0.27~pre27-ubuntu1) precise; urgency=low
   * Numerous bug-fixes
   * Improved compatibility with Nexus 7 tablet
 
- -- Sebastiaan Mathot <s.mathot@cogsci.nl>  Mon, 19 Nov 2012 13:55:07 +0100
+ -- Sebastiaan Mathot <s.mathot@cogsci.nl>  Mon, 26 Nov 2012 15:53:35 +0100
 
 opensesame (0.26-2) unstable; urgency=low
 
