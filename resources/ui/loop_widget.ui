@@ -196,12 +196,12 @@
        <widget class="QComboBox" name="combobox_order">
         <item>
          <property name="text">
-          <string>random</string>
+          <string notr="true">random</string>
          </property>
         </item>
         <item>
          <property name="text">
-          <string>sequential</string>
+          <string notr="true">sequential</string>
          </property>
         </item>
        </widget>

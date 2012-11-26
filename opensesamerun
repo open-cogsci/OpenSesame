@@ -101,6 +101,10 @@ if __name__ == "__main__":
 		exp.set_subject(options.subject)
 		exp.fullscreen = options.fullscreen
 		exp.logfile = options.logfile
+		
+		# Initialize random number generator
+		import random
+		random.seed()
 	
 		# Try to run the experiment
 		try:

@@ -38,11 +38,20 @@ if __name__ == "__main__":
 		if path != '':
 			os.chdir(path)
 			if path not in sys.path:
-				sys.path.append(path)			
+				sys.path.append(path)
+				
+	# Load debug package (this must be after the working directory change)
+	from libopensesame.misc import debug
 
 	# The IPython modules must be loaded before PyQt4
 	if "--ipython" in sys.argv:
-		from IPython.frontend.qt.console.ipython_widget import IPythonWidget
+		try:
+			from IPython.frontend.qt.console.ipython_widget import IPythonWidget
+			debug.msg('IPython loaded')
+		except:
+			sys.argv.remove('--ipython')
+			debug.msg('Failed to load IPython. Is IPython QtConsole installed?', \
+				reason='warning')
 
 	# Do the basic window initialization
 	from PyQt4.QtGui import QApplication
@@ -54,7 +63,7 @@ if __name__ == "__main__":
 	
 	# Import the remaining modules
 	from PyQt4.QtCore import SIGNAL, QObject, QLocale, QTranslator	
-	from libopensesame.misc import resource, debug
+	from libopensesame.misc import resource
 	import os.path
 	
 	# Load the locale for UI translation. The locale can be specified on the

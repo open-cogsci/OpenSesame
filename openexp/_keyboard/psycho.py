@@ -76,7 +76,7 @@ class psycho(openexp._keyboard.legacy.legacy):
 
 		l = []
 		for i in dir(pyglet.window.key):
-			if type(eval("pyglet.window.key.%s" % i)) == int:
+			if isinstance(getattr(pyglet.window.key, i), int):
 				l.append(i)
 		return l
 
@@ -123,7 +123,7 @@ class psycho(openexp._keyboard.legacy.legacy):
 		start_time = 1000.0 * self.experiment.clock.getTime()
 		time = start_time
 		
-		while timeout == None or time-start_time <= timeout:
+		while True:
 			time = 1000.0 * self.experiment.clock.getTime()
 			keys = event.getKeys(_keylist, timeStamped=self.experiment.clock)
 			for key, time in keys:
@@ -133,6 +133,8 @@ class psycho(openexp._keyboard.legacy.legacy):
 						"The escape key was pressed.")
 				elif keylist == None or key in keylist:				
 					return key, time
+			if timeout != None and time-start_time >= timeout:
+				break
 
 		return None, time
 

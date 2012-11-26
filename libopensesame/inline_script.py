@@ -28,9 +28,9 @@ class inline_script(item.item):
 	def __init__(self, name, experiment, string = None):
 
 		"""<DOC>
-		Constructor. You will generally not create an
-		inline_script item yourself, but use OpenSesame to create a body
-		for the prepare() and run() functions.
+		Constructor. You will generally not create an inline_script item
+		yourself, but use OpenSesame to create a body for the prepare() and
+		run() functions.
 
 		Arguments:
 		name -- the name of the item
@@ -57,6 +57,9 @@ class inline_script(item.item):
 
 		Returns:
 		An openexp canvas
+		
+		Example:
+		>>> my_canvas = self.copy_sketchpad('my_sketchpad')
 		</DOC>"""
 
 		c = self.offline_canvas()
@@ -73,6 +76,9 @@ class inline_script(item.item):
 
 		Returns:
 		An openexp canvas
+		
+		Example:
+		>>> my_canvas = self.offline_canvas()
 		</DOC>"""
 
 		return canvas.canvas(self.experiment, self.get("background"), \
@@ -111,9 +117,8 @@ class inline_script(item.item):
 	def run(self):
 
 		"""<DOC>
-		Execute the run script. The code that you enter in the 'run'
-		tab of an inline_script item in the GUI is used as a body for this
-		function.
+		Execute the run script. The code that you enter in the 'run' tab of an
+		inline_script item in the GUI is used as a body for this function.
 		</DOC>"""
 
 		# Convenience variables

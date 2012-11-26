@@ -141,13 +141,22 @@ class general_properties(QtGui.QWidget):
 		self.main_window.experiment.set("description", desc)
 
 		# Set the backend
-		i = self.ui.combobox_backend.currentIndex()
-		backend = openexp.backend_info.backend_list.values()[i]
-		self.main_window.experiment.set("canvas_backend", backend["canvas"])
-		self.main_window.experiment.set("keyboard_backend", backend["keyboard"])
-		self.main_window.experiment.set("mouse_backend", backend["mouse"])
-		self.main_window.experiment.set("sampler_backend", backend["sampler"])
-		self.main_window.experiment.set("synth_backend", backend["synth"])
+		if self.ui.combobox_backend.isEnabled():
+			i = self.ui.combobox_backend.currentIndex()
+			backend = openexp.backend_info.backend_list.values()[i]
+			self.main_window.experiment.set("canvas_backend", \
+				backend["canvas"])
+			self.main_window.experiment.set("keyboard_backend", \
+				backend["keyboard"])
+			self.main_window.experiment.set("mouse_backend", \
+				backend["mouse"])
+			self.main_window.experiment.set("sampler_backend", \
+				backend["sampler"])
+			self.main_window.experiment.set("synth_backend", \
+				backend["synth"])
+		else:
+			debug.msg( \
+				'not setting back-end, because a custom backend is selected')
 
 		# Set the display width
 		width = self.ui.spinbox_width.value()
@@ -243,6 +252,9 @@ class general_properties(QtGui.QWidget):
 			self.main_window.experiment.foreground))
 		self.ui.edit_background.setText(self.main_window.experiment.unistr( \
 			self.main_window.experiment.background))
+			
+		# Set the font
+		self.ui.widget_font.initialize(self.main_window.experiment)
 
 		# Release the general tab
 		self.lock = False

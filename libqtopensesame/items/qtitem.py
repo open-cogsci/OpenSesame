@@ -293,7 +293,7 @@ class qtitem(QtCore.QObject):
 		
 		# Create a new item and make it a clone of the current item
 		item = self.experiment.main_window.add_item(self.item_type, False, \
-			name=self.name)
+			name=self.name, interactive=False)
 		if catch:
 			try:
 				self.experiment.items[item].from_string(script)
@@ -338,8 +338,6 @@ class qtitem(QtCore.QObject):
 			script += self.strip_script_line(s)
 		self.edit_script.edit.setPlainText(script, set_modified=False)
 		self.edit_script.apply.clicked.connect(self.apply_script_changes)
-		QtCore.QObject.connect(self.edit_script.edit, QtCore.SIGNAL( \
-			"focusLost"), self.apply_script_changes)
 
 		button = QtGui.QPushButton(self.experiment.icon("apply"), \
 			_("Apply and close"))
@@ -634,7 +632,7 @@ class qtitem(QtCore.QObject):
 			slider.valueChanged.disconnect()
 			if self.has(var):
 				try:
-					slider.setValue(self.get(var))
+					slider.setValue(self.get(var, _eval=False))
 				except Exception as e:
 					self.experiment.notify(_("Failed to set control '%s': %s") \
 						% (var, e))
@@ -658,6 +656,35 @@ class qtitem(QtCore.QObject):
 				except Exception as e:
 					self.experiment.notify(_("Failed to set control '%s': %s") \
 						% (var, e))
+						
+	def sanitize_check(self, s, strict=False, allow_vars=True, notify=True):
+		
+		"""
+		Checks whether a string is sane (i.e. unchanged by sanitize()) and
+		optionally presents a warning if it's notably
+		
+		Arguments: 
+		s -- the string to check
+		
+		Keyword arguments:
+		strict -- see sanitize()
+		allow_vars -- see sanitize()
+		notify -- indicates whether a notification should be presented if the 
+				  string is not sane.
+		
+		Returns:
+		True if s is sane, False otherwise
+		"""
+		
+		sane = s == self.sanitize(s, strict=strict, allow_vars=allow_vars)
+		if not sane and notify:
+			if strict:
+				self.experiment.notify(
+					_('All non-alphanumeric characters except underscores have been stripped'))
+			else:
+				self.experiment.notify(
+					_('The following characters are not allowed and have been stripped: double-quote ("), backslash (\), and newline'))
+		return sane						
 						
 	def sanity_check(self):
 	
@@ -740,6 +767,8 @@ class qtitem(QtCore.QObject):
 			if type(var) == str:
 				self.set(var, editor.edit.toPlainText())
 				editor.setModified(False)
+
+		return True
 				
 	def auto_add_widget(self, widget, var=None):
 	

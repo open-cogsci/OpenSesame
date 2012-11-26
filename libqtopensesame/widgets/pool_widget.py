@@ -20,6 +20,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 from libopensesame import debug, misc
 from libqtopensesame.ui import pool_widget_ui
 from libqtopensesame.misc import _
+from libqtopensesame.misc.config import cfg
 from PyQt4 import QtCore, QtGui
 import os
 import platform
@@ -53,6 +54,7 @@ class pool_widget(QtGui.QWidget):
 			}
 
 		self.main_window = main_window
+		self.max_len = 5
 
 		QtGui.QWidget.__init__(self, parent)
 		self.ui = pool_widget_ui.Ui_pool_widget()
@@ -134,11 +136,16 @@ class pool_widget(QtGui.QWidget):
 		Add one or more files to the pool
 
 		Keyword arguments:
-		dummy -- a dummy argument passed py the signal handler (default == None)
+		dummy -- a dummy argument passed py the signal handler (default=None)
 		"""
 
-		self.add(QtGui.QFileDialog.getOpenFileNames( \
-			self.main_window.ui.centralwidget, _("Add files to pool")))
+		path_list = QtGui.QFileDialog.getOpenFileNames( \
+			self.main_window.ui.centralwidget, _("Add files to pool"), \
+			directory=cfg.default_pool_folder)
+		if len(path_list) == 0:
+			return
+		cfg.default_pool_folder = os.path.dirname(unicode(path_list[0]))
+		self.add(path_list)
 
 	def select(self, fname):
 
@@ -259,15 +266,19 @@ class pool_widget(QtGui.QWidget):
 
 		elif a == _("Remove from pool"):
 
-			# Create a list of files to be removed
+			# Create a list of files to be removed			
 			l = []
-			for item in self.ui.list_pool.selectedItems():
+			suffix = ''
+			for item in self.ui.list_pool.selectedItems()[:self.max_len]:
 				l.append(unicode(item.text()))
+			if len(self.ui.list_pool.selectedItems()) > self.max_len:				
+				suffix = _('And %d more file(s)') % \
+					(len(self.ui.list_pool.selectedItems())-self.max_len)
 
 			# Ask for confirmation
 			resp = QtGui.QMessageBox.question(self, _("Remove"), \
-				_("<p>Are you sure you want to remove the following files from the file pool? This operation will only affect the OpenSesame file pool, not the original files on your disk.</p><p><b> - %s</b></p>") \
-				% ("<br /> - ".join(l)), QtGui.QMessageBox.Yes, \
+				_("<p>Are you sure you want to remove the following files from the file pool? This operation will only affect the OpenSesame file pool, not the original files on your disk.</p><p><b> - %s</b></p><p>%s</p>") \
+				% ("<br /> - ".join(l), suffix), QtGui.QMessageBox.Yes, \
 				QtGui.QMessageBox.No)
 			if resp == QtGui.QMessageBox.No:
 				return

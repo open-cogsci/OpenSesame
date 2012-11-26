@@ -64,7 +64,8 @@ class action_button(QtGui.QPushButton):
 
 			elif row == "new":
 
-				item_type = unicode(self.sequence.combobox_item_type.currentText())
+				item_type = unicode( \
+					self.sequence.combobox_item_type.currentText())
 
 				# The separator has been selected
 				if item_type == "":
@@ -77,7 +78,8 @@ class action_button(QtGui.QPushButton):
 						"self.sequence.experiment.main_window.add_%s(False, \"%s\")" \
 						% (item_type, self.sequence.name))
 				else:
-					item = self.sequence.experiment.main_window.add_item(item_type, False)
+					item = self.sequence.experiment.main_window.add_item( \
+						item_type, False)
 
 				# If the item has been created, add it to the sequence
 				# and select it.
@@ -259,8 +261,9 @@ class sequence(libopensesame.sequence.sequence, qtitem.qtitem):
 		index -- the index of the item
 		s -- the new run if statement
 		"""
-
-		s = self.experiment.sanitize(s)
+		
+		if not self.sanitize_check(s):
+			s = self.sanitize(s)
 		if s == "":
 			s = "always"
 		if s != self.items[index][1]:

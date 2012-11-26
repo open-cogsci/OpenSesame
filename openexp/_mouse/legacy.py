@@ -53,6 +53,11 @@ class legacy:
 			"name" : "Custom cursor",
 			"description" : "Bypass the system mouse cursor",
 			"default" : "yes"
+			},
+		"enable_escape" : {
+			"name" : "Enable escape",
+			"description" : "Abort the experiment when the upper left and right corners are clicked",
+			"default" : "no",
 			}
 		}
 
@@ -71,6 +76,10 @@ class legacy:
 				   for no timeout (default = None)
 		visible -- a boolean indicating the visibility of the cursor
 				   (default=False)
+				   
+		Example:
+		>>> from openexp.mouse import mouse
+		>>> my_mouse = mouse(exp)
 		</DOC>"""	
 	
 		self.experiment = experiment
@@ -91,6 +100,11 @@ class legacy:
 		Keyword arguments:
 		buttonlist -- a list of buttons that are accepted or None to accept all
 					  input (default=None)
+					  
+		Example:
+		>>> from openexp.mouse import mouse
+		>>> my_mouse = mouse(exp)
+		>>> my_mouse.set_buttonlist( [1,2] )
 		</DOC>"""	
 	
 		if buttonlist == None:
@@ -111,7 +125,12 @@ class legacy:
 		
 		Keyword arguments:
 		timeout -- an integer value specifying a timeout in milliseconds or None
-				   for no timeout (default=None)		
+				   for no timeout (default=None)
+				   
+		Example:
+		>>> from openexp.mouse import mouse
+		>>> my_mouse = mouse(exp)
+		>>> my_mouse.set_timeout(2000)
 		</DOC>"""
 			
 		self.timeout = timeout
@@ -124,6 +143,11 @@ class legacy:
 		Keyword arguments:
 		visible -- A boolean indicating the visibility of the cursor
 				   (default=True)
+				   
+		Example:
+		>>> from openexp.mouse import mouse
+		>>> my_mouse = mouse(exp)
+		>>> my_mouse.set_visible(True)
 		</DOC>"""	
 	
 		self.visible = visible
@@ -148,6 +172,13 @@ class legacy:
 		Returns:
 		A (button, position, timestamp) tuple. The button and position are None
 		if a timeout occurs. Position is an (x, y) tuple in screen coordinates.
+		
+		Example:
+		>>> from openexp.mouse import mouse
+		>>> my_mouse = mouse(exp)
+		>>> button, position, timestamp = my_mouse.get_click()
+		>>> if button == None:
+		>>> 	print 'A timeout occurred!'
 		</DOC>"""		
 	
 		if buttonlist == None:
@@ -156,7 +187,8 @@ class legacy:
 			timeout = self.timeout	
 		if visible == None:
 			visible = self.visible			
-		
+		enable_escape = self.experiment.get_check('enable_escape', 'no', \
+			['yes', 'no']) == 'yes'		
 		if self.cursor == None:
 			pygame.mouse.set_visible(visible)
 		elif visible:
@@ -181,7 +213,22 @@ class legacy:
 				if event.type == KEYDOWN and event.key == pygame.K_ESCAPE:
 					raise openexp.exceptions.response_error( \
 						"The escape key was pressed.")										
-				if event.type == MOUSEBUTTONDOWN:
+				if event.type == MOUSEBUTTONDOWN:					
+				
+					# Check escape sequence. If the top-left and top-right
+					# corner are clicked successively within 2000ms, the
+					# experiment is aborted
+					if enable_escape and event.pos[0] < 64 and event.pos[1] \
+						< 64:
+						_time = pygame.time.get_ticks()
+						while pygame.time.get_ticks() - _time < 2000:
+							for event in pygame.event.get():
+								if event.type == MOUSEBUTTONDOWN:
+									if event.pos[0] > self.experiment.get( \
+										'width')-64 and event.pos[1] < 64:
+										raise openexp.exceptions.response_error( \
+											"The escape sequence was clicked/ tapped")
+						
 					if buttonlist == None or event.button in buttonlist:
 						pygame.mouse.set_visible(self.visible)
 						return event.button, event.pos, time
@@ -197,6 +244,13 @@ class legacy:
 		
 		Returns:
 		A (position, timestamp) tuple.
+		
+		Example:
+		>>> from openexp.mouse import mouse
+		>>> my_mouse = mouse(exp)
+		>>> position, timestamp = my_mouse.get_pos()
+		>>> x, y = position
+		>>> print 'The cursor was at (%d, %d)' % (x, y)
 		</DOC>"""	
 	
 		return pygame.mouse.get_pos(), self.experiment.time()
@@ -209,6 +263,12 @@ class legacy:
 		Returns:
 		True if a button had been clicked (i.e., if there was something
 		to flush) and False otherwise
+		
+		Example:
+		>>> from openexp.mouse import mouse
+		>>> my_mouse = mouse(exp)
+		>>> my_mouse.flush()
+		>>> button, position, timestamp = my_mouse.get_click()
 		</DOC>"""	
 	
 		buttonclicked = False
@@ -222,7 +282,7 @@ class legacy:
 		
 	def synonyms(self, button):
 	
-		"""<DOC>
+		"""
 		Gives a list of synonyms for a mouse button. For example, 1 and
 		'left_click' are synonyms.
 		
@@ -230,8 +290,7 @@ class legacy:
 		button -- a button value
 		
 		Returns:
-		A list of synonyms
-		</DOC>
+		A list of synonyms		
 		"""
 				
 		button_map = [ (1, "left_button"), (2, "middle_button"), (3, \

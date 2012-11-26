@@ -22,13 +22,18 @@ import pygame
 import math
 import openexp._canvas.legacy
 import openexp.exceptions
-from psychopy import core, visual
 try: # Try both import statements
 	from PIL import Image
 except:
 	import Image
 import numpy as np
 import os.path
+
+try:
+	from psychopy import core, visual
+except:
+	raise openexp.exceptions.canvas_error(
+		'Failed to import PsychoPy, probably because it is not (correctly) installed. For installation instructions, please visit http://www.psychopy.org/.')
 
 class psycho(openexp._canvas.legacy.legacy):
 

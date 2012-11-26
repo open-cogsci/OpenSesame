@@ -25,6 +25,7 @@ class font_widget(QtGui.QWidget):
 	"""A font selection widget"""
 	
 	max_size = 64
+	font_list = ['mono', 'sans', 'serif', 'other ...']
 
 	def __init__(self, parent=None):
 	
@@ -119,7 +120,9 @@ class font_widget(QtGui.QWidget):
 		if size == None:
 			self.size = self.experiment.get('font_size')
 		else:
-			self.size = size						
+			self.size = size			
+		if self.ui.combobox_family.findText(self.family) < 0:
+			self.ui.combobox_family.addItem(self.family)			
 		self.ui.combobox_family.setCurrentIndex( \
 			self.ui.combobox_family.findText(self.family))
 		self.ui.checkbox_italic.setChecked(self.italic)
@@ -138,7 +141,7 @@ class font_widget(QtGui.QWidget):
 
 		self.ui.combobox_family.currentIndexChanged.disconnect()
 		self.ui.combobox_family.clear()	
-		l = ['mono', 'sans', 'serif', 'other ...']
+		l = self.font_list[:]
 		if self.family not in l:
 			l += [self.family]
 		self.ui.combobox_family.insertItems(0, l)

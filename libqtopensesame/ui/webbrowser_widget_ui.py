@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'resources/ui/webbrowser_widget.ui'
 #
-# Created: Mon Jul 16 15:25:23 2012
+# Created: Fri Nov 23 12:45:18 2012
 #      by: PyQt4 UI code generator 4.9.1
 #
 # WARNING! All changes made in this file will be lost!
@@ -62,6 +62,9 @@ class Ui_webbrowser_widget(object):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.label_load_progress.sizePolicy().hasHeightForWidth())
         self.label_load_progress.setSizePolicy(sizePolicy)
+        font = QtGui.QFont()
+        font.setItalic(True)
+        self.label_load_progress.setFont(font)
         self.label_load_progress.setObjectName(_fromUtf8("label_load_progress"))
         self.horizontalLayout.addWidget(self.label_load_progress)
         self.layout_main.addWidget(self.widget)

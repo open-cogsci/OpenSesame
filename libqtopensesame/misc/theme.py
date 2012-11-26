@@ -68,7 +68,7 @@ class theme:
 			self._icon_map = info.icon_map
 			self._icon_theme = info.icon_theme									
 		self.load_icon_map()
-		self.apply_theme(self.main_window)
+		self.apply_theme(self.main_window)			
 		
 	def apply_theme(self, widget):
 	

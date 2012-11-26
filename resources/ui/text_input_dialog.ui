@@ -59,7 +59,7 @@ background-color: #729fcf;</string>
          </font>
         </property>
         <property name="text">
-         <string>OpenSesame says ...</string>
+         <string>Message</string>
         </property>
        </widget>
       </item>
@@ -67,7 +67,11 @@ background-color: #729fcf;</string>
     </widget>
    </item>
    <item>
-    <widget class="QTextEdit" name="textedit_input"/>
+    <widget class="QTextEdit" name="textedit_input">
+     <property name="acceptRichText">
+      <bool>false</bool>
+     </property>
+    </widget>
    </item>
    <item>
     <widget class="QDialogButtonBox" name="buttonBox">

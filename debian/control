@@ -17,7 +17,7 @@ Depends: ${misc:Depends}, ${python:Depends}, python-qt4,
   gnome-icon-theme
 Recommends: python-serial (>= 2.3~), psychopy (>= 1.64.0),
   python-pyaudio (>= 0.2.4), python-imaging (>= 1.1.7),
-  python-opengl (>= 3.0.1), expyriment (>= 0.5.2)
+  python-opengl (>= 3.0.1), expyriment (>= 0.5.2), ipython-qtconsole (>= 0.12)
 Description: graphical experiment builder for the social sciences
  This graphical environment provides an easy to use, point-and-click interface
  for creating psychological experiments. In addition to a powerful sketchpad for

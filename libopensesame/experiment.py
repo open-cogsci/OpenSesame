@@ -19,7 +19,6 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame import misc, item, exceptions, plugins, debug
-import random
 import os.path
 import shutil
 import sys
@@ -50,8 +49,6 @@ class experiment(item.item):
 
 		global pool_folders
 		
-		random.seed()		
-
 		self.items = {}
 		self.running = False
 		self.auto_response = False
@@ -143,10 +140,17 @@ class experiment(item.item):
 	def set_subject(self, nr):
 
 		"""<DOC>
-		Set the subject number and parity (even/ odd)
+		Set the subject number and parity (even/ odd). This function is
+		called automatically when an experiment is started, so you do not
+		generally need to call it yourself.
 
 		Arguments:
 		nr -- the subject nr
+		
+		Example:
+		>>> exp.set_subject(1)
+		>>> print 'Subject nr = %d' % exp.get('subject_nr')
+		>>> print 'Subject parity = %s' % exp.get('subject_parity')
 		</DOC>"""
 
 		# Set the subject nr and parity
@@ -323,8 +327,16 @@ class experiment(item.item):
 
 		"""Nicely end the experiment"""
 
-		self.running = False
-		openexp.experiment.experiment.end(self)
+		from openexp import sampler, canvas
+		self.running = False			
+		try:
+			self._log.flush()
+			os.fsync(self._log)
+			self._log.close()
+		except:
+			pass									
+		sampler.close_sound(self)
+		canvas.close_display(self)							
 		self.cleanup()
 
 	def to_string(self):
@@ -383,6 +395,11 @@ class experiment(item.item):
 
 		Returns:
 		The full path to the file
+		
+		Example:		
+		>>> image_path = exp.get_file('my_image.png')
+		>>> my_canvas = exp.offline_canvas()
+		>>> my_canvas.image(image_path)
 		</DOC>"""
 
 		if type(path) not in(unicode, str):
@@ -404,6 +421,14 @@ class experiment(item.item):
 
 		Returns:
 		A boolean indicating if the file is in the pool
+		
+		Example:		
+		>>> if not exp.file_in_pool('my_image.png'):
+		>>> 	print 'my_image.png could not be found!'
+		>>> else:
+		>>> 	image_path = exp.get_file('my_image.png')
+		>>> 	my_canvas = exp.offline_canvas()
+		>>> 	my_canvas.image(image_path)		
 		</DOC>"""
 
 		return os.path.exists(self.get_file(path))
@@ -640,20 +665,6 @@ class experiment(item.item):
 		raise exceptions.runtime_error( \
 			"experiment._time_func(): This function should be set by the canvas backend." \
 			)
-
-	def end(self):
-
-		"""Gracefully end the experiment"""
-
-		from openexp import sampler, canvas
-		try:
-			self._log.flush()
-			os.fsync(self._log)
-			self._log.close()
-		except:
-			pass									
-		sampler.close_sound(self)
-		canvas.close_display(self)	
 
 def clean_up(verbose=False):
 

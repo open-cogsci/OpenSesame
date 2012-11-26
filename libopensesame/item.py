@@ -247,10 +247,17 @@ class item(object):
 			line_stripped = line.strip()
 			# The end of a textblock
 			if line_stripped == u'__end__':
-				self.set(textblock_var, textblock_val)
-				textblock_var = None
-			# The beginning of a textblock
-			elif line_stripped[:2] == u'__' and line_stripped[-2:] == u'__':
+				if textblock_var == None:
+					self.experiment.notify( \
+						'It appears that a textblock has been closed without being opened. The most likely reason is that you have used the string "__end__", which has a special meaning for OpenSesame.')
+				else:
+					self.set(textblock_var, textblock_val)
+					textblock_var = None
+			# The beginning of a textblock. A new textblock is only started when
+			# a textblock is not already ongoing, and only if the textblock start
+			# is of the format __VARNAME__
+			elif line_stripped[:2] == u'__' and line_stripped[-2:] == u'__' and \
+				textblock_var == None:
 				textblock_var = line_stripped[2:-2]
 				if textblock_var in self.reserved_words:
 					textblock_var = u'_' + textblock_var
@@ -321,10 +328,15 @@ class item(object):
 		Sets an OpenSesame variable
 		
 		If you want to set a variable so that it is available in other items as
-		well (such as the logger item, so you can log the variable), you need to
-		use the set() function from the experiment. So, in an inline_script item
-		you would generally set a variable with exp.set(), rather
+		well (such as the logger item, so you can log the variable), you need
+		to use the set() function from the experiment. So, in an inline_script
+		item you would generally set a variable with exp.set(), rather
 		than self.set().
+		
+		Please note that you can only set simple variable types (str, unicode,
+		float, and int). If you use the set function to save an object, it will
+		be converted to a string representation. To make complex variables
+		globally accessible in your experiment, please use the global keyword.
 		
 		The type of the value can be anything. However, see get() for an
 		explanation of how data-types are handled.
@@ -453,6 +465,10 @@ class item(object):
 				 exception is raised if the value is not an allowed value.				 
 		_eval -- indicates whether the variable should be evaluated, i.e.
 				 whether containing variables should be processed (default=True)
+				 
+		Example:		
+		>>> if self.get_check('cue', default='invalid') == 'valid':
+		>>>		print 'This is a validly cued trial'	
 
 		Exceptions:
 		Raises a runtime_error if the variable is not defined and there is no
@@ -581,11 +597,16 @@ class item(object):
 
 		if time == None:
 			time = self.time()
-		exec(u'self.experiment.time_%s = %f' % (self.name, time))
+		setattr(self.experiment, 'time_%s' % self.name, time)
 
-	def dummy(self):
+	def dummy(self, **args):
 
-		"""Dummy function"""
+		"""
+		Dummy function
+		
+		Keyword arguments:
+		arguments -- accepts all keywords for compatibility		
+		"""
 
 		pass
 
@@ -748,7 +769,7 @@ class item(object):
 		"""
 
 		return [ (u"time_%s" % self.name, u"[Timestamp of last item call]"), \
-			(u"count_%s" % self.name, u"[Number of item calls]") ]
+			(u"count_%s" % self.name, u"[Number of item calls]") ]			
 
 	def sanitize(self, s, strict=False, allow_vars=True):
 
@@ -779,7 +800,7 @@ class item(object):
 			if allow_vars:
 				return regexp.sanitize_strict_vars.sub('', s)
 			return regexp.sanitize_strict_novars.sub('', s)
-		return regexp.sanitize_loose.sub('', s)
+		return regexp.sanitize_loose.sub('', s)	
 	
 	def usanitize(self, s, strict=False):
 
@@ -853,15 +874,25 @@ class item(object):
 		Returns:
 		A unicode string
 		"""
-		
+			
 		# Unicode strings cannot (and need not) be encoded again
-		if type(val) == unicode:
-			return val
+		if isinstance(val, unicode):
+			return val		
 		# Regular strings need to be encoded using the correct encoding
-		if type(val) == str:
-			return unicode(val, encoding=self.encoding)
+		if isinstance(val, str):
+			return unicode(val, encoding=self.encoding, errors='replace')
+		# Some types need to be converted to unicode, but require the encoding
+		# and errors parameters. Notable examples are Exceptions, which have
+		# strange characters under some locales, such as French. It even appears
+		# that, at least in some cases, they have to be encodeed to str first.
+		# Presumably, there is a better way to do this, but for now this at
+		# least gives sensible results.
+		try:
+			return unicode(str(val), encoding=self.encoding, errors='replace')
+		except:
+			pass
 		# For other types, the unicode representation doesn't require a specific
-		# encoding
+		# encoding. This mostly applies to non-stringy things, such as integers.
 		return unicode(val)
 	
 	def split(self, u):
