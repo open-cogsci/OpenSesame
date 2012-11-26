@@ -363,6 +363,7 @@ class legacy:
 		Arguments:
 		penwidth -- A pen width in pixels
 		
+		Example:
 		>>> from openexp.canvas import canvas
 		>>> my_canvas = canvas(exp)
 		>>> my_canvas.set_penwidth(10)
