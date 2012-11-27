@@ -51,6 +51,7 @@ class form_base(item.item):
 		self.spacing = 10
 		self.focus_widget = None
 		self.theme = 'gray'
+		self.only_render = 'no'
 		self.margins = '50;50;50;50'
 		self._widgets = []		
 		
@@ -129,7 +130,10 @@ class form_base(item.item):
 		"""
 
 		self.set_item_onset()
-		self._form._exec(focus_widget=self.focus_widget)
+		if self.get('only_render') == 'yes':
+			self._form.render()
+		else:
+			self._form._exec(focus_widget=self.focus_widget)
 		return True
 		
 	def prepare(self):
