@@ -50,7 +50,7 @@ import urllib
 # Some settings
 include_plugins = True
 include_media_player = False
-include_media_player_vlc = False
+include_media_player_vlc = True
 include_examples = True
 include_sounds = True
 include_faenza = True
