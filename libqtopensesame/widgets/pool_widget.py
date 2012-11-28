@@ -49,7 +49,8 @@ class pool_widget(QtGui.QWidget):
 			"sound" : (".ogg", ".wav"), \
 			"text" : (".txt", ".csv", ".tsv"), \
 			"python" : (".py", ".pyc"), \
-			"video" : (".avi", ".mpg", ".wmv", ".mpeg", ".mov", ".ogv"), \
+			"video" : (".avi", ".mpg", ".wmv", ".mpeg", ".mov", ".ogv", \
+				".mp4", ".flv"), \
 			"pdf" : (".pdf"), \
 			}
 
