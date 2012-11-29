@@ -8,3 +8,4 @@ Icon=applications-science
 Type=Application
 Categories=Development;IDE;Science
 StartupNotify=true
+MimeType=application/x-opensesame-experiment
