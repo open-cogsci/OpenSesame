@@ -19,7 +19,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 
 import os.path
 import threading
-from libopensesame import sequence
+from libopensesame import sequence, debug
 from libqtopensesame.items import sequence as qtsequence
 from libqtopensesame.items import qtplugin
 
@@ -43,7 +43,8 @@ class parallel_process(threading.Thread):
 	def run(self):	
 	
 		"""Runs the item"""
-	
+
+		self.launch_time = self.item.time()
 		try:
 			self.item.run()
 		except Exception as e:
@@ -93,6 +94,7 @@ class parallel(sequence.sequence):
 			
 		# Run the main item
 		if main_item != None:
+			self.launch_time = self.time()
 			main_item.run()
 					
 		# Wait for the threads to finish
@@ -107,6 +109,11 @@ class parallel(sequence.sequence):
 				self.sleep(100)
 			else:
 				break
+
+		# Debug output to verify timing
+		debug.msg('main item was launched at %s' % self.launch_time)
+		for t in tl:
+			debug.msg('thread was launched at %s' % t.launch_time)
 			
 		return True	
 	
