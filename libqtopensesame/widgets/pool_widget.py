@@ -66,9 +66,9 @@ class pool_widget(QtGui.QWidget):
 		self.ui.button_browse_pool.clicked.connect(self.browse)
 		self.ui.edit_pool_filter.textChanged.connect(self.refresh)
 		self.ui.combobox_view.currentIndexChanged.connect(self.set_view)
-		self.ui.list_pool.itemActivated.connect(self.activate_file)		
+		self.ui.list_pool.itemActivated.connect(self.activate_file)
 		self.main_window.theme.apply_theme(self)
-		
+
 		self.ui.combobox_view.setItemIcon(0, self.main_window.theme.qicon( \
 			"view-list-details-symbolic"))
 		self.ui.combobox_view.setItemIcon(1, self.main_window.theme.qicon( \
@@ -93,7 +93,7 @@ class pool_widget(QtGui.QWidget):
 	def browse(self):
 
 		"""Open the pool folder in the file manager in an OS specific way"""
-		
+
 		misc.open_url(self.main_window.experiment.pool_folder)
 
 	def add(self, files):
@@ -108,7 +108,7 @@ class pool_widget(QtGui.QWidget):
 		basename = ""
 		for path in files:
 			path = unicode(path)
-			debug.msg(path)			
+			debug.msg(path)
 			basename = os.path.basename(path)
 			if not os.path.isfile(path):
 				self.main_window.experiment.notify( \
@@ -196,7 +196,7 @@ class pool_widget(QtGui.QWidget):
 			self.main_window.experiment.pool_folder)):
 			debug.msg(fname)
 			if filt in fname.lower():
-				icon = self.main_window.experiment.icon(self.file_type(fname))				
+				icon = self.main_window.experiment.icon(self.file_type(fname))
 				item = QtGui.QListWidgetItem(icon, fname)
 				item.icon = icon
 				item.path = os.path.join( \
@@ -267,12 +267,13 @@ class pool_widget(QtGui.QWidget):
 
 		elif a == _("Remove from pool"):
 
-			# Create a list of files to be removed			
+			# Prepare the confirmation dialog, which contains a limited nr of
+			# filenames
 			l = []
 			suffix = ''
 			for item in self.ui.list_pool.selectedItems()[:self.max_len]:
 				l.append(unicode(item.text()))
-			if len(self.ui.list_pool.selectedItems()) > self.max_len:				
+			if len(self.ui.list_pool.selectedItems()) > self.max_len:
 				suffix = _('And %d more file(s)') % \
 					(len(self.ui.list_pool.selectedItems())-self.max_len)
 
@@ -284,9 +285,14 @@ class pool_widget(QtGui.QWidget):
 			if resp == QtGui.QMessageBox.No:
 				return
 
+			# Create a list of files to be removed
+			dL = []
+			for item in self.ui.list_pool.selectedItems():
+				dL.append(unicode(item.text()))
+
 			# Remove the files
 			try:
-				for f in l:
+				for f in dL:
 					os.remove(os.path.join( \
 						self.main_window.experiment.pool_folder, f))
 				debug.msg("removed '%s'" % self.context_target)
