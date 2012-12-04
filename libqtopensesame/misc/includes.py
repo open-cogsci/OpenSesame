@@ -44,11 +44,11 @@ if "--pylink" in sys.argv:
 # Explicitly importing these modules ensures that Py2exe will
 # bundle them. This is therefore only required for Windows.
 
-if "--preload" in sys.argv:	
+if "--preload" in sys.argv:
 
 	import warnings
 
-	debug.msg("preloading modules ...")	
+	debug.msg("preloading modules ...")
 	debug.msg("preloading 'legacy' back-end")
 	try:
 		import openexp,\
@@ -66,7 +66,7 @@ if "--preload" in sys.argv:
 			openexp._canvas.xpyriment,\
 			openexp._mouse.xpyriment
 	except Exception as e:
-		debug.msg("failed to import 'xpyriment' back-end. Error: %s" % e)		
+		debug.msg("failed to import 'xpyriment' back-end. Error: %s" % e)
 
 	debug.msg("preloading 'opengl' back-end")
 	try:
@@ -133,7 +133,7 @@ if "--preload" in sys.argv:
 		from OpenGL.GL import *
 		from OpenGL.platform import win32
 	except AttributeError:
-		pass	
+		pass
 	try:
 		from ctypes import util
 		import OpenGL
@@ -181,5 +181,5 @@ if "--preload" in sys.argv:
 		from IPython.frontend.qt.kernelmanager import QtKernelManager
 		from IPython.utils.localinterfaces import LOCALHOST
 	except Exception as e:
-		debug.msg("failed to import IPython <http://www.ipython.org/>. You will not be able to use the IPython console. Error: %s" % e)		
+		debug.msg("failed to import IPython <http://www.ipython.org/>. You will not be able to use the IPython console. Error: %s" % e)
 

@@ -161,7 +161,7 @@ class sequence(libopensesame.sequence.sequence, qtitem.qtitem):
 		l = QtGui.QHBoxLayout()
 		self.frame_empty.setLayout(l)
 		l.addWidget(self.experiment.label_image("info"))
-		l.addWidget(QtGui.QLabel(_("The sequence is empty")))
+		l.addWidget(QtGui.QLabel(_("The %s is empty" % self.item_type)))
 		l.addStretch()
 
 		self.button_existing = self.action_button("button_select", \

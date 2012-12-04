@@ -21,7 +21,7 @@ import os
 import os.path
 import sys
 
-version = "0.27~pre30"
+version = "0.27~pre32"
 codename = "Frisky Freud"
 
 use_global_resources = "--no-global-resources" not in sys.argv
@@ -93,7 +93,7 @@ def opensesamerun_options():
 	group.add_option("-d", "--debug", action="store_true", dest="debug", help= \
 		"Print lots of debugging messages to the standard output")
 	group.add_option("--stack", action="store_true", dest="stack", help= \
-		"Print stack information")	
+		"Print stack information")
 	parser.add_option_group(group)
 	group = optparse.OptionGroup(parser, "Miscellaneous options")
 	group.add_option("--pylink", action="store_true", dest="pylink", help= \
@@ -248,7 +248,7 @@ def module_versions():
 	s = "OpenSesame %s" % version
 	s += "\nPython %d.%d.%d" % (sys.version_info[0], sys.version_info[1], \
 		sys.version_info[2])
-		
+
 	# OpenCV
 	try:
 		import cv
@@ -272,16 +272,16 @@ def module_versions():
 		s += '\nExpyriment %s' % expyriment.get_version()
 	except:
 		s += '\nExpyriment is not available (or version is unknown)'
-		
+
 	# NumPy
 	try:
 		import numpy
 		s += '\nNumPy %s' % numpy.version.version
 	except:
 		s += '\nNumPy is not available (or version is unknown)'
-		
+
 	# PyAudio
-	try:		
+	try:
 		import pyaudio
 		s += "\nPyAudio %s" % pyaudio.__version__
 	except:
@@ -293,17 +293,17 @@ def module_versions():
 		s += "\nPyGame %s" % pygame.ver
 	except:
 		s += "\nPyGame not available (or version is unknown)"
-		
+
 	# PyOpenGL
 	try:
 		import OpenGL
 		s += "\nPyOpenGL %s" % OpenGL.__version__
 	except:
 		s += "\nPyOpenGL not available (or version is unknown)"
-		
+
 	# PyQt
-	s += "\nPyQt %s" % QtCore.PYQT_VERSION_STR		
-	
+	s += "\nPyQt %s" % QtCore.PYQT_VERSION_STR
+
 	# PySerial
 	try:
 		import serial
@@ -324,21 +324,21 @@ def module_versions():
 		s += "\nPyglet %s" % pyglet.version
 	except:
 		s += "\nPyglet not available (or version is unknown)"
-		
+
 	# SciPy
 	try:
 		import scipy
 		s += '\nSciPy %s' % scipy.version.version
 	except:
-		s += '\nScipy is not available (or version is unknown)'		
-		
+		s += '\nScipy is not available (or version is unknown)'
+
 	return s
-	
+
 def open_url(url):
 
 	"""
 	Open a URL in an OS specific way. The URL can be a file, website, etc.
-	
+
 	Arguments:
 	url -- a url
 	"""

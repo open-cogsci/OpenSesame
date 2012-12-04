@@ -30,7 +30,7 @@ class sketchpad(item.item, generic_response.generic_response):
 	The term 'item' is used for sketchpad 'elements'. This is confusing, because
 	'item' is also used for the higher level items, such as sketchpads. This
 	terminology should be changed. Furthermore, the sketchpad elements should
-	ideally be handled by separate classes, rather than the chaotic ad-hoc 
+	ideally be handled by separate classes, rather than the chaotic ad-hoc
 	implementation here and in the libqtopensesame.widgets.sketchpad_widget.
 	"""
 
@@ -179,7 +179,7 @@ class sketchpad(item.item, generic_response.generic_response):
 				if _item["type"] == "rect":
 					self.canvas.rect(_item["x"], _item["y"], _item["w"], \
 						_item["h"], _item["fill"] == 1)
-						
+
 				elif _item["type"] == "circle":
 					self.canvas.ellipse(_item["x"]-0.5*_item["r"], \
 						_item["y"]-0.5*_item["r"], _item["r"], _item["r"], \
@@ -282,7 +282,7 @@ class sketchpad(item.item, generic_response.generic_response):
 		item["arrow_size"] = 20
 		item["center"] = 1
 		item["scale"] = 1.0
-		item["font_family"] = self.experiment.font_family		
+		item["font_family"] = self.experiment.font_family
 		item["font_size"] = self.experiment.font_size
 		item["font_italic"] = self.experiment.font_italic
 		item["font_bold"] = self.experiment.font_bold
@@ -529,7 +529,7 @@ class sketchpad(item.item, generic_response.generic_response):
 		Arguments:
 		string -- the unicode string containing the sketchpad definition
 		"""
-		
+
 		for line in string.split(u'\n'):
 			if not self.parse_variable(line):
 				l = self.split(line)
@@ -625,7 +625,7 @@ class sketchpad(item.item, generic_response.generic_response):
 				_item["penwidth"], _item["color"], _item["show_if"])
 
 		elif _item["type"] == "textline":
-			return u"draw textline %s %s \"%s\" center=%s color=%s font_family=%s font_size=%s font_italic=%s font_bold=%s show_if=\"%s\"" \
+			return u"draw textline %s %s \"%s\" center=%s color=%s font_family=\"%s\" font_size=%s font_italic=%s font_bold=%s show_if=\"%s\"" \
 				% (_item["x"], _item["y"], \
 				self.experiment.sanitize(_item["text"]), _item["center"], \
 				_item["color"], _item["font_family"], _item["font_size"], \
