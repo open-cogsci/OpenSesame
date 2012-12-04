@@ -299,17 +299,17 @@ if include_media_player:
 if include_media_player_vlc:
 	print "copying media_player_vlc"
 	os.mkdir("dist\plugins\media_player_vlc")
-	shutil.copyfile("""..\media_player_vlc\\vlc.py""", \
+	shutil.copyfile("""..\media_player_vlc\media_player_vlc\\vlc.py""", \
 		"""dist\plugins\media_player_vlc\\vlc.py""")	
-	shutil.copyfile("""..\media_player_vlc\media_player_vlc.py""", \
+	shutil.copyfile("""..\media_player_vlc\media_player_vlc\media_player_vlc.py""", \
 		"""dist\plugins\media_player_vlc\media_player_vlc.py""")
-	shutil.copyfile("""..\media_player_vlc\media_player_vlc.html""", \
+	shutil.copyfile("""..\media_player_vlc\media_player_vlc\media_player_vlc.html""", \
 		"""dist\plugins\media_player_vlc\media_player_vlc.html""")
-	shutil.copyfile("""..\media_player_vlc\media_player_vlc.png""", \
+	shutil.copyfile("""..\media_player_vlc\media_player_vlc\media_player_vlc.png""", \
 		"""dist\plugins\media_player_vlc\media_player_vlc.png""")
-	shutil.copyfile("""..\media_player_vlc\media_player_vlc_large.png""", \
+	shutil.copyfile("""..\media_player_vlc\media_player_vlc\media_player_vlc_large.png""", \
 		"""dist\plugins\media_player_vlc\media_player_vlc_large.png""")
-	shutil.copyfile("""..\media_player_vlc\info.txt""", \
+	shutil.copyfile("""..\media_player_vlc\media_player_vlc\info.txt""", \
 		"""dist\plugins\media_player_vlc\info.txt""")		
 
 # Include examples
