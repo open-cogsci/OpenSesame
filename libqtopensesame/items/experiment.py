@@ -124,12 +124,12 @@ class experiment(libopensesame.experiment.experiment):
 		widget.setToolTip(0, "General options")
 		widget.name = "__general__"
 		self.ui.itemtree.insertTopLevelItem(0, widget)
-		
+
 		if self.start in self.items:
 			items.append(self.items[self.start])
 			self.items[self.start].build_item_tree(widget, items)
 		widget.setExpanded(True)
-		
+
 		# Next build a tree with left over items
 		self.unused_widget = QtGui.QTreeWidgetItem(self.ui.itemtree)
 		self.unused_widget.setText(0, "Unused items")
@@ -138,7 +138,7 @@ class experiment(libopensesame.experiment.experiment):
 		self.unused_widget.setToolTip(0, "Unused items")
 		self.unused_widget.setToolTip(1, "Unused items")
 		self.ui.itemtree.insertTopLevelItem(1, widget)
-		
+
 		self.unused_items = []
 		c = 0
 		for i in self.items:
@@ -147,7 +147,7 @@ class experiment(libopensesame.experiment.experiment):
 				self.items[i].build_item_tree(self.unused_widget, items)
 				c += 1
 		self.unused_widget.setExpanded(False)
-		
+
 		font = QtGui.QFont()
 		font.setPointSize(8)
 		font.setItalic(True)
@@ -157,7 +157,7 @@ class experiment(libopensesame.experiment.experiment):
 		else:
 			self.unused_widget.setText(1, "empty")
 		self.unused_widget.setFont(1, font)
-		
+
 		return items
 
 	def rename(self, from_name, to_name):
@@ -189,14 +189,14 @@ class experiment(libopensesame.experiment.experiment):
 				new_items[item] = self.items[item]
 		self.items = new_items
 
-		# Walk through all open tabs to open them when needed
+		# Walk through all open tabs to re-open them when needed
 		for i in range(self.experiment.ui.tabwidget.count()):
 			w = self.experiment.ui.tabwidget.widget(i)
-			if hasattr(w, "edit_item") and w.edit_item == from_name:
+			if hasattr(w, "__edit_item__") and w.__edit_item__ == from_name:
 				self.experiment.ui.tabwidget.setTabText(i, to_name)
 				self.items[to_name].header.restore_name(False)
 				w.edit_item = to_name
-			if hasattr(w, "script_item") and w.script_item == from_name:
+			if hasattr(w, "__script_item__") and w.__script_item__ == from_name:
 				w.script_item = to_name
 				self.experiment.ui.tabwidget.setTabText(i, to_name)
 
@@ -294,14 +294,14 @@ class experiment(libopensesame.experiment.experiment):
 		Returns:
 		A QLabel
 		"""
-		
+
 		# TODO This hack is necessary to avoid breaking compatibility with the
 		# old resources system, but plug-ins should not do this anymore!
 		if (name+"_large.png") in self.resources:
 			l = QtGui.QLabel()
 			l.setPixmap(QtGui.QPixmap(self.resource(name+"_large.png")))
 			return l
-			
+
 		return self.main_window.theme.qlabel(name)
 
 	def item_combobox(self, select=None, exclude = [], c = None):
