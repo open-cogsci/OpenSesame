@@ -25,15 +25,15 @@ class label(widget):
 	"""A simple non-interactive text label"""
 
 	def __init__(self, form, text='label', frame=False, center=True):
-	
+
 		"""<DOC>
 		Constructor
-		
+
 		Arguments:
 		form -- the parent form
 
 		Keyword arguments:
-		text -- a string of text (default='label')		
+		text -- a string of text (default='label')
 		frame -- indicates whether a frame should be drawn around the widget
 				 (default=False)
 		center -- indicates whether the text should be centered (default=True)
@@ -42,29 +42,29 @@ class label(widget):
 		if type(frame) != bool:
 			frame = frame == 'yes'
 		if type(center) != bool:
-			center = center == 'yes'			
-			
+			center = center == 'yes'
+
 		widget.__init__(self, form)
-		self.type = 'label'		
+		self.type = 'label'
 		self.text = text
 		self.frame = frame
 		self.center = center
 		self.x_pad = 8
 		self.y_pad = 8
 		self.tab_str = '    ' # Replace tab characters by four spaces
-				
+
 	def draw_text(self, text, html=True):
-	
+
 		"""<DOC>
 		Draws text in the widget
-		
+
 		Arguments:
 		text -- the text to draw
-		
+
 		Keyword arguments:
 		html -- indicates whether HTML should be parsed (default=True)
 		</DOC>"""
-			
+
 		if self.form.item != None:
 			text = self.form.item.eval_text(text)
 		else:
@@ -77,15 +77,15 @@ class label(widget):
 		else:
 			x += self.x_pad
 			y += self.y_pad
-		w -= 2*self.x_pad							
+		w -= 2*self.x_pad
 		self.form.canvas.text(text, center=self.center, x=x, y=y, max_width=w, \
-			html=html)		
-		
+			html=html)
+
 	def render(self):
-	
+
 		"""<DOC>
 		Draws the widget
-		</DOC>"""	
+		</DOC>"""
 
 		if self.frame:
 			self.draw_frame(self.rect)
