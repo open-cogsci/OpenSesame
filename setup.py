@@ -52,37 +52,37 @@ included_plugins = [
 	"form_multiple_choice",
 	"parallel",
 	]
-	
+
 def resources():
 
 	"""
 	Create a list of all resource files that need to be included
-	
+
 	Returns:
 	A list of resource files
 	"""
-	
+
 	l = []
 	for root, dirnames, filenames in os.walk("resources"):
 		print root
 		if root in ["resources/bak", "resources/ui"]:
 			continue
-		for f in filenames:			
+		for f in filenames:
 			if f not in exclude_resources and (os.path.splitext(f)[1] not in \
 				[".csv"] or f in ["icon_map.csv"]):
 				l.append( (os.path.join(share_folder, root), [os.path.join( \
 					root, f)] ) )
 	return l
-			
+
 def plugins():
 
 	"""
 	Create a list of all plugins that need to be included in the release
-	
+
 	Returns:
 	A list of plugins
 	"""
-	
+
 	global included_plugins
 	l = []
 	for plugin in os.listdir("plugins"):
@@ -120,6 +120,7 @@ setup(name="opensesame",
 		"libqtopensesame" : "libqtopensesame"},
 	data_files=[
 		("/usr/share/opensesame", ["COPYING"]),
+		("/usr/share/mime/packages", ["data/x-opensesame-experiment.xml"]),
 		("/usr/share/applications", ["data/opensesame.desktop"]),
 		("/usr/share/opensesame/help", glob.glob("help/*.html")),
 		("/usr/share/opensesame/sounds", glob.glob("sounds/*")),

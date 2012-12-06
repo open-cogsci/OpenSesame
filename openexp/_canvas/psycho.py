@@ -414,9 +414,16 @@ def init_display(experiment):
 	experiment.time = experiment._time_func
 	experiment.sleep = experiment._sleep_func	
 
-	# If pyglet is being used, change the window caption. Don't know how to do this for pygame (regular set_caption() is ineffective)
+	# If pyglet is being used, change the window caption. Don't know how to do
+	# this for pygame (regular set_caption() is ineffective)
 	if wintype == "pyglet":
-		experiment.window.winHandle.set_caption("OpenSesame (PsychoPy backend)")
+		try:
+			experiment.window.winHandle.set_caption( \
+				'OpenSesame (PsychoPy backend)')
+		except:
+			debug.msg( \
+				'Failed to set Window caption. This may indicate a problem witb Pyglet.', \
+				reason=warning)
 		
 	pygame.mixer.init()	
 				
