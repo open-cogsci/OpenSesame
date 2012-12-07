@@ -54,22 +54,22 @@ class form_text_display(form_base.form_base):
 
 		if string == None:
 			string = default_script
-		form_base.form_base.__init__(self, name, experiment, string, \
+		super(form_text_display, self).__init__(name, experiment, string, \
 			item_type='form_text_display', description= \
-			'A simple text display form')			
-			
+			'A simple text display form')
+
 	def from_string(self, script):
-	
+
 		"""
 		Re-generate the form from a definition script
-		
+
 		Arguments:
 		script -- the definition script
 		"""
-	
+
 		self._widgets = []
-		form_base.form_base.from_string(self, script)
-		
+		super(form_text_display, self).from_string(script)
+
 class qtform_text_display(form_text_display, qtplugin.qtplugin):
 
 	"""GUI controls"""
@@ -86,7 +86,7 @@ class qtform_text_display(form_text_display, qtplugin.qtplugin):
 		Keyword arguments:
 		string -- a definition string
 		"""
-		
+
 		form_text_display.__init__(self, name, experiment, string)
 		qtplugin.qtplugin.__init__(self, __file__)
 
@@ -101,7 +101,7 @@ class qtform_text_display(form_text_display, qtplugin.qtplugin):
 		self.add_line_edit_control('ok_text', 'Ok-button text', \
 			tooltip='Ok-button text')
 		self.add_editor_control('form_text', 'Main form text', \
-			tooltip='Main form text')		
+			tooltip='Main form text')
 		self.lock = False
 
 	def apply_edit_changes(self):
@@ -120,4 +120,4 @@ class qtform_text_display(form_text_display, qtplugin.qtplugin):
 		qtplugin.qtplugin.edit_widget(self)
 		self.lock = False
 		return self._edit_widget
-		
+

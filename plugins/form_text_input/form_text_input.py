@@ -54,34 +54,34 @@ class form_text_input(form_base.form_base):
 
 		if string == None:
 			string = default_script
-		form_base.form_base.__init__(self, name, experiment, string, \
+		super(form_text_input, self).__init__(name, experiment, string, \
 			item_type='form_text_input', description= \
-			'A simple text input form')			
-			
+			'A simple text input form')
+
 	def from_string(self, script):
-	
+
 		"""
 		Re-generate the form from a definition script
-		
+
 		Arguments:
 		script -- the definition script
 		"""
-	
+
 		self._widgets = []
-		form_base.form_base.from_string(self, script)
-		
+		super(form_text_input, self).from_string(script)
+
 	def var_info(self):
-		
+
 		"""
 		Return a list of dictionaries with variable descriptions
 
 		Returns:
 		A list of (name, description) tuples
 		"""
-		
-		return form_base.form_base.var_info(self) + \
-			[(self.get('form_var'), '[Depends on response]')]				
-		
+
+		return super(form_text_input, self).var_info() + \
+			[(self.get('form_var'), '[Depends on response]')]
+
 class qtform_text_input(form_text_input, qtplugin.qtplugin):
 
 	"""GUI controls"""
@@ -98,7 +98,7 @@ class qtform_text_input(form_text_input, qtplugin.qtplugin):
 		Keyword arguments:
 		string -- a definition string
 		"""
-		
+
 		form_text_input.__init__(self, name, experiment, string)
 		qtplugin.qtplugin.__init__(self, __file__)
 
@@ -132,4 +132,4 @@ class qtform_text_input(form_text_input, qtplugin.qtplugin):
 		qtplugin.qtplugin.edit_widget(self)
 		self.lock = False
 		return self._edit_widget
-		
+
