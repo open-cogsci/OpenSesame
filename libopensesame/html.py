@@ -152,7 +152,10 @@ class html(HTMLParser):
 		if max_width == None:
 			max_x = canvas.experiment.width
 		else:
-			max_x = x + max_width
+			if center:
+				max_x = x + max_width/2
+			else:
+				max_x = x + max_width
 
 		# First parse the HTML
 		self.text = []

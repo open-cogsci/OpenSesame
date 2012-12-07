@@ -30,13 +30,13 @@ from libqtopensesame.misc import _
 class qtitem(QtCore.QObject):
 
 	"""Base class for the GUI controls of other items"""
-	
+
 	def __init__(self):
 
 		"""Constructor"""
 
 		QtCore.QObject.__init__(self)
-				
+
 		# The auto-widgets are stored in name -> (var, widget) dictionaries
 		self.auto_line_edit = {}
 		self.auto_combobox = {}
@@ -45,15 +45,15 @@ class qtitem(QtCore.QObject):
 		self.auto_editor = {}
 		self.auto_checkbox = {}
 		self.sanity_criteria = {}
-					
+
 		self.init_edit_widget()
 		self.init_script_widget()
 		self.script_tab = None
 		self.lock = False
 		self.edit_mode = "edit"
-				
-		debug.msg("created %s" % self.name)				
-		
+
+		debug.msg("created %s" % self.name)
+
 	def open_help_tab(self):
 
 		"""Open the help tab"""
@@ -139,7 +139,7 @@ class qtitem(QtCore.QObject):
 			return
 		self.auto_edit_widget()
 		return self._edit_widget
-		
+
 	def apply_name_change(self, rebuild=True):
 
 		"""
@@ -148,9 +148,9 @@ class qtitem(QtCore.QObject):
 		Keywords arguments:
 		rebuild -- a deprecated argument (default=True)
 		"""
-		
+
 		debug.msg()
-		
+
 		# Sanitize the name, check if it is new and valid, and if so, rename
 		new_name = self.experiment.sanitize(self.header.edit_name.text(), \
 			strict=True, allow_vars=False)
@@ -161,7 +161,7 @@ class qtitem(QtCore.QObject):
 		if valid != True:
 			self.experiment.notify(valid)
 			self.header.edit_name.setText(self.name)
-			return			
+			return
 		old_name = self.name
 		self.name = new_name
 		self._edit_widget.__edit_item__	= new_name
@@ -182,7 +182,7 @@ class qtitem(QtCore.QObject):
 		if self.experiment.main_window.lock_refresh:
 			debug.msg("skipping, because refresh in progress")
 			return False
-		self.auto_apply_edit_changes()		
+		self.auto_apply_edit_changes()
 		self.set("description", \
 			self.experiment.sanitize(unicode( \
 				self.header.edit_desc.text()).strip()))
@@ -191,7 +191,7 @@ class qtitem(QtCore.QObject):
 		self.header.label_desc.setText(self.description)
 		self.experiment.main_window.dispatch.event_simple_change.emit(self.name)
 		return True
-	
+
 	def close_edit_tab(self, index=None):
 
 		"""
@@ -202,7 +202,7 @@ class qtitem(QtCore.QObject):
 		"""
 
 		pass
-		
+
 	def open_edit_tab(self, index=None, focus=True):
 
 		"""
@@ -216,7 +216,7 @@ class qtitem(QtCore.QObject):
 		debug.msg("%s (#%s)" % (self.name, hash(self)))
 
 		# Switch to edit mode and close the script tab if it was open
-		self.edit_mode = "edit"		
+		self.edit_mode = "edit"
 		for i in range(self.experiment.ui.tabwidget.count()):
 			w = self.experiment.ui.tabwidget.widget(i)
 			if hasattr(w, "__script_item__") and w.__script_item__ == self.name:
@@ -290,7 +290,7 @@ class qtitem(QtCore.QObject):
 
 		debug.msg(self.name)
 		script = self.edit_script.edit.toPlainText()
-		
+
 		# Create a new item and make it a clone of the current item
 		item = self.experiment.main_window.add_item(self.item_type, False, \
 			name=self.name, interactive=False)
@@ -310,7 +310,7 @@ class qtitem(QtCore.QObject):
 		del self.experiment.items[item]
 		self.experiment.items[self.name].init_script_widget()
 		self.experiment.main_window.dispatch.event_script_change.emit(self.name)
-		
+
 	def strip_script_line(self, s):
 
 		"""
@@ -593,11 +593,11 @@ class qtitem(QtCore.QObject):
 	def auto_edit_widget(self):
 
 		"""Update the GUI controls based on the auto-widgets"""
-		
+
 		debug.msg()
 		for var, edit in self.auto_line_edit.iteritems():
-			edit.editingFinished.disconnect()		
-			if self.has(var):			
+			edit.editingFinished.disconnect()
+			if self.has(var):
 				try:
 					edit.setText(self.unistr(self.get(var, _eval=False)))
 				except Exception as e:
@@ -605,7 +605,7 @@ class qtitem(QtCore.QObject):
 						% (var, e))
 			else:
 				edit.setText("")
-			edit.editingFinished.connect(self.apply_edit_changes)				
+			edit.editingFinished.connect(self.apply_edit_changes)
 
 		for var, combobox in self.auto_combobox.iteritems():
 			combobox.currentIndexChanged.disconnect()
@@ -616,7 +616,7 @@ class qtitem(QtCore.QObject):
 				except Exception as e:
 					self.experiment.notify(_("Failed to set control '%s': %s") \
 						% (var, e))
-			combobox.currentIndexChanged.connect(self.apply_edit_changes)	
+			combobox.currentIndexChanged.connect(self.apply_edit_changes)
 
 		for var, spinbox in self.auto_spinbox.iteritems():
 			spinbox.editingFinished.disconnect()
@@ -637,7 +637,7 @@ class qtitem(QtCore.QObject):
 					self.experiment.notify(_("Failed to set control '%s': %s") \
 						% (var, e))
 			slider.valueChanged.connect(self.apply_edit_changes)
-						
+
 		for var, checkbox in self.auto_checkbox.iteritems():
 			checkbox.toggled.disconnect()
 			if self.has(var):
@@ -645,7 +645,7 @@ class qtitem(QtCore.QObject):
 					checkbox.setChecked(self.get(var, _eval=False) == "yes")
 				except Exception as e:
 					self.experiment.notify(_("Failed to set control '%s': %s") \
-						% (var, e))		
+						% (var, e))
 			checkbox.toggled.connect(self.apply_edit_changes)
 
 		for var, editor in self.auto_editor.iteritems():
@@ -656,26 +656,26 @@ class qtitem(QtCore.QObject):
 				except Exception as e:
 					self.experiment.notify(_("Failed to set control '%s': %s") \
 						% (var, e))
-						
+
 	def sanitize_check(self, s, strict=False, allow_vars=True, notify=True):
-		
+
 		"""
 		Checks whether a string is sane (i.e. unchanged by sanitize()) and
 		optionally presents a warning if it's notably
-		
-		Arguments: 
+
+		Arguments:
 		s -- the string to check
-		
+
 		Keyword arguments:
 		strict -- see sanitize()
 		allow_vars -- see sanitize()
-		notify -- indicates whether a notification should be presented if the 
+		notify -- indicates whether a notification should be presented if the
 				  string is not sane.
-		
+
 		Returns:
 		True if s is sane, False otherwise
 		"""
-		
+
 		sane = s == self.sanitize(s, strict=strict, allow_vars=allow_vars)
 		if not sane and notify:
 			if strict:
@@ -684,17 +684,17 @@ class qtitem(QtCore.QObject):
 			else:
 				self.experiment.notify(
 					_('The following characters are not allowed and have been stripped: double-quote ("), backslash (\), and newline'))
-		return sane						
-						
+		return sane
+
 	def sanity_check(self):
-	
+
 		"""
 		Checks whether all variables match prespecified criteria and fall back
 		to the script editor otherwise. This is usefull to check that certain
-		variables are numeric, etc.		
+		variables are numeric, etc.
 		"""
 
-		debug.msg()		
+		debug.msg()
 		errors = []
 		for var_name, criteria in self.sanity_criteria.items():
 			msg = _("Invalid or missing value for variable '%s' (edit script to fix this)") \
@@ -735,13 +735,13 @@ class qtitem(QtCore.QObject):
 				val = unicode(edit.text()).strip()
 				if val != "":
 					self.set(var, val)
-					
-				# If the variable has no value, we assign a default value if it 
+
+				# If the variable has no value, we assign a default value if it
 				# has been specified, and unset it otherwise.
 				elif hasattr(edit, "default"):
 					self.set(var, edit.default)
 				else:
-					self.unset(var)					
+					self.unset(var)
 
 		for var, combobox in self.auto_combobox.iteritems():
 			if type(var) == str:
@@ -754,14 +754,14 @@ class qtitem(QtCore.QObject):
 		for var, slider in self.auto_slider.iteritems():
 			if type(var) == str:
 				self.set(var, slider.value())
-				
+
 		for var, checkbox in self.auto_checkbox.iteritems():
 			if type(var) == str:
 				if checkbox.isChecked():
 					val = "yes"
 				else:
 					val = "no"
-				self.set(var, val)				
+				self.set(var, val)
 
 		for var, editor in self.auto_editor.iteritems():
 			if type(var) == str:
@@ -769,45 +769,45 @@ class qtitem(QtCore.QObject):
 				editor.setModified(False)
 
 		return True
-				
+
 	def auto_add_widget(self, widget, var=None):
-	
+
 		"""
 		Add a widget to the list of auto-widgets
-		
+
 		Arguments:
 		widget -- a QWidget
-		
+
 		Keyword arguments:
 		var -- the variable to be linked to the widget (default=None)
 		"""
-		
+
 		# Use the object id as a fallback name
 		if var == None:
 			var = id(widget)
 		debug.msg(var)
-		
+
 		if isinstance(widget, QtGui.QSpinBox) or isinstance(widget, \
 			QtGui.QDoubleSpinBox):
 			widget.editingFinished.connect(self.apply_edit_changes)
 			self.auto_spinbox[var] = widget
-			
+
 		elif isinstance(widget, QtGui.QComboBox):
 			widget.currentIndexChanged.connect(self.apply_edit_changes)
 			self.auto_combobox[var] = widget
-			
+
 		elif isinstance(widget, QtGui.QSlider):
 			widget.editingFinished.connect(self.apply_edit_changes)
 			self.auto_slider[var] = widget
-			
+
 		elif isinstance(widget, QtGui.QLineEdit):
 			widget.editingFinished.connect(self.apply_edit_changes)
 			self.auto_line_edit[var] = widget
-			
+
 		elif isinstance(widget, QtGui.QCheckBox):
 			widget.toggled.connect(self.apply_edit_changes)
 			self.auto_checkbox[var] = widget
-									
+
 		else:
 			raise Exception("Cannot auto-add widget of type %s" % widget)
-			
+

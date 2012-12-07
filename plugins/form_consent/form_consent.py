@@ -69,24 +69,24 @@ class form_consent(form_base.form_base):
 		if string == None:
 			string = default_script
 		super(form_consent, self).__init__(name, experiment, string, item_type= \
-			'form_consent', description='A simple consent form')			
-			
+			'form_consent', description='A simple consent form')
+
 	def from_string(self, script):
-	
+
 		"""
 		Re-generate the form from a definition script
-		
+
 		Arguments:
 		script -- the definition script
 		"""
-	
+
 		self._widgets = []
 		super(form_consent, self).from_string(script)
-		
+
 	def run(self):
-	
+
 		"""Execute the consent form"""
-	
+
 		while True:
 			super(form_consent, self).run()
 			if self.get('checkbox_status') == self.get('checkbox_text') and \
@@ -96,7 +96,7 @@ class form_consent(form_base.form_base):
 			c.text(self.get('decline_message'))
 			c.show()
 			self.sleep(5000)
-			
+
 
 class qtform_consent(form_consent, qtplugin.qtplugin):
 
@@ -114,7 +114,7 @@ class qtform_consent(form_consent, qtplugin.qtplugin):
 		Keyword arguments:
 		string -- a definition string
 		"""
-		
+
 		form_consent.__init__(self, name, experiment, string)
 		qtplugin.qtplugin.__init__(self, __file__)
 
@@ -129,13 +129,13 @@ class qtform_consent(form_consent, qtplugin.qtplugin):
 		self.add_line_edit_control('checkbox_text', 'Checkbox text', \
 			tooltip='Checbox text')
 		self.add_line_edit_control('accept_text', 'Accept button text', \
-			tooltip='Accept button text')		
+			tooltip='Accept button text')
 		self.add_line_edit_control('decline_text', 'Decline button text', \
-			tooltip='Decline button text')					
+			tooltip='Decline button text')
 		self.add_line_edit_control('decline_message', 'Message on decline', \
-			tooltip='Shown when the participant does not accept the consent form')					
+			tooltip='Shown when the participant does not accept the consent form')
 		self.add_editor_control('form_text', 'Consent form text', \
-			tooltip='Consent form text')		
+			tooltip='Consent form text')
 		self.lock = False
 
 	def apply_edit_changes(self):
@@ -154,4 +154,4 @@ class qtform_consent(form_consent, qtplugin.qtplugin):
 		qtplugin.qtplugin.edit_widget(self)
 		self.lock = False
 		return self._edit_widget
-		
+
