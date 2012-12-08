@@ -188,7 +188,7 @@ setup(
 		"icon_resources": [(0, os.path.join("resources", "opensesame.ico"))],
 		},{
 		"script" : "opensesamerun",
-		"icon_resources": [(0, os.path.join("resources", "opensesame.ico"))],
+		"icon_resources": [(0, os.path.join("resources", "opensesamerun.ico"))],
 		}],
 	options = {
 		"py2exe" : {
