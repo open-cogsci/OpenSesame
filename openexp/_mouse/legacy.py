@@ -64,19 +64,19 @@ class legacy:
 	def __init__(self, experiment, buttonlist=None, timeout=None, visible=False):
 	
 		"""<DOC>
-		Intializes the mouse object
+		Intializes the mouse object.
 		
 		Arguments:
-		experiment -- an instance of libopensesame.experiment.experiment
+		experiment -- An instance of libopensesame.experiment.experiment.
 		
 		Keyword arguments:
-		buttonlist -- a list of buttons that are accepted or None to accept all
-					  input (default = None)
-		timeout -- an integer value specifying a timeout in milliseconds or None
-				   for no timeout (default = None)
-		visible -- a boolean indicating the visibility of the cursor
-				   (default=False)
-				   
+		buttonlist -- A list of buttons that are accepted or None to accept all #
+					  input (default = None).
+		timeout -- An integer value specifying a timeout in milliseconds or None #
+				   for no timeout (default = None).
+		visible -- A Boolean indicating the visibility of the cursor #
+				   (default=False).
+		   
 		Example:
 		>>> from openexp.mouse import mouse
 		>>> my_mouse = mouse(exp)
@@ -95,12 +95,12 @@ class legacy:
 	def set_buttonlist(self, buttonlist = None):
 	
 		"""<DOC>
-		Sets a list of accepted buttons
+		Sets a list of accepted buttons.
 
 		Keyword arguments:
-		buttonlist -- a list of buttons that are accepted or None to accept all
-					  input (default=None)
-					  
+		buttonlist -- A list of buttons that are accepted or None to accept all #
+					  input (default=None).
+		  
 		Example:
 		>>> from openexp.mouse import mouse
 		>>> my_mouse = mouse(exp)
@@ -121,12 +121,12 @@ class legacy:
 	def set_timeout(self, timeout=None):	
 	
 		"""<DOC>
-		Sets a timeout
+		Sets a timeout.
 		
 		Keyword arguments:
-		timeout -- an integer value specifying a timeout in milliseconds or None
-				   for no timeout (default=None)
-				   
+		timeout -- An integer value specifying a timeout in milliseconds or None #
+				   for no timeout (default=None).
+		
 		Example:
 		>>> from openexp.mouse import mouse
 		>>> my_mouse = mouse(exp)
@@ -138,16 +138,16 @@ class legacy:
 	def set_visible(self, visible=True):
 	
 		"""<DOC>
-		Sets the visibility of the cursor
+		Sets the visibility of the cursor.
 		
 		Keyword arguments:
-		visible -- A boolean indicating the visibility of the cursor
-				   (default=True)
-				   
+		visible -- A Boolean indicating the visibility of the cursor #
+				   (default=True).
+
 		Example:
 		>>> from openexp.mouse import mouse
 		>>> my_mouse = mouse(exp)
-		>>> my_mouse.set_visible(True)
+		>>> my_mouse.set_visible()
 		</DOC>"""	
 	
 		self.visible = visible
@@ -156,21 +156,21 @@ class legacy:
 	def get_click(self, buttonlist=None, timeout=None, visible=None):
 	
 		"""<DOC>
-		Waits for mouse input
+		Waits for mouse input.
 		
 		Keyword arguments:
-		buttonlist -- a list of buttons that are accepted or None to use the
-					  default. This parameter does not change  default keylist.
-					  (default=None)
-		timeout -- an integer value specifying a timeout in milliseconds or None
-				   to use the default. This parameter does not change the
-				   default timeout. (default=None)		
-		visible -- a boolean indicating the visibility of the target or None to
-				   use the default. This parameter does not change the default 
-				   visibility (default=False)
+		buttonlist -- A list of buttons that are accepted or None to use the #
+					  default. This parameter does not change the default keylist #
+					  (default=None).
+		timeout -- An integer value specifying a timeout in milliseconds or None #
+				   to use the default. This parameter does not change the #
+				   default timeout (default=None).		
+		visible -- A Boolean indicating the visibility of the target or None to #
+				   use the default. This parameter does not change the default #
+				   visibility (default=False).
 				   
 		Returns:
-		A (button, position, timestamp) tuple. The button and position are None
+		A (button, position, timestamp) tuple. The button and position are None #
 		if a timeout occurs. Position is an (x, y) tuple in screen coordinates.
 		
 		Example:
@@ -178,7 +178,7 @@ class legacy:
 		>>> my_mouse = mouse(exp)
 		>>> button, position, timestamp = my_mouse.get_click()
 		>>> if button == None:
-		>>> 	print 'A timeout occurred!'
+		>>> 		print 'A timeout occurred!'
 		</DOC>"""		
 	
 		if buttonlist == None:
@@ -240,7 +240,7 @@ class legacy:
 	def get_pos(self):
 	
 		"""<DOC>
-		Returns the current location of the cursor
+		Returns the current location of the cursor.
 		
 		Returns:
 		A (position, timestamp) tuple.
@@ -258,11 +258,11 @@ class legacy:
 	def flush(self):
 	
 		"""<DOC>
-		Clears all pending input, not limited to the mouse
+		Clears all pending input, not limited to the mouse.
 		
 		Returns:
-		True if a button had been clicked (i.e., if there was something
-		to flush) and False otherwise
+		True if a button had been clicked (i.e., if there was something #
+		to flush) and False otherwise.
 		
 		Example:
 		>>> from openexp.mouse import mouse
@@ -283,14 +283,14 @@ class legacy:
 	def synonyms(self, button):
 	
 		"""
-		Gives a list of synonyms for a mouse button. For example, 1 and
+		Gives a list of synonyms for a mouse button. For example, 1 and #
 		'left_click' are synonyms.
 		
 		Arguments:
-		button -- a button value
+		button -- A button value.
 		
 		Returns:
-		A list of synonyms		
+		A list of synonyms.
 		"""
 				
 		button_map = [ (1, "left_button"), (2, "middle_button"), (3, \
