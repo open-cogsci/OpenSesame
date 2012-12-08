@@ -312,7 +312,7 @@ class legacy:
 		>>> 	print 'The sampler is still playing!'
 		</DOC>"""
 
-		return pygame.mixer.get_busy()
+		return bool(pygame.mixer.get_busy())
 
 	def wait(self):
 
