@@ -65,7 +65,7 @@ class legacy:
 		"""<DOC>
 		Intializes the keyboard object.
 		
-		Keys can be identified either by character or name. This is case
+		Keys can be identified either by character or name. This is case #
 		insensitive. Naming keys using ASCII (integer) key codes is deprecated.
 
 		For example:
@@ -74,17 +74,17 @@ class legacy:
 		- The '/' key is represented by '/', 'slash', and 'SLASH'
 		- The spacebar is represented by 'space' and 'SPACE'
 		
-		For a complete list of available key names, click on the 'list available
-		keys' button the keyboard_response tab within OpenSesame.
+		For a complete list of available key names, click on the 'list available #
+		keys' button in the keyboard_response tab within OpenSesame.
 
 		Arguments:
-		experiment -- an instance of libopensesame.experiment.experiment
+		experiment -- An instance of libopensesame.experiment.experiment.
 
 		Keyword arguments:
-		keylist -- a list of human readable keys that are accepted or None to
-				   accept all keys (default=None)
-		timeout -- an integer value specifying a timeout in milliseconds or None
-				   for no timeout (default=None)
+		keylist -- A list of human readable keys that are accepted or None to #
+				   accept all keys (default=None).
+		timeout -- An integer value specifying a timeout in milliseconds or None #
+				   for no timeout (default=None).
 				   
 		Example:
 		>>> from openexp.keyboard import keyboard
@@ -113,11 +113,11 @@ class legacy:
 	def set_keylist(self, keylist=None):
 
 		"""<DOC>
-		Sets a list of accepted keys
+		Sets a list of accepted keys.
 
 		Keyword arguments:
-		keylist -- a list of keys that are accepted or None to accept all keys
-				   (default=None)
+		keylist -- A list of keys that are accepted or None to accept all keys #
+				   (default=None).
 				   
 		Example:
 		>>> from openexp.keyboard import keyboard
@@ -135,11 +135,11 @@ class legacy:
 	def set_timeout(self, timeout=None):
 
 		"""<DOC>
-		Sets a timeout
+		Sets a timeout.
 
 		Keyword arguments:
-		timeout -- an integer value specifying a timeout in milliseconds or None
-				   for no timeout (default=None)
+		timeout -- An integer value specifying a timeout in milliseconds or None #
+				   for no timeout (default=None).
 				   
 		Example:
 		>>> from openexp.keyboard import keyboard
@@ -152,18 +152,18 @@ class legacy:
 	def get_key(self, keylist=None, timeout=None):
 
 		"""<DOC>
-		Waits for keyboard input
+		Waits for keyboard input.
 
 		Keyword arguments:
-		keylist -- a list of human readable keys that are accepted or None to
-				   use the default. This parameter does not change the default
-				   keylist. (default=None)
-		timeout -- an integer value specifying a timeout in milliseconds or None
-				   to use the default. This parameter does not change the
-				   default timeout. (default=None)
+		keylist -- A list of human readable keys that are accepted or None to #
+				   use the default. This parameter does not change the default #
+				   keylist (default=None).
+		timeout -- An integer value specifying a timeout in milliseconds or None #
+				   to use the default. This parameter does not change the #
+				   default timeout (default=None).
 				   
 		Exceptions:
-		A response_error if 'escape' was pressed				   
+		A response_error if 'escape' was pressed.
 
 		Returns:
 		A (key, timestamp) tuple. The key is None if a timeout occurs.
@@ -173,7 +173,7 @@ class legacy:
 		>>> my_keyboard = keyboard(exp, timeout=2000)
 		>>> response, timestamp = my_keyboard.get_key()
 		>>> if response == None:
-		>>> 	print 'A timeout occurred!'
+		>>> 		print 'A timeout occurred!'
 		</DOC>"""
 				
 		start_time = pygame.time.get_ticks()
@@ -207,19 +207,19 @@ class legacy:
 	def get_mods(self):
 
 		"""<DOC>
-		Returns a list of keyboard moderators (e.g., shift, alt, etc.) that are
+		Returns a list of keyboard moderators (e.g., shift, alt, etc.) that are #
 		currently pressed.
 
 		Returns:
-		A list of keyboard moderators. An empty list is returned if no
+		A list of keyboard moderators. An empty list is returned if no #
 		moderators are pressed.
-		
+
 		Example:
 		>>> from openexp.keyboard import keyboard
 		>>> my_keyboard = keyboard(exp)
 		>>> moderators = my_keyboard.get_mods()
 		>>> if 'shift' in moderators:
-		>>> 	print 'The shift-key is down!'
+		>>> 		print 'The shift-key is down!'
 		</DOC>"""
 
 		l = []
@@ -243,10 +243,10 @@ class legacy:
 		assumes a standard US keyboard.
 
 		Arguments:
-		key -- A character
+		key -- A character.
 
 		Keyword arguments:
-		mods -- a list of keyboard moderators (default=["shift"])
+		mods -- A list of keyboard moderators (default=["shift"]).
 
 		Returns:
 		The character that results from combining the input key with shift.
@@ -329,14 +329,14 @@ class legacy:
 	def flush(self):
 
 		"""<DOC>
-		Clears all pending input, not limited to the keyboard
+		Clears all pending input, not limited to the keyboard.
 		
 		Exceptions:
-		A response_error if 'escape' was pressed		
-
+		A response_error if 'escape' was pressed
+		
 		Returns:
-		True if a key had been pressed (i.e., if there was something
-		to flush) and False otherwise
+		True if a key had been pressed (i.e., if there was something #
+		to flush) and False otherwise.
 		
 		Example:
 		>>> from openexp.keyboard import keyboard

@@ -33,19 +33,19 @@ class legacy(openexp._sampler.legacy.legacy):
 	def __init__(self, experiment, osc = "sine", freq = 440, length = 100, attack = 0, decay = 5):
 	
 		"""<DOC>
-		Initialize the synthesizer
+		Initializes the synthesizer.
 		
 		Arguments:
-		experiment -- an instance of libopensesame.experiment.experiment
+		experiment -- An instance of libopensesame.experiment.experiment.
 		
 		Keyword arguments:
-		osc -- oscillator, can be "sine", "saw", "square" or "white_noise"
-			   (default = "sine")
-		freq -- frequency, either an int (value in hertz) or a string ("A1",
-				"eb2", etc.) (default = 440)
-		length -- the length of the sound in milliseconds (default = 100)
-		attack -- the attack (fade-in) time in milliseconds (default = 0)
-		decay -- the decay (fade-out) time in milliseconds (default = 5)
+		osc -- Oscillator, can be "sine", "saw", "square" or "white_noise"#
+			   (default = "sine").
+		freq -- Frequency, either an integer value (value in hertz) or a string #
+				("A1", "eb2", etc.). (Default = 440)
+		length -- The length of the sound in milliseconds (default = 100).
+		attack -- The attack (fade-in) time in milliseconds (default = 0).
+		decay -- The decay (fade-out) time in milliseconds (default = 5).
 		
 		Example:
 		>>> from openexp.synth import synth
@@ -54,7 +54,7 @@ class legacy(openexp._sampler.legacy.legacy):
 	
 		openexp._sampler.legacy.legacy.__init__(self, experiment, None)
 		
-		# The frequency is not an int, convert it to an int
+		# If the frequency is not an int, convert it to an int
 		try:
 			int(freq)
 		except:
@@ -98,13 +98,13 @@ class legacy(openexp._sampler.legacy.legacy):
 	def key_to_freq(self, key):
 	
 		"""<DOC>
-		Convert a key (e.g., A1) to a frequency
+		Converts a key (e.g., A1) to a frequency.
 		
 		Arguments:
-		key -- a string like "A1", "eb2", etc.
+		key -- A string like "A1", "eb2", etc.
 		
 		Returns:
-		An int containing the frequency in Hertz
+		An int containing the frequency in Hertz.
 		
 		Example:
 		>>> from openexp.synth import synth
