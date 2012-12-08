@@ -60,11 +60,11 @@ class legacy:
 	def __init__(self, experiment, src):
 
 		"""<DOC>
-		Initialize the sampler with a specified file
+		Initializes the sampler with a specified file.
 
 		Arguments:
-		experiment -- An instance of libopensesame.experiment.experiment
-		src -- A path to a .wav or .ogg file
+		experiment -- An instance of libopensesame.experiment.experiment.
+		src -- A path to a .wav or .ogg file.
 		
 		Example:
 		>>> from openexp.sampler import sampler
@@ -89,10 +89,10 @@ class legacy:
 	def stop_after(self, ms):
 
 		"""<DOC>
-		Specify a duration after which the sampler stops playing
+		Specifies a duration after which the sampler stops playing.
 
 		Arguments:
-		ms -- A duration in milliseconds
+		ms -- An integer value specifying the duration in milliseconds.
 		
 		Example:
 		>>> from openexp.sampler import sampler
@@ -109,10 +109,10 @@ class legacy:
 	def fade_in(self, ms):
 
 		"""<DOC>
-		Set the fade-in time in milliseconds
+		Sets the fade-in time in milliseconds.
 
 		Arguments:
-		ms - A duration in milliseconds
+		ms - An integer value specifying the duration in milliseconds.
 		
 		Example:
 		>>> from openexp.sampler import sampler
@@ -129,7 +129,7 @@ class legacy:
 	def volume(self, vol):
 
 		"""<DOC>
-		Set the volume
+		Sets the volume.
 
 		Arguments:
 		vol -- A volume between 0.0 and 1.0
@@ -150,10 +150,11 @@ class legacy:
 	def pitch(self, p):
 
 		"""<DOC>
-		Set the relative pitch of the sample
+		Sets the relative pitch of the sample.
 
 		Arguments:
-		p -- The pitch. p > 1.0 slows the sample down, p < 1.0 speeds the sample up
+		p -- The pitch. p > 1.0 slows the sample down, p < 1.0 speeds #
+				the sample up.
 		
 		Example:
 		>>> from openexp.sampler import sampler
@@ -179,13 +180,13 @@ class legacy:
 	def pan(self, p):
 
 		"""<DOC>
-		Sets the panning of the sample. The volume of the "unpanned" channel
-		decreases, the volume of the other channel remains the same. To fully
-		mute one channel specify "left" (mutes right, pans to left) or "right"
+		Sets the panning of the sample. The volume of the "unpanned" channel #
+		decreases, the volume of the other channel remains the same. To fully #
+		mute one channel specify "left" (mutes right, pans to left) or "right" #
 		(mutes left, pans to right").
 
 		Arguments:
-		p -- Panning. A float (p < 0 = to left, p > 0 = to right) or string
+		p -- Panning. A float (p < 0 = to left, p > 0 = to right) or string #
 			 ("left" or "right")
 		
 		Example:
@@ -225,10 +226,10 @@ class legacy:
 	def play(self, block = False):
 
 		"""<DOC>
-		Play the sound
+		Plays the sound.
 
 		Keyword arguments:
-		block -- If True, block until the sound is finished. (default == False)
+		block -- If True, block until the sound is finished (default == False).
 		
 		Example:
 		>>> from openexp.sampler import sampler
@@ -244,7 +245,7 @@ class legacy:
 	def stop(self):
 
 		"""<DOC>
-		Stops the currently playing sound (if any)
+		Stops the currently playing sound (if any).
 		
 		Example:
 		>>> from openexp.sampler import sampler
@@ -260,7 +261,7 @@ class legacy:
 	def pause(self):
 
 		"""<DOC>
-		Pauses playback (if any)
+		Pauses playback (if any).
 		
 		Example:
 		>>> from openexp.sampler import sampler
@@ -278,7 +279,7 @@ class legacy:
 	def resume(self):
 
 		"""<DOC>
-		Resumes playback (if any)
+		Resumes playback (if any).
 		
 		Example:
 		>>> from openexp.sampler import sampler
@@ -296,18 +297,18 @@ class legacy:
 	def is_playing(self):
 
 		"""<DOC>
-		Checks if a sound is currently playing
+		Checks if a sound is currently playing.
 
 		Returns:
-		True if a sound is playing, False if not
-		
+		True if a sound is playing, False if not.
+
 		Example:
 		>>> from openexp.sampler import sampler
 		>>> src = exp.get_file('my_sound.ogg')
 		>>> my_sampler = sampler(exp, src)
 		>>> my_sampler.play()
 		>>> self.sleep(100)
-		>>> if not my_sampler.is_playing():
+		>>> if my_sampler.is_playing():
 		>>> 	print 'The sampler is still playing!'
 		</DOC>"""
 
@@ -316,8 +317,8 @@ class legacy:
 	def wait(self):
 
 		"""<DOC>
-		Blocks until the sound has finished playing or returns right away if no
-		sound is playing
+		Blocks until the sound has finished playing or returns right away if no #
+		sound is playing.
 		
 		Example:
 		>>> from openexp.sampler import sampler
@@ -334,7 +335,7 @@ class legacy:
 def init_sound(experiment):
 
 	"""
-	Initialize the pygame mixer before the experiment begins.
+	Initializes the pygame mixer before the experiment begins.
 
 	Arguments:
 	experiment -- An instance of libopensesame.experiment.experiment
@@ -353,7 +354,7 @@ def init_sound(experiment):
 def close_sound(experiment):
 
 	"""
-	Close the mixer after the experiment is finished.
+	Closes the mixer after the experiment is finished.
 
 	Arguments:
 	experiment -- An instance of libopensesame.experiment.experiment

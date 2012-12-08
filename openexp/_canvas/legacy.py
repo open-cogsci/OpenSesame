@@ -115,35 +115,35 @@ class legacy:
 	def __init__(self, experiment, bgcolor=None, fgcolor=None, auto_prepare=True):
 		
 		"""<DOC>
-		Initializes the canvas
+		Initializes the canvas.
 		
 		Arguments:
-		experiment -- an instance of libopensesame.experiment.experiment
+		experiment -- An instance of libopensesame.experiment.experiment.
 		
 		Keyword arguments:
-		bgcolor -- a human-readable background color or None to use #
-				   experiment default (default=None)
-		fgcolor -- a human-readable foreground color or None to use #
-				   experiment default (default=None)
+		bgcolor -- A human-readable background color or None to use #
+				   experiment default (default=None).
+		fgcolor -- A human-readable foreground color or None to use #
+				   experiment default (default=None).
 		auto_prepare -- Indicates whether the canvas should be automatically #
 					    prepared after each drawing operation, so that #
-					    `canvas.show()` will be maximally efficient. If #
+					    canvas.show() will be maximally efficient. If #
 					    auto_prepare is turned off, drawing operations may #
-					    be more faster, but canvas.show() will take longer, #
+					    be faster, but canvas.show() will take longer, #
 					    unless canvas.prepare() is explicitly called in #
 					    advance. Generally, it only makes sense to disable #
 					    auto_prepare when you want to draw a large number #
 						of stimuli, as in the second example below. #
 						Currently, the auto_prepare parameter only applies #
-						to the xpyriment, and is ignored by the other #
-						backends. (default=True)					    
+						to the xpyriment backend, and is ignored by the other #
+						backends (default=True).					    
 				   
 		Example:		
 		>>> from openexp.canvas import canvas
 		>>> my_canvas = canvas(exp)
 		>>> my_canvas.fixdot()
 		>>> my_canvas.show()
-		
+
 		Example:
 		>>> from openexp.canvas import canvas
 		>>> from random import randint
@@ -151,7 +151,7 @@ class legacy:
 		>>> for i in range(1000):
 		>>>		x = randint(0, self.get('width'))
 		>>>		y = randint(0, self.get('height'))
-		>>> 		my_canvas.fixdot(x, y)
+		>>> 	my_canvas.fixdot(x, y)
 		>>> my_canvas.prepare()
 		>>> my_canvas.show()
 
@@ -177,8 +177,8 @@ class legacy:
 	def color(self, color):
 	
 		"""
-		Transforms a "human readable" color into the format that is used by the
-		back-end (e.g., a PyGame color)
+		Transforms a "human readable" color into the format that is used by the#
+		back-end (e.g., a PyGame color).
 		
 		Arguments:
 		color -- A color in one the following formats (by example):
@@ -197,10 +197,10 @@ class legacy:
 	def _font(self):
 	
 		"""
-		Create a PyGame font instance
+		Creates a PyGame font instance.
 		
 		Returns:
-		A PyGame font
+		A PyGame font.
 		"""
 	
 		if self._current_font == None:			
@@ -214,15 +214,15 @@ class legacy:
 	def flip(self, x=True, y=False):
 		
 		"""
-		Flips the canvas along the x- and/ or y-axis. Note: This does not
-		refresh the display, like e.g., pygame.display.flip(), which is handled
+		Flips the canvas along the x- and/ or y-axis. Note: This does not#
+		refresh the display, like e.g., pygame.display.flip(), which is handled#
 		by show().
 		
 		Keyword arguments:
-		x -- A boolean indicating whether the canvas should be flipped
-			 horizontally (default=True)
-		y -- A boolean indicating whether the canvas should be flipped
-			 vertically (default=False)
+		x -- A Boolean indicating whether the canvas should be flipped#
+			 horizontally (default=True).
+		y -- A Boolean indicating whether the canvas should be flipped#
+			 vertically (default=False).
 			 
 		Example:
 		>>> from openexp.canvas import canvas
@@ -231,24 +231,27 @@ class legacy:
 		>>> my_canvas.flip(x=True)
 		"""
 		
+		
 		self.surface = pygame.transform.flip(self.surface, x, y)
 				
 	def copy(self, canvas):
 	
 		"""<DOC>
-		Turn the current canvas into a copy of the passed canvas. Note: If you
-		want to create a copy of a sketchpad canvas, you can also use the
+		Turns the current canvas into a copy of the passed canvas. Note: If you#
+		want to create a copy of a sketchpad canvas, you can also use the#
 		inline_script.copy_sketchpad() function.
 		
 		Arguments:
-		canvas -- The canvas to copy
-		
+		canvas -- The canvas to copy.
+
 		Example:
 		>>> from openexp.canvas import canvas
 		>>> my_canvas = canvas(exp)
 		>>> my_canvas.fixdot(x=100, color='green')
 		>>> my_copied_canvas = canvas(exp)
 		>>> my_copied_canvas.copy(my_canvas)
+		>>> my_copied_canvas.fixdot(x=200, color="blue")
+		>>> my_copied_canvas.show()
 		</DOC>"""
 		
 		self.surface = canvas.surface.copy()
@@ -297,21 +300,21 @@ class legacy:
 	def prepare(self):
 	
 		"""<DOC>
-		Finishes up pending canvas operations (if any), so that a subsequent
-		call to show() is extra fast. It's generally not necessary to call this
-		function, unless you use a specific back-end that requires this. Also,
+		Finishes up pending canvas operations (if any), so that a subsequent#
+		call to show() is extra fast. It's generally not necessary to call this#
+		function, unless you use a specific back-end that requires this. Also,#
 		see the note on auto_prepare under __init__().
 		</DOC>"""
-		
+
 		pass
 		
 	def show(self):
 		
 		"""<DOC>
-		Puts ('flips') the canvas onto the screen
+		Puts ('flips') the canvas onto the screen.
 		
 		Returns:
-		A timestamp containing the time at which the canvas actually appeared on
+		A timestamp containing the time at which the canvas actually appeared on#
 		the screen (or a best guess).
 		
 		Example:
@@ -329,15 +332,14 @@ class legacy:
 	def clear(self, color=None):
 		
 		"""<DOC>
-		Clears the canvas with the current background color. Note that it is
-		generally better to use a different canvas for each experimental display,
+		Clears the canvas with the current background color. Note that it is#
+		generally better to use a different canvas for each experimental display,#
 		than to use a single canvas and repeatedly clear and redraw it.
 		
 		Keyword arguments:
-		color -- A custom background color to be used. This does not affect the
-				 default background color as set by set_bgcolor().
-				 (Default=None)
-				 
+		color -- A custom background color to be used. This does not affect the#
+				 default background color as set by set_bgcolor() (default=None).
+
 		Example:
 		>>> from openexp.canvas import canvas
 		>>> my_canvas = canvas(exp)
@@ -354,14 +356,14 @@ class legacy:
 		else:
 			color = self.bgcolor
 		self.surface.fill(color)
-		
+
 	def set_penwidth(self, penwidth):
 		
 		"""<DOC>
 		Sets the pen width for subsequent drawing operations.
 		
 		Arguments:
-		penwidth -- A pen width in pixels
+		penwidth -- A pen width in pixels.
 		
 		Example:
 		>>> from openexp.canvas import canvas
@@ -371,15 +373,15 @@ class legacy:
 		</DOC>"""
 		
 		self.penwidth = penwidth
-		
+
 	def set_fgcolor(self, color):
 		
 		"""<DOC>
 		Sets the foreground color for subsequent drawing operations.
 		
 		Arguments:
-		color -- A color. Acceptable formats are human readable colors, such as
-				 'red', and HTML colors, such as '#FF0000'
+		color -- A color. Acceptable formats are human readable colors, such as#
+				 'red'; and HTML colors, such as '#FF0000'.
 		
 		Example:
 		>>> from openexp.canvas import canvas
@@ -391,15 +393,15 @@ class legacy:
 		</DOC>"""
 		
 		self.fgcolor = self.color(color)		
-		
+
 	def set_bgcolor(self, color):
 		
 		"""<DOC>
-		Sets the background color for the canvas
+		Sets the background color for the canvas.
 		
 		Arguments:
-		color -- A color. Acceptable formats are human readable colors, such as
-				 'red', and HTML colors, such as '#FF0000'
+		color -- A color. Acceptable formats are human readable colors, such as#
+				 'red'; and HTML colors, such as '#FF0000'.
 				 
 		Example:
 		>>> from openexp.canvas import canvas
@@ -409,20 +411,20 @@ class legacy:
 		</DOC>"""
 
 		self.bgcolor = self.color(color)	
-		
+
 	def set_font(self, style=None, size=None, italic=None, bold=None, underline=None):
-	
+
 		"""<DOC>
 		Sets the font for subsequent drawing operations.
 		
 		Keyword arguments:
-		style -- A font style. This can be one of the three standard styles
-				 ('mono', 'sans', or 'serif') or a system font (e.g., 'arial')
-				 (default=None)
-		size -- A font size in pixels (default=None)
-		italic -- indicates if the font should be italic (default=None)
-		bold -- indicates if the font should be bold (default=None)
-		underline -- indicates if the font should be underlined (default=None)
+		style -- A font style. This can be one of the three standard styles#
+				 ('mono', 'sans', or 'serif') or a system font (e.g., 'arial').#
+				 (Default=None)
+		size -- A font size in pixels (default=None).
+		italic -- Indicates if the font should be italic (default=None).
+		bold -- Indicates if the font should be bold (default=None).
+		underline -- Indicates if the font should be underlined (default=None).
 		
 		Example:
 		>>> from openexp.canvas import canvas
@@ -430,7 +432,7 @@ class legacy:
 		>>> my_canvas.set_font(style='serif', italic=True)
 		>>> my_canvas.text('Text in italic serif')
 		</DOC>"""
-			
+
 		if style != None: self.font_style = style
 		if size != None: self.font_size = size
 		if italic != None: self.font_italic = italic
@@ -440,14 +442,14 @@ class legacy:
 	def fixdot(self, x=None, y=None, color=None):
 		
 		"""<DOC>
-		Draws a standard fixation dot, which is a big circle (r = 8px) with the
-		foreground color and a smaller circle (r = 2px) of the background color
+		Draws a standard fixation dot, which is a big circle (r = 8px) with the#
+		foreground color and a smaller circle (r = 2px) of the background color.
 		
 		Keyword arguments:
-		x -- The center X coordinate. None = center (default=None)
-		y -- The center Y coordinate. None = center (default=None)
-		color -- A custom human readable foreground color. This does not affect
-				 the default foreground color as set by set_fgcolor(). 
+		x -- The center X coordinate. None = center (default=None).
+		y -- The center Y coordinate. None = center (default=None).
+		color -- A custom human readable foreground color. This does not affect#
+				 the default foreground color as set by set_fgcolor(). #
 				 (Default=None)
 		
 		Example:
@@ -476,16 +478,16 @@ class legacy:
 		Draws a circle.
 		
 		Arguments:
-		x -- The center X coordinate
-		y -- The center Y coordinate
-		r -- The radius
+		x -- The center X coordinate.
+		y -- The center Y coordinate.
+		r -- The radius.
 		
 		Keyword arguments:
-		fill -- A boolean indicating whether the circle is outlined (False) #
-				or filled (True) (default=False)
+		fill -- A Boolean indicating whether the circle is outlined (False) #
+				or filled (True). (Default=False)
 		color -- A custom human readable foreground color. This does not #
 				 affect the default foreground color as set by #
-				 set_fgcolor(). (Default=None) 
+				 set_fgcolor(). (Default=None)
 				 
 		Example:
 		>>> from openexp.canvas import canvas
@@ -498,13 +500,13 @@ class legacy:
 	def line(self, sx, sy, ex, ey, color=None):
 		
 		"""<DOC>
-		Draws a line
+		Draws a line.
 		
 		Arguments:
-		sx -- The left coordinate
-		sy -- The top coordinate
-		ex -- The right coordinate
-		ey -- The bottom coordinate
+		sx -- The left coordinate.
+		sy -- The top coordinate.
+		ex -- The right coordinate.
+		ey -- The bottom coordinate.
 		
 		Keyword arguments:
 		color -- A custom human readable foreground color. This does not #
@@ -528,19 +530,19 @@ class legacy:
 	def arrow(self, sx, sy, ex, ey, arrow_size=5, color=None):
 		
 		"""<DOC>
-		Draws an arrow. An arrow is a line, with an arrowhead at (ex, ey). The
+		Draws an arrow. An arrow is a line, with an arrowhead at (ex, ey). The #
 		angle between the arrowhead lines and the arrow line is 45 degrees.
 		
 		Arguments:
-		sx -- The left coordinate
-		sy -- The top coordinate
-		ex -- The right coordinate
-		ey -- The bottom coordinate
-		
+		sx -- The left coordinate.
+		sy -- The top coordinate.
+		ex -- The right coordinate.
+		ey -- The bottom coordinate.
+
 		Keyword arguments:
-		arrow_size -- The length of the arrowhead lines (default=5)
-		color -- A custom foreground color. This does not affect the default
-				foreground color as set by set_fgcolor(). (Default=None)		
+		arrow_size -- The length of the arrowhead lines (default=5).
+		color -- A custom foreground color. This does not affect the default#
+				foreground color as set by set_fgcolor(). (Default=None)
 				
 		Example:
 		>>> from openexp.canvas import canvas
@@ -564,7 +566,7 @@ class legacy:
 	def rect(self, x, y, w, h, fill=False, color=None):
 		
 		"""<DOC>
-		Draws a rectangle
+		Draws a rectangle.
 		
 		Arguments:
 		x -- The left X coordinate.
@@ -574,9 +576,9 @@ class legacy:
 				
 		Keyword arguments:
 		fill -- A boolean indicating whether the rectangle is outlined (False)
-				or filled (True) (default=False)
-		color -- A custom foreground color. This does not affect the default
-				 foreground color as set by set_fgcolor(). (Default=None)		
+				or filled (True). (Default=False)#
+		color -- A custom foreground color. This does not affect the default#
+				 foreground color as set by set_fgcolor(). (Default=None)
 				 
 		Example:
 		>>> from openexp.canvas import canvas
@@ -598,7 +600,7 @@ class legacy:
 	def ellipse(self, x, y, w, h, fill=False, color=None):
 		
 		"""<DOC>
-		Draws an ellipse
+		Draws an ellipse.
 		
 		Arguments:
 		x -- The left X coordinate.
@@ -607,9 +609,9 @@ class legacy:
 		h -- The height.
 				
 		Keyword arguments:
-		fill -- A boolean indicating whether the ellipse is outlined (False) or
-				filled (True) (default=False)
-		color -- A custom foreground color. This does not affect the default
+		fill -- A Boolean indicating whether the ellipse is outlined (False) or#
+				filled (True). (default=False)
+		color -- A custom foreground color. This does not affect the default#
 				 foreground color as set by set_fgcolor(). (Default=None)
 				 
 		Example:
@@ -617,7 +619,7 @@ class legacy:
 		>>> my_canvas = canvas(exp)
 		>>> w = self.get('width')-10
 		>>> h = self.get('height')-10
-		>>> my_canvas.ellipse(10, 10, w, h, fill=True)					 
+		>>> my_canvas.ellipse(10, 10, w, h, fill=True) 
 		</DOC>"""
 		
 		if color != None:
@@ -644,18 +646,18 @@ class legacy:
 	def polygon(self, vertices, fill=False, color=None):
 		
 		"""<DOC>
-		Draws a polygon that consists of multiple vertices (i.e. a shape of
-		points connected by lines)
+		Draws a polygon that consists of multiple vertices (i.e. a shape of#
+		points connected by lines).
 		
 		Arguments:
-		vertices -- a list of tuples, where each tuple corresponds to a vertex
-					For example, [(100,100), (200,100), (100,200)] will draw a
+		vertices -- A list of tuples, where each tuple corresponds to a vertex #
+					For example, [(100,100), (200,100), (100,200)] will draw a #
 					triangle.
 				
 		Keyword arguments:
-		fill -- A boolean indicating whether the rectangle is outlined (False)
-				or filled (True) (default=False)
-		color -- A custom foreground color. This does not affect the default
+		fill -- A Boolean indicating whether the rectangle is outlined (False) #
+				or filled (True). (Default=False)
+		color -- A custom foreground color. This does not affect the default #
 				 foreground color as set by set_fgcolor(). (Default=None)
 				 
 		Example:
@@ -683,10 +685,10 @@ class legacy:
 		Determines the size of a text string in pixels.
 		
 		Arguments:
-		text -- The text string
+		text -- The text string.
 		
 		Returns:
-		A (width, height) tuple containing the dimensions of the text string
+		A (width, height) tuple containing the dimensions of the text string.
 		
 		Example:
 		>>> from openexp.canvas import canvas
@@ -705,17 +707,17 @@ class legacy:
 		text -- The text string
 		
 		Keyword arguments:
-		center -- A boolean indicating whether the coordinates reflect the
-				  center (True) or top-left (default=True)
-		x -- The X coordinate. None = center. (default=None)
-		y -- The Y coordinate. None = center. (default=None)
-		max_width -- The maximum width of the text, before wrapping to a new
+		center -- A Boolean indicating whether the coordinates reflect the #
+				  center (True) or top-left (default=True).
+		x -- The X coordinate. None = center. (Default=None)
+		y -- The Y coordinate. None = center. (Default=None)
+		max_width -- The maximum width of the text, before wrapping to a new #
 					 line, or None to wrap at screen edge (default=None)
-		color -- A custom human readable foreground color. This does not affect
-				 the default foreground color as set by set_fgcolor().
+		color -- A custom human readable foreground color. This does not affect #
+				 the default foreground color as set by set_fgcolor(). #
 				 (Default=None)
-		html -- Indicates whether HTML tags should be parsed (default=True)
-		
+		html -- Indicates whether HTML tags should be parsed (default=True).
+
 		Example:
 		>>> from openexp.canvas import canvas
 		>>> my_canvas = canvas(exp)
@@ -738,9 +740,9 @@ class legacy:
 		text rendering.
 		
 		Arguments:
-		text -- the text
-		x -- the x-coordinate
-		y -- the y-coordinate
+		text -- The text.
+		x -- The x-coordinate.
+		y -- The y-coordinate.
 		"""		
 			
 		font = self._font()
@@ -750,18 +752,18 @@ class legacy:
 	def textline(self, text, line, color=None):
 		
 		"""<DOC>
-		A convenience function that draws a line of text based on a line number.
-		The text strings are centered on the X-axis and vertically spaced with
-		1.5 the line height as determined by text_size().
+		A convenience function that draws a line of text based on a line number. #
+		The text strings are centered on the X-axis and vertically spaced with #
+		1.5 times the line height as determined by text_size(). #
 		
 		Arguments:
-		text -- The text string
-		line -- A line number, where 0 is the center and > 0 is below the
+		text -- The text string.
+		line -- A line number, where 0 is the center and > 0 is below the #
 				center.
 				
 		Keyword arguments:
-		color -- A custom foreground color. This does not affect the default
-				foreground color as set by set_fgcolor(). (default=None)
+		color -- A custom foreground color. This does not affect the default #
+				foreground color as set by set_fgcolor(). (Default=None)
 				 
 		Example:
 		>>> from openexp.canvas import canvas
@@ -778,21 +780,21 @@ class legacy:
 	def image(self, fname, center=True, x=None, y=None, scale=None):
 		
 		"""<DOC>
-		Draws an image from file. This function does not look in the file pool,
+		Draws an image from file. This function does not look in the file pool, #
 		but takes an absolute path.
 		
 		Arguments:
-		fname -- The path of the file
+		fname -- The path of the file.
 		
 		Keyword arguments:
-		center -- A boolean indicating whether the given coordinates reflect the
-				  center (True) or the top-left (False) of the image
-				  (default=True)
-		x -- The X coordinate. None = center. (default=None)
-		y -- The Y coordinate. None = center. (default=None)
-		scale -- The scaling factor of the image. 1.0 or None = no scaling, 2.0
-				 = twice as large, etc. (default=None)
-				 
+		center -- A Boolean indicating whether the given coordinates reflect the #
+				  center (True) or the top-left (False) of the image #
+				  (default=True).
+		x -- The X coordinate. None = center. (Default=None)
+		y -- The Y coordinate. None = center. (Default=None)
+		scale -- The scaling factor of the image. 1.0 or None = no scaling, 2.0 #
+				 = twice as large, etc. (default=None).
+
 		Example:
 		>>> from openexp.canvas import canvas
 		>>> my_canvas = canvas(exp)
@@ -831,29 +833,29 @@ class legacy:
 	def gabor(self, x, y, orient, freq, env="gaussian", size=96, stdev=12, phase=0, col1="white", col2="black", bgmode="avg"):
 	
 		"""<DOC>
-		Draws a Gabor patch. The exact rendering of the Gabor patch depends on the
+		Draws a Gabor patch. The exact rendering of the Gabor patch depends on the #
 		back-end.
 		
 		Arguments:
-		x -- The center X coordinate
-		y -- The center Y coordinate
-		orient -- Orientation in degrees [0 .. 360]
-		freq -- Frequency in cycles/px of the sinusoid
+		x -- The center X coordinate.
+		y -- The center Y coordinate.
+		orient -- Orientation in degrees [0 .. 360].
+		freq -- Frequency in cycles/px of the sinusoid.
 		
 		Keyword arguments:	
-		env -- Any of the following: "gaussian", "linear", "circular",
-			   "rectangle" (default="gaussian")
-		size -- Size in pixels (default=96)
-		stdev -- Standard deviation in pixels of the gaussian. Only applicable
-				 if env = "gaussian". (default=12)
-		phase -- Phase of the sinusoid [0.0 .. 1.0] (default=0)
-		col1 -- Human readable color for the tops (default="white")
-		col2 -- Human readable color for the troughs. Note: This parameter is
-				ignored by the psycho back-end. (default="black")
-		bgmode -- Specifies whether the background is the average of col1 and
-				  col2 (bgmode = "avg", a typical Gabor patch) or equal to col2
-				  ("col2"), useful for blending into the background. Note: this
-				  paramter is ignored by the psycho backend. (default="avg")
+		env -- Any of the following: "gaussian", "linear", "circular", #
+			   "rectangle" (default="gaussian").
+		size -- Size in pixels (default=96).
+		stdev -- Standard deviation in pixels of the gaussian. Only applicable #
+				 if env = "gaussian". (Default=12)
+		phase -- Phase of the sinusoid [0.0 .. 1.0] (default=0).
+		col1 -- Human readable color for the tops (default="white").
+		col2 -- Human readable color for the troughs. Note: This parameter is #
+				ignored by the psycho backend. (Default="black").
+		bgmode -- Specifies whether the background is the average of col1 and #
+				  col2 (bgmode = "avg", a typical Gabor patch) or equal to col2 #
+				  ("col2"), useful for blending into the background. Note: this #
+				  parameter is ignored by the psycho backend. (Default="avg").
 				  
 		Example:
 		>>> from openexp.canvas import canvas
@@ -868,26 +870,26 @@ class legacy:
 	def noise_patch(self, x, y, env="gaussian", size=96, stdev=12, col1="white", col2="black", bgmode="avg"):
 	
 		"""<DOC>
-		Draws a patch of noise, with an envelope. The exact rendering of the noise
+		Draws a patch of noise, with an envelope. The exact rendering of the noise #
 		patch depends on the back-end.
 		
 		Arguments:
-		x -- The center X coordinate
-		y -- The center Y coordinate
+		x -- The center X coordinate.
+		y -- The center Y coordinate.
 		
 		Keyword arguments:	
-		env -- Any of the following: "gaussian", "linear", "circular",
-			   "rectangle" (default="gaussian")
-		size -- Size in pixels (default=96)
-		stdev -- Standard deviation in pixels of the gaussian. Only applicable
-				 if env = "gaussian". (default=12)
-		phase -- Phase of the sinusoid [0.0 .. 1.0] (default=0)
-		col1 -- Human readable color for the tops (default="white")
-		col2 -- Human readable color for the troughs (default="black")
-		bgmode -- Specifies whether the background is the average of col1 and
-				  col2 (bgmode="avg", a typical Gabor patch) or equal to col2
-				  ("col2"), useful for blending into the background.
-				  (default="avg")
+		env -- Any of the following: "gaussian", "linear", "circular", #
+			   "rectangle" (default="gaussian").
+		size -- Size in pixels (default=96).
+		stdev -- Standard deviation in pixels of the gaussian. Only applicable #
+				 if env = "gaussian". (Default=12)
+		phase -- Phase of the sinusoid [0.0 .. 1.0] (default=0).
+		col1 -- Human readable color for the tops (default="white").
+		col2 -- Human readable color for the troughs (default="black").
+		bgmode -- Specifies whether the background is the average of col1 and #
+				  col2 (bgmode="avg", a typical Gabor patch) or equal to col2 #
+				  ("col2"), useful for blending into the background #
+				  (default="avg").
 				  
 		Example:
 		>>> from openexp.canvas import canvas
