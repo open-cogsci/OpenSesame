@@ -64,8 +64,10 @@ class font_widget(QtGui.QWidget):
 		if self.ui.combobox_family.currentText() == 'other ...':
 			font, ok = QtGui.QFontDialog.getFont(self.get_font())
 			if ok:
-				self.family = unicode(font.family())
-				self.update_family_combobox()
+				self.family = unicode(font.family())				
+			else:
+				self.family = self.experiment.get('font_family')
+			self.update_family_combobox()
 		self._apply()
 		
 	def get_font(self):
