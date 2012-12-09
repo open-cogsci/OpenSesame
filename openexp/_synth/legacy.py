@@ -104,7 +104,7 @@ class legacy(openexp._sampler.legacy.legacy):
 		key -- A string like "A1", "eb2", etc.
 		
 		Returns:
-		An int containing the frequency in Hertz.
+		An integer value containing the frequency in hertz.
 		
 		Example:
 		>>> from openexp.synth import synth

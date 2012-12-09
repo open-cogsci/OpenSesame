@@ -341,8 +341,8 @@ class item(object):
 		explanation of how data-types are handled.
 
 		Arguments:
-		var -- the name of an OpenSesame variable
-		val -- the value
+		var -- The name of an OpenSesame variable.
+		val -- The value.
 
 		Example:
 		>>> exp.set('my_timestamp', self.time())
@@ -396,17 +396,13 @@ class item(object):
 		variable exists 'locally' in the item and, if not, checks if the #
 		variable exists 'globally' in the experiment.
 
-		The type of the returned value be int, float, or unicode #
+		The type of the returned value can be int, float, or unicode #
 		(string). The appropriate type is automatically selected, e.g. '10' #
 		is returned as int, '10.1' as float, and 'some text' as unicode.
 
 		The _eval parameter is used to specify whether the value of the #
 		variable should be evaluated, in case it contains references to other #
-		variables. This is best illustrated by example:
-		>>> exp.set('var1', 'I like [var2]')
-		>>> exp.set('var2', 'OpenSesame')
-		>>> print self.get('var1') # prints 'I like OpenSesame'
-		>>> print self.get('var1', _eval=False) # prints 'I like [var2]'
+		variables. This is best illustrated by example 2 below.
 
 		Arguments:
 		var -- The name of an OpenSesame variable.
@@ -423,6 +419,13 @@ class item(object):
 		Example:
 		>>> if self.get('cue') == 'valid':
 		>>>		print 'This is a validly cued trial'
+		
+		Example 2:
+		>>> exp.set('var1', 'I like [var2]')
+		>>> exp.set('var2', 'OpenSesame')
+		>>> print self.get('var1') # prints 'I like OpenSesame'
+		>>> print self.get('var1', _eval=False) # prints 'I like [var2]'
+
 		</DOC>"""
 
 		var = self.unistr(var)
@@ -457,7 +460,7 @@ class item(object):
 		list.
 
 		Arguments:
-		var --The name of an OpenSesame variable
+		var -- The name of an OpenSesame variable
 		default -- A default 'fallback' value or None for no fallback, in which #
 				   case an exception is rased if the value does not exist.
 		valid -- A list of allowed values (or None for no restrictions). An #
@@ -519,7 +522,7 @@ class item(object):
 		text -- A string of text.
 
 		Returns:
-		A list of variable names or an empty list if the string contains no
+		A list of variable names or an empty list if the string contains no #
 		references.
 
 		Example:
@@ -552,12 +555,11 @@ class item(object):
 		Converts a value into the 'best fitting' or 'simplest' type that is #
 		compatible with the value.
 
-
 		Arguments:
 		val -- A value.
 
 		Returns:
-		The same value converted to the 'best fitting' type
+		The same value converted to the 'best fitting' type.
 
 		Example:
 		>>> print type(self.auto_type('1')) # Prints 'int'
@@ -627,7 +629,7 @@ class item(object):
 					   default value of 2. (Default=False)
 		soft_ignore -- A Boolean indicating whether missing variables should be #
 					   ignored, rather than cause an exception (default=False).
-		quote_str -- A Boolean indicating whether string variables should be
+		quote_str -- A Boolean indicating whether string variables should be #
 					 surrounded by single quotes (default=False).
 
 		Returns:
@@ -965,7 +967,7 @@ class item(object):
 		Returns the current time.
 
 		Returns:
-		A timestamp of the current time
+		A timestamp of the current time.
 
 		Example:
 		>>> print 'The time is %s' % self.time()
