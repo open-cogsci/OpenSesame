@@ -222,8 +222,8 @@ shutil.copytree("resources", os.path.join("dist", "resources"), symlinks=True, \
 	ignore=ignore_resources)
 
 print "copying README info etc."
-shutil.copyfile("README", os.path.join("dist", "README"))
-shutil.copyfile("LICENSE-BIN", os.path.join("dist", "LICENSE"))
+shutil.copyfile("readme.md", os.path.join("dist", "readme.md"))
+shutil.copyfile("debian/copyright", os.path.join("dist", "copyright"))
 shutil.copyfile("COPYING", os.path.join("dist", "COPYING"))
 shutil.copytree("help", os.path.join("dist", "help"))
 
