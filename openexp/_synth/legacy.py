@@ -39,7 +39,7 @@ class legacy(openexp._sampler.legacy.legacy):
 		experiment -- An instance of libopensesame.experiment.experiment.
 		
 		Keyword arguments:
-		osc -- Oscillator, can be "sine", "saw", "square" or "white_noise"#
+		osc -- Oscillator, can be "sine", "saw", "square" or "white_noise" #
 			   (default = "sine").
 		freq -- Frequency, either an integer value (value in hertz) or a string #
 				("A1", "eb2", etc.). (Default = 440)
