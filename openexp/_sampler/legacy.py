@@ -187,7 +187,7 @@ class legacy:
 
 		Arguments:
 		p -- Panning. A float (p < 0 = to left, p > 0 = to right) or string #
-			 ("left" or "right")
+			 ("left" or "right").
 		
 		Example:
 		>>> from openexp.sampler import sampler
