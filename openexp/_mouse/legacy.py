@@ -178,7 +178,7 @@ class legacy:
 		>>> my_mouse = mouse(exp)
 		>>> button, position, timestamp = my_mouse.get_click()
 		>>> if button == None:
-		>>> 		print 'A timeout occurred!'
+		>>> 	print 'A timeout occurred!'
 		</DOC>"""		
 	
 		if buttonlist == None:

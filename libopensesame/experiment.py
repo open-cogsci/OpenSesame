@@ -37,14 +37,14 @@ class experiment(item.item):
 	def __init__(self, name='experiment', string=None, pool_folder=None):
 
 		"""<DOC>
-		Constructor. The experiment is created automatically be OpenSesame and
+		Constructor. The experiment is created automatically be OpenSesame and #
 		you will generally not need to create it yourself.
 
 		Keyword arguments:
-		name -- the name of the experiment (default='experiment')		
-		string -- a string containing the experiment definition (default=None)
-		pool_folder -- a specific folder to be used for the file pool
-					   (default=None)
+		name -- The name of the experiment (default='experiment').
+		string -- A string containing the experiment definition (default=None).
+		pool_folder -- A specific folder to be used for the file pool #
+					   (default=None).
 		</DOC>"""
 
 		global pool_folders
