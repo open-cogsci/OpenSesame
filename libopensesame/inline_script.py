@@ -28,16 +28,16 @@ class inline_script(item.item):
 	def __init__(self, name, experiment, string = None):
 
 		"""<DOC>
-		Constructor. You will generally not create an inline_script item
-		yourself, but use OpenSesame to create a body for the prepare() and
+		Constructor. You will generally not create an inline_script item #
+		yourself, but use OpenSesame to create a body for the prepare() and #
 		run() functions.
 
 		Arguments:
-		name -- the name of the item
-		experiment -- the experiment
+		name -- The name of the item.
+		experiment -- The experiment.
 
 		Keyword arguments:
-		string -- an item definition string (default = None)
+		string -- An item definition string (default = None).
 		</DOC>"""
 
 		self.description = "Executes Python code"
@@ -50,13 +50,13 @@ class inline_script(item.item):
 	def copy_sketchpad(self, sketchpad_name):
 
 		"""<DOC>
-		Create a canvas that is a copy from the canvas of a sketchpad item
+		Creates a canvas that is a copy from the canvas of a sketchpad item.
 
 		Arguments:
-		sketchpad_name -- the name of the sketchpad
+		sketchpad_name -- The name of the sketchpad.
 
 		Returns:
-		An openexp canvas
+		An openexp canvas.
 		
 		Example:
 		>>> my_canvas = self.copy_sketchpad('my_sketchpad')
@@ -69,13 +69,13 @@ class inline_script(item.item):
 	def offline_canvas(self, auto_prepare=True):
 
 		"""<DOC>
-		Create an empty canvas
+		Creates an empty canvas
 		
 		Keyword arguments:
-		auto_prepare -- Please see the canvas documentation (default=True)
+		auto_prepare -- Please see the canvas documentation (default=True).
 
 		Returns:
-		An openexp canvas
+		An openexp canvas.
 		
 		Example:
 		>>> my_canvas = self.offline_canvas()
@@ -87,8 +87,8 @@ class inline_script(item.item):
 	def prepare(self):
 
 		"""<DOC>
-		Execute the prepare script. The code that you enter in the 'prepare'
-		tab of an inline_script item in the GUI is used as a body for this
+		Executes the prepare script. The code that you enter in the 'prepare' #
+		tab of an inline_script item in the GUI is used as a body for this #
 		function.
 		</DOC>"""
 
@@ -117,7 +117,7 @@ class inline_script(item.item):
 	def run(self):
 
 		"""<DOC>
-		Execute the run script. The code that you enter in the 'run' tab of an
+		Executes the run script. The code that you enter in the 'run' tab of an #
 		inline_script item in the GUI is used as a body for this function.
 		</DOC>"""
 
@@ -135,10 +135,10 @@ class inline_script(item.item):
 	def var_info(self):
 
 		"""
-		Give a list of dictionaries with variable descriptions
+		Gives a list of dictionaries with variable descriptions.
 
 		Returns:
-		A list of (variable, description) tuples
+		A list of (variable, description) tuples.
 		"""
 
 		# Don't parse the script if it isn't necessary, since
