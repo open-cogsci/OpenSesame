@@ -177,7 +177,7 @@ class legacy:
 	def color(self, color):
 	
 		"""
-		Transforms a "human readable" color into the format that is used by the#
+		Transforms a "human-readable" color into the format that is used by the#
 		back-end (e.g., a PyGame color).
 		
 		Arguments:
@@ -214,14 +214,14 @@ class legacy:
 	def flip(self, x=True, y=False):
 		
 		"""
-		Flips the canvas along the x- and/ or y-axis. Note: This does not#
-		refresh the display, like e.g., pygame.display.flip(), which is handled#
+		Flips the canvas along the x- and/ or y-axis. Note: This does not #
+		refresh the display, like e.g., pygame.display.flip(), which is handled #
 		by show().
 		
 		Keyword arguments:
-		x -- A Boolean indicating whether the canvas should be flipped#
+		x -- A Boolean indicating whether the canvas should be flipped #
 			 horizontally (default=True).
-		y -- A Boolean indicating whether the canvas should be flipped#
+		y -- A Boolean indicating whether the canvas should be flipped #
 			 vertically (default=False).
 			 
 		Example:
@@ -237,8 +237,8 @@ class legacy:
 	def copy(self, canvas):
 	
 		"""<DOC>
-		Turns the current canvas into a copy of the passed canvas. Note: If you#
-		want to create a copy of a sketchpad canvas, you can also use the#
+		Turns the current canvas into a copy of the passed canvas. Note: If you #
+		want to create a copy of a sketchpad canvas, you can also use the #
 		inline_script.copy_sketchpad() function.
 		
 		Arguments:
@@ -300,9 +300,9 @@ class legacy:
 	def prepare(self):
 	
 		"""<DOC>
-		Finishes up pending canvas operations (if any), so that a subsequent#
-		call to show() is extra fast. It's generally not necessary to call this#
-		function, unless you use a specific back-end that requires this. Also,#
+		Finishes up pending canvas operations (if any), so that a subsequent #
+		call to show() is extra fast. It's generally not necessary to call this #
+		function, unless you use a specific back-end that requires this. Also, #
 		see the note on auto_prepare under __init__().
 		</DOC>"""
 
@@ -314,7 +314,7 @@ class legacy:
 		Puts ('flips') the canvas onto the screen.
 		
 		Returns:
-		A timestamp containing the time at which the canvas actually appeared on#
+		A timestamp containing the time at which the canvas actually appeared on #
 		the screen (or a best guess).
 		
 		Example:
@@ -332,13 +332,13 @@ class legacy:
 	def clear(self, color=None):
 		
 		"""<DOC>
-		Clears the canvas with the current background color. Note that it is#
-		generally better to use a different canvas for each experimental display,#
+		Clears the canvas with the current background color. Note that it is #
+		generally better to use a different canvas for each experimental display, #
 		than to use a single canvas and repeatedly clear and redraw it.
 		
 		Keyword arguments:
-		color -- A custom background color to be used. This does not affect the#
-				 default background color as set by set_bgcolor() (default=None).
+		color -- A custom background color to be used. This does not affect the #
+				 default background color as set by set_bgcolor(). (Default=None).
 
 		Example:
 		>>> from openexp.canvas import canvas
@@ -380,7 +380,7 @@ class legacy:
 		Sets the foreground color for subsequent drawing operations.
 		
 		Arguments:
-		color -- A color. Acceptable formats are human readable colors, such as#
+		color -- A color. Acceptable formats are human-readable colors, such as #
 				 'red'; and HTML colors, such as '#FF0000'.
 		
 		Example:
@@ -400,7 +400,7 @@ class legacy:
 		Sets the background color for the canvas.
 		
 		Arguments:
-		color -- A color. Acceptable formats are human readable colors, such as#
+		color -- A color. Acceptable formats are human-readable colors, such as #
 				 'red'; and HTML colors, such as '#FF0000'.
 				 
 		Example:
@@ -418,8 +418,8 @@ class legacy:
 		Sets the font for subsequent drawing operations.
 		
 		Keyword arguments:
-		style -- A font style. This can be one of the three standard styles#
-				 ('mono', 'sans', or 'serif') or a system font (e.g., 'arial').#
+		style -- A font style. This can be one of the three standard styles #
+				 ('mono', 'sans', or 'serif') or a system font (e.g., 'arial'). #
 				 (Default=None)
 		size -- A font size in pixels (default=None).
 		italic -- Indicates if the font should be italic (default=None).
@@ -442,13 +442,14 @@ class legacy:
 	def fixdot(self, x=None, y=None, color=None):
 		
 		"""<DOC>
-		Draws a standard fixation dot, which is a big circle (r = 8px) with the#
-		foreground color and a smaller circle (r = 2px) of the background color.
+		Draws a standard fixation dot, which is a big circle (radius = 8px) with #
+		the foreground color and a smaller circle (radius = 2px) of the #
+		background color.
 		
 		Keyword arguments:
 		x -- The center X coordinate. None = center (default=None).
 		y -- The center Y coordinate. None = center (default=None).
-		color -- A custom human readable foreground color. This does not affect#
+		color -- A custom human-readable foreground color. This does not affect #
 				 the default foreground color as set by set_fgcolor(). #
 				 (Default=None)
 		
@@ -485,7 +486,7 @@ class legacy:
 		Keyword arguments:
 		fill -- A Boolean indicating whether the circle is outlined (False) #
 				or filled (True). (Default=False)
-		color -- A custom human readable foreground color. This does not #
+		color -- A custom human-readable foreground color. This does not #
 				 affect the default foreground color as set by #
 				 set_fgcolor(). (Default=None)
 				 
@@ -509,7 +510,7 @@ class legacy:
 		ey -- The bottom coordinate.
 		
 		Keyword arguments:
-		color -- A custom human readable foreground color. This does not #
+		color -- A custom human-readable foreground color. This does not #
 				 affect the default foreground color as set by #
 				 set_fgcolor(). (Default=None)
 				 
@@ -541,7 +542,7 @@ class legacy:
 
 		Keyword arguments:
 		arrow_size -- The length of the arrowhead lines (default=5).
-		color -- A custom foreground color. This does not affect the default#
+		color -- A custom foreground color. This does not affect the default #
 				foreground color as set by set_fgcolor(). (Default=None)
 				
 		Example:
@@ -575,9 +576,9 @@ class legacy:
 		h -- The height.
 				
 		Keyword arguments:
-		fill -- A boolean indicating whether the rectangle is outlined (False)
-				or filled (True). (Default=False)#
-		color -- A custom foreground color. This does not affect the default#
+		fill -- A Boolean indicating whether the rectangle is outlined (False) #
+				or filled (True). (Default=False)
+		color -- A custom foreground color. This does not affect the default #
 				 foreground color as set by set_fgcolor(). (Default=None)
 				 
 		Example:
@@ -609,9 +610,9 @@ class legacy:
 		h -- The height.
 				
 		Keyword arguments:
-		fill -- A Boolean indicating whether the ellipse is outlined (False) or#
-				filled (True). (default=False)
-		color -- A custom foreground color. This does not affect the default#
+		fill -- A Boolean indicating whether the ellipse is outlined (False) or #
+				filled (True). (Default=False)
+		color -- A custom foreground color. This does not affect the default #
 				 foreground color as set by set_fgcolor(). (Default=None)
 				 
 		Example:
@@ -646,11 +647,11 @@ class legacy:
 	def polygon(self, vertices, fill=False, color=None):
 		
 		"""<DOC>
-		Draws a polygon that consists of multiple vertices (i.e. a shape of#
+		Draws a polygon that consists of multiple vertices (i.e. a shape of #
 		points connected by lines).
 		
 		Arguments:
-		vertices -- A list of tuples, where each tuple corresponds to a vertex #
+		vertices -- A list of tuples, where each tuple corresponds to a vertex. #
 					For example, [(100,100), (200,100), (100,200)] will draw a #
 					triangle.
 				
@@ -713,7 +714,7 @@ class legacy:
 		y -- The Y coordinate. None = center. (Default=None)
 		max_width -- The maximum width of the text, before wrapping to a new #
 					 line, or None to wrap at screen edge (default=None)
-		color -- A custom human readable foreground color. This does not affect #
+		color -- A custom human-readable foreground color. This does not affect #
 				 the default foreground color as set by set_fgcolor(). #
 				 (Default=None)
 		html -- Indicates whether HTML tags should be parsed (default=True).
@@ -754,7 +755,7 @@ class legacy:
 		"""<DOC>
 		A convenience function that draws a line of text based on a line number. #
 		The text strings are centered on the X-axis and vertically spaced with #
-		1.5 times the line height as determined by text_size(). #
+		1.5 times the line height as determined by text_size(). 
 		
 		Arguments:
 		text -- The text string.
@@ -849,13 +850,13 @@ class legacy:
 		stdev -- Standard deviation in pixels of the gaussian. Only applicable #
 				 if env = "gaussian". (Default=12)
 		phase -- Phase of the sinusoid [0.0 .. 1.0] (default=0).
-		col1 -- Human readable color for the tops (default="white").
-		col2 -- Human readable color for the troughs. Note: This parameter is #
+		col1 -- Human-readable color for the tops (default="white").
+		col2 -- Human-readable color for the troughs. Note: This parameter is #
 				ignored by the psycho backend. (Default="black").
 		bgmode -- Specifies whether the background is the average of col1 and #
 				  col2 (bgmode = "avg", a typical Gabor patch) or equal to col2 #
 				  ("col2"), useful for blending into the background. Note: this #
-				  parameter is ignored by the psycho backend. (Default="avg").
+				  parameter is ignored by the psycho backend. (Default="avg")
 				  
 		Example:
 		>>> from openexp.canvas import canvas
@@ -884,8 +885,8 @@ class legacy:
 		stdev -- Standard deviation in pixels of the gaussian. Only applicable #
 				 if env = "gaussian". (Default=12)
 		phase -- Phase of the sinusoid [0.0 .. 1.0] (default=0).
-		col1 -- Human readable color for the tops (default="white").
-		col2 -- Human readable color for the troughs (default="black").
+		col1 -- Human-readable color for the tops (default="white").
+		col2 -- Human-readable color for the troughs (default="black").
 		bgmode -- Specifies whether the background is the average of col1 and #
 				  col2 (bgmode="avg", a typical Gabor patch) or equal to col2 #
 				  ("col2"), useful for blending into the background #

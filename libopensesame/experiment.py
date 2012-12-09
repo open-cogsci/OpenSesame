@@ -140,12 +140,12 @@ class experiment(item.item):
 	def set_subject(self, nr):
 
 		"""<DOC>
-		Set the subject number and parity (even/ odd). This function is
-		called automatically when an experiment is started, so you do not
+		Sets the subject number and parity (even/ odd). This function is #
+		called automatically when an experiment is started, so you do not #
 		generally need to call it yourself.
 
 		Arguments:
-		nr -- the subject nr
+		nr -- The subject nr.
 		
 		Example:
 		>>> exp.set_subject(1)
@@ -386,15 +386,15 @@ class experiment(item.item):
 	def get_file(self, path):
 
 		"""<DOC>
-		Returns the path to a file. First checks if the file is in the file pool
-		and then the folder of the current experiment (if any)
-		Otherwise, simply return the path.
+		Returns the path to a file. First checks if the file is in the file pool #
+		and then the folder of the current experiment (if any). Otherwise, #
+		simply returns the path.
 
 		Arguments:
-		path -- the filename
+		path -- The filename.
 
 		Returns:
-		The full path to the file
+		The full path to the file.
 		
 		Example:		
 		>>> image_path = exp.get_file('my_image.png')
@@ -417,10 +417,10 @@ class experiment(item.item):
 	def file_in_pool(self, path):
 
 		"""<DOC>
-		Checks if a file is in the file pool
+		Checks if a file is in the file pool.
 
 		Returns:
-		A boolean indicating if the file is in the pool
+		A Boolean indicating if the file is in the pool.
 		
 		Example:		
 		>>> if not exp.file_in_pool('my_image.png'):

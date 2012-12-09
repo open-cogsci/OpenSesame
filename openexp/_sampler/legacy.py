@@ -112,7 +112,7 @@ class legacy:
 		Sets the fade-in time in milliseconds.
 
 		Arguments:
-		ms - An integer value specifying the duration in milliseconds.
+		ms -- An integer value specifying the duration in milliseconds.
 		
 		Example:
 		>>> from openexp.sampler import sampler
@@ -229,7 +229,7 @@ class legacy:
 		Plays the sound.
 
 		Keyword arguments:
-		block -- If True, block until the sound is finished (default == False).
+		block -- If True, block until the sound is finished (default = False).
 		
 		Example:
 		>>> from openexp.sampler import sampler
