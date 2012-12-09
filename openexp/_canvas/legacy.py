@@ -238,8 +238,8 @@ class legacy:
 	
 		"""<DOC>
 		Turns the current canvas into a copy of the passed canvas. Note: If you #
-		want to create a copy of a sketchpad canvas, you can also use the #
-		inline_script.copy_sketchpad() function.
+		want to create a copy of a sketchpad canvas, it is more convenient to #
+		use the inline_script.copy_sketchpad() function.
 		
 		Arguments:
 		canvas -- The canvas to copy.
@@ -894,7 +894,7 @@ class legacy:
 		col1 -- Human-readable color for the tops (default="white").
 		col2 -- Human-readable color for the troughs (default="black").
 		bgmode -- Specifies whether the background is the average of col1 and #
-				  col2 (bgmode="avg", a typical Gabor patch) or equal to col2 #
+				  col2 (bgmode="avg", a typical noise patch) or equal to col2 #
 				  ("col2"), useful for blending into the background #
 				  (default="avg").
 				  
