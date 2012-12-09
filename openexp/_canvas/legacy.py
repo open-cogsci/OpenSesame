@@ -238,8 +238,8 @@ class legacy:
 	
 		"""<DOC>
 		Turns the current canvas into a copy of the passed canvas. Note: If you #
-		want to create a copy of a sketchpad canvas, you can also use the #
-		inline_script.copy_sketchpad() function.
+		want to create a copy of a sketchpad canvas, it is more convenient to #
+		use the inline_script.copy_sketchpad() function.
 		
 		Arguments:
 		canvas -- The canvas to copy.
@@ -337,9 +337,10 @@ class legacy:
 		than to use a single canvas and repeatedly clear and redraw it.
 		
 		Keyword arguments:
-		color -- A custom background color to be used. This does not affect the #
-				 default background color as set by set_bgcolor(). (Default=None).
-
+		color -- A custom human-readable background color to be used. This does #
+				not affect the default background color as set by set_bgcolor(). #
+				(Default=None)
+				
 		Example:
 		>>> from openexp.canvas import canvas
 		>>> my_canvas = canvas(exp)
@@ -388,7 +389,7 @@ class legacy:
 		>>> my_canvas = canvas(exp)
 		>>> my_canvas.set_fgcolor('green')
 		>>> my_canvas.text('Green text', y=200)
-		>>> my_canvas.set_fgcolor('red`')
+		>>> my_canvas.set_fgcolor('red')
 		>>> my_canvas.text('Red text', y=400)
 		</DOC>"""
 		
@@ -542,8 +543,9 @@ class legacy:
 
 		Keyword arguments:
 		arrow_size -- The length of the arrowhead lines (default=5).
-		color -- A custom foreground color. This does not affect the default #
-				foreground color as set by set_fgcolor(). (Default=None)
+		color -- A custom human-readable foreground color. This does not affect #
+				the default foreground color as set by set_fgcolor(). #
+				(Default=None)
 				
 		Example:
 		>>> from openexp.canvas import canvas
@@ -578,8 +580,9 @@ class legacy:
 		Keyword arguments:
 		fill -- A Boolean indicating whether the rectangle is outlined (False) #
 				or filled (True). (Default=False)
-		color -- A custom foreground color. This does not affect the default #
-				 foreground color as set by set_fgcolor(). (Default=None)
+		color -- A custom human-readable foreground color. This does not affect #
+				the default foreground color as set by set_fgcolor(). #
+				(Default=None)
 				 
 		Example:
 		>>> from openexp.canvas import canvas
@@ -658,8 +661,9 @@ class legacy:
 		Keyword arguments:
 		fill -- A Boolean indicating whether the rectangle is outlined (False) #
 				or filled (True). (Default=False)
-		color -- A custom foreground color. This does not affect the default #
-				 foreground color as set by set_fgcolor(). (Default=None)
+		color -- A custom human-readable foreground color. This does not affect #
+				the default foreground color as set by set_fgcolor(). #
+				(Default=None)
 				 
 		Example:
 		>>> from openexp.canvas import canvas
@@ -705,7 +709,7 @@ class legacy:
 		Draws text.
 		
 		Arguments:
-		text -- The text string
+		text -- The text string.
 		
 		Keyword arguments:
 		center -- A Boolean indicating whether the coordinates reflect the #
@@ -763,8 +767,9 @@ class legacy:
 				center.
 				
 		Keyword arguments:
-		color -- A custom foreground color. This does not affect the default #
-				foreground color as set by set_fgcolor(). (Default=None)
+		color -- A human-readable custom foreground color. This does not affect #
+				the default 	foreground color as set by set_fgcolor(). #
+				(Default=None)
 				 
 		Example:
 		>>> from openexp.canvas import canvas
@@ -799,6 +804,7 @@ class legacy:
 		Example:
 		>>> from openexp.canvas import canvas
 		>>> my_canvas = canvas(exp)
+		>>> # Determine the absolute path:
 		>>> path = exp.get_file('image_in_pool.png')
 		>>> my_canvas.image(path)
 		</DOC>"""
@@ -888,7 +894,7 @@ class legacy:
 		col1 -- Human-readable color for the tops (default="white").
 		col2 -- Human-readable color for the troughs (default="black").
 		bgmode -- Specifies whether the background is the average of col1 and #
-				  col2 (bgmode="avg", a typical Gabor patch) or equal to col2 #
+				  col2 (bgmode="avg", a typical noise patch) or equal to col2 #
 				  ("col2"), useful for blending into the background #
 				  (default="avg").
 				  
