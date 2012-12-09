@@ -121,14 +121,13 @@ def ignore_package_files(folder, files):
 
 # A function to strip non-compiled scripts and backup files
 def strip_py(folder):
-	for path in os.listdir(folder):
+	for path in os.listdir(folder):		
 		path = os.path.join(folder, path)
 		if os.path.isdir(path):
 			strip_py(path)
 			continue
 		base, ext = os.path.splitext(path)
-		if (ext in ('.py', '.pyc') and os.path.exists(base+'.pyo')) or \
-			path[-1] == '~':
+		if (ext in ('.py', '.pyc') and os.path.exists(base+'.pyo')) or path[-1] == '~':
 			print 'stripping %s' % path
 			os.remove(path)
 
@@ -141,7 +140,10 @@ for pkg in copy_packages:
 	shutil.copytree(pkg_folder, pkg_target, symlinks=True, \
 		ignore=ignore_package_files)
 	compileall.compile_dir(pkg_target, force=True)
-	strip_py(pkg_target)
+	# Expyriment assumes that certain source files are available, see
+	# http://code.google.com/p/expyriment/issues/detail?id=16
+	if pkg != 'expyriment':
+		strip_py(pkg_target)
 
 # Create a list of standard pakcages that should be included
 # http://stackoverflow.com/questions/6463918/how-can-i-get-a-list-of-all-the-python-standard-library-modules
