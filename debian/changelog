@@ -1,4 +1,4 @@
-opensesame (0.27-ubuntu1) precise; urgency=low
+opensesame (0.27-nd1) unstable; urgency=low
 
   * Added Expyriment backend
   * Added form functionality
@@ -13,7 +13,7 @@ opensesame (0.27-ubuntu1) precise; urgency=low
 
 opensesame (0.26-2) unstable; urgency=low
 
-  * Loads of bug-fixes. 
+  * Loads of bug-fixes.
 
  -- Sebastiaan Mathot <s.mathot@cogsci.nl>  Mon, 02 Apr 2012 11:46:10 +0200
 
@@ -21,7 +21,7 @@ opensesame (0.25-1) unstable; urgency=low
 
   * Loads of bug-fixes.
   * Editor component now uses Scintilla.
-    
+
  -- Sebastiaan Mathot <s.mathot@cogsci.nl>  Tue, 08 Nov 2011 12:48:24 +0100
 
 opensesame (0.24-1) unstable; urgency=low
