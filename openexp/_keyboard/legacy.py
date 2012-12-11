@@ -69,10 +69,10 @@ class legacy:
 		insensitive. Naming keys using ASCII (integer) key codes is deprecated.
 
 		For example:
-		- The key 'a' is represented by 'a' and 'A'
-		- The up arrow is represented by 'up' and 'UP'
-		- The '/' key is represented by '/', 'slash', and 'SLASH'
-		- The spacebar is represented by 'space' and 'SPACE'
+		- The key 'a' is represented by 'a' and 'A'.
+		- The up arrow is represented by 'up' and 'UP'.
+		- The '/' key is represented by '/', 'slash', and 'SLASH'.
+		- The spacebar is represented by 'space' and 'SPACE'.
 		
 		For a complete list of available key names, click on the 'list available #
 		keys' button in the keyboard_response tab within OpenSesame.
@@ -81,7 +81,7 @@ class legacy:
 		experiment -- An instance of libopensesame.experiment.experiment.
 
 		Keyword arguments:
-		keylist -- A list of human readable keys that are accepted or None to #
+		keylist -- A list of human-readable keys that are accepted or None to #
 				   accept all keys (default=None).
 		timeout -- An integer value specifying a timeout in milliseconds or None #
 				   for no timeout (default=None).
@@ -155,7 +155,7 @@ class legacy:
 		Waits for keyboard input.
 
 		Keyword arguments:
-		keylist -- A list of human readable keys that are accepted or None to #
+		keylist -- A list of human-readable keys that are accepted or None to #
 				   use the default. This parameter does not change the default #
 				   keylist (default=None).
 		timeout -- An integer value specifying a timeout in milliseconds or None #
@@ -173,7 +173,7 @@ class legacy:
 		>>> my_keyboard = keyboard(exp, timeout=2000)
 		>>> response, timestamp = my_keyboard.get_key()
 		>>> if response == None:
-		>>> 		print 'A timeout occurred!'
+		>>> 	print 'A timeout occurred!'
 		</DOC>"""
 				
 		start_time = pygame.time.get_ticks()
@@ -219,7 +219,7 @@ class legacy:
 		>>> my_keyboard = keyboard(exp)
 		>>> moderators = my_keyboard.get_mods()
 		>>> if 'shift' in moderators:
-		>>> 		print 'The shift-key is down!'
+		>>> 	print 'The shift-key is down!'
 		</DOC>"""
 
 		l = []
