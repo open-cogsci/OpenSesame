@@ -50,7 +50,7 @@ class text_input(item.item, generic_response.generic_response):
 		self.duration = "dummy"
 		self.accept_on = "return press"
 		self.timeout = 1000
-		self.process_feedback = True				
+		self.process_feedback = True
 
 		# Provide a short accurate description of the items functionality
 		self.description = "Provides a simple text input"
@@ -73,7 +73,7 @@ class text_input(item.item, generic_response.generic_response):
 		# the current response item
 		if self.experiment.start_response_interval == None:
 			self.experiment.start_response_interval = self.get("time_%s" % \
-				self.name)		
+				self.name)
 
 		self._keyboard = openexp.keyboard.keyboard(self.experiment)
 
@@ -101,10 +101,10 @@ class text_input(item.item, generic_response.generic_response):
 		response = ""
 		response_time = None
 		while True:
-		
+
 			if self._check_return and resp == "return":
 				break
-		
+
 			if self._check_timeout and self.time() - \
 				self.experiment.start_response_interval > self.timeout:
 				break
@@ -157,20 +157,20 @@ class text_input(item.item, generic_response.generic_response):
 
 		# Report success
 		return True
-		
+
 	def prepare(self):
-	
+
 		"""Prepare for the run phase"""
-		
-		item.item.prepare(self)		
+
+		item.item.prepare(self)
 		if self.get("accept_on") != "return press":
 			self._check_timeout = True
 		else:
-			self._check_timeout = False			
+			self._check_timeout = False
 		if self.get("accept_on") != "timeout":
 			self._check_return = True
 		else:
-			self._check_return = False				
+			self._check_return = False
 		return True
 
 	def var_info(self):
@@ -207,6 +207,8 @@ class qttext_input(text_input, qtplugin.qtplugin):
 
 		# Pass the word on to the parent
 		qtplugin.qtplugin.init_edit_widget(self, False)
+		self.add_text( \
+			'<b>Deprecation warning:</b> Forms are faster and more flexible than the text_input plug-in')
 
 		# Create the controls
 		#
@@ -230,7 +232,7 @@ class qttext_input(text_input, qtplugin.qtplugin):
 		self.add_combobox_control("font_family", "Font family", ["mono", "sans", "serif"], tooltip = "The font style")
 		self.add_spinbox_control("font_size", "Font size", 1, 512, suffix = "pt", tooltip = "The font size")
 		self.add_combobox_control("accept_on", "Accept on", ["return press", "timeout", "return press or timeout"], tooltip = "Indicates when the input text should be accepted")
-		self.add_spinbox_control("timeout", "Timeout (if applicable)", 1, 100000, suffix = "ms", tooltip = "Timeout value")		
+		self.add_spinbox_control("timeout", "Timeout (if applicable)", 1, 100000, suffix = "ms", tooltip = "Timeout value")
 		self.add_editor_control("_question", "Question", default = "Your question?", tooltip = "The question to be displayed above the input field")
 
 		self.lock = False
