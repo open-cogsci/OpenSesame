@@ -16,7 +16,7 @@
 ; USAGE
 ; -----
 ; This script assumes that the binary is located in
-; 	C:\Users\John Doe\Documents\git\OpenSesame\dist\
+; 	C:\Users\John Doe\Documents\git\OpenSesame\dist
 
 ; For each new release, adjust the PRODUCT_VERSION as follows:
 ; 	version-win32-package#
@@ -26,7 +26,7 @@
 
 ; HM NIS Edit Wizard helper defines
 !define PRODUCT_NAME "OpenSesame"
-!define PRODUCT_VERSION "0.27~rc2-win32-1"
+!define PRODUCT_VERSION "0.27-win32-1"
 !define PRODUCT_PUBLISHER "Sebastiaan Mathot"
 !define PRODUCT_WEB_SITE "http://www.cogsci.nl"
 !define PRODUCT_UNINST_KEY "Software\Microsoft\Windows\CurrentVersion\Uninstall\${PRODUCT_NAME}"
