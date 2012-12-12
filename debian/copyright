@@ -1,6 +1,6 @@
-Format: Format: http://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
+Format: http://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
 Upstream-Name: opensesame
-Maintainer-Contact: Sebastiaan Mathot <s.mathot@cogsci.nl>
+Upstream-Contact: Sebastiaan Mathot <s.mathot@cogsci.nl>
 Source: http://www.cogsci.nl/software/opensesame
 
 Files: *

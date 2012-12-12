@@ -1,4 +1,4 @@
-opensesame (0.27-nd1) unstable; urgency=low
+opensesame (0.27-1) unstable; urgency=low
 
   * Added Expyriment backend
   * Added form functionality
@@ -8,30 +8,31 @@ opensesame (0.27-nd1) unstable; urgency=low
   * Add ecological alternative to S&V template
   * Numerous bug-fixes
   * Improved compatibility with Nexus 7 tablet
+  * (Closes: #611640)
 
- -- Sebastiaan Mathot <s.mathot@cogsci.nl>  Tue, 11 Dec 2012 17:49:16 +0100
+ -- Sebastiaan Mathot <s.mathot@cogsci.nl>  Wed, 12 Dec 2012 16:37:54 +0100
 
-opensesame (0.26-2) unstable; urgency=low
+opensesame (0.26-2) UNRELEASED; urgency=low
 
   * Loads of bug-fixes.
 
  -- Sebastiaan Mathot <s.mathot@cogsci.nl>  Mon, 02 Apr 2012 11:46:10 +0200
 
-opensesame (0.25-1) unstable; urgency=low
+opensesame (0.25-1) neurodebian; urgency=low
 
   * Loads of bug-fixes.
   * Editor component now uses Scintilla.
 
  -- Sebastiaan Mathot <s.mathot@cogsci.nl>  Tue, 08 Nov 2011 12:48:24 +0100
 
-opensesame (0.24-1) unstable; urgency=low
+opensesame (0.24-1) neurodebian; urgency=low
 
   * New upstream release. Added new PsychoPy and OpenGL backends.
   * Bumped Standards-version to 3.9.2; no changes necessary.
 
  -- Michael Hanke <mih@debian.org>  Wed, 20 Jul 2011 14:47:21 -0400
 
-opensesame (0.23+git1-g0212357-1) unstable; urgency=low
+opensesame (0.23+git1-g0212357-1) neurodebian; urgency=low
 
   * New upstream release. Package from subsequent Git commit as upstream removed
     pre-generated PDFs after the 0.23 release.
@@ -40,7 +41,7 @@ opensesame (0.23+git1-g0212357-1) unstable; urgency=low
 
  -- Michael Hanke <mih@debian.org>  Wed, 06 Apr 2011 21:10:09 -0400
 
-opensesame (0.22+git9-g8633c14-1) unstable; urgency=low
+opensesame (0.22+git9-g8633c14-1) neurodebian; urgency=low
 
   * Initial release (Closes: #611640).
 
