@@ -52,7 +52,7 @@ class srbox(item.item, generic_response.generic_response):
 		self.lights = ""
 		self.dev = "autodetect"
 		self._dummy = "no"
-		self.process_feedback = True				
+		self.process_feedback = True
 
 		# The parent handles the rest of the contruction
 		item.item.__init__(self, name, experiment, string)
@@ -196,7 +196,7 @@ class srbox(item.item, generic_response.generic_response):
 		if not hasattr(self.experiment, "srbox") or \
 			self.experiment.srbox == None:
 				debug.msg("no active srbox")
-				return		
+				return
 		try:
 			self.experiment.srbox.close()
 			debug.msg("srbox closed")

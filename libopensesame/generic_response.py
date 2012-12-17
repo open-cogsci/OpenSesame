@@ -122,7 +122,7 @@ class generic_response:
 	def response_bookkeeping(self):
 
 		"""Do some bookkeeping for the response"""
-		
+
 		# The respone and response_time variables are always set, for every
 		# response item
 		self.experiment.set("response_time", \
@@ -132,17 +132,17 @@ class generic_response:
 			self.get("response"))
 		self.experiment.set("response_time_%s" % self.get("name"), \
 			self.get("response_time"))
-		self.experiment.start_response_interval = None									
-					
+		self.experiment.start_response_interval = None
+
 		# But correctness information is only set for dedicated response items,
 		# such as keyboard_response items, because otherwise we might confound
 		# the feedback
-		if self.process_feedback:			
-			debug.msg("processing feedback for '%s'" % self.name)				
+		if self.process_feedback:
+			debug.msg("processing feedback for '%s'" % self.name)
 			if self.has("correct_response"):
 				# If a correct_response has been defined, we use it to determine
 				# accuracy etc.
-				correct_response = self.get("correct_response")				
+				correct_response = self.get("correct_response")
 				if hasattr(self, "synonyms") and self.synonyms != None:
 					if correct_response in self.synonyms or \
 						self.unistr(correct_response) in self.synonyms:
@@ -156,11 +156,11 @@ class generic_response:
 						self.experiment.correct = 1
 						self.experiment.total_correct += 1
 					else:
-						self.experiment.correct = 0								
-			else:			
+						self.experiment.correct = 0
+			else:
 				# If a correct_response hasn't been defined, we simply set
 				# correct to undefined
-				self.experiment.correct = "undefined"				
+				self.experiment.correct = "undefined"
 			# Do some response bookkeeping
 			self.experiment.total_response_time += self.experiment.response_time
 			self.experiment.total_responses += 1
@@ -307,7 +307,7 @@ class generic_response:
 		"""Prepare a keypress duration"""
 
 		self._keyboard = openexp.keyboard.keyboard(self.experiment)
-		if self.experiment.auto_response:			
+		if self.experiment.auto_response:
 			self._duration_func = self.auto_responder
 		else:
 			self._keyboard.set_timeout(self._timeout)
@@ -322,7 +322,7 @@ class generic_response:
 		if self.experiment.auto_response:
 			self._duration_func = self.auto_responder
 		else:
-			# Prepare mouseclick			
+			# Prepare mouseclick
 			self._mouse.set_timeout(self._timeout)
 			self._mouse.set_buttonlist(self._allowed_responses)
 			self._duration_func = self._mouse.get_click
@@ -357,14 +357,14 @@ class generic_response:
 		"""
 
 		l = []
-		l.append( ("response", "[Depends on response]") )		
-		l.append( ("response_time", "[Depends on response]") )		
+		l.append( ("response", "[Depends on response]") )
+		l.append( ("response_time", "[Depends on response]") )
 		l.append( ("response_%s" % self.get("name", _eval=False), \
-			"[Depends on response]") )		
+			"[Depends on response]") )
 		l.append( ("response_time_%s" % self.get("name", _eval=False), \
-			"[Depends on response]") )			
+			"[Depends on response]") )
 		if self.process_feedback:
-			l.append( ("correct", "[Depends on response]") )		
+			l.append( ("correct", "[Depends on response]") )
 			l.append( ("correct_%s" % self.get("name", _eval=False), \
 				"[Depends on response]") )
 			l.append( ("average_response_time", "[Depends on response]") )
