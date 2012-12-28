@@ -95,7 +95,7 @@ class joystick(item.item, generic_response.generic_response):
 
 		# In case of dummy-mode:
 		self._keyboard = openexp.keyboard.keyboard(self.experiment)
-		if self.has("dummy") and self.get("dummy") == "yes":
+		if self.has("_dummy") and self.get("_dummy") == "yes":
 			self._resp_func = self._keyboard.get_key
 
 		# Not in dummy-mode:

@@ -23,7 +23,7 @@ style API. The new one is obviously preferred for new code.
 
 OLD STYLE
 =========
->>> from libqtopensesame.misc import config 
+>>> from libqtopensesame.misc import config
 >>> config.set_config('my_setting', 'my_value')
 >>> print config.get_config('my_setting')
 
@@ -93,24 +93,24 @@ class config(object):
 		"version_check_url" : \
 			"http://files.cogsci.nl/software/opensesame/MOST_RECENT_VERSION.TXT"
 		}
-		
+
 	# OS specific override settings
 	config_linux = {
 		"theme" : "gnome"
-		}		
+		}
 	config_mac = {}
 	config_windows = {}
-		
+
 	def __init__(self):
-		
+
 		"""Constructor"""
-		
+
 		# Determine the sip api that is used, because this depends on whether
 		# or not IPython is loaded
 		object.__setattr__(self, 'api', sip.getapi('QString'))
 		if self.api not in (1,2):
-			raise Exception('config: unknown api %s' % self.api)	
-		
+			raise Exception('config: unknown api %s' % self.api)
+
 		# Apply OS specific override settings
 		if platform.system() == "Windows":
 			for key, value in self.config_windows.iteritems():
@@ -118,56 +118,56 @@ class config(object):
 		elif platform.system() == "Darwin":
 			for key, value in self.config_mac.iteritems():
 				self.config[key] = value
-		elif platform.system() == "Linux":			
+		elif platform.system() == "Linux":
 			for key, value in self.config_linux.iteritems():
 				self.config[key] = value
-		
+
 	def __getattr__(self, setting):
-		
+
 		"""
 		A getter for settings, to allow for easy access
-		
+
 		Argument:
 		setting -- the setting to get
 		"""
-		
+
 		if setting not in self.config:
 			raise exceptions.runtime_error('The setting "%s" does not exist' \
 				% setting)
 		return self.config[setting]
-	
+
 	def __setattr__(self, setting, value):
-		
+
 		"""
 		A setter for settings, to allow for easy access
-		
+
 		Argument:
 		setting -- the setting to set
 		value -- the value to set
 		"""
 		if setting not in self.config:
 			raise exceptions.runtime_error('The setting "%s" does not exist' \
-				% setting)		
+				% setting)
 		self.config[setting] = value
 		self.config['cfg_ver'] += 1
-		
+
 	def parse_cmdline_args(self, args):
 
 		"""
 		Apply settings that were specified on the command line. The expected
 		format is as follows: [name]=[val];[name]=[val];...
-		
+
 		Arguments:
 		args -- the string of command line arguments
 		"""
-		
-		if args == None:		
+
+		if args == None:
 			return
-			
+
 		for arg in args.split(";"):
 			a = arg.split("=")
 			if len(a) == 2:
-			
+
 				# Automagically determine the data type
 				if a[1] == "True":
 					val = True
@@ -181,16 +181,16 @@ class config(object):
 							val = float(a[1])
 						except:
 							val = a[1]
-					
-				# Apply the argument		
+
+				# Apply the argument
 				try:
 					self.__setattr__(a[0], val)
 					debug.msg("%s = %s" % (a[0], val))
 				except:
-					debug.msg("Failed to parse argument: %s" % arg)				
-		
+					debug.msg("Failed to parse argument: %s" % arg)
+
 	def restore(self, qsettings):
-		
+
 		"""
 		Restore settings from a QSettings
 
@@ -219,12 +219,12 @@ class config(object):
 				elif type(default) == QtCore.QByteArray:
 					value = value.toByteArray()
 				elif type(default) == QtCore.QString:
-					value = value.toString()					
+					value = value.toString()
 				elif type(default) == QtCore.QStringList:
 					value = value.toStringList()
 				elif type(default) == unicode:
 					value = unicode(value.toString())
-					
+
 
 			# The newer api returns some things as strings, so we still have to
 			# do some type conversion
@@ -236,11 +236,11 @@ class config(object):
 						value = True
 				elif type(default) == int:
 					value = int(value)
-					
+
 			self.__setattr__(setting, value)
-			
+
 	def save(self, qsettings):
-		
+
 		"""
 		Save settings to a QSettings
 
@@ -250,8 +250,8 @@ class config(object):
 
 		for setting, value in self.config.items():
 			if setting != "cfg_ver":
-				qsettings.setValue(setting, value)		
-	
+				qsettings.setValue(setting, value)
+
 
 # Old style API. See explanation above
 def get_config(setting):
@@ -262,7 +262,7 @@ def set_config(setting, value):
 
 def restore_config(settings):
 	cfg.restore(settings)
-		
+
 def save_config(settings):
 	cfg.save(settings)
 
