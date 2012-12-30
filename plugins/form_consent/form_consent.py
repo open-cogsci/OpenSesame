@@ -88,7 +88,12 @@ class form_consent(form_base.form_base):
 		"""Execute the consent form"""
 
 		while True:
-			super(form_consent, self).run()
+			# In this case we cannot call super(form_consent, self), because
+			# modules may have been reloaded. The exact nature of the bug is
+			# unclear, but passing the __class__ property resolves it. See also
+			# <http://thingspython.wordpress.com/2010/09/27/another-super-wrinkle-raising-typeerror/>
+
+			super(self.__class__, self).run()
 			if self.get('checkbox_status') == self.get('checkbox_text') and \
 				self.get('accept_status') == 'yes':
 				break
@@ -96,7 +101,6 @@ class form_consent(form_base.form_base):
 			c.text(self.get('decline_message'))
 			c.show()
 			self.sleep(5000)
-
 
 class qtform_consent(form_consent, qtplugin.qtplugin):
 
