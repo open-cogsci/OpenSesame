@@ -419,7 +419,7 @@ class item(object):
 		Example:
 		>>> if self.get('cue') == 'valid':
 		>>>		print 'This is a validly cued trial'
-		
+
 		Example 2:
 		>>> exp.set('var1', 'I like [var2]')
 		>>> exp.set('var2', 'OpenSesame')
@@ -1004,3 +1004,4 @@ class item(object):
 
 		self.experiment._log.flush()
 		os.fsync(self.experiment._log)
+
