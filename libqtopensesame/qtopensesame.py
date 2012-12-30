@@ -36,7 +36,7 @@ import subprocess
 class qtopensesame(QtGui.QMainWindow):
 
 	"""The main class of the OpenSesame GUI"""
-	
+
 	# Set to False for release!
 	devmode = False
 
@@ -46,7 +46,7 @@ class qtopensesame(QtGui.QMainWindow):
 		Constructor. This does very little, except prepare the app to be shown
 		as rapidly as possible. The actual GUI initialization is handled by
 		resume_init().
-		
+
 		Arguments:
 		app -- the QApplication
 
@@ -56,7 +56,7 @@ class qtopensesame(QtGui.QMainWindow):
 
 		QtGui.QMainWindow.__init__(self, parent)
 		self.app = app
-		self.first_show = True		
+		self.first_show = True
 
 	def resume_init(self):
 
@@ -68,22 +68,22 @@ class qtopensesame(QtGui.QMainWindow):
 		from libqtopensesame.misc import theme, dispatch
 		import platform
 		import random
-		
+
 		# Initialize random number generator
 		random.seed()
 
 		# Check the filesystem encoding for debugging purposes
 		debug.msg('filesystem encoding: %s' % sys.getfilesystemencoding())
-		
+
 		# Restore the configuration
 		self.restore_config()
-		
+
 		# Setup dispatch
 		self.dispatch = dispatch.dispatch(self)
-				
+
 		# Setup the UI
 		self.ui = opensesame_ui.Ui_opensesame_mainwindow()
-		self.ui.setupUi(self)	
+		self.ui.setupUi(self)
 		self.ui.toolbar_items.main_window = self
 		self.ui.itemtree.main_window = self
 		self.ui.table_variables.main_window = self
@@ -95,12 +95,12 @@ class qtopensesame(QtGui.QMainWindow):
 		self.codename = misc.codename
 		self.lock_refresh = False
 		self.unsaved_changes = False
-		
+
 		# Parse the command line
 		self.parse_command_line()
-		
+
 		# Load a theme
-		self.theme = theme.theme(self, self.options._theme)		
+		self.theme = theme.theme(self, self.options._theme)
 
 		# Determine the home folder
 		self.home_folder = libopensesame.misc.home_folder()
@@ -120,7 +120,7 @@ class qtopensesame(QtGui.QMainWindow):
 
 		# Set the window message
 		self.window_message(_("Welcome to OpenSesame %s") % self.version)
-		
+
 		# Set the window icon
 		self.setWindowIcon(self.theme.qicon("opensesame"))
 
@@ -152,7 +152,7 @@ class qtopensesame(QtGui.QMainWindow):
 			self.ui.tabwidget.open_general_help)
 		self.ui.action_about.triggered.connect(self.ui.tabwidget.open_about)
 		self.ui.action_online_documentation.triggered.connect( \
-			self.ui.tabwidget.open_osdoc)		
+			self.ui.tabwidget.open_osdoc)
 		self.ui.action_check_for_update.triggered.connect(self.check_update)
 		self.ui.action_open_autosave_folder.triggered.connect( \
 			self.open_autosave_folder)
@@ -215,7 +215,7 @@ class qtopensesame(QtGui.QMainWindow):
 
 		# On Mac OS (darwin) hide, the run in Window functionality
 		if sys.platform == "darwin":
-			self.ui.action_run_in_window.setDisabled(True)				
+			self.ui.action_run_in_window.setDisabled(True)
 
 		# Create the initial experiment
 
@@ -224,14 +224,14 @@ class qtopensesame(QtGui.QMainWindow):
 				"default.opensesame")), "r").read())
 
 		# Build the items toolbar
-		self.set_status(_("Welcome to OpenSesame %s") % self.version)		
+		self.set_status(_("Welcome to OpenSesame %s") % self.version)
 		self.restore_state()
 		self.refresh_plugins()
 		self.start_autosave_timer()
 		self.update_recent_files()
-		self.clean_autosave()		
+		self.clean_autosave()
 		self.set_unsaved(False)
-		
+
 	def parse_command_line(self):
 
 		"""Parse command line options"""
@@ -254,7 +254,7 @@ class qtopensesame(QtGui.QMainWindow):
 		group.add_option("-c", "--config", action="store", dest="_config", \
 			help="Set a configuration option, e.g, '--config auto_update_check=False;scintilla_font_size=10'. For a complete list of configuration options, please refer to the source of config.py.")
 		group.add_option("-t", "--theme", action="store", dest="_theme", \
-			help="Specify a GUI theme")							
+			help="Specify a GUI theme")
 		group.add_option("-d", "--debug", action="store_true", dest="debug", \
 			help="Print lots of debugging messages to the standard output")
 		group.add_option("-s", "--stack", action="store_true", dest="_stack", \
@@ -266,25 +266,25 @@ class qtopensesame(QtGui.QMainWindow):
 		group.add_option("--ipython", action="store_true", dest="ipython", \
 			help="Enable the IPython interpreter")
 		group.add_option("--locale", action="store_true", dest="locale", \
-			help="Specify localization")			
+			help="Specify localization")
 		group.add_option("--catch-translatables", action="store_true", \
-			dest="catch_translatables", help="Log all translatable text")						
+			dest="catch_translatables", help="Log all translatable text")
 		group.add_option("--no-global-resources", action="store_true", dest="no_global_resources", \
 			help="Do not use global resources on *nix")
 		parser.add_option_group(group)
-		self.options, args = parser.parse_args(sys.argv)	
+		self.options, args = parser.parse_args(sys.argv)
 		if self.options.run and self.options.run_in_window:
-			parser.error("Options -r / --run and -w / --run-in-window are mutually exclusive.")			
-			
+			parser.error("Options -r / --run and -w / --run-in-window are mutually exclusive.")
+
 	def restore_config(self):
-	
+
 		"""Restores the configuration settings, but doesn't apply anything"""
-	
+
 		debug.msg()
 		settings = QtCore.QSettings("cogscinl", "opensesame")
 		settings.beginGroup("MainWindow")
 		config.restore_config(settings)
-		settings.endGroup()			
+		settings.endGroup()
 
 	def restore_state(self):
 
@@ -298,7 +298,7 @@ class qtopensesame(QtGui.QMainWindow):
 		self.resize(cfg.size)
 		self.move(cfg.pos)
 		self.experiment.auto_response = cfg.auto_response
-		
+
 		# Set the keyboard shortcuts
 		self.ui.shortcut_itemtree.setKey(QtGui.QKeySequence( \
 			cfg.shortcut_itemtree))
@@ -311,13 +311,13 @@ class qtopensesame(QtGui.QMainWindow):
 
 		# Unpack the string with recent files and only remember those that exist
 		self.recent_files = []
-		for path in cfg.recent_files.split(";;"):		
+		for path in cfg.recent_files.split(";;"):
 			if os.path.exists(path):
 				debug.msg("adding recent file '%s'" % path)
 				self.recent_files.append(path)
 			else:
 				debug.msg("missing recent file '%s'" % path)
-				
+
 		self.ui.action_enable_auto_response.setChecked( \
 			self.experiment.auto_response)
 		self.ui.action_onetabmode.setChecked(cfg.onetabmode)
@@ -333,7 +333,7 @@ class qtopensesame(QtGui.QMainWindow):
 				QtCore.Qt.ToolButtonIconOnly)
 		self.set_style()
 		self.theme.set_toolbar_size(cfg.toolbar_size)
-		
+
 	def restore_window_state(self):
 
 		"""
@@ -341,8 +341,8 @@ class qtopensesame(QtGui.QMainWindow):
 		don't wait until the end, the window gets distorted again.
 		"""
 
-		self.restoreState(config.get_config('_initial_window_state'))		
-		self.restoreGeometry(config.get_config('_initial_window_geometry'))		
+		self.restoreState(config.get_config('_initial_window_state'))
+		self.restoreGeometry(config.get_config('_initial_window_geometry'))
 
 	def save_state(self):
 
@@ -359,7 +359,7 @@ class qtopensesame(QtGui.QMainWindow):
 		settings.setValue("auto_response", self.experiment.auto_response)
 		settings.setValue("toolbar_text", \
 			self.ui.toolbar_main.toolButtonStyle() == \
-			QtCore.Qt.ToolButtonTextUnderIcon)		
+			QtCore.Qt.ToolButtonTextUnderIcon)
 		settings.setValue("recent_files", ";;".join(self.recent_files))
 		settings.endGroup()
 
@@ -620,7 +620,7 @@ class qtopensesame(QtGui.QMainWindow):
 
 		w = self.ui.tabwidget.get_widget('__preferences__')
 		if w != None:
-			w.set_controls()	
+			w.set_controls()
 
 	def show_text_in_toolbar(self):
 
@@ -795,7 +795,7 @@ class qtopensesame(QtGui.QMainWindow):
 	def update_recent_files(self):
 
 		"""Recreate the list with recent documents"""
-		
+
 		from libqtopensesame.actions import recent_action
 
 		# Add the current path to the front of the list
@@ -849,12 +849,12 @@ class qtopensesame(QtGui.QMainWindow):
 
 		path = unicode(path)
 		self.set_status("Opening ...")
-		self.ui.tabwidget.close_all()		
+		self.ui.tabwidget.close_all()
 		cfg.file_dialog_path = os.path.dirname(path)
 
 		try:
 			exp = experiment.experiment(self, "Experiment", path)
-		except Exception as e:			
+		except Exception as e:
 			self.experiment.notify( \
 				_("<b>Error:</b> Failed to open '%s'<br /><b>Description:</b> %s<br /><br />Make sure that the file is in .opensesame or .opensesame.tar.gz format. If you should be able to open this file, but can't, please go to http://www.cogsci.nl/opensesame to find out how to recover your experiment and file a bug report.") \
 				% (path, e))
@@ -928,7 +928,7 @@ class qtopensesame(QtGui.QMainWindow):
 		# Try to save the experiment if it doesn't exist already
 		if self.experiment.debug:
 			resp = self.experiment.save(self.current_path, overwrite=True)
-			self.set_status(_("Saved as %s") % self.current_path)			
+			self.set_status(_("Saved as %s") % self.current_path)
 		else:
 			try:
 				resp = self.experiment.save(self.current_path, overwrite=True)
@@ -954,21 +954,21 @@ class qtopensesame(QtGui.QMainWindow):
 			cfg.file_dialog_path = os.path.join(self.home_folder, self.experiment.sanitize( \
 				self.experiment.title, strict=True, allow_vars=False))
 		else:
-			cfg.file_dialog_path = self.current_path		
+			cfg.file_dialog_path = self.current_path
 		path, file_type = QtGui.QFileDialog.getSaveFileNameAndFilter( \
 			self.ui.centralwidget, _("Save file as ..."), directory= \
 			cfg.file_dialog_path, filter=self.file_type_filter)
-							
+
 		if path != None and path != "":
 			path = unicode(path)
 			cfg.file_dialog_path = os.path.dirname(path)
-			
+
 			# If the extension has not been explicitly typed in, set it based
 			# on the selected filter and, if no filter has been set, based on
 			# whether there is content in the file pool
 			if path[-18:].lower() != ".opensesame.tar.gz" and \
 				path[-11:].lower() != ".opensesame":
-				debug.msg("automagically determing file type")			
+				debug.msg("automagically determing file type")
 				if "(*.opensesame)" in file_type:
 					path += ".opensesame"
 				elif "(*.opensesame.tar.gz)" in file_type:
@@ -978,7 +978,7 @@ class qtopensesame(QtGui.QMainWindow):
 				else:
 					path += ".opensesame.tar.gz"
 				debug.msg(path)
-					
+
 			self.current_path = path
 			self.save_file()
 
@@ -1052,7 +1052,7 @@ class qtopensesame(QtGui.QMainWindow):
 			return
 
 		self.experiment = tmp
-		self.refresh()			
+		self.refresh()
 
 	def build_item_list(self, name=None):
 
@@ -1162,7 +1162,8 @@ class qtopensesame(QtGui.QMainWindow):
 
 		# Temporary file for the standard output and experiment
 		stdout = tempfile.mktemp(suffix = ".stdout")
-		path = tempfile.mktemp(suffix = ".opensesame.tar.gz")
+		path = os.path.join(exp.experiment_path, \
+			'.opensesamerun-tmp.opensesame.tar.gz')
 		exp.save(path, True)
 		debug.msg("experiment saved as '%s'" % path)
 
@@ -1175,7 +1176,8 @@ class qtopensesame(QtGui.QMainWindow):
 		else:
 			cmd = config.get_config('opensesamerun_exec').split()
 
-		cmd += [path, "--logfile=%s" % exp.logfile, "--subject=%s" % exp.subject_nr]
+		cmd += [path, "--logfile=%s" % exp.logfile, "--subject=%s" \
+			% exp.subject_nr]
 
 		if debug.enabled:
 			cmd.append("--debug")
@@ -1278,7 +1280,7 @@ class qtopensesame(QtGui.QMainWindow):
 			exp.set("subject_nr", 999)
 			exp.set("subject_parity", "odd")
 			logfile = os.path.join(config.get_config('default_logfile_folder'), \
-				config.get_config('quick_run_logfile'))				
+				config.get_config('quick_run_logfile'))
 
 		else:
 
@@ -1393,11 +1395,11 @@ class qtopensesame(QtGui.QMainWindow):
 		"""Runs the experiment in a window"""
 
 		self.run_experiment(fullscreen=False)
-		
+
 	def run_quick(self):
-		
+
 		"""Run the experiment without asking for subject nr and logfile"""
-		
+
 		self.run_experiment(fullscreen=False, quick=True)
 
 	def refresh(self, changed_item=None, refresh_edit=True, \
@@ -1502,9 +1504,9 @@ class qtopensesame(QtGui.QMainWindow):
 		Arguments:
 		menu -- a QMenu instance
 		"""
-		
+
 		from libqtopensesame.actions import plugin_action
-		
+
 		cat_menu = {}
 		for plugin in libopensesame.plugins.list_plugins():
 			debug.msg("found plugin '%s'" % plugin)
@@ -1574,7 +1576,7 @@ class qtopensesame(QtGui.QMainWindow):
 				name = self.experiment.sanitize(unicode(name), strict=True, \
 					allow_vars=False)
 				if name not in self.experiment.items:
-					break				
+					break
 			if not ok:
 				return None
 			name = unicode(name)
