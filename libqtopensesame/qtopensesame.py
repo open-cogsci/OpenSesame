@@ -126,7 +126,7 @@ class qtopensesame(QtGui.QMainWindow):
 
 		# Make the connections
 		self.ui.itemtree.itemClicked.connect(self.open_item)
-		self.ui.action_quit.triggered.connect(self.close)
+		self.ui.action_quit.triggered.connect(self.closeEvent)
 		self.ui.action_new.triggered.connect(self.new_file)
 		self.ui.action_open.triggered.connect(self.open_file)
 		self.ui.action_save.triggered.connect(self.save_file)
@@ -751,20 +751,6 @@ class qtopensesame(QtGui.QMainWindow):
 		subprocess.Popen(cmd)
 		QtCore.QCoreApplication.quit()
 
-	def close(self):
-
-		"""Cleanly close opensesame"""
-
-		resp = QtGui.QMessageBox.question(self.ui.centralwidget, _("Quit?"), \
-			_("Are you sure you want to quit OpenSesame?"), \
-			QtGui.QMessageBox.Yes, QtGui.QMessageBox.No)
-		if resp == QtGui.QMessageBox.No:
-			return
-		libopensesame.experiment.clean_up(debug.enabled)
-		self.save_unsaved_changes()
-		self.save_state()
-		QtCore.QCoreApplication.quit()
-
 	def closeEvent(self, e):
 
 		"""
@@ -772,25 +758,32 @@ class qtopensesame(QtGui.QMainWindow):
 		is clicked
 
 		Arguments:
-		e -- the closeEvent
+		e -- the closeEvent or a bool
 		"""
 
 		if debug.enabled or self.devmode:
 			libopensesame.experiment.clean_up(debug.enabled)
 			self.save_state()
-			e.accept()
+			if isinstance(e, bool):
+				QtCore.QCoreApplication.quit()
+			else:
+				e.accept()
 			return
 
 		resp = QtGui.QMessageBox.question(self.ui.centralwidget, _("Quit?"), \
 			_("Are you sure you want to quit OpenSesame?"), \
 			QtGui.QMessageBox.Yes, QtGui.QMessageBox.No)
 		if resp == QtGui.QMessageBox.No:
-			e.ignore()
+			if not isinstance(e, bool):
+				e.ignore()
 		else:
 			libopensesame.experiment.clean_up(debug.enabled)
 			self.save_unsaved_changes()
 			self.save_state()
-			e.accept()
+			if isinstance(e, bool):
+				QtCore.QCoreApplication.quit()
+			else:
+				e.accept()
 
 	def update_recent_files(self):
 
