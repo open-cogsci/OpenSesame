@@ -32,7 +32,7 @@ import sip
 class general_properties(QtGui.QWidget):
 
 	"""The QWidget for the general properties tab"""
-	
+
 	backend_format = "%s [%s]"
 
 	def __init__(self, parent=None):
@@ -74,14 +74,14 @@ class general_properties(QtGui.QWidget):
 
 		# Initialize the color and font widgets
 		self.ui.edit_foreground.initialize(self.main_window.experiment)
-		self.ui.edit_background.initialize(self.main_window.experiment)		
+		self.ui.edit_background.initialize(self.main_window.experiment)
 		QtCore.QObject.connect(self.ui.edit_foreground, QtCore.SIGNAL( \
 			"set_color"), self.apply_changes)
 		QtCore.QObject.connect(self.ui.edit_background, QtCore.SIGNAL( \
-			"set_color"), self.apply_changes)			
-		self.ui.widget_font.initialize(self.main_window.experiment)		
+			"set_color"), self.apply_changes)
+		self.ui.widget_font.initialize(self.main_window.experiment)
 		QtCore.QObject.connect(self.ui.widget_font, QtCore.SIGNAL( \
-			"font_changed"), self.apply_changes)			
+			"font_changed"), self.apply_changes)
 
 		# Connect the rest
 		self.ui.spinbox_width.editingFinished.connect(self.apply_changes)
@@ -118,7 +118,7 @@ class general_properties(QtGui.QWidget):
 			"<font size='5'><b>%s</b> - Experiment</font>&nbsp;&nbsp;&nbsp;<font color='gray'><i>Click to edit</i></font>" \
 			% self.main_window.experiment.title)
 		self.header_widget.edit_desc.setText(self.main_window.experiment.description)
-		self.header_widget.label_desc.setText(self.main_window.experiment.description)		
+		self.header_widget.label_desc.setText(self.main_window.experiment.description)
 
 	def apply_changes(self):
 
@@ -183,7 +183,7 @@ class general_properties(QtGui.QWidget):
 				foreground = self.main_window.experiment.get("foreground")
 				self.ui.edit_foreground.setText(foreground)
 		self.main_window.experiment.set("foreground", foreground)
-		
+
 		# Set the background color
 		background = self.main_window.experiment.sanitize( \
 			self.ui.edit_background.text())
@@ -198,17 +198,17 @@ class general_properties(QtGui.QWidget):
 				self.ui.edit_background.setText(background)
 		self.main_window.experiment.set("background", foreground)
 		self.main_window.experiment.set("background", background)
-		
+
 		# Set the font
 		self.main_window.experiment.set('font_family', \
-			self.ui.widget_font.family)		
+			self.ui.widget_font.family)
 		self.main_window.experiment.set('font_size', \
 			self.ui.widget_font.size)
 		self.main_window.experiment.set('font_italic', \
 			self.ui.widget_font.italic)
 		self.main_window.experiment.set('font_bold', \
 			self.ui.widget_font.bold)
-			
+
 		# Refresh the interface and unlock the general tab
 		self.main_window.refresh()
 		self.lock = False
@@ -252,7 +252,7 @@ class general_properties(QtGui.QWidget):
 			self.main_window.experiment.foreground))
 		self.ui.edit_background.setText(self.main_window.experiment.unistr( \
 			self.main_window.experiment.background))
-			
+
 		# Set the font
 		self.ui.widget_font.initialize(self.main_window.experiment)
 
@@ -278,18 +278,18 @@ class general_header_widget(header_widget.header_widget):
 		self.general_tab = general_tab
 		self.label_name.setText( \
 			"<font size='5'><b>%s</b> - Experiment</font>&nbsp;&nbsp;&nbsp;<font color='gray'><i>Click to edit</i></font>" \
-			% self.item.get("title"))
+			% self.item.get("title", _eval=False))
 
 	def restore_name(self):
 
 		"""Apply the name change, hide the editable title and show the label"""
 
-		self.general_tab.apply_changes()						
+		self.general_tab.apply_changes()
 		self.label_name.setText( \
 			"<font size='5'><b>%s</b> - Experiment</font>&nbsp;&nbsp;&nbsp;<font color='gray'><i>Click to edit</i></font>" \
-			% self.item.get("title"))
+			% self.item.get("title", _eval=False))
 		self.label_name.show()
-		self.edit_name.setText(self.item.get("title"))
+		self.edit_name.setText(self.item.get("title", _eval=False))
 		self.edit_name.hide()
 
 	def restore_desc(self):
@@ -298,8 +298,8 @@ class general_header_widget(header_widget.header_widget):
 		Apply the description change, hide the editable description and show the label
 		"""
 
-		self.general_tab.apply_changes()						
-		self.label_desc.setText(self.item.get("description"))
+		self.general_tab.apply_changes()
+		self.label_desc.setText(self.item.get("description", _eval=False))
 		self.label_desc.show()
-		self.edit_desc.setText(self.item.get("description"))
+		self.edit_desc.setText(self.item.get("description", _eval=False))
 		self.edit_desc.hide()
