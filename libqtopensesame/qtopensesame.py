@@ -38,7 +38,7 @@ class qtopensesame(QtGui.QMainWindow):
 	"""The main class of the OpenSesame GUI"""
 
 	# Set to False for release!
-	devmode = False
+	devmode = True
 
 	def __init__(self, app, parent=None):
 
@@ -591,19 +591,39 @@ class qtopensesame(QtGui.QMainWindow):
 				self.update_dialog( \
 					_("... and is sorry to say that the attempt to check for updates has failed. Please make sure that you are connected to the internet and try again later. If this problem persists, please visit <a href='http://www.cogsci.nl/opensesame'>http://www.cogsci.nl/opensesame</a> for more information."))
 			return
-
-		try:
-			if len(self.version.split("-")) == 2:
-				cv = float(self.version.split("-")[0]) - 0.01 + 0.00001 * int(self.version.split("-")[1][3:])
-				debug.msg("you are running a pre-release version, identifying as %s" \
-					% cv)
-			else:
-				cv = float(self.version)
-		except:
-			debug.msg("version is not numeric")
-			return
-
-		if mrv > float(cv):
+		
+		# The most recent version as downloaded is always a float. Therefore, we
+		# must convert the various possible version numbers to analogous floats.
+		# We do this by dividing each subversion number by 100. The only
+		# exception is that prereleases should be counted as older than stable
+		# releases, so for pre-release we substract one bugfix version.
+		# 0.27			->	0.27.0.0			->	0.27
+		# 0.27.1 		-> 	0.27.1.0			->	0.2701
+		# 0.27~pre1		->	0.27.0.1 - .0001	-> 	0.269901
+		# 0.27.1~pre1	->	0.27.1.1 - .0001	-> 	0.270001		
+		v = self.version	
+		l = v.split("~pre")
+		if len(l) == 2:
+			lastSubVer = l[1]
+			v = l[0]		
+			ver = -.0001
+		else:
+			lastSubVer = 0
+			ver = .0
+		lvl = 0
+		fct = .01
+		for subVer in v.split('.') + [lastSubVer]:
+			try:
+				_subVer = int(subVer)
+			except:
+				debug.msg('Failed to process version segment %s' % subVer, \
+					reason='warning')
+				return
+			ver += fct**lvl * _subVer
+			lvl += 1			
+		debug.msg('identifying as version %s' % ver)
+		debug.msg('latest stable version is %s' % mrv)
+		if mrv > ver:
 			self.update_dialog( \
 				_("... and is happy to report that a new version of OpenSesame (%s) is available at <a href='http://www.cogsci.nl/opensesame'>http://www.cogsci.nl/opensesame</a>!") % mrv)
 		else:
