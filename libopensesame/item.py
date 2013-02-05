@@ -246,10 +246,10 @@ class item(object):
 					self.set(textblock_var, textblock_val)
 					textblock_var = None
 			# The beginning of a textblock. A new textblock is only started when
-			# a textblock is not already ongoing, and only if the textblock start
-			# is of the format __VARNAME__
-			elif line_stripped[:2] == u'__' and line_stripped[-2:] == u'__' and \
-				textblock_var == None:
+			# a textblock is not already ongoing, and only if the textblock
+			# start is of the format __VARNAME__
+			elif line_stripped[:2] == u'__' and line_stripped[-2:] == u'__' \
+				and textblock_var == None:
 				textblock_var = line_stripped[2:-2]
 				if textblock_var in self.reserved_words:
 					textblock_var = u'_' + textblock_var
@@ -266,7 +266,7 @@ class item(object):
 				if strip_tab:
 					textblock_val += line[1:] + u'\n'
 				else:
-					textblock_val += line + '\n'
+					textblock_val += line + u'\n'
 			# Parse regular variables
 			elif not self.parse_variable(line):
 				self.parse_line(line)

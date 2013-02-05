@@ -86,7 +86,7 @@ class xpyriment(openexp._canvas.legacy.legacy):
 
 		# TODO
 		raise openexp.exceptions.canvas_error( \
-			"openexp._canvas.xpyriment.flip(): the flip() function has not been implemented for the psycho back-end!")
+			"openexp._canvas.xpyriment.flip(): the flip() function has not been implemented for the xpyriment back-end!")
 
 	def copy(self, canvas):
 
