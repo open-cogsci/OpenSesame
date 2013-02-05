@@ -70,12 +70,16 @@ class checkbox(button):
 		</DOC>"""		
 	
 		if self.group != None:
+			# If the checkbox is part of a group than checking it will uncheck
+			# all other checkboxes in the group, and check the current one
 			for widget in self.form.widgets:
 				if widget != None and widget.type == 'checkbox' and \
 					widget.group == self.group:
 					widget.set_checked(False)
 			self.set_checked(True)
 		else:
+			# If the checkbox is not part of a group then checking it will
+			# toggle its check status
 			self.set_checked(not self.checked)
 			
 		# Set the response variable
@@ -84,7 +88,7 @@ class checkbox(button):
 			if widget != None and widget.type == 'checkbox' and \
 				widget.group == self.group:
 				if widget.checked:
-					l_val.append(widget.text)
+					l_val.append(self.form.experiment.unistr(widget.text))
 		self.set_var(';'.join(l_val))
 			
 		if self.click_accepts:
