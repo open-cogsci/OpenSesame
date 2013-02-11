@@ -55,7 +55,8 @@ class form_multiple_choice(item.item):
 		"""Run the item"""
 		
 		# Parse the option list
-		option_list = unicode(self.get('options')).split()
+		option_list = unicode(self.get('options')).split('\n') # split by return
+		option_list.pop(len(option_list)-1) # remove last (empty) option
 		if len(option_list) == 0:
 			raise exceptions.runtime_error( \
 			'You must specify at least one response option in form_multiple_choice item "%s"' \
