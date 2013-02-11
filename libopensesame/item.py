@@ -955,7 +955,7 @@ class item(object):
 		</DOC>"""
 
 		# This function is set by item.prepare()
-		raise exceptions.openexp_error( \
+		raise exceptions.runtime_error( \
 			u'item.sleep(): This function should be set by the canvas backend.')
 
 	def time(self):
@@ -971,7 +971,7 @@ class item(object):
 		</DOC>"""
 
 		# This function is set by item.prepare()
-		raise exceptions.openexp_error( \
+		raise exceptions.runtime_error( \
 			u"item.time(): This function should be set by the canvas backend.")
 
 	def log(self, msg):
