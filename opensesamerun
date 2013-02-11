@@ -39,8 +39,7 @@ if __name__ == "__main__":
 			os.chdir(path)
 			if path not in sys.path:
 				sys.path.append(path)
-
-	import libqtopensesame.qtopensesamerun
+	
 	import libopensesame.misc
 	import libopensesame.experiment
 
@@ -64,6 +63,7 @@ if __name__ == "__main__":
 			sys.exit()
 
 		# Create the GUI and show it
+		import libqtopensesame.qtopensesamerun
 		if app == None:
 			app = QtGui.QApplication(sys.argv)
 			myapp = libqtopensesame.qtopensesamerun.qtopensesamerun(options)
