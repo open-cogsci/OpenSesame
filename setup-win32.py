@@ -17,20 +17,34 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 
-ABOUT
+About
 =====
+
 This script will create a binary Windows package of OpenSesame, using py2exe.
 If possible, dependencies are simply copied into a subfolder and compiled to
 .pyo format. If not possible, they are included in the library.zip file, which
 is the default py2exe way of including dependencies.
 
-USAGE
+Usage
 =====
-Don't forget to invoke Python with the -O argument. Otherwise, the dependencies
+
+Python should be called with the -O argument. Otherwise, the dependencies
 will be compiled to .pyc, instead of .pyo, and the .py source files will not be
 pruned. And that doesn't look very professional (although it does work).
 
-$ ./python -O setup-win32.py py2exe
+	./python -O setup-win32.py py2exe
+	
+More options can be tweaked by changing the variables below.
+
+Assumptions
+===========
+
+If media_player or media_player_vlc are included, they are assumed to be one folder
+up. So the folder structure should be as follows:
+
+	./opensesame
+	./media_player
+	./media_player_vlc
 
 """
 
@@ -47,7 +61,11 @@ import libopensesame.misc
 import psychopy
 import urllib
 
-# Some settings
+# Set this to False to build a 'light' version without the Qt4 gui. This
+# options currently breaks opensesamerun as well, so don't set it to False.
+include_gui = True
+
+# Miscellaneous settings
 include_plugins = True
 include_media_player = False
 include_media_player_vlc = True
@@ -63,7 +81,6 @@ python_version = "2.7"
 # included by py2exe in the library .zip file
 copy_packages = [
 	'libopensesame',
-	'libqtopensesame',
 	'openexp',
 	'expyriment',
 	'psychopy',
@@ -75,6 +92,7 @@ copy_packages = [
 	'PIL',
 	'pygame',
 	'pyglet',
+	'libqtopensesame'
 	]
 
 # Packages that are part of the standard Python packages, but should not be
@@ -85,19 +103,20 @@ exclude_packages = [
 	'test', # Avoid automated tests, because they take ages
 	]
 
+
 # Packages that are not part of the standard Python packages (or not detected
 # as such), but should nevertheless be includes
 include_packages = [
-	'sip',
 	'pyaudio',
 	'cairo',
 	'Image',
+	'cv2',
+	'sip',	
 	'PyQt4.QtCore',
 	'PyQt4.QtGui',
 	'PyQt4.Qsci',
 	'PyQt4.QtWebKit',
 	'PyQt4.QtNetwork',
-	'cv2',
 	]
 
 exclude_dll = [
@@ -179,19 +198,25 @@ for top, dirs, files in os.walk(std_lib):
 for pkg in sys.builtin_module_names:
 	print pkg			
 	std_pkg.append(pkg)
+	
+windows_opensesame = {
+		"script" : "opensesame",
+		"icon_resources": [(0, os.path.join("resources", "opensesame.ico"))],
+		}		
+windows_opensesamerun = {
+		"script" : "opensesamerun",
+		"icon_resources": [(0, os.path.join("resources", "opensesamerun.ico"))],
+		}
+windows = [windows_opensesamerun]
+if include_gui:
+	windows += [windows_opensesame]
 
 # Setup options
 setup(
 
 	# Use 'console' to have the programs run in a terminal and
 	# 'windows' to run them normally.
-	windows = [{
-		"script" : "opensesame",
-		"icon_resources": [(0, os.path.join("resources", "opensesame.ico"))],
-		},{
-		"script" : "opensesamerun",
-		"icon_resources": [(0, os.path.join("resources", "opensesamerun.ico"))],
-		}],
+	windows = windows,
 	options = {
 		"py2exe" : {
 		"compressed" : True,
@@ -214,7 +239,9 @@ def ignore_resources(folder, files):
 			l.append(f)
 		if 'Faenza' in folder and f == 'scalable':
 			l.append(f)
-		if f == "Faenza" and not include_faenza:
+		if f == "Faenza" and (not include_faenza or not include_gui):
+			l.append(f)
+		if not include_gui and f in ('theme', 'locale', 'templates', 'ts', 'ui'):
 			l.append(f)
 	return l
 
@@ -227,7 +254,8 @@ print "copying README info etc."
 shutil.copyfile("readme.md", os.path.join("dist", "readme.md"))
 shutil.copyfile("debian/copyright", os.path.join("dist", "copyright"))
 shutil.copyfile("COPYING", os.path.join("dist", "COPYING"))
-shutil.copytree("help", os.path.join("dist", "help"))
+if include_gui:
+	shutil.copytree("help", os.path.join("dist", "help"))
 
 print "copying PyGame/ SDLL dll's"
 shutil.copyfile("""%s\Lib\site-packages\pygame\SDL_ttf.dll""" \
