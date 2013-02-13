@@ -27,10 +27,10 @@ class widget:
 	def __init__(self, form):
 	
 		"""<DOC>
-		Constructor
+		Constructor.
 		
 		Arguments:
-		form -- the parent form
+		form -- The parent form.
 		</DOC>"""
 	
 		self.type = 'widget'
@@ -48,12 +48,12 @@ class widget:
 	def draw_frame(self, rect=None, style='normal'):
 	
 		"""<DOC>
-		Draws a simple frame around the widget
+		Draws a simple frame around the widget.
 		
 		Keyword arguments:
-		rect -- a (left, top, width, height) tuple for the frame geometry or
-				None to use the widget geometry (default=None)
-		style -- 'normal', 'active', 'light' (default='normal')
+		rect -- A (left, top, width, height) tuple for the frame geometry or
+				None to use the widget geometry (default=None).
+		style -- 'normal', 'active', 'light' (default='normal').
 		</DOC>"""
 		
 		x, y, w, h = rect
@@ -65,13 +65,13 @@ class widget:
 		Is called whenever the user clicks on the widget
 		
 		Arguments:
-		pos -- an (x, y) tuple		
+		pos -- An (x, y) tuple		
 		</DOC>"""
 				
 	def render(self):
 	
 		"""<DOC>
-		Draws the widget
+		Draws the widget.
 		</DOC>"""
 	
 		if self.focus:
@@ -82,10 +82,10 @@ class widget:
 	def set_rect(self, rect):
 	
 		"""<DOC>
-		Sets the widget geometry
+		Sets the widget geometry.
 		
 		Arguments:
-		rect -- a (left, top, width, height) tuple
+		rect -- A (left, top, width, height) tuple.
 		</DOC>"""
 			
 		self.rect = rect
@@ -93,13 +93,13 @@ class widget:
 	def set_var(self, val, var=None):
 	
 		"""<DOC>
-		Set an experimental variable
+		Sets an experimental variable.
 		
 		Arguments:
-		val -- a value
+		val -- A value.
 		
 		Keyword arguments:
-		var -- a variable name, or None to use widget default (default=None)		
+		var -- A variable name, or None to use widget default (default=None).
 		</DOC>"""
 		
 		if var == None:

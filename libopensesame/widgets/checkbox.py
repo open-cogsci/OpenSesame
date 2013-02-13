@@ -29,19 +29,19 @@ class checkbox(button):
 		Constructor
 		
 		Arguments:
-		form -- the parent form
+		form -- The parent form.
 				
 		Keyword arguments:
-		text -- checkbox text (default='checkbox')		
-		frame -- indicates whether a frame should be drawn around the widget
-				 (default=False)
-		group -- if a group is specified, checking one checkbox from the group
-				 will uncheck all other checkboxes in that group (default=None)
-		checked -- the checked state of the checkbox (default=False)
-		click_accepts -- indicates whether a click press should accept and
-					     close the form (default=False)		
-		var -- the name of the experimental variable that should be used to log
-			   the widget status (default=None)
+		text -- Checkbox text (default='checkbox').
+		frame -- Indicates whether a frame should be drawn around the widget #
+				 (default=False).
+		group -- If a group is specified, checking one checkbox from the group #
+				 will uncheck all other checkboxes in that group (default=None).
+		checked -- The checked state of the checkbox (default=False).
+		click_accepts -- Indicates whether a click press should accept and #
+					     close the form (default=False).
+		var -- The name of the experimental variable that should be used to log #
+			   the widget status (default=None).
 		</DOC>"""	
 		
 		if type(checked) != bool:
@@ -62,11 +62,11 @@ class checkbox(button):
 	def on_mouse_click(self, pos):
 	
 		"""<DOC>
-		Is called whenever the user clicks on the widget. Toggles the state of
+		Is called whenever the user clicks on the widget. Toggles the state of #
 		the checkbox.
 		
 		Arguments:
-		pos -- an (x, y) tuple		
+		pos -- An (x, y) tuple.
 		</DOC>"""		
 	
 		if self.group != None:
@@ -97,7 +97,7 @@ class checkbox(button):
 	def render(self):
 	
 		"""<DOC>
-		Draws the widget
+		Draws the widget.
 		</DOC>"""	
 	
 		x, y, w, h = self.rect
@@ -108,10 +108,10 @@ class checkbox(button):
 	def set_checked(self, checked=True):
 	
 		"""<DOC>
-		Sets the checked status of the checkbox
+		Sets the checked status of the checkbox.
 		
 		Keyword arguments:
-		checked -- the checked status (default=True)
+		checked -- The checked status (default=True).
 		</DOC>"""
 		
 		self.checked = checked

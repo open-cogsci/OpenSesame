@@ -26,21 +26,21 @@ class image_button(image):
 	def __init__(self, form, path=None, adjust=True, frame=False, image_id=None, var=None):
 	
 		"""<DOC>
-		Constructor
+		Constructor.
 		
 		Arguments:
-		form -- the parent form
+		form -- The parent form.
 		
 		Keyword arguments:
-		path -- the full path to the image (default=None)				
-		adjust -- indicates whether the image should be scaled according to the
-				  size of the widget (default=True)
-		frame -- indicates whether a frame should be drawn around the widget
-				 (default=False)
-		image_id -- an id to identify the image when it is clicked. If None, the
-					path to the image is used as id (default=None)
-		var -- the name of the experimental variable that should be used to log
-			   the widget status (default=None)					
+		path -- The full path to the image (default=None).				
+		adjust -- Indicates whether the image should be scaled according to the #
+				  size of the widget (default=True).
+		frame -- Indicates whether a frame should be drawn around the widget #
+				 (default=False).
+		image_id -- An id to identify the image when it is clicked. If None, the #
+					path to the image is used as id (default=None).
+		var -- The name of the experimental variable that should be used to log #
+			   the widget status (default=None).					
 		</DOC>"""		
 	
 		image.__init__(self, form, path, adjust=adjust, frame=frame)
@@ -55,11 +55,11 @@ class image_button(image):
 	def on_mouse_click(self, pos):
 	
 		"""<DOC>
-		Is called whenever the user clicks on the widget. Returns the image_id
+		Is called whenever the user clicks on the widget. Returns the image_id #
 		or the path to the image if no image_id has been specified.
 		
 		Arguments:
-		pos -- an (x, y) tuple		
+		pos -- An (x, y) tuple.
 		</DOC>"""	
 	
 		self.set_var(True)

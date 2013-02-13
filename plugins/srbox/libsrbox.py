@@ -38,10 +38,10 @@ class libsrbox:
 		Constructor. Connects to the SR Box.
 
 		Arguments:
-		experiment -- opensesame experiment
+		experiment -- Opensesame experiment.
 
 		Keywords arguments:
-		dev -- the srbox device port or None for auto-detect (default=None)
+		dev -- The srbox device port or None for auto-detect (default=None).
 		</DOC>"""
 
 		self.experiment = experiment
@@ -97,10 +97,10 @@ class libsrbox:
 	def send(self, ch):
 
 		"""<DOC>
-		Send a single character
+		Sends a single character.
 
 		Arguments:
-		ch -- the character to send
+		ch -- The character to send.
 		</DOC>"""
 
 		self._srbox.write(ch)
@@ -108,7 +108,7 @@ class libsrbox:
 	def start(self):
 
 		"""<DOC>
-		Turn on sending mode, to start giving output.
+		Turns on sending mode, to start giving output.
 
 		Example:
 		>>> exp.srbox.start()
@@ -126,7 +126,7 @@ class libsrbox:
 	def stop(self):
 
 		"""<DOC>
-		Turn of sending mode, so stop giving output.
+		Turns of sending mode, to stop giving output.
 
 		Example:
 		>>> exp.srbox.start()
@@ -144,13 +144,13 @@ class libsrbox:
 	def get_button_press(self, allowed_buttons=None, timeout=None):
 
 		"""<DOC>
-		Gets a button press from the SR box
+		Gets a button press from the SR box.
 
 		Keywords arguments:
-		allowed_buttons -- A list of buttons that are accepted or None to #
-						   accept all buttons. Valid buttons are integers 1 #
-						   through 8. (default=None)
-		timeout -- a timeout value or None for no timeout (default=None)
+		allowed_buttons -- A list of buttons that are accepted or None to accept #
+						   all buttons. Valid buttons are integers 1 through 8. #
+						   (default=None)
+		timeout -- A timeout value or None for no timeout. (default=None)
 
 		Returns:
 		A timestamp, buttonlist tuple. The buttonlist consists of a list of #
@@ -203,8 +203,8 @@ class libsrbox:
 
 	def close(self):
 
-		"""<DOC>
-		Close the connection to the srbox. This is (sometimes?) required in #
+		"""<DOC> TODO
+		Closes the connection to the srbox. This is (sometimes?) required in #
 		order to re-use the SR Box in the same session of OpenSesame.
 		</DOC>"""
 
