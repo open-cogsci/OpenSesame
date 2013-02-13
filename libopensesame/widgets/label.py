@@ -27,16 +27,16 @@ class label(widget):
 	def __init__(self, form, text='label', frame=False, center=True):
 	
 		"""<DOC>
-		Constructor
+		Constructor.
 		
 		Arguments:
-		form -- the parent form
+		form -- The parent form.
 
 		Keyword arguments:
-		text -- a string of text (default='label')		
-		frame -- indicates whether a frame should be drawn around the widget
-				 (default=False)
-		center -- indicates whether the text should be centered (default=True)
+		text -- A string of text (default='label').
+		frame -- Indicates whether a frame should be drawn around the widget #
+				 (default=False).
+		center -- Indicates whether the text should be centered (default=True).
 		</DOC>"""
 
 		if type(frame) != bool:
@@ -56,13 +56,13 @@ class label(widget):
 	def draw_text(self, text, html=True):
 	
 		"""<DOC>
-		Draws text in the widget
+		Draws text in the widget.
 		
 		Arguments:
-		text -- the text to draw
+		text -- The text to draw.
 		
 		Keyword arguments:
-		html -- indicates whether HTML should be parsed (default=True)
+		html -- Indicates whether HTML should be parsed (default=True).
 		</DOC>"""
 			
 		if self.form.item != None:
@@ -84,7 +84,7 @@ class label(widget):
 	def render(self):
 	
 		"""<DOC>
-		Draws the widget
+		Draws the widget.
 		</DOC>"""	
 
 		if self.frame:

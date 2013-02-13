@@ -29,15 +29,15 @@ class button(label):
 		Constructor
 		
 		Arguments:
-		form -- the parent form
+		form -- The parent form.
 		
 		Keyword arguments:
-		text -- button text (default='button')
-		frame -- indicates whether a frame should be drawn around the widget
-				 (default=False)
-		center -- indicates whether the text should be centered (default=False)
-		var -- the name of the experimental variable that should be used to log
-			   the widget status (default=None)		
+		text -- Button text (default='button').
+		frame -- Indicates whether a frame should be drawn around the widget
+				 (default=False).
+		center -- Indicates whether the text should be centered (default=False).
+		var -- The name of the experimental variable that should be used to log
+			   the widget status (default=None).
 		</DOC>"""	
 	
 		label.__init__(self, form, text, frame=frame, center=center)
@@ -48,11 +48,11 @@ class button(label):
 	def on_mouse_click(self, pos):
 	
 		"""<DOC>
-		Is called whenever the user clicks on the widget. Returns the button
+		Is called whenever the user clicks on the widget. Returns the button #
 		text.
 		
 		Arguments:
-		pos -- an (x, y) tuple		
+		pos -- An (x, y) tuple.
 		</DOC>"""		
 	
 		self.set_var(True)
