@@ -27,22 +27,22 @@ class text_input(label):
 	def __init__(self, form, text='', frame=True, center=False, stub='Type here ...', return_accepts=False, var=None):
 	
 		"""<DOC>
-		Constructor
+		Constructor.
 		
 		Arguments:
-		form -- the parent form		
+		form -- The parent form.
 		
 		Keyword arguments:
-		text -- the text to start with (default='')
-		frame -- indicates whether a frame should be drawn around the widget
-				 (default=False)
-		center -- indicates whether the text should be centered (default=False)
-		stub -- a text string that should be shown whenever the user has not
-				entered any text (default='Type here ...')
-		return_accepts -- indicates whether a return press should accept and
-						  close the form (default=False)
-		var -- the name of the experimental variable that should be used to log
-			   the widget status (default=None)					
+		text -- The text to start with (default='').
+		frame -- Indicates whether a frame should be drawn around the widget
+				 (default=False).
+		center -- Indicates whether the text should be centered (default=False).
+		stub -- A text string that should be shown whenever the user has not
+				entered any text (default='Type here ...').
+		return_accepts -- Indicates whether a return press should accept and
+						  close the form (default=False).
+		var -- The name of the experimental variable that should be used to log
+			   the widget status (default=None).				
 		</DOC>"""
 		
 		if type(return_accepts) != bool:
@@ -60,7 +60,7 @@ class text_input(label):
 	def render(self):
 	
 		"""<DOC>
-		Draws the widget
+		Draws the widget.
 		</DOC>"""	
 
 		if self.frame:
@@ -78,11 +78,11 @@ class text_input(label):
 	def on_mouse_click(self, pos):
 	
 		"""<DOC>
-		Is called whenever the user clicks on the widget. Activates the text
+		Is called whenever the user clicks on the widget. Activates the text #
 		input for typing text.
 		
 		Arguments:
-		pos -- an (x, y) tuple		
+		pos -- An (x, y) tuple.
 		</DOC>"""	
 		
 		self.focus = True

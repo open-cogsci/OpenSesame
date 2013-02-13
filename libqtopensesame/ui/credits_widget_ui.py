@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'resources/ui/credits_widget.ui'
 #
-# Created: Sat Sep  8 16:32:13 2012
+# Created: Tue Feb  5 15:54:19 2013
 #      by: PyQt4 UI code generator 4.9.1
 #
 # WARNING! All changes made in this file will be lost!
@@ -96,5 +96,5 @@ class Ui_widget_credits(object):
         self.label_website.setText(QtGui.QApplication.translate("widget_credits", "H", None, QtGui.QApplication.UnicodeUTF8))
         self.label_cogscinl.setText(QtGui.QApplication.translate("widget_credits", "<html><head/><body><p>COGSCIdotNL // cognitive science and more</p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
         self.label_opensesame.setText(QtGui.QApplication.translate("widget_credits", "OpenSesame [version] [codename]\n"
-"Copyright Sebastiaan Mathôt (2010-2012)", None, QtGui.QApplication.UnicodeUTF8))
+"Copyright Sebastiaan Mathôt (2010-2013)", None, QtGui.QApplication.UnicodeUTF8))
 

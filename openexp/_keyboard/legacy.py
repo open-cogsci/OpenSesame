@@ -96,12 +96,17 @@ class legacy:
 		self.key_name_to_code = {}		
 		for i in dir(pygame):
 			if i[:2] == "K_":
-				code = eval("pygame.%s" % i)
+				code = getattr(pygame, i)
 				name1 = pygame.key.name(code).lower()
 				name2 = name1.upper()
 				name3 = i[2:].lower()
 				name4 = name3.upper()
-				self.key_code_to_name[code] = name1, name2, name3, name4				
+				self.key_code_to_name[code] = [name1, name2, name3, name4]				
+				try:
+					i = int(name5)
+					self.key_code_to_name[code].append(name5)
+				except:
+					pass				
 				self.key_name_to_code[name1] = code
 				self.key_name_to_code[name2] = code
 				self.key_name_to_code[name3] = code
@@ -316,14 +321,17 @@ class legacy:
 	def synonyms(self, key):
 	
 		"""
-		Gives a list of synonyms for a key, either codes or names
+		Gives a list of synonyms for a key, either codes or names. Synonyms
+		include all variables as types and as Unicode strings (if applicable).
 		
 		Returns:
 		A list of synonyms
 		"""
 		
+		# If the key is not familiar, simply return it plus its string
+		# representation.
 		if key not in self.key_name_to_code:
-			return [key]
+			return [key, self.experiment.unistr(key)]
 		return self.key_code_to_name[self.key_name_to_code[key]]
 
 	def flush(self):

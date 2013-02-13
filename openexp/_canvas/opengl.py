@@ -35,20 +35,20 @@ class opengl(openexp._canvas.legacy.legacy):
 
 	"""
 	Implements an OpenGL canvas. See openexp._canvas.legacy for a full
-	explanation of all parameters	
+	explanation of all parameters
 	"""
-	
+
 	settings = None
 
 	def __init__(self, experiment, bgcolor=None, fgcolor=None, auto_prepare=True):
 
 		self.experiment = experiment
-		
+
 		if fgcolor == None:
 			fgcolor = self.experiment.get("foreground")
 		if bgcolor == None:
-			bgcolor = self.experiment.get("background")	
-			
+			bgcolor = self.experiment.get("background")
+
 		self.fgcolor = self.color(fgcolor)
 		self.bgcolor = self.color(bgcolor)
 		self.penwidth = 1
@@ -68,7 +68,7 @@ class opengl(openexp._canvas.legacy.legacy):
 	def flip(self, x = True, y = False):
 
 		"""see openexp._canvas.legacy"""
-		
+
 		#self.surface = pygame.transform.flip(self.surface, x, y)
 		# will have to flip each object and adjust it's location accordingly
 		pass
@@ -84,19 +84,19 @@ class opengl(openexp._canvas.legacy.legacy):
 	def xcenter(self):
 
 		"""see openexp._canvas.legacy"""
-		
+
 		return self.experiment.get('width') / 2
 
 	def ycenter(self):
 
 		"""see openexp._canvas.legacy"""
-		
+
 		return self.experiment.get('height') / 2
 
 	def show(self):
 
 		"""see openexp._canvas.legacy"""
-		
+
 		for s,loc in self.showables:
 			s.show(loc[0],loc[1])
 		libopengl.doBlockingFlip()
@@ -113,32 +113,32 @@ class opengl(openexp._canvas.legacy.legacy):
 
 		# clear the showable list
 		self.showables = []
-		surface = pygame.Surface(self.experiment.resolution)
+		surface = pygame.Surface(self.experiment.resolution())
 		surface.fill(color)
 		self.showables.append((libopengl.LowImage(surface), (0,0)))
 
 	def set_penwidth(self, penwidth):
 
 		"""see openexp._canvas.legacy"""
-		
+
 		self.penwidth = penwidth
 
 	def set_fgcolor(self, color):
 
 		"""see openexp._canvas.legacy"""
-		
+
 		self.fgcolor = self.color(color)
 
 	def set_bgcolor(self, color):
 
 		"""see openexp._canvas.legacy"""
-		
+
 		self.bgcolor = self.color(color)
 
 	def set_font(self, style, size):
 
 		"""see openexp._canvas.legacy"""
-		
+
 		self.font = pygame.font.Font(self.experiment.resource("%s.ttf" % style), size)
 
 	def fixdot(self, x = None, y = None, color = None):
@@ -147,7 +147,8 @@ class opengl(openexp._canvas.legacy.legacy):
 
 		if color == None:
 			color = self.fgcolor
-		
+		color = self.color(color)
+
 		if x == None:
 			x = self.xcenter()
 
@@ -170,6 +171,7 @@ class opengl(openexp._canvas.legacy.legacy):
 
 		if color == None:
 			color = self.fgcolor
+		color = self.color(color)
 
 		dy = abs(ey - sy) + 2*self.penwidth + 1
 		dx = abs(ex - sx) + 2*self.penwidth + 1
@@ -201,8 +203,9 @@ class opengl(openexp._canvas.legacy.legacy):
 		"""see openexp._canvas.legacy"""
 
 		if color == None:
-			color = self.fgcolor		
-		
+			color = self.fgcolor
+		color = self.color(color)
+
 		dy = abs(ey - sy) + 2*arrow_size
 		dx = abs(ex - sx) + 2*arrow_size
 		surface = pygame.Surface((dx,dy), SRCALPHA)
@@ -245,7 +248,8 @@ class opengl(openexp._canvas.legacy.legacy):
 		"""see openexp._canvas.legacy"""
 
 		if color == None:
-			color = self.fgcolor		
+			color = self.fgcolor
+		color = self.color(color)
 
 		if fill:
 			surface = pygame.Surface((w,h), SRCALPHA)
@@ -266,8 +270,9 @@ class opengl(openexp._canvas.legacy.legacy):
 		"""see openexp._canvas.legacy"""
 
 		if color == None:
-			color = self.fgcolor		
-			
+			color = self.fgcolor
+		color = self.color(color)
+
 		x = int(x)
 		y = int(y)
 		w = int(w)
@@ -298,11 +303,11 @@ class opengl(openexp._canvas.legacy.legacy):
 
 		self.showables.append((libopengl.LowImage(surface),
 				       loc))
-				       
+
 	def polygon(self, vertices, fill=False, color=None):
-		
+
 		"""see openexp._canvas.legacy"""
-				
+
 		# TODO
 		raise openexp.exceptions.canvas_error( \
 			"openexp._canvas.opengl.polygon() not implemented")
@@ -318,8 +323,9 @@ class opengl(openexp._canvas.legacy.legacy):
 		"""see openexp._canvas.legacy"""
 
 		if color == None:
-			color = self.fgcolor		
-			
+			color = self.fgcolor
+		color = self.color(color)
+
 		surface = self.font.render(text, self.antialias, color)
 		size = self.font.size(text)
 
@@ -345,7 +351,7 @@ class opengl(openexp._canvas.legacy.legacy):
 	def image(self, fname, center = True, x = None, y = None, scale = None):
 
 		"""see openexp._canvas.legacy"""
-		
+
 		try:
 			surface = pygame.image.load(fname)
 		except pygame.error as e:
@@ -451,7 +457,7 @@ def init_display(experiment):
 	experiment._time_func = pygame.time.get_ticks
 	experiment._sleep_func = pygame.time.delay
 	experiment.time = experiment._time_func
-	experiment.sleep = experiment._sleep_func	
+	experiment.sleep = experiment._sleep_func
 
 	# Create a font, falling back to the default font
 	experiment.font = pygame.font.Font(experiment.resource("%s.ttf" % experiment.font_family), experiment.font_size)

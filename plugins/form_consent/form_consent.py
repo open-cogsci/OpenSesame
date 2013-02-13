@@ -68,7 +68,10 @@ class form_consent(form_base.form_base):
 
 		if string == None:
 			string = default_script
-		super(form_consent, self).__init__(name, experiment, string, item_type= \
+		# Due to dynamic loading, we need to implement this super() hack. See
+		# <http://thingspython.wordpress.com/2010/09/27/another-super-wrinkle-raising-typeerror/>			
+		self.super_form_consent = super(form_consent, self)
+		self.super_form_consent.__init__(name, experiment, string, item_type= \
 			'form_consent', description='A simple consent form')
 
 	def from_string(self, script):
@@ -81,14 +84,19 @@ class form_consent(form_base.form_base):
 		"""
 
 		self._widgets = []
-		super(form_consent, self).from_string(script)
+		self.super_form_consent.from_string(script)
 
 	def run(self):
 
 		"""Execute the consent form"""
 
 		while True:
-			super(form_consent, self).run()
+			# In this case we cannot call super(form_consent, self), because
+			# modules may have been reloaded. The exact nature of the bug is
+			# unclear, but passing the __class__ property resolves it. See also
+			# <http://thingspython.wordpress.com/2010/09/27/another-super-wrinkle-raising-typeerror/>
+
+			self.super_form_consent.run()
 			if self.get('checkbox_status') == self.get('checkbox_text') and \
 				self.get('accept_status') == 'yes':
 				break
@@ -96,7 +104,6 @@ class form_consent(form_base.form_base):
 			c.text(self.get('decline_message'))
 			c.show()
 			self.sleep(5000)
-
 
 class qtform_consent(form_consent, qtplugin.qtplugin):
 

@@ -48,7 +48,7 @@ class experiment(item.item):
 		</DOC>"""
 
 		global pool_folders
-		
+
 		self.items = {}
 		self.running = False
 		self.auto_response = False
@@ -63,7 +63,7 @@ class experiment(item.item):
 		self.coordinates = "relative"
 		self.compensation = 0
 		self.start = "experiment"
-		
+
 		# Sound parameters
 		self.sound_freq = 48000
 		self.sound_sample_size = -16 # Negative values means signed
@@ -82,7 +82,7 @@ class experiment(item.item):
 		self.width = 1024
 		self.height = 768
 		self.background = "black"
-		self.foreground = "white"		
+		self.foreground = "white"
 		self.fullscreen = False
 
 		# Font parameters
@@ -95,14 +95,14 @@ class experiment(item.item):
 		# Logfile parameters
 		self._log = None
 		self.logfile = None
-		
-		# This is a dummy variable for backwards compatibility. The logfile 
+
+		# This is a dummy variable for backwards compatibility. The logfile
 		# encoding is always utf-8, and this variable doesn't do anything.
-		self.logfile_codec = "utf-8"	
-		
+		self.logfile_codec = "utf-8"
+
 		# Default subject info
 		self.subject_nr = 0
-		self.subject_parity = "even"				
+		self.subject_parity = "even"
 
 		# This is some duplication of the option parser in qtopensesame,
 		# but nevertheless keep it so we don't need qtopensesame
@@ -118,10 +118,10 @@ class experiment(item.item):
 			debug.msg("reusing existing pool folder")
 			self.pool_folder = pool_folder
 		debug.msg("pool folder is '%s'" % self.pool_folder)
-		
+
 		string = self.open(string)
 		item.item.__init__(self, name, self, string)
-		
+
 	def module_container(self):
 
 		"""Specify the module that contains the item modules"""
@@ -146,7 +146,7 @@ class experiment(item.item):
 
 		Arguments:
 		nr -- The subject nr.
-		
+
 		Example:
 		>>> exp.set_subject(1)
 		>>> print 'Subject nr = %d' % exp.get('subject_nr')
@@ -203,7 +203,6 @@ class experiment(item.item):
 		"""
 
 		if plugins.is_plugin(item_type):
-
 			# Load a plug-in
 			if debug.enabled:
 				debug.msg(u"loading plugin '%s'" % item_type)
@@ -217,39 +216,15 @@ class experiment(item.item):
 					raise exceptions.script_error(u"Failed load plugin '%s'" % \
 						item_type)
 			self.items[item_name] = item
-
 		else:
-
-			# Load the module from the regular items
-			debug.msg(u"loading core plugin '%s'" % item_type)
-			if debug.enabled:
-				exec("from %s import %s" % (self.module_container(), item_type))
-			try:
-				if not self.debug:
-					exec("from %s import %s" % (self.module_container(), \
-						item_type))
-			except:
-				raise exceptions.script_error( \
-					u"Failed to import item '%s' as '%s'. " \
-					% (item_type, item_name)
-					+ "Perhaps the experiment requires a plug-in that is not available on your system.", \
-					full=False)
-
-			cmd = '%(item_type)s.%(item_type)s("%(item_name)s", self, u"""%(string)s""")' \
-				% {"item_type" : item_type, "item_name" : item_name, "string" \
-				: string.replace(u'"', u'\\"')}
-
-			if debug.enabled:
-				bytecode = compile(cmd, "<string>", "eval")
-				self.items[item_name] = eval(bytecode)
-			else:
-				try:
-					bytecode = compile(cmd, "<string>", "eval")
-					self.items[item_name] = eval(bytecode)
-				except Exception as e:
-					raise exceptions.script_error( \
-						u"Failed to instantiate module '%s' as '%s': %s" % \
-						(item_type, item_name, e))
+			# Load one of the core items
+			debug.msg(u"loading core item '%s' from '%s'" % (item_type, \
+				self.module_container()))
+			item_module = __import__('%s.%s' % (self.module_container(), \
+				item_type), fromlist=['dummy'])					
+			item_class = getattr(item_module, item_type)
+			item = item_class(item_name, self, string)
+			self.items[item_name] = item
 
 	def from_string(self, string):
 
@@ -268,7 +243,7 @@ class experiment(item.item):
 			get_next = True
 			try:
 				l = self.split(line)
-			except ValueError as e:									
+			except ValueError as e:
 				raise exceptions.script_error( \
 					u"Failed to parse script. Maybe it contains illegal characters or unclosed quotes?")
 
@@ -284,8 +259,8 @@ class experiment(item.item):
 					item_type = l[1]
 					item_name = self.sanitize(l[2])
 					line, def_str = self.read_definition(s)
-					get_next = False					
-					self.parse_definition(item_type, item_name, def_str)					
+					get_next = False
+					self.parse_definition(item_type, item_name, def_str)
 
 			if get_next:
 				line = next(s, None)
@@ -294,7 +269,8 @@ class experiment(item.item):
 
 		"""Run the experiment"""
 
-		self.running = True				
+		self.save_state()
+		self.running = True
 		self.init_display()
 		self.init_sound()
 		self.init_log()
@@ -328,16 +304,17 @@ class experiment(item.item):
 		"""Nicely end the experiment"""
 
 		from openexp import sampler, canvas
-		self.running = False			
+		self.running = False
 		try:
 			self._log.flush()
 			os.fsync(self._log)
 			self._log.close()
 		except:
-			pass									
+			pass
 		sampler.close_sound(self)
-		canvas.close_display(self)							
+		canvas.close_display(self)
 		self.cleanup()
+		self.restore_state()
 
 	def to_string(self):
 
@@ -395,8 +372,8 @@ class experiment(item.item):
 
 		Returns:
 		The full path to the file.
-		
-		Example:		
+
+		Example:
 		>>> image_path = exp.get_file('my_image.png')
 		>>> my_canvas = exp.offline_canvas()
 		>>> my_canvas.image(image_path)
@@ -421,14 +398,14 @@ class experiment(item.item):
 
 		Returns:
 		A Boolean indicating if the file is in the pool.
-		
-		Example:		
+
+		Example:
 		>>> if not exp.file_in_pool('my_image.png'):
 		>>> 	print 'my_image.png could not be found!'
 		>>> else:
 		>>> 	image_path = exp.get_file('my_image.png')
 		>>> 	my_canvas = exp.offline_canvas()
-		>>> 	my_canvas.image(image_path)		
+		>>> 	my_canvas.image(image_path)
 		</DOC>"""
 
 		return os.path.exists(self.get_file(path))
@@ -514,7 +491,7 @@ class experiment(item.item):
 
 		# If the path is not a path at all, but a string containing
 		# the script, return it
-		
+
 		if not os.path.exists(path):
 			debug.msg("opening from unicode string")
 			self.experiment_path = None
@@ -561,7 +538,7 @@ class experiment(item.item):
 		self.average_response_time = "undefined"
 		self.accuracy = "undefined"
 		self.acc = "undefined"
-		
+
 	def var_info(self):
 
 		"""
@@ -590,7 +567,7 @@ class experiment(item.item):
 		A list of tuples
 		"""
 
-		l = []				
+		l = []
 		# Create a dictionary of items that also includes the experiment
 		item_dict = dict(self.items.items() + [('global', self)]).items()
 		seen = []
@@ -604,7 +581,7 @@ class experiment(item.item):
 					l.append( (var, val, item_name) )
 					seen.append(var)
 		return l
-				
+
 	def init_sound(self):
 
 		"""Intialize the sound backend"""
@@ -622,7 +599,7 @@ class experiment(item.item):
 	def init_log(self):
 
 		"""Open the logile"""
-		
+
 		# Do not open the logfile if it's already open
 		if self._log != None:
 			return
@@ -632,31 +609,55 @@ class experiment(item.item):
 		self._log = codecs.open(self.logfile, 'w', encoding=self.encoding)
 		print "experiment.init_log(): using '%s' as logfile (%s)" % \
 			(self.logfile, self.logfile_codec)
-						
+
+	def save_state(self):
+
+		"""
+		Saves the system state so that it can be restored after the
+		experiment. For now, this comes down to remembering which global variables
+		exist, so that they can be deleted later on.
+		"""
+
+		from libopensesame import inline_script
+		self._globals = inline_script.inline_script._globals().keys()
+		debug.msg('%d inline_script globals on start' % len(self._globals))
+
+	def restore_state(self):
+
+		"""Restores the system to the state as saved by save_state()"""
+
+		from libopensesame import inline_script
+		_globals = inline_script.inline_script._globals().keys()
+		debug.msg('%d inline_script globals on end' % len(_globals))
+		for g in _globals:
+			if g not in self._globals:
+				debug.msg('deleting inline_script global %s' % g)
+				delattr(inline_script, g)
+
 	def _sleep_func(self, ms):
 
 		"""
-		Sleeps for a specific time. 
-		
+		Sleeps for a specific time.
+
 		* This is a stub that should be replaced by a proper function by the
 		  canvas backend. See openexp._canvas.legacy.init_display()
-		
+
 		Arguments:
 		ms -- the sleep period
 		"""
-		
+
 		raise exceptions.runtime_error( \
 			"experiment._sleep_func(): This function should be set by the canvas backend." \
-			)			
+			)
 
 	def _time_func(self):
 
 		"""
 		Get the time
-		
+
 		* This is a stub that should be replaced by a proper function by the
 		  canvas backend. See openexp._canvas.legacy.init_display()
-		  
+
 		Returns:
 		A timestamp in milliseconds. Depending on the backend, this may be an
 		int or a float
@@ -665,6 +666,7 @@ class experiment(item.item):
 		raise exceptions.runtime_error( \
 			"experiment._time_func(): This function should be set by the canvas backend." \
 			)
+
 
 def clean_up(verbose=False):
 

@@ -44,9 +44,9 @@ class keyboard_response(item.item, generic_response.generic_response):
 		self.timeout = "infinite"
 		self.auto_response = 97 # 'a'
 		self.duration = "keypress"
-		self.process_feedback = True		
+		self.process_feedback = True
 		item.item.__init__(self, name, experiment, string)
-		
+
 	def prepare(self):
 
 		"""

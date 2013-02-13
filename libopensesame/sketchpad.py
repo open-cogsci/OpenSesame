@@ -317,7 +317,6 @@ class sketchpad(item.item, generic_response.generic_response):
 					var = i[:j]
 					val = i[j+1:]
 					item[var] = self.auto_type(val)
-
 		return item
 
 	def parse_rect_ellipse(self, line, l, item, item_type):

@@ -44,7 +44,7 @@ class python_lexer(QsciLexerPython):
 class scintilla(QsciScintilla):
 
 	"""The text editor"""
-	
+
 	focusLost = QtCore.pyqtSignal()
 
 	def __init__(self, parent=None, syntax=None):
@@ -175,7 +175,7 @@ class scintilla(QsciScintilla):
 
 		if not set_modified:
 			_m = self.isModified()
-			self.textChanged.disconnect()		
+			self.textChanged.disconnect()
 		self.setText(self._parent.experiment.unistr(s))
 		if not set_modified:
 			self.textChanged.connect(self._parent.setModified)
@@ -224,7 +224,7 @@ class scintilla(QsciScintilla):
 class inline_editor(QtGui.QFrame):
 
 	"""The wrapper containing the editor and additional controls"""
-	
+
 	changed = QtCore.pyqtSignal()
 	applied = QtCore.pyqtSignal()
 
@@ -319,11 +319,11 @@ class inline_editor(QtGui.QFrame):
 		vbox.setMargin(0)
 
 		self.toolbar_hbox = search_hbox
-		
+
 	def _apply(self):
-	
+
 		"""When apply is clicked, two signals are sent"""
-	
+
 		self.changed.emit()
 		self.applied.emit()
 

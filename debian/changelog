@@ -1,3 +1,22 @@
+opensesame (0.27.1-1) unstable; urgency=low
+
+  * Fix numeric values in form checkboxex
+  * Do not show start-up tab when opening a file directly
+  * Catch errors due to missing closing quotations when editing a sketchpad element
+  * Fix super() bug in form plug-ins
+  * Fix variable background color in sketchpad item
+  * Catch recursion errors in general script
+  * More comprehensive HTML and Font implementation in psycho and legacy back-ends
+  * Do not interpret special character sequences in script
+  * Fix joystick plug-in
+  * Add repeat_cycle plug-in in Debian packaging
+  * Add joystick plug-in in Debian packaging
+  * Fix exp.get_file() in opensesamerun
+  * Fix option splitting by return in form_multiple_choice plug-in
+  * Fix a bug where timeouts where always counted as incorrect
+
+ -- Sebastiaan Mathot <s.mathot@cogsci.nl>  Wed, 13 Feb 2013 17:22:08 +0100
+
 opensesame (0.27-2) unstable; urgency=low
 
   * Added Expyriment backend

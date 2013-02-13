@@ -155,21 +155,39 @@ class psycho(openexp._keyboard.legacy.legacy):
 	def synonyms(self, key):
 
 		"""See openexp._keyboard.legacy"""
-
+		
+		# Respond correctly if a keycode is passed, rather than a Unicode string
+		# key description.
 		if type(key) == int:
-			l = [pyglet.window.key.symbol_string(key).lower()]
+			l = [key, pyglet.window.key.symbol_string(key).lower()]
 			if l[-1].upper() != l[-1].lower():
 				l.append(l[-1].upper())
 			return l
 		
-		l = [key.upper()]
+		# Sanity check
+		if not isinstance(key, basestring):
+			raise openexp.exceptions( \
+				'Key names should be string or numeric, not %s' % type(key))
+		
+		# Make a list of all conceivable ways that a key might be referred to.
+		l = [key, key.upper()]
 		if key.upper() != key.lower():
 			l.append(key.lower())
 		for char, name in self.keymap.items():
 			if key == char:
 				l.append(name)
 			if key.lower() == name:
-				l.append(char)												
+				l.append(char)	
+		# Make sure that we can deal with None/ timeout responses
+		if key.lower() == 'none':
+			l.append(None)
+		# Make sure that we convert numeric strings to ints as well
+		try:
+			i = int(key)
+			l.append(i)
+		except:
+			pass
+		print 'Synonym for %s (%s) == %s' % (key, type(key), l)
 		return l
 
 	def flush(self):

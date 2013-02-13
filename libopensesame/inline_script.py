@@ -57,7 +57,7 @@ class inline_script(item.item):
 
 		Returns:
 		An openexp canvas.
-		
+
 		Example:
 		>>> my_canvas = self.copy_sketchpad('my_sketchpad')
 		</DOC>"""
@@ -70,13 +70,13 @@ class inline_script(item.item):
 
 		"""<DOC>
 		Creates an empty canvas
-		
+
 		Keyword arguments:
 		auto_prepare -- Please see the canvas documentation (default=True).
 
 		Returns:
 		An openexp canvas.
-		
+
 		Example:
 		>>> my_canvas = self.offline_canvas()
 		</DOC>"""
@@ -92,7 +92,7 @@ class inline_script(item.item):
 		function.
 		</DOC>"""
 
-		item.item.prepare(self)		
+		item.item.prepare(self)
 		# Convenience variables
 		exp = self.experiment
 		win = self.experiment.window
@@ -100,7 +100,7 @@ class inline_script(item.item):
 		try:
 			self.cprepare = compile(self._prepare, "<string>", "exec")
 		except Exception as e:
-			raise exceptions.inline_error(self.name, "prepare", e)			
+			raise exceptions.inline_error(self.name, "prepare", e)
 		# Compile run script
 		try:
 			self.crun = compile(self._run, "<string>", "exec")
@@ -159,8 +159,8 @@ class inline_script(item.item):
 			self._prepare + self._run) \
 			+ re.findall( \
 			"exp.set\('(\w+)'(\s*),(\s*)('*)([^'\)]*)('*)", \
-			self._prepare + self._run)			
-			
+			self._prepare + self._run)
+
 		for var, s1, s2, q1, val, q2 in m:
 			if q1 != "\"":
 				val = "[Set to '%s']" % val
@@ -168,3 +168,13 @@ class inline_script(item.item):
 		self._var_info = l
 
 		return l
+
+	@staticmethod
+	def _globals():
+
+		"""
+		Returns:
+		A dictionary of globals that are registered within the current module
+		"""
+
+		return globals()
