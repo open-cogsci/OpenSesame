@@ -286,6 +286,7 @@ if include_plugins:
 		"advanced_delay",
 		"external_script",
 		"fixation_dot",
+		"joystick",
 		"text_display",
 		"text_input",
 		"notepad",
