@@ -20,8 +20,15 @@ along with openexp.  If not, see <http://www.gnu.org/licenses/>.
 import pygame
 from pygame.locals import *
 import openexp.exceptions
-import numpy
 import os.path
+try:
+	import numpy
+except:
+	numpy = None
+try:
+	import pygame.mixer as mixer
+except ImportError:
+	import android.mixer as mixer	
 
 class legacy:
 
@@ -74,12 +81,16 @@ class legacy:
 
 		if src != None:
 			if not os.path.exists(src):
-				raise openexp.exceptions.sample_error("openexp._sampler.legacy.__init__() the file '%s' does not exist" % src)
+				raise openexp.exceptions.sample_error( \
+					"openexp._sampler.legacy.__init__() the file '%s' does not exist" \
+					% src)
 
 			if os.path.splitext(src)[1].lower() not in (".ogg", ".wav"):
-				raise openexp.exceptions.sample_error("openexp._sampler.legacy.__init__() the file '%s' is not an .ogg or .wav file" % src)
+				raise openexp.exceptions.sample_error( \
+					"openexp._sampler.legacy.__init__() the file '%s' is not an .ogg or .wav file" \
+					% src)
 
-			self.sound = pygame.mixer.Sound(src)
+			self.sound = mixer.Sound(src)
 
 		self.experiment = experiment
 		self._stop_after = 0
@@ -163,8 +174,13 @@ class legacy:
 		>>> my_sampler.pitch(2.0)
 		</DOC>"""
 
+		# On Android, numpy does not exist and this is not supported
+		if numpy == None:			
+			return
+
 		if type(p) not in (int, float) or p <= 0:
-			raise openexp.exceptions.sample_error("openexp._sampler.legacy.pitch() requires a positive number")
+			raise openexp.exceptions.sample_error( \
+				"openexp._sampler.legacy.pitch() requires a positive number")
 
 		if p == 1:
 			return
@@ -175,7 +191,8 @@ class legacy:
 		for i in range(int(float(len(buf)) / p)):
 			_buf.append(buf[int(float(i) * p)])
 
-		self.sound = pygame.sndarray.make_sound(numpy.array(_buf, dtype="int16"))
+		self.sound = pygame.sndarray.make_sound(numpy.array(_buf, \
+			dtype="int16"))
 
 	def pan(self, p):
 
@@ -195,7 +212,11 @@ class legacy:
 		>>> my_sampler = sampler(exp, src)
 		>>> my_sampler.pan('left')
 		</DOC>"""
-
+		
+		# On Android, numpy does not exist and this is not supported
+		if numpy == None:			
+			return
+		
 		if type(p) not in (int, float) and p not in ("left", "right"):
 			raise openexp.exceptions.sample_error("openexp._sampler.legacy.pan() requires a number or 'left', 'right'")
 
@@ -256,7 +277,7 @@ class legacy:
 		>>> my_sampler.stop()
 		</DOC>"""
 
-		pygame.mixer.stop()
+		mixer.stop()
 
 	def pause(self):
 
@@ -274,7 +295,7 @@ class legacy:
 		>>> my_sampler.resume()				
 		</DOC>"""
 
-		pygame.mixer.pause()
+		mixer.pause()
 
 	def resume(self):
 
@@ -292,7 +313,7 @@ class legacy:
 		>>> my_sampler.resume()				
 		</DOC>"""
 
-		pygame.mixer.unpause()
+		mixer.unpause()
 
 	def is_playing(self):
 
@@ -312,7 +333,7 @@ class legacy:
 		>>> 	print 'The sampler is still playing!'
 		</DOC>"""
 
-		return bool(pygame.mixer.get_busy())
+		return bool(mixer.get_busy())
 
 	def wait(self):
 
@@ -329,7 +350,7 @@ class legacy:
 		>>> print 'The sampler is finished!'
 		</DOC>"""
 
-		while pygame.mixer.get_busy():
+		while mixer.get_busy():
 			pass
 
 def init_sound(experiment):
@@ -343,12 +364,12 @@ def init_sound(experiment):
 
 	print "openexp.sampler._legacy.init_sound(): sampling freq = %d, buffer size = %d" \
 		% (experiment.sound_freq, experiment.sound_buf_size)
-	if pygame.mixer.get_init():
+	if hasattr(mixer, 'get_init') and mixer.get_init():
 		print 'openexp.sampler._legacy.init_sound(): mixer already initialized, closing'
 		pygame.mixer.quit()
-	pygame.mixer.pre_init(experiment.sound_freq, experiment.sound_sample_size, \
+	mixer.pre_init(experiment.sound_freq, experiment.sound_sample_size, \
 		experiment.sound_channels, experiment.sound_buf_size)	
-	pygame.mixer.init()
+	mixer.init()
 
 
 def close_sound(experiment):
@@ -360,5 +381,5 @@ def close_sound(experiment):
 	experiment -- An instance of libopensesame.experiment.experiment
 	"""
 
-	pygame.mixer.quit()
+	mixer.quit()
 

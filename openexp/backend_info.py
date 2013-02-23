@@ -22,7 +22,6 @@ import os.path
 
 legacy = {
 	"description" : "uses PyGame, maximum stability", \
-	"authors" : ["Sebastiaan Mathot"], \
 	"canvas" : "legacy", \
 	"keyboard" : "legacy", \
 	"mouse" : "legacy", \
@@ -33,7 +32,6 @@ legacy = {
 	
 opengl = {
 	"description" : "uses PyGame and OpenGL", \
-	"authors" : ["Sebastiaan Mathot", "Per Sederberg"], \
 	"canvas" : "opengl", \
 	"keyboard" : "legacy", \
 	"mouse" : "legacy", \
@@ -44,7 +42,6 @@ opengl = {
 
 psycho = {
 	"description" : "uses PsychoPy, powerful stimulus generation", \
-	"authors" : ["Sebastiaan Mathot", "Jonathan Peirce"], \
 	"canvas" : "psycho", \
 	"keyboard" : "psycho", \
 	"mouse" : "psycho", \
@@ -55,7 +52,6 @@ psycho = {
 	
 xpyriment = {
 	"description" : "uses Expyriment", \
-	"authors" : ["Sebastiaan Mathot"], \
 	"canvas" : "xpyriment", \
 	"keyboard" : "legacy", \
 	"mouse" : "xpyriment", \
@@ -64,10 +60,21 @@ xpyriment = {
 	"icon" : "os-expyriment"
 	}	
 	
+droid = {
+	"description" : "for Android devices", \
+	"canvas" : "droid", \
+	"keyboard" : "droid", \
+	"mouse" : "droid", \
+	"sampler" : "legacy", \
+	"synth" : "droid", \
+	"icon" : "os-android"
+	}	
+	
 backend_list = {}
 backend_list["legacy"] = legacy
 backend_list["xpyriment"] = xpyriment
 backend_list["psycho"] = psycho
+backend_list["droid"] = droid
 
 def match(experiment):
 
