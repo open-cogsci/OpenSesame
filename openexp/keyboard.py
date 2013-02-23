@@ -17,7 +17,7 @@ You should have received a copy of the GNU General Public License
 along with openexp.  If not, see <http://www.gnu.org/licenses/>.
 """
 
-from openexp import exceptions
+from libopensesame import debug
 
 class keyboard:
 
@@ -26,19 +26,13 @@ class keyboard:
 	morphs into the appropriate keyboard backend class.
 	"""
 
-	def __init__(self, experiment, keylist = None, timeout = None):
+	def __init__(self, experiment, keylist=None, timeout=None):		
 	
-		if experiment.debug:
-			print "keyboard.__init__(): morphing into openexp._keyboard.%s" % experiment.keyboard_backend				
-			exec("import openexp._keyboard.%s" % experiment.keyboard_backend)
-			self.__class__ = eval("openexp._keyboard.%s.%s" % (experiment.keyboard_backend, experiment.keyboard_backend))					
-		else:
-			try:
-				exec("import openexp._keyboard.%s" % experiment.keyboard_backend)
-				self.__class__ = eval("openexp._keyboard.%s.%s" % (experiment.keyboard_backend, experiment.keyboard_backend))
-			except Exception as e:
-				raise exceptions.canvas_error("Failed to import 'openexp._keyboard.%s' as keyboard backend.<br /><br />Error: %s" % (experiment.backend, e))		
-															
-		exec("openexp._keyboard.%s.%s.__init__(self, experiment, keylist, timeout)" % (experiment.keyboard_backend, experiment.keyboard_backend))
-		
+		backend = experiment.keyboard_backend		
+		debug.msg('morphing into %s' % backend)
+		mod = __import__('openexp._keyboard.%s' % backend, fromlist=['dummy'])			
+		cls = getattr(mod, backend)
+		self.__class__ = cls
+		cls.__init__(self, experiment, keylist, timeout)
+			
 

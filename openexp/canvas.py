@@ -17,7 +17,7 @@ You should have received a copy of the GNU General Public License
 along with openexp.  If not, see <http://www.gnu.org/licenses/>.
 """
 
-import openexp.exceptions
+from libopensesame import debug
 import tempfile
 import pygame
 import os
@@ -29,49 +29,31 @@ class canvas:
 	"""A 'magic' class that morphs into the approriate backend from openexp._canvas"""
 	
 	def __init__(self, experiment, bgcolor=None, fgcolor=None, auto_prepare=True):
-	
-		"""Constructor"""
-	
-		if experiment.debug:
-			print "canvas.__init__(): morphing into openexp._canvas.%s" % experiment.canvas_backend		
-			exec("import openexp._canvas.%s" % experiment.canvas_backend)
-			self.__class__ = eval("openexp._canvas.%s.%s" % (experiment.canvas_backend, experiment.canvas_backend))				
-		else:
-			try:
-				exec("import openexp._canvas.%s" % experiment.canvas_backend)
-				self.__class__ = eval("openexp._canvas.%s.%s" % (experiment.canvas_backend, experiment.canvas_backend))				
-			except Exception as e:
-				raise openexp.exceptions.canvas_error("Failed to import 'openexp._canvas.%s' as video backend.<br /><br />Error: %s" % (experiment.canvas_backend, e))													
-
-		exec("openexp._canvas.%s.%s.__init__(self, experiment, bgcolor, fgcolor, auto_prepare)" % (experiment.canvas_backend, experiment.canvas_backend))				
 		
+		backend = experiment.canvas_backend		
+		debug.msg('morphing into %s' % backend)
+		mod = __import__('openexp._canvas.%s' % backend, fromlist=['dummy'])			
+		cls = getattr(mod, backend)
+		self.__class__ = cls
+		cls.__init__(self, experiment, bgcolor, fgcolor, auto_prepare)
+			
 def init_display(experiment):
 
 	"""Call the back-end specific init_display function"""
-
-	if experiment.debug:
-		exec("import openexp._canvas.%s" % experiment.canvas_backend)
-		exec("openexp._canvas.%s.init_display(experiment)" % experiment.canvas_backend)
-	else:
-		try:
-			exec("import openexp._canvas.%s" % experiment.canvas_backend)
-			exec("openexp._canvas.%s.init_display(experiment)" % experiment.canvas_backend)
-		except Exception as e:
-			raise openexp.exceptions.canvas_error("Failed to call openexp._canvas.%s.init_display()<br /><br />Error: %s" % (experiment.canvas_backend, e))				
+	
+	backend = experiment.canvas_backend		
+	debug.msg('morphing into %s' % backend)
+	mod = __import__('openexp._canvas.%s' % backend, fromlist=['dummy'])			
+	mod.init_display(experiment)
 		
 def close_display(experiment):
 
 	"""Call the back-end specific close_display function"""
-	
-	if experiment.debug:
-		exec("import openexp._canvas.%s" % experiment.canvas_backend)
-		exec("openexp._canvas.%s.close_display(experiment)" % experiment.canvas_backend)
-	else:
-		try:
-			exec("import openexp._canvas.%s" % experiment.canvas_backend)
-			exec("openexp._canvas.%s.close_display(experiment)" % experiment.canvas_backend)
-		except Exception as e:
-			raise openexp.exceptions.canvas_error("Failed to call openexp._canvas.%s.close_display()<br /><br />Error: %s" % (experiment.canvas_backend, e))						
+		
+	backend = experiment.canvas_backend		
+	debug.msg('morphing into %s' % backend)
+	mod = __import__('openexp._canvas.%s' % backend, fromlist=['dummy'])			
+	mod.close_display(experiment)
 		
 def clean_up(verbose = False):
 	
@@ -79,7 +61,8 @@ def clean_up(verbose = False):
 	Cleans up the temporary pool folders
 	
 	Keyword arguments:
-	verbose -- a boolean indicating if debugging output should be provided (default = False)
+	verbose		--	a boolean indicating if debugging output should be provided
+					(default = False)
 	"""
 	
 	global temp_files
