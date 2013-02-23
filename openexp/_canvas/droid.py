@@ -18,7 +18,9 @@ along with openexp.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 import pygame
-import openexp._canvas.legacy
+from openexp._canvas.legacy import legacy
+from openexp.exceptions import canvas_error
+
 try:
 	import android
 except ImportError:
@@ -27,7 +29,7 @@ except ImportError:
 initialized = False
 resolution = 1280, 800 # resolution is hardcoded for now
 
-class droid(openexp._canvas.legacy.legacy):
+class droid(legacy):
 
 	"""
 	This is a canvas backend for Android devices. It is identical to the legacy
@@ -39,6 +41,11 @@ class droid(openexp._canvas.legacy.legacy):
 def init_display(experiment):
 
 	"""See openexp._canvas.legacy"""
+	
+	if experiment.resolution() != resolution:
+		raise canvas_error( \
+		'The droid back-end requires a resolution of %d x %d. Your display will be scaled automatically to fit devices with different resolutions.' \
+		% resolution)
 
 	# Intialize PyGame
 	if not pygame.display.get_init():
