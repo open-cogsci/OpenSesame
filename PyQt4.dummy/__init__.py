@@ -15,16 +15,7 @@ GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
-"""
+""" 
 
-__author__ = "Sebastiaan Mathot"
-__license__ = "GPLv3"
-
-from PyQt4 import QtCore
-if QtCore.QCoreApplication != None:	
-	# Redirect certain things so that the old way of from libqtopensesame import
-	# qtplugin still works.
-	from libqtopensesame.items import qtplugin
-	from libqtopensesame.widgets import inline_editor, pool_widget
-else:
-	from libqtopensesame.misc import dummy as qtplugin
+from libopensesame import debug
+debug.msg('using dummy PyQt4')
