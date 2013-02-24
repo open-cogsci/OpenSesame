@@ -16,15 +16,42 @@ GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
+
+Usage
+=====
+
+Assumptions
+-----------
+
+- The PyGame subset for Android is installed in the folder indicated under
+`pgs4a_folder`.
+- The Python modules are installed in the folder indicated under
+`module_folder`
+
+Building
+--------
+
+Build the `.apk` with the following command:
+
+	python setup-android.py [install]
+	
+The `install` parameter is optional, and indicates that the `.apk` should be
+installed on an attached Android device or emulator. The resulting `.apk` can
+be found in the `bin` subfolder of the PyGame subset for Android folder.
 """
 
 import shutil
+import sys
 import os
 import subprocess
 
 pgs4a_folder = 'pgs4a-0.9.4'
-build_cmd = './android.py build opensesame release install'
 module_folder = '/usr/lib/python2.7'
+clear_cmd = \
+	'./android-sdk/platform-tools/adb shell pm clear nl.cogsci.opensesame'
+build_cmd = './android.py build opensesame release'
+if 'install' in sys.argv:
+	build_cmd += ' install'
 
 # A list of OpenSesame folders that need to be included
 folder_list = [
@@ -45,7 +72,7 @@ resources_whitelist = [
 	'widgets',
 	'gray',
 	'android',
-	'menu.opensesame.tar.gz',
+	'menu.opensesame',
 	'box-checked.png',
 	'box-unchecked.png',
 	'mono.ttf',
@@ -90,6 +117,14 @@ def ignore_resources(folder, files):
 			l.append(f)
 	return l
 
+# A filter to strip non-relevant examples
+def ignore_examples(folder, files):
+	l = []
+	for f in files:
+		if '_android' not in f:
+			l.append(f)
+	return l
+
 target = os.path.join(pgs4a_folder, 'opensesame')
 
 if os.path.exists(target):
@@ -106,7 +141,8 @@ print 'Copying resources'
 shutil.copytree('resources', os.path.join(target, 'resources'), \
 	ignore=ignore_resources)
 print 'Copying examples'
-shutil.copytree('examples', os.path.join(target, 'examples'))
+shutil.copytree('examples', os.path.join(target, 'examples'), \
+	ignore=ignore_examples)
 
 print 'Copying plugins'
 os.mkdir(os.path.join(target, 'plugins'))
@@ -122,17 +158,21 @@ for module in module_list:
 		os.path.join(target, module))
 	
 print 'Copying dummy PyQt4'
-shutil.copytree('PyQt4.dummy', os.path.join(target, 'PyQt4'))
+shutil.copytree('resources/android/PyQt4', os.path.join(target, 'PyQt4'))
 print 'Copying main.py'
-shutil.copyfile('android-main.py', os.path.join(target, 'main.py'))
+shutil.copyfile('opensesameandroid.py', os.path.join(target, 'main.py'))
 print 'Copying .android.json'
-shutil.copyfile('resources/android/android.json', os.path.join(target, '.android.json'))
+shutil.copyfile('resources/android/android.json', os.path.join(target, \
+	'.android.json'))
 print 'Copying android-icon.png'
 shutil.copyfile('resources/android/android-icon.png', \
 	os.path.join(target, 'android-icon.png'))
-print 'Copying android-splash.png'
-shutil.copyfile('resources/android/android-splash.jpg', \
-	os.path.join(target, 'android-splash.jpg'))
+print 'Copying android-presplash.png'
+shutil.copyfile('resources/android/android-presplash.jpg', \
+	os.path.join(target, 'android-presplash.jpg'))
 print 'Building'
 os.chdir(pgs4a_folder)
+print 'Clearing application data'
+subprocess.call(clear_cmd.split())
+print 'Building'
 subprocess.call(build_cmd.split())

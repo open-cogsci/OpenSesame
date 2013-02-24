@@ -18,6 +18,7 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
+import os
 import sys
 import pygame
 import traceback
@@ -27,26 +28,32 @@ try:
 except:
 	android = None
 	
+sdcard_folders = [
+	'/sdcard/',
+	'/mnt/sdcard/'
+	]
+	
 class stdout_file(object):
 	
 	"""A class that redirects the standard output to a file"""
 	
-	def __init__(self, stdout, path='/storage/sdcard0/opensesame-debug.txt'):
+	def __init__(self, stdout):
 		
 		"""
 		Constructor
 		
 		Arguments:
 		stdout		--	the original standard output
-		
-		Keyword arguments:
-		path		--	the path for the logfile (default=
-						'/storage/sdcard0/opensesame-debug.txt')
 		"""
-		
+				
 		self.stdout = stdout
+		
+		# Try to auto-detect the sdcard location and create a text file there
+		for path in sdcard_folders:
+			if os.path.isdir(path):
+				break
 		try:
-			self.fd = open(path, 'w')
+			self.fd = open(os.path.join(path, 'opensesame-debug.txt'), 'w')
 		except:
 			self.stdout.write('Failed to create %s' % path)
 			self.fd = None
@@ -74,7 +81,7 @@ def main():
 		sys.stdout = stdout_file(sys.stdout)
 		
 	# First start the menu experiment	
-	src = 'resources/android/menu.opensesame.tar.gz'
+	src = 'resources/android/menu.opensesame'
 	print 'Launching %s' % src
 	menu = experiment('Experiment', src)
 	menu.run()

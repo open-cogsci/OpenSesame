@@ -76,4 +76,7 @@ def close_display(experiment):
 
 	"""See openexp._canvas.legacy"""
 
-	pass
+	# On Android, we don't quit the display, as this appears to exit the
+	# application altogether.
+	if android == None:
+		pygame.display.quit()
