@@ -17,6 +17,7 @@ You should have received a copy of the GNU General Public License
 along with openexp.  If not, see <http://www.gnu.org/licenses/>.
 """
 
+from math import hypot
 import pygame
 from openexp._canvas.legacy import legacy
 from openexp.exceptions import canvas_error
@@ -61,6 +62,23 @@ def init_display(experiment):
 	if android != None:
 		android.init()
 		android.map_key(android.KEYCODE_BACK, pygame.K_ESCAPE)
+		dpi = android.get_dpi()
+	else:
+		# A dummy dpi if we are not on Android
+		dpi = 96
+	# Log the device characteristics
+	info = pygame.display.Info()
+	diag = hypot(info.current_w, info.current_h) / dpi
+	if diag < 6: # 6" is the minimum size to be considered a tablet
+		is_tablet = 'yes'
+	else:
+		is_tablet = 'no'
+	experiment.set('device_resolution_width', info.current_w)
+	experiment.set('device_resolution_height', info.current_h)
+	experiment.set('device_dpi', dpi)
+	experiment.set('device_screen_diag', diag)
+	experiment.set('device_is_tablet', is_tablet)
+		
 	# Start with a splash screen		
 	splash = pygame.image.load(experiment.resource('android-splash.jpg'))
 	x = resolution[0]/2 - splash.get_width()/2
