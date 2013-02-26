@@ -169,6 +169,9 @@ class form:
 		y2 = effective_height*sum(self.rows[:row+rowspan])-self.spacing
 		w = x2-x1
 		h = y2-y1
+		if w <= 0 or h <= 0:
+			raise form_error( \
+				'There is not enough space to show some form widgets. Please modify the form geometry!')
 		return x1+self.margins[3], y1+self.margins[0], w, h
 
 	def render(self):
