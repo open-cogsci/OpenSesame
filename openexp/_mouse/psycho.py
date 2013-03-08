@@ -117,6 +117,12 @@ class psycho(openexp._mouse.legacy.legacy):
 		x = x + self.experiment.width/2
 		y = self.experiment.height/2 - y
 		return (x, y), t
+
+	def get_pressed(self):
+	
+		"""See openexp._mouse.legacy"""
+
+		return tuple(self.mouse.getPressed(getTime=False))
 		
 	def flush(self):
 	
