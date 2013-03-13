@@ -68,7 +68,13 @@ class psycho(openexp._mouse.legacy.legacy):
 		"""See openexp._mouse.legacy"""
 	
 		self.visible = visible
-		self.mouse.setVisible(visible)		
+		self.mouse.setVisible(visible)
+
+	def set_pos(self, pos=(0,0)):
+
+		"""See openexp._mouse.legacy"""	
+	
+		self.mouse.setPos(newPos=pos)
 		
 	def get_click(self, buttonlist=None, timeout=None, visible=None):
 	
