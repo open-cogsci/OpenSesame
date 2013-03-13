@@ -36,12 +36,16 @@ class checkbox(button):
 		frame -- Indicates whether a frame should be drawn around the widget #
 				 (default=False).
 		group -- If a group is specified, checking one checkbox from the group #
-				 will uncheck all other checkboxes in that group (default=None).
+				 will uncheck all other checkboxes in that group. (default=None).
 		checked -- The checked state of the checkbox (default=False).
 		click_accepts -- Indicates whether a click press should accept and #
 					     close the form (default=False).
 		var -- The name of the experimental variable that should be used to log #
-			   the widget status (default=None).
+			   the widget status. This variable will contain a semi-colon #
+			   separated list of the text of all checked checkboxes in the #
+			   same group, or 'no' if no checkbox in the group is checked. For #
+			   the purpose of the variable, all checkboxes that are not part #
+			   of a group are placed in the same group. (default=None).
 		</DOC>"""	
 		
 		if type(checked) != bool:

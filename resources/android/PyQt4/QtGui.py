@@ -1,4 +1,4 @@
- #-*- coding:utf-8 -*-
+#-*- coding:utf-8 -*-
 
 """
 This file is part of OpenSesame.
@@ -15,16 +15,7 @@ GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
-"""
+""" 
 
-templates = [
-	('templates/default.opensesame', 'Default template'),
-	('templates/extended_template.opensesame', 'Extended template'),
-	('templates/android_template.opensesame', 'Runtime for Android template'),
-	('templates/eco_alt_template.opensesame.tar.gz',
-			'Stimulus set: an ecological alternative to Snodgrass & Vanderwart'),
-	('templates/gaped_template.opensesame.tar.gz', 
-			'Stimulus set: the Geneva affective picture database (GAPED)'),
-	('templates/boss_template.opensesame.tar,gz',
-			'Stimulus set: the bank of standardized stimuli (BOSS)')
-	]
+from libopensesame import debug
+debug.msg('using dummy PyQt4.QtGui')

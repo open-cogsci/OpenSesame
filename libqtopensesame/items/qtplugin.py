@@ -327,7 +327,7 @@ class qtplugin(qtitem.qtitem):
 
 		Keyword arguments:
 		syntax -- a boolean indicating whether Python syntax highlighting
-				  should be activated (default=False)
+				should be activated (default=False)
 		tooltip -- a tooltip (default=None)
 		default -- a default value (default=None)
 		"""

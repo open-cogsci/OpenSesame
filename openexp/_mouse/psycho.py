@@ -68,7 +68,13 @@ class psycho(openexp._mouse.legacy.legacy):
 		"""See openexp._mouse.legacy"""
 	
 		self.visible = visible
-		self.mouse.setVisible(visible)		
+		self.mouse.setVisible(visible)
+
+	def set_pos(self, pos=(0,0)):
+
+		"""See openexp._mouse.legacy"""	
+	
+		self.mouse.setPos(newPos=pos)
 		
 	def get_click(self, buttonlist=None, timeout=None, visible=None):
 	
@@ -117,6 +123,12 @@ class psycho(openexp._mouse.legacy.legacy):
 		x = x + self.experiment.width/2
 		y = self.experiment.height/2 - y
 		return (x, y), t
+
+	def get_pressed(self):
+	
+		"""See openexp._mouse.legacy"""
+
+		return tuple(self.mouse.getPressed(getTime=False))
 		
 	def flush(self):
 	
