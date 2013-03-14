@@ -19,9 +19,9 @@
 	border-radius: 4px;
 }
 
-#widget_variable_inspector_header_box QLabel,
-#widget_debug_window_header_box QLabel,
-#widget_header_box QLabel {
+QLabel#widget_variable_inspector_header_box,
+QLabel#widget_debug_window_header_box,
+QLabel#widget_header_box {
 	color: #ffffff;
 	padding: 4px;
 }

@@ -24,7 +24,8 @@ from PyQt4 import QtCore, QtGui
 import os.path
 import sip
 from libopensesame import debug, exceptions, item
-from libqtopensesame.widgets import inline_editor, header_widget
+from libqtopensesame.widgets import inline_editor, header_widget, \
+	user_hint_widget
 from libqtopensesame.misc import _
 
 class qtitem(QtCore.QObject):
@@ -77,6 +78,7 @@ class qtitem(QtCore.QObject):
 		"""Build the GUI controls"""
 
 		self.header = header_widget.header_widget(self)
+		self.user_hint_widget = user_hint_widget.user_hint_widget(self)
 
 		self.header_hbox = QtGui.QHBoxLayout()
 		self.header_hbox.addWidget(self.experiment.label_image(self.item_type))
@@ -110,7 +112,8 @@ class qtitem(QtCore.QObject):
 		self.edit_vbox = QtGui.QVBoxLayout()
 		self.edit_vbox.setMargin(16)
 		self.edit_vbox.addWidget(self.header_widget)
-		self.edit_vbox.addWidget(self.edit_grid_widget)
+		self.edit_vbox.addWidget(self.user_hint_widget)
+		self.edit_vbox.addWidget(self.edit_grid_widget)		
 		if stretch:
 			self.edit_vbox.addStretch()
 		self._edit_widget = QtGui.QWidget()
@@ -131,6 +134,7 @@ class qtitem(QtCore.QObject):
 		if not stretch:
 			debug.msg("passing the stretch argument is deprecated", \
 				reason="deprecation")
+		self.user_hint_widget.clear()
 		self.header.restore_name(False)
 		self.header.refresh()
 		self._edit_widget.__edit_item__ = self.name
@@ -138,6 +142,7 @@ class qtitem(QtCore.QObject):
 			self.open_script_tab()
 			return
 		self.auto_edit_widget()
+		self.user_hint_widget.refresh()
 		return self._edit_widget
 
 	def apply_name_change(self, rebuild=True):
@@ -588,8 +593,8 @@ class qtitem(QtCore.QObject):
 			debug.msg("applying pending script changes")
 			self.apply_script_changes(catch=False)
 			return True
-		return False
-
+		return False		
+		
 	def auto_edit_widget(self):
 
 		"""Update the GUI controls based on the auto-widgets"""
@@ -621,21 +626,35 @@ class qtitem(QtCore.QObject):
 		for var, spinbox in self.auto_spinbox.iteritems():
 			spinbox.editingFinished.disconnect()
 			if self.has(var):
-				try:
-					spinbox.setValue(self.get(var, _eval=False))
-				except Exception as e:
-					self.experiment.notify(_("Failed to set control '%s': %s") \
-						% (var, e))
-			spinbox.editingFinished.connect(self.apply_edit_changes)
+				val = self.get(var, _eval=False)
+				if type(val) in (float, int):						
+					try:
+						spinbox.setValue(val)
+					except Exception as e:
+						self.experiment.notify(_( \
+							"Failed to set control '%s': %s") % (var, e))
+				else:
+					spinbox.setDisabled(True)
+					self.user_hint_widget.add_user_hint(_( \
+						'"%s" is defined using variables. Open the script editor to edit this variable.' \
+						% var))
+			spinbox.editingFinished.connect(self.apply_edit_changes)			
 
 		for var, slider in self.auto_slider.iteritems():
 			slider.valueChanged.disconnect()
 			if self.has(var):
-				try:
-					slider.setValue(self.get(var, _eval=False))
-				except Exception as e:
-					self.experiment.notify(_("Failed to set control '%s': %s") \
-						% (var, e))
+				val = self.get(var, _eval=False)
+				if type(val) in (float, int):	
+					try:
+						slider.setValue(val)
+					except Exception as e:
+						self.experiment.notify(_( \
+							"Failed to set control '%s': %s") % (var, e))						
+				else:
+					slider.setDisabled(True)
+					self.user_hint_widget.add_user_hint(_( \
+						'"%s" is defined using variables. Open the script editor to edit this variable.' \
+						% var))
 			slider.valueChanged.connect(self.apply_edit_changes)
 
 		for var, checkbox in self.auto_checkbox.iteritems():
@@ -731,7 +750,7 @@ class qtitem(QtCore.QObject):
 
 		debug.msg()
 		for var, edit in self.auto_line_edit.iteritems():
-			if type(var) == str:
+			if edit.isEnabled() and isinstance(var, basestring):
 				val = unicode(edit.text()).strip()
 				if val != "":
 					self.set(var, val)
@@ -744,19 +763,19 @@ class qtitem(QtCore.QObject):
 					self.unset(var)
 
 		for var, combobox in self.auto_combobox.iteritems():
-			if type(var) == str:
+			if combobox.isEnabled() and isinstance(var, basestring):
 				self.set(var, unicode(combobox.currentText()))
 
 		for var, spinbox in self.auto_spinbox.iteritems():
-			if type(var) == str:
+			if spinbox.isEnabled() and isinstance(var, basestring):
 				self.set(var, spinbox.value())
 
 		for var, slider in self.auto_slider.iteritems():
-			if type(var) == str:
+			if slider.isEnabled() and isinstance(var, basestring):
 				self.set(var, slider.value())
 
 		for var, checkbox in self.auto_checkbox.iteritems():
-			if type(var) == str:
+			if checkbox.isEnabled() and isinstance(var, basestring):
 				if checkbox.isChecked():
 					val = "yes"
 				else:
@@ -764,7 +783,7 @@ class qtitem(QtCore.QObject):
 				self.set(var, val)
 
 		for var, editor in self.auto_editor.iteritems():
-			if type(var) == str:
+			if isinstance(var, basestring):
 				self.set(var, editor.edit.toPlainText())
 				editor.setModified(False)
 
