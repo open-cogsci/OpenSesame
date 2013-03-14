@@ -187,7 +187,6 @@ class psycho(openexp._keyboard.legacy.legacy):
 			l.append(i)
 		except:
 			pass
-		print 'Synonym for %s (%s) == %s' % (key, type(key), l)
 		return l
 
 	def flush(self):
