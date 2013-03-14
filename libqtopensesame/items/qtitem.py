@@ -78,7 +78,8 @@ class qtitem(QtCore.QObject):
 		"""Build the GUI controls"""
 
 		self.header = header_widget.header_widget(self)
-		self.user_hint_widget = user_hint_widget.user_hint_widget(self)
+		self.user_hint_widget = user_hint_widget.user_hint_widget( \
+			self.experiment.main_window, self)
 
 		self.header_hbox = QtGui.QHBoxLayout()
 		self.header_hbox.addWidget(self.experiment.label_image(self.item_type))
@@ -636,7 +637,7 @@ class qtitem(QtCore.QObject):
 				else:
 					spinbox.setDisabled(True)
 					self.user_hint_widget.add_user_hint(_( \
-						'"%s" is defined using variables. Open the script editor to edit this variable.' \
+						'"%s" is defined using variables and can only be edited through the script.' \
 						% var))
 			spinbox.editingFinished.connect(self.apply_edit_changes)			
 
@@ -653,7 +654,7 @@ class qtitem(QtCore.QObject):
 				else:
 					slider.setDisabled(True)
 					self.user_hint_widget.add_user_hint(_( \
-						'"%s" is defined using variables. Open the script editor to edit this variable.' \
+						'"%s" is defined using variables and can only be edited through the script.' \
 						% var))
 			slider.valueChanged.connect(self.apply_edit_changes)
 

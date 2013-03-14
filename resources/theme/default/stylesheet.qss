@@ -12,6 +12,11 @@
 	color: #888a85;
 }
 
+#user_hint_widget QPushButton {
+	background-color: #729fcf;
+}
+
+#user_hint_widget,
 #widget_variable_inspector_header_box,
 #widget_debug_window_header_box,
 #widget_header_box {
@@ -19,9 +24,11 @@
 	border-radius: 4px;
 }
 
-QLabel#widget_variable_inspector_header_box,
-QLabel#widget_debug_window_header_box,
-QLabel#widget_header_box {
+#user_hint_widget QPushButton,
+#user_hint_widget QLabel,
+#widget_variable_inspector_header_box QLabel,
+#widget_debug_window_header_box QLabel,
+#widget_header_box QLabel {
 	color: #ffffff;
 	padding: 4px;
 }
