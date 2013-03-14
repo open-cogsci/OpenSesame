@@ -54,7 +54,11 @@ class form_text_input(form_base.form_base):
 
 		if string == None:
 			string = default_script
-		super(form_text_input, self).__init__(name, experiment, string, \
+			
+		# Due to dynamic loading, we need to implement this super() hack. See
+		# <http://thingspython.wordpress.com/2010/09/27/another-super-wrinkle-raising-typeerror/>
+		self.super_form_text_input = super(form_text_input, self)		
+		self.super_form_text_input.__init__(name, experiment, string, \
 			item_type='form_text_input', description= \
 			'A simple text input form')
 
@@ -68,7 +72,7 @@ class form_text_input(form_base.form_base):
 		"""
 
 		self._widgets = []
-		super(form_text_input, self).from_string(script)
+		self.super_form_text_input.from_string(script)
 
 	def var_info(self):
 
@@ -79,7 +83,7 @@ class form_text_input(form_base.form_base):
 		A list of (name, description) tuples
 		"""
 
-		return super(form_text_input, self).var_info() + \
+		return self.super_form_text_input.var_info() + \
 			[(self.get('form_var'), '[Depends on response]')]
 
 class qtform_text_input(form_text_input, qtplugin.qtplugin):

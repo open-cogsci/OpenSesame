@@ -32,17 +32,17 @@ class image(widget):
 	def __init__(self, form, path=None, adjust=True, frame=False):
 	
 		"""<DOC>
-		Constructor
+		Constructor.
 		
 		Arguments:
-		form -- the parent form
+		form -- The parent form.
 		
 		Keyword arguments:
-		path -- the full path to the image (default=None)		
-		adjust -- indicates whether the image should be scaled according to the
-				  size of the widget (default=True)
-		frame -- indicates whether a frame should be drawn around the widget
-				 (default=False)
+		path -- The full path to the image (default=None).
+		adjust -- Indicates whether the image should be scaled according to the #
+				  size of the widget (default=True).
+		frame -- Indicates whether a frame should be drawn around the widget #
+				 (default=False).
 		</DOC>"""		
 	
 		if type(adjust) != bool:
@@ -59,7 +59,7 @@ class image(widget):
 	def render(self):
 	
 		"""<DOC>
-		Draws the widget
+		Draws the widget.
 		</DOC>"""	
 	
 		if not os.path.exists(self.path):
@@ -77,10 +77,10 @@ class image(widget):
 	def set_rect(self, rect):
 	
 		"""<DOC>
-		Sets the widget geometry
+		Sets the widget geometry.
 		
 		Arguments:
-		rect -- a (left, top, width, height) tuple
+		rect -- A (left, top, width, height) tuple.
 		</DOC>"""	
 	
 		self.rect = rect	

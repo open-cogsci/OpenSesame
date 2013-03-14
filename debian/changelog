@@ -1,3 +1,29 @@
+opensesame (0.27.2~pre2-ubuntu1) precise; urgency=low
+
+  * Add support for Android
+  * Fix a bug in form text_input widgets with numeric input
+
+ -- Sebastiaan Mathot <s.mathot@cogsci.nl>  Tue, 26 Feb 2013 18:17:13 +0100
+
+opensesame (0.27.1-ubuntu1) precise; urgency=low
+
+  * Fix numeric values in form checkboxex
+  * Do not show start-up tab when opening a file directly
+  * Catch errors due to missing closing quotations when editing a sketchpad element
+  * Fix super() bug in form plug-ins
+  * Fix variable background color in sketchpad item
+  * Catch recursion errors in general script
+  * More comprehensive HTML and Font implementation in psycho and legacy back-ends
+  * Do not interpret special character sequences in script
+  * Fix joystick plug-in
+  * Add repeat_cycle plug-in in Debian packaging
+  * Add joystick plug-in in Debian packaging
+  * Fix exp.get_file() in opensesamerun
+  * Fix option splitting by return in form_multiple_choice plug-in
+  * Fix a bug where timeouts where always counted as incorrect
+
+ -- Sebastiaan Mathot <s.mathot@cogsci.nl>  Wed, 13 Feb 2013 15:33:59 +0100
+
 opensesame (0.27-ubuntu1) precise; urgency=low
 
   * Added Expyriment backend
@@ -8,8 +34,9 @@ opensesame (0.27-ubuntu1) precise; urgency=low
   * Add ecological alternative to S&V template
   * Numerous bug-fixes
   * Improved compatibility with Nexus 7 tablet
+  * man
 
- -- Sebastiaan Mathot <s.mathot@cogsci.nl>  Tue, 11 Dec 2012 17:49:16 +0100
+ -- Sebastiaan Mathot <s.mathot@cogsci.nl>  Fri, 08 Feb 2013 11:16:46 +0100
 
 opensesame (0.26-2) unstable; urgency=low
 

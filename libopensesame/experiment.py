@@ -203,7 +203,6 @@ class experiment(item.item):
 		"""
 
 		if plugins.is_plugin(item_type):
-
 			# Load a plug-in
 			if debug.enabled:
 				debug.msg(u"loading plugin '%s'" % item_type)
@@ -217,39 +216,15 @@ class experiment(item.item):
 					raise exceptions.script_error(u"Failed load plugin '%s'" % \
 						item_type)
 			self.items[item_name] = item
-
 		else:
-
-			# Load the module from the regular items
-			debug.msg(u"loading core plugin '%s'" % item_type)
-			if debug.enabled:
-				exec("from %s import %s" % (self.module_container(), item_type))
-			try:
-				if not self.debug:
-					exec("from %s import %s" % (self.module_container(), \
-						item_type))
-			except:
-				raise exceptions.script_error( \
-					u"Failed to import item '%s' as '%s'. " \
-					% (item_type, item_name)
-					+ "Perhaps the experiment requires a plug-in that is not available on your system.", \
-					full=False)
-
-			cmd = '%(item_type)s.%(item_type)s("%(item_name)s", self, u"""%(string)s""")' \
-				% {"item_type" : item_type, "item_name" : item_name, "string" \
-				: string.replace(u'"', u'\\"')}
-
-			if debug.enabled:
-				bytecode = compile(cmd, "<string>", "eval")
-				self.items[item_name] = eval(bytecode)
-			else:
-				try:
-					bytecode = compile(cmd, "<string>", "eval")
-					self.items[item_name] = eval(bytecode)
-				except Exception as e:
-					raise exceptions.script_error( \
-						u"Failed to instantiate module '%s' as '%s': %s" % \
-						(item_type, item_name, e))
+			# Load one of the core items
+			debug.msg(u"loading core item '%s' from '%s'" % (item_type, \
+				self.module_container()))
+			item_module = __import__('%s.%s' % (self.module_container(), \
+				item_type), fromlist=['dummy'])					
+			item_class = getattr(item_module, item_type)
+			item = item_class(item_name, self, string)
+			self.items[item_name] = item
 
 	def from_string(self, string):
 

@@ -27,20 +27,20 @@ class rating_scale(widget):
 	def __init__(self, form, nodes=5, click_accepts=False, var=None):
 	
 		"""<DOC>
-		Constructor
+		Constructor.
 		
 		Arguments:
-		form -- the parent form
+		form -- The parent form.
 		
 		Keyword arguments:
-		nodes -- the number of nodes or a list of node identifiers (e.g.,
-				 ['yes', 'no', 'maybe']. If a list is passed the rating scale
-				 will have labels, otherwise it will just have boxes.
-				 (default=5)
-		click_accepts -- indicates whether the form should close when a value
-						 is selected (default=False)
-		var -- the name of the experimental variable that should be used to log
-			   the widget status (default=None)								 
+		nodes -- The number of nodes or a list of node identifiers (e.g., #
+				 ['yes', 'no', 'maybe']. If a list is passed the rating scale #
+				 will have labels, otherwise it will just have boxes #
+				 (default=5).
+		click_accepts -- Indicates whether the form should close when a value #
+						 is selected (default=False).
+		var -- The name of the experimental variable that should be used to log #
+			   the widget status (default=None).
 		</DOC>"""	
 		
 		if type(click_accepts) != bool:
@@ -63,11 +63,11 @@ class rating_scale(widget):
 	def on_mouse_click(self, pos):
 	
 		"""<DOC>
-		Is called whenever the user clicks on the widget. Selects the correct
+		Is called whenever the user clicks on the widget. Selects the correct #
 		value from the scale and optionally closes the form.
 		
 		Arguments:
-		pos -- an (x, y) tuple		
+		pos -- An (x, y) tuple.
 		</DOC>"""		
 	
 	
@@ -85,10 +85,10 @@ class rating_scale(widget):
 	def render(self):
 	
 		"""<DOC>
-		Draws the widget
+		Draws the widget.
 		</DOC>"""	
-	
-		# Some ugly maths, but basically it evely spaces the checkboxes and
+		
+		# Some ugly maths, but basically it evenly spaces the checkboxes and
 		# draws a frame around it.
 		x, y, w, h = self.rect		
 		cy = y+h/2
@@ -109,10 +109,10 @@ class rating_scale(widget):
 	def set_value(self, val):
 	
 		"""<DOC>
-		Set the rating scale value
+		Sets the rating scale value.
 		
 		Arguments:
-		val -- the value		
+		val -- The value.
 		</DOC>"""
 		
 		self.value = val

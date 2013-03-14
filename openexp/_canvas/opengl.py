@@ -147,6 +147,7 @@ class opengl(openexp._canvas.legacy.legacy):
 
 		if color == None:
 			color = self.fgcolor
+		color = self.color(color)
 
 		if x == None:
 			x = self.xcenter()
@@ -170,6 +171,7 @@ class opengl(openexp._canvas.legacy.legacy):
 
 		if color == None:
 			color = self.fgcolor
+		color = self.color(color)
 
 		dy = abs(ey - sy) + 2*self.penwidth + 1
 		dx = abs(ex - sx) + 2*self.penwidth + 1
@@ -202,6 +204,7 @@ class opengl(openexp._canvas.legacy.legacy):
 
 		if color == None:
 			color = self.fgcolor
+		color = self.color(color)
 
 		dy = abs(ey - sy) + 2*arrow_size
 		dx = abs(ex - sx) + 2*arrow_size
@@ -246,6 +249,7 @@ class opengl(openexp._canvas.legacy.legacy):
 
 		if color == None:
 			color = self.fgcolor
+		color = self.color(color)
 
 		if fill:
 			surface = pygame.Surface((w,h), SRCALPHA)
@@ -267,6 +271,7 @@ class opengl(openexp._canvas.legacy.legacy):
 
 		if color == None:
 			color = self.fgcolor
+		color = self.color(color)
 
 		x = int(x)
 		y = int(y)
@@ -319,6 +324,7 @@ class opengl(openexp._canvas.legacy.legacy):
 
 		if color == None:
 			color = self.fgcolor
+		color = self.color(color)
 
 		surface = self.font.render(text, self.antialias, color)
 		size = self.font.size(text)

@@ -54,7 +54,10 @@ class form_text_display(form_base.form_base):
 
 		if string == None:
 			string = default_script
-		super(form_text_display, self).__init__(name, experiment, string, \
+		# Due to dynamic loading, we need to implement this super() hack. See
+		# <http://thingspython.wordpress.com/2010/09/27/another-super-wrinkle-raising-typeerror/>			
+		self.super_form_text_display = super(form_text_display, self)			
+		self.super_form_text_display.__init__(name, experiment, string, \
 			item_type='form_text_display', description= \
 			'A simple text display form')
 
@@ -68,7 +71,7 @@ class form_text_display(form_base.form_base):
 		"""
 
 		self._widgets = []
-		super(form_text_display, self).from_string(script)
+		self.super_form_text_display.from_string(script)
 
 class qtform_text_display(form_text_display, qtplugin.qtplugin):
 

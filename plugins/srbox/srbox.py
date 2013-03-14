@@ -159,7 +159,7 @@ class srbox(item.item, generic_response.generic_response):
 				None, self._timeout)
 			try:
 				resp = self._keyboard.to_chr(resp)
-				if resp != "timeout":
+				if resp not in ('timeout', None):
 					resp = int(resp)
 			except:
 				raise exceptions.runtime_error( \

@@ -38,10 +38,10 @@ class libsrbox:
 		Constructor. Connects to the SR Box.
 
 		Arguments:
-		experiment -- opensesame experiment
+		experiment -- Opensesame experiment.
 
 		Keywords arguments:
-		dev -- the srbox device port or None for auto-detect (default=None)
+		dev -- The srbox device port or None for auto-detect (default=None).
 		</DOC>"""
 
 		self.experiment = experiment
@@ -83,10 +83,12 @@ class libsrbox:
 							self._srbox = None
 							pass
 			else:
-				raise exceptions.runtime_error("libsrbox does not know how to auto-detect the SR Box on your platform. Please specify a device.")
+				raise exceptions.runtime_error( \
+					"libsrbox does not know how to auto-detect the SR Box on your platform. Please specify a device.")
 
 		if self._srbox == None:
-			raise exceptions.runtime_error("libsrbox failed to auto-detect an SR Box. Please specify a device.")
+			raise exceptions.runtime_error( \
+				"libsrbox failed to auto-detect an SR Box. Please specify a device.")
 		debug.msg("using device %s" % dev)
 		# Turn off all lights
 		if self._srbox != None:
@@ -95,10 +97,10 @@ class libsrbox:
 	def send(self, ch):
 
 		"""<DOC>
-		Send a single character
+		Sends a single character.
 
 		Arguments:
-		ch -- the character to send
+		ch -- The character to send.
 		</DOC>"""
 
 		self._srbox.write(ch)
@@ -106,7 +108,14 @@ class libsrbox:
 	def start(self):
 
 		"""<DOC>
-		Turn on sending mode, to start giving output
+		Turns on sending mode, to start giving output.
+
+		Example:
+		>>> exp.srbox.start()
+		>>> timestamp, buttonlist = exp.srbox.get_button_press(allowed_buttons=[1,2])
+		>>> if 1 in buttonlist:
+		>>> 		print 'Button 1 was pressed!'
+		>>> exp.srbox.stop()
 		</DOC>"""
 
 		# Write the start byte
@@ -117,7 +126,14 @@ class libsrbox:
 	def stop(self):
 
 		"""<DOC>
-		Turn of sending mode, so stop giving output
+		Turns of sending mode, to stop giving output.
+
+		Example:
+		>>> exp.srbox.start()
+		>>> timestamp, buttonlist = exp.srbox.get_button_press(allowed_buttons=[1,2])
+		>>> if 1 in buttonlist:
+		>>> 		print 'Button 1 was pressed!'
+		>>> exp.srbox.stop()
 		</DOC>"""
 
 		# Write the stop byte and flush the input
@@ -128,17 +144,24 @@ class libsrbox:
 	def get_button_press(self, allowed_buttons=None, timeout=None):
 
 		"""<DOC>
-		Get a button press from the SR box
+		Gets a button press from the SR box.
 
 		Keywords arguments:
-		allowed_buttons -- A list of buttons that are accepted or None to accept
-						   all buttons. Valid buttons are integers 1 through 8.
+		allowed_buttons -- A list of buttons that are accepted or None to accept #
+						   all buttons. Valid buttons are integers 1 through 8. #
 						   (default=None)
-		timeout -- a timeout value or None for no timeout (default=None)
+		timeout -- A timeout value or None for no timeout. (default=None)
 
 		Returns:
-		A timestamp, buttonlist tuple. The buttonlist consists of a list of
+		A timestamp, buttonlist tuple. The buttonlist consists of a list of #
 		button numbers.
+
+		Example:
+		>>> exp.srbox.start()
+		>>> timestamp, buttonlist = exp.srbox.get_button_press(allowed_buttons=[1,2])
+		>>> if 1 in buttonlist:
+		>>> 		print 'Button 1 was pressed!'
+		>>> exp.srbox.stop()
 		</DOC>"""
 
 		c = self.experiment.time()
@@ -152,33 +175,37 @@ class libsrbox:
 
 				if k != 0:
 					l = []
-					if k | self.BUTTON1 == 255 and (allowed_buttons == None or 1 in allowed_buttons):
+					if k | self.BUTTON1 == 255 and (allowed_buttons == None or \
+						1 in allowed_buttons):
 						l.append(1)
-					if k | self.BUTTON2 == 255 and (allowed_buttons == None or 2 in allowed_buttons):
+					if k | self.BUTTON2 == 255 and (allowed_buttons == None or \
+						2 in allowed_buttons):
 						l.append(2)
-					if k | self.BUTTON3 == 255 and (allowed_buttons == None or 3 in allowed_buttons):
+					if k | self.BUTTON3 == 255 and (allowed_buttons == None or \
+						3 in allowed_buttons):
 						l.append(3)
-					if k | self.BUTTON4 == 255 and (allowed_buttons == None or 4 in allowed_buttons):
+					if k | self.BUTTON4 == 255 and (allowed_buttons == None or \
+						4 in allowed_buttons):
 						l.append(4)
-					if k | self.BUTTON5 == 255 and (allowed_buttons == None or 5 in allowed_buttons):
+					if k | self.BUTTON5 == 255 and (allowed_buttons == None or \
+						5 in allowed_buttons):
 						l.append(5)
-					if k | self.BUTTON6 == 255 and (allowed_buttons == None or 6 in allowed_buttons):
+					if k | self.BUTTON6 == 255 and (allowed_buttons == None or \
+						6 in allowed_buttons):
 						l.append(6)
-					if k | self.BUTTON7 == 255 and (allowed_buttons == None or 7 in allowed_buttons):
+					if k | self.BUTTON7 == 255 and (allowed_buttons == None or \
+						7 in allowed_buttons):
 						l.append(7)
-					if k | self.BUTTON8 == 255 and (allowed_buttons == None or 8 in allowed_buttons):
+					if k | self.BUTTON8 == 255 and (allowed_buttons == None or \
+						8 in allowed_buttons):
 						l.append(8)
-					if len(l) > 0:
-						print "L=%s T=%s" % (l, t)
-						return l, t
-
 		return None, t
 
 	def close(self):
 
-		"""<DOC>
-		Close the connection to the srbox. This (sometimes?) required in order
-		to re-use the SR Box in the same session of OpenSesame.
+		"""<DOC> TODO
+		Closes the connection to the srbox. This is (sometimes?) required in #
+		order to re-use the SR Box in the same session of OpenSesame.
 		</DOC>"""
 
 		self._srbox.close()

@@ -111,15 +111,7 @@ class item(object):
 		# all from_string() derivatives need to be modified
 		if self.parse_comment(line):
 			return True
-
-
 		l = self.split(line.strip())
-		try:
-			l = self.split(line.strip())
-		except Exception as e:
-			raise exceptions.script_error( \
-				u"Error parsing '%s' in item '%s': %s" % (line, self.name, e))
-
 		if len(l) > 0 and l[0] == u'set':
 			if len(l) != 3:
 				raise exceptions.script_error( \
@@ -254,10 +246,10 @@ class item(object):
 					self.set(textblock_var, textblock_val)
 					textblock_var = None
 			# The beginning of a textblock. A new textblock is only started when
-			# a textblock is not already ongoing, and only if the textblock start
-			# is of the format __VARNAME__
-			elif line_stripped[:2] == u'__' and line_stripped[-2:] == u'__' and \
-				textblock_var == None:
+			# a textblock is not already ongoing, and only if the textblock
+			# start is of the format __VARNAME__
+			elif line_stripped[:2] == u'__' and line_stripped[-2:] == u'__' \
+				and textblock_var == None:
 				textblock_var = line_stripped[2:-2]
 				if textblock_var in self.reserved_words:
 					textblock_var = u'_' + textblock_var
@@ -274,7 +266,7 @@ class item(object):
 				if strip_tab:
 					textblock_val += line[1:] + u'\n'
 				else:
-					textblock_val += line + '\n'
+					textblock_val += line + u'\n'
 			# Parse regular variables
 			elif not self.parse_variable(line):
 				self.parse_line(line)
@@ -913,8 +905,13 @@ class item(object):
 		"""
 
 		import shlex
-		return [chunk.decode(self.encoding) for chunk in shlex.split(u.encode( \
-			self.encoding))]
+		try:
+			return [chunk.decode(self.encoding) for chunk in shlex.split( \
+				u.encode(self.encoding))]
+		except:
+			raise exceptions.script_error( \
+				u'Failed to parse line "%s". Is there a closing quotation missing?' \
+				% u)
 
 	def color_check(self, col):
 
@@ -958,7 +955,7 @@ class item(object):
 		</DOC>"""
 
 		# This function is set by item.prepare()
-		raise exceptions.openexp_error( \
+		raise exceptions.runtime_error( \
 			u'item.sleep(): This function should be set by the canvas backend.')
 
 	def time(self):
@@ -974,7 +971,7 @@ class item(object):
 		</DOC>"""
 
 		# This function is set by item.prepare()
-		raise exceptions.openexp_error( \
+		raise exceptions.runtime_error( \
 			u"item.time(): This function should be set by the canvas backend.")
 
 	def log(self, msg):

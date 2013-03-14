@@ -29,19 +29,23 @@ class checkbox(button):
 		Constructor
 		
 		Arguments:
-		form -- the parent form
+		form -- The parent form.
 				
 		Keyword arguments:
-		text -- checkbox text (default='checkbox')		
-		frame -- indicates whether a frame should be drawn around the widget
-				 (default=False)
-		group -- if a group is specified, checking one checkbox from the group
-				 will uncheck all other checkboxes in that group (default=None)
-		checked -- the checked state of the checkbox (default=False)
-		click_accepts -- indicates whether a click press should accept and
-					     close the form (default=False)		
-		var -- the name of the experimental variable that should be used to log
-			   the widget status (default=None)
+		text -- Checkbox text (default='checkbox').
+		frame -- Indicates whether a frame should be drawn around the widget #
+				 (default=False).
+		group -- If a group is specified, checking one checkbox from the group #
+				 will uncheck all other checkboxes in that group. (default=None).
+		checked -- The checked state of the checkbox (default=False).
+		click_accepts -- Indicates whether a click press should accept and #
+					     close the form (default=False).
+		var -- The name of the experimental variable that should be used to log #
+			   the widget status. This variable will contain a semi-colon #
+			   separated list of the text of all checked checkboxes in the #
+			   same group, or 'no' if no checkbox in the group is checked. For #
+			   the purpose of the variable, all checkboxes that are not part #
+			   of a group are placed in the same group. (default=None).
 		</DOC>"""	
 		
 		if type(checked) != bool:
@@ -62,20 +66,24 @@ class checkbox(button):
 	def on_mouse_click(self, pos):
 	
 		"""<DOC>
-		Is called whenever the user clicks on the widget. Toggles the state of
+		Is called whenever the user clicks on the widget. Toggles the state of #
 		the checkbox.
 		
 		Arguments:
-		pos -- an (x, y) tuple		
+		pos -- An (x, y) tuple.
 		</DOC>"""		
 	
 		if self.group != None:
+			# If the checkbox is part of a group than checking it will uncheck
+			# all other checkboxes in the group, and check the current one
 			for widget in self.form.widgets:
 				if widget != None and widget.type == 'checkbox' and \
 					widget.group == self.group:
 					widget.set_checked(False)
 			self.set_checked(True)
 		else:
+			# If the checkbox is not part of a group then checking it will
+			# toggle its check status
 			self.set_checked(not self.checked)
 			
 		# Set the response variable
@@ -84,7 +92,7 @@ class checkbox(button):
 			if widget != None and widget.type == 'checkbox' and \
 				widget.group == self.group:
 				if widget.checked:
-					l_val.append(widget.text)
+					l_val.append(self.form.experiment.unistr(widget.text))
 		self.set_var(';'.join(l_val))
 			
 		if self.click_accepts:
@@ -93,7 +101,7 @@ class checkbox(button):
 	def render(self):
 	
 		"""<DOC>
-		Draws the widget
+		Draws the widget.
 		</DOC>"""	
 	
 		x, y, w, h = self.rect
@@ -104,10 +112,10 @@ class checkbox(button):
 	def set_checked(self, checked=True):
 	
 		"""<DOC>
-		Sets the checked status of the checkbox
+		Sets the checked status of the checkbox.
 		
 		Keyword arguments:
-		checked -- the checked status (default=True)
+		checked -- The checked status (default=True).
 		</DOC>"""
 		
 		self.checked = checked

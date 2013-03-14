@@ -90,10 +90,10 @@ if __name__ == "__main__":
 	# suppress the new wizard in that case.
 	import os.path
 	if len(sys.argv) >= 2 and os.path.isfile(sys.argv[1]):
-		new_wizard = False
+		start_new_tab = False
 		opensesame.open_file(path=sys.argv[1])
 	else:
-		new_wizard = True
+		start_new_tab = True
 
 	# Run the app (the startup method depends on command line parameters)
 	if opensesame.options.run:
@@ -102,7 +102,8 @@ if __name__ == "__main__":
 		opensesame.run_experiment(False)
 	else:
 		opensesame.check_update(always=False)
-		opensesame.ui.tabwidget.open_start_new(start=True)
+		if start_new_tab:
+			opensesame.ui.tabwidget.open_start_new(start=True)
 
 	opensesame.restore_window_state()				
 	opensesame.refresh()			
