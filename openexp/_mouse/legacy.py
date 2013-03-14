@@ -198,7 +198,7 @@ class legacy:
 		start_time = pygame.time.get_ticks()
 		time = start_time
 		
-		while timeout == None or time - start_time < timeout:
+		while True:
 			time = pygame.time.get_ticks()						
 			
 			# Draw a cusom cursor if necessary
@@ -232,6 +232,8 @@ class legacy:
 					if buttonlist == None or event.button in buttonlist:
 						pygame.mouse.set_visible(self.visible)
 						return event.button, event.pos, time
+			if timeout != None and time-start_time >= timeout:
+				break
 											
 		if self.cursor == None:
 			pygame.mouse.set_visible(self.visible)					
