@@ -428,29 +428,31 @@ class qtopensesame(QtGui.QMainWindow):
 		"""Autosave the experiment if there are unsaved changes"""
 
 		if not self.unsaved_changes:
-			self.set_status("No unsaved changes, skipping backup")
-			autosave_path = ""
+			self.set_status(u'No unsaved changes, skipping backup')
+			autosave_path = u''
 		else:
 			_current_path = self.current_path
+			_experiment_path = self.experiment.experiment_path
 			_unsaved_changes = self.unsaved_changes
 			_window_msg = self.window_msg
 			self.current_path = os.path.join(self.autosave_folder, \
-				"%s.opensesame.tar.gz" % unicode(time.ctime()).replace(":", "_"))
+				u'%s.opensesame.tar.gz'% unicode(time.ctime()).replace(':', \
+				'_'))
 			debug.msg("saving backup as %s" % self.current_path)
 			try:
 				self.save_file(False, remember=False, catch=False)
-				self.set_status(_("Backup saved as %s") % self.current_path)
+				self.set_status(_('Backup saved as %s') % self.current_path)
 			except:
-				self.set_status(_("Failed to save backup ..."))
+				self.set_status(_('Failed to save backup ...'))
 			autosave_path = self.current_path
 			self.current_path = _current_path
+			self.experiment.experiment_path = _experiment_path
 			self.set_unsaved(_unsaved_changes)
 			self.window_message(_window_msg)
 		self.start_autosave_timer()
 		return autosave_path
 
 	def clean_autosave(self):
-
 
 		"""Remove old files from the back-up folder"""
 
