@@ -18,7 +18,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from PyQt4 import QtCore, QtGui
-from libopensesame.misc import debug
+from libopensesame import debug
 
 class color_edit(QtGui.QWidget):
 
