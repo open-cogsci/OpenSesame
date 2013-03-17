@@ -666,6 +666,7 @@ class sketchpad(item.item, generic_response.generic_response):
 		A list of (name, description) tuples
 		"""
 
+		l = item.item.var_info(self)
 		if self.get("duration", _eval=False) in ["keypress", "mouseclick"]:
-			return generic_response.generic_response.var_info(self)
-		return item.item.var_info(self)
+			l += generic_response.generic_response.var_info(self)
+		return l

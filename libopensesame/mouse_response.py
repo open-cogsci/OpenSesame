@@ -110,7 +110,8 @@ class mouse_response(item.item, generic_response.generic_response):
 		A list of (name, description) tuples
 		"""
 
-		l = generic_response.generic_response.var_info(self)
+		l = item.item.var_info(self) + \
+			generic_response.generic_response.var_info(self)
 		l.append( ("cursor_x", "[Depends on response]") )
 		l.append( ("cursor_y", "[Depends on response]") )
 		return l
