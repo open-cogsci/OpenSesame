@@ -1163,6 +1163,25 @@ class qtopensesame(QtGui.QMainWindow):
 						debug.msg("'%s' did something" % item)
 						redo = True
 						break
+						
+	def print_debug_window(self, msg):
+		
+		"""
+		Prints a message to the debug window.
+		
+		Arguments:
+		msg		--	An object to print to the debug window. If it's an exception
+					than a full traceback will be printed.
+		"""
+		
+		from libqtopensesame.widgets import pyterm				
+		out = pyterm.output_buffer(self.ui.edit_stdout)
+		if isinstance(msg, Exception):
+			import traceback
+			for s in traceback.format_exc(msg).split('\n'):
+				out.write(s)
+		else:
+			out.write(self.experiment.unistr(msg))
 
 	def call_opensesamerun(self, exp):
 
@@ -1389,8 +1408,7 @@ class qtopensesame(QtGui.QMainWindow):
 					self.experiment.notify( \
 						_("An unexpected error occurred, which was not caught by OpenSesame. This should not happen! Message:<br/><b>%s</b>") \
 						% self.experiment.unistr(e))
-					for s in traceback.format_exc(e).split("\n"):
-						print s
+					self.print_debug_window(e)					
 
 		# Undo the standard output rerouting
 		sys.stdout = sys.__stdout__
