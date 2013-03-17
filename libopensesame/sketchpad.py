@@ -276,16 +276,16 @@ class sketchpad(item.item, generic_response.generic_response):
 		item = {}
 
 		item["penwidth"] = 1
-		item["color"] = self.get("foreground")
+		item["color"] = self.get("foreground", _eval=False)
 		item["type"] = "undefined"
 		item["fill"] = 0
 		item["arrow_size"] = 20
 		item["center"] = 1
 		item["scale"] = 1.0
-		item["font_family"] = self.experiment.font_family
-		item["font_size"] = self.experiment.font_size
-		item["font_italic"] = self.experiment.font_italic
-		item["font_bold"] = self.experiment.font_bold
+		item["font_family"] = self.get('font_family', _eval=False)
+		item["font_size"] = self.get('font_size', _eval=False)
+		item["font_italic"] = self.get('font_italic', _eval=False)
+		item["font_bold"] = self.get('font_bold', _eval=False)
 
 		item["orient"] = 0
 		item["freq"] = 0.1
