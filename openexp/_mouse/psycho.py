@@ -87,7 +87,7 @@ class psycho(openexp._mouse.legacy.legacy):
 		button = None
 		pos = None
 		self.mouse.clickReset()
-		while timeout == None or time - start_time < timeout:
+		while True:
 			time = 1000.0 * self.experiment.clock.getTime()			
 			buttons, times = self.mouse.getPressed(getTime=True)
 			if buttons[0] and (buttonlist == None or 1 in buttonlist):
@@ -98,9 +98,11 @@ class psycho(openexp._mouse.legacy.legacy):
 				button = 2
 				pos = self.mouse.getPos()
 				break
-			if buttons[2] and (buttonlist == None or 1 in buttonlist):
+			if buttons[2] and (buttonlist == None or 3 in buttonlist):
 				button = 3
 				pos = self.mouse.getPos()
+				break
+			if timeout != None and time-start_time >= timeout:
 				break
 		if pos != None:
 			pos = pos[0]+self.experiment.width/2, \

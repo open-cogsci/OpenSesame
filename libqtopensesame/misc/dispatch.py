@@ -47,6 +47,7 @@ from libqtopensesame.misc import _
 from libqtopensesame.items import experiment
 import libopensesame.exceptions
 import sip
+import traceback
 
 class dispatch(QtCore.QObject):
 
@@ -100,10 +101,13 @@ class dispatch(QtCore.QObject):
 			tmp = experiment.experiment(self.main_window, \
 				self.main_window.experiment.title, script, \
 				self.main_window.experiment.pool_folder)
-		except libopensesame.exceptions.script_error as error:		
-			# If something is wrong with the script, notify the user
-			self.main_window.experiment.notify(_("Could not parse script: %s") \
+		except Exception as error:		
+			# If something is wrong with the script, notify the user and print
+			# a traceback to the debug window
+			self.main_window.experiment.notify( \
+				_('Failed to parse script (see traceback in debug window): %s') \
 				% error)
+			self.main_window.print_debug_window(error)
 			return
 		# Apply the new experiment
 		self.main_window.experiment = tmp

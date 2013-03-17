@@ -239,17 +239,14 @@ class experiment(item.item):
 		s = iter(string.split("\n"));
 		line = next(s, None)
 		while line != None:
-
 			get_next = True
 			try:
 				l = self.split(line)
 			except ValueError as e:
 				raise exceptions.script_error( \
 					u"Failed to parse script. Maybe it contains illegal characters or unclosed quotes?")
-
 			if len(l) > 0:
 				self.parse_variable(line)
-
 				# Parse definitions
 				if l[0] == u"define":
 					if len(l) != 3:
@@ -261,9 +258,9 @@ class experiment(item.item):
 					line, def_str = self.read_definition(s)
 					get_next = False
 					self.parse_definition(item_type, item_name, def_str)
-
+			# Advance to next line
 			if get_next:
-				line = next(s, None)
+				line = next(s, None)				
 
 	def run(self):
 

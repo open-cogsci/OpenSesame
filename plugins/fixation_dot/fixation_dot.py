@@ -108,8 +108,16 @@ class fixation_dot(item.item, generic_response.generic_response):
 		return True
 		
 	def var_info(self):
+		
+		"""
+		Give a list of dictionaries with variable descriptions
 
-		return generic_response.generic_response.var_info(self)			
+		Returns:
+		A list of (name, description) tuples
+		"""		
+
+		return item.item.var_info(self) + \
+			generic_response.generic_response.var_info(self)		
 
 class qtfixation_dot(fixation_dot, qtplugin.qtplugin):
 

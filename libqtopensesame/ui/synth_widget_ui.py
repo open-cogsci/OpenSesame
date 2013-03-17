@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'resources/ui/synth_widget.ui'
 #
-# Created: Thu Aug  2 12:43:05 2012
+# Created: Thu Mar 14 21:12:09 2013
 #      by: PyQt4 UI code generator 4.9.1
 #
 # WARNING! All changes made in this file will be lost!
@@ -22,7 +22,7 @@ class Ui_synth_widget(object):
         self.gridLayout.setMargin(0)
         self.gridLayout.setObjectName(_fromUtf8("gridLayout"))
         spacerItem = QtGui.QSpacerItem(40, 20, QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
-        self.gridLayout.addItem(spacerItem, 1, 0, 1, 1)
+        self.gridLayout.addItem(spacerItem, 0, 0, 1, 1)
         self.frame_controls = QtGui.QFrame(synth_widget)
         sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Fixed, QtGui.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
@@ -224,50 +224,9 @@ class Ui_synth_widget(object):
         self.button_white_noise.setObjectName(_fromUtf8("button_white_noise"))
         self.gridLayout_4.addWidget(self.button_white_noise, 1, 3, 1, 1)
         self.gridLayout_3.addWidget(self.frame_3, 2, 0, 1, 3)
-        self.gridLayout.addWidget(self.frame_controls, 1, 2, 1, 1)
+        self.gridLayout.addWidget(self.frame_controls, 0, 2, 1, 1)
         spacerItem1 = QtGui.QSpacerItem(40, 20, QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
-        self.gridLayout.addItem(spacerItem1, 1, 3, 1, 1)
-        self.frame_notification = QtGui.QFrame(synth_widget)
-        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Preferred, QtGui.QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.frame_notification.sizePolicy().hasHeightForWidth())
-        self.frame_notification.setSizePolicy(sizePolicy)
-        self.frame_notification.setFrameShape(QtGui.QFrame.NoFrame)
-        self.frame_notification.setFrameShadow(QtGui.QFrame.Raised)
-        self.frame_notification.setObjectName(_fromUtf8("frame_notification"))
-        self.horizontalLayout_3 = QtGui.QHBoxLayout(self.frame_notification)
-        self.horizontalLayout_3.setObjectName(_fromUtf8("horizontalLayout_3"))
-        self.widget_2 = QtGui.QWidget(self.frame_notification)
-        self.widget_2.setStyleSheet(_fromUtf8("background-color: #729fcf;\n"
-"color: rgb(255, 255, 255);"))
-        self.widget_2.setObjectName(_fromUtf8("widget_2"))
-        self.horizontalLayout_2 = QtGui.QHBoxLayout(self.widget_2)
-        self.horizontalLayout_2.setMargin(5)
-        self.horizontalLayout_2.setMargin(0)
-        self.horizontalLayout_2.setObjectName(_fromUtf8("horizontalLayout_2"))
-        self.label_synth_script = QtGui.QLabel(self.widget_2)
-        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Fixed, QtGui.QSizePolicy.Preferred)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.label_synth_script.sizePolicy().hasHeightForWidth())
-        self.label_synth_script.setSizePolicy(sizePolicy)
-        self.label_synth_script.setText(_fromUtf8(""))
-        self.label_synth_script.setPixmap(QtGui.QPixmap(_fromUtf8(":/icons/about_large.png")))
-        self.label_synth_script.setObjectName(_fromUtf8("label_synth_script"))
-        self.horizontalLayout_2.addWidget(self.label_synth_script)
-        self.label_15 = QtGui.QLabel(self.widget_2)
-        self.label_15.setWordWrap(True)
-        self.label_15.setObjectName(_fromUtf8("label_15"))
-        self.horizontalLayout_2.addWidget(self.label_15)
-        self.button_script = QtGui.QPushButton(self.widget_2)
-        icon4 = QtGui.QIcon()
-        icon4.addPixmap(QtGui.QPixmap(_fromUtf8(":/icons/script.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.button_script.setIcon(icon4)
-        self.button_script.setObjectName(_fromUtf8("button_script"))
-        self.horizontalLayout_2.addWidget(self.button_script)
-        self.horizontalLayout_3.addWidget(self.widget_2)
-        self.gridLayout.addWidget(self.frame_notification, 0, 2, 1, 1)
+        self.gridLayout.addItem(spacerItem1, 0, 3, 1, 1)
 
         self.retranslateUi(synth_widget)
         QtCore.QMetaObject.connectSlotsByName(synth_widget)
@@ -307,7 +266,4 @@ class Ui_synth_widget(object):
         self.button_saw.setToolTip(QtGui.QApplication.translate("synth_widget", "Generate a sawtooth wave", None, QtGui.QApplication.UnicodeUTF8))
         self.button_square.setToolTip(QtGui.QApplication.translate("synth_widget", "Generate a square wave", None, QtGui.QApplication.UnicodeUTF8))
         self.button_white_noise.setToolTip(QtGui.QApplication.translate("synth_widget", "Generate white noise", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_15.setText(QtGui.QApplication.translate("synth_widget", "One of the controls is defined using variables and therefore the controls are disabled. Use the script editor to edit the synth.", None, QtGui.QApplication.UnicodeUTF8))
-        self.button_script.setToolTip(QtGui.QApplication.translate("synth_widget", "Edit the script to see the definition", None, QtGui.QApplication.UnicodeUTF8))
-        self.button_script.setText(QtGui.QApplication.translate("synth_widget", "Edit script", None, QtGui.QApplication.UnicodeUTF8))
 

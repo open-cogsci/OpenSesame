@@ -25,7 +25,7 @@ class keyboard_response(item.item, generic_response.generic_response):
 
 	"""An item for collection keyboard responses"""
 
-	def __init__(self, name, experiment, string = None):
+	def __init__(self, name, experiment, string=None):
 
 		"""
 		Constructor
@@ -85,5 +85,13 @@ class keyboard_response(item.item, generic_response.generic_response):
 		return True
 
 	def var_info(self):
+		
+		"""
+		Give a list of dictionaries with variable descriptions
 
-		return generic_response.generic_response.var_info(self)
+		Returns:
+		A list of (name, description) tuples
+		"""		
+
+		return item.item.var_info(self) + \
+			generic_response.generic_response.var_info(self)

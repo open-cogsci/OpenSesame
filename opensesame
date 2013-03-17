@@ -41,7 +41,7 @@ if __name__ == "__main__":
 				sys.path.append(path)
 				
 	# Load debug package (this must be after the working directory change)
-	from libopensesame.misc import debug
+	from libopensesame import debug
 
 	# The IPython modules must be loaded before PyQt4
 	if "--ipython" in sys.argv:

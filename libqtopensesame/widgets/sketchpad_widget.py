@@ -20,6 +20,9 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 __author__ = "Sebastiaan Mathot"
 __license__ = "GPLv3"
 
+import math
+import os
+import numbers
 from libopensesame import exceptions, debug
 from libqtopensesame.ui import sketchpad_widget_ui, gabor_dialog_ui, \
 	noise_patch_dialog_ui
@@ -27,8 +30,6 @@ from libqtopensesame.widgets import pool_widget
 from libqtopensesame.misc import _
 import openexp.canvas
 from PyQt4 import QtCore, QtGui
-import math
-import os
 
 class remove_item_button(QtGui.QPushButton):
 
@@ -316,8 +317,8 @@ class canvas(QtGui.QGraphicsScene):
 
 		self.grid_list = []
 
-		w = self.sketchpad_widget.sketchpad.get("width")
-		h = self.sketchpad_widget.sketchpad.get("height")
+		w = self.sketchpad_widget.sketchpad.experiment.get("width")
+		h = self.sketchpad_widget.sketchpad.experiment.get("height")
 
 		pen = QtGui.QPen()
 		pen.setWidth(1)
@@ -396,7 +397,8 @@ class sketchpad_widget(QtGui.QWidget):
 		self.ui.widget_items.setLayout(self.vbox_items)
 
 		# Initialize custom color and font widgets
-		self.ui.edit_color.initialize(self.sketchpad.experiment)
+		self.ui.edit_color.initialize(self.sketchpad.experiment, color= \
+			self.sketchpad.get('foreground', _eval=False))
 		QtCore.QObject.connect(self.ui.edit_color, QtCore.SIGNAL( \
 			"set_color"), self.set_tool)
 		self.ui.widget_font.initialize(self.sketchpad.experiment)
@@ -871,16 +873,18 @@ class sketchpad_widget(QtGui.QWidget):
 		"""(Re)draw the canvas and fill the item list"""
 
 		self.scene.clear()
-
 		self.ui.view.setMouseTracking(True)
-
-		w = self.sketchpad.get("width")
-		h = self.sketchpad.get("height")
-
+		w = self.sketchpad.get('width')
+		h = self.sketchpad.get('height')
+		
 		# Apply the zoom level
 		self.ui.view.setFixedSize(self.zoom * w + 60, self.zoom * h + 60)
 		self.ui.view.resetTransform()
 		self.ui.view.scale(self.zoom, self.zoom)
+		
+		# Set the foreground
+		self.ui.edit_color.initialize(self.sketchpad.experiment, color= \
+			self.sketchpad.get('foreground', _eval=False))				
 
 		# Set the background
 		brush = QtGui.QBrush()
@@ -1001,16 +1005,17 @@ class sketchpad_widget(QtGui.QWidget):
 		"""Set the current tool according to the options in the widget"""
 
 		self.penwidth = self.ui.spin_penwidth.value()
-		self.color = self.sketchpad.experiment.sanitize(self.ui.edit_color.text())
+		self.color = self.sketchpad.experiment.sanitize( \
+			self.ui.edit_color.text())
 		refs = []
 		try:
 			refs = self.sketchpad.experiment.get_refs(self.color)
 			self.sketchpad.experiment.color_check(self.color)
 		except Exception as e:
-			if refs == []:
+			if len(refs) == 0:
 				self.sketchpad.experiment.notify(e)
-				self.ui.edit_color.setText("white")
-				self.color = "white"
+				self.ui.edit_color.setText('white')
+				self.color = 'white'
 
 		self.show_grid = self.ui.checkbox_show_grid.isChecked()
 
