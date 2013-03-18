@@ -17,21 +17,18 @@ You should have received a copy of the GNU General Public License
 along with openexp.  If not, see <http://www.gnu.org/licenses/>.
 """
 
-from libopensesame import debug
+import openexp.exceptions
 
-class mouse:
+class droid(object):
 
-	"""
-	Based on the mouse_backend variable in the experiment, this class
-	morphs into the appropriate keyboard backend class.
-	"""
-
-	def __init__(self, experiment, buttonlist=None, timeout=None, visible=False):
+	"""The synth generates a sound"""
 	
-		backend = experiment.mouse_backend		
-		debug.msg('morphing into %s' % backend)
-		mod = __import__('openexp._mouse.%s' % backend, fromlist=['dummy'])			
-		cls = getattr(mod, backend)
-		self.__class__ = cls
-		cls.__init__(self, experiment, buttonlist, timeout, visible)
+	def __init__(self, experiment, **keywords):
+	
+		"""See openexp._synth.legacy"""
+
+		raise openexp.exceptions.synth_error( \
+			'The synth is not supported on the droid back-end, sorry!')
+		
+
 		
