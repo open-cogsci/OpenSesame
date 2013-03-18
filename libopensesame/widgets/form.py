@@ -17,6 +17,7 @@ You should have received a copy of the GNU General Public License
 along with openexp.  If not, see <http://www.gnu.org/licenses/>.
 """
 
+from libopensesame import type_check
 from libopensesame.exceptions import form_error
 from openexp.canvas import canvas
 from openexp.mouse import mouse
@@ -51,10 +52,12 @@ class form:
 		if type(cols) == int:
 			self.cols = [1./cols]*cols
 		else:
+			cols = type_check.float_list(cols, u'form columns', min_len=1)
 			self.cols = [float(c)/sum(cols) for c in cols]
 		if type(rows) == int:
 			self.rows = [1./rows]*rows
 		else:
+			rows = type_check.float_list(rows, u'form rows', min_len=1)
 			self.rows = [float(r)/sum(rows) for r in rows]
 
 		self.experiment = experiment
@@ -62,7 +65,8 @@ class form:
 		self.width = experiment.get('width')
 		self.height = experiment.get('height')
 		self.spacing = spacing
-		self.margins = margins
+		self.margins = type_check.float_list(margins, u'form margins', \
+			min_len=4, max_len=4)		
 		n_cells = len(self.cols)*len(self.rows)
 		self.widgets = [None]*n_cells
 		self.span = [(1,1)]*n_cells
