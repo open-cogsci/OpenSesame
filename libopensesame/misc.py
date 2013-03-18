@@ -21,8 +21,8 @@ import os
 import os.path
 import sys
 
-version = "0.28.0~pre1"
-codename = "Gutsy Gibson"
+version = "0.27.2~pre2"
+codename = "Frisky Freud"
 
 use_global_resources = "--no-global-resources" not in sys.argv
 from libopensesame import debug
