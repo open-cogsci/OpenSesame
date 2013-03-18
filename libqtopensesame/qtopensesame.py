@@ -1399,16 +1399,17 @@ class qtopensesame(QtGui.QMainWindow):
 				# Report the error
 				if isinstance(e, libopensesame.exceptions.runtime_error):
 					self.experiment.notify(e)
-				elif isinstance(e, openexp.exceptions.openexp_error):
-					print unicode(e)
+					self.print_debug_window(e)
+				elif isinstance(e, openexp.exceptions.openexp_error):					
 					self.experiment.notify( \
 						_("<b>Error</b>: OpenExp error<br /><b>Description</b>: %s") \
 						% e)
+					self.print_debug_window(e)
 				else:
 					self.experiment.notify( \
 						_("An unexpected error occurred, which was not caught by OpenSesame. This should not happen! Message:<br/><b>%s</b>") \
 						% self.experiment.unistr(e))
-					self.print_debug_window(e)					
+					self.print_debug_window(e)
 
 		# Undo the standard output rerouting
 		sys.stdout = sys.__stdout__
