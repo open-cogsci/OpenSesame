@@ -151,7 +151,23 @@ class legacy:
 		</DOC>"""	
 	
 		self.visible = visible
-		pygame.mouse.set_visible(visible)						
+		pygame.mouse.set_visible(visible)
+
+	def set_pos(self, pos=(0,0)):
+
+		"""<DOC>
+		Sets the mouse position.
+		
+		Keyword arguments:
+		pos -- A (x,y) tuple for the new mouse coordinates (default = (0,0))
+
+		Example:
+		>>> from openexp.mouse import mouse
+		>>> my_mouse = mouse(exp)
+		>>> my_mouse.set_pos(pos=(0,0))
+		</DOC>"""	
+	
+		pygame.mouse.set_pos(pos)						
 		
 	def get_click(self, buttonlist=None, timeout=None, visible=None):
 	
@@ -253,6 +269,7 @@ class legacy:
 		>>> print 'The cursor was at (%d, %d)' % (x, y)
 		</DOC>"""	
 	
+		pygame.event.get()
 		return pygame.mouse.get_pos(), self.experiment.time()
 		
 	def flush(self):
