@@ -611,25 +611,18 @@ class experiment(item.item):
 
 		"""
 		Saves the system state so that it can be restored after the
-		experiment. For now, this comes down to remembering which global variables
-		exist, so that they can be deleted later on.
+		experiment.
 		"""
-
+		
 		from libopensesame import inline_script
-		self._globals = inline_script.inline_script._globals().keys()
-		debug.msg('%d inline_script globals on start' % len(self._globals))
-
+		inline_script.save_state()
+	
 	def restore_state(self):
 
 		"""Restores the system to the state as saved by save_state()"""
 
 		from libopensesame import inline_script
-		_globals = inline_script.inline_script._globals().keys()
-		debug.msg('%d inline_script globals on end' % len(_globals))
-		for g in _globals:
-			if g not in self._globals:
-				debug.msg('deleting inline_script global %s' % g)
-				delattr(inline_script, g)
+		inline_script.restore_state()
 
 	def _sleep_func(self, ms):
 
