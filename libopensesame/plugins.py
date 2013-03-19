@@ -19,6 +19,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 
 import os
 import os.path
+import json
 
 # Caching variables
 _list = None
@@ -124,17 +125,26 @@ def plugin_property(plugin, _property, default=0):
 	if plugin in _properties and _property in _properties[plugin]:
 		return _properties[plugin][_property]
 	if plugin not in _properties:
-		_properties[plugin] = {}	
-	for l in open(os.path.join(plugin_folder(plugin), "info.txt"), "r"):
-		a = l.split(":")
-		if len(a) == 2 and a[0] == _property:
-			val = a[1].strip()			
-			try:
-				val = int(val)
-			finally:
-				_properties[plugin][_property] = val
-				return val
-	_properties[plugin][_property] = default				
+		_properties[plugin] = {}		
+	info_txt = os.path.join(plugin_folder(plugin), u'info.txt')
+	info_json = os.path.join(plugin_folder(plugin), u'info.json')	
+	# New-style plug-ins, using info.json
+	if os.path.exists(info_json):
+		_json = json.load(open(info_json))
+		if _property in _json:
+			return _json[_property]
+	# Old-style plug-ins, using info.txt
+	else:
+		for l in open(info_txt, "r"):
+			a = l.split(":")
+			if len(a) == 2 and a[0] == _property:
+				val = a[1].strip()			
+				try:
+					val = int(val)
+				finally:
+					_properties[plugin][_property] = val
+					return val
+		_properties[plugin][_property] = default				
 	return default
 	
 def plugin_category(plugin):

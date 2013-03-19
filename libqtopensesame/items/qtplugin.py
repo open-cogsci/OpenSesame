@@ -43,14 +43,14 @@ class qtplugin(qtitem.qtitem):
 		if plugin_file != None:
 			# These lines makes sure that the icons and help file are recognized
 			# by OpenSesame.
+			self.plugin_folder = os.path.dirname(plugin_file)
 			self.experiment.resources["%s.png" % self.item_type] = \
-				os.path.join(os.path.split(plugin_file)[0], "%s.png" \
-				% self.item_type)
+				os.path.join(self.plugin_folder, "%s.png" % self.item_type)
 			self.experiment.resources["%s_large.png" % self.item_type] = \
-				os.path.join(os.path.split(plugin_file)[0], "%s_large.png" \
+				os.path.join(self.plugin_folder, "%s_large.png" \
 				% self.item_type)
 			self.experiment.resources["%s.html" % self.item_type] = \
-				os.path.join(os.path.split(plugin_file)[0], "%s.html" \
+				os.path.join(self.plugin_folder, "%s.html" \
 				% self.item_type)
 
 		self.lock = False
