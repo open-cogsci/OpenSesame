@@ -361,8 +361,8 @@ class qtitem(QtCore.QObject):
 
 		hbox = QtGui.QHBoxLayout()
 		hbox.addWidget(self.experiment.label_image("%s" % self.item_type))
-		hbox.addWidget(QtGui.QLabel(_("Editing script for <b>%s</b> - %s") % \
-			(self.name, self.item_type)))
+		self.script_header = QtGui.QLabel()			
+		hbox.addWidget(self.script_header)
 		hbox.addStretch()
 		hbox.setContentsMargins(0,0,0,0)
 		hwidget = QtGui.QWidget()
@@ -384,6 +384,9 @@ class qtitem(QtCore.QObject):
 		The QWidget containing the script tab
 		"""
 
+		self.script_header.setText( \
+			_("Editing script for <b>%s</b> - %s") % (self.name, \
+			self.item_type))
 		script = ""
 		for s in self.to_string().split("\n")[1:]:
 			script += self.strip_script_line(s)

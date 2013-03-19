@@ -199,6 +199,7 @@ class experiment(libopensesame.experiment.experiment):
 			if hasattr(w, "__script_item__") and w.__script_item__ == from_name:
 				w.script_item = to_name
 				self.experiment.ui.tabwidget.setTabText(i, to_name)
+				self.items[to_name].script_widget()
 
 		self.main_window.refresh()
 
