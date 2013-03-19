@@ -21,6 +21,7 @@ import openexp.mouse
 import openexp.exceptions
 import openexp._mouse.legacy
 from psychopy import event
+import psychopy.visual
 
 class psycho(openexp._mouse.legacy.legacy):
 
@@ -68,7 +69,17 @@ class psycho(openexp._mouse.legacy.legacy):
 		"""See openexp._mouse.legacy"""
 	
 		self.visible = visible
-		self.mouse.setVisible(visible)		
+		self.mouse.setVisible(visible)
+
+	def set_pos(self, pos=(0,0)):
+
+		"""See openexp._mouse.legacy"""	
+
+		if psychopy.visual.openWindows[0].winType == 'pyglet':
+			raise openexp.exceptions.response_error( \
+				"Method set_pos not supported in pyglet environment (default for psycho back-end)")
+
+		self.mouse.setPos(newPos=pos)
 		
 	def get_click(self, buttonlist=None, timeout=None, visible=None):
 	
