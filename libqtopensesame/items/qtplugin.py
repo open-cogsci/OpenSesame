@@ -23,7 +23,7 @@ __license__ = "GPLv3"
 from PyQt4 import QtCore, QtGui
 from libqtopensesame.items import qtitem
 from libqtopensesame.misc import _
-from libqtopensesame.widgets import color_edit, inline_editor
+from libqtopensesame.widgets import color_edit, inline_editor, pool_widget
 import os.path
 from libopensesame import debug
 
@@ -275,7 +275,7 @@ class qtplugin(qtitem.qtitem):
 
 		self.add_control(label, widget, tooltip)
 
-	def add_filepool_control(self, var, label, click_func, tooltip=None, \
+	def add_filepool_control(self, var, label, click_func=None, tooltip=None, \
 		default=None):
 
 		"""
@@ -286,17 +286,20 @@ class qtplugin(qtitem.qtitem):
 		Arguments:
 		var -- name of the associated variable
 		label -- a label
-		click_func -- a function to be called when a file is selected
 
 		Keyword arguments:
+		click_func -- a custom function to be called when a file is selected
+		(default=None)
 		tooltip -- a tooltip (default=None)
 		default -- a default value (default=None)
-		"""
+		"""	
 
 		edit = QtGui.QLineEdit()		
 		edit.editingFinished.connect(self.apply_edit_changes)
 		if var != None:
 			self.auto_line_edit[var] = edit
+		if click_func == None:
+			click_func = self.browse_pool_func(edit)
 		button = QtGui.QPushButton(self.experiment.icon(u'browse'), u'Browse')
 		button.setIconSize(QtCore.QSize(16, 16))
 		button.clicked.connect(click_func)
@@ -307,6 +310,8 @@ class qtplugin(qtitem.qtitem):
 		widget = QtGui.QWidget()
 		widget.setLayout(hbox)
 		self.add_control(label, widget, tooltip)
+
+		return edit
 
 	def add_editor_control(self, var, label, syntax=False, tooltip=None, \
 		default=None):
@@ -390,6 +395,24 @@ class qtplugin(qtitem.qtitem):
 
 		return widget
 
+	def browse_pool_func(self, edit_widget):
+
+		"""
+		Returns a function to present a file dialog to browse the file pool.
+
+		Arguments:
+		editwidget -- a line edit widget
+		"""
+
+		def browse_pool():
+			s = pool_widget.select_from_pool(self.experiment.main_window)
+			if unicode(s) == "":
+				return
+			edit_widget.setText(s)
+			self.apply_edit_changes()
+
+		return browse_pool
+		
 	def get_ready(self):
 
 		"""
