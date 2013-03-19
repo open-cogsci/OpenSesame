@@ -117,11 +117,7 @@ class sequence(item.item):
 				raise exceptions.runtime_error( \
 					"Could not find item '%s', which is called by sequence item '%s'" \
 					% (_item, self.name))
-			if not self.experiment.items[_item].prepare():			
-				raise exceptions.runtime_error( \
-					"Failed to prepare item '%s', which is called by sequence item '%s'" \
-					% (_item, self.name))
-				
+			self.experiment.items[_item].prepare()				
 			self._items.append( (_item, self.compile_cond(cond)) )
 															
 		return True
