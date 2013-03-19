@@ -52,6 +52,9 @@ class qtplugin(qtitem.qtitem):
 			self.experiment.resources["%s.html" % self.item_type] = \
 				os.path.join(self.plugin_folder, "%s.html" \
 				% self.item_type)
+			self.experiment.resources["%s.md" % self.item_type] = \
+				os.path.join(self.plugin_folder, "%s.md" \
+				% self.item_type)				
 		self.lock = False
 		qtitem.qtitem.__init__(self)
 
