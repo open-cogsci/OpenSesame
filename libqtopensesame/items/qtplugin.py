@@ -34,10 +34,10 @@ class qtplugin(qtitem.qtitem):
 	def __init__(self, plugin_file=None):
 
 		"""
-		Constructor
+		Constructor.
 
 		Arguments:
-		plugin_file -- path to the plugin script
+		plugin_file		-- The path to the plugin script. (default=None)
 		"""
 
 		if plugin_file != None:
@@ -52,13 +52,12 @@ class qtplugin(qtitem.qtitem):
 			self.experiment.resources["%s.html" % self.item_type] = \
 				os.path.join(self.plugin_folder, "%s.html" \
 				% self.item_type)
-
 		self.lock = False
 		qtitem.qtitem.__init__(self)
 
 	def edit_widget(self):
 
-		"""Update the GUI controls"""
+		"""Updates the GUI controls."""
 
 		qtitem.qtitem.edit_widget(self)
 		self.auto_edit_widget()
@@ -66,27 +65,27 @@ class qtplugin(qtitem.qtitem):
 	def apply_edit_changes(self, rebuild=True):
 
 		"""
-		Apply the controls
+		Applies the controls.
 
 		Keyword arguments:
-		rebuild -- deprecated (does nothing) (default=True)
+		rebuild		-- DEPRECATED
 		"""
 
 		return qtitem.qtitem.apply_edit_changes(self, rebuild) and \
 			self.auto_apply_edit_changes(rebuild)	
 
-	def add_control(self, label, widget, tooltip, min_width=None):
+	def add_control(self, label, widget, tooltip=None, min_width=None):
 
 		"""
-		Add a generic control
+		Adds a generic control QWidget.
 
 		Arguments:
-		label -- a text label
-		widget -- a control widget
-		tooltip -- a tooltip string
+		label		--	A text label.
+		widget		--	A control QWidget.
 
 		Keyword arguments:
-		min_width -- a minimum width for the widget (default=None)
+		tooltip		--	A tooltip text. (default=None)
+		min_width	--	A minimum width for the widget. (default=None)
 		"""
 
 		if tooltip != None:
@@ -104,16 +103,19 @@ class qtplugin(qtitem.qtitem):
 		min_width=None):
 
 		"""
-		Adds a QLineEdit control
+		Adds a QLineEdit control that is linked to a variable.
 
 		Arguments:
-		var -- name of the associated variable
-		label -- a label
+		var			--	Name of the associated variable.
+		label 		--	Label text.
 
 		Keyword arguments:
-		tooltip -- a tooltip (default=None)
-		default -- a default value (default=None)
-		min_width -- a minimum width for the widget (default=None)
+		tooltip 	--	A tooltip text. (default=None)
+		default 	--	DEPRECATED
+		min_width 	--	A minimum width for the widget. (default=None)
+		
+		Returns:
+		A QLineEdit widget.
 		"""
 
 		edit = QtGui.QLineEdit()				
@@ -126,14 +128,17 @@ class qtplugin(qtitem.qtitem):
 	def add_checkbox_control(self, var, label, tooltip=None):
 	
 		"""
-		Adds a QCheckBox control
+		Adds a QCheckBox control that is linked to a variable.
 
 		Arguments:
-		var -- name of the associated variable
-		label -- a label
+		var			--	Name of the associated variable.
+		label 		--	Label text.
 
 		Keyword arguments:
-		tooltip -- a tooltip (default=None)
+		tooltip 	--	A tooltip text. (default=None)
+		
+		Returns:
+		A QCheckBox widget.
 		"""
 		
 		checkbox = QtGui.QCheckBox(_(label))
@@ -152,13 +157,16 @@ class qtplugin(qtitem.qtitem):
 		variably defined entries are accepted.
 
 		Arguments:
-		var -- name of the associated variable
-		label -- a label
+		var			--	Name of the associated variable.
+		label 		--	Label text.
 
 		Keyword arguments:
-		tooltip -- a tooltip (default=None)
-		default -- a default value (default=None)
-		min_width -- a minimum width for the widget (default=None)
+		tooltip 	--	A tooltip text. (default=None)
+		default 	--	DEPRECATED
+		min_width 	--	A minimum width for the widget. (default=None)
+		
+		Returns:
+		A color_edit widget.
 		"""
 
 		edit = color_edit.color_edit()
@@ -173,15 +181,18 @@ class qtplugin(qtitem.qtitem):
 	def add_combobox_control(self, var, label, options, tooltip = None):
 
 		"""
-		Adds a QComboBox control
+		Adds a QComboBox control that is linked to a variable.
 
 		Arguments:
-		var -- name of the associated variable
-		label -- a label
-		options -- a list of options
+		var			-- 	Name of the associated variable.
+		label 		--	Label text.
+		options 	--	A list of options.
 
 		Keyword arguments:
-		tooltip -- a tooltip (default=None)
+		tooltip 	--	A tooltip text. (default=None)
+		
+		Returns:
+		A QComboBox widget.
 		"""
 
 		combobox = QtGui.QComboBox()
@@ -193,105 +204,108 @@ class qtplugin(qtitem.qtitem):
 			self.auto_combobox[var] = combobox
 		return combobox
 
-	def add_spinbox_control(self, var, label, min_val, max_val, prefix="", \
-		suffix="", tooltip=None):
+	def add_spinbox_control(self, var, label, min_val, max_val, prefix=u'', \
+		suffix=u'', tooltip=None):
 
 		"""
-		Adds a QSpinBox control
+		Adds a QSpinBox control that is linked to a variable.
 
 		Arguments:
-		var -- name of the associated variable
-		label -- a label
-		min_val -- minimum value
-		max_val -- maximum value
+		var			-- 	Name of the associated variable.
+		label 		-- 	Label text.
+		min_val 	-- 	A minimum value.
+		max_val 	-- 	A maximum value.
 
 		Keyword arguments:
-		prefix -- a prefix string
-		suffix -- a suffix string
-		tooltip -- a tooltip (default=None)
+		prefix 		-- 	A prefix text. (default=u'')
+		suffix 		-- 	A suffix text. (default=u'')
+		tooltip 	-- 	A tooltip text. (default=None)
+		
+		Returns:
+		A QSpinBox widget.
 		"""
 
 		spinbox = QtGui.QSpinBox()
 		spinbox.setMinimum(min_val)
 		spinbox.setMaximum(max_val)
 		spinbox.editingFinished.connect(self.apply_edit_changes)
-		if prefix != "":
+		if prefix != u'':
 			spinbox.setPrefix(prefix)
-		if suffix != "":
+		if suffix != u'':
 			spinbox.setSuffix(suffix)
 		self.add_control(label, spinbox, tooltip)
 		if var != None:
 			self.auto_spinbox[var] = spinbox
 		return spinbox
 
-	def add_slider_control(self, var, label, min_val, max_val, left_label="", \
-		right_label="", tooltip=None, default=None):
+	def add_slider_control(self, var, label, min_val, max_val, left_label=u'', \
+		right_label=u'', tooltip=None, default=None):
 
 		"""
-		Adds a QSlider control
+		Adds a QSlider control that is linked to a variable.
 
 		Arguments:
-		var -- name of the associated variable
-		label -- a label
-		min_val -- minimum value
-		max_val -- maximum value
+		var			--	Name of the associated variable.
+		label 		--	Label text.
+		min_val 	--	A minimum value.
+		max_val 	--	A maximum value.
 
 		Keyword arguments:
-		left_label -- a label for the left side (default="")
-		right_label -- a label for the right side (default="")
-		tooltip -- a tooltip (default=None)
-		default -- a default value (default=None)
+		left_label 	--	A label for the left side (default="")
+		right_label	--	A label for the right side (default="")
+		tooltip		--	A tooltip text. (default=None)
+		default		--	DEPRECATED
+		
+		Returns:
+		A QSlider widget.
 		"""
 
 		slider = QtGui.QSlider(QtCore.Qt.Horizontal)
 		slider.setFocusPolicy(QtCore.Qt.NoFocus)
 		slider.setGeometry(30, 40, 100, 30)
 		slider.setRange(min_val, max_val)
-		slider.setSingleStep(1000)
-		
+		slider.setSingleStep(1000)		
 		#Take care of layout
 		layout = QtGui.QHBoxLayout()
 		layout.setMargin(0)
 		layout.setSpacing(5)
-
 		if left_label:
 			llabel = QtGui.QLabel()
 			llabel.setText(left_label)
 			layout.addWidget(llabel)
 		layout.addWidget(slider)
-
 		if right_label:
 			rlabel = QtGui.QLabel()
 			rlabel.setText(right_label)
 			layout.addWidget(rlabel)
-
 		slider.valueChanged.connect(self.apply_edit_changes)
-
 		if var != None:
 			self.auto_slider[var] = slider
-
 		widget = QtGui.QWidget()
 		widget.setLayout(layout)
-
 		self.add_control(label, widget, tooltip)
+		return slider
 
 	def add_filepool_control(self, var, label, click_func=None, tooltip=None, \
 		default=None):
 
 		"""
-		Adds a control to select a file from the file pool. This is not fully
-		automated, and a function has to specified that is called when a file
-		is selected.
+		Adds a control to select a file from the file pool, and is linked to a
+		variable.
 
 		Arguments:
-		var -- name of the associated variable
-		label -- a label
+		var			--	Name of the associated variable.
+		label 		--	Label text.
 
 		Keyword arguments:
-		click_func -- a custom function to be called when a file is selected
-		(default=None)
-		tooltip -- a tooltip (default=None)
-		default -- a default value (default=None)
+		click_func 	--	A custom function to be called when a file is selected.
+						If no click_func is specified, file selection will be
+						handled automatically. (default=None)
+		tooltip 	--	A tooltip text. (default=None)
+		default		--	DEPRECATED
+		
+		Returns:
+		A QLineEdit widget that contains the path of the selected file.
 		"""	
 
 		edit = QtGui.QLineEdit()		
@@ -310,25 +324,27 @@ class qtplugin(qtitem.qtitem):
 		widget = QtGui.QWidget()
 		widget.setLayout(hbox)
 		self.add_control(label, widget, tooltip)
-
 		return edit
 
 	def add_editor_control(self, var, label, syntax=False, tooltip=None, \
 		default=None):
 
 		"""
-		Adds a texteditor control (an extended QPlainTextEdit)
+		Adds a texteditor control (an extended QPlainTextEdit) that is linked to
+		a variable.
 
 		Arguments:
-		var -- name of the associated variable
-		label -- a label
-
+		var			--	Name of the associated variable.
+		label 		--	Label text.
 
 		Keyword arguments:
-		syntax -- a boolean indicating whether Python syntax highlighting
-				should be activated (default=False)
-		tooltip -- a tooltip (default=None)
-		default -- a default value (default=None)
+		syntax 		--	A boolean indicating whether Python syntax highlighting
+						should be activated. (default=False)
+		tooltip		--	A tooltip text. (default=None)
+		default		--	DEPRECATED
+		
+		Returns:
+		An inline_editor widget.
 		"""
 
 		label = QtGui.QLabel(label)
@@ -344,20 +360,25 @@ class qtplugin(qtitem.qtitem):
 			self.auto_editor[var] = editor
 		self.edit_vbox.addWidget(label)
 		self.edit_vbox.addWidget(editor)
+		return editor
 
 	def add_text(self, msg):
 
 		"""
-		Adds a QLabel (for descriptions, no control)
+		Adds a non-interactive QLabel for description purposes.
 
 		Arguments:
-		msg -- text
+		msg		--	A text message.
+		
+		Returns:
+		A QLabel widget.
 		"""
 
 		row = self.edit_grid.rowCount()
 		label = QtGui.QLabel(_(msg))
 		label.setWordWrap(True)
 		self.edit_vbox.addWidget(label)
+		return label
 		
 	def add_stretch(self):
 		
@@ -365,20 +386,21 @@ class qtplugin(qtitem.qtitem):
 	
 		self.edit_vbox.addStretch()
 
-	def apply_button(self, label="Apply", icon="apply", \
-		tooltip="Apply changes"):
+	def apply_button(self, label=u'Apply', icon=u'apply', \
+		tooltip=u'Apply changes'):
 
 		"""
-		Returns a right-outlined apply button. The widget is not added
-		automatically to the controls.
+		Returns a right-outlined apply QPushButton. The widget is not added
+		automatically to the controls. I.e. you need to implement your own
+		connections to make the button functional.
 
 		Keyword arguments:
-		label -- a button label (default="Apply")
-		icon -- an icon name (default="Apply")
-		tooltip -- a tooltip (default="Apply changes")
+		label		-- A label text. (default=u'Apply')
+		icon		-- An icon name. (default=u'Apply')
+		tooltip		-- A tooltip text. (default=u'Apply changes')
 
 		Returns:
-		A QPushButton
+		A QPushButton widget.
 		"""
 
 		button_apply = QtGui.QPushButton(_(label))
@@ -392,7 +414,6 @@ class qtplugin(qtitem.qtitem):
 		hbox.addWidget(button_apply)
 		widget = QtGui.QWidget()
 		widget.setLayout(hbox)
-
 		return widget
 
 	def browse_pool_func(self, edit_widget):
@@ -401,7 +422,10 @@ class qtplugin(qtitem.qtitem):
 		Returns a function to present a file dialog to browse the file pool.
 
 		Arguments:
-		editwidget -- a line edit widget
+		edit_widget		--	A QLineEdit widget.
+		
+		Returns:
+		A function that presents a filepool dialog and sets the edit_widget.
 		"""
 
 		def browse_pool():
@@ -410,16 +434,15 @@ class qtplugin(qtitem.qtitem):
 				return
 			edit_widget.setText(s)
 			self.apply_edit_changes()
-
 		return browse_pool
 		
 	def get_ready(self):
 
 		"""
-		Apply pending script changes
+		Applies pending script changes.
 
 		Returns:
-		True if changes have been made, False otherwise
+		True if changes have been made, False otherwise.
 		"""
 
 		for var, editor in self.auto_editor.iteritems():
@@ -427,6 +450,5 @@ class qtplugin(qtitem.qtitem):
 				debug.msg("applying pending Python script changes")
 				self.apply_edit_changes()
 				return True
-
 		return qtitem.qtitem.get_ready(self)
 
