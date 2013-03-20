@@ -103,6 +103,7 @@ class inline_script(item.item):
 		if 'exp' not in _globals:
 			_globals['exp'] = self.experiment
 			_globals['win'] = self.experiment.window
+			_globals['self'] = self
 		# Compile prepare script
 		try:
 			self.cprepare = compile(self._prepare, "<string>", "exec")
