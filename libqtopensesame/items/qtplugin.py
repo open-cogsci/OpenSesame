@@ -181,7 +181,7 @@ class qtplugin(qtitem.qtitem):
 			self.auto_line_edit[var] = edit
 		return edit
 
-	def add_combobox_control(self, var, label, options, tooltip = None):
+	def add_combobox_control(self, var, label, options, tooltip=None):
 
 		"""
 		Adds a QComboBox control that is linked to a variable.

@@ -37,14 +37,14 @@ class item(object):
 	def __init__(self, name, experiment, string=None):
 
 		"""
-		Constructor
+		Constructor.
 
 		Arguments:
-		name -- The name of the item.
-		experiment -- The experiment.
+		name 		--	The name of the item.
+		experiment 	--	The experiment object.
 
 		Keyword arguments:
-		string -- An item definition string (default = None).
+		string		--	An definition string. (default=None).
 		"""
 
 		self.name = name
@@ -52,20 +52,24 @@ class item(object):
 		self.debug = debug.enabled
 		self.count = 0
 
-		# A number of keywords are reserved, which means that they cannot be used
-		# as variable names
-		self.reserved_words = ['experiment', 'variables', 'comments', 'item_type']
+		# A number of keywords are reserved, which means that they cannot be
+		# used as variable names
+		self.reserved_words = [u'experiment', u'variables', u'comments', \
+			u'item_type']
 		for attr in dir(item):
 			if hasattr(getattr(item, attr), '__call__'):
 				self.reserved_words.append(attr)
 
 		self._get_lock = None
 
-		if not hasattr(self, "item_type"):
-			self.item_type = "item"
-		if not hasattr(self, "description"):
-			self.description = "Default description"
-		if not hasattr(self, "round_decimals"):
+		if not hasattr(self, u'item_type'):
+			prefix = self.experiment.item_prefix()
+			self.item_type = self.__class__.__name__
+			if self.item_type.startswith(prefix):
+				self.item_type = self.item_type[len(prefix):]
+		if not hasattr(self, u'description'):
+			self.description = u'Default description'
+		if not hasattr(self, u'round_decimals'):
 			self.round_decimals = 2
 		self.variables = {}
 		self.comments = []

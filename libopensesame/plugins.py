@@ -20,6 +20,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 import os
 import os.path
 import json
+from libopensesame import debug
 
 # Caching variables
 _list = None
@@ -130,7 +131,11 @@ def plugin_property(plugin, _property, default=0):
 	info_json = os.path.join(plugin_folder(plugin), u'info.json')	
 	# New-style plug-ins, using info.json
 	if os.path.exists(info_json):
-		_json = json.load(open(info_json))
+		try:
+			_json = json.load(open(info_json))
+		except:
+			debug.msg('Failed to parse %s' % info_json)
+			_json = {}
 		if _property in _json:
 			return _json[_property]
 	# Old-style plug-ins, using info.txt
