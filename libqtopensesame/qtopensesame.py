@@ -873,11 +873,7 @@ class qtopensesame(QtGui.QMainWindow):
 			self.experiment.notify( \
 				_("<b>Error:</b> Failed to open '%s'<br /><b>Description:</b> %s<br /><br />Make sure that the file is in .opensesame or .opensesame.tar.gz format. If you should be able to open this file, but can't, please go to http://www.cogsci.nl/opensesame to find out how to recover your experiment and file a bug report.") \
 				% (path, e))
-			# Print the traceback in debug mode
-			if debug.enabled:
-				l = traceback.format_exc(e).split("\n")
-				for r in l:
-					print r
+			self.print_debug_window(e)
 			return
 
 		self.experiment = exp
