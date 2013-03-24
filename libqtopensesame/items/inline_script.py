@@ -65,9 +65,6 @@ class inline_script(libopensesame.inline_script.inline_script, qtitem.qtitem):
 
 		sp = self.textedit_prepare.edit.toPlainText()
 		sr = self.textedit_run.edit.toPlainText()
-
-		self.set(u'_transparent_variables', \
-			self.checkbox_transparent_variables.isChecked())
 		self.set(u'_prepare', sp)
 		self.set(u'_run', sr)
 		self.lock = True

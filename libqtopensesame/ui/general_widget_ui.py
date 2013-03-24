@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'resources/ui/general_widget.ui'
 #
-# Created: Thu Mar 21 19:09:06 2013
+# Created: Sun Mar 24 20:08:05 2013
 #      by: PyQt4 UI code generator 4.9.1
 #
 # WARNING! All changes made in this file will be lost!
@@ -169,9 +169,9 @@ class Ui_general_widget(object):
         self.button_script_editor.setObjectName(_fromUtf8("button_script_editor"))
         self.horizontalLayout_6.addWidget(self.button_script_editor)
         self.formLayout.setWidget(6, QtGui.QFormLayout.FieldRole, self.frame_advanced)
-        self.checkBox = QtGui.QCheckBox(self.widget)
-        self.checkBox.setObjectName(_fromUtf8("checkBox"))
-        self.formLayout.setWidget(5, QtGui.QFormLayout.FieldRole, self.checkBox)
+        self.checkbox_transparent_variables = QtGui.QCheckBox(self.widget)
+        self.checkbox_transparent_variables.setObjectName(_fromUtf8("checkbox_transparent_variables"))
+        self.formLayout.setWidget(5, QtGui.QFormLayout.FieldRole, self.checkbox_transparent_variables)
         self.label_7 = QtGui.QLabel(self.widget)
         self.label_7.setTextFormat(QtCore.Qt.AutoText)
         self.label_7.setObjectName(_fromUtf8("label_7"))
@@ -199,7 +199,7 @@ class Ui_general_widget(object):
         self.label_11.setText(QtGui.QApplication.translate("general_widget", "<h3>Advanced</h3>", None, QtGui.QApplication.UnicodeUTF8))
         self.button_backend_settings.setText(QtGui.QApplication.translate("general_widget", "Back-end settings", None, QtGui.QApplication.UnicodeUTF8))
         self.button_script_editor.setText(QtGui.QApplication.translate("general_widget", "Script editor", None, QtGui.QApplication.UnicodeUTF8))
-        self.checkBox.setText(QtGui.QApplication.translate("general_widget", "Inline_script globals are experimental variables", None, QtGui.QApplication.UnicodeUTF8))
+        self.checkbox_transparent_variables.setText(QtGui.QApplication.translate("general_widget", "Transparent variable management", None, QtGui.QApplication.UnicodeUTF8))
         self.label_7.setText(QtGui.QApplication.translate("general_widget", "<h3>Variables</h3>", None, QtGui.QApplication.UnicodeUTF8))
 
 from libqtopensesame.widgets.font_widget import font_widget
