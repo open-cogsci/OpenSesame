@@ -1,9 +1,14 @@
-opensesame (0.27.2~pre2-ubuntu1) precise; urgency=low
+opensesame (0.27.2~pre4-ubuntu1) precise; urgency=low
 
   * Add support for Android
-  * Fix a bug in form text_input widgets with numeric input
+  * Add new-style plug-in API
+  * Add support for Markdown help files
+  * Persistent globals and locals stack in line_script items
+  * Add set_pos() and get_pressed() to mouse
+  * Miscellaneous bug fixes
+  * Add transparent variable management
 
- -- Sebastiaan Mathot <s.mathot@cogsci.nl>  Tue, 26 Feb 2013 18:17:13 +0100
+ -- Sebastiaan Mathot <s.mathot@cogsci.nl>  Sun, 24 Mar 2013 20:28:42 +0100
 
 opensesame (0.27.1-ubuntu1) precise; urgency=low
 
