@@ -1,4 +1,3 @@
-
 #-*- coding:utf-8 -*-
 
 """
@@ -34,17 +33,18 @@ class experiment(item.item):
 
 	"""The main experiment class, which is the first item to be called"""
 
-	def __init__(self, name='experiment', string=None, pool_folder=None):
+	def __init__(self, name=u'experiment', string=None, pool_folder=None):
 
 		"""<DOC>
 		Constructor. The experiment is created automatically be OpenSesame and #
 		you will generally not need to create it yourself.
 
 		Keyword arguments:
-		name -- The name of the experiment (default='experiment').
-		string -- A string containing the experiment definition (default=None).
-		pool_folder -- A specific folder to be used for the file pool #
-					   (default=None).
+		name 		--	The name of the experiment. (default='experiment')
+		string 		--	A string containing the experiment definition. #
+						(default=None)
+		pool_folder	--	A specific folder to be used for the file pool. #
+						(default=None)
 		</DOC>"""
 
 		global pool_folders
@@ -52,45 +52,46 @@ class experiment(item.item):
 		self.items = {}
 		self.running = False
 		self.auto_response = False
-		self.plugin_folder = "plugins"
+		self.plugin_folder = u'plugins'
 		self.start_response_interval = None
 		self.cleanup_functions = []
 		self.restart = False
 		self.experiment_path = None
-		self.title = 'My Experiment'
+		self.title = u'My Experiment'
+		self.transparent_variables = u'no'
 
 		# Set default variables
-		self.coordinates = "relative"
-		self.compensation = 0
-		self.start = "experiment"
+		self.coordinates = u'relative' # DEPRECATED
+		self.compensation = 0 # DEPRECATED
+		self.start = u'experiment'
 
 		# Sound parameters
 		self.sound_freq = 48000
-		self.sound_sample_size = -16 # Negative values means signed
+		self.sound_sample_size = -16 # Negative values mean signed
 		self.sound_channels = 2
 		self.sound_buf_size = 512
 		self.resources = {}
 
 		# Backend parameters
-		self.canvas_backend = "xpyriment"
-		self.keyboard_backend = "legacy"
-		self.mouse_backend = "xpyriment"
-		self.sampler_backend = "legacy"
-		self.synth_backend = "legacy"
+		self.canvas_backend = u'xpyriment'
+		self.keyboard_backend = u'legacy'
+		self.mouse_backend = u'xpyriment'
+		self.sampler_backend = u'legacy'
+		self.synth_backend = u'legacy'
 
 		# Display parameters
 		self.width = 1024
 		self.height = 768
-		self.background = "black"
-		self.foreground = "white"
+		self.background = u'black'
+		self.foreground = u'white'
 		self.fullscreen = False
 
 		# Font parameters
 		self.font_size = 18
-		self.font_family = "mono"
-		self.font_italic = "no"
-		self.font_bold = "no"
-		self.font_underline = "no"
+		self.font_family = u'mono'
+		self.font_italic = u'no'
+		self.font_bold = u'no'
+		self.font_underline = u'no'
 
 		# Logfile parameters
 		self._log = None
@@ -98,26 +99,26 @@ class experiment(item.item):
 
 		# This is a dummy variable for backwards compatibility. The logfile
 		# encoding is always utf-8, and this variable doesn't do anything.
-		self.logfile_codec = "utf-8"
+		self.logfile_codec = u'utf-8'
 
 		# Default subject info
 		self.subject_nr = 0
-		self.subject_parity = "even"
+		self.subject_parity = u'even'
 
 		# This is some duplication of the option parser in qtopensesame,
 		# but nevertheless keep it so we don't need qtopensesame
-		self.debug = "--debug" in sys.argv or "-d" in sys.argv
-		self._stack = "--stack" in sys.argv or "-s" in sys.argv
+		self.debug = u'--debug' in sys.argv or u'-d' in sys.argv
+		self._stack = u'--stack' in sys.argv or u'-s' in sys.argv
 
 		# Pool folder
 		if pool_folder == None:
-			self.pool_folder = tempfile.mkdtemp(".opensesame_pool")
+			self.pool_folder = tempfile.mkdtemp(u'.opensesame_pool')
 			pool_folders.append(self.pool_folder)
-			debug.msg("creating new pool folder")
+			debug.msg(u'creating new pool folder')
 		else:
-			debug.msg("reusing existing pool folder")
+			debug.msg(u'reusing existing pool folder')
 			self.pool_folder = pool_folder
-		debug.msg("pool folder is '%s'" % self.pool_folder)
+		debug.msg(u'pool folder is \'%s\'' % self.pool_folder)
 
 		string = self.open(string)
 		item.item.__init__(self, name, self, string)
