@@ -59,7 +59,7 @@ setup(
     data_files = ['opensesame.py'],
     options = {'py2app' : 
 			{'argv_emulation': False, 
-			 'includes' : ['sip', 'PyQt4.QtNetwork', 'pygame', 'numpy', 'serial', 'openexp', 'libqtopensesame','libopensesame','libopensesame.widgets', 'libqtopensesame.widgets', 'opensesamerun'],
+			 'includes' : ['sip', 'PyQt4.QtNetwork', 'pygame', 'numpy', 'serial', 'openexp', 'libqtopensesame','libopensesame','libopensesame.widgets', 'libqtopensesame.widgets', 'opensesamerun','cv','cv2'],
 			 'resources' : ['qt_menu.nib', 'qt.conf', 'resources', 'sounds', 'plugins', 'help', 'data'],
 			 'packages' : ['expyriment'],
 			 'iconfile' : 'resources/opensesame.icns',			
