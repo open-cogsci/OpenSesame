@@ -213,10 +213,6 @@ class qtopensesame(QtGui.QMainWindow):
 			QtGui.QKeySequence(), self, \
 			self.ui.pool_widget.ui.edit_pool_filter.setFocus)
 
-		# On Mac OS (darwin) hide, the run in Window functionality
-		if sys.platform == "darwin":
-			self.ui.action_run_in_window.setDisabled(True)
-
 		# Create the initial experiment
 
 		self.experiment = experiment.experiment(self, "New experiment", \
