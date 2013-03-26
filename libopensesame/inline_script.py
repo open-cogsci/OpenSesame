@@ -18,7 +18,6 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 import re
-from numbers import Number
 from libopensesame import item, exceptions
 from openexp import canvas
 
@@ -203,7 +202,8 @@ class inline_script(item.item):
 
 		global _globals
 		for var, val in _globals.items():
-			if isinstance(val, basestring) or isinstance(val, Number):
+			if isinstance(val, basestring) or isinstance(val, float) or \
+				isinstance(val, int):
 				self.experiment.set(var, val)
 	
 def restore_state():
