@@ -257,7 +257,7 @@ class tab_widget(QtGui.QTabWidget):
 		"""
 
 		if start:
-			if self.switch('__start_wizar__'):
+			if self.switch('__start_wizard__'):
 				return			
 		else:
 			if self.switch('__new_wizard__'):
