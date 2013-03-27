@@ -54,7 +54,14 @@ class qtopensesame(QtGui.QMainWindow):
 		parent -- a link to the parent window
 		"""
 
-		QtGui.QMainWindow.__init__(self, parent)
+		if sys.platform == 'darwin':
+			# Workaround for Qt issue on OS X that causes QMainWindow to
+			# hide when adding QToolBar, see
+			# https://bugreports.qt-project.org/browse/QTBUG-4300
+			QtGui.QMainWindow.__init__(self, parent, \
+				QtCore.Qt.MacWindowToolBarButtonHint)
+		else:
+			QtGui.QMainWindow.__init__(self, parent)
 		self.app = app
 		self.first_show = True
 
