@@ -20,9 +20,10 @@ along with openexp.  If not, see <http://www.gnu.org/licenses/>.
 import openexp._sampler.legacy
 import openexp.exceptions
 import math
-import numpy
 import pygame
 import random
+import numpy
+import pygame.mixer as mixer
 
 class legacy(openexp._sampler.legacy.legacy):
 
@@ -30,7 +31,7 @@ class legacy(openexp._sampler.legacy.legacy):
 	
 	settings = None
 
-	def __init__(self, experiment, osc = "sine", freq = 440, length = 100, attack = 0, decay = 5):
+	def __init__(self, experiment, osc="sine", freq=440, length=100, attack=0, decay=5):
 	
 		"""<DOC>
 		Initializes the synthesizer.
@@ -70,7 +71,9 @@ class legacy(openexp._sampler.legacy.legacy):
 		elif osc == "white_noise":
 			_func = self.white_noise
 		else:
-			raise openexp.exceptions.synth_error("synth.__init__(): '%s' is not a valid oscillator, exception 'sine', 'saw', 'square', or 'white_noise'" % osc)
+			raise openexp.exceptions.synth_error( \
+				"synth.__init__(): '%s' is not a valid oscillator, exception 'sine', 'saw', 'square', or 'white_noise'" \
+				% osc)
 	
 		l = []
 
@@ -93,7 +96,7 @@ class legacy(openexp._sampler.legacy.legacy):
 			
 		b = numpy.array(l, dtype="int16").reshape(len(l) / 2, 2)				 
 			
-		self.sound = pygame.mixer.Sound(b)
+		self.sound = mixer.Sound(b)
 		
 	def key_to_freq(self, key):
 	

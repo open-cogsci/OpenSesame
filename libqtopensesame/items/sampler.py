@@ -18,6 +18,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 import libopensesame.sampler
+from libqtopensesame.misc import _
 from libqtopensesame.items import qtitem
 from libqtopensesame.ui import sampler_widget_ui
 from libqtopensesame.widgets import pool_widget
@@ -55,19 +56,25 @@ class sampler(libopensesame.sampler.sampler, qtitem.qtitem):
 		self.sampler_widget.ui.setupUi(self.sampler_widget)
 		self.experiment.main_window.theme.apply_theme(self.sampler_widget)
 		
-		self.sampler_widget.ui.spin_pan.valueChanged.connect(self.apply_edit_changes)
-		self.sampler_widget.ui.spin_volume.valueChanged.connect(self.apply_edit_changes)
-		self.sampler_widget.ui.spin_pitch.valueChanged.connect(self.apply_edit_changes)
-		self.sampler_widget.ui.spin_stop_after.valueChanged.connect(self.apply_edit_changes)		
-		self.sampler_widget.ui.spin_fade_in.valueChanged.connect(self.apply_edit_changes)		
-		self.sampler_widget.ui.edit_duration.editingFinished.connect(self.apply_edit_changes)		
-		self.sampler_widget.ui.edit_sample.editingFinished.connect(self.apply_edit_changes)		
-	
-		self.sampler_widget.ui.button_browse_sample.clicked.connect(self.browse_sample)
-		self.sampler_widget.ui.button_script.clicked.connect(self.open_script_tab)
-		
+		self.sampler_widget.ui.spin_pan.valueChanged.connect( \
+			self.apply_edit_changes)
+		self.sampler_widget.ui.spin_volume.valueChanged.connect( \
+			self.apply_edit_changes)
+		self.sampler_widget.ui.spin_pitch.valueChanged.connect( \
+			self.apply_edit_changes)
+		self.sampler_widget.ui.spin_stop_after.valueChanged.connect( \
+			self.apply_edit_changes)		
+		self.sampler_widget.ui.spin_fade_in.valueChanged.connect( \
+			self.apply_edit_changes)
+		self.sampler_widget.ui.edit_duration.editingFinished.connect( \
+			self.apply_edit_changes)		
+		self.sampler_widget.ui.edit_sample.editingFinished.connect( \
+			self.apply_edit_changes)			
+		self.sampler_widget.ui.button_browse_sample.clicked.connect( \
+			self.browse_sample)
 		self.sampler_widget.ui.dial_pan.valueChanged.connect(self.apply_dials)
-		self.sampler_widget.ui.dial_volume.valueChanged.connect(self.apply_dials)
+		self.sampler_widget.ui.dial_volume.valueChanged.connect( \
+			self.apply_dials)
 		self.sampler_widget.ui.dial_pitch.valueChanged.connect(self.apply_dials)
 							
 		self.edit_vbox.addWidget(self.sampler_widget)
@@ -95,11 +102,11 @@ class sampler(libopensesame.sampler.sampler, qtitem.qtitem):
 		self.lock = True		
 		qtitem.qtitem.edit_widget(self)						
 		if self.variable_vars(["sample", "duration"]):			
-			self.sampler_widget.ui.frame_notification.setVisible(True)
-			self.sampler_widget.ui.frame_controls.setVisible(False)
-			
+			self.user_hint_widget.add_user_hint(_( \
+				'The controls are disabled, because one of the settings is defined using variables.'))
+			self.user_hint_widget.refresh()
+			self.sampler_widget.ui.frame_controls.setVisible(False)			
 		else:		
-			self.sampler_widget.ui.frame_notification.setVisible(False)
 			self.sampler_widget.ui.frame_controls.setVisible(True)					
 			self.sampler_widget.ui.edit_sample.setText(self.unistr(self.get( \
 				'sample', _eval=False)))

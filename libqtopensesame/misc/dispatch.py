@@ -47,6 +47,7 @@ from libqtopensesame.misc import _
 from libqtopensesame.items import experiment
 import libopensesame.exceptions
 import sip
+import traceback
 
 class dispatch(QtCore.QObject):
 
@@ -67,10 +68,10 @@ class dispatch(QtCore.QObject):
 	def __init__(self, main_window):
 	
 		"""
-		Constructor
+		Constructor.
 		
 		Arguments:
-		main_window -- the main window
+		main_window 	--	The main window.
 		"""
 	
 		QtCore.QObject.__init__(self)
@@ -87,10 +88,10 @@ class dispatch(QtCore.QObject):
 	def regenerate(self, script):
 	
 		"""
-		Handles a full regeneration of the experiment
+		Handles a full regeneration of the experiment.
 		
 		Arguments:
-		script -- a definition string (unicode/ QString)
+		script 			--	A definition Unicode string / QString.
 		"""
 				
 		self.main_window.set_busy(True)		
@@ -100,10 +101,13 @@ class dispatch(QtCore.QObject):
 			tmp = experiment.experiment(self.main_window, \
 				self.main_window.experiment.title, script, \
 				self.main_window.experiment.pool_folder)
-		except libopensesame.exceptions.script_error as error:		
-			# If something is wrong with the script, notify the user
-			self.main_window.experiment.notify(_("Could not parse script: %s") \
+		except Exception as error:		
+			# If something is wrong with the script, notify the user and print
+			# a traceback to the debug window
+			self.main_window.experiment.notify( \
+				_('Failed to parse script (see traceback in debug window): %s') \
 				% error)
+			self.main_window.print_debug_window(error)
 			return
 		# Apply the new experiment
 		self.main_window.experiment = tmp
@@ -116,10 +120,10 @@ class dispatch(QtCore.QObject):
 	def script_change(self, name=None):
 	
 		"""
-		Handles a change to an items script
+		Handles a change to an items script.
 		
 		Arguments:
-		name -- the name of an item
+		name 		--	The name of an item. (default=None)
 		"""
 	
 		self.main_window.experiment.build_item_tree()		
@@ -128,10 +132,10 @@ class dispatch(QtCore.QObject):
 	def simple_change(self, name=None):
 	
 		"""
-		Handles simple changes to an item
+		Handles simple changes to an item.
 		
 		Arguments:
-		name -- the name of an item
+		name		-- The name of an item.
 		"""
 	
 		self.main_window.refresh_variable_inspector()
@@ -140,10 +144,11 @@ class dispatch(QtCore.QObject):
 	def structure_change(self, name=None):
 		
 		"""
-		Handles changes to the structure of the experiment
+		Handles changes to the structure of the experiment.
 		
 		Arguments:
-		name -- the name of the item that caused the change
+		name 		--	The name of the item that caused the change.
+						(default=None)
 		"""
 		
 		self.main_window.experiment.build_item_tree()
@@ -152,11 +157,11 @@ class dispatch(QtCore.QObject):
 	def name_change(self, from_name, to_name):
 	
 		"""
-		Handles the name change of an item
+		Handles the name change of an item.
 		
 		Arguments:
-		from_name -- the previous name
-		to_name -- the new name		
+		from_name 	-- The previous name.
+		to_name 	-- The new name.
 		"""
 	
 		from_name = unicode(from_name)

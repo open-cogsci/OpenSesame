@@ -18,6 +18,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 import libopensesame.synth
+from libqtopensesame.misc import _
 from libqtopensesame.items import qtitem
 from libqtopensesame.ui import synth_widget_ui
 from PyQt4 import QtCore, QtGui
@@ -70,8 +71,6 @@ class synth(libopensesame.synth.synth, qtitem.qtitem):
 		self.synth_widget.ui.dial_decay.valueChanged.connect(self.apply_dials)	
 		self.synth_widget.ui.dial_pan.valueChanged.connect(self.apply_dials)
 		self.synth_widget.ui.dial_volume.valueChanged.connect(self.apply_dials)		
-		self.synth_widget.ui.button_script.clicked.connect( \
-			self.open_script_tab)		
 		self.synth_widget.ui.button_sine.clicked.connect(self.set_sine)
 		self.synth_widget.ui.button_saw.clicked.connect(self.set_saw)
 		self.synth_widget.ui.button_square.clicked.connect(self.set_square)
@@ -137,12 +136,12 @@ class synth(libopensesame.synth.synth, qtitem.qtitem):
 		qtitem.qtitem.edit_widget(self, False)		
 				
 		if self.variable_vars(["duration", "freq"]):			
-			self.synth_widget.ui.frame_notification.setVisible(True)
 			self.synth_widget.ui.frame_controls.setVisible(False)
-			
+			self.user_hint_widget.add_user_hint(_( \
+				'The controls are disabled, because one of the settings is defined using variables.'))
+			self.user_hint_widget.refresh()			
 		else:
 		
-			self.synth_widget.ui.frame_notification.setVisible(False)
 			self.synth_widget.ui.frame_controls.setVisible(True)				
 			self.synth_widget.ui.edit_freq.setText(self.unistr(self.get( \
 				'freq', _eval=False)))		

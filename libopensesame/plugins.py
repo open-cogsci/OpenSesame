@@ -19,11 +19,19 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 
 import os
 import os.path
+import json
+from libopensesame import debug
 
 # Caching variables
 _list = None
 _folders = {}
 _properties = {}
+
+# The plug-ins can be either source or bytecode. Usually they will be source,
+# but some distributions (notably the runtime for Android) will automatically
+# compile everything to bytecode.
+src_templates = ['%s.py']
+bytecode_templates = ['%s.pyo', '%s.pyc']
 	
 def plugin_folders(only_existing=True):
 
@@ -40,21 +48,31 @@ def plugin_folders(only_existing=True):
 	
 	l = []
 	
+	# For all platforms, the plugins folder relative to the working directory
+	# should be searched
 	path = os.path.join(os.getcwd(), "plugins")
 	if not only_existing or os.path.exists(path):
-		l.append(path)
-				
-	if os.name == "posix":
-	
+		l.append(path)				
+		
+	if os.name == "posix" and "HOME" in os.environ:
+		# Regular Linux distributions
 		path = os.path.join(os.environ["HOME"], ".opensesame", "plugins")
 		if not only_existing or os.path.exists(path):
-			l.append(path)	
-	
+			l.append(path)		
 		path = "/usr/share/opensesame/plugins"
 		if not only_existing or os.path.exists(path):
+			l.append(path)			
+			
+	elif os.name == "posix" and "HOME" not in os.environ:						
+		# Android can be recognized by the fact that the HOME variable is not
+		# available. We can simply use the relative path `plugins`, which will
+		# (always?) point to `/data/data/nl.cogsci.nl/opensesame/files/plugins`
+		path = 'plugins'
+		if not only_existing or os.path.exists(path):
 			l.append(path)
-									
+		
 	elif os.name == "nt":
+		# Windows
 		path = os.path.join(os.environ["APPDATA"], ".opensesame", "plugins")
 		if not only_existing or os.path.exists(path):
 			l.append(path)		
@@ -108,17 +126,30 @@ def plugin_property(plugin, _property, default=0):
 	if plugin in _properties and _property in _properties[plugin]:
 		return _properties[plugin][_property]
 	if plugin not in _properties:
-		_properties[plugin] = {}	
-	for l in open(os.path.join(plugin_folder(plugin), "info.txt"), "r"):
-		a = l.split(":")
-		if len(a) == 2 and a[0] == _property:
-			val = a[1].strip()			
-			try:
-				val = int(val)
-			finally:
-				_properties[plugin][_property] = val
-				return val
-	_properties[plugin][_property] = default				
+		_properties[plugin] = {}		
+	info_txt = os.path.join(plugin_folder(plugin), u'info.txt')
+	info_json = os.path.join(plugin_folder(plugin), u'info.json')	
+	# New-style plug-ins, using info.json
+	if os.path.exists(info_json):
+		try:
+			_json = json.load(open(info_json))
+		except:
+			debug.msg('Failed to parse %s' % info_json)
+			_json = {}
+		if _property in _json:
+			return _json[_property]
+	# Old-style plug-ins, using info.txt
+	else:
+		for l in open(info_txt, "r"):
+			a = l.split(":")
+			if len(a) == 2 and a[0] == _property:
+				val = a[1].strip()			
+				try:
+					val = int(val)
+				finally:
+					_properties[plugin][_property] = val
+					return val
+		_properties[plugin][_property] = default				
 	return default
 	
 def plugin_category(plugin):
@@ -175,15 +206,14 @@ def plugin_folder(plugin):
 	global _folders
 	
 	if plugin in _folders:
-		return _folders[plugin]	
-	
+		return _folders[plugin]		
 	for folder in plugin_folders():
 		plugin = str(plugin)
-		if os.path.exists(os.path.join(folder, plugin, "%s.py" % plugin)):
-			f = os.path.join(folder, plugin)
-			_folders[plugin] = f
-			return f
-			
+		for tmpl in src_templates + bytecode_templates:		
+			if os.path.exists(os.path.join(folder, plugin, tmpl % plugin)):
+				f = os.path.join(folder, plugin)
+				_folders[plugin] = f
+				return f			
 	return None
 	
 def plugin_icon_large(plugin):
@@ -225,10 +255,16 @@ def import_plugin(plugin):
 	
 	import imp
 	plugin = str(plugin)
-	path = os.path.join(plugin_folder(plugin), "%s.py" % plugin)
-	return imp.load_source(plugin, path)
+	for tmpl in src_templates:
+		if os.path.exists(os.path.join(plugin_folder(plugin), tmpl % plugin)):
+			path = os.path.join(plugin_folder(plugin), tmpl % plugin)
+			return imp.load_source(plugin, path)
+	for tmpl in bytecode_templates:
+		if os.path.exists(os.path.join(plugin_folder(plugin), tmpl % plugin)):
+			path = os.path.join(plugin_folder(plugin), tmpl % plugin)
+			return imp.load_compiled(plugin, path)
 	
-def load_plugin(plugin, item_name, experiment, string, prefix = ""):
+def load_plugin(plugin, item_name, experiment, string, prefix=""):
 
 	"""
 	Returns an instance of the plugin
@@ -246,9 +282,8 @@ def load_plugin(plugin, item_name, experiment, string, prefix = ""):
 	An item (plugin instance)
 	"""
 
-	mod = import_plugin(plugin)
-	cmd = "mod.%(prefix)s%(plugin)s(item_name, experiment, string)" % \
-		{"plugin" : plugin, "prefix" : prefix}
-	item = eval(cmd)
+	item_module = import_plugin(plugin)
+	item_class = getattr(item_module, prefix+plugin)
+	item = item_class(item_name, experiment, string)
 	return item
 	

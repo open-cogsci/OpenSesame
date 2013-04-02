@@ -18,6 +18,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from PyQt4 import QtCore, QtGui
+from libopensesame import debug
 
 class color_edit(QtGui.QWidget):
 
@@ -99,10 +100,11 @@ class color_edit(QtGui.QWidget):
 		color -- a color to start with or None for experiment foreground
 				 default (default=None)
 		"""
-	
+		
+		debug.msg('color = %s' % color)
 		self.experiment = experiment
 		if color == None:
-			color = self.experiment.get('foreground')
+			color = self.experiment.get('foreground', _eval=False)
 		self.setText(color)
 		self.button.setIcon(self.experiment.icon("colorpicker"))
 		
