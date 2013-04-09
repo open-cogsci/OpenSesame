@@ -22,7 +22,7 @@ if __name__ == "__main__":
 
 	# First, load a minimum number of modules and show an empty app window. This
 	# gives the user the feeling of a snappy response.
-	import os, sys
+	import os, sys, platform
 
 	# Change the working directory on Windows. Depending on whether the
 	# application has been frozen by py2exe or not we need to use a different
@@ -39,6 +39,12 @@ if __name__ == "__main__":
 			os.chdir(path)
 			if path not in sys.path:
 				sys.path.append(path)
+
+	# horrendous OS X invalid locale hack, which otherwise prevents psychopy to start
+	if platform.system() == 'Darwin':
+		import locale
+		if locale.getlocale()[0] is None:
+			locale.setlocale(locale.LC_ALL, 'en_US.UTF-8')
 				
 	# Load debug package (this must be after the working directory change)
 	from libopensesame import debug
@@ -57,8 +63,7 @@ if __name__ == "__main__":
 	from PyQt4.QtGui import QApplication
 	app = QApplication(sys.argv)
 	from libqtopensesame.qtopensesame import qtopensesame
-	opensesame = qtopensesame(app)	
-	opensesame.show()
+	opensesame = qtopensesame(app)		
 	app.processEvents()
 	
 	# Import the remaining modules
@@ -107,6 +112,8 @@ if __name__ == "__main__":
 
 	opensesame.restore_window_state()				
 	opensesame.refresh()			
+	opensesame.show()
+	opensesame.raise_()  #Added for OS X, otherwise Window will not appear
 	
 	# Exit using the application exit status
 	sys.exit(app.exec_())

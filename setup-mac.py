@@ -42,28 +42,29 @@ try:
 	shutil.rmtree("qt_menu.nib")
 except:
 	pass
-shutil.copytree("/opt/local/lib/Resources/qt_menu.nib", "qt_menu.nib")
+shutil.copytree("/Library/Frameworks/QtGui.framework/Resources/qt_menu.nib", "qt_menu.nib")
 
 # Py2app doesn't like extensionless Python scripts
 try:
 	os.remove("opensesame.py")
+	os.remove("opensesamerun.py")
 except:
 	pass
 shutil.copyfile("opensesame", "opensesame.py")
+shutil.copyfile("opensesamerun", "opensesamerun.py")
 
 # Build!
 setup(
     app = ['opensesame.py'],
     data_files = ['opensesame.py'],
-    options = {'py2app' : {'argv_emulation': False, 
-		'includes' : ['sip', 'PyQt4.QtGui', 'PyQt4.QtCore', 'pygame', 'numpy', \
-			'serial', 'openexp', 'libqtopensesame', 'libopensesame', 'cv', \
-			"cv2"
-			],
-		'resources' : ['qt_menu.nib', 'resources', 'examples', 'sounds', \
-			'plugins', 'help', 'data'
-			]
-		}},
+    options = {'py2app' : 
+			{'argv_emulation': False, 
+			 'includes' : ['sip', 'PyQt4.QtNetwork', 'pygame', 'numpy', 'serial', 'openexp', 'libqtopensesame','libopensesame','libopensesame.widgets', 'libqtopensesame.widgets', 'opensesamerun','cv','cv2'],
+			 'resources' : ['qt_menu.nib', 'qt.conf', 'resources', 'sounds', 'plugins', 'help', 'data'],
+			 'packages' : ['expyriment'],
+			 'iconfile' : 'resources/opensesame.icns',			
+			}
+		   },
     setup_requires=['py2app'],
 )
 
@@ -77,5 +78,6 @@ shutil.rmtree("dist/opensesame.app/Contents/Resources/plugins/port_reader")
 # Remove opensesame.py
 try:
 	os.remove("opensesame.py")
+	os.remove("opensesamerun.py")
 except:
 	pass
