@@ -21,6 +21,7 @@ import openexp.mouse
 import openexp.exceptions
 import openexp._mouse.legacy
 from psychopy import event
+import psychopy.visual
 
 class psycho(openexp._mouse.legacy.legacy):
 
@@ -68,7 +69,17 @@ class psycho(openexp._mouse.legacy.legacy):
 		"""See openexp._mouse.legacy"""
 	
 		self.visible = visible
-		self.mouse.setVisible(visible)		
+		self.mouse.setVisible(visible)
+
+	def set_pos(self, pos=(0,0)):
+
+		"""See openexp._mouse.legacy"""	
+
+		if psychopy.visual.openWindows[0].winType == 'pyglet':
+			raise openexp.exceptions.response_error( \
+				"Method set_pos not supported in pyglet environment (default for psycho back-end)")
+
+		self.mouse.setPos(newPos=pos)
 		
 	def get_click(self, buttonlist=None, timeout=None, visible=None):
 	
@@ -87,7 +98,7 @@ class psycho(openexp._mouse.legacy.legacy):
 		button = None
 		pos = None
 		self.mouse.clickReset()
-		while timeout == None or time - start_time < timeout:
+		while True:
 			time = 1000.0 * self.experiment.clock.getTime()			
 			buttons, times = self.mouse.getPressed(getTime=True)
 			if buttons[0] and (buttonlist == None or 1 in buttonlist):
@@ -98,9 +109,11 @@ class psycho(openexp._mouse.legacy.legacy):
 				button = 2
 				pos = self.mouse.getPos()
 				break
-			if buttons[2] and (buttonlist == None or 1 in buttonlist):
+			if buttons[2] and (buttonlist == None or 3 in buttonlist):
 				button = 3
 				pos = self.mouse.getPos()
+				break
+			if timeout != None and time-start_time >= timeout:
 				break
 		if pos != None:
 			pos = pos[0]+self.experiment.width/2, \
@@ -117,6 +130,12 @@ class psycho(openexp._mouse.legacy.legacy):
 		x = x + self.experiment.width/2
 		y = self.experiment.height/2 - y
 		return (x, y), t
+
+	def get_pressed(self):
+	
+		"""See openexp._mouse.legacy"""
+
+		return tuple(self.mouse.getPressed(getTime=False))
 		
 	def flush(self):
 	

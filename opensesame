@@ -47,7 +47,7 @@ if __name__ == "__main__":
 			locale.setlocale(locale.LC_ALL, 'en_US.UTF-8')
 				
 	# Load debug package (this must be after the working directory change)
-	from libopensesame.misc import debug
+	from libopensesame import debug
 
 	# The IPython modules must be loaded before PyQt4
 	if "--ipython" in sys.argv:

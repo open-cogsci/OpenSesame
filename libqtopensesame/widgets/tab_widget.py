@@ -17,7 +17,7 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
-from libopensesame.misc import debug
+from libopensesame import debug
 from libqtopensesame.misc import config, _
 from PyQt4 import QtGui, QtCore
 

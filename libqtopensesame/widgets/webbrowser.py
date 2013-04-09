@@ -79,7 +79,16 @@ class webbrowser(QtGui.QWidget):
 		url -- the webpage to load
 		"""
 	
-		self.ui.webview.load(QtCore.QUrl(url))
+		if url.endswith(u'.md'):
+			try:
+				import markdown				
+				html = markdown.markdown(open(url).read())
+			except:
+				html = \
+					u'<p>Python markdown must be installed to view this page. Sorry!'
+			self.ui.webview.setHtml(html, QtCore.QUrl(url))
+		else:
+			self.ui.webview.load(QtCore.QUrl(url))
 		
 	def load_finished(self):
 	

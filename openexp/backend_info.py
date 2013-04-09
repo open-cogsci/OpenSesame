@@ -23,7 +23,6 @@ import platform
 
 legacy = {
 	"description" : "uses PyGame, maximum stability", \
-	"authors" : ["Sebastiaan Mathot"], \
 	"canvas" : "legacy", \
 	"keyboard" : "legacy", \
 	"mouse" : "legacy", \
@@ -34,7 +33,6 @@ legacy = {
 	
 opengl = {
 	"description" : "uses PyGame and OpenGL", \
-	"authors" : ["Sebastiaan Mathot", "Per Sederberg"], \
 	"canvas" : "opengl", \
 	"keyboard" : "legacy", \
 	"mouse" : "legacy", \
@@ -45,7 +43,6 @@ opengl = {
 
 psycho = {
 	"description" : "uses PsychoPy, powerful stimulus generation", \
-	"authors" : ["Sebastiaan Mathot", "Jonathan Peirce"], \
 	"canvas" : "psycho", \
 	"keyboard" : "psycho", \
 	"mouse" : "psycho", \
@@ -56,13 +53,22 @@ psycho = {
 	
 xpyriment = {
 	"description" : "uses Expyriment", \
-	"authors" : ["Sebastiaan Mathot"], \
 	"canvas" : "xpyriment", \
 	"keyboard" : "legacy", \
 	"mouse" : "xpyriment", \
 	"sampler" : "legacy", \
 	"synth" : "legacy", \
 	"icon" : "os-expyriment"
+	}	
+	
+droid = {
+	"description" : "for Android devices", \
+	"canvas" : "droid", \
+	"keyboard" : "droid", \
+	"mouse" : "droid", \
+	"sampler" : "legacy", \
+	"synth" : "droid", \
+	"icon" : "os-android"
 	}	
 	
 backend_list = {}
@@ -72,6 +78,8 @@ backend_list["xpyriment"] = xpyriment
 # Do not add psychopy to the list on 64-bit OS X as this doesn't work
 if not (platform.system() == 'Darwin' and sys.maxsize > 2**32):
 	backend_list["psycho"] = psycho
+
+backend_list["droid"] = droid
 
 def match(experiment):
 

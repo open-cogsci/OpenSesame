@@ -111,4 +111,12 @@ class sampler(item.item, generic_response.generic_response):
 
 	def var_info(self):
 
-		return generic_response.generic_response.var_info(self)
+		"""
+		Give a list of dictionaries with variable descriptions
+
+		Returns:
+		A list of (name, description) tuples
+		"""		
+
+		return item.item.var_info(self) + \
+			generic_response.generic_response.var_info(self)

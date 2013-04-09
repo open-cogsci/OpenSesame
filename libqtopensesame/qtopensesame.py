@@ -424,29 +424,31 @@ class qtopensesame(QtGui.QMainWindow):
 		"""Autosave the experiment if there are unsaved changes"""
 
 		if not self.unsaved_changes:
-			self.set_status("No unsaved changes, skipping backup")
-			autosave_path = ""
+			self.set_status(u'No unsaved changes, skipping backup')
+			autosave_path = u''
 		else:
 			_current_path = self.current_path
+			_experiment_path = self.experiment.experiment_path
 			_unsaved_changes = self.unsaved_changes
 			_window_msg = self.window_msg
 			self.current_path = os.path.join(self.autosave_folder, \
-				"%s.opensesame.tar.gz" % unicode(time.ctime()).replace(":", "_"))
+				u'%s.opensesame.tar.gz'% unicode(time.ctime()).replace(':', \
+				'_'))
 			debug.msg("saving backup as %s" % self.current_path)
 			try:
 				self.save_file(False, remember=False, catch=False)
-				self.set_status(_("Backup saved as %s") % self.current_path)
+				self.set_status(_('Backup saved as %s') % self.current_path)
 			except:
-				self.set_status(_("Failed to save backup ..."))
+				self.set_status(_('Failed to save backup ...'))
 			autosave_path = self.current_path
 			self.current_path = _current_path
+			self.experiment.experiment_path = _experiment_path
 			self.set_unsaved(_unsaved_changes)
 			self.window_message(_window_msg)
 		self.start_autosave_timer()
 		return autosave_path
 
 	def clean_autosave(self):
-
 
 		"""Remove old files from the back-up folder"""
 
@@ -1157,6 +1159,25 @@ class qtopensesame(QtGui.QMainWindow):
 						debug.msg("'%s' did something" % item)
 						redo = True
 						break
+						
+	def print_debug_window(self, msg):
+		
+		"""
+		Prints a message to the debug window.
+		
+		Arguments:
+		msg		--	An object to print to the debug window. If it's an exception
+					than a full traceback will be printed.
+		"""
+		
+		from libqtopensesame.widgets import pyterm				
+		out = pyterm.output_buffer(self.ui.edit_stdout)
+		if isinstance(msg, Exception):
+			import traceback
+			for s in traceback.format_exc(msg).split('\n'):
+				out.write(s)
+		else:
+			out.write(self.experiment.unistr(msg))
 
 	def call_opensesamerun(self, exp):
 
@@ -1374,17 +1395,17 @@ class qtopensesame(QtGui.QMainWindow):
 				# Report the error
 				if isinstance(e, libopensesame.exceptions.runtime_error):
 					self.experiment.notify(e)
-				elif isinstance(e, openexp.exceptions.openexp_error):
-					print unicode(e)
+					self.print_debug_window(e)
+				elif isinstance(e, openexp.exceptions.openexp_error):					
 					self.experiment.notify( \
 						_("<b>Error</b>: OpenExp error<br /><b>Description</b>: %s") \
 						% e)
+					self.print_debug_window(e)
 				else:
 					self.experiment.notify( \
 						_("An unexpected error occurred, which was not caught by OpenSesame. This should not happen! Message:<br/><b>%s</b>") \
 						% self.experiment.unistr(e))
-					for s in traceback.format_exc(e).split("\n"):
-						print s
+					self.print_debug_window(e)
 
 		# Undo the standard output rerouting
 		sys.stdout = sys.__stdout__

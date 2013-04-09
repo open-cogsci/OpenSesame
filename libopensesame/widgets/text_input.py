@@ -50,11 +50,11 @@ class text_input(label):
 	
 		label.__init__(self, form, text, frame=frame, center=center)
 		self.type = 'text_input'		
-		self.stub = stub
+		self.stub = self.form.experiment.unistr(stub)
 		self.prompt = '_'
 		self.return_accepts = return_accepts
 		self.var = var
-		self.text = text
+		self.text = self.form.experiment.unistr(text)
 		self.set_var(text)
 		
 	def render(self):

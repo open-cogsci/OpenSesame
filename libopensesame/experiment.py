@@ -239,17 +239,14 @@ class experiment(item.item):
 		s = iter(string.split("\n"));
 		line = next(s, None)
 		while line != None:
-
 			get_next = True
 			try:
 				l = self.split(line)
 			except ValueError as e:
 				raise exceptions.script_error( \
 					u"Failed to parse script. Maybe it contains illegal characters or unclosed quotes?")
-
 			if len(l) > 0:
 				self.parse_variable(line)
-
 				# Parse definitions
 				if l[0] == u"define":
 					if len(l) != 3:
@@ -261,9 +258,9 @@ class experiment(item.item):
 					line, def_str = self.read_definition(s)
 					get_next = False
 					self.parse_definition(item_type, item_name, def_str)
-
+			# Advance to next line
 			if get_next:
-				line = next(s, None)
+				line = next(s, None)				
 
 	def run(self):
 
@@ -614,25 +611,18 @@ class experiment(item.item):
 
 		"""
 		Saves the system state so that it can be restored after the
-		experiment. For now, this comes down to remembering which global variables
-		exist, so that they can be deleted later on.
+		experiment.
 		"""
-
+		
 		from libopensesame import inline_script
-		self._globals = inline_script.inline_script._globals().keys()
-		debug.msg('%d inline_script globals on start' % len(self._globals))
-
+		inline_script.save_state()
+	
 	def restore_state(self):
 
 		"""Restores the system to the state as saved by save_state()"""
 
 		from libopensesame import inline_script
-		_globals = inline_script.inline_script._globals().keys()
-		debug.msg('%d inline_script globals on end' % len(_globals))
-		for g in _globals:
-			if g not in self._globals:
-				debug.msg('deleting inline_script global %s' % g)
-				delattr(inline_script, g)
+		inline_script.restore_state()
 
 	def _sleep_func(self, ms):
 

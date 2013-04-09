@@ -21,11 +21,14 @@ from libopensesame import item, exceptions
 from openexp import canvas
 import re
 
+_globals = {}
+_locals = {}
+
 class inline_script(item.item):
 
 	"""Allows users to use Python code in their experiments"""
 
-	def __init__(self, name, experiment, string = None):
+	def __init__(self, name, experiment, string=None):
 
 		"""<DOC>
 		Constructor. You will generally not create an inline_script item #
@@ -33,11 +36,11 @@ class inline_script(item.item):
 		run() functions.
 
 		Arguments:
-		name -- The name of the item.
-		experiment -- The experiment.
+		name		--	The name of the item.
+		experiment 	--	The experiment.
 
 		Keyword arguments:
-		string -- An item definition string (default = None).
+		string		--	An item definition string (default=None).
 		</DOC>"""
 
 		self.description = "Executes Python code"
@@ -53,7 +56,7 @@ class inline_script(item.item):
 		Creates a canvas that is a copy from the canvas of a sketchpad item.
 
 		Arguments:
-		sketchpad_name -- The name of the sketchpad.
+		sketchpad_name	--	The name of the sketchpad.
 
 		Returns:
 		An openexp canvas.
@@ -69,10 +72,10 @@ class inline_script(item.item):
 	def offline_canvas(self, auto_prepare=True):
 
 		"""<DOC>
-		Creates an empty canvas
+		Creates an empty canvas.
 
 		Keyword arguments:
-		auto_prepare -- Please see the canvas documentation (default=True).
+		auto_prepare 	--	See canvas documentation. (default=True)
 
 		Returns:
 		An openexp canvas.
@@ -92,10 +95,14 @@ class inline_script(item.item):
 		function.
 		</DOC>"""
 
-		item.item.prepare(self)
-		# Convenience variables
-		exp = self.experiment
-		win = self.experiment.window
+		global _globals, _locals
+		
+		item.item.prepare(self)		
+		
+		# Convenience variables need to be registered as globals
+		if 'exp' not in _globals:
+			_globals['exp'] = self.experiment
+			_globals['win'] = self.experiment.window
 		# Compile prepare script
 		try:
 			self.cprepare = compile(self._prepare, "<string>", "exec")
@@ -108,7 +115,7 @@ class inline_script(item.item):
 			raise exceptions.inline_error(self.name, "run", e)
 		# Run prepare script
 		try:
-			exec(self.cprepare)
+			exec(self.cprepare, _globals, _locals)
 		except Exception as e:
 			raise exceptions.inline_error(self.name, "prepare", e)
 		# Report success
@@ -117,16 +124,18 @@ class inline_script(item.item):
 	def run(self):
 
 		"""<DOC>
-		Executes the run script. The code that you enter in the 'run' tab of an #
-		inline_script item in the GUI is used as a body for this function.
+		Executes the run script. The code that you enter in the 'run' tab of #
+		an inline_script item in the GUI is used as a body for this function.
 		</DOC>"""
+		
+		global _globals, _locals
 
 		# Convenience variables
 		exp = self.experiment
 		win = self.experiment.window
 
 		try:
-			exec(self.crun)
+			exec(self.crun, _globals, _locals)
 		except Exception as e:
 			raise exceptions.inline_error(self.name, "run", e)
 
@@ -168,13 +177,18 @@ class inline_script(item.item):
 		self._var_info = l
 
 		return l
-
-	@staticmethod
-	def _globals():
-
-		"""
-		Returns:
-		A dictionary of globals that are registered within the current module
-		"""
-
-		return globals()
+	
+def restore_state():
+	
+	"""Restores the system state."""
+	
+	global _globals, _locals
+	_globals = {}
+	_locals = {}
+	
+def save_state():
+	
+	"""Saves the system state."""
+	
+	# Currently does nothing.
+	pass

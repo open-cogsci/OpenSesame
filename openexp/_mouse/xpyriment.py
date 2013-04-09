@@ -80,7 +80,7 @@ class xpyriment(openexp._mouse.legacy.legacy):
 		start_time = pygame.time.get_ticks()
 		time = start_time		
 		
-		while timeout == None or time - start_time < timeout:
+		while True:
 			time = pygame.time.get_ticks()						
 			
 			# Draw a cusom cursor if necessary
@@ -107,6 +107,8 @@ class xpyriment(openexp._mouse.legacy.legacy):
 							-self.experiment.height)/2
 												
 						return event.button, (x,y), time					
+			if timeout != None and time-start_time >= timeout:
+				break
 											
 		if self.cursor == None:
 			pygame.mouse.set_visible(self.visible)					
