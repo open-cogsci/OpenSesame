@@ -161,16 +161,16 @@ class inline_script(item.item):
 		l = item.item.var_info(self)
 
 		m = re.findall( \
-			"self.experiment.set\(\"(\w+)\"(\s*),(\s*)(\"*)([^\"\)]*)(\"*)", \
+			u"self.experiment.set\(\"(\w+)\"(\s*),(\s*)(\"*)([^\"\)]*)(\"*)", \
 			self._prepare + self._run) \
 			+ re.findall( \
-			"self.experiment.set\('(\w+)'(\s*),(\s*)('*)([^'\)]*)('*)", \
+			u"self.experiment.set\('(\w+)'(\s*),(\s*)('*)([^'\)]*)('*)", \
 			self._prepare + self._run) \
 			+ re.findall( \
-			"exp.set\(\"(\w+)\"(\s*),(\s*)(\"*)([^\"\)]*)(\"*)", \
+			u"exp.set\(\"(\w+)\"(\s*),(\s*)(\"*)([^\"\)]*)(\"*)", \
 			self._prepare + self._run) \
 			+ re.findall( \
-			"exp.set\('(\w+)'(\s*),(\s*)('*)([^'\)]*)('*)", \
+			u"exp.set\('(\w+)'(\s*),(\s*)('*)([^'\)]*)('*)", \
 			self._prepare + self._run)
 
 		for var, s1, s2, q1, val, q2 in m:
