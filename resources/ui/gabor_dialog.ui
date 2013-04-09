@@ -214,7 +214,7 @@
       <item row="6" column="1">
        <widget class="QLineEdit" name="edit_color1">
         <property name="text">
-         <string>white</string>
+         <string notr="true">white</string>
         </property>
        </widget>
       </item>
@@ -228,7 +228,7 @@
       <item row="7" column="1">
        <widget class="QLineEdit" name="edit_color2">
         <property name="text">
-         <string>black</string>
+         <string notr="true">black</string>
         </property>
        </widget>
       </item>

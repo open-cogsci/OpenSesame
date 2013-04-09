@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'resources/ui/gabor_dialog.ui'
 #
-# Created: Thu Aug  2 12:43:06 2012
+# Created: Tue Apr  9 17:37:52 2013
 #      by: PyQt4 UI code generator 4.9.1
 #
 # WARNING! All changes made in this file will be lost!
@@ -116,12 +116,14 @@ class Ui_gabor_dialog(object):
         self.label_10.setObjectName(_fromUtf8("label_10"))
         self.formLayout.setWidget(6, QtGui.QFormLayout.LabelRole, self.label_10)
         self.edit_color1 = QtGui.QLineEdit(self.widget)
+        self.edit_color1.setText(_fromUtf8("white"))
         self.edit_color1.setObjectName(_fromUtf8("edit_color1"))
         self.formLayout.setWidget(6, QtGui.QFormLayout.FieldRole, self.edit_color1)
         self.label_9 = QtGui.QLabel(self.widget)
         self.label_9.setObjectName(_fromUtf8("label_9"))
         self.formLayout.setWidget(7, QtGui.QFormLayout.LabelRole, self.label_9)
         self.edit_color2 = QtGui.QLineEdit(self.widget)
+        self.edit_color2.setText(_fromUtf8("black"))
         self.edit_color2.setObjectName(_fromUtf8("edit_color2"))
         self.formLayout.setWidget(7, QtGui.QFormLayout.FieldRole, self.edit_color2)
         self.label_11 = QtGui.QLabel(self.widget)
@@ -179,9 +181,7 @@ class Ui_gabor_dialog(object):
         self.label_7.setText(QtGui.QApplication.translate("gabor_dialog", "Frequency<br /><i>in cycles/ px</i>", None, QtGui.QApplication.UnicodeUTF8))
         self.label_8.setText(QtGui.QApplication.translate("gabor_dialog", "Phase<br /><i>in cycles (0 .. 1)</i>", None, QtGui.QApplication.UnicodeUTF8))
         self.label_10.setText(QtGui.QApplication.translate("gabor_dialog", "Color 1<br /><i>e.g., \'white\' or \'#FFFFFF\'</i>", None, QtGui.QApplication.UnicodeUTF8))
-        self.edit_color1.setText(QtGui.QApplication.translate("gabor_dialog", "white", None, QtGui.QApplication.UnicodeUTF8))
         self.label_9.setText(QtGui.QApplication.translate("gabor_dialog", "Color 1<br /><i>e.g., \'black\' or \'#000000\'</i>", None, QtGui.QApplication.UnicodeUTF8))
-        self.edit_color2.setText(QtGui.QApplication.translate("gabor_dialog", "black", None, QtGui.QApplication.UnicodeUTF8))
         self.label_11.setText(QtGui.QApplication.translate("gabor_dialog", "Background color *", None, QtGui.QApplication.UnicodeUTF8))
         self.combobox_bgmode.setItemText(0, QtGui.QApplication.translate("gabor_dialog", "Color average", None, QtGui.QApplication.UnicodeUTF8))
         self.combobox_bgmode.setItemText(1, QtGui.QApplication.translate("gabor_dialog", "Color 2", None, QtGui.QApplication.UnicodeUTF8))
