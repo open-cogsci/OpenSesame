@@ -1,4 +1,4 @@
-opensesame (0.27.2~pre4-ubuntu1) precise; urgency=low
+opensesame (0.27.2~pre5-ubuntu1) precise; urgency=low
 
   * Add support for Android
   * Add new-style plug-in API
@@ -7,8 +7,9 @@ opensesame (0.27.2~pre4-ubuntu1) precise; urgency=low
   * Add set_pos() and get_pressed() to mouse
   * Miscellaneous bug fixes
   * Add transparent variable management
+  * Fix various Unicode errors
 
- -- Sebastiaan Mathot <s.mathot@cogsci.nl>  Sun, 24 Mar 2013 20:28:42 +0100
+ -- Sebastiaan Mathot <s.mathot@cogsci.nl>  Wed, 10 Apr 2013 14:56:35 +0200
 
 opensesame (0.27.1-ubuntu1) precise; urgency=low
 
