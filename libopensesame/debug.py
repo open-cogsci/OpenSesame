@@ -57,10 +57,10 @@ def msg(msg=u'', reason=None):
 			print u' %.3d\t%s\t' % (i, parse_stack(st.pop()))
 			i += 1
 
-enabled = u'--debug' in sys.argv or u'-d' in sys.argv
+enabled = '--debug' in sys.argv or '-d' in sys.argv
 if enabled:
 	import inspect
-	stack = u'--stack' in sys.argv or u'-s' in sys.argv
+	stack = '--stack' in sys.argv or '-s' in sys.argv
 	if stack:
 		msg(u'debug mode enabled (stacktrace on)')
 	else:
