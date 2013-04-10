@@ -2,7 +2,9 @@ OpenSesame
 ==========
 
 *A graphical experiment builder for the social sciences*
+
 Copyright, 2010-2012, Sebastiaan Mathot
+
 <http://www.cogsci.nl/smathot>
 
 1. About
