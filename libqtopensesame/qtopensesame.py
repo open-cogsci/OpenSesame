@@ -21,7 +21,7 @@ from PyQt4 import QtCore, QtGui
 from libqtopensesame.misc import includes, config, _
 from libqtopensesame.misc.config import cfg
 from libqtopensesame.items import experiment
-from libopensesame import debug, exceptions
+from libopensesame import debug, exceptions, misc
 import libopensesame.exceptions
 import libopensesame.experiment
 import libopensesame.plugins
@@ -80,7 +80,7 @@ class qtopensesame(QtGui.QMainWindow):
 		random.seed()
 
 		# Check the filesystem encoding for debugging purposes
-		debug.msg('filesystem encoding: %s' % sys.getfilesystemencoding())
+		debug.msg('filesystem encoding: %s' % misc.filesystem_encoding())
 
 		# Restore the configuration
 		self.restore_config()
@@ -921,7 +921,7 @@ class qtopensesame(QtGui.QMainWindow):
 		# Get ready, generate the script and see if the script can be
 		# re-parsed. In debug mode any errors are not caught. Otherwise. a
 		# neat exception is thrown.
-		if self.experiment.debug:
+		if debug.enabled:
 			self.get_ready()
 			script = self.experiment.to_string()
 			experiment.experiment(self, "Experiment", script)
@@ -940,7 +940,7 @@ class qtopensesame(QtGui.QMainWindow):
 				return
 
 		# Try to save the experiment if it doesn't exist already
-		if self.experiment.debug:
+		if debug.enabled:
 			resp = self.experiment.save(self.current_path, overwrite=True)
 			self.set_status(_("Saved as %s") % self.current_path)
 		else:

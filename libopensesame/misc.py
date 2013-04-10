@@ -357,3 +357,18 @@ def open_url(url):
 			debug.msg("Failed to open '%s'" % url, reason="warning")
 	else:
 		debug.msg("Failed to open '%s'" % url, reason="warning")
+
+def filesystem_encoding():
+
+	"""
+	Gets the current file system encoding. This wrapper is necessary, because
+	sys.getfilesystemencoding() returns None on Android.
+
+	Returns:
+	A string with the file system encoding, such as 'utf-8' or 'mdcs'
+	"""
+
+	enc = sys.getfilesystemencoding()
+	if enc == None:
+		enc = 'utf-8'
+	return enc
