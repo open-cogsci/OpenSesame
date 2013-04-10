@@ -18,7 +18,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 import os
-import os.path
+import sys
 import json
 from libopensesame import debug
 
@@ -258,12 +258,12 @@ def import_plugin(plugin):
 	for tmpl in src_templates:
 		if os.path.exists(os.path.join(plugin_folder(plugin), tmpl % plugin)):
 			path = os.path.join(plugin_folder(plugin), tmpl % plugin).encode( \
-				u'utf-8')
+				sys.getfilesystemencoding())
 			return imp.load_source(plugin, path)
 	for tmpl in bytecode_templates:
 		if os.path.exists(os.path.join(plugin_folder(plugin), tmpl % plugin)):
 			path = os.path.join(plugin_folder(plugin), tmpl % plugin).encode( \
-				u'utf-8')
+				sys.getfilesystemencoding())
 			return imp.load_compiled(plugin, path)
 	
 def load_plugin(plugin, item_name, experiment, string, prefix=u''):

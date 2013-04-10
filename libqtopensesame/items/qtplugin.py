@@ -20,11 +20,12 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 __author__ = "Sebastiaan Mathot"
 __license__ = "GPLv3"
 
+import os
+import sys
 from PyQt4 import QtCore, QtGui
 from libqtopensesame.items import qtitem
 from libqtopensesame.misc import _
 from libqtopensesame.widgets import color_edit, inline_editor, pool_widget
-import os.path
 from libopensesame import debug
 
 class qtplugin(qtitem.qtitem):
@@ -44,7 +45,7 @@ class qtplugin(qtitem.qtitem):
 			# The __file__ variable is generally a str, which will cause unicode
 			# errors. Therefore, convert this here if necessary.
 			if isinstance(plugin_file, str):
-				plugin_file = plugin_file.decode(u'utf-8')
+				plugin_file = plugin_file.decode(sys.getfilesystemencoding())
 			# These lines makes sure that the icons and help file are recognized
 			# by OpenSesame.
 			self.plugin_folder = os.path.dirname(plugin_file)
