@@ -1833,7 +1833,7 @@ class qtopensesame(QtGui.QMainWindow):
 
 		from libqtopensesame.widgets import draggables
 
-		debug.msg("dropping from toolbar")
+		debug.msg(u'dropping from toolbar')
 
 		# Determine the drop target
 		if draggables.drop_target == None:
@@ -1841,7 +1841,7 @@ class qtopensesame(QtGui.QMainWindow):
 		target, index, select = draggables.drop_target
 
 		# Create a new item and return if it fails
-		if type(add_func) != str:
+		if not isinstance(add_func, basestring):
 			new_item = add_func(False, parent=target)
 		else:
 			new_item = self.add_item(add_func, False)
@@ -1849,11 +1849,11 @@ class qtopensesame(QtGui.QMainWindow):
 			self.refresh(target)
 			return
 
-		if target == "__start__":
-			self.experiment.set("start", new_item)
+		if target == u'__start__':
+			self.experiment.set(u'start', new_item)
 		else:
 			self.experiment.items[target].items.insert(index, (new_item, \
-				"always"))
+				u'always'))
 
 		self.refresh(target)
 		if select:

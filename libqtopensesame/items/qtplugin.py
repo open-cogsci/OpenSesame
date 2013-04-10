@@ -41,19 +41,23 @@ class qtplugin(qtitem.qtitem):
 		"""
 
 		if plugin_file != None:
+			# The __file__ variable is generally a str, which will cause unicode
+			# errors. Therefore, convert this here if necessary.
+			if isinstance(plugin_file, str):
+				plugin_file = plugin_file.decode(u'utf-8')
 			# These lines makes sure that the icons and help file are recognized
 			# by OpenSesame.
 			self.plugin_folder = os.path.dirname(plugin_file)
-			self.experiment.resources["%s.png" % self.item_type] = \
-				os.path.join(self.plugin_folder, "%s.png" % self.item_type)
-			self.experiment.resources["%s_large.png" % self.item_type] = \
-				os.path.join(self.plugin_folder, "%s_large.png" \
+			self.experiment.resources[u'%s.png' % self.item_type] = \
+				os.path.join(self.plugin_folder, u'%s.png' % self.item_type)
+			self.experiment.resources[u'%s_large.png' % self.item_type] = \
+				os.path.join(self.plugin_folder, u'%s_large.png' \
 				% self.item_type)
-			self.experiment.resources["%s.html" % self.item_type] = \
-				os.path.join(self.plugin_folder, "%s.html" \
+			self.experiment.resources[u'%s.html' % self.item_type] = \
+				os.path.join(self.plugin_folder, u'%s.html' \
 				% self.item_type)
-			self.experiment.resources["%s.md" % self.item_type] = \
-				os.path.join(self.plugin_folder, "%s.md" \
+			self.experiment.resources[u'%s.md' % self.item_type] = \
+				os.path.join(self.plugin_folder, u'%s.md' \
 				% self.item_type)				
 		self.lock = False
 		qtitem.qtitem.__init__(self)
