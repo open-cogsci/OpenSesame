@@ -107,8 +107,8 @@ class experiment(item.item):
 
 		# This is some duplication of the option parser in qtopensesame,
 		# but nevertheless keep it so we don't need qtopensesame
-		self.debug = '--debug' in sys.argv or '-d' in sys.argv
-		self._stack = '--stack' in sys.argv or '-s' in sys.argv
+		self.debug = debug.enabled
+		self._stack = debug.stack
 
 		# Pool folder
 		if pool_folder == None:

@@ -68,4 +68,5 @@ if enabled:
 else:
 	# Replace the message function with a dummy function to turn off debugging
 	# output
+	stack = False
 	msg = lambda msg=None, reason=None: None
