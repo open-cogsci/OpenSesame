@@ -22,18 +22,18 @@ from libopensesame import debug
 
 class color_edit(QtGui.QWidget):
 
-	"""A QWidget with a QLineEdit and a QPushButton that pops up a colorpicker"""
+	"""A colorpicker QWidget with a QLineEdit and a QPushButton."""
 
 	def __init__(self, parent=None):
 	
 		"""
-		Constructor
+		Constructor.
 		
 		Arguments:
-		experiment -- the experiment
+		experiment	--	The experiment object.
 		
 		Keywords arguments:
-		parent -- the parent QWidget (default=None)		
+		parent		--	The parent QWidget. (default=None)
 		"""
 	
 		QtGui.QWidget.__init__(self, parent)		
@@ -51,7 +51,7 @@ class color_edit(QtGui.QWidget):
 
 	def colorpicker(self):
 	
-		"""Pick a color with the colorpicker dialog"""
+		"""Picks a color with the colorpicker dialog."""
 	
 		color = self.experiment.colorpicker(self.experiment.sanitize( \
 			self.text()))
@@ -63,10 +63,10 @@ class color_edit(QtGui.QWidget):
 	def text(self):
 	
 		"""
-		Return the text (emulate QLineEdit behavior)
+		Returns the text (emulate QLineEdit behavior).
 		
 		Returns:
-		A QString
+		A QString.
 		"""
 	
 		return self.edit.text()
@@ -74,10 +74,10 @@ class color_edit(QtGui.QWidget):
 	def setText(self, s):
 	
 		"""
-		Set the text (emulate QLineEdit behavior)
+		Sets the text (emulate QLineEdit behavior).
 		
 		Arguments:
-		s -- the text
+		s	--	The text.
 		"""
 	
 		self.edit.setText(s)
@@ -86,25 +86,25 @@ class color_edit(QtGui.QWidget):
 	
 		"""Emit a 'set_color' signal to indicate that a color has been picker"""		
 		
-		self.emit(QtCore.SIGNAL("set_color"))
+		self.emit(QtCore.SIGNAL(u'set_color'))
 		
 	def initialize(self, experiment, color=None):
 	
 		"""
-		Initialize the widget
+		Initializes the widget.
 		
 		Arguments:
-		experiment -- an opensesame experiment
+		experiment	--	The experiment object.
 		
 		Keyword arguments:
-		color -- a color to start with or None for experiment foreground
-				 default (default=None)
+		color		--	A color to start with or None for experiment foreground
+						default. (default=None)
 		"""
 		
-		debug.msg('color = %s' % color)
+		debug.msg(u'color = %s' % color)
 		self.experiment = experiment
 		if color == None:
-			color = self.experiment.get('foreground', _eval=False)
+			color = self.experiment.get(u'foreground', _eval=False)
 		self.setText(color)
-		self.button.setIcon(self.experiment.icon("colorpicker"))
+		self.button.setIcon(self.experiment.icon(u'colorpicker'))
 		
