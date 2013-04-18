@@ -30,7 +30,7 @@ class synth:
 	
 		backend = experiment.synth_backend		
 		debug.msg('morphing into %s' % backend)
-		mod = __import__('openexp._sampler.%s' % backend, fromlist=['dummy'])			
+		mod = __import__('openexp._synth.%s' % backend, fromlist=['dummy'])			
 		cls = getattr(mod, backend)
 		self.__class__ = cls
 		cls.__init__(self, experiment, osc, freq, length, attack, decay)

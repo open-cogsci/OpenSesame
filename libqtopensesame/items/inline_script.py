@@ -65,9 +65,8 @@ class inline_script(libopensesame.inline_script.inline_script, qtitem.qtitem):
 
 		sp = self.textedit_prepare.edit.toPlainText()
 		sr = self.textedit_run.edit.toPlainText()
-
-		self.set("_prepare", sp)
-		self.set("_run", sr)
+		self.set(u'_prepare', sp)
+		self.set(u'_run', sr)
 		self.lock = True
 		self._var_info = None
 		self.experiment.main_window.refresh(self.name)
@@ -83,12 +82,12 @@ class inline_script(libopensesame.inline_script.inline_script, qtitem.qtitem):
 		qtitem.qtitem.init_edit_widget(self, False)
 
 		tabwidget_script = QtGui.QTabWidget(self._edit_widget)
-		py_ver = "Python %d.%d.%d" % (sys.version_info[0], \
+		py_ver = u'Python %d.%d.%d' % (sys.version_info[0], \
 			sys.version_info[1], sys.version_info[2])
 			
 		# Construct prepare editor
 		self.textedit_prepare = inline_editor.inline_editor(self.experiment, \
-			notification=py_ver, syntax="python")
+			notification=py_ver, syntax=u'python')
 		self.textedit_prepare.apply.clicked.connect(self.apply_edit_changes)
 		QtCore.QObject.connect(self.textedit_prepare.edit, QtCore.SIGNAL( \
 			"focusLost"), self.apply_edit_changes)
@@ -102,12 +101,12 @@ class inline_script(libopensesame.inline_script.inline_script, qtitem.qtitem):
 		vbox.addWidget(hbox_widget)
 		widget = QtGui.QWidget()
 		widget.setLayout(vbox)
-		tabwidget_script.addTab(widget, self.experiment.icon("inline_script"), \
-			_("Prepare phase"))
+		tabwidget_script.addTab(widget, self.experiment.icon( \
+			u'inline_script'), _(u'Prepare phase'))
 
 		# Construct run editor
 		self.textedit_run = inline_editor.inline_editor(self.experiment, \
-			notification=py_ver, syntax="python")
+			notification=py_ver, syntax=u'python')
 		self.textedit_run.apply.clicked.connect(self.apply_edit_changes)
 		QtCore.QObject.connect(self.textedit_run.edit, QtCore.SIGNAL( \
 			"focusLost"), self.apply_edit_changes)
@@ -121,17 +120,17 @@ class inline_script(libopensesame.inline_script.inline_script, qtitem.qtitem):
 		vbox.addWidget(hbox_widget)
 		widget = QtGui.QWidget()
 		widget.setLayout(vbox)
-		tabwidget_script.addTab(widget, self.experiment.icon("inline_script"), \
-			_("Run phase"))
+		tabwidget_script.addTab(widget, self.experiment.icon( \
+			u'inline_script'), _(u'Run phase'))
 
 		# Switch to the run script by default, unless there is only content for
 		# the prepare script.
-		if self._run == "" and self._prepare != "":
+		if self._run == u'' and self._prepare != u'':
 			tabwidget_script.setCurrentIndex(0)
 		else:
 			tabwidget_script.setCurrentIndex(1)
 			
-		# Add the tabwidget to the controls
+		# Add all widgets to the edit_vbox
 		self.edit_vbox.addWidget(tabwidget_script)
 
 	def edit_widget(self):
@@ -154,7 +153,7 @@ class inline_script(libopensesame.inline_script.inline_script, qtitem.qtitem):
 		"""Apply pending script changes"""
 
 		if self.textedit_prepare.isModified() or self.textedit_run.isModified():
-			debug.msg("applying pending script changes")
+			debug.msg(u'applying pending script changes')
 			self.apply_edit_changes(catch = False)
 			return True
 		return qtitem.qtitem.get_ready(self)

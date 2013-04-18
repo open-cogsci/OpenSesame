@@ -216,12 +216,12 @@ class experiment(libopensesame.experiment.experiment):
 		True if the name is allowed, False otherwise
 		"""
 
-		if name.strip() == "":
-			return "Empty names are not allowed"
+		if name.strip() == u'':
+			return u'Empty names are not allowed.'
 		if name.lower() in [item.lower() for item in self.items.keys()]:
-			return "An item with that name already exists"
+			return u'An item with that name already exists.'
 		if name != self.sanitize(name, strict=True, allow_vars=False):
-			return "Name contains special characters. Only alphanumeric characters and underscores are allowed."
+			return u'Name contains special characters. Only alphanumeric characters and underscores are allowed.'
 		return True
 
 	def delete(self, item_name, item_parent=None, index=None):

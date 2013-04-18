@@ -21,10 +21,10 @@ import os
 import os.path
 import sys
 
-version = "0.27.2~pre2"
-codename = "Frisky Freud"
+version = u'0.27.2~pre6'
+codename = u'Frisky Freud'
 
-use_global_resources = "--no-global-resources" not in sys.argv
+use_global_resources = '--no-global-resources' not in sys.argv
 from libopensesame import debug
 
 def change_working_dir():
@@ -37,21 +37,21 @@ def change_working_dir():
 		try:
 			# Extract the part of the description containing the path
 			s = unicode(libqtopensesame.qtopensesame)
-			i = s.find("from '") + 6
-			j = s.find("'>'") - 1
+			i = s.find(u'from \'') + 6
+			j = s.find(u'\'>\'') - 1
 			s = s[i:j]
 			# Go up the tree until the path of the current script
-			while not os.path.exists(os.path.join(s, "opensesame")) and \
-				not os.path.exists(os.path.join(s, "opensesame.exe"))and \
-				not os.path.exists(os.path.join(s, "opensesamerun")) and \
-				not os.path.exists(os.path.join(s, "opensesamerun.exe")):
+			while not os.path.exists(os.path.join(s, u'opensesame')) and \
+				not os.path.exists(os.path.join(s, u'opensesame.exe'))and \
+				not os.path.exists(os.path.join(s, u'opensesamerun')) and \
+				not os.path.exists(os.path.join(s, u'opensesamerun.exe')):
 				s = os.path.dirname(s)
 			os.chdir(s)
 			if s not in sys.path:
 				sys.path.append(s)
 			debug.msg(s)
 		except Exception as e:
-			debug.msg("failed to change working directory: %s" % e)
+			debug.msg(u'failed to change working directory: %s' % e)
 
 def opensesamerun_options():
 
@@ -61,7 +61,7 @@ def opensesamerun_options():
 	global version, codename
 
 	parser = optparse.OptionParser( \
-		"usage: opensesamerun [experiment] [options]", version="%s '%s'" % \
+		u'usage: opensesamerun [experiment] [options]', version=u'%s \'%s\'' % \
 		(version, codename))
 
 	parser.set_defaults(subject=0)
@@ -72,58 +72,58 @@ def opensesamerun_options():
 	parser.set_defaults(width=1024)
 	parser.set_defaults(height=768)
 	parser.set_defaults(custom_resolution=False)
-	group = optparse.OptionGroup(parser, "Subject and log file options")
-	group.add_option("-s", "--subject", action="store", dest="subject", help= \
-		"Subject number")
-	group.add_option("-l", "--logfile", action="store", dest="logfile", help= \
-		"Logfile")
+	group = optparse.OptionGroup(parser, u'Subject and log file options')
+	group.add_option(u"-s", u"--subject", action=u"store", dest=u"subject", \
+		help=u"Subject number")
+	group.add_option(u"-l", u"--logfile", action=u"store", dest=u"logfile", \
+		help=u"Logfile")
 	parser.add_option_group(group)
-	group = optparse.OptionGroup(parser, "Display options")
-	group.add_option("-f", "--fullscreen", action="store_true", dest= \
-		"fullscreen", help="Run fullscreen")
-	group.add_option("-c", "--custom_resolution", action="store_true", dest= \
-		"custom_resolution", help= \
-		"Do not use the display resolution specified in the experiment file")
-	group.add_option("-w", "--width", action="store", dest="width", help= \
-		"Display width")
-	group.add_option("-e", "--height", action="store", dest="height", help= \
-		"Display height")
+	group = optparse.OptionGroup(parser, u"Display options")
+	group.add_option(u"-f", u"--fullscreen", action=u"store_true", dest= \
+		"fullscreen", help=u"Run fullscreen")
+	group.add_option(u"-c", u"--custom_resolution", action=u"store_true", \
+		dest=u"custom_resolution", help= \
+		u"Do not use the display resolution specified in the experiment file")
+	group.add_option(u"-w", u"--width", action=u"store", dest=u"width", help= \
+		u"Display width")
+	group.add_option(u"-e", u"--height", action=u"store", dest=u"height", \
+		help=u"Display height")
 	parser.add_option_group(group)
-	group = optparse.OptionGroup(parser, "Miscellaneous options")
-	group.add_option("-d", "--debug", action="store_true", dest="debug", help= \
-		"Print lots of debugging messages to the standard output")
-	group.add_option("--stack", action="store_true", dest="stack", help= \
-		"Print stack information")
+	group = optparse.OptionGroup(parser, u"Miscellaneous options")
+	group.add_option(u"-d", u"--debug", action=u"store_true", dest=u"debug", \
+		help=u"Print lots of debugging messages to the standard output")
+	group.add_option(u"--stack", action=u"store_true", dest=u"stack", help= \
+		u"Print stack information")
 	parser.add_option_group(group)
-	group = optparse.OptionGroup(parser, "Miscellaneous options")
-	group.add_option("--pylink", action="store_true", dest="pylink", help= \
-		"Load PyLink before PyGame (necessary for using the Eyelink plug-ins in non-dummy mode)")
+	group = optparse.OptionGroup(parser, u"Miscellaneous options")
+	group.add_option(u"--pylink", action=u"store_true", dest=u"pylink", help= \
+		u"Load PyLink before PyGame (necessary for using the Eyelink plug-ins in non-dummy mode)")
 	parser.add_option_group(group)
 	options, args = parser.parse_args(sys.argv)
 
 	# Set the default logfile based on the subject nr
 	if options.logfile == None:
-		options.logfile = "subject%s.csv" % options.subject
+		options.logfile = u"subject%s.csv" % options.subject
 
 	if len(sys.argv) > 1 and os.path.exists:
 		options.experiment = sys.argv[1]
 	else:
-		options.experiment = ""
+		options.experiment = u""
 
 	try:
 		options.subject = int(options.subject)
 	except:
-		parser.error("Subject (-s / --subject) should be numeric")
+		parser.error(u"Subject (-s / --subject) should be numeric")
 
 	try:
 		options.width = int(options.width)
 	except:
-		parser.error("Width (-w / --width) should be numeric")
+		parser.error(u"Width (-w / --width) should be numeric")
 
 	try:
 		options.height = int(options.height)
 	except:
-		parser.error("Height (-e / --height) should be numeric")
+		parser.error(u"Height (-e / --height) should be numeric")
 
 	return options
 
@@ -146,7 +146,7 @@ def opensesamerun_ready(options):
 
 	# Check if the logfile is writable
 	try:
-		open(options.logfile, "w")
+		open(options.logfile, u"w")
 	except:
 		return False
 
@@ -169,7 +169,7 @@ def messagebox(title, msg):
 	l = Tkinter.Label(root, text=msg, justify=Tkinter.LEFT, padx=8, pady=8, \
 		wraplength=300)
 	l.pack()
-	b = Tkinter.Button(root, text="Ok", command=root.quit)
+	b = Tkinter.Button(root, text=u"Ok", command=root.quit)
 	b.pack(side=Tkinter.RIGHT)
 	root.mainloop()
 
@@ -202,11 +202,11 @@ def resource(name):
 	"""
 
 	global use_global_resources
-	path = os.path.join("resources", name)
+	path = os.path.join(u"resources", name)
 	if os.path.exists(path):
-		return os.path.join("resources", name)
-	if os.name == "posix" and use_global_resources:
-		path = "/usr/share/opensesame/resources/%s" % name
+		return os.path.join(u"resources", name)
+	if os.name == u"posix" and use_global_resources:
+		path = u"/usr/share/opensesame/resources/%s" % name
 		if os.path.exists(path):
 			return path
 	return None
@@ -223,14 +223,14 @@ def home_folder():
 	import platform
 
 	# Determine the home folder
-	if platform.system() == "Windows":
-		return os.environ["APPDATA"]
-	if platform.system() == "Darwin":
-		return os.environ["HOME"]
-	if platform.system() == "Linux":
-		return os.environ["HOME"]
-	home_folder = os.environ["HOME"]
-	print "qtopensesame.__init__(): unknown platform '%s', using '%s' as home folder" \
+	if platform.system() == u"Windows":
+		return os.environ[u"APPDATA"]
+	if platform.system() == u"Darwin":
+		return os.environ[u"HOME"]
+	if platform.system() == u"Linux":
+		return os.environ[u"HOME"]
+	home_folder = os.environ[u"HOME"]
+	print u"qtopensesame.__init__(): unknown platform '%s', using '%s' as home folder" \
 		% (platform.system(), home_folder)
 	return home_folder
 
@@ -245,23 +245,23 @@ def module_versions():
 
 	from PyQt4 import QtCore
 
-	s = "OpenSesame %s" % version
-	s += "\nPython %d.%d.%d" % (sys.version_info[0], sys.version_info[1], \
+	s = u"OpenSesame %s" % version
+	s += u"\nPython %d.%d.%d" % (sys.version_info[0], sys.version_info[1], \
 		sys.version_info[2])
 
 	# OpenCV
 	try:
 		import cv
-		s += '\nOpenCV is available (version is unknown)'
+		s += u'\nOpenCV is available (version is unknown)'
 	except:
-		s += '\nOpenCV is not available'
+		s += u'\nOpenCV is not available'
 
 	# OpenCV 2
 	try:
 		import cv2
-		s += '\nOpenCV 2 is available (version is unknown)'
+		s += u'\nOpenCV 2 is available (version is unknown)'
 	except:
-		s += '\nOpenCV 2 is not available'
+		s += u'\nOpenCV 2 is not available'
 
 	# Expyriment
 	try:
@@ -269,68 +269,68 @@ def module_versions():
 		sys.stdout = open(os.devnull, 'w')
 		import expyriment
 		sys.stdout = _out
-		s += '\nExpyriment %s' % expyriment.get_version()
+		s += u'\nExpyriment %s' % expyriment.get_version()
 	except:
-		s += '\nExpyriment is not available (or version is unknown)'
+		s += u'\nExpyriment is not available (or version is unknown)'
 
 	# NumPy
 	try:
 		import numpy
-		s += '\nNumPy %s' % numpy.version.version
+		s += u'\nNumPy %s' % numpy.version.version
 	except:
-		s += '\nNumPy is not available (or version is unknown)'
+		s += u'\nNumPy is not available (or version is unknown)'
 
 	# PyAudio
 	try:
 		import pyaudio
-		s += "\nPyAudio %s" % pyaudio.__version__
+		s += u"\nPyAudio %s" % pyaudio.__version__
 	except:
-		s += "\nPyAudio not available (or version is unknown)"
+		s += u"\nPyAudio not available (or version is unknown)"
 
 	# PyGame
 	try:
 		import pygame
-		s += "\nPyGame %s" % pygame.ver
+		s += u"\nPyGame %s" % pygame.ver
 	except:
-		s += "\nPyGame not available (or version is unknown)"
+		s += u"\nPyGame not available (or version is unknown)"
 
 	# PyOpenGL
 	try:
 		import OpenGL
-		s += "\nPyOpenGL %s" % OpenGL.__version__
+		s += u"\nPyOpenGL %s" % OpenGL.__version__
 	except:
-		s += "\nPyOpenGL not available (or version is unknown)"
+		s += u"\nPyOpenGL not available (or version is unknown)"
 
 	# PyQt
-	s += "\nPyQt %s" % QtCore.PYQT_VERSION_STR
+	s += u"\nPyQt %s" % QtCore.PYQT_VERSION_STR
 
 	# PySerial
 	try:
 		import serial
-		s += '\nPySerial %s' % serial.VERSION
+		s += u'\nPySerial %s' % serial.VERSION
 	except:
-		s += '\nPySerial not available (or version is unknown)'
+		s += u'\nPySerial not available (or version is unknown)'
 
 	# PsychoPy
 	try:
 		import psychopy
-		s += "\nPsychoPy %s" % psychopy.__version__
+		s += u"\nPsychoPy %s" % psychopy.__version__
 	except:
 		s += "\nPsychoPy not available (or version is unknown)"
 
 	# Pyglet
 	try:
 		import pyglet
-		s += "\nPyglet %s" % pyglet.version
+		s += u"\nPyglet %s" % pyglet.version
 	except:
-		s += "\nPyglet not available (or version is unknown)"
+		s += u"\nPyglet not available (or version is unknown)"
 
 	# SciPy
 	try:
 		import scipy
-		s += '\nSciPy %s' % scipy.version.version
+		s += u'\nSciPy %s' % scipy.version.version
 	except:
-		s += '\nScipy is not available (or version is unknown)'
+		s += u'\nScipy is not available (or version is unknown)'
 
 	return s
 
@@ -346,14 +346,29 @@ def open_url(url):
 	debug.msg(url)
 	import platform
 	import subprocess
-	if platform.system() == "Linux":
-		pid = subprocess.Popen(["xdg-open", url]).pid
-	elif platform.system() == "Darwin":
+	if platform.system() == u"Linux":
+		pid = subprocess.Popen([u"xdg-open", url]).pid
+	elif platform.system() == u"Darwin":
 		pid = subprocess.Popen(["open", url]).pid
-	elif platform.system() == "Windows":
+	elif platform.system() == u"Windows":
 		try:
 			os.startfile(url)
 		except:
-			debug.msg("Failed to open '%s'" % url, reason="warning")
+			debug.msg(u"Failed to open '%s'" % url, reason=u"warning")
 	else:
-		debug.msg("Failed to open '%s'" % url, reason="warning")
+		debug.msg(u"Failed to open '%s'" % url, reason=u"warning")
+
+def filesystem_encoding():
+
+	"""
+	Gets the current file system encoding. This wrapper is necessary, because
+	sys.getfilesystemencoding() returns None on Android.
+
+	Returns:
+	A string with the file system encoding, such as 'utf-8' or 'mdcs'
+	"""
+
+	enc = sys.getfilesystemencoding()
+	if enc == None:
+		enc = u'utf-8'
+	return enc

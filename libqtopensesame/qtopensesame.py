@@ -21,7 +21,7 @@ from PyQt4 import QtCore, QtGui
 from libqtopensesame.misc import includes, config, _
 from libqtopensesame.misc.config import cfg
 from libqtopensesame.items import experiment
-from libopensesame import debug, exceptions
+from libopensesame import debug, exceptions, misc
 import libopensesame.exceptions
 import libopensesame.experiment
 import libopensesame.plugins
@@ -54,7 +54,14 @@ class qtopensesame(QtGui.QMainWindow):
 		parent -- a link to the parent window
 		"""
 
-		QtGui.QMainWindow.__init__(self, parent)
+		if sys.platform == 'darwin':
+			# Workaround for Qt issue on OS X that causes QMainWindow to
+			# hide when adding QToolBar, see
+			# https://bugreports.qt-project.org/browse/QTBUG-4300
+			QtGui.QMainWindow.__init__(self, parent, \
+				QtCore.Qt.MacWindowToolBarButtonHint)
+		else:
+			QtGui.QMainWindow.__init__(self, parent)
 		self.app = app
 		self.first_show = True
 
@@ -73,7 +80,7 @@ class qtopensesame(QtGui.QMainWindow):
 		random.seed()
 
 		# Check the filesystem encoding for debugging purposes
-		debug.msg('filesystem encoding: %s' % sys.getfilesystemencoding())
+		debug.msg('filesystem encoding: %s' % misc.filesystem_encoding())
 
 		# Restore the configuration
 		self.restore_config()
@@ -869,11 +876,7 @@ class qtopensesame(QtGui.QMainWindow):
 			self.experiment.notify( \
 				_("<b>Error:</b> Failed to open '%s'<br /><b>Description:</b> %s<br /><br />Make sure that the file is in .opensesame or .opensesame.tar.gz format. If you should be able to open this file, but can't, please go to http://www.cogsci.nl/opensesame to find out how to recover your experiment and file a bug report.") \
 				% (path, e))
-			# Print the traceback in debug mode
-			if debug.enabled:
-				l = traceback.format_exc(e).split("\n")
-				for r in l:
-					print r
+			self.print_debug_window(e)
 			return
 
 		self.experiment = exp
@@ -918,7 +921,7 @@ class qtopensesame(QtGui.QMainWindow):
 		# Get ready, generate the script and see if the script can be
 		# re-parsed. In debug mode any errors are not caught. Otherwise. a
 		# neat exception is thrown.
-		if self.experiment.debug:
+		if debug.enabled:
 			self.get_ready()
 			script = self.experiment.to_string()
 			experiment.experiment(self, "Experiment", script)
@@ -937,7 +940,7 @@ class qtopensesame(QtGui.QMainWindow):
 				return
 
 		# Try to save the experiment if it doesn't exist already
-		if self.experiment.debug:
+		if debug.enabled:
 			resp = self.experiment.save(self.current_path, overwrite=True)
 			self.set_status(_("Saved as %s") % self.current_path)
 		else:
@@ -1837,7 +1840,7 @@ class qtopensesame(QtGui.QMainWindow):
 
 		from libqtopensesame.widgets import draggables
 
-		debug.msg("dropping from toolbar")
+		debug.msg(u'dropping from toolbar')
 
 		# Determine the drop target
 		if draggables.drop_target == None:
@@ -1845,7 +1848,7 @@ class qtopensesame(QtGui.QMainWindow):
 		target, index, select = draggables.drop_target
 
 		# Create a new item and return if it fails
-		if type(add_func) != str:
+		if not isinstance(add_func, basestring):
 			new_item = add_func(False, parent=target)
 		else:
 			new_item = self.add_item(add_func, False)
@@ -1853,11 +1856,11 @@ class qtopensesame(QtGui.QMainWindow):
 			self.refresh(target)
 			return
 
-		if target == "__start__":
-			self.experiment.set("start", new_item)
+		if target == u'__start__':
+			self.experiment.set(u'start', new_item)
 		else:
 			self.experiment.items[target].items.insert(index, (new_item, \
-				"always"))
+				u'always'))
 
 		self.refresh(target)
 		if select:

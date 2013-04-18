@@ -1,4 +1,3 @@
-
 #-*- coding:utf-8 -*-
 
 """
@@ -34,17 +33,18 @@ class experiment(item.item):
 
 	"""The main experiment class, which is the first item to be called"""
 
-	def __init__(self, name='experiment', string=None, pool_folder=None):
+	def __init__(self, name=u'experiment', string=None, pool_folder=None):
 
 		"""<DOC>
 		Constructor. The experiment is created automatically be OpenSesame and #
 		you will generally not need to create it yourself.
 
 		Keyword arguments:
-		name -- The name of the experiment (default='experiment').
-		string -- A string containing the experiment definition (default=None).
-		pool_folder -- A specific folder to be used for the file pool #
-					   (default=None).
+		name 		--	The name of the experiment. (default='experiment')
+		string 		--	A string containing the experiment definition. #
+						(default=None)
+		pool_folder	--	A specific folder to be used for the file pool. #
+						(default=None)
 		</DOC>"""
 
 		global pool_folders
@@ -52,45 +52,46 @@ class experiment(item.item):
 		self.items = {}
 		self.running = False
 		self.auto_response = False
-		self.plugin_folder = "plugins"
+		self.plugin_folder = u'plugins'
 		self.start_response_interval = None
 		self.cleanup_functions = []
 		self.restart = False
 		self.experiment_path = None
-		self.title = 'My Experiment'
+		self.title = u'My Experiment'
+		self.transparent_variables = u'no'
 
 		# Set default variables
-		self.coordinates = "relative"
-		self.compensation = 0
-		self.start = "experiment"
+		self.coordinates = u'relative' # DEPRECATED
+		self.compensation = 0 # DEPRECATED
+		self.start = u'experiment'
 
 		# Sound parameters
 		self.sound_freq = 48000
-		self.sound_sample_size = -16 # Negative values means signed
+		self.sound_sample_size = -16 # Negative values mean signed
 		self.sound_channels = 2
 		self.sound_buf_size = 512
 		self.resources = {}
 
 		# Backend parameters
-		self.canvas_backend = "xpyriment"
-		self.keyboard_backend = "legacy"
-		self.mouse_backend = "xpyriment"
-		self.sampler_backend = "legacy"
-		self.synth_backend = "legacy"
+		self.canvas_backend = u'xpyriment'
+		self.keyboard_backend = u'legacy'
+		self.mouse_backend = u'xpyriment'
+		self.sampler_backend = u'legacy'
+		self.synth_backend = u'legacy'
 
 		# Display parameters
 		self.width = 1024
 		self.height = 768
-		self.background = "black"
-		self.foreground = "white"
+		self.background = u'black'
+		self.foreground = u'white'
 		self.fullscreen = False
 
 		# Font parameters
 		self.font_size = 18
-		self.font_family = "mono"
-		self.font_italic = "no"
-		self.font_bold = "no"
-		self.font_underline = "no"
+		self.font_family = u'mono'
+		self.font_italic = u'no'
+		self.font_bold = u'no'
+		self.font_underline = u'no'
 
 		# Logfile parameters
 		self._log = None
@@ -98,26 +99,26 @@ class experiment(item.item):
 
 		# This is a dummy variable for backwards compatibility. The logfile
 		# encoding is always utf-8, and this variable doesn't do anything.
-		self.logfile_codec = "utf-8"
+		self.logfile_codec = u'utf-8'
 
 		# Default subject info
 		self.subject_nr = 0
-		self.subject_parity = "even"
+		self.subject_parity = u'even'
 
 		# This is some duplication of the option parser in qtopensesame,
 		# but nevertheless keep it so we don't need qtopensesame
-		self.debug = "--debug" in sys.argv or "-d" in sys.argv
-		self._stack = "--stack" in sys.argv or "-s" in sys.argv
+		self.debug = debug.enabled
+		self._stack = debug.stack
 
 		# Pool folder
 		if pool_folder == None:
-			self.pool_folder = tempfile.mkdtemp(".opensesame_pool")
+			self.pool_folder = tempfile.mkdtemp(u'.opensesame_pool')
 			pool_folders.append(self.pool_folder)
-			debug.msg("creating new pool folder")
+			debug.msg(u'creating new pool folder')
 		else:
-			debug.msg("reusing existing pool folder")
+			debug.msg(u'reusing existing pool folder')
 			self.pool_folder = pool_folder
-		debug.msg("pool folder is '%s'" % self.pool_folder)
+		debug.msg(u'pool folder is \'%s\'' % self.pool_folder)
 
 		string = self.open(string)
 		item.item.__init__(self, name, self, string)
@@ -126,7 +127,7 @@ class experiment(item.item):
 
 		"""Specify the module that contains the item modules"""
 
-		return "libopensesame"
+		return u'libopensesame'
 
 	def item_prefix(self):
 
@@ -135,7 +136,7 @@ class experiment(item.item):
 		instead of the [plugin] class
 		"""
 
-		return ""
+		return u''
 
 	def set_subject(self, nr):
 
@@ -154,11 +155,11 @@ class experiment(item.item):
 		</DOC>"""
 
 		# Set the subject nr and parity
-		self.set("subject_nr", nr)
+		self.set(u'subject_nr', nr)
 		if nr % 2 == 0:
-			self.set("subject_parity", "even")
+			self.set(u'subject_parity', u'even')
 		else:
-			self.set("subject_parity", "odd")
+			self.set(u'subject_parity', u'odd')
 
 	def read_definition(self, s):
 
@@ -220,8 +221,8 @@ class experiment(item.item):
 			# Load one of the core items
 			debug.msg(u"loading core item '%s' from '%s'" % (item_type, \
 				self.module_container()))
-			item_module = __import__('%s.%s' % (self.module_container(), \
-				item_type), fromlist=['dummy'])					
+			item_module = __import__(u'%s.%s' % (self.module_container(), \
+				item_type), fromlist=[u'dummy'])
 			item_class = getattr(item_module, item_type)
 			item = item_class(item_name, self, string)
 			self.items[item_name] = item
@@ -273,7 +274,7 @@ class experiment(item.item):
 		self.init_log()
 		self.reset_feedback()
 
-		print "experiment.run(): experiment started at %s" % time.ctime()
+		print u"experiment.run(): experiment started at %s" % time.ctime()
 
 		if self.start in self.items:
 			self.items[self.start].prepare()
@@ -283,7 +284,7 @@ class experiment(item.item):
 				"Could not find item '%s', which is the entry point of the experiment" \
 				% self.start)
 
-		print "experiment.run(): experiment finished at %s" % time.ctime()
+		print u"experiment.run(): experiment finished at %s" % time.ctime()
 
 		self.end()
 
@@ -293,7 +294,7 @@ class experiment(item.item):
 
 		while len(self.cleanup_functions) > 0:
 			func = self.cleanup_functions.pop()
-			debug.msg("calling cleanup function")
+			debug.msg(u"calling cleanup function")
 			func()
 
 	def end(self):
@@ -424,46 +425,46 @@ class experiment(item.item):
 		The path on successfull saving or False otherwise
 		"""
 
-		debug.msg("asked to save '%s'" % path)
+		debug.msg(u"asked to save '%s'" % path)
 
 		# Determine the extension
 		ext = os.path.splitext(path)[1].lower()
 
 		# If the extension is .opensesame, save the script as plain text
-		if ext == ".opensesame":
+		if ext == u".opensesame":
 			if os.path.exists(path) and not overwrite:
 				return False
-			debug.msg("saving as .opensesame file")
-			f = open(path, "w")
+			debug.msg(u"saving as .opensesame file")
+			f = open(path, u"w")
 			f.write(self.usanitize(self.to_string()))
 			f.close()
 			self.experiment_path = os.path.dirname(path)
 			return path
 
 		# Use the .opensesame.tar.gz extension by default
-		if path[-len(".opensesame.tar.gz"):] != ".opensesame.tar.gz":
-			path += ".opensesame.tar.gz"
+		if path[-len(u".opensesame.tar.gz"):] != u".opensesame.tar.gz":
+			path += u".opensesame.tar.gz"
 
 		if os.path.exists(path) and not overwrite:
 			return False
 
-		debug.msg("saving as .opensesame.tar.gz file")
+		debug.msg(u"saving as .opensesame.tar.gz file")
 
 		# Write the script to a text file
 		script = self.to_string()
-		script_path = os.path.join(self.pool_folder, "script.opensesame")
-		f = open(script_path, "w")
+		script_path = os.path.join(self.pool_folder, u"script.opensesame")
+		f = open(script_path, u"w")
 		f.write(self.usanitize(script))
 		f.close()
 
 		# Create the archive in a a temporary folder and move it
 		# afterwards. This hack is needed, because tarfile fails
 		# on a Unicode path.
-		tmp_path = tempfile.mktemp(suffix = ".opensesame.tar.gz")
-		tar = tarfile.open(tmp_path, "w:gz")
-		tar.add(script_path, "script.opensesame")
+		tmp_path = tempfile.mktemp(suffix = u".opensesame.tar.gz")
+		tar = tarfile.open(tmp_path, u"w:gz")
+		tar.add(script_path, u"script.opensesame")
 		os.remove(script_path)
-		tar.add(self.pool_folder, "pool", True)
+		tar.add(self.pool_folder, u"pool", True)
 		tar.close()
 
 		# Move the file to the intended location
@@ -490,36 +491,36 @@ class experiment(item.item):
 		# the script, return it
 
 		if not os.path.exists(path):
-			debug.msg("opening from unicode string")
+			debug.msg(u"opening from unicode string")
 			self.experiment_path = None
 			return path
 
 		# If the file is a regular text script,
 		# read it and return it
-		ext = ".opensesame.tar.gz"
+		ext = u".opensesame.tar.gz"
 		if path[-len(ext):] != ext:
-			debug.msg("opening .opensesame file")
+			debug.msg(u"opening .opensesame file")
 			self.experiment_path = os.path.dirname(path)
-			return self.unsanitize(open(path, "rU").read())
+			return self.unsanitize(open(path, u"rU").read())
 
-		debug.msg("opening .opensesame.tar.gz file")
+		debug.msg(u"opening .opensesame.tar.gz file")
 
 		# If the file is a .tar.gz archive, extract
 		# the pool to the pool folder and return the
 		# contents of opensesame.script
-		tar = tarfile.open(path, "r:gz")
+		tar = tarfile.open(path, u"r:gz")
 		for name in tar.getnames():
 			folder, fname = os.path.split(name)
-			if folder == "pool":
-				debug.msg("extracting '%s'" % name)
+			if folder == u"pool":
+				debug.msg(u"extracting '%s'" % name)
 				tar.extract(name, self.pool_folder)
 				os.rename(os.path.join(self.pool_folder, name), os.path.join( \
 					self.pool_folder, fname))
 				os.rmdir(os.path.join(self.pool_folder, folder))
 
-		script_path = os.path.join(self.pool_folder, "script.opensesame")
-		tar.extract("script.opensesame", self.pool_folder)
-		script = self.unsanitize(open(script_path, "rU").read())
+		script_path = os.path.join(self.pool_folder, u"script.opensesame")
+		tar.extract(u"script.opensesame", self.pool_folder)
+		script = self.unsanitize(open(script_path, u"rU").read())
 		os.remove(script_path)
 		self.experiment_path = os.path.dirname(path)
 		return script
@@ -531,10 +532,10 @@ class experiment(item.item):
 		self.total_responses = 0
 		self.total_correct = 0
 		self.total_response_time = 0
-		self.avg_rt = "undefined"
-		self.average_response_time = "undefined"
-		self.accuracy = "undefined"
-		self.acc = "undefined"
+		self.avg_rt = u"undefined"
+		self.average_response_time = u"undefined"
+		self.accuracy = u"undefined"
+		self.acc = u"undefined"
 
 	def var_info(self):
 
@@ -551,7 +552,7 @@ class experiment(item.item):
 			l.append( (var, self.variables[var]) )
 		return l
 
-	def var_list(self, filt=''):
+	def var_list(self, filt=u''):
 
 		"""
 		Return a list of (name, value, description) tuples with variable
@@ -566,7 +567,7 @@ class experiment(item.item):
 
 		l = []
 		# Create a dictionary of items that also includes the experiment
-		item_dict = dict(self.items.items() + [('global', self)]).items()
+		item_dict = dict(self.items.items() + [(u'global', self)]).items()
 		seen = []
 		for item_name, item in item_dict:
 			# Create a dictionary of variables that includes the broadcasted ones
@@ -603,8 +604,8 @@ class experiment(item.item):
 		# Open the logfile
 		if self.logfile == None:
 			self.logfile = u'defaultlog.txt'
-		self._log = codecs.open(self.logfile, 'w', encoding=self.encoding)
-		print "experiment.init_log(): using '%s' as logfile (%s)" % \
+		self._log = codecs.open(self.logfile, u'w', encoding=self.encoding)
+		print u"experiment.init_log(): using '%s' as logfile (%s)" % \
 			(self.logfile, self.logfile_codec)
 
 	def save_state(self):
@@ -671,16 +672,16 @@ def clean_up(verbose=False):
 	from openexp import canvas
 	global pool_folders
 	if verbose:
-		print "experiment.clean_up()"
+		print u"experiment.clean_up()"
 
 	for path in pool_folders:
 		if verbose:
-			print "experiment.clean_up(): removing '%s'" % path
+			print u"experiment.clean_up(): removing '%s'" % path
 		try:
 			shutil.rmtree(path)
 		except:
 			if verbose:
-				print "experiment.clean_up(): failed to remove '%s'" % path
+				print u"experiment.clean_up(): failed to remove '%s'" % path
 	canvas.clean_up(verbose)
 
 

@@ -29,52 +29,48 @@ class loop(item.item):
 
 	"""A loop item runs a single other item multiple times"""
 
+	description = u'Repeatedly runs another item'
+
 	def __init__(self, name, experiment, string = None):
 
 		"""
-		Constructor
+		Constructor.
 
 		Arguments:
-		name -- the name of the item
-		experiment -- an instance of libopensesame.experiment
+		name		--	The name of the item.
+		experiment 	--	The experiment.
 
 		Keyword arguments:
-		string -- a string with the item definition (default = None)
+		string		--	An item definition string (default=None).
 		"""
 
 		self.cycles = 1
 		self.repeat = 1
 		self.skip = 0
-		self.offset = "no"
+		self.offset = u'no'
 		self.matrix = {}
-		self.order = "random"
-		self.description = "Repeatedly runs another item"
-		self.item_type = "loop"
-		self.item = ""
-		self.break_if = ""
+		self.order = u'random'
+		self.item = u''
+		self.break_if = u''
 		item.item.__init__(self, name, experiment, string)
 
 	def from_string(self, string):
 
 		"""
-		Create a loop from a definition in a string
+		Creates a loop from a definition in a string.
 
 		Arguments:
-		string -- the definition of the loop
+		string 		--	An item definition string.
 		"""
 
-		for i in string.split("\n"):
-
+		for i in string.split(u'\n'):
 			self.parse_variable(i)
-
 			# Extract the item to run
 			i = self.split(i.strip())
 			if len(i) > 0:
-				if i[0] == "run" and len(i) > 1:
+				if i[0] == u'run' and len(i) > 1:
 					self.item = i[1]
-
-				if i[0] == "setcycle" and len(i) > 3:
-
+				if i[0] == u'setcycle' and len(i) > 3:
 					cycle = int(i[1])
 					var = i[2]
 					val = i[3]
@@ -85,26 +81,16 @@ class loop(item.item):
 							val = float(val)
 					except:
 						pass
-
 					if cycle not in self.matrix:
 						self.matrix[cycle] = {}
 					self.matrix[cycle][var] = val
 
 	def run(self):
 
-		"""
-		Run the loop
-		
-		Exceptions:
-		A runtime_error is raised on an error
-
-		Returns:
-		True on success. False is never actually returned, since a runtime_error
-		is raised on failure.
-		"""
+		"""Runs the loop."""
 		
 		# Prepare the break if condition
-		if self.break_if != "":
+		if self.break_if != u'':
 			self._break_if = self.compile_cond(self.break_if)
 		else:
 			self._break_if = None
@@ -126,15 +112,16 @@ class loop(item.item):
 				l.append(i)
 
 		# Randomize the list if necessary
-		if self.order == "random":
+		if self.order == u'random':
 			shuffle(l)
 			
 		# In sequential order, the offset and the skip are relevant
 		else:			
 			if len(l) < self.skip:
-				raise exceptions.runtime_error("The value of skip is too high in loop item '%s': You cannot skip more cycles than there are." \
+				raise exceptions.runtime_error( \
+						u'The value of skip is too high in loop item "%s":: You cannot skip more cycles than there are.' \
 					% self.name)
-			if self.offset == "yes":
+			if self.offset == u'yes':
 				l = l[self.skip:] + l[:self.skip]
 			else:
 				l = l[self.skip:]
@@ -155,23 +142,22 @@ class loop(item.item):
 			self.apply_cycle(cycle)
 			if self._break_if != None and eval(self._break_if):
 				break
-			self.experiment.set('repeat_cycle', 0)
+			self.experiment.set(u'repeat_cycle', 0)
 			_item.prepare()
 			_item.run()
-			if self.experiment.get('repeat_cycle'):
-				debug.msg('repeating cycle %d' % cycle)
+			if self.experiment.get(u'repeat_cycle'):
+				debug.msg(u'repeating cycle %d' % cycle)
 				l.append(cycle)
-				if self.order == 'random':
+				if self.order == u'random':
 					shuffle(l)
-		return True
 							
 	def apply_cycle(self, cycle):
 	
 		"""
-		Set all the loop variables according to the cycle
+		Sets all the loop variables according to the cycle.
 		
 		Arguments:
-		cycle -- the cycle nr
+		cycle 		--	The cycle nr.
 		"""
 		
 		# If the cycle is not defined, we don't have to do anything
@@ -196,26 +182,26 @@ class loop(item.item):
 	def to_string(self):
 
 		"""
-		Create a string with the definition of the loop
+		Creates a definition string for the loop.
 
 		Returns:
-		A string with the definition
+		A definition string.
 		"""
 
-		s = item.item.to_string(self, "loop")
+		s = item.item.to_string(self, u'loop')
 		for i in self.matrix:
 			for var in self.matrix[i]:
-				s += "\tsetcycle %d %s \"%s\"\n" % (i, var, self.matrix[i][var])
-		s += "\trun %s\n" % self.item
+				s += u'\tsetcycle %d %s "%s"\n' % (i, var, self.matrix[i][var])
+		s += u'\trun %s\n' % self.item
 		return s
 
 	def var_info(self):
 
 		"""
-		Describe the variables specific to the loop
+		Describes the variables specific to the loop.
 
 		Returns:
-		A list of (variable name, description) tuples
+		A list of (variable name, description) tuples.
 		"""
 
 		l = item.item.var_info(self)
@@ -226,6 +212,6 @@ class loop(item.item):
 					var_list[var] = []
 				var_list[var].append(self.unistr(self.matrix[i][var]))
 		for var in var_list:
-			l.append( (var, "[" + ", ".join(var_list[var]) + "]"))
+			l.append( (var, u'[' + u', '.join(var_list[var]) + u']'))
 		return l
 
