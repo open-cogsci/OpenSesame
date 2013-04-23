@@ -74,10 +74,19 @@ droid = {
 backend_list = {}
 backend_list["legacy"] = legacy
 backend_list["xpyriment"] = xpyriment
+<<<<<<< HEAD
+backend_list["droid"] = droid
 # Do not add psychopy to the list on 64-bit OS X as this doesn't work
 if not (platform.system() == 'Darwin' and sys.maxsize > 2**32):
 	backend_list["psycho"] = psycho
+=======
+
+# Do not add psychopy to the list on 64-bit OS X as this doesn't work
+if not (platform.system() == 'Darwin' and sys.maxsize > 2**32):
+	backend_list["psycho"] = psycho
+
 backend_list["droid"] = droid
+>>>>>>> 4e66cb6299608140cc8c3ab0562de8019aa71372
 
 def match(experiment):
 

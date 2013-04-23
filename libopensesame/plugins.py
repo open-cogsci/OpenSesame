@@ -18,9 +18,9 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 import os
-import os.path
+import sys
 import json
-from libopensesame import debug
+from libopensesame import debug, misc
 
 # Caching variables
 _list = None
@@ -30,50 +30,50 @@ _properties = {}
 # The plug-ins can be either source or bytecode. Usually they will be source,
 # but some distributions (notably the runtime for Android) will automatically
 # compile everything to bytecode.
-src_templates = ['%s.py']
-bytecode_templates = ['%s.pyo', '%s.pyc']
+src_templates = [u'%s.py']
+bytecode_templates = [u'%s.pyo', u'%s.pyc']
 	
 def plugin_folders(only_existing=True):
 
 	"""
-	Returns a list of plugin folders
+	Returns a list of plugin folders.
 	
 	Keywords arguments:
-	only_existing -- specifies if only existing folders should be returned
-					 (default=True)
+	only_existing	--	Specifies if only existing folders should be returned.
+						(default=True)
 	
 	Returns:
-	A list of folders
+	A list of folders.
 	"""
 	
 	l = []
 	
 	# For all platforms, the plugins folder relative to the working directory
 	# should be searched
-	path = os.path.join(os.getcwd(), "plugins")
+	path = os.path.join(os.getcwdu(), u'plugins')
 	if not only_existing or os.path.exists(path):
 		l.append(path)				
 		
-	if os.name == "posix" and "HOME" in os.environ:
-		# Regular Linux distributions
-		path = os.path.join(os.environ["HOME"], ".opensesame", "plugins")
+	if os.name == u'posix' and u'HOME' in os.environ:
+		# Regular Linux distributions. TODO: How well does this apply to Mac OS?
+		path = os.path.join(os.environ[u'HOME'], u'.opensesame', u'plugins')
 		if not only_existing or os.path.exists(path):
 			l.append(path)		
-		path = "/usr/share/opensesame/plugins"
+		path = u'/usr/share/opensesame/plugins'
 		if not only_existing or os.path.exists(path):
 			l.append(path)			
 			
-	elif os.name == "posix" and "HOME" not in os.environ:						
+	elif os.name == u'posix' and u'HOME' not in os.environ:
 		# Android can be recognized by the fact that the HOME variable is not
 		# available. We can simply use the relative path `plugins`, which will
 		# (always?) point to `/data/data/nl.cogsci.nl/opensesame/files/plugins`
-		path = 'plugins'
+		path = u'plugins'
 		if not only_existing or os.path.exists(path):
 			l.append(path)
 		
-	elif os.name == "nt":
+	elif os.name == u'nt':
 		# Windows
-		path = os.path.join(os.environ["APPDATA"], ".opensesame", "plugins")
+		path = os.path.join(os.environ[u'APPDATA'], u'.opensesame', u'plugins')
 		if not only_existing or os.path.exists(path):
 			l.append(path)		
 			
@@ -82,10 +82,10 @@ def plugin_folders(only_existing=True):
 def is_plugin(item_type):
 
 	"""
-	Checks if a given item type corresponds to a plugin
+	Checks if a given item type corresponds to a plugin.
 	
 	Returns:
-	True if the item_type is a plugin, False otherwise
+	True if the item_type is a plugin, False otherwise.
 	"""
 
 	return plugin_folder(item_type) != None
@@ -97,29 +97,29 @@ def plugin_disabled(plugin):
 	the return value is False.
 	
 	Arguments:
-	plugin -- the plugin to check
+	plugin	--	The plugin to check.
 	
 	Returns:
-	True if the plugin has been disabled, False otherwise
+	True if the plugin has been disabled, False otherwise.
 	"""
 
 	from libqtopensesame.misc import config
-	return plugin in config.get_config("disabled_plugins").split(";")
+	return plugin in config.get_config(u'disabled_plugins').split(u';')
 	
 def plugin_property(plugin, _property, default=0):
 
 	"""
-	Returns the property of a plug-in
+	Returns a property of a plug-in.
 	
 	Arguments:
-	plugin -- name of the plugin
-	_property -- name of the property
+	plugin		--	The name of the plugin.
+	_property	--	The name of the property.
 	
 	Keywords arguments:
-	default -- a default property value (default=0)
+	default		--	A default property value. (default=0)
 	
 	Returns:
-	The property value
+	The property value.
 	"""
 	
 	global _properties	
@@ -134,13 +134,13 @@ def plugin_property(plugin, _property, default=0):
 		try:
 			_json = json.load(open(info_json))
 		except:
-			debug.msg('Failed to parse %s' % info_json)
+			debug.msg(u'Failed to parse %s' % info_json)
 			_json = {}
 		if _property in _json:
 			return _json[_property]
 	# Old-style plug-ins, using info.txt
 	else:
-		for l in open(info_txt, "r"):
+		for l in open(info_txt, u'r'):
 			a = l.split(":")
 			if len(a) == 2 and a[0] == _property:
 				val = a[1].strip()			
@@ -155,21 +155,21 @@ def plugin_property(plugin, _property, default=0):
 def plugin_category(plugin):
 
 	"""
-	Returns the category of a plugin
+	Returns the category of a plugin.
 	
 	Returns:
-	A category
+	A category.
 	"""
 	
-	return plugin_property(plugin, "category", default="Miscellaneous")
+	return plugin_property(plugin, u'category', default=u'Miscellaneous')
 	
 def list_plugins(filter_disabled=True):
 
 	"""
-	Returns a list of plugins
+	Returns a list of plugins.
 	
 	Returns:
-	A list of plugins (item_types)
+	A list of plugins (item_types).
 	"""
 	
 	global _list	
@@ -181,7 +181,7 @@ def list_plugins(filter_disabled=True):
 	for folder in plugin_folders():
 		for plugin in os.listdir(folder):			
 			if is_plugin(plugin):
-				_plugin = plugin, plugin_property(plugin, "priority")			
+				_plugin = plugin, plugin_property(plugin, u'priority')
 				if _plugin not in plugins:
 					plugins.append(_plugin)
 				
@@ -228,7 +228,7 @@ def plugin_icon_large(plugin):
 	The full path to an icon
 	"""
 	
-	return os.path.join(plugin_folder(plugin), "%s_large.png" % plugin)
+	return os.path.join(plugin_folder(plugin), u'%s_large.png' % plugin)
 	
 def plugin_icon_small(plugin):
 
@@ -242,7 +242,7 @@ def plugin_icon_small(plugin):
 	The full path to an icon	
 	"""
 	
-	return os.path.join(plugin_folder(plugin), "%s.png" % plugin)	
+	return os.path.join(plugin_folder(plugin), u'%s.png' % plugin)
 	
 def import_plugin(plugin):
 
@@ -257,29 +257,32 @@ def import_plugin(plugin):
 	plugin = str(plugin)
 	for tmpl in src_templates:
 		if os.path.exists(os.path.join(plugin_folder(plugin), tmpl % plugin)):
-			path = os.path.join(plugin_folder(plugin), tmpl % plugin)
+			path = os.path.join(plugin_folder(plugin), tmpl % plugin).encode( \
+				misc.filesystem_encoding())
 			return imp.load_source(plugin, path)
 	for tmpl in bytecode_templates:
 		if os.path.exists(os.path.join(plugin_folder(plugin), tmpl % plugin)):
-			path = os.path.join(plugin_folder(plugin), tmpl % plugin)
+			path = os.path.join(plugin_folder(plugin), tmpl % plugin).encode( \
+				misc.filesystem_encoding())
 			return imp.load_compiled(plugin, path)
 	
-def load_plugin(plugin, item_name, experiment, string, prefix=""):
+def load_plugin(plugin, item_name, experiment, string, prefix=u''):
 
 	"""
-	Returns an instance of the plugin
+	Returns an instance of the plugin.
 	
 	Arguments:
-	plugin -- the name of the plugin
-	item_name -- the name of the item (plugin instance)
-	experiment -- the experiment
-	string -- a definitions tring
+	plugin		--	The name of the plugin.
+	item_name	--	Yhe name of the item (plugin instance).
+	experiment	--	The experiment object.
+	string		--	A definition string.
 	
 	Keywords arguments:
-	prefix -- a class prefix to allow switching between [plugin] and qt[plugin]
+	prefix		--	A class prefix to allow switching between [plugin] and
+					qt[plugin]. (default=u'')
 	
 	Returns:
-	An item (plugin instance)
+	An item (plugin instance).
 	"""
 
 	item_module = import_plugin(plugin)

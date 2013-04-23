@@ -25,72 +25,56 @@ class keyboard_response(item.item, generic_response.generic_response):
 
 	"""An item for collection keyboard responses"""
 
+	description = u'Collects keyboard responses'
+
 	def __init__(self, name, experiment, string=None):
 
 		"""
-		Constructor
+		Constructor.
 
 		Arguments:
-		name -- the name of the item
-		experiment -- the experiment
+		name 		--	The name of the item.
+		experiment 	--	The experiment.
 
 		Keyword arguments:
-		string -- item definition string
+		string		-- 	The item definition string. (default=None)
 		"""
 
-		self.flush = "yes"
-		self.item_type = "keyboard_response"
-		self.description = "Collects keyboard responses"
-		self.timeout = "infinite"
-		self.auto_response = 97 # 'a'
-		self.duration = "keypress"
+		self.flush = u'yes'
+		self.timeout = u'infinite'
+		self.auto_response = u'space'
+		self.duration = u'keypress'
 		self.process_feedback = True
 		item.item.__init__(self, name, experiment, string)
 
 	def prepare(self):
 
-		"""
-		Prepare the item
-
-		Returns:
-		True on success, False on failure
-		"""
+		"""Prepares the item."""
 
 		item.item.prepare(self)
 		generic_response.generic_response.prepare(self)
-		self._flush = self.get("flush") == "yes"
-		return True
+		self._flush = self.get(u'flush') == u'yes'
 
 	def run(self):
 
-		"""
-		Runs the item
-
-		Returns:
-		True on success, False on failure
-		"""
+		"""Runs the item."""
 
 		# Record the onset of the current item
 		self.set_item_onset()
-
 		# Flush responses, to make sure that earlier responses
 		# are not carried over
 		if self._flush:
 			self._keyboard.flush()
-
 		self.set_sri()
 		self.process_response()
-
-		# Report success
-		return True
 
 	def var_info(self):
 		
 		"""
-		Give a list of dictionaries with variable descriptions
+		Gives a list of dictionaries with variable descriptions.
 
 		Returns:
-		A list of (name, description) tuples
+		A list of (name, description) tuples.
 		"""		
 
 		return item.item.var_info(self) + \

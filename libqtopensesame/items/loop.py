@@ -312,7 +312,27 @@ class loop(libopensesame.loop.loop, qtitem.qtitem):
 		except:
 			return 0
 
-	def refresh_loop_table(self, lock = True):
+	def refresh_summary(self):
+
+		"""Refreshes the cycle count summary."""
+
+		cc = self.call_count()
+		if self.order == u'sequential' and self.offset != u'yes':
+			s = _(u"<b>%s</b> will be called <b>%s</b> x <b>%s</b> - <b>%s</b> = <b>%s</b> times in <b>%s</b> order") \
+				% (self.item, self.cycles, self.repeat, self.skip, cc, \
+				self.order)
+		else:
+			s = _(u"<b>%s</b> will be called <b>%s</b> x <b>%s</b> = <b>%s</b> times in <b>%s</b> order") \
+				% (self.item, self.cycles, self.repeat, cc, self.order)
+		if self.order == u"sequential" and self.skip > 0:
+			s += _(u" starting at cycle <b>%d</b>") % self.skip
+			if self.offset == u"yes" and self.skip >= cc:
+				s += _(u" <font color='red'><b>(too many cycles skipped)</b></font>")
+		if cc < 1:
+			s += _(u" <font color='red'><b>(zero or negative length)</b></font>")
+		self.loop_widget.ui.label_summary.setText(u"<small>%s</small>" % s)
+
+	def refresh_loop_table(self, lock=True):
 
 		"""
 		Rebuild the loop table
@@ -451,6 +471,7 @@ class loop(libopensesame.loop.loop, qtitem.qtitem):
 			self.loop_widget.ui.spin_cycles.setValue(self.cycle_count())
 			self.lock = False
 			self.refresh_loop_table()		
+			self.refresh_summary()
 
 	def init_edit_widget(self):
 
@@ -523,23 +544,7 @@ class loop(libopensesame.loop.loop, qtitem.qtitem):
 			self.loop_widget.ui.spin_skip.setDisabled(False)
 			self.loop_widget.ui.checkbox_offset.setDisabled( \
 				self.get("skip") < 1)
-				
-		# Update the summary
-		cc = self.call_count()					
-		if self.order == "sequential" and self.offset != "yes":
-			s = _("<b>%s</b> will be called <b>%s</b> x <b>%s</b> - <b>%s</b> = <b>%s</b> times in <b>%s</b> order") \
-				% (self.item, self.cycles, self.repeat, self.skip, cc, \
-				self.order)
-		else:			
-			s = _("<b>%s</b> will be called <b>%s</b> x <b>%s</b> = <b>%s</b> times in <b>%s</b> order") \
-				% (self.item, self.cycles, self.repeat, cc, self.order)	
-		if self.order == "sequential" and self.skip > 0:
-			s += _(" starting at cycle <b>%d</b>") % self.skip
-			if self.offset == "yes" and self.skip >= cc:
-				s += _(" <font color='red'><b>(too many cycles skipped)</b></font>")
-		if cc < 1:
-			s += _(" <font color='red'><b>(zero or negative length)</b></font>")
-		self.loop_widget.ui.label_summary.setText("<small>%s</small>" % s)		
+		self.refresh_summary()
 		self.lock = False
 		return self._edit_widget
 	

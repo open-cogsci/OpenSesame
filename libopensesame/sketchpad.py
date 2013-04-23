@@ -34,28 +34,27 @@ class sketchpad(item.item, generic_response.generic_response):
 	implementation here and in the libqtopensesame.widgets.sketchpad_widget.
 	"""
 
+	description = u'Displays stimuli'
+
 	def __init__(self, name, experiment, string=None):
 
 		"""
-		Constructor
+		Constructor.
 
 		Arguments:
-		name -- name of the item
-		experiment -- experiment
+		name 		--	The name of the item.
+		experiment 	--	The experiment.
 
 		Keyword arguments:
-		string -- definition string (default=None)
+		string		-- 	The item definition string. (default=None)
 		"""
 
 		self.duration = "keypress"
 		self.start_response_interval = "no"
 		self.items = []
-		self.item_type = "sketchpad"
 		self.numeric_attrs = "x", "y", "x1", "y1", "r", "w", "h", "scale", \
 			"font_size", "penwidth", "arrow_size", "center", "fill", "orient", \
 			"freq", "phase", "stdev", "size"
-		if not hasattr(self, "description"):
-			self.description = "Displays stimuli"
 		item.item.__init__(self, name, experiment, string)
 
 	def unfix_coordinates(self, item):

@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'resources/ui/noise_patch_dialog.ui'
 #
-# Created: Thu Aug  2 12:43:06 2012
+# Created: Tue Apr  9 17:37:57 2013
 #      by: PyQt4 UI code generator 4.9.1
 #
 # WARNING! All changes made in this file will be lost!
@@ -89,12 +89,14 @@ class Ui_noise_patch_dialog(object):
         self.label_10.setObjectName(_fromUtf8("label_10"))
         self.formLayout.setWidget(3, QtGui.QFormLayout.LabelRole, self.label_10)
         self.edit_color1 = QtGui.QLineEdit(self.widget)
+        self.edit_color1.setText(_fromUtf8("white"))
         self.edit_color1.setObjectName(_fromUtf8("edit_color1"))
         self.formLayout.setWidget(3, QtGui.QFormLayout.FieldRole, self.edit_color1)
         self.label_9 = QtGui.QLabel(self.widget)
         self.label_9.setObjectName(_fromUtf8("label_9"))
         self.formLayout.setWidget(4, QtGui.QFormLayout.LabelRole, self.label_9)
         self.edit_color2 = QtGui.QLineEdit(self.widget)
+        self.edit_color2.setText(_fromUtf8("black"))
         self.edit_color2.setObjectName(_fromUtf8("edit_color2"))
         self.formLayout.setWidget(4, QtGui.QFormLayout.FieldRole, self.edit_color2)
         self.label_11 = QtGui.QLabel(self.widget)
@@ -150,9 +152,7 @@ class Ui_noise_patch_dialog(object):
         self.label_6.setText(QtGui.QApplication.translate("noise_patch_dialog", "Standard deviation<br /><i>in pixels, only applies to Gaussian envelope</i>", None, QtGui.QApplication.UnicodeUTF8))
         self.spin_stdev.setSuffix(QtGui.QApplication.translate("noise_patch_dialog", "px", None, QtGui.QApplication.UnicodeUTF8))
         self.label_10.setText(QtGui.QApplication.translate("noise_patch_dialog", "Color 1<br /><i>e.g., \'white\' or \'#FFFFFF\'</i>", None, QtGui.QApplication.UnicodeUTF8))
-        self.edit_color1.setText(QtGui.QApplication.translate("noise_patch_dialog", "white", None, QtGui.QApplication.UnicodeUTF8))
         self.label_9.setText(QtGui.QApplication.translate("noise_patch_dialog", "Color 2<br /><i>e.g., \'black\' or \'#000000\'</i>", None, QtGui.QApplication.UnicodeUTF8))
-        self.edit_color2.setText(QtGui.QApplication.translate("noise_patch_dialog", "black", None, QtGui.QApplication.UnicodeUTF8))
         self.label_11.setText(QtGui.QApplication.translate("noise_patch_dialog", "Background color *", None, QtGui.QApplication.UnicodeUTF8))
         self.combobox_bgmode.setItemText(0, QtGui.QApplication.translate("noise_patch_dialog", "Color average", None, QtGui.QApplication.UnicodeUTF8))
         self.combobox_bgmode.setItemText(1, QtGui.QApplication.translate("noise_patch_dialog", "Color 2", None, QtGui.QApplication.UnicodeUTF8))

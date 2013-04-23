@@ -165,14 +165,12 @@ class qtitem(QtCore.QObject):
 		# Sanitize the name, check if it is new and valid, and if so, rename
 		new_name = self.experiment.sanitize(self.header.edit_name.text(), \
 			strict=True, allow_vars=False)
-		if new_name.lower() == self.name.lower():
-			self.header.edit_name.setText(self.name)
-			return
-		valid = self.experiment.check_name(new_name)
-		if valid != True:
-			self.experiment.notify(valid)
-			self.header.edit_name.setText(self.name)
-			return
+		if new_name.lower() != self.name.lower():
+			valid = self.experiment.check_name(new_name)
+			if valid != True:
+				self.experiment.notify(valid)
+				self.header.edit_name.setText(self.name)
+				return
 		old_name = self.name
 		self.name = new_name
 		self._edit_widget.__edit_item__	= new_name
