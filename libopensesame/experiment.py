@@ -376,7 +376,7 @@ class experiment(item.item):
 		>>> my_canvas = exp.offline_canvas()
 		>>> my_canvas.image(image_path)
 		</DOC>"""
-
+		path = path.encode('utf8', 'replace')
 		if type(path) not in(unicode, str):
 			raise exceptions.runtime_error( \
 				"A string should be passed to experiment.get_file(), not '%s'" \
