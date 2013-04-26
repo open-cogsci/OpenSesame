@@ -490,7 +490,7 @@ class experiment(item.item):
 		# If the path is not a path at all, but a string containing
 		# the script, return it
 
-		if not os.path.exists(path):
+		if not os.path.exists(path.encode('utf8', 'replace')):
 			debug.msg(u"opening from unicode string")
 			self.experiment_path = None
 			return path
