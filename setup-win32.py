@@ -60,6 +60,7 @@ import libqtopensesame.qtopensesame
 import libopensesame.misc
 import psychopy
 import urllib
+from setupcommon import included_plugins
 
 # Set this to False to build a 'light' version without the Qt4 gui. This
 # options currently breaks opensesamerun as well, so don't set it to False.
@@ -103,7 +104,6 @@ exclude_packages = [
 	'test', # Avoid automated tests, because they take ages
 	]
 
-
 # Packages that are not part of the standard Python packages (or not detected
 # as such), but should nevertheless be includes
 include_packages = [
@@ -146,7 +146,8 @@ def strip_py(folder):
 			strip_py(path)
 			continue
 		base, ext = os.path.splitext(path)
-		if (ext in ('.py', '.pyc') and os.path.exists(base+'.pyo')) or path[-1] == '~':
+		if (ext in ('.py', '.pyc') and os.path.exists(base+'.pyo')) or \
+			path[-1] == '~':
 			print 'stripping %s' % path
 			os.remove(path)
 
@@ -241,7 +242,8 @@ def ignore_resources(folder, files):
 			l.append(f)
 		if f == "Faenza" and (not include_faenza or not include_gui):
 			l.append(f)
-		if not include_gui and f in ('theme', 'locale', 'templates', 'ts', 'ui'):
+		if not include_gui and f in ('theme', 'locale', 'templates', 'ts', \
+			'ui'):
 			l.append(f)
 	return l
 
@@ -281,27 +283,7 @@ if include_inpout32:
 
 # Include plug-ins
 if include_plugins:
-	print "copying plugins"
-	included_plugins = [
-		"advanced_delay",
-		"external_script",
-		"fixation_dot",
-		"joystick",
-		"text_display",
-		"text_input",
-		"notepad",
-		"srbox",
-		"port_reader",
-		"reset_feedback",
-		"repeat_cycle",
-		"parallel",
-		"form_base",
-		"form_text_input",
-		"form_consent",
-		"form_text_display",
-		"form_multiple_choice",
-		]
-
+	print "copying plugins"	
 	for plugin in included_plugins:
 		print "copying plugin", plugin
 		shutil.copytree(os.path.join("plugins", plugin), os.path.join("dist", \
@@ -332,13 +314,17 @@ if include_media_player_vlc:
 	os.mkdir("dist\plugins\media_player_vlc")
 	shutil.copyfile("""..\media_player_vlc\media_player_vlc\\vlc.py""", \
 		"""dist\plugins\media_player_vlc\\vlc.py""")	
-	shutil.copyfile("""..\media_player_vlc\media_player_vlc\media_player_vlc.py""", \
+	shutil.copyfile( \
+		"""..\media_player_vlc\media_player_vlc\media_player_vlc.py""", \
 		"""dist\plugins\media_player_vlc\media_player_vlc.py""")
-	shutil.copyfile("""..\media_player_vlc\media_player_vlc\media_player_vlc.html""", \
+	shutil.copyfile( \
+		"""..\media_player_vlc\media_player_vlc\media_player_vlc.html""", \
 		"""dist\plugins\media_player_vlc\media_player_vlc.html""")
-	shutil.copyfile("""..\media_player_vlc\media_player_vlc\media_player_vlc.png""", \
+	shutil.copyfile( \
+		"""..\media_player_vlc\media_player_vlc\media_player_vlc.png""", \
 		"""dist\plugins\media_player_vlc\media_player_vlc.png""")
-	shutil.copyfile("""..\media_player_vlc\media_player_vlc\media_player_vlc_large.png""", \
+	shutil.copyfile( \
+		"""..\media_player_vlc\media_player_vlc\media_player_vlc_large.png""", \
 		"""dist\plugins\media_player_vlc\media_player_vlc_large.png""")
 	shutil.copyfile("""..\media_player_vlc\media_player_vlc\info.txt""", \
 		"""dist\plugins\media_player_vlc\info.txt""")		
