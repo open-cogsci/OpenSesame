@@ -36,8 +36,30 @@ pruned. And that doesn't look very professional (although it does work).
 	
 More options can be tweaked by changing the variables below.
 
-Assumptions
-===========
+Python modules
+==============
+
+The following Python modules should be installed:
+	
+	cairo
+	distutils
+	expyriment
+	opencv2
+	pil
+	psychopy
+	py2exe
+	pyaudio	
+	pygame
+	pyglet
+	pyopengl
+	pyparallel	(Don't forget simpleio.dll in the site-packages/parallel folder)
+	pyqt4
+	pyserial
+	numpy
+	scipy
+
+Folder structure
+================
 
 If media_player or media_player_vlc are included, they are assumed to be one folder
 up. So the folder structure should be as follows:
@@ -96,7 +118,7 @@ include_sounds = True
 include_faenza = True
 include_inpout32 = True
 include_simpleio = True
-python_folder = "C:\\Python_2.7.3-32"
+python_folder = r"C:\Python_2.7.4-32"
 python_version = "2.7"
 
 # Packages that are too be copied for the site-packages folder, rather than
@@ -281,21 +303,21 @@ if include_gui:
 	shutil.copytree("help", os.path.join("dist", "help"))
 
 print "copying PyGame/ SDLL dll's"
-shutil.copyfile("""%s\Lib\site-packages\pygame\SDL_ttf.dll""" \
-	% python_folder, """dist\SDL_ttf.dll""")
-shutil.copyfile("""%s\Lib\site-packages\pygame\libfreetype-6.dll""" \
-	% python_folder, """dist\libfreetype-6.dll""")
-shutil.copyfile("""%s\Lib\site-packages\pygame\libogg-0.dll""" \
-	% python_folder, """dist\libogg-0.dll""")
+shutil.copyfile(r"%s\Lib\site-packages\pygame\SDL_ttf.dll" \
+	% python_folder, r"dist\SDL_ttf.dll")
+shutil.copyfile(r"%s\Lib\site-packages\pygame\libfreetype-6.dll" \
+	% python_folder, r"dist\libfreetype-6.dll")
+shutil.copyfile(r"%s\Lib\site-packages\pygame\libogg-0.dll" \
+	% python_folder, r"dist\libogg-0.dll")
 	
 print "copying PIL.pth"
-shutil.copyfile("""%s\Lib\site-packages\PIL.pth""" \
-	% python_folder, """dist\PIL.pth""")
+shutil.copyfile(r"%s\Lib\site-packages\PIL.pth" \
+	% python_folder, r"dist\PIL.pth")
 
 if include_simpleio:
 	print "copying simpleio.dll"
-	shutil.copyfile("""%s\Lib\site-packages\parallel\simpleio.dll""" \
-		% python_folder, """dist\simpleio.dll""")
+	shutil.copyfile(r"%s\Lib\site-packages\parallel\simpleio.dll" \
+		% python_folder, r"dist\simpleio.dll")
 
 if include_inpout32:
 	print "copying inpout32.dll"
@@ -318,37 +340,37 @@ if include_plugins:
 if include_media_player:
 	print "copying media_player"
 	os.mkdir("dist\plugins\media_player")
-	shutil.copyfile("""..\media_player\media_player.py""", \
-		"""dist\plugins\media_player\media_player.py""")
-	shutil.copyfile("""..\media_player\media_player.html""", \
-		"""dist\plugins\media_player\media_player.html""")
-	shutil.copyfile("""..\media_player\media_player.png""", \
-		"""dist\plugins\media_player\media_player.png""")
-	shutil.copyfile("""..\media_player\media_player_large.png""", \
-		"""dist\plugins\media_player\media_player_large.png""")
-	shutil.copyfile("""..\media_player\info.txt""", \
-		"""dist\plugins\media_player\info.txt""")
+	shutil.copyfile(r"..\media_player\media_player.py", \
+		r"dist\plugins\media_player\media_player.py""")
+	shutil.copyfile(r"..\media_player\media_player.html", \
+		r"dist\plugins\media_player\media_player.html")
+	shutil.copyfile(r"..\media_player\media_player.png", \
+		r"dist\plugins\media_player\media_player.png")
+	shutil.copyfile(r"..\media_player\media_player_large.png", \
+		r"dist\plugins\media_player\media_player_large.png")
+	shutil.copyfile(r"..\media_player\info.txt", \
+		r"dist\plugins\media_player\info.txt")
 
 # Include new vlc-based media player
 if include_media_player_vlc:
 	print "copying media_player_vlc"
 	os.mkdir("dist\plugins\media_player_vlc")
-	shutil.copyfile("""..\media_player_vlc\media_player_vlc\\vlc.py""", \
-		"""dist\plugins\media_player_vlc\\vlc.py""")	
+	shutil.copyfile(r"..\media_player_vlc\vlc.py", \
+		r"dist\plugins\media_player_vlc\vlc.py")	
 	shutil.copyfile( \
-		"""..\media_player_vlc\media_player_vlc\media_player_vlc.py""", \
-		"""dist\plugins\media_player_vlc\media_player_vlc.py""")
+		r"..\media_player_vlc\media_player_vlc.py", \
+		r"dist\plugins\media_player_vlc\media_player_vlc.py")
 	shutil.copyfile( \
-		"""..\media_player_vlc\media_player_vlc\media_player_vlc.html""", \
-		"""dist\plugins\media_player_vlc\media_player_vlc.html""")
+		r"..\media_player_vlc\media_player_vlc.html", \
+		r"dist\plugins\media_player_vlc\media_player_vlc.html")
 	shutil.copyfile( \
-		"""..\media_player_vlc\media_player_vlc\media_player_vlc.png""", \
-		"""dist\plugins\media_player_vlc\media_player_vlc.png""")
+		r"..\media_player_vlc\media_player_vlc.png", \
+		r"dist\plugins\media_player_vlc\media_player_vlc.png")
 	shutil.copyfile( \
-		"""..\media_player_vlc\media_player_vlc\media_player_vlc_large.png""", \
-		"""dist\plugins\media_player_vlc\media_player_vlc_large.png""")
-	shutil.copyfile("""..\media_player_vlc\media_player_vlc\info.txt""", \
-		"""dist\plugins\media_player_vlc\info.txt""")		
+		r"..\media_player_vlc\media_player_vlc_large.png", \
+		r"dist\plugins\media_player_vlc\media_player_vlc_large.png")
+	shutil.copyfile(r"..\media_player_vlc\info.txt", \
+		r"dist\plugins\media_player_vlc\info.txt")		
 
 # Include examples
 if include_examples:
