@@ -376,7 +376,8 @@ class experiment(item.item):
 		>>> my_canvas = exp.offline_canvas()
 		>>> my_canvas.image(image_path)
 		</DOC>"""
-		path = path.encode('utf8', 'replace')
+		
+		path = path.encode(misc.filesystem_encoding(), 'replace')
 		if type(path) not in(unicode, str):
 			raise exceptions.runtime_error( \
 				"A string should be passed to experiment.get_file(), not '%s'" \
@@ -490,7 +491,7 @@ class experiment(item.item):
 		# If the path is not a path at all, but a string containing
 		# the script, return it
 
-		if not os.path.exists(path.encode('utf8', 'replace')):
+		if not os.path.exists(path.encode(misc.filesystem_encoding(), 'replace')):
 			debug.msg(u"opening from unicode string")
 			self.experiment_path = None
 			return path
