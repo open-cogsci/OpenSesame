@@ -380,7 +380,10 @@ class experiment(item.item):
 		if not isinstance(path, basestring):
 			raise exceptions.runtime_error( \
 				u"A string should be passed to experiment.get_file(), not '%s'" \
-				% path)		
+				% path)
+		if path.strip() == u'':
+			raise exceptions.runtime_error( \
+				u"An empty string was passed to experiment.get_file(). Please specify a valid filename.")				
 		if isinstance(path, unicode):
 			path = path.encode(misc.filesystem_encoding())
 		if os.path.exists(os.path.join(self.pool_folder, path)):
