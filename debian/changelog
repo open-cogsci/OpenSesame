@@ -1,4 +1,4 @@
-opensesame (0.27.2~pre5-ubuntu1) precise; urgency=low
+opensesame (0.27.2-ubuntu1) raring; urgency=low
 
   * Add support for Android
   * Add new-style plug-in API
@@ -8,6 +8,7 @@ opensesame (0.27.2~pre5-ubuntu1) precise; urgency=low
   * Miscellaneous bug fixes
   * Add transparent variable management
   * Fix various Unicode errors
+  * Update test suite to use Expyriment test suite
 
  -- Sebastiaan Mathot <s.mathot@cogsci.nl>  Wed, 10 Apr 2013 14:56:35 +0200
 

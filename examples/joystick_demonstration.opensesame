@@ -65,7 +65,7 @@ define sequence sequence
 
 define joystick joystick
 	set correct_response "[correct_response]"
-	set dummy "no"
+	set _dummy "no"
 	set allowed_responses "1;2;3;4;5"
 	set description "Collects input from a joystick or gamepad"
 	set timeout "infinite"
