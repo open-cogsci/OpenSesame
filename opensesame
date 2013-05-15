@@ -45,6 +45,15 @@ if __name__ == "__main__":
 		import locale
 		if locale.getlocale()[0] is None:
 			locale.setlocale(locale.LC_ALL, 'en_US.UTF-8')
+			
+		# On 32-bit OSX: Shortly init and destroy pygame window before all else
+		# Strangly, the experiment otherwise hangs at init_dispay() with pygame based backends...
+		if not sys.maxsize > 2**32:
+			import pygame
+			pygame.init()
+			pygame.display.init()
+			pygame.display.set_mode((10,10))
+			pygame.quit()	
 				
 	# Load debug package (this must be after the working directory change)
 	from libopensesame import debug
