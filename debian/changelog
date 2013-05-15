@@ -1,4 +1,18 @@
-opensesame (0.27.1-1) unstable; urgency=low
+opensesame (0.27.2-4) unstable; urgency=low
+
+  * Add support for Android
+  * Add new-style plug-in API
+  * Add support for Markdown help files
+  * Persistent globals and locals stack in line_script items
+  * Add set_pos() and get_pressed() to mouse
+  * Miscellaneous bug fixes
+  * Add transparent variable management
+  * Fix various Unicode errors
+  * Update test suite to use Expyriment test suite
+
+ -- Sebastiaan Mathot <s.mathot@cogsci.nl>  Fri, 10 May 2013 18:07:39 +0200
+
+opensesame (0.27.1-1) neurodebian; urgency=low
 
   * Fix numeric values in form checkboxex
   * Do not show start-up tab when opening a file directly
@@ -17,7 +31,7 @@ opensesame (0.27.1-1) unstable; urgency=low
 
  -- Sebastiaan Mathot <s.mathot@cogsci.nl>  Wed, 13 Feb 2013 17:22:08 +0100
 
-opensesame (0.27-2) unstable; urgency=low
+opensesame (0.27-2) neurodebian; urgency=low
 
   * Added Expyriment backend
   * Added form functionality

@@ -151,7 +151,23 @@ class legacy:
 		</DOC>"""	
 	
 		self.visible = visible
-		pygame.mouse.set_visible(visible)						
+		pygame.mouse.set_visible(visible)
+
+	def set_pos(self, pos=(0,0)):
+
+		"""<DOC>
+		Sets the mouse position.
+		
+		Keyword arguments:
+		pos -- A (x,y) tuple for the new mouse coordinates (default = (0,0))
+
+		Example:
+		>>> from openexp.mouse import mouse
+		>>> my_mouse = mouse(exp)
+		>>> my_mouse.set_pos(pos=(0,0))
+		</DOC>"""	
+	
+		pygame.mouse.set_pos(pos)						
 		
 	def get_click(self, buttonlist=None, timeout=None, visible=None):
 	
@@ -198,7 +214,7 @@ class legacy:
 		start_time = pygame.time.get_ticks()
 		time = start_time
 		
-		while timeout == None or time - start_time < timeout:
+		while True:
 			time = pygame.time.get_ticks()						
 			
 			# Draw a cusom cursor if necessary
@@ -232,6 +248,8 @@ class legacy:
 					if buttonlist == None or event.button in buttonlist:
 						pygame.mouse.set_visible(self.visible)
 						return event.button, event.pos, time
+			if timeout != None and time-start_time >= timeout:
+				break
 											
 		if self.cursor == None:
 			pygame.mouse.set_visible(self.visible)					
@@ -253,7 +271,27 @@ class legacy:
 		>>> print 'The cursor was at (%d, %d)' % (x, y)
 		</DOC>"""	
 	
+		pygame.event.get()
 		return pygame.mouse.get_pos(), self.experiment.time()
+
+	def get_pressed(self):
+	
+		"""<DOC>
+		Returns the current state of the mouse buttons. A True value means #
+		the button is currently being pressed.
+		
+		Returns:
+		A (button1, button2, button3) tuple.
+		
+		Example:
+		>>> from openexp.mouse import mouse
+		>>> my_mouse = mouse(exp)
+		>>> buttons = my_mouse.get_pressed()
+		>>> b1, b2, b3 = buttons
+		>>> print 'Currently pressed mouse buttons: (%d, %d, %d)' % (b1, b2, b3)
+		</DOC>"""
+
+		return pygame.mouse.get_pressed()
 		
 	def flush(self):
 	

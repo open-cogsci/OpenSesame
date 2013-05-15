@@ -39,15 +39,15 @@ class header_widget(QtGui.QWidget):
 
 		QtGui.QWidget.__init__(self)
 		self.setCursor(QtCore.Qt.IBeamCursor)
-		self.setToolTip(_("Click to edit"))
+		self.setToolTip(_(u"Click to edit"))
 		self.item = item
 		self.label_name = QtGui.QLabel()
-		self.label_name.id = "name"
+		self.label_name.id = u"name"
 		self.edit_name = QtGui.QLineEdit()
 		self.edit_name.editingFinished.connect(self.restore_name)
 		self.edit_name.hide()
 		self.label_desc = QtGui.QLabel()
-		self.label_desc.id = "desc"
+		self.label_desc.id = u"desc"
 		self.edit_desc = QtGui.QLineEdit()
 		self.edit_desc.editingFinished.connect(self.restore_desc)
 		self.edit_desc.hide()
@@ -68,8 +68,8 @@ class header_widget(QtGui.QWidget):
 
 		self.edit_name.setText(self.item.name)
 		self.label_name.setText( \
-			"<font size='5'><b>%s</b> - %s</font>&nbsp;&nbsp;&nbsp;<font color='gray'><i>Click to edit</i></font>" \
-			% (self.item.name, self.item.item_type.replace("_", " ").title()))
+			u"<font size='5'><b>%s</b> - %s</font>&nbsp;&nbsp;&nbsp;<font color='gray'><i>Click to edit</i></font>" \
+			% (self.item.name, self.item.item_type.replace(u"_", u" ").title()))
 		self.edit_desc.setText(self.item.description)
 		self.label_desc.setText(self.item.description)
 
@@ -84,7 +84,7 @@ class header_widget(QtGui.QWidget):
 							 (default=True)
 		"""
 		
-		debug.msg("apply_name_change = %s" % apply_name_change)
+		debug.msg(u"apply_name_change = %s" % apply_name_change)
 		if apply_name_change:
 			self.item.apply_name_change()			
 		self.refresh()					
@@ -113,8 +113,8 @@ class header_widget(QtGui.QWidget):
 
 		target = self.childAt(event.pos())
 
-		if target != None and hasattr(target, "id"):
-			if target.id == "name":
+		if target != None and hasattr(target, u"id"):
+			if target.id == u"name":
 				self.restore_desc()
 				self.label_name.hide()
 				self.edit_name.show()

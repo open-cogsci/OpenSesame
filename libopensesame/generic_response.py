@@ -50,10 +50,13 @@ class generic_response:
 					"'%s' is not a valid timeout in keyboard_response '%s'. Expecting a positive integer or 'infinite'." \
 					% (self.get("timeout"), self.name))
 
-	def auto_responder(self):
+	def auto_responder(self, dev=u'keyboard'):
 
 		"""
-		Mimick participant responses
+		Mimicks participant responses.
+
+		Keyword arguments:
+		dev		--	The device that should be simulated. (default=u'keyboard')
 
 		Returns:
 		A simulated (response_time, response) tuple
@@ -70,7 +73,17 @@ class generic_response:
 			resp = random.choice(self._allowed_responses)
 
 		debug.msg("generic_response.auto_responder(): responding '%s'" % resp)
+		if dev == u'mouse':
+			pos = random.randint(0, self.get('width')), random.randint( \
+				0, self.get('height'))
+			return resp, pos, self.time()
 		return resp, self.time()
+
+	def auto_responder_mouse(self):
+
+		"""An ugly hack to make auto-response work for mouse_response items."""
+
+		return self.auto_responder(dev=u'mouse')
 
 	def process_response_keypress(self, retval):
 
@@ -320,7 +333,7 @@ class generic_response:
 
 		self._mouse = openexp.mouse.mouse(self.experiment)
 		if self.experiment.auto_response:
-			self._duration_func = self.auto_responder
+			self._duration_func = self.auto_responder_mouse
 		else:
 			# Prepare mouseclick
 			self._mouse.set_timeout(self._timeout)

@@ -20,6 +20,9 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 __author__ = "Sebastiaan Mathot"
 __license__ = "GPLv3"
 
+import math
+import os
+import numbers
 from libopensesame import exceptions, debug
 from libqtopensesame.ui import sketchpad_widget_ui, gabor_dialog_ui, \
 	noise_patch_dialog_ui
@@ -27,8 +30,6 @@ from libqtopensesame.widgets import pool_widget
 from libqtopensesame.misc import _
 import openexp.canvas
 from PyQt4 import QtCore, QtGui
-import math
-import os
 
 class remove_item_button(QtGui.QPushButton):
 
@@ -316,8 +317,8 @@ class canvas(QtGui.QGraphicsScene):
 
 		self.grid_list = []
 
-		w = self.sketchpad_widget.sketchpad.get("width")
-		h = self.sketchpad_widget.sketchpad.get("height")
+		w = self.sketchpad_widget.sketchpad.experiment.get("width")
+		h = self.sketchpad_widget.sketchpad.experiment.get("height")
 
 		pen = QtGui.QPen()
 		pen.setWidth(1)
@@ -396,7 +397,8 @@ class sketchpad_widget(QtGui.QWidget):
 		self.ui.widget_items.setLayout(self.vbox_items)
 
 		# Initialize custom color and font widgets
-		self.ui.edit_color.initialize(self.sketchpad.experiment)
+		self.ui.edit_color.initialize(self.sketchpad.experiment, color= \
+			self.sketchpad.get('foreground', _eval=False))
 		QtCore.QObject.connect(self.ui.edit_color, QtCore.SIGNAL( \
 			"set_color"), self.set_tool)
 		self.ui.widget_font.initialize(self.sketchpad.experiment)
@@ -868,46 +870,42 @@ class sketchpad_widget(QtGui.QWidget):
 
 	def refresh(self):
 
-		"""(Re)draw the canvas and fill the item list"""
+		"""(Re)draws the canvas and fill the item list."""
 
 		self.scene.clear()
-
 		self.ui.view.setMouseTracking(True)
-
-		w = self.sketchpad.get("width")
-		h = self.sketchpad.get("height")
-
+		w = self.sketchpad.get(u'width')
+		h = self.sketchpad.get(u'height')
 		# Apply the zoom level
-		self.ui.view.setFixedSize(self.zoom * w + 60, self.zoom * h + 60)
+		self.ui.view.setFixedSize(self.zoom*w+60, self.zoom*h+60)
 		self.ui.view.resetTransform()
 		self.ui.view.scale(self.zoom, self.zoom)
-
+		# Set the foreground
+		self.ui.edit_color.initialize(self.sketchpad.experiment, color= \
+			self.color)
 		# Set the background
 		brush = QtGui.QBrush()
-		brush.setColor(QtGui.QColor(self.sketchpad.get("background", \
+		brush.setColor(QtGui.QColor(self.sketchpad.get(u'background', \
 			_eval=False)))
 		brush.setStyle(QtCore.Qt.SolidPattern)
 		self.ui.view.setBackgroundBrush(brush)
-
 		# Optionally draw a grid
 		if self.show_grid and self.zoom * self.scene.grid >= 5:
 			self.scene.draw_grid()
-
 		# Initialize the notifications
 		self.notifications = []
 		static_items = self.sketchpad.static_items()
 		not_shown = len(self.sketchpad.items) - len(static_items)
 		if not_shown > 1:
 			self.notifications.append( \
-				_("%d objects are not shown, because they are defined using variables.") \
+				_(u"%d objects are not shown, because they are defined using variables.") \
 				% not_shown)
 		elif not_shown == 1:
 			self.notifications.append( \
-				_("One object is not shown, because it is defined using variables."))
+				_(u"One object is not shown, because it is defined using variables."))
 		if self.sketchpad.items_out_of_bounds() > 0:
 			self.notifications.append( \
-				_("Some objects will not be visible (or partly) because they fall outside of the screen boundaries."))
-
+				_(u"Some objects will not be visible (or partly) because they fall outside of the screen boundaries."))
 		# Walk through all items and show them
 		self.item_list = []
 		for item in static_items:
@@ -996,21 +994,27 @@ class sketchpad_widget(QtGui.QWidget):
 
 		return True
 
-	def set_tool(self, dummy = None):
+	def set_tool(self, dummy=None):
 
-		"""Set the current tool according to the options in the widget"""
+		"""
+		Sets the current tool according to the options in the widget.
+
+		Keyword argument:
+		dummy	--	DEPRECATED.
+		"""
 
 		self.penwidth = self.ui.spin_penwidth.value()
-		self.color = self.sketchpad.experiment.sanitize(self.ui.edit_color.text())
+		self.color = self.sketchpad.experiment.sanitize( \
+			self.ui.edit_color.text())
 		refs = []
 		try:
 			refs = self.sketchpad.experiment.get_refs(self.color)
 			self.sketchpad.experiment.color_check(self.color)
 		except Exception as e:
-			if refs == []:
+			if len(refs) == 0:
 				self.sketchpad.experiment.notify(e)
-				self.ui.edit_color.setText("white")
-				self.color = "white"
+				self.ui.edit_color.setText(u'white')
+				self.color = u'white'
 
 		self.show_grid = self.ui.checkbox_show_grid.isChecked()
 
@@ -1034,36 +1038,35 @@ class sketchpad_widget(QtGui.QWidget):
 			self.ui.edit_show_if.text())
 
 		if self.ui.button_line.isChecked():
-			self.tool = "line"
+			self.tool = u'line'
 			self.scene.oneshot = False
 		elif self.ui.button_arrow.isChecked():
-			self.tool = "arrow"
+			self.tool = u'arrow'
 			self.scene.oneshot = False
 		elif self.ui.button_rect.isChecked():
-			self.tool = "rect"
+			self.tool = u'rect'
 			self.scene.oneshot = False
 		elif self.ui.button_ellipse.isChecked():
-			self.tool = "ellipse"
+			self.tool = u'ellipse'
 			self.scene.oneshot = False
 		elif self.ui.button_circle.isChecked():
-			self.tool = "circle"
+			self.tool = u'circle'
 			self.scene.oneshot = False
 		elif self.ui.button_fixdot.isChecked():
-			self.tool = "fixdot"
+			self.tool = u'fixdot'
 			self.scene.oneshot = True
 		elif self.ui.button_image.isChecked():
-			self.tool = "image"
+			self.tool = u'image'
 			self.scene.oneshot = True
 		elif self.ui.button_textline.isChecked():
-			self.tool = "textline"
+			self.tool = u'textline'
 			self.scene.oneshot = True
 		elif self.ui.button_gabor.isChecked():
-			self.tool = "gabor"
+			self.tool = u'gabor'
 			self.scene.oneshot = True
 		elif self.ui.button_noise_patch.isChecked():
-			self.tool = "noise"
+			self.tool = u'noise'
 			self.scene.oneshot = True
-
 		self.refresh()
 
 

@@ -21,7 +21,7 @@ from PyQt4 import QtCore, QtGui
 from libqtopensesame.misc import includes, config, _
 from libqtopensesame.misc.config import cfg
 from libqtopensesame.items import experiment
-from libopensesame import debug, exceptions
+from libopensesame import debug, exceptions, misc
 import libopensesame.exceptions
 import libopensesame.experiment
 import libopensesame.plugins
@@ -38,7 +38,7 @@ class qtopensesame(QtGui.QMainWindow):
 	"""The main class of the OpenSesame GUI"""
 
 	# Set to False for release!
-	devmode = True
+	devmode = False
 
 	def __init__(self, app, parent=None):
 
@@ -54,7 +54,14 @@ class qtopensesame(QtGui.QMainWindow):
 		parent -- a link to the parent window
 		"""
 
-		QtGui.QMainWindow.__init__(self, parent)
+		if sys.platform == 'darwin':
+			# Workaround for Qt issue on OS X that causes QMainWindow to
+			# hide when adding QToolBar, see
+			# https://bugreports.qt-project.org/browse/QTBUG-4300
+			QtGui.QMainWindow.__init__(self, parent, \
+				QtCore.Qt.MacWindowToolBarButtonHint)
+		else:
+			QtGui.QMainWindow.__init__(self, parent)
 		self.app = app
 		self.first_show = True
 
@@ -73,7 +80,7 @@ class qtopensesame(QtGui.QMainWindow):
 		random.seed()
 
 		# Check the filesystem encoding for debugging purposes
-		debug.msg('filesystem encoding: %s' % sys.getfilesystemencoding())
+		debug.msg('filesystem encoding: %s' % misc.filesystem_encoding())
 
 		# Restore the configuration
 		self.restore_config()
@@ -212,10 +219,6 @@ class qtopensesame(QtGui.QMainWindow):
 		self.ui.shortcut_pool = QtGui.QShortcut( \
 			QtGui.QKeySequence(), self, \
 			self.ui.pool_widget.ui.edit_pool_filter.setFocus)
-
-		# On Mac OS (darwin) hide, the run in Window functionality
-		if sys.platform == "darwin":
-			self.ui.action_run_in_window.setDisabled(True)
 
 		# Create the initial experiment
 
@@ -428,29 +431,31 @@ class qtopensesame(QtGui.QMainWindow):
 		"""Autosave the experiment if there are unsaved changes"""
 
 		if not self.unsaved_changes:
-			self.set_status("No unsaved changes, skipping backup")
-			autosave_path = ""
+			self.set_status(u'No unsaved changes, skipping backup')
+			autosave_path = u''
 		else:
 			_current_path = self.current_path
+			_experiment_path = self.experiment.experiment_path
 			_unsaved_changes = self.unsaved_changes
 			_window_msg = self.window_msg
 			self.current_path = os.path.join(self.autosave_folder, \
-				"%s.opensesame.tar.gz" % unicode(time.ctime()).replace(":", "_"))
+				u'%s.opensesame.tar.gz'% unicode(time.ctime()).replace(':', \
+				'_'))
 			debug.msg("saving backup as %s" % self.current_path)
 			try:
 				self.save_file(False, remember=False, catch=False)
-				self.set_status(_("Backup saved as %s") % self.current_path)
+				self.set_status(_('Backup saved as %s') % self.current_path)
 			except:
-				self.set_status(_("Failed to save backup ..."))
+				self.set_status(_('Failed to save backup ...'))
 			autosave_path = self.current_path
 			self.current_path = _current_path
+			self.experiment.experiment_path = _experiment_path
 			self.set_unsaved(_unsaved_changes)
 			self.window_message(_window_msg)
 		self.start_autosave_timer()
 		return autosave_path
 
 	def clean_autosave(self):
-
 
 		"""Remove old files from the back-up folder"""
 
@@ -871,11 +876,7 @@ class qtopensesame(QtGui.QMainWindow):
 			self.experiment.notify( \
 				_("<b>Error:</b> Failed to open '%s'<br /><b>Description:</b> %s<br /><br />Make sure that the file is in .opensesame or .opensesame.tar.gz format. If you should be able to open this file, but can't, please go to http://www.cogsci.nl/opensesame to find out how to recover your experiment and file a bug report.") \
 				% (path, e))
-			# Print the traceback in debug mode
-			if debug.enabled:
-				l = traceback.format_exc(e).split("\n")
-				for r in l:
-					print r
+			self.print_debug_window(e)
 			return
 
 		self.experiment = exp
@@ -920,7 +921,7 @@ class qtopensesame(QtGui.QMainWindow):
 		# Get ready, generate the script and see if the script can be
 		# re-parsed. In debug mode any errors are not caught. Otherwise. a
 		# neat exception is thrown.
-		if self.experiment.debug:
+		if debug.enabled:
 			self.get_ready()
 			script = self.experiment.to_string()
 			experiment.experiment(self, "Experiment", script)
@@ -939,7 +940,7 @@ class qtopensesame(QtGui.QMainWindow):
 				return
 
 		# Try to save the experiment if it doesn't exist already
-		if self.experiment.debug:
+		if debug.enabled:
 			resp = self.experiment.save(self.current_path, overwrite=True)
 			self.set_status(_("Saved as %s") % self.current_path)
 		else:
@@ -1161,6 +1162,25 @@ class qtopensesame(QtGui.QMainWindow):
 						debug.msg("'%s' did something" % item)
 						redo = True
 						break
+						
+	def print_debug_window(self, msg):
+		
+		"""
+		Prints a message to the debug window.
+		
+		Arguments:
+		msg		--	An object to print to the debug window. If it's an exception
+					than a full traceback will be printed.
+		"""
+		
+		from libqtopensesame.widgets import pyterm				
+		out = pyterm.output_buffer(self.ui.edit_stdout)
+		if isinstance(msg, Exception):
+			import traceback
+			for s in traceback.format_exc(msg).split('\n'):
+				out.write(s)
+		else:
+			out.write(self.experiment.unistr(msg))
 
 	def call_opensesamerun(self, exp):
 
@@ -1378,17 +1398,17 @@ class qtopensesame(QtGui.QMainWindow):
 				# Report the error
 				if isinstance(e, libopensesame.exceptions.runtime_error):
 					self.experiment.notify(e)
-				elif isinstance(e, openexp.exceptions.openexp_error):
-					print unicode(e)
+					self.print_debug_window(e)
+				elif isinstance(e, openexp.exceptions.openexp_error):					
 					self.experiment.notify( \
 						_("<b>Error</b>: OpenExp error<br /><b>Description</b>: %s") \
 						% e)
+					self.print_debug_window(e)
 				else:
 					self.experiment.notify( \
 						_("An unexpected error occurred, which was not caught by OpenSesame. This should not happen! Message:<br/><b>%s</b>") \
 						% self.experiment.unistr(e))
-					for s in traceback.format_exc(e).split("\n"):
-						print s
+					self.print_debug_window(e)
 
 		# Undo the standard output rerouting
 		sys.stdout = sys.__stdout__
@@ -1813,7 +1833,7 @@ class qtopensesame(QtGui.QMainWindow):
 
 		from libqtopensesame.widgets import draggables
 
-		debug.msg("dropping from toolbar")
+		debug.msg(u'dropping from toolbar')
 
 		# Determine the drop target
 		if draggables.drop_target == None:
@@ -1821,7 +1841,7 @@ class qtopensesame(QtGui.QMainWindow):
 		target, index, select = draggables.drop_target
 
 		# Create a new item and return if it fails
-		if type(add_func) != str:
+		if not isinstance(add_func, basestring):
 			new_item = add_func(False, parent=target)
 		else:
 			new_item = self.add_item(add_func, False)
@@ -1829,11 +1849,11 @@ class qtopensesame(QtGui.QMainWindow):
 			self.refresh(target)
 			return
 
-		if target == "__start__":
-			self.experiment.set("start", new_item)
+		if target == u'__start__':
+			self.experiment.set(u'start', new_item)
 		else:
 			self.experiment.items[target].items.insert(index, (new_item, \
-				"always"))
+				u'always'))
 
 		self.refresh(target)
 		if select:

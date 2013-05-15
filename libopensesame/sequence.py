@@ -24,33 +24,28 @@ class sequence(item.item):
 
 	"""The sequence item"""
 
+	description = u'Runs a number of items in sequence'
+
 	def __init__(self, name, experiment, string=None):
 	
 		"""
-		Constructor
-		
+		Constructor.
+
 		Arguments:
-		name -- the item name
-		experiment the opensesame experiment
-		
-		Keywords arguments:
-		string -- a definition string (default=None)
+		name 		--	The name of the item.
+		experiment 	--	The experiment.
+
+		Keyword arguments:
+		string		-- 	The item definition string. (default=None)
 		"""
 	
 		self.items = []		
-		self.item_type = "sequence"		
-		self.description = "Runs a number of items in sequence"		
-		self.flush_keyboard = "yes"
+		self.flush_keyboard = u'yes'
 		item.item.__init__(self, name, experiment, string)
 				
 	def run(self):
 	
-		"""
-		Run the sequence
-		
-		Returns:
-		True on success, False on failure
-		"""
+		"""Runs the sequence."""
 	
 		# Optionally flush the responses to catch escape presses
 		if self._keyboard != None:
@@ -58,22 +53,21 @@ class sequence(item.item):
 		for item, cond in self._items:		
 			if eval(cond):	
 				self.experiment.items[item].run()
-		return True				
 		
 	def parse_run(self, i):
 	
 		"""
-		Parse a run line from the definition script
+		Parses a run line from the definition script.
 		
 		Arguments:
-		i -- a list of words, corresponding to a single script line
+		i 		-- 	A list of words, corresponding to a single script line.
 		
 		Returns:
-		A (item_name, conditional) tuple
+		An (item_name, conditional) tuple.
 		"""
 	
 		name = i[1]
-		cond = "always"
+		cond = u'always'
 		if len(i) > 2:
 			cond = i[2]	
 		return i[1], cond 
@@ -81,62 +75,49 @@ class sequence(item.item):
 	def from_string(self, string):
 	
 		"""
-		Parses a definition string
+		Parses a definition string.
 		
 		Arguments:
-		string -- a definition string
+		string 	--	A definition string.
 		"""
 	
-		for i in string.split("\n"):
+		for i in string.split(u'\n'):
 			self.parse_variable(i)
 			i = self.split(i.strip())
 			if len(i) > 0:
-				if i[0] == "run" and len(i) > 1:				
+				if i[0] == u'run' and len(i) > 1:
 					self.items.append(self.parse_run(i))			
 		
 	def prepare(self):
 	
-		"""
-		Prepare the sequence
-		
-		Returns:
-		True on success, False on failure
-		"""
+		"""Prepares the sequence."""
 		
 		item.item.prepare(self)
-		
-		if self.get("flush_keyboard") == "yes":		
+		if self.get(u'flush_keyboard') == u'yes':
 			# Create a keyboard to flush responses at the start of the run phase
 			self._keyboard = openexp.keyboard.keyboard(self.experiment)
 		else:
 			self._keyboard = None
-		
 		self._items = []
 		for _item, cond in self.items:
 			if _item not in self.experiment.items:			
 				raise exceptions.runtime_error( \
-					"Could not find item '%s', which is called by sequence item '%s'" \
+					u"Could not find item '%s', which is called by sequence item '%s'" \
 					% (_item, self.name))
-			if not self.experiment.items[_item].prepare():			
-				raise exceptions.runtime_error( \
-					"Failed to prepare item '%s', which is called by sequence item '%s'" \
-					% (_item, self.name))
-				
+			self.experiment.items[_item].prepare()				
 			self._items.append( (_item, self.compile_cond(cond)) )
-															
-		return True
 			
 	def to_string(self):
 	
 		"""
-		Encode the sequence as a definition string
+		Encodes the sequence as a definition string.
 		
 		Returns:
-		A definition string
+		A definition string.
 		"""
 	
 		s = item.item.to_string(self, self.item_type)
 		for _item, cond in self.items:
-			s += "\trun %s \"%s\"\n" % (_item, cond)
-		return s			
+			s += u'\trun %s "%s"\n' % (_item, cond)
+		return s
 		

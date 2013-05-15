@@ -24,52 +24,46 @@ class sampler(item.item, generic_response.generic_response):
 
 	"""Sound playback item"""
 
+	description = u'Plays a sound file in .wav or .ogg format'
+
 	def __init__(self, name, experiment, string = None):
 
 		"""
-		Constructor
+		Constructor.
 
 		Arguments:
-		name -- the name of the item
-		experiment -- the experiment
+		name 		--	The name of the item.
+		experiment 	--	The experiment.
 
 		Keyword arguments:
-		string -- definition string for the item
+		string		-- 	The item definition string. (default=None)
 		"""
 
-		self.description = "Plays a sound file in .wav or .ogg format"
-		self.item_type = "sampler"
-		self.sample = ""
+		self.sample = u''
 		self.pan = 0
 		self.pitch = 1
 		self.fade_in = 0
 		self.volume = 1.0
 		self.stop_after = 0
-		self.duration = "sound"
+		self.duration = u'sound'
 		self.block = False
-
 		item.item.__init__(self, name, experiment, string)
 
 	def prepare_duration_sound(self):
 
-		"""Set the duration function for 'sound' duration"""
+		"""Sets the duration function for 'sound' duration."""
 
 		self.block = True
 		self._duration_func = self.dummy
 
 	def prepare(self):
 
-		"""
-		Prepare for playback
-
-		Returns:
-		True on success, False on failure
-		"""
+		"""Prepares for playback."""
 
 		item.item.prepare(self)
-
-		if self.sample.strip() == "":
-			raise exceptions.runtime_error("No sample has been specified in sampler '%s'" % self.name)
+		if self.sample.strip() == u'':
+			raise exceptions.runtime_error( \
+				u'No sample has been specified in sampler "%s"' % self.name)
 		sample = self.experiment.get_file(self.eval_text(self.sample))
 		if debug.enabled:
 			self.sampler = openexp.sampler.sampler(self.experiment, sample)
@@ -77,38 +71,40 @@ class sampler(item.item, generic_response.generic_response):
 			try:
 				self.sampler = openexp.sampler.sampler(self.experiment, sample)
 			except Exception as e:
-				raise exceptions.runtime_error("Failed to load sample in sampler '%s': %s" % (self.name, e))
+				raise exceptions.runtime_error( \
+					u'Failed to load sample in sampler "%s": %s' % (self.name, \
+					e))
 
-		pan = self.get("pan")
+		pan = self.get(u'pan')
 		if pan == -20:
-			pan = "left"
+			pan = u'left'
 		elif pan == 20:
-			pan = "right"
+			pan = u'right'
 
 		self.sampler.pan(pan)
-		self.sampler.volume(self.get("volume"))
-		self.sampler.pitch(self.get("pitch"))
-		self.sampler.fade_in(self.get("fade_in"))
-		self.sampler.stop_after(self.get("stop_after"))
+		self.sampler.volume(self.get(u'volume'))
+		self.sampler.pitch(self.get(u'pitch'))
+		self.sampler.fade_in(self.get(u'fade_in'))
+		self.sampler.stop_after(self.get(u'stop_after'))
 		generic_response.generic_response.prepare(self)
-
-		return True
 
 	def run(self):
 
-		"""
-		Play the sample
-
-		Returns:
-		True on success, False on failure
-		"""
+		"""Plays the sample."""
 
 		self.set_item_onset(self.time())
 		self.set_sri()
 		self.sampler.play(self.block)
 		self.process_response()
-		return True
 
 	def var_info(self):
 
-		return generic_response.generic_response.var_info(self)
+		"""
+		Give a list of dictionaries with variable descriptions
+
+		Returns:
+		A list of (name, description) tuples
+		"""		
+
+		return item.item.var_info(self) + \
+			generic_response.generic_response.var_info(self)

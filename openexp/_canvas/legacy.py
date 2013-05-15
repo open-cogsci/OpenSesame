@@ -95,7 +95,7 @@ class legacy:
 		"pygame_doublebuf" : {
 			"name" : "Double buffering",
 			"description" : "Use double buffering",
-			"default" : "yes"
+			"default" : "no"
 			},
 		"pygame_window_frame" : {
 			"name" : "Draw window frame",

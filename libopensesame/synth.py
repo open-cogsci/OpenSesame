@@ -24,59 +24,50 @@ class synth(sampler.sampler, item.item):
 
 	"""Plays a synthesized sound"""
 
+	description = u'A basic sound synthesizer'
+
 	def __init__(self, name, experiment, string = None):
 	
 		"""
-		Constructor
+		Constructor.
 
 		Arguments:
-		name -- the name of the item
-		experiment -- the experiment
+		name 		--	The name of the item.
+		experiment 	--	The experiment.
 
 		Keyword arguments:
-		string -- definition string for the item
+		string		-- 	The item definition string. (default=None)
 		"""
 
-		self.description = "A basic sound synthesizer"		
-		self.item_type = "synth"
+		self.item_type = u'synth'
 		self.freq = 440
 		self.length = 100
-		self.osc = "sine"
+		self.osc = u'sine'
 		self.pan = 0		
 		self.attack = 0
 		self.decay = 5
 		self.volume = 1.0
-		self.duration = "sound"
+		self.duration = u'sound'
 		self.block = False
-		
 		item.item.__init__(self, name, experiment, string)	
 		
 	def prepare(self):
 	
-		"""
-		Prepare for playback
+		"""Prepares for playback."""
 
-		Returns:
-		True on success, False on failure
-		"""		
-
-		item.item.prepare(self)		
-		
+		item.item.prepare(self)
 		try:
-			self.sampler = openexp.synth.synth(self.experiment, self.get("osc"), self.get("freq"), self.get("length"), self.get("attack"), self.get("decay"))
+			self.sampler = openexp.synth.synth(self.experiment, \
+				self.get(u'osc'), self.get(u'freq'), self.get(u'length'), \
+				self.get(u'attack'), self.get(u'decay'))
 		except Exception as e:
-			raise exceptions.runtime_error("Failed to generate sound in synth '%s': %s" % (self.name, e))
-			
-		pan = self.get("pan")
+			raise exceptions.runtime_error( \
+				u"Failed to generate sound in synth '%s': %s" % (self.name, e))
+		pan = self.get(u'pan')
 		if pan == -20:
-			pan = "left"
+			pan = u'left'
 		elif pan == 20:
-			pan = "right"
-			
+			pan = u'right'
 		self.sampler.pan(pan)
-		self.sampler.volume(self.get("volume"))		
+		self.sampler.volume(self.get(u'volume'))
 		generic_response.generic_response.prepare(self)
-								
-		return True
-		
-

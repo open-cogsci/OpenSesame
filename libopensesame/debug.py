@@ -23,49 +23,50 @@ import os.path
 def parse_stack(stack):
 
 	"""
-	Generate a nice looking stacktrace item
+	Generates a nice looking stacktrace item.
 
 	Returns:
 	A string of the stacktrace item
 	"""
 
-	return "%s(%d).%s" % (os.path.basename(stack[1]), stack[2], stack[3])
+	return u'%s(%d).%s' % (os.path.basename(stack[1]), stack[2], stack[3])
 
-def msg(msg="", reason=None):
+def msg(msg=u'', reason=None):
 
 	"""
-	Print a debugging message. Respects the --debug and --stack parameters.
+	Prints a debugging message. Respects the --debug and --stack parameters.
 
 	Keyword arguments:
-	msg -- debug message (default='')
-	reason -- a specific reason for the message (default=None)
+	msg 	--	A debug message. (default=u'')
+	reason	--	A specific reason for the message. (default=None)
 	"""
 
 	global stack, max_stack
 	st = inspect.stack()
 	if reason != None:
-		print "[%s]" % reason,
+		print u'[%s]' % reason,
 	# The terminal may not like anythin but plain ASCII
 	if isinstance(msg, unicode):
 		msg = msg.encode('ASCII', 'ignore')
-	print "%s: %s" % (parse_stack(st[1]), msg)
+	print u'%s: %s' % (parse_stack(st[1]), msg)
 	st = st[2:]
 	st.reverse()
 	if stack:
 		i = 1
 		while len(st) > 0:
-			print " %.3d\t%s\t" % (i, parse_stack(st.pop()))
+			print u' %.3d\t%s\t' % (i, parse_stack(st.pop()))
 			i += 1
 
-enabled = "--debug" in sys.argv or "-d" in sys.argv
+enabled = '--debug' in sys.argv or '-d' in sys.argv
 if enabled:
 	import inspect
-	stack = "--stack" in sys.argv or "-s" in sys.argv
+	stack = '--stack' in sys.argv or '-s' in sys.argv
 	if stack:
-		msg("debug mode enabled (stacktrace on)")
+		msg(u'debug mode enabled (stacktrace on)')
 	else:
-		msg("debug mode enabled (stacktrace off)")
+		msg(u'debug mode enabled (stacktrace off)')
 else:
 	# Replace the message function with a dummy function to turn off debugging
 	# output
+	stack = False
 	msg = lambda msg=None, reason=None: None

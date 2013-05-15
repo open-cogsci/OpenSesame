@@ -17,15 +17,19 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
+import re
 from libopensesame import item, exceptions
 from openexp import canvas
-import re
+
+_globals = {}
 
 class inline_script(item.item):
 
 	"""Allows users to use Python code in their experiments"""
 
-	def __init__(self, name, experiment, string = None):
+	description = u'Executes Python code'
+
+	def __init__(self, name, experiment, string=None):
 
 		"""<DOC>
 		Constructor. You will generally not create an inline_script item #
@@ -33,17 +37,15 @@ class inline_script(item.item):
 		run() functions.
 
 		Arguments:
-		name -- The name of the item.
-		experiment -- The experiment.
+		name		--	The name of the item.
+		experiment 	--	The experiment.
 
 		Keyword arguments:
-		string -- An item definition string (default = None).
+		string		--	An item definition string (default=None).
 		</DOC>"""
 
-		self.description = "Executes Python code"
-		self.item_type = "inline_script"
-		self._prepare = ""
-		self._run = ""
+		self._prepare = u''
+		self._run = u''
 		self._var_info = None
 		item.item.__init__(self, name, experiment, string)
 
@@ -53,7 +55,7 @@ class inline_script(item.item):
 		Creates a canvas that is a copy from the canvas of a sketchpad item.
 
 		Arguments:
-		sketchpad_name -- The name of the sketchpad.
+		sketchpad_name	--	The name of the sketchpad.
 
 		Returns:
 		An openexp canvas.
@@ -69,10 +71,10 @@ class inline_script(item.item):
 	def offline_canvas(self, auto_prepare=True):
 
 		"""<DOC>
-		Creates an empty canvas
+		Creates an empty canvas.
 
 		Keyword arguments:
-		auto_prepare -- Please see the canvas documentation (default=True).
+		auto_prepare 	--	See canvas documentation. (default=True)
 
 		Returns:
 		An openexp canvas.
@@ -81,8 +83,8 @@ class inline_script(item.item):
 		>>> my_canvas = self.offline_canvas()
 		</DOC>"""
 
-		return canvas.canvas(self.experiment, self.get("background"), \
-			self.get("foreground"), auto_prepare=auto_prepare)
+		return canvas.canvas(self.experiment, self.get(u'background'), \
+			self.get(u'foreground'), auto_prepare=auto_prepare)
 
 	def prepare(self):
 
@@ -92,45 +94,55 @@ class inline_script(item.item):
 		function.
 		</DOC>"""
 
+		global _globals, _locals
+		
 		item.item.prepare(self)
-		# Convenience variables
-		exp = self.experiment
-		win = self.experiment.window
+		if self.experiment.transparent_variables == u'yes':
+			self.start_transparency()
+		
+		# Convenience variables need to be registered as globals. By specifying
+		# a __name__, the script will function as a module, so that e.g. import
+		# statements do not suffer from locality.
+		if u'exp' not in _globals:
+			_globals[u'exp'] = self.experiment
+			_globals[u'win'] = self.experiment.window
+			_globals[u'self'] = self
+			_globals[u'__name__'] = u'myname'
 		# Compile prepare script
 		try:
-			self.cprepare = compile(self._prepare, "<string>", "exec")
+			self.cprepare = compile(self._prepare, u'<string>', u'exec')
 		except Exception as e:
-			raise exceptions.inline_error(self.name, "prepare", e)
+			raise exceptions.inline_error(self.name, u'prepare', e)
 		# Compile run script
 		try:
-			self.crun = compile(self._run, "<string>", "exec")
+			self.crun = compile(self._run, u'<string>', u'exec')
 		except Exception as e:
-			raise exceptions.inline_error(self.name, "run", e)
+			raise exceptions.inline_error(self.name, u'run', e)
 		# Run prepare script
 		try:
-			exec(self.cprepare)
+			exec(self.cprepare, _globals)
 		except Exception as e:
-			raise exceptions.inline_error(self.name, "prepare", e)
-		# Report success
-		return True
+			raise exceptions.inline_error(self.name, u'prepare', e)
+		if self.experiment.transparent_variables == u'yes':
+			self.end_transparency()
 
 	def run(self):
 
 		"""<DOC>
-		Executes the run script. The code that you enter in the 'run' tab of an #
-		inline_script item in the GUI is used as a body for this function.
+		Executes the run script. The code that you enter in the 'run' tab of #
+		an inline_script item in the GUI is used as a body for this function.
 		</DOC>"""
+		
+		global _globals, _locals
 
-		# Convenience variables
-		exp = self.experiment
-		win = self.experiment.window
-
+		if self.experiment.transparent_variables == u'yes':
+			self.start_transparency()
 		try:
-			exec(self.crun)
+			exec(self.crun, _globals)
 		except Exception as e:
-			raise exceptions.inline_error(self.name, "run", e)
-
-		return True
+			raise exceptions.inline_error(self.name, u'run', e)
+		if self.experiment.transparent_variables == u'yes':
+			self.end_transparency()
 
 	def var_info(self):
 
@@ -149,32 +161,61 @@ class inline_script(item.item):
 		l = item.item.var_info(self)
 
 		m = re.findall( \
-			"self.experiment.set\(\"(\w+)\"(\s*),(\s*)(\"*)([^\"\)]*)(\"*)", \
+			u"self.experiment.set\(\"(\w+)\"(\s*),(\s*)(\"*)([^\"\)]*)(\"*)", \
 			self._prepare + self._run) \
 			+ re.findall( \
-			"self.experiment.set\('(\w+)'(\s*),(\s*)('*)([^'\)]*)('*)", \
+			u"self.experiment.set\('(\w+)'(\s*),(\s*)('*)([^'\)]*)('*)", \
 			self._prepare + self._run) \
 			+ re.findall( \
-			"exp.set\(\"(\w+)\"(\s*),(\s*)(\"*)([^\"\)]*)(\"*)", \
+			u"exp.set\(\"(\w+)\"(\s*),(\s*)(\"*)([^\"\)]*)(\"*)", \
 			self._prepare + self._run) \
 			+ re.findall( \
-			"exp.set\('(\w+)'(\s*),(\s*)('*)([^'\)]*)('*)", \
+			u"exp.set\('(\w+)'(\s*),(\s*)('*)([^'\)]*)('*)", \
 			self._prepare + self._run)
 
 		for var, s1, s2, q1, val, q2 in m:
-			if q1 != "\"":
-				val = "[Set to '%s']" % val
+			if q1 != u'"':
+				val = u'[Set to \'%s\']' % val
 			l.append( (var, val) )
 		self._var_info = l
 
 		return l
 
-	@staticmethod
-	def _globals():
+	def start_transparency(self):
 
 		"""
-		Returns:
-		A dictionary of globals that are registered within the current module
+		Registers all experiment variables in the locals dictionary. This allows
+		the user to interact with the experimental variables without needing
+		to call `exp.set()`.
 		"""
 
-		return globals()
+		global _globals
+		for var, val in self.experiment.var_info():
+			_globals[var] = val
+
+	def end_transparency(self):
+
+		"""
+		Sets all local variables, so that the user doesn't have explicitly have
+		to call `exp.set()`.
+		"""
+
+		global _globals
+		for var, val in _globals.items():
+			if isinstance(val, basestring) or isinstance(val, float) or \
+				isinstance(val, int):
+				self.experiment.set(var, val)
+	
+def restore_state():
+	
+	"""Restores the system state."""
+	
+	global _globals
+	_globals = {}
+	
+def save_state():
+	
+	"""Saves the system state."""
+	
+	# Currently does nothing.
+	pass

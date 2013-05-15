@@ -62,14 +62,14 @@ class libjoystick:
 		</DOC>"""
 
 		
+		global js
 		pygame.init()
 		js = pygame.joystick.Joystick(0)
 		js.init()
 		
 		self.experiment = experiment
 		self.set_joybuttonlist(joybuttonlist)
-		self.set_timeout(timeout)
-		global js
+		self.set_timeout(timeout)		
 
 	def set_joybuttonlist(self, joybuttonlist = None):
 

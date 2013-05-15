@@ -17,7 +17,7 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
-from libopensesame.misc import debug
+from libopensesame import debug
 from libqtopensesame.misc import config, _
 from PyQt4 import QtGui, QtCore
 
@@ -257,7 +257,7 @@ class tab_widget(QtGui.QTabWidget):
 		"""
 
 		if start:
-			if self.switch('__start_wizar__'):
+			if self.switch('__start_wizard__'):
 				return			
 		else:
 			if self.switch('__new_wizard__'):

@@ -23,26 +23,26 @@ class logger(item.item):
 
 	"""The logger item logs variables to a plain text .csv file"""
 
+	description = u'Logs experimental data'
+
 	def __init__(self, name, experiment, string=None):
 
 		"""
-		Constructor
-
+		Constructor.
+		
 		Arguments:
-		name -- the name of the item
-		experiment -- the experiment
+		name		--	The name of the item.
+		experiment 	--	The experiment.
 
 		Keyword arguments:
-		string -- the definition string for the item (default = None)
+		string		--	An item definition string (default=None).
 		"""
 
 		self.logvars = []
 		self.log_started = False
-		self.description = "Logs experimental data"
-		self.item_type = "logger"
-		self.use_quotes = "yes"
-		self.auto_log = "yes"
-		self.ignore_missing = "yes" # This means that missing variables should
+		self.use_quotes = u'yes'
+		self.auto_log = u'yes'
+		self.ignore_missing = u'yes' # This means that missing variables should
 									# be ignored in the sense that they are
 									# assigned the value 'NA'. They are included
 									# in the logfile.
@@ -55,24 +55,24 @@ class logger(item.item):
 		if not self.log_started:
 			self.log_started = True
 			# If auto logging is enabled, collect all variables
-			if self.get("auto_log") == "yes":
+			if self.get(u'auto_log') == u'yes':
 				self.logvars = []
 				for logvar, val, item in self.experiment.var_list():
-					if (self.has(logvar) or self.get("ignore_missing") == \
-						"yes") and logvar not in self.logvars:
+					if (self.has(logvar) or self.get(u'ignore_missing') == \
+						u'yes') and logvar not in self.logvars:
 						self.logvars.append(logvar)
-						debug.msg("auto-logging '%s'" % logvar)
+						debug.msg(u'auto-logging "%s"' % logvar)
 			# Sort the logvars to ascertain a consistent ordering
 			self.logvars.sort()
 			# Draw the first line with variables
-			self.log(",".join(self.logvars))
+			self.log(u','.join(self.logvars))
 
 		l = []
 		for var in self.logvars:
 			try:
 				val = self.unistr(self.get(var))
 			except exceptions.runtime_error as e:
-				if self.get('ignore_missing') == 'yes':
+				if self.get(u'ignore_missing') == u'yes':
 					val = u'NA'
 				else:
 					raise exceptions.runtime_error( \
@@ -80,8 +80,8 @@ class logger(item.item):
 						% (self.name, var, var, self.name))
 			l.append(val)
 
-		if self.get('use_quotes') == 'yes':
-			self.log(u'"' + ('","'.join(l)) + '"')
+		if self.get(u'use_quotes') == u'yes':
+			self.log(u'"' + (u'","'.join(l)) + u'"')
 		else:
 			self.log(u",".join(l))
 
@@ -95,10 +95,10 @@ class logger(item.item):
 		"""
 
 		self.logvars = []
-		for line in string.split('\n'):
+		for line in string.split(u'\n'):
 			self.parse_variable(line)
 			l = self.split(line)
-			if len(l) > 1 and l[0] == 'log':
+			if len(l) > 1 and l[0] == u'log':
 				self.logvars.append(l[1])
 
 	def to_string(self):
@@ -110,7 +110,7 @@ class logger(item.item):
 		A definition string
 		"""
 
-		s = item.item.to_string(self, 'logger')
+		s = item.item.to_string(self, u'logger')
 		for logvar in self.logvars:
 			s += u'\tlog "%s"\n' % logvar
 		return s

@@ -17,7 +17,7 @@ You should have received a copy of the GNU General Public License
 along with openexp.  If not, see <http://www.gnu.org/licenses/>.
 """
 
-from openexp import exceptions
+from libopensesame import debug
 
 class mouse:
 
@@ -26,20 +26,12 @@ class mouse:
 	morphs into the appropriate keyboard backend class.
 	"""
 
-	def __init__(self, experiment, buttonlist = None, timeout = None, visible = False):
+	def __init__(self, experiment, buttonlist=None, timeout=None, visible=False):
 	
-		if experiment.debug:
-			print "mouse.__init__(): morphing into openexp._mouse.%s" % experiment.mouse_backend				
-			exec("import openexp._mouse.%s" % experiment.mouse_backend)
-			self.__class__ = eval("openexp._mouse.%s.%s" % (experiment.mouse_backend, experiment.mouse_backend))					
-		else:
-			try:
-				exec("import openexp._mouse.%s" % experiment.mouse_backend)
-				self.__class__ = eval("openexp._mouse.%s.%s" % (experiment.mouse_backend, experiment.mouse_backend))
-			except Exception as e:
-				raise exceptions.canvas_error("Failed to import 'openexp._mouse.%s' as mouse backend.<br /><br />Error: %s" % (experiment.backend, e))		
-											
-		exec("openexp._mouse.%s.%s.__init__(self, experiment, buttonlist, timeout, visible)" % (experiment.mouse_backend, experiment.mouse_backend))
-				
-
+		backend = experiment.mouse_backend		
+		debug.msg('morphing into %s' % backend)
+		mod = __import__('openexp._mouse.%s' % backend, fromlist=['dummy'])			
+		cls = getattr(mod, backend)
+		self.__class__ = cls
+		cls.__init__(self, experiment, buttonlist, timeout, visible)
 		

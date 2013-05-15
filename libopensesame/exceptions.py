@@ -22,14 +22,13 @@ import traceback
 class form_error(Exception):
 
 	"""
-	A form_error is thrown when parsing a script using the from_string()
-	functions fails
+	A form_error is thrown when an error occurs in a form or a form widget.
 	"""
 
 	def __init__(self, value, full=True):
 
 		if type(value) == str:
-			self.value = unicode(value, errors='ignore')
+			self.value = unicode(value, errors=u'ignore')
 		else:
 			self.value = value
 		self.full = full
@@ -37,7 +36,7 @@ class form_error(Exception):
 	def __str__(self):
 
 		if self.full:
-			return "<b>Error:</b> Form error<br /><b>Description</b>: %s" % \
+			return u'<b>Error:</b> Form error<br /><b>Description</b>: %s' % \
 				self.value
 		return self.value
 
@@ -45,13 +44,13 @@ class script_error(Exception):
 
 	"""
 	A form_error is thrown when parsing a script using the from_string()
-	functions fails
+	functions fails.
 	"""
 
 	def __init__(self, value, full=True):
 
 		if type(value) == str:
-			self.value = unicode(value, errors='ignore')
+			self.value = unicode(value, errors=u'ignore')
 		else:
 			self.value = value
 		self.full = full
@@ -59,7 +58,7 @@ class script_error(Exception):
 	def __str__(self):
 
 		if self.full:
-			return "<b>Error:</b> Script error<br /><b>Description</b>: %s" % \
+			return u'<b>Error:</b> Script error<br /><b>Description</b>: %s' % \
 				self.value
 		return self.value
 
@@ -73,13 +72,13 @@ class runtime_error(Exception):
 	def __init__(self, value):
 
 		if type(value) == str:
-			self.value = unicode(value, errors='ignore')
+			self.value = unicode(value, errors=u'ignore')
 		else:
 			self.value = value
 
 	def __str__(self):
 
-		return "<b>Error:</b> Runtime error<br /><b>Description</b>: %s" % \
+		return u'<b>Error:</b> Runtime error<br /><b>Description</b>: %s' % \
 			self.value
 
 class inline_error(runtime_error):
@@ -104,19 +103,19 @@ class inline_error(runtime_error):
 		# We are only interested in the last two lines
 		l = l[-3:]
 
-		s = "<b>Error</b>: Inline script error"
-		s += "<br /><b>In</b>: %s (%s phase)" % (item_name, phase)
-		s += "<br />" + self.parse_line(l[0])
-		s += "<br /><br /><b>Python traceback</b>:"
+		s = u'<b>Error</b>: Inline script error'
+		s += u'<br /><b>In</b>: %s (%s phase)' % (item_name, phase)
+		s += u'<br />' + self.parse_line(l[0])
+		s += u'<br /><br /><b>Python traceback</b>:'
 		for r in l[1:]:
-			s += "<br />%s" % r
-		s += "<br /><i>Full traceback in debug window</i>"
+			s += u'<br />%s' % r
+		s += u'<br /><i>Full traceback in debug window</i>'
 		self.value = s
 
 	def parse_line(self, s):
 
-		s = s.replace("File \"<string>\", line", "<b>Line:</b>")
-		s = s.replace(", in <module>", "")
+		s = s.replace(u'File "<string>", line', u'<b>Line:</b>')
+		s = s.replace(u', in <module>', u'')
 		return s
 
 	def __str__(self):

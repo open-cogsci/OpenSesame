@@ -34,28 +34,27 @@ class sketchpad(item.item, generic_response.generic_response):
 	implementation here and in the libqtopensesame.widgets.sketchpad_widget.
 	"""
 
+	description = u'Displays stimuli'
+
 	def __init__(self, name, experiment, string=None):
 
 		"""
-		Constructor
+		Constructor.
 
 		Arguments:
-		name -- name of the item
-		experiment -- experiment
+		name 		--	The name of the item.
+		experiment 	--	The experiment.
 
 		Keyword arguments:
-		string -- definition string (default=None)
+		string		-- 	The item definition string. (default=None)
 		"""
 
 		self.duration = "keypress"
 		self.start_response_interval = "no"
 		self.items = []
-		self.item_type = "sketchpad"
 		self.numeric_attrs = "x", "y", "x1", "y1", "r", "w", "h", "scale", \
 			"font_size", "penwidth", "arrow_size", "center", "fill", "orient", \
 			"freq", "phase", "stdev", "size"
-		if not hasattr(self, "description"):
-			self.description = "Displays stimuli"
 		item.item.__init__(self, name, experiment, string)
 
 	def unfix_coordinates(self, item):
@@ -276,16 +275,16 @@ class sketchpad(item.item, generic_response.generic_response):
 		item = {}
 
 		item["penwidth"] = 1
-		item["color"] = self.get("foreground")
+		item["color"] = self.get("foreground", _eval=False)
 		item["type"] = "undefined"
 		item["fill"] = 0
 		item["arrow_size"] = 20
 		item["center"] = 1
 		item["scale"] = 1.0
-		item["font_family"] = self.experiment.font_family
-		item["font_size"] = self.experiment.font_size
-		item["font_italic"] = self.experiment.font_italic
-		item["font_bold"] = self.experiment.font_bold
+		item["font_family"] = self.get('font_family', _eval=False)
+		item["font_size"] = self.get('font_size', _eval=False)
+		item["font_italic"] = self.get('font_italic', _eval=False)
+		item["font_bold"] = self.get('font_bold', _eval=False)
 
 		item["orient"] = 0
 		item["freq"] = 0.1
@@ -666,6 +665,7 @@ class sketchpad(item.item, generic_response.generic_response):
 		A list of (name, description) tuples
 		"""
 
+		l = item.item.var_info(self)
 		if self.get("duration", _eval=False) in ["keypress", "mouseclick"]:
-			return generic_response.generic_response.var_info(self)
-		return item.item.var_info(self)
+			l += generic_response.generic_response.var_info(self)
+		return l
