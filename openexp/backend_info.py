@@ -75,6 +75,7 @@ backend_list = {}
 backend_list["legacy"] = legacy
 backend_list["xpyriment"] = xpyriment
 backend_list["droid"] = droid
+
 # Do not add psychopy to the list on 64-bit OS X as this doesn't work
 if not (platform.system() == 'Darwin' and sys.maxsize > 2**32):
 	backend_list["psycho"] = psycho
