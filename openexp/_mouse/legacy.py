@@ -208,6 +208,12 @@ class legacy:
 		if self.cursor == None:
 			pygame.mouse.set_visible(visible)
 		elif visible:
+			if hasattr(self.experiment,"lastShownCanvas") and not self.experiment.lastShownCanvas is None:
+				background = self.experiment.lastShownCanvas
+			else:
+				background = self.experiment.window.copy()
+			
+			
 			pygame.mouse.set_visible(False)
 		
 		start_time = pygame.time.get_ticks()
@@ -218,7 +224,7 @@ class legacy:
 			
 			# Draw a cusom cursor if necessary
 			if self.cursor != None and visible:
-				surface = self.experiment.lastShownCanvas.copy()
+				surface = background.copy()
 				surface.blit(self.cursor, pygame.mouse.get_pos())
 				self.experiment.surface.blit(surface, (0,0))		
 				pygame.display.flip()
