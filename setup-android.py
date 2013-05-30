@@ -28,6 +28,16 @@ Assumptions
 - The Python modules are installed in the folder indicated under
 `module_folder`
 
+Build environment
+-----------------
+
+Currently, most development is done on Kubuntu 13.04. Most of the dependencies
+for pgs4a are described on their homepage, but in addition you need to install
+the Oracle Java JDK (v8 currently used). This is available from
+`ppa:webupd8team/java`. Instructions taken from:
+
+- <http://www.mameau.com/pygame-subset-for-android-pgs4a-on-ubuntu-precise-12-04/>
+
 Building
 --------
 
@@ -44,6 +54,28 @@ import shutil
 import sys
 import os
 import subprocess
+
+# List of included plug-ins
+included_plugins = [
+	'advanced_delay',
+	'external_script',
+	'fixation_dot',
+	'form_base',
+	'form_text_input',
+	'form_consent',
+	'form_text_display',
+	'form_multiple_choice',	
+	'joystick',
+	'notepad',
+	'parallel',		
+	'port_reader',
+	'repeat_cycle',	
+	'reset_feedback',	
+	'srbox',
+	'text_display',
+	'text_input',	
+	'touch_response',
+	]
 
 pgs4a_folder = 'pgs4a-0.9.4'
 module_folder = '/usr/lib/python2.7'
@@ -79,26 +111,6 @@ resources_whitelist = [
 	'sans.ttf',
 	'serif.ttf',
 	'android-splash.jpg'	
-	]
-	
-# Not all plugins are included
-included_plugins = [
-	"advanced_delay",
-	"external_script",
-	"fixation_dot",
-	"form_base",
-	"form_consent",
-	"form_text_display",
-	"form_text_input",
-	"form_multiple_choice",
-	"joystick",
-	"notepad",
-	"parallel",
-	"repeat_cycle",
-	"reset_feedback",
-	"srbox",
-	"text_display",
-	"text_input",
 	]
 	
 # A filter to ignore non-relevant package files

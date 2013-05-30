@@ -29,30 +29,32 @@ import fnmatch
 import libqtopensesame.qtopensesame
 import libopensesame.misc
 
+# List of included plug-ins
+included_plugins = [
+	'advanced_delay',
+	'external_script',
+	'fixation_dot',
+	'form_base',
+	'form_text_input',
+	'form_consent',
+	'form_text_display',
+	'form_multiple_choice',	
+	'joystick',
+	'notepad',
+	'parallel',		
+	'port_reader',
+	'repeat_cycle',	
+	'reset_feedback',	
+	'srbox',
+	'text_display',
+	'text_input',	
+	'touch_response',
+	]
+
 share_folder = "/usr/share/opensesame"
 
 exclude_resources = [
 	'.hidden',
-	]
-
-# Not all plugins are included
-included_plugins = [
-	"advanced_delay",
-	"external_script",
-	"fixation_dot",
-	"form_base",
-	"form_consent",
-	"form_text_display",
-	"form_text_input",
-	"form_multiple_choice",
-	"joystick",
-	"notepad",
-	"parallel",
-	"repeat_cycle",
-	"reset_feedback",
-	"srbox",
-	"text_display",
-	"text_input",
 	]
 
 def resources():

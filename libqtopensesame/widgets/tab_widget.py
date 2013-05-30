@@ -35,10 +35,27 @@ class tab_widget(QtGui.QTabWidget):
 		"""	
 	
 		QtGui.QTabWidget.__init__(self, parent)		
-		self.tabCloseRequested.connect(self.removeTab)				
+		try:
+			self.tabCloseRequested.connect(self.removeTab)
+		except:
+			# Catch what appears to be a bug in earlier versions of PyQt4.
+			self.tabCloseRequested.connect(self._removeTab)
 		self.currentChanged.connect(self.index_changed)
 		self.setSizePolicy(QtGui.QSizePolicy.MinimumExpanding, \
 			QtGui.QSizePolicy.MinimumExpanding)
+		
+	def _removeTab(self, i):
+		
+		"""
+		This is simply a wrapper around QTabWidget.removeTab(). For some reason,
+		connecting this function to tabCloseRequested causes an exception on
+		older versions of PyQt4. This functions is a workaround.
+		
+		Arguments:
+		i		--	The index of the tab to close.
+		"""
+		
+		self.removeTab(i)
 		
 	def add(self, widget, icon, name):
 	

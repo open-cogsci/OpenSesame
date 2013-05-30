@@ -95,7 +95,7 @@ class legacy:
 		"pygame_doublebuf" : {
 			"name" : "Double buffering",
 			"description" : "Use double buffering",
-			"default" : "yes"
+			"default" : "no"
 			},
 		"pygame_window_frame" : {
 			"name" : "Draw window frame",
@@ -326,8 +326,10 @@ class legacy:
 		</DOC>"""
 
 		self.experiment.surface.blit(self.surface, (0, 0))
+		self.experiment.last_shown_canvas = self.surface
 		pygame.display.flip()
 		return pygame.time.get_ticks()
+		
 
 	def clear(self, color=None):
 

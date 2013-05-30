@@ -34,14 +34,14 @@ class inline_script(libopensesame.inline_script.inline_script, qtitem.qtitem):
 	def __init__(self, name, experiment, string=None):
 
 		"""
-		Constructor
+		Constructor.
 
 		Arguments:
-		name -- the item name
-		experiment -- the experiment
+		name 		--	The item name.
+		experiment	--	The experiment object.
 
 		Keywords arguments:
-		string -- definition string
+		string		--	A definition string. (default=None)
 		"""
 
 		libopensesame.inline_script.inline_script.__init__(self, name, \
@@ -53,16 +53,15 @@ class inline_script(libopensesame.inline_script.inline_script, qtitem.qtitem):
 	def apply_edit_changes(self, dummy=None, dummy2=None, catch=True):
 
 		"""
-		Apply the controls
+		Applies the controls.
 
 		Keywords arguments:
-		dummy -- dummy argument
-		dummy2 -- dummy argument
-		catch -- deprecated argument
+		dummy	--	A dummy argument. (default=None)
+		dummy2	--	A dummy argument. (default=None)
+		catch	--	A deprecated argument. (default=True)
 		"""
 
 		qtitem.qtitem.apply_edit_changes(self, False)
-
 		sp = self.textedit_prepare.edit.toPlainText()
 		sr = self.textedit_run.edit.toPlainText()
 		self.set(u'_prepare', sp)
@@ -71,13 +70,12 @@ class inline_script(libopensesame.inline_script.inline_script, qtitem.qtitem):
 		self._var_info = None
 		self.experiment.main_window.refresh(self.name)
 		self.lock = False
-
 		self.textedit_prepare.setModified(False)
 		self.textedit_run.setModified(False)
 
 	def init_edit_widget(self):
 
-		"""Construct the GUI controls"""
+		"""Constructs the GUI controls."""
 
 		qtitem.qtitem.init_edit_widget(self, False)
 
@@ -136,10 +134,10 @@ class inline_script(libopensesame.inline_script.inline_script, qtitem.qtitem):
 	def edit_widget(self):
 
 		"""
-		Update the GUI controls
+		Updates the GUI controls.
 
 		Returns:
-		The control QWidget
+		The control QWidget.
 		"""
 
 		qtitem.qtitem.edit_widget(self, False)
@@ -150,7 +148,7 @@ class inline_script(libopensesame.inline_script.inline_script, qtitem.qtitem):
 
 	def get_ready(self):
 
-		"""Apply pending script changes"""
+		"""Applies pending script changes."""
 
 		if self.textedit_prepare.isModified() or self.textedit_run.isModified():
 			debug.msg(u'applying pending script changes')

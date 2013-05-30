@@ -19,7 +19,8 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 
 import os
 from PyQt4 import QtGui, QtCore
-from PyQt4.Qsci import QsciScintilla, QsciScintillaBase, QsciLexerPython
+from PyQt4.Qsci import QsciScintilla, QsciScintillaBase, QsciLexerPython, \
+	QSCINTILLA_VERSION
 from libqtopensesame.misc import config, _
 from libqtopensesame.dialogs.replace_dialog import replace_dialog
 from libopensesame import debug
@@ -65,6 +66,7 @@ class scintilla(QsciScintilla):
 		self.refresh_layout = True
 		self.cfg_ver = config.get_config("cfg_ver")
 		self.setUtf8(True)
+		self.setEolMode(self.EolUnix)
 
 	def paintEvent(self, e):
 
@@ -78,7 +80,7 @@ class scintilla(QsciScintilla):
 	def set_layout(self):
 
 		"""Initialize the editor layout"""
-
+		
 		if config.get_config("scintilla_custom_font"):
 			font_family = config.get_config("scintilla_font_family")
 		elif os.name == "posix":
@@ -88,7 +90,7 @@ class scintilla(QsciScintilla):
 		font = QtGui.QFont(font_family)
 		font.setFixedPitch(True)
 		if config.get_config("scintilla_custom_font"):
-			font.setPointSize(config.get_config("scintilla_font_size"))
+			font.setPointSize(config.get_config("scintilla_font_size"))		
 
 		fm = QtGui.QFontMetrics(font)
 		self.setFont(font)
@@ -134,19 +136,24 @@ class scintilla(QsciScintilla):
 			self.setBraceMatching(QsciScintilla.SloppyBraceMatch)
 		else:
 			self.setBraceMatching(QsciScintilla.NoBraceMatch)
-
-		# Set syntax highlightinh
+			
+		# Set syntax highlighting.
 		if config.get_config("scintilla_syntax_highlighting") and \
 			(self.syntax == "python" or self.syntax == "opensesame"):
 			self.setLexer(python_lexer(font))
 			for i in range(16): # There are properties that need to be forced
-				self.SendScintilla(QsciScintilla.SCI_STYLESETFONT, i, \
-					font.family())
+				# In Ubuntu 13.04, forcing the font actually causes the font
+				# to be reset. This is an ugly hack to prevent that from
+				# happening, assuming that this regression is due to the version
+				# of Qscintilla.
+				if QSCINTILLA_VERSION < 132865:
+					self.SendScintilla(QsciScintilla.SCI_STYLESETFONT, i, \
+						font.family())
 				self.SendScintilla(QsciScintilla.SCI_STYLESETSIZE, i, \
 					font.pointSize())
 		else:
 			self.setLexer(None)
-			self.SendScintilla(QsciScintilla.SCI_CLEARDOCUMENTSTYLE)
+			self.SendScintilla(QsciScintilla.SCI_CLEARDOCUMENTSTYLE)				
 
 	def toPlainText(self):
 
@@ -157,8 +164,7 @@ class scintilla(QsciScintilla):
 		A unicode string with the editor contents
 		"""
 
-		# Make sure that operating specific eol's are converted to unix style
-		return  unicode(self.text()).replace(os.linesep, '\n')
+		return unicode(self.text())
 
 	def setPlainText(self, s, set_modified=False):
 
