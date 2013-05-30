@@ -1373,6 +1373,10 @@ class qtopensesame(QtGui.QMainWindow):
 
 		exp.auto_response = self.experiment.auto_response
 
+###############################################################################
+## Daniel change from here
+
+
 		# Reroute the standard output to the debug window
 		buf = pyterm.output_buffer(self.ui.edit_stdout)
 		sys.stdout = buf
@@ -1418,6 +1422,9 @@ class qtopensesame(QtGui.QMainWindow):
 		if self.autosave_timer != None:
 			debug.msg("resuming autosave timer")
 			self.autosave_timer.start()
+
+## Daniel End changes here
+###############################################################################
 
 		# Restart the experiment if necessary
 		if exp.restart:

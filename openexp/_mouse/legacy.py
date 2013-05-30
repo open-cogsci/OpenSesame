@@ -208,8 +208,13 @@ class legacy:
 		if self.cursor == None:
 			pygame.mouse.set_visible(visible)
 		elif visible:
+			if hasattr(self.experiment,"lastShownCanvas") and not self.experiment.lastShownCanvas is None:
+				background = self.experiment.lastShownCanvas
+			else:
+				background = self.experiment.window.copy()
+			
+			
 			pygame.mouse.set_visible(False)
-			bg_surface = self.experiment.window.copy()
 		
 		start_time = pygame.time.get_ticks()
 		time = start_time
@@ -219,7 +224,7 @@ class legacy:
 			
 			# Draw a cusom cursor if necessary
 			if self.cursor != None and visible:
-				surface = bg_surface.copy()
+				surface = background.copy()
 				surface.blit(self.cursor, pygame.mouse.get_pos())
 				self.experiment.surface.blit(surface, (0,0))		
 				pygame.display.flip()
@@ -245,8 +250,9 @@ class legacy:
 										raise openexp.exceptions.response_error( \
 											"The escape sequence was clicked/ tapped")
 						
-					if buttonlist == None or event.button in buttonlist:
-						pygame.mouse.set_visible(self.visible)
+					if (buttonlist == None or event.button in buttonlist):
+						if self.cursor is None:						
+							pygame.mouse.set_visible(self.visible)
 						return event.button, event.pos, time
 			if timeout != None and time-start_time >= timeout:
 				break
