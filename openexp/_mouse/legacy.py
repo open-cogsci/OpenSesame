@@ -218,7 +218,7 @@ class legacy:
 			
 			# Draw a cusom cursor if necessary
 			if self.cursor != None and visible:
-				surface = self.experiment.lastShownCanvas.copy()
+				surface = self.experiment.last_shown_canvas.copy()
 				surface.blit(self.cursor, pygame.mouse.get_pos())
 				self.experiment.surface.blit(surface, (0,0))		
 				pygame.display.flip()

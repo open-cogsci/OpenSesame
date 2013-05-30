@@ -326,7 +326,7 @@ class legacy:
 		</DOC>"""
 
 		self.experiment.surface.blit(self.surface, (0, 0))
-		self.experiment.lastShownCanvas = self.surface
+		self.experiment.last_shown_canvas = self.surface
 		pygame.display.flip()
 		return pygame.time.get_ticks()
 		

@@ -146,7 +146,7 @@ class xpyriment(openexp._canvas.legacy.legacy):
 
 		if not self.prepared: self.prepare()
 		self._canvas.present()
-		self.experiment.lastShownCanvas = self._canvas
+		self.experiment.last_shown_canvas = self._canvas
 		return self.experiment.time()
 
 	def clear(self, color=None):
