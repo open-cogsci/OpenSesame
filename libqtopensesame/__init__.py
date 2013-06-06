@@ -27,4 +27,6 @@ if QtCore.QCoreApplication != None:
 	from libqtopensesame.items import qtplugin
 	from libqtopensesame.widgets import inline_editor, pool_widget
 else:
+	# Load dummy modules to avoid dependency on PyQt4
 	from libqtopensesame.misc import dummy as qtplugin
+	from libqtopensesame.misc import dummy as qtautoplugin

@@ -18,7 +18,6 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 import os
-import json
 from libqtopensesame.items.qtplugin import qtplugin
 from libqtopensesame.misc import _
 
@@ -34,6 +33,11 @@ class qtautoplugin(qtplugin):
 
 		"""Construct the GUI controls based on info.json"""
 
+		# Import json only when required, as it is not necessary for the
+		# runtime environment and may be not available on all platforms,
+		# notably Android.
+		import json
+	
 		self.lock = True
 		qtplugin.init_edit_widget(self, False)		
 		# Load info.json
