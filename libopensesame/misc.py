@@ -372,3 +372,21 @@ def filesystem_encoding():
 	if enc == None:
 		enc = u'utf-8'
 	return enc
+
+def strip_html(s):
+	
+	"""
+	Strips basic HTML tags from a string.
+	
+	Arguments:
+	s		--	A string to strip.
+		
+	Returns:
+	A stripped string.
+	"""
+	
+	s = s.replace(u'<br />', u'\n')
+	for tag in [u'<i>', u'</i>', u'<b>', u'</b>']:
+		s = s.replace(tag, u'')
+	return s
+	

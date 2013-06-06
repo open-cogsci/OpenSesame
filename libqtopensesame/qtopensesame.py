@@ -1177,8 +1177,8 @@ class qtopensesame(QtGui.QMainWindow):
 		out = pyterm.output_buffer(self.ui.edit_stdout)
 		if isinstance(msg, Exception):
 			import traceback
-			for s in traceback.format_exc(msg).split('\n'):
-				out.write(s)
+			for s in traceback.format_exc(msg).split(u'\n'):
+				out.write(misc.strip_html(s))
 		else:
 			out.write(self.experiment.unistr(msg))
 
