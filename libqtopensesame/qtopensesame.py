@@ -965,12 +965,13 @@ class qtopensesame(QtGui.QMainWindow):
 		"""Save the current experiment after asking for a file name"""
 
 		if self.current_path == None:
-			cfg.file_dialog_path = os.path.join(self.home_folder, self.experiment.sanitize( \
-				self.experiment.title, strict=True, allow_vars=False))
+			cfg.file_dialog_path = os.path.join(self.home_folder, \
+				self.experiment.sanitize(self.experiment.title, strict=True, \
+				allow_vars=False))
 		else:
 			cfg.file_dialog_path = self.current_path
 		path, file_type = QtGui.QFileDialog.getSaveFileNameAndFilter( \
-			self.ui.centralwidget, _("Save file as ..."), directory= \
+			self.ui.centralwidget, _(u'Save file as ...'), directory= \
 			cfg.file_dialog_path, filter=self.file_type_filter)
 
 		if path != None and path != "":
@@ -980,17 +981,17 @@ class qtopensesame(QtGui.QMainWindow):
 			# If the extension has not been explicitly typed in, set it based
 			# on the selected filter and, if no filter has been set, based on
 			# whether there is content in the file pool
-			if path[-18:].lower() != ".opensesame.tar.gz" and \
-				path[-11:].lower() != ".opensesame":
-				debug.msg("automagically determing file type")
-				if "(*.opensesame)" in file_type:
-					path += ".opensesame"
-				elif "(*.opensesame.tar.gz)" in file_type:
-					path += ".opensesame.tar.gz"
+			if path[-18:].lower() != u".opensesame.tar.gz" and \
+				path[-11:].lower() != u".opensesame":
+				debug.msg(u"automagically determing file type")
+				if u"(*.opensesame)" in file_type:
+					path += u".opensesame"
+				elif u"(*.opensesame.tar.gz)" in file_type:
+					path += u".opensesame.tar.gz"
 				elif len(os.listdir(self.experiment.pool_folder)) == 0:
-					path += ".opensesame"
+					path += u".opensesame"
 				else:
-					path += ".opensesame.tar.gz"
+					path += u".opensesame.tar.gz"
 				debug.msg(path)
 
 			self.current_path = path
@@ -1177,7 +1178,12 @@ class qtopensesame(QtGui.QMainWindow):
 		out = pyterm.output_buffer(self.ui.edit_stdout)
 		if isinstance(msg, Exception):
 			import traceback
-			for s in traceback.format_exc(msg).split(u'\n'):
+			# The traceback may contain special characters, so it needs to
+			# be properly decoded. For some reason, it appears to encoded with
+			# the filesystem encoding, at least on Windows 7.
+			tb = traceback.format_exc(msg).decode(misc.filesystem_encoding(), \
+				errors=u'ignore')
+			for s in tb.split(u'\n'):
 				out.write(misc.strip_html(s))
 		else:
 			out.write(self.experiment.unistr(msg))

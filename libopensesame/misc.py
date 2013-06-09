@@ -214,24 +214,23 @@ def resource(name):
 def home_folder():
 
 	"""
-	Determines the home folder
+	Determines the home folder.
 
 	Returns:
-	A path to the home folder
+	A path to the home folder.
 	"""
 
 	import platform
-
-	# Determine the home folder
 	if platform.system() == u"Windows":
-		return os.environ[u"APPDATA"]
-	if platform.system() == u"Darwin":
-		return os.environ[u"HOME"]
-	if platform.system() == u"Linux":
-		return os.environ[u"HOME"]
-	home_folder = os.environ[u"HOME"]
-	print u"qtopensesame.__init__(): unknown platform '%s', using '%s' as home folder" \
-		% (platform.system(), home_folder)
+		home_folder = os.environ[u"APPDATA"]
+	elif platform.system() == u"Darwin":
+		home_folder = os.environ[u"HOME"]
+	elif platform.system() == u"Linux":
+		home_folder = os.environ[u"HOME"]
+	else:
+		home_folder = os.environ[u"HOME"]
+	if isinstance(home_folder, str):
+		home_folder = home_folder.decode(filesystem_encoding())
 	return home_folder
 
 def module_versions():
