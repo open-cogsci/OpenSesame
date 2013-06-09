@@ -245,8 +245,7 @@ def module_versions():
 	from PyQt4 import QtCore
 
 	s = u"OpenSesame %s" % version
-	s += u"\nPython %d.%d.%d" % (sys.version_info[0], sys.version_info[1], \
-		sys.version_info[2])
+	s += u"\nPython %s" % sys.version
 
 	# OpenCV
 	try:
@@ -258,7 +257,11 @@ def module_versions():
 	# OpenCV 2
 	try:
 		import cv2
-		s += u'\nOpenCV 2 is available (version is unknown)'
+		if hasattr(cv2, u'__version__'):
+			ver = cv2.__version__
+		else:
+			ver = u'(version unknown)'
+		s += u'\nOpenCV2 %s' % ver
 	except:
 		s += u'\nOpenCV 2 is not available'
 
