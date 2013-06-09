@@ -52,7 +52,7 @@ class legacy:
 		"custom_cursor" : {
 			"name" : "Custom cursor",
 			"description" : "Bypass the system mouse cursor",
-			"default" : "yes"
+			"default" : "no"
 			},
 		"enable_escape" : {
 			"name" : "Enable escape",
@@ -86,7 +86,7 @@ class legacy:
 		self.set_buttonlist(buttonlist)
 		self.set_timeout(timeout)
 		self.set_visible(visible)		
-		if self.experiment.get_check('custom_cursor', 'yes') == 'yes':
+		if self.experiment.get_check('custom_cursor', 'no') == 'yes':
 			self.cursor = pygame.image.load(self.experiment.resource( \
 				'cursor.png'))		
 		else:
