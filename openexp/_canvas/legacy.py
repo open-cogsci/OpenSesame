@@ -204,8 +204,15 @@ class legacy:
 		"""
 
 		if self._current_font == None:
-			self._current_font = pygame.font.Font(self.experiment.resource( \
-				"%s.ttf" % self.font_style), self.font_size)
+			# First see if the font refers to a file in the resources/ filepool
+			try:
+				font_path = self.experiment.resource(u'%s.ttf' % \
+					self.font_style)
+				self._current_font = pygame.font.Font(font_path, self.font_size)
+			# If not, try to match a system font
+			except:
+				self._current_font = pygame.font.SysFont(self.font_style, \
+					self.font_size)				
 			self._current_font.set_bold(self.font_bold)
 			self._current_font.set_italic(self.font_italic)
 			self._current_font.set_underline(self.font_underline)
