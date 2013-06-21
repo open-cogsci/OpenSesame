@@ -169,7 +169,7 @@ for module in module_list:
 print 'Copying dummy PyQt4'
 shutil.copytree('resources/android/PyQt4', os.path.join(target, 'PyQt4'))
 print 'Copying main.py'
-shutil.copyfile('packageandroid.py', os.path.join(target, 'main.py'))
+shutil.copyfile('standalone-android.py', os.path.join(target, 'main.py'))
 print 'Copying .android.json'
 shutil.copyfile('resources/android/android.json', os.path.join(target, \
 	'.android.json'))
