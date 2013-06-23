@@ -478,7 +478,7 @@ class experiment(item.item):
 		self.experiment_path = os.path.dirname(path)
 		return path
 
-	def open(self, path):
+	def open(self, src):
 
 		"""
 		If the path exists, open the file, extract the pool and return the
@@ -486,23 +486,28 @@ class experiment(item.item):
 		string, because it probably was a definition to begin with.
 
 		Arguments:
-		path	--	The file to be opened, or a definition string.
+		src		--	A definition string or a file to be opened.
 
 		Returns:
 		A unicode defition string.
 		"""
 		
-		# Convert to string using the filesystem encoding 
-		if isinstance(path, unicode):
-			path = path.encode(misc.filesystem_encoding())		
-
 		# If the path is not a path at all, but a string containing
 		# the script, return it. Also, convert the path back to Unicode before
 		# returning.
-		if not os.path.exists(path):
+		if not os.path.exists(src):
 			debug.msg(u"opening from unicode string")
 			self.experiment_path = None
-			return path.decode(misc.filesystem_encoding())
+			if isinstance(src, unicode):
+				return src
+			return src.decode(self.encoding, errors=u'replace')
+			
+		# Otherwise, src is a pathname, and we need to convert it to the
+		# filesystem encoding if it is a Unicode string.
+		if isinstance(src, unicode):
+			path = src.encode(misc.filesystem_encoding())					
+		else:
+			path = src
 
 		# If the file is a regular text script,
 		# read it and return it

@@ -112,12 +112,14 @@ class inline_script(item.item):
 		_globals[u'self'] = self
 		# Compile prepare script
 		try:
-			self.cprepare = compile(self._prepare, u'<string>', u'exec')
+			self.cprepare = compile(self._prepare.encode(self.encoding), \
+				u'<string>', u'exec')
 		except Exception as e:
 			raise exceptions.inline_error(self.name, u'prepare', e)
 		# Compile run script
 		try:
-			self.crun = compile(self._run, u'<string>', u'exec')
+			self.crun = compile(self._run.encode(self.encoding), \
+				u'<string>', u'exec')
 		except Exception as e:
 			raise exceptions.inline_error(self.name, u'run', e)
 		# Run prepare script
