@@ -1433,7 +1433,7 @@ class qtopensesame(QtGui.QMainWindow):
 							print "%s: %s" % (type(msg), msg)
 						channel.task_done()							
 					else:
-						time.sleep(0.2)
+						time.sleep(0.1)
 						
 				# Exp process is finished, check error code
 				if exp_process.exitcode != 0:
@@ -1444,7 +1444,10 @@ class qtopensesame(QtGui.QMainWindow):
 			except Exception as e:
 				# Report the error
 				self.experiment.notify(_("Critical error! Experiment process did not complete successfully: <b>%s</b>" % self.experiment.unistr(e)))
-				self.print_debug_window(e)		
+				self.print_debug_window(e)
+			finally:
+				# Cleanup the process
+				del(exp_process)
 				
 
 		# Undo the standard output rerouting
@@ -1456,6 +1459,7 @@ class qtopensesame(QtGui.QMainWindow):
 			debug.msg("resuming autosave timer")
 			self.autosave_timer.start()			
 			
+	
 	def run_experiment_orig(self, dummy=None, fullscreen=True, quick=False):
 
 		"""
