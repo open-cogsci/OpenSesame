@@ -840,8 +840,6 @@ class item(object):
 			raise exceptions.runtime_error( \
 			u'unsanitize() expects first argument to be unicode or str, not "%s"' \
 			% type(s))
-		if not isinstance(s, str):
-			s = s.decode(self.encoding)			
 		s = self.unistr(s)
 		while True:
 			m = regexp.unsanitize.search(s)

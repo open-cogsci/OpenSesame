@@ -343,9 +343,11 @@ class experiment(item.item):
 		name	--	The file name.
 
 		Returns:
-		The full path to the file in the resources folder.
+		A Unicode string with the full path to the file in the resources
+		folder.
 		"""
 
+		name = self.unistr(name)		
 		if self != None:
 			if name in self.resources:
 				return self.resources[name]
@@ -381,11 +383,11 @@ class experiment(item.item):
 			raise exceptions.runtime_error( \
 				u"A string should be passed to experiment.get_file(), not '%s'" \
 				% path)
+		if isinstance(path, str):
+			path = path.decode(self.encoding, errors=u'ignore')				
 		if path.strip() == u'':
 			raise exceptions.runtime_error( \
 				u"An empty string was passed to experiment.get_file(). Please specify a valid filename.")				
-		if isinstance(path, unicode):
-			path = path.encode(misc.filesystem_encoding())
 		if os.path.exists(os.path.join(self.pool_folder, path)):
 			return os.path.join(self.pool_folder, path)
 		elif self.experiment_path != None and os.path.exists(os.path.join( \
@@ -430,6 +432,8 @@ class experiment(item.item):
 		The path on successfull saving or False otherwise.
 		"""
 
+		if isinstance(path, str):
+			path = path.decode(self.encoding)
 		debug.msg(u'asked to save "%s"' % path)
 		# Determine the extension
 		ext = os.path.splitext(path)[1].lower()
@@ -458,22 +462,22 @@ class experiment(item.item):
 		# Create the archive in a a temporary folder and move it afterwards.
 		# This hack is needed, because tarfile fails on a Unicode path.
 		tmp_path = tempfile.mktemp(suffix=u'.opensesame.tar.gz')
-		tar = tarfile.open(tmp_path, u'w:gz', format=tarfile.PAX_FORMAT)
+		tar = tarfile.open(tmp_path, u'w:gz')
 		tar.add(script_path, u'script.opensesame')
 		os.remove(script_path)
 		# We also create a temporary pool folder, where all the filenames are
 		# Unicode sanitized to ASCII format. Again, this is necessary to deal
 		# with poor Unicode support in .tar.gz.
 		tmp_pool = tempfile.mkdtemp(suffix=u'.opensesame.pool')
-		for fname in os.listdir(self.pool_folder):
+		for fname in os.listdir(self.pool_folder):			
 			sname = self.usanitize(fname)
-			shutil.move(os.path.join(self.pool_folder, fname), os.path.join( \
-				tmp_pool, sname))
+			shutil.copyfile(os.path.join(self.pool_folder, fname), \
+				os.path.join(tmp_pool, sname))
 		tar.add(tmp_pool, u'pool', True)		
 		tar.close()
 		# Move the file to the intended location
 		shutil.move(tmp_path, path)
-		self.experiment_path = os.path.dirname(path)
+		self.experiment_path = os.path.dirname(path)		
 		return path
 
 	def open(self, src):
@@ -494,28 +498,22 @@ class experiment(item.item):
 		# the script, return it. Also, convert the path back to Unicode before
 		# returning.
 		if not os.path.exists(src):
-			debug.msg(u"opening from unicode string")
+			debug.msg(u'opening from unicode string')
 			self.experiment_path = None
 			if isinstance(src, unicode):
 				return src
 			return src.decode(self.encoding, errors=u'replace')		
-		# Otherwise, src is a pathname, and we need to convert it to the
-		# filesystem encoding if it is a Unicode string.
-		if isinstance(src, unicode):
-			path = src.encode(misc.filesystem_encoding())					
-		else:
-			path = src
 		# If the file is a regular text script,
 		# read it and return it
-		ext = u".opensesame.tar.gz"
-		if path[-len(ext):] != ext:
-			debug.msg(u"opening .opensesame file")
-			self.experiment_path = os.path.dirname(path)
-			return self.unsanitize(open(path, u"rU").read())
+		ext = u'.opensesame.tar.gz'
+		if src[-len(ext):] != ext:
+			debug.msg(u'opening .opensesame file')
+			self.experiment_path = os.path.dirname(src)
+			return self.unsanitize(open(src, u'rU').read())
 		debug.msg(u"opening .opensesame.tar.gz file")
 		# If the file is a .tar.gz archive, extract the pool to the pool folder
 		# and return the contents of opensesame.script.
-		tar = tarfile.open(path, u"r:gz", format=tarfile.PAX_FORMAT)
+		tar = tarfile.open(src, u'r:gz')
 		for name in tar.getnames():
 			# Here, all paths except name are Unicode. In addition, fname is
 			# Unicode unsanitized, because the files as saved are Unicode
@@ -534,7 +532,7 @@ class experiment(item.item):
 		tar.extract(u"script.opensesame", self.pool_folder)
 		script = self.unsanitize(open(script_path, u"rU").read())
 		os.remove(script_path)
-		self.experiment_path = os.path.dirname(path)
+		self.experiment_path = os.path.dirname(src)
 		return script
 
 	def reset_feedback(self):
