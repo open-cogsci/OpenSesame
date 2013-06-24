@@ -17,5 +17,11 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """ 
 
+import sys
 from libopensesame import debug
+from libqtopensesame.misc import dummy
 debug.msg('using dummy PyQt4')
+sys.modules['libqtopensesame.items.qtplugin'] = dummy
+sys.modules['libqtopensesame.items.qtautoplugin'] = dummy
+sys.modules['libqtopensesame.qtplugin'] = dummy
+sys.modules['libqtopensesame.qtautoplugin'] = dummy

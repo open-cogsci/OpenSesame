@@ -153,7 +153,7 @@ class tab_widget(QtGui.QTabWidget):
 
 		"""Open the about help tab"""
 
-		self.open_help("About", "about")				
+		self.open_browser(u'http://osdoc.cogsci.nl/about/')
 		
 	def open_browser(self, url):
 	

@@ -27,3 +27,13 @@ OpenSesame contains works of others. For the full license information, please re
 Installation instructions and documentation are available on the documentation website:
 
 - <http://osdoc.cogsci.nl/>
+
+4. Building packages
+--------------------
+
+Instructions for building OpenSesame on the various systems are included in the setup scripts. See the following files:
+
+- `setup.py` for Linux
+- `setup-win32.py` for Windows XP/ 7/ 8
+- `setup-mac.py` for Mac OS(X)
+- `setup-android.py` for Android

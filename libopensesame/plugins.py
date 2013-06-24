@@ -73,7 +73,8 @@ def plugin_folders(only_existing=True):
 		
 	elif os.name == u'nt':
 		# Windows
-		path = os.path.join(os.environ[u'APPDATA'], u'.opensesame', u'plugins')
+		path = os.path.join(os.environ[u'APPDATA'].decode( \
+			misc.filesystem_encoding()), u'.opensesame', u'plugins')
 		if not only_existing or os.path.exists(path):
 			l.append(path)		
 			

@@ -105,9 +105,11 @@ class inline_script(item.item):
 		# statements do not suffer from locality.
 		if u'exp' not in _globals:
 			_globals[u'exp'] = self.experiment
-			_globals[u'win'] = self.experiment.window
-			_globals[u'self'] = self
+			_globals[u'win'] = self.experiment.window			
 			_globals[u'__name__'] = u'myname'
+		# 'self' must always be registered, otherwise we get confusions between
+		# the various inline_script items.
+		_globals[u'self'] = self
 		# Compile prepare script
 		try:
 			self.cprepare = compile(self._prepare, u'<string>', u'exec')

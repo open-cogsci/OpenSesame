@@ -32,7 +32,7 @@ class item(object):
 	such as sketchpad, keyboard_response, experiment, etc.
 	"""
 
-	encoding = 'UTF-8'
+	encoding = u'utf-8'
 
 	def __init__(self, name, experiment, string=None):
 

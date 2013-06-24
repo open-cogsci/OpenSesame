@@ -61,7 +61,10 @@ class form:
 			self.rows = [float(r)/sum(rows) for r in rows]
 
 		self.experiment = experiment
-		self.item = item
+		if item != None:
+			self.item = item
+		else:
+			self.item = experiment
 		self.width = experiment.get('width')
 		self.height = experiment.get('height')
 		self.spacing = spacing
@@ -69,8 +72,10 @@ class form:
 			min_len=4, max_len=4)		
 		n_cells = len(self.cols)*len(self.rows)
 		self.widgets = [None]*n_cells
-		self.span = [(1,1)]*n_cells
-		self.canvas = canvas(self.experiment, auto_prepare=False)
+		self.span = [(1,1)]*n_cells		
+		self.canvas = canvas(self.experiment, auto_prepare=False, fgcolor= \
+			self.item.get(u'foreground'), bgcolor=self.item.get( \
+			u'background'))
 
 		if theme == 'gray':
 			from themes.gray import gray

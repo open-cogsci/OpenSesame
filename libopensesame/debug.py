@@ -56,7 +56,7 @@ def msg(msg=u'', reason=None):
 		while len(st) > 0:
 			print u' %.3d\t%s\t' % (i, parse_stack(st.pop()))
 			i += 1
-
+			
 enabled = '--debug' in sys.argv or '-d' in sys.argv
 if enabled:
 	import inspect
