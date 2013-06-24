@@ -47,6 +47,8 @@ class droid(openexp._mouse.legacy.legacy):
 	
 		"""See openexp._mouse.legacy"""		
 	
+		# clear() command added to prevent carry-over from previous screen-presses.
+		pygame.event.clear()
 		if android == None:
 			pygame.mouse.set_visible(True)
 		if buttonlist == None:
