@@ -98,8 +98,7 @@ class inline_script(item.item):
 		
 		item.item.prepare(self)
 		if self.experiment.transparent_variables == u'yes':
-			self.start_transparency()
-		
+			self.start_transparency()		
 		# Convenience variables need to be registered as globals. By specifying
 		# a __name__, the script will function as a module, so that e.g. import
 		# statements do not suffer from locality.
@@ -110,16 +109,20 @@ class inline_script(item.item):
 		# 'self' must always be registered, otherwise we get confusions between
 		# the various inline_script items.
 		_globals[u'self'] = self
+		# Prepend source encoding (PEP 0263) and encode scripts. This is
+		# necessary, because the exec statement doesn't take kindly to Unicode.
+		_prepare = (u'#-*- coding:%s -*-\n' % self.encoding + self._prepare) \
+			.encode(self.encoding)
+		_run = (u'#-*- coding:%s -*-\n' % self.encoding + self._run) \
+			.encode(self.encoding)			
 		# Compile prepare script
 		try:
-			self.cprepare = compile(self._prepare.encode(self.encoding), \
-				u'<string>', u'exec')
+			self.cprepare = compile(_prepare, u'<string>', u'exec')
 		except Exception as e:
 			raise exceptions.inline_error(self.name, u'prepare', e)
 		# Compile run script
 		try:
-			self.crun = compile(self._run.encode(self.encoding), \
-				u'<string>', u'exec')
+			self.crun = compile(_run, u'<string>', u'exec')
 		except Exception as e:
 			raise exceptions.inline_error(self.name, u'run', e)
 		# Run prepare script
