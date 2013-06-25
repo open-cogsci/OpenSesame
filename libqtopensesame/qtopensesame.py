@@ -1429,7 +1429,7 @@ class qtopensesame(QtGui.QMainWindow):
 									% self.experiment.unistr(e))
 								self.print_debug_window(tb)
 						else:
-							print "Unkown message type:"
+							print "Unkown message type received from experiment process:"
 							print "%s: %s" % (type(msg), msg)
 						channel.task_done()							
 					else:

@@ -111,13 +111,13 @@ class ExperimentProcess(multiprocessing.Process):
 			exp.logfile = self.logfile
 			exp.auto_response = self.auto_response
 			print "Starting experiment as %s" % self.name
-			exp.run()				
-								
+			exp.run()
+			exp.end()
+			libopensesame.experiment.clean_up(exp.debug)	# Is this still necessary if the process gets killed afterwards anyway?									
+			sys.exit(0)	# Quit process without error
 		except Exception as e:
-			import traceback	
-			#print type(e)
-			#print traceback.format_exc()
-			#self.output.put((e,traceback.format_exc()))
+			import traceback
 			self.output.put((e, traceback.format_exc()))
-			#self.output.join()
 			sys.exit(1)
+			
+		
