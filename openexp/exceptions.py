@@ -18,40 +18,34 @@ along with openexp.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 class openexp_error(Exception):
-
-	def __init__(self, value):
-
+	def __init__(self, value, *args):
+		super(openexp_error, self).__init__(value, args)
 		if type(value) == str:
 			self.value = unicode(value, errors='ignore')
 		else:
 			self.value = value
 		
-	def __str__(self):
-	
+	def __str__(self):	
 		return self.value
 
 class canvas_error(openexp_error):
-
-	def __init__(self, value):
-	
+	def __init__(self, value, *args):
+		super(canvas_error, self).__init__(value, args)	
 		self.value = value
 				
 class response_error(openexp_error):
-
-	def __init__(self, value):
-	
+	def __init__(self, value, *args):
+		super(response_error, self).__init__(value, args)	
 		self.value = value
 			
 class sample_error(openexp_error):
-
-	def __init__(self, value):
-	
+	def __init__(self, value, *args):
+		super(sample_error, self).__init__(value, args)	
 		self.value = value
 		
 class synth_error(openexp_error):
-
-	def __init__(self, value):
-	
+	def __init__(self, value, *args):
+		super(synth_error, self).__init__(value, args)	
 		self.value = value
 		
 	

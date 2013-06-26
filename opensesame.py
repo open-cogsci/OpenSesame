@@ -1,0 +1,129 @@
+#!/usr/bin/env python
+#-*- coding:utf-8 -*-
+
+"""
+This file is part of OpenSesame.
+
+OpenSesame is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+OpenSesame is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
+"""
+
+if __name__ == "__main__":
+
+	# First, load a minimum number of modules and show an empty app window. This
+	# gives the user the feeling of a snappy response.
+	import os, sys, platform
+
+	# Change the working directory on Windows. Depending on whether the
+	# application has been frozen by py2exe or not we need to use a different
+	# method of deducing the name to the main script.
+	# See also http://www.py2exe.org/index.cgi/HowToDetermineIfRunningFromExe
+	if os.name == "nt":
+		import imp
+		if (hasattr(sys, "frozen") or hasattr(sys, "importers") or \
+			imp.is_frozen("__main__")):
+			path = os.path.dirname(sys.executable)
+		else:
+			path = os.path.dirname(__file__)
+		if path != '':
+			os.chdir(path)
+			if path not in sys.path:
+				sys.path.append(path)
+
+	# horrendous OS X invalid locale hack, which otherwise prevents psychopy to start
+	if platform.system() == 'Darwin':
+		import locale
+		if locale.getlocale()[0] is None:
+			locale.setlocale(locale.LC_ALL, 'en_US.UTF-8')
+			
+		# On 32-bit OSX: Shortly init and destroy pygame window before all else
+		# Strangly, the experiment otherwise hangs at init_dispay() with pygame based backends...
+		if not sys.maxsize > 2**32:
+			import pygame
+			pygame.init()
+			pygame.display.init()
+			pygame.display.set_mode((10,10))
+			pygame.quit()	
+				
+	# Load debug package (this must be after the working directory change)
+	from libopensesame import debug
+
+	# The IPython modules must be loaded before PyQt4
+	if "--ipython" in sys.argv:
+		try:
+			from IPython.frontend.qt.console.ipython_widget import IPythonWidget
+			debug.msg('IPython loaded')
+		except:
+			sys.argv.remove('--ipython')
+			debug.msg('Failed to load IPython. Is IPython QtConsole installed?', \
+				reason='warning')
+
+	# Do the basic window initialization
+	from PyQt4.QtGui import QApplication
+	app = QApplication(sys.argv)
+	from libqtopensesame.qtopensesame import qtopensesame
+	opensesame = qtopensesame(app)		
+	app.processEvents()
+	
+	# Import the remaining modules
+	from PyQt4.QtCore import SIGNAL, QObject, QLocale, QTranslator	
+	from libopensesame.misc import resource
+	import os.path
+	
+	# Load the locale for UI translation. The locale can be specified on the
+	# command line using the --locale parameter
+	locale = unicode(QLocale().system().name())
+	for i in range(len(sys.argv)-1):
+		if sys.argv[i] == '--locale':
+			locale = sys.argv[i+1]	
+	qm = resource(os.path.join('locale', locale) +'.qm')
+	if qm != None:
+		debug.msg('installing %s translator' % qm)
+		translator = QTranslator()
+		translator.load(qm)
+		app.installTranslator(translator)
+	else:
+		debug.msg('no translator found for %s' % locale)	
+
+	# Now that the window is shown, load the remaining modules and resume the
+	# GUI initialization.
+	opensesame.resume_init()
+	QObject.connect(app, SIGNAL("quit()"), opensesame.close)
+	
+	# Open an experiment if it has been specified as a command line argument and
+	# suppress the new wizard in that case.
+	import os.path
+	if len(sys.argv) >= 2 and os.path.isfile(sys.argv[1]):
+		start_new_tab = False
+		opensesame.open_file(path=sys.argv[1])
+	else:
+		start_new_tab = True
+
+	# Run the app (the startup method depends on command line parameters)
+	if opensesame.options.run:
+		opensesame.run_experiment()
+	elif opensesame.options.run_in_window:
+		opensesame.run_experiment(False)
+	else:
+		opensesame.check_update(always=False)
+		if start_new_tab:
+			opensesame.ui.tabwidget.open_start_new(start=True)
+
+	opensesame.restore_window_state()				
+	opensesame.refresh()			
+	opensesame.show()
+	opensesame.raise_()  #Added for OS X, otherwise Window will not appear
+	
+	# Exit using the application exit status
+	sys.exit(app.exec_())
+
