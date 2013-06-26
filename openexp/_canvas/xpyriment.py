@@ -298,7 +298,11 @@ class xpyriment(openexp._canvas.legacy.legacy):
 		if x == None: x = self.xcenter()
 		if y == None: y = self.ycenter()
 		if center == False:
-			surf = pygame.image.load(fname)
+			if isinstance(fname, unicode):
+				_fname = fname.encode(self.experiment.encoding)
+			else:
+				_fname = fname
+			surf = pygame.image.load(_fname)
 			if scale == None:
 				x += surf.get_width()/2
 				y += surf.get_height()/2

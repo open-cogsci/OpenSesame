@@ -1286,21 +1286,27 @@ class qtopensesame(QtGui.QMainWindow):
 	def run_experiment(self, dummy=None, fullscreen=True, quick=False):
 
 		"""
-		Runs the current experiment
+		Runs the current experiment.
 
 		Keyword arguments:
-		dummy -- a dummy argument that is passed by signaler (default=None)
-		fullscreen -- a boolean to indicate whether the window should be
-					  fullscreen (default=True)
-		quick -- a boolean to indicate whether default should be used for the
-				 log-file and subject number. Mostly useful while testing the
-				 experiment (default=False)
+		dummy 		--	A dummy argument that is passed by signaler.
+						(default=None)
+		fullscreen	--	A boolean to indicate whether the window should be
+						fullscreen. (default=True)
+		quick		--	A boolean to indicate whether default should be used for
+						the log-file and subject number. Mostly useful while
+						testing the experiment. (default=False)
 		"""
 
 		import openexp.exceptions
 		from libqtopensesame.widgets import pyterm
 		import multiprocessing
 		import libopensesame.experiment_process
+		
+		# Disable the entire Window, so that we can't interact with OpenSesame.
+		# TODO: This should be more elegant, so that we selectively disable
+		# parts of the GUI.
+		self.setDisabled(True)
 
 		# Before we run the experiment, we parse it in three steps
 		# 1) Apply any pending changes
@@ -1457,8 +1463,10 @@ class qtopensesame(QtGui.QMainWindow):
 		# Resume autosave, but not if opensesamerun is called
 		if self.autosave_timer != None:
 			debug.msg("resuming autosave timer")
-			self.autosave_timer.start()			
-			
+			self.autosave_timer.start()
+		
+		# Re-enable the GUI.
+		self.setDisabled(False)			
 	
 	def run_experiment_orig(self, dummy=None, fullscreen=True, quick=False):
 
