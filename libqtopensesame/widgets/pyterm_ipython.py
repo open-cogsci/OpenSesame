@@ -50,6 +50,13 @@ class output_buffer:
 		"""
 
 		self.console.console._append_plain_text(s)
+		
+	def flush(self):
+		
+		"""Dummy flush function for compatibility."""
+		
+		pass
+		
 
 class console(QWidget):
 
