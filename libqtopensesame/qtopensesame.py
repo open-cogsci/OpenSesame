@@ -1325,10 +1325,12 @@ class qtopensesame(QtGui.QMainWindow):
 
 		except libopensesame.exceptions.script_error as e:
 			self.experiment.notify(unicode(e))
+			self.setDisabled(False)
 			return
 
 		if quick:
-			exp_process.subject_nr = 999			
+			subject_nr = 999
+			exp_process.subject_nr = subject_nr			
 			logfile = os.path.join(config.get_config('default_logfile_folder'), \
 				config.get_config('quick_run_logfile'))
 
@@ -1339,6 +1341,7 @@ class qtopensesame(QtGui.QMainWindow):
 				_("Subject number"), _("Please enter the subject number"), \
 				min=0)
 			if not ok:
+				self.setDisabled(False)
 				return
 
 			# Set the subject nr and parity
@@ -1395,7 +1398,21 @@ class qtopensesame(QtGui.QMainWindow):
 		sys.stdout = buf
 
 		if config.get_config('opensesamerun'):
-			# Optionally, the experiment is run as a separate process
+			# Optionally, the experiment is run as a separate process using opensesamerun
+			
+			exp = libopensesame.experiment.experiment("Experiment", \
+				self.experiment.to_string(), self.experiment.pool_folder)
+			exp.set_subject(subject_nr)
+			if subject_nr % 2:
+				sp = "even"
+			else:
+				sp = "odd"	
+			exp.set("subject_parity", sp)
+			exp.experiment_path = self.experiment.experiment_path
+			exp.fullscreen = fullscreen
+			exp.logfile = logfile
+			exp.auto_response = self.experiment.auto_response			
+			
 			if self.call_opensesamerun(exp):
 				self.experiment_finished(exp)
 
@@ -1411,13 +1428,12 @@ class qtopensesame(QtGui.QMainWindow):
 					if not channel.empty():
 						msg = channel.get(False)
 						# For standard print statements
+						# Remove str when OS is completely unicode safe					
+						
 						if type(msg) in [str, unicode]:
 							sys.stdout.write(msg)
 						# Errors arrive as a tuple with (Error object, traceback)
-						elif type(msg) == tuple and isinstance(msg[0],Exception):  		
-							#sys.stderr.write(msg[1])
-							#sys.stderr.flush()
-						
+						elif type(msg) == tuple and isinstance(msg[0],Exception):  								
 							e = msg[0]	#Exception object
 							tb = msg[1]	 #Traceback
 						
@@ -1426,30 +1442,30 @@ class qtopensesame(QtGui.QMainWindow):
 								self.print_debug_window(tb)
 							elif isinstance(e, openexp.exceptions.openexp_error):					
 								self.experiment.notify( \
-									_("<b>Error</b>: OpenExp error<br /><b>Description</b>: %s") \
+									_(u"<b>Error</b>: OpenExp error<br /><b>Description</b>: %s") \
 									% e)
 								self.print_debug_window(tb)
 							else:
 								self.experiment.notify( \
-									_("An unexpected error occurred, which was not caught by OpenSesame. This should not happen! Message:<br/><b>%s</b>") \
+									_(u"An unexpected error occurred, which was not caught by OpenSesame. This should not happen! Message:<br/><b>%s</b>") \
 									% self.experiment.unistr(e))
 								self.print_debug_window(tb)
 						else:
-							print "Unkown message type received from experiment process:"
-							print "%s: %s" % (type(msg), msg)
+							print u"Unkown message type received from experiment process:"
+							print u"%s: %s" % (type(msg), msg)
 						channel.task_done()							
 					else:
 						time.sleep(0.1)
 						
 				# Exp process is finished, check error code
 				if exp_process.exitcode != 0:
-					print "The experiment exited with code %d" % exp_process.exitcode					
+					print u"The experiment exited with code %d" % exp_process.exitcode					
 
 				self.experiment_finished(exp_process)
 
 			except Exception as e:
 				# Report the error
-				self.experiment.notify(_("Critical error! Experiment process did not complete successfully: <b>%s</b>" % self.experiment.unistr(e)))
+				self.experiment.notify(_(u"Critical error! Experiment process did not complete successfully: <b>%s</b>" % self.experiment.unistr(e)))
 				self.print_debug_window(e)
 			finally:
 				# Cleanup the process

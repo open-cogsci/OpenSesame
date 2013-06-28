@@ -19,10 +19,9 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 import multiprocessing
 
 class OutputChannel:
-	def __init__(self,channel,orig=None, mode="standard"):
+	def __init__(self,channel,orig=None):
 		self.channel = channel
 		self.orig = orig
-		self.mode = mode
 		
 	def write(self, m):
 		self.channel.put(m)
@@ -75,8 +74,9 @@ class ExperimentProcess(multiprocessing.Process):
 					sys.path.append(path)
 
 		# Reroute output to OpenSesame main process, so everything will be printed in the Debug window there		
-		sys.stdout = OutputChannel(self.output)
-		sys.stderr = OutputChannel(self.output)
+		pipeToMainProcess = OutputChannel(self.output)		
+		sys.stdout = pipeToMainProcess
+		sys.stderr = pipeToMainProcess
 	
 		os.chdir("..")
 	
@@ -98,14 +98,14 @@ class ExperimentProcess(multiprocessing.Process):
 			
 			# Determine subject parity
 			if self.subject_nr % 2:
-				sp = "even"
+				sp = u"even"
 			else:
-				sp = "odd"	
+				sp = u"odd"	
 						
 			exp = libopensesame.experiment.experiment("Experiment", self.script, self.pool_folder)
 				
 			exp.set_subject(self.subject_nr)
-			exp.set("subject_parity", sp)
+			exp.set(u"subject_parity", sp)
 			exp.experiment_path = self.path
 			exp.fullscreen = self.fullscreen
 			exp.logfile = self.logfile
