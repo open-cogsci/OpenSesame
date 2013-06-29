@@ -39,64 +39,64 @@ import libopensesame.misc
 from libopensesame import debug, exceptions
 import platform
 import sip
-if sip.getapi('QString') == 2:
+if sip.getapi(u'QString') == 2:
 	QtCore.QStringList = list
 
 class config(object):
 
 	config = {
-		"cfg_ver" : 0,
-		"_initial_window_geometry" : QtCore.QByteArray(),
-		"_initial_window_state" : QtCore.QByteArray(),
-		"auto_update_check" : True,
-		"auto_response" : False,
-		"autosave_interval" : 10 * 60 * 1000,
-		"autosave_max_age" : 7,
-		"default_logfile_folder" : libopensesame.misc.home_folder(),
-		"default_pool_folder" : libopensesame.misc.home_folder(),
-		"disabled_plugins" : "",
-		"file_dialog_path" : "",
-		"immediate_rename" : False,
-		"locale" : "default",
-		"loop_wizard" : QtCore.QStringList(),
-		"onetabmode" : False,
-		"quick_run_logfile": u"quickrun.csv",
-		"recent_files" : "",
-		"scintilla_line_numbers" : True,
-		"scintilla_right_margin" : False,
-		"scintilla_eol_visible" : False,
-		"scintilla_whitespace_visible" : False,
-		"scintilla_indentation_guides" : True,
-		"scintilla_auto_indent" : True,
-		"scintilla_folding" : True,
-		"scintilla_brace_match" : True,
-		"scintilla_syntax_highlighting" : True,
-		"scintilla_custom_font" : False,
-		"scintilla_font_family" : "courier",
-		"scintilla_font_size" : 10,
-		"shortcut_itemtree" : "Ctrl+1",
-		"shortcut_tabwidget" : "Ctrl+2",
-		"shortcut_stdout" : "Ctrl+3",
-		"shortcut_pool" : "Ctrl+4",
-		"shortcut_variables" : "Ctrl+5",
-		"style" : "",
-		"theme" : "default",
-		"toolbar_size" : 32,
-		"toolbar_text" : False,
-		"opensesamerun" : False,
-		"opensesamerun_exec" : "",
-		"pos" : QtCore.QPoint(200, 200),
-		"size" : QtCore.QSize(1000, 600),
-		"url_website" : "http://www.cogsci.nl/opensesame",
-		"url_facebook" : "http://www.facebook.com/cognitivescience",
-		"url_twitter" : "http://www.twitter.com/cogscinl",
-		"version_check_url" : \
-			"http://files.cogsci.nl/software/opensesame/MOST_RECENT_VERSION.TXT"
+		u"cfg_ver" : 0,
+		u"_initial_window_geometry" : QtCore.QByteArray(),
+		u"_initial_window_state" : QtCore.QByteArray(),
+		u"auto_update_check" : True,
+		u"auto_response" : False,
+		u"autosave_interval" : 10 * 60 * 1000,
+		u"autosave_max_age" : 7,
+		u"default_logfile_folder" : libopensesame.misc.home_folder(),
+		u"default_pool_folder" : libopensesame.misc.home_folder(),
+		u"disabled_plugins" : "",
+		u"file_dialog_path" : "",
+		u"immediate_rename" : False,
+		u"locale" : u"default",
+		u"loop_wizard" : QtCore.QStringList(),
+		u"onetabmode" : False,
+		u"quick_run_logfile": u"quickrun.csv",
+		u"recent_files" : u"",
+		u"scintilla_line_numbers" : True,
+		u"scintilla_right_margin" : False,
+		u"scintilla_eol_visible" : False,
+		u"scintilla_whitespace_visible" : False,
+		u"scintilla_indentation_guides" : True,
+		u"scintilla_auto_indent" : True,
+		u"scintilla_folding" : True,
+		u"scintilla_brace_match" : True,
+		u"scintilla_syntax_highlighting" : True,
+		u"scintilla_custom_font" : False,
+		u"scintilla_font_family" : u"courier",
+		u"scintilla_font_size" : 10,
+		u"shortcut_itemtree" : u"Ctrl+1",
+		u"shortcut_tabwidget" : u"Ctrl+2",
+		u"shortcut_stdout" : u"Ctrl+3",
+		u"shortcut_pool" : u"Ctrl+4",
+		u"shortcut_variables" : u"Ctrl+5",
+		u"style" : u"",
+		u"theme" : u"default",
+		u"toolbar_size" : 32,
+		u"toolbar_text" : False,
+		u"opensesamerun" : False,
+		u"opensesamerun_exec" : u"",
+		u"pos" : QtCore.QPoint(200, 200),
+		u"size" : QtCore.QSize(1000, 600),
+		u"url_website" : u"http://www.cogsci.nl/opensesame",
+		u"url_facebook" : u"http://www.facebook.com/cognitivescience",
+		u"url_twitter" : u"http://www.twitter.com/cogscinl",
+		u"version_check_url" : \
+			u"http://files.cogsci.nl/software/opensesame/MOST_RECENT_VERSION.TXT"
 		}
 
 	# OS specific override settings
 	config_linux = {
-		"theme" : "gnome"
+		u"theme" : u"gnome"
 		}
 	config_mac = {}
 	config_windows = {}
@@ -107,18 +107,18 @@ class config(object):
 
 		# Determine the sip api that is used, because this depends on whether
 		# or not IPython is loaded
-		object.__setattr__(self, 'api', sip.getapi('QString'))
+		object.__setattr__(self, u'api', sip.getapi(u'QString'))
 		if self.api not in (1,2):
-			raise Exception('config: unknown api %s' % self.api)
+			raise Exception(u'config: unknown api %s' % self.api)
 
 		# Apply OS specific override settings
-		if platform.system() == "Windows":
+		if platform.system() == u"Windows":
 			for key, value in self.config_windows.iteritems():
 				self.config[key] = value
-		elif platform.system() == "Darwin":
+		elif platform.system() == u"Darwin":
 			for key, value in self.config_mac.iteritems():
 				self.config[key] = value
-		elif platform.system() == "Linux":
+		elif platform.system() == u"Linux":
 			for key, value in self.config_linux.iteritems():
 				self.config[key] = value
 
@@ -132,7 +132,7 @@ class config(object):
 		"""
 
 		if setting not in self.config:
-			raise exceptions.runtime_error('The setting "%s" does not exist' \
+			raise exceptions.runtime_error(u'The setting "%s" does not exist' \
 				% setting)
 		return self.config[setting]
 
@@ -146,10 +146,10 @@ class config(object):
 		value -- the value to set
 		"""
 		if setting not in self.config:
-			raise exceptions.runtime_error('The setting "%s" does not exist' \
+			raise exceptions.runtime_error(u'The setting "%s" does not exist' \
 				% setting)
 		self.config[setting] = value
-		self.config['cfg_ver'] += 1
+		self.config[u'cfg_ver'] += 1
 
 	def parse_cmdline_args(self, args):
 
@@ -164,14 +164,14 @@ class config(object):
 		if args == None:
 			return
 
-		for arg in args.split(";"):
-			a = arg.split("=")
+		for arg in args.split(u";"):
+			a = arg.split(u"=")
 			if len(a) == 2:
 
 				# Automagically determine the data type
-				if a[1] == "True":
+				if a[1] == u"True":
 					val = True
-				elif a[1] == "False":
+				elif a[1] == u"False":
 					val = False
 				else:
 					try:
@@ -185,9 +185,9 @@ class config(object):
 				# Apply the argument
 				try:
 					self.__setattr__(a[0], val)
-					debug.msg("%s = %s" % (a[0], val))
+					debug.msg(u"%s = %s" % (a[0], val))
 				except:
-					debug.msg("Failed to parse argument: %s" % arg)
+					debug.msg(u"Failed to parse argument: %s" % arg)
 
 	def restore(self, qsettings):
 
@@ -225,12 +225,11 @@ class config(object):
 				elif type(default) == unicode:
 					value = unicode(value.toString())
 
-
 			# The newer api returns some things as strings, so we still have to
 			# do some type conversion
 			else:
 				if type(default) == bool:
-					if value == 'false':
+					if value == u'false':
 						value = False
 					else:
 						value = True
@@ -249,9 +248,8 @@ class config(object):
 		"""
 
 		for setting, value in self.config.items():
-			if setting != "cfg_ver":
+			if setting != u"cfg_ver":
 				qsettings.setValue(setting, value)
-
 
 # Old style API. See explanation above
 def get_config(setting):
