@@ -306,7 +306,7 @@
     <message>
         <location filename="loop_widget.ui" line="181"/>
         <source>Item to run</source>
-        <translation>Objet à éxécuter</translation>
+        <translation>Objet à exécuter</translation>
     </message>
     <message>
         <location filename="loop_widget.ui" line="191"/>
@@ -568,7 +568,7 @@
     <message>
         <location filename="opensesame.ui" line="83"/>
         <source>Run</source>
-        <translation>Éxécuter</translation>
+        <translation>Exécuter</translation>
     </message>
     <message>
         <location filename="opensesame.ui" line="93"/>
@@ -608,12 +608,12 @@
     <message>
         <location filename="opensesame.ui" line="272"/>
         <source>Clear filter</source>
-        <translation>Éffacer le filtre</translation>
+        <translation>Effacer le filtre</translation>
     </message>
     <message>
         <location filename="opensesame.ui" line="472"/>
         <source>Help</source>
-        <translation>AIde</translation>
+        <translation>Aide</translation>
     </message>
     <message>
         <location filename="opensesame.ui" line="352"/>
@@ -678,7 +678,7 @@
     <message>
         <location filename="opensesame.ui" line="609"/>
         <source>Save (Control+S)</source>
-        <translation>Enregistrer (Control+S)</translation>
+        <translation>Enregistrer (Controle+S)</translation>
     </message>
     <message>
         <location filename="opensesame.ui" line="612"/>
@@ -693,7 +693,7 @@
     <message>
         <location filename="opensesame.ui" line="624"/>
         <source>Save as (Control+Shift+S)</source>
-        <translation>Enregistrer sous (Control+Majuscule+S)</translation>
+        <translation>Enregistrer sous (Controle+Majuscule+S)</translation>
     </message>
     <message>
         <location filename="opensesame.ui" line="627"/>
@@ -713,12 +713,12 @@
     <message>
         <location filename="opensesame.ui" line="644"/>
         <source>Run fullscreen</source>
-        <translation>Éxécuter en plein écran</translation>
+        <translation>Exécuter en plein écran</translation>
     </message>
     <message>
         <location filename="opensesame.ui" line="647"/>
         <source>Run fullscreen (Control+R)</source>
-        <translation>Éxécuter en plein écran(Control+R)</translation>
+        <translation>Exécuter en plein écran(Controle+R)</translation>
     </message>
     <message>
         <location filename="opensesame.ui" line="650"/>
@@ -733,7 +733,7 @@
     <message>
         <location filename="opensesame.ui" line="662"/>
         <source>New (Control+N)</source>
-        <translation>Nouveau (Control+N)</translation>
+        <translation>Nouveau (Controle+N)</translation>
     </message>
     <message>
         <location filename="opensesame.ui" line="665"/>
@@ -748,7 +748,7 @@
     <message>
         <location filename="opensesame.ui" line="683"/>
         <source>Add sketchpad</source>
-        <translation>Ajouter uncarnet à dessin </translation>
+        <translation>Ajouter un carnet à dessin </translation>
     </message>
     <message>
         <location filename="opensesame.ui" line="692"/>
@@ -788,7 +788,7 @@
     <message>
         <location filename="opensesame.ui" line="749"/>
         <source>Close other tabs (Control+T)</source>
-        <translation>Fermer les autres onglets(Control+T)</translation>
+        <translation>Fermer les autres onglets(Controle+T)</translation>
     </message>
     <message>
         <location filename="opensesame.ui" line="752"/>
@@ -808,12 +808,12 @@
     <message>
         <location filename="opensesame.ui" line="784"/>
         <source>Run in window</source>
-        <translation>Éxécuter en fenêtre</translation>
+        <translation>Exécuter en fenêtre</translation>
     </message>
     <message>
         <location filename="opensesame.ui" line="787"/>
         <source>Run in window (Control+W)</source>
-        <translation>Éxécuter en fenêtre (Control+W)</translation>
+        <translation>Exécuter en fenêtre (Controle+W)</translation>
     </message>
     <message>
         <location filename="opensesame.ui" line="790"/>
@@ -833,7 +833,7 @@
     <message>
         <location filename="opensesame.ui" line="814"/>
         <source>Show variable inspector (Control+I)</source>
-        <translation>Montrer l&apos;inspecteur de variables(Control+I)</translation>
+        <translation>Montrer l&apos;inspecteur de variables(Controle+I)</translation>
     </message>
     <message>
         <location filename="opensesame.ui" line="817"/>
@@ -878,7 +878,7 @@
     <message>
         <location filename="opensesame.ui" line="871"/>
         <source>Show debug window (standard output) and a Python interpreter (Control+D)</source>
-        <translation>Montrer la fenêtre de débogage (sortie standard) et un interpreteur python (Control+D)</translation>
+        <translation>Montrer la fenêtre de débogage (sortie standard) et un interpreteur python (Controle+D)</translation>
     </message>
     <message>
         <location filename="opensesame.ui" line="874"/>
@@ -915,7 +915,7 @@
     <message>
         <location filename="opensesame.ui" line="920"/>
         <source>Submit a bug</source>
-        <translation>Soumettre un bug</translation>
+        <translation>Soumettre un beug</translation>
     </message>
     <message>
         <location filename="opensesame.ui" line="929"/>
@@ -975,7 +975,7 @@
     <message>
         <location filename="opensesame.ui" line="992"/>
         <source>Quick run</source>
-        <translation>Éxécution rapide</translation>
+        <translation>Exécution rapide</translation>
     </message>
     <message>
         <location filename="opensesame.ui" line="995"/>
@@ -993,12 +993,12 @@
     <message>
         <location filename="opensesamerun.ui" line="14"/>
         <source>OpenSesame Run</source>
-        <translation>Éxécuter OpenSesame</translation>
+        <translation>Exécuter OpenSesame</translation>
     </message>
     <message>
         <location filename="opensesamerun.ui" line="51"/>
         <source>&lt;b&gt;OpenSesame Run&lt;/b&gt;&lt;br /&gt;&lt;small&gt;&lt;i&gt;Run your OpenSesame experiment&lt;/i&gt;&lt;/small&gt;</source>
-        <translation>&lt;b&gt;Éxécuter OpenSesame&lt;/b&gt;&lt;br /&gt;&lt;small&gt;&lt;i&gt;Réalisez votre expérience OpenSesame&lt;/i&gt;&lt;/small&gt;</translation>
+        <translation>&lt;b&gt;Exécuter OpenSesame&lt;/b&gt;&lt;br /&gt;&lt;small&gt;&lt;i&gt;Réalisez votre expérience OpenSesame&lt;/i&gt;&lt;/small&gt;</translation>
     </message>
     <message>
         <location filename="opensesamerun.ui" line="61"/>
@@ -1033,7 +1033,7 @@
     <message>
         <location filename="opensesamerun.ui" line="180"/>
         <source>Run fullscreen</source>
-        <translation>Éxécuter en plein écran</translation>
+        <translation>Exécuter en plein écran</translation>
     </message>
     <message>
         <location filename="opensesamerun.ui" line="187"/>
@@ -1073,7 +1073,7 @@
     <message>
         <location filename="opensesamerun.ui" line="368"/>
         <source>Run</source>
-        <translation>Éxécuter</translation>
+        <translation>Exécuter</translation>
     </message>
 </context>
 <context>
@@ -1159,7 +1159,7 @@
     <message>
         <location filename="preferences_widget.ui" line="131"/>
         <source>Small icons in toolbar</source>
-        <translation>Petite icones dans la barre d&apos;outils</translation>
+        <translation>Petites icones dans la barre d&apos;outils</translation>
     </message>
     <message>
         <location filename="preferences_widget.ui" line="82"/>
@@ -1249,7 +1249,7 @@
     <message>
         <location filename="preferences_widget.ui" line="327"/>
         <source>Auto-save interval:</source>
-        <translation>sauver automatiquement les intervalles:</translation>
+        <translation>Intervalle des sauvegardes automatiques:</translation>
     </message>
     <message>
         <location filename="preferences_widget.ui" line="334"/>
@@ -1294,12 +1294,12 @@
     <message>
         <location filename="preferences_widget.ui" line="438"/>
         <source>Run options</source>
-        <translation>Éxécuter les options</translation>
+        <translation>Options pendant l&apos;exécution</translation>
     </message>
     <message>
         <location filename="preferences_widget.ui" line="466"/>
         <source>Run experiments in a separate process</source>
-        <translation>Éxécuter les expériences par un processus séparé</translation>
+        <translation>Exécuter les expériences dans un processus séparé</translation>
     </message>
     <message>
         <location filename="preferences_widget.ui" line="473"/>
@@ -1309,7 +1309,7 @@
     <message>
         <location filename="preferences_widget.ui" line="480"/>
         <source>Custom run command:</source>
-        <translation>Commande exécuter de façon personnalisée:</translation>
+        <translation>Exécuter la commande de façon personnalisée:</translation>
     </message>
     <message>
         <location filename="preferences_widget.ui" line="499"/>
@@ -1345,7 +1345,7 @@
     <message>
         <location filename="preferences_widget.ui" line="456"/>
         <source>&lt;small&gt;&lt;i&gt;If you experience stability issues, you can enable the &apos;Run experiments in a separate process&apos; option. This essentially means that &apos;opensesamerun[.exe]&apos; is used to run your experiment.&lt;/i&gt;&lt;/small&gt;</source>
-        <translation>&lt;small&gt;&lt;i&gt;if vous faites l&apos;expérience de problèmes de stabilité, vous pouvez autoriser l&apos;option &apos;Exécuter les expériences dans un processus séparé&apos;. Cela signifie  essentiellement que &apos;opensesamerun[.exe]&apos; est utilisé pour Éxécuter votre expérience.&lt;/i&gt;&lt;/small&gt;</translation>
+        <translation>&lt;small&gt;&lt;i&gt;if vous faites l&apos;expérience de problèmes de stabilité, vous pouvez autoriser l&apos;option &apos;Exécuter les expériences dans un processus séparé&apos;. Cela signifie  essentiellement que &apos;opensesamerun[.exe]&apos; est utilisé pour exécuter votre expérience.&lt;/i&gt;&lt;/small&gt;</translation>
     </message>
 </context>
 <context>
@@ -1441,7 +1441,7 @@
     <message>
         <location filename="sampler_widget.ui" line="61"/>
         <source>Browse</source>
-        <translation>Regarder</translation>
+        <translation>Naviguer</translation>
     </message>
     <message>
         <location filename="sampler_widget.ui" line="90"/>
@@ -2351,7 +2351,7 @@ Description: %s</translation>
     <message>
         <location filename="sketchpad_widget.ui" line="480"/>
         <source>Pen width</source>
-        <translation>épaisseur du stylo</translation>
+        <translation>Épaisseur du stylo</translation>
     </message>
     <message>
         <location filename="sketchpad_widget.ui" line="605"/>
