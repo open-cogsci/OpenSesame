@@ -89,5 +89,6 @@ class unused_widget(QtGui.QWidget):
 			self.main_window.experiment.build_item_tree()
 						
 		# Notify dispatch
-		self.main_window.dispatch.event_structure_change.emit(u'')
-		
+		self.main_window.dispatch.event_structure_change.emit(u'')		
+		self.main_window.ui.tabwidget.close_all()
+		self.main_window.ui.tabwidget.open_general()

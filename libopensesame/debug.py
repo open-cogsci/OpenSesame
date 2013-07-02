@@ -46,9 +46,14 @@ def msg(msg=u'', reason=None):
 	if reason != None:
 		print u'[%s]' % reason,
 	# The terminal may not like anythin but plain ASCII
-	if isinstance(msg, unicode):
-		msg = msg.encode('ASCII', 'ignore')
-	print u'%s: %s' % (parse_stack(st[1]), msg)
+	if isinstance(msg, str):
+		msg = msg.decode(u'utf-8', errors=u'ignore')
+	try:
+		print u'%s: %s' % (parse_stack(st[1]), msg)
+	except:
+		# This should not happen!
+		print u'%s: Failed to print message to debug window' % \
+			parse_stack(st[1])
 	st = st[2:]
 	st.reverse()
 	if stack:

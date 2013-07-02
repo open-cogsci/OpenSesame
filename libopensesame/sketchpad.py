@@ -276,7 +276,7 @@ class sketchpad(item.item, generic_response.generic_response):
 
 		item["penwidth"] = 1
 		item["color"] = self.get("foreground", _eval=False)
-		item["type"] = "undefined"
+		item["type"] = u"undefined"
 		item["fill"] = 0
 		item["arrow_size"] = 20
 		item["center"] = 1
@@ -288,15 +288,15 @@ class sketchpad(item.item, generic_response.generic_response):
 
 		item["orient"] = 0
 		item["freq"] = 0.1
-		item["env"] = "gaussian"
+		item["env"] = u"gaussian"
 		item["size"] = 96
 		item["stdev"] = 12
 		item["phase"] = 0
-		item["color1"] = "white"
-		item["color2"] = "black"
-		item["bgmode"] = "avg"
+		item["color1"] = u"white"
+		item["color2"] = u"black"
+		item["bgmode"] = u"avg"
 
-		item["show_if"] = "always"
+		item["show_if"] = u"always"
 
 		for i in l:
 
@@ -361,7 +361,7 @@ class sketchpad(item.item, generic_response.generic_response):
 			raise exceptions.script_error("Invalid draw circle command '%s', expecting 'draw circle [x] [y] [r]'" \
 				% line)
 
-		item["type"] = "circle"
+		item["type"] = u"circle"
 		item["x"] = self.auto_type(l[2])
 		item["y"] = self.auto_type(l[3])
 		item["r"] = self.auto_type(l[4])
@@ -382,7 +382,7 @@ class sketchpad(item.item, generic_response.generic_response):
 		A finished sketchpad element
 		"""
 
-		item["type"] = "fixdot"
+		item["type"] = u"fixdot"
 		if len(l) > 3:
 			item["x"] = self.auto_type(l[2])
 			item["y"] = self.auto_type(l[3])
@@ -436,7 +436,7 @@ class sketchpad(item.item, generic_response.generic_response):
 		if len(l) < 3:
 			raise exceptions.script_error("Invalid draw textline command '%s', expecting 'draw textline [x] [y] [text]' or 'draw textline [text]'" \
 				% line)
-		item["type"] = "textline"
+		item["type"] = u"textline"
 		try:
 			item["x"] = self.auto_type(l[2])
 			item["y"] = self.auto_type(l[3])
@@ -464,7 +464,7 @@ class sketchpad(item.item, generic_response.generic_response):
 		if len(l) < 3:
 			raise exceptions.script_error("Invalid draw image command '%s', expecting 'draw image [x] [y] [file]' or 'draw textline [file]'" \
 				% line)
-		item["type"] = "image"
+		item["type"] = u"image"
 		try:
 			item["x"] = self.auto_type(l[2])
 			item["y"] = self.auto_type(l[3])
@@ -492,7 +492,7 @@ class sketchpad(item.item, generic_response.generic_response):
 		if len(l) < 4:
 			raise exceptions.script_error("Invalid draw image command '%s', expecting 'draw gabor [x] [y] [orient] [freq]'" \
 				% line)
-		item["type"] = "gabor"
+		item["type"] = u"gabor"
 		item["x"] = self.auto_type(l[2])
 		item["y"] = self.auto_type(l[3])
 		return item
@@ -514,7 +514,7 @@ class sketchpad(item.item, generic_response.generic_response):
 		if len(l) < 4:
 			raise exceptions.script_error("Invalid draw image command '%s', expecting 'draw noise [x] [y]'" \
 				% line)
-		item["type"] = "noise"
+		item["type"] = u"noise"
 		item["x"] = self.auto_type(l[2])
 		item["y"] = self.auto_type(l[3])
 		return item

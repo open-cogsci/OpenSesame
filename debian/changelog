@@ -1,3 +1,9 @@
+opensesame (0.27.3~pre2-ubuntu1) raring; urgency=low
+
+  * Various bug-fixes
+
+ -- Sebastiaan Mathot <s.mathot@cogsci.nl>  Sun, 09 Jun 2013 17:25:58 +0200
+
 opensesame (0.27.2-ubuntu1) raring; urgency=low
 
   * Add support for Android

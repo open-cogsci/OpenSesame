@@ -153,8 +153,6 @@ class dispatch(QtCore.QObject):
 		
 		self.main_window.experiment.build_item_tree()
 		self.simple_change(name)
-		self.main_window.ui.tabwidget.close_all()
-		self.main_window.ui.tabwidget.open_general()
 		
 	def name_change(self, from_name, to_name):
 	

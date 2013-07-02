@@ -80,19 +80,30 @@ def main():
 	if android != None:		
 		sys.stdout = stdout_file(sys.stdout)
 		
-	# First start the menu experiment	
-	src = 'resources/android/menu.opensesame'
-	print 'Launching %s' % src
-	menu = experiment('Experiment', src)
-	menu.run()
-	menu.end()
-	clean_up(menu.debug)	
+	autorun_src = 'resources/android/autorun.opensesame.tar.gz'
+		
+	if not os.path.exists(autorun_src):
+		# Start the menu experiment	
+		src = 'resources/android/menu.opensesame'
+		print 'Launching %s' % src
+		menu = experiment('Experiment', src)
+		menu.run()
+		menu.end()
+		clean_up(menu.debug)		
+		src = menu._experiment
+		subject_nr = menu._subject_nr
+		logfile = menu._logfile		
+	else:
+		# Use the autorun experiment
+		src = autorun_src
+		subject_nr = 0
+		logfile = '/sdcard/autorun.csv'		
 	
 	# Next run the actual experiment!
-	exp = experiment('Experiment', menu._experiment)
-	print 'Launching %s' % menu._experiment
-	exp.subject_nr = menu._subject_nr
-	exp.logfile = menu._logfile
+	exp = experiment('Experiment', src)
+	print 'Launching %s' % src
+	exp.subject_nr = subject_nr
+	exp.logfile = logfile
 	
 	# Capture exceptions and write them to the standard output so they can be
 	# inspected

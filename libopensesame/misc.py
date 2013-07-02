@@ -21,7 +21,7 @@ import os
 import os.path
 import sys
 
-version = u'0.27.3~pre1'
+version = u'0.27.3~pre2'
 codename = u'Frisky Freud'
 
 use_global_resources = '--no-global-resources' not in sys.argv
@@ -195,18 +195,22 @@ def resource(name):
 	A hacky way to get a resource using the functionality from openexp
 
 	Arguments:
-	name -- the name of the requested resource
+	name	--	The name of the requested resource. If this is a regular string
+				it is assumed to be encoded as utf-8.
 
 	Returns:
-	The full path to the resource
+	A Unicode string with the full path to the resource.
 	"""
 
 	global use_global_resources
-	path = os.path.join(u"resources", name)
+	
+	if isinstance(name, str):
+		name = name.decode(u'utf-8', errors=u'ignore')	
+	path = os.path.join(u'resources', name)
 	if os.path.exists(path):
-		return os.path.join(u"resources", name)
-	if os.name == u"posix" and use_global_resources:
-		path = u"/usr/share/opensesame/resources/%s" % name
+		return os.path.join(u'resources', name)
+	if os.name == u'posix' and use_global_resources:
+		path = u'/usr/share/opensesame/resources/%s' % name
 		if os.path.exists(path):
 			return path
 	return None
