@@ -43,17 +43,30 @@ Building
 
 Build the `.apk` with the following command:
 
-	python setup-android.py [install]
-	
-The `install` parameter is optional, and indicates that the `.apk` should be
-installed on an attached Android device or emulator. The resulting `.apk` can
-be found in the `bin` subfolder of the PyGame subset for Android folder.
+	python setup-android.py [--help]
 """
 
 import shutil
 import sys
 import os
 import subprocess
+from optparse import OptionParser
+
+# Set-up the command line arguments
+parser = OptionParser()
+parser.add_option('--install', dest='install', action='store_true', default= \
+	False, help='Install .apk on USB-attached device')
+parser.add_option('--autorun', dest='autorun', action='store', default=None, \
+	help='Specify an experiment that should be automatically started')
+parser.add_option('--icon', dest='icon', action='store', default= \
+	'resources/android/android-icon.png', help='Specify an icon (64x64 .png)')
+parser.add_option('--splash', dest='splash', action='store', default= \
+	'resources/android/android-presplash.jpg', help= \
+	'Specify a splash image (720x320 .jpg)')
+parser.add_option('--json', dest='json', action='store', default= \
+	'resources/android/android.json', help= \
+	'Specify a package information file (.json)')
+options, args = parser.parse_args()
 
 # List of included plug-ins
 included_plugins = [
@@ -82,7 +95,7 @@ module_folder = '/usr/lib/python2.7'
 clear_cmd = \
 	'./android-sdk/platform-tools/adb shell pm clear nl.cogsci.opensesame'
 build_cmd = './android.py build opensesame release'
-if 'install' in sys.argv:
+if options.install:
 	build_cmd += ' install'
 
 # A list of OpenSesame folders that need to be included
@@ -152,6 +165,12 @@ for folder in folder_list:
 print 'Copying resources'
 shutil.copytree('resources', os.path.join(target, 'resources'), \
 	ignore=ignore_resources)
+
+if options.autorun != None:
+	print 'Copying %s as autorun.opensesame.tar.gz' % options.autorun
+	shutil.copyfile(options.autorun, os.path.join(target, \
+		'resources/android/autorun.opensesame.tar.gz'))
+
 print 'Copying examples'
 shutil.copytree('examples', os.path.join(target, 'examples'), \
 	ignore=ignore_examples)
@@ -173,15 +192,13 @@ print 'Copying dummy PyQt4'
 shutil.copytree('resources/android/PyQt4', os.path.join(target, 'PyQt4'))
 print 'Copying main.py'
 shutil.copyfile('opensesameandroid.py', os.path.join(target, 'main.py'))
-print 'Copying .android.json'
-shutil.copyfile('resources/android/android.json', os.path.join(target, \
+print 'Copying .android.json (%s)' % options.json
+shutil.copyfile(options.json, os.path.join(target, \
 	'.android.json'))
-print 'Copying android-icon.png'
-shutil.copyfile('resources/android/android-icon.png', \
-	os.path.join(target, 'android-icon.png'))
-print 'Copying android-presplash.png'
-shutil.copyfile('resources/android/android-presplash.jpg', \
-	os.path.join(target, 'android-presplash.jpg'))
+print 'Copying icon (%s)' % options.icon
+shutil.copyfile(options.icon, os.path.join(target, 'android-icon.png'))
+print 'Copying splash (%s)' % options.splash
+shutil.copyfile(options.splash, os.path.join(target, 'android-presplash.jpg'))
 print 'Building'
 os.chdir(pgs4a_folder)
 print 'Clearing application data'
