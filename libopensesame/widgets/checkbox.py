@@ -23,10 +23,10 @@ class checkbox(button):
 
 	"""A checkbox widget"""
 
-	def __init__(self, form, text='checkbox', frame=False, group=None, checked=False, click_accepts=False, var=None):
+	def __init__(self, form, text=u'checkbox', frame=False, group=None, checked=False, click_accepts=False, var=None):
 	
 		"""<DOC>
-		Constructor
+		Constructor.
 		
 		Arguments:
 		form -- The parent form.
@@ -49,12 +49,12 @@ class checkbox(button):
 		</DOC>"""	
 		
 		if type(checked) != bool:
-			checked = checked == 'yes'
+			checked = checked == u'yes'
 		if type(click_accepts) != bool:
-			click_accepts = click_accepts == 'yes'											
+			click_accepts = click_accepts == u'yes'											
 			
 		button.__init__(self, form, text, frame=frame, center=False)
-		self.type = 'checkbox'
+		self.type = u'checkbox'
 		self.group = group		
 		self.box_size = 16
 		self.box_pad = self.x_pad
@@ -77,7 +77,7 @@ class checkbox(button):
 			# If the checkbox is part of a group than checking it will uncheck
 			# all other checkboxes in the group, and check the current one
 			for widget in self.form.widgets:
-				if widget != None and widget.type == 'checkbox' and \
+				if widget != None and widget.type == u'checkbox' and \
 					widget.group == self.group:
 					widget.set_checked(False)
 			self.set_checked(True)
@@ -89,7 +89,7 @@ class checkbox(button):
 		# Set the response variable
 		l_val = []
 		for widget in self.form.widgets:		
-			if widget != None and widget.type == 'checkbox' and \
+			if widget != None and widget.type == u'checkbox' and \
 				widget.group == self.group:
 				if widget.checked:
 					l_val.append(self.form.experiment.unistr(widget.text))
