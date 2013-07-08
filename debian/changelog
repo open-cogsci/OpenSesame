@@ -1,6 +1,7 @@
-opensesame (0.27.3~pre3-ubuntu1) raring; urgency=low
+opensesame (0.27.3-ubuntu1) raring; urgency=low
 
   * Various bug-fixes
+  * Add French translation
 
  -- Sebastiaan Mathot <s.mathot@cogsci.nl>  Sun, 09 Jun 2013 17:25:58 +0200
 
