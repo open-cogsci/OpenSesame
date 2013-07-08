@@ -54,7 +54,7 @@ class checkbox(button):
 			   of a group are placed in the same group. (default=None).
 		</DOC>"""	
 		
-		if isinstance(checked, bool):
+		if isinstance(checked, basestring):
 			checked = checked == u'yes'
 		if isinstance(click_accepts, bool):
 			click_accepts = click_accepts == u'yes'			
