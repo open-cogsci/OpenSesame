@@ -17,9 +17,6 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
-__author__ = "Sebastiaan Mathot"
-__license__ = "GPLv3"
-
 from libopensesame import debug
 import libopensesame.experiment
 import libopensesame.plugins
@@ -33,85 +30,94 @@ class experiment(libopensesame.experiment.experiment):
 	def __init__(self, main_window, name, string=None, pool_folder=None):
 
 		"""
-		Constructor
+		Constructor.
 
 		Arguments:
-		main_window -- the GUI main window
-		name -- the name of the experiment
+		main_window	--	The main window object.
+		name		--	The name of the experiment.
 
 		Keyword arguments:
-		string -- a definition string for the experiment (default=None)
-		pool_folder -- a path to be used for the file pool (default=None)
+		string		--	A definition string for the experiment or None to
+						start with an empty experiment. (default=None)
+		pool_folder	--	A path to be used for the file pool or None to use a
+						system-specific temporary folder. (default=None)
 		"""
 
 		self.main_window = main_window
 		self.ui = self.main_window.ui
 		self.unused_items = []
-		self.core_items = "loop", "sequence", "sketchpad", "feedback", \
-			"sampler", "synth", "keyboard_response", "mouse_response", \
-			"logger", "inline_script"
+		self.core_items = u"loop", u"sequence", u"sketchpad", u"feedback", \
+			u"sampler", u"synth", u"keyboard_response", u"mouse_response", \
+			u"logger", u"inline_script"
 		libopensesame.experiment.experiment.__init__(self, name, string, \
 			pool_folder)
 
 	def help(self, name):
 
 		"""
-		Return the full path to a help file
+		Returns the full path to a help file.
 
 		Arguments:
-		name -- the name of the help file (e.g., "sequence.html")
+		name	--	The name of the help file. (e.g., "sequence.html")
 
 		Returns:
-		The full path to the help file or an empty string if the
-		help file was not found
+		The full path to the help file or an empty string if the help file was
+		not found.
 		"""
 
 		# Check in the subfolder of the current path, which is
 		# where the helpfile will be on Windows
-		path = os.path.join("help", name)
+		path = os.path.join(u'help', name)
 		if os.path.exists(path):
 			return path
-
 		# Check in the shared folders
-		if os.name == "posix":
+		if os.name == u'posix':
 			path = u'/usr/share/opensesame/help/%s' % name
 			if os.path.exists(path):
 				return path
-
 		# Fall back to the resource folder if the help
 		# file is not found
 		try:
 			return self.resource(name)
 		except:
 			pass
-
 		# Return an empty string if not found
 		return u''
 
 	def module_container(self):
 
-		"""Specifies the module that is used to get items from"""
+		"""
+		Specifies the module that is used to get items from.
+		
+		Returns:
+		u'libqtopensesame.items'
+		"""
 
-		return "libqtopensesame.items"
+		return u'libqtopensesame.items'
 
 	def item_prefix(self):
 
-		"""A prefix that should be added to classes for plugins"""
+		"""
+		Specifies a prefix that should be added to classes for plugins.
+		
+		Returns:
+		u'qt'		
+		"""
 
-		return "qt"
+		return u'qt'
 
 	def build_item_tree(self, toplevel=None, items=[]):
 
 		"""
-		Construct an item tree
+		Constructs an item tree.
 
 		Keyword arguments:
-		toplevel -- the toplevel widget (default = None)
-		items -- a list of items that have been added, to prevent recursion
-				 (default=[])
+		toplevel	--	The toplevel widget. (default=None)
+		items		--	A list of items that have already been added, to
+						prevent recursion. (default=[])
 
 		Returns:
-		An updated list of items that have been added
+		An updated list of items that have been added.
 		"""
 
 		self.ui.itemtree.clear()
@@ -163,11 +169,11 @@ class experiment(libopensesame.experiment.experiment):
 	def rename(self, from_name, to_name):
 
 		"""
-		Rename an item
+		Renames an item.
 
 		Arguments:
-		from_name -- the original name
-		to_name -- the new name
+		from_name	--	The old name.
+		to_name		--	The new name.
 		"""
 
 		to_name = self.sanitize(to_name, True)
@@ -206,14 +212,14 @@ class experiment(libopensesame.experiment.experiment):
 	def check_name(self, name):
 
 		"""
-		Checks whether a given name is allowed. Reasons for not being allowed
-		are invalid characters or match with an existing name.
+		Checks whether a given name is valid. Reasons for not being valid
+		are invalid characters or a conflict with an existing name..
 
 		Arguments:
-		name -- the name to check
+		name	--	The name to check.
 
 		Returns:
-		True if the name is allowed, False otherwise
+		True if the name is allowed, False otherwise.
 		"""
 
 		if name.strip() == u'':
@@ -227,18 +233,20 @@ class experiment(libopensesame.experiment.experiment):
 	def delete(self, item_name, item_parent=None, index=None):
 
 		"""
-		Delete an item
+		Deletes an item.
 
 		Arguments:
-		item_name -- the name of the item to be deleted
+		item_name		--	The name of the item to be deleted.
 
 		Keywords arguments:
-		item_parent -- the parent item (default=None)
-		index -- the index of the item in the parent (default=None)
+		item_parent		--	The parent item. (default=None)
+		index			--	The index of the item in the parent sequence, if
+							applicable. (default=None)
 		"""
 
 		if self.start == item_name:
-			self.notify("You cannot delete the entry point of the experiment!")
+			self.notify( \
+				u'You cannot delete the entry point of the experiment!')
 			return
 		for item in self.items:
 			self.items[item].delete(item_name, item_parent, index)
@@ -248,77 +256,75 @@ class experiment(libopensesame.experiment.experiment):
 	def unique_name(self, name):
 
 		"""
-		Return a unique name that resembles the desired name
+		Returns a unique name that resembles the desired name.
 
 		Arguments:
-		name -- the desired name
+		name	--	The desired name.
 
 		Returns:
-		The unique name
+		A unique name.
 		"""
 
 		for item in self.items:
 			if item == name:
-				name = "_" + name
+				name = u'_' + name
 				return self.unique_name(name)
 		return name
 
 	def icon(self, name):
 
 		"""
-		Return a QIcon for the given name
+		Returns a QIcon for a given name (such as an item type).
 
 		Arguments:
-		name -- the name (e.g., "sequence")
+		name	--	A name. (e.g., u'sequence')
 
 		Returns:
-		A QIcon
+		A QIcon.
 		"""
 
 
 		# TODO This hack is necessary to avoid breaking compatibility with the
 		# old resources system, but plug-ins should not do this anymore!
-		if (name+".png") in self.resources:
-			return QtGui.QIcon(self.resource(name+".png"))
-
-		#debug.msg(reason="deprecated")
+		if (name+u'.png') in self.resources:
+			return QtGui.QIcon(self.resource(name+u'.png'))
 		return self.main_window.theme.qicon(name)
 
 	def label_image(self, name):
 
 		"""
-		Return a QLabel with a pixmap for the given name
+		Returns a QLabel for a given name (such as an item type).
 
 		Arguments:
-		name -- the name (e.g., "sequence")
+		name	--	A name. (e.g., u'sequence')
 
 		Returns:
-		A QLabel
+		A QLabel.
 		"""
 
 		# TODO This hack is necessary to avoid breaking compatibility with the
 		# old resources system, but plug-ins should not do this anymore!
-		if (name+"_large.png") in self.resources:
+		if (name+u'_large.png') in self.resources:
 			l = QtGui.QLabel()
-			l.setPixmap(QtGui.QPixmap(self.resource(name+"_large.png")))
+			l.setPixmap(QtGui.QPixmap(self.resource(name+u'_large.png')))
 			return l
-
 		return self.main_window.theme.qlabel(name)
 
-	def item_combobox(self, select=None, exclude = [], c = None):
+	def item_combobox(self, select=None, exclude=[], c=None):
 
 		"""
-		Returns a combobox with all the items of the experiment
+		Returns a QComboBox that contains all the items of the experiment.
 
 		Keyword arguments:
-		select -- the item to be selected initially	or None to select nothing
-				  (default=None)
-		exclude -- a list of items that should not be included in the list
-				   (default=[])
-		c -- a QComboBox that should be cleared and re-filled (default = None)
+		select	--	The item to be selected initially or None to select
+					nothing. (default=None)
+		exclude	--	A list of items that should not be included in the list.
+					(default=[])
+		c		--	A QComboBox that should be cleared and re-filled.
+					(default=None)
 
 		Returns:
-		A QComboBox
+		A QComboBox.
 		"""
 
 		if c == None:
@@ -355,16 +361,21 @@ class experiment(libopensesame.experiment.experiment):
 		c.setCurrentIndex(index)
 		return c
 
-	def item_type_combobox(self, core_items = True, plugins = True, c = None, select = None):
+	def item_type_combobox(self, core_items=True, plugins=True, c=None, \
+		select=None):
 
 		"""
-		Returns a combobox with all the item types and plug-ins
+		Returns a combobox with all the item types and plug-ins.
 
 		Keyword arguments:
-		core_items -- a boolean indicating if core items should be included (default = True)
-		plugins -- a boolean indicating if plug-ins should be inculuded (default = True)
-		c -- a QComboBox that should be cleared and re-filled (default = None)
-		select -- the item that should be selected initially (default = None)
+		core_items	--	A boolean indicating whether core items should be
+						included. (default=True)
+		plugins		--	A boolean indicating whether plug-ins should be
+						inculuded. (default=True)
+		c			--	A QComboBox that should be cleared and re-filled.
+						(default=None)
+		select		--	The item type that should be selected initially.
+						(default=None)
 
 		Returns:
 		A QComboBox
@@ -374,23 +385,20 @@ class experiment(libopensesame.experiment.experiment):
 			c = QtGui.QComboBox(self.ui.centralwidget)
 		else:
 			c.clear()
-
 		i = 0
-
-		for item in ["loop", "sequence", "sketchpad", "feedback", "sampler", "synth", "keyboard_response", "mouse_response", "logger", "inline_script"]:
+		for item in self.core_items:
 			c.addItem(item)
 			c.setItemIcon(i, self.icon(item))
 			if item == select:
 				c.setCurrentIndex(i)
 			i += 1
-
 		if core_items and plugins:
-			c.addItem("")
+			c.addItem(u'')
 			i += 1
-
 		for plugin in libopensesame.plugins.list_plugins():
 			c.addItem(plugin)
-			c.setItemIcon(i, QtGui.QIcon(libopensesame.plugins.plugin_icon_small(plugin)))
+			c.setItemIcon(i, QtGui.QIcon( \
+				libopensesame.plugins.plugin_icon_small(plugin)))
 			if plugin == select:
 				c.setCurrentIndex(i)
 			i += 1
@@ -399,11 +407,11 @@ class experiment(libopensesame.experiment.experiment):
 	def combobox_text_select(self, combobox, text):
 
 		"""
-		Find a text in a combobox and select the corresponding item
+		Finds a text in a combobox and selects the corresponding item.
 
 		Arguments:
-		combobox -- a QComboBox
-		text -- a text string to select
+		combobox	--	A QComboBox.
+		text		--	A text string to select, if a match is found.
 		"""
 
 		combobox.setCurrentIndex(0)
@@ -415,10 +423,10 @@ class experiment(libopensesame.experiment.experiment):
 	def notify(self, message):
 
 		"""
-		Present a default notification dialog
+		Presents a default notification dialog.
 
 		Arguments:
-		message -- the message to be shown
+		message		--	The message to be shown.
 		"""
 
 		from libqtopensesame.ui import notification_dialog_ui
@@ -430,20 +438,20 @@ class experiment(libopensesame.experiment.experiment):
 		a.adjustSize()
 		a.show()
 
-	def text_input(self, title, message=None, content=""):
+	def text_input(self, title, message=None, content=u''):
 
 		"""
-		Pops up a text input dialog
+		Pops up a text input dialog.
 
 		Arguments:
-		title -- the title for the dialog
+		title		--	The title for the dialog.
 
 		Keywords arguments:
-		message -- a text message (default=None)
-		contents -- the initial contents (default="")
+		message		--	A text message. (default=None)
+		contents	--	The initial contents. (default=u'')
 
 		Returns:
-		A string of text or None if cancel was pressed
+		A string of text or None if cancel was pressed.
 		"""
 
 		from libqtopensesame.ui import text_input_dialog_ui
@@ -460,24 +468,24 @@ class experiment(libopensesame.experiment.experiment):
 			return unicode(a.ui.textedit_input.toPlainText())
 		return None
 
-	def colorpicker(self, title="Pick a color", initial_color=None):
+	def colorpicker(self, title=u'Pick a color', initial_color=None):
 
 		"""
 		Pops up a colorpicker dialog and returns a color in hexadecimal RGB
-		notation
+		notation.
 
 		Keywords arguments:
-		title -- title of the dialog (default='Pick a color')
-		initial_color -- the color to start with (default=None)
+		title			--	Title of the dialog. (default=u'Pick a color')
+		initial_color	--	The color to start with. (default=None)
 
 		Returns:
-		A color string or None if the dialog was cancelled
+		A color string or None if the dialog was canceled.
 		"""
 
 		try:
 			self.color_check(initial_color)
 		except:
-			initial_color = "white"
+			initial_color = u'white'
 		color = QtGui.QColorDialog.getColor(QtGui.QColor(initial_color), \
 			self.main_window, title)
 		if color.isValid():
@@ -487,16 +495,16 @@ class experiment(libopensesame.experiment.experiment):
 	def monospace(self):
 
 		"""
-		Determines the OS specific monospace font
+		Returns the system-specific default monospace font.
 
 		Returns:
-		A QFont
+		A QFont.
 		"""
 
-		if os.name == "posix":
-			font_family = "mono"
+		if os.name == u'posix':
+			font_family = u'mono'
 		else:
-			font_family = "courier"
+			font_family = u'courier'
 		font = QtGui.QFont(font_family)
 		font.setFixedPitch(True)
 		return font
@@ -504,11 +512,11 @@ class experiment(libopensesame.experiment.experiment):
 	def clear_widget(self, widget):
 
 		"""
-		Explicitly clears the layout in a widget. This is necessary
-		in some weird cases.
+		Explicitly clears the layout in a widget. This is necessary in some
+		weird cases.
 
 		Arguments:
-		widget -- the QWidget to be cleared
+		widget	--	The QWidget to be cleared.
 		"""
 
 		if widget != None:

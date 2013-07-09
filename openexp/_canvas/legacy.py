@@ -27,7 +27,7 @@ import subprocess
 import os
 import os.path
 import tempfile
-from libopensesame import debug, html
+from libopensesame import debug, html, misc
 
 # Translation mapping from envelope names
 env_synonyms = {}
@@ -95,7 +95,7 @@ class legacy:
 		"pygame_doublebuf" : {
 			"name" : "Double buffering",
 			"description" : "Use double buffering",
-			"default" : "no"
+			"default" : "yes"
 			},
 		"pygame_window_frame" : {
 			"name" : "Draw window frame",
@@ -204,8 +204,15 @@ class legacy:
 		"""
 
 		if self._current_font == None:
-			self._current_font = pygame.font.Font(self.experiment.resource( \
-				"%s.ttf" % self.font_style), self.font_size)
+			# First see if the font refers to a file in the resources/ filepool
+			try:
+				font_path = self.experiment.resource(u'%s.ttf' % \
+					self.font_style)
+				self._current_font = pygame.font.Font(font_path, self.font_size)
+			# If not, try to match a system font
+			except:
+				self._current_font = pygame.font.SysFont(self.font_style, \
+					self.font_size)				
 			self._current_font.set_bold(self.font_bold)
 			self._current_font.set_italic(self.font_italic)
 			self._current_font.set_underline(self.font_underline)
@@ -326,8 +333,10 @@ class legacy:
 		</DOC>"""
 
 		self.experiment.surface.blit(self.surface, (0, 0))
+		self.experiment.last_shown_canvas = self.surface
 		pygame.display.flip()
 		return pygame.time.get_ticks()
+		
 
 	def clear(self, color=None):
 
@@ -787,35 +796,38 @@ class legacy:
 	def image(self, fname, center=True, x=None, y=None, scale=None):
 
 		"""<DOC>
-		Draws an image from file. This function does not look in the file pool, #
-		but takes an absolute path.
+		Draws an image from file. This function does not look in the file #
+		pool, but takes an absolute path.
 
 		Arguments:
-		fname -- The path of the file.
+		fname		--	The path of the file. If this is a Unicode string, it #
+						is intepreted as utf-8 encoding.
 
 		Keyword arguments:
-		center -- A Boolean indicating whether the given coordinates reflect the #
-				  center (True) or the top-left (False) of the image #
-				  (default=True).
-		x -- The X coordinate. None = center. (Default=None)
-		y -- The Y coordinate. None = center. (Default=None)
-		scale -- The scaling factor of the image. 1.0 or None = no scaling, 2.0 #
-				 = twice as large, etc. (default=None).
+		center		--	A Boolean indicating whether the given coordinates #
+						reflect the center (True) or the top-left (False) of #
+						the image default=True).
+		x			--	The X coordinate. None = center. (Default=None)
+		y			--	The Y coordinate. None = center. (Default=None)
+		scale		--	The scaling factor of the image. 1.0 or None = #
+						no scaling, 2.0 = twice as large, etc. (default=None).
 
 		Example:
 		>>> from openexp.canvas import canvas
 		>>> my_canvas = canvas(exp)
 		>>> # Determine the absolute path:
-		>>> path = exp.get_file('image_in_pool.png')
+		>>> path = exp.get_file(u'image_in_pool.png')
 		>>> my_canvas.image(path)
 		</DOC>"""
 
+		if isinstance(fname, unicode):
+			fname = fname.encode(self.experiment.encoding)
 		try:
 			surface = pygame.image.load(fname)
 		except pygame.error as e:
 			raise openexp.exceptions.canvas_error( \
 				"'%s' is not a supported image format" % fname)
-
+				
 		if scale != None:
 			try:
 				surface = pygame.transform.smoothscale(surface, \

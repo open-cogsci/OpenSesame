@@ -52,7 +52,7 @@ class legacy:
 		"custom_cursor" : {
 			"name" : "Custom cursor",
 			"description" : "Bypass the system mouse cursor",
-			"default" : "yes"
+			"default" : "no"
 			},
 		"enable_escape" : {
 			"name" : "Enable escape",
@@ -86,7 +86,7 @@ class legacy:
 		self.set_buttonlist(buttonlist)
 		self.set_timeout(timeout)
 		self.set_visible(visible)		
-		if self.experiment.get_check('custom_cursor', 'yes') == 'yes':
+		if self.experiment.get_check('custom_cursor', 'no') == 'yes':
 			self.cursor = pygame.image.load(self.experiment.resource( \
 				'cursor.png'))		
 		else:
@@ -209,7 +209,6 @@ class legacy:
 			pygame.mouse.set_visible(visible)
 		elif visible:
 			pygame.mouse.set_visible(False)
-			bg_surface = self.experiment.window.copy()
 		
 		start_time = pygame.time.get_ticks()
 		time = start_time
@@ -219,7 +218,7 @@ class legacy:
 			
 			# Draw a cusom cursor if necessary
 			if self.cursor != None and visible:
-				surface = bg_surface.copy()
+				surface = self.experiment.last_shown_canvas.copy()
 				surface.blit(self.cursor, pygame.mouse.get_pos())
 				self.experiment.surface.blit(surface, (0,0))		
 				pygame.display.flip()
@@ -245,8 +244,9 @@ class legacy:
 										raise openexp.exceptions.response_error( \
 											"The escape sequence was clicked/ tapped")
 						
-					if buttonlist == None or event.button in buttonlist:
-						pygame.mouse.set_visible(self.visible)
+					if (buttonlist == None or event.button in buttonlist):
+						if self.cursor is None:						
+							pygame.mouse.set_visible(self.visible)
 						return event.button, event.pos, time
 			if timeout != None and time-start_time >= timeout:
 				break

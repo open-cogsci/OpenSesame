@@ -66,6 +66,7 @@ class scintilla(QsciScintilla):
 		self.refresh_layout = True
 		self.cfg_ver = config.get_config("cfg_ver")
 		self.setUtf8(True)
+		self.setEolMode(self.EolUnix)
 
 	def paintEvent(self, e):
 
@@ -162,9 +163,8 @@ class scintilla(QsciScintilla):
 		Returns:
 		A unicode string with the editor contents
 		"""
-		
-		# Make sure that operating specific eol's are converted to unix style
-		return  unicode(self.text()).replace(os.linesep, '\n')
+
+		return unicode(self.text())
 
 	def setPlainText(self, s, set_modified=False):
 

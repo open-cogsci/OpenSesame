@@ -28,10 +28,10 @@ class unused_widget(QtGui.QWidget):
 	def __init__(self, parent=None):
 
 		"""
-		Constructor
+		Constructor.
 
 		Keywords arguments:
-		parent -- the parent QWidget
+		parent	--	The parent QWidget. (default=None)
 		"""
 				
 		self.main_window = parent
@@ -40,18 +40,18 @@ class unused_widget(QtGui.QWidget):
 
 		# Set the header, with the icon, label and script button
 		header_hbox = QtGui.QHBoxLayout()
-		header_hbox.addWidget(self.experiment.label_image("unused"))
+		header_hbox.addWidget(self.experiment.label_image(u"unused"))
 		header_label = QtGui.QLabel()
-		header_label.setText(_("<b><font size='5'>Unused</font></b>"))
+		header_label.setText(_(u"<b><font size='5'>Unused</font></b>"))
 		header_hbox.addWidget(header_label)
 		header_hbox.addStretch()
 		header_widget = QtGui.QWidget()
 		header_widget.setLayout(header_hbox)
 
-		purge_button = QtGui.QPushButton(self.experiment.icon("purge"), \
-			_("Permanently delete unused items"))
+		purge_button = QtGui.QPushButton(self.experiment.icon(u"purge"), \
+			_(u"Permanently delete unused items"))
 		purge_button.setIconSize(QtCore.QSize(16, 16))
-		QtCore.QObject.connect(purge_button, QtCore.SIGNAL("clicked()"), \
+		QtCore.QObject.connect(purge_button, QtCore.SIGNAL(u"clicked()"), \
 			self.purge_unused)
 
 		purge_hbox = QtGui.QHBoxLayout()
@@ -74,8 +74,8 @@ class unused_widget(QtGui.QWidget):
 
 		# Ask confirmation
 		resp = QtGui.QMessageBox.question(self.main_window.ui.centralwidget, \
-			_("Permanently delete items?"), \
-			_("Are you sure you want to permanently delete all unused items? This action cannot be undone."), \
+			_(u"Permanently delete items?"), \
+			_(u"Are you sure you want to permanently delete all unused items? This action cannot be undone."), \
 			QtGui.QMessageBox.Yes, QtGui.QMessageBox.No)
 		if resp == QtGui.QMessageBox.No:
 			return
@@ -89,5 +89,6 @@ class unused_widget(QtGui.QWidget):
 			self.main_window.experiment.build_item_tree()
 						
 		# Notify dispatch
-		self.main_window.dispatch.event_structure_change.emit('')
-		
+		self.main_window.dispatch.event_structure_change.emit(u'')		
+		self.main_window.ui.tabwidget.close_all()
+		self.main_window.ui.tabwidget.open_general()

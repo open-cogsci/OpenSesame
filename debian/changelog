@@ -1,4 +1,11 @@
-opensesame (0.27.2-4) unstable; urgency=low
+opensesame (0.27.3-1) neurodebian; urgency=low
+
+  * Miscellaneous bug-fixes
+  * Add French translation
+
+ -- Sebastiaan Mathot <s.mathot@cogsci.nl>  Tue, 09 Jul 2013 10:06:07 +0200
+
+opensesame (0.27.2-4) neurodebian; urgency=low
 
   * Add support for Android
   * Add new-style plug-in API

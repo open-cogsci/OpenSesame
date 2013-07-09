@@ -21,7 +21,7 @@ import os
 import os.path
 import sys
 
-version = u'0.27.2'
+version = u'0.27.3'
 codename = u'Frisky Freud'
 
 use_global_resources = '--no-global-resources' not in sys.argv
@@ -195,18 +195,22 @@ def resource(name):
 	A hacky way to get a resource using the functionality from openexp
 
 	Arguments:
-	name -- the name of the requested resource
+	name	--	The name of the requested resource. If this is a regular string
+				it is assumed to be encoded as utf-8.
 
 	Returns:
-	The full path to the resource
+	A Unicode string with the full path to the resource.
 	"""
 
 	global use_global_resources
-	path = os.path.join(u"resources", name)
+	
+	if isinstance(name, str):
+		name = name.decode(u'utf-8', errors=u'ignore')	
+	path = os.path.join(u'resources', name)
 	if os.path.exists(path):
-		return os.path.join(u"resources", name)
-	if os.name == u"posix" and use_global_resources:
-		path = u"/usr/share/opensesame/resources/%s" % name
+		return os.path.join(u'resources', name)
+	if os.name == u'posix' and use_global_resources:
+		path = u'/usr/share/opensesame/resources/%s' % name
 		if os.path.exists(path):
 			return path
 	return None
@@ -214,24 +218,23 @@ def resource(name):
 def home_folder():
 
 	"""
-	Determines the home folder
+	Determines the home folder.
 
 	Returns:
-	A path to the home folder
+	A path to the home folder.
 	"""
 
 	import platform
-
-	# Determine the home folder
 	if platform.system() == u"Windows":
-		return os.environ[u"APPDATA"]
-	if platform.system() == u"Darwin":
-		return os.environ[u"HOME"]
-	if platform.system() == u"Linux":
-		return os.environ[u"HOME"]
-	home_folder = os.environ[u"HOME"]
-	print u"qtopensesame.__init__(): unknown platform '%s', using '%s' as home folder" \
-		% (platform.system(), home_folder)
+		home_folder = os.environ[u"APPDATA"]
+	elif platform.system() == u"Darwin":
+		home_folder = os.environ[u"HOME"]
+	elif platform.system() == u"Linux":
+		home_folder = os.environ[u"HOME"]
+	else:
+		home_folder = os.environ[u"HOME"]
+	if isinstance(home_folder, str):
+		home_folder = home_folder.decode(filesystem_encoding())
 	return home_folder
 
 def module_versions():
@@ -246,8 +249,7 @@ def module_versions():
 	from PyQt4 import QtCore
 
 	s = u"OpenSesame %s" % version
-	s += u"\nPython %d.%d.%d" % (sys.version_info[0], sys.version_info[1], \
-		sys.version_info[2])
+	s += u"\nPython %s" % sys.version
 
 	# OpenCV
 	try:
@@ -259,7 +261,11 @@ def module_versions():
 	# OpenCV 2
 	try:
 		import cv2
-		s += u'\nOpenCV 2 is available (version is unknown)'
+		if hasattr(cv2, u'__version__'):
+			ver = cv2.__version__
+		else:
+			ver = u'(version unknown)'
+		s += u'\nOpenCV2 %s' % ver
 	except:
 		s += u'\nOpenCV 2 is not available'
 
@@ -372,3 +378,21 @@ def filesystem_encoding():
 	if enc == None:
 		enc = u'utf-8'
 	return enc
+
+def strip_html(s):
+	
+	"""
+	Strips basic HTML tags from a string.
+	
+	Arguments:
+	s		--	A string to strip.
+		
+	Returns:
+	A stripped string.
+	"""
+	
+	s = s.replace(u'<br />', u'\n')
+	for tag in [u'<i>', u'</i>', u'<b>', u'</b>']:
+		s = s.replace(tag, u'')
+	return s
+	

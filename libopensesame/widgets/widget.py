@@ -33,7 +33,7 @@ class widget:
 		form -- The parent form.
 		</DOC>"""
 	
-		self.type = 'widget'
+		self.type = u'widget'
 		self.form = form
 		self.rect = None
 		self.focus = False
@@ -42,8 +42,8 @@ class widget:
 		# Check if the form parameter is valid
 		if not isinstance(form, _form):
 			raise form_error( \
-			'The first parameter passed to the constructor of a form widget should be a form, not "%s"' \
-			% form)
+				u'The first parameter passed to the constructor of a form widget should be a form, not "%s"' \
+				% form)
 		
 	def draw_frame(self, rect=None, style='normal'):
 	

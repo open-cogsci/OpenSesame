@@ -42,9 +42,14 @@ Python modules
 The following Python modules should be installed:
 	
 	cairo
+		- Unofficial Windows builds can be downloaded from
+		  <http://www.lfd.uci.edu/~gohlke/pythonlibs/#pycairo>
 	distutils
 	expyriment
 	opencv2
+		- Download and extract the regular OpenCV2 package
+		- Copy cv2.pyd from build/python/2.7 to the Python site-packages
+		  folder
 	pil
 	psychopy
 	py2exe
@@ -52,11 +57,19 @@ The following Python modules should be installed:
 	pygame
 	pyglet
 	pyopengl
-	pyparallel	(Don't forget simpleio.dll in the site-packages/parallel folder)
+	pyparallel
+		- Needs to be installed through the .zip package
+		- Manually place simpleio.dll in the Python folder
 	pyqt4
 	pyserial
 	numpy
 	scipy
+	vlc
+		- Required only for media_player_vlc
+		= Place vlc.py in the media_player_vlc folder. See below for folder
+		  structure.
+		- Choose the version for VLC 2.0
+		- Available from <http://liris.cnrs.fr/advene/download/python-ctypes/>		  
 
 Folder structure
 ================
@@ -64,9 +77,10 @@ Folder structure
 If media_player or media_player_vlc are included, they are assumed to be one folder
 up. So the folder structure should be as follows:
 
-	./opensesame
-	./media_player
-	./media_player_vlc
+	/[parent foler]
+		/opensesame
+		/media_player
+		/media_player_vlc
 
 """
 
@@ -118,11 +132,13 @@ include_sounds = True
 include_faenza = True
 include_inpout32 = True
 include_simpleio = True
-python_folder = r"C:\Python_2.7.4-32"
+python_folder = r"C:\Python_2.7.5-win32"
 python_version = "2.7"
 
 # Packages that are too be copied for the site-packages folder, rather than
-# included by py2exe in the library .zip file
+# included by py2exe in the library .zip file. Copying packages is in general
+# preferred, as some packages (e.g. expyriment) do not work well when included
+# in the library.zip file that py2exe uses to store packages.
 copy_packages = [
 	'libopensesame',
 	'openexp',
@@ -166,7 +182,7 @@ exclude_dll = [
 	"MSVCP90.DLL",
 	"libzmq.dll",
 	]
-	
+
 # Create empty destination folders
 if os.path.exists("dist"):
 	shutil.rmtree("dist")
@@ -316,13 +332,13 @@ shutil.copyfile(r"%s\Lib\site-packages\PIL.pth" \
 
 if include_simpleio:
 	print "copying simpleio.dll"
-	shutil.copyfile(r"%s\Lib\site-packages\parallel\simpleio.dll" \
+	shutil.copyfile(r"%s\simpleio.dll" \
 		% python_folder, r"dist\simpleio.dll")
 
 if include_inpout32:
 	print "copying inpout32.dll"
 	urllib.urlretrieve ("http://files.cogsci.nl/misc/inpout32.dll", \
-		"dist\\inpout32.dll")
+		r"dist\inpout32.dll")
 
 # Include plug-ins
 if include_plugins:

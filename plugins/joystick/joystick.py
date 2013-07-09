@@ -114,30 +114,18 @@ class joystick(item.item, generic_response.generic_response):
 
 		# Set the onset time
 		self.set_item_onset()
-
 		# Flush keyboard, so the escape key can be used
 		self._keyboard.flush()
-
 		# If no start response interval has been set, set it to the onset of
 		# the current response item
 		if self.experiment.start_response_interval == None:
-			self.experiment.start_response_interval = self.get("time_%s" \
-																% self.name)
-		if self.has("_dummy") and self.get("_dummy") == "yes":
-
+			self.experiment.start_response_interval = self.get(u'time_%s' \
+				% self.name)
+		if self.has(u'_dummy') and self.get(u'_dummy') == u'yes':
 			# In dummy mode, no one can hear you scream! Oh, and we simply
 			# take input from the keyboard
 			resp, self.experiment.end_response_interval = self._resp_func( \
 				None, self._timeout)
-			try:
-				resp = self._keyboard.to_chr(resp)
-				if resp != "timeout":
-					resp = int(resp)
-			except:
-				raise exceptions.runtime_error( \
-					"An error occured in joystick '%s': Only number keys are accepted in dummy mode" \
-					% self.name)
-
 		else:
 			# Get the response
 			try:
@@ -146,7 +134,6 @@ class joystick(item.item, generic_response.generic_response):
 			except Exception as e:
 				raise exceptions.runtime_error( \
 					"An error occured in joystick '%s': '%s." % (self.name, e))
-
 		debug.msg(u'received %s' % resp)
 		self.experiment.response = resp
 		generic_response.generic_response.response_bookkeeping(self)
