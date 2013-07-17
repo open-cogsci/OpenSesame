@@ -19,17 +19,35 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 import multiprocessing
 
 class OutputChannel:
+	""" Passes messages from child process back to main process
+	
+	Arguments:
+		channel -- a multiprocessing.JoinableQueue object that is referenced
+			from the main process
+			
+	Keyword arguments
+		orig -- the original stdout or stderr to also print the messages to
+			
+	"""
 	def __init__(self,channel,orig=None):
 		self.channel = channel
 		self.orig = orig
 		
 	def write(self, m):
+		"""
+		Write a message to the queue
+		
+		Arguments
+			m -- the message to write. Should be a string or a 
+				(Exception, traceback) tuple
+		"""
 		self.channel.put(m)
 		
 		if self.orig:
 			self.orig.write(m)
 			
 	def flush(self):
+		""" Dummy function to mimic the stderr.flush() function (crashes otherwise) """
 		if self.orig:
 			self.orig.flush()
 		else:
@@ -38,22 +56,29 @@ class OutputChannel:
 
 
 class ExperimentProcess(multiprocessing.Process):
+
+	""" Creates a new process to run an experiment in
+	Arguments
+		exp - an instance of libopensesame.experiment.experiment
+		output - a reference to the queue object created in and used to communicate with the main process
+	"""
 	
-	def __init__(self, output):
-		""" Constructor
-		provide a reference to the pipe object used to communicate with the main process
-		"""
-		
+	def __init__(self, exp, output):
 		multiprocessing.Process.__init__(self)
 		self.output = output
-		self.script = ""
-		self.path = ""
-		self.pool_folder = ""
-		self.fullscreen = True
-		self.subject_nr = None
-		self.logfile = ""
-		self.auto_response = False
 		
+		# The experiment object is troublesome to serialize,
+		# therefore pull out all relevant data to pass on to the new process
+		# and rebuild the exp object from there.
+		
+		self.script = exp.to_string()
+		self.pool_folder = exp.pool_folder
+		self.subject_nr = exp.subject_nr
+		self.path = exp.experiment_path
+		self.fullscreen = exp.fullscreen
+		self.logfile = exp.logfile
+		self.auto_response = exp.auto_response
+				
 		
 	def run(self):
 		""" Everything in this function is run in a new process, therefore all import statements are put in here
@@ -77,39 +102,29 @@ class ExperimentProcess(multiprocessing.Process):
 		pipeToMainProcess = OutputChannel(self.output)		
 		sys.stdout = pipeToMainProcess
 		sys.stderr = pipeToMainProcess
-	
-		os.chdir("..")
-	
-		try:	
-			# Check if all required data is available
-			if self.script == "":
-				raise RuntimeError("Script to run not specified")
-			if self.path == "":
-				raise RuntimeError("Experiment path not specified")
-			if self.pool_folder == "":
-				raise RuntimeError("Pool folder not set")
-			if self.logfile == "" :
-				raise RuntimeError("Save location of logfile not specified")
-			if self.subject_nr is None:
-				raise RuntimeError("Subject number not specified")
-						
+		
+		os.chdir("..")	
+					
+		try:							
 			import libopensesame.misc
 			import libopensesame.experiment
+			
 			
 			# Determine subject parity
 			if self.subject_nr % 2:
 				sp = u"even"
 			else:
 				sp = u"odd"	
+			
 						
-			exp = libopensesame.experiment.experiment("Experiment", self.script, self.pool_folder)
-				
+			exp = libopensesame.experiment.experiment("Experiment", self.script, self.pool_folder)				
 			exp.set_subject(self.subject_nr)
 			exp.set(u"subject_parity", sp)
 			exp.experiment_path = self.path
 			exp.fullscreen = self.fullscreen
 			exp.logfile = self.logfile
 			exp.auto_response = self.auto_response
+						
 			print "Starting experiment as %s" % self.name
 			exp.run()
 			exp.end()
