@@ -88,7 +88,7 @@ class inline_error(runtime_error):
 	item. The Python traceback is parsed and returned.
 	"""
 
-	def __init__(self, item_name, phase, exception):
+	def __init__(self, item_name, phase, exception=None):
 		self.name = item_name
 		self.phase = phase
 
@@ -110,7 +110,8 @@ class inline_error(runtime_error):
 			s += u'<br />%s' % r
 		s += u'<br /><i>Full traceback in debug window</i>'
 		self.value = s
-		super(inline_error, self).__init__(s, item_name, phase, exception)
+		#super(inline_error, self).__init__(s, item_name, phase, exception)
+		runtime_error.__init__(self, s, item_name, phase, exception)
 
 	def parse_line(self, s):
 
