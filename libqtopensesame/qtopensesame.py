@@ -1177,7 +1177,6 @@ class qtopensesame(QtGui.QMainWindow):
 		from libqtopensesame.widgets import pyterm				
 		out = pyterm.output_buffer(self.ui.edit_stdout)
 		if isinstance(msg, Exception):
-			import traceback
 			# The traceback may contain special characters, so it needs to
 			# be properly decoded. For some reason, it appears to encoded with
 			# the filesystem encoding, at least on Windows 7.
@@ -1188,83 +1187,7 @@ class qtopensesame(QtGui.QMainWindow):
 		else:
 			out.write(self.experiment.unistr(msg))
 
-	def call_opensesamerun(self, exp):
-
-		"""
-		Runs an experiment using opensesamerun
-
-		Arguments:
-		exp -- an instance of libopensesame.experiment.experiment
-		"""
-
-		import tempfile
-
-		# Temporary file for the standard output and experiment
-		stdout = tempfile.mktemp(suffix = ".stdout")
-		path = os.path.join(exp.experiment_path, \
-			'.opensesamerun-tmp.opensesame.tar.gz')
-		exp.save(path, True)
-		debug.msg("experiment saved as '%s'" % path)
-
-		# Determine the name of the executable
-		if config.get_config('opensesamerun_exec') == '':
-			if os.name == "nt":
-				cmd = ["opensesamerun.exe"]
-			else:
-				cmd = ["opensesamerun"]
-		else:
-			cmd = config.get_config('opensesamerun_exec').split()
-
-		cmd += [path, "--logfile=%s" % exp.logfile, "--subject=%s" \
-			% exp.subject_nr]
-
-		if debug.enabled:
-			cmd.append("--debug")
-		if exp.fullscreen:
-			cmd.append("--fullscreen")
-		if "--pylink" in sys.argv:
-			cmd.append("--pylink")
-
-		debug.msg("spawning opensesamerun as a separate process")
-
-		# Call opensesamerun and wait for the process to complete
-		try:
-			p = subprocess.Popen(cmd, stdout = open(stdout, "w"))
-		except:
-			self.experiment.notify( \
-				_("<b>Failed to start opensesamerun</b><br />Please make sure that opensesamerun (or opensesamerun.exe) is present in the path, manually specify the run command, or deselect the 'Run as separate process' option.<br><pre>%s</pre>") \
-				% (" ".join(cmd)))
-			try:
-				os.remove(path)
-				os.remove(stdout)
-			except:
-				pass
-			return False
-
-		# Wait for OpenSesame run to complete, process events in the meantime,
-		# to make sure that the new process is shown (otherwise it will crash
-		# on Windows).
-		retcode = None
-		while retcode == None:
-			retcode = p.poll()
-			QtGui.QApplication.processEvents()
-			time.sleep(1)
-
-		debug.msg("opensesamerun returned %d" % retcode)
-
-		print
-		print open(stdout, "r").read()
-		print
-
-		# Clean up the temporary file
-		try:
-			os.remove(path)
-			os.remove(stdout)
-		except:
-			pass
-
-		return True
-
+	
 	def experiment_finished(self, exp):
 
 		"""
@@ -1282,6 +1205,7 @@ class qtopensesame(QtGui.QMainWindow):
 			% exp.logfile, QtGui.QMessageBox.Yes, QtGui.QMessageBox.No)
 		if resp == QtGui.QMessageBox.Yes:
 			self.copy_to_pool(exp.logfile)
+			
 
 	def run_experiment(self, dummy=None, fullscreen=True, quick=False):
 
@@ -1391,7 +1315,6 @@ class qtopensesame(QtGui.QMainWindow):
 		buf = pyterm.output_buffer(self.ui.edit_stdout)
 		sys.stdout = buf
 		
-		print config.get_config(u"runner")
 		if config.get_config(u"runner") == u'multiprocess':			
 			from libopensesame.runner import multiprocess_runner as runner								
 		elif config.get_config(u"runner") == u'inprocess':
@@ -1410,12 +1333,12 @@ class qtopensesame(QtGui.QMainWindow):
 			
 				if isinstance(e, libopensesame.exceptions.runtime_error):
 					self.experiment.notify(e)
-					self.print_debug_window(tb)
+					#self.print_debug_window(tb)
 				elif isinstance(e, openexp.exceptions.openexp_error):					
 					self.experiment.notify( \
 						_(u"<b>Error</b>: OpenExp error<br /><b>Description</b>: %s") \
 						% e)
-					self.print_debug_window(tb)
+					#self.print_debug_window(tb)
 				else:
 					self.experiment.notify( \
 						_(u"An unexpected error occurred, which was not caught by OpenSesame. This should not happen! Message:<br/><b>%s</b>") \
@@ -1433,12 +1356,12 @@ class qtopensesame(QtGui.QMainWindow):
 				# Report the error
 				if isinstance(exception, libopensesame.exceptions.runtime_error):
 					self.experiment.notify(exception)
-					self.print_debug_window(exception)
+					#self.print_debug_window(exception)
 				elif isinstance(exception, openexp.exceptions.openexp_error):					
 					self.experiment.notify( \
 						_("<b>Error</b>: OpenExp error<br /><b>Description</b>: %s") \
 						% exception)
-					self.print_debug_window(exception)
+					#self.print_debug_window(exception)
 				else:
 					self.experiment.notify( \
 						_("An unexpected error occurred, which was not caught by OpenSesame. This should not happen! Message:<br/><b>%s</b>") \
@@ -1458,154 +1381,7 @@ class qtopensesame(QtGui.QMainWindow):
 		
 		# Re-enable the GUI.
 		self.setDisabled(False)			
-	
-	def run_experiment_orig(self, dummy=None, fullscreen=True, quick=False):
-
-		"""
-		Runs the current experiment
-
-		Keyword arguments:
-		dummy -- a dummy argument that is passed by signaler (default=None)
-		fullscreen -- a boolean to indicate whether the window should be
-					  fullscreen (default=True)
-		quick -- a boolean to indicate whether default should be used for the
-				 log-file and subject number. Mostly useful while testing the
-				 experiment (default=False)
-		"""
-
-		import openexp.exceptions
-		from libqtopensesame.widgets import pyterm
-
-		# Before we run the experiment, we parse it in three steps
-		# 1) Apply any pending changes
-		# 2) Convert the experiment to a string
-		# 3) Parse the string into a new experiment (with all the GUI stuff
-		#    stripped off)
-		try:
-			self.get_ready()
-			script = self.experiment.to_string()
-			exp = libopensesame.experiment.experiment("Experiment", script, \
-				self.experiment.pool_folder)
-			exp.experiment_path = self.experiment.experiment_path
-		except libopensesame.exceptions.script_error as e:
-			self.experiment.notify(unicode(e))
-			return
-
-		if quick:
-			exp.set("subject_nr", 999)
-			exp.set("subject_parity", "odd")
-			logfile = os.path.join(config.get_config('default_logfile_folder'), \
-				config.get_config('quick_run_logfile'))
-
-		else:
-
-			# Get the participant number
-			subject_nr, ok = QtGui.QInputDialog.getInt(self.ui.centralwidget, \
-				_("Subject number"), _("Please enter the subject number"), \
-				min=0)
-			if not ok:
-				return
-
-			# Set the subject nr and parity
-			exp.set_subject(subject_nr)
-
-			# Suggested filename
-			suggested_path = os.path.join(config.get_config( \
-				'default_logfile_folder'), u'subject-%d.csv' % subject_nr)
-
-			# Get the data file
-			csv_filter = u'Comma-separated values (*.csv)'
-			logfile = unicode(QtGui.QFileDialog.getSaveFileName( \
-				self.ui.centralwidget, \
-				_("Choose location for logfile (press 'escape' for default location)"), \
-				suggested_path, filter=csv_filter))
-
-			if logfile == '':
-				try:
-					# Sometimes this fails, e.g. if the default folder is "/"
-					logfile = os.path.join(config.get_config( \
-						'default_logfile_folder'), u'defaultlog.csv')
-				except:
-					logfile = os.path.join(self.home_folder, u'defaultlog.csv')
-			else:
-				if os.path.splitext(logfile)[1].lower() not in (".csv", \
-					".txt", ".dat", ".log"):
-					logfile += ".csv"
-
-		# Check if the logfile is writable
-		try:
-			open(logfile, "w")
-		except:
-			self.experiment.notify( \
-				_("The logfile '%s' is not writable. Please choose another location for the logfile.") \
-				% logfile)
-			return
-
-		# Remember the location of the logfile
-		config.set_config('default_logfile_folder', os.path.split(logfile)[0])
-
-		# Set fullscreen/ window mode
-		exp.fullscreen = fullscreen
-		exp.logfile = logfile
-
-		# Suspend autosave
-		if self.autosave_timer != None:
-			debug.msg("stopping autosave timer")
-			self.autosave_timer.stop()
-
-		exp.auto_response = self.experiment.auto_response
-
-		# Reroute the standard output to the debug window
-		buf = pyterm.output_buffer(self.ui.edit_stdout)
-		sys.stdout = buf
-
-		if config.get_config('opensesamerun'):
-			# Optionally, the experiment is run as a separate process
-			if self.call_opensesamerun(exp):
-				self.experiment_finished(exp)
-
-		else:
-			try:
-				exp.run()
-				self.experiment_finished(exp)
-
-			except Exception as e:
-
-				# Make sure that the experiment cleans up, even though it crashed
-				try:
-					exp.end()
-				except Exception as _e:
-					debug.msg("exception: %s" % _e)
-
-				# Report the error
-				if isinstance(e, libopensesame.exceptions.runtime_error):
-					self.experiment.notify(e)
-					self.print_debug_window(e)
-				elif isinstance(e, openexp.exceptions.openexp_error):					
-					self.experiment.notify( \
-						_("<b>Error</b>: OpenExp error<br /><b>Description</b>: %s") \
-						% e)
-					self.print_debug_window(e)
-				else:
-					self.experiment.notify( \
-						_("An unexpected error occurred, which was not caught by OpenSesame. This should not happen! Message:<br/><b>%s</b>") \
-						% self.experiment.unistr(e))
-					self.print_debug_window(e)
-
-		# Undo the standard output rerouting
-		sys.stdout = sys.__stdout__
-		self.ui.edit_stdout.show_prompt()
-
-		# Resume autosave, but not if opensesamerun is called
-		if self.autosave_timer != None:
-			debug.msg("resuming autosave timer")
-			self.autosave_timer.start()
-
-		# Restart the experiment if necessary
-		if exp.restart:
-			self.restart()
-			
-
+		
 	def run_experiment_in_window(self):
 
 		"""Runs the experiment in a window"""
