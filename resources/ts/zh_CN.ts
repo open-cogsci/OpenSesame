@@ -1530,12 +1530,12 @@
     <message>
         <location filename="translatables.py" line="116"/>
         <source>Tell me more about the %s item</source>
-        <translation>告诉我更多关于 %项目</translation>
+        <translation>告诉我更多关于 %s 项目</translation>
     </message>
     <message>
         <location filename="translatables.py" line="117"/>
         <source>%s (Edit the script to fix this)</source>
-        <translation>% (编辑脚本以修复)</translation>
+        <translation>%s (编辑脚本以修复)</translation>
     </message>
     <message>
         <location filename="translatables.py" line="118"/>
