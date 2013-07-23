@@ -326,12 +326,12 @@
     <message>
         <location filename="loop_widget.ui" line="233"/>
         <source>each cycle </source>
-        <translation>chaque cycle</translation>
+        <translation>chaque cycle </translation>
     </message>
     <message>
         <location filename="loop_widget.ui" line="236"/>
         <source> time(s)</source>
-        <translation>temps(s)</translation>
+        <translation> temps(s)</translation>
     </message>
     <message>
         <location filename="loop_widget.ui" line="267"/>
@@ -693,12 +693,12 @@
     <message>
         <location filename="opensesame.ui" line="624"/>
         <source>Save as (Control+Shift+S)</source>
-        <translation>Enregistrer sous (Controle+Majuscule+S)</translation>
+        <translation type="unfinished">Enregistrer sous (Controle+Shift+S)</translation>
     </message>
     <message>
         <location filename="opensesame.ui" line="627"/>
         <source>Ctrl+Shift+S</source>
-        <translation>Ctrl+Majuscule+S</translation>
+        <translation type="unfinished">Ctrl+Shift+S</translation>
     </message>
     <message>
         <location filename="opensesame.ui" line="636"/>
@@ -985,7 +985,7 @@
     <message>
         <location filename="opensesame.ui" line="998"/>
         <source>Ctrl+Shift+W</source>
-        <translation>Ctrl+Majuscule+W</translation>
+        <translation type="unfinished">Ctrl+Shift+W</translation>
     </message>
 </context>
 <context>
