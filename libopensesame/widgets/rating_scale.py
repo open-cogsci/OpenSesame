@@ -44,18 +44,18 @@ class rating_scale(widget):
 		</DOC>"""	
 		
 		if type(click_accepts) != bool:
-			click_accepts = click_accepts == 'yes'					
+			click_accepts = click_accepts == u'yes'					
 		
 		widget.__init__(self, form)
-		self.type = 'rating_scale'
+		self.type = u'rating_scale'
 		self.box_size = 16
 		self.click_accepts = click_accepts
 		self.pos_list = []
 		self.var = var
 		if type(nodes) == int:
-			self.nodes = ['']*nodes
-		elif type(nodes) in (str, unicode):
-			self.nodes = nodes.split(';')
+			self.nodes = [u'']*nodes
+		elif isinstance(nodes, basestring):
+			self.nodes = nodes.split(u';')
 		else:
 			self.nodes = nodes
 		self.set_value(None)
@@ -94,7 +94,7 @@ class rating_scale(widget):
 		cy = y+h/2
 		_h = self.form.theme_engine.box_size()				
 		dx = (1*w-3*_h)/(len(self.nodes)-1)										
-		self.form.theme_engine.frame(x, cy-.5*_h, w, 2*_h, style='light')		
+		self.form.theme_engine.frame(x, cy-.5*_h, w, 2*_h, style=u'light')		
 		_x = x+_h
 		i = 0
 		for node in self.nodes:

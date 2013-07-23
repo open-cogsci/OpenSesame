@@ -99,7 +99,7 @@ class experiment(item.item):
 
 		# This is a dummy variable for backwards compatibility. The logfile
 		# encoding is always utf-8, and this variable doesn't do anything.
-		self.logfile_codec = u'utf-8'
+		self.logfile_codec = u'utf-8' # DEPRECATED
 
 		# Default subject info
 		self.subject_nr = 0
@@ -112,7 +112,13 @@ class experiment(item.item):
 
 		# Pool folder
 		if pool_folder == None:
-			self.pool_folder = tempfile.mkdtemp(u'.opensesame_pool')
+			# On some systems tempfile.mkdtemp() triggers a UnicodeDecodeError.
+			# This is resolved by passing the dir explicitly as a Unicode
+			# string. This fix has been adapted from:
+			# - <http://bugs.python.org/issue1681974>
+			self.pool_folder = tempfile.mkdtemp(suffix= \
+				u'.opensesame_pool', dir=tempfile.gettempdir().decode( \
+				encoding=misc.filesystem_encoding()))				
 			pool_folders.append(self.pool_folder)
 			debug.msg(u'creating new pool folder')
 		else:
@@ -194,8 +200,8 @@ class experiment(item.item):
 	def parse_definition(self, item_type, item_name, string):
 
 		"""
-		Initializes a single definition, using the string, and
-		add it to the dictionary of items.
+		Initializes a single definition, using the string, and adds it to the
+		dictionary of items.
 
 		Arguments:
 		item_type	--	The item's type.
