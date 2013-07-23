@@ -224,7 +224,6 @@ class preferences_widget(QtGui.QWidget):
 		
 		from libqtopensesame import runners
 		for runner in runners.runner_list:
-			print runner, self.ui.combobox_runner.currentText()
 			if runner in self.ui.combobox_runner.currentText():
 				config.set_config(u'runner', runner)
 
