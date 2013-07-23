@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>702</width>
-    <height>1200</height>
+    <width>760</width>
+    <height>1033</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -24,8 +24,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>682</width>
-        <height>1180</height>
+        <width>746</width>
+        <height>1019</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -40,10 +40,7 @@
          <property name="title">
           <string>Miscellaneous</string>
          </property>
-         <layout class="QFormLayout" name="formLayout_3">
-          <property name="fieldGrowthPolicy">
-           <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
-          </property>
+         <layout class="QGridLayout" name="gridLayout_5">
           <property name="leftMargin">
            <number>0</number>
           </property>
@@ -81,7 +78,7 @@
          <property name="title">
           <string>Appearance</string>
          </property>
-         <layout class="QFormLayout" name="formLayout_4">
+         <layout class="QGridLayout" name="gridLayout_4">
           <property name="leftMargin">
            <number>0</number>
           </property>
@@ -94,6 +91,17 @@
           <property name="bottomMargin">
            <number>0</number>
           </property>
+          <item row="0" column="0" colspan="2">
+           <widget class="QLabel" name="label_8">
+            <property name="text">
+             <string>&lt;small&gt;&lt;i&gt;Changes take effect the next time you start OpenSesame&lt;/i&gt;&lt;/small&gt;
+</string>
+            </property>
+            <property name="wordWrap">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
           <item row="1" column="0">
            <widget class="QLabel" name="label_2">
             <property name="text">
@@ -113,17 +121,6 @@
           </item>
           <item row="2" column="1">
            <widget class="QComboBox" name="combobox_theme"/>
-          </item>
-          <item row="0" column="0" colspan="2">
-           <widget class="QLabel" name="label_8">
-            <property name="text">
-             <string>&lt;small&gt;&lt;i&gt;Changes take effect the next time you start OpenSesame&lt;/i&gt;&lt;/small&gt;
-</string>
-            </property>
-            <property name="wordWrap">
-             <bool>true</bool>
-            </property>
-           </widget>
           </item>
           <item row="3" column="0" colspan="2">
            <widget class="QCheckBox" name="checkbox_small_toolbar">
@@ -153,10 +150,7 @@
          <property name="title">
           <string>Embedded text editor</string>
          </property>
-         <layout class="QFormLayout" name="formLayout_5">
-          <property name="fieldGrowthPolicy">
-           <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
-          </property>
+         <layout class="QGridLayout" name="gridLayout_2">
           <property name="leftMargin">
            <number>0</number>
           </property>
@@ -298,10 +292,7 @@
          <property name="flat">
           <bool>false</bool>
          </property>
-         <layout class="QFormLayout" name="formLayout_2">
-          <property name="horizontalSpacing">
-           <number>6</number>
-          </property>
+         <layout class="QGridLayout" name="gridLayout_3">
           <property name="leftMargin">
            <number>0</number>
           </property>
@@ -313,6 +304,9 @@
           </property>
           <property name="bottomMargin">
            <number>0</number>
+          </property>
+          <property name="horizontalSpacing">
+           <number>6</number>
           </property>
           <item row="0" column="0">
            <widget class="QCheckBox" name="checkbox_enable_autosave">
@@ -347,17 +341,6 @@
             </property>
            </widget>
           </item>
-          <item row="3" column="0">
-           <widget class="QPushButton" name="button_browse_autosave">
-            <property name="text">
-             <string>Open backup folder</string>
-            </property>
-            <property name="icon">
-             <iconset>
-              <normaloff>:/icons/browse.png</normaloff>:/icons/browse.png</iconset>
-            </property>
-           </widget>
-          </item>
           <item row="2" column="0">
            <widget class="QLabel" name="label_3">
             <property name="text">
@@ -378,6 +361,17 @@
             </property>
            </widget>
           </item>
+          <item row="3" column="0">
+           <widget class="QPushButton" name="button_browse_autosave">
+            <property name="text">
+             <string>Open backup folder</string>
+            </property>
+            <property name="icon">
+             <iconset>
+              <normaloff>:/icons/browse.png</normaloff>:/icons/browse.png</iconset>
+            </property>
+           </widget>
+          </item>
          </layout>
         </widget>
        </item>
@@ -392,10 +386,7 @@
          <property name="title">
           <string>Updates</string>
          </property>
-         <layout class="QFormLayout" name="formLayout">
-          <property name="fieldGrowthPolicy">
-           <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
-          </property>
+         <layout class="QGridLayout" name="gridLayout_6">
           <property name="leftMargin">
            <number>0</number>
           </property>
@@ -435,7 +426,7 @@
           </sizepolicy>
          </property>
          <property name="title">
-          <string>Run options</string>
+          <string>Runner</string>
          </property>
          <layout class="QGridLayout" name="gridLayout">
           <property name="leftMargin">
@@ -453,7 +444,7 @@
           <item row="0" column="0" colspan="2">
            <widget class="QLabel" name="label">
             <property name="text">
-             <string>&lt;small&gt;&lt;i&gt;If you experience stability issues, you can enable the 'Run experiments in a separate process' option. This essentially means that 'opensesamerun[.exe]' is used to run your experiment.&lt;/i&gt;&lt;/small&gt;</string>
+             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:8pt; font-style:italic;&quot;&gt;The 'runner' determines how your OpenSesame experiment is executed. For more information, please visit &lt;/span&gt;&lt;a href=&quot;http://osdoc.cogsci.nl/miscellaneous/runners&quot;&gt;&lt;span style=&quot; font-size:8pt; font-style:italic; text-decoration: underline; color:#0057ae;&quot;&gt;http://osdoc.cogsci.nl/miscellaneous/runners&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:8pt; font-style:italic;&quot;&gt;.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
             </property>
             <property name="wordWrap">
              <bool>true</bool>
@@ -461,28 +452,23 @@
            </widget>
           </item>
           <item row="1" column="0" colspan="2">
-           <widget class="QCheckBox" name="checkbox_opensesamerun">
-            <property name="text">
-             <string>Run experiments in a separate process</string>
-            </property>
+           <widget class="QComboBox" name="combobox_runner">
+            <item>
+             <property name="text">
+              <string>Run experiment in the same process (inprocess)</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Run experiment in a separate process (multiprocess)</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Run experiment with opensesamerun (external)</string>
+             </property>
+            </item>
            </widget>
-          </item>
-          <item row="2" column="0" colspan="2">
-           <widget class="QCheckBox" name="checkbox_auto_opensesamerun_exec">
-            <property name="text">
-             <string>Auto-detect the run command</string>
-            </property>
-           </widget>
-          </item>
-          <item row="3" column="0">
-           <widget class="QLabel" name="label_opensesamerun_exec">
-            <property name="text">
-             <string>Custom run command:</string>
-            </property>
-           </widget>
-          </item>
-          <item row="3" column="1">
-           <widget class="QLineEdit" name="edit_opensesamerun_exec"/>
           </item>
          </layout>
         </widget>
@@ -498,10 +484,7 @@
          <property name="title">
           <string>Plug-ins</string>
          </property>
-         <layout class="QFormLayout" name="formLayout_7">
-          <property name="fieldGrowthPolicy">
-           <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
-          </property>
+         <layout class="QGridLayout" name="gridLayout_7">
           <property name="leftMargin">
            <number>0</number>
           </property>
@@ -555,70 +538,6 @@
  </widget>
  <resources/>
  <connections>
-  <connection>
-   <sender>checkbox_opensesamerun</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>checkbox_auto_opensesamerun_exec</receiver>
-   <slot>setEnabled(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>273</x>
-     <y>496</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>273</x>
-     <y>522</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>checkbox_auto_opensesamerun_exec</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>label_opensesamerun_exec</receiver>
-   <slot>setEnabled(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>273</x>
-     <y>522</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>97</x>
-     <y>551</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>checkbox_auto_opensesamerun_exec</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>label_opensesamerun_exec</receiver>
-   <slot>setDisabled(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>273</x>
-     <y>522</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>97</x>
-     <y>551</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>checkbox_auto_opensesamerun_exec</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>edit_opensesamerun_exec</receiver>
-   <slot>setDisabled(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>273</x>
-     <y>522</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>337</x>
-     <y>551</y>
-    </hint>
-   </hints>
-  </connection>
   <connection>
    <sender>checkbox_enable_autosave</sender>
    <signal>toggled(bool)</signal>
