@@ -49,6 +49,19 @@ Copyright: 2012, Andrea Epifani <andreaepifani@gmail.com>
 License: GPL-3
  The full text of the GNU General Public License version 3 is available on
  Debian systems in /usr/share/common-licenses/GPL-3.
+ 
+Files: resources/ts/fr_FR.ts
+Copyright: 2013, Romain Monfollet
+License: GPL-3
+ The full text of the GNU General Public License version 3 is available on
+ Debian systems in /usr/share/common-licenses/GPL-3.
+ 
+Files: resources/ts/zh_CN.ts
+Copyright: 2013, Gabriel Chan
+           2013, Jerry Li
+License: GPL-3
+ The full text of the GNU General Public License version 3 is available on
+ Debian systems in /usr/share/common-licenses/GPL-3.
 
 Files: resources/templates/eco_alt_template.opensesame.tar.gz
 Copyright: 2012, Francisco Javier Moreno-Martinez
