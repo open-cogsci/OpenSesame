@@ -63,7 +63,7 @@ class item(object):
 			self.name, reason=u'deprecation')
 		# Deduce item_type from class name
 		prefix = self.experiment.item_prefix()
-		self.item_type = self.__class__.__name__
+		self.item_type = unicode(self.__class__.__name__)
 		if self.item_type.startswith(prefix):
 			self.item_type = self.item_type[len(prefix):]			
 		if not hasattr(self, u'description'):
