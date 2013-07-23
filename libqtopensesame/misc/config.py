@@ -83,7 +83,7 @@ class config(object):
 		u"theme" : u"default",
 		u"toolbar_size" : 32,
 		u"toolbar_text" : False,
-		u"runner" : u"multiprocess",
+		u"runner" : u"inprocess",
 		u"opensesamerun" : False,
 		u"opensesamerun_exec" : u"",
 		u"pos" : QtCore.QPoint(200, 200),
