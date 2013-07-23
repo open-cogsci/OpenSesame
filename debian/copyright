@@ -5,7 +5,7 @@ Source: http://www.cogsci.nl/software/opensesame
 
 Files: *
 Copyright: 2010-2012, Sebastiaan Mathot
-License: GPL-3
+Licenses: GPL-3
  On Debian systems, the full text of the GNU General Public License version 3
  can be found in the file `/usr/share/common-licenses/GPL-3'.
 
@@ -43,6 +43,21 @@ Licenses: GPL-3
 Files: resources/ts/it_IT.ts
 Copyright: 2012, Andrea Epifani <andreaepifani@gmail.com>
 Licenses: GPL-3
+ The full text of the GNU General Public License version 3 is available on
+ Debian systems in /usr/share/common-licenses/GPL-3.
+ 
+Files: resources/ts/fr_FR.ts
+Copyright: 2013, Romain Monfollet
+Licenses: GPL-3
+ The full text of the GNU General Public License version 3 is available on
+ Debian systems in /usr/share/common-licenses/GPL-3.
+ 
+Files: resources/ts/zh_CN.ts
+Copyright: 2013, Gabriel Chan
+           2013, Jerry Li
+Licenses: GPL-3
+ The full text of the GNU General Public License version 3 is available on
+ Debian systems in /usr/share/common-licenses/GPL-3.
 
 Files: resources/templates/eco_alt_template.opensesame.tar.gz
 Copyright: 2012, Francisco Javier Moreno-Martinez
