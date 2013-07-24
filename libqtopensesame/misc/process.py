@@ -103,7 +103,7 @@ class ExperimentProcess(multiprocessing.Process):
 		sys.stdout = pipeToMainProcess
 		sys.stderr = pipeToMainProcess
 		
-		os.chdir("..")	
+		os.chdir("../..")	
 					
 		try:							
 			import libopensesame.misc
