@@ -48,7 +48,7 @@ class image_button(image):
 			self.image_id = path
 		else:
 			self.image_id = image_id
-		self.type = 'image_button'
+		self.type = u'image_button'
 		self.var = var
 		self.set_var(False)				
 				

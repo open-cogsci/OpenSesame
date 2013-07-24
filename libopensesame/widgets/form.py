@@ -26,7 +26,7 @@ class form:
 
 	"""Implements a single form that acts as a container for widgets"""
 
-	def __init__(self, experiment, cols=2, rows=2, spacing=10, margins=(100, 100, 100, 100), theme='gray', item=None):
+	def __init__(self, experiment, cols=2, rows=2, spacing=10, margins=(100, 100, 100, 100), theme=u'gray', item=None):
 
 		"""<DOC>
 		Constructor
@@ -65,8 +65,8 @@ class form:
 			self.item = item
 		else:
 			self.item = experiment
-		self.width = experiment.get('width')
-		self.height = experiment.get('height')
+		self.width = experiment.get(u'width')
+		self.height = experiment.get(u'height')
 		self.spacing = spacing
 		self.margins = type_check.float_list(margins, u'form margins', \
 			min_len=4, max_len=4)		
@@ -77,7 +77,7 @@ class form:
 			self.item.get(u'foreground'), bgcolor=self.item.get( \
 			u'background'))
 
-		if theme == 'gray':
+		if theme == u'gray':
 			from themes.gray import gray
 			self.theme_engine = gray(self)
 		else:
@@ -136,7 +136,7 @@ class form:
 			return pos
 		if type(pos) in (tuple, list) and len(pos) == 2:
 			return pos[1]*len(self.cols)+pos[0]
-		raise form_error('%s is an invalid position in the form' % pos)
+		raise form_error(u'%s is an invalid position in the form' % pos)
 
 	def get_cell(self, index):
 

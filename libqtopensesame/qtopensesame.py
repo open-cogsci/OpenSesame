@@ -1316,11 +1316,11 @@ class qtopensesame(QtGui.QMainWindow):
 		sys.stdout = buf
 		
 		if config.get_config(u"runner") == u'multiprocess':			
-			from libopensesame.runner import multiprocess_runner as runner								
+			from libqtopensesame.runners import multiprocess_runner as runner								
 		elif config.get_config(u"runner") == u'inprocess':
-			from libopensesame.runner import inprocess_runner as runner
+			from libqtopensesame.runners import inprocess_runner as runner
 		elif config.get_config(u"runner") == u'external':
-			from libopensesame.runner import external_runner as runner
+			from libqtopensesame.runners import external_runner as runner
 			
 		exception = runner(self, exp).execute()
 		if exception != None:

@@ -84,7 +84,6 @@ class config(object):
 		u"toolbar_size" : 32,
 		u"toolbar_text" : False,
 		u"runner" : u"inprocess",
-		u"opensesamerun" : False,
 		u"opensesamerun_exec" : u"",
 		u"pos" : QtCore.QPoint(200, 200),
 		u"size" : QtCore.QSize(1000, 600),

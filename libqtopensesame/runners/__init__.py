@@ -17,23 +17,11 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
-import sys
-if '--catch-translatables' in sys.argv:
+from libqtopensesame.runners.base_runner import base_runner
+from libqtopensesame.runners.inprocess_runner import inprocess_runner
+from libqtopensesame.runners.external_runner import external_runner
+from libqtopensesame.runners.multiprocess_runner import multiprocess_runner
 
-	# Automatically catches all strings that require translation
-	from libopensesame import misc
-	import os.path
-	path = misc.resource(os.path.join(u'ts', u'translatables.txt'))
-	def _(s):
-		l = open(path).read().split(u'\n')
-		if s not in l:
-			f = open(path, u'a')
-			f.write(s + u'\n')
-			print u'New translatable: '+s
-			f.close()
-		return s
-
-else:
-	# A simple wrapper arround the translate function
-	from PyQt4.QtCore import QCoreApplication
-	_ = lambda s: unicode(QCoreApplication.translate(u'script', s))
+runner_list = ['inprocess', 'external', 'multiprocess']
+	
+	
