@@ -149,12 +149,12 @@
     <message>
         <location filename="gabor_dialog.ui" line="256"/>
         <source>Color 2</source>
-        <translation>顏色 2</translation>
+        <translation>颜色 2</translation>
     </message>
     <message>
         <location filename="gabor_dialog.ui" line="276"/>
         <source>* Has no effect in psycho back-end</source>
-        <translation>* 對&apos;psycho&apos; 后端无影响</translation>
+        <translation>* 对&apos;psycho&apos; 后端无影响</translation>
     </message>
 </context>
 <context>
@@ -505,7 +505,7 @@
     <message>
         <location filename="noise_patch_dialog.ui" line="149"/>
         <source>Color 1&lt;br /&gt;&lt;i&gt;e.g., &apos;white&apos; or &apos;#FFFFFF&apos;&lt;/i&gt;</source>
-        <translation>顏色 1&lt;br /&gt;&lt;i&gt;如, &apos;白色&apos; 或 &apos;#FFFFFF&apos;&lt;/i&gt;</translation>
+        <translation>颜色 1&lt;br /&gt;&lt;i&gt;如, &apos;白色&apos; 或 &apos;#FFFFFF&apos;&lt;/i&gt;</translation>
     </message>
     <message>
         <location filename="noise_patch_dialog.ui" line="163"/>
@@ -921,7 +921,7 @@
     <message>
         <location filename="opensesame.ui" line="938"/>
         <source>Preferences</source>
-        <translation>偏好</translation>
+        <translation>首选项</translation>
     </message>
     <message>
         <location filename="opensesame.ui" line="943"/>
@@ -1009,7 +1009,7 @@
     <message>
         <location filename="opensesamerun.ui" line="105"/>
         <source>Experiment</source>
-        <translation>實驗</translation>
+        <translation>实验</translation>
     </message>
     <message>
         <location filename="opensesamerun.ui" line="135"/>
@@ -1044,7 +1044,7 @@
     <message>
         <location filename="opensesamerun.ui" line="272"/>
         <source>px</source>
-        <translation>px</translation>
+        <translation>像素</translation>
     </message>
     <message>
         <location filename="opensesamerun.ui" line="256"/>
@@ -1364,12 +1364,12 @@
     <message>
         <location filename="replace_dialog.ui" line="40"/>
         <source>Search term</source>
-        <translation>查找术语</translation>
+        <translation>查找内容</translation>
     </message>
     <message>
         <location filename="replace_dialog.ui" line="47"/>
         <source>Replacement term</source>
-        <translation>替换术语</translation>
+        <translation>替换内容</translation>
     </message>
     <message>
         <location filename="replace_dialog.ui" line="63"/>
