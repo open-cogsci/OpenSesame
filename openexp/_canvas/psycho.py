@@ -438,8 +438,9 @@ def init_display(experiment):
 				'Failed to set Window caption. This may indicate a problem witb Pyglet.', \
 				reason=warning)
 
+	core.quit = _psychopy_clean_quit
 	pygame.mixer.init()
-
+	
 def close_display(experiment):
 
 	"""See openexp._canvas.legacy"""
@@ -462,3 +463,14 @@ def _sleep(ms):
 	"""See openexp._canvas.legacy"""
 
 	core.wait(.001*ms)
+
+def _psychopy_clean_quit():
+	
+	"""
+	When PsychoPy encounters an error, it does a sys.exit() which is not what
+	we want, because it closes OpenSesame altogether. Instead, we nicely inform
+	the user that PsychoPy has signalled an error.
+	"""
+	
+	raise openexp.exceptions.openexp_error( \
+		u'PsychoPy encountered an error and aborted the program. See the debug window for PsychoPy error messages.')
