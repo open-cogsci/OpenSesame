@@ -1322,8 +1322,10 @@ class qtopensesame(QtGui.QMainWindow):
 		elif config.get_config(u"runner") == u'external':
 			from libqtopensesame.runners import external_runner as runner
 			
-		exception = runner(self, exp).execute()
-		if exception != None:
+		
+		exception = runner(self, exp).execute()		
+		
+		if exception is not None:
 			# Exceptions from other processes will arrive as a tuple
 			# Because the tracebacks have to be passed along with them.
 			
