@@ -53,15 +53,20 @@ class multiprocess_runner(base_runner):
 			
 			# Wait for experiment to finish.
 			# Listen for incoming messages in the meantime.
+			
 			while self.exp_process.is_alive() or not self.channel.empty():
-				QtGui.QApplication.processEvents()
-				# Check if messages are pending to be processed
-				# Sleep otherwise
-				if not self.channel.empty():	
+				QtGui.QApplication.processEvents()					
+				
+				try:				
 					# Make sure None is not printed
 					# Ugly hack for a bug in the Queue class?
-					sys.stdout = _pit					
-					msg = self.channel.get(False)
+					sys.stdout = _pit	
+					
+					# Wait for messages. Will throw Exception if no
+					# message is received before timeout.
+					msg = self.channel.get(True, 0.05)					
+					
+					# Restore connection to stdout
 					sys.stdout = _stdout
 				
 					# For standard print statements
@@ -75,8 +80,8 @@ class multiprocess_runner(base_runner):
 					else:
 						sys.stdout.write(RuntimeError( \
 							u"Illegal message type received from child process"))
-				else:
-					time.sleep(0.1)
+				except:
+					pass				
 										
 			# Return None if experiment finished without problems								
 			return None
