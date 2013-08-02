@@ -43,8 +43,8 @@ class OutputChannel:
 		"""
 		self.channel.put(m)
 		
-		if self.orig:
-			self.orig.write(m)
+#		if self.orig:
+#			self.orig.write(m)
 			
 	def flush(self):
 		""" Dummy function to mimic the stderr.flush() function (crashes otherwise) """
@@ -103,7 +103,7 @@ class ExperimentProcess(multiprocessing.Process):
 		sys.stdout = pipeToMainProcess
 		sys.stderr = pipeToMainProcess
 		
-		os.chdir("..")	
+		os.chdir("../..")	
 					
 		try:							
 			import libopensesame.misc

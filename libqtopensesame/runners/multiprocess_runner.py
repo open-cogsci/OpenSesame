@@ -18,11 +18,9 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 import sys
-import os
-from libopensesame import debug, exceptions
-from libqtopensesame.misc import config
 from libqtopensesame.runners import base_runner
 
+from StringIO import StringIO
 from PyQt4 import QtGui
 import time
 
@@ -38,7 +36,7 @@ class multiprocess_runner(base_runner):
 		from libqtopensesame.misc import process
 		
 		super(multiprocess_runner, self).__init__(main_window, experiment)
-		self.channel = multiprocessing.JoinableQueue()	
+		self.channel = multiprocessing.Queue()	
 		self.exp_process = process.ExperimentProcess(experiment, self.channel)
 		
 	def execute(self):		
@@ -47,35 +45,45 @@ class multiprocess_runner(base_runner):
 		
 		try:		
 			# Start process!			
-			self.exp_process.start() 
+			self.exp_process.start()
+			
+			# Variables used for ugly hack to suppress 'None' print by Queue.get()
+			_stdout = sys.stdout	
+			_pit = StringIO()
 			
 			# Wait for experiment to finish.
 			# Listen for incoming messages in the meantime.
+			
 			while self.exp_process.is_alive() or not self.channel.empty():
-				QtGui.QApplication.processEvents()\
-				# Check if messages are pending to be processed
-				# Sleep otherwise
-				if not self.channel.empty():
-					msg = self.channel.get(False)
+				QtGui.QApplication.processEvents()					
+				
+				try:				
+					# Make sure None is not printed
+					# Ugly hack for a bug in the Queue class?
+					sys.stdout = _pit	
 					
-					# Notify process that message has been received
-					self.channel.task_done()	
+					# Wait for messages. Will throw Exception if no
+					# message is received before timeout.
+					msg = self.channel.get(True, 0.05)					
 					
+					# Restore connection to stdout
+					sys.stdout = _stdout
+				
 					# For standard print statements
 					# Remove str when OS is completely unicode safe										
 					if type(msg) in [str, unicode]:
 						sys.stdout.write(msg)
 					# Errors arrive as a tuple with (Error object, traceback)
-					elif type(msg) == tuple and isinstance(msg[0], Exception):
-						self.exp_process.terminate()  								
+					elif type(msg) == tuple and isinstance(msg[0], Exception):					
+						self.exp_process.terminate()						
 						return msg
 					else:
 						sys.stdout.write(RuntimeError( \
 							u"Illegal message type received from child process"))
-				else:
-					time.sleep(0.1)
+				except:
+					pass				
 										
-			# Return None if experiment finished without problems			
+			# Return None if experiment finished without problems								
 			return None
 	
 		except Exception as e:

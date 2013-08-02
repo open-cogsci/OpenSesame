@@ -1199,6 +1199,7 @@ class qtopensesame(QtGui.QMainWindow):
 		"""
 
 		# Report success and copy the logfile to the filepool if necessary
+
 		resp = QtGui.QMessageBox.question(self.ui.centralwidget, \
 			_("Finished!"), \
 			_("The experiment is finished and data has been logged to '%s'. Do you want to copy the logfile to the file pool?") \
@@ -1322,8 +1323,9 @@ class qtopensesame(QtGui.QMainWindow):
 		elif config.get_config(u"runner") == u'external':
 			from libqtopensesame.runners import external_runner as runner
 			
-		exception = runner(self, exp).execute()
-		if exception != None:
+		exception = runner(self, exp).execute()		
+		
+		if exception is not None:
 			# Exceptions from other processes will arrive as a tuple
 			# Because the tracebacks have to be passed along with them.
 			
@@ -1367,7 +1369,7 @@ class qtopensesame(QtGui.QMainWindow):
 						_("An unexpected error occurred, which was not caught by OpenSesame. This should not happen! Message:<br/><b>%s</b>") \
 						% self.experiment.unistr(exception))
 					self.print_debug_window(exception)
-		else:
+		elif not quick:
 			self.experiment_finished(exp)
 									
 		# Undo the standard output rerouting
