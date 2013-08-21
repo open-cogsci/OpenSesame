@@ -565,16 +565,14 @@ class legacy:
 		>>> my_canvas.line(0, 0, w, h, arrow_size=10)
 		</DOC>"""
 
-		if color != None: color = self.color(color)
-		else: color = self.fgcolor
-		self.line(sx, sy, ex, ey)
+		self.line(sx, sy, ex, ey, color=color)
 		a = math.atan2(ey - sy, ex - sx)
 		_sx = ex + arrow_size * math.cos(a + math.radians(135))
 		_sy = ey + arrow_size * math.sin(a + math.radians(135))
-		self.line(_sx, _sy, ex, ey)
+		self.line(_sx, _sy, ex, ey, color=color)
 		_sx = ex + arrow_size * math.cos(a + math.radians(225))
 		_sy = ey + arrow_size * math.sin(a + math.radians(225))
-		self.line(_sx, _sy, ex, ey)
+		self.line(_sx, _sy, ex, ey, color=color)
 
 	def rect(self, x, y, w, h, fill=False, color=None):
 
