@@ -204,7 +204,7 @@ class sketchpad(item.item, generic_response.generic_response):
 						_item["font_size"], _item['font_italic'] == 'yes', \
 						_item['font_bold'] == 'yes')
 					self.canvas.text(_item["text"], _item["center"] == 1, \
-						_item["x"], _item["y"])
+						_item["x"], _item["y"], html=_item["html"]==u"yes")
 
 				elif _item["type"] == "image":
 					try:
@@ -295,6 +295,7 @@ class sketchpad(item.item, generic_response.generic_response):
 		item["color1"] = u"white"
 		item["color2"] = u"black"
 		item["bgmode"] = u"avg"
+		item["html"] = u"yes"
 
 		item["show_if"] = u"always"
 
@@ -623,11 +624,12 @@ class sketchpad(item.item, generic_response.generic_response):
 				_item["penwidth"], _item["color"], _item["show_if"])
 
 		elif _item["type"] == "textline":
-			return u"draw textline %s %s \"%s\" center=%s color=%s font_family=\"%s\" font_size=%s font_italic=%s font_bold=%s show_if=\"%s\"" \
+			return u"draw textline %s %s \"%s\" center=%s color=%s font_family=\"%s\" font_size=%s font_italic=%s font_bold=%s show_if=\"%s\" html=\"%s\"" \
 				% (_item["x"], _item["y"], \
 				self.experiment.sanitize(_item["text"]), _item["center"], \
 				_item["color"], _item["font_family"], _item["font_size"], \
-				_item["font_italic"], _item["font_bold"], _item["show_if"])
+				_item["font_italic"], _item["font_bold"], _item["show_if"], \
+				_item["html"])
 
 		elif _item["type"] == "image":
 			return u"draw image %s %s \"%s\" scale=%s center=%s show_if=\"%s\"" \
