@@ -741,6 +741,7 @@ class legacy:
 		else: color = self.fgcolor
 		if x == None: x = self.xcenter()
 		if y == None: y = self.ycenter()
+		self.html.reset()
 		self.html.render(text, x, y, self, max_width=max_width, center=center, \
 			color=color, html=html)
 
