@@ -58,8 +58,8 @@ class checkbox(button):
 		
 		if isinstance(checked, basestring):
 			checked = checked == u'yes'
-		if isinstance(click_accepts, bool):
-			click_accepts = click_accepts == u'yes'			
+		if isinstance(click_accepts, basestring):
+			click_accepts = click_accepts == u'yes'
 		button.__init__(self, form, text, frame=frame, center=False)
 		self.type = u'checkbox'
 		self.group = group		
@@ -78,7 +78,7 @@ class checkbox(button):
 		
 		Arguments:
 		pos		--	An (x, y) tuple.
-		</DOC>"""		
+		</DOC>"""
 	
 		if self.group != None:
 			# If the checkbox is part of a group than checking it will uncheck
