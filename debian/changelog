@@ -1,8 +1,9 @@
-opensesame (0.27.4~pre1) raring; urgency=low
+opensesame (0.27.4~pre3) raring; urgency=low
 
   * Various bug-fixes
   * Add Chinese translation (zh_CN)
   * Make HTML parsing optional in sketchpad items
+  * Add `orientation` keyword to rating_scale form widget
 
  -- Sebastiaan Mathot <s.mathot@cogsci.nl>  Wed, 21 Aug 2013 13:08:16 +0200
 
