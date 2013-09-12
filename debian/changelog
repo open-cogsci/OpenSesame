@@ -1,4 +1,4 @@
-opensesame (0.27.4~pre3) raring; urgency=low
+opensesame (0.27.4) raring; urgency=low
 
   * Various bug-fixes
   * Add Chinese translation (zh_CN)
