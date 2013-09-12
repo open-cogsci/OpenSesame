@@ -73,6 +73,12 @@ class output_buffer:
 		if s.strip() != u'':
 			self.plaintext.appendPlainText(s)
 			QtGui.QApplication.processEvents()
+			
+	def flush(self):
+		
+		"""Dummy flush function for compatibility."""
+		
+		pass
 
 class pyterm(code.InteractiveConsole):
 

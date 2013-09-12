@@ -17,16 +17,13 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
-__author__ = "Sebastiaan Mathot"
-__license__ = "GPLv3"
-
 import os.path
 import imp
 from libopensesame import debug, misc
 from libqtopensesame.misc import config
 from PyQt4 import QtGui, QtCore
 
-available_themes = ['default', 'gnome']
+available_themes = [u'default', u'gnome']
 
 class theme:
 
@@ -48,19 +45,19 @@ class theme:
 
 		self.main_window = main_window
 		if theme == None:
-			self.theme = config.get_config("theme")
+			self.theme = config.get_config(u"theme")
 		else:
 			self.theme = theme
-		self.theme_folder = misc.resource(os.path.join("theme", \
+		self.theme_folder = misc.resource(os.path.join(u"theme", \
 			self.theme))
-		debug.msg("theme = '%s' (%s)" % (self.theme, self.theme_folder))			
+		debug.msg(u"theme = '%s' (%s)" % (self.theme, self.theme_folder))			
 		if self.theme_folder == None or not os.path.exists(self.theme_folder):			
-			debug.msg("theme '%s' does not exist, using 'default'" % theme, \
-				reason="warning")
-			self.theme = "default"
-			self.theme_folder = misc.resource(os.path.join("theme", \
+			debug.msg(u"theme '%s' does not exist, using 'default'" % theme, \
+				reason=u"warning")
+			self.theme = u"default"
+			self.theme_folder = misc.resource(os.path.join(u"theme", \
 				self.theme))						
-		self.theme_info = os.path.join(self.theme_folder, "__theme__.py")
+		self.theme_info = os.path.join(self.theme_folder, u"__theme__.py")
 		if os.path.exists(self.theme_info):						
 			info = imp.load_source(self.theme, self.theme_info)
 			self._qss = path = \
@@ -80,7 +77,7 @@ class theme:
 		"""
 		
 		widget.setStyleSheet(self._qss)
-		if hasattr(widget, "ui"):
+		if hasattr(widget, u"ui"):
 			self.load_icons(widget.ui)
 				
 	def qicon(self, icon):
@@ -100,7 +97,7 @@ class theme:
 		else:
 			name = icon
 		return QtGui.QIcon.fromTheme(name, QtGui.QIcon(os.path.join( \
-			misc.resource("theme"), "fallback.png")))
+			misc.resource(u"theme"), u"fallback.png")))
 			
 	def qpixmap(self, icon, size=None):
 	
@@ -129,7 +126,7 @@ class theme:
 			else:
 				name = icon					
 		return QtGui.QIcon.fromTheme(name, QtGui.QIcon(os.path.join( \
-			misc.resource("theme"), "fallback.png"))).pixmap(size)
+			misc.resource(u"theme"), u"fallback.png"))).pixmap(size)
 			
 	def qlabel(self, icon):
 	
@@ -152,13 +149,13 @@ class theme:
 		"""Load the icon map"""
 	
 		if os.path.exists(os.path.join(self.theme_folder, self._icon_theme)):
-			debug.msg("using custom icon theme")
+			debug.msg(u"using custom icon theme")
 			QtGui.QIcon.setThemeSearchPaths(QtGui.QIcon.themeSearchPaths() \
 				+ [self.theme_folder])
 			QtGui.QIcon.setThemeName(self._icon_theme)
 		else:
-			debug.msg("using default icon theme, icons may be missing", \
-				reason="warning")
+			debug.msg(u"using default icon theme, icons may be missing", \
+				reason=u"warning")
 		self.icon_map = {}
 		path = os.path.join(self.theme_folder, self._icon_map)		
 		debug.msg(path)
@@ -172,8 +169,8 @@ class theme:
 				alias = l[0].strip()
 				name = l[1].strip()
 				if alias in self.icon_map:
-					debug.msg("alias '%s' already in icon map, overwriting" % \
-						alias, reason="warning")
+					debug.msg(u"alias '%s' already in icon map, overwriting" % \
+						alias, reason=u"warning")
 				self.icon_map[alias] = name, size
 		
 	def load_icons(self, ui):
@@ -189,10 +186,10 @@ class theme:
 		for i in dir(ui):
 			if i in self.icon_map:			
 				a = getattr(ui, i)
-				if hasattr(a, "setIcon"):
+				if hasattr(a, u"setIcon"):
 					a.setIcon(self.qicon(i))
-				elif hasattr(a, "setPixmap"):
-					a.setPixmap(self.qpixmap(i))																								
+				elif hasattr(a, u"setPixmap"):
+					a.setPixmap(self.qpixmap(i))
 		
 	def set_toolbar_size(self, size):
 	

@@ -51,13 +51,15 @@ class checkbox(button):
 			   separated list of the text of all checked checkboxes in the #
 			   same group, or 'no' if no checkbox in the group is checked. For #
 			   the purpose of the variable, all checkboxes that are not part #
-			   of a group are placed in the same group. (default=None).
+			   of a group are placed in the same group. For more information #
+			   about the use of response variables in forms, see the form #
+			   documentation page. (default=None).
 		</DOC>"""	
 		
 		if isinstance(checked, basestring):
 			checked = checked == u'yes'
-		if isinstance(click_accepts, bool):
-			click_accepts = click_accepts == u'yes'			
+		if isinstance(click_accepts, basestring):
+			click_accepts = click_accepts == u'yes'
 		button.__init__(self, form, text, frame=frame, center=False)
 		self.type = u'checkbox'
 		self.group = group		
@@ -76,14 +78,14 @@ class checkbox(button):
 		
 		Arguments:
 		pos		--	An (x, y) tuple.
-		</DOC>"""		
+		</DOC>"""
 	
 		if self.group != None:
 			# If the checkbox is part of a group than checking it will uncheck
 			# all other checkboxes in the group, and check the current one
 			for widget in self.form.widgets:
 				if widget != None and widget.type == u'checkbox' and \
-					widget.group == self.group:
+					widget.group == self.group and self.group != None:
 					widget.set_checked(False)
 			self.set_checked(True)
 		else:
@@ -147,13 +149,13 @@ class checkbox(button):
 		
 		for widget in widget_list:
 			if widget != None and widget.type == u'checkbox' and \
-				widget.group == self.group:
-				if widget.var != self.var:
+				widget.var == self.var:
+				if widget.group != self.group and self.group != None:
 					raise form_error(_( \
 						u'All checkbox widgets without a group or within the same group should have the same variable.'))
 				if widget.checked or widget.checked == u'yes':
 					l_val.append(self.form.experiment.unistr(widget.text))
-		val = ';'.join(l_val)
+		val = u';'.join(l_val)
 		if val == u'':
 			val = u'no'
 		self.form.experiment.set(var, val)		

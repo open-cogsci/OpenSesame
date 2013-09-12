@@ -326,12 +326,12 @@
     <message>
         <location filename="loop_widget.ui" line="233"/>
         <source>each cycle </source>
-        <translation>chaque cycle</translation>
+        <translation>chaque cycle </translation>
     </message>
     <message>
         <location filename="loop_widget.ui" line="236"/>
         <source> time(s)</source>
-        <translation>temps(s)</translation>
+        <translation> temp(s)</translation>
     </message>
     <message>
         <location filename="loop_widget.ui" line="267"/>
@@ -341,12 +341,12 @@
     <message>
         <location filename="loop_widget.ui" line="274"/>
         <source>Automatic summary</source>
-        <translation>résumé automatique</translation>
+        <translation>Résumé automatique</translation>
     </message>
     <message>
         <location filename="loop_widget.ui" line="71"/>
         <source>Apply weights</source>
-        <translation>appliquer les poids</translation>
+        <translation>Appliquer les poids</translation>
     </message>
 </context>
 <context>
@@ -558,7 +558,7 @@
     <message>
         <location filename="opensesame.ui" line="60"/>
         <source>File</source>
-        <translation>FIchier</translation>
+        <translation type="unfinished">Fichier</translation>
     </message>
     <message>
         <location filename="opensesame.ui" line="64"/>
@@ -663,7 +663,7 @@
     <message>
         <location filename="opensesame.ui" line="594"/>
         <source>Open (Ctrl+0)</source>
-        <translation>Ouvrir(Ctrl+0)</translation>
+        <translation>Ouvrir (Ctrl+0)</translation>
     </message>
     <message>
         <location filename="opensesame.ui" line="597"/>
@@ -693,12 +693,12 @@
     <message>
         <location filename="opensesame.ui" line="624"/>
         <source>Save as (Control+Shift+S)</source>
-        <translation>Enregistrer sous (Controle+Majuscule+S)</translation>
+        <translation>Enregistrer sous (Controle+Shift+S)</translation>
     </message>
     <message>
         <location filename="opensesame.ui" line="627"/>
         <source>Ctrl+Shift+S</source>
-        <translation>Ctrl+Majuscule+S</translation>
+        <translation>Ctrl+Shift+S</translation>
     </message>
     <message>
         <location filename="opensesame.ui" line="636"/>
@@ -718,7 +718,7 @@
     <message>
         <location filename="opensesame.ui" line="647"/>
         <source>Run fullscreen (Control+R)</source>
-        <translation>Exécuter en plein écran(Controle+R)</translation>
+        <translation>Exécuter en plein écran (Controle+R)</translation>
     </message>
     <message>
         <location filename="opensesame.ui" line="650"/>
@@ -748,7 +748,7 @@
     <message>
         <location filename="opensesame.ui" line="683"/>
         <source>Add sketchpad</source>
-        <translation>Ajouter un carnet à dessin </translation>
+        <translation>Ajouter un carnet à dessin</translation>
     </message>
     <message>
         <location filename="opensesame.ui" line="692"/>
@@ -788,7 +788,7 @@
     <message>
         <location filename="opensesame.ui" line="749"/>
         <source>Close other tabs (Control+T)</source>
-        <translation>Fermer les autres onglets(Controle+T)</translation>
+        <translation>Fermer les autres onglets (Controle+T)</translation>
     </message>
     <message>
         <location filename="opensesame.ui" line="752"/>
@@ -833,7 +833,7 @@
     <message>
         <location filename="opensesame.ui" line="814"/>
         <source>Show variable inspector (Control+I)</source>
-        <translation>Montrer l&apos;inspecteur de variables(Controle+I)</translation>
+        <translation>Montrer l&apos;inspecteur de variables (Controle+I)</translation>
     </message>
     <message>
         <location filename="opensesame.ui" line="817"/>
@@ -915,7 +915,7 @@
     <message>
         <location filename="opensesame.ui" line="920"/>
         <source>Submit a bug</source>
-        <translation>Soumettre un beug</translation>
+        <translation>Soumettre un bug</translation>
     </message>
     <message>
         <location filename="opensesame.ui" line="929"/>
@@ -985,7 +985,7 @@
     <message>
         <location filename="opensesame.ui" line="998"/>
         <source>Ctrl+Shift+W</source>
-        <translation>Ctrl+Majuscule+W</translation>
+        <translation>Ctrl+Shift+W</translation>
     </message>
 </context>
 <context>

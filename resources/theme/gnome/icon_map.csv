@@ -41,6 +41,7 @@ apply,document-save,
 backend,applications-system,
 browse,folder-open,
 button_add_cyclevar,list-add,
+button_apply_weights,dialog-ok,
 button_arrow,os-arrow,
 button_back,go-previous,
 button_browse_autosave,folder-open,
@@ -48,7 +49,7 @@ button_browse,document-open,
 button_browse_experiment,document-open,
 button_browse_logfile,document-open,
 button_browse_pool,folder-open,16
-button_cancel,gtk-cancel,
+button_cancel,process-stop,
 button_circle,os-circle,
 button_clear_stdout,edit-clear,
 button_close,window-close,
@@ -74,7 +75,7 @@ button_recent,document-open-recent,
 button_rect,os-rect,
 button_refresh,view-refresh,16
 button_remove_cyclevar,list-remove,
-button_rename_cyclevar,stock_properties,
+button_rename_cyclevar,document-properties,
 button_replace_all,edit-find-replace,
 button_replace,edit-find-replace,
 button_run,os-run,
@@ -106,12 +107,12 @@ indent,format-indent-more,
 inline_script,os-inline_script,
 keyboard_response,os-keyboard_response,
 label_backend_icon,applications-system,32
-label_facebook,goa-account-facebook,24
+label_facebook,facebook,24
 label_gabor,os-gabor,32
 label_get_started,os-experiment,32
 label_info,help-about,16
 label_noise_patch,os-noise,32
-label_notification,starred,
+label_notification,help-about,
 label_opensesamerun,os-experiment,32
 label_pool,os-file-pool,
 label_pool_search,edit-find,16
@@ -125,7 +126,7 @@ label_synth,os-synth,32
 label_synth_script,utilities-terminal,32
 label_template,bookmark-new,32
 label_text_input,menu-editor,32
-label_twitter,goa-account-twitter,24
+label_twitter,twitter,24
 label_update_dialog,update-manager,32
 label_variables,os-inspector,
 label_variables_search,edit-find,16
@@ -138,12 +139,12 @@ mouse_response,os-mouse_response,
 opensesame,os-experiment,
 options,preferences-desktop,
 paste,edit-paste,
-pixmap_notification,starred,16
-plugin,application-vnd.openofficeorg.extension,
+pixmap_notification,help-about,16
+plugin,extension,
 purge,user-trash,
 python,text-x-script,
 random,media-playlist-shuffle,
-rename,stock_properties,
+rename,document-properties,
 replace,edit-find-replace,
 sampler,os-sampler,
 script,utilities-terminal,
@@ -163,4 +164,4 @@ video,video-x-generic,
 view-list-details-symbolic,format-justify-fill,
 view-list-icons-symbolic,format-justify-fill,
 wizard,bookmark-new,
-
+info,help-contents,
