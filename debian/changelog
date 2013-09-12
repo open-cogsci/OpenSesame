@@ -1,3 +1,12 @@
+opensesame (0.27.4-1) unstable; urgency=low
+
+  * Various bug-fixes
+  * Add Chinese translation (zh_CN)
+  * Make HTML parsing optional in sketchpad items
+  * Add `orientation` keyword to rating_scale form widget
+
+ -- Sebastiaan Mathot <s.mathot@cogsci.nl>  Thu, 12 Sep 2013 17:50:56 +0200
+
 opensesame (0.27.3-3) unstable; urgency=low
 
   * Miscellaneous bug-fixes
