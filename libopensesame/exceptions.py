@@ -26,7 +26,7 @@ class form_error(Exception):
 	"""
 
 	def __init__(self, value, full=True):
-
+		super(form_error, self).__init__(value, full)
 		if type(value) == str:
 			self.value = unicode(value, errors=u'ignore')
 		else:
@@ -48,7 +48,7 @@ class script_error(Exception):
 	"""
 
 	def __init__(self, value, full=True):
-
+		super(script_error, self).__init__(value, full)
 		if type(value) == str:
 			self.value = unicode(value, errors=u'ignore')
 		else:
@@ -69,8 +69,8 @@ class runtime_error(Exception):
 	which includes the preparation phase.
 	"""
 
-	def __init__(self, value):
-
+	def __init__(self, value, *args):
+		super(runtime_error, self).__init__(value, args)
 		if type(value) == str:
 			self.value = unicode(value, errors=u'ignore')
 		else:
@@ -88,8 +88,7 @@ class inline_error(runtime_error):
 	item. The Python traceback is parsed and returned.
 	"""
 
-	def __init__(self, item_name, phase, exception):
-
+	def __init__(self, item_name, phase, exception=None):
 		self.name = item_name
 		self.phase = phase
 
@@ -111,6 +110,8 @@ class inline_error(runtime_error):
 			s += u'<br />%s' % r
 		s += u'<br /><i>Full traceback in debug window</i>'
 		self.value = s
+		#super(inline_error, self).__init__(s, item_name, phase, exception)
+		runtime_error.__init__(self, s, item_name, phase, exception)
 
 	def parse_line(self, s):
 

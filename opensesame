@@ -19,6 +19,10 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 if __name__ == "__main__":
+	# Make sure the multiprocessing part of OS plays well with py2exe/py2app
+	# Has no effect if program is run straight from cli interpreter
+	import multiprocessing
+	multiprocessing.freeze_support()
 
 	# First, load a minimum number of modules and show an empty app window. This
 	# gives the user the feeling of a snappy response.
