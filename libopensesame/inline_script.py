@@ -141,7 +141,9 @@ class inline_script(item.item):
 		</DOC>"""
 		
 		global _globals, _locals
-
+		# 'self' must always be registered, otherwise we get confusions between
+		# the various inline_script items.
+		_globals[u'self'] = self
 		if self.experiment.transparent_variables == u'yes':
 			self.start_transparency()
 		try:
