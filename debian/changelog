@@ -1,3 +1,9 @@
+opensesame (2.8.0~pre1) UNRELEASED; urgency=low
+
+  * Dummy entry
+
+ -- Sebastiaan Mathot <s.mathot@cogsci.nl>  Fri, 13 Sep 2013 16:59:10 +0200
+
 opensesame (0.27.4-ubuntu2) raring; urgency=low
 
   * Various bug-fixes
