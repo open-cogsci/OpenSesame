@@ -30,7 +30,7 @@
 
 ; HM NIS Edit Wizard helper defines
 !define PRODUCT_NAME "OpenSesame"
-!define PRODUCT_VERSION "0.27.3-win32-1"
+!define PRODUCT_VERSION "0.27.4-win32-2"
 !define PRODUCT_PUBLISHER "Sebastiaan Mathot"
 !define PRODUCT_WEB_SITE "http://www.cogsci.nl"
 !define PRODUCT_UNINST_KEY "Software\Microsoft\Windows\CurrentVersion\Uninstall\${PRODUCT_NAME}"
