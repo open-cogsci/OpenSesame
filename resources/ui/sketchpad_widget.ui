@@ -468,6 +468,16 @@
                     </property>
                    </widget>
                   </item>
+                  <item row="9" column="0" colspan="3">
+                   <widget class="font_widget" name="widget_font" native="true">
+                    <property name="sizePolicy">
+                     <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+                      <horstretch>0</horstretch>
+                      <verstretch>0</verstretch>
+                     </sizepolicy>
+                    </property>
+                   </widget>
+                  </item>
                   <item row="3" column="1" colspan="2">
                    <widget class="QSpinBox" name="spin_penwidth">
                     <property name="sizePolicy">
@@ -519,13 +529,16 @@
                     </property>
                    </widget>
                   </item>
-                  <item row="8" column="0" colspan="3">
-                   <widget class="font_widget" name="widget_font" native="true">
-                    <property name="sizePolicy">
-                     <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
-                      <horstretch>0</horstretch>
-                      <verstretch>0</verstretch>
-                     </sizepolicy>
+                  <item row="8" column="0" colspan="2">
+                   <widget class="QCheckBox" name="checkbox_html">
+                    <property name="toolTip">
+                     <string>Parse a subset of HTML tags</string>
+                    </property>
+                    <property name="text">
+                     <string>Parse HTML subset</string>
+                    </property>
+                    <property name="checked">
+                     <bool>true</bool>
                     </property>
                    </widget>
                   </item>
@@ -740,7 +753,7 @@
                  <x>0</x>
                  <y>0</y>
                  <width>1047</width>
-                 <height>426</height>
+                 <height>398</height>
                 </rect>
                </property>
                <layout class="QVBoxLayout" name="verticalLayout_5">

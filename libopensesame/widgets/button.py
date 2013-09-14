@@ -23,7 +23,7 @@ class button(label):
 
 	"""A simple text button"""
 
-	def __init__(self, form, text='button', frame=True, center=True, var=None):
+	def __init__(self, form, text=u'button', frame=True, center=True, var=None):
 	
 		"""<DOC>
 		Constructor
@@ -41,7 +41,7 @@ class button(label):
 		</DOC>"""	
 	
 		label.__init__(self, form, text, frame=frame, center=center)
-		self.type = 'button'
+		self.type = u'button'
 		self.var = var
 		self.set_var(False)
 				

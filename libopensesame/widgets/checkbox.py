@@ -17,26 +17,32 @@ You should have received a copy of the GNU General Public License
 along with openexp.  If not, see <http://www.gnu.org/licenses/>.
 """
 
+from libqtopensesame.misc import _
+from libopensesame.exceptions import form_error
 from button import button
 
 class checkbox(button):
 
 	"""A checkbox widget"""
 
-	def __init__(self, form, text='checkbox', frame=False, group=None, checked=False, click_accepts=False, var=None):
+	def __init__(self, form, text=u'checkbox', frame=False, group=None, checked=False, click_accepts=False, var=None):
 	
 		"""<DOC>
-		Constructor
+		Constructor.
 		
 		Arguments:
 		form -- The parent form.
 				
 		Keyword arguments:
-		text -- Checkbox text (default='checkbox').
+		text -- Checkbox text (default=u'checkbox').
 		frame -- Indicates whether a frame should be drawn around the widget #
 				 (default=False).
 		group -- If a group is specified, checking one checkbox from the group #
-				 will uncheck all other checkboxes in that group. (default=None).
+				 will uncheck all other checkboxes in that group. Checkboxes #
+				 that are part of a group cannot be unchecked, except by clicking #
+				 on another checkbox in the group. The group keyword also #
+				 affects how variables are stored (see the var keyword). #
+				 (default=None).
 		checked -- The checked state of the checkbox (default=False).
 		click_accepts -- Indicates whether a click press should accept and #
 					     close the form (default=False).
@@ -45,16 +51,17 @@ class checkbox(button):
 			   separated list of the text of all checked checkboxes in the #
 			   same group, or 'no' if no checkbox in the group is checked. For #
 			   the purpose of the variable, all checkboxes that are not part #
-			   of a group are placed in the same group. (default=None).
+			   of a group are placed in the same group. For more information #
+			   about the use of response variables in forms, see the form #
+			   documentation page. (default=None).
 		</DOC>"""	
 		
-		if type(checked) != bool:
-			checked = checked == 'yes'
-		if type(click_accepts) != bool:
-			click_accepts = click_accepts == 'yes'											
-			
+		if isinstance(checked, basestring):
+			checked = checked == u'yes'
+		if isinstance(click_accepts, basestring):
+			click_accepts = click_accepts == u'yes'
 		button.__init__(self, form, text, frame=frame, center=False)
-		self.type = 'checkbox'
+		self.type = u'checkbox'
 		self.group = group		
 		self.box_size = 16
 		self.box_pad = self.x_pad
@@ -70,31 +77,22 @@ class checkbox(button):
 		the checkbox.
 		
 		Arguments:
-		pos -- An (x, y) tuple.
-		</DOC>"""		
+		pos		--	An (x, y) tuple.
+		</DOC>"""
 	
 		if self.group != None:
 			# If the checkbox is part of a group than checking it will uncheck
 			# all other checkboxes in the group, and check the current one
 			for widget in self.form.widgets:
-				if widget != None and widget.type == 'checkbox' and \
-					widget.group == self.group:
+				if widget != None and widget.type == u'checkbox' and \
+					widget.group == self.group and self.group != None:
 					widget.set_checked(False)
 			self.set_checked(True)
 		else:
 			# If the checkbox is not part of a group then checking it will
 			# toggle its check status
 			self.set_checked(not self.checked)
-			
-		# Set the response variable
-		l_val = []
-		for widget in self.form.widgets:		
-			if widget != None and widget.type == 'checkbox' and \
-				widget.group == self.group:
-				if widget.checked:
-					l_val.append(self.form.experiment.unistr(widget.text))
-		self.set_var(';'.join(l_val))
-			
+								
 		if self.click_accepts:
 			return self.text
 				
@@ -115,9 +113,50 @@ class checkbox(button):
 		Sets the checked status of the checkbox.
 		
 		Keyword arguments:
-		checked -- The checked status (default=True).
+		checked	--	The checked status. (default=True)
 		</DOC>"""
 		
 		self.checked = checked
 		self.set_var(checked)
+				
+	def set_var(self, val, var=None):
+	
+		"""<DOC>
+		Sets an experimental variable.
+		
+		Arguments:
+		val		--	A value.
+		
+		Keyword arguments:
+		var		--	A variable name, or None to use widget default.
+					(default=None)
+		</DOC>"""
+		
+		if var == None:
+			var = self.var
+		if var == None:
+			return
+		
+		# Set the response variable
+		l_val = []
+				
+		# When this function is called via the constructor, the checkbox is not
+		# yet part of the form. Therefore, we need to add it explicitly to the
+		# widget list.
+		widget_list = self.form.widgets[:]
+		if self not in self.form.widgets:
+			widget_list += [self]
+		
+		for widget in widget_list:
+			if widget != None and widget.type == u'checkbox' and \
+				widget.var == self.var:
+				if widget.group != self.group and self.group != None:
+					raise form_error(_( \
+						u'All checkbox widgets without a group or within the same group should have the same variable.'))
+				if widget.checked or widget.checked == u'yes':
+					l_val.append(self.form.experiment.unistr(widget.text))
+		val = u';'.join(l_val)
+		if val == u'':
+			val = u'no'
+		self.form.experiment.set(var, val)		
 

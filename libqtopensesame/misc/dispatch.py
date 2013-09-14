@@ -53,17 +53,17 @@ class dispatch(QtCore.QObject):
 
 	"""
 	The dispatch is informed of changes and passes these on to the various
-	parts of the GUI
+	parts of the GUI.
 	"""
 	
-	event_name_change = QtCore.pyqtSignal([str, str], name='nameChange')
-	event_regenerate = QtCore.pyqtSignal([str], name='regenerate')
+	event_name_change = QtCore.pyqtSignal([str, str], name=u'nameChange')
+	event_regenerate = QtCore.pyqtSignal([str], name=u'regenerate')
 	event_script_change = QtCore.pyqtSignal([str], [sip.voidptr], \
-		name='scriptChange')
+		name=u'scriptChange')
 	event_simple_change = QtCore.pyqtSignal([str], [sip.voidptr], \
-		name='simpleChange')
+		name=u'simpleChange')
 	event_structure_change = QtCore.pyqtSignal([str], [sip.voidptr], \
-		name='structureChange')
+		name=u'structureChange')
 		
 	def __init__(self, main_window):
 	
@@ -105,7 +105,7 @@ class dispatch(QtCore.QObject):
 			# If something is wrong with the script, notify the user and print
 			# a traceback to the debug window
 			self.main_window.experiment.notify( \
-				_('Failed to parse script (see traceback in debug window): %s') \
+				_(u'Failed to parse script (see traceback in debug window): %s') \
 				% error)
 			self.main_window.print_debug_window(error)
 			return

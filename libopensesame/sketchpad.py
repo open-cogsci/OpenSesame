@@ -204,7 +204,7 @@ class sketchpad(item.item, generic_response.generic_response):
 						_item["font_size"], _item['font_italic'] == 'yes', \
 						_item['font_bold'] == 'yes')
 					self.canvas.text(_item["text"], _item["center"] == 1, \
-						_item["x"], _item["y"])
+						_item["x"], _item["y"], html=_item["html"]==u"yes")
 
 				elif _item["type"] == "image":
 					try:
@@ -276,7 +276,7 @@ class sketchpad(item.item, generic_response.generic_response):
 
 		item["penwidth"] = 1
 		item["color"] = self.get("foreground", _eval=False)
-		item["type"] = "undefined"
+		item["type"] = u"undefined"
 		item["fill"] = 0
 		item["arrow_size"] = 20
 		item["center"] = 1
@@ -288,15 +288,16 @@ class sketchpad(item.item, generic_response.generic_response):
 
 		item["orient"] = 0
 		item["freq"] = 0.1
-		item["env"] = "gaussian"
+		item["env"] = u"gaussian"
 		item["size"] = 96
 		item["stdev"] = 12
 		item["phase"] = 0
-		item["color1"] = "white"
-		item["color2"] = "black"
-		item["bgmode"] = "avg"
+		item["color1"] = u"white"
+		item["color2"] = u"black"
+		item["bgmode"] = u"avg"
+		item["html"] = u"yes"
 
-		item["show_if"] = "always"
+		item["show_if"] = u"always"
 
 		for i in l:
 
@@ -361,7 +362,7 @@ class sketchpad(item.item, generic_response.generic_response):
 			raise exceptions.script_error("Invalid draw circle command '%s', expecting 'draw circle [x] [y] [r]'" \
 				% line)
 
-		item["type"] = "circle"
+		item["type"] = u"circle"
 		item["x"] = self.auto_type(l[2])
 		item["y"] = self.auto_type(l[3])
 		item["r"] = self.auto_type(l[4])
@@ -382,7 +383,7 @@ class sketchpad(item.item, generic_response.generic_response):
 		A finished sketchpad element
 		"""
 
-		item["type"] = "fixdot"
+		item["type"] = u"fixdot"
 		if len(l) > 3:
 			item["x"] = self.auto_type(l[2])
 			item["y"] = self.auto_type(l[3])
@@ -436,7 +437,7 @@ class sketchpad(item.item, generic_response.generic_response):
 		if len(l) < 3:
 			raise exceptions.script_error("Invalid draw textline command '%s', expecting 'draw textline [x] [y] [text]' or 'draw textline [text]'" \
 				% line)
-		item["type"] = "textline"
+		item["type"] = u"textline"
 		try:
 			item["x"] = self.auto_type(l[2])
 			item["y"] = self.auto_type(l[3])
@@ -464,7 +465,7 @@ class sketchpad(item.item, generic_response.generic_response):
 		if len(l) < 3:
 			raise exceptions.script_error("Invalid draw image command '%s', expecting 'draw image [x] [y] [file]' or 'draw textline [file]'" \
 				% line)
-		item["type"] = "image"
+		item["type"] = u"image"
 		try:
 			item["x"] = self.auto_type(l[2])
 			item["y"] = self.auto_type(l[3])
@@ -492,7 +493,7 @@ class sketchpad(item.item, generic_response.generic_response):
 		if len(l) < 4:
 			raise exceptions.script_error("Invalid draw image command '%s', expecting 'draw gabor [x] [y] [orient] [freq]'" \
 				% line)
-		item["type"] = "gabor"
+		item["type"] = u"gabor"
 		item["x"] = self.auto_type(l[2])
 		item["y"] = self.auto_type(l[3])
 		return item
@@ -514,7 +515,7 @@ class sketchpad(item.item, generic_response.generic_response):
 		if len(l) < 4:
 			raise exceptions.script_error("Invalid draw image command '%s', expecting 'draw noise [x] [y]'" \
 				% line)
-		item["type"] = "noise"
+		item["type"] = u"noise"
 		item["x"] = self.auto_type(l[2])
 		item["y"] = self.auto_type(l[3])
 		return item
@@ -623,11 +624,12 @@ class sketchpad(item.item, generic_response.generic_response):
 				_item["penwidth"], _item["color"], _item["show_if"])
 
 		elif _item["type"] == "textline":
-			return u"draw textline %s %s \"%s\" center=%s color=%s font_family=\"%s\" font_size=%s font_italic=%s font_bold=%s show_if=\"%s\"" \
+			return u"draw textline %s %s \"%s\" center=%s color=%s font_family=\"%s\" font_size=%s font_italic=%s font_bold=%s show_if=\"%s\" html=\"%s\"" \
 				% (_item["x"], _item["y"], \
 				self.experiment.sanitize(_item["text"]), _item["center"], \
 				_item["color"], _item["font_family"], _item["font_size"], \
-				_item["font_italic"], _item["font_bold"], _item["show_if"])
+				_item["font_italic"], _item["font_bold"], _item["show_if"], \
+				_item["html"])
 
 		elif _item["type"] == "image":
 			return u"draw image %s %s \"%s\" scale=%s center=%s show_if=\"%s\"" \

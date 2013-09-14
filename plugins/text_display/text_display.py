@@ -25,6 +25,8 @@ from PyQt4 import QtGui, QtCore
 class text_display(item.item, generic_response.generic_response):
 
 	"""Basic text display plug-in"""
+    
+	description = u"Presents a display consisting of text"
 
 	def __init__(self, name, experiment, string=None):
 
@@ -39,26 +41,12 @@ class text_display(item.item, generic_response.generic_response):
 		string -- a definition string (default=None)
 		"""
 
-		self.item_type = "text_display"
-		self.description = "Presents a display consisting of text"
-		self.duration = "keypress"
-		self.align = "center"
-		self.content = "Enter your text here."
+		self.duration = u"keypress"
+		self.align = u"center"
+		self.content = u"Enter your text here."
 		self.maxchar = 50
-
 		# Pass the word on to the parent
 		item.item.__init__(self, name, experiment, string)
-
-		# These lines makes sure that the icons and help file are recognized by
-		# OpenSesame. Copy-paste these lines at the end of your plugin's
-		# constructor
-		self.experiment.resources["%s.png" % self.item_type] = os.path.join( \
-			os.path.split(__file__)[0], "%s.png" % self.item_type)
-		self.experiment.resources["%s_large.png" % self.item_type] = \
-			os.path.join(os.path.split(__file__)[0], "%s_large.png" % \
-			self.item_type)
-		self.experiment.resources["%s.html" % self.item_type] = os.path.join( \
-			os.path.split(__file__)[0], "%s.html" % self.item_type)
 
 	def prepare(self):
 

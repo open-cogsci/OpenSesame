@@ -42,21 +42,26 @@ class psycho(openexp._canvas.legacy.legacy):
 	# The settings variable is used by the GUI to provide a list of back-end
 	# settings
 	settings = {
-		"psychopy_waitblanking" : {
-			"name" : "Wait for blanking",
-			"description" : "Block until the display has been shown",
-			"default" : "yes"
+		u"psychopy_waitblanking" : {
+			u"name" : u"Wait for blanking",
+			u"description" : u"Block until the display has been shown",
+			u"default" : u"yes"
 			},
-		"psychopy_wintype" : {
-			"name" : "Window type",
-			"description" : "'pygame' or 'pyglet'",
-			"default" : "pyglet"
+		u"psychopy_wintype" : {
+			u"name" : u"Window type",
+			u"description" : u"'pygame' or 'pyglet'",
+			u"default" : u"pyglet"
 			},
-		"psychopy_monitor" : {
-			"name" : "Monitor",
-			"description" : "Virtual monitor",
-			"default" : "testMonitor"
+		u"psychopy_monitor" : {
+			u"name" : u"Monitor",
+			u"description" : u"Virtual monitor",
+			u"default" : u"testMonitor"
 			},
+		u"psychopy_screen" : {
+			u"name" : u"Screen",
+			u"description" : u"The physical screen that is used",
+			u"default" : 0,			
+			}
 		}
 
 	def __init__(self, experiment, bgcolor=None, fgcolor=None, auto_prepare=True):
@@ -398,15 +403,20 @@ def init_display(experiment):
 	_experiment = experiment
 
 	# Set the PsychoPy monitor, default to testMonitor
-	monitor = experiment.get_check("psychopy_monitor", "testMonitor")
-	wintype = experiment.get_check("psychopy_wintype", "pyglet", ["pyglet", "pygame"])
-	waitblanking = experiment.get_check("psychopy_waitblanking", "yes", ["yes", "no"]) == "yes"
+	monitor = experiment.get_check(u"psychopy_monitor", u"testMonitor")
+	wintype = experiment.get_check(u"psychopy_wintype", u"pyglet", [u"pyglet", \
+		"pygame"])
+	waitblanking = experiment.get_check(u"psychopy_waitblanking", u"yes", \
+		[u"yes", u"no"]) == u"yes"
+	screen = experiment.get_check(u'psychopy_screen', 0)
 
-	print "openexp._canvas.psycho.init_display(): window type = %s" % wintype
-	print "openexp._canvas.psycho.init_display(): waitblanking = %s" % waitblanking
-	print "openexp._canvas.psycho.init_display(): monitor = %s" % monitor
+	print u"openexp._canvas.psycho.init_display(): window type = %s" % wintype
+	print u"openexp._canvas.psycho.init_display(): waitblanking = %s" % \
+		waitblanking
+	print u"openexp._canvas.psycho.init_display(): monitor = %s" % monitor
+	print u"openexp._canvas.psycho.init_display(): screen = %s" % screen
 
-	experiment.window = visual.Window( experiment.resolution(), \
+	experiment.window = visual.Window( experiment.resolution(), screen=screen, \
 		waitBlanking=waitblanking, fullscr=experiment.fullscreen, \
 		monitor=monitor, units="pix", winType=wintype, \
 		rgb=experiment.background)
@@ -419,7 +429,7 @@ def init_display(experiment):
 
 	# If pyglet is being used, change the window caption. Don't know how to do
 	# this for pygame (regular set_caption() is ineffective)
-	if wintype == "pyglet":
+	if wintype == u"pyglet":
 		try:
 			experiment.window.winHandle.set_caption( \
 				'OpenSesame (PsychoPy backend)')
@@ -428,8 +438,9 @@ def init_display(experiment):
 				'Failed to set Window caption. This may indicate a problem witb Pyglet.', \
 				reason=warning)
 
+	core.quit = _psychopy_clean_quit
 	pygame.mixer.init()
-
+	
 def close_display(experiment):
 
 	"""See openexp._canvas.legacy"""
@@ -452,3 +463,14 @@ def _sleep(ms):
 	"""See openexp._canvas.legacy"""
 
 	core.wait(.001*ms)
+
+def _psychopy_clean_quit():
+	
+	"""
+	When PsychoPy encounters an error, it does a sys.exit() which is not what
+	we want, because it closes OpenSesame altogether. Instead, we nicely inform
+	the user that PsychoPy has signalled an error.
+	"""
+	
+	raise openexp.exceptions.openexp_error( \
+		u'PsychoPy encountered an error and aborted the program. See the debug window for PsychoPy error messages.')
