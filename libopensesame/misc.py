@@ -205,7 +205,7 @@ def resource(name):
 	global use_global_resources
 	
 	if isinstance(name, str):
-		name = name.decode(u'utf-8', errors=u'ignore')	
+		name = name.decode(u'utf-8')	
 	path = os.path.join(u'resources', name)
 	if os.path.exists(path):
 		return os.path.join(u'resources', name)

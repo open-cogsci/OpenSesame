@@ -1181,7 +1181,7 @@ class qtopensesame(QtGui.QMainWindow):
 			# be properly decoded. For some reason, it appears to encoded with
 			# the filesystem encoding, at least on Windows 7.
 			tb = traceback.format_exc(msg).decode(misc.filesystem_encoding(), \
-				errors=u'ignore')
+				u'ignore')
 			for s in tb.split(u'\n'):
 				out.write(misc.strip_html(s))
 		else:
