@@ -69,7 +69,7 @@ class output_buffer:
 		"""
 
 		if isinstance(s, str):
-			s = s.decode(u'utf-8', errors=u'replace')
+			s = s.decode(u'utf-8', u'replace')
 		if s.strip() != u'':
 			self.plaintext.appendPlainText(s)
 			QtGui.QApplication.processEvents()
@@ -104,7 +104,7 @@ class pyterm(code.InteractiveConsole):
 		"""
 		
 		if isinstance(s, str):
-			s = s.decode(u'utf-8', errors=u'replace')
+			s = s.decode(u'utf-8', u'replace')
 		print s.replace(u'\n', u'')
 
 class console(QtGui.QPlainTextEdit):

@@ -395,7 +395,7 @@ class experiment(item.item):
 				u"A string should be passed to experiment.get_file(), not '%s'" \
 				% path)
 		if isinstance(path, str):
-			path = path.decode(self.encoding, errors=u'ignore')				
+			path = path.decode(self.encoding)
 		if path.strip() == u'':
 			raise exceptions.runtime_error( \
 				u"An empty string was passed to experiment.get_file(). Please specify a valid filename.")				
@@ -513,7 +513,7 @@ class experiment(item.item):
 			self.experiment_path = None
 			if isinstance(src, unicode):
 				return src
-			return src.decode(self.encoding, errors=u'replace')		
+			return src.decode(self.encoding, u'replace')		
 		# If the file is a regular text script,
 		# read it and return it
 		ext = u'.opensesame.tar.gz'

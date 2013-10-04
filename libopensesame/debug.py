@@ -47,7 +47,7 @@ def msg(msg=u'', reason=None):
 		print u'[%s]' % reason,
 	# The terminal may not like anythin but plain ASCII
 	if isinstance(msg, str):
-		msg = msg.decode(u'utf-8', errors=u'ignore')
+		msg = msg.decode(u'utf-8', u'ignore')
 	try:
 		print u'%s: %s' % (parse_stack(st[1]), msg)
 	except:
