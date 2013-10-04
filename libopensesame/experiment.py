@@ -78,6 +78,11 @@ class experiment(item.item):
 		self.mouse_backend = u'xpyriment'
 		self.sampler_backend = u'legacy'
 		self.synth_backend = u'legacy'
+		
+		# Save the date and time, and the version of OpenSesame
+		self.datetime = time.strftime(u'%c').decode(self.encoding, u'ignore')
+		self.opensesame_version = misc.version
+		self.opensesame_codename = misc.codename
 
 		# Display parameters
 		self.width = 1024
