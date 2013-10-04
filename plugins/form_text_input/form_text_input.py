@@ -34,7 +34,7 @@ set rows 1;1;6
 set cols 1
 widget 0 0 1 1 label text=[form_title]
 widget 0 1 1 1 label text=[form_question] center=no
-widget 0 2 1 1 text_input return_accepts=yes focus=yes var=[form_var]
+widget 0 2 1 1 text_input return_accepts=yes focus=yes var=[form_var] stub=""
 """
 
 class form_text_input(form_base.form_base):
