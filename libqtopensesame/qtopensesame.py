@@ -1316,14 +1316,14 @@ class qtopensesame(QtGui.QMainWindow):
 		buf = pyterm.output_buffer(self.ui.edit_stdout)
 		sys.stdout = buf
 		
-		if config.get_config(u"runner") == u'multiprocess':			
-			from libqtopensesame.runners import multiprocess_runner as runner								
+		if config.get_config(u"runner") == u'multiprocess':
+			from libqtopensesame.runners import multiprocess_runner as runner
 		elif config.get_config(u"runner") == u'inprocess':
 			from libqtopensesame.runners import inprocess_runner as runner
 		elif config.get_config(u"runner") == u'external':
 			from libqtopensesame.runners import external_runner as runner
 			
-		exception = runner(self, exp).execute()		
+		exception = runner(self, exp).execute()
 		
 		if exception is not None:
 			# Exceptions from other processes will arrive as a tuple
@@ -1336,7 +1336,7 @@ class qtopensesame(QtGui.QMainWindow):
 				if isinstance(e, libopensesame.exceptions.runtime_error):
 					self.experiment.notify(e)
 					#self.print_debug_window(tb)
-				elif isinstance(e, openexp.exceptions.openexp_error):					
+				elif isinstance(e, openexp.exceptions.openexp_error):
 					self.experiment.notify( \
 						_(u"<b>Error</b>: OpenExp error<br /><b>Description</b>: %s") \
 						% e)
@@ -1348,7 +1348,7 @@ class qtopensesame(QtGui.QMainWindow):
 					self.print_debug_window(tb)
 			else:
 				# In case the exception originated from the current process (or opensesamerun)
-												
+				
 				# Make sure that the experiment cleans up, even though it crashed
 				try:
 					exp.end()

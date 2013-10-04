@@ -41,13 +41,13 @@ class external_runner(base_runner):
 			# Temporary file for the standard output and experiment
 			self.stdout = tempfile.mktemp(suffix=u".stdout")
 			
-			if self.exp.experiment_path is None:
+			if self.experiment.experiment_path is None:
 				raise exceptions.runtime_error( \
 					u"Please save your experiment first, before running it using opensesamerun")
 			
-			self.path = os.path.join(self.exp.experiment_path, \
+			self.path = os.path.join(self.experiment.experiment_path, \
 				'.opensesamerun-tmp.opensesame.tar.gz')
-			self.exp.save(self.path, True)
+			self.experiment.save(self.path, True)
 			debug.msg(u"experiment saved as '%s'" % self.path)
 			
 			# Determine the name of the executable
@@ -59,12 +59,12 @@ class external_runner(base_runner):
 			else:
 				self.cmd = config.get_config(u'opensesamerun_exec').split()								
 			
-			self.cmd += [self.path, u"--logfile=%s" % self.exp.logfile, \
-				u"--subject=%s" % self.exp.subject_nr]
+			self.cmd += [self.path, u"--logfile=%s" % self.experiment.logfile, \
+				u"--subject=%s" % self.experiment.subject_nr]
 			
 			if debug.enabled:
 				self.cmd.append(u"--debug")
-			if self.exp.fullscreen:
+			if self.experiment.fullscreen:
 				self.cmd.append(u"--fullscreen")
 			if u"--pylink" in sys.argv:
 				self.cmd.append(u"--pylink")		
@@ -76,7 +76,7 @@ class external_runner(base_runner):
 
 			try:
 				p = subprocess.Popen(self.cmd, stdout = open(self.stdout, u"w"))
-			except Exception as e:			
+			except Exception as e:
 				try:
 					os.remove(self.path)
 					os.remove(self.stdout)
