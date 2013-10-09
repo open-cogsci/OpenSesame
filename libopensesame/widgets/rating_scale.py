@@ -17,7 +17,7 @@ You should have received a copy of the GNU General Public License
 along with openexp.  If not, see <http://www.gnu.org/licenses/>.
 """
 
-from libopensesame.exceptions import form_error
+from libopensesame.exceptions import osexception
 from libopensesame import debug
 from widget import widget
 
@@ -133,7 +133,7 @@ class rating_scale(widget):
 				_y += dy
 				i += 1
 		else:
-			raise form_error( \
+			raise osexception( \
 				u'rating_scale orientation must be "horizontal" or "vertical", not "%s"' % \
 				self.orientation)
 			
@@ -147,7 +147,7 @@ class rating_scale(widget):
 		</DOC>"""
 		
 		if val != None and (val >= len(self.nodes) or val < 0):
-			raise form_error( \
+			raise osexception( \
 				u'Trying to select a non-existing node (%s). Did you specify an incorrect default value?' \
 				% val)
 		self.value = val

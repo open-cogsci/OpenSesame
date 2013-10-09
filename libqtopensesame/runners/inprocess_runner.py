@@ -17,6 +17,8 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
+from libopensesame import debug
+from libopensesame.exceptions import osexception
 from libqtopensesame.runners import base_runner
 
 class inprocess_runner(base_runner):
@@ -27,9 +29,18 @@ class inprocess_runner(base_runner):
 		
 		"""See base_runner.execute()."""
 		
+		# Exceptions during the run phase are important and returned so that the
+		# user is notified.
+		e = None
 		try:
-			self.experiment.run()
-			self.experiment.end()			
-			return None
+			self.experiment.run()			
 		except Exception as e:
-			return e
+			if not isinstance(e, osexception):
+				e = osexception(u'Unexpected error', e)
+		# Exceptions during the end phase are less important and only printed
+		# to the debug window.
+		try:
+			self.experiment.end()
+		except Exception as _e:
+			debug.msg(u'Exception during experiment.end(): %s' % _e)
+		return e

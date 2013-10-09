@@ -17,7 +17,8 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
-from libopensesame import item, exceptions, generic_response, debug
+from libopensesame.exceptions import osexception
+from libopensesame import item, generic_response, debug
 import openexp.sampler
 
 class sampler(item.item, generic_response.generic_response):
@@ -62,7 +63,7 @@ class sampler(item.item, generic_response.generic_response):
 
 		item.item.prepare(self)
 		if self.sample.strip() == u'':
-			raise exceptions.runtime_error( \
+			raise osexception( \
 				u'No sample has been specified in sampler "%s"' % self.name)
 		sample = self.experiment.get_file(self.eval_text(self.sample))
 		if debug.enabled:
@@ -71,7 +72,7 @@ class sampler(item.item, generic_response.generic_response):
 			try:
 				self.sampler = openexp.sampler.sampler(self.experiment, sample)
 			except Exception as e:
-				raise exceptions.runtime_error( \
+				raise osexception( \
 					u'Failed to load sample in sampler "%s": %s' % (self.name, \
 					e))
 

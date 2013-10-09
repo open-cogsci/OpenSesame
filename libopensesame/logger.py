@@ -17,7 +17,8 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
-from libopensesame import item, exceptions, debug
+from libopensesame.exceptions import osexception
+from libopensesame import item, debug
 
 class logger(item.item):
 
@@ -71,11 +72,11 @@ class logger(item.item):
 		for var in self.logvars:
 			try:
 				val = self.unistr(self.get(var))
-			except exceptions.runtime_error as e:
+			except osexception as e:
 				if self.get(u'ignore_missing') == u'yes':
 					val = u'NA'
 				else:
-					raise exceptions.runtime_error( \
+					raise osexception( \
 						u"Logger '%s' tries to log the variable '%s', but this variable is not available. Please deselect '%s' in logger '%s' or enable the 'Use NA for variables that have not been set' option." \
 						% (self.name, var, var, self.name))
 			l.append(val)

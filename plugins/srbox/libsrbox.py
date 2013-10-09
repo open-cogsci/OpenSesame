@@ -15,7 +15,8 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
-from libopensesame import debug, exceptions
+from libopensesame.exceptions import osexception
+from libopensesame import debug
 import serial
 import os
 
@@ -52,7 +53,7 @@ class libsrbox:
 			try:
 				self._srbox = serial.Serial(dev, timeout=0, baudrate=19200)
 			except Exception as e:
-				raise exceptions.runtime_error( \
+				raise osexception( \
 					"Failed to open device port '%s' in libsrbox: '%s'" \
 					% (dev, e))
 
@@ -83,11 +84,11 @@ class libsrbox:
 							self._srbox = None
 							pass
 			else:
-				raise exceptions.runtime_error( \
+				raise osexception( \
 					"libsrbox does not know how to auto-detect the SR Box on your platform. Please specify a device.")
 
 		if self._srbox == None:
-			raise exceptions.runtime_error( \
+			raise osexception( \
 				"libsrbox failed to auto-detect an SR Box. Please specify a device.")
 		debug.msg("using device %s" % dev)
 		# Turn off all lights

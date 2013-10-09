@@ -18,7 +18,7 @@ along with openexp.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 import openexp._sampler.legacy
-import openexp.exceptions
+from libopensesame.exceptions import osexception
 import math
 import pygame
 import random
@@ -71,7 +71,7 @@ class legacy(openexp._sampler.legacy.legacy):
 		elif osc == "white_noise":
 			_func = self.white_noise
 		else:
-			raise openexp.exceptions.synth_error( \
+			raise osexception( \
 				"synth.__init__(): '%s' is not a valid oscillator, exception 'sine', 'saw', 'square', or 'white_noise'" \
 				% osc)
 	
@@ -116,14 +116,14 @@ class legacy(openexp._sampler.legacy.legacy):
 		</DOC>"""
 		
 		if type(key) != str or len(key) < 2:
-			raise openexp.exceptions.synth_error( \
+			raise osexception( \
 				"synth.key_to_freq(): '%s' is not a valid note, expecting something like 'A1'")			
 		
 		n = key[:-1].lower()
 		try:
 			o = int(key[-1])
 		except:
-			raise openexp.exceptions.synth_error( \
+			raise osexception( \
 				"synth.key_to_freq(): '%s' is not a valid note, expecting something like 'A1'")								
 			
 		if n == "a":

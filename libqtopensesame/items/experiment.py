@@ -420,21 +420,30 @@ class experiment(libopensesame.experiment.experiment):
 				combobox.setCurrentIndex(i)
 				break
 
-	def notify(self, message):
-
+	def notify(self, msg, title=None, icon=None):
+		
 		"""
 		Presents a default notification dialog.
 
 		Arguments:
-		message		--	The message to be shown.
+		msg		--	The message to be shown.
+		
+		Keyword arguments:
+		title	--	A title message or None for default title. (default=None)
+		icon	--	A custom icon or None for default icon. (default=None)
 		"""
-
+		
 		from libqtopensesame.ui import notification_dialog_ui
 		a = QtGui.QDialog(self.main_window)
 		a.ui = notification_dialog_ui.Ui_notification_dialog()
 		a.ui.setupUi(a)
 		self.main_window.theme.apply_theme(a)
-		a.ui.textedit_notification.setHtml(self.unistr(message))
+		a.ui.textedit_notification.setHtml(self.unistr(msg))
+		if title != None:
+			a.ui.label_title.setText(title)
+		if icon != None:
+			a.ui.label_notification.setPixmap(self.main_window.theme.qpixmap( \
+				icon))
 		a.adjustSize()
 		a.show()
 

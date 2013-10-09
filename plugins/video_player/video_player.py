@@ -25,7 +25,7 @@ from libqtopensesame import qtplugin
 from libqtopensesame import pool_widget
 
 # Used to throw exceptions
-from libopensesame import exceptions
+from libopensesame.exceptions import osexception
 
 # OpenCV is used to read the video file
 import cv
@@ -155,7 +155,7 @@ class video_player(item.item):
 			
 				if event.type == KEYDOWN:					
 					if event.key == pygame.K_ESCAPE:
-						raise exceptions.runtime_error("The escape key was pressed.")
+						raise osexception("The escape key was pressed.")
 					if self.duration == "keypress":	
 						go = False
 						

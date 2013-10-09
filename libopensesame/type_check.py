@@ -17,7 +17,7 @@ You should have received a copy of the GNU General Public License
 along with openexp.  If not, see <http://www.gnu.org/licenses/>.
 """
 
-from libopensesame.exceptions import runtime_error
+from libopensesame.exceptions import osexception
 
 def float_list(l, desc, min_len=None, max_len=None):
 	
@@ -26,14 +26,14 @@ def float_list(l, desc, min_len=None, max_len=None):
 	
 	Arguments:
 	a		--	The variable to convert.
-	desc	--	A description to clarify the runtime_error.
+	desc	--	A description to clarify the osexception.
 	
 	Keyword arguments:
 	min_len	--	The minimum length of the list. (default=None)
 	max_len	--	The maximum length of the list. (default=None)
 	
 	Raises:
-	A runtime_error if the variable could not be converted.
+	A osexception if the variable could not be converted.
 	
 	Returns:
 	A list of floats.
@@ -42,13 +42,13 @@ def float_list(l, desc, min_len=None, max_len=None):
 	try:
 		l = list(l)
 	except:
-		raise runtime_error( \
+		raise osexception( \
 			u'Expecting a list or compatible type not "%s" for "%s"' % (l, \
 				desc))
 	if min_len != None and len(l) < min_len:
-		raise runtime_error( \
+		raise osexception( \
 			u'Expecting a list of at least %d items for "%s"' % (min_len, desc))
 	if max_len != None and len(l) > max_len:
-		raise runtime_error( \
+		raise osexception( \
 			u'Expecting a list of at most %d items for "%s"' % (max_len, desc))
 	return l

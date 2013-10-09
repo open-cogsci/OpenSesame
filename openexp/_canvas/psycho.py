@@ -21,7 +21,7 @@ import pyglet
 import pygame
 import math
 import openexp._canvas.legacy
-import openexp.exceptions
+from libopensesame.exceptions import osexception
 try: # Try both import statements
 	from PIL import Image
 except:
@@ -32,7 +32,7 @@ import os.path
 try:
 	from psychopy import core, visual
 except:
-	raise openexp.exceptions.canvas_error(
+	raise osexception(
 		'Failed to import PsychoPy, probably because it is not (correctly) installed. For installation instructions, please visit http://www.psychopy.org/.')
 
 class psycho(openexp._canvas.legacy.legacy):
@@ -109,7 +109,7 @@ class psycho(openexp._canvas.legacy.legacy):
 		"""See openexp._canvas.legacy"""
 
 		# TODO
-		raise openexp.exceptions.canvas_error( \
+		raise osexception( \
 			"openexp._canvas.psycho.flip(): the flip() function has not been implemented for the psycho back-end!")
 
 	def copy(self, canvas):
@@ -472,5 +472,5 @@ def _psychopy_clean_quit():
 	the user that PsychoPy has signalled an error.
 	"""
 	
-	raise openexp.exceptions.openexp_error( \
+	raise osexception( \
 		u'PsychoPy encountered an error and aborted the program. See the debug window for PsychoPy error messages.')

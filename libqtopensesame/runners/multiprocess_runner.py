@@ -28,20 +28,15 @@ class multiprocess_runner(base_runner):
 	
 	"""Runs an experiment in another process using multiprocessing."""
 	
-	def __init__(self, main_window, experiment):
-		
-		"""See base_runner.__init__()."""
-
-		import multiprocessing
-		from libqtopensesame.misc import process
-		
-		super(multiprocess_runner, self).__init__(main_window, experiment)
-		self.channel = multiprocessing.Queue()	
-		self.exp_process = process.ExperimentProcess(experiment, self.channel)
-		
 	def execute(self):		
 		
 		"""See base_runner.execute()."""
+		
+		import multiprocessing
+		from libqtopensesame.misc import process
+		self.channel = multiprocessing.Queue()
+		self.exp_process = process.ExperimentProcess(self.experiment, \
+			self.channel)
 		
 		try:		
 			# Start process!			

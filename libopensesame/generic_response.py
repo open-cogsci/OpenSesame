@@ -20,7 +20,8 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 import random
 import openexp.keyboard
 import openexp.mouse
-from libopensesame import exceptions, debug
+from libopensesame import debug
+from libopensesame.exceptions import osexception
 
 class generic_response:
 
@@ -42,11 +43,11 @@ class generic_response:
 			try:
 				self._timeout = int(self.get("timeout"))
 			except:
-				raise exceptions.runtime_error( \
+				raise osexception( \
 					"'%s' is not a valid timeout in keyboard_response '%s'. Expecting a positive integer or 'infinite'." \
 					% (self.get("timeout"), self.name))
 			if self._timeout < 0:
-				raise exceptions.runtime_error( \
+				raise osexception( \
 					"'%s' is not a valid timeout in keyboard_response '%s'. Expecting a positive integer or 'infinite'." \
 					% (self.get("timeout"), self.name))
 
@@ -126,7 +127,7 @@ class generic_response:
 		if hasattr(self, process_func):
 			exec("self.%s(retval)" % process_func)
 		else:
-			raise exceptions.runtime_error( \
+			raise osexception( \
 				"Don't know how to process responses for duration '%s' in item '%s'" \
 				% (self.get("duration"), self.name))
 
@@ -217,11 +218,11 @@ class generic_response:
 			try:
 				self._timeout = int(self.get("timeout"))
 			except:
-				raise exceptions.runtime_error( \
+				raise osexception( \
 					"'%s' is not a valid timeout in item '%s'. Expecting a positive integer or 'infinite'." \
 					% (self.get("timeout"), self.name))
 			if self._timeout < 0:
-				raise exceptions.runtime_error( \
+				raise osexception( \
 					"'%s' is not a valid timeout in item '%s'. Expecting a positive integer or 'infinite'." \
 					% (self.get("timeout"), self.name))
 
@@ -234,7 +235,7 @@ class generic_response:
 			try:
 				self._compensation = int(self.get("compensation"))
 			except:
-				raise exceptions.runtime_error( \
+				raise osexception( \
 					"Variable 'compensation' should be numeric and not '%s' in %s item '%s'" \
 					% (self.get("compensation"), self.item_type, self.name))
 		else:
@@ -270,17 +271,17 @@ class generic_response:
 							if r in self.resp_codes:
 								self._allowed_responses.append(r)
 							else:
-								raise exceptions.runtime_error( \
+								raise osexception( \
 									"Unknown allowed_response '%s' in mouse_response item '%s'" \
 									% (r, self.name))
-						except ValueError:
-							raise exceptions.runtime_error( \
+						except Exception as e:
+							raise osexception( \
 								"Unknown allowed_response '%s' in mouse_response item '%s'" \
-								% (r, self.name))
+								% (r, self.name), exception=e)
 
 			# If allowed responses are provided, the list should not be empty
 			if len(self._allowed_responses) == 0:
-				raise exceptions.runtime_error( \
+				raise osexception( \
 					"'%s' are not valid allowed responses in keyboard_response '%s'" \
 					% (self.get("allowed_responses"), self.name))
 		else:
@@ -311,7 +312,7 @@ class generic_response:
 			if hasattr(self, prepare_func):
 				exec("self.%s()" % prepare_func)
 			else:
-				raise exceptions.runtime_error( \
+				raise osexception( \
 					"'%s' is not a valid duration in item '%s'" % \
 					(self.get("duration"), self.name))
 
