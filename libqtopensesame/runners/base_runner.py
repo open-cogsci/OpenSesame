@@ -194,10 +194,6 @@ class base_runner(object):
 		e		--	An exception, or an (exception, traceback) tuple.
 		"""
 
-		# Exceptions from other processes will arrive as a tuple, because the
-		# tracebacks are to be passed along with them.
-		if isinstance(e, tuple):
-			e, tb = e
 		if not isinstance(e, osexception):
 			e = osexception(msg=u'Unexpected error', exception=e)
 		self.main_window.print_debug_window(e)
