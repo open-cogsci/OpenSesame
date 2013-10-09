@@ -202,7 +202,7 @@ class base_runner(object):
 		self.main_window.print_debug_window(e)
 		self.main_window.experiment.notify(e.html(), title=u'Exception')
 	
-	def on_success(self, quick=True):
+	def on_success(self, quick=False):
 		
 		"""
 		Is called when an experiment has successfully ended, and gives the user
@@ -215,13 +215,13 @@ class base_runner(object):
 		
 		if quick:
 			return
-		resp = QtGui.QMessageBox.question(self.ui.centralwidget, \
+		resp = QtGui.QMessageBox.question(self.main_window.ui.centralwidget, \
 			_(u"Finished!"), \
 			_(u"The experiment is finished and data has been logged to '%s'. Do you want to copy the logfile to the file pool?") \
 			% self.experiment.logfile, QtGui.QMessageBox.Yes, \
 			QtGui.QMessageBox.No)
 		if resp == QtGui.QMessageBox.Yes:
-			self.main_window.copy_to_pool(exp.logfile)
+			self.main_window.copy_to_pool(self.experiment.logfile)
 
 	def run(self, quick=False, fullscreen=False, auto_response=False):
 		
@@ -244,4 +244,4 @@ class base_runner(object):
 		if ret_val != None:
 			self.on_exception(ret_val)
 		elif not quick:
-			self.on_success()
+			self.on_success(quick=quick)
