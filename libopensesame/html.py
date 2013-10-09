@@ -193,6 +193,7 @@ class html(HTMLParser):
 						l_x_offset.append(-(_x-x)/2)
 						_x = x
 						_y += dy
+						dx = canvas.text_size(word.lstrip())[0]
 						word = word.lstrip()
 
 					# Draw!
@@ -229,6 +230,7 @@ class html(HTMLParser):
 					else:
 						_x = x
 					_y += dy
+					dx = canvas.text_size(word.lstrip())[0]
 					word = word.lstrip()
 
 				# Draw!
