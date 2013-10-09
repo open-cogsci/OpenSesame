@@ -152,16 +152,17 @@ class base_runner(object):
 		True if the experiment was successfully initiated, False it was not.
 		"""
 		
-		# First tell the experiment to get ready, to apply any pending changes.
-		self.main_window.get_ready()
-		# Render the experiment script. This can trigger a script error.
+		# First tell the experiment to get ready, to apply any pending changes,
+		# and then initialize the script. This can trigger errors.
 		try:
-			script = self.main_window.experiment.to_string()		
+			self.main_window.get_ready()
+			script = self.main_window.experiment.to_string()
 		except Exception as e:
 			if not isinstance(e, osexception):
 				e = osexception(u'Unexpected error', exception=e)
 			self.main_window.print_debug_window(e)
 			self.main_window.experiment.notify(e.html())
+			return False
 		# Get and set the subject number
 		subject_nr = self.get_subject_nr(quick=quick)
 		if subject_nr == None:
