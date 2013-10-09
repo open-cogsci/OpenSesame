@@ -21,14 +21,13 @@ import pygame
 from pygame.locals import *
 import random
 import openexp._canvas.legacy
-import openexp.exceptions
+from libopensesame.exceptions import osexception
 import math
 import subprocess
 import os
 import os.path
 import tempfile
 import copy
-
 import libopengl
 
 class opengl(openexp._canvas.legacy.legacy):
@@ -309,7 +308,7 @@ class opengl(openexp._canvas.legacy.legacy):
 		"""see openexp._canvas.legacy"""
 
 		# TODO
-		raise openexp.exceptions.canvas_error( \
+		raise osexception( \
 			"openexp._canvas.opengl.polygon() not implemented")
 
 	def text_size(self, text):
@@ -355,7 +354,7 @@ class opengl(openexp._canvas.legacy.legacy):
 		try:
 			surface = pygame.image.load(fname)
 		except pygame.error as e:
-			raise openexp.exceptions.canvas_error("'%s' is not a supported image format" % fname)
+			raise osexception("'%s' is not a supported image format" % fname)
 
 		if scale != None:
 			surface = pygame.transform.smoothscale(surface, (int(surface.get_width() * scale), int(surface.get_height() * scale)))

@@ -17,7 +17,8 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
-from libopensesame import sampler, exceptions, item, generic_response
+from libopensesame.exceptions import osexception
+from libopensesame import sampler, item, generic_response
 import openexp.synth
 
 class synth(sampler.sampler, item.item):
@@ -61,7 +62,7 @@ class synth(sampler.sampler, item.item):
 				self.get(u'osc'), self.get(u'freq'), self.get(u'length'), \
 				self.get(u'attack'), self.get(u'decay'))
 		except Exception as e:
-			raise exceptions.runtime_error( \
+			raise osexception( \
 				u"Failed to generate sound in synth '%s': %s" % (self.name, e))
 		pan = self.get(u'pan')
 		if pan == -20:

@@ -23,6 +23,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 import pygame
 from pygame.locals import *
 from pygame.joystick import Joystick
+from libopensesame.exceptions import osexception
 
 class libjoystick:
 
@@ -37,7 +38,7 @@ class libjoystick:
 	A few guidelines:
 	--	Acceptable key-formats are characters and integers, interpreted as ASCII key codes.
 	--	Moderators are represented by the following strings: "shift", "alt", "control" and "meta"
-	--	Catch exceptions wherever possible and raise an openexp.exceptions.canvas_error
+	--	Catch exceptions wherever possible and raise an osexception
 		with a clear and descriptive error message.
 	--	Do not deviate from the guidelines. All back-ends should be interchangeable and
 		transparent to OpenSesame. You are free to add functionality to this class, to be
@@ -130,7 +131,7 @@ class libjoystick:
 			for event in pygame.event.get():
 				if event.type == KEYDOWN:
 					if event.key == pygame.K_ESCAPE:
-						raise openexp.exceptions.response_error("The escape key was pressed.")
+						raise osexception("The escape key was pressed.")
 				if event.type == JOYBUTTONDOWN:
 					if joybuttonlist == None or event.button + 1 in joybuttonlist:
 						bpress = event.button + 1
@@ -164,7 +165,7 @@ class libjoystick:
 			for event in pygame.event.get():
 				if event.type == KEYDOWN:
 					if event.key == pygame.K_ESCAPE:
-						raise openexp.exceptions.response_error("The escape key was pressed.")
+						raise osexception("The escape key was pressed.")
 				if event.type == JOYAXISMOTION:
 					for axis in range(js.get_numaxes()):
 						pos.append(js.get_axis(axis))
@@ -198,7 +199,7 @@ class libjoystick:
 			for event in pygame.event.get():
 				if event.type == KEYDOWN:
 					if event.key == pygame.K_ESCAPE:
-						raise openexp.exceptions.response_error("The escape key was pressed.")
+						raise osexception("The escape key was pressed.")
 				if event.type == JOYBALLMOTION:
 					for ball in range(js.get_numballs()):
 						ballpos.append(js.get_ball(ball))
@@ -232,7 +233,7 @@ class libjoystick:
 			for event in pygame.event.get():
 				if event.type == KEYDOWN:
 					if event.key == pygame.K_ESCAPE:
-						raise openexp.exceptions.response_error("The escape key was pressed.")
+						raise osexception("The escape key was pressed.")
 				if event.type == JOYHATMOTION:
 					for hat in range(js.get_numhats()):
 						hatpos.append(js.get_hat(hat))
@@ -274,7 +275,7 @@ class libjoystick:
 			for event in pygame.event.get():
 				if event.type == KEYDOWN:
 					if event.key == pygame.K_ESCAPE:
-						raise openexp.exceptions.response_error("The escape key was pressed.")
+						raise osexception("The escape key was pressed.")
 				if event.type == JOYBUTTONDOWN:
 					if joybuttonlist == None or event.button + 1 in joybuttonlist:
 						eventtype = 'joybuttonpress'
@@ -324,7 +325,7 @@ class libjoystick:
 		joyinput = False
 		for event in pygame.event.get():
 			if event.type == KEYDOWN and event.key == pygame.K_ESCAPE:
-				raise openexp.exceptions.response_error("The escape key was pressed.")
+				raise osexception("The escape key was pressed.")
 			if event.type == JOYBUTTONDOWN or event.type == JOYAXISMOTION or event.type == JOYBALLMOTION or event.type == JOYHATMOTION:
 				joyinput = True
 		return joyinput

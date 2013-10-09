@@ -19,7 +19,7 @@ along with openexp.  If not, see <http://www.gnu.org/licenses/>.
 
 import pygame
 from pygame.locals import *
-import openexp.exceptions
+from libopensesame.exceptions import osexception
 import os.path
 try:
 	import numpy
@@ -81,12 +81,12 @@ class legacy:
 
 		if src != None:
 			if not os.path.exists(src):
-				raise openexp.exceptions.sample_error( \
+				raise osexception( \
 					"openexp._sampler.legacy.__init__() the file '%s' does not exist" \
 					% src)
 
 			if os.path.splitext(src)[1].lower() not in (".ogg", ".wav"):
-				raise openexp.exceptions.sample_error( \
+				raise osexception( \
 					"openexp._sampler.legacy.__init__() the file '%s' is not an .ogg or .wav file" \
 					% src)
 
@@ -113,7 +113,7 @@ class legacy:
 		</DOC>"""
 
 		if type(ms) != int or ms < 0:
-			raise openexp.exceptions.sample_error("openexp._sampler.legacy.stop_after() requires a positive integer")
+			raise osexception("openexp._sampler.legacy.stop_after() requires a positive integer")
 
 		self._stop_after = ms
 
@@ -133,7 +133,7 @@ class legacy:
 		</DOC>"""
 
 		if type(ms) != int or ms < 0:
-			raise openexp.exceptions.sample_error("openexp._sampler.legacy.fade_in() requires a positive integer")
+			raise osexception("openexp._sampler.legacy.fade_in() requires a positive integer")
 
 		self._fade_in = ms
 
@@ -153,7 +153,7 @@ class legacy:
 		</DOC>"""
 
 		if type(vol) not in (int, float) or vol < 0 or vol > 1:
-			raise openexp.exceptions.sample_error("openexp._sampler.legacy.volume() requires a number between 0.0 and 1.0")
+			raise osexception("openexp._sampler.legacy.volume() requires a number between 0.0 and 1.0")
 
 		self._volume = vol
 		self.sound.set_volume(vol)
@@ -179,7 +179,7 @@ class legacy:
 			return
 
 		if type(p) not in (int, float) or p <= 0:
-			raise openexp.exceptions.sample_error( \
+			raise osexception( \
 				"openexp._sampler.legacy.pitch() requires a positive number")
 
 		if p == 1:
@@ -218,7 +218,7 @@ class legacy:
 			return
 		
 		if type(p) not in (int, float) and p not in ("left", "right"):
-			raise openexp.exceptions.sample_error("openexp._sampler.legacy.pan() requires a number or 'left', 'right'")
+			raise osexception("openexp._sampler.legacy.pan() requires a number or 'left', 'right'")
 
 		if p == 0:
 			return

@@ -19,7 +19,8 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 
 import sys
 import os
-from libopensesame import debug, exceptions
+from libopensesame.exceptions import osexception
+from libopensesame import debug
 from libqtopensesame.misc import config
 from libqtopensesame.runners import base_runner
 
@@ -42,7 +43,7 @@ class external_runner(base_runner):
 			self.stdout = tempfile.mktemp(suffix=u".stdout")
 			
 			if self.experiment.experiment_path is None:
-				raise exceptions.runtime_error( \
+				raise osexception( \
 					u"Please save your experiment first, before running it using opensesamerun")
 			
 			self.path = os.path.join(self.experiment.experiment_path, \

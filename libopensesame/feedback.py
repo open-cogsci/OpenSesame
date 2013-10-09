@@ -17,7 +17,8 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
-from libopensesame import sketchpad, exceptions
+from libopensesame.exceptions import osexception
+from libopensesame import sketchpad
 
 class feedback(sketchpad.sketchpad):
 
@@ -34,42 +35,23 @@ class feedback(sketchpad.sketchpad):
 		string -- a definitions tring (default=None)
 		"""
 
-		self.description = "Provides feedback to the participant"		
-		self.reset_variables = "yes"		
-		sketchpad.sketchpad.__init__(self, name, experiment, string)				
-		self.item_type = "feedback"			
+		self.description = u"Provides feedback to the participant"
+		self.reset_variables = u"yes"
+		sketchpad.sketchpad.__init__(self, name, experiment, string)
+		self.item_type = u"feedback"
 		
 	def prepare(self):
 		
-		"""
-		Prepare for running. In the case of the feedback display, this means
-		doing nothing
-		
-		Returns:
-		True
-		"""
+		"""Prepares the item."""
 				
-		return True
+		pass
 		
 	def run(self):
 	
-		"""
-		Run the item (ie., show the feedback item)
+		"""Runs the item."""
 		
-		Returns:
-		True on success, False on Failure
-		"""
-		
-		try:
-			if not sketchpad.sketchpad.prepare(self):
-				return False
-		except exceptions.script_error as e:
-			raise exceptions.runtime_error("Failed to create feedback item '%s'" \
-				% self.name)						
-		if not sketchpad.sketchpad.run(self):
-			return False			
-		
-		# Reset the bookkeeping		
-		if self.reset_variables == "yes":
+		sketchpad.sketchpad.prepare(self)
+		not sketchpad.sketchpad.run(self)
+		if self.reset_variables == u'yes':
 			self.experiment.reset_feedback()
 						

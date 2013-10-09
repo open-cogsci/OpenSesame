@@ -21,7 +21,7 @@ import os
 import os.path
 import sys
 
-version = u'2.8.0~pre1'
+version = u'2.8.0~pre2'
 codename = u'Gutsy Gibson'
 
 use_global_resources = '--no-global-resources' not in sys.argv
@@ -396,3 +396,24 @@ def strip_html(s):
 		s = s.replace(tag, u'')
 	return s
 	
+def escape_html(s):
+	
+	"""
+	Escapes a string so that it can be displayed as HTML. This is useful for 
+	example for tracebacks, which use <> characters.
+	
+	Arguments:
+	s	--	A string to escape. We assume Unicode input. str objects may cause
+			decoding errors.
+	
+	Returns:
+	An escaped string.
+	"""
+		
+	# Note that we need to replace the '&' first, otherwise we'll start escaping
+	# the escaped characters.
+	l = [(u'&', u'&amp;'), (u' ', u'&nbsp;'), (u'\t', \
+		u'&nbsp;&nbsp;&nbsp;&nbsp;'), (u'<', u'&lt;'), (u'>', u'&gt;')]
+	for orig, new in l:
+		s = s.replace(orig, new)
+	return s

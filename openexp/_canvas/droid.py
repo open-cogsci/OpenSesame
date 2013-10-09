@@ -20,7 +20,7 @@ along with openexp.  If not, see <http://www.gnu.org/licenses/>.
 from math import hypot
 import pygame
 from openexp._canvas.legacy import legacy
-from openexp.exceptions import canvas_error
+from libopensesame.exceptions import osexception
 
 try:
 	import android
@@ -44,7 +44,7 @@ def init_display(experiment):
 	"""See openexp._canvas.legacy"""
 	
 	if experiment.resolution() != resolution:
-		raise canvas_error( \
+		raise osexception( \
 		'The droid back-end requires a resolution of %d x %d. Your display will be scaled automatically to fit devices with different resolutions.' \
 		% resolution)
 

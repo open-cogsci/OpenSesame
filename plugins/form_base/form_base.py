@@ -17,7 +17,8 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
-from libopensesame import item, exceptions, widgets
+from libopensesame.exceptions import osexception
+from libopensesame import item, widgets
 from libqtopensesame import qtplugin
 from libqtopensesame.misc import _
 import openexp.canvas
@@ -77,7 +78,7 @@ class form_base(item.item):
 			colspan = int(l[3])
 			rowspan = int(l[4])
 		except:
-			raise exceptions.script_error( \
+			raise osexception( \
 				_('Widget column and row should be numeric'))
 
 		# Parse the widget into a dictionary and store it in the list of
@@ -148,7 +149,7 @@ class form_base(item.item):
 			rows = [float(i) for i in unicode(self.rows).split(';')]
 			margins = [float(i) for i in unicode(self.margins).split(';')]
 		except:
-			raise exceptions.runtime_error( \
+			raise osexception( \
 				_('cols, rows, and margins should be numeric values separated by a semi-colon'))
 		self._form = widgets.form(self.experiment, cols=cols, rows=rows, \
 			margins=margins, spacing=self.spacing, theme=self.theme, item=self)
@@ -187,7 +188,7 @@ class form_base(item.item):
 			try:
 				_w = eval('widgets.%s(self._form, **w)' % _type)
 			except Exception as e:
-				raise exceptions.runtime_error( \
+				raise osexception( \
 					'Failed to create widget "%s": %s' % (_type, e))
 			self._form.set_widget(_w, (col, row), colspan=colspan, \
 					rowspan=rowspan)

@@ -15,7 +15,8 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
-from libopensesame import item, exceptions, generic_response
+from libopensesame.exceptions import osexception
+from libopensesame import item, generic_response
 from libqtopensesame import qtplugin
 import openexp.canvas
 import openexp.keyboard
@@ -89,7 +90,7 @@ class text_input(item.item, generic_response.generic_response):
 		maxchar = self.get("linewidth") / w
 
 		if maxchar < 2:
-			raise exceptions.runtime_error( \
+			raise osexception( \
 				"The maximum line width is too small (or the font is too large) in text_input '%s'" \
 				% self.name)
 

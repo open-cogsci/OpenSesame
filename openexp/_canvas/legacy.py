@@ -21,12 +21,12 @@ import pygame
 from pygame.locals import *
 import random
 import openexp.canvas
-import openexp.exceptions
 import math
 import subprocess
 import os
 import os.path
 import tempfile
+from libopensesame.exceptions import osexception
 from libopensesame import debug, html, misc
 
 # Translation mapping from envelope names
@@ -73,7 +73,7 @@ class legacy:
 
 	A few guidelines:
 	-- Catch exceptions wherever possible and raise an
-	   openexp.exceptions.canvas_error with a clear and descriptive error
+	   osexception with a clear and descriptive error
 	   message.
 	-- If you create a temporary file, add its path to the
 	   openexp.canvas.temp_files list.
@@ -824,7 +824,7 @@ class legacy:
 		try:
 			surface = pygame.image.load(fname)
 		except pygame.error as e:
-			raise openexp.exceptions.canvas_error( \
+			raise osexception( \
 				"'%s' is not a supported image format" % fname)
 				
 		if scale != None:
@@ -1192,7 +1192,7 @@ def _match_env(env):
 	env -- an envelope name
 
 	Exception:
-	Throws a canvas_error if an unknown envelope was specified
+	Throws an osexception if an unknown envelope was specified
 
 	Returns:
 	A standard envelope name ("c", "g", "r" or "l")
@@ -1200,5 +1200,5 @@ def _match_env(env):
 
 	global env_synonyms
 	if env not in env_synonyms:
-		raise openexp.exceptions.canvas_error("'%s' is not a valid envelope" % env)
+		raise osexception("'%s' is not a valid envelope" % env)
 	return env_synonyms[env]

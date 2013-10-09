@@ -17,10 +17,8 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
-__author__ = "Sebastiaan Mathot"
-__license__ = "GPLv3"
-
-from libopensesame import item, exceptions, debug
+from libopensesame.exceptions import osexception
+from libopensesame import item, debug
 import openexp.keyboard
 from random import *
 from math import *
@@ -118,7 +116,7 @@ class loop(item.item):
 		# In sequential order, the offset and the skip are relevant
 		else:			
 			if len(l) < self.skip:
-				raise exceptions.runtime_error( \
+				raise osexception( \
 						u'The value of skip is too high in loop item "%s":: You cannot skip more cycles than there are.' \
 					% self.name)
 			if self.offset == u'yes':
@@ -131,7 +129,7 @@ class loop(item.item):
 
 		# Make sure the item to run exists		
 		if self.item not in self.experiment.items:
-			raise exceptions.runtime_error( \
+			raise osexception( \
 				"Could not find item '%s', which is called by loop item '%s'" \
 				% (self.item, self.name))			
 				
@@ -173,7 +171,7 @@ class loop(item.item):
 				try:
 					val = eval(val[1:])
 				except Exception as e:
-					raise exceptions.runtime_error( \
+					raise osexception( \
 						"Failed to evaluate '%s' in loop item '%s': %s" \
 						% (val[1:], self.name, e))
 			# Set it!

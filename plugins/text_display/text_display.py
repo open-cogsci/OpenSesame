@@ -15,8 +15,8 @@ You should have received a copy of the GNU General Public License
 along with opensesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
-
-from libopensesame import item, generic_response, exceptions
+from libopensesame.exceptions import osexception
+from libopensesame import item, generic_response
 from libqtopensesame import qtplugin
 import openexp.canvas
 import os.path
@@ -73,7 +73,7 @@ class text_display(item.item, generic_response.generic_response):
 			while len(line) > self.get("maxchar"):
 				i = line.rfind(" ", 0, self.get("maxchar"))
 				if i < 0:
-					raise exceptions.runtime_error( \
+					raise osexception( \
 						"Failed to do line wrapping in text_display '%s'. Perhaps one of the words is longer than the maximum number of characters per line?" \
 						% self.name)
 				_content.append(line[:i])
@@ -91,7 +91,7 @@ class text_display(item.item, generic_response.generic_response):
 					max_width = max(max_width, size[0])
 					max_height = max(max_height, size[1])
 			except:
-				raise exceptions.runtime_error( \
+				raise osexception( \
 					"Failed to use alignment '%s' in text_display '%s'. Perhaps this alignment is not supported by the back-end. Please use 'center' alignment." \
 					% (self.get("align"), self.name))
 

@@ -1,6 +1,6 @@
-opensesame (2.8.0~pre1) UNRELEASED; urgency=low
+opensesame (2.8.0~pre2-ubuntu1) raring; urgency=low
 
-  * Dummy entry
+  * Add runner functionality
 
  -- Sebastiaan Mathot <s.mathot@cogsci.nl>  Fri, 13 Sep 2013 16:59:10 +0200
 

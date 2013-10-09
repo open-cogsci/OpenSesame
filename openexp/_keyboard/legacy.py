@@ -17,10 +17,10 @@ You should have received a copy of the GNU General Public License
 along with openexp.  If not, see <http://www.gnu.org/licenses/>.
 """
 
-from string import whitespace, printable
 import pygame
 from pygame.locals import *
-import openexp.keyboard
+from string import whitespace, printable
+from libopensesame.exceptions import osexception
 
 # Whitespace and empty strings are not acceptable names for keys. These should
 # be converted to descriptions, e.g. '\t' to 'tab'
@@ -43,7 +43,7 @@ class legacy:
 	-- Moderators are represented by the following strings: "shift", "alt",
 	   "control" and "meta"
 	-- Catch exceptions wherever possible and raise an
-	   openexp.exceptions.canvas_error with a clear and descriptive error
+	   osexception with a clear and descriptive error
 	   message
 	-- Do not deviate from the guidelines. All back-ends should be
 	   interchangeable and transparent to OpenSesame. You are free to add
@@ -159,7 +159,7 @@ class legacy:
 				   default timeout (default=None).
 				   
 		Exceptions:
-		A response_error if 'escape' was pressed.
+		An osexception if 'escape' was pressed.
 
 		Returns:
 		A (key, timestamp) tuple. The key is None if a timeout occurs.
@@ -186,18 +186,16 @@ class legacy:
 				if event.type != pygame.KEYDOWN:
 					continue
 				if event.key == pygame.K_ESCAPE:
-					raise openexp.exceptions.response_error( \
-						u"The escape key was pressed.")
+					raise osexception(u'The escape key was pressed.')
 				if event.unicode in invalid_unicode or event.unicode not in \
 					printable:
 					key = self.key_name(event.key)
 				else:
-					key = event.unicode				
+					key = event.unicode
 				if keylist == None or key in keylist:
-					return key, time				
+					return key, time
 			if timeout != None and time-start_time >= timeout:
 				break
-		
 		return None, time
 
 	def get_mods(self):
@@ -248,7 +246,7 @@ class legacy:
 		This function always raises an exception
 		"""
 
-		raise openexp.exceptions.response_error( \
+		raise osexception( \
 			u"keyboard.shift() is deprecated")
 
 	def to_int(self, key):
@@ -266,7 +264,7 @@ class legacy:
 		This function always raises an exception
 		"""
 
-		raise openexp.exceptions.response_error( \
+		raise osexception( \
 			u"keyboard.to_int() is deprecated")
 
 	def to_chr(self, key):
@@ -321,7 +319,7 @@ class legacy:
 		Clears all pending input, not limited to the keyboard.
 		
 		Exceptions:
-		A response_error if 'escape' was pressed
+		An osexception if 'escape' was pressed
 		
 		Returns:
 		True if a key had been pressed (i.e., if there was something #
@@ -339,7 +337,7 @@ class legacy:
 			if event.type == KEYDOWN:
 				keypressed = True
 				if event.key == pygame.K_ESCAPE:
-					raise openexp.exceptions.response_error( \
+					raise osexception( \
 						u"The escape key was pressed.")
 		return keypressed
 

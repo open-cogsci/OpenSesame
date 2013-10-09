@@ -34,9 +34,10 @@ NEW STYLE
 >>> print cfg.my_setting # get
 """
 
+from libopensesame.exceptions import osexception
 from PyQt4 import QtCore
 import libopensesame.misc
-from libopensesame import debug, exceptions
+from libopensesame import debug
 import platform
 import sip
 if sip.getapi(u'QString') == 2:
@@ -132,7 +133,7 @@ class config(object):
 		"""
 
 		if setting not in self.config:
-			raise exceptions.runtime_error(u'The setting "%s" does not exist' \
+			raise osexception(u'The setting "%s" does not exist' \
 				% setting)
 		return self.config[setting]
 
@@ -146,7 +147,7 @@ class config(object):
 		value -- the value to set
 		"""
 		if setting not in self.config:
-			raise exceptions.runtime_error(u'The setting "%s" does not exist' \
+			raise osexception(u'The setting "%s" does not exist' \
 				% setting)
 		self.config[setting] = value
 		self.config[u'cfg_ver'] += 1
