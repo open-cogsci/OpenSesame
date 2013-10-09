@@ -103,7 +103,9 @@ class base_runner(object):
 					self.valid_logfile_extensions:
 					logfile += self.default_logfile_extension		
 		# If the logfile is not writable, inform the user and cancel.
-		if not os.access(logfile, os.W_OK):
+		try:
+			open(logfile, u'w').close()
+		except:
 			self.main_window.experiment.notify( \
 				_(u"The logfile '%s' is not writable. Please choose another location for the logfile.") \
 				% logfile)
