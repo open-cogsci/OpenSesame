@@ -1,6 +1,11 @@
-opensesame (2.8.0~pre2-ubuntu1) raring; urgency=low
+opensesame (2.8.0~pre2-ubuntu3) raring; urgency=low
 
-  * Add runner functionality
+  * New functionality
+    - Add runner functionality
+    - Improved exception handling
+  * Bugs fixed
+    - Line wrapping causes double spaces (#203)
+    - Keywords to `decode()` break compatibility with Python < 2.7 (#201)
 
  -- Sebastiaan Mathot <s.mathot@cogsci.nl>  Fri, 13 Sep 2013 16:59:10 +0200
 
