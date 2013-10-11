@@ -79,7 +79,7 @@ class ExperimentProcess(multiprocessing.Process):
 		self.output = output
 		# The experiment object is troublesome to serialize,
 		# therefore pull out all relevant data to pass on to the new process
-		# and rebuild the exp object from there.
+		# and rebuild the exp object in there.
 		self.script = exp.to_string()
 		self.pool_folder = exp.pool_folder
 		self.subject_nr = exp.subject_nr
@@ -102,7 +102,10 @@ class ExperimentProcess(multiprocessing.Process):
 		from libopensesame.experiment import experiment
 		from libopensesame.exceptions import osexception
 		
-		# TODO: Can you add comments describing what happens here?
+		# Determines the directory name of the script or the directory name
+		# of the executable after being packaged with py2exe. This has to be done
+		# so the child process can find all relevant modules too.
+		# See http://www.py2exe.org/index.cgi/HowToDetermineIfRunningFromExe
 		if os.name == u'nt':
 			import imp
 			if (hasattr(sys, u'frozen') or hasattr(sys, u'importers') or \
@@ -114,12 +117,17 @@ class ExperimentProcess(multiprocessing.Process):
 				os.chdir(path)
 				if path not in sys.path:
 					sys.path.append(path)
+					
 		# Reroute output to OpenSesame main process, so everything will be
 		# printed in the Debug window there.
 		pipeToMainProcess = OutputChannel(self.output)
 		sys.stdout = pipeToMainProcess
 		sys.stderr = pipeToMainProcess
-		# TODO: Why the os.chdir()?
+		# By default the current directory is set to where module that is run
+		# as the child process is located, which in this case will be
+		# /libqtopensesame/misc/
+		# Because all plugins are referenced from the OpenSesame root dir, we
+		# need to change the current folder back to that location.		
 		os.chdir(u'../..')
 		# First initialize the experiment and catch any resulting Exceptions
 		try:

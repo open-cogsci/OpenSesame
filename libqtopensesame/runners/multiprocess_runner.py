@@ -21,7 +21,7 @@ import sys
 from libqtopensesame.runners import base_runner
 from StringIO import StringIO
 from PyQt4 import QtGui
-import time
+from libopensesame.exceptions import osexception
 
 class multiprocess_runner(base_runner):
 	
