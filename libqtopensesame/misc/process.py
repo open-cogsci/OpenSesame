@@ -123,8 +123,8 @@ class ExperimentProcess(multiprocessing.Process):
 		pipeToMainProcess = OutputChannel(self.output)
 		sys.stdout = pipeToMainProcess
 		sys.stderr = pipeToMainProcess
-		# By default the current directory is set to where module that is run
-		# as the child process is located, which in this case will be
+		# When a module is run in a new process, by default the current directory 
+		# is set to where this module is located, which in this case will be
 		# /libqtopensesame/misc/
 		# Because all plugins are referenced from the OpenSesame root dir, we
 		# need to change the current folder back to that location.		
