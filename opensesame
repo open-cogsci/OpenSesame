@@ -18,7 +18,7 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
-if __name__ == "__main__":
+if __name__ == u'__main__':
 	# Make sure the multiprocessing part of OS plays well with py2exe/py2app
 	# Has no effect if program is run straight from cli interpreter
 	import multiprocessing
@@ -32,23 +32,23 @@ if __name__ == "__main__":
 	# application has been frozen by py2exe or not we need to use a different
 	# method of deducing the name to the main script.
 	# See also http://www.py2exe.org/index.cgi/HowToDetermineIfRunningFromExe
-	if os.name == "nt":
+	if os.name == u'nt':
 		import imp
-		if (hasattr(sys, "frozen") or hasattr(sys, "importers") or \
-			imp.is_frozen("__main__")):
+		if (hasattr(sys, u'frozen') or hasattr(sys, u'importers') or \
+			imp.is_frozen(u'__main__')):
 			path = os.path.dirname(sys.executable)
 		else:
 			path = os.path.dirname(__file__)
-		if path != '':
+		if path != u'':
 			os.chdir(path)
 			if path not in sys.path:
 				sys.path.append(path)
 
 	# horrendous OS X invalid locale hack, which otherwise prevents psychopy to start
-	if platform.system() == 'Darwin':
+	if platform.system() == u'Darwin':
 		import locale
 		if locale.getlocale()[0] is None:
-			locale.setlocale(locale.LC_ALL, 'en_US.UTF-8')
+			locale.setlocale(locale.LC_ALL, u'en_US.UTF-8')
 			
 		# On 32-bit OSX: Shortly init and destroy pygame window before all else
 		# Strangly, the experiment otherwise hangs at init_dispay() with pygame based backends...
@@ -66,17 +66,17 @@ if __name__ == "__main__":
 	if "--ipython" in sys.argv:
 		try:
 			from IPython.frontend.qt.console.ipython_widget import IPythonWidget
-			debug.msg('IPython loaded')
+			debug.msg(u'IPython loaded')
 		except:
-			sys.argv.remove('--ipython')
-			debug.msg('Failed to load IPython. Is IPython QtConsole installed?', \
-				reason='warning')
+			sys.argv.remove(u'--ipython')
+			debug.msg(u'Failed to load IPython. Is IPython QtConsole installed?', \
+				reason=u'warning')
 
 	# Do the basic window initialization
 	from PyQt4.QtGui import QApplication
 	app = QApplication(sys.argv)
 	from libqtopensesame.qtopensesame import qtopensesame
-	opensesame = qtopensesame(app)		
+	opensesame = qtopensesame(app)
 	app.processEvents()
 	
 	# Import the remaining modules
@@ -88,21 +88,21 @@ if __name__ == "__main__":
 	# command line using the --locale parameter
 	locale = unicode(QLocale().system().name())
 	for i in range(len(sys.argv)-1):
-		if sys.argv[i] == '--locale':
-			locale = sys.argv[i+1]	
-	qm = resource(os.path.join('locale', locale) +'.qm')
+		if sys.argv[i] == u'--locale':
+			locale = sys.argv[i+1]
+	qm = resource(os.path.join(u'locale', locale) + u'.qm')
 	if qm != None:
-		debug.msg('installing %s translator' % qm)
+		debug.msg(u'installing %s translator' % qm)
 		translator = QTranslator()
 		translator.load(qm)
 		app.installTranslator(translator)
 	else:
-		debug.msg('no translator found for %s' % locale)	
+		debug.msg(u'no translator found for %s' % locale)	
 
 	# Now that the window is shown, load the remaining modules and resume the
 	# GUI initialization.
 	opensesame.resume_init()
-	QObject.connect(app, SIGNAL("quit()"), opensesame.close)
+	QObject.connect(app, SIGNAL(u'quit()'), opensesame.close)
 	
 	# Open an experiment if it has been specified as a command line argument and
 	# suppress the new wizard in that case.
@@ -123,10 +123,11 @@ if __name__ == "__main__":
 		if start_new_tab:
 			opensesame.ui.tabwidget.open_start_new(start=True)
 
-	opensesame.restore_window_state()				
-	opensesame.refresh()			
+	opensesame.restore_window_state()
+	opensesame.refresh()
 	opensesame.show()
-	opensesame.raise_()  #Added for OS X, otherwise Window will not appear
+	# Added for OS X, otherwise Window will not appear
+	opensesame.raise_()
 	
 	# Exit using the application exit status
 	sys.exit(app.exec_())

@@ -83,9 +83,12 @@ class webbrowser(QtGui.QWidget):
 			try:
 				import markdown				
 				html = markdown.markdown(open(url).read())
+				html += u'<style type="text/css">%s</style>' % \
+					open(self.main_window.theme.resource( \
+					u'markdown.css')).read()
 			except:
 				html = \
-					u'<p>Python markdown must be installed to view this page. Sorry!'
+					u'<p>Python markdown must be installed to view this page. Sorry!</p>'
 			self.ui.webview.setHtml(html, QtCore.QUrl(url))
 		else:
 			self.ui.webview.load(QtCore.QUrl(url))
@@ -94,7 +97,7 @@ class webbrowser(QtGui.QWidget):
 	
 		"""Hide the statusbar to indicate that loading is finished"""
 
-		self.ui.label_load_progress.setText('Done')
+		self.ui.label_load_progress.setText(u'Done')
 		
 	def update_progressbar(self, progress):
 	
@@ -105,25 +108,25 @@ class webbrowser(QtGui.QWidget):
 		progress -- the load progress
 		"""
 	
-		self.ui.label_load_progress.setText('%d%%' % progress)
+		self.ui.label_load_progress.setText(u'%d%%' % progress)
 		
 	def load_started(self):
 	
 		"""Show the statusbar to indicate that loading has started"""
 
-		self.ui.label_load_progress.setText('Starting ...')
+		self.ui.label_load_progress.setText(u'Starting ...')
 		
 	def open_osdoc(self):
 	
 		"""Open osdoc.cogsci.nl"""
 	
-		self.load('http://osdoc.cogsci.nl/')
+		self.load(u'http://osdoc.cogsci.nl/')
 
 	def open_forum(self):
 	
 		"""Open forum.cogsci.nl"""	
 	
-		self.load('http://forum.cogsci.nl/')
+		self.load(u'http://forum.cogsci.nl/')
 
 	def url_changed(self, url):
 

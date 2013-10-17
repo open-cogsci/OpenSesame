@@ -52,19 +52,11 @@ class qtitem(QtCore.QObject):
 
 		debug.msg(u'created %s' % self.name)
 
-	def open_help_tab(self):
+	def open_help_tab(self, page=None):
 
-		"""Open the help tab"""
-
-		md_path = self.experiment.help(self.item_type + u'.md')
-		html_path = self.experiment.help(self.item_type + u'.html')
-		if os.path.exists(md_path):
-			path = md_path
-		elif os.path.exists(html_path):
-			path = html_path
-		else:
-			path = self.experiment.help(u'missing.html')
-		self.experiment.main_window.ui.tabwidget.open_browser(path)
+		"""Opens a help tab."""
+		
+		self.experiment.main_window.ui.tabwidget.open_help(self.item_type)
 
 	def open_tab(self):
 
