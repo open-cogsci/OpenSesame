@@ -795,21 +795,22 @@ class qtopensesame(QtGui.QMainWindow):
 			else:
 				e.accept()
 			return
-
-		resp = QtGui.QMessageBox.question(self.ui.centralwidget, _("Quit?"), \
-			_("Are you sure you want to quit OpenSesame?"), \
+		resp = QtGui.QMessageBox.question(self.ui.centralwidget, _(u"Quit?"), \
+			_(u"Are you sure you want to quit OpenSesame?"), \
 			QtGui.QMessageBox.Yes, QtGui.QMessageBox.No)
 		if resp == QtGui.QMessageBox.No:
 			if not isinstance(e, bool):
 				e.ignore()
+				return
+		libopensesame.experiment.clean_up(debug.enabled)
+		if not self.save_unsaved_changes():
+			e.ignore()
+			return
+		self.save_state()
+		if isinstance(e, bool):
+			QtCore.QCoreApplication.quit()
 		else:
-			libopensesame.experiment.clean_up(debug.enabled)
-			self.save_unsaved_changes()
-			self.save_state()
-			if isinstance(e, bool):
-				QtCore.QCoreApplication.quit()
-			else:
-				e.accept()
+			e.accept()
 
 	def update_recent_files(self):
 
