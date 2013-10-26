@@ -23,7 +23,7 @@ from libopensesame import misc
 from libqtopensesame.misc import _
 import libopensesame.exceptions
 from libqtopensesame.ui import general_widget_ui
-from libqtopensesame.widgets import color_edit, inline_editor, header_widget
+from libqtopensesame.widgets import color_edit, header_widget
 from libqtopensesame.items import experiment
 from libqtopensesame.misc import config
 import openexp.backend_info

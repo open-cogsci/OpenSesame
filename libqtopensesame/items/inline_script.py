@@ -21,7 +21,6 @@ from libopensesame import debug, misc
 import libopensesame.inline_script
 from libqtopensesame.items import qtitem
 from libqtopensesame.misc import _, config
-from libqtopensesame.widgets import inline_editor
 import random
 import re
 import sys
@@ -50,21 +49,18 @@ class inline_script(libopensesame.inline_script.inline_script, qtitem.qtitem):
 		self.lock = False
 		self._var_info = None
 
-	def apply_edit_changes(self, dummy=None, dummy2=None, catch=True):
+	def apply_edit_changes(self, **args):
 
 		"""
 		Applies the controls.
 
 		Keywords arguments:
-		dummy	--	A dummy argument. (default=None)
-		dummy2	--	A dummy argument. (default=None)
-		catch	--	A deprecated argument. (default=True)
+		args	--	A dictionary to accept unused keyword arguments.
 		"""
 
 		qtitem.qtitem.apply_edit_changes(self, False)
 		sp = self.qprogedit.text(index=0)
 		sr = self.qprogedit.text(index=1)
-		self.qprogedit.setModified(False)
 		self.set(u'_prepare', sp)
 		self.set(u'_run', sr)
 		self.lock = True
@@ -77,19 +73,18 @@ class inline_script(libopensesame.inline_script.inline_script, qtitem.qtitem):
 		"""Constructs the GUI controls."""
 		
 		from QProgEdit import QTabManager
-		qtitem.qtitem.init_edit_widget(self, False)				
+		qtitem.qtitem.init_edit_widget(self, False)
 		self.qprogedit = QTabManager(handler=self.apply_edit_changes, \
 			defaultLang=u'Python')
-		self.qprogedit.addTab('Prepare')
-		self.qprogedit.addTab('Run')
+		self.qprogedit.addTab(u'Prepare')
+		self.qprogedit.addTab(u'Run')
 		# Switch to the run phase, unless there is only content for the prepare
 		# phase.
 		if self._run == u'' and self._prepare != u'':
 			self.qprogedit.setCurrentIndex(0)
 		else:
-			self.qprogedit.setCurrentIndex(1)		
+			self.qprogedit.setCurrentIndex(1)
 		self.edit_vbox.addWidget(self.qprogedit)
-					
 
 	def edit_widget(self):
 
