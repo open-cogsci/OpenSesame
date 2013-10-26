@@ -266,6 +266,17 @@ class config(object):
 		for setting, value in self.config.items():
 			if setting != u"cfg_ver":
 				qsettings.setValue(setting, value)
+				
+	def version(self):
+		
+		"""
+		Gets the current version of the config.
+		
+		Returns:
+		The config version.
+		"""
+
+		return self.cfg_ver
 
 # Old style API. See explanation above
 def get_config(setting):
