@@ -23,6 +23,7 @@ import sip
 from libopensesame import debug, exceptions, item
 from libqtopensesame.widgets import header_widget, user_hint_widget
 from libqtopensesame.misc import _
+from libqtopensesame.misc.config import cfg
 
 class qtitem(QtCore.QObject):
 
@@ -322,7 +323,8 @@ class qtitem(QtCore.QObject):
 		from QProgEdit import QTabManager
 		self.qprogedit = QTabManager(handler=self.apply_script_and_close, \
 			defaultLang=u'OpenSesame', handlerButtonText= \
-			_(u'Apply and close script editor'), callHandlerOnFocusOut=False)
+			_(u'Apply and close script editor'), callHandlerOnFocusOut=False,
+			cfg=cfg)
 		self.qprogedit.addTab(u'Script')
 		
 		hbox = QtGui.QHBoxLayout()

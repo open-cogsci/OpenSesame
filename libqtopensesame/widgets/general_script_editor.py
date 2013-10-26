@@ -21,6 +21,7 @@ from PyQt4 import QtCore, QtGui
 from libqtopensesame.misc import _
 from libqtopensesame.ui.general_script_editor_ui import \
 	Ui_widget_general_script_editor
+from libqtopensesame.misc.config import cfg
 
 class general_script_editor(QtGui.QWidget):
 
@@ -43,7 +44,7 @@ class general_script_editor(QtGui.QWidget):
 		self.ui.setupUi(self)
 		self.ui.qprogedit = QTabManager(handler=self._apply, defaultLang= \
 			u'OpenSesame', handlerButtonText=u'Apply', callHandlerOnFocusOut= \
-			False)
+			False, cfg=cfg)
 		self.ui.qprogedit.addTab(u'General script')
 		self.ui.layout_vbox.addWidget(self.ui.qprogedit)
 		self.main_window.theme.apply_theme(self)

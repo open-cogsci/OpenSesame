@@ -27,6 +27,7 @@ from libqtopensesame.items import qtitem
 from libqtopensesame.misc import _
 from libqtopensesame.widgets import color_edit, pool_widget
 from libopensesame import debug, misc
+from libqtopensesame.misc.config import cfg
 
 class qtplugin(qtitem.qtitem):
 
@@ -361,7 +362,7 @@ class qtplugin(qtitem.qtitem):
 		else:
 			lang = u'text'
 		qprogedit = QTabManager(handler=self.apply_edit_changes, defaultLang= \
-			lang)
+			lang, cfg=cfg)
 		qprogedit.addTab(u'Script')
 		if var != None:
 			self.auto_editor[var] = qprogedit
