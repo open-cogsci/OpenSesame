@@ -18,7 +18,7 @@ along with openexp.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 import openexp._mouse.legacy
-from openexp import exceptions
+from libopensesame.exceptions import osexception
 import pygame
 from pygame.locals import *
 from expyriment import stimuli
@@ -50,7 +50,7 @@ class xpyriment(openexp._mouse.legacy.legacy):
 		self.set_visible(visible)		
 		if self.experiment.get_check('custom_cursor', 'no') == 'yes':
 			if self.experiment.expyriment.screen._fullscreen:
-				raise exceptions.response_error( \
+				raise osexception( \
 					'The xpyriment mouse back-end does not support custom cursors in fullscreen mode (you can change this in the back-end settings)')
 			self.cursor = stimuli.Picture(self.experiment.resource( \
 				'cursor.png'))
@@ -72,7 +72,7 @@ class xpyriment(openexp._mouse.legacy.legacy):
 			pygame.mouse.set_visible(visible)
 		elif visible:
 			pygame.mouse.set_visible(False)
-			bg_surface = self.experiment.window.copy()
+			bg_surface = self.experiment.last_shown_canvas._get_surface().copy()
 			dx, dy = self.cursor.surface_size
 			dx /= 2
 			dy /= 2
@@ -93,7 +93,7 @@ class xpyriment(openexp._mouse.legacy.legacy):
 			# Process the input
 			for event in pygame.event.get([MOUSEBUTTONDOWN, KEYDOWN]):												
 				if event.type == KEYDOWN and event.key == pygame.K_ESCAPE:
-					raise openexp.exceptions.response_error( \
+					raise osexception( \
 						"The escape key was pressed.")										
 				if event.type == MOUSEBUTTONDOWN:
 					if buttonlist == None or event.button in buttonlist:

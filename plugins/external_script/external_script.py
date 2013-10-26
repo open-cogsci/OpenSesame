@@ -15,7 +15,8 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
-from libopensesame import item, exceptions
+from libopensesame.exceptions import osexception
+from libopensesame import item
 from libqtopensesame import qtplugin, pool_widget
 import openexp.canvas
 import os.path
@@ -63,12 +64,12 @@ class external_script(item.item):
 			try:
 				self.module = imp.load_source("file", os.path.join(self.experiment.pool_folder, self.file))
 			except Exception as e:
-				raise exceptions.runtime_error("Failed to import '%s' in the prepare phase of external_script item '%s': %s" % (self.file, self.name, e))
+				raise osexception("Failed to import '%s' in the prepare phase of external_script item '%s': %s" % (self.file, self.name, e))
 			
 		try:
 			exec("self.module.%s(self)" % self.prepare_func)
 		except Exception as e:
-			raise exceptions.runtime_error("Failed to run function '%s(item)' in the prepare phase of external_script item '%s': %s" % (self.prepare_func, self.name, e))				
+			raise osexception("Failed to run function '%s(item)' in the prepare phase of external_script item '%s': %s" % (self.prepare_func, self.name, e))				
 		
 		# Report success
 		return True
@@ -86,7 +87,7 @@ class external_script(item.item):
 		try:
 			exec("self.module.%s(self)" % self.run_func)
 		except Exception as e:
-			raise exceptions.runtime_error("Failed to run function '%s(item)' in the run phase of external_script item '%s': %s" % (self.run_func, self.name, e))				
+			raise osexception("Failed to run function '%s(item)' in the run phase of external_script item '%s': %s" % (self.run_func, self.name, e))				
 								
 		# Report success
 		return True

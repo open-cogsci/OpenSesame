@@ -64,7 +64,7 @@ class droid(openexp._mouse.legacy.legacy):
 			# Process the input
 			for event in pygame.event.get():								
 				if event.type == KEYDOWN and event.key == pygame.K_ESCAPE:
-					raise openexp.exceptions.response_error( \
+					raise osexception( \
 						"The escape key was pressed.")										
 				if event.type == MOUSEBUTTONDOWN:									
 					# Check escape sequence. If the top-left and top-right
@@ -78,7 +78,7 @@ class droid(openexp._mouse.legacy.legacy):
 								if event.type == MOUSEBUTTONDOWN:
 									if event.pos[0] > self.experiment.get( \
 										'width')-64 and event.pos[1] < 64:
-										raise openexp.exceptions.response_error( \
+										raise osexception( \
 											"The escape sequence was clicked/ tapped")						
 					if buttonlist == None or event.button in buttonlist:
 						return event.button, event.pos, time						

@@ -17,7 +17,7 @@ You should have received a copy of the GNU General Public License
 along with openexp.  If not, see <http://www.gnu.org/licenses/>.
 """
 
-import openexp.exceptions
+from libopensesame.exceptions import osexception
 import openexp._keyboard.legacy
 from psychopy import event
 import pyglet.window.key
@@ -63,7 +63,7 @@ class psycho(openexp._keyboard.legacy.legacy):
 		"""See openexp._keyboard.legacy"""
 
 		if experiment.canvas_backend != "psycho":
-			raise openexp.exceptions.response_error( \
+			raise osexception( \
 				"The psycho keyboard backend must be used in combination with the psycho canvas backend!")
 
 		self.experiment = experiment
@@ -94,7 +94,7 @@ class psycho(openexp._keyboard.legacy.legacy):
 				else:				
 					if not hasattr(pyglet.window.key, key.upper()) and not \
 						hasattr(pyglet.window.key, "NUM_%s" % key):
-						raise openexp.exceptions.response_error( \
+						raise osexception( \
 							"The key '%s' is not recognized by the psycho keyboard backend. Please refer to <a href='http://pyglet.org/doc/api/pyglet.window.key-module.html'>http://pyglet.org/doc/api/pyglet.window.key-module.html</a> for a list of valid keys." \
 							% key)
 					_keylist.append(key)
@@ -129,7 +129,7 @@ class psycho(openexp._keyboard.legacy.legacy):
 			for key, time in keys:
 				time *= 1000.0
 				if key == "escape":
-					raise openexp.exceptions.response_error( \
+					raise osexception( \
 						"The escape key was pressed.")
 				elif keylist == None or key in keylist:				
 					return key, time
@@ -166,7 +166,7 @@ class psycho(openexp._keyboard.legacy.legacy):
 		
 		# Sanity check
 		if not isinstance(key, basestring):
-			raise openexp.exceptions( \
+			raise osexception( \
 				'Key names should be string or numeric, not %s' % type(key))
 		
 		# Make a list of all conceivable ways that a key might be referred to.
@@ -196,7 +196,7 @@ class psycho(openexp._keyboard.legacy.legacy):
 		keypressed = False
 		for key in event.getKeys():
 			if key == "escape":
-				raise openexp.exceptions.response_error( \
+				raise osexception( \
 					"The escape key was pressed.")
 			keypressed = True
 		return keypressed

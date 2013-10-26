@@ -17,9 +17,6 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
-__author__ = "Sebastiaan Mathot"
-__license__ = "GPLv3"
-
 from PyQt4 import QtCore, QtGui
 import os.path
 import sip
@@ -51,29 +48,21 @@ class qtitem(QtCore.QObject):
 		self.init_script_widget()
 		self.script_tab = None
 		self.lock = False
-		self.edit_mode = "edit"
+		self.edit_mode = u'edit'
 
-		debug.msg("created %s" % self.name)
+		debug.msg(u'created %s' % self.name)
 
-	def open_help_tab(self):
+	def open_help_tab(self, page=None):
 
-		"""Open the help tab"""
-
-		md_path = self.experiment.help(self.item_type + '.md')
-		html_path = self.experiment.help(self.item_type + '.html')
-		if os.path.exists(md_path):
-			path = md_path
-		elif os.path.exists(html_path):
-			path = html_path
-		else:
-			path = self.experiment.help('missing.html')
-		self.experiment.main_window.ui.tabwidget.open_browser(path)
+		"""Opens a help tab."""
+		
+		self.experiment.main_window.ui.tabwidget.open_help(self.item_type)
 
 	def open_tab(self):
 
 		"""Opens the correct tab based on the current edit mode"""
 
-		if self.edit_mode == "edit":
+		if self.edit_mode == u'edit':
 			self.open_edit_tab()
 		else:
 			self.open_script_tab()
@@ -82,39 +71,44 @@ class qtitem(QtCore.QObject):
 
 		"""Build the GUI controls"""
 
+		# Header widget
 		self.header = header_widget.header_widget(self)
 		self.user_hint_widget = user_hint_widget.user_hint_widget( \
 			self.experiment.main_window, self)
-
 		self.header_hbox = QtGui.QHBoxLayout()
 		self.header_hbox.addWidget(self.experiment.label_image(self.item_type))
 		self.header_hbox.addWidget(self.header)
 		self.header_hbox.addStretch()
 		self.header_hbox.setContentsMargins(0, 0, 0, 16)
 
-		button = QtGui.QPushButton(self.experiment.icon("script"), "")
-		button.setToolTip(_("Edit script"))
+		# Edit script button
+		button = QtGui.QPushButton(self.experiment.icon(u"script"), u"")
+		button.setToolTip(_(u"Edit script"))
 		button.setIconSize(QtCore.QSize(16, 16))
-		QtCore.QObject.connect(button, QtCore.SIGNAL("clicked()"), \
+		QtCore.QObject.connect(button, QtCore.SIGNAL(u"clicked()"), \
 			self.open_script_tab)
 		self.header_hbox.addWidget(button)
 
-		button = QtGui.QPushButton(self.experiment.icon("help"), "")
-		button.setToolTip(_("Tell me more about the %s item") % self.item_type)
+		# Help button
+		button = QtGui.QPushButton(self.experiment.icon(u"help"), u"")
+		button.setToolTip(_(u"Tell me more about the %s item") % self.item_type)
 		button.setIconSize(QtCore.QSize(16, 16))
-		QtCore.QObject.connect(button, QtCore.SIGNAL("clicked()"), \
+		QtCore.QObject.connect(button, QtCore.SIGNAL(u"clicked()"), \
 			self.open_help_tab)
 		self.header_hbox.addWidget(button)
 
 		self.header_widget = QtGui.QWidget()
 		self.header_widget.setLayout(self.header_hbox)
 
+		# The edit_grid is the layout that contains the actual controls for the
+		# items.
 		self.edit_grid = QtGui.QGridLayout()
 		self.edit_grid.setColumnStretch(2, 2)
 		self.edit_grid_widget = QtGui.QWidget()
 		self.edit_grid.setMargin(0)
 		self.edit_grid_widget.setLayout(self.edit_grid)
 
+		# The edit_vbox contains the edit_grid and the header widget
 		self.edit_vbox = QtGui.QVBoxLayout()
 		self.edit_vbox.setMargin(16)
 		self.edit_vbox.addWidget(self.header_widget)
@@ -131,15 +125,15 @@ class qtitem(QtCore.QObject):
 	def edit_widget(self, stretch=True):
 
 		"""
-		A dummy edit widget, to be overridden
+		A dummy edit widget, to be overridden.
 
 		Keywords arguments:
-		stretch -- a deprecated argument (default=True)
+		stretch		--	DEPRECATED (default=True)
 		"""
 
 		if not stretch:
-			debug.msg("passing the stretch argument is deprecated", \
-				reason="deprecation")
+			debug.msg(u"passing the stretch argument is deprecated", \
+				reason=u"deprecation")
 		self.user_hint_widget.clear()
 		self.header.restore_name(False)
 		self.header.refresh()
@@ -180,23 +174,23 @@ class qtitem(QtCore.QObject):
 	def apply_edit_changes(self, rebuild=True):
 
 		"""
-		Apply the GUI controls
+		Applies the GUI controls.
 
 		Keywords arguments:
-		rebuild -- specifies whether the overview area (item list) should be
-				   rebuild (default=True)
+		rebuild	--	Specifies whether the overview area (item list) should be
+					rebuild. (default=True)
 		"""
 
 		debug.msg(self.name)
 		if self.experiment.main_window.lock_refresh:
-			debug.msg("skipping, because refresh in progress")
+			debug.msg(u"skipping, because refresh in progress")
 			return False
 		self.auto_apply_edit_changes()
-		self.set("description", \
+		self.set(u"description", \
 			self.experiment.sanitize(unicode( \
 				self.header.edit_desc.text()).strip()))
-		if self.description == "":
-			self.description = "No description"
+		if self.description == u"":
+			self.description = u"No description"
 		self.header.label_desc.setText(self.description)
 		self.experiment.main_window.dispatch.event_simple_change.emit(self.name)
 		return True
@@ -204,10 +198,10 @@ class qtitem(QtCore.QObject):
 	def close_edit_tab(self, index=None):
 
 		"""
-		Closes the edit tab (does nothing by default)
+		Closes the edit tab (does nothing by default).
 
 		Keywords arguments:
-		index -- the index of the tab in the tab area (default=None)
+		index	--	The index of the tab in the tab area. (default=None)
 		"""
 
 		pass
@@ -215,20 +209,23 @@ class qtitem(QtCore.QObject):
 	def open_edit_tab(self, index=None, focus=True):
 
 		"""
-		Opens/ shows the GUI control tab
+		Opens the GUI control tab, or switches to the tab if it was already
+		open.
 
 		Keywords arguments:
-		index -- the index of the tab (if it is already open) (default=None)
-		focus -- indicates whether the tab should receive focus (default=True)
+		index	--	The index of the tab (if open). (default=None)
+		focus	--	Indicates whether the tab should receive focus.
+					(default=True)
 		"""
 
-		debug.msg("%s (#%s)" % (self.name, hash(self)))
+		debug.msg(u"%s (#%s)" % (self.name, hash(self)))
 
 		# Switch to edit mode and close the script tab if it was open
-		self.edit_mode = "edit"
+		self.edit_mode = u"edit"
 		for i in range(self.experiment.ui.tabwidget.count()):
 			w = self.experiment.ui.tabwidget.widget(i)
-			if hasattr(w, "__script_item__") and w.__script_item__ == self.name:
+			if hasattr(w, u"__script_item__") and w.__script_item__ == \
+				self.name:
 				self.experiment.ui.tabwidget.removeTab(i)
 				if index == None:
 					index = i
@@ -237,7 +234,7 @@ class qtitem(QtCore.QObject):
 		# Focus the edit tab, instead of reopening, if it was already open
 		for i in range(self.experiment.ui.tabwidget.count()):
 			w = self.experiment.ui.tabwidget.widget(i)
-			if hasattr(w, "__edit_item__") and w.__edit_item__ == self.name:
+			if hasattr(w, u"__edit_item__") and w.__edit_item__ == self.name:
 				index = i
 
 		# Refresh the controls on the tab. In debug mode don't catch any errors
@@ -247,7 +244,7 @@ class qtitem(QtCore.QObject):
 			try:
 				widget = self.edit_widget()
 			except Exception as e:
-				self.experiment.notify(_("%s (Edit the script to fix this)") \
+				self.experiment.notify(_(u"%s (Edit the script to fix this)") \
 					% e)
 				self.open_script_tab()
 				return
@@ -255,10 +252,10 @@ class qtitem(QtCore.QObject):
 		# Open the tab or focus the tab if it was already open
 		if index == None:
 			self.edit_tab_index = self.experiment.ui.tabwidget.addTab(widget, \
-				self.experiment.icon(self.item_type), "%s" % self.name)
+				self.experiment.icon(self.item_type), u"%s" % self.name)
 		else:
 			self.experiment.ui.tabwidget.insertTab(index, widget, \
-				self.experiment.icon(self.item_type), "%s" % self.name)
+				self.experiment.icon(self.item_type), u"%s" % self.name)
 			self.edit_tab_index = index
 		if focus:
 			self.experiment.ui.tabwidget.setCurrentIndex(self.edit_tab_index)
@@ -277,8 +274,8 @@ class qtitem(QtCore.QObject):
 		if self.edit_script.edit.isModified():
 			resp = QtGui.QMessageBox.question( \
 				self.experiment.main_window.ui.centralwidget, \
-				_('Forget changes?'), \
-				_('Are you sure you want to forget all changes to the script?'), \
+				_(u'Forget changes?'), \
+				_(u'Are you sure you want to forget all changes to the script?'), \
 				QtGui.QMessageBox.Yes, QtGui.QMessageBox.No)
 			if resp == QtGui.QMessageBox.No:
 				return
@@ -332,38 +329,38 @@ class qtitem(QtCore.QObject):
 		A stripped line of script
 		"""
 
-		if len(s) > 0 and s[0] == "\t":
-			return s[1:] + "\n"
-		return s + "\n"
+		if len(s) > 0 and s[0] == u"\t":
+			return s[1:] + u"\n"
+		return s + u"\n"
 
 	def init_script_widget(self):
 
 		"""Build the script tab"""
 
 		self.edit_script = inline_editor.inline_editor( \
-			self.experiment, syntax="opensesame")
+			self.experiment, syntax=u"opensesame")
 		script = ""
 		for s in self.to_string().split("\n")[1:]:
 			script += self.strip_script_line(s)
 		self.edit_script.edit.setPlainText(script, set_modified=False)
 		self.edit_script.apply.clicked.connect(self.apply_script_changes)
 
-		button = QtGui.QPushButton(self.experiment.icon("apply"), \
-			_("Apply and close"))
-		button.setToolTip(_("Apply changes and resume normal editing"))
+		button = QtGui.QPushButton(self.experiment.icon(u"apply"), \
+			_(u"Apply and close"))
+		button.setToolTip(_(u"Apply changes and resume normal editing"))
 		button.setIconSize(QtCore.QSize(16, 16))
 		button.clicked.connect(self.apply_script_and_close)
 		self.edit_script.toolbar_hbox.addWidget(button)
 
-		button = QtGui.QPushButton(self.experiment.icon("close"), \
-			_("Forget changes and close"))
-		button.setToolTip(_("Ignore changes and resume normal editing"))
+		button = QtGui.QPushButton(self.experiment.icon(u"close"), \
+			_(u"Forget changes and close"))
+		button.setToolTip(_(u"Ignore changes and resume normal editing"))
 		button.setIconSize(QtCore.QSize(16, 16))
 		button.clicked.connect(self.ignore_script_and_close)
 		self.edit_script.toolbar_hbox.addWidget(button)
 
 		hbox = QtGui.QHBoxLayout()
-		hbox.addWidget(self.experiment.label_image("%s" % self.item_type))
+		hbox.addWidget(self.experiment.label_image(u"%s" % self.item_type))
 		self.script_header = QtGui.QLabel()			
 		hbox.addWidget(self.script_header)
 		hbox.addStretch()
@@ -388,10 +385,10 @@ class qtitem(QtCore.QObject):
 		"""
 
 		self.script_header.setText( \
-			_("Editing script for <b>%s</b> - %s") % (self.name, \
+			_(u"Editing script for <b>%s</b> - %s") % (self.name, \
 			self.item_type))
-		script = ""
-		for s in self.to_string().split("\n")[1:]:
+		script = u""
+		for s in self.to_string().split(u"\n")[1:]:
 			script += self.strip_script_line(s)
 		self.edit_script.edit.setPlainText(script)
 		self._script_widget.__script_item__ = self.name
@@ -407,13 +404,13 @@ class qtitem(QtCore.QObject):
 		focus -- indicates whether the tab should receive focus (default=True)
 		"""
 
-		debug.msg("%s (#%s)" % (self.name, hash(self)))
-		self.edit_mode = "script"
+		debug.msg(u"%s (#%s)" % (self.name, hash(self)))
+		self.edit_mode = u"script"
 
 		# Close the edit tab
 		for i in range(self.experiment.ui.tabwidget.count()):
 			w = self.experiment.ui.tabwidget.widget(i)
-			if hasattr(w, "__edit_item__") and w.__edit_item__ == self.name:
+			if hasattr(w, u"__edit_item__") and w.__edit_item__ == self.name:
 				self.experiment.ui.tabwidget.removeTab(i)
 				if index == None:
 					index = i
@@ -421,16 +418,16 @@ class qtitem(QtCore.QObject):
 
 		for i in range(self.experiment.ui.tabwidget.count()):
 			w = self.experiment.ui.tabwidget.widget(i)
-			if hasattr(w, "__script_item__") and w.__script_item__ == self.name:
+			if hasattr(w, u"__script_item__") and w.__script_item__ == self.name:
 				index = i
 		if index == None:
 			self.script_tab_index = self.experiment.ui.tabwidget.addTab( \
-				self.script_widget(), self.experiment.icon("script"), "%s" \
+				self.script_widget(), self.experiment.icon(u"script"), u"%s" \
 				% self.name)
 		else:
 			self.script_tab_index = index
 			self.experiment.ui.tabwidget.insertTab(index, \
-				self.script_widget(), self.experiment.icon("script"), "%s" \
+				self.script_widget(), self.experiment.icon(u"script"), u"%s" \
 				% self.name)
 		if focus:
 			self.experiment.ui.tabwidget.setCurrentIndex(self.script_tab_index)
@@ -509,7 +506,7 @@ class qtitem(QtCore.QObject):
 		if icon == None:
 			icon = self.item_type
 		if tooltip == None:
-			tooltip = _("Type: %s\nDescription: %s") % (self.item_type, \
+			tooltip = _(u"Type: %s\nDescription: %s") % (self.item_type, \
 				self.description)
 		font = QtGui.QFont()
 		font.setPointSize(8)
@@ -581,7 +578,7 @@ class qtitem(QtCore.QObject):
 		for var in self.variables:
 			if var not in exclude:
 				val = self.variables[var]
-				if type(val) in (unicode, str) and '[' in val:
+				if isinstance(val, basestring) and u'[' in val:
 					return True
 		return False
 
@@ -597,7 +594,7 @@ class qtitem(QtCore.QObject):
 		"""
 
 		if self.edit_script.isModified():
-			debug.msg("applying pending script changes")
+			debug.msg(u"applying pending script changes")
 			self.apply_script_changes(catch=False)
 			return True
 		return False		
@@ -613,10 +610,10 @@ class qtitem(QtCore.QObject):
 				try:
 					edit.setText(self.unistr(self.get(var, _eval=False)))
 				except Exception as e:
-					self.experiment.notify(_("Failed to set control '%s': %s") \
+					self.experiment.notify(_(u"Failed to set control '%s': %s") \
 						% (var, e))
 			else:
-				edit.setText("")
+				edit.setText(u"")
 			edit.editingFinished.connect(self.apply_edit_changes)
 
 		for var, combobox in self.auto_combobox.iteritems():
@@ -626,7 +623,7 @@ class qtitem(QtCore.QObject):
 					combobox.setCurrentIndex(combobox.findText( \
 						self.unistr(self.get(var, _eval=False))))
 				except Exception as e:
-					self.experiment.notify(_("Failed to set control '%s': %s") \
+					self.experiment.notify(_(u"Failed to set control '%s': %s") \
 						% (var, e))
 			combobox.currentIndexChanged.connect(self.apply_edit_changes)
 
@@ -639,11 +636,11 @@ class qtitem(QtCore.QObject):
 						spinbox.setValue(val)
 					except Exception as e:
 						self.experiment.notify(_( \
-							"Failed to set control '%s': %s") % (var, e))
+							u"Failed to set control '%s': %s") % (var, e))
 				else:
 					spinbox.setDisabled(True)
 					self.user_hint_widget.add_user_hint(_( \
-						'"%s" is defined using variables and can only be edited through the script.' \
+						u'"%s" is defined using variables and can only be edited through the script.' \
 						% var))
 			spinbox.editingFinished.connect(self.apply_edit_changes)			
 
@@ -656,11 +653,11 @@ class qtitem(QtCore.QObject):
 						slider.setValue(val)
 					except Exception as e:
 						self.experiment.notify(_( \
-							"Failed to set control '%s': %s") % (var, e))						
+							u"Failed to set control '%s': %s") % (var, e))						
 				else:
 					slider.setDisabled(True)
 					self.user_hint_widget.add_user_hint(_( \
-						'"%s" is defined using variables and can only be edited through the script.' \
+						u'"%s" is defined using variables and can only be edited through the script.' \
 						% var))
 			slider.valueChanged.connect(self.apply_edit_changes)
 
@@ -668,9 +665,9 @@ class qtitem(QtCore.QObject):
 			checkbox.toggled.disconnect()
 			if self.has(var):
 				try:
-					checkbox.setChecked(self.get(var, _eval=False) == "yes")
+					checkbox.setChecked(self.get(var, _eval=False) == u"yes")
 				except Exception as e:
-					self.experiment.notify(_("Failed to set control '%s': %s") \
+					self.experiment.notify(_(u"Failed to set control '%s': %s") \
 						% (var, e))
 			checkbox.toggled.connect(self.apply_edit_changes)
 
@@ -680,36 +677,36 @@ class qtitem(QtCore.QObject):
 					editor.edit.setPlainText(self.unistr(self.get(var, \
 						_eval=False)))
 				except Exception as e:
-					self.experiment.notify(_("Failed to set control '%s': %s") \
+					self.experiment.notify(_(u"Failed to set control '%s': %s") \
 						% (var, e))
 
 	def sanitize_check(self, s, strict=False, allow_vars=True, notify=True):
 
 		"""
 		Checks whether a string is sane (i.e. unchanged by sanitize()) and
-		optionally presents a warning if it's notably
+		optionally presents a warning.
 
 		Arguments:
-		s -- the string to check
+		s			--	The string to check.
 
 		Keyword arguments:
-		strict -- see sanitize()
-		allow_vars -- see sanitize()
-		notify -- indicates whether a notification should be presented if the
-				  string is not sane.
+		strict		--	See sanitize().
+		allow_vars	--	See sanitize().
+		notify		--	Indicates whether a notification should be presented if
+						the string is not sane.
 
 		Returns:
-		True if s is sane, False otherwise
+		True if s is sane, False otherwise.
 		"""
 
 		sane = s == self.sanitize(s, strict=strict, allow_vars=allow_vars)
 		if not sane and notify:
 			if strict:
 				self.experiment.notify(
-					_('All non-alphanumeric characters except underscores have been stripped'))
+					_(u'All non-alphanumeric characters except underscores have been stripped'))
 			else:
 				self.experiment.notify(
-					_('The following characters are not allowed and have been stripped: double-quote ("), backslash (\), and newline'))
+					_(u'The following characters are not allowed and have been stripped: double-quote ("), backslash (\), and newline'))
 		return sane
 
 	def sanity_check(self):
@@ -723,25 +720,25 @@ class qtitem(QtCore.QObject):
 		debug.msg()
 		errors = []
 		for var_name, criteria in self.sanity_criteria.items():
-			msg = _("Invalid or missing value for variable '%s' (edit script to fix this)") \
+			msg = _(u"Invalid or missing value for variable '%s' (edit script to fix this)") \
 				% var_name
-			if 'msg' in criteria:
-				msg += ': ' + criteria['msg']
-			if not self.has(var_name) and 'required' in criteria and \
-				criteria['required']:
+			if u'msg' in criteria:
+				msg += u': ' + criteria[u'msg']
+			if not self.has(var_name) and u'required' in criteria and \
+				criteria[u'required']:
 				self.experiment.notify(msg)
 				return False
 			else:
 				var = self.get(var_name, _eval=False)
-				if 'type' in criteria:
-					_type = criteria['type']
+				if u'type' in criteria:
+					_type = criteria[u'type']
 					if type(_type) != list:
 						_type = [_type]
 				 	if type(var) not in _type:
 						self.experiment.notify(msg)
 						return False
-				if 'func' in criteria:
-					if not criteria['func'](var):
+				if u'func' in criteria:
+					if not criteria[u'func'](var):
 						self.experiment.notify(msg)
 						return False
 		return True
@@ -759,12 +756,12 @@ class qtitem(QtCore.QObject):
 		for var, edit in self.auto_line_edit.iteritems():
 			if edit.isEnabled() and isinstance(var, basestring):
 				val = unicode(edit.text()).strip()
-				if val != "":
+				if val != u"":
 					self.set(var, val)
 
 				# If the variable has no value, we assign a default value if it
 				# has been specified, and unset it otherwise.
-				elif hasattr(edit, "default"):
+				elif hasattr(edit, u"default"):
 					self.set(var, edit.default)
 				else:
 					self.unset(var)
@@ -784,9 +781,9 @@ class qtitem(QtCore.QObject):
 		for var, checkbox in self.auto_checkbox.iteritems():
 			if checkbox.isEnabled() and isinstance(var, basestring):
 				if checkbox.isChecked():
-					val = "yes"
+					val = u"yes"
 				else:
-					val = "no"
+					val = u"no"
 				self.set(var, val)
 
 		for var, editor in self.auto_editor.iteritems():
@@ -835,5 +832,5 @@ class qtitem(QtCore.QObject):
 			self.auto_checkbox[var] = widget
 
 		else:
-			raise Exception("Cannot auto-add widget of type %s" % widget)
+			raise Exception(u"Cannot auto-add widget of type %s" % widget)
 

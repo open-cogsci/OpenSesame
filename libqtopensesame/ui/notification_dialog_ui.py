@@ -2,8 +2,8 @@
 
 # Form implementation generated from reading ui file 'resources/ui/notification_dialog.ui'
 #
-# Created: Thu Aug  2 12:43:06 2012
-#      by: PyQt4 UI code generator 4.9.1
+# Created: Wed Oct  9 14:51:38 2013
+#      by: PyQt4 UI code generator 4.10
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -12,7 +12,16 @@ from PyQt4 import QtCore, QtGui
 try:
     _fromUtf8 = QtCore.QString.fromUtf8
 except AttributeError:
-    _fromUtf8 = lambda s: s
+    def _fromUtf8(s):
+        return s
+
+try:
+    _encoding = QtGui.QApplication.UnicodeUTF8
+    def _translate(context, text, disambig):
+        return QtGui.QApplication.translate(context, text, disambig, _encoding)
+except AttributeError:
+    def _translate(context, text, disambig):
+        return QtGui.QApplication.translate(context, text, disambig)
 
 class Ui_notification_dialog(object):
     def setupUi(self, notification_dialog):
@@ -32,7 +41,6 @@ class Ui_notification_dialog(object):
         self.widget.setObjectName(_fromUtf8("widget"))
         self.horizontalLayout = QtGui.QHBoxLayout(self.widget)
         self.horizontalLayout.setMargin(5)
-        self.horizontalLayout.setMargin(0)
         self.horizontalLayout.setObjectName(_fromUtf8("horizontalLayout"))
         self.label_notification = QtGui.QLabel(self.widget)
         sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Fixed, QtGui.QSizePolicy.Preferred)
@@ -44,14 +52,14 @@ class Ui_notification_dialog(object):
         self.label_notification.setPixmap(QtGui.QPixmap(_fromUtf8(":/icons/about_large.png")))
         self.label_notification.setObjectName(_fromUtf8("label_notification"))
         self.horizontalLayout.addWidget(self.label_notification)
-        self.label_2 = QtGui.QLabel(self.widget)
+        self.label_title = QtGui.QLabel(self.widget)
         font = QtGui.QFont()
         font.setPointSize(11)
         font.setBold(True)
         font.setWeight(75)
-        self.label_2.setFont(font)
-        self.label_2.setObjectName(_fromUtf8("label_2"))
-        self.horizontalLayout.addWidget(self.label_2)
+        self.label_title.setFont(font)
+        self.label_title.setObjectName(_fromUtf8("label_title"))
+        self.horizontalLayout.addWidget(self.label_title)
         self.verticalLayout.addWidget(self.widget)
         self.textedit_notification = QtGui.QTextBrowser(notification_dialog)
         font = QtGui.QFont()
@@ -71,6 +79,6 @@ class Ui_notification_dialog(object):
         QtCore.QMetaObject.connectSlotsByName(notification_dialog)
 
     def retranslateUi(self, notification_dialog):
-        notification_dialog.setWindowTitle(QtGui.QApplication.translate("notification_dialog", "OpenSesame says ...", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_2.setText(QtGui.QApplication.translate("notification_dialog", "OpenSesame says ...", None, QtGui.QApplication.UnicodeUTF8))
+        notification_dialog.setWindowTitle(_translate("notification_dialog", "OpenSesame says ...", None))
+        self.label_title.setText(_translate("notification_dialog", "OpenSesame says ...", None))
 

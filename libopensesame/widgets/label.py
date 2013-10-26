@@ -40,18 +40,18 @@ class label(widget):
 		</DOC>"""
 
 		if type(frame) != bool:
-			frame = frame == 'yes'
+			frame = frame == u'yes'
 		if type(center) != bool:
-			center = center == 'yes'
+			center = center == u'yes'
 
 		widget.__init__(self, form)
-		self.type = 'label'
+		self.type = u'label'
 		self.text = text
 		self.frame = frame
 		self.center = center
 		self.x_pad = 8
 		self.y_pad = 8
-		self.tab_str = '    ' # Replace tab characters by four spaces
+		self.tab_str = u'    ' # Replace tab characters by four spaces
 
 	def draw_text(self, text, html=True):
 

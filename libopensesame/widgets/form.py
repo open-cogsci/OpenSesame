@@ -18,7 +18,7 @@ along with openexp.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame import type_check
-from libopensesame.exceptions import form_error
+from libopensesame.exceptions import osexception
 from openexp.canvas import canvas
 from openexp.mouse import mouse
 
@@ -26,7 +26,7 @@ class form:
 
 	"""Implements a single form that acts as a container for widgets"""
 
-	def __init__(self, experiment, cols=2, rows=2, spacing=10, margins=(100, 100, 100, 100), theme='gray', item=None):
+	def __init__(self, experiment, cols=2, rows=2, spacing=10, margins=(100, 100, 100, 100), theme=u'gray', item=None):
 
 		"""<DOC>
 		Constructor
@@ -61,18 +61,23 @@ class form:
 			self.rows = [float(r)/sum(rows) for r in rows]
 
 		self.experiment = experiment
-		self.item = item
-		self.width = experiment.get('width')
-		self.height = experiment.get('height')
+		if item != None:
+			self.item = item
+		else:
+			self.item = experiment
+		self.width = experiment.get(u'width')
+		self.height = experiment.get(u'height')
 		self.spacing = spacing
 		self.margins = type_check.float_list(margins, u'form margins', \
 			min_len=4, max_len=4)		
 		n_cells = len(self.cols)*len(self.rows)
 		self.widgets = [None]*n_cells
-		self.span = [(1,1)]*n_cells
-		self.canvas = canvas(self.experiment, auto_prepare=False)
+		self.span = [(1,1)]*n_cells		
+		self.canvas = canvas(self.experiment, auto_prepare=False, fgcolor= \
+			self.item.get(u'foreground'), bgcolor=self.item.get( \
+			u'background'))
 
-		if theme == 'gray':
+		if theme == u'gray':
 			from themes.gray import gray
 			self.theme_engine = gray(self)
 		else:
@@ -131,7 +136,7 @@ class form:
 			return pos
 		if type(pos) in (tuple, list) and len(pos) == 2:
 			return pos[1]*len(self.cols)+pos[0]
-		raise form_error('%s is an invalid position in the form' % pos)
+		raise osexception(u'%s is an invalid position in the form' % pos)
 
 	def get_cell(self, index):
 
@@ -174,7 +179,7 @@ class form:
 		w = x2-x1
 		h = y2-y1
 		if w <= 0 or h <= 0:
-			raise form_error( \
+			raise osexception( \
 				'There is not enough space to show some form widgets. Please modify the form geometry!')
 		return x1+self.margins[3], y1+self.margins[0], w, h
 
@@ -207,14 +212,14 @@ class form:
 
 		index = self.cell_index(pos)
 		if index >= len(self.widgets):
-			raise form_error( \
+			raise osexception( \
 				u'Widget position (%s, %s) is outside of the form' % pos)
 		if type(colspan) != int or colspan < 1 or colspan > len(self.cols):
-			raise form_error( \
+			raise osexception( \
 				u'Column span %s is invalid (i.e. too large, too small, or not a number)' \
 				% colspan)
 		if type(rowspan) != int or rowspan < 1 or rowspan > len(self.rows):
-			raise form_error( \
+			raise osexception( \
 				u'Row span %s is invalid (i.e. too large, too small, or not a number)' \
 				% rowspan)
 		self.widgets[index] = widget

@@ -18,7 +18,7 @@ along with openexp.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 import openexp.mouse
-import openexp.exceptions
+from libopensesame.exceptions import osexception
 import pygame
 from pygame.locals import *
 
@@ -40,7 +40,7 @@ class legacy:
 		4 = scroll up
 		5 = scroll down
 	-- Catch exceptions wherever possible and raise an
-	   openexp.exceptions.canvas_error with a clear and descriptive error
+	   osexception with a clear and descriptive error
 	   message.
 	-- Do not deviate from the guidelines. All back-ends should be
 	   interchangeable and transparent to OpenSesame. You are free to add
@@ -52,7 +52,7 @@ class legacy:
 		"custom_cursor" : {
 			"name" : "Custom cursor",
 			"description" : "Bypass the system mouse cursor",
-			"default" : "yes"
+			"default" : "no"
 			},
 		"enable_escape" : {
 			"name" : "Enable escape",
@@ -86,7 +86,7 @@ class legacy:
 		self.set_buttonlist(buttonlist)
 		self.set_timeout(timeout)
 		self.set_visible(visible)		
-		if self.experiment.get_check('custom_cursor', 'yes') == 'yes':
+		if self.experiment.get_check('custom_cursor', 'no') == 'yes':
 			self.cursor = pygame.image.load(self.experiment.resource( \
 				'cursor.png'))		
 		else:
@@ -115,7 +115,7 @@ class legacy:
 				for b in buttonlist:
 					self.buttonlist.append(int(b))
 			except:
-				raise openexp.exceptions.response_error( \
+				raise osexception( \
 					"The list of mousebuttons must be a list of numeric values")
 		
 	def set_timeout(self, timeout=None):	
@@ -209,7 +209,6 @@ class legacy:
 			pygame.mouse.set_visible(visible)
 		elif visible:
 			pygame.mouse.set_visible(False)
-			bg_surface = self.experiment.window.copy()
 		
 		start_time = pygame.time.get_ticks()
 		time = start_time
@@ -219,7 +218,7 @@ class legacy:
 			
 			# Draw a cusom cursor if necessary
 			if self.cursor != None and visible:
-				surface = bg_surface.copy()
+				surface = self.experiment.last_shown_canvas.copy()
 				surface.blit(self.cursor, pygame.mouse.get_pos())
 				self.experiment.surface.blit(surface, (0,0))		
 				pygame.display.flip()
@@ -227,7 +226,7 @@ class legacy:
 			# Process the input
 			for event in pygame.event.get():								
 				if event.type == KEYDOWN and event.key == pygame.K_ESCAPE:
-					raise openexp.exceptions.response_error( \
+					raise osexception( \
 						"The escape key was pressed.")										
 				if event.type == MOUSEBUTTONDOWN:					
 				
@@ -242,11 +241,12 @@ class legacy:
 								if event.type == MOUSEBUTTONDOWN:
 									if event.pos[0] > self.experiment.get( \
 										'width')-64 and event.pos[1] < 64:
-										raise openexp.exceptions.response_error( \
+										raise osexception( \
 											"The escape sequence was clicked/ tapped")
 						
-					if buttonlist == None or event.button in buttonlist:
-						pygame.mouse.set_visible(self.visible)
+					if (buttonlist == None or event.button in buttonlist):
+						if self.cursor is None:						
+							pygame.mouse.set_visible(self.visible)
 						return event.button, event.pos, time
 			if timeout != None and time-start_time >= timeout:
 				break
@@ -312,7 +312,7 @@ class legacy:
 		buttonclicked = False
 		for event in pygame.event.get():
 			if event.type == KEYDOWN and event.key == pygame.K_ESCAPE:
-				raise openexp.exceptions.response_error( \
+				raise osexception( \
 					"The escape key was pressed.")
 			if event.type == MOUSEBUTTONDOWN:
 				buttonclicked = True

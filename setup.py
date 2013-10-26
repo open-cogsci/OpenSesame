@@ -55,6 +55,7 @@ share_folder = "/usr/share/opensesame"
 
 exclude_resources = [
 	'.hidden',
+	'eco_alt_template.opensesame.tar.gz'
 	]
 
 def resources():
@@ -117,8 +118,9 @@ setup(name="opensesame",
 		"libqtopensesame.dialogs",
 		"libqtopensesame.items",
 		"libqtopensesame.misc",
+		"libqtopensesame.runners",
 		"libqtopensesame.ui",
-		"libqtopensesame.widgets",
+		"libqtopensesame.widgets",		
 		],
 	package_dir = {"openexp" : "openexp", "libopensesame" : "libopensesame", \
 		"libqtopensesame" : "libqtopensesame"},

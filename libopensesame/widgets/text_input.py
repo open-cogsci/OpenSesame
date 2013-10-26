@@ -24,7 +24,7 @@ class text_input(label):
 
 	"""A multiline text input widget"""
 
-	def __init__(self, form, text='', frame=True, center=False, stub='Type here ...', return_accepts=False, var=None):
+	def __init__(self, form, text=u'', frame=True, center=False, stub=u'Type here ...', return_accepts=False, var=None):
 	
 		"""<DOC>
 		Constructor.
@@ -33,12 +33,12 @@ class text_input(label):
 		form -- The parent form.
 		
 		Keyword arguments:
-		text -- The text to start with (default='').
+		text -- The text to start with (default=u'').
 		frame -- Indicates whether a frame should be drawn around the widget
 				 (default=False).
 		center -- Indicates whether the text should be centered (default=False).
 		stub -- A text string that should be shown whenever the user has not
-				entered any text (default='Type here ...').
+				entered any text (default=u'Type here ...').
 		return_accepts -- Indicates whether a return press should accept and
 						  close the form (default=False).
 		var -- The name of the experimental variable that should be used to log
@@ -46,12 +46,12 @@ class text_input(label):
 		</DOC>"""
 		
 		if type(return_accepts) != bool:
-			return_accepts = return_accepts == 'yes'								
+			return_accepts = return_accepts == u'yes'								
 	
 		label.__init__(self, form, text, frame=frame, center=center)
-		self.type = 'text_input'		
+		self.type = u'text_input'		
 		self.stub = self.form.experiment.unistr(stub)
-		self.prompt = '_'
+		self.prompt = u'_'
 		self.return_accepts = return_accepts
 		self.var = var
 		self.text = self.form.experiment.unistr(text)
@@ -65,9 +65,9 @@ class text_input(label):
 
 		if self.frame:
 			if self.focus:
-				self.draw_frame(self.rect, style='active')
+				self.draw_frame(self.rect, style=u'active')
 			else:
-				self.draw_frame(self.rect, style='light')
+				self.draw_frame(self.rect, style=u'light')
 		if self.text == '' and not self.focus:
 			self.draw_text(self.stub, html=False)	
 		elif self.focus:
@@ -94,14 +94,14 @@ class text_input(label):
 				o = ord(resp)
 			except:
 				o = None
-			if resp == 'space':			
+			if resp == u'space':			
 				self.text += ' '
-			elif resp == 'backspace' or o == 8:
+			elif resp == u'backspace' or o == 8:
 				self.text = self.text[:-1]
-			elif resp == 'tab':
+			elif resp == u'tab':
 				self.focus = False
 				return None
-			elif resp == 'return':
+			elif resp == u'return':
 				if self.return_accepts:
 					return self.text
 				else:

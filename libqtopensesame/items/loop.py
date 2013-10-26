@@ -581,12 +581,15 @@ class loop(libopensesame.loop.loop, qtitem.qtitem):
 					except:
 						weight = 1
 				self.matrix[_row][var] = val
-			_row += 1
-			while weight > 1:
-				weight -= 1				
-				if _row-1 in self.matrix:
-					self.matrix[_row] = self.matrix[_row-1]
+			if weight <= 0:
+				del self.matrix[_row]
+			else:
 				_row += 1
+				while weight > 1:
+					weight -= 1				
+					if _row-1 in self.matrix:
+						self.matrix[_row] = self.matrix[_row-1]
+					_row += 1
 		self.set_cycle_count(_row)
 		self.edit_widget()
 	

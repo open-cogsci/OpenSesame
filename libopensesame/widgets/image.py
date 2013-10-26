@@ -22,7 +22,7 @@ try: # Try both import statements
 	from PIL import Image
 except:
 	import Image
-from libopensesame import exceptions
+from libopensesame.exceptions import osexception
 import os
 
 class image(widget):
@@ -46,15 +46,15 @@ class image(widget):
 		</DOC>"""		
 	
 		if type(adjust) != bool:
-			adjust = adjust == 'yes'			
+			adjust = adjust == u'yes'			
 		if type(frame) != bool:
-			frame = frame == 'yes'						
+			frame = frame == u'yes'						
 	
 		widget.__init__(self, form)
 		self.adjust = adjust
 		self.frame = frame
 		self.path = path
-		self.type = 'image'
+		self.type = u'image'
 				
 	def render(self):
 	
@@ -63,8 +63,8 @@ class image(widget):
 		</DOC>"""	
 	
 		if not os.path.exists(self.path):
-			raise exceptions.runtime_error( \
-				'No valid path has been specified in image widget')
+			raise osexception( \
+				u'No valid path has been specified in image widget')
 		
 		x, y, w, h = self.rect
 		x += w/2
@@ -94,8 +94,8 @@ class image(widget):
 					import pygame
 					img = pygame.image.load(self.path)
 				except:
-					raise exceptions.runtime_error( \
-						'Failed to open image "%s". Perhaps the file is not an image, or the image format is not supported.' \
+					raise osexception( \
+						u'Failed to open image "%s". Perhaps the file is not an image, or the image format is not supported.' \
 						% self.path)
 				img_w, img_h = img.get_width()			
 			scale_x = 1.*w/img_w

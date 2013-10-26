@@ -17,23 +17,14 @@ You should have received a copy of the GNU General Public License
 along with openexp.  If not, see <http://www.gnu.org/licenses/>.
 """
 
-from string import whitespace, printable
 import pygame
 from pygame.locals import *
-import openexp.keyboard
+from string import whitespace, printable
+from libopensesame.exceptions import osexception
 
 # Whitespace and empty strings are not acceptable names for keys. These should
 # be converted to descriptions, e.g. '\t' to 'tab'
-invalid_unicode = [''] + list(whitespace)
-
-# This is a crude keymap that allows you to convert into the corresponding keys
-# plus shift
-key_map = {
-	"1" : "!", "2" : "@", "3" : "#", "4" : "$", "5" : "%", "6" : "^", 
-	"7" : "&", "8" : "*", "9" : "(", "0" : ")", "-" : "_", "=" : "+",
-	"[" : "{", "]" : "}", "\\" : "|", ";" : ":", "\"" : "'", "," : "<",
-	"." : ">", "/" : "?"
-	}
+invalid_unicode = [u''] + list(whitespace)
 
 class legacy:
 
@@ -52,7 +43,7 @@ class legacy:
 	-- Moderators are represented by the following strings: "shift", "alt",
 	   "control" and "meta"
 	-- Catch exceptions wherever possible and raise an
-	   openexp.exceptions.canvas_error with a clear and descriptive error
+	   osexception with a clear and descriptive error
 	   message
 	-- Do not deviate from the guidelines. All back-ends should be
 	   interchangeable and transparent to OpenSesame. You are free to add
@@ -95,9 +86,9 @@ class legacy:
 		self.key_code_to_name = {}
 		self.key_name_to_code = {}		
 		for i in dir(pygame):
-			if i[:2] == "K_":
+			if i[:2] == u"K_":
 				code = getattr(pygame, i)
-				name1 = pygame.key.name(code).lower()
+				name1 = self.key_name(code).lower()
 				name2 = name1.upper()
 				name3 = i[2:].lower()
 				name4 = name3.upper()
@@ -168,7 +159,7 @@ class legacy:
 				   default timeout (default=None).
 				   
 		Exceptions:
-		A response_error if 'escape' was pressed.
+		An osexception if 'escape' was pressed.
 
 		Returns:
 		A (key, timestamp) tuple. The key is None if a timeout occurs.
@@ -195,18 +186,16 @@ class legacy:
 				if event.type != pygame.KEYDOWN:
 					continue
 				if event.key == pygame.K_ESCAPE:
-					raise openexp.exceptions.response_error( \
-						"The escape key was pressed.")
+					raise osexception(u'The escape key was pressed.')
 				if event.unicode in invalid_unicode or event.unicode not in \
 					printable:
-					key = pygame.key.name(event.key)
+					key = self.key_name(event.key)
 				else:
 					key = event.unicode
 				if keylist == None or key in keylist:
-					return key, time				
+					return key, time
 			if timeout != None and time-start_time >= timeout:
 				break
-		
 		return None, time
 
 	def get_mods(self):
@@ -230,45 +219,35 @@ class legacy:
 		l = []
 		mods = pygame.key.get_mods()
 		if mods & KMOD_LSHIFT or mods & KMOD_RSHIFT or mods & KMOD_SHIFT:
-			l.append("shift")
+			l.append(u"shift")
 		if mods & KMOD_LCTRL or mods & KMOD_RCTRL or mods & KMOD_CTRL:
-			l.append("ctrl")
+			l.append(u"ctrl")
 		if mods & KMOD_LALT or mods & KMOD_RALT or mods & KMOD_ALT:
-			l.append("alt")
+			l.append(u"alt")
 		if mods & KMOD_LMETA or mods & KMOD_RMETA or mods & KMOD_META:
-			l.append("meta")
+			l.append(u"meta")
 		return l
 
-	def shift(self, key, mods=["shift"]):
+	def shift(self, key, mods=[u"shift"]):
 
 		"""
-		Returns the character that results from pressing a key together with the
-		moderators, typically a shift. E.g., "3" + "Shift" -> "#". This function
-		is not particularly elegant as it does not take locales into account and
-		assumes a standard US keyboard.
-
+		DEPRECATED
+		
+		This function has been deprecated as of 0.27.4. Shift is handled
+		transparently by keyboard.get_key()
+		
 		Arguments:
-		key -- A character.
-
+		key 	--	A key.
+		
 		Keyword arguments:
-		mods -- A list of keyboard moderators (default=["shift"]).
-
-		Returns:
-		The character that results from combining the input key with shift.
+		mods	--	A list of keyboard modifiers.
+		
+		Exception:
+		This function always raises an exception
 		"""
 
-		if key.isalpha():
-			if "shift" in mods:
-				return key.upper()
-			else:
-				return key.lower()
-
-		if "shift" in mods:
-			if key not in key_map:
-				return ""
-			return key_map[key]
-
-		return key
+		raise osexception( \
+			u"keyboard.shift() is deprecated")
 
 	def to_int(self, key):
 
@@ -285,8 +264,8 @@ class legacy:
 		This function always raises an exception
 		"""
 
-		raise openexp.exceptions.response_error( \
-			"keyboard.to_int() is deprecated")
+		raise osexception( \
+			u"keyboard.to_int() is deprecated")
 
 	def to_chr(self, key):
 
@@ -340,7 +319,7 @@ class legacy:
 		Clears all pending input, not limited to the keyboard.
 		
 		Exceptions:
-		A response_error if 'escape' was pressed
+		An osexception if 'escape' was pressed
 		
 		Returns:
 		True if a key had been pressed (i.e., if there was something #
@@ -358,7 +337,22 @@ class legacy:
 			if event.type == KEYDOWN:
 				keypressed = True
 				if event.key == pygame.K_ESCAPE:
-					raise openexp.exceptions.response_error( \
-						"The escape key was pressed.")
+					raise osexception( \
+						u"The escape key was pressed.")
 		return keypressed
 
+	def key_name(self, key):
+		
+		"""
+		Returns the name that corresponds to a key code. This intercepts the
+		pygame.key.name() function, to prevent invalid names like '[1]'.
+		
+		Arguments:
+		key		--	A key code.
+		
+		Returns:
+		A unicode string corresponding to the key code.
+		"""
+		
+		return unicode(pygame.key.name(key)).replace(u'[', u'') \
+			.replace(u']', u'')

@@ -93,7 +93,7 @@ if __name__ == "__main__":
 		# Try to parse the experiment from a file
 		try:
 			exp = libopensesame.experiment.experiment("Experiment", options.experiment)
-		except libopensesame.exceptions.script_error as e:
+		except Exception as e:
 			libopensesame.misc.messagebox("OpenSesame Run", libopensesame.misc.strip_tags(e))
 			sys.exit()
 

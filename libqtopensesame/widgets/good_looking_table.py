@@ -26,15 +26,16 @@ class good_looking_table(QtGui.QTableWidget):
 	def __init__(self, rows, columns=None, icons={}, parent=None):
 	
 		"""
-		Constructor
+		Constructor.
 		
 		Arguments:
-		rows -- the number of rows
+		rows	--	The number of rows.
 		
 		Keywords arguments:
-		columns -- the number of columns or None for no columns (default=None)
-		icons -- a dictionary with QIcons for the various actions (default={})
-		parent -- the parent QWidget (default=None)
+		columns	--	The number of columns or None for no columns. (default=None)
+		icons	--	A dictionary with QIcons for the various actions.
+					(default={})
+		parent	--	The parent QWidget. (default=None)
 		"""
 	
 		self.clipboard = QtGui.QApplication.clipboard			
@@ -50,10 +51,10 @@ class good_looking_table(QtGui.QTableWidget):
 	def build_context_menu(self, icons={}):
 
 		"""
-		Build the context menu
+		Builds the context menu.
 
 		Keyword arguments:
-		icons -- a dictionary with icon names (default={})
+		icons	--	A dictionary with icon names. (default={})
 		"""
 
 		self.menu = QtGui.QMenu()		
@@ -77,10 +78,10 @@ class good_looking_table(QtGui.QTableWidget):
 	def contextMenuEvent(self, e):
 	
 		"""
-		Present the context menu
+		Presents the context menu.
 		
 		Arguments:
-		e -- a QContentMenuEvent
+		e	--	a QContextMenuEvent.
 		"""
 	
 		self.pos = e.globalPos()
@@ -89,10 +90,10 @@ class good_looking_table(QtGui.QTableWidget):
 	def keyPressEvent(self, e):
 	
 		"""
-		Capture keypresses to handle copy, cut, and paste
+		Captures keypresses to handle copy, cut, and paste.
 		
 		Arguments:
-		e -- a QKeyEvent
+		e	--	a QKeyEvent.
 		"""
 		
 		if e.key() == QtCore.Qt.Key_Delete:
@@ -122,7 +123,7 @@ class good_looking_table(QtGui.QTableWidget):
 
 	def copy(self):
 	
-		"""Copies data from the table into the clipboard"""
+		"""Copies data from the table into the clipboard."""
 
 		_range = self.selectedRanges()[0]	
 		rows = []
@@ -132,7 +133,6 @@ class good_looking_table(QtGui.QTableWidget):
 				item = self.item(row, column)
 				if item != None:
 					value = unicode(item.text())
-					print value
 				else:
 					value = u''				
 				columns.append(value)
@@ -142,7 +142,7 @@ class good_looking_table(QtGui.QTableWidget):
 		
 	def paste(self):
 	
-		"""Paste text from the clipboard into the table"""
+		"""Pastes text from the clipboard into the table."""
 			
 		selection = unicode(self.clipboard().mimeData().text())
 		rows = selection.split(u'\n')	
@@ -161,7 +161,7 @@ class good_looking_table(QtGui.QTableWidget):
 			
 	def _clear(self):
 	
-		"""Clear the selected cells"""
+		"""Clears the selected cells."""
 	
 		selected_range = self.selectedRanges()[0]
 		for row in range(selected_range.topRow(), selected_range.bottomRow() + \
@@ -170,15 +170,15 @@ class good_looking_table(QtGui.QTableWidget):
 				selected_range.rightColumn() + 1):	
 				item = self.item(row, column)
 				if item != None:
-					item.setText("")					
+					item.setText(u'')					
 					
 	def get_contents(self):
 		
 		"""
-		Get the contents of the table
+		Gets the contents of the table.
 		
 		Returns:
-		A QVariant
+		A QStringList for the table contents.
 		"""
 		
 		contents = QtCore.QStringList()		
@@ -194,10 +194,10 @@ class good_looking_table(QtGui.QTableWidget):
 	def set_contents(self, contents):
 		
 		"""
-		Set the table contents
+		Sets the table contents.
 		
 		Arguments:
-		contents -- a QStringList
+		contents	--	a QStringList.
 		"""		
 		
 		column = 0

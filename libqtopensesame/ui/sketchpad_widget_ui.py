@@ -2,8 +2,8 @@
 
 # Form implementation generated from reading ui file 'resources/ui/sketchpad_widget.ui'
 #
-# Created: Fri Sep 14 15:43:47 2012
-#      by: PyQt4 UI code generator 4.9.1
+# Created: Sun Aug 25 12:47:26 2013
+#      by: PyQt4 UI code generator 4.10
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -12,7 +12,16 @@ from PyQt4 import QtCore, QtGui
 try:
     _fromUtf8 = QtCore.QString.fromUtf8
 except AttributeError:
-    _fromUtf8 = lambda s: s
+    def _fromUtf8(s):
+        return s
+
+try:
+    _encoding = QtGui.QApplication.UnicodeUTF8
+    def _translate(context, text, disambig):
+        return QtGui.QApplication.translate(context, text, disambig, _encoding)
+except AttributeError:
+    def _translate(context, text, disambig):
+        return QtGui.QApplication.translate(context, text, disambig)
 
 class Ui_sketchpad_widget(object):
     def setupUi(self, sketchpad_widget):
@@ -32,18 +41,15 @@ class Ui_sketchpad_widget(object):
         self.widget.setObjectName(_fromUtf8("widget"))
         self.horizontalLayout_2 = QtGui.QHBoxLayout(self.widget)
         self.horizontalLayout_2.setMargin(0)
-        self.horizontalLayout_2.setMargin(0)
         self.horizontalLayout_2.setObjectName(_fromUtf8("horizontalLayout_2"))
         self.widget_3 = QtGui.QWidget(self.widget)
         self.widget_3.setObjectName(_fromUtf8("widget_3"))
         self.verticalLayout_3 = QtGui.QVBoxLayout(self.widget_3)
         self.verticalLayout_3.setMargin(0)
-        self.verticalLayout_3.setMargin(0)
         self.verticalLayout_3.setObjectName(_fromUtf8("verticalLayout_3"))
         self.widget_2 = QtGui.QWidget(self.widget_3)
         self.widget_2.setObjectName(_fromUtf8("widget_2"))
         self.horizontalLayout = QtGui.QHBoxLayout(self.widget_2)
-        self.horizontalLayout.setMargin(0)
         self.horizontalLayout.setMargin(0)
         self.horizontalLayout.setObjectName(_fromUtf8("horizontalLayout"))
         self.verticalLayout_3.addWidget(self.widget_2)
@@ -55,7 +61,6 @@ class Ui_sketchpad_widget(object):
         self.widget_7.setSizePolicy(sizePolicy)
         self.widget_7.setObjectName(_fromUtf8("widget_7"))
         self.horizontalLayout_5 = QtGui.QHBoxLayout(self.widget_7)
-        self.horizontalLayout_5.setMargin(0)
         self.horizontalLayout_5.setMargin(0)
         self.horizontalLayout_5.setObjectName(_fromUtf8("horizontalLayout_5"))
         self.frame_4 = QtGui.QFrame(self.widget_7)
@@ -224,6 +229,14 @@ class Ui_sketchpad_widget(object):
         self.checkbox_fill = QtGui.QCheckBox(self.frame_5)
         self.checkbox_fill.setObjectName(_fromUtf8("checkbox_fill"))
         self.gridLayout_2.addWidget(self.checkbox_fill, 6, 0, 1, 3)
+        self.widget_font = font_widget(self.frame_5)
+        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Preferred, QtGui.QSizePolicy.Expanding)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.widget_font.sizePolicy().hasHeightForWidth())
+        self.widget_font.setSizePolicy(sizePolicy)
+        self.widget_font.setObjectName(_fromUtf8("widget_font"))
+        self.gridLayout_2.addWidget(self.widget_font, 9, 0, 1, 3)
         self.spin_penwidth = QtGui.QSpinBox(self.frame_5)
         sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Preferred, QtGui.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
@@ -244,14 +257,10 @@ class Ui_sketchpad_widget(object):
         self.spin_scale.setProperty("value", 100.0)
         self.spin_scale.setObjectName(_fromUtf8("spin_scale"))
         self.gridLayout_2.addWidget(self.spin_scale, 5, 1, 1, 2)
-        self.widget_font = font_widget(self.frame_5)
-        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Preferred, QtGui.QSizePolicy.Expanding)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.widget_font.sizePolicy().hasHeightForWidth())
-        self.widget_font.setSizePolicy(sizePolicy)
-        self.widget_font.setObjectName(_fromUtf8("widget_font"))
-        self.gridLayout_2.addWidget(self.widget_font, 8, 0, 1, 3)
+        self.checkbox_html = QtGui.QCheckBox(self.frame_5)
+        self.checkbox_html.setChecked(True)
+        self.checkbox_html.setObjectName(_fromUtf8("checkbox_html"))
+        self.gridLayout_2.addWidget(self.checkbox_html, 8, 0, 1, 2)
         self.horizontalLayout_5.addWidget(self.frame_5)
         spacerItem = QtGui.QSpacerItem(40, 20, QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
         self.horizontalLayout_5.addItem(spacerItem)
@@ -343,7 +352,7 @@ class Ui_sketchpad_widget(object):
         self.scrollArea.setWidgetResizable(True)
         self.scrollArea.setObjectName(_fromUtf8("scrollArea"))
         self.scrollAreaWidgetContents = QtGui.QWidget()
-        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 1047, 426))
+        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 1047, 398))
         self.scrollAreaWidgetContents.setObjectName(_fromUtf8("scrollAreaWidgetContents"))
         self.verticalLayout_5 = QtGui.QVBoxLayout(self.scrollAreaWidgetContents)
         self.verticalLayout_5.setObjectName(_fromUtf8("verticalLayout_5"))
@@ -370,45 +379,47 @@ class Ui_sketchpad_widget(object):
         QtCore.QMetaObject.connectSlotsByName(sketchpad_widget)
 
     def retranslateUi(self, sketchpad_widget):
-        sketchpad_widget.setWindowTitle(QtGui.QApplication.translate("sketchpad_widget", "Form", None, QtGui.QApplication.UnicodeUTF8))
-        self.button_line.setToolTip(QtGui.QApplication.translate("sketchpad_widget", "Line tool", None, QtGui.QApplication.UnicodeUTF8))
-        self.button_arrow.setToolTip(QtGui.QApplication.translate("sketchpad_widget", "Arrow tool", None, QtGui.QApplication.UnicodeUTF8))
-        self.button_textline.setToolTip(QtGui.QApplication.translate("sketchpad_widget", "Text tool", None, QtGui.QApplication.UnicodeUTF8))
-        self.button_image.setToolTip(QtGui.QApplication.translate("sketchpad_widget", "Image tool", None, QtGui.QApplication.UnicodeUTF8))
-        self.button_gabor.setToolTip(QtGui.QApplication.translate("sketchpad_widget", "Gabor patch tool", None, QtGui.QApplication.UnicodeUTF8))
-        self.button_rect.setToolTip(QtGui.QApplication.translate("sketchpad_widget", "Rectangle tool", None, QtGui.QApplication.UnicodeUTF8))
-        self.button_ellipse.setToolTip(QtGui.QApplication.translate("sketchpad_widget", "Ellipse tool", None, QtGui.QApplication.UnicodeUTF8))
-        self.button_circle.setToolTip(QtGui.QApplication.translate("sketchpad_widget", "Circle tool", None, QtGui.QApplication.UnicodeUTF8))
-        self.button_fixdot.setToolTip(QtGui.QApplication.translate("sketchpad_widget", "Fixation dot tool", None, QtGui.QApplication.UnicodeUTF8))
-        self.button_noise_patch.setToolTip(QtGui.QApplication.translate("sketchpad_widget", "Noise patch tool", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_options.setText(QtGui.QApplication.translate("sketchpad_widget", "Click on the sketchpad for options", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_arrow_size.setText(QtGui.QApplication.translate("sketchpad_widget", "Arrowhead size", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_show_if.setText(QtGui.QApplication.translate("sketchpad_widget", "Show if", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_color.setText(QtGui.QApplication.translate("sketchpad_widget", "Color", None, QtGui.QApplication.UnicodeUTF8))
-        self.checkbox_center.setToolTip(QtGui.QApplication.translate("sketchpad_widget", "Center the object", None, QtGui.QApplication.UnicodeUTF8))
-        self.checkbox_center.setText(QtGui.QApplication.translate("sketchpad_widget", "Center object", None, QtGui.QApplication.UnicodeUTF8))
-        self.spin_arrow_size.setToolTip(QtGui.QApplication.translate("sketchpad_widget", "Size of the arrowhead", None, QtGui.QApplication.UnicodeUTF8))
-        self.spin_arrow_size.setSuffix(QtGui.QApplication.translate("sketchpad_widget", "px", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_penwidth.setText(QtGui.QApplication.translate("sketchpad_widget", "Pen width", None, QtGui.QApplication.UnicodeUTF8))
-        self.checkbox_fill.setToolTip(QtGui.QApplication.translate("sketchpad_widget", "Check to draw filled objects", None, QtGui.QApplication.UnicodeUTF8))
-        self.checkbox_fill.setText(QtGui.QApplication.translate("sketchpad_widget", "Fill object", None, QtGui.QApplication.UnicodeUTF8))
-        self.spin_penwidth.setToolTip(QtGui.QApplication.translate("sketchpad_widget", "Pen width", None, QtGui.QApplication.UnicodeUTF8))
-        self.spin_penwidth.setSuffix(QtGui.QApplication.translate("sketchpad_widget", "px", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_scale.setText(QtGui.QApplication.translate("sketchpad_widget", "Image scale", None, QtGui.QApplication.UnicodeUTF8))
-        self.spin_scale.setToolTip(QtGui.QApplication.translate("sketchpad_widget", "Image scaling in %", None, QtGui.QApplication.UnicodeUTF8))
-        self.spin_scale.setSuffix(QtGui.QApplication.translate("sketchpad_widget", "%", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_6.setText(QtGui.QApplication.translate("sketchpad_widget", "Zoom", None, QtGui.QApplication.UnicodeUTF8))
-        self.spin_zoom.setToolTip(QtGui.QApplication.translate("sketchpad_widget", "Zoom level in %", None, QtGui.QApplication.UnicodeUTF8))
-        self.spin_zoom.setSuffix(QtGui.QApplication.translate("sketchpad_widget", "%", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_5.setText(QtGui.QApplication.translate("sketchpad_widget", "Grid", None, QtGui.QApplication.UnicodeUTF8))
-        self.spin_grid.setToolTip(QtGui.QApplication.translate("sketchpad_widget", "Grid size", None, QtGui.QApplication.UnicodeUTF8))
-        self.spin_grid.setSuffix(QtGui.QApplication.translate("sketchpad_widget", "px", None, QtGui.QApplication.UnicodeUTF8))
-        self.checkbox_show_grid.setToolTip(QtGui.QApplication.translate("sketchpad_widget", "Check to display the grid and enable snap-to-grid", None, QtGui.QApplication.UnicodeUTF8))
-        self.checkbox_show_grid.setText(QtGui.QApplication.translate("sketchpad_widget", "Show grid", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_mouse_pos.setText(QtGui.QApplication.translate("sketchpad_widget", "(0, 0)", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_notification.setText(QtGui.QApplication.translate("sketchpad_widget", "[nr] objects are not shown, because their definition contains variables.", None, QtGui.QApplication.UnicodeUTF8))
-        self.button_edit_script.setToolTip(QtGui.QApplication.translate("sketchpad_widget", "Edit the script to see objects defined using variables", None, QtGui.QApplication.UnicodeUTF8))
-        self.button_edit_script.setText(QtGui.QApplication.translate("sketchpad_widget", "Edit script", None, QtGui.QApplication.UnicodeUTF8))
+        sketchpad_widget.setWindowTitle(_translate("sketchpad_widget", "Form", None))
+        self.button_line.setToolTip(_translate("sketchpad_widget", "Line tool", None))
+        self.button_arrow.setToolTip(_translate("sketchpad_widget", "Arrow tool", None))
+        self.button_textline.setToolTip(_translate("sketchpad_widget", "Text tool", None))
+        self.button_image.setToolTip(_translate("sketchpad_widget", "Image tool", None))
+        self.button_gabor.setToolTip(_translate("sketchpad_widget", "Gabor patch tool", None))
+        self.button_rect.setToolTip(_translate("sketchpad_widget", "Rectangle tool", None))
+        self.button_ellipse.setToolTip(_translate("sketchpad_widget", "Ellipse tool", None))
+        self.button_circle.setToolTip(_translate("sketchpad_widget", "Circle tool", None))
+        self.button_fixdot.setToolTip(_translate("sketchpad_widget", "Fixation dot tool", None))
+        self.button_noise_patch.setToolTip(_translate("sketchpad_widget", "Noise patch tool", None))
+        self.label_options.setText(_translate("sketchpad_widget", "Click on the sketchpad for options", None))
+        self.label_arrow_size.setText(_translate("sketchpad_widget", "Arrowhead size", None))
+        self.label_show_if.setText(_translate("sketchpad_widget", "Show if", None))
+        self.label_color.setText(_translate("sketchpad_widget", "Color", None))
+        self.checkbox_center.setToolTip(_translate("sketchpad_widget", "Center the object", None))
+        self.checkbox_center.setText(_translate("sketchpad_widget", "Center object", None))
+        self.spin_arrow_size.setToolTip(_translate("sketchpad_widget", "Size of the arrowhead", None))
+        self.spin_arrow_size.setSuffix(_translate("sketchpad_widget", "px", None))
+        self.label_penwidth.setText(_translate("sketchpad_widget", "Pen width", None))
+        self.checkbox_fill.setToolTip(_translate("sketchpad_widget", "Check to draw filled objects", None))
+        self.checkbox_fill.setText(_translate("sketchpad_widget", "Fill object", None))
+        self.spin_penwidth.setToolTip(_translate("sketchpad_widget", "Pen width", None))
+        self.spin_penwidth.setSuffix(_translate("sketchpad_widget", "px", None))
+        self.label_scale.setText(_translate("sketchpad_widget", "Image scale", None))
+        self.spin_scale.setToolTip(_translate("sketchpad_widget", "Image scaling in %", None))
+        self.spin_scale.setSuffix(_translate("sketchpad_widget", "%", None))
+        self.checkbox_html.setToolTip(_translate("sketchpad_widget", "Parse a subset of HTML tags", None))
+        self.checkbox_html.setText(_translate("sketchpad_widget", "Parse HTML subset", None))
+        self.label_6.setText(_translate("sketchpad_widget", "Zoom", None))
+        self.spin_zoom.setToolTip(_translate("sketchpad_widget", "Zoom level in %", None))
+        self.spin_zoom.setSuffix(_translate("sketchpad_widget", "%", None))
+        self.label_5.setText(_translate("sketchpad_widget", "Grid", None))
+        self.spin_grid.setToolTip(_translate("sketchpad_widget", "Grid size", None))
+        self.spin_grid.setSuffix(_translate("sketchpad_widget", "px", None))
+        self.checkbox_show_grid.setToolTip(_translate("sketchpad_widget", "Check to display the grid and enable snap-to-grid", None))
+        self.checkbox_show_grid.setText(_translate("sketchpad_widget", "Show grid", None))
+        self.label_mouse_pos.setText(_translate("sketchpad_widget", "(0, 0)", None))
+        self.label_notification.setText(_translate("sketchpad_widget", "[nr] objects are not shown, because their definition contains variables.", None))
+        self.button_edit_script.setToolTip(_translate("sketchpad_widget", "Edit the script to see objects defined using variables", None))
+        self.button_edit_script.setText(_translate("sketchpad_widget", "Edit script", None))
 
 from libqtopensesame.widgets.font_widget import font_widget
 from libqtopensesame.widgets.color_edit import color_edit

@@ -17,9 +17,8 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
-from libopensesame import item, exceptions, generic_response
+from libopensesame import item, generic_response
 import openexp.mouse
-import openexp.exceptions
 
 class mouse_response(item.item, generic_response.generic_response):
 

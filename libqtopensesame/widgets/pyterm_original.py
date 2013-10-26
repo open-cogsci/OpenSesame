@@ -68,9 +68,17 @@ class output_buffer:
 		s -- a string
 		"""
 
-		if s.strip() != "":
+		if isinstance(s, str):
+			s = s.decode(u'utf-8', u'replace')
+		if s.strip() != u'':
 			self.plaintext.appendPlainText(s)
 			QtGui.QApplication.processEvents()
+			
+	def flush(self):
+		
+		"""Dummy flush function for compatibility."""
+		
+		pass
 
 class pyterm(code.InteractiveConsole):
 
@@ -89,13 +97,15 @@ class pyterm(code.InteractiveConsole):
 	def write(self, s):
 
 		"""
-		Simply redirect everything to the standard output
+		Simply redirect everything to the standard output.
 
 		Arguments:
 		s -- the output string
 		"""
-
-		print s.replace("\n", "")
+		
+		if isinstance(s, str):
+			s = s.decode(u'utf-8', u'replace')
+		print s.replace(u'\n', u'')
 
 class console(QtGui.QPlainTextEdit):
 

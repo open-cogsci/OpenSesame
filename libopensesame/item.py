@@ -19,7 +19,8 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 
 import openexp.mouse
 import openexp.keyboard
-from libopensesame import exceptions, debug, regexp
+from libopensesame.exceptions import osexception
+from libopensesame import debug, regexp
 import string
 import os
 import sys
@@ -27,12 +28,9 @@ import pygame
 
 class item(object):
 
-	"""
-	item is an abstract class that serves as the basis for all OpenSesame items,
-	such as sketchpad, keyboard_response, experiment, etc.
-	"""
+	"""Abstract class that serves as the basis for all OpenSesame items."""
 
-	encoding = 'UTF-8'
+	encoding = u'utf-8'
 
 	def __init__(self, name, experiment, string=None):
 
@@ -51,64 +49,58 @@ class item(object):
 		self.experiment = experiment
 		self.debug = debug.enabled
 		self.count = 0
-
 		# A number of keywords are reserved, which means that they cannot be
 		# used as variable names
 		self.reserved_words = [u'experiment', u'variables', u'comments', \
 			u'item_type']
 		for attr in dir(item):
-			if hasattr(getattr(item, attr), '__call__'):
+			if hasattr(getattr(item, attr), u'__call__'):
 				self.reserved_words.append(attr)
 
 		self._get_lock = None
-
-		if not hasattr(self, u'item_type'):
-			prefix = self.experiment.item_prefix()
-			self.item_type = self.__class__.__name__
-			if self.item_type.startswith(prefix):
-				self.item_type = self.item_type[len(prefix):]
+		# item_type shouldn't be explicitly set anymore.
+		if hasattr(self, u'item_type'):
+			debug.msg(u'item_type has been set explicitly in item "%s"' % \
+			self.name, reason=u'deprecation')
+		# Deduce item_type from class name
+		prefix = self.experiment.item_prefix()
+		self.item_type = unicode(self.__class__.__name__)
+		if self.item_type.startswith(prefix):
+			self.item_type = self.item_type[len(prefix):]			
 		if not hasattr(self, u'description'):
 			self.description = u'Default description'
 		if not hasattr(self, u'round_decimals'):
 			self.round_decimals = 2
 		self.variables = {}
 		self.comments = []
-
 		if string != None:
 			self.from_string(string)
 
 	def prepare(self):
 
-		"""
-		Derived classes should use this function to prepare the item for speedy
-		execution during the run phase.
-		"""
+		"""Implements the prepare phase of the item."""
 
 		self.time = self.experiment._time_func
 		self.sleep = self.experiment._sleep_func
-		self.experiment.set("count_%s" % self.name, self.count)
-		self.count += 1
-		return True
+		self.experiment.set(u'count_%s' % self.name, self.count)
+		self.count += 1		
 
 	def run(self):
 
-		"""
-		Derived classes should use this function to perform the item specific
-		function.
-		"""
+		"""Implements the run phase of the item."""
 
-		return True
+		pass
 
 	def parse_variable(self, line):
 
 		"""
-		Reads a single variable from a single definition line
+		Reads a single variable from a single definition line.
 
 		Arguments:
-		line -- a single definition line
+		line	--	A single definition line.
 
 		Returns:
-		True on succes, False on failure
+		True on succes, False on failure.
 		"""
 
 		# It is a little ugly to call parse_comment() here, but otherwise
@@ -118,46 +110,45 @@ class item(object):
 		l = self.split(line.strip())
 		if len(l) > 0 and l[0] == u'set':
 			if len(l) != 3:
-				raise exceptions.script_error( \
-					u"Error parsing variable definition: '%s'" % line)
+				raise osexception( \
+					u'Error parsing variable definition: "%s"' % line)
 			else:
 				self.set(l[1], l[2])
 				return True
-
 		return False
 
 	def parse_keywords(self, line, unsanitize=False, _eval=False):
 
 		"""
-		Parses keywords, e.g. 'my_keyword=my_value'
+		Parses keywords, e.g. 'my_keyword=my_value'.
 
 		Arguments:
-		line -- a single definition line
+		line		--	A single definition line.
 
 		Keyword arguments:
-		unsanitize -- DEPRECATED KEYWORD
-		_eval -- indicates whether the values should be evaluated
-				 (default=False)
+		unsanitize	--	DEPRECATED KEYWORD.
+		_eval		--	Indicates whether the values should be evaluated.
+						(default=False)
 
 		Returns:
-		A keyword => value dictionary
+		A value dictionary with keywords as keys and values as values.
 		"""
 
 		# Parse keywords
 		l = self.split(line.strip())
 		keywords = {}
 		for i in l:
-			j = i.find("=")
+			j = i.find(u'=')
 			if j != -1:
 				# UGLY HACK: if the string appears to be plain text,
 				# rather than a keyword, for example something like
 				# 'accuracy = [acc]%', do not parse it as a keyword-
 				# value pair. The string needs to occur only once in
 				# the full line, both quoted and unquoted.
-				q = "\"" + i + "\""
+				q = u'"%s"' % i
 				if line.count(q) == 1 and line.count(i) == 1:
 					debug.msg( \
-						"'%s' does not appear to be a keyword-value pair in string '%s'" \
+						u'"%s" does not appear to be a keyword-value pair in string "%s"' \
 						% (i, line))
 				else:
 					var = str(i[:j])
@@ -170,10 +161,10 @@ class item(object):
 	def parse_line(self, line):
 
 		"""
-		Allows for arbitrary line parsing, for item-specific requirements
+		Allows for arbitrary line parsing, for item-specific requirements.
 
 		Arguments:
-		line -- a single definition line
+		line	--	A single definition line.
 		"""
 
 		pass
@@ -181,20 +172,20 @@ class item(object):
 	def parse_comment(self, line):
 
 		"""
-		Parses comments from a single definition line, indicated by # // or '
+		Parses comments from a single definition line, indicated by # // or '.
 
 		Arguments:
-		line -- a single definition line
+		line	--	A single definition line.
 
 		Returns:
-		True on succes, False on failure
+		True on succes, False on failure.
 		"""
 
 		line = line.strip()
-		if len(line) > 0 and line[0] == "#":
+		if len(line) > 0 and line[0] == u'#':
 			self.comments.append(line[1:])
 			return True
-		elif len(line) > 1 and line[0:2] == "//":
+		elif len(line) > 1 and line[0:2] == u'//':
 			self.comments.append(line[2:])
 			return True
 		return False
@@ -202,17 +193,16 @@ class item(object):
 	def variable_to_string(self, var):
 
 		"""
-		Encode a variable into a definition string
+		Encodes a variable into a definition string.
 
 		Arguments:
-		var -- the variable to encode
+		var		--	The variable to encode.
 
 		Returns:
-		A definition string
+		A definition string.
 		"""
-
+		
 		val = self.unistr(self.variables[var])
-
 		# Multiline variables are stored as a block
 		if u'\n' in val or u'"' in val:
 			s = u'__%s__\n' % var
@@ -222,7 +212,6 @@ class item(object):
 				s = s[:-1]
 			s += u'\n\t__end__\n'
 			return s
-
 		# Regular variables
 		else:
 			return u'set %s "%s"\n' % (var, val)
@@ -230,10 +219,10 @@ class item(object):
 	def from_string(self, string):
 
 		"""
-		Parse the item from a definition string
+		Parses the item from a definition string.
 
 		Arguments:
-		string -- the definition string
+		string	--	The definition string.
 		"""
 
 		debug.msg()
@@ -245,7 +234,7 @@ class item(object):
 			if line_stripped == u'__end__':
 				if textblock_var == None:
 					self.experiment.notify( \
-						'It appears that a textblock has been closed without being opened. The most likely reason is that you have used the string "__end__", which has a special meaning for OpenSesame.')
+						u'It appears that a textblock has been closed without being opened. The most likely reason is that you have used the string "__end__", which has a special meaning for OpenSesame.')
 				else:
 					self.set(textblock_var, textblock_val)
 					textblock_var = None
@@ -278,10 +267,11 @@ class item(object):
 	def to_string(self, item_type=None):
 
 		"""
-		Encode the item into an OpenSesame definition string
+		Encodes the item into an OpenSesame definition string.
 
 		Keyword arguments:
-		item_type -- the type of the item or None for autodetect (default=None)
+		item_type	--	The type of the item or None for autodetect.
+						(default=None)
 
 		Returns:
 		The unicode definition string
@@ -311,10 +301,11 @@ class item(object):
 		A (width, height) tuple
 		</DOC>"""
 
-		w = self.get('width')
-		h = self.get('height')
+		w = self.get(u'width')
+		h = self.get(u'height')
 		if type(w) != int or type(h) != int:
-			raise exceptions.runtime_error('(%s, %s) is not a valid resolution')
+			raise osexception( \
+				u'(%s, %s) is not a valid resolution' % (w, h))
 		return w, h
 
 	def set(self, var, val):
@@ -348,14 +339,14 @@ class item(object):
 		var = self.unistr(var)
 		val = self.auto_type(val)
 		# Check whether the variable name is valid
-		if regexp.sanitize_var_name.sub('_', var) != var:
-			raise exceptions.runtime_error( \
-				'"%s" is not a valid variable name. Variable names must consist of alphanumeric characters and underscores, and may not start with a digit.' \
+		if regexp.sanitize_var_name.sub(u'_', var) != var:
+			raise osexception( \
+				u'"%s" is not a valid variable name. Variable names must consist of alphanumeric characters and underscores, and may not start with a digit.' \
 				% var)
 		# Check whether the variable name is not protected
 		if var in self.reserved_words:
-			raise exceptions.runtime_error( \
-				'"%s" is a reserved keyword (i.e. it has a special meaning for OpenSesame), and therefore cannot be used as a variable name. Sorry!' \
+			raise osexception( \
+				u'"%s" is a reserved keyword (i.e. it has a special meaning for OpenSesame), and therefore cannot be used as a variable name. Sorry!' \
 				% var)
 
 		# Register the variables
@@ -407,7 +398,7 @@ class item(object):
 				 (default=True).
 
 		Exceptions:
-		A runtime_error is raised if the variable is not found.
+		A osexception is raised if the variable is not found.
 
 		Returns:
 		The value.
@@ -427,7 +418,7 @@ class item(object):
 		var = self.unistr(var)
 		# Avoid recursion
 		if var == self._get_lock:
-			raise exceptions.runtime_error( \
+			raise osexception( \
 				u"Recursion detected! Is variable '%s' defined in terms of itself (e.g., 'var = [var]') in item '%s'" \
 				% (var, self.name))
 		# Get the variable
@@ -437,7 +428,7 @@ class item(object):
 			try:
 				val = getattr(self.experiment, var)
 			except:
-				raise exceptions.runtime_error( \
+				raise osexception( \
 					u"Variable '%s' is not set in item '%s'.<br /><br />You are trying to use a variable that does not exist. Make sure that you have spelled and capitalized the variable name correctly. You may wish to use the variable inspector (Control + I) to find the intended variable." \
 					% (var, self.name))
 		if _eval:
@@ -465,7 +456,7 @@ class item(object):
 				 whether containing variables should be processed (default=True).
 
 		Exceptions:
-		Raises a runtime_error if the variable is not defined and there is no #
+		Raises a osexception if the variable is not defined and there is no #
 		default value, or if the variable value is not part of the 'valid' list.
 
 		Returns:
@@ -483,7 +474,7 @@ class item(object):
 		else:
 			val = default
 		if valid != None and val not in valid:
-			raise exceptions.runtime_error( \
+			raise osexception( \
 				u"Variable '%s' is '%s', expecting '%s'" % (var, val, \
 				u" or ".join(valid)))
 		return val
@@ -537,7 +528,7 @@ class item(object):
 				break
 			end = text.find(u']', start + 1)
 			if end < 0:
-				raise exceptions.runtime_error( \
+				raise osexception( \
 					u"Missing closing bracket ']' in string '%s', in item '%s'" \
 					% (text, self.name))
 			var = text[start+1:end]
@@ -596,7 +587,7 @@ class item(object):
 
 		if time == None:
 			time = self.time()
-		setattr(self.experiment, 'time_%s' % self.name, time)
+		setattr(self.experiment, u'time_%s' % self.name, time)
 
 	def dummy(self, **args):
 
@@ -655,7 +646,7 @@ class item(object):
 				val = self.get(var)
 				# Quote strings if necessary
 				if type(val) == unicode and quote_str:
-					val = u"\'" + val + u"\'"
+					val = u"'" + val + u"'"
 				# Round floats
 				elif round_float and type(val) == float:
 					val = float_template % val
@@ -686,20 +677,20 @@ class item(object):
 		# If the conditional statement is preceded by a '=', it is interpreted as
 		# Python code, like 'self.get("correct") == 1'. In this case we only have
 		# to strip the preceding space
-		if len(src) > 0 and src[0] == '=':
+		if len(src) > 0 and src[0] == u'=':
 			code = src[1:]
-			debug.msg('Python-style conditional statement: %s' % code)
+			debug.msg(u'Python-style conditional statement: %s' % code)
 
 		# Otherwise, it is interpreted as a traditional run if statement, like
 		# '[correct] = 1'
 		else:
-			operators = "!=", "==", "=", "<", ">", ">=", "<=", "+", "-", "(", \
-				")", "/", "*", "%", "~", "**", "^"
-			op_chars = "!", "=", "=", "<", ">", "+", "-", "(", ")", "/", "*", \
-				"%", "~", "*", "^"
-			whitespace = " ", "\t", "\n"
-			keywords = "and", "or", "is", "not", "true", "false"
-			capitalize = "true", "false", "none"
+			operators = u"!=", u"==", u"=", u"<", u">", u">=", u"<=", u"+", \
+				u"-", u"(", u")", u"/", u"*", u"%", u"~", u"**", u"^"
+			op_chars = u"!", u"=", u"=", u"<", u">", u"+", u"-", u"(", u")", \
+				u"/", u"*", u"%", u"~", u"*", u"^"
+			whitespace = u" ", u"\t", u"\n"
+			keywords = u"and", u"or", u"is", u"not", u"true", u"false"
+			capitalize = u"true", u"false", u"none"
 
 			# Try to fix missing spaces
 			redo = True
@@ -742,17 +733,17 @@ class item(object):
 						l.append(self.unistr(word))
 				i += 1
 
-			code = " ".join(l)
-			if code != "True":
-				debug.msg("'%s' => '%s'" % (src, code))
+			code = u" ".join(l)
+			if code != u"True":
+				debug.msg(u"'%s' => '%s'" % (src, code))
 
 		# Optionally compile the conditional statement to bytecode and return
 		if not bytecode:
 			return code
 		try:
-			bytecode = compile(code, "<conditional statement>", "eval")
+			bytecode = compile(code, u"<conditional statement>", u"eval")
 		except:
-			raise exceptions.runtime_error( \
+			raise osexception( \
 				u"'%s' is not a valid conditional statement in sequence item '%s'" \
 				% (cond, self.name))
 		return bytecode
@@ -796,9 +787,9 @@ class item(object):
 		s = self.unistr(s)
 		if strict:
 			if allow_vars:
-				return regexp.sanitize_strict_vars.sub('', s)
-			return regexp.sanitize_strict_novars.sub('', s)
-		return regexp.sanitize_loose.sub('', s)
+				return regexp.sanitize_strict_vars.sub(u'', s)
+			return regexp.sanitize_strict_novars.sub(u'', s)
+		return regexp.sanitize_loose.sub(u'', s)
 
 	def usanitize(self, s, strict=False):
 
@@ -818,10 +809,10 @@ class item(object):
 		notation
 		"""
 
-		if type(s) != unicode:
-			raise exceptions.runtime_error( \
-			'usanitize() expects first argument to be unicode, not "%s"' \
-			% type(s))
+		if not isinstance(s, unicode):
+			raise osexception( \
+				u'usanitize() expects first argument to be unicode, not "%s"' \
+				% type(s))
 
 		_s = ''
 		for ch in s:
@@ -831,7 +822,7 @@ class item(object):
 					_s += 'U+%.4X' % ord(ch)
 			else:
 				_s += ch
-		return _s.replace(os.linesep, "\n")
+		return _s.replace(os.linesep, '\n')
 
 
 	def unsanitize(self, s):
@@ -846,16 +837,15 @@ class item(object):
 		A unicode string with special characters
 		"""
 
-		if type(s) not in (str, unicode):
-			raise exceptions.runtime_error( \
-			'unsanitize() expects first argument to be unicode, not "%s"' \
+		if not isinstance(s, basestring):
+			raise osexception( \
+			u'unsanitize() expects first argument to be unicode or str, not "%s"' \
 			% type(s))
-
 		s = self.unistr(s)
 		while True:
 			m = regexp.unsanitize.search(s)
 			if m == None:
-				break
+				break			
 			s = s.replace(m.group(0), unichr(int(m.group(1), 16)), 1)
 		return s
 
@@ -878,7 +868,10 @@ class item(object):
 			return val
 		# Regular strings need to be encoded using the correct encoding
 		if isinstance(val, str):
-			return unicode(val, encoding=self.encoding, errors='replace')
+			return unicode(val, encoding=self.encoding, errors=u'replace')
+		# Numeric values are encoded right away
+		if isinstance(val, int) or isinstance(val, float):
+			return unicode(val)
 		# Some types need to be converted to unicode, but require the encoding
 		# and errors parameters. Notable examples are Exceptions, which have
 		# strange characters under some locales, such as French. It even appears
@@ -886,7 +879,7 @@ class item(object):
 		# Presumably, there is a better way to do this, but for now this at
 		# least gives sensible results.
 		try:
-			return unicode(str(val), encoding=self.encoding, errors='replace')
+			return unicode(str(val), encoding=self.encoding, errors=u'replace')
 		except:
 			pass
 		# For other types, the unicode representation doesn't require a specific
@@ -912,10 +905,10 @@ class item(object):
 		try:
 			return [chunk.decode(self.encoding) for chunk in shlex.split( \
 				u.encode(self.encoding))]
-		except:
-			raise exceptions.script_error( \
+		except Exception as e:
+			raise osexception( \
 				u'Failed to parse line "%s". Is there a closing quotation missing?' \
-				% u)
+				% u, exception=e)
 
 	def color_check(self, col):
 
@@ -926,14 +919,14 @@ class item(object):
 		col -- The color to check.
 
 		Exceptions:
-		Raises a runtime_error if col is not a valid color.
+		Raises a osexception if col is not a valid color.
 
 		Example:
 		>>> # Ok
 		>>> print self.color_check('red')
 		>>> # Ok
 		>>> print self.color_check('#FFFFFF')
-		>>> # Raises runtime_error
+		>>> # Raises osexception
 		>>> print self.color_check('this is not a color')
 		</DOC>"""
 
@@ -942,9 +935,9 @@ class item(object):
 				col = str(col)
 			pygame.Color(col)
 		except Exception as e:
-			raise exceptions.script_error( \
+			raise osexception( \
 				u"'%s' is not a valid color. See http://www.w3schools.com/html/html_colornames.asp for an overview of valid color names" \
-				% self.unistr(col))
+				% self.unistr(col), exception=e)
 
 	def sleep(self, ms):
 
@@ -959,7 +952,7 @@ class item(object):
 		</DOC>"""
 
 		# This function is set by item.prepare()
-		raise exceptions.runtime_error( \
+		raise osexception( \
 			u'item.sleep(): This function should be set by the canvas backend.')
 
 	def time(self):
@@ -975,7 +968,7 @@ class item(object):
 		</DOC>"""
 
 		# This function is set by item.prepare()
-		raise exceptions.runtime_error( \
+		raise osexception( \
 			u"item.time(): This function should be set by the canvas backend.")
 
 	def log(self, msg):
@@ -990,7 +983,7 @@ class item(object):
 		>>> self.log('TIMESTAMP = %s' % self.time())
 		</DOC>"""
 
-		self.experiment._log.write(u"%s\n" % msg)
+		self.experiment._log.write(u'%s\n' % msg)
 
 	def flush_log(self):
 

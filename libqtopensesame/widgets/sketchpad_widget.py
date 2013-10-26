@@ -23,7 +23,8 @@ __license__ = "GPLv3"
 import math
 import os
 import numbers
-from libopensesame import exceptions, debug
+from libopensesame.exceptions import osexception
+from libopensesame import debug
 from libqtopensesame.ui import sketchpad_widget_ui, gabor_dialog_ui, \
 	noise_patch_dialog_ui
 from libqtopensesame.widgets import pool_widget
@@ -307,7 +308,7 @@ class canvas(QtGui.QGraphicsScene):
 		self.delete_item(item)
 		try:
 			self.sketchpad_widget.sketchpad.from_string(s)
-		except exceptions.script_error as e:
+		except osexception as e:
 			self.sketchpad_widget.sketchpad.items = tmp
 			self.sketchpad_widget.sketchpad.experiment.notify(e)
 
@@ -423,6 +424,7 @@ class sketchpad_widget(QtGui.QWidget):
 		self.ui.spin_arrow_size.valueChanged.connect(self.set_tool)
 		self.ui.checkbox_fill.stateChanged.connect(self.set_tool)
 		self.ui.checkbox_center.stateChanged.connect(self.set_tool)
+		self.ui.checkbox_html.stateChanged.connect(self.set_tool)
 		self.ui.checkbox_show_grid.stateChanged.connect(self.set_tool)
 		self.ui.edit_show_if.editingFinished.connect(self.set_tool)
 
@@ -461,6 +463,7 @@ class sketchpad_widget(QtGui.QWidget):
 		self.ui.spin_arrow_size.hide()
 		self.ui.checkbox_fill.hide()
 		self.ui.checkbox_center.hide()
+		self.ui.checkbox_html.hide()
 		self.ui.widget_font.hide()
 
 		self.ui.label_options.hide()
@@ -563,6 +566,7 @@ class sketchpad_widget(QtGui.QWidget):
 		self.ui.button_textline.setChecked(True)
 		self.ui.edit_color.show()
 		self.ui.checkbox_center.show()
+		self.ui.checkbox_html.show()
 		self.ui.label_color.show()
 		self.ui.widget_font.show()
 		self.set_tool()
@@ -642,6 +646,7 @@ class sketchpad_widget(QtGui.QWidget):
 			item["y"] = to_pos[1]
 			item["text"] = self.sketchpad.experiment.sanitize(text)
 			item["center"] = self.center
+			item["html"] = self.html
 			item["font_family"] = self.font_family
 			item["font_size"] = self.font_size
 			item["font_italic"] = self.sketchpad.experiment.auto_type( \
@@ -1036,6 +1041,10 @@ class sketchpad_widget(QtGui.QWidget):
 		self.font_bold = self.ui.widget_font.bold
 		self.show_if = self.sketchpad.experiment.sanitize( \
 			self.ui.edit_show_if.text())
+		if self.ui.checkbox_html.isChecked():
+			self.html = u'yes'
+		else:
+			self.html = u'no'
 
 		if self.ui.button_line.isChecked():
 			self.tool = u'line'

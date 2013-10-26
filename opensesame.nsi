@@ -16,7 +16,11 @@
 ; USAGE
 ; -----
 ; This script assumes that the binary is located in
-; 	C:\Users\John Doe\Documents\gít\OpenSesame\dist
+; 	C:\Users\Dévélõpe®\Documents\gît\OpenSesame\dist
+;
+; The extension FileAssociation.nsh must be installed. This can be
+; done by downloading the script from the link below and copying it
+; to a file named FileAssociation.nsh in the Include folder of NSIS.
 
 ; For each new release, adjust the PRODUCT_VERSION as follows:
 ; 	version-win32-package#
@@ -26,7 +30,7 @@
 
 ; HM NIS Edit Wizard helper defines
 !define PRODUCT_NAME "OpenSesame"
-!define PRODUCT_VERSION "0.27.2-win32-1"
+!define PRODUCT_VERSION "0.27.4-win32-2"
 !define PRODUCT_PUBLISHER "Sebastiaan Mathot"
 !define PRODUCT_WEB_SITE "http://www.cogsci.nl"
 !define PRODUCT_UNINST_KEY "Software\Microsoft\Windows\CurrentVersion\Uninstall\${PRODUCT_NAME}"
@@ -38,7 +42,7 @@
 
 ; MUI Settings
 !define MUI_ABORTWARNING
-!define MUI_ICON "C:\Users\John Doe\Documents\gít\OpenSesame\resources\opensesame.ico"
+!define MUI_ICON "C:\Users\Dévélõpe®\Documents\gît\OpenSesame\resources\opensesame.ico"
 !define MUI_UNICON "${NSISDIR}\Contrib\Graphics\Icons\modern-uninstall.ico"
 
 ; Welcome page
@@ -68,7 +72,7 @@ ShowUnInstDetails hide
 Section "OpenSesame" SEC01
   SetOutPath "$INSTDIR"
   SetOverwrite try
-  File /r "C:\Users\John Doe\Documents\gít\OpenSesame\dist\*.*"
+  File /r "C:\Users\Dévélõpe®\Documents\gît\OpenSesame\dist\*.*"
   ${registerExtension} "$INSTDIR\opensesame.exe" ".opensesame" "OpenSesame script"
   ${registerExtension} "$INSTDIR\opensesame.exe" ".gz" "OpenSesame experiment archive"
 SectionEnd
@@ -102,17 +106,14 @@ Function un.onInit
 FunctionEnd
 
 Section Uninstall
-
   Delete "$SMPROGRAMS\OpenSesame\OpenSesame.lnk"
   Delete "$SMPROGRAMS\OpenSesame\OpenSesame (runtime).lnk"
   Delete "$SMPROGRAMS\OpenSesame\Website.lnk"
   Delete "$SMPROGRAMS\OpenSesame\Uninstall.lnk"
   RMDir "$SMPROGRAMS\OpenSesame"
-  RMDir /r "$INSTDIR"
-  
+  RMDir /r "$INSTDIR"  
   ${unregisterExtension} ".opensesame" "OpenSesame script"
   ${unregisterExtension} ".opensesame.tar.gz" "OpenSesame experiment"
-
   DeleteRegKey ${PRODUCT_UNINST_ROOT_KEY} "${PRODUCT_UNINST_KEY}"
   SetAutoClose true
 SectionEnd

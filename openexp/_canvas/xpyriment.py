@@ -20,15 +20,15 @@ along with openexp.  If not, see <http://www.gnu.org/licenses/>.
 import numpy as np
 import copy
 import openexp._canvas.legacy
-import openexp.exceptions
+from libopensesame.exceptions import osexception
 import pygame
 try:
 	from expyriment import control, stimuli, misc, io
 	from expyriment.misc.geometry import coordinates2position, \
 		points_to_vertices as p2v
 except:
-	raise openexp.exceptions.canvas_error(
-		'Failed to import expyriment, probably because it is not (correctly) installed. For installation instructions, please visit http://www.expyriment.org/.')
+	raise osexception(
+		u'Failed to import expyriment, probably because it is not (correctly) installed. For installation instructions, please visit http://www.expyriment.org/.')
 
 def c2p(pos):
 
@@ -52,10 +52,10 @@ class xpyriment(openexp._canvas.legacy.legacy):
 	"""This is a canvas backend built on top of Expyriment"""
 
 	settings = {
-		"expyriment_opengl" : {
-			"name" : "Use OpenGL",
-			"description" : "Use OpenGL mode for better temporal precision",
-			"default" : "yes"
+		u"expyriment_opengl" : {
+			u"name" : u"Use OpenGL",
+			u"description" : u"Use OpenGL mode for better temporal precision",
+			u"default" : u"yes"
 			},
 		}
 
@@ -67,15 +67,15 @@ class xpyriment(openexp._canvas.legacy.legacy):
 		self.auto_prepare = auto_prepare
 		self.prepared = False
 		if fgcolor == None:
-			fgcolor = self.experiment.get('foreground')
+			fgcolor = self.experiment.get(u'foreground')
 		if bgcolor == None:
-			bgcolor = self.experiment.get('background')
+			bgcolor = self.experiment.get(u'background')
 		self.set_fgcolor(fgcolor)
 		self.set_bgcolor(bgcolor)
 		self.set_font(style=self.experiment.font_family, size= \
-			self.experiment.font_size, bold=self.experiment.font_bold=='yes', \
-			italic=self.experiment.font_italic=='yes', underline= \
-			self.experiment.font_underline=='yes')
+			self.experiment.font_size, bold=self.experiment.font_bold==u'yes', \
+			italic=self.experiment.font_italic==u'yes', underline= \
+			self.experiment.font_underline==u'yes')
 		self.penwidth = 1
 		self.aa = 10
 		self.clear()
@@ -85,8 +85,8 @@ class xpyriment(openexp._canvas.legacy.legacy):
 		"""See openexp._canvas.legacy"""
 
 		# TODO
-		raise openexp.exceptions.canvas_error( \
-			"openexp._canvas.xpyriment.flip(): the flip() function has not been implemented for the xpyriment back-end!")
+		raise osexception( \
+			u"openexp._canvas.xpyriment.flip(): the flip() function has not been implemented for the xpyriment back-end!")
 
 	def copy(self, canvas):
 
@@ -146,6 +146,7 @@ class xpyriment(openexp._canvas.legacy.legacy):
 
 		if not self.prepared: self.prepare()
 		self._canvas.present()
+		self.experiment.last_shown_canvas = self._canvas
 		return self.experiment.time()
 
 	def clear(self, color=None):
@@ -155,6 +156,7 @@ class xpyriment(openexp._canvas.legacy.legacy):
 		if color != None: self._canvas_color = self.color(color)
 		else: self._canvas_color = self.bgcolor
 		self.stim_list = []
+		self.prepare()
 
 	def fixdot(self, x=None, y=None, color=None):
 
@@ -254,7 +256,7 @@ class xpyriment(openexp._canvas.legacy.legacy):
 		"""See openexp._canvas.legacy"""
 
 		try:
-			_font = self.experiment.resource("%s.ttf" % self.font_style)
+			_font = self.experiment.resource(u"%s.ttf" % self.font_style)
 		except:
 			_font = self.font_style
 		stim = stimuli.TextLine(text, text_font=_font, \
@@ -268,7 +270,7 @@ class xpyriment(openexp._canvas.legacy.legacy):
 		"""See openexp._canvas.legacy"""
 
 		try:
-			_font = self.experiment.resource("%s.ttf" % self.font_style)
+			_font = self.experiment.resource(u"%s.ttf" % self.font_style)
 		except:
 			_font = self.font_style
 
@@ -297,7 +299,11 @@ class xpyriment(openexp._canvas.legacy.legacy):
 		if x == None: x = self.xcenter()
 		if y == None: y = self.ycenter()
 		if center == False:
-			surf = pygame.image.load(fname)
+			if isinstance(fname, unicode):
+				_fname = fname.encode(self.experiment.encoding)
+			else:
+				_fname = fname
+			surf = pygame.image.load(_fname)
 			if scale == None:
 				x += surf.get_width()/2
 				y += surf.get_height()/2
@@ -308,8 +314,8 @@ class xpyriment(openexp._canvas.legacy.legacy):
 		if scale != None: stim.scale( (scale, scale) )
 		self.add_stim(stim)
 
-	def gabor(self, x, y, orient, freq, env="gaussian", size=96, stdev=12, \
-		phase=0, col1="white", col2="black", bgmode="avg"):
+	def gabor(self, x, y, orient, freq, env=u"gaussian", size=96, stdev=12, \
+		phase=0, col1=u"white", col2=u"black", bgmode=u"avg"):
 
 		"""See openexp._canvas.legacy"""
 
@@ -319,8 +325,8 @@ class xpyriment(openexp._canvas.legacy.legacy):
 		stim._surface = surface
 		self.add_stim(stim)
 
-	def noise_patch(self, x, y, env="gaussian", size=96, stdev=12, \
-		col1="white", col2="black", bgmode="avg"):
+	def noise_patch(self, x, y, env=u"gaussian", size=96, stdev=12, \
+		col1=u"white", col2=u"black", bgmode=u"avg"):
 
 		"""See openexp._canvas.legacy"""
 
@@ -344,16 +350,16 @@ def init_display(experiment):
 	io.defaults.mouse_track_button_events = False
 	control.defaults.initialize_delay = 0
 	control.defaults.event_logging = 0
-	control.defaults.window_mode = experiment.get('fullscreen') == 'no'
+	control.defaults.window_mode = experiment.get(u'fullscreen') == u'no'
 	control.defaults.fast_quit = True
 	control.defaults.window_size = experiment.resolution()
 	control.defaults.auto_create_subject_id = True
-	control.defaults.open_gl = experiment.get_check('expyriment_opengl', \
-		xpyriment.settings['expyriment_opengl']['default']) == 'yes'
-	control.defaults.audiosystem_sample_rate = experiment.get('sound_freq')
-	control.defaults.audiosystem_bit_depth = experiment.get('sound_sample_size')
-	control.defaults.audiosystem_channels = experiment.get('sound_channels')
-	control.defaults.audiosystem_buffer_size = experiment.get('sound_buf_size')
+	control.defaults.open_gl = experiment.get_check(u'expyriment_opengl', \
+		xpyriment.settings[u'expyriment_opengl'][u'default']) == u'yes'
+	control.defaults.audiosystem_sample_rate = experiment.get(u'sound_freq')
+	control.defaults.audiosystem_bit_depth = experiment.get(u'sound_sample_size')
+	control.defaults.audiosystem_channels = experiment.get(u'sound_channels')
+	control.defaults.audiosystem_buffer_size = experiment.get(u'sound_buf_size')
 
 	# Initialize
 	exp = control.initialize()
@@ -366,7 +372,7 @@ def init_display(experiment):
 
 	# TODO: In order to set the window title and to allow mouse responses we
 	# need to bypass expyriment for now
-	pygame.display.set_caption('OpenSesame (Expyriment backend)')
+	pygame.display.set_caption(u'OpenSesame (Expyriment backend)')
 	pygame.event.set_allowed(pygame.MOUSEBUTTONDOWN)
 	pygame.event.set_allowed(pygame.MOUSEBUTTONUP)
 

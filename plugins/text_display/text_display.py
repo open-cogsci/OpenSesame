@@ -15,8 +15,8 @@ You should have received a copy of the GNU General Public License
 along with opensesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
-
-from libopensesame import item, generic_response, exceptions
+from libopensesame.exceptions import osexception
+from libopensesame import item, generic_response
 from libqtopensesame import qtplugin
 import openexp.canvas
 import os.path
@@ -25,6 +25,8 @@ from PyQt4 import QtGui, QtCore
 class text_display(item.item, generic_response.generic_response):
 
 	"""Basic text display plug-in"""
+    
+	description = u"Presents a display consisting of text"
 
 	def __init__(self, name, experiment, string=None):
 
@@ -39,26 +41,12 @@ class text_display(item.item, generic_response.generic_response):
 		string -- a definition string (default=None)
 		"""
 
-		self.item_type = "text_display"
-		self.description = "Presents a display consisting of text"
-		self.duration = "keypress"
-		self.align = "center"
-		self.content = "Enter your text here."
+		self.duration = u"keypress"
+		self.align = u"center"
+		self.content = u"Enter your text here."
 		self.maxchar = 50
-
 		# Pass the word on to the parent
 		item.item.__init__(self, name, experiment, string)
-
-		# These lines makes sure that the icons and help file are recognized by
-		# OpenSesame. Copy-paste these lines at the end of your plugin's
-		# constructor
-		self.experiment.resources["%s.png" % self.item_type] = os.path.join( \
-			os.path.split(__file__)[0], "%s.png" % self.item_type)
-		self.experiment.resources["%s_large.png" % self.item_type] = \
-			os.path.join(os.path.split(__file__)[0], "%s_large.png" % \
-			self.item_type)
-		self.experiment.resources["%s.html" % self.item_type] = os.path.join( \
-			os.path.split(__file__)[0], "%s.html" % self.item_type)
 
 	def prepare(self):
 
@@ -85,7 +73,7 @@ class text_display(item.item, generic_response.generic_response):
 			while len(line) > self.get("maxchar"):
 				i = line.rfind(" ", 0, self.get("maxchar"))
 				if i < 0:
-					raise exceptions.runtime_error( \
+					raise osexception( \
 						"Failed to do line wrapping in text_display '%s'. Perhaps one of the words is longer than the maximum number of characters per line?" \
 						% self.name)
 				_content.append(line[:i])
@@ -103,7 +91,7 @@ class text_display(item.item, generic_response.generic_response):
 					max_width = max(max_width, size[0])
 					max_height = max(max_height, size[1])
 			except:
-				raise exceptions.runtime_error( \
+				raise osexception( \
 					"Failed to use alignment '%s' in text_display '%s'. Perhaps this alignment is not supported by the back-end. Please use 'center' alignment." \
 					% (self.get("align"), self.name))
 

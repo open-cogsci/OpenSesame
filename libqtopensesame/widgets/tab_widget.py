@@ -34,11 +34,28 @@ class tab_widget(QtGui.QTabWidget):
 		parent -- the parent QWidget
 		"""	
 	
-		QtGui.QTabWidget.__init__(self, parent)		
-		self.tabCloseRequested.connect(self.removeTab)				
+		QtGui.QTabWidget.__init__(self, parent)
+		try:
+			self.tabCloseRequested.connect(self.removeTab)
+		except:
+			# Catch what appears to be a bug in earlier versions of PyQt4.
+			self.tabCloseRequested.connect(self._removeTab)
 		self.currentChanged.connect(self.index_changed)
 		self.setSizePolicy(QtGui.QSizePolicy.MinimumExpanding, \
 			QtGui.QSizePolicy.MinimumExpanding)
+		
+	def _removeTab(self, i):
+		
+		"""
+		This is simply a wrapper around QTabWidget.removeTab(). For some reason,
+		connecting this function to tabCloseRequested causes an exception on
+		older versions of PyQt4. This functions is a workaround.
+		
+		Arguments:
+		i		--	The index of the tab to close.
+		"""
+		
+		self.removeTab(i)
 		
 	def add(self, widget, icon, name):
 	
@@ -59,7 +76,7 @@ class tab_widget(QtGui.QTabWidget):
 		"""Close all tabs"""
 		
 		while self.count() > 0:
-			self.removeTab(0)		
+			self.removeTab(0)
 			
 	def close_current(self):
 		
@@ -91,7 +108,7 @@ class tab_widget(QtGui.QTabWidget):
 
 		for i in range(self.count()):
 			w = self.widget(i)
-			if (hasattr(w, "tab_name") and w.tab_name == tab_name) or \
+			if (hasattr(w, u"tab_name") and w.tab_name == tab_name) or \
 				(hasattr(w, tab_name)):
 				return i
 		return None			
@@ -110,7 +127,7 @@ class tab_widget(QtGui.QTabWidget):
 			
 		for i in range(self.count()):
 			w = self.widget(i)
-			if (hasattr(w, "__edit_item__") and w.__edit_item__ == item):
+			if (hasattr(w, u"__edit_item__") and w.__edit_item__ == item):
 				return i
 		return None
 					
@@ -136,7 +153,7 @@ class tab_widget(QtGui.QTabWidget):
 
 		"""Open the about help tab"""
 
-		self.open_help("About", "about")				
+		self.open_browser(u'http://osdoc.cogsci.nl/about/')
 		
 	def open_browser(self, url):
 	
@@ -150,100 +167,108 @@ class tab_widget(QtGui.QTabWidget):
 		from libqtopensesame.widgets import webbrowser		
 		browser = webbrowser.webbrowser(self.main_window)
 		browser.load(url)
-		self.add(browser, "web-browser", 'Help')
+		self.add(browser, u"web-browser", u'Help')
 			
-	def open_help(self, title, item):
+	def open_help(self, item):
 
 		"""
-		Open a help tab for the specified item. Looks for a file
-		called [item].html in the resources folder.
+		Open a help tab for the specified item. Looks for a file called
+		[item].html or [item.md] in the resources folder.
 
 		Arguments:
-		title -- the tab title
 		item -- the item for which help should be displayed
 		"""
 
-		self.open_browser(self.main_window.experiment.help("%s.html" % item))
+		import os
+		md_path = self.main_window.experiment.help(item + u'.md')
+		html_path = self.main_window.experiment.help(item + u'.html')
+		if os.path.exists(md_path):
+			path = md_path
+		elif os.path.exists(html_path):
+			path = html_path
+		else:
+			path = self.main_window.experiment.help(u'missing.md')
+		self.open_browser(path)
 		
 	def open_backend_settings(self):
 	
 		"""Opens the backend settings"""
 				
-		if self.switch('__backend_settings__'):
+		if self.switch(u'__backend_settings__'):
 			return
 		from libqtopensesame.widgets.backend_settings import backend_settings
-		self.add(backend_settings(self.main_window), 'backend', \
-			'Back-end settings')	
+		self.add(backend_settings(self.main_window), u'backend', \
+			u'Back-end settings')	
 			
 	def open_forum(self):
 	
 		"""Open osdoc.cogsci.nl"""
 	
-		self.open_browser('http://forum.cogsci.nl')								
+		self.open_browser(u'http://forum.cogsci.nl')								
 		
 	def open_general(self):
 
 		"""Opens the general tab"""
 
-		if self.switch('__general_properties__'):
+		if self.switch(u'__general_properties__'):
 			return			
 		from libqtopensesame.widgets.general_properties import general_properties
 		w = general_properties(self.main_window)		
-		self.add(w, 'experiment', 'General properties')
+		self.add(w, u'experiment', u'General properties')
 
 	def open_general_help(self):
 
 		"""Open the general help tab"""
 
-		self.open_help("Help: General", "general")
+		self.open_help(u'general')
 		
 	def open_general_script(self):
 	
 		"""Opens the general script editor"""
 				
-		if self.switch('__general_script__'):
+		if self.switch(u'__general_script__'):
 			return
 		from libqtopensesame.widgets.general_script_editor import \
 			general_script_editor
-		self.add(general_script_editor(self.main_window), 'terminal', \
-			'General script editor')	
+		self.add(general_script_editor(self.main_window), u'terminal', \
+			u'General script editor')	
 			
 	def open_osdoc(self):
 	
 		"""Open osdoc.cogsci.nl"""
 	
-		self.open_browser('http://osdoc.cogsci.nl')			
+		self.open_browser(u'http://osdoc.cogsci.nl')
 
 	def open_stdout_help(self):
 
 		"""Open the debug window help tab"""
 
-		self.open_help("Help: Debug window", "stdout")
+		self.open_help(u'stdout')
 		
 	def open_unused(self):
 
 		"""Opens the unused tab"""
 
-		if self.switch('__general__'):
-			return			
+		if self.switch(u'__general__'):
+			return
 		from libqtopensesame.widgets.unused_widget import unused_widget
 		w = unused_widget(self.main_window)		
-		self.add(w, 'unused', 'Unused items')		
+		self.add(w, u'unused', u'Unused items')		
 
 	def open_variables_help(self):
 
 		"""Open the variable inspector help tab"""
 
-		self.open_help("Help: Variable inspector", "variables")
+		self.open_help(u'variables')
 
 	def open_preferences(self):
 
 		"""Open the preferences tab"""
 
 		from libqtopensesame.widgets import preferences_widget
-		if not self.switch("__preferences__"):
+		if not self.switch(u"__preferences__"):
 			self.add(preferences_widget.preferences_widget(self.main_window), \
-				"options", "Preferences")	
+				u"options", u"Preferences")	
 				
 	def open_start_new(self, start=False):
 
@@ -257,14 +282,14 @@ class tab_widget(QtGui.QTabWidget):
 		"""
 
 		if start:
-			if self.switch('__start_wizard__'):
-				return			
+			if self.switch(u'__start_wizard__'):
+				return
 		else:
-			if self.switch('__new_wizard__'):
-				return			 
+			if self.switch(u'__new_wizard__'):
+				return
 		from libqtopensesame.widgets.start_new_widget import start_new_widget
 		w = start_new_widget(self.main_window, start=start)		
-		self.add(w, 'os-experiment', 'Get started')
+		self.add(w, u'os-experiment', u'Get started')
 		
 	def switch(self, tab_name):
 	
@@ -285,13 +310,13 @@ class tab_widget(QtGui.QTabWidget):
 
 		"""Toggles onetabmode"""
 
-		config.set_config("onetabmode", \
+		config.set_config(u"onetabmode", \
 			self.main_window.ui.action_onetabmode.isChecked())
-		if config.get_config("onetabmode"):
+		if config.get_config(u"onetabmode"):
 			self.close_other()
-		self.setTabsClosable(not config.get_config("onetabmode"))
+		self.setTabsClosable(not config.get_config(u"onetabmode"))
 		self.main_window.ui.action_close_other_tabs.setEnabled(not \
-			config.get_config("onetabmode"))
+			config.get_config(u"onetabmode"))
 			
 	def index_changed(self, index):
 
@@ -302,9 +327,9 @@ class tab_widget(QtGui.QTabWidget):
 		index -- the index of the new tab
 		"""
 
-		if config.get_config("onetabmode"):
+		if config.get_config(u"onetabmode"):
 			self.close_other()
 		w = self.currentWidget()
-		if hasattr(w, 'on_activate'):
+		if hasattr(w, u'on_activate'):
 			w.on_activate()
 	

@@ -17,7 +17,8 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
-from libopensesame import item, exceptions
+from libopensesame.exceptions import osexception
+from libopensesame import item
 import openexp.keyboard
 
 class sequence(item.item):
@@ -101,7 +102,7 @@ class sequence(item.item):
 		self._items = []
 		for _item, cond in self.items:
 			if _item not in self.experiment.items:			
-				raise exceptions.runtime_error( \
+				raise osexception( \
 					u"Could not find item '%s', which is called by sequence item '%s'" \
 					% (_item, self.name))
 			self.experiment.items[_item].prepare()				
