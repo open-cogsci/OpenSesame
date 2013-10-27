@@ -356,17 +356,15 @@ class qtplugin(qtitem.qtitem):
 		"""
 		
 		from QProgEdit import QTabManager
-		label = QtGui.QLabel(label)		
 		if syntax:
 			lang = u'python'
 		else:
 			lang = u'text'
 		qprogedit = QTabManager(handler=self.apply_edit_changes, defaultLang= \
 			lang, cfg=cfg)
-		qprogedit.addTab(u'Script')
+		qprogedit.addTab(label)
 		if var != None:
 			self.auto_editor[var] = qprogedit
-		self.edit_vbox.addWidget(label)
 		self.edit_vbox.addWidget(qprogedit)
 		return qprogedit
 
