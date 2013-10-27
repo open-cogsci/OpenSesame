@@ -21,7 +21,7 @@ import os
 import os.path
 import sys
 
-version = u'2.8.0~pre4'
+version = u'2.8.0~pre5'
 codename = u'Gutsy Gibson'
 
 use_global_resources = '--no-global-resources' not in sys.argv
@@ -268,6 +268,13 @@ def module_versions():
 		s += u'\nOpenCV2 %s' % ver
 	except:
 		s += u'\nOpenCV 2 is not available'
+		
+	# QProgEdit
+	try:
+		import QProgEdit
+		s += u'\nQProgedit %s' % QProgEdit.version
+	except:
+		s += u'\nQProgEdit is not available'
 
 	# Expyriment
 	try:
