@@ -21,6 +21,7 @@ from libopensesame import debug, misc
 import libopensesame.inline_script
 from libqtopensesame.items import qtitem
 from libqtopensesame.misc import _, config
+from libqtopensesame.misc.config import cfg
 import random
 import re
 import sys
@@ -75,7 +76,7 @@ class inline_script(libopensesame.inline_script.inline_script, qtitem.qtitem):
 		from QProgEdit import QTabManager
 		qtitem.qtitem.init_edit_widget(self, False)
 		self.qprogedit = QTabManager(handler=self.apply_edit_changes, \
-			defaultLang=u'Python')
+			defaultLang=u'Python', cfg=cfg)
 		self.qprogedit.addTab(u'Prepare')
 		self.qprogedit.addTab(u'Run')
 		# Switch to the run phase, unless there is only content for the prepare

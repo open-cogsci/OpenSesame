@@ -281,7 +281,7 @@ class qtitem(QtCore.QObject):
 		"""
 
 		debug.msg(self.name)
-		script = self.qprogedit.text()
+		script = self.script_qprogedit.text()
 		# Create a new item and make it a clone of the current item
 		item = self.experiment.main_window.add_item(self.item_type, False, \
 			name=self.name, interactive=False)
@@ -321,11 +321,11 @@ class qtitem(QtCore.QObject):
 		"""Build the script tab"""
 
 		from QProgEdit import QTabManager
-		self.qprogedit = QTabManager(handler=self.apply_script_and_close, \
+		self.script_qprogedit = QTabManager(handler=self.apply_script_and_close, \
 			defaultLang=u'OpenSesame', handlerButtonText= \
 			_(u'Apply and close script editor'), callHandlerOnFocusOut=False,
 			cfg=cfg)
-		self.qprogedit.addTab(u'Script')
+		self.script_qprogedit.addTab(u'Script')
 		
 		hbox = QtGui.QHBoxLayout()
 		hbox.addWidget(self.experiment.label_image(u"%s" % self.item_type))
@@ -338,7 +338,7 @@ class qtitem(QtCore.QObject):
 
 		vbox = QtGui.QVBoxLayout()
 		vbox.addWidget(hwidget)
-		vbox.addWidget(self.qprogedit)
+		vbox.addWidget(self.script_qprogedit)
 		self._script_widget = QtGui.QWidget()
 		self._script_widget.setLayout(vbox)
 		self._script_widget.__script_item__ = self.name
@@ -358,7 +358,7 @@ class qtitem(QtCore.QObject):
 		script = u""
 		for s in self.to_string().split(u"\n")[1:]:
 			script += self.strip_script_line(s)
-		self.qprogedit.setText(script)
+		self.script_qprogedit.setText(script)
 		self._script_widget.__script_item__ = self.name
 		return self._script_widget
 
@@ -561,7 +561,7 @@ class qtitem(QtCore.QObject):
 		True if some action has been taken, False if nothing was done
 		"""
 
-		if self.qprogedit.isModified():
+		if self.script_qprogedit.isModified():
 			debug.msg(u'applying pending script changes')
 			self.apply_script_changes(catch=False)
 			return True

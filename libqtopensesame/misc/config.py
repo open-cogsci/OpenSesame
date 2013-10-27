@@ -75,7 +75,7 @@ class config(object):
 		u'qProgEditShowIndent' : False,
 		u'qProgEditShowFolding' : True,
 		u'qProgEditAutoComplete' : True,
-		u'qProgEditColorScheme' : u'TangoDark',
+		u'qProgEditColorScheme' : u'Default',
 		u"quick_run_logfile": u"quickrun.csv",
 		u"recent_files" : u"",
 		u"scintilla_line_numbers" : True,
@@ -115,7 +115,9 @@ class config(object):
 		u"theme" : u"gnome"
 		}
 	config_mac = {}
-	config_windows = {}
+	config_windows = {
+		u'qProgEditFontFamily' : u'Courier New'
+		}
 
 	def __init__(self):
 
