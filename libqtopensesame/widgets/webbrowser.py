@@ -86,7 +86,8 @@ class webbrowser(QtGui.QWidget):
 				html += u'<style type="text/css">%s</style>' % \
 					open(self.main_window.theme.resource( \
 					u'markdown.css')).read()
-			except:
+			except Exception as e:
+				debug.msg(self.main_window.experiment.unistr(e))
 				html = \
 					u'<p>Python markdown must be installed to view this page. Sorry!</p>'
 			self.ui.webview.setHtml(html, QtCore.QUrl(url))
