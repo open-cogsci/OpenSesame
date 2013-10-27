@@ -61,6 +61,21 @@ class config(object):
 		u"locale" : u"default",
 		u"loop_wizard" : QtCore.QStringList(),
 		u"onetabmode" : False,
+		u'qProgEditFontFamily' : u'Monospace',
+		u'qProgEditFontSize' : 10,
+		u'qProgEditLineNumbers' : True,
+		u'qProgEditHighlightCurrentLine' : False,
+		u'qProgEditHighlightMatchingBrackets' : True,
+		u'qProgEditWordWrapMarker' : 80,
+		u'qProgEditWordWrap' : True,
+		u'qProgEditTabWidth' : 4,
+		u'qProgEditAutoIndent' : True,
+		u'qProgEditShowEol' : False,
+		u'qProgEditShowWhitespace' : False,
+		u'qProgEditShowIndent' : False,
+		u'qProgEditShowFolding' : True,
+		u'qProgEditAutoComplete' : True,
+		u'qProgEditColorScheme' : u'Default',
 		u"quick_run_logfile": u"quickrun.csv",
 		u"recent_files" : u"",
 		u"scintilla_line_numbers" : True,
@@ -100,7 +115,9 @@ class config(object):
 		u"theme" : u"gnome"
 		}
 	config_mac = {}
-	config_windows = {}
+	config_windows = {
+		u'qProgEditFontFamily' : u'Courier New'
+		}
 
 	def __init__(self):
 
@@ -251,6 +268,17 @@ class config(object):
 		for setting, value in self.config.items():
 			if setting != u"cfg_ver":
 				qsettings.setValue(setting, value)
+				
+	def version(self):
+		
+		"""
+		Gets the current version of the config.
+		
+		Returns:
+		The config version.
+		"""
+
+		return self.cfg_ver
 
 # Old style API. See explanation above
 def get_config(setting):
