@@ -17,9 +17,9 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
+import os
 import sys
 from libqtopensesame.runners import base_runner
-from StringIO import StringIO
 from PyQt4 import QtGui
 from libopensesame.exceptions import osexception
 
@@ -32,7 +32,19 @@ class multiprocess_runner(base_runner):
 		"""See base_runner.execute()."""
 		
 		import multiprocessing
-		from libqtopensesame.misc import process
+		from libqtopensesame.misc import process, _
+		from libopensesame import misc, debug
+		from StringIO import StringIO
+		
+		# If opensesame.pyc does not yet exist, compile it, so that the new
+		# process can use it. This hack is required, because the multiprocessing
+		# functionality does not recognize Python scripts without a `.py` or
+		# `.pyc` extension.
+		os_folder = misc.opensesame_folder()
+		if not os.path.exists(os.path.join(os_folder, u'opensesame.pyc')) \
+			and not os.path.exists(os.path.join(os_folder, u'opensesame.py')):
+			return osexception( \
+				_(u'Failed to find `opensesame.py` or `opensesame.pyc` in the program folder. To fix this, simply copy the main script file `opensesame` to `opensesame.py`. Alternatively, you can select a different runner under Preferences.'))					
 		self.channel = multiprocessing.Queue()
 		self.exp_process = process.ExperimentProcess(self.experiment, \
 			self.channel)
