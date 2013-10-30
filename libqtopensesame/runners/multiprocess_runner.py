@@ -34,17 +34,22 @@ class multiprocess_runner(base_runner):
 		import multiprocessing
 		from libqtopensesame.misc import process, _
 		from libopensesame import misc, debug
-		from StringIO import StringIO
-		
-		# If opensesame.pyc does not yet exist, compile it, so that the new
-		# process can use it. This hack is required, because the multiprocessing
-		# functionality does not recognize Python scripts without a `.py` or
-		# `.pyc` extension.
-		os_folder = misc.opensesame_folder()
-		if not os.path.exists(os.path.join(os_folder, u'opensesame.pyc')) \
-			and not os.path.exists(os.path.join(os_folder, u'opensesame.py')):
-			return osexception( \
-				_(u'Failed to find `opensesame.py` or `opensesame.pyc` in the program folder. To fix this, simply copy the main script file `opensesame` to `opensesame.py`. Alternatively, you can select a different runner under Preferences.'))					
+		from StringIO import StringIO				
+		if os.name == u'nt':
+			# Under Windows, the multiprocess runner assumes that there is a
+			# file called `opensesame.py` or `opensesame.pyc`. If this file does
+			# not exist, try to copy it from the main script (`opensesame`). If
+			# this fails, provide an informative error message.
+			os_folder = misc.opensesame_folder()
+			if not os.path.exists(os.path.join(os_folder, u'opensesame.pyc')) \
+				and not os.path.exists(os.path.join(os_folder, u'opensesame.py')):			
+				import shutil
+				try:
+					shutil.copyfile(os.path.join(os_folder, u'opensesame'), \
+						os.path.join(os_folder, u'opensesame.py'))
+				except Exception as e:			
+					return osexception( \
+						_(u'Failed to copy `opensesame` to `opensesame.py`, which is required for the multiprocess runner. Please copy the file manually, or select a different runner under Preferences.'), exception=e)
 		self.channel = multiprocessing.Queue()
 		self.exp_process = process.ExperimentProcess(self.experiment, \
 			self.channel)

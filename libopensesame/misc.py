@@ -267,7 +267,7 @@ def opensesame_folder():
 		# To get the opensesame folder, simply jump to levels up
 		path = os.path.dirname(__file__).decode( \
 			sys.getfilesystemencoding())
-		path = os.path.normpath(os.path.join(path, u'..', u'..'))
+		path = os.path.normpath(os.path.join(path, u'..'))
 	return path
 
 def module_versions():
