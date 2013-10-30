@@ -37,7 +37,7 @@ if __name__ == u'__main__':
 			path = os.path.dirname(sys.executable)
 		else:
 			path = os.path.dirname(__file__)
-		if path != u'':
+		if path != '':
 			os.chdir(path)
 			if path not in sys.path:
 				sys.path.append(path)
