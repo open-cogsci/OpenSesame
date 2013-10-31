@@ -1,6 +1,14 @@
-opensesame (2.8.0~pre2-ubuntu1) raring; urgency=low
+opensesame (2.8.0~pre5-ubuntu2) saucy; urgency=low
 
-  * Add runner functionality
+  * New functionality
+    - Add runner functionality
+    - Improved exception handling
+    - Migrate to QProgEdit editor component
+  * Bugs fixed
+    - Line wrapping causes double spaces (#203)
+    - Keywords to `decode()` break compatibility with Python < 2.7 (#201)
+  * Debian packaging
+    - Remove large template files
 
  -- Sebastiaan Mathot <s.mathot@cogsci.nl>  Fri, 13 Sep 2013 16:59:10 +0200
 

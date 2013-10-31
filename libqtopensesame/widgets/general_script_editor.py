@@ -19,9 +19,9 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 
 from PyQt4 import QtCore, QtGui
 from libqtopensesame.misc import _
-from libqtopensesame.widgets.inline_editor import inline_editor
 from libqtopensesame.ui.general_script_editor_ui import \
 	Ui_widget_general_script_editor
+from libqtopensesame.misc.config import cfg
 
 class general_script_editor(QtGui.QWidget):
 
@@ -36,13 +36,17 @@ class general_script_editor(QtGui.QWidget):
 		main_window -- the main window
 		"""	
 	
+		from QProgEdit import QTabManager
+		
 		self.main_window = main_window
 		QtGui.QWidget.__init__(self, main_window)
 		self.ui = Ui_widget_general_script_editor()
 		self.ui.setupUi(self)
-		self.ui.edit = inline_editor(self.main_window.experiment)
-		self.ui.edit.applied.connect(self._apply)
-		self.ui.layout_vbox.addWidget(self.ui.edit)
+		self.ui.qprogedit = QTabManager(handler=self._apply, defaultLang= \
+			u'OpenSesame', handlerButtonText=u'Apply', callHandlerOnFocusOut= \
+			False, cfg=cfg)
+		self.ui.qprogedit.addTab(u'General script')
+		self.ui.layout_vbox.addWidget(self.ui.qprogedit)
 		self.main_window.theme.apply_theme(self)
 		self.tab_name = '__general_script__'
 		
@@ -55,7 +59,8 @@ class general_script_editor(QtGui.QWidget):
 			QtGui.QMessageBox.Yes, QtGui.QMessageBox.No)
 		if resp == QtGui.QMessageBox.No:
 			return	
-		self.main_window.dispatch.event_regenerate.emit(self.ui.edit.getText())
+		self.main_window.dispatch.event_regenerate.emit( \
+			self.ui.qprogedit.text())
 				
 	def on_activate(self):
 		
@@ -67,4 +72,4 @@ class general_script_editor(QtGui.QWidget):
 	
 		"""Refresh the contents of the general script"""
 		
-		self.ui.edit.setText(self.main_window.experiment.to_string())
+		self.ui.qprogedit.setText(self.main_window.experiment.to_string())

@@ -33,7 +33,13 @@ try:
 	from psychopy import core, visual
 except:
 	raise osexception(
-		'Failed to import PsychoPy, probably because it is not (correctly) installed. For installation instructions, please visit http://www.psychopy.org/.')
+		u'Failed to import PsychoPy, probably because it is not (correctly) installed. For installation instructions, please visit http://www.psychopy.org/.')
+if not hasattr(visual, u'ImageStim'):
+	raise osexception( \
+		u'PsychoPy is missing the ImageStim() class. Please update your version of PsychoPy! For installation instructions, please visit http://www.psychopy.org/.')
+if not hasattr(visual, u'GratingStim'):
+	raise osexception( \
+		u'PsychoPy is missing the GratingStim() class. Please update your version of PsychoPy! For installation instructions, please visit http://www.psychopy.org/.')
 
 class psycho(openexp._canvas.legacy.legacy):
 
@@ -71,20 +77,21 @@ class psycho(openexp._canvas.legacy.legacy):
 		self.experiment = experiment
 		self.min_penwidth = 1
 		if fgcolor == None:
-			fgcolor = self.experiment.get("foreground")
+			fgcolor = self.experiment.get(u"foreground")
 		if bgcolor == None:
-			bgcolor = self.experiment.get("background")
+			bgcolor = self.experiment.get(u"background")
 		self.set_fgcolor(fgcolor)
 		self.set_bgcolor(bgcolor)
 		self.set_penwidth(1)
 		self.set_font(style=self.experiment.font_family, size= \
-			self.experiment.font_size, bold=self.experiment.font_bold=='yes', \
-			italic=self.experiment.font_italic=='yes', underline= \
-			self.experiment.font_underline=='yes')
+			self.experiment.font_size, bold=self.experiment.font_bold==u'yes', \
+			italic=self.experiment.font_italic==u'yes', underline= \
+			self.experiment.font_underline==u'yes')
 		# This font map converts the standard OpenSesame font names to ones that
 		# are acceptable to PsychoPy (or PyGlet actually). For now, the
 		# difference appears only to be capitalization.
-		self.font_map = {"sans" : "Sans", "serif" : "Serif", "mono" : "Mono"}
+		self.font_map = {u"sans" : u"Sans", u"serif" : u"Serif", u"mono" : \
+			u"Mono"}
 		self.clear()
 
 	def color(self, color):
@@ -110,7 +117,7 @@ class psycho(openexp._canvas.legacy.legacy):
 
 		# TODO
 		raise osexception( \
-			"openexp._canvas.psycho.flip(): the flip() function has not been implemented for the psycho back-end!")
+			u"openexp._canvas.psycho.flip(): the flip() function has not been implemented for the psycho back-end!")
 
 	def copy(self, canvas):
 
@@ -186,7 +193,7 @@ class psycho(openexp._canvas.legacy.legacy):
 				close=True)
 		else:
 			pos = x + w/2 - self.xcenter(), self.ycenter() - y - h/2
-			stim = visual.PatchStim(win = self.experiment.window, pos=pos, \
+			stim = visual.GratingStim(win=self.experiment.window, pos=pos, \
 				size=[w, h], color=color, tex=None, interpolate=False)
 			self.stim_list.append(stim)
 
@@ -201,13 +208,13 @@ class psycho(openexp._canvas.legacy.legacy):
 
 		pos = x - self.xcenter() + w/2, self.ycenter() - y - h/2
 
-		stim = visual.PatchStim(win = self.experiment.window, mask="circle", \
+		stim = visual.GratingStim(win=self.experiment.window, mask=u'circle', \
 			pos=pos, size=[w, h], color=color, tex=None, interpolate=True)
 		self.stim_list.append(stim)
 
 		if not fill:
-			stim = visual.PatchStim(win = self.experiment.window, \
-				mask="circle", pos=pos, size=[w-2*self.penwidth, \
+			stim = visual.GratingStim(win = self.experiment.window, \
+				mask=u'circle', pos=pos, size=[w-2*self.penwidth, \
 				h-2*self.penwidth], color=self.bgcolor, tex=None, \
 				interpolate=True)
 			self.stim_list.append(stim)
@@ -238,7 +245,7 @@ class psycho(openexp._canvas.legacy.legacy):
 			font = self.font_map[self.font_style]
 		pos = x - self.xcenter(), self.ycenter() - y
 		stim = visual.TextStim(win=self.experiment.window, text=text, \
-			alignHoriz='left', alignVert='top', pos=pos, color=self.fgcolor, \
+			alignHoriz=u'left', alignVert=u'top', pos=pos, color=self.fgcolor, \
 			font=font, height=self.font_size, wrapWidth=self.experiment.width, \
 			bold=self.font_bold, italic=self.font_italic)
 		self.stim_list.append(stim)
@@ -272,30 +279,30 @@ class psycho(openexp._canvas.legacy.legacy):
 			y += h/2
 		pos = x - self.xcenter(), self.ycenter() - y
 
-		stim = visual.PatchStim(win = self.experiment.window, tex=fname, \
+		stim = visual.ImageStim(win=self.experiment.window, image=fname, \
 			pos=pos, size=(w,h))
 		self.stim_list.append(stim)
 
-	def gabor(self, x, y, orient, freq, env="gaussian", size=96, stdev=12, \
-		phase=0, col1="white", col2=None, bgmode=None):
+	def gabor(self, x, y, orient, freq, env=u"gaussian", size=96, stdev=12, \
+		phase=0, col1=u"white", col2=None, bgmode=None):
 
 		"""See openexp._canvas.legacy"""
 
 		pos = x - self.xcenter(), self.ycenter() - y
 		_env, _size, s = self.env_to_mask(env, size, stdev)
-		p = visual.PatchStim(win=self.experiment.window, pos=pos, ori=-orient,
+		p = visual.GratingStim(win=self.experiment.window, pos=pos, ori=-orient,
 			mask=_env, size=_size, sf=freq, phase=phase, color=col1)
 		self.stim_list.append(p)
 
-	def noise_patch(self, x, y, env="gaussian", size=96, stdev=12, \
-		col1="white", col2="black", bgmode="avg"):
+	def noise_patch(self, x, y, env=u"gaussian", size=96, stdev=12, \
+		col1=u"white", col2=u"black", bgmode=u"avg"):
 
 		"""See openexp._canvas.legacy"""
 
 		pos = x - self.xcenter(), self.ycenter() - y
 		_env, _size, s = self.env_to_mask(env, size, stdev)
 		tex = 2*(np.random.random([s,s])-0.5)
-		p = visual.PatchStim(win=self.experiment.window, tex=tex, pos=pos,
+		p = visual.GratingStim(win=self.experiment.window, tex=tex, pos=pos,
 			mask=_env, size=_size, color=col1)
 		self.stim_list.append(p)
 
@@ -323,27 +330,25 @@ class psycho(openexp._canvas.legacy.legacy):
 		i = 2
 		while size / (i) > 0:
 			i = 2*i
-		print "size:", i
 		s = i
 
 		# Create a PsychoPy mask
-		if env == "c":
-			_env = "circle"
+		if env == u"c":
+			_env = u"circle"
 			_size = size
-		elif env == "g":
-			_env = "gauss"
+		elif env == u"g":
+			_env = u"gauss"
 			_size = 6*stdev
-		elif env == "r":
-			_env = "None"
+		elif env == u"r":
+			_env = u"None"
 			_size = size
-		elif env == "l":
+		elif env == u"l":
 			_env = np.zeros([s,s])
 			for x in range(s):
 				for y in range(s):
 					r = np.sqrt((x-s/2)**2+(y-s/2)**2)
 					_env[x,y] = (max(0, (0.5*s-r) / (0.5*s))-0.5)*2
 			_size = size
-
 		return	(_env, _size, s)
 
 	def shapestim(self, vertices, color=None, fill=False, fix_coor=True, \
@@ -432,10 +437,10 @@ def init_display(experiment):
 	if wintype == u"pyglet":
 		try:
 			experiment.window.winHandle.set_caption( \
-				'OpenSesame (PsychoPy backend)')
+				u'OpenSesame (PsychoPy backend)')
 		except:
 			debug.msg( \
-				'Failed to set Window caption. This may indicate a problem witb Pyglet.', \
+				u'Failed to set Window caption. This may indicate a problem witb Pyglet.', \
 				reason=warning)
 
 	core.quit = _psychopy_clean_quit

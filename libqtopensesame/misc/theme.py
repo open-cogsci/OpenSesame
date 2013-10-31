@@ -204,3 +204,17 @@ class theme:
 		self.main_window.ui.toolbar_items.setIconSize(QtCore.QSize(size, size))
 		self.main_window.ui.toolbar_items.build()
 
+	def resource(self, fname):
+		
+		"""
+		Retrieves the path to a resource within the theme folder.
+		
+		Arguments:
+		fname	--	The resource filename.
+		
+		Returns:
+		The full path to the resource file in the theme folder.
+		"""
+		
+		return os.path.join(self.theme_folder, fname)
+	

@@ -87,6 +87,7 @@ up. So the folder structure should be as follows:
 from distutils.core import setup
 import distutils.sysconfig as sysconfig
 import compileall
+import py_compile
 import glob
 import py2exe
 import os
@@ -140,6 +141,7 @@ python_version = "2.7"
 # preferred, as some packages (e.g. expyriment) do not work well when included
 # in the library.zip file that py2exe uses to store packages.
 copy_packages = [
+	'QProgEdit',
 	'libopensesame',
 	'openexp',
 	'expyriment',
@@ -152,7 +154,7 @@ copy_packages = [
 	'PIL',
 	'pygame',
 	'pyglet',
-	'libqtopensesame'
+	'libqtopensesame',
 	]
 
 # Packages that are part of the standard Python packages, but should not be
@@ -215,6 +217,7 @@ for pkg in copy_packages:
 	print 'copying packages %s ... ' % pkg
 	exec('import %s as _pkg' % pkg)
 	pkg_folder = os.path.dirname(_pkg.__file__)
+	print '\tfrom %s' % pkg_folder
 	pkg_target = os.path.join("dist", pkg)
 	shutil.copytree(pkg_folder, pkg_target, symlinks=True, \
 		ignore=ignore_package_files)
@@ -305,6 +308,10 @@ def ignore_resources(folder, files):
 			'ui'):
 			l.append(f)
 	return l
+	
+# Compiling opensesame to opensesame.pyc for the multiprocessing functionality
+print "compiling opensesame"
+py_compile.compile("opensesame", os.path.join("dist", "opensesame.pyc"))
 
 # Copy resource files
 print "copying resources"
