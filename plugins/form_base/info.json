@@ -1,0 +1,9 @@
+{
+	"category"	: "Form",
+	"controls" : [
+		{
+			"type"		: "text",
+			"label"		: "Edit the script to modify the form"
+		}
+	]
+}
