@@ -184,7 +184,7 @@ class form_base(item.item):
 
 			# Create the widget and add it to the form
 			try:
-				_w = eval(u'widgets.%s(self._form, **w)' % _type)
+				_w = getattr(widgets, _type)(self._form, **w)
 			except Exception as e:
 				raise osexception( \
 					u'Failed to create widget "%s": %s' % (_type, e))
