@@ -28,11 +28,10 @@ from PyQt4 import QtGui, QtCore
 
 class form_base(item.item):
 
-	"""A text input display"""
+	"""A generic form plug-in"""
 	
-	description = u'A generic form plug-in'
-
-	def __init__(self, name, experiment, script=None):
+	def __init__(self, name, experiment, script=None, item_type=u'form_base', \
+		description=u'A generic form plug-in'):
 
 		"""
 		Constructor
@@ -45,6 +44,8 @@ class form_base(item.item):
 		script		--	A definition script. (default=None)
 		"""
 
+		self.item_type = item_type
+		self.description = description
 		self.cols = u'2;2'
 		self.rows = u'2;2'
 		self.spacing = 10
