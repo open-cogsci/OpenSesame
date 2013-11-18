@@ -1,9 +1,10 @@
 opensesame (2.8.0~pre6-ubuntu1) saucy; urgency=low
 
-  * New functionality
+  * New functionality and improvements
     - Add runner functionality
     - Improved exception handling
     - Migrate to QProgEdit editor component
+    - Updated offline help pages
   * Bugs fixed
     - Line wrapping causes double spaces (#203)
     - Keywords to `decode()` break compatibility with Python < 2.7 (#201)
