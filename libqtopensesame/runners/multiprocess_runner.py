@@ -27,14 +27,14 @@ class multiprocess_runner(base_runner):
 	
 	"""Runs an experiment in another process using multiprocessing."""
 	
-	def execute(self):		
+	def execute(self):
 		
 		"""See base_runner.execute()."""
 		
 		import multiprocessing
 		from libqtopensesame.misc import process, _
 		from libopensesame import misc, debug
-		from StringIO import StringIO				
+		from StringIO import StringIO
 		if os.name == u'nt':
 			# Under Windows, the multiprocess runner assumes that there is a
 			# file called `opensesame.py` or `opensesame.pyc`. If this file does
@@ -42,7 +42,7 @@ class multiprocess_runner(base_runner):
 			# this fails, provide an informative error message.
 			os_folder = misc.opensesame_folder()
 			if not os.path.exists(os.path.join(os_folder, u'opensesame.pyc')) \
-				and not os.path.exists(os.path.join(os_folder, u'opensesame.py')):			
+				and not os.path.exists(os.path.join(os_folder, u'opensesame.py')):
 				import shutil
 				try:
 					shutil.copyfile(os.path.join(os_folder, u'opensesame'), \

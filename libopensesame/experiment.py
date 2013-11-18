@@ -64,7 +64,6 @@ class experiment(item.item):
 		self.start_response_interval = None
 		self.cleanup_functions = []
 		self.restart = False
-		self.experiment_path = experiment_path
 		self.title = u'My Experiment'
 		self.transparent_variables = u'no'
 
@@ -127,7 +126,7 @@ class experiment(item.item):
 			# - <http://bugs.python.org/issue1681974>
 			self.pool_folder = tempfile.mkdtemp(suffix= \
 				u'.opensesame_pool', dir=tempfile.gettempdir().decode( \
-				encoding=misc.filesystem_encoding()))				
+				encoding=misc.filesystem_encoding()))
 			pool_folders.append(self.pool_folder)
 			debug.msg(u'creating new pool folder')
 		else:
@@ -139,7 +138,10 @@ class experiment(item.item):
 		item.item.__init__(self, name, self, string)
 		
 		# Default subject info
-		self.set_subject(subject_nr)		
+		self.set_subject(subject_nr)
+		# Restore experiment path
+		if experiment_path != None:
+			self.experiment_path = experiment_path
 
 	def module_container(self):
 
