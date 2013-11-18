@@ -49,7 +49,7 @@ class mouse_response(item.item, generic_response.generic_response):
 		self.resp_codes = {}
 		self.resp_codes[None] = u'timeout'
 		self.resp_codes[1] = u'left_button'
-		self.resp_codes[2] = u'iddle_button'
+		self.resp_codes[2] = u'middle_button'
 		self.resp_codes[3] = u'right_button'
 		self.resp_codes[4] = u'scroll_up'
 		self.resp_codes[5] = u'scroll_down'

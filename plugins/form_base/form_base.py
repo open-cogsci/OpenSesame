@@ -28,11 +28,10 @@ from PyQt4 import QtGui, QtCore
 
 class form_base(item.item):
 
-	"""A text input display"""
+	"""A generic form plug-in"""
 	
-	description = u'A generic form plug-in'
-
-	def __init__(self, name, experiment, script=None):
+	def __init__(self, name, experiment, script=None, item_type=u'form_base', \
+		description=u'A generic form plug-in'):
 
 		"""
 		Constructor
@@ -45,6 +44,8 @@ class form_base(item.item):
 		script		--	A definition script. (default=None)
 		"""
 
+		self.item_type = item_type
+		self.description = description
 		self.cols = u'2;2'
 		self.rows = u'2;2'
 		self.spacing = 10
@@ -184,7 +185,7 @@ class form_base(item.item):
 
 			# Create the widget and add it to the form
 			try:
-				_w = eval(u'widgets.%s(self._form, **w)' % _type)
+				_w = getattr(widgets, _type)(self._form, **w)
 			except Exception as e:
 				raise osexception( \
 					u'Failed to create widget "%s": %s' % (_type, e))

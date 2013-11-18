@@ -223,17 +223,12 @@ class experiment(item.item):
 
 		if plugins.is_plugin(item_type):
 			# Load a plug-in
-			if debug.enabled:
-				debug.msg(u"loading plugin '%s'" % item_type)
-				item = plugins.load_plugin(item_type, item_name, self, string, \
-					self.item_prefix())
-			else:
-				try:
-					item = plugins.load_plugin(item_type, item_name, self, \
-						string, self.item_prefix())
-				except Exception as e:
-					raise osexception(u"Failed load plugin '%s'" % \
-						item_type, exception=e)
+			try:
+				item = plugins.load_plugin(item_type, item_name, self, \
+					string, self.item_prefix())
+			except Exception as e:
+				raise osexception(u"Failed to load plugin '%s'" % \
+					item_type, exception=e)
 			self.items[item_name] = item
 		else:
 			# Load one of the core items
