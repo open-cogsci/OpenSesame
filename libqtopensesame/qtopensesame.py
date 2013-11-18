@@ -862,38 +862,39 @@ class qtopensesame(QtGui.QMainWindow):
 
 		if path == None:
 			path = QtGui.QFileDialog.getOpenFileName(self.ui.centralwidget, \
-				_("Open file"), filter=self.file_type_filter, directory= \
+				_(u"Open file"), filter=self.file_type_filter, directory= \
 				cfg.file_dialog_path)
 		if path == None or path == "":
 			return
 
 		path = unicode(path)
-		self.set_status("Opening ...")
+		self.set_status(u"Opening ...")
 		self.ui.tabwidget.close_all()
 		cfg.file_dialog_path = os.path.dirname(path)
 
 		try:
-			exp = experiment.experiment(self, "Experiment", path)
+			exp = experiment.experiment(self, u"Experiment", path)
 		except Exception as e:
-			self.experiment.notify( \
-				_("<b>Error:</b> Failed to open '%s'<br /><b>Description:</b> %s<br /><br />Make sure that the file is in .opensesame or .opensesame.tar.gz format. If you should be able to open this file, but can't, please go to http://www.cogsci.nl/opensesame to find out how to recover your experiment and file a bug report.") \
-				% (path, e))
+			
+			if not isinstance(e, osexception):
+				e = osexception(msg=u'Failed to open file', exception=e)
 			self.print_debug_window(e)
+			self.experiment.notify(e.html(), title=u'Exception')
 			return
 
 		self.experiment = exp
 		self.refresh()
 		self.ui.tabwidget.open_general()
-		self.set_status("Opened %s" % path)
+		self.set_status(u"Opened %s" % path)
 
 		if add_to_recent:
 			self.current_path = path
 			self.window_message(self.current_path)
 			self.update_recent_files()
-			config.set_config('default_logfile_folder', os.path.dirname( \
+			config.set_config(u'default_logfile_folder', os.path.dirname( \
 				self.current_path))
 		else:
-			self.window_message("New experiment")
+			self.window_message(u"New experiment")
 			self.current_path = None
 
 		self.set_auto_response()
@@ -1379,38 +1380,34 @@ class qtopensesame(QtGui.QMainWindow):
 		"""
 
 		# Get a unique name if none has been specified
-		name = self.experiment.unique_name("%s" % item_type)
-
-		debug.msg("adding %s (%s)" % (name, item_type))
-
+		name = self.experiment.unique_name(u"%s" % item_type)
+		debug.msg(u"adding %s (%s)" % (name, item_type))
 		# If the item type is a plugin, we need to use the plugin mechanism
 		if libopensesame.plugins.is_plugin(item_type):
-
-			# In debug mode, exceptions are not caught
-			if debug.enabled:
+			try:
 				item = libopensesame.plugins.load_plugin(item_type, name, \
 					self.experiment, None, self.experiment.item_prefix())
-			else:
-				try:
-					item = libopensesame.plugins.load_plugin(item_type, name, \
-						self.experiment, None, self.experiment.item_prefix())
-				except Exception as e:
-					self.experiment.notify( \
-						_("Failed to load plugin '%s'. Error: %s") \
-						% (item_type, e))
-					return
-
+			except Exception as e:
+				if not isinstance(e, osexception):
+					e = osexception(msg=u"Failed to load plug-in '%s'" \
+						% item_type, exception=e)
+				self.print_debug_window(e)
+				self.experiment.notify(e.html(), title=u'Exception')
+				return
 		else:
 			# Load a core item
-			exec("from libqtopensesame.items import %s" % item_type)
-			name = self.experiment.unique_name("%s" % item_type)
-			item = eval("%s.%s(name, self.experiment)" % (item_type, item_type))
-
+			debug.msg(u"loading core item '%s' from '%s'" % (item_type, \
+				self.experiment.module_container()))
+			item_module = __import__(u'%s.%s' % ( \
+				self.experiment.module_container(), item_type), fromlist= \
+				[u'dummy'])
+			item_class = getattr(item_module, item_type)
+			item = item_class(name, self.experiment)
 		# Optionally, ask for a new name right away
-		if interactive and config.get_config('immediate_rename'):
+		if interactive and config.get_config(u'immediate_rename'):
 			while True:
-				name, ok = QtGui.QInputDialog.getText(self, _("New name"), \
-					_("Please enter a name for the new %s") % item_type, \
+				name, ok = QtGui.QInputDialog.getText(self, _(u"New name"), \
+					_(u"Please enter a name for the new %s") % item_type, \
 					text=name)
 				name = self.experiment.sanitize(unicode(name), strict=True, \
 					allow_vars=False)
@@ -1420,17 +1417,14 @@ class qtopensesame(QtGui.QMainWindow):
 				return None
 			name = unicode(name)
 			item.name = name
-
 		# Add the item to the item list
 		self.experiment.items[name] = item
 		self.set_unsaved()
-
 		# Optionally, refresh the interface
 		if refresh:
-			debug.msg("refresh")
+			debug.msg(u"refresh")
 			self.refresh()
 			self.select_item(name)
-
 		return name
 
 	def add_loop(self, refresh=True, parent=None):

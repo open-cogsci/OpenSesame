@@ -66,7 +66,7 @@ class item(object):
 		prefix = self.experiment.item_prefix()
 		self.item_type = unicode(self.__class__.__name__)
 		if self.item_type.startswith(prefix):
-			self.item_type = self.item_type[len(prefix):]			
+			self.item_type = self.item_type[len(prefix):]
 		if not hasattr(self, u'description'):
 			self.description = u'Default description'
 		if not hasattr(self, u'round_decimals'):
@@ -83,7 +83,7 @@ class item(object):
 		self.time = self.experiment._time_func
 		self.sleep = self.experiment._sleep_func
 		self.experiment.set(u'count_%s' % self.name, self.count)
-		self.count += 1		
+		self.count += 1
 
 	def run(self):
 

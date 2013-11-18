@@ -33,7 +33,7 @@ class inprocess_runner(base_runner):
 		# user is notified.
 		e = None
 		try:
-			self.experiment.run()			
+			self.experiment.run()
 		except Exception as e:
 			if not isinstance(e, osexception):
 				e = osexception(u'Unexpected error', e)
