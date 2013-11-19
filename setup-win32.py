@@ -155,6 +155,7 @@ copy_packages = [
 	'pygame',
 	'pyglet',
 	'libqtopensesame',
+	'markdown',
 	]
 
 # Packages that are part of the standard Python packages, but should not be
