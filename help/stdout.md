@@ -1,11 +1,8 @@
-Debug window {.western}
-============
+# Debug window
 
-The Debug window provides a basic Python interpreter. It is primarily
-useful for printing debugging messages from within inline\_script items.
+The Debug window provides a basic Python interpreter. It is primarily useful for printing debugging messages from within `inline_script` items.
 
 Example:
 
-~~~~ {.western}
-print 'This is a debugging message'
-~~~~
+	print 'This is a debugging message'
+

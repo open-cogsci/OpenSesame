@@ -17,6 +17,10 @@ The `keyboard_response` item is the primary way to collect keypress responses.
 - `avg_rt` or `average_response_time` is the average response time since the last feedback item.
 - `acc` or `accuracy` is the average percentage of correct responses since the last feedback item.
 
+For more information about response variables, see:
+	
+- <http://osdoc.cogsci.nl/usage/variables-and-conditional-statements/#responsevariables>
+
 ## Names of keys
 
 Keys are generally identified by their character and/ or their description (depending on which is applicable). For example, the `/` key is identified as 'slash' and '/'. The `a` is just identified as 'a'. The left arrow is just identified as 'left'. For a full list of available key names, click on the 'List available keys' button.

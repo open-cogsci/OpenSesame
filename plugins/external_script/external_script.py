@@ -62,14 +62,19 @@ class external_script(item.item):
 		
 		if self.module == None:
 			try:
-				self.module = imp.load_source("file", os.path.join(self.experiment.pool_folder, self.file))
+				self.module = imp.load_source("file", os.path.join( \
+					self.experiment.pool_folder, self.file))
 			except Exception as e:
-				raise osexception("Failed to import '%s' in the prepare phase of external_script item '%s': %s" % (self.file, self.name, e))
+				raise osexception( \
+					"Failed to import '%s' in the prepare phase of external_script item '%s': %s" \
+					% (self.file, self.name, e))
 			
 		try:
-			exec("self.module.%s(self)" % self.prepare_func)
+			getattr(self.module, self.prepare_func)(self)
 		except Exception as e:
-			raise osexception("Failed to run function '%s(item)' in the prepare phase of external_script item '%s': %s" % (self.prepare_func, self.name, e))				
+			raise osexception( \
+				"Failed to run function '%s(item)' in the prepare phase of external_script item '%s': %s" \
+				% (self.prepare_func, self.name, e))				
 		
 		# Report success
 		return True
@@ -85,9 +90,11 @@ class external_script(item.item):
 		self.set_item_onset()
 			
 		try:
-			exec("self.module.%s(self)" % self.run_func)
+			getattr(self.module, self.run_func)(self)
 		except Exception as e:
-			raise osexception("Failed to run function '%s(item)' in the run phase of external_script item '%s': %s" % (self.run_func, self.name, e))				
+			raise osexception( \
+				"Failed to run function '%s(item)' in the run phase of external_script item '%s': %s" \
+				% (self.run_func, self.name, e))
 								
 		# Report success
 		return True

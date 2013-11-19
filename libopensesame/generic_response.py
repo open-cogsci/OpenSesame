@@ -125,7 +125,7 @@ class generic_response:
 
 		process_func = "process_response_%s" % self.get("duration")
 		if hasattr(self, process_func):
-			exec("self.%s(retval)" % process_func)
+			getattr(self, process_func)(retval)
 		else:
 			raise osexception( \
 				"Don't know how to process responses for duration '%s' in item '%s'" \
@@ -310,7 +310,7 @@ class generic_response:
 			# handles by special functions
 			prepare_func = "prepare_duration_%s" % self.get("duration")
 			if hasattr(self, prepare_func):
-				exec("self.%s()" % prepare_func)
+				getattr(self, prepare_func)()
 			else:
 				raise osexception( \
 					"'%s' is not a valid duration in item '%s'" % \
