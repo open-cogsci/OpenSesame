@@ -40,13 +40,11 @@ class preferences_widget(QtGui.QWidget):
 		QtGui.QWidget.__init__(self, parent)
 		self.tab_name = u'__preferences__'
 		self.main_window = parent
-
 		# Setup the GUI
 		self.ui = preferences_widget_ui.Ui_preferences_widget()
 		self.ui.setupUi(self)
 		self.main_window.theme.apply_theme(self)
 		self.lock = False
-
 		# Connect the controls
 		self.ui.checkbox_immediately_rename.toggled.connect(self.apply)
 		self.ui.checkbox_autoresponse.toggled.connect(self.apply)
@@ -63,22 +61,6 @@ class preferences_widget(QtGui.QWidget):
 			self.main_window.check_update)
 		self.ui.combobox_style.currentIndexChanged.connect(self.apply)
 		self.ui.combobox_theme.currentIndexChanged.connect(self.apply)
-
-		self.ui.checkbox_scintilla_auto_indent.toggled.connect(self.apply)
-		self.ui.checkbox_scintilla_brace_match.toggled.connect(self.apply)
-		self.ui.checkbox_scintilla_custom_font.toggled.connect(self.apply)
-		self.ui.checkbox_scintilla_eol_visible.toggled.connect(self.apply)
-		self.ui.checkbox_scintilla_folding.toggled.connect(self.apply)
-		self.ui.checkbox_scintilla_indentation_guides.toggled.connect( \
-			self.apply)
-		self.ui.checkbox_scintilla_line_numbers.toggled.connect(self.apply)
-		self.ui.checkbox_scintilla_right_margin.toggled.connect(self.apply)
-		self.ui.checkbox_scintilla_syntax_highlighting.toggled.connect( \
-			self.apply)
-		self.ui.checkbox_scintilla_whitespace_visible.toggled.connect(self.apply)
-		self.ui.font_scintilla_font_family.currentFontChanged.connect(self.apply)
-		self.ui.spinbox_scintilla_font_size.valueChanged.connect(self.apply)
-
 		# Construct the plugin section
 		self.checkbox_plugins = {}
 		self.ui.edit_plugin_folders.setText(u'; '.join(plugins.plugin_folders( \
@@ -87,12 +69,11 @@ class preferences_widget(QtGui.QWidget):
 			self.checkbox_plugins[plugin] = QtGui.QCheckBox(plugin)
 			self.checkbox_plugins[plugin].toggled.connect(self.apply)
 			self.ui.layout_plugin_list.addWidget(self.checkbox_plugins[plugin])
-
 		self.set_controls()
 
 	def set_controls(self):
 
-		"""Update the controls"""
+		"""Updates the controls."""
 
 		if self.lock:
 			return
@@ -119,37 +100,9 @@ class preferences_widget(QtGui.QWidget):
 		self.ui.combobox_runner.setCurrentIndex( \
 			self.ui.combobox_runner.findText(config.get_config(u'runner'), \
 			flags=QtCore.Qt.MatchContains))		
-		self.ui.checkbox_scintilla_auto_indent.setChecked(config.get_config( \
-			u"scintilla_auto_indent"))
-		self.ui.checkbox_scintilla_brace_match.setChecked(config.get_config( \
-			u"scintilla_brace_match"))
-		self.ui.checkbox_scintilla_custom_font.setChecked(config.get_config( \
-			u"scintilla_custom_font"))
-		self.ui.checkbox_scintilla_eol_visible.setChecked(config.get_config( \
-			u"scintilla_eol_visible"))
-		self.ui.checkbox_scintilla_folding.setChecked(config.get_config( \
-			u"scintilla_folding"))
-		self.ui.checkbox_scintilla_indentation_guides.setChecked( \
-			config.get_config(u"scintilla_indentation_guides"))
-		self.ui.checkbox_scintilla_line_numbers.setChecked(config.get_config( \
-			u"scintilla_line_numbers"))
-		self.ui.checkbox_scintilla_right_margin.setChecked(config.get_config( \
-			u"scintilla_right_margin"))
-		self.ui.checkbox_scintilla_auto_indent.setChecked(config.get_config( \
-			u"scintilla_auto_indent"))
-		self.ui.checkbox_scintilla_syntax_highlighting.setChecked( \
-			config.get_config(u"scintilla_syntax_highlighting"))
-		self.ui.checkbox_scintilla_whitespace_visible.setChecked( \
-			config.get_config(u"scintilla_whitespace_visible"))
-		self.ui.font_scintilla_font_family.setCurrentFont(QtGui.QFont( \
-			config.get_config(u"scintilla_font_family")))
-		self.ui.spinbox_scintilla_font_size.setValue(config.get_config( \
-			u"scintilla_font_size"))
-
 		# Disable some of the controls, if they depend on other controls
 		if config.get_config(u'autosave_interval') <= 0:
 			self.ui.spinbox_autosave_interval.setDisabled(True)
-
 		# Set the style combobox
 		i = 0
 		if config.get_config(u'style') == u'':
@@ -161,20 +114,17 @@ class preferences_widget(QtGui.QWidget):
 			if config.get_config(u'style') == unicode(style):
 				self.ui.combobox_style.setCurrentIndex(i)
 			i += 1
-			
 		# Set the theme combobox
 		i = 0
 		for _theme in theme.available_themes:
 			self.ui.combobox_theme.addItem(_theme)
 			if config.get_config(u'theme') == _theme:
 				self.ui.combobox_theme.setCurrentIndex(i)
-			i += 1			
-
+			i += 1
 		# Set the plugin status
 		for plugin in plugins.list_plugins(filter_disabled=False):
 			self.checkbox_plugins[plugin].setChecked(not \
 				plugins.plugin_disabled(plugin))
-
 		self.lock = False
 
 	def apply(self):
@@ -227,30 +177,6 @@ class preferences_widget(QtGui.QWidget):
 			if runner in self.ui.combobox_runner.currentText():
 				config.set_config(u'runner', runner)
 
-		config.set_config(u"scintilla_auto_indent", \
-			self.ui.checkbox_scintilla_auto_indent.isChecked())
-		config.set_config(u"scintilla_brace_match", \
-			self.ui.checkbox_scintilla_brace_match.isChecked())
-		config.set_config(u"scintilla_custom_font", \
-			self.ui.checkbox_scintilla_custom_font.isChecked())
-		config.set_config(u"scintilla_eol_visible", \
-			self.ui.checkbox_scintilla_eol_visible.isChecked())
-		config.set_config(u"scintilla_folding", \
-			self.ui.checkbox_scintilla_folding.isChecked())
-		config.set_config(u"scintilla_indentation_guides", \
-			self.ui.checkbox_scintilla_indentation_guides.isChecked())
-		config.set_config(u"scintilla_line_numbers", \
-			self.ui.checkbox_scintilla_line_numbers.isChecked())
-		config.set_config(u"scintilla_right_margin", \
-			self.ui.checkbox_scintilla_right_margin.isChecked())
-		config.set_config(u"scintilla_syntax_highlighting", \
-			self.ui.checkbox_scintilla_syntax_highlighting.isChecked())
-		config.set_config(u"scintilla_whitespace_visible", \
-			self.ui.checkbox_scintilla_whitespace_visible.isChecked())
-		config.set_config(u"scintilla_font_family", unicode( \
-			self.ui.font_scintilla_font_family.currentFont().family()))
-		config.set_config(u"scintilla_font_size", \
-			self.ui.spinbox_scintilla_font_size.value())
 		config.set_config(u'theme', unicode( \
 			self.ui.combobox_theme.currentText()))
 

@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>760</width>
-    <height>1033</height>
+    <width>834</width>
+    <height>842</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -24,8 +24,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>746</width>
-        <height>1019</height>
+        <width>820</width>
+        <height>828</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -134,145 +134,6 @@
             <property name="text">
              <string>Show text in toolbar</string>
             </property>
-           </widget>
-          </item>
-         </layout>
-        </widget>
-       </item>
-       <item>
-        <widget class="QGroupBox" name="groupbox_scintilla">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="title">
-          <string>Embedded text editor</string>
-         </property>
-         <layout class="QGridLayout" name="gridLayout_2">
-          <property name="leftMargin">
-           <number>0</number>
-          </property>
-          <property name="rightMargin">
-           <number>0</number>
-          </property>
-          <property name="bottomMargin">
-           <number>0</number>
-          </property>
-          <item row="0" column="0">
-           <widget class="QCheckBox" name="checkbox_scintilla_line_numbers">
-            <property name="text">
-             <string>Show line numbers</string>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="1">
-           <widget class="QCheckBox" name="checkbox_scintilla_folding">
-            <property name="text">
-             <string>Enable block folding</string>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="0">
-           <widget class="QCheckBox" name="checkbox_scintilla_right_margin">
-            <property name="text">
-             <string>Show right margin</string>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="1">
-           <widget class="QCheckBox" name="checkbox_scintilla_brace_match">
-            <property name="text">
-             <string>Highlight matching braces</string>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="0">
-           <widget class="QCheckBox" name="checkbox_scintilla_eol_visible">
-            <property name="text">
-             <string>Show end of lines</string>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="1">
-           <widget class="QCheckBox" name="checkbox_scintilla_syntax_highlighting">
-            <property name="text">
-             <string>Enable syntax highlighting</string>
-            </property>
-           </widget>
-          </item>
-          <item row="3" column="0">
-           <widget class="QCheckBox" name="checkbox_scintilla_whitespace_visible">
-            <property name="text">
-             <string>Show whitespace</string>
-            </property>
-           </widget>
-          </item>
-          <item row="3" column="1">
-           <widget class="QCheckBox" name="checkbox_scintilla_indentation_guides">
-            <property name="text">
-             <string>Show indentation guides</string>
-            </property>
-           </widget>
-          </item>
-          <item row="4" column="0">
-           <widget class="QCheckBox" name="checkbox_scintilla_auto_indent">
-            <property name="text">
-             <string>Auto indent</string>
-            </property>
-           </widget>
-          </item>
-          <item row="4" column="1">
-           <widget class="QCheckBox" name="checkbox_scintilla_custom_font">
-            <property name="text">
-             <string>Use custom font</string>
-            </property>
-           </widget>
-          </item>
-          <item row="5" column="0" colspan="2">
-           <widget class="QWidget" name="widget_scintilla_font" native="true">
-            <property name="enabled">
-             <bool>false</bool>
-            </property>
-            <layout class="QFormLayout" name="formLayout_6">
-             <property name="fieldGrowthPolicy">
-              <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
-             </property>
-             <property name="margin">
-              <number>0</number>
-             </property>
-             <item row="0" column="0">
-              <widget class="QLabel" name="label_4">
-               <property name="text">
-                <string>Font family</string>
-               </property>
-              </widget>
-             </item>
-             <item row="0" column="1">
-              <widget class="QFontComboBox" name="font_scintilla_font_family"/>
-             </item>
-             <item row="1" column="0">
-              <widget class="QLabel" name="label_5">
-               <property name="text">
-                <string>Font size</string>
-               </property>
-              </widget>
-             </item>
-             <item row="1" column="1">
-              <widget class="QSpinBox" name="spinbox_scintilla_font_size">
-               <property name="suffix">
-                <string> pt</string>
-               </property>
-               <property name="minimum">
-                <number>2</number>
-               </property>
-               <property name="value">
-                <number>10</number>
-               </property>
-              </widget>
-             </item>
-            </layout>
            </widget>
           </item>
          </layout>
@@ -567,22 +428,6 @@
     <hint type="destinationlabel">
      <x>78</x>
      <y>265</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>checkbox_scintilla_custom_font</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>widget_scintilla_font</receiver>
-   <slot>setEnabled(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>456</x>
-     <y>365</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>377</x>
-     <y>412</y>
     </hint>
    </hints>
   </connection>
