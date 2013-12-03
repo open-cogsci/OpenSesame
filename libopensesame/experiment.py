@@ -395,12 +395,7 @@ class experiment(item.item):
 		>>> my_canvas.image(image_path)
 		</DOC>"""
 
-		if not isinstance(path, basestring):
-			raise osexception( \
-				u"A string should be passed to experiment.get_file(), not '%s'" \
-				% path)
-		if isinstance(path, str):
-			path = path.decode(self.encoding)
+		path = self.unistr(path)
 		if path.strip() == u'':
 			raise osexception( \
 				u"An empty string was passed to experiment.get_file(). Please specify a valid filename.")
