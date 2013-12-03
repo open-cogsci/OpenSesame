@@ -10,6 +10,12 @@
 			"tooltip"	: "Form title"
 		},
 		{
+			"type"		: "line_edit",
+			"var"		: "form_var",
+			"label"		: "Response variable",
+			"tooltip"	: "Response variable"
+		},
+		{
 			"type"		: "checkbox",
 			"var"		: "allow_multiple",
 			"label"		: "Allow multiple options to be selected",
