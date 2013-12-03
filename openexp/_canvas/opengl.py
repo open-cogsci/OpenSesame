@@ -54,7 +54,7 @@ class opengl(openexp._canvas.legacy.legacy):
 		self.penwidth = 1
 		self.antialias = True
 		self.font = self.experiment.font
-
+		self.bidi = self.experiment.get(u'bidi')==u'yes'
 		# set to have no objects
 		self.showables = []
 		self.clear()

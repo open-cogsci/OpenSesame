@@ -74,6 +74,7 @@ class xpyriment(openexp._canvas.legacy.legacy):
 			bgcolor = self.experiment.get(u'background')
 		self.set_fgcolor(fgcolor)
 		self.set_bgcolor(bgcolor)
+		self.bidi = self.experiment.get(u'bidi')==u'yes'
 		self.set_font(style=self.experiment.font_family, size= \
 			self.experiment.font_size, bold=self.experiment.font_bold==u'yes', \
 			italic=self.experiment.font_italic==u'yes', underline= \
