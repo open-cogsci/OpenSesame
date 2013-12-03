@@ -17,8 +17,8 @@ You should have received a copy of the GNU General Public License
 along with openexp.  If not, see <http://www.gnu.org/licenses/>.
 """
 
-import pyglet
 import pygame
+import pyglet
 import math
 import openexp._canvas.legacy
 from libopensesame.exceptions import osexception
@@ -54,11 +54,6 @@ class psycho(openexp._canvas.legacy.legacy):
 			u"description" : u"Block until the display has been shown",
 			u"default" : u"yes"
 			},
-		u"psychopy_wintype" : {
-			u"name" : u"Window type",
-			u"description" : u"'pygame' or 'pyglet'",
-			u"default" : u"pyglet"
-			},
 		u"psychopy_monitor" : {
 			u"name" : u"Monitor",
 			u"description" : u"Virtual monitor",
@@ -90,11 +85,17 @@ class psycho(openexp._canvas.legacy.legacy):
 			self.experiment.font_size, bold=self.experiment.font_bold==u'yes', \
 			italic=self.experiment.font_italic==u'yes', underline= \
 			self.experiment.font_underline==u'yes')
-		# This font map converts the standard OpenSesame font names to ones that
-		# are acceptable to PsychoPy (or PyGlet actually). For now, the
-		# difference appears only to be capitalization.
-		self.font_map = {u"sans" : u"Sans", u"serif" : u"Serif", u"mono" : \
-			u"Mono"}
+		# We need to map the simple font names used by OpenSesame onto the
+		# actual names of the fonts.
+		self.font_map = {
+			u"sans" : u"Droid Sans",
+			u"serif" : u"Droid Serif",
+			u"mono" : u"Droid Sans Mono",
+			u'hebrew' : u'Droid Sans Hebrew',
+			u'hindi' : u'Lohit Hindi',
+			u'arabic' : u'Droid Arabic Naskh',
+			u'chinese-japanese-korean' : u'WenQuanYi Micro Hei',
+			}
 		self.clear()
 
 	def color(self, color):
@@ -241,16 +242,16 @@ class psycho(openexp._canvas.legacy.legacy):
 	def _text(self, text, x, y):
 
 		"""See openexp._canvas.legacy"""
-
-		if self.font_style not in self.font_map:
-			font = self.font_style
-		else:
+		
+		if self.font_style in self.font_map:
 			font = self.font_map[self.font_style]
+		else:
+			font = self.font_style
 		pos = x - self.xcenter(), self.ycenter() - y
 		stim = visual.TextStim(win=self.experiment.window, text=text, \
 			alignHoriz=u'left', alignVert=u'top', pos=pos, color=self.fgcolor, \
-			font=font, height=self.font_size, wrapWidth=self.experiment.width, \
-			bold=self.font_bold, italic=self.font_italic)
+			font=font, height= self.font_size, wrapWidth= \
+			self.experiment.width, bold=self.font_bold, italic=self.font_italic)
 		self.stim_list.append(stim)
 
 	def textline(self, text, line, color=None):
@@ -412,13 +413,10 @@ def init_display(experiment):
 
 	# Set the PsychoPy monitor, default to testMonitor
 	monitor = experiment.get_check(u"psychopy_monitor", u"testMonitor")
-	wintype = experiment.get_check(u"psychopy_wintype", u"pyglet", [u"pyglet", \
-		"pygame"])
 	waitblanking = experiment.get_check(u"psychopy_waitblanking", u"yes", \
 		[u"yes", u"no"]) == u"yes"
 	screen = experiment.get_check(u'psychopy_screen', 0)
 
-	print u"openexp._canvas.psycho.init_display(): window type = %s" % wintype
 	print u"openexp._canvas.psycho.init_display(): waitblanking = %s" % \
 		waitblanking
 	print u"openexp._canvas.psycho.init_display(): monitor = %s" % monitor
@@ -426,26 +424,18 @@ def init_display(experiment):
 
 	experiment.window = visual.Window( experiment.resolution(), screen=screen, \
 		waitBlanking=waitblanking, fullscr=experiment.fullscreen, \
-		monitor=monitor, units="pix", winType=wintype, \
-		rgb=experiment.background)
+		monitor=monitor, units=u'pix', rgb=experiment.background)
 	experiment.window.setMouseVisible(False)
 	experiment.clock = core.Clock()
 	experiment._time_func = _time
 	experiment._sleep_func = _sleep
 	experiment.time = experiment._time_func
-	experiment.sleep = experiment._sleep_func
-
-	# If pyglet is being used, change the window caption. Don't know how to do
-	# this for pygame (regular set_caption() is ineffective)
-	if wintype == u"pyglet":
-		try:
-			experiment.window.winHandle.set_caption( \
-				u'OpenSesame (PsychoPy backend)')
-		except:
-			debug.msg( \
-				u'Failed to set Window caption. This may indicate a problem witb Pyglet.', \
-				reason=warning)
-
+	experiment.sleep = experiment._sleep_func	
+	experiment.window.winHandle.set_caption(u'OpenSesame (PsychoPy backend)')
+	# Register the built-in OpenSesame fonts.
+	for font in [u'sans', u'serif', u'mono', u'arabic', u'hebrew', u'hindi', \
+		u'chinese-japanese-korean']:
+		pyglet.font.add_file(experiment.resource(u'%s.ttf' % font))
 	core.quit = _psychopy_clean_quit
 	pygame.mixer.init()
 	
