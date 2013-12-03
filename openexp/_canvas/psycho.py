@@ -22,6 +22,7 @@ import pygame
 import math
 import openexp._canvas.legacy
 from libopensesame.exceptions import osexception
+from libopensesame import debug, html
 try: # Try both import statements
 	from PIL import Image
 except:
@@ -75,6 +76,7 @@ class psycho(openexp._canvas.legacy.legacy):
 		"""See openexp._canvas.legacy"""
 
 		self.experiment = experiment
+		self.html = html.html()
 		self.min_penwidth = 1
 		if fgcolor == None:
 			fgcolor = self.experiment.get(u"foreground")

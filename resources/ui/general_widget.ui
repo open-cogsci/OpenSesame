@@ -51,14 +51,14 @@
           <number>0</number>
          </property>
          <item row="0" column="0">
-          <widget class="QLabel" name="label">
+          <widget class="QLabel" name="label_backend">
            <property name="text">
             <string>&lt;h3&gt;Back-end&lt;/h3&gt;</string>
            </property>
           </widget>
          </item>
          <item row="2" column="0">
-          <widget class="QLabel" name="label_3">
+          <widget class="QLabel" name="label_resolution">
            <property name="text">
             <string>&lt;h3&gt;Resolution&lt;/h3&gt;</string>
            </property>
@@ -122,7 +122,7 @@
           </widget>
          </item>
          <item row="3" column="0">
-          <widget class="QLabel" name="label_8">
+          <widget class="QLabel" name="label_colors">
            <property name="text">
             <string>&lt;h3&gt;Colors&lt;/h3&gt;</string>
            </property>
@@ -147,14 +147,14 @@
              <widget class="color_edit" name="edit_foreground" native="true"/>
             </item>
             <item row="0" column="0">
-             <widget class="QLabel" name="label_4">
+             <widget class="QLabel" name="label_foreground">
               <property name="text">
                <string>Foreground</string>
               </property>
              </widget>
             </item>
             <item row="1" column="0">
-             <widget class="QLabel" name="label_5">
+             <widget class="QLabel" name="label_background">
               <property name="text">
                <string>Background</string>
               </property>
@@ -164,7 +164,7 @@
              <widget class="color_edit" name="edit_background" native="true"/>
             </item>
             <item row="2" column="0" colspan="2">
-             <widget class="QLabel" name="label_2">
+             <widget class="QLabel" name="label_colors_examples">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
                 <horstretch>0</horstretch>
@@ -186,7 +186,7 @@
           </widget>
          </item>
          <item row="4" column="0">
-          <widget class="QLabel" name="label_9">
+          <widget class="QLabel" name="label_font">
            <property name="text">
             <string>&lt;h3&gt;Font&lt;/h3&gt;</string>
            </property>
@@ -229,8 +229,8 @@
            </layout>
           </widget>
          </item>
-         <item row="6" column="0">
-          <widget class="QLabel" name="label_11">
+         <item row="7" column="0">
+          <widget class="QLabel" name="label_advanced">
            <property name="text">
             <string>&lt;h3&gt;Advanced&lt;/h3&gt;</string>
            </property>
@@ -244,9 +244,12 @@
              <verstretch>0</verstretch>
             </sizepolicy>
            </property>
+           <property name="toolTip">
+            <string>Select a back-end to handle input and output</string>
+           </property>
           </widget>
          </item>
-         <item row="6" column="1">
+         <item row="7" column="1">
           <widget class="QFrame" name="frame_advanced">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
@@ -269,6 +272,9 @@
             </property>
             <item>
              <widget class="QCommandLinkButton" name="button_backend_settings">
+              <property name="toolTip">
+               <string>Advanced settings for the selected back-end</string>
+              </property>
               <property name="text">
                <string>Back-end settings</string>
               </property>
@@ -276,6 +282,9 @@
             </item>
             <item>
              <widget class="QCommandLinkButton" name="button_script_editor">
+              <property name="toolTip">
+               <string>Edit the script for the entire experiment</string>
+              </property>
               <property name="text">
                <string>Script editor</string>
               </property>
@@ -286,18 +295,31 @@
          </item>
          <item row="5" column="1">
           <widget class="QCheckBox" name="checkbox_transparent_variables">
+           <property name="toolTip">
+            <string>Allows you to access experimental variables directly by name</string>
+           </property>
            <property name="text">
             <string>Transparent variable management</string>
            </property>
           </widget>
          </item>
          <item row="5" column="0">
-          <widget class="QLabel" name="label_7">
+          <widget class="QLabel" name="label_miscellaneous">
            <property name="text">
-            <string>&lt;h3&gt;Variables&lt;/h3&gt;</string>
+            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:large; font-weight:600;&quot;&gt;Miscellaneous&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
            </property>
            <property name="textFormat">
             <enum>Qt::AutoText</enum>
+           </property>
+          </widget>
+         </item>
+         <item row="6" column="1">
+          <widget class="QCheckBox" name="checkbox_bidi">
+           <property name="toolTip">
+            <string>Enables support for bi-directional languages, such as Arabic and Hebrew</string>
+           </property>
+           <property name="text">
+            <string>Bi-directional-text support</string>
            </property>
           </widget>
          </item>

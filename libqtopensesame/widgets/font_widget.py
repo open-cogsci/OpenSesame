@@ -25,18 +25,19 @@ class font_widget(QtGui.QWidget):
 	"""A font selection widget"""
 	
 	max_size = 64
-	font_list = ['mono', 'sans', 'serif', 'other ...']
+	font_list = [u'mono', u'sans', u'serif', u'arabic', \
+		u'chinese-japanese-korean', u'hebrew', u'hindi', u'other ...']
 
 	def __init__(self, parent=None):
 	
 		"""
-		Constructor
+		Constructor.
 		
 		Arguments:
-		experiment -- the experiment
+		experiment	--	The experiment.
 		
 		Keywords arguments:
-		parent -- the parent QWidget (default=None)		
+		parent		--	The parent QWidget. (default=None)
 		"""
 	
 		QtGui.QWidget.__init__(self, parent)
@@ -45,28 +46,28 @@ class font_widget(QtGui.QWidget):
 				
 	def _apply(self):
 	
-		"""Apply the controls"""
+		"""Applies the controls."""
 	
 		self.family = self.ui.combobox_family.currentText()
 		self.size = self.ui.spinbox_size.value()
 		self.italic = self.ui.checkbox_italic.isChecked()
 		self.bold = self.ui.checkbox_bold.isChecked()
 		self.ui.label_example.setFont(self.get_font())
-		self.emit(QtCore.SIGNAL("font_changed"))
+		self.emit(QtCore.SIGNAL(u"font_changed"))
 		
 	def apply_family(self):
 	
 		"""
-		Apply the controls and optionally present a full font selection dialog
-		if the user has selected 'other ...'
+		Applies the controls and optionally presents a full font selection
+		dialog if the user has selected 'other ...'
 		"""
 	
-		if self.ui.combobox_family.currentText() == 'other ...':
+		if self.ui.combobox_family.currentText() == u'other ...':
 			font, ok = QtGui.QFontDialog.getFont(self.get_font())
 			if ok:
-				self.family = unicode(font.family())				
+				self.family = unicode(font.family())
 			else:
-				self.family = self.experiment.get('font_family')
+				self.family = self.experiment.get(u'font_family')
 			self.update_family_combobox()
 		self._apply()
 		
@@ -84,47 +85,47 @@ class font_widget(QtGui.QWidget):
 		else:
 			weight = QtGui.QFont.Normal	
 		return QtGui.QFont(self.family, min(self.max_size, self.size), weight, \
-			self.italic)		
+			self.italic)
 		
 	def initialize(self, experiment, family=None, italic=None, bold=None, \
 		size=None):
 		
 		"""
-		Initialize the widget
+		Initializes the widget.
 		
 		Arguments:
-		experiment -- an opensesame experiment
+		experiment	--	The experiment.
 		
 		Keyword arguments:
-		family -- the font family or None to use experiment default
-				  (default=None)
-		italic -- the font italic state or None to use experiment default
-				  (default=None)
-		bold -- the font bold state or None to use experiment default
-				(default=None)
-		size -- the font size or None to use experiment default
-				  (default=None)
+		family		--	The font family or None to use experiment default.
+						(default=None)
+		italic		--	The font italic state or None to use experiment default.
+						(default=None)
+		bold		--	The font bold state or None to use experiment default.
+						(default=None)
+		size		--	The font size or None to use experiment default.
+						(default=None)
 		"""
 	
 		self.experiment = experiment
 		if family == None:
-			self.family = self.experiment.get('font_family')
+			self.family = self.experiment.get(u'font_family')
 		else:
 			self.family = family
 		if italic == None:
-			self.italic = self.experiment.get('font_italic') == 'yes'		
+			self.italic = self.experiment.get(u'font_italic') == u'yes'
 		else:
 			self.italic = italic
 		if bold == None:
-			self.bold = self.experiment.get('font_bold') == 'yes'
+			self.bold = self.experiment.get(u'font_bold') == u'yes'
 		else:
 			self.bold = bold
 		if size == None:
-			self.size = self.experiment.get('font_size')
+			self.size = self.experiment.get(u'font_size')
 		else:
-			self.size = size			
+			self.size = size
 		if self.ui.combobox_family.findText(self.family) < 0:
-			self.ui.combobox_family.addItem(self.family)			
+			self.ui.combobox_family.addItem(self.family)
 		self.ui.combobox_family.setCurrentIndex( \
 			self.ui.combobox_family.findText(self.family))
 		self.ui.checkbox_italic.setChecked(self.italic)
@@ -135,11 +136,11 @@ class font_widget(QtGui.QWidget):
 			self.apply_family)
 		self.ui.checkbox_italic.toggled.connect(self._apply)
 		self.ui.checkbox_bold.toggled.connect(self._apply)
-		self.ui.spinbox_size.valueChanged.connect(self._apply)		
-						
+		self.ui.spinbox_size.valueChanged.connect(self._apply)
+	
 	def update_family_combobox(self):
 	
-		"""Update the family combobox to include a custom font"""
+		"""Updates the family combobox to include a custom font."""
 
 		self.ui.combobox_family.currentIndexChanged.disconnect()
 		self.ui.combobox_family.clear()	
@@ -150,6 +151,4 @@ class font_widget(QtGui.QWidget):
 		self.ui.combobox_family.setCurrentIndex( \
 			self.ui.combobox_family.findText(self.family))
 		self.ui.combobox_family.currentIndexChanged.connect( \
-			self.apply_family)		
-						
-			
+			self.apply_family)

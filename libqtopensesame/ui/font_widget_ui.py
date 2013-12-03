@@ -2,8 +2,8 @@
 
 # Form implementation generated from reading ui file 'resources/ui/font_widget.ui'
 #
-# Created: Wed Jul 11 17:29:01 2012
-#      by: PyQt4 UI code generator 4.9.1
+# Created: Fri Nov 29 16:39:02 2013
+#      by: PyQt4 UI code generator 4.10.3
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -12,12 +12,21 @@ from PyQt4 import QtCore, QtGui
 try:
     _fromUtf8 = QtCore.QString.fromUtf8
 except AttributeError:
-    _fromUtf8 = lambda s: s
+    def _fromUtf8(s):
+        return s
+
+try:
+    _encoding = QtGui.QApplication.UnicodeUTF8
+    def _translate(context, text, disambig):
+        return QtGui.QApplication.translate(context, text, disambig, _encoding)
+except AttributeError:
+    def _translate(context, text, disambig):
+        return QtGui.QApplication.translate(context, text, disambig)
 
 class Ui_font_widget(object):
     def setupUi(self, font_widget):
         font_widget.setObjectName(_fromUtf8("font_widget"))
-        font_widget.resize(246, 171)
+        font_widget.resize(265, 171)
         self.gridLayout = QtGui.QGridLayout(font_widget)
         self.gridLayout.setMargin(0)
         self.gridLayout.setSpacing(4)
@@ -27,6 +36,10 @@ class Ui_font_widget(object):
         self.gridLayout.addWidget(self.label, 0, 0, 1, 1)
         self.combobox_family = QtGui.QComboBox(font_widget)
         self.combobox_family.setObjectName(_fromUtf8("combobox_family"))
+        self.combobox_family.addItem(_fromUtf8(""))
+        self.combobox_family.addItem(_fromUtf8(""))
+        self.combobox_family.addItem(_fromUtf8(""))
+        self.combobox_family.addItem(_fromUtf8(""))
         self.combobox_family.addItem(_fromUtf8(""))
         self.combobox_family.addItem(_fromUtf8(""))
         self.combobox_family.addItem(_fromUtf8(""))
@@ -70,15 +83,19 @@ class Ui_font_widget(object):
         QtCore.QMetaObject.connectSlotsByName(font_widget)
 
     def retranslateUi(self, font_widget):
-        font_widget.setWindowTitle(QtGui.QApplication.translate("font_widget", "Form", None, QtGui.QApplication.UnicodeUTF8))
-        self.label.setText(QtGui.QApplication.translate("font_widget", "Font family", None, QtGui.QApplication.UnicodeUTF8))
-        self.combobox_family.setItemText(0, QtGui.QApplication.translate("font_widget", "mono", None, QtGui.QApplication.UnicodeUTF8))
-        self.combobox_family.setItemText(1, QtGui.QApplication.translate("font_widget", "sans", None, QtGui.QApplication.UnicodeUTF8))
-        self.combobox_family.setItemText(2, QtGui.QApplication.translate("font_widget", "serif", None, QtGui.QApplication.UnicodeUTF8))
-        self.combobox_family.setItemText(3, QtGui.QApplication.translate("font_widget", "other ...", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_2.setText(QtGui.QApplication.translate("font_widget", "Font size", None, QtGui.QApplication.UnicodeUTF8))
-        self.spinbox_size.setSuffix(QtGui.QApplication.translate("font_widget", " pt", None, QtGui.QApplication.UnicodeUTF8))
-        self.checkbox_italic.setText(QtGui.QApplication.translate("font_widget", "Italic", None, QtGui.QApplication.UnicodeUTF8))
-        self.checkbox_bold.setText(QtGui.QApplication.translate("font_widget", "Bold", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_example.setText(QtGui.QApplication.translate("font_widget", "Example", None, QtGui.QApplication.UnicodeUTF8))
+        font_widget.setWindowTitle(_translate("font_widget", "Form", None))
+        self.label.setText(_translate("font_widget", "Font family", None))
+        self.combobox_family.setItemText(0, _translate("font_widget", "mono", None))
+        self.combobox_family.setItemText(1, _translate("font_widget", "sans", None))
+        self.combobox_family.setItemText(2, _translate("font_widget", "serif", None))
+        self.combobox_family.setItemText(3, _translate("font_widget", "arabic", None))
+        self.combobox_family.setItemText(4, _translate("font_widget", "chinese-japanese-korean", None))
+        self.combobox_family.setItemText(5, _translate("font_widget", "hebrew", None))
+        self.combobox_family.setItemText(6, _translate("font_widget", "hindi", None))
+        self.combobox_family.setItemText(7, _translate("font_widget", "other ...", None))
+        self.label_2.setText(_translate("font_widget", "Font size", None))
+        self.spinbox_size.setSuffix(_translate("font_widget", " pt", None))
+        self.checkbox_italic.setText(_translate("font_widget", "Italic", None))
+        self.checkbox_bold.setText(_translate("font_widget", "Bold", None))
+        self.label_example.setText(_translate("font_widget", "Example", None))
 

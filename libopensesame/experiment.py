@@ -66,6 +66,7 @@ class experiment(item.item):
 		self.restart = False
 		self.title = u'My Experiment'
 		self.transparent_variables = u'no'
+		self.bidi = u'no'
 
 		# Set default variables
 		self.coordinates = u'relative' # DEPRECATED

@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>246</width>
+    <width>265</width>
     <height>171</height>
    </rect>
   </property>
@@ -42,6 +42,26 @@
      <item>
       <property name="text">
        <string>serif</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>arabic</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>chinese-japanese-korean</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>hebrew</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>hindi</string>
       </property>
      </item>
      <item>

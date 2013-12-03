@@ -109,9 +109,6 @@ class legacy:
 			}
 		}
 
-	# Initialize the html renderer
-	html = html.html()
-
 	def __init__(self, experiment, bgcolor=None, fgcolor=None, auto_prepare=True):
 
 		"""<DOC>
@@ -158,6 +155,7 @@ class legacy:
 		</DOC>"""
 
 		self.experiment = experiment
+		self.html = html.html()
 		if fgcolor == None:
 			fgcolor = self.experiment.get("foreground")
 		if bgcolor == None:
@@ -168,6 +166,7 @@ class legacy:
 		self.antialias = True
 		self.surface = self.experiment.surface.copy()
 		self._current_font = None
+		self.bidi = self.experiment.get(u'bidi')==u'yes'
 		self.set_font(style=self.experiment.font_family, size= \
 			self.experiment.font_size, bold=self.experiment.font_bold=='yes', \
 			italic=self.experiment.font_italic=='yes', underline= \
@@ -366,6 +365,18 @@ class legacy:
 		else:
 			color = self.bgcolor
 		self.surface.fill(color)
+		
+	def set_bidi(self, bidi):
+		
+		"""<DOC>
+		Enables or disables bi-directional text support.
+		
+		Arguments:
+		bidi	--	True to enable bi-directional text support, False to
+					disable.
+		</DOC>"""
+		
+		self.bidi = bidi
 
 	def set_penwidth(self, penwidth):
 
@@ -711,25 +722,30 @@ class legacy:
 
 		return self._font().size(text)
 
-	def text(self, text, center=True, x=None, y=None, max_width=None, color=None, html=True):
+	def text(self, text, center=True, x=None, y=None, max_width=None, color=None, bidi=None, html=True):
 
 		"""<DOC>
 		Draws text.
 
 		Arguments:
-		text -- The text string.
+		text		--	The text string.
 
 		Keyword arguments:
-		center -- A Boolean indicating whether the coordinates reflect the #
-				  center (True) or top-left (default=True).
-		x -- The X coordinate. None = center. (Default=None)
-		y -- The Y coordinate. None = center. (Default=None)
-		max_width -- The maximum width of the text, before wrapping to a new #
-					 line, or None to wrap at screen edge (default=None)
-		color -- A custom human-readable foreground color. This does not affect #
-				 the default foreground color as set by set_fgcolor(). #
-				 (Default=None)
-		html -- Indicates whether HTML tags should be parsed (default=True).
+		center		--	A Boolean indicating whether the coordinates reflect the
+						center (True) or top-left (default=True).
+		x			--	The X coordinate. None = center. (Default=None)
+		y			--	The Y coordinate. None = center. (Default=None)
+		max_width	--	The maximum width of the text, before wrapping to a new
+						line, or None to wrap at screen edge (default=None)
+		color		--	A custom human-readable foreground color. This does not
+						affect the default foreground color as set by
+						set_fgcolor(). (Default=None)
+		bidi		--	True or False for bi-directional text support, or None
+						to use experiment default. This does not affect the
+						default bidi setting as set by set_bidi().
+						(Default=None)
+		html		--	Indicates whether HTML tags should be parsed
+						(default=True).
 
 		Example:
 		>>> from openexp.canvas import canvas
@@ -739,11 +755,12 @@ class legacy:
 
 		if color != None: color = self.color(color)
 		else: color = self.fgcolor
+		if bidi == None: bidi = self.bidi
 		if x == None: x = self.xcenter()
 		if y == None: y = self.ycenter()
 		self.html.reset()
 		self.html.render(text, x, y, self, max_width=max_width, center=center, \
-			color=color, html=html)
+			color=color, html=html, bidi=bidi)
 
 	def _text(self, text, x, y):
 

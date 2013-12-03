@@ -21,6 +21,7 @@ import numpy as np
 import copy
 import openexp._canvas.legacy
 from libopensesame.exceptions import osexception
+from libopensesame import debug, html
 import pygame
 try:
 	from expyriment import control, stimuli, misc, io
@@ -64,6 +65,7 @@ class xpyriment(openexp._canvas.legacy.legacy):
 		"""See openexp._canvas.legacy"""
 
 		self.experiment = experiment
+		self.html = html.html()
 		self.auto_prepare = auto_prepare
 		self.prepared = False
 		if fgcolor == None:

@@ -50,14 +50,14 @@ class general_properties(QtGui.QWidget):
 		self.header_widget = general_header_widget(self, \
 			self.main_window.experiment)
 		button_help = QtGui.QPushButton(self.main_window.experiment.icon( \
-			"help"), "")
+			u"help"), u"")
 		button_help.setIconSize(QtCore.QSize(16, 16))
 		button_help.clicked.connect( \
 			self.main_window.ui.tabwidget.open_general_help)
-		button_help.setToolTip(_("Tell me more about OpenSesame!"))
+		button_help.setToolTip(_(u"Tell me more about OpenSesame!"))
 		header_hbox = QtGui.QHBoxLayout()
 		header_hbox.addWidget(self.main_window.experiment.label_image( \
-			"experiment"))
+			u"experiment"))
 		header_hbox.addWidget(self.header_widget)
 		header_hbox.addStretch()
 		header_hbox.addWidget(button_help)
@@ -75,12 +75,12 @@ class general_properties(QtGui.QWidget):
 		self.ui.edit_foreground.initialize(self.main_window.experiment)
 		self.ui.edit_background.initialize(self.main_window.experiment)
 		QtCore.QObject.connect(self.ui.edit_foreground, QtCore.SIGNAL( \
-			"set_color"), self.apply_changes)
+			u"set_color"), self.apply_changes)
 		QtCore.QObject.connect(self.ui.edit_background, QtCore.SIGNAL( \
-			"set_color"), self.apply_changes)
+			u"set_color"), self.apply_changes)
 		self.ui.widget_font.initialize(self.main_window.experiment)
 		QtCore.QObject.connect(self.ui.widget_font, QtCore.SIGNAL( \
-			"font_changed"), self.apply_changes)
+			u"font_changed"), self.apply_changes)
 
 		# Connect the rest
 		self.ui.spinbox_width.editingFinished.connect(self.apply_changes)
@@ -92,8 +92,8 @@ class general_properties(QtGui.QWidget):
 
 		# Set the backend combobox
 		for backend in openexp.backend_info.backend_list:
-			desc = openexp.backend_info.backend_list[backend]["description"]
-			icon = openexp.backend_info.backend_list[backend]["icon"]
+			desc = openexp.backend_info.backend_list[backend][u"description"]
+			icon = openexp.backend_info.backend_list[backend][u"icon"]
 			self.ui.combobox_backend.addItem(self.main_window.theme.qicon( \
 				icon), self.backend_format % (backend, desc))
 		self.ui.combobox_backend.currentIndexChanged.connect(self.apply_changes)
@@ -101,13 +101,15 @@ class general_properties(QtGui.QWidget):
 		# Variable transparency
 		self.ui.checkbox_transparent_variables.stateChanged.connect( \
 			self.apply_changes)
+		# Bi-directional-text support
+		self.ui.checkbox_bidi.stateChanged.connect(self.apply_changes)
 
 		vbox = QtGui.QVBoxLayout()
 		vbox.addWidget(header_widget)
 		vbox.addWidget(w)
 
 		self.setLayout(vbox)
-		self.tab_name = '__general_properties__'
+		self.tab_name = u'__general_properties__'
 		self.on_activate = self.refresh
 
 	def set_header_label(self):
@@ -213,10 +215,12 @@ class general_properties(QtGui.QWidget):
 			self.ui.widget_font.italic)
 		self.main_window.experiment.set(u'font_bold', \
 			self.ui.widget_font.bold)
-
 		# Set variable transparency
 		self.main_window.experiment.set(u'transparent_variables', \
 			self.ui.checkbox_transparent_variables.isChecked())
+		# Set bi-directional text
+		self.main_window.experiment.set(u'bidi', \
+			self.ui.checkbox_bidi.isChecked())
 
 		# Refresh the interface and unlock the general tab
 		self.main_window.refresh()
@@ -267,6 +271,9 @@ class general_properties(QtGui.QWidget):
 		# Set variable transparency
 		self.ui.checkbox_transparent_variables.setChecked( \
 			self.main_window.experiment.get(u'transparent_variables') == u'yes')
+		# Set bidirectional text
+		self.ui.checkbox_bidi.setChecked(self.main_window.experiment.get( \
+			u'bidi') == u'yes')
 		# Release the general tab
 		self.lock = False
 
