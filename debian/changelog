@@ -1,14 +1,17 @@
-opensesame (2.8.0~pre6-ubuntu1) saucy; urgency=low
+opensesame (2.8.0~pre7-ubuntu1) saucy; urgency=low
 
   * New functionality and improvements
     - Add runner functionality
     - Improved exception handling
     - Migrate to QProgEdit editor component
     - Updated offline help pages
+    - Improve support for non-Latin alphabets (#211)
+    - Add correct-response option to touch_response plug-in (#214)
   * Bugs fixed
     - Line wrapping causes double spaces (#203)
     - Keywords to `decode()` break compatibility with Python < 2.7 (#201)
     - Respect `focus=no` in `form_base` (#208)
+    - Fix ugly exception on Escape press in joystick plug-in (#162)
   * Debian packaging
     - Remove large template files 
 
