@@ -21,6 +21,7 @@ import sys
 import pygame
 from pygame.locals import *
 import openexp._mouse.legacy
+from libopensesame.exceptions import osexception
 try:
 	import android
 except ImportError:
@@ -45,28 +46,27 @@ class droid(openexp._mouse.legacy.legacy):
 		
 	def get_click(self, buttonlist=None, timeout=None, visible=None):
 	
-		"""See openexp._mouse.legacy"""		
+		"""See openexp._mouse.legacy"""
 	
 		if android == None:
 			pygame.mouse.set_visible(True)
 		if buttonlist == None:
 			buttonlist = self.buttonlist
 		if timeout == None:
-			timeout = self.timeout	
+			timeout = self.timeout
 		if visible == None:
-			visible = self.visible			
-		enable_escape = self.experiment.get_check('enable_escape', 'no', \
-			['yes', 'no']) == 'yes'		
+			visible = self.visible
+		enable_escape = self.experiment.get_check(u'enable_escape', u'no', \
+			[u'yes', u'no']) == u'yes'
 		start_time = pygame.time.get_ticks()
 		time = start_time		
 		while timeout == None or time - start_time < timeout:
-			time = pygame.time.get_ticks()						
+			time = pygame.time.get_ticks()
 			# Process the input
-			for event in pygame.event.get():								
+			for event in pygame.event.get():
 				if event.type == KEYDOWN and event.key == pygame.K_ESCAPE:
-					raise osexception( \
-						"The escape key was pressed.")										
-				if event.type == MOUSEBUTTONDOWN:									
+					raise osexception(u"The escape key was pressed.")
+				if event.type == MOUSEBUTTONDOWN:
 					# Check escape sequence. If the top-left and top-right
 					# corner are clicked successively within 2000ms, the
 					# experiment is aborted
@@ -77,13 +77,13 @@ class droid(openexp._mouse.legacy.legacy):
 							for event in pygame.event.get():
 								if event.type == MOUSEBUTTONDOWN:
 									if event.pos[0] > self.experiment.get( \
-										'width')-64 and event.pos[1] < 64:
+										u'width')-64 and event.pos[1] < 64:
 										raise osexception( \
-											"The escape sequence was clicked/ tapped")						
+											u"The escape sequence was clicked/ tapped")
 					if buttonlist == None or event.button in buttonlist:
-						return event.button, event.pos, time						
+						return event.button, event.pos, time
 			# Allow Android interrupt
 			if android != None and android.check_pause():
-				android.wait_for_resume()				
+				android.wait_for_resume()
 		return None, None, time
 		

@@ -22,6 +22,7 @@ from pygame.locals import *
 import random
 import openexp._canvas.legacy
 from libopensesame.exceptions import osexception
+from libopensesame import debug, html
 import math
 import subprocess
 import os
@@ -42,7 +43,7 @@ class opengl(openexp._canvas.legacy.legacy):
 	def __init__(self, experiment, bgcolor=None, fgcolor=None, auto_prepare=True):
 
 		self.experiment = experiment
-
+		self.html = html.html()
 		if fgcolor == None:
 			fgcolor = self.experiment.get("foreground")
 		if bgcolor == None:
@@ -53,7 +54,7 @@ class opengl(openexp._canvas.legacy.legacy):
 		self.penwidth = 1
 		self.antialias = True
 		self.font = self.experiment.font
-
+		self.bidi = self.experiment.get(u'bidi')==u'yes'
 		# set to have no objects
 		self.showables = []
 		self.clear()

@@ -6,6 +6,12 @@
 	"controls" : [
 		{
 			"type"		: "line_edit",
+			"var"		: "correct_response",
+			"label"		: "Correct response",
+			"tooltip"	: "Set the correct response"
+		},
+		{
+			"type"		: "line_edit",
 			"var"		: "timeout",
 			"label"		: "Timeout",
 			"tooltip"	: "Expecting a value in milliseconds or 'infinite'"

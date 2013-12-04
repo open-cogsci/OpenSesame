@@ -20,6 +20,14 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 from HTMLParser import HTMLParser
 from libopensesame import debug
 
+try:
+	from bidi.algorithm import get_display as bidi_func
+except:
+	debug.msg( \
+		u'Failed to import bidi. Bi-directional-text support will not be available', \
+		reason=u'warning')
+	bidi_func = None
+
 class html(HTMLParser):
 
 	"""
@@ -30,7 +38,7 @@ class html(HTMLParser):
 
 	valid_end_tags = u'i', u'b', u'u', u'span'
 	valid_start_tags = u'i', u'b', u'u', u'span', u'br'
-
+	
 	def handle_data(self, data):
 
 		"""
@@ -103,32 +111,35 @@ class html(HTMLParser):
 			debug.msg(u'Unrecognized tag: %s' % tag)
 
 	def render(self, text, x, y, canvas, max_width=None, center=False, \
-		color=None, html=True):
+		color=None, bidi=False, html=True):
 
 		"""
-		Render an HTML formatted string onto a canvas
+		Renders an HTML formatted string onto a canvas.
 
 		Arguments:
-		text -- the text string
-		x -- the left-most coordinate
-		y -- the top coordinate
-		canvas -- an openexp canvas
+		text		-- 	The text string.
+		x			--	The left-most coordinate.
+		y			--	The top coordinate.
+		canvas		--	An openexp canvas.
 
 		Keyword arguments:
-		max_width -- the maximum width, after which line wrapping should occur,
-					 or None to wrap at screen edge (default=None)
-		center -- indicates whether the text should be center aligned
-				  (default=False)
-		color -- indicates the color of the text or None for canvas default
-				 (default=None)
-		html -- indicates whether HTML should be parsed (default=True)
+		max_width 	--	The maximum width, after which line wrapping should
+						occur, or None to wrap at screen edge. (default=None)
+		center 		--	Indicates whether the text should be center aligned.
+						(default=False)
+		color		--	Indicates the color of the text or None for canvas
+						default. (default=None)
+		bidi		--	Indicates whether bi-directional text support should be
+						enabled. (default=False)
+		html		--	Indicates whether HTML should be parsed. (default=True)
 		"""
 
 		debug.msg(text)
-
+		# Parse bi-directional strings
+		if bidi and bidi_func != None:
+			text = bidi_func(text)
 		# Make sure that it's a string
 		text = canvas.experiment.unistr(text)
-
 		# Convert line breaks to HTML break tags
 		text = text.replace(u'\n', u'<br />')
 

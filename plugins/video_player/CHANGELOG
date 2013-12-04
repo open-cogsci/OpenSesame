@@ -1,7 +1,0 @@
-0.11
-- Fixed a bug that caused a crash after the video is finished
-- Moved the resizing operation to opencv, to speed up playback
-- Various operations to make playback marginally more efficient
-
-0.10
-- First working version

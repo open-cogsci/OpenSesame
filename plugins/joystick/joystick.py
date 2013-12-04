@@ -129,12 +129,8 @@ class joystick(item.item, generic_response.generic_response):
 				None, self._timeout)
 		else:
 			# Get the response
-			try:
-				resp, self.experiment.end_response_interval = \
-						self._resp_func(self._allowed_responses, self._timeout)
-			except Exception as e:
-				raise osexception( \
-					"An error occured in joystick '%s': '%s." % (self.name, e))
+			resp, self.experiment.end_response_interval = self._resp_func( \
+				self._allowed_responses, self._timeout)
 		debug.msg(u'received %s' % resp)
 		self.experiment.response = resp
 		generic_response.generic_response.response_bookkeeping(self)

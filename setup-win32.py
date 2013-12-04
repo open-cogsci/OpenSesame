@@ -41,11 +41,16 @@ Python modules
 
 The following Python modules should be installed:
 	
+	bidi
+		- This is installed as an egg and therefore not packaged properly. For
+		  packaging, simply place the `bidi` source folder directly in the
+		  Python site-packages.
 	cairo
 		- Unofficial Windows builds can be downloaded from
 		  <http://www.lfd.uci.edu/~gohlke/pythonlibs/#pycairo>
 	distutils
 	expyriment
+	matplotlib
 	opencv2
 		- Download and extract the regular OpenCV2 package
 		- Copy cv2.pyd from build/python/2.7 to the Python site-packages
@@ -139,7 +144,8 @@ python_version = "2.7"
 # Packages that are too be copied for the site-packages folder, rather than
 # included by py2exe in the library .zip file. Copying packages is in general
 # preferred, as some packages (e.g. expyriment) do not work well when included
-# in the library.zip file that py2exe uses to store packages.
+# in the library.zip file that py2exe uses to store packages. Note eggs are not
+# copied properly.
 copy_packages = [
 	'QProgEdit',
 	'libopensesame',
@@ -156,6 +162,8 @@ copy_packages = [
 	'pyglet',
 	'libqtopensesame',
 	'markdown',
+	'matplotlib',
+	'bidi',
 	]
 
 # Packages that are part of the standard Python packages, but should not be
