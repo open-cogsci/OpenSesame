@@ -1677,7 +1677,6 @@ Description: %s</source>
     <message>
         <location filename="translatables.py" line="149"/>
         <source>&lt;b&gt;%s&lt;/b&gt; will be called &lt;b&gt;%s&lt;/b&gt; x &lt;b&gt;%s&lt;/b&gt; = &lt;b&gt;%s&lt;/b&gt; times in &lt;b&gt;%s&lt;/b&gt; order</source>
-        <translatorcomment>The translation contained one wildcard too much, causing an exception</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2210,7 +2209,7 @@ href=&apos;http://www.cogsci.nl/opensesame&apos;&gt;http://www.cogsci.nl/openses
     <message>
         <location filename="translatables.py" line="43"/>
         <source>Failed to parse script (see traceback in debug window): %s</source>
-        <translation>无法解析脚本 (查看调试视窗中的追溯信息)</translation>
+        <translation type="unfinished">无法解析脚本 (查看调试视窗中的追溯信息): %s</translation>
     </message>
     <message>
         <location filename="translatables.py" line="57"/>
