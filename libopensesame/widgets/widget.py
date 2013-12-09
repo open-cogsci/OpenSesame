@@ -45,7 +45,7 @@ class widget:
 				u'The first parameter passed to the constructor of a form widget should be a form, not "%s"' \
 				% form)
 		
-	def draw_frame(self, rect=None, style='normal'):
+	def draw_frame(self, rect=None, style=u'normal'):
 	
 		"""<DOC>
 		Draws a simple frame around the widget.
