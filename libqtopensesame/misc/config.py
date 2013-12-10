@@ -61,6 +61,8 @@ class config(object):
 		u"locale" : u"default",
 		u"loop_wizard" : QtCore.QStringList(),
 		u"onetabmode" : False,
+		u"qProgEditCommentShortcut" : u'Ctrl+M',
+		u"qProgEditUncommentShortcut" : u'Ctrl+Shift+M',
 		u'qProgEditFontFamily' : u'Monospace',
 		u'qProgEditFontSize' : 10,
 		u'qProgEditLineNumbers' : True,
