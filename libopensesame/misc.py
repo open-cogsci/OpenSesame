@@ -283,7 +283,7 @@ def module_versions():
 
 	s = u"OpenSesame %s" % version
 	s += u"\nPython %s" % sys.version
-
+	
 	# OpenCV
 	try:
 		import cv
@@ -325,6 +325,20 @@ def module_versions():
 		s += u'\nNumPy %s' % numpy.version.version
 	except:
 		s += u'\nNumPy is not available (or version is unknown)'
+		
+	# OpenCV
+	try:
+		from PIL import Image
+		s += u'\nPIL is available (version is unknown)'
+	except:
+		s += u'\nPIL is not available'
+		
+	# PsychoPy
+	try:
+		import psychopy
+		s += u"\nPsychoPy %s" % psychopy.__version__
+	except:
+		s += "\nPsychoPy not available (or version is unknown)"		
 
 	# PyAudio
 	try:
@@ -339,6 +353,13 @@ def module_versions():
 		s += u"\nPyGame %s" % pygame.ver
 	except:
 		s += u"\nPyGame not available (or version is unknown)"
+		
+	# Pyglet
+	try:
+		import pyglet
+		s += u"\nPyglet %s" % pyglet.version
+	except:
+		s += u"\nPyglet not available (or version is unknown)"		
 
 	# PyOpenGL
 	try:
@@ -356,20 +377,21 @@ def module_versions():
 		s += u'\nPySerial %s' % serial.VERSION
 	except:
 		s += u'\nPySerial not available (or version is unknown)'
-
-	# PsychoPy
+		
+	# python-bidi
 	try:
-		import psychopy
-		s += u"\nPsychoPy %s" % psychopy.__version__
+		import bidi
+		s += u'\npython-bidi %s' % bidi.VERSION
 	except:
-		s += "\nPsychoPy not available (or version is unknown)"
-
-	# Pyglet
+		s += u'\npython-bidi is not available'		
+		
+		
+	# python-markdown
 	try:
-		import pyglet
-		s += u"\nPyglet %s" % pyglet.version
+		import markdown
+		s += u'\npython-markdown %s' % markdown.version
 	except:
-		s += u"\nPyglet not available (or version is unknown)"
+		s += u'\npython-markdown is not available'		
 
 	# SciPy
 	try:
