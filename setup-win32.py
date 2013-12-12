@@ -56,6 +56,10 @@ The following Python modules should be installed:
 		  folder
 	pil
 	psychopy
+    pyflakes
+		- This is installed as an egg and therefore not packaged properly. For
+		  packaging, simply place the `pyflakes` source folder directly in the
+		  Python site-packages.
 	py2exe
 	pyaudio	
 	pygame
@@ -157,6 +161,7 @@ copy_packages = [
 	'openexp',
 	'expyriment',
 	'psychopy',
+    'pyflakes',
 	'scipy',
 	'numpy',
 	'serial',
