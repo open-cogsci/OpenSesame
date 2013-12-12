@@ -78,6 +78,7 @@ class config(object):
 		u'qProgEditShowFolding' : True,
 		u'qProgEditAutoComplete' : True,
 		u'qProgEditColorScheme' : u'Default',
+		u'qProgEditValidate' : True,
 		u"quick_run_logfile": u"quickrun.csv",
 		u"recent_files" : u"",
 		u"shortcut_itemtree" : u"Ctrl+1",
