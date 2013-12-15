@@ -130,7 +130,7 @@ class loop(item.item):
 		# Make sure the item to run exists		
 		if self.item not in self.experiment.items:
 			raise osexception( \
-				"Could not find item '%s', which is called by loop item '%s'" \
+				u"Could not find item '%s', which is called by loop item '%s'" \
 				% (self.item, self.name))			
 				
 		# And run!
@@ -172,7 +172,7 @@ class loop(item.item):
 					val = eval(val[1:])
 				except Exception as e:
 					raise osexception( \
-						"Failed to evaluate '%s' in loop item '%s': %s" \
+						u"Failed to evaluate '%s' in loop item '%s': %s" \
 						% (val[1:], self.name, e))
 			# Set it!
 			self.experiment.set(var, val)												

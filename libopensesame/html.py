@@ -17,6 +17,7 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
+import os
 from HTMLParser import HTMLParser
 from libopensesame import debug
 
@@ -141,7 +142,7 @@ class html(HTMLParser):
 		# Make sure that it's a string
 		text = canvas.experiment.unistr(text)
 		# Convert line breaks to HTML break tags
-		text = text.replace(u'\n', u'<br />')
+		text = text.replace(os.linesep, u'<br />').replace(u'\n', u'<br />')
 
 		# Initialize the style
 		self.canvas = canvas

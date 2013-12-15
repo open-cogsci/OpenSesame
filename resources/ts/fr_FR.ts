@@ -557,7 +557,7 @@
     <message>
         <location filename="opensesame.ui" line="60"/>
         <source>File</source>
-        <translation type="unfinished">Fichier</translation>
+        <translation>Fichier</translation>
     </message>
     <message>
         <location filename="opensesame.ui" line="64"/>
@@ -1357,17 +1357,17 @@
     <message>
         <location filename="preferences_widget.ui" line="458"/>
         <source>Run experiment in the same process (inprocess)</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Exécuter l&apos;expérience dans le même processus (inprocess)</translation>
     </message>
     <message>
         <location filename="preferences_widget.ui" line="463"/>
         <source>Run experiment in a separate process (multiprocess)</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Exécuter l&apos;expérience dans un processus séparé (multiprocess)</translation>
     </message>
     <message>
         <location filename="preferences_widget.ui" line="468"/>
         <source>Run experiment with opensesamerun (external)</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Exécuter l&apos;expérience avec opensesamerun (external)</translation>
     </message>
 </context>
 <context>
@@ -1753,7 +1753,7 @@ Description: %s</translation>
     <message>
         <location filename="translatables.py" line="7"/>
         <source>Backup saved as %s</source>
-        <translation>Sauvegarde enregistrée sous %S</translation>
+        <translation>Sauvegarde enregistrée sous %s</translation>
     </message>
     <message>
         <location filename="translatables.py" line="8"/>
@@ -2741,7 +2741,7 @@ Description: %s</translation>
     <message>
         <location filename="findWidget.ui" line="23"/>
         <source>Replace:</source>
-        <translation>Remplacer</translation>
+        <translation>Remplacer:</translation>
     </message>
     <message>
         <location filename="findWidget.ui" line="33"/>

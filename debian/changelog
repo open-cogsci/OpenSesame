@@ -1,4 +1,4 @@
-opensesame (2.8.0~pre7-ubuntu1) saucy; urgency=low
+opensesame (2.8.0~pre10-ubuntu1) saucy; urgency=low
 
   * New functionality and improvements
     - Add runner functionality
@@ -12,8 +12,9 @@ opensesame (2.8.0~pre7-ubuntu1) saucy; urgency=low
     - Keywords to `decode()` break compatibility with Python < 2.7 (#201)
     - Respect `focus=no` in `form_base` (#208)
     - Fix ugly exception on Escape press in joystick plug-in (#162)
+    - Correctly parse non-Unix line separators in HTML parser
   * Debian packaging
-    - Remove large template files 
+    - Remove large template files
 
  -- Sebastiaan Mathot <s.mathot@cogsci.nl>  Fri, 13 Sep 2013 16:59:10 +0200
 

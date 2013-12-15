@@ -75,6 +75,10 @@ class qtopensesame(QtGui.QMainWindow):
 		from libqtopensesame.misc import theme, dispatch
 		import platform
 		import random
+		
+		# Make sure that QProgEdit doesn't complain about some standard names
+		from QProgEdit import validate
+		validate.addPythonBuiltins([u'exp', u'win', u'self'])
 
 		# Initialize random number generator
 		random.seed()

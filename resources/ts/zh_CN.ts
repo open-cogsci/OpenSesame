@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS><TS version="2.0" language="zh_CN" sourcelanguage="">
+<!DOCTYPE TS>
+<TS version="2.0" language="zh_CN">
 <context>
     <name>font_widget</name>
     <message>
@@ -1676,7 +1677,7 @@ Description: %s</source>
     <message>
         <location filename="translatables.py" line="149"/>
         <source>&lt;b&gt;%s&lt;/b&gt; will be called &lt;b&gt;%s&lt;/b&gt; x &lt;b&gt;%s&lt;/b&gt; = &lt;b&gt;%s&lt;/b&gt; times in &lt;b&gt;%s&lt;/b&gt; order</source>
-        <translation>&lt;b&gt;%s&lt;/b&gt;被调用 &lt;b&gt;%s&lt;/b&gt; x &lt;b&gt;%s&lt;/b&gt; - &lt;b&gt;%s&lt;/b&gt; = &lt;b&gt;%s&lt;/b&gt; 次数 &lt;b&gt;%s&lt;/b&gt; 次序</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="translatables.py" line="150"/>
@@ -2208,7 +2209,7 @@ href=&apos;http://www.cogsci.nl/opensesame&apos;&gt;http://www.cogsci.nl/openses
     <message>
         <location filename="translatables.py" line="43"/>
         <source>Failed to parse script (see traceback in debug window): %s</source>
-        <translation>无法解析脚本 (查看调试视窗中的追溯信息)</translation>
+        <translation type="unfinished">无法解析脚本 (查看调试视窗中的追溯信息): %s</translation>
     </message>
     <message>
         <location filename="translatables.py" line="57"/>
@@ -2957,7 +2958,7 @@ Various settings related to the control of the display, sound, and input devices
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;COGSCIdotNL // cognitive science and more&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;COGSCIdotNL // 认知科学及更多&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
-    <message encoding="UTF-8">
+    <message utf8="true">
         <location filename="credits_widget.ui" line="150"/>
         <source>OpenSesame [version] [codename]
 Copyright Sebastiaan Mathôt (2010-2013)</source>

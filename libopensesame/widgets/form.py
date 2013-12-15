@@ -180,7 +180,7 @@ class form:
 		h = y2-y1
 		if w <= 0 or h <= 0:
 			raise osexception( \
-				'There is not enough space to show some form widgets. Please modify the form geometry!')
+				u'There is not enough space to show some form widgets. Please modify the form geometry!')
 		return x1+self.margins[3], y1+self.margins[0], w, h
 
 	def render(self):
