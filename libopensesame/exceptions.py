@@ -118,3 +118,8 @@ class osexception(Exception):
 		"""
 		
 		return self._html
+
+# For backwards compatibility, we should also define the old Exception classes
+runtime_error = osexception
+script_error = osexception
+form_error = osexception
