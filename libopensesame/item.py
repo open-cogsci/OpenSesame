@@ -19,7 +19,8 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 
 import openexp.mouse
 import openexp.keyboard
-from libopensesame import exceptions, debug, regexp
+from libopensesame.exceptions import osexception
+from libopensesame import debug, regexp
 import string
 import os
 import sys
@@ -65,7 +66,7 @@ class item(object):
 		prefix = self.experiment.item_prefix()
 		self.item_type = unicode(self.__class__.__name__)
 		if self.item_type.startswith(prefix):
-			self.item_type = self.item_type[len(prefix):]			
+			self.item_type = self.item_type[len(prefix):]
 		if not hasattr(self, u'description'):
 			self.description = u'Default description'
 		if not hasattr(self, u'round_decimals'):
@@ -82,7 +83,7 @@ class item(object):
 		self.time = self.experiment._time_func
 		self.sleep = self.experiment._sleep_func
 		self.experiment.set(u'count_%s' % self.name, self.count)
-		self.count += 1		
+		self.count += 1
 
 	def run(self):
 
@@ -109,7 +110,7 @@ class item(object):
 		l = self.split(line.strip())
 		if len(l) > 0 and l[0] == u'set':
 			if len(l) != 3:
-				raise exceptions.script_error( \
+				raise osexception( \
 					u'Error parsing variable definition: "%s"' % line)
 			else:
 				self.set(l[1], l[2])
@@ -303,7 +304,7 @@ class item(object):
 		w = self.get(u'width')
 		h = self.get(u'height')
 		if type(w) != int or type(h) != int:
-			raise exceptions.runtime_error( \
+			raise osexception( \
 				u'(%s, %s) is not a valid resolution' % (w, h))
 		return w, h
 
@@ -339,12 +340,12 @@ class item(object):
 		val = self.auto_type(val)
 		# Check whether the variable name is valid
 		if regexp.sanitize_var_name.sub(u'_', var) != var:
-			raise exceptions.runtime_error( \
+			raise osexception( \
 				u'"%s" is not a valid variable name. Variable names must consist of alphanumeric characters and underscores, and may not start with a digit.' \
 				% var)
 		# Check whether the variable name is not protected
 		if var in self.reserved_words:
-			raise exceptions.runtime_error( \
+			raise osexception( \
 				u'"%s" is a reserved keyword (i.e. it has a special meaning for OpenSesame), and therefore cannot be used as a variable name. Sorry!' \
 				% var)
 
@@ -397,7 +398,7 @@ class item(object):
 				 (default=True).
 
 		Exceptions:
-		A runtime_error is raised if the variable is not found.
+		A osexception is raised if the variable is not found.
 
 		Returns:
 		The value.
@@ -417,7 +418,7 @@ class item(object):
 		var = self.unistr(var)
 		# Avoid recursion
 		if var == self._get_lock:
-			raise exceptions.runtime_error( \
+			raise osexception( \
 				u"Recursion detected! Is variable '%s' defined in terms of itself (e.g., 'var = [var]') in item '%s'" \
 				% (var, self.name))
 		# Get the variable
@@ -427,7 +428,7 @@ class item(object):
 			try:
 				val = getattr(self.experiment, var)
 			except:
-				raise exceptions.runtime_error( \
+				raise osexception( \
 					u"Variable '%s' is not set in item '%s'.<br /><br />You are trying to use a variable that does not exist. Make sure that you have spelled and capitalized the variable name correctly. You may wish to use the variable inspector (Control + I) to find the intended variable." \
 					% (var, self.name))
 		if _eval:
@@ -455,7 +456,7 @@ class item(object):
 				 whether containing variables should be processed (default=True).
 
 		Exceptions:
-		Raises a runtime_error if the variable is not defined and there is no #
+		Raises a osexception if the variable is not defined and there is no #
 		default value, or if the variable value is not part of the 'valid' list.
 
 		Returns:
@@ -473,7 +474,7 @@ class item(object):
 		else:
 			val = default
 		if valid != None and val not in valid:
-			raise exceptions.runtime_error( \
+			raise osexception( \
 				u"Variable '%s' is '%s', expecting '%s'" % (var, val, \
 				u" or ".join(valid)))
 		return val
@@ -527,7 +528,7 @@ class item(object):
 				break
 			end = text.find(u']', start + 1)
 			if end < 0:
-				raise exceptions.runtime_error( \
+				raise osexception( \
 					u"Missing closing bracket ']' in string '%s', in item '%s'" \
 					% (text, self.name))
 			var = text[start+1:end]
@@ -742,7 +743,7 @@ class item(object):
 		try:
 			bytecode = compile(code, u"<conditional statement>", u"eval")
 		except:
-			raise exceptions.runtime_error( \
+			raise osexception( \
 				u"'%s' is not a valid conditional statement in sequence item '%s'" \
 				% (cond, self.name))
 		return bytecode
@@ -809,7 +810,7 @@ class item(object):
 		"""
 
 		if not isinstance(s, unicode):
-			raise exceptions.runtime_error( \
+			raise osexception( \
 				u'usanitize() expects first argument to be unicode, not "%s"' \
 				% type(s))
 
@@ -837,7 +838,7 @@ class item(object):
 		"""
 
 		if not isinstance(s, basestring):
-			raise exceptions.runtime_error( \
+			raise osexception( \
 			u'unsanitize() expects first argument to be unicode or str, not "%s"' \
 			% type(s))
 		s = self.unistr(s)
@@ -904,10 +905,10 @@ class item(object):
 		try:
 			return [chunk.decode(self.encoding) for chunk in shlex.split( \
 				u.encode(self.encoding))]
-		except:
-			raise exceptions.script_error( \
+		except Exception as e:
+			raise osexception( \
 				u'Failed to parse line "%s". Is there a closing quotation missing?' \
-				% u)
+				% u, exception=e)
 
 	def color_check(self, col):
 
@@ -918,14 +919,14 @@ class item(object):
 		col -- The color to check.
 
 		Exceptions:
-		Raises a runtime_error if col is not a valid color.
+		Raises a osexception if col is not a valid color.
 
 		Example:
 		>>> # Ok
 		>>> print self.color_check('red')
 		>>> # Ok
 		>>> print self.color_check('#FFFFFF')
-		>>> # Raises runtime_error
+		>>> # Raises osexception
 		>>> print self.color_check('this is not a color')
 		</DOC>"""
 
@@ -934,9 +935,9 @@ class item(object):
 				col = str(col)
 			pygame.Color(col)
 		except Exception as e:
-			raise exceptions.script_error( \
+			raise osexception( \
 				u"'%s' is not a valid color. See http://www.w3schools.com/html/html_colornames.asp for an overview of valid color names" \
-				% self.unistr(col))
+				% self.unistr(col), exception=e)
 
 	def sleep(self, ms):
 
@@ -951,7 +952,7 @@ class item(object):
 		</DOC>"""
 
 		# This function is set by item.prepare()
-		raise exceptions.runtime_error( \
+		raise osexception( \
 			u'item.sleep(): This function should be set by the canvas backend.')
 
 	def time(self):
@@ -967,7 +968,7 @@ class item(object):
 		</DOC>"""
 
 		# This function is set by item.prepare()
-		raise exceptions.runtime_error( \
+		raise osexception( \
 			u"item.time(): This function should be set by the canvas backend.")
 
 	def log(self, msg):

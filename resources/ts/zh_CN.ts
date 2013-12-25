@@ -1138,202 +1138,202 @@
         <translation>杂项</translation>
     </message>
     <message>
-        <location filename="preferences_widget.ui" line="59"/>
+        <location filename="preferences_widget.ui" line="56"/>
         <source>Offer to rename new items immediately</source>
         <translation>提供即时重新命名新项目</translation>
     </message>
     <message>
-        <location filename="preferences_widget.ui" line="66"/>
+        <location filename="preferences_widget.ui" line="63"/>
         <source>Enable auto-response</source>
         <translation>启用自动反应</translation>
     </message>
     <message>
-        <location filename="preferences_widget.ui" line="138"/>
+        <location filename="preferences_widget.ui" line="135"/>
         <source>Show text in toolbar</source>
         <translation>在工具栏显示文字</translation>
     </message>
     <message>
-        <location filename="preferences_widget.ui" line="131"/>
+        <location filename="preferences_widget.ui" line="128"/>
         <source>Small icons in toolbar</source>
         <translation>工具栏中的小图标</translation>
     </message>
     <message>
-        <location filename="preferences_widget.ui" line="82"/>
+        <location filename="preferences_widget.ui" line="79"/>
         <source>Appearance</source>
         <translation>外形</translation>
     </message>
     <message>
-        <location filename="preferences_widget.ui" line="154"/>
+        <location filename="preferences_widget.ui" line="151"/>
         <source>Embedded text editor</source>
         <translation>嵌入式文本编辑器</translation>
     </message>
     <message>
-        <location filename="preferences_widget.ui" line="172"/>
+        <location filename="preferences_widget.ui" line="166"/>
         <source>Show line numbers</source>
         <translation>显示行数</translation>
     </message>
     <message>
-        <location filename="preferences_widget.ui" line="179"/>
+        <location filename="preferences_widget.ui" line="173"/>
         <source>Enable block folding</source>
         <translation>启用区组折叠</translation>
     </message>
     <message>
-        <location filename="preferences_widget.ui" line="186"/>
+        <location filename="preferences_widget.ui" line="180"/>
         <source>Show right margin</source>
         <translation>显示右边距</translation>
     </message>
     <message>
-        <location filename="preferences_widget.ui" line="193"/>
+        <location filename="preferences_widget.ui" line="187"/>
         <source>Highlight matching braces</source>
         <translation>突出显示配对的大括号</translation>
     </message>
     <message>
-        <location filename="preferences_widget.ui" line="200"/>
+        <location filename="preferences_widget.ui" line="194"/>
         <source>Show end of lines</source>
         <translation>显示行结束</translation>
     </message>
     <message>
-        <location filename="preferences_widget.ui" line="207"/>
+        <location filename="preferences_widget.ui" line="201"/>
         <source>Enable syntax highlighting</source>
         <translation>启用句法突出</translation>
     </message>
     <message>
-        <location filename="preferences_widget.ui" line="214"/>
+        <location filename="preferences_widget.ui" line="208"/>
         <source>Show whitespace</source>
         <translation>显示空格</translation>
     </message>
     <message>
-        <location filename="preferences_widget.ui" line="221"/>
+        <location filename="preferences_widget.ui" line="215"/>
         <source>Show indentation guides</source>
         <translation>显示缩进提示</translation>
     </message>
     <message>
-        <location filename="preferences_widget.ui" line="228"/>
+        <location filename="preferences_widget.ui" line="222"/>
         <source>Auto indent</source>
         <translation>自动缩进</translation>
     </message>
     <message>
-        <location filename="preferences_widget.ui" line="235"/>
+        <location filename="preferences_widget.ui" line="229"/>
         <source>Use custom font</source>
         <translation>使用自定义字体</translation>
     </message>
     <message>
-        <location filename="preferences_widget.ui" line="254"/>
+        <location filename="preferences_widget.ui" line="248"/>
         <source>Font family</source>
         <translation>字体库</translation>
     </message>
     <message>
-        <location filename="preferences_widget.ui" line="264"/>
+        <location filename="preferences_widget.ui" line="258"/>
         <source>Font size</source>
         <translation>字体大小</translation>
     </message>
     <message>
-        <location filename="preferences_widget.ui" line="271"/>
+        <location filename="preferences_widget.ui" line="265"/>
         <source> pt</source>
         <translation>磅</translation>
     </message>
     <message>
-        <location filename="preferences_widget.ui" line="296"/>
+        <location filename="preferences_widget.ui" line="290"/>
         <source>Backups</source>
         <translation>备份</translation>
     </message>
     <message>
-        <location filename="preferences_widget.ui" line="320"/>
+        <location filename="preferences_widget.ui" line="314"/>
         <source>Automatically create backups</source>
         <translation>自动创建备份</translation>
     </message>
     <message>
-        <location filename="preferences_widget.ui" line="327"/>
+        <location filename="preferences_widget.ui" line="321"/>
         <source>Auto-save interval:</source>
         <translation>自动保存间隔:</translation>
     </message>
     <message>
-        <location filename="preferences_widget.ui" line="334"/>
+        <location filename="preferences_widget.ui" line="328"/>
         <source> minute(s)</source>
         <translation>分钟</translation>
     </message>
     <message>
-        <location filename="preferences_widget.ui" line="337"/>
+        <location filename="preferences_widget.ui" line="331"/>
         <source>every </source>
         <translation>每 </translation>
     </message>
     <message>
-        <location filename="preferences_widget.ui" line="353"/>
+        <location filename="preferences_widget.ui" line="367"/>
         <source>Open backup folder</source>
         <translation>打开备份文件夹</translation>
     </message>
     <message>
-        <location filename="preferences_widget.ui" line="364"/>
+        <location filename="preferences_widget.ui" line="347"/>
         <source>Clean backups after:</source>
         <translation>之后清除备份文件夹:</translation>
     </message>
     <message>
-        <location filename="preferences_widget.ui" line="371"/>
+        <location filename="preferences_widget.ui" line="354"/>
         <source> day(s)</source>
         <translation>天</translation>
     </message>
     <message>
-        <location filename="preferences_widget.ui" line="393"/>
+        <location filename="preferences_widget.ui" line="387"/>
         <source>Updates</source>
         <translation>更新</translation>
     </message>
     <message>
-        <location filename="preferences_widget.ui" line="411"/>
+        <location filename="preferences_widget.ui" line="402"/>
         <source>Check for updates on start-up</source>
         <translation>启动时检查是否有更新</translation>
     </message>
     <message>
-        <location filename="preferences_widget.ui" line="418"/>
+        <location filename="preferences_widget.ui" line="409"/>
         <source>Check for updates now</source>
         <translation>现在检查是否有更新</translation>
     </message>
     <message>
         <location filename="preferences_widget.ui" line="438"/>
         <source>Run options</source>
-        <translation>运行 选项</translation>
+        <translation type="obsolete">运行 选项</translation>
     </message>
     <message>
         <location filename="preferences_widget.ui" line="466"/>
         <source>Run experiments in a separate process</source>
-        <translation>在单独进程运行实验</translation>
+        <translation type="obsolete">在单独进程运行实验</translation>
     </message>
     <message>
         <location filename="preferences_widget.ui" line="473"/>
         <source>Auto-detect the run command</source>
-        <translation>自动检测运行的命令</translation>
+        <translation type="obsolete">自动检测运行的命令</translation>
     </message>
     <message>
         <location filename="preferences_widget.ui" line="480"/>
         <source>Custom run command:</source>
-        <translation>自定义运行命令:</translation>
+        <translation type="obsolete">自定义运行命令:</translation>
     </message>
     <message>
-        <location filename="preferences_widget.ui" line="499"/>
+        <location filename="preferences_widget.ui" line="485"/>
         <source>Plug-ins</source>
         <translation>插件</translation>
     </message>
     <message>
-        <location filename="preferences_widget.ui" line="520"/>
+        <location filename="preferences_widget.ui" line="503"/>
         <source>Plug-in folders:</source>
         <translation>插件文件夹:</translation>
     </message>
     <message>
-        <location filename="preferences_widget.ui" line="540"/>
+        <location filename="preferences_widget.ui" line="523"/>
         <source>Installed plug-ins (requires restart):</source>
         <translation>安装(需要重新启动):</translation>
     </message>
     <message>
-        <location filename="preferences_widget.ui" line="100"/>
+        <location filename="preferences_widget.ui" line="108"/>
         <source>Interface style</source>
         <translation>界面风格</translation>
     </message>
     <message>
-        <location filename="preferences_widget.ui" line="110"/>
+        <location filename="preferences_widget.ui" line="118"/>
         <source>icon theme</source>
         <translation>图标主题</translation>
     </message>
     <message>
-        <location filename="preferences_widget.ui" line="120"/>
+        <location filename="preferences_widget.ui" line="97"/>
         <source>&lt;small&gt;&lt;i&gt;Changes take effect the next time you start OpenSesame&lt;/i&gt;&lt;/small&gt;
 </source>
         <translation>&lt;small&gt;&lt;i&gt;下次运行OpenSeasame时改变生效&lt;/i&gt;&lt;/small&gt;</translation>
@@ -1341,7 +1341,32 @@
     <message>
         <location filename="preferences_widget.ui" line="456"/>
         <source>&lt;small&gt;&lt;i&gt;If you experience stability issues, you can enable the &apos;Run experiments in a separate process&apos; option. This essentially means that &apos;opensesamerun[.exe]&apos; is used to run your experiment.&lt;/i&gt;&lt;/small&gt;</source>
-        <translation>&lt;small&gt;&lt;i&gt;如你遇到稳定性问题，你可以启用 &apos;在单独进程运行实验&apos;的选项。这意味着 &apos;opensesamerun{.exe]&apos;被用以运行你的实验&lt;/i&gt;&lt;/small&gt;</translation>
+        <translation type="obsolete">&lt;small&gt;&lt;i&gt;如你遇到稳定性问题，你可以启用 &apos;在单独进程运行实验&apos;的选项。这意味着 &apos;opensesamerun{.exe]&apos;被用以运行你的实验&lt;/i&gt;&lt;/small&gt;</translation>
+    </message>
+    <message>
+        <location filename="preferences_widget.ui" line="429"/>
+        <source>Runner</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="preferences_widget.ui" line="447"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:8pt; font-style:italic;&quot;&gt;The &apos;runner&apos; determines how your OpenSesame experiment is executed. For more information, please visit &lt;/span&gt;&lt;a href=&quot;http://osdoc.cogsci.nl/miscellaneous/runners&quot;&gt;&lt;span style=&quot; font-size:8pt; font-style:italic; text-decoration: underline; color:#0057ae;&quot;&gt;http://osdoc.cogsci.nl/miscellaneous/runners&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:8pt; font-style:italic;&quot;&gt;.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="preferences_widget.ui" line="458"/>
+        <source>Run experiment in the same process (inprocess)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="preferences_widget.ui" line="463"/>
+        <source>Run experiment in a separate process (multiprocess)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="preferences_widget.ui" line="468"/>
+        <source>Run experiment with opensesamerun (external)</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1652,7 +1677,7 @@ Description: %s</source>
     <message>
         <location filename="translatables.py" line="149"/>
         <source>&lt;b&gt;%s&lt;/b&gt; will be called &lt;b&gt;%s&lt;/b&gt; x &lt;b&gt;%s&lt;/b&gt; = &lt;b&gt;%s&lt;/b&gt; times in &lt;b&gt;%s&lt;/b&gt; order</source>
-        <translation>&lt;b&gt;%s&lt;/b&gt;被调用 &lt;b&gt;%s&lt;/b&gt; x &lt;b&gt;%s&lt;/b&gt; - &lt;b&gt;%s&lt;/b&gt; = &lt;b&gt;%s&lt;/b&gt; 次数 &lt;b&gt;%s&lt;/b&gt; 次序</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="translatables.py" line="150"/>
@@ -2184,7 +2209,7 @@ href=&apos;http://www.cogsci.nl/opensesame&apos;&gt;http://www.cogsci.nl/openses
     <message>
         <location filename="translatables.py" line="43"/>
         <source>Failed to parse script (see traceback in debug window): %s</source>
-        <translation>无法解析脚本 (查看调试视窗中的追溯信息)</translation>
+        <translation type="unfinished">无法解析脚本 (查看调试视窗中的追溯信息): %s</translation>
     </message>
     <message>
         <location filename="translatables.py" line="57"/>
@@ -2345,12 +2370,12 @@ href=&apos;http://www.cogsci.nl/opensesame&apos;&gt;http://www.cogsci.nl/openses
         <translation>颜色</translation>
     </message>
     <message>
-        <location filename="sketchpad_widget.ui" line="480"/>
+        <location filename="sketchpad_widget.ui" line="490"/>
         <source>Pen width</source>
         <translation>笔宽</translation>
     </message>
     <message>
-        <location filename="sketchpad_widget.ui" line="605"/>
+        <location filename="sketchpad_widget.ui" line="618"/>
         <source>px</source>
         <translation>像素</translation>
     </message>
@@ -2365,17 +2390,17 @@ href=&apos;http://www.cogsci.nl/opensesame&apos;&gt;http://www.cogsci.nl/openses
         <translation>箭头大小</translation>
     </message>
     <message>
-        <location filename="sketchpad_widget.ui" line="496"/>
+        <location filename="sketchpad_widget.ui" line="506"/>
         <source>Image scale</source>
         <translation>图片比例</translation>
     </message>
     <message>
-        <location filename="sketchpad_widget.ui" line="503"/>
+        <location filename="sketchpad_widget.ui" line="513"/>
         <source>Image scaling in %</source>
         <translation>图片比例 %</translation>
     </message>
     <message>
-        <location filename="sketchpad_widget.ui" line="579"/>
+        <location filename="sketchpad_widget.ui" line="592"/>
         <source>%</source>
         <translation>%</translation>
     </message>
@@ -2410,54 +2435,64 @@ href=&apos;http://www.cogsci.nl/opensesame&apos;&gt;http://www.cogsci.nl/openses
         <translation>填充物件</translation>
     </message>
     <message>
-        <location filename="sketchpad_widget.ui" line="569"/>
+        <location filename="sketchpad_widget.ui" line="582"/>
         <source>Zoom</source>
         <translation>缩放</translation>
     </message>
     <message>
-        <location filename="sketchpad_widget.ui" line="576"/>
+        <location filename="sketchpad_widget.ui" line="589"/>
         <source>Zoom level in %</source>
         <translation>缩放比例 %</translation>
     </message>
     <message>
-        <location filename="sketchpad_widget.ui" line="595"/>
+        <location filename="sketchpad_widget.ui" line="608"/>
         <source>Grid</source>
         <translation>网格</translation>
     </message>
     <message>
-        <location filename="sketchpad_widget.ui" line="602"/>
+        <location filename="sketchpad_widget.ui" line="615"/>
         <source>Grid size</source>
         <translation>网格大小</translation>
     </message>
     <message>
-        <location filename="sketchpad_widget.ui" line="618"/>
+        <location filename="sketchpad_widget.ui" line="631"/>
         <source>Check to display the grid and enable snap-to-grid</source>
         <translation>勾选以显示网格并启用对齐网格</translation>
     </message>
     <message>
-        <location filename="sketchpad_widget.ui" line="621"/>
+        <location filename="sketchpad_widget.ui" line="634"/>
         <source>Show grid</source>
         <translation>显示网格</translation>
     </message>
     <message>
-        <location filename="sketchpad_widget.ui" line="643"/>
+        <location filename="sketchpad_widget.ui" line="656"/>
         <source>(0, 0)</source>
         <translation>(0, 0)</translation>
     </message>
     <message>
-        <location filename="sketchpad_widget.ui" line="693"/>
+        <location filename="sketchpad_widget.ui" line="706"/>
         <source>[nr] objects are not shown, because their definition contains variables.</source>
         <translation>[nr] 物件不能显示，因为它们的定义包含了变量。</translation>
     </message>
     <message>
-        <location filename="sketchpad_widget.ui" line="712"/>
+        <location filename="sketchpad_widget.ui" line="725"/>
         <source>Edit the script to see objects defined using variables</source>
         <translation>编辑脚本以显示使用变量定义的物件</translation>
     </message>
     <message>
-        <location filename="sketchpad_widget.ui" line="715"/>
+        <location filename="sketchpad_widget.ui" line="728"/>
         <source>Edit script</source>
         <translation>编辑脚本</translation>
+    </message>
+    <message>
+        <location filename="sketchpad_widget.ui" line="535"/>
+        <source>Parse a subset of HTML tags</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="sketchpad_widget.ui" line="538"/>
+        <source>Parse HTML subset</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2693,6 +2728,142 @@ href=&apos;http://www.cogsci.nl/opensesame&apos;&gt;http://www.cogsci.nl/openses
         <location filename="webbrowser_widget.ui" line="104"/>
         <source>50%</source>
         <translation>50%</translation>
+    </message>
+</context>
+<context>
+    <name>widgetFind</name>
+    <message>
+        <location filename="findWidget.ui" line="14"/>
+        <source>Form</source>
+        <translation type="unfinished">表单</translation>
+    </message>
+    <message>
+        <location filename="findWidget.ui" line="23"/>
+        <source>Replace:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="findWidget.ui" line="33"/>
+        <source>Find:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="findWidget.ui" line="49"/>
+        <source>Search</source>
+        <translation type="unfinished">查找</translation>
+    </message>
+    <message>
+        <location filename="findWidget.ui" line="59"/>
+        <source>Replace</source>
+        <translation type="unfinished">替换</translation>
+    </message>
+    <message>
+        <location filename="findWidget.ui" line="69"/>
+        <source>Replace all</source>
+        <translation type="unfinished">替换所有</translation>
+    </message>
+    <message>
+        <location filename="findWidget.ui" line="88"/>
+        <source>Case sensitive</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="findWidget.ui" line="95"/>
+        <source>Match whole words</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>widgetPrefs</name>
+    <message>
+        <location filename="prefsWidget.ui" line="14"/>
+        <source>Form</source>
+        <translation type="unfinished">表单</translation>
+    </message>
+    <message>
+        <location filename="prefsWidget.ui" line="23"/>
+        <source>Show 80 character word-wrap marker</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="prefsWidget.ui" line="30"/>
+        <source>Tab width</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="prefsWidget.ui" line="37"/>
+        <source> characters</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="prefsWidget.ui" line="44"/>
+        <source>Font family</source>
+        <translation type="unfinished">字体库</translation>
+    </message>
+    <message>
+        <location filename="prefsWidget.ui" line="51"/>
+        <source>Show whitespace</source>
+        <translation type="unfinished">显示空格</translation>
+    </message>
+    <message>
+        <location filename="prefsWidget.ui" line="58"/>
+        <source>Show line numbers</source>
+        <translation type="unfinished">显示行数</translation>
+    </message>
+    <message>
+        <location filename="prefsWidget.ui" line="65"/>
+        <source>Enable word wrapping</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="prefsWidget.ui" line="72"/>
+        <source>Enable block folding</source>
+        <translation type="unfinished">启用区组折叠</translation>
+    </message>
+    <message>
+        <location filename="prefsWidget.ui" line="79"/>
+        <source>Enable automatic completion</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="prefsWidget.ui" line="89"/>
+        <source>Show end-of-lines</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="prefsWidget.ui" line="96"/>
+        <source>Show indentation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="prefsWidget.ui" line="103"/>
+        <source>Font size</source>
+        <translation type="unfinished">字体大小</translation>
+    </message>
+    <message>
+        <location filename="prefsWidget.ui" line="110"/>
+        <source> pt</source>
+        <translation type="unfinished">磅</translation>
+    </message>
+    <message>
+        <location filename="prefsWidget.ui" line="117"/>
+        <source>Highlight current line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="prefsWidget.ui" line="124"/>
+        <source>Highlight matching brackets</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="prefsWidget.ui" line="131"/>
+        <source>Enable automatic indentation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="prefsWidget.ui" line="141"/>
+        <source>Color scheme</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

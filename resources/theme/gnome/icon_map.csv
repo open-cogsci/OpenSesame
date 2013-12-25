@@ -97,7 +97,7 @@ colorpicker,applications-graphics,16
 copy,edit-copy,
 cut,edit-cut,
 delete,list-remove,
-edit,stock_properties,
+edit,document-properties,
 experiment,os-experiment,
 feedback,os-feedback,
 handle,os-handle,
@@ -125,7 +125,7 @@ label_stdout,os-debug,
 label_synth,os-synth,32
 label_synth_script,utilities-terminal,32
 label_template,bookmark-new,32
-label_text_input,menu-editor,32
+label_text_input,accessories-text-editor,32
 label_twitter,twitter,24
 label_update_dialog,update-manager,32
 label_variables,os-inspector,

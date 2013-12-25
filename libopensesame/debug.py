@@ -20,16 +20,34 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 import sys
 import os.path
 
-def parse_stack(stack):
+def parse_stack(st):
 
 	"""
-	Generates a nice looking stacktrace item.
+	Generates a nice looking stacktrace for a single item.
 
 	Returns:
 	A string of the stacktrace item
 	"""
 
-	return u'%s(%d).%s' % (os.path.basename(stack[1]), stack[2], stack[3])
+	return u'%s(%d).%s' % (os.path.basename(st[1]), st[2], st[3])
+
+def format_stack(st, skip=0):
+	
+	"""
+	Generates a nice looking full stracktrace.
+	
+	Returns:
+	A string corresponding to the stacktrace.
+	"""
+	
+	st = st[skip:]
+	st.reverse()
+	i = 1
+	s = u''
+	while len(st) > 0:
+		s += u' %.3d\t%s\n' % (i, parse_stack(st.pop()))
+		i += 1
+	return s
 
 def msg(msg=u'', reason=None):
 
@@ -47,20 +65,15 @@ def msg(msg=u'', reason=None):
 		print u'[%s]' % reason,
 	# The terminal may not like anythin but plain ASCII
 	if isinstance(msg, str):
-		msg = msg.decode(u'utf-8', errors=u'ignore')
+		msg = msg.decode(u'utf-8', u'ignore')
 	try:
 		print u'%s: %s' % (parse_stack(st[1]), msg)
 	except:
 		# This should not happen!
 		print u'%s: Failed to print message to debug window' % \
 			parse_stack(st[1])
-	st = st[2:]
-	st.reverse()
 	if stack:
-		i = 1
-		while len(st) > 0:
-			print u' %.3d\t%s\t' % (i, parse_stack(st.pop()))
-			i += 1
+		print format_stack(st, skip=2)
 			
 enabled = '--debug' in sys.argv or '-d' in sys.argv
 if enabled:

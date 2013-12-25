@@ -140,7 +140,7 @@ def plugin_property(plugin, _property, default=0):
 		if _property in _json:
 			return _json[_property]
 	# Old-style plug-ins, using info.txt
-	else:
+	elif os.path.exists(info_txt):
 		for l in open(info_txt, u'r'):
 			a = l.split(":")
 			if len(a) == 2 and a[0] == _property:
@@ -150,7 +150,11 @@ def plugin_property(plugin, _property, default=0):
 				finally:
 					_properties[plugin][_property] = val
 					return val
-		_properties[plugin][_property] = default				
+		_properties[plugin][_property] = default
+	else:
+		debug.msg( \
+			u'Failed to read plug-in information (%s) from info.[txt|json]' \
+			% plugin)
 	return default
 	
 def plugin_category(plugin):

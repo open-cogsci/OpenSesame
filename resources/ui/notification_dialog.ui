@@ -50,7 +50,7 @@ background-color: #729fcf;</string>
        </widget>
       </item>
       <item>
-       <widget class="QLabel" name="label_2">
+       <widget class="QLabel" name="label_title">
         <property name="font">
          <font>
           <pointsize>11</pointsize>

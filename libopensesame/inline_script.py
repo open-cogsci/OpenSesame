@@ -18,8 +18,9 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 import re
-from libopensesame import item, exceptions
+from libopensesame import item
 from openexp import canvas
+from libopensesame.exceptions import osexception
 
 _globals = {}
 
@@ -119,17 +120,20 @@ class inline_script(item.item):
 		try:
 			self.cprepare = compile(_prepare, u'<string>', u'exec')
 		except Exception as e:
-			raise exceptions.inline_error(self.name, u'prepare', e)
+			raise osexception(u'Failed to compile inline script', item= \
+				self.name, phase=u'prepare', exception=e)
 		# Compile run script
 		try:
 			self.crun = compile(_run, u'<string>', u'exec')
 		except Exception as e:
-			raise exceptions.inline_error(self.name, u'run', e)
+			raise osexception(u'Failed to compile inline script', item= \
+				self.name, phase=u'run', exception=e)
 		# Run prepare script
 		try:
 			exec(self.cprepare, _globals)
 		except Exception as e:
-			raise exceptions.inline_error(self.name, u'prepare', e)
+			raise osexception(u'Error while executing inline script', item= \
+				self.name, phase=u'prepare', exception=e)
 		if self.experiment.transparent_variables == u'yes':
 			self.end_transparency()
 
@@ -149,7 +153,8 @@ class inline_script(item.item):
 		try:
 			exec(self.crun, _globals)
 		except Exception as e:
-			raise exceptions.inline_error(self.name, u'run', e)
+			raise osexception(u'Error while executing inline script', item= \
+				self.name, phase=u'run', exception=e)
 		if self.experiment.transparent_variables == u'yes':
 			self.end_transparency()
 

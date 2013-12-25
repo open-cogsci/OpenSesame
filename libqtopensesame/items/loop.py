@@ -17,9 +17,6 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
-__author__ = "Sebastiaan Mathot"
-__license__ = "GPLv3"
-
 import copy
 import libopensesame.loop
 from libqtopensesame.items import qtitem
@@ -37,33 +34,29 @@ class loop(libopensesame.loop.loop, qtitem.qtitem):
 	def __init__(self, name, experiment, string=None):
 
 		"""
-		Constructor
+		Constructor.
 
 		Arguments:
-		name -- name of the item
-		experiment -- the experiment
+		name		--	Name of the item.
+		experiment	-- 	The experiment object.
 
 		Keyword arguments:
-		string -- definition string (default = None)
+		string		--	The definition string. (default=None)
 		"""
 
 		libopensesame.loop.loop.__init__(self, name, experiment, string)
 		qtitem.qtitem.__init__(self)
-		self.sanity_criteria['repeat'] = {'type' : [int, float], \
-			'msg' : 'Must be a numeric value'}
-		self.sanity_criteria['cycles'] = {'type' : int, \
-			'msg' : 'Must be a integer numeric value'}
-		self.sanity_criteria['skip'] = {'type' : int, \
-			'msg' : 'Must be a integer numeric value'}			
+		self.sanity_criteria[u'cycles'] = {u'type' : int, u'msg' : \
+			u'Must be a integer numeric value'}
 
 	def rename(self, from_name, to_name):
 
 		"""
-		Handle an item rename
+		Handles an item rename.
 
 		Arguments:
-		from_name -- the old name of the item to be renamed
-		to_name -- the new name of the item to be renamed
+		from_name	--	The old name of the item to be renamed.
+		to_name		--	The new name of the item to be renamed.
 		"""
 
 		qtitem.qtitem.rename(self, from_name, to_name)
@@ -73,26 +66,26 @@ class loop(libopensesame.loop.loop, qtitem.qtitem):
 	def delete(self, item_name, item_parent=None, index=None):
 
 		"""
-		Delete an item
+		Deletes an item.
 
 		Arguments:
-		item_name -- the name of the item to be deleted
+		item_name		--	The name of the item to be deleted.
 
 		Keywords arguments:
-		item_parent -- the parent item (default=None)
-		index -- the index of the item in the parent (default=None)
+		item_parent		--	The parent item. (default=None)
+		index			--	The index of the item in the parent. (default=None)
 		"""
 
 		if self.item == item_name and item_parent == self.name:
-			self.item = ""
+			self.item = u""
 
 	def add_cyclevar(self):
 
-		"""Present a dialog and add a variable"""
+		"""Presents a dialog and add a variable,"""
 
 		var_name, ok = QtGui.QInputDialog.getText(self.loop_table, \
-			_('New variable'), \
-			_('Enter a variable name, optionally followed by a default value (i.e., \"varname defaultvalue\")'))
+			_(u'New variable'), \
+			_(u'Enter a variable name, optionally followed by a default value (i.e., \"varname defaultvalue\")'))
 
 		if ok:
 			l = self.cyclevar_list()
@@ -109,15 +102,15 @@ class loop(libopensesame.loop.loop, qtitem.qtitem):
 			# Check for valid variable names
 			var_name = self.experiment.sanitize(var_name, strict=True, \
 				allow_vars=False)
-			if var_name == "":
+			if var_name == u"":
 				self.experiment.notify( \
-					"Variable names must consist of alphanumeric characters and underscores, and must not be empty")
+					u"Variable names must consist of alphanumeric characters and underscores, and must not be empty")
 				return
 
 			# Check if the variable already exists
 			if l != None and var_name in l:
 				self.experiment.notify( \
-					_("A variable with the name '%s' already exists") \
+					_(u"A variable with the name '%s' already exists") \
 						% var_name)
 				return
 
@@ -132,7 +125,7 @@ class loop(libopensesame.loop.loop, qtitem.qtitem):
 	def cyclevar_list(self):
 
 		"""
-		Return a list of variables
+		Returns a list of variables.
 
 		Returns:
 		A list of variable names
@@ -151,12 +144,12 @@ class loop(libopensesame.loop.loop, qtitem.qtitem):
 	def rename_var(self, item, from_name, to_name):
 
 		"""
-		A notification that a variable has been renamed
+		Processes a notification that a variable has been renamed.
 
 		Arguments:
-		item -- the item doing the renaming
-		from_name -- the old variable name
-		to_name -- the new variable name
+		item		--	The item doing the renaming.
+		from_name	--	The old variable name.
+		to_name		--	The new variable name.
 		"""
 
 		# Only accept renames from this item
@@ -170,30 +163,30 @@ class loop(libopensesame.loop.loop, qtitem.qtitem):
 
 	def rename_cyclevar(self):
 
-		"""Present a dialog and rename a variable"""
+		"""Presents a dialog and rename a variable."""
 
 		var_list = self.cyclevar_list()
 		if var_list == None:
 			return
 
 		old_var, ok = QtGui.QInputDialog.getItem( \
-			self.experiment.ui.centralwidget, _("Rename variable"), \
-			_("Which variable do you want to rename?"), var_list, \
+			self.experiment.ui.centralwidget, _(u"Rename variable"), \
+			_(u"Which variable do you want to rename?"), var_list, \
 			editable=False)
 		if ok:
 			_new_var, ok = QtGui.QInputDialog.getText(self.loop_table, \
-				_('New variable'), _('Enter a new variable name'), text=old_var)
+				_(u'New variable'), _(u'Enter a new variable name'), text=old_var)
 			if ok and _new_var != old_var:
 				old_var = unicode(old_var)
 				new_var = self.experiment.sanitize(_new_var, strict=True, \
 					allow_vars=False)
 				if _new_var != new_var or new_var == "":
 					self.experiment.notify( \
-						_("Please use only letters, numbers and underscores"))
+						_(u"Please use only letters, numbers and underscores"))
 					return
 				if new_var in var_list:
 					self.experiment.notify( \
-						_("A variable with the name '%s' already exists") % \
+						_(u"A variable with the name '%s' already exists") % \
 						new_var)
 					return
 			for item in self.experiment.items.values():
@@ -203,14 +196,14 @@ class loop(libopensesame.loop.loop, qtitem.qtitem):
 
 	def remove_cyclevar(self):
 
-		"""Present a dialog and remove a variable"""
+		"""Presents a dialog and remove a variable."""
 
 		var_list = self.cyclevar_list()
 		if var_list == None:
 			return
 
 		var, ok = QtGui.QInputDialog.getItem(self.experiment.ui.centralwidget, \
-			_("Remove variable"), _("Which variable do you want to remove?"), \
+			_(u"Remove variable"), _(u"Which variable do you want to remove?"), \
 			var_list)
 		if ok:
 			var = unicode(var)
@@ -224,10 +217,10 @@ class loop(libopensesame.loop.loop, qtitem.qtitem):
 	def cyclevar_count(self):
 
 		"""
-		Count the number of variables in the loop
+		Counts the number of variables in the loop,
 
 		Returns:
-		The number of variables
+		The number of variables in the loop.
 		"""
 
 		l = []
@@ -242,29 +235,31 @@ class loop(libopensesame.loop.loop, qtitem.qtitem):
 	def cycle_count(self):
 
 		"""
-		Count the number of cycles, which is the maximum of the table length
-		and the 'cycles' variables
+		Counts the number of cycles, which is the maximum of the table length
+		and the 'cycles' variables.
 
 		Returns:
-		The number of cycles
+		The number of cycles.
 		"""
 
-		return max(self.get("cycles"), len(self.matrix))
+		if type(self.cycles) != int:
+			return 0
+		return max(self.cycles, len(self.matrix))
 
 	def set_cycle_count(self, cycles, confirm=True):
 
 		"""
-		Sets the nr of cycles and truncates data if necessary
+		Sets the nr of cycles and truncates data if necessary.
 
 		Arguments:
-		cycles -- the number of cycles
+		cycles		--	The number of cycles.
 
 		Keyword arguments:
-		confirm -- indicates if confirmation is required before data is removed
-				   from the table (default=True)
+		confirm		--	Indicates whether confirmation is required before data
+						is removed from the table. (default=True)
 		"""
 
-		debug.msg("cycles = %d" % cycles)
+		debug.msg(u"cycles = %s" % cycles)
 		cont = True
 		while cont:
 			cont = False
@@ -274,15 +269,15 @@ class loop(libopensesame.loop.loop, qtitem.qtitem):
 					# Check if the cells that will be removed are not empty
 					empty = True
 					for var in self.matrix[i]:
-						if self.matrix[i][var] != "":
+						if self.matrix[i][var] != u"":
 							empty = False
 
 					# Ask for confirmation (only the first time)
 					if not empty and confirm:
 						resp = QtGui.QMessageBox.question( \
 							self.experiment.ui.centralwidget, \
-							_("Remove cycles?"), \
-							_("By reducing the number of cycles, data will be lost from the table. Do you wish to continue?"), \
+							_(u"Remove cycles?"), \
+							_(u"By reducing the number of cycles, data will be lost from the table. Do you wish to continue?"), \
 							QtGui.QMessageBox.Yes, QtGui.QMessageBox.No)
 						if resp == QtGui.QMessageBox.No:
 							return
@@ -293,20 +288,20 @@ class loop(libopensesame.loop.loop, qtitem.qtitem):
 					cont = True
 					break
 
-		self.set("cycles", cycles)
+		self.set(u"cycles", cycles)
 
 	def call_count(self):
 
 		"""
-		The nr of times that the target item is called in total,
-		which depends on the repeat and cycles
+		Returns the number of times that the target item is called in total,
+		which depends on the repeat and cycles.
 
 		Returns:
-		The nr of calls
+		The number of calls or 0 if the number of calls could not be determined.
 		"""
 		
 		try:
-			if self.order == "sequential" and self.offset != "yes":
+			if self.order == u"sequential" and self.offset != u"yes":
 				return int(self.cycles * self.repeat - self.skip)
 			return int(self.cycles * self.repeat)
 		except:
@@ -325,25 +320,33 @@ class loop(libopensesame.loop.loop, qtitem.qtitem):
 			s = _(u"<b>%s</b> will be called <b>%s</b> x <b>%s</b> = <b>%s</b> times in <b>%s</b> order") \
 				% (self.item, self.cycles, self.repeat, cc, self.order)
 		if self.order == u"sequential" and self.skip > 0:
-			s += _(u" starting at cycle <b>%d</b>") % self.skip
+			s += _(u" starting at cycle <b>%s</b>") % self.skip
 			if self.offset == u"yes" and self.skip >= cc:
 				s += _(u" <font color='red'><b>(too many cycles skipped)</b></font>")
 		if cc < 1:
-			s += _(u" <font color='red'><b>(zero or negative length)</b></font>")
+			s += _(u" <font color='red'><b>(zero, negative, or unknown length)</b></font>")
 		self.loop_widget.ui.label_summary.setText(u"<small>%s</small>" % s)
 
 	def refresh_loop_table(self, lock=True):
 
 		"""
-		Rebuild the loop table
+		Rebuilds the loop table.
 
 		Keyword arguments:
-		lock -- a boolean indicating whether the item should be locked to
-				prevent recursion (default = True)
+		lock	--	A boolean indicating whether the item should be locked to
+					prevent recursion. (default=True)
 		"""
 
 		if lock:
 			self.lock = True
+
+		# Don't crash if the cycle variable is variable, simply provide an
+		# error message (due to the sanity check) and disable the loop table.
+		if type(self.cycles) != int:
+			self.loop_table.setEnabled(False)
+			self.lock = False
+			return
+		self.loop_table.setEnabled(True)
 
 		# Don't clear and resize the table if this is not necessary, because
 		# this makes the cursor jump
@@ -356,8 +359,8 @@ class loop(libopensesame.loop.loop, qtitem.qtitem):
 		# Determine the order in which the columns are displayed
 		column_order = []
 		if self.cyclevar_list() != None:
-			if self.has("column_order"):
-				for var in self.unistr(self.get("column_order")).split(";"):
+			if self.has(u"column_order"):
+				for var in self.unistr(self.get(u"column_order")).split(u";"):
 					if var in self.cyclevar_list():
 						column_order.append(var)
 			for var in self.cyclevar_list():
@@ -382,8 +385,8 @@ class loop(libopensesame.loop.loop, qtitem.qtitem):
 						self.matrix[cycle][var])))
 
 		# Store the number of cycles and the column order
-		self.set("cycles", max(self.get("cycles"), self.cycle_count()))
-		self.set("column_order", ";".join(column_order))
+		self.set(u"cycles", max(self.get(u"cycles"), self.cycle_count()))
+		self.set(u"column_order", u";".join(column_order))
 
 		if lock:
 			self.lock = False
@@ -391,13 +394,13 @@ class loop(libopensesame.loop.loop, qtitem.qtitem):
 	def wizard_process(self, d, l=[]):
 
 		"""
-		Rebuilds the loop table based on a dictionary of variables and levels
+		Rebuilds the loop table based on a dictionary of variables and levels.
 
 		Arguments:
-		d -- a dictionary of variables and levels
+		d	--	A dictionary of variables and levels.
 
 		Keyword arguments:
-		l -- a list of variables and values (default = [])
+		l	--	A list of variables and values. (default=[])
 		"""
 		
 		if len(d) == 0:
@@ -415,13 +418,13 @@ class loop(libopensesame.loop.loop, qtitem.qtitem):
 
 	def wizard(self):
 
-		"""Present the variable wizard dialog"""
+		"""Presents the variable wizard dialog."""
 		
 		icons = {}
-		icons["cut"] = self.experiment.icon("cut")
-		icons["copy"] = self.experiment.icon("copy")
-		icons["paste"] = self.experiment.icon("paste")
-		icons["clear"] = self.experiment.icon("clear")		
+		icons[u"cut"] = self.experiment.icon(u"cut")
+		icons[u"copy"] = self.experiment.icon(u"copy")
+		icons[u"paste"] = self.experiment.icon(u"paste")
+		icons[u"clear"] = self.experiment.icon(u"clear")
 
 		# Set up the wizard dialog
 		a = QtGui.QDialog(self.experiment.main_window.ui.centralwidget)
@@ -434,10 +437,10 @@ class loop(libopensesame.loop.loop, qtitem.qtitem):
 		a.ui.table_wizard.setRowCount(255)
 		a.ui.table_wizard.setColumnCount(255)
 		
-		a.ui.table_wizard.set_contents(cfg.loop_wizard)		
-		if a.exec_() == QtGui.QDialog.Accepted:		
+		a.ui.table_wizard.set_contents(cfg.loop_wizard)
+		if a.exec_() == QtGui.QDialog.Accepted:
 			cfg.loop_wizard = a.ui.table_wizard.get_contents()
-			debug.msg("filling loop table")
+			debug.msg(u"filling loop table")
 			# First read the table into a dictionary of variables
 			var_dict = {}
 			for col in range(a.ui.table_wizard.columnCount()):
@@ -459,7 +462,7 @@ class loop(libopensesame.loop.loop, qtitem.qtitem):
 			# notification and do nothin
 			if len(var_dict) == 0:
 				self.experiment.notify(
-					_('You provided an empty or invalid variable definition. For an example of a valid variable definition, open the variable wizard and select "Show example".'))
+					_(u'You provided an empty or invalid variable definition. For an example of a valid variable definition, open the variable wizard and select "Show example".'))
 				return	
 						
 			# Then fill the loop table
@@ -475,7 +478,7 @@ class loop(libopensesame.loop.loop, qtitem.qtitem):
 
 	def init_edit_widget(self):
 
-		"""Build the loop controls"""
+		"""Builds the loop controls."""
 
 		self.lock = True
 
@@ -489,11 +492,11 @@ class loop(libopensesame.loop.loop, qtitem.qtitem):
 		self.edit_vbox.addWidget(self.loop_widget)
 		
 		self.auto_add_widget(self.loop_widget.ui.spin_cycles)		
-		self.auto_add_widget(self.loop_widget.ui.spin_repeat, "repeat")
-		self.auto_add_widget(self.loop_widget.ui.spin_skip, "skip")
-		self.auto_add_widget(self.loop_widget.ui.combobox_order, "order")
-		self.auto_add_widget(self.loop_widget.ui.checkbox_offset, "offset")
-		self.auto_add_widget(self.loop_widget.ui.edit_break_if, "break_if")
+		self.auto_add_widget(self.loop_widget.ui.spin_repeat, u"repeat")
+		self.auto_add_widget(self.loop_widget.ui.spin_skip, u"skip")
+		self.auto_add_widget(self.loop_widget.ui.combobox_order, u"order")
+		self.auto_add_widget(self.loop_widget.ui.checkbox_offset, u"offset")
+		self.auto_add_widget(self.loop_widget.ui.edit_break_if, u"break_if")
 		
 		# The item combobox needs special treatment, because it's changes
 		# must be visible in the item tree as well
@@ -511,9 +514,9 @@ class loop(libopensesame.loop.loop, qtitem.qtitem):
 			self.apply_weights)
 		
 		self.loop_widget.ui.combobox_order.setItemIcon(0, \
-			self.experiment.icon("random"))
+			self.experiment.icon(u"random"))
 		self.loop_widget.ui.combobox_order.setItemIcon(1, \
-			self.experiment.icon("sequential"))
+			self.experiment.icon(u"sequential"))
 
 		self.loop_table = loop_table.loop_table(self, self.cycles, \
 			self.cyclevar_count())
@@ -535,7 +538,7 @@ class loop(libopensesame.loop.loop, qtitem.qtitem):
 		self.refresh_loop_table(lock=False)		
 		self.loop_widget.ui.spin_cycles.setValue(self.cycle_count())
 		
-		if self.get("order") == "random":
+		if self.get(u"order") == u"random":
 			self.loop_widget.ui.label_skip.setDisabled(True)
 			self.loop_widget.ui.spin_skip.setDisabled(True)
 			self.loop_widget.ui.checkbox_offset.setDisabled(True)
@@ -543,7 +546,7 @@ class loop(libopensesame.loop.loop, qtitem.qtitem):
 			self.loop_widget.ui.label_skip.setDisabled(False)
 			self.loop_widget.ui.spin_skip.setDisabled(False)
 			self.loop_widget.ui.checkbox_offset.setDisabled( \
-				self.get("skip") < 1)
+				type(self.skip) != int or self.skip < 1)
 		self.refresh_summary()
 		self.lock = False
 		return self._edit_widget
@@ -557,8 +560,8 @@ class loop(libopensesame.loop.loop, qtitem.qtitem):
 			return
 
 		weight_var, ok = QtGui.QInputDialog.getItem( \
-			self.experiment.ui.centralwidget, _("Apply weight"), \
-			_("Which variable contains the weights?"), var_list, \
+			self.experiment.ui.centralwidget, _(u"Apply weight"), \
+			_(u"Which variable contains the weights?"), var_list, \
 			editable=False)
 		if not ok:		
 			return
@@ -586,7 +589,7 @@ class loop(libopensesame.loop.loop, qtitem.qtitem):
 			else:
 				_row += 1
 				while weight > 1:
-					weight -= 1				
+					weight -= 1
 					if _row-1 in self.matrix:
 						self.matrix[_row] = self.matrix[_row-1]
 					_row += 1
@@ -595,21 +598,21 @@ class loop(libopensesame.loop.loop, qtitem.qtitem):
 	
 	def apply_item_change(self):
 		
-		"""Apply a change to the item to run	"""
+		"""Applies a change to the item to run."""
 		
 		item = unicode(self.loop_widget.ui.combobox_item.currentText())
-		debug.msg(item)		
-		self.set('item', item)
+		debug.msg(item)
+		self.set(u'item', item)
 		self.experiment.main_window.dispatch.event_structure_change.emit( \
 			self.name)
 
 	def apply_edit_changes(self, dummy=None):
 
 		"""
-		Set the variables from the controls
+		Sets the variables from the controls.
 
 		Keyword arguments:
-		dummy -- a dummy argument passed by the signal handler (default = None)
+		dummy	-- A dummy argument passed by the signal handler. (default=None)
 		"""
 		
 		if self.lock or not qtitem.qtitem.apply_edit_changes(self, False):
@@ -643,15 +646,15 @@ class loop(libopensesame.loop.loop, qtitem.qtitem):
 	def build_item_tree(self, toplevel, items):
 
 		"""
-		Construct an item tree
+		Constructs an item tree.
 
 		Keyword arguments:
-		toplevel -- the toplevel widget (default = None)
-		items -- a list of items that have been added, to prevent recursion
-				 (default=[])
+		toplevel		--	The toplevel widget. (default=None)
+		items			--	A list of items that have been added, to prevent
+							recursion. (default=[])
 
 		Returns:
-		An updated list of items that have been added
+		An updated list of items that have been added.
 		"""
 
 		widget = self.item_tree_widget(toplevel)
@@ -667,13 +670,13 @@ class loop(libopensesame.loop.loop, qtitem.qtitem):
 	def is_offspring(self, item):
 
 		"""
-		Checks if the item is offspring of the current item
+		Checks if the item is offspring of the current item.
 
 		Arguments:
-		item -- the potential offspring
+		item	--	The potential offspring.
 
 		Returns:
-		True if the passed item is offspring, False otherwise
+		True if the passed item is offspring, False otherwise.
 		"""
 
 		return self.item == item or (self.item in self.experiment.items and \

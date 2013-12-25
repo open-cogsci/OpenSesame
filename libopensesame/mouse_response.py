@@ -17,9 +17,8 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
-from libopensesame import item, exceptions, generic_response
+from libopensesame import item, generic_response
 import openexp.mouse
-import openexp.exceptions
 
 class mouse_response(item.item, generic_response.generic_response):
 
@@ -50,7 +49,7 @@ class mouse_response(item.item, generic_response.generic_response):
 		self.resp_codes = {}
 		self.resp_codes[None] = u'timeout'
 		self.resp_codes[1] = u'left_button'
-		self.resp_codes[2] = u'iddle_button'
+		self.resp_codes[2] = u'middle_button'
 		self.resp_codes[3] = u'right_button'
 		self.resp_codes[4] = u'scroll_up'
 		self.resp_codes[5] = u'scroll_down'

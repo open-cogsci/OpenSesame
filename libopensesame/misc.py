@@ -21,8 +21,8 @@ import os
 import os.path
 import sys
 
-version = u'0.27.4'
-codename = u'Frisky Freud'
+version = u'2.8.0~pre9'
+codename = u'Gutsy Gibson'
 
 use_global_resources = '--no-global-resources' not in sys.argv
 from libopensesame import debug
@@ -205,7 +205,7 @@ def resource(name):
 	global use_global_resources
 	
 	if isinstance(name, str):
-		name = name.decode(u'utf-8', errors=u'ignore')	
+		name = name.decode(u'utf-8')	
 	path = os.path.join(u'resources', name)
 	if os.path.exists(path):
 		return os.path.join(u'resources', name)
@@ -236,6 +236,39 @@ def home_folder():
 	if isinstance(home_folder, str):
 		home_folder = home_folder.decode(filesystem_encoding())
 	return home_folder
+	
+def opensesame_folder():
+
+	"""
+	Determines the folder that contains the OpenSesame executable. This is only
+	applicable under Windows.
+	
+	Returns:
+	The OpenSesame folder or None if the os is not Windows.
+	"""
+	
+	if os.name != u'nt':
+		return None
+	# Determines the directory name of the script or the directory name
+	# of the executable after being packaged with py2exe. This has to be
+	# done so the child process can find all relevant modules too.
+	# See http://www.py2exe.org/index.cgi/HowToDetermineIfRunningFromExe
+	#
+	# There are two scenarios: Either OpenSesame is run from a frozen state,
+	# in which case the OpenSesame folder is the folder containing the
+	# executable, or OpenSesame is run from source, in which case we go to
+	# the OpenSesame folder by going two levels up from the __file__ folder.
+	import imp
+	if (hasattr(sys, u'frozen') or hasattr(sys, u'importers') or \
+		imp.is_frozen(u'__main__')):
+		path = os.path.dirname(sys.executable).decode( \
+			sys.getfilesystemencoding())
+	else:
+		# To get the opensesame folder, simply jump to levels up
+		path = os.path.dirname(__file__).decode( \
+			sys.getfilesystemencoding())
+		path = os.path.normpath(os.path.join(path, u'..'))
+	return path
 
 def module_versions():
 
@@ -250,7 +283,7 @@ def module_versions():
 
 	s = u"OpenSesame %s" % version
 	s += u"\nPython %s" % sys.version
-
+	
 	# OpenCV
 	try:
 		import cv
@@ -268,6 +301,13 @@ def module_versions():
 		s += u'\nOpenCV2 %s' % ver
 	except:
 		s += u'\nOpenCV 2 is not available'
+		
+	# QProgEdit
+	try:
+		import QProgEdit
+		s += u'\nQProgedit %s' % QProgEdit.version
+	except:
+		s += u'\nQProgEdit is not available'
 
 	# Expyriment
 	try:
@@ -285,6 +325,20 @@ def module_versions():
 		s += u'\nNumPy %s' % numpy.version.version
 	except:
 		s += u'\nNumPy is not available (or version is unknown)'
+		
+	# OpenCV
+	try:
+		from PIL import Image
+		s += u'\nPIL is available (version is unknown)'
+	except:
+		s += u'\nPIL is not available'
+		
+	# PsychoPy
+	try:
+		import psychopy
+		s += u"\nPsychoPy %s" % psychopy.__version__
+	except:
+		s += "\nPsychoPy not available (or version is unknown)"		
 
 	# PyAudio
 	try:
@@ -299,6 +353,13 @@ def module_versions():
 		s += u"\nPyGame %s" % pygame.ver
 	except:
 		s += u"\nPyGame not available (or version is unknown)"
+		
+	# Pyglet
+	try:
+		import pyglet
+		s += u"\nPyglet %s" % pyglet.version
+	except:
+		s += u"\nPyglet not available (or version is unknown)"		
 
 	# PyOpenGL
 	try:
@@ -316,20 +377,21 @@ def module_versions():
 		s += u'\nPySerial %s' % serial.VERSION
 	except:
 		s += u'\nPySerial not available (or version is unknown)'
-
-	# PsychoPy
+		
+	# python-bidi
 	try:
-		import psychopy
-		s += u"\nPsychoPy %s" % psychopy.__version__
+		import bidi
+		s += u'\npython-bidi %s' % bidi.VERSION
 	except:
-		s += "\nPsychoPy not available (or version is unknown)"
-
-	# Pyglet
+		s += u'\npython-bidi is not available'		
+		
+		
+	# python-markdown
 	try:
-		import pyglet
-		s += u"\nPyglet %s" % pyglet.version
+		import markdown
+		s += u'\npython-markdown %s' % markdown.version
 	except:
-		s += u"\nPyglet not available (or version is unknown)"
+		s += u'\npython-markdown is not available'		
 
 	# SciPy
 	try:
@@ -396,3 +458,24 @@ def strip_html(s):
 		s = s.replace(tag, u'')
 	return s
 	
+def escape_html(s):
+	
+	"""
+	Escapes a string so that it can be displayed as HTML. This is useful for 
+	example for tracebacks, which use <> characters.
+	
+	Arguments:
+	s	--	A string to escape. We assume Unicode input. str objects may cause
+			decoding errors.
+	
+	Returns:
+	An escaped string.
+	"""
+		
+	# Note that we need to replace the '&' first, otherwise we'll start escaping
+	# the escaped characters.
+	l = [(u'&', u'&amp;'), (u' ', u'&nbsp;'), (u'\t', \
+		u'&nbsp;&nbsp;&nbsp;&nbsp;'), (u'<', u'&lt;'), (u'>', u'&gt;')]
+	for orig, new in l:
+		s = s.replace(orig, new)
+	return s

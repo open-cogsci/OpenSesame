@@ -34,9 +34,10 @@ NEW STYLE
 >>> print cfg.my_setting # get
 """
 
+from libopensesame.exceptions import osexception
 from PyQt4 import QtCore
 import libopensesame.misc
-from libopensesame import debug, exceptions
+from libopensesame import debug
 import platform
 import sip
 if sip.getapi(u'QString') == 2:
@@ -60,20 +61,25 @@ class config(object):
 		u"locale" : u"default",
 		u"loop_wizard" : QtCore.QStringList(),
 		u"onetabmode" : False,
+		u"qProgEditCommentShortcut" : u'Ctrl+M',
+		u"qProgEditUncommentShortcut" : u'Ctrl+Shift+M',
+		u'qProgEditFontFamily' : u'Monospace',
+		u'qProgEditFontSize' : 10,
+		u'qProgEditLineNumbers' : True,
+		u'qProgEditHighlightCurrentLine' : False,
+		u'qProgEditHighlightMatchingBrackets' : True,
+		u'qProgEditWordWrapMarker' : 80,
+		u'qProgEditWordWrap' : True,
+		u'qProgEditTabWidth' : 4,
+		u'qProgEditAutoIndent' : True,
+		u'qProgEditShowEol' : False,
+		u'qProgEditShowWhitespace' : False,
+		u'qProgEditShowIndent' : False,
+		u'qProgEditShowFolding' : True,
+		u'qProgEditAutoComplete' : True,
+		u'qProgEditColorScheme' : u'Default',
 		u"quick_run_logfile": u"quickrun.csv",
 		u"recent_files" : u"",
-		u"scintilla_line_numbers" : True,
-		u"scintilla_right_margin" : False,
-		u"scintilla_eol_visible" : False,
-		u"scintilla_whitespace_visible" : False,
-		u"scintilla_indentation_guides" : True,
-		u"scintilla_auto_indent" : True,
-		u"scintilla_folding" : True,
-		u"scintilla_brace_match" : True,
-		u"scintilla_syntax_highlighting" : True,
-		u"scintilla_custom_font" : False,
-		u"scintilla_font_family" : u"courier",
-		u"scintilla_font_size" : 10,
 		u"shortcut_itemtree" : u"Ctrl+1",
 		u"shortcut_tabwidget" : u"Ctrl+2",
 		u"shortcut_stdout" : u"Ctrl+3",
@@ -83,7 +89,7 @@ class config(object):
 		u"theme" : u"default",
 		u"toolbar_size" : 32,
 		u"toolbar_text" : False,
-		u"opensesamerun" : False,
+		u"runner" : u"inprocess",
 		u"opensesamerun_exec" : u"",
 		u"pos" : QtCore.QPoint(200, 200),
 		u"size" : QtCore.QSize(1000, 600),
@@ -99,7 +105,9 @@ class config(object):
 		u"theme" : u"gnome"
 		}
 	config_mac = {}
-	config_windows = {}
+	config_windows = {
+		u'qProgEditFontFamily' : u'Courier New'
+		}
 
 	def __init__(self):
 
@@ -132,7 +140,7 @@ class config(object):
 		"""
 
 		if setting not in self.config:
-			raise exceptions.runtime_error(u'The setting "%s" does not exist' \
+			raise osexception(u'The setting "%s" does not exist' \
 				% setting)
 		return self.config[setting]
 
@@ -146,7 +154,7 @@ class config(object):
 		value -- the value to set
 		"""
 		if setting not in self.config:
-			raise exceptions.runtime_error(u'The setting "%s" does not exist' \
+			raise osexception(u'The setting "%s" does not exist' \
 				% setting)
 		self.config[setting] = value
 		self.config[u'cfg_ver'] += 1
@@ -250,6 +258,17 @@ class config(object):
 		for setting, value in self.config.items():
 			if setting != u"cfg_ver":
 				qsettings.setValue(setting, value)
+				
+	def version(self):
+		
+		"""
+		Gets the current version of the config.
+		
+		Returns:
+		The config version.
+		"""
+
+		return self.cfg_ver
 
 # Old style API. See explanation above
 def get_config(setting):

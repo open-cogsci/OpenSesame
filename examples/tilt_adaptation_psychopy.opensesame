@@ -82,7 +82,6 @@ define sketchpad adapter
 define inline_script stimuli_and_response
 	___run__
 	# First import the required modules
-	from openexp.exceptions import response_error
 	from psychopy import visual, core, event
 	
 	# Prepare the stimuli
@@ -114,7 +113,7 @@ define inline_script stimuli_and_response
 	keys = event.waitKeys(keyList = ["z", "slash", "escape"])
 	response = keys[0]
 	if response == "escape":
-		raise response_error("Escape was pressed!")
+		raise Exception("Escape was pressed!")
 		
 	# By setting the response in this way it will be recognized by
 	# OpenSesame and automatically logged by the logger item

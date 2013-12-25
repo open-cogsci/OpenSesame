@@ -15,7 +15,8 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
-from libopensesame import item, generic_response, exceptions, debug
+from libopensesame.exceptions import osexception
+from libopensesame import item, generic_response, debug
 from libqtopensesame import qtplugin
 from PyQt4 import QtGui, QtCore
 try:
@@ -84,7 +85,7 @@ class port_reader(item.item, generic_response.generic_response):
 			try:
 				self._port = windll.inpout32
 			except:
-				raise exceptions.runtime_error( \
+				raise osexception( \
 					"Failed to load inpout32.dll in port_reader '%s'" \
 					% self.name)
 			self._duration_func = self.get_portinput

@@ -20,14 +20,15 @@ along with openexp.  If not, see <http://www.gnu.org/licenses/>.
 import numpy as np
 import copy
 import openexp._canvas.legacy
-import openexp.exceptions
+from libopensesame.exceptions import osexception
+from libopensesame import debug, html
 import pygame
 try:
 	from expyriment import control, stimuli, misc, io
 	from expyriment.misc.geometry import coordinates2position, \
 		points_to_vertices as p2v
 except:
-	raise openexp.exceptions.canvas_error(
+	raise osexception(
 		u'Failed to import expyriment, probably because it is not (correctly) installed. For installation instructions, please visit http://www.expyriment.org/.')
 
 def c2p(pos):
@@ -64,6 +65,7 @@ class xpyriment(openexp._canvas.legacy.legacy):
 		"""See openexp._canvas.legacy"""
 
 		self.experiment = experiment
+		self.html = html.html()
 		self.auto_prepare = auto_prepare
 		self.prepared = False
 		if fgcolor == None:
@@ -72,6 +74,7 @@ class xpyriment(openexp._canvas.legacy.legacy):
 			bgcolor = self.experiment.get(u'background')
 		self.set_fgcolor(fgcolor)
 		self.set_bgcolor(bgcolor)
+		self.bidi = self.experiment.get(u'bidi')==u'yes'
 		self.set_font(style=self.experiment.font_family, size= \
 			self.experiment.font_size, bold=self.experiment.font_bold==u'yes', \
 			italic=self.experiment.font_italic==u'yes', underline= \
@@ -85,7 +88,7 @@ class xpyriment(openexp._canvas.legacy.legacy):
 		"""See openexp._canvas.legacy"""
 
 		# TODO
-		raise openexp.exceptions.canvas_error( \
+		raise osexception( \
 			u"openexp._canvas.xpyriment.flip(): the flip() function has not been implemented for the xpyriment back-end!")
 
 	def copy(self, canvas):

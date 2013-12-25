@@ -18,7 +18,8 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame. If not, see <http://www.gnu.org/licenses/>.
 """
 
-from libopensesame import item, generic_response, exceptions, debug
+from libopensesame.exceptions import osexception
+from libopensesame import item, generic_response, debug
 from libqtopensesame.items.qtautoplugin import qtautoplugin
 import openexp.keyboard
 import imp
@@ -66,11 +67,11 @@ class joystick(item.item, generic_response.generic_response):
 					try:
 						r = int(r)
 					except:
-						raise exceptions.runtime_error( \
+						raise osexception( \
 							"'%s' is not a valid response on your joystick/gamepad. Expecting a number in the range of 1 to the amount of buttons." \
 							% (r,self.name))
 					if r < 0 or r > 255:
-						raise exceptions.runtime_error( \
+						raise osexception( \
 							"'%s' is not a valid response on your joystick/gamepad. Expecting a number in the range of 1 to the amount of buttons." \
 							% (r, self.name))
 					self._allowed_responses.append(r)
@@ -128,12 +129,8 @@ class joystick(item.item, generic_response.generic_response):
 				None, self._timeout)
 		else:
 			# Get the response
-			try:
-				resp, self.experiment.end_response_interval = \
-						self._resp_func(self._allowed_responses, self._timeout)
-			except Exception as e:
-				raise exceptions.runtime_error( \
-					"An error occured in joystick '%s': '%s." % (self.name, e))
+			resp, self.experiment.end_response_interval = self._resp_func( \
+				self._allowed_responses, self._timeout)
 		debug.msg(u'received %s' % resp)
 		self.experiment.response = resp
 		generic_response.generic_response.response_bookkeeping(self)

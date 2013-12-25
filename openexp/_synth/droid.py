@@ -17,7 +17,7 @@ You should have received a copy of the GNU General Public License
 along with openexp.  If not, see <http://www.gnu.org/licenses/>.
 """
 
-import openexp.exceptions
+from libopensesame.exceptions import osexception
 
 class droid(object):
 
@@ -27,7 +27,7 @@ class droid(object):
 	
 		"""See openexp._synth.legacy"""
 
-		raise openexp.exceptions.synth_error( \
+		raise osexception( \
 			'The synth is not supported on the droid back-end, sorry!')
 		
 

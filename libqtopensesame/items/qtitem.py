@@ -21,9 +21,9 @@ from PyQt4 import QtCore, QtGui
 import os.path
 import sip
 from libopensesame import debug, exceptions, item
-from libqtopensesame.widgets import inline_editor, header_widget, \
-	user_hint_widget
+from libqtopensesame.widgets import header_widget, user_hint_widget
 from libqtopensesame.misc import _
+from libqtopensesame.misc.config import cfg
 
 class qtitem(QtCore.QObject):
 
@@ -52,19 +52,11 @@ class qtitem(QtCore.QObject):
 
 		debug.msg(u'created %s' % self.name)
 
-	def open_help_tab(self):
+	def open_help_tab(self, page=None):
 
-		"""Open the help tab"""
-
-		md_path = self.experiment.help(self.item_type + u'.md')
-		html_path = self.experiment.help(self.item_type + u'.html')
-		if os.path.exists(md_path):
-			path = md_path
-		elif os.path.exists(html_path):
-			path = html_path
-		else:
-			path = self.experiment.help(u'missing.html')
-		self.experiment.main_window.ui.tabwidget.open_browser(path)
+		"""Opens a help tab."""
+		
+		self.experiment.main_window.ui.tabwidget.open_help(self.item_type)
 
 	def open_tab(self):
 
@@ -275,20 +267,6 @@ class qtitem(QtCore.QObject):
 		self.apply_script_changes()
 		self.experiment.main_window.select_item(self.name)
 
-	def ignore_script_and_close(self):
-
-		"""Applies script changes and opens the edit tab"""
-
-		if self.edit_script.edit.isModified():
-			resp = QtGui.QMessageBox.question( \
-				self.experiment.main_window.ui.centralwidget, \
-				_(u'Forget changes?'), \
-				_(u'Are you sure you want to forget all changes to the script?'), \
-				QtGui.QMessageBox.Yes, QtGui.QMessageBox.No)
-			if resp == QtGui.QMessageBox.No:
-				return
-		self.experiment.main_window.select_item(self.name)
-
 	def apply_script_changes(self, rebuild=True, catch=True):
 
 		"""
@@ -303,8 +281,7 @@ class qtitem(QtCore.QObject):
 		"""
 
 		debug.msg(self.name)
-		script = self.edit_script.edit.toPlainText()
-
+		script = self.script_qprogedit.text()
 		# Create a new item and make it a clone of the current item
 		item = self.experiment.main_window.add_item(self.item_type, False, \
 			name=self.name, interactive=False)
@@ -316,9 +293,7 @@ class qtitem(QtCore.QObject):
 				return
 		else:
 			self.experiment.items[item].from_string(script)
-		self.edit_script.setModified(False)
 		self.experiment.items[item].name = self.name
-
 		# Replace the current item
 		self.experiment.items[self.name] = self.experiment.items[item]
 		del self.experiment.items[item]
@@ -345,28 +320,13 @@ class qtitem(QtCore.QObject):
 
 		"""Build the script tab"""
 
-		self.edit_script = inline_editor.inline_editor( \
-			self.experiment, syntax=u"opensesame")
-		script = ""
-		for s in self.to_string().split("\n")[1:]:
-			script += self.strip_script_line(s)
-		self.edit_script.edit.setPlainText(script, set_modified=False)
-		self.edit_script.apply.clicked.connect(self.apply_script_changes)
-
-		button = QtGui.QPushButton(self.experiment.icon(u"apply"), \
-			_(u"Apply and close"))
-		button.setToolTip(_(u"Apply changes and resume normal editing"))
-		button.setIconSize(QtCore.QSize(16, 16))
-		button.clicked.connect(self.apply_script_and_close)
-		self.edit_script.toolbar_hbox.addWidget(button)
-
-		button = QtGui.QPushButton(self.experiment.icon(u"close"), \
-			_(u"Forget changes and close"))
-		button.setToolTip(_(u"Ignore changes and resume normal editing"))
-		button.setIconSize(QtCore.QSize(16, 16))
-		button.clicked.connect(self.ignore_script_and_close)
-		self.edit_script.toolbar_hbox.addWidget(button)
-
+		from QProgEdit import QTabManager
+		self.script_qprogedit = QTabManager(handler=self.apply_script_and_close, \
+			defaultLang=u'OpenSesame', handlerButtonText= \
+			_(u'Apply and close script editor'), callHandlerOnFocusOut=False,
+			cfg=cfg)
+		self.script_qprogedit.addTab(u'Script')
+		
 		hbox = QtGui.QHBoxLayout()
 		hbox.addWidget(self.experiment.label_image(u"%s" % self.item_type))
 		self.script_header = QtGui.QLabel()			
@@ -378,7 +338,7 @@ class qtitem(QtCore.QObject):
 
 		vbox = QtGui.QVBoxLayout()
 		vbox.addWidget(hwidget)
-		vbox.addWidget(self.edit_script)
+		vbox.addWidget(self.script_qprogedit)
 		self._script_widget = QtGui.QWidget()
 		self._script_widget.setLayout(vbox)
 		self._script_widget.__script_item__ = self.name
@@ -398,7 +358,7 @@ class qtitem(QtCore.QObject):
 		script = u""
 		for s in self.to_string().split(u"\n")[1:]:
 			script += self.strip_script_line(s)
-		self.edit_script.edit.setPlainText(script)
+		self.script_qprogedit.setText(script)
 		self._script_widget.__script_item__ = self.name
 		return self._script_widget
 
@@ -601,8 +561,8 @@ class qtitem(QtCore.QObject):
 		True if some action has been taken, False if nothing was done
 		"""
 
-		if self.edit_script.isModified():
-			debug.msg(u"applying pending script changes")
+		if self.script_qprogedit.isModified():
+			debug.msg(u'applying pending script changes')
 			self.apply_script_changes(catch=False)
 			return True
 		return False		
@@ -679,11 +639,10 @@ class qtitem(QtCore.QObject):
 						% (var, e))
 			checkbox.toggled.connect(self.apply_edit_changes)
 
-		for var, editor in self.auto_editor.iteritems():
+		for var, qprogedit in self.auto_editor.iteritems():
 			if self.has(var):
 				try:
-					editor.edit.setPlainText(self.unistr(self.get(var, \
-						_eval=False)))
+					qprogedit.setText(self.unistr(self.get(var, _eval=False)))
 				except Exception as e:
 					self.experiment.notify(_(u"Failed to set control '%s': %s") \
 						% (var, e))
@@ -793,11 +752,10 @@ class qtitem(QtCore.QObject):
 				else:
 					val = u"no"
 				self.set(var, val)
-
-		for var, editor in self.auto_editor.iteritems():
+				
+		for var, qprogedit in self.auto_editor.iteritems():
 			if isinstance(var, basestring):
-				self.set(var, editor.edit.toPlainText())
-				editor.setModified(False)
+				self.set(var, qprogedit.text())
 
 		return True
 

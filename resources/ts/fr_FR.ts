@@ -285,7 +285,6 @@
     <message>
         <location filename="loop_widget.ui" line="135"/>
         <source>first </source>
-        <translatorcomment>première?</translatorcomment>
         <translation>premier(s) </translation>
     </message>
     <message>
@@ -558,7 +557,7 @@
     <message>
         <location filename="opensesame.ui" line="60"/>
         <source>File</source>
-        <translation type="unfinished">Fichier</translation>
+        <translation>Fichier</translation>
     </message>
     <message>
         <location filename="opensesame.ui" line="64"/>
@@ -898,13 +897,11 @@
     <message>
         <location filename="opensesame.ui" line="899"/>
         <source>Random tip</source>
-        <translatorcomment>UNUSED</translatorcomment>
         <translation>Indice aléatoire</translation>
     </message>
     <message>
         <location filename="opensesame.ui" line="902"/>
         <source>Show a random tip</source>
-        <translatorcomment>UNUSED</translatorcomment>
         <translation>Montrer un indice aléatoire</translation>
     </message>
     <message>
@@ -1142,202 +1139,202 @@
         <translation>Divers</translation>
     </message>
     <message>
-        <location filename="preferences_widget.ui" line="59"/>
+        <location filename="preferences_widget.ui" line="56"/>
         <source>Offer to rename new items immediately</source>
         <translation>Permettre de renommer des nouveaux éléments immédiatement</translation>
     </message>
     <message>
-        <location filename="preferences_widget.ui" line="66"/>
+        <location filename="preferences_widget.ui" line="63"/>
         <source>Enable auto-response</source>
         <translation>Autoriser la réponse automatique</translation>
     </message>
     <message>
-        <location filename="preferences_widget.ui" line="138"/>
+        <location filename="preferences_widget.ui" line="135"/>
         <source>Show text in toolbar</source>
         <translation>Montrer le texte dans la barre d&apos;outils</translation>
     </message>
     <message>
-        <location filename="preferences_widget.ui" line="131"/>
+        <location filename="preferences_widget.ui" line="128"/>
         <source>Small icons in toolbar</source>
         <translation>Petites icones dans la barre d&apos;outils</translation>
     </message>
     <message>
-        <location filename="preferences_widget.ui" line="82"/>
+        <location filename="preferences_widget.ui" line="79"/>
         <source>Appearance</source>
         <translation>Apparence</translation>
     </message>
     <message>
-        <location filename="preferences_widget.ui" line="154"/>
+        <location filename="preferences_widget.ui" line="151"/>
         <source>Embedded text editor</source>
         <translation>Éditeur de texte intégré</translation>
     </message>
     <message>
-        <location filename="preferences_widget.ui" line="172"/>
+        <location filename="preferences_widget.ui" line="166"/>
         <source>Show line numbers</source>
         <translation>Montrer le numéro des lignes</translation>
     </message>
     <message>
-        <location filename="preferences_widget.ui" line="179"/>
+        <location filename="preferences_widget.ui" line="173"/>
         <source>Enable block folding</source>
         <translation>Autoriser la réduction de blocs</translation>
     </message>
     <message>
-        <location filename="preferences_widget.ui" line="186"/>
+        <location filename="preferences_widget.ui" line="180"/>
         <source>Show right margin</source>
         <translation>Montrer la marge droite</translation>
     </message>
     <message>
-        <location filename="preferences_widget.ui" line="193"/>
+        <location filename="preferences_widget.ui" line="187"/>
         <source>Highlight matching braces</source>
         <translation>Surligner les symboles correspondants</translation>
     </message>
     <message>
-        <location filename="preferences_widget.ui" line="200"/>
+        <location filename="preferences_widget.ui" line="194"/>
         <source>Show end of lines</source>
         <translation>Montrer chaque fin de ligne</translation>
     </message>
     <message>
-        <location filename="preferences_widget.ui" line="207"/>
+        <location filename="preferences_widget.ui" line="201"/>
         <source>Enable syntax highlighting</source>
         <translation>Permettre de surligner la sytnaxe</translation>
     </message>
     <message>
-        <location filename="preferences_widget.ui" line="214"/>
+        <location filename="preferences_widget.ui" line="208"/>
         <source>Show whitespace</source>
         <translation>Montrer les espaces</translation>
     </message>
     <message>
-        <location filename="preferences_widget.ui" line="221"/>
+        <location filename="preferences_widget.ui" line="215"/>
         <source>Show indentation guides</source>
         <translation>Montrer les guides d&apos;indentation</translation>
     </message>
     <message>
-        <location filename="preferences_widget.ui" line="228"/>
+        <location filename="preferences_widget.ui" line="222"/>
         <source>Auto indent</source>
         <translation>Auto-indenter</translation>
     </message>
     <message>
-        <location filename="preferences_widget.ui" line="235"/>
+        <location filename="preferences_widget.ui" line="229"/>
         <source>Use custom font</source>
         <translation>Utiliser une police de caractères personnalisée</translation>
     </message>
     <message>
-        <location filename="preferences_widget.ui" line="254"/>
+        <location filename="preferences_widget.ui" line="248"/>
         <source>Font family</source>
         <translation>Police de caractères</translation>
     </message>
     <message>
-        <location filename="preferences_widget.ui" line="264"/>
+        <location filename="preferences_widget.ui" line="258"/>
         <source>Font size</source>
         <translation>Taille de la police</translation>
     </message>
     <message>
-        <location filename="preferences_widget.ui" line="271"/>
+        <location filename="preferences_widget.ui" line="265"/>
         <source> pt</source>
         <translation>pt</translation>
     </message>
     <message>
-        <location filename="preferences_widget.ui" line="296"/>
+        <location filename="preferences_widget.ui" line="290"/>
         <source>Backups</source>
         <translation>Sauvegardes</translation>
     </message>
     <message>
-        <location filename="preferences_widget.ui" line="320"/>
+        <location filename="preferences_widget.ui" line="314"/>
         <source>Automatically create backups</source>
         <translation>Faire des sauvegardes automatiques</translation>
     </message>
     <message>
-        <location filename="preferences_widget.ui" line="327"/>
+        <location filename="preferences_widget.ui" line="321"/>
         <source>Auto-save interval:</source>
         <translation>Intervalle des sauvegardes automatiques:</translation>
     </message>
     <message>
-        <location filename="preferences_widget.ui" line="334"/>
+        <location filename="preferences_widget.ui" line="328"/>
         <source> minute(s)</source>
         <translation>minute(s)</translation>
     </message>
     <message>
-        <location filename="preferences_widget.ui" line="337"/>
+        <location filename="preferences_widget.ui" line="331"/>
         <source>every </source>
         <translation>chaque </translation>
     </message>
     <message>
-        <location filename="preferences_widget.ui" line="353"/>
+        <location filename="preferences_widget.ui" line="367"/>
         <source>Open backup folder</source>
         <translation>Ouvrir le fichier de sauvegarde</translation>
     </message>
     <message>
-        <location filename="preferences_widget.ui" line="364"/>
+        <location filename="preferences_widget.ui" line="347"/>
         <source>Clean backups after:</source>
         <translation>Écraser les sauvegardes après:</translation>
     </message>
     <message>
-        <location filename="preferences_widget.ui" line="371"/>
+        <location filename="preferences_widget.ui" line="354"/>
         <source> day(s)</source>
         <translation>jour(s)</translation>
     </message>
     <message>
-        <location filename="preferences_widget.ui" line="393"/>
+        <location filename="preferences_widget.ui" line="387"/>
         <source>Updates</source>
         <translation>Mises à jour</translation>
     </message>
     <message>
-        <location filename="preferences_widget.ui" line="411"/>
+        <location filename="preferences_widget.ui" line="402"/>
         <source>Check for updates on start-up</source>
         <translation>Vérifier si des mises à jours sont disponibles au démarrage</translation>
     </message>
     <message>
-        <location filename="preferences_widget.ui" line="418"/>
+        <location filename="preferences_widget.ui" line="409"/>
         <source>Check for updates now</source>
         <translation>Vérifier les mises à jour maintenant</translation>
     </message>
     <message>
         <location filename="preferences_widget.ui" line="438"/>
         <source>Run options</source>
-        <translation>Options pendant l&apos;exécution</translation>
+        <translation type="obsolete">Options pendant l&apos;exécution</translation>
     </message>
     <message>
         <location filename="preferences_widget.ui" line="466"/>
         <source>Run experiments in a separate process</source>
-        <translation>Exécuter les expériences dans un processus séparé</translation>
+        <translation type="obsolete">Exécuter les expériences dans un processus séparé</translation>
     </message>
     <message>
         <location filename="preferences_widget.ui" line="473"/>
         <source>Auto-detect the run command</source>
-        <translation>Détecter automatiquement la commande exécuter</translation>
+        <translation type="obsolete">Détecter automatiquement la commande exécuter</translation>
     </message>
     <message>
         <location filename="preferences_widget.ui" line="480"/>
         <source>Custom run command:</source>
-        <translation>Exécuter la commande de façon personnalisée:</translation>
+        <translation type="obsolete">Exécuter la commande de façon personnalisée:</translation>
     </message>
     <message>
-        <location filename="preferences_widget.ui" line="499"/>
+        <location filename="preferences_widget.ui" line="485"/>
         <source>Plug-ins</source>
         <translation>Plug-ins</translation>
     </message>
     <message>
-        <location filename="preferences_widget.ui" line="520"/>
+        <location filename="preferences_widget.ui" line="503"/>
         <source>Plug-in folders:</source>
         <translation>Dossier des plug-ins:</translation>
     </message>
     <message>
-        <location filename="preferences_widget.ui" line="540"/>
+        <location filename="preferences_widget.ui" line="523"/>
         <source>Installed plug-ins (requires restart):</source>
         <translation>Plug-ins installés (nécessite un redémarrage):</translation>
     </message>
     <message>
-        <location filename="preferences_widget.ui" line="100"/>
+        <location filename="preferences_widget.ui" line="108"/>
         <source>Interface style</source>
         <translation>Style de l&apos;interface</translation>
     </message>
     <message>
-        <location filename="preferences_widget.ui" line="110"/>
+        <location filename="preferences_widget.ui" line="118"/>
         <source>icon theme</source>
         <translation>thème d&apos;icone</translation>
     </message>
     <message>
-        <location filename="preferences_widget.ui" line="120"/>
+        <location filename="preferences_widget.ui" line="97"/>
         <source>&lt;small&gt;&lt;i&gt;Changes take effect the next time you start OpenSesame&lt;/i&gt;&lt;/small&gt;
 </source>
         <translation>&lt;small&gt;&lt;i&gt;Les modifications prendront effet lors du prochain démarrage d&apos;OpenSesame&lt;/i&gt;&lt;/small</translation>
@@ -1345,7 +1342,32 @@
     <message>
         <location filename="preferences_widget.ui" line="456"/>
         <source>&lt;small&gt;&lt;i&gt;If you experience stability issues, you can enable the &apos;Run experiments in a separate process&apos; option. This essentially means that &apos;opensesamerun[.exe]&apos; is used to run your experiment.&lt;/i&gt;&lt;/small&gt;</source>
-        <translation>&lt;small&gt;&lt;i&gt;if vous faites l&apos;expérience de problèmes de stabilité, vous pouvez autoriser l&apos;option &apos;Exécuter les expériences dans un processus séparé&apos;. Cela signifie  essentiellement que &apos;opensesamerun[.exe]&apos; est utilisé pour exécuter votre expérience.&lt;/i&gt;&lt;/small&gt;</translation>
+        <translation type="obsolete">&lt;small&gt;&lt;i&gt;if vous faites l&apos;expérience de problèmes de stabilité, vous pouvez autoriser l&apos;option &apos;Exécuter les expériences dans un processus séparé&apos;. Cela signifie  essentiellement que &apos;opensesamerun[.exe]&apos; est utilisé pour exécuter votre expérience.&lt;/i&gt;&lt;/small&gt;</translation>
+    </message>
+    <message>
+        <location filename="preferences_widget.ui" line="429"/>
+        <source>Runner</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="preferences_widget.ui" line="447"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:8pt; font-style:italic;&quot;&gt;The &apos;runner&apos; determines how your OpenSesame experiment is executed. For more information, please visit &lt;/span&gt;&lt;a href=&quot;http://osdoc.cogsci.nl/miscellaneous/runners&quot;&gt;&lt;span style=&quot; font-size:8pt; font-style:italic; text-decoration: underline; color:#0057ae;&quot;&gt;http://osdoc.cogsci.nl/miscellaneous/runners&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:8pt; font-style:italic;&quot;&gt;.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="preferences_widget.ui" line="458"/>
+        <source>Run experiment in the same process (inprocess)</source>
+        <translation type="unfinished">Exécuter l&apos;expérience dans le même processus (inprocess)</translation>
+    </message>
+    <message>
+        <location filename="preferences_widget.ui" line="463"/>
+        <source>Run experiment in a separate process (multiprocess)</source>
+        <translation type="unfinished">Exécuter l&apos;expérience dans un processus séparé (multiprocess)</translation>
+    </message>
+    <message>
+        <location filename="preferences_widget.ui" line="468"/>
+        <source>Run experiment with opensesamerun (external)</source>
+        <translation type="unfinished">Exécuter l&apos;expérience avec opensesamerun (external)</translation>
     </message>
 </context>
 <context>
@@ -1731,7 +1753,7 @@ Description: %s</translation>
     <message>
         <location filename="translatables.py" line="7"/>
         <source>Backup saved as %s</source>
-        <translation>Sauvegarde enregistrée sous %S</translation>
+        <translation>Sauvegarde enregistrée sous %s</translation>
     </message>
     <message>
         <location filename="translatables.py" line="8"/>
@@ -2349,12 +2371,12 @@ Description: %s</translation>
         <translation>Couleur</translation>
     </message>
     <message>
-        <location filename="sketchpad_widget.ui" line="480"/>
+        <location filename="sketchpad_widget.ui" line="490"/>
         <source>Pen width</source>
         <translation>Épaisseur du stylo</translation>
     </message>
     <message>
-        <location filename="sketchpad_widget.ui" line="605"/>
+        <location filename="sketchpad_widget.ui" line="618"/>
         <source>px</source>
         <translation>px</translation>
     </message>
@@ -2369,17 +2391,17 @@ Description: %s</translation>
         <translation>Taille de la tête de la flèche</translation>
     </message>
     <message>
-        <location filename="sketchpad_widget.ui" line="496"/>
+        <location filename="sketchpad_widget.ui" line="506"/>
         <source>Image scale</source>
         <translation>Échelle de l&apos;image</translation>
     </message>
     <message>
-        <location filename="sketchpad_widget.ui" line="503"/>
+        <location filename="sketchpad_widget.ui" line="513"/>
         <source>Image scaling in %</source>
         <translation>Échelle de l&apos;image en %</translation>
     </message>
     <message>
-        <location filename="sketchpad_widget.ui" line="579"/>
+        <location filename="sketchpad_widget.ui" line="592"/>
         <source>%</source>
         <translation>%</translation>
     </message>
@@ -2414,54 +2436,64 @@ Description: %s</translation>
         <translation>Remplir l&apos;objet</translation>
     </message>
     <message>
-        <location filename="sketchpad_widget.ui" line="569"/>
+        <location filename="sketchpad_widget.ui" line="582"/>
         <source>Zoom</source>
         <translation>Zoom</translation>
     </message>
     <message>
-        <location filename="sketchpad_widget.ui" line="576"/>
+        <location filename="sketchpad_widget.ui" line="589"/>
         <source>Zoom level in %</source>
         <translation>Niveau du zoom en %</translation>
     </message>
     <message>
-        <location filename="sketchpad_widget.ui" line="595"/>
+        <location filename="sketchpad_widget.ui" line="608"/>
         <source>Grid</source>
         <translation>Grille</translation>
     </message>
     <message>
-        <location filename="sketchpad_widget.ui" line="602"/>
+        <location filename="sketchpad_widget.ui" line="615"/>
         <source>Grid size</source>
         <translation>taille de la grille</translation>
     </message>
     <message>
-        <location filename="sketchpad_widget.ui" line="618"/>
+        <location filename="sketchpad_widget.ui" line="631"/>
         <source>Check to display the grid and enable snap-to-grid</source>
         <translation>cocher pour afficher la grille et permettre le positionnement automatique sur la grille</translation>
     </message>
     <message>
-        <location filename="sketchpad_widget.ui" line="621"/>
+        <location filename="sketchpad_widget.ui" line="634"/>
         <source>Show grid</source>
         <translation>Montrer la grille</translation>
     </message>
     <message>
-        <location filename="sketchpad_widget.ui" line="643"/>
+        <location filename="sketchpad_widget.ui" line="656"/>
         <source>(0, 0)</source>
         <translation>(0, 0)</translation>
     </message>
     <message>
-        <location filename="sketchpad_widget.ui" line="693"/>
+        <location filename="sketchpad_widget.ui" line="706"/>
         <source>[nr] objects are not shown, because their definition contains variables.</source>
         <translation>[nr] les objets ne sont pas montrés, car leur définition contient des variables.</translation>
     </message>
     <message>
-        <location filename="sketchpad_widget.ui" line="712"/>
+        <location filename="sketchpad_widget.ui" line="725"/>
         <source>Edit the script to see objects defined using variables</source>
         <translation>Éditer le script pour voir des objets définis à l&apos;aide de variables</translation>
     </message>
     <message>
-        <location filename="sketchpad_widget.ui" line="715"/>
+        <location filename="sketchpad_widget.ui" line="728"/>
         <source>Edit script</source>
         <translation>Éditer le script</translation>
+    </message>
+    <message>
+        <location filename="sketchpad_widget.ui" line="535"/>
+        <source>Parse a subset of HTML tags</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="sketchpad_widget.ui" line="538"/>
+        <source>Parse HTML subset</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2643,7 +2675,6 @@ Description: %s</translation>
     <message>
         <location filename="user_hint_widget.ui" line="20"/>
         <source>A list of user hints</source>
-        <translatorcomment>UNUSED</translatorcomment>
         <translation>Une liste d&apos;indices pour utilisateurs</translation>
     </message>
     <message>
@@ -2698,6 +2729,142 @@ Description: %s</translation>
         <location filename="webbrowser_widget.ui" line="104"/>
         <source>50%</source>
         <translation>50%</translation>
+    </message>
+</context>
+<context>
+    <name>widgetFind</name>
+    <message>
+        <location filename="findWidget.ui" line="14"/>
+        <source>Form</source>
+        <translation>Formulaire</translation>
+    </message>
+    <message>
+        <location filename="findWidget.ui" line="23"/>
+        <source>Replace:</source>
+        <translation>Remplacer:</translation>
+    </message>
+    <message>
+        <location filename="findWidget.ui" line="33"/>
+        <source>Find:</source>
+        <translation>Rechercher:</translation>
+    </message>
+    <message>
+        <location filename="findWidget.ui" line="49"/>
+        <source>Search</source>
+        <translation>Rechercher</translation>
+    </message>
+    <message>
+        <location filename="findWidget.ui" line="59"/>
+        <source>Replace</source>
+        <translation>Remplacer</translation>
+    </message>
+    <message>
+        <location filename="findWidget.ui" line="69"/>
+        <source>Replace all</source>
+        <translation>Tout remplacer</translation>
+    </message>
+    <message>
+        <location filename="findWidget.ui" line="88"/>
+        <source>Case sensitive</source>
+        <translation>Sensible à la casse</translation>
+    </message>
+    <message>
+        <location filename="findWidget.ui" line="95"/>
+        <source>Match whole words</source>
+        <translation>Mots entiers</translation>
+    </message>
+</context>
+<context>
+    <name>widgetPrefs</name>
+    <message>
+        <location filename="prefsWidget.ui" line="14"/>
+        <source>Form</source>
+        <translation>Formulaire</translation>
+    </message>
+    <message>
+        <location filename="prefsWidget.ui" line="23"/>
+        <source>Show 80 character word-wrap marker</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="prefsWidget.ui" line="30"/>
+        <source>Tab width</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="prefsWidget.ui" line="37"/>
+        <source> characters</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="prefsWidget.ui" line="44"/>
+        <source>Font family</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="prefsWidget.ui" line="51"/>
+        <source>Show whitespace</source>
+        <translation type="unfinished">Montrer les espaces</translation>
+    </message>
+    <message>
+        <location filename="prefsWidget.ui" line="58"/>
+        <source>Show line numbers</source>
+        <translation type="unfinished">Montrer le numéro des lignes</translation>
+    </message>
+    <message>
+        <location filename="prefsWidget.ui" line="65"/>
+        <source>Enable word wrapping</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="prefsWidget.ui" line="72"/>
+        <source>Enable block folding</source>
+        <translation type="unfinished">Autoriser la réduction de blocs</translation>
+    </message>
+    <message>
+        <location filename="prefsWidget.ui" line="79"/>
+        <source>Enable automatic completion</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="prefsWidget.ui" line="89"/>
+        <source>Show end-of-lines</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="prefsWidget.ui" line="96"/>
+        <source>Show indentation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="prefsWidget.ui" line="103"/>
+        <source>Font size</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="prefsWidget.ui" line="110"/>
+        <source> pt</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="prefsWidget.ui" line="117"/>
+        <source>Highlight current line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="prefsWidget.ui" line="124"/>
+        <source>Highlight matching brackets</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="prefsWidget.ui" line="131"/>
+        <source>Enable automatic indentation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="prefsWidget.ui" line="141"/>
+        <source>Color scheme</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

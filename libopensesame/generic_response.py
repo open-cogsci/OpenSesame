@@ -20,7 +20,8 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 import random
 import openexp.keyboard
 import openexp.mouse
-from libopensesame import exceptions, debug
+from libopensesame import debug
+from libopensesame.exceptions import osexception
 
 class generic_response:
 
@@ -29,26 +30,26 @@ class generic_response:
 	reponse.
 	"""
 
-	auto_response = "a"
+	auto_response = u"a"
 	process_feedback = False
 
 	def prepare_timeout(self):
 
 		"""Prepares the response timeout"""
 
-		if self.get("timeout") == "infinite":
+		if self.get(u"timeout") == u"infinite":
 			self._timeout = None
 		else:
 			try:
-				self._timeout = int(self.get("timeout"))
+				self._timeout = int(self.get(u"timeout"))
 			except:
-				raise exceptions.runtime_error( \
-					"'%s' is not a valid timeout in keyboard_response '%s'. Expecting a positive integer or 'infinite'." \
-					% (self.get("timeout"), self.name))
+				raise osexception( \
+					u"'%s' is not a valid timeout in keyboard_response '%s'. Expecting a positive integer or 'infinite'." \
+					% (self.get(u"timeout"), self.name))
 			if self._timeout < 0:
-				raise exceptions.runtime_error( \
-					"'%s' is not a valid timeout in keyboard_response '%s'. Expecting a positive integer or 'infinite'." \
-					% (self.get("timeout"), self.name))
+				raise osexception( \
+					u"'%s' is not a valid timeout in keyboard_response '%s'. Expecting a positive integer or 'infinite'." \
+					% (self.get(u"timeout"), self.name))
 
 	def auto_responder(self, dev=u'keyboard'):
 
@@ -72,10 +73,10 @@ class generic_response:
 		else:
 			resp = random.choice(self._allowed_responses)
 
-		debug.msg("generic_response.auto_responder(): responding '%s'" % resp)
+		debug.msg(u"generic_response.auto_responder(): responding '%s'" % resp)
 		if dev == u'mouse':
-			pos = random.randint(0, self.get('width')), random.randint( \
-				0, self.get('height'))
+			pos = random.randint(0, self.get(u'width')), random.randint( \
+				0, self.get(u'height'))
 			return resp, pos, self.time()
 		return resp, self.time()
 
@@ -106,8 +107,8 @@ class generic_response:
 			self.experiment.cursor_x = pos[0]
 			self.experiment.cursor_y = pos[1]
 		else:
-			self.experiment.cursor_x = 'NA'
-			self.experiment.cursor_y = 'NA'
+			self.experiment.cursor_x = u'NA'
+			self.experiment.cursor_y = u'NA'
 
 	def process_response(self):
 
@@ -122,13 +123,13 @@ class generic_response:
 		if retval == None:
 			return
 
-		process_func = "process_response_%s" % self.get("duration")
+		process_func = u"process_response_%s" % self.get(u"duration")
 		if hasattr(self, process_func):
-			exec("self.%s(retval)" % process_func)
+			getattr(self, process_func)(retval)
 		else:
-			raise exceptions.runtime_error( \
-				"Don't know how to process responses for duration '%s' in item '%s'" \
-				% (self.get("duration"), self.name))
+			raise osexception( \
+				u"Don't know how to process responses for duration '%s' in item '%s'" \
+				% (self.get(u"duration"), self.name))
 
 		self.response_bookkeeping()
 
@@ -138,25 +139,25 @@ class generic_response:
 
 		# The respone and response_time variables are always set, for every
 		# response item
-		self.experiment.set("response_time", \
+		self.experiment.set(u"response_time", \
 			self.experiment.end_response_interval - \
 			self.experiment.start_response_interval)
-		self.experiment.set("response_%s" % self.get("name"), \
-			self.get("response"))
-		self.experiment.set("response_time_%s" % self.get("name"), \
-			self.get("response_time"))
+		self.experiment.set(u"response_%s" % self.get(u"name"), \
+			self.get(u"response"))
+		self.experiment.set(u"response_time_%s" % self.get(u"name"), \
+			self.get(u"response_time"))
 		self.experiment.start_response_interval = None
 
 		# But correctness information is only set for dedicated response items,
 		# such as keyboard_response items, because otherwise we might confound
 		# the feedback
 		if self.process_feedback:
-			debug.msg("processing feedback for '%s'" % self.name)
-			if self.has("correct_response"):
+			debug.msg(u"processing feedback for '%s'" % self.name)
+			if self.has(u"correct_response"):
 				# If a correct_response has been defined, we use it to determine
 				# accuracy etc.
-				correct_response = self.get("correct_response")
-				if hasattr(self, "synonyms") and self.synonyms != None:
+				correct_response = self.get(u"correct_response")
+				if hasattr(self, u"synonyms") and self.synonyms != None:
 					if correct_response in self.synonyms or \
 						self.unistr(correct_response) in self.synonyms:
 						self.experiment.correct = 1
@@ -173,18 +174,18 @@ class generic_response:
 			else:
 				# If a correct_response hasn't been defined, we simply set
 				# correct to undefined
-				self.experiment.correct = "undefined"
+				self.experiment.correct = u"undefined"
 			# Do some response bookkeeping
 			self.experiment.total_response_time += self.experiment.response_time
 			self.experiment.total_responses += 1
-			self.experiment.set("acc", 100.0 * self.experiment.total_correct / \
+			self.experiment.set(u"acc", 100.0 * self.experiment.total_correct / \
 				self.experiment.total_responses)
-			self.experiment.set("avg_rt", self.experiment.total_response_time / \
+			self.experiment.set(u"avg_rt", self.experiment.total_response_time / \
 				self.experiment.total_responses)
-			self.experiment.set("accuracy", self.experiment.acc)
-			self.experiment.set("average_response_time", self.experiment.avg_rt)
-			self.experiment.set("correct_%s" % self.get("name"), \
-				self.get("correct"))
+			self.experiment.set(u"accuracy", self.experiment.acc)
+			self.experiment.set(u"average_response_time", self.experiment.avg_rt)
+			self.experiment.set(u"correct_%s" % self.get(u"name"), \
+				self.get(u"correct"))
 
 	def set_sri(self, reset=False):
 
@@ -197,12 +198,12 @@ class generic_response:
 		"""
 
 		if reset:
-			self.sri = self.get("time_%s" % self.name)
+			self.sri = self.get(u"time_%s" % self.name)
 			self.experiment.start_response_interval = self.get("time_%s" % \
 				self.name)
 
 		if self.experiment.start_response_interval == None:
-			self.sri = self.get("time_%s" % self.name)
+			self.sri = self.get(u"time_%s" % self.name)
 		else:
 			self.sri = self.experiment.start_response_interval
 
@@ -211,32 +212,32 @@ class generic_response:
 		"""Prepare the response timeout"""
 
 		# Set the timeout
-		if not self.has("timeout") or self.get("timeout") == "infinite":
+		if not self.has(u"timeout") or self.get(u"timeout") == u"infinite":
 			self._timeout = None
 		else:
 			try:
-				self._timeout = int(self.get("timeout"))
+				self._timeout = int(self.get(u"timeout"))
 			except:
-				raise exceptions.runtime_error( \
-					"'%s' is not a valid timeout in item '%s'. Expecting a positive integer or 'infinite'." \
-					% (self.get("timeout"), self.name))
+				raise osexception( \
+					u"'%s' is not a valid timeout in item '%s'. Expecting a positive integer or 'infinite'." \
+					% (self.get(u"timeout"), self.name))
 			if self._timeout < 0:
-				raise exceptions.runtime_error( \
-					"'%s' is not a valid timeout in item '%s'. Expecting a positive integer or 'infinite'." \
-					% (self.get("timeout"), self.name))
+				raise osexception( \
+					u"'%s' is not a valid timeout in item '%s'. Expecting a positive integer or 'infinite'." \
+					% (self.get(u"timeout"), self.name))
 
 	def prepare_compensation(self):
 
 		"""Prepare the duration compensation"""
 
 		# Prepare the compensation function
-		if self.has("compensation"):
+		if self.has(u"compensation"):
 			try:
-				self._compensation = int(self.get("compensation"))
+				self._compensation = int(self.get(u"compensation"))
 			except:
-				raise exceptions.runtime_error( \
-					"Variable 'compensation' should be numeric and not '%s' in %s item '%s'" \
-					% (self.get("compensation"), self.item_type, self.name))
+				raise osexception( \
+					u"Variable 'compensation' should be numeric and not '%s' in %s item '%s'" \
+					% (self.get(u"compensation"), self.item_type, self.name))
 		else:
 			self._compensation = 0
 
@@ -245,21 +246,21 @@ class generic_response:
 		"""Prepare the allowed responses"""
 
 		# Prepare the allowed responses
-		dur = self.get("duration")
-		if self.has("allowed_responses"):
-			if dur == "keypress":
+		dur = self.get(u"duration")
+		if self.has(u"allowed_responses"):
+			if dur == u"keypress":
 
 				# Prepare valid keypress responses
-				l = self.experiment.unistr(self.get("allowed_responses")).split( \
-					";")
+				l = self.experiment.unistr(self.get(u"allowed_responses")).split( \
+					u";")
 				self._allowed_responses = l
 
-			elif dur == "mouseclick":
+			elif dur == u"mouseclick":
 
 				# Prepare valid mouseclick responses
 				self._allowed_responses = []
 				for r in self.experiment.unistr(self.get( \
-					"allowed_responses")).split(";"):
+					u"allowed_responses")).split(";"):
 					if r in self.resp_codes.values():
 						for code, resp in self.resp_codes.items():
 							if resp == r:
@@ -270,19 +271,19 @@ class generic_response:
 							if r in self.resp_codes:
 								self._allowed_responses.append(r)
 							else:
-								raise exceptions.runtime_error( \
-									"Unknown allowed_response '%s' in mouse_response item '%s'" \
+								raise osexception( \
+									u"Unknown allowed_response '%s' in mouse_response item '%s'" \
 									% (r, self.name))
-						except ValueError:
-							raise exceptions.runtime_error( \
-								"Unknown allowed_response '%s' in mouse_response item '%s'" \
-								% (r, self.name))
+						except Exception as e:
+							raise osexception( \
+								u"Unknown allowed_response '%s' in mouse_response item '%s'" \
+								% (r, self.name), exception=e)
 
 			# If allowed responses are provided, the list should not be empty
 			if len(self._allowed_responses) == 0:
-				raise exceptions.runtime_error( \
-					"'%s' are not valid allowed responses in keyboard_response '%s'" \
-					% (self.get("allowed_responses"), self.name))
+				raise osexception( \
+					u"'%s' are not valid allowed responses in keyboard_response '%s'" \
+					% (self.get(u"allowed_responses"), self.name))
 		else:
 			self._allowed_responses = None
 
@@ -290,10 +291,10 @@ class generic_response:
 
 		"""Prepare the duration"""
 
-		if type(self.get("duration")) == int:
+		if type(self.get(u"duration")) == int:
 
 			# Prepare a duration in milliseconds
-			self._duration = int(self.get("duration"))
+			self._duration = int(self.get(u"duration"))
 			if self._duration == 0:
 				self._duration_func = self.dummy
 			else:
@@ -307,13 +308,13 @@ class generic_response:
 
 			# Prepare a special duration, such as 'keypress', which are
 			# handles by special functions
-			prepare_func = "prepare_duration_%s" % self.get("duration")
+			prepare_func = u"prepare_duration_%s" % self.get(u"duration")
 			if hasattr(self, prepare_func):
-				exec("self.%s()" % prepare_func)
+				getattr(self, prepare_func)()
 			else:
-				raise exceptions.runtime_error( \
-					"'%s' is not a valid duration in item '%s'" % \
-					(self.get("duration"), self.name))
+				raise osexception( \
+					u"'%s' is not a valid duration in item '%s'" % \
+					(self.get(u"duration"), self.name))
 
 	def prepare_duration_keypress(self):
 
@@ -370,18 +371,18 @@ class generic_response:
 		"""
 
 		l = []
-		l.append( ("response", "[Depends on response]") )
-		l.append( ("response_time", "[Depends on response]") )
-		l.append( ("response_%s" % self.get("name", _eval=False), \
-			"[Depends on response]") )
-		l.append( ("response_time_%s" % self.get("name", _eval=False), \
-			"[Depends on response]") )
+		l.append( (u"response", u"[Depends on response]") )
+		l.append( (u"response_time", u"[Depends on response]") )
+		l.append( (u"response_%s" % self.get(u"name", _eval=False), \
+			u"[Depends on response]") )
+		l.append( ("response_time_%s" % self.get(u"name", _eval=False), \
+			u"[Depends on response]") )
 		if self.process_feedback:
-			l.append( ("correct", "[Depends on response]") )
-			l.append( ("correct_%s" % self.get("name", _eval=False), \
-				"[Depends on response]") )
-			l.append( ("average_response_time", "[Depends on response]") )
-			l.append( ("avg_rt", "[Depends on response]") )
-			l.append( ("accuracy", "[Depends on response]") )
-			l.append( ("acc", "[Depends on response]") )
+			l.append( (u"correct", u"[Depends on response]") )
+			l.append( (u"correct_%s" % self.get(u"name", _eval=False), \
+				u"[Depends on response]") )
+			l.append( (u"average_response_time", u"[Depends on response]") )
+			l.append( (u"avg_rt", u"[Depends on response]") )
+			l.append( (u"accuracy", u"[Depends on response]") )
+			l.append( (u"acc", u"[Depends on response]") )
 		return l

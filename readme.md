@@ -1,5 +1,4 @@
-OpenSesame
-==========
+# OpenSesame
 
 *A graphical experiment builder for the social sciences*
 
@@ -7,13 +6,15 @@ Copyright, 2010-2013, Sebastiaan Math&ocirc;t and contributors.
 
 <http://www.cogsci.nl/smathot>
 
-1. About
---------
+## About
 
 OpenSesame is a graphical experiment builder. OpenSesame provides an easy to use, point-and-click interface for creating psychological/ neuroscientific experiments.
 
-2. License
-----------
+## Citation
+
+Mathôt, S., Schreij, D., & Theeuwes, J. (2012). OpenSesame: An open-source, graphical experiment builder for the social sciences. *Behavior Research Methods*, *44*(2), 314-324. [doi:10.3758/s13428-011-0168-7](http://dx.doi.org/doi:10.3758/s13428-011-0168-7)
+
+## License
 
 OpenSesame is distributed under the terms of the GNU General Public License 3. The full license should be included in the file COPYING, or can be obtained from:
 
@@ -21,19 +22,15 @@ OpenSesame is distributed under the terms of the GNU General Public License 3. T
 
 OpenSesame contains works of others. For the full license information, please refer to `debian/copyright`.
 
-3. Documentation
-----------------
+## Documentation
 
-Installation instructions and documentation are available on the documentation website:
+Installation instructions and documentation are available on the documentation website ...
 
 - <http://osdoc.cogsci.nl/>
 
-4. Building packages
---------------------
+... which is itself also hosted on GitHub:
 
-Instructions for building OpenSesame on the various systems are included in the setup scripts. See the following files:
+- <https://github.com/smathot/osdoc>
 
-- `setup.py` for Linux
-- `setup-win32.py` for Windows XP/ 7/ 8
-- `setup-mac.py` for Mac OS(X)
-- `setup-android.py` for Android
+
+

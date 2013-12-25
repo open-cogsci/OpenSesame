@@ -17,7 +17,8 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
-from libopensesame import item, exceptions, debug
+from libopensesame.exceptions import osexception
+from libopensesame import item, debug
 from libqtopensesame.items.qtautoplugin import qtautoplugin
 from PyQt4 import QtGui, QtCore
 import os.path
@@ -59,10 +60,10 @@ class advanced_delay(item.item):
 				self._duration = int(self.get(u"duration") + \
 					random.gauss(0, self.get(u"jitter")))
 			else:
-				raise exceptions.runtime_error( \
+				raise osexception( \
 					u'Unknown jitter mode in advanced_delay %s' % self.name)
 		except:
-			raise exceptions.runtime_error( \
+			raise osexception( \
 				u"Invalid duration and/ or jitter in advanced_delay '%s'" % \
 				self.name)
 

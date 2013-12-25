@@ -17,7 +17,8 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
-from libopensesame import misc, item, exceptions, plugins, debug
+from libopensesame.exceptions import osexception
+from libopensesame import misc, item, plugins, debug
 import os.path
 import shutil
 import sys
@@ -33,32 +34,39 @@ class experiment(item.item):
 
 	"""The main experiment class, which is the first item to be called"""
 
-	def __init__(self, name=u'experiment', string=None, pool_folder=None):
+	def __init__(self, name=u'experiment', string=None, pool_folder=None, experiment_path=None, fullscreen=False, auto_response=False, logfile=u'defaultlog.csv', subject_nr=0):
 
 		"""<DOC>
 		Constructor. The experiment is created automatically be OpenSesame and #
 		you will generally not need to create it yourself.
 
 		Keyword arguments:
-		name 		--	The name of the experiment. (default='experiment')
-		string 		--	A string containing the experiment definition. #
-						(default=None)
-		pool_folder	--	A specific folder to be used for the file pool. #
-						(default=None)
+		name 			--	The name of the experiment. (default=u'experiment')
+		string 			--	A string containing the experiment definition. #
+							(default=None)
+		pool_folder		--	A specific folder to be used for the file pool. #
+							(default=None)
+		experiment_path	--	The path of the experiment file. (default=None)
+		fullscreen		--	Indicates whether the experiment should be #
+							executed in fullscreen. (default=False)
+		auto_response	--	Indicates whether auto-response mode should be #
+							enabled. (default=False)
+		logfile			--	The logfile path. (default=u'defaultlog.csv')
+		subject_nr		--	The subject number. (default=0)
 		</DOC>"""
 
 		global pool_folders
 
 		self.items = {}
 		self.running = False
-		self.auto_response = False
+		self.auto_response = auto_response
 		self.plugin_folder = u'plugins'
 		self.start_response_interval = None
 		self.cleanup_functions = []
 		self.restart = False
-		self.experiment_path = None
 		self.title = u'My Experiment'
 		self.transparent_variables = u'no'
+		self.bidi = u'no'
 
 		# Set default variables
 		self.coordinates = u'relative' # DEPRECATED
@@ -78,13 +86,18 @@ class experiment(item.item):
 		self.mouse_backend = u'xpyriment'
 		self.sampler_backend = u'legacy'
 		self.synth_backend = u'legacy'
+		
+		# Save the date and time, and the version of OpenSesame
+		self.datetime = time.strftime(u'%c').decode(self.encoding, u'ignore')
+		self.opensesame_version = misc.version
+		self.opensesame_codename = misc.codename
 
 		# Display parameters
 		self.width = 1024
 		self.height = 768
 		self.background = u'black'
 		self.foreground = u'white'
-		self.fullscreen = False
+		self.fullscreen = fullscreen
 
 		# Font parameters
 		self.font_size = 18
@@ -95,15 +108,11 @@ class experiment(item.item):
 
 		# Logfile parameters
 		self._log = None
-		self.logfile = None
+		self.logfile = logfile
 
 		# This is a dummy variable for backwards compatibility. The logfile
 		# encoding is always utf-8, and this variable doesn't do anything.
 		self.logfile_codec = u'utf-8' # DEPRECATED
-
-		# Default subject info
-		self.subject_nr = 0
-		self.subject_parity = u'even'
 
 		# This is some duplication of the option parser in qtopensesame,
 		# but nevertheless keep it so we don't need qtopensesame
@@ -118,7 +127,7 @@ class experiment(item.item):
 			# - <http://bugs.python.org/issue1681974>
 			self.pool_folder = tempfile.mkdtemp(suffix= \
 				u'.opensesame_pool', dir=tempfile.gettempdir().decode( \
-				encoding=misc.filesystem_encoding()))				
+				encoding=misc.filesystem_encoding()))
 			pool_folders.append(self.pool_folder)
 			debug.msg(u'creating new pool folder')
 		else:
@@ -128,6 +137,12 @@ class experiment(item.item):
 
 		string = self.open(string)
 		item.item.__init__(self, name, self, string)
+		
+		# Default subject info
+		self.set_subject(subject_nr)
+		# Restore experiment path
+		if experiment_path != None:
+			self.experiment_path = experiment_path
 
 	def module_container(self):
 
@@ -211,17 +226,12 @@ class experiment(item.item):
 
 		if plugins.is_plugin(item_type):
 			# Load a plug-in
-			if debug.enabled:
-				debug.msg(u"loading plugin '%s'" % item_type)
-				item = plugins.load_plugin(item_type, item_name, self, string, \
-					self.item_prefix())
-			else:
-				try:
-					item = plugins.load_plugin(item_type, item_name, self, \
-						string, self.item_prefix())
-				except:
-					raise exceptions.script_error(u"Failed load plugin '%s'" % \
-						item_type)
+			try:
+				item = plugins.load_plugin(item_type, item_name, self, \
+					string, self.item_prefix())
+			except Exception as e:
+				raise osexception(u"Failed to load plugin '%s'" % \
+					item_type, exception=e)
 			self.items[item_name] = item
 		else:
 			# Load one of the core items
@@ -250,16 +260,16 @@ class experiment(item.item):
 			try:
 				l = self.split(line)
 			except ValueError as e:
-				raise exceptions.script_error( \
-					u"Failed to parse script. Maybe it contains illegal characters or unclosed quotes?")
+				raise osexception( \
+					u"Failed to parse script. Maybe it contains illegal characters or unclosed quotes?", \
+					exception=e)
 			if len(l) > 0:
 				self.parse_variable(line)
 				# Parse definitions
 				if l[0] == u"define":
 					if len(l) != 3:
-						raise exceptions.script_error( \
-							u"Failed to parse definition '%s'" \
-							% line)
+						raise osexception( \
+							u'Failed to parse definition', line=line)
 					item_type = l[1]
 					item_name = self.sanitize(l[2])
 					line, def_str = self.read_definition(s)
@@ -286,7 +296,7 @@ class experiment(item.item):
 			self.items[self.start].prepare()
 			self.items[self.start].run()
 		else:
-			raise exceptions.runtime_error( \
+			raise osexception( \
 				"Could not find item '%s', which is the entry point of the experiment" \
 				% self.start)
 
@@ -385,15 +395,10 @@ class experiment(item.item):
 		>>> my_canvas.image(image_path)
 		</DOC>"""
 
-		if not isinstance(path, basestring):
-			raise exceptions.runtime_error( \
-				u"A string should be passed to experiment.get_file(), not '%s'" \
-				% path)
-		if isinstance(path, str):
-			path = path.decode(self.encoding, errors=u'ignore')				
+		path = self.unistr(path)
 		if path.strip() == u'':
-			raise exceptions.runtime_error( \
-				u"An empty string was passed to experiment.get_file(). Please specify a valid filename.")				
+			raise osexception( \
+				u"An empty string was passed to experiment.get_file(). Please specify a valid filename.")
 		if os.path.exists(os.path.join(self.pool_folder, path)):
 			return os.path.join(self.pool_folder, path)
 		elif self.experiment_path != None and os.path.exists(os.path.join( \
@@ -508,7 +513,7 @@ class experiment(item.item):
 			self.experiment_path = None
 			if isinstance(src, unicode):
 				return src
-			return src.decode(self.encoding, errors=u'replace')		
+			return src.decode(self.encoding, u'replace')		
 		# If the file is a regular text script,
 		# read it and return it
 		ext = u'.opensesame.tar.gz'
@@ -618,8 +623,6 @@ class experiment(item.item):
 		if self._log != None:
 			return
 		# Open the logfile
-		if self.logfile == None:
-			self.logfile = u'defaultlog.txt'
 		self._log = codecs.open(self.logfile, u'w', encoding=self.encoding)
 		print u"experiment.init_log(): using '%s' as logfile (%s)" % \
 			(self.logfile, self.logfile_codec)
@@ -652,9 +655,8 @@ class experiment(item.item):
 		ms	--	The sleep duration.
 		"""
 
-		raise exceptions.runtime_error( \
-			u"experiment._sleep_func(): This function should be set by the canvas backend." \
-			)
+		raise osexception( \
+			u"experiment._sleep_func(): This function should be set by the canvas backend.")
 
 	def _time_func(self):
 
@@ -669,9 +671,8 @@ class experiment(item.item):
 		int or a float.
 		"""
 
-		raise exceptions.runtime_error( \
-			u"experiment._time_func(): This function should be set by the canvas backend." \
-			)
+		raise osexception( \
+			u"experiment._time_func(): This function should be set by the canvas backend.")
 
 
 def clean_up(verbose=False):

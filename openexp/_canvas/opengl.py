@@ -21,14 +21,14 @@ import pygame
 from pygame.locals import *
 import random
 import openexp._canvas.legacy
-import openexp.exceptions
+from libopensesame.exceptions import osexception
+from libopensesame import debug, html
 import math
 import subprocess
 import os
 import os.path
 import tempfile
 import copy
-
 import libopengl
 
 class opengl(openexp._canvas.legacy.legacy):
@@ -43,7 +43,7 @@ class opengl(openexp._canvas.legacy.legacy):
 	def __init__(self, experiment, bgcolor=None, fgcolor=None, auto_prepare=True):
 
 		self.experiment = experiment
-
+		self.html = html.html()
 		if fgcolor == None:
 			fgcolor = self.experiment.get("foreground")
 		if bgcolor == None:
@@ -54,7 +54,7 @@ class opengl(openexp._canvas.legacy.legacy):
 		self.penwidth = 1
 		self.antialias = True
 		self.font = self.experiment.font
-
+		self.bidi = self.experiment.get(u'bidi')==u'yes'
 		# set to have no objects
 		self.showables = []
 		self.clear()
@@ -309,7 +309,7 @@ class opengl(openexp._canvas.legacy.legacy):
 		"""see openexp._canvas.legacy"""
 
 		# TODO
-		raise openexp.exceptions.canvas_error( \
+		raise osexception( \
 			"openexp._canvas.opengl.polygon() not implemented")
 
 	def text_size(self, text):
@@ -355,7 +355,7 @@ class opengl(openexp._canvas.legacy.legacy):
 		try:
 			surface = pygame.image.load(fname)
 		except pygame.error as e:
-			raise openexp.exceptions.canvas_error("'%s' is not a supported image format" % fname)
+			raise osexception("'%s' is not a supported image format" % fname)
 
 		if scale != None:
 			surface = pygame.transform.smoothscale(surface, (int(surface.get_width() * scale), int(surface.get_height() * scale)))

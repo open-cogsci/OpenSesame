@@ -23,7 +23,8 @@ __license__ = "GPLv3"
 import math
 import os
 import numbers
-from libopensesame import exceptions, debug
+from libopensesame.exceptions import osexception
+from libopensesame import debug
 from libqtopensesame.ui import sketchpad_widget_ui, gabor_dialog_ui, \
 	noise_patch_dialog_ui
 from libqtopensesame.widgets import pool_widget
@@ -307,7 +308,7 @@ class canvas(QtGui.QGraphicsScene):
 		self.delete_item(item)
 		try:
 			self.sketchpad_widget.sketchpad.from_string(s)
-		except exceptions.script_error as e:
+		except osexception as e:
 			self.sketchpad_widget.sketchpad.items = tmp
 			self.sketchpad_widget.sketchpad.experiment.notify(e)
 

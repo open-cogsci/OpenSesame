@@ -18,7 +18,7 @@ along with openexp.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame import type_check
-from libopensesame.exceptions import form_error
+from libopensesame.exceptions import osexception
 from openexp.canvas import canvas
 from openexp.mouse import mouse
 
@@ -136,7 +136,7 @@ class form:
 			return pos
 		if type(pos) in (tuple, list) and len(pos) == 2:
 			return pos[1]*len(self.cols)+pos[0]
-		raise form_error(u'%s is an invalid position in the form' % pos)
+		raise osexception(u'%s is an invalid position in the form' % pos)
 
 	def get_cell(self, index):
 
@@ -179,8 +179,8 @@ class form:
 		w = x2-x1
 		h = y2-y1
 		if w <= 0 or h <= 0:
-			raise form_error( \
-				'There is not enough space to show some form widgets. Please modify the form geometry!')
+			raise osexception( \
+				u'There is not enough space to show some form widgets. Please modify the form geometry!')
 		return x1+self.margins[3], y1+self.margins[0], w, h
 
 	def render(self):
@@ -212,14 +212,14 @@ class form:
 
 		index = self.cell_index(pos)
 		if index >= len(self.widgets):
-			raise form_error( \
+			raise osexception( \
 				u'Widget position (%s, %s) is outside of the form' % pos)
 		if type(colspan) != int or colspan < 1 or colspan > len(self.cols):
-			raise form_error( \
+			raise osexception( \
 				u'Column span %s is invalid (i.e. too large, too small, or not a number)' \
 				% colspan)
 		if type(rowspan) != int or rowspan < 1 or rowspan > len(self.rows):
-			raise form_error( \
+			raise osexception( \
 				u'Row span %s is invalid (i.e. too large, too small, or not a number)' \
 				% rowspan)
 		self.widgets[index] = widget

@@ -74,9 +74,8 @@ class action_button(QtGui.QPushButton):
 				# The sequence and loop are a bit different, because they need
 				# an extra dialog when they are created
 				if item_type in ("sequence", "loop"):
-					item = eval( \
-						"self.sequence.experiment.main_window.add_%s(False, \"%s\")" \
-						% (item_type, self.sequence.name))
+					item = getattr(self.sequence.experiment.main_window, \
+						u'add_%s' % item_type)(False, self.sequence.name)
 				else:
 					item = self.sequence.experiment.main_window.add_item( \
 						item_type, False)

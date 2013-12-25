@@ -17,16 +17,14 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
-__author__ = "Sebastiaan Mathot"
-__license__ = "GPLv3"
-
 import os
 import sys
 from PyQt4 import QtCore, QtGui
 from libqtopensesame.items import qtitem
 from libqtopensesame.misc import _
-from libqtopensesame.widgets import color_edit, inline_editor, pool_widget
+from libqtopensesame.widgets import color_edit, pool_widget
 from libopensesame import debug, misc
+from libqtopensesame.misc.config import cfg
 
 class qtplugin(qtitem.qtitem):
 
@@ -338,8 +336,7 @@ class qtplugin(qtitem.qtitem):
 		default=None):
 
 		"""
-		Adds a texteditor control (an extended QPlainTextEdit) that is linked to
-		a variable.
+		Adds a QProgEdit that is linked to a variable.
 
 		Arguments:
 		var			--	Name of the associated variable.
@@ -352,23 +349,21 @@ class qtplugin(qtitem.qtitem):
 		default		--	DEPRECATED
 		
 		Returns:
-		An inline_editor widget.
+		A QProgEdit widget.
 		"""
-
-		label = QtGui.QLabel(label)
+		
+		from QProgEdit import QTabManager
 		if syntax:
-			editor = inline_editor.inline_editor(self.experiment, \
-				syntax="python")
+			lang = u'python'
 		else:
-			editor = inline_editor.inline_editor(self.experiment)			
-		editor.apply.clicked.connect(self.apply_edit_changes)
-		QtCore.QObject.connect(editor.edit, QtCore.SIGNAL('focusLost'), \
-			self.apply_edit_changes)
+			lang = u'text'
+		qprogedit = QTabManager(handler=self.apply_edit_changes, defaultLang= \
+			lang, cfg=cfg)
+		qprogedit.addTab(label)
 		if var != None:
-			self.auto_editor[var] = editor
-		self.edit_vbox.addWidget(label)
-		self.edit_vbox.addWidget(editor)
-		return editor
+			self.auto_editor[var] = qprogedit
+		self.edit_vbox.addWidget(qprogedit)
+		return qprogedit
 
 	def add_text(self, msg):
 
@@ -453,9 +448,9 @@ class qtplugin(qtitem.qtitem):
 		True if changes have been made, False otherwise.
 		"""
 
-		for var, editor in self.auto_editor.iteritems():
-			if editor.isModified():
-				debug.msg("applying pending Python script changes")
+		for var, qprogedit in self.auto_editor.iteritems():
+			if qprogedit.isModified():
+				debug.msg(u'applying pending editor changes')
 				self.apply_edit_changes()
 				return True
 		return qtitem.qtitem.get_ready(self)

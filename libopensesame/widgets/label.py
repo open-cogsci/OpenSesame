@@ -24,7 +24,7 @@ class label(widget):
 
 	"""A simple non-interactive text label"""
 
-	def __init__(self, form, text='label', frame=False, center=True):
+	def __init__(self, form, text=u'label', frame=False, center=True):
 
 		"""<DOC>
 		Constructor.
@@ -69,7 +69,7 @@ class label(widget):
 			text = self.form.item.eval_text(text)
 		else:
 			text = self.form.experiment.eval_text(text)
-		text = self.form.experiment.unistr(text).replace('\t', self.tab_str)
+		text = self.form.experiment.unistr(text).replace(u'\t', self.tab_str)
 		x, y, w, h = self.rect
 		if self.center:
 			x += w/2

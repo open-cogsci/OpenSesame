@@ -17,9 +17,9 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
-from libopensesame import item, exceptions, generic_response, debug
+from libopensesame.exceptions import osexception
+from libopensesame import item, generic_response, debug
 import openexp.canvas
-import openexp.exceptions
 
 class sketchpad(item.item, generic_response.generic_response):
 
@@ -112,12 +112,12 @@ class sketchpad(item.item, generic_response.generic_response):
 		item -- a sketchpad element
 
 		Exceptions:
-		Throws a runtime_error if an attribute which should be numeric is not
+		Throws a osexception if an attribute which should be numeric is not
 		"""
 
 		for attr in item:
 			if attr in self.numeric_attrs and type(item[attr]) == str:
-				raise exceptions.runtime_error( \
+				raise osexception( \
 					"'%s' should be numeric, not '%s', in sketchpad '%s'" % \
 					(attr, item[attr], self.name))
 
@@ -142,7 +142,7 @@ class sketchpad(item.item, generic_response.generic_response):
 					self.get("background"), self.get("foreground"), auto_prepare= \
 					False)
 			except ValueError as e:
-				raise exceptions.runtime_error( \
+				raise osexception( \
 					"Failed to create a canvas. This could be because the foreground or background color is not valid.")
 
 		# Walk through all items and only shown the if the show-if criterion is
@@ -169,7 +169,7 @@ class sketchpad(item.item, generic_response.generic_response):
 				try:
 					self.canvas.set_fgcolor(_item["color"])
 				except ValueError as e:
-					raise exceptions.runtime_error( \
+					raise osexception( \
 						"'%s' is not a valid color in sketchpad '%s'" % \
 						(_item["color"], self.name))
 				self.canvas.set_penwidth(_item["penwidth"])
@@ -211,17 +211,17 @@ class sketchpad(item.item, generic_response.generic_response):
 						self.canvas.image(self.experiment.get_file( \
 							_item["file"]), _item["center"] == 1, _item["x"], \
 							_item["y"], _item["scale"])
-					except openexp.exceptions.canvas_error as e:
+					except osexception as e:
 
 						# Drawing an image can fail because the image format is
 						# not recognized or because the image file cannot be
 						# found
 						if self.experiment.file_in_pool(_item["file"]):
-							raise exceptions.runtime_error( \
+							raise osexception( \
 								"'%s' is not a supported image format in sketchpad '%s'" \
 								% (_item["file"], self.name))
 						else:
-							raise exceptions.runtime_error( \
+							raise osexception( \
 								"'%s' could not be found in sketchpad '%s'. Make sure that the file is present in the file pool (or specify the full location of the image in the script editor)." \
 								% (_item["file"], self.name))
 
@@ -335,7 +335,7 @@ class sketchpad(item.item, generic_response.generic_response):
 		"""
 
 		if len(l) < 6:
-			raise exceptions.script_error("Invalid draw %s command '%s', expecting 'draw %s [x] [y] [w] [h]'" \
+			raise osexception("Invalid draw %s command '%s', expecting 'draw %s [x] [y] [w] [h]'" \
 				% (item_type, line, item_type))
 		item["type"] = item_type
 		item["x"] = self.auto_type(l[2])
@@ -359,7 +359,7 @@ class sketchpad(item.item, generic_response.generic_response):
 		"""
 
 		if len(l) < 5:
-			raise exceptions.script_error("Invalid draw circle command '%s', expecting 'draw circle [x] [y] [r]'" \
+			raise osexception("Invalid draw circle command '%s', expecting 'draw circle [x] [y] [r]'" \
 				% line)
 
 		item["type"] = u"circle"
@@ -408,7 +408,7 @@ class sketchpad(item.item, generic_response.generic_response):
 		"""
 
 		if len(l) < 6:
-			raise exceptions.script_error("Invalid draw %s command '%s', expecting 'draw %s [x1] [y1] [x2] [y2]'" \
+			raise osexception("Invalid draw %s command '%s', expecting 'draw %s [x1] [y1] [x2] [y2]'" \
 				% (item_type, line, item_type))
 
 		item["type"] = item_type
@@ -435,7 +435,7 @@ class sketchpad(item.item, generic_response.generic_response):
 		"""
 
 		if len(l) < 3:
-			raise exceptions.script_error("Invalid draw textline command '%s', expecting 'draw textline [x] [y] [text]' or 'draw textline [text]'" \
+			raise osexception("Invalid draw textline command '%s', expecting 'draw textline [x] [y] [text]' or 'draw textline [text]'" \
 				% line)
 		item["type"] = u"textline"
 		try:
@@ -463,7 +463,7 @@ class sketchpad(item.item, generic_response.generic_response):
 		"""
 
 		if len(l) < 3:
-			raise exceptions.script_error("Invalid draw image command '%s', expecting 'draw image [x] [y] [file]' or 'draw textline [file]'" \
+			raise osexception("Invalid draw image command '%s', expecting 'draw image [x] [y] [file]' or 'draw textline [file]'" \
 				% line)
 		item["type"] = u"image"
 		try:
@@ -491,7 +491,7 @@ class sketchpad(item.item, generic_response.generic_response):
 		"""
 
 		if len(l) < 4:
-			raise exceptions.script_error("Invalid draw image command '%s', expecting 'draw gabor [x] [y] [orient] [freq]'" \
+			raise osexception("Invalid draw image command '%s', expecting 'draw gabor [x] [y] [orient] [freq]'" \
 				% line)
 		item["type"] = u"gabor"
 		item["x"] = self.auto_type(l[2])
@@ -513,7 +513,7 @@ class sketchpad(item.item, generic_response.generic_response):
 		"""
 
 		if len(l) < 4:
-			raise exceptions.script_error("Invalid draw image command '%s', expecting 'draw noise [x] [y]'" \
+			raise osexception("Invalid draw image command '%s', expecting 'draw noise [x] [y]'" \
 				% line)
 		item["type"] = u"noise"
 		item["x"] = self.auto_type(l[2])
@@ -535,7 +535,7 @@ class sketchpad(item.item, generic_response.generic_response):
 				if len(l) > 0:
 					if l[0] == u'draw':
 						if len(l) == 1:
-							raise exceptions.script_error( \
+							raise osexception( \
 								"Incomplete draw command '%s'" % line)
 						item = self.parse_item(l, line)
 						if l[1] in ("circle",):
@@ -561,11 +561,11 @@ class sketchpad(item.item, generic_response.generic_response):
 						elif l[1] in ("noise"):
 							item = self.parse_noise(line, l, item)
 						else:
-							raise exceptions.script_error( \
+							raise osexception( \
 								"Unknown draw command '%s'" % line)
 						self.items.append(item)
 					else:
-						raise exceptions.script_error("Unknown command '%s'" \
+						raise osexception("Unknown command '%s'" \
 							% line)
 
 	def relativize(self, item, compensation, varlist):

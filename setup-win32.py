@@ -41,11 +41,15 @@ Python modules
 
 The following Python modules should be installed:
 	
+	bidi
+		- This is installed as an egg and therefore not packaged properly. For
+		  packaging, simply place the `bidi` source folder directly in the
+		  Python site-packages.
 	cairo
 		- Unofficial Windows builds can be downloaded from
 		  <http://www.lfd.uci.edu/~gohlke/pythonlibs/#pycairo>
-	distutils
 	expyriment
+	matplotlib		
 	opencv2
 		- Download and extract the regular OpenCV2 package
 		- Copy cv2.pyd from build/python/2.7 to the Python site-packages
@@ -56,17 +60,23 @@ The following Python modules should be installed:
 	pyaudio	
 	pygame
 	pyglet
+		- The installer doesn't work. Need to install from .zip.
 	pyopengl
 	pyparallel
 		- Needs to be installed through the .zip package
 		- Manually place simpleio.dll in the Python folder
+	pyparsing
+		- Required by matplotlib. The installer doesn't work, so needs to be
+		  installed from .zip.
 	pyqt4
 	pyserial
+	python-dateutil
+		- Required by matplotlib
 	numpy
 	scipy
 	vlc
 		- Required only for media_player_vlc
-		= Place vlc.py in the media_player_vlc folder. See below for folder
+		- Place vlc.py in the media_player_vlc folder. See below for folder
 		  structure.
 		- Choose the version for VLC 2.0
 		- Available from <http://liris.cnrs.fr/advene/download/python-ctypes/>		  
@@ -87,6 +97,7 @@ up. So the folder structure should be as follows:
 from distutils.core import setup
 import distutils.sysconfig as sysconfig
 import compileall
+import py_compile
 import glob
 import py2exe
 import os
@@ -132,14 +143,16 @@ include_sounds = True
 include_faenza = True
 include_inpout32 = True
 include_simpleio = True
-python_folder = r"C:\Python_2.7.5-win32"
+python_folder = r"C:\Python_2.7.6-win32"
 python_version = "2.7"
 
 # Packages that are too be copied for the site-packages folder, rather than
 # included by py2exe in the library .zip file. Copying packages is in general
 # preferred, as some packages (e.g. expyriment) do not work well when included
-# in the library.zip file that py2exe uses to store packages.
+# in the library.zip file that py2exe uses to store packages. Note eggs are not
+# copied properly.
 copy_packages = [
+	'QProgEdit',
 	'libopensesame',
 	'openexp',
 	'expyriment',
@@ -152,7 +165,10 @@ copy_packages = [
 	'PIL',
 	'pygame',
 	'pyglet',
-	'libqtopensesame'
+	'libqtopensesame',
+	'markdown',
+	'matplotlib',
+	'bidi',
 	]
 
 # Packages that are part of the standard Python packages, but should not be
@@ -164,7 +180,7 @@ exclude_packages = [
 	]
 
 # Packages that are not part of the standard Python packages (or not detected
-# as such), but should nevertheless be includes
+# as such), but should nevertheless be included
 include_packages = [
 	'pyaudio',
 	'cairo',
@@ -215,6 +231,7 @@ for pkg in copy_packages:
 	print 'copying packages %s ... ' % pkg
 	exec('import %s as _pkg' % pkg)
 	pkg_folder = os.path.dirname(_pkg.__file__)
+	print '\tfrom %s' % pkg_folder
 	pkg_target = os.path.join("dist", pkg)
 	shutil.copytree(pkg_folder, pkg_target, symlinks=True, \
 		ignore=ignore_package_files)
@@ -305,6 +322,10 @@ def ignore_resources(folder, files):
 			'ui'):
 			l.append(f)
 	return l
+	
+# Compiling opensesame to opensesame.pyc for the multiprocessing functionality
+print "compiling opensesame"
+py_compile.compile("opensesame", os.path.join("dist", "opensesame.pyc"))
 
 # Copy resource files
 print "copying resources"
@@ -377,16 +398,16 @@ if include_media_player_vlc:
 		r"..\media_player_vlc\media_player_vlc.py", \
 		r"dist\plugins\media_player_vlc\media_player_vlc.py")
 	shutil.copyfile( \
-		r"..\media_player_vlc\media_player_vlc.html", \
-		r"dist\plugins\media_player_vlc\media_player_vlc.html")
+		r"..\media_player_vlc\media_player_vlc.md", \
+		r"dist\plugins\media_player_vlc\media_player_vlc.md")
 	shutil.copyfile( \
 		r"..\media_player_vlc\media_player_vlc.png", \
 		r"dist\plugins\media_player_vlc\media_player_vlc.png")
 	shutil.copyfile( \
 		r"..\media_player_vlc\media_player_vlc_large.png", \
 		r"dist\plugins\media_player_vlc\media_player_vlc_large.png")
-	shutil.copyfile(r"..\media_player_vlc\info.txt", \
-		r"dist\plugins\media_player_vlc\info.txt")		
+	shutil.copyfile(r"..\media_player_vlc\info.json", \
+		r"dist\plugins\media_player_vlc\info.json")		
 
 # Include examples
 if include_examples:
