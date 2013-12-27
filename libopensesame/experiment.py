@@ -69,8 +69,6 @@ class experiment(item.item):
 		self.bidi = u'no'
 
 		# Set default variables
-		self.coordinates = u'relative' # DEPRECATED
-		self.compensation = 0 # DEPRECATED
 		self.start = u'experiment'
 
 		# Sound parameters
@@ -109,10 +107,6 @@ class experiment(item.item):
 		# Logfile parameters
 		self._log = None
 		self.logfile = logfile
-
-		# This is a dummy variable for backwards compatibility. The logfile
-		# encoding is always utf-8, and this variable doesn't do anything.
-		self.logfile_codec = u'utf-8' # DEPRECATED
 
 		# This is some duplication of the option parser in qtopensesame,
 		# but nevertheless keep it so we don't need qtopensesame
@@ -625,7 +619,7 @@ class experiment(item.item):
 		# Open the logfile
 		self._log = codecs.open(self.logfile, u'w', encoding=self.encoding)
 		print u"experiment.init_log(): using '%s' as logfile (%s)" % \
-			(self.logfile, self.logfile_codec)
+			(self.logfile, self.encoding)
 
 	def save_state(self):
 
