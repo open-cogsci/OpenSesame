@@ -762,11 +762,11 @@ class qtopensesame(QtGui.QMainWindow):
 			if not isinstance(e, bool):
 				e.ignore()
 				return
-		libopensesame.experiment.clean_up(debug.enabled)
 		if not self.save_unsaved_changes():
 			e.ignore()
 			return
 		self.save_state()
+		libopensesame.experiment.clean_up(debug.enabled)
 		if isinstance(e, bool):
 			QtCore.QCoreApplication.quit()
 		else:
