@@ -16,22 +16,25 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 
-USAGE
-=====
+<DOC>
 This module is used to maintain configuration settings. There is a old and a new
-style API. The new one is obviously preferred for new code.
+style API. The new one is obviously preferred for new code. When this module is
+first loaded, a single instance of the `config` class is instantiated, whicn is
+subsequently used for all configuration getting and setting (i.e. a singleton
+design pattern).
 
-OLD STYLE
-=========
->>> from libqtopensesame.misc import config
->>> config.set_config('my_setting', 'my_value')
->>> print config.get_config('my_setting')
+Old style:
 
-NEW STYLE
-=========
->>> from libqtopensesame.misc.config import cfg
->>> cfg.my_setting = 'my_value' # set
->>> print cfg.my_setting # get
+	from libqtopensesame.misc import config
+	config.set_config('my_setting', 'my_value')
+	print config.get_config('my_setting')
+
+New style:
+
+	from libqtopensesame.misc.config import cfg
+	cfg.my_setting = 'my_value' # set
+	print cfg.my_setting # get
+</DOC>
 """
 
 from libopensesame.exceptions import osexception

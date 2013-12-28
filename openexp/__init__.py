@@ -15,5 +15,14 @@ GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
 along with openexp.  If not, see <http://www.gnu.org/licenses/>.
+
+<DOC>
+The `openexp` package contains the functionality required for low-level input
+and output. Depending on the back-end that is selected, the 'abstract' classes
+(`openexp.canvas.canvas` etc.) morph into one of the 
+`openexp._canvas.[backend].[backend] classes. This strategy, which resembles a
+factory design pattern, allows you to instantiate the 'abstract' classes without
+having to specify the exact back-end that is to be used.
+</DOC>
 """
 

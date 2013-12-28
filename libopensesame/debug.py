@@ -15,6 +15,17 @@ GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
+
+<DOC>
+Provides printing of debug output, which is only shown when OpenSesame is
+started in debug mode by passing the `--debug` command-line argument, optionally
+with a full stacktrace if the `--stack` argument is passed as well. To print
+debug output, simply use the following structure:
+
+	from libopensesame import debug
+	debug.print(u'This is a debug message')
+
+</DOC>
 """
 
 import sys
