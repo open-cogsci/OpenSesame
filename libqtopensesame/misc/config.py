@@ -16,7 +16,8 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 
-<DOC>
+# About
+
 This module is used to maintain configuration settings. There is a old and a new
 style API. The new one is obviously preferred for new code. When this module is
 first loaded, a single instance of the `config` class is instantiated, whicn is
@@ -34,7 +35,6 @@ New style:
 	from libqtopensesame.misc.config import cfg
 	cfg.my_setting = 'my_value' # set
 	print cfg.my_setting # get
-</DOC>
 """
 
 from libopensesame.exceptions import osexception

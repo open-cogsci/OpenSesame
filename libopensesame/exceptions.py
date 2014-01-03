@@ -16,12 +16,12 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 
-<DOC>
+# About
+
 Provides the `osexception` class for throwing OpenSesame-specific exceptions.
 
 	from libopensesame.exceptions import osexception
 	raise osexception(u'This is a custom exception!')
-</DOC>
 """
 
 from libopensesame.misc import escape_html
