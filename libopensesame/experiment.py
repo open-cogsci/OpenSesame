@@ -507,7 +507,7 @@ class experiment(item.item):
 			self.experiment_path = None
 			if isinstance(src, unicode):
 				return src
-			return src.decode(self.encoding, u'replace')		
+			return src.decode(self.encoding, u'replace')
 		# If the file is a regular text script,
 		# read it and return it
 		ext = u'.opensesame.tar.gz'

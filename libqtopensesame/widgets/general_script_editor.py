@@ -43,8 +43,7 @@ class general_script_editor(QtGui.QWidget):
 		self.ui = Ui_widget_general_script_editor()
 		self.ui.setupUi(self)
 		self.ui.qprogedit = QTabManager(handler=self._apply, defaultLang= \
-			u'OpenSesame', handlerButtonText=u'Apply', callHandlerOnFocusOut= \
-			False, cfg=cfg)
+			u'OpenSesame', handlerButtonText=u'Apply', cfg=cfg)
 		self.ui.qprogedit.addTab(u'General script')
 		self.ui.layout_vbox.addWidget(self.ui.qprogedit)
 		self.main_window.theme.apply_theme(self)
