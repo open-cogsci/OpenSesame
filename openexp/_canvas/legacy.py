@@ -461,39 +461,68 @@ class legacy:
 		if bold != None: self.font_bold = bold
 		if underline != None: self.font_underline = underline
 
-	def fixdot(self, x=None, y=None, color=None):
+	def fixdot(self, x=None, y=None, color=None, style=u'default'):
 
 		"""<DOC>
-		Draws a standard fixation dot, which is a big circle (radius = 8px) with #
-		the foreground color and a smaller circle (radius = 2px) of the #
-		background color.
+		Draws a fixation dot. Various styles are available ('default' equals #
+		'medium-open'):
+		
+		- 'large-filled' is a filled circle with a 16px radius.
+		- 'medium-filled' is a filled circle with an 8px radius.
+		- 'small-filled' is a filled circle with a 4px radius.
+		- 'large-open' is a filled circle with a 16px radius and a 2px hole.
+		- 'medium-open' is a filled circle with an 8px radius and a 2px hole.
+		- 'small-open' is a filled circle with a 4px radius and a 2px hole.
+		- 'large-cross' is 16px cross.
+		- 'medium-cross' is an 8px cross.
+		- 'small-cross' is a 4px cross.
 
 		Keyword arguments:
-		x -- The center X coordinate. None = center (default=None).
-		y -- The center Y coordinate. None = center (default=None).
-		color -- A custom human-readable foreground color. This does not affect #
-				 the default foreground color as set by set_fgcolor(). #
-				 (Default=None)
+		x		--	The center X coordinate. None = center (default=None).
+		y 		--	The center Y coordinate. None = center (default=None).
+		color	--	A custom human-readable foreground color. This does not #
+					affect the default foreground color as set by #
+					set_fgcolor(). (default=None)
+		style	--	One of: default, large-filled, medium-filled, small-filled, #
+					large-open, medium-open, small-open, large-cross, #
+					medium-cross, small-cross. default equals medium-open. #
+					(default=u'default')
 
 		Example:
 		>>> from openexp.canvas import canvas
 		>>> my_canvas = canvas(exp)
 		>>> my_canvas.fixdot()
-		</DOC>"""
-
+		"""
+		
 		if color != None:
 			color = self.color(color)
 		else:
 			color = self.fgcolor
-
 		if x == None:
 			x = self.xcenter()
-
 		if y == None:
 			y = self.ycenter()
 
-		pygame.draw.circle(self.surface, color, (x, y), 8, 0)
-		pygame.draw.circle(self.surface, self.bgcolor, (x, y), 2, 0)
+		h = 2
+		if u'large' in style:
+			s = 16
+		elif u'medium' in style or style == u'default':
+			s = 8
+		elif u'small' in style:
+			s = 4
+		else:
+			raise osexception(u'Unknown style: %s' % self.style)
+		
+		if u'open' in style or style == u'default':
+			self.ellipse(x-s, y-s, 2*s, 2*s, True, color=color)
+			self.ellipse(x-h, y-h, 2*h, 2*h, True, color=self.bgcolor)
+		elif u'filled' in style:
+			self.ellipse(x-s, y-s, 2*s, 2*s, True, color=color)
+		elif u'cross' in style:
+			self.line(x, y-s, x, y+s, color=color)
+			self.line(x-s, y, x+s, y, color=color)
+		else:
+			raise osexception(u'Unknown style: %s' % self.style)
 
 	def circle(self, x, y, r, fill=False, color=None):
 

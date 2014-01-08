@@ -156,18 +156,6 @@ class psycho(openexp._canvas.legacy.legacy):
 			self.rect(0, 0, self.experiment.width, self.experiment.height, \
 				color=color, fill=True)
 
-	def fixdot(self, x=None, y=None, color=None):
-
-		"""See openexp._canvas.legacy"""
-
-		if x == None:
-			x = self.xcenter()
-		if y == None:
-			y = self.ycenter()
-
-		self.ellipse(x-8, y-8, 16, 16, fill = True, color = color)
-		self.ellipse(x-2, y-2, 4, 4, fill = True, color = self.bgcolor)
-
 	def circle(self, x, y, r, fill=False, color=None):
 
 		"""See openexp._canvas.legacy"""

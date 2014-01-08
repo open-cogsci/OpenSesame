@@ -141,30 +141,6 @@ class opengl(openexp._canvas.legacy.legacy):
 
 		self.font = pygame.font.Font(self.experiment.resource("%s.ttf" % style), size)
 
-	def fixdot(self, x = None, y = None, color = None):
-
-		"""see openexp._canvas.legacy"""
-
-		if color == None:
-			color = self.fgcolor
-		color = self.color(color)
-
-		if x == None:
-			x = self.xcenter()
-
-		if y == None:
-			y = self.ycenter()
-
-		r1 = 8
-		r2 = 2
-		surface = pygame.Surface((r1*2,r1*2), SRCALPHA)
-
-		pygame.draw.circle(surface, color, (r1, r1), r1, 0)
-		pygame.draw.circle(surface, self.bgcolor, (r1, r1), r2, 0)
-
-		self.showables.append((libopengl.LowImage(surface),
-				       (x-r1,y-r1)))
-
 	def line(self, sx, sy, ex, ey, color = None):
 
 		"""see openexp._canvas.legacy"""
