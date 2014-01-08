@@ -893,7 +893,7 @@ class qtopensesame(QtGui.QMainWindow):
 				self.get_ready()
 				script = self.experiment.to_string()
 				experiment.experiment(self, u"Experiment", script)
-			except libopensesame.osexception as e:
+			except osexception as e:
 				if not catch:
 					raise e
 				self.experiment.notify( \
@@ -984,7 +984,6 @@ class qtopensesame(QtGui.QMainWindow):
 			redo = False
 			for i in range(self.ui.tabwidget.count()):
 				w = self.ui.tabwidget.widget(i)
-				print w, type(w)
 				if close_edit and hasattr(w, u"edit_item") and \
 					w.edit_item == item:
 					self.ui.tabWidget.removeTab(i)
@@ -1027,7 +1026,7 @@ class qtopensesame(QtGui.QMainWindow):
 		try:
 			tmp = experiment.experiment(self, self.experiment.title, script, \
 				self.experiment.pool_folder)
-		except libopensesame.osexception as error:
+		except osexception as error:
 			self.experiment.notify(_(u"Could not parse script: %s") % error)
 			self.edit_script.edit.setText(self.experiment.to_string())
 			return
