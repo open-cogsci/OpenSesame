@@ -189,6 +189,67 @@ class item(object):
 			self.comments.append(line[2:])
 			return True
 		return False
+	
+	def set_response(self, response=None, response_time=None, correct=None):
+		
+		"""<DOC>
+		Processes a response in such a way that feedback variables are updated #
+		as well.
+		
+		Keyword arguments:
+		response		--	The response value. (default=None)
+		response_time	--	The response time. (default=None)
+		correct			--	The correctness value. (default=None)
+		
+		Example:
+		>>> from openexp.keyboard import keyboard
+		>>> my_keyboard = keyboard(exp)
+		>>> t1 = self.time()
+		>>> button, timestamp = my_keyboard.get_key()
+		>>> if button == 'left':
+		>>> 	correct = 1
+		>>> else:
+		>>> 	correct = 0
+		>>> rt = timestamp - t1
+		>>> self.set_response(response=button, response_time=rt, \
+		>>> 	correct=correct)
+		</DOC>"""
+		
+		# Handle response variables.
+		self.experiment.set(u'total_responses', self.experiment.get( \
+			u'total_responses') + 1)
+		self.experiment.set(u'response', response)
+		self.experiment.set(u'response_time', response_time)
+		if response_time != None:
+			if type(response_time) not in (int, float):
+				raise osexception(u'response should be a numeric value or None')
+			self.experiment.set(u'total_response_time', self.experiment.get( \
+			u'total_response_time') + 1)
+		if correct != None:
+			if correct not in (0, 1, True, False, None):
+				raise osexception( \
+					u'correct should be 0, 1, True, False, or None')
+			if correct:
+				self.experiment.set(u'total_correct', self.experiment.get( \
+					u'total_correct') + 1)
+				self.experiment.set(u'correct', 1)
+			else:
+				self.experiment.set(u'correct', 0)
+		# Set feedback variables
+		self.experiment.set(u'acc', 100.0 * self.experiment.get( \
+			u'total_correct') / self.experiment.get(u'total_responses'))
+		self.experiment.set(u'avg_rt', self.experiment.get( \
+			u'total_response_time') / self.experiment.get(u'total_responses'))
+		self.experiment.set(u'accuracy', self.experiment.get(u'acc'))
+		self.experiment.set(u'average_response_time', self.experiment.get( \
+			u'avg_rt'))
+		# Copy the response variables to variables with a name suffix.
+		self.experiment.set(u'correct_%s' % self.get(u'name'), \
+			self.experiment.get(u'correct'))
+		self.experiment.set(u'response_%s' % self.get(u'name'), \
+			self.experiment.get(u'response'))
+		self.experiment.set(u'response_time_%s' % self.get(u'name'), \
+			self.experiment.get(u'response_time'))	
 
 	def variable_to_string(self, var):
 

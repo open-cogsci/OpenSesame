@@ -8,6 +8,7 @@ opensesame (2.8.0~pre14-ubuntu1) saucy; urgency=low
     - Improve support for non-Latin alphabets (#211)
     - Add correct-response option to touch_response plug-in (#214)
     - Add style argument to canvas.fixdot()
+    - Add item.set_response() convenience method
   * Bugs fixed
     - Line wrapping causes double spaces (#203)
     - Keywords to `decode()` break compatibility with Python < 2.7 (#201)
