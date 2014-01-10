@@ -224,7 +224,7 @@ class item(object):
 			if type(response_time) not in (int, float):
 				raise osexception(u'response should be a numeric value or None')
 			self.experiment.set(u'total_response_time', self.experiment.get( \
-			u'total_response_time') + 1)
+			u'total_response_time') + self.get(u'response_time'))
 		if correct != None:
 			if correct not in (0, 1, True, False, None):
 				raise osexception( \
