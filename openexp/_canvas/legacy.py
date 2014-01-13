@@ -211,7 +211,7 @@ class legacy:
 			# If not, try to match a system font
 			except:
 				self._current_font = pygame.font.SysFont(self.font_style, \
-					self.font_size)				
+					self.font_size)
 			self._current_font.set_bold(self.font_bold)
 			self._current_font.set_italic(self.font_italic)
 			self._current_font.set_underline(self.font_underline)
@@ -439,9 +439,10 @@ class legacy:
 		Sets the font for subsequent drawing operations.
 
 		Keyword arguments:
-		style -- A font style. This can be one of the three standard styles #
-				 ('mono', 'sans', or 'serif') or a system font (e.g., 'arial'). #
-				 (Default=None)
+		style -- A font style. This can be one of the default fonts #
+				 (e.g., 'mono'), a system font (e.g., 'arial'). #
+				 or the name of a `.ttf` font file in the file pool (without #
+				 the `.ttf` extension).
 		size -- A font size in pixels (default=None).
 		italic -- Indicates if the font should be italic (default=None).
 		bold -- Indicates if the font should be bold (default=None).

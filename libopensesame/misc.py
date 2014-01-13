@@ -21,7 +21,7 @@ import os
 import os.path
 import sys
 
-version = u'2.8.0~pre14'
+version = u'2.8.0~pre15'
 codename = u'Gutsy Gibson'
 
 use_global_resources = '--no-global-resources' not in sys.argv
