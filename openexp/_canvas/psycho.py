@@ -63,6 +63,11 @@ class psycho(openexp._canvas.legacy.legacy):
 			u"name" : u"Screen",
 			u"description" : u"The physical screen that is used",
 			u"default" : 0,			
+			},
+		u"psychopy_gamma" : {
+			u"name" : u"Gamma",
+			u"description" : u"Display gamma value display",
+			u"default" : u"unchanged",
 			}
 		}
 
@@ -391,12 +396,14 @@ Static methods
 
 # Store the experiment as a singleton, to be used in the _time() function
 _experiment = None
+# Store the old display gamma value
+_old_gamma = None
 
 def init_display(experiment):
 
 	"""See openexp._canvas.legacy"""
 
-	global _experiment
+	global _experiment, _old_gamma
 	_experiment = experiment
 
 	# Set the PsychoPy monitor, default to testMonitor
@@ -420,6 +427,14 @@ def init_display(experiment):
 	experiment.time = experiment._time_func
 	experiment.sleep = experiment._sleep_func	
 	experiment.window.winHandle.set_caption(u'OpenSesame (PsychoPy backend)')
+	# Set Gamma value if specified
+	gamma = experiment.get_check(u'psychopy_gamma', u'unchanged')
+	if type(gamma) in (int, float) and gamma > 0:
+		_old_gamma = experiment.window.gamma
+		experiment.window.setGamma(gamma)
+	elif gamma != u'unchanged':
+		raise osexception( \
+			u'Gamma should be a positive numeric value or "unchanged"')
 	# Register the built-in OpenSesame fonts.
 	for font in [u'sans', u'serif', u'mono', u'arabic', u'hebrew', u'hindi', \
 		u'chinese-japanese-korean']:
@@ -431,7 +446,12 @@ def close_display(experiment):
 
 	"""See openexp._canvas.legacy"""
 
-	# This causes a (harmless) exception in some cases, so we catch it to prevent confusion
+	global _old_gamma
+	# Restore display gamma if necessary
+	if _old_gamma != None:
+		experiment.window.setGamma(_old_gamma)
+	# This causes a (harmless) exception in some cases, so we catch it to
+	# prevent confusion	
 	try:
 		experiment.window.close()
 	except:
