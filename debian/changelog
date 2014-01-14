@@ -9,6 +9,7 @@ opensesame (2.8.0~pre15-ubuntu1) saucy; urgency=low
     - Add correct-response option to touch_response plug-in (#214)
     - Add style argument to canvas.fixdot()
     - Add item.set_response() convenience method
+    - Add gamma and suppress-warnings options to psycho back-end
   * Bugs fixed
     - Line wrapping causes double spaces (#203)
     - Keywords to `decode()` break compatibility with Python < 2.7 (#201)
