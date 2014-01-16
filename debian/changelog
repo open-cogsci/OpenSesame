@@ -1,4 +1,4 @@
-opensesame (2.8.0~pre15-ubuntu1) saucy; urgency=low
+opensesame (2.8.0~pre16-ubuntu1) saucy; urgency=low
 
   * New functionality and improvements
     - Add runner functionality
@@ -17,6 +17,7 @@ opensesame (2.8.0~pre15-ubuntu1) saucy; urgency=low
     - Fix ugly exception on Escape press in joystick plug-in (#162)
     - Correctly parse non-Unix line separators in HTML parser
     - Do not give ugly warning on close (#124)
+    - Set subject_parity in Android runtime (#221)
   * Debian packaging
     - Remove large template files
 

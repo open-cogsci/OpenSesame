@@ -93,7 +93,7 @@ class config(object):
 		u"theme" : u"default",
 		u"toolbar_size" : 32,
 		u"toolbar_text" : False,
-		u"runner" : u"inprocess",
+		u"runner" : u"multiprocess",
 		u"opensesamerun_exec" : u"",
 		u"pos" : QtCore.QPoint(200, 200),
 		u"size" : QtCore.QSize(1000, 600),
@@ -262,12 +262,12 @@ class config(object):
 		for setting, value in self.config.items():
 			if setting != u"cfg_ver":
 				qsettings.setValue(setting, value)
-				
+
 	def version(self):
-		
+
 		"""
 		Gets the current version of the config.
-		
+
 		Returns:
 		The config version.
 		"""
