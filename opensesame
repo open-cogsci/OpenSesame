@@ -46,7 +46,12 @@ if __name__ == u'__main__':
 	if platform.system() == u'Darwin':
 		import locale
 		if locale.getlocale()[0] is None:
-			locale.setlocale(locale.LC_ALL, u'en_US.UTF-8')
+			try:
+				# Python3 version
+				locale.setlocale(locale.LC_ALL, u'en_US.UTF-8')
+			except ValueError:
+				# Python 2 version
+				locale.setlocale(locale.LC_ALL, b'en_US.UTF-8')
 		# On 32-bit OSX: Call init and destroy pygame window before all else
 		# Strangly, the experiment otherwise hangs at init_dispay() with
 		# pygame-based backends.
