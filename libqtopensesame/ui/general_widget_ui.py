@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'resources/ui/general_widget.ui'
 #
-# Created: Fri Nov 29 11:37:39 2013
+# Created: Sat Feb 15 15:53:31 2014
 #      by: PyQt4 UI code generator 4.10.3
 #
 # WARNING! All changes made in this file will be lost!
@@ -30,17 +30,17 @@ class Ui_general_widget(object):
         self.gridLayout_5 = QtGui.QGridLayout(general_widget)
         self.gridLayout_5.setMargin(0)
         self.gridLayout_5.setObjectName(_fromUtf8("gridLayout_5"))
-        self.widget_2 = QtGui.QWidget(general_widget)
+        self.widget_container = QtGui.QWidget(general_widget)
         sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.widget_2.sizePolicy().hasHeightForWidth())
-        self.widget_2.setSizePolicy(sizePolicy)
-        self.widget_2.setObjectName(_fromUtf8("widget_2"))
-        self.horizontalLayout_5 = QtGui.QHBoxLayout(self.widget_2)
+        sizePolicy.setHeightForWidth(self.widget_container.sizePolicy().hasHeightForWidth())
+        self.widget_container.setSizePolicy(sizePolicy)
+        self.widget_container.setObjectName(_fromUtf8("widget_container"))
+        self.horizontalLayout_5 = QtGui.QHBoxLayout(self.widget_container)
         self.horizontalLayout_5.setMargin(0)
         self.horizontalLayout_5.setObjectName(_fromUtf8("horizontalLayout_5"))
-        self.widget = QtGui.QWidget(self.widget_2)
+        self.widget = QtGui.QWidget(self.widget_container)
         sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Fixed, QtGui.QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -149,14 +149,6 @@ class Ui_general_widget(object):
         self.label_advanced = QtGui.QLabel(self.widget)
         self.label_advanced.setObjectName(_fromUtf8("label_advanced"))
         self.formLayout.setWidget(7, QtGui.QFormLayout.LabelRole, self.label_advanced)
-        self.combobox_backend = QtGui.QComboBox(self.widget)
-        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Fixed, QtGui.QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.combobox_backend.sizePolicy().hasHeightForWidth())
-        self.combobox_backend.setSizePolicy(sizePolicy)
-        self.combobox_backend.setObjectName(_fromUtf8("combobox_backend"))
-        self.formLayout.setWidget(0, QtGui.QFormLayout.FieldRole, self.combobox_backend)
         self.frame_advanced = QtGui.QFrame(self.widget)
         sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Fixed, QtGui.QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
@@ -187,8 +179,26 @@ class Ui_general_widget(object):
         self.checkbox_bidi = QtGui.QCheckBox(self.widget)
         self.checkbox_bidi.setObjectName(_fromUtf8("checkbox_bidi"))
         self.formLayout.setWidget(6, QtGui.QFormLayout.FieldRole, self.checkbox_bidi)
+        self.widget_backend = QtGui.QWidget(self.widget)
+        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Fixed, QtGui.QSizePolicy.Preferred)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.widget_backend.sizePolicy().hasHeightForWidth())
+        self.widget_backend.setSizePolicy(sizePolicy)
+        self.widget_backend.setObjectName(_fromUtf8("widget_backend"))
+        self.horizontalLayout = QtGui.QHBoxLayout(self.widget_backend)
+        self.horizontalLayout.setMargin(0)
+        self.horizontalLayout.setObjectName(_fromUtf8("horizontalLayout"))
+        self.combobox_backend = QtGui.QComboBox(self.widget_backend)
+        self.combobox_backend.setObjectName(_fromUtf8("combobox_backend"))
+        self.horizontalLayout.addWidget(self.combobox_backend)
+        self.label_backend_2 = QtGui.QLabel(self.widget_backend)
+        self.label_backend_2.setOpenExternalLinks(True)
+        self.label_backend_2.setObjectName(_fromUtf8("label_backend_2"))
+        self.horizontalLayout.addWidget(self.label_backend_2)
+        self.formLayout.setWidget(0, QtGui.QFormLayout.FieldRole, self.widget_backend)
         self.horizontalLayout_5.addWidget(self.widget)
-        self.gridLayout_5.addWidget(self.widget_2, 0, 0, 1, 1)
+        self.gridLayout_5.addWidget(self.widget_container, 0, 0, 1, 1)
 
         self.retranslateUi(general_widget)
         QtCore.QMetaObject.connectSlotsByName(general_widget)
@@ -208,7 +218,6 @@ class Ui_general_widget(object):
         self.label_colors_examples.setText(_translate("general_widget", "<small><i>Examples: \'white\', \'#FFFFFF\'</i></small>", None))
         self.label_font.setText(_translate("general_widget", "<h3>Font</h3>", None))
         self.label_advanced.setText(_translate("general_widget", "<h3>Advanced</h3>", None))
-        self.combobox_backend.setToolTip(_translate("general_widget", "Select a back-end to handle input and output", None))
         self.button_backend_settings.setToolTip(_translate("general_widget", "Advanced settings for the selected back-end", None))
         self.button_backend_settings.setText(_translate("general_widget", "Back-end settings", None))
         self.button_script_editor.setToolTip(_translate("general_widget", "Edit the script for the entire experiment", None))
@@ -218,6 +227,7 @@ class Ui_general_widget(object):
         self.label_miscellaneous.setText(_translate("general_widget", "<html><head/><body><p><span style=\" font-size:large; font-weight:600;\">Miscellaneous</span></p></body></html>", None))
         self.checkbox_bidi.setToolTip(_translate("general_widget", "Enables support for bi-directional languages, such as Arabic and Hebrew", None))
         self.checkbox_bidi.setText(_translate("general_widget", "Bi-directional-text support", None))
+        self.label_backend_2.setText(_translate("general_widget", "<html><head/><body><p><a href=\"http://osdoc.cogsci.nl/back-ends/about\"><span style=\"font-size:small;font-style:italic; text-decoration: underline; color:#0057ae;\">Why is this important?</span></a></p></body></html>", None))
 
 from libqtopensesame.widgets.font_widget import font_widget
 from libqtopensesame.widgets.color_edit import color_edit
