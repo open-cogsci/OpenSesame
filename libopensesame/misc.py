@@ -21,7 +21,7 @@ import os
 import os.path
 import sys
 
-version = u'2.8.0~pre16'
+version = u'2.8.0'
 codename = u'Gutsy Gibson'
 
 use_global_resources = '--no-global-resources' not in sys.argv
@@ -203,9 +203,9 @@ def resource(name):
 	"""
 
 	global use_global_resources
-	
+
 	if isinstance(name, str):
-		name = name.decode(u'utf-8')	
+		name = name.decode(u'utf-8')
 	path = os.path.join(u'resources', name)
 	if os.path.exists(path):
 		return os.path.join(u'resources', name)
@@ -236,17 +236,17 @@ def home_folder():
 	if isinstance(home_folder, str):
 		home_folder = home_folder.decode(filesystem_encoding())
 	return home_folder
-	
+
 def opensesame_folder():
 
 	"""
 	Determines the folder that contains the OpenSesame executable. This is only
 	applicable under Windows.
-	
+
 	Returns:
 	The OpenSesame folder or None if the os is not Windows.
 	"""
-	
+
 	if os.name != u'nt':
 		return None
 	# Determines the directory name of the script or the directory name
@@ -283,7 +283,7 @@ def module_versions():
 
 	s = u"OpenSesame %s" % version
 	s += u"\nPython %s" % sys.version
-	
+
 	# OpenCV
 	try:
 		import cv
@@ -301,7 +301,7 @@ def module_versions():
 		s += u'\nOpenCV2 %s' % ver
 	except:
 		s += u'\nOpenCV 2 is not available'
-		
+
 	# QProgEdit
 	try:
 		import QProgEdit
@@ -325,20 +325,20 @@ def module_versions():
 		s += u'\nNumPy %s' % numpy.version.version
 	except:
 		s += u'\nNumPy is not available (or version is unknown)'
-		
+
 	# OpenCV
 	try:
 		from PIL import Image
 		s += u'\nPIL is available (version is unknown)'
 	except:
 		s += u'\nPIL is not available'
-		
+
 	# PsychoPy
 	try:
 		import psychopy
 		s += u"\nPsychoPy %s" % psychopy.__version__
 	except:
-		s += "\nPsychoPy not available (or version is unknown)"		
+		s += "\nPsychoPy not available (or version is unknown)"
 
 	# PyAudio
 	try:
@@ -353,13 +353,13 @@ def module_versions():
 		s += u"\nPyGame %s" % pygame.ver
 	except:
 		s += u"\nPyGame not available (or version is unknown)"
-		
+
 	# Pyglet
 	try:
 		import pyglet
 		s += u"\nPyglet %s" % pyglet.version
 	except:
-		s += u"\nPyglet not available (or version is unknown)"		
+		s += u"\nPyglet not available (or version is unknown)"
 
 	# PyOpenGL
 	try:
@@ -377,21 +377,21 @@ def module_versions():
 		s += u'\nPySerial %s' % serial.VERSION
 	except:
 		s += u'\nPySerial not available (or version is unknown)'
-		
+
 	# python-bidi
 	try:
 		import bidi
 		s += u'\npython-bidi %s' % bidi.VERSION
 	except:
-		s += u'\npython-bidi is not available'		
-		
-		
+		s += u'\npython-bidi is not available'
+
+
 	# python-markdown
 	try:
 		import markdown
 		s += u'\npython-markdown %s' % markdown.version
 	except:
-		s += u'\npython-markdown is not available'		
+		s += u'\npython-markdown is not available'
 
 	# SciPy
 	try:
@@ -442,36 +442,36 @@ def filesystem_encoding():
 	return enc
 
 def strip_html(s):
-	
+
 	"""
 	Strips basic HTML tags from a string.
-	
+
 	Arguments:
 	s		--	A string to strip.
-		
+
 	Returns:
 	A stripped string.
 	"""
-	
+
 	s = s.replace(u'<br />', u'\n')
 	for tag in [u'<i>', u'</i>', u'<b>', u'</b>']:
 		s = s.replace(tag, u'')
 	return s
-	
+
 def escape_html(s):
-	
+
 	"""
-	Escapes a string so that it can be displayed as HTML. This is useful for 
+	Escapes a string so that it can be displayed as HTML. This is useful for
 	example for tracebacks, which use <> characters.
-	
+
 	Arguments:
 	s	--	A string to escape. We assume Unicode input. str objects may cause
 			decoding errors.
-	
+
 	Returns:
 	An escaped string.
 	"""
-		
+
 	# Note that we need to replace the '&' first, otherwise we'll start escaping
 	# the escaped characters.
 	l = [(u'&', u'&amp;'), (u' ', u'&nbsp;'), (u'\t', \

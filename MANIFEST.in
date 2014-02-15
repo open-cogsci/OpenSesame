@@ -26,6 +26,8 @@ recursive-include plugins/form_consent *
 recursive-include plugins/form_text_input *
 recursive-include plugins/form_text_display *
 recursive-include plugins/parallel *
+recursive-include plugins/touch_response *
+recursive-include plugins/joystick *
 recursive-exclude plugins *~
 recursive-exclude plugins *.csv
 recursive-exclude plugins *.pyc

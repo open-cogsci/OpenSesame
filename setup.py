@@ -18,9 +18,6 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
-__author__ = "Sebastiaan Mathot"
-__license__ = "GPLv3"
-
 from distutils.core import setup
 import glob
 import os
@@ -38,16 +35,16 @@ included_plugins = [
 	'form_text_input',
 	'form_consent',
 	'form_text_display',
-	'form_multiple_choice',	
+	'form_multiple_choice',
 	'joystick',
 	'notepad',
-	'parallel',		
+	'parallel',
 	'port_reader',
-	'repeat_cycle',	
-	'reset_feedback',	
+	'repeat_cycle',
+	'reset_feedback',
 	'srbox',
 	'text_display',
-	'text_input',	
+	'text_input',
 	'touch_response',
 	]
 
@@ -94,15 +91,17 @@ def plugins():
 		if plugin in included_plugins:
 			l.append( (os.path.join(share_folder, "plugins", plugin), \
 				glob.glob("plugins/%s/*" % plugin)) )
+	# At plug-in subfolders where necessary
+	l.append( (os.path.join(share_folder, 'plugins/joystick/_libjoystick'), \
+		glob.glob('plugins/joystick/_libjoystick')) )
 	return l
 
 setup(name="opensesame",
-
 	version = libopensesame.misc.version,
 	description = "A graphical experiment builder for the social sciences",
 	author = "Sebastiaan Mathot",
 	author_email = "s.mathot@cogsci.nl",
-	url = "http://www.cogsci.nl/",
+	url = "http://osdoc.cogsci.nl/",
 	scripts = ["opensesame", "opensesamerun"],
 	packages = ["openexp",
 		"openexp._canvas",
@@ -120,10 +119,13 @@ setup(name="opensesame",
 		"libqtopensesame.misc",
 		"libqtopensesame.runners",
 		"libqtopensesame.ui",
-		"libqtopensesame.widgets",		
+		"libqtopensesame.widgets",
 		],
-	package_dir = {"openexp" : "openexp", "libopensesame" : "libopensesame", \
-		"libqtopensesame" : "libqtopensesame"},
+	package_dir = {
+		"openexp" : "openexp",
+		"libopensesame" : "libopensesame",
+		"libqtopensesame" : "libqtopensesame"
+		},
 	data_files=[
 		("/usr/share/opensesame", ["COPYING"]),
 		("/usr/share/mime/packages", ["data/x-opensesame-experiment.xml"]),
@@ -135,5 +137,3 @@ setup(name="opensesame",
 			glob.glob("examples/*.opensesame.tar.gz")),
 		] + plugins() + resources()
 	)
-
-
