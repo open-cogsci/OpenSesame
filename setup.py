@@ -89,11 +89,20 @@ def plugins():
 	l = []
 	for plugin in os.listdir("plugins"):
 		if plugin in included_plugins:
-			l.append( (os.path.join(share_folder, "plugins", plugin), \
-				glob.glob("plugins/%s/*" % plugin)) )
-	# At plug-in subfolders where necessary
+			# Copy all files in the plug-in folder, but not any subdirectories,
+			# because those will trigger an error
+			target_folder = os.path.join(share_folder, "plugins", plugin)
+			src_folder = "plugins/%s" % plugin
+			file_list = []
+			for fname in os.listdir(src_folder):
+				path = os.path.join(src_folder, fname)
+				if not os.path.isdir(path):
+					file_list.append(path)
+			l.append( (target_folder, file_list) )
+	# Copy plug-in subfolders where necessary. These are manual hacks to deal
+	# with plug-ins that have subdirectories.
 	l.append( (os.path.join(share_folder, 'plugins/joystick/_libjoystick'), \
-		glob.glob('plugins/joystick/_libjoystick')) )
+		glob.glob('plugins/joystick/_libjoystick/*')) )
 	return l
 
 setup(name="opensesame",
