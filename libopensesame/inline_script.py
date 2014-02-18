@@ -86,7 +86,7 @@ class inline_script(item.item):
 
 		return canvas.canvas(self.experiment, self.get(u'background'), \
 			self.get(u'foreground'), auto_prepare=auto_prepare)
-
+	
 	def prepare(self):
 
 		"""<DOC>

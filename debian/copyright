@@ -4,7 +4,7 @@ Maintainer-Contact: Sebastiaan Mathot <s.mathot@cogsci.nl>
 Source: http://www.cogsci.nl/software/opensesame
 
 Files: *
-Copyright: 2010-2012, Sebastiaan Mathot
+Copyright: 2010-2014, Sebastiaan Mathot
 Licenses: GPL-3
  On Debian systems, the full text of the GNU General Public License version 3
  can be found in the file `/usr/share/common-licenses/GPL-3'.

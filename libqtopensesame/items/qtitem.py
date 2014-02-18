@@ -270,14 +270,14 @@ class qtitem(QtCore.QObject):
 	def apply_script_changes(self, rebuild=True, catch=True):
 
 		"""
-		Apply changes to the script, by regenerating the item from the script
+		Applies changes to the script, by regenerating the item from the script.
 
 		Keywords arguments:
-		rebuild -- specifies whether the overview area (item list) should be
-				   rebuild (default=True)
-		catch -- indicates if exceptions should be caught and shown in a
-				 notification dialog (True) or not be caught (False)
-				 (default=True)
+		rebuild	--	Specifies whether the overview area (item list) should be
+					rebuild. (default=True)
+		catch	--	Indicates whether exceptions should be caught and shown in a
+					notification dialog (True) or not be caught (False).
+					(default=True)
 		"""
 
 		debug.msg(self.name)
@@ -298,7 +298,8 @@ class qtitem(QtCore.QObject):
 		self.experiment.items[self.name] = self.experiment.items[item]
 		del self.experiment.items[item]
 		self.experiment.items[self.name].init_script_widget()
-		self.experiment.main_window.dispatch.event_script_change.emit(self.name)
+		self.experiment.main_window.dispatch.event_script_change.emit(self.name)		
+		self.experiment.main_window.select_item(self.name)
 
 	def strip_script_line(self, s):
 
@@ -321,15 +322,15 @@ class qtitem(QtCore.QObject):
 		"""Build the script tab"""
 
 		from QProgEdit import QTabManager
-		self.script_qprogedit = QTabManager(handler=self.apply_script_and_close, \
-			defaultLang=u'OpenSesame', handlerButtonText= \
-			_(u'Apply and close script editor'), callHandlerOnFocusOut=False,
-			cfg=cfg)
+		self.script_qprogedit = QTabManager(handler= \
+			self.apply_script_and_close, defaultLang=u'OpenSesame', \
+			handlerButtonText=_(u'Apply and close script editor'), \
+			focusOutHandler=self.apply_script_and_close, cfg=cfg)
 		self.script_qprogedit.addTab(u'Script')
 		
 		hbox = QtGui.QHBoxLayout()
 		hbox.addWidget(self.experiment.label_image(u"%s" % self.item_type))
-		self.script_header = QtGui.QLabel()			
+		self.script_header = QtGui.QLabel()
 		hbox.addWidget(self.script_header)
 		hbox.addStretch()
 		hbox.setContentsMargins(0,0,0,0)

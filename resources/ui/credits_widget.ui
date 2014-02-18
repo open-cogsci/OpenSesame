@@ -107,6 +107,26 @@
              </widget>
             </item>
             <item>
+             <widget class="QLabel" name="label_contribute">
+              <property name="text">
+               <string>&lt;a href=&quot;http://osdoc.cogsci.nl/contribute/&quot;&gt;Contribute&lt;/a&gt;</string>
+              </property>
+              <property name="openExternalLinks">
+               <bool>true</bool>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="label_donate">
+              <property name="text">
+               <string>&lt;a href=&quot;http://osdoc.cogsci.nl/donate/&quot;&gt;Donate&lt;/a&gt;</string>
+              </property>
+              <property name="openExternalLinks">
+               <bool>true</bool>
+              </property>
+             </widget>
+            </item>
+            <item>
              <spacer name="horizontalSpacer_2">
               <property name="orientation">
                <enum>Qt::Horizontal</enum>
@@ -148,7 +168,7 @@
         </property>
         <property name="text">
          <string>OpenSesame [version] [codename]
-Copyright Sebastiaan Mathôt (2010-2013)</string>
+Copyright Sebastiaan Mathôt (2010-2014)</string>
         </property>
         <property name="alignment">
          <set>Qt::AlignBottom|Qt::AlignRight|Qt::AlignTrailing</set>

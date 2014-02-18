@@ -358,7 +358,7 @@ class qtplugin(qtitem.qtitem):
 		else:
 			lang = u'text'
 		qprogedit = QTabManager(handler=self.apply_edit_changes, defaultLang= \
-			lang, cfg=cfg)
+			lang, cfg=cfg, focusOutHandler=self.apply_edit_changes)
 		qprogedit.addTab(label)
 		if var != None:
 			self.auto_editor[var] = qprogedit

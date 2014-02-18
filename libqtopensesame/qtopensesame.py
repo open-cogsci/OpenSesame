@@ -893,7 +893,7 @@ class qtopensesame(QtGui.QMainWindow):
 				self.get_ready()
 				script = self.experiment.to_string()
 				experiment.experiment(self, u"Experiment", script)
-			except libopensesame.osexception as e:
+			except osexception as e:
 				if not catch:
 					raise e
 				self.experiment.notify( \
@@ -963,16 +963,16 @@ class qtopensesame(QtGui.QMainWindow):
 	def close_item_tab(self, item, close_edit=True, close_script=True):
 
 		"""
-		Close all tabs that edit and/ or script tabs of a specific item
+		Closes all tabs that edit and/ or script tabs of a specific item.
 
 		Arguments:
-		item -- the name of the item
+		item			--	The name of the item.
 
 		Keyword arguments:
-		close_edit -- a boolean indicating whether the edit tab should be closed
-					  (default=True)
-		close_script -- a boolean indicating whether the script tab should be
-						closed (default=True)
+		close_edit		--	A boolean indicating whether the edit tab should be
+							closed. (default=True)
+		close_script	--	A boolean indicating whether the script tab should
+							be closed. (default=True)
 		"""
 
 		debug.msg(u"closing tabs for '%s'" % item)
@@ -1026,7 +1026,7 @@ class qtopensesame(QtGui.QMainWindow):
 		try:
 			tmp = experiment.experiment(self, self.experiment.title, script, \
 				self.experiment.pool_folder)
-		except libopensesame.osexception as error:
+		except osexception as error:
 			self.experiment.notify(_(u"Could not parse script: %s") % error)
 			self.edit_script.edit.setText(self.experiment.to_string())
 			return
@@ -1062,7 +1062,7 @@ class qtopensesame(QtGui.QMainWindow):
 			QtCore.Qt.MatchFlags(QtCore.Qt.MatchRecursive)):
 			self.ui.itemtree.setCurrentItem(item)
 		if name in self.experiment.items:
-			self.experiment.items[name].open_edit_tab()
+			self.experiment.items[name].open_tab()
 
 	def open_item(self, widget, dummy=None):
 

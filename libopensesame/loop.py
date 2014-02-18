@@ -96,15 +96,15 @@ class loop(item.item):
 		# First generate a list of cycle numbers
 		l = []
 		# Walk through all complete repeats
-		whole_repeats = int(self.repeat)
+		whole_repeats = int(self.get(u'repeat'))
 		for j in range(whole_repeats):
-			for i in range(self.cycles):
+			for i in range(self.get(u'cycles')):
 				l.append(i)
 
 		# Add the leftover repeats
-		partial_repeats = self.repeat - whole_repeats
+		partial_repeats = self.get(u'repeat') - whole_repeats
 		if partial_repeats > 0:
-			all_cycles = range(self.cycles)
+			all_cycles = range(self.get(u'cycles'))
 			_sample = sample(all_cycles, int(len(all_cycles) * partial_repeats))
 			for i in _sample:
 				l.append(i)
