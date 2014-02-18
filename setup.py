@@ -139,7 +139,7 @@ setup(name="opensesame",
 		("/usr/share/opensesame", ["COPYING"]),
 		("/usr/share/mime/packages", ["data/x-opensesame-experiment.xml"]),
 		("/usr/share/applications", ["data/opensesame.desktop"]),
-		("/usr/share/opensesame/help", glob.glob("help/*.html")),
+		("/usr/share/opensesame/help", glob.glob("help/*.md")),
 		("/usr/share/opensesame/sounds", glob.glob("sounds/*")),
 		("/usr/share/opensesame/examples", \
 			glob.glob("examples/*.opensesame") + \

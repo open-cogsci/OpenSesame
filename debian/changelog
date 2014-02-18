@@ -1,3 +1,9 @@
+opensesame (2.8.0-ubuntu4) saucy; urgency=low
+
+  * Fix missing help files
+
+ -- Sebastiaan Mathot <s.mathot@cogsci.nl>  Tue, 18 Feb 2014 10:15:47 +0100
+
 opensesame (2.8.0-ubuntu3) saucy; urgency=low
 
   * New functionality and improvements
