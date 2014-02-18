@@ -16,22 +16,25 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 
-USAGE
-=====
+# About
+
 This module is used to maintain configuration settings. There is a old and a new
-style API. The new one is obviously preferred for new code.
+style API. The new one is obviously preferred for new code. When this module is
+first loaded, a single instance of the `config` class is instantiated, whicn is
+subsequently used for all configuration getting and setting (i.e. a singleton
+design pattern).
 
-OLD STYLE
-=========
->>> from libqtopensesame.misc import config
->>> config.set_config('my_setting', 'my_value')
->>> print config.get_config('my_setting')
+Old style:
 
-NEW STYLE
-=========
->>> from libqtopensesame.misc.config import cfg
->>> cfg.my_setting = 'my_value' # set
->>> print cfg.my_setting # get
+	from libqtopensesame.misc import config
+	config.set_config('my_setting', 'my_value')
+	print config.get_config('my_setting')
+
+New style:
+
+	from libqtopensesame.misc.config import cfg
+	cfg.my_setting = 'my_value' # set
+	print cfg.my_setting # get
 """
 
 from libopensesame.exceptions import osexception
@@ -78,6 +81,7 @@ class config(object):
 		u'qProgEditShowFolding' : True,
 		u'qProgEditAutoComplete' : True,
 		u'qProgEditColorScheme' : u'Default',
+		u'qProgEditValidate' : True,
 		u"quick_run_logfile": u"quickrun.csv",
 		u"recent_files" : u"",
 		u"shortcut_itemtree" : u"Ctrl+1",
@@ -89,7 +93,7 @@ class config(object):
 		u"theme" : u"default",
 		u"toolbar_size" : 32,
 		u"toolbar_text" : False,
-		u"runner" : u"inprocess",
+		u"runner" : u"multiprocess",
 		u"opensesamerun_exec" : u"",
 		u"pos" : QtCore.QPoint(200, 200),
 		u"size" : QtCore.QSize(1000, 600),
@@ -258,12 +262,12 @@ class config(object):
 		for setting, value in self.config.items():
 			if setting != u"cfg_ver":
 				qsettings.setValue(setting, value)
-				
+
 	def version(self):
-		
+
 		"""
 		Gets the current version of the config.
-		
+
 		Returns:
 		The config version.
 		"""

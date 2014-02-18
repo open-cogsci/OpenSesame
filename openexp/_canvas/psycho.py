@@ -31,7 +31,7 @@ import numpy as np
 import os.path
 
 try:
-	from psychopy import core, visual
+	from psychopy import core, visual, logging
 except:
 	raise osexception(
 		u'Failed to import PsychoPy, probably because it is not (correctly) installed. For installation instructions, please visit http://www.psychopy.org/.')
@@ -49,24 +49,35 @@ class psycho(openexp._canvas.legacy.legacy):
 	# The settings variable is used by the GUI to provide a list of back-end
 	# settings
 	settings = {
-		u"psychopy_waitblanking" : {
-			u"name" : u"Wait for blanking",
-			u"description" : u"Block until the display has been shown",
-			u"default" : u"yes"
+		u'psychopy_waitblanking' : {
+			u'name' : u'Wait for blanking',
+			u'description' : u'Block until the display has been shown',
+			u'default' : u'yes'
 			},
-		u"psychopy_monitor" : {
-			u"name" : u"Monitor",
-			u"description" : u"Virtual monitor",
-			u"default" : u"testMonitor"
+		u'psychopy_monitor' : {
+			u'name' : u'Monitor',
+			u'description' : u'Virtual monitor',
+			u'default' : u'testMonitor'
 			},
 		u"psychopy_screen" : {
 			u"name" : u"Screen",
 			u"description" : u"The physical screen that is used",
 			u"default" : 0,			
+			},
+		u"psychopy_gamma" : {
+			u"name" : u"Gamma",
+			u"description" : u"Display gamma value display",
+			u"default" : u"unchanged",
+			},
+		u'psychopy_suppress_warnings' : {
+			u'name' : u'Suppress warnings',
+			u'description' : u'Set PsychoPy logging level to "critical"',
+			u'default' : u'yes',
 			}
 		}
 
-	def __init__(self, experiment, bgcolor=None, fgcolor=None, auto_prepare=True):
+	def __init__(self, experiment, bgcolor=None, fgcolor=None, auto_prepare= \
+		True):
 
 		"""See openexp._canvas.legacy"""
 
@@ -91,7 +102,7 @@ class psycho(openexp._canvas.legacy.legacy):
 			u"sans" : u"Droid Sans",
 			u"serif" : u"Droid Serif",
 			u"mono" : u"Droid Sans Mono",
-			u'hebrew' : u'Droid Sans Hebrew',
+			u'hebrew' : u'Alef',
 			u'hindi' : u'Lohit Hindi',
 			u'arabic' : u'Droid Arabic Naskh',
 			u'chinese-japanese-korean' : u'WenQuanYi Micro Hei',
@@ -156,18 +167,6 @@ class psycho(openexp._canvas.legacy.legacy):
 			self.rect(0, 0, self.experiment.width, self.experiment.height, \
 				color=color, fill=True)
 
-	def fixdot(self, x=None, y=None, color=None):
-
-		"""See openexp._canvas.legacy"""
-
-		if x == None:
-			x = self.xcenter()
-		if y == None:
-			y = self.ycenter()
-
-		self.ellipse(x-8, y-8, 16, 16, fill = True, color = color)
-		self.ellipse(x-2, y-2, 4, 4, fill = True, color = self.bgcolor)
-
 	def circle(self, x, y, r, fill=False, color=None):
 
 		"""See openexp._canvas.legacy"""
@@ -229,6 +228,20 @@ class psycho(openexp._canvas.legacy.legacy):
 
 		self.shapestim(vertices, fill=fill, color=color, fix_coor=True, \
 			close=True)
+		
+	def set_font(self, style=None, size=None, italic=None, bold=None, \
+		underline=None):
+		
+		"""See openexp._canvas.legacy"""
+		
+		if style != None:
+			# If a font is taken from the file pool, it is not registered with
+			# PyGlet, and we therefore need to register it now.
+			if self.experiment.file_in_pool(u'%s.ttf' % style):
+				font_path = self.experiment.get_file(u'%s.ttf' % style)
+				register_font(font_path)
+		openexp._canvas.legacy.legacy.set_font(self, style=style, size=size, \
+			italic=italic, bold=bold, underline=underline)
 
 	def text_size(self, text):
 
@@ -403,25 +416,28 @@ Static methods
 
 # Store the experiment as a singleton, to be used in the _time() function
 _experiment = None
+# Store the old display gamma value
+_old_gamma = None
+# Contains a list of fonts that have been explicitly registered with PyGlet
+_registered_fonts = []
 
 def init_display(experiment):
 
 	"""See openexp._canvas.legacy"""
 
-	global _experiment
+	global _experiment, _old_gamma
 	_experiment = experiment
-
 	# Set the PsychoPy monitor, default to testMonitor
-	monitor = experiment.get_check(u"psychopy_monitor", u"testMonitor")
-	waitblanking = experiment.get_check(u"psychopy_waitblanking", u"yes", \
-		[u"yes", u"no"]) == u"yes"
+	monitor = experiment.get_check(u'psychopy_monitor', u'testMonitor')
+	waitblanking = experiment.get_check(u'psychopy_waitblanking', u'yes', \
+		[u'yes', u'no']) == u'yes'
 	screen = experiment.get_check(u'psychopy_screen', 0)
-
-	print u"openexp._canvas.psycho.init_display(): waitblanking = %s" % \
+	# Print some information to the debug window
+	print u'openexp._canvas.psycho.init_display(): waitblanking = %s' % \
 		waitblanking
-	print u"openexp._canvas.psycho.init_display(): monitor = %s" % monitor
-	print u"openexp._canvas.psycho.init_display(): screen = %s" % screen
-
+	print u'openexp._canvas.psycho.init_display(): monitor = %s' % monitor
+	print u'openexp._canvas.psycho.init_display(): screen = %s' % screen
+	# Initialize the PsychoPy window and set various functions
 	experiment.window = visual.Window( experiment.resolution(), screen=screen, \
 		waitBlanking=waitblanking, fullscr=experiment.fullscreen, \
 		monitor=monitor, units=u'pix', rgb=experiment.background)
@@ -432,22 +448,60 @@ def init_display(experiment):
 	experiment.time = experiment._time_func
 	experiment.sleep = experiment._sleep_func	
 	experiment.window.winHandle.set_caption(u'OpenSesame (PsychoPy backend)')
+	# Set Gamma value if specified
+	gamma = experiment.get_check(u'psychopy_gamma', u'unchanged')
+	if type(gamma) in (int, float) and gamma > 0:
+		_old_gamma = experiment.window.gamma
+		experiment.window.setGamma(gamma)
+	elif gamma != u'unchanged':
+		raise osexception( \
+			u'Gamma should be a positive numeric value or "unchanged"')
 	# Register the built-in OpenSesame fonts.
 	for font in [u'sans', u'serif', u'mono', u'arabic', u'hebrew', u'hindi', \
 		u'chinese-japanese-korean']:
-		pyglet.font.add_file(experiment.resource(u'%s.ttf' % font))
+		font_path = experiment.resource(u'%s.ttf' % font)
+		register_font(font_path)
+	# Override the default quit function, so that the application is not exited
 	core.quit = _psychopy_clean_quit
+	# Optionally change the logging level to avoid a lot of warnings in the
+	# debug window
+	if experiment.get_check(u'psychopy_suppress_warnings', u'yes'):
+		logging.console.setLevel(logging.CRITICAL)
+	# We need to initialize the pygame mixer, because PsychoPy uses that as well
 	pygame.mixer.init()
 	
 def close_display(experiment):
 
 	"""See openexp._canvas.legacy"""
 
-	# This causes a (harmless) exception in some cases, so we catch it to prevent confusion
+	global _old_gamma
+	# Restore display gamma if necessary
+	if _old_gamma != None:
+		experiment.window.setGamma(_old_gamma)
+	# This causes a (harmless) exception in some cases, so we catch it to
+	# prevent confusion	
 	try:
 		experiment.window.close()
 	except:
-		pass
+		debug.msg(u'An error occurred while closing the PsychoPy window.', \
+			reason=u'warning')
+		
+def register_font(font_path):
+	
+	"""
+	Register a font with PyGlet. If the font has already been registered, this
+	function does nothing.
+	
+	Arguments:
+	font_path	--	The full path to the font file.
+	"""
+	
+	global _registered_fonts
+	if font_path in _registered_fonts:
+		return
+	debug.msg(u'registering %s' % font_path)
+	pyglet.font.add_file(font_path)
+	_registered_fonts.append(font_path)
 
 def _time():
 
@@ -467,6 +521,7 @@ def _psychopy_clean_quit():
 	"""
 	When PsychoPy encounters an error, it does a sys.exit() which is not what
 	we want, because it closes OpenSesame altogether. Instead, we nicely inform
+
 	the user that PsychoPy has signalled an error.
 	"""
 	

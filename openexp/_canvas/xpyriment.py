@@ -161,19 +161,6 @@ class xpyriment(openexp._canvas.legacy.legacy):
 		self.stim_list = []
 		self.prepare()
 
-	def fixdot(self, x=None, y=None, color=None):
-
-		"""See openexp._canvas.legacy"""
-
-		if color != None: color = self.color(color)
-		else: color = self.fgcolor
-		if x == None: x = self.xcenter()
-		if y == None: y = self.ycenter()
-		stim = stimuli.Circle(16, colour=color, position=c2p((x,y)))
-		self.add_stim(stim, prepare=False)
-		stim = stimuli.Circle(4, colour=self.bgcolor, position=c2p((x,y)))
-		self.add_stim(stim)
-
 	def line(self, sx, sy, ex, ey, color=None):
 
 		"""See openexp._canvas.legacy"""

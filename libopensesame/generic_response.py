@@ -226,21 +226,6 @@ class generic_response:
 					u"'%s' is not a valid timeout in item '%s'. Expecting a positive integer or 'infinite'." \
 					% (self.get(u"timeout"), self.name))
 
-	def prepare_compensation(self):
-
-		"""Prepare the duration compensation"""
-
-		# Prepare the compensation function
-		if self.has(u"compensation"):
-			try:
-				self._compensation = int(self.get(u"compensation"))
-			except:
-				raise osexception( \
-					u"Variable 'compensation' should be numeric and not '%s' in %s item '%s'" \
-					% (self.get(u"compensation"), self.item_type, self.name))
-		else:
-			self._compensation = 0
-
 	def prepare_allowed_responses(self):
 
 		"""Prepare the allowed responses"""
@@ -298,11 +283,7 @@ class generic_response:
 			if self._duration == 0:
 				self._duration_func = self.dummy
 			else:
-				self.prepare_compensation()
-				if self._compensation != 0:
-					self._duration_func = self.sleep_for_comp_duration
-				else:
-					self._duration_func = self.sleep_for_duration
+				self._duration_func = self.sleep_for_duration
 
 		else:
 
@@ -354,12 +335,6 @@ class generic_response:
 		"""Sleep for a specified time"""
 
 		self.sleep(self._duration)
-
-	def sleep_for_comp_duration(self):
-
-		"""Sleep for a specified time, taking the compensation into account"""
-
-		self.sleep(self._duration - self._compensation)
 
 	def var_info(self):
 

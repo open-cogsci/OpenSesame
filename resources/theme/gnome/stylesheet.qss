@@ -5,6 +5,8 @@
 	border-bottom-style: dotted;
 }
 
+#label_contribute,
+#label_donate,
 #label_cogscinl,
 #label_opensesame {
 	font-size: 8pt;

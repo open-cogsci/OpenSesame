@@ -2,8 +2,8 @@
 
 # Form implementation generated from reading ui file 'resources/ui/credits_widget.ui'
 #
-# Created: Tue Feb  5 15:54:19 2013
-#      by: PyQt4 UI code generator 4.9.1
+# Created: Fri Jan  3 14:35:01 2014
+#      by: PyQt4 UI code generator 4.10.3
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -12,7 +12,16 @@ from PyQt4 import QtCore, QtGui
 try:
     _fromUtf8 = QtCore.QString.fromUtf8
 except AttributeError:
-    _fromUtf8 = lambda s: s
+    def _fromUtf8(s):
+        return s
+
+try:
+    _encoding = QtGui.QApplication.UnicodeUTF8
+    def _translate(context, text, disambig):
+        return QtGui.QApplication.translate(context, text, disambig, _encoding)
+except AttributeError:
+    def _translate(context, text, disambig):
+        return QtGui.QApplication.translate(context, text, disambig)
 
 class Ui_widget_credits(object):
     def setupUi(self, widget_credits):
@@ -38,20 +47,17 @@ class Ui_widget_credits(object):
         self.horizontalLayout = QtGui.QHBoxLayout(self.widget_container)
         self.horizontalLayout.setSpacing(0)
         self.horizontalLayout.setMargin(0)
-        self.horizontalLayout.setMargin(0)
         self.horizontalLayout.setObjectName(_fromUtf8("horizontalLayout"))
         self.widget_credits_2 = QtGui.QWidget(self.widget_container)
         self.widget_credits_2.setObjectName(_fromUtf8("widget_credits_2"))
         self.verticalLayout_3 = QtGui.QVBoxLayout(self.widget_credits_2)
         self.verticalLayout_3.setSpacing(0)
         self.verticalLayout_3.setMargin(0)
-        self.verticalLayout_3.setMargin(0)
         self.verticalLayout_3.setObjectName(_fromUtf8("verticalLayout_3"))
         self.widget_social = QtGui.QWidget(self.widget_credits_2)
         self.widget_social.setObjectName(_fromUtf8("widget_social"))
         self.horizontalLayout_2 = QtGui.QHBoxLayout(self.widget_social)
         self.horizontalLayout_2.setSpacing(4)
-        self.horizontalLayout_2.setMargin(0)
         self.horizontalLayout_2.setMargin(0)
         self.horizontalLayout_2.setObjectName(_fromUtf8("horizontalLayout_2"))
         self.label_facebook = QtGui.QLabel(self.widget_social)
@@ -66,6 +72,14 @@ class Ui_widget_credits(object):
         self.label_cogscinl = QtGui.QLabel(self.widget_social)
         self.label_cogscinl.setObjectName(_fromUtf8("label_cogscinl"))
         self.horizontalLayout_2.addWidget(self.label_cogscinl)
+        self.label_contribute = QtGui.QLabel(self.widget_social)
+        self.label_contribute.setOpenExternalLinks(True)
+        self.label_contribute.setObjectName(_fromUtf8("label_contribute"))
+        self.horizontalLayout_2.addWidget(self.label_contribute)
+        self.label_donate = QtGui.QLabel(self.widget_social)
+        self.label_donate.setOpenExternalLinks(True)
+        self.label_donate.setObjectName(_fromUtf8("label_donate"))
+        self.horizontalLayout_2.addWidget(self.label_donate)
         spacerItem1 = QtGui.QSpacerItem(40, 20, QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
         self.horizontalLayout_2.addItem(spacerItem1)
         self.verticalLayout_3.addWidget(self.widget_social)
@@ -87,14 +101,16 @@ class Ui_widget_credits(object):
         QtCore.QMetaObject.connectSlotsByName(widget_credits)
 
     def retranslateUi(self, widget_credits):
-        widget_credits.setWindowTitle(QtGui.QApplication.translate("widget_credits", "Form", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_facebook.setToolTip(QtGui.QApplication.translate("widget_credits", "Visit Facebook page", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_facebook.setText(QtGui.QApplication.translate("widget_credits", "F", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_twitter.setToolTip(QtGui.QApplication.translate("widget_credits", "Visit Twitter page", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_twitter.setText(QtGui.QApplication.translate("widget_credits", "T", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_website.setToolTip(QtGui.QApplication.translate("widget_credits", "Visit cogsci.nl", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_website.setText(QtGui.QApplication.translate("widget_credits", "H", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_cogscinl.setText(QtGui.QApplication.translate("widget_credits", "<html><head/><body><p>COGSCIdotNL // cognitive science and more</p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_opensesame.setText(QtGui.QApplication.translate("widget_credits", "OpenSesame [version] [codename]\n"
-"Copyright Sebastiaan Mathôt (2010-2013)", None, QtGui.QApplication.UnicodeUTF8))
+        widget_credits.setWindowTitle(_translate("widget_credits", "Form", None))
+        self.label_facebook.setToolTip(_translate("widget_credits", "Visit Facebook page", None))
+        self.label_facebook.setText(_translate("widget_credits", "F", None))
+        self.label_twitter.setToolTip(_translate("widget_credits", "Visit Twitter page", None))
+        self.label_twitter.setText(_translate("widget_credits", "T", None))
+        self.label_website.setToolTip(_translate("widget_credits", "Visit cogsci.nl", None))
+        self.label_website.setText(_translate("widget_credits", "H", None))
+        self.label_cogscinl.setText(_translate("widget_credits", "<html><head/><body><p>COGSCIdotNL // cognitive science and more</p></body></html>", None))
+        self.label_contribute.setText(_translate("widget_credits", "<a href=\"http://osdoc.cogsci.nl/contribute/\">Contribute</a>", None))
+        self.label_donate.setText(_translate("widget_credits", "<a href=\"http://osdoc.cogsci.nl/donate/\">Donate</a>", None))
+        self.label_opensesame.setText(_translate("widget_credits", "OpenSesame [version] [codename]\n"
+"Copyright Sebastiaan Mathôt (2010-2014)", None))
 

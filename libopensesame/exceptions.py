@@ -15,8 +15,16 @@ GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
+
+# About
+
+Provides the `osexception` class for throwing OpenSesame-specific exceptions.
+
+	from libopensesame.exceptions import osexception
+	raise osexception(u'This is a custom exception!')
 """
 
+import re
 from libopensesame.misc import escape_html
 from libopensesame import debug
 import traceback
@@ -64,6 +72,11 @@ class osexception(Exception):
 				# stacktrace. Since it's not clear whether this is fullproof,
 				# we try-except it for now.
 				info[u'line'] = traceback.extract_tb(sys.exc_info()[2])[-1][1]
+				# Inline script items automatically add the source encoding as
+				# the first line. Therefore, the reported line is always one
+				# after the actual line, and we need to substract 1.
+				if u'item' in info and info[u'item'] == u'inline_script':
+					info[u'line'] -= 1
 			except:
 				pass
 		# List any additional information that was passed
@@ -78,8 +91,17 @@ class osexception(Exception):
 		self._plaintext += u'\nTraceback:\n'
 		for l in tb.split(u'\n')[1:]:
 			# It is confusing that the contents of the inline script are
-			# described as <string>, so replace that.
-			l = l.replace(u'File "<string>"', u'Inline_script')
+			# described as <string>, so replace that. In addition, we need to
+			# decrease the line numer by 1, to compensate for the extra (hidden)
+			# source-encoding line that the inline script has.
+			if u'item' in info and info[u'item'] == u'inline_script':
+				for g in re.finditer( \
+					u'File "<string>", line (?P<linenr>\d+),', l):
+					try:
+						l = l.replace(g.group(), u'Inline_script, line %d,' % \
+							(int(g.group(u'linenr'))-1))
+					except:
+						debug.msg(u'Failed to correct inline_script exception')
 			self._html += escape_html(l) + u'<br />\n'
 			self._plaintext += l + u'\n'
 			
@@ -118,3 +140,8 @@ class osexception(Exception):
 		"""
 		
 		return self._html
+
+# For backwards compatibility, we should also define the old Exception classes
+runtime_error = osexception
+script_error = osexception
+form_error = osexception

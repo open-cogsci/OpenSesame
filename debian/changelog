@@ -1,4 +1,4 @@
-opensesame (2.8.0~pre9-ubuntu1) saucy; urgency=low
+opensesame (2.8.0-ubuntu3) saucy; urgency=low
 
   * New functionality and improvements
     - Add runner functionality
@@ -7,12 +7,17 @@ opensesame (2.8.0~pre9-ubuntu1) saucy; urgency=low
     - Updated offline help pages
     - Improve support for non-Latin alphabets (#211)
     - Add correct-response option to touch_response plug-in (#214)
+    - Add style argument to canvas.fixdot()
+    - Add item.set_response() convenience method
+    - Add gamma and suppress-warnings options to psycho back-end
   * Bugs fixed
     - Line wrapping causes double spaces (#203)
     - Keywords to `decode()` break compatibility with Python < 2.7 (#201)
     - Respect `focus=no` in `form_base` (#208)
     - Fix ugly exception on Escape press in joystick plug-in (#162)
     - Correctly parse non-Unix line separators in HTML parser
+    - Do not give ugly warning on close (#124)
+    - Set subject_parity in Android runtime (#221)
   * Debian packaging
     - Remove large template files
 

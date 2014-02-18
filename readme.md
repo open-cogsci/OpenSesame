@@ -2,7 +2,7 @@
 
 *A graphical experiment builder for the social sciences*
 
-Copyright, 2010-2013, Sebastiaan Math&ocirc;t and contributors.
+Copyright, 2010-2014, Sebastiaan Mathôt and contributors.
 
 <http://www.cogsci.nl/smathot>
 
@@ -14,9 +14,15 @@ OpenSesame is a graphical experiment builder. OpenSesame provides an easy to use
 
 Mathôt, S., Schreij, D., & Theeuwes, J. (2012). OpenSesame: An open-source, graphical experiment builder for the social sciences. *Behavior Research Methods*, *44*(2), 314-324. [doi:10.3758/s13428-011-0168-7](http://dx.doi.org/doi:10.3758/s13428-011-0168-7)
 
+## Contribute
+
+If you wish to contribute to OpenSesame (and you are welcome to!), please visit:
+
+- <http://osdoc.cogsci.nl/contribute/>
+
 ## License
 
-OpenSesame is distributed under the terms of the GNU General Public License 3. The full license should be included in the file COPYING, or can be obtained from:
+OpenSesame is distributed under the terms of the GNU General Public License 3. The full license should be included in the file `COPYING`, or can be obtained from:
 
 - <http://www.gnu.org/licenses/gpl.txt>
 
@@ -31,6 +37,5 @@ Installation instructions and documentation are available on the documentation w
 ... which is itself also hosted on GitHub:
 
 - <https://github.com/smathot/osdoc>
-
 
 
