@@ -43,10 +43,7 @@ if __name__ == u'__main__':
 				sys.path.append(path)
 	# Horrendous OS X invalid locale hack, which otherwise prevents PsychoPy
 	# from loading.
-	if platform.system() == u'Darwin':
-		import locale
-		if locale.getlocale()[0] is None:
-			locale.setlocale(locale.LC_ALL, u'en_US.UTF-8')
+	if platform.system() == u'Darwin':		
 		# On 32-bit OSX: Call init and destroy pygame window before all else
 		# Strangly, the experiment otherwise hangs at init_dispay() with
 		# pygame-based backends.

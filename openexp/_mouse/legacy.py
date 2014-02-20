@@ -208,6 +208,12 @@ class legacy:
 		if self.cursor == None:
 			pygame.mouse.set_visible(visible)
 		elif visible:
+			if hasattr(self.experiment,"lastShownCanvas") and not self.experiment.lastShownCanvas is None:
+				background = self.experiment.lastShownCanvas
+			else:
+				background = self.experiment.window.copy()
+			
+			
 			pygame.mouse.set_visible(False)
 		
 		start_time = pygame.time.get_ticks()
