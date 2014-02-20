@@ -1162,7 +1162,8 @@ class qtopensesame(QtGui.QMainWindow):
 		# Disable the entire Window, so that we can't interact with OpenSesame.
 		# TODO: This should be more elegant, so that we selectively disable
 		# parts of the GUI.
-		self.setDisabled(True)
+		if sys.platform != 'darwin':
+			self.setDisabled(True)
 		# Suspend autosave
 		if self.autosave_timer != None:
 			debug.msg(u"stopping autosave timer")
@@ -1188,7 +1189,8 @@ class qtopensesame(QtGui.QMainWindow):
 			debug.msg(u"resuming autosave timer")
 			self.autosave_timer.start()		
 		# Re-enable the GUI.
-		self.setDisabled(False)			
+		if sys.platform != 'darwin':
+			self.setDisabled(False)			
 		
 	def run_experiment_in_window(self):
 
