@@ -73,6 +73,7 @@ class xpyriment(openexp._mouse.legacy.legacy):
 		elif visible:
 			pygame.mouse.set_visible(False)
 			bg_surface = self.experiment.last_shown_canvas._get_surface().copy()
+
 			dx, dy = self.cursor.surface_size
 			dx /= 2
 			dy /= 2
