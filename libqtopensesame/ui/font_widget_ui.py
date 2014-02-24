@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'resources/ui/font_widget.ui'
 #
-# Created: Fri Nov 29 16:39:02 2013
+# Created: Mon Feb 24 16:14:52 2014
 #      by: PyQt4 UI code generator 4.10.3
 #
 # WARNING! All changes made in this file will be lost!
@@ -26,7 +26,7 @@ except AttributeError:
 class Ui_font_widget(object):
     def setupUi(self, font_widget):
         font_widget.setObjectName(_fromUtf8("font_widget"))
-        font_widget.resize(265, 171)
+        font_widget.resize(267, 171)
         self.gridLayout = QtGui.QGridLayout(font_widget)
         self.gridLayout.setMargin(0)
         self.gridLayout.setSpacing(4)
@@ -37,12 +37,19 @@ class Ui_font_widget(object):
         self.combobox_family = QtGui.QComboBox(font_widget)
         self.combobox_family.setObjectName(_fromUtf8("combobox_family"))
         self.combobox_family.addItem(_fromUtf8(""))
+        self.combobox_family.setItemText(0, _fromUtf8("mono"))
         self.combobox_family.addItem(_fromUtf8(""))
+        self.combobox_family.setItemText(1, _fromUtf8("sans"))
         self.combobox_family.addItem(_fromUtf8(""))
+        self.combobox_family.setItemText(2, _fromUtf8("serif"))
         self.combobox_family.addItem(_fromUtf8(""))
+        self.combobox_family.setItemText(3, _fromUtf8("arabic"))
         self.combobox_family.addItem(_fromUtf8(""))
+        self.combobox_family.setItemText(4, _fromUtf8("chinese-japanese-korean"))
         self.combobox_family.addItem(_fromUtf8(""))
+        self.combobox_family.setItemText(5, _fromUtf8("hebrew"))
         self.combobox_family.addItem(_fromUtf8(""))
+        self.combobox_family.setItemText(6, _fromUtf8("hindi"))
         self.combobox_family.addItem(_fromUtf8(""))
         self.gridLayout.addWidget(self.combobox_family, 0, 1, 1, 1)
         self.label_2 = QtGui.QLabel(font_widget)
@@ -85,13 +92,6 @@ class Ui_font_widget(object):
     def retranslateUi(self, font_widget):
         font_widget.setWindowTitle(_translate("font_widget", "Form", None))
         self.label.setText(_translate("font_widget", "Font family", None))
-        self.combobox_family.setItemText(0, _translate("font_widget", "mono", None))
-        self.combobox_family.setItemText(1, _translate("font_widget", "sans", None))
-        self.combobox_family.setItemText(2, _translate("font_widget", "serif", None))
-        self.combobox_family.setItemText(3, _translate("font_widget", "arabic", None))
-        self.combobox_family.setItemText(4, _translate("font_widget", "chinese-japanese-korean", None))
-        self.combobox_family.setItemText(5, _translate("font_widget", "hebrew", None))
-        self.combobox_family.setItemText(6, _translate("font_widget", "hindi", None))
         self.combobox_family.setItemText(7, _translate("font_widget", "other ...", None))
         self.label_2.setText(_translate("font_widget", "Font size", None))
         self.spinbox_size.setSuffix(_translate("font_widget", " pt", None))
