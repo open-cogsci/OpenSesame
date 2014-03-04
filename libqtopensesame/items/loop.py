@@ -621,7 +621,8 @@ class loop(libopensesame.loop.loop, qtitem.qtitem):
 			return
 		self.lock = True
 		# Validate and set the break-if statement
-		break_if = self.clean_cond(self.loop_widget.ui.edit_break_if.text())
+		break_if = self.clean_cond(self.loop_widget.ui.edit_break_if.text(), \
+			default=u'never')
 		self.loop_widget.ui.edit_break_if.setText(break_if)
 		self.set(u'break_if', break_if)
 		# Walk through the loop table and apply all changes

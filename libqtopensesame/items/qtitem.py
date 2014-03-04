@@ -802,7 +802,7 @@ class qtitem(QtCore.QObject):
 		else:
 			raise Exception(u"Cannot auto-add widget of type %s" % widget)
 
-	def clean_cond(self, cond):
+	def clean_cond(self, cond, default=u'always'):
 
 		"""
 		Cleans a conditional statement. May raise a dialog box if problems are
@@ -811,15 +811,19 @@ class qtitem(QtCore.QObject):
 		Arguments:
 		cond	--	A (potentially filthy) conditional statement.
 
+		Keyword arguments:
+		default	--	A default value to use for empty
+
 		Returns:
-		cond	--	A clean conditional statement.
+		cond	--	A clean conditional statement conditional statements.
+					(default=u'always')
 		"""
 
 		cond = self.unistr(cond)
 		if not self.sanitize_check(cond):
 			cond = self.sanitize(cond)
 		if cond.strip() == u'':
-			cond = u'always'
+			cond = default
 		try:
 			self.compile_cond(cond)
 		except osexception as e:
