@@ -74,7 +74,6 @@ class edit_item_button(QtGui.QPushButton):
 		item -- the item of the sketchpad widget
 		"""
 
-
 		self.sketchpad_widget = sketchpad_widget
 		self.item = item
 		QtGui.QPushButton.__init__(self, \
@@ -1039,8 +1038,8 @@ class sketchpad_widget(QtGui.QWidget):
 		self.font_size = self.ui.widget_font.size
 		self.font_italic = self.ui.widget_font.italic
 		self.font_bold = self.ui.widget_font.bold
-		self.show_if = self.sketchpad.experiment.sanitize( \
-			self.ui.edit_show_if.text())
+		self.show_if = self.sketchpad.clean_cond(self.ui.edit_show_if.text())
+		self.ui.edit_show_if.setText(self.show_if)
 		if self.ui.checkbox_html.isChecked():
 			self.html = u'yes'
 		else:

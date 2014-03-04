@@ -20,7 +20,8 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 from PyQt4 import QtCore, QtGui
 import os.path
 import sip
-from libopensesame import debug, exceptions, item
+from libopensesame.exceptions import osexception
+from libopensesame import debug, item
 from libqtopensesame.widgets import header_widget, user_hint_widget
 from libqtopensesame.misc import _
 from libqtopensesame.misc.config import cfg
@@ -55,7 +56,7 @@ class qtitem(QtCore.QObject):
 	def open_help_tab(self, page=None):
 
 		"""Opens a help tab."""
-		
+
 		self.experiment.main_window.ui.tabwidget.open_help(self.item_type)
 
 	def open_tab(self):
@@ -113,7 +114,7 @@ class qtitem(QtCore.QObject):
 		self.edit_vbox.setMargin(16)
 		self.edit_vbox.addWidget(self.header_widget)
 		self.edit_vbox.addWidget(self.user_hint_widget)
-		self.edit_vbox.addWidget(self.edit_grid_widget)		
+		self.edit_vbox.addWidget(self.edit_grid_widget)
 		if stretch:
 			self.edit_vbox.addStretch()
 		self._edit_widget = QtGui.QWidget()
@@ -298,7 +299,7 @@ class qtitem(QtCore.QObject):
 		self.experiment.items[self.name] = self.experiment.items[item]
 		del self.experiment.items[item]
 		self.experiment.items[self.name].init_script_widget()
-		self.experiment.main_window.dispatch.event_script_change.emit(self.name)		
+		self.experiment.main_window.dispatch.event_script_change.emit(self.name)
 		self.experiment.main_window.select_item(self.name)
 
 	def strip_script_line(self, s):
@@ -327,7 +328,7 @@ class qtitem(QtCore.QObject):
 			handlerButtonText=_(u'Apply and close script editor'), \
 			focusOutHandler=self.apply_script_and_close, cfg=cfg)
 		self.script_qprogedit.addTab(u'Script')
-		
+
 		hbox = QtGui.QHBoxLayout()
 		hbox.addWidget(self.experiment.label_image(u"%s" % self.item_type))
 		self.script_header = QtGui.QLabel()
@@ -566,8 +567,8 @@ class qtitem(QtCore.QObject):
 			debug.msg(u'applying pending script changes')
 			self.apply_script_changes(catch=False)
 			return True
-		return False		
-		
+		return False
+
 	def auto_edit_widget(self):
 
 		"""Update the GUI controls based on the auto-widgets"""
@@ -600,7 +601,7 @@ class qtitem(QtCore.QObject):
 			spinbox.editingFinished.disconnect()
 			if self.has(var):
 				val = self.get(var, _eval=False)
-				if type(val) in (float, int):						
+				if type(val) in (float, int):
 					try:
 						spinbox.setValue(val)
 					except Exception as e:
@@ -611,18 +612,18 @@ class qtitem(QtCore.QObject):
 					self.user_hint_widget.add_user_hint(_( \
 						u'"%s" is defined using variables and can only be edited through the script.' \
 						% var))
-			spinbox.editingFinished.connect(self.apply_edit_changes)			
+			spinbox.editingFinished.connect(self.apply_edit_changes)
 
 		for var, slider in self.auto_slider.iteritems():
 			slider.valueChanged.disconnect()
 			if self.has(var):
 				val = self.get(var, _eval=False)
-				if type(val) in (float, int):	
+				if type(val) in (float, int):
 					try:
 						slider.setValue(val)
 					except Exception as e:
 						self.experiment.notify(_( \
-							u"Failed to set control '%s': %s") % (var, e))						
+							u"Failed to set control '%s': %s") % (var, e))
 				else:
 					slider.setDisabled(True)
 					self.user_hint_widget.add_user_hint(_( \
@@ -753,7 +754,7 @@ class qtitem(QtCore.QObject):
 				else:
 					val = u"no"
 				self.set(var, val)
-				
+
 		for var, qprogedit in self.auto_editor.iteritems():
 			if isinstance(var, basestring):
 				self.set(var, qprogedit.text())
@@ -801,3 +802,27 @@ class qtitem(QtCore.QObject):
 		else:
 			raise Exception(u"Cannot auto-add widget of type %s" % widget)
 
+	def clean_cond(self, cond):
+
+		"""
+		Cleans a conditional statement. May raise a dialog box if problems are
+		encountered.
+
+		Arguments:
+		cond	--	A (potentially filthy) conditional statement.
+
+		Returns:
+		cond	--	A clean conditional statement.
+		"""
+
+		cond = self.unistr(cond)
+		if not self.sanitize_check(cond):
+			cond = self.sanitize(cond)
+		if cond.strip() == u'':
+			cond = u'always'
+		try:
+			self.compile_cond(cond)
+		except osexception as e:
+			self.experiment.notify( \
+				u'Failed to compile conditional statement "%s": %s' % (cond, e))
+		return cond
