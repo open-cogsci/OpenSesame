@@ -2,6 +2,10 @@ opensesame (2.8.1~pre1-ubuntu1) saucy; urgency=low
 
   * Bugs fixed
     - Do not choke on translations in font-selection dialog
+    - Fix buffer-flush issue in srbox plug-in (#234)
+    - Sort comboboxes alphabetically (#233)
+    - Sort items alphabetically in OpenSesame script (#236)
+    - Improved validation of conditional statements (#235)
 
  -- Sebastiaan Mathot <s.mathot@cogsci.nl>  Mon, 24 Feb 2014 16:23:27 +0100
 
