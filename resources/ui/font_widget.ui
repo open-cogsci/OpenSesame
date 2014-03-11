@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>265</width>
+    <width>267</width>
     <height>171</height>
    </rect>
   </property>
@@ -31,37 +31,37 @@
     <widget class="QComboBox" name="combobox_family">
      <item>
       <property name="text">
-       <string>mono</string>
+       <string notr="true">mono</string>
       </property>
      </item>
      <item>
       <property name="text">
-       <string>sans</string>
+       <string notr="true">sans</string>
       </property>
      </item>
      <item>
       <property name="text">
-       <string>serif</string>
+       <string notr="true">serif</string>
       </property>
      </item>
      <item>
       <property name="text">
-       <string>arabic</string>
+       <string notr="true">arabic</string>
       </property>
      </item>
      <item>
       <property name="text">
-       <string>chinese-japanese-korean</string>
+       <string notr="true">chinese-japanese-korean</string>
       </property>
      </item>
      <item>
       <property name="text">
-       <string>hebrew</string>
+       <string notr="true">hebrew</string>
       </property>
      </item>
      <item>
       <property name="text">
-       <string>hindi</string>
+       <string notr="true">hindi</string>
       </property>
      </item>
      <item>

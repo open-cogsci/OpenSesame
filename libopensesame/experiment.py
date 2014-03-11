@@ -84,7 +84,7 @@ class experiment(item.item):
 		self.mouse_backend = u'xpyriment'
 		self.sampler_backend = u'legacy'
 		self.synth_backend = u'legacy'
-		
+
 		# Save the date and time, and the version of OpenSesame
 		self.datetime = time.strftime(u'%c').decode(self.encoding, u'ignore')
 		self.opensesame_version = misc.version
@@ -131,7 +131,7 @@ class experiment(item.item):
 
 		string = self.open(string)
 		item.item.__init__(self, name, self, string)
-		
+
 		# Default subject info
 		self.set_subject(subject_nr)
 		# Restore experiment path
@@ -271,7 +271,7 @@ class experiment(item.item):
 					self.parse_definition(item_type, item_name, def_str)
 			# Advance to next line
 			if get_next:
-				line = next(s, None)				
+				line = next(s, None)
 
 	def run(self):
 
@@ -340,7 +340,7 @@ class experiment(item.item):
 		for var in self.variables:
 			s += self.variable_to_string(var)
 		s += u'\n'
-		for item in self.items:
+		for item in sorted(self.items):
 			s += self.items[item].to_string() + u'\n'
 		return s
 
@@ -357,7 +357,7 @@ class experiment(item.item):
 		folder.
 		"""
 
-		name = self.unistr(name)		
+		name = self.unistr(name)
 		if self != None:
 			if name in self.resources:
 				return self.resources[name]
@@ -474,15 +474,15 @@ class experiment(item.item):
 		# Unicode sanitized to ASCII format. Again, this is necessary to deal
 		# with poor Unicode support in .tar.gz.
 		tmp_pool = tempfile.mkdtemp(suffix=u'.opensesame.pool')
-		for fname in os.listdir(self.pool_folder):			
+		for fname in os.listdir(self.pool_folder):
 			sname = self.usanitize(fname)
 			shutil.copyfile(os.path.join(self.pool_folder, fname), \
 				os.path.join(tmp_pool, sname))
-		tar.add(tmp_pool, u'pool', True)		
+		tar.add(tmp_pool, u'pool', True)
 		tar.close()
 		# Move the file to the intended location
 		shutil.move(tmp_path, path)
-		self.experiment_path = os.path.dirname(path)		
+		self.experiment_path = os.path.dirname(path)
 		return path
 
 	def open(self, src):
@@ -498,7 +498,7 @@ class experiment(item.item):
 		Returns:
 		A unicode defition string.
 		"""
-		
+
 		# If the path is not a path at all, but a string containing
 		# the script, return it. Also, convert the path back to Unicode before
 		# returning.
@@ -524,7 +524,7 @@ class experiment(item.item):
 			# Unicode unsanitized, because the files as saved are Unicode
 			# sanitized (see save()).
 			uname = name.decode(self.encoding)
-			folder, fname = os.path.split(uname)			
+			folder, fname = os.path.split(uname)
 			fname = self.unsanitize(fname)
 			if folder == u"pool":
 				debug.msg(u"extracting '%s'" % uname)
@@ -626,10 +626,10 @@ class experiment(item.item):
 		"""
 		Saves the system state so that it can be restored after the experiment.
 		"""
-		
+
 		from libopensesame import inline_script
 		inline_script.save_state()
-	
+
 	def restore_state(self):
 
 		"""Restores the system to the state as saved by save_state()."""
