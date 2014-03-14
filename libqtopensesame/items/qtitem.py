@@ -265,10 +265,10 @@ class qtitem(QtCore.QObject):
 
 		"""Applies script changes and opens the edit tab"""
 
-		self.apply_script_changes()
+		self.apply_script_changes(mode=u'edit')
 		self.experiment.main_window.select_item(self.name)
 
-	def apply_script_changes(self, rebuild=True, catch=True):
+	def apply_script_changes(self, rebuild=True, catch=True, mode=u'script'):
 
 		"""
 		Applies changes to the script, by regenerating the item from the script.
@@ -279,6 +279,8 @@ class qtitem(QtCore.QObject):
 		catch	--	Indicates whether exceptions should be caught and shown in a
 					notification dialog (True) or not be caught (False).
 					(default=True)
+		mode	--	Indicates whether the item should re-open in edit or script
+					mode. (default=u'script')
 		"""
 
 		debug.msg(self.name)
@@ -299,8 +301,29 @@ class qtitem(QtCore.QObject):
 		self.experiment.items[self.name] = self.experiment.items[item]
 		del self.experiment.items[item]
 		self.experiment.items[self.name].init_script_widget()
+		self.experiment.items[self.name].edit_mode = mode
 		self.experiment.main_window.dispatch.event_script_change.emit(self.name)
-		self.experiment.main_window.select_item(self.name)
+		# The logic here is pretty complex, and is more-or-less a hack until the
+		# event handling code has been improved. Basically, if we want to apply
+		# the script and stay in script mode, we have to re-open the script tab,
+		# because the entire item is re-generated. This new tab has to be
+		# inserted in place of (i.e. with the same index as) the old tab, which
+		# has to be removed. If the tab had the focus at the moment of removal
+		# we also need to re-focus the new tab.
+		if mode == u'script':
+			currentIndex = self.experiment.ui.tabwidget.currentIndex()
+			for i in range(self.experiment.ui.tabwidget.count()):
+				w = self.experiment.ui.tabwidget.widget(i)
+				if hasattr(w, u'__script_item__') and w.__script_item__ == \
+					self.name:
+					if i == currentIndex:
+						focus = True
+					else:
+						focus = False
+					self.experiment.ui.tabwidget.removeTab(i)
+					self.experiment.items[self.name].open_script_tab(index=i, \
+						focus=focus)
+					break
 
 	def strip_script_line(self, s):
 
@@ -326,11 +349,11 @@ class qtitem(QtCore.QObject):
 		self.script_qprogedit = QTabManager(handler= \
 			self.apply_script_and_close, defaultLang=u'OpenSesame', \
 			handlerButtonText=_(u'Apply and close script editor'), \
-			focusOutHandler=self.apply_script_and_close, cfg=cfg)
+			focusOutHandler=self.apply_script_changes, cfg=cfg)
 		self.script_qprogedit.addTab(u'Script')
 
 		hbox = QtGui.QHBoxLayout()
-		hbox.addWidget(self.experiment.label_image(u"%s" % self.item_type))
+		hbox.addWidget(self.experiment.label_image(self.item_type))
 		self.script_header = QtGui.QLabel()
 		hbox.addWidget(self.script_header)
 		hbox.addStretch()
