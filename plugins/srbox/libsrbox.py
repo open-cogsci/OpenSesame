@@ -115,7 +115,7 @@ class libsrbox:
 		>>> exp.srbox.start()
 		>>> timestamp, buttonlist = exp.srbox.get_button_press(allowed_buttons=[1,2])
 		>>> if 1 in buttonlist:
-		>>> 		print 'Button 1 was pressed!'
+		>>> 		print('Button 1 was pressed!')
 		>>> exp.srbox.stop()
 		</DOC>"""
 
@@ -133,7 +133,7 @@ class libsrbox:
 		>>> exp.srbox.start()
 		>>> timestamp, buttonlist = exp.srbox.get_button_press(allowed_buttons=[1,2])
 		>>> if 1 in buttonlist:
-		>>> 		print 'Button 1 was pressed!'
+		>>> 		print('Button 1 was pressed!')
 		>>> exp.srbox.stop()
 		</DOC>"""
 
@@ -161,7 +161,7 @@ class libsrbox:
 		>>> exp.srbox.start()
 		>>> timestamp, buttonlist = exp.srbox.get_button_press(allowed_buttons=[1,2])
 		>>> if 1 in buttonlist:
-		>>> 		print 'Button 1 was pressed!'
+		>>> 		print('Button 1 was pressed!')
 		>>> exp.srbox.stop()
 		</DOC>"""
 

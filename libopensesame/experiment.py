@@ -165,8 +165,8 @@ class experiment(item.item):
 
 		Example:
 		>>> exp.set_subject(1)
-		>>> print 'Subject nr = %d' % exp.get('subject_nr')
-		>>> print 'Subject parity = %s' % exp.get('subject_parity')
+		>>> print('Subject nr = %d' % exp.get('subject_nr'))
+		>>> print('Subject parity = %s' % exp.get('subject_parity'))
 		</DOC>"""
 
 		# Set the subject nr and parity
@@ -284,7 +284,7 @@ class experiment(item.item):
 		self.init_log()
 		self.reset_feedback()
 
-		print u"experiment.run(): experiment started at %s" % time.ctime()
+		print(u"experiment.run(): experiment started at %s" % time.ctime())
 
 		if self.start in self.items:
 			self.items[self.start].prepare()
@@ -294,7 +294,7 @@ class experiment(item.item):
 				"Could not find item '%s', which is the entry point of the experiment" \
 				% self.start)
 
-		print u"experiment.run(): experiment finished at %s" % time.ctime()
+		print(u"experiment.run(): experiment finished at %s" % time.ctime())
 
 		self.end()
 
@@ -411,7 +411,7 @@ class experiment(item.item):
 
 		Example:
 		>>> if not exp.file_in_pool('my_image.png'):
-		>>> 	print 'my_image.png could not be found!'
+		>>> 	print('my_image.png could not be found!')
 		>>> else:
 		>>> 	image_path = exp.get_file('my_image.png')
 		>>> 	my_canvas = exp.offline_canvas()
@@ -618,8 +618,8 @@ class experiment(item.item):
 			return
 		# Open the logfile
 		self._log = codecs.open(self.logfile, u'w', encoding=self.encoding)
-		print u"experiment.init_log(): using '%s' as logfile (%s)" % \
-			(self.logfile, self.encoding)
+		print(u"experiment.init_log(): using '%s' as logfile (%s)" % \
+			(self.logfile, self.encoding))
 
 	def save_state(self):
 
@@ -682,16 +682,16 @@ def clean_up(verbose=False):
 	from openexp import canvas
 	global pool_folders
 	if verbose:
-		print u"experiment.clean_up()"
+		print(u"experiment.clean_up()")
 
 	for path in pool_folders:
 		if verbose:
-			print u"experiment.clean_up(): removing '%s'" % path
+			print(u"experiment.clean_up(): removing '%s'" % path)
 		try:
 			shutil.rmtree(path)
 		except:
 			if verbose:
-				print u"experiment.clean_up(): failed to remove '%s'" % path
+				print(u"experiment.clean_up(): failed to remove '%s'" % path)
 	canvas.clean_up(verbose)
 
 

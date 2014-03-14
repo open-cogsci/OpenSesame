@@ -66,7 +66,7 @@ def resources():
 
 	l = []
 	for root, dirnames, filenames in os.walk("resources"):
-		print root
+		print(root)
 		if root in ["resources/bak", "resources/ui"]:
 			continue
 		for f in filenames:

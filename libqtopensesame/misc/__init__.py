@@ -29,7 +29,7 @@ if '--catch-translatables' in sys.argv:
 		if s not in l:
 			f = open(path, u'a')
 			f.write(s + u'\n')
-			print u'New translatable: '+s
+			print(u'New translatable: '+s)
 			f.close()
 		return s
 

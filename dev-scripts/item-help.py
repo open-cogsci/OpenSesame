@@ -46,57 +46,57 @@ toc:
 
 plugin_msg = u"\n<div class='page-notification'>This is plug-in may not be installed by default. For plug-in installation instructions, see <a href='/plug-ins/installation'>here</a>.</div>\n"
 
-exclude_list = [u'general.md', u'variables.md', u'stdout.md', u'missing.md', 
+exclude_list = [u'general.md', u'variables.md', u'stdout.md', u'missing.md',
 	u'auto_example.md', u'remote_logger.md']
 
 def collect(folder):
-	
+
 	"""
 	Recursively collects a list of Markdown help files from a specified folder.
-	
+
 	Arguments:
 	folder		--	The source folder.
-	
+
 	Returns:
 	A list of path names of help files.
 	"""
-	
+
 	src = []
 	for fname in os.listdir(folder):
 		path = os.path.join(folder, fname)
 		if os.path.isdir(path):
-			print 'Entering %s' % path
+			print('Entering %s' % path)
 			src += collect(path)
 			continue
 		if fname in exclude_list or not fname.endswith(u'.md'):
 			continue
-		print 'Adding %s' % path
+		print('Adding %s' % path)
 		src.append(path)
 	return sorted(src)
 
 def helpify(folder, msg=u''):
-	
+
 	"""
 	Recursively builds a help page from Markdown help files in a source folder.
-	
+
 	Arguments:
 	folder		--	The source folder.
-	
+
 	Keyword arguments:
 	msg			--	An informative message to include after each help file.
-	
+
 	Returns:
 	A help page.
-	"""	
+	"""
 
 	src = collect(folder)
 	md = u''
-	for path in src:		
+	for path in src:
 		_md = u'\n' + open(path).read().decode(u'utf-8') + msg + u'\n'
 		_md = _md.replace(u'\n#', u'\n###')
 		md += _md
 	return md
-	
+
 md = md % (helpify(u'help'), helpify(u'plugins', plugin_msg))
 html = build.HTML(md, standalone=False)
 open('../osdoc/content/_includes/item-help', 'w').write(html.encode('utf-8'))

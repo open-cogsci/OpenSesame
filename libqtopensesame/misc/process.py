@@ -20,41 +20,41 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 import multiprocessing
 
 class OutputChannel:
-	
+
 	"""Passes messages from child process back to main process."""
-	
+
 	def __init__(self, channel, orig=None):
-		
+
 		"""
 		Constructor.
-		
+
 		Arguments:
 		channel	--	A multiprocessing.JoinableQueue object that is referenced
 					from the main process.
-				
+
 		Keyword arguments:
 		orig	--	The original stdout or stderr to also print the messages to.
 		"""
-		
+
 		self.channel = channel
 		self.orig = orig
-		
+
 	def write(self, m):
-		
+
 		"""
 		Writes a message to the queue.
-		
+
 		Arguments
 		m		--	The message to write. Should be a string or an (Exception,
 					traceback) tuple.
 		"""
-		
+
 		self.channel.put(m)
-		
+
 	def flush(self):
-		
+
 		"""Dummy function to mimic the stderr.flush() function."""
-		
+
 		if self.orig:
 			self.orig.flush()
 		else:
@@ -63,9 +63,9 @@ class OutputChannel:
 class ExperimentProcess(multiprocessing.Process):
 
 	"""Creates a new process to run an experiment in."""
-	
+
 	def __init__(self, exp, output):
-		
+
 		"""
 		Constructor.
 
@@ -74,7 +74,7 @@ class ExperimentProcess(multiprocessing.Process):
 		output	--	A reference to the queue object created in and used to
 					communicate with the main process.
 		"""
-		
+
 		multiprocessing.Process.__init__(self)
 		self.output = output
 		# The experiment object is troublesome to serialize,
@@ -87,16 +87,16 @@ class ExperimentProcess(multiprocessing.Process):
 		self.fullscreen = exp.fullscreen
 		self.logfile = exp.logfile
 		self.auto_response = exp.auto_response
-		
+
 	def run(self):
-		
+
 		"""
 		Everything in this function is run in a new process, therefore all
 		import statements are put in here. The function reroutes all output to
 		stdin and stderr to the pipe to the main process so OpenSesame can
 		handle all prints and errors.
 		"""
-		
+
 		import os
 		import sys
 		from libopensesame import misc
@@ -123,7 +123,7 @@ class ExperimentProcess(multiprocessing.Process):
 			# Communicate the exception and exit with error
 			self.output.put(e)
 			sys.exit(1)
-		print u'Starting experiment as %s' % self.name
+		print(u'Starting experiment as %s' % self.name)
 		# Run the experiment and catch any Exceptions.
 		e_run = None
 		try:
@@ -137,7 +137,7 @@ class ExperimentProcess(multiprocessing.Process):
 		try:
 			exp.end()
 		except Exception as e_exp:
-			print u'An Exception occurred during exp.end(): %s' % e_exp
+			print(u'An Exception occurred during exp.end(): %s' % e_exp)
 		# Communicate the exception and exit with error
 		if e_run != None:
 			self.output.put(e_run)

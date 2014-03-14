@@ -336,7 +336,7 @@ class legacy:
 		>>> my_sampler.play()
 		>>> self.sleep(100)
 		>>> if my_sampler.is_playing():
-		>>> 	print 'The sampler is still playing!'
+		>>> 	print('The sampler is still playing!')
 		</DOC>"""
 
 		return bool(mixer.get_busy())
@@ -353,7 +353,7 @@ class legacy:
 		>>> my_sampler = sampler(exp, src)
 		>>> my_sampler.play()
 		>>> my_sampler.wait()
-		>>> print 'The sampler is finished!'
+		>>> print('The sampler is finished!')
 		</DOC>"""
 
 		while mixer.get_busy():

@@ -27,58 +27,59 @@ temp_files = [] # Contains a list of temporary files that should be cleaned up
 class canvas:
 
 	"""A 'magic' class that morphs into the approriate backend from openexp._canvas"""
-	
+
 	def __init__(self, experiment, bgcolor=None, fgcolor=None, auto_prepare=True):
-		
-		backend = experiment.canvas_backend		
+
+		backend = experiment.canvas_backend
 		debug.msg('morphing into %s' % backend)
-		mod = __import__('openexp._canvas.%s' % backend, fromlist=['dummy'])			
+		mod = __import__('openexp._canvas.%s' % backend, fromlist=['dummy'])
 		cls = getattr(mod, backend)
 		self.__class__ = cls
 		cls.__init__(self, experiment, bgcolor, fgcolor, auto_prepare)
-			
+
 def init_display(experiment):
 
 	"""Call the back-end specific init_display function"""
-	
-	backend = experiment.canvas_backend		
+
+	backend = experiment.canvas_backend
 	debug.msg('morphing into %s' % backend)
-	mod = __import__('openexp._canvas.%s' % backend, fromlist=['dummy'])			
+	mod = __import__('openexp._canvas.%s' % backend, fromlist=['dummy'])
 	mod.init_display(experiment)
-		
+
 def close_display(experiment):
 
 	"""Call the back-end specific close_display function"""
-		
-	backend = experiment.canvas_backend		
+
+	backend = experiment.canvas_backend
 	debug.msg('morphing into %s' % backend)
-	mod = __import__('openexp._canvas.%s' % backend, fromlist=['dummy'])			
+	mod = __import__('openexp._canvas.%s' % backend, fromlist=['dummy'])
 	mod.close_display(experiment)
-		
+
 def clean_up(verbose = False):
-	
+
 	"""
 	Cleans up the temporary pool folders
-	
+
 	Keyword arguments:
 	verbose		--	a boolean indicating if debugging output should be provided
 					(default = False)
 	"""
-	
+
 	global temp_files
-	
+
 	if verbose:
-		print "canvas.clean_up()"
-	
+		print("canvas.clean_up()")
+
 	for path in temp_files:
 		if verbose:
-			print "canvas.clean_up(): removing '%s'" % path
+			print("canvas.clean_up(): removing '%s'" % path)
 		try:
 			os.remove(path)
 		except Exception as e:
 			if verbose:
-				print "canvas.clean_up(): failed to remove '%s': %s" % (path, e)
-						
+				print("canvas.clean_up(): failed to remove '%s': %s" \
+					% (path, e))
+
 def gabor_file(orient, freq, env = "gaussian", size = 96, stdev = 12, phase = 0, col1 = "white", col2 = "black", bgmode = "avg"):
 
 	"""
@@ -86,40 +87,40 @@ def gabor_file(orient, freq, env = "gaussian", size = 96, stdev = 12, phase = 0,
 
 	Keyword arguments:
 	See canvas.noise_patch()
-	
+
 	Returns:
 	A path to the image file
 	"""
-	
+
 	global temp_files
 	import openexp._canvas.legacy
 	surface = openexp._canvas.legacy._gabor(orient, freq, env, size, stdev, phase, col1, col2, bgmode)
-	
+
 	tmp = tempfile.mkstemp(suffix = ".png")	[1]
 	pygame.image.save(surface, tmp)
 	temp_files.append(tmp)
-	
+
 	return tmp
-	
+
 def noise_file(env = "gaussian", size = 96, stdev = 12, col1 = "white", col2 = "black", bgmode = "avg"):
 
 	"""
 	Creates a temporary file containing a noise patch.
-	
+
 	Keyword arguments:
 	See canvas.noise_patch()
-	
+
 	Returns:
 	A path to the image file
 	"""
-	
-	global temp_files	
-	import openexp._canvas.legacy	
+
+	global temp_files
+	import openexp._canvas.legacy
 	surface = openexp._canvas.legacy._noise_patch(env, size, stdev, col1, col2, bgmode)
-	
+
 	tmp = tempfile.mkstemp(suffix = ".png")	[1]
 	pygame.image.save(surface, tmp)
 	temp_files.append(tmp)
-	
+
 	return tmp
-					
+

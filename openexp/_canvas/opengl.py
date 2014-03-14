@@ -408,9 +408,9 @@ def init_display(experiment):
 	if experiment.fullscreen:
 		mode = mode | pygame.FULLSCREEN
 	if pygame.display.mode_ok(experiment.resolution(), mode):
-		print "video.opengl.init_display(): video mode ok"
+		print("video.opengl.init_display(): video mode ok")
 	else:
-		print "video.opengl.init_display(): warning: video mode not ok"
+		print("video.opengl.init_display(): warning: video mode not ok")
 
 	# Set the sync to VBL
 

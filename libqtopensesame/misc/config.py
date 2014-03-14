@@ -28,13 +28,13 @@ Old style:
 
 	from libqtopensesame.misc import config
 	config.set_config('my_setting', 'my_value')
-	print config.get_config('my_setting')
+	print(config.get_config('my_setting'))
 
 New style:
 
 	from libqtopensesame.misc.config import cfg
 	cfg.my_setting = 'my_value' # set
-	print cfg.my_setting # get
+	print(cfg.my_setting) # get
 """
 
 from libopensesame.exceptions import osexception

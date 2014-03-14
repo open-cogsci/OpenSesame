@@ -81,7 +81,7 @@ def main():
 
 	# First start the menu experiment
 	src = 'resources/android/menu.opensesame'
-	print 'Launching %s' % src
+	print('Launching %s' % src)
 	menu = experiment('Experiment', src)
 	menu.run()
 	menu.end()
@@ -89,7 +89,7 @@ def main():
 
 	# Next run the actual experiment!
 	exp = experiment('Experiment', menu._experiment)
-	print 'Launching %s' % menu._experiment
+	print('Launching %s' % menu._experiment)
 	exp.set_subject(menu._subject_nr)
 	exp.logfile = menu._logfile
 
@@ -99,12 +99,12 @@ def main():
 		exp.run()
 	except Exception as e:
 		for s in traceback.format_exc(e).split("\n"):
-			print s
+			print(s)
 	try:
 		exp.end()
 	except Exception as e:
 		for s in traceback.format_exc(e).split("\n"):
-			print s
+			print(s)
 
 	clean_up(exp.debug)
 	pygame.display.quit()
