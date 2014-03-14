@@ -6,6 +6,10 @@ opensesame (2.8.1~pre1-ubuntu1) saucy; urgency=low
     - Sort comboboxes alphabetically (#233)
     - Sort items alphabetically in OpenSesame script (#236)
     - Improved validation of conditional statements (#235)
+    - Correctly parse non-Unix line separators in text_display plug-in (#237)
+    - Saner focus and event-handling in script view.
+    - Flush keyboard during sound playback to catch 'Escape' presses (#227)
+    - Initial jitter_mode value in advanced_delay plug-in (#238)
 
  -- Sebastiaan Mathot <s.mathot@cogsci.nl>  Mon, 24 Feb 2014 16:23:27 +0100
 
