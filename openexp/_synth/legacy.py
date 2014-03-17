@@ -28,17 +28,17 @@ import pygame.mixer as mixer
 class legacy(openexp._sampler.legacy.legacy):
 
 	"""The synth generates a sound"""
-	
+
 	settings = None
 
 	def __init__(self, experiment, osc="sine", freq=440, length=100, attack=0, decay=5):
-	
+
 		"""<DOC>
 		Initializes the synthesizer.
-		
+
 		Arguments:
 		experiment -- An instance of libopensesame.experiment.experiment.
-		
+
 		Keyword arguments:
 		osc -- Oscillator, can be "sine", "saw", "square" or "white_noise" #
 			   (default = "sine").
@@ -47,20 +47,20 @@ class legacy(openexp._sampler.legacy.legacy):
 		length -- The length of the sound in milliseconds (default = 100).
 		attack -- The attack (fade-in) time in milliseconds (default = 0).
 		decay -- The decay (fade-out) time in milliseconds (default = 5).
-		
+
 		Example:
 		>>> from openexp.synth import synth
 		>>> my_synth = synth(exp, freq='b2', length=500)
 		</DOC>"""
-	
+
 		openexp._sampler.legacy.legacy.__init__(self, experiment, None)
-		
+
 		# If the frequency is not an int, convert it to an int
 		try:
 			int(freq)
 		except:
 			freq = self.key_to_freq(freq)
-		
+
 		# Set the oscillator function
 		if osc == "sine":
 			_func = math.sin
@@ -74,7 +74,7 @@ class legacy(openexp._sampler.legacy.legacy):
 			raise osexception( \
 				"synth.__init__(): '%s' is not a valid oscillator, exception 'sine', 'saw', 'square', or 'white_noise'" \
 				% osc)
-	
+
 		l = []
 
 		attack = attack * self.experiment.get("sound_freq") / 1000
@@ -83,49 +83,49 @@ class legacy(openexp._sampler.legacy.legacy):
 		sps = self.experiment.get("sound_freq") # samples per second
 		cps = float(sps / freq) # cycles per sample
 		slen = self.experiment.get("sound_freq") * length / 1000 # nr of samples
-	
+
 		for i in range(slen):
 			p = float((i % cps)) / cps * 2 * math.pi
-			v = int(amp * (_func(p)))			
+			v = int(amp * (_func(p)))
 			if i < attack:
-				v = int(v * float(i) / attack)				
+				v = int(v * float(i) / attack)
 			if i > slen - decay:
-				v = int(v * (float(slen) - float(i)) / decay)			
+				v = int(v * (float(slen) - float(i)) / decay)
 			l.append(v)
 			l.append(v)
-			
-		b = numpy.array(l, dtype="int16").reshape(len(l) / 2, 2)				 
-			
+
+		b = numpy.array(l, dtype="int16").reshape(len(l) / 2, 2)
+
 		self.sound = mixer.Sound(b)
-		
+
 	def key_to_freq(self, key):
-	
+
 		"""<DOC>
 		Converts a key (e.g., A1) to a frequency.
-		
+
 		Arguments:
 		key -- A string like "A1", "eb2", etc.
-		
+
 		Returns:
 		An integer value containing the frequency in hertz.
-		
+
 		Example:
 		>>> from openexp.synth import synth
 		>>> my_synth = synth(exp)
-		>>> print 'An a2 is %d Hz' % my_synth.key_to_freq('a2')
+		>>> print('An a2 is %d Hz' % my_synth.key_to_freq('a2'))
 		</DOC>"""
-		
+
 		if type(key) != str or len(key) < 2:
 			raise osexception( \
-				"synth.key_to_freq(): '%s' is not a valid note, expecting something like 'A1'")			
-		
+				"synth.key_to_freq(): '%s' is not a valid note, expecting something like 'A1'")
+
 		n = key[:-1].lower()
 		try:
 			o = int(key[-1])
 		except:
 			raise osexception( \
-				"synth.key_to_freq(): '%s' is not a valid note, expecting something like 'A1'")								
-			
+				"synth.key_to_freq(): '%s' is not a valid note, expecting something like 'A1'")
+
 		if n == "a":
 			f = 440.0
 		elif n == "a#" or n == "bb":
@@ -150,30 +150,30 @@ class legacy(openexp._sampler.legacy.legacy):
 			f = 784.00
 		elif n == "ab" or n == "g#":
 			f == 830.64
-			
+
 		if o < 1:
-			o = 0.5 ** (abs(o) + 1)			
+			o = 0.5 ** (abs(o) + 1)
 			freq = f * o
 		else:
 			freq = f ** o
-			
+
 		return freq
-	
+
 	def saw(self, phase):
-	
+
 		"""
 		* For internal use
-		
+
 		Generates a saw wave
 		"""
-		
-		phase = phase % math.pi		
-		
+
+		phase = phase % math.pi
+
 		return float(phase) / (0.5 * math.pi) - 1.0
 
-				
+
 	def square(self, phase):
-	
+
 		"""
 		* For internal use
 
@@ -183,15 +183,15 @@ class legacy(openexp._sampler.legacy.legacy):
 		if phase < math.pi:
 			return 1
 		return -1
-		
+
 	def white_noise(self, phase):
-	
+
 		"""
 		* For internal use
 
 		Generates random noise
 		"""
-		
+
 		return random.random()
 
-		
+

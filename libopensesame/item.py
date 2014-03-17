@@ -189,18 +189,18 @@ class item(object):
 			self.comments.append(line[2:])
 			return True
 		return False
-	
+
 	def set_response(self, response=None, response_time=None, correct=None):
-		
+
 		"""<DOC>
 		Processes a response in such a way that feedback variables are updated #
 		as well.
-		
+
 		Keyword arguments:
 		response		--	The response value. (default=None)
 		response_time	--	The response time. (default=None)
 		correct			--	The correctness value. (default=None)
-		
+
 		Example:
 		>>> from openexp.keyboard import keyboard
 		>>> my_keyboard = keyboard(exp)
@@ -214,7 +214,7 @@ class item(object):
 		>>> self.set_response(response=button, response_time=rt, \
 		>>> 	correct=correct)
 		</DOC>"""
-		
+
 		# Handle response variables.
 		self.experiment.set(u'total_responses', self.experiment.get( \
 			u'total_responses') + 1)
@@ -249,7 +249,7 @@ class item(object):
 		self.experiment.set(u'response_%s' % self.get(u'name'), \
 			self.experiment.get(u'response'))
 		self.experiment.set(u'response_time_%s' % self.get(u'name'), \
-			self.experiment.get(u'response_time'))	
+			self.experiment.get(u'response_time'))
 
 	def variable_to_string(self, var):
 
@@ -262,7 +262,7 @@ class item(object):
 		Returns:
 		A definition string.
 		"""
-		
+
 		val = self.unistr(self.variables[var])
 		# Multiline variables are stored as a block
 		if u'\n' in val or u'"' in val:
@@ -424,9 +424,9 @@ class item(object):
 
 		Example:
 		>>> self.set('var', 'Hello world!')
-		>>> print self.get('var') # Prints 'Hello world!'
+		>>> print(self.get('var')) # Prints 'Hello world!'
 		>>> self.unset('variable_to_forget')
-		>>> print self.get('var') # Gives error!
+		>>> print(self.get('var')) # Gives error!
 		</DOC>"""
 
 		var = self.unistr(var)
@@ -466,13 +466,13 @@ class item(object):
 
 		Example:
 		>>> if self.get('cue') == 'valid':
-		>>>		print 'This is a validly cued trial'
+		>>>		print('This is a validly cued trial')
 
 		Example 2:
 		>>> exp.set('var1', 'I like [var2]')
 		>>> exp.set('var2', 'OpenSesame')
-		>>> print self.get('var1') # prints 'I like OpenSesame'
-		>>> print self.get('var1', _eval=False) # prints 'I like [var2]'
+		>>> print(self.get('var1')) # prints 'I like OpenSesame'
+		>>> print(self.get('var1', _eval=False)) # prints 'I like [var2]'
 
 		</DOC>"""
 
@@ -525,7 +525,7 @@ class item(object):
 
 		Example:
 		>>> if self.get_check('cue', default='invalid') == 'valid':
-		>>>		print 'This is a validly-cued trial'
+		>>>		print('This is a validly-cued trial')
 		</DOC>"""
 
 		if default == None:
@@ -554,7 +554,7 @@ class item(object):
 
 		Example:
 		>>> if not self.has('response'):
-		>>> 	print 'No response has been collected yet'
+		>>> 	print('No response has been collected yet')
 
 		</DOC>"""
 
@@ -574,7 +574,7 @@ class item(object):
 		references.
 
 		Example:
-		>>> print self.get_refs('There are [two] [references] here')
+		>>> print(self.get_refs('There are [two] [references] here'))
 		>>> # Prints ['two', 'references']
 		</DOC>"""
 
@@ -610,12 +610,12 @@ class item(object):
 		The same value converted to the 'best fitting' type.
 
 		Example:
-		>>> print type(self.auto_type('1')) # Prints 'int'
-		>>> print type(self.auto_type('1.1')) # Prints 'float'
-		>>> print type(self.auto_type('some text')) # Prints 'unicode'
+		>>> print(type(self.auto_type('1'))) # Prints 'int'
+		>>> print(type(self.auto_type('1.1'))) # Prints 'float'
+		>>> print(type(self.auto_type('some text'))) # Prints 'unicode'
 		>>> # Note: Boolean values are converted to 'yes' / 'no' and are
 		>>> # therefore also returned as unicode objects.
-		>>> print type(self.auto_type(True)) # Prints 'unicode'
+		>>> print(type(self.auto_type(True))) # Prints 'unicode'
 		</DOC>"""
 
 		# Booleans are converted to True/ False
@@ -686,7 +686,7 @@ class item(object):
 		Example:
 		>>> exp.set('var', 'evaluated')
 		>>> # Prints 'This string has been evaluated
-		>>> print self.eval_text('This string has been [var]')
+		>>> print(self.eval_text('This string has been [var]'))
 		</DOC>"""
 
 		# Only unicode needs to be evaluated
@@ -840,9 +840,9 @@ class item(object):
 
 		Example:
 		>>> # Prints 'Universit Aix-Marseille'
-		>>> print self.sanitize('\"Université Aix-Marseille\"')
+		>>> print(self.sanitize('\"Université Aix-Marseille\"'))
 		>>> # Prints 'UniversitAixMarseille'
-		>>> print self.sanitize('\"Université Aix-Marseille\""', strict=True)
+		>>> print(self.sanitize('\"Université Aix-Marseille\""', strict=True))
 		</DOC>"""
 
 		s = self.unistr(s)
@@ -906,7 +906,7 @@ class item(object):
 		while True:
 			m = regexp.unsanitize.search(s)
 			if m == None:
-				break			
+				break
 			s = s.replace(m.group(0), unichr(int(m.group(1), 16)), 1)
 		return s
 
@@ -984,11 +984,11 @@ class item(object):
 
 		Example:
 		>>> # Ok
-		>>> print self.color_check('red')
+		>>> print(self.color_check('red'))
 		>>> # Ok
-		>>> print self.color_check('#FFFFFF')
+		>>> print(self.color_check('#FFFFFF'))
 		>>> # Raises osexception
-		>>> print self.color_check('this is not a color')
+		>>> print(self.color_check('this is not a color'))
 		</DOC>"""
 
 		try:
@@ -1025,7 +1025,7 @@ class item(object):
 		A timestamp of the current time.
 
 		Example:
-		>>> print 'The time is %s' % self.time()
+		>>> print('The time is %s' % self.time())
 		</DOC>"""
 
 		# This function is set by item.prepare()

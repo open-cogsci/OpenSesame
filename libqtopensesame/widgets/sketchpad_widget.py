@@ -959,7 +959,7 @@ class sketchpad_widget(QtGui.QWidget):
 				elif item["type"] == "noise":
 					g = self.noise(item)
 				else:
-					print "Could not find", item["type"]
+					print("Could not find", item["type"])
 
 			except Exception as e:
 				debug.msg("exception caught: %s" % e)

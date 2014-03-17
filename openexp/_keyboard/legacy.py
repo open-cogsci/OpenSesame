@@ -50,12 +50,12 @@ class legacy:
 	   functionality to this class, to be used in inline scripts, but this
 	   should not break the basic functionality.
 	"""
-	
+
 	def __init__(self, experiment, keylist=None, timeout=None):
 
 		"""<DOC>
 		Intializes the keyboard object.
-		
+
 		Keys can be identified either by character or name. This is case #
 		insensitive. Naming keys using ASCII (integer) key codes is deprecated.
 
@@ -64,7 +64,7 @@ class legacy:
 		- The up arrow is represented by 'up' and 'UP'.
 		- The '/' key is represented by '/', 'slash', and 'SLASH'.
 		- The spacebar is represented by 'space' and 'SPACE'.
-		
+
 		For a complete list of available key names, click on the 'list available #
 		keys' button in the keyboard_response tab within OpenSesame.
 
@@ -76,7 +76,7 @@ class legacy:
 				   accept all keys (default=None).
 		timeout -- An integer value specifying a timeout in milliseconds or None #
 				   for no timeout (default=None).
-				   
+
 		Example:
 		>>> from openexp.keyboard import keyboard
 		>>> my_keyboard = keyboard(exp, keylist=['z', 'm'], timeout=2000)
@@ -84,7 +84,7 @@ class legacy:
 
 		pygame.init()
 		self.key_code_to_name = {}
-		self.key_name_to_code = {}		
+		self.key_name_to_code = {}
 		for i in dir(pygame):
 			if i[:2] == u"K_":
 				code = getattr(pygame, i)
@@ -92,20 +92,20 @@ class legacy:
 				name2 = name1.upper()
 				name3 = i[2:].lower()
 				name4 = name3.upper()
-				self.key_code_to_name[code] = [name1, name2, name3, name4]				
+				self.key_code_to_name[code] = [name1, name2, name3, name4]
 				try:
 					i = int(name5)
 					self.key_code_to_name[code].append(name5)
 				except:
-					pass				
+					pass
 				self.key_name_to_code[name1] = code
 				self.key_name_to_code[name2] = code
 				self.key_name_to_code[name3] = code
-				self.key_name_to_code[name4] = code				
+				self.key_name_to_code[name4] = code
 		self.experiment = experiment
 		self.set_keylist(keylist)
-		self.set_timeout(timeout)		
-		
+		self.set_timeout(timeout)
+
 	def set_keylist(self, keylist=None):
 
 		"""<DOC>
@@ -114,7 +114,7 @@ class legacy:
 		Keyword arguments:
 		keylist -- A list of keys that are accepted or None to accept all keys #
 				   (default=None).
-				   
+
 		Example:
 		>>> from openexp.keyboard import keyboard
 		>>> my_keyboard = keyboard(exp)
@@ -123,7 +123,7 @@ class legacy:
 
 		if keylist == None:
 			self._keylist = None
-		else:			
+		else:
 			self._keylist = []
 			for key in keylist:
 				self._keylist += self.synonyms(key)
@@ -136,7 +136,7 @@ class legacy:
 		Keyword arguments:
 		timeout -- An integer value specifying a timeout in milliseconds or None #
 				   for no timeout (default=None).
-				   
+
 		Example:
 		>>> from openexp.keyboard import keyboard
 		>>> my_keyboard = keyboard(exp)
@@ -157,23 +157,23 @@ class legacy:
 		timeout -- An integer value specifying a timeout in milliseconds or None #
 				   to use the default. This parameter does not change the #
 				   default timeout (default=None).
-				   
+
 		Exceptions:
 		An osexception if 'escape' was pressed.
 
 		Returns:
 		A (key, timestamp) tuple. The key is None if a timeout occurs.
-		
+
 		Example:
 		>>> from openexp.keyboard import keyboard
 		>>> my_keyboard = keyboard(exp, timeout=2000)
 		>>> response, timestamp = my_keyboard.get_key()
 		>>> if response == None:
-		>>> 	print 'A timeout occurred!'
+		>>> 	print('A timeout occurred!')
 		</DOC>"""
-				
+
 		start_time = pygame.time.get_ticks()
-		time = start_time		
+		time = start_time
 
 		if keylist == None:
 			keylist = self._keylist
@@ -213,7 +213,7 @@ class legacy:
 		>>> my_keyboard = keyboard(exp)
 		>>> moderators = my_keyboard.get_mods()
 		>>> if 'shift' in moderators:
-		>>> 	print 'The shift-key is down!'
+		>>> 	print('The shift-key is down!')
 		</DOC>"""
 
 		l = []
@@ -232,16 +232,16 @@ class legacy:
 
 		"""
 		DEPRECATED
-		
+
 		This function has been deprecated as of 0.27.4. Shift is handled
 		transparently by keyboard.get_key()
-		
+
 		Arguments:
 		key 	--	A key.
-		
+
 		Keyword arguments:
 		mods	--	A list of keyboard modifiers.
-		
+
 		Exception:
 		This function always raises an exception
 		"""
@@ -253,13 +253,13 @@ class legacy:
 
 		"""
 		DEPRECATED
-		
+
 		This function has been removed as of 0.26. Keys are now only referred to
 		by their name and/ or character
-		
+
 		Arguments:
 		key -- a key
-		
+
 		Exception:
 		This function always raises an exception
 		"""
@@ -271,42 +271,42 @@ class legacy:
 
 		"""
 		DEPRECATED
-		
+
 		This function is deprecated as of 0.26. Keys are now only referred to
 		by their name and/ or character and this conversion function is no
-		longer necessary. For backwards compatibility, the input argument is 
+		longer necessary. For backwards compatibility, the input argument is
 		silently returned.
-		
+
 		Arguments:
 		key -- a key
 
 		Returns:
-		The key		
+		The key
 		"""
 
 		return key
-		
+
 	def valid_keys(self):
-	
+
 		"""
 		Generates a list of valid key names. Mostly for use by the GUI.
-		
+
 		Returns:
 		A list of valid key names
 		"""
-		
+
 		return sorted(self.key_name_to_code.keys())
-		
+
 	def synonyms(self, key):
-	
+
 		"""
 		Gives a list of synonyms for a key, either codes or names. Synonyms
 		include all variables as types and as Unicode strings (if applicable).
-		
+
 		Returns:
 		A list of synonyms
 		"""
-		
+
 		# If the key is not familiar, simply return it plus its string
 		# representation.
 		if key not in self.key_name_to_code:
@@ -317,14 +317,14 @@ class legacy:
 
 		"""<DOC>
 		Clears all pending input, not limited to the keyboard.
-		
+
 		Exceptions:
 		An osexception if 'escape' was pressed
-		
+
 		Returns:
 		True if a key had been pressed (i.e., if there was something #
 		to flush) and False otherwise.
-		
+
 		Example:
 		>>> from openexp.keyboard import keyboard
 		>>> my_keyboard = keyboard(exp)
@@ -342,17 +342,17 @@ class legacy:
 		return keypressed
 
 	def key_name(self, key):
-		
+
 		"""
 		Returns the name that corresponds to a key code. This intercepts the
 		pygame.key.name() function, to prevent invalid names like '[1]'.
-		
+
 		Arguments:
 		key		--	A key code.
-		
+
 		Returns:
 		A unicode string corresponding to the key code.
 		"""
-		
+
 		return unicode(pygame.key.name(key)).replace(u'[', u'') \
 			.replace(u']', u'')

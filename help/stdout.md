@@ -4,5 +4,5 @@ The Debug window provides a basic Python interpreter. It is primarily useful for
 
 Example:
 
-	print 'This is a debugging message'
+	print('This is a debugging message')
 

@@ -1,0 +1,9 @@
+{
+	"category"	: "Response collection",
+	"controls" : [
+		{
+			"type"		: "text",
+			"label"		: "This plug-in has no settings"
+		}
+	]
+}

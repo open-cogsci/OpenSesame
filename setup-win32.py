@@ -33,14 +33,14 @@ will be compiled to .pyc, instead of .pyo, and the .py source files will not be
 pruned. And that doesn't look very professional (although it does work).
 
 	./python -O setup-win32.py py2exe
-	
+
 More options can be tweaked by changing the variables below.
 
 Python modules
 ==============
 
 The following Python modules should be installed:
-	
+
 	bidi
 		- This is installed as an egg and therefore not packaged properly. For
 		  packaging, simply place the `bidi` source folder directly in the
@@ -49,7 +49,7 @@ The following Python modules should be installed:
 		- Unofficial Windows builds can be downloaded from
 		  <http://www.lfd.uci.edu/~gohlke/pythonlibs/#pycairo>
 	expyriment
-	matplotlib		
+	matplotlib
 	opencv2
 		- Download and extract the regular OpenCV2 package
 		- Copy cv2.pyd from build/python/2.7 to the Python site-packages
@@ -61,7 +61,7 @@ The following Python modules should be installed:
 		  packaging, simply place the `pyflakes` source folder directly in the
 		  Python site-packages.
 	py2exe
-	pyaudio	
+	pyaudio
 	pygame
 	pyglet
 		- The installer doesn't work. Need to install from .zip.
@@ -83,7 +83,7 @@ The following Python modules should be installed:
 		- Place vlc.py in the media_player_vlc folder. See below for folder
 		  structure.
 		- Choose the version for VLC 2.0
-		- Available from <http://liris.cnrs.fr/advene/download/python-ctypes/>		  
+		- Available from <http://liris.cnrs.fr/advene/download/python-ctypes/>
 
 Folder structure
 ================
@@ -121,16 +121,16 @@ included_plugins = [
 	'form_text_input',
 	'form_consent',
 	'form_text_display',
-	'form_multiple_choice',	
+	'form_multiple_choice',
 	'joystick',
 	'notepad',
-	'parallel',		
+	'parallel',
 	'port_reader',
-	'repeat_cycle',	
-	'reset_feedback',	
+	'repeat_cycle',
+	'reset_feedback',
 	'srbox',
 	'text_display',
-	'text_input',	
+	'text_input',
 	'touch_response',
 	]
 
@@ -191,7 +191,7 @@ include_packages = [
 	'cairo',
 	'Image',
 	'cv2',
-	'sip',	
+	'sip',
 	'PyQt4.QtCore',
 	'PyQt4.QtGui',
 	'PyQt4.Qsci',
@@ -220,7 +220,7 @@ def ignore_package_files(folder, files):
 
 # A function to strip non-compiled scripts and backup files
 def strip_py(folder):
-	for path in os.listdir(folder):		
+	for path in os.listdir(folder):
 		path = os.path.join(folder, path)
 		if os.path.isdir(path):
 			strip_py(path)
@@ -228,15 +228,15 @@ def strip_py(folder):
 		base, ext = os.path.splitext(path)
 		if (ext in ('.py', '.pyc') and os.path.exists(base+'.pyo')) or \
 			path[-1] == '~':
-			print 'stripping %s' % path
+			print('stripping %s' % path)
 			os.remove(path)
 
-# Copy packages	
+# Copy packages
 for pkg in copy_packages:
-	print 'copying packages %s ... ' % pkg
+	print('copying packages %s ... ' % pkg)
 	exec('import %s as _pkg' % pkg)
 	pkg_folder = os.path.dirname(_pkg.__file__)
-	print '\tfrom %s' % pkg_folder
+	print('\tfrom %s' % pkg_folder)
 	pkg_target = os.path.join("dist", pkg)
 	shutil.copytree(pkg_folder, pkg_target, symlinks=True, \
 		ignore=ignore_package_files)
@@ -248,7 +248,7 @@ for pkg in copy_packages:
 
 # Create a list of standard pakcages that should be included
 # http://stackoverflow.com/questions/6463918/how-can-i-get-a-list-of-all-the-python-standard-library-modules
-print 'detecting standard Python packages and modules ... '
+print('detecting standard Python packages and modules ... ')
 std_pkg = []
 std_lib = sysconfig.get_python_lib(standard_lib=True)
 for top, dirs, files in os.walk(std_lib):
@@ -275,16 +275,16 @@ for top, dirs, files in os.walk(std_lib):
 			exec('import %s' % pkg)
 		except:
 			continue
-		print pkg			
+		print(pkg)
 		std_pkg.append(pkg)
 for pkg in sys.builtin_module_names:
-	print pkg			
+	print(pkg)
 	std_pkg.append(pkg)
-	
+
 windows_opensesame = {
 		"script" : "opensesame",
 		"icon_resources": [(0, os.path.join("resources", "opensesame.ico"))],
-		}		
+		}
 windows_opensesamerun = {
 		"script" : "opensesamerun",
 		"icon_resources": [(0, os.path.join("resources", "opensesamerun.ico"))],
@@ -314,7 +314,7 @@ setup(
 # A filter to ignore non-relevant resource files
 def ignore_resources(folder, files):
 	l = []
-	print "... %s" % folder
+	print("... %s" % folder)
 	for f in files:
 		if os.path.splitext(f)[1] in [".csv", ".pyc"] and f not in \
 			["icon_map.csv"]:
@@ -327,60 +327,60 @@ def ignore_resources(folder, files):
 			'ui'):
 			l.append(f)
 	return l
-	
+
 # Compiling opensesame to opensesame.pyc for the multiprocessing functionality
-print "compiling opensesame"
+print("compiling opensesame")
 py_compile.compile("opensesame", os.path.join("dist", "opensesame.pyc"))
 
 # Copy resource files
-print "copying resources"
+print("copying resources")
 shutil.copytree("resources", os.path.join("dist", "resources"), symlinks=True, \
 	ignore=ignore_resources)
 
-print "copying README info etc."
+print("copying README info etc.")
 shutil.copyfile("readme.md", os.path.join("dist", "readme.md"))
 shutil.copyfile("debian/copyright", os.path.join("dist", "copyright"))
 shutil.copyfile("COPYING", os.path.join("dist", "COPYING"))
 if include_gui:
 	shutil.copytree("help", os.path.join("dist", "help"))
 
-print "copying PyGame/ SDLL dll's"
+print("copying PyGame/ SDLL dll's")
 shutil.copyfile(r"%s\Lib\site-packages\pygame\SDL_ttf.dll" \
 	% python_folder, r"dist\SDL_ttf.dll")
 shutil.copyfile(r"%s\Lib\site-packages\pygame\libfreetype-6.dll" \
 	% python_folder, r"dist\libfreetype-6.dll")
 shutil.copyfile(r"%s\Lib\site-packages\pygame\libogg-0.dll" \
 	% python_folder, r"dist\libogg-0.dll")
-	
-print "copying PIL.pth"
+
+print("copying PIL.pth")
 shutil.copyfile(r"%s\Lib\site-packages\PIL.pth" \
 	% python_folder, r"dist\PIL.pth")
 
 if include_simpleio:
-	print "copying simpleio.dll"
+	print("copying simpleio.dll")
 	shutil.copyfile(r"%s\simpleio.dll" \
 		% python_folder, r"dist\simpleio.dll")
 
 if include_inpout32:
-	print "copying inpout32.dll"
+	print("copying inpout32.dll")
 	urllib.urlretrieve ("http://files.cogsci.nl/misc/inpout32.dll", \
 		r"dist\inpout32.dll")
 
 # Include plug-ins
 if include_plugins:
-	print "copying plugins"	
+	print("copying plugins"	)
 	for plugin in included_plugins:
-		print "copying plugin", plugin
+		print("copying plugin", plugin)
 		shutil.copytree(os.path.join("plugins", plugin), os.path.join("dist", \
 			"plugins", plugin))
 		for path in os.listdir(os.path.join("plugins", plugin)):
 			if path[-1] == "~" or os.path.splitext(path)[1] in [".pyc"]:
-				print "removing file", path
+				print("removing file", path)
 				os.remove(os.path.join("dist", "plugins", plugin, path))
 
 # Include old media_player
 if include_media_player:
-	print "copying media_player"
+	print("copying media_player")
 	os.mkdir("dist\plugins\media_player")
 	shutil.copyfile(r"..\media_player\media_player.py", \
 		r"dist\plugins\media_player\media_player.py""")
@@ -395,10 +395,10 @@ if include_media_player:
 
 # Include new vlc-based media player
 if include_media_player_vlc:
-	print "copying media_player_vlc"
+	print("copying media_player_vlc")
 	os.mkdir("dist\plugins\media_player_vlc")
 	shutil.copyfile(r"..\media_player_vlc\vlc.py", \
-		r"dist\plugins\media_player_vlc\vlc.py")	
+		r"dist\plugins\media_player_vlc\vlc.py")
 	shutil.copyfile( \
 		r"..\media_player_vlc\media_player_vlc.py", \
 		r"dist\plugins\media_player_vlc\media_player_vlc.py")
@@ -412,19 +412,19 @@ if include_media_player_vlc:
 		r"..\media_player_vlc\media_player_vlc_large.png", \
 		r"dist\plugins\media_player_vlc\media_player_vlc_large.png")
 	shutil.copyfile(r"..\media_player_vlc\info.json", \
-		r"dist\plugins\media_player_vlc\info.json")		
+		r"dist\plugins\media_player_vlc\info.json")
 
 # Include examples
 if include_examples:
-	print "copying examples"
+	print("copying examples")
 	shutil.copytree("examples", os.path.join("dist", "examples"))
 	for path in os.listdir(os.path.join("dist", "examples")):
 		if path[-1] == "~" or os.path.splitext(path)[1] not in [".opensesame", \
 			".gz"]:
-			print "removing file", path
+			print("removing file", path)
 			os.remove(os.path.join("dist", "examples", path))
 
 # Include sounds
 if include_sounds:
-	print "copying sounds"
+	print("copying sounds")
 	shutil.copytree("sounds", os.path.join("dist", "sounds"))

@@ -25,22 +25,22 @@ def updateHidden(folder):
 	"""
 	Scans a folder and adds all files of a particular type to the .hidden file,
 	to avoid a cluttered view in Nautilus
-	
+
 	Arguments:
 	folder -- the folder to process
 	"""
 
-	print 'Scanning', folder
+	print('Scanning', folder)
 	f = open(os.path.join(folder, '.hidden'), 'w')
 	for fname in os.listdir(folder):
 		if fname[0] == '.':
-			continue	
+			continue
 		path = os.path.join(folder, fname)
 		if os.path.isdir(path):
 			updateHidden(path)
 		elif os.path.splitext(fname)[1] in hiddenExts:
-			print 'Hiding', fname
+			print('Hiding', fname)
 			f.write(fname+'\n')
 	f.close()
-					
+
 updateHidden('.')

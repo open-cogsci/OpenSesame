@@ -44,7 +44,7 @@ Building
 Build the `.apk` with the following command:
 
 	python setup-android.py [install]
-	
+
 The `install` parameter is optional, and indicates that the `.apk` should be
 installed on an attached Android device or emulator. The resulting `.apk` can
 be found in the `bin` subfolder of the PyGame subset for Android folder.
@@ -64,16 +64,16 @@ included_plugins = [
 	'form_text_input',
 	'form_consent',
 	'form_text_display',
-	'form_multiple_choice',	
+	'form_multiple_choice',
 	'joystick',
 	'notepad',
-	'parallel',		
+	'parallel',
 	'port_reader',
-	'repeat_cycle',	
-	'reset_feedback',	
+	'repeat_cycle',
+	'reset_feedback',
 	'srbox',
 	'text_display',
-	'text_input',	
+	'text_input',
 	'touch_response',
 	]
 
@@ -91,14 +91,14 @@ folder_list = [
 	'libqtopensesame',
 	'openexp',
 	]
-	
-# A list of pure Python modules that are not included by default but are 
+
+# A list of pure Python modules that are not included by default but are
 # required for OpenSesame
 module_list = [
 	'HTMLParser.py',
 	'markupbase.py',
 	]
-	
+
 # A list of files/folders in the resources folder that should be copied
 resources_whitelist = [
 	'widgets',
@@ -110,9 +110,9 @@ resources_whitelist = [
 	'mono.ttf',
 	'sans.ttf',
 	'serif.ttf',
-	'android-splash.jpg'	
+	'android-splash.jpg'
 	]
-	
+
 # A filter to ignore non-relevant package files
 def ignore_bytecode(folder, files):
 	l = []
@@ -140,51 +140,51 @@ def ignore_examples(folder, files):
 target = os.path.join(pgs4a_folder, 'opensesame')
 
 if os.path.exists(target):
-	print 'Removing %s' % target
+	print('Removing %s' % target)
 	shutil.rmtree(target)
-print 'Creating %s' % target
+print('Creating %s' % target)
 os.mkdir(target)
-	
+
 for folder in folder_list:
-	print 'Copying %s' % folder
+	print('Copying %s' % folder)
 	shutil.copytree(folder, os.path.join(target, folder), \
 		ignore=ignore_bytecode)
-print 'Copying resources'
+print('Copying resources')
 shutil.copytree('resources', os.path.join(target, 'resources'), \
 	ignore=ignore_resources)
-print 'Copying examples'
+print('Copying examples')
 shutil.copytree('examples', os.path.join(target, 'examples'), \
 	ignore=ignore_examples)
 
-print 'Copying plugins'
+print('Copying plugins')
 os.mkdir(os.path.join(target, 'plugins'))
 for plugin in included_plugins:
-	print 'Copying plugin %s' % plugin
+	print('Copying plugin %s' % plugin)
 	shutil.copytree(os.path.join('plugins', plugin), os.path.join(target, \
 		'plugins', plugin))
 
-print 'Copying modules'
+print('Copying modules')
 for module in module_list:
-	print 'Copying %s' % module
+	print('Copying %s' % module)
 	shutil.copyfile(os.path.join(module_folder, module), \
 		os.path.join(target, module))
-	
-print 'Copying dummy PyQt4'
+
+print('Copying dummy PyQt4')
 shutil.copytree('resources/android/PyQt4', os.path.join(target, 'PyQt4'))
-print 'Copying main.py'
+print('Copying main.py')
 shutil.copyfile('opensesameandroid.py', os.path.join(target, 'main.py'))
-print 'Copying .android.json'
+print('Copying .android.json')
 shutil.copyfile('resources/android/android.json', os.path.join(target, \
 	'.android.json'))
-print 'Copying android-icon.png'
+print('Copying android-icon.png')
 shutil.copyfile('resources/android/android-icon.png', \
 	os.path.join(target, 'android-icon.png'))
-print 'Copying android-presplash.png'
+print('Copying android-presplash.png')
 shutil.copyfile('resources/android/android-presplash.jpg', \
 	os.path.join(target, 'android-presplash.jpg'))
-print 'Building'
+print('Building')
 os.chdir(pgs4a_folder)
-print 'Clearing application data'
+print('Clearing application data')
 subprocess.call(clear_cmd.split())
-print 'Building'
+print('Building')
 subprocess.call(build_cmd.split())

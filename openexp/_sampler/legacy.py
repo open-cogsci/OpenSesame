@@ -20,6 +20,7 @@ along with openexp.  If not, see <http://www.gnu.org/licenses/>.
 import pygame
 from pygame.locals import *
 from libopensesame.exceptions import osexception
+from openexp.keyboard import keyboard
 import os.path
 try:
 	import numpy
@@ -28,7 +29,7 @@ except:
 try:
 	import pygame.mixer as mixer
 except ImportError:
-	import android.mixer as mixer	
+	import android.mixer as mixer
 
 class legacy:
 
@@ -42,25 +43,25 @@ class legacy:
 	# The settings variable is used by the GUI to provide a list of back-end
 	# settings
 	settings = {
-		"sound_buf_size" : {
-			"name" : "Sound buffer size",
-			"description" : "Size of the sound buffer (increase if playback is choppy)",
-			"default" : 1024
+		u"sound_buf_size" : {
+			u"name" : u"Sound buffer size",
+			u"description" : u"Size of the sound buffer (increase if playback is choppy)",
+			u"default" : 1024
 			},
-		"sound_freq" : {
-			"name" : "Sampling frequency",
-			"description" : "Determines the sampling rate",
-			"default" : 48000
+		u"sound_freq" : {
+			u"name" : u"Sampling frequency",
+			u"description" : u"Determines the sampling rate",
+			u"default" : 48000
 			},
-		"sound_sample_size" : {
-			"name" : "Sample size",
-			"description" : "Determines the bith depth (negative = signed)",
-			"default" : -16
+		u"sound_sample_size" : {
+			u"name" : u"Sample size",
+			u"description" : u"Determines the bith depth (negative = signed)",
+			u"default" : -16
 			},
 		"sound_channels" : {
-			"name" : "The number of sound channels",
-			"description" : "1 = mono, 2 = stereo",
-			"default" : 2
+			u"name" : u"The number of sound channels",
+			u"description" : u"1 = mono, 2 = stereo",
+			u"default" : 2
 			},
 		}
 
@@ -72,7 +73,7 @@ class legacy:
 		Arguments:
 		experiment -- An instance of libopensesame.experiment.experiment.
 		src -- A path to a .wav or .ogg file.
-		
+
 		Example:
 		>>> from openexp.sampler import sampler
 		>>> src = exp.get_file('my_sound.ogg')
@@ -82,17 +83,18 @@ class legacy:
 		if src != None:
 			if not os.path.exists(src):
 				raise osexception( \
-					"openexp._sampler.legacy.__init__() the file '%s' does not exist" \
+					u"openexp._sampler.legacy.__init__() the file '%s' does not exist" \
 					% src)
 
 			if os.path.splitext(src)[1].lower() not in (".ogg", ".wav"):
 				raise osexception( \
-					"openexp._sampler.legacy.__init__() the file '%s' is not an .ogg or .wav file" \
+					u"openexp._sampler.legacy.__init__() the file '%s' is not an .ogg or .wav file" \
 					% src)
 
 			self.sound = mixer.Sound(src)
 
 		self.experiment = experiment
+		self.keyboard = keyboard(experiment)
 		self._stop_after = 0
 		self._fade_in = 0
 		self._volume = 1.0
@@ -104,16 +106,17 @@ class legacy:
 
 		Arguments:
 		ms -- An integer value specifying the duration in milliseconds.
-		
+
 		Example:
 		>>> from openexp.sampler import sampler
 		>>> src = exp.get_file('my_sound.ogg')
 		>>> my_sampler = sampler(exp, src)
-		>>> my_sampler.stop_after(100)		
+		>>> my_sampler.stop_after(100)
 		</DOC>"""
 
 		if type(ms) != int or ms < 0:
-			raise osexception("openexp._sampler.legacy.stop_after() requires a positive integer")
+			raise osexception( \
+				u"openexp._sampler.legacy.stop_after() requires a positive integer")
 
 		self._stop_after = ms
 
@@ -124,16 +127,17 @@ class legacy:
 
 		Arguments:
 		ms -- An integer value specifying the duration in milliseconds.
-		
+
 		Example:
 		>>> from openexp.sampler import sampler
 		>>> src = exp.get_file('my_sound.ogg')
 		>>> my_sampler = sampler(exp, src)
-		>>> my_sampler.fade_in(100)		
+		>>> my_sampler.fade_in(100)
 		</DOC>"""
 
 		if type(ms) != int or ms < 0:
-			raise osexception("openexp._sampler.legacy.fade_in() requires a positive integer")
+			raise osexception( \
+				u"openexp._sampler.legacy.fade_in() requires a positive integer")
 
 		self._fade_in = ms
 
@@ -144,7 +148,7 @@ class legacy:
 
 		Arguments:
 		vol -- A volume between 0.0 and 1.0
-		
+
 		Example:
 		>>> from openexp.sampler import sampler
 		>>> src = exp.get_file('my_sound.ogg')
@@ -153,7 +157,8 @@ class legacy:
 		</DOC>"""
 
 		if type(vol) not in (int, float) or vol < 0 or vol > 1:
-			raise osexception("openexp._sampler.legacy.volume() requires a number between 0.0 and 1.0")
+			raise osexception( \
+				u"openexp._sampler.legacy.volume() requires a number between 0.0 and 1.0")
 
 		self._volume = vol
 		self.sound.set_volume(vol)
@@ -166,7 +171,7 @@ class legacy:
 		Arguments:
 		p -- The pitch. p > 1.0 slows the sample down, p < 1.0 speeds #
 				the sample up.
-		
+
 		Example:
 		>>> from openexp.sampler import sampler
 		>>> src = exp.get_file('my_sound.ogg')
@@ -175,12 +180,12 @@ class legacy:
 		</DOC>"""
 
 		# On Android, numpy does not exist and this is not supported
-		if numpy == None:			
+		if numpy == None:
 			return
 
 		if type(p) not in (int, float) or p <= 0:
 			raise osexception( \
-				"openexp._sampler.legacy.pitch() requires a positive number")
+				u"openexp._sampler.legacy.pitch() requires a positive number")
 
 		if p == 1:
 			return
@@ -192,7 +197,7 @@ class legacy:
 			_buf.append(buf[int(float(i) * p)])
 
 		self.sound = pygame.sndarray.make_sound(numpy.array(_buf, \
-			dtype="int16"))
+			dtype=u"int16"))
 
 	def pan(self, p):
 
@@ -205,20 +210,21 @@ class legacy:
 		Arguments:
 		p -- Panning. A float (p < 0 = to left, p > 0 = to right) or string #
 			 ("left" or "right").
-		
+
 		Example:
 		>>> from openexp.sampler import sampler
 		>>> src = exp.get_file('my_sound.ogg')
 		>>> my_sampler = sampler(exp, src)
 		>>> my_sampler.pan('left')
 		</DOC>"""
-		
+
 		# On Android, numpy does not exist and this is not supported
-		if numpy == None:			
+		if numpy == None:
 			return
-		
-		if type(p) not in (int, float) and p not in ("left", "right"):
-			raise osexception("openexp._sampler.legacy.pan() requires a number or 'left', 'right'")
+
+		if type(p) not in (int, float) and p not in (u"left", u"right"):
+			raise osexception( \
+				u"openexp._sampler.legacy.pan() requires a number or 'left', 'right'")
 
 		if p == 0:
 			return
@@ -244,14 +250,14 @@ class legacy:
 
 		self.sound = pygame.sndarray.make_sound(numpy.array(buf))
 
-	def play(self, block = False):
+	def play(self, block=False):
 
 		"""<DOC>
 		Plays the sound.
 
 		Keyword arguments:
 		block -- If True, block until the sound is finished (default = False).
-		
+
 		Example:
 		>>> from openexp.sampler import sampler
 		>>> src = exp.get_file('my_sound.ogg')
@@ -259,7 +265,7 @@ class legacy:
 		>>> my_sampler.play()
 		</DOC>"""
 
-		self.sound.play(maxtime = self._stop_after, fade_ms = self._fade_in)
+		self.sound.play(maxtime=self._stop_after, fade_ms=self._fade_in)
 		if block:
 			self.wait()
 
@@ -267,7 +273,7 @@ class legacy:
 
 		"""<DOC>
 		Stops the currently playing sound (if any).
-		
+
 		Example:
 		>>> from openexp.sampler import sampler
 		>>> src = exp.get_file('my_sound.ogg')
@@ -283,16 +289,16 @@ class legacy:
 
 		"""<DOC>
 		Pauses playback (if any).
-		
+
 		Example:
 		>>> from openexp.sampler import sampler
 		>>> src = exp.get_file('my_sound.ogg')
 		>>> my_sampler = sampler(exp, src)
 		>>> my_sampler.play()
 		>>> self.sleep(100)
-		>>> my_sampler.pause()				
+		>>> my_sampler.pause()
 		>>> self.sleep(100)
-		>>> my_sampler.resume()				
+		>>> my_sampler.resume()
 		</DOC>"""
 
 		mixer.pause()
@@ -301,16 +307,16 @@ class legacy:
 
 		"""<DOC>
 		Resumes playback (if any).
-		
+
 		Example:
 		>>> from openexp.sampler import sampler
 		>>> src = exp.get_file('my_sound.ogg')
 		>>> my_sampler = sampler(exp, src)
 		>>> my_sampler.play()
 		>>> self.sleep(100)
-		>>> my_sampler.pause()				
+		>>> my_sampler.pause()
 		>>> self.sleep(100)
-		>>> my_sampler.resume()				
+		>>> my_sampler.resume()
 		</DOC>"""
 
 		mixer.unpause()
@@ -330,7 +336,7 @@ class legacy:
 		>>> my_sampler.play()
 		>>> self.sleep(100)
 		>>> if my_sampler.is_playing():
-		>>> 	print 'The sampler is still playing!'
+		>>> 	print('The sampler is still playing!')
 		</DOC>"""
 
 		return bool(mixer.get_busy())
@@ -340,18 +346,18 @@ class legacy:
 		"""<DOC>
 		Blocks until the sound has finished playing or returns right away if no #
 		sound is playing.
-		
+
 		Example:
 		>>> from openexp.sampler import sampler
 		>>> src = exp.get_file('my_sound.ogg')
 		>>> my_sampler = sampler(exp, src)
 		>>> my_sampler.play()
 		>>> my_sampler.wait()
-		>>> print 'The sampler is finished!'
+		>>> print('The sampler is finished!')
 		</DOC>"""
 
 		while mixer.get_busy():
-			pass
+			self.keyboard.flush()
 
 def init_sound(experiment):
 
@@ -362,15 +368,16 @@ def init_sound(experiment):
 	experiment -- An instance of libopensesame.experiment.experiment
 	"""
 
-	print "openexp.sampler._legacy.init_sound(): sampling freq = %d, buffer size = %d" \
-		% (experiment.sound_freq, experiment.sound_buf_size)
-	if hasattr(mixer, 'get_init') and mixer.get_init():
-		print 'openexp.sampler._legacy.init_sound(): mixer already initialized, closing'
+	print( \
+		u"openexp.sampler._legacy.init_sound(): sampling freq = %d, buffer size = %d" \
+		% (experiment.sound_freq, experiment.sound_buf_size))
+	if hasattr(mixer, u'get_init') and mixer.get_init():
+		print( \
+			u'openexp.sampler._legacy.init_sound(): mixer already initialized, closing')
 		pygame.mixer.quit()
 	mixer.pre_init(experiment.sound_freq, experiment.sound_sample_size, \
-		experiment.sound_channels, experiment.sound_buf_size)	
+		experiment.sound_channels, experiment.sound_buf_size)
 	mixer.init()
-
 
 def close_sound(experiment):
 

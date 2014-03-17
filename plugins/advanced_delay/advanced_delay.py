@@ -21,28 +21,28 @@ from libopensesame.exceptions import osexception
 from libopensesame import item, debug
 from libqtopensesame.items.qtautoplugin import qtautoplugin
 from PyQt4 import QtGui, QtCore
-import os.path
 import random
 
 class advanced_delay(item.item):
-	
+
 	description = u'Waits for a specified duration'
 
 	def __init__(self, name, experiment, script=None):
 
 		"""
 		Constructor.
-		
+
 		Arguments:
 		name		--	The name of the plug-in.
 		experiment	--	The experiment object.
-		
+
 		Keyword arguments:
 		script		--	A definition script. (default=None)
 		"""
 
 		self.duration = 1000
 		self.jitter = 0
+		self.jitter_mode = u'Uniform'
 		item.item.__init__(self, name, experiment, script)
 
 	def prepare(self):
@@ -50,27 +50,27 @@ class advanced_delay(item.item):
 		"""The preparation phase of the plug-in."""
 
 		item.item.prepare(self)
-
-		try:
-			if self.get(u"jitter_mode") == u"Uniform":
-				self._duration = int(self.get(u"duration") + \
-					random.uniform(0, self.get(u"jitter")) - \
-					self.get(u"jitter")*0.5)
-			elif self.get(u"jitter_mode") == u"Std. Dev.":
-				self._duration = int(self.get(u"duration") + \
-					random.gauss(0, self.get(u"jitter")))
-			else:
-				raise osexception( \
-					u'Unknown jitter mode in advanced_delay %s' % self.name)
-		except:
+		# Sanity check on the duration value, which should be a positive numeric
+		# value.
+		if type(self.get('duration')) not in (int, float) or \
+			self.get('duration') < 0:
 			raise osexception( \
-				u"Invalid duration and/ or jitter in advanced_delay '%s'" % \
-				self.name)
-
+				u'Duration should be a positive numeric value in advanced_delay %s' \
+				% self.name)
+		if self.get(u'jitter_mode') == u'Uniform':
+			self._duration = random.uniform(self.get(u'duration')-self.get( \
+				u'jitter')/2, self.get(u'duration')+self.get(u'jitter')/2)
+		elif self.get(u'jitter_mode') == u'Std. Dev.':
+			self._duration = random.gauss(self.get(u'duration'), self.get( \
+				u'jitter'))
+		else:
+			raise osexception( \
+				u'Unknown jitter mode in advanced_delay %s' % self.name)
+		# Don't allow negative durations.
 		if self._duration < 0:
 			self._duration = 0
-
-		self.experiment.set(u"delay_%s" % self.name, self._duration)
+		self._duration = int(self._duration)
+		self.experiment.set(u'delay_%s' % self.name, self._duration)
 		debug.msg(u"delay for %s ms" % self._duration)
 
 	def run(self):
@@ -93,7 +93,9 @@ class advanced_delay(item.item):
 			u'[Determined at runtime]')]
 
 class qtadvanced_delay(advanced_delay, qtautoplugin):
-	
+
+	"""Automatic plug-in GUI."""
+
 	def __init__(self, name, experiment, script=None):
 
 		advanced_delay.__init__(self, name, experiment, script)
