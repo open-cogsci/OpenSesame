@@ -86,7 +86,7 @@ class loop(item.item):
 	def run(self):
 
 		"""Runs the loop."""
-		
+
 		# Prepare the break if condition
 		if self.break_if != u'':
 			self._break_if = self.compile_cond(self.break_if)
@@ -112,29 +112,29 @@ class loop(item.item):
 		# Randomize the list if necessary
 		if self.order == u'random':
 			shuffle(l)
-			
+
 		# In sequential order, the offset and the skip are relevant
-		else:			
+		else:
 			if len(l) < self.skip:
 				raise osexception( \
-						u'The value of skip is too high in loop item "%s":: You cannot skip more cycles than there are.' \
+					u'The value of skip is too high in loop item "%s":: You cannot skip more cycles than there are.' \
 					% self.name)
 			if self.offset == u'yes':
 				l = l[self.skip:] + l[:self.skip]
 			else:
 				l = l[self.skip:]
-				
+
 		# Create a keyboard to flush responses between cycles
 		self._keyboard = openexp.keyboard.keyboard(self.experiment)
 
-		# Make sure the item to run exists		
+		# Make sure the item to run exists
 		if self.item not in self.experiment.items:
 			raise osexception( \
 				u"Could not find item '%s', which is called by loop item '%s'" \
-				% (self.item, self.name))			
-				
+				% (self.item, self.name))
+
 		# And run!
-		_item = self.experiment.items[self.item]						
+		_item = self.experiment.items[self.item]
 		while len(l) > 0:
 			cycle = l.pop(0)
 			self.apply_cycle(cycle)
@@ -148,19 +148,19 @@ class loop(item.item):
 				l.append(cycle)
 				if self.order == u'random':
 					shuffle(l)
-							
+
 	def apply_cycle(self, cycle):
-	
+
 		"""
 		Sets all the loop variables according to the cycle.
-		
+
 		Arguments:
 		cycle 		--	The cycle nr.
 		"""
-		
+
 		# If the cycle is not defined, we don't have to do anything
 		if cycle not in self.matrix:
-			return			
+			return
 		# Otherwise apply all variables from the cycle
 		for var in self.matrix[cycle]:
 			val = self.matrix[cycle][var]
@@ -175,7 +175,7 @@ class loop(item.item):
 						u"Failed to evaluate '%s' in loop item '%s': %s" \
 						% (val[1:], self.name, e))
 			# Set it!
-			self.experiment.set(var, val)												
+			self.experiment.set(var, val)
 
 	def to_string(self):
 

@@ -27,30 +27,30 @@ from libqtopensesame.runners import base_runner
 from PyQt4 import QtGui
 import time
 
-class external_runner(base_runner):		
-	
+class external_runner(base_runner):
+
 	"""Runs an experiment using opensesamerun."""
-									
+
 	def execute(self):
-		
+
 		"""See base_runner.execute()."""
-		
+
 		import subprocess
 		import tempfile
-		
+
 		try:
 			# Temporary file for the standard output and experiment
 			self.stdout = tempfile.mktemp(suffix=u".stdout")
-			
+
 			if self.experiment.experiment_path is None:
 				raise osexception( \
 					u"Please save your experiment first, before running it using opensesamerun")
-			
+
 			self.path = os.path.join(self.experiment.experiment_path, \
 				'.opensesamerun-tmp.opensesame.tar.gz')
 			self.experiment.save(self.path, True)
 			debug.msg(u"experiment saved as '%s'" % self.path)
-			
+
 			# Determine the name of the executable
 			if config.get_config(u'opensesamerun_exec') == u'':
 				if os.name == u"nt":
@@ -58,21 +58,21 @@ class external_runner(base_runner):
 				else:
 					self.cmd = [u"opensesamerun"]
 			else:
-				self.cmd = config.get_config(u'opensesamerun_exec').split()								
-			
+				self.cmd = config.get_config(u'opensesamerun_exec').split()
+
 			self.cmd += [self.path, u"--logfile=%s" % self.experiment.logfile, \
 				u"--subject=%s" % self.experiment.subject_nr]
-			
+
 			if debug.enabled:
 				self.cmd.append(u"--debug")
 			if self.experiment.fullscreen:
 				self.cmd.append(u"--fullscreen")
 			if u"--pylink" in sys.argv:
-				self.cmd.append(u"--pylink")		
-			
-			
+				self.cmd.append(u"--pylink")
+
+
 			debug.msg(u"spawning opensesamerun as a separate process")
-			
+
 			# Call opensesamerun and wait for the process to complete
 
 			try:
@@ -84,7 +84,7 @@ class external_runner(base_runner):
 				except:
 					pass
 				return e
-			
+
 			# Wait for OpenSesame run to complete, process events in the meantime,
 			# to make sure that the new process is shown (otherwise it will crash
 			# on Windows).
@@ -93,20 +93,20 @@ class external_runner(base_runner):
 				retcode = p.poll()
 				QtGui.QApplication.processEvents()
 				time.sleep(1)
-			
+
 			debug.msg(u"opensesamerun returned %d" % retcode)
-			
-			print			
-			print open(self.stdout, u"r").read()
+
 			print
-			
+			print(open(self.stdout, u"r").read())
+			print
+
 			# Clean up the temporary file
 			try:
 				os.remove(self.path)
 				os.remove(self.stdout)
 			except:
 				pass
-			
+
 			return None
 		except Exception as e:
 			return e

@@ -115,32 +115,32 @@ class libsrbox:
 		>>> exp.srbox.start()
 		>>> timestamp, buttonlist = exp.srbox.get_button_press(allowed_buttons=[1,2])
 		>>> if 1 in buttonlist:
-		>>> 		print 'Button 1 was pressed!'
+		>>> 		print('Button 1 was pressed!')
 		>>> exp.srbox.stop()
 		</DOC>"""
 
 		# Write the start byte
-		self._srbox.write('\xA0')
 		self._srbox.flushOutput()
 		self._srbox.flushInput()
+		self._srbox.write('\xA0')
 
 	def stop(self):
 
 		"""<DOC>
-		Turns of sending mode, to stop giving output.
+		Turns off sending mode, to stop giving output.
 
 		Example:
 		>>> exp.srbox.start()
 		>>> timestamp, buttonlist = exp.srbox.get_button_press(allowed_buttons=[1,2])
 		>>> if 1 in buttonlist:
-		>>> 		print 'Button 1 was pressed!'
+		>>> 		print('Button 1 was pressed!')
 		>>> exp.srbox.stop()
 		</DOC>"""
 
 		# Write the stop byte and flush the input
-		self._srbox.write('\x20')
 		self._srbox.flushOutput()
 		self._srbox.flushInput()
+		self._srbox.write('\x20')
 
 	def get_button_press(self, allowed_buttons=None, timeout=None):
 
@@ -161,7 +161,7 @@ class libsrbox:
 		>>> exp.srbox.start()
 		>>> timestamp, buttonlist = exp.srbox.get_button_press(allowed_buttons=[1,2])
 		>>> if 1 in buttonlist:
-		>>> 		print 'Button 1 was pressed!'
+		>>> 		print('Button 1 was pressed!')
 		>>> exp.srbox.stop()
 		</DOC>"""
 

@@ -335,7 +335,7 @@ class legacy:
 		self.experiment.last_shown_canvas = self.surface
 		pygame.display.flip()
 		return pygame.time.get_ticks()
-		
+
 
 	def clear(self, color=None):
 
@@ -365,17 +365,17 @@ class legacy:
 		else:
 			color = self.bgcolor
 		self.surface.fill(color)
-		
+
 	def set_bidi(self, bidi):
-		
+
 		"""<DOC>
 		Enables or disables bi-directional text support.
-		
+
 		Arguments:
 		bidi	--	True to enable bi-directional text support, False to
 					disable.
 		</DOC>"""
-		
+
 		self.bidi = bidi
 
 	def set_penwidth(self, penwidth):
@@ -467,7 +467,7 @@ class legacy:
 		"""<DOC>
 		Draws a fixation dot. Various styles are available ('default' equals #
 		'medium-open'):
-		
+
 		- 'large-filled' is a filled circle with a 16px radius.
 		- 'medium-filled' is a filled circle with an 8px radius.
 		- 'small-filled' is a filled circle with a 4px radius.
@@ -494,7 +494,7 @@ class legacy:
 		>>> my_canvas = canvas(exp)
 		>>> my_canvas.fixdot()
 		"""
-		
+
 		if color != None:
 			color = self.color(color)
 		else:
@@ -513,7 +513,7 @@ class legacy:
 			s = 4
 		else:
 			raise osexception(u'Unknown style: %s' % self.style)
-		
+
 		if u'open' in style or style == u'default':
 			self.ellipse(x-s, y-s, 2*s, 2*s, True, color=color)
 			self.ellipse(x-h, y-h, 2*h, 2*h, True, color=self.bgcolor)
@@ -873,7 +873,7 @@ class legacy:
 		except pygame.error as e:
 			raise osexception( \
 				"'%s' is not a supported image format" % fname)
-				
+
 		if scale != None:
 			try:
 				surface = pygame.transform.smoothscale(surface, \
@@ -997,20 +997,25 @@ def init_display(experiment):
 	mode = 0
 	if experiment.get_check("pygame_hwsurface", "yes", ["yes", "no"]) == "yes":
 		mode = mode | pygame.HWSURFACE
-		print "openexp._canvas.legacy.init_display(): enabling hardware surface"
+		print( \
+			u"openexp._canvas.legacy.init_display(): enabling hardware surface")
 	else:
-		print "openexp._canvas.legacy.init_display(): not enabling hardware surface"
+		print( \
+			u"openexp._canvas.legacy.init_display(): not enabling hardware surface")
 
 	if experiment.get_check("pygame_doublebuf", "yes", ["yes", "no"]) == "yes":
 		mode = mode | pygame.DOUBLEBUF
-		print "openexp._canvas.legacy.init_display(): enabling double buffering"
+		print( \
+			u"openexp._canvas.legacy.init_display(): enabling double buffering")
 	else:
-		print "openexp._canvas.legacy.init_display(): not enabling double buffering"
+		print( \
+			u"openexp._canvas.legacy.init_display(): not enabling double buffering")
 
 	if pygame.display.mode_ok(experiment.resolution(), mode):
-		print "openexp._canvas.legacy.init_display(): video mode ok"
+		print(u"openexp._canvas.legacy.init_display(): video mode ok")
 	else:
-		print "openexp._canvas.legacy.init_display(): warning: video mode not ok"
+		print( \
+			u"openexp._canvas.legacy.init_display(): warning: video mode not ok")
 
 	if experiment.fullscreen:
 		mode = mode | pygame.FULLSCREEN

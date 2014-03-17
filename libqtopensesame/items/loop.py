@@ -299,7 +299,7 @@ class loop(libopensesame.loop.loop, qtitem.qtitem):
 		Returns:
 		The number of calls or 0 if the number of calls could not be determined.
 		"""
-		
+
 		try:
 			if self.order == u"sequential" and self.offset != u"yes":
 				return int(self.cycles * self.repeat - self.skip)
@@ -373,7 +373,7 @@ class loop(libopensesame.loop.loop, qtitem.qtitem):
 			self.loop_table.setHorizontalHeaderItem(i, \
 				QtGui.QTableWidgetItem(var))
 			i += 1
-			
+
 		# Fill the table
 		var_columns = {}
 		new_column = 0
@@ -402,7 +402,7 @@ class loop(libopensesame.loop.loop, qtitem.qtitem):
 		Keyword arguments:
 		l	--	A list of variables and values. (default=[])
 		"""
-		
+
 		if len(d) == 0:
 			for var, val in l:
 				if self.i not in self.matrix:
@@ -419,7 +419,7 @@ class loop(libopensesame.loop.loop, qtitem.qtitem):
 	def wizard(self):
 
 		"""Presents the variable wizard dialog."""
-		
+
 		icons = {}
 		icons[u"cut"] = self.experiment.icon(u"cut")
 		icons[u"copy"] = self.experiment.icon(u"copy")
@@ -429,14 +429,14 @@ class loop(libopensesame.loop.loop, qtitem.qtitem):
 		# Set up the wizard dialog
 		a = QtGui.QDialog(self.experiment.main_window.ui.centralwidget)
 		a.ui = loop_wizard_dialog_ui.Ui_loop_wizard_dialog()
-		a.ui.setupUi(a)		
+		a.ui.setupUi(a)
 		self.experiment.main_window.theme.apply_theme(a)
 		a.ui.table_example.build_context_menu(icons)
 		a.ui.table_wizard.build_context_menu(icons)
 		a.ui.table_example.hide()
 		a.ui.table_wizard.setRowCount(255)
 		a.ui.table_wizard.setColumnCount(255)
-		
+
 		a.ui.table_wizard.set_contents(cfg.loop_wizard)
 		if a.exec_() == QtGui.QDialog.Accepted:
 			cfg.loop_wizard = a.ui.table_wizard.get_contents()
@@ -457,23 +457,23 @@ class loop(libopensesame.loop.loop, qtitem.qtitem):
 						var_dict[var] = []
 					elif var != None:
 						var_dict[var].append(s)
-						
+
 			# If the variable wizard was not parsed correctly, provide a
 			# notification and do nothin
 			if len(var_dict) == 0:
 				self.experiment.notify(
 					_(u'You provided an empty or invalid variable definition. For an example of a valid variable definition, open the variable wizard and select "Show example".'))
-				return	
-						
+				return
+
 			# Then fill the loop table
 			self.i = 0
 			self.matrix = {}
 			self.wizard_process(var_dict)
 			self.set_cycle_count(len(self.matrix))
-			self.lock = True		
+			self.lock = True
 			self.loop_widget.ui.spin_cycles.setValue(self.cycle_count())
 			self.lock = False
-			self.refresh_loop_table()		
+			self.refresh_loop_table()
 			self.refresh_summary()
 
 	def init_edit_widget(self):
@@ -485,34 +485,36 @@ class loop(libopensesame.loop.loop, qtitem.qtitem):
 		qtitem.qtitem.init_edit_widget(self, False)
 		self.loop_widget = QtGui.QWidget()
 		self.loop_widget.ui = loop_widget_ui.Ui_loop_widget()
-		self.loop_widget.ui.setupUi(self.loop_widget)		
+		self.loop_widget.ui.setupUi(self.loop_widget)
 		self.experiment.main_window.theme.apply_theme(self.loop_widget)
-		self.loop_widget.ui.widget_advanced.hide()		
-		
+		self.loop_widget.ui.widget_advanced.hide()
+
 		self.edit_vbox.addWidget(self.loop_widget)
-		
-		self.auto_add_widget(self.loop_widget.ui.spin_cycles)		
+
+		self.auto_add_widget(self.loop_widget.ui.spin_cycles)
 		self.auto_add_widget(self.loop_widget.ui.spin_repeat, u"repeat")
 		self.auto_add_widget(self.loop_widget.ui.spin_skip, u"skip")
 		self.auto_add_widget(self.loop_widget.ui.combobox_order, u"order")
 		self.auto_add_widget(self.loop_widget.ui.checkbox_offset, u"offset")
-		self.auto_add_widget(self.loop_widget.ui.edit_break_if, u"break_if")
-		
+		# The break-if box needs to be validated, so we don't add it to the
+		# auto widgets.
+		self.loop_widget.ui.edit_break_if.editingFinished.connect( \
+			self.apply_edit_changes)
 		# The item combobox needs special treatment, because it's changes
 		# must be visible in the item tree as well
 		self.loop_widget.ui.combobox_item.currentIndexChanged.connect( \
 			self.apply_item_change)
-		
+
 		self.loop_widget.ui.button_add_cyclevar.clicked.connect( \
 			self.add_cyclevar)
 		self.loop_widget.ui.button_rename_cyclevar.clicked.connect( \
-			self.rename_cyclevar)			
+			self.rename_cyclevar)
 		self.loop_widget.ui.button_remove_cyclevar.clicked.connect( \
-			self.remove_cyclevar)			
+			self.remove_cyclevar)
 		self.loop_widget.ui.button_wizard.clicked.connect(self.wizard)
 		self.loop_widget.ui.button_apply_weights.clicked.connect( \
 			self.apply_weights)
-		
+
 		self.loop_widget.ui.combobox_order.setItemIcon(0, \
 			self.experiment.icon(u"random"))
 		self.loop_widget.ui.combobox_order.setItemIcon(1, \
@@ -521,8 +523,8 @@ class loop(libopensesame.loop.loop, qtitem.qtitem):
 		self.loop_table = loop_table.loop_table(self, self.cycles, \
 			self.cyclevar_count())
 		self.edit_vbox.addWidget(self.loop_table)
-		
-		self.lock = False				
+
+		self.lock = False
 		return self._edit_widget
 
 	def edit_widget(self):
@@ -530,14 +532,14 @@ class loop(libopensesame.loop.loop, qtitem.qtitem):
 		"""Set the loop controls from the variables"""
 
 		self.lock = True
-		debug.msg()			
+		debug.msg()
 		# Update the item combobox
 		self.experiment.item_combobox(self.item, self.parents(), \
 			self.loop_widget.ui.combobox_item)
 		qtitem.qtitem.edit_widget(self)
-		self.refresh_loop_table(lock=False)		
+		self.refresh_loop_table(lock=False)
 		self.loop_widget.ui.spin_cycles.setValue(self.cycle_count())
-		
+
 		if self.get(u"order") == u"random":
 			self.loop_widget.ui.label_skip.setDisabled(True)
 			self.loop_widget.ui.spin_skip.setDisabled(True)
@@ -550,11 +552,11 @@ class loop(libopensesame.loop.loop, qtitem.qtitem):
 		self.refresh_summary()
 		self.lock = False
 		return self._edit_widget
-	
+
 	def apply_weights(self):
-		
+
 		"""Repeat certain cycles based on the value in a particular column"""
-		
+
 		var_list = self.cyclevar_list()
 		if var_list == None:
 			return
@@ -563,9 +565,9 @@ class loop(libopensesame.loop.loop, qtitem.qtitem):
 			self.experiment.ui.centralwidget, _(u"Apply weight"), \
 			_(u"Which variable contains the weights?"), var_list, \
 			editable=False)
-		if not ok:		
+		if not ok:
 			return
-		
+
 		self.matrix = {}
 		_row = 0
 		for row in range(self.loop_table.rowCount()):
@@ -595,11 +597,11 @@ class loop(libopensesame.loop.loop, qtitem.qtitem):
 					_row += 1
 		self.set_cycle_count(_row)
 		self.edit_widget()
-	
+
 	def apply_item_change(self):
-		
+
 		"""Applies a change to the item to run."""
-		
+
 		item = unicode(self.loop_widget.ui.combobox_item.currentText())
 		debug.msg(item)
 		self.set(u'item', item)
@@ -614,11 +616,15 @@ class loop(libopensesame.loop.loop, qtitem.qtitem):
 		Keyword arguments:
 		dummy	-- A dummy argument passed by the signal handler. (default=None)
 		"""
-		
-		if self.lock or not qtitem.qtitem.apply_edit_changes(self, False):
-			return		
-		self.lock = True
 
+		if self.lock or not qtitem.qtitem.apply_edit_changes(self, False):
+			return
+		self.lock = True
+		# Validate and set the break-if statement
+		break_if = self.clean_cond(self.loop_widget.ui.edit_break_if.text(), \
+			default=u'never')
+		self.loop_widget.ui.edit_break_if.setText(break_if)
+		self.set(u'break_if', break_if)
 		# Walk through the loop table and apply all changes
 		self.matrix = {}
 		for row in range(self.loop_table.rowCount()):
@@ -629,14 +635,12 @@ class loop(libopensesame.loop.loop, qtitem.qtitem):
 				if cell == None:
 					val = u''
 				else:
-					val = unicode(self.loop_table.item(row, col).text())										
+					val = unicode(self.loop_table.item(row, col).text())
 				if not self.sanitize_check(val):
 					val = self.sanitize(val)
 				self.matrix[row][var] = val
-				
 		row = self.loop_table.currentRow()
 		column = self.loop_table.currentColumn()
-		
 		self.set_cycle_count(self.loop_widget.ui.spin_cycles.value())
 		self.refresh_loop_table()
 		self.loop_table.setCurrentCell(row, column)

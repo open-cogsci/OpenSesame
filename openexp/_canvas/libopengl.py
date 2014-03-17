@@ -24,7 +24,7 @@ try:
     from OpenGL.GLU import *
     GLU = 1
 except:
-    print "Warning: OpenGL.GLU did not import correctly."
+    print("Warning: OpenGL.GLU did not import correctly.")
     GLU = None
 
 lastclearcolor = None
@@ -59,7 +59,7 @@ def getGLVersion():
         # that versions like 1.1.1 can be represented as a float (i.e., strip
         # the final digit
         v = glGetString(GL_VERSION)
-        v = ".".join(v.split()[0].split(".")[:2])		
+        v = ".".join(v.split()[0].split(".")[:2])
         gl_version = float(v)
     return gl_version
 
@@ -71,7 +71,7 @@ def doBlockingFlip():
 
     # do the flip
     pygame.display.flip()
-    
+
     # The following is taken from the PsychToolbox
     # Draw a single pixel in left-top area of back-buffer. This will wait/stall the rendering pipeline
     # until the buffer flip has happened, aka immediately after the VBL has started.
@@ -94,7 +94,7 @@ class OGLSprite:
     """Implement the ugly details of "blitting" to OpenGL"""
     def __init__(self, surf, mipmap=None, interpolate=True):
         """OGLSprite(self, surf, mipmap=None) -> OGLSprite
-        
+
         Create a drawable texture out of a given surface."""
 
         w, h = surf.get_width(), surf.get_height()
@@ -119,7 +119,7 @@ class OGLSprite:
         if mipmap:
             if not GLU:
                 raise NotImplementedError("OGLSprite mipmaps require OpenGL.GLU")
-            #build MIPMAP levels. Ths is another slow bit            
+            #build MIPMAP levels. Ths is another slow bit
             gluBuild2DMipmaps(GL_TEXTURE_2D, GL_RGBA, w2, h2, GL_RGBA, GL_UNSIGNED_BYTE, rgba)
             glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT)
             glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT)
@@ -215,7 +215,7 @@ class OGLSprite:
         return self
     def enter(self, xres, yres):
         """enter(self) -> self
-        
+
         Set up OpenGL for drawing textures; do this once per batch of
         textures.  Returns self so ogs.enter().blit().exit() works"""
 

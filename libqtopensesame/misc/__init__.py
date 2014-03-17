@@ -29,11 +29,25 @@ if '--catch-translatables' in sys.argv:
 		if s not in l:
 			f = open(path, u'a')
 			f.write(s + u'\n')
-			print u'New translatable: '+s
+			print(u'New translatable: '+s)
 			f.close()
 		return s
 
 else:
-	# A simple wrapper arround the translate function
 	from PyQt4.QtCore import QCoreApplication
-	_ = lambda s: unicode(QCoreApplication.translate(u'script', s))
+	def _(s, context=u'script'):
+
+		"""
+		Translates a string of text.
+
+		Arguments:
+		s			--	The string to translate.
+
+		Keyword arguments:
+		context		--	The translation context. (default=u'script')
+
+		Returns:
+		The translated string.
+		"""
+
+		return unicode(QCoreApplication.translate(context, s))

@@ -42,14 +42,14 @@ def parse_stack(st):
 	return u'%s(%d).%s' % (os.path.basename(st[1]), st[2], st[3])
 
 def format_stack(st, skip=0):
-	
+
 	"""
 	Generates a nice looking full stracktrace.
-	
+
 	Returns:
 	A string corresponding to the stacktrace.
 	"""
-	
+
 	st = st[skip:]
 	st.reverse()
 	i = 1
@@ -72,19 +72,19 @@ def msg(msg=u'', reason=None):
 	global stack, max_stack
 	st = inspect.stack()
 	if reason != None:
-		print u'[%s]' % reason,
+		print(u'[%s]' % reason)
 	# The terminal may not like anythin but plain ASCII
 	if isinstance(msg, str):
 		msg = msg.decode(u'utf-8', u'ignore')
 	try:
-		print u'%s: %s' % (parse_stack(st[1]), msg)
+		print(u'%s: %s' % (parse_stack(st[1]), msg))
 	except:
 		# This should not happen!
-		print u'%s: Failed to print message to debug window' % \
-			parse_stack(st[1])
+		print(u'%s: Failed to print message to debug window' % \
+			parse_stack(st[1]))
 	if stack:
-		print format_stack(st, skip=2)
-			
+		print(format_stack(st, skip=2))
+
 enabled = '--debug' in sys.argv or '-d' in sys.argv
 if enabled:
 	import inspect

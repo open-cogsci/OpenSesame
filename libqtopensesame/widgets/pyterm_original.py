@@ -29,7 +29,7 @@ def modules():
 	"""Print version info"""
 
 	from libopensesame.misc import module_versions
-	print module_versions()
+	print(module_versions())
 
 class output_buffer:
 
@@ -73,11 +73,11 @@ class output_buffer:
 		if s.strip() != u'':
 			self.plaintext.appendPlainText(s)
 			QtGui.QApplication.processEvents()
-			
+
 	def flush(self):
-		
+
 		"""Dummy flush function for compatibility."""
-		
+
 		pass
 
 class pyterm(code.InteractiveConsole):
@@ -102,10 +102,10 @@ class pyterm(code.InteractiveConsole):
 		Arguments:
 		s -- the output string
 		"""
-		
+
 		if isinstance(s, str):
 			s = s.decode(u'utf-8', u'replace')
-		print s.replace(u'\n', u'')
+		print(s.replace(u'\n', u''))
 
 class console(QtGui.QPlainTextEdit):
 
@@ -151,7 +151,7 @@ class console(QtGui.QPlainTextEdit):
 			sys.version_info[2]) \
 			+ "\nType \"help()\", \"copyright()\", \"credits()\" or \"license()\" for more information." \
 			+ "\nType \"modules()\" for details about installed modules and version information." \
-			+ "\nUse the \"print [msg]\" statement in inline_script items to print to this debug window."
+			+ "\nUse the \"print([msg])\" statement in inline_script items to print to this debug window."
 		self.insertPlainText(s)
 
 	def show_prompt(self, suffix=""):
