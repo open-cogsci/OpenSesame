@@ -81,14 +81,20 @@ class gstreamer:
 		# Create required elements
 		self.panner = gst.element_factory_make("audiopanorama","panner")
 		self.pitcher = gst.element_factory_make("pitch","pitch_controller")
+		convert = gst.element_factory_make("audioconvert", "convert")
 		audiosink = gst.element_factory_make("autoaudiosink","playback")		
 		
 		# Put in bin and link elements together
 		output_bin = gst.Bin("postprocessing")
-		output_bin.add_many(self.panner, self.pitcher, audiosink)
-		self.panner.link(self.pitcher)
-		self.pitcher.link(audiosink)
-				
+		output_bin.add_many(self.pitcher, self.panner, convert, audiosink)
+		gst.element_link_many(self.pitcher, self.panner, convert, audiosink)
+
+		# Create pad (entry point for playbin2 in output_bin)		
+		pad = self.pitcher.get_static_pad("sink")
+		ghost_pad = gst.GhostPad("sink", pad)
+		ghost_pad.set_active(True)
+		output_bin.add_pad(ghost_pad)
+							
 		# Create player and route output to bin		
 		self.player = gst.element_factory_make("playbin2", "player")
 		self.player.set_property("audio-sink", output_bin)
@@ -228,10 +234,6 @@ class gstreamer:
 		>>> my_sampler.pitch(2.0)
 		</DOC>"""
 
-		# On Android, numpy does not exist and this is not supported
-		if numpy == None:
-			return
-
 		if type(p) not in (int, float) or p <= 0:
 			raise osexception( \
 				u"openexp._sampler.gstreamer.pitch() requires a positive number")
@@ -239,14 +241,7 @@ class gstreamer:
 		if p == 1:
 			return
 
-#		buf = pygame.sndarray.array(self.sound)
-#		_buf = []
-#
-#		for i in range(int(float(len(buf)) / p)):
-#			_buf.append(buf[int(float(i) * p)])
-#
-#		self.sound = pygame.sndarray.make_sound(numpy.array(_buf, \
-#			dtype=u"int16"))
+		self.pitcher.set_property("pitch", p)
 
 	def pan(self, p):
 
@@ -267,37 +262,21 @@ class gstreamer:
 		>>> my_sampler.pan('left')
 		</DOC>"""
 
-		# On Android, numpy does not exist and this is not supported
-		if numpy == None:
-			return
-
 		if type(p) not in (int, float) and p not in (u"left", u"right"):
 			raise osexception( \
 				u"openexp._sampler.gstreamer.pan() requires a number or 'left', 'right'")
 
 		if p == 0:
-			return
+			return	
 
-#		buf = pygame.sndarray.array(self.sound)
-#
-#		for i in range(len(buf)):
-#
-#			l = buf[i][0]
-#			r = buf[i][1]
-#
-#			if p == "left":
-#				r = 0
-#			elif p == "right":
-#				l = 0
-#			elif p < 0:
-#				r = int(float(r) / abs(p))
-#			else:
-#				l = int(float(l) / p)
-#
-#			buf[i][0] = l
-#			buf[i][1] = r
-#
-#		self.sound = pygame.sndarray.make_sound(numpy.array(buf))
+		if p == "left":
+			p = -1.0
+		elif p == "right":
+			p = 1.0
+		else:
+			p /= 20.0
+
+		self.panner.set_property("panorama", p)
 
 	def play(self, block=False):
 
@@ -366,7 +345,6 @@ class gstreamer:
 		>>> my_sampler.resume()
 		</DOC>"""
 
-		self.player.set_state(gst.STATE_PAUSED)
 		if self.player.get_state()[1].value_name == "GST_STATE_PLAYING":
 			self.player.set_state(gst.STATE_PAUSED)
 			self._playing = False
