@@ -78,7 +78,22 @@ class gstreamer:
 		>>> my_sampler = sampler(exp, src)
 		</DOC>"""
 
-		self.player = gst.element_factory_make("playbin2", "player")	
+		# Create required elements
+		self.panner = gst.element_factory_make("audiopanorama","panner")
+		self.pitcher = gst.element_factory_make("pitch","pitch_controller")
+		audiosink = gst.element_factory_make("autoaudiosink","playback")		
+		
+		# Put in bin and link elements together
+		output_bin = gst.Bin("postprocessing")
+		output_bin.add_many(self.panner, self.pitcher, audiosink)
+		self.panner.link(self.pitcher)
+		self.pitcher.link(audiosink)
+				
+		# Create player and route output to bin		
+		self.player = gst.element_factory_make("playbin2", "player")
+		self.player.set_property("audio-sink", output_bin)
+		
+		# Create bus reference to keep track of what's happening in the player
 		self.bus = self.player.get_bus()		
 		self.bus.enable_sync_message_emission()
 
