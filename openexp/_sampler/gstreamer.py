@@ -153,6 +153,13 @@ class gstreamer:
 				print self.experiment.time() - self._starttime
 				if self.experiment.time() - self._starttime > self._stop_after:					
 					self.stop()
+					
+			if self._fade_in > 0:
+				passed_time = self.experiment.time() - self._starttime
+				if  passed_time < self._fade_in:
+					vol = float(passed_time)/self._fade_in * 1.0					
+					self.player.set_property("volume",vol)
+					
 				
 	def stop_after(self, ms):
 
@@ -298,7 +305,8 @@ class gstreamer:
 			self.player.seek_simple(gst.FORMAT_TIME, gst.SEEK_FLAG_FLUSH, 1.0)
 			self._end_of_stream_reached = False
 
-		print self._stop_after
+		if self._fade_in > 0:
+			self.player.set_property("volume", 0)
 
 		self._starttime = self.experiment.time()				
 		self.gst_listener.start()
@@ -327,7 +335,6 @@ class gstreamer:
 			self._playing = False
 			self._end_of_stream_reached = True
 			self.player.set_state(gst.STATE_NULL)
-			print "STOPPED PLAYBACK!"
 
 	def pause(self):
 
