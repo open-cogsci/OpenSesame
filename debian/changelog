@@ -13,6 +13,12 @@ opensesame (2.8.1~pre1-ubuntu1) saucy; urgency=low
 
  -- Sebastiaan Mathot <s.mathot@cogsci.nl>  Mon, 24 Feb 2014 16:23:27 +0100
 
+opensesame (2.8.0-ubuntu4) saucy; urgency=low
+
+  * Fix missing help files
+
+ -- Sebastiaan Mathot <s.mathot@cogsci.nl>  Tue, 18 Feb 2014 10:15:47 +0100
+
 opensesame (2.8.0-ubuntu3) saucy; urgency=low
 
   * New functionality and improvements
@@ -103,7 +109,7 @@ opensesame (0.27-ubuntu1) precise; urgency=low
 
 opensesame (0.26-2) unstable; urgency=low
 
-  * Loads of bug-fixes. 
+  * Loads of bug-fixes.
 
  -- Sebastiaan Mathot <s.mathot@cogsci.nl>  Mon, 02 Apr 2012 11:46:10 +0200
 
@@ -111,7 +117,7 @@ opensesame (0.25-1) unstable; urgency=low
 
   * Loads of bug-fixes.
   * Editor component now uses Scintilla.
-    
+
  -- Sebastiaan Mathot <s.mathot@cogsci.nl>  Tue, 08 Nov 2011 12:48:24 +0100
 
 opensesame (0.24-1) unstable; urgency=low
