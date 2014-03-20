@@ -60,7 +60,7 @@ class legacy(openexp._sampler.legacy.legacy):
 			int(freq)
 		except:
 			freq = self.key_to_freq(freq)
-
+			
 		# Set the oscillator function
 		if osc == "sine":
 			_func = math.sin
@@ -115,7 +115,7 @@ class legacy(openexp._sampler.legacy.legacy):
 		>>> print('An a2 is %d Hz' % my_synth.key_to_freq('a2'))
 		</DOC>"""
 
-		if type(key) != str or len(key) < 2:
+		if not type(key) in [str,unicode] or len(key) < 2:
 			raise osexception( \
 				"synth.key_to_freq(): '%s' is not a valid note, expecting something like 'A1'")
 
@@ -155,7 +155,7 @@ class legacy(openexp._sampler.legacy.legacy):
 			o = 0.5 ** (abs(o) + 1)
 			freq = f * o
 		else:
-			freq = f ** o
+			freq = f * o
 
 		return freq
 
