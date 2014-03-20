@@ -23,7 +23,6 @@ import os
 import sys
 import urlparse, urllib		# To build the URI that gst requires
 import threading
-import numpy
 
 # Gstreamer components
 
@@ -150,14 +149,13 @@ class gstreamer:
 				self.experiment.sleep(5)
 				
 			if self._stop_after:
-				print self.experiment.time() - self._starttime
 				if self.experiment.time() - self._starttime > self._stop_after:					
 					self.stop()
 					
 			if self._fade_in > 0:
 				passed_time = self.experiment.time() - self._starttime
 				if  passed_time < self._fade_in:
-					vol = float(passed_time)/self._fade_in * 1.0					
+					vol = float(passed_time)/self._fade_in * self._volume					
 					self.player.set_property("volume",vol)
 					
 				
