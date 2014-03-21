@@ -53,7 +53,7 @@ except:
 
 class gstreamer:
 	"""
-	The sampler loads a sound file in .ogg or .wav format from disk and plays
+	The sampler loads a sound file from disk and plays
 	it back. The sampler offers a number of basic operations, such as pitch,
 	panning, and fade in.
 	"""
@@ -64,18 +64,7 @@ class gstreamer:
 
 	def __init__(self, experiment, src):
 
-		"""<DOC>
-		Initializes the sampler with a specified file.
-
-		Arguments:
-		experiment -- An instance of libopensesame.experiment.experiment.
-		src -- A path to a .wav or .ogg file.
-
-		Example:
-		>>> from openexp.sampler import sampler
-		>>> src = exp.get_file('my_sound.ogg')
-		>>> my_sampler = sampler(exp, src)
-		</DOC>"""
+		"""See openexp._sampler.legacy"""
 
 		# Create required elements
 		self.panner = gst.element_factory_make("audiopanorama","panner")
@@ -129,11 +118,7 @@ class gstreamer:
 		
 	def _monitor_events(self):
 		
-		"""
-		Process gstreamer events in the background. (To allow playback of sound
-		even when experiment continues
-						
-		"""
+		"""See openexp._sampler.legacy"""
 		while not self._end_of_stream_reached:				
 			event = self.bus.pop()	
 			if event:				
@@ -161,18 +146,7 @@ class gstreamer:
 				
 	def stop_after(self, ms):
 
-		"""<DOC>
-		Specifies a duration after which the sampler stops playing.
-
-		Arguments:
-		ms -- An integer value specifying the duration in milliseconds.
-
-		Example:
-		>>> from openexp.sampler import sampler
-		>>> src = exp.get_file('my_sound.ogg')
-		>>> my_sampler = sampler(exp, src)
-		>>> my_sampler.stop_after(100)
-		</DOC>"""
+		"""See openexp._sampler.legacy"""
 
 		if type(ms) != int or ms < 0:
 			raise osexception( \
@@ -182,18 +156,7 @@ class gstreamer:
 
 	def fade_in(self, ms):
 
-		"""<DOC>
-		Sets the fade-in time in milliseconds.
-
-		Arguments:
-		ms -- An integer value specifying the duration in milliseconds.
-
-		Example:
-		>>> from openexp.sampler import sampler
-		>>> src = exp.get_file('my_sound.ogg')
-		>>> my_sampler = sampler(exp, src)
-		>>> my_sampler.fade_in(100)
-		</DOC>"""
+		"""See openexp._sampler.legacy"""
 
 		if type(ms) != int or ms < 0:
 			raise osexception( \
@@ -203,18 +166,7 @@ class gstreamer:
 
 	def volume(self, vol):
 
-		"""<DOC>
-		Sets the volume.
-
-		Arguments:
-		vol -- A volume between 0.0 and 1.0
-
-		Example:
-		>>> from openexp.sampler import sampler
-		>>> src = exp.get_file('my_sound.ogg')
-		>>> my_sampler = sampler(exp, src)
-		>>> my_sampler.volume(0.5)
-		</DOC>"""
+		"""See openexp._sampler.legacy"""
 
 		if type(vol) not in (int, float) or vol < 0 or vol > 1:
 			raise osexception( \
@@ -225,19 +177,7 @@ class gstreamer:
 
 	def pitch(self, p):
 
-		"""<DOC>
-		Sets the relative pitch of the sample.
-
-		Arguments:
-		p -- The pitch. p > 1.0 slows the sample down, p < 1.0 speeds #
-				the sample up.
-
-		Example:
-		>>> from openexp.sampler import sampler
-		>>> src = exp.get_file('my_sound.ogg')
-		>>> my_sampler = sampler(exp, src)
-		>>> my_sampler.pitch(2.0)
-		</DOC>"""
+		"""See openexp._sampler.legacy"""
 
 		if type(p) not in (int, float) or p <= 0:
 			raise osexception( \
@@ -250,22 +190,7 @@ class gstreamer:
 
 	def pan(self, p):
 
-		"""<DOC>
-		Sets the panning of the sample. The volume of the "unpanned" channel #
-		decreases, the volume of the other channel remains the same. To fully #
-		mute one channel specify "left" (mutes right, pans to left) or "right" #
-		(mutes left, pans to right").
-
-		Arguments:
-		p -- Panning. A float (p < 0 = to left, p > 0 = to right) or string #
-			 ("left" or "right").
-
-		Example:
-		>>> from openexp.sampler import sampler
-		>>> src = exp.get_file('my_sound.ogg')
-		>>> my_sampler = sampler(exp, src)
-		>>> my_sampler.pan('left')
-		</DOC>"""
+		"""See openexp._sampler.legacy"""
 
 		if type(p) not in (int, float) and p not in (u"left", u"right"):
 			raise osexception( \
@@ -285,18 +210,7 @@ class gstreamer:
 
 	def play(self, block=False):
 
-		"""<DOC>
-		Plays the sound.
-
-		Keyword arguments:
-		block -- If True, block until the sound is finished (default = False).
-
-		Example:
-		>>> from openexp.sampler import sampler
-		>>> src = exp.get_file('my_sound.ogg')
-		>>> my_sampler = sampler(exp, src)
-		>>> my_sampler.play()
-		</DOC>"""
+		"""See openexp._sampler.legacy"""
 
 		# Rewind file is it has been completely played before
 		if self._end_of_stream_reached:		
@@ -317,17 +231,7 @@ class gstreamer:
 
 	def stop(self):
 
-		"""<DOC>
-		Stops the currently playing sound (if any).
-
-		Example:
-		>>> from openexp.sampler import sampler
-		>>> src = exp.get_file('my_sound.ogg')
-		>>> my_sampler = sampler(exp, src)
-		>>> my_sampler.play()
-		>>> self.sleep(100)
-		>>> my_sampler.stop()
-		</DOC>"""
+		"""See openexp._sampler.legacy"""
 		
 		if self.player.get_state()[1].value_name != "GST_STATE_NULL":
 			self._playing = False
@@ -336,19 +240,7 @@ class gstreamer:
 
 	def pause(self):
 
-		"""<DOC>
-		Pauses playback (if any).
-
-		Example:
-		>>> from openexp.sampler import sampler
-		>>> src = exp.get_file('my_sound.ogg')
-		>>> my_sampler = sampler(exp, src)
-		>>> my_sampler.play()
-		>>> self.sleep(100)
-		>>> my_sampler.pause()
-		>>> self.sleep(100)
-		>>> my_sampler.resume()
-		</DOC>"""
+		"""See openexp._sampler.legacy"""
 
 		if self.player.get_state()[1].value_name == "GST_STATE_PLAYING":
 			self.player.set_state(gst.STATE_PAUSED)
@@ -356,19 +248,7 @@ class gstreamer:
 
 	def resume(self):
 
-		"""<DOC>
-		Resumes playback (if any).
-
-		Example:
-		>>> from openexp.sampler import sampler
-		>>> src = exp.get_file('my_sound.ogg')
-		>>> my_sampler = sampler(exp, src)
-		>>> my_sampler.play()
-		>>> self.sleep(100)
-		>>> my_sampler.pause()
-		>>> self.sleep(100)
-		>>> my_sampler.resume()
-		</DOC>"""
+		"""See openexp._sampler.legacy"""
 
 		if self.player.get_state()[1].value_name == "GST_STATE_PAUSED":
 			self.player.set_state(gst.STATE_PLAYING)
@@ -376,61 +256,23 @@ class gstreamer:
 
 	def is_playing(self):
 
-		"""<DOC>
-		Checks if a sound is currently playing.
-
-		Returns:
-		True if a sound is playing, False if not.
-
-		Example:
-		>>> from openexp.sampler import sampler
-		>>> src = exp.get_file('my_sound.ogg')
-		>>> my_sampler = sampler(exp, src)
-		>>> my_sampler.play()
-		>>> self.sleep(100)
-		>>> if my_sampler.is_playing():
-		>>> 	print('The sampler is still playing!')
-		</DOC>"""
+		"""See openexp._sampler.legacy"""
 		
 		return self._playing
 	
 	def wait(self):
 
-		"""<DOC>
-		Blocks until the sound has finished playing or returns right away if no #
-		sound is playing.
-
-		Example:
-		>>> from openexp.sampler import sampler
-		>>> src = exp.get_file('my_sound.ogg')
-		>>> my_sampler = sampler(exp, src)
-		>>> my_sampler.play()
-		>>> my_sampler.wait()
-		>>> print('The sampler is finished!')
-		</DOC>"""
+		"""See openexp._sampler.legacy"""
 						
 		while not self._end_of_stream_reached:			
 			self.keyboard.flush()
 			
 
 def init_sound(experiment):
-
-	"""
-	Initializes the pygame mixer before the experiment begins.
-
-	Arguments:
-	experiment -- An instance of libopensesame.experiment.experiment
-	"""
+	"""See openexp._sampler.legacy"""
 	pass
 
 def close_sound(experiment):
-
-	"""
-	Closes the mixer after the experiment is finished.
-
-	Arguments:
-	experiment -- An instance of libopensesame.experiment.experiment
-	"""
-
+	"""See openexp._sampler.legacy"""
 	pass
 

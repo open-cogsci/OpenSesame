@@ -17,7 +17,6 @@ You should have received a copy of the GNU General Public License
 along with openexp.  If not, see <http://www.gnu.org/licenses/>.
 """
 
-
 import os
 import sys
 import threading
@@ -62,25 +61,7 @@ class gstreamer(openexp._sampler.gstreamer.gstreamer):
 
 	def __init__(self, experiment, osc="sine", freq=440, length=100, attack=0, decay=5):
 
-		"""<DOC>
-		Initializes the synthesizer.
-
-		Arguments:
-		experiment -- An instance of libopensesame.experiment.experiment.
-
-		Keyword arguments:
-		osc -- Oscillator, can be "sine", "saw", "square" or "white_noise" #
-			   (default = "sine").
-		freq -- Frequency, either an integer value (value in hertz) or a string #
-				("A1", "eb2", etc.). (Default = 440)
-		length -- The length of the sound in milliseconds (default = 100).
-		attack -- The attack (fade-in) time in milliseconds (default = 0).
-		decay -- The decay (fade-out) time in milliseconds (default = 5).
-
-		Example:
-		>>> from openexp.synth import synth
-		>>> my_synth = synth(exp, freq='b2', length=500)
-		</DOC>"""
+		"""See openexp._synth.legacy"""
 		
 		# If the frequency is not an int, convert it to an int
 		try:
@@ -122,11 +103,7 @@ class gstreamer(openexp._sampler.gstreamer.gstreamer):
 		
 	def _monitor_events(self):
 		
-		"""
-		Process gstreamer events in the background. (To allow playback of sound
-		even when experiment continues
-						
-		"""
+		"""See openexp._synth.legacy"""
 		
 		while self.experiment.time() - self._starttime <= self._stop_after:						
 			passed_time = self.experiment.time() - self._starttime
@@ -148,18 +125,7 @@ class gstreamer(openexp._sampler.gstreamer.gstreamer):
 					
 	def play(self, block=False):
 
-		"""<DOC>
-		Plays the sound.
-
-		Keyword arguments:
-		block -- If True, block until the sound is finished (default = False).
-
-		Example:
-		>>> from openexp.sampler import sampler
-		>>> src = exp.get_file('my_sound.ogg')
-		>>> my_sampler = sampler(exp, src)
-		>>> my_sampler.play()
-		</DOC>"""
+		"""See openexp._synth.legacy"""
 
 		if self._fade_in > 0:
 			self.vol_control.set_property("volume", 0)
@@ -175,36 +141,14 @@ class gstreamer(openexp._sampler.gstreamer.gstreamer):
 			
 	def wait(self):
 
-		"""<DOC>
-		Blocks until the sound has finished playing or returns right away if no #
-		sound is playing.
-
-		Example:
-		>>> from openexp.sampler import sampler
-		>>> src = exp.get_file('my_sound.ogg')
-		>>> my_sampler = sampler(exp, src)
-		>>> my_sampler.play()
-		>>> my_sampler.wait()
-		>>> print('The sampler is finished!')
-		</DOC>"""
+		"""See openexp._synth.legacy"""
 						
 		while self._playing:			
 			self.keyboard.flush()
 
 	def volume(self, vol):
 
-		"""<DOC>
-		Sets the volume.
-
-		Arguments:
-		vol -- A volume between 0.0 and 1.0
-
-		Example:
-		>>> from openexp.sampler import sampler
-		>>> src = exp.get_file('my_sound.ogg')
-		>>> my_sampler = sampler(exp, src)
-		>>> my_sampler.volume(0.5)
-		</DOC>"""
+		"""See openexp._synth.legacy"""
 
 		if type(vol) not in (int, float) or vol < 0 or vol > 1:
 			raise osexception( \
@@ -216,20 +160,7 @@ class gstreamer(openexp._sampler.gstreamer.gstreamer):
 
 	def key_to_freq(self, key):
 
-		"""<DOC>
-		Converts a key (e.g., A1) to a frequency.
-
-		Arguments:
-		key -- A string like "A1", "eb2", etc.
-
-		Returns:
-		An integer value containing the frequency in hertz.
-
-		Example:
-		>>> from openexp.synth import synth
-		>>> my_synth = synth(exp)
-		>>> print('An a2 is %d Hz' % my_synth.key_to_freq('a2'))
-		</DOC>"""
+		"""See openexp._synth.legacy"""
 
 		if not type(key) in [str,unicode] or len(key) < 2:
 			raise osexception( \
