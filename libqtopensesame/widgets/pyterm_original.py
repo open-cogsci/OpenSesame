@@ -22,7 +22,9 @@ import sys
 import os
 import time
 from PyQt4 import QtGui, QtCore
+from libopensesame import debug
 from libqtopensesame.misc import _
+from libqtopensesame.misc.config import cfg
 
 def modules():
 
@@ -121,12 +123,7 @@ class console(QtGui.QPlainTextEdit):
 		"""
 
 		QtGui.QPlainTextEdit.__init__(self, parent)
-		if os.name == u"posix":
-			font = QtGui.QFont(u"mono")
-		else:
-			font = QtGui.QFont(u"courier")
 		self.main_window = parent
-		self.setFont(font)
 		self.collect_input = False
 		self._input = u""
 		self.history = []
@@ -134,8 +131,43 @@ class console(QtGui.QPlainTextEdit):
 		self.pyterm = pyterm(self.main_window)
 		self.pyterm.textedit = self
 		self.setCursorWidth(8)
+		self.setTheme()
 		self.welcome()
 		self.show_prompt()
+
+	def setTheme(self):
+
+		"""Sets the theme, based on the QProgEdit settings."""
+
+		self.setFont(QtGui.QFont(cfg.qProgEditFontFamily, \
+			cfg.qProgEditFontSize))
+		from QProgEdit import QColorScheme
+		if not hasattr(QColorScheme, cfg.qProgEditColorScheme):
+			debug.msg(u'Failed to set debug-output colorscheme')
+			return
+		cs = getattr(QColorScheme, cfg.qProgEditColorScheme)
+		if u'Background' not in cs:
+			background = u'white'
+		else:
+			background = cs[u'Background']
+		if u'Default' not in cs:
+			foreground = u'black'
+		else:
+			foreground = cs[u'Default']
+		self.setStyleSheet(u'background-color: "%s"; color: "%s";' \
+			% (background, foreground))
+
+	def focusInEvent(self, e):
+
+		"""
+		Process focus-in events to set the style of the debug window.
+
+		Arguments:
+		e		--	A focus-in event.
+		"""
+
+		self.setTheme()
+		super(console, self).focusInEvent(e)
 
 	def clear(self):
 
@@ -186,7 +218,7 @@ class console(QtGui.QPlainTextEdit):
 					cmd = self.history.pop()
 					self.show_prompt(cmd)
 					self.history.insert(0, cmd)
-			elif e.key() == QtCore.Qt.Key_Home:				
+			elif e.key() == QtCore.Qt.Key_Home:
 				cursor = self.textCursor()
 				cursor.setPosition(self.textCursor().block().position() \
 					+len(self.prompt))
