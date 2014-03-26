@@ -84,13 +84,13 @@ class pyterm(code.InteractiveConsole):
 
 	"""Custom Python interpreter"""
 
-	def __init__(self, textedit=None):
+	def __init__(self, parent, textedit=None):
 
 		"""Constructor"""
 
 		global modules
 
-		self._locals = {"modules" : modules}
+		self._locals = {u'modules' : modules, u'parent' : parent}
 		code.InteractiveConsole.__init__(self, self._locals)
 		self.textedit = textedit
 
@@ -121,16 +121,17 @@ class console(QtGui.QPlainTextEdit):
 		"""
 
 		QtGui.QPlainTextEdit.__init__(self, parent)
-		if os.name == "posix":
-			font = QtGui.QFont("mono")
+		if os.name == u"posix":
+			font = QtGui.QFont(u"mono")
 		else:
-			font = QtGui.QFont("courier")
+			font = QtGui.QFont(u"courier")
+		self.main_window = parent
 		self.setFont(font)
 		self.collect_input = False
-		self._input = ""
+		self._input = u""
 		self.history = []
-		self.prompt = ">>> "
-		self.pyterm = pyterm()
+		self.prompt = u">>> "
+		self.pyterm = pyterm(self.main_window)
 		self.pyterm.textedit = self
 		self.setCursorWidth(8)
 		self.welcome()
@@ -147,11 +148,11 @@ class console(QtGui.QPlainTextEdit):
 
 		"""Print welcome information"""
 
-		s = "Python %d.%d.%d" % (sys.version_info[0], sys.version_info[1], \
+		s = u"Python %d.%d.%d" % (sys.version_info[0], sys.version_info[1], \
 			sys.version_info[2]) \
-			+ "\nType \"help()\", \"copyright()\", \"credits()\" or \"license()\" for more information." \
-			+ "\nType \"modules()\" for details about installed modules and version information." \
-			+ "\nUse the \"print([msg])\" statement in inline_script items to print to this debug window."
+			+ u"\nType \"help()\", \"copyright()\", \"credits()\" or \"license()\" for more information." \
+			+ u"\nType \"modules()\" for details about installed modules and version information." \
+			+ u"\nUse the \"print([msg])\" statement in inline_script items to print to this debug window."
 		self.insertPlainText(s)
 
 	def show_prompt(self, suffix=""):
@@ -172,7 +173,7 @@ class console(QtGui.QPlainTextEdit):
 		# Emulate the standard input
 		if self.collect_input:
 			if e.key() in [QtCore.Qt.Key_Enter, QtCore.Qt.Key_Return]:
-				self._input += "\n"
+				self._input += u"\n"
 			else:
 				self._input += unicode(e.text())
 				QtGui.QPlainTextEdit.keyPressEvent(self, e)
@@ -184,10 +185,18 @@ class console(QtGui.QPlainTextEdit):
 				if len(self.history) > 0:
 					cmd = self.history.pop()
 					self.show_prompt(cmd)
+					self.history.insert(0, cmd)
+			elif e.key() == QtCore.Qt.Key_Home:				
+				cursor = self.textCursor()
+				cursor.setPosition(self.textCursor().block().position() \
+					+len(self.prompt))
+				self.setTextCursor(cursor)
 			elif e.key() in [QtCore.Qt.Key_Enter, QtCore.Qt.Key_Return]:
 				self.execute()
-			elif e.key() not in [QtCore.Qt.Key_Left, QtCore.Qt.Key_Backspace]\
-				or self.textCursor().positionInBlock() > len(self.prompt):
+			elif e.key() not in [QtCore.Qt.Key_Backspace, QtCore.Qt.Key_Home, \
+				QtCore.Qt.Key_Up, QtCore.Qt.Key_Down] and e.key() != \
+				QtCore.Qt.Key_Left or self.textCursor().positionInBlock() > \
+				len(self.prompt):
 				QtGui.QPlainTextEdit.keyPressEvent(self, e)
 
 	def execute(self):
@@ -198,7 +207,7 @@ class console(QtGui.QPlainTextEdit):
 			s = unicode(self.document().lastBlock().text())[len(self.prompt):]
 		except:
 			self.appendPlainText( \
-				_("Error: Command contains invalid characters"))
+				_(u"Error: Command contains invalid characters"))
 			self.show_prompt()
 			return
 		if len(s) > 0:
