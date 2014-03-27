@@ -23,6 +23,7 @@ import os
 import sys
 import urlparse, urllib		# To build the URI that gst requires
 import threading
+import time
 
 # Gstreamer components
 
@@ -131,7 +132,7 @@ class gstreamer:
 					self.stop()
 					raise Exception(u"Gst Error: %s" % err, debug_info)
 			else:
-				self.experiment.sleep(5)
+				time.sleep(0.001)
 				
 			if self._stop_after:
 				if self.experiment.time() - self._starttime > self._stop_after:					
