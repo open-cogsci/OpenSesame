@@ -20,6 +20,7 @@ along with openexp.  If not, see <http://www.gnu.org/licenses/>.
 import os
 import sys
 import threading
+import time
 
 import openexp._sampler.gstreamer
 from openexp.keyboard import keyboard
@@ -118,7 +119,7 @@ class gstreamer(openexp._sampler.gstreamer.gstreamer):
 				vol = max(0,(self._stop_after - passed_time)/float(self._fade_out) * self._volume)
 				self.vol_control.set_property("volume",vol)
 					
-			self.experiment.sleep(1)
+			time.sleep(0.001)
 
 		self.player.set_state(gst.STATE_NULL)
 		self._playing = False		
@@ -131,8 +132,7 @@ class gstreamer(openexp._sampler.gstreamer.gstreamer):
 			self.vol_control.set_property("volume", 0)
 
 		self._starttime = self.experiment.time()				
-		self.gst_listener.start()
-		
+		self.gst_listener.start()		
 		self.player.set_state(gst.STATE_PLAYING)
 		self._playing = True
 
