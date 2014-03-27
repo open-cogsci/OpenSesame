@@ -33,7 +33,7 @@ class form:
 
 		Arguments:
 		experiment -- An OpenSesame experiment.
-		
+
 		Keyword arguments:
 		cols -- The number of columns (as int) or a list that specifies the #
 				number and relative size of the columns. For example, '[1,2,1]' #
@@ -69,10 +69,10 @@ class form:
 		self.height = experiment.get(u'height')
 		self.spacing = spacing
 		self.margins = type_check.float_list(margins, u'form margins', \
-			min_len=4, max_len=4)		
+			min_len=4, max_len=4)
 		n_cells = len(self.cols)*len(self.rows)
 		self.widgets = [None]*n_cells
-		self.span = [(1,1)]*n_cells		
+		self.span = [(1,1)]*n_cells
 		self.canvas = canvas(self.experiment, auto_prepare=False, fgcolor= \
 			self.item.get(u'foreground'), bgcolor=self.item.get( \
 			u'background'))
@@ -88,7 +88,7 @@ class form:
 
 		"""<DOC>
 		Executes the form.
-		
+
 		Keyword arguments:
 		focus_widget -- A widget that is in the form and should receive a #
 						virtual mouse click when the form is opened. This allows #
@@ -127,7 +127,7 @@ class form:
 
 		Arguments:
 		pos -- A position, which can be an index (int) or a column, row tuple.
-		
+
 		Returns:
 		A cell index
 		</DOC>"""
@@ -137,6 +137,33 @@ class form:
 		if type(pos) in (tuple, list) and len(pos) == 2:
 			return pos[1]*len(self.cols)+pos[0]
 		raise osexception(u'%s is an invalid position in the form' % pos)
+
+	def validate_geometry(self):
+
+		"""
+		Checks whether the form has a valid geometry.
+
+		Exceptions:
+		osexception		--	When the geometry is invalid.
+		"""
+
+		for index1 in range(len(self.widgets)):
+			if self.widgets[index1] == None:
+				continue
+			l = self.get_cell(index1)
+			colspan, rowspan = self.span[index1]
+			for col in range(l[0], l[0]+colspan):
+				for row in range(l[1], l[1]+rowspan):
+					index2 = self.cell_index((col, row))
+					if index1 == index2:
+						continue
+					print '%s, %s (%s)' % (col, row, index2)
+					if len(self.widgets) <= index2:
+						raise osexception( \
+							u'One or more widgets fall outside of your form')
+					if self.widgets[index2] != None:
+						raise osexception( \
+							u'Two or more widgets in your form are overlapping')
 
 	def get_cell(self, index):
 
@@ -150,6 +177,7 @@ class form:
 		A (column, row, column_span, row_span) tuple
 		"""
 
+		index = self.cell_index(index)
 		col = index % len(self.cols)
 		row = index / len(self.cols)
 		colspan, rowspan = self.span[index]
@@ -189,6 +217,7 @@ class form:
 		Draws the form and all the widgets in it.
 		</DOC>"""
 
+		self.validate_geometry()
 		self.canvas.clear()
 		for widget in self.widgets:
 			if widget != None:
@@ -199,15 +228,15 @@ class form:
 
 		"""<DOC>
 		Adds a widget to the form.
-		
+
 		Arguments:
 		widget -- The widget to add.
 		pos -- The position to add the widget, which can be an index or a
 			   (column, row) tuple.
-		
+
 		Keyword arguments:
 		colspan -- The number of columns that the widget should span (default=1).
-		rowspan -- The number of rows that the widget should span (default=1).		
+		rowspan -- The number of rows that the widget should span (default=1).
 		</DOC>"""
 
 		index = self.cell_index(pos)
@@ -234,7 +263,7 @@ class form:
 
 		Arguments:
 		xy -- An (x,y) tuple.
-		
+
 		Returns:
 		A cell index.
 		</DOC>"""
@@ -244,6 +273,3 @@ class form:
 			if x <= xy[0] and x+w >= xy[0] and y <= xy[1] and y+h >= xy[1]:
 				return index
 		return None
-
-
-
