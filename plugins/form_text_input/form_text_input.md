@@ -1,7 +1,7 @@
-# Forms
+# Form_text_input plug-in
 
-Forms are simple interactive displays that can be used to implement questionnaires, text input displays, etc.
+The `form_text_input` plug-in is a simple multi-character input form consisting of a title, question, and text-input area.
 
 For more information, see:
 	
-- <http://osdoc.cogsci.nl/>
+- <http://osdoc.cogsci.nl/forms/form-plug-ins/>
