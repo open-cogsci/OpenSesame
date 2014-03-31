@@ -15,7 +15,8 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
-from libopensesame import debug, exceptions
+from libopensesame.exceptions import osexception
+from libopensesame import debug
 import serial
 import os
 
@@ -52,7 +53,7 @@ class libsrbox:
 			try:
 				self._srbox = serial.Serial(dev, timeout=0, baudrate=19200)
 			except Exception as e:
-				raise exceptions.runtime_error( \
+				raise osexception( \
 					"Failed to open device port '%s' in libsrbox: '%s'" \
 					% (dev, e))
 
@@ -83,11 +84,11 @@ class libsrbox:
 							self._srbox = None
 							pass
 			else:
-				raise exceptions.runtime_error( \
+				raise osexception( \
 					"libsrbox does not know how to auto-detect the SR Box on your platform. Please specify a device.")
 
 		if self._srbox == None:
-			raise exceptions.runtime_error( \
+			raise osexception( \
 				"libsrbox failed to auto-detect an SR Box. Please specify a device.")
 		debug.msg("using device %s" % dev)
 		# Turn off all lights
@@ -114,32 +115,32 @@ class libsrbox:
 		>>> exp.srbox.start()
 		>>> timestamp, buttonlist = exp.srbox.get_button_press(allowed_buttons=[1,2])
 		>>> if 1 in buttonlist:
-		>>> 		print 'Button 1 was pressed!'
+		>>> 		print('Button 1 was pressed!')
 		>>> exp.srbox.stop()
 		</DOC>"""
 
 		# Write the start byte
-		self._srbox.write('\xA0')
 		self._srbox.flushOutput()
 		self._srbox.flushInput()
+		self._srbox.write('\xA0')
 
 	def stop(self):
 
 		"""<DOC>
-		Turns of sending mode, to stop giving output.
+		Turns off sending mode, to stop giving output.
 
 		Example:
 		>>> exp.srbox.start()
 		>>> timestamp, buttonlist = exp.srbox.get_button_press(allowed_buttons=[1,2])
 		>>> if 1 in buttonlist:
-		>>> 		print 'Button 1 was pressed!'
+		>>> 		print('Button 1 was pressed!')
 		>>> exp.srbox.stop()
 		</DOC>"""
 
 		# Write the stop byte and flush the input
-		self._srbox.write('\x20')
 		self._srbox.flushOutput()
 		self._srbox.flushInput()
+		self._srbox.write('\x20')
 
 	def get_button_press(self, allowed_buttons=None, timeout=None):
 
@@ -160,7 +161,7 @@ class libsrbox:
 		>>> exp.srbox.start()
 		>>> timestamp, buttonlist = exp.srbox.get_button_press(allowed_buttons=[1,2])
 		>>> if 1 in buttonlist:
-		>>> 		print 'Button 1 was pressed!'
+		>>> 		print('Button 1 was pressed!')
 		>>> exp.srbox.stop()
 		</DOC>"""
 

@@ -42,11 +42,11 @@ class text_input(label):
 		return_accepts -- Indicates whether a return press should accept and
 						  close the form (default=False).
 		var -- The name of the experimental variable that should be used to log
-			   the widget status (default=None).				
+			   the widget status (default=None).
 		</DOC>"""
 		
 		if type(return_accepts) != bool:
-			return_accepts = return_accepts == u'yes'								
+			return_accepts = return_accepts == u'yes'
 	
 		label.__init__(self, form, text, frame=frame, center=center)
 		self.type = u'text_input'		

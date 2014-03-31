@@ -15,110 +15,133 @@ GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
+
+# About
+
+Provides the `osexception` class for throwing OpenSesame-specific exceptions.
+
+	from libopensesame.exceptions import osexception
+	raise osexception(u'This is a custom exception!')
 """
 
+import re
+from libopensesame.misc import escape_html
+from libopensesame import debug
 import traceback
+import inspect
+import sys
 
-class form_error(Exception):
-
+class osexception(Exception):
+	
 	"""
-	A form_error is thrown when an error occurs in a form or a form widget.
+	A general Exception class for exceptions that occur within OpenSesame.
+	Ideally, only `osexception`s should occur, all other exceptions indicate
+	a (usually harmless) bug somewhere.
 	"""
 
-	def __init__(self, value, full=True):
-
-		if type(value) == str:
-			self.value = unicode(value, errors=u'ignore')
-		else:
-			self.value = value
-		self.full = full
+	def __init__(self, msg, exception=None, **info):
+		
+		"""
+		Constructor.
+		
+		Arguments:
+		msg		--	An Exception message.
+		
+		Keyword arguments:
+		exception	--	An exception that was intercepted or None for
+						self-generated exceptions. (default=None)
+		**info		--	A dictionary with optional additional info for the
+						exception.
+		"""
+		
+		super(osexception, self).__init__(msg)
+		# Create both HTML and plain text representations of the Exception.
+		self._html = u'<b>%s</b><br />\n' % msg
+		self._plaintext = u'\n%s\n\n' % msg
+		self.enc = u'utf-8'
+		# If an Exception is passed, i.e. if we are catching an Exception,
+		# summarize this exception here.
+		self.exception = exception
+		if self.exception != None:
+			info[u'exception type'] = self.exception.__class__.__name__ \
+				.decode(self.enc, u'ignore')
+			info[u'exception message'] = self.exception.message.decode( \
+				self.enc, u'ignore')
+			try:
+				# This is a hacky way to extract the line number from the
+				# stacktrace. Since it's not clear whether this is fullproof,
+				# we try-except it for now.
+				info[u'line'] = traceback.extract_tb(sys.exc_info()[2])[-1][1]
+				# Inline script items automatically add the source encoding as
+				# the first line. Therefore, the reported line is always one
+				# after the actual line, and we need to substract 1.
+				if u'item' in info and info[u'item'] == u'inline_script':
+					info[u'line'] -= 1
+			except:
+				pass
+		# List any additional information that was passed
+		for key, val in info.items():
+			self._html += u'<i>%s</i>: %s<br />\n' % (key, val)
+			self._plaintext += u'%s: %s\n' % (key, val)
+		# If an Exception is passed, we should include a traceback.
+		if self.exception == None:
+			return
+		tb = traceback.format_exc(self.exception).decode(self.enc, u'ignore')
+		self._html += u'<br /><b>Traceback (also in debug window)</b>:<br />\n'
+		self._plaintext += u'\nTraceback:\n'
+		for l in tb.split(u'\n')[1:]:
+			# It is confusing that the contents of the inline script are
+			# described as <string>, so replace that. In addition, we need to
+			# decrease the line numer by 1, to compensate for the extra (hidden)
+			# source-encoding line that the inline script has.
+			if u'item' in info and info[u'item'] == u'inline_script':
+				for g in re.finditer( \
+					u'File "<string>", line (?P<linenr>\d+),', l):
+					try:
+						l = l.replace(g.group(), u'Inline_script, line %d,' % \
+							(int(g.group(u'linenr'))-1))
+					except:
+						debug.msg(u'Failed to correct inline_script exception')
+			self._html += escape_html(l) + u'<br />\n'
+			self._plaintext += l + u'\n'
+			
+	def __unicode__(self):
+		
+		"""
+		Returns:
+		A unicode representation of the exception in plaintext.
+		"""
+		
+		return self._plaintext
 
 	def __str__(self):
+		
+		"""
+		Returns:
+		A string representation of the exception in plaintext.
+		"""
 
-		if self.full:
-			return u'<b>Error:</b> Form error<br /><b>Description</b>: %s' % \
-				self.value
-		return self.value
+		return self._plaintext.encode(u'utf-8')
+	
+	def plaintext(self):
+		
+		"""
+		Returns:
+		A string representation of the exception in plaintext.
+		"""
+		
+		return unicode(self)
+	
+	def html(self):
+		
+		"""
+		Returns:
+		A unicode representation of the exception in HTML format.
+		"""
+		
+		return self._html
 
-class script_error(Exception):
-
-	"""
-	A form_error is thrown when parsing a script using the from_string()
-	functions fails.
-	"""
-
-	def __init__(self, value, full=True):
-
-		if type(value) == str:
-			self.value = unicode(value, errors=u'ignore')
-		else:
-			self.value = value
-		self.full = full
-
-	def __str__(self):
-
-		if self.full:
-			return u'<b>Error:</b> Script error<br /><b>Description</b>: %s' % \
-				self.value
-		return self.value
-
-class runtime_error(Exception):
-
-	"""
-	A runtime error is thrown when somethingg oes wrong while running a script,
-	which includes the preparation phase.
-	"""
-
-	def __init__(self, value):
-
-		if type(value) == str:
-			self.value = unicode(value, errors=u'ignore')
-		else:
-			self.value = value
-
-	def __str__(self):
-
-		return u'<b>Error:</b> Runtime error<br /><b>Description</b>: %s' % \
-			self.value
-
-class inline_error(runtime_error):
-
-	"""
-	An inline error is thrown when something goes wrong in an inline_script
-	item. The Python traceback is parsed and returned.
-	"""
-
-	def __init__(self, item_name, phase, exception):
-
-		self.name = item_name
-		self.phase = phase
-
-		# Split the traceback
-		l = traceback.format_exc(exception).split("\n")
-
-		# Print the traceback to the stdout
-		for r in l:
-			print r
-
-		# We are only interested in the last two lines
-		l = l[-3:]
-
-		s = u'<b>Error</b>: Inline script error'
-		s += u'<br /><b>In</b>: %s (%s phase)' % (item_name, phase)
-		s += u'<br />' + self.parse_line(l[0])
-		s += u'<br /><br /><b>Python traceback</b>:'
-		for r in l[1:]:
-			s += u'<br />%s' % r
-		s += u'<br /><i>Full traceback in debug window</i>'
-		self.value = s
-
-	def parse_line(self, s):
-
-		s = s.replace(u'File "<string>", line', u'<b>Line:</b>')
-		s = s.replace(u', in <module>', u'')
-		return s
-
-	def __str__(self):
-
-		return self.value
-
+# For backwards compatibility, we should also define the old Exception classes
+runtime_error = osexception
+script_error = osexception
+form_error = osexception

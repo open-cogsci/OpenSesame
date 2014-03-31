@@ -1,6 +1,7 @@
-Forms
------
+# Form_multiple_choice plug-in
 
-Forms are simple interactive displays that can be used to implement questionnaires, text input displays, etc.
+The `form_multiple_choice` plug-in provides a single multiple-choice question.
 
-More information can be found on the documentation website, at [http://osdoc.cogsci.nl/forms/about-forms](http://osdoc.cogsci.nl/forms/about-forms).
+For more information, see:
+	
+- <http://osdoc.cogsci.nl/forms/form-plug-ins/>

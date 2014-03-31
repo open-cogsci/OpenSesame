@@ -18,15 +18,15 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame import item, exceptions, generic_response, widgets, plugins
-from libqtopensesame import qtplugin
+from libqtopensesame.items.qtautoplugin import qtautoplugin
 from openexp.canvas import canvas
 import openexp.keyboard
 import os.path
 from PyQt4 import QtGui, QtCore
 
-form_base = plugins.import_plugin('form_base')
+form_base = plugins.import_plugin(u'form_base')
 
-default_script = """
+default_script = u"""
 __form_text__
 You are about to participate in an experiment.
 
@@ -56,14 +56,14 @@ class form_consent(form_base.form_base):
 	def __init__(self, name, experiment, string=None):
 
 		"""
-		Constructor
+		Constructor.
 
 		Arguments:
-		name -- the name of the item
-		experiment -- the experiment instance
+		name		--	The name of the item.
+		experiment	--	The experiment instance.
 
 		Keyword arguments:
-		string -- a definition string
+		string		--	A definition string. (default=None)
 		"""
 
 		if string == None:
@@ -72,15 +72,15 @@ class form_consent(form_base.form_base):
 		# <http://thingspython.wordpress.com/2010/09/27/another-super-wrinkle-raising-typeerror/>			
 		self.super_form_consent = super(form_consent, self)
 		self.super_form_consent.__init__(name, experiment, string, item_type= \
-			'form_consent', description='A simple consent form')
+			u'form_consent', description=u'A simple consent form')
 
 	def from_string(self, script):
 
 		"""
-		Re-generate the form from a definition script
+		Re-generates the form from a definition script.
 
 		Arguments:
-		script -- the definition script
+		script		--	The definition script.
 		"""
 
 		self._widgets = []
@@ -88,77 +88,26 @@ class form_consent(form_base.form_base):
 
 	def run(self):
 
-		"""Execute the consent form"""
+		"""Executes the consent form."""
 
 		while True:
 			# In this case we cannot call super(form_consent, self), because
 			# modules may have been reloaded. The exact nature of the bug is
 			# unclear, but passing the __class__ property resolves it. See also
 			# <http://thingspython.wordpress.com/2010/09/27/another-super-wrinkle-raising-typeerror/>
-
 			self.super_form_consent.run()
-			if self.get('checkbox_status') == self.get('checkbox_text') and \
-				self.get('accept_status') == 'yes':
+			if self.get(u'checkbox_status') == self.get(u'checkbox_text') and \
+				self.get(u'accept_status') == u'yes':
 				break
 			c = canvas(self.experiment)
-			c.text(self.get('decline_message'))
+			c.text(self.get(u'decline_message'))
 			c.show()
 			self.sleep(5000)
+			
+class qtform_consent(form_consent, qtautoplugin):
+	
+	def __init__(self, name, experiment, script=None):
 
-class qtform_consent(form_consent, qtplugin.qtplugin):
-
-	"""GUI controls"""
-
-	def __init__(self, name, experiment, string=None):
-
-		"""
-		Constructor
-
-		Arguments:
-		name -- the name of the item
-		experiment -- the experiment instance
-
-		Keyword arguments:
-		string -- a definition string
-		"""
-
-		form_consent.__init__(self, name, experiment, string)
-		qtplugin.qtplugin.__init__(self, __file__)
-
-	def init_edit_widget(self):
-
-		"""Initialize the controls"""
-
-		self.lock = True
-		qtplugin.qtplugin.init_edit_widget(self, False)
-		self.add_line_edit_control('form_title', 'Form title', tooltip= \
-			'Form title')
-		self.add_line_edit_control('checkbox_text', 'Checkbox text', \
-			tooltip='Checbox text')
-		self.add_line_edit_control('accept_text', 'Accept button text', \
-			tooltip='Accept button text')
-		self.add_line_edit_control('decline_text', 'Decline button text', \
-			tooltip='Decline button text')
-		self.add_line_edit_control('decline_message', 'Message on decline', \
-			tooltip='Shown when the participant does not accept the consent form')
-		self.add_editor_control('form_text', 'Consent form text', \
-			tooltip='Consent form text')
-		self.lock = False
-
-	def apply_edit_changes(self):
-
-		"""Apply the controls"""
-
-		if not qtplugin.qtplugin.apply_edit_changes(self, False) or self.lock:
-			return False
-		return True
-
-	def edit_widget(self):
-
-		"""Update the controls"""
-
-		self.lock = True
-		qtplugin.qtplugin.edit_widget(self)
-		self.lock = False
-		return self._edit_widget
+		form_consent.__init__(self, name, experiment, script)
+		qtautoplugin.__init__(self, __file__)	
 

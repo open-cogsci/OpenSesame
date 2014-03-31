@@ -15,7 +15,8 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
-from libopensesame import item, generic_response, exceptions, debug
+from libopensesame.exceptions import osexception
+from libopensesame import item, generic_response, debug
 from libqtopensesame import qtplugin
 import openexp.keyboard
 import imp
@@ -77,11 +78,11 @@ class srbox(item.item, generic_response.generic_response):
 					try:
 						r = int(r)
 					except:
-						raise exceptions.runtime_error( \
+						raise osexception( \
 							"'%s' is not a valid response in srbox '%s'. Expecting a number in the range 0 .. 5." \
 							% (r, self.name))
 					if r < 0 or r > 255:
-						raise exceptions.runtime_error( \
+						raise osexception( \
 							"'%s' is not a valid response in srbox '%s'. Expecting a number in the range 0 .. 5." \
 							% (r, self.name))
 					self._allowed_responses.append(r)
@@ -162,7 +163,7 @@ class srbox(item.item, generic_response.generic_response):
 				if resp not in ('timeout', None):
 					resp = int(resp)
 			except:
-				raise exceptions.runtime_error( \
+				raise osexception( \
 					"An error occured in srbox '%s': Only number keys are accepted in dummy mode" \
 					% self.name)
 
@@ -175,7 +176,7 @@ class srbox(item.item, generic_response.generic_response):
 					self._resp_func(self._allowed_responses, self._timeout)
 				self.experiment.srbox.stop()
 			except Exception as e:
-				raise exceptions.runtime_error( \
+				raise osexception( \
 					"An error occured in srbox '%s': %s." % (self.name, e))
 
 		debug.msg("received %s" % resp)

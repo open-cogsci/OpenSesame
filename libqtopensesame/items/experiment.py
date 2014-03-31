@@ -88,7 +88,7 @@ class experiment(libopensesame.experiment.experiment):
 
 		"""
 		Specifies the module that is used to get items from.
-		
+
 		Returns:
 		u'libqtopensesame.items'
 		"""
@@ -99,9 +99,9 @@ class experiment(libopensesame.experiment.experiment):
 
 		"""
 		Specifies a prefix that should be added to classes for plugins.
-		
+
 		Returns:
-		u'qt'		
+		u'qt'
 		"""
 
 		return u'qt'
@@ -333,31 +333,23 @@ class experiment(libopensesame.experiment.experiment):
 		else:
 			index = max(0, c.currentIndex())
 			c.clear()
-
-		item_dict = {}
 		i = 0
-
+		# If we are trying to select a non-existing item, add a dummy entry to
+		# the combobox
 		if select != None and select not in self.experiment.items:
-			c.addItem("[Please select an item]")
+			c.addItem(u'[Please select an item]')
 			c.setCurrentIndex(0)
-			c.setItemIcon(i, self.icon("down"))
+			c.setItemIcon(i, self.icon(u'down'))
 			i += 1
-
-		for item in self.experiment.items:
+		# Add all existing items (except excluded) in alphabetical order
+		for item in sorted(self.experiment.items):
 			if item not in exclude:
 				item_type = self.experiment.items[item].item_type
-				if item_type not in item_dict:
-					item_dict[item_type] = []
-				item_dict[item_type].append(item)
-
-		for item_type in item_dict:
-			for item in sorted(item_dict[item_type]):
 				c.addItem(item)
 				c.setItemIcon(i, self.icon(self.experiment.items[item].item_type))
 				if self.experiment.items[item].name == select:
 					index = i
 				i += 1
-
 		c.setCurrentIndex(index)
 		return c
 
@@ -386,7 +378,8 @@ class experiment(libopensesame.experiment.experiment):
 		else:
 			c.clear()
 		i = 0
-		for item in self.core_items:
+		# Add all core items in alphabetical order.
+		for item in sorted(self.core_items):
 			c.addItem(item)
 			c.setItemIcon(i, self.icon(item))
 			if item == select:
@@ -395,7 +388,9 @@ class experiment(libopensesame.experiment.experiment):
 		if core_items and plugins:
 			c.addItem(u'')
 			i += 1
-		for plugin in libopensesame.plugins.list_plugins():
+		# Add all plug-ins in alphabetical order. We need to sort the list here
+		# because `list_plugins()` sorts by priority.
+		for plugin in sorted(libopensesame.plugins.list_plugins()):
 			c.addItem(plugin)
 			c.setItemIcon(i, QtGui.QIcon( \
 				libopensesame.plugins.plugin_icon_small(plugin)))
@@ -420,13 +415,17 @@ class experiment(libopensesame.experiment.experiment):
 				combobox.setCurrentIndex(i)
 				break
 
-	def notify(self, message):
+	def notify(self, msg, title=None, icon=None):
 
 		"""
 		Presents a default notification dialog.
 
 		Arguments:
-		message		--	The message to be shown.
+		msg		--	The message to be shown.
+
+		Keyword arguments:
+		title	--	A title message or None for default title. (default=None)
+		icon	--	A custom icon or None for default icon. (default=None)
 		"""
 
 		from libqtopensesame.ui import notification_dialog_ui
@@ -434,7 +433,12 @@ class experiment(libopensesame.experiment.experiment):
 		a.ui = notification_dialog_ui.Ui_notification_dialog()
 		a.ui.setupUi(a)
 		self.main_window.theme.apply_theme(a)
-		a.ui.textedit_notification.setHtml(self.unistr(message))
+		a.ui.textedit_notification.setHtml(self.unistr(msg))
+		if title != None:
+			a.ui.label_title.setText(title)
+		if icon != None:
+			a.ui.label_notification.setPixmap(self.main_window.theme.qpixmap( \
+				icon))
 		a.adjustSize()
 		a.show()
 

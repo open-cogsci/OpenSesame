@@ -21,14 +21,14 @@ import pygame
 from pygame.locals import *
 import random
 import openexp._canvas.legacy
-import openexp.exceptions
+from libopensesame.exceptions import osexception
+from libopensesame import debug, html
 import math
 import subprocess
 import os
 import os.path
 import tempfile
 import copy
-
 import libopengl
 
 class opengl(openexp._canvas.legacy.legacy):
@@ -43,7 +43,7 @@ class opengl(openexp._canvas.legacy.legacy):
 	def __init__(self, experiment, bgcolor=None, fgcolor=None, auto_prepare=True):
 
 		self.experiment = experiment
-
+		self.html = html.html()
 		if fgcolor == None:
 			fgcolor = self.experiment.get("foreground")
 		if bgcolor == None:
@@ -54,7 +54,7 @@ class opengl(openexp._canvas.legacy.legacy):
 		self.penwidth = 1
 		self.antialias = True
 		self.font = self.experiment.font
-
+		self.bidi = self.experiment.get(u'bidi')==u'yes'
 		# set to have no objects
 		self.showables = []
 		self.clear()
@@ -140,30 +140,6 @@ class opengl(openexp._canvas.legacy.legacy):
 		"""see openexp._canvas.legacy"""
 
 		self.font = pygame.font.Font(self.experiment.resource("%s.ttf" % style), size)
-
-	def fixdot(self, x = None, y = None, color = None):
-
-		"""see openexp._canvas.legacy"""
-
-		if color == None:
-			color = self.fgcolor
-		color = self.color(color)
-
-		if x == None:
-			x = self.xcenter()
-
-		if y == None:
-			y = self.ycenter()
-
-		r1 = 8
-		r2 = 2
-		surface = pygame.Surface((r1*2,r1*2), SRCALPHA)
-
-		pygame.draw.circle(surface, color, (r1, r1), r1, 0)
-		pygame.draw.circle(surface, self.bgcolor, (r1, r1), r2, 0)
-
-		self.showables.append((libopengl.LowImage(surface),
-				       (x-r1,y-r1)))
 
 	def line(self, sx, sy, ex, ey, color = None):
 
@@ -309,7 +285,7 @@ class opengl(openexp._canvas.legacy.legacy):
 		"""see openexp._canvas.legacy"""
 
 		# TODO
-		raise openexp.exceptions.canvas_error( \
+		raise osexception( \
 			"openexp._canvas.opengl.polygon() not implemented")
 
 	def text_size(self, text):
@@ -355,7 +331,7 @@ class opengl(openexp._canvas.legacy.legacy):
 		try:
 			surface = pygame.image.load(fname)
 		except pygame.error as e:
-			raise openexp.exceptions.canvas_error("'%s' is not a supported image format" % fname)
+			raise osexception("'%s' is not a supported image format" % fname)
 
 		if scale != None:
 			surface = pygame.transform.smoothscale(surface, (int(surface.get_width() * scale), int(surface.get_height() * scale)))
@@ -432,9 +408,9 @@ def init_display(experiment):
 	if experiment.fullscreen:
 		mode = mode | pygame.FULLSCREEN
 	if pygame.display.mode_ok(experiment.resolution(), mode):
-		print "video.opengl.init_display(): video mode ok"
+		print("video.opengl.init_display(): video mode ok")
 	else:
-		print "video.opengl.init_display(): warning: video mode not ok"
+		print("video.opengl.init_display(): warning: video mode not ok")
 
 	# Set the sync to VBL
 

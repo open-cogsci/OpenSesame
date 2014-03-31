@@ -1,4 +1,57 @@
-opensesame (0.27.4-2) unstable; urgency=low
+opensesame (2.8.1-1) unstable; urgency=low
+
+  * Bugs fixed
+    - Do not choke on translations in font-selection dialog
+    - Fix buffer-flush issue in srbox plug-in (#234)
+    - Correctly parse non-Unix line separators in text_display plug-in (#237)
+    - Saner focus and event-handling in script view.
+    - Initial jitter_mode value in advanced_delay plug-in (#238)
+    - Fix crash on special characters in experiment title with legacy back-end
+  * Improvements
+    - Validate form geometry (#222)
+    - Improvements to joystick plug-in
+    - Flush keyboard during sound playback to catch 'Escape' presses (#227)
+    - Sort comboboxes alphabetically (#233)
+    - Sort items alphabetically in OpenSesame script (#236)
+    - Improved validation of conditional statements (#235)
+    - Debug window respects QProgEdit theme
+    - Store filename-only logfiles relative to experiment folder (#161)
+    - Use one-tab mode by default
+
+ -- Sebastiaan Mathot <s.mathot@cogsci.nl>  Mon, 24 Feb 2014 16:23:27 +0100
+
+opensesame (2.8.0-ubuntu4) saucy; urgency=low
+
+  * Fix missing help files
+
+ -- Sebastiaan Mathot <s.mathot@cogsci.nl>  Tue, 18 Feb 2014 10:15:47 +0100
+
+opensesame (2.8.0-ubuntu3) saucy; urgency=low
+
+  * New functionality and improvements
+    - Add runner functionality
+    - Improved exception handling
+    - Migrate to QProgEdit editor component
+    - Updated offline help pages
+    - Improve support for non-Latin alphabets (#211)
+    - Add correct-response option to touch_response plug-in (#214)
+    - Add style argument to canvas.fixdot()
+    - Add item.set_response() convenience method
+    - Add gamma and suppress-warnings options to psycho back-end
+  * Bugs fixed
+    - Line wrapping causes double spaces (#203)
+    - Keywords to `decode()` break compatibility with Python < 2.7 (#201)
+    - Respect `focus=no` in `form_base` (#208)
+    - Fix ugly exception on Escape press in joystick plug-in (#162)
+    - Correctly parse non-Unix line separators in HTML parser
+    - Do not give ugly warning on close (#124)
+    - Set subject_parity in Android runtime (#221)
+  * Debian packaging
+    - Remove large template files
+
+ -- Sebastiaan Mathot <s.mathot@cogsci.nl>  Fri, 13 Sep 2013 16:59:10 +0200
+
+opensesame (0.27.4-2) neurodebian; urgency=low
 
   * Various bug-fixes
   * Add Chinese translation (zh_CN)
@@ -7,7 +60,7 @@ opensesame (0.27.4-2) unstable; urgency=low
 
  -- Sebastiaan Mathot <s.mathot@cogsci.nl>  Thu, 12 Sep 2013 17:50:56 +0200
 
-opensesame (0.27.3-3) unstable; urgency=low
+opensesame (0.27.3-3) neurodebian; urgency=low
 
   * Miscellaneous bug-fixes
   * Add French translation

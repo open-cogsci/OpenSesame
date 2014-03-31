@@ -20,10 +20,11 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 from PyQt4 import QtCore, QtGui
 import os.path
 import sip
-from libopensesame import debug, exceptions, item
-from libqtopensesame.widgets import inline_editor, header_widget, \
-	user_hint_widget
+from libopensesame.exceptions import osexception
+from libopensesame import debug, item
+from libqtopensesame.widgets import header_widget, user_hint_widget
 from libqtopensesame.misc import _
+from libqtopensesame.misc.config import cfg
 
 class qtitem(QtCore.QObject):
 
@@ -52,19 +53,11 @@ class qtitem(QtCore.QObject):
 
 		debug.msg(u'created %s' % self.name)
 
-	def open_help_tab(self):
+	def open_help_tab(self, page=None):
 
-		"""Open the help tab"""
+		"""Opens a help tab."""
 
-		md_path = self.experiment.help(self.item_type + u'.md')
-		html_path = self.experiment.help(self.item_type + u'.html')
-		if os.path.exists(md_path):
-			path = md_path
-		elif os.path.exists(html_path):
-			path = html_path
-		else:
-			path = self.experiment.help(u'missing.html')
-		self.experiment.main_window.ui.tabwidget.open_browser(path)
+		self.experiment.main_window.ui.tabwidget.open_help(self.item_type)
 
 	def open_tab(self):
 
@@ -87,7 +80,7 @@ class qtitem(QtCore.QObject):
 		self.header_hbox.addWidget(self.experiment.label_image(self.item_type))
 		self.header_hbox.addWidget(self.header)
 		self.header_hbox.addStretch()
-		self.header_hbox.setContentsMargins(0, 0, 0, 16)
+		self.header_hbox.setContentsMargins(0, 5, 0, 10)
 
 		# Edit script button
 		button = QtGui.QPushButton(self.experiment.icon(u"script"), u"")
@@ -118,10 +111,10 @@ class qtitem(QtCore.QObject):
 
 		# The edit_vbox contains the edit_grid and the header widget
 		self.edit_vbox = QtGui.QVBoxLayout()
-		self.edit_vbox.setMargin(16)
+		self.edit_vbox.setMargin(5)
 		self.edit_vbox.addWidget(self.header_widget)
 		self.edit_vbox.addWidget(self.user_hint_widget)
-		self.edit_vbox.addWidget(self.edit_grid_widget)		
+		self.edit_vbox.addWidget(self.edit_grid_widget)
 		if stretch:
 			self.edit_vbox.addStretch()
 		self._edit_widget = QtGui.QWidget()
@@ -272,39 +265,26 @@ class qtitem(QtCore.QObject):
 
 		"""Applies script changes and opens the edit tab"""
 
-		self.apply_script_changes()
+		self.apply_script_changes(mode=u'edit')
 		self.experiment.main_window.select_item(self.name)
 
-	def ignore_script_and_close(self):
-
-		"""Applies script changes and opens the edit tab"""
-
-		if self.edit_script.edit.isModified():
-			resp = QtGui.QMessageBox.question( \
-				self.experiment.main_window.ui.centralwidget, \
-				_(u'Forget changes?'), \
-				_(u'Are you sure you want to forget all changes to the script?'), \
-				QtGui.QMessageBox.Yes, QtGui.QMessageBox.No)
-			if resp == QtGui.QMessageBox.No:
-				return
-		self.experiment.main_window.select_item(self.name)
-
-	def apply_script_changes(self, rebuild=True, catch=True):
+	def apply_script_changes(self, rebuild=True, catch=True, mode=u'script'):
 
 		"""
-		Apply changes to the script, by regenerating the item from the script
+		Applies changes to the script, by regenerating the item from the script.
 
 		Keywords arguments:
-		rebuild -- specifies whether the overview area (item list) should be
-				   rebuild (default=True)
-		catch -- indicates if exceptions should be caught and shown in a
-				 notification dialog (True) or not be caught (False)
-				 (default=True)
+		rebuild	--	Specifies whether the overview area (item list) should be
+					rebuild. (default=True)
+		catch	--	Indicates whether exceptions should be caught and shown in a
+					notification dialog (True) or not be caught (False).
+					(default=True)
+		mode	--	Indicates whether the item should re-open in edit or script
+					mode. (default=u'script')
 		"""
 
 		debug.msg(self.name)
-		script = self.edit_script.edit.toPlainText()
-
+		script = self.script_qprogedit.text()
 		# Create a new item and make it a clone of the current item
 		item = self.experiment.main_window.add_item(self.item_type, False, \
 			name=self.name, interactive=False)
@@ -316,14 +296,41 @@ class qtitem(QtCore.QObject):
 				return
 		else:
 			self.experiment.items[item].from_string(script)
-		self.edit_script.setModified(False)
 		self.experiment.items[item].name = self.name
-
 		# Replace the current item
 		self.experiment.items[self.name] = self.experiment.items[item]
 		del self.experiment.items[item]
 		self.experiment.items[self.name].init_script_widget()
+		self.experiment.items[self.name].edit_mode = mode
 		self.experiment.main_window.dispatch.event_script_change.emit(self.name)
+		# The logic here is pretty complex, and is more-or-less a hack until the
+		# event handling code has been improved. Basically, if we want to apply
+		# the script and stay in script mode, we have to re-open the script tab,
+		# because the entire item is re-generated. This new tab has to be
+		# inserted in place of (i.e. with the same index as) the old tab, which
+		# has to be removed. We always refocus the tab, but if the tab doesn't
+		# actually have focus, we refocus the original tab. This is necessary
+		# to avoid repainting artifacts.
+		#
+		# See also this issue:
+		# - <https://github.com/smathot/OpenSesame/issues/219>
+		if mode == u'script':
+			currentIndex = self.experiment.ui.tabwidget.currentIndex()
+			for i in range(self.experiment.ui.tabwidget.count()):
+				w = self.experiment.ui.tabwidget.widget(i)
+				if hasattr(w, u'__script_item__') and w.__script_item__ == \
+					self.name:
+					if i == currentIndex:
+						focus = True
+					else:
+						focus = False
+					self.experiment.items[self.name].open_script_tab(index=i, \
+						focus=True)
+					self.experiment.ui.tabwidget.removeTab(i+1)
+					if not focus:
+						self.experiment.ui.tabwidget.setCurrentIndex( \
+							currentIndex)
+					break
 
 	def strip_script_line(self, s):
 
@@ -345,31 +352,16 @@ class qtitem(QtCore.QObject):
 
 		"""Build the script tab"""
 
-		self.edit_script = inline_editor.inline_editor( \
-			self.experiment, syntax=u"opensesame")
-		script = ""
-		for s in self.to_string().split("\n")[1:]:
-			script += self.strip_script_line(s)
-		self.edit_script.edit.setPlainText(script, set_modified=False)
-		self.edit_script.apply.clicked.connect(self.apply_script_changes)
-
-		button = QtGui.QPushButton(self.experiment.icon(u"apply"), \
-			_(u"Apply and close"))
-		button.setToolTip(_(u"Apply changes and resume normal editing"))
-		button.setIconSize(QtCore.QSize(16, 16))
-		button.clicked.connect(self.apply_script_and_close)
-		self.edit_script.toolbar_hbox.addWidget(button)
-
-		button = QtGui.QPushButton(self.experiment.icon(u"close"), \
-			_(u"Forget changes and close"))
-		button.setToolTip(_(u"Ignore changes and resume normal editing"))
-		button.setIconSize(QtCore.QSize(16, 16))
-		button.clicked.connect(self.ignore_script_and_close)
-		self.edit_script.toolbar_hbox.addWidget(button)
+		from QProgEdit import QTabManager
+		self.script_qprogedit = QTabManager(handler= \
+			self.apply_script_and_close, defaultLang=u'OpenSesame', \
+			handlerButtonText=_(u'Apply and close script editor'), \
+			focusOutHandler=self.apply_script_changes, cfg=cfg)
+		self.script_qprogedit.addTab(u'Script')
 
 		hbox = QtGui.QHBoxLayout()
-		hbox.addWidget(self.experiment.label_image(u"%s" % self.item_type))
-		self.script_header = QtGui.QLabel()			
+		hbox.addWidget(self.experiment.label_image(self.item_type))
+		self.script_header = QtGui.QLabel()
 		hbox.addWidget(self.script_header)
 		hbox.addStretch()
 		hbox.setContentsMargins(0,0,0,0)
@@ -378,7 +370,7 @@ class qtitem(QtCore.QObject):
 
 		vbox = QtGui.QVBoxLayout()
 		vbox.addWidget(hwidget)
-		vbox.addWidget(self.edit_script)
+		vbox.addWidget(self.script_qprogedit)
 		self._script_widget = QtGui.QWidget()
 		self._script_widget.setLayout(vbox)
 		self._script_widget.__script_item__ = self.name
@@ -398,7 +390,7 @@ class qtitem(QtCore.QObject):
 		script = u""
 		for s in self.to_string().split(u"\n")[1:]:
 			script += self.strip_script_line(s)
-		self.edit_script.edit.setPlainText(script)
+		self.script_qprogedit.setText(script)
 		self._script_widget.__script_item__ = self.name
 		return self._script_widget
 
@@ -601,12 +593,12 @@ class qtitem(QtCore.QObject):
 		True if some action has been taken, False if nothing was done
 		"""
 
-		if self.edit_script.isModified():
-			debug.msg(u"applying pending script changes")
+		if self.script_qprogedit.isModified():
+			debug.msg(u'applying pending script changes')
 			self.apply_script_changes(catch=False)
 			return True
-		return False		
-		
+		return False
+
 	def auto_edit_widget(self):
 
 		"""Update the GUI controls based on the auto-widgets"""
@@ -639,7 +631,7 @@ class qtitem(QtCore.QObject):
 			spinbox.editingFinished.disconnect()
 			if self.has(var):
 				val = self.get(var, _eval=False)
-				if type(val) in (float, int):						
+				if type(val) in (float, int):
 					try:
 						spinbox.setValue(val)
 					except Exception as e:
@@ -650,18 +642,18 @@ class qtitem(QtCore.QObject):
 					self.user_hint_widget.add_user_hint(_( \
 						u'"%s" is defined using variables and can only be edited through the script.' \
 						% var))
-			spinbox.editingFinished.connect(self.apply_edit_changes)			
+			spinbox.editingFinished.connect(self.apply_edit_changes)
 
 		for var, slider in self.auto_slider.iteritems():
 			slider.valueChanged.disconnect()
 			if self.has(var):
 				val = self.get(var, _eval=False)
-				if type(val) in (float, int):	
+				if type(val) in (float, int):
 					try:
 						slider.setValue(val)
 					except Exception as e:
 						self.experiment.notify(_( \
-							u"Failed to set control '%s': %s") % (var, e))						
+							u"Failed to set control '%s': %s") % (var, e))
 				else:
 					slider.setDisabled(True)
 					self.user_hint_widget.add_user_hint(_( \
@@ -679,11 +671,10 @@ class qtitem(QtCore.QObject):
 						% (var, e))
 			checkbox.toggled.connect(self.apply_edit_changes)
 
-		for var, editor in self.auto_editor.iteritems():
+		for var, qprogedit in self.auto_editor.iteritems():
 			if self.has(var):
 				try:
-					editor.edit.setPlainText(self.unistr(self.get(var, \
-						_eval=False)))
+					qprogedit.setText(self.unistr(self.get(var, _eval=False)))
 				except Exception as e:
 					self.experiment.notify(_(u"Failed to set control '%s': %s") \
 						% (var, e))
@@ -794,10 +785,9 @@ class qtitem(QtCore.QObject):
 					val = u"no"
 				self.set(var, val)
 
-		for var, editor in self.auto_editor.iteritems():
+		for var, qprogedit in self.auto_editor.iteritems():
 			if isinstance(var, basestring):
-				self.set(var, editor.edit.toPlainText())
-				editor.setModified(False)
+				self.set(var, qprogedit.text())
 
 		return True
 
@@ -842,3 +832,31 @@ class qtitem(QtCore.QObject):
 		else:
 			raise Exception(u"Cannot auto-add widget of type %s" % widget)
 
+	def clean_cond(self, cond, default=u'always'):
+
+		"""
+		Cleans a conditional statement. May raise a dialog box if problems are
+		encountered.
+
+		Arguments:
+		cond	--	A (potentially filthy) conditional statement.
+
+		Keyword arguments:
+		default	--	A default value to use for empty
+
+		Returns:
+		cond	--	A clean conditional statement conditional statements.
+					(default=u'always')
+		"""
+
+		cond = self.unistr(cond)
+		if not self.sanitize_check(cond):
+			cond = self.sanitize(cond)
+		if cond.strip() == u'':
+			cond = default
+		try:
+			self.compile_cond(cond)
+		except osexception as e:
+			self.experiment.notify( \
+				u'Failed to compile conditional statement "%s": %s' % (cond, e))
+		return cond

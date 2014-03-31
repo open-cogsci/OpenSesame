@@ -18,12 +18,11 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
-if __name__ == "__main__":
+if __name__ == u"__main__":
 
 	# First, load a minimum number of modules and show an empty app window. This
 	# gives the user the feeling of a snappy response.
 	import os, sys
-
 	# Change the working directory on Windows. Depending on whether the
 	# application has been frozen by py2exe or not we need to use a different
 	# method of deducing the name to the main script.
@@ -39,35 +38,30 @@ if __name__ == "__main__":
 			os.chdir(path)
 			if path not in sys.path:
 				sys.path.append(path)
-	
+
 	import libopensesame.misc
 	import libopensesame.experiment
-
 	# Parse the command line options
 	options = libopensesame.misc.opensesamerun_options()
-
 	app = None
-
 	# If the command line options haven't provided sufficient information to
 	# run right away, present a GUI
 	while not libopensesame.misc.opensesamerun_ready(options):
-
 		# If PyQt4 is not available (e.g., this might be the case on Mac OS)
 		# give an error instead of showing a GUI. This makes sure that even
 		# without PyQt4, people can still run experiments.
 		try:
 			from PyQt4 import QtGui, QtCore
 		except:
-			libopensesame.misc.messagebox("OpenSesame Run", \
-				"Incorrect or missing options.\n\nRun 'opensesame --help' from a terminal (or command prompt) to see a list of available options, or install Python Qt4 to enable the graphical user interface.")
+			libopensesame.misc.messagebox(u"OpenSesame Run", \
+				u"Incorrect or missing options.\n\nRun 'opensesame --help' from a terminal (or command prompt) to see a list of available options, or install Python Qt4 to enable the graphical user interface.")
 			sys.exit()
-
 		# Create the GUI and show it
 		import libqtopensesame.qtopensesamerun
 		if app == None:
 			app = QtGui.QApplication(sys.argv)
 			myapp = libqtopensesame.qtopensesamerun.qtopensesamerun(options)
-		QtCore.QObject.connect(app, QtCore.SIGNAL("sys.exit()"), myapp.close)
+		QtCore.QObject.connect(app, QtCore.SIGNAL(u"sys.exit()"), myapp.close)
 		myapp.show()
 		app.exec_()
 
@@ -79,43 +73,41 @@ if __name__ == "__main__":
 			sys.exit()
 
 	if options.debug:
-
 		# In debug mode, don't try to catch any exceptions
-		exp = libopensesame.experiment.experiment("Experiment", options.experiment)
+		exp = libopensesame.experiment.experiment(u"Experiment", \
+			options.experiment)
 		exp.set_subject(options.subject)
 		exp.fullscreen = options.fullscreen
 		exp.logfile = options.logfile
 		exp.run()
 		exp.end()
-
 	else:
-
 		# Try to parse the experiment from a file
 		try:
-			exp = libopensesame.experiment.experiment("Experiment", options.experiment)
-		except libopensesame.exceptions.script_error as e:
-			libopensesame.misc.messagebox("OpenSesame Run", libopensesame.misc.strip_tags(e))
+			exp = libopensesame.experiment.experiment(u"Experiment", \
+				options.experiment)
+		except Exception as e:
+			libopensesame.misc.messagebox(u"OpenSesame Run", \
+				libopensesame.misc.strip_tags(e))
 			sys.exit()
-
 		# Set some options
 		exp.set_subject(options.subject)
 		exp.fullscreen = options.fullscreen
 		exp.logfile = options.logfile
-
 		# Initialize random number generator
 		import random
 		random.seed()
-
 		# Try to run the experiment
 		try:
 			exp.run()
 		except Exception as e:
-
-			# Try to nicely end the experiment, even though an exception occurred
+			# Try to nicely end the experiment, even though an exception
+			# occurred.
 			try:
 				exp.end()
 			except Exception as f:
-				libopensesame.misc.messagebox("OpenSesame Run", libopensesame.misc.strip_tags(f))
-			libopensesame.misc.messagebox("OpenSesame Run", libopensesame.misc.strip_tags(e))
-
+				libopensesame.misc.messagebox(u"OpenSesame Run", \
+					libopensesame.misc.strip_tags(f))
+			libopensesame.misc.messagebox(u"OpenSesame Run", \
+				libopensesame.misc.strip_tags(e))
 	libopensesame.experiment.clean_up(exp.debug)

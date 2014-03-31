@@ -38,13 +38,13 @@ class backend_settings(QtGui.QWidget):
 			"sampler"]:
 			backend = self.main_window.experiment.get("%s_backend" \
 				% backend_type)
-			exec("from openexp._%s.%s import %s as _backend" % ( \
-				backend_type, backend, backend))
-			group = eval("self.ui.group_%s" % backend_type)
-			layout = eval("self.ui.layout_%s" % backend_type)
-			label = eval("self.ui.label_%s" % backend_type)
-
-			# Horribly ugly wayo clear the previous settings
+			backend_module = __import__(u'openexp._%s.%s' % (backend_type, \
+				backend), fromlist=[u'dummy'])
+			_backend = getattr(backend_module, backend)
+			group = getattr(self.ui, u'group_%s' % backend_type)
+			layout = getattr(self.ui, u'layout_%s' % backend_type)
+			label = getattr(self.ui, u'label_%s' % backend_type)
+			# Horribly ugly way to clear the previous settings
 			while layout.count() > 1:
 				w = layout.itemAt(1)
 				layout.removeItem(w)

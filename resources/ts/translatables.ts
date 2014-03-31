@@ -28,33 +28,53 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="font_widget.ui" line="49"/>
+        <location filename="font_widget.ui" line="69"/>
         <source>other ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="font_widget.ui" line="57"/>
+        <location filename="font_widget.ui" line="77"/>
         <source>Font size</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="font_widget.ui" line="64"/>
+        <location filename="font_widget.ui" line="84"/>
         <source> pt</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="font_widget.ui" line="82"/>
+        <location filename="font_widget.ui" line="102"/>
         <source>Italic</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="font_widget.ui" line="95"/>
+        <location filename="font_widget.ui" line="115"/>
         <source>Bold</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="font_widget.ui" line="114"/>
+        <location filename="font_widget.ui" line="134"/>
         <source>Example</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="font_widget.ui" line="49"/>
+        <source>arabic</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="font_widget.ui" line="54"/>
+        <source>chinese-japanese-korean</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="font_widget.ui" line="59"/>
+        <source>hebrew</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="font_widget.ui" line="64"/>
+        <source>hindi</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -224,23 +244,53 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="general_widget.ui" line="273"/>
+        <location filename="general_widget.ui" line="266"/>
         <source>Back-end settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="general_widget.ui" line="280"/>
+        <location filename="general_widget.ui" line="276"/>
         <source>Script editor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="general_widget.ui" line="290"/>
+        <location filename="general_widget.ui" line="289"/>
         <source>Transparent variable management</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="general_widget.ui" line="297"/>
-        <source>&lt;h3&gt;Variables&lt;/h3&gt;</source>
+        <location filename="general_widget.ui" line="263"/>
+        <source>Advanced settings for the selected back-end</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="general_widget.ui" line="273"/>
+        <source>Edit the script for the entire experiment</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="general_widget.ui" line="286"/>
+        <source>Allows you to access experimental variables directly by name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="general_widget.ui" line="296"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:large; font-weight:600;&quot;&gt;Miscellaneous&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="general_widget.ui" line="306"/>
+        <source>Enables support for bi-directional languages, such as Arabic and Hebrew</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="general_widget.ui" line="309"/>
+        <source>Bi-directional-text support</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="general_widget.ui" line="331"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://osdoc.cogsci.nl/back-ends/about&quot;&gt;&lt;span style=&quot;font-size:small;font-style:italic; text-decoration: underline; color:#0057ae;&quot;&gt;Why is this important?&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1137,209 +1187,139 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="preferences_widget.ui" line="59"/>
+        <location filename="preferences_widget.ui" line="56"/>
         <source>Offer to rename new items immediately</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="preferences_widget.ui" line="66"/>
+        <location filename="preferences_widget.ui" line="63"/>
         <source>Enable auto-response</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="preferences_widget.ui" line="138"/>
+        <location filename="preferences_widget.ui" line="135"/>
         <source>Show text in toolbar</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="preferences_widget.ui" line="131"/>
+        <location filename="preferences_widget.ui" line="128"/>
         <source>Small icons in toolbar</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="preferences_widget.ui" line="82"/>
+        <location filename="preferences_widget.ui" line="79"/>
         <source>Appearance</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="preferences_widget.ui" line="154"/>
-        <source>Embedded text editor</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="preferences_widget.ui" line="172"/>
-        <source>Show line numbers</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="preferences_widget.ui" line="179"/>
-        <source>Enable block folding</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="preferences_widget.ui" line="186"/>
-        <source>Show right margin</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="preferences_widget.ui" line="193"/>
-        <source>Highlight matching braces</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="preferences_widget.ui" line="200"/>
-        <source>Show end of lines</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="preferences_widget.ui" line="207"/>
-        <source>Enable syntax highlighting</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="preferences_widget.ui" line="214"/>
-        <source>Show whitespace</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="preferences_widget.ui" line="221"/>
-        <source>Show indentation guides</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="preferences_widget.ui" line="228"/>
-        <source>Auto indent</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="preferences_widget.ui" line="235"/>
-        <source>Use custom font</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="preferences_widget.ui" line="254"/>
-        <source>Font family</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="preferences_widget.ui" line="264"/>
-        <source>Font size</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="preferences_widget.ui" line="271"/>
-        <source> pt</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="preferences_widget.ui" line="296"/>
+        <location filename="preferences_widget.ui" line="151"/>
         <source>Backups</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="preferences_widget.ui" line="320"/>
+        <location filename="preferences_widget.ui" line="175"/>
         <source>Automatically create backups</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="preferences_widget.ui" line="327"/>
+        <location filename="preferences_widget.ui" line="182"/>
         <source>Auto-save interval:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="preferences_widget.ui" line="334"/>
+        <location filename="preferences_widget.ui" line="189"/>
         <source> minute(s)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="preferences_widget.ui" line="337"/>
+        <location filename="preferences_widget.ui" line="192"/>
         <source>every </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="preferences_widget.ui" line="353"/>
+        <location filename="preferences_widget.ui" line="228"/>
         <source>Open backup folder</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="preferences_widget.ui" line="364"/>
+        <location filename="preferences_widget.ui" line="208"/>
         <source>Clean backups after:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="preferences_widget.ui" line="371"/>
+        <location filename="preferences_widget.ui" line="215"/>
         <source> day(s)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="preferences_widget.ui" line="393"/>
+        <location filename="preferences_widget.ui" line="248"/>
         <source>Updates</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="preferences_widget.ui" line="411"/>
+        <location filename="preferences_widget.ui" line="263"/>
         <source>Check for updates on start-up</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="preferences_widget.ui" line="418"/>
+        <location filename="preferences_widget.ui" line="270"/>
         <source>Check for updates now</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="preferences_widget.ui" line="438"/>
-        <source>Run options</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="preferences_widget.ui" line="466"/>
-        <source>Run experiments in a separate process</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="preferences_widget.ui" line="473"/>
-        <source>Auto-detect the run command</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="preferences_widget.ui" line="480"/>
-        <source>Custom run command:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="preferences_widget.ui" line="499"/>
+        <location filename="preferences_widget.ui" line="346"/>
         <source>Plug-ins</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="preferences_widget.ui" line="520"/>
+        <location filename="preferences_widget.ui" line="364"/>
         <source>Plug-in folders:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="preferences_widget.ui" line="540"/>
+        <location filename="preferences_widget.ui" line="384"/>
         <source>Installed plug-ins (requires restart):</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="preferences_widget.ui" line="100"/>
+        <location filename="preferences_widget.ui" line="108"/>
         <source>Interface style</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="preferences_widget.ui" line="110"/>
+        <location filename="preferences_widget.ui" line="118"/>
         <source>icon theme</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="preferences_widget.ui" line="120"/>
+        <location filename="preferences_widget.ui" line="97"/>
         <source>&lt;small&gt;&lt;i&gt;Changes take effect the next time you start OpenSesame&lt;/i&gt;&lt;/small&gt;
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="preferences_widget.ui" line="456"/>
-        <source>&lt;small&gt;&lt;i&gt;If you experience stability issues, you can enable the &apos;Run experiments in a separate process&apos; option. This essentially means that &apos;opensesamerun[.exe]&apos; is used to run your experiment.&lt;/i&gt;&lt;/small&gt;</source>
+        <location filename="preferences_widget.ui" line="290"/>
+        <source>Runner</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="preferences_widget.ui" line="308"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:8pt; font-style:italic;&quot;&gt;The &apos;runner&apos; determines how your OpenSesame experiment is executed. For more information, please visit &lt;/span&gt;&lt;a href=&quot;http://osdoc.cogsci.nl/miscellaneous/runners&quot;&gt;&lt;span style=&quot; font-size:8pt; font-style:italic; text-decoration: underline; color:#0057ae;&quot;&gt;http://osdoc.cogsci.nl/miscellaneous/runners&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:8pt; font-style:italic;&quot;&gt;.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="preferences_widget.ui" line="319"/>
+        <source>Run experiment in the same process (inprocess)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="preferences_widget.ui" line="324"/>
+        <source>Run experiment in a separate process (multiprocess)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="preferences_widget.ui" line="329"/>
+        <source>Run experiment with opensesamerun (external)</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2342,12 +2322,12 @@ Description: %s</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="sketchpad_widget.ui" line="480"/>
+        <location filename="sketchpad_widget.ui" line="490"/>
         <source>Pen width</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="sketchpad_widget.ui" line="605"/>
+        <location filename="sketchpad_widget.ui" line="618"/>
         <source>px</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2362,17 +2342,17 @@ Description: %s</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="sketchpad_widget.ui" line="496"/>
+        <location filename="sketchpad_widget.ui" line="506"/>
         <source>Image scale</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="sketchpad_widget.ui" line="503"/>
+        <location filename="sketchpad_widget.ui" line="513"/>
         <source>Image scaling in %</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="sketchpad_widget.ui" line="579"/>
+        <location filename="sketchpad_widget.ui" line="592"/>
         <source>%</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2407,53 +2387,63 @@ Description: %s</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="sketchpad_widget.ui" line="569"/>
+        <location filename="sketchpad_widget.ui" line="582"/>
         <source>Zoom</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="sketchpad_widget.ui" line="576"/>
+        <location filename="sketchpad_widget.ui" line="589"/>
         <source>Zoom level in %</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="sketchpad_widget.ui" line="595"/>
+        <location filename="sketchpad_widget.ui" line="608"/>
         <source>Grid</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="sketchpad_widget.ui" line="602"/>
+        <location filename="sketchpad_widget.ui" line="615"/>
         <source>Grid size</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="sketchpad_widget.ui" line="618"/>
+        <location filename="sketchpad_widget.ui" line="631"/>
         <source>Check to display the grid and enable snap-to-grid</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="sketchpad_widget.ui" line="621"/>
+        <location filename="sketchpad_widget.ui" line="634"/>
         <source>Show grid</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="sketchpad_widget.ui" line="643"/>
+        <location filename="sketchpad_widget.ui" line="656"/>
         <source>(0, 0)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="sketchpad_widget.ui" line="693"/>
+        <location filename="sketchpad_widget.ui" line="706"/>
         <source>[nr] objects are not shown, because their definition contains variables.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="sketchpad_widget.ui" line="712"/>
+        <location filename="sketchpad_widget.ui" line="725"/>
         <source>Edit the script to see objects defined using variables</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="sketchpad_widget.ui" line="715"/>
+        <location filename="sketchpad_widget.ui" line="728"/>
         <source>Edit script</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="sketchpad_widget.ui" line="535"/>
+        <source>Parse a subset of HTML tags</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="sketchpad_widget.ui" line="538"/>
+        <source>Parse HTML subset</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2693,6 +2683,187 @@ Description: %s</source>
     </message>
 </context>
 <context>
+    <name>widgetFind</name>
+    <message>
+        <location filename="findWidget.ui" line="14"/>
+        <source>Form</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="findWidget.ui" line="23"/>
+        <source>Replace:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="findWidget.ui" line="33"/>
+        <source>Find:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="findWidget.ui" line="49"/>
+        <source>Search</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="findWidget.ui" line="59"/>
+        <source>Replace</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="findWidget.ui" line="69"/>
+        <source>Replace all</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="findWidget.ui" line="88"/>
+        <source>Case sensitive</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="findWidget.ui" line="95"/>
+        <source>Match whole words</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>widgetPrefs</name>
+    <message>
+        <location filename="prefsWidget.ui" line="14"/>
+        <source>Form</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="prefsWidget.ui" line="183"/>
+        <source>Show 80 character word-wrap marker</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="prefsWidget.ui" line="78"/>
+        <source>Tab width</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="prefsWidget.ui" line="40"/>
+        <source> characters</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="prefsWidget.ui" line="47"/>
+        <source>Font family</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="prefsWidget.ui" line="141"/>
+        <source>Show whitespace</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="prefsWidget.ui" line="92"/>
+        <source>Show line numbers</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="prefsWidget.ui" line="23"/>
+        <source>Enable word wrapping</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="prefsWidget.ui" line="148"/>
+        <source>Enable block folding</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="prefsWidget.ui" line="169"/>
+        <source>Enable automatic completion</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="prefsWidget.ui" line="71"/>
+        <source>Show end-of-lines</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="prefsWidget.ui" line="54"/>
+        <source>Show indentation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="prefsWidget.ui" line="106"/>
+        <source>Font size</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="prefsWidget.ui" line="64"/>
+        <source> pt</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="prefsWidget.ui" line="113"/>
+        <source>Highlight current line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="prefsWidget.ui" line="120"/>
+        <source>Highlight matching brackets</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="prefsWidget.ui" line="85"/>
+        <source>Enable automatic indentation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="prefsWidget.ui" line="162"/>
+        <source>Color scheme</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="prefsWidget.ui" line="30"/>
+        <source>A color scheme for the editor component</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="prefsWidget.ui" line="37"/>
+        <source>The tab width for the editor component</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="prefsWidget.ui" line="61"/>
+        <source>The font size for the editor component</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="prefsWidget.ui" line="99"/>
+        <source>The font font the editor component</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="prefsWidget.ui" line="127"/>
+        <source>Comment shortcut</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="prefsWidget.ui" line="134"/>
+        <source>A keyboard shortcut, such as Ctrl+Shift+M</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="prefsWidget.ui" line="155"/>
+        <source>A keyboard shortcut, such as Ctrl+M</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="prefsWidget.ui" line="176"/>
+        <source>Uncomment shortcut</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="prefsWidget.ui" line="190"/>
+        <source>Validate content</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>widget_backend_settings</name>
     <message>
         <location filename="backend_settings.ui" line="14"/>
@@ -2783,10 +2954,20 @@ Various settings related to the control of the display, sound, and input devices
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;COGSCIdotNL // cognitive science and more&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="credits_widget.ui" line="112"/>
+        <source>&lt;a href=&quot;http://osdoc.cogsci.nl/contribute/&quot;&gt;Contribute&lt;/a&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="credits_widget.ui" line="122"/>
+        <source>&lt;a href=&quot;http://osdoc.cogsci.nl/donate/&quot;&gt;Donate&lt;/a&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
     <message encoding="UTF-8">
-        <location filename="credits_widget.ui" line="150"/>
+        <location filename="credits_widget.ui" line="170"/>
         <source>OpenSesame [version] [codename]
-Copyright Sebastiaan Mathôt (2010-2013)</source>
+Copyright Sebastiaan Mathôt (2010-2014)</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

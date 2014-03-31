@@ -59,78 +59,78 @@ def detect_translatables(path):
 	"""
 	Scans a Python script for translatables and adds these to the list of
 	translatables
-	
+
 	Arguments:
-	path -- the path to Python script	
+	path -- the path to Python script
 	"""
 
 	global translatables
-	s = open(path).read()	
+	s = open(path).read()
 	for i in regex_trans.findall(s):
-		translatables.append(i[2:-1])	
-		
+		translatables.append(i[2:-1])
+
 def encode_translatables(path='dev-scripts/translatables.py'):
 
 	"""
 	Writes all translatables to a Python script, which can be interpreted by
 	pylupdate4
-	
+
 	Arguments:
-	path -- the path to the Python script that is generated	
+	path -- the path to the Python script that is generated
 	"""
 
-	global translatables		
+	global translatables
 	f = open(path, 'w')
 	f.write('class script:\n\tdef _():\n')
 	for t in translatables:
 		f.write('\t\tself.tr(%s)\n' % t)
 	f.close()
-	print '%d translatables written to %s' % (len(translatables), path)
-	
+	print('%d translatables written to %s' % (len(translatables), path))
+
 def validate(path):
 
 	"""
 	Checks whether a Python script is valid, i.e. starts with a proper Encoding
 	message etc.
-	
+
 	Arguments:
-	path -- the path to Python script	
+	path -- the path to Python script
 	"""
 	s = open(path).readline().strip()
 	if s not in ('#-*- coding:utf-8 -*-', '# -*- coding: utf-8 -*-'):
-		print 'no-utf8: %s' % path
-	
+		print('no-utf8: %s' % path)
+
 def parse_file(path, translate=True):
 
 	"""
 	Processes a single file
-		
+
 	Arguments:
-	path -- the path to Python script	
-	
+	path -- the path to Python script
+
 	Keyword arguments:
 	translate -- indicates whether the script should be checked for
 				 translatables (default=True)
-	"""	
+	"""
 
 	global n_files
 	n_files += 1
 	validate(path)
 	if translate:
 		detect_translatables(path)
-	
+
 def parse_folder(path, translate=True):
 
 	"""
 	Processes a single folder
-		
+
 	Arguments:
 	path -- the path to the folder
-	
+
 	Keyword arguments:
 	translate -- indicates whether the folder should be checked for
 				 translatables (default=True)
-	"""	
+	"""
 
 	for f in os.listdir(path):
 		_path = os.path.join(path, f)
@@ -138,9 +138,9 @@ def parse_folder(path, translate=True):
 			parse_folder(_path, translate)
 		elif f in ['qtopensesame'] or os.path.splitext(_path)[1] == '.py':
 			parse_file(_path, translate)
-	
+
 parse_folder('libqtopensesame')
 parse_folder('libopensesame', translate=False)
 parse_folder('openexp', translate=False)
 encode_translatables()
-print 'Parsed %d files' % n_files
+print('Parsed %d files' % n_files)

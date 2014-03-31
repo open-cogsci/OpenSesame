@@ -1,9 +1,8 @@
 include data/opensesame.desktop
 include data/x-opensesame-experiment.xml
 include resources/*.ttf
-include resources/tips.txt
 include resources/templates/*.opensesame
-recursive-exclude .hidden
+exclude .hidden
 recursive-include resources/theme *
 recursive-exclude resources/theme *~
 recursive-exclude resources/theme *.pyc
@@ -26,6 +25,8 @@ recursive-include plugins/form_consent *
 recursive-include plugins/form_text_input *
 recursive-include plugins/form_text_display *
 recursive-include plugins/parallel *
+recursive-include plugins/touch_response *
+recursive-include plugins/joystick *
 recursive-exclude plugins *~
 recursive-exclude plugins *.csv
 recursive-exclude plugins *.pyc

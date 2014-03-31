@@ -17,6 +17,7 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
+import openexp.mouse
 from libopensesame.mouse_response import mouse_response
 from libqtopensesame.items.qtautoplugin import qtautoplugin
 
@@ -44,10 +45,10 @@ class touch_response(mouse_response):
 		self._ncol = 2
 		self._nrow = 1
 		mouse_response.__init__(self, name, experiment, script)
-
+		
 	def process_response_mouseclick(self, retval):
 
-		"""Process a mouseclick response"""
+		"""Processes a mouseclick response."""
 
 		self.experiment.start_response_interval = self.sri
 		button, pos, self.experiment.end_response_interval = retval

@@ -17,10 +17,8 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
-__author__ = "Sebastiaan Mathot"
-__license__ = "GPLv3"
-
-from libopensesame import item, exceptions, debug
+from libopensesame.exceptions import osexception
+from libopensesame import item, debug
 import openexp.keyboard
 from random import *
 from math import *
@@ -88,7 +86,7 @@ class loop(item.item):
 	def run(self):
 
 		"""Runs the loop."""
-		
+
 		# Prepare the break if condition
 		if self.break_if != u'':
 			self._break_if = self.compile_cond(self.break_if)
@@ -98,15 +96,15 @@ class loop(item.item):
 		# First generate a list of cycle numbers
 		l = []
 		# Walk through all complete repeats
-		whole_repeats = int(self.repeat)
+		whole_repeats = int(self.get(u'repeat'))
 		for j in range(whole_repeats):
-			for i in range(self.cycles):
+			for i in range(self.get(u'cycles')):
 				l.append(i)
 
 		# Add the leftover repeats
-		partial_repeats = self.repeat - whole_repeats
+		partial_repeats = self.get(u'repeat') - whole_repeats
 		if partial_repeats > 0:
-			all_cycles = range(self.cycles)
+			all_cycles = range(self.get(u'cycles'))
 			_sample = sample(all_cycles, int(len(all_cycles) * partial_repeats))
 			for i in _sample:
 				l.append(i)
@@ -114,29 +112,29 @@ class loop(item.item):
 		# Randomize the list if necessary
 		if self.order == u'random':
 			shuffle(l)
-			
+
 		# In sequential order, the offset and the skip are relevant
-		else:			
+		else:
 			if len(l) < self.skip:
-				raise exceptions.runtime_error( \
-						u'The value of skip is too high in loop item "%s":: You cannot skip more cycles than there are.' \
+				raise osexception( \
+					u'The value of skip is too high in loop item "%s":: You cannot skip more cycles than there are.' \
 					% self.name)
 			if self.offset == u'yes':
 				l = l[self.skip:] + l[:self.skip]
 			else:
 				l = l[self.skip:]
-				
+
 		# Create a keyboard to flush responses between cycles
 		self._keyboard = openexp.keyboard.keyboard(self.experiment)
 
-		# Make sure the item to run exists		
+		# Make sure the item to run exists
 		if self.item not in self.experiment.items:
-			raise exceptions.runtime_error( \
-				"Could not find item '%s', which is called by loop item '%s'" \
-				% (self.item, self.name))			
-				
+			raise osexception( \
+				u"Could not find item '%s', which is called by loop item '%s'" \
+				% (self.item, self.name))
+
 		# And run!
-		_item = self.experiment.items[self.item]						
+		_item = self.experiment.items[self.item]
 		while len(l) > 0:
 			cycle = l.pop(0)
 			self.apply_cycle(cycle)
@@ -150,19 +148,19 @@ class loop(item.item):
 				l.append(cycle)
 				if self.order == u'random':
 					shuffle(l)
-							
+
 	def apply_cycle(self, cycle):
-	
+
 		"""
 		Sets all the loop variables according to the cycle.
-		
+
 		Arguments:
 		cycle 		--	The cycle nr.
 		"""
-		
+
 		# If the cycle is not defined, we don't have to do anything
 		if cycle not in self.matrix:
-			return			
+			return
 		# Otherwise apply all variables from the cycle
 		for var in self.matrix[cycle]:
 			val = self.matrix[cycle][var]
@@ -173,11 +171,11 @@ class loop(item.item):
 				try:
 					val = eval(val[1:])
 				except Exception as e:
-					raise exceptions.runtime_error( \
-						"Failed to evaluate '%s' in loop item '%s': %s" \
+					raise osexception( \
+						u"Failed to evaluate '%s' in loop item '%s': %s" \
 						% (val[1:], self.name, e))
 			# Set it!
-			self.experiment.set(var, val)												
+			self.experiment.set(var, val)
 
 	def to_string(self):
 

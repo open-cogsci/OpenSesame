@@ -18,7 +18,7 @@ along with openexp.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 import openexp.mouse
-import openexp.exceptions
+from libopensesame.exceptions import osexception
 import openexp._mouse.legacy
 from psychopy import event
 import psychopy.visual
@@ -33,7 +33,7 @@ class psycho(openexp._mouse.legacy.legacy):
 		"""See openexp._mouse.legacy"""
 		
 		if experiment.canvas_backend != "psycho":
-			raise openexp.exceptions.response_error( \
+			raise osexception( \
 				"The psycho mouse backend must be used in combination with the psycho canvas backend!")
 	
 		self.experiment = experiment						
@@ -55,7 +55,7 @@ class psycho(openexp._mouse.legacy.legacy):
 				for b in buttonlist:
 					self.buttonlist.append(int(b))
 			except:
-				raise openexp.exceptions.response_error( \
+				raise osexception( \
 					"The list of mousebuttons must be a list of numeric values")
 		
 	def set_timeout(self, timeout=None):	
@@ -76,7 +76,7 @@ class psycho(openexp._mouse.legacy.legacy):
 		"""See openexp._mouse.legacy"""	
 
 		if psychopy.visual.openWindows[0].winType == 'pyglet':
-			raise openexp.exceptions.response_error( \
+			raise osexception( \
 				"Method set_pos not supported in pyglet environment (default for psycho back-end)")
 
 		self.mouse.setPos(newPos=pos)

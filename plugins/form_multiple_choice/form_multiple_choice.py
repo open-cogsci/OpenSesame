@@ -17,7 +17,8 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
-from libopensesame import item, exceptions, generic_response, widgets, plugins
+from libopensesame.exceptions import osexception
+from libopensesame import item, generic_response, widgets, plugins
 from libqtopensesame.items.qtautoplugin import qtautoplugin
 from openexp.canvas import canvas
 import openexp.keyboard
@@ -58,7 +59,7 @@ class form_multiple_choice(item.item):
 		option_list = self.get(u'options').split(u'\n') # split by return
 		option_list.pop(len(option_list)-1) # remove last (empty) option
 		if len(option_list) == 0:
-			raise exceptions.runtime_error( \
+			raise osexception( \
 				u'You must specify at least one response option in form_multiple_choice item "%s"' \
 				% self.name)
 			

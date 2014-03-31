@@ -23,7 +23,8 @@ __license__ = "GPLv3"
 import math
 import os
 import numbers
-from libopensesame import exceptions, debug
+from libopensesame.exceptions import osexception
+from libopensesame import debug
 from libqtopensesame.ui import sketchpad_widget_ui, gabor_dialog_ui, \
 	noise_patch_dialog_ui
 from libqtopensesame.widgets import pool_widget
@@ -72,7 +73,6 @@ class edit_item_button(QtGui.QPushButton):
 		sketchpad_widget -- the sketchpad widget
 		item -- the item of the sketchpad widget
 		"""
-
 
 		self.sketchpad_widget = sketchpad_widget
 		self.item = item
@@ -307,7 +307,7 @@ class canvas(QtGui.QGraphicsScene):
 		self.delete_item(item)
 		try:
 			self.sketchpad_widget.sketchpad.from_string(s)
-		except exceptions.script_error as e:
+		except osexception as e:
 			self.sketchpad_widget.sketchpad.items = tmp
 			self.sketchpad_widget.sketchpad.experiment.notify(e)
 
@@ -959,7 +959,7 @@ class sketchpad_widget(QtGui.QWidget):
 				elif item["type"] == "noise":
 					g = self.noise(item)
 				else:
-					print "Could not find", item["type"]
+					print("Could not find", item["type"])
 
 			except Exception as e:
 				debug.msg("exception caught: %s" % e)
@@ -1038,8 +1038,8 @@ class sketchpad_widget(QtGui.QWidget):
 		self.font_size = self.ui.widget_font.size
 		self.font_italic = self.ui.widget_font.italic
 		self.font_bold = self.ui.widget_font.bold
-		self.show_if = self.sketchpad.experiment.sanitize( \
-			self.ui.edit_show_if.text())
+		self.show_if = self.sketchpad.clean_cond(self.ui.edit_show_if.text())
+		self.ui.edit_show_if.setText(self.show_if)
 		if self.ui.checkbox_html.isChecked():
 			self.html = u'yes'
 		else:
