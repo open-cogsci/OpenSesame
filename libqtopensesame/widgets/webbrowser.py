@@ -31,14 +31,14 @@ class small_webview(QtWebKit.QWebView):
 	"""
 
 	def sizeHint(self):
-	
+
 		"""
 		Give size hint
-		
+
 		Returns:
 		A QSize
 		"""
-	
+
 		return QtCore.QSize(100,100)
 
 class webbrowser(QtGui.QWidget):
@@ -46,20 +46,20 @@ class webbrowser(QtGui.QWidget):
 	"""A simple browser tab"""
 
 	def __init__(self, parent):
-	
+
 		"""
 		Constructor
-		
+
 		Keyword arguments:
-		parent -- the parent QWidget (default=None)		
+		parent -- the parent QWidget (default=None)
 		"""
-	
-		QtGui.QWidget.__init__(self, parent)							
+
+		QtGui.QWidget.__init__(self, parent)
 		self.main_window = parent
 		self.ui = webbrowser_widget_ui.Ui_webbrowser_widget()
-		self.ui.setupUi(self)		
-		
-		self.ui.webview = small_webview(self)		
+		self.ui.setupUi(self)
+
+		self.ui.webview = small_webview(self)
 		self.ui.webview.loadProgress.connect(self.update_progressbar)
 		self.ui.webview.loadStarted.connect(self.load_started)
 		self.ui.webview.loadFinished.connect(self.load_finished)
@@ -68,21 +68,22 @@ class webbrowser(QtGui.QWidget):
 		self.ui.button_back.clicked.connect(self.ui.webview.back)
 		self.ui.button_osdoc.clicked.connect(self.open_osdoc)
 		self.ui.button_forum.clicked.connect(self.open_forum)
-		self.main_window.theme.apply_theme(self)	
-						
+		self.main_window.theme.apply_theme(self)
+
 	def load(self, url):
-	
+
 		"""
 		Load a webpage
-		
+
 		Arguments:
 		url -- the webpage to load
 		"""
-	
+
 		if url.endswith(u'.md'):
 			try:
-				import markdown				
-				html = markdown.markdown(open(url).read())
+				import markdown
+				html = markdown.markdown(open(url).read().decode(u'utf-8', \
+					'ignore'))
 				html += u'<style type="text/css">%s</style>' % \
 					open(self.main_window.theme.resource( \
 					u'markdown.css')).read()
@@ -93,44 +94,44 @@ class webbrowser(QtGui.QWidget):
 			self.ui.webview.setHtml(html, QtCore.QUrl(url))
 		else:
 			self.ui.webview.load(QtCore.QUrl(url))
-		
+
 	def load_finished(self):
-	
+
 		"""Hide the statusbar to indicate that loading is finished"""
 
 		self.ui.label_load_progress.setText(u'Done')
-		
+
 	def update_progressbar(self, progress):
-	
+
 		"""
 		Update the progressbar to indicate the load progress
-		
+
 		Arguments:
 		progress -- the load progress
 		"""
-	
+
 		self.ui.label_load_progress.setText(u'%d%%' % progress)
-		
+
 	def load_started(self):
-	
+
 		"""Show the statusbar to indicate that loading has started"""
 
 		self.ui.label_load_progress.setText(u'Starting ...')
-		
+
 	def open_osdoc(self):
-	
+
 		"""Open osdoc.cogsci.nl"""
-	
+
 		self.load(u'http://osdoc.cogsci.nl/')
 
 	def open_forum(self):
-	
-		"""Open forum.cogsci.nl"""	
-	
+
+		"""Open forum.cogsci.nl"""
+
 		self.load(u'http://forum.cogsci.nl/')
 
 	def url_changed(self, url):
 
-		"""Update the url bat"""	
+		"""Update the url bat"""
 
 		self.ui.edit_url.setText(url.toString())

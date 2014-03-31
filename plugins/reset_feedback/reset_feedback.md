@@ -14,4 +14,6 @@ This plug-in will reset the following variables to 0:
 - `avg_rt`
 - `average_response_time`
 
+For more information, see:
 
+- <http://osdoc.cogsci.nl/usage/feedback/>

@@ -30,7 +30,7 @@ from PyQt4 import QtGui, QtCore
 class joystick(item.item, generic_response.generic_response):
 
 	"""A plug-in for using a joystick/gamepad"""
-	
+
 	description = u'Collects input from a joystick or gamepad'
 
 	def __init__(self, name, experiment, string=None):
@@ -47,7 +47,7 @@ class joystick(item.item, generic_response.generic_response):
 		"""
 
 		self.timeout = u'infinite'
-		self.allowed_responses = u'1;2'
+		self.allowed_responses = u''
 		self._dummy = u'no'
 		item.item.__init__(self, name, experiment, string)
 		self.process_feedback = True
@@ -60,53 +60,45 @@ class joystick(item.item, generic_response.generic_response):
 		item.item.prepare(self)
 
 		# Prepare the allowed responses
-		if self.has("allowed_responses"):
+		if self.has(u"allowed_responses"):
 			self._allowed_responses = []
-			for r in self.unistr(self.get("allowed_responses")).split(";"):
+			for r in self.unistr(self.get(u"allowed_responses")).split(u";"):
 				if r.strip() != "":
 					try:
 						r = int(r)
 					except:
 						raise osexception( \
-							"'%s' is not a valid response on your joystick/gamepad. Expecting a number in the range of 1 to the amount of buttons." \
+							u"'%s' is not a valid response on your joystick/gamepad. Expecting a number in the range of 1 to the amount of buttons." \
 							% (r,self.name))
 					if r < 0 or r > 255:
 						raise osexception( \
-							"'%s' is not a valid response on your joystick/gamepad. Expecting a number in the range of 1 to the amount of buttons." \
+							u"'%s' is not a valid response on your joystick/gamepad. Expecting a number in the range of 1 to the amount of buttons." \
 							% (r, self.name))
 					self._allowed_responses.append(r)
 			if len(self._allowed_responses) == 0:
 				self._allowed_responses = None
 		else:
 			self._allowed_responses = None
-
-		debug.msg("allowed responses has been set to %s" % self._allowed_responses)
-
+		debug.msg(u"allowed responses has been set to %s" % self._allowed_responses)
 		# In case of dummy-mode:
 		self._keyboard = openexp.keyboard.keyboard(self.experiment)
-		if self.has("_dummy") and self.get("_dummy") == "yes":
+		if self.has(u"_dummy") and self.get(u"_dummy") == u"yes":
 			self._resp_func = self._keyboard.get_key
-
 		# Not in dummy-mode:
 		else:
-
-			# Prepare joybuttonlist and timeout
-			joybuttonlist = self.get("_allowed_responses")
-			timeout = self.get("timeout")
-
+			timeout = self.get(u"timeout")
 			# Dynamically load a joystick instance
-			if not hasattr(self.experiment, "joystick"):
-				path = os.path.join(os.path.dirname(__file__), "libjoystick.py")
-				_joystick = imp.load_source("libjoystick", path)
-				self.experiment.joystick = _joystick.libjoystick(self.experiment, [joybuttonlist, timeout])
-				#self.experiment.cleanup_functions.append(self.close)
-
+			if not hasattr(self.experiment, u"joystick"):
+				path = os.path.join(os.path.dirname(__file__), \
+					u"libjoystick.py")
+				_joystick = imp.load_source(u"libjoystick", path)
+				self.experiment.joystick = _joystick.libjoystick( \
+					self.experiment)
 			# Prepare auto response
 			if self.experiment.auto_response:
 				self._resp_func = self.auto_responder
 			else:
 				self._resp_func = self.experiment.joystick.get_joybutton
-
 		self.prepare_timeout()
 
 	def run(self):
@@ -136,13 +128,13 @@ class joystick(item.item, generic_response.generic_response):
 		generic_response.generic_response.response_bookkeeping(self)
 
 	def var_info(self):
-		
+
 		"""
 		Gives a list of dictionaries with variable descriptions.
 
 		Returns:
 		A list of (name, description) tuples
-		"""		
+		"""
 
 		return item.item.var_info(self) + \
 			generic_response.generic_response.var_info(self)

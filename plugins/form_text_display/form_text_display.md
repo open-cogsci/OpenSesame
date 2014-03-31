@@ -1,7 +1,7 @@
-# Forms
+# Form_text_display plug-in
 
-Forms are simple interactive displays that can be used to implement questionnaires, text input displays, etc.
+The `form_text_display` plug-in is a simple form consisting of a title, content, and an Ok button.
 
 For more information, see:
 	
-- <http://osdoc.cogsci.nl/>
+- <http://osdoc.cogsci.nl/forms/form-plug-ins/>

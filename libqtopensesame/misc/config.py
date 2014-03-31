@@ -63,7 +63,7 @@ class config(object):
 		u"immediate_rename" : False,
 		u"locale" : u"default",
 		u"loop_wizard" : QtCore.QStringList(),
-		u"onetabmode" : False,
+		u"onetabmode" : True,
 		u"qProgEditCommentShortcut" : u'Ctrl+M',
 		u"qProgEditUncommentShortcut" : u'Ctrl+Shift+M',
 		u'qProgEditFontFamily' : u'Monospace',

@@ -80,7 +80,7 @@ class qtitem(QtCore.QObject):
 		self.header_hbox.addWidget(self.experiment.label_image(self.item_type))
 		self.header_hbox.addWidget(self.header)
 		self.header_hbox.addStretch()
-		self.header_hbox.setContentsMargins(0, 0, 0, 16)
+		self.header_hbox.setContentsMargins(0, 5, 0, 10)
 
 		# Edit script button
 		button = QtGui.QPushButton(self.experiment.icon(u"script"), u"")
@@ -111,7 +111,7 @@ class qtitem(QtCore.QObject):
 
 		# The edit_vbox contains the edit_grid and the header widget
 		self.edit_vbox = QtGui.QVBoxLayout()
-		self.edit_vbox.setMargin(16)
+		self.edit_vbox.setMargin(5)
 		self.edit_vbox.addWidget(self.header_widget)
 		self.edit_vbox.addWidget(self.user_hint_widget)
 		self.edit_vbox.addWidget(self.edit_grid_widget)
@@ -308,8 +308,12 @@ class qtitem(QtCore.QObject):
 		# the script and stay in script mode, we have to re-open the script tab,
 		# because the entire item is re-generated. This new tab has to be
 		# inserted in place of (i.e. with the same index as) the old tab, which
-		# has to be removed. If the tab had the focus at the moment of removal
-		# we also need to re-focus the new tab.
+		# has to be removed. We always refocus the tab, but if the tab doesn't
+		# actually have focus, we refocus the original tab. This is necessary
+		# to avoid repainting artifacts.
+		#
+		# See also this issue:
+		# - <https://github.com/smathot/OpenSesame/issues/219>
 		if mode == u'script':
 			currentIndex = self.experiment.ui.tabwidget.currentIndex()
 			for i in range(self.experiment.ui.tabwidget.count()):
@@ -320,9 +324,12 @@ class qtitem(QtCore.QObject):
 						focus = True
 					else:
 						focus = False
-					self.experiment.ui.tabwidget.removeTab(i)
 					self.experiment.items[self.name].open_script_tab(index=i, \
-						focus=focus)
+						focus=True)
+					self.experiment.ui.tabwidget.removeTab(i+1)
+					if not focus:
+						self.experiment.ui.tabwidget.setCurrentIndex( \
+							currentIndex)
 					break
 
 	def strip_script_line(self, s):

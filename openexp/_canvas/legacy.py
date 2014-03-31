@@ -31,29 +31,29 @@ from libopensesame import debug, html, misc
 
 # Translation mapping from envelope names
 env_synonyms = {}
-env_synonyms["c"] = "c"
-env_synonyms["circular"] = "c"
-env_synonyms["round"] = "c"
+env_synonyms[u"c"] = u"c"
+env_synonyms[u"circular"] = u"c"
+env_synonyms[u"round"] = u"c"
 
-env_synonyms["g"] = "g"
-env_synonyms["gaussian"] = "g"
-env_synonyms["gauss"] = "g"
-env_synonyms["normal"] = "g"
+env_synonyms[u"g"] = u"g"
+env_synonyms[u"gaussian"] = u"g"
+env_synonyms[u"gauss"] = u"g"
+env_synonyms[u"normal"] = u"g"
 
-env_synonyms["r"] = "r"
-env_synonyms["rectangular"] = "r"
-env_synonyms["rectangle"] = "r"
+env_synonyms[u"r"] = u"r"
+env_synonyms[u"rectangular"] = u"r"
+env_synonyms[u"rectangle"] = u"r"
 
-env_synonyms["g"] = "g"
-env_synonyms["rect"] = "g"
-env_synonyms["square"] = "g"
-env_synonyms[None] = "g"
+env_synonyms[u"g"] = u"g"
+env_synonyms[u"rect"] = u"g"
+env_synonyms[u"square"] = u"g"
+env_synonyms[None] = u"g"
 
-env_synonyms["l"] = "l"
-env_synonyms["linear"] = "l"
-env_synonyms["lin"] = "l"
-env_synonyms["ln"] = "l"
-env_synonyms["l"] = "l"
+env_synonyms[u"l"] = u"l"
+env_synonyms[u"linear"] = u"l"
+env_synonyms[u"lin"] = u"l"
+env_synonyms[u"ln"] = u"l"
+env_synonyms[u"l"] = u"l"
 
 class legacy:
 
@@ -87,25 +87,25 @@ class legacy:
 	# The settings variable is used by the GUI to provide a list of back-end
 	# settings
 	settings = {
-		"pygame_hwsurface" : {
-			"name" : "Hardware surface",
-			"description" : "Create a hardware surface",
-			"default" : "yes"
+		u"pygame_hwsurface" : {
+			u"name" : u"Hardware surface",
+			u"description" : u"Create a hardware surface",
+			u"default" : u"yes"
 			},
-		"pygame_doublebuf" : {
-			"name" : "Double buffering",
-			"description" : "Use double buffering",
-			"default" : "yes"
+		u"pygame_doublebuf" : {
+			u"name" : u"Double buffering",
+			u"description" : u"Use double buffering",
+			u"default" : u"yes"
 			},
-		"pygame_window_frame" : {
-			"name" : "Draw window frame",
-			"description" : "Draw a frame in window mode",
-			"default" : "yes",
+		u"pygame_window_frame" : {
+			u"name" : u"Draw window frame",
+			u"description" : u"Draw a frame in window mode",
+			u"default" : u"yes",
 			},
-		"pygame_window_pos" : {
-			"name" : "Window position",
-			"description" : "Window position in window mode (format: 'x,y' or 'auto')",
-			"default" : "auto",
+		u"pygame_window_pos" : {
+			u"name" : u"Window position",
+			u"description" : u"Window position in window mode (format: 'x,y' or 'auto')",
+			u"default" : u"auto",
 			}
 		}
 
@@ -157,9 +157,9 @@ class legacy:
 		self.experiment = experiment
 		self.html = html.html()
 		if fgcolor == None:
-			fgcolor = self.experiment.get("foreground")
+			fgcolor = self.experiment.get(u"foreground")
 		if bgcolor == None:
-			bgcolor = self.experiment.get("background")
+			bgcolor = self.experiment.get(u"background")
 		self.set_fgcolor(fgcolor)
 		self.set_bgcolor(bgcolor)
 		self.penwidth = 1
@@ -168,9 +168,9 @@ class legacy:
 		self._current_font = None
 		self.bidi = self.experiment.get(u'bidi')==u'yes'
 		self.set_font(style=self.experiment.font_family, size= \
-			self.experiment.font_size, bold=self.experiment.font_bold=='yes', \
-			italic=self.experiment.font_italic=='yes', underline= \
-			self.experiment.font_underline=='yes')
+			self.experiment.font_size, bold=self.experiment.font_bold==u'yes', \
+			italic=self.experiment.font_italic==u'yes', underline= \
+			self.experiment.font_underline==u'yes')
 		self.clear()
 
 	def color(self, color):
@@ -237,7 +237,6 @@ class legacy:
 		>>> my_canvas.flip(x=True)
 		"""
 
-
 		self.surface = pygame.transform.flip(self.surface, x, y)
 
 	def copy(self, canvas):
@@ -283,7 +282,7 @@ class legacy:
 		>>> my_canvas.line(x1, y1, x2, y2)
 		</DOC>"""
 
-		return self.experiment.get('width') / 2
+		return self.experiment.get(u'width') / 2
 
 	def ycenter(self):
 
@@ -301,7 +300,7 @@ class legacy:
 		>>> my_canvas.line(x1, y1, x2, y2)
 		</DOC>"""
 
-		return self.experiment.get('height') / 2
+		return self.experiment.get(u'height') / 2
 
 	def prepare(self):
 
@@ -872,7 +871,7 @@ class legacy:
 			surface = pygame.image.load(fname)
 		except pygame.error as e:
 			raise osexception( \
-				"'%s' is not a supported image format" % fname)
+				u"'%s' is not a supported image format" % fname)
 
 		if scale != None:
 			try:
@@ -880,8 +879,8 @@ class legacy:
 					(int(surface.get_width()*scale), \
 					int(surface.get_height()*scale)))
 			except:
-				debug.msg("smooth scaling failed for '%s'" % fname, reason=\
-					"warning")
+				debug.msg(u"smooth scaling failed for '%s'" % fname, reason=\
+					u"warning")
 				surface = pygame.transform.scale(surface, \
 					(int(surface.get_width()*scale), \
 					int(surface.get_height()*scale)))
@@ -896,7 +895,7 @@ class legacy:
 			y -= size[1] / 2
 		self.surface.blit(surface, (x, y))
 
-	def gabor(self, x, y, orient, freq, env="gaussian", size=96, stdev=12, phase=0, col1="white", col2="black", bgmode="avg"):
+	def gabor(self, x, y, orient, freq, env=u"gaussian", size=96, stdev=12, phase=0, col1=u"white", col2=u"black", bgmode=u"avg"):
 
 		"""<DOC>
 		Draws a Gabor patch. The exact rendering of the Gabor patch depends on the #
@@ -933,7 +932,7 @@ class legacy:
 			bgmode)
 		self.surface.blit(surface, (x - 0.5 * size, y - 0.5 * size))
 
-	def noise_patch(self, x, y, env="gaussian", size=96, stdev=12, col1="white", col2="black", bgmode="avg"):
+	def noise_patch(self, x, y, env=u"gaussian", size=96, stdev=12, col1=u"white", col2=u"black", bgmode=u"avg"):
 
 		"""<DOC>
 		Draws a patch of noise, with an envelope. The exact rendering of the noise #
@@ -995,7 +994,8 @@ def init_display(experiment):
 
 	# Determine the video mode
 	mode = 0
-	if experiment.get_check("pygame_hwsurface", "yes", ["yes", "no"]) == "yes":
+	if experiment.get_check(u"pygame_hwsurface", u"yes", [u"yes", u"no"]) == \
+		u"yes":
 		mode = mode | pygame.HWSURFACE
 		print( \
 			u"openexp._canvas.legacy.init_display(): enabling hardware surface")
@@ -1003,7 +1003,8 @@ def init_display(experiment):
 		print( \
 			u"openexp._canvas.legacy.init_display(): not enabling hardware surface")
 
-	if experiment.get_check("pygame_doublebuf", "yes", ["yes", "no"]) == "yes":
+	if experiment.get_check(u"pygame_doublebuf", u"yes", [u"yes", u"no"]) == \
+		u"yes":
 		mode = mode | pygame.DOUBLEBUF
 		print( \
 			u"openexp._canvas.legacy.init_display(): enabling double buffering")
@@ -1020,24 +1021,25 @@ def init_display(experiment):
 	if experiment.fullscreen:
 		mode = mode | pygame.FULLSCREEN
 
-	if experiment.get_check('pygame_window_frame', 'yes', ['yes', 'no']) == 'no':
+	if experiment.get_check(u'pygame_window_frame', u'yes', [u'yes', u'no']) \
+		== u'no':
 		mode = mode | pygame.NOFRAME
 
-	if experiment.get_check('pygame_window_pos', 'auto') != 'auto':
-		os.environ['SDL_VIDEO_WINDOW_POS'] = experiment.get( \
-			'pygame_window_pos')
+	if experiment.get_check(u'pygame_window_pos', u'auto') != u'auto':
+		os.environ[u'SDL_VIDEO_WINDOW_POS'] = experiment.get( \
+			u'pygame_window_pos')
 
 	# Create the window and the surface
 	experiment.window = pygame.display.set_mode(experiment.resolution(), mode)
-	pygame.display.set_caption(experiment.title)
+	pygame.display.set_caption(u'OpenSesame (legacy backend)')
 	pygame.mouse.set_visible(False)
 	experiment.surface = pygame.display.get_surface()
 
 	# Create a font, falling back to the default font
-	experiment.font = pygame.font.Font(experiment.resource("%s.ttf" \
+	experiment.font = pygame.font.Font(experiment.resource(u"%s.ttf" \
 		% experiment.font_family), experiment.font_size)
 	if experiment.font == None:
-		debug.msg("'%s.ttf' not found, falling back to default font" \
+		debug.msg(u"'%s.ttf' not found, falling back to default font" \
 			% experiment.font_family)
 		experiment.font = pygame.font.Font(None, experiment.font_size)
 
@@ -1071,73 +1073,64 @@ def _color(color):
 	See canvas.color()
 	"""
 
-	if type(color) in (str, unicode):
+	if isinstance(color, unicode):
 		return pygame.Color(str(color))
-	elif type(color) == int:
-		pygame.Color(color, color, color, 255)
-	elif type(color) == float:
+	if isinstance(color, str):
+		return pygame.Color(color)
+	if isinstance(color, int):
+		return pygame.Color(color, color, color, 255)
+	if isinstance(color, float):
 		i = int(255 * color)
-		pygame.Color(i, i, i, 255)
-	elif type(color) == tuple:
+		return pygame.Color(i, i, i, 255)
+	if isinstance(color, tuple):
 		if len(color) == 3:
 			return pygame.Color(color[0], color[1], color[2], 255)
-		elif len(color) > 3:
+		if len(color) > 3:
 			return pygame.Color(color[0], color[1], color[2], color[3])
-		else:
-			return pygame.Color("white")
-	elif type(color) == pygame.Color:
+		raise osexception(u'Unknown color: %s' % color)
+	if isinstance(color, pygame.Color):
 		return color
-	else:
-		debug.msg('Cannot interpret %s (%s), falling back to white' % (color, \
-			type(color)))
-		return pygame.Color("white")
+	raise osexception(u'Unknown color: %s' % color)
 
-def _gabor(orient, freq, env = "gaussian", size = 96, stdev = 12, phase = 0, col1 = "white", col2 = "black", bgmode = "avg"):
+def _gabor(orient, freq, env=u"gaussian", size=96, stdev=12, phase=0, col1= \
+	u"white", col2=u"black", bgmode=u"avg"):
 
 	"""
-	Returns a pygame surface containing a Gabor patch
+	Returns a pygame surface containing a Gabor patch.
 	See canvas.gabor()
 	"""
 
 	env = _match_env(env)
-
 	# Generating a Gabor patch takes quite some time, so keep
 	# a cache of previously generated Gabor patches to speed up
 	# the process.
 	global canvas_cache
-	key = "gabor_%s_%s_%s_%s_%s_%s_%s_%s_%s" % (orient, freq, env, size, stdev, phase, col1, col2, bgmode)
+	key = u"gabor_%s_%s_%s_%s_%s_%s_%s_%s_%s" % (orient, freq, env, size, \
+		stdev, phase, col1, col2, bgmode)
 	if key in canvas_cache:
 		return canvas_cache[key]
-
 	# Create a surface
 	surface = pygame.Surface( (size, size) )
 	px = pygame.PixelArray(surface)
-
 	# Conver the orientation to radians
 	orient = math.radians(orient)
-
 	col1 = _color(col1)
 	col2 = _color(col2)
-
 	# rx and ry reflect the real coordinates in the
 	# target image
 	for rx in range(size):
 		for ry in range(size):
-
 			# Distance from the center
 			dx = rx - 0.5 * size
 			dy = ry - 0.5 * size
-
 			# Get the coordinates (x, y) in the unrotated
 			# Gabor patch
 			t = math.atan2(dy, dx) + orient
 			r = math.sqrt(dx ** 2 + dy ** 2)
 			ux = r * math.cos(t)
 			uy = r * math.sin(t)
-
 			# Get the amplitude without the envelope (0 .. 1)
 			amp = 0.5 + 0.5 * math.cos(2.0 * math.pi * (ux * freq + phase))
-
 			# The envelope adjustment
 			if env == "g":
 				f = math.exp(-0.5 * (ux / stdev) ** 2 - 0.5 * (uy / stdev) ** 2)
@@ -1150,25 +1143,21 @@ def _gabor(orient, freq, env = "gaussian", size = 96, stdev = 12, phase = 0, col
 					f = 1.0
 			else:
 				f = 1.0
-
 			# Apply the envelope
-			if bgmode == "avg":
+			if bgmode == u"avg":
 				amp = amp * f + 0.5 * (1.0 - f)
 			else:
 				amp = amp * f
-
 			r = col1.r * amp + col2.r * (1.0 - amp)
 			g = col1.g * amp + col2.g * (1.0 - amp)
 			b = col1.b * amp + col2.b * (1.0 - amp)
-
 			px[rx][ry] = r, g, b
-
 	canvas_cache[key] = surface
-
 	del px
 	return surface
 
-def _noise_patch(env = "gaussian", size = 96, stdev = 12, col1 = "white", col2 = "black", bgmode = "avg"):
+def _noise_patch(env=u"gaussian", size=96, stdev=12, col1=u"white", col2= \
+	u"black", bgmode=u"avg"):
 
 	"""
 	Returns a pygame surface containing a noise patch.
@@ -1176,62 +1165,50 @@ def _noise_patch(env = "gaussian", size = 96, stdev = 12, col1 = "white", col2 =
 	"""
 
 	env = _match_env(env)
-
 	# Generating a noise patch takes quite some time, so keep
 	# a cache of previously generated noise patches to speed up
 	# the process.
 	global canvas_cache
-	key = "noise_%s_%s_%s_%s_%s_%s" % (env, size, stdev, col1, col2, bgmode)
+	key = u"noise_%s_%s_%s_%s_%s_%s" % (env, size, stdev, col1, col2, bgmode)
 	if key in canvas_cache:
 		return canvas_cache[key]
-
 	# Create a surface
 	surface = pygame.Surface( (size, size) )
 	px = pygame.PixelArray(surface)
-
 	col1 = _color(col1)
 	col2 = _color(col2)
-
 	# rx and ry reflect the real coordinates in the
 	# target image
 	for rx in range(size):
 		for ry in range(size):
-
 			# Distance from the center
 			ux = rx - 0.5 * size
 			uy = ry - 0.5 * size
 			r = math.sqrt(ux ** 2 + uy ** 2)
-
 			# Get the amplitude without the envelope (0 .. 1)
 			amp = random.random()
-
 			# The envelope adjustment
-			if env == "g":
+			if env == u"g":
 				f = math.exp(-0.5 * (ux / stdev) ** 2 - 0.5 * (uy / stdev) ** 2)
-			elif env == "l":
+			elif env == u"l":
 				f = max(0, (0.5 * size - r) / (0.5 * size))
-			elif env == "c":
+			elif env == u"c":
 				if (r > 0.5 * size):
 					f = 0.0
 				else:
 					f = 1.0
 			else:
 				f = 1.0
-
 			# Apply the envelope
-			if bgmode == "avg":
+			if bgmode == u"avg":
 				amp = amp * f + 0.5 * (1.0 - f)
 			else:
 				amp = amp * f
-
 			r = col1.r * amp + col2.r * (1.0 - amp)
 			g = col1.g * amp + col2.g * (1.0 - amp)
 			b = col1.b * amp + col2.b * (1.0 - amp)
-
 			px[rx][ry] = r, g, b
-
 	canvas_cache[key] = surface
-
 	del px
 	return surface
 
@@ -1252,5 +1229,5 @@ def _match_env(env):
 
 	global env_synonyms
 	if env not in env_synonyms:
-		raise osexception("'%s' is not a valid envelope" % env)
+		raise osexception(u"'%s' is not a valid envelope" % env)
 	return env_synonyms[env]

@@ -1,7 +1,6 @@
-Fixation dot
-============
+# Fixation dot
 
-The fixation_dot item is a convenience plug-in. That is, it does nothing which could not be done using a sketchpad item, but is more convenient if you only want to display a central fixation dot.
+The `fixation_dot` plug-in is a convenience plug-in. That is, it does nothing that could not be done using a `sketchpad` item, but is more convenient if you want to present only a central-fixation dot.
 
 The following options are available:
 
