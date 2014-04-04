@@ -264,6 +264,9 @@ class qtopensesame(QtGui.QMainWindow):
 		group.add_option(u"-d", u"--debug", action=u"store_true", dest= \
 			u"debug", help= \
 			u"Print lots of debugging messages to the standard output")
+		group.add_option(u"--start-clean", action=u"store_true", dest= \
+			u"start_clean", help= \
+			u"Do not load configuration and do not restore window geometry")
 		group.add_option(u"-s", u"--stack", action=u"store_true", dest= \
 			u"_stack", help=u"Print stack trace (only in debug mode)")
 		group.add_option(u"-p", u"--preload", action=u"store_true", dest= \
@@ -303,11 +306,13 @@ class qtopensesame(QtGui.QMainWindow):
 
 		# Force configuration options that were set via the command line
 		config.parse_cmdline_args(self.options._config)
-
+		self.recent_files = []				
+		if self.options.start_clean:
+			debug.msg(u'Not restoring state')
+			return
 		self.resize(cfg.size)
 		self.move(cfg.pos)
 		self.experiment.auto_response = cfg.auto_response
-
 		# Set the keyboard shortcuts
 		self.ui.shortcut_itemtree.setKey(QtGui.QKeySequence( \
 			cfg.shortcut_itemtree))
@@ -317,23 +322,19 @@ class qtopensesame(QtGui.QMainWindow):
 		self.ui.shortcut_pool.setKey(QtGui.QKeySequence(cfg.shortcut_pool))
 		self.ui.shortcut_variables.setKey(QtGui.QKeySequence( \
 			cfg.shortcut_variables))
-
-		# Unpack the string with recent files and only remember those that exist
-		self.recent_files = []
+		# Unpack the string with recent files and only remember those that exist		
 		for path in cfg.recent_files.split(u";;"):
 			if os.path.exists(path):
 				debug.msg(u"adding recent file '%s'" % path)
 				self.recent_files.append(path)
 			else:
 				debug.msg(u"missing recent file '%s'" % path)
-
 		self.ui.action_enable_auto_response.setChecked( \
 			self.experiment.auto_response)
 		self.ui.action_onetabmode.setChecked(cfg.onetabmode)
 		self.ui.action_compact_toolbar.setChecked( \
 			cfg.toolbar_size == 16)
 		self.ui.tabwidget.toggle_onetabmode()
-
 		if cfg.toolbar_text:
 			self.ui.toolbar_main.setToolButtonStyle( \
 				QtCore.Qt.ToolButtonTextUnderIcon)
@@ -350,6 +351,9 @@ class qtopensesame(QtGui.QMainWindow):
 		don't wait until the end, the window gets distorted again.
 		"""
 
+		if self.options.start_clean:
+			debug.msg(u'Not restoring window state')
+			return
 		self.restoreState(cfg._initial_window_state)
 		self.restoreGeometry(cfg._initial_window_geometry)
 
