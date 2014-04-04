@@ -616,6 +616,12 @@ class experiment(item.item):
 		# Do not open the logfile if it's already open
 		if self._log != None:
 			return
+		# If only a filename is present, we interpret this filename as relative
+		# to the experiment folder, instead of relative to the current working
+		# directory.
+		if os.path.basename(self.logfile) == self.logfile and \
+			self.experiment_path != None:
+			self.logfile = os.path.join(self.experiment_path, self.logfile)
 		# Open the logfile
 		self._log = codecs.open(self.logfile, u'w', encoding=self.encoding)
 		print(u"experiment.init_log(): using '%s' as logfile (%s)" % \

@@ -44,10 +44,10 @@ toc:
 
 """
 
-plugin_msg = u"\n<div class='page-notification'>This is plug-in may not be installed by default. For plug-in installation instructions, see <a href='/plug-ins/installation'>here</a>.</div>\n"
+plugin_msg = u"\n<div class='page-notification'>This is a plug-in and may not be installed by default. For plug-in installation instructions, see <a href='/plug-ins/installation'>here</a>.</div>\n"
 
 exclude_list = [u'general.md', u'variables.md', u'stdout.md', u'missing.md',
-	u'auto_example.md', u'remote_logger.md']
+	u'auto_example.md', u'remote_logger.md', u'pool.md', u'video_player.md']
 
 def collect(folder):
 
@@ -92,7 +92,7 @@ def helpify(folder, msg=u''):
 	src = collect(folder)
 	md = u''
 	for path in src:
-		_md = u'\n' + open(path).read().decode(u'utf-8') + msg + u'\n'
+		_md = u'\n' + msg + open(path).read().decode(u'utf-8') + u'\n<hr />\n'
 		_md = _md.replace(u'\n#', u'\n###')
 		md += _md
 	return md

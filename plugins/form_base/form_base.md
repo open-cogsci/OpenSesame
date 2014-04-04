@@ -1,7 +1,7 @@
-# Forms
+# Form_base plug-in
 
-Forms are simple interactive displays that can be used to implement questionnaires, text input displays, etc.
+The `form_base` plug-in allows you to create custom forms through OpenSesame script.
 
 For more information, see:
-	
-- <http://osdoc.cogsci.nl/>
+
+- <http://osdoc.cogsci.nl/forms/custom-forms/>

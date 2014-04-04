@@ -9,6 +9,3 @@ You can add files to the file pool using drag-and-drop or by clicking on the 'Ad
 ## Saving the file pool
 
 In order to save the file pool along with your experiment, you must save your experiment in `.opensesame.tar.gz` format.
-
-
-

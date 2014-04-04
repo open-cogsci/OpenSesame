@@ -1,7 +1,7 @@
-# Forms
+# Form_consent plug-in
 
-Forms are simple interactive displays that can be used to implement questionnaires, text input displays, etc.
+The `form_consent` plug-in provides a basic digital consent form.
 
 For more information, see:
 	
-- <http://osdoc.cogsci.nl/>
+- <http://osdoc.cogsci.nl/forms/form-plug-ins/>
