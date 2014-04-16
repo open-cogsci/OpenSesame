@@ -42,7 +42,7 @@ try:
 	shutil.rmtree("qt_menu.nib")
 except:
 	pass
-shutil.copytree("/Library/Frameworks/QtGui.framework/Resources/qt_menu.nib", "qt_menu.nib")
+shutil.copytree("/usr/local/Frameworks/QtGui.framework/Resources/qt_menu.nib", "qt_menu.nib")
 
 # Py2app doesn't like extensionless Python scripts
 try:
@@ -59,9 +59,10 @@ setup(
     data_files = ['opensesame.py'],
     options = {'py2app' : 
 			{'argv_emulation': False, 
-			 'includes' : ['sip', 'PyQt4.QtNetwork', 'pygame', 'numpy', 'serial', 'openexp', 'libqtopensesame','libopensesame','libopensesame.widgets', 'libqtopensesame.widgets', 'opensesamerun','cv','cv2'],
-			 'resources' : ['qt_menu.nib', 'qt.conf', 'resources', 'sounds', 'plugins', 'help', 'data'],
-			 'packages' : ['expyriment'],
+			 'includes' : ['PyQt4.QtNetwork', 'pygame', 'numpy', 'serial', 'openexp','opensesamerun','skimage'],
+			 'excludes' : ['cv','cv2'],  #OpenCV currently causes segfault on mac (2.4.8)
+			 'resources' : ['qt_menu.nib', 'resources', 'sounds', 'plugins', 'help', 'data'],
+			 'packages' : ['expyriment','psychopy','QProgEdit','libqtopensesame','libopensesame'],
 			 'iconfile' : 'resources/opensesame.icns',			
 			}
 		   },
