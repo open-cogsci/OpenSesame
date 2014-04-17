@@ -86,7 +86,7 @@ class LabScribe_send_message(item):
 			return ms
 		
 		if self._option == u'Start Connection':
-			host = '127.0.0.1'
+			host = u'127.0.0.1'
 			port = 3000
 			socketCreated = 0
 
@@ -94,8 +94,8 @@ class LabScribe_send_message(item):
 				s = socket.create_connection((host, port))
 				socketCreated = 1
 
-			except socket.error, msg:
-				print 'Error Code : ' + str(msg[0]) + ' Message ' + msg[1]
+			except:
+				raise osexception( u'Error Code : ' + str(msg[0]) + u' Message ' + msg[1])
 
 			if socketCreated == 1:
 				startTime = datetime.now()
@@ -104,38 +104,38 @@ class LabScribe_send_message(item):
 
 				try:
 					s.sendall(data)
-				except socket.error, msg:
-					print 'Error Code : ' + str(msg[0]) + ' Message ' + msg[1]
+				except:
+				raise osexception( u'Error Code : ' + str(msg[0]) + u' Message ' + msg[1])
+
 			else:
-				print 'error'
+				print u'error'
 				
 		elif self._option == u'Send Message':
 			if socketCreated == 1:
 				msg = "mark^" +  str(millis()) + "^" + self._text + "^"
-				data = msg.encode('utf8')
+				data = msg.encode('utf8') # utf8 encoding used since we are sending tcpip messages.
 
 				try :
 					s.sendall(data)
-
-				except socket.error, msg:
-					print 'Error Code : ' + str(msg[0]) + ' Message ' + msg[1]
+				except:
+					raise osexception( u'Error Code : ' + str(msg[0]) + u' Message ' + msg[1])
 			else:
-				print 'error'
+				print u'error'
 				
 		elif self._option == u'End Connection':
 			if socketCreated == 1:
 				msg = "cmdstop^" + str(millis()) + "^"
-				data = msg.encode('utf8')
+				data = msg.encode('utf8') # utf8 encoding used since we are sending tcpip messages.
 
 				try :
 					s.sendall(data)
 
-				except socket.error, msg:
-					print 'Error Code : ' + str(msg[0]) + ' Message ' + msg[1]
+				except :
+					raise osexception( u'Error Code : ' + str(msg[0]) + u' Message ' + msg[1])
 				
 				s.close()
 			else:
-				print 'error'
+				print u'error'
 
 		self.set_item_onset() # Record the timestamp of the plug-in execution.
 
