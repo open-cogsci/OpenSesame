@@ -1,3 +1,20 @@
+"""
+This file is part of OpenSesame.
+
+OpenSesame is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+OpenSesame is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
+"""
+
 from libopensesame import debug
 from libopensesame.item import item
 from libqtopensesame.items.qtautoplugin import qtautoplugin
@@ -12,11 +29,24 @@ import time
 import socket
 import sys
 
-class send_message(item):
-
+class LabScribe_send_message(item):
+	"""Plugin to send messages to Labscribe"""
 	description = u'Plugin to send messages to Labscribe.'
 
 	def __init__(self, name, experiment, script=None):
+	
+		"""
+		Constructor
+		
+		Arguments:
+		name -- item name
+		experiment -- experiment instance
+		
+		Keyword arguments:
+		script -- definition string (default=None)
+		"""
+		
+		
 		self._checkbox = u'no' # yes = checked, no = unchecked
 		self._color = u'blue'
 		self._option = u'Start Connection'
@@ -38,6 +68,7 @@ class send_message(item):
 		item.prepare(self)
 
 	def run(self):
+	"""Process the request to send message.  Record the time stamp and send the message."""
 		self.set_item_onset() # Record the timestamp of the plug-in execution.
 		global s
 		global host
@@ -109,9 +140,9 @@ class send_message(item):
 		self.set_item_onset() # Record the timestamp of the plug-in execution.
 
 class qtsend_message(send_message, qtautoplugin):
-
+	"""GUI controls for LabScribe_send_message plug-in"""
 	def __init__(self, name, experiment, script=None):
-		send_message.__init__(self, name, experiment, script)
+		LabScribe_send_message.__init__(self, name, experiment, script)
 		qtautoplugin.__init__(self, __file__)
 
 	def init_edit_widget(self):
