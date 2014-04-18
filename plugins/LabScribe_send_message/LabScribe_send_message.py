@@ -14,6 +14,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
+
 from libopensesame import debug
 from libopensesame.item import item
 from libqtopensesame.items.qtautoplugin import qtautoplugin
@@ -84,18 +85,25 @@ class LabScribe_send_message(item):
 			return ms
 		
 		if self._option == u'Start Connection':
-			host = u'127.0.0.1'
+			host = '127.0.0.1'
 			port = 3000
 			socketCreated = 0
-			startTime = datetime.now()
-			msg = u'cmdstart^' + startTime.strftime("%H:%M:%S^%f") + u'^'
 			
 			try:
 				s = socket.create_connection((host, port))
+				socketCreated = 1
+			except:
+				raise osexception( u'Error Creating socket connection. Make sure that LabScribe is recordng data and the Experiment Server port is set to 3000.')
+			
+			startTime = datetime.now()
+			msg = startTime.strftime("cmdstart^%H:%M:%S^%f^")
+			
+			try:
+				data = msg.encode('utf8')
 				s.sendall(data)
 				socketCreated = 1
 			except:
-				raise osexception( u'Error Creating socket connection')
+				raise osexception( u'Error sending Start Connection')
 			
 				
 		elif self._option == u'Send Message':
@@ -104,7 +112,7 @@ class LabScribe_send_message(item):
 				#data = msg.encode('utf8') # utf8 encoding used since we are sending tcpip messages.
 
 				try :
-					s.sendall(data)
+					s.sendall(msg)
 				except:
 					raise osexception( u'Error Sending Message')
 			else:
@@ -116,7 +124,7 @@ class LabScribe_send_message(item):
 				#data = msg.encode('utf8') # utf8 encoding used since we are sending tcpip messages.
 
 				try :
-					s.sendall(data)
+					s.sendall(msg)
 
 				except :
 					raise osexception( u'Error Ending Connection')
