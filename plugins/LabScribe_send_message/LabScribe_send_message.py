@@ -14,16 +14,14 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
-
 from libopensesame import debug
 from libopensesame.item import item
 from libqtopensesame.items.qtautoplugin import qtautoplugin
 from openexp.canvas import canvas
-from libopensesame.item import item
 from time import gmtime, strftime
 from datetime import datetime
 from datetime import timedelta
-
+from libopensesame.exceptions import osexception
 
 import time
 import socket
@@ -68,7 +66,7 @@ class LabScribe_send_message(item):
 		item.prepare(self)
 
 	def run(self):
-	"""Process the request to send message.  Record the time stamp and send the message."""
+		"""Process the request to send message.  Record the time stamp and send the message."""
 		self.set_item_onset() # Record the timestamp of the plug-in execution.
 		global s
 		global host
@@ -89,49 +87,39 @@ class LabScribe_send_message(item):
 			host = u'127.0.0.1'
 			port = 3000
 			socketCreated = 0
-
+			startTime = datetime.now()
+			msg = u'cmdstart^' + startTime.strftime("%H:%M:%S^%f") + u'^'
+			
 			try:
 				s = socket.create_connection((host, port))
+				s.sendall(data)
 				socketCreated = 1
-
 			except:
-				raise osexception( u'Error Code : ' + str(msg[0]) + u' Message ' + msg[1])
-
-			if socketCreated == 1:
-				startTime = datetime.now()
-				msg = "cmdstart^" + startTime.strftime("%H:%M:%S^%f") + "^"
-				data = msg.encode('utf8')
-
-				try:
-					s.sendall(data)
-				except:
-				raise osexception( u'Error Code : ' + str(msg[0]) + u' Message ' + msg[1])
-
-			else:
-				print u'error'
+				raise osexception( u'Error Creating socket connection')
+			
 				
 		elif self._option == u'Send Message':
 			if socketCreated == 1:
-				msg = "mark^" +  str(millis()) + "^" + self._text + "^"
-				data = msg.encode('utf8') # utf8 encoding used since we are sending tcpip messages.
+				msg = u'mark^' +  str(millis()) + u'^' + self._text + u'^'
+				#data = msg.encode('utf8') # utf8 encoding used since we are sending tcpip messages.
 
 				try :
 					s.sendall(data)
 				except:
-					raise osexception( u'Error Code : ' + str(msg[0]) + u' Message ' + msg[1])
+					raise osexception( u'Error Sending Message')
 			else:
 				print u'error'
 				
 		elif self._option == u'End Connection':
 			if socketCreated == 1:
-				msg = "cmdstop^" + str(millis()) + "^"
-				data = msg.encode('utf8') # utf8 encoding used since we are sending tcpip messages.
+				msg = u'cmdstop^' + str(millis()) + u'^'
+				#data = msg.encode('utf8') # utf8 encoding used since we are sending tcpip messages.
 
 				try :
 					s.sendall(data)
 
 				except :
-					raise osexception( u'Error Code : ' + str(msg[0]) + u' Message ' + msg[1])
+					raise osexception( u'Error Ending Connection')
 				
 				s.close()
 			else:
@@ -139,7 +127,7 @@ class LabScribe_send_message(item):
 
 		self.set_item_onset() # Record the timestamp of the plug-in execution.
 
-class qtsend_message(send_message, qtautoplugin):
+class qtLabScribe_send_message(LabScribe_send_message, qtautoplugin):
 	"""GUI controls for LabScribe_send_message plug-in"""
 	def __init__(self, name, experiment, script=None):
 		LabScribe_send_message.__init__(self, name, experiment, script)
