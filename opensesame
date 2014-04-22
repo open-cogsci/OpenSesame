@@ -21,11 +21,21 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 if __name__ == u'__main__':
 	# Make sure the multiprocessing part of OS plays well with py2exe/py2app
 	# Has no effect if program is run straight from cli interpreter
-	import multiprocessing
-	multiprocessing.freeze_support()
+
 	# First, load a minimum number of modules and show an empty app window.
 	# This gives the user the feeling of a snappy response.
 	import os, sys, platform
+
+	# Support for multiprocessing when packaged
+	# In OS X the multiprocessing module is horribly broken, but a fixed
+	# version has been released as the 'billiard' module
+	if platform.system() == 'Darwin':
+		from billiard import freeze_support, forking_enable
+		forking_enable(0)		
+	else:
+		from multiprocessing import freeze_support
+	freeze_support()
+
 	# Change the working directory on Windows. Depending on whether the
 	# application has been frozen by py2exe or not we need to use a different
 	# method of deducing the name to the main script.
@@ -41,18 +51,7 @@ if __name__ == u'__main__':
 			os.chdir(path)
 			if path not in sys.path:
 				sys.path.append(path)
-	# Horrendous OS X invalid locale hack, which otherwise prevents PsychoPy
-	# from loading.
-	if platform.system() == u'Darwin':		
-		# On 32-bit OSX: Call init and destroy pygame window before all else
-		# Strangly, the experiment otherwise hangs at init_dispay() with
-		# pygame-based backends.
-		if not sys.maxsize > 2**32:
-			import pygame
-			pygame.init()
-			pygame.display.init()
-			pygame.display.set_mode((10,10))
-			pygame.quit()				
+			
 	# Load debug package (this must be after the working directory change)
 	from libopensesame import debug
 	# The IPython modules must be loaded before PyQt4
