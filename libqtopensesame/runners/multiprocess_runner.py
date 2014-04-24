@@ -31,7 +31,15 @@ class multiprocess_runner(base_runner):
 		
 		"""See base_runner.execute()."""
 		
-		import multiprocessing
+		import platform
+		# In OS X the multiprocessing module is horribly broken, but a fixed
+		# version has been released as the 'billiard' module
+		if platform.system() == 'Darwin':
+			import billiard as multiprocessing
+			multiprocessing.forking_enable(0)
+		else:
+			import multiprocessing
+	
 		from libqtopensesame.misc import process, _
 		from libopensesame import misc, debug
 		from StringIO import StringIO
