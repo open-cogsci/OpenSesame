@@ -99,7 +99,6 @@ class LabScribe_send_message(item):
 			msg = startTime.strftime("cmdstart^%H:%M:%S^%f^")
 			
 			try:
-				data = msg.encode('utf8')
 				s.sendall(data)
 				socketCreated = 1
 			except:
@@ -109,7 +108,6 @@ class LabScribe_send_message(item):
 		elif self._option == u'Send Message':
 			if socketCreated == 1:
 				msg = u'mark^' +  str(millis()) + u'^' + self._text + u'^'
-				#data = msg.encode('utf8') # utf8 encoding used since we are sending tcpip messages.
 
 				try :
 					s.sendall(msg)
@@ -121,7 +119,6 @@ class LabScribe_send_message(item):
 		elif self._option == u'End Connection':
 			if socketCreated == 1:
 				msg = u'cmdstop^' + str(millis()) + u'^'
-				#data = msg.encode('utf8') # utf8 encoding used since we are sending tcpip messages.
 
 				try :
 					s.sendall(msg)
