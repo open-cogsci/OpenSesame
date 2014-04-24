@@ -417,7 +417,7 @@ class qtopensesame(QtGui.QMainWindow):
 		if os.name == u"nt":
 			os.startfile(self.autosave_folder)
 		elif os.name == u"posix":
-			pid = subprocess.Popen([u"xdg-open", self.autosave_folder]).pid
+			misc.open_url(self.autosave_folder)
 
 	def start_autosave_timer(self):
 
