@@ -87,6 +87,8 @@ class loop(item.item):
 
 		"""Runs the loop."""
 
+		self.set_item_onset()
+
 		# Prepare the break if condition
 		if self.break_if != u'':
 			self._break_if = self.compile_cond(self.break_if)

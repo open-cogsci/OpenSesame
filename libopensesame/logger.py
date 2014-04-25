@@ -30,7 +30,7 @@ class logger(item.item):
 
 		"""
 		Constructor.
-		
+
 		Arguments:
 		name		--	The name of the item.
 		experiment 	--	The experiment.
@@ -53,6 +53,7 @@ class logger(item.item):
 
 		"""Log the selected variables"""
 
+		self.set_item_onset()
 		if not self.log_started:
 			self.log_started = True
 			# If auto logging is enabled, collect all variables
@@ -90,7 +91,7 @@ class logger(item.item):
 
 		"""
 		Parse the logger from a definition string
-		
+
 		Arguments:
 		string -- definition string
 		"""
