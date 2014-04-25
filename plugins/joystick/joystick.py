@@ -18,6 +18,7 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame. If not, see <http://www.gnu.org/licenses/>.
 """
 
+from libopensesame import plugins
 from libopensesame.exceptions import osexception
 from libopensesame import item, generic_response, debug
 from libqtopensesame.items.qtautoplugin import qtautoplugin
@@ -90,9 +91,7 @@ class joystick(item.item, generic_response.generic_response):
 			timeout = self.get(u"timeout")
 			# Dynamically load a joystick instance
 			if not hasattr(self.experiment, u"joystick"):
-				path = os.path.join(os.path.dirname(__file__), \
-					u"libjoystick.py")
-				_joystick = imp.load_source(u"libjoystick", path)
+				_joystick = plugins.load_mod(__file__, u'libjoystick')
 				self.experiment.joystick = _joystick.libjoystick( \
 					self.experiment, device=self._device)
 			# Prepare auto response
