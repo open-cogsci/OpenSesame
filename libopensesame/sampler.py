@@ -93,7 +93,7 @@ class sampler(item.item, generic_response.generic_response):
 
 		"""Plays the sample."""
 
-		self.set_item_onset(self.time())
+		self.set_item_onset()
 		self.set_sri()
 		self.sampler.play(self.block)
 		self.process_response()
@@ -105,7 +105,7 @@ class sampler(item.item, generic_response.generic_response):
 
 		Returns:
 		A list of (name, description) tuples
-		"""		
+		"""
 
 		return item.item.var_info(self) + \
 			generic_response.generic_response.var_info(self)

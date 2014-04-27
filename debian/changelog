@@ -1,3 +1,14 @@
+opensesame (2.8.2-ubuntu1) saucy; urgency=low
+
+  * Improvements
+    - Improve support for psycho back-end on OSX
+    - Improve support for multiprocessing on OSX
+  * Bugs fixed
+    - Fix autosave folder dialog on OSX (#250)
+    - Fix sampler crashing on filenames with special characters (#244)
+
+ -- Sebastiaan Mathot <s.mathot@cogsci.nl>  Thu, 17 Apr 2014 17:14:10 +0200
+
 opensesame (2.8.1-ubuntu1) saucy; urgency=low
 
   * Bugs fixed

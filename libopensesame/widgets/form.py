@@ -157,13 +157,14 @@ class form:
 					index2 = self.cell_index((col, row))
 					if index1 == index2:
 						continue
-					print '%s, %s (%s)' % (col, row, index2)
 					if len(self.widgets) <= index2:
 						raise osexception( \
-							u'One or more widgets fall outside of your form')
+							u'The widget at position (%d, %s) falls outside of your form' \
+							% (l[0], l[1]))
 					if self.widgets[index2] != None:
 						raise osexception( \
-							u'Two or more widgets in your form are overlapping')
+							u'The widget at position (%d, %d) overlaps with another widget' \
+							% (l[0], l[1]))
 
 	def get_cell(self, index):
 

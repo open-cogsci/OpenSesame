@@ -195,7 +195,7 @@ def list_plugins(filter_disabled=True):
 	_list = [plugin[0] for plugin in plugins]
 	return [plugin for plugin in _list if not (filter_disabled and \
 		plugin_disabled(plugin))]
-	
+
 def plugin_folder(plugin):
 
 	"""
@@ -295,3 +295,54 @@ def load_plugin(plugin, item_name, experiment, string, prefix=u''):
 	item = item_class(item_name, experiment, string)
 	return item
 
+def load_cls(path, cls, mod, pkg=None):
+
+	"""
+	Dynamically loads a module from a path and return a class from the module
+
+	Arguments:
+	path		--	A folder or file name. If a filename is specified, the
+					file's directory will be used as path.
+	cls			--	The class name.
+	mod			--	The name of a module, which corresponds to the name of the
+					source file without the `.py` extension.
+	pkg			--	The module's package. This is effectively a subfolder that
+					is added to the path. (default=None)
+
+	Returns:
+	A Python class.
+	"""
+
+	mod = load_mod(path, mod, pkg)
+	print mod
+	print dir(mod)
+	debug.msg(u'getting class %s from module %s' % (cls, mod))
+	return getattr(mod, cls)
+
+def load_mod(path, mod, pkg=None):
+
+	"""
+	Dynamically loads a module from a path.
+
+	Arguments:
+	path		--	A folder or file name. If a filename is specified, the
+					file's directory will be used as path.
+	mod			--	The name of a module, which corresponds to the name of the
+					source file without the `.py` extension.
+	pkg			--	The module's package. This is effectively a subfolder that
+					is added to the path. (default=None)
+
+	Returns:
+	A Python module.
+	"""
+
+	import imp
+	if isinstance(path, str):
+		path = path.decode(sys.getfilesystemencoding())
+	if not os.path.isdir(path):
+		path = os.path.dirname(path)
+	if pkg != None:
+		path = os.path.join(path, pkg)
+	path = os.path.join(path, mod+u'.py')
+	debug.msg(u'loading module from %s' % path)
+	return imp.load_source(mod, path)
