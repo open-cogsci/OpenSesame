@@ -86,7 +86,7 @@ class inline_script(item.item):
 
 		return canvas.canvas(self.experiment, self.get(u'background'), \
 			self.get(u'foreground'), auto_prepare=auto_prepare)
-	
+
 	def prepare(self):
 
 		"""<DOC>
@@ -96,16 +96,16 @@ class inline_script(item.item):
 		</DOC>"""
 
 		global _globals, _locals
-		
+
 		item.item.prepare(self)
 		if self.experiment.transparent_variables == u'yes':
-			self.start_transparency()		
+			self.start_transparency()
 		# Convenience variables need to be registered as globals. By specifying
 		# a __name__, the script will function as a module, so that e.g. import
 		# statements do not suffer from locality.
 		if u'exp' not in _globals:
 			_globals[u'exp'] = self.experiment
-			_globals[u'win'] = self.experiment.window			
+			_globals[u'win'] = self.experiment.window
 			_globals[u'__name__'] = u'myname'
 		# 'self' must always be registered, otherwise we get confusions between
 		# the various inline_script items.
@@ -115,7 +115,7 @@ class inline_script(item.item):
 		_prepare = (u'#-*- coding:%s -*-\n' % self.encoding + self._prepare) \
 			.encode(self.encoding)
 		_run = (u'#-*- coding:%s -*-\n' % self.encoding + self._run) \
-			.encode(self.encoding)			
+			.encode(self.encoding)
 		# Compile prepare script
 		try:
 			self.cprepare = compile(_prepare, u'<string>', u'exec')
@@ -143,8 +143,9 @@ class inline_script(item.item):
 		Executes the run script. The code that you enter in the 'run' tab of #
 		an inline_script item in the GUI is used as a body for this function.
 		</DOC>"""
-		
+
 		global _globals, _locals
+		self.set_item_onset()
 		# 'self' must always be registered, otherwise we get confusions between
 		# the various inline_script items.
 		_globals[u'self'] = self
@@ -219,17 +220,17 @@ class inline_script(item.item):
 			if isinstance(val, basestring) or isinstance(val, float) or \
 				isinstance(val, int):
 				self.experiment.set(var, val)
-	
+
 def restore_state():
-	
+
 	"""Restores the system state."""
-	
+
 	global _globals
 	_globals = {}
-	
+
 def save_state():
-	
+
 	"""Saves the system state."""
-	
+
 	# Currently does nothing.
 	pass

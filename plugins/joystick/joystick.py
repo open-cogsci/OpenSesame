@@ -49,6 +49,7 @@ class joystick(item.item, generic_response.generic_response):
 		self.timeout = u'infinite'
 		self.allowed_responses = u''
 		self._dummy = u'no'
+		self._device = 0
 		item.item.__init__(self, name, experiment, string)
 		self.process_feedback = True
 
@@ -93,7 +94,7 @@ class joystick(item.item, generic_response.generic_response):
 					u"libjoystick.py")
 				_joystick = imp.load_source(u"libjoystick", path)
 				self.experiment.joystick = _joystick.libjoystick( \
-					self.experiment)
+					self.experiment, device=self._device)
 			# Prepare auto response
 			if self.experiment.auto_response:
 				self._resp_func = self.auto_responder

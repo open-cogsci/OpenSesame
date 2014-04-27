@@ -26,81 +26,26 @@ import pygame
 from pygame.locals import *
 from pygame.joystick import Joystick
 from libopensesame.exceptions import osexception
+from libopensesame import plugins
 
-class legacy:
+basejoystick = plugins.load_cls(__file__, cls=u'basejoystick',
+	mod=u'basejoystick')
 
-	def __init__(self, experiment, joybuttonlist=None, timeout=None):
+class legacy(basejoystick):
 
-		"""<DOC>
-		Intializes the joystick object.
+	def __init__(self, experiment, device=0, joybuttonlist=None, timeout=None):
 
-		Arguments:
-		experiment		--	An instance of libopensesame.experiment.experiment.
+		"""See _libjoystick.basejoystick"""
 
-		Keyword arguments:
-		joybuttonlist	--	A list of buttons that are accepted or None to
-							accept all buttons. (default=None)
-		timeout			--	An integer value specifying a timeout in
-							milliseconds or None for no timeout. (default=None)
-		</DOC>"""
-
-
-		global js
-		pygame.init()
-		js = pygame.joystick.Joystick(0)
-		js.init()
-
+		self.js = pygame.joystick.Joystick(device)
+		self.js.init()
 		self.experiment = experiment
 		self.set_joybuttonlist(joybuttonlist)
 		self.set_timeout(timeout)
 
-	def set_joybuttonlist(self, joybuttonlist=None):
-
-		"""<DOC>
-		Sets a list of accepted buttons.
-
-		Keyword arguments:
-		joybuttonlist	--	A list of button numbers that are accepted or None
-							to accept all buttons. (default=None)
-		</DOC>"""
-
-		if joybuttonlist == None or joybuttonlist == []:
-			self._joybuttonlist = None
-		else:
-			self._joybuttonlist = []
-			for joybutton in joybuttonlist:
-				self._joybuttonlist.append(joybutton)
-
-	def set_timeout(self, timeout=None):
-
-		"""<DOC>
-		Sets a timeout.
-
-		Keyword arguments:
-		timeout		--	An integer value specifying a timeout in milliseconds or
-						None for no timeout. (default=None)
-		</DOC>"""
-
-		self.timeout = timeout
-
 	def get_joybutton(self, joybuttonlist=None, timeout=None):
 
-		"""<DOC>
-		Waits for joystick button input.
-
-		Keyword arguments:
-		joybuttonlist	--	A list of button numbers that are accepted or
-							None to use the default. This parameter does not
-							change the default joybuttonlist. (default = None)
-		timeout			--	An integer value specifying a timeout in
-							milliseconds or None to use the default. This
-							parameter does not change the default timeout.
-							(default=None)
-
-		Returns:
-		A (joybutton, timestamp) tuple. The joybutton is None if a timeout
-		occurs.
-		</DOC>"""
+		"""See _libjoystick.basejoystick"""
 
 		if joybuttonlist == None or joybuttonlist == []:
 			joybuttonlist = self._joybuttonlist
@@ -126,17 +71,7 @@ class legacy:
 
 	def get_joyaxes(self, timeout=None):
 
-		"""<DOC>
-		Waits for joystick axes movement.
-
-		Keyword arguments:
-		timeout		--	An integer value specifying a timeout in milliseconds
-						or None to use the default. This parameter does not
-						change the default timeout. (default=None)
-
-		Returns:
-		A (position, timestamp) tuple. The position is None if a timeout occurs.
-		</DOC>"""
+		"""See _libjoystick.basejoystick"""
 
 		if timeout == None:
 			timeout = self.timeout
@@ -152,25 +87,15 @@ class legacy:
 					if event.key == pygame.K_ESCAPE:
 						raise osexception(u"The escape key was pressed.")
 				if event.type == JOYAXISMOTION:
-					for axis in range(js.get_numaxes()):
-						pos.append(js.get_axis(axis))
+					for axis in range(self.js.get_numaxes()):
+						pos.append(self.js.get_axis(axis))
 					return pos, time
 
 		return None, time
 
 	def get_joyballs(self, timeout=None):
 
-		"""<DOC>
-		Waits for joystick trackball movement.
-
-		Keyword arguments:
-		timeout		--	An integer value specifying a timeout in milliseconds
-						or None to use the default. This parameter does not
-						change the default timeout. (default=None)
-
-		Returns:
-		A (position, timestamp) tuple. The position is None if a timeout occurs.
-		</DOC>"""
+		"""See _libjoystick.basejoystick"""
 
 		if timeout == None:
 			timeout = self.timeout
@@ -186,25 +111,15 @@ class legacy:
 					if event.key == pygame.K_ESCAPE:
 						raise osexception(u"The escape key was pressed.")
 				if event.type == JOYBALLMOTION:
-					for ball in range(js.get_numballs()):
-						ballpos.append(js.get_ball(ball))
+					for ball in range(self.js.get_numballs()):
+						ballpos.append(self.js.get_ball(ball))
 					return ballpos, time
 
 		return None, time
 
 	def get_joyhats(self, timeout=None):
 
-		"""<DOC>
-		Waits for joystick hat movement.
-
-		Keyword arguments:
-		timeout		--	An integer value specifying a timeout in milliseconds
-						or None to use the default. This parameter does not
-						change the default timeout. (default=None)
-
-		Returns:
-		A (position, timestamp) tuple. The position is None if a timeout occurs.
-		</DOC>"""
+		"""See _libjoystick.basejoystick"""
 
 		if timeout == None:
 			timeout = self.timeout
@@ -220,30 +135,15 @@ class legacy:
 					if event.key == pygame.K_ESCAPE:
 						raise osexception(u"The escape key was pressed.")
 				if event.type == JOYHATMOTION:
-					for hat in range(js.get_numhats()):
-						hatpos.append(js.get_hat(hat))
+					for hat in range(self.js.get_numhats()):
+						hatpos.append(self.js.get_hat(hat))
 					return hatpos, time
 
 		return None, time
 
 	def get_joyinput(self, joybuttonlist=None, timeout=None):
 
-		"""<DOC>
-		Waits for any joystick input (buttons, axes, hats or balls).
-
-		Keyword arguments:
-		joybuttonlist	--	A list of button numbers that are accepted or
-							None to use the default. This parameter does not
-							change the default joybuttonlist. (default=None)
-		timeout			--	An integer value specifying a timeout in
-							milliseconds or None to use the default. This
-							parameter does not change the default timeout.
-							(default=None)
-
-		Returns:
-		A (event, value, timestamp) tuple. The value is None if a timeout
-		occurs.
-		</DOC>"""
+		"""See _libjoystick.basejoystick"""
 
 		if joybuttonlist == None or joybuttonlist == []:
 			joybuttonlist = self._joybuttonlist
@@ -271,44 +171,33 @@ class legacy:
 						return eventtype, bpress, time
 				if event.type == JOYAXISMOTION:
 					eventtype = u'joyaxismotion'
-					for axis in range(js.get_numaxes()):
-						pos.append(js.get_axis(axis))
+					for axis in range(self.js.get_numaxes()):
+						pos.append(self.js.get_axis(axis))
 					return eventtype, pos, time
 				if event.type == JOYBALLMOTION:
 					eventtype = u'joyballmotion'
-					for ball in range(js.get_numballs()):
-						ballpos.append(js.get_ball(ball))
+					for ball in range(self.js.get_numballs()):
+						ballpos.append(self.js.get_ball(ball))
 					return eventtype, ballpos, time
 				if event.type == JOYHATMOTION:
 					eventtype = u'joyhatmotion'
-					for hat in range(js.get_numhats()):
-						hatpos.append(js.get_hat(hat))
+					for hat in range(self.js.get_numhats()):
+						hatpos.append(self.js.get_hat(hat))
 					return eventtype, hatpos, time
 
 		return eventtype, None, time
 
 	def input_options(self):
 
-		"""<DOC>
-		Generates a list with amount of available buttons, axes, balls and hats.
+		"""See _libjoystick.basejoystick"""
 
-		Returns:
-		List with number of inputs as: [buttons, axes, balls, hats]
-		</DOC>"""
-
-		ninputs = [js.get_numbuttons(), js.get_numaxes(), js.get_numballs(), \
-			js.get_numhats()]
+		ninputs = [self.js.get_numbuttons(), self.js.get_numaxes(),
+			self.js.get_numballs(), self.js.get_numhats()]
 		return ninputs
 
 	def flush(self):
 
-		"""<DOC>
-		Clears all pending input, not limited to the joystick.
-
-		Returns:
-		True if a joyinput has been made (i.e., if there was something
-		to flush) and False otherwise
-		</DOC>"""
+		"""See _libjoystick.basejoystick"""
 
 		joyinput = False
 		for event in pygame.event.get():

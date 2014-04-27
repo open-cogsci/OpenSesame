@@ -85,12 +85,16 @@ class legacy:
 				raise osexception( \
 					u"openexp._sampler.legacy.__init__() the file '%s' does not exist" \
 					% src)
-
 			if os.path.splitext(src)[1].lower() not in (".ogg", ".wav"):
 				raise osexception( \
 					u"openexp._sampler.legacy.__init__() the file '%s' is not an .ogg or .wav file" \
 					% src)
-
+			# The mixer chokes on unicode pathnames that contain special
+			# characters. To avoid this we convert to str with the filesystem
+			# encoding.
+			if isinstance(src, unicode):
+				import sys
+				src = src.encode(sys.getfilesystemencoding())
 			self.sound = mixer.Sound(src)
 
 		self.experiment = experiment
