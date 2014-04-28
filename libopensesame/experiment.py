@@ -136,7 +136,10 @@ class experiment(item.item):
 		self.set_subject(subject_nr)
 		# Restore experiment path
 		if experiment_path != None:
+			self.fallback_pool_folder = os.path.join(experiment_path, u'__pool__')
 			self.experiment_path = experiment_path
+		else:
+			self.fallback_pool_folder = None
 
 	def module_container(self):
 
@@ -374,8 +377,9 @@ class experiment(item.item):
 
 		"""<DOC>
 		Returns the path to a file. First checks if the file is in the file pool #
-		and then the folder of the current experiment (if any). Otherwise, #
-		simply returns the path.
+		and then the folder of the current experiment (if any), or in the #
+		`__pool__` subfolder of the current experiment. Otherwise, simply #
+		returns the path.
 
 		Arguments:
 		path	--	The filename.
@@ -391,15 +395,20 @@ class experiment(item.item):
 
 		path = self.unistr(path)
 		if path.strip() == u'':
-			raise osexception( \
-				u"An empty string was passed to experiment.get_file(). Please specify a valid filename.")
+			raise osexception(
+				u"An empty string was passed to experiment.get_file(). Please "
+				u"specify a valid filename.")
 		if os.path.exists(os.path.join(self.pool_folder, path)):
 			return os.path.join(self.pool_folder, path)
-		elif self.experiment_path != None and os.path.exists(os.path.join( \
-			self.experiment_path, path)):
-			return os.path.join(self.experiment_path, path)
-		else:
-			return path
+		if self.experiment_path != None:
+			if os.path.exists(os.path.join(self.experiment_path, path)):
+				return os.path.join(self.experiment_path, path)
+			if self.fallback_pool_folder != None and os.path.exists(
+				os.path.join(self.experiment_path, self.fallback_pool_folder,
+				path)):
+				return os.path.join(self.experiment_path,
+					self.fallback_pool_folder, path)
+		return path
 
 	def file_in_pool(self, path):
 
