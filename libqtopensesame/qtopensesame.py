@@ -824,21 +824,17 @@ class qtopensesame(QtGui.QMainWindow):
 		if not self.save_unsaved_changes():
 			self.ui.tabwidget.open_general()
 			return
-
 		if path == None:
-			path = QtGui.QFileDialog.getOpenFileName(self.ui.centralwidget, \
-				_(u"Open file"), filter=self.file_type_filter, directory= \
-				cfg.file_dialog_path)
+			path = unicode(QtGui.QFileDialog.getOpenFileName(
+				self.ui.centralwidget, _(u"Open file"),
+				filter=self.file_type_filter, directory=cfg.file_dialog_path))
 		if path == None or path == u'' or (not path.lower().endswith(
 			u'.opensesame') and not path.lower().endswith(
 			u'.opensesame.tar.gz')):
 			return
-
-		path = unicode(path)
 		self.set_status(u"Opening ...")
 		self.ui.tabwidget.close_all()
 		cfg.file_dialog_path = os.path.dirname(path)
-
 		try:
 			exp = experiment.experiment(self, u"Experiment", path)
 		except Exception as e:
