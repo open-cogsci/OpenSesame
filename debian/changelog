@@ -1,14 +1,18 @@
-opensesame (2.8.2~pre2-ubuntu1) trusty; urgency=low
+opensesame (2.8.2~pre3-ubuntu1) trusty; urgency=low
 
   * Improvements
     - Improve support for psycho back-end on OSX
     - Improve support for multiprocessing on OSX
     - Open experiments by dropping on the overview area
     - Add fallback pool folder to facilitate versioning
+    - Allow margins, spacing, and theme to be specified in
+      `form_multiple_choice` plug-in (#255)
   * Bugs fixed
     - Fix autosave folder dialog on OSX (#250)
     - Fix sampler crashing on filenames with special characters (#244)
     - All items set `time_[item name]` variables (#243)
+    - Do not crash on purely numeric text when using bi-direction language
+	  support (#253)
 
  -- Sebastiaan Mathot <s.mathot@cogsci.nl>  Thu, 17 Apr 2014 17:14:10 +0200
 
