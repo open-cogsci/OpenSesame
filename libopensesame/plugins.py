@@ -314,9 +314,6 @@ def load_cls(path, cls, mod, pkg=None):
 	"""
 
 	mod = load_mod(path, mod, pkg)
-	print mod
-	print dir(mod)
-	debug.msg(u'getting class %s from module %s' % (cls, mod))
 	return getattr(mod, cls)
 
 def load_mod(path, mod, pkg=None):
@@ -345,4 +342,4 @@ def load_mod(path, mod, pkg=None):
 		path = os.path.join(path, pkg)
 	path = os.path.join(path, mod+u'.py')
 	debug.msg(u'loading module from %s' % path)
-	return imp.load_source(mod, path)
+	return imp.load_source(mod, path.encode(sys.getfilesystemencoding()))

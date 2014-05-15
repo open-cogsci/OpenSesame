@@ -135,12 +135,12 @@ class html(HTMLParser):
 		html		--	Indicates whether HTML should be parsed. (default=True)
 		"""
 
+		# Make sure that it's a string
+		text = canvas.experiment.unistr(text)
 		debug.msg(text)
 		# Parse bi-directional strings
 		if bidi and bidi_func != None:
 			text = bidi_func(text)
-		# Make sure that it's a string
-		text = canvas.experiment.unistr(text)
 		# Convert line breaks to HTML break tags
 		text = text.replace(os.linesep, u'<br />').replace(u'\n', u'<br />')
 

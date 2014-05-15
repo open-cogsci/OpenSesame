@@ -75,7 +75,7 @@ class qtopensesame(QtGui.QMainWindow):
 		from libqtopensesame.misc import theme, dispatch
 		import platform
 		import random
-		
+
 		# Make sure that QProgEdit doesn't complain about some standard names
 		from QProgEdit import validate
 		validate.addPythonBuiltins([u'exp', u'win', u'self'])
@@ -306,7 +306,7 @@ class qtopensesame(QtGui.QMainWindow):
 
 		# Force configuration options that were set via the command line
 		config.parse_cmdline_args(self.options._config)
-		self.recent_files = []				
+		self.recent_files = []
 		if self.options.start_clean:
 			debug.msg(u'Not restoring state')
 			return
@@ -322,7 +322,7 @@ class qtopensesame(QtGui.QMainWindow):
 		self.ui.shortcut_pool.setKey(QtGui.QKeySequence(cfg.shortcut_pool))
 		self.ui.shortcut_variables.setKey(QtGui.QKeySequence( \
 			cfg.shortcut_variables))
-		# Unpack the string with recent files and only remember those that exist		
+		# Unpack the string with recent files and only remember those that exist
 		for path in cfg.recent_files.split(u";;"):
 			if os.path.exists(path):
 				debug.msg(u"adding recent file '%s'" % path)
@@ -603,7 +603,7 @@ class qtopensesame(QtGui.QMainWindow):
 				self.update_dialog( \
 					_(u"... and is sorry to say that the attempt to check for updates has failed. Please make sure that you are connected to the internet and try again later. If this problem persists, please visit <a href='http://www.cogsci.nl/opensesame'>http://www.cogsci.nl/opensesame</a> for more information."))
 			return
-		
+
 		# The most recent version as downloaded is always a float. Therefore, we
 		# must convert the various possible version numbers to analogous floats.
 		# We do this by dividing each subversion number by 100. The only
@@ -612,12 +612,12 @@ class qtopensesame(QtGui.QMainWindow):
 		# 0.27			->	0.27.0.0			->	0.27
 		# 0.27.1 		-> 	0.27.1.0			->	0.2701
 		# 0.27~pre1		->	0.27.0.1 - .0001	-> 	0.269901
-		# 0.27.1~pre1	->	0.27.1.1 - .0001	-> 	0.270001		
+		# 0.27.1~pre1	->	0.27.1.1 - .0001	-> 	0.270001
 		v = self.version
 		l = v.split(u"~pre")
 		if len(l) == 2:
 			lastSubVer = l[1]
-			v = l[0]		
+			v = l[0]
 			ver = -.0001
 		else:
 			lastSubVer = 0
@@ -824,23 +824,21 @@ class qtopensesame(QtGui.QMainWindow):
 		if not self.save_unsaved_changes():
 			self.ui.tabwidget.open_general()
 			return
-
 		if path == None:
-			path = QtGui.QFileDialog.getOpenFileName(self.ui.centralwidget, \
-				_(u"Open file"), filter=self.file_type_filter, directory= \
-				cfg.file_dialog_path)
-		if path == None or path == "":
+			path = unicode(QtGui.QFileDialog.getOpenFileName(
+				self.ui.centralwidget, _(u"Open file"),
+				filter=self.file_type_filter, directory=cfg.file_dialog_path))
+		if path == None or path == u'' or (not path.lower().endswith(
+			u'.opensesame') and not path.lower().endswith(
+			u'.opensesame.tar.gz')):
 			return
-
-		path = unicode(path)
 		self.set_status(u"Opening ...")
 		self.ui.tabwidget.close_all()
 		cfg.file_dialog_path = os.path.dirname(path)
-
 		try:
 			exp = experiment.experiment(self, u"Experiment", path)
 		except Exception as e:
-			
+
 			if not isinstance(e, osexception):
 				e = osexception(msg=u'Failed to open file', exception=e)
 			self.print_debug_window(e)
@@ -1132,20 +1130,20 @@ class qtopensesame(QtGui.QMainWindow):
 						debug.msg(u"'%s' did something" % item)
 						redo = True
 						break
-						
+
 	def print_debug_window(self, msg):
-		
+
 		"""
 		Prints a message to the debug window.
-		
+
 		Arguments:
 		msg		--	An object to print to the debug window.
 		"""
-		
+
 		from libqtopensesame.widgets import pyterm
 		out = pyterm.output_buffer(self.ui.edit_stdout)
 		out.write(self.experiment.unistr(msg))
-			
+
 	def run_experiment(self, dummy=None, fullscreen=True, quick=False):
 
 		"""
@@ -1162,7 +1160,7 @@ class qtopensesame(QtGui.QMainWindow):
 		"""
 
 		from libqtopensesame.widgets import pyterm
-		
+
 		# Disable the entire Window, so that we can't interact with OpenSesame.
 		# TODO: This should be more elegant, so that we selectively disable
 		# parts of the GUI.
@@ -1174,14 +1172,14 @@ class qtopensesame(QtGui.QMainWindow):
 			self.autosave_timer.stop()
 		# Reroute the standard output to the debug window
 		buf = pyterm.output_buffer(self.ui.edit_stdout)
-		sys.stdout = buf		
+		sys.stdout = buf
 		# Launch the runner!
 		if cfg.runner == u'multiprocess':
 			from libqtopensesame.runners import multiprocess_runner as runner
 		elif cfg.runner == u'inprocess':
 			from libqtopensesame.runners import inprocess_runner as runner
 		elif cfg.runner == u'external':
-			from libqtopensesame.runners import external_runner as runner		
+			from libqtopensesame.runners import external_runner as runner
 		debug.msg(u'using %s runner' % runner)
 		runner(self).run(quick=quick, fullscreen=fullscreen, auto_response= \
 			self.experiment.auto_response)
@@ -1191,11 +1189,11 @@ class qtopensesame(QtGui.QMainWindow):
 		# Resume autosave
 		if self.autosave_timer != None:
 			debug.msg(u"resuming autosave timer")
-			self.autosave_timer.start()		
+			self.autosave_timer.start()
 		# Re-enable the GUI.
 		if sys.platform != 'darwin':
-			self.setDisabled(False)			
-		
+			self.setDisabled(False)
+
 	def run_experiment_in_window(self):
 
 		"""Runs the experiment in a window"""

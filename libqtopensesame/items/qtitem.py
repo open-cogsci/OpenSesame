@@ -607,24 +607,29 @@ class qtitem(QtCore.QObject):
 		for var, edit in self.auto_line_edit.iteritems():
 			edit.editingFinished.disconnect()
 			if self.has(var):
-				try:
-					edit.setText(self.unistr(self.get(var, _eval=False)))
-				except Exception as e:
-					self.experiment.notify(_(u"Failed to set control '%s': %s") \
-						% (var, e))
+				edit.setText(self.unistr(self.get(var, _eval=False)))
 			else:
-				edit.setText(u"")
+				edit.setText(u'')
 			edit.editingFinished.connect(self.apply_edit_changes)
 
 		for var, combobox in self.auto_combobox.iteritems():
 			combobox.currentIndexChanged.disconnect()
-			if self.has(var):
-				try:
-					combobox.setCurrentIndex(combobox.findText( \
-						self.unistr(self.get(var, _eval=False))))
-				except Exception as e:
-					self.experiment.notify(_(u"Failed to set control '%s': %s") \
-						% (var, e))
+			val = self.get_check(var, _eval=False, default=u'')
+			i = combobox.findText(self.unistr(self.get(var, _eval=False)))
+			# Set the combobox to the select item
+			if i >= 0:
+				combobox.setDisabled(False)
+				combobox.setCurrentIndex(i)
+			# If no value was specified, set the combobox to a blank item
+			elif val == u'':
+				combobox.setDisabled(False)
+				combobox.setCurrentIndex(-1)
+			# If an unknown value has been specified, notify the user
+			else:
+				combobox.setDisabled(True)
+				self.user_hint_widget.add_user_hint(_(u'"%s" is set to a '
+					u'variable or unknown value and can only be edited through '
+					u'the script.' % var))
 			combobox.currentIndexChanged.connect(self.apply_edit_changes)
 
 		for var, spinbox in self.auto_spinbox.iteritems():

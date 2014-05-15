@@ -49,6 +49,9 @@ class form_multiple_choice(item.item):
 		self.advance_immediately = u'yes'
 		self.allow_multiple = u'yes'
 		self.button_text = u'Ok'
+		self.spacing = 10
+		self.margins = u'50;50;50;50'
+		self.theme = u'gray'
 		item.item.__init__(self, name, experiment, string)
 		
 	def run(self):
@@ -78,13 +81,20 @@ class form_multiple_choice(item.item):
 		if self.get(u'allow_multiple') == u'no':
 			group = u'response_group'
 		else:
-			group = None			
+			group = None
 			
 		# The variable in which the response is stored
 		var = self.get(u'form_var')
 		
 		# Build the form
-		form = widgets.form(self.experiment, cols=1, rows=rows)		
+		try:
+			margins = [float(i) for i in unicode(self.margins).split(u';')]
+		except:
+			raise osexception( \
+				_(u'margins should be numeric values separated by a semi-colon'))
+		form = widgets.form(self.experiment, cols=1, rows=rows,
+			spacing=self.get(u'spacing'), margins=margins,
+			theme=self.get(u'theme'), item=self)
 		form.set_widget(widgets.label(form, self.get(u'form_title')), (0,0))
 		form.set_widget(widgets.label(form, self.get(u'question')), (0,1))
 		i = 2

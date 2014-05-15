@@ -32,7 +32,7 @@ class tree_overview(QtGui.QTreeWidget):
 		Constructor
 
 		Arguments:
-		parent -- the parent item
+		parent 	--	The parent item.
 		"""
 
 		QtGui.QTreeWidget.__init__(self, parent)
@@ -75,27 +75,36 @@ class tree_overview(QtGui.QTreeWidget):
 	def dropEvent(self, e):
 
 		"""
-		Accept a drop event
+		Accepts a drop event.
 
 		Arguments:
-		e -- a QDragEvent
+		e 	--	A QDropEvent.
 		"""
 
-		if e.mimeData().hasText():
+		# Open files by drag-and-drop
+		if e.mimeData().hasUrls():
+			urls = e.mimeData().urls()
+			if len(urls) == 0:
+				debug.msg(u'An empty URL list was dropped')
+				return
+			url = urls[0]
+			if not url.isLocalFile():
+				debug.msg(u'URL is not a local file')
+				return
+			path = unicode(url.toLocalFile())
+			self.main_window.open_file(path=path)
+		elif e.mimeData().hasText():
 			s = e.mimeData().text()
 			e.setDropAction(QtCore.Qt.CopyAction)
 			item = self.itemAt(e.pos())
-
 			if item == None:
 				e.ignore()
 				return
-
 			# Accept a drop on the toplevel item
 			if item.parent() == None:
 				self.main_window.experiment.notify( \
-					'You cannot change the entry point of the experiment!')
+					u'You cannot change the entry point of the experiment!')
 				return
-
 			index = 0
 			while True:
 				item_name = unicode(item.text(0))
@@ -104,11 +113,10 @@ class tree_overview(QtGui.QTreeWidget):
 					return
 				item_type = \
 					self.main_window.experiment.items[item_name].item_type
-				if item_type == "sequence":
+				if item_type == u'sequence':
 					break
 				index = item.parent().indexOfChild(item)
 				item = item.parent()
-
 			if item != None:
 				item.setSelected(True)
 				draggables.drop_target = item_name, index, True
@@ -145,7 +153,7 @@ class tree_overview(QtGui.QTreeWidget):
 			# If the parent is a sequence, get the position of the item in the
 			# sequence, because the name by itself is ambiguous since the name
 			# may occur multiple times in one sequence
-			if parent_type == "sequence":
+			if parent_type == u'sequence':
 				index = 0
 				for index in range(parent_item.childCount()):
 					child = parent_item.child(index)
@@ -193,34 +201,33 @@ class tree_overview(QtGui.QTreeWidget):
 			self.main_window.open_item(self.currentItem())
 		elif e.key() == QtCore.Qt.Key_Space:
 			self.context_menu(self.currentItem())
-			
+
 	def recursive_children(self, item):
-		
+
 		"""
 		Get a list of unused items from the itemtree
-		
+
 		Returns:
 		A list of items (strings) that are children of the parent item
 		"""
-		
+
 		children = []
 		for i in range(item.childCount()):
 			child = item.child(i)
 			children.append(unicode(child.text(0)))
 			children += self.recursive_children(child)
 		return children
-	
+
 	def unused_items(self):
-		
+
 		"""
 		Get a list of unused items
-		
+
 		Returns:
 		A list of unused items (names as strings)
 		"""
-		
+
 		return self.main_window.ui.itemtree.recursive_children( \
 			self.main_window.ui.itemtree.topLevelItem( \
 				self.main_window.ui.itemtree.topLevelItemCount()-1))
-		
-				
+
