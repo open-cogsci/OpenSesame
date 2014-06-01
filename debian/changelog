@@ -1,4 +1,4 @@
-opensesame (2.8.2~pre3-ubuntu1) trusty; urgency=low
+opensesame (2.8.2~pre4-ubuntu1) trusty; urgency=low
 
   * Improvements
     - Improve support for psycho back-end on OSX
@@ -7,6 +7,7 @@ opensesame (2.8.2~pre3-ubuntu1) trusty; urgency=low
     - Add fallback pool folder to facilitate versioning
     - Allow margins, spacing, and theme to be specified in
       `form_multiple_choice` plug-in (#255)
+    - Safely convert messages to unicode in `item.log()`
   * Bugs fixed
     - Fix autosave folder dialog on OSX (#250)
     - Fix sampler crashing on filenames with special characters (#244)

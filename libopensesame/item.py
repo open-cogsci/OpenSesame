@@ -912,17 +912,24 @@ class item(object):
 
 	def unistr(self, val):
 
-		"""
-		Converts a variable type into a unicode string. This function is mostly
-		necessary to make sure that normal strings with special characters are
+		"""<DOC>
+		Converts a value to a unicode string. This function is mostly #
+		necessary to make sure that normal strings with special characters are #
 		correctly encoded into unicode, and don't result in TypeErrors.
+		
+		The conversion logic is as follows:
+		
+		- unicode values are returned unchanged.
+		- str values are decoded using utf-8.
+		- all other types are typecast to unicode, assuming utf-8 encoding where #
+		  applicable.
 
 		Arguments:
-		val -- a value of any types
+		val -- A value of any type.
 
 		Returns:
-		A unicode string
-		"""
+		A unicode string.
+		</DOC>"""
 
 		# Unicode strings cannot (and need not) be encoded again
 		if isinstance(val, unicode):
@@ -1038,13 +1045,14 @@ class item(object):
 		Writes a message to the log file. Note that using the log() function in #
 		combination with a logger item may result in messy log files.
 
-		msg -- A message.
+		msg	--	A message. This can be any type and will we be converted to a #
+				unicode string using the logic described in `unistr()`.
 
 		Example:
 		>>> self.log('TIMESTAMP = %s' % self.time())
 		</DOC>"""
 
-		self.experiment._log.write(u'%s\n' % msg)
+		self.experiment._log.write(u'%s\n' % self.unistr(msg))
 
 	def flush_log(self):
 
