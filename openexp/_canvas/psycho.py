@@ -442,7 +442,15 @@ def init_display(experiment):
 		waitBlanking=waitblanking, fullscr=experiment.fullscreen, \
 		monitor=monitor, units=u'pix', rgb=experiment.background)
 	experiment.window.setMouseVisible(False)
-	experiment.clock = core.Clock()
+	# The PsychoPy clock system has changed as of 1.80.3. This introduces
+	# problems with the timing in OpenSesame
+	# See https://github.com/psychopy/psychopy/issues/286
+	if hasattr(core, u'monotonicClock'):
+		experiment.clock = core.monotonicClock
+		experiment.psychopy_monotonic_clock = True
+	else:
+		experiment.clock = core.Clock()
+		experiment.psychopy_monotonic_clock = False
 	experiment._time_func = _time
 	experiment._sleep_func = _sleep
 	experiment.time = experiment._time_func
