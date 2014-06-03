@@ -124,11 +124,8 @@ class psycho(openexp._keyboard.legacy.legacy):
 		time = start_time
 		
 		while True:
-			if self.experiment.psychopy_monotonic_clock:
-				keys = event.getKeys(_keylist, timeStamped=True)
-			else:
-				keys = event.getKeys(_keylist,
-					timeStamped=self.experiment.clock)
+			time = 1000.0 * self.experiment.clock.getTime()
+			keys = event.getKeys(_keylist, timeStamped=self.experiment.clock)
 			for key, time in keys:
 				time *= 1000.0
 				if key == "escape":
