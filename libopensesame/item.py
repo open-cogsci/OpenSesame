@@ -719,18 +719,18 @@ class item(object):
 	def compile_cond(self, cond, bytecode=True):
 
 		"""
-		Create Python code for a given conditional statement
+		Create Python code for a given conditional statement.
 
 		Arguments:
-		cond -- the conditional statement (e.g., '[correct] = 1')
+		cond		--	The conditional statement (e.g., '[correct] = 1')
 
 		Keyword arguments:
-		bytecode -- a boolean indicating whether the generated code should be
-					byte compiled (default = True)
+		bytecode	--	A boolean indicating whether the generated code should
+						be byte compiled (default=True).
 
 		Returns:
 		Python code (possibly byte compiled) that reflects the conditional
-		statement
+		statement.
 		"""
 
 		src = cond
@@ -760,12 +760,12 @@ class item(object):
 				for i in range(len(cond)):
 					if cond[i] in op_chars:
 						if i != 0 and cond[i-1] not in op_chars + whitespace:
-							cond = cond[:i] + " " + cond[i:]
+							cond = cond[:i] + u" " + cond[i:]
 							redo = True
 							break
 						if i < len(cond)-1 and cond[i+1] not in \
 							op_chars+whitespace:
-							cond = cond[:i+1] + " " + cond[i+1:]
+							cond = cond[:i+1] + u" " + cond[i+1:]
 							redo = True
 							break
 
@@ -773,8 +773,8 @@ class item(object):
 			l = []
 			i = 0
 			for word in self.split(cond):
-				if len(word) > 2 and word[0] == "[" and word[-1] == "]":
-					l.append(u"self.get('%s')" % word[1:-1])
+				if len(word) > 2 and word[0] == u"[" and word[-1] == u"]":
+					l.append(u"self.get(u'%s')" % word[1:-1])
 				elif word == u"=":
 					l.append(u"==")
 				elif word.lower() == u"always":
@@ -789,7 +789,7 @@ class item(object):
 				else:
 					val = self.auto_type(word)
 					if type(val) == unicode:
-						l.append(u"\"%s\"" % word)
+						l.append(u"u\"%s\"" % word)
 					else:
 						l.append(self.unistr(word))
 				i += 1
