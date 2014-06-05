@@ -50,4 +50,5 @@ else:
 		The translated string.
 		"""
 
-		return unicode(QCoreApplication.translate(context, s))
+		return unicode(QCoreApplication.translate(context, s,
+			encoding=QCoreApplication.UnicodeUTF8))
