@@ -1,4 +1,4 @@
-opensesame (2.8.2~pre7-ubuntu1) trusty; urgency=low
+opensesame (2.8.2~pre8-ubuntu1) trusty; urgency=low
 
   * Improvements
     - Improve support for psycho back-end on OSX
@@ -17,6 +17,7 @@ opensesame (2.8.2~pre7-ubuntu1) trusty; urgency=low
     - Correctly evaluate conditional statements with special characters
     - Fixed confusion in tab manager when saving while having an open and modified item script
     - Fix translation bug for non-ASCII str objects
+    - Fix a unicode bug where exceptions with images with special-character paths where obscured
 
  -- Sebastiaan Mathot <s.mathot@cogsci.nl>  Thu, 17 Apr 2014 17:14:10 +0200
 

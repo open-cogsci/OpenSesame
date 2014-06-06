@@ -866,9 +866,11 @@ class legacy:
 		</DOC>"""
 
 		if isinstance(fname, unicode):
-			fname = fname.encode(self.experiment.encoding)
+			_fname = fname.encode(self.experiment.encoding)
+		else:
+			_fname = fname
 		try:
-			surface = pygame.image.load(fname)
+			surface = pygame.image.load(_fname)
 		except pygame.error as e:
 			raise osexception( \
 				u"'%s' is not a supported image format" % fname)
