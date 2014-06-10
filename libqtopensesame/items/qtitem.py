@@ -593,10 +593,6 @@ class qtitem(QtCore.QObject):
 		True if some action has been taken, False if nothing was done
 		"""
 
-		if self.script_qprogedit.isModified():
-			debug.msg(u'applying pending script changes')
-			self.apply_script_changes(catch=False)
-			return True
 		return False
 
 	def auto_edit_widget(self):

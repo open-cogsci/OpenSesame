@@ -719,18 +719,18 @@ class item(object):
 	def compile_cond(self, cond, bytecode=True):
 
 		"""
-		Create Python code for a given conditional statement
+		Create Python code for a given conditional statement.
 
 		Arguments:
-		cond -- the conditional statement (e.g., '[correct] = 1')
+		cond		--	The conditional statement (e.g., '[correct] = 1')
 
 		Keyword arguments:
-		bytecode -- a boolean indicating whether the generated code should be
-					byte compiled (default = True)
+		bytecode	--	A boolean indicating whether the generated code should
+						be byte compiled (default=True).
 
 		Returns:
 		Python code (possibly byte compiled) that reflects the conditional
-		statement
+		statement.
 		"""
 
 		src = cond
@@ -760,12 +760,12 @@ class item(object):
 				for i in range(len(cond)):
 					if cond[i] in op_chars:
 						if i != 0 and cond[i-1] not in op_chars + whitespace:
-							cond = cond[:i] + " " + cond[i:]
+							cond = cond[:i] + u" " + cond[i:]
 							redo = True
 							break
 						if i < len(cond)-1 and cond[i+1] not in \
 							op_chars+whitespace:
-							cond = cond[:i+1] + " " + cond[i+1:]
+							cond = cond[:i+1] + u" " + cond[i+1:]
 							redo = True
 							break
 
@@ -773,8 +773,8 @@ class item(object):
 			l = []
 			i = 0
 			for word in self.split(cond):
-				if len(word) > 2 and word[0] == "[" and word[-1] == "]":
-					l.append(u"self.get('%s')" % word[1:-1])
+				if len(word) > 2 and word[0] == u"[" and word[-1] == u"]":
+					l.append(u"self.get(u'%s')" % word[1:-1])
 				elif word == u"=":
 					l.append(u"==")
 				elif word.lower() == u"always":
@@ -789,7 +789,7 @@ class item(object):
 				else:
 					val = self.auto_type(word)
 					if type(val) == unicode:
-						l.append(u"\"%s\"" % word)
+						l.append(u"u\"%s\"" % word)
 					else:
 						l.append(self.unistr(word))
 				i += 1
@@ -912,17 +912,24 @@ class item(object):
 
 	def unistr(self, val):
 
-		"""
-		Converts a variable type into a unicode string. This function is mostly
-		necessary to make sure that normal strings with special characters are
+		"""<DOC>
+		Converts a value to a unicode string. This function is mostly #
+		necessary to make sure that normal strings with special characters are #
 		correctly encoded into unicode, and don't result in TypeErrors.
+		
+		The conversion logic is as follows:
+		
+		- unicode values are returned unchanged.
+		- str values are decoded using utf-8.
+		- all other types are typecast to unicode, assuming utf-8 encoding where #
+		  applicable.
 
 		Arguments:
-		val -- a value of any types
+		val -- A value of any type.
 
 		Returns:
-		A unicode string
-		"""
+		A unicode string.
+		</DOC>"""
 
 		# Unicode strings cannot (and need not) be encoded again
 		if isinstance(val, unicode):
@@ -1038,13 +1045,14 @@ class item(object):
 		Writes a message to the log file. Note that using the log() function in #
 		combination with a logger item may result in messy log files.
 
-		msg -- A message.
+		msg	--	A message. This can be any type and will we be converted to a #
+				unicode string using the logic described in `unistr()`.
 
 		Example:
 		>>> self.log('TIMESTAMP = %s' % self.time())
 		</DOC>"""
 
-		self.experiment._log.write(u'%s\n' % msg)
+		self.experiment._log.write(u'%s\n' % self.unistr(msg))
 
 	def flush_log(self):
 
