@@ -20,6 +20,7 @@ along with openexp.  If not, see <http://www.gnu.org/licenses/>.
 import pygame
 from pygame.locals import *
 from libopensesame.exceptions import osexception
+from libopensesame import misc
 from openexp.keyboard import keyboard
 import os.path
 try:
@@ -94,7 +95,7 @@ class legacy:
 			# encoding.
 			if isinstance(src, unicode):
 				import sys
-				src = src.encode(sys.getfilesystemencoding())
+				src = src.encode(misc.filesystem_encoding())
 			self.sound = mixer.Sound(src)
 
 		self.experiment = experiment
