@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
-<TS version="2.0" language="de_DE">
+<!DOCTYPE TS><TS version="2.0" language="de_DE" sourcelanguage="">
 <context>
     <name>font_widget</name>
     <message>
@@ -16,17 +15,17 @@
     <message>
         <location filename="font_widget.ui" line="34"/>
         <source>mono</source>
-        <translation>Mono</translation>
+        <translation type="obsolete">Mono</translation>
     </message>
     <message>
         <location filename="font_widget.ui" line="39"/>
         <source>sans</source>
-        <translation>Sans</translation>
+        <translation type="obsolete">Sans</translation>
     </message>
     <message>
         <location filename="font_widget.ui" line="44"/>
         <source>serif</source>
-        <translation>Serif</translation>
+        <translation type="obsolete">Serif</translation>
     </message>
     <message>
         <location filename="font_widget.ui" line="69"/>
@@ -61,22 +60,22 @@
     <message>
         <location filename="font_widget.ui" line="49"/>
         <source>arabic</source>
-        <translation>Arabisch</translation>
+        <translation type="obsolete">Arabisch</translation>
     </message>
     <message>
         <location filename="font_widget.ui" line="54"/>
         <source>chinese-japanese-korean</source>
-        <translation>Chinesisch / Japanisch / Koreanisch</translation>
+        <translation type="obsolete">Chinesisch / Japanisch / Koreanisch</translation>
     </message>
     <message>
         <location filename="font_widget.ui" line="59"/>
         <source>hebrew</source>
-        <translation>Hebräisch</translation>
+        <translation type="obsolete">Hebräisch</translation>
     </message>
     <message>
         <location filename="font_widget.ui" line="64"/>
         <source>hindi</source>
-        <translation>Hindi</translation>
+        <translation type="obsolete">Hindi</translation>
     </message>
 </context>
 <context>
@@ -1505,762 +1504,787 @@
 <context>
     <name>script</name>
     <message>
-        <location filename="translatables.py" line="115"/>
+        <location filename="translatables.py" line="99"/>
         <source>Edit script</source>
         <translation>Skript bearbeiten</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="116"/>
+        <location filename="translatables.py" line="100"/>
         <source>Tell me more about the %s item</source>
         <translation>Erzähl mir mehr über Item %s</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="117"/>
+        <location filename="translatables.py" line="101"/>
         <source>%s (Edit the script to fix this)</source>
         <translation>%s (Skript bearbeiten, um das Problem zu beheben)</translation>
     </message>
     <message>
         <location filename="translatables.py" line="118"/>
         <source>Forget changes?</source>
-        <translation>Änderungen verwerfen?</translation>
+        <translation type="obsolete">Änderungen verwerfen?</translation>
     </message>
     <message>
         <location filename="translatables.py" line="119"/>
         <source>Are you sure you want to forget all changes to the script?</source>
-        <translation>Sind Sie sicher, dass Sie alle Änderungen am Skript verwerfen wollen?</translation>
+        <translation type="obsolete">Sind Sie sicher, dass Sie alle Änderungen am Skript verwerfen wollen?</translation>
     </message>
     <message>
         <location filename="translatables.py" line="120"/>
         <source>Apply and close</source>
-        <translation>Anwenden und schließen</translation>
+        <translation type="obsolete">Anwenden und schließen</translation>
     </message>
     <message>
         <location filename="translatables.py" line="121"/>
         <source>Apply changes and resume normal editing</source>
-        <translation>Alle Änderungen anwenden und zurück zum normalen Bearbeitungsmodus</translation>
+        <translation type="obsolete">Alle Änderungen anwenden und zurück zum normalen Bearbeitungsmodus</translation>
     </message>
     <message>
         <location filename="translatables.py" line="122"/>
         <source>Forget changes and close</source>
-        <translation>Änderungen verwerfen und schließen</translation>
+        <translation type="obsolete">Änderungen verwerfen und schließen</translation>
     </message>
     <message>
         <location filename="translatables.py" line="123"/>
         <source>Ignore changes and resume normal editing</source>
-        <translation>Änderungen ignorieren und zurück zum normalen Bearbeitungsmodus</translation>
+        <translation type="obsolete">Änderungen ignorieren und zurück zum normalen Bearbeitungsmodus</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="124"/>
+        <location filename="translatables.py" line="103"/>
         <source>Editing script for &lt;b&gt;%s&lt;/b&gt; - %s</source>
         <translation>Skript für &lt;b&gt;%s&lt;/b&gt; - %s</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="125"/>
+        <location filename="translatables.py" line="104"/>
         <source>Type: %s
 Description: %s</source>
         <translation>Typ: %s
 Beschreibung: %s</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="129"/>
+        <location filename="translatables.py" line="106"/>
         <source>Failed to set control &apos;%s&apos;: %s</source>
         <translation>Failed to set control &apos;%s&apos;: %s</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="132"/>
+        <location filename="translatables.py" line="109"/>
         <source>Invalid or missing value for variable &apos;%s&apos; (edit script to fix this)</source>
         <translation>Ungültiger oder fehlender Wert in Variable &apos;%s&apos; (Skript bearbeiten, um den Fehler zu beheben)</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="140"/>
+        <location filename="translatables.py" line="117"/>
         <source>New variable</source>
         <translation>Neue Variable</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="136"/>
+        <location filename="translatables.py" line="113"/>
         <source>Enter a variable name, optionally followed by a default value (i.e., &quot;varname defaultvalue&quot;)</source>
         <translation>Variablennamen eingeben, bei Bedarf gefolgt vom Standardwert (z.B., &quot;variablenname standardwert&quot;)</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="143"/>
+        <location filename="translatables.py" line="120"/>
         <source>A variable with the name &apos;%s&apos; already exists</source>
         <translation>Es gibt bereits eine Variable mit dem Namen &apos;%s&apos;</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="138"/>
+        <location filename="translatables.py" line="115"/>
         <source>Rename variable</source>
         <translation>Variable umbenennen</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="139"/>
+        <location filename="translatables.py" line="116"/>
         <source>Which variable do you want to rename?</source>
         <translation>Welche Variable möchsten Sie umbenennen?</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="141"/>
+        <location filename="translatables.py" line="118"/>
         <source>Enter a new variable name</source>
         <translation>Neuen Variablennamen eingeben</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="142"/>
+        <location filename="translatables.py" line="119"/>
         <source>Please use only letters, numbers and underscores</source>
         <translation>Bitte nur Buchstaben, Zahlen und Unterstriche benutzen</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="144"/>
+        <location filename="translatables.py" line="121"/>
         <source>Remove variable</source>
         <translation>Variable entfernen</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="145"/>
+        <location filename="translatables.py" line="122"/>
         <source>Which variable do you want to remove?</source>
         <translation>Welche Variable möchten Sie entfernen?</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="146"/>
+        <location filename="translatables.py" line="123"/>
         <source>Remove cycles?</source>
         <translation>Durchgang entfernen?</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="147"/>
+        <location filename="translatables.py" line="124"/>
         <source>By reducing the number of cycles, data will be lost from the table. Do you wish to continue?</source>
         <translation>Durch das Herabsetzen der Durchgänge, gehen die Daten aus der Tabelle verloren. Möchten Sie trotzdem fortsetzen?</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="148"/>
+        <location filename="translatables.py" line="125"/>
         <source>&lt;b&gt;%s&lt;/b&gt; will be called &lt;b&gt;%s&lt;/b&gt; x &lt;b&gt;%s&lt;/b&gt; - &lt;b&gt;%s&lt;/b&gt; = &lt;b&gt;%s&lt;/b&gt; times in &lt;b&gt;%s&lt;/b&gt; order</source>
         <translation>&lt;b&gt;%s&lt;/b&gt; werden aufgerufen &lt;b&gt;%s&lt;/b&gt; x &lt;b&gt;%s&lt;/b&gt; - &lt;b&gt;%s&lt;/b&gt; = &lt;b&gt;%s&lt;/b&gt; Mal in &lt;b&gt;%s&lt;/b&gt; Reihenfolge</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="149"/>
+        <location filename="translatables.py" line="126"/>
         <source>&lt;b&gt;%s&lt;/b&gt; will be called &lt;b&gt;%s&lt;/b&gt; x &lt;b&gt;%s&lt;/b&gt; = &lt;b&gt;%s&lt;/b&gt; times in &lt;b&gt;%s&lt;/b&gt; order</source>
         <translation>&lt;b&gt;%s&lt;/b&gt; werden aufgerufen &lt;b&gt;%s&lt;/b&gt; x &lt;b&gt;%s&lt;/b&gt; = &lt;b&gt;%s&lt;/b&gt; Mal in &lt;b&gt;%s&lt;/b&gt; Reihenfolge</translation>
     </message>
     <message>
         <location filename="translatables.py" line="150"/>
         <source> starting at cycle &lt;b&gt;%d&lt;/b&gt;</source>
-        <translation> Beginne mit Durchgang &lt;b&gt;%d&lt;/b&gt;</translation>
+        <translation type="obsolete"> Beginne mit Durchgang &lt;b&gt;%d&lt;/b&gt;</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="151"/>
+        <location filename="translatables.py" line="128"/>
         <source> &lt;font color=&apos;red&apos;&gt;&lt;b&gt;(too many cycles skipped)&lt;/b&gt;&lt;/font&gt;</source>
         <translation> &lt;font color=&apos;red&apos;&gt;&lt;b&gt;(zu viele Durchgänge übersprungen)&lt;/b&gt;&lt;/font&gt;</translation>
     </message>
     <message>
         <location filename="translatables.py" line="152"/>
         <source> &lt;font color=&apos;red&apos;&gt;&lt;b&gt;(zero or negative length)&lt;/b&gt;&lt;/font&gt;</source>
-        <translation> &lt;font color=&apos;red&apos;&gt;&lt;b&gt;(keine oder negative Länge)&lt;/b&gt;&lt;/font&gt;</translation>
+        <translation type="obsolete"> &lt;font color=&apos;red&apos;&gt;&lt;b&gt;(keine oder negative Länge)&lt;/b&gt;&lt;/font&gt;</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="133"/>
+        <location filename="translatables.py" line="110"/>
         <source>The following key names are valid:&lt;br /&gt;</source>
         <translation>Erlaubte Tastenbezeichnungen:&lt;br /&gt;</translation>
     </message>
     <message>
         <location filename="translatables.py" line="113"/>
         <source>Prepare phase</source>
-        <translation>Phase vorbereiten</translation>
+        <translation type="obsolete">Phase vorbereiten</translation>
     </message>
     <message>
         <location filename="translatables.py" line="114"/>
         <source>Run phase</source>
-        <translation>Phase starten</translation>
+        <translation type="obsolete">Phase starten</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="166"/>
+        <location filename="translatables.py" line="143"/>
         <source>Flush pending key presses at sequence start</source>
         <translation>Bei Sequenzstart bestehenden Tastendruck ignorieren</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="167"/>
+        <location filename="translatables.py" line="144"/>
         <source>Append existing item to sequence</source>
         <translation>Vorhandenes Item in Sequenz einfügen</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="168"/>
+        <location filename="translatables.py" line="145"/>
         <source>Create and append  new item to sequence</source>
         <translation>Neues Item erstellen und in Sequenz einfügen</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="169"/>
+        <location filename="translatables.py" line="146"/>
         <source>Append existing item</source>
         <translation>Besstehendes Item einfügen</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="170"/>
+        <location filename="translatables.py" line="147"/>
         <source>Append new item</source>
         <translation>Neues Item einfügen</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="4"/>
+        <location filename="translatables.py" line="11"/>
         <source>Welcome to OpenSesame %s</source>
         <translation>Willkommen bei OpenSesame %s</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="5"/>
+        <location filename="translatables.py" line="12"/>
         <source>Busy ...</source>
         <translation>Beschäftigt ...</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="6"/>
+        <location filename="translatables.py" line="13"/>
         <source>Done!</source>
         <translation>Fertig!</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="7"/>
+        <location filename="translatables.py" line="14"/>
         <source>Backup saved as %s</source>
         <translation>Datensicherung gespeichert unter %s</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="8"/>
+        <location filename="translatables.py" line="15"/>
         <source>Failed to save backup ...</source>
         <translation>Fehler bei der Datensicherung...</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="9"/>
+        <location filename="translatables.py" line="16"/>
         <source>Save changes?</source>
         <translation>Änderungen speichern?</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="10"/>
+        <location filename="translatables.py" line="17"/>
         <source>Your experiment contains unsaved changes. Do you want to save your experiment?</source>
         <translation>Dein Experiment enthält Änderungen, die noch nicht gespeichert wurden. Möchtest Du Dein Experiment speichern?</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="11"/>
+        <location filename="translatables.py" line="18"/>
         <source>%s [unsaved]</source>
         <translation>%s [nicht gespeichert]</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="12"/>
+        <location filename="translatables.py" line="19"/>
         <source>... and is sorry to say that the attempt to check for updates has failed. Please make sure that you are connected to the internet and try again later. If this problem persists, please visit &lt;a href=&apos;http://www.cogsci.nl/opensesame&apos;&gt;http://www.cogsci.nl/opensesame&lt;/a&gt; for more information.</source>
         <translation>... und bedauert Dir mitteilen zu müssen, dass der Versuch nach Updates zu suchen, gescheitert ist. Bitte stelle sicher, dass Du mit dem Internet verbunden bist und versuche es später wieder. Wenn das Problem weiterhin besteht, besuche uns bitte  unter &lt;a href=&apos;http://www.cogsci.nl/opensesame&apos;&gt;http://www.cogsci.nl/opensesame&lt;/a&gt; für weitere Informationen.</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="13"/>
+        <location filename="translatables.py" line="20"/>
         <source>... and is happy to report that a new version of OpenSesame (%s) is available at &lt;a href=&apos;http://www.cogsci.nl/opensesame&apos;&gt;http://www.cogsci.nl/opensesame&lt;/a&gt;!</source>
         <translation>...und freut sich Dir mitteilen zu können, dass eine neue Version von OpenSesame (%s) unter &lt;a href=&apos;http://www.cogsci.nl/opensesame&apos;&gt;http://www.cogsci.nl/opensesame&lt;/a&gt; verfügbar ist!</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="14"/>
+        <location filename="translatables.py" line="21"/>
         <source> ... and is happy to report that you are running the most recent version of OpenSesame.</source>
         <translation>... und freut sich Dir mitteilen zu können, dass Du die aktuellste Version von OpenSesame benutzt.</translation>
     </message>
     <message>
         <location filename="translatables.py" line="15"/>
         <source>Restart?</source>
-        <translation>Neustart?</translation>
+        <translation type="obsolete">Neustart?</translation>
     </message>
     <message>
         <location filename="translatables.py" line="16"/>
         <source>A restart is required. Do you want to save the current experiment and restart OpenSesame?</source>
-        <translation>Neustart erforderlich. Möchten Sie das aktuelle Experiment speichern und OpenSesame neustarten?</translation>
+        <translation type="obsolete">Neustart erforderlich. Möchten Sie das aktuelle Experiment speichern und OpenSesame neustarten?</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="17"/>
+        <location filename="translatables.py" line="22"/>
         <source>Quit?</source>
         <translation>Beenden?</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="18"/>
+        <location filename="translatables.py" line="23"/>
         <source>Are you sure you want to quit OpenSesame?</source>
         <translation>Möchtest Du OpenSesame wirklich beenden?</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="19"/>
+        <location filename="translatables.py" line="24"/>
         <source>(No recent files)</source>
         <translation>(keine Dateien)</translation>
     </message>
     <message>
         <location filename="translatables.py" line="21"/>
         <source>&lt;b&gt;Error:&lt;/b&gt; Failed to open &apos;%s&apos;&lt;br /&gt;&lt;b&gt;Description:&lt;/b&gt; %s&lt;br /&gt;&lt;br /&gt;Make sure that the file is in .opensesame or .opensesame.tar.gz format. If you should be able to open this file, but can&apos;t, please go to http://www.cogsci.nl/opensesame to find out how to recover your experiment and file a bug report.</source>
-        <translation>&lt;b&gt;Fehler:&lt;/b&gt; Konnte &apos;%s&apos; nicht öffnen.&lt;br /&gt;&lt;b&gt;Beschreibung:&lt;/b&gt; %s&lt;br /&gt;&lt;br /&gt;Bitte stelle sicher, dass die Datei im Format .opensesame oderr .opensesame.tar.gz vorliegt. Solltest Du die Datei wider Erwarten trotzdem nicht öffnen können, besuche uns unter &lt;a href=&apos;http://www.cogsci.nl/opensesame&apos;&gt;http://www.cogsci.nl/opensesame&lt;/a&gt; um mehr über die Wiederherstellung herauszufinden und einen Fehlerbericht an uns zu senden.</translation>
+        <translation type="obsolete">&lt;b&gt;Fehler:&lt;/b&gt; Konnte &apos;%s&apos; nicht öffnen.&lt;br /&gt;&lt;b&gt;Beschreibung:&lt;/b&gt; %s&lt;br /&gt;&lt;br /&gt;Bitte stelle sicher, dass die Datei im Format .opensesame oderr .opensesame.tar.gz vorliegt. Solltest Du die Datei wider Erwarten trotzdem nicht öffnen können, besuche uns unter &lt;a href=&apos;http://www.cogsci.nl/opensesame&apos;&gt;http://www.cogsci.nl/opensesame&lt;/a&gt; um mehr über die Wiederherstellung herauszufinden und einen Fehlerbericht an uns zu senden.</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="22"/>
+        <location filename="translatables.py" line="26"/>
         <source>Could not save file, because the script could not be generated. The following error occured:&lt;br/&gt;%s</source>
         <translation>Konnte Datei nicht speichern, weil das Skript nicht generiert werden konnte. Folgender Fehler trat auf: &lt;br/&gt;%s</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="24"/>
+        <location filename="translatables.py" line="28"/>
         <source>Saved as %s</source>
         <translation>Gespeichert unter %s</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="25"/>
+        <location filename="translatables.py" line="29"/>
         <source>Failed to save file. Error: %s</source>
         <translation>Konnte Datei nicht speichern. Fehler: %s</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="26"/>
+        <location filename="translatables.py" line="30"/>
         <source>Save file as ...</source>
         <translation>Datei speichern unter ...</translation>
     </message>
     <message>
         <location filename="translatables.py" line="27"/>
         <source>Failed to change the display resolution:</source>
-        <translation>Konnte Bildschirmauflösung nicht ändern:</translation>
+        <translation type="obsolete">Konnte Bildschirmauflösung nicht ändern:</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="28"/>
+        <location filename="translatables.py" line="31"/>
         <source>Could not parse script: %s</source>
         <translation>Konnte Skript nicht analysieren: %s</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="106"/>
+        <location filename="translatables.py" line="92"/>
         <source>&lt;b&gt;&lt;font size=&apos;5&apos;&gt;Unused&lt;/font&gt;&lt;/b&gt;</source>
         <translation>&lt;b&gt;&lt;font size=&apos;5&apos;&gt;Unbenutzt&lt;/font&gt;&lt;/b&gt;</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="107"/>
+        <location filename="translatables.py" line="93"/>
         <source>Permanently delete unused items</source>
         <translation>Unbenutzte Items endgültig löschen</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="108"/>
+        <location filename="translatables.py" line="94"/>
         <source>Permanently delete items?</source>
         <translation>Items endgültig löschen?</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="109"/>
+        <location filename="translatables.py" line="95"/>
         <source>Are you sure you want to permanently delete all unused items? This action cannot be undone.</source>
         <translation>Bist Du sicher, dass Du alle unbenutzten Items endgültig löschen möchtest? Diese Aktion kann nicht rückgängig gemacht werden.</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="29"/>
+        <location filename="translatables.py" line="32"/>
         <source>File renamed</source>
         <translation>Datei umbenannt</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="30"/>
+        <location filename="translatables.py" line="33"/>
         <source>The file has been renamed to &apos;%s&apos;, because the file pool already contains a file named &apos;%s&apos;.</source>
         <translation>Die Datei wurde umbenannt zu &apos;%s&apos;, weil die Dateisammlung bereits eine Datei mit dem Namen &apos;%s&apos; enthält.</translation>
     </message>
     <message>
         <location filename="translatables.py" line="31"/>
         <source>&lt;b&gt;Failed to start opensesamerun&lt;/b&gt;&lt;br /&gt;Please make sure that opensesamerun (or opensesamerun.exe) is present in the path, manually specify the run command, or deselect the &apos;Run as separate process&apos; option.&lt;br&gt;&lt;pre&gt;%s&lt;/pre&gt;</source>
-        <translation>&lt;b&gt;Konnte opensesamerun nicht starten&lt;/b&gt;&lt;br /&gt;Bitte stelle sicher, dass opensesamerun (oderr opensesamerun.exe) im aktuellen Verzeichnis existiert, präzisiere den run-Befehl manuell oder deaktiviere &apos;Führe Experiment im selben Prozess aus (inprocess)&apos; in den Einstellungen.&lt;br&gt;&lt;pre&gt;%s&lt;/pre&gt;</translation>
+        <translation type="obsolete">&lt;b&gt;Konnte opensesamerun nicht starten&lt;/b&gt;&lt;br /&gt;Bitte stelle sicher, dass opensesamerun (oderr opensesamerun.exe) im aktuellen Verzeichnis existiert, präzisiere den run-Befehl manuell oder deaktiviere &apos;Führe Experiment im selben Prozess aus (inprocess)&apos; in den Einstellungen.&lt;br&gt;&lt;pre&gt;%s&lt;/pre&gt;</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="32"/>
+        <location filename="translatables.py" line="7"/>
         <source>Finished!</source>
         <translation>Fertig!</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="33"/>
+        <location filename="translatables.py" line="8"/>
         <source>The experiment is finished and data has been logged to &apos;%s&apos;. Do you want to copy the logfile to the file pool?</source>
         <translation>Das Experiment wurde abgeschlossen und die Daten wurden in &apos;%s&apos; geschrieben. Möchtest Du eine Kopie der Protokolldatei in die Dateisammlung kopieren?</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="34"/>
+        <location filename="translatables.py" line="5"/>
         <source>Subject number</source>
         <translation>Versuchspersonennummer</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="35"/>
+        <location filename="translatables.py" line="6"/>
         <source>Please enter the subject number</source>
         <translation>Bitte Versuchspersonennummer eingeben</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="36"/>
+        <location filename="translatables.py" line="3"/>
         <source>Choose location for logfile (press &apos;escape&apos; for default location)</source>
         <translation>Speicherort für das Logfile auswählen (drücke Esc um den Standardordner zu nutzen)</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="37"/>
+        <location filename="translatables.py" line="4"/>
         <source>The logfile &apos;%s&apos; is not writable. Please choose another location for the logfile.</source>
         <translation>Das Logfile &apos;%s&apos; kann nicht gespeichert werden. Bitte wähle einen anderen Speicherort.</translation>
     </message>
     <message>
         <location filename="translatables.py" line="38"/>
         <source>&lt;b&gt;Error&lt;/b&gt;: OpenExp error&lt;br /&gt;&lt;b&gt;Description&lt;/b&gt;: %s</source>
-        <translation>&lt;b&gt;Fehler&lt;/b&gt;: OpenExp Fehler&lt;br /&gt;&lt;b&gt;Beschreibung&lt;/b&gt;: %s</translation>
+        <translation type="obsolete">&lt;b&gt;Fehler&lt;/b&gt;: OpenExp Fehler&lt;br /&gt;&lt;b&gt;Beschreibung&lt;/b&gt;: %s</translation>
     </message>
     <message>
         <location filename="translatables.py" line="39"/>
         <source>An unexpected error occurred, which was not caught by OpenSesame. This should not happen! Message:&lt;br/&gt;&lt;b&gt;%s&lt;/b&gt;</source>
-        <translation>Es ist ein unerwarteter Fehler aufgetreten, den OpenSesame nicht beheben konnte. Das sollte nicht passieren! Nachricht:&lt;br/&gt;&lt;b&gt;%s&lt;/b&gt;</translation>
+        <translation type="obsolete">Es ist ein unerwarteter Fehler aufgetreten, den OpenSesame nicht beheben konnte. Das sollte nicht passieren! Nachricht:&lt;br/&gt;&lt;b&gt;%s&lt;/b&gt;</translation>
     </message>
     <message>
         <location filename="translatables.py" line="40"/>
         <source>Failed to load plugin &apos;%s&apos;. Error: %s</source>
-        <translation>Konnte Plugin &apos;%s&apos; nicht laden. Fehler: %s</translation>
+        <translation type="obsolete">Konnte Plugin &apos;%s&apos; nicht laden. Fehler: %s</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="41"/>
+        <location filename="translatables.py" line="34"/>
         <source>New name</source>
         <translation>Neuer Name</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="42"/>
+        <location filename="translatables.py" line="35"/>
         <source>Please enter a name for the new %s</source>
         <translation>Bitte neuen Namen für %s eingeben</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="77"/>
+        <location filename="translatables.py" line="63"/>
         <source>Drag this &lt;b&gt;%s&lt;/b&gt; item to the intended location in the overview area or into the item list of a sequence tab</source>
         <translation>Ziehe das &lt;b&gt;%s&lt;/b&gt; Item an die passende Stelle in der Übersicht oder in die Itemliste eines Sequenz-Tabs</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="78"/>
+        <location filename="translatables.py" line="64"/>
         <source>&lt;small&gt;Commonly used&lt;/small&gt;</source>
         <translation>&lt;small&gt;Häufig verwendet&lt;/small&gt;</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="80"/>
+        <location filename="translatables.py" line="66"/>
         <source>Drag this item to re-order</source>
         <translation>Item ziehen um neu zu sortieren</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="81"/>
+        <location filename="translatables.py" line="67"/>
         <source>Run this item only under the following conditions</source>
         <translation>Item nur benutzen, wenn folgende Bedingungen erfüllt sind</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="82"/>
+        <location filename="translatables.py" line="68"/>
         <source>Click to edit this item</source>
         <translation>Klicken um das Item zu bearbeiten</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="83"/>
+        <location filename="translatables.py" line="69"/>
         <source>&lt;small&gt;&lt;i&gt;Run if&lt;/i&gt;&lt;/small&gt;</source>
         <translation>&lt;small&gt;&lt;i&gt;Run if&lt;/i&gt;&lt;/small&gt;</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="84"/>
+        <location filename="translatables.py" line="70"/>
         <source>Unkown item &apos;%s&apos; in sequence &apos;%s&apos;. You can fix this using the script editor.</source>
         <translation>Unbekanntes Item &apos;%s&apos; in Sequenz &apos;%s&apos;. Bitte behebe den Fehler mithilfe des Skripteditors.</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="89"/>
+        <location filename="translatables.py" line="75"/>
         <source>(Out of sketchpad)</source>
         <translation>(Außerhalb der Zeichenfläche)</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="92"/>
+        <location filename="translatables.py" line="78"/>
         <source>Delete</source>
         <translation>Löschen</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="93"/>
+        <location filename="translatables.py" line="79"/>
         <source>Edit</source>
         <translation>Bearbeiten</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="94"/>
+        <location filename="translatables.py" line="80"/>
         <source>Edit sketchpad element</source>
         <translation>Element bearbeiten</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="95"/>
+        <location filename="translatables.py" line="81"/>
         <source>Element script</source>
         <translation>Elementskript</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="96"/>
+        <location filename="translatables.py" line="82"/>
         <source>New textline</source>
         <translation>Neues Textfeld</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="97"/>
+        <location filename="translatables.py" line="83"/>
         <source>Please enter a text for the textline</source>
         <translation>Hier den Text für das Textfeld eingeben</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="98"/>
+        <location filename="translatables.py" line="84"/>
         <source>Funky image alert: &apos;%s&apos; has a non-standard format. It is recommended to convert this image to .png format, for example with Gimp &lt;http://www.gimp.org/&gt;.</source>
         <translation>Seltsames Bild: &apos;%s&apos; hat kein Standardformat. Wir empfehlen Dir das Bild ins .png-Format zu konvertieren. Zum Beispiel mit dem kostenlosen Gimp &lt;http://www.gimp.org/&gt;.</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="99"/>
+        <location filename="translatables.py" line="85"/>
         <source>%d objects are not shown, because they are defined using variables.</source>
         <translation>%d Objekte werden nicht angezeigt, weil in ihren Definitionen Variablen benutzt werden.</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="100"/>
+        <location filename="translatables.py" line="86"/>
         <source>One object is not shown, because it is defined using variables.</source>
         <translation>Ein Objekt wird nicht angezeigt, weil in seiner Definition Variablen benutzt werden.</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="101"/>
+        <location filename="translatables.py" line="87"/>
         <source>Some objects will not be visible (or partly) because they fall outside of the screen boundaries.</source>
         <translation>Einige Objekte sind (ganz oder teilweise) nicht sichtbar, weil sie außerhalb des Bildschirms liegen.</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="102"/>
+        <location filename="translatables.py" line="88"/>
         <source>Failed to parse the following item (use &apos;Edit script&apos; to fix/ remove this line):
 &apos;%s&apos;</source>
         <translation>Erzeugen des folgenden Items gescheitert (Bearbeite das Skript oder entferne die Zeile um den Fehler zu beheben): &apos;%s&apos;</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="51"/>
+        <location filename="translatables.py" line="45"/>
         <source>Overwrite</source>
         <translation>Überschreiben</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="52"/>
+        <location filename="translatables.py" line="46"/>
         <source>A file named &apos;%s&apos; already exists in the pool. Do you want to overwrite this file?</source>
         <translation>Es existiert bereits eine Datei mit dem Namen &apos;%s&apos; in der Dateisammlung. Möchtest Du die alte Datei überschreiben?</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="53"/>
+        <location filename="translatables.py" line="47"/>
         <source>Add files to pool</source>
         <translation>Datei(en) zur Dateisammlung hinzufügen</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="58"/>
+        <location filename="translatables.py" line="52"/>
         <source>Remove from pool</source>
         <translation>Aus Dateisammlung entfernen</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="62"/>
+        <location filename="translatables.py" line="56"/>
         <source>Rename</source>
         <translation>Umbenennen</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="60"/>
+        <location filename="translatables.py" line="54"/>
         <source>Remove</source>
         <translation>Entfernen</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="63"/>
+        <location filename="translatables.py" line="57"/>
         <source>Please enter a new name for &apos;%s&apos;</source>
         <translation>Bitte gib einen neuen Namen für &apos;%s&apos; ein</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="64"/>
+        <location filename="translatables.py" line="58"/>
         <source>There already is a file named &apos;%s&apos; in the file pool</source>
         <translation>In der Dateisammlung existiert bereits eine Datei mit dem Namen &apos;%s&apos;</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="65"/>
+        <location filename="translatables.py" line="59"/>
         <source>Cancel</source>
         <translation>Abbrechen</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="66"/>
+        <location filename="translatables.py" line="60"/>
         <source>Select</source>
         <translation>Auswählen</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="67"/>
+        <location filename="translatables.py" line="61"/>
         <source>Select file from pool</source>
         <translation>Aus Dateisammlung wählen</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="110"/>
+        <location filename="translatables.py" line="96"/>
         <source>Oops!</source>
         <translation>Ups!</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="111"/>
+        <location filename="translatables.py" line="97"/>
         <source>The replacement string cannot contain the search string.</source>
         <translation>Der &quot;Ersetzen&quot;-Text, darf nicht den Suchtext enthalten.</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="112"/>
+        <location filename="translatables.py" line="98"/>
         <source>Replace all</source>
         <translation>Alle ersetzen</translation>
     </message>
     <message>
         <location filename="translatables.py" line="69"/>
         <source>Enter a search term</source>
-        <translation>Gib einen Suchbegriff ein</translation>
+        <translation type="obsolete">Gib einen Suchbegriff ein</translation>
     </message>
     <message>
         <location filename="translatables.py" line="70"/>
         <source>Search</source>
-        <translation>Suche</translation>
+        <translation type="obsolete">Suche</translation>
     </message>
     <message>
         <location filename="translatables.py" line="71"/>
         <source>Replace</source>
-        <translation>Ersetze</translation>
+        <translation type="obsolete">Ersetze</translation>
     </message>
     <message>
         <location filename="translatables.py" line="72"/>
         <source>Indent one level (tab)</source>
-        <translation>Text einrücken (Tab)</translation>
+        <translation type="obsolete">Text einrücken (Tab)</translation>
     </message>
     <message>
         <location filename="translatables.py" line="73"/>
         <source>Unindent one level (super + tab)</source>
-        <translation>Einrückung zurück (Strg+Tab)</translation>
+        <translation type="obsolete">Einrückung zurück (Strg+Tab)</translation>
     </message>
     <message>
         <location filename="translatables.py" line="76"/>
         <source>Press Alt + A to apply unsaved changes</source>
-        <translation>Drücke Alt+A um alle ungespeicherten Änderungen anzuwenden</translation>
+        <translation type="obsolete">Drücke Alt+A um alle ungespeicherten Änderungen anzuwenden</translation>
     </message>
     <message>
         <location filename="translatables.py" line="75"/>
         <source>Apply</source>
-        <translation>Anwenden</translation>
+        <translation type="obsolete">Anwenden</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="104"/>
+        <location filename="translatables.py" line="90"/>
         <source>Tell me more about OpenSesame!</source>
         <translation>Erzähl mir mehr über OpenSesame!</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="87"/>
+        <location filename="translatables.py" line="73"/>
         <source>No settings for %s</source>
         <translation>Keine Einstellungen für %s</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="88"/>
+        <location filename="translatables.py" line="74"/>
         <source>Settings for %s:</source>
         <translation>Einstellungen für %s:</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="105"/>
+        <location filename="translatables.py" line="91"/>
         <source>Failed to parse the resolution. Expecting positive numeric values.</source>
         <translation>Änderung der Auflösung gescheitert. Erwarte positive numerische Eingabe.</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="44"/>
+        <location filename="translatables.py" line="37"/>
         <source>Open %s</source>
         <translation>Öffne %s</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="48"/>
+        <location filename="translatables.py" line="41"/>
         <source>%s help</source>
         <translation>%s Hilfe</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="50"/>
+        <location filename="translatables.py" line="43"/>
         <source>Please enter a new name</source>
         <translation>Bitte gib einen neuen Namen ein</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="79"/>
+        <location filename="translatables.py" line="65"/>
         <source>Click to edit</source>
         <translation>Zum bearbeiten klicken</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="103"/>
+        <location filename="translatables.py" line="89"/>
         <source>Error: Command contains invalid characters</source>
         <translation>Fehler: Eingabe enthält ungültige Zeichen</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="68"/>
+        <location filename="translatables.py" line="62"/>
         <source>Ready</source>
         <translation>Fertig</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="20"/>
+        <location filename="translatables.py" line="25"/>
         <source>Open file</source>
         <translation>Öffne Datei</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="85"/>
+        <location filename="translatables.py" line="71"/>
         <source>Apply?</source>
         <translation>Anwenden?</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="86"/>
+        <location filename="translatables.py" line="72"/>
         <source>Are you sure you want to apply the changes to the general script?</source>
         <translation>Bist Du sicher, dass Du die Änderungen am Gesamtskript anwenden möchtest?</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="43"/>
+        <location filename="translatables.py" line="36"/>
         <source>Failed to parse script (see traceback in debug window): %s</source>
         <translation>Konnte Skript nicht analysieren (siehe Verlauf im Debugmodus): %s</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="57"/>
+        <location filename="translatables.py" line="51"/>
         <source>Open</source>
         <translation>Öffnen</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="59"/>
+        <location filename="translatables.py" line="53"/>
         <source>And %d more file(s)</source>
         <translation>Und %d weitere Datei(en)</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="61"/>
+        <location filename="translatables.py" line="55"/>
         <source>&lt;p&gt;Are you sure you want to remove the following files from the file pool? This operation will only affect the OpenSesame file pool, not the original files on your disk.&lt;/p&gt;&lt;p&gt;&lt;b&gt; - %s&lt;/b&gt;&lt;/p&gt;&lt;p&gt;%s&lt;/p&gt;</source>
         <translation>&lt;p&gt;Bist Du sicher, dass Du die folgenden Dateien aus der Dateisammlung löschen möchtest? Diese Aktion betrifft nur die Dateisammlung in OpenSesame, nicht die Originaldatei auf der Festplatte.&lt;/p&gt;&lt;p&gt;&lt;b&gt; - %s&lt;/b&gt;&lt;/p&gt;&lt;p&gt;%s&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="130"/>
+        <location filename="translatables.py" line="107"/>
         <source>All non-alphanumeric characters except underscores have been stripped</source>
         <translation>Alle nicht alphanumerischen Zeichen (außer Unterstrich) wurden entfernt</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="131"/>
+        <location filename="translatables.py" line="108"/>
         <source>The following characters are not allowed and have been stripped: double-quote (&quot;), backslash (), and newline</source>
         <translation>Die folgenden Zeichen sind nicht erlaubt und wurden entfernt: Anführungszeichen (&quot;), backslash (\) und Absatz</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="134"/>
+        <location filename="translatables.py" line="111"/>
         <source>&quot;%s&quot; is not a valid qtautoplugin control</source>
         <translation>&quot;%s&quot; is not a valid qtautoplugin control</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="153"/>
+        <location filename="translatables.py" line="130"/>
         <source>You provided an empty or invalid variable definition. For an example of a valid variable definition, open the variable wizard and select &quot;Show example&quot;.</source>
         <translation>Die Variablendefinition ist ungültig oder leer. Öffne den Variablenassistenten und klicke auf &quot;Zeige Beispiel&quot;, für ein Beispiel gültiger Variablendefinitionen.</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="154"/>
+        <location filename="translatables.py" line="131"/>
         <source>Apply weight</source>
         <translation>Gewichtung anwenden</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="155"/>
+        <location filename="translatables.py" line="132"/>
         <source>Which variable contains the weights?</source>
         <translation>Welche Variable enthält die Gewichtung?</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="156"/>
+        <location filename="translatables.py" line="133"/>
         <source>Add custom variable</source>
         <translation>Benutzerdefinierte Variable hinzufügen</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="157"/>
+        <location filename="translatables.py" line="134"/>
         <source>Add an arbitrary variable by name</source>
         <translation>Zufallsvariable hinzufügen</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="158"/>
+        <location filename="translatables.py" line="135"/>
         <source>Smart select</source>
         <translation>Clevere Auswahl</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="159"/>
+        <location filename="translatables.py" line="136"/>
         <source>Select all</source>
         <translation>Alle anwählen</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="160"/>
+        <location filename="translatables.py" line="137"/>
         <source>Select all variables</source>
         <translation>Alle Variablen anwählen</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="161"/>
+        <location filename="translatables.py" line="138"/>
         <source>Deselect all</source>
         <translation>Alle abwählen</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="162"/>
+        <location filename="translatables.py" line="139"/>
         <source>Deselect all variables</source>
         <translation>Alle Variablen abwählen</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="163"/>
+        <location filename="translatables.py" line="140"/>
         <source>Include variables with missing values</source>
         <translation>Schließe Variablen mit fehlenden Werten ein</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="164"/>
+        <location filename="translatables.py" line="141"/>
         <source>Automatically detect and log all variables</source>
         <translation>Automatisch alle Variablen erfassen und protokollieren</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="165"/>
+        <location filename="translatables.py" line="142"/>
         <source>Put quotes around values</source>
         <translation>Schreibe Anführungszeichen um Werte</translation>
+    </message>
+    <message>
+        <location filename="translatables.py" line="9"/>
+        <source>Failed to copy `opensesame` to `opensesame.py`, which is required for the multiprocess runner. Please copy the file manually, or select a different runner under Preferences.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="translatables.py" line="44"/>
+        <source>&apos;%s&apos; is not a regular file and could not be added to the file pool.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="translatables.py" line="102"/>
+        <source>Apply and close script editor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="translatables.py" line="127"/>
+        <source> starting at cycle &lt;b&gt;%s&lt;/b&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="translatables.py" line="129"/>
+        <source> &lt;font color=&apos;red&apos;&gt;&lt;b&gt;(zero, negative, or unknown length)&lt;/b&gt;&lt;/font&gt;</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2709,22 +2733,22 @@ Beschreibung: %s</translation>
         <translation>Suchen</translation>
     </message>
     <message>
-        <location filename="findWidget.ui" line="59"/>
+        <location filename="findWidget.ui" line="61"/>
         <source>Replace</source>
         <translation>Ersetzen</translation>
     </message>
     <message>
-        <location filename="findWidget.ui" line="69"/>
+        <location filename="findWidget.ui" line="73"/>
         <source>Replace all</source>
         <translation>Alle ersetzen</translation>
     </message>
     <message>
-        <location filename="findWidget.ui" line="88"/>
+        <location filename="findWidget.ui" line="94"/>
         <source>Case sensitive</source>
         <translation>Groß- / Kleinschreibung beachten</translation>
     </message>
     <message>
-        <location filename="findWidget.ui" line="95"/>
+        <location filename="findWidget.ui" line="101"/>
         <source>Match whole words</source>
         <translation>Ganze Wörter</translation>
     </message>
@@ -2969,7 +2993,7 @@ Einstellungen im Zusammenhang mit dem Bildschirm, Ton und Eingabegeräten</trans
         <source>&lt;a href=&quot;http://osdoc.cogsci.nl/donate/&quot;&gt;Donate&lt;/a&gt;</source>
         <translation>&lt;a href=&quot;http://osdoc.cogsci.nl/donate/&quot;&gt;Spenden&lt;/a&gt;</translation>
     </message>
-    <message utf8="true">
+    <message encoding="UTF-8">
         <location filename="credits_widget.ui" line="170"/>
         <source>OpenSesame [version] [codename]
 Copyright Sebastiaan Mathôt (2010-2014)</source>
