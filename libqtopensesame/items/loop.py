@@ -539,7 +539,6 @@ class loop(libopensesame.loop.loop, qtitem.qtitem):
 		qtitem.qtitem.edit_widget(self)
 		self.refresh_loop_table(lock=False)
 		self.loop_widget.ui.spin_cycles.setValue(self.cycle_count())
-
 		if self.get(u"order") == u"random":
 			self.loop_widget.ui.label_skip.setDisabled(True)
 			self.loop_widget.ui.spin_skip.setDisabled(True)
@@ -550,6 +549,14 @@ class loop(libopensesame.loop.loop, qtitem.qtitem):
 			self.loop_widget.ui.checkbox_offset.setDisabled( \
 				type(self.skip) != int or self.skip < 1)
 		self.refresh_summary()
+		# Update advanced settings
+		break_if = self.get(u'break_if', _eval=False)
+		self.loop_widget.ui.edit_break_if.setText(break_if)
+		if break_if not in [u'never', u''] or \
+			self.get(u'offset', _eval=False) == u'yes' or \
+			self.get(u'skip', _eval=False) != 0:
+			self.loop_widget.ui.checkbox_advanced.setChecked(True)
+			self.loop_widget.ui.widget_advanced.show()
 		self.lock = False
 		return self._edit_widget
 
