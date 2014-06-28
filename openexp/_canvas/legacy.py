@@ -602,7 +602,7 @@ class legacy:
 		>>> my_canvas = canvas(exp)
 		>>> w = self.get('width')/2
 		>>> h = self.get('height')/2
-		>>> my_canvas.line(0, 0, w, h, arrow_size=10)
+		>>> my_canvas.arrow(0, 0, w, h, arrow_size=10)
 		</DOC>"""
 
 		self.line(sx, sy, ex, ey, color=color)
