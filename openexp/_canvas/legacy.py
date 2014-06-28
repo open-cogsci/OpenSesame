@@ -732,13 +732,24 @@ class legacy:
 			width = self.penwidth
 		pygame.draw.polygon(self.surface, color, vertices, width)
 
-	def text_size(self, text):
+	def text_size(self, text, max_width=None, bidi=None, html=True):
 
 		"""<DOC>
 		Determines the size of a text string in pixels.
 
 		Arguments:
 		text -- The text string.
+
+		Keyword arguments:
+		max_width	--	The maximum width of the text, before wrapping to a new
+						line, or None to wrap at screen edge (default=None)
+						set_fgcolor(). (Default=None)
+		bidi		--	True or False for bi-directional text support, or None
+						to use experiment default. This does not affect the
+						default bidi setting as set by set_bidi().
+						(Default=None)
+		html		--	Indicates whether HTML tags should be parsed
+						(default=True).
 
 		Returns:
 		A (width, height) tuple containing the dimensions of the text string.
@@ -749,7 +760,10 @@ class legacy:
 		>>> w, h = my_canvas.text_size('Some text')
 		</DOC>"""
 
-		return self._font().size(text)
+		self.html.reset()
+		width, height = self.html.render(text, 0, 0, self, max_width=max_width,
+			html=html, bidi=bidi, dry_run=True)
+		return width, height
 
 	def text(self, text, center=True, x=None, y=None, max_width=None, color=None, bidi=None, html=True):
 
@@ -808,6 +822,22 @@ class legacy:
 		font = self._font()
 		surface = font.render(text, self.antialias, self.fgcolor)
 		self.surface.blit(surface, (x, y))
+
+	def _text_size(self, text):
+
+		"""
+		Determines the size of a string of text for the default font. This
+		function is for internal use. For a function that respects line
+		separation, etc., use `text_size()`.
+
+		Arguments:
+		text	--	The text.
+
+		Returns:
+		A (width, height) tuple.
+		"""
+
+		return self._font().size(text)
 
 	def textline(self, text, line, color=None):
 
