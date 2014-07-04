@@ -143,7 +143,7 @@ class qtopensesame(QtGui.QMainWindow):
 		self.ui.action_save.triggered.connect(self.save_file)
 		self.ui.action_save_as.triggered.connect(self.save_file_as)
 		self.ui.action_run.triggered.connect(self.run_experiment)
-		self.ui.action_run_in_window.triggered.connect( \
+		self.ui.action_run_in_window.triggered.connect(
 			self.run_experiment_in_window)
 		self.ui.action_run_quick.triggered.connect(self.run_quick)
 		self.ui.action_enable_auto_response.triggered.connect( \
@@ -154,6 +154,8 @@ class qtopensesame(QtGui.QMainWindow):
 			self.ui.tabwidget.close_other)
 		self.ui.action_onetabmode.triggered.connect( \
 			self.ui.tabwidget.toggle_onetabmode)
+		self.ui.action_quick_open_item.triggered.connect(
+			self.quick_open_item)
 		self.ui.action_show_overview.triggered.connect(self.toggle_overview)
 		self.ui.action_show_variable_inspector.triggered.connect( \
 			self.refresh_variable_inspector)
@@ -554,6 +556,14 @@ class qtopensesame(QtGui.QMainWindow):
 
 		cfg.immediate_rename = self.ui.action_immediate_rename.isChecked()
 		debug.msg(u"set to %s" % cfg.immediate_rename)
+
+	def quick_open_item(self):
+
+		"""Shows the quick-open-item dialog."""
+
+		from libqtopensesame.dialogs.quick_open_item import quick_open_item
+		d = quick_open_item(self)
+		d.exec_()
 
 	def update_dialog(self, message):
 

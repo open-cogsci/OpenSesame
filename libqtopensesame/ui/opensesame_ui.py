@@ -2,8 +2,8 @@
 
 # Form implementation generated from reading ui file 'resources/ui/opensesame.ui'
 #
-# Created: Thu Jun  6 16:59:41 2013
-#      by: PyQt4 UI code generator 4.10
+# Created: Fri Jul  4 13:28:29 2014
+#      by: PyQt4 UI code generator 4.10.4
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -51,7 +51,7 @@ class Ui_opensesame_mainwindow(object):
         self.verticalLayout_6.addWidget(self.tabwidget)
         opensesame_mainwindow.setCentralWidget(self.centralwidget)
         self.menubar = QtGui.QMenuBar(opensesame_mainwindow)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 1000, 22))
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 1000, 23))
         self.menubar.setObjectName(_fromUtf8("menubar"))
         self.menu_file = QtGui.QMenu(self.menubar)
         self.menu_file.setObjectName(_fromUtf8("menu_file"))
@@ -443,6 +443,10 @@ class Ui_opensesame_mainwindow(object):
         self.action_online_forum.setObjectName(_fromUtf8("action_online_forum"))
         self.action_run_quick = QtGui.QAction(opensesame_mainwindow)
         self.action_run_quick.setObjectName(_fromUtf8("action_run_quick"))
+        self.action_quick_open_item = QtGui.QAction(opensesame_mainwindow)
+        icon = QtGui.QIcon.fromTheme(_fromUtf8("forward"))
+        self.action_quick_open_item.setIcon(icon)
+        self.action_quick_open_item.setObjectName(_fromUtf8("action_quick_open_item"))
         self.menu_recent_files.addAction(self.actionDummy)
         self.menu_file.addAction(self.action_new)
         self.menu_file.addAction(self.action_open)
@@ -472,6 +476,8 @@ class Ui_opensesame_mainwindow(object):
         self.menu_view.addAction(self.action_close_all_tabs)
         self.menu_view.addAction(self.action_close_other_tabs)
         self.menu_view.addAction(self.action_onetabmode)
+        self.menu_view.addSeparator()
+        self.menu_view.addAction(self.action_quick_open_item)
         self.menu_view.addSeparator()
         self.menu_view.addAction(self.action_show_overview)
         self.menu_view.addAction(self.action_show_variable_inspector)
@@ -611,6 +617,8 @@ class Ui_opensesame_mainwindow(object):
         self.action_run_quick.setText(_translate("opensesame_mainwindow", "Quick run", None))
         self.action_run_quick.setToolTip(_translate("opensesame_mainwindow", "Give your experiment a quick test run", None))
         self.action_run_quick.setShortcut(_translate("opensesame_mainwindow", "Ctrl+Shift+W", None))
+        self.action_quick_open_item.setText(_translate("opensesame_mainwindow", "Quick open item", None))
+        self.action_quick_open_item.setShortcut(_translate("opensesame_mainwindow", "Meta+O", None))
 
 from libqtopensesame.widgets.statusbar import statusbar
 from libqtopensesame.widgets.tree_overview import tree_overview
