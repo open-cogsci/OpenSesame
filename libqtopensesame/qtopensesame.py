@@ -541,6 +541,8 @@ class qtopensesame(QtGui.QMainWindow):
 
 		if msg != None:
 			self.window_msg = msg
+			if os.name == u'nt':
+				self.window_msg = self.window_msg.replace(u'/', u'\\')
 		if self.unsaved_changes:
 			self.setWindowTitle(_(u"%s [unsaved]") % self.window_msg)
 		else:
@@ -878,47 +880,34 @@ class qtopensesame(QtGui.QMainWindow):
 		if self.current_path == None:
 			self.save_file_as()
 			return
-
 		# Indicate that we're busy
 		self.set_busy(True)
 		QtGui.QApplication.processEvents()
-
 		# Get ready, generate the script and see if the script can be
-		# re-parsed. In debug mode any errors are not caught. Otherwise. a
-		# neat exception is thrown.
-		if debug.enabled:
+		# re-parsed.
+		try:
 			self.get_ready()
 			script = self.experiment.to_string()
 			experiment.experiment(self, u"Experiment", script)
-		else:
-			try:
-				self.get_ready()
-				script = self.experiment.to_string()
-				experiment.experiment(self, u"Experiment", script)
-			except osexception as e:
-				if not catch:
-					raise e
-				self.experiment.notify( \
-					_(u"Could not save file, because the script could not be generated. The following error occured:<br/>%s") \
-					% e)
-				self.set_busy(False)
-				return
-
+		except osexception as e:
+			if not catch:
+				raise e
+			self.print_debug_window(e)
+			self.experiment.notify( \
+				_(u"Could not save file, because the script could not be generated. The following error occured:<br/>%s") \
+				% e)
+			self.set_busy(False)
+			return
 		# Try to save the experiment if it doesn't exist already
-		if debug.enabled:
+		try:
 			resp = self.experiment.save(self.current_path, overwrite=True)
 			self.set_status(_(u"Saved as %s") % self.current_path)
-		else:
-			try:
-				resp = self.experiment.save(self.current_path, overwrite=True)
-				self.set_status(_(u"Saved as %s") % self.current_path)
-			except Exception as e:
-				if not catch:
-					raise e
-				self.experiment.notify(_(u"Failed to save file. Error: %s") % e)
-				self.set_busy(False)
-				return
-
+		except Exception as e:
+			if not catch:
+				raise e
+			self.experiment.notify(_(u"Failed to save file. Error: %s") % e)
+			self.set_busy(False)
+			return
 		if remember:
 			self.update_recent_files()
 		self.set_unsaved(False)
@@ -958,7 +947,19 @@ class qtopensesame(QtGui.QMainWindow):
 				else:
 					path += u".opensesame.tar.gz"
 				debug.msg(path)
-
+			# Avoid chunking of file extensions. This happens sometimes when
+			# file managers (used for the save-file dialog) have difficulty
+			# with multi-part extensions.
+			path = path.replace(u'.opensesame.opensesame', u'.opensesame')
+			path = path.replace(u'.opensesame.tar.opensesame', u'.opensesame')
+			path = path.replace(u'.opensesame.tar.gz.opensesame',
+				u'.opensesame')
+			# Warn if we are saving in .opensesame format and there are files
+			# in the file pool.
+			if len(os.listdir(self.experiment.pool_folder)) > 0 \
+				and path.lower().endswith(u'.opensesame'):
+				self.experiment.notify(
+					_(u'You have selected the <code>.opensesame</code> format. This means that the file pool has <i>not</i> been saved. To save the file pool along with your experiment, select the <code>.opensesame.tar.gz</code> format.'))
 			self.current_path = path
 			self.save_file()
 
