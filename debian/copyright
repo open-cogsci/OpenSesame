@@ -29,7 +29,7 @@ Copyright: 2003, Automatic Control Equipments, Pune, INDIA
 Licenses: GPL-2+
  The full text of the GNU General Public License version 2 is available on
  Debian systems in /usr/share/common-licenses/GPL-2.
- 
+
 Files: resources/hebrew.ttf
 Copyright: 2012, HaGilda <info@hagilda.com>
  2012, Mushon Zer-Aviv
@@ -76,6 +76,18 @@ Licenses: GPL-3
 Files: resources/ts/zh_CN.ts
 Copyright: 2013, Gabriel Chan
            2013, Jerry Li
+Licenses: GPL-3
+ The full text of the GNU General Public License version 3 is available on
+ Debian systems in /usr/share/common-licenses/GPL-3.
+
+Files: resources/ts/ru_RU.ts
+Copyright: 2014, Validimir Kosonogov
+Licenses: GPL-3
+ The full text of the GNU General Public License version 3 is available on
+ Debian systems in /usr/share/common-licenses/GPL-3.
+
+Files: resources/ts/de_DE.ts
+Copyright: 2014, Timo Lueke
 Licenses: GPL-3
  The full text of the GNU General Public License version 3 is available on
  Debian systems in /usr/share/common-licenses/GPL-3.

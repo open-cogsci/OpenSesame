@@ -241,7 +241,7 @@ class xpyriment(openexp._canvas.legacy.legacy):
 		self.bgcolor = self.color(color)
 		self._canvas_color = self.bgcolor
 
-	def text_size(self, text):
+	def _text_size(self, text):
 
 		"""See openexp._canvas.legacy"""
 

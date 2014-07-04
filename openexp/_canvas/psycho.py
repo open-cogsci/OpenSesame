@@ -243,7 +243,7 @@ class psycho(openexp._canvas.legacy.legacy):
 		openexp._canvas.legacy.legacy.set_font(self, style=style, size=size, \
 			italic=italic, bold=bold, underline=underline)
 
-	def text_size(self, text):
+	def _text_size(self, text):
 
 		"""See openexp._canvas.legacy"""
 
