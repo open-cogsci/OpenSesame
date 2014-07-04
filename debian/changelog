@@ -2,6 +2,11 @@ opensesame (2.8.3-ubuntu1) trusty; urgency=medium
 
   * Improvements
     - Add German translation (de_DE)
+    - Add Russian translation (ru_RU)
+  * Bugs fixed
+    - Fix canvas.arrow() docstring
+    - canvas.text_size() respects line breaks and formatting (#262)
+    - Advanced loop settings are preserved in GUI (#263)
 
  -- Sebastiaan Mathot <s.mathot@cogsci.nl>  Mon, 23 Jun 2014 20:59:27 +0200
 
