@@ -1,7 +1,7 @@
 #sequence_container {
 	border: none;
 	border-bottom-color: black;
-	border-bottom-width: 1px;		
+	border-bottom-width: 1px;
 	border-bottom-style: dotted;
 }
 
@@ -35,3 +35,9 @@
 	padding: 4px;
 }
 
+#quick_open_item #filter_line_edit {
+	font-size: 14pt;
+}
+#quick_open_item {
+	background-color: #729fcf;
+}
