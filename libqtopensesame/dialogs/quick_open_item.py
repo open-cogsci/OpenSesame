@@ -18,7 +18,6 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from PyQt4 import QtCore, QtGui
-from libqtopensesame.ui.quick_open_item_ui import Ui_quick_open_item
 from libqtopensesame.dialogs.base_dialog import base_dialog
 
 class quick_open_item(base_dialog):
@@ -40,7 +39,8 @@ class quick_open_item(base_dialog):
 		"""
 
 		super(quick_open_item, self).__init__(main_window,
-			ui=u'dialogs.quick_open_item', frameless=True)
+			ui=u'dialogs.quick_open_item',
+			flags=QtCore.Qt.Dialog | QtCore.Qt.FramelessWindowHint)
 		self.ui.filter_line_edit.textChanged.connect(self.populate_list)
 		self.ui.filter_line_edit.returnPressed.connect(self.select_item)
 		self.ui.items_list_widget.itemActivated.connect(self.select_item)

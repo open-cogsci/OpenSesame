@@ -30,8 +30,8 @@ class feedpad:
 
 		"""Open a new window for the drawing tool"""
 
-		a = sketchpad_dialog.sketchpad_dialog( \
-			self.experiment.ui.centralwidget, self);
+		a = sketchpad_dialog.sketchpad_dialog(
+			self.experiment.main_window, self);
 		a.exec_()
 		self.apply_edit_changes()
 

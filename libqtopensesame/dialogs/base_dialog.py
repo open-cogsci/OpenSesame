@@ -27,7 +27,7 @@ class base_dialog(QtGui.QDialog, base_component):
 		A base class for dialogs.
 	"""
 
-	def __init__(self, main_window, ui=None, frameless=False):
+	def __init__(self, main_window, ui=None, *arglist, **kwdict):
 
 		"""
 		desc:
@@ -40,12 +40,13 @@ class base_dialog(QtGui.QDialog, base_component):
 			ui:
 							An id for a user-interface file, for example
 							'dialogs.quick_open_item'.
-			frameless:		Indicates whether the dialog should have a frame.
+
+		argument-list:
+		*arglist:			A list of arguments to be passed onto QDialog.
+
+		keyword-dict:
+		*kwdict:			A dict of keywords to be passed onto QDialog.
 		"""
 
-		window_flags = QtCore.Qt.Dialog
-		if frameless:
-			window_flags = window_flags | QtCore.Qt.FramelessWindowHint
-		super(base_dialog, self).__init__(main_window, flags=window_flags)
+		super(base_dialog, self).__init__(main_window, *arglist, **kwdict)
 		self.setup(main_window, ui=ui)
-

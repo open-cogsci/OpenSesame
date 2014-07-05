@@ -1420,8 +1420,8 @@ class qtopensesame(QtGui.QMainWindow):
 
 		from libqtopensesame.dialogs import new_loop_sequence_dialog
 
-		d = new_loop_sequence_dialog.new_loop_sequence_dialog(self, \
-			self.experiment, u"loop", parent)
+		d = new_loop_sequence_dialog.new_loop_sequence_dialog(self, u"loop",
+			parent)
 		d.exec_()
 		if d.action == u"cancel":
 			return None
@@ -1452,8 +1452,8 @@ class qtopensesame(QtGui.QMainWindow):
 
 		from libqtopensesame.dialogs import new_loop_sequence_dialog
 
-		d = new_loop_sequence_dialog.new_loop_sequence_dialog(self, \
-			self.experiment, u"sequence", parent)
+		d = new_loop_sequence_dialog.new_loop_sequence_dialog(self, u"sequence",
+			parent)
 		d.exec_()
 		if d.action == u"cancel":
 			return None
