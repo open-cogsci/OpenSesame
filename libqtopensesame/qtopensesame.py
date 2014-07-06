@@ -19,6 +19,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 
 from PyQt4 import QtCore, QtGui
 from libqtopensesame.misc import includes, config, _
+from libqtopensesame.misc.base_component import base_component
 from libqtopensesame.misc.config import cfg
 from libqtopensesame.items import experiment
 from libopensesame import debug, misc
@@ -33,7 +34,7 @@ import time
 import traceback
 import subprocess
 
-class qtopensesame(QtGui.QMainWindow):
+class qtopensesame(QtGui.QMainWindow, base_component):
 
 	"""The main class of the OpenSesame GUI"""
 
@@ -71,7 +72,6 @@ class qtopensesame(QtGui.QMainWindow):
 
 		from libopensesame import misc
 		from libqtopensesame.widgets import pool_widget
-		from libqtopensesame.ui import opensesame_ui
 		from libqtopensesame.misc import theme, dispatch
 		import platform
 		import random
@@ -93,8 +93,7 @@ class qtopensesame(QtGui.QMainWindow):
 		self.dispatch = dispatch.dispatch(self)
 
 		# Setup the UI
-		self.ui = opensesame_ui.Ui_opensesame_mainwindow()
-		self.ui.setupUi(self)
+		self.load_ui(u'main_window')
 		self.ui.toolbar_items.main_window = self
 		self.ui.itemtree.main_window = self
 		self.ui.table_variables.main_window = self
@@ -574,18 +573,9 @@ class qtopensesame(QtGui.QMainWindow):
 		message -- the message to be displayed
 		"""
 
-		from libqtopensesame.ui import update_dialog_ui
-
-		a = QtGui.QDialog(self)
-		a.ui = update_dialog_ui.Ui_update_dialog()
-		a.ui.setupUi(a)
-		self.theme.apply_theme(a)
-		a.ui.checkbox_auto_check_update.setChecked(cfg.auto_update_check)
-		a.ui.textedit_notification.setHtml(message)
-		a.adjustSize()
-		a.exec_()
-		cfg.auto_update_check = a.ui.checkbox_auto_check_update.isChecked()
-		self.update_preferences_tab()
+		from libqtopensesame.dialogs.update import update
+		d = update(self, msg=message)
+		d.exec_()
 
 	def check_update(self, dummy=None, always=True):
 

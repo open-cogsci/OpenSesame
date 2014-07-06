@@ -428,19 +428,10 @@ class experiment(libopensesame.experiment.experiment):
 		icon	--	A custom icon or None for default icon. (default=None)
 		"""
 
-		from libqtopensesame.ui import notification_dialog_ui
-		a = QtGui.QDialog(self.main_window)
-		a.ui = notification_dialog_ui.Ui_notification_dialog()
-		a.ui.setupUi(a)
-		self.main_window.theme.apply_theme(a)
-		a.ui.textedit_notification.setHtml(self.unistr(msg))
-		if title != None:
-			a.ui.label_title.setText(title)
-		if icon != None:
-			a.ui.label_notification.setPixmap(self.main_window.theme.qpixmap( \
-				icon))
-		a.adjustSize()
-		a.show()
+		from libqtopensesame.dialogs.notification import notification
+		nd = notification(self.main_window, msg=self.unistr(msg), title=title,
+			icon=icon)
+		nd.show()
 
 	def text_input(self, title, message=None, content=u''):
 
@@ -458,19 +449,9 @@ class experiment(libopensesame.experiment.experiment):
 		A string of text or None if cancel was pressed.
 		"""
 
-		from libqtopensesame.ui import text_input_dialog_ui
-		a = QtGui.QDialog(self.main_window)
-		a.ui = text_input_dialog_ui.Ui_text_input_dialog()
-		a.ui.setupUi(a)
-		self.main_window.theme.apply_theme(a)
-		if message != None:
-			a.ui.label_message.setText(message)
-		a.ui.textedit_input.setPlainText(content)
-		a.ui.textedit_input.setFont(self.monospace())
-		a.adjustSize()
-		if a.exec_() == QtGui.QDialog.Accepted:
-			return unicode(a.ui.textedit_input.toPlainText())
-		return None
+		from libqtopensesame.dialogs.text_input import text_input
+		tid = text_input(self.main_window, msg=message, content=content)
+		return tid.get_input()
 
 	def colorpicker(self, title=u'Pick a color', initial_color=None):
 

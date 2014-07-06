@@ -22,7 +22,7 @@ import libopensesame.loop
 from libqtopensesame.items import qtitem
 from libqtopensesame.misc import _
 from libqtopensesame.misc.config import cfg
-from libqtopensesame.ui import loop_wizard_dialog_ui, loop_widget_ui
+from libqtopensesame.ui import loop_widget_ui
 from libqtopensesame.widgets import loop_table
 from libopensesame import debug
 from PyQt4 import QtCore, QtGui
@@ -420,33 +420,17 @@ class loop(libopensesame.loop.loop, qtitem.qtitem):
 
 		"""Presents the variable wizard dialog."""
 
-		icons = {}
-		icons[u"cut"] = self.experiment.icon(u"cut")
-		icons[u"copy"] = self.experiment.icon(u"copy")
-		icons[u"paste"] = self.experiment.icon(u"paste")
-		icons[u"clear"] = self.experiment.icon(u"clear")
-
-		# Set up the wizard dialog
-		a = QtGui.QDialog(self.experiment.main_window.ui.centralwidget)
-		a.ui = loop_wizard_dialog_ui.Ui_loop_wizard_dialog()
-		a.ui.setupUi(a)
-		self.experiment.main_window.theme.apply_theme(a)
-		a.ui.table_example.build_context_menu(icons)
-		a.ui.table_wizard.build_context_menu(icons)
-		a.ui.table_example.hide()
-		a.ui.table_wizard.setRowCount(255)
-		a.ui.table_wizard.setColumnCount(255)
-
-		a.ui.table_wizard.set_contents(cfg.loop_wizard)
-		if a.exec_() == QtGui.QDialog.Accepted:
-			cfg.loop_wizard = a.ui.table_wizard.get_contents()
+		from libqtopensesame.dialogs.loop_wizard import loop_wizard
+		d = loop_wizard(self.experiment.main_window)
+		if d.exec_() == QtGui.QDialog.Accepted:
+			#cfg.loop_wizard = a.ui.table_wizard.get_contents()
 			debug.msg(u"filling loop table")
 			# First read the table into a dictionary of variables
 			var_dict = {}
-			for col in range(a.ui.table_wizard.columnCount()):
+			for col in range(d.column_count()):
 				var = None
-				for row in range(a.ui.table_wizard.rowCount()):
-					item = a.ui.table_wizard.item(row, col)
+				for row in range(d.row_count()):
+					item = d.get_item(row, col)
 					if item == None:
 						break
 					s = unicode(item.text())

@@ -17,7 +17,9 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
+import os
 from PyQt4 import QtCore, QtGui, uic
+from libopensesame import debug
 
 class base_component(object):
 
@@ -42,16 +44,41 @@ class base_component(object):
 							the file 'resources/ui/dialogs/quick_open_item.ui'.
 		"""
 
+		from libqtopensesame.qtopensesame import qtopensesame
+		debug.msg(u'initializing %s' % self.__class__.__name__)
 		self.main_window = main_window
-		self.theme = main_window.theme
-		self.theme.apply_theme(self)
-		self.experiment = self.main_window.experiment
-		print self.__class__
+		if hasattr(self.main_window, u'theme'):
+			self.theme = main_window.theme
+		if hasattr(self.main_window, u'experiment'):
+			self.experiment = self.main_window.experiment
+		self.load_ui(ui)
+		if hasattr(self.main_window, u'theme'):
+			self.theme.apply_theme(self)
+
+	def load_ui(self, ui=None):
+
+		"""
+		desc:
+			Dynamically loads the ui, if any.
+
+		keywords:
+			ui:			An id for a user-interface file, or None.
+		"""
+
 		if ui != None:
-			ui_path = self.experiment.resource(u'ui/%s.ui' % ui.replace(u'.',
-				u'/'))
+			# Dot-split the ui id, append a `.ui` extension, and assume it's
+			# relative to the resources/ui subfolder.
+			path_list = [u'ui'] + ui.split(u'.')
+			if hasattr(self, u'experiment'):
+				# If an experiment object is available, use that to find the
+				# resources ...
+				ui_path = self.experiment.resource(
+					os.path.join(*path_list)+u'.ui')
+			else:
+				# ... otherwise use the static resources function.
+				from libopensesame import misc
+				ui_path = misc.resource(os.path.join(*path_list)+u'.ui')
+			debug.msg(u'dynamically loading ui: %s' % ui_path)
 			self.ui = uic.loadUi(ui_path, self)
 		else:
 			self.ui = None
-
-
