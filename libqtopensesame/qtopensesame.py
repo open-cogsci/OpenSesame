@@ -71,7 +71,6 @@ class qtopensesame(QtGui.QMainWindow, base_component):
 		"""Resume GUI initialization"""
 
 		from libopensesame import misc
-		from libqtopensesame.widgets import pool_widget
 		from libqtopensesame.misc import theme, dispatch
 		import platform
 		import random
@@ -93,10 +92,9 @@ class qtopensesame(QtGui.QMainWindow, base_component):
 		self.dispatch = dispatch.dispatch(self)
 
 		# Setup the UI
-		self.load_ui(u'main_window')
+		self.load_ui(u'misc.main_window')
 		self.ui.toolbar_items.main_window = self
 		self.ui.itemtree.main_window = self
-		self.ui.table_variables.main_window = self
 		self.ui.tabwidget.main_window = self
 
 		# Set some initial variables
@@ -186,25 +184,31 @@ class qtopensesame(QtGui.QMainWindow, base_component):
 		self.ui.button_help_stdout.clicked.connect( \
 			self.ui.tabwidget.open_stdout_help)
 
+		# Create the initial experiment, which is the default template.
+		self.experiment = experiment.experiment(self, u"New experiment", \
+			open(misc.resource(os.path.join(u"templates", \
+				u"default.opensesame")), u"r").read())
+
 		# Setup the overview area
 		self.ui.dock_overview.show()
 		self.ui.dock_overview.visibilityChanged.connect( \
 			self.ui.action_show_overview.setChecked)
 
 		# Setup the variable inspector
+		from libqtopensesame.widgets.variable_inspector import \
+			variable_inspector
+		self.ui.variable_inspector = variable_inspector(self)
 		self.ui.dock_variable_inspector.hide()
-		self.ui.button_help_variables.clicked.connect( \
-			self.ui.tabwidget.open_variables_help)
-		self.ui.dock_variable_inspector.visibilityChanged.connect( \
+		self.ui.dock_variable_inspector.visibilityChanged.connect(
 			self.ui.action_show_variable_inspector.setChecked)
-		self.ui.edit_variable_filter.textChanged.connect( \
-			self.refresh_variable_inspector)
+		self.ui.dock_variable_inspector.setWidget(self.ui.variable_inspector)
 
 		# Setup the file pool
+		from libqtopensesame.widgets.pool_widget import pool_widget
 		self.ui.dock_pool.hide()
-		self.ui.dock_pool.visibilityChanged.connect( \
+		self.ui.dock_pool.visibilityChanged.connect(
 			self.ui.action_show_pool.setChecked)
-		self.ui.pool_widget = pool_widget.pool_widget(self)
+		self.ui.pool_widget = pool_widget(self)
 		self.ui.dock_pool.setWidget(self.ui.pool_widget)
 
 		# Uncheck the debug window button on debug window close
@@ -220,15 +224,10 @@ class qtopensesame(QtGui.QMainWindow, base_component):
 			QtGui.QKeySequence(), self, self.ui.edit_stdout.setFocus)
 		self.ui.shortcut_variables = QtGui.QShortcut( \
 			QtGui.QKeySequence(), self, \
-			self.ui.edit_variable_filter.setFocus)
+			self.ui.variable_inspector.set_focus())
 		self.ui.shortcut_pool = QtGui.QShortcut( \
 			QtGui.QKeySequence(), self, \
 			self.ui.pool_widget.ui.edit_pool_filter.setFocus)
-
-		# Create the initial experiment, which is the default template.
-		self.experiment = experiment.experiment(self, u"New experiment", \
-			open(misc.resource(os.path.join(u"templates", \
-				u"default.opensesame")), u"r").read())
 
 		# Miscellaneous initialization
 		self.set_status(_(u"Welcome to OpenSesame %s") % self.version)
@@ -739,7 +738,7 @@ class qtopensesame(QtGui.QMainWindow, base_component):
 
 		if self.ui.action_show_variable_inspector.isChecked():
 			self.ui.dock_variable_inspector.setVisible(True)
-			self.ui.table_variables.refresh()
+			self.ui.variable_inspector.refresh()
 		else:
 			self.ui.dock_variable_inspector.setVisible(False)
 
