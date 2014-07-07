@@ -71,6 +71,9 @@
             </property>
             <item>
              <widget class="QLabel" name="label_facebook">
+              <property name="cursor">
+               <cursorShape>PointingHandCursor</cursorShape>
+              </property>
               <property name="toolTip">
                <string>Visit Facebook page</string>
               </property>
@@ -81,6 +84,9 @@
             </item>
             <item>
              <widget class="QLabel" name="label_twitter">
+              <property name="cursor">
+               <cursorShape>PointingHandCursor</cursorShape>
+              </property>
               <property name="toolTip">
                <string>Visit Twitter page</string>
               </property>
@@ -91,6 +97,9 @@
             </item>
             <item>
              <widget class="QLabel" name="label_website">
+              <property name="cursor">
+               <cursorShape>PointingHandCursor</cursorShape>
+              </property>
               <property name="toolTip">
                <string>Visit cogsci.nl</string>
               </property>

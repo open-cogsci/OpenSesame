@@ -93,6 +93,7 @@ class qtopensesame(QtGui.QMainWindow, base_component):
 
 		# Setup the UI
 		self.load_ui(u'misc.main_window')
+
 		self.ui.toolbar_items.main_window = self
 		self.ui.itemtree.main_window = self
 		self.ui.tabwidget.main_window = self
@@ -184,11 +185,6 @@ class qtopensesame(QtGui.QMainWindow, base_component):
 		self.ui.button_help_stdout.clicked.connect( \
 			self.ui.tabwidget.open_stdout_help)
 
-		# Create the initial experiment, which is the default template.
-		self.experiment = experiment.experiment(self, u"New experiment", \
-			open(misc.resource(os.path.join(u"templates", \
-				u"default.opensesame")), u"r").read())
-
 		# Setup the overview area
 		self.ui.dock_overview.show()
 		self.ui.dock_overview.visibilityChanged.connect( \
@@ -228,6 +224,11 @@ class qtopensesame(QtGui.QMainWindow, base_component):
 		self.ui.shortcut_pool = QtGui.QShortcut( \
 			QtGui.QKeySequence(), self, \
 			self.ui.pool_widget.ui.edit_pool_filter.setFocus)
+
+		# Create the initial experiment, which is the default template.
+		self.experiment = experiment.experiment(self, u"New experiment", \
+			open(misc.resource(os.path.join(u"templates", \
+				u"default.opensesame")), u"r").read())
 
 		# Miscellaneous initialization
 		self.set_status(_(u"Welcome to OpenSesame %s") % self.version)

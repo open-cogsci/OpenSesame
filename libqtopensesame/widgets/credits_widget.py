@@ -19,33 +19,31 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 
 from libopensesame import misc
 from libqtopensesame.misc import config
-from libqtopensesame.ui.credits_widget_ui import Ui_widget_credits
+from libqtopensesame.widgets.base_widget import base_widget
 from PyQt4 import QtGui, QtCore
 
-class credits_widget(QtGui.QWidget):
+class credits_widget(base_widget):
 
-	"""A widget with the opensesame credits"""
+	"""
+	desc:
+		A credits window, embedded in the start-new widget.
+	"""
 
-	def __init__(self, parent=None):
+	def __init__(self, main_window):
 
 		"""
-		Constructor
+		desc:
+			Constructor.
 
-		Keywords arguments:
-		parent -- the parent QWidget
+		keywords:
+			main_window:	A qtopensesame object.
 		"""
 
-		QtGui.QTabWidget.__init__(self, parent)
-		self.ui = Ui_widget_credits()
-		self.ui.setupUi(self)
-
-	def initialize(self, main_window):
-
-		self.main_window = main_window
-		self.main_window.theme.apply_theme(self)
+		super(credits_widget, self).__init__(main_window,
+			ui=u'widgets.credits_widget')
 		self.ui.label_opensesame.setText(unicode( \
-			self.ui.label_opensesame.text()).replace("[version]", \
-			misc.version).replace("[codename]", misc.codename))
+			self.ui.label_opensesame.text()).replace(u"[version]",
+			misc.version).replace(u"[codename]", misc.codename))
 		self.ui.label_website.mousePressEvent = self.open_website
 		self.ui.label_facebook.mousePressEvent = self.open_facebook
 		self.ui.label_twitter.mousePressEvent = self.open_twitter
@@ -67,4 +65,3 @@ class credits_widget(QtGui.QWidget):
 		"""Open Twitter page"""
 
 		misc.open_url(config.get_config("url_twitter"))
-

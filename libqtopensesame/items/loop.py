@@ -22,8 +22,8 @@ import libopensesame.loop
 from libqtopensesame.items import qtitem
 from libqtopensesame.misc import _
 from libqtopensesame.misc.config import cfg
-from libqtopensesame.ui import loop_widget_ui
 from libqtopensesame.widgets import loop_table
+from libqtopensesame.widgets.loop_widget import loop_widget
 from libopensesame import debug
 from PyQt4 import QtCore, QtGui
 
@@ -467,12 +467,8 @@ class loop(libopensesame.loop.loop, qtitem.qtitem):
 		self.lock = True
 
 		qtitem.qtitem.init_edit_widget(self, False)
-		self.loop_widget = QtGui.QWidget()
-		self.loop_widget.ui = loop_widget_ui.Ui_loop_widget()
-		self.loop_widget.ui.setupUi(self.loop_widget)
-		self.experiment.main_window.theme.apply_theme(self.loop_widget)
+		self.loop_widget = loop_widget(self.experiment.main_window)
 		self.loop_widget.ui.widget_advanced.hide()
-
 		self.edit_vbox.addWidget(self.loop_widget)
 
 		self.auto_add_widget(self.loop_widget.ui.spin_cycles)

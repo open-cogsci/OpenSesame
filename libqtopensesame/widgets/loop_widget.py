@@ -17,36 +17,27 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
-from libqtopensesame.misc.base_subcomponent import base_subcomponent
-from PyQt4 import QtCore, QtGui
+from libopensesame import misc
+from libqtopensesame.misc import config
+from libqtopensesame.widgets.base_widget import base_widget
+from PyQt4 import QtGui, QtCore
 
-class base_dialog(QtGui.QDialog, base_subcomponent):
+class loop_widget(base_widget):
 
 	"""
 	desc:
-		A base class for dialogs.
+		A credits window, embedded in the start-new widget.
 	"""
 
-	def __init__(self, main_window, ui=None, *arglist, **kwdict):
+	def __init__(self, main_window):
 
 		"""
 		desc:
 			Constructor.
 
-		arguments:
-			main_window:	A qtopensesame object.
-
 		keywords:
-			ui:
-							An id for a user-interface file, for example
-							'dialogs.quick_open_item'.
-
-		argument-list:
-		*arglist:			A list of arguments to be passed onto QDialog.
-
-		keyword-dict:
-		*kwdict:			A dict of keywords to be passed onto QDialog.
+			main_window:	A qtopensesame object.
 		"""
 
-		super(base_dialog, self).__init__(main_window, *arglist, **kwdict)
-		self.setup(main_window, ui=ui)
+		super(loop_widget, self).__init__(main_window,
+			ui=u'widgets.loop_widget')

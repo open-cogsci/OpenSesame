@@ -18,7 +18,6 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame import debug, misc
-from libqtopensesame.ui import pool_widget_ui
 from libqtopensesame.misc import _
 from libqtopensesame.misc.config import cfg
 from libqtopensesame.widgets.base_widget import base_widget

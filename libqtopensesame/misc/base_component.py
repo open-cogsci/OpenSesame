@@ -20,6 +20,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 import os
 from PyQt4 import QtCore, QtGui, uic
 from libopensesame import debug
+from libopensesame.exceptions import osexception
 
 class base_component(object):
 
@@ -46,14 +47,19 @@ class base_component(object):
 
 		from libqtopensesame.qtopensesame import qtopensesame
 		debug.msg(u'initializing %s' % self.__class__.__name__)
+		# If the main_window is actually not the main window, but a widget that
+		# has the main window somewhere above it in the hierarchy, we traverse
+		# upwards.
+		from libqtopensesame.qtopensesame import qtopensesame
+		while not isinstance(main_window, qtopensesame):
+			_parent = main_window.parent()
+			if _parent == None:
+				raise osexception(u'Invalid main_window')
+			main_window = _parent
 		self.main_window = main_window
-		if hasattr(self.main_window, u'theme'):
-			self.theme = main_window.theme
-		if hasattr(self.main_window, u'experiment'):
-			self.experiment = self.main_window.experiment
 		self.load_ui(ui)
 		if hasattr(self.main_window, u'theme'):
-			self.theme.apply_theme(self)
+			self.main_window.theme.apply_theme(self)
 
 	def load_ui(self, ui=None):
 
