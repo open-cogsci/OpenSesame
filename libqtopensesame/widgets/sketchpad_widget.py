@@ -378,6 +378,7 @@ class sketchpad_widget(QtGui.QWidget):
 		parent -- a parent widget (default=None)
 		"""
 
+		self.main_window = sketchpad.main_window
 		QtGui.QWidget.__init__(self, parent)
 
 		# Setup the UI

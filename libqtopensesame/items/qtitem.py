@@ -53,6 +53,26 @@ class qtitem(QtCore.QObject):
 
 		debug.msg(u'created %s' % self.name)
 
+	@property
+	def main_window(self):
+
+		"""
+		returns:
+			The main window object.
+		"""
+
+		return self.experiment.main_window
+
+	@property
+	def theme(self):
+
+		"""
+		returns:
+			The theme object.
+		"""
+
+		return self.experiment.theme
+
 	def open_help_tab(self, page=None):
 
 		"""Opens a help tab."""
@@ -73,8 +93,8 @@ class qtitem(QtCore.QObject):
 		"""Build the GUI controls"""
 
 		# Header widget
-		self.header = header_widget.header_widget(self)
-		self.user_hint_widget = user_hint_widget.user_hint_widget( \
+		self.header = header_widget.header_widget(self.main_window, self)
+		self.user_hint_widget = user_hint_widget.user_hint_widget(
 			self.experiment.main_window, self)
 		self.header_hbox = QtGui.QHBoxLayout()
 		self.header_hbox.addWidget(self.experiment.label_image(self.item_type))
@@ -86,16 +106,14 @@ class qtitem(QtCore.QObject):
 		button = QtGui.QPushButton(self.experiment.icon(u"script"), u"")
 		button.setToolTip(_(u"Edit script"))
 		button.setIconSize(QtCore.QSize(16, 16))
-		QtCore.QObject.connect(button, QtCore.SIGNAL(u"clicked()"), \
-			self.open_script_tab)
+		button.clicked.connect(self.open_script_tab)
 		self.header_hbox.addWidget(button)
 
 		# Help button
 		button = QtGui.QPushButton(self.experiment.icon(u"help"), u"")
 		button.setToolTip(_(u"Tell me more about the %s item") % self.item_type)
 		button.setIconSize(QtCore.QSize(16, 16))
-		QtCore.QObject.connect(button, QtCore.SIGNAL(u"clicked()"), \
-			self.open_help_tab)
+		button.clicked.connect(self.open_help_tab)
 		self.header_hbox.addWidget(button)
 
 		self.header_widget = QtGui.QWidget()

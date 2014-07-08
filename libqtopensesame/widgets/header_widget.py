@@ -17,27 +17,30 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
-__author__ = "Sebastiaan Mathot"
-__license__ = "GPLv3"
-
 from PyQt4 import QtCore, QtGui
 from libopensesame import debug
 from libqtopensesame.misc import _
+from libqtopensesame.widgets.base_widget import base_widget
 
-class header_widget(QtGui.QWidget):
+class header_widget(base_widget):
 
-	"""Editable labels for the item's name and description"""
+	"""
+	desc:
+		Editable labels for an item's name and description.
+	"""
 
-	def __init__(self, item):
+	def __init__(self, main_window, item):
 
 		"""
-		Constructor
+		desc:
+			Constructor.
 
-		Arguments:
-		item -- the item to provide a header for
+		arguments:
+			main_window:	A qtopensesame object.
+			item: 			A qtitem object.
 		"""
 
-		QtGui.QWidget.__init__(self)
+		super(header_widget, self).__init__(main_window)
 		self.setCursor(QtCore.Qt.IBeamCursor)
 		self.setToolTip(_(u"Click to edit"))
 		self.item = item
@@ -51,14 +54,14 @@ class header_widget(QtGui.QWidget):
 		self.edit_desc = QtGui.QLineEdit()
 		self.edit_desc.editingFinished.connect(self.restore_desc)
 		self.edit_desc.hide()
-			
+
 		vbox = QtGui.QVBoxLayout()
 		vbox.setContentsMargins(8, 0, 0, 0)
 		vbox.setSpacing(0)
 		vbox.addWidget(self.label_name)
 		vbox.addWidget(self.edit_name)
 		vbox.addWidget(self.label_desc)
-		vbox.addWidget(self.edit_desc)		
+		vbox.addWidget(self.edit_desc)
 		self.refresh()
 		self.setLayout(vbox)
 
@@ -83,19 +86,19 @@ class header_widget(QtGui.QWidget):
 		apply_name_change -- indicates of the name change should be applied
 							 (default=True)
 		"""
-		
+
 		debug.msg(u"apply_name_change = %s" % apply_name_change)
 		if apply_name_change:
-			self.item.apply_name_change()			
-		self.refresh()					
+			self.item.apply_name_change()
+		self.refresh()
 		self.label_name.show()
 		self.edit_name.hide()
 
 	def restore_desc(self):
 
 		"""Apply the description change and revert the edit	back to the label"""
-		
-		self.item.apply_edit_changes()			
+
+		self.item.apply_edit_changes()
 		self.refresh()
 		self.label_desc.show()
 		self.edit_desc.hide()

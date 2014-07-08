@@ -30,9 +30,19 @@ class base_subcomponent(base_component):
 	@property
 	def experiment(self):
 
+		"""
+		returns:
+			An experiment object.
+		"""
+
 		return self.main_window.experiment
 
 	@property
 	def theme(self):
+
+		"""
+		returns:
+			A theme object.
+		"""
 
 		return self.main_window.theme

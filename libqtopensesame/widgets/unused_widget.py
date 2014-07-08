@@ -33,7 +33,7 @@ class unused_widget(QtGui.QWidget):
 		Keywords arguments:
 		parent	--	The parent QWidget. (default=None)
 		"""
-				
+
 		self.main_window = parent
 		self.experiment = self.main_window.experiment
 		QtGui.QWidget.__init__(self, parent)
@@ -45,8 +45,8 @@ class unused_widget(QtGui.QWidget):
 		header_label.setText(_(u"<b><font size='5'>Unused</font></b>"))
 		header_hbox.addWidget(header_label)
 		header_hbox.addStretch()
-		header_widget = QtGui.QWidget()
-		header_widget.setLayout(header_hbox)
+		user_hint_widget = QtGui.QWidget()
+		user_hint_widget.setLayout(header_hbox)
 
 		purge_button = QtGui.QPushButton(self.experiment.icon(u"purge"), \
 			_(u"Permanently delete unused items"))
@@ -61,10 +61,10 @@ class unused_widget(QtGui.QWidget):
 		purge_widget.setLayout(purge_hbox)
 
 		vbox = QtGui.QVBoxLayout()
-		vbox.addWidget(header_widget)
+		vbox.addWidget(user_hint_widget)
 		vbox.addWidget(purge_widget)
 		vbox.addStretch()
-		
+
 		self.setLayout(vbox)
 		self.__unused_tab__ = True
 
@@ -79,7 +79,7 @@ class unused_widget(QtGui.QWidget):
 			QtGui.QMessageBox.Yes, QtGui.QMessageBox.No)
 		if resp == QtGui.QMessageBox.No:
 			return
-		
+
 		# We need a loop, because items may become unused
 		# by deletion of their unused parent items
 		while len(self.main_window.experiment.unused_items) > 0:
@@ -87,8 +87,8 @@ class unused_widget(QtGui.QWidget):
 				if item in self.main_window.experiment.items:
 					del self.main_window.experiment.items[item]
 			self.main_window.experiment.build_item_tree()
-						
+
 		# Notify dispatch
-		self.main_window.dispatch.event_structure_change.emit(u'')		
+		self.main_window.dispatch.event_structure_change.emit(u'')
 		self.main_window.ui.tabwidget.close_all()
 		self.main_window.ui.tabwidget.open_general()

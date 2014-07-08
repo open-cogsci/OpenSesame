@@ -52,9 +52,12 @@ class base_component(object):
 		# upwards.
 		from libqtopensesame.qtopensesame import qtopensesame
 		while not isinstance(main_window, qtopensesame):
-			_parent = main_window.parent()
-			if _parent == None:
-				raise osexception(u'Invalid main_window')
+			if hasattr(main_window, u'main_window'):
+				_parent = main_window.main_window
+			else:
+				_parent = main_window.parent()
+				if _parent == None:
+					raise osexception(u'Invalid main_window')
 			main_window = _parent
 		self.main_window = main_window
 		self.load_ui(ui)
