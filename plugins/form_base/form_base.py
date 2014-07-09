@@ -29,7 +29,7 @@ from PyQt4 import QtGui, QtCore
 class form_base(item.item):
 
 	"""A generic form plug-in"""
-	
+
 	def __init__(self, name, experiment, script=None, item_type=u'form_base', \
 		description=u'A generic form plug-in'):
 
@@ -50,7 +50,7 @@ class form_base(item.item):
 		self.rows = u'2;2'
 		self.spacing = 10
 		self.focus_widget = None
-		self.theme = u'gray'
+		self._theme = u'gray'
 		self.only_render = u'no'
 		self.margins = u'50;50;50;50'
 		self._widgets = []
@@ -151,7 +151,7 @@ class form_base(item.item):
 			raise osexception( \
 				_(u'cols, rows, and margins should be numeric values separated by a semi-colon'))
 		self._form = widgets.form(self.experiment, cols=cols, rows=rows, \
-			margins=margins, spacing=self.spacing, theme=self.theme, item=self)
+			margins=margins, spacing=self.spacing, theme=self._theme, item=self)
 
 		# Prepare the widgets
 		for _w in self._widgets:
