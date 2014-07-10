@@ -102,6 +102,7 @@ class legacy:
 				self.key_name_to_code[name2] = code
 				self.key_name_to_code[name3] = code
 				self.key_name_to_code[name4] = code
+		self.persistent_virtual_keyboard = False
 		self.experiment = experiment
 		self.set_keylist(keylist)
 		self.set_timeout(timeout)
@@ -356,3 +357,29 @@ class legacy:
 
 		return unicode(pygame.key.name(key)).replace(u'[', u'') \
 			.replace(u']', u'')
+
+	def show_virtual_keyboard(self, visible=True):
+
+		"""<DOC>
+		Shows or hides a virtual keyboard if this is supported by the back-end.
+		This function is only necessary if you want the virtual keyboard to
+		remain visible while collecting multicharacter responses. Otherwise,
+		get_key() will implicitly shown and hide the keyboard for a single-
+		character response.
+
+		This function does nothing for back-ends that do not support virtual
+		keyboards.
+
+		Arguments:
+		visible		--	True if the keyboard should be shown, False otherwise.
+
+		Example:
+		>>> from openexp.keyboard import keyboard
+		>>> my_keyboard = keyboard(exp)
+		>>> my_keyboard.show_virtual_keyboard(True)
+		>>> response1, timestamp2 = my_keyboard.get_key()
+		>>> response2, timestamp2 = my_keyboard.get_key()
+		>>> my_keyboard.show_virtual_keyboard(False)
+		</DOC>"""
+
+		pass
