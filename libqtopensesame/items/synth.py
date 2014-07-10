@@ -20,7 +20,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 import libopensesame.synth
 from libqtopensesame.misc import _
 from libqtopensesame.items import qtitem
-from libqtopensesame.ui import synth_widget_ui
+from libqtopensesame.widgets.synth_widget import synth_widget
 from PyQt4 import QtCore, QtGui
 
 class synth(libopensesame.synth.synth, qtitem.qtitem):
@@ -49,10 +49,7 @@ class synth(libopensesame.synth.synth, qtitem.qtitem):
 		"""Build the GUI controls"""
 		
 		qtitem.qtitem.init_edit_widget(self, False)				
-		self.synth_widget = QtGui.QWidget()
-		self.synth_widget.ui = synth_widget_ui.Ui_synth_widget()
-		self.synth_widget.ui.setupUi(self.synth_widget)
-		self.experiment.main_window.theme.apply_theme(self.synth_widget)
+		self.synth_widget = synth_widget(self.main_window)
 		self.synth_widget.ui.spin_attack.valueChanged.connect( \
 			self.apply_edit_changes)
 		self.synth_widget.ui.spin_decay.valueChanged.connect( \

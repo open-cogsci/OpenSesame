@@ -20,7 +20,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 import libopensesame.sampler
 from libqtopensesame.misc import _
 from libqtopensesame.items import qtitem
-from libqtopensesame.ui import sampler_widget_ui
+from libqtopensesame.widgets.sampler_widget import sampler_widget
 from libqtopensesame.widgets import pool_widget
 from PyQt4 import QtCore, QtGui
 
@@ -51,11 +51,8 @@ class sampler(libopensesame.sampler.sampler, qtitem.qtitem):
 		
 		qtitem.qtitem.init_edit_widget(self, False)
 				
-		self.sampler_widget = QtGui.QWidget()
-		self.sampler_widget.ui = sampler_widget_ui.Ui_sampler_widget()
-		self.sampler_widget.ui.setupUi(self.sampler_widget)
-		self.experiment.main_window.theme.apply_theme(self.sampler_widget)
-		
+		self.sampler_widget = sampler_widget(self.main_window)
+
 		self.sampler_widget.ui.spin_pan.valueChanged.connect( \
 			self.apply_edit_changes)
 		self.sampler_widget.ui.spin_volume.valueChanged.connect( \
@@ -101,7 +98,7 @@ class sampler(libopensesame.sampler.sampler, qtitem.qtitem):
 		
 		self.lock = True		
 		qtitem.qtitem.edit_widget(self)						
-		if self.variable_vars(["sample", "duration"]):			
+		if self.variable_vars(["sample", "duration"]):
 			self.user_hint_widget.add_user_hint(_( \
 				'The controls are disabled, because one of the settings is defined using variables.'))
 			self.user_hint_widget.refresh()
@@ -111,7 +108,7 @@ class sampler(libopensesame.sampler.sampler, qtitem.qtitem):
 			self.sampler_widget.ui.edit_sample.setText(self.unistr(self.get( \
 				'sample', _eval=False)))
 			self.sampler_widget.ui.edit_duration.setText(self.unistr(self.get( \
-				'duration', _eval=False)))		
+				'duration', _eval=False)))
 			self.sampler_widget.ui.spin_pan.setValue(self.get('pan', _eval= \
 				False))
 			self.sampler_widget.ui.spin_volume.setValue(100.0 * self.get( \
