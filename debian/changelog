@@ -3,6 +3,8 @@ opensesame (2.8.3-ubuntu1) trusty; urgency=medium
   * Improvements
     - Add German translation (de_DE)
     - Add Russian translation (ru_RU)
+    - Remember experiment and logfile folders on Android (#259)
+    - Add show_virtual_keyboard() function to keyboard back-ends (#254)
   * Bugs fixed
     - Fix canvas.arrow() docstring
     - canvas.text_size() respects line breaks and formatting (#262)
