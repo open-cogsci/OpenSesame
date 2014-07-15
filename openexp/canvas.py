@@ -52,6 +52,10 @@ def init_display(experiment):
 	"""
 	desc:
 		Calls the back-end specific init_display function.
+
+	arguments:
+		experiment:		The experiment object.
+		type:			experiment
 	"""
 
 	backend = experiment.get(u'canvas_backend')
@@ -64,6 +68,10 @@ def close_display(experiment):
 	"""
 	desc:
 		Calls the back-end specific close_display function.
+
+	arguments:
+		experiment:		The experiment object.
+		type:			experiment
 	"""
 
 	backend = experiment.get(u'canvas_backend')

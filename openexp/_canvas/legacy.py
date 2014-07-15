@@ -28,7 +28,9 @@ class legacy(canvas.canvas):
 
 	"""
 	desc:
-		Legacy canvas back-end.
+		This is a canvas backend built on top of PyGame.
+		For function specifications and docstrings, see
+		`openexp._canvas.canvas`.
 	"""
 
 	# The settings variable is used by the GUI to provide a list of back-end

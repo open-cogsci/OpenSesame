@@ -20,24 +20,23 @@ along with openexp.  If not, see <http://www.gnu.org/licenses/>.
 import sys
 import pygame
 from pygame.locals import *
-import openexp._mouse.legacy
+from openexp._mouse import legacy
 from libopensesame.exceptions import osexception
 try:
 	import android
 except ImportError:
 	android = None
 
-class droid(openexp._mouse.legacy.legacy):
+class droid(legacy.legacy):
 
 	"""
-	Mouse back-end for Android devices. Only changes the legacy back-end by
-	allowing Android-specific interrupts and not providing a custom mouse
-	cursor.
-	"""	
+	desc:
+		This is a mouse backend built on top of PyGame, adapted for android.
+		For function specifications and docstrings, see
+		`openexp._mouse.mouse`.
+	"""
 	
 	def __init__(self, experiment, buttonlist=None, timeout=None, visible=False):
-	
-		"""See openexp._mouse.legacy"""		
 	
 		self.experiment = experiment
 		self.set_buttonlist(buttonlist)
@@ -45,8 +44,6 @@ class droid(openexp._mouse.legacy.legacy):
 		self.set_visible(visible)		
 		
 	def get_click(self, buttonlist=None, timeout=None, visible=None):
-	
-		"""See openexp._mouse.legacy"""
 	
 		if android == None:
 			pygame.mouse.set_visible(True)
@@ -86,4 +83,4 @@ class droid(openexp._mouse.legacy.legacy):
 			if android != None and android.check_pause():
 				android.wait_for_resume()
 		return None, None, time
-		
+

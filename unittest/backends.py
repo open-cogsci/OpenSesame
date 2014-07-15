@@ -77,11 +77,27 @@ class check_backend_argspec(unittest.TestCase):
 			Checks the integrity of all back-ends.
 		"""
 
+		# Check canvas back-ends
 		from openexp._canvas.canvas import canvas
 		for backend in ['legacy', 'droid', 'xpyriment', 'psycho']:
 			mod = __import__('openexp._canvas.%s' % backend, fromlist=['dummy'])
 			cls = getattr(mod, backend)
 			self.check(canvas, cls)
+
+		# Check keyboard back-ends
+		from openexp._keyboard.keyboard import keyboard
+		for backend in ['legacy', 'droid', 'psycho']:
+			mod = __import__('openexp._keyboard.%s' % backend,
+				fromlist=['dummy'])
+			cls = getattr(mod, backend)
+			self.check(keyboard, cls)
+
+		# Check mouse back-ends
+		from openexp._mouse.mouse import mouse
+		for backend in ['legacy', 'droid', 'xpyriment', 'psycho']:
+			mod = __import__('openexp._mouse.%s' % backend, fromlist=['dummy'])
+			cls = getattr(mod, backend)
+			self.check(mouse, cls)
 
 if __name__ == '__main__':
 	unittest.main()

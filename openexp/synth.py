@@ -19,20 +19,24 @@ along with openexp.  If not, see <http://www.gnu.org/licenses/>.
 
 from libopensesame import debug
 
-class synth:
+def synth(experiment, **kwdict):
 
 	"""
-	This is a dummy class, which morphes into the appropriate backend. For a list of
-	functions, see openexp._synth.legacy
+	desc:
+		A factory that returns a back-end specific synth object.
+
+	arguments:
+		experiment:
+			desc:	The experiment object.
+			type:	experiment
+
+	keyword-dict:
+		kwdict:		See synth.__init__() for a description of available
+					keywords.
 	"""
 
-	def __init__(self, experiment, osc="sine", freq=440, length=100, attack=0, decay=5):
-	
-		backend = experiment.synth_backend		
-		debug.msg('morphing into %s' % backend)
-		mod = __import__('openexp._synth.%s' % backend, fromlist=['dummy'])			
-		cls = getattr(mod, backend)
-		self.__class__ = cls
-		cls.__init__(self, experiment, osc, freq, length, attack, decay)
-		
-
+	backend = experiment.get(u'synth_backend')
+	debug.msg(u'morphing into %s' % backend)
+	mod = __import__('openexp._synth.%s' % backend, fromlist=['dummy'])
+	cls = getattr(mod, backend)
+	return cls(experiment, **kwdict)
