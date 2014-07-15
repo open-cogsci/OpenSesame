@@ -23,10 +23,6 @@ import os
 from libopensesame.exceptions import osexception
 from libopensesame import debug, html, misc
 from openexp._canvas import canvas
-try:
-	from yamldoc import inherit as docinherit
-except:
-	docinherit = type
 
 class legacy(canvas.canvas):
 
@@ -59,8 +55,6 @@ class legacy(canvas.canvas):
 			u"default" : u"auto",
 			}
 		}
-
-	__metaclass__ = docinherit
 
 	def __init__(self, experiment, bgcolor=None, fgcolor=None,
 		auto_prepare=True):

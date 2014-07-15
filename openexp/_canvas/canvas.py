@@ -22,6 +22,13 @@ import pygame
 import math
 from libopensesame.exceptions import osexception
 
+# If available, use the yaml.inherit metaclass to copy the docstrings from
+# canvas onto the back-end-specific implementations of this class (legacy, etc.)
+try:
+	from yamldoc import inherit as docinherit
+except:
+	docinherit = type
+
 class canvas(object):
 
 	"""
@@ -83,6 +90,8 @@ class canvas(object):
 		my_canvas.fixdot()
 		my_canvas.show()
 	"""
+
+	__metaclass__ = docinherit
 
 	def __init__(self, experiment, bgcolor=None, fgcolor=None,
 		auto_prepare=True):

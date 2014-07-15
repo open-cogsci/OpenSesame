@@ -45,14 +45,15 @@ class check_backend_argspec(unittest.TestCase):
 		arguments:
 			ref_cls:
 				desc:	The reference class.
-				type:	type
+				type:	inherit
 			chk_cls:
 				desc:	The implementation class.
+				type:	inherit
 		"""
 
 		print(u'Starting new check ...')
 		print(u'\tChecking whether %s inherits %s ...' % (chk_cls, ref_cls))
-		self.assertIn(ref_cls, chk_cls.__bases__)
+		self.assertTrue(issubclass(chk_cls, ref_cls))
 		# Loop through all functions
 		for name, ref_obj in ref_cls.__dict__.items():
 			ref_df = yamldoc.DocFactory(ref_obj, types=[u'function'])
@@ -74,14 +75,13 @@ class check_backend_argspec(unittest.TestCase):
 		"""
 		desc:
 			Checks the integrity of all back-ends.
-
 		"""
 
 		from openexp._canvas.canvas import canvas
-		from openexp._canvas.legacy import legacy
-		self.check(canvas, legacy)
-		#from openexp._canvas.psycho import psycho
-		#self.check(canvas, psycho)
+		for backend in ['legacy', 'droid', 'xpyriment', 'psycho']:
+			mod = __import__('openexp._canvas.%s' % backend, fromlist=['dummy'])
+			cls = getattr(mod, backend)
+			self.check(canvas, cls)
 
 if __name__ == '__main__':
 	unittest.main()
