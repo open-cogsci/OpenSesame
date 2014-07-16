@@ -25,7 +25,7 @@ import os
  # A list of temporary files that should be cleaned up.
 temp_files = []
 
-def canvas(experiment, **kwdict):
+def canvas(experiment, *arglist, **kwdict):
 
 	"""
 	desc:
@@ -36,16 +36,18 @@ def canvas(experiment, **kwdict):
 			desc:	The experiment object.
 			type:	experiment
 
+	argument-list:
+		arglist:	See canvas.__init__().
+
 	keyword-dict:
-		kwdict:		See canvas.__init__() for a description of available
-					keywords.
+		kwdict:		See canvas.__init__().
 	"""
 
 	backend = experiment.get(u'canvas_backend')
 	debug.msg(u'morphing into %s' % backend)
 	mod = __import__('openexp._canvas.%s' % backend, fromlist=['dummy'])
 	cls = getattr(mod, backend)
-	return cls(experiment, **kwdict)
+	return cls(experiment, *arglist, **kwdict)
 
 def init_display(experiment):
 

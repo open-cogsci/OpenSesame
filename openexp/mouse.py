@@ -19,7 +19,7 @@ along with openexp.  If not, see <http://www.gnu.org/licenses/>.
 
 from libopensesame import debug
 
-def mouse(experiment, **kwdict):
+def mouse(experiment, *arglist, **kwdict):
 
 	"""
 	desc:
@@ -30,13 +30,15 @@ def mouse(experiment, **kwdict):
 			desc:	The experiment object.
 			type:	experiment
 
+	argument-list:
+		arglist:	See mouse.__init__().
+
 	keyword-dict:
-		kwdict:		See mouse.__init__() for a description of available
-					keywords.
+		kwdict:		See mouse.__init__().
 	"""
 
 	backend = experiment.get(u'mouse_backend')
 	debug.msg(u'morphing into %s' % backend)
 	mod = __import__('openexp._mouse.%s' % backend, fromlist=['dummy'])
 	cls = getattr(mod, backend)
-	return cls(experiment, **kwdict)
+	return cls(experiment, *arglist, **kwdict)

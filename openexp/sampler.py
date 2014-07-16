@@ -19,7 +19,7 @@ along with openexp.  If not, see <http://www.gnu.org/licenses/>.
 
 from libopensesame import debug
 
-def sampler(experiment, **kwdict):
+def sampler(experiment, *arglist, **kwdict):
 
 	"""
 	desc:
@@ -30,16 +30,18 @@ def sampler(experiment, **kwdict):
 			desc:	The experiment object.
 			type:	experiment
 
+	argument-list:
+		arglist:	See sampler.__init__().
+
 	keyword-dict:
-		kwdict:		See sampler.__init__() for a description of available
-					keywords.
+		kwdict:		See sampler.__init__().
 	"""
 
 	backend = experiment.get(u'sampler_backend')
 	debug.msg(u'morphing into %s' % backend)
 	mod = __import__('openexp._sampler.%s' % backend, fromlist=['dummy'])
 	cls = getattr(mod, backend)
-	return cls(experiment, **kwdict)
+	return cls(experiment, *arglist, **kwdict)
 
 def init_sound(experiment):
 
@@ -52,11 +54,11 @@ def init_sound(experiment):
 		type:			experiment
 	"""
 
-	backend = experiment.sampler_backend		
+	backend = experiment.sampler_backend
 	debug.msg('morphing into %s' % backend)
-	mod = __import__('openexp._sampler.%s' % backend, fromlist=['dummy'])			
+	mod = __import__('openexp._sampler.%s' % backend, fromlist=['dummy'])
 	mod.init_sound(experiment)
-		
+
 def close_sound(experiment):
 
 	"""
@@ -68,7 +70,7 @@ def close_sound(experiment):
 		type:			experiment
 	"""
 
-	backend = experiment.sampler_backend		
+	backend = experiment.sampler_backend
 	debug.msg('morphing into %s' % backend)
-	mod = __import__('openexp._sampler.%s' % backend, fromlist=['dummy'])			
+	mod = __import__('openexp._sampler.%s' % backend, fromlist=['dummy'])
 	mod.close_sound(experiment)

@@ -70,6 +70,32 @@ class check_backend_argspec(unittest.TestCase):
 			self.assertEqual(unicode(chk_df), unicode(ref_df))
 		print(u'Done!')
 
+	@yamldoc.validate
+	def checkBackendCategory(self, category, backends):
+
+		"""
+		desc:
+			Checks a back-end category.
+
+		arguments:
+			category:
+				desc:	A back-end category, such as 'canvas'.
+				type:	unicode
+			backends:
+				desc:	A list of back-end names that should be checked.
+				type:	list
+		"""
+
+		# Check sampler back-ends
+		ref_mod = __import__(u'openexp._%s.%s' % (category, category),
+			fromlist=[u'dummy'])
+		ref_cls = getattr(ref_mod, category)
+		for backend in backends:
+			chk_mod = __import__(u'openexp._%s.%s' % (category, backend),
+				fromlist=[u'dummy'])
+			chk_cls = getattr(chk_mod, backend)
+			self.check(ref_cls, chk_cls)
+
 	def runTest(self):
 
 		"""
@@ -77,27 +103,14 @@ class check_backend_argspec(unittest.TestCase):
 			Checks the integrity of all back-ends.
 		"""
 
-		# Check canvas back-ends
-		from openexp._canvas.canvas import canvas
-		for backend in ['legacy', 'droid', 'xpyriment', 'psycho']:
-			mod = __import__('openexp._canvas.%s' % backend, fromlist=['dummy'])
-			cls = getattr(mod, backend)
-			self.check(canvas, cls)
+		self.checkBackendCategory(u'canvas', ['legacy', 'droid', 'xpyriment',
+			'psycho'])
+		self.checkBackendCategory(u'keyboard', ['legacy', 'droid', 'psycho'])
+		self.checkBackendCategory(u'mouse', ['legacy', 'droid', 'xpyriment',
+			'psycho'])
+		self.checkBackendCategory(u'sampler', ['legacy', 'gstreamer'])
+		self.checkBackendCategory(u'synth', ['legacy', 'droid'])
 
-		# Check keyboard back-ends
-		from openexp._keyboard.keyboard import keyboard
-		for backend in ['legacy', 'droid', 'psycho']:
-			mod = __import__('openexp._keyboard.%s' % backend,
-				fromlist=['dummy'])
-			cls = getattr(mod, backend)
-			self.check(keyboard, cls)
-
-		# Check mouse back-ends
-		from openexp._mouse.mouse import mouse
-		for backend in ['legacy', 'droid', 'xpyriment', 'psycho']:
-			mod = __import__('openexp._mouse.%s' % backend, fromlist=['dummy'])
-			cls = getattr(mod, backend)
-			self.check(mouse, cls)
 
 if __name__ == '__main__':
 	unittest.main()

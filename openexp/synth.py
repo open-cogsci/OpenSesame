@@ -19,7 +19,7 @@ along with openexp.  If not, see <http://www.gnu.org/licenses/>.
 
 from libopensesame import debug
 
-def synth(experiment, **kwdict):
+def synth(experiment, *arglist, **kwdict):
 
 	"""
 	desc:
@@ -30,13 +30,15 @@ def synth(experiment, **kwdict):
 			desc:	The experiment object.
 			type:	experiment
 
+	argument-list:
+		arglist:	See synth.__init__().
+
 	keyword-dict:
-		kwdict:		See synth.__init__() for a description of available
-					keywords.
+		kwdict:		See synth.__init__().
 	"""
 
 	backend = experiment.get(u'synth_backend')
 	debug.msg(u'morphing into %s' % backend)
 	mod = __import__('openexp._synth.%s' % backend, fromlist=['dummy'])
 	cls = getattr(mod, backend)
-	return cls(experiment, **kwdict)
+	return cls(experiment, *arglist, **kwdict)
