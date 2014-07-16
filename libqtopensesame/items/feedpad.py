@@ -47,15 +47,15 @@ class feedpad:
 		"""
 
 		l = []
-		for item in self.items:
-			static = True
-			for var in item:
-				if var != "text" and var != "show_if" and type(item[var]) == \
-					unicode and item[var].find("[") >= 0:
-					debug.msg("variable property: %s = %s" % (var, item[var]))
-					static = False
-			if static:
-				l.append(item)
+		#for item in self.items:
+			#static = True
+			#for var in item:
+				#if var != "text" and var != "show_if" and type(item[var]) == \
+					#unicode and item[var].find("[") >= 0:
+					#debug.msg("variable property: %s = %s" % (var, item[var]))
+					#static = False
+			#if static:
+				#l.append(item)
 		return l
 
 	def items_out_of_bounds(self):

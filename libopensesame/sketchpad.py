@@ -79,7 +79,6 @@ class sketchpad(item, generic_response):
 						element = element_class(self, line)
 						self.elements.append(element)
 		self.elements.sort(key=lambda element: -element.z_index)
-		print self.to_string()
 
 	def prepare(self):
 
@@ -133,7 +132,7 @@ class sketchpad(item, generic_response):
 			A list of (name, description) tuples.
 		"""
 
-		l = item.item.var_info(self)
+		l = item.var_info(self)
 		if self.get(u'duration', _eval=False) in [u'keypress', u'mouseclick']:
 			l += generic_response.var_info(self)
 		return l

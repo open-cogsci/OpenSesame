@@ -52,5 +52,6 @@ class fixdot(base_element):
 			Draws the element to the canvas of the sketchpad.
 		"""
 
-		self.canvas.fixdot(self.properties[u'x'], self.properties[u'y'],
-			color=self.properties[u'color'], style=self.properties[u'style'])
+		properties = self.eval_properties()
+		self.canvas.fixdot(properties[u'x'], properties[u'y'],
+			color=properties[u'color'], style=properties[u'style'])

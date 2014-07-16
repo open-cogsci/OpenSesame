@@ -53,6 +53,7 @@ class image(base_element):
 			Draws the element to the canvas of the sketchpad.
 		"""
 
-		self.canvas.image(self.get_file(self.properties[u'file']),
-			center=self.properties[u'center']==1, x=self.properties[u'x'],
-			y=self.properties[u'y'], scale=self.properties[u'scale'])
+		properties = self.eval_properties()
+		self.canvas.image(self.get_file(properties[u'file']),
+			center=properties[u'center']==1, x=properties[u'x'],
+			y=properties[u'y'], scale=properties[u'scale'])

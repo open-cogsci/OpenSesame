@@ -50,9 +50,8 @@ class base_element(object):
 			(u'show_if', u'always')
 			]
 		self.sketchpad = sketchpad
+		self.fix_coordinates = True # TODO: Will be deprecated
 		self.from_string(string)
-		self.eval_properties()
-		self.topleft_coordinates() # TODO: To be deprecated
 
 	@property
 	def canvas(self): return self.sketchpad.canvas
@@ -127,7 +126,7 @@ class base_element(object):
 					u'sketchpad element \'%s\' in item \'%s\'') % (var,
 					self._type, self.name))
 			vars_parsed.append(var)
-			self.properties[var] = val
+			self.properties[var] = self.sketchpad.auto_type(val)
 			keyword_nr += 1
 		# Check if all values that need to be specified have indeed been
 		# specified.
@@ -162,6 +161,9 @@ class base_element(object):
 
 		s = u'draw %s' % self._type
 		for var, val in self.defaults:
+			# Dummy properties have names like `__x__`, and we don't want those.
+			if var.startswith(u'__') and var.endswith(u'__'):
+				continue
 			val = self.properties[var]
 			if isinstance(val, basestring):
 				s += u' %s="%s"' % (var, val)
@@ -169,33 +171,29 @@ class base_element(object):
 				s += u' %s=%s' % (var, val)
 		return s
 
-	def topleft_coordinates(self):
-
-		"""
-		desc:
-			Converts all coordinates to top-left. This function should be
-			deprecated when center coordinates are used throughout.
-		"""
-
-		xc = self.get(u'width')/2
-		yc = self.get(u'height')/2
-		for var in self.properties:
-			if var in [u'x', u'x1', u'x2']:
-				self.properties[var] += xc
-			if var in [u'y', u'y1', u'y2']:
-				self.properties[var] += yc
-
 	def eval_properties(self):
 
 		"""
 		desc:
 			Evaluates all properties.
+
+		returns:
+			A new property dictionary.
 		"""
 
-		for var, val in self.properties.items():
+		properties = self.properties.copy()
+		xc = self.get(u'width')/2
+		yc = self.get(u'height')/2
+		for var, val in properties.items():
 			if var == u'text':
 				round_float = True
 			else:
 				round_float = False
-			self.properties[var] = self.sketchpad.eval_text(val,
+			properties[var] = self.sketchpad.eval_text(val,
 				round_float=round_float)
+			if self.fix_coordinates:
+				if var in [u'x', u'x1', u'x2']:
+					properties[var] += xc
+				if var in [u'y', u'y1', u'y2']:
+					properties[var] += yc
+		return properties

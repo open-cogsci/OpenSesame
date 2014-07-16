@@ -18,70 +18,24 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 import libopensesame.feedback
-from libqtopensesame.items import qtplugin, feedpad
-from libqtopensesame.widgets import sketchpad_widget
-from PyQt4 import QtCore, QtGui
+from libqtopensesame.items import qtplugin
 
-class feedback(libopensesame.feedback.feedback, feedpad.feedpad, \
-	qtplugin.qtplugin):
+class feedback(libopensesame.feedback.feedback, qtplugin.qtplugin):
 
-	"""The GUI for the feedback item"""
+	"""
+	desc:
+		The sketchpad controls have been removed, and will re-implemented.
+	"""
 
 	def __init__(self, name, experiment, string=None):
 
-		"""
-		Constructor
-
-		Arguments:
-		name -- the name of the item
-		experiment -- an instance of libopensesame.experiment
-
-		Keyword arguments:
-		string -- a string with the item definition (default = None)
-		"""
-
-		libopensesame.feedback.feedback.__init__(self, name, experiment, string)
+		libopensesame.sketchpad.sketchpad.__init__(self, name, experiment,
+			string)
 		qtplugin.qtplugin.__init__(self)
-
-	def apply_edit_changes(self):
-
-		"""Apply changes to the controls"""
-		
-		if not qtplugin.qtplugin.apply_edit_changes(self, False) or self.lock:
-			return False
-		self.experiment.main_window.refresh(self.name)
-		return True			
 
 	def edit_widget(self):
 
-		"""Update the controls based on the items settings"""
-		
 		self.lock = True
 		qtplugin.qtplugin.edit_widget(self)
 		self.lock = False
-		self.tools_widget.refresh()
 		return self._edit_widget
-
-	def init_edit_widget(self):
-
-		"""Construct the edit widget that contains the controls"""
-		
-		qtplugin.qtplugin.init_edit_widget(self, False)
-		
-		self.add_line_edit_control('duration', 'Duration', tooltip= \
-			'A numeric value (duration in milliseconds), "keypress", or "mouseclick"')
-		self.add_checkbox_control('reset_variables', 'Reset feedback variables',
-			tooltip='Reset feedback variables, such as "accuracy" and "avg_rt"')
-		self.popout_button = QtGui.QPushButton(self.experiment.icon( \
-			self.item_type), 'Open editor in new window')
-		self.popout_button.setIconSize(QtCore.QSize(16,16))
-		self.popout_button.setToolTip( \
-			"Open the sketchpad editor in a new window")
-		QtCore.QObject.connect(self.popout_button, QtCore.SIGNAL("clicked()"), \
-			self.popout)
-		self.add_control('', self.popout_button,
-			'Open the feedback editor in a new window')
-		self.tools_widget = sketchpad_widget.sketchpad_widget(self)
-		self.edit_vbox.addWidget(self.tools_widget)		
-
-

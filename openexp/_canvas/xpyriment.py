@@ -156,7 +156,7 @@ class xpyriment(canvas.canvas):
 
 	def line(self, sx, sy, ex, ey, color=None, penwidth=None):
 
-		if pendwidth == None: penwidth = self.penwidth
+		if penwidth == None: penwidth = self.penwidth
 		if color != None: color = self.color(color)
 		else: color = self.fgcolor
 		stim = stimuli.Line(c2p((sx,sy)), c2p((ex,ey)),
@@ -187,7 +187,7 @@ class xpyriment(canvas.canvas):
 	def ellipse(self, x, y, w, h, fill=False, color=None, penwidth=None):
 
 		if color != None: color = self.color(color)
-		if pendwidth == None: penwidth = self.penwidth
+		if penwidth == None: penwidth = self.penwidth
 		else: color = self.fgcolor
 		if fill: line_width = 0
 		else: line_width = penwidth
@@ -198,7 +198,7 @@ class xpyriment(canvas.canvas):
 
 	def polygon(self, vertices, fill=False, color=None, penwidth=None):
 
-		if pendwidth == None: penwidth = self.penwidth
+		if penwidth == None: penwidth = self.penwidth
 		if color != None: color = self.color(color)
 		else: color = self.fgcolor
 		if fill: line_width = 0

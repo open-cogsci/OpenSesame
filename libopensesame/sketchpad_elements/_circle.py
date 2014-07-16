@@ -54,7 +54,8 @@ class circle(base_element):
 			Draws the element to the canvas of the sketchpad.
 		"""
 
-		self.canvas.circle(self.properties[u'x'], self.properties[u'y'],
-			self.properties[u'r'], fill=self.properties[u'fill'],
-			color=self.properties[u'color'],
-			penwidth=self.properties[u'penwidth'])
+		properties = self.eval_properties()
+		self.canvas.circle(properties[u'x'], properties[u'y'],
+			properties[u'r'], fill=properties[u'fill'],
+			color=properties[u'color'],
+			penwidth=properties[u'penwidth'])

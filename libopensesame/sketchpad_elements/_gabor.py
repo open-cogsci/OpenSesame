@@ -59,9 +59,10 @@ class gabor(base_element):
 			Draws the element to the canvas of the sketchpad.
 		"""
 
-		self.canvas.gabor(x=self.properties[u'x'], y=self.properties[u'y'],
-			orient=self.properties[u'orient'], freq=self.properties[u'freq'],
-			env=self.properties[u'env'], size=self.properties[u'size'],
-			stdev=self.properties[u'stdev'], phase=self.properties[u'phase'],
-			col1=self.properties[u'color1'], col2=self.properties[u'color2'],
-			bgmode=self.properties[u'bgmode'])
+		properties = self.eval_properties()
+		self.canvas.gabor(x=properties[u'x'], y=properties[u'y'],
+			orient=properties[u'orient'], freq=properties[u'freq'],
+			env=properties[u'env'], size=properties[u'size'],
+			stdev=properties[u'stdev'], phase=properties[u'phase'],
+			col1=properties[u'color1'], col2=properties[u'color2'],
+			bgmode=properties[u'bgmode'])

@@ -58,12 +58,13 @@ class textline(base_element):
 			Draws the element to the canvas of the sketchpad.
 		"""
 
-		self.canvas.set_font(style=self.properties[u'font_family'],
-			size=self.properties[u'font_size'],
-			italic=self.properties[u'font_italic'] == 'yes',
-			bold=self.properties[u'font_bold'] == 'yes')
-		self.canvas.text(self.properties[u'text'],
-			center=self.properties[u'center']==1,
-			x=self.properties[u'x'], y=self.properties[u'y'],
-			color=self.properties[u'color'],
-			html=self.properties[u'html']==u'yes')
+		properties = self.eval_properties()
+		self.canvas.set_font(style=properties[u'font_family'],
+			size=properties[u'font_size'],
+			italic=properties[u'font_italic'] == 'yes',
+			bold=properties[u'font_bold'] == 'yes')
+		self.canvas.text(properties[u'text'],
+			center=properties[u'center']==1,
+			x=properties[u'x'], y=properties[u'y'],
+			color=properties[u'color'],
+			html=properties[u'html']==u'yes')

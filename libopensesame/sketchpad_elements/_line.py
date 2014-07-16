@@ -54,7 +54,8 @@ class line(base_element):
 			Draws the element to the canvas of the sketchpad.
 		"""
 
-		self.canvas.line(self.properties[u'x1'], self.properties[u'y1'],
-			self.properties[u'x2'], self.properties[u'y2'],
-			color=self.properties[u'color'],
-			penwidth=self.properties[u'penwidth'])
+		properties = self.eval_properties()
+		self.canvas.line(properties[u'x1'], properties[u'y1'],
+			properties[u'x2'], properties[u'y2'],
+			color=properties[u'color'],
+			penwidth=properties[u'penwidth'])

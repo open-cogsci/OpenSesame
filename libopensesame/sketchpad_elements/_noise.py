@@ -56,8 +56,9 @@ class noise(base_element):
 			Draws the element to the canvas of the sketchpad.
 		"""
 
-		self.canvas.noise_patch(x=self.properties[u'x'],
-			y=self.properties[u'y'], env=self.properties[u'env'],
-			size=self.properties[u'size'], stdev=self.properties[u'stdev'],
-			col1=self.properties[u'color1'], col2=self.properties[u'color2'],
-			bgmode=self.properties[u'bgmode'])
+		properties = self.eval_properties()
+		self.canvas.noise_patch(x=properties[u'x'],
+			y=properties[u'y'], env=properties[u'env'],
+			size=properties[u'size'], stdev=properties[u'stdev'],
+			col1=properties[u'color1'], col2=properties[u'color2'],
+			bgmode=properties[u'bgmode'])

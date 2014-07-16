@@ -55,9 +55,10 @@ class arrow(base_element):
 			Draws the element to the canvas of the sketchpad.
 		"""
 
-		self.canvas.arrow(self.properties[u'x1'], self.properties[u'y1'],
-			self.properties[u'x2'], self.properties[u'y2'],
-			color=self.properties[u'color'],
-			penwidth=self.properties[u'penwidth'],
-			arrow_size=self.properties[u'arrow_size'])
+		properties = self.eval_properties()
+		self.canvas.arrow(properties[u'x1'], properties[u'y1'],
+			properties[u'x2'], properties[u'y2'],
+			color=properties[u'color'],
+			penwidth=properties[u'penwidth'],
+			arrow_size=properties[u'arrow_size'])
 

@@ -55,8 +55,9 @@ class ellipse(base_element):
 			Draws the element to the canvas of the sketchpad.
 		"""
 
-		self.canvas.ellipse(self.properties[u'x'], self.properties[u'y'],
-			self.properties[u'w'], self.properties[u'h'],
-			fill=self.properties[u'fill'],
-			color=self.properties[u'color'],
-			penwidth=self.properties[u'penwidth'])
+		properties = self.eval_properties()
+		self.canvas.ellipse(properties[u'x'], properties[u'y'],
+			properties[u'w'], properties[u'h'],
+			fill=properties[u'fill'],
+			color=properties[u'color'],
+			penwidth=properties[u'penwidth'])
