@@ -88,7 +88,7 @@ class synth(object):
 		if not hasattr(self, u'osc_%s' % osc):
 			raise osexception(u'Invalid oscillator for synth: %s' % osc)
 		osc_fnc = getattr(self, u'osc_%s' % osc)
-		signal = osc_fnc(freq, length, rate)
+		signal = osc_fnc(self.key_to_freq(freq), length, rate)
 		envelope = self.envelope(length, attack, decay, rate)
 		sound = self.to_int_16(signal * envelope)
 		self.sampler = sampler(experiment, sound)
