@@ -154,11 +154,6 @@ class psycho(canvas.canvas):
 			self.rect(0, 0, self.experiment.width, self.experiment.height,
 				color=color, fill=True)
 
-	def circle(self, x, y, r, fill=False, color=None, penwidth=None):
-
-		self.ellipse(x-r, y-r, 2*r, 2*r, fill=fill, color=color,
-			penwidth=penwidth)
-
 	def line(self, sx, sy, ex, ey, color=None, penwidth=None):
 
 		if color == None:
@@ -213,8 +208,8 @@ class psycho(canvas.canvas):
 			if self.experiment.file_in_pool(u'%s.ttf' % style):
 				font_path = self.experiment.get_file(u'%s.ttf' % style)
 				register_font(font_path)
-		openexp._canvas.legacy.legacy.set_font(self, style=style, size=size,
-			italic=italic, bold=bold, underline=underline)
+		super(psycho, self).set_font(style=style, size=size, italic=italic,
+			bold=bold, underline=underline)
 
 	def _text_size(self, text):
 

@@ -175,7 +175,7 @@ class qtplugin(qtitem.qtitem):
 		A color_edit widget.
 		"""
 
-		edit = color_edit.color_edit()
+		edit = color_edit.color_edit(self.main_window)
 		edit.initialize(self.experiment)
 		QtCore.QObject.connect(edit, QtCore.SIGNAL('set_color'), \
 			self.apply_edit_changes)

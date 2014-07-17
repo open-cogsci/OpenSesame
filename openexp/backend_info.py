@@ -63,7 +63,7 @@ xpyriment_gst = {
 	"keyboard" : "legacy", \
 	"mouse" : "xpyriment", \
 	"sampler" : "gstreamer", \
-	"synth" : "gstreamer", \
+	"synth" : "legacy", \
 	"icon" : "os-expyriment"
 	}
 

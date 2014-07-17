@@ -116,7 +116,20 @@ class base_element(object):
 			i = keyword.find(u'=')
 			if i >= 0:
 				var = keyword[:i]
-				val = keyword[i+1:]
+				# If the keyword is not known, we assumed that it's not a
+				# keyword at all, but part of the value. This is mostly a hack
+				# necessary to maintain backwards compatibility for the texline
+				# element, which may have strings of text that look like keyword
+				# -value specifications, but are really just text, like:
+				# "Accuracy = [acc] ms"
+				if self.valid_keyword(var):
+					val = keyword[i+1:]
+				else:
+					debug.msg(
+						u'Invalid keyword "%s", assuming "%s"' \
+						% (var, self.defaults[keyword_nr][0]))
+					var = self.defaults[keyword_nr][0]
+					val = keyword
 			else:
 				var = self.defaults[keyword_nr][0]
 				val = keyword
@@ -148,6 +161,26 @@ class base_element(object):
 					(u'The keyword \'%s\' is not applicable to '
 					u'sketchpad element \'%s\' in item \'%s\'') % (var,
 					self._type, self.name))
+
+	def valid_keyword(self, keyword):
+
+		"""
+		desc:
+			Checks whether a particular keyword is valid for this element.
+
+		arguments:
+			keyword:	A keyword.
+			type:		unicode
+
+		returns:
+			desc:		True if keyword is valid.
+			type:		bool
+		"""
+
+		for var, val in self.defaults:
+			if var == keyword:
+				return True
+		return False
 
 	def to_string(self):
 
