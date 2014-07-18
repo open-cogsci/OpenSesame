@@ -55,7 +55,7 @@ class line(base_element):
 		"""
 
 		properties = self.eval_properties()
-		self.canvas.line(properties[u'x1'], properties[u'y1'],
+		return self.canvas.line(properties[u'x1'], properties[u'y1'],
 			properties[u'x2'], properties[u'y2'],
 			color=properties[u'color'],
 			penwidth=properties[u'penwidth'])

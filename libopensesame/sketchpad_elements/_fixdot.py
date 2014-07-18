@@ -53,5 +53,5 @@ class fixdot(base_element):
 		"""
 
 		properties = self.eval_properties()
-		self.canvas.fixdot(properties[u'x'], properties[u'y'],
+		return self.canvas.fixdot(properties[u'x'], properties[u'y'],
 			color=properties[u'color'], style=properties[u'style'])

@@ -383,6 +383,25 @@ class qtplugin(qtitem.qtitem):
 		self.edit_vbox.addWidget(label)
 		return label
 
+	def add_widget(self, w):
+
+		"""
+		desc:
+			Adds a QWidget to the controls.
+
+		arguments:
+			w:
+				desc:	A widget.
+				type:	QWidget
+
+		returns:
+			desc:		The widget.
+			type:		QWidget
+		"""
+
+		self.edit_vbox.addWidget(w)
+		return w
+
 	def add_stretch(self):
 
 		"""Pad empty space below the controls"""

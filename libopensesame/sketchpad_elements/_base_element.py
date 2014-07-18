@@ -224,7 +224,7 @@ class base_element(object):
 				round_float = False
 			properties[var] = self.sketchpad.eval_text(val,
 				round_float=round_float)
-			if self.fix_coordinates:
+			if self.fix_coordinates and type(val) in (int, float):
 				if var in [u'x', u'x1', u'x2']:
 					properties[var] += xc
 				if var in [u'y', u'y1', u'y2']:

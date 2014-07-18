@@ -56,7 +56,7 @@ class ellipse(base_element):
 		"""
 
 		properties = self.eval_properties()
-		self.canvas.ellipse(properties[u'x'], properties[u'y'],
+		return self.canvas.ellipse(properties[u'x'], properties[u'y'],
 			properties[u'w'], properties[u'h'],
 			fill=properties[u'fill'],
 			color=properties[u'color'],

@@ -54,6 +54,6 @@ class image(base_element):
 		"""
 
 		properties = self.eval_properties()
-		self.canvas.image(self.get_file(properties[u'file']),
+		return self.canvas.image(self.get_file(properties[u'file']),
 			center=properties[u'center']==1, x=properties[u'x'],
 			y=properties[u'y'], scale=properties[u'scale'])

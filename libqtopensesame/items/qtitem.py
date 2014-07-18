@@ -71,7 +71,7 @@ class qtitem(QtCore.QObject):
 			The theme object.
 		"""
 
-		return self.experiment.theme
+		return self.experiment.main_window.theme
 
 	def open_help_tab(self, page=None):
 

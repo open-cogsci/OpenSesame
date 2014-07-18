@@ -57,7 +57,7 @@ class noise(base_element):
 		"""
 
 		properties = self.eval_properties()
-		self.canvas.noise_patch(x=properties[u'x'],
+		return self.canvas.noise_patch(x=properties[u'x'],
 			y=properties[u'y'], env=properties[u'env'],
 			size=properties[u'size'], stdev=properties[u'stdev'],
 			col1=properties[u'color1'], col2=properties[u'color2'],

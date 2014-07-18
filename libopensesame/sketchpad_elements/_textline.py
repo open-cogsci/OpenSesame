@@ -63,7 +63,7 @@ class textline(base_element):
 			size=properties[u'font_size'],
 			italic=properties[u'font_italic'] == 'yes',
 			bold=properties[u'font_bold'] == 'yes')
-		self.canvas.text(properties[u'text'],
+		return self.canvas.text(properties[u'text'],
 			center=properties[u'center']==1,
 			x=properties[u'x'], y=properties[u'y'],
 			color=properties[u'color'],

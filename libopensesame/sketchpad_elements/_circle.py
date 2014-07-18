@@ -55,7 +55,7 @@ class circle(base_element):
 		"""
 
 		properties = self.eval_properties()
-		self.canvas.circle(properties[u'x'], properties[u'y'],
+		return self.canvas.circle(properties[u'x'], properties[u'y'],
 			properties[u'r'], fill=properties[u'fill'],
 			color=properties[u'color'],
 			penwidth=properties[u'penwidth'])

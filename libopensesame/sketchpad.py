@@ -17,7 +17,8 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
-from libopensesame import debug, sketchpad_elements
+from libopensesame import sketchpad_elements
+from libopensesame import debug
 from libopensesame.exceptions import osexception
 from libopensesame.item import item
 from libopensesame.generic_response import generic_response
@@ -51,6 +52,20 @@ class sketchpad(item, generic_response):
 		self.elements = []
 		super(sketchpad, self).__init__(name, experiment, string=string)
 
+	def element_module(self):
+
+		"""
+		desc:
+			Determines the module to be used for the element classes. The
+			runtime and GUI use different modules.
+
+		returns:
+			desc:	A module containing sketchpad-element classes
+			type:	module
+		"""
+
+		return sketchpad_elements
+
 	def from_string(self, string):
 
 		"""
@@ -70,11 +85,11 @@ class sketchpad(item, generic_response):
 							raise osexception(
 								u'Incomplete draw command: \'%s\'' % line)
 						element_type = l[1]
-						if not hasattr(sketchpad_elements, element_type):
+						if not hasattr(self.element_module(), element_type):
 							raise osexception(
 								u'Unknown sketchpad element: \'%s\'' \
 								% element_type)
-						element_class = getattr(sketchpad_elements,
+						element_class = getattr(self.element_module(),
 							element_type)
 						element = element_class(self, line)
 						self.elements.append(element)
