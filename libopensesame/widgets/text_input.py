@@ -87,6 +87,7 @@ class text_input(label):
 		
 		self.focus = True
 		my_keyboard = keyboard(self.form.experiment)
+		my_keyboard.show_virtual_keyboard(True)
 		while True:		
 			self.form.render()		
 			resp, time = my_keyboard.get_key()
@@ -100,14 +101,17 @@ class text_input(label):
 				self.text = self.text[:-1]
 			elif resp == u'tab':
 				self.focus = False
+				my_keyboard.show_virtual_keyboard(False)
 				return None
 			elif resp == u'return':
 				if self.return_accepts:
+					my_keyboard.show_virtual_keyboard(False)
 					return self.text
 				else:
 					self.focus = False
+					my_keyboard.show_virtual_keyboard(False)
 					return None
 			elif len(resp) == 1:
 				self.text += resp
 			self.set_var(self.text)
-						
+
