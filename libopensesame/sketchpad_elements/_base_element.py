@@ -235,3 +235,18 @@ class base_element(object):
 				if var in [u'y', u'y1', u'y2']:
 					properties[var] += yc
 		return properties
+
+	def is_shown(self):
+
+		"""
+		desc:
+			Determines whether the element should be shown, based on the
+			show-if statement.
+
+		returns:
+			desc:	A bool indicating whether the element should be shown.
+			type:	bool
+		"""
+
+		return eval(self.sketchpad.compile_cond(self.properties[u'show_if']))
+

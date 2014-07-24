@@ -878,4 +878,5 @@ class qtitem(QtCore.QObject):
 		except osexception as e:
 			self.experiment.notify( \
 				u'Failed to compile conditional statement "%s": %s' % (cond, e))
+			return u'always'
 		return cond

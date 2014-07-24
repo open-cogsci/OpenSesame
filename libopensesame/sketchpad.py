@@ -108,7 +108,8 @@ class sketchpad(item, generic_response):
 			fgcolor=self.get(u'foreground'),
 			bgcolor=self.get(u'background'), auto_prepare=False)
 		for element in self.elements:
-			element.draw()
+			if element.is_shown():
+				element.draw()
 		self.canvas.prepare()
 
 	def run(self):

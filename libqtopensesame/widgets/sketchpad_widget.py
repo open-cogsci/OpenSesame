@@ -54,8 +54,8 @@ class sketchpad_widget(base_widget):
 		self.ui.button_pointer.clicked.connect(self.select_pointer_tool)
 		self.ui.spinbox_zoom.valueChanged.connect(self.zoom)
 		self.ui.spinbox_penwidth.valueChanged.connect(self.apply_penwidth)
-		self.ui.edit_color.textChanged.connect(self.apply_color)
-		self.ui.edit_show_if.textChanged.connect(self.apply_show_if)
+		self.ui.edit_color.textEdited.connect(self.apply_color)
+		self.ui.edit_show_if.editingFinished.connect(self.apply_show_if)
 		self.ui.spinbox_arrow_size.valueChanged.connect(self.apply_arrow_size)
 		self.ui.checkbox_center.toggled.connect(self.apply_center)
 		self.ui.checkbox_fill.toggled.connect(self.apply_fill)
@@ -160,19 +160,23 @@ class sketchpad_widget(base_widget):
 			Applies changes to the color picker.
 		"""
 
+		color = unicode(color)
 		for element in self.sketchpad.selected_elements():
-			element.set_property(u'color', unicode(color))
+			element.set_property(u'color', color)
 		self.draw()
 
-	def apply_show_if(self, show_if):
+	def apply_show_if(self):
 
 		"""
 		desc:
 			Applies changes to the show-if field.
 		"""
 
+		show_if = unicode(self.ui.edit_show_if.text())
+		show_if = self.sketchpad.clean_cond(show_if)
 		for element in self.sketchpad.selected_elements():
-			element.set_property(u'show_if', unicode(show_if))
+			element.set_property(u'show_if', show_if)
+			self.ui.edit_show_if.setText(show_if)
 		self.draw()
 
 	def apply_penwidth(self, penwidth):
@@ -209,7 +213,7 @@ class sketchpad_widget(base_widget):
 		"""
 
 		if element.requires_show_if():
-			self.ui.edit_color.setText(element.get_property(u'show_if'))
+			self.ui.edit_show_if.setText(element.get_property(u'show_if'))
 		if element.requires_color():
 			self.ui.edit_color.setText(element.get_property(u'color'))
 		if element.requires_center():

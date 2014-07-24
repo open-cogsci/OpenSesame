@@ -29,6 +29,7 @@ class color_edit(base_widget):
 	"""
 
 	textChanged = QtCore.pyqtSignal('QString')
+	textEdited = QtCore.pyqtSignal('QString')
 
 	def __init__(self, main_window):
 
@@ -107,6 +108,7 @@ class color_edit(base_widget):
 
 		self.emit(QtCore.SIGNAL(u'set_color'))
 		self.textChanged.emit(self.text())
+		self.textEdited.emit(self.text())
 
 	def initialize(self, experiment=None, color=None):
 
