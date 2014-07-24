@@ -23,24 +23,29 @@ from libqtopensesame.widgets.base_widget import base_widget
 
 class color_edit(base_widget):
 
-	"""A colorpicker QWidget with a QLineEdit and a QPushButton."""
+	"""
+	desc:
+		A colorpicker widget that emulates a QLineEdit.
+	"""
 
 	textChanged = QtCore.pyqtSignal('QString')
 
 	def __init__(self, main_window):
 
 		"""
-		Constructor.
+		desc:
+			Constructor.
 
-		Arguments:
-		experiment	--	The experiment object.
-
-		Keywords arguments:
-		parent		--	The parent QWidget. (default=None)
+		arguments:
+			main_window:
+				desc:	The main-window object.
+				type:	qtopensesame
 		"""
 
 		super(color_edit, self).__init__(main_window)
 		self.edit = QtGui.QLineEdit()
+		self.edit.setSizePolicy(QtGui.QSizePolicy.Minimum,
+			QtGui.QSizePolicy.Minimum)
 		self.edit.editingFinished.connect(self.apply)
 		self.editingFinished = self.edit.editingFinished
 		self.button = QtGui.QPushButton()
@@ -54,9 +59,12 @@ class color_edit(base_widget):
 
 	def colorpicker(self):
 
-		"""Picks a color with the colorpicker dialog."""
+		"""
+		desc:
+			Picks a color with the colorpicker dialog.
+		"""
 
-		color = self.experiment.colorpicker(self.experiment.sanitize( \
+		color = self.experiment.colorpicker(self.experiment.sanitize(
 			self.text()))
 		if color == None:
 			return
@@ -66,10 +74,12 @@ class color_edit(base_widget):
 	def text(self):
 
 		"""
-		Returns the text (emulate QLineEdit behavior).
+		desc:
+			Gets text (emulate QLineEdit behavior).
 
-		Returns:
-		A QString.
+		returns:
+			desc:	A color text.
+			type:	QString
 		"""
 
 		return self.edit.text()
@@ -77,17 +87,23 @@ class color_edit(base_widget):
 	def setText(self, s):
 
 		"""
-		Sets the text (emulate QLineEdit behavior).
+		dsc:
+			Sets text (emulate QLineEdit behavior).
 
-		Arguments:
-		s	--	The text.
+		arguments:
+			s:
+				desc:	Text.
+				type:	unicode
 		"""
 
 		self.edit.setText(s)
 
 	def apply(self):
 
-		"""Emit a 'set_color' signal to indicate that a color has been picker"""
+		"""
+		desc:
+			Emits a 'set_color' signal to indicate that a color has been picked.
+		"""
 
 		self.emit(QtCore.SIGNAL(u'set_color'))
 		self.textChanged.emit(self.text())
@@ -95,14 +111,19 @@ class color_edit(base_widget):
 	def initialize(self, experiment=None, color=None):
 
 		"""
-		Initializes the widget.
+		desc:
+			Initializes the widget. This is necessary to apply the theme and
+			give the fields initial values.
 
-		Arguments:
-		experiment	--	The experiment object.
-
-		Keyword arguments:
-		color		--	A color to start with or None for experiment foreground
-						default. (default=None)
+		keywords:
+			experiment:
+				desc:	The experiment object or None if it is already available
+						via the base_component property.
+				type:	[experiment, NoneType]
+			color:
+				color:	An initial color or None to start with experiment
+						foreground.
+				type:	[unicode, NoneType]
 		"""
 
 		debug.msg(u'color = %s' % color)

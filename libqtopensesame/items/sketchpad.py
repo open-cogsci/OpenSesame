@@ -66,6 +66,8 @@ class sketchpad(qtplugin, sketchpad_runtime):
 		qtplugin.init_edit_widget(self, False)
 		self.sketchpad_widget = sketchpad_widget(self)
 		self.add_widget(self.sketchpad_widget)
+		self.auto_add_widget(self.sketchpad_widget.ui.edit_duration,
+			u'duration')
 
 	def element_module(self):
 

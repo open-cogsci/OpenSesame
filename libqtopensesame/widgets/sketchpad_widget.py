@@ -322,12 +322,12 @@ class sketchpad_widget(base_widget):
 		self.unselect_all_tools()
 		self.ui.button_pointer.setChecked(True)
 		self.ui.widget_settings_text.setVisible(False)
-		self.ui.edit_color.setVisible(False)
-		self.ui.spinbox_penwidth.setVisible(False)
-		self.ui.spinbox_arrow_size.setVisible(False)
-		self.ui.spinbox_scale.setVisible(False)
-		self.ui.checkbox_fill.setVisible(False)
-		self.ui.checkbox_center.setVisible(False)
+		self.ui.widget_settings_color.setVisible(False)
+		self.ui.widget_settings_penwidth.setVisible(False)
+		self.ui.widget_settings_arrow_size.setVisible(False)
+		self.ui.widget_settings_scale.setVisible(False)
+		self.ui.widget_settings_fill.setVisible(False)
+		self.ui.widget_settings_center.setVisible(False)
 		self.ui.widget_settings_show_if.setVisible(False)
 
 	def select_element_tool(self, element):
@@ -360,12 +360,13 @@ class sketchpad_widget(base_widget):
 		"""
 
 		self.ui.widget_settings_text.setVisible(element.requires_text())
-		self.ui.edit_color.setVisible(element.requires_color())
-		self.ui.spinbox_penwidth.setVisible(element.requires_penwidth())
-		self.ui.spinbox_arrow_size.setVisible(element.requires_arrow_size())
-		self.ui.spinbox_scale.setVisible(element.requires_scale())
-		self.ui.checkbox_fill.setVisible(element.requires_fill())
-		self.ui.checkbox_center.setVisible(element.requires_center())
+		self.ui.widget_settings_color.setVisible(element.requires_color())
+		self.ui.widget_settings_penwidth.setVisible(element.requires_penwidth())
+		self.ui.widget_settings_arrow_size.setVisible(
+			element.requires_arrow_size())
+		self.ui.widget_settings_scale.setVisible(element.requires_scale())
+		self.ui.widget_settings_fill.setVisible(element.requires_fill())
+		self.ui.widget_settings_center.setVisible(element.requires_center())
 		self.ui.widget_settings_show_if.setVisible(element.requires_show_if())
 
 	def unselect_all_tools(self):
