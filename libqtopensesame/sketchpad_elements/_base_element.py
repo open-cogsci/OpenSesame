@@ -17,23 +17,76 @@ You should have received a copy of the GNU General Public License
 along with openexp.  If not, see <http://www.gnu.org/licenses/>.
 """
 
+from libopensesame.exceptions import osexception
+from libqtopensesame.misc import _
 from PyQt4 import QtGui, QtCore
 
 class base_element(object):
 
-	def __init__(self, sketchpad, string):
+	"""
+	desc:
+		A base class for the sketchpad-element GUIs.
+	"""
 
+	def __init__(self, sketchpad, string=None, properties=None):
+
+		"""
+		desc:
+			Constructor.
+
+		arguments:
+			sketchpad:	A sketchpad object.
+			type:		sketchpad
+
+		keywords:
+			string:
+				desc:	An element-definition string.
+				type:	[str, unicode, NoneType]
+			properties:
+				desc:	A dictionary with element properties. If a dictionary
+						is provided, the string keyword is ignored, and a
+						definition string is created from the properties dict.
+				type:	[dict, NoneType]
+		"""
+
+		if properties != None:
+			string = u'draw %s' % (self.__class__.__name__)
+			for var, val in properties.items():
+				string += u' %s="%s"' % (var, val)
 		super(base_element, self).__init__(sketchpad, string)
 		self.selected = False
 		self.highlighted = False
 
+	@property
+	def main_window(self):
+		return self.experiment.main_window
+
+	@property
+	def theme(self):
+		return self.experiment.main_window.theme
+
 	def draw(self):
+
+		"""
+		desc:
+			Draw this element, without redrawing the entire sketchpad.
+		"""
 
 		self.graphics_item = super(base_element, self).draw()
 		self.graphics_item.element = self
+		self.graphics_item.setToolTip(self.to_string())
 		self.update()
 
 	def move(self, dx=0, dy=0):
+
+		"""
+		desc:
+			Moves the element position.
+
+		keywords:
+			dx:		The horizontal movement.
+			dy:		The vertical movement.
+		"""
 
 		for var, val in self.properties.items():
 			if var in [u'x', u'x1', u'x2']:
@@ -41,7 +94,44 @@ class base_element(object):
 			if var in [u'y', u'y1', u'y2']:
 				self.properties[var] += dy
 
+	def set_pos(self, x=0, y=0):
+
+		"""
+		desc:
+			Sets the element position.
+
+		keywords:
+			x:		The horizontal position.
+			y:		The vertical position.
+		"""
+
+		for var, val in self.properties.items():
+			if var in [u'x', u'x1', u'x2']:
+				self.properties[var] = x
+			if var in [u'y', u'y1', u'y2']:
+				self.properties[var] = y
+
+	def get_pos(self):
+
+		"""
+		desc:
+			Gets the element position.
+
+		returns:
+			desc:	An (x,y) tuple.
+			type:	tuple
+		"""
+
+		if u'x' in self.properties:
+			return self.properties[u'x'], self.properties[u'y']
+		return self.properties[u'x1'], self.properties[u'y1']
+
 	def update(self):
+
+		"""
+		desc:
+			Redraws this element.
+		"""
 
 		if self.highlighted:
 			self.graphics_item.setGraphicsEffect(self.highlighted_effect())
@@ -52,25 +142,298 @@ class base_element(object):
 
 	def highlight(self, highlighted=True):
 
+		"""
+		desc:
+			Sets the highlight status of the element and redraws.
+
+		arguments:
+			highlighted:	A bool indicating the highlight status.
+		"""
+
 		self.highlighted = highlighted
 		self.update()
 
 	def select(self, selected=True):
+
+		"""
+		desc:
+			Sets the selected status of the element and redraws.
+
+		arguments:
+			selected:	A bool indicating the selected status.
+		"""
 
 		self.selected = selected
 		self.update()
 
 	def selected_effect(self):
 
+		"""
+		desc:
+			Creates the selected effect.
+
+		returns:
+			A QGraphicsEffect object.
+		"""
+
 		effect = QtGui.QGraphicsDropShadowEffect()
 		effect.setColor(QtGui.QColor('#00FF00'))
 		effect.setBlurRadius(32)
-		effect.setOffset(0,0)
+		effect.setOffset(8,8)
 		return effect
 
 	def highlighted_effect(self):
 
-		effect = QtGui.QGraphicsColorizeEffect()
-		effect.setColor(QtGui.QColor('#00FF00'))
-		effect.setStrength(0.5)
+		"""
+		desc:
+			Creates the highlighted effect.
+
+		returns:
+			A QGraphicsEffect object.
+		"""
+
+
+		effect = QtGui.QGraphicsOpacityEffect()
 		return effect
+
+	def get_property(self, name, _type=unicode):
+
+		"""
+		desc:
+			Gets an element property.
+
+		arguments:
+			name:	The property name.
+
+		keywords:
+			_type:	The property type.
+
+		returns:
+			The property in the specified type, or None if the property doesn't
+			exist.
+		"""
+
+		properties = self.eval_properties()
+		if name not in properties:
+			return None
+		val = properties[name]
+		if _type == unicode:
+			return unicode(val)
+		if _type == int:
+			return int(val)
+		if _type == float:
+			return float(val)
+		if _type == bool:
+			if val in (u'yes', u'1'):
+				return True
+			if val in (u'no', u'0'):
+				return False
+			return bool(val)
+		raise osexception(u'Unknown type: %s' % _type)
+
+	def set_property(self, name, val, yes_no=False):
+
+		"""
+		desc:
+			Sets an element property.
+
+		arguments:
+			name:	The property name.
+			val:	The property value.
+
+		keywords:
+			yes_no:	Indicates whether the value should be treated as a bool and
+					recoded to yes/ no.
+		"""
+
+		if name not in self.properties:
+			return None
+		if yes_no:
+			if val:
+				val = u'yes'
+			else:
+				val = u'no'
+		self.properties[name] = val
+
+	def show_script_edit_dialog(self):
+
+		"""
+		desc:
+			Shows the script-edit dialog.
+		"""
+
+		old_string = self.to_string()
+		string = self.experiment.text_input(_(u'Edit element'),
+			message=_(u'Element script'), content=self.to_string())
+		if string == None:
+			return
+		try:
+			self.from_string(string)
+		except osexception as e:
+			self.experiment.notify(e)
+			self.main_window.print_debug_window(e)
+			self.from_string(old_string)
+			return
+		self.sketchpad.draw()
+
+	def show_edit_dialog(self):
+
+		"""
+		desc:
+			Shows an edit dialog for the element, typically to edit the element
+			script.
+		"""
+
+		self.show_script_edit_dialog()
+
+	def show_context_menu(self, pos):
+
+		"""
+		desc:
+			Shows a context menu for the element.
+
+		arguments:
+			pos:
+				type:	QPoint
+		"""
+
+		menu = QtGui.QMenu()
+		menu.addAction(self.theme.qicon(u'utilities-terminal'),
+			_(u'Edit script'))
+		menu.addAction(self.theme.qicon(u'go-top'), _(u'Raise to front'))
+		menu.addAction(self.theme.qicon(u'go-bottom'), _(u'Lower to bottom'))
+		menu.addAction(self.theme.qicon(u'edit-delete'), _(u'Delete'))
+		action = menu.exec_(pos)
+		if action == None:
+			return
+		if action.text() == u'Edit script':
+			self.show_script_edit_dialog()
+		elif action.text() == u'Raise to front':
+			self.properties[u'z_index'] = self.sketchpad.min_z_index() - 1
+		elif action.text() == u'Lower to bottom':
+			self.properties[u'z_index'] = self.sketchpad.max_z_index() + 1
+		elif action.text() == u'Delete':
+			self.sketchpad.remove_elements([self])
+		self.sketchpad.draw()
+
+	@staticmethod
+	def click(sketchpad, pos):
+
+		"""
+		desc:
+			A static method that processes mouse clicks and returns an element
+			object when one has been created (for example, every second click).
+
+		arguments:
+			sketchpad:	A sketchpad object.
+			pos:		An (x,y) tuple with mouse-click coordinates.
+
+		returns:
+			An element object, or None if no element was created.
+		"""
+
+		return None
+
+	@staticmethod
+	def requires_text():
+
+		"""
+		desc:
+			Indicates whether the element requires text settings.
+
+		returns:
+			type:	bool
+		"""
+
+		return False
+
+	@staticmethod
+	def requires_penwidth():
+
+		"""
+		desc:
+			Indicates whether the element requires penwidth settings.
+
+		returns:
+			type:	bool
+		"""
+
+		return False
+
+	@staticmethod
+	def requires_color():
+
+		"""
+		desc:
+			Indicates whether the element requires color settings.
+
+		returns:
+			type:	bool
+		"""
+
+		return False
+
+	@staticmethod
+	def requires_arrow_size():
+
+		"""
+		desc:
+			Indicates whether the element requires arrow-size settings.
+
+		returns:
+			type:	bool
+		"""
+
+		return False
+
+	@staticmethod
+	def requires_scale():
+
+		"""
+		desc:
+			Indicates whether the element requires scale settings.
+
+		returns:
+			type:	bool
+		"""
+
+		return False
+
+	@staticmethod
+	def requires_fill():
+
+		"""
+		desc:
+			Indicates whether the element requires fill settings.
+
+		returns:
+			type:	bool
+		"""
+
+		return False
+
+	@staticmethod
+	def requires_center():
+
+		"""
+		desc:
+			Indicates whether the element requires center settings.
+
+		returns:
+			type:	bool
+		"""
+
+		return False
+
+	@staticmethod
+	def requires_show_if():
+
+		"""
+		desc:
+			Indicates whether the element requires show-if settings.
+
+		returns:
+			type:	bool
+		"""
+
+		return True

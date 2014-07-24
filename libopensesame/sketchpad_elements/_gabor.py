@@ -60,8 +60,8 @@ class gabor(base_element):
 		"""
 
 		properties = self.eval_properties()
-		return self.canvas.gabor(x=properties[u'x'], y=properties[u'y'],
-			orient=properties[u'orient'], freq=properties[u'freq'],
+		return self.canvas.gabor(properties[u'x'], properties[u'y'],
+			properties[u'orient'], properties[u'freq'],
 			env=properties[u'env'], size=properties[u'size'],
 			stdev=properties[u'stdev'], phase=properties[u'phase'],
 			col1=properties[u'color1'], col2=properties[u'color2'],

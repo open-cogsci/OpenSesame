@@ -102,6 +102,7 @@ class config(object):
 		u"url_twitter" : u"http://www.twitter.com/cogscinl",
 		u"version_check_url" : \
 			u"http://files.cogsci.nl/software/opensesame/MOST_RECENT_VERSION.TXT",
+		u'sketchpad_placeholder_color' : u'#00FF00',
 		u'sketchpad_grid_color' : u'#00FF00',
 		u'sketchpad_grid_thickness_thin' : 2,
 		u'sketchpad_grid_thickness_thick' : 4,

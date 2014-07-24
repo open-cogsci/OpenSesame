@@ -29,10 +29,28 @@ class sketchpad(qtplugin, sketchpad_runtime):
 
 	"""
 	desc:
-		The sketchpad controls have been removed, and will re-implemented.
+		Controls for the sketchpad item.
 	"""
 
 	def __init__(self, name, experiment, string=None):
+
+		"""
+		desc:
+			Constructor.
+
+		arguments:
+			name:
+				desc:	The item name.
+				type:	unicode
+			experiment:
+				desc:	The experiment object.
+				type:	experiment
+
+		keywords:
+			string:
+				desc:	A definition string.
+				type:	[unicode, NoneType]
+		"""
 
 		sketchpad_runtime.__init__(self, name, experiment, string)
 		self.canvas = sketchpad_canvas(self)
@@ -40,27 +58,84 @@ class sketchpad(qtplugin, sketchpad_runtime):
 
 	def init_edit_widget(self):
 
+		"""
+		desc:
+			Initializes the widget.
+		"""
+
 		qtplugin.init_edit_widget(self, False)
 		self.sketchpad_widget = sketchpad_widget(self)
 		self.add_widget(self.sketchpad_widget)
 
 	def element_module(self):
 
+		"""
+		returns:
+			desc:	The module that contains the sketchpad elements.
+			type:	module
+		"""
+
 		return sketchpad_elements
 
 	def eval_text(self, s, round_float=True):
+
+		"""
+		desc:
+			Re-implemented to avoid text evaluation.
+		"""
 
 		return s
 
 	def edit_widget(self):
 
+		"""
+		desc:
+			Updates the widget.
+
+		returns:
+			desc:	The widget with the controls.
+			type:	QWidget
+		"""
+
 		self.lock = True
 		qtplugin.edit_widget(self)
+		self.sketchpad_widget.initialize()
 		self.sketchpad_widget.draw()
 		self.lock = False
 		return self._edit_widget
 
+	def add_element(self, element):
+
+		"""
+		desc:
+			Adds an element to the sketchpad.
+
+		arguments:
+			element:
+				desc:	The element to add.
+				type:	base_element
+		"""
+
+		if element == None:
+			return
+		self.elements.append(element)
+		self.draw()
+		for element in self.elements:
+			element.select(False)
+		element.select()
+		self.select_pointer_tool()
+		self.show_element_settings(element)
+
 	def selected_elements(self):
+
+		"""
+		desc:
+			Gets selected elements.
+
+		returns:
+			desc:	A list of selected elements.
+			type:	list
+		"""
 
 		l = []
 		for element in self.elements:
@@ -70,13 +145,170 @@ class sketchpad(qtplugin, sketchpad_runtime):
 
 	def remove_elements(self, elements):
 
+		"""
+		desc:
+			Removes elements.
+
+		arguments:
+			elements:
+				desc:	A list of elements to be removed.
+				type:	list
+		"""
+
 		for element in elements:
 			self.elements.remove(element)
 
 	def move_elements(self, elements, dx=0, dy=0):
 
+		"""
+		desc:
+			Moves elements.
+
+		arguments:
+			elements:
+				desc:	A list of elements to be moved.
+				type:	list
+
+		keywords:
+			dx:
+				desc:	A horizontal displacement.
+				type:	[int, float]
+			dy:
+				desc:	A vertical displacement
+				type:	[int, float]
+		"""
+
 		for element in elements:
 			element.move(dx, dy)
+
+	def topleft_elements_pos(self, elements):
+
+		"""
+		desc:
+			Gets the top-left position of a set of elements.
+
+		arguments:
+			elements:
+				desc:	A list of elements.
+				type:	list
+
+		returns:
+			desc:		An (x,y) tuple with the top-left position.
+			type:		tuple.
+		"""
+
+		lx = []
+		ly = []
+		for element in elements:
+			x, y = element.get_pos()
+			lx.append(x)
+			ly.append(y)
+		return min(lx), min(ly)
+
+	def set_elements_pos(self, elements, x=0, y=0):
+
+		"""
+		desc:
+			Sets position of elements.
+
+		arguments:
+			elements:
+				desc:	A list of elements to be positioned.
+				type:	list
+
+		keywords:
+			x:
+				desc:	A horizontal position.
+				type:	[int, float]
+			y:
+				desc:	A vertical position
+				type:	[int, float]
+		"""
+
+		mx, my = self.topleft_elements_pos(elements)
+		for element in elements:
+			dx, dy = element.get_pos()
+			dx -= mx
+			dy -= my
+			element.set_pos(x+dx, y+dy)
+
+	def min_z_index(self):
+
+		"""
+		desc:
+			Gets the z-index of the top item (i.e. in front of all other items).
+
+		returns:
+			desc:	A z-index.
+			type:	int
+		"""
+
+		return min([element.z_index for element in self.elements])
+
+	def max_z_index(self):
+
+		"""
+		desc:
+			Gets the z-index of the bottom item (i.e. below all other items).
+
+		returns:
+			desc:	A z-index.
+			type:	int
+		"""
+
+		return max([element.z_index for element in self.elements])
+
+	@property
+	def current_color(self):
+		return self.sketchpad_widget.current_color
+
+	@property
+	def current_penwidth(self):
+		return self.sketchpad_widget.current_penwidth
+
+	@property
+	def current_arrow_size(self):
+		return self.sketchpad_widget.current_arrow_size
+
+	@property
+	def current_scale(self):
+		return self.sketchpad_widget.current_scale
+
+	@property
+	def current_show_if(self):
+		return self.sketchpad_widget.current_show_if
+
+	@property
+	def current_fill(self):
+		return self.sketchpad_widget.current_fill
+
+	@property
+	def current_center(self):
+		return self.sketchpad_widget.current_center
+
+	@property
+	def current_font_family(self):
+		return self.sketchpad_widget.current_font_family
+
+	@property
+	def current_font_size(self):
+		return self.sketchpad_widget.current_font_size
+
+	@property
+	def current_font_bold(self):
+		return self.sketchpad_widget.current_font_bold
+
+	@property
+	def current_font_italic(self):
+		return self.sketchpad_widget.current_font_italic
+
+	@property
+	def current_html(self):
+		return self.sketchpad_widget.current_html
+
+	@property
+	def current_html(self):
+		return self.sketchpad_widget.current_html
 
 	@property
 	def draw(self):
@@ -90,4 +322,14 @@ class sketchpad(qtplugin, sketchpad_runtime):
 	def graphics_view(self):
 		return self.sketchpad_widget.ui.graphics_view
 
+	@property
+	def zoom_diff(self):
+		return self.sketchpad_widget.zoom_diff
 
+	@property
+	def show_element_settings(self):
+		return self.sketchpad_widget.show_element_settings
+
+	@property
+	def select_pointer_tool(self):
+		return self.sketchpad_widget.select_pointer_tool

@@ -27,3 +27,5 @@ from _line import line
 from _noise import noise
 from _textline import textline
 from _rect import rect
+elements = [textline, fixdot, line, arrow, rect, circle, ellipse, image, gabor,
+	noise]

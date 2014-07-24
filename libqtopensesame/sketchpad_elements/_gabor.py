@@ -17,9 +17,37 @@ You should have received a copy of the GNU General Public License
 along with openexp.  If not, see <http://www.gnu.org/licenses/>.
 """
 
+from libqtopensesame.dialogs.gabor_settings import gabor_settings
 from libqtopensesame.sketchpad_elements._base_element import base_element
 from libopensesame.sketchpad_elements import gabor as gabor_runtime
 
 class gabor(base_element, gabor_runtime):
 
-	pass
+	def show_edit_dialog(self):
+
+		"""
+		desc:
+			The show-edit dialog for the gabor shows the settings dialog.
+		"""
+
+		d = gabor_settings(self.main_window)
+		d.set_properties(self.properties)
+		properties = d.get_properties()
+		if properties == None:
+			return
+		self.properties.update(properties)
+		self.sketchpad.draw()
+
+	@staticmethod
+	def click(sketchpad, pos):
+
+		d = gabor_settings(sketchpad.main_window)
+		properties = d.get_properties()
+		if properties == None:
+			return
+		properties.update({
+				u'x':			pos[0],
+				u'y':			pos[1],
+				u'show_if' : 	sketchpad.current_show_if()
+			})
+		return gabor(sketchpad, properties=properties)

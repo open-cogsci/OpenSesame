@@ -19,6 +19,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 
 import os
 import math
+from libqtopensesame.misc import drag_and_drop
 from libqtopensesame.misc import _
 from libqtopensesame.misc.config import cfg
 from PyQt4 import QtGui, QtCore
@@ -42,44 +43,43 @@ class sketchpad_canvas(QtGui.QGraphicsScene):
 		"""
 
 		self.sketchpad = sketchpad
+		self.placeholder_color = cfg.sketchpad_placeholder_color
 		self.grid = 32
 		super(sketchpad_canvas, self).__init__(self.sketchpad.main_window)
 		self.indicator = None
 
-	def dragLeaveEvent(self, e):
+	@property
+	def selected_element_tool(self):
+
+		return self.sketchpad.sketchpad_widget.selected_element_tool
+
+	def dragMoveEvent(self, e):
 
 		"""
 		desc:
-			Accepts drops to implement moving items.
+			Accepts drag-moves to implement moving items.
 
 		arguments:
-			e:		A QGraphicsSceneDragDropEvent object.
+			e:
+				type:	QGraphicsSceneDragDropEvent
 		"""
 
-		cmd = unicode(e.mimeData().text())
-		if cmd.startswith(u'move:'):
-			l = cmd[5:].split(u',')
-			if len(l) != 2:
-				e.ignore()
-				return
-			try:
-				sx = int(l[0])
-				sy = int(l[1])
-			except:
-				e.ignore()
-				return
-			ex, ey = self.cursor_pos(e)
-			dx = ex-sx
-			dy = ey-sy
-			if abs(dx) < self.grid and abs(dy) < self.grid:
-				e.ignore()
-				return
-			self.sketchpad.move_elements(self.sketchpad.selected_elements(),
-				dx=dx, dy=dy)
-			self.sketchpad.draw()
-			e.accept()
-		else:
+		data = drag_and_drop.receive(e)
+		if data[u'type'] != u'sketchpad-element-move':
 			e.ignore()
+			return
+		ex, ey = self.cursor_pos(e, grid=True)
+		dx = ex-data[u'from_x']
+		dy = ey-data[u'from_y']
+		dx = round(1.*dx/self.grid) * self.grid
+		dy = round(1.*dy/self.grid) * self.grid
+		if abs(dx) < self.grid and abs(dy) < self.grid:
+			e.ignore()
+			return
+		self.sketchpad.set_elements_pos(self.sketchpad.selected_elements(),
+			x=ex, y=ey)
+		self.sketchpad.draw()
+		e.accept()
 
 	def mouseMoveEvent(self, e):
 
@@ -89,15 +89,52 @@ class sketchpad_canvas(QtGui.QGraphicsScene):
 			position display.
 
 		arguments:
-			e:	A QMouseEvent.
+			e:
+				type:	QMouseEvent
 		"""
 
 		self.sketchpad.set_cursor_pos(self.cursor_pos(e))
-		graphics_item = self.itemAt(e.scenePos())
 		for element in self.sketchpad.elements:
 			element.highlight(False)
-		if graphics_item != None:
-			graphics_item.element.highlight()
+		element = self.element_at(e.scenePos())
+		if element != None:
+			element.highlight()
+
+	def wheelEvent(self, e):
+
+		"""
+		desc:
+			Scrolls the graphics view based on a wheel event (i.e. mouse-scroll
+			event.
+
+		arguments:
+			e:
+				type:	QGraphicsViewWheelEvent
+		"""
+
+		if not QtCore.Qt.ControlModifier & e.modifiers():
+			return
+		self.sketchpad.zoom_diff(e.delta())
+
+	def mouseDoubleClickEvent(self, e):
+
+		"""
+		desc:
+			Processes mouse-press events, to handle element selection.
+
+		arguments:
+			e:
+				type:	QGraphicsSceneMouseEvent
+		"""
+
+		if not QtCore.Qt.LeftButton & e.button():
+			# Only accept right clicks
+			return
+		# Select the pointed-at element
+		element = self.element_at(e.scenePos())
+		if element == None:
+			return
+		element.show_edit_dialog()
 
 	def mousePressEvent(self, e):
 
@@ -106,20 +143,37 @@ class sketchpad_canvas(QtGui.QGraphicsScene):
 			Processes mouse-press events, to handle element selection.
 
 		arguments:
-			e:	A QMouseEvent.
+			e:
+				type:	QMouseEvent
 		"""
 
-		graphics_item = self.itemAt(e.scenePos())
+		# When control is not pressed, we deselect all currently selected
+		# elements first
 		if not QtCore.Qt.ControlModifier & e.modifiers():
 			for element in self.sketchpad.elements:
 				element.select(False)
-		if graphics_item != None:
-			graphics_item.element.select()
-			mime_data = QtCore.QMimeData()
-			mime_data.setText(u'move:%d,%d' % self.cursor_pos(e))
-			drag = QtGui.QDrag(e.widget())
-			drag.setMimeData(mime_data)
-			drag.start()
+		element = self.element_at(e.scenePos())
+		if QtCore.Qt.RightButton & e.button() and element != None:
+			# The right buttons pops up a context menu.
+			element.show_context_menu(e.screenPos())
+		if QtCore.Qt.LeftButton & e.button():
+			# The left button selects and drags.
+			if self.selected_element_tool != None:
+				# When in pointer-tool mode, mouse clicks create new elements.
+				self.sketchpad.add_element(self.selected_element_tool.click(
+					self.sketchpad, self.cursor_pos(e)))
+			elif element == None:
+				self.sketchpad.select_pointer_tool()
+			else:
+				element.select()
+				self.sketchpad.show_element_settings(element)
+				x, y = self.cursor_pos(e, grid=False)
+				data = {
+					u'type'		: u'sketchpad-element-move',
+					u'from_x'	: x,
+					u'from_y'	: y
+					}
+				drag_and_drop.send(e.widget(), data)
 
 	def keyPressEvent(self, e):
 
@@ -128,7 +182,8 @@ class sketchpad_canvas(QtGui.QGraphicsScene):
 			Processes key-press events, to handle deletion, movement, etc.
 
 		arguments:
-			e:	A QKeyEvent.
+			e:
+				type:	QKeyEvent
 		"""
 
 		if e.key() == QtCore.Qt.Key_Delete:
@@ -150,24 +205,64 @@ class sketchpad_canvas(QtGui.QGraphicsScene):
 			return
 		self.sketchpad.draw()
 
-	def cursor_pos(self, e):
+	def element_at(self, pos):
+
+		"""
+		desc:
+			Gets the element at a specific position.
+
+		arguments:
+			pos:	An (x,y) tuple.
+
+		returns:
+			A sketchpad element (base_element) or None of no element was at pos.
+		"""
+
+		# First try to see if there's an exact position match ...
+		graphics_item = self.itemAt(pos)
+		# ... if not, try if there's an element that encompasses the position.
+		if graphics_item == None:
+			for item in self.items():
+				if item.boundingRect().contains(pos):
+					graphics_item = item
+		# ... else don't find an element.
+		if graphics_item == None:
+			return None
+		# If the item is part of a group, we want the group, not the invdividual
+		# item, because the group has the element property.
+		if graphics_item.group() != None:
+			graphics_item = graphics_item.group()
+		return graphics_item.element
+
+	def cursor_pos(self, e, grid=True):
 
 		"""
 		desc:
 			Gets the position of the mouse cursor.
 
 		arguments:
-			e:	A QMouseEvent.
+			e:
+				type:	QMouseEvent
+
+		keywords:
+			grid:
+				desc:	Indicates whether the cursor should be locked to the
+						grid.
+				type:	bool
 
 		returns:
 			An (x, y) tuple with the the coordinates of the mouse cursor.
 		"""
 
 		pos = e.scenePos().toPoint()
-		x = pos.x() + 0.5 * self.grid - self.xcenter()
-		y = pos.y() + 0.5 * self.grid - self.ycenter()
-		x = x - x % self.grid
-		y = y - y % self.grid
+		if grid:
+			x = pos.x() + 0.5 * self.grid - self.xcenter()
+			y = pos.y() + 0.5 * self.grid - self.ycenter()
+			x = x - x % self.grid
+			y = y - y % self.grid
+		else:
+			x = pos.x() - self.xcenter()
+			y = pos.y() - self.ycenter()
 		return x, y
 
 	def notify(self, msg):
@@ -209,7 +304,7 @@ class sketchpad_canvas(QtGui.QGraphicsScene):
 
 		if self.is_var(fname):
 			self.notify(
-				_(u'Image name "%s" is variably defined, using fallback image') \
+				_(u'Image name "%s" is unknown or variably defined, using fallback image') \
 				% fname)
 			return self.sketchpad.theme.qpixmap(u'fallback')
 		if not os.path.exists(fname):
@@ -251,7 +346,7 @@ class sketchpad_canvas(QtGui.QGraphicsScene):
 
 		if type(penwidth) not in (int, float):
 			self.notify(
-				_(u'Penwidth "%s" is variably defined, using 1') % penwidth)
+				_(u'Penwidth "%s" is unknown or variably defined, using 1') % penwidth)
 			return 1
 		return penwidth
 
@@ -292,7 +387,7 @@ class sketchpad_canvas(QtGui.QGraphicsScene):
 
 		if self.is_var(color):
 			self.notify(
-				_(u'Color "%s" is variably defined, using placeholder color') \
+				_(u'Color "%s" is unknown or variably defined, using placeholder color') \
 				% color)
 			return QtGui.QColor(self.placeholder_color)
 		return QtGui.QColor(color)
@@ -309,7 +404,7 @@ class sketchpad_canvas(QtGui.QGraphicsScene):
 
 		if type(x) not in (int, float):
 			self.notify(
-				_('X coordinate "%s" is variably defined, using display center') \
+				_('X coordinate "%s" is unknown or variably defined, using display center') \
 				% x)
 			return self.xcenter()
 		return x
@@ -326,7 +421,7 @@ class sketchpad_canvas(QtGui.QGraphicsScene):
 
 		if type(y) not in (int, float):
 			self.notify(
-				_('Y coordinate "%s" is variably defined, using display center') \
+				_('Y coordinate "%s" is unknown or variably defined, using display center') \
 				% y)
 			return self.ycenter()
 		return y
@@ -342,7 +437,7 @@ class sketchpad_canvas(QtGui.QGraphicsScene):
 		"""
 
 		if type(x) not in (int, float):
-			self.notify(_('Width "%s" is variably defined, using 100') % x)
+			self.notify(_('Width "%s" is unknown or variably defined, using 100') % x)
 			return 100
 		return x
 
@@ -357,7 +452,7 @@ class sketchpad_canvas(QtGui.QGraphicsScene):
 		"""
 
 		if type(y) not in (int, float):
-			self.notify(_('Height "%s" is variably defined, using 100') % y)
+			self.notify(_('Height "%s" is unknown or variably defined, using 100') % y)
 			return 100
 		return y
 
@@ -372,7 +467,7 @@ class sketchpad_canvas(QtGui.QGraphicsScene):
 		"""
 
 		if type(scale) not in (int, float):
-			self.notify(_('Scale "%s" is variably defined, using 1.0') % y)
+			self.notify(_('Scale "%s" is unknown or variably defined, using 1.0') % scale)
 			return 1.0
 		return scale
 
@@ -397,14 +492,15 @@ class sketchpad_canvas(QtGui.QGraphicsScene):
 		painter.drawRect(QtCore.QRect(0, 0, w, h))
 		# Draw all lines except for the center ones, because they should be
 		# thicker
-		for x in range(xc, w+1, self.grid):
-			painter.drawLine(x, 0, x, h)
-		for x in range(self.grid, xc, self.grid):
-			painter.drawLine(x, 0, x, h)
-		for y in range(yc, h+1, self.grid):
-			painter.drawLine(0, y, w, y)
-		for y in range(self.grid, yc, self.grid):
-			painter.drawLine(0, y, w, y)
+		if self.grid > 1:
+			for x in range(xc, w+1, self.grid):
+				painter.drawLine(x, 0, x, h)
+			for x in range(xc-self.grid, -1, -self.grid):
+				painter.drawLine(x, 0, x, h)
+			for y in range(yc, h+1, self.grid):
+				painter.drawLine(0, y, w, y)
+			for y in range(yc-self.grid, -1, -self.grid):
+				painter.drawLine(0, y, w, y)
 		# Draw thicker central lines
 		painter.setPen(self._pen(cfg.sketchpad_grid_color,
 			cfg.sketchpad_grid_thickness_thick, cfg.sketchpad_grid_opacity))
@@ -444,7 +540,11 @@ class sketchpad_canvas(QtGui.QGraphicsScene):
 
 		"""Mimicks canvas api. See openexp._canvas.canvas."""
 
-		self._font = QtGui.QFont(style, size, bold, italic)
+		if bold:
+			weight = QtGui.QFont.Bold
+		else:
+			weight = QtGui.QFont.Normal
+		self._font = QtGui.QFont(style, size, weight, italic)
 
 	def text(self, text, center=True, x=None, y=None, max_width=None,
 		color=None, bidi=None, html=True):
@@ -455,38 +555,51 @@ class sketchpad_canvas(QtGui.QGraphicsScene):
 		i.setDefaultTextColor(self._color(color))
 		if html:
 			i.setHtml(text)
+		if center:
+			# Source:
+			# http://www.cesarbs.org/blog/2011/05/30/aligning-text-in-\
+			# qgraphicstextitem/
+			i.setTextWidth(i.boundingRect().width())
+			fmt = QtGui.QTextBlockFormat()
+			fmt.setAlignment(QtCore.Qt.AlignCenter)
+			cursor = i.textCursor()
+			cursor.mergeBlockFormat(fmt)
+			i.setTextCursor(cursor)
 		i.setPos(self._point(i, x, y, center))
 		return i
 
-	def line(self, sx, sy, ex, ey, color=None, penwidth=None):
+	def line(self, sx, sy, ex, ey, color=None, penwidth=None, add=True):
 
 		"""Mimicks canvas api. See openexp._canvas.canvas."""
 
-		i = self.addLine(self._x(sx), self._y(sy), self._x(ex), self._y(ey),
-			pen=self._pen(color, penwidth))
+		i = QtGui.QGraphicsLineItem(self._x(sx), self._y(sy), self._x(ex),
+			self._y(ey))
+		i.setPen(self._pen(color, penwidth))
+		if add:
+			self.addItem(i)
 		return i
 
 	def arrow(self, sx, sy, ex, ey, arrow_size=5, color=None, penwidth=None):
 
 		"""Mimicks canvas api. See openexp._canvas.canvas."""
 
-		# We use a polygon instead of three separate lines, because a polygon
-		# is a single object, which is easier to work with.
 		a = math.atan2(ey - sy, ex - sx)
 		sx1 = ex + arrow_size * math.cos(a + math.radians(135))
 		sy1 = ey + arrow_size * math.sin(a + math.radians(135))
 		sx2 = ex + arrow_size * math.cos(a + math.radians(225))
 		sy2 = ey + arrow_size * math.sin(a + math.radians(225))
-		path = [
-			QtCore.QPoint(self._x(sx), self._y(sy)),
-			QtCore.QPoint(self._x(ex), self._y(ey)),
-			QtCore.QPoint(self._x(sx1), self._y(sy1)),
-			QtCore.QPoint(self._x(ex), self._y(ey)),
-			QtCore.QPoint(self._x(sx2), self._y(sy2)),
-			QtCore.QPoint(self._x(ex), self._y(ey)),
-			]
-		i = self.addPolygon(QtGui.QPolygonF(path), pen=self._pen(color, penwidth))
-		return i
+		group = QtGui.QGraphicsItemGroup()
+		i = self.line(sx, sy, ex, ey, color=color, penwidth=penwidth,
+			add=False)
+		group.addToGroup(i)
+		i = self.line(sx1, sy1, ex, ey, color=color, penwidth=penwidth,
+			add=False)
+		group.addToGroup(i)
+		i = self.line(sx2, sy2, ex, ey, color=color, penwidth=penwidth,
+			add=False)
+		group.addToGroup(i)
+		self.addItem(group)
+		return group
 
 	def rect(self, x, y, w, h, fill=False, color=None, penwidth=None):
 
@@ -503,7 +616,8 @@ class sketchpad_canvas(QtGui.QGraphicsScene):
 			pen=pen, brush=brush)
 		return i
 
-	def ellipse(self, x, y, w, h, fill=False, color=None, penwidth=None):
+	def ellipse(self, x, y, w, h, fill=False, color=None, penwidth=None,
+		add=True):
 
 		"""Mimicks canvas api. See openexp._canvas.canvas."""
 
@@ -514,8 +628,12 @@ class sketchpad_canvas(QtGui.QGraphicsScene):
 		else:
 			pen = self._pen(color, penwidth)
 			brush = QtGui.QBrush()
-		i = self.addEllipse(self._x(x), self._y(y), self._w(w), self._h(h),
-			pen=pen, brush=brush)
+		i = QtGui.QGraphicsEllipseItem(self._x(x), self._y(y), self._w(w),
+			self._h(h))
+		i.setPen(pen)
+		i.setBrush(brush)
+		if add:
+			self.addItem(i)
 		return i
 
 	def circle(self, x, y, r, fill=False, color=None, penwidth=None):
@@ -535,25 +653,58 @@ class sketchpad_canvas(QtGui.QGraphicsScene):
 		i.setPos(self._point(i, x, y, center))
 		return i
 
-	def noise_patch(self, x, y, env=u'gaussian', size=96, stdev=12,
-		col1=u'white', col2=u'black', bgmode=u'avg'):
+	def gabor(self, x, y, *arglist, **kwdict):
 
 		"""Mimicks canvas api. See openexp._canvas.canvas."""
 
-		# TODO
-		return self.circle(x, y, 10)
+		from openexp.canvas import gabor_file
+		image = gabor_file(*arglist, **kwdict)
+		return self.image(image, x=x, y=y, scale=1)
 
-	def gabor(self, x, y, orient, freq, env=u'gaussian', size=96, stdev=12,
-		phase=0, col1=u'white', col2=u'black', bgmode=u'avg'):
+	def noise_patch(self, x, y, *arglist, **kwdict):
 
 		"""Mimicks canvas api. See openexp._canvas.canvas."""
 
-		# TODO
-		return self.circle(x, y, 10)
+		from openexp.canvas import noise_file
+		image = noise_file(*arglist, **kwdict)
+		return self.image(image, x=x, y=y, scale=1)
 
 	def fixdot(self, x=None, y=None, color=None, style=u'default'):
 
 		"""Mimicks canvas api. See openexp._canvas.canvas."""
 
-		# TODO
-		return self.circle(x, y, 10)
+		color = self._color(color)
+		x = self._x(x)
+		y = self._y(y)
+		group = QtGui.QGraphicsItemGroup()
+		h = 2
+		if style == u'default':
+			style = u'open-medium'
+		if u'large' in style:
+			s = 16
+		elif u'medium' in style:
+			s = 8
+		elif u'small' in style:
+			s = 4
+		else:
+			raise osexception(u'Unknown fixdot style: %s' % self.style)
+		if u'open' in style:
+			i = self.ellipse(x-s, y-s, 2*s, 2*s, fill=True, color=color,
+				add=False)
+			group.addToGroup(i)
+			i = self.ellipse(x-h, y-h, 2*h, 2*h, fill=True,
+				color=self.bgcolor, add=False)
+			group.addToGroup(i)
+		elif u'filled' in style:
+			i = self.ellipse(x-s, y-s, 2*s, 2*s, fill=True, color=color,
+				add=True)
+			group.addToGroup(i)
+		elif u'cross' in style:
+			i = self.line(x, y-s, x, y+s, color=color, add=False, penwidth=1)
+			group.addToGroup(i)
+			i = self.line(x-s, y, x+s, y, color=color, add=False, penwidth=1)
+			group.addToGroup(i)
+		else:
+			raise osexception(u'Unknown fixdot style: %s' % self.style)
+		self.addItem(group)
+		return group

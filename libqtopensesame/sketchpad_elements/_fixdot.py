@@ -22,4 +22,18 @@ from libopensesame.sketchpad_elements import fixdot as fixdot_runtime
 
 class fixdot(base_element, fixdot_runtime):
 
-	pass
+	@staticmethod
+	def click(sketchpad, pos):
+
+		properties = {
+				u'x':		pos[0],
+				u'y':		pos[1],
+				u'color': 	sketchpad.current_color(),
+				u'show_if'	: sketchpad.current_show_if()
+			}
+		e = fixdot(sketchpad, properties=properties)
+		return e
+
+	@staticmethod
+	def requires_color():
+		return True

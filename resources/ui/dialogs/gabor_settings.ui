@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>noise_patch_dialog</class>
- <widget class="QDialog" name="noise_patch_dialog">
+ <class>gabor_dialog</class>
+ <widget class="QDialog" name="gabor_dialog">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
     <width>476</width>
-    <height>384</height>
+    <height>510</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Insert noise patch</string>
+   <string>Insert Gabor patch</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
@@ -30,7 +30,7 @@
        <number>5</number>
       </property>
       <item>
-       <widget class="QLabel" name="label_noise_patch">
+       <widget class="QLabel" name="label_gabor">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
           <horstretch>0</horstretch>
@@ -41,7 +41,7 @@
          <string/>
         </property>
         <property name="pixmap">
-         <pixmap>:/icons/noise_patch.png</pixmap>
+         <pixmap>:/icons/gabor.png</pixmap>
         </property>
        </widget>
       </item>
@@ -55,7 +55,7 @@
          </font>
         </property>
         <property name="text">
-         <string>Insert noise patch</string>
+         <string>Insert Gabor patch</string>
         </property>
        </widget>
       </item>
@@ -76,10 +76,34 @@
       <property name="verticalSpacing">
        <number>12</number>
       </property>
+      <item row="0" column="0">
+       <widget class="QLabel" name="label_3">
+        <property name="text">
+         <string>Orientation&lt;br /&gt;&lt;i&gt;in degrees (0 .. 360)&lt;/i&gt;</string>
+        </property>
+       </widget>
+      </item>
       <item row="0" column="1">
-       <widget class="QSpinBox" name="spin_size">
+       <widget class="QDoubleSpinBox" name="spinbox_orient">
         <property name="suffix">
-         <string>px</string>
+         <string> °</string>
+        </property>
+        <property name="maximum">
+         <double>360.000000000000000</double>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0">
+       <widget class="QLabel" name="label_4">
+        <property name="text">
+         <string>Size&lt;br /&gt;&lt;i&gt;in pixels&lt;/i&gt;</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1">
+       <widget class="QSpinBox" name="spinbox_size">
+        <property name="suffix">
+         <string> px</string>
         </property>
         <property name="minimum">
          <number>1</number>
@@ -92,14 +116,14 @@
         </property>
        </widget>
       </item>
-      <item row="1" column="0">
+      <item row="2" column="0">
        <widget class="QLabel" name="label_5">
         <property name="text">
          <string>Envelope</string>
         </property>
        </widget>
       </item>
-      <item row="1" column="1">
+      <item row="2" column="1">
        <widget class="QComboBox" name="combobox_env">
         <item>
          <property name="text">
@@ -118,22 +142,22 @@
         </item>
         <item>
          <property name="text">
-          <string>rectangle (no envelope)</string>
+          <string>rectangular (no envelope)</string>
          </property>
         </item>
        </widget>
       </item>
-      <item row="2" column="0">
+      <item row="3" column="0">
        <widget class="QLabel" name="label_6">
         <property name="text">
          <string>Standard deviation&lt;br /&gt;&lt;i&gt;in pixels, only applies to Gaussian envelope&lt;/i&gt;</string>
         </property>
        </widget>
       </item>
-      <item row="2" column="1">
-       <widget class="QDoubleSpinBox" name="spin_stdev">
+      <item row="3" column="1">
+       <widget class="QDoubleSpinBox" name="spinbox_stdev">
         <property name="suffix">
-         <string>px</string>
+         <string> px</string>
         </property>
         <property name="maximum">
          <double>1000.000000000000000</double>
@@ -143,35 +167,72 @@
         </property>
        </widget>
       </item>
-      <item row="3" column="0">
+      <item row="4" column="0">
+       <widget class="QLabel" name="label_7">
+        <property name="text">
+         <string>Frequency&lt;br /&gt;&lt;i&gt;in cycles/ px&lt;/i&gt;</string>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="1">
+       <widget class="QDoubleSpinBox" name="spinbox_freq">
+        <property name="suffix">
+         <string/>
+        </property>
+        <property name="maximum">
+         <double>1000.000000000000000</double>
+        </property>
+        <property name="value">
+         <double>0.100000000000000</double>
+        </property>
+       </widget>
+      </item>
+      <item row="5" column="0">
+       <widget class="QLabel" name="label_8">
+        <property name="text">
+         <string>Phase&lt;br /&gt;&lt;i&gt;in cycles (0 .. 1)&lt;/i&gt;</string>
+        </property>
+       </widget>
+      </item>
+      <item row="5" column="1">
+       <widget class="QDoubleSpinBox" name="spinbox_phase">
+        <property name="maximum">
+         <double>1.000000000000000</double>
+        </property>
+        <property name="singleStep">
+         <double>0.100000000000000</double>
+        </property>
+       </widget>
+      </item>
+      <item row="6" column="0">
        <widget class="QLabel" name="label_10">
         <property name="text">
          <string>Color 1&lt;br /&gt;&lt;i&gt;e.g., 'white' or '#FFFFFF'&lt;/i&gt;</string>
         </property>
        </widget>
       </item>
-      <item row="3" column="1">
-       <widget class="QLineEdit" name="edit_color1">
+      <item row="6" column="1">
+       <widget class="color_edit" name="edit_color1">
         <property name="text">
          <string notr="true">white</string>
         </property>
        </widget>
       </item>
-      <item row="4" column="0">
+      <item row="7" column="0">
        <widget class="QLabel" name="label_9">
         <property name="text">
-         <string>Color 2&lt;br /&gt;&lt;i&gt;e.g., 'black' or '#000000'&lt;/i&gt;</string>
+         <string>Color 1&lt;br /&gt;&lt;i&gt;e.g., 'black' or '#000000'&lt;/i&gt;</string>
         </property>
        </widget>
       </item>
-      <item row="4" column="1">
-       <widget class="QLineEdit" name="edit_color2">
+      <item row="7" column="1">
+       <widget class="color_edit" name="edit_color2">
         <property name="text">
          <string notr="true">black</string>
         </property>
        </widget>
       </item>
-      <item row="5" column="0">
+      <item row="8" column="0">
        <widget class="QLabel" name="label_11">
         <property name="font">
          <font>
@@ -183,7 +244,7 @@
         </property>
        </widget>
       </item>
-      <item row="5" column="1">
+      <item row="8" column="1">
        <widget class="QComboBox" name="combobox_bgmode">
         <item>
          <property name="text">
@@ -195,13 +256,6 @@
           <string>Color 2</string>
          </property>
         </item>
-       </widget>
-      </item>
-      <item row="0" column="0">
-       <widget class="QLabel" name="label_4">
-        <property name="text">
-         <string>Size&lt;br /&gt;&lt;i&gt;in pixels&lt;/i&gt;</string>
-        </property>
        </widget>
       </item>
      </layout>
@@ -244,12 +298,19 @@
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>color_edit</class>
+   <extends>QLineEdit</extends>
+   <header>libqtopensesame/widgets/color_edit.h</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections>
   <connection>
    <sender>buttonBox</sender>
    <signal>accepted()</signal>
-   <receiver>noise_patch_dialog</receiver>
+   <receiver>gabor_dialog</receiver>
    <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -265,7 +326,7 @@
   <connection>
    <sender>buttonBox</sender>
    <signal>rejected()</signal>
-   <receiver>noise_patch_dialog</receiver>
+   <receiver>gabor_dialog</receiver>
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">

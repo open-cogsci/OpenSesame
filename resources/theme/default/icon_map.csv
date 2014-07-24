@@ -67,6 +67,7 @@ button_new,list-add,
 button_next,go-next,
 button_noise_patch,os-noise,
 button_osdoc,web-browser,
+button_pointer,os-pointer,
 button_pool_add,list-add,16
 button_pool_filter_clear,edit-clear,16
 button_prev,go-previous,

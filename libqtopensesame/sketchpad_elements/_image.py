@@ -22,4 +22,27 @@ from libopensesame.sketchpad_elements import image as image_runtime
 
 class image(base_element, image_runtime):
 
-	pass
+	@staticmethod
+	def click(sketchpad, pos):
+
+		_file = sketchpad.main_window.select_from_pool()
+		if _file == None:
+			return None
+		properties = {
+			u'x':		pos[0],
+			u'y':		pos[1],
+			u'file':	_file,
+			u'scale':	sketchpad.current_scale(),
+			u'center':	sketchpad.current_center(),
+			u'show_if': sketchpad.current_show_if()
+		}
+		e = image(sketchpad, properties=properties)
+		return e
+
+	@staticmethod
+	def requires_center():
+		return True
+
+	@staticmethod
+	def requires_scale():
+		return True

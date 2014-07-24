@@ -20,6 +20,39 @@ along with openexp.  If not, see <http://www.gnu.org/licenses/>.
 from libqtopensesame.sketchpad_elements._base_element import base_element
 from libopensesame.sketchpad_elements import ellipse as ellipse_runtime
 
+pos_start = None
+
 class ellipse(base_element, ellipse_runtime):
 
-	pass
+	@staticmethod
+	def click(sketchpad, pos):
+
+		global pos_start
+		if pos_start == None:
+			pos_start = pos
+			return None
+		properties = {
+				u'x':		pos_start[0],
+				u'y':		pos_start[1],
+				u'w':		pos[0]-pos_start[0],
+				u'h':		pos[1]-pos_start[1],
+				u'color': 	sketchpad.current_color(),
+				u'penwidth'	: sketchpad.current_penwidth(),
+				u'fill'		: sketchpad.current_fill(),
+				u'show_if'	: sketchpad.current_show_if()
+			}
+		e = ellipse(sketchpad, properties=properties)
+		pos_start = None
+		return e
+
+	@staticmethod
+	def requires_color():
+		return True
+
+	@staticmethod
+	def requires_penwidth():
+		return True
+
+	@staticmethod
+	def requires_fill():
+		return True

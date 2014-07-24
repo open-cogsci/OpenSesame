@@ -25,6 +25,8 @@ class color_edit(base_widget):
 
 	"""A colorpicker QWidget with a QLineEdit and a QPushButton."""
 
+	textChanged = QtCore.pyqtSignal('QString')
+
 	def __init__(self, main_window):
 
 		"""
@@ -88,6 +90,7 @@ class color_edit(base_widget):
 		"""Emit a 'set_color' signal to indicate that a color has been picker"""
 
 		self.emit(QtCore.SIGNAL(u'set_color'))
+		self.textChanged.emit(self.text())
 
 	def initialize(self, experiment=None, color=None):
 

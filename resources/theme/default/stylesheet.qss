@@ -42,6 +42,11 @@
 	background-color: #729fcf;
 }
 
-#form_sketchpad QLabel, QCheckBox, QLineEdit, QSpinBox {
+#form_sketchpad * {
 	font-size: 8pt;
 }
+
+#form_sketchpad #label_cursor_pos {
+	font-family: monospace;
+}
+

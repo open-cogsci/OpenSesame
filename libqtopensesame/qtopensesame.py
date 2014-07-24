@@ -1088,6 +1088,22 @@ class qtopensesame(QtGui.QMainWindow, base_component):
 		else:
 			self.experiment.items[widget.name].open_tab()
 
+	def select_from_pool(self):
+
+		"""
+		desc:
+			Opens the file-pool selection dialog.
+
+		returns:
+			A filename or None if no file was selected.
+		"""
+
+		from libqtopensesame.widgets import pool_widget
+		_file = pool_widget.select_from_pool(self)
+		if _file == u'':
+			return None
+		return _file
+
 	def copy_to_pool(self, fname):
 
 		"""

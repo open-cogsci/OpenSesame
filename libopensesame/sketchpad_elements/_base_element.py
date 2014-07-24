@@ -69,6 +69,9 @@ class base_element(object):
 	def split(self): return self.sketchpad.split
 
 	@property
+	def experiment(self): return self.sketchpad.experiment
+
+	@property
 	def z_index(self):
 
 		"""
@@ -102,7 +105,7 @@ class base_element(object):
 		"""
 
 		l  = self.split(string)
-		if l < 2 or l[0] != u'draw' or l[1] != self._type:
+		if len(l) < 2 or l[0] != u'draw' or l[1] != self._type:
 			raise osexception(u'Invalid sketchpad-element definition: \'%s\'' \
 				% string)
 		# First load the default values
@@ -146,7 +149,7 @@ class base_element(object):
 		for var, val in self.properties.items():
 			if val == None:
 				raise osexception(
-					(u'The keyword \'%s\' has not been specified in '
+					(u'Required keyword \'%s\' has not been specified in '
 					u'sketchpad element \'%s\' in item \'%s\'') % (var,
 					self._type, self.name))
 		# Check if no non-existing keywords have been specified
@@ -199,6 +202,8 @@ class base_element(object):
 				continue
 			val = self.properties[var]
 			if isinstance(val, basestring):
+				val = val.replace(u'\\', u'\\\\')
+				val = val.replace(u'"', u'\\"')
 				s += u' %s="%s"' % (var, val)
 			else:
 				s += u' %s=%s' % (var, val)
