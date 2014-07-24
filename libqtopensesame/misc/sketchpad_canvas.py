@@ -96,9 +96,11 @@ class sketchpad_canvas(QtGui.QGraphicsScene):
 		self.sketchpad.set_cursor_pos(self.cursor_pos(e))
 		for element in self.sketchpad.elements:
 			element.highlight(False)
-		element = self.element_at(e.scenePos())
-		if element != None:
-			element.highlight()
+		# Only highlight elements if the pointer tool is selected
+		if self.selected_element_tool == None:
+			element = self.element_at(e.scenePos())
+			if element != None:
+				element.highlight()
 
 	def wheelEvent(self, e):
 
