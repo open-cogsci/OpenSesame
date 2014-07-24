@@ -17,25 +17,18 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
-import libopensesame.feedback
-from libqtopensesame.items import qtplugin
+from libopensesame.feedback import feedback as feedback_runtime
+from libqtopensesame.items.qtplugin import qtplugin
+from libqtopensesame.items.feedpad import feedpad
 
-class feedback(libopensesame.feedback.feedback, qtplugin.qtplugin):
+class feedback(feedpad, qtplugin, feedback_runtime):
 
 	"""
 	desc:
-		The sketchpad controls have been removed, and will re-implemented.
+		The feedback controls are implemented in feedpad.
 	"""
 
 	def __init__(self, name, experiment, string=None):
 
-		libopensesame.sketchpad.sketchpad.__init__(self, name, experiment,
-			string)
-		qtplugin.qtplugin.__init__(self)
-
-	def edit_widget(self):
-
-		self.lock = True
-		qtplugin.qtplugin.edit_widget(self)
-		self.lock = False
-		return self._edit_widget
+		feedback_runtime.__init__(self, name, experiment, string)
+		qtplugin.__init__(self)
