@@ -102,17 +102,17 @@ class qtitem(QtCore.QObject):
 				QtCore.Qt.WindowMaximizeButtonHint)
 			self._edit_widget.showMaximized()
 			self._edit_widget.show()
-			self.main_window.setEnabled(False)
-			self.maximized = True
 			self.button_toggle_maximize.setIcon(
 				self.theme.qicon(u'view-restore'))
 		else:
 			self._edit_widget.setParent(self.main_window)
-			self.main_window.setEnabled(True)
 			self.open_tab()
-			self.maximized = False
 			self.button_toggle_maximize.setIcon(
 				self.theme.qicon(u'view-fullscreen'))
+		self.maximized = not self.maximized
+		self.button_edit_script.setDisabled(self.maximized)
+		self.button_help.setDisabled(self.maximized)
+		self.main_window.setDisabled(self.maximized)
 
 	def init_edit_widget(self, stretch=True):
 
@@ -137,18 +137,18 @@ class qtitem(QtCore.QObject):
 		self.header_hbox.addWidget(self.button_toggle_maximize)
 
 		# Edit script button
-		button = QtGui.QPushButton(self.experiment.icon(u"script"), u"")
-		button.setToolTip(_(u"Edit script"))
-		button.setIconSize(QtCore.QSize(16, 16))
-		button.clicked.connect(self.open_script_tab)
-		self.header_hbox.addWidget(button)
+		self.button_edit_script = QtGui.QPushButton(self.experiment.icon(u"script"), u"")
+		self.button_edit_script.setToolTip(_(u"Edit script"))
+		self.button_edit_script.setIconSize(QtCore.QSize(16, 16))
+		self.button_edit_script.clicked.connect(self.open_script_tab)
+		self.header_hbox.addWidget(self.button_edit_script)
 
 		# Help button
-		button = QtGui.QPushButton(self.experiment.icon(u"help"), u"")
-		button.setToolTip(_(u"Tell me more about the %s item") % self.item_type)
-		button.setIconSize(QtCore.QSize(16, 16))
-		button.clicked.connect(self.open_help_tab)
-		self.header_hbox.addWidget(button)
+		self.button_help = QtGui.QPushButton(self.experiment.icon(u"help"), u"")
+		self.button_help.setToolTip(_(u"Tell me more about the %s item") % self.item_type)
+		self.button_help.setIconSize(QtCore.QSize(16, 16))
+		self.button_help.clicked.connect(self.open_help_tab)
+		self.header_hbox.addWidget(self.button_help)
 
 		self.header_widget = QtGui.QWidget()
 		self.header_widget.setLayout(self.header_hbox)
