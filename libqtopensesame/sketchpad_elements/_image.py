@@ -22,6 +22,13 @@ from libopensesame.sketchpad_elements import image as image_runtime
 
 class image(base_element, image_runtime):
 
+	"""
+	desc:
+		An image element.
+
+		See base_element for docstrings and function descriptions.
+	"""
+
 	@classmethod
 	def mouse_press(cls, sketchpad, pos):
 

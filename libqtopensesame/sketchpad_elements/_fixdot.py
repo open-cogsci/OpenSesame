@@ -22,6 +22,13 @@ from libopensesame.sketchpad_elements import fixdot as fixdot_runtime
 
 class fixdot(base_element, fixdot_runtime):
 
+	"""
+	desc:
+		A fixdot element.
+
+		See base_element for docstrings and function descriptions.
+	"""
+
 	@classmethod
 	def mouse_press(cls, sketchpad, pos):
 

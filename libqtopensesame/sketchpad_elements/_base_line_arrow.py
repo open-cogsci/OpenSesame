@@ -22,15 +22,30 @@ from libqtopensesame.sketchpad_elements._base_element import base_element
 
 class base_line_arrow(base_element):
 
+	"""
+	desc:
+		A base class for line and arrow elements.
+		
+		See base_element for docstrings and function descriptions.
+	"""
+
 	pos_start = None
 	preview = None
+
+	def set_pos(self, x=0, y=0):
+
+		dx = self.properties[u'x2'] - self.properties[u'x1']
+		dy = self.properties[u'y2'] - self.properties[u'y1']
+		self.properties[u'x1'] = x
+		self.properties[u'y1'] = y
+		self.properties[u'x2'] = x+dx
+		self.properties[u'y2'] = y+dy
 
 	@classmethod
 	def mouse_press(cls, sketchpad, pos):
 
 		if cls.pos_start != None:
 			return
-		print 'Press!'
 		cls.pos_start = pos
 		xc = sketchpad.canvas.xcenter()
 		yc = sketchpad.canvas.ycenter()

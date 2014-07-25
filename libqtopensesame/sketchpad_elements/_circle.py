@@ -45,6 +45,10 @@ class circle(base_element, circle_runtime):
 		if cls.pos_start == None:
 			cls.pos_start = pos
 			return None
+		if cls.radius(pos) < 1:
+			cls.pos_start = None
+			sketchpad.canvas.removeItem(cls.preview)
+			return
 		properties = {
 				u'x':		cls.pos_start[0],
 				u'y':		cls.pos_start[1],

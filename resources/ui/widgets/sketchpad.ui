@@ -47,6 +47,9 @@
                 <verstretch>0</verstretch>
                </sizepolicy>
               </property>
+              <property name="toolTip">
+               <string>A numeric value (duration in milliseconds), &quot;keypress&quot;, or &quot;mouseclick&quot;</string>
+              </property>
              </widget>
             </item>
            </layout>
@@ -75,6 +78,9 @@
                 <horstretch>0</horstretch>
                 <verstretch>0</verstretch>
                </sizepolicy>
+              </property>
+              <property name="toolTip">
+               <string>Color</string>
               </property>
              </widget>
             </item>
@@ -134,6 +140,9 @@
             </item>
             <item>
              <widget class="QSpinBox" name="spinbox_arrow_size">
+              <property name="toolTip">
+               <string>Size of the arrowhead</string>
+              </property>
               <property name="suffix">
                <string> px</string>
               </property>
@@ -172,6 +181,9 @@
             </item>
             <item>
              <widget class="QDoubleSpinBox" name="spinbox_scale">
+              <property name="toolTip">
+               <string>Image scaling factor</string>
+              </property>
               <property name="prefix">
                <string>Scale </string>
               </property>
@@ -216,6 +228,9 @@
             </item>
             <item>
              <widget class="QCheckBox" name="checkbox_fill">
+              <property name="toolTip">
+               <string>Check to draw filled objects</string>
+              </property>
               <property name="text">
                <string>Fill</string>
               </property>
@@ -242,6 +257,9 @@
             </item>
             <item>
              <widget class="QCheckBox" name="checkbox_center">
+              <property name="toolTip">
+               <string>Center the object</string>
+              </property>
               <property name="text">
                <string>Center</string>
               </property>
@@ -335,6 +353,9 @@
          </item>
          <item>
           <widget class="QDoubleSpinBox" name="spinbox_zoom">
+           <property name="toolTip">
+            <string>Zoom factor</string>
+           </property>
            <property name="suffix">
             <string> x</string>
            </property>
@@ -372,6 +393,9 @@
             </item>
             <item>
              <widget class="QCheckBox" name="checkbox_html">
+              <property name="toolTip">
+               <string>Parse a subset of HTML tags</string>
+              </property>
               <property name="text">
                <string>HTML</string>
               </property>
@@ -398,6 +422,9 @@
          </item>
          <item>
           <widget class="QCheckBox" name="checkbox_grid">
+           <property name="toolTip">
+            <string>Check to display the grid and enable snap-to-grid</string>
+           </property>
            <property name="text">
             <string>Grid</string>
            </property>
@@ -408,6 +435,9 @@
          </item>
          <item>
           <widget class="QSpinBox" name="spinbox_grid">
+           <property name="toolTip">
+            <string>Grid size</string>
+           </property>
            <property name="suffix">
             <string> px</string>
            </property>

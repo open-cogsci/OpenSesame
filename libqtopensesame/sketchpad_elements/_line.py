@@ -22,10 +22,23 @@ from libopensesame.sketchpad_elements import line as line_runtime
 
 class line(base_line_arrow, line_runtime):
 
+	"""
+	desc:
+		A line element.
+
+		See base_element for docstrings and function descriptions.
+	"""
+
 	@classmethod
 	def mouse_release(cls, sketchpad, pos):
 
 		if cls.pos_start == None:
+			return
+		dx = pos[0] - cls.pos_start[0]
+		dy = pos[1] - cls.pos_start[1]
+		if abs(dx) < 1 and abs(dy) < 1:
+			cls.pos_start = None
+			sketchpad.canvas.removeItem(cls.preview)
 			return
 		properties = {
 				u'x1':		cls.pos_start[0],

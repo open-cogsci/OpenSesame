@@ -101,8 +101,6 @@ class feedpad(QtCore.QObject):
 		for element in self.elements:
 			element.select(False)
 		element.select()
-		self.select_pointer_tool()
-		self.show_element_settings(element)
 
 	def selected_elements(self):
 

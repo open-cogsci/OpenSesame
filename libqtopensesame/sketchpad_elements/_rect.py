@@ -24,6 +24,13 @@ from libopensesame.sketchpad_elements import rect as rect_runtime
 
 class rect(base_rect_ellipse, rect_runtime):
 
+	"""
+	desc:
+		A rect element.
+
+		See base_element for docstrings and function descriptions.
+	"""
+
 	@classmethod
 	def mouse_press(cls, sketchpad, pos):
 

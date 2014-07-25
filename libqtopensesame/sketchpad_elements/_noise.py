@@ -23,6 +23,13 @@ from libopensesame.sketchpad_elements import noise as noise_runtime
 
 class noise(base_element, noise_runtime):
 
+	"""
+	desc:
+		A noise element.
+
+		See base_element for docstrings and function descriptions.
+	"""
+
 	def show_edit_dialog(self):
 
 		"""

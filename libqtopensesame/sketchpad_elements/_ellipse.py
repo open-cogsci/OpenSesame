@@ -24,6 +24,13 @@ from libopensesame.sketchpad_elements import ellipse as ellipse_runtime
 
 class ellipse(base_rect_ellipse, ellipse_runtime):
 
+	"""
+	desc:
+		An ellipse element.
+
+		See base_element for docstrings and function descriptions.
+	"""
+
 	@classmethod
 	def mouse_press(cls, sketchpad, pos):
 

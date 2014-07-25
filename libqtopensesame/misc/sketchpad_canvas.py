@@ -69,42 +69,16 @@ class sketchpad_canvas(QtGui.QGraphicsScene):
 			e.ignore()
 			return
 		ex, ey = self.cursor_pos(e, grid=True)
-		dx = ex-data[u'from_x']
-		dy = ey-data[u'from_y']
-		dx = round(1.*dx/self.grid) * self.grid
-		dy = round(1.*dy/self.grid) * self.grid
+		dx = ex-self.start_move_pos[0]
+		dy = ey-self.start_move_pos[1]
+		self.start_move_pos = ex, ey
 		if abs(dx) < self.grid and abs(dy) < self.grid:
-			e.ignore()
+			e.accept()
 			return
-		self.sketchpad.set_elements_pos(self.sketchpad.selected_elements(),
-			x=ex, y=ey)
+		self.sketchpad.move_elements(self.sketchpad.selected_elements(),
+			dx=dx, dy=dy)
 		self.sketchpad.draw()
 		e.accept()
-
-	def mouseMoveEvent(self, e):
-
-		"""
-		desc:
-			Processes mouse-move events, to handle highlighting and cursor-
-			position display.
-
-		arguments:
-			e:
-				type:	QMouseEvent
-		"""
-
-		cursor_pos = self.cursor_pos(e)
-		self.sketchpad.set_cursor_pos(cursor_pos)
-		for element in self.sketchpad.elements:
-			element.highlight(False)
-		# Only highlight elements if the pointer tool is selected
-		if self.selected_element_tool == None:
-			element = self.element_at(e.scenePos())
-			if element != None:
-				element.highlight()
-		else:
-			self.selected_element_tool.set_cursor_pos(self.sketchpad,
-				cursor_pos)
 
 	def wheelEvent(self, e):
 
@@ -146,7 +120,17 @@ class sketchpad_canvas(QtGui.QGraphicsScene):
 
 		"""
 		desc:
-			Processes mouse-press events, to handle element selection.
+			Processes mouse-press events. Mouse presses can have a number of
+			effects.
+
+			- All selected elements are deselected unless Control is pressed
+			- Left clicks:
+				- If the pointer tool is selected, clicking an element selects
+				  it.
+				- If an element tool is selected, clicking gives the element
+				  tool the opporunity (to start a) drawing operation.
+			- Right clicks:
+				- If an element is selected, a context menu is shown.
 
 		arguments:
 			e:
@@ -175,6 +159,7 @@ class sketchpad_canvas(QtGui.QGraphicsScene):
 				element.select()
 				self.sketchpad.show_element_settings(element)
 				x, y = self.cursor_pos(e, grid=False)
+				self.start_move_pos = x, y
 				data = {
 					u'type'		: u'sketchpad-element-move',
 					u'from_x'	: x,
@@ -184,6 +169,16 @@ class sketchpad_canvas(QtGui.QGraphicsScene):
 
 	def mouseReleaseEvent(self, e):
 
+		"""
+		desc:
+			Mouse-release events give elements the opportunity to finish a
+			drawing operation.
+
+		arguments:
+			e:
+				type:	QMouseEvent
+		"""
+
 		if self.selected_element_tool != None:
 			self.sketchpad.add_element(
 				self.selected_element_tool.mouse_release(self.sketchpad,
@@ -191,9 +186,27 @@ class sketchpad_canvas(QtGui.QGraphicsScene):
 
 	def mouseMoveEvent(self, e):
 
-		if self.selected_element_tool != None:
-			self.selected_element_tool.mouse_move(self.sketchpad,
-				self.cursor_pos(e))
+		"""
+		desc:
+			Processes mouse-move events, to handle highlighting and cursor-
+			position display.
+
+		arguments:
+			e:
+				type:	QMouseEvent
+		"""
+
+		cursor_pos = self.cursor_pos(e)
+		self.sketchpad.set_cursor_pos(cursor_pos)
+		for element in self.sketchpad.elements:
+			element.highlight(False)
+		# Only highlight elements if the pointer tool is selected
+		if self.selected_element_tool == None:
+			element = self.element_at(e.scenePos())
+			if element != None:
+				element.highlight()
+		else:
+			self.selected_element_tool.mouse_move(self.sketchpad, cursor_pos)
 
 	def keyPressEvent(self, e):
 

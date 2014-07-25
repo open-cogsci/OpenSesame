@@ -32,7 +32,8 @@ class base_rect_ellipse(base_element):
 			return
 		w = pos[0]-cls.pos_start[0]
 		h = pos[1]-cls.pos_start[1]
-		if abs(w) < 1 and abs(h) < 1:
+		# Don't draw line-like shapes
+		if abs(w) < 1 or abs(h) < 1:
 			cls.pos_start = None
 			sketchpad.canvas.removeItem(cls.preview)
 			return

@@ -105,11 +105,8 @@ class base_element(object):
 			y:		The vertical position.
 		"""
 
-		for var, val in self.properties.items():
-			if var in [u'x', u'x1', u'x2']:
-				self.properties[var] = x
-			if var in [u'y', u'y1', u'y2']:
-				self.properties[var] = y
+		self.properties[u'x'] = x
+		self.properties[u'y'] = y
 
 	def get_pos(self):
 
@@ -475,3 +472,18 @@ class base_element(object):
 		"""
 
 		return True
+
+	@staticmethod
+	def cursor():
+
+		"""
+		desc:
+			Indicates which cursor should be shown when the element tool is
+			selected.
+
+		returns:
+			desc:	A Qt::CursorShape value
+			type:	int
+		"""
+
+		return QtCore.Qt.CrossCursor

@@ -23,6 +23,13 @@ from libopensesame.sketchpad_elements import gabor as gabor_runtime
 
 class gabor(base_element, gabor_runtime):
 
+	"""
+	desc:
+		A gabor element.
+
+		See base_element for docstrings and function descriptions.
+	"""
+
 	def show_edit_dialog(self):
 
 		"""
