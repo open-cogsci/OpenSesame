@@ -3,7 +3,10 @@ opensesame (2.9.0~pre1-ubuntu1) trusty; urgency=medium
   * Bugs fixed
     - The radius keyword to circle sketchpad elements now specifies radius, instead of diameter
   * Improvements
-    - Rewritten sketchpad (runtime only)
+    - Rewritten sketchpad runtime
+    - Redesigned sketchpad gui
+    - Added quick-open-item feature
+    - Added toggle-item-maximization feature    
     - Converted GUI to base_component framework
     - Back-ends now inherit from abstract class
 
