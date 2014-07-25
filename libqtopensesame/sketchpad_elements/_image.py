@@ -22,8 +22,8 @@ from libopensesame.sketchpad_elements import image as image_runtime
 
 class image(base_element, image_runtime):
 
-	@staticmethod
-	def click(sketchpad, pos):
+	@classmethod
+	def mouse_press(cls, sketchpad, pos):
 
 		_file = sketchpad.main_window.select_from_pool()
 		if _file == None:

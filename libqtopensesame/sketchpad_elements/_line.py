@@ -17,23 +17,19 @@ You should have received a copy of the GNU General Public License
 along with openexp.  If not, see <http://www.gnu.org/licenses/>.
 """
 
-from libqtopensesame.sketchpad_elements._base_element import base_element
+from libqtopensesame.sketchpad_elements._base_line_arrow import base_line_arrow
 from libopensesame.sketchpad_elements import line as line_runtime
 
-pos_start = None
+class line(base_line_arrow, line_runtime):
 
-class line(base_element, line_runtime):
+	@classmethod
+	def mouse_release(cls, sketchpad, pos):
 
-	@staticmethod
-	def click(sketchpad, pos):
-
-		global pos_start
-		if pos_start == None:
-			pos_start = pos
-			return None
+		if cls.pos_start == None:
+			return
 		properties = {
-				u'x1':		pos_start[0],
-				u'y1':		pos_start[1],
+				u'x1':		cls.pos_start[0],
+				u'y1':		cls.pos_start[1],
 				u'x2':		pos[0],
 				u'y2':		pos[1],
 				u'color': 	sketchpad.current_color(),
@@ -41,13 +37,6 @@ class line(base_element, line_runtime):
 				u'show_if'	: sketchpad.current_show_if()
 			}
 		e = line(sketchpad, properties=properties)
-		pos_start = None
+		cls.pos_start = None
+		sketchpad.canvas.removeItem(cls.preview)
 		return e
-
-	@staticmethod
-	def requires_color():
-		return True
-
-	@staticmethod
-	def requires_penwidth():
-		return True

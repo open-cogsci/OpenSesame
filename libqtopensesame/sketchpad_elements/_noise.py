@@ -38,8 +38,8 @@ class noise(base_element, noise_runtime):
 		self.properties.update(properties)
 		self.sketchpad.draw()
 
-	@staticmethod
-	def click(sketchpad, pos):
+	@classmethod
+	def mouse_press(cls, sketchpad, pos):
 
 		d = noise_settings(sketchpad.main_window)
 		properties = d.get_properties()

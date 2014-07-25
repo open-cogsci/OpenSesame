@@ -38,8 +38,8 @@ class gabor(base_element, gabor_runtime):
 		self.properties.update(properties)
 		self.sketchpad.draw()
 
-	@staticmethod
-	def click(sketchpad, pos):
+	@classmethod
+	def mouse_press(cls, sketchpad, pos):
 
 		d = gabor_settings(sketchpad.main_window)
 		properties = d.get_properties()

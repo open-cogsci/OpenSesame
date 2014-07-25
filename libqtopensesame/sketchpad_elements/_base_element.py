@@ -316,13 +316,13 @@ class base_element(object):
 			self.sketchpad.remove_elements([self])
 		self.sketchpad.draw()
 
-	@staticmethod
-	def click(sketchpad, pos):
+	@classmethod
+	def mouse_press(cls, sketchpad, pos):
 
 		"""
 		desc:
 			A static method that processes mouse clicks and returns an element
-			object when one has been created (for example, every second click).
+			object when one has been created.
 
 		arguments:
 			sketchpad:	A sketchpad object.
@@ -333,6 +333,44 @@ class base_element(object):
 		"""
 
 		return None
+
+	@classmethod
+	def mouse_release(cls, sketchpad, pos):
+
+		"""
+		desc:
+			A static method that processes mouse releases and returns an element
+			object when one has been created.
+
+		arguments:
+			sketchpad:	A sketchpad object.
+			pos:		An (x,y) tuple with mouse-release coordinates.
+
+		returns:
+			An element object, or None if no element was created.
+		"""
+
+		pass
+
+	@classmethod
+	def mouse_move(cls, sketchpad, pos):
+
+		"""
+		desc:
+			A static method that processes mouse moves, and gives elements the
+			opportunity to update their preview.
+
+		arguments:
+			sketchpad:	A sketchpad object.
+			pos:		An (x,y) tuple with mousecoordinates.
+		"""
+
+		pass
+
+	@classmethod
+	def reset(cls, sketchpad):
+
+		pass
 
 	@staticmethod
 	def requires_text():

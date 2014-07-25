@@ -17,42 +17,21 @@ You should have received a copy of the GNU General Public License
 along with openexp.  If not, see <http://www.gnu.org/licenses/>.
 """
 
-from libqtopensesame.sketchpad_elements._base_element import base_element
+from libqtopensesame.misc.config import cfg
+from libqtopensesame.sketchpad_elements._base_rect_ellipse import \
+	base_rect_ellipse
 from libopensesame.sketchpad_elements import ellipse as ellipse_runtime
 
-pos_start = None
+class ellipse(base_rect_ellipse, ellipse_runtime):
 
-class ellipse(base_element, ellipse_runtime):
+	@classmethod
+	def mouse_press(cls, sketchpad, pos):
 
-	@staticmethod
-	def click(sketchpad, pos):
-
-		global pos_start
-		if pos_start == None:
-			pos_start = pos
-			return None
-		properties = {
-				u'x':		pos_start[0],
-				u'y':		pos_start[1],
-				u'w':		pos[0]-pos_start[0],
-				u'h':		pos[1]-pos_start[1],
-				u'color': 	sketchpad.current_color(),
-				u'penwidth'	: sketchpad.current_penwidth(),
-				u'fill'		: sketchpad.current_fill(),
-				u'show_if'	: sketchpad.current_show_if()
-			}
-		e = ellipse(sketchpad, properties=properties)
-		pos_start = None
-		return e
-
-	@staticmethod
-	def requires_color():
-		return True
-
-	@staticmethod
-	def requires_penwidth():
-		return True
-
-	@staticmethod
-	def requires_fill():
-		return True
+		if cls.pos_start != None:
+			return
+		cls.pos_start = pos
+		xc = sketchpad.canvas.xcenter()
+		yc = sketchpad.canvas.ycenter()
+		cls.preview = sketchpad.canvas.ellipse(pos[0]+xc, pos[1]+yc, 0, 0,
+			color=cfg.sketchpad_preview_color,
+			penwidth=cfg.sketchpad_preview_penwidth)

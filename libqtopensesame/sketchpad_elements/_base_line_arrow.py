@@ -17,23 +17,46 @@ You should have received a copy of the GNU General Public License
 along with openexp.  If not, see <http://www.gnu.org/licenses/>.
 """
 
+from libqtopensesame.misc.config import cfg
 from libqtopensesame.sketchpad_elements._base_element import base_element
-from libopensesame.sketchpad_elements import fixdot as fixdot_runtime
 
-class fixdot(base_element, fixdot_runtime):
+class base_line_arrow(base_element):
+
+	pos_start = None
+	preview = None
 
 	@classmethod
 	def mouse_press(cls, sketchpad, pos):
 
-		properties = {
-				u'x':		pos[0],
-				u'y':		pos[1],
-				u'color': 	sketchpad.current_color(),
-				u'show_if'	: sketchpad.current_show_if()
-			}
-		e = fixdot(sketchpad, properties=properties)
-		return e
+		if cls.pos_start != None:
+			return
+		print 'Press!'
+		cls.pos_start = pos
+		xc = sketchpad.canvas.xcenter()
+		yc = sketchpad.canvas.ycenter()
+		cls.preview = sketchpad.canvas.line(pos[0]+xc, pos[1]+yc, pos[0]+xc,
+			pos[1]+yc, color=cfg.sketchpad_preview_color,
+			penwidth=cfg.sketchpad_preview_penwidth)
+
+	@classmethod
+	def mouse_move(cls, sketchpad, pos):
+
+		if cls.pos_start == None:
+			return
+		xc = sketchpad.canvas.xcenter()
+		yc = sketchpad.canvas.ycenter()
+		cls.preview.setLine(cls.pos_start[0]+xc, cls.pos_start[1]+yc, pos[0]+xc,
+			pos[1]+yc)
+
+	@classmethod
+	def reset(cls):
+
+		cls.pos_start = None
 
 	@staticmethod
 	def requires_color():
+		return True
+
+	@staticmethod
+	def requires_penwidth():
 		return True

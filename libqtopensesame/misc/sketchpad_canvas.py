@@ -93,7 +93,8 @@ class sketchpad_canvas(QtGui.QGraphicsScene):
 				type:	QMouseEvent
 		"""
 
-		self.sketchpad.set_cursor_pos(self.cursor_pos(e))
+		cursor_pos = self.cursor_pos(e)
+		self.sketchpad.set_cursor_pos(cursor_pos)
 		for element in self.sketchpad.elements:
 			element.highlight(False)
 		# Only highlight elements if the pointer tool is selected
@@ -101,6 +102,9 @@ class sketchpad_canvas(QtGui.QGraphicsScene):
 			element = self.element_at(e.scenePos())
 			if element != None:
 				element.highlight()
+		else:
+			self.selected_element_tool.set_cursor_pos(self.sketchpad,
+				cursor_pos)
 
 	def wheelEvent(self, e):
 
@@ -162,8 +166,9 @@ class sketchpad_canvas(QtGui.QGraphicsScene):
 			# The left button selects and drags.
 			if self.selected_element_tool != None:
 				# When in pointer-tool mode, mouse clicks create new elements.
-				self.sketchpad.add_element(self.selected_element_tool.click(
-					self.sketchpad, self.cursor_pos(e)))
+				self.sketchpad.add_element(
+					self.selected_element_tool.mouse_press(self.sketchpad,
+					self.cursor_pos(e)))
 			elif element == None:
 				self.sketchpad.select_pointer_tool()
 			else:
@@ -176,6 +181,19 @@ class sketchpad_canvas(QtGui.QGraphicsScene):
 					u'from_y'	: y
 					}
 				drag_and_drop.send(e.widget(), data)
+
+	def mouseReleaseEvent(self, e):
+
+		if self.selected_element_tool != None:
+			self.sketchpad.add_element(
+				self.selected_element_tool.mouse_release(self.sketchpad,
+				self.cursor_pos(e)))
+
+	def mouseMoveEvent(self, e):
+
+		if self.selected_element_tool != None:
+			self.selected_element_tool.mouse_move(self.sketchpad,
+				self.cursor_pos(e))
 
 	def keyPressEvent(self, e):
 

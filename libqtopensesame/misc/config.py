@@ -107,6 +107,8 @@ class config(object):
 		u'sketchpad_grid_thickness_thin' : 2,
 		u'sketchpad_grid_thickness_thick' : 4,
 		u'sketchpad_grid_opacity' : 32,
+		u'sketchpad_preview_color' : u'#00FF00',
+		u'sketchpad_preview_penwidth' : 2,
 		}
 
 	# OS specific override settings

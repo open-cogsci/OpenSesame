@@ -41,8 +41,8 @@ class textline(base_element, textline_runtime):
 		self.properties[u'text'] = unicode(text)
 		self.sketchpad.draw()
 
-	@staticmethod
-	def click(sketchpad, pos):
+	@classmethod
+	def mouse_press(cls, sketchpad, pos):
 
 		text = sketchpad.experiment.text_input(title=_(u'New textline'),
 			message=_(u'Please enter a text for the textline'))
