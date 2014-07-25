@@ -75,6 +75,13 @@ class qtopensesame(QtGui.QMainWindow, base_component):
 		import platform
 		import random
 
+		# Set some initial variables
+		self.current_path = None
+		self.version = misc.version
+		self.codename = misc.codename
+		self.lock_refresh = False
+		self.unsaved_changes = False
+
 		# Make sure that QProgEdit doesn't complain about some standard names
 		from QProgEdit import validate
 		validate.addPythonBuiltins([u'exp', u'win', u'self'])
@@ -84,6 +91,9 @@ class qtopensesame(QtGui.QMainWindow, base_component):
 
 		# Check the filesystem encoding for debugging purposes
 		debug.msg(u'filesystem encoding: %s' % misc.filesystem_encoding())
+
+		# Parse the command line
+		self.parse_command_line()
 
 		# Restore the configuration
 		self.restore_config()
@@ -97,16 +107,6 @@ class qtopensesame(QtGui.QMainWindow, base_component):
 		self.ui.toolbar_items.main_window = self
 		self.ui.itemtree.main_window = self
 		self.ui.tabwidget.main_window = self
-
-		# Set some initial variables
-		self.current_path = None
-		self.version = misc.version
-		self.codename = misc.codename
-		self.lock_refresh = False
-		self.unsaved_changes = False
-
-		# Parse the command line
-		self.parse_command_line()
 
 		# Load a theme
 		self.theme = theme.theme(self, self.options._theme)
@@ -293,6 +293,9 @@ class qtopensesame(QtGui.QMainWindow, base_component):
 
 		"""Restores the configuration settings, but doesn't apply anything"""
 
+		if self.options.start_clean:
+			debug.msg(u'Not restoring config')
+			return
 		debug.msg()
 		settings = QtCore.QSettings(u"cogscinl", u"opensesame")
 		settings.beginGroup(u"MainWindow")
