@@ -288,7 +288,7 @@
   <customwidget>
    <class>good_looking_table</class>
    <extends>QTableWidget</extends>
-   <header location="global">good_looking_table.h</header>
+   <header location="global">libqtopensesame/widgets/good_looking_table.h</header>
   </customwidget>
  </customwidgets>
  <resources/>
