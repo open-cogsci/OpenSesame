@@ -50,6 +50,7 @@ class qtitem(QtCore.QObject):
 		self.script_tab = None
 		self.lock = False
 		self.edit_mode = u'edit'
+		self.maximized = False
 
 		debug.msg(u'created %s' % self.name)
 
@@ -88,6 +89,31 @@ class qtitem(QtCore.QObject):
 		else:
 			self.open_script_tab()
 
+	def toggle_maximize(self):
+
+		"""
+		desc:
+			Toggles edit-widget maximization.
+		"""
+
+		if not self.maximized:
+			self._edit_widget.setParent(None)
+			self._edit_widget.setWindowFlags(QtCore.Qt.WindowStaysOnTopHint|\
+				QtCore.Qt.WindowMaximizeButtonHint)
+			self._edit_widget.showMaximized()
+			self._edit_widget.show()
+			self.main_window.setEnabled(False)
+			self.maximized = True
+			self.button_toggle_maximize.setIcon(
+				self.theme.qicon(u'view-restore'))
+		else:
+			self._edit_widget.setParent(self.main_window)
+			self.main_window.setEnabled(True)
+			self.open_tab()
+			self.maximized = False
+			self.button_toggle_maximize.setIcon(
+				self.theme.qicon(u'view-fullscreen'))
+
 	def init_edit_widget(self, stretch=True):
 
 		"""Build the GUI controls"""
@@ -101,6 +127,14 @@ class qtitem(QtCore.QObject):
 		self.header_hbox.addWidget(self.header)
 		self.header_hbox.addStretch()
 		self.header_hbox.setContentsMargins(0, 5, 0, 10)
+
+		# Maximize button
+		self.button_toggle_maximize = QtGui.QPushButton(
+			self.theme.qicon(u'view-fullscreen'), u'')
+		self.button_toggle_maximize.setToolTip(_(u'Toggle pop-out'))
+		self.button_toggle_maximize.setIconSize(QtCore.QSize(16, 16))
+		self.button_toggle_maximize.clicked.connect(self.toggle_maximize)
+		self.header_hbox.addWidget(self.button_toggle_maximize)
 
 		# Edit script button
 		button = QtGui.QPushButton(self.experiment.icon(u"script"), u"")
@@ -136,6 +170,7 @@ class qtitem(QtCore.QObject):
 		if stretch:
 			self.edit_vbox.addStretch()
 		self._edit_widget = QtGui.QWidget()
+		self._edit_widget.setWindowIcon(self.experiment.icon(self.item_type))
 		self._edit_widget.setLayout(self.edit_vbox)
 		self._edit_widget.__edit_item__ = self.name
 
