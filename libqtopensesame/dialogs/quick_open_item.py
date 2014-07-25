@@ -65,8 +65,6 @@ class quick_open_item(base_dialog):
 				or filter_text in item_type.lower():
 				self.ui.items_list_widget.addItem(QtGui.QListWidgetItem(
 					item_icon, item_name))
-		if len(self.ui.items_list_widget) == 1:
-			self.select_item(self.ui.items_list_widget.item(0))
 
 	def select_item(self, list_widget_item=None):
 
@@ -85,5 +83,7 @@ class quick_open_item(base_dialog):
 				 list_widget_item = self.ui.items_list_widget.item(0)
 			else:
 				self.accept()
+		if list_widget_item == None:
+			return
 		self.main_window.select_item(unicode(list_widget_item.text()))
 		self.accept()
