@@ -41,7 +41,22 @@ class user_hint_widget(QtGui.QFrame, base_subcomponent):
 		super(user_hint_widget, self).__init__(main_window)
 		self.setup(main_window, ui=u'widgets.user_hint_widget')
 		self.item = item
+		self.ui.button_edit_script.clicked.connect(self.item.open_script_tab)
 		self.hide()
+
+	def disable(self, disabled=True):
+
+		"""
+		desc:
+			Disables the widget.
+
+		keywords:
+			disabled:
+				desc:	Indicates whether the widget should be disabled.
+				type:	bool
+		"""
+
+		self.ui.button_edit_script.setDisabled(disabled)
 
 	def add_user_hint(self, hint):
 
