@@ -17,6 +17,7 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
+from libopensesame.item_store import item_store
 from libopensesame.exceptions import osexception
 from libopensesame import misc, item, plugins, debug
 import os.path
@@ -57,7 +58,7 @@ class experiment(item.item):
 
 		global pool_folders
 
-		self.items = {}
+		self.items = item_store(self)
 		self.running = False
 		self.auto_response = auto_response
 		self.plugin_folder = u'plugins'
@@ -209,37 +210,6 @@ class experiment(item.item):
 				break
 		return line, def_str
 
-	def parse_definition(self, item_type, item_name, string):
-
-		"""
-		Initializes a single definition, using the string, and adds it to the
-		dictionary of items.
-
-		Arguments:
-		item_type	--	The item's type.
-		item_name	--	The item's name.
-		string		--	The item's definition string.
-		"""
-
-		if plugins.is_plugin(item_type):
-			# Load a plug-in
-			try:
-				item = plugins.load_plugin(item_type, item_name, self, \
-					string, self.item_prefix())
-			except Exception as e:
-				raise osexception(u"Failed to load plugin '%s'" % \
-					item_type, exception=e)
-			self.items[item_name] = item
-		else:
-			# Load one of the core items
-			debug.msg(u"loading core item '%s' from '%s'" % (item_type, \
-				self.module_container()))
-			item_module = __import__(u'%s.%s' % (self.module_container(), \
-				item_type), fromlist=[u'dummy'])
-			item_class = getattr(item_module, item_type)
-			item = item_class(item_name, self, string)
-			self.items[item_name] = item
-
 	def from_string(self, string):
 
 		"""
@@ -271,7 +241,8 @@ class experiment(item.item):
 					item_name = self.sanitize(l[2])
 					line, def_str = self.read_definition(s)
 					get_next = False
-					self.parse_definition(item_type, item_name, def_str)
+					self.items.new(item_type, item_name=item_name,
+						string=def_str)
 			# Advance to next line
 			if get_next:
 				line = next(s, None)

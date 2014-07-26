@@ -673,3 +673,33 @@ class loop(libopensesame.loop.loop, qtitem.qtitem):
 		return self.item == item or (self.item in self.experiment.items and \
 			self.experiment.items[self.item].is_offspring(item))
 
+	def set_new_item(self, item_type):
+
+		"""
+		desc:
+			Creates a new item and sets it as the item to run.
+
+		arguments:
+			item_type:
+				desc:	The item type of the to-be-created item.
+				type:	unicode
+		"""
+
+		self.item = self.experiment.items.new(item_type).name
+		self.main_window.refresh(self.name)
+
+	def set_existing_item(self, item_name):
+
+		"""
+		desc:
+			Sets an existing item as the item to run.
+
+		arguments:
+			item_name:
+				desc:	The item name.
+				type:	unicode
+		"""
+
+		self.item = item_name
+		self.main_window.refresh(self.name)
+

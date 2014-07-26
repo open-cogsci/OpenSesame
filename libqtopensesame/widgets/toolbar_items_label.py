@@ -17,42 +17,39 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
-from libqtopensesame.misc.base_component import base_component
+from PyQt4 import QtCore, QtGui
+from libqtopensesame.misc import _
+from libqtopensesame.misc.base_subcomponent import base_subcomponent
 
-class base_subcomponent(base_component):
+class toolbar_items_label(base_subcomponent, QtGui.QFrame):
 
 	"""
 	desc:
-		A base class for all components that require an experiment and theme
-		property.
+		A label for the item toolbar.
 	"""
 
-	@property
-	def experiment(self):
+	def __init__(self, parent, label):
 
 		"""
-		returns:
-			An experiment object.
+		desc:
+			Constructor
+
+		arguments:
+			parent:
+				desc:	The parent.
+				type:	QWidget
+			label:
+				desc:	Label text.
+				type:	unicode
 		"""
 
-		return self.main_window.experiment
-
-	@property
-	def theme(self):
-
-		"""
-		returns:
-			A theme object.
-		"""
-
-		return self.main_window.theme
-
-	@property
-	def notify(self):
-
-		"""
-		returns:
-			The notify function.
-		"""
-
-		return self.main_window.experiment.notify
+		super(toolbar_items_label, self).__init__(parent)
+		self.setup(parent)
+		l = QtGui.QLabel(_(label))
+		l.setMaximumWidth(90)
+		l.setIndent(5)
+		l.setWordWrap(True)
+		hbox = QtGui.QHBoxLayout()
+		hbox.addWidget(l)
+		hbox.setMargin(0)
+		self.setLayout(hbox)

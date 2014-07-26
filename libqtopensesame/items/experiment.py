@@ -253,24 +253,6 @@ class experiment(libopensesame.experiment.experiment):
 		self.main_window.refresh()
 		self.main_window.close_item_tab(item_name)
 
-	def unique_name(self, name):
-
-		"""
-		Returns a unique name that resembles the desired name.
-
-		Arguments:
-		name	--	The desired name.
-
-		Returns:
-		A unique name.
-		"""
-
-		for item in self.items:
-			if item == name:
-				name = u'_' + name
-				return self.unique_name(name)
-		return name
-
 	def icon(self, name):
 
 		"""

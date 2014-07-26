@@ -15,6 +15,26 @@ GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
 along with openexp.  If not, see <http://www.gnu.org/licenses/>.
+
+---
+desc:
+	Drag-and-drop data is communicated by json-encoded dictionaries. The
+	following drag types exist:
+
+	-	type:			invalid
+
+	-	type:			sketchpad-element-move
+
+	-	type:			item-create
+		item-type:		[item type]
+
+	-	type:			item-copy
+		item-name:		[item name]
+		QTreeWidgetItem	[representation of QTreeWidgetItem]
+
+	-	type:		item-clone
+		item:		[item name]
+---
 """
 
 import json
@@ -45,9 +65,25 @@ def receive(drop_event):
 	"""
 
 	mimedata = drop_event.mimeData()
-	if not mimedata.hasText():
+	# Reject unknown mimedata
+	if not mimedata.hasText() and not mimedata.hasUrls():
 		debug.msg(u'No text data')
 		return invalid_data
+	# Process url mimedata
+	if mimedata.hasUrls():
+		urls = mimedata.urls()
+		if len(urls) == 0:
+			return invalid_data
+		url = urls[0]
+		if not url.isLocalFile():
+			return invalid_data
+		path = unicode(url.toLocalFile())
+		data = {
+			u'type' : u'url-local',
+			u'url'	: path
+			}
+		return data
+	# Process JSON text data
 	text = unicode(mimedata.text())
 	debug.msg(text)
 	try:

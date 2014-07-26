@@ -336,3 +336,49 @@ class sequence(libopensesame.sequence.sequence, qtitem.qtitem):
 				self.experiment.items[i].is_offspring(item)):
 				return True
 		return False
+
+	def insert_new_item(self, item_type, index=-1):
+
+		"""
+		desc:
+			Creates a new item and inserts it into the list.
+
+		arguments:
+			item_type:
+				desc:	The item type of the to-be-created item.
+				type:	unicode
+
+		keywords:
+			index:
+				desc:	The index of the new item, or -1 for appending.
+				type:	int
+		"""
+
+		item = self.experiment.items.new(item_type)
+		self.insert_existing_item(item.name, index=index)
+
+	def insert_existing_item(self, item_name, index=-1):
+
+		"""
+		desc:
+			Inserts an existing item into the list.
+
+		arguments:
+			item_name:
+				desc:	The name of the item.
+				type:	unicode
+
+		keywords:
+			index:
+				desc:	The index of the new item, or -1 for appending.
+				type:	int
+		"""
+
+		# The item is actually a tuple with the conditional statement as
+		# second element.
+		item = item_name, u'always'
+		if index < 0 or index >= len(self.items):
+			self.items.append(item)
+		else:
+			self.items.insert(index, item)
+		self.main_window.refresh(self.name)

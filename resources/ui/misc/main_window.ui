@@ -88,23 +88,6 @@
     <addaction name="separator"/>
     <addaction name="action_enable_auto_response"/>
    </widget>
-   <widget class="QMenu" name="menu_items">
-    <property name="title">
-     <string>Items</string>
-    </property>
-    <addaction name="action_add_loop"/>
-    <addaction name="action_add_sequence"/>
-    <addaction name="action_add_sketchpad"/>
-    <addaction name="action_add_feedback"/>
-    <addaction name="action_add_sampler"/>
-    <addaction name="action_add_synth"/>
-    <addaction name="action_add_keyboard_response"/>
-    <addaction name="action_add_mouse_response"/>
-    <addaction name="action_add_logger"/>
-    <addaction name="action_add_inline_script"/>
-    <addaction name="separator"/>
-    <addaction name="actionPlugins"/>
-   </widget>
    <widget class="QMenu" name="menu_view">
     <property name="title">
      <string>View</string>
@@ -140,7 +123,6 @@
    </widget>
    <addaction name="menu_file"/>
    <addaction name="menu_run"/>
-   <addaction name="menu_items"/>
    <addaction name="menu_view"/>
    <addaction name="menu_tools"/>
    <addaction name="menu_help"/>

@@ -17,42 +17,10 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
-from libqtopensesame.misc.base_component import base_component
+from libopensesame.item_store import item_store as item_store_runtime
 
-class base_subcomponent(base_component):
+class item_store(item_store_runtime):
 
-	"""
-	desc:
-		A base class for all components that require an experiment and theme
-		property.
-	"""
+	def create(self, item_type):
 
-	@property
-	def experiment(self):
-
-		"""
-		returns:
-			An experiment object.
-		"""
-
-		return self.main_window.experiment
-
-	@property
-	def theme(self):
-
-		"""
-		returns:
-			A theme object.
-		"""
-
-		return self.main_window.theme
-
-	@property
-	def notify(self):
-
-		"""
-		returns:
-			The notify function.
-		"""
-
-		return self.main_window.experiment.notify
+		pass
