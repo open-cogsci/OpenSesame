@@ -38,8 +38,8 @@ class textline(base_element):
 		"""
 
 		defaults = [
-			(u'x'			, 0),
-			(u'y'			, 0),
+			(u'x'			, None),
+			(u'y'			, None),
 			(u'text'		, None),
 			(u'center'		, 1),
 			(u'color'		, sketchpad.get(u'foreground')),

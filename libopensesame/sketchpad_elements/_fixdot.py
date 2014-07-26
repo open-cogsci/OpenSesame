@@ -38,8 +38,8 @@ class fixdot(base_element):
 		"""
 
 		defaults = [
-			(u'x'		, 0),
-			(u'y'		, 0),
+			(u'x'		, None),
+			(u'y'		, None),
 			(u'color'	, sketchpad.get(u'foreground')),
 			(u'style'	, u'default'),
 			]

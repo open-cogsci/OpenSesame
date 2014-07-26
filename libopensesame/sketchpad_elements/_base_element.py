@@ -44,13 +44,20 @@ class base_element(object):
 		"""
 
 		self._type = self.__class__.__name__
+		# These keywords provide compatibility with older versions of
+		# OpenSesame. `only_keywords` specifies whether all parameters should be
+		# written as keywords, which will prevent < 2.9.0 from reading the
+		# sketchpad elements. If not, keywords with a None default will be
+		# written value-only style. `fix_coordinates` specifies whether
+		# coordinates should be translated to top-left = 0,0.
+		self.only_keywords = False
+		self.fix_coordinates = True
 		debug.msg(self._type)
 		self.defaults = defaults + [
 			(u'z_index', 0),
 			(u'show_if', u'always')
 			]
 		self.sketchpad = sketchpad
-		self.fix_coordinates = True # TODO: Will be deprecated
 		self.from_string(string)
 
 	@property
@@ -185,6 +192,37 @@ class base_element(object):
 				return True
 		return False
 
+	def escape(self, val, quote=True):
+
+		"""
+		desc:
+			Escapes and optionally quotes a value so that it can be safely
+			inserted into a definition string. Everything except unicode is
+			returned as is.
+
+		arguments:
+			val:
+				desc:	The value to escape.
+				type:	[unicode, float, int]
+			quote:
+				desc:	Indicates whether unicode strings should be quoted
+						with double quotes.
+				type:	bool
+
+		returns:
+			desc:		A value that can be safely inserted into a definiton
+						string.
+			type:		[unicode, int, float]
+		"""
+
+		if not isinstance(val, unicode):
+			return val
+		val = val.replace(u'\\', u'\\\\')
+		val = val.replace(u'"', u'\\"')
+		if quote:
+			val = u'"%s"' % val
+		return val
+
 	def to_string(self):
 
 		"""
@@ -192,19 +230,16 @@ class base_element(object):
 			Generates a string representation of the element.
 
 		returns:
-			A string representation.
+			desc:	A string representation.
+			type:	unicode
 		"""
 
 		s = u'draw %s' % self._type
-		for var, val in self.defaults:
-			# Dummy properties have names like `__x__`, and we don't want those.
-			if var.startswith(u'__') and var.endswith(u'__'):
-				continue
+		for var, default in self.defaults:
 			val = self.properties[var]
-			if isinstance(val, basestring):
-				val = val.replace(u'\\', u'\\\\')
-				val = val.replace(u'"', u'\\"')
-				s += u' %s="%s"' % (var, val)
+			val = self.escape(val)
+			if default == None and not self.only_keywords:
+				s += u' %s' % val
 			else:
 				s += u' %s=%s' % (var, val)
 		return s

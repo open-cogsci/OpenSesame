@@ -38,8 +38,8 @@ class noise(base_element):
 		"""
 
 		defaults = [
-			(u'x',		0),
-			(u'y',		0),
+			(u'x',		None),
+			(u'y',		None),
 			(u'env',	u'gaussian'),
 			(u'size', 	96),
 			(u'stdev',	12),

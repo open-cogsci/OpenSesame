@@ -38,8 +38,8 @@ class gabor(base_element):
 		"""
 
 		defaults = [
-			(u'x',		0),
-			(u'y',		0),
+			(u'x',		None),
+			(u'y',		None),
 			(u'orient',	0),
 			(u'freq',	.1),
 			(u'env',	u'gaussian'),

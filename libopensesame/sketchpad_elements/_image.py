@@ -38,8 +38,8 @@ class image(base_element):
 		"""
 
 		defaults = [
-			(u'x'		, 0),
-			(u'y'		, 0),
+			(u'x'		, None),
+			(u'y'		, None),
 			(u'file'	, None),
 			(u'scale'	, 1),
 			(u'center'	, 1),
