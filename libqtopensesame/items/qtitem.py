@@ -585,21 +585,6 @@ class qtitem(QtCore.QObject):
 
 		toplevel.addChild(self.item_tree_widget(toplevel))
 
-	def is_offspring(self, item):
-
-		"""
-		Checks if the item is offspring of the current item, in the sense that
-		the current item is contained by the item
-
-		Arguments:
-		item -- the potential offspring
-
-		Returns:
-		True if the current item is offspring of the item, False otherwise
-		"""
-
-		return False
-
 	def parents(self):
 
 		"""
@@ -612,7 +597,7 @@ class qtitem(QtCore.QObject):
 
 		l = [self.name]
 		for item in self.experiment.items:
-			if self.experiment.items[item].is_offspring(self.name):
+			if self.experiment.items[item].is_child_item(self.name):
 				l.append(item)
 		return l
 
@@ -916,3 +901,61 @@ class qtitem(QtCore.QObject):
 				u'Failed to compile conditional statement "%s": %s' % (cond, e))
 			return u'always'
 		return cond
+
+	def is_child_item(self, item_name):
+
+		"""
+		desc:
+			Checks if an item is somewhere downstream from the current item
+			in the experimental hierarchy.
+
+		arguments:
+			item_name:
+				desc:	The name of the child item.
+				type:	unicode
+
+		returns:
+			desc:	True if the current item is offspring of the item, False
+					otherwise.
+			type:	bool
+		"""
+
+		return False
+
+	def insert_child_item(self, item_name, index=0):
+
+		"""
+		desc:
+			Inserts a child item, if applicable to the item type.
+
+		arguments:
+			item_name:
+				desc:	The name of the child item.
+				type:	unicode
+
+		keywords:
+			index:
+				desc:	The index of the child item.
+				type:	int
+		"""
+
+		pass
+
+	def remove_child_item(self, item_name, index=0):
+
+		"""
+		desc:
+			Removes a child item, if applicable to the item type.
+
+		arguments:
+			item_name:
+				desc:	The name of the child item.
+				type:	unicode
+
+		keywords:
+			index:
+				desc:	The index of the child item.
+				type:	int
+		"""
+
+		pass

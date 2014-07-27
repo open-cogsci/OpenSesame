@@ -25,10 +25,15 @@ desc:
 
 	-	type:			sketchpad-element-move
 
-	-	type:			item-create
-		item-type:		[item type]
+	-	type:			url-local
+		url:			[url]
 
-	-	type:			item-copy
+	-	type:			item-new
+		item-type:		[item type]
+		item-name:		[suggested name]
+		script:			[script]
+
+	-	type:			item-existing
 		item-name:		[item name]
 		QTreeWidgetItem	[representation of QTreeWidgetItem]
 
@@ -45,6 +50,34 @@ from libopensesame import debug
 invalid_data = {
 	u'type':	u'invalid'
 	}
+
+def matches(data, types):
+
+	"""
+	desc:
+		Checks whether a data dictionary matches any of the specified drop
+		types.
+
+	arguments:
+		data:
+			desc:	A data dictionary. Non-dict types do not give an error, but
+					return False.
+		types:
+			desc:	A list of types, matching the 'type' key in the data dict.
+			type:	list
+
+	returns:
+		desc:		True if the data matches, False otherwise.
+		type:		bool
+	"""
+
+	if not isinstance(data, dict):
+		return False
+	if u'type' not in data:
+		return False
+	if data[u'type'] not in types:
+		return False
+	return True
 
 def receive(drop_event):
 

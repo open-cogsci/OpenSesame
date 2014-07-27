@@ -30,25 +30,12 @@ class tree_overview(base_subcomponent, QtGui.QTreeWidget):
 		The overview area.
 	"""
 
-	def __init__(self, parent):
-
-		"""
-		desc:
-			Constructor.
-
-		arguments:
-			parent:
-				desc:	The parent widget.
-				type:	QWidget
-		"""
-
-		super(tree_overview, self).__init__(parent)
-
 	def mousePressEvent(self, e):
 
 		"""
 		desc:
-			Initiates a drag event after a mouse press.
+			Initiates a drag event after a mouse press, these are used to
+			implement item moving, shallow copying, and deep copying.
 
 		arguments:
 			e:
@@ -67,13 +54,86 @@ class tree_overview(base_subcomponent, QtGui.QTreeWidget):
 			e.ignore()
 			return
 		# Get the target item
-		target_item_name = unicode(target_treeitem.text(0))
-		data = {
-			u'type'				: u'item-clone',
-			u'item-name'		: target_item_name,
-			u'QTreeWidgetItem'	: `target_treeitem`,
-			}
+		target_item_name, target_item_ancestry = self.ancestry_from_treeitem(
+			target_treeitem)
+		if (QtCore.Qt.ControlModifier & e.modifiers()) and \
+			(QtCore.Qt.ShiftModifier & e.modifiers()):
+			target_item = self.experiment.items[target_item_name]
+			data = {
+				u'type'				: u'item-new',
+				u'item-name'		: target_item.name,
+				u'item-type'		: target_item.item_type,
+				u'ancestry'			: target_item_ancestry,
+				u'script'			: target_item.to_string()
+				}
+		else:
+			data = {
+				u'type'				: u'item-existing',
+				u'item-name'		: target_item_name,
+				u'ancestry'			: target_item_ancestry,
+				}
 		drag_and_drop.send(self, data)
+
+	def parent_from_ancestry(self, ancestry):
+
+		"""
+		desc:
+			Gets the parent item, and the index of the item in the parent, based
+			on an item's ancestry, as returned by ancestry_from_treeitem.
+
+		arguments:
+			ancestry:
+				desc:	An ancestry string.
+				type:	unicode
+
+		returns:
+			desc:	A (parent item name, index) tuple.
+			type:	tuple
+		"""
+
+		l = ancestry.split(u'.')
+		if len(l) == 1:
+			return None, None
+		parent_item_name = l[1].split(u':')[0]
+		index = int(l[0].split(u':')[1])
+		return parent_item_name, index
+
+	def ancestry_from_treeitem(self, treeitem):
+
+		"""
+		desc:
+			Gets the full ancestry of an item, i.e. a sequence of items that are
+			above the item in the hierarchy. The index of the item in the parent
+			is indicated by a ':'. The index is 0 in the case of most items, but
+			is mostly necessary for indicating the position in sequence items.
+
+			For example:
+
+				fixdot:2.trial_sequence:0.block_loop:0.experiment
+
+		arguments:
+			treeitem:
+				desc:	The tree item that contains the item.
+				type:	QTreeWidgetItem
+
+		returns:
+			desc:	A (item name, ancestry) tuple. For example:
+
+						(u'trial_sequence',
+						u'trial_sequence:0.block_loop:0.experiment:0')
+
+			type:	tuple
+		"""
+
+		item_name = unicode(treeitem.text(0))
+		l = []
+		while True:
+			if treeitem.parent() == None:
+				break
+			index = treeitem.parent().indexOfChild(treeitem)
+			l.append(unicode(treeitem.text(0))+u':'+unicode(index))
+			treeitem = treeitem.parent()
+		return item_name, u'.'.join(l)
 
 	def droppable_treeitem(self, treeitem):
 
@@ -97,7 +157,7 @@ class tree_overview(base_subcomponent, QtGui.QTreeWidget):
 			return False
 		return True
 
-	def drop_event_item_clone(self, data, e):
+	def drop_event_item_move(self, data, e):
 
 		"""
 		desc:
@@ -112,27 +172,29 @@ class tree_overview(base_subcomponent, QtGui.QTreeWidget):
 				type:	QDropEvent
 		"""
 
+		if not drag_and_drop.matches(data, [u'item-existing']):
+			e.ignore()
+			return
 		target_treeitem = self.itemAt(e.pos())
 		if not self.droppable_treeitem(target_treeitem):
 			e.ignore()
 			return
-		print data
-		target_item_name = unicode(target_treeitem.text(0))
-		# Don't accept drops on the same item
-		if `target_treeitem` == data[u'QTreeWidgetItem']:
+		target_item_name, target_item_ancestry = self.ancestry_from_treeitem(
+			target_treeitem)
+		if target_item_ancestry.endswith(data[u'ancestry']):
 			e.ignore()
 			return
-		# Check for recursion, i.e. check if the source item name is also in
-		# the parent hierarchy.
-		parent_treeitem = target_treeitem.parent()
-		while parent_treeitem.parent() != None:
-			if unicode(parent_treeitem.text(0)) == data[u'item-name']:
-				e.ignore()
-				return
-			parent_treeitem = parent_treeitem.parent()
-		self.drop_event_item_create(data, e)
+		parent_item_name, index = self.parent_from_ancestry(
+			data[u'ancestry'])
+		if parent_item_name == None:
+			e.ignore()
+			return
+		if not QtCore.Qt.ControlModifier & e.keyboardModifiers():
+			self.experiment.items[parent_item_name].remove_child_item(
+				data[u'item-name'], index)
+		self.drop_event_item_new(data, e)
 
-	def drop_event_item_create(self, data, e):
+	def drop_event_item_new(self, data, e):
 
 		"""
 		desc:
@@ -147,6 +209,9 @@ class tree_overview(base_subcomponent, QtGui.QTreeWidget):
 				type:	QDropEvent
 		"""
 
+		if not drag_and_drop.matches(data, [u'item-existing', u'item-new']):
+			e.ignore()
+			return
 		# Ignore drops on non-droppable tree items.
 		target_treeitem = self.itemAt(e.pos())
 		if not self.droppable_treeitem(target_treeitem):
@@ -155,41 +220,27 @@ class tree_overview(base_subcomponent, QtGui.QTreeWidget):
 		# Get the target item
 		target_item_name = unicode(target_treeitem.text(0))
 		target_item = self.experiment.items[target_item_name]
-		# If a drop has been made on a loop, tell the loop to accept a new item.
-		if target_item.item_type == u'loop':
-			if data[u'type'] == u'item-create':
-				target_item.set_new_item(data[u'item-type'])
-			else:
-				target_item.set_existing_item(data[u'item-name'])
-		# If a drop has been made on a sequence, append the item to the
-		# sequence.
-		elif target_item.item_type == u'sequence':
-			if data[u'type'] == u'item-create':
-				target_item.insert_new_item(data[u'item-type'])
-			else:
-				target_item.insert_existing_item(data[u'item-name'])
+		# Get the item to be inserted. If the drop type is item-new, we need
+		# to create a new item, otherwise we get an existin item.
+		if data[u'type'] == u'item-new':
+			item = self.experiment.items.new(data[u'item-type'],
+				data[u'item-name'], data[u'script'])
+		else:
+			item = self.experiment.items[data[u'item-name']]
+		# If a drop has been made on a loop or sequence, we can insert the new
+		# item directly.
+		if target_item.item_type in [u'loop', u'sequence']:
+			target_item.insert_child_item(item.name)
+		# Otherwise, we find the parent of the target item, and insert the new
+		# item at the correct position.
 		else:
 			parent_treeitem = target_treeitem.parent()
 			parent_item_name = unicode(parent_treeitem.text(0))
 			parent_item = self.experiment.items[parent_item_name]
-			# If a drop has been made on an item that has a loop as parent,
-			# tell the parent loop to accept a new item.
-			if parent_item.item_type == u'loop':
-				if data[u'type'] == u'item-create':
-					parent_item.set_new_item(data[u'item-type'])
-				else:
-					parent_item.set_existing_item(data[u'item-name'])
-			# If a drop has been made on an item that has a sequence as parent,
-			# tell the parent sequence to accept a new item after the position
-			# of the drop target.
-			elif parent_item.item_type == u'sequence':
-				index = parent_treeitem.indexOfChild(target_treeitem)
-				if data[u'type'] == u'item-create':
-					parent_item.insert_new_item(data[u'item-type'], index=index)
-				else:
-					parent_item.insert_existing_item(data[u'item-name'],
-						index=index)
+			index = parent_treeitem.indexOfChild(target_treeitem)
+			parent_item.insert_child_item(item.name, index)
 		e.accept()
+		self.main_window.refresh()
 
 	def dropEvent(self, e):
 
@@ -204,10 +255,10 @@ class tree_overview(base_subcomponent, QtGui.QTreeWidget):
 		"""
 
 		data = drag_and_drop.receive(e)
-		if data[u'type'] == u'item-create':
-			self.drop_event_item_create(data, e)
-		elif data[u'type'] == u'item-clone':
-			self.drop_event_item_clone(data, e)
+		if data[u'type'] == u'item-new':
+			self.drop_event_item_new(data, e)
+		elif data[u'type'] == u'item-existing':
+			self.drop_event_item_move(data, e)
 		elif data[u'type'] == u'url-local':
 			self.main_window.open_file(path=data[u'url'])
 		else:
@@ -227,7 +278,8 @@ class tree_overview(base_subcomponent, QtGui.QTreeWidget):
 		"""
 
 		data = drag_and_drop.receive(e)
-		if data[u'type'] in (u'item-create', u'item-clone', u'url-local'):
+		if drag_and_drop.matches(data, [u'item-new', u'item-existing',
+			u'url-local']):
 			e.accept()
 		else:
 			e.ignore()
@@ -246,9 +298,9 @@ class tree_overview(base_subcomponent, QtGui.QTreeWidget):
 		"""
 
 		data = drag_and_drop.receive(e)
-		if data[u'type'] == u'url-local':
+		if drag_and_drop.matches(data, [u'url-local']):
 			e.accept()
-		elif data[u'type'] in (u'item-create', u'item-clone'):
+		elif drag_and_drop.matches(data, [u'item-new', u'item-existing']):
 			if not self.droppable_treeitem(self.itemAt(e.pos())):
 				e.ignore()
 			else:
@@ -360,4 +412,3 @@ class tree_overview(base_subcomponent, QtGui.QTreeWidget):
 		return self.main_window.ui.itemtree.recursive_children( \
 			self.main_window.ui.itemtree.topLevelItem( \
 				self.main_window.ui.itemtree.topLevelItemCount()-1))
-

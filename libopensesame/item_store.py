@@ -42,24 +42,24 @@ class item_store(object):
 		self.__items__ = {}
 		self.experiment = experiment
 
-	def new(self, item_type, item_name=None, string=None):
+	def new(self, _type, name=None, script=None):
 
 		"""
 		desc:
 			Creates a new item.
 
 		arguments:
-			item_type:
+			_type:
 				desc:	The item type.
 				type:	unicode
 
 		keywords:
-			item_name:
+			name:
 				desc:	The item name, or None to choose a unique name based
 						on the item type.
 				type:	[unicode, NoneType]
-			string:
-				desc:	A definition string, or None to start with a blank item.
+			script:
+				desc:	A definition script, or None to start with a blank item.
 				type:	[unicode, NoneType]
 
 		returns:
@@ -67,27 +67,27 @@ class item_store(object):
 			type:	item
 		"""
 
-		debug.msg(u'creating %s' % item_type)
-		item_name = self.unique_name(item_type, suggestion=item_name)
-		if plugins.is_plugin(item_type):
+		debug.msg(u'creating %s' % _type)
+		name = self.unique_name(_type, suggestion=name)
+		if plugins.is_plugin(_type):
 			# Load a plug-in
 			try:
-				item = plugins.load_plugin(item_type, item_name,
-					self.experiment, string, self.experiment.item_prefix())
+				item = plugins.load_plugin(_type, name,
+					self.experiment, script, self.experiment.item_prefix())
 			except Exception as e:
 				raise osexception(
-					u"Failed to load plugin '%s'" % item_type, exception=e)
-			self.__items__[item_name] = item
+					u"Failed to load plugin '%s'" % _type, exception=e)
+			self.__items__[name] = item
 		else:
 			# Load one of the core items
-			debug.msg(u"loading core item '%s' from '%s'" % (item_type,
+			debug.msg(u"loading core item '%s' from '%s'" % (_type,
 				self.experiment.module_container()))
 			item_module = __import__(u'%s.%s' % (
-				self.experiment.module_container(), item_type),
+				self.experiment.module_container(), _type),
 				fromlist=[u'dummy'])
-			item_class = getattr(item_module, item_type)
-			item = item_class(item_name, self.experiment, string)
-			self.__items__[item_name] = item
+			item_class = getattr(item_module, _type)
+			item = item_class(name, self.experiment, script)
+			self.__items__[name] = item
 		return item
 
 	def unique_name(self, item_type, suggestion=None):
@@ -145,3 +145,7 @@ class item_store(object):
 	@property
 	def __contains__(self):
 		return  self.__items__.__contains__
+
+	@property
+	def items(self):
+		return self.__items__.items

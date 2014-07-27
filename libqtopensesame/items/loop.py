@@ -482,7 +482,7 @@ class loop(libopensesame.loop.loop, qtitem.qtitem):
 			self.apply_edit_changes)
 		# The item combobox needs special treatment, because it's changes
 		# must be visible in the item tree as well
-		self.loop_widget.ui.combobox_item.currentIndexChanged.connect( \
+		self.loop_widget.ui.combobox_item.activated.connect( \
 			self.apply_item_change)
 
 		self.loop_widget.ui.button_add_cyclevar.clicked.connect( \
@@ -658,48 +658,16 @@ class loop(libopensesame.loop.loop, qtitem.qtitem):
 		widget.setExpanded(True)
 		return items
 
-	def is_offspring(self, item):
-
-		"""
-		Checks if the item is offspring of the current item.
-
-		Arguments:
-		item	--	The potential offspring.
-
-		Returns:
-		True if the passed item is offspring, False otherwise.
-		"""
+	def is_child_item(self, item):
 
 		return self.item == item or (self.item in self.experiment.items and \
-			self.experiment.items[self.item].is_offspring(item))
+			self.experiment.items[self.item].is_child_item(item))
 
-	def set_new_item(self, item_type):
-
-		"""
-		desc:
-			Creates a new item and sets it as the item to run.
-
-		arguments:
-			item_type:
-				desc:	The item type of the to-be-created item.
-				type:	unicode
-		"""
-
-		self.item = self.experiment.items.new(item_type).name
-		self.main_window.refresh(self.name)
-
-	def set_existing_item(self, item_name):
-
-		"""
-		desc:
-			Sets an existing item as the item to run.
-
-		arguments:
-			item_name:
-				desc:	The item name.
-				type:	unicode
-		"""
+	def insert_child_item(self, item_name, index=0):
 
 		self.item = item_name
-		self.main_window.refresh(self.name)
 
+	def remove_child_item(self, item_name, index=0):
+
+		if item_name == self.item:
+			self.item = None

@@ -241,8 +241,7 @@ class experiment(item.item):
 					item_name = self.sanitize(l[2])
 					line, def_str = self.read_definition(s)
 					get_next = False
-					self.items.new(item_type, item_name=item_name,
-						string=def_str)
+					self.items.new(item_type, item_name, def_str)
 			# Advance to next line
 			if get_next:
 				line = next(s, None)
