@@ -76,7 +76,8 @@ class theme:
 		widget -- a QWidget
 		"""
 
-		widget.setStyleSheet(self._qss)
+		if hasattr(widget, u'setStyleSheet'):
+			widget.setStyleSheet(self._qss)
 		if hasattr(widget, u"ui"):
 			self.load_icons(widget.ui)
 

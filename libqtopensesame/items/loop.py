@@ -24,6 +24,7 @@ from libqtopensesame.misc import _
 from libqtopensesame.misc.config import cfg
 from libqtopensesame.widgets import loop_table
 from libqtopensesame.widgets.loop_widget import loop_widget
+from libqtopensesame.widgets.tree_item import tree_item
 from libopensesame import debug
 from PyQt4 import QtCore, QtGui
 
@@ -634,7 +635,7 @@ class loop(libopensesame.loop.loop, qtitem.qtitem):
 		self.lock = False
 		self.edit_widget()
 
-	def build_item_tree(self, toplevel, items):
+	def build_item_tree(self, toplevel=None, items=[], max_depth=-1):
 
 		"""
 		Constructs an item tree.
@@ -648,15 +649,15 @@ class loop(libopensesame.loop.loop, qtitem.qtitem):
 		An updated list of items that have been added.
 		"""
 
-		widget = self.item_tree_widget(toplevel)
-		toplevel.addChild(widget)
-		if self.item in self.experiment.items and self.item != None and \
-			self.item.strip() != "":
-			if self.experiment.items[self.item] not in items:
-				items.append(self.experiment.items[self.item])
-			self.experiment.items[self.item].build_item_tree(widget, items)
-		widget.setExpanded(True)
-		return items
+		items.append(self.name)
+		widget = tree_item(self)
+		if toplevel != None:
+			toplevel.addChild(widget)
+		if (max_depth < 0 or max_depth > 1) \
+			and self.item in self.experiment.items:
+			self.experiment.items[self.item].build_item_tree(widget, items,
+				max_depth=max_depth-1)
+		return widget
 
 	def is_child_item(self, item):
 

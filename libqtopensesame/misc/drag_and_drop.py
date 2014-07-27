@@ -118,7 +118,6 @@ def receive(drop_event):
 		return data
 	# Process JSON text data
 	text = unicode(mimedata.text())
-	debug.msg(text)
 	try:
 		data = json.loads(text)
 	except:

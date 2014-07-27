@@ -20,7 +20,8 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 from PyQt4 import QtCore, QtGui
 from libqtopensesame.misc import drag_and_drop
 from libqtopensesame.misc.base_subcomponent import base_subcomponent
-from libqtopensesame.widgets import draggables, item_context_menu
+from libqtopensesame.widgets import item_context_menu
+from libqtopensesame.widgets.tree_item import tree_item
 from libopensesame import debug
 
 class tree_overview(base_subcomponent, QtGui.QTreeWidget):
@@ -29,6 +30,16 @@ class tree_overview(base_subcomponent, QtGui.QTreeWidget):
 	desc:
 		The overview area.
 	"""
+
+	def __init__(self, main_window, overview_mode=True):
+
+		super(tree_overview, self).__init__(main_window)
+		self.overview_mode = overview_mode
+		self.setAcceptDrops(True)
+		if self.overview_mode:
+			self.setHeaderHidden(True)
+		else:
+			self.setHeaderHidden(False)
 
 	def mousePressEvent(self, e):
 
@@ -48,14 +59,14 @@ class tree_overview(base_subcomponent, QtGui.QTreeWidget):
 			return
 		# Get item and open tab.
 		target_treeitem = self.itemAt(e.pos())
-		self.main_window.open_item(target_treeitem)
+		if self.overview_mode:
+			self.main_window.open_item(target_treeitem)
 		# Ignore drops on non-droppable tree items.
 		if not self.droppable_treeitem(target_treeitem):
 			e.ignore()
 			return
 		# Get the target item
-		target_item_name, target_item_ancestry = self.ancestry_from_treeitem(
-			target_treeitem)
+		target_item_name, target_item_ancestry = target_treeitem.ancestry()
 		if (QtCore.Qt.ControlModifier & e.modifiers()) and \
 			(QtCore.Qt.ShiftModifier & e.modifiers()):
 			target_item = self.experiment.items[target_item_name]
@@ -98,43 +109,6 @@ class tree_overview(base_subcomponent, QtGui.QTreeWidget):
 		index = int(l[0].split(u':')[1])
 		return parent_item_name, index
 
-	def ancestry_from_treeitem(self, treeitem):
-
-		"""
-		desc:
-			Gets the full ancestry of an item, i.e. a sequence of items that are
-			above the item in the hierarchy. The index of the item in the parent
-			is indicated by a ':'. The index is 0 in the case of most items, but
-			is mostly necessary for indicating the position in sequence items.
-
-			For example:
-
-				fixdot:2.trial_sequence:0.block_loop:0.experiment
-
-		arguments:
-			treeitem:
-				desc:	The tree item that contains the item.
-				type:	QTreeWidgetItem
-
-		returns:
-			desc:	A (item name, ancestry) tuple. For example:
-
-						(u'trial_sequence',
-						u'trial_sequence:0.block_loop:0.experiment:0')
-
-			type:	tuple
-		"""
-
-		item_name = unicode(treeitem.text(0))
-		l = []
-		while True:
-			if treeitem.parent() == None:
-				break
-			index = treeitem.parent().indexOfChild(treeitem)
-			l.append(unicode(treeitem.text(0))+u':'+unicode(index))
-			treeitem = treeitem.parent()
-		return item_name, u'.'.join(l)
-
 	def droppable_treeitem(self, treeitem):
 
 		"""
@@ -153,7 +127,7 @@ class tree_overview(base_subcomponent, QtGui.QTreeWidget):
 
 		# Do not accept drops on nothing or drops on top-level tree-items, which
 		# are the experiment and unused items bin.
-		if treeitem == None or treeitem.parent() == None:
+		if treeitem == None or not hasattr(treeitem, u'__droppable__'):
 			return False
 		return True
 
@@ -177,16 +151,17 @@ class tree_overview(base_subcomponent, QtGui.QTreeWidget):
 			return
 		target_treeitem = self.itemAt(e.pos())
 		if not self.droppable_treeitem(target_treeitem):
+			debug.msg(u'Drop ignored: target not droppable')
 			e.ignore()
 			return
-		target_item_name, target_item_ancestry = self.ancestry_from_treeitem(
-			target_treeitem)
+		target_item_name, target_item_ancestry = target_treeitem.ancestry()
 		if target_item_ancestry.endswith(data[u'ancestry']):
+			debug.msg(u'Drop ignored: recursion prevented')
 			e.ignore()
 			return
-		parent_item_name, index = self.parent_from_ancestry(
-			data[u'ancestry'])
+		parent_item_name, index = self.parent_from_ancestry(data[u'ancestry'])
 		if parent_item_name == None:
+			debug.msg(u'Drop ignored: no parent')
 			e.ignore()
 			return
 		if not QtCore.Qt.ControlModifier & e.keyboardModifiers():
@@ -228,8 +203,14 @@ class tree_overview(base_subcomponent, QtGui.QTreeWidget):
 		else:
 			item = self.experiment.items[data[u'item-name']]
 		# If a drop has been made on a loop or sequence, we can insert the new
-		# item directly.
-		if target_item.item_type in [u'loop', u'sequence']:
+		# item directly. We only do this in overview mode, because it is
+		# confusing otherwise.
+		if self.overview_mode and \
+			target_item.item_type in [u'loop', u'sequence']:
+			target_item.insert_child_item(item.name)
+		# If the item has ni parent, also drop on it directly. This is the case
+		# in sequence views of the overview area.
+		elif target_treeitem.parent() == None:
 			target_item.insert_child_item(item.name)
 		# Otherwise, we find the parent of the target item, and insert the new
 		# item at the correct position.

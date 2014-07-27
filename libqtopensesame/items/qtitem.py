@@ -22,6 +22,7 @@ import os.path
 import sip
 from libopensesame.exceptions import osexception
 from libopensesame import debug, item
+from libqtopensesame.widgets.tree_item import tree_item
 from libqtopensesame.widgets import header_widget, user_hint_widget
 from libqtopensesame.misc import _
 from libqtopensesame.misc.config import cfg
@@ -538,41 +539,7 @@ class qtitem(QtCore.QObject):
 
 		pass
 
-	def item_tree_widget(self, toplevel, icon=None, name=None, tooltip=None):
-
-		"""
-		Create a single item tree widget
-
-		Arguments:
-		toplevel -- the toplevel item
-
-		Keyword arguments:
-		icon -- an icon name or None for default (default=None)
-		name -- the name of the item or None for default (default=None)
-		tooltip -- the tooltip or None for default (default=None)
-
-		Returns:
-		A QTreeWidgetItem
-		"""
-
-		if name == None:
-			name = self.name
-		if icon == None:
-			icon = self.item_type
-		if tooltip == None:
-			tooltip = _(u"Type: %s\nDescription: %s") % (self.item_type, \
-				self.description)
-		font = QtGui.QFont()
-		font.setPointSize(8)
-		font.setItalic(True)
-		widget = QtGui.QTreeWidgetItem(toplevel)
-		widget.setText(0, name)
-		widget.setIcon(0, self.experiment.icon(icon))
-		widget.name = name
-		widget.setToolTip(0, tooltip)
-		return widget
-
-	def build_item_tree(self, toplevel=None, items=[]):
+	def build_item_tree(self, toplevel=None, items=[], max_depth=-1):
 
 		"""
 		Construct an item tree
@@ -583,7 +550,11 @@ class qtitem(QtCore.QObject):
 				 (default=[])
 		"""
 
-		toplevel.addChild(self.item_tree_widget(toplevel))
+		widget = tree_item(self)
+		items.append(self.name)
+		if toplevel != None:
+			toplevel.addChild(widget)
+		return widget
 
 	def parents(self):
 

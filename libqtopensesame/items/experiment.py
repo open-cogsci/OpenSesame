@@ -106,7 +106,7 @@ class experiment(libopensesame.experiment.experiment):
 
 		return u'qt'
 
-	def build_item_tree(self, toplevel=None, items=[]):
+	def build_item_tree(self, toplevel=None, items=[], max_depth=-1):
 
 		"""
 		Constructs an item tree.
@@ -125,6 +125,7 @@ class experiment(libopensesame.experiment.experiment):
 
 		# First build the tree of the experiment
 		widget = QtGui.QTreeWidgetItem(self.ui.itemtree)
+		widget.item = self
 		widget.setText(0, self.title)
 		widget.setIcon(0, self.icon("os-experiment"))
 		widget.setToolTip(0, "General options")
@@ -132,9 +133,9 @@ class experiment(libopensesame.experiment.experiment):
 		self.ui.itemtree.insertTopLevelItem(0, widget)
 
 		if self.start in self.items:
-			items.append(self.items[self.start])
 			self.items[self.start].build_item_tree(widget, items)
 		widget.setExpanded(True)
+		widget.child(0).expand()
 
 		# Next build a tree with left over items
 		self.unused_widget = QtGui.QTreeWidgetItem(self.ui.itemtree)
@@ -148,7 +149,7 @@ class experiment(libopensesame.experiment.experiment):
 		self.unused_items = []
 		c = 0
 		for i in self.items:
-			if self.items[i] not in items:
+			if self.items[i].name not in items:
 				self.unused_items.append(i)
 				self.items[i].build_item_tree(self.unused_widget, items)
 				c += 1

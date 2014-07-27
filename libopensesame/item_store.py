@@ -149,3 +149,11 @@ class item_store(object):
 	@property
 	def items(self):
 		return self.__items__.items
+
+	@property
+	def keys(self):
+		return self.__items__.keys
+
+	@property
+	def values(self):
+		return self.__items__.values
