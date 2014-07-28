@@ -25,6 +25,8 @@ class unused_widget(QtGui.QWidget):
 
 	"""The unused items widget"""
 
+	tab_name = u'__unused__'
+
 	def __init__(self, parent=None):
 
 		"""

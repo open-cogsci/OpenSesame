@@ -19,6 +19,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 
 from libopensesame import plugins
 from libopensesame.misc import debug
+from libopensesame.exceptions import osexception
 
 class item_store(object):
 
@@ -120,11 +121,21 @@ class item_store(object):
 			name = u'_' + name
 		return name
 
-	# The properties below emulate a dict interface.
+	def rename(self, from_name, to_name):
 
-	@property
-	def __getitem__(self):
-		return self.__items__.__getitem__
+		if from_name not in self:
+			return
+		if to_name in self:
+			return
+		# Copy the item in the __items__dictionary
+		self.__items__[to_name] = self.__items__[from_name]
+		del self.__items__[from_name]
+		# Give all items a chance to update
+		for item in self.values():
+			item.rename(from_name, to_name)
+		self.experiment.rename(from_name, to_name)
+
+	# The properties below emulate a dict interface.
 
 	@property
 	def __setitem__(self):
@@ -143,10 +154,6 @@ class item_store(object):
 		return self.__items__.__iter__
 
 	@property
-	def __contains__(self):
-		return  self.__items__.__contains__
-
-	@property
 	def items(self):
 		return self.__items__.items
 
@@ -157,3 +164,19 @@ class item_store(object):
 	@property
 	def values(self):
 		return self.__items__.values
+
+	# The functions below are overridden to implement case insensitivity.
+
+	def __contains__(self, name):
+
+		for item in self.__items__:
+			if item.lower() == name.lower():
+				return True
+		return False
+
+	def __getitem__(self, name):
+
+		for item in self.__items__:
+			if item.lower() == name.lower():
+				return self.__items__[item]
+		raise osexception(u'No item named "%s"' % name)

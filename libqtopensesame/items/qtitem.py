@@ -22,7 +22,7 @@ import os.path
 import sip
 from libopensesame.exceptions import osexception
 from libopensesame import debug, item
-from libqtopensesame.widgets.tree_item import tree_item
+from libqtopensesame.widgets.tree_item_item import tree_item_item
 from libqtopensesame.widgets import header_widget, user_hint_widget
 from libqtopensesame.misc import _
 from libqtopensesame.misc.config import cfg
@@ -210,22 +210,8 @@ class qtitem(QtCore.QObject):
 		rebuild -- a deprecated argument (default=True)
 		"""
 
-		debug.msg()
-
-		# Sanitize the name, check if it is new and valid, and if so, rename
-		new_name = self.experiment.sanitize(self.header.edit_name.text(), \
-			strict=True, allow_vars=False)
-		if new_name.lower() != self.name.lower():
-			valid = self.experiment.check_name(new_name)
-			if valid != True:
-				self.experiment.notify(valid)
-				self.header.edit_name.setText(self.name)
-				return
-		old_name = self.name
-		self.name = new_name
-		self._edit_widget.__edit_item__	= new_name
-		self.experiment.main_window.dispatch.event_name_change.emit(old_name, \
-			new_name)
+		self.experiment.notify(_(u'Not implemented'))
+		self.header.edit_name.setText(self.name)
 
 	def apply_edit_changes(self, rebuild=True):
 
@@ -341,20 +327,16 @@ class qtitem(QtCore.QObject):
 		debug.msg(self.name)
 		script = self.script_qprogedit.text()
 		# Create a new item and make it a clone of the current item
-		item = self.experiment.main_window.add_item(self.item_type, False, \
-			name=self.name, interactive=False)
-		if catch:
-			try:
-				self.experiment.items[item].from_string(script)
-			except Exception as e:
-				self.experiment.notify(unicode(e))
-				return
-		else:
-			self.experiment.items[item].from_string(script)
-		self.experiment.items[item].name = self.name
+		try:
+			item = self.experiment.items.new(self.item_type, name=self.name,
+				script=script)
+		except osexception as e:
+			self.experiment.notify(e)
+			self.main_window.print_debug_window(e)
 		# Replace the current item
-		self.experiment.items[self.name] = self.experiment.items[item]
-		del self.experiment.items[item]
+		self.experiment.items[self.name] = self.experiment.items[item.name]
+		del self.experiment.items[item.name]
+		self.experiment.items[self.name].name = self.name
 		self.experiment.items[self.name].init_script_widget()
 		self.experiment.items[self.name].edit_mode = mode
 		self.experiment.main_window.dispatch.event_script_change.emit(self.name)
@@ -539,7 +521,8 @@ class qtitem(QtCore.QObject):
 
 		pass
 
-	def build_item_tree(self, toplevel=None, items=[], max_depth=-1):
+	def build_item_tree(self, toplevel=None, items=[], max_depth=-1,
+		extra_info=None):
 
 		"""
 		Construct an item tree
@@ -550,7 +533,7 @@ class qtitem(QtCore.QObject):
 				 (default=[])
 		"""
 
-		widget = tree_item(self)
+		widget = tree_item_item(self, extra_info=extra_info)
 		items.append(self.name)
 		if toplevel != None:
 			toplevel.addChild(widget)
@@ -870,7 +853,7 @@ class qtitem(QtCore.QObject):
 		except osexception as e:
 			self.experiment.notify( \
 				u'Failed to compile conditional statement "%s": %s' % (cond, e))
-			return u'always'
+			return default
 		return cond
 
 	def is_child_item(self, item_name):

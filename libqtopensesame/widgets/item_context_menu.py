@@ -24,7 +24,7 @@ class item_context_menu(QtGui.QMenu):
 
 	"""Provides a basic context menu for an item"""
 
-	def __init__(self, title, parent, item, parent_item=None, index=None):
+	def __init__(self, title, treeitem, item, parent_item=None, index=None):
 
 		"""
 		Constructor
@@ -40,7 +40,8 @@ class item_context_menu(QtGui.QMenu):
 				 (default=None)
 		"""
 
-		QtGui.QMenu.__init__(self, title, parent)
+		QtGui.QMenu.__init__(self, title, treeitem.treeWidget())
+		self.treeitem = treeitem
 		self.item = item
 		self.parent_item = parent_item
 		self.index = index
@@ -90,19 +91,4 @@ class item_context_menu(QtGui.QMenu):
 
 		"""Rename an item"""
 
-		new_name, ok = QtGui.QInputDialog.getText(self, _(u'Rename'), \
-			_(u'Please enter a new name'), text=self.item.name)
-		new_name = self.item.experiment.sanitize(new_name, strict=True, \
-			allow_vars=False)
-		if ok:
-			# Do not allow names that are already in use, but do allow
-			# capitalization changes.
-			if new_name.lower() != self.item.name.lower():
-				valid = self.item.experiment.check_name(new_name)
-				if valid != True:
-					self.item.experiment.notify(valid)
-					return
-			# Accept
-			self.item.experiment.main_window.set_unsaved()
-			self.item.experiment.rename(self.item.name, new_name)
-
+		self.treeitem.start_edit(0)

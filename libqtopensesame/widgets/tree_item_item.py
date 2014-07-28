@@ -19,18 +19,16 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 
 from PyQt4 import QtCore, QtGui
 from libqtopensesame.misc import _
-from libqtopensesame.misc.base_subcomponent import base_subcomponent
+from libqtopensesame.widgets.tree_base_item import tree_base_item
 
-class tree_item(base_subcomponent, QtGui.QTreeWidgetItem):
+class tree_item_item(tree_base_item):
 
 	"""
 	desc:
 		Corresponds to an item widget in the overview area.
 	"""
 
-	__droppable__ = True
-
-	def __init__(self, item):
+	def __init__(self, item, extra_info=None, parent_item=None, index=None):
 
 		"""
 		desc:
@@ -40,17 +38,56 @@ class tree_item(base_subcomponent, QtGui.QTreeWidgetItem):
 			item:
 				desc:	An item.
 				type:	qtitem
+
+		keywords:
+			extra_info:
+				desc:	Extra info that is shown in the second column. Not shown
+						in overview mode.
+				type:	[NoneType, unicode]
 		"""
 
-		super(tree_item, self).__init__()
+		super(tree_item_item, self).__init__()
 		self.setup(item.main_window)
 		self.item = item
 		tooltip = _(u"Type: %s\nDescription: %s") % (item.item_type,
 			item.description)
 		self.setText(0, item.name)
+		if extra_info != None:
+			self.setText(1, extra_info)
+		self.setFlags(QtCore.Qt.ItemIsEditable | self.flags())
 		self.setIcon(0, self.experiment.icon(item.item_type))
 		self.name = item.name
+		self._droppable = True
+		self._draggable = True
+		self._lock = False
 		self.setToolTip(0, tooltip)
+
+	def rename(self, to_name):
+
+		"""
+		desc:
+			Renames the item that belongs to this tree item, and refreshes the
+			ui accordingly.
+
+		arguments:
+			to_name:
+				desc:	The new name of the item.
+				type:	unicode
+		"""
+
+		if self._lock:
+			return
+		self._lock = True
+		if to_name in self.experiment.items:
+			self.experiment.notify(_(u'An item with that name already exists.'))
+		elif to_name == u'':
+			self.experiment.notify(_(u'An item name cannot be empty.'))
+		else:
+			self.experiment.items.rename(self.name, to_name)
+			self.name = to_name
+			self.setText(0, self.name)
+			self.main_window.open_item(self)
+		self._lock = False
 
 	def ancestry(self):
 
@@ -89,18 +126,13 @@ class tree_item(base_subcomponent, QtGui.QTreeWidgetItem):
 			else:
 				index = 0
 			l.append(unicode(treeitem.text(0))+u':'+unicode(index))
-			if not hasattr(treeitem.parent(), u'__droppable__'):
-				break
 			treeitem = treeitem.parent()
+			if treeitem == None or not treeitem.droppable:
+				break
 		return item_name, u'.'.join(l)
 
-	def expand(self):
+	def show_context_menu(self, pos):
 
-		"""
-		desc:
-			Expands this item and all items under it.
-		"""
-
-		self.setExpanded(True)
-		for i in range(self.childCount()):
-			self.child(i).expand()
+		from libqtopensesame.widgets.item_context_menu import item_context_menu
+		menu = item_context_menu(u'Item', self, self.item)
+		menu.popup(pos)

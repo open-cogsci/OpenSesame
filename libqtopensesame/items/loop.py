@@ -24,7 +24,7 @@ from libqtopensesame.misc import _
 from libqtopensesame.misc.config import cfg
 from libqtopensesame.widgets import loop_table
 from libqtopensesame.widgets.loop_widget import loop_widget
-from libqtopensesame.widgets.tree_item import tree_item
+from libqtopensesame.widgets.tree_item_item import tree_item_item
 from libopensesame import debug
 from PyQt4 import QtCore, QtGui
 
@@ -635,7 +635,8 @@ class loop(libopensesame.loop.loop, qtitem.qtitem):
 		self.lock = False
 		self.edit_widget()
 
-	def build_item_tree(self, toplevel=None, items=[], max_depth=-1):
+	def build_item_tree(self, toplevel=None, items=[], max_depth=-1,
+		extra_info=None):
 
 		"""
 		Constructs an item tree.
@@ -650,7 +651,7 @@ class loop(libopensesame.loop.loop, qtitem.qtitem):
 		"""
 
 		items.append(self.name)
-		widget = tree_item(self)
+		widget = tree_item_item(self, extra_info=extra_info)
 		if toplevel != None:
 			toplevel.addChild(widget)
 		if (max_depth < 0 or max_depth > 1) \

@@ -18,20 +18,37 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from PyQt4 import QtCore, QtGui
+from libqtopensesame.misc import _
 from libqtopensesame.misc import drag_and_drop
 from libqtopensesame.misc.base_subcomponent import base_subcomponent
 from libqtopensesame.widgets import item_context_menu
-from libqtopensesame.widgets.tree_item import tree_item
+from libqtopensesame.widgets.tree_item_item import tree_item_item
 from libopensesame import debug
 
 class tree_overview(base_subcomponent, QtGui.QTreeWidget):
 
 	"""
 	desc:
-		The overview area.
+		A tree widget used in sequence items and the overview area.
 	"""
 
 	def __init__(self, main_window, overview_mode=True):
+
+		"""
+		desc:
+			Constructor.
+
+		arguments:
+			main_window:
+				desc:		The main window object.
+				type:		qtopensesame
+
+		keywords:
+			overview_mode:
+				desc:		Indicates whether the tree should be overview-area
+							style (True) or sequence style (False).
+				type:		int
+		"""
 
 		super(tree_overview, self).__init__(main_window)
 		self.overview_mode = overview_mode
@@ -40,6 +57,41 @@ class tree_overview(base_subcomponent, QtGui.QTreeWidget):
 			self.setHeaderHidden(True)
 		else:
 			self.setHeaderHidden(False)
+			self.setHeaderLabels([_(u'Item name'), _(u'Run if')])
+		self.setAlternatingRowColors(True)
+		self.itemChanged.connect(self.text_edited)
+
+	def text_edited(self, treeitem, col):
+
+		"""
+		desc:
+			Processes edits to the item names and run-if statements.
+
+		arguments:
+			treeitem:
+				desc:	A tree item
+				type:	QTreeWidgetItem
+			col:
+				desc:	The column that was edited.
+				type:	int
+		"""
+
+		if col == 0:
+			if hasattr(treeitem, u'name'):
+				from_name = treeitem.name
+				to_name = unicode(treeitem.text(0))
+				to_name_clean = self.experiment.sanitize(to_name, strict=True)
+				treeitem.rename(to_name_clean)
+		elif col == 1:
+			if hasattr(treeitem, u'ancestry'):
+				parent_item_name, ancestry = treeitem.ancestry()
+				parent_item_name, index = self.parent_from_ancestry(ancestry)
+				parent_item = self.experiment.items[parent_item_name]
+				if parent_item.item_type == u'sequence':
+					cond = unicode(treeitem.text(1))
+					cond = parent_item.clean_cond(cond)
+					parent_item.set_run_if(index, cond)
+				self.main_window.refresh()
 
 	def mousePressEvent(self, e):
 
@@ -61,8 +113,8 @@ class tree_overview(base_subcomponent, QtGui.QTreeWidget):
 		target_treeitem = self.itemAt(e.pos())
 		if self.overview_mode:
 			self.main_window.open_item(target_treeitem)
-		# Ignore drops on non-droppable tree items.
-		if not self.droppable_treeitem(target_treeitem):
+		# Only start drags for draggable tree items.
+		if not self.draggable(target_treeitem):
 			e.ignore()
 			return
 		# Get the target item
@@ -109,7 +161,7 @@ class tree_overview(base_subcomponent, QtGui.QTreeWidget):
 		index = int(l[0].split(u':')[1])
 		return parent_item_name, index
 
-	def droppable_treeitem(self, treeitem):
+	def droppable(self, treeitem):
 
 		"""
 		desc:
@@ -125,11 +177,25 @@ class tree_overview(base_subcomponent, QtGui.QTreeWidget):
 			type:	bool
 		"""
 
-		# Do not accept drops on nothing or drops on top-level tree-items, which
-		# are the experiment and unused items bin.
-		if treeitem == None or not hasattr(treeitem, u'__droppable__'):
-			return False
-		return True
+		return treeitem != None and treeitem.droppable()
+
+	def draggable(self, treeitem):
+
+		"""
+		desc:
+			Determines if a tree item can be dragged.
+
+		arguments:
+			treeitem:
+				desc:	A tree item.
+				type:	QTreeWidgetItem
+
+		returns:
+			desc:	A bool indicating if the tree item is draggable.
+			type:	bool
+		"""
+
+		return treeitem != None and treeitem.draggable()
 
 	def drop_event_item_move(self, data, e):
 
@@ -150,7 +216,7 @@ class tree_overview(base_subcomponent, QtGui.QTreeWidget):
 			e.ignore()
 			return
 		target_treeitem = self.itemAt(e.pos())
-		if not self.droppable_treeitem(target_treeitem):
+		if not self.droppable(target_treeitem):
 			debug.msg(u'Drop ignored: target not droppable')
 			e.ignore()
 			return
@@ -165,8 +231,12 @@ class tree_overview(base_subcomponent, QtGui.QTreeWidget):
 			e.ignore()
 			return
 		if not QtCore.Qt.ControlModifier & e.keyboardModifiers():
-			self.experiment.items[parent_item_name].remove_child_item(
-				data[u'item-name'], index)
+			if parent_item_name not in self.experiment.items:
+				debug.msg(u'Don\'t know how to remove item from %s' \
+					% parent_item_name)
+			else:
+				self.experiment.items[parent_item_name].remove_child_item(
+					data[u'item-name'], index)
 		self.drop_event_item_new(data, e)
 
 	def drop_event_item_new(self, data, e):
@@ -189,37 +259,41 @@ class tree_overview(base_subcomponent, QtGui.QTreeWidget):
 			return
 		# Ignore drops on non-droppable tree items.
 		target_treeitem = self.itemAt(e.pos())
-		if not self.droppable_treeitem(target_treeitem):
+		if not self.droppable(target_treeitem):
 			e.ignore()
 			return
-		# Get the target item
+		# Get the target item, check if it exists, and, if so, drop the source
+		# item on it.
 		target_item_name = unicode(target_treeitem.text(0))
-		target_item = self.experiment.items[target_item_name]
-		# Get the item to be inserted. If the drop type is item-new, we need
-		# to create a new item, otherwise we get an existin item.
-		if data[u'type'] == u'item-new':
-			item = self.experiment.items.new(data[u'item-type'],
-				data[u'item-name'], data[u'script'])
+		if target_item_name not in self.experiment.items:
+			debug.msg(u'Don\'t know how to drop on %s' % target_item_name)
 		else:
-			item = self.experiment.items[data[u'item-name']]
-		# If a drop has been made on a loop or sequence, we can insert the new
-		# item directly. We only do this in overview mode, because it is
-		# confusing otherwise.
-		if self.overview_mode and \
-			target_item.item_type in [u'loop', u'sequence']:
-			target_item.insert_child_item(item.name)
-		# If the item has ni parent, also drop on it directly. This is the case
-		# in sequence views of the overview area.
-		elif target_treeitem.parent() == None:
-			target_item.insert_child_item(item.name)
-		# Otherwise, we find the parent of the target item, and insert the new
-		# item at the correct position.
-		else:
-			parent_treeitem = target_treeitem.parent()
-			parent_item_name = unicode(parent_treeitem.text(0))
-			parent_item = self.experiment.items[parent_item_name]
-			index = parent_treeitem.indexOfChild(target_treeitem)
-			parent_item.insert_child_item(item.name, index)
+			target_item = self.experiment.items[target_item_name]
+			# Get the item to be inserted. If the drop type is item-new, we need
+			# to create a new item, otherwise we get an existin item.
+			if data[u'type'] == u'item-new':
+				item = self.experiment.items.new(data[u'item-type'],
+					data[u'item-name'], data[u'script'])
+			else:
+				item = self.experiment.items[data[u'item-name']]
+			# If a drop has been made on a loop or sequence, we can insert the new
+			# item directly. We only do this in overview mode, because it is
+			# confusing otherwise.
+			if self.overview_mode and \
+				target_item.item_type in [u'loop', u'sequence']:
+				target_item.insert_child_item(item.name)
+			# If the item has ni parent, also drop on it directly. This is the case
+			# in sequence views of the overview area.
+			elif target_treeitem.parent() == None:
+				target_item.insert_child_item(item.name)
+			# Otherwise, we find the parent of the target item, and insert the new
+			# item at the correct position.
+			else:
+				parent_treeitem = target_treeitem.parent()
+				parent_item_name = unicode(parent_treeitem.text(0))
+				parent_item = self.experiment.items[parent_item_name]
+				index = parent_treeitem.indexOfChild(target_treeitem)
+				parent_item.insert_child_item(item.name, index)
 		e.accept()
 		self.main_window.refresh()
 
@@ -282,71 +356,27 @@ class tree_overview(base_subcomponent, QtGui.QTreeWidget):
 		if drag_and_drop.matches(data, [u'url-local']):
 			e.accept()
 		elif drag_and_drop.matches(data, [u'item-new', u'item-existing']):
-			if not self.droppable_treeitem(self.itemAt(e.pos())):
+			if not self.droppable(self.itemAt(e.pos())):
 				e.ignore()
 			else:
 				e.accept()
 		else:
 			e.ignore()
 
-	def context_menu(self, item, pos=None):
-
-		"""
-		Present a context menu for an item.
-
-		Arguments:
-		item -- a QTreeWidgetItem
-
-		Keyword arguments:
-		A position for the top-left of the menu (default=None)
-		"""
-
-		target_item = item
-		item_name = unicode(target_item.text(0))
-		parent_item = target_item.parent()
-		if parent_item != None:
-			parent_name = unicode(parent_item.text(0))
-		else:
-			parent_name = None
-		index = None
-		if parent_name in self.main_window.experiment.items:
-			parent_type = \
-				self.main_window.experiment.items[parent_name].item_type
-
-			# If the parent is a sequence, get the position of the item in the
-			# sequence, because the name by itself is ambiguous since the name
-			# may occur multiple times in one sequence
-			if parent_type == u'sequence':
-				index = 0
-				for index in range(parent_item.childCount()):
-					child = parent_item.child(index)
-					if child == target_item:
-						break
-					index += 1
-
-		if item_name not in self.main_window.experiment.items:
-			return
-		item = self.main_window.experiment.items[item_name]
-		m = item_context_menu.item_context_menu("Item", self, item, \
-			parent_name, index)
-
-		if pos == None:
-			m.popup(self.mapToGlobal(self.pos()))
-		else:
-			m.popup(pos)
-
 	def contextMenuEvent(self, e):
 
 		"""
-		Show a context menu at the cursor position
+		desc:
+			Asks a tree item to show a context menu.
 
-		Arguments:
-		e -- the content menu event
+		arguments:
+			e:
+				type:	QContextMenuEvent
 		"""
 
 		item = self.itemAt(e.pos())
-		self.context_menu(item, e.globalPos())
-
+		if item != None:
+			item.show_context_menu(e.globalPos())
 
 	def keyPressEvent(self, e):
 
@@ -357,11 +387,14 @@ class tree_overview(base_subcomponent, QtGui.QTreeWidget):
 		e -- a QKeyEvent
 		"""
 
+		if self.currentItem() == None:
+			return
 		QtGui.QTreeWidget.keyPressEvent(self, e)
 		if e.key() in [QtCore.Qt.Key_Up, QtCore.Qt.Key_Down, \
 			QtCore.Qt.Key_PageUp, QtCore.Qt.Key_PageDown, QtCore.Qt.Key_Home, \
 			QtCore.Qt.Key_End, QtCore.Qt.Key_Return]:
-			self.main_window.open_item(self.currentItem())
+			if self.overview_mode:
+				self.main_window.open_item(self.currentItem())
 		elif e.key() == QtCore.Qt.Key_Space:
 			self.context_menu(self.currentItem())
 

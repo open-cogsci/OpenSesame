@@ -46,7 +46,6 @@ class base_component(object):
 		"""
 
 		from libqtopensesame.qtopensesame import qtopensesame
-		debug.msg(u'initializing %s' % self.__class__.__name__)
 		# If the main_window is actually not the main window, but a widget that
 		# has the main window somewhere above it in the hierarchy, we traverse
 		# upwards.

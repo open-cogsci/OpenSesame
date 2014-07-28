@@ -183,7 +183,6 @@ class theme:
 		ui -- the ui object to load icons into
 		"""
 
-		debug.msg()
 		for i in dir(ui):
 			# Oddly enough, it can happend that getattr() fails on items that
 			# have been returned by dir(). That's why we need a hasattr() as

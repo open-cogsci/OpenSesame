@@ -249,7 +249,7 @@ class tab_widget(QtGui.QTabWidget):
 
 		"""Opens the unused tab"""
 
-		if self.switch(u'__general__'):
+		if self.switch(u'__unused__'):
 			return
 		from libqtopensesame.widgets.unused_widget import unused_widget
 		w = unused_widget(self.main_window)

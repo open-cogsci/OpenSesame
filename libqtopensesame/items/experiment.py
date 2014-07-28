@@ -120,52 +120,18 @@ class experiment(libopensesame.experiment.experiment):
 		An updated list of items that have been added.
 		"""
 
+		from libqtopensesame.widgets.tree_unused_items_item import \
+			tree_unused_items_item
+		from libqtopensesame.widgets.tree_general_item import tree_general_item
+
 		self.ui.itemtree.clear()
-		items = []
-
-		# First build the tree of the experiment
-		widget = QtGui.QTreeWidgetItem(self.ui.itemtree)
-		widget.item = self
-		widget.setText(0, self.title)
-		widget.setIcon(0, self.icon("os-experiment"))
-		widget.setToolTip(0, "General options")
-		widget.name = "__general__"
-		self.ui.itemtree.insertTopLevelItem(0, widget)
-
-		if self.start in self.items:
-			self.items[self.start].build_item_tree(widget, items)
-		widget.setExpanded(True)
-		widget.child(0).expand()
-
-		# Next build a tree with left over items
-		self.unused_widget = QtGui.QTreeWidgetItem(self.ui.itemtree)
-		self.unused_widget.setText(0, "Unused items")
-		self.unused_widget.setIcon(0, self.icon("unused"))
-		self.unused_widget.name = "__unused__"
-		self.unused_widget.setToolTip(0, "Unused items")
-		self.unused_widget.setToolTip(1, "Unused items")
-		self.ui.itemtree.insertTopLevelItem(1, widget)
-
-		self.unused_items = []
-		c = 0
-		for i in self.items:
-			if self.items[i].name not in items:
-				self.unused_items.append(i)
-				self.items[i].build_item_tree(self.unused_widget, items)
-				c += 1
-		self.unused_widget.setExpanded(False)
-
-		font = QtGui.QFont()
-		font.setPointSize(8)
-		font.setItalic(True)
-
-		if c > 0:
-			self.unused_widget.setText(1, "contains items")
-		else:
-			self.unused_widget.setText(1, "empty")
-		self.unused_widget.setFont(1, font)
-
-		return items
+		self.treeitem_general = tree_general_item(self)
+		self.treeitem_unused = tree_unused_items_item(self.main_window,
+			self.treeitem_general.used_items())
+		self.ui.itemtree.insertTopLevelItem(0, self.treeitem_general)
+		self.ui.itemtree.insertTopLevelItem(1, self.treeitem_unused)
+		self.treeitem_general.expand()
+		self.treeitem_unused.collapse()
 
 	def rename(self, from_name, to_name):
 
@@ -177,38 +143,8 @@ class experiment(libopensesame.experiment.experiment):
 		to_name		--	The new name.
 		"""
 
-		to_name = self.sanitize(to_name, True)
-		debug.msg("from '%s' to '%s'" % (from_name, to_name))
-
-		# Make sure the entry point is updated when renamed
 		if self.get("start") == from_name:
 			self.set("start", to_name)
-
-		# This only changes the name in the object, it doesn't update the GUI
-		# in case a tab is opened
-		for item in self.items:
-			self.items[item].rename(from_name, to_name)
-		new_items = {}
-		for item in self.items:
-			if item == from_name:
-				new_items[to_name] = self.items[item]
-			else:
-				new_items[item] = self.items[item]
-		self.items = new_items
-
-		# Walk through all open tabs to re-open them when needed
-		for i in range(self.experiment.ui.tabwidget.count()):
-			w = self.experiment.ui.tabwidget.widget(i)
-			if hasattr(w, "__edit_item__") and w.__edit_item__ == from_name:
-				self.experiment.ui.tabwidget.setTabText(i, to_name)
-				self.items[to_name].header.restore_name(False)
-				w.edit_item = to_name
-			if hasattr(w, "__script_item__") and w.__script_item__ == from_name:
-				w.script_item = to_name
-				self.experiment.ui.tabwidget.setTabText(i, to_name)
-				self.items[to_name].script_widget()
-
-		self.main_window.refresh()
 
 	def check_name(self, name):
 
