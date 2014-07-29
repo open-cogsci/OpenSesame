@@ -435,6 +435,7 @@ class sketchpad_widget(base_widget):
 			self.sketchpad.user_hint_widget.add_user_hint(u'\n'.join(
 				self.canvas.notifications))
 		self.sketchpad.user_hint_widget.refresh()
+		self.sketchpad.apply_edit_changes()
 
 	def set_cursor_pos(self, xy):
 

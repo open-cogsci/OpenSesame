@@ -56,16 +56,9 @@ class tree_unused_items_item(tree_base_item):
 			if item.name not in used_items:
 				item.build_item_tree(self, used_items)
 
-	def expand(self):
+	def open_tab(self):
 
-		"""
-		desc:
-			Expands this item and all items under it.
-		"""
-
-		self.setExpanded(True)
-		for i in range(self.childCount()):
-			self.child(i).expand()
+		self.main_window.tabwidget.open_unused()
 
 	def ancestry(self):
 

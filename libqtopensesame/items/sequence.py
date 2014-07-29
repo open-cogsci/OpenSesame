@@ -23,8 +23,9 @@ from libopensesame.sequence import sequence as sequence_runtime
 from libqtopensesame.widgets.tree_item_item import tree_item_item
 from libqtopensesame.widgets.tree_overview import tree_overview
 from libqtopensesame.items.qtplugin import qtplugin
+from libqtopensesame.items.qtstructure_item import qtstructure_item
 
-class sequence(qtplugin, sequence_runtime):
+class sequence(qtstructure_item, qtplugin, sequence_runtime):
 
 	"""
 	desc:
@@ -51,11 +52,13 @@ class sequence(qtplugin, sequence_runtime):
 
 	def init_edit_widget(self):
 
-		"""See qtplugin."""
+		"""See qtitem."""
 
 		super(sequence, self).init_edit_widget(False)
 		self.treewidget = tree_overview(self.main_window, overview_mode=False)
 		self.treewidget.setup(self.main_window)
+		self.treewidget.structure_change.connect(self.update)
+		self.treewidget.text_change.connect(self.update_script)
 		self.edit_vbox.addWidget(self.treewidget)
 		self.add_checkbox_control(u'flush_keyboard',
 			u'Flush pending key presses at sequence start',
@@ -63,7 +66,7 @@ class sequence(qtplugin, sequence_runtime):
 
 	def edit_widget(self):
 
-		"""See qtplugin."""
+		"""See qtitem."""
 
 		super(sequence, self).edit_widget()
 		self.treewidget.clear()
@@ -71,11 +74,10 @@ class sequence(qtplugin, sequence_runtime):
 		self.treewidget.addTopLevelItem(self.toplevel_treeitem)
 		self.toplevel_treeitem.setExpanded(True)
 		self.treewidget.resizeColumnToContents(0)
-		return self._edit_widget
 
 	def rename(self, from_name, to_name):
 
-		"""See qtplugin."""
+		"""See qtitem."""
 
 		qtplugin.rename(self, from_name, to_name)
 		new_items = []
@@ -88,7 +90,7 @@ class sequence(qtplugin, sequence_runtime):
 
 	def delete(self, item_name, item_parent=None, index=None):
 
-		"""See qtplugin."""
+		"""See qtitem."""
 
 		if item_parent == None or (item_parent == self.name and index == None):
 			redo = True
@@ -106,7 +108,7 @@ class sequence(qtplugin, sequence_runtime):
 	def build_item_tree(self, toplevel=None, items=[], max_depth=-1,
 		extra_info=None):
 
-		"""See qtplugin."""
+		"""See qtitem."""
 
 		widget = tree_item_item(self, extra_info=extra_info)
 		widget.set_draggable(False)
@@ -141,7 +143,7 @@ class sequence(qtplugin, sequence_runtime):
 
 	def is_child_item(self, item):
 
-		"""See qtplugin."""
+		"""See qtitem."""
 
 		for i, cond in self.items:
 			if i == item or (i in self.experiment.items and \
@@ -151,7 +153,7 @@ class sequence(qtplugin, sequence_runtime):
 
 	def insert_child_item(self, item_name, index=0):
 
-		"""See qtplugin."""
+		"""See qtitem."""
 
 		if item_name == self.last_removed_child[0]:
 			# If this item was just removed, re-add it and preserve its run-if
@@ -162,7 +164,7 @@ class sequence(qtplugin, sequence_runtime):
 
 	def remove_child_item(self, item_name, index=0):
 
-		"""See qtplugin."""
+		"""See qtitem."""
 
 		if self.items[index][0] == item_name:
 			# We remember the last removed child item, because we will re-use

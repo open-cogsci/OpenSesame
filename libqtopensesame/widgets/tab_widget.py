@@ -68,8 +68,12 @@ class tab_widget(QtGui.QTabWidget):
 		name -- a name for the tab
 		"""
 
-		self.setCurrentIndex(self.addTab(widget, \
-			self.main_window.experiment.icon(icon), _(name)))
+
+		index = self.indexOf(widget)
+		if index < 0:
+			index = self.addTab(widget, self.main_window.experiment.icon(icon),
+			   _(name))
+		self.setCurrentIndex(index)
 
 	def close_all(self):
 
@@ -332,4 +336,3 @@ class tab_widget(QtGui.QTabWidget):
 		w = self.currentWidget()
 		if hasattr(w, u'on_activate'):
 			w.on_activate()
-

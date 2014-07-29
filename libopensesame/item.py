@@ -45,6 +45,7 @@ class item(object):
 		string		--	An definition string. (default=None).
 		"""
 
+		self.reset()
 		self.name = name
 		self.experiment = experiment
 		self.debug = debug.enabled
@@ -75,6 +76,15 @@ class item(object):
 		self.comments = []
 		if string != None:
 			self.from_string(string)
+
+	def reset(self):
+
+		"""
+		desc:
+			Resets all item variables to their default value.
+		"""
+
+		pass
 
 	def prepare(self):
 
@@ -287,6 +297,7 @@ class item(object):
 		"""
 
 		debug.msg()
+		self.reset()
 		textblock_var = None
 		self.variables = {}
 		for line in string.split(u'\n'):
@@ -916,9 +927,9 @@ class item(object):
 		Converts a value to a unicode string. This function is mostly #
 		necessary to make sure that normal strings with special characters are #
 		correctly encoded into unicode, and don't result in TypeErrors.
-		
+
 		The conversion logic is as follows:
-		
+
 		- unicode values are returned unchanged.
 		- str values are decoded using utf-8.
 		- all other types are typecast to unicode, assuming utf-8 encoding where #

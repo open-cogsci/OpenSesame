@@ -58,6 +58,10 @@ class tree_general_item(tree_base_item):
 			self.child(0).set_draggable(False)
 		self.expand()
 
+	def open_tab(self):
+
+		self.main_window.tabwidget.open_general()
+
 	def used_items(self):
 
 		"""
@@ -67,14 +71,3 @@ class tree_general_item(tree_base_item):
 		"""
 
 		return self.items
-
-	def expand(self):
-
-		"""
-		desc:
-			Expands this item and all items under it.
-		"""
-
-		self.setExpanded(True)
-		for i in range(self.childCount()):
-			self.child(i).expand()

@@ -39,7 +39,7 @@ class general_header_widget(header_widget):
 			main_window:	A qtopensesame object.
 		"""
 
-		header_widget.__init__(self, main_window, main_window.experiment)
+		header_widget.__init__(self, main_window.experiment)
 		self.general_tab = general_tab
 		self.label_name.setText(
 			_(u"<font size='5'><b>%s</b> - Experiment</font>&nbsp;&nbsp;&nbsp;<font color='gray'><i>Click to edit</i></font>") \

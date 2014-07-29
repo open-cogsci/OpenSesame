@@ -62,6 +62,10 @@ class tree_item_item(tree_base_item):
 		self._lock = False
 		self.setToolTip(0, tooltip)
 
+	def open_tab(self):
+
+		self.item.open_tab()
+
 	def rename(self, to_name):
 
 		"""
@@ -78,15 +82,9 @@ class tree_item_item(tree_base_item):
 		if self._lock:
 			return
 		self._lock = True
-		if to_name in self.experiment.items:
-			self.experiment.notify(_(u'An item with that name already exists.'))
-		elif to_name == u'':
-			self.experiment.notify(_(u'An item name cannot be empty.'))
-		else:
-			self.experiment.items.rename(self.name, to_name)
+		if self.experiment.items.rename(self.name, to_name):
 			self.name = to_name
 			self.setText(0, self.name)
-			self.main_window.open_item(self)
 		self._lock = False
 
 	def ancestry(self):
@@ -136,3 +134,10 @@ class tree_item_item(tree_base_item):
 		from libqtopensesame.widgets.item_context_menu import item_context_menu
 		menu = item_context_menu(u'Item', self, self.item)
 		menu.popup(pos)
+
+	def rename(self, from_name, to_name):
+
+		super(tree_item_item, self).rename(from_name, to_name)
+		if unicode(self.text(0)) == from_name:
+			self.setText(0, to_name)
+

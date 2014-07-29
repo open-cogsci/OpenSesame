@@ -90,7 +90,5 @@ class unused_widget(QtGui.QWidget):
 					del self.main_window.experiment.items[item]
 			self.main_window.experiment.build_item_tree()
 
-		# Notify dispatch
-		self.main_window.dispatch.event_structure_change.emit(u'')
 		self.main_window.ui.tabwidget.close_all()
 		self.main_window.ui.tabwidget.open_general()

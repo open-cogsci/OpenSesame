@@ -60,8 +60,6 @@ class general_script_editor(base_widget):
 			QtGui.QMessageBox.Yes, QtGui.QMessageBox.No)
 		if resp == QtGui.QMessageBox.No:
 			return
-		self.main_window.dispatch.event_regenerate.emit( \
-			self.ui.qprogedit.text())
 
 	def on_activate(self):
 

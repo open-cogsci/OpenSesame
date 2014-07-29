@@ -30,25 +30,13 @@ class inline_script(item.item):
 
 	description = u'Executes Python code'
 
-	def __init__(self, name, experiment, string=None):
+	def reset(self):
 
-		"""<DOC>
-		Constructor. You will generally not create an inline_script item #
-		yourself, but use OpenSesame to create a body for the prepare() and #
-		run() functions.
-
-		Arguments:
-		name		--	The name of the item.
-		experiment 	--	The experiment.
-
-		Keyword arguments:
-		string		--	An item definition string (default=None).
-		</DOC>"""
+		"""See item."""
 
 		self._prepare = u''
 		self._run = u''
 		self._var_info = None
-		item.item.__init__(self, name, experiment, string)
 
 	def copy_sketchpad(self, sketchpad_name):
 

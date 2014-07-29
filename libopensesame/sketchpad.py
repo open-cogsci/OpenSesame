@@ -33,24 +33,12 @@ class sketchpad(item, generic_response):
 
 	description = u'Displays stimuli'
 
-	def __init__(self, name, experiment, string=None):
+	def reset(self):
 
-		"""
-		desc:
-			Constructor.
-
-		arguments:
-			name:			The name of the item.
-			experiment:		The experiment object.
-
-		keywords:
-			string:			The item definition string or None to initialize
-							from scratch.
-		"""
+		"""See item."""
 
 		self.duration = u'keypress'
 		self.elements = []
-		super(sketchpad, self).__init__(name, experiment, string=string)
 
 	def element_module(self):
 
@@ -76,6 +64,7 @@ class sketchpad(item, generic_response):
 			string:		A definition string.
 		"""
 
+		self.reset()
 		for line in string.split(u'\n'):
 			if not self.parse_variable(line):
 				l = self.split(line)

@@ -69,18 +69,11 @@ class feedpad(QtCore.QObject):
 		"""
 		desc:
 			Updates the widget.
-
-		returns:
-			desc:	The widget with the controls.
-			type:	QWidget
 		"""
 
-		self.lock = True
 		qtplugin.edit_widget(self)
 		self.sketchpad_widget.initialize()
 		self.sketchpad_widget.draw()
-		self.lock = False
-		return self._edit_widget
 
 	def add_element(self, element):
 

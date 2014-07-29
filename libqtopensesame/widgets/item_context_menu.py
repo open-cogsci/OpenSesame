@@ -78,7 +78,7 @@ class item_context_menu(QtGui.QMenu):
 		if action == self.open_text:
 			self.item.open_edit_tab()
 		elif action == self.edit_text:
-			self.item.open_script_tab()
+			self.item.show_script()
 		elif action == self.rename_text:
 			self.rename()
 		elif action == self.help_text:

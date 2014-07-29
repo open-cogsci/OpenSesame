@@ -18,8 +18,9 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 import copy
-import libopensesame.loop
-from libqtopensesame.items import qtitem
+from libopensesame.loop import loop as loop_runtime
+from libqtopensesame.items.qtitem import qtitem
+from libqtopensesame.items.qtstructure_item import qtstructure_item
 from libqtopensesame.misc import _
 from libqtopensesame.misc.config import cfg
 from libqtopensesame.widgets import loop_table
@@ -28,7 +29,7 @@ from libqtopensesame.widgets.tree_item_item import tree_item_item
 from libopensesame import debug
 from PyQt4 import QtCore, QtGui
 
-class loop(libopensesame.loop.loop, qtitem.qtitem):
+class loop(qtstructure_item, qtitem, loop_runtime):
 
 	"""The GUI for the loop item"""
 
@@ -45,8 +46,8 @@ class loop(libopensesame.loop.loop, qtitem.qtitem):
 		string		--	The definition string. (default=None)
 		"""
 
-		libopensesame.loop.loop.__init__(self, name, experiment, string)
-		qtitem.qtitem.__init__(self)
+		loop_runtime.__init__(self, name, experiment, string)
+		qtitem.__init__(self)
 		self.sanity_criteria[u'cycles'] = {u'type' : int, u'msg' : \
 			u'Must be a integer numeric value'}
 
@@ -60,7 +61,7 @@ class loop(libopensesame.loop.loop, qtitem.qtitem):
 		to_name		--	The new name of the item to be renamed.
 		"""
 
-		qtitem.qtitem.rename(self, from_name, to_name)
+		qtitem.rename(self, from_name, to_name)
 		if self.item == from_name:
 			self.item = to_name
 
@@ -190,8 +191,7 @@ class loop(libopensesame.loop.loop, qtitem.qtitem):
 						_(u"A variable with the name '%s' already exists") % \
 						new_var)
 					return
-			for item in self.experiment.items.values():
-				item.rename_var(self.name, old_var, new_var)
+			self.rename_var(self.name, old_var, new_var)
 			self.refresh_loop_table()
 			self.apply_edit_changes()
 
@@ -467,7 +467,7 @@ class loop(libopensesame.loop.loop, qtitem.qtitem):
 
 		self.lock = True
 
-		qtitem.qtitem.init_edit_widget(self, False)
+		qtitem.init_edit_widget(self, False)
 		self.loop_widget = loop_widget(self.experiment.main_window)
 		self.loop_widget.ui.widget_advanced.hide()
 		self.edit_vbox.addWidget(self.loop_widget)
@@ -517,7 +517,7 @@ class loop(libopensesame.loop.loop, qtitem.qtitem):
 		# Update the item combobox
 		self.experiment.item_combobox(self.item, self.parents(), \
 			self.loop_widget.ui.combobox_item)
-		qtitem.qtitem.edit_widget(self)
+		qtitem.edit_widget(self)
 		self.refresh_loop_table(lock=False)
 		self.loop_widget.ui.spin_cycles.setValue(self.cycle_count())
 		if self.get(u"order") == u"random":
@@ -593,8 +593,6 @@ class loop(libopensesame.loop.loop, qtitem.qtitem):
 		item = unicode(self.loop_widget.ui.combobox_item.currentText())
 		debug.msg(item)
 		self.set(u'item', item)
-		self.experiment.main_window.dispatch.event_structure_change.emit( \
-			self.name)
 
 	def apply_edit_changes(self, dummy=None):
 
@@ -605,7 +603,7 @@ class loop(libopensesame.loop.loop, qtitem.qtitem):
 		dummy	-- A dummy argument passed by the signal handler. (default=None)
 		"""
 
-		if self.lock or not qtitem.qtitem.apply_edit_changes(self, False):
+		if self.lock or not qtitem.apply_edit_changes(self, False):
 			return
 		self.lock = True
 		# Validate and set the break-if statement
@@ -662,14 +660,22 @@ class loop(libopensesame.loop.loop, qtitem.qtitem):
 
 	def is_child_item(self, item):
 
+		"""See qtitem."""
+
 		return self.item == item or (self.item in self.experiment.items and \
 			self.experiment.items[self.item].is_child_item(item))
 
 	def insert_child_item(self, item_name, index=0):
 
+		"""See qtitem."""
+
 		self.item = item_name
+		self.update()
 
 	def remove_child_item(self, item_name, index=0):
 
+		"""See qtitem."""
+
 		if item_name == self.item:
 			self.item = None
+		self.update()

@@ -17,30 +17,25 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
-from libqtopensesame.misc.base_component import base_component
-
-class base_subcomponent(base_component):
+class qtstructure_item(object):
 
 	"""
 	desc:
-		A base class for all components that require an experiment and theme
-		property.
+		A base class for items that control the structure of the experiment,
+		i.e. those that require rebuilding of the item tree when they are
+		changed.
 	"""
 
-	# These properties allow for cleaner programming, without dot references.
+	def update(self):
 
-	@property
-	def experiment(self):
-		return self.main_window.experiment
+		"""See qtitem."""
 
-	@property
-	def theme(self):
-		return self.main_window.theme
+		super(qtstructure_item, self).update()
+		self.experiment.build_item_tree()
 
-	@property
-	def notify(self):
-		return self.main_window.experiment.notify
+	def apply_script_changes(self):
 
-	@property
-	def item_store(self):
-		return self.experiment.items
+		"""See qtitem."""
+
+		super(qtstructure_item, self).apply_script_changes()
+		self.experiment.build_item_tree()

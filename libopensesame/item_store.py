@@ -69,7 +69,7 @@ class item_store(object):
 		"""
 
 		debug.msg(u'creating %s' % _type)
-		name = self.unique_name(_type, suggestion=name)
+		name = self.valid_name(_type, suggestion=name)
 		if plugins.is_plugin(_type):
 			# Load a plug-in
 			try:
@@ -91,11 +91,12 @@ class item_store(object):
 			self.__items__[name] = item
 		return item
 
-	def unique_name(self, item_type, suggestion=None):
+	def valid_name(self, item_type, suggestion=None):
 
 		"""
 		desc:
-			Generates a unique name that resembles the desired name.
+			Generates a unique name that is valid and resembles the desired
+			name.
 
 		arguments:
 			item_type:
@@ -116,24 +117,13 @@ class item_store(object):
 		if suggestion == None:
 			name = item_type
 		else:
-			name = suggestion
+			name = self.experiment.sanitize(suggestion, strict=True,
+				allow_vars=False)
+			if len(name) == 0:
+				name = item_type
 		while name in self:
 			name = u'_' + name
 		return name
-
-	def rename(self, from_name, to_name):
-
-		if from_name not in self:
-			return
-		if to_name in self:
-			return
-		# Copy the item in the __items__dictionary
-		self.__items__[to_name] = self.__items__[from_name]
-		del self.__items__[from_name]
-		# Give all items a chance to update
-		for item in self.values():
-			item.rename(from_name, to_name)
-		self.experiment.rename(from_name, to_name)
 
 	# The properties below emulate a dict interface.
 
@@ -165,10 +155,16 @@ class item_store(object):
 	def values(self):
 		return self.__items__.values
 
+	@property
+	def copy(self):
+		return self.__items__.copy
+
 	# The functions below are overridden to implement case insensitivity.
 
 	def __contains__(self, name):
 
+		if not isinstance(name, basestring):
+			return False
 		for item in self.__items__:
 			if item.lower() == name.lower():
 				return True

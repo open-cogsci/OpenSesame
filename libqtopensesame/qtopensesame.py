@@ -71,7 +71,7 @@ class qtopensesame(QtGui.QMainWindow, base_component):
 		"""Resume GUI initialization"""
 
 		from libopensesame import misc
-		from libqtopensesame.misc import theme, dispatch
+		from libqtopensesame.misc import theme
 		import platform
 		import random
 
@@ -97,9 +97,6 @@ class qtopensesame(QtGui.QMainWindow, base_component):
 
 		# Restore the configuration
 		self.restore_config()
-
-		# Setup dispatch
-		self.dispatch = dispatch.dispatch(self)
 
 		# Setup the UI
 		self.load_ui(u'misc.main_window')
@@ -132,7 +129,7 @@ class qtopensesame(QtGui.QMainWindow, base_component):
 		self.setWindowIcon(self.theme.qicon(u"opensesame"))
 
 		# Make the connections
-		self.ui.itemtree.itemClicked.connect(self.open_item)
+		self.ui.itemtree.structure_change.connect(self.update_overview_area)
 		self.ui.action_quit.triggered.connect(self.closeEvent)
 		self.ui.action_new.triggered.connect(self.new_file)
 		self.ui.action_open.triggered.connect(self.open_file)
@@ -214,6 +211,7 @@ class qtopensesame(QtGui.QMainWindow, base_component):
 		self.experiment = experiment.experiment(self, u"New experiment", \
 			open(misc.resource(os.path.join(u"templates", \
 				u"default.opensesame")), u"r").read())
+		self.experiment.build_item_tree()
 
 		# Miscellaneous initialization
 		self.set_status(_(u"Welcome to OpenSesame %s") % self.version)
@@ -632,6 +630,15 @@ class qtopensesame(QtGui.QMainWindow, base_component):
 				self.update_dialog( \
 					_(u" ... and is happy to report that you are running the most recent version of OpenSesame."))
 
+	def update_overview_area(self):
+
+		"""
+		desc:
+			Refreshes the overview area.
+		"""
+
+		self.experiment.build_item_tree()
+
 	def update_preferences_tab(self):
 
 		"""
@@ -824,7 +831,7 @@ class qtopensesame(QtGui.QMainWindow, base_component):
 			return
 
 		self.experiment = exp
-		self.refresh()
+		self.experiment.build_item_tree()
 		self.ui.tabwidget.open_general()
 		self.set_status(u"Opened %s" % path)
 
@@ -940,41 +947,6 @@ class qtopensesame(QtGui.QMainWindow, base_component):
 			self.current_path = path
 			self.save_file()
 
-	def close_item_tab(self, item, close_edit=True, close_script=True):
-
-		"""
-		Closes all tabs that edit and/ or script tabs of a specific item.
-
-		Arguments:
-		item			--	The name of the item.
-
-		Keyword arguments:
-		close_edit		--	A boolean indicating whether the edit tab should be
-							closed. (default=True)
-		close_script	--	A boolean indicating whether the script tab should
-							be closed. (default=True)
-		"""
-
-		debug.msg(u"closing tabs for '%s'" % item)
-
-		# There's a kind of double loop, because the indices change
-		# after a deletion
-		redo = True
-		while redo:
-			redo = False
-			for i in range(self.ui.tabwidget.count()):
-				w = self.ui.tabwidget.widget(i)
-				if close_edit and hasattr(w, u"edit_item") and \
-					w.edit_item == item:
-					self.ui.tabWidget.removeTab(i)
-					redo = True
-					break
-				if close_script and hasattr(w, u"script_item") and \
-					w.script_item == item:
-					self.ui.tabWidget.removeTab(i)
-					redo = True
-					break
-
 	def update_resolution(self, width, height):
 
 		"""
@@ -1013,56 +985,6 @@ class qtopensesame(QtGui.QMainWindow, base_component):
 
 		self.experiment = tmp
 		self.refresh()
-
-	def build_item_list(self, name=None):
-
-		"""
-		Refreshes the item list
-
-		Keyword arguments:
-		name -- a name of the item that has called the build (default=None)
-		"""
-
-		debug.msg(name)
-		self.experiment.build_item_tree()
-
-	def select_item(self, name):
-
-		"""
-		Selects an item from the itemlist and opens the corresponding edit tab
-
-		Arguments:
-		name -- the name of the item
-		"""
-
-		debug.msg(name)
-		if name in self.experiment.unused_items:
-			self.experiment.unused_widget.setExpanded(True)
-		for item in self.ui.itemtree.findItems(name, \
-			QtCore.Qt.MatchFlags(QtCore.Qt.MatchRecursive)):
-			self.ui.itemtree.setCurrentItem(item)
-		if name in self.experiment.items:
-			self.experiment.items[name].open_tab()
-
-	def open_item(self, widget, dummy=None):
-
-		"""
-		Open a tab belonging to a widget in the item tree
-
-		Arguments:
-		widget -- a QTreeWidgetItem
-
-		Keyword arguments:
-		dummy -- an unused parameter which is passed on automatically by the
-				 signaller
-		"""
-
-		if widget.name == u"__general__":
-			self.ui.tabwidget.open_general()
-		elif widget.name == u"__unused__":
-			self.ui.tabwidget.open_unused()
-		else:
-			self.experiment.items[widget.name].open_tab()
 
 	def select_from_pool(self):
 
@@ -1175,8 +1097,8 @@ class qtopensesame(QtGui.QMainWindow, base_component):
 		elif cfg.runner == u'external':
 			from libqtopensesame.runners import external_runner as runner
 		debug.msg(u'using %s runner' % runner)
-		runner(self).run(quick=quick, fullscreen=fullscreen, auto_response= \
-			self.experiment.auto_response)
+		runner(self).run(quick=quick, fullscreen=fullscreen,
+			auto_response=self.experiment.auto_response)
 		# Undo the standard output rerouting
 		sys.stdout = sys.__stdout__
 		self.ui.edit_stdout.show_prompt()
@@ -1200,97 +1122,6 @@ class qtopensesame(QtGui.QMainWindow, base_component):
 
 		self.run_experiment(fullscreen=False, quick=True)
 
-	def refresh(self, changed_item=None, refresh_edit=True, \
-		refresh_script=True):
+	def refresh(self, *deprecated, **_deprecated):
 
-		"""
-		Refreshes all parts of the interface that may have changed because of a
-		changed item
-
-		Keyword arguments:
-		changed_item -- the name of a specific item that should be refreshed
-						(default = None)
-		refresh_edit -- a boolean to indicate if the edit tabs should be
-						refreshed (default = True)
-		refresh_script -- a boolean to indicate if the script tabs should be
-						  refreshed (default = True)
-		"""
-
-		# Make sure the refresh does not get caught in
-		# a recursive loop
-		if self.lock_refresh:
-			return
-		self.lock_refresh = True
-
-		self.set_busy(True)
-		debug.msg(changed_item)
-
-		index = self.ui.tabwidget.currentIndex()
-		for i in range(self.ui.tabwidget.count()):
-			w = self.ui.tabwidget.widget(i)
-			if hasattr(w, u"__general_tab__"):
-				w.refresh()
-			# For now the unused tab doesn't need to be refreshed
-			if hasattr(w, u"__unused_tab__"):
-				pass
-			if refresh_edit and hasattr(w, u"__edit_item__") and (changed_item \
-				== None or w.__edit_item__ == changed_item):
-				if w.__edit_item__ in self.experiment.items:
-					self.experiment.items[w.__edit_item__].edit_widget()
-			if refresh_script and hasattr(w, u"__script_item__") and ( \
-				changed_item == None or w.__script_item__ == changed_item):
-				if w.__script_item__ in self.experiment.items:
-					self.experiment.items[w.__script_item__].script_widget()
-
-		self.ui.tabwidget.setCurrentIndex(index)
-		self.build_item_list()
-		self.refresh_variable_inspector()
-		self.refresh_pool()
-		self.lock_refresh = False
-		self.set_busy(False)
-
-	def hard_refresh(self, changed_item):
-
-		"""
-		Closes and reopens the tabs for a changed item. This is different from
-		the normal refresh in the sense that here the tabs are reinitialized
-		from scratch which is necessary if a new instance of the item has been
-		created.
-
-		Arguments:
-		changed_item -- the name of the changed item
-		"""
-
-		# Make sure the refresh does not get caught in
-		# a recursive loop
-		if self.lock_refresh:
-			return
-		self.lock_refresh = True
-
-		self.set_busy(True)
-		debug.msg(changed_item)
-		index = self.ui.tabwidget.currentIndex()
-
-		for i in range(self.ui.tabwidget.count()):
-				w = self.ui.tabwidget.widget(i)
-				if hasattr(w, u"edit_item") and (changed_item == None or \
-					w.edit_item == changed_item) and w.edit_item in \
-					self.experiment.items:
-					debug.msg(u"reopening edit tab %s" % changed_item)
-					self.ui.tabwidget.removeTab(i)
-					self.experiment.items[w.edit_item].open_edit_tab(i, False)
-					w = self.ui.tabwidget.widget(i)
-					w.edit_item = changed_item
-				if hasattr(w, u"script_item") and (changed_item == None or \
-					w.script_item == changed_item) and w.script_item in \
-					self.experiment.items:
-					debug.msg(u"reopening script tab %s" % changed_item)
-					self.ui.tabwidget.removeTab(i)
-					self.experiment.items[w.script_item].open_script_tab(i, \
-						False)
-					w = self.ui.tabwidget.widget(i)
-					w.script_item = changed_item
-
-		self.ui.tabwidget.setCurrentIndex(index)
-		self.lock_refresh = False
-		self.set_busy(False)
+		debug.msg(reason=u'deprecated')

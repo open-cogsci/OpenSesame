@@ -32,6 +32,9 @@ class tree_overview(base_subcomponent, QtGui.QTreeWidget):
 		A tree widget used in sequence items and the overview area.
 	"""
 
+	structure_change = QtCore.pyqtSignal()
+	text_change = QtCore.pyqtSignal()
+
 	def __init__(self, main_window, overview_mode=True):
 
 		"""
@@ -80,8 +83,8 @@ class tree_overview(base_subcomponent, QtGui.QTreeWidget):
 			if hasattr(treeitem, u'name'):
 				from_name = treeitem.name
 				to_name = unicode(treeitem.text(0))
-				to_name_clean = self.experiment.sanitize(to_name, strict=True)
-				treeitem.rename(to_name_clean)
+				self.experiment.items.rename(from_name, to_name)
+				self.text_change.emit()
 		elif col == 1:
 			if hasattr(treeitem, u'ancestry'):
 				parent_item_name, ancestry = treeitem.ancestry()
@@ -91,7 +94,7 @@ class tree_overview(base_subcomponent, QtGui.QTreeWidget):
 					cond = unicode(treeitem.text(1))
 					cond = parent_item.clean_cond(cond)
 					parent_item.set_run_if(index, cond)
-				self.main_window.refresh()
+				self.text_change.emit()
 
 	def mousePressEvent(self, e):
 
@@ -111,8 +114,10 @@ class tree_overview(base_subcomponent, QtGui.QTreeWidget):
 			return
 		# Get item and open tab.
 		target_treeitem = self.itemAt(e.pos())
+		if target_treeitem == None:
+			return
 		if self.overview_mode:
-			self.main_window.open_item(target_treeitem)
+			target_treeitem.open_tab()
 		# Only start drags for draggable tree items.
 		if not self.draggable(target_treeitem):
 			e.ignore()
@@ -293,9 +298,11 @@ class tree_overview(base_subcomponent, QtGui.QTreeWidget):
 				parent_item_name = unicode(parent_treeitem.text(0))
 				parent_item = self.experiment.items[parent_item_name]
 				index = parent_treeitem.indexOfChild(target_treeitem)
-				parent_item.insert_child_item(item.name, index)
+				parent_item.insert_child_item(item.name, index=index)
+			if self.overview_mode:
+				item.open_tab()
 		e.accept()
-		self.main_window.refresh()
+		self.structure_change.emit()
 
 	def dropEvent(self, e):
 
@@ -389,14 +396,12 @@ class tree_overview(base_subcomponent, QtGui.QTreeWidget):
 
 		if self.currentItem() == None:
 			return
-		QtGui.QTreeWidget.keyPressEvent(self, e)
-		if e.key() in [QtCore.Qt.Key_Up, QtCore.Qt.Key_Down, \
-			QtCore.Qt.Key_PageUp, QtCore.Qt.Key_PageDown, QtCore.Qt.Key_Home, \
+		super(tree_overview, self).keyPressEvent(e)
+		if e.key() in [QtCore.Qt.Key_Up, QtCore.Qt.Key_Down,
+			QtCore.Qt.Key_PageUp, QtCore.Qt.Key_PageDown, QtCore.Qt.Key_Home,
 			QtCore.Qt.Key_End, QtCore.Qt.Key_Return]:
 			if self.overview_mode:
-				self.main_window.open_item(self.currentItem())
-		elif e.key() == QtCore.Qt.Key_Space:
-			self.context_menu(self.currentItem())
+				self.currentItem().open_tab()
 
 	def recursive_children(self, item):
 
@@ -426,3 +431,10 @@ class tree_overview(base_subcomponent, QtGui.QTreeWidget):
 		return self.main_window.ui.itemtree.recursive_children( \
 			self.main_window.ui.itemtree.topLevelItem( \
 				self.main_window.ui.itemtree.topLevelItemCount()-1))
+
+	def rename(self, from_name, to_name):
+
+		self.itemChanged.disconnect()
+		for i in range(self.topLevelItemCount()):
+			self.topLevelItem(i).rename(from_name, to_name)
+		self.itemChanged.connect(self.text_edited)

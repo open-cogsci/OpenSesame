@@ -20,6 +20,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 from libopensesame import debug
 import libopensesame.experiment
 import libopensesame.plugins
+from libqtopensesame.misc.qtitem_store import qtitem_store
 from PyQt4 import QtCore, QtGui
 import os.path
 
@@ -46,11 +47,12 @@ class experiment(libopensesame.experiment.experiment):
 		self.main_window = main_window
 		self.ui = self.main_window.ui
 		self.unused_items = []
-		self.core_items = u"loop", u"sequence", u"sketchpad", u"feedback", \
-			u"sampler", u"synth", u"keyboard_response", u"mouse_response", \
-			u"logger", u"inline_script"
-		libopensesame.experiment.experiment.__init__(self, name, string, \
-			pool_folder)
+		self.core_items = [u"loop", u"sequence", u"sketchpad", u"feedback",
+			u"sampler", u"synth", u"keyboard_response", u"mouse_response",
+			u"logger", u"inline_script"]
+		items = qtitem_store(self)
+		libopensesame.experiment.experiment.__init__(self, name, string,
+			pool_folder, items=items)
 
 	def help(self, name):
 

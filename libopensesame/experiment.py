@@ -35,7 +35,9 @@ class experiment(item.item):
 
 	"""The main experiment class, which is the first item to be called"""
 
-	def __init__(self, name=u'experiment', string=None, pool_folder=None, experiment_path=None, fullscreen=False, auto_response=False, logfile=u'defaultlog.csv', subject_nr=0):
+	def __init__(self, name=u'experiment', string=None, pool_folder=None,
+		experiment_path=None, fullscreen=False, auto_response=False,
+		logfile=u'defaultlog.csv', subject_nr=0, items=None):
 
 		"""<DOC>
 		Constructor. The experiment is created automatically be OpenSesame and #
@@ -58,7 +60,10 @@ class experiment(item.item):
 
 		global pool_folders
 
-		self.items = item_store(self)
+		if items == None:
+			self.items = item_store(self)
+		else:
+			self.items = items
 		self.running = False
 		self.auto_response = auto_response
 		self.plugin_folder = u'plugins'

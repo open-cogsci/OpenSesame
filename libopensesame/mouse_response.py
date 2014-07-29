@@ -22,29 +22,20 @@ import openexp.mouse
 
 class mouse_response(item.item, generic_response.generic_response):
 
-	"""An item for collection keyboard responses"""	
+	"""An item for collection keyboard responses"""
 
 	description = u'Collects mouse responses'
 
-	def __init__(self, name, experiment, string=None):
+	def reset(self):
 
-		"""
-		Constructor.
-
-		Arguments:
-		name 		--	The name of the item.
-		experiment 	--	The experiment.
-
-		Keyword arguments:
-		string		-- 	The item definition string. (default=None)
-		"""
+		"""See item."""
 
 		self.flush = u'yes'
 		self.show_cursor = u'yes'
 		self.timeout = u'infinite'
 		self.auto_response = 1
 		self.duration = u'mouseclick'
-		self.process_feedback = True				
+		self.process_feedback = True
 
 		self.resp_codes = {}
 		self.resp_codes[None] = u'timeout'
@@ -54,8 +45,6 @@ class mouse_response(item.item, generic_response.generic_response):
 		self.resp_codes[4] = u'scroll_up'
 		self.resp_codes[5] = u'scroll_down'
 
-		item.item.__init__(self, name, experiment, string)
-
 	def prepare(self):
 
 		"""Prepares the item."""
@@ -63,7 +52,7 @@ class mouse_response(item.item, generic_response.generic_response):
 		item.item.prepare(self)
 		generic_response.generic_response.prepare(self)
 		self._flush = self.get(u'flush') == u'yes'
-					
+
 	def run(self):
 
 		"""Runs the item."""
@@ -76,7 +65,7 @@ class mouse_response(item.item, generic_response.generic_response):
 		# Flush responses, to make sure that earlier responses are not carried
 		# over.
 		if self._flush:
-			self._mouse.flush()			
+			self._mouse.flush()
 		self.set_sri()
 		self.process_response()
 		self._mouse.set_visible(False)

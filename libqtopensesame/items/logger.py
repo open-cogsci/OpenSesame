@@ -92,7 +92,7 @@ class logger(libopensesame.logger.logger, qtitem.qtitem):
 		self.logvar_buttons = QtGui.QWidget()
 		self.logvar_buttons.setLayout(hbox)
 		self.checkbox_ignore_missing = QtGui.QCheckBox( \
-			_('Include variables with missing values'))			
+			_('Include variables with missing values'))
 		self.checkbox_ignore_missing.stateChanged.connect( \
 			self.apply_edit_changes)
 		self.checkbox_auto_log = QtGui.QCheckBox( \
@@ -290,28 +290,3 @@ class logger(libopensesame.logger.logger, qtitem.qtitem):
 				self.logvars.append(var)
 				self.edit_widget()
 				self.experiment.main_window.refresh(self.name)
-
-	def rename_var(self, item, from_name, to_name):
-
-		"""
-		A notification that a variable has been renamed
-
-		Arguments:
-		item -- the item doing the renaming
-		from_name -- the old variable name
-		to_name -- the new variable name
-		"""
-
-		if from_name in self.logvars:
-			debug.msg("'%s' has been renamed to '%s'" % (from_name, to_name))
-			resp = QtGui.QMessageBox.question(self.experiment.main_window, \
-				"Use new name in logger?",
-				"Do you want to use the new name in the logger item '%s' as well?" \
-				% self.name,
-				QtGui.QMessageBox.Yes, QtGui.QMessageBox.No)
-			if resp == QtGui.QMessageBox.No:
-				return
-			self.logvars.remove(from_name)
-			self.logvars.append(to_name)
-			self.edit_widget()
-

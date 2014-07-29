@@ -40,6 +40,10 @@ class tree_base_item(base_subcomponent, QtGui.QTreeWidgetItem):
 
 		pass
 
+	def open_tab(self):
+
+		pass
+
 	def droppable(self):
 
 		return self._droppable
@@ -77,3 +81,9 @@ class tree_base_item(base_subcomponent, QtGui.QTreeWidgetItem):
 		self.setExpanded(False)
 		for i in range(self.childCount()):
 			self.child(i).collapse()
+
+	def rename(self, from_name, to_name):
+
+		for i in range(self.childCount()):
+			self.child(i).rename(from_name, to_name)
+

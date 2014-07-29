@@ -29,18 +29,9 @@ class loop(item.item):
 
 	description = u'Repeatedly runs another item'
 
-	def __init__(self, name, experiment, string = None):
+	def reset(self):
 
-		"""
-		Constructor.
-
-		Arguments:
-		name		--	The name of the item.
-		experiment 	--	The experiment.
-
-		Keyword arguments:
-		string		--	An item definition string (default=None).
-		"""
+		"""See item."""
 
 		self.cycles = 1
 		self.repeat = 1
@@ -50,7 +41,6 @@ class loop(item.item):
 		self.order = u'random'
 		self.item = u''
 		self.break_if = u''
-		item.item.__init__(self, name, experiment, string)
 
 	def from_string(self, string):
 
@@ -61,6 +51,7 @@ class loop(item.item):
 		string 		--	An item definition string.
 		"""
 
+		self.reset()
 		for i in string.split(u'\n'):
 			self.parse_variable(i)
 			# Extract the item to run
