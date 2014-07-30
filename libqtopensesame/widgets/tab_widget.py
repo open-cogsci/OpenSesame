@@ -75,6 +75,22 @@ class tab_widget(QtGui.QTabWidget):
 			   _(name))
 		self.setCurrentIndex(index)
 
+	def remove(self, widget):
+
+		"""
+		desc:
+			Removes the tab with a given widget in it.
+
+		arguments:
+			widget:
+				desc:	The widget in the tab.
+				type:	QWidget
+		"""
+
+		index = self.indexOf(widget)
+		if index >= 0:
+			self.removeTab(index)
+
 	def close_all(self):
 
 		"""Close all tabs"""

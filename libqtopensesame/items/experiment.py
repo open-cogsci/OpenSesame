@@ -125,11 +125,9 @@ class experiment(libopensesame.experiment.experiment):
 		from libqtopensesame.widgets.tree_unused_items_item import \
 			tree_unused_items_item
 		from libqtopensesame.widgets.tree_general_item import tree_general_item
-
 		self.ui.itemtree.clear()
 		self.treeitem_general = tree_general_item(self)
-		self.treeitem_unused = tree_unused_items_item(self.main_window,
-			self.treeitem_general.used_items())
+		self.treeitem_unused = tree_unused_items_item(self.main_window)
 		self.ui.itemtree.insertTopLevelItem(0, self.treeitem_general)
 		self.ui.itemtree.insertTopLevelItem(1, self.treeitem_unused)
 		self.treeitem_general.expand()

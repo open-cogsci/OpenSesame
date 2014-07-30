@@ -91,3 +91,36 @@ class qtitem_store(item_store):
 		self.experiment.rename(from_name, to_name)
 		self.itemtree.rename(from_name, to_name)
 		return to_name
+
+	def is_unused(self, name):
+
+		"""
+		arguments:
+			name:	An item name.
+			type:	unicode
+
+		returns:
+			desc:	True if the item is unused, False otherwise.
+			type:	bool
+		"""
+
+		for _name in self:
+			if self[_name].is_child_item(name):
+				return False
+		if name == self.experiment.start:
+			return False
+		return True
+
+	def unused(self):
+
+		"""
+		returns:
+			desc:	A list of unused item names.
+			type:	list
+		"""
+
+		l = []
+		for name in self:
+			if self.is_unused(name):
+				l.append(name)
+		return l

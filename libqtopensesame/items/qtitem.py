@@ -71,6 +71,15 @@ class qtitem(QtCore.QObject):
 
 		self.main_window.tabwidget.add(self.widget(), self.item_type, self.name)
 
+	def close_tab(self):
+
+		"""
+		desc:
+			Closes the tab if it was open.
+		"""
+
+		self.main_window.tabwidget.remove(self.widget())
+
 	def show_tab(self):
 
 		"""

@@ -28,7 +28,7 @@ class tree_unused_items_item(tree_base_item):
 		Corresponds to the unused-items widget in the overview area.
 	"""
 
-	def __init__(self, main_window, used_items):
+	def __init__(self, main_window):
 
 		"""
 		desc:
@@ -38,9 +38,6 @@ class tree_unused_items_item(tree_base_item):
 			main_window:
 				desc:	The main-window object.
 				type:	qtopensesame
-			used_items:
-				desc:	A list of used-item names.
-				type:	list
 		"""
 
 		super(tree_unused_items_item, self).__init__()
@@ -51,10 +48,8 @@ class tree_unused_items_item(tree_base_item):
 		self._droppable = True
 		self._draggable = False
 		self.name = u'__unused__'
-		for item_name in self.experiment.items:
-			item = self.experiment.items[item_name]
-			if item.name not in used_items:
-				item.build_item_tree(self, used_items)
+		for item_name in self.experiment.items.unused():
+			self.experiment.items[item_name].build_item_tree(self, max_depth=1)
 
 	def open_tab(self):
 
