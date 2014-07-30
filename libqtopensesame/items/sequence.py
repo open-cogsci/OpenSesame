@@ -166,7 +166,7 @@ class sequence(qtstructure_item, qtplugin, sequence_runtime):
 
 		"""See qtitem."""
 
-		if self.items[index][0] == item_name:
+		if len(self.items) > index and self.items[index][0] == item_name:
 			# We remember the last removed child item, because we will re-use
 			# it's run-if statement if it is re-added.
 			self.last_removed_child = self.items[index]

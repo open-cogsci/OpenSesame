@@ -21,7 +21,6 @@ from PyQt4 import QtCore, QtGui
 from libqtopensesame.misc import _
 from libqtopensesame.misc import drag_and_drop
 from libqtopensesame.misc.base_subcomponent import base_subcomponent
-from libqtopensesame.widgets import item_context_menu
 from libqtopensesame.widgets.tree_item_item import tree_item_item
 from libopensesame import debug
 
@@ -124,22 +123,19 @@ class tree_overview(base_subcomponent, QtGui.QTreeWidget):
 			return
 		# Get the target item
 		target_item_name, target_item_ancestry = target_treeitem.ancestry()
-		if (QtCore.Qt.ControlModifier & e.modifiers()) and \
-			(QtCore.Qt.ShiftModifier & e.modifiers()):
-			target_item = self.experiment.items[target_item_name]
-			data = {
-				u'type'				: u'item-new',
+		target_item = self.experiment.items[target_item_name]
+		data = 	{
 				u'item-name'		: target_item.name,
 				u'item-type'		: target_item.item_type,
 				u'ancestry'			: target_item_ancestry,
-				u'script'			: target_item.to_string()
+				u'script'			: target_item.to_string(),
+				u'application-id'	: self.main_window._id()
 				}
+		if (QtCore.Qt.ControlModifier & e.modifiers()) and \
+			(QtCore.Qt.ShiftModifier & e.modifiers()):
+			data[u'type'] = u'item-new'
 		else:
-			data = {
-				u'type'				: u'item-existing',
-				u'item-name'		: target_item_name,
-				u'ancestry'			: target_item_ancestry,
-				}
+			data[u'type'] = u'item-existing'
 		drag_and_drop.send(self, data)
 
 	def parent_from_ancestry(self, ancestry):
@@ -244,7 +240,7 @@ class tree_overview(base_subcomponent, QtGui.QTreeWidget):
 					data[u'item-name'], index)
 		self.drop_event_item_new(data, e)
 
-	def drop_event_item_new(self, data, e):
+	def drop_event_item_new(self, data, e=None, target_treeitem=None):
 
 		"""
 		desc:
@@ -254,18 +250,26 @@ class tree_overview(base_subcomponent, QtGui.QTreeWidget):
 			data:
 				desc:	A drop-data dictionary.
 				type:	dict:
+
+		keywords:
 			e:
-				desc:	A drop event.
-				type:	QDropEvent
+				desc:	A drop event or None if a target treeitem is provided.
+				type:	[QDropEvent, NoneType]
+			target_treeitem:
+				desc:	A target tree item or None in a drop event is specified.
+				type:	[tree_base_item, NoneType]
 		"""
 
 		if not drag_and_drop.matches(data, [u'item-existing', u'item-new']):
-			e.ignore()
+			if e != None:
+				e.ignore()
 			return
 		# Ignore drops on non-droppable tree items.
-		target_treeitem = self.itemAt(e.pos())
+		if target_treeitem == None:
+			target_treeitem = self.itemAt(e.pos())
 		if not self.droppable(target_treeitem):
-			e.ignore()
+			if e != None:
+				e.ignore()
 			return
 		# Get the target item, check if it exists, and, if so, drop the source
 		# item on it.
@@ -275,8 +279,11 @@ class tree_overview(base_subcomponent, QtGui.QTreeWidget):
 		else:
 			target_item = self.experiment.items[target_item_name]
 			# Get the item to be inserted. If the drop type is item-new, we need
-			# to create a new item, otherwise we get an existin item.
-			if data[u'type'] == u'item-new':
+			# to create a new item, otherwise we get an existin item. Also, if
+			# the drop doesn't originate from this application, we create a new
+			# item.
+			if data[u'type'] == u'item-new' \
+				or data[u'application-id'] != self.main_window._id():
 				item = self.experiment.items.new(data[u'item-type'],
 					data[u'item-name'], data[u'script'])
 			else:
@@ -301,7 +308,8 @@ class tree_overview(base_subcomponent, QtGui.QTreeWidget):
 				parent_item.insert_child_item(item.name, index=index)
 			if self.overview_mode:
 				item.open_tab()
-		e.accept()
+		if e != None:
+			e.accept()
 		self.structure_change.emit()
 
 	def dropEvent(self, e):

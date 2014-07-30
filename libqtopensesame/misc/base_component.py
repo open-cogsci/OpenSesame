@@ -29,6 +29,8 @@ class base_component(object):
 		A base class for all components, notably dialogs and widgets.
 	"""
 
+	enc = u'utf-8'
+
 	def setup(self, main_window, ui=None):
 
 		"""

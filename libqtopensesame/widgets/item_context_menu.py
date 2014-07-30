@@ -19,76 +19,48 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 
 from PyQt4 import QtCore, QtGui
 from libqtopensesame.misc import _
+from libqtopensesame.misc.base_subcomponent import base_subcomponent
 
-class item_context_menu(QtGui.QMenu):
+class item_context_menu(base_subcomponent, QtGui.QMenu):
 
 	"""Provides a basic context menu for an item"""
 
-	def __init__(self, title, treeitem, item, parent_item=None, index=None):
+	def __init__(self, main_window, treeitem):
 
 		"""
-		Constructor
+		desc:
+			Constructor.
 
-		Arguments:
-		title -- menu title
-		parent -- parent widget
-		item -- the item to which this context menu belongs
-
-		Keyword arguments:
-		parent_item -- the parent of the item (default=None)
-		index -- the index of the item in the parent item (if applicable)
-				 (default=None)
+		arguments:
+			main_window:
+				desc:	The main-window object.
+				type:	qtopensesame
+			treeitem:
+				desc:	The tree item.
+				type:	tree_item_item
 		"""
 
-		QtGui.QMenu.__init__(self, title, treeitem.treeWidget())
+		super(item_context_menu, self).__init__(main_window)
+		self.setup(main_window)
 		self.treeitem = treeitem
-		self.item = item
-		self.parent_item = parent_item
-		self.index = index
-
-		# The menu text
-		self.open_text = _("Open %s") % item.name
-		self.edit_text = _("Edit script")
-		self.rename_text = _("Rename")
-		self.delete_text = _("Delete")
-		self.help_text = _("%s help") % item.item_type.capitalize()
-
-		self.addAction(item.experiment.icon(item.item_type), self.open_text)
-		self.addAction(item.experiment.icon("script"), self.edit_text)
+		self.addAction(self.experiment.icon(self.item.item_type),
+			_("Open %s") % self.item.name, self.item.open_tab)
 		self.addSeparator()
-		self.addAction(item.experiment.icon("rename"), self.rename_text)
-		if parent_item != None:
-			self.addAction(item.experiment.icon("delete"), self.delete_text)
+		self.addAction(self.experiment.icon(u"copy"), _("Copy"),
+			self.treeitem.copy)
+		if self.treeitem.clipboard_data() != None:
+			self.addAction(self.experiment.icon(u"paste"), _("Paste"),
+				self.treeitem.paste)
+		self.addAction(self.experiment.icon(u"rename"), _("Rename"),
+			self.treeitem.rename)
+		if self.treeitem.is_deletable():
+			self.addAction(self.experiment.icon(u"delete"), _("Delete"),
+				self.treeitem.delete)
 		self.addSeparator()
-		self.addAction(item.experiment.icon("help"), self.help_text)
+		self.addAction(self.experiment.icon(u"help"),
+			_("%s help") % self.item.item_type.capitalize(),
+			self.item.open_help_tab)
 
-	def popup(self, pos):
-
-		"""
-		Show the menu and execute the chosen action
-
-		Arguments:
-		pos -- the position to popup
-		"""
-
-		action = self.exec_(pos)
-		if action == None:
-			return
-		action = unicode(action.text())
-		if action == self.open_text:
-			self.item.open_edit_tab()
-		elif action == self.edit_text:
-			self.item.show_script()
-		elif action == self.rename_text:
-			self.rename()
-		elif action == self.help_text:
-			self.item.open_help_tab()
-		elif action == self.delete_text:
-			self.item.experiment.delete(self.item.name, self.parent_item, \
-				self.index)
-
-	def rename(self):
-
-		"""Rename an item"""
-
-		self.treeitem.start_edit(0)
+	@property
+	def item(self):
+		return self.treeitem.item

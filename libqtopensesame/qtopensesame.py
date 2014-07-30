@@ -1124,4 +1124,23 @@ class qtopensesame(QtGui.QMainWindow, base_component):
 
 	def refresh(self, *deprecated, **_deprecated):
 
+		"""
+		desc:
+			This function used to implement refreshing of the OpenSesame GUI,
+			but has been deprecated.
+		"""
+
 		debug.msg(reason=u'deprecated')
+
+	def _id(self):
+
+		"""
+		returns:
+			desc:	A unique id string for this instance of OpenSesame. This
+					allows us to distinguish between different instances of the
+					program that may be running simultaneously.
+			type:	unicode
+		"""
+
+		_id = `QtGui.QApplication.instance()`.decode(self.enc)
+		return _id
