@@ -458,15 +458,15 @@ class qtitem(QtCore.QObject):
 
 		debug.msg()
 		for var, edit in self.auto_line_edit.iteritems():
-			edit.editingFinished.disconnect()
+			#edit.editingFinished.disconnect()
 			if self.has(var):
 				edit.setText(self.unistr(self.get(var, _eval=False)))
 			else:
 				edit.setText(u'')
-			edit.editingFinished.connect(self.apply_edit_changes)
+			#edit.editingFinished.connect(self.apply_edit_changes)
 
 		for var, combobox in self.auto_combobox.iteritems():
-			combobox.currentIndexChanged.disconnect()
+			#combobox.currentIndexChanged.disconnect()
 			val = self.get_check(var, _eval=False, default=u'')
 			i = combobox.findText(self.unistr(self.get(var, _eval=False)))
 			# Set the combobox to the select item
@@ -483,10 +483,10 @@ class qtitem(QtCore.QObject):
 				self.user_hint_widget.add_user_hint(_(u'"%s" is set to a '
 					u'variable or unknown value and can only be edited through '
 					u'the script.' % var))
-			combobox.currentIndexChanged.connect(self.apply_edit_changes)
+			#combobox.currentIndexChanged.connect(self.apply_edit_changes)
 
 		for var, spinbox in self.auto_spinbox.iteritems():
-			spinbox.editingFinished.disconnect()
+			#spinbox.editingFinished.disconnect()
 			if self.has(var):
 				val = self.get(var, _eval=False)
 				if type(val) in (float, int):
@@ -500,10 +500,10 @@ class qtitem(QtCore.QObject):
 					self.user_hint_widget.add_user_hint(_( \
 						u'"%s" is defined using variables and can only be edited through the script.' \
 						% var))
-			spinbox.editingFinished.connect(self.apply_edit_changes)
+			#spinbox.editingFinished.connect(self.apply_edit_changes)
 
 		for var, slider in self.auto_slider.iteritems():
-			slider.valueChanged.disconnect()
+			#slider.valueChanged.disconnect()
 			if self.has(var):
 				val = self.get(var, _eval=False)
 				if type(val) in (float, int):
@@ -517,17 +517,17 @@ class qtitem(QtCore.QObject):
 					self.user_hint_widget.add_user_hint(_( \
 						u'"%s" is defined using variables and can only be edited through the script.' \
 						% var))
-			slider.valueChanged.connect(self.apply_edit_changes)
+			#slider.valueChanged.connect(self.apply_edit_changes)
 
 		for var, checkbox in self.auto_checkbox.iteritems():
-			checkbox.toggled.disconnect()
+			#checkbox.toggled.disconnect()
 			if self.has(var):
 				try:
 					checkbox.setChecked(self.get(var, _eval=False) == u"yes")
 				except Exception as e:
 					self.experiment.notify(_(u"Failed to set control '%s': %s") \
 						% (var, e))
-			checkbox.toggled.connect(self.apply_edit_changes)
+			#checkbox.toggled.connect(self.apply_edit_changes)
 
 		for var, qprogedit in self.auto_editor.iteritems():
 			if self.has(var):
@@ -666,13 +666,13 @@ class qtitem(QtCore.QObject):
 			var = id(widget)
 		debug.msg(var)
 
-		if isinstance(widget, QtGui.QSpinBox) or isinstance(widget, \
+		if isinstance(widget, QtGui.QSpinBox) or isinstance(widget,
 			QtGui.QDoubleSpinBox):
 			widget.editingFinished.connect(self.apply_edit_changes)
 			self.auto_spinbox[var] = widget
 
 		elif isinstance(widget, QtGui.QComboBox):
-			widget.currentIndexChanged.connect(self.apply_edit_changes)
+			widget.activated.connect(self.apply_edit_changes)
 			self.auto_combobox[var] = widget
 
 		elif isinstance(widget, QtGui.QSlider):
@@ -684,7 +684,7 @@ class qtitem(QtCore.QObject):
 			self.auto_line_edit[var] = widget
 
 		elif isinstance(widget, QtGui.QCheckBox):
-			widget.toggled.connect(self.apply_edit_changes)
+			widget.clicked.connect(self.apply_edit_changes)
 			self.auto_checkbox[var] = widget
 
 		else:

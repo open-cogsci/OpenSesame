@@ -48,8 +48,6 @@ class loop(qtstructure_item, qtitem, loop_runtime):
 
 		loop_runtime.__init__(self, name, experiment, string)
 		qtitem.__init__(self)
-		self.sanity_criteria[u'cycles'] = {u'type' : int, u'msg' : \
-			u'Must be a integer numeric value'}
 
 	def rename(self, from_name, to_name):
 
@@ -381,9 +379,8 @@ class loop(qtstructure_item, qtitem, loop_runtime):
 		for cycle in self.matrix:
 			for var in self.matrix[cycle]:
 				col = column_order.index(var)
-				self.loop_table.setItem(cycle, col, \
-					QtGui.QTableWidgetItem(self.experiment.unistr( \
-						self.matrix[cycle][var])))
+				self.loop_table.set_text(cycle, col,
+					self.experiment.unistr(self.matrix[cycle][var]))
 
 		# Store the number of cycles and the column order
 		self.set(u"cycles", max(self.get(u"cycles"), self.cycle_count()))
@@ -460,64 +457,50 @@ class loop(qtstructure_item, qtitem, loop_runtime):
 			self.lock = False
 			self.refresh_loop_table()
 			self.refresh_summary()
+			self.apply_edit_changes()
 
 	def init_edit_widget(self):
 
 		"""Builds the loop controls."""
 
-		self.lock = True
-
-		qtitem.init_edit_widget(self, False)
+		print 'init_edit_widget'
+		super(loop, self).init_edit_widget(stretch=False)
 		self.loop_widget = loop_widget(self.experiment.main_window)
 		self.loop_widget.ui.widget_advanced.hide()
 		self.edit_vbox.addWidget(self.loop_widget)
-
 		self.auto_add_widget(self.loop_widget.ui.spin_cycles)
 		self.auto_add_widget(self.loop_widget.ui.spin_repeat, u"repeat")
 		self.auto_add_widget(self.loop_widget.ui.spin_skip, u"skip")
 		self.auto_add_widget(self.loop_widget.ui.combobox_order, u"order")
 		self.auto_add_widget(self.loop_widget.ui.checkbox_offset, u"offset")
-		# The break-if box needs to be validated, so we don't add it to the
-		# auto widgets.
-		self.loop_widget.ui.edit_break_if.editingFinished.connect( \
-			self.apply_edit_changes)
-		# The item combobox needs special treatment, because it's changes
-		# must be visible in the item tree as well
-		self.loop_widget.ui.combobox_item.activated.connect( \
-			self.apply_item_change)
-
-		self.loop_widget.ui.button_add_cyclevar.clicked.connect( \
+		self.auto_add_widget(self.loop_widget.ui.combobox_item, u"item")
+		self.auto_add_widget(self.loop_widget.ui.edit_break_if, u"break_if")
+		self.loop_widget.ui.button_add_cyclevar.clicked.connect(
 			self.add_cyclevar)
-		self.loop_widget.ui.button_rename_cyclevar.clicked.connect( \
+		self.loop_widget.ui.button_rename_cyclevar.clicked.connect(
 			self.rename_cyclevar)
-		self.loop_widget.ui.button_remove_cyclevar.clicked.connect( \
+		self.loop_widget.ui.button_remove_cyclevar.clicked.connect(
 			self.remove_cyclevar)
 		self.loop_widget.ui.button_wizard.clicked.connect(self.wizard)
-		self.loop_widget.ui.button_apply_weights.clicked.connect( \
+		self.loop_widget.ui.button_apply_weights.clicked.connect(
 			self.apply_weights)
-
-		self.loop_widget.ui.combobox_order.setItemIcon(0, \
+		self.loop_widget.ui.combobox_order.setItemIcon(0,
 			self.experiment.icon(u"random"))
-		self.loop_widget.ui.combobox_order.setItemIcon(1, \
+		self.loop_widget.ui.combobox_order.setItemIcon(1,
 			self.experiment.icon(u"sequential"))
-
-		self.loop_table = loop_table.loop_table(self, self.cycles, \
+		self.loop_table = loop_table.loop_table(self, self.cycles,
 			self.cyclevar_count())
 		self.edit_vbox.addWidget(self.loop_table)
-
-		self.lock = False
-		return self._edit_widget
 
 	def edit_widget(self):
 
 		"""Set the loop controls from the variables"""
 
-		self.lock = True
-		debug.msg()
+		print 'edit_widget'
+		super(loop, self).edit_widget()
 		# Update the item combobox
-		self.experiment.item_combobox(self.item, self.parents(), \
+		self.experiment.item_combobox(self.item, self.parents(),
 			self.loop_widget.ui.combobox_item)
-		qtitem.edit_widget(self)
 		self.refresh_loop_table(lock=False)
 		self.loop_widget.ui.spin_cycles.setValue(self.cycle_count())
 		if self.get(u"order") == u"random":
@@ -538,8 +521,6 @@ class loop(qtstructure_item, qtitem, loop_runtime):
 			self.get(u'skip', _eval=False) != 0:
 			self.loop_widget.ui.checkbox_advanced.setChecked(True)
 			self.loop_widget.ui.widget_advanced.show()
-		self.lock = False
-		return self._edit_widget
 
 	def apply_weights(self):
 
@@ -549,9 +530,9 @@ class loop(qtstructure_item, qtitem, loop_runtime):
 		if var_list == None:
 			return
 
-		weight_var, ok = QtGui.QInputDialog.getItem( \
-			self.experiment.ui.centralwidget, _(u"Apply weight"), \
-			_(u"Which variable contains the weights?"), var_list, \
+		weight_var, ok = QtGui.QInputDialog.getItem(
+			self.experiment.ui.centralwidget, _(u"Apply weight"),
+			_(u"Which variable contains the weights?"), var_list,
 			editable=False)
 		if not ok:
 			return
@@ -584,15 +565,7 @@ class loop(qtstructure_item, qtitem, loop_runtime):
 						self.matrix[_row] = self.matrix[_row-1]
 					_row += 1
 		self.set_cycle_count(_row)
-		self.edit_widget()
-
-	def apply_item_change(self):
-
-		"""Applies a change to the item to run."""
-
-		item = unicode(self.loop_widget.ui.combobox_item.currentText())
-		debug.msg(item)
-		self.set(u'item', item)
+		self.update()
 
 	def apply_edit_changes(self, dummy=None):
 
@@ -603,11 +576,12 @@ class loop(qtstructure_item, qtitem, loop_runtime):
 		dummy	-- A dummy argument passed by the signal handler. (default=None)
 		"""
 
-		if self.lock or not qtitem.apply_edit_changes(self, False):
-			return
-		self.lock = True
+		print 'apply_edit_changes'
+		# Set item to run
+		item = unicode(self.loop_widget.ui.combobox_item.currentText())
+		self.set(u'item', item)
 		# Validate and set the break-if statement
-		break_if = self.clean_cond(self.loop_widget.ui.edit_break_if.text(), \
+		break_if = self.clean_cond(self.loop_widget.ui.edit_break_if.text(),
 			default=u'never')
 		self.loop_widget.ui.edit_break_if.setText(break_if)
 		self.set(u'break_if', break_if)
@@ -630,23 +604,13 @@ class loop(qtstructure_item, qtitem, loop_runtime):
 		self.set_cycle_count(self.loop_widget.ui.spin_cycles.value())
 		self.refresh_loop_table()
 		self.loop_table.setCurrentCell(row, column)
-		self.lock = False
-		self.edit_widget()
+		super(loop, self).apply_edit_changes()
+		self.experiment.build_item_tree()
 
 	def build_item_tree(self, toplevel=None, items=[], max_depth=-1,
 		extra_info=None):
 
-		"""
-		Constructs an item tree.
-
-		Keyword arguments:
-		toplevel		--	The toplevel widget. (default=None)
-		items			--	A list of items that have been added, to prevent
-							recursion. (default=[])
-
-		Returns:
-		An updated list of items that have been added.
-		"""
+		"""See qtitem."""
 
 		items.append(self.name)
 		widget = tree_item_item(self, extra_info=extra_info)
@@ -656,7 +620,7 @@ class loop(qtstructure_item, qtitem, loop_runtime):
 			and self.item in self.experiment.items:
 			self.experiment.items[self.item].build_item_tree(widget, items,
 				max_depth=max_depth-1)
-		return widget
+		return items
 
 	def is_child_item(self, item):
 
@@ -677,5 +641,5 @@ class loop(qtstructure_item, qtitem, loop_runtime):
 		"""See qtitem."""
 
 		if item_name == self.item:
-			self.item = None
+			self.item = u''
 		self.update()

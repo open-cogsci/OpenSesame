@@ -179,7 +179,7 @@ class loop(item.item):
 		A definition string.
 		"""
 
-		s = item.item.to_string(self, u'loop')
+		s = super(loop, self).to_string()
 		for i in self.matrix:
 			for var in self.matrix[i]:
 				s += u'\tsetcycle %d %s "%s"\n' % (i, var, self.matrix[i][var])
