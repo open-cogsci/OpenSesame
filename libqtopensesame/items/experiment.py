@@ -187,7 +187,6 @@ class experiment(libopensesame.experiment.experiment):
 			return
 		for item in self.items:
 			self.items[item].delete(item_name, item_parent, index)
-		self.main_window.refresh()
 		self.main_window.close_item_tab(item_name)
 
 	def icon(self, name):

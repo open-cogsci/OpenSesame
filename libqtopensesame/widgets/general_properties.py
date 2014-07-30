@@ -202,7 +202,6 @@ class general_properties(base_widget):
 		self.experiment.set(u'bidi', self.ui.checkbox_bidi.isChecked())
 
 		# Refresh the interface and unlock the general tab
-		self.main_window.refresh()
 		self.lock = False
 		self.main_window.set_busy(False)
 

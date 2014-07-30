@@ -152,8 +152,6 @@ class sampler(libopensesame.sampler.sampler, qtitem.qtitem):
 		self.set("fade_in", self.sampler_widget.ui.spin_fade_in.value())
 		self.set("stop_after", self.sampler_widget.ui.spin_stop_after.value())
 
-		self.experiment.main_window.refresh(self.name)
-
 	def apply_dials(self, dummy=None):
 
 		"""

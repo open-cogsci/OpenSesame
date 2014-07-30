@@ -30,38 +30,37 @@ class keyboard_response(libopensesame.keyboard_response.keyboard_response, \
 	"""keyboard_response item GUI"""
 
 	def __init__(self, name, experiment, string=None):
-	
+
 		"""
 		Constructor
-		
+
 		Arguments:
 		name -- item name
-		experiment -- experiment instance	
-		
+		experiment -- experiment instance
+
 		Keywords arguments:
-		string -- a definition string (default=None)	
+		string -- a definition string (default=None)
 		"""
-		
+
 		libopensesame.keyboard_response.keyboard_response.__init__(self, name, \
 			experiment, string)
-		qtplugin.qtplugin.__init__(self)	
-		
+		qtplugin.qtplugin.__init__(self)
+
 	def apply_edit_changes(self):
-	
+
 		"""Apply controls"""
-		
+
 		if not qtplugin.qtplugin.apply_edit_changes(self, False) or self.lock:
 			return False
-		self.experiment.main_window.refresh(self.name)
-		return True		
+		return True
 
 	def init_edit_widget(self):
-	
+
 		"""Initialize controls"""
 
 		self.lock = True
 		qtplugin.qtplugin.init_edit_widget(self, False)
-		
+
 		# Use auto-controls for most stuff
 		self.add_line_edit_control('correct_response', 'Correct response',
 			tooltip='Set the correct response')
@@ -72,22 +71,22 @@ class keyboard_response(libopensesame.keyboard_response.keyboard_response, \
 			tooltip='Set the response timeout in milliseconds, or "infinite"')
 		self.add_checkbox_control('flush', 'Flush pending keypresses',
 			tooltip='Flush pending keypresses')
-			
+
 		# List available keys
 		button_list_keys = QtGui.QPushButton(self.experiment.icon("info"), \
 			"List available keys")
 		button_list_keys.setIconSize(QtCore.QSize(16,16))
-		button_list_keys.clicked.connect(self.list_keys)		
+		button_list_keys.clicked.connect(self.list_keys)
 		self.add_control('', button_list_keys, 'List available keys')
-							
+
 		self.edit_vbox.addStretch()
-		self.lock = True		
-							
+		self.lock = True
+
 	def edit_widget(self):
-	
+
 		"""
 		Update controls
-		
+
 		Returns:
 		Controls QWidget
 		"""
@@ -96,13 +95,13 @@ class keyboard_response(libopensesame.keyboard_response.keyboard_response, \
 		qtplugin.qtplugin.edit_widget(self)
 		self.lock = False
 		return self._edit_widget
-		
+
 	def list_keys(self):
-	
+
 		"""Show a dialog with available key names"""
-		
+
 		my_keyboard = keyboard(self.experiment)
 		s = _('The following key names are valid:<br />') \
 			+ '<br />'.join(my_keyboard.valid_keys())
 		self.experiment.notify(s)
-	
+

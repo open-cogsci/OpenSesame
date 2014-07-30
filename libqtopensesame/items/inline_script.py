@@ -66,13 +66,12 @@ class inline_script(libopensesame.inline_script.inline_script, qtitem.qtitem):
 		self.set(u'_run', sr)
 		self.lock = True
 		self._var_info = None
-		self.experiment.main_window.refresh(self.name)
 		self.lock = False
 
 	def init_edit_widget(self):
 
 		"""Constructs the GUI controls."""
-		
+
 		from QProgEdit import QTabManager
 		qtitem.qtitem.init_edit_widget(self, False)
 		self.qprogedit = QTabManager(handler=self.apply_edit_changes, \

@@ -27,36 +27,35 @@ class mouse_response(libopensesame.mouse_response.mouse_response, \
 	"""mouse_response item GUI"""
 
 	def __init__(self, name, experiment, string=None):
-	
+
 		"""
 		Constructor
-		
+
 		Arguments:
 		name -- item name
-		experiment -- experiment instance	
-		
+		experiment -- experiment instance
+
 		Keywords arguments:
-		string -- a definition string (default=None)	
-		"""		
+		string -- a definition string (default=None)
+		"""
 		libopensesame.mouse_response.mouse_response.__init__(self, name, \
 			experiment, string)
 		qtplugin.qtplugin.__init__(self)
 
 	def apply_edit_changes(self):
-	
+
 		"""Apply controls"""
-		
+
 		if not qtplugin.qtplugin.apply_edit_changes(self, False) or self.lock:
 			return False
-		self.experiment.main_window.refresh(self.name)
-		return True		
+		return True
 
 	def init_edit_widget(self):
-	
+
 		"""Initialize controls"""
-		
+
 		self.lock = True
-		qtplugin.qtplugin.init_edit_widget(self, False)		
+		qtplugin.qtplugin.init_edit_widget(self, False)
 		# Use auto-controls for most stuff
 		self.add_line_edit_control('correct_response', 'Correct response',
 			tooltip='Set the correct response')
@@ -66,24 +65,24 @@ class mouse_response(libopensesame.mouse_response.mouse_response, \
 		self.add_line_edit_control('timeout', 'Timeout',
 			tooltip='Set the response timeout in milliseconds, or "infinite"')
 		self.add_checkbox_control('show_cursor', 'Visible mouse cursor',
-			tooltip='If checked, the mouse cursor will be visible')			
+			tooltip='If checked, the mouse cursor will be visible')
 		self.add_checkbox_control('flush', 'Flush pending mouse clicks',
-			tooltip='Flush pending mouse clicks')			
+			tooltip='Flush pending mouse clicks')
 		self.add_text( \
 			'<small><i><b>Note:</b> Change the "custom cursor" option in the backend settings to switch between the system cursor and the custom OpenSesame cursor</i></small>' \
-			)			
+			)
 		self.edit_vbox.addStretch()
-		self.lock = True							
-							
+		self.lock = True
+
 	def edit_widget(self):
-	
+
 		"""
 		Update controls
-		
+
 		Returns:
 		Controls QWidget
 		"""
-		
+
 		self.lock = True
 		qtplugin.qtplugin.edit_widget(self)
 		self.lock = False

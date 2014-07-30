@@ -227,8 +227,6 @@ class logger(libopensesame.logger.logger, qtitem.qtitem):
 				if checkbox.isChecked():
 					self.logvars.append(checkbox.var)
 
-		self.experiment.main_window.refresh(self.name, refresh_edit = False)
-
 	def suggest_variables(self):
 
 		"""
@@ -253,7 +251,6 @@ class logger(libopensesame.logger.logger, qtitem.qtitem):
 						self.logvars.append(var)
 
 		self.edit_widget()
-		self.experiment.main_window.refresh(self.name)
 
 	def select_all(self):
 
@@ -263,7 +260,6 @@ class logger(libopensesame.logger.logger, qtitem.qtitem):
 			if var not in self.logvars:
 				self.logvars.append(var)
 		self.edit_widget()
-		self.experiment.main_window.refresh(self.name)
 
 	def deselect_all(self):
 
@@ -271,7 +267,6 @@ class logger(libopensesame.logger.logger, qtitem.qtitem):
 
 		self.logvars = []
 		self.edit_widget()
-		self.experiment.main_window.refresh(self.name)
 
 	def add_custom(self):
 
@@ -289,4 +284,3 @@ class logger(libopensesame.logger.logger, qtitem.qtitem):
 			if var not in self.logvars:
 				self.logvars.append(var)
 				self.edit_widget()
-				self.experiment.main_window.refresh(self.name)

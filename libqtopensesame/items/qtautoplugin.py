@@ -24,11 +24,11 @@ from libqtopensesame.misc import _
 class qtautoplugin(qtplugin):
 
 	"""A class that processes auto-plugins defined in a JSON file"""
-	
+
 	def __init__(self, plugin_file):
-		
-		qtplugin.__init__(self, plugin_file)				
-					
+
+		qtplugin.__init__(self, plugin_file)
+
 	def init_edit_widget(self):
 
 		"""Construct the GUI controls based on info.json"""
@@ -37,12 +37,12 @@ class qtautoplugin(qtplugin):
 		# runtime environment and may be not available on all platforms,
 		# notably Android.
 		import json
-	
+
 		self.lock = True
-		qtplugin.init_edit_widget(self, False)		
+		qtplugin.init_edit_widget(self, False)
 		# Load info.json
 		json_path = os.path.join(self.plugin_folder, u'info.json')
-		self.json = json.load(open(json_path))				
+		self.json = json.load(open(json_path))
 		# Some options are required. Which options are requires depends on the
 		# specific widget.
 		required  = [
@@ -67,7 +67,7 @@ class qtautoplugin(qtplugin):
 		# This indicates whether we should pad the controls with a stretch at
 		# the end.
 		need_stretch = True
-		for c in self.json[u'controls']:			
+		for c in self.json[u'controls']:
 			# Check whether all required options have been specified
 			if u'type' not in c:
 				raise Exception(_( \
@@ -143,7 +143,6 @@ class qtautoplugin(qtplugin):
 
 		if not qtplugin.apply_edit_changes(self, False) or self.lock:
 			return False
-		self.experiment.main_window.refresh(self.name)
 		return True
 
 	def edit_widget(self):
@@ -153,5 +152,4 @@ class qtautoplugin(qtplugin):
 		self.lock = True
 		qtplugin.edit_widget(self)
 		self.lock = False
-		return self._edit_widget	
-	
+		return self._edit_widget
