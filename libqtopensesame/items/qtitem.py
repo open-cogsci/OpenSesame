@@ -44,7 +44,6 @@ class qtitem(QtCore.QObject):
 		self.auto_slider = {}
 		self.auto_editor = {}
 		self.auto_checkbox = {}
-		self.sanity_criteria = {}
 		self.init_edit_widget()
 		self.lock = False
 		self.maximized = False
@@ -565,40 +564,6 @@ class qtitem(QtCore.QObject):
 				self.experiment.notify(
 					_(u'The following characters are not allowed and have been stripped: double-quote ("), backslash (\), and newline'))
 		return sane
-
-	def sanity_check(self):
-
-		"""
-		Checks whether all variables match prespecified criteria and fall back
-		to the script editor otherwise. This is usefull to check that certain
-		variables are numeric, etc.
-		"""
-
-		debug.msg()
-		errors = []
-		for var_name, criteria in self.sanity_criteria.items():
-			msg = _(u"Invalid or missing value for variable '%s' (edit script to fix this)") \
-				% var_name
-			if u'msg' in criteria:
-				msg += u': ' + criteria[u'msg']
-			if not self.has(var_name) and u'required' in criteria and \
-				criteria[u'required']:
-				self.experiment.notify(msg)
-				return False
-			else:
-				var = self.get(var_name, _eval=False)
-				if u'type' in criteria:
-					_type = criteria[u'type']
-					if type(_type) != list:
-						_type = [_type]
-				 	if type(var) not in _type:
-						self.experiment.notify(msg)
-						return False
-				if u'func' in criteria:
-					if not criteria[u'func'](var):
-						self.experiment.notify(msg)
-						return False
-		return True
 
 	def auto_apply_edit_changes(self, rebuild=True):
 
