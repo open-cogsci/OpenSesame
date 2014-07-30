@@ -104,16 +104,16 @@
             <string>Set the volume of the sound</string>
            </property>
            <property name="suffix">
-            <string>%</string>
+            <string/>
            </property>
            <property name="maximum">
-            <double>100.000000000000000</double>
+            <double>1.000000000000000</double>
            </property>
            <property name="singleStep">
-            <double>100.000000000000000</double>
+            <double>0.100000000000000</double>
            </property>
            <property name="value">
-            <double>100.000000000000000</double>
+            <double>1.000000000000000</double>
            </property>
           </widget>
          </item>
@@ -223,7 +223,7 @@
             <string>Set the attack (&quot;fade in&quot;) of the sound</string>
            </property>
            <property name="suffix">
-            <string>ms</string>
+            <string> ms</string>
            </property>
            <property name="maximum">
             <number>100000</number>
@@ -236,7 +236,7 @@
             <string>Set the decay (&quot;fade out&quot;) of the sound</string>
            </property>
            <property name="suffix">
-            <string>ms</string>
+            <string> ms</string>
            </property>
            <property name="maximum">
             <number>100000</number>
@@ -279,7 +279,7 @@
          <string>Set the length of the sound</string>
         </property>
         <property name="suffix">
-         <string>ms</string>
+         <string> ms</string>
         </property>
         <property name="maximum">
          <number>100000000</number>

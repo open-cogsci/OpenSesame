@@ -435,3 +435,25 @@ class experiment(libopensesame.experiment.experiment):
 						w.deleteLater()
 						QtCore.QCoreApplication.sendPostedEvents(w, QtCore.QEvent.DeferredDelete)
 
+	def varref(self, val):
+
+		"""
+		desc:
+			Checks whether a value contains a variable reference, for example:
+
+				'This is [width] px'
+
+		arguments:
+			val:
+				desc:	The value to check. This can be any type, but only
+						str and unicode can contain variable references.
+
+		returns:
+			desc:		True if a variable reference was found, False otherwise.
+			type:		bool
+		"""
+
+		if not isinstance(val, basestring):
+			return False
+		# TODO: Improve with regular expression
+		return u'[' in val

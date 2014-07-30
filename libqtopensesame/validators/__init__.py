@@ -18,3 +18,5 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from _cond_validator import cond_validator
+from _timeout_validator import timeout_validator
+from _duration_validator import duration_validator

@@ -434,7 +434,7 @@ class qtitem(QtCore.QObject):
 		for var in self.variables:
 			if var not in exclude:
 				val = self.variables[var]
-				if isinstance(val, basestring) and u'[' in val:
+				if self.experiment.varref(val):
 					return True
 		return False
 
@@ -457,15 +457,12 @@ class qtitem(QtCore.QObject):
 
 		debug.msg()
 		for var, edit in self.auto_line_edit.iteritems():
-			#edit.editingFinished.disconnect()
 			if self.has(var):
 				edit.setText(self.unistr(self.get(var, _eval=False)))
 			else:
 				edit.setText(u'')
-			#edit.editingFinished.connect(self.apply_edit_changes)
 
 		for var, combobox in self.auto_combobox.iteritems():
-			#combobox.currentIndexChanged.disconnect()
 			val = self.get_check(var, _eval=False, default=u'')
 			i = combobox.findText(self.unistr(self.get(var, _eval=False)))
 			# Set the combobox to the select item
@@ -482,13 +479,12 @@ class qtitem(QtCore.QObject):
 				self.user_hint_widget.add_user_hint(_(u'"%s" is set to a '
 					u'variable or unknown value and can only be edited through '
 					u'the script.' % var))
-			#combobox.currentIndexChanged.connect(self.apply_edit_changes)
 
 		for var, spinbox in self.auto_spinbox.iteritems():
-			#spinbox.editingFinished.disconnect()
 			if self.has(var):
 				val = self.get(var, _eval=False)
 				if type(val) in (float, int):
+					spinbox.setDisabled(False)
 					try:
 						spinbox.setValue(val)
 					except Exception as e:
@@ -499,13 +495,12 @@ class qtitem(QtCore.QObject):
 					self.user_hint_widget.add_user_hint(_( \
 						u'"%s" is defined using variables and can only be edited through the script.' \
 						% var))
-			#spinbox.editingFinished.connect(self.apply_edit_changes)
 
 		for var, slider in self.auto_slider.iteritems():
-			#slider.valueChanged.disconnect()
 			if self.has(var):
 				val = self.get(var, _eval=False)
 				if type(val) in (float, int):
+					slider.setDisabled(False)
 					try:
 						slider.setValue(val)
 					except Exception as e:
@@ -516,17 +511,14 @@ class qtitem(QtCore.QObject):
 					self.user_hint_widget.add_user_hint(_( \
 						u'"%s" is defined using variables and can only be edited through the script.' \
 						% var))
-			#slider.valueChanged.connect(self.apply_edit_changes)
 
 		for var, checkbox in self.auto_checkbox.iteritems():
-			#checkbox.toggled.disconnect()
 			if self.has(var):
 				try:
 					checkbox.setChecked(self.get(var, _eval=False) == u"yes")
 				except Exception as e:
 					self.experiment.notify(_(u"Failed to set control '%s': %s") \
 						% (var, e))
-			#checkbox.toggled.connect(self.apply_edit_changes)
 
 		for var, qprogedit in self.auto_editor.iteritems():
 			if self.has(var):

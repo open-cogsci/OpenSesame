@@ -29,25 +29,12 @@ class cond_validator(base_validator):
 
 	def __init__(self, main_window, default=u'always'):
 
-		self.default = default
-		super(cond_validator, self).__init__(main_window)
+		super(cond_validator, self).__init__(main_window, default=default)
 
-	def validate(self, val, pos):
+	def is_valid(self, val):
 
 		try:
 			self.experiment.compile_cond(unicode(val))
-			return (self.Acceptable, pos)
+			return True
 		except:
-			return (self.Intermediate, pos)
-
-	def fixup(self, val):
-
-		if val.trimmed() == u'':
-			val.remove(0, len(val))
-			val.insert(0, self.default)
-			return
-		try:
-			self.experiment.compile_cond(unicode(val))
-		except Exception as e:
-			val.remove(0, len(val))
-			val.insert(0, self.default)
+			return False

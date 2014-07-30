@@ -103,7 +103,7 @@
             <number>100</number>
            </property>
            <property name="value">
-            <number>99</number>
+            <number>1</number>
            </property>
            <property name="notchTarget">
             <double>10.000000000000000</double>
@@ -119,13 +119,16 @@
             <string>Set the volume of the sound</string>
            </property>
            <property name="suffix">
-            <string>%</string>
+            <string/>
            </property>
            <property name="maximum">
-            <double>100.000000000000000</double>
+            <double>1.000000000000000</double>
            </property>
            <property name="singleStep">
-            <double>100.000000000000000</double>
+            <double>0.100000000000000</double>
+           </property>
+           <property name="value">
+            <double>1.000000000000000</double>
            </property>
           </widget>
          </item>
@@ -206,16 +209,19 @@
          <item row="2" column="2">
           <widget class="QDoubleSpinBox" name="spin_pitch">
            <property name="toolTip">
-            <string>Set the relative pitch of the sound (100% = original)</string>
+            <string>Set the relative pitch of the sound (1 = original)</string>
            </property>
            <property name="suffix">
-            <string>%</string>
+            <string/>
            </property>
            <property name="maximum">
-            <double>10000.000000000000000</double>
+            <double>100.000000000000000</double>
+           </property>
+           <property name="singleStep">
+            <double>0.100000000000000</double>
            </property>
            <property name="value">
-            <double>99.989999999999995</double>
+            <double>1.000000000000000</double>
            </property>
           </widget>
          </item>
@@ -235,7 +241,7 @@
          <string>Force playback to stop after a specified duration. 0ms corresponds to a full playback.</string>
         </property>
         <property name="suffix">
-         <string>ms</string>
+         <string> ms</string>
         </property>
         <property name="maximum">
          <number>100000000</number>
@@ -248,7 +254,7 @@
          <string>The fade-in time of the sound.</string>
         </property>
         <property name="suffix">
-         <string>ms</string>
+         <string> ms</string>
         </property>
         <property name="maximum">
          <number>10000000</number>

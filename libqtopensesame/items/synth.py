@@ -17,53 +17,44 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
-import libopensesame.synth
+from libopensesame.synth import synth as synth_runtime
 from libqtopensesame.misc import _
-from libqtopensesame.items import qtitem
+from libqtopensesame.items.qtplugin import qtplugin
 from libqtopensesame.widgets.synth_widget import synth_widget
+from libqtopensesame.validators import duration_validator
 from PyQt4 import QtCore, QtGui
 
-class synth(libopensesame.synth.synth, qtitem.qtitem):
+class synth(synth_runtime, qtplugin):
 
-	"""GUI controls for the synth item"""
+	"""
+	desc:
+		GUI controls for the synth item.
+	"""
 
-	def __init__(self, name, experiment, string = None):
+	def __init__(self, name, experiment, string=None):
 
-		"""
-		Constructor
+		"""See item."""
 
-		Arguments:
-		name -- the item name
-		experiment -- the experiment
-
-		Keywords arguments:
-		string -- definition string (default=None)
-		"""
-
-		libopensesame.synth.synth.__init__(self, name, experiment, string)
-		qtitem.qtitem.__init__(self)
-		self.lock = False
+		synth_runtime.__init__(self, name, experiment, string)
+		qtplugin.__init__(self)
 
 	def init_edit_widget(self):
 
-		"""Build the GUI controls"""
+		"""See qtitem."""
 
-		qtitem.qtitem.init_edit_widget(self, False)
+		super(synth, self).init_edit_widget(self)
 		self.synth_widget = synth_widget(self.main_window)
-		self.synth_widget.ui.spin_attack.valueChanged.connect( \
-			self.apply_edit_changes)
-		self.synth_widget.ui.spin_decay.valueChanged.connect( \
-			self.apply_edit_changes)
-		self.synth_widget.ui.spin_pan.valueChanged.connect( \
-			self.apply_edit_changes)
-		self.synth_widget.ui.spin_volume.valueChanged.connect( \
-			self.apply_edit_changes)
-		self.synth_widget.ui.spin_length.valueChanged.connect( \
-			self.apply_edit_changes)
-		self.synth_widget.ui.edit_freq.editingFinished.connect( \
-			self.apply_edit_changes)
-		self.synth_widget.ui.edit_duration.editingFinished.connect( \
-			self.apply_edit_changes)
+		self.add_widget(self.synth_widget)
+		self.add_stretch()
+		self.auto_add_widget(self.synth_widget.ui.spin_attack, u'attack')
+		self.auto_add_widget(self.synth_widget.ui.spin_decay, u'decay')
+		self.auto_add_widget(self.synth_widget.ui.spin_volume, u'volume')
+		self.auto_add_widget(self.synth_widget.ui.spin_pan, u'pan')
+		self.auto_add_widget(self.synth_widget.ui.spin_length, u'length')
+		self.auto_add_widget(self.synth_widget.ui.edit_duration, u'duration')
+		self.auto_add_widget(self.synth_widget.ui.edit_freq, u'freq')
+		self.synth_widget.ui.edit_duration.setValidator(
+			duration_validator(self, default=u'sound'))
 		self.synth_widget.ui.dial_attack.valueChanged.connect(self.apply_dials)
 		self.synth_widget.ui.dial_decay.valueChanged.connect(self.apply_dials)
 		self.synth_widget.ui.dial_pan.valueChanged.connect(self.apply_dials)
@@ -71,159 +62,112 @@ class synth(libopensesame.synth.synth, qtitem.qtitem):
 		self.synth_widget.ui.button_sine.clicked.connect(self.set_sine)
 		self.synth_widget.ui.button_saw.clicked.connect(self.set_saw)
 		self.synth_widget.ui.button_square.clicked.connect(self.set_square)
-		self.synth_widget.ui.button_white_noise.clicked.connect( \
+		self.synth_widget.ui.button_white_noise.clicked.connect(
 			self.set_white_noise)
-		self.edit_vbox.addWidget(self.synth_widget)
-		self.edit_vbox.addStretch()
 
-	def set_sine(self):
+	def apply_edit_changes(self):
 
-		"""Select the sine oscillator"""
+		"""See qtitem."""
 
-		self.synth_widget.ui.button_sine.setChecked(True)
-		self.synth_widget.ui.button_saw.setChecked(False)
-		self.synth_widget.ui.button_square.setChecked(False)
-		self.synth_widget.ui.button_white_noise.setChecked(False)
+		super(synth, self).apply_edit_changes()
+		self.update_dials()
 
-		self.set("osc", "sine")
-		self.apply_edit_changes()
+	def apply_script_changes(self):
 
-	def set_saw(self):
+		"""See qtitem."""
 
-		"""Select the saw oscillator"""
+		super(synth, self).apply_script_changes()
+		self.update_dials()
 
-		self.synth_widget.ui.button_sine.setChecked(False)
-		self.synth_widget.ui.button_saw.setChecked(True)
-		self.synth_widget.ui.button_square.setChecked(False)
-		self.synth_widget.ui.button_white_noise.setChecked(False)
+	def update_dials(self):
 
-		self.set("osc", "saw")
-		self.apply_edit_changes()
+		"""
+		desc:
+			Updates the dials to match the corresponding spinboxes.
+		"""
 
-	def set_square(self):
+		self.synth_widget.ui.dial_pan.setDisabled(
+			type(self.get(u'pan', _eval=False)) not in (int, float))
+		self.synth_widget.ui.dial_decay.setDisabled(
+			type(self.get(u'decay', _eval=False)) not in (int, float))
+		self.synth_widget.ui.dial_attack.setDisabled(
+			type(self.get(u'attack', _eval=False)) not in (int, float))
+		self.synth_widget.ui.dial_volume.setDisabled(
+			type(self.get(u'volume', _eval=False)) not in (int, float))
+		self.synth_widget.ui.dial_pan.setValue(
+			self.synth_widget.ui.spin_pan.value())
+		self.synth_widget.ui.dial_decay.setValue(
+			self.synth_widget.ui.spin_decay.value())
+		self.synth_widget.ui.dial_attack.setValue(
+			self.synth_widget.ui.spin_attack.value())
+		self.synth_widget.ui.dial_volume.setValue(
+			100*self.synth_widget.ui.spin_volume.value())
 
-		"""Select the square oscillator"""
+	def apply_dials(self):
 
-		self.synth_widget.ui.button_sine.setChecked(False)
-		self.synth_widget.ui.button_saw.setChecked(False)
-		self.synth_widget.ui.button_square.setChecked(True)
-		self.synth_widget.ui.button_white_noise.setChecked(False)
+		"""
+		desc:
+			Applies changes to the dials.
+		"""
 
-		self.set("osc", "square")
-		self.apply_edit_changes()
-
-	def set_white_noise(self):
-
-		"""Select the white noise oscillator"""
-
-		self.synth_widget.ui.button_sine.setChecked(False)
-		self.synth_widget.ui.button_saw.setChecked(False)
-		self.synth_widget.ui.button_square.setChecked(False)
-		self.synth_widget.ui.button_white_noise.setChecked(True)
-
-		self.set("osc", "white_noise")
-		self.apply_edit_changes()
+		if self.synth_widget.ui.dial_attack.isEnabled():
+			self.set(u"attack", self.synth_widget.ui.dial_attack.value())
+		if self.synth_widget.ui.dial_decay.isEnabled():
+			self.set(u"decay", self.synth_widget.ui.dial_decay.value())
+		if self.synth_widget.ui.dial_pan.isEnabled():
+			self.set(u"pan", self.synth_widget.ui.dial_pan.value())
+		if self.synth_widget.ui.dial_volume.isEnabled():
+			self.set(u"volume", .01*self.synth_widget.ui.dial_volume.value())
+		self.edit_widget()
+		self.update_script()
 
 	def edit_widget(self):
 
-		"""Refresh the GUI controls"""
+		"""See qtitem."""
 
-		self.lock = True
+		super(synth, self).edit_widget()
+		osc = self.get(u'osc', _eval=False)
+		self.synth_widget.ui.button_sine.setChecked(osc == u'sine')
+		self.synth_widget.ui.button_saw.setChecked(osc == u'saw')
+		self.synth_widget.ui.button_square.setChecked(osc == u'square')
+		self.synth_widget.ui.button_white_noise.setChecked(osc == u'noise')
 
-		qtitem.qtitem.edit_widget(self, False)
-
-		if self.variable_vars(["duration", "freq"]):
-			self.synth_widget.ui.frame_controls.setVisible(False)
-			self.user_hint_widget.add_user_hint(_( \
-				'The controls are disabled, because one of the settings is defined using variables.'))
-			self.user_hint_widget.refresh()
-		else:
-
-			self.synth_widget.ui.frame_controls.setVisible(True)
-			self.synth_widget.ui.edit_freq.setText(self.unistr(self.get( \
-				'freq', _eval=False)))
-			self.synth_widget.ui.edit_duration.setText(self.unistr(self.get( \
-				'duration', _eval=False)))
-			self.synth_widget.ui.spin_attack.setValue(self.get("attack", \
-				_eval=False))
-			self.synth_widget.ui.spin_decay.setValue(self.get("decay", _eval= \
-				False))
-			self.synth_widget.ui.spin_pan.setValue(self.get("pan", _eval=False))
-			self.synth_widget.ui.spin_volume.setValue(100.0 * self.get( \
-				"volume", _eval=False))
-			self.synth_widget.ui.spin_length.setValue(self.get("length", \
-				_eval=False))
-			self.synth_widget.ui.dial_attack.setValue(self.get("attack", \
-				_eval=False))
-			self.synth_widget.ui.dial_decay.setValue(self.get("decay", \
-				_eval=False))
-			self.synth_widget.ui.dial_pan.setValue(self.get("pan", _eval= \
-				False))
-			self.synth_widget.ui.dial_volume.setValue(100.0 * self.get( \
-				"volume", _eval=False))
-			self.synth_widget.ui.button_sine.setChecked(self.get("osc", \
-				_eval=False) == "sine")
-			self.synth_widget.ui.button_saw.setChecked(self.get("osc", _eval= \
-				False) == "saw")
-			self.synth_widget.ui.button_square.setChecked(self.get("osc", \
-				_eval=False) == "square")
-			self.synth_widget.ui.button_white_noise.setChecked(self.get( \
-				"osc", _eval=False) == "white_noise")
-
-		self.lock = False
-
-		return self._edit_widget
-
-
-	def apply_edit_changes(self, dummy1=None, dummy2=None):
+	def set_sine(self):
 
 		"""
-		Apply the GUI controls
-
-		Keywords arguments:
-		dummy1 -- a dummy argument (default=None)
-		dummy2 -- a dummy argument (default=None)
+		desc:
+			Selects the sine oscillator
 		"""
 
-		if not qtitem.qtitem.apply_edit_changes(self) or self.lock:
-			return
+		self.set(u"osc", u"sine")
+		self.update()
 
-		self.set("freq", self.sanitize(self.synth_widget.ui.edit_freq.text(), \
-			strict=True))
-		dur = self.sanitize(self.synth_widget.ui.edit_duration.text(), \
-			strict=True)
-		if dur == "":
-			dur = "sound"
-		self.set("duration", dur)
-
-		self.set("attack", self.synth_widget.ui.spin_attack.value())
-		self.set("decay", self.synth_widget.ui.spin_decay.value())
-		self.set("pan", self.synth_widget.ui.spin_pan.value())
-		self.set("volume", .01 * self.synth_widget.ui.spin_volume.value())
-		self.set("length", self.synth_widget.ui.spin_length.value())
-
-		if self.synth_widget.ui.button_sine.isChecked():
-			self.set("osc", "sine")
-		elif self.synth_widget.ui.button_saw.isChecked():
-			self.set("osc", "saw")
-		elif self.synth_widget.ui.button_square.isChecked():
-			self.set("osc", "square")
-		else:
-			self.set("osc", "white_noise")
-
-	def apply_dials(self, dummy=None):
+	def set_saw(self):
 
 		"""
-		Set the spinbox values based on the dials
-
-		Keywords arguments:
-		dummy -- a dummy argument (default=None)
+		desc:
+			Selects the saw oscillator
 		"""
 
-		if self.lock:
-			return
-		self.set("attack", self.synth_widget.ui.dial_attack.value())
-		self.set("decay", self.synth_widget.ui.dial_decay.value())
-		self.set("pan", self.synth_widget.ui.dial_pan.value())
-		self.set("volume", .01 * self.synth_widget.ui.dial_volume.value())
-		self.edit_widget()
+		self.set(u"osc", u"saw")
+		self.update()
+
+	def set_square(self):
+
+		"""
+		desc:
+			Selects the square oscillator
+		"""
+
+		self.set(u"osc", u"square")
+		self.update()
+
+	def set_white_noise(self):
+
+		"""
+		desc:
+			Selects the noise oscillator
+		"""
+
+		self.set(u"osc", u"white_noise")
+		self.update()

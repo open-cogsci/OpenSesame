@@ -105,8 +105,8 @@ class qtplugin(qtitem.qtitem):
 		self.edit_grid.addWidget(QtGui.QLabel(_(label)), row, 0)
 		self.edit_grid.addWidget(widget, row, 1)
 
-	def add_line_edit_control(self, var, label, tooltip=None, default=None, \
-		min_width=None):
+	def add_line_edit_control(self, var, label, tooltip=None, default=None,
+		min_width=None, validator=None):
 
 		"""
 		Adds a QLineEdit control that is linked to a variable.
@@ -119,6 +119,7 @@ class qtplugin(qtitem.qtitem):
 		tooltip 	--	A tooltip text. (default=None)
 		default 	--	DEPRECATED
 		min_width 	--	A minimum width for the widget. (default=None)
+		validator	--
 
 		Returns:
 		A QLineEdit widget.
@@ -126,6 +127,8 @@ class qtplugin(qtitem.qtitem):
 
 		edit = QtGui.QLineEdit()
 		edit.editingFinished.connect(self.apply_edit_changes)
+		if validator != None:
+			edit.setValidator(validator)
 		self.add_control(label, edit, tooltip, min_width)
 		if var != None:
 			self.auto_line_edit[var] = edit

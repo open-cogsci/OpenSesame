@@ -17,34 +17,26 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
-from libqtopensesame.misc.base_component import base_component
+from PyQt4 import QtCore, QtGui
+from _base_validator import base_validator
 
-class base_subcomponent(base_component):
+class timeout_validator(base_validator):
 
 	"""
 	desc:
-		A base class for all components that require an experiment and theme
-		property.
+		A validator for timeout values.
 	"""
 
-	# These properties allow for cleaner programming, without dot references.
+	def __init__(self, main_window, default=u'infinite'):
 
-	@property
-	def experiment(self):
-		return self.main_window.experiment
+		super(timeout_validator, self).__init__(main_window, default=default)
 
-	@property
-	def theme(self):
-		return self.main_window.theme
+	def is_valid(self, val):
 
-	@property
-	def notify(self):
-		return self.main_window.experiment.notify
-
-	@property
-	def text_input(self):
-		return self.main_window.experiment.text_input
-
-	@property
-	def item_store(self):
-		return self.experiment.items
+		if val == u'infinite' or self.experiment.varref(val):
+			return True
+		try:
+			int(val)
+			return True
+		except:
+			return False

@@ -27,7 +27,29 @@ class base_validator(base_subcomponent, QtGui.QValidator):
 		A base class for input validators.
 	"""
 
-	def __init__(self, main_window):
+	def __init__(self, main_window, default):
 
+		self.default = default
 		super(base_validator, self).__init__(main_window)
 		self.setup(main_window)
+
+	def is_valid(self, val):
+
+		return True
+
+	def set_text(self, val, text):
+
+		val.remove(0, len(val))
+		val.insert(0, text)
+
+	def validate(self, val, pos):
+
+		if self.is_valid(unicode(val)):
+			return (self.Acceptable, pos)
+		else:
+			return (self.Intermediate, pos)
+
+	def fixup(self, val):
+
+		if not self.is_valid(unicode(val)):
+			self.set_text(val, self.default)
