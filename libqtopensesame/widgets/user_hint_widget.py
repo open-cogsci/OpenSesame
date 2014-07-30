@@ -41,6 +41,7 @@ class user_hint_widget(QtGui.QFrame, base_subcomponent):
 		super(user_hint_widget, self).__init__(main_window)
 		self.setup(main_window, ui=u'widgets.user_hint_widget')
 		self.item = item
+		self.clear()
 		self.ui.button_edit_script.clicked.connect(self.item.show_script)
 		self.hide()
 
