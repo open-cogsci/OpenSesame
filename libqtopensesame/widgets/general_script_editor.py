@@ -19,6 +19,8 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 
 from PyQt4 import QtCore, QtGui
 from libqtopensesame.misc import _
+from libopensesame.exceptions import osexception
+from libqtopensesame.items.experiment import experiment
 from libqtopensesame.widgets.base_widget import base_widget
 from libqtopensesame.misc.config import cfg
 
@@ -60,6 +62,17 @@ class general_script_editor(base_widget):
 			QtGui.QMessageBox.Yes, QtGui.QMessageBox.No)
 		if resp == QtGui.QMessageBox.No:
 			return
+		try:
+			exp = experiment(self.main_window, u'dummy',
+				self.ui.qprogedit.text())
+		except osexception as e:
+			self.notify(e.html())
+			self.main_window.print_debug_window(e)
+			return
+		self.main_window.experiment = exp
+		self.main_window.tabwidget.close_all()
+		self.main_window.tabwidget.open_general()
+		self.experiment.build_item_tree()
 
 	def on_activate(self):
 
