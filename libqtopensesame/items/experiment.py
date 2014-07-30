@@ -255,7 +255,7 @@ class experiment(libopensesame.experiment.experiment):
 		# If we are trying to select a non-existing item, add a dummy entry to
 		# the combobox
 		if select != None and select not in self.experiment.items:
-			c.addItem(u'[Please select an item]')
+			c.addItem(u'')
 			c.setCurrentIndex(0)
 			c.setItemIcon(i, self.icon(u'down'))
 			i += 1

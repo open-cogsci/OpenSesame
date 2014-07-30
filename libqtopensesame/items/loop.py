@@ -26,6 +26,7 @@ from libqtopensesame.misc.config import cfg
 from libqtopensesame.widgets import loop_table
 from libqtopensesame.widgets.loop_widget import loop_widget
 from libqtopensesame.widgets.tree_item_item import tree_item_item
+from libqtopensesame.validators import cond_validator
 from libopensesame import debug
 from PyQt4 import QtCore, QtGui
 
@@ -463,7 +464,6 @@ class loop(qtstructure_item, qtitem, loop_runtime):
 
 		"""Builds the loop controls."""
 
-		print 'init_edit_widget'
 		super(loop, self).init_edit_widget(stretch=False)
 		self.loop_widget = loop_widget(self.experiment.main_window)
 		self.loop_widget.ui.widget_advanced.hide()
@@ -475,6 +475,8 @@ class loop(qtstructure_item, qtitem, loop_runtime):
 		self.auto_add_widget(self.loop_widget.ui.checkbox_offset, u"offset")
 		self.auto_add_widget(self.loop_widget.ui.combobox_item, u"item")
 		self.auto_add_widget(self.loop_widget.ui.edit_break_if, u"break_if")
+		self.loop_widget.ui.edit_break_if.setValidator(cond_validator(self,
+			default=u'never'))
 		self.loop_widget.ui.button_add_cyclevar.clicked.connect(
 			self.add_cyclevar)
 		self.loop_widget.ui.button_rename_cyclevar.clicked.connect(
@@ -492,17 +494,14 @@ class loop(qtstructure_item, qtitem, loop_runtime):
 			self.cyclevar_count())
 		self.edit_vbox.addWidget(self.loop_table)
 
-	def edit_widget(self):
+	def update_widget_state(self):
 
-		"""Set the loop controls from the variables"""
+		"""
+		desc:
+			Enables or disables widgets, based on the settings.
+		"""
 
-		print 'edit_widget'
-		super(loop, self).edit_widget()
-		# Update the item combobox
-		self.experiment.item_combobox(self.item, self.parents(),
-			self.loop_widget.ui.combobox_item)
-		self.refresh_loop_table(lock=False)
-		self.loop_widget.ui.spin_cycles.setValue(self.cycle_count())
+		self.refresh_summary()
 		if self.get(u"order") == u"random":
 			self.loop_widget.ui.label_skip.setDisabled(True)
 			self.loop_widget.ui.spin_skip.setDisabled(True)
@@ -510,17 +509,29 @@ class loop(qtstructure_item, qtitem, loop_runtime):
 		else:
 			self.loop_widget.ui.label_skip.setDisabled(False)
 			self.loop_widget.ui.spin_skip.setDisabled(False)
-			self.loop_widget.ui.checkbox_offset.setDisabled( \
+			self.loop_widget.ui.checkbox_offset.setDisabled(
 				type(self.skip) != int or self.skip < 1)
-		self.refresh_summary()
-		# Update advanced settings
 		break_if = self.get(u'break_if', _eval=False)
-		self.loop_widget.ui.edit_break_if.setText(break_if)
 		if break_if not in [u'never', u''] or \
 			self.get(u'offset', _eval=False) == u'yes' or \
 			self.get(u'skip', _eval=False) != 0:
 			self.loop_widget.ui.checkbox_advanced.setChecked(True)
 			self.loop_widget.ui.widget_advanced.show()
+
+	def edit_widget(self):
+
+		"""Set the loop controls from the variables"""
+
+		super(loop, self).edit_widget()
+		# Update the item combobox
+		self.experiment.item_combobox(self.item, self.parents(),
+			self.loop_widget.ui.combobox_item)
+		self.refresh_loop_table(lock=False)
+		self.loop_widget.ui.spin_cycles.setValue(self.cycle_count())
+		# Update advanced settings
+		break_if = self.get(u'break_if', _eval=False)
+		self.loop_widget.ui.edit_break_if.setText(break_if)
+		self.update_widget_state()
 
 	def apply_weights(self):
 
@@ -576,7 +587,6 @@ class loop(qtstructure_item, qtitem, loop_runtime):
 		dummy	-- A dummy argument passed by the signal handler. (default=None)
 		"""
 
-		print 'apply_edit_changes'
 		# Set item to run
 		item = unicode(self.loop_widget.ui.combobox_item.currentText())
 		self.set(u'item', item)
@@ -606,6 +616,7 @@ class loop(qtstructure_item, qtitem, loop_runtime):
 		self.loop_table.setCurrentCell(row, column)
 		super(loop, self).apply_edit_changes()
 		self.experiment.build_item_tree()
+		self.update_widget_state()
 
 	def build_item_tree(self, toplevel=None, items=[], max_depth=-1,
 		extra_info=None):

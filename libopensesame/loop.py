@@ -40,7 +40,7 @@ class loop(item.item):
 		self.matrix = {}
 		self.order = u'random'
 		self.item = u''
-		self.break_if = u''
+		self.break_if = u'never'
 
 	def from_string(self, string):
 
