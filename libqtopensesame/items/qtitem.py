@@ -302,7 +302,14 @@ class qtitem(QtCore.QObject):
 		"""
 
 		debug.msg()
-		self.from_string(self._script_widget.text())
+		script = self._script_widget.text()
+		try:
+			self.__class__(self.name, self.experiment, script)
+		except osexception as e:
+			self.experiment.notify(e.html())
+			self.main_window.print_debug_window(e)
+			return
+		self.from_string(script)
 		self.edit_widget()
 
 	def rename(self, from_name, to_name):
