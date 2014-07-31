@@ -66,25 +66,13 @@ class form_consent(form_base.form_base):
 		string		--	A definition string. (default=None)
 		"""
 
-		if string == None:
+		if string == None or string.strip() == u'':
 			string = default_script
 		# Due to dynamic loading, we need to implement this super() hack. See
-		# <http://thingspython.wordpress.com/2010/09/27/another-super-wrinkle-raising-typeerror/>			
+		# <http://thingspython.wordpress.com/2010/09/27/another-super-wrinkle-raising-typeerror/>
 		self.super_form_consent = super(form_consent, self)
 		self.super_form_consent.__init__(name, experiment, string, item_type= \
 			u'form_consent', description=u'A simple consent form')
-
-	def from_string(self, script):
-
-		"""
-		Re-generates the form from a definition script.
-
-		Arguments:
-		script		--	The definition script.
-		"""
-
-		self._widgets = []
-		self.super_form_consent.from_string(script)
 
 	def run(self):
 
@@ -103,11 +91,11 @@ class form_consent(form_base.form_base):
 			c.text(self.get(u'decline_message'))
 			c.show()
 			self.sleep(5000)
-			
+
 class qtform_consent(form_consent, qtautoplugin):
-	
+
 	def __init__(self, name, experiment, script=None):
 
 		form_consent.__init__(self, name, experiment, script)
-		qtautoplugin.__init__(self, __file__)	
+		qtautoplugin.__init__(self, __file__)
 
