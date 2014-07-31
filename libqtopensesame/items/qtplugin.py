@@ -151,7 +151,7 @@ class qtplugin(qtitem.qtitem):
 		"""
 
 		checkbox = QtGui.QCheckBox(_(label))
-		checkbox.toggled.connect(self.apply_edit_changes)
+		checkbox.clicked.connect(self.apply_edit_changes)
 		self.add_control('', checkbox, tooltip)
 		if var != None:
 			self.auto_checkbox[var] = checkbox
@@ -207,7 +207,7 @@ class qtplugin(qtitem.qtitem):
 		combobox = QtGui.QComboBox()
 		for o in options:
 			combobox.addItem(o)
-		combobox.currentIndexChanged.connect(self.apply_edit_changes)
+		combobox.activated.connect(self.apply_edit_changes)
 		self.add_control(label, combobox, tooltip)
 		if var != None:
 			self.auto_combobox[var] = combobox
@@ -287,7 +287,7 @@ class qtplugin(qtitem.qtitem):
 			rlabel = QtGui.QLabel()
 			rlabel.setText(right_label)
 			layout.addWidget(rlabel)
-		slider.valueChanged.connect(self.apply_edit_changes)
+		slider.sliderMoved.connect(self.apply_edit_changes)
 		if var != None:
 			self.auto_slider[var] = slider
 		widget = QtGui.QWidget()
