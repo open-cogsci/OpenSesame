@@ -24,8 +24,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>820</width>
-        <height>828</height>
+        <width>816</width>
+        <height>824</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -51,13 +51,6 @@
            <number>0</number>
           </property>
           <item row="0" column="0">
-           <widget class="QCheckBox" name="checkbox_immediately_rename">
-            <property name="text">
-             <string>Offer to rename new items immediately</string>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="0">
            <widget class="QCheckBox" name="checkbox_autoresponse">
             <property name="text">
              <string>Enable auto-response</string>

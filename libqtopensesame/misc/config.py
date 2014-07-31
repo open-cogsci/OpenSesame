@@ -60,7 +60,6 @@ class config(object):
 		u"default_pool_folder" : libopensesame.misc.home_folder(),
 		u"disabled_plugins" : "",
 		u"file_dialog_path" : "",
-		u"immediate_rename" : False,
 		u"locale" : u"default",
 		u"loop_wizard" : QtCore.QStringList(),
 		u"onetabmode" : True,

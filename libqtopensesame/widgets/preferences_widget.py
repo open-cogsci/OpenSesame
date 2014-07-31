@@ -46,7 +46,6 @@ class preferences_widget(base_widget):
 		self.tab_name = u'__preferences__'
 		self.lock = False
 		# Connect the controls
-		self.ui.checkbox_immediately_rename.toggled.connect(self.apply)
 		self.ui.checkbox_autoresponse.toggled.connect(self.apply)
 		self.ui.checkbox_toolbar_text.toggled.connect(self.apply)
 		self.ui.checkbox_small_toolbar.toggled.connect(self.apply)
@@ -83,8 +82,6 @@ class preferences_widget(base_widget):
 		self.lock = True
 		debug.msg()
 
-		self.ui.checkbox_immediately_rename.setChecked(config.get_config(
-			u'immediate_rename'))
 		self.ui.checkbox_autoresponse.setChecked(
 			self.experiment.auto_response)
 		self.ui.checkbox_toolbar_text.setChecked(
@@ -139,8 +136,6 @@ class preferences_widget(base_widget):
 		self.lock = True
 		debug.msg()
 
-		config.set_config(u'immediate_rename',
-			self.ui.checkbox_immediately_rename.isChecked())
 		self.experiment.auto_response = \
 			self.ui.checkbox_autoresponse.isChecked()
 		self.main_window.ui.action_enable_auto_response.setChecked(
