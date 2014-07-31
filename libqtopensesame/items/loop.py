@@ -522,10 +522,10 @@ class loop(qtstructure_item, qtitem, loop_runtime):
 
 		"""Set the loop controls from the variables"""
 
-		super(loop, self).edit_widget()
 		# Update the item combobox
 		self.experiment.item_combobox(self.item, self.parents(),
 			self.loop_widget.ui.combobox_item)
+		super(loop, self).edit_widget()
 		self.refresh_loop_table(lock=False)
 		self.loop_widget.ui.spin_cycles.setValue(self.cycle_count())
 		# Update advanced settings
