@@ -96,6 +96,10 @@ class logger_widget(base_widget):
 						var == u"count_%s" % item:
 						self.logger.logvars.append(var)
 		self.logger.update()
+		self.logger.user_hint_widget.add(_(u'A smart selection of variables '
+			u'has been made. Are you sure that all relevant variables are now '
+			u'selected?'))
+		self.logger.user_hint_widget.refresh()
 
 	def add_custom_variable(self):
 
