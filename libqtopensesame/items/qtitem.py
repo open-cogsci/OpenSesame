@@ -301,14 +301,14 @@ class qtitem(QtCore.QObject):
 		"""
 
 		debug.msg()
-		script = self._script_widget.text()
+		old_script = self.to_string()
+		new_script = self._script_widget.text()
 		try:
-			self.__class__(self.name, self.experiment, script)
+			self.from_string(new_script)
 		except osexception as e:
 			self.experiment.notify(e.html())
 			self.main_window.print_debug_window(e)
-			return
-		self.from_string(script)
+			self.from_string(old_script)
 		self.edit_widget()
 
 	def rename(self, from_name, to_name):
@@ -476,7 +476,7 @@ class qtitem(QtCore.QObject):
 			# If an unknown value has been specified, notify the user
 			else:
 				combobox.setDisabled(True)
-				self.user_hint_widget.add_user_hint(_(u'"%s" is set to a '
+				self.user_hint_widget.add(_(u'"%s" is set to a '
 					u'variable or unknown value and can only be edited through '
 					u'the script.' % var))
 
@@ -492,7 +492,7 @@ class qtitem(QtCore.QObject):
 							u"Failed to set control '%s': %s") % (var, e))
 				else:
 					spinbox.setDisabled(True)
-					self.user_hint_widget.add_user_hint(_( \
+					self.user_hint_widget.add(_( \
 						u'"%s" is defined using variables and can only be edited through the script.' \
 						% var))
 
@@ -508,7 +508,7 @@ class qtitem(QtCore.QObject):
 							u"Failed to set control '%s': %s") % (var, e))
 				else:
 					slider.setDisabled(True)
-					self.user_hint_widget.add_user_hint(_( \
+					self.user_hint_widget.add(_( \
 						u'"%s" is defined using variables and can only be edited through the script.' \
 						% var))
 
