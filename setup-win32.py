@@ -17,16 +17,16 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 
-About
-=====
+----
+
+## About
 
 This script will create a binary Windows package of OpenSesame, using py2exe.
 If possible, dependencies are simply copied into a subfolder and compiled to
 .pyo format. If not possible, they are included in the library.zip file, which
 is the default py2exe way of including dependencies.
 
-Usage
-=====
+## Usage
 
 Python should be called with the -O argument. Otherwise, the dependencies
 will be compiled to .pyc, instead of .pyo, and the .py source files will not be
@@ -36,8 +36,7 @@ pruned. And that doesn't look very professional (although it does work).
 
 More options can be tweaked by changing the variables below.
 
-Python modules
-==============
+## Python modules
 
 The following Python modules should be installed:
 
@@ -85,8 +84,7 @@ The following Python modules should be installed:
 		- Choose the version for VLC 2.0
 		- Available from <http://liris.cnrs.fr/advene/download/python-ctypes/>
 
-Folder structure
-================
+## Folder structure
 
 If media_player or media_player_vlc are included, they are assumed to be one folder
 up. So the folder structure should be as follows:
@@ -95,6 +93,7 @@ up. So the folder structure should be as follows:
 		/opensesame
 		/media_player
 		/media_player_vlc
+---
 
 """
 
@@ -197,6 +196,7 @@ include_packages = [
 	'PyQt4.Qsci',
 	'PyQt4.QtWebKit',
 	'PyQt4.QtNetwork',
+	'PyQt4.uic',
 	]
 
 exclude_dll = [
