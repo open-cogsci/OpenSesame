@@ -464,7 +464,7 @@ class qtitem(QtCore.QObject):
 
 		for var, combobox in self.auto_combobox.iteritems():
 			val = self.get_check(var, _eval=False, default=u'')
-			i = combobox.findText(self.unistr(self.get(var, _eval=False)))
+			i = combobox.findText(self.unistr(val))
 			# Set the combobox to the select item
 			if i >= 0:
 				combobox.setDisabled(False)
