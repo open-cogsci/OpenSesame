@@ -111,7 +111,6 @@ class sequence(qtstructure_item, qtplugin, sequence_runtime):
 		"""See qtitem."""
 
 		widget = tree_item_item(self, extra_info=extra_info)
-		widget.set_draggable(False)
 		items.append(self.name)
 		if max_depth < 0 or max_depth > 1:
 			for item, cond in self.items:
@@ -120,6 +119,8 @@ class sequence(qtstructure_item, qtplugin, sequence_runtime):
 						max_depth=max_depth-1, extra_info=cond)
 		if toplevel != None:
 			toplevel.addChild(widget)
+		else:
+			widget.set_draggable(False)
 		return widget
 
 	def set_run_if(self, index, cond=u'always'):
