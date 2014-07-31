@@ -432,8 +432,7 @@ class sketchpad_widget(base_widget):
 			element.draw()
 		self.sketchpad.user_hint_widget.clear()
 		if len(self.canvas.notifications) > 0:
-			self.sketchpad.user_hint_widget.add_user_hint(u'\n'.join(
-				self.canvas.notifications))
+			self.sketchpad.user_hint_widget.add(self.canvas.notifications)
 		self.sketchpad.user_hint_widget.refresh()
 		self.sketchpad.apply_edit_changes()
 

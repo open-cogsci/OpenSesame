@@ -41,9 +41,10 @@ class user_hint_widget(QtGui.QFrame, base_subcomponent):
 		super(user_hint_widget, self).__init__(main_window)
 		self.setup(main_window, ui=u'widgets.user_hint_widget')
 		self.item = item
+		self.ui.button_hide.clicked.connect(self.dismiss)
+		self.hints = []
+		self.dismissed_hints = []
 		self.clear()
-		self.ui.button_edit_script.clicked.connect(self.item.show_script)
-		self.hide()
 
 	def disable(self, disabled=True):
 
@@ -57,19 +58,30 @@ class user_hint_widget(QtGui.QFrame, base_subcomponent):
 				type:	bool
 		"""
 
-		self.ui.button_edit_script.setDisabled(disabled)
+		self.ui.button_hide.setDisabled(disabled)
 
-	def add_user_hint(self, hint):
+	def add(self, hint):
 
 		"""
 		desc:
 			Adds a user hint.
 
 		arguments:
-			hint:		A user-hint text.
+			hint:
+				desc:	A user-hint message, or a list of messages.
+				type:	[list, unicode]
 		"""
 
-		self.hints.append(hint)
+		if not isinstance(hint, list):
+			hint = [hint]
+		for _hint in hint:
+			if _hint not in self.dismissed_hints:
+				self.hints.append(_hint)
+
+	def dismiss(self):
+
+		self.dismissed_hints += self.hints
+		self.clear()
 
 	def clear(self):
 
@@ -79,7 +91,7 @@ class user_hint_widget(QtGui.QFrame, base_subcomponent):
 		"""
 
 		self.hints = []
-		self.hide()
+		self.refresh()
 
 	def refresh(self):
 

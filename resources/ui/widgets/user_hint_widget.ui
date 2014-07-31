@@ -25,7 +25,7 @@
     </widget>
    </item>
    <item>
-    <widget class="QPushButton" name="button_edit_script">
+    <widget class="QPushButton" name="button_hide">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
        <horstretch>0</horstretch>
@@ -36,7 +36,7 @@
       <string>Click to open script editor</string>
      </property>
      <property name="text">
-      <string>Edit script</string>
+      <string>Hide</string>
      </property>
     </widget>
    </item>
