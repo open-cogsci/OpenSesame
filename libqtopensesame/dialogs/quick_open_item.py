@@ -85,5 +85,7 @@ class quick_open_item(base_dialog):
 				self.accept()
 		if list_widget_item == None:
 			return
-		self.main_window.select_item(unicode(list_widget_item.text()))
+		item_name = unicode(list_widget_item.text())
+		self.experiment.items[item_name].open_tab()
 		self.accept()
+
