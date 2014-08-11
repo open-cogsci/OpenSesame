@@ -92,6 +92,23 @@ class qtitem_store(item_store):
 		self.itemtree.rename(from_name, to_name)
 		return to_name
 
+	def set_icon(self, name, icon):
+
+		"""
+		desc:
+			Changes an item's icon.
+
+		arguments:
+			name:
+				desc:	The item name.
+				type:	unicode
+			icon:
+				desc:	The icon name.
+				type:	unicode
+		"""
+
+		self.itemtree.set_icon(name, icon)
+
 	def is_unused(self, name):
 
 		"""

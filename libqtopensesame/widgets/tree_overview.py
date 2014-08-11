@@ -442,7 +442,40 @@ class tree_overview(base_subcomponent, QtGui.QTreeWidget):
 
 	def rename(self, from_name, to_name):
 
+		"""
+		desc:
+			Renames an item.
+
+		arguments:
+			from_name:
+				desc:	The old name.
+				type:	unicode
+			to_name:
+				desc:	The new name.
+				type:	unicode
+		"""
+
 		self.itemChanged.disconnect()
 		for i in range(self.topLevelItemCount()):
 			self.topLevelItem(i).rename(from_name, to_name)
+		self.itemChanged.connect(self.text_edited)
+
+	def set_icon(self, name, icon):
+
+		"""
+		desc:
+			Changes an item's icon.
+
+		arguments:
+			name:
+				desc:	The item name.
+				type:	unicode
+			icon:
+				desc:	The icon name.
+				type:	unicode
+		"""
+
+		self.itemChanged.disconnect()
+		for i in range(self.topLevelItemCount()):
+			self.topLevelItem(i).set_icon(name, icon)
 		self.itemChanged.connect(self.text_edited)

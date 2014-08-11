@@ -18,10 +18,11 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame import debug
+from libqtopensesame.misc.base_subcomponent import base_subcomponent
 from libqtopensesame.misc import config, _
 from PyQt4 import QtGui, QtCore
 
-class tab_widget(QtGui.QTabWidget):
+class tab_widget(base_subcomponent, QtGui.QTabWidget):
 
 	"""A custom tab widget with some extra functionality"""
 
@@ -35,6 +36,7 @@ class tab_widget(QtGui.QTabWidget):
 		"""
 
 		QtGui.QTabWidget.__init__(self, parent)
+		base_subcomponent.setup(self, parent)
 		try:
 			self.tabCloseRequested.connect(self.removeTab)
 		except:
@@ -90,6 +92,25 @@ class tab_widget(QtGui.QTabWidget):
 		index = self.indexOf(widget)
 		if index >= 0:
 			self.removeTab(index)
+
+	def set_icon(self, widget, icon):
+
+		"""
+		desc:
+			Sets the icon for a tab with a specific widget.
+
+		arguments:
+			widget:
+				desc:	A widget.
+				type:	QWidget
+			icon:
+				desc:	An icon name.
+				type:	unicode
+		"""
+
+		index = self.indexOf(widget)
+		if index >= 0:
+			self.setTabIcon(index, self.theme.qicon(icon))
 
 	def close_all(self):
 

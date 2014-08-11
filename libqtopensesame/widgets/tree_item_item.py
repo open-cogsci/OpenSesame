@@ -55,7 +55,7 @@ class tree_item_item(tree_base_item):
 		if extra_info != None:
 			self.setText(1, extra_info)
 		self.setFlags(QtCore.Qt.ItemIsEditable | self.flags())
-		self.setIcon(0, self.experiment.icon(item.item_type))
+		self.setIcon(0, self.experiment.icon(item.item_icon()))
 		self.name = item.name
 		self._droppable = True
 		self._draggable = True
@@ -70,27 +70,6 @@ class tree_item_item(tree_base_item):
 		"""
 
 		self.item.open_tab()
-
-	def rename(self, to_name):
-
-		"""
-		desc:
-			Renames the item that belongs to this tree item, and refreshes the
-			ui accordingly.
-
-		arguments:
-			to_name:
-				desc:	The new name of the item.
-				type:	unicode
-		"""
-
-		if self._lock:
-			return
-		self._lock = True
-		if self.experiment.items.rename(self.name, to_name):
-			self.name = to_name
-			self.setText(0, self.name)
-		self._lock = False
 
 	def ancestry(self):
 
@@ -168,6 +147,14 @@ class tree_item_item(tree_base_item):
 		super(tree_item_item, self).rename(from_name, to_name)
 		if unicode(self.text(0)) == from_name:
 			self.setText(0, to_name)
+
+	def set_icon(self, name, icon):
+
+		"""See tree_base_item."""
+
+		super(tree_item_item, self).set_icon(name, icon)
+		if unicode(self.text(0)) == name:
+			self.setIcon(0, self.theme.qicon(icon))
 
 	def is_deletable(self):
 

@@ -47,6 +47,25 @@ class inline_script(inline_script_runtime, qtplugin):
 		sr = self.qprogedit.text(index=1)
 		self.set(u'_prepare', sp)
 		self.set(u'_run', sr)
+		self.update_item_icon()
+
+	def item_icon(self):
+
+		"""
+		desc:
+			Determines the icon, based on whether the scripts are syntactically
+			correct.
+
+		returns:
+			desc:	An icon name.
+			type:	unicode
+		"""
+
+		if self.experiment.python_workspace.check_syntax(self.get(u'_prepare'))\
+			and self.experiment.python_workspace.check_syntax(
+			self.get(u'_run')):
+			return u'os-inline_script'
+		return u'os-inline_script-syntax-error'
 
 	def init_edit_widget(self):
 

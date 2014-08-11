@@ -68,7 +68,7 @@ class qtitem(QtCore.QObject):
 			Opens the tab if it wasn't yet open, and switches to it.
 		"""
 
-		self.main_window.tabwidget.add(self.widget(), self.item_type, self.name)
+		self.tabwidget.add(self.widget(), self.item_icon(), self.name)
 
 	def close_tab(self):
 
@@ -77,7 +77,29 @@ class qtitem(QtCore.QObject):
 			Closes the tab if it was open.
 		"""
 
-		self.main_window.tabwidget.remove(self.widget())
+		self.tabwidget.remove(self.widget())
+
+	def update_item_icon(self):
+
+		"""
+		desc:
+			Updates the item icon.
+		"""
+
+		self.tabwidget.set_icon(self.widget(), self.item_icon())
+		self.experiment.items.set_icon(self.name, self.item_icon())
+		self.header_item_icon.setPixmap(
+			self.theme.qpixmap(self.item_icon(), 32))
+
+	def item_icon(self):
+
+		"""
+		returns:
+			desc:	The name of the item icon.
+			type:	unicode
+		"""
+
+		return self.item_type
 
 	def show_tab(self):
 
@@ -122,7 +144,8 @@ class qtitem(QtCore.QObject):
 		self.user_hint_widget = user_hint_widget.user_hint_widget(
 			self.experiment.main_window, self)
 		self.header_hbox = QtGui.QHBoxLayout()
-		self.header_hbox.addWidget(self.experiment.label_image(self.item_type))
+		self.header_item_icon = self.experiment.label_image(self.item_icon())
+		self.header_hbox.addWidget(self.header_item_icon)
 		self.header_hbox.addWidget(self.header)
 		self.header_hbox.addStretch()
 		self.header_hbox.setContentsMargins(0, 5, 0, 10)
