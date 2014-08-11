@@ -56,7 +56,7 @@ class start_new_widget(base_widget):
 			item = QtGui.QListWidgetItem(self.ui.list_templates)
 			item.setText(desc)
 			item.file = path
-			item.setIcon(self.experiment.icon(u"wizard"))
+			item.setIcon(self.experiment.icon(u"document-open-recent"))
 			self.ui.list_templates.addItem(item)
 		self.ui.list_templates.setCurrentRow(0)
 		self.ui.list_templates.itemDoubleClicked.connect(self.open_template)

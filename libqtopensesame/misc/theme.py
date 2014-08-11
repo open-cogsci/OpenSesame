@@ -23,7 +23,7 @@ from libopensesame import debug, misc
 from libqtopensesame.misc import config
 from PyQt4 import QtGui, QtCore
 
-available_themes = [u'default', u'gnome']
+available_themes = [u'default']
 
 class theme:
 
@@ -44,6 +44,8 @@ class theme:
 		"""
 
 		self.main_window = main_window
+		self.fallback_icon = QtGui.QIcon(os.path.join(misc.resource(u"theme"),
+			u"fallback.png"))
 		if theme == None:
 			self.theme = config.get_config(u"theme")
 		else:
@@ -94,11 +96,13 @@ class theme:
 		"""
 
 		if icon in self.icon_map:
-			name, size = self.icon_map[icon]
+			name = self.icon_map[icon][0]
 		else:
 			name = icon
-		return QtGui.QIcon.fromTheme(name, QtGui.QIcon(os.path.join( \
-			misc.resource(u"theme"), u"fallback.png")))
+		icon = QtGui.QIcon.fromTheme(name, self.fallback_icon)
+		if icon.name() != name:
+			debug.msg(u'missing icon %s' % name, reason=u'warning')
+		return icon
 
 	def qpixmap(self, icon, size=None):
 
@@ -117,17 +121,11 @@ class theme:
 
 		if size == None:
 			if icon in self.icon_map:
-				name, size = self.icon_map[icon]
+				size = self.icon_map[icon][1]
 			else:
-				name = icon
 				size = self.default_icon_size
-		else:
-			if icon in self.icon_map:
-				name = self.icon_map[icon][0]
-			else:
-				name = icon
-		return QtGui.QIcon.fromTheme(name, QtGui.QIcon(os.path.join( \
-			misc.resource(u"theme"), u"fallback.png"))).pixmap(size)
+		icon = self.qicon(icon)
+		return icon.pixmap(size)
 
 	def qlabel(self, icon):
 
@@ -149,6 +147,7 @@ class theme:
 
 		"""Load the icon map"""
 
+		self.original_theme = QtGui.QIcon.themeName()
 		if os.path.exists(os.path.join(self.theme_folder, self._icon_theme)):
 			debug.msg(u"using custom icon theme")
 			QtGui.QIcon.setThemeSearchPaths(QtGui.QIcon.themeSearchPaths() \

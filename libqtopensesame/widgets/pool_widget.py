@@ -68,9 +68,9 @@ class pool_widget(base_widget):
 		self.main_window.theme.apply_theme(self)
 
 		self.ui.combobox_view.setItemIcon(0, self.main_window.theme.qicon( \
-			u"view-list-details-symbolic"))
+			u"view-list-details"))
 		self.ui.combobox_view.setItemIcon(1, self.main_window.theme.qicon( \
-			u"view-list-icons-symbolic"))
+			u"view-list-icons"))
 
 	def help(self):
 

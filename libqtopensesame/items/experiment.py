@@ -257,7 +257,7 @@ class experiment(libopensesame.experiment.experiment):
 		if select != None and select not in self.experiment.items:
 			c.addItem(u'')
 			c.setCurrentIndex(0)
-			c.setItemIcon(i, self.icon(u'down'))
+			c.setItemIcon(i, self.icon(u'go-down'))
 			i += 1
 		# Add all existing items (except excluded) in alphabetical order
 		for item in sorted(self.experiment.items):

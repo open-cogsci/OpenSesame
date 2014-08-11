@@ -187,7 +187,7 @@ class tab_widget(QtGui.QTabWidget):
 		from libqtopensesame.widgets import webbrowser
 		browser = webbrowser.webbrowser(self.main_window)
 		browser.load(url)
-		self.add(browser, u"web-browser", u'Help')
+		self.add(browser, u"applications-internet", u'Help')
 
 	def open_help(self, item):
 

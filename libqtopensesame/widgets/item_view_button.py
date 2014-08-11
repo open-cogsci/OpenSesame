@@ -62,7 +62,7 @@ class item_view_button(base_subcomponent, QtGui.QPushButton):
 			type: 	QIcon
 		"""
 
-		return self.theme.qicon(u'applications-accessories')
+		return self.theme.qicon(u'os-view-controls')
 
 	def view_script_icon(self):
 
@@ -72,7 +72,7 @@ class item_view_button(base_subcomponent, QtGui.QPushButton):
 			type: 	QIcon
 		"""
 
-		return self.theme.qicon(u'utilities-terminal')
+		return self.theme.qicon(u'os-view-script')
 
 	def view_split_icon(self):
 
