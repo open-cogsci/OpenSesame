@@ -22,13 +22,13 @@ from libopensesame.exceptions import osexception
 from libqtopensesame.runners import base_runner
 
 class inprocess_runner(base_runner):
-	
+
 	"""Runs an experiment in the traditional way, in the same process."""
 
 	def execute(self):
-		
+
 		"""See base_runner.execute()."""
-		
+
 		# Exceptions during the run phase are important and returned so that the
 		# user is notified.
 		e = None
@@ -44,3 +44,9 @@ class inprocess_runner(base_runner):
 		except Exception as _e:
 			debug.msg(u'Exception during experiment.end(): %s' % _e)
 		return e
+
+	def workspace_globals(self):
+
+		"""See base_runner."""
+
+		return self.experiment.python_workspace._globals

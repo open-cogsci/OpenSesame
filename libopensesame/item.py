@@ -76,7 +76,7 @@ class item(object):
 		self.comments = []
 		if string != None:
 			self.from_string(string)
-
+			
 	def reset(self):
 
 		"""

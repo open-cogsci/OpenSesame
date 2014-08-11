@@ -1097,8 +1097,11 @@ class qtopensesame(QtGui.QMainWindow, base_component):
 		elif cfg.runner == u'external':
 			from libqtopensesame.runners import external_runner as runner
 		debug.msg(u'using %s runner' % runner)
-		runner(self).run(quick=quick, fullscreen=fullscreen,
+		_runner = runner(self)
+		_runner.run(quick=quick, fullscreen=fullscreen,
 			auto_response=self.experiment.auto_response)
+		self.ui.edit_stdout.pyterm.set_workspace_globals(
+			_runner.workspace_globals())
 		# Undo the standard output rerouting
 		sys.stdout = sys.__stdout__
 		self.ui.edit_stdout.show_prompt()

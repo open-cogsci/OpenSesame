@@ -18,6 +18,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame.item_store import item_store
+from libopensesame.python_workspace import python_workspace
 from libopensesame.exceptions import osexception
 from libopensesame import misc, item, plugins, debug
 import os.path
@@ -37,7 +38,7 @@ class experiment(item.item):
 
 	def __init__(self, name=u'experiment', string=None, pool_folder=None,
 		experiment_path=None, fullscreen=False, auto_response=False,
-		logfile=u'defaultlog.csv', subject_nr=0, items=None):
+		logfile=u'defaultlog.csv', subject_nr=0, items=None, workspace=None):
 
 		"""<DOC>
 		Constructor. The experiment is created automatically be OpenSesame and #
@@ -56,6 +57,8 @@ class experiment(item.item):
 							enabled. (default=False)
 		logfile			--	The logfile path. (default=u'defaultlog.csv')
 		subject_nr		--	The subject number. (default=0)
+		items			--	TODO
+		workspace		--	TODO
 		</DOC>"""
 
 		global pool_folders
@@ -64,6 +67,10 @@ class experiment(item.item):
 			self.items = item_store(self)
 		else:
 			self.items = items
+		if workspace == None:
+			self.python_workspace = python_workspace(self)
+		else:
+			self.python_workspace = workspace
 		self.running = False
 		self.auto_response = auto_response
 		self.plugin_folder = u'plugins'
@@ -592,6 +599,7 @@ class experiment(item.item):
 
 		from openexp import canvas
 		canvas.init_display(self)
+		self.python_workspace[u'win'] = self.window
 
 	def init_log(self):
 

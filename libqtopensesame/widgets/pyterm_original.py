@@ -90,9 +90,9 @@ class pyterm(code.InteractiveConsole):
 
 		"""Constructor"""
 
-		global modules
-
-		self._locals = {u'modules' : modules, u'parent' : parent}
+		self._locals = {}
+		self.parent = parent
+		self.set_workspace_globals()
 		code.InteractiveConsole.__init__(self, self._locals)
 		self.textedit = textedit
 
@@ -108,6 +108,24 @@ class pyterm(code.InteractiveConsole):
 		if isinstance(s, str):
 			s = s.decode(u'utf-8', u'replace')
 		print(s.replace(u'\n', u''))
+
+	def set_workspace_globals(self, _globals={}):
+
+		"""
+		desc:
+			Updates the globals dictionary for the console's workspace.
+
+		keywords:
+			_globals:
+				desc:	A globals dictionary
+				type:	dict
+		"""
+
+		global modules
+		self._locals.clear()
+		self._locals[u'modules'] = modules
+		self._locals[u'parent'] = self.parent
+		self._locals.update(_globals)
 
 class console(QtGui.QPlainTextEdit):
 

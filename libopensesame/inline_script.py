@@ -22,8 +22,6 @@ from libopensesame import item
 from openexp import canvas
 from libopensesame.exceptions import osexception
 
-_globals = {}
-
 class inline_script(item.item):
 
 	"""Allows users to use Python code in their experiments"""
@@ -83,45 +81,31 @@ class inline_script(item.item):
 		function.
 		</DOC>"""
 
-		global _globals, _locals
-
 		item.item.prepare(self)
 		if self.experiment.transparent_variables == u'yes':
 			self.start_transparency()
-		# Convenience variables need to be registered as globals. By specifying
-		# a __name__, the script will function as a module, so that e.g. import
-		# statements do not suffer from locality.
-		if u'exp' not in _globals:
-			_globals[u'exp'] = self.experiment
-			_globals[u'win'] = self.experiment.window
-			_globals[u'__name__'] = u'myname'
 		# 'self' must always be registered, otherwise we get confusions between
 		# the various inline_script items.
-		_globals[u'self'] = self
-		# Prepend source encoding (PEP 0263) and encode scripts. This is
-		# necessary, because the exec statement doesn't take kindly to Unicode.
-		_prepare = (u'#-*- coding:%s -*-\n' % self.encoding + self._prepare) \
-			.encode(self.encoding)
-		_run = (u'#-*- coding:%s -*-\n' % self.encoding + self._run) \
-			.encode(self.encoding)
+		self.experiment.python_workspace[u'self'] = self
 		# Compile prepare script
 		try:
-			self.cprepare = compile(_prepare, u'<string>', u'exec')
+			self.cprepare = self.experiment.python_workspace._compile(
+				self._prepare)
 		except Exception as e:
-			raise osexception(u'Failed to compile inline script', item= \
-				self.name, phase=u'prepare', exception=e)
+			raise osexception(u'Failed to compile inline script',
+				item=self.name, phase=u'prepare', exception=e)
 		# Compile run script
 		try:
-			self.crun = compile(_run, u'<string>', u'exec')
+			self.crun = self.experiment.python_workspace._compile(self._run)
 		except Exception as e:
-			raise osexception(u'Failed to compile inline script', item= \
-				self.name, phase=u'run', exception=e)
+			raise osexception(u'Failed to compile inline script',
+				item=self.name, phase=u'run', exception=e)
 		# Run prepare script
 		try:
-			exec(self.cprepare, _globals)
+			self.experiment.python_workspace._exec(self.cprepare)
 		except Exception as e:
-			raise osexception(u'Error while executing inline script', item= \
-				self.name, phase=u'prepare', exception=e)
+			raise osexception(u'Error while executing inline script',
+				item=self.name, phase=u'prepare', exception=e)
 		if self.experiment.transparent_variables == u'yes':
 			self.end_transparency()
 
@@ -132,18 +116,17 @@ class inline_script(item.item):
 		an inline_script item in the GUI is used as a body for this function.
 		</DOC>"""
 
-		global _globals, _locals
 		self.set_item_onset()
 		# 'self' must always be registered, otherwise we get confusions between
 		# the various inline_script items.
-		_globals[u'self'] = self
+		self.experiment.python_workspace[u'self'] = self
 		if self.experiment.transparent_variables == u'yes':
 			self.start_transparency()
 		try:
-			exec(self.crun, _globals)
+			self.experiment.python_workspace._exec(self.crun)
 		except Exception as e:
-			raise osexception(u'Error while executing inline script', item= \
-				self.name, phase=u'run', exception=e)
+			raise osexception(u'Error while executing inline script',
+				item=self.name, phase=u'run', exception=e)
 		if self.experiment.transparent_variables == u'yes':
 			self.end_transparency()
 
@@ -187,24 +170,22 @@ class inline_script(item.item):
 	def start_transparency(self):
 
 		"""
-		Registers all experiment variables in the locals dictionary. This allows
+		Registers all experimental variables. This allows
 		the user to interact with the experimental variables without needing
 		to call `exp.set()`.
 		"""
 
-		global _globals
 		for var, val in self.experiment.var_info():
-			_globals[var] = val
+			self.experiment.python_workspace[var] = val
 
 	def end_transparency(self):
 
 		"""
-		Sets all local variables, so that the user doesn't have explicitly have
+		Sets all global variables, so that the user doesn't have explicitly have
 		to call `exp.set()`.
 		"""
 
-		global _globals
-		for var, val in _globals.items():
+		for var, val in self.experiment.python_workspace.items():
 			if isinstance(val, basestring) or isinstance(val, float) or \
 				isinstance(val, int):
 				self.experiment.set(var, val)
@@ -213,8 +194,8 @@ def restore_state():
 
 	"""Restores the system state."""
 
-	global _globals
-	_globals = {}
+	# Currently does nothing.
+	pass
 
 def save_state():
 
