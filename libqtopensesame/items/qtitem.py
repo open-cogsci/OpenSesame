@@ -364,7 +364,6 @@ class qtitem(QtCore.QObject):
 			self.button_toggle_maximize.setIcon(
 				self.theme.qicon(u'view-fullscreen'))
 		self.maximized = not self.maximized
-		self.button_edit_script.setDisabled(self.maximized)
 		self.user_hint_widget.disable(self.maximized)
 		self.button_help.setDisabled(self.maximized)
 		self.main_window.setDisabled(self.maximized)
