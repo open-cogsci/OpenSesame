@@ -46,15 +46,15 @@ class item_context_menu(base_subcomponent, QtGui.QMenu):
 		self.addAction(self.experiment.icon(self.item.item_type),
 			_("Open %s") % self.item.name, self.item.open_tab)
 		self.addSeparator()
-		self.addAction(self.experiment.icon(u"copy"), _("Copy"),
+		self.addAction(self.experiment.icon(u"edit-copy"), _("Copy"),
 			self.treeitem.copy)
 		if self.treeitem.clipboard_data() != None:
-			self.addAction(self.experiment.icon(u"paste"), _("Paste"),
+			self.addAction(self.experiment.icon(u"edit-paste"), _("Paste"),
 				self.treeitem.paste)
-		self.addAction(self.experiment.icon(u"rename"), _("Rename"),
+		self.addAction(self.experiment.icon(u"accessories-text-editor"), _("Rename"),
 			self.treeitem.rename)
 		if self.treeitem.is_deletable():
-			self.addAction(self.experiment.icon(u"delete"), _("Delete"),
+			self.addAction(self.experiment.icon(u"list-remove"), _("Delete"),
 				self.treeitem.delete)
 		self.addSeparator()
 		self.addAction(self.experiment.icon(u"help"),
