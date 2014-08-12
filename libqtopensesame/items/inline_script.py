@@ -61,9 +61,10 @@ class inline_script(inline_script_runtime, qtplugin):
 			type:	unicode
 		"""
 
-		if self.experiment.python_workspace.check_syntax(self.get(u'_prepare'))\
+		if self.experiment.python_workspace.check_syntax(
+			self.unistr(self.get(u'_prepare', _eval=False)))\
 			and self.experiment.python_workspace.check_syntax(
-			self.get(u'_run')):
+			self.unistr(self.get(u'_run', _eval=False))):
 			return u'os-inline_script'
 		return u'os-inline_script-syntax-error'
 
@@ -91,8 +92,8 @@ class inline_script(inline_script_runtime, qtplugin):
 		"""See qtitem."""
 
 		super(inline_script, self).edit_widget()
-		self.qprogedit.setText(self._prepare, index=0)
-		self.qprogedit.setText(self._run, index=1)
+		self.qprogedit.setText(self.unistr(self._prepare), index=0)
+		self.qprogedit.setText(self.unistr(self._run), index=1)
 
 	def get_ready(self):
 
