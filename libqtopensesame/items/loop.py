@@ -311,20 +311,23 @@ class loop(qtstructure_item, qtitem, loop_runtime):
 
 		"""Refreshes the cycle count summary."""
 
-		cc = self.call_count()
-		if self.order == u'sequential' and self.offset != u'yes':
-			s = _(u"<b>%s</b> will be called <b>%s</b> x <b>%s</b> - <b>%s</b> = <b>%s</b> times in <b>%s</b> order") \
-				% (self.item, self.cycles, self.repeat, self.skip, cc, \
-				self.order)
+		if self.item not in self.experiment.items:
+			s = _(u"<font color='red'>No item to run specified</font>")
 		else:
-			s = _(u"<b>%s</b> will be called <b>%s</b> x <b>%s</b> = <b>%s</b> times in <b>%s</b> order") \
-				% (self.item, self.cycles, self.repeat, cc, self.order)
-		if self.order == u"sequential" and self.skip > 0:
-			s += _(u" starting at cycle <b>%s</b>") % self.skip
-			if self.offset == u"yes" and self.skip >= cc:
-				s += _(u" <font color='red'><b>(too many cycles skipped)</b></font>")
-		if cc < 1:
-			s += _(u" <font color='red'><b>(zero, negative, or unknown length)</b></font>")
+			cc = self.call_count()
+			if self.order == u'sequential' and self.offset != u'yes':
+				s = _(u"<b>%s</b> will be called <b>%s</b> x <b>%s</b> - <b>%s</b> = <b>%s</b> times in <b>%s</b> order") \
+					% (self.item, self.cycles, self.repeat, self.skip, cc, \
+					self.order)
+			else:
+				s = _(u"<b>%s</b> will be called <b>%s</b> x <b>%s</b> = <b>%s</b> times in <b>%s</b> order") \
+					% (self.item, self.cycles, self.repeat, cc, self.order)
+			if self.order == u"sequential" and self.skip > 0:
+				s += _(u" starting at cycle <b>%s</b>") % self.skip
+				if self.offset == u"yes" and self.skip >= cc:
+					s += _(u" <font color='red'><b>(too many cycles skipped)</b></font>")
+			if cc < 1:
+				s += _(u" <font color='red'><b>(zero, negative, or unknown length)</b></font>")
 		self.loop_widget.ui.label_summary.setText(u"<small>%s</small>" % s)
 
 	def refresh_loop_table(self, lock=True):
