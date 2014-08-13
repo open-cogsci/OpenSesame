@@ -22,7 +22,7 @@ action_contribute,mail-send,
 action_help,help-contents,
 action_new,document-new,
 action_onetabmode,os-one-tab-mode,
-action_online_documentation,help-browser,
+action_online_documentation,applications-internet,
 action_open_autosave_folder,folder-open,
 action_open,document-open,
 action_plugins,help-about,
@@ -60,7 +60,7 @@ button_colorpicker,text-css,16
 button_edit_script,utilities-terminal,16
 button_ellipse,os-ellipse,
 button_fixdot,os-fixdot,
-button_forum,help-browser,
+button_forum,applications-internet,
 button_gabor,os-gabor,
 button_help_pool,help-contents,16
 button_help_stdout,help-contents,
@@ -70,7 +70,7 @@ button_line,os-line,
 button_new,list-add,
 button_next,go-next,
 button_noise_patch,os-noise,
-button_osdoc,help-browser,
+button_osdoc,applications-internet,
 button_pointer,os-pointer,
 button_pool_add,list-add,16
 button_pool_filter_clear,edit-clear,16
