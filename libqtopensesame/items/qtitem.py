@@ -314,6 +314,7 @@ class qtitem(QtCore.QObject):
 		debug.msg()
 		self.auto_apply_edit_changes()
 		self.update_script()
+		self.main_window.set_unsaved(True)
 		return True
 
 	def apply_script_changes(self, *deprecated, **_deprecated):
@@ -333,6 +334,7 @@ class qtitem(QtCore.QObject):
 			self.main_window.print_debug_window(e)
 			self.from_string(old_script)
 		self.edit_widget()
+		self.main_window.set_unsaved(True)
 
 	def rename(self, from_name, to_name):
 

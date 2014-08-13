@@ -649,6 +649,7 @@ class loop(qtstructure_item, qtitem, loop_runtime):
 
 		self.item = item_name
 		self.update()
+		self.main_window.set_unsaved(True)
 
 	def remove_child_item(self, item_name, index=0):
 
@@ -657,3 +658,4 @@ class loop(qtstructure_item, qtitem, loop_runtime):
 		if item_name == self.item:
 			self.item = u''
 		self.update()
+		self.main_window.set_unsaved(True)

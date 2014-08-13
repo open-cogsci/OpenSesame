@@ -50,6 +50,13 @@ class qtitem_store(item_store):
 	@property
 	def itemtree(self):
 		return self.experiment.main_window.itemtree
+		
+	def new(self, _type, name=None, script=None):
+		
+		"""See item_store."""
+		
+		self.main_window.set_unsaved(True)
+		return super(qtitem_store, self).new(_type, name=name, script=script)		
 
 	def rename(self, from_name, to_name):
 
@@ -90,6 +97,7 @@ class qtitem_store(item_store):
 			item.rename(from_name, to_name)
 		self.experiment.rename(from_name, to_name)
 		self.itemtree.rename(from_name, to_name)
+		self.main_window.set_unsaved(True)
 		return to_name
 
 	def set_icon(self, name, icon):
