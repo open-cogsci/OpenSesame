@@ -79,7 +79,7 @@ button_recent,document-open-recent,
 button_rect,os-rect,
 button_refresh,view-refresh,16
 button_remove_cyclevar,list-remove,
-button_rename_cyclevar,edit-rename,
+button_rename_cyclevar,accessories-text-editor,
 button_replace_all,edit-find-replace,
 button_replace,edit-find-replace,
 button_run,os-run,
@@ -89,12 +89,12 @@ button_search,edit-find,
 button_select,dialog-ok,
 button_sine,os-sine,
 button_square,os-square,
-button_template,tools-wizard,
+button_template,dialog-information,
 button_textline,os-textline,
 button_update_check,system-software-update,
 button_variables_clear,edit-clear,
 button_white_noise,os-white_noise,
-button_wizard,tools-wizard,
+button_wizard,dialog-information,
 clear,edit-clear,
 close,list-remove,
 colorpicker,text-css,16
@@ -128,7 +128,7 @@ label_startup_tip,help-about,32
 label_stdout,os-debug,
 label_synth,os-synth,32
 label_synth_script,utilities-terminal,32
-label_template,tools-wizard,32
+label_template,dialog-information,32
 label_text_input,menu-editor,32
 label_twitter,twitter,24
 label_update_dialog,system-software-update,32
@@ -136,7 +136,7 @@ label_variables_search,edit-find,16
 label_variables,os-inspector,
 label_warning_icon,emblem-important,32
 label_website,os-experiment,24
-label_wizard,tools-wizard,32
+label_wizard,dialog-information,32
 logger,os-logger,
 loop,os-loop,
 mouse_response,os-mouse_response,
@@ -148,7 +148,7 @@ plugin,extension,
 purge,user-trash,
 python,text-x-python,
 random,media-playlist-shuffle,
-rename,edit-rename,
+rename,accessories-text-editor,
 replace,edit-find-replace,
 sampler,os-sampler,
 script,utilities-terminal,
@@ -165,5 +165,5 @@ unindent,format-indent-less,
 unsaved_changes,emblem-important,16
 unused,user-trash,
 video,video-x-generic,
-wizard,tools-wizard,
+wizard,dialog-information,
 
