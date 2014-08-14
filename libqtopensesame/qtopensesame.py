@@ -821,9 +821,9 @@ class qtopensesame(QtGui.QMainWindow, base_component):
 		self.ui.tabwidget.close_all()
 		cfg.file_dialog_path = os.path.dirname(path)
 		try:
-			exp = experiment.experiment(self, u"Experiment", path)
+			exp = experiment.experiment(self, u"Experiment", path,
+				experiment_path=os.path.dirname(path))
 		except Exception as e:
-
 			if not isinstance(e, osexception):
 				e = osexception(msg=u'Failed to open file', exception=e)
 			self.print_debug_window(e)
@@ -846,6 +846,8 @@ class qtopensesame(QtGui.QMainWindow, base_component):
 
 		self.set_auto_response()
 		self.set_unsaved(False)
+		self.refresh_pool()
+		self.refresh_variable_inspector()
 
 	def save_file(self, dummy=None, remember=True, catch=True):
 

@@ -189,8 +189,10 @@ class pool_widget(base_widget):
 		if not os.path.exists(self.experiment.pool_folder):
 			return
 
-		for fname in os.listdir(unicode( \
-			self.experiment.pool_folder)):
+		file_list = os.listdir(self.experiment.pool_folder)
+		if self.experiment.fallback_pool_folder != None:
+			file_list += os.listdir(self.experiment.fallback_pool_folder)
+		for fname in file_list:
 			debug.msg(fname)
 			if filt in fname.lower():
 				icon = self.experiment.icon(self.file_type(fname))

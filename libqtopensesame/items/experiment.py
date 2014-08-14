@@ -28,7 +28,8 @@ class experiment(libopensesame.experiment.experiment):
 
 	"""Contains various GUI controls for the experiment"""
 
-	def __init__(self, main_window, name, string=None, pool_folder=None):
+	def __init__(self, main_window, name, string=None, pool_folder=None,
+		experiment_path=None):
 
 		"""
 		Constructor.
@@ -52,7 +53,7 @@ class experiment(libopensesame.experiment.experiment):
 			u"logger", u"inline_script"]
 		items = qtitem_store(self)
 		libopensesame.experiment.experiment.__init__(self, name, string,
-			pool_folder, items=items)
+			pool_folder, items=items, experiment_path=experiment_path)
 
 	def help(self, name):
 
