@@ -49,4 +49,6 @@ class inprocess_runner(base_runner):
 
 		"""See base_runner."""
 
+		if not hasattr(self, u'experiment'):
+			return {}
 		return self.experiment.python_workspace._globals
