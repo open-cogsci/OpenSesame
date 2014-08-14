@@ -335,14 +335,9 @@ class sketchpad_canvas(QtGui.QGraphicsScene):
 			A QPixmap object.
 		"""
 
-		if self.is_var(fname):
-			self.notify(
-				_(u'Image name "%s" is unknown or variably defined, using fallback image') \
-				% fname)
-			return self.sketchpad.theme.qpixmap(u'fallback')
 		if not os.path.exists(fname):
 			self.notify(
-				_(u'Image name "%s" not found, using fallback image') \
+				_(u'Image name "%s" is unknown or variably defined, using fallback image') \
 				% fname)
 			return self.sketchpad.theme.qpixmap(u'fallback')
 		return QtGui.QPixmap(fname)
