@@ -1,8 +1,8 @@
 button_hide,dialog-ok,
-button_select_all,dialog-apply,
+button_select_all,edit-select-all,
 button_deselect_all,edit-clear,
-button_smart_select,dialog-apply,
-button_add_custom_variable,add,
+button_smart_select,edit-select-all,
+button_add_custom_variable,list-add,
 action_about,help-about,
 action_add_feedback,os-feedback,
 action_add_inline_script,os-inline_script,
@@ -40,7 +40,7 @@ action_show_stdout,os-debug,
 action_show_variable_inspector,os-inspector,
 action_submit_a_bug,mail-send,
 add,list-add,
-apply,dialog-apply,
+apply,edit-select-all,
 backend,applications-system,
 browse,folder-open,
 button_add_cyclevar,list-add,
@@ -129,7 +129,7 @@ label_stdout,os-debug,
 label_synth,os-synth,32
 label_synth_script,utilities-terminal,32
 label_template,dialog-information,32
-label_text_input,menu-editor,32
+label_text_input,accessories-text-editor,32
 label_twitter,twitter,24
 label_update_dialog,system-software-update,32
 label_variables_search,edit-find,16

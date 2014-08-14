@@ -63,7 +63,7 @@ class keyboard_response(keyboard_response_runtime, qtplugin):
 		self.add_checkbox_control('flush', 'Flush pending keypresses',
 			tooltip='Flush pending keypresses')
 		# List available keys
-		button_list_keys = QtGui.QPushButton(self.experiment.icon("info"),
+		button_list_keys = QtGui.QPushButton(self.experiment.icon("help-about"),
 			"List available keys")
 		button_list_keys.setIconSize(QtCore.QSize(16,16))
 		button_list_keys.clicked.connect(self.list_keys)
