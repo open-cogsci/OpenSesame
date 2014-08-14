@@ -17,6 +17,7 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
+from libopensesame import debug
 from libqtopensesame.misc import _
 from libqtopensesame.widgets.header_widget import header_widget
 
@@ -41,36 +42,45 @@ class general_header_widget(header_widget):
 
 		header_widget.__init__(self, main_window.experiment)
 		self.general_tab = general_tab
-		self.label_name.setText(
-			_(u"<font size='5'><b>%s</b> - Experiment</font>&nbsp;&nbsp;&nbsp;<font color='gray'><i>Click to edit</i></font>") \
-			% self.item.get(u"title", _eval=False))
 
-	def restore_name(self):
+	def refresh(self):
 
 		"""
 		desc:
-			Applies the name change, hides the editable title and shows the
+			Updates the header so that it's content match the item.
+		"""
+
+		self.set_name(self.experiment.title)
+		self.set_desc(self.experiment.description)
+
+	def apply_name(self):
+
+		"""
+		desc:
+			Applies the name change and revert the edit control back to the
+			static label.
+		"""
+
+		if self.label_name.isVisible():
+			return
+		debug.msg()
+		self.label_name.show()
+		self.edit_name.hide()
+		self.general_tab.apply_changes()
+		self.refresh()
+
+	def apply_desc(self):
+
+		"""
+		desc:
+			Applies the description change and revert the edit back to the
 			label.
 		"""
 
-		self.general_tab.apply_changes()
-		self.label_name.setText(_(
-			u"<font size='5'><b>%s</b> - Experiment</font>&nbsp;&nbsp;&nbsp;<font color='gray'><i>Click to edit</i></font>") \
-			% self.item.get(u"title", _eval=False))
-		self.label_name.show()
-		self.edit_name.setText(self.item.get(u"title", _eval=False))
-		self.edit_name.hide()
-
-	def restore_desc(self):
-
-		"""
-		desc:
-			Applies the description change, hides the editable description and
-			shows the label.
-		"""
-
-		self.general_tab.apply_changes()
-		self.label_desc.setText(self.item.get(u"description", _eval=False))
+		if self.label_desc.isVisible():
+			return
+		debug.msg()
 		self.label_desc.show()
-		self.edit_desc.setText(self.item.get(u"description", _eval=False))
 		self.edit_desc.hide()
+		self.general_tab.apply_changes()
+		self.refresh()

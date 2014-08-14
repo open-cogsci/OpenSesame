@@ -106,12 +106,9 @@ class header_widget(base_widget):
 	def apply_name(self):
 
 		"""
-		Apply the name change and revert the edit control back to the static
-		label
-
-		Keywords arguments:
-		apply_name_change -- indicates of the name change should be applied
-							 (default=True)
+		desc:
+			Applies the name change and revert the edit control back to the
+			static label.
 		"""
 
 		if self.label_name.isVisible():
@@ -123,7 +120,11 @@ class header_widget(base_widget):
 
 	def apply_desc(self):
 
-		"""Apply the description change and revert the edit	back to the label"""
+		"""
+		desc:
+			Applies the description change and revert the edit back to the
+			label.
+		"""
 
 		if self.label_desc.isVisible():
 			return
