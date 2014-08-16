@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>quick_open_item</class>
- <widget class="QDialog" name="quick_open_item">
+ <class>quick_switcher</class>
+ <widget class="QDialog" name="quick_switcher">
   <property name="windowModality">
    <enum>Qt::ApplicationModal</enum>
   </property>
@@ -17,7 +17,9 @@
    <string>Quick open item</string>
   </property>
   <property name="windowIcon">
-   <iconset theme="forward"/>
+   <iconset theme="forward">
+    <normaloff/>
+   </iconset>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <property name="spacing">

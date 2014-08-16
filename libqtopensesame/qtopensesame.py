@@ -147,8 +147,8 @@ class qtopensesame(QtGui.QMainWindow, base_component):
 			self.ui.tabwidget.close_other)
 		self.ui.action_onetabmode.triggered.connect( \
 			self.ui.tabwidget.toggle_onetabmode)
-		self.ui.action_quick_open_item.triggered.connect(
-			self.quick_open_item)
+		self.ui.action_quick_switcher.triggered.connect(
+			self.quick_switcher)
 		self.ui.action_show_overview.triggered.connect(self.toggle_overview)
 		self.ui.action_show_variable_inspector.triggered.connect( \
 			self.refresh_variable_inspector)
@@ -541,12 +541,12 @@ class qtopensesame(QtGui.QMainWindow, base_component):
 		cfg.immediate_rename = self.ui.action_immediate_rename.isChecked()
 		debug.msg(u"set to %s" % cfg.immediate_rename)
 
-	def quick_open_item(self):
+	def quick_switcher(self):
 
 		"""Shows the quick-open-item dialog."""
 
-		from libqtopensesame.dialogs.quick_open_item import quick_open_item
-		d = quick_open_item(self)
+		from libqtopensesame.dialogs.quick_switcher import quick_switcher
+		d = quick_switcher(self)
 		d.exec_()
 
 	def update_dialog(self, message):

@@ -43,8 +43,8 @@ class base_component(object):
 		keywords:
 			ui:
 							An id for a user-interface file. For example
-							'dialogs.quick_open_item' will correspond to
-							the file 'resources/ui/dialogs/quick_open_item.ui'.
+							'dialogs.quick_switcher' will correspond to
+							the file 'resources/ui/dialogs/quick_switcher.ui'.
 		"""
 
 		from libqtopensesame.qtopensesame import qtopensesame

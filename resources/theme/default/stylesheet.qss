@@ -35,10 +35,10 @@
 	padding: 4px;
 }
 
-#quick_open_item #filter_line_edit {
+#quick_switcher #filter_line_edit {
 	font-size: 14pt;
 }
-#quick_open_item {
+#quick_switcher {
 	background-color: #729fcf;
 }
 

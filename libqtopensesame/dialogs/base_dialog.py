@@ -39,7 +39,7 @@ class base_dialog(QtGui.QDialog, base_subcomponent):
 		keywords:
 			ui:
 							An id for a user-interface file, for example
-							'dialogs.quick_open_item'.
+							'dialogs.quick_switcher'.
 
 		argument-list:
 		*arglist:			A list of arguments to be passed onto QDialog.

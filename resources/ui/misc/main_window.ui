@@ -96,7 +96,7 @@
     <addaction name="action_close_other_tabs"/>
     <addaction name="action_onetabmode"/>
     <addaction name="separator"/>
-    <addaction name="action_quick_open_item"/>
+    <addaction name="action_quick_switcher"/>
     <addaction name="separator"/>
     <addaction name="action_show_overview"/>
     <addaction name="action_show_variable_inspector"/>
@@ -809,14 +809,14 @@
     <string>Ctrl+Shift+W</string>
    </property>
   </action>
-  <action name="action_quick_open_item">
+  <action name="action_quick_switcher">
    <property name="icon">
     <iconset theme="forward">
      <normaloff/>
     </iconset>
    </property>
    <property name="text">
-    <string>Quick open item</string>
+    <string>Quick switcher</string>
    </property>
    <property name="shortcut">
     <string>Meta+O</string>
