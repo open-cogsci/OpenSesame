@@ -108,6 +108,9 @@ class config(object):
 		u'sketchpad_grid_opacity' : 32,
 		u'sketchpad_preview_color' : u'#00FF00',
 		u'sketchpad_preview_penwidth' : 2,
+		u'qProgEditSwitchLeftShortcut' : u'Alt+Left',
+		u'qProgEditSwitchRightShortcut' : u'Alt+Right',
+		u'qProgEditSymbolTreeWidgetItemIcon' : u'os-symbol',
 		}
 
 	# OS specific override settings

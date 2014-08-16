@@ -360,9 +360,11 @@ class qtplugin(qtitem.qtitem):
 			lang = u'python'
 		else:
 			lang = u'text'
-		qprogedit = QTabManager(handler=self.apply_edit_changes, defaultLang= \
-			lang, cfg=cfg, focusOutHandler=self.apply_edit_changes)
-		qprogedit.addTab(label)
+		qprogedit = QTabManager(cfg=cfg)
+		qprogedit.focusLost.connect(self.apply_edit_changes)
+		qprogedit.handlerButtonClicked.connect(self.apply_edit_changes)
+		qprogedit.addTab(label).setLang(lang)
+
 		if var != None:
 			self.auto_editor[var] = qprogedit
 		self.edit_vbox.addWidget(qprogedit)

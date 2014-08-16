@@ -21,7 +21,7 @@ import os
 import os.path
 import sys
 
-version = u'2.9.0~pre4'
+version = u'2.9.0~pre5'
 codename = u'Hesitant Heisenberg'
 
 use_global_resources = '--no-global-resources' not in sys.argv
@@ -305,7 +305,7 @@ def module_versions():
 	# QProgEdit
 	try:
 		import QProgEdit
-		s += u'\nQProgedit %s' % QProgEdit.version
+		s += u'\nQProgedit %s' % QProgEdit.__version__
 	except:
 		s += u'\nQProgEdit is not available'
 

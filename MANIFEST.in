@@ -9,7 +9,7 @@ recursive-exclude resources/theme *.pyc
 recursive-exclude resources/theme *.pyo
 include examples/*.opensesame
 include examples/*.opensesame.tar.gz
-include help/*.html
+include help/*.md
 include sounds/*
 include COPYING
 recursive-include plugins/advanced_delay *

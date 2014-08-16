@@ -25,6 +25,8 @@ from libopensesame.inline_script import inline_script as inline_script_runtime
 from libqtopensesame.items.qtplugin import qtplugin
 from libqtopensesame.misc import _
 from libqtopensesame.misc.config import cfg
+from libqtopensesame.widgets.tree_inline_script_item import \
+	tree_inline_script_item
 from PyQt4 import QtCore, QtGui
 
 class inline_script(inline_script_runtime, qtplugin):
@@ -68,17 +70,30 @@ class inline_script(inline_script_runtime, qtplugin):
 			return u'os-inline_script'
 		return u'os-inline_script-syntax-error'
 
+	def build_item_tree(self, toplevel=None, items=[], max_depth=-1,
+		extra_info=None):
+
+		"""See qtitem."""
+
+		widget = tree_inline_script_item(self, extra_info=extra_info,
+			symbols=(max_depth < 0 or max_depth > 1))
+		items.append(self.name)
+		if toplevel != None:
+			toplevel.addChild(widget)
+		return widget
+
 	def init_edit_widget(self):
 
 		"""See qtitem."""
 
 		from QProgEdit import QTabManager
 		super(inline_script, self).init_edit_widget(stretch=False)
-		self.qprogedit = QTabManager(handler=self.apply_edit_changes,
-			defaultLang=u'Python', cfg=cfg,
-			focusOutHandler=self.apply_edit_changes)
-		self.qprogedit.addTab(u'Prepare')
-		self.qprogedit.addTab(u'Run')
+		self.qprogedit = QTabManager(cfg=cfg)
+		self.qprogedit.handlerButtonClicked.connect(self.apply_edit_changes)
+		self.qprogedit.focusLost.connect(self.apply_edit_changes)
+		self.qprogedit.cursorRowChanged.connect(self.apply_edit_changes)
+		self.qprogedit.addTab(u'Prepare').setLang(u'Python')
+		self.qprogedit.addTab(u'Run').setLang(u'Python')
 		# Switch to the run phase, unless there is only content for the prepare
 		# phase.
 		if self._run == u'' and self._prepare != u'':
@@ -92,8 +107,8 @@ class inline_script(inline_script_runtime, qtplugin):
 		"""See qtitem."""
 
 		super(inline_script, self).edit_widget()
-		self.qprogedit.setText(self.unistr(self._prepare), index=0)
-		self.qprogedit.setText(self.unistr(self._run), index=1)
+		self.qprogedit.tab(0).setText(self.unistr(self._prepare))
+		self.qprogedit.tab(1).setText(self.unistr(self._run))
 
 	def get_ready(self):
 

@@ -192,11 +192,12 @@ class qtitem(QtCore.QObject):
 
 		# The _script_widget contains the script editor
 		from QProgEdit import QTabManager
-		self._script_widget = QTabManager(handler=self.apply_script_changes,
-			defaultLang=u'OpenSesame',
-			handlerButtonText=_(u'Apply'),
-			focusOutHandler=self.apply_script_changes, cfg=cfg)
-		self._script_widget.addTab(u'Script')
+		self._script_widget = QTabManager(handlerButtonText=_(u'Apply'),
+			cfg=cfg)
+		self._script_widget.focusLost.connect(self.apply_script_changes)
+		self._script_widget.handlerButtonClicked.connect(
+			self.apply_script_changes)
+		self._script_widget.addTab(u'Script').setLang(u'OpenSesame')
 
 		# The container_widget is the top-level widget that is actually inserted
 		# into the tab widget.
