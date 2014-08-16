@@ -69,6 +69,10 @@ class theme:
 		self.load_icon_map()
 		self.apply_theme(self.main_window)
 
+	@property
+	def experiment(self):
+		return self.main_window.experiment
+
 	def apply_theme(self, widget):
 
 		"""
@@ -95,6 +99,9 @@ class theme:
 		A QIcon
 		"""
 
+		if hasattr(self, u'experiment') and u'%s_large.png' % icon in \
+			self.experiment.resources:
+			return QtGui.QIcon(self.experiment.resource(u'%s_large.png' % icon))
 		if icon in self.icon_map:
 			name = self.icon_map[icon][0]
 		else:
