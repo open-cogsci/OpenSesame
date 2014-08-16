@@ -114,7 +114,7 @@ class inline_script(inline_script_runtime, qtplugin):
 
 		"""See qtitem."""
 
-		if self.qprogedit.isModified():
+		if self.qprogedit.isAnyModified():
 			debug.msg(u'applying pending script changes')
 			self.apply_edit_changes()
 			return True

@@ -473,7 +473,7 @@ class qtplugin(qtitem.qtitem):
 		"""
 
 		for var, qprogedit in self.auto_editor.iteritems():
-			if qprogedit.isModified():
+			if qprogedit.isAnyModified():
 				debug.msg(u'applying pending editor changes')
 				self.apply_edit_changes()
 				return True
