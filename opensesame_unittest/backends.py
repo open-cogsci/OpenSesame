@@ -29,7 +29,7 @@ class check_backend_argspec(unittest.TestCase):
 	desc: |
 		-	Checks whether the argument specifications of the back-ends match
 			those of the reference classes.
-		-	Checks whether all functions that should be overridden in the
+		-	Checks whether all functions that should be overridden in thebackends
 			back-ends have in fact been overridden.
 	"""
 
