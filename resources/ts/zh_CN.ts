@@ -1,6 +1,177 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS><TS version="2.0" language="zh_CN" sourcelanguage="">
 <context>
+    <name>Form</name>
+    <message>
+        <location filename="logger.ui" line="14"/>
+        <source>Form</source>
+        <translation type="unfinished">表单</translation>
+    </message>
+    <message>
+        <location filename="logger.ui" line="23"/>
+        <source>Automatically detect and log all variables</source>
+        <translation type="unfinished">自动检测和记录所有变量</translation>
+    </message>
+    <message>
+        <location filename="logger.ui" line="30"/>
+        <source>Include variables with missing values</source>
+        <translation type="unfinished">包含带缺失值的变量</translation>
+    </message>
+    <message>
+        <location filename="logger.ui" line="37"/>
+        <source>Put quotes around values</source>
+        <translation type="unfinished">在数值左右放置引号</translation>
+    </message>
+    <message>
+        <location filename="logger.ui" line="50"/>
+        <source>Select all</source>
+        <translation type="unfinished">选择所有</translation>
+    </message>
+    <message>
+        <location filename="logger.ui" line="57"/>
+        <source>Deselect all</source>
+        <translation type="unfinished">取消选择所有</translation>
+    </message>
+    <message>
+        <location filename="logger.ui" line="77"/>
+        <source>Smart select</source>
+        <translation type="unfinished">智能筛选</translation>
+    </message>
+    <message>
+        <location filename="logger.ui" line="84"/>
+        <source>Add custom variable</source>
+        <translation type="unfinished">添加自定义变量</translation>
+    </message>
+    <message>
+        <location filename="logger.ui" line="109"/>
+        <source>Variable</source>
+        <translation type="unfinished">变量</translation>
+    </message>
+    <message>
+        <location filename="logger.ui" line="114"/>
+        <source>Source item(s)</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>container_widget</name>
+    <message>
+        <location filename="general_properties.ui" line="14"/>
+        <source>Form</source>
+        <translation type="unfinished">表单</translation>
+    </message>
+    <message>
+        <location filename="general_properties.ui" line="56"/>
+        <source>&lt;h3&gt;Back-end&lt;/h3&gt;</source>
+        <translation type="unfinished">&lt;h3&gt;后端&lt;/h3&gt;</translation>
+    </message>
+    <message>
+        <location filename="general_properties.ui" line="63"/>
+        <source>&lt;h3&gt;Resolution&lt;/h3&gt;</source>
+        <translation type="unfinished">&lt;h3&gt;分辨率&lt;/h3&gt;</translation>
+    </message>
+    <message>
+        <location filename="general_properties.ui" line="85"/>
+        <source>The display resolution (width) in pixels</source>
+        <translation type="unfinished">显示分辨率为 (宽度) 像素</translation>
+    </message>
+    <message>
+        <location filename="general_properties.ui" line="111"/>
+        <source>px</source>
+        <translation type="unfinished">像素</translation>
+    </message>
+    <message>
+        <location filename="general_properties.ui" line="101"/>
+        <source>x</source>
+        <translation type="unfinished">x</translation>
+    </message>
+    <message>
+        <location filename="general_properties.ui" line="108"/>
+        <source>The display resolution (height) in pixels</source>
+        <translation type="unfinished">显示分辨率为 (高度) 像素</translation>
+    </message>
+    <message>
+        <location filename="general_properties.ui" line="127"/>
+        <source>&lt;h3&gt;Colors&lt;/h3&gt;</source>
+        <translation type="unfinished">&lt;h3&gt;颜色&lt;/h3&gt;</translation>
+    </message>
+    <message>
+        <location filename="general_properties.ui" line="152"/>
+        <source>Foreground</source>
+        <translation type="unfinished">前景</translation>
+    </message>
+    <message>
+        <location filename="general_properties.ui" line="159"/>
+        <source>Background</source>
+        <translation type="unfinished">背景</translation>
+    </message>
+    <message>
+        <location filename="general_properties.ui" line="175"/>
+        <source>&lt;small&gt;&lt;i&gt;Examples: &apos;white&apos;, &apos;#FFFFFF&apos;&lt;/i&gt;&lt;/small&gt;</source>
+        <translation type="unfinished">&lt;small&gt;&lt;i&gt;例子: &apos;白色&apos;, &apos;#FFFFFF&apos;&lt;/i&gt;&lt;/small&gt;</translation>
+    </message>
+    <message>
+        <location filename="general_properties.ui" line="191"/>
+        <source>&lt;h3&gt;Font&lt;/h3&gt;</source>
+        <translation type="unfinished">&lt;h3&gt;字体&lt;/h3&gt;</translation>
+    </message>
+    <message>
+        <location filename="general_properties.ui" line="235"/>
+        <source>&lt;h3&gt;Advanced&lt;/h3&gt;</source>
+        <translation type="unfinished">&lt;h3&gt;高级&lt;/h3&gt;</translation>
+    </message>
+    <message>
+        <location filename="general_properties.ui" line="263"/>
+        <source>Advanced settings for the selected back-end</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="general_properties.ui" line="266"/>
+        <source>Back-end settings</source>
+        <translation type="unfinished">后端设置</translation>
+    </message>
+    <message>
+        <location filename="general_properties.ui" line="273"/>
+        <source>Edit the script for the entire experiment</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="general_properties.ui" line="276"/>
+        <source>Script editor</source>
+        <translation type="unfinished">脚本编辑器</translation>
+    </message>
+    <message>
+        <location filename="general_properties.ui" line="286"/>
+        <source>Allows you to access experimental variables directly by name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="general_properties.ui" line="289"/>
+        <source>Transparent variable management</source>
+        <translation type="unfinished">透明的变量管理</translation>
+    </message>
+    <message>
+        <location filename="general_properties.ui" line="296"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:large; font-weight:600;&quot;&gt;Miscellaneous&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="general_properties.ui" line="306"/>
+        <source>Enables support for bi-directional languages, such as Arabic and Hebrew</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="general_properties.ui" line="309"/>
+        <source>Bi-directional-text support</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="general_properties.ui" line="331"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://osdoc.cogsci.nl/back-ends/about&quot;&gt;&lt;span style=&quot;font-size:small;font-style:italic; text-decoration: underline; color:#0057ae;&quot;&gt;Why is this important?&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>font_widget</name>
     <message>
         <location filename="font_widget.ui" line="14"/>
@@ -8,7 +179,7 @@
         <translation>表单</translation>
     </message>
     <message>
-        <location filename="font_widget.ui" line="26"/>
+        <location filename="font_widget.ui" line="32"/>
         <source>Font family</source>
         <translation>字体库</translation>
     </message>
@@ -28,132 +199,270 @@
         <translation type="obsolete">serif</translation>
     </message>
     <message>
-        <location filename="font_widget.ui" line="69"/>
+        <location filename="font_widget.ui" line="75"/>
         <source>other ...</source>
         <translation>其他 ...</translation>
     </message>
     <message>
-        <location filename="font_widget.ui" line="77"/>
+        <location filename="font_widget.ui" line="92"/>
         <source>Font size</source>
         <translation>字体大小</translation>
     </message>
     <message>
-        <location filename="font_widget.ui" line="84"/>
+        <location filename="font_widget.ui" line="99"/>
         <source> pt</source>
         <translation>磅</translation>
     </message>
     <message>
-        <location filename="font_widget.ui" line="102"/>
+        <location filename="font_widget.ui" line="132"/>
         <source>Italic</source>
         <translation>斜体</translation>
     </message>
     <message>
-        <location filename="font_widget.ui" line="115"/>
+        <location filename="font_widget.ui" line="145"/>
         <source>Bold</source>
         <translation>粗体</translation>
     </message>
     <message>
-        <location filename="font_widget.ui" line="134"/>
+        <location filename="font_widget.ui" line="167"/>
         <source>Example</source>
         <translation>例子</translation>
     </message>
 </context>
 <context>
+    <name>form_sketchpad</name>
+    <message>
+        <location filename="sketchpad.ui" line="14"/>
+        <source>Form</source>
+        <translation type="unfinished">表单</translation>
+    </message>
+    <message>
+        <location filename="sketchpad.ui" line="38"/>
+        <source>Duration</source>
+        <translation type="unfinished">持续时间</translation>
+    </message>
+    <message>
+        <location filename="sketchpad.ui" line="51"/>
+        <source>A numeric value (duration in milliseconds), &quot;keypress&quot;, or &quot;mouseclick&quot;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="sketchpad.ui" line="83"/>
+        <source>Color</source>
+        <translation type="unfinished">颜色</translation>
+    </message>
+    <message>
+        <location filename="sketchpad.ui" line="442"/>
+        <source> px</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="sketchpad.ui" line="112"/>
+        <source>Penwidth </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="sketchpad.ui" line="144"/>
+        <source>Size of the arrowhead</source>
+        <translation type="unfinished">箭头大小</translation>
+    </message>
+    <message>
+        <location filename="sketchpad.ui" line="150"/>
+        <source>Arrowhead </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="sketchpad.ui" line="185"/>
+        <source>Image scaling factor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="sketchpad.ui" line="188"/>
+        <source>Scale </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="sketchpad.ui" line="360"/>
+        <source> x</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="sketchpad.ui" line="232"/>
+        <source>Check to draw filled objects</source>
+        <translation type="unfinished">勾选以绘制填色物件</translation>
+    </message>
+    <message>
+        <location filename="sketchpad.ui" line="235"/>
+        <source>Fill</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="sketchpad.ui" line="261"/>
+        <source>Center the object</source>
+        <translation type="unfinished">物件居中</translation>
+    </message>
+    <message>
+        <location filename="sketchpad.ui" line="264"/>
+        <source>Center</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="sketchpad.ui" line="293"/>
+        <source>Show if</source>
+        <translation type="unfinished">显示if</translation>
+    </message>
+    <message>
+        <location filename="sketchpad.ui" line="347"/>
+        <source>0,0</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="sketchpad.ui" line="357"/>
+        <source>Zoom factor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="sketchpad.ui" line="397"/>
+        <source>Parse a subset of HTML tags</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="sketchpad.ui" line="400"/>
+        <source>HTML</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="sketchpad.ui" line="426"/>
+        <source>Check to display the grid and enable snap-to-grid</source>
+        <translation type="unfinished">勾选以显示网格并启用对齐网格</translation>
+    </message>
+    <message>
+        <location filename="sketchpad.ui" line="429"/>
+        <source>Grid</source>
+        <translation type="unfinished">网格</translation>
+    </message>
+    <message>
+        <location filename="sketchpad.ui" line="439"/>
+        <source>Grid size</source>
+        <translation type="unfinished">网格大小</translation>
+    </message>
+    <message>
+        <location filename="sketchpad.ui" line="482"/>
+        <source>Select and move elements</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>gabor_dialog</name>
     <message>
-        <location filename="gabor_dialog.ui" line="58"/>
+        <location filename="gabor_settings.ui" line="58"/>
         <source>Insert Gabor patch</source>
         <translation>插入 Gabor patch</translation>
     </message>
     <message>
-        <location filename="gabor_dialog.ui" line="82"/>
+        <location filename="gabor_settings.ui" line="82"/>
         <source>Orientation&lt;br /&gt;&lt;i&gt;in degrees (0 .. 360)&lt;/i&gt;</source>
         <translation>方向&lt;br /&gt;&lt;i&gt;角度 (0 .. 360)&lt;/i&gt;</translation>
     </message>
     <message>
         <location filename="gabor_dialog.ui" line="89"/>
         <source>deg</source>
-        <translation>度</translation>
+        <translation type="obsolete">度</translation>
     </message>
     <message>
-        <location filename="gabor_dialog.ui" line="99"/>
+        <location filename="gabor_settings.ui" line="99"/>
         <source>Size&lt;br /&gt;&lt;i&gt;in pixels&lt;/i&gt;</source>
         <translation>大小&lt;br /&gt;&lt;i&gt;像素&lt;/i&gt;</translation>
     </message>
     <message>
         <location filename="gabor_dialog.ui" line="160"/>
         <source>px</source>
-        <translation>像素</translation>
+        <translation type="obsolete">像素</translation>
     </message>
     <message>
-        <location filename="gabor_dialog.ui" line="122"/>
+        <location filename="gabor_settings.ui" line="122"/>
         <source>Envelope</source>
         <translation>封套</translation>
     </message>
     <message>
-        <location filename="gabor_dialog.ui" line="130"/>
+        <location filename="gabor_settings.ui" line="130"/>
         <source>gaussian</source>
         <translation>高斯系</translation>
     </message>
     <message>
-        <location filename="gabor_dialog.ui" line="135"/>
+        <location filename="gabor_settings.ui" line="135"/>
         <source>linear</source>
         <translation>线性</translation>
     </message>
     <message>
-        <location filename="gabor_dialog.ui" line="140"/>
+        <location filename="gabor_settings.ui" line="140"/>
         <source>circular (sharp edge)</source>
         <translation>圆 (具清淅边界)</translation>
     </message>
     <message>
         <location filename="gabor_dialog.ui" line="145"/>
         <source>rectangle (no envelope)</source>
-        <translation>长方形 (沒有封套)</translation>
+        <translation type="obsolete">长方形 (沒有封套)</translation>
     </message>
     <message>
-        <location filename="gabor_dialog.ui" line="153"/>
+        <location filename="gabor_settings.ui" line="153"/>
         <source>Standard deviation&lt;br /&gt;&lt;i&gt;in pixels, only applies to Gaussian envelope&lt;/i&gt;</source>
         <translation>标准差&lt;br /&gt;&lt;i&gt;像素 只套用于高斯系封套&lt;/i&gt;</translation>
     </message>
     <message>
-        <location filename="gabor_dialog.ui" line="173"/>
+        <location filename="gabor_settings.ui" line="173"/>
         <source>Frequency&lt;br /&gt;&lt;i&gt;in cycles/ px&lt;/i&gt;</source>
         <translation>频率&lt;br /&gt;&lt;i&gt;周期 px&lt;/i&gt;</translation>
     </message>
     <message>
-        <location filename="gabor_dialog.ui" line="193"/>
+        <location filename="gabor_settings.ui" line="193"/>
         <source>Phase&lt;br /&gt;&lt;i&gt;in cycles (0 .. 1)&lt;/i&gt;</source>
         <translation>阶段&lt;br /&gt;&lt;i&gt;周期 (0 .. 1)&lt;/i&gt;</translation>
     </message>
     <message>
-        <location filename="gabor_dialog.ui" line="210"/>
+        <location filename="gabor_settings.ui" line="210"/>
         <source>Color 1&lt;br /&gt;&lt;i&gt;e.g., &apos;white&apos; or &apos;#FFFFFF&apos;&lt;/i&gt;</source>
         <translation>颜色 1&lt;br /&gt;&lt;i&gt;如, &apos;白色&apos; 或 &apos;#FFFFFF&apos;&lt;/i&gt;</translation>
     </message>
     <message>
-        <location filename="gabor_dialog.ui" line="224"/>
+        <location filename="gabor_settings.ui" line="224"/>
         <source>Color 1&lt;br /&gt;&lt;i&gt;e.g., &apos;black&apos; or &apos;#000000&apos;&lt;/i&gt;</source>
         <translation>颜色 1&lt;br /&gt;&lt;i&gt;如., &apos;黑色&apos; 或 &apos;#FFFFFF&apos;&lt;/i&gt;</translation>
     </message>
     <message>
-        <location filename="gabor_dialog.ui" line="243"/>
+        <location filename="gabor_settings.ui" line="243"/>
         <source>Background color *</source>
         <translation>背景颜色  *</translation>
     </message>
     <message>
-        <location filename="gabor_dialog.ui" line="251"/>
+        <location filename="gabor_settings.ui" line="251"/>
         <source>Color average</source>
         <translation>平均色</translation>
     </message>
     <message>
-        <location filename="gabor_dialog.ui" line="256"/>
+        <location filename="gabor_settings.ui" line="256"/>
         <source>Color 2</source>
         <translation>颜色 2</translation>
     </message>
     <message>
-        <location filename="gabor_dialog.ui" line="276"/>
+        <location filename="gabor_settings.ui" line="276"/>
         <source>* Has no effect in psycho back-end</source>
         <translation>* 对&apos;psycho&apos; 后端无影响</translation>
+    </message>
+    <message encoding="UTF-8">
+        <location filename="gabor_settings.ui" line="89"/>
+        <source> °</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="gabor_settings.ui" line="160"/>
+        <source> px</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="gabor_settings.ui" line="145"/>
+        <source>rectangular (no envelope)</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -161,122 +470,87 @@
     <message>
         <location filename="general_widget.ui" line="14"/>
         <source>Form</source>
-        <translation>表单</translation>
+        <translation type="obsolete">表单</translation>
     </message>
     <message>
         <location filename="general_widget.ui" line="85"/>
         <source>The display resolution (width) in pixels</source>
-        <translation>显示分辨率为 (宽度) 像素</translation>
+        <translation type="obsolete">显示分辨率为 (宽度) 像素</translation>
     </message>
     <message>
         <location filename="general_widget.ui" line="111"/>
         <source>px</source>
-        <translation>像素</translation>
+        <translation type="obsolete">像素</translation>
     </message>
     <message>
         <location filename="general_widget.ui" line="108"/>
         <source>The display resolution (height) in pixels</source>
-        <translation>显示分辨率为 (高度) 像素</translation>
+        <translation type="obsolete">显示分辨率为 (高度) 像素</translation>
     </message>
     <message>
         <location filename="general_widget.ui" line="56"/>
         <source>&lt;h3&gt;Back-end&lt;/h3&gt;</source>
-        <translation>&lt;h3&gt;后端&lt;/h3&gt;</translation>
+        <translation type="obsolete">&lt;h3&gt;后端&lt;/h3&gt;</translation>
     </message>
     <message>
         <location filename="general_widget.ui" line="63"/>
         <source>&lt;h3&gt;Resolution&lt;/h3&gt;</source>
-        <translation>&lt;h3&gt;分辨率&lt;/h3&gt;</translation>
+        <translation type="obsolete">&lt;h3&gt;分辨率&lt;/h3&gt;</translation>
     </message>
     <message>
         <location filename="general_widget.ui" line="101"/>
         <source>x</source>
-        <translation>x</translation>
+        <translation type="obsolete">x</translation>
     </message>
     <message>
         <location filename="general_widget.ui" line="127"/>
         <source>&lt;h3&gt;Colors&lt;/h3&gt;</source>
-        <translation>&lt;h3&gt;颜色&lt;/h3&gt;</translation>
+        <translation type="obsolete">&lt;h3&gt;颜色&lt;/h3&gt;</translation>
     </message>
     <message>
         <location filename="general_widget.ui" line="152"/>
         <source>Foreground</source>
-        <translation>前景</translation>
+        <translation type="obsolete">前景</translation>
     </message>
     <message>
         <location filename="general_widget.ui" line="159"/>
         <source>Background</source>
-        <translation>背景</translation>
+        <translation type="obsolete">背景</translation>
     </message>
     <message>
         <location filename="general_widget.ui" line="175"/>
         <source>&lt;small&gt;&lt;i&gt;Examples: &apos;white&apos;, &apos;#FFFFFF&apos;&lt;/i&gt;&lt;/small&gt;</source>
-        <translation>&lt;small&gt;&lt;i&gt;例子: &apos;白色&apos;, &apos;#FFFFFF&apos;&lt;/i&gt;&lt;/small&gt;</translation>
+        <translation type="obsolete">&lt;small&gt;&lt;i&gt;例子: &apos;白色&apos;, &apos;#FFFFFF&apos;&lt;/i&gt;&lt;/small&gt;</translation>
     </message>
     <message>
         <location filename="general_widget.ui" line="191"/>
         <source>&lt;h3&gt;Font&lt;/h3&gt;</source>
-        <translation>&lt;h3&gt;字体&lt;/h3&gt;</translation>
+        <translation type="obsolete">&lt;h3&gt;字体&lt;/h3&gt;</translation>
     </message>
     <message>
         <location filename="general_widget.ui" line="235"/>
         <source>&lt;h3&gt;Advanced&lt;/h3&gt;</source>
-        <translation>&lt;h3&gt;高级&lt;/h3&gt;</translation>
+        <translation type="obsolete">&lt;h3&gt;高级&lt;/h3&gt;</translation>
     </message>
     <message>
         <location filename="general_widget.ui" line="266"/>
         <source>Back-end settings</source>
-        <translation>后端设置</translation>
+        <translation type="obsolete">后端设置</translation>
     </message>
     <message>
         <location filename="general_widget.ui" line="276"/>
         <source>Script editor</source>
-        <translation>脚本编辑器</translation>
+        <translation type="obsolete">脚本编辑器</translation>
     </message>
     <message>
         <location filename="general_widget.ui" line="289"/>
         <source>Transparent variable management</source>
-        <translation>透明的变量管理</translation>
+        <translation type="obsolete">透明的变量管理</translation>
     </message>
     <message>
         <location filename="general_widget.ui" line="297"/>
         <source>&lt;h3&gt;Variables&lt;/h3&gt;</source>
         <translation type="obsolete">&lt;h3&gt;变量&lt;/h3&gt;</translation>
-    </message>
-    <message>
-        <location filename="general_widget.ui" line="263"/>
-        <source>Advanced settings for the selected back-end</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="general_widget.ui" line="273"/>
-        <source>Edit the script for the entire experiment</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="general_widget.ui" line="286"/>
-        <source>Allows you to access experimental variables directly by name</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="general_widget.ui" line="296"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:large; font-weight:600;&quot;&gt;Miscellaneous&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="general_widget.ui" line="306"/>
-        <source>Enables support for bi-directional languages, such as Arabic and Hebrew</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="general_widget.ui" line="309"/>
-        <source>Bi-directional-text support</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="general_widget.ui" line="331"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://osdoc.cogsci.nl/back-ends/about&quot;&gt;&lt;span style=&quot;font-size:small;font-style:italic; text-decoration: underline; color:#0057ae;&quot;&gt;Why is this important?&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -497,79 +771,84 @@
 <context>
     <name>noise_patch_dialog</name>
     <message>
-        <location filename="noise_patch_dialog.ui" line="58"/>
+        <location filename="noise_settings.ui" line="58"/>
         <source>Insert noise patch</source>
         <translation>嵌入noise patch</translation>
     </message>
     <message>
         <location filename="noise_patch_dialog.ui" line="136"/>
         <source>px</source>
-        <translation>像素</translation>
+        <translation type="obsolete">像素</translation>
     </message>
     <message>
-        <location filename="noise_patch_dialog.ui" line="98"/>
+        <location filename="noise_settings.ui" line="98"/>
         <source>Envelope</source>
         <translation>封套</translation>
     </message>
     <message>
-        <location filename="noise_patch_dialog.ui" line="106"/>
+        <location filename="noise_settings.ui" line="106"/>
         <source>gaussian</source>
         <translation>高斯系</translation>
     </message>
     <message>
-        <location filename="noise_patch_dialog.ui" line="111"/>
+        <location filename="noise_settings.ui" line="111"/>
         <source>linear</source>
         <translation>线性</translation>
     </message>
     <message>
-        <location filename="noise_patch_dialog.ui" line="116"/>
+        <location filename="noise_settings.ui" line="116"/>
         <source>circular (sharp edge)</source>
         <translation>圆 (具清淅边界)</translation>
     </message>
     <message>
-        <location filename="noise_patch_dialog.ui" line="121"/>
+        <location filename="noise_settings.ui" line="121"/>
         <source>rectangle (no envelope)</source>
         <translation>矩形 (沒有封套)</translation>
     </message>
     <message>
-        <location filename="noise_patch_dialog.ui" line="129"/>
+        <location filename="noise_settings.ui" line="129"/>
         <source>Standard deviation&lt;br /&gt;&lt;i&gt;in pixels, only applies to Gaussian envelope&lt;/i&gt;</source>
         <translation>标准差&lt;br /&gt;&lt;i&gt;像素 只套用于高斯系封套&lt;/i&gt;</translation>
     </message>
     <message>
-        <location filename="noise_patch_dialog.ui" line="149"/>
+        <location filename="noise_settings.ui" line="149"/>
         <source>Color 1&lt;br /&gt;&lt;i&gt;e.g., &apos;white&apos; or &apos;#FFFFFF&apos;&lt;/i&gt;</source>
         <translation>颜色 1&lt;br /&gt;&lt;i&gt;如, &apos;白色&apos; 或 &apos;#FFFFFF&apos;&lt;/i&gt;</translation>
     </message>
     <message>
-        <location filename="noise_patch_dialog.ui" line="163"/>
+        <location filename="noise_settings.ui" line="163"/>
         <source>Color 2&lt;br /&gt;&lt;i&gt;e.g., &apos;black&apos; or &apos;#000000&apos;&lt;/i&gt;</source>
         <translation>颜色 2&lt;br /&gt;&lt;i&gt;如, &apos;黑色&apos; 或 &apos;#000000&apos;&lt;/i&gt;</translation>
     </message>
     <message>
-        <location filename="noise_patch_dialog.ui" line="182"/>
+        <location filename="noise_settings.ui" line="182"/>
         <source>Background color *</source>
         <translation>背景颜色 *</translation>
     </message>
     <message>
-        <location filename="noise_patch_dialog.ui" line="190"/>
+        <location filename="noise_settings.ui" line="190"/>
         <source>Color average</source>
         <translation>平均色</translation>
     </message>
     <message>
-        <location filename="noise_patch_dialog.ui" line="195"/>
+        <location filename="noise_settings.ui" line="195"/>
         <source>Color 2</source>
         <translation>颜色 2</translation>
     </message>
     <message>
-        <location filename="noise_patch_dialog.ui" line="203"/>
+        <location filename="noise_settings.ui" line="203"/>
         <source>Size&lt;br /&gt;&lt;i&gt;in pixels&lt;/i&gt;</source>
         <translation>大小&lt;br /&gt;&lt;i&gt;像素&lt;/i&gt;</translation>
     </message>
     <message>
-        <location filename="noise_patch_dialog.ui" line="222"/>
+        <location filename="noise_settings.ui" line="222"/>
         <source>* Has no effect in psycho back-end</source>
         <translation>* 对&apos;psycho&apos;后端无影响</translation>
+    </message>
+    <message>
+        <location filename="noise_settings.ui" line="136"/>
+        <source> px</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -583,439 +862,449 @@
 <context>
     <name>opensesame_mainwindow</name>
     <message>
-        <location filename="opensesame.ui" line="14"/>
+        <location filename="main_window.ui" line="14"/>
         <source>OpenSesame</source>
         <translation>OpenSeasame</translation>
     </message>
     <message>
-        <location filename="opensesame.ui" line="60"/>
+        <location filename="main_window.ui" line="60"/>
         <source>File</source>
         <translation>文件</translation>
     </message>
     <message>
-        <location filename="opensesame.ui" line="64"/>
+        <location filename="main_window.ui" line="64"/>
         <source>Recent files</source>
         <translation>最近文档</translation>
     </message>
     <message>
-        <location filename="opensesame.ui" line="83"/>
+        <location filename="main_window.ui" line="83"/>
         <source>Run</source>
         <translation>运行</translation>
     </message>
     <message>
         <location filename="opensesame.ui" line="93"/>
         <source>Items</source>
-        <translation>项目</translation>
+        <translation type="obsolete">项目</translation>
     </message>
     <message>
-        <location filename="opensesame.ui" line="110"/>
+        <location filename="main_window.ui" line="93"/>
         <source>View</source>
         <translation>视图</translation>
     </message>
     <message>
-        <location filename="opensesame.ui" line="132"/>
+        <location filename="main_window.ui" line="117"/>
         <source>Tools</source>
         <translation>工具</translation>
     </message>
     <message>
-        <location filename="opensesame.ui" line="158"/>
+        <location filename="main_window.ui" line="142"/>
         <source>Overview</source>
         <translation>概览</translation>
     </message>
     <message>
-        <location filename="opensesame.ui" line="184"/>
+        <location filename="main_window.ui" line="159"/>
         <source>Name</source>
         <translation>名称</translation>
     </message>
     <message>
-        <location filename="opensesame.ui" line="239"/>
+        <location filename="main_window.ui" line="172"/>
         <source>Variable inspector</source>
         <translation>变量检查器</translation>
     </message>
     <message>
         <location filename="opensesame.ui" line="265"/>
         <source>Enter a filter</source>
-        <translation>输入过滤器</translation>
+        <translation type="obsolete">输入过滤器</translation>
     </message>
     <message>
         <location filename="opensesame.ui" line="272"/>
         <source>Clear filter</source>
-        <translation>清除过滤器</translation>
+        <translation type="obsolete">清除过滤器</translation>
     </message>
     <message>
-        <location filename="opensesame.ui" line="472"/>
+        <location filename="main_window.ui" line="283"/>
         <source>Help</source>
         <translation>帮助</translation>
     </message>
     <message>
         <location filename="opensesame.ui" line="352"/>
         <source>Variable</source>
-        <translation>变量</translation>
+        <translation type="obsolete">变量</translation>
     </message>
     <message>
         <location filename="opensesame.ui" line="357"/>
         <source>Value</source>
-        <translation>数值</translation>
+        <translation type="obsolete">数值</translation>
     </message>
     <message>
         <location filename="opensesame.ui" line="362"/>
         <source>In item</source>
-        <translation>项目中</translation>
+        <translation type="obsolete">项目中</translation>
     </message>
     <message>
-        <location filename="opensesame.ui" line="378"/>
+        <location filename="main_window.ui" line="189"/>
         <source>File pool</source>
         <translation>文档池</translation>
     </message>
     <message>
-        <location filename="opensesame.ui" line="434"/>
+        <location filename="main_window.ui" line="245"/>
         <source>Debug window</source>
         <translation>调试窗口</translation>
     </message>
     <message>
-        <location filename="opensesame.ui" line="495"/>
+        <location filename="main_window.ui" line="306"/>
         <source>Clear debug window</source>
         <translation>清除调试窗口</translation>
     </message>
     <message>
-        <location filename="opensesame.ui" line="536"/>
+        <location filename="main_window.ui" line="347"/>
         <source>Main toolbar</source>
         <translation>主工具栏</translation>
     </message>
     <message>
-        <location filename="opensesame.ui" line="576"/>
+        <location filename="main_window.ui" line="387"/>
         <source>Toolbar items</source>
         <translation>工具栏项目</translation>
     </message>
     <message>
-        <location filename="opensesame.ui" line="591"/>
+        <location filename="main_window.ui" line="402"/>
         <source>Open</source>
         <translation>打开</translation>
     </message>
     <message>
-        <location filename="opensesame.ui" line="594"/>
+        <location filename="main_window.ui" line="405"/>
         <source>Open (Ctrl+0)</source>
         <translation>打开 (Ctrl+0)</translation>
     </message>
     <message>
-        <location filename="opensesame.ui" line="597"/>
+        <location filename="main_window.ui" line="408"/>
         <source>Ctrl+O</source>
         <translation>Ctrl+O</translation>
     </message>
     <message>
-        <location filename="opensesame.ui" line="606"/>
+        <location filename="main_window.ui" line="417"/>
         <source>Save</source>
         <translation>保存</translation>
     </message>
     <message>
-        <location filename="opensesame.ui" line="609"/>
+        <location filename="main_window.ui" line="420"/>
         <source>Save (Control+S)</source>
         <translation>保存 (Control+S)</translation>
     </message>
     <message>
-        <location filename="opensesame.ui" line="612"/>
+        <location filename="main_window.ui" line="423"/>
         <source>Ctrl+S</source>
         <translation>Ctrl+S</translation>
     </message>
     <message>
-        <location filename="opensesame.ui" line="621"/>
+        <location filename="main_window.ui" line="432"/>
         <source>Save as</source>
         <translation>另存为</translation>
     </message>
     <message>
-        <location filename="opensesame.ui" line="624"/>
+        <location filename="main_window.ui" line="435"/>
         <source>Save as (Control+Shift+S)</source>
         <translation>另存为 (Control+Shift+S)</translation>
     </message>
     <message>
-        <location filename="opensesame.ui" line="627"/>
+        <location filename="main_window.ui" line="438"/>
         <source>Ctrl+Shift+S</source>
         <translation>Ctrl+Shift+S</translation>
     </message>
     <message>
-        <location filename="opensesame.ui" line="636"/>
+        <location filename="main_window.ui" line="447"/>
         <source>Quit</source>
         <translation>退出</translation>
     </message>
     <message>
-        <location filename="opensesame.ui" line="639"/>
+        <location filename="main_window.ui" line="450"/>
         <source>Quit (Alt+F4)</source>
         <translation>退出 (Alt+F4)</translation>
     </message>
     <message>
-        <location filename="opensesame.ui" line="644"/>
+        <location filename="main_window.ui" line="455"/>
         <source>Run fullscreen</source>
         <translation>全屏运行</translation>
     </message>
     <message>
-        <location filename="opensesame.ui" line="647"/>
+        <location filename="main_window.ui" line="458"/>
         <source>Run fullscreen (Control+R)</source>
         <translation>全屏运行 (Control+R)</translation>
     </message>
     <message>
-        <location filename="opensesame.ui" line="650"/>
+        <location filename="main_window.ui" line="461"/>
         <source>Ctrl+R</source>
         <translation>Ctrl+R</translation>
     </message>
     <message>
-        <location filename="opensesame.ui" line="659"/>
+        <location filename="main_window.ui" line="470"/>
         <source>New</source>
         <translation>新建</translation>
     </message>
     <message>
-        <location filename="opensesame.ui" line="662"/>
+        <location filename="main_window.ui" line="473"/>
         <source>New (Control+N)</source>
         <translation>新建 (Control+N)</translation>
     </message>
     <message>
-        <location filename="opensesame.ui" line="665"/>
+        <location filename="main_window.ui" line="476"/>
         <source>Ctrl+N</source>
         <translation>Ctrl+N</translation>
     </message>
     <message>
-        <location filename="opensesame.ui" line="674"/>
+        <location filename="main_window.ui" line="485"/>
         <source>Add sequence</source>
         <translation>添加序列</translation>
     </message>
     <message>
-        <location filename="opensesame.ui" line="683"/>
+        <location filename="main_window.ui" line="494"/>
         <source>Add sketchpad</source>
         <translation>添加画板</translation>
     </message>
     <message>
-        <location filename="opensesame.ui" line="692"/>
+        <location filename="main_window.ui" line="503"/>
         <source>Add keyboard response</source>
         <translation>添加键盘反应</translation>
     </message>
     <message>
-        <location filename="opensesame.ui" line="701"/>
+        <location filename="main_window.ui" line="512"/>
         <source>Add logger</source>
         <translation>添加记录器</translation>
     </message>
     <message>
-        <location filename="opensesame.ui" line="710"/>
+        <location filename="main_window.ui" line="521"/>
         <source>Add loop</source>
         <translation>添加循环</translation>
     </message>
     <message>
-        <location filename="opensesame.ui" line="719"/>
+        <location filename="main_window.ui" line="530"/>
         <source>Add feedback</source>
         <translation>添加反馈</translation>
     </message>
     <message>
-        <location filename="opensesame.ui" line="728"/>
+        <location filename="main_window.ui" line="539"/>
         <source>Add inline script</source>
         <translation>添加内嵌脚本</translation>
     </message>
     <message>
-        <location filename="opensesame.ui" line="737"/>
+        <location filename="main_window.ui" line="548"/>
         <source>Close all tabs</source>
         <translation>关闭所有标签</translation>
     </message>
     <message>
-        <location filename="opensesame.ui" line="746"/>
+        <location filename="main_window.ui" line="557"/>
         <source>Close other tabs</source>
         <translation>关闭其他标签</translation>
     </message>
     <message>
-        <location filename="opensesame.ui" line="749"/>
+        <location filename="main_window.ui" line="560"/>
         <source>Close other tabs (Control+T)</source>
         <translation>关闭其他标签 (Control+T)</translation>
     </message>
     <message>
-        <location filename="opensesame.ui" line="752"/>
+        <location filename="main_window.ui" line="563"/>
         <source>Ctrl+T</source>
         <translation>Ctrl+T</translation>
     </message>
     <message>
-        <location filename="opensesame.ui" line="770"/>
+        <location filename="main_window.ui" line="581"/>
         <source>About</source>
         <translation>关于</translation>
     </message>
     <message>
-        <location filename="opensesame.ui" line="779"/>
+        <location filename="main_window.ui" line="590"/>
         <source>Add mouse response</source>
         <translation>添加鼠标反应</translation>
     </message>
     <message>
-        <location filename="opensesame.ui" line="784"/>
+        <location filename="main_window.ui" line="595"/>
         <source>Run in window</source>
         <translation>在窗口中运行</translation>
     </message>
     <message>
-        <location filename="opensesame.ui" line="787"/>
+        <location filename="main_window.ui" line="598"/>
         <source>Run in window (Control+W)</source>
         <translation>在窗口中运行 (Control+W)</translation>
     </message>
     <message>
-        <location filename="opensesame.ui" line="790"/>
+        <location filename="main_window.ui" line="601"/>
         <source>Ctrl+W</source>
         <translation>Ctrl+W</translation>
     </message>
     <message>
-        <location filename="opensesame.ui" line="799"/>
+        <location filename="main_window.ui" line="610"/>
         <source>Check for updates</source>
         <translation>检查更新</translation>
     </message>
     <message>
-        <location filename="opensesame.ui" line="811"/>
+        <location filename="main_window.ui" line="622"/>
         <source>Show variable inspector</source>
         <translation>显示变量检查器</translation>
     </message>
     <message>
-        <location filename="opensesame.ui" line="814"/>
+        <location filename="main_window.ui" line="625"/>
         <source>Show variable inspector (Control+I)</source>
         <translation>显示变量检查器 (Control+I)</translation>
     </message>
     <message>
-        <location filename="opensesame.ui" line="817"/>
+        <location filename="main_window.ui" line="628"/>
         <source>Ctrl+I</source>
         <translation>Ctrl+I</translation>
     </message>
     <message>
-        <location filename="opensesame.ui" line="826"/>
+        <location filename="main_window.ui" line="637"/>
         <source>Add sampler</source>
         <translation>添加采样</translation>
     </message>
     <message>
-        <location filename="opensesame.ui" line="829"/>
+        <location filename="main_window.ui" line="640"/>
         <source>Add sound sampler</source>
         <translation>添加声音采样</translation>
     </message>
     <message>
-        <location filename="opensesame.ui" line="838"/>
+        <location filename="main_window.ui" line="649"/>
         <source>Add synth</source>
         <translation>添加合成器</translation>
     </message>
     <message>
-        <location filename="opensesame.ui" line="841"/>
+        <location filename="main_window.ui" line="652"/>
         <source>Add sound synthesizer</source>
         <translation>添加声音合成器</translation>
     </message>
     <message>
-        <location filename="opensesame.ui" line="853"/>
+        <location filename="main_window.ui" line="664"/>
         <source>Show file pool</source>
         <translation>显示文档池</translation>
     </message>
     <message>
-        <location filename="opensesame.ui" line="856"/>
+        <location filename="main_window.ui" line="667"/>
         <source>Ctrl+P</source>
         <translation>Ctrl+P</translation>
     </message>
     <message>
-        <location filename="opensesame.ui" line="868"/>
+        <location filename="main_window.ui" line="679"/>
         <source>Show debug window</source>
         <translation>显示调试窗口</translation>
     </message>
     <message>
-        <location filename="opensesame.ui" line="871"/>
+        <location filename="main_window.ui" line="682"/>
         <source>Show debug window (standard output) and a Python interpreter (Control+D)</source>
         <translation>显示调试窗口 (标准输出)和Python编码解释器</translation>
     </message>
     <message>
-        <location filename="opensesame.ui" line="874"/>
+        <location filename="main_window.ui" line="685"/>
         <source>Ctrl+D</source>
         <translation>Ctrl+D</translation>
     </message>
     <message>
-        <location filename="opensesame.ui" line="882"/>
+        <location filename="main_window.ui" line="693"/>
         <source>Enable auto response</source>
         <translation>启动自动反应</translation>
     </message>
     <message>
-        <location filename="opensesame.ui" line="890"/>
+        <location filename="main_window.ui" line="701"/>
         <source>Plugins</source>
         <translation>插件</translation>
     </message>
     <message>
-        <location filename="opensesame.ui" line="899"/>
+        <location filename="main_window.ui" line="710"/>
         <source>Random tip</source>
         <translation>随机小窍门</translation>
     </message>
     <message>
-        <location filename="opensesame.ui" line="902"/>
+        <location filename="main_window.ui" line="713"/>
         <source>Show a random tip</source>
         <translation>显示随机小窍门</translation>
     </message>
     <message>
-        <location filename="opensesame.ui" line="911"/>
+        <location filename="main_window.ui" line="722"/>
         <source>Open backup folder</source>
         <translation>打开备份文件夹</translation>
     </message>
     <message>
-        <location filename="opensesame.ui" line="920"/>
+        <location filename="main_window.ui" line="731"/>
         <source>Submit a bug</source>
         <translation>提交漏洞</translation>
     </message>
     <message>
-        <location filename="opensesame.ui" line="929"/>
+        <location filename="main_window.ui" line="740"/>
         <source>Contribute</source>
         <translation>贡献</translation>
     </message>
     <message>
-        <location filename="opensesame.ui" line="938"/>
+        <location filename="main_window.ui" line="749"/>
         <source>Preferences</source>
         <translation>首选项</translation>
     </message>
     <message>
-        <location filename="opensesame.ui" line="943"/>
+        <location filename="main_window.ui" line="754"/>
         <source>Dummy</source>
         <translation>虚设</translation>
     </message>
     <message>
-        <location filename="opensesame.ui" line="951"/>
+        <location filename="main_window.ui" line="762"/>
         <source>Show overview area</source>
         <translation>显示概览区</translation>
     </message>
     <message>
-        <location filename="opensesame.ui" line="954"/>
+        <location filename="main_window.ui" line="765"/>
         <source>Ctrl+Shift+O</source>
         <translation>Ctrl+Shift+O</translation>
     </message>
     <message>
-        <location filename="opensesame.ui" line="966"/>
+        <location filename="main_window.ui" line="777"/>
         <source>One tab mode</source>
         <translation>单一标签模式</translation>
     </message>
     <message>
-        <location filename="opensesame.ui" line="969"/>
+        <location filename="main_window.ui" line="780"/>
         <source>Enable one tab mode</source>
         <translation>启用单一标签模式</translation>
     </message>
     <message>
-        <location filename="opensesame.ui" line="977"/>
+        <location filename="main_window.ui" line="788"/>
         <source>Compact toolbar</source>
         <translation>压缩工具栏</translation>
     </message>
     <message>
-        <location filename="opensesame.ui" line="761"/>
+        <location filename="main_window.ui" line="572"/>
         <source>Offline help</source>
         <translation>离线帮助</translation>
     </message>
     <message>
-        <location filename="opensesame.ui" line="982"/>
+        <location filename="main_window.ui" line="793"/>
         <source>Online help</source>
         <translation>在线帮助</translation>
     </message>
     <message>
-        <location filename="opensesame.ui" line="987"/>
+        <location filename="main_window.ui" line="798"/>
         <source>Online forum</source>
         <translation>在线讨论区</translation>
     </message>
     <message>
-        <location filename="opensesame.ui" line="992"/>
+        <location filename="main_window.ui" line="803"/>
         <source>Quick run</source>
         <translation>快速运行</translation>
     </message>
     <message>
-        <location filename="opensesame.ui" line="995"/>
+        <location filename="main_window.ui" line="806"/>
         <source>Give your experiment a quick test run</source>
         <translation>快速测试你的实验</translation>
     </message>
     <message>
-        <location filename="opensesame.ui" line="998"/>
+        <location filename="main_window.ui" line="809"/>
         <source>Ctrl+Shift+W</source>
         <translation>Ctrl+Shift+W</translation>
+    </message>
+    <message>
+        <location filename="main_window.ui" line="819"/>
+        <source>Quick switcher</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="main_window.ui" line="822"/>
+        <source>Meta+O</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1174,25 +1463,25 @@
     <message>
         <location filename="preferences_widget.ui" line="56"/>
         <source>Offer to rename new items immediately</source>
-        <translation>提供即时重新命名新项目</translation>
+        <translation type="obsolete">提供即时重新命名新项目</translation>
     </message>
     <message>
-        <location filename="preferences_widget.ui" line="63"/>
+        <location filename="preferences_widget.ui" line="56"/>
         <source>Enable auto-response</source>
         <translation>启用自动反应</translation>
     </message>
     <message>
-        <location filename="preferences_widget.ui" line="135"/>
+        <location filename="preferences_widget.ui" line="128"/>
         <source>Show text in toolbar</source>
         <translation>在工具栏显示文字</translation>
     </message>
     <message>
-        <location filename="preferences_widget.ui" line="128"/>
+        <location filename="preferences_widget.ui" line="121"/>
         <source>Small icons in toolbar</source>
         <translation>工具栏中的小图标</translation>
     </message>
     <message>
-        <location filename="preferences_widget.ui" line="79"/>
+        <location filename="preferences_widget.ui" line="72"/>
         <source>Appearance</source>
         <translation>外形</translation>
     </message>
@@ -1267,57 +1556,57 @@
         <translation type="obsolete">磅</translation>
     </message>
     <message>
-        <location filename="preferences_widget.ui" line="151"/>
+        <location filename="preferences_widget.ui" line="144"/>
         <source>Backups</source>
         <translation>备份</translation>
     </message>
     <message>
-        <location filename="preferences_widget.ui" line="175"/>
+        <location filename="preferences_widget.ui" line="168"/>
         <source>Automatically create backups</source>
         <translation>自动创建备份</translation>
     </message>
     <message>
-        <location filename="preferences_widget.ui" line="182"/>
+        <location filename="preferences_widget.ui" line="175"/>
         <source>Auto-save interval:</source>
         <translation>自动保存间隔:</translation>
     </message>
     <message>
-        <location filename="preferences_widget.ui" line="189"/>
+        <location filename="preferences_widget.ui" line="182"/>
         <source> minute(s)</source>
         <translation>分钟</translation>
     </message>
     <message>
-        <location filename="preferences_widget.ui" line="192"/>
+        <location filename="preferences_widget.ui" line="185"/>
         <source>every </source>
         <translation>每 </translation>
     </message>
     <message>
-        <location filename="preferences_widget.ui" line="228"/>
+        <location filename="preferences_widget.ui" line="221"/>
         <source>Open backup folder</source>
         <translation>打开备份文件夹</translation>
     </message>
     <message>
-        <location filename="preferences_widget.ui" line="208"/>
+        <location filename="preferences_widget.ui" line="201"/>
         <source>Clean backups after:</source>
         <translation>之后清除备份文件夹:</translation>
     </message>
     <message>
-        <location filename="preferences_widget.ui" line="215"/>
+        <location filename="preferences_widget.ui" line="208"/>
         <source> day(s)</source>
         <translation>天</translation>
     </message>
     <message>
-        <location filename="preferences_widget.ui" line="248"/>
+        <location filename="preferences_widget.ui" line="241"/>
         <source>Updates</source>
         <translation>更新</translation>
     </message>
     <message>
-        <location filename="preferences_widget.ui" line="263"/>
+        <location filename="preferences_widget.ui" line="256"/>
         <source>Check for updates on start-up</source>
         <translation>启动时检查是否有更新</translation>
     </message>
     <message>
-        <location filename="preferences_widget.ui" line="270"/>
+        <location filename="preferences_widget.ui" line="263"/>
         <source>Check for updates now</source>
         <translation>现在检查是否有更新</translation>
     </message>
@@ -1342,32 +1631,32 @@
         <translation type="obsolete">自定义运行命令:</translation>
     </message>
     <message>
-        <location filename="preferences_widget.ui" line="346"/>
+        <location filename="preferences_widget.ui" line="339"/>
         <source>Plug-ins</source>
         <translation>插件</translation>
     </message>
     <message>
-        <location filename="preferences_widget.ui" line="364"/>
+        <location filename="preferences_widget.ui" line="357"/>
         <source>Plug-in folders:</source>
         <translation>插件文件夹:</translation>
     </message>
     <message>
-        <location filename="preferences_widget.ui" line="384"/>
+        <location filename="preferences_widget.ui" line="377"/>
         <source>Installed plug-ins (requires restart):</source>
         <translation>安装(需要重新启动):</translation>
     </message>
     <message>
-        <location filename="preferences_widget.ui" line="108"/>
+        <location filename="preferences_widget.ui" line="101"/>
         <source>Interface style</source>
         <translation>界面风格</translation>
     </message>
     <message>
-        <location filename="preferences_widget.ui" line="118"/>
+        <location filename="preferences_widget.ui" line="111"/>
         <source>icon theme</source>
         <translation>图标主题</translation>
     </message>
     <message>
-        <location filename="preferences_widget.ui" line="97"/>
+        <location filename="preferences_widget.ui" line="90"/>
         <source>&lt;small&gt;&lt;i&gt;Changes take effect the next time you start OpenSesame&lt;/i&gt;&lt;/small&gt;
 </source>
         <translation>&lt;small&gt;&lt;i&gt;下次运行OpenSeasame时改变生效&lt;/i&gt;&lt;/small&gt;</translation>
@@ -1378,28 +1667,41 @@
         <translation type="obsolete">&lt;small&gt;&lt;i&gt;如你遇到稳定性问题，你可以启用 &apos;在单独进程运行实验&apos;的选项。这意味着 &apos;opensesamerun{.exe]&apos;被用以运行你的实验&lt;/i&gt;&lt;/small&gt;</translation>
     </message>
     <message>
-        <location filename="preferences_widget.ui" line="290"/>
+        <location filename="preferences_widget.ui" line="283"/>
         <source>Runner</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="preferences_widget.ui" line="308"/>
+        <location filename="preferences_widget.ui" line="301"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:8pt; font-style:italic;&quot;&gt;The &apos;runner&apos; determines how your OpenSesame experiment is executed. For more information, please visit &lt;/span&gt;&lt;a href=&quot;http://osdoc.cogsci.nl/miscellaneous/runners&quot;&gt;&lt;span style=&quot; font-size:8pt; font-style:italic; text-decoration: underline; color:#0057ae;&quot;&gt;http://osdoc.cogsci.nl/miscellaneous/runners&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:8pt; font-style:italic;&quot;&gt;.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="preferences_widget.ui" line="319"/>
+        <location filename="preferences_widget.ui" line="312"/>
         <source>Run experiment in the same process (inprocess)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="preferences_widget.ui" line="324"/>
+        <location filename="preferences_widget.ui" line="317"/>
         <source>Run experiment in a separate process (multiprocess)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="preferences_widget.ui" line="329"/>
+        <location filename="preferences_widget.ui" line="322"/>
         <source>Run experiment with opensesamerun (external)</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>quick_switcher</name>
+    <message>
+        <location filename="quick_switcher.ui" line="17"/>
+        <source>Quick open item</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="quick_switcher.ui" line="34"/>
+        <source>Search by item name or type</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1408,67 +1710,67 @@
     <message>
         <location filename="replace_dialog.ui" line="14"/>
         <source>Search/ Replace</source>
-        <translation>查找/替换</translation>
+        <translation type="obsolete">查找/替换</translation>
     </message>
     <message>
         <location filename="replace_dialog.ui" line="26"/>
         <source>Search for</source>
-        <translation>查找</translation>
+        <translation type="obsolete">查找</translation>
     </message>
     <message>
         <location filename="replace_dialog.ui" line="33"/>
         <source>Replace with</source>
-        <translation>以...替换</translation>
+        <translation type="obsolete">以...替换</translation>
     </message>
     <message>
         <location filename="replace_dialog.ui" line="40"/>
         <source>Search term</source>
-        <translation>查找内容</translation>
+        <translation type="obsolete">查找内容</translation>
     </message>
     <message>
         <location filename="replace_dialog.ui" line="47"/>
         <source>Replacement term</source>
-        <translation>替换内容</translation>
+        <translation type="obsolete">替换内容</translation>
     </message>
     <message>
         <location filename="replace_dialog.ui" line="63"/>
         <source>Search and select a single occurence</source>
-        <translation>查找并选择单一出现事件</translation>
+        <translation type="obsolete">查找并选择单一出现事件</translation>
     </message>
     <message>
         <location filename="replace_dialog.ui" line="66"/>
         <source>Search</source>
-        <translation>查找</translation>
+        <translation type="obsolete">查找</translation>
     </message>
     <message>
         <location filename="replace_dialog.ui" line="77"/>
         <source>Replace the current selection</source>
-        <translation>替换当前选择</translation>
+        <translation type="obsolete">替换当前选择</translation>
     </message>
     <message>
         <location filename="replace_dialog.ui" line="80"/>
         <source>Replace</source>
-        <translation>替换</translation>
+        <translation type="obsolete">替换</translation>
     </message>
     <message>
         <location filename="replace_dialog.ui" line="91"/>
         <source>Replace all occurences</source>
-        <translation>替换所有发生事件</translation>
+        <translation type="obsolete">替换所有发生事件</translation>
     </message>
     <message>
         <location filename="replace_dialog.ui" line="94"/>
         <source>Replace all</source>
-        <translation>替换所有</translation>
+        <translation type="obsolete">替换所有</translation>
     </message>
     <message>
         <location filename="replace_dialog.ui" line="105"/>
         <source>Close this dialog</source>
-        <translation>关闭对话框</translation>
+        <translation type="obsolete">关闭对话框</translation>
     </message>
     <message>
         <location filename="replace_dialog.ui" line="108"/>
         <source>Close</source>
-        <translation>关闭</translation>
+        <translation type="obsolete">关闭</translation>
     </message>
 </context>
 <context>
@@ -1511,90 +1813,100 @@
     <message>
         <location filename="sampler_widget.ui" line="212"/>
         <source>%</source>
-        <translation>%</translation>
+        <translation type="obsolete">%</translation>
     </message>
     <message>
-        <location filename="sampler_widget.ui" line="135"/>
+        <location filename="sampler_widget.ui" line="138"/>
         <source>Pan</source>
         <translation>声道</translation>
     </message>
     <message>
-        <location filename="sampler_widget.ui" line="145"/>
+        <location filename="sampler_widget.ui" line="148"/>
         <source>Pitch</source>
         <translation>音调</translation>
     </message>
     <message>
-        <location filename="sampler_widget.ui" line="193"/>
+        <location filename="sampler_widget.ui" line="196"/>
         <source>Set the panning (left-right) of the sound</source>
         <translation>设定声道 (左-右)</translation>
     </message>
     <message>
-        <location filename="sampler_widget.ui" line="209"/>
+        <location filename="sampler_widget.ui" line="177"/>
         <source>Set the relative pitch of the sound (100% = original)</source>
         <translation>设定相对音调 (100% = 正常)</translation>
     </message>
     <message>
-        <location filename="sampler_widget.ui" line="228"/>
+        <location filename="sampler_widget.ui" line="234"/>
         <source>Stop after</source>
         <translation>之后停止</translation>
     </message>
     <message>
-        <location filename="sampler_widget.ui" line="235"/>
+        <location filename="sampler_widget.ui" line="241"/>
         <source>Force playback to stop after a specified duration. 0ms corresponds to a full playback.</source>
         <translation>经过某段设定时间长度后强制停止回播。0毫秒对应于整段回播。</translation>
     </message>
     <message>
         <location filename="sampler_widget.ui" line="251"/>
         <source>ms</source>
-        <translation>毫秒</translation>
+        <translation type="obsolete">毫秒</translation>
     </message>
     <message>
-        <location filename="sampler_widget.ui" line="248"/>
+        <location filename="sampler_widget.ui" line="254"/>
         <source>The fade-in time of the sound.</source>
         <translation>声音的渐强时间.</translation>
     </message>
     <message>
-        <location filename="sampler_widget.ui" line="261"/>
+        <location filename="sampler_widget.ui" line="267"/>
         <source>Set the duration of the sampler item. Expecting a duration in ms, &apos;sound&apos; (to wait until the sound is finished playing), &apos;keypress&apos;, &apos;mouseclick&apos;, or a variable (e.g., &apos;[sampler_dur]&apos;).</source>
         <translation>设定采样项目的持续时间。最好以毫秒计算持续时间, &apos;声音&apos; (等待直至声音播放完毕). &apos;按鍵&apos;, &apos;鼠标点击&apos;, 或 一个变量 (如, &apos;[sampler_dur]&apos;).</translation>
     </message>
     <message>
-        <location filename="sampler_widget.ui" line="264"/>
+        <location filename="sampler_widget.ui" line="270"/>
         <source>sound</source>
         <translation>声音</translation>
     </message>
     <message>
-        <location filename="sampler_widget.ui" line="271"/>
+        <location filename="sampler_widget.ui" line="277"/>
         <source>Fade in</source>
         <translation>渐强</translation>
     </message>
     <message>
-        <location filename="sampler_widget.ui" line="278"/>
+        <location filename="sampler_widget.ui" line="284"/>
         <source>Duration</source>
         <translation>持续时间</translation>
     </message>
     <message>
-        <location filename="sampler_widget.ui" line="318"/>
+        <location filename="sampler_widget.ui" line="324"/>
         <source>Sampler controls</source>
         <translation>采样控制</translation>
+    </message>
+    <message>
+        <location filename="sampler_widget.ui" line="212"/>
+        <source>Set the relative pitch of the sound (1 = original)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="sampler_widget.ui" line="257"/>
+        <source> ms</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>script</name>
     <message>
-        <location filename="translatables.py" line="99"/>
+        <location filename="translatables.py" line="124"/>
         <source>Edit script</source>
         <translation>编辑脚本</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="100"/>
+        <location filename="translatables.py" line="92"/>
         <source>Tell me more about the %s item</source>
         <translation>告诉我更多关于 %s 项目</translation>
     </message>
     <message>
         <location filename="translatables.py" line="101"/>
         <source>%s (Edit the script to fix this)</source>
-        <translation>%s (编辑脚本以修复)</translation>
+        <translation type="obsolete">%s (编辑脚本以修复)</translation>
     </message>
     <message>
         <location filename="translatables.py" line="118"/>
@@ -1629,87 +1941,87 @@
     <message>
         <location filename="translatables.py" line="103"/>
         <source>Editing script for &lt;b&gt;%s&lt;/b&gt; - %s</source>
-        <translation>编辑脚本&lt;b&gt;%s&lt;/b&gt; - %s</translation>
+        <translation type="obsolete">编辑脚本&lt;b&gt;%s&lt;/b&gt; - %s</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="104"/>
+        <location filename="translatables.py" line="85"/>
         <source>Type: %s
 Description: %s</source>
         <translation>类型: %s
 描述: %s</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="106"/>
+        <location filename="translatables.py" line="95"/>
         <source>Failed to set control &apos;%s&apos;: %s</source>
         <translation>无法设定控制 &apos;%s&apos;: %s</translation>
     </message>
     <message>
         <location filename="translatables.py" line="109"/>
         <source>Invalid or missing value for variable &apos;%s&apos; (edit script to fix this)</source>
-        <translation>无效或缺失变量数值 &apos;%s&apos; (编辑脚本以还原这)</translation>
+        <translation type="obsolete">无效或缺失变量数值 &apos;%s&apos; (编辑脚本以还原这)</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="117"/>
+        <location filename="translatables.py" line="105"/>
         <source>New variable</source>
         <translation>新变量</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="113"/>
+        <location filename="translatables.py" line="101"/>
         <source>Enter a variable name, optionally followed by a default value (i.e., &quot;varname defaultvalue&quot;)</source>
         <translation>输入一个变量的名称，可选择默认的数值 (如., &quot;varname defaultvalue&quot;)</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="120"/>
+        <location filename="translatables.py" line="108"/>
         <source>A variable with the name &apos;%s&apos; already exists</source>
         <translation>这个 &apos;%s&apos; 的变量名称已经存在</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="115"/>
+        <location filename="translatables.py" line="103"/>
         <source>Rename variable</source>
         <translation>重命名变量</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="116"/>
+        <location filename="translatables.py" line="104"/>
         <source>Which variable do you want to rename?</source>
         <translation>你想重命名哪个变量?</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="118"/>
+        <location filename="translatables.py" line="106"/>
         <source>Enter a new variable name</source>
         <translation>输入一个新的变量名称</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="119"/>
+        <location filename="translatables.py" line="107"/>
         <source>Please use only letters, numbers and underscores</source>
         <translation>只能使用字母、数字和下划线</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="121"/>
+        <location filename="translatables.py" line="109"/>
         <source>Remove variable</source>
         <translation>移除变量</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="122"/>
+        <location filename="translatables.py" line="110"/>
         <source>Which variable do you want to remove?</source>
         <translation>你想移除哪个变量?</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="123"/>
+        <location filename="translatables.py" line="111"/>
         <source>Remove cycles?</source>
         <translation>移除周期?</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="124"/>
+        <location filename="translatables.py" line="112"/>
         <source>By reducing the number of cycles, data will be lost from the table. Do you wish to continue?</source>
         <translation>减少周期的数目会导致图表中的资料丧失。你确定要继续?</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="125"/>
+        <location filename="translatables.py" line="114"/>
         <source>&lt;b&gt;%s&lt;/b&gt; will be called &lt;b&gt;%s&lt;/b&gt; x &lt;b&gt;%s&lt;/b&gt; - &lt;b&gt;%s&lt;/b&gt; = &lt;b&gt;%s&lt;/b&gt; times in &lt;b&gt;%s&lt;/b&gt; order</source>
         <translation>&lt;b&gt;%s&lt;/b&gt;被调用 &lt;b&gt;%s&lt;/b&gt; x &lt;b&gt;%s&lt;/b&gt; - &lt;b&gt;%s&lt;/b&gt; = &lt;b&gt;%s&lt;/b&gt; 次数 &lt;b&gt;%s&lt;/b&gt; 次序</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="126"/>
+        <location filename="translatables.py" line="115"/>
         <source>&lt;b&gt;%s&lt;/b&gt; will be called &lt;b&gt;%s&lt;/b&gt; x &lt;b&gt;%s&lt;/b&gt; = &lt;b&gt;%s&lt;/b&gt; times in &lt;b&gt;%s&lt;/b&gt; order</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1719,7 +2031,7 @@ Description: %s</source>
         <translation type="obsolete">在周期开始 &lt;b&gt;%d&lt;/b&gt; </translation>
     </message>
     <message>
-        <location filename="translatables.py" line="128"/>
+        <location filename="translatables.py" line="117"/>
         <source> &lt;font color=&apos;red&apos;&gt;&lt;b&gt;(too many cycles skipped)&lt;/b&gt;&lt;/font&gt;</source>
         <translation> &lt;font color=&apos;red&apos;&gt;&lt;b&gt;(跳过太多周期)&lt;/b&gt;&lt;/font&gt;</translation>
     </message>
@@ -1729,7 +2041,7 @@ Description: %s</source>
         <translation type="obsolete"> &lt;font color=&apos;red&apos;&apos;&gt;&lt;b&gt;(长度为零或负)&lt;/b&gt;&lt;/font&gt;</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="110"/>
+        <location filename="translatables.py" line="98"/>
         <source>The following key names are valid:&lt;br /&gt;</source>
         <translation>以下关键名称是有效的:&lt;br /&gt;</translation>
     </message>
@@ -1746,27 +2058,27 @@ Description: %s</source>
     <message>
         <location filename="translatables.py" line="143"/>
         <source>Flush pending key presses at sequence start</source>
-        <translation>在序列开始时清空按键输入</translation>
+        <translation type="obsolete">在序列开始时清空按键输入</translation>
     </message>
     <message>
         <location filename="translatables.py" line="144"/>
         <source>Append existing item to sequence</source>
-        <translation>附加现有项目至序列</translation>
+        <translation type="obsolete">附加现有项目至序列</translation>
     </message>
     <message>
         <location filename="translatables.py" line="145"/>
         <source>Create and append  new item to sequence</source>
-        <translation>创建及附加新项目至序列</translation>
+        <translation type="obsolete">创建及附加新项目至序列</translation>
     </message>
     <message>
         <location filename="translatables.py" line="146"/>
         <source>Append existing item</source>
-        <translation>附加现有项目</translation>
+        <translation type="obsolete">附加现有项目</translation>
     </message>
     <message>
         <location filename="translatables.py" line="147"/>
         <source>Append new item</source>
-        <translation>附加新项目</translation>
+        <translation type="obsolete">附加新项目</translation>
     </message>
     <message>
         <location filename="translatables.py" line="11"/>
@@ -1860,17 +2172,17 @@ href=&apos;http://www.cogsci.nl/opensesame&apos;&gt;http://www.cogsci.nl/openses
         <translation>无法保存文件，因为脚本无法生成。以下的错误出现：&lt;br/&gt;%s</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="28"/>
+        <location filename="translatables.py" line="27"/>
         <source>Saved as %s</source>
         <translation>另存为%s</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="29"/>
+        <location filename="translatables.py" line="28"/>
         <source>Failed to save file. Error: %s</source>
         <translation>无法保存文件。 错误： %s</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="30"/>
+        <location filename="translatables.py" line="29"/>
         <source>Save file as ...</source>
         <translation>另存文件为  ...</translation>
     </message>
@@ -1885,24 +2197,24 @@ href=&apos;http://www.cogsci.nl/opensesame&apos;&gt;http://www.cogsci.nl/openses
         <translation>无法解析脚本: %s</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="92"/>
+        <location filename="translatables.py" line="88"/>
         <source>&lt;b&gt;&lt;font size=&apos;5&apos;&gt;Unused&lt;/font&gt;&lt;/b&gt;</source>
         <translation>&lt;b&gt;&lt;font size=&apos;5&gt;未使用&lt;/font&gt;&lt;/b&gt;</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="93"/>
+        <location filename="translatables.py" line="89"/>
         <source>Permanently delete unused items</source>
         <translation>永久刪除不用的项目</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="94"/>
+        <location filename="translatables.py" line="90"/>
         <source>Permanently delete items?</source>
         <translation>永久删除项目?</translation>
     </message>
     <message>
         <location filename="translatables.py" line="95"/>
         <source>Are you sure you want to permanently delete all unused items? This action cannot be undone.</source>
-        <translation>你确定要永久删除所有不用的项目?这个操作不能被还原.</translation>
+        <translation type="obsolete">你确定要永久删除所有不用的项目?这个操作不能被还原.</translation>
     </message>
     <message>
         <location filename="translatables.py" line="32"/>
@@ -1967,178 +2279,178 @@ href=&apos;http://www.cogsci.nl/opensesame&apos;&gt;http://www.cogsci.nl/openses
     <message>
         <location filename="translatables.py" line="34"/>
         <source>New name</source>
-        <translation>新名称</translation>
+        <translation type="obsolete">新名称</translation>
     </message>
     <message>
         <location filename="translatables.py" line="35"/>
         <source>Please enter a name for the new %s</source>
-        <translation>请为新 %s 输入一个名称</translation>
+        <translation type="obsolete">请为新 %s 输入一个名称</translation>
     </message>
     <message>
         <location filename="translatables.py" line="63"/>
         <source>Drag this &lt;b&gt;%s&lt;/b&gt; item to the intended location in the overview area or into the item list of a sequence tab</source>
-        <translation>把这 &lt;b&gt;%s&lt;/b&gt; 项目拖到概览区中预想的位置或拉到序列标签的项目列表中</translation>
+        <translation type="obsolete">把这 &lt;b&gt;%s&lt;/b&gt; 项目拖到概览区中预想的位置或拉到序列标签的项目列表中</translation>
     </message>
     <message>
         <location filename="translatables.py" line="64"/>
         <source>&lt;small&gt;Commonly used&lt;/small&gt;</source>
-        <translation>&lt;small&gt;常用&lt;/small&gt;</translation>
+        <translation type="obsolete">&lt;small&gt;常用&lt;/small&gt;</translation>
     </message>
     <message>
         <location filename="translatables.py" line="66"/>
         <source>Drag this item to re-order</source>
-        <translation>拖动此项目以重新排序</translation>
+        <translation type="obsolete">拖动此项目以重新排序</translation>
     </message>
     <message>
         <location filename="translatables.py" line="67"/>
         <source>Run this item only under the following conditions</source>
-        <translation>只在以下的情况运行此项目</translation>
+        <translation type="obsolete">只在以下的情况运行此项目</translation>
     </message>
     <message>
         <location filename="translatables.py" line="68"/>
         <source>Click to edit this item</source>
-        <translation>点击以编辑此项目</translation>
+        <translation type="obsolete">点击以编辑此项目</translation>
     </message>
     <message>
         <location filename="translatables.py" line="69"/>
         <source>&lt;small&gt;&lt;i&gt;Run if&lt;/i&gt;&lt;/small&gt;</source>
-        <translation>&lt;small&gt;&lt;i&gt;运行 if&lt;/i&gt;&lt;/small&gt;</translation>
+        <translation type="obsolete">&lt;small&gt;&lt;i&gt;运行 if&lt;/i&gt;&lt;/small&gt;</translation>
     </message>
     <message>
         <location filename="translatables.py" line="70"/>
         <source>Unkown item &apos;%s&apos; in sequence &apos;%s&apos;. You can fix this using the script editor.</source>
-        <translation>未知项目 &apos;%s&apos; 序列中 &apos;%s&apos;. 你可以透过脚本编辑器来修复。</translation>
+        <translation type="obsolete">未知项目 &apos;%s&apos; 序列中 &apos;%s&apos;. 你可以透过脚本编辑器来修复。</translation>
     </message>
     <message>
         <location filename="translatables.py" line="75"/>
         <source>(Out of sketchpad)</source>
-        <translation>(画板外)</translation>
+        <translation type="obsolete">(画板外)</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="78"/>
+        <location filename="translatables.py" line="127"/>
         <source>Delete</source>
         <translation>删除</translation>
     </message>
     <message>
         <location filename="translatables.py" line="79"/>
         <source>Edit</source>
-        <translation>编辑</translation>
+        <translation type="obsolete">编辑</translation>
     </message>
     <message>
         <location filename="translatables.py" line="80"/>
         <source>Edit sketchpad element</source>
-        <translation>编辑画板元素</translation>
+        <translation type="obsolete">编辑画板元素</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="81"/>
+        <location filename="translatables.py" line="123"/>
         <source>Element script</source>
         <translation>元素脚本</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="82"/>
+        <location filename="translatables.py" line="130"/>
         <source>New textline</source>
         <translation>新文本行</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="83"/>
+        <location filename="translatables.py" line="131"/>
         <source>Please enter a text for the textline</source>
         <translation>请为文字行输入内容</translation>
     </message>
     <message>
         <location filename="translatables.py" line="84"/>
         <source>Funky image alert: &apos;%s&apos; has a non-standard format. It is recommended to convert this image to .png format, for example with Gimp &lt;http://www.gimp.org/&gt;.</source>
-        <translation>奇怪图片警告： &apos;%s&apos; 并无一标准格式. 我们建议你用(例如 Gimp &lt;http://www.gimp.org/&gt;) 转换这图片至.png 格式。 </translation>
+        <translation type="obsolete">奇怪图片警告： &apos;%s&apos; 并无一标准格式. 我们建议你用(例如 Gimp &lt;http://www.gimp.org/&gt;) 转换这图片至.png 格式。 </translation>
     </message>
     <message>
         <location filename="translatables.py" line="85"/>
         <source>%d objects are not shown, because they are defined using variables.</source>
-        <translation>%d 物件无法显示, 因为它们被变量所定义。</translation>
+        <translation type="obsolete">%d 物件无法显示, 因为它们被变量所定义。</translation>
     </message>
     <message>
         <location filename="translatables.py" line="86"/>
         <source>One object is not shown, because it is defined using variables.</source>
-        <translation>一个物件无法显示, 因为它被变量所定义。 </translation>
+        <translation type="obsolete">一个物件无法显示, 因为它被变量所定义。 </translation>
     </message>
     <message>
         <location filename="translatables.py" line="87"/>
         <source>Some objects will not be visible (or partly) because they fall outside of the screen boundaries.</source>
-        <translation>一些物件(或部分)将无法可见，因为它们在屏幕边界外。</translation>
+        <translation type="obsolete">一些物件(或部分)将无法可见，因为它们在屏幕边界外。</translation>
     </message>
     <message>
         <location filename="translatables.py" line="88"/>
         <source>Failed to parse the following item (use &apos;Edit script&apos; to fix/ remove this line):
 &apos;%s&apos;</source>
-        <translation>无法从解析以下项目 (用 &apos;编辑脚本&apos; 来修复/移除这一行)：&apos;%s&apos;</translation>
+        <translation type="obsolete">无法从解析以下项目 (用 &apos;编辑脚本&apos; 来修复/移除这一行)：&apos;%s&apos;</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="45"/>
+        <location filename="translatables.py" line="51"/>
         <source>Overwrite</source>
         <translation>覆盖</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="46"/>
+        <location filename="translatables.py" line="52"/>
         <source>A file named &apos;%s&apos; already exists in the pool. Do you want to overwrite this file?</source>
         <translation>一个文件名为&apos;%s&apos;已经存在于文档池中。你是否想覆盖该文件?</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="47"/>
+        <location filename="translatables.py" line="53"/>
         <source>Add files to pool</source>
         <translation>添加文件至文档池</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="52"/>
+        <location filename="translatables.py" line="58"/>
         <source>Remove from pool</source>
         <translation>从文档池中移除</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="56"/>
+        <location filename="translatables.py" line="62"/>
         <source>Rename</source>
         <translation>重命名</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="54"/>
+        <location filename="translatables.py" line="60"/>
         <source>Remove</source>
         <translation>移除</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="57"/>
+        <location filename="translatables.py" line="63"/>
         <source>Please enter a new name for &apos;%s&apos;</source>
         <translation>请为&apos;%s&apos;输入一个新的名称</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="58"/>
+        <location filename="translatables.py" line="64"/>
         <source>There already is a file named &apos;%s&apos; in the file pool</source>
         <translation>文档池中已有一个文件名为 &apos;%s&apos;的文件</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="59"/>
+        <location filename="translatables.py" line="65"/>
         <source>Cancel</source>
         <translation>取消</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="60"/>
+        <location filename="translatables.py" line="66"/>
         <source>Select</source>
         <translation>选择</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="61"/>
+        <location filename="translatables.py" line="67"/>
         <source>Select file from pool</source>
         <translation>在文档池选择一个文件</translation>
     </message>
     <message>
         <location filename="translatables.py" line="96"/>
         <source>Oops!</source>
-        <translation>哎呀!</translation>
+        <translation type="obsolete">哎呀!</translation>
     </message>
     <message>
         <location filename="translatables.py" line="97"/>
         <source>The replacement string cannot contain the search string.</source>
-        <translation>替换的字符串不可包含查找的字符串。</translation>
+        <translation type="obsolete">替换的字符串不可包含查找的字符串。</translation>
     </message>
     <message>
         <location filename="translatables.py" line="98"/>
         <source>Replace all</source>
-        <translation>替换所有</translation>
+        <translation type="obsolete">替换所有</translation>
     </message>
     <message>
         <location filename="translatables.py" line="69"/>
@@ -2171,57 +2483,57 @@ href=&apos;http://www.cogsci.nl/opensesame&apos;&gt;http://www.cogsci.nl/openses
         <translation type="obsolete">按Alt + A以应用未保存改变</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="75"/>
+        <location filename="translatables.py" line="93"/>
         <source>Apply</source>
-        <translation type="obsolete">应用</translation>
+        <translation type="unfinished">应用</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="90"/>
+        <location filename="translatables.py" line="86"/>
         <source>Tell me more about OpenSesame!</source>
         <translation>告诉我更多有关OpenSesame的!</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="73"/>
+        <location filename="translatables.py" line="80"/>
         <source>No settings for %s</source>
         <translation>对 %s 无设定</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="74"/>
+        <location filename="translatables.py" line="81"/>
         <source>Settings for %s:</source>
         <translation> %s 的设定:</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="91"/>
+        <location filename="translatables.py" line="87"/>
         <source>Failed to parse the resolution. Expecting positive numeric values.</source>
         <translation>无法解析分辨率。 预期正的数值。</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="37"/>
+        <location filename="translatables.py" line="44"/>
         <source>Open %s</source>
         <translation>打开 %s</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="41"/>
+        <location filename="translatables.py" line="49"/>
         <source>%s help</source>
         <translation>%s 帮助</translation>
     </message>
     <message>
         <location filename="translatables.py" line="43"/>
         <source>Please enter a new name</source>
-        <translation>请输入一个新的名称</translation>
+        <translation type="obsolete">请输入一个新的名称</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="65"/>
+        <location filename="translatables.py" line="75"/>
         <source>Click to edit</source>
         <translation>点击以编辑</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="89"/>
+        <location filename="translatables.py" line="84"/>
         <source>Error: Command contains invalid characters</source>
         <translation>错误： 命令包含无效字符</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="62"/>
+        <location filename="translatables.py" line="68"/>
         <source>Ready</source>
         <translation>准备就绪</translation>
     </message>
@@ -2231,114 +2543,114 @@ href=&apos;http://www.cogsci.nl/opensesame&apos;&gt;http://www.cogsci.nl/openses
         <translation>打开文件</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="71"/>
+        <location filename="translatables.py" line="76"/>
         <source>Apply?</source>
         <translation>应用?</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="72"/>
+        <location filename="translatables.py" line="77"/>
         <source>Are you sure you want to apply the changes to the general script?</source>
         <translation>你确定要把改变应用至通用脚本?</translation>
     </message>
     <message>
         <location filename="translatables.py" line="36"/>
         <source>Failed to parse script (see traceback in debug window): %s</source>
-        <translation type="unfinished">无法解析脚本 (查看调试视窗中的追溯信息): %s</translation>
+        <translation type="obsolete">无法解析脚本 (查看调试视窗中的追溯信息): %s</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="51"/>
+        <location filename="translatables.py" line="57"/>
         <source>Open</source>
         <translation>打开</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="53"/>
+        <location filename="translatables.py" line="59"/>
         <source>And %d more file(s)</source>
         <translation>和 %d 更多文件</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="55"/>
+        <location filename="translatables.py" line="61"/>
         <source>&lt;p&gt;Are you sure you want to remove the following files from the file pool? This operation will only affect the OpenSesame file pool, not the original files on your disk.&lt;/p&gt;&lt;p&gt;&lt;b&gt; - %s&lt;/b&gt;&lt;/p&gt;&lt;p&gt;%s&lt;/p&gt;</source>
         <translation>&lt;p&gt;你是否确定要从文档池中移除以下文件？这个操作只会影响OpenSesame的文档池，并不会影响你硬盘中的原始文件。&lt;/p&gt;&lt;p&gt;&lt;b&gt; - %s&lt;/b&gt;&lt;/p&gt;&lt;p&gt;%s&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="107"/>
+        <location filename="translatables.py" line="96"/>
         <source>All non-alphanumeric characters except underscores have been stripped</source>
         <translation>除了下划线外，所有非字母数字已被去除</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="108"/>
+        <location filename="translatables.py" line="97"/>
         <source>The following characters are not allowed and have been stripped: double-quote (&quot;), backslash (), and newline</source>
         <translation>以下的字符并不被允许并已被去除：双引号(&quot;), 反斜线(), 及newline</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="111"/>
+        <location filename="translatables.py" line="99"/>
         <source>&quot;%s&quot; is not a valid qtautoplugin control</source>
         <translation>&quot;%s&quot; 是无效的qtautoplugin控制</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="130"/>
+        <location filename="translatables.py" line="119"/>
         <source>You provided an empty or invalid variable definition. For an example of a valid variable definition, open the variable wizard and select &quot;Show example&quot;.</source>
         <translation>你提供了一个空白或无效的变量定义。对何为有效的变量定义的例子，打开变量向导并选择 &quot;显示例子&quot;。</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="131"/>
+        <location filename="translatables.py" line="120"/>
         <source>Apply weight</source>
         <translation>应用权重</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="132"/>
+        <location filename="translatables.py" line="121"/>
         <source>Which variable contains the weights?</source>
         <translation>哪个变量包含权重?</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="133"/>
+        <location filename="translatables.py" line="82"/>
         <source>Add custom variable</source>
         <translation>添加自定义变量</translation>
     </message>
     <message>
         <location filename="translatables.py" line="134"/>
         <source>Add an arbitrary variable by name</source>
-        <translation>通过名称添加任意变量</translation>
+        <translation type="obsolete">通过名称添加任意变量</translation>
     </message>
     <message>
         <location filename="translatables.py" line="135"/>
         <source>Smart select</source>
-        <translation>智能筛选</translation>
+        <translation type="obsolete">智能筛选</translation>
     </message>
     <message>
         <location filename="translatables.py" line="136"/>
         <source>Select all</source>
-        <translation>选择所有</translation>
+        <translation type="obsolete">选择所有</translation>
     </message>
     <message>
         <location filename="translatables.py" line="137"/>
         <source>Select all variables</source>
-        <translation>选择所有变量</translation>
+        <translation type="obsolete">选择所有变量</translation>
     </message>
     <message>
         <location filename="translatables.py" line="138"/>
         <source>Deselect all</source>
-        <translation>取消选择所有</translation>
+        <translation type="obsolete">取消选择所有</translation>
     </message>
     <message>
         <location filename="translatables.py" line="139"/>
         <source>Deselect all variables</source>
-        <translation>取消选择所有变量</translation>
+        <translation type="obsolete">取消选择所有变量</translation>
     </message>
     <message>
         <location filename="translatables.py" line="140"/>
         <source>Include variables with missing values</source>
-        <translation>包含带缺失值的变量</translation>
+        <translation type="obsolete">包含带缺失值的变量</translation>
     </message>
     <message>
         <location filename="translatables.py" line="141"/>
         <source>Automatically detect and log all variables</source>
-        <translation>自动检测和记录所有变量</translation>
+        <translation type="obsolete">自动检测和记录所有变量</translation>
     </message>
     <message>
         <location filename="translatables.py" line="142"/>
         <source>Put quotes around values</source>
-        <translation>在数值左右放置引号</translation>
+        <translation type="obsolete">在数值左右放置引号</translation>
     </message>
     <message>
         <location filename="translatables.py" line="9"/>
@@ -2346,23 +2658,153 @@ href=&apos;http://www.cogsci.nl/opensesame&apos;&gt;http://www.cogsci.nl/openses
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="translatables.py" line="44"/>
+        <location filename="translatables.py" line="50"/>
         <source>&apos;%s&apos; is not a regular file and could not be added to the file pool.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="translatables.py" line="102"/>
-        <source>Apply and close script editor</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="translatables.py" line="127"/>
+        <location filename="translatables.py" line="116"/>
         <source> starting at cycle &lt;b&gt;%s&lt;/b&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="translatables.py" line="129"/>
+        <location filename="translatables.py" line="118"/>
         <source> &lt;font color=&apos;red&apos;&gt;&lt;b&gt;(zero, negative, or unknown length)&lt;/b&gt;&lt;/font&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="translatables.py" line="30"/>
+        <source>You have selected the &lt;code&gt;.opensesame&lt;/code&gt; format. This means that the file pool has &lt;i&gt;not&lt;/i&gt; been saved. To save the file pool along with your experiment, select the &lt;code&gt;.opensesame.tar.gz&lt;/code&gt; format.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="translatables.py" line="34"/>
+        <source>Image name &quot;%s&quot; is unknown or variably defined, using fallback image</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="translatables.py" line="35"/>
+        <source>Penwidth &quot;%s&quot; is unknown or variably defined, using 1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="translatables.py" line="36"/>
+        <source>Color &quot;%s&quot; is unknown or variably defined, using placeholder color</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="translatables.py" line="37"/>
+        <source>X coordinate &quot;%s&quot; is unknown or variably defined, using display center</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="translatables.py" line="38"/>
+        <source>Y coordinate &quot;%s&quot; is unknown or variably defined, using display center</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="translatables.py" line="39"/>
+        <source>Width &quot;%s&quot; is unknown or variably defined, using 100</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="translatables.py" line="40"/>
+        <source>Height &quot;%s&quot; is unknown or variably defined, using 100</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="translatables.py" line="41"/>
+        <source>Scale &quot;%s&quot; is unknown or variably defined, using 1.0</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="translatables.py" line="42"/>
+        <source>An item with that name already exists.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="translatables.py" line="43"/>
+        <source>An item name cannot be empty.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="translatables.py" line="45"/>
+        <source>Copy</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="translatables.py" line="46"/>
+        <source>Paste</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="translatables.py" line="69"/>
+        <source>General options</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="translatables.py" line="71"/>
+        <source>Unused items</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="translatables.py" line="72"/>
+        <source>View controls</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="translatables.py" line="73"/>
+        <source>View script</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="translatables.py" line="74"/>
+        <source>Split view</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="translatables.py" line="78"/>
+        <source>Item name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="translatables.py" line="79"/>
+        <source>Run if</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="translatables.py" line="83"/>
+        <source>Which variable do you wish to log?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="translatables.py" line="91"/>
+        <source>Toggle pop-out</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="translatables.py" line="113"/>
+        <source>&lt;font color=&apos;red&apos;&gt;No item to run specified&lt;/font&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="translatables.py" line="122"/>
+        <source>Edit element</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="translatables.py" line="125"/>
+        <source>Raise to front</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="translatables.py" line="126"/>
+        <source>Lower to bottom</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="translatables.py" line="128"/>
+        <source>Edit text</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2371,187 +2813,177 @@ href=&apos;http://www.cogsci.nl/opensesame&apos;&gt;http://www.cogsci.nl/openses
     <message>
         <location filename="sketchpad_widget.ui" line="14"/>
         <source>Form</source>
-        <translation>表单</translation>
+        <translation type="obsolete">表单</translation>
     </message>
     <message>
         <location filename="sketchpad_widget.ui" line="95"/>
         <source>Line tool</source>
-        <translation>线条工具</translation>
+        <translation type="obsolete">线条工具</translation>
     </message>
     <message>
         <location filename="sketchpad_widget.ui" line="124"/>
         <source>Arrow tool</source>
-        <translation>箭头工具</translation>
+        <translation type="obsolete">箭头工具</translation>
     </message>
     <message>
         <location filename="sketchpad_widget.ui" line="150"/>
         <source>Text tool</source>
-        <translation>文本工具</translation>
+        <translation type="obsolete">文本工具</translation>
     </message>
     <message>
         <location filename="sketchpad_widget.ui" line="176"/>
         <source>Image tool</source>
-        <translation>图片工具</translation>
+        <translation type="obsolete">图片工具</translation>
     </message>
     <message>
         <location filename="sketchpad_widget.ui" line="202"/>
         <source>Gabor patch tool</source>
-        <translation>Gabor patch工具</translation>
+        <translation type="obsolete">Gabor patch工具</translation>
     </message>
     <message>
         <location filename="sketchpad_widget.ui" line="228"/>
         <source>Rectangle tool</source>
-        <translation>矩形工具</translation>
+        <translation type="obsolete">矩形工具</translation>
     </message>
     <message>
         <location filename="sketchpad_widget.ui" line="254"/>
         <source>Ellipse tool</source>
-        <translation>椭圆形工具</translation>
+        <translation type="obsolete">椭圆形工具</translation>
     </message>
     <message>
         <location filename="sketchpad_widget.ui" line="280"/>
         <source>Circle tool</source>
-        <translation>圆形工具</translation>
+        <translation type="obsolete">圆形工具</translation>
     </message>
     <message>
         <location filename="sketchpad_widget.ui" line="306"/>
         <source>Fixation dot tool</source>
-        <translation>固定点工具</translation>
+        <translation type="obsolete">固定点工具</translation>
     </message>
     <message>
         <location filename="sketchpad_widget.ui" line="335"/>
         <source>Noise patch tool</source>
-        <translation>噪点修补工具</translation>
+        <translation type="obsolete">噪点修补工具</translation>
     </message>
     <message>
         <location filename="sketchpad_widget.ui" line="424"/>
         <source>Color</source>
-        <translation>颜色</translation>
+        <translation type="obsolete">颜色</translation>
     </message>
     <message>
         <location filename="sketchpad_widget.ui" line="490"/>
         <source>Pen width</source>
-        <translation>笔宽</translation>
+        <translation type="obsolete">笔宽</translation>
     </message>
     <message>
         <location filename="sketchpad_widget.ui" line="618"/>
         <source>px</source>
-        <translation>像素</translation>
+        <translation type="obsolete">像素</translation>
     </message>
     <message>
         <location filename="sketchpad_widget.ui" line="400"/>
         <source>Arrowhead size</source>
-        <translation>箭头大小</translation>
+        <translation type="obsolete">箭头大小</translation>
     </message>
     <message>
         <location filename="sketchpad_widget.ui" line="444"/>
         <source>Size of the arrowhead</source>
-        <translation>箭头大小</translation>
+        <translation type="obsolete">箭头大小</translation>
     </message>
     <message>
         <location filename="sketchpad_widget.ui" line="506"/>
         <source>Image scale</source>
-        <translation>图片比例</translation>
+        <translation type="obsolete">图片比例</translation>
     </message>
     <message>
         <location filename="sketchpad_widget.ui" line="513"/>
         <source>Image scaling in %</source>
-        <translation>图片比例 %</translation>
+        <translation type="obsolete">图片比例 %</translation>
     </message>
     <message>
         <location filename="sketchpad_widget.ui" line="592"/>
         <source>%</source>
-        <translation>%</translation>
+        <translation type="obsolete">%</translation>
     </message>
     <message>
         <location filename="sketchpad_widget.ui" line="431"/>
         <source>Center the object</source>
-        <translation>物件居中</translation>
+        <translation type="obsolete">物件居中</translation>
     </message>
     <message>
         <location filename="sketchpad_widget.ui" line="434"/>
         <source>Center object</source>
-        <translation>物件居中</translation>
+        <translation type="obsolete">物件居中</translation>
     </message>
     <message>
         <location filename="sketchpad_widget.ui" line="393"/>
         <source>Click on the sketchpad for options</source>
-        <translation>点击画板以选择</translation>
+        <translation type="obsolete">点击画板以选择</translation>
     </message>
     <message>
         <location filename="sketchpad_widget.ui" line="417"/>
         <source>Show if</source>
-        <translation>显示if</translation>
+        <translation type="obsolete">显示if</translation>
     </message>
     <message>
         <location filename="sketchpad_widget.ui" line="464"/>
         <source>Check to draw filled objects</source>
-        <translation>勾选以绘制填色物件</translation>
+        <translation type="obsolete">勾选以绘制填色物件</translation>
     </message>
     <message>
         <location filename="sketchpad_widget.ui" line="467"/>
         <source>Fill object</source>
-        <translation>填充物件</translation>
+        <translation type="obsolete">填充物件</translation>
     </message>
     <message>
         <location filename="sketchpad_widget.ui" line="582"/>
         <source>Zoom</source>
-        <translation>缩放</translation>
+        <translation type="obsolete">缩放</translation>
     </message>
     <message>
         <location filename="sketchpad_widget.ui" line="589"/>
         <source>Zoom level in %</source>
-        <translation>缩放比例 %</translation>
+        <translation type="obsolete">缩放比例 %</translation>
     </message>
     <message>
         <location filename="sketchpad_widget.ui" line="608"/>
         <source>Grid</source>
-        <translation>网格</translation>
+        <translation type="obsolete">网格</translation>
     </message>
     <message>
         <location filename="sketchpad_widget.ui" line="615"/>
         <source>Grid size</source>
-        <translation>网格大小</translation>
+        <translation type="obsolete">网格大小</translation>
     </message>
     <message>
         <location filename="sketchpad_widget.ui" line="631"/>
         <source>Check to display the grid and enable snap-to-grid</source>
-        <translation>勾选以显示网格并启用对齐网格</translation>
+        <translation type="obsolete">勾选以显示网格并启用对齐网格</translation>
     </message>
     <message>
         <location filename="sketchpad_widget.ui" line="634"/>
         <source>Show grid</source>
-        <translation>显示网格</translation>
+        <translation type="obsolete">显示网格</translation>
     </message>
     <message>
         <location filename="sketchpad_widget.ui" line="656"/>
         <source>(0, 0)</source>
-        <translation>(0, 0)</translation>
+        <translation type="obsolete">(0, 0)</translation>
     </message>
     <message>
         <location filename="sketchpad_widget.ui" line="706"/>
         <source>[nr] objects are not shown, because their definition contains variables.</source>
-        <translation>[nr] 物件不能显示，因为它们的定义包含了变量。</translation>
+        <translation type="obsolete">[nr] 物件不能显示，因为它们的定义包含了变量。</translation>
     </message>
     <message>
         <location filename="sketchpad_widget.ui" line="725"/>
         <source>Edit the script to see objects defined using variables</source>
-        <translation>编辑脚本以显示使用变量定义的物件</translation>
+        <translation type="obsolete">编辑脚本以显示使用变量定义的物件</translation>
     </message>
     <message>
         <location filename="sketchpad_widget.ui" line="728"/>
         <source>Edit script</source>
-        <translation>编辑脚本</translation>
-    </message>
-    <message>
-        <location filename="sketchpad_widget.ui" line="535"/>
-        <source>Parse a subset of HTML tags</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="sketchpad_widget.ui" line="538"/>
-        <source>Parse HTML subset</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">编辑脚本</translation>
     </message>
 </context>
 <context>
@@ -2574,7 +3006,7 @@ href=&apos;http://www.cogsci.nl/opensesame&apos;&gt;http://www.cogsci.nl/openses
     <message>
         <location filename="synth_widget.ui" line="107"/>
         <source>%</source>
-        <translation>%</translation>
+        <translation type="obsolete">%</translation>
     </message>
     <message>
         <location filename="synth_widget.ui" line="123"/>
@@ -2609,7 +3041,7 @@ href=&apos;http://www.cogsci.nl/opensesame&apos;&gt;http://www.cogsci.nl/openses
     <message>
         <location filename="synth_widget.ui" line="282"/>
         <source>ms</source>
-        <translation>毫秒</translation>
+        <translation type="obsolete">毫秒</translation>
     </message>
     <message>
         <location filename="synth_widget.ui" line="255"/>
@@ -2696,6 +3128,11 @@ href=&apos;http://www.cogsci.nl/opensesame&apos;&gt;http://www.cogsci.nl/openses
         <source>Generate white noise</source>
         <translation>生成白噪音</translation>
     </message>
+    <message>
+        <location filename="synth_widget.ui" line="282"/>
+        <source> ms</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>text_input_dialog</name>
@@ -2748,7 +3185,55 @@ href=&apos;http://www.cogsci.nl/opensesame&apos;&gt;http://www.cogsci.nl/openses
     <message>
         <location filename="user_hint_widget.ui" line="39"/>
         <source>Edit script</source>
-        <translation>编辑脚本</translation>
+        <translation type="obsolete">编辑脚本</translation>
+    </message>
+    <message>
+        <location filename="user_hint_widget.ui" line="39"/>
+        <source>Hide</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>variable_inspector</name>
+    <message>
+        <location filename="variable_inspector.ui" line="14"/>
+        <source>Form</source>
+        <translation type="unfinished">表单</translation>
+    </message>
+    <message>
+        <location filename="variable_inspector.ui" line="52"/>
+        <source>Variable inspector</source>
+        <translation type="unfinished">变量检查器</translation>
+    </message>
+    <message>
+        <location filename="variable_inspector.ui" line="78"/>
+        <source>Enter a filter</source>
+        <translation type="unfinished">输入过滤器</translation>
+    </message>
+    <message>
+        <location filename="variable_inspector.ui" line="85"/>
+        <source>Clear filter</source>
+        <translation type="unfinished">清除过滤器</translation>
+    </message>
+    <message>
+        <location filename="variable_inspector.ui" line="111"/>
+        <source>Help</source>
+        <translation type="unfinished">帮助</translation>
+    </message>
+    <message>
+        <location filename="variable_inspector.ui" line="165"/>
+        <source>Variable</source>
+        <translation type="unfinished">变量</translation>
+    </message>
+    <message>
+        <location filename="variable_inspector.ui" line="170"/>
+        <source>Value</source>
+        <translation type="unfinished">数值</translation>
+    </message>
+    <message>
+        <location filename="variable_inspector.ui" line="175"/>
+        <source>In item</source>
+        <translation type="unfinished">项目中</translation>
     </message>
 </context>
 <context>
@@ -3028,37 +3513,37 @@ Various settings related to the control of the display, sound, and input devices
         <translation>表单</translation>
     </message>
     <message>
-        <location filename="credits_widget.ui" line="75"/>
+        <location filename="credits_widget.ui" line="78"/>
         <source>Visit Facebook page</source>
         <translation>访问Facebook页面</translation>
     </message>
     <message>
-        <location filename="credits_widget.ui" line="78"/>
+        <location filename="credits_widget.ui" line="81"/>
         <source>F</source>
         <translation>F</translation>
     </message>
     <message>
-        <location filename="credits_widget.ui" line="85"/>
+        <location filename="credits_widget.ui" line="91"/>
         <source>Visit Twitter page</source>
         <translation>访问Twitter页面</translation>
     </message>
     <message>
-        <location filename="credits_widget.ui" line="88"/>
+        <location filename="credits_widget.ui" line="94"/>
         <source>T</source>
         <translation>T</translation>
     </message>
     <message>
-        <location filename="credits_widget.ui" line="95"/>
+        <location filename="credits_widget.ui" line="104"/>
         <source>Visit cogsci.nl</source>
         <translation>访问Cogsci.nl</translation>
     </message>
     <message>
-        <location filename="credits_widget.ui" line="98"/>
+        <location filename="credits_widget.ui" line="107"/>
         <source>H</source>
         <translation>H</translation>
     </message>
     <message>
-        <location filename="credits_widget.ui" line="105"/>
+        <location filename="credits_widget.ui" line="114"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;COGSCIdotNL // cognitive science and more&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;COGSCIdotNL // 认知科学及更多&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
@@ -3070,17 +3555,17 @@ Copyright Sebastiaan Mathôt (2010-2013)</source>
 版权归 Sebastiaan Mathôt 所有 (2010-2013)</translation>
     </message>
     <message>
-        <location filename="credits_widget.ui" line="112"/>
+        <location filename="credits_widget.ui" line="121"/>
         <source>&lt;a href=&quot;http://osdoc.cogsci.nl/contribute/&quot;&gt;Contribute&lt;/a&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="credits_widget.ui" line="122"/>
+        <location filename="credits_widget.ui" line="131"/>
         <source>&lt;a href=&quot;http://osdoc.cogsci.nl/donate/&quot;&gt;Donate&lt;/a&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message encoding="UTF-8">
-        <location filename="credits_widget.ui" line="170"/>
+        <location filename="credits_widget.ui" line="179"/>
         <source>OpenSesame [version] [codename]
 Copyright Sebastiaan Mathôt (2010-2014)</source>
         <translation type="unfinished"></translation>

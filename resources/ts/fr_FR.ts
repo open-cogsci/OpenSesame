@@ -1,6 +1,177 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS><TS version="2.0" language="fr" sourcelanguage="">
 <context>
+    <name>Form</name>
+    <message>
+        <location filename="logger.ui" line="14"/>
+        <source>Form</source>
+        <translation type="unfinished">Formulaire</translation>
+    </message>
+    <message>
+        <location filename="logger.ui" line="23"/>
+        <source>Automatically detect and log all variables</source>
+        <translation type="unfinished">Détecter et inscrire dans le journal toutes les variables</translation>
+    </message>
+    <message>
+        <location filename="logger.ui" line="30"/>
+        <source>Include variables with missing values</source>
+        <translation type="unfinished">Inclure les variables avec des valeurs manquantes</translation>
+    </message>
+    <message>
+        <location filename="logger.ui" line="37"/>
+        <source>Put quotes around values</source>
+        <translation type="unfinished">Mettre des guillemets autour des valeurs</translation>
+    </message>
+    <message>
+        <location filename="logger.ui" line="50"/>
+        <source>Select all</source>
+        <translation type="unfinished">Tout sélectionner</translation>
+    </message>
+    <message>
+        <location filename="logger.ui" line="57"/>
+        <source>Deselect all</source>
+        <translation type="unfinished">Tout désélectionner</translation>
+    </message>
+    <message>
+        <location filename="logger.ui" line="77"/>
+        <source>Smart select</source>
+        <translation type="unfinished">Selection intelligente</translation>
+    </message>
+    <message>
+        <location filename="logger.ui" line="84"/>
+        <source>Add custom variable</source>
+        <translation type="unfinished">Ajouter une variable personnalisée</translation>
+    </message>
+    <message>
+        <location filename="logger.ui" line="109"/>
+        <source>Variable</source>
+        <translation type="unfinished">Variable</translation>
+    </message>
+    <message>
+        <location filename="logger.ui" line="114"/>
+        <source>Source item(s)</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>container_widget</name>
+    <message>
+        <location filename="general_properties.ui" line="14"/>
+        <source>Form</source>
+        <translation type="unfinished">Formulaire</translation>
+    </message>
+    <message>
+        <location filename="general_properties.ui" line="56"/>
+        <source>&lt;h3&gt;Back-end&lt;/h3&gt;</source>
+        <translation type="unfinished">&lt;h3&gt;Arrière-fond&lt;/h3&gt;</translation>
+    </message>
+    <message>
+        <location filename="general_properties.ui" line="63"/>
+        <source>&lt;h3&gt;Resolution&lt;/h3&gt;</source>
+        <translation type="unfinished">&lt;h3&gt;Résolution&lt;/h3&gt;</translation>
+    </message>
+    <message>
+        <location filename="general_properties.ui" line="85"/>
+        <source>The display resolution (width) in pixels</source>
+        <translation type="unfinished">La résolution d&apos;affichage(largeur) en pixels</translation>
+    </message>
+    <message>
+        <location filename="general_properties.ui" line="111"/>
+        <source>px</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="general_properties.ui" line="101"/>
+        <source>x</source>
+        <translation type="unfinished">x</translation>
+    </message>
+    <message>
+        <location filename="general_properties.ui" line="108"/>
+        <source>The display resolution (height) in pixels</source>
+        <translation type="unfinished">La résolution d&apos;affichage(hauteur) en pixels</translation>
+    </message>
+    <message>
+        <location filename="general_properties.ui" line="127"/>
+        <source>&lt;h3&gt;Colors&lt;/h3&gt;</source>
+        <translation type="unfinished">&lt;h3&gt;Couleurs&lt;/h3&gt;</translation>
+    </message>
+    <message>
+        <location filename="general_properties.ui" line="152"/>
+        <source>Foreground</source>
+        <translation type="unfinished">Premier plan</translation>
+    </message>
+    <message>
+        <location filename="general_properties.ui" line="159"/>
+        <source>Background</source>
+        <translation type="unfinished">Arrière plan</translation>
+    </message>
+    <message>
+        <location filename="general_properties.ui" line="175"/>
+        <source>&lt;small&gt;&lt;i&gt;Examples: &apos;white&apos;, &apos;#FFFFFF&apos;&lt;/i&gt;&lt;/small&gt;</source>
+        <translation type="unfinished">&lt;small&gt;&lt;i&gt;Exemples: &apos;blanc&apos;, &apos;#FFFFFF&apos;&lt;/i&gt;&lt;/small&gt;</translation>
+    </message>
+    <message>
+        <location filename="general_properties.ui" line="191"/>
+        <source>&lt;h3&gt;Font&lt;/h3&gt;</source>
+        <translation type="unfinished">&lt;h3&gt;Police de caractères&lt;/h3&gt;</translation>
+    </message>
+    <message>
+        <location filename="general_properties.ui" line="235"/>
+        <source>&lt;h3&gt;Advanced&lt;/h3&gt;</source>
+        <translation type="unfinished">&lt;h3&gt;Avancé&lt;/h3&gt;</translation>
+    </message>
+    <message>
+        <location filename="general_properties.ui" line="263"/>
+        <source>Advanced settings for the selected back-end</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="general_properties.ui" line="266"/>
+        <source>Back-end settings</source>
+        <translation type="unfinished">Réglages d&apos;arrière-fond</translation>
+    </message>
+    <message>
+        <location filename="general_properties.ui" line="273"/>
+        <source>Edit the script for the entire experiment</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="general_properties.ui" line="276"/>
+        <source>Script editor</source>
+        <translation type="unfinished">Éditeur de scripts</translation>
+    </message>
+    <message>
+        <location filename="general_properties.ui" line="286"/>
+        <source>Allows you to access experimental variables directly by name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="general_properties.ui" line="289"/>
+        <source>Transparent variable management</source>
+        <translation type="unfinished">Gestion transparente des variables</translation>
+    </message>
+    <message>
+        <location filename="general_properties.ui" line="296"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:large; font-weight:600;&quot;&gt;Miscellaneous&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="general_properties.ui" line="306"/>
+        <source>Enables support for bi-directional languages, such as Arabic and Hebrew</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="general_properties.ui" line="309"/>
+        <source>Bi-directional-text support</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="general_properties.ui" line="331"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://osdoc.cogsci.nl/back-ends/about&quot;&gt;&lt;span style=&quot;font-size:small;font-style:italic; text-decoration: underline; color:#0057ae;&quot;&gt;Why is this important?&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>font_widget</name>
     <message>
         <location filename="font_widget.ui" line="14"/>
@@ -8,7 +179,7 @@
         <translation>Formulaire</translation>
     </message>
     <message>
-        <location filename="font_widget.ui" line="26"/>
+        <location filename="font_widget.ui" line="32"/>
         <source>Font family</source>
         <translation>Police de Caractères</translation>
     </message>
@@ -28,132 +199,270 @@
         <translation type="obsolete">serif</translation>
     </message>
     <message>
-        <location filename="font_widget.ui" line="69"/>
+        <location filename="font_widget.ui" line="75"/>
         <source>other ...</source>
         <translation>autre...</translation>
     </message>
     <message>
-        <location filename="font_widget.ui" line="77"/>
+        <location filename="font_widget.ui" line="92"/>
         <source>Font size</source>
         <translation>Taille de police</translation>
     </message>
     <message>
-        <location filename="font_widget.ui" line="84"/>
+        <location filename="font_widget.ui" line="99"/>
         <source> pt</source>
         <translation> pt</translation>
     </message>
     <message>
-        <location filename="font_widget.ui" line="102"/>
+        <location filename="font_widget.ui" line="132"/>
         <source>Italic</source>
         <translation>Italique</translation>
     </message>
     <message>
-        <location filename="font_widget.ui" line="115"/>
+        <location filename="font_widget.ui" line="145"/>
         <source>Bold</source>
         <translation>Gras</translation>
     </message>
     <message>
-        <location filename="font_widget.ui" line="134"/>
+        <location filename="font_widget.ui" line="167"/>
         <source>Example</source>
         <translation>Exemple</translation>
     </message>
 </context>
 <context>
+    <name>form_sketchpad</name>
+    <message>
+        <location filename="sketchpad.ui" line="14"/>
+        <source>Form</source>
+        <translation type="unfinished">Formulaire</translation>
+    </message>
+    <message>
+        <location filename="sketchpad.ui" line="38"/>
+        <source>Duration</source>
+        <translation type="unfinished">Durée</translation>
+    </message>
+    <message>
+        <location filename="sketchpad.ui" line="51"/>
+        <source>A numeric value (duration in milliseconds), &quot;keypress&quot;, or &quot;mouseclick&quot;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="sketchpad.ui" line="83"/>
+        <source>Color</source>
+        <translation type="unfinished">Couleur</translation>
+    </message>
+    <message>
+        <location filename="sketchpad.ui" line="442"/>
+        <source> px</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="sketchpad.ui" line="112"/>
+        <source>Penwidth </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="sketchpad.ui" line="144"/>
+        <source>Size of the arrowhead</source>
+        <translation type="unfinished">Taille de la tête de la flèche</translation>
+    </message>
+    <message>
+        <location filename="sketchpad.ui" line="150"/>
+        <source>Arrowhead </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="sketchpad.ui" line="185"/>
+        <source>Image scaling factor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="sketchpad.ui" line="188"/>
+        <source>Scale </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="sketchpad.ui" line="360"/>
+        <source> x</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="sketchpad.ui" line="232"/>
+        <source>Check to draw filled objects</source>
+        <translation type="unfinished">Cocher pour dessiner des objets pleins</translation>
+    </message>
+    <message>
+        <location filename="sketchpad.ui" line="235"/>
+        <source>Fill</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="sketchpad.ui" line="261"/>
+        <source>Center the object</source>
+        <translation type="unfinished">Centrer l&apos;objet</translation>
+    </message>
+    <message>
+        <location filename="sketchpad.ui" line="264"/>
+        <source>Center</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="sketchpad.ui" line="293"/>
+        <source>Show if</source>
+        <translation type="unfinished">Montrer si</translation>
+    </message>
+    <message>
+        <location filename="sketchpad.ui" line="347"/>
+        <source>0,0</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="sketchpad.ui" line="357"/>
+        <source>Zoom factor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="sketchpad.ui" line="397"/>
+        <source>Parse a subset of HTML tags</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="sketchpad.ui" line="400"/>
+        <source>HTML</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="sketchpad.ui" line="426"/>
+        <source>Check to display the grid and enable snap-to-grid</source>
+        <translation type="unfinished">cocher pour afficher la grille et permettre le positionnement automatique sur la grille</translation>
+    </message>
+    <message>
+        <location filename="sketchpad.ui" line="429"/>
+        <source>Grid</source>
+        <translation type="unfinished">Grille</translation>
+    </message>
+    <message>
+        <location filename="sketchpad.ui" line="439"/>
+        <source>Grid size</source>
+        <translation type="unfinished">taille de la grille</translation>
+    </message>
+    <message>
+        <location filename="sketchpad.ui" line="482"/>
+        <source>Select and move elements</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>gabor_dialog</name>
     <message>
-        <location filename="gabor_dialog.ui" line="58"/>
+        <location filename="gabor_settings.ui" line="58"/>
         <source>Insert Gabor patch</source>
         <translation>Insérer le patch Gabor</translation>
     </message>
     <message>
-        <location filename="gabor_dialog.ui" line="82"/>
+        <location filename="gabor_settings.ui" line="82"/>
         <source>Orientation&lt;br /&gt;&lt;i&gt;in degrees (0 .. 360)&lt;/i&gt;</source>
         <translation>Orientation&lt;br /&gt;&lt;i&gt;en degrés (0 .. 360)&lt;/i&gt;</translation>
     </message>
     <message>
         <location filename="gabor_dialog.ui" line="89"/>
         <source>deg</source>
-        <translation>deg</translation>
+        <translation type="obsolete">deg</translation>
     </message>
     <message>
-        <location filename="gabor_dialog.ui" line="99"/>
+        <location filename="gabor_settings.ui" line="99"/>
         <source>Size&lt;br /&gt;&lt;i&gt;in pixels&lt;/i&gt;</source>
         <translation>Taille&lt;br /&gt;&lt;i&gt;en pixels&lt;/i&gt;</translation>
     </message>
     <message>
         <location filename="gabor_dialog.ui" line="160"/>
         <source>px</source>
-        <translation>px</translation>
+        <translation type="obsolete">px</translation>
     </message>
     <message>
-        <location filename="gabor_dialog.ui" line="122"/>
+        <location filename="gabor_settings.ui" line="122"/>
         <source>Envelope</source>
         <translation>Enveloppe</translation>
     </message>
     <message>
-        <location filename="gabor_dialog.ui" line="130"/>
+        <location filename="gabor_settings.ui" line="130"/>
         <source>gaussian</source>
         <translation>gaussien(ne)</translation>
     </message>
     <message>
-        <location filename="gabor_dialog.ui" line="135"/>
+        <location filename="gabor_settings.ui" line="135"/>
         <source>linear</source>
         <translation>linéaire</translation>
     </message>
     <message>
-        <location filename="gabor_dialog.ui" line="140"/>
+        <location filename="gabor_settings.ui" line="140"/>
         <source>circular (sharp edge)</source>
         <translation>circulaire()</translation>
     </message>
     <message>
         <location filename="gabor_dialog.ui" line="145"/>
         <source>rectangle (no envelope)</source>
-        <translation>rectangle (pas d&apos;enveloppe)</translation>
+        <translation type="obsolete">rectangle (pas d&apos;enveloppe)</translation>
     </message>
     <message>
-        <location filename="gabor_dialog.ui" line="153"/>
+        <location filename="gabor_settings.ui" line="153"/>
         <source>Standard deviation&lt;br /&gt;&lt;i&gt;in pixels, only applies to Gaussian envelope&lt;/i&gt;</source>
         <translation>Écart type&lt;br /&gt;&lt;i&gt;en pixels, s&apos;applique seulement à l&apos;enveloppe Gausienne&lt;/i&gt;</translation>
     </message>
     <message>
-        <location filename="gabor_dialog.ui" line="173"/>
+        <location filename="gabor_settings.ui" line="173"/>
         <source>Frequency&lt;br /&gt;&lt;i&gt;in cycles/ px&lt;/i&gt;</source>
         <translation>Fréquence&lt;br /&gt;&lt;i&gt;en cycles/ px&lt;/i&gt;</translation>
     </message>
     <message>
-        <location filename="gabor_dialog.ui" line="193"/>
+        <location filename="gabor_settings.ui" line="193"/>
         <source>Phase&lt;br /&gt;&lt;i&gt;in cycles (0 .. 1)&lt;/i&gt;</source>
         <translation>Phase&lt;br /&gt;&lt;i&gt;en cycles (0 .. 1)&lt;/i&gt;</translation>
     </message>
     <message>
-        <location filename="gabor_dialog.ui" line="210"/>
+        <location filename="gabor_settings.ui" line="210"/>
         <source>Color 1&lt;br /&gt;&lt;i&gt;e.g., &apos;white&apos; or &apos;#FFFFFF&apos;&lt;/i&gt;</source>
         <translation>couleur 1&lt;br /&gt;&lt;i&gt;par ex., &apos;blanc&apos; ou &apos;#FFFFFF&apos;&lt;/i&gt;</translation>
     </message>
     <message>
-        <location filename="gabor_dialog.ui" line="224"/>
+        <location filename="gabor_settings.ui" line="224"/>
         <source>Color 1&lt;br /&gt;&lt;i&gt;e.g., &apos;black&apos; or &apos;#000000&apos;&lt;/i&gt;</source>
         <translation>Couleur 1&lt;br /&gt;&lt;i&gt;par ex., &apos;noir&apos; ou &apos;#000000&apos;&lt;/i&gt;</translation>
     </message>
     <message>
-        <location filename="gabor_dialog.ui" line="243"/>
+        <location filename="gabor_settings.ui" line="243"/>
         <source>Background color *</source>
         <translation>Couleur du fond *</translation>
     </message>
     <message>
-        <location filename="gabor_dialog.ui" line="251"/>
+        <location filename="gabor_settings.ui" line="251"/>
         <source>Color average</source>
         <translation>Couleur moyenne</translation>
     </message>
     <message>
-        <location filename="gabor_dialog.ui" line="256"/>
+        <location filename="gabor_settings.ui" line="256"/>
         <source>Color 2</source>
         <translation>Couleur 2</translation>
     </message>
     <message>
-        <location filename="gabor_dialog.ui" line="276"/>
+        <location filename="gabor_settings.ui" line="276"/>
         <source>* Has no effect in psycho back-end</source>
         <translation>* N&apos;a pas d&apos;effet dans l&apos;arriere-plan de psycho</translation>
+    </message>
+    <message encoding="UTF-8">
+        <location filename="gabor_settings.ui" line="89"/>
+        <source> °</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="gabor_settings.ui" line="160"/>
+        <source> px</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="gabor_settings.ui" line="145"/>
+        <source>rectangular (no envelope)</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -161,122 +470,87 @@
     <message>
         <location filename="general_widget.ui" line="14"/>
         <source>Form</source>
-        <translation>Formulaire</translation>
+        <translation type="obsolete">Formulaire</translation>
     </message>
     <message>
         <location filename="general_widget.ui" line="85"/>
         <source>The display resolution (width) in pixels</source>
-        <translation>La résolution d&apos;affichage(largeur) en pixels</translation>
+        <translation type="obsolete">La résolution d&apos;affichage(largeur) en pixels</translation>
     </message>
     <message>
         <location filename="general_widget.ui" line="111"/>
         <source>px</source>
-        <translation>px</translation>
+        <translation type="obsolete">px</translation>
     </message>
     <message>
         <location filename="general_widget.ui" line="108"/>
         <source>The display resolution (height) in pixels</source>
-        <translation>La résolution d&apos;affichage(hauteur) en pixels</translation>
+        <translation type="obsolete">La résolution d&apos;affichage(hauteur) en pixels</translation>
     </message>
     <message>
         <location filename="general_widget.ui" line="56"/>
         <source>&lt;h3&gt;Back-end&lt;/h3&gt;</source>
-        <translation>&lt;h3&gt;Arrière-fond&lt;/h3&gt;</translation>
+        <translation type="obsolete">&lt;h3&gt;Arrière-fond&lt;/h3&gt;</translation>
     </message>
     <message>
         <location filename="general_widget.ui" line="63"/>
         <source>&lt;h3&gt;Resolution&lt;/h3&gt;</source>
-        <translation>&lt;h3&gt;Résolution&lt;/h3&gt;</translation>
+        <translation type="obsolete">&lt;h3&gt;Résolution&lt;/h3&gt;</translation>
     </message>
     <message>
         <location filename="general_widget.ui" line="101"/>
         <source>x</source>
-        <translation>x</translation>
+        <translation type="obsolete">x</translation>
     </message>
     <message>
         <location filename="general_widget.ui" line="127"/>
         <source>&lt;h3&gt;Colors&lt;/h3&gt;</source>
-        <translation>&lt;h3&gt;Couleurs&lt;/h3&gt;</translation>
+        <translation type="obsolete">&lt;h3&gt;Couleurs&lt;/h3&gt;</translation>
     </message>
     <message>
         <location filename="general_widget.ui" line="152"/>
         <source>Foreground</source>
-        <translation>Premier plan</translation>
+        <translation type="obsolete">Premier plan</translation>
     </message>
     <message>
         <location filename="general_widget.ui" line="159"/>
         <source>Background</source>
-        <translation>Arrière plan</translation>
+        <translation type="obsolete">Arrière plan</translation>
     </message>
     <message>
         <location filename="general_widget.ui" line="175"/>
         <source>&lt;small&gt;&lt;i&gt;Examples: &apos;white&apos;, &apos;#FFFFFF&apos;&lt;/i&gt;&lt;/small&gt;</source>
-        <translation>&lt;small&gt;&lt;i&gt;Exemples: &apos;blanc&apos;, &apos;#FFFFFF&apos;&lt;/i&gt;&lt;/small&gt;</translation>
+        <translation type="obsolete">&lt;small&gt;&lt;i&gt;Exemples: &apos;blanc&apos;, &apos;#FFFFFF&apos;&lt;/i&gt;&lt;/small&gt;</translation>
     </message>
     <message>
         <location filename="general_widget.ui" line="191"/>
         <source>&lt;h3&gt;Font&lt;/h3&gt;</source>
-        <translation>&lt;h3&gt;Police de caractères&lt;/h3&gt;</translation>
+        <translation type="obsolete">&lt;h3&gt;Police de caractères&lt;/h3&gt;</translation>
     </message>
     <message>
         <location filename="general_widget.ui" line="235"/>
         <source>&lt;h3&gt;Advanced&lt;/h3&gt;</source>
-        <translation>&lt;h3&gt;Avancé&lt;/h3&gt;</translation>
+        <translation type="obsolete">&lt;h3&gt;Avancé&lt;/h3&gt;</translation>
     </message>
     <message>
         <location filename="general_widget.ui" line="266"/>
         <source>Back-end settings</source>
-        <translation>Réglages d&apos;arrière-fond</translation>
+        <translation type="obsolete">Réglages d&apos;arrière-fond</translation>
     </message>
     <message>
         <location filename="general_widget.ui" line="276"/>
         <source>Script editor</source>
-        <translation>Éditeur de scripts</translation>
+        <translation type="obsolete">Éditeur de scripts</translation>
     </message>
     <message>
         <location filename="general_widget.ui" line="289"/>
         <source>Transparent variable management</source>
-        <translation>Gestion transparente des variables</translation>
+        <translation type="obsolete">Gestion transparente des variables</translation>
     </message>
     <message>
         <location filename="general_widget.ui" line="297"/>
         <source>&lt;h3&gt;Variables&lt;/h3&gt;</source>
         <translation type="obsolete">&lt;h3&gt;Variables&lt;/h3&gt;</translation>
-    </message>
-    <message>
-        <location filename="general_widget.ui" line="263"/>
-        <source>Advanced settings for the selected back-end</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="general_widget.ui" line="273"/>
-        <source>Edit the script for the entire experiment</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="general_widget.ui" line="286"/>
-        <source>Allows you to access experimental variables directly by name</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="general_widget.ui" line="296"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:large; font-weight:600;&quot;&gt;Miscellaneous&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="general_widget.ui" line="306"/>
-        <source>Enables support for bi-directional languages, such as Arabic and Hebrew</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="general_widget.ui" line="309"/>
-        <source>Bi-directional-text support</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="general_widget.ui" line="331"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://osdoc.cogsci.nl/back-ends/about&quot;&gt;&lt;span style=&quot;font-size:small;font-style:italic; text-decoration: underline; color:#0057ae;&quot;&gt;Why is this important?&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -498,79 +772,84 @@
 <context>
     <name>noise_patch_dialog</name>
     <message>
-        <location filename="noise_patch_dialog.ui" line="58"/>
+        <location filename="noise_settings.ui" line="58"/>
         <source>Insert noise patch</source>
         <translation>Insérer le patch de bruit blanc</translation>
     </message>
     <message>
         <location filename="noise_patch_dialog.ui" line="136"/>
         <source>px</source>
-        <translation>px</translation>
+        <translation type="obsolete">px</translation>
     </message>
     <message>
-        <location filename="noise_patch_dialog.ui" line="98"/>
+        <location filename="noise_settings.ui" line="98"/>
         <source>Envelope</source>
         <translation>Enveloppe</translation>
     </message>
     <message>
-        <location filename="noise_patch_dialog.ui" line="106"/>
+        <location filename="noise_settings.ui" line="106"/>
         <source>gaussian</source>
         <translation>Gaussienne</translation>
     </message>
     <message>
-        <location filename="noise_patch_dialog.ui" line="111"/>
+        <location filename="noise_settings.ui" line="111"/>
         <source>linear</source>
         <translation>linéaire</translation>
     </message>
     <message>
-        <location filename="noise_patch_dialog.ui" line="116"/>
+        <location filename="noise_settings.ui" line="116"/>
         <source>circular (sharp edge)</source>
         <translation>circulaire (bords nets)</translation>
     </message>
     <message>
-        <location filename="noise_patch_dialog.ui" line="121"/>
+        <location filename="noise_settings.ui" line="121"/>
         <source>rectangle (no envelope)</source>
         <translation>rectangle (pas d&apos;enveloppe)</translation>
     </message>
     <message>
-        <location filename="noise_patch_dialog.ui" line="129"/>
+        <location filename="noise_settings.ui" line="129"/>
         <source>Standard deviation&lt;br /&gt;&lt;i&gt;in pixels, only applies to Gaussian envelope&lt;/i&gt;</source>
         <translation>écart-type&lt;br /&gt;&lt;i&gt;en pixels, s&apos;applique seulement à l&apos;enveloppe Gausienne&lt;/i&gt;</translation>
     </message>
     <message>
-        <location filename="noise_patch_dialog.ui" line="149"/>
+        <location filename="noise_settings.ui" line="149"/>
         <source>Color 1&lt;br /&gt;&lt;i&gt;e.g., &apos;white&apos; or &apos;#FFFFFF&apos;&lt;/i&gt;</source>
         <translation>Couleur 1&lt;br /&gt;&lt;i&gt;par ex., &apos;blanc&apos; ou &apos;#FFFFFF&apos;&lt;/i&gt;</translation>
     </message>
     <message>
-        <location filename="noise_patch_dialog.ui" line="163"/>
+        <location filename="noise_settings.ui" line="163"/>
         <source>Color 2&lt;br /&gt;&lt;i&gt;e.g., &apos;black&apos; or &apos;#000000&apos;&lt;/i&gt;</source>
         <translation>Couleur 2&lt;br /&gt;&lt;i&gt;par ex., &apos;noir&apos; ou &apos;#000000&apos;&lt;/i&gt;</translation>
     </message>
     <message>
-        <location filename="noise_patch_dialog.ui" line="182"/>
+        <location filename="noise_settings.ui" line="182"/>
         <source>Background color *</source>
         <translation>Couleur du fond d&apos;écran *</translation>
     </message>
     <message>
-        <location filename="noise_patch_dialog.ui" line="190"/>
+        <location filename="noise_settings.ui" line="190"/>
         <source>Color average</source>
         <translation>Couleur moyenne</translation>
     </message>
     <message>
-        <location filename="noise_patch_dialog.ui" line="195"/>
+        <location filename="noise_settings.ui" line="195"/>
         <source>Color 2</source>
         <translation>Couleur 2</translation>
     </message>
     <message>
-        <location filename="noise_patch_dialog.ui" line="203"/>
+        <location filename="noise_settings.ui" line="203"/>
         <source>Size&lt;br /&gt;&lt;i&gt;in pixels&lt;/i&gt;</source>
         <translation>Taille&lt;br /&gt;&lt;i&gt;en pixels&lt;/i&gt;</translation>
     </message>
     <message>
-        <location filename="noise_patch_dialog.ui" line="222"/>
+        <location filename="noise_settings.ui" line="222"/>
         <source>* Has no effect in psycho back-end</source>
         <translation>* N&apos;as pas d&apos;effet dans l&apos;arrière-fond de psycho</translation>
+    </message>
+    <message>
+        <location filename="noise_settings.ui" line="136"/>
+        <source> px</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -584,439 +863,449 @@
 <context>
     <name>opensesame_mainwindow</name>
     <message>
-        <location filename="opensesame.ui" line="14"/>
+        <location filename="main_window.ui" line="14"/>
         <source>OpenSesame</source>
         <translation>OpenSesame</translation>
     </message>
     <message>
-        <location filename="opensesame.ui" line="60"/>
+        <location filename="main_window.ui" line="60"/>
         <source>File</source>
         <translation>Fichier</translation>
     </message>
     <message>
-        <location filename="opensesame.ui" line="64"/>
+        <location filename="main_window.ui" line="64"/>
         <source>Recent files</source>
         <translation>Fichiers récents</translation>
     </message>
     <message>
-        <location filename="opensesame.ui" line="83"/>
+        <location filename="main_window.ui" line="83"/>
         <source>Run</source>
         <translation>Exécuter</translation>
     </message>
     <message>
         <location filename="opensesame.ui" line="93"/>
         <source>Items</source>
-        <translation>Objets</translation>
+        <translation type="obsolete">Objets</translation>
     </message>
     <message>
-        <location filename="opensesame.ui" line="110"/>
+        <location filename="main_window.ui" line="93"/>
         <source>View</source>
         <translation>Vue</translation>
     </message>
     <message>
-        <location filename="opensesame.ui" line="132"/>
+        <location filename="main_window.ui" line="117"/>
         <source>Tools</source>
         <translation>Outils</translation>
     </message>
     <message>
-        <location filename="opensesame.ui" line="158"/>
+        <location filename="main_window.ui" line="142"/>
         <source>Overview</source>
         <translation>Vue d&apos;ensemble</translation>
     </message>
     <message>
-        <location filename="opensesame.ui" line="184"/>
+        <location filename="main_window.ui" line="159"/>
         <source>Name</source>
         <translation>Nom</translation>
     </message>
     <message>
-        <location filename="opensesame.ui" line="239"/>
+        <location filename="main_window.ui" line="172"/>
         <source>Variable inspector</source>
         <translation>Inspecteur de variables</translation>
     </message>
     <message>
         <location filename="opensesame.ui" line="265"/>
         <source>Enter a filter</source>
-        <translation>Entrer un filtre</translation>
+        <translation type="obsolete">Entrer un filtre</translation>
     </message>
     <message>
         <location filename="opensesame.ui" line="272"/>
         <source>Clear filter</source>
-        <translation>Effacer le filtre</translation>
+        <translation type="obsolete">Effacer le filtre</translation>
     </message>
     <message>
-        <location filename="opensesame.ui" line="472"/>
+        <location filename="main_window.ui" line="283"/>
         <source>Help</source>
         <translation>Aide</translation>
     </message>
     <message>
         <location filename="opensesame.ui" line="352"/>
         <source>Variable</source>
-        <translation>Variable</translation>
+        <translation type="obsolete">Variable</translation>
     </message>
     <message>
         <location filename="opensesame.ui" line="357"/>
         <source>Value</source>
-        <translation>Valeur</translation>
+        <translation type="obsolete">Valeur</translation>
     </message>
     <message>
         <location filename="opensesame.ui" line="362"/>
         <source>In item</source>
-        <translation>Dans l&apos;objet</translation>
+        <translation type="obsolete">Dans l&apos;objet</translation>
     </message>
     <message>
-        <location filename="opensesame.ui" line="378"/>
+        <location filename="main_window.ui" line="189"/>
         <source>File pool</source>
         <translation>Groupe de fichiers</translation>
     </message>
     <message>
-        <location filename="opensesame.ui" line="434"/>
+        <location filename="main_window.ui" line="245"/>
         <source>Debug window</source>
         <translation>Fenêtre de débogage</translation>
     </message>
     <message>
-        <location filename="opensesame.ui" line="495"/>
+        <location filename="main_window.ui" line="306"/>
         <source>Clear debug window</source>
         <translation>Effacer la fenêtre de débogage</translation>
     </message>
     <message>
-        <location filename="opensesame.ui" line="536"/>
+        <location filename="main_window.ui" line="347"/>
         <source>Main toolbar</source>
         <translation>Bar d&apos;outils principale</translation>
     </message>
     <message>
-        <location filename="opensesame.ui" line="576"/>
+        <location filename="main_window.ui" line="387"/>
         <source>Toolbar items</source>
         <translation>Éléments de la bare d&apos;outils</translation>
     </message>
     <message>
-        <location filename="opensesame.ui" line="591"/>
+        <location filename="main_window.ui" line="402"/>
         <source>Open</source>
         <translation>Ouvrir</translation>
     </message>
     <message>
-        <location filename="opensesame.ui" line="594"/>
+        <location filename="main_window.ui" line="405"/>
         <source>Open (Ctrl+0)</source>
         <translation>Ouvrir (Ctrl+0)</translation>
     </message>
     <message>
-        <location filename="opensesame.ui" line="597"/>
+        <location filename="main_window.ui" line="408"/>
         <source>Ctrl+O</source>
         <translation>Ctrl+O</translation>
     </message>
     <message>
-        <location filename="opensesame.ui" line="606"/>
+        <location filename="main_window.ui" line="417"/>
         <source>Save</source>
         <translation>Enregistrer</translation>
     </message>
     <message>
-        <location filename="opensesame.ui" line="609"/>
+        <location filename="main_window.ui" line="420"/>
         <source>Save (Control+S)</source>
         <translation>Enregistrer (Controle+S)</translation>
     </message>
     <message>
-        <location filename="opensesame.ui" line="612"/>
+        <location filename="main_window.ui" line="423"/>
         <source>Ctrl+S</source>
         <translation>Ctrl+S</translation>
     </message>
     <message>
-        <location filename="opensesame.ui" line="621"/>
+        <location filename="main_window.ui" line="432"/>
         <source>Save as</source>
         <translation>Enregistrer sous</translation>
     </message>
     <message>
-        <location filename="opensesame.ui" line="624"/>
+        <location filename="main_window.ui" line="435"/>
         <source>Save as (Control+Shift+S)</source>
         <translation>Enregistrer sous (Controle+Shift+S)</translation>
     </message>
     <message>
-        <location filename="opensesame.ui" line="627"/>
+        <location filename="main_window.ui" line="438"/>
         <source>Ctrl+Shift+S</source>
         <translation>Ctrl+Shift+S</translation>
     </message>
     <message>
-        <location filename="opensesame.ui" line="636"/>
+        <location filename="main_window.ui" line="447"/>
         <source>Quit</source>
         <translation>Quitter</translation>
     </message>
     <message>
-        <location filename="opensesame.ui" line="639"/>
+        <location filename="main_window.ui" line="450"/>
         <source>Quit (Alt+F4)</source>
         <translation>Quitter(Alt+F4)</translation>
     </message>
     <message>
-        <location filename="opensesame.ui" line="644"/>
+        <location filename="main_window.ui" line="455"/>
         <source>Run fullscreen</source>
         <translation>Exécuter en plein écran</translation>
     </message>
     <message>
-        <location filename="opensesame.ui" line="647"/>
+        <location filename="main_window.ui" line="458"/>
         <source>Run fullscreen (Control+R)</source>
         <translation>Exécuter en plein écran (Controle+R)</translation>
     </message>
     <message>
-        <location filename="opensesame.ui" line="650"/>
+        <location filename="main_window.ui" line="461"/>
         <source>Ctrl+R</source>
         <translation>Ctrl+R</translation>
     </message>
     <message>
-        <location filename="opensesame.ui" line="659"/>
+        <location filename="main_window.ui" line="470"/>
         <source>New</source>
         <translation>Nouveau</translation>
     </message>
     <message>
-        <location filename="opensesame.ui" line="662"/>
+        <location filename="main_window.ui" line="473"/>
         <source>New (Control+N)</source>
         <translation>Nouveau (Controle+N)</translation>
     </message>
     <message>
-        <location filename="opensesame.ui" line="665"/>
+        <location filename="main_window.ui" line="476"/>
         <source>Ctrl+N</source>
         <translation>Ctrl+N</translation>
     </message>
     <message>
-        <location filename="opensesame.ui" line="674"/>
+        <location filename="main_window.ui" line="485"/>
         <source>Add sequence</source>
         <translation>Ajouter une séquence</translation>
     </message>
     <message>
-        <location filename="opensesame.ui" line="683"/>
+        <location filename="main_window.ui" line="494"/>
         <source>Add sketchpad</source>
         <translation>Ajouter un carnet à dessin</translation>
     </message>
     <message>
-        <location filename="opensesame.ui" line="692"/>
+        <location filename="main_window.ui" line="503"/>
         <source>Add keyboard response</source>
         <translation>Ajouter une réponse du clavier</translation>
     </message>
     <message>
-        <location filename="opensesame.ui" line="701"/>
+        <location filename="main_window.ui" line="512"/>
         <source>Add logger</source>
         <translation>Ajouter un logger</translation>
     </message>
     <message>
-        <location filename="opensesame.ui" line="710"/>
+        <location filename="main_window.ui" line="521"/>
         <source>Add loop</source>
         <translation>Ajouter une boucle</translation>
     </message>
     <message>
-        <location filename="opensesame.ui" line="719"/>
+        <location filename="main_window.ui" line="530"/>
         <source>Add feedback</source>
         <translation>Ajouter un feedback</translation>
     </message>
     <message>
-        <location filename="opensesame.ui" line="728"/>
+        <location filename="main_window.ui" line="539"/>
         <source>Add inline script</source>
         <translation>Ajouter un module de script</translation>
     </message>
     <message>
-        <location filename="opensesame.ui" line="737"/>
+        <location filename="main_window.ui" line="548"/>
         <source>Close all tabs</source>
         <translation>Fermer tous les onglets</translation>
     </message>
     <message>
-        <location filename="opensesame.ui" line="746"/>
+        <location filename="main_window.ui" line="557"/>
         <source>Close other tabs</source>
         <translation>Fermer les autres onglets</translation>
     </message>
     <message>
-        <location filename="opensesame.ui" line="749"/>
+        <location filename="main_window.ui" line="560"/>
         <source>Close other tabs (Control+T)</source>
         <translation>Fermer les autres onglets (Controle+T)</translation>
     </message>
     <message>
-        <location filename="opensesame.ui" line="752"/>
+        <location filename="main_window.ui" line="563"/>
         <source>Ctrl+T</source>
         <translation>Ctrl+T</translation>
     </message>
     <message>
-        <location filename="opensesame.ui" line="770"/>
+        <location filename="main_window.ui" line="581"/>
         <source>About</source>
         <translation>À propros</translation>
     </message>
     <message>
-        <location filename="opensesame.ui" line="779"/>
+        <location filename="main_window.ui" line="590"/>
         <source>Add mouse response</source>
         <translation>Ajouter une réponse de souris</translation>
     </message>
     <message>
-        <location filename="opensesame.ui" line="784"/>
+        <location filename="main_window.ui" line="595"/>
         <source>Run in window</source>
         <translation>Exécuter en fenêtre</translation>
     </message>
     <message>
-        <location filename="opensesame.ui" line="787"/>
+        <location filename="main_window.ui" line="598"/>
         <source>Run in window (Control+W)</source>
         <translation>Exécuter en fenêtre (Controle+W)</translation>
     </message>
     <message>
-        <location filename="opensesame.ui" line="790"/>
+        <location filename="main_window.ui" line="601"/>
         <source>Ctrl+W</source>
         <translation>Ctrl+W</translation>
     </message>
     <message>
-        <location filename="opensesame.ui" line="799"/>
+        <location filename="main_window.ui" line="610"/>
         <source>Check for updates</source>
         <translation>Vérifier les mises à jour</translation>
     </message>
     <message>
-        <location filename="opensesame.ui" line="811"/>
+        <location filename="main_window.ui" line="622"/>
         <source>Show variable inspector</source>
         <translation>Montrer l&apos;inspecteur de variables</translation>
     </message>
     <message>
-        <location filename="opensesame.ui" line="814"/>
+        <location filename="main_window.ui" line="625"/>
         <source>Show variable inspector (Control+I)</source>
         <translation>Montrer l&apos;inspecteur de variables (Controle+I)</translation>
     </message>
     <message>
-        <location filename="opensesame.ui" line="817"/>
+        <location filename="main_window.ui" line="628"/>
         <source>Ctrl+I</source>
         <translation>Ctrl+I</translation>
     </message>
     <message>
-        <location filename="opensesame.ui" line="826"/>
+        <location filename="main_window.ui" line="637"/>
         <source>Add sampler</source>
         <translation>Ajouter un lecteur d&apos;échantillons</translation>
     </message>
     <message>
-        <location filename="opensesame.ui" line="829"/>
+        <location filename="main_window.ui" line="640"/>
         <source>Add sound sampler</source>
         <translation>Ajouter un lecteur d&apos;échantillons</translation>
     </message>
     <message>
-        <location filename="opensesame.ui" line="838"/>
+        <location filename="main_window.ui" line="649"/>
         <source>Add synth</source>
         <translation>Ajouter un synthétiseur</translation>
     </message>
     <message>
-        <location filename="opensesame.ui" line="841"/>
+        <location filename="main_window.ui" line="652"/>
         <source>Add sound synthesizer</source>
         <translation>Ajouter un synthétiseur de sons</translation>
     </message>
     <message>
-        <location filename="opensesame.ui" line="853"/>
+        <location filename="main_window.ui" line="664"/>
         <source>Show file pool</source>
         <translation>Montrer le groupe de fichiers</translation>
     </message>
     <message>
-        <location filename="opensesame.ui" line="856"/>
+        <location filename="main_window.ui" line="667"/>
         <source>Ctrl+P</source>
         <translation>Ctrl+P</translation>
     </message>
     <message>
-        <location filename="opensesame.ui" line="868"/>
+        <location filename="main_window.ui" line="679"/>
         <source>Show debug window</source>
         <translation>Montrer la fenêtre de débogage</translation>
     </message>
     <message>
-        <location filename="opensesame.ui" line="871"/>
+        <location filename="main_window.ui" line="682"/>
         <source>Show debug window (standard output) and a Python interpreter (Control+D)</source>
         <translation>Montrer la fenêtre de débogage (sortie standard) et un interpreteur python (Controle+D)</translation>
     </message>
     <message>
-        <location filename="opensesame.ui" line="874"/>
+        <location filename="main_window.ui" line="685"/>
         <source>Ctrl+D</source>
         <translation>Ctrl+D</translation>
     </message>
     <message>
-        <location filename="opensesame.ui" line="882"/>
+        <location filename="main_window.ui" line="693"/>
         <source>Enable auto response</source>
         <translation>Autoriser la réponse automatique</translation>
     </message>
     <message>
-        <location filename="opensesame.ui" line="890"/>
+        <location filename="main_window.ui" line="701"/>
         <source>Plugins</source>
         <translation>Plugins</translation>
     </message>
     <message>
-        <location filename="opensesame.ui" line="899"/>
+        <location filename="main_window.ui" line="710"/>
         <source>Random tip</source>
         <translation>Indice aléatoire</translation>
     </message>
     <message>
-        <location filename="opensesame.ui" line="902"/>
+        <location filename="main_window.ui" line="713"/>
         <source>Show a random tip</source>
         <translation>Montrer un indice aléatoire</translation>
     </message>
     <message>
-        <location filename="opensesame.ui" line="911"/>
+        <location filename="main_window.ui" line="722"/>
         <source>Open backup folder</source>
         <translation>Ouvrir de dossier de copie de sauvegarde</translation>
     </message>
     <message>
-        <location filename="opensesame.ui" line="920"/>
+        <location filename="main_window.ui" line="731"/>
         <source>Submit a bug</source>
         <translation>Soumettre un bug</translation>
     </message>
     <message>
-        <location filename="opensesame.ui" line="929"/>
+        <location filename="main_window.ui" line="740"/>
         <source>Contribute</source>
         <translation>Contribuer</translation>
     </message>
     <message>
-        <location filename="opensesame.ui" line="938"/>
+        <location filename="main_window.ui" line="749"/>
         <source>Preferences</source>
         <translation>Préférences</translation>
     </message>
     <message>
-        <location filename="opensesame.ui" line="943"/>
+        <location filename="main_window.ui" line="754"/>
         <source>Dummy</source>
         <translation>Pour les nuls</translation>
     </message>
     <message>
-        <location filename="opensesame.ui" line="951"/>
+        <location filename="main_window.ui" line="762"/>
         <source>Show overview area</source>
         <translation>Montrer la vue générale</translation>
     </message>
     <message>
-        <location filename="opensesame.ui" line="954"/>
+        <location filename="main_window.ui" line="765"/>
         <source>Ctrl+Shift+O</source>
         <translation>Ctrl+Majuscule+O</translation>
     </message>
     <message>
-        <location filename="opensesame.ui" line="966"/>
+        <location filename="main_window.ui" line="777"/>
         <source>One tab mode</source>
         <translation>Mode un-onglet</translation>
     </message>
     <message>
-        <location filename="opensesame.ui" line="969"/>
+        <location filename="main_window.ui" line="780"/>
         <source>Enable one tab mode</source>
         <translation>Autoriser le mode un-onglet</translation>
     </message>
     <message>
-        <location filename="opensesame.ui" line="977"/>
+        <location filename="main_window.ui" line="788"/>
         <source>Compact toolbar</source>
         <translation>Barre d&apos;outils compacte</translation>
     </message>
     <message>
-        <location filename="opensesame.ui" line="761"/>
+        <location filename="main_window.ui" line="572"/>
         <source>Offline help</source>
         <translation>Aide hors-ligne</translation>
     </message>
     <message>
-        <location filename="opensesame.ui" line="982"/>
+        <location filename="main_window.ui" line="793"/>
         <source>Online help</source>
         <translation>Aide en ligne</translation>
     </message>
     <message>
-        <location filename="opensesame.ui" line="987"/>
+        <location filename="main_window.ui" line="798"/>
         <source>Online forum</source>
         <translation>Forum en-ligne</translation>
     </message>
     <message>
-        <location filename="opensesame.ui" line="992"/>
+        <location filename="main_window.ui" line="803"/>
         <source>Quick run</source>
         <translation>Exécution rapide</translation>
     </message>
     <message>
-        <location filename="opensesame.ui" line="995"/>
+        <location filename="main_window.ui" line="806"/>
         <source>Give your experiment a quick test run</source>
         <translation>Exécuter un test rapide de votre expérience</translation>
     </message>
     <message>
-        <location filename="opensesame.ui" line="998"/>
+        <location filename="main_window.ui" line="809"/>
         <source>Ctrl+Shift+W</source>
         <translation>Ctrl+Shift+W</translation>
+    </message>
+    <message>
+        <location filename="main_window.ui" line="819"/>
+        <source>Quick switcher</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="main_window.ui" line="822"/>
+        <source>Meta+O</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1175,25 +1464,25 @@
     <message>
         <location filename="preferences_widget.ui" line="56"/>
         <source>Offer to rename new items immediately</source>
-        <translation>Permettre de renommer des nouveaux éléments immédiatement</translation>
+        <translation type="obsolete">Permettre de renommer des nouveaux éléments immédiatement</translation>
     </message>
     <message>
-        <location filename="preferences_widget.ui" line="63"/>
+        <location filename="preferences_widget.ui" line="56"/>
         <source>Enable auto-response</source>
         <translation>Autoriser la réponse automatique</translation>
     </message>
     <message>
-        <location filename="preferences_widget.ui" line="135"/>
+        <location filename="preferences_widget.ui" line="128"/>
         <source>Show text in toolbar</source>
         <translation>Montrer le texte dans la barre d&apos;outils</translation>
     </message>
     <message>
-        <location filename="preferences_widget.ui" line="128"/>
+        <location filename="preferences_widget.ui" line="121"/>
         <source>Small icons in toolbar</source>
         <translation>Petites icones dans la barre d&apos;outils</translation>
     </message>
     <message>
-        <location filename="preferences_widget.ui" line="79"/>
+        <location filename="preferences_widget.ui" line="72"/>
         <source>Appearance</source>
         <translation>Apparence</translation>
     </message>
@@ -1268,57 +1557,57 @@
         <translation type="obsolete">pt</translation>
     </message>
     <message>
-        <location filename="preferences_widget.ui" line="151"/>
+        <location filename="preferences_widget.ui" line="144"/>
         <source>Backups</source>
         <translation>Sauvegardes</translation>
     </message>
     <message>
-        <location filename="preferences_widget.ui" line="175"/>
+        <location filename="preferences_widget.ui" line="168"/>
         <source>Automatically create backups</source>
         <translation>Faire des sauvegardes automatiques</translation>
     </message>
     <message>
-        <location filename="preferences_widget.ui" line="182"/>
+        <location filename="preferences_widget.ui" line="175"/>
         <source>Auto-save interval:</source>
         <translation>Intervalle des sauvegardes automatiques:</translation>
     </message>
     <message>
-        <location filename="preferences_widget.ui" line="189"/>
+        <location filename="preferences_widget.ui" line="182"/>
         <source> minute(s)</source>
         <translation>minute(s)</translation>
     </message>
     <message>
-        <location filename="preferences_widget.ui" line="192"/>
+        <location filename="preferences_widget.ui" line="185"/>
         <source>every </source>
         <translation>chaque </translation>
     </message>
     <message>
-        <location filename="preferences_widget.ui" line="228"/>
+        <location filename="preferences_widget.ui" line="221"/>
         <source>Open backup folder</source>
         <translation>Ouvrir le fichier de sauvegarde</translation>
     </message>
     <message>
-        <location filename="preferences_widget.ui" line="208"/>
+        <location filename="preferences_widget.ui" line="201"/>
         <source>Clean backups after:</source>
         <translation>Écraser les sauvegardes après:</translation>
     </message>
     <message>
-        <location filename="preferences_widget.ui" line="215"/>
+        <location filename="preferences_widget.ui" line="208"/>
         <source> day(s)</source>
         <translation>jour(s)</translation>
     </message>
     <message>
-        <location filename="preferences_widget.ui" line="248"/>
+        <location filename="preferences_widget.ui" line="241"/>
         <source>Updates</source>
         <translation>Mises à jour</translation>
     </message>
     <message>
-        <location filename="preferences_widget.ui" line="263"/>
+        <location filename="preferences_widget.ui" line="256"/>
         <source>Check for updates on start-up</source>
         <translation>Vérifier si des mises à jours sont disponibles au démarrage</translation>
     </message>
     <message>
-        <location filename="preferences_widget.ui" line="270"/>
+        <location filename="preferences_widget.ui" line="263"/>
         <source>Check for updates now</source>
         <translation>Vérifier les mises à jour maintenant</translation>
     </message>
@@ -1343,32 +1632,32 @@
         <translation type="obsolete">Exécuter la commande de façon personnalisée:</translation>
     </message>
     <message>
-        <location filename="preferences_widget.ui" line="346"/>
+        <location filename="preferences_widget.ui" line="339"/>
         <source>Plug-ins</source>
         <translation>Plug-ins</translation>
     </message>
     <message>
-        <location filename="preferences_widget.ui" line="364"/>
+        <location filename="preferences_widget.ui" line="357"/>
         <source>Plug-in folders:</source>
         <translation>Dossier des plug-ins:</translation>
     </message>
     <message>
-        <location filename="preferences_widget.ui" line="384"/>
+        <location filename="preferences_widget.ui" line="377"/>
         <source>Installed plug-ins (requires restart):</source>
         <translation>Plug-ins installés (nécessite un redémarrage):</translation>
     </message>
     <message>
-        <location filename="preferences_widget.ui" line="108"/>
+        <location filename="preferences_widget.ui" line="101"/>
         <source>Interface style</source>
         <translation>Style de l&apos;interface</translation>
     </message>
     <message>
-        <location filename="preferences_widget.ui" line="118"/>
+        <location filename="preferences_widget.ui" line="111"/>
         <source>icon theme</source>
         <translation>thème d&apos;icone</translation>
     </message>
     <message>
-        <location filename="preferences_widget.ui" line="97"/>
+        <location filename="preferences_widget.ui" line="90"/>
         <source>&lt;small&gt;&lt;i&gt;Changes take effect the next time you start OpenSesame&lt;/i&gt;&lt;/small&gt;
 </source>
         <translation>&lt;small&gt;&lt;i&gt;Les modifications prendront effet lors du prochain démarrage d&apos;OpenSesame&lt;/i&gt;&lt;/small</translation>
@@ -1379,29 +1668,42 @@
         <translation type="obsolete">&lt;small&gt;&lt;i&gt;if vous faites l&apos;expérience de problèmes de stabilité, vous pouvez autoriser l&apos;option &apos;Exécuter les expériences dans un processus séparé&apos;. Cela signifie  essentiellement que &apos;opensesamerun[.exe]&apos; est utilisé pour exécuter votre expérience.&lt;/i&gt;&lt;/small&gt;</translation>
     </message>
     <message>
-        <location filename="preferences_widget.ui" line="290"/>
+        <location filename="preferences_widget.ui" line="283"/>
         <source>Runner</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="preferences_widget.ui" line="308"/>
+        <location filename="preferences_widget.ui" line="301"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:8pt; font-style:italic;&quot;&gt;The &apos;runner&apos; determines how your OpenSesame experiment is executed. For more information, please visit &lt;/span&gt;&lt;a href=&quot;http://osdoc.cogsci.nl/miscellaneous/runners&quot;&gt;&lt;span style=&quot; font-size:8pt; font-style:italic; text-decoration: underline; color:#0057ae;&quot;&gt;http://osdoc.cogsci.nl/miscellaneous/runners&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:8pt; font-style:italic;&quot;&gt;.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="preferences_widget.ui" line="319"/>
+        <location filename="preferences_widget.ui" line="312"/>
         <source>Run experiment in the same process (inprocess)</source>
         <translation type="unfinished">Exécuter l&apos;expérience dans le même processus (inprocess)</translation>
     </message>
     <message>
-        <location filename="preferences_widget.ui" line="324"/>
+        <location filename="preferences_widget.ui" line="317"/>
         <source>Run experiment in a separate process (multiprocess)</source>
         <translation type="unfinished">Exécuter l&apos;expérience dans un processus séparé (multiprocess)</translation>
     </message>
     <message>
-        <location filename="preferences_widget.ui" line="329"/>
+        <location filename="preferences_widget.ui" line="322"/>
         <source>Run experiment with opensesamerun (external)</source>
         <translation type="unfinished">Exécuter l&apos;expérience avec opensesamerun (external)</translation>
+    </message>
+</context>
+<context>
+    <name>quick_switcher</name>
+    <message>
+        <location filename="quick_switcher.ui" line="17"/>
+        <source>Quick open item</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="quick_switcher.ui" line="34"/>
+        <source>Search by item name or type</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1409,67 +1711,67 @@
     <message>
         <location filename="replace_dialog.ui" line="14"/>
         <source>Search/ Replace</source>
-        <translation>Rechercher/ Remplacer</translation>
+        <translation type="obsolete">Rechercher/ Remplacer</translation>
     </message>
     <message>
         <location filename="replace_dialog.ui" line="26"/>
         <source>Search for</source>
-        <translation>Rechercher</translation>
+        <translation type="obsolete">Rechercher</translation>
     </message>
     <message>
         <location filename="replace_dialog.ui" line="33"/>
         <source>Replace with</source>
-        <translation>Remplacer par</translation>
+        <translation type="obsolete">Remplacer par</translation>
     </message>
     <message>
         <location filename="replace_dialog.ui" line="40"/>
         <source>Search term</source>
-        <translation>Terme à rechercher</translation>
+        <translation type="obsolete">Terme à rechercher</translation>
     </message>
     <message>
         <location filename="replace_dialog.ui" line="47"/>
         <source>Replacement term</source>
-        <translation>terme de remplacement</translation>
+        <translation type="obsolete">terme de remplacement</translation>
     </message>
     <message>
         <location filename="replace_dialog.ui" line="63"/>
         <source>Search and select a single occurence</source>
-        <translation>Rechercher et selectionner un seul événement</translation>
+        <translation type="obsolete">Rechercher et selectionner un seul événement</translation>
     </message>
     <message>
         <location filename="replace_dialog.ui" line="66"/>
         <source>Search</source>
-        <translation>Rechercher</translation>
+        <translation type="obsolete">Rechercher</translation>
     </message>
     <message>
         <location filename="replace_dialog.ui" line="77"/>
         <source>Replace the current selection</source>
-        <translation>Remplacer la sélection actuelle</translation>
+        <translation type="obsolete">Remplacer la sélection actuelle</translation>
     </message>
     <message>
         <location filename="replace_dialog.ui" line="80"/>
         <source>Replace</source>
-        <translation>Remplacer</translation>
+        <translation type="obsolete">Remplacer</translation>
     </message>
     <message>
         <location filename="replace_dialog.ui" line="91"/>
         <source>Replace all occurences</source>
-        <translation>Remplacer toutes les apparitions</translation>
+        <translation type="obsolete">Remplacer toutes les apparitions</translation>
     </message>
     <message>
         <location filename="replace_dialog.ui" line="94"/>
         <source>Replace all</source>
-        <translation>Tout remplacer</translation>
+        <translation type="obsolete">Tout remplacer</translation>
     </message>
     <message>
         <location filename="replace_dialog.ui" line="105"/>
         <source>Close this dialog</source>
-        <translation>Fermer cette fenêtre de dialogue</translation>
+        <translation type="obsolete">Fermer cette fenêtre de dialogue</translation>
     </message>
     <message>
         <location filename="replace_dialog.ui" line="108"/>
         <source>Close</source>
-        <translation>Fermer</translation>
+        <translation type="obsolete">Fermer</translation>
     </message>
 </context>
 <context>
@@ -1512,90 +1814,100 @@
     <message>
         <location filename="sampler_widget.ui" line="212"/>
         <source>%</source>
-        <translation>%</translation>
+        <translation type="obsolete">%</translation>
     </message>
     <message>
-        <location filename="sampler_widget.ui" line="135"/>
+        <location filename="sampler_widget.ui" line="138"/>
         <source>Pan</source>
         <translation>Spatialisation</translation>
     </message>
     <message>
-        <location filename="sampler_widget.ui" line="145"/>
+        <location filename="sampler_widget.ui" line="148"/>
         <source>Pitch</source>
         <translation>Intensité</translation>
     </message>
     <message>
-        <location filename="sampler_widget.ui" line="193"/>
+        <location filename="sampler_widget.ui" line="196"/>
         <source>Set the panning (left-right) of the sound</source>
         <translation>Régler la spatialisation (gauche-droite) du son</translation>
     </message>
     <message>
-        <location filename="sampler_widget.ui" line="209"/>
+        <location filename="sampler_widget.ui" line="177"/>
         <source>Set the relative pitch of the sound (100% = original)</source>
         <translation>régler l&apos;intensité relative du son (100% = original)</translation>
     </message>
     <message>
-        <location filename="sampler_widget.ui" line="228"/>
+        <location filename="sampler_widget.ui" line="234"/>
         <source>Stop after</source>
         <translation>Arrêter après</translation>
     </message>
     <message>
-        <location filename="sampler_widget.ui" line="235"/>
+        <location filename="sampler_widget.ui" line="241"/>
         <source>Force playback to stop after a specified duration. 0ms corresponds to a full playback.</source>
         <translation>Forcer l&apos;arrêt de la lecture après une durée déterminée. 0ms correspond à lecture complète.</translation>
     </message>
     <message>
         <location filename="sampler_widget.ui" line="251"/>
         <source>ms</source>
-        <translation>ms</translation>
+        <translation type="obsolete">ms</translation>
     </message>
     <message>
-        <location filename="sampler_widget.ui" line="248"/>
+        <location filename="sampler_widget.ui" line="254"/>
         <source>The fade-in time of the sound.</source>
         <translation>Le temps de l&apos;apparition en fondu du son.</translation>
     </message>
     <message>
-        <location filename="sampler_widget.ui" line="261"/>
+        <location filename="sampler_widget.ui" line="267"/>
         <source>Set the duration of the sampler item. Expecting a duration in ms, &apos;sound&apos; (to wait until the sound is finished playing), &apos;keypress&apos;, &apos;mouseclick&apos;, or a variable (e.g., &apos;[sampler_dur]&apos;).</source>
         <translation>Régler la durée de l&apos;échantillonnage. Il faut entrer une durée en ms, &apos;son&apos; (à attendre jusqu&apos;à ce que le son finisse d&apos;être lu), &apos;touche du clavier&apos;, &apos;clique de souris&apos;, ou une variable (par ex.,&apos;[sampler_dur]&apos;).</translation>
     </message>
     <message>
-        <location filename="sampler_widget.ui" line="264"/>
+        <location filename="sampler_widget.ui" line="270"/>
         <source>sound</source>
         <translation>son</translation>
     </message>
     <message>
-        <location filename="sampler_widget.ui" line="271"/>
+        <location filename="sampler_widget.ui" line="277"/>
         <source>Fade in</source>
         <translation>Fondu</translation>
     </message>
     <message>
-        <location filename="sampler_widget.ui" line="278"/>
+        <location filename="sampler_widget.ui" line="284"/>
         <source>Duration</source>
         <translation>Durée</translation>
     </message>
     <message>
-        <location filename="sampler_widget.ui" line="318"/>
+        <location filename="sampler_widget.ui" line="324"/>
         <source>Sampler controls</source>
         <translation>boutons de contrôle de l&apos;échantillonneur</translation>
+    </message>
+    <message>
+        <location filename="sampler_widget.ui" line="212"/>
+        <source>Set the relative pitch of the sound (1 = original)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="sampler_widget.ui" line="257"/>
+        <source> ms</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>script</name>
     <message>
-        <location filename="translatables.py" line="99"/>
+        <location filename="translatables.py" line="124"/>
         <source>Edit script</source>
         <translation>Éditer le script</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="100"/>
+        <location filename="translatables.py" line="92"/>
         <source>Tell me more about the %s item</source>
         <translation>Dites m&apos;en plus sur l&apos;élément %s </translation>
     </message>
     <message>
         <location filename="translatables.py" line="101"/>
         <source>%s (Edit the script to fix this)</source>
-        <translation>%s (Éditer le script pour le réparer )</translation>
+        <translation type="obsolete">%s (Éditer le script pour le réparer )</translation>
     </message>
     <message>
         <location filename="translatables.py" line="118"/>
@@ -1630,87 +1942,87 @@
     <message>
         <location filename="translatables.py" line="103"/>
         <source>Editing script for &lt;b&gt;%s&lt;/b&gt; - %s</source>
-        <translation>Édition du script pour &lt;b&gt;%s&lt;/b&gt; - %s</translation>
+        <translation type="obsolete">Édition du script pour &lt;b&gt;%s&lt;/b&gt; - %s</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="104"/>
+        <location filename="translatables.py" line="85"/>
         <source>Type: %s
 Description: %s</source>
         <translation>Type: %s
 Description: %s</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="106"/>
+        <location filename="translatables.py" line="95"/>
         <source>Failed to set control &apos;%s&apos;: %s</source>
         <translation>Le réglage de la commande &apos;%s&apos;: %s a échouée</translation>
     </message>
     <message>
         <location filename="translatables.py" line="109"/>
         <source>Invalid or missing value for variable &apos;%s&apos; (edit script to fix this)</source>
-        <translation>Valeur invalide ou manquante pour la variable &apos;&apos;%s&apos; (éditer le script pour réparer cela)</translation>
+        <translation type="obsolete">Valeur invalide ou manquante pour la variable &apos;&apos;%s&apos; (éditer le script pour réparer cela)</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="117"/>
+        <location filename="translatables.py" line="105"/>
         <source>New variable</source>
         <translation>Nouvelle variable</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="113"/>
+        <location filename="translatables.py" line="101"/>
         <source>Enter a variable name, optionally followed by a default value (i.e., &quot;varname defaultvalue&quot;)</source>
         <translation>Entrer un nom de variable, optionnellement suivie par une valeur par défaut (par ex., &quot;nomvariable valeurpardefaut&quot;)</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="120"/>
+        <location filename="translatables.py" line="108"/>
         <source>A variable with the name &apos;%s&apos; already exists</source>
         <translation>Une variable du nom de &apos;%s&apos; existe déjà</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="115"/>
+        <location filename="translatables.py" line="103"/>
         <source>Rename variable</source>
         <translation>Renommer la variable</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="116"/>
+        <location filename="translatables.py" line="104"/>
         <source>Which variable do you want to rename?</source>
         <translation>Quelle variable voulez-vous renommer?</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="118"/>
+        <location filename="translatables.py" line="106"/>
         <source>Enter a new variable name</source>
         <translation>Entrer un nouveau nom de variable</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="119"/>
+        <location filename="translatables.py" line="107"/>
         <source>Please use only letters, numbers and underscores</source>
         <translation>Veuillez n&apos; utilisez que les lettres , des nombres et des traits bas</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="121"/>
+        <location filename="translatables.py" line="109"/>
         <source>Remove variable</source>
         <translation>Enlever la variable</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="122"/>
+        <location filename="translatables.py" line="110"/>
         <source>Which variable do you want to remove?</source>
         <translation>Quelle variable voulez-vous enlever?</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="123"/>
+        <location filename="translatables.py" line="111"/>
         <source>Remove cycles?</source>
         <translation>Enlever les cycles?</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="124"/>
+        <location filename="translatables.py" line="112"/>
         <source>By reducing the number of cycles, data will be lost from the table. Do you wish to continue?</source>
         <translation>En réduisant le nombre de cycles, des données du tableau seront perdues.Souhaitez-vous continuer?</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="125"/>
+        <location filename="translatables.py" line="114"/>
         <source>&lt;b&gt;%s&lt;/b&gt; will be called &lt;b&gt;%s&lt;/b&gt; x &lt;b&gt;%s&lt;/b&gt; - &lt;b&gt;%s&lt;/b&gt; = &lt;b&gt;%s&lt;/b&gt; times in &lt;b&gt;%s&lt;/b&gt; order</source>
         <translation>&lt;b&gt;%s&lt;/b&gt; sera appelé &lt;b&gt;%s&lt;/b&gt; x &lt;b&gt;%s&lt;/b&gt; - &lt;b&gt;%s&lt;/b&gt; = &lt;b&gt;%s&lt;/b&gt; fois dans &lt;b&gt;%s&lt;/b&gt; ordre</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="126"/>
+        <location filename="translatables.py" line="115"/>
         <source>&lt;b&gt;%s&lt;/b&gt; will be called &lt;b&gt;%s&lt;/b&gt; x &lt;b&gt;%s&lt;/b&gt; = &lt;b&gt;%s&lt;/b&gt; times in &lt;b&gt;%s&lt;/b&gt; order</source>
         <translation>&lt;b&gt;%s&lt;/b&gt; sera appelé &lt;b&gt;%s&lt;/b&gt; x &lt;b&gt;%s&lt;/b&gt; = &lt;b&gt;%s&lt;/b&gt; fois dans l&apos;ordre &lt;b&gt;%s&lt;/b&gt;</translation>
     </message>
@@ -1720,7 +2032,7 @@ Description: %s</translation>
         <translation type="obsolete"> démarre au cycle &lt;b&gt;%d&lt;/b&gt;</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="128"/>
+        <location filename="translatables.py" line="117"/>
         <source> &lt;font color=&apos;red&apos;&gt;&lt;b&gt;(too many cycles skipped)&lt;/b&gt;&lt;/font&gt;</source>
         <translation> &lt;font color=&apos;red&apos;&gt;&lt;b&gt;(trop de cycles sautés)&lt;/b&gt;&lt;/font&gt;</translation>
     </message>
@@ -1730,7 +2042,7 @@ Description: %s</translation>
         <translation type="obsolete"> &lt;font color=&apos;red&apos;&gt;&lt;b&gt;(longueur zéro ou négative)&lt;/b&gt;&lt;/font&gt;</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="110"/>
+        <location filename="translatables.py" line="98"/>
         <source>The following key names are valid:&lt;br /&gt;</source>
         <translation>Les noms de touches suivants sont valides: &lt;br /&gt;</translation>
     </message>
@@ -1747,27 +2059,27 @@ Description: %s</translation>
     <message>
         <location filename="translatables.py" line="143"/>
         <source>Flush pending key presses at sequence start</source>
-        <translation>Supprimer les touches appuyées en attente au début de la séquence</translation>
+        <translation type="obsolete">Supprimer les touches appuyées en attente au début de la séquence</translation>
     </message>
     <message>
         <location filename="translatables.py" line="144"/>
         <source>Append existing item to sequence</source>
-        <translation>Concaténer l&apos;élément existant à la séquence</translation>
+        <translation type="obsolete">Concaténer l&apos;élément existant à la séquence</translation>
     </message>
     <message>
         <location filename="translatables.py" line="145"/>
         <source>Create and append  new item to sequence</source>
-        <translation>Créer et concaténer le nouvel élément à la séquence</translation>
+        <translation type="obsolete">Créer et concaténer le nouvel élément à la séquence</translation>
     </message>
     <message>
         <location filename="translatables.py" line="146"/>
         <source>Append existing item</source>
-        <translation>Concaténer l&apos;élément existant</translation>
+        <translation type="obsolete">Concaténer l&apos;élément existant</translation>
     </message>
     <message>
         <location filename="translatables.py" line="147"/>
         <source>Append new item</source>
-        <translation>Concaténer le nouvel élément</translation>
+        <translation type="obsolete">Concaténer le nouvel élément</translation>
     </message>
     <message>
         <location filename="translatables.py" line="11"/>
@@ -1860,17 +2172,17 @@ Description: %s</translation>
         <translation>Impossible d&apos;enregistrer le fichier, car le script n&apos;a pas pu être généré. L&apos;erreur suivante est arrivée: &lt;br/&gt;%s</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="28"/>
+        <location filename="translatables.py" line="27"/>
         <source>Saved as %s</source>
         <translation>enregistré sous %s</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="29"/>
+        <location filename="translatables.py" line="28"/>
         <source>Failed to save file. Error: %s</source>
         <translation>L&apos;enregistrement du fichier a échoué. Erreur: %s</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="30"/>
+        <location filename="translatables.py" line="29"/>
         <source>Save file as ...</source>
         <translation>Enregistrer le fichier sous...</translation>
     </message>
@@ -1885,24 +2197,24 @@ Description: %s</translation>
         <translation>L&apos;analyse du script a échoué: %s</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="92"/>
+        <location filename="translatables.py" line="88"/>
         <source>&lt;b&gt;&lt;font size=&apos;5&apos;&gt;Unused&lt;/font&gt;&lt;/b&gt;</source>
         <translation>&lt;b&gt;&lt;font size=&apos;5&apos;&gt;Non utilisé&lt;/font&gt;&lt;/b&gt;</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="93"/>
+        <location filename="translatables.py" line="89"/>
         <source>Permanently delete unused items</source>
         <translation>Supprimer définitivement les éléments non utilisés</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="94"/>
+        <location filename="translatables.py" line="90"/>
         <source>Permanently delete items?</source>
         <translation>Supprimer définitivement les éléments?</translation>
     </message>
     <message>
         <location filename="translatables.py" line="95"/>
         <source>Are you sure you want to permanently delete all unused items? This action cannot be undone.</source>
-        <translation>Êtes vous sur(e) de vouloir supprimer définitivement tous les éléments non utilisés? Cette ne peut pas être défaite.</translation>
+        <translation type="obsolete">Êtes vous sur(e) de vouloir supprimer définitivement tous les éléments non utilisés? Cette ne peut pas être défaite.</translation>
     </message>
     <message>
         <location filename="translatables.py" line="32"/>
@@ -1967,179 +2279,179 @@ Description: %s</translation>
     <message>
         <location filename="translatables.py" line="34"/>
         <source>New name</source>
-        <translation>Nouveau nom</translation>
+        <translation type="obsolete">Nouveau nom</translation>
     </message>
     <message>
         <location filename="translatables.py" line="35"/>
         <source>Please enter a name for the new %s</source>
-        <translation>Veuillez entrer un nom pour le nouveau %s</translation>
+        <translation type="obsolete">Veuillez entrer un nom pour le nouveau %s</translation>
     </message>
     <message>
         <location filename="translatables.py" line="63"/>
         <source>Drag this &lt;b&gt;%s&lt;/b&gt; item to the intended location in the overview area or into the item list of a sequence tab</source>
-        <translation>Glisser cet élément &lt;b&gt;%s&lt;/b&gt; à la localisation voulue dans la zone de vue d&apos;ensemble, ou dans la liste des éléments d&apos;un onglet de séquences</translation>
+        <translation type="obsolete">Glisser cet élément &lt;b&gt;%s&lt;/b&gt; à la localisation voulue dans la zone de vue d&apos;ensemble, ou dans la liste des éléments d&apos;un onglet de séquences</translation>
     </message>
     <message>
         <location filename="translatables.py" line="64"/>
         <source>&lt;small&gt;Commonly used&lt;/small&gt;</source>
-        <translation>&lt;small&gt;Fréquemment utilisé &lt;/small&gt;</translation>
+        <translation type="obsolete">&lt;small&gt;Fréquemment utilisé &lt;/small&gt;</translation>
     </message>
     <message>
         <location filename="translatables.py" line="66"/>
         <source>Drag this item to re-order</source>
-        <translation>Glisser cet item pour le réordonner</translation>
+        <translation type="obsolete">Glisser cet item pour le réordonner</translation>
     </message>
     <message>
         <location filename="translatables.py" line="67"/>
         <source>Run this item only under the following conditions</source>
-        <translation>Exécuter cet élément seulement à la condition suivante</translation>
+        <translation type="obsolete">Exécuter cet élément seulement à la condition suivante</translation>
     </message>
     <message>
         <location filename="translatables.py" line="68"/>
         <source>Click to edit this item</source>
-        <translation>Cliquer pour éditer cet élément</translation>
+        <translation type="obsolete">Cliquer pour éditer cet élément</translation>
     </message>
     <message>
         <location filename="translatables.py" line="69"/>
         <source>&lt;small&gt;&lt;i&gt;Run if&lt;/i&gt;&lt;/small&gt;</source>
-        <translation>&lt;small&gt;&lt;i&gt;Exécuter si&lt;/i&gt;&lt;/small&gt;</translation>
+        <translation type="obsolete">&lt;small&gt;&lt;i&gt;Exécuter si&lt;/i&gt;&lt;/small&gt;</translation>
     </message>
     <message>
         <location filename="translatables.py" line="70"/>
         <source>Unkown item &apos;%s&apos; in sequence &apos;%s&apos;. You can fix this using the script editor.</source>
-        <translation>Élément inconnu &apos;%s&apos; dans la séquence &apos;%s&apos;. Vous pouvez réparer cela à l&apos;aide de l&apos;éditeur de script.</translation>
+        <translation type="obsolete">Élément inconnu &apos;%s&apos; dans la séquence &apos;%s&apos;. Vous pouvez réparer cela à l&apos;aide de l&apos;éditeur de script.</translation>
     </message>
     <message>
         <location filename="translatables.py" line="75"/>
         <source>(Out of sketchpad)</source>
-        <translation>(En dehors du carnet à dessin)</translation>
+        <translation type="obsolete">(En dehors du carnet à dessin)</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="78"/>
+        <location filename="translatables.py" line="127"/>
         <source>Delete</source>
         <translation>Supprimer</translation>
     </message>
     <message>
         <location filename="translatables.py" line="79"/>
         <source>Edit</source>
-        <translation>Éditer</translation>
+        <translation type="obsolete">Éditer</translation>
     </message>
     <message>
         <location filename="translatables.py" line="80"/>
         <source>Edit sketchpad element</source>
-        <translation>Éditer l&apos;élément du carnet à dessin</translation>
+        <translation type="obsolete">Éditer l&apos;élément du carnet à dessin</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="81"/>
+        <location filename="translatables.py" line="123"/>
         <source>Element script</source>
         <translation>Script de l&apos;élément</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="82"/>
+        <location filename="translatables.py" line="130"/>
         <source>New textline</source>
         <translation>Nouvelle ligne de texte</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="83"/>
+        <location filename="translatables.py" line="131"/>
         <source>Please enter a text for the textline</source>
         <translation>Vueillez entrer du texte pour la ligne de texte</translation>
     </message>
     <message>
         <location filename="translatables.py" line="84"/>
         <source>Funky image alert: &apos;%s&apos; has a non-standard format. It is recommended to convert this image to .png format, for example with Gimp &lt;http://www.gimp.org/&gt;.</source>
-        <translation>Alerte d&apos;image: &apos;%s&apos; n&apos;a pas un format standard. Il est recommandé de convertir cette image au format .png, par exemple avec Gimp  &lt;http://www.gimp.org/&gt;.</translation>
+        <translation type="obsolete">Alerte d&apos;image: &apos;%s&apos; n&apos;a pas un format standard. Il est recommandé de convertir cette image au format .png, par exemple avec Gimp  &lt;http://www.gimp.org/&gt;.</translation>
     </message>
     <message>
         <location filename="translatables.py" line="85"/>
         <source>%d objects are not shown, because they are defined using variables.</source>
-        <translation>%d objets ne sont pas montrés, car ils sont définis à l&apos;aide de variables.</translation>
+        <translation type="obsolete">%d objets ne sont pas montrés, car ils sont définis à l&apos;aide de variables.</translation>
     </message>
     <message>
         <location filename="translatables.py" line="86"/>
         <source>One object is not shown, because it is defined using variables.</source>
-        <translation>Un objet n&apos;est pas montré, car il est défini à l&apos;aide de variables.</translation>
+        <translation type="obsolete">Un objet n&apos;est pas montré, car il est défini à l&apos;aide de variables.</translation>
     </message>
     <message>
         <location filename="translatables.py" line="87"/>
         <source>Some objects will not be visible (or partly) because they fall outside of the screen boundaries.</source>
-        <translation>Certains objets ne seront pas visibles (ou en partie) car elle dépasse les dimensions de l&apos;écran.</translation>
+        <translation type="obsolete">Certains objets ne seront pas visibles (ou en partie) car elle dépasse les dimensions de l&apos;écran.</translation>
     </message>
     <message>
         <location filename="translatables.py" line="88"/>
         <source>Failed to parse the following item (use &apos;Edit script&apos; to fix/ remove this line):
 &apos;%s&apos;</source>
-        <translation>L&apos;analyse de l&apos;élément suivant a échouée (utilisez &apos;Editer le script&apos; pour réparer/ enlever cette ligne):
+        <translation type="obsolete">L&apos;analyse de l&apos;élément suivant a échouée (utilisez &apos;Editer le script&apos; pour réparer/ enlever cette ligne):
 &apos;%s&apos;</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="45"/>
+        <location filename="translatables.py" line="51"/>
         <source>Overwrite</source>
         <translation>Écraser</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="46"/>
+        <location filename="translatables.py" line="52"/>
         <source>A file named &apos;%s&apos; already exists in the pool. Do you want to overwrite this file?</source>
         <translation>Un fichier nommé &apos;%s&apos; existe déja dans le groupe. Voulez vous écraser ce fichier?</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="47"/>
+        <location filename="translatables.py" line="53"/>
         <source>Add files to pool</source>
         <translation>Ajouter les fichiers au groupe</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="52"/>
+        <location filename="translatables.py" line="58"/>
         <source>Remove from pool</source>
         <translation>Retirer les fichiers du groupe</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="56"/>
+        <location filename="translatables.py" line="62"/>
         <source>Rename</source>
         <translation>Renommer</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="54"/>
+        <location filename="translatables.py" line="60"/>
         <source>Remove</source>
         <translation>Retirer</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="57"/>
+        <location filename="translatables.py" line="63"/>
         <source>Please enter a new name for &apos;%s&apos;</source>
         <translation>Veuillez entrer un nouveau nom pour &apos;%s&apos;</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="58"/>
+        <location filename="translatables.py" line="64"/>
         <source>There already is a file named &apos;%s&apos; in the file pool</source>
         <translation>Il y a déjà un fichier nommé &apos;%s&apos; dans le groupe de fichiers</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="59"/>
+        <location filename="translatables.py" line="65"/>
         <source>Cancel</source>
         <translation>Annuler</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="60"/>
+        <location filename="translatables.py" line="66"/>
         <source>Select</source>
         <translation>Sélectionner</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="61"/>
+        <location filename="translatables.py" line="67"/>
         <source>Select file from pool</source>
         <translation>Sélectionner à partir du groupe</translation>
     </message>
     <message>
         <location filename="translatables.py" line="96"/>
         <source>Oops!</source>
-        <translation>Oups!</translation>
+        <translation type="obsolete">Oups!</translation>
     </message>
     <message>
         <location filename="translatables.py" line="97"/>
         <source>The replacement string cannot contain the search string.</source>
-        <translation>La chaine de remplacement ne peut pas contenir la chaine de recherche.</translation>
+        <translation type="obsolete">La chaine de remplacement ne peut pas contenir la chaine de recherche.</translation>
     </message>
     <message>
         <location filename="translatables.py" line="98"/>
         <source>Replace all</source>
-        <translation>Tout remplacer</translation>
+        <translation type="obsolete">Tout remplacer</translation>
     </message>
     <message>
         <location filename="translatables.py" line="69"/>
@@ -2172,57 +2484,57 @@ Description: %s</translation>
         <translation type="obsolete">Appuyez sur Alt+A pour appliquer les modifitions non enregistrées</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="75"/>
+        <location filename="translatables.py" line="93"/>
         <source>Apply</source>
-        <translation type="obsolete">Appliquer</translation>
+        <translation type="unfinished">Appliquer</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="90"/>
+        <location filename="translatables.py" line="86"/>
         <source>Tell me more about OpenSesame!</source>
         <translation>Plus à propos d&apos;OpenSesame!</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="73"/>
+        <location filename="translatables.py" line="80"/>
         <source>No settings for %s</source>
         <translation>Pas de réglagles pour %s</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="74"/>
+        <location filename="translatables.py" line="81"/>
         <source>Settings for %s:</source>
         <translation>Réglages pour %s:</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="91"/>
+        <location filename="translatables.py" line="87"/>
         <source>Failed to parse the resolution. Expecting positive numeric values.</source>
         <translation>L&apos;analyse de la résolution a échouée. Cette valeur doit être numérique positive.</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="37"/>
+        <location filename="translatables.py" line="44"/>
         <source>Open %s</source>
         <translation>Ouvrir %s</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="41"/>
+        <location filename="translatables.py" line="49"/>
         <source>%s help</source>
         <translation>%s aide</translation>
     </message>
     <message>
         <location filename="translatables.py" line="43"/>
         <source>Please enter a new name</source>
-        <translation>Veuillez entrer un nouveau nom</translation>
+        <translation type="obsolete">Veuillez entrer un nouveau nom</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="65"/>
+        <location filename="translatables.py" line="75"/>
         <source>Click to edit</source>
         <translation>Cliquer pour éditer</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="89"/>
+        <location filename="translatables.py" line="84"/>
         <source>Error: Command contains invalid characters</source>
         <translation>Erreur: la commande contient des caractères invalides</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="62"/>
+        <location filename="translatables.py" line="68"/>
         <source>Ready</source>
         <translation>Prêt</translation>
     </message>
@@ -2232,114 +2544,114 @@ Description: %s</translation>
         <translation>Ouvrir un fichier</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="71"/>
+        <location filename="translatables.py" line="76"/>
         <source>Apply?</source>
         <translation>Appliquer?</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="72"/>
+        <location filename="translatables.py" line="77"/>
         <source>Are you sure you want to apply the changes to the general script?</source>
         <translation>Êtes vous sur(e) de vouloir appliquer les modifications au script général?</translation>
     </message>
     <message>
         <location filename="translatables.py" line="36"/>
         <source>Failed to parse script (see traceback in debug window): %s</source>
-        <translation>L&apos;analyse du script a échouée (retrouver la trace dans la fenêtre de débogage): %s</translation>
+        <translation type="obsolete">L&apos;analyse du script a échouée (retrouver la trace dans la fenêtre de débogage): %s</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="51"/>
+        <location filename="translatables.py" line="57"/>
         <source>Open</source>
         <translation>Ouvrir</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="53"/>
+        <location filename="translatables.py" line="59"/>
         <source>And %d more file(s)</source>
         <translation>Et %d  fichier(s) en plus</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="55"/>
+        <location filename="translatables.py" line="61"/>
         <source>&lt;p&gt;Are you sure you want to remove the following files from the file pool? This operation will only affect the OpenSesame file pool, not the original files on your disk.&lt;/p&gt;&lt;p&gt;&lt;b&gt; - %s&lt;/b&gt;&lt;/p&gt;&lt;p&gt;%s&lt;/p&gt;</source>
         <translation>&lt;p&gt;Êtes vous sur(e) de vouloir enlever les fichiers suivants du groupe de fichiers? Cette opération n&apos;affectera que le groupe de fichiers d&apos;OpenSesame, pas les fichiers originaux sur votre disque dur&lt;/p&gt;&lt;p&gt;&lt;b&gt; - %s&lt;/b&gt;&lt;/p&gt;&lt;p&gt;%s&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="107"/>
+        <location filename="translatables.py" line="96"/>
         <source>All non-alphanumeric characters except underscores have been stripped</source>
         <translation>Tous les caractères non alphanumériques ont été retirés sauf les tirets bas</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="108"/>
+        <location filename="translatables.py" line="97"/>
         <source>The following characters are not allowed and have been stripped: double-quote (&quot;), backslash (), and newline</source>
         <translation>Les caractères suivants ne sont pas permis et ont été retirés: guillemets(&quot;), backslash (\), et nouvelle ligne</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="111"/>
+        <location filename="translatables.py" line="99"/>
         <source>&quot;%s&quot; is not a valid qtautoplugin control</source>
         <translation>&quot;%s&quot; n&apos;est pas une commande qtautoplugin valide</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="130"/>
+        <location filename="translatables.py" line="119"/>
         <source>You provided an empty or invalid variable definition. For an example of a valid variable definition, open the variable wizard and select &quot;Show example&quot;.</source>
         <translation>Vous avez fourni une définition de variable vide ou invalide. Pour un exemple de définition de variable valide, ouvrez l&apos;assistant de variable et sélectionnez &quot;montrer un exemple&quot;.</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="131"/>
+        <location filename="translatables.py" line="120"/>
         <source>Apply weight</source>
         <translation>Appliquer le poids</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="132"/>
+        <location filename="translatables.py" line="121"/>
         <source>Which variable contains the weights?</source>
         <translation>Quelle variable contient les poids?</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="133"/>
+        <location filename="translatables.py" line="82"/>
         <source>Add custom variable</source>
         <translation>Ajouter une variable personnalisée</translation>
     </message>
     <message>
         <location filename="translatables.py" line="134"/>
         <source>Add an arbitrary variable by name</source>
-        <translation>Ajouter une variable arbitraire par son nom</translation>
+        <translation type="obsolete">Ajouter une variable arbitraire par son nom</translation>
     </message>
     <message>
         <location filename="translatables.py" line="135"/>
         <source>Smart select</source>
-        <translation>Selection intelligente</translation>
+        <translation type="obsolete">Selection intelligente</translation>
     </message>
     <message>
         <location filename="translatables.py" line="136"/>
         <source>Select all</source>
-        <translation>Tout sélectionner</translation>
+        <translation type="obsolete">Tout sélectionner</translation>
     </message>
     <message>
         <location filename="translatables.py" line="137"/>
         <source>Select all variables</source>
-        <translation>Sélectionner toutes les variables</translation>
+        <translation type="obsolete">Sélectionner toutes les variables</translation>
     </message>
     <message>
         <location filename="translatables.py" line="138"/>
         <source>Deselect all</source>
-        <translation>Tout désélectionner</translation>
+        <translation type="obsolete">Tout désélectionner</translation>
     </message>
     <message>
         <location filename="translatables.py" line="139"/>
         <source>Deselect all variables</source>
-        <translation>Désélectionner toutes les variables</translation>
+        <translation type="obsolete">Désélectionner toutes les variables</translation>
     </message>
     <message>
         <location filename="translatables.py" line="140"/>
         <source>Include variables with missing values</source>
-        <translation>Inclure les variables avec des valeurs manquantes</translation>
+        <translation type="obsolete">Inclure les variables avec des valeurs manquantes</translation>
     </message>
     <message>
         <location filename="translatables.py" line="141"/>
         <source>Automatically detect and log all variables</source>
-        <translation>Détecter et inscrire dans le journal toutes les variables</translation>
+        <translation type="obsolete">Détecter et inscrire dans le journal toutes les variables</translation>
     </message>
     <message>
         <location filename="translatables.py" line="142"/>
         <source>Put quotes around values</source>
-        <translation>Mettre des guillemets autour des valeurs</translation>
+        <translation type="obsolete">Mettre des guillemets autour des valeurs</translation>
     </message>
     <message>
         <location filename="translatables.py" line="9"/>
@@ -2347,23 +2659,153 @@ Description: %s</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="translatables.py" line="44"/>
+        <location filename="translatables.py" line="50"/>
         <source>&apos;%s&apos; is not a regular file and could not be added to the file pool.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="translatables.py" line="102"/>
-        <source>Apply and close script editor</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="translatables.py" line="127"/>
+        <location filename="translatables.py" line="116"/>
         <source> starting at cycle &lt;b&gt;%s&lt;/b&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="translatables.py" line="129"/>
+        <location filename="translatables.py" line="118"/>
         <source> &lt;font color=&apos;red&apos;&gt;&lt;b&gt;(zero, negative, or unknown length)&lt;/b&gt;&lt;/font&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="translatables.py" line="30"/>
+        <source>You have selected the &lt;code&gt;.opensesame&lt;/code&gt; format. This means that the file pool has &lt;i&gt;not&lt;/i&gt; been saved. To save the file pool along with your experiment, select the &lt;code&gt;.opensesame.tar.gz&lt;/code&gt; format.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="translatables.py" line="34"/>
+        <source>Image name &quot;%s&quot; is unknown or variably defined, using fallback image</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="translatables.py" line="35"/>
+        <source>Penwidth &quot;%s&quot; is unknown or variably defined, using 1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="translatables.py" line="36"/>
+        <source>Color &quot;%s&quot; is unknown or variably defined, using placeholder color</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="translatables.py" line="37"/>
+        <source>X coordinate &quot;%s&quot; is unknown or variably defined, using display center</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="translatables.py" line="38"/>
+        <source>Y coordinate &quot;%s&quot; is unknown or variably defined, using display center</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="translatables.py" line="39"/>
+        <source>Width &quot;%s&quot; is unknown or variably defined, using 100</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="translatables.py" line="40"/>
+        <source>Height &quot;%s&quot; is unknown or variably defined, using 100</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="translatables.py" line="41"/>
+        <source>Scale &quot;%s&quot; is unknown or variably defined, using 1.0</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="translatables.py" line="42"/>
+        <source>An item with that name already exists.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="translatables.py" line="43"/>
+        <source>An item name cannot be empty.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="translatables.py" line="45"/>
+        <source>Copy</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="translatables.py" line="46"/>
+        <source>Paste</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="translatables.py" line="69"/>
+        <source>General options</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="translatables.py" line="71"/>
+        <source>Unused items</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="translatables.py" line="72"/>
+        <source>View controls</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="translatables.py" line="73"/>
+        <source>View script</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="translatables.py" line="74"/>
+        <source>Split view</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="translatables.py" line="78"/>
+        <source>Item name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="translatables.py" line="79"/>
+        <source>Run if</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="translatables.py" line="83"/>
+        <source>Which variable do you wish to log?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="translatables.py" line="91"/>
+        <source>Toggle pop-out</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="translatables.py" line="113"/>
+        <source>&lt;font color=&apos;red&apos;&gt;No item to run specified&lt;/font&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="translatables.py" line="122"/>
+        <source>Edit element</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="translatables.py" line="125"/>
+        <source>Raise to front</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="translatables.py" line="126"/>
+        <source>Lower to bottom</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="translatables.py" line="128"/>
+        <source>Edit text</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2372,187 +2814,177 @@ Description: %s</translation>
     <message>
         <location filename="sketchpad_widget.ui" line="14"/>
         <source>Form</source>
-        <translation>Formulaire</translation>
+        <translation type="obsolete">Formulaire</translation>
     </message>
     <message>
         <location filename="sketchpad_widget.ui" line="95"/>
         <source>Line tool</source>
-        <translation>outils ligne</translation>
+        <translation type="obsolete">outils ligne</translation>
     </message>
     <message>
         <location filename="sketchpad_widget.ui" line="124"/>
         <source>Arrow tool</source>
-        <translation>Outils flèche</translation>
+        <translation type="obsolete">Outils flèche</translation>
     </message>
     <message>
         <location filename="sketchpad_widget.ui" line="150"/>
         <source>Text tool</source>
-        <translation>Outils texte</translation>
+        <translation type="obsolete">Outils texte</translation>
     </message>
     <message>
         <location filename="sketchpad_widget.ui" line="176"/>
         <source>Image tool</source>
-        <translation>Outils image</translation>
+        <translation type="obsolete">Outils image</translation>
     </message>
     <message>
         <location filename="sketchpad_widget.ui" line="202"/>
         <source>Gabor patch tool</source>
-        <translation>Outils patch Gabor</translation>
+        <translation type="obsolete">Outils patch Gabor</translation>
     </message>
     <message>
         <location filename="sketchpad_widget.ui" line="228"/>
         <source>Rectangle tool</source>
-        <translation>Outils rectangle</translation>
+        <translation type="obsolete">Outils rectangle</translation>
     </message>
     <message>
         <location filename="sketchpad_widget.ui" line="254"/>
         <source>Ellipse tool</source>
-        <translation>Outils ellipse</translation>
+        <translation type="obsolete">Outils ellipse</translation>
     </message>
     <message>
         <location filename="sketchpad_widget.ui" line="280"/>
         <source>Circle tool</source>
-        <translation>Outils cercle</translation>
+        <translation type="obsolete">Outils cercle</translation>
     </message>
     <message>
         <location filename="sketchpad_widget.ui" line="306"/>
         <source>Fixation dot tool</source>
-        <translation>Outils point de fixation</translation>
+        <translation type="obsolete">Outils point de fixation</translation>
     </message>
     <message>
         <location filename="sketchpad_widget.ui" line="335"/>
         <source>Noise patch tool</source>
-        <translation>Outils  patch de bruit</translation>
+        <translation type="obsolete">Outils  patch de bruit</translation>
     </message>
     <message>
         <location filename="sketchpad_widget.ui" line="424"/>
         <source>Color</source>
-        <translation>Couleur</translation>
+        <translation type="obsolete">Couleur</translation>
     </message>
     <message>
         <location filename="sketchpad_widget.ui" line="490"/>
         <source>Pen width</source>
-        <translation>Épaisseur du stylo</translation>
+        <translation type="obsolete">Épaisseur du stylo</translation>
     </message>
     <message>
         <location filename="sketchpad_widget.ui" line="618"/>
         <source>px</source>
-        <translation>px</translation>
+        <translation type="obsolete">px</translation>
     </message>
     <message>
         <location filename="sketchpad_widget.ui" line="400"/>
         <source>Arrowhead size</source>
-        <translation>Taille de la tête de la flèche</translation>
+        <translation type="obsolete">Taille de la tête de la flèche</translation>
     </message>
     <message>
         <location filename="sketchpad_widget.ui" line="444"/>
         <source>Size of the arrowhead</source>
-        <translation>Taille de la tête de la flèche</translation>
+        <translation type="obsolete">Taille de la tête de la flèche</translation>
     </message>
     <message>
         <location filename="sketchpad_widget.ui" line="506"/>
         <source>Image scale</source>
-        <translation>Échelle de l&apos;image</translation>
+        <translation type="obsolete">Échelle de l&apos;image</translation>
     </message>
     <message>
         <location filename="sketchpad_widget.ui" line="513"/>
         <source>Image scaling in %</source>
-        <translation>Échelle de l&apos;image en %</translation>
+        <translation type="obsolete">Échelle de l&apos;image en %</translation>
     </message>
     <message>
         <location filename="sketchpad_widget.ui" line="592"/>
         <source>%</source>
-        <translation>%</translation>
+        <translation type="obsolete">%</translation>
     </message>
     <message>
         <location filename="sketchpad_widget.ui" line="431"/>
         <source>Center the object</source>
-        <translation>Centrer l&apos;objet</translation>
+        <translation type="obsolete">Centrer l&apos;objet</translation>
     </message>
     <message>
         <location filename="sketchpad_widget.ui" line="434"/>
         <source>Center object</source>
-        <translation>Centrer l&apos;objet</translation>
+        <translation type="obsolete">Centrer l&apos;objet</translation>
     </message>
     <message>
         <location filename="sketchpad_widget.ui" line="393"/>
         <source>Click on the sketchpad for options</source>
-        <translation>Cliquer sur le carnet à dessin pour les options</translation>
+        <translation type="obsolete">Cliquer sur le carnet à dessin pour les options</translation>
     </message>
     <message>
         <location filename="sketchpad_widget.ui" line="417"/>
         <source>Show if</source>
-        <translation>Montrer si</translation>
+        <translation type="obsolete">Montrer si</translation>
     </message>
     <message>
         <location filename="sketchpad_widget.ui" line="464"/>
         <source>Check to draw filled objects</source>
-        <translation>Cocher pour dessiner des objets pleins</translation>
+        <translation type="obsolete">Cocher pour dessiner des objets pleins</translation>
     </message>
     <message>
         <location filename="sketchpad_widget.ui" line="467"/>
         <source>Fill object</source>
-        <translation>Remplir l&apos;objet</translation>
+        <translation type="obsolete">Remplir l&apos;objet</translation>
     </message>
     <message>
         <location filename="sketchpad_widget.ui" line="582"/>
         <source>Zoom</source>
-        <translation>Zoom</translation>
+        <translation type="obsolete">Zoom</translation>
     </message>
     <message>
         <location filename="sketchpad_widget.ui" line="589"/>
         <source>Zoom level in %</source>
-        <translation>Niveau du zoom en %</translation>
+        <translation type="obsolete">Niveau du zoom en %</translation>
     </message>
     <message>
         <location filename="sketchpad_widget.ui" line="608"/>
         <source>Grid</source>
-        <translation>Grille</translation>
+        <translation type="obsolete">Grille</translation>
     </message>
     <message>
         <location filename="sketchpad_widget.ui" line="615"/>
         <source>Grid size</source>
-        <translation>taille de la grille</translation>
+        <translation type="obsolete">taille de la grille</translation>
     </message>
     <message>
         <location filename="sketchpad_widget.ui" line="631"/>
         <source>Check to display the grid and enable snap-to-grid</source>
-        <translation>cocher pour afficher la grille et permettre le positionnement automatique sur la grille</translation>
+        <translation type="obsolete">cocher pour afficher la grille et permettre le positionnement automatique sur la grille</translation>
     </message>
     <message>
         <location filename="sketchpad_widget.ui" line="634"/>
         <source>Show grid</source>
-        <translation>Montrer la grille</translation>
+        <translation type="obsolete">Montrer la grille</translation>
     </message>
     <message>
         <location filename="sketchpad_widget.ui" line="656"/>
         <source>(0, 0)</source>
-        <translation>(0, 0)</translation>
+        <translation type="obsolete">(0, 0)</translation>
     </message>
     <message>
         <location filename="sketchpad_widget.ui" line="706"/>
         <source>[nr] objects are not shown, because their definition contains variables.</source>
-        <translation>[nr] les objets ne sont pas montrés, car leur définition contient des variables.</translation>
+        <translation type="obsolete">[nr] les objets ne sont pas montrés, car leur définition contient des variables.</translation>
     </message>
     <message>
         <location filename="sketchpad_widget.ui" line="725"/>
         <source>Edit the script to see objects defined using variables</source>
-        <translation>Éditer le script pour voir des objets définis à l&apos;aide de variables</translation>
+        <translation type="obsolete">Éditer le script pour voir des objets définis à l&apos;aide de variables</translation>
     </message>
     <message>
         <location filename="sketchpad_widget.ui" line="728"/>
         <source>Edit script</source>
-        <translation>Éditer le script</translation>
-    </message>
-    <message>
-        <location filename="sketchpad_widget.ui" line="535"/>
-        <source>Parse a subset of HTML tags</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="sketchpad_widget.ui" line="538"/>
-        <source>Parse HTML subset</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Éditer le script</translation>
     </message>
 </context>
 <context>
@@ -2575,7 +3007,7 @@ Description: %s</translation>
     <message>
         <location filename="synth_widget.ui" line="107"/>
         <source>%</source>
-        <translation>%</translation>
+        <translation type="obsolete">%</translation>
     </message>
     <message>
         <location filename="synth_widget.ui" line="123"/>
@@ -2610,7 +3042,7 @@ Description: %s</translation>
     <message>
         <location filename="synth_widget.ui" line="282"/>
         <source>ms</source>
-        <translation>ms</translation>
+        <translation type="obsolete">ms</translation>
     </message>
     <message>
         <location filename="synth_widget.ui" line="255"/>
@@ -2697,6 +3129,11 @@ Description: %s</translation>
         <source>Generate white noise</source>
         <translation>Générer du bruit blanc</translation>
     </message>
+    <message>
+        <location filename="synth_widget.ui" line="282"/>
+        <source> ms</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>text_input_dialog</name>
@@ -2749,7 +3186,55 @@ Description: %s</translation>
     <message>
         <location filename="user_hint_widget.ui" line="39"/>
         <source>Edit script</source>
-        <translation>Éditer le script</translation>
+        <translation type="obsolete">Éditer le script</translation>
+    </message>
+    <message>
+        <location filename="user_hint_widget.ui" line="39"/>
+        <source>Hide</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>variable_inspector</name>
+    <message>
+        <location filename="variable_inspector.ui" line="14"/>
+        <source>Form</source>
+        <translation type="unfinished">Formulaire</translation>
+    </message>
+    <message>
+        <location filename="variable_inspector.ui" line="52"/>
+        <source>Variable inspector</source>
+        <translation type="unfinished">Inspecteur de variables</translation>
+    </message>
+    <message>
+        <location filename="variable_inspector.ui" line="78"/>
+        <source>Enter a filter</source>
+        <translation type="unfinished">Entrer un filtre</translation>
+    </message>
+    <message>
+        <location filename="variable_inspector.ui" line="85"/>
+        <source>Clear filter</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="variable_inspector.ui" line="111"/>
+        <source>Help</source>
+        <translation type="unfinished">Aide</translation>
+    </message>
+    <message>
+        <location filename="variable_inspector.ui" line="165"/>
+        <source>Variable</source>
+        <translation type="unfinished">Variable</translation>
+    </message>
+    <message>
+        <location filename="variable_inspector.ui" line="170"/>
+        <source>Value</source>
+        <translation type="unfinished">Valeur</translation>
+    </message>
+    <message>
+        <location filename="variable_inspector.ui" line="175"/>
+        <source>In item</source>
+        <translation type="unfinished">Dans l&apos;objet</translation>
     </message>
 </context>
 <context>
@@ -3029,37 +3514,37 @@ Différents réglages liés au contrôle de l&apos;affichage, le son, et les sys
         <translation>Formulaire</translation>
     </message>
     <message>
-        <location filename="credits_widget.ui" line="75"/>
+        <location filename="credits_widget.ui" line="78"/>
         <source>Visit Facebook page</source>
         <translation>Aller sur la page Facebook</translation>
     </message>
     <message>
-        <location filename="credits_widget.ui" line="78"/>
+        <location filename="credits_widget.ui" line="81"/>
         <source>F</source>
         <translation>F</translation>
     </message>
     <message>
-        <location filename="credits_widget.ui" line="85"/>
+        <location filename="credits_widget.ui" line="91"/>
         <source>Visit Twitter page</source>
         <translation>Aller sur la page Twitter</translation>
     </message>
     <message>
-        <location filename="credits_widget.ui" line="88"/>
+        <location filename="credits_widget.ui" line="94"/>
         <source>T</source>
         <translation>T</translation>
     </message>
     <message>
-        <location filename="credits_widget.ui" line="95"/>
+        <location filename="credits_widget.ui" line="104"/>
         <source>Visit cogsci.nl</source>
         <translation>Aller sur cogsci.nl</translation>
     </message>
     <message>
-        <location filename="credits_widget.ui" line="98"/>
+        <location filename="credits_widget.ui" line="107"/>
         <source>H</source>
         <translation>H</translation>
     </message>
     <message>
-        <location filename="credits_widget.ui" line="105"/>
+        <location filename="credits_widget.ui" line="114"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;COGSCIdotNL // cognitive science and more&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;COGSCIpointNL // cognitive science and more&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
@@ -3071,17 +3556,17 @@ Copyright Sebastiaan Mathôt (2010-2013)</source>
 Copyright Sebastiaan Mathôt (2010-2013)</translation>
     </message>
     <message>
-        <location filename="credits_widget.ui" line="112"/>
+        <location filename="credits_widget.ui" line="121"/>
         <source>&lt;a href=&quot;http://osdoc.cogsci.nl/contribute/&quot;&gt;Contribute&lt;/a&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="credits_widget.ui" line="122"/>
+        <location filename="credits_widget.ui" line="131"/>
         <source>&lt;a href=&quot;http://osdoc.cogsci.nl/donate/&quot;&gt;Donate&lt;/a&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message encoding="UTF-8">
-        <location filename="credits_widget.ui" line="170"/>
+        <location filename="credits_widget.ui" line="179"/>
         <source>OpenSesame [version] [codename]
 Copyright Sebastiaan Mathôt (2010-2014)</source>
         <translation type="unfinished"></translation>
