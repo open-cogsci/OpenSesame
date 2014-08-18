@@ -44,8 +44,8 @@ class general_script_editor(base_widget):
 		from QProgEdit import QTabManager
 		super(general_script_editor, self).__init__(main_window,
 			ui=u'widgets.general_script_editor')
-		self.ui.qprogedit = QTabManager(handler=self._apply,
-			defaultLang=u'OpenSesame', handlerButtonText=u'Apply', cfg=cfg)
+		self.ui.qprogedit = QTabManager(handlerButtonText=u'Apply', cfg=cfg)
+		self.ui.qprogedit.handlerButtonClicked.connect(self._apply)
 		self.ui.qprogedit.addTab(u'General script').setLang(u'OpenSesame')
 		self.ui.layout_vbox.addWidget(self.ui.qprogedit)
 		self.tab_name = u'__general_script__'
