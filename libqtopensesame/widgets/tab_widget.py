@@ -271,7 +271,7 @@ class tab_widget(base_subcomponent, QtGui.QTabWidget):
 			return
 		from libqtopensesame.widgets.general_script_editor import \
 			general_script_editor
-		self.add(general_script_editor(self.main_window), u'terminal', \
+		self.add(general_script_editor(self.main_window), u'utilities-terminal',
 			u'General script editor')
 
 	def open_osdoc(self):
