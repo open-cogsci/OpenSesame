@@ -154,10 +154,8 @@ class form_base(item.item):
 		self._form = widgets.form(self.experiment, cols=cols, rows=rows, \
 			margins=margins, spacing=self.spacing, theme=self._theme, item=self)
 
-		print 'prepare!'
 		# Prepare the widgets
 		for _w in self._widgets:
-			print _w
 			# Evaluate all keyword arguments
 			w = {}
 			for var, val in _w.iteritems():
