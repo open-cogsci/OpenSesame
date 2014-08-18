@@ -53,7 +53,7 @@ if __name__ == u"__main__":
 		try:
 			from PyQt4 import QtGui, QtCore
 		except:
-			libopensesame.misc.messagebox(u"OpenSesame Run", \
+			libopensesame.misc.messagebox(u"OpenSesame Run",
 				u"Incorrect or missing options.\n\nRun 'opensesame --help' from a terminal (or command prompt) to see a list of available options, or install Python Qt4 to enable the graphical user interface.")
 			sys.exit()
 		# Create the GUI and show it
@@ -74,7 +74,7 @@ if __name__ == u"__main__":
 
 	if options.debug:
 		# In debug mode, don't try to catch any exceptions
-		exp = libopensesame.experiment.experiment(u"Experiment", \
+		exp = libopensesame.experiment.experiment(u"Experiment",
 			options.experiment)
 		exp.set_subject(options.subject)
 		exp.fullscreen = options.fullscreen
@@ -83,11 +83,13 @@ if __name__ == u"__main__":
 		exp.end()
 	else:
 		# Try to parse the experiment from a file
-		try:
-			exp = libopensesame.experiment.experiment(u"Experiment", \
-				options.experiment)
+		experiment = os.path.abspath(options.experiment)
+		experiment_path = os.path.dirname(experiment)		
+		try:			
+			exp = libopensesame.experiment.experiment(u"Experiment",
+				experiment, experiment_path=experiment_path)
 		except Exception as e:
-			libopensesame.misc.messagebox(u"OpenSesame Run", \
+			libopensesame.misc.messagebox(u"OpenSesame Run",
 				libopensesame.misc.strip_tags(e))
 			sys.exit()
 		# Set some options
@@ -106,8 +108,9 @@ if __name__ == u"__main__":
 			try:
 				exp.end()
 			except Exception as f:
-				libopensesame.misc.messagebox(u"OpenSesame Run", \
+				libopensesame.misc.messagebox(u"OpenSesame Run",
 					libopensesame.misc.strip_tags(f))
-			libopensesame.misc.messagebox(u"OpenSesame Run", \
+			libopensesame.misc.messagebox(u"OpenSesame Run",
 				libopensesame.misc.strip_tags(e))
 	libopensesame.experiment.clean_up(exp.debug)
+
