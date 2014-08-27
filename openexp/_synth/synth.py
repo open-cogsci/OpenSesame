@@ -29,14 +29,25 @@ from libopensesame.exceptions import osexception
 class synth(object):
 
 	"""
-	desc:
+	desc: |
 		The `synth` class provides basic sound synthesis functionality.
 
-	example: |
+		__Example:__
+
+		~~~ {.python}
 		# Generate and play a simple tone
 		from openexp.synth import synth
 		my_synth = synth(exp, osc='saw', freq='b2', attack=250, length='500')
 		my_synth.play()
+		~~~
+
+		__Function list:__
+
+		%--
+		toc:
+			mindepth: 2
+			maxdepth: 2
+		--%
 	"""
 
 	__metaclass__ = docinherit
@@ -255,44 +266,89 @@ class synth(object):
 	@property
 	def is_playing(self):
 
+		"""
+		name: 	is_playing
+		desc:	See `sampler.is_playing`.
+		"""
+
 		return self.sampler.is_playing
 
 	@property
 	def pan(self):
+
+		"""
+		name: 	pan
+		desc:	See `sampler.pan`.
+		"""
 
 		return self.sampler.pan
 
 	@property
 	def pause(self):
 
+		"""
+		name: 	pause
+		desc:	See `sampler.pause`.
+		"""
+
 		return self.sampler.pause
 
 	@property
 	def pitch(self):
+
+		"""
+		name: 	pitch
+		desc:	See `sampler.pitch`.
+		"""
 
 		return self.sampler.pitch
 
 	@property
 	def play(self):
 
+		"""
+		name: 	play
+		desc:	See `sampler.play`.
+		"""
+
 		return self.sampler.play
 
 	@property
 	def resume(self):
+
+		"""
+		name: 	resume
+		desc:	See `sampler.resume`.
+		"""
 
 		return self.sampler.resume
 
 	@property
 	def stop_after(self):
 
+		"""
+		name: 	stop_after
+		desc:	See `sampler.stop_after`.
+		"""
+
 		return self.sampler.stop_after
 
 	@property
 	def volume(self):
 
+		"""
+		name: 	volume
+		desc:	See `sampler.volume`.
+		"""
+
 		return self.sampler.volume
 
 	@property
 	def wait(self):
+
+		"""
+		name: 	wait
+		desc:	See `sampler.wait`.
+		"""
 
 		return self.sampler.wait

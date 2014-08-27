@@ -34,32 +34,86 @@ pool_folders = []
 
 class experiment(item.item):
 
-	"""The main experiment class, which is the first item to be called"""
+	"""
+	desc: |
+		The `experiment` object controls the flow of the experiment. If you are
+		writing Python inline code, there are a few functions in the experiment
+		object that may be useful, mostly to `get` and `set` variables, and to
+		retrieve files from the file pool. The `experiment` object is a property
+		of the `inline_script` object, so you can access it as `self.experiment`
+		in an inline_script. For convenience, you can also refer to it simply as
+		`exp`. For example, the following script retrieves the full path to a
+		file from the pool, shows it using a canvas, and stores the timestamp of
+		the display presentation as `canvas_timestamp`, so it can be logged:
+
+		__Example:__
+
+		~~~ {.python}
+		from openexp.canvas import canvas
+		my_canvas = canvas(exp)
+		my_canvas.image(exp.get_file('my_image.png'))
+		timestamp = my_canvas.show()
+		exp.set('canvas_timestamp', timestamp)
+		~~~
+
+		__Function list:__
+
+		%--
+		toc:
+			mindepth: 2
+			maxdepth: 2
+		--%
+	"""
 
 	def __init__(self, name=u'experiment', string=None, pool_folder=None,
 		experiment_path=None, fullscreen=False, auto_response=False,
 		logfile=u'defaultlog.csv', subject_nr=0, items=None, workspace=None):
 
-		"""<DOC>
-		Constructor. The experiment is created automatically be OpenSesame and #
-		you will generally not need to create it yourself.
+		"""
+		desc:
+			Constructor. The experiment is created automatically be OpenSesame
+			and you will generally not need to create it yourself.
 
-		Keyword arguments:
-		name 			--	The name of the experiment. (default=u'experiment')
-		string 			--	A string containing the experiment definition. #
-							(default=None)
-		pool_folder		--	A specific folder to be used for the file pool. #
-							(default=None)
-		experiment_path	--	The path of the experiment file. (default=None)
-		fullscreen		--	Indicates whether the experiment should be #
-							executed in fullscreen. (default=False)
-		auto_response	--	Indicates whether auto-response mode should be #
-							enabled. (default=False)
-		logfile			--	The logfile path. (default=u'defaultlog.csv')
-		subject_nr		--	The subject number. (default=0)
-		items			--	TODO
-		workspace		--	TODO
-		</DOC>"""
+		keywords:
+			name:
+				desc:	The name of the experiment.
+				type:	[str, unicode]
+			string:
+				desc:	A string containing the experiment definition, the
+						name of an OpenSesame experiment file, or `None` to
+						create a blank experiment.
+				type:	[str, unicode, NoneType]
+			pool_folder:
+				desc:	A specific folder to be used for the file pool, or
+						`None` to use a new temporary folder.
+				type:	[str, unicode, NoneType]
+			experiment_path:
+				desc:	The path of the experiment file. This will need to
+						be specified even if a filename was passed using the
+						`string` keyword.
+				type:	[str, unicode, NoneType]
+			fullscreen:
+				desc:	Indicates whether the experiment should be executed in
+						fullscreen.
+				type:	bool
+			auto_response:
+				desc:	Indicates whether auto-response mode should be enabled.
+				type:	bool
+			logfile:
+				desc:	The logfile path.
+				type:	[unicode, str]
+			subject_nr:
+				desc:	The subject number.
+				type:	int
+			items:
+				desc:	An `item_store` object to be used for storing items
+						internally, or `None` to create a new item store.
+				type:	[item_store, NoneType]
+			workspace:
+				desc:	A `python_workspace` object to be used for executing
+						custom Python code, or `None` to create a new workspace.
+				type:	[python_workspace, NoneType]
+		"""
 
 		global pool_folders
 
@@ -171,19 +225,22 @@ class experiment(item.item):
 
 	def set_subject(self, nr):
 
-		"""<DOC>
-		Sets the subject number and parity (even/ odd). This function is #
-		called automatically when an experiment is started, so you do not #
-		generally need to call it yourself.
+		"""
+		desc:
+			Sets the subject number and parity (even/ odd). This function is
+			called automatically when an experiment is started, so you do not
+			generally need to call it yourself.
 
-		Arguments:
-		nr	--	The subject nr.
+		arguments:
+			nr:
+				desc:	The subject nr.
+				type:	int
 
-		Example:
-		>>> exp.set_subject(1)
-		>>> print('Subject nr = %d' % exp.get('subject_nr'))
-		>>> print('Subject parity = %s' % exp.get('subject_parity'))
-		</DOC>"""
+		example: |
+			exp.set_subject(1)
+			print('Subject nr = %d' % exp.get('subject_nr'))
+			print('Subject parity = %s' % exp.get('subject_parity'))
+		"""
 
 		# Set the subject nr and parity
 		self.set(u'subject_nr', nr)
@@ -357,23 +414,31 @@ class experiment(item.item):
 
 	def get_file(self, path):
 
-		"""<DOC>
-		Returns the path to a file. First checks if the file is in the file pool #
-		and then the folder of the current experiment (if any), or in the #
-		`__pool__` subfolder of the current experiment. Otherwise, simply #
-		returns the path.
+		"""
+		desc: |
+			Returns the full path to a file. The logic is as follows:
 
-		Arguments:
-		path	--	The filename.
+			1. First checks if `path` is a file in the file pool.
+			2. If not, check if `path` is a file in the folder of the current
+			   experiment (if any).
+			3. If not, check if `path` is a file in the `__pool__` subfolder of
+			   the current experiment.
+			4. If not, simply return `path`.
 
-		Returns:
-		The full path to the file.
+		arguments:
+			path:
+				desc:	A filename. This can be any type, but will be coerced
+						to `unicode` if it is not `unicode`.
 
-		Example:
-		>>> image_path = exp.get_file('my_image.png')
-		>>> my_canvas = exp.offline_canvas()
-		>>> my_canvas.image(image_path)
-		</DOC>"""
+		returns:
+			desc:	The full path to the file.
+			type:	unicode
+
+		example: |
+			image_path = exp.get_file('my_image.png')
+			my_canvas = exp.offline_canvas()
+			my_canvas.image(image_path)
+		"""
 
 		path = self.unistr(path)
 		if path.strip() == u'':
@@ -394,20 +459,22 @@ class experiment(item.item):
 
 	def file_in_pool(self, path):
 
-		"""<DOC>
-		Checks if a file is in the file pool.
+		"""
+		desc:
+			Checks if a file is in the file pool.
 
-		Returns:
-		A Boolean indicating if the file is in the pool.
+		returns:
+			desc:	A bool indicating if the file is in the pool.
+			type:	bool
 
-		Example:
-		>>> if not exp.file_in_pool('my_image.png'):
-		>>> 	print('my_image.png could not be found!')
-		>>> else:
-		>>> 	image_path = exp.get_file('my_image.png')
-		>>> 	my_canvas = exp.offline_canvas()
-		>>> 	my_canvas.image(image_path)
-		</DOC>"""
+		example: |
+			if not exp.file_in_pool('my_image.png'):
+				print('my_image.png could not be found!')
+			else:
+				image_path = exp.get_file('my_image.png')
+				my_canvas = exp.offline_canvas()
+				my_canvas.image(image_path)
+		"""
 
 		return os.path.exists(self.get_file(path))
 

@@ -28,8 +28,20 @@ except:
 class keyboard(object):
 
 	"""
-	desc:
+	desc: |
 		The `keyboard` class is used to collect keyboard responses.
+
+		__Example:__
+
+		~~~ {.python}
+		# Wait for a 'z' or 'x' key with a timeout of 3000 ms
+		from openexp.keyboard import keyboard
+		my_keyboard = keyboard(exp, keylist=['z', 'x'], timeout=3000)
+		start_time = self.time()
+		key, end_time = my_keyboard.get_key()
+		exp.set('response', key)
+		exp.set('response_time', end_time - start_time)
+		~~~
 
 		__Function list:__
 
@@ -48,15 +60,6 @@ class keyboard(object):
 				A numeric value specifying a timeout in milliseconds or `None`
 				for no (i.e. infinite) timeout.
 		--%
-
-	example: |
-		# Wait for a 'z' or 'x' key with a timeout of 3000 ms
-		from openexp.keyboard import keyboard
-		my_keyboard = keyboard(exp, keylist=['z', 'x'], timeout=3000)
-		start_time = self.time()
-		key, end_time = my_keyboard.get_key()
-		exp.set('response', key)
-		exp.set('response_time', end_time - start_time)
 	"""
 
 	__metaclass__ = docinherit
@@ -73,10 +76,10 @@ class keyboard(object):
 
 			For example:
 
-				- The key 'a' is represented by 'a' and 'A'.
-				- The up arrow is represented by 'up' and 'UP'.
-				- The '/' key is represented by '/', 'slash', and 'SLASH'.
-				- The spacebar is represented by 'space' and 'SPACE'.
+			- The key 'a' is represented by 'a' and 'A'.
+			- The up arrow is represented by 'up' and 'UP'.
+			- The '/' key is represented by '/', 'slash', and 'SLASH'.
+			- The spacebar is represented by 'space' and 'SPACE'.
 
 			For a complete list of available key names, click on the
 			'list available keys' button in the keyboard_response tab within

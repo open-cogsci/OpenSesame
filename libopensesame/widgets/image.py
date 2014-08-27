@@ -27,23 +27,64 @@ import os
 
 class image(widget):
 
-	"""A simple non-interactive image widget"""
+	"""
+	desc: |
+		The image widget is used to display a non-interactive image.
+
+		__Example (OpenSesame script):__
+
+		~~~
+		widget 0 0 1 1 image path='5.png'
+		~~~
+
+		__Example (Python):__
+
+		~~~ {.python}
+		from libopensesame import widgets
+		form = widgets.form(self.experiment)
+		# The full path to the image needs to be provided.
+		# self.experiment.get_file() can be used to retrieve the full path
+		# to an image in the file pool.
+		image = widgets.image(form, path=self.experiment.get_file('5.png'))
+		form.set_widget(image, (0,0))
+		form._exec()
+		~~~
+
+		__Function list:__
+
+		%--
+		toc:
+			mindepth: 2
+			maxdepth: 2
+		--%
+	"""
 
 	def __init__(self, form, path=None, adjust=True, frame=False):
 	
-		"""<DOC>
-		Constructor.
+		"""
+		desc:
+			Constructor.
 		
-		Arguments:
-		form -- The parent form.
+		arguments:
+			form:
+				desc:	The parent form.
+				type:	form
 		
-		Keyword arguments:
-		path -- The full path to the image (default=None).
-		adjust -- Indicates whether the image should be scaled according to the #
-				  size of the widget (default=True).
-		frame -- Indicates whether a frame should be drawn around the widget #
-				 (default=False).
-		</DOC>"""		
+		keywords:
+			path:
+				desc:	The full path to the image. To show an image from the
+						file pool, you need to first use `experiment.get_file`
+						to determine the full path to the image.
+				type:	[str, unicode, NoneType]
+			adjust:
+				desc:	Indicates whether the image should be scaled according
+						to the size of the widget.
+				type:	bool
+			frame:
+				desc:	Indicates whether a frame should be drawn around the
+						widget.
+				type:	bool
+		"""
 	
 		if type(adjust) != bool:
 			adjust = adjust == u'yes'			
@@ -58,9 +99,10 @@ class image(widget):
 				
 	def render(self):
 	
-		"""<DOC>
-		Draws the widget.
-		</DOC>"""	
+		"""
+		desc:
+			Draws the widget.
+		"""
 	
 		if not os.path.exists(self.path):
 			raise osexception( \
@@ -76,12 +118,15 @@ class image(widget):
 
 	def set_rect(self, rect):
 	
-		"""<DOC>
-		Sets the widget geometry.
+		"""
+		desc:
+			Sets the widget geometry.
 		
-		Arguments:
-		rect -- A (left, top, width, height) tuple.
-		</DOC>"""	
+		arguments:
+			rect:
+				desc:	A (left, top, width, height) tuple.
+				type:	tuple
+		"""
 	
 		self.rect = rect	
 		if self.adjust:
@@ -103,7 +148,3 @@ class image(widget):
 			self.scale = min(scale_x, scale_y)
 		else:
 			self.scale = 1
-		
-		
-		
-		

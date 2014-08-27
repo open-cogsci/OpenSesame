@@ -30,7 +30,7 @@ from libopensesame.exceptions import osexception
 class mouse(object):
 
 	"""
-	desc:
+	desc: |
 		The `mouse` class is used to collect mouse input.
 
 		__Important note:__
@@ -39,6 +39,23 @@ class mouse(object):
 		top-left of the display, and not, as in `sketchpad`s, relative to the
 		display center. For example, the following script will determine the
 		deviation of a mouse click relative to the display center.
+
+		__Example:__
+
+		~~~ {.python}
+		from openexp.mouse import mouse
+		from openexp.canvas import canvas
+		my_mouse = mouse(exp)
+		my_canvas = canvas(exp)
+		while True:
+			button, position, timestamp = my_mouse.get_click(timeout=20)
+			if button != None:
+				break
+			pos, time = my_mouse.get_pos()
+			my_canvas.clear()
+			my_canvas.fixdot(pos[0], pos[1])
+			my_canvas.show()
+		~~~
 
 		__Function list:__
 
@@ -59,20 +76,6 @@ class mouse(object):
 			arg_visible:
 				True to show the cursor, False to hide.
 		--%
-
-	example: |
-		from openexp.mouse import mouse
-		from openexp.canvas import canvas
-		my_mouse = mouse(exp)
-		my_canvas = canvas(exp)
-		while True:
-			button, position, timestamp = my_mouse.get_click(timeout=20)
-			if button != None:
-				break
-			pos, time = my_mouse.get_pos()
-			my_canvas.clear()
-			my_canvas.fixdot(pos[0], pos[1])
-			my_canvas.show()
 	"""
 
 	__metaclass__ = docinherit

@@ -41,6 +41,16 @@ class canvas(object):
 		relative to the top-left of the display, and not, as in `sketchpad`s,
 		relative to the display center.
 
+		__Example__:
+
+		~~~ {.python}
+		# Create a canvas with a central fixation dot and show it.
+		from openexp.canvas import canvas
+		my_canvas = canvas(exp)
+		my_canvas.fixdot()
+		my_canvas.show()
+		~~~
+
 		__Function list:__
 
 		%--
@@ -81,14 +91,10 @@ class canvas(object):
 				col2 ('col2'), useful for blending into the	background. Note:
 				this parameter is ignored by the psycho backend, which uses
 				increasing transparency for the background.
+			arg_fill: |
+				Specifies whether the shape should be filled (True) or consist
+				of an outline (False).
 		--%
-
-	example: |
-		# Create a canvas with a central fixation dot and show it.
-		from openexp.canvas import canvas
-		my_canvas = canvas(exp)
-		my_canvas.fixdot()
-		my_canvas.show()
 	"""
 
 	__metaclass__ = docinherit
@@ -124,7 +130,7 @@ class canvas(object):
 						advance. Generally, it only makes sense to disable
 						auto_prepare when you want to draw a large number
 						of stimuli, as in the second example below.
-						Currently, the auto_prepare parameter only applies.
+						Currently, the auto_prepare parameter only applies
 						to the xpyriment backend, and is ignored by the
 						other backends.
 				type:	bool

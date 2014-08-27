@@ -23,36 +23,84 @@ from widget import widget
 
 class rating_scale(widget):
 
-	"""A simple rating scale/ Likert widget"""
+	"""
+	desc: |
+		The rating_scale widget is a horizontally aligned series of checkable
+		boxes (nodes), optionally with a label attached to each node.
 
-	def __init__(self, form, nodes=5, click_accepts=False, orientation=u'horizontal', var=None, default=None):
+		__Example (OpenSesame script):__
+
+		~~~
+		widget 0 0 1 1 label text="I like fluffy kittens"
+		widget 0 1 1 1 rating_scale var="response" nodes="Agree;Don't know;Disagree"
+		~~~
+
+		__Example (OpenSesame script):__
+
+		~~~ {.python}
+		from libopensesame import widgets
+		form = widgets.form(self.experiment)
+		label = widgets.label(form, text='I like fluffy kittens')
+		rating_scale = widgets.rating_scale(form, nodes=['Agree', "Don't know",
+			'Disagree'], var='response')
+		form.set_widget(label, (0,0))
+		form.set_widget(rating_scale, (0,1))
+		form._exec()
+		~~~
+
+		__Function list:__
+
+		%--
+		toc:
+			mindepth: 2
+			maxdepth: 2
+		--%
+	"""
+
+	def __init__(self, form, nodes=5, click_accepts=False,
+		orientation=u'horizontal', var=None, default=None):
 	
-		"""<DOC>
-		Constructor.
+		"""
+		desc:
+			Constructor.
 		
-		Arguments:
-		form			--	The parent form.
+		arguments:
+			form:
+				desc:	The parent form.
+				type:	form
 		
-		Keyword arguments:
-		nodes			--	The number of nodes or a list of node identifiers (e.g., #
-							['yes', 'no', 'maybe']. If a list is passed the rating scale #
-							will have labels, otherwise it will just have boxes #
-							(default=5).
-		click_accepts	--	Indicates whether the form should close when a value #
-							is selected (default=False).
-		orientation		--	'horizontal' indicates a horizontally oriented
-							rating scale, 'vertical' indicates a vertically
-							oriented rating scale. (default=u'horizontal')
-		var				--	The name of the experimental variable that should be used to log #
-							the widget status. The value that is logged is the number of #
-							the node that was selected, with the first node being 0. If no #
-							nodes were selected, the value is 'None'. For more information #
-							about the use of response variables in forms, see the form #
-							documentation page.(default=None).
-		default			--	The node that is selected by default, or None to #
-							select no node. The value corresponds to the node #
-							number, where 0 is the first node. (default=None)
-		</DOC>"""	
+		keywords:
+			nodes:
+				desc:	The number of nodes or a list of node identifiers (e.g.,
+						['yes', 'no', 'maybe']. If a list is passed the rating
+						scale will have labels, otherwise it will just have
+						boxes.
+				type:	[int, list]
+			click_accepts:
+				desc:	Indicates whether the form should close when a value
+						is selected.
+				type:	bool
+			orientation:
+				desc:	|
+						'horizontal' indicates a horizontally oriented rating
+						scale, 'vertical' indicates a vertically oriented rating
+						scale.
+				type:	[str, unicode]
+			var:
+				desc:	The name of the experimental variable that should be
+						used to log the widget status. The value that is logged
+						is the number of the node that was selected, with the
+						first node being 0. If no nodes were selected, the value
+						is 'None'. For more information about the use of
+						response variables in forms, see the form documentation
+						page.
+				type:	[str, unicode, NoneType]
+			default:
+				desc:	The node that is selected by default, or `None` to
+						select no node. The value corresponds to the node
+						number, where 0 is the first node.
+				type:	[int, NoneType]
+		"""
 		
 		if isinstance(click_accepts, basestring):
 			click_accepts = click_accepts == u'yes'
@@ -74,14 +122,16 @@ class rating_scale(widget):
 			
 	def on_mouse_click(self, pos):
 	
-		"""<DOC>
-		Is called whenever the user clicks on the widget. Selects the correct #
-		value from the scale and optionally closes the form.
+		"""
+		desc:
+			Is called whenever the user clicks on the widget. Selects the
+			correct value from the scale and optionally closes the form.
 		
-		Arguments:
-		pos -- An (x, y) tuple.
-		</DOC>"""		
-	
+		arguments:
+			pos:
+				desc:	An (x, y) coordinates tuple.
+				type:	tuple
+		"""
 	
 		x, y = pos
 		i = 0
@@ -96,9 +146,10 @@ class rating_scale(widget):
 		
 	def render(self):
 	
-		"""<DOC>
-		Draws the widget.
-		</DOC>"""	
+		"""
+		desc:
+			Draws the widget.
+		"""
 
 		x, y, w, h = self.rect
 		cx = x+w/2
@@ -139,12 +190,15 @@ class rating_scale(widget):
 			
 	def set_value(self, val):
 	
-		"""<DOC>
-		Sets the rating scale value.
+		"""
+		desc:
+			Sets the rating scale value.
 		
-		Arguments:
-		val -- The value.
-		</DOC>"""
+		arguments:
+			val:
+				desc:	The value.
+				type:	int
+		"""
 		
 		if val != None and (val >= len(self.nodes) or val < 0):
 			raise osexception( \

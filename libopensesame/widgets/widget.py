@@ -22,16 +22,22 @@ from libopensesame.exceptions import osexception
 
 class widget:
 
-	"""The base class for all other widgets"""
+	"""
+	desc:
+		The base class for all other widgets.
+	"""
 
 	def __init__(self, form):
 
-		"""<DOC>
-		Constructor.
+		"""
+		desc:
+			Constructor.
 
-		Arguments:
-		form -- The parent form.
-		</DOC>"""
+		arguments:
+			form:
+				desc:	The parent form.
+				type:	form
+		"""
 
 		self.type = u'widget'
 		self.form = form
@@ -47,34 +53,43 @@ class widget:
 
 	def draw_frame(self, rect=None, style=u'normal'):
 
-		"""<DOC>
-		Draws a simple frame around the widget.
+		"""
+		desc:
+			Draws a simple frame around the widget.
 
-		Keyword arguments:
-		rect -- A (left, top, width, height) tuple for the frame geometry or
-				None to use the widget geometry (default=None).
-		style -- 'normal', 'active', 'light' (default='normal').
-		</DOC>"""
+		keywords:
+			rect:
+				desc:	A (left, top, width, height) tuple for the frame
+						geometry or `None` to use the widget geometry.
+				type:	[tuple, NoneType]
+			style:
+				desc:	A visual style. Should be 'normal', 'active', or 'light'.
+				type:	[str, unicode]
+		"""
 
 		x, y, w, h = rect
 		self.form.theme_engine.frame(x, y, w, h, style=style)
 
 	def on_mouse_click(self, pos):
 
-		"""<DOC>
-		Is called whenever the user clicks on the widget
+		"""
+		desc:
+			Is called whenever the user clicks on the widget.
 
-		Arguments:
-		pos -- An (x, y) tuple
-		</DOC>"""
+		arguments:
+			pos:
+				desc:	An (x, y) coordinates tuple.
+				type:	tuple
+		"""
 
 		pass
 
 	def render(self):
 
-		"""<DOC>
-		Draws the widget.
-		</DOC>"""
+		"""
+		desc:
+			Draws the widget.
+		"""
 
 		if self.focus:
 			self.draw_frame(self.rect, focus=True)
@@ -83,26 +98,33 @@ class widget:
 
 	def set_rect(self, rect):
 
-		"""<DOC>
-		Sets the widget geometry.
+		"""
+		desc:
+			Sets the widget geometry.
 
-		Arguments:
-		rect -- A (left, top, width, height) tuple.
-		</DOC>"""
+		arguments:
+			rect:
+				desc:	A (left, top, width, height) tuple.
+				type:	tuple
+		"""
 
 		self.rect = rect
 
 	def set_var(self, val, var=None):
 
-		"""<DOC>
-		Sets an experimental variable.
+		"""
+		desc:
+			Sets an experimental variable.
 
-		Arguments:
-		val -- A value.
+		arguments:
+			val:
+				desc:	A value.
 
-		Keyword arguments:
-		var -- A variable name, or None to use widget default (default=None).
-		</DOC>"""
+		keywords:
+			var:
+				desc:	A variable name, or None to use widget default.
+				type:	[str, unicode, NoneType]
+		"""
 
 		if var == None:
 			var = self.var

@@ -22,28 +22,73 @@ from openexp.keyboard import keyboard
 
 class text_input(label):
 
-	"""A multiline text input widget"""
+	"""
+	desc: |
+		The text_input widget allows the participant to enter multi-character
+		responses. (This widget has no relation to the text_input plug-in, which
+		was created before forms where added to OpenSesame.)
 
-	def __init__(self, form, text=u'', frame=True, center=False, stub=u'Type here ...', return_accepts=False, var=None):
+		__Example (OpenSesame script):__
+
+		~~~
+		widget 0 0 1 1 text_input var='response' return_accepts='yes'
+		~~~
+
+		__Example (Python):__
+
+		~~~ {.python}
+		from libopensesame import widgets
+		form = widgets.form(self.experiment)
+		text_input = widgets.text_input(form, var='response', return_accepts=True)
+		form.set_widget(text_input, (0,0))
+		form._exec()
+		~~~
+
+		__Function list:__
+
+		%--
+		toc:
+			mindepth: 2
+			maxdepth: 2
+		--%
+	"""
+
+	def __init__(self, form, text=u'', frame=True, center=False,
+		stub=u'Type here ...', return_accepts=False, var=None):
 	
-		"""<DOC>
-		Constructor.
-		
-		Arguments:
-		form -- The parent form.
-		
-		Keyword arguments:
-		text -- The text to start with (default=u'').
-		frame -- Indicates whether a frame should be drawn around the widget
-				 (default=False).
-		center -- Indicates whether the text should be centered (default=False).
-		stub -- A text string that should be shown whenever the user has not
-				entered any text (default=u'Type here ...').
-		return_accepts -- Indicates whether a return press should accept and
-						  close the form (default=False).
-		var -- The name of the experimental variable that should be used to log
-			   the widget status (default=None).
-		</DOC>"""
+		"""
+		desc:
+			Constructor.
+
+		arguments:
+			form:
+				desc:	The parent form.
+				type:	form
+
+		keywords:
+			text:
+				desc:	The text to start with.
+				type:	[str, unicode]
+			frame:
+				desc:	Indicates whether a frame should be drawn around the
+						widget.
+				type:	bool
+			center:
+				desc:	Indicates whether the text should be centered.
+				type:	bool
+			stub:
+				desc:	A text string that should be shown whenever the user has
+						not entered any text.
+				type:	[str, unicode]
+			return_accepts:
+				desc:	Indicates whether a return press should accept and close
+						the form.
+				type:	bool
+			var:
+				desc:	The name of the experimental variable that should be
+						used to log the widget status.
+				type:	[str, unicode, NoneType]
+		"""
 		
 		if type(return_accepts) != bool:
 			return_accepts = return_accepts == u'yes'
@@ -59,9 +104,10 @@ class text_input(label):
 		
 	def render(self):
 	
-		"""<DOC>
-		Draws the widget.
-		</DOC>"""	
+		"""
+		desc:
+			Draws the widget.
+		"""
 
 		if self.frame:
 			if self.focus:
@@ -77,13 +123,16 @@ class text_input(label):
 				
 	def on_mouse_click(self, pos):
 	
-		"""<DOC>
-		Is called whenever the user clicks on the widget. Activates the text #
-		input for typing text.
+		"""
+		desc:
+			Is called whenever the user clicks on the widget. Activates the text
+			input for typing text.
 		
-		Arguments:
-		pos -- An (x, y) tuple.
-		</DOC>"""	
+		arguments:
+			pos:
+				desc:	An (x, y) coordinates tuple.
+				type:	tuple
+		"""
 		
 		self.focus = True
 		my_keyboard = keyboard(self.form.experiment)

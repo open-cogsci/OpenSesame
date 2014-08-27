@@ -24,7 +24,43 @@ from libopensesame.exceptions import osexception
 
 class inline_script(item.item):
 
-	"""Allows users to use Python code in their experiments"""
+	"""
+	desc: |
+		Allows users to use Python code in their experiments.
+
+		When you are using the inline_script item, you are essentially writing
+		the body of two functions (`prepare` and `run`) of an `inline_script`
+		object. The `inline_script` object has many more functions which you can
+		use, and these are listed below. To use these functions, you use the
+		`self.[function_name]` notation.
+
+		__Important note:__
+
+		All inline_script items share the same workspace. This means that
+		variables that are created in one inline_script are available in
+		another inline_script. Similarly, modules that are imported in one
+		inline_script are available in all other inline_scripts.
+
+		__Example:__
+
+		~~~ {.python}
+		subject_nr = self.get("subject_nr")
+		~~~
+
+		__Example:__
+
+		{% highlight python %}
+		self.sleep(1000)
+		{% endhighlight %}
+
+		__Function list:__
+
+		%--
+		toc:
+			mindepth: 2
+			maxdepth: 2
+		--%
+	"""
 
 	description = u'Executes Python code'
 
@@ -38,18 +74,22 @@ class inline_script(item.item):
 
 	def copy_sketchpad(self, sketchpad_name):
 
-		"""<DOC>
-		Creates a canvas that is a copy from the canvas of a sketchpad item.
+		"""
+		desc:
+			Creates a canvas that is a copy from the canvas of a sketchpad item.
 
-		Arguments:
-		sketchpad_name	--	The name of the sketchpad.
+		arguments:
+			sketchpad_name:
+				desc:	The name of the sketchpad.
+				type:	[str, unicode]
 
-		Returns:
-		An openexp canvas.
+		returns:
+			desc:	A canvas.
+			type:	canvas
 
-		Example:
-		>>> my_canvas = self.copy_sketchpad('my_sketchpad')
-		</DOC>"""
+		example: |
+			my_canvas = self.copy_sketchpad('my_sketchpad')
+		"""
 
 		c = self.offline_canvas()
 		c.copy(self.experiment.items[sketchpad_name].canvas)
@@ -57,29 +97,34 @@ class inline_script(item.item):
 
 	def offline_canvas(self, auto_prepare=True):
 
-		"""<DOC>
-		Creates an empty canvas.
+		"""
+		desc:
+			Creates an empty canvas.
 
-		Keyword arguments:
-		auto_prepare 	--	See canvas documentation. (default=True)
+		keywords:
+			auto_prepare:
+				desc:	See `openexp.canvas.__init__`.
+				type:	bool
 
-		Returns:
-		An openexp canvas.
+		returns:
+			desc:	A canvas.
+			type:	canvas
 
-		Example:
-		>>> my_canvas = self.offline_canvas()
-		</DOC>"""
+		example: |
+			my_canvas = self.offline_canvas()
+		"""
 
 		return canvas.canvas(self.experiment, self.get(u'background'), \
 			self.get(u'foreground'), auto_prepare=auto_prepare)
 
 	def prepare(self):
 
-		"""<DOC>
-		Executes the prepare script. The code that you enter in the 'prepare' #
-		tab of an inline_script item in the GUI is used as a body for this #
-		function.
-		</DOC>"""
+		"""
+		desc:
+			Executes the prepare script. The code that you enter in the
+			'prepare' tab of an inline_script item in the GUI is used as a body
+			for this function.
+		"""
 
 		item.item.prepare(self)
 		if self.experiment.transparent_variables == u'yes':
@@ -111,10 +156,12 @@ class inline_script(item.item):
 
 	def run(self):
 
-		"""<DOC>
-		Executes the run script. The code that you enter in the 'run' tab of #
-		an inline_script item in the GUI is used as a body for this function.
-		</DOC>"""
+		"""
+		desc:
+			Executes the run script. The code that you enter in the 'run' tab of
+			an inline_script item in the GUI is used as a body for this
+			function.
+		"""
 
 		self.set_item_onset()
 		# 'self' must always be registered, otherwise we get confusions between

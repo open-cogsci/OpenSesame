@@ -24,29 +24,69 @@ from openexp.mouse import mouse
 
 class form:
 
-	"""Implements a single form that acts as a container for widgets"""
+	"""
+	desc: |
+		The form is a container for widgets, such as labels, etc. If you use the
+		form_base plug-in in combination with OpenSesame script, you do not need
+		to explicitly create a form. However, if you use Python inline code, you
+		do.
 
-	def __init__(self, experiment, cols=2, rows=2, spacing=10, margins=(100, 100, 100, 100), theme=u'gray', item=None):
+		__Example__:
 
-		"""<DOC>
-		Constructor
+		~~~ {.python}
+		from libopensesame import widgets
+		form = widgets.form(self.experiment)
+		label = widgets.label(form, text='label)
+		form.set_widget(label, (0,0))
+		form._exec()
+		~~~
 
-		Arguments:
-		experiment -- An OpenSesame experiment.
+		__Function list:__
 
-		Keyword arguments:
-		cols -- The number of columns (as int) or a list that specifies the #
-				number and relative size of the columns. For example, '[1,2,1]' #
-				will create 3 columns where the middle one is twice as large as #
-				the outer ones (default=2).
-		rows -- Analogous to 'cols' (default=2).
-		spacing -- The amount of empty space between the widgets (default=10).
-		margins -- The amount of empty space around the form. This is specified #
-				   as a list, like so [top-margin, right-margin, bottom-margin, #
-				   left-margin] (default=[100, 100, 100, 100]).
-		theme -- The theme for the widgets (default='gray').
-		item -- The item of which the form is part (default=None).
-		</DOC>"""
+		%--
+		toc:
+			mindepth: 2
+			maxdepth: 2
+		--%
+	"""
+
+	def __init__(self, experiment, cols=2, rows=2, spacing=10,
+		margins=(100, 100, 100, 100), theme=u'gray', item=None):
+
+		"""
+		desc:
+			Constructor.
+
+		arguments:
+			experiment:
+				desc:	An OpenSesame experiment.
+				type:	experiment
+
+		keywords:
+			cols:
+				desc:	The number of columns (as int) or a list that specifies
+						the number and relative size of the columns. For
+						example, `[1,2,1]` will create 3 columns where the
+						middle one is twice as large as the outer ones.
+				type:	[int, list]
+			rows:
+				desc:	Analogous to `cols`, but for the rows.
+				type:	[int, list]
+			spacing:
+				desc:	The amount of empty space between widgets (in pixels).
+				type:	int
+			margins:
+				desc:	The amount of empty space around the form. This is
+						specified as a list, like so [top-margin, right-margin,
+						bottom-margin, left-margin].
+				type:	list
+			theme:
+				desc:	The theme for the widgets.
+				type:	[str, unicode]
+			item:
+				desc:	The item of which the form is part.
+				type:	[item, NoneType]
+		"""
 
 		# Normalize the column and row sizes so that they add up to 1
 		if type(cols) == int:
@@ -86,20 +126,23 @@ class form:
 
 	def _exec(self, focus_widget=None):
 
-		"""<DOC>
-		Executes the form.
+		"""
+		desc:
+			Executes the form.
 
-		Keyword arguments:
-		focus_widget -- A widget that is in the form and should receive a #
-						virtual mouse click when the form is opened. This allows #
-						you to activate a text_input right away, for example, so #
+		keywords:
+			focus_widget:
+				desc:	A widget that is in the form and should receive a
+						virtual mouse click when the form is opened. This allows
+						you to activate a text_input right away, for example, so
 						that the user doesn't have to click on it anymore.
+				type:	[widget, NoneType]
 
-		Returns:
-		Gives the return value of the form, which depends on how the user has #
-		interacted with the widgets. For example, if the user has pressed a #
-		button, the button text will be returned.
-		</DOC>"""
+		returns:
+			desc:	Gives the return value of the form, which depends on how the
+					user interacted with the widgets. For example, if the user
+					pressed a button, the button text will be returned.
+		"""
 
 		i = 0
 		self.mouse = mouse(self.experiment)
@@ -121,16 +164,21 @@ class form:
 
 	def cell_index(self, pos):
 
-		"""<DOC>
-		Converts a position to a cell index. A cell index corresponds to the #
-		number of the cell in the form, from left-to-right, top-to-bottom.
+		"""
+		desc:
+			Converts a position to a cell index. A cell index corresponds to the
+			number of the cell in the form, from left-to-right, top-to-bottom.
 
-		Arguments:
-		pos -- A position, which can be an index (int) or a column, row tuple.
+		arguments:
+			pos:
+				desc:	A position in the form, which can be an index (int) or a
+						(column, row) tuple.
+				type:	[int, tuple]
 
-		Returns:
-		A cell index
-		</DOC>"""
+		returns:
+			desc:	A cell index.
+			type:	int
+		"""
 
 		if type(pos) == int:
 			return pos
@@ -214,9 +262,10 @@ class form:
 
 	def render(self):
 
-		"""<DOC>
-		Draws the form and all the widgets in it.
-		</DOC>"""
+		"""
+		desc:
+			Draws the form and all the widgets in it.
+		"""
 
 		self.validate_geometry()
 		self.canvas.clear()
@@ -227,18 +276,27 @@ class form:
 
 	def set_widget(self, widget, pos, colspan=1, rowspan=1):
 
-		"""<DOC>
-		Adds a widget to the form.
+		"""
+		desc:
+			Adds a widget to the form.
 
-		Arguments:
-		widget -- The widget to add.
-		pos -- The position to add the widget, which can be an index or a
-			   (column, row) tuple.
+		arguments:
+			widget:
+				desc:	The widget to add.
+				type:	widget
+			pos:
+				desc:	The position to add the widget, which can be an index or
+						a (column, row) tuple.
+				type:	[int, tuple]
 
-		Keyword arguments:
-		colspan -- The number of columns that the widget should span (default=1).
-		rowspan -- The number of rows that the widget should span (default=1).
-		</DOC>"""
+		keywords:
+			colspan:
+				desc:	The number of columns that the widget should span.
+				type:	int
+			rowspan:
+				desc:	The number of rows that the widget should span.
+				type:	int
+		"""
 
 		index = self.cell_index(pos)
 		if index >= len(self.widgets):
@@ -258,16 +316,20 @@ class form:
 
 	def xy_to_index(self, xy):
 
-		"""<DOC>
-		Converts a coordinate in pixels to a cell index. This allows you to #
-		determine on which widget a user has clicked.
+		"""
+		desc:
+			Converts a coordinate in pixels to a cell index. This allows you to
+			determine on which widget a user has clicked.
 
-		Arguments:
-		xy -- An (x,y) tuple.
+		arguments:
+			xy:
+				desc:	An (x,y) coordinates tuple.
+				type:	tuple
 
-		Returns:
-		A cell index.
-		</DOC>"""
+		returns:
+			desc:	A cell index.
+			type:	int
+		"""
 
 		for index in range(len(self.widgets)):
 			x, y, w, h = self.get_rect(index)

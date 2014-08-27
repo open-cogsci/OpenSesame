@@ -22,22 +22,58 @@ from widget import widget
 
 class label(widget):
 
-	"""A simple non-interactive text label"""
+	"""
+	desc: |
+		The label widget is a non-interactive string of text.
+
+		__Example (OpenSesame script):__
+
+		~~~
+		widget 0 0 1 1 label text='My text'
+		~~~
+
+		__Example (Python):__
+
+		~~~ {.python}
+		from libopensesame import widgets
+		form = widgets.form(self.experiment)
+		label = widgets.label(form, text='My text')
+		form.set_widget(label, (0,0))
+		form._exec()
+		~~~
+
+		__Function list:__
+
+		%--
+		toc:
+			mindepth: 2
+			maxdepth: 2
+		--%
+	"""
 
 	def __init__(self, form, text=u'label', frame=False, center=True):
 
-		"""<DOC>
-		Constructor.
-		
-		Arguments:
-		form -- The parent form.
+		"""
+		desc:
+			Constructor.
 
-		Keyword arguments:
-		text -- A string of text (default='label').
-		frame -- Indicates whether a frame should be drawn around the widget #
-				 (default=False).
-		center -- Indicates whether the text should be centered (default=True).
-		</DOC>"""
+		arguments:
+			form:
+				desc:	The parent form.
+				type:	form
+
+		keywords:
+			text:
+				desc:	The label text.
+				type:	[str, unicode]
+			frame:
+				desc:	Indicates whether a frame should be drawn around the
+						widget.
+				type:	bool
+			center:
+				desc:	Indicates whether the text should be centerd.
+				type:	bool
+		"""
 
 		if type(frame) != bool:
 			frame = frame == u'yes'
@@ -55,15 +91,20 @@ class label(widget):
 
 	def draw_text(self, text, html=True):
 
-		"""<DOC>
-		Draws text in the widget.
+		"""
+		desc:
+			Draws text inside the widget.
 		
-		Arguments:
-		text -- The text to draw.
+		arguments:
+			text:
+				desc:	The text to draw.
+				type:	[str, unicode]
 		
-		Keyword arguments:
-		html -- Indicates whether HTML should be parsed (default=True).
-		</DOC>"""
+		keywords:
+			html:
+				desc:	Indicates whether HTML should be parsed.
+				type:	bool
+		"""
 
 		if self.form.item != None:
 			text = self.form.item.eval_text(text)
@@ -83,9 +124,10 @@ class label(widget):
 
 	def render(self):
 
-		"""<DOC>
-		Draws the widget.
-		</DOC>"""	
+		"""
+		desc:
+			Draws the widget.
+		"""
 
 		if self.frame:
 			self.draw_frame(self.rect)

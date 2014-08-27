@@ -30,7 +30,7 @@ from libopensesame.exceptions import osexception
 class sampler(object):
 
 	"""
-	desc:
+	desc: |
 		The `sampler` module provides functionality to play sound samples in
 		`.ogg` and `.wav` format (Audacity is an excellent free tool to convert
 		samples from other formats).
@@ -42,10 +42,21 @@ class sampler(object):
 		the sampling rate of the sampler back-end as specified under back-end
 		settings.
 
-	example: |
+		__Example:__
+
+		~~~ {.python}
 		from openexp.sampler import sampler
 		my_sampler = sampler(exp, exp.get_file('bark.ogg'))
 		my_sampler.play()
+		~~~
+
+		__Function list:__
+
+		%--
+		toc:
+			mindepth: 2
+			maxdepth: 2
+		--%
 	"""
 
 	__metaclass__ = docinherit
