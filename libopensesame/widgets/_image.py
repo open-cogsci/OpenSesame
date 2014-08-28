@@ -17,7 +17,7 @@ You should have received a copy of the GNU General Public License
 along with openexp.  If not, see <http://www.gnu.org/licenses/>.
 """
 
-from widget import widget
+from libopensesame.widgets._widget import widget
 try: # Try both import statements
 	from PIL import Image
 except:

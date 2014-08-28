@@ -19,7 +19,7 @@ along with openexp.  If not, see <http://www.gnu.org/licenses/>.
 
 from libopensesame.exceptions import osexception
 from libopensesame import debug
-from widget import widget
+from libopensesame.widgets._widget import widget
 
 class rating_scale(widget):
 

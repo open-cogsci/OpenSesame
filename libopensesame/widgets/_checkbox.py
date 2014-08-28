@@ -19,7 +19,7 @@ along with openexp.  If not, see <http://www.gnu.org/licenses/>.
 
 from libqtopensesame.misc import _
 from libopensesame.exceptions import osexception
-from button import button
+from libopensesame.widgets._button import button
 
 class checkbox(button):
 

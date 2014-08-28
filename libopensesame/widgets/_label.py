@@ -18,7 +18,7 @@ along with openexp.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 import textwrap
-from widget import widget
+from libopensesame.widgets._widget import widget
 
 class label(widget):
 

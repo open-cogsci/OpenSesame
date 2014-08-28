@@ -22,7 +22,7 @@ from libopensesame.exceptions import osexception
 from openexp.canvas import canvas
 from openexp.mouse import mouse
 
-class form:
+class form(object):
 
 	"""
 	desc: |

@@ -17,10 +17,10 @@ You should have received a copy of the GNU General Public License
 along with openexp.  If not, see <http://www.gnu.org/licenses/>.
 """
 
-from form import form as _form
+from libopensesame.widgets._form import form as _form
 from libopensesame.exceptions import osexception
 
-class widget:
+class widget(object):
 
 	"""
 	desc:

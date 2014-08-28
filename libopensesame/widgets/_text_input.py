@@ -17,7 +17,7 @@ You should have received a copy of the GNU General Public License
 along with openexp.  If not, see <http://www.gnu.org/licenses/>.
 """
 
-from label import label
+from libopensesame.widgets._label import label
 from openexp.keyboard import keyboard
 
 class text_input(label):

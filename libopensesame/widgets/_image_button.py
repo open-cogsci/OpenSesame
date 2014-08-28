@@ -17,7 +17,7 @@ You should have received a copy of the GNU General Public License
 along with openexp.  If not, see <http://www.gnu.org/licenses/>.
 """
 
-from image import image
+from libopensesame.widgets._image import image
 
 class image_button(image):
 
