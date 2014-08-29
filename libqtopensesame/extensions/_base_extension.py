@@ -20,6 +20,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 import os
 from PyQt4 import QtCore, QtGui
 from libopensesame import debug
+from libopensesame.exceptions import osexception
 from libqtopensesame.misc import _
 from libqtopensesame.misc.config import cfg
 from libqtopensesame.misc.base_subcomponent import base_subcomponent
@@ -29,19 +30,21 @@ class base_extension(base_subcomponent):
 	"""
 	desc:
 		A base class for GUI extensions.
-
-		Currently supported events
-
-		- startup
-			- Fired when OpenSesame has been launched, after program the has
-			  been fully initialized.
-		- start_experiment(bool fullscreen)
-			- Fired when an experiment is started.
-		- end_experiment
-			- Fired when an experiment is finished.
 	"""
 
 	def __init__(self, main_window, info={}):
+
+		"""
+		desc:
+			Constructor.
+
+		arguments:
+			main_window:	The main-window object.
+
+		keywords:
+			info:			A dictionary with extension properties that have
+							been read from info.[json|txt].
+		"""
 
 		debug.msg(u'creating %s' % self.name())
 		self.info = info
@@ -52,25 +55,63 @@ class base_extension(base_subcomponent):
 
 	@property
 	def menubar(self):
+
+		"""
+		returns:
+			desc:	Gives the menubar.
+			type:	QMenuBar
+		"""
+
 		return self.main_window.menuBar()
 
 	@property
 	def toolbar(self):
+
+		"""
+		returns:
+			desc:	Gives the main toolbar.
+			type:	QToolBar
+		"""
+
 		return self.main_window.ui.toolbar_main
 
 	@property
-	def statusbar(self):
-		return self.main_window.statusBar()
+	def tabwidget(self):
+
+		"""
+		returns:
+			desc:	Gives the tab widget.
+			type:	QTabWidget
+		"""
+
+		return self.main_window.ui.tabwidget
 
 	@property
-	def notify(self):
-		return self.main_window.experiment.notify
+	def statusbar(self):
+
+		"""
+		returns:
+			desc:	Gives the statusbar.
+			type:	QStatusBar
+		"""
+
+		return self.main_window.statusBar()
 
 	@property
 	def set_status(self):
 		return self.main_window.set_status
 
 	def label(self):
+
+		"""
+		desc:
+			Gives the label that is used for the menu and toolbar entry.
+			Normally, this is specified in info.json.
+
+		returns:
+			desc:	A label text.
+			type:	unicode
+		"""
 
 		label = self.info.get(u'label', None)
 		if label != None:
@@ -80,18 +121,44 @@ class base_extension(base_subcomponent):
 	def icon(self):
 
 		"""
+		desc:
+			Gives the name of the icon that is used for the menu and toolbar
+			entry. Normally, this is specified in info.json.
+
 		returns:
-			desc:	The name of an icon, or a QIcon.
-			type:	[str, unicode, QIcon]
+			desc:	The name of an icon.
+			type:	unicode
 		"""
 
 		return self.info.get(u'icon', u'applications-utilities')
 
 	def shortcut(self):
 
+		"""
+		desc:
+			Gives the keyboard shortcut that activates the extension. Normally,
+			this is specified in info.json. A shortcut only works if the
+			extension has either a toolbar ot menu entry.
+
+		returns:
+			desc:	The keyboard shortcut.
+			type:	unicode
+		"""
+
 		return self.info.get(u'shortcut', None)
 
 	def menu_pos(self):
+
+		"""
+		desc:
+			Describes the position of the extension in the menu. Normally,
+			this is specified in info.json.
+
+		returns:
+			desc:	A (submenu, menuindex, separator_before, separator_after)
+					tuple, or None if the extension has no menu entry.
+			type:	[tuple, NoneType]
+		"""
 
 		menu_pos = self.info.get(u'menu', None)
 		if menu_pos == None:
@@ -103,6 +170,17 @@ class base_extension(base_subcomponent):
 
 	def toolbar_pos(self):
 
+		"""
+		desc:
+			Describes the position of the extension in the toolbar. Normally,
+			this is specified in info.json.
+
+		returns:
+			desc:	An (index, separator_before, separator_after)
+					tuple, or None if the extension has no toolbar entry.
+			type:	[tuple, NoneType]
+		"""
+
 		toolbar_pos = self.info.get(u'toolbar', None)
 		if toolbar_pos == None:
 			return None
@@ -111,10 +189,35 @@ class base_extension(base_subcomponent):
 			toolbar_pos.get(u'separator_after', False))
 
 	def activate(self):
+
+		"""
+		desc:
+			Is called when the extension is activated through a keyboard
+			shortcut, or a menu/ toolbar click.
+		"""
+
 		pass
 
 	def add_action(self, widget, action, index, separator_before,
 		separator_after):
+
+		"""
+		visible:
+			False
+
+		desc:
+			Adds an action to a widget that supports actions (i.e. a QMenu or
+			a QToolBar).
+
+		arguments:
+			widget:				The widget to add the action to.
+			action:				The action to add.
+			index:				The index of the action.
+			separator_before:	Indicates whether a separator should be added
+								before the action.
+			separator_action:	Indicates whether a separator should be added
+								before the action.
+		"""
 
 		if index >= len(widget.actions()) or index < -len(widget.actions()) \
 			or index == -1:
@@ -136,15 +239,20 @@ class base_extension(base_subcomponent):
 		if separator_before:
 			widget.insertSeparator(action)
 
-	def get_action(self, widget, action_text):
-
-		for action in widget.actions():
-			if action.text() == action_text:
-				return action
-		debug.msg(u'Action "%s" not found' % action_text, reason=u'warning')
-		return action
-
 	def get_submenu(self, menu_text):
+
+		"""
+		desc:
+			Gets the submenu that matches the menu text. If no match is found
+			a new submenu is created.
+
+		arguments:
+			menu_text:	The menu text. This should match an object in
+						main_window.ui.menu_[menu_text].
+
+		returns:
+			type:	QMenu
+		"""
 
 		menu_name = u'menu_%s' % menu_text.lower()
 		if not hasattr(self.main_window.ui, menu_name):
@@ -159,10 +267,6 @@ class base_extension(base_subcomponent):
 		if hasattr(self, u'event_%s' % event):
 			debug.msg(u'extensions %s received event_%s' % (self.name(), event))
 			getattr(self, u'event_%s' % event)(**kwdict)
-
-	def ext_folder(self):
-
-		return self.info[u'plugin_folder']
 
 	def name(self):
 
@@ -280,3 +384,10 @@ class base_extension(base_subcomponent):
 				cfg[setting] = control.value()
 			else:
 				cfg[setting] = unicode(control.text())
+
+	def ext_resource(self, resource):
+
+		path = os.path.join(self.info[u'plugin_folder'], resource)
+		if not os.path.exists(path):
+			raise osexception(u'Extension resource not found: %s' % path)
+		return path

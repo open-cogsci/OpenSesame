@@ -18,14 +18,33 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 import sys
+from PyQt4 import QtGui, QtCore
 from libopensesame import plugins
+from libqtopensesame.misc import _
 from libqtopensesame.misc.base_subcomponent import base_subcomponent
 
 class extension_manager(base_subcomponent):
 
+	"""
+	desc:
+		Initializes GUI extensions, and distributes signals (fires) to the
+		relevant extensions.
+	"""
+
 	def __init__(self, main_window):
 
+		"""
+		desc:
+			Constructor.
+
+		arguments:
+			main_window:	The main-window object.
+		"""
+
 		self.setup(main_window)
+		self.main_window.set_status(_(u'Loading extensions'), timeout=None,
+			status=u'busy')
+		QtGui.QApplication.processEvents()
 		self._extensions = []
 		self.events = {}
 		for ext_name in plugins.list_plugins(_type=u'extensions'):
@@ -35,8 +54,21 @@ class extension_manager(base_subcomponent):
 				if event not in self.events:
 					self.events[event] = []
 				self.events[event].append(ext)
+		self.main_window.set_status(_(u'Done'), status=u'ready')
 
 	def fire(self, event, **kwdict):
+
+		"""
+		desc:
+			Fires an event to all extensions that support the event.
+
+		arguments:
+			event:		The event name.
+
+		keyword-dict:
+		kwdict:		A dictionary with keywords that are applicable to a
+					particular event.
+		"""
 
 		for ext in self.events.get(event, []):
 			ext.fire(event, **kwdict)

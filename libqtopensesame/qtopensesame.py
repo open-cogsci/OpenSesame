@@ -148,11 +148,6 @@ class qtopensesame(QtGui.QMainWindow, base_component):
 			self.refresh_variable_inspector)
 		self.ui.action_show_pool.triggered.connect(self.refresh_pool)
 		self.ui.action_show_stdout.triggered.connect(self.refresh_stdout)
-		self.ui.action_help.triggered.connect( \
-			self.ui.tabwidget.open_general_help)
-		self.ui.action_about.triggered.connect(self.ui.tabwidget.open_about)
-		self.ui.action_online_documentation.triggered.connect( \
-			self.ui.tabwidget.open_osdoc)
 		self.ui.action_preferences.triggered.connect( \
 			self.ui.tabwidget.open_preferences)
 		self.ui.button_help_stdout.clicked.connect( \
@@ -205,7 +200,6 @@ class qtopensesame(QtGui.QMainWindow, base_component):
 		self.experiment.build_item_tree()
 
 		# Miscellaneous initialization
-		self.set_status(_(u"Welcome to OpenSesame %s") % self.version)
 		self.restore_state()
 		self.update_recent_files()
 		self.set_unsaved(False)

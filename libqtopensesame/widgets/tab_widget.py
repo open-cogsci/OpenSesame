@@ -190,12 +190,6 @@ class tab_widget(base_subcomponent, QtGui.QTabWidget):
 			return None
 		return self.widget(i)
 
-	def open_about(self):
-
-		"""Open the about help tab"""
-
-		self.open_browser(u'http://osdoc.cogsci.nl/about/')
-
 	def open_browser(self, url):
 
 		"""
@@ -256,12 +250,6 @@ class tab_widget(base_subcomponent, QtGui.QTabWidget):
 		from libqtopensesame.widgets.general_properties import general_properties
 		w = general_properties(self.main_window)
 		self.add(w, u'experiment', u'General properties')
-
-	def open_general_help(self):
-
-		"""Open the general help tab"""
-
-		self.open_help(u'general')
 
 	def open_general_script(self):
 
