@@ -76,18 +76,23 @@ class base_component(object):
 		"""
 
 		if ui != None:
-			# Dot-split the ui id, append a `.ui` extension, and assume it's
-			# relative to the resources/ui subfolder.
-			path_list = [u'ui'] + ui.split(u'.')
-			if hasattr(self, u'experiment'):
-				# If an experiment object is available, use that to find the
-				# resources ...
-				ui_path = self.experiment.resource(
-					os.path.join(*path_list)+u'.ui')
+			# If the UI file has been explicitly registered, which is the case
+			# for extensions
+			if hasattr(self, u'experiment') and ui in self.experiment.resources:
+				ui_path = self.experiment.resources[ui]
 			else:
-				# ... otherwise use the static resources function.
-				from libopensesame import misc
-				ui_path = misc.resource(os.path.join(*path_list)+u'.ui')
+				# Dot-split the ui id, append a `.ui` extension, and assume it's
+				# relative to the resources/ui subfolder.
+				path_list = [u'ui'] + ui.split(u'.')
+				if hasattr(self, u'experiment'):
+					# If an experiment object is available, use that to find the
+					# resources ...
+					ui_path = self.experiment.resource(
+						os.path.join(*path_list)+u'.ui')
+				else:
+					# ... otherwise use the static resources function.
+					from libopensesame import misc
+					ui_path = misc.resource(os.path.join(*path_list)+u'.ui')
 			debug.msg(u'dynamically loading ui: %s' % ui_path)
 			self.ui = uic.loadUi(ui_path, self)
 		else:

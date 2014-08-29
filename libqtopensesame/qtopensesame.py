@@ -18,7 +18,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from PyQt4 import QtCore, QtGui
-from libqtopensesame.misc import includes, config, _
+from libqtopensesame.misc import includes, _
 from libqtopensesame.misc.base_component import base_component
 from libqtopensesame.misc.config import cfg
 from libqtopensesame.items import experiment
@@ -72,6 +72,7 @@ class qtopensesame(QtGui.QMainWindow, base_component):
 
 		from libopensesame import misc
 		from libqtopensesame.misc import theme
+		from libqtopensesame.extensions import extension_manager
 		import platform
 		import random
 
@@ -109,14 +110,9 @@ class qtopensesame(QtGui.QMainWindow, base_component):
 		# Determine the home folder
 		self.home_folder = libopensesame.misc.home_folder()
 
-		# Determine autosave_folder
+		# Create .opensesame folder if it doesn't exist yet
 		if not os.path.exists(os.path.join(self.home_folder, u".opensesame")):
 			os.mkdir(os.path.join(self.home_folder, u".opensesame"))
-		if not os.path.exists(os.path.join(self.home_folder, u".opensesame", \
-			u"backup")):
-			os.mkdir(os.path.join(self.home_folder, u".opensesame", u"backup"))
-		self.autosave_folder = os.path.join(self.home_folder, u".opensesame", \
-			u"backup")
 
 		# Set the filter-string for opening and saving files
 		self.file_type_filter = \
@@ -147,8 +143,6 @@ class qtopensesame(QtGui.QMainWindow, base_component):
 			self.ui.tabwidget.close_other)
 		self.ui.action_onetabmode.triggered.connect( \
 			self.ui.tabwidget.toggle_onetabmode)
-		self.ui.action_quick_switcher.triggered.connect(
-			self.quick_switcher)
 		self.ui.action_show_overview.triggered.connect(self.toggle_overview)
 		self.ui.action_show_variable_inspector.triggered.connect( \
 			self.refresh_variable_inspector)
@@ -159,9 +153,6 @@ class qtopensesame(QtGui.QMainWindow, base_component):
 		self.ui.action_about.triggered.connect(self.ui.tabwidget.open_about)
 		self.ui.action_online_documentation.triggered.connect( \
 			self.ui.tabwidget.open_osdoc)
-		self.ui.action_check_for_update.triggered.connect(self.check_update)
-		self.ui.action_open_autosave_folder.triggered.connect( \
-			self.open_autosave_folder)
 		self.ui.action_preferences.triggered.connect( \
 			self.ui.tabwidget.open_preferences)
 		self.ui.button_help_stdout.clicked.connect( \
@@ -216,10 +207,12 @@ class qtopensesame(QtGui.QMainWindow, base_component):
 		# Miscellaneous initialization
 		self.set_status(_(u"Welcome to OpenSesame %s") % self.version)
 		self.restore_state()
-		self.start_autosave_timer()
 		self.update_recent_files()
-		self.clean_autosave()
 		self.set_unsaved(False)
+
+		# Initialize extensions
+		self.extension_manager = extension_manager(self)
+		self.extension_manager.fire(u'startup')
 
 	def parse_command_line(self):
 
@@ -276,13 +269,8 @@ class qtopensesame(QtGui.QMainWindow, base_component):
 		"""Restores the configuration settings, but doesn't apply anything"""
 
 		if self.options.start_clean:
-			debug.msg(u'Not restoring config')
-			return
-		debug.msg()
-		settings = QtCore.QSettings(u"cogscinl", u"opensesame")
-		settings.beginGroup(u"MainWindow")
-		config.restore_config(settings)
-		settings.endGroup()
+			cfg.clear()
+		cfg.restore()
 
 	def restore_state(self):
 
@@ -291,7 +279,7 @@ class qtopensesame(QtGui.QMainWindow, base_component):
 		debug.msg()
 
 		# Force configuration options that were set via the command line
-		config.parse_cmdline_args(self.options._config)
+		cfg.parse_cmdline_args(self.options._config)
 		self.recent_files = []
 		if self.options.start_clean:
 			debug.msg(u'Not restoring state')
@@ -350,7 +338,6 @@ class qtopensesame(QtGui.QMainWindow, base_component):
 		debug.msg()
 		settings = QtCore.QSettings(u"cogscinl", u"opensesame")
 		settings.beginGroup(u"MainWindow")
-		config.save_config(settings)
 		settings.setValue(u"size", self.size())
 		settings.setValue(u"pos", self.pos())
 		settings.setValue(u"_initial_window_geometry", self.saveGeometry())
@@ -361,6 +348,7 @@ class qtopensesame(QtGui.QMainWindow, base_component):
 			QtCore.Qt.ToolButtonTextUnderIcon)
 		settings.setValue(u"recent_files", u";;".join(self.recent_files))
 		settings.endGroup()
+		cfg.save()
 
 	def set_busy(self, state=True):
 
@@ -395,74 +383,6 @@ class qtopensesame(QtGui.QMainWindow, base_component):
 		self.experiment.auto_response = \
 			self.ui.action_enable_auto_response.isChecked()
 		self.update_preferences_tab()
-
-	def open_autosave_folder(self):
-
-		"""Browse the autosave folder in a platform specific way"""
-
-		if os.name == u"nt":
-			os.startfile(self.autosave_folder)
-		elif os.name == u"posix":
-			misc.open_url(self.autosave_folder)
-
-	def start_autosave_timer(self):
-
-		"""If autosave is enabled, construct and start the autosave timer"""
-
-		if cfg.autosave_interval > 0:
-			debug.msg(u"autosave interval = %d ms" % cfg.autosave_interval)
-			self.autosave_timer = QtCore.QTimer()
-			self.autosave_timer.setInterval(cfg.autosave_interval)
-			self.autosave_timer.setSingleShot(True)
-			self.autosave_timer.timeout.connect(self.autosave)
-			self.autosave_timer.start()
-		else:
-			debug.msg(u"autosave disabled")
-			self.autosave_timer = None
-
-	def autosave(self):
-
-		"""Autosave the experiment if there are unsaved changes"""
-
-		if not self.unsaved_changes:
-			self.set_status(u'No unsaved changes, skipping backup')
-			autosave_path = u''
-		else:
-			_current_path = self.current_path
-			_experiment_path = self.experiment.experiment_path
-			_unsaved_changes = self.unsaved_changes
-			_window_msg = self.window_msg
-			self.current_path = os.path.join(self.autosave_folder, \
-				u'%s.opensesame.tar.gz'% unicode(time.ctime()).replace(u':', \
-				u'_'))
-			debug.msg(u"saving backup as %s" % self.current_path)
-			try:
-				self.save_file(False, remember=False, catch=False)
-				self.set_status(_(u'Backup saved as %s') % self.current_path)
-			except:
-				self.set_status(_(u'Failed to save backup ...'))
-			autosave_path = self.current_path
-			self.current_path = _current_path
-			self.experiment.experiment_path = _experiment_path
-			self.set_unsaved(_unsaved_changes)
-			self.window_message(_window_msg)
-		self.start_autosave_timer()
-		return autosave_path
-
-	def clean_autosave(self):
-
-		"""Remove old files from the back-up folder"""
-
-		for path in os.listdir(self.autosave_folder):
-			_path = os.path.join(self.autosave_folder, path)
-			t = os.path.getctime(_path)
-			age = (time.time() - t)/(60*60*24)
-			if age > cfg.autosave_max_age:
-				debug.msg(u"removing '%s'" % path)
-				try:
-					os.remove(_path)
-				except:
-					debug.msg(u"failed to remove '%s'" % path)
 
 	def save_unsaved_changes(self):
 
@@ -540,95 +460,6 @@ class qtopensesame(QtGui.QMainWindow, base_component):
 
 		cfg.immediate_rename = self.ui.action_immediate_rename.isChecked()
 		debug.msg(u"set to %s" % cfg.immediate_rename)
-
-	def quick_switcher(self):
-
-		"""Shows the quick-open-item dialog."""
-
-		from libqtopensesame.dialogs.quick_switcher import quick_switcher
-		d = quick_switcher(self)
-		d.exec_()
-
-	def update_dialog(self, message):
-
-		"""
-		Presents an update dialog
-
-		Arguments:
-		message -- the message to be displayed
-		"""
-
-		from libqtopensesame.dialogs.update import update
-		d = update(self, msg=message)
-		d.exec_()
-
-	def check_update(self, dummy=None, always=True):
-
-		"""
-		Contacts www.cogsci.nl to check for the most recent version
-
-		Keyword arguments:
-		dummy -- a dummy argument passed by the signal handler
-		always -- a boolean indicating if a dialog should be shown
-				  regardless of the auto check update setting and the
-				  outcome of the update check
-		"""
-
-		import urllib
-
-		if not always and not cfg.auto_update_check:
-			debug.msg(u"skipping update check")
-			return
-
-		debug.msg(u"opening %s" % cfg.version_check_url)
-
-		try:
-			fd = urllib.urlopen(cfg.version_check_url)
-			mrv = float(fd.read().strip())
-		except Exception as e:
-			if always:
-				self.update_dialog( \
-					_(u"... and is sorry to say that the attempt to check for updates has failed. Please make sure that you are connected to the internet and try again later. If this problem persists, please visit <a href='http://www.cogsci.nl/opensesame'>http://www.cogsci.nl/opensesame</a> for more information."))
-			return
-
-		# The most recent version as downloaded is always a float. Therefore, we
-		# must convert the various possible version numbers to analogous floats.
-		# We do this by dividing each subversion number by 100. The only
-		# exception is that prereleases should be counted as older than stable
-		# releases, so for pre-release we substract one bugfix version.
-		# 0.27			->	0.27.0.0			->	0.27
-		# 0.27.1 		-> 	0.27.1.0			->	0.2701
-		# 0.27~pre1		->	0.27.0.1 - .0001	-> 	0.269901
-		# 0.27.1~pre1	->	0.27.1.1 - .0001	-> 	0.270001
-		v = self.version
-		l = v.split(u"~pre")
-		if len(l) == 2:
-			lastSubVer = l[1]
-			v = l[0]
-			ver = -.0001
-		else:
-			lastSubVer = 0
-			ver = .0
-		lvl = 0
-		fct = .01
-		for subVer in v.split(u'.') + [lastSubVer]:
-			try:
-				_subVer = int(subVer)
-			except:
-				debug.msg(u'Failed to process version segment %s' % subVer, \
-					reason=u'warning')
-				return
-			ver += fct**lvl * _subVer
-			lvl += 1
-		debug.msg(u'identifying as version %s' % ver)
-		debug.msg(u'latest stable version is %s' % mrv)
-		if mrv > ver:
-			self.update_dialog( \
-				_(u"... and is happy to report that a new version of OpenSesame (%s) is available at <a href='http://www.cogsci.nl/opensesame'>http://www.cogsci.nl/opensesame</a>!") % mrv)
-		else:
-			if always:
-				self.update_dialog( \
-					_(u" ... and is happy to report that you are running the most recent version of OpenSesame."))
 
 	def update_overview_area(self):
 
@@ -1079,15 +910,12 @@ class qtopensesame(QtGui.QMainWindow, base_component):
 
 		from libqtopensesame.widgets import pyterm
 
+		self.extension_manager.fire(u'run_experiment', fullscreen=fullscreen)
 		# Disable the entire Window, so that we can't interact with OpenSesame.
 		# TODO: This should be more elegant, so that we selectively disable
 		# parts of the GUI.
 		if sys.platform != 'darwin':
 			self.setDisabled(True)
-		# Suspend autosave
-		if self.autosave_timer != None:
-			debug.msg(u"stopping autosave timer")
-			self.autosave_timer.stop()
 		# Reroute the standard output to the debug window
 		buf = pyterm.output_buffer(self.ui.edit_stdout)
 		sys.stdout = buf
@@ -1107,13 +935,10 @@ class qtopensesame(QtGui.QMainWindow, base_component):
 		# Undo the standard output rerouting
 		sys.stdout = sys.__stdout__
 		self.ui.edit_stdout.show_prompt()
-		# Resume autosave
-		if self.autosave_timer != None:
-			debug.msg(u"resuming autosave timer")
-			self.autosave_timer.start()
 		# Re-enable the GUI.
 		if sys.platform != 'darwin':
 			self.setDisabled(False)
+		self.extension_manager.fire(u'end_experiment')
 
 	def run_experiment_in_window(self):
 

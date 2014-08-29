@@ -1,0 +1,13 @@
+{
+	"label"			: "Open backup folder",
+	"icon"			: "folder-open",
+	"menu"			: {
+			"submenu"			: "Tools",
+			"index"				: 1,
+			"separator_after"	: true
+		},
+	"settings"		: {
+			"autosave_max_age"	: 7,
+			"autosave_interval"	: 600000
+		}
+}

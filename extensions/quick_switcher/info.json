@@ -1,0 +1,10 @@
+{
+	"label"			: "Quick switcher",
+	"shortcut"		: "Meta+O",
+	"icon"			: "edit-find",
+	"menu"			: {
+			"submenu"			: "view",
+			"index"				: 4,
+			"separator_after"	: true
+		}
+}

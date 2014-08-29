@@ -48,3 +48,7 @@ class base_subcomponent(base_component):
 	@property
 	def item_store(self):
 		return self.experiment.items
+
+	@property
+	def extensions(self):
+		return self.main_window.extension_manager._extensions

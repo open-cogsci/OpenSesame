@@ -54,11 +54,10 @@ class config(object):
 		u"_initial_window_state" : QtCore.QByteArray(),
 		u"auto_update_check" : True,
 		u"auto_response" : False,
-		u"autosave_interval" : 10 * 60 * 1000,
-		u"autosave_max_age" : 7,
 		u"default_logfile_folder" : libopensesame.misc.home_folder(),
 		u"default_pool_folder" : libopensesame.misc.home_folder(),
 		u"disabled_plugins" : "",
+		u"disabled_extensions" : "",
 		u"file_dialog_path" : "",
 		u"locale" : u"default",
 		u"loop_wizard" : QtCore.QStringList(),
@@ -172,6 +171,53 @@ class config(object):
 		self.config[setting] = value
 		self.config[u'cfg_ver'] += 1
 
+	def __setitem__(self, setting, value):
+
+		"""
+		desc:
+			Emulate dict API.
+		"""
+
+		self.__setattr__(setting, value)
+
+	def __getitem__(self, setting):
+
+		"""
+		desc:
+			Emulate dict API.
+		"""
+
+		return self.__getattr__(setting)
+
+	def __contains__(self, setting):
+
+		"""
+		returns:
+			True if setting exists, False otherwise.
+		"""
+
+		return setting in self.config
+
+	def register(self, setting, default):
+
+		"""
+		desc:
+			Registers a new setting, if it doesn't already exist.
+
+		arguments:
+			setting:	The setting name.
+			default:	A default value, which is used if the setting doesn't
+						already exist.
+		"""
+
+		qsettings = QtCore.QSettings(u"cogscinl", u"opensesame")
+		qsettings.beginGroup(u"MainWindow")
+		if setting not in self.config:
+			value = qsettings.value(setting, default)
+			value = self.type_qvariant(value, default)
+			self.config[setting] = value
+		qsettings.endGroup()
+
 	def parse_cmdline_args(self, args):
 
 		"""
@@ -210,67 +256,97 @@ class config(object):
 				except:
 					debug.msg(u"Failed to parse argument: %s" % arg)
 
-	def restore(self, qsettings):
+	def type_qvariant(self, value, default):
 
 		"""
-		Restore settings from a QSettings
+		desc:
+			Typecasts a QVariant to a normal type that matches the type of a
+			default value.
 
-		Arguments:
-		qsettings -- a QSettings instance
+		arguments:
+			value:		The QVariant to typecast.
+			default:	A default value.
+
+		returns:
+			A value.
 		"""
 
+		if self.api == 1:
+			if type(default) == bool:
+				value = value.toBool()
+			elif type(default) == str:
+				try:
+					value = unicode(value.toString())
+				except:
+					value = default
+			elif type(default) == int:
+				value = value.toInt()[0]
+			elif type(default) == QtCore.QPoint:
+				value = value.toPoint()
+			elif type(default) == QtCore.QSize:
+				value = value.toSize()
+			elif type(default) == QtCore.QByteArray:
+				value = value.toByteArray()
+			elif type(default) == QtCore.QString:
+				value = value.toString()
+			elif type(default) == QtCore.QStringList:
+				value = value.toStringList()
+			elif type(default) == unicode:
+				value = unicode(value.toString())
+
+		# The newer api returns some things as strings, so we still have to
+		# do some type conversion
+		else:
+			if type(default) == bool:
+				if value == u'false':
+					value = False
+				else:
+					value = True
+			elif type(default) == int:
+				value = int(value)
+		return value
+
+	def restore(self):
+
+		"""
+		desc:
+			Restore settings from a QSettings.
+		"""
+
+		qsettings = QtCore.QSettings(u"cogscinl", u"opensesame")
+		qsettings.beginGroup(u"MainWindow")
 		for setting, default in self.config.items():
 			value = qsettings.value(setting, default)
-
 			# The older (default) api requires an explicit type conversion
-			if self.api == 1:
-				if type(default) == bool:
-					value = value.toBool()
-				elif type(default) == str:
-					try:
-						value = unicode(value.toString())
-					except:
-						value = default
-				elif type(default) == int:
-					value = value.toInt()[0]
-				elif type(default) == QtCore.QPoint:
-					value = value.toPoint()
-				elif type(default) == QtCore.QSize:
-					value = value.toSize()
-				elif type(default) == QtCore.QByteArray:
-					value = value.toByteArray()
-				elif type(default) == QtCore.QString:
-					value = value.toString()
-				elif type(default) == QtCore.QStringList:
-					value = value.toStringList()
-				elif type(default) == unicode:
-					value = unicode(value.toString())
+			value = self.type_qvariant(value, default)
+			self.config[setting] = value
+		qsettings.endGroup()
 
-			# The newer api returns some things as strings, so we still have to
-			# do some type conversion
-			else:
-				if type(default) == bool:
-					if value == u'false':
-						value = False
-					else:
-						value = True
-				elif type(default) == int:
-					value = int(value)
-
-			self.__setattr__(setting, value)
-
-	def save(self, qsettings):
+	def save(self):
 
 		"""
-		Save settings to a QSettings
-
-		Arguments:
-		qsettings -- a QSettings instance
+		desc:
+			Save settings to a QSettings.
 		"""
 
+		qsettings = QtCore.QSettings(u"cogscinl", u"opensesame")
+		qsettings.beginGroup(u"MainWindow")
 		for setting, value in self.config.items():
 			if setting != u"cfg_ver":
 				qsettings.setValue(setting, value)
+		qsettings.endGroup()
+
+	def clear(self):
+
+		"""
+		desc:
+			Clears all settings.
+		"""
+
+		qsettings = QtCore.QSettings(u"cogscinl", u"opensesame")
+		qsettings.beginGroup(u"MainWindow")
+		qsettings.clear()
+		qsettings.endGroup()
 
 	def version(self):
 
@@ -289,15 +365,6 @@ def get_config(setting):
 
 def set_config(setting, value):
 	cfg.__setattr__(setting, value)
-
-def restore_config(settings):
-	cfg.restore(settings)
-
-def save_config(settings):
-	cfg.save(settings)
-
-def parse_cmdline_args(args):
-	cfg.parse_cmdline_args(args)
 
 # Create a singleton config instance
 global cfg

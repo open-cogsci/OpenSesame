@@ -1,0 +1,11 @@
+{
+	"label"			: "Check for updates",
+	"icon"			: "system-software-update",
+	"menu"			: {
+			"submenu"		: "Tools",
+			"index"			: 0
+		},
+	"settings"		: {
+			"auto_update_check"	: true
+		}
+}

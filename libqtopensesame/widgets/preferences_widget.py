@@ -20,7 +20,6 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 from libopensesame import debug
 from libqtopensesame.widgets.base_widget import base_widget
 from libqtopensesame.misc import config, theme
-from libopensesame import plugins
 from PyQt4 import QtCore, QtGui
 import os
 
@@ -49,26 +48,15 @@ class preferences_widget(base_widget):
 		self.ui.checkbox_autoresponse.toggled.connect(self.apply)
 		self.ui.checkbox_toolbar_text.toggled.connect(self.apply)
 		self.ui.checkbox_small_toolbar.toggled.connect(self.apply)
-		self.ui.checkbox_enable_autosave.toggled.connect(self.apply)
-		self.ui.spinbox_autosave_interval.valueChanged.connect(self.apply)
-		self.ui.spinbox_autosave_max_age.valueChanged.connect(self.apply)
-		self.ui.checkbox_auto_update_check.toggled.connect(self.apply)
 		self.ui.combobox_runner.currentIndexChanged.connect(self.apply)
-		self.ui.button_browse_autosave.clicked.connect( \
-			self.main_window.open_autosave_folder)
-		self.ui.button_update_check.clicked.connect(
-			self.main_window.check_update)
 		self.ui.combobox_style.currentIndexChanged.connect(self.apply)
 		self.ui.combobox_theme.currentIndexChanged.connect(self.apply)
-		# Construct the plugin section
-		self.checkbox_plugins = {}
-		self.ui.edit_plugin_folders.setText(u'; '.join(plugins.plugin_folders(
-			only_existing=False)))
-		for plugin in sorted(plugins.list_plugins(filter_disabled=False)):
-			self.checkbox_plugins[plugin] = QtGui.QCheckBox(plugin)
-			self.checkbox_plugins[plugin].toggled.connect(self.apply)
-			self.ui.layout_plugin_list.addWidget(self.checkbox_plugins[plugin])
 		self.set_controls()
+		for ext in self.extensions:
+			w = ext.settings_widget()
+			if w != None:
+				self.ui.layout_preferences.addWidget(w)
+		self.ui.layout_preferences.addStretch()
 
 	def set_controls(self):
 
@@ -89,20 +77,9 @@ class preferences_widget(base_widget):
 			QtCore.Qt.ToolButtonTextUnderIcon)
 		self.ui.checkbox_small_toolbar.setChecked(
 			config.get_config(u"toolbar_size") == 16)
-		self.ui.checkbox_enable_autosave.setChecked(
-			config.get_config(u'autosave_interval') > 0)
-		self.ui.spinbox_autosave_interval.setValue(
-			config.get_config(u'autosave_interval') / 60000) # Show in minutes
-		self.ui.spinbox_autosave_max_age.setValue(
-			config.get_config(u'autosave_max_age'))
-		self.ui.checkbox_auto_update_check.setChecked(config.get_config(
-			u'auto_update_check'))
 		self.ui.combobox_runner.setCurrentIndex(
 			self.ui.combobox_runner.findText(config.get_config(u'runner'),
 			flags=QtCore.Qt.MatchContains))
-		# Disable some of the controls, if they depend on other controls
-		if config.get_config(u'autosave_interval') <= 0:
-			self.ui.spinbox_autosave_interval.setDisabled(True)
 		# Set the style combobox
 		i = 0
 		if config.get_config(u'style') == u'':
@@ -121,10 +98,6 @@ class preferences_widget(base_widget):
 			if config.get_config(u'theme') == _theme:
 				self.ui.combobox_theme.setCurrentIndex(i)
 			i += 1
-		# Set the plugin status
-		for plugin in plugins.list_plugins(filter_disabled=False):
-			self.checkbox_plugins[plugin].setChecked(
-				not plugins.plugin_disabled(plugin))
 		self.lock = False
 
 	def apply(self):
@@ -157,18 +130,6 @@ class preferences_widget(base_widget):
 			config.set_config(u"toolbar_size", new_size)
 			self.theme.set_toolbar_size(config.get_config("toolbar_size"))
 
-		if self.ui.checkbox_enable_autosave.isChecked():
-			config.set_config(u'autosave_interval',
-				60000 * self.ui.spinbox_autosave_interval.value())
-		else:
-			config.set_config(u'autosave_interval', 0)
-		config.set_config(u'autosave_max_age',
-			self.ui.spinbox_autosave_max_age.value())
-		self.main_window.start_autosave_timer()
-
-		config.set_config(u'auto_update_check',
-			self.ui.checkbox_auto_update_check.isChecked())
-
 		from libqtopensesame import runners
 		for runner in runners.runner_list:
 			if runner in self.ui.combobox_runner.currentText():
@@ -176,13 +137,6 @@ class preferences_widget(base_widget):
 
 		config.set_config(u'theme',
 			unicode(self.ui.combobox_theme.currentText()))
-
-		# Create a semicolon-separated list of disabled plugins
-		l = []
-		for plugin in plugins.list_plugins(filter_disabled=False):
-			if not self.checkbox_plugins[plugin].isChecked():
-				l.append(plugin)
-		config.set_config(u"disabled_plugins", ";".join(l))
 
 		config.set_config(u'style',
 			unicode(self.ui.combobox_style.currentText()))

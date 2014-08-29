@@ -18,11 +18,10 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from PyQt4 import QtCore, QtGui
+from libopensesame import plugins
 from libqtopensesame.dialogs.base_dialog import base_dialog
-from libqtopensesame.widgets.quick_open_element_item import \
-	quick_open_element_item
-from libqtopensesame.widgets.quick_open_element_symbol import \
-	quick_open_element_symbol
+from quick_switcher_dialog.item import quick_open_element_item
+from quick_switcher_dialog.symbol import quick_open_element_symbol
 
 class quick_switcher(base_dialog):
 
@@ -43,7 +42,7 @@ class quick_switcher(base_dialog):
 		"""
 
 		super(quick_switcher, self).__init__(main_window,
-			ui=u'dialogs.quick_switcher',
+			ui=u'extensions.quick_switcher.quick_switcher',
 			flags=QtCore.Qt.Dialog | QtCore.Qt.FramelessWindowHint)
 		self.ui.filter_line_edit.textChanged.connect(self.filter_list)
 		self.ui.filter_line_edit.returnPressed.connect(self.select_item)
