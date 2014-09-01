@@ -50,16 +50,10 @@ class general_properties(base_widget):
 
 		# Set the header, with the icon, label and script button
 		self.header_widget = general_header_widget(self, self.main_window)
-		button_help = QtGui.QPushButton(self.experiment.icon(u"help"), u"")
-		button_help.setIconSize(QtCore.QSize(16, 16))
-		button_help.clicked.connect(
-			self.main_window.ui.tabwidget.open_general_help)
-		button_help.setToolTip(_(u"Tell me more about OpenSesame!"))
 		header_hbox = QtGui.QHBoxLayout()
 		header_hbox.addWidget(self.experiment.label_image(u"experiment"))
 		header_hbox.addWidget(self.header_widget)
 		header_hbox.addStretch()
-		header_hbox.addWidget(button_help)
 		header_widget = QtGui.QWidget()
 		header_widget.setLayout(header_hbox)
 		self.ui.container_layout.insertWidget(0, header_widget)
