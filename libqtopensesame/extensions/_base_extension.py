@@ -99,6 +99,12 @@ class base_extension(base_subcomponent):
 
 	@property
 	def set_status(self):
+
+		"""
+		returns:
+			desc:	A shortcut to `qtopensesame.set_status`.
+		"""
+
 		return self.main_window.set_status
 
 	def label(self):
@@ -106,7 +112,8 @@ class base_extension(base_subcomponent):
 		"""
 		desc:
 			Gives the label that is used for the menu and toolbar entry.
-			Normally, this is specified in info.json.
+			Normally, this is specified in info.json, but you can override this
+			function to implement custom logic.
 
 		returns:
 			desc:	A label text.
@@ -123,7 +130,8 @@ class base_extension(base_subcomponent):
 		"""
 		desc:
 			Gives the name of the icon that is used for the menu and toolbar
-			entry. Normally, this is specified in info.json.
+			entry. Normally, this is specified in info.json, but you can
+			override this function to implement custom logic.
 
 		returns:
 			desc:	The name of an icon.
@@ -137,7 +145,8 @@ class base_extension(base_subcomponent):
 		"""
 		desc:
 			Gives the keyboard shortcut that activates the extension. Normally,
-			this is specified in info.json. A shortcut only works if the
+			this is specified in info.json, but you can override this
+			function to implement custom logic. A shortcut only works if the
 			extension has either a toolbar ot menu entry.
 
 		returns:
@@ -152,7 +161,8 @@ class base_extension(base_subcomponent):
 		"""
 		desc:
 			Describes the position of the extension in the menu. Normally,
-			this is specified in info.json.
+			this is specified in info.json, but you can override this
+			function to implement custom logic.
 
 		returns:
 			desc:	A (submenu, menuindex, separator_before, separator_after)
@@ -173,7 +183,8 @@ class base_extension(base_subcomponent):
 		"""
 		desc:
 			Describes the position of the extension in the toolbar. Normally,
-			this is specified in info.json.
+			this is specified in info.json, but you can override this
+			function to implement custom logic.
 
 		returns:
 			desc:	An (index, separator_before, separator_after)
@@ -193,7 +204,8 @@ class base_extension(base_subcomponent):
 		"""
 		desc:
 			Is called when the extension is activated through a keyboard
-			shortcut, or a menu/ toolbar click.
+			shortcut, or a menu/ toolbar click. Override this function to
+			implement your extension's behavior.
 		"""
 
 		pass
@@ -202,9 +214,6 @@ class base_extension(base_subcomponent):
 		separator_after):
 
 		"""
-		visible:
-			False
-
 		desc:
 			Adds an action to a widget that supports actions (i.e. a QMenu or
 			a QToolBar).
@@ -264,15 +273,41 @@ class base_extension(base_subcomponent):
 
 	def fire(self, event, **kwdict):
 
+		"""
+		desc:
+			Calls an event function, if it exists.
+
+		arguments:
+			event:
+				desc:	The event name, which is handled by a function called
+						`event_[event name]`.
+				type:	[str, unicode]
+
+		keyword-dict:
+			kwdict:		A keyword dictionary with event-specific keywords.
+		"""
+
 		if hasattr(self, u'event_%s' % event):
 			debug.msg(u'extensions %s received event_%s' % (self.name(), event))
 			getattr(self, u'event_%s' % event)(**kwdict)
 
 	def name(self):
 
-		return self.__class__.__name__
+		"""
+		returns:
+			desc:	The name of the extension, i.e. the extension class name.
+			type:	unicode
+		"""
+
+		return self.__class__.__name__.decode(u'utf-8')
 
 	def register_ui_files(self):
+
+		"""
+		desc:
+			Registers all .ui files in the extension folder so that they can
+			be retrieved as extensions.[extension name].[ui name].
+		"""
 
 		for path in os.listdir(self.info[u'plugin_folder']):
 			if path.endswith(u'.ui'):
@@ -281,6 +316,12 @@ class base_extension(base_subcomponent):
 					self.info[u'plugin_folder'], path)
 
 	def create_action(self):
+
+		"""
+		desc:
+			Creates a QAction for the extension, and adds it to the menubar
+			and/ or the toolbar.
+		"""
 
 		if self.label() != None:
 			# Create an action to be inserted into the menu and/ or toolbar
@@ -306,6 +347,16 @@ class base_extension(base_subcomponent):
 
 	def supported_events(self):
 
+		"""
+		desc:
+			Gives the events that are supported by the extension. This is done
+			by introspecting which `event_[event name]` functions exist.
+
+		returns:
+			desc:	A list of supported events.
+			type:	list
+		"""
+
 		events = []
 		for event in dir(self):
 			if event.startswith(u'event_'):
@@ -315,6 +366,11 @@ class base_extension(base_subcomponent):
 
 	def register_config(self):
 
+		"""
+		desc:
+			Registers the extension settings in the config object.
+		"""
+
 		for setting, default in self.info.get(u'settings', {}).items():
 			cfg.register(setting, default=default)
 
@@ -323,7 +379,8 @@ class base_extension(base_subcomponent):
 		"""
 		desc:
 			Creates a settings QWidget for the extension, or returns None if
-			no settings have been defined.
+			no settings have been defined. Override this function to implement
+			a more fancy non-default settings menu.
 
 		returns:
 			A settings QWidget or None.
@@ -373,7 +430,8 @@ class base_extension(base_subcomponent):
 
 		"""
 		desc:
-			Applies the settings widget.
+			Applies the settings widget. This function is called automatically
+			when a default settings widget is created by [settings_widget].
 		"""
 
 		for setting, default in self.info[u'settings'].items():
@@ -386,6 +444,22 @@ class base_extension(base_subcomponent):
 				cfg[setting] = unicode(control.text())
 
 	def ext_resource(self, resource):
+
+		"""
+		desc:
+			Finds an extension resource, i.e. a file in the extension folder,
+			and returns the full path to the resource. An `osexception` is
+			raised if the resource does not exist.
+
+		arguments:
+			resource:
+				desc:	The name of a resource.
+				type:	[str, unicode]
+
+		returns:
+			desc:	The full path to the resource.
+			type:	unicode
+		"""
 
 		path = os.path.join(self.info[u'plugin_folder'], resource)
 		if not os.path.exists(path):
