@@ -116,14 +116,64 @@ class base_extension(base_subcomponent):
 			function to implement custom logic.
 
 		returns:
-			desc:	A label text.
-			type:	unicode
+			desc:	A label text or None.
+			type:	[unicode, NoneType]
 		"""
 
 		label = self.info.get(u'label', None)
 		if label != None:
 			return _(label)
 		return None
+
+	def tooltip(self):
+
+		"""
+		desc:
+			Gives the tooltip that is used for the menu and toolbar entry.
+			Normally, this is specified in info.json, but you can override this
+			function to implement custom logic.
+
+		returns:
+			desc:	A tooltip text.
+			type:	[unicode, NoneType]
+		"""
+
+		tooltip = self.info.get(u'tooltip', None)
+		if tooltip != None:
+			return _(tooltip)
+		return None
+
+
+	def checkable(self):
+
+		"""
+		desc:
+			Indicates whether the extension action is checkable or not.
+			Normally, this is specified in info.json, but you can override this
+			function to implement custom logic.
+
+		returns:
+			type:	bool
+		"""
+
+		return self.info.get(u'checkable', False)
+
+	def set_checked(self, checked):
+
+		"""
+		desc:
+			Sets the checked status of the action. If there is no action, or if
+			the action is not checkable, this is silently ignored.
+
+		arguments:
+			checked:
+				desc:	The checked status.
+				type:	bool
+		"""
+
+		if self.action == None or not self.checkable():
+			return
+		self.action.setChecked(checked)
 
 	def icon(self):
 
@@ -328,22 +378,27 @@ class base_extension(base_subcomponent):
 			icon = self.icon()
 			if isinstance(icon, basestring):
 				icon = self.theme.qicon(icon)
-			action = QtGui.QAction(icon, self.label(), self.main_window)
-			action.triggered.connect(self.activate)
+			self.action = QtGui.QAction(icon, self.label(), self.main_window)
+			self.action.triggered.connect(self.activate)
+			self.action.setCheckable(self.checkable())
+			if self.tooltip() != None:
+				self.action.setToolTip(self.tooltip())
 			if self.shortcut() != None:
-				action.setShortcuts([self.shortcut()])
+				self.action.setShortcuts([self.shortcut()])
 			# Insert the action into the menu
 			if self.menu_pos() != None:
 				submenu_text, index, separator_before, separator_after = \
 					self.menu_pos()
 				submenu = self.get_submenu(submenu_text)
-				self.add_action(submenu, action, index, separator_before,
+				self.add_action(submenu, self.action, index, separator_before,
 					separator_after)
 			# Insert the action into the toolbar
 			if self.toolbar_pos() != None:
 				index, separator_before, separator_after = self.toolbar_pos()
-				self.add_action(self.toolbar, action, index, separator_before,
-					separator_after)
+				self.add_action(self.toolbar, self.action, index,
+					separator_before, separator_after)
+		else:
+			self.action = None
 
 	def supported_events(self):
 
