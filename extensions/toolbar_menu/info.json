@@ -1,0 +1,16 @@
+{
+	"label"			: "Integrate menu and toolbar",
+	"checkable"		: true,
+	"tooltip"		: "Integrates the menu into the toolbar",
+	"icon"			: "applications-system",
+	"priority"		: -999999,
+	"menu"			: {
+			"submenu"					: "View",
+			"index"						: -1,
+			"separator_after"			: false,
+			"separator_before"			: true
+		},
+	"settings"		: {
+			"toolbar_menu_active"		: false
+		}
+}
