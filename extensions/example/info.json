@@ -1,0 +1,18 @@
+{
+	"label"			: "Example extension",
+	"icon"			: "applications-accessories",
+	"menu"			: {
+			"submenu"			: "Example",
+			"index"				: 0,
+			"separator_after"	: false,
+			"separator_before"	: false,
+		},
+	"toolbar"		: {
+			"index"				: -1,
+			"separator_after"	: false,
+			"separator_before"	: true,
+		},
+	"settings"		: {
+			"example_setting"	: "some value"
+		}
+}

@@ -554,23 +554,21 @@ class qtopensesame(QtGui.QMainWindow, base_component):
 	def closeEvent(self, e):
 
 		"""
-		Process a closeEvent, which occurs when the window managers close button
-		is clicked
+		desc:
+			Process a request to close the application.
 
-		Arguments:
-		e -- the closeEvent or a bool
+		arguments:
+			e:
+				type:	QCloseEvent
 		"""
 
 		if debug.enabled or self.devmode:
 			libopensesame.experiment.clean_up(debug.enabled)
 			self.save_state()
-			if isinstance(e, bool):
-				QtCore.QCoreApplication.quit()
-			else:
-				e.accept()
+			e.accept()
 			return
-		resp = QtGui.QMessageBox.question(self.ui.centralwidget, _(u"Quit?"), \
-			_(u"Are you sure you want to quit OpenSesame?"), \
+		resp = QtGui.QMessageBox.question(self.ui.centralwidget, _(u"Quit?"),
+			_(u"Are you sure you want to quit OpenSesame?"),
 			QtGui.QMessageBox.Yes, QtGui.QMessageBox.No)
 		if resp == QtGui.QMessageBox.No:
 			if not isinstance(e, bool):
@@ -579,12 +577,10 @@ class qtopensesame(QtGui.QMainWindow, base_component):
 		if not self.save_unsaved_changes():
 			e.ignore()
 			return
+		self.extension_manager.fire(u'close')
 		self.save_state()
 		libopensesame.experiment.clean_up(debug.enabled)
-		if isinstance(e, bool):
-			QtCore.QCoreApplication.quit()
-		else:
-			e.accept()
+		e.accept()
 
 	def update_recent_files(self):
 
@@ -642,6 +638,7 @@ class qtopensesame(QtGui.QMainWindow, base_component):
 			u'.opensesame') and not path.lower().endswith(
 			u'.opensesame.tar.gz')):
 			return
+		self.extension_manager.fire(u'open_experiment', path=path)
 		self.set_status(u"Opening ...")
 		self.ui.tabwidget.close_all()
 		cfg.file_dialog_path = os.path.dirname(path)
@@ -690,6 +687,7 @@ class qtopensesame(QtGui.QMainWindow, base_component):
 		if self.current_path == None:
 			self.save_file_as()
 			return
+		self.extension_manager.fire(u'save_experiment', path=self.current_path)
 		# Indicate that we're busy
 		self.set_busy(True)
 		QtGui.QApplication.processEvents()
