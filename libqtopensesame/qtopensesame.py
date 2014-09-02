@@ -126,7 +126,7 @@ class qtopensesame(QtGui.QMainWindow, base_component):
 
 		# Make the connections
 		self.ui.itemtree.structure_change.connect(self.update_overview_area)
-		self.ui.action_quit.triggered.connect(self.closeEvent)
+		self.ui.action_quit.triggered.connect(self.close)
 		self.ui.action_new.triggered.connect(self.new_file)
 		self.ui.action_open.triggered.connect(self.open_file)
 		self.ui.action_save.triggered.connect(self.save_file)
