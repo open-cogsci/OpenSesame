@@ -52,3 +52,7 @@ class base_subcomponent(base_component):
 	@property
 	def extensions(self):
 		return self.main_window.extension_manager._extensions
+
+	@property
+	def unistr(self):
+		return self.main_window.experiment.unistr
