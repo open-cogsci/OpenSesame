@@ -19,7 +19,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 
 import os
 import sys
-import json
+import yaml
 from libopensesame import debug, misc
 from libopensesame.exceptions import osexception
 
@@ -152,13 +152,19 @@ def plugin_properties(plugin, _type=u'plugins'):
 		return _properties[plugin]
 	folder = plugin_folder(plugin, _type=_type)
 	info_txt = os.path.join(folder, u'info.txt')
-	info_json = os.path.join(folder, u'info.json')
-	# New-style plug-ins, using info.json
-	if os.path.exists(info_json):
+	info_yaml = os.path.join(folder, u'info.yaml')
+	if not os.path.exists(info_yaml):
+		info_yaml = os.path.join(folder, u'info.json')
+	# New-style plug-ins, using info.yaml
+	if os.path.exists(info_yaml):
+		# Read the yaml file and replace all tabs by spaces. This is necessary,
+		# because yaml doesn't accept tab-based indentation, whereas json does.
+		s = open(info_yaml).read().decode(u'utf-8')
+		s = s.replace(u'\t', u'    ')
 		try:
-			_properties[plugin] = json.load(open(info_json))
+			_properties[plugin] = yaml.load(s)
 		except:
-			debug.msg(u'Failed to parse %s' % info_json)
+			debug.msg(u'Failed to parse %s' % info_yaml)
 			_properties[plugin] = {}
 	# Old-style plug-ins, using info.txt
 	elif os.path.exists(info_txt):

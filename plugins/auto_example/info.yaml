@@ -1,0 +1,70 @@
+description: Example plug-in.
+version: 0.1
+author: "Sebastiaan Mathôt"
+url: "http://osdoc.cogsci.nl/"
+category: "Visual stimuli"
+date: "2013"
+controls:
+-
+    type: "checkbox"
+    var: "_checkbox"
+    label: "Example checkbox"
+    name: "checkbox_widget"
+    tooltip: "An example checkbox"
+-
+    type: "color_edit"
+    var: "_color"
+    label: "Color"
+    name: "color_widget"
+    tooltip: "An example color edit"
+-
+    type: "combobox"
+    var: "_option"
+    label: "Select option"
+    options:
+    - "Option 1"
+    - "Option 2"
+    name: "combobox_widget"
+    tooltip: "An example combobox"
+-
+    type: "filepool"
+    var: "_file"
+    label: "Select file"
+    name: "filepool_widget"
+    tooltip: "An example filepool widget"
+-
+    type: "line_edit"
+    var: "_text"
+    label: "Enter text"
+    name: "line_edit_widget"
+    tooltip: "An example line_edit widget"
+-
+    type: "spinbox"
+    var: "_spinbox_value"
+    label: "Enter value"
+    min_val: 0
+    max_val: 100000
+    name: "spinbox_widget"
+    prefix: "approx. "
+    suffix: " ms"
+    tooltip: "An example spinbox widget"
+-
+    type: "slider"
+    var: "_slider_value"
+    label: "Select value"
+    min_val: 0
+    max_val: 100000
+    name: "slider_widget"
+    left_label: "low"
+    right_label: "high"
+    tooltip: "An example slider widget"
+-
+    type: "text"
+    label: "Some non-interactive text"
+-
+    type: "editor"
+    var: "_script"
+    label: "Python editor"
+    name: "editor_widget"
+    syntax: true
+    tooltip: "An example editor widget"

@@ -14,7 +14,7 @@ Architecture: all
 XB-Python-Version: ${python:Versions}
 Depends: ${misc:Depends}, ${python:Depends}, python-qt4,
   python-pygame (>= 1.8.1~), python-numpy (>= 1.3.0~), python-qscintilla2,
-  python-simplejson, python-qprogedit (>= 2.0.0)
+  python-simplejson, python-yaml, python-qprogedit (>= 2.0.0)
 Recommends: python-serial (>= 2.3~), psychopy (>= 1.64.0),
   python-pyaudio (>= 0.2.4), python-imaging (>= 1.1.7),
   python-opengl (>= 3.0.1), expyriment (>= 0.5.2), ipython-qtconsole (>= 0.12),
