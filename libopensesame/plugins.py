@@ -179,6 +179,7 @@ def plugin_properties(plugin, _type=u'plugins'):
 			u'Failed to read plug-in information (%s) from info.[txt|json]' \
 			% plugin)
 	_properties[plugin][u'plugin_folder'] = folder
+	_properties[plugin][u'type'] = _type
 	return _properties[plugin]
 
 def plugin_category(plugin, _type=u'plugins'):
