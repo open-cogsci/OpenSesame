@@ -93,7 +93,7 @@ class base_component(object):
 					# ... otherwise use the static resources function.
 					from libopensesame import misc
 					ui_path = misc.resource(os.path.join(*path_list)+u'.ui')
-			debug.msg(u'dynamically loading ui: %s' % ui_path)
-			self.ui = uic.loadUi(ui_path, self)
+			debug.msg(u'dynamically loading ui: %s' % ui_path)			
+			self.ui = uic.loadUi(open(ui_path), self)
 		else:
 			self.ui = None
