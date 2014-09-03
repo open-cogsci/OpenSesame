@@ -322,6 +322,7 @@ class qtopensesame(QtGui.QMainWindow, base_component):
 		if self.options.start_clean:
 			debug.msg(u'Not restoring window state')
 			return
+		debug.msg()
 		self.restoreState(cfg._initial_window_state)
 		self.restoreGeometry(cfg._initial_window_geometry)
 
@@ -330,18 +331,14 @@ class qtopensesame(QtGui.QMainWindow, base_component):
 		"""Restores the state of the current window"""
 
 		debug.msg()
-		settings = QtCore.QSettings(u"cogscinl", u"opensesame")
-		settings.beginGroup(u"MainWindow")
-		settings.setValue(u"size", self.size())
-		settings.setValue(u"pos", self.pos())
-		settings.setValue(u"_initial_window_geometry", self.saveGeometry())
-		settings.setValue(u"_initial_window_state", self.saveState())
-		settings.setValue(u"auto_response", self.experiment.auto_response)
-		settings.setValue(u"toolbar_text", \
-			self.ui.toolbar_main.toolButtonStyle() == \
-			QtCore.Qt.ToolButtonTextUnderIcon)
-		settings.setValue(u"recent_files", u";;".join(self.recent_files))
-		settings.endGroup()
+		cfg.size = self.size()
+		cfg.pos = self.pos()
+		cfg._initial_window_geometry = self.saveGeometry()
+		cfg._initial_window_state = self.saveState()
+		cfg.auto_response = self.experiment.auto_response
+		cfg.toolbar_text = self.ui.toolbar_main.toolButtonStyle() == \
+			QtCore.Qt.ToolButtonTextUnderIcon
+		cfg.recent_files =  u";;".join(self.recent_files)
 		cfg.save()
 
 	def set_busy(self, state=True):

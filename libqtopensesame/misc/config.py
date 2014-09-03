@@ -95,6 +95,8 @@ class config(object):
 		u"opensesamerun_exec" : u"",
 		u"pos" : QtCore.QPoint(200, 200),
 		u"size" : QtCore.QSize(1000, 600),
+		u"_initial_window_geometry" : QtCore.QByteArray(),
+		u"_initial_window_state" : QtCore.QByteArray(),
 		u"url_website" : u"http://www.cogsci.nl/opensesame",
 		u"url_facebook" : u"http://www.facebook.com/cognitivescience",
 		u"url_twitter" : u"http://www.twitter.com/cogscinl",
