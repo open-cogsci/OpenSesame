@@ -127,7 +127,9 @@ class general_properties(base_widget):
 		# Set the title and the description
 		title = self.experiment.sanitize( \
 			self.header_widget.edit_name.text())
-		self.experiment.set(u"title", title)
+		if title != self.experiment.get(u'title'):
+			self.experiment.set(u"title", title)
+			self.experiment.build_item_tree()
 		desc = self.experiment.sanitize( \
 			self.header_widget.edit_desc.text())
 		self.experiment.set(u"description", desc)
