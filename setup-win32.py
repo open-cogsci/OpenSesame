@@ -132,6 +132,16 @@ included_plugins = [
 	'text_input',
 	'touch_response',
 	]
+	
+# List of included extensions
+included_extensions = [
+	'automatic_backup',
+	'help',
+	'plugin_manager',
+	'quick_switcher',
+	'toolbar_menu',
+	'update_checker'
+	]
 
 # Set this to False to build a 'light' version without the Qt4 gui. This
 # options currently breaks opensesamerun as well, so don't set it to False.
@@ -139,6 +149,7 @@ include_gui = True
 
 # Miscellaneous settings
 include_plugins = True
+include_extensions = True
 include_media_player = False
 include_media_player_vlc = True
 include_examples = True
@@ -173,6 +184,7 @@ copy_packages = [
 	'markdown',
 	'matplotlib',
 	'bidi',
+	'yaml'
 	]
 
 # Packages that are part of the standard Python packages, but should not be
@@ -209,6 +221,7 @@ if os.path.exists("dist"):
 	shutil.rmtree("dist")
 os.mkdir("dist")
 os.mkdir(os.path.join("dist", "plugins"))
+os.mkdir(os.path.join("dist", "extensions"))
 
 # A filter to ignore non-relevant package files
 def ignore_package_files(folder, files):
@@ -370,13 +383,25 @@ if include_inpout32:
 if include_plugins:
 	print("copying plugins"	)
 	for plugin in included_plugins:
-		print("copying plugin", plugin)
+		print("copying plugin %s" % plugin)
 		shutil.copytree(os.path.join("plugins", plugin), os.path.join("dist", \
 			"plugins", plugin))
 		for path in os.listdir(os.path.join("plugins", plugin)):
 			if path[-1] == "~" or os.path.splitext(path)[1] in [".pyc"]:
-				print("removing file", path)
+				print("removing file %s" % path)
 				os.remove(os.path.join("dist", "plugins", plugin, path))
+				
+# Include extensions
+if include_extensions:
+	print("copying extensions"	)
+	for extension in included_extensions:
+		print("copying extension %s" % extension)
+		shutil.copytree(os.path.join("extensions", extension),
+			os.path.join("dist", "extensions", extension))
+		for path in os.listdir(os.path.join("extensions", extension)):
+			if path[-1] == "~" or os.path.splitext(path)[1] in [".pyc"]:
+				print("removing file %s" % path)
+				os.remove(os.path.join("dist", "extensions", extension, path))
 
 # Include old media_player
 if include_media_player:
@@ -421,7 +446,7 @@ if include_examples:
 	for path in os.listdir(os.path.join("dist", "examples")):
 		if path[-1] == "~" or os.path.splitext(path)[1] not in [".opensesame", \
 			".gz"]:
-			print("removing file", path)
+			print("removing file %s" % path)
 			os.remove(os.path.join("dist", "examples", path))
 
 # Include sounds
