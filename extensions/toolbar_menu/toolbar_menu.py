@@ -50,9 +50,10 @@ class toolbar_menu(base_extension):
 			cfg.toolbar_size))
 		self.button.setFlat(True)
 		self.toolbar.addWidget(self.stretch)
-		self.action = self.toolbar.addWidget(self.button)
+		self.menu_action = self.toolbar.addWidget(self.button)
 		if cfg.toolbar_menu_active:
 			self.activate_toolbar_menu()
+			self.set_checked(True)
 		else:
 			self.deactivate_toolbar_menu()
 	
@@ -77,7 +78,7 @@ class toolbar_menu(base_extension):
 
 		cfg.toolbar_menu_active = True
 		self.menubar.setVisible(False)
-		self.action.setVisible(True)
+		self.menu_action.setVisible(True)
 		self.stretch.setVisible(True)
 
 	def deactivate_toolbar_menu(self):
@@ -89,5 +90,5 @@ class toolbar_menu(base_extension):
 
 		cfg.toolbar_menu_active = False
 		self.menubar.setVisible(True)
-		self.action.setVisible(False)
+		self.menu_action.setVisible(False)
 		self.stretch.setVisible(False)
