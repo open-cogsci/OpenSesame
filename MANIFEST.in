@@ -2,6 +2,8 @@ include data/opensesame.desktop
 include data/x-opensesame-experiment.xml
 include resources/*.ttf
 include resources/templates/*.opensesame
+include setup_shared.py
+include readme.md
 exclude .hidden
 recursive-include resources/theme *
 recursive-exclude resources/theme *~
