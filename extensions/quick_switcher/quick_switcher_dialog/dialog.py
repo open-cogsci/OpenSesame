@@ -119,6 +119,7 @@ class quick_switcher(base_dialog):
 
 		self.ui.label_quick_switcher_wait.hide()
 		self.ui.items_list_widget.show()
+		self.ui.filter_line_edit.clear()
 		self.ui.filter_line_edit.setFocus()
 		super(quick_switcher, self).exec_()
 
