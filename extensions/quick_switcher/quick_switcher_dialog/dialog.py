@@ -22,6 +22,7 @@ from libopensesame import plugins
 from libqtopensesame.dialogs.base_dialog import base_dialog
 from quick_switcher_dialog.item import quick_open_element_item
 from quick_switcher_dialog.symbol import quick_open_element_symbol
+from quick_switcher_dialog.action import quick_open_element_action
 
 class quick_switcher(base_dialog):
 
@@ -65,6 +66,67 @@ class quick_switcher(base_dialog):
 						self.ui.items_list_widget.addItem(list_widget_item)
 						self.ui.items_list_widget.setItemWidget(
 							list_widget_item, element)
+		for element in self.action_elements(
+			self.main_window.menubar.actions()):
+			list_widget_item = QtGui.QListWidgetItem()
+			list_widget_item.setSizeHint(element.minimumSizeHint())
+			self.ui.items_list_widget.addItem(list_widget_item)
+			self.ui.items_list_widget.setItemWidget(list_widget_item,
+				element)
+
+	def action_elements(self, actions, path_to_action=[]):
+
+		"""
+		desc:
+			Builds a list of action elements.
+
+		arguments:
+			actions:
+				desc:	A list of actions.
+				type:	list
+
+		keywords:
+			path_to_action:
+				desc:	A list of parent action texts.
+				type:	list
+
+		returns:
+			type:	quick_open_element_action
+		"""
+
+		l = []
+		for action in actions:
+			text = unicode(action.text())
+			# Skip separators
+			if text == u'':
+				continue
+			_path_to_action = path_to_action + [text]
+			menu = action.menu()
+			if menu == None:
+				l.append(quick_open_element_action(self, action,
+					_path_to_action))
+			else:
+				l += self.action_elements(action.menu().actions(),
+					_path_to_action)
+		return l
+
+	def exec_(self):
+
+		"""
+		desc:
+			Focus the filter input and activate the dialog.
+		"""
+
+		self.ui.label_quick_switcher_wait.hide()
+		self.ui.items_list_widget.show()
+		self.ui.filter_line_edit.setFocus()
+		super(quick_switcher, self).exec_()
+
+	def show_wait(self):
+
+		self.ui.label_quick_switcher_wait.show()
+		self.ui.items_list_widget.hide()
+		QtGui.QApplication.processEvents()
 
 	def filter_list(self):
 

@@ -21,9 +21,46 @@ from PyQt4 import QtGui
 from libqtopensesame.extensions import base_extension
 
 class quick_switcher(base_extension):
-	
-	def activate(self):
+
+	"""
+	desc:
+		The quick-switcher allows you to quickly navigate to items and
+		functions, and to quickly activate menu actions.
+	"""
+
+	def event_startup(self):
+
+		"""
+		desc:
+			Initialize the quick_switcher.
+		"""
+
+		self.init_dialog()
+
+	def event_open_experiment(self, path):
+
+		"""
+		desc:
+			Re-init the dialog to update the recent files list.
+		"""
+
+		self.init_dialog()
+
+	def init_dialog(self):
+
+		"""
+		desc:
+			Re-init the dialog.
+		"""
 
 		from quick_switcher_dialog.dialog import quick_switcher
-		d = quick_switcher(self.main_window)
-		d.exec_()
+		self.d = quick_switcher(self.main_window)
+
+	def activate(self):
+
+		"""
+		desc:
+			Pops up the quick-switcher dialog.
+		"""
+
+		self.d.exec_()

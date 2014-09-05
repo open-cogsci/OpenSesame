@@ -9,8 +9,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>308</width>
-    <height>216</height>
+    <width>337</width>
+    <height>351</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -32,6 +32,16 @@
     <widget class="QLineEdit" name="filter_line_edit">
      <property name="placeholderText">
       <string>Search by item name or type</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QLabel" name="label_quick_switcher_wait">
+     <property name="text">
+      <string>Your bidding, sire ...</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
      </property>
     </widget>
    </item>

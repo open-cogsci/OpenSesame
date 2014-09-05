@@ -38,8 +38,14 @@
 #quick_switcher #filter_line_edit {
 	font-size: 14pt;
 }
+
 #quick_switcher {
 	background-color: #729fcf;
+}
+
+#quick_switcher #label_quick_switcher_wait {
+	font-size: 14pt;
+	color: #ffffff;
 }
 
 #form_sketchpad * {
