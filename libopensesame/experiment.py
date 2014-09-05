@@ -203,7 +203,13 @@ class experiment(item.item):
 		self.set_subject(subject_nr)
 		# Restore experiment path
 		if experiment_path != None:
-			self.fallback_pool_folder = os.path.join(experiment_path, u'__pool__')
+			self.fallback_pool_folder = os.path.join(experiment_path,
+				u'__pool__')
+			if os.path.exists(self.fallback_pool_folder):
+				debug.msg(u'Using fallback pool folder: %s' \
+					% self.fallback_pool_folder)
+			else:
+				self.fallback_pool_folder = None
 			self.experiment_path = experiment_path
 		else:
 			self.fallback_pool_folder = None
