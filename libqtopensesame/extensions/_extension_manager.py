@@ -70,5 +70,8 @@ class extension_manager(base_subcomponent):
 					particular event.
 		"""
 
+		if event == u'open_experiment':
+			for ext in self._extensions:
+				ext.register_ui_files()
 		for ext in self.events.get(event, []):
 			ext.fire(event, **kwdict)

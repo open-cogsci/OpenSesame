@@ -635,7 +635,6 @@ class qtopensesame(QtGui.QMainWindow, base_component):
 			u'.opensesame') and not path.lower().endswith(
 			u'.opensesame.tar.gz')):
 			return
-		self.extension_manager.fire(u'open_experiment', path=path)
 		self.set_status(u"Opening ...")
 		self.ui.tabwidget.close_all()
 		cfg.file_dialog_path = os.path.dirname(path)
@@ -662,11 +661,11 @@ class qtopensesame(QtGui.QMainWindow, base_component):
 		else:
 			self.window_message(u"New experiment")
 			self.current_path = None
-
 		self.set_auto_response()
 		self.set_unsaved(False)
 		self.refresh_pool()
 		self.refresh_variable_inspector()
+		self.extension_manager.fire(u'open_experiment', path=path)
 
 	def save_file(self, dummy=None, remember=True, catch=True):
 
