@@ -17,6 +17,7 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
+from libopensesame import debug
 from libqtopensesame.extensions import base_extension
 
 class example(base_extension):
@@ -34,31 +35,31 @@ class example(base_extension):
 			action.
 		"""
 
-		print(u'Example extension activated')
+		debug.msg(u'Example extension activated')
 
 	# Below is a list of event handlers, which you can implement to have your
 	# extension react to specific events.
 
 	def event_startup(self):
 
-		print(u'Event fired: startup')
+		debug.msg(u'Event fired: startup')
 
 	def event_run_experiment(self, fullscreen):
 
-		print(u'Event fired: run_experiment(fullscreen=%s)' % fullscreen)
+		debug.msg(u'Event fired: run_experiment(fullscreen=%s)' % fullscreen)
 
 	def event_end_experiment(self):
 
-		print(u'Event fired: end_experiment')
+		debug.msg(u'Event fired: end_experiment')
 
 	def event_save_experiment(self, path):
-
-		print(u'Event fired: save_experiment(path=%s)' % path)
+		
+		debug.msg(u'Event fired: save_experiment(path=%s)' % path)
 
 	def event_open_experiment(self, path):
 
-		print(u'Event fired: open_experiment(path=%s)' % path)
+		debug.msg(u'Event fired: open_experiment(path=%s)' % path)
 
 	def event_close(self):
 
-		print(u'Event fired: close')
+		debug.msg(u'Event fired: close')
