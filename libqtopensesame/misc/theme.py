@@ -99,6 +99,8 @@ class theme:
 		A QIcon
 		"""
 
+		if isinstance(icon, QtGui.QIcon):
+			return icon
 		if hasattr(self, u'experiment') and u'%s_large.png' % icon in \
 			self.experiment.resources:
 			return QtGui.QIcon(self.experiment.resource(u'%s_large.png' % icon))
