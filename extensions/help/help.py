@@ -27,7 +27,23 @@ from libqtopensesame.misc.config import cfg
 
 class action_page(QtGui.QAction, base_subcomponent):
 
+	"""
+	desc:
+		A menu entry for a single help page.
+	"""
+
 	def __init__(self, main_window, title, link, menu):
+
+		"""
+		desc:
+			Constructor.
+
+		arguments:
+			main_window:	The main-window object.
+			title:			The menu title.
+			link:			The URL to open.
+			menu:			The menu for the action.
+		"""
 
 		self.setup(main_window)
 		QtGui.QAction.__init__(self, self.theme.qicon(u'applications-internet'),
@@ -38,14 +54,31 @@ class action_page(QtGui.QAction, base_subcomponent):
 
 	def open_page(self):
 
+		"""
+		desc:
+			Opens the page URL.
+		"""
+
 		self.main_window.tabwidget.open_browser(self.link)
 
 class help(base_extension):
+
+	"""
+	desc:
+		An extension that implements the help menu.
+	"""
 	
 	def event_startup(self):
 
+		"""
+		desc:
+			Build the menu on startup.
+		"""
+
 		self.menu = self.menubar.addMenu(_(u'Help'))
-		self.action_online_help = self.menu.addMenu(self.online_help_menu())
+		menu = self.online_help_menu()
+		if menu != None:
+			self.action_online_help = self.menu.addMenu(menu)
 		self.action_offline_help = self.menu.addAction(
 			self.theme.qicon(u'help-contents'), _(u'Offline help'))
 		self.action_offline_help.triggered.connect(self.open_offline_help)
@@ -53,9 +86,19 @@ class help(base_extension):
 
 	def open_offline_help(self):
 
+		"""
+		desc:
+			Open offline help in browser.
+		"""
+
 		self.tabwidget.open_browser(self.ext_resource(u'offline_help.md'))
 
 	def online_help_menu(self):
+
+		"""
+		desc:
+			Build online help menu based on remote sitemap.
+		"""
 
 		import urllib2
 		import yaml
@@ -68,13 +111,25 @@ class help(base_extension):
 			sitemap = fd.read()
 			_dict = yaml.load(sitemap)
 		except:
-			return self.menu.addMenu(
-				self.theme.qicon(u'network-error'),
-				_('Online help (failed to load)'))
+			return None
 		menu = self.build_menu(self.menu, _(u'Online help'), _dict)
 		return menu
 
 	def build_menu(self, parent_menu, title, _dict):
+
+		"""
+		desc:
+			A helper function to build the online-help menu.
+
+		arguments:
+			parent_menu:	A parent QMenu for a submenu.
+			title:			A menu title.
+			_dict:			A dict extracted from the sitemap with page names
+							and contents.
+
+		returns:
+			A QMenu.
+		"""
 
 		menu = parent_menu.addMenu(self.theme.qicon(u'applications-internet'),
 			title)
