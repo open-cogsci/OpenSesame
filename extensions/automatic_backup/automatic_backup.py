@@ -124,24 +124,13 @@ class automatic_backup(base_extension):
 			self.set_status(u'No unsaved changes, skipping backup')
 			autosave_path = u''
 		else:
-			_current_path = self.main_window.current_path
-			_experiment_path = self.experiment.experiment_path
-			_unsaved_changes = self.main_window.unsaved_changes
-			_window_msg = self.window_msg
-			self.main_window.current_path = os.path.join(self.autosave_folder,
+			path = os.path.join(self.autosave_folder,
 				u'%s.opensesame.tar.gz'% unicode(time.ctime()).replace(u':',
 				u'_'))
-			debug.msg(u"saving backup as %s" % self.main_window.current_path)
 			try:
-				self.main_window.save_file(False, remember=False, catch=False)
-				self.set_status(
-					_(u'Backup saved as %s') % self.main_window.current_path)
+				self.main_window.get_ready()
+				self.experiment.save(path, overwrite=True)
+				debug.msg(u"saving backup as %s" % path)
 			except:
 				self.set_status(_(u'Failed to save backup ...'))
-			autosave_path = self.main_window.current_path
-			self.main_window.current_path = _current_path
-			self.experiment.experiment_path = _experiment_path
-			self.main_window.set_unsaved(_unsaved_changes)
-			self.main_window.window_message(_window_msg)
 		self.start_autosave_timer()
-		return autosave_path
