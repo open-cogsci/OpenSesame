@@ -18,6 +18,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from PyQt4 import QtCore, QtGui
+from libqtopensesame.misc.config import cfg
 from libqtopensesame.misc import _
 from libqtopensesame.misc import drag_and_drop
 from libqtopensesame.misc.base_subcomponent import base_subcomponent
@@ -62,6 +63,8 @@ class tree_overview(base_subcomponent, QtGui.QTreeWidget):
 			self.setHeaderLabels([_(u'Item name'), _(u'Run if')])
 		self.setAlternatingRowColors(True)
 		self.itemChanged.connect(self.text_edited)
+		self.pending_drag_data = None
+		self.drag_timer = None
 
 	def text_edited(self, treeitem, col):
 
@@ -136,7 +139,45 @@ class tree_overview(base_subcomponent, QtGui.QTreeWidget):
 			data[u'type'] = u'item-new'
 		else:
 			data[u'type'] = u'item-existing'
-		drag_and_drop.send(self, data)
+		# Drags are not started right away, but only after the mouse has been
+		# pressed for a minimum interval. To accomplish this, we set a timer,
+		# and cancel the timer when the mouse cursor is released.
+		if self.drag_timer != None:
+			self.drag_timer.stop()
+		self.pending_drag_data = data
+		self.drag_timer = QtCore.QTimer()
+		self.drag_timer.setSingleShot(True)
+		self.drag_timer.setInterval(cfg.start_drag_delay)
+		self.drag_timer.timeout.connect(self.start_drag)
+		self.drag_timer.start()
+
+	def start_drag(self):
+
+		"""
+		desc:
+			Starts a pending drag operation (if any).
+		"""
+
+		if self.pending_drag_data == None:
+			return
+		drag_and_drop.send(self, self.pending_drag_data)
+		self.pending_drag_data = None
+
+	def mouseReleaseEvent(self, e):
+
+		"""
+		desc:
+			Cancels pending drag operations when the mouse is released to
+			quickly. This avoids accidental dragging.
+
+		arguments:
+			e:
+				desc:	A mouse event.
+				type:	QMouseEvent
+		"""
+
+		super(tree_overview, self).mouseReleaseEvent(e)
+		self.pending_drag_data = None
 
 	def parent_from_ancestry(self, ancestry):
 

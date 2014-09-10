@@ -93,6 +93,7 @@ class config(object):
 		u"toolbar_text" : False,
 		u"runner" : u"multiprocess",
 		u"opensesamerun_exec" : u"",
+		u"start_drag_delay" : 300,
 		u"pos" : QtCore.QPoint(200, 200),
 		u"size" : QtCore.QSize(1000, 600),
 		u"_initial_window_geometry" : QtCore.QByteArray(),
