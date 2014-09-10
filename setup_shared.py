@@ -53,5 +53,7 @@ included_extensions = [
 	'plugin_manager',
 	'quick_switcher',
 	'toolbar_menu',
-	'update_checker'
+	'update_checker',
+	'qprogedit_preferences',
+	'dock_manager',
 	]
