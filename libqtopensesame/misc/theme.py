@@ -136,7 +136,7 @@ class theme:
 		icon = self.qicon(icon)
 		return icon.pixmap(size)
 
-	def qlabel(self, icon):
+	def qlabel(self, icon, size=None):
 
 		"""
 		Get an icon from the theme
@@ -144,12 +144,15 @@ class theme:
 		Arguments:
 		icon -- the icon name
 
+		Keyword arguments:
+		size -- the size of the icon or None for default (default=None)
+
 		Returns:
 		A QLabel
 		"""
 
 		l = QtGui.QLabel()
-		l.setPixmap(self.qpixmap(icon))
+		l.setPixmap(self.qpixmap(icon, size=size))
 		return l
 
 	def load_icon_map(self):
