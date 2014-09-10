@@ -36,6 +36,7 @@ class example(base_extension):
 		"""
 
 		debug.msg(u'Example extension activated')
+		int('x') # Triggers exception, which we be caught by OpenSesame
 
 	# Below is a list of event handlers, which you can implement to have your
 	# extension react to specific events.

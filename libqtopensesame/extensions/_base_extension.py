@@ -260,6 +260,26 @@ class base_extension(base_subcomponent):
 
 		pass
 
+	def _activate(self):
+
+		"""
+		visible:
+			False
+
+		desc:
+			A wrapper around [activate] to catch Exceptions.
+		"""
+
+		try:
+			self.activate()
+		except Exception as e:
+			if not isinstance(e, osexception):
+				e = osexception(msg=u'Extension error', exception=e)
+			self.notify(
+				u'Extension %s misbehaved on activate (see debug window for stack trace)' \
+				% self.name())
+			self.main_window.print_debug_window(e)
+
 	def add_action(self, widget, action, index, separator_before,
 		separator_after):
 
@@ -379,7 +399,7 @@ class base_extension(base_subcomponent):
 			if isinstance(icon, basestring):
 				icon = self.theme.qicon(icon)
 			self.action = QtGui.QAction(icon, self.label(), self.main_window)
-			self.action.triggered.connect(self.activate)
+			self.action.triggered.connect(self._activate)
 			self.action.setCheckable(self.checkable())
 			if self.tooltip() != None:
 				self.action.setToolTip(self.tooltip())

@@ -20,6 +20,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 import sys
 from PyQt4 import QtGui, QtCore
 from libopensesame import plugins
+from libopensesame.exceptions import osexception
 from libqtopensesame.misc import _
 from libqtopensesame.misc.base_subcomponent import base_subcomponent
 
@@ -48,7 +49,15 @@ class extension_manager(base_subcomponent):
 		self._extensions = []
 		self.events = {}
 		for ext_name in plugins.list_plugins(_type=u'extensions'):
-			ext = plugins.load_extension(ext_name, self.main_window)
+			try:
+				ext = plugins.load_extension(ext_name, self.main_window)
+			except Exception as e:
+				if not isinstance(e, osexception):
+					e = osexception(msg=u'Extension error', exception=e)
+				self.notify(
+					u'Failed to load extension %s (see debug window for stack trace)' \
+					% ext_name)
+				self.main_window.print_debug_window(e)
 			self._extensions.append(ext)
 			for event in ext.supported_events():
 				if event not in self.events:
@@ -74,4 +83,12 @@ class extension_manager(base_subcomponent):
 			for ext in self._extensions:
 				ext.register_ui_files()
 		for ext in self.events.get(event, []):
-			ext.fire(event, **kwdict)
+			try:
+				ext.fire(event, **kwdict)
+			except Exception as e:
+				if not isinstance(e, osexception):
+					e = osexception(msg=u'Extension error', exception=e)
+				self.notify(
+					u'Extension %s misbehaved on event %s (see debug window for stack trace)' \
+					% (ext_name, event))
+				self.main_window.print_debug_window(e)
