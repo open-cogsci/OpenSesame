@@ -18,6 +18,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame import debug
+from libopensesame.exceptions import osexception
 from libqtopensesame.widgets.base_widget import base_widget
 from libqtopensesame.misc import config, theme
 from PyQt4 import QtCore, QtGui
@@ -53,10 +54,19 @@ class preferences_widget(base_widget):
 		self.ui.combobox_theme.currentIndexChanged.connect(self.apply)
 		self.set_controls()
 		for ext in self.extensions:
-			w = ext.settings_widget()
+			try:
+				w = ext.settings_widget()
+			except Exception as e:
+				if not isinstance(e, osexception):
+					e = osexception(msg=u'Extension error', exception=e)
+				self.notify(
+					u'Extension %s failed to return settings widget (see debug window for stack trace)' \
+					% ext.name())
+				self.main_window.print_debug_window(e)
+				continue
 			if w != None:
 				self.ui.layout_preferences.addWidget(w)
-		self.ui.layout_preferences.addStretch()
+		self.ui.container_widget.adjustSize()
 
 	def set_controls(self):
 
