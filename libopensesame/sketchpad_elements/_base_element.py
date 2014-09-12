@@ -254,21 +254,21 @@ class base_element(object):
 			A new property dictionary.
 		"""
 
-		properties = self.properties.copy()
+		properties = {}
 		xc = self.get(u'width')/2
 		yc = self.get(u'height')/2
-		for var, val in properties.items():
+		for var, val in self.properties.items():
 			if var == u'text':
 				round_float = True
 			else:
 				round_float = False
-			properties[var] = self.sketchpad.eval_text(val,
-				round_float=round_float)
+			val = self.sketchpad.eval_text(val, round_float=round_float)
 			if self.fix_coordinates and type(val) in (int, float):
 				if var in [u'x', u'x1', u'x2']:
-					properties[var] += xc
+					val += xc
 				if var in [u'y', u'y1', u'y2']:
-					properties[var] += yc
+					val += yc
+			properties[var] = val
 		return properties
 
 	def is_shown(self):
