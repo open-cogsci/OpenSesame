@@ -53,7 +53,11 @@ class theme:
 		self.theme_folder = misc.resource(os.path.join(u"theme", \
 			self.theme))
 		debug.msg(u"theme = '%s' (%s)" % (self.theme, self.theme_folder))
-		if self.theme_folder == None or not os.path.exists(self.theme_folder):
+		# The theme folder must exist, and contain a file called __theme__.py,
+		# if not, we fall back to the default theme, which is assumed to always
+		# exist.
+		if self.theme_folder == None or not os.path.exists(
+			os.path.join(self.theme_folder, u'__theme__.py')):
 			debug.msg(u"theme '%s' does not exist, using 'default'" % theme, \
 				reason=u"warning")
 			self.theme = u"default"
