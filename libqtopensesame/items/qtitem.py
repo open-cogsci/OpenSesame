@@ -121,10 +121,6 @@ class qtitem(QtCore.QObject):
 
 		return self.container_widget
 
-	def show_script(self):
-
-		self._script_widget.setVisible(not self._script_widget.isVisible())
-
 	def init_edit_widget(self, stretch=True):
 
 		"""
