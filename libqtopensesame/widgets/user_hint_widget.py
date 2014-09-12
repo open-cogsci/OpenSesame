@@ -75,10 +75,18 @@ class user_hint_widget(QtGui.QFrame, base_subcomponent):
 		if not isinstance(hint, list):
 			hint = [hint]
 		for _hint in hint:
-			if _hint not in self.dismissed_hints:
-				self.hints.append(_hint)
+			if _hint in self.dismissed_hints:
+				continue
+			if _hint in self.hints:
+				continue
+			self.hints.append(_hint)
 
 	def dismiss(self):
+
+		"""
+		desc:
+			Dismiss all current user hints.
+		"""
 
 		self.dismissed_hints += self.hints
 		self.clear()
