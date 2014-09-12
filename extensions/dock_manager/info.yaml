@@ -1,7 +1,6 @@
 description: Manage the dock widgets for the debug window, file pool, etc.
 icon: system-lock-screen
 settings:
-  vertical_dock_titles: True
   lock_dock_widgets: False
 label: Lock dock widgets
 checkable: true

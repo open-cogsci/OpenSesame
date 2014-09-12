@@ -49,10 +49,12 @@ class dock_manager(base_extension):
 			Sets the dock title orientation and the initial lock status.
 		"""
 
-		if cfg.vertical_dock_titles:
-			for dock in self.dock_widgets():
-				dock.setFeatures(dock.features() \
-					| QtGui.QDockWidget.DockWidgetVerticalTitleBar)
+		# Vertical dock titles are disabled for now, because they are not
+		# rendered correctly when a stylesheet is applied.
+		#if cfg.vertical_dock_titles:
+			#for dock in self.dock_widgets():
+				#dock.setFeatures(dock.features() \
+					#| QtGui.QDockWidget.DockWidgetVerticalTitleBar)
 		if cfg.lock_dock_widgets:
 			self.lock_dock_widgets()
 			self.set_checked(True)
