@@ -24,6 +24,7 @@ from libopensesame.exceptions import osexception
 from libopensesame import debug, item
 from libqtopensesame.widgets.item_view_button import item_view_button
 from libqtopensesame.widgets.tree_item_item import tree_item_item
+from libqtopensesame.widgets.qtitem_splitter import qtitem_splitter
 from libqtopensesame.widgets import header_widget, user_hint_widget
 from libqtopensesame.misc import _
 from libqtopensesame.misc.config import cfg
@@ -197,9 +198,7 @@ class qtitem(QtCore.QObject):
 
 		# The container_widget is the top-level widget that is actually inserted
 		# into the tab widget.
-		self.splitter = QtGui.QSplitter(QtCore.Qt.Vertical)
-		self.splitter.addWidget(self._edit_widget)
-		self.splitter.addWidget(self._script_widget)
+		self.splitter = qtitem_splitter(self)
 		self.set_view_controls()
 		self.splitter.splitterMoved.connect(self.splitter_moved)
 		self.container_vbox = QtGui.QVBoxLayout()
