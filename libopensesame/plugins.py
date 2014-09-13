@@ -153,6 +153,9 @@ def plugin_properties(plugin, _type=u'plugins'):
 	folder = plugin_folder(plugin, _type=_type)
 	info_txt = os.path.join(folder, u'info.txt')
 	info_yaml = os.path.join(folder, u'info.yaml')
+	# For backwards compatibility, also look for a .json file. These can be
+	# processed just like a .yaml file, because json is a yaml subset, with the
+	# exception of allow tab-based indentation (see below).
 	if not os.path.exists(info_yaml):
 		info_yaml = os.path.join(folder, u'info.json')
 	# New-style plug-ins, using info.yaml
@@ -171,7 +174,7 @@ def plugin_properties(plugin, _type=u'plugins'):
 		_properties[plugin] = {}
 		for l in open(info_txt, u'r'):
 			a = l.split(":")
-			if len(a) == 2 and a[0] == _properties:
+			if len(a) == 2:
 				val = a[1].strip()
 				var = a[0].strip()
 				try:
@@ -183,7 +186,7 @@ def plugin_properties(plugin, _type=u'plugins'):
 		_properties[plugin] = {}
 		debug.msg( \
 			u'Failed to read plug-in information (%s) from info.[txt|json]' \
-			% plugin)
+			% plugin, reason=u'warning')
 	_properties[plugin][u'plugin_folder'] = folder
 	_properties[plugin][u'type'] = _type
 	return _properties[plugin]
