@@ -90,5 +90,5 @@ class extension_manager(base_subcomponent):
 					e = osexception(msg=u'Extension error', exception=e)
 				self.notify(
 					u'Extension %s misbehaved on event %s (see debug window for stack trace)' \
-					% (ext_name, event))
+					% (ext.name(), event))
 				self.main_window.print_debug_window(e)
