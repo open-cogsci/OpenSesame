@@ -71,8 +71,12 @@ class quick_open_element_action(base_widget):
 			type:	bool
 		"""
 
-		return query in self.text.lower() or \
-			query in self.path_to_action.lower()
+		_text = self.text.lower()
+		_path = self.path_to_action.lower()
+		for term in query.lower().split():
+			if term not in _text and term not in _path:
+				return False
+		return True
 
 	def activate(self):
 

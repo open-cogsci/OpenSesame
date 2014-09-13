@@ -119,6 +119,7 @@ class quick_switcher(base_dialog):
 
 		self.ui.label_quick_switcher_wait.hide()
 		self.ui.items_list_widget.show()
+		self.ui.items_list_widget.setCurrentRow(0)
 		self.ui.filter_line_edit.clear()
 		self.ui.filter_line_edit.setFocus()
 		super(quick_switcher, self).exec_()
@@ -145,6 +146,43 @@ class quick_switcher(base_dialog):
 				list_widget_item.setHidden(False)
 			elif not match and not list_widget_item.isHidden():
 				list_widget_item.setHidden(True)
+		i = self.first_index()
+		if i != None:
+			self.ui.items_list_widget.setCurrentRow(i)
+
+	def first_item(self):
+
+		"""
+		desc:
+			Gets the first visible item.
+
+		returns:
+			desc:	The first visible item, or None if there are no items.
+			type:	[QListWidgetItem, None]
+		"""
+
+		for i in range(self.ui.items_list_widget.count()):
+			list_widget_item = self.ui.items_list_widget.item(i)
+			if not list_widget_item.isHidden():
+				return list_widget_item
+		return None
+
+	def first_index(self):
+
+		"""
+		desc:
+			Gets the index of the first visible item.
+
+		returns:
+			desc:	The first visible index, or None if there are no items.
+			type:	[int, None]
+		"""
+
+		for i in range(self.ui.items_list_widget.count()):
+			list_widget_item = self.ui.items_list_widget.item(i)
+			if not list_widget_item.isHidden():
+				return i
+		return None
 
 	def select_item(self, list_widget_item=None):
 
@@ -159,14 +197,20 @@ class quick_switcher(base_dialog):
 		"""
 
 		if list_widget_item == None:
-			for i in range(self.ui.items_list_widget.count()):
-				list_widget_item = self.ui.items_list_widget.item(i)
-				if not list_widget_item.isHidden():
-					break
+			list_widget_item = self.first_item()
 		if list_widget_item == None or list_widget_item.isHidden():
 			self.accept()
 			return
 		element = self.ui.items_list_widget.itemWidget(list_widget_item)
 		element.activate()
 		self.accept()
+
+	def focus_list(self):
+
+		"""
+		desc:
+			Sets focus on the item list.
+		"""
+
+		self.ui.items_list_widget.setFocus()
 

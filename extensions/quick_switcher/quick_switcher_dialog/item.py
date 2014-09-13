@@ -58,8 +58,12 @@ class quick_open_element_item(base_widget):
 			type:	bool
 		"""
 
-		return query in self.item.name.lower() or \
-			query in self.item.item_type.lower()
+		_type = self.item.item_type.lower()
+		_name = self.item.name.lower()
+		for term in query.lower().split():
+			if term not in _type and term not in _name:
+				return False
+		return True
 
 	def activate(self):
 

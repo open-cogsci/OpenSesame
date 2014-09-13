@@ -66,10 +66,16 @@ class quick_open_element_symbol(base_widget):
 			type:	bool
 		"""
 
-		return query in self.item.name.lower() or \
-			query in self.item.item_type.lower() or \
-			query in self.name.lower() or query in self._type.lower() or \
-			query in self.phase.lower()
+		_item_type = self.item.item_type.lower()
+		_item_name = self.item.name.lower()
+		_name = self.name.lower()
+		_type = self._type.lower()
+		_phase = self.phase.lower()
+		for term in query.lower().split():
+			if term not in _item_type and term not in _item_name and \
+				term not in _type and term not in _phase and term not in _name:
+				return False
+		return True
 
 	def activate(self):
 
