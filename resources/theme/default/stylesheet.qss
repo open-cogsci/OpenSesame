@@ -44,6 +44,14 @@
 	background-color: #729fcf;
 }
 
+#quick_switcher QListWidget,
+#quick_switcher QLineEdit {
+	border: none;
+	border-radius: 2px;
+	background-color: #eeeeec;
+	padding: 4px;
+}
+
 #quick_switcher #label_quick_switcher_wait {
 	font-size: 14pt;
 	color: #ffffff;

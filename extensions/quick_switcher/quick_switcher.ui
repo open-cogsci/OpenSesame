@@ -29,7 +29,7 @@
     <number>8</number>
    </property>
    <item>
-    <widget class="QLineEdit" name="filter_line_edit">
+    <widget class="line_edit_filter" name="filter_line_edit">
      <property name="placeholderText">
       <string>Search by item name or type</string>
      </property>
@@ -46,10 +46,24 @@
     </widget>
    </item>
    <item>
-    <widget class="QListWidget" name="items_list_widget"/>
+    <widget class="QListWidget" name="items_list_widget">
+     <property name="verticalScrollBarPolicy">
+      <enum>Qt::ScrollBarAlwaysOff</enum>
+     </property>
+     <property name="horizontalScrollBarPolicy">
+      <enum>Qt::ScrollBarAlwaysOff</enum>
+     </property>
+    </widget>
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>line_edit_filter</class>
+   <extends>QLineEdit</extends>
+   <header>quick_switcher_dialog/line_edit_filter.h</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>
