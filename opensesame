@@ -79,7 +79,7 @@ if __name__ == u'__main__':
 	# command line using the --locale parameter
 	locale = unicode(QLocale().system().name())
 	for i in range(len(sys.argv)-1):
-		if sys.argv[i] == u'--locale':
+		if sys.argv[i] == '--locale':
 			locale = sys.argv[i+1]
 	qm = resource(os.path.join(u'locale', locale) + u'.qm')
 	if qm != None:
