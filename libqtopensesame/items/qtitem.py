@@ -374,7 +374,8 @@ class qtitem(QtCore.QObject):
 		if not self.maximized:
 			self.container_widget.setParent(None)
 			self.container_widget.setWindowFlags(QtCore.Qt.WindowStaysOnTopHint|\
-				QtCore.Qt.WindowMaximizeButtonHint)
+				QtCore.Qt.WindowMaximizeButtonHint|\
+				QtCore.Qt.CustomizeWindowHint)
 			self.container_widget.showMaximized()
 			self.container_widget.show()
 			self.button_toggle_maximize.setIcon(
