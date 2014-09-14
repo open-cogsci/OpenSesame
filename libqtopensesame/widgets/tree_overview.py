@@ -24,6 +24,7 @@ from libqtopensesame.misc import drag_and_drop
 from libqtopensesame.misc.base_subcomponent import base_subcomponent
 from libqtopensesame.widgets.tree_item_item import tree_item_item
 from libopensesame import debug
+from libopensesame.exceptions import osexception
 
 class tree_overview(base_subcomponent, QtGui.QTreeWidget):
 
@@ -325,8 +326,18 @@ class tree_overview(base_subcomponent, QtGui.QTreeWidget):
 			# item.
 			if data[u'type'] == u'item-new' \
 				or data[u'application-id'] != self.main_window._id():
-				item = self.experiment.items.new(data[u'item-type'],
-					data[u'item-name'], data[u'script'])
+				try:
+					item = self.experiment.items.new(data[u'item-type'],
+						data[u'item-name'], data[u'script'])
+				except Exception as ex:
+					if not isinstance(e, osexception):
+						ex = osexception(msg=u'Plug-in error', exception=ex)
+					self.notify(
+						u'Failed to load plug-in %s (see debug window for stack trace)' \
+						% data[u'item-type'])
+					self.main_window.print_debug_window(ex)
+					e.accept()
+					return
 			else:
 				item = self.experiment.items[data[u'item-name']]
 			# If a drop has been made on a loop or sequence, we can insert the new
