@@ -635,7 +635,7 @@ class qtopensesame(QtGui.QMainWindow, base_component):
 			u'.opensesame') and not path.lower().endswith(
 			u'.opensesame.tar.gz')):
 			return
-		self.set_status(u"Opening ...")
+		self.set_status(u"Opening ...", status=u'busy')
 		self.ui.tabwidget.close_all()
 		cfg.file_dialog_path = os.path.dirname(path)
 		try:
@@ -647,12 +647,9 @@ class qtopensesame(QtGui.QMainWindow, base_component):
 			self.print_debug_window(e)
 			self.experiment.notify(e.html(), title=u'Exception')
 			return
-
 		self.experiment = exp
 		self.experiment.build_item_tree()
-		self.ui.tabwidget.open_general()
-		self.set_status(u"Opened %s" % path)
-
+		self.ui.tabwidget.open_general()		
 		if add_to_recent:
 			self.current_path = path
 			self.window_message(self.current_path)
@@ -666,6 +663,7 @@ class qtopensesame(QtGui.QMainWindow, base_component):
 		self.refresh_pool()
 		self.refresh_variable_inspector()
 		self.extension_manager.fire(u'open_experiment', path=path)
+		self.set_status(u"Opened %s" % path)
 
 	def save_file(self, dummy=None, remember=True, catch=True):
 

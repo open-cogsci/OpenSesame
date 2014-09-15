@@ -59,14 +59,8 @@ class qtitem_store(item_store):
 		
 		"""See item_store."""
 		
-		self.main_window.set_unsaved(True)
 		item = super(qtitem_store, self).new(_type, name=name, script=script)
-		try:
-			self.extension_manager.fire(u'new_item', name=name, _type=_type)
-		except:
-			# New items may be generated before the extension manager has been
-			# loaded.
-			pass
+		self.main_window.set_unsaved(True)
 		return item
 
 	def rename(self, from_name, to_name):

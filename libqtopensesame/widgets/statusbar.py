@@ -67,13 +67,16 @@ class statusbar(QtGui.QStatusBar, base_widget):
 		if status == "ready":
 			self.ready_icon.show()
 			self.busy_icon.hide()
+			QtGui.QApplication.restoreOverrideCursor()
 		else:
+			QtGui.QApplication.setOverrideCursor(
+				QtGui.QCursor(QtCore.Qt.WaitCursor))			
 			self.ready_icon.hide()
 			self.busy_icon.show()
-		self.message.setText("<small>%s</small>" % msg)
-
+		self.message.setText("<small>%s</small>" % msg)		
 		if timeout != None:
 			QtCore.QTimer.singleShot(timeout, self.clear_status)
+		QtGui.QApplication.processEvents()
 
 	def clear_status(self):
 

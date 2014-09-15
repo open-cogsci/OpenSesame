@@ -302,9 +302,11 @@ class tree_overview(base_subcomponent, QtGui.QTreeWidget):
 				type:	[tree_base_item, NoneType]
 		"""
 
+		self.main_window.set_busy(True)
 		if not drag_and_drop.matches(data, [u'item-existing', u'item-new']):
 			if e != None:
 				e.ignore()
+			self.main_window.set_busy(False)
 			return
 		# Ignore drops on non-droppable tree items.
 		if target_treeitem == None:
@@ -312,6 +314,7 @@ class tree_overview(base_subcomponent, QtGui.QTreeWidget):
 		if not self.droppable(target_treeitem):
 			if e != None:
 				e.ignore()
+			self.main_window.set_busy(False)
 			return
 		# Get the target item, check if it exists, and, if so, drop the source
 		# item on it.
@@ -337,7 +340,10 @@ class tree_overview(base_subcomponent, QtGui.QTreeWidget):
 						% data[u'item-type'])
 					self.main_window.print_debug_window(ex)
 					e.accept()
+					self.main_window.set_busy(False)
 					return
+				self.extension_manager.fire(u'new_item',
+					name=data[u'item-name'], _type=data[u'item-type'])				
 			else:
 				item = self.experiment.items[data[u'item-name']]
 			# If a drop has been made on a loop or sequence, we can insert the new
@@ -363,6 +369,7 @@ class tree_overview(base_subcomponent, QtGui.QTreeWidget):
 		if e != None:
 			e.accept()
 		self.structure_change.emit()
+		self.main_window.set_busy(False)
 
 	def dropEvent(self, e):
 
