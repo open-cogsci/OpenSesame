@@ -122,6 +122,7 @@ include_extensions = True
 include_media_player = False
 include_media_player_vlc = True
 include_boks = True
+include_pygaze = True
 include_examples = True
 include_sounds = True
 include_faenza = True
@@ -154,7 +155,8 @@ copy_packages = [
 	'markdown',
 	'matplotlib',
 	'bidi',
-	'yaml'
+	'yaml',
+	'pygaze'
 	]
 
 # Packages that are part of the standard Python packages, but should not be
@@ -415,6 +417,15 @@ if include_boks:
 	shutil.copytree(r"..\boks\opensesame\boks",
 		r"dist\plugins\boks",
 		ignore=shutil.ignore_patterns('*.pyc', '.*', '.pyo'))
+		
+# Include PyGaze plug-ins
+if include_pygaze:
+	print("copying pygaze")
+	for plugin in ['init', 'log', 'drift_correct', 'start_recording',
+		'stop_recording', 'wait']:
+		shutil.copytree(r"..\pygaze\opensesame_plugins\pygaze_%s" % plugin,
+			r"dist\plugins\pygaze_%s" % plugin,
+			ignore=shutil.ignore_patterns('*.pyc', '.*', '.pyo'))			
 
 # Include examples
 if include_examples:
