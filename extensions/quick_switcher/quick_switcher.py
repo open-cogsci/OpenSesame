@@ -27,24 +27,24 @@ class quick_switcher(base_extension):
 		The quick-switcher allows you to quickly navigate to items and
 		functions, and to quickly activate menu actions.
 	"""
+	
+	# We need to (re)initialize the dialog on startup and after structural
+	# changes.
 
 	def event_startup(self):
-
-		"""
-		desc:
-			Initialize the quick_switcher.
-		"""
-
 		self.init_dialog()
 
 	def event_open_experiment(self, path):
-
-		"""
-		desc:
-			Re-init the dialog to update the recent files list.
-		"""
-
 		self.init_dialog()
+		
+	def event_rename_item(self, from_name, to_name):
+		self.init_dialog()
+		
+	def event_new_item(self, name, _type):
+		self.init_dialog()
+		
+	def event_purge_unused_items(self):
+		self.init_dialog()	
 
 	def init_dialog(self):
 
