@@ -121,6 +121,7 @@ include_plugins = True
 include_extensions = True
 include_media_player = False
 include_media_player_vlc = True
+include_boks = True
 include_examples = True
 include_sounds = True
 include_faenza = True
@@ -407,6 +408,13 @@ if include_media_player_vlc:
 		r"dist\plugins\media_player_vlc\media_player_vlc_large.png")
 	shutil.copyfile(r"..\media_player_vlc\info.json", \
 		r"dist\plugins\media_player_vlc\info.json")
+		
+# Include Boks plug-in
+if include_boks:
+	print("copying boks")
+	shutil.copytree(r"..\boks\opensesame\boks",
+		r"dist\plugins\boks",
+		ignore=shutil.ignore_patterns('*.pyc', '.*', '.pyo'))
 
 # Include examples
 if include_examples:
