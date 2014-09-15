@@ -259,35 +259,21 @@ class loop(qtstructure_item, qtitem, loop_runtime):
 						is removed from the table. (default=True)
 		"""
 
+		if self.cycles == 'lock':
+			return
+		self.cycles = 'lock'
 		debug.msg(u"cycles = %s" % cycles)
-		cont = True
-		while cont:
-			cont = False
-			for i in self.matrix:
-				if i >= cycles:
-
-					# Check if the cells that will be removed are not empty
-					empty = True
-					for var in self.matrix[i]:
-						if self.matrix[i][var] != u"":
-							empty = False
-
-					# Ask for confirmation (only the first time)
-					if not empty and confirm:
-						resp = QtGui.QMessageBox.question( \
-							self.experiment.ui.centralwidget, \
-							_(u"Remove cycles?"), \
-							_(u"By reducing the number of cycles, data will be lost from the table. Do you wish to continue?"), \
-							QtGui.QMessageBox.Yes, QtGui.QMessageBox.No)
-						if resp == QtGui.QMessageBox.No:
-							return
-						confirm = False
-
-					# Delete the cycle and restart the loop
-					del self.matrix[i]
-					cont = True
-					break
-
+		# Ask for confirmation before reducing the number of cycles.
+		if len(self.matrix) > cycles and confirm:
+			resp = QtGui.QMessageBox.question(self.experiment.ui.centralwidget,
+				_(u"Remove cycles?"),
+				_(u"By reducing the number of cycles, data will be lost from the table. Do you wish to continue?"),
+				QtGui.QMessageBox.Yes, QtGui.QMessageBox.No)
+			if resp == QtGui.QMessageBox.No:
+				return
+		for i in self.matrix.keys():
+			if i >= cycles:
+				del self.matrix[i]		
 		self.set(u"cycles", cycles)
 
 	def call_count(self):
