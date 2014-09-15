@@ -51,12 +51,24 @@ class qtitem_store(item_store):
 	def itemtree(self):
 		return self.experiment.main_window.itemtree
 		
+	@property
+	def extension_manager(self):
+		return self.main_window.extension_manager	
+		
 	def new(self, _type, name=None, script=None):
 		
 		"""See item_store."""
 		
 		self.main_window.set_unsaved(True)
-		return super(qtitem_store, self).new(_type, name=name, script=script)		
+		item = super(qtitem_store, self).new(_type, name=name, script=script)
+		try:
+			self.extension_manager.fire(u'new_item', name=name, _type=_type)
+		except:
+			# New items may be generated before the extension manager has been
+			# loaded.
+			print 'x'
+			pass
+		return item
 
 	def rename(self, from_name, to_name):
 
@@ -98,6 +110,8 @@ class qtitem_store(item_store):
 		self.experiment.rename(from_name, to_name)
 		self.itemtree.rename(from_name, to_name)
 		self.main_window.set_unsaved(True)
+		self.extension_manager.fire(u'rename_item', from_name=from_name,
+			to_name=to_name)
 		return to_name
 
 	def set_icon(self, name, icon):

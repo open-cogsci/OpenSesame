@@ -36,7 +36,6 @@ class example(base_extension):
 		"""
 
 		debug.msg(u'Example extension activated')
-		int('x') # Triggers exception, which we be caught by OpenSesame
 
 	# Below is a list of event handlers, which you can implement to have your
 	# extension react to specific events.
@@ -64,3 +63,16 @@ class example(base_extension):
 	def event_close(self):
 
 		debug.msg(u'Event fired: close')
+		
+	def event_rename_item(self, from_name, to_name):
+		
+		debug.msg(u'Event fired: rename_item(from_name=%s, to_name=%s)' \
+			% (from_name, to_name))
+		
+	def event_new_item(self, name, _type):
+		
+		debug.msg(u'Event fired: new_item(name=%s, _type=%s)' % (name, _type))
+	
+	def event_purge_unused_items(self):
+		
+		debug.msg(u'Event fired: purge_unused_items')

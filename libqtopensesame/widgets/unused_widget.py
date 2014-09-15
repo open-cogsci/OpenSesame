@@ -88,6 +88,7 @@ class unused_widget(base_widget):
 			del self.experiment.items[item_name]
 		self.experiment.build_item_tree()
 		self.purge_button.setDisabled(True)
+		self.extension_manager.fire(u'purge_unused_items')
 
 	def on_activate(self):
 
