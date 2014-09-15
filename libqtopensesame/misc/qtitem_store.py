@@ -66,7 +66,6 @@ class qtitem_store(item_store):
 		except:
 			# New items may be generated before the extension manager has been
 			# loaded.
-			print 'x'
 			pass
 		return item
 
