@@ -119,7 +119,7 @@ class form_multiple_choice(item.item):
 		"""
 
 		return item.item.var_info(self) + \
-			[(self.get(u'form_var'), u'[Depends on response]')]
+			[(u'form_var', u'[Depends on response]')]
 
 class qtform_multiple_choice(form_multiple_choice, qtautoplugin):
 
