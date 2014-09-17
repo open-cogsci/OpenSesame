@@ -122,7 +122,13 @@ class keyboard(object):
 			my_keyboard.set_keylist( ['z', 'm'] )
 		"""
 
-		raise NotImplementedError()
+		if keylist == None:
+			self._keylist = None
+		else:
+			self._keylist = []
+			for key in keylist:
+				self._keylist += self.synonyms(key)
+		print self._keylist
 
 	def set_timeout(self, timeout=None):
 

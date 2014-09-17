@@ -79,24 +79,6 @@ class psycho(keyboard.keyboard):
 				l.append(i)
 		return l
 
-	def set_keylist(self, keylist=None):
-
-		if keylist == None:
-			self._keylist = None
-		else:
-			_keylist = []
-			for key in keylist:
-				if key in self.keymap:
-					_keylist.append(self.keymap[key])
-				else:
-					if not hasattr(pyglet.window.key, key.upper()) and not \
-						hasattr(pyglet.window.key, "NUM_%s" % key):
-						raise osexception(
-							"The key '%s' is not recognized by the psycho keyboard backend. Please refer to <a href='http://pyglet.org/doc/api/pyglet.window.key-module.html'>http://pyglet.org/doc/api/pyglet.window.key-module.html</a> for a list of valid keys." \
-							% key)
-					_keylist.append(key)
-			self._keylist = _keylist
-
 	def get_key(self, keylist=None, timeout=None):
 
 		if keylist == None:
@@ -147,8 +129,10 @@ class psycho(keyboard.keyboard):
 				% type(key))
 		
 		# Make a list of all conceivable ways that a key might be referred to.
-		l = [key, key.upper()]
-		if key.upper() != key.lower():
+		l = [key]
+		if key != key.upper():
+			l.append(key.upper())
+		if key != key.lower():
 			l.append(key.lower())
 		for char, name in self.keymap.items():
 			if key == char:

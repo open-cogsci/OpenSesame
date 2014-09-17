@@ -63,15 +63,6 @@ class legacy(keyboard.keyboard):
 		self.set_keylist(keylist)
 		self.set_timeout(timeout)
 
-	def set_keylist(self, keylist=None):
-
-		if keylist == None:
-			self._keylist = None
-		else:
-			self._keylist = []
-			for key in keylist:
-				self._keylist += self.synonyms(key)
-
 	def get_key(self, keylist=None, timeout=None):
 
 		start_time = pygame.time.get_ticks()
