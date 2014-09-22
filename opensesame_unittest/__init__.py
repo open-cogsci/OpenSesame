@@ -18,6 +18,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 import unittest
-from opensesame_unittest import parsing, backends
+from opensesame_unittest import parsing, backends, syntax
 unittest.main(parsing, exit=False)
-unittest.main(backends)
+unittest.main(backends, exit=False)
+unittest.main(syntax)
