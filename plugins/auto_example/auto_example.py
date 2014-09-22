@@ -31,17 +31,11 @@ class auto_example(item):
 	# Provide an informative description for your plug-in.
 	description = u'An example new-style plug-in'
 
-	def __init__(self, name, experiment, script=None):
+	def reset(self):
 
 		"""
-		Constructor.
-		
-		Arguments:
-		name		--	The name of the plug-in.
-		experiment	--	The experiment object.
-		
-		Keyword arguments:
-		script		--	A definition script. (default=None)
+		desc:
+			Resets plug-in to initial values.
 		"""
 
 		# Here we provide default values for the variables that are specified
@@ -56,8 +50,6 @@ class auto_example(item):
 		self._spinbox_value = 1
 		self._slider_value = 1
 		self._script = u'print 10'
-		# Then call the parent constructor
-		item.__init__(self, name, experiment, script)
 
 	def prepare(self):
 
