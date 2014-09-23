@@ -51,8 +51,8 @@ class item_context_menu(base_subcomponent, QtGui.QMenu):
 		if self.treeitem.clipboard_data() != None:
 			self.addAction(self.experiment.icon(u"edit-paste"), _("Paste"),
 				self.treeitem.paste)
-		self.addAction(self.experiment.icon(u"accessories-text-editor"), _("Rename"),
-			self.treeitem.rename)
+		self.addAction(self.experiment.icon(u"accessories-text-editor"),
+			_("Rename"), self.treeitem.start_rename)
 		if self.treeitem.is_deletable():
 			self.addAction(self.experiment.icon(u"list-remove"), _("Delete"),
 				self.treeitem.delete)

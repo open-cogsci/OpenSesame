@@ -86,7 +86,16 @@ class tree_overview(base_subcomponent, QtGui.QTreeWidget):
 			if hasattr(treeitem, u'name'):
 				from_name = treeitem.name
 				to_name = unicode(treeitem.text(0))
-				self.experiment.items.rename(from_name, to_name)
+				to_name = self.experiment.items.rename(from_name, to_name)
+				if to_name == None:
+					self.itemChanged.disconnect()
+					treeitem.setText(0, from_name)
+					self.itemChanged.connect(self.text_edited)
+				if from_name != to_name:
+					self.itemChanged.disconnect()
+					treeitem.setText(0, to_name)
+					self.itemChanged.connect(self.text_edited)
+				treeitem.name = to_name
 				self.text_change.emit()
 		elif col == 1:
 			if hasattr(treeitem, u'ancestry'):

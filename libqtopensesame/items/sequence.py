@@ -87,6 +87,7 @@ class sequence(qtstructure_item, qtplugin, sequence_runtime):
 			else:
 				new_items.append( (item, cond) )
 		self.items = new_items
+		self.treewidget.rename(from_name, to_name)
 
 	def delete(self, item_name, item_parent=None, index=None):
 

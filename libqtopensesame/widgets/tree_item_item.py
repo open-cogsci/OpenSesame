@@ -147,6 +147,16 @@ class tree_item_item(tree_base_item):
 		super(tree_item_item, self).rename(from_name, to_name)
 		if unicode(self.text(0)) == from_name:
 			self.setText(0, to_name)
+			self.name = to_name
+
+	def start_rename(self):
+
+		"""
+		desc:
+			Goes into edit mode for the item's name.
+		"""
+
+		self.treeWidget().editItem(self, 0)
 
 	def set_icon(self, name, icon):
 
