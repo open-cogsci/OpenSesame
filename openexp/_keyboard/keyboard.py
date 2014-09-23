@@ -128,7 +128,6 @@ class keyboard(object):
 			self._keylist = []
 			for key in keylist:
 				self._keylist += self.synonyms(key)
-		print self._keylist
 
 	def set_timeout(self, timeout=None):
 
