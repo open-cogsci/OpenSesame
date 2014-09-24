@@ -1,4 +1,4 @@
-opensesame (2.9.0~pre17-ubuntu1) trusty; urgency=medium
+opensesame (2.9.0~pre18-ubuntu1) trusty; urgency=medium
 
   * Bugs fixed
     - The radius keyword to circle sketchpad elements now specifies radius, instead of diameter
