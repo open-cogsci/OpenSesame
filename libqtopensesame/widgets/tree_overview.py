@@ -438,13 +438,15 @@ class tree_overview(base_subcomponent, QtGui.QTreeWidget):
 		data = drag_and_drop.receive(e)
 		if drag_and_drop.matches(data, [u'url-local']):
 			e.accept()
-		elif drag_and_drop.matches(data, [u'item-new', u'item-existing']):
-			if not self.droppable(self.itemAt(e.pos())):
-				e.ignore()
-			else:
-				e.accept()
-		else:
+			return
+		if not drag_and_drop.matches(data, [u'item-new', u'item-existing']):
+			e.accept()
+			return
+		target = self.itemAt(e.pos())
+		if not self.droppable(target):
 			e.ignore()
+			return
+		e.accept()
 
 	def contextMenuEvent(self, e):
 
