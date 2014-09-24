@@ -805,18 +805,23 @@ class qtopensesame(QtGui.QMainWindow, base_component):
 		self.experiment = tmp
 		self.refresh()
 
-	def select_from_pool(self):
+	def select_from_pool(self, parent=None):
 
 		"""
 		desc:
 			Opens the file-pool selection dialog.
+
+		keywords:
+			parent:		The parent QWidget or None to use main window.
 
 		returns:
 			A filename or None if no file was selected.
 		"""
 
 		from libqtopensesame.widgets import pool_widget
-		_file = pool_widget.select_from_pool(self)
+		if parent == None:
+			parent = self
+		_file = pool_widget.select_from_pool(self, parent=parent)
 		if _file == u'':
 			return None
 		return _file

@@ -261,7 +261,8 @@ class base_element(object):
 
 		old_string = self.to_string()
 		string = self.experiment.text_input(_(u'Edit element'),
-			message=_(u'Element script'), content=self.to_string())
+			message=_(u'Element script'), content=self.to_string(),
+			parent=self.sketchpad._edit_widget)
 		if string == None:
 			return
 		try:

@@ -43,7 +43,8 @@ class textline(base_element, textline_runtime):
 
 		text = self.experiment.text_input(_(u'Edit text'),
 			message=_(u'Please enter a text for the textline'),
-			content=self.properties[u'text'])
+			content=self.properties[u'text'],
+			parent=self.sketchpad._edit_widget)
 		if text == None:
 			return
 		self.properties[u'text'] = unicode(text)
@@ -53,7 +54,8 @@ class textline(base_element, textline_runtime):
 	def mouse_press(cls, sketchpad, pos):
 
 		text = sketchpad.experiment.text_input(title=_(u'New textline'),
-			message=_(u'Please enter a text for the textline'))
+			message=_(u'Please enter a text for the textline'),
+			parent=sketchpad._edit_widget)
 		if text == None:
 			return None
 		# Sanitize the text, by replacing the line separators and stripping

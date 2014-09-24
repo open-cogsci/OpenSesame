@@ -352,24 +352,29 @@ class experiment(libopensesame.experiment.experiment):
 			icon=icon)
 		nd.show()
 
-	def text_input(self, title, message=None, content=u''):
+	def text_input(self, title, message=None, content=u'', parent=None):
 
 		"""
-		Pops up a text input dialog.
+		dexc:
+			Pops up a text input dialog.
 
-		Arguments:
-		title		--	The title for the dialog.
+		arguments:
+			title:		The title for the dialog.
 
-		Keywords arguments:
-		message		--	A text message. (default=None)
-		contents	--	The initial contents. (default=u'')
+		keywords:
+			message:	A text message.
+			contents:	The initial contents.
+			parent:		A parent QWidget or None to use the main window as
+						parent.
 
-		Returns:
-		A string of text or None if cancel was pressed.
+		returns:
+			A string of text or None if cancel was pressed.
 		"""
 
 		from libqtopensesame.dialogs.text_input import text_input
-		tid = text_input(self.main_window, msg=message, content=content)
+		if parent == None:
+			parent = self.main_window
+		tid = text_input(parent, msg=message, content=content)
 		return tid.get_input()
 
 	def colorpicker(self, title=u'Pick a color', initial_color=None):

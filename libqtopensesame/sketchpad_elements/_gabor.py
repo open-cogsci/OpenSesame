@@ -37,7 +37,7 @@ class gabor(base_element, gabor_runtime):
 			The show-edit dialog for the gabor shows the settings dialog.
 		"""
 
-		d = gabor_settings(self.main_window)
+		d = gabor_settings(self.sketchpad._edit_widget)
 		d.set_properties(self.properties)
 		properties = d.get_properties()
 		if properties == None:
@@ -48,7 +48,7 @@ class gabor(base_element, gabor_runtime):
 	@classmethod
 	def mouse_press(cls, sketchpad, pos):
 
-		d = gabor_settings(sketchpad.main_window)
+		d = gabor_settings(sketchpad._edit_widget)
 		properties = d.get_properties()
 		if properties == None:
 			return

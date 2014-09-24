@@ -351,16 +351,23 @@ class pool_widget(base_widget):
 		self.add(files)
 		event.acceptProposedAction()
 
-def select_from_pool(main_window):
+def select_from_pool(main_window, parent=None):
 
 	"""
-	A static function that presents the select from pool dialog
+	desc:
+		A static function that presents the select from pool dialog.
 
-	Arguments:
-	main_window -- the GUI main window
+	arguments:
+		main_window:	The GUI main window
+
+	keywords:
+		parent:		The parent QWidget or None to use main window's central
+					widget.
 	"""
 
-	d = QtGui.QDialog(main_window.ui.centralwidget)
+	if parent == None:
+		parent = main_window.ui.centralwidget
+	d = QtGui.QDialog(parent)
 	widget = pool_widget(main_window)
 	widget.refresh()
 	bbox = QtGui.QDialogButtonBox(d)

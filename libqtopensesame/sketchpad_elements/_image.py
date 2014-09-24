@@ -32,7 +32,8 @@ class image(base_element, image_runtime):
 	@classmethod
 	def mouse_press(cls, sketchpad, pos):
 
-		_file = sketchpad.main_window.select_from_pool()
+		_file = sketchpad.main_window.select_from_pool(
+			parent=sketchpad._edit_widget)
 		if _file == None:
 			return None
 		properties = {

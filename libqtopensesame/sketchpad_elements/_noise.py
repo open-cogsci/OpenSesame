@@ -37,7 +37,7 @@ class noise(base_element, noise_runtime):
 			The show-edit dialog for the noise shows the settings dialog.
 		"""
 
-		d = noise_settings(self.main_window)
+		d = noise_settings(self.sketchpad._edit_widget)
 		d.set_properties(self.properties)
 		properties = d.get_properties()
 		if properties == None:
@@ -48,7 +48,7 @@ class noise(base_element, noise_runtime):
 	@classmethod
 	def mouse_press(cls, sketchpad, pos):
 
-		d = noise_settings(sketchpad.main_window)
+		d = noise_settings(sketchpad._edit_widget)
 		properties = d.get_properties()
 		if properties == None:
 			return
