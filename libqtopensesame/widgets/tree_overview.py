@@ -352,26 +352,26 @@ class tree_overview(base_subcomponent, QtGui.QTreeWidget):
 					self.main_window.set_busy(False)
 					return
 				self.extension_manager.fire(u'new_item',
-					name=data[u'item-name'], _type=data[u'item-type'])				
+					name=data[u'item-name'], _type=data[u'item-type'])
 			else:
 				item = self.experiment.items[data[u'item-name']]
-			# If a drop has been made on a loop or sequence, we can insert the new
-			# item directly. We only do this in overview mode, because it is
+			# If a drop has been made on a loop or sequence, we can insert the
+			# new item directly. We only do this in overview mode, because it is
 			# confusing otherwise.
 			if self.overview_mode and \
 				target_item.item_type in [u'loop', u'sequence']:
 				target_item.insert_child_item(item.name)
-			# If the item has ni parent, also drop on it directly. This is the case
-			# in sequence views of the overview area.
+			# If the item has ni parent, also drop on it directly. This is the
+			# case in sequence views of the overview area.
 			elif target_treeitem.parent() == None:
 				target_item.insert_child_item(item.name)
-			# Otherwise, we find the parent of the target item, and insert the new
-			# item at the correct position.
+			# Otherwise, we find the parent of the target item, and insert the
+			# new item at the correct position.
 			else:
 				parent_treeitem = target_treeitem.parent()
 				parent_item_name = unicode(parent_treeitem.text(0))
 				parent_item = self.experiment.items[parent_item_name]
-				index = parent_treeitem.indexOfChild(target_treeitem)
+				index = parent_treeitem.indexOfChild(target_treeitem)+1
 				parent_item.insert_child_item(item.name, index=index)
 			if self.overview_mode:
 				item.open_tab()
