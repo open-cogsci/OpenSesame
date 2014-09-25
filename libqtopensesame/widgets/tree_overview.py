@@ -441,54 +441,58 @@ class tree_overview(base_subcomponent, QtGui.QTreeWidget):
 		target_item_name = unicode(target_treeitem.text(0))
 		if target_item_name not in self.experiment.items:
 			debug.msg(u'Don\'t know how to drop on %s' % target_item_name)
+			if e != None:
+				e.ignore()
+			self.structure_change.emit()
+			self.main_window.set_busy(False)
+			return
+		target_item = self.experiment.items[target_item_name]
+		# Get the item to be inserted. If the drop type is item-new, we need
+		# to create a new item, otherwise we get an existin item. Also, if
+		# the drop doesn't originate from this application, we create a new
+		# item.
+		if data[u'type'] == u'item-new' \
+			or data[u'application-id'] != self.main_window._id():
+			try:
+				item = self.experiment.items.new(data[u'item-type'],
+					data[u'item-name'], data[u'script'])
+			except Exception as ex:
+				if not isinstance(e, osexception):
+					ex = osexception(msg=u'Plug-in error', exception=ex)
+				self.notify(
+					u'Failed to load plug-in %s (see debug window for stack trace)' \
+					% data[u'item-type'])
+				self.main_window.print_debug_window(ex)
+				e.accept()
+				self.main_window.set_busy(False)
+				return
+			self.extension_manager.fire(u'new_item',
+				name=data[u'item-name'], _type=data[u'item-type'])
 		else:
-			target_item = self.experiment.items[target_item_name]
-			# Get the item to be inserted. If the drop type is item-new, we need
-			# to create a new item, otherwise we get an existin item. Also, if
-			# the drop doesn't originate from this application, we create a new
-			# item.
-			if data[u'type'] == u'item-new' \
-				or data[u'application-id'] != self.main_window._id():
-				try:
-					item = self.experiment.items.new(data[u'item-type'],
-						data[u'item-name'], data[u'script'])
-				except Exception as ex:
-					if not isinstance(e, osexception):
-						ex = osexception(msg=u'Plug-in error', exception=ex)
-					self.notify(
-						u'Failed to load plug-in %s (see debug window for stack trace)' \
-						% data[u'item-type'])
-					self.main_window.print_debug_window(ex)
-					e.accept()
-					self.main_window.set_busy(False)
-					return
-				self.extension_manager.fire(u'new_item',
-					name=data[u'item-name'], _type=data[u'item-type'])
-			else:
-				item = self.experiment.items[data[u'item-name']]
-			# If a drop has been made on a loop or sequence, we can insert the
-			# new item directly. We only do this in overview mode, because it is
-			# confusing otherwise.
-			if self.overview_mode and \
-				target_item.item_type in [u'loop', u'sequence']:
-				target_item.insert_child_item(item.name)
-			# If the item has ni parent, also drop on it directly. This is the
-			# case in sequence views of the overview area.
-			elif target_treeitem.parent() == None:
-				target_item.insert_child_item(item.name)
-			# Otherwise, we find the parent of the target item, and insert the
-			# new item at the correct position.
-			else:
-				parent_treeitem = target_treeitem.parent()
-				parent_item_name = unicode(parent_treeitem.text(0))
-				parent_item = self.experiment.items[parent_item_name]
-				index = parent_treeitem.indexOfChild(target_treeitem)+1
-				parent_item.insert_child_item(item.name, index=index)
-			if self.overview_mode:
-				item.open_tab()
+			item = self.experiment.items[data[u'item-name']]
+		# If a drop has been made on a loop or sequence, we can insert the
+		# new item directly. We only do this in overview mode, because it is
+		# confusing otherwise.
+		if self.overview_mode and \
+			target_item.item_type in [u'loop', u'sequence']:
+			target_item.insert_child_item(item.name)
+		# If the item has ni parent, also drop on it directly. This is the
+		# case in sequence views of the overview area.
+		elif target_treeitem.parent() == None:
+			target_item.insert_child_item(item.name)
+		# Otherwise, we find the parent of the target item, and insert the
+		# new item at the correct position.
+		else:
+			parent_treeitem = target_treeitem.parent()
+			parent_item_name = unicode(parent_treeitem.text(0))
+			parent_item = self.experiment.items[parent_item_name]
+			index = parent_treeitem.indexOfChild(target_treeitem)+1
+			parent_item.insert_child_item(item.name, index=index)
 		if e != None:
 			e.accept()
 		self.structure_change.emit()
+		if self.overview_mode:
+			item.open_tab()
 		self.main_window.set_busy(False)
 
 	def dropEvent(self, e):
