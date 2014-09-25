@@ -46,12 +46,12 @@ class tree_inline_script_item(tree_item_item):
 			prepare_tree_widget = tree_inline_script_phase_item(item,
 				u'prepare')
 			run_tree_widget = tree_inline_script_phase_item(item, u'run')
+			self.addChild(prepare_tree_widget)
+			self.addChild(run_tree_widget)
 			self.item.qprogedit.tab(0).setSymbolTree(prepare_tree_widget,
 				tree_inline_script_symbol_item)
 			self.item.qprogedit.tab(1).setSymbolTree(run_tree_widget,
 				tree_inline_script_symbol_item)
-			self.addChild(prepare_tree_widget)
-			self.addChild(run_tree_widget)
 
 	def expand(self):
 

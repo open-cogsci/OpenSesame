@@ -57,3 +57,77 @@ class tree_inline_script_phase_item(tree_base_item):
 			self.inline_script.qprogedit.selectTab(0)
 		else:
 			self.inline_script.qprogedit.selectTab(1)
+
+	def clear(self):
+
+		"""
+		desc:
+			Clears the symbols.
+		"""
+
+		tree_base_item.takeChildren(self)
+
+	def add_symbol(self, symbol):
+
+		"""
+		desc:
+			Adds a symbol.
+
+		arguments:
+			symbol:		A symbol
+			type:		tree_inline_script_symbol_item
+		"""
+
+		tree_base_item.addChild(self, symbol)
+
+	def clones(self):
+
+		"""
+		desc:
+			Returns a list of all clones of this phase in the tree. This is
+			necessary, because different QTreeWidgetItems correspond to
+			shallow copies of the same item.
+
+		returns:
+			desc:	A list of clones.
+			type:	list
+		"""
+
+		treewidget = self.treeWidget()
+		if treewidget == None:
+			return [self]
+		l = treewidget.findItems(self.inline_script.name,
+			QtCore.Qt.MatchFixedString|QtCore.Qt.MatchRecursive, 0)
+		_clones = []
+		for treeitem in l:
+			if self.phase == u'prepare':
+				_clones.append(treeitem.child(0))
+			else:
+				_clones.append(treeitem.child(1))
+		return _clones
+
+	def takeChildren(self):
+
+		"""
+		desc:
+			Implements QTreeWidgetItems.takeChildren for all clones of this
+			object.
+		"""
+
+		for c in self.clones():
+			c.clear()
+
+	def addChild(self, child):
+
+		"""
+		desc:
+			Implements QTreeWidgetItems.addChild for all clones of this
+			object.
+
+		arguments:
+			child:	A child object.
+			type:	QTreeWidgetItem
+		"""
+
+		for c in self.clones():
+			c.add_symbol(child.clone())

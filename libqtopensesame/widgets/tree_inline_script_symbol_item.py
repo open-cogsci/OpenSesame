@@ -39,6 +39,7 @@ class tree_inline_script_symbol_item(tree_base_item, QSymbolTreeWidgetItem):
 		tree_base_item.__init__(self)
 		QSymbolTreeWidgetItem.__init__(self, editor, lineNo, _type, name,
 			argSpec)
+		self.arg_list = [editor, lineNo, _type, name, argSpec]
 		self._droppable = False
 		self._draggable = False
 
@@ -55,3 +56,13 @@ class tree_inline_script_symbol_item(tree_base_item, QSymbolTreeWidgetItem):
 
 		self.inline_script.open_tab(select_in_tree=False)
 		self.activate()
+
+	def clone(self):
+
+		"""
+		returns:
+			desc:	A deep copy of this object.
+			type:	tree_inline_script_symbol_item
+		"""
+
+		return tree_inline_script_symbol_item(*self.arg_list)
