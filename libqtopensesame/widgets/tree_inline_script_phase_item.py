@@ -52,7 +52,7 @@ class tree_inline_script_phase_item(tree_base_item):
 			Open the inline-script tab.
 		"""
 
-		self.inline_script.open_tab()
+		self.inline_script.open_tab(select_in_tree=False)
 		if self.phase == u'prepare':
 			self.inline_script.qprogedit.selectTab(0)
 		else:

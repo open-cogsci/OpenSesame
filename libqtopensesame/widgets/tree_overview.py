@@ -66,6 +66,117 @@ class tree_overview(base_subcomponent, QtGui.QTreeWidget):
 		self.itemChanged.connect(self.text_edited)
 		self.pending_drag_data = None
 		self.drag_timer = None
+		self.shortcut_copy_item = QtGui.QShortcut(
+			QtGui.QKeySequence(cfg.shortcut_copy_clipboard), self,
+			self.copy_item, context=QtCore.Qt.WidgetWithChildrenShortcut)
+		self.shortcut_paste_item = QtGui.QShortcut(
+			QtGui.QKeySequence(cfg.shortcut_paste_clipboard), self,
+			self.paste_item, context=QtCore.Qt.WidgetWithChildrenShortcut)
+		self.shortcut_delete_item = QtGui.QShortcut(
+			QtGui.QKeySequence(cfg.shortcut_delete), self, self.delete_item,
+			context=QtCore.Qt.WidgetWithChildrenShortcut)
+		self.shortcut_delete_item = QtGui.QShortcut(
+			QtGui.QKeySequence(cfg.shortcut_permanently_delete), self,
+			self.permanently_delete_item,
+			context=QtCore.Qt.WidgetWithChildrenShortcut)
+		self.shortcut_linked_copy = QtGui.QShortcut(
+			QtGui.QKeySequence(cfg.shortcut_linked_copy), self,
+			self.create_linked_copy,
+			context=QtCore.Qt.WidgetWithChildrenShortcut)
+		self.shortcut_unlinked_copy = QtGui.QShortcut(
+			QtGui.QKeySequence(cfg.shortcut_unlinked_copy), self,
+			self.create_unlinked_copy,
+			context=QtCore.Qt.WidgetWithChildrenShortcut)
+
+	def copy_item(self):
+
+		"""
+		desc:
+			Copies the currently selected treeitem to the clipboard (if
+			supported by the treeitem).
+		"""
+
+		target_treeitem = self.currentItem()
+		if target_treeitem != None:
+			target_treeitem.copy()
+
+	def paste_item(self):
+
+		"""
+		desc:
+			Pastes the clipboard onto the currently selected treeitem (if
+			supported by the treeitem).
+		"""
+
+		target_treeitem = self.currentItem()
+		if target_treeitem != None:
+			target_treeitem.paste()
+
+	def delete_item(self):
+
+		"""
+		desc:
+			Deletes the currently selected treeitem (if supported by the
+			treeitem).
+		"""
+
+		target_treeitem = self.currentItem()
+		if target_treeitem != None:
+			target_treeitem.delete()
+
+	def permanently_delete_item(self):
+
+		"""
+		desc:
+			Permanently deletes the currently selected treeitem (if supported by
+			the treeitem).
+		"""
+
+		target_treeitem = self.currentItem()
+		if target_treeitem != None:
+			target_treeitem.permanently_delete()
+
+	def create_linked_copy(self):
+
+		"""
+		desc:
+			Creates a linked copy of the currently selected item (if supported
+			by the treeitem).
+		"""
+
+		target_treeitem = self.currentItem()
+		if target_treeitem != None:
+			target_treeitem.create_linked_copy()
+
+	def create_unlinked_copy(self):
+
+		"""
+		desc:
+			Creates an unlinked copy of the currently selected item (if
+			supported by the treeitem).
+		"""
+
+		target_treeitem = self.currentItem()
+		if target_treeitem != None:
+			target_treeitem.create_unlinked_copy()
+
+	def select_item(self, name):
+
+		"""
+		desc:
+			Selects all items that match the specified name.
+
+		arguments:
+			name:	The name to select.
+		"""
+
+		self.clearSelection()
+		l = self.findItems(name,
+			QtCore.Qt.MatchFixedString|QtCore.Qt.MatchRecursive, 0)
+		if len(l) == 0:
+			return
+		for _l in l:
+			_l.setSelected(True)
 
 	def text_edited(self, treeitem, col):
 

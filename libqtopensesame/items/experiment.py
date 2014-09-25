@@ -109,7 +109,8 @@ class experiment(libopensesame.experiment.experiment):
 
 		return u'qt'
 
-	def build_item_tree(self, toplevel=None, items=[], max_depth=-1):
+	def build_item_tree(self, toplevel=None, items=[], max_depth=-1,
+		select=None):
 
 		"""
 		Constructs an item tree.
@@ -133,6 +134,8 @@ class experiment(libopensesame.experiment.experiment):
 		self.ui.itemtree.insertTopLevelItem(1, self.treeitem_unused)
 		self.treeitem_general.expand()
 		self.treeitem_unused.collapse()
+		if select != None:
+			l = self.ui.itemtree.select_item(select)
 
 	def rename(self, from_name, to_name):
 

@@ -40,6 +40,30 @@ class tree_base_item(base_subcomponent, QtGui.QTreeWidgetItem):
 
 		pass
 
+	def paste(self):
+
+		pass
+
+	def copy(self):
+
+		pass
+
+	def create_linked_copy(self):
+
+		pass
+
+	def create_unlinked_copy(self):
+
+		pass
+
+	def delete(self):
+
+		pass
+
+	def permanently_delete(self):
+
+		pass
+
 	def open_tab(self):
 
 		pass

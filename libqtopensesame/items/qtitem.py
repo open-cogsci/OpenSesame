@@ -62,7 +62,7 @@ class qtitem(QtCore.QObject):
 	def tabwidget(self):
 		return self.experiment.main_window.tabwidget
 
-	def open_tab(self):
+	def open_tab(self, select_in_tree=True):
 
 		"""
 		desc:
@@ -70,6 +70,8 @@ class qtitem(QtCore.QObject):
 		"""
 
 		self.tabwidget.add(self.widget(), self.item_icon(), self.name)
+		if select_in_tree:
+			self.experiment.main_window.ui.itemtree.select_item(self.name)
 
 	def close_tab(self):
 

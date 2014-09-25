@@ -177,6 +177,21 @@ class tree_item_item(tree_base_item):
 
 		return hasattr(self.parent(), u'item')
 
+	def is_cloneable(self):
+
+		"""
+		returns:
+			desc:	True if the item for this treeitem can be cloned, False
+					otherwise. An item can be cloned if it is in a sequence.
+			type:	bool
+		"""
+
+		if not hasattr(self.parent(), u'item'):
+			return False
+		if not getattr(self.parent(), u'item').item_type == u'sequence':
+			return False
+		return True
+
 	def delete(self):
 
 		"""
@@ -190,6 +205,29 @@ class tree_item_item(tree_base_item):
 		parent_item = self.parent().item
 		parent_item.remove_child_item(self.item.name, index)
 		parent_item.update()
+		self.experiment.build_item_tree()
+
+	def permanently_delete(self):
+
+		"""
+		desc:
+			Permanently deletes the item, if possible.
+		"""
+
+		if not self.is_deletable():
+			return
+		if QtGui.QMessageBox.question(self.treeWidget(),
+			_(u'Permanently delete item'),
+			_(u'Are you sure you want to permanently delete this item? You will not be able to undo this.'),
+			buttons=(QtGui.QMessageBox.Yes|QtGui.QMessageBox.No),
+			defaultButton=QtGui.QMessageBox.No) \
+			!= QtGui.QMessageBox.Yes:
+			return
+		index = self.parent().indexOfChild(self)
+		parent_item = self.parent().item
+		parent_item.remove_child_item(self.item.name, index)
+		parent_item.update()
+		del self.item_store[self.name]
 		self.experiment.build_item_tree()
 
 	def copy(self):
@@ -244,3 +282,24 @@ class tree_item_item(tree_base_item):
 		data = self.clipboard_data()
 		if data != None:
 			self.treeWidget().drop_event_item_new(data, target_treeitem=self)
+
+	def create_linked_copy(self):
+
+		if not self.is_cloneable():
+			return
+		index = self.parent().indexOfChild(self)
+		parent_item = self.parent().item
+		parent_item.insert_child_item(self.item.name, index+1)
+		parent_item.update()
+		self.experiment.build_item_tree(select=self.item.name)
+
+	def create_unlinked_copy(self):
+
+		if not self.is_cloneable():
+			return
+		index = self.parent().indexOfChild(self)
+		item = self.item_store.unlinked_copy(self.item)
+		parent_item = self.parent().item
+		parent_item.insert_child_item(item.name, index+1)
+		parent_item.update()
+		self.experiment.build_item_tree(select=item.name)

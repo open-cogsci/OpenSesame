@@ -19,11 +19,15 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 
 from PyQt4 import QtCore, QtGui
 from libqtopensesame.misc import _
+from libqtopensesame.misc.config import cfg
 from libqtopensesame.misc.base_subcomponent import base_subcomponent
 
 class item_context_menu(base_subcomponent, QtGui.QMenu):
 
-	"""Provides a basic context menu for an item"""
+	"""
+	desc:
+		Provides a basic context menu for an item.
+	"""
 
 	def __init__(self, main_window, treeitem):
 
@@ -46,20 +50,55 @@ class item_context_menu(base_subcomponent, QtGui.QMenu):
 		self.addAction(self.experiment.icon(self.item.item_type),
 			_("Open %s") % self.item.name, self.item.open_tab)
 		self.addSeparator()
-		self.addAction(self.experiment.icon(u"edit-copy"), _("Copy"),
-			self.treeitem.copy)
-		if self.treeitem.clipboard_data() != None:
-			self.addAction(self.experiment.icon(u"edit-paste"), _("Paste"),
-				self.treeitem.paste)
-		self.addAction(self.experiment.icon(u"accessories-text-editor"),
-			_("Rename"), self.treeitem.start_rename)
-		if self.treeitem.is_deletable():
-			self.addAction(self.experiment.icon(u"list-remove"), _("Delete"),
-				self.treeitem.delete)
+		self.add_action(u"accessories-text-editor", _("Rename"),
+			self.treeitem.start_rename, cfg.shortcut_rename)
 		self.addSeparator()
-		self.addAction(self.experiment.icon(u"help"),
+		self.add_action(u"edit-copy", _("Copy to clipboard"),
+			self.treeitem.copy, cfg.shortcut_copy_clipboard)
+		if self.treeitem.clipboard_data() != None:
+			self.add_action(u"edit-paste", _("Paste from clipboard"),
+				self.treeitem.paste, cfg.shortcut_paste_clipboard)
+		if self.treeitem.is_deletable():
+			self.addSeparator()
+			self.add_action(u"unused", _("Move to unused items"),
+				self.treeitem.delete, cfg.shortcut_delete)
+			self.add_action(u"list-remove", _("Permanently delete"),
+				self.treeitem.permanently_delete,
+				cfg.shortcut_permanently_delete)
+		if self.treeitem.is_cloneable():
+			self.addSeparator()
+			self.add_action(u"edit-copy", _("Create linked copy"),
+				self.treeitem.create_linked_copy, cfg.shortcut_linked_copy)
+			self.add_action(u"edit-copy", _("Create unlinked copy"),
+				self.treeitem.create_unlinked_copy, cfg.shortcut_unlinked_copy)
+		self.addSeparator()
+		self.add_action(u"help",
 			_("%s help") % self.item.item_type.capitalize(),
 			self.item.open_help_tab)
+
+	def add_action(self, icon, text, func, shortcut=None):
+
+		"""
+		desc:
+			A convenience function for adding menu actions.
+
+		arguments:
+			icon:	An icon name.
+			text:	A menu text.
+			func:	A function to call when the action is activated.
+
+		keywords:
+			shortcut:	A key sequence to activate the action.
+
+		returns:
+			type:	QAction
+		"""
+
+		action = self.addAction(self.experiment.icon(icon), text, func)
+		if shortcut != None:
+			action.setShortcut(QtGui.QKeySequence(shortcut))
+			action.setShortcutContext(QtCore.Qt.WidgetShortcut)
+		return action
 
 	@property
 	def item(self):

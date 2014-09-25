@@ -63,6 +63,21 @@ class qtitem_store(item_store):
 		self.main_window.set_unsaved(True)
 		return item
 
+	def unlinked_copy(self, item):
+
+		"""
+		desc:
+			Creates an unlinked (deep) copy of an item.
+
+		arguments:
+			item:	The item to copy.
+
+		returns:
+			The new item.
+		"""
+
+		return self.new(item.item_type, item.name, item.to_string())
+
 	def rename(self, from_name, to_name):
 
 		"""

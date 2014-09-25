@@ -53,5 +53,5 @@ class tree_inline_script_symbol_item(tree_base_item, QSymbolTreeWidgetItem):
 			Open the inline-script tab and reveal the symbol.
 		"""
 
-		self.inline_script.open_tab()
+		self.inline_script.open_tab(select_in_tree=False)
 		self.activate()
