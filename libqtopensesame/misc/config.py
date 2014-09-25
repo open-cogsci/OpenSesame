@@ -88,7 +88,7 @@ class config(object):
 		u"shortcut_pool" : u"Ctrl+4",
 		u"shortcut_variables" : u"Ctrl+5",
 		u"shortcut_copy_clipboard" : u"Ctrl+C",
-		u"shortcut_paste_clipboard" : u"Ctrl+C",
+		u"shortcut_paste_clipboard" : u"Ctrl+V",
 		u"shortcut_delete" : u"Del",
 		u"shortcut_permanently_delete" : u"Shift+Del",
 		u"shortcut_linked_copy" : u"Ctrl+Shift+L",

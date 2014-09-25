@@ -47,8 +47,8 @@ class item_context_menu(base_subcomponent, QtGui.QMenu):
 		super(item_context_menu, self).__init__(main_window)
 		self.setup(main_window)
 		self.treeitem = treeitem
-		self.addAction(self.experiment.icon(self.item.item_type),
-			_("Open %s") % self.item.name, self.item.open_tab)
+		self.addAction(self.experiment.icon(self.item.item_type), _('Open'),
+			self.item.open_tab)
 		self.addSeparator()
 		self.add_action(u"accessories-text-editor", _("Rename"),
 			self.treeitem.start_rename, cfg.shortcut_rename)
@@ -58,6 +58,12 @@ class item_context_menu(base_subcomponent, QtGui.QMenu):
 		if self.treeitem.clipboard_data() != None:
 			self.add_action(u"edit-paste", _("Paste from clipboard"),
 				self.treeitem.paste, cfg.shortcut_paste_clipboard)
+		if self.treeitem.is_cloneable():
+			self.addSeparator()
+			self.add_action(u"edit-copy", _("Create linked copy"),
+				self.treeitem.create_linked_copy, cfg.shortcut_linked_copy)
+			self.add_action(u"edit-copy", _("Create unlinked copy"),
+				self.treeitem.create_unlinked_copy, cfg.shortcut_unlinked_copy)
 		if self.treeitem.is_deletable():
 			self.addSeparator()
 			self.add_action(u"unused", _("Move to unused items"),
@@ -65,16 +71,8 @@ class item_context_menu(base_subcomponent, QtGui.QMenu):
 			self.add_action(u"list-remove", _("Permanently delete"),
 				self.treeitem.permanently_delete,
 				cfg.shortcut_permanently_delete)
-		if self.treeitem.is_cloneable():
-			self.addSeparator()
-			self.add_action(u"edit-copy", _("Create linked copy"),
-				self.treeitem.create_linked_copy, cfg.shortcut_linked_copy)
-			self.add_action(u"edit-copy", _("Create unlinked copy"),
-				self.treeitem.create_unlinked_copy, cfg.shortcut_unlinked_copy)
 		self.addSeparator()
-		self.add_action(u"help",
-			_("%s help") % self.item.item_type.capitalize(),
-			self.item.open_help_tab)
+		self.add_action(u"help", _("Help"), self.item.open_help_tab)
 
 	def add_action(self, icon, text, func, shortcut=None):
 
