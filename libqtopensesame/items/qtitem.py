@@ -373,6 +373,10 @@ class qtitem(QtCore.QObject):
 		"""
 
 		if not self.maximized:
+			# Always ignore close events. This is necessary, because otherwise
+			# the pop-out widget can be closed without re-enabling the main
+			# window.
+			self.container_widget.closeEvent = lambda e: e.ignore()
 			self.container_widget.setParent(None)
 			self.container_widget.setWindowFlags(QtCore.Qt.WindowStaysOnTopHint|\
 				QtCore.Qt.WindowMaximizeButtonHint|\
