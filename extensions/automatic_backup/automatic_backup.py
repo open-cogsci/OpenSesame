@@ -129,7 +129,7 @@ class automatic_backup(base_extension):
 				u'_'))
 			try:
 				self.main_window.get_ready()
-				self.experiment.save(path, overwrite=True)
+				self.experiment.save(path, overwrite=True, update_path=False)
 				debug.msg(u"saving backup as %s" % path)
 			except:
 				self.set_status(_(u'Failed to save backup ...'))

@@ -484,21 +484,30 @@ class experiment(item.item):
 
 		return os.path.exists(self.get_file(path))
 
-	def save(self, path, overwrite=False):
+	def save(self, path, overwrite=False, update_path=True):
 
 		"""
-		Saves the experiment to file. If no extension is provided,
-		.opensesame.tar.gz is chosen by default.
+		desc:
+			Saves the experiment to file. If no extension is provided,
+			.opensesame.tar.gz is chosen by default.
 
-		Arguments:
-		path		--	The target file to save to.
+		arguments:
+			path:
+				desc:	The target file to save to.
+				type:	[str, unicode]
 
-		Keyword arguments:
-		overwrite	--	A boolean indicating if existing files should be
-						overwritten. (default=False)
+		keywords:
+			overwrite:
+				desc:	Indicates if existing files should be overwritten.
+				type:	bool
+			update_path:
+				desc:	Indicates if the experiment_path attribute should be
+						updated.
+				type:	bool
 
-		Returns:
-		The path on successfull saving or False otherwise.
+		returns:
+			desc:	The path on successful saving or False otherwise.
+			type:	[unicode, bool]
 		"""
 
 		if isinstance(path, str):
@@ -540,13 +549,14 @@ class experiment(item.item):
 		tmp_pool = tempfile.mkdtemp(suffix=u'.opensesame.pool')
 		for fname in os.listdir(self.pool_folder):
 			sname = self.usanitize(fname)
-			shutil.copyfile(os.path.join(self.pool_folder, fname), \
+			shutil.copyfile(os.path.join(self.pool_folder, fname),
 				os.path.join(tmp_pool, sname))
 		tar.add(tmp_pool, u'pool', True)
 		tar.close()
 		# Move the file to the intended location
 		shutil.move(tmp_path, path)
-		self.experiment_path = os.path.dirname(path)
+		if update_path:
+			self.experiment_path = os.path.dirname(path)
 		return path
 
 	def open(self, src):
