@@ -42,6 +42,7 @@ class tree_inline_script_item(tree_item_item):
 
 		super(tree_inline_script_item, self).__init__(item,
 			extra_info=extra_info, parent_item=parent_item, index=index)
+		self.symbols = symbols
 		if symbols:
 			prepare_tree_widget = tree_inline_script_phase_item(item,
 				u'prepare')
@@ -52,6 +53,9 @@ class tree_inline_script_item(tree_item_item):
 				tree_inline_script_symbol_item)
 			self.item.qprogedit.tab(1).setSymbolTree(run_tree_widget,
 				tree_inline_script_symbol_item)
+		else:
+			self.item.qprogedit.tab(0).setSymbolTree(None)
+			self.item.qprogedit.tab(1).setSymbolTree(None)
 
 	def expand(self):
 

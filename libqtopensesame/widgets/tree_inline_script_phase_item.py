@@ -100,6 +100,8 @@ class tree_inline_script_phase_item(tree_base_item):
 			QtCore.Qt.MatchFixedString|QtCore.Qt.MatchRecursive, 0)
 		_clones = []
 		for treeitem in l:
+			if not treeitem.symbols:
+				continue
 			if self.phase == u'prepare':
 				_clones.append(treeitem.child(0))
 			else:
