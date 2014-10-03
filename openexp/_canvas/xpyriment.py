@@ -281,8 +281,8 @@ class xpyriment(canvas.canvas):
 	def gabor(self, x, y, orient, freq, env=u"gaussian", size=96, stdev=12,
 		phase=0, col1=u"white", col2=u"black", bgmode=u"avg"):
 
-		surface = openexp._canvas.legacy._gabor(orient, freq, env, size,
-			stdev, phase, col1, col2, bgmode)
+		surface = canvas._gabor(orient, freq, env, size, stdev, phase, col1,
+			col2, bgmode)
 		stim = stimuli._visual.Visual(position=c2p((x,y)))
 		stim._surface = surface
 		self.add_stim(stim)
@@ -290,8 +290,7 @@ class xpyriment(canvas.canvas):
 	def noise_patch(self, x, y, env=u"gaussian", size=96, stdev=12,
 		col1=u"white", col2=u"black", bgmode=u"avg"):
 
-		surface = openexp._canvas.legacy._noise_patch(env, size, stdev, col1,
-			col2, bgmode)
+		surface = canvas._noise_patch(env, size, stdev, col1, col2, bgmode)
 		stim = stimuli._visual.Visual(position=c2p((x,y)))
 		stim._surface = surface
 		self.add_stim(stim)
