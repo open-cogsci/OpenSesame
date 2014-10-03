@@ -62,14 +62,13 @@ class tree_item_item(tree_base_item):
 		self._lock = False
 		self.setToolTip(0, tooltip)
 
+	@property
 	def open_tab(self):
+		return self.item.open_tab
 
-		"""
-		desc:
-			Opens the item tab.
-		"""
-
-		self.item.open_tab()
+	@property
+	def close_tab(self):
+		return self.item.close_tab
 
 	def ancestry(self):
 
@@ -228,6 +227,7 @@ class tree_item_item(tree_base_item):
 		parent_item.remove_child_item(self.item.name, index)
 		parent_item.update()
 		del self.item_store[self.name]
+		self.close_tab()
 		self.experiment.build_item_tree()
 
 	def copy(self):
