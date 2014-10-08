@@ -755,7 +755,8 @@ class qtitem(QtCore.QObject):
 
 		keywords:
 			index:
-				desc:	The index of the child item, if applicable.
+				desc:	The index of the child item, if applicable. A negative
+						value indicates all instances.
 				type:	int
 		"""
 

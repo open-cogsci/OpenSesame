@@ -53,7 +53,23 @@ class qtitem_store(item_store):
 		
 	@property
 	def extension_manager(self):
-		return self.main_window.extension_manager	
+		return self.main_window.extension_manager
+
+	def __delitem__(self, name):
+
+		"""
+		desc:
+			Deletes an item, and notifies other items of the deletion.
+
+		arguments:
+			name:
+				desc:	The name of the item to be deleted.
+				type:	[str, unicode]
+		"""
+
+		del self.__items__[name]
+		for _name in self:
+			self[_name].remove_child_item(name, index=-1)
 		
 	def new(self, _type, name=None, script=None):
 		
