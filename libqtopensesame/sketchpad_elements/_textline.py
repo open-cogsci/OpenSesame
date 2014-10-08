@@ -43,11 +43,11 @@ class textline(base_element, textline_runtime):
 
 		text = self.experiment.text_input(_(u'Edit text'),
 			message=_(u'Please enter a text for the textline'),
-			content=self.properties[u'text'],
+			content=self.properties[u'text'].replace(u'<br />', u'\n'),
 			parent=self.sketchpad._edit_widget)
 		if text == None:
 			return
-		self.properties[u'text'] = unicode(text)
+		self.properties[u'text'] = self.clean_text(text)
 		self.sketchpad.draw()
 
 	@classmethod
@@ -58,15 +58,10 @@ class textline(base_element, textline_runtime):
 			parent=sketchpad._edit_widget)
 		if text == None:
 			return None
-		# Sanitize the text, by replacing the line separators and stripping
-		# the quotes.
-		text = text.replace(os.linesep, u'<br />')
-		text = text.replace(u'\n', u'<br />')
-		text = text.replace(u'"', u'')
 		properties = {
 				u'x':			pos[0],
 				u'y':			pos[1],
-				u'text':		text,
+				u'text':		cls.clean_text(text),
 				u'color': 		sketchpad.current_color(),
 				u'center': 		sketchpad.current_center(),
 				u'font_family': sketchpad.current_font_family(),
@@ -77,6 +72,29 @@ class textline(base_element, textline_runtime):
 				u'show_if' : 	sketchpad.current_show_if()
 			}
 		return textline(sketchpad, properties=properties)
+
+	@staticmethod
+	def clean_text(text):
+
+		"""
+		desc:
+			Cleans text by removing quotes and converting newlines to <br />
+			tags.
+
+		arguments:
+			text:	The text to clean.
+			type:	[str, unicode, QString]
+
+		returns:
+			desc:	Clean text.
+			type:	unicode
+		"""
+
+		text = unicode(text)
+		text = text.replace(os.linesep, u'<br />')
+		text = text.replace(u'\n', u'<br />')
+		text = text.replace(u'"', u'')
+		return text
 
 	@staticmethod
 	def requires_text():
