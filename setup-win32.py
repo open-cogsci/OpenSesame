@@ -74,7 +74,11 @@ The following Python modules should be installed:
 	pyqt4
 	pyserial
 	python-dateutil
-		- Required by matplotlib
+		- Required by matplotlib. Installed as .egg, so requires manual copying.
+	pytz
+		- Required by matplotlib. Installed as .egg, so requires manual copying.
+	six
+		- Required by matplotlib. Installed as .egg, so requires manual copying.
 	numpy
 	scipy
 	vlc
@@ -156,7 +160,17 @@ copy_packages = [
 	'matplotlib',
 	'bidi',
 	'yaml',
-	'pygaze'
+	'pygaze',
+	'pytz',
+	'pyparsing',
+	'dateutil',
+	'six'
+	]
+	
+# A list of packages that shouldn't be stripped from .py files, because it
+# breaks them.
+no_strip = [
+	'expyriment'
 	]
 
 # Packages that are part of the standard Python packages, but should not be
@@ -221,15 +235,23 @@ for pkg in copy_packages:
 	print('copying packages %s ... ' % pkg)
 	exec('import %s as _pkg' % pkg)
 	pkg_folder = os.path.dirname(_pkg.__file__)
-	print('\tfrom %s' % pkg_folder)
 	pkg_target = os.path.join("dist", pkg)
-	shutil.copytree(pkg_folder, pkg_target, symlinks=True, \
-		ignore=ignore_package_files)
-	compileall.compile_dir(pkg_target, force=True)
-	# Expyriment assumes that certain source files are available, see
-	# http://code.google.com/p/expyriment/issues/detail?id=16
-	if pkg != 'expyriment':
-		strip_py(pkg_target)
+	# For modules that are .py files in site-packages
+	if pkg_folder.endswith('site-packages'):
+		print('\tmodule %s' % _pkg.__file__)
+		shutil.copy(os.path.join(pkg_folder, '%s.py' % pkg), 'dist')
+		compileall.compile_file('dist/%s.py' % pkg)
+		os.remove('dist/%s.py' % pkg)
+	# For packages that are subfolder of site-packages
+	else:
+		print('\tfrom %s' % pkg_folder)		
+		shutil.copytree(pkg_folder, pkg_target, symlinks=True, \
+			ignore=ignore_package_files)
+		compileall.compile_dir(pkg_target, force=True)
+		# Expyriment assumes that certain source files are available, see
+		# http://code.google.com/p/expyriment/issues/detail?id=16
+		if pkg != no_strip:
+			strip_py(pkg_target)
 
 # Create a list of standard pakcages that should be included
 # http://stackoverflow.com/questions/6463918/how-can-i-get-a-list-of-all-the-python-standard-library-modules
