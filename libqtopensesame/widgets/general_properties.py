@@ -199,6 +199,8 @@ class general_properties(base_widget):
 
 		# Refresh the interface and unlock the general tab
 		self.lock = False
+		self.main_window.ui.tabwidget.close_other()
+		self.main_window.update_overview_area()
 		self.main_window.set_busy(False)
 
 	def refresh(self):
