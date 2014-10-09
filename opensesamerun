@@ -84,7 +84,8 @@ if __name__ == u"__main__":
 	else:
 		# Try to parse the experiment from a file
 		experiment = os.path.abspath(options.experiment)
-		experiment_path = os.path.dirname(experiment)		
+		experiment_path = os.path.dirname(experiment).decode(
+			libopensesame.misc.filesystem_encoding())	
 		try:			
 			exp = libopensesame.experiment.experiment(u"Experiment",
 				experiment, experiment_path=experiment_path)

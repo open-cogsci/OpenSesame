@@ -699,7 +699,7 @@ class experiment(item.item):
 			self.logfile = os.path.join(self.experiment_path, self.logfile)
 		# Open the logfile
 		self._log = codecs.open(self.logfile, u'w', encoding=self.encoding)
-		print(u"experiment.init_log(): using '%s' as logfile (%s)" % \
+		debug._print(u"experiment.init_log(): using '%s' as logfile (%s)" % \
 			(self.logfile, self.encoding))
 
 	def save_state(self):
