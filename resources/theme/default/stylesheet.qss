@@ -83,7 +83,7 @@ QDockWidget::close-button,
 QDockWidget::float-button {
 	border-radius: 2px;
 	background: #eeeeec;
-	padding: 0px;
+	padding: 1px 0px 0px 0px;
 	width: 16px;
 	subcontrol-position: top right;
 	subcontrol-origin: margin;
@@ -93,11 +93,11 @@ QDockWidget::float-button {
 }
 
 QDockWidget::close-button {
-	right: 3px;
+	right: 4px;
 }
 
 QDockWidget::float-button {
-	right: 21px;
+	right: 22px;
 }
 
 QDockWidget::close-button:hover {
