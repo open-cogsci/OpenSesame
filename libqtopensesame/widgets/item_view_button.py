@@ -53,6 +53,7 @@ class item_view_button(base_subcomponent, QtGui.QPushButton):
 		self.menu_view.addAction(self.view_split_icon(), _(u'Split view'),
 			self.item.set_view_split)
 		self.setMenu(self.menu_view)
+		self.setToolTip(_(u'Select view'))
 
 	def view_controls_icon(self):
 
