@@ -67,7 +67,8 @@ class experiment(item.item):
 
 	def __init__(self, name=u'experiment', string=None, pool_folder=None,
 		experiment_path=None, fullscreen=False, auto_response=False,
-		logfile=u'defaultlog.csv', subject_nr=0, items=None, workspace=None):
+		logfile=u'defaultlog.csv', subject_nr=0, items=None, workspace=None,
+		resources={}):
 
 		"""
 		desc:
@@ -113,6 +114,10 @@ class experiment(item.item):
 				desc:	A `python_workspace` object to be used for executing
 						custom Python code, or `None` to create a new workspace.
 				type:	[python_workspace, NoneType]
+			resources:
+				desc:	A dictionary with names as keys and paths as values.
+						This serves as a look-up table for resources.
+				type:	dict
 		"""
 
 		global pool_folders
@@ -134,6 +139,7 @@ class experiment(item.item):
 		self.title = u'My Experiment'
 		self.transparent_variables = u'no'
 		self.bidi = u'no'
+		self.resources = resources
 
 		# Set default variables
 		self.start = u'experiment'
@@ -143,7 +149,6 @@ class experiment(item.item):
 		self.sound_sample_size = -16 # Negative values mean signed
 		self.sound_channels = 2
 		self.sound_buf_size = 512
-		self.resources = {}
 
 		# Backend parameters
 		self.canvas_backend = u'xpyriment'

@@ -29,20 +29,40 @@ class experiment(libopensesame.experiment.experiment):
 	"""Contains various GUI controls for the experiment"""
 
 	def __init__(self, main_window, name, string=None, pool_folder=None,
-		experiment_path=None):
+		experiment_path=None, resources={}):
 
 		"""
-		Constructor.
+		desc:
+			Constructor. The experiment is created automatically be OpenSesame
+			and you will generally not need to create it yourself.
 
-		Arguments:
-		main_window	--	The main window object.
-		name		--	The name of the experiment.
+		arguments:
+			main_window:
+				desc:	The main-window object.
+				type:	qtopensesame
+			name:
+				desc:	The name of the experiment.
+				type:	[str, unicode]
 
-		Keyword arguments:
-		string		--	A definition string for the experiment or None to
-						start with an empty experiment. (default=None)
-		pool_folder	--	A path to be used for the file pool or None to use a
-						system-specific temporary folder. (default=None)
+		keywords:
+			string:
+				desc:	A string containing the experiment definition, the
+						name of an OpenSesame experiment file, or `None` to
+						create a blank experiment.
+				type:	[str, unicode, NoneType]
+			pool_folder:
+				desc:	A specific folder to be used for the file pool, or
+						`None` to use a new temporary folder.
+				type:	[str, unicode, NoneType]
+			experiment_path:
+				desc:	The path of the experiment file. This will need to
+						be specified even if a filename was passed using the
+						`string` keyword.
+				type:	[str, unicode, NoneType]
+			resources:
+				desc:	A dictionary with names as keys and paths as values.
+						This serves as a look-up table for resources.
+				type:	dict
 		"""
 
 		self.main_window = main_window
@@ -53,7 +73,8 @@ class experiment(libopensesame.experiment.experiment):
 			u"logger", u"inline_script"]
 		items = qtitem_store(self)
 		libopensesame.experiment.experiment.__init__(self, name, string,
-			pool_folder, items=items, experiment_path=experiment_path)
+			pool_folder, items=items, experiment_path=experiment_path,
+			resources=resources)
 
 	def help(self, name):
 

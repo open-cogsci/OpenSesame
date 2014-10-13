@@ -44,7 +44,10 @@ class quick_switcher(base_extension):
 		self.init_dialog()
 		
 	def event_purge_unused_items(self):
-		self.init_dialog()	
+		self.init_dialog()
+
+	def event_regenerate(self):
+		self.init_dialog()
 
 	def init_dialog(self):
 

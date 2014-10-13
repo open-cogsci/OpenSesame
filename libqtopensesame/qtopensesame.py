@@ -769,41 +769,42 @@ class qtopensesame(QtGui.QMainWindow, base_component):
 	def update_resolution(self, width, height):
 
 		"""
-		Updates the resolution in a way that preserves display centering. This
-		is kind of a quick hack. First generate the script, change the
-		resolution in the script and then re-parse the script.
+		desc:
+			Updates the resolution in a way that preserves display centering.
+			This is kind of a quick hack. First generate the script, change the
+			resolution in the script and then re-parse the script.
 
-		Arguments:
-		width -- the display width in pixels
-		height -- the display height in pixels
+		arguments:
+			width:		The display width in pixels.
+			height:		The display height in pixels.
 		"""
 
 		debug.msg(u"changing resolution to %d x %d" % (width, height))
-
 		try:
 			script = self.experiment.to_string()
 		except Exception as e:
 			if not isinstance(e, osexception):
-				e = osexception(u'Failed to change the display resolution', \
+				e = osexception(u'Failed to change the display resolution',
 					exception=e)
 			self.experiment.notify(e.html())
 			return
-
 		script = script.replace(u"\nset height \"%s\"\n" % \
 			self.experiment.get(u"height"), u"\nset height \"%s\"\n" % height)
 		script = script.replace(u"\nset width \"%s\"\n" % \
 			self.experiment.get(u"width"), u"\nset width \"%s\"\n" % width)
-
 		try:
-			tmp = experiment.experiment(self, self.experiment.title, script, \
-				self.experiment.pool_folder)
+			tmp = experiment.experiment(self, name=self.experiment.title,
+				string=script, pool_folder=self.experiment.pool_folder,
+				experiment_path=self.experiment.experiment_path,
+				resources=self.experiment.resources)
 		except osexception as error:
 			self.experiment.notify(_(u"Could not parse script: %s") % error)
 			self.edit_script.edit.setText(self.experiment.to_string())
 			return
-
 		self.experiment = tmp
-		self.refresh()
+		self.ui.tabwidget.close_other()
+		self.update_overview_area()
+		self.extension_manager.fire(u'regenerate')
 
 	def select_from_pool(self, parent=None):
 

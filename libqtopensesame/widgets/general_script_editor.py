@@ -63,8 +63,11 @@ class general_script_editor(base_widget):
 		if resp == QtGui.QMessageBox.No:
 			return
 		try:
-			exp = experiment(self.main_window, u'dummy',
-				self.ui.qprogedit.text())
+			exp = experiment(self.main_window, name=self.experiment.title,
+				string=self.ui.qprogedit.text(),
+				pool_folder=self.experiment.pool_folder,
+				experiment_path=self.experiment.experiment_path,
+				resources=self.experiment.resources)
 		except osexception as e:
 			self.notify(e.html())
 			self.main_window.print_debug_window(e)
@@ -73,6 +76,7 @@ class general_script_editor(base_widget):
 		self.main_window.tabwidget.close_all()
 		self.main_window.tabwidget.open_general()
 		self.experiment.build_item_tree()
+		self.extension_manager.fire(u'regenerate')
 
 	def on_activate(self):
 
