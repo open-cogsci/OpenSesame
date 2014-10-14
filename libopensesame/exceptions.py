@@ -43,7 +43,7 @@ class osexception(Exception):
 		a (usually harmless) bug somewhere.
 	"""
 
-	def __init__(self, msg, exception=None, **info):
+	def __init__(self, msg, exception=None, line_offset=0, **info):
 
 		"""
 		desc:
@@ -59,6 +59,13 @@ class osexception(Exception):
 				desc:	An exception that was intercepted or None for
 						self-generated exceptions.
 				type:	[Exception, NoneType]
+			line_offset:
+				desc:	A value to decrease/ increase line numbers. The primary
+						goal for this keyword is to re-align line numbers that
+						arise in inline_scripts, which need to be compensated
+						for the source encoding line that is added to the
+						source.
+				type:	int
 
 		keyword-dict:
 			info:		Optional additional info for the exception.
@@ -80,7 +87,7 @@ class osexception(Exception):
 			if isinstance(self.exception, SyntaxError):
 				# Syntax errors are dealt with specially, because they provide
 				# introspective information.
-				info[u'line'] = self.exception.lineno - 1
+				info[u'line'] = self.exception.lineno + line_offset
 				info[u'code'] = self.exception.text.decode(self.enc, u'ignore')
 			else:
 				try:
@@ -88,12 +95,7 @@ class osexception(Exception):
 					# stacktrace. Since it's not clear whether this is
 					# fullproof, we try-except it for now.
 					info[u'line'] = traceback.extract_tb(sys.exc_info()[2]) \
-						[-1][1]
-					# Inline script items automatically add the source encoding
-					# as the first line. Therefore, the reported line is always
-					# one after the actual line, and we need to substract 1.
-					if u'item' in info and info[u'item'] == u'inline_script':
-						info[u'line'] -= 1
+						[-1][1] + line_offset
 				except:
 					pass
 		# List any additional information that was passed
@@ -116,7 +118,7 @@ class osexception(Exception):
 					u'File "<string>", line (?P<linenr>\d+),', l):
 					try:
 						l = l.replace(g.group(), u'Inline_script, line %d,' % \
-							(int(g.group(u'linenr'))-1))
+							(int(g.group(u'linenr')) + line_offset))
 					except:
 						debug.msg(u'Failed to correct inline_script exception')
 			self._html += escape_html(l) + u'<br />\n'

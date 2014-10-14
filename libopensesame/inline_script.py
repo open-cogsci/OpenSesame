@@ -138,19 +138,19 @@ class inline_script(item.item):
 				self._prepare)
 		except Exception as e:
 			raise osexception(u'Failed to compile inline script',
-				item=self.name, phase=u'prepare', exception=e)
+				line_offset=-1, item=self.name, phase=u'prepare', exception=e)
 		# Compile run script
 		try:
 			self.crun = self.experiment.python_workspace._compile(self._run)
 		except Exception as e:
 			raise osexception(u'Failed to compile inline script',
-				item=self.name, phase=u'run', exception=e)
+				line_offset=-1, item=self.name, phase=u'run', exception=e)
 		# Run prepare script
 		try:
 			self.experiment.python_workspace._exec(self.cprepare)
 		except Exception as e:
 			raise osexception(u'Error while executing inline script',
-				item=self.name, phase=u'prepare', exception=e)
+				line_offset=-1, item=self.name, phase=u'prepare', exception=e)
 		if self.experiment.transparent_variables == u'yes':
 			self.end_transparency()
 
@@ -173,7 +173,7 @@ class inline_script(item.item):
 			self.experiment.python_workspace._exec(self.crun)
 		except Exception as e:
 			raise osexception(u'Error while executing inline script',
-				item=self.name, phase=u'run', exception=e)
+				line_offset=-1, item=self.name, phase=u'run', exception=e)
 		if self.experiment.transparent_variables == u'yes':
 			self.end_transparency()
 
