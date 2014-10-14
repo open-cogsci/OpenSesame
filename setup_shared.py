@@ -56,4 +56,5 @@ included_extensions = [
 	'update_checker',
 	'qprogedit_preferences',
 	'dock_manager',
+	'psychopy_monitor_center',
 	]
