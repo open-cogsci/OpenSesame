@@ -225,7 +225,8 @@ class tree_item_item(tree_base_item):
 			return
 		if QtGui.QMessageBox.question(self.treeWidget(),
 			_(u'Permanently delete item'),
-			_(u'Are you sure you want to permanently delete this item? All instances (linked copies) of this item will be deleted. You will not be able to undo this.'),
+			_(u'Are you sure you want to permanently delete <b>%s</b>? All linked copies of <b>%s</b> will be deleted. You will not be able to undo this.') \
+			% (self.name, self.name),
 			buttons=(QtGui.QMessageBox.Yes|QtGui.QMessageBox.No),
 			defaultButton=QtGui.QMessageBox.No) \
 			!= QtGui.QMessageBox.Yes:

@@ -66,9 +66,10 @@ class item_context_menu(base_subcomponent, QtGui.QMenu):
 				self.treeitem.create_unlinked_copy, cfg.shortcut_unlinked_copy)
 		if self.treeitem.is_deletable():
 			self.addSeparator()
-			self.add_action(u"unused", _("Move to unused items"),
+			self.add_action(u"list-remove", _("Delete"),
 				self.treeitem.delete, cfg.shortcut_delete)
-			self.add_action(u"list-remove", _("Permanently delete"),
+			self.add_action(u"list-remove",
+				_("Permanently delete all linked copies"),
 				self.treeitem.permanently_delete,
 				cfg.shortcut_permanently_delete)
 		self.addSeparator()
