@@ -169,7 +169,8 @@ class qtitem_store(item_store):
 
 		for _name in self:
 			if self[_name].is_child_item(name):
-				return self.is_unused(_name)
+				if not self.is_unused(_name):
+					return False
 		if name == self.experiment.start:
 			return False
 		return True
