@@ -52,7 +52,7 @@ class item_context_menu(base_subcomponent, QtGui.QMenu):
 		self.addSeparator()
 		self.add_action(u"accessories-text-editor", _("Rename"),
 			self.treeitem.start_rename, cfg.shortcut_rename)
-		if not self.treewidget.overview_mode:
+		if not self.treewidget.overview_mode and self.treeitem.parent() != None:
 			self.add_action(u"accessories-text-editor",
 				_("Edit run-if statement"),
 				self.treeitem.start_edit_runif, cfg.shortcut_edit_runif)

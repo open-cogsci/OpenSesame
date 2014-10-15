@@ -695,8 +695,13 @@ class tree_overview(base_subcomponent, QtGui.QTreeWidget):
 		if self.overview_mode:
 			return
 		target_treeitem = self.currentItem()
-		if target_treeitem != None:
-			self.editItem(target_treeitem, 1)
+		if target_treeitem == None:
+			return
+		if target_treeitem.parent() == None:
+			# The top-level item is the sequence itself, which doesn't have a
+			# run-if statement.
+			return
+		self.editItem(target_treeitem, 1)
 			
 	def start_rename(self):
 		
