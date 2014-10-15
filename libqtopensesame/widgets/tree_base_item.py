@@ -68,7 +68,11 @@ class tree_base_item(base_subcomponent, QtGui.QTreeWidgetItem):
 
 		pass
 
-	def droppable(self):
+	def drop_hint(self):
+
+		return None
+
+	def droppable(self, data):
 
 		return self._droppable
 

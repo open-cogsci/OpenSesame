@@ -20,6 +20,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 from PyQt4 import QtCore, QtGui
 from libqtopensesame.misc import _
 from libqtopensesame.widgets.tree_base_item import tree_base_item
+from libqtopensesame.misc import drag_and_drop
 
 class tree_unused_items_item(tree_base_item):
 
@@ -50,6 +51,14 @@ class tree_unused_items_item(tree_base_item):
 		self.name = u'__unused__'
 		for item_name in self.experiment.items.unused():
 			self.experiment.items[item_name].build_item_tree(self, max_depth=1)
+
+	def droppable(self, data):
+
+		return drag_and_drop.matches(data, [u'item-existing'])
+
+	def drop_hint(self):
+
+		return _(u'Move to unused items')
 
 	def open_tab(self):
 

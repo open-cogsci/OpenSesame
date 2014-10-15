@@ -324,7 +324,7 @@ class tree_overview(base_subcomponent, QtGui.QTreeWidget):
 		index = int(l[0].split(u':')[1])
 		return parent_item_name, index
 
-	def droppable(self, treeitem):
+	def droppable(self, treeitem, data):
 
 		"""
 		desc:
@@ -334,13 +334,16 @@ class tree_overview(base_subcomponent, QtGui.QTreeWidget):
 			treeitem:
 				desc:	A tree item.
 				type:	QTreeWidgetItem
+			data:
+				desc:	Drag-and-drop data.
+				type:	dict
 
 		returns:
 			desc:	A bool indicating if the tree item is droppable.
 			type:	bool
 		"""
 
-		return treeitem != None and treeitem.droppable()
+		return treeitem != None and treeitem.droppable(data)
 
 	def draggable(self, treeitem):
 
@@ -379,7 +382,7 @@ class tree_overview(base_subcomponent, QtGui.QTreeWidget):
 			e.ignore()
 			return
 		target_treeitem = self.itemAt(e.pos())
-		if not self.droppable(target_treeitem):
+		if not self.droppable(target_treeitem, data):
 			debug.msg(u'Drop ignored: target not droppable')
 			e.ignore()
 			return
@@ -431,7 +434,7 @@ class tree_overview(base_subcomponent, QtGui.QTreeWidget):
 		# Ignore drops on non-droppable tree items.
 		if target_treeitem == None:
 			target_treeitem = self.itemAt(e.pos())
-		if not self.droppable(target_treeitem):
+		if not self.droppable(target_treeitem, data):
 			if e != None:
 				e.ignore()
 			self.main_window.set_busy(False)
@@ -558,9 +561,12 @@ class tree_overview(base_subcomponent, QtGui.QTreeWidget):
 			e.accept()
 			return
 		target = self.itemAt(e.pos())
-		if not self.droppable(target):
+		if not self.droppable(target, data):
 			e.ignore()
 			return
+		drop_hint = target.drop_hint()
+		if drop_hint != None:
+			QtGui.QToolTip.showText(self.mapToGlobal(e.pos()), drop_hint, self)
 		e.accept()
 
 	def contextMenuEvent(self, e):
