@@ -66,6 +66,15 @@ class tree_overview(base_subcomponent, QtGui.QTreeWidget):
 		self.itemChanged.connect(self.text_edited)
 		self.pending_drag_data = None
 		self.drag_timer = None
+		if not self.overview_mode:
+			self.shortcut_edit_runif = QtGui.QShortcut(
+				QtGui.QKeySequence(cfg.shortcut_edit_runif), self,
+				self.start_edit_runif,
+				context=QtCore.Qt.WidgetWithChildrenShortcut)
+		self.shortcut_rename = QtGui.QShortcut(
+			QtGui.QKeySequence(cfg.shortcut_rename), self,
+			self.start_rename,
+			context=QtCore.Qt.WidgetWithChildrenShortcut)				
 		self.shortcut_copy_item = QtGui.QShortcut(
 			QtGui.QKeySequence(cfg.shortcut_copy_clipboard), self,
 			self.copy_item, context=QtCore.Qt.WidgetWithChildrenShortcut)
@@ -215,8 +224,13 @@ class tree_overview(base_subcomponent, QtGui.QTreeWidget):
 				parent_item = self.experiment.items[parent_item_name]
 				if parent_item.item_type == u'sequence':
 					cond = unicode(treeitem.text(1))
+					if cond.strip() == u'':
+						cond = u'always'
 					cond = parent_item.clean_cond(cond)
 					parent_item.set_run_if(index, cond)
+					self.itemChanged.disconnect()
+					treeitem.setText(1, cond)
+					self.itemChanged.connect(self.text_edited)
 				self.text_change.emit()
 
 	def mousePressEvent(self, e):
@@ -670,3 +684,27 @@ class tree_overview(base_subcomponent, QtGui.QTreeWidget):
 		for i in range(self.topLevelItemCount()):
 			self.topLevelItem(i).set_icon(name, icon)
 		self.itemChanged.connect(self.text_edited)
+		
+	def start_edit_runif(self):
+		
+		"""
+		desc:
+			Edits the run-if statement. This is not applicable in overview mode.
+		"""
+
+		if self.overview_mode:
+			return
+		target_treeitem = self.currentItem()
+		if target_treeitem != None:
+			self.editItem(target_treeitem, 1)
+			
+	def start_rename(self):
+		
+		"""
+		desc:
+			Edits the item name.
+		"""
+
+		target_treeitem = self.currentItem()
+		if target_treeitem != None:
+			self.editItem(target_treeitem, 0)

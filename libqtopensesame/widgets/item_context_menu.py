@@ -52,6 +52,10 @@ class item_context_menu(base_subcomponent, QtGui.QMenu):
 		self.addSeparator()
 		self.add_action(u"accessories-text-editor", _("Rename"),
 			self.treeitem.start_rename, cfg.shortcut_rename)
+		if not self.treewidget.overview_mode:
+			self.add_action(u"accessories-text-editor",
+				_("Edit run-if statement"),
+				self.treeitem.start_edit_runif, cfg.shortcut_edit_runif)
 		self.addSeparator()
 		self.add_action(u"edit-copy", _("Copy to clipboard"),
 			self.treeitem.copy, cfg.shortcut_copy_clipboard)
@@ -102,3 +106,7 @@ class item_context_menu(base_subcomponent, QtGui.QMenu):
 	@property
 	def item(self):
 		return self.treeitem.item
+		
+	@property
+	def treewidget(self):
+		return self.treeitem.treeWidget()

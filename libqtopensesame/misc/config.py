@@ -94,6 +94,7 @@ class config(object):
 		u"shortcut_linked_copy" : u"Ctrl+Shift+L",
 		u"shortcut_unlinked_copy" : u"Ctrl+Shift+U",
 		u"shortcut_rename" : u"F2",
+		u"shortcut_edit_runif" : u"F3",
 		u"style" : u"",
 		u"theme" : u"default",
 		u"toolbar_size" : 32,

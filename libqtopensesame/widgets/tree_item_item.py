@@ -156,6 +156,18 @@ class tree_item_item(tree_base_item):
 		"""
 
 		self.treeWidget().editItem(self, 0)
+		
+	def start_edit_runif(self):
+
+		"""
+		desc:
+			Goes into edit mode for the item's run-if statement. This is only
+			applicable to sequences, i.e. not if the treewidget is in overview
+			mode.
+		"""
+
+		if not self.treeWidget().overview_mode:
+			self.treeWidget().editItem(self, 1)		
 
 	def set_icon(self, name, icon):
 
