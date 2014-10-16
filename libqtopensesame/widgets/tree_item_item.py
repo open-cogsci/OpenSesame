@@ -179,10 +179,11 @@ class tree_item_item(tree_base_item):
 
 	def drop_hint(self):
 
-		if self.item.item_type == u'loop':
-			return _(u'Set as item to run for %s') % self.name
-		if self.item.item_type == u'sequence':
-			return _(u'Insert into %s') % self.name
+		if self.treeWidget().overview_mode or self.parent() == None:
+			if self.item.item_type == u'loop':
+				return _(u'Set as item to run for %s') % self.name
+			if self.item.item_type == u'sequence':
+				return _(u'Insert into %s') % self.name
 		return _(u'Drop below %s') % self.name
 
 	def is_deletable(self):
