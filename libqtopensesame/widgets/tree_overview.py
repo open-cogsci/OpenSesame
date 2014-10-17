@@ -610,9 +610,6 @@ class tree_overview(base_subcomponent, QtGui.QTreeWidget):
 		if not self.droppable(target, data):
 			e.ignore()
 			return
-		drop_hint = target.drop_hint()
-		if drop_hint != None:
-			QtGui.QToolTip.showText(self.mapToGlobal(e.pos()), drop_hint, self)
 		e.accept()
 
 	def contextMenuEvent(self, e):
