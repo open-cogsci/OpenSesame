@@ -23,8 +23,10 @@ from libqtopensesame.misc import _
 from libqtopensesame.misc import drag_and_drop
 from libqtopensesame.misc.base_subcomponent import base_subcomponent
 from libqtopensesame.widgets.tree_item_item import tree_item_item
+from libqtopensesame._input.popup_menu import popup_menu
 from libopensesame import debug
 from libopensesame.exceptions import osexception
+from libopensesame.sequence import sequence
 
 class tree_overview(base_subcomponent, QtGui.QTreeWidget):
 
@@ -74,7 +76,7 @@ class tree_overview(base_subcomponent, QtGui.QTreeWidget):
 		self.shortcut_rename = QtGui.QShortcut(
 			QtGui.QKeySequence(cfg.shortcut_rename), self,
 			self.start_rename,
-			context=QtCore.Qt.WidgetWithChildrenShortcut)				
+			context=QtCore.Qt.WidgetWithChildrenShortcut)
 		self.shortcut_copy_item = QtGui.QShortcut(
 			QtGui.QKeySequence(cfg.shortcut_copy_clipboard), self,
 			self.copy_item, context=QtCore.Qt.WidgetWithChildrenShortcut)
@@ -487,22 +489,52 @@ class tree_overview(base_subcomponent, QtGui.QTreeWidget):
 				name=data[u'item-name'], _type=data[u'item-type'])
 		else:
 			item = self.experiment.items[data[u'item-name']]
-		# If a drop has been made on a loop or sequence, we can insert the
-		# new item directly. We only do this in overview mode, because it is
-		# confusing otherwise.
-		if self.overview_mode and \
-			target_item.item_type in [u'loop', u'sequence']:
+
+		inserted = False
+		# If the item has no parent or if it is the experiment starting point,
+		# we insert into it directly.
+		if target_treeitem.parent() == None or \
+			target_item.name == self.experiment.start:
 			target_item.insert_child_item(item.name)
-		# If the item has ni parent, also drop on it directly. This is the
-		# case in sequence views of the overview area.
-		elif target_treeitem.parent() == None:
-			target_item.insert_child_item(item.name)
+			inserted = True
+		else:
+			if target_item.item_type in (u'loop', u'sequence'):
+				self.main_window.set_busy(False)
+				# Choose appropriate option
+				if target_item.item_type == u'loop':
+					question = _('Set as item to run for %s') % target_item.name
+					icon = u'os-loop'
+				else:
+					question = _('Insert into %s') % target_item.name
+					icon = u'os-sequence'
+				resp = popup_menu(self, [(0, question, icon),
+					(1, _('Insert after %s' % target_item.name), 'list-add')
+					]).show()
+				# If the popup was cancelled
+				if resp == None:
+					e.accept()
+					del self.experiment.items[item.name]
+					self.main_window.set_busy(False)
+					return
+				# If the user chose to insert into the target item
+				if resp == 0:
+					target_item.insert_child_item(item.name)
+					inserted = True
 		# Otherwise, we find the parent of the target item, and insert the
 		# new item at the correct position.
-		else:
-			parent_treeitem = target_treeitem.parent()
-			parent_item_name = unicode(parent_treeitem.text(0))
-			parent_item = self.experiment.items[parent_item_name]
+		if not inserted:
+			while True:
+				parent_treeitem = target_treeitem.parent()
+				if parent_treeitem == None:
+					e.accept()
+					del self.experiment.items[item.name]
+					self.main_window.set_busy(False)
+					return
+				parent_item_name = unicode(parent_treeitem.text(0))
+				parent_item = self.experiment.items[parent_item_name]
+				if isinstance(parent_item, sequence):
+					break
+				target_treeitem = parent_treeitem
 			index = parent_treeitem.indexOfChild(target_treeitem)+1
 			parent_item.insert_child_item(item.name, index=index)
 		if e != None:
