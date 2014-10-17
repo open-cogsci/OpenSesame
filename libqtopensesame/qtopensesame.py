@@ -685,18 +685,13 @@ class qtopensesame(QtGui.QMainWindow, base_component):
 		# Indicate that we're busy
 		self.set_busy(True)
 		QtGui.QApplication.processEvents()
-		# Get ready, generate the script and see if the script can be
-		# re-parsed.
+		# Get ready
 		try:
 			self.get_ready()
-			script = self.experiment.to_string()
-			experiment.experiment(self, u"Experiment", script)
 		except osexception as e:
-			if not catch:
-				raise e
 			self.print_debug_window(e)
-			self.experiment.notify( \
-				_(u"Could not save file, because the script could not be generated. The following error occured:<br/>%s") \
+			self.experiment.notify(
+				_(u"The following error occured while trying to save:<br/>%s") \
 				% e)
 			self.set_busy(False)
 			return

@@ -21,6 +21,7 @@ import openexp.mouse
 import openexp.keyboard
 from libopensesame.exceptions import osexception
 from libopensesame import debug, regexp
+import codecs
 import string
 import os
 import sys
@@ -927,36 +928,33 @@ class item(object):
 	def usanitize(self, s, strict=False):
 
 		"""
-		Convert all special characters to U+XXXX notation, so that the resulting
-		string can be treated as plain ASCII text.
+		desc:
+			Converts all non-ASCII characters to U+XXXX notation, so that the
+			resulting string can be treated as plain ASCII text.
 
-		Arguments:
-		s -- A unicode string to be santized
+		arguments:
+			s:
+				desc:	A unicode string to be santized
+				type:	unicode
 
-		Keyword arguments:
-		strict -- if True, special characters are ignored rather than recoded
-				  (default=False)
+		keywords:
+			strict:
+				desc:	If True, special characters are ignored rather than
+						recoded.
+				type:	bool
 
-		Returns:
-		A regular Python string with all special characters replaced by U+XXXX
-		notation
+		returns:
+			desc:	A regular Python string with all special characters replaced
+					by U+XXXX notation or ignored (if strict).
+			type:	str
 		"""
 
-		if not isinstance(s, unicode):
-			raise osexception( \
-				u'usanitize() expects first argument to be unicode, not "%s"' \
-				% type(s))
-
-		_s = ''
-		for ch in s:
-			# Encode non ASCII and slash characters
-			if ord(ch) > 127 or ord(ch) == 92:
-				if not strict:
-					_s += 'U+%.4X' % ord(ch)
-			else:
-				_s += ch
+		if strict:
+			_s = codecs.encode(s, u'ascii', u'ignore')
+		else:
+			_s = codecs.encode(s, u'ascii', u'osreplace')
+		_s = str(_s)
 		return _s.replace(os.linesep, '\n')
-
 
 	def unsanitize(self, s):
 
@@ -1155,3 +1153,26 @@ class item(object):
 
 		self.experiment._log.flush()
 		os.fsync(self.experiment._log)
+
+def osreplace(exc):
+
+	"""
+	desc:
+		A replacement function to allow opensame-style replacement of unicode
+		characters.
+
+	arguments:
+		exc:
+			type:	UnicodeEncodeError
+
+	returns:
+		desc:	A (replacement, end) tuple.
+		type:	tuple
+	"""
+
+	_s = u''
+	for ch in exc.object[exc.start:exc.end]:
+		_s += u'U+%.4X' % ord(ch)
+	return _s, exc.end
+
+codecs.register_error(u'osreplace', osreplace)
