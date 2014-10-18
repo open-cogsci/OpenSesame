@@ -32,22 +32,22 @@ class quick_switcher(base_extension):
 	# changes.
 
 	def event_startup(self):
-		self.init_dialog()
+		self.d = None
 
 	def event_open_experiment(self, path):
-		self.init_dialog()
+		self.d = None
 		
 	def event_rename_item(self, from_name, to_name):
-		self.init_dialog()
+		self.d = None
 		
 	def event_new_item(self, name, _type):
-		self.init_dialog()
+		self.d = None
 		
 	def event_purge_unused_items(self):
-		self.init_dialog()
+		self.d = None
 
 	def event_regenerate(self):
-		self.init_dialog()
+		self.d = None
 
 	def init_dialog(self):
 
@@ -66,4 +66,6 @@ class quick_switcher(base_extension):
 			Pops up the quick-switcher dialog.
 		"""
 
+		if not hasattr(self, u'd') or self.d == None:
+			self.init_dialog()
 		self.d.exec_()
