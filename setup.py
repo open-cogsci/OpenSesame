@@ -140,6 +140,7 @@ setup(name="opensesame",
 		"libqtopensesame.widgets",
 		"libqtopensesame.validators",
 		"libqtopensesame.sketchpad_elements",
+		"libqtopensesame._input",
 		],
 	package_dir = {
 		"openexp" : "openexp",
