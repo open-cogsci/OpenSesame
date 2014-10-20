@@ -19,7 +19,7 @@ along with openexp.  If not, see <http://www.gnu.org/licenses/>.
 
 import pygame
 from pygame.locals import *
-from string import whitespace, printable
+from string import whitespace
 from libopensesame.exceptions import osexception
 from openexp._keyboard import keyboard
 
@@ -80,8 +80,7 @@ class legacy(keyboard.keyboard):
 					continue
 				if event.key == pygame.K_ESCAPE:
 					raise osexception(u'The escape key was pressed.')
-				if event.unicode in invalid_unicode or event.unicode not in \
-					printable:
+				if event.unicode in invalid_unicode:
 					key = self.key_name(event.key)
 				else:
 					key = event.unicode
