@@ -552,6 +552,7 @@ class experiment(item.item):
 		# Unicode sanitized to ASCII format. Again, this is necessary to deal
 		# with poor Unicode support in .tar.gz.
 		tmp_pool = tempfile.mkdtemp(suffix=u'.opensesame.pool')
+		pool_folders.append(tmp_pool)
 		for fname in os.listdir(self.pool_folder):
 			sname = self.usanitize(fname)
 			shutil.copyfile(os.path.join(self.pool_folder, fname),
