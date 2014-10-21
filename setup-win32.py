@@ -28,12 +28,18 @@ is the default py2exe way of including dependencies.
 
 ## Usage
 
-Python should be called with the -O argument. Otherwise, the dependencies
-will be compiled to .pyc, instead of .pyo, and the .py source files will not be
-pruned. And that doesn't look very professional (although it does work).
+To compile all source files to `.pyc` (default), call the script as follows:
 
-	./python -O setup-win32.py py2exe
+	python setup-win32.py py2exe
+	
+To compile all source files to `.pyo`, call the script as follows:
 
+	python -O setup-win32.py py2exe
+	
+or
+
+	python -OO setup-win32.py py2exe
+	
 More options can be tweaked by changing the variables below.
 
 ## Python modules
@@ -135,6 +141,24 @@ include_simpleio = True
 python_folder = r"C:\Python_2.7.6-win32"
 python_version = "2.7"
 
+# Determine which files we're going to keep
+if '-OO' in sys.argv:
+	strip_ext = '.py', '.pyc'
+	keep_ext = '.pyo'
+	optimize = 2
+	print(u'Compiling to .pyo')
+elif '-O' in sys.argv:
+	strip_ext = '.py', '.pyc'
+	keep_ext = '.pyo'
+	optimize = 1
+	print(u'Compiling to .pyo')
+else:
+	strip_ext = '.py', '.pyo'
+	keep_ext = '.pyc'
+	optimize = 0
+	print(u'Compiling to .pyc')
+print(u'Optimize = %d' % optimize)
+
 # Packages that are too be copied for the site-packages folder, rather than
 # included by py2exe in the library .zip file. Copying packages is in general
 # preferred, as some packages (e.g. expyriment) do not work well when included
@@ -225,7 +249,7 @@ def strip_py(folder):
 			strip_py(path)
 			continue
 		base, ext = os.path.splitext(path)
-		if (ext in ('.py', '.pyc') and os.path.exists(base+'.pyo')) or \
+		if (ext in strip_ext and os.path.exists(base+keep_ext)) or \
 			path[-1] == '~':
 			print('stripping %s' % path)
 			os.remove(path)
@@ -309,7 +333,7 @@ setup(
 	options = {
 		"py2exe" : {
 		"compressed" : True,
-		"optimize": 2,
+		"optimize": optimize,
 		"bundle_files": 3,
 		"excludes": copy_packages,
 		"includes" : std_pkg + include_packages,
