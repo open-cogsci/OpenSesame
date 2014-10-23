@@ -354,6 +354,13 @@ def module_versions():
 	except:
 		s += u"\nPyGame not available (or version is unknown)"
 
+	# PyGaze
+	try:
+		import pygaze
+		s += u'\nPyGaze %s' % pygaze.version
+	except:
+		s += u'\nPyGaze is not available'
+
 	# Pyglet
 	try:
 		import pyglet
