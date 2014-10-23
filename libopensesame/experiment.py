@@ -148,7 +148,7 @@ class experiment(item.item):
 		self.sound_freq = 48000
 		self.sound_sample_size = -16 # Negative values mean signed
 		self.sound_channels = 2
-		self.sound_buf_size = 512
+		self.sound_buf_size = 1024
 
 		# Backend parameters
 		self.canvas_backend = u'xpyriment'
