@@ -17,29 +17,27 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 
-Usage
-=====
+---
 
-Assumptions
------------
+# Usage
+
+## Assumptions
 
 - The PyGame subset for Android is installed in the folder indicated under
 `pgs4a_folder`.
 - The Python modules are installed in the folder indicated under
 `module_folder`
 
-Build environment
------------------
+## Build environment
 
-Currently, most development is done on Kubuntu 13.04. Most of the dependencies
+Currently, most development is done on Kubuntu 14.04. Most of the dependencies
 for pgs4a are described on their homepage, but in addition you need to install
 the Oracle Java JDK (v8 currently used). This is available from
 `ppa:webupd8team/java`. Instructions taken from:
 
 - <http://www.mameau.com/pygame-subset-for-android-pgs4a-on-ubuntu-precise-12-04/>
 
-Building
---------
+## Building
 
 Build the `.apk` with the following command:
 
@@ -48,34 +46,15 @@ Build the `.apk` with the following command:
 The `install` parameter is optional, and indicates that the `.apk` should be
 installed on an attached Android device or emulator. The resulting `.apk` can
 be found in the `bin` subfolder of the PyGame subset for Android folder.
+---
 """
 
 import shutil
 import sys
 import os
 import subprocess
-
-# List of included plug-ins
-included_plugins = [
-	'advanced_delay',
-	'external_script',
-	'fixation_dot',
-	'form_base',
-	'form_text_input',
-	'form_consent',
-	'form_text_display',
-	'form_multiple_choice',
-	'joystick',
-	'notepad',
-	'parallel',
-	'port_reader',
-	'repeat_cycle',
-	'reset_feedback',
-	'srbox',
-	'text_display',
-	'text_input',
-	'touch_response',
-	]
+import importlib
+from setup_shared import *
 
 pgs4a_folder = 'pgs4a-0.9.4'
 module_folder = '/usr/lib/python2.7'
@@ -85,18 +64,20 @@ build_cmd = './android.py build opensesame release'
 if 'install' in sys.argv:
 	build_cmd += ' install'
 
-# A list of OpenSesame folders that need to be included
-folder_list = [
-	'libopensesame',
-	'libqtopensesame',
-	'openexp',
-	]
-
 # A list of pure Python modules that are not included by default but are
 # required for OpenSesame
 module_list = [
-	'HTMLParser.py',
-	'markupbase.py',
+	'HTMLParser',
+	'markupbase',
+	]
+
+# A list of pure Python packages that are not included by default but are
+# required for OpenSesame
+package_list = [
+	'yaml',
+	'libopensesame',
+	'libqtopensesame',
+	'openexp'
 	]
 
 # A list of files/folders in the resources folder that should be copied
@@ -145,10 +126,6 @@ if os.path.exists(target):
 print('Creating %s' % target)
 os.mkdir(target)
 
-for folder in folder_list:
-	print('Copying %s' % folder)
-	shutil.copytree(folder, os.path.join(target, folder), \
-		ignore=ignore_bytecode)
 print('Copying resources')
 shutil.copytree('resources', os.path.join(target, 'resources'), \
 	ignore=ignore_resources)
@@ -165,22 +142,32 @@ for plugin in included_plugins:
 
 print('Copying modules')
 for module in module_list:
-	print('Copying %s' % module)
-	shutil.copyfile(os.path.join(module_folder, module), \
-		os.path.join(target, module))
+	mod = importlib.import_module(module)
+	fname = mod.__file__
+	if fname.endswith('.pyc'):
+		fname = fname[:-1]
+	print('\t%s (%s)' % (module, fname))
+	shutil.copyfile(fname, os.path.join(target, module+'.py'))
+
+print('Copying packages')
+for package in package_list:
+	pkg = importlib.import_module(package)
+	folder = os.path.dirname(pkg.__file__)
+	print('\t%s (%s)' % (package, folder))
+	shutil.copytree(folder, os.path.join(target, package))
 
 print('Copying dummy PyQt4')
 shutil.copytree('resources/android/PyQt4', os.path.join(target, 'PyQt4'))
 print('Copying main.py')
 shutil.copyfile('opensesameandroid.py', os.path.join(target, 'main.py'))
 print('Copying .android.json')
-shutil.copyfile('resources/android/android.json', os.path.join(target, \
+shutil.copyfile('resources/android/android.json', os.path.join(target,
 	'.android.json'))
 print('Copying android-icon.png')
-shutil.copyfile('resources/android/android-icon.png', \
+shutil.copyfile('resources/android/android-icon.png',
 	os.path.join(target, 'android-icon.png'))
 print('Copying android-presplash.png')
-shutil.copyfile('resources/android/android-presplash.jpg', \
+shutil.copyfile('resources/android/android-presplash.jpg',
 	os.path.join(target, 'android-presplash.jpg'))
 print('Building')
 os.chdir(pgs4a_folder)
