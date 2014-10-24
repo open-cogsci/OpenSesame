@@ -1,9 +1,12 @@
-opensesame (2.9.0~pre30-ubuntu1) trusty; urgency=medium
+opensesame (2.9.0~pre31-ubuntu1) trusty; urgency=medium
 
   * Bugs fixed
     - The radius keyword to circle sketchpad elements now specifies radius, instead of diameter
-    - Allow non-latin text input
-    - Clean up temporary files on Windows
+    - Allow non-latin text input (#280)
+    - Clean up temporary files on Windows (#282)
+    - Fix incorrect line numbers in inline_script tracebacks (#281)
+    - Fix detection of uppercase keys in psycho back-end (#271)
+    - Fix speciying synth frequency by key (#269)
   * Improvements
     - Rewritten sketchpad runtime
     - Redesigned sketchpad gui
