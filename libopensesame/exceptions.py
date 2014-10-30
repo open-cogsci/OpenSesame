@@ -82,8 +82,17 @@ class osexception(Exception):
 		if self.exception != None:
 			info[u'exception type'] = self.exception.__class__.__name__ \
 				.decode(self.enc, u'ignore')
-			info[u'exception message'] = self.exception.message.decode(
-				self.enc, u'ignore')
+			# Try to get a descriptive message from the exception, either by
+			# looking at the `message` property or by using unicode(). If both
+			# fail, a placeholder message is used.
+			if hasattr(self.exception, u'message'):
+				msg = self.exception.message.decode(self.enc, u'ignore')
+			else:
+				try:
+					msg = unicode(self.exception)
+				except:
+					msg = u'Description unavailable'
+			info[u'exception message'] = msg
 			if isinstance(self.exception, SyntaxError):
 				# Syntax errors are dealt with specially, because they provide
 				# introspective information.
