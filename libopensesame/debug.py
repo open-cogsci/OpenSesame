@@ -29,6 +29,7 @@ debug output, simply use the following structure:
 
 import sys
 import os.path
+import inspect
 
 def parse_stack(st):
 
@@ -71,7 +72,7 @@ def format_stack(st, skip=0):
 		i += 1
 	return s
 
-def msg(msg=u'', reason=None):
+def _msg(msg=u'', reason=None):
 
 	"""
 	desc:
@@ -122,14 +123,14 @@ def _print(msg):
 
 enabled = '--debug' in sys.argv or '-d' in sys.argv
 if enabled:
-	import inspect
-	stack = '--stack' in sys.argv or '-s' in sys.argv
-	if stack:
-		msg(u'debug mode enabled (stacktrace on)')
-	else:
-		msg(u'debug mode enabled (stacktrace off)')
+	msg = _msg
 else:
 	# Replace the message function with a dummy function to turn off debugging
 	# output
 	stack = False
 	msg = lambda msg=None, reason=None: None
+stack = '--stack' in sys.argv or '-s' in sys.argv
+if stack:
+	_msg(u'debug mode enabled (stacktrace on)')
+else:
+	_msg(u'debug mode enabled (stacktrace off)')
