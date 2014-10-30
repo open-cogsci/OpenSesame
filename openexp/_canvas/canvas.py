@@ -1197,7 +1197,7 @@ def _gabor(orient, freq, env=u"gaussian", size=96, stdev=12, phase=0,
 			r = col1.r * amp + col2.r * (1.0 - amp)
 			g = col1.g * amp + col2.g * (1.0 - amp)
 			b = col1.b * amp + col2.b * (1.0 - amp)
-			px[rx][ry] = r, g, b
+			px[rx][ry] = round(r), round(g), round(b)
 	canvas_cache[key] = surface
 	del px
 	return surface
@@ -1254,7 +1254,7 @@ def _noise_patch(env=u"gaussian", size=96, stdev=12, col1=u"white",
 			r = col1.r * amp + col2.r * (1.0 - amp)
 			g = col1.g * amp + col2.g * (1.0 - amp)
 			b = col1.b * amp + col2.b * (1.0 - amp)
-			px[rx][ry] = r, g, b
+			px[rx][ry] = round(r), round(g), round(b)
 	canvas_cache[key] = surface
 	del px
 	return surface
