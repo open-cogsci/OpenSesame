@@ -1,3 +1,12 @@
+opensesame (2.9.1-ubuntu1) trusty; urgency=medium
+
+  * Bugs fixed
+    - Fix resetting font size and family in sketchpad (#284)
+    - Fix rounding issue in canvas._gabor() (#283)
+    - Better detection of Exception messages (#285)
+
+ -- Sebastiaan Mathot <s.mathot@cogsci.nl>  Thu, 30 Oct 2014 14:43:09 +0100
+
 opensesame (2.9.0-ubuntu1) trusty; urgency=medium
 
   * Bugs fixed
