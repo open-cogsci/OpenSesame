@@ -86,10 +86,10 @@ class font_widget_base(base_widget):
 		"""
 
 
-		self.ui.combobox_family.currentIndexChanged.disconnect()
-		self.ui.checkbox_italic.toggled.disconnect()
-		self.ui.checkbox_bold.toggled.disconnect()
-		self.ui.spinbox_size.valueChanged.disconnect()
+		self.ui.combobox_family.activated.disconnect()
+		self.ui.checkbox_italic.clicked.disconnect()
+		self.ui.checkbox_bold.clicked.disconnect()
+		self.ui.spinbox_size.editingFinished.disconnect()
 		self.initialize(family=family, italic=italic, bold=bold, size=size)
 
 	def initialize(self, experiment=None, family=None, italic=None, bold=None,
@@ -138,26 +138,24 @@ class font_widget_base(base_widget):
 		self.ui.checkbox_bold.setChecked(self.bold)
 		self.ui.spinbox_size.setValue(self.size)
 		self._apply()
-		self.ui.combobox_family.currentIndexChanged.connect(
-			self.apply_family)
-		self.ui.checkbox_italic.toggled.connect(self._apply)
-		self.ui.checkbox_bold.toggled.connect(self._apply)
-		self.ui.spinbox_size.valueChanged.connect(self._apply)
+		self.ui.combobox_family.activated.connect(self.apply_family)
+		self.ui.checkbox_italic.clicked.connect(self._apply)
+		self.ui.checkbox_bold.clicked.connect(self._apply)
+		self.ui.spinbox_size.editingFinished.connect(self._apply)
 
 	def update_family_combobox(self):
 
 		"""Updates the family combobox to include a custom font."""
 
-		self.ui.combobox_family.currentIndexChanged.disconnect()
+		self.ui.combobox_family.activated.disconnect()
 		self.ui.combobox_family.clear()
 		l = self.font_list[:]
 		if self.family not in l:
 			l += [self.family]
 		self.ui.combobox_family.insertItems(0, l)
-		self.ui.combobox_family.setCurrentIndex( \
+		self.ui.combobox_family.setCurrentIndex(
 			self.ui.combobox_family.findText(self.family))
-		self.ui.combobox_family.currentIndexChanged.connect( \
-			self.apply_family)
+		self.ui.combobox_family.activated.connect(self.apply_family)
 
 class font_widget_horizontal(font_widget_base):
 

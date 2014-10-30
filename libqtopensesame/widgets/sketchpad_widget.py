@@ -47,6 +47,7 @@ class sketchpad_widget(base_widget):
 		super(sketchpad_widget, self).__init__(sketchpad.main_window,
 			ui=u'widgets.sketchpad')
 		self.sketchpad = sketchpad
+		self.initialized = False
 		self.margin = 50
 		self.canvas = self.sketchpad.canvas
 		self.ui.graphics_view.setScene(self.canvas)
@@ -288,8 +289,10 @@ class sketchpad_widget(base_widget):
 			Initializes the sketchpad widget.
 		"""
 
-		self.ui.edit_color.initialize(experiment=self.experiment)
-		self.ui.widget_font.initialize(experiment=self.experiment)
+		if not self.initialized:
+			self.ui.edit_color.initialize(experiment=self.experiment)
+			self.ui.widget_font.initialize(experiment=self.experiment)
+			self.initialized = True
 
 	def init_settings(self):
 
