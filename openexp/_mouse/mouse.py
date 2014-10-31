@@ -73,8 +73,11 @@ class mouse(object):
 			arg_timeout:
 				A numeric value specifying a timeout in milliseconds or `None`
 				for no (i.e. infinite) timeout.
-			arg_visible:
-				True to show the cursor, False to hide.
+			arg_visible: |
+				`True` to show the cursor, `False` to hide. (If you are using the
+				*legacy* back-end, you may find that the mouse cursor is not
+				visible. For a workaround, see
+				<http://osdoc.cogsci.nl/back-ends/legacy/>.)
 		--%
 	"""
 
