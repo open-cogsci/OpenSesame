@@ -130,7 +130,8 @@ else:
 	stack = False
 	msg = lambda msg=None, reason=None: None
 stack = '--stack' in sys.argv or '-s' in sys.argv
-if stack:
-	_msg(u'debug mode enabled (stacktrace on)')
-else:
-	_msg(u'debug mode enabled (stacktrace off)')
+if enabled:
+	if stack:
+		_msg(u'debug mode enabled (stacktrace on)')
+	else:
+		_msg(u'debug mode enabled (stacktrace off)')
