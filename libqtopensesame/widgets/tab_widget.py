@@ -43,8 +43,38 @@ class tab_widget(base_subcomponent, QtGui.QTabWidget):
 			# Catch what appears to be a bug in earlier versions of PyQt4.
 			self.tabCloseRequested.connect(self._removeTab)
 		self.currentChanged.connect(self.index_changed)
-		self.setSizePolicy(QtGui.QSizePolicy.MinimumExpanding, \
+		self.setSizePolicy(QtGui.QSizePolicy.MinimumExpanding,
 			QtGui.QSizePolicy.MinimumExpanding)
+		self.shortcut_switch_left = QtGui.QShortcut(
+			QtGui.QKeySequence.PreviousChild, self.main_window,
+			self.switch_prev, self.switch_prev)
+		self.shortcut_switch_right = QtGui.QShortcut(
+			QtGui.QKeySequence.NextChild, self.main_window,
+			self.switch_next, self.switch_next)
+
+	def switch_prev(self):
+
+		"""
+		desc:
+			Switches to the previous tab.
+		"""
+
+		i = self.currentIndex() - 1
+		if i < 0:
+			i = self.count()-1
+		self.setCurrentIndex(i)
+
+	def switch_next(self):
+
+		"""
+		desc:
+			Switches to the next tab.
+		"""
+
+		i = self.currentIndex() + 1
+		if i >= self.count():
+			i = 0
+		self.setCurrentIndex(i)
 
 	def _removeTab(self, i):
 
