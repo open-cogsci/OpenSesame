@@ -63,6 +63,7 @@ class sampler(sampler_runtime, qtplugin):
 		self.sampler_widget.ui.dial_pan.sliderMoved.connect(self.apply_dials)
 		self.sampler_widget.ui.dial_volume.sliderMoved.connect(self.apply_dials)
 		self.sampler_widget.ui.dial_pitch.sliderMoved.connect(self.apply_dials)
+		self.set_focus_widget(self.sampler_widget.ui.edit_sample, override=True)
 		self.update_dials()
 
 	def browse_sample(self):

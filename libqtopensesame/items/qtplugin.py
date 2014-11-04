@@ -104,6 +104,7 @@ class qtplugin(qtitem.qtitem):
 		row = self.edit_grid.rowCount()
 		self.edit_grid.addWidget(QtGui.QLabel(_(label)), row, 0)
 		self.edit_grid.addWidget(widget, row, 1)
+		self.set_focus_widget(widget)
 
 	def add_line_edit_control(self, var, label, tooltip=None, default=None,
 		min_width=None, validator=None):
@@ -368,6 +369,7 @@ class qtplugin(qtitem.qtitem):
 		if var != None:
 			self.auto_editor[var] = qprogedit
 		self.edit_vbox.addWidget(qprogedit)
+		self.set_focus_widget(qprogedit)
 		return qprogedit
 
 	def add_text(self, msg):

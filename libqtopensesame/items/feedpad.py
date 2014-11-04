@@ -55,6 +55,15 @@ class feedpad(QtCore.QObject):
 
 		return sketchpad_elements
 
+	def set_focus(self):
+
+		"""
+		desc:
+			Allows the item to focus the most important widget.
+		"""
+
+		self.sketchpad_widget.ui.edit_duration.setFocus()
+
 	def eval_text(self, s, round_float=True):
 
 		"""

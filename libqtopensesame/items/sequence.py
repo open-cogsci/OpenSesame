@@ -59,6 +59,7 @@ class sequence(qtstructure_item, qtplugin, sequence_runtime):
 		self.treewidget.setup(self.main_window)
 		self.treewidget.structure_change.connect(self.update)
 		self.treewidget.text_change.connect(self.update_script)
+		self.set_focus_widget(self.treewidget)
 		self.edit_vbox.addWidget(self.treewidget)
 		self.add_checkbox_control(u'flush_keyboard',
 			u'Flush pending key presses at sequence start',

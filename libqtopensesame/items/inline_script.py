@@ -51,6 +51,15 @@ class inline_script(inline_script_runtime, qtplugin):
 		self.set(u'_run', sr)
 		self.update_item_icon()
 
+	def set_focus(self):
+
+		"""
+		desc:
+			Allows the item to focus the most important widget.
+		"""
+
+		self.qprogedit.setFocus()
+
 	def item_icon(self):
 
 		"""

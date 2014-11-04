@@ -82,6 +82,37 @@ class qtitem(QtCore.QObject):
 
 		self.tabwidget.remove(self.widget())
 
+	def set_focus(self):
+
+		"""
+		desc:
+			Gives focus to the most important widget.
+		"""
+
+		if hasattr(self, u'focus_widget') and self.focus_widget != None:
+			self.focus_widget.setFocus()
+
+	def set_focus_widget(self, widget, override=False):
+
+		"""
+		desc:
+			Sets the widget that receives focus when the tab is opened.
+
+		arguments:
+			widget:
+				desc:	The widget to receive focus or `None` to reset.
+				type:	[QWidget, NoneType]
+
+		keywords:
+			override:
+				desc:	Indicates whether the focus widget should be changed if
+						there already is a focus widget.
+				type:	bool
+		"""
+
+		if override or not hasattr(self, u'focus_widget') or self.focus_widget == None:
+			self.focus_widget = widget
+
 	def update_item_icon(self):
 
 		"""
@@ -113,6 +144,7 @@ class qtitem(QtCore.QObject):
 
 		self.update_script()
 		self.edit_widget()
+		self.set_focus()
 
 	def widget(self):
 
@@ -648,28 +680,23 @@ class qtitem(QtCore.QObject):
 		if var == None:
 			var = id(widget)
 		debug.msg(var)
-
+		self.set_focus_widget(widget)
 		if isinstance(widget, QtGui.QSpinBox) or isinstance(widget,
 			QtGui.QDoubleSpinBox):
 			widget.editingFinished.connect(self.apply_edit_changes)
 			self.auto_spinbox[var] = widget
-
 		elif isinstance(widget, QtGui.QComboBox):
 			widget.activated.connect(self.apply_edit_changes)
 			self.auto_combobox[var] = widget
-
 		elif isinstance(widget, QtGui.QSlider):
 			widget.editingFinished.connect(self.apply_edit_changes)
 			self.auto_slider[var] = widget
-
 		elif isinstance(widget, QtGui.QLineEdit):
 			widget.editingFinished.connect(self.apply_edit_changes)
 			self.auto_line_edit[var] = widget
-
 		elif isinstance(widget, QtGui.QCheckBox):
 			widget.clicked.connect(self.apply_edit_changes)
 			self.auto_checkbox[var] = widget
-
 		else:
 			raise Exception(u"Cannot auto-add widget of type %s" % widget)
 
