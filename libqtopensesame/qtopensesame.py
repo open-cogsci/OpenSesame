@@ -879,7 +879,7 @@ class qtopensesame(QtGui.QMainWindow, base_component):
 		"""
 
 		from libqtopensesame.widgets import pyterm
-		out = pyterm.output_buffer(self)
+		out = pyterm.output_buffer(self.ui.edit_stdout)
 		out.write(self.experiment.unistr(msg))
 
 	def run_experiment(self, dummy=None, fullscreen=True, quick=False):
