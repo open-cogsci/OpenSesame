@@ -524,7 +524,15 @@ class tree_overview(base_subcomponent, QtGui.QTreeWidget):
 		# new item at the correct position.
 		if not inserted:
 			while True:
-				parent_treeitem = target_treeitem.parent()
+				try:
+					parent_treeitem = target_treeitem.parent()
+				except:
+					# A race condition can occur in which the tree_overview has
+					# been rebuild, thus destroying target_treeitem. If this
+					# happens, we re-take target_treeitem based on the mouse
+					# coordinates.
+					target_treeitem = self.itemAt(e.pos())
+					parent_treeitem = target_treeitem.parent()
 				if parent_treeitem == None:
 					e.accept()
 					del self.experiment.items[item.name]
