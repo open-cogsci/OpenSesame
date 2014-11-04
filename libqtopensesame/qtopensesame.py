@@ -135,22 +135,24 @@ class qtopensesame(QtGui.QMainWindow, base_component):
 		self.ui.action_run_in_window.triggered.connect(
 			self.run_experiment_in_window)
 		self.ui.action_run_quick.triggered.connect(self.run_quick)
-		self.ui.action_enable_auto_response.triggered.connect( \
+		self.ui.action_enable_auto_response.triggered.connect(
 			self.set_auto_response)
-		self.ui.action_close_all_tabs.triggered.connect( \
+		self.ui.action_close_current_tab.triggered.connect(
+			self.ui.tabwidget.close_current)
+		self.ui.action_close_all_tabs.triggered.connect(
 			self.ui.tabwidget.close_all)
-		self.ui.action_close_other_tabs.triggered.connect( \
+		self.ui.action_close_other_tabs.triggered.connect(
 			self.ui.tabwidget.close_other)
-		self.ui.action_onetabmode.triggered.connect( \
+		self.ui.action_onetabmode.triggered.connect(
 			self.ui.tabwidget.toggle_onetabmode)
 		self.ui.action_show_overview.triggered.connect(self.toggle_overview)
-		self.ui.action_show_variable_inspector.triggered.connect( \
+		self.ui.action_show_variable_inspector.triggered.connect(
 			self.refresh_variable_inspector)
 		self.ui.action_show_pool.triggered.connect(self.refresh_pool)
 		self.ui.action_show_stdout.triggered.connect(self.refresh_stdout)
-		self.ui.action_preferences.triggered.connect( \
+		self.ui.action_preferences.triggered.connect(
 			self.ui.tabwidget.open_preferences)
-		self.ui.button_help_stdout.clicked.connect( \
+		self.ui.button_help_stdout.clicked.connect(
 			self.ui.tabwidget.open_stdout_help)
 
 		# Setup the overview area

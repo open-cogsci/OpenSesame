@@ -369,13 +369,17 @@ class tab_widget(base_subcomponent, QtGui.QTabWidget):
 
 		"""Toggles onetabmode"""
 
-		config.set_config(u"onetabmode", \
+		config.set_config(u"onetabmode",
 			self.main_window.ui.action_onetabmode.isChecked())
 		if config.get_config(u"onetabmode"):
 			self.close_other()
 		self.setTabsClosable(not config.get_config(u"onetabmode"))
-		self.main_window.ui.action_close_other_tabs.setEnabled(not \
-			config.get_config(u"onetabmode"))
+		self.main_window.ui.action_close_all_tabs.setEnabled(
+			not config.get_config(u"onetabmode"))
+		self.main_window.ui.action_close_current_tab.setEnabled(
+			not config.get_config(u"onetabmode"))
+		self.main_window.ui.action_close_other_tabs.setEnabled(
+			not config.get_config(u"onetabmode"))
 
 	def index_changed(self, index):
 

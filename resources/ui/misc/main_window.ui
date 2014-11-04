@@ -92,6 +92,7 @@
     <property name="title">
      <string>View</string>
     </property>
+    <addaction name="action_close_current_tab"/>
     <addaction name="action_close_all_tabs"/>
     <addaction name="action_close_other_tabs"/>
     <addaction name="action_onetabmode"/>
@@ -488,6 +489,9 @@
    <property name="text">
     <string>Close all tabs</string>
    </property>
+   <property name="shortcut">
+    <string>Ctrl+Alt+T</string>
+   </property>
   </action>
   <action name="action_close_other_tabs">
    <property name="icon">
@@ -761,6 +765,17 @@
    </property>
    <property name="shortcut">
     <string>Meta+O</string>
+   </property>
+  </action>
+  <action name="action_close_current_tab">
+   <property name="text">
+    <string>Close current tab</string>
+   </property>
+   <property name="toolTip">
+    <string>Close the current tab</string>
+   </property>
+   <property name="shortcut">
+    <string>Alt+T</string>
    </property>
   </action>
  </widget>
