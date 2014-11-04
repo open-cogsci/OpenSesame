@@ -153,6 +153,20 @@ class config(object):
 			for key, value in self.config_linux.iteritems():
 				self.config[key] = value
 
+	def __str__(self):
+
+		return unicode(self).encode(u'utf-8')
+
+	def __unicode__(self):
+
+		s = u''
+		for key, val in self.config.iteritems():
+			if not isinstance(val, basestring) and not isinstance(val, int) \
+				and not isinstance(val, float):
+				val = type(val)
+			s += u'%s: %s\n' % (key, val)
+		return s
+
 	def __getattr__(self, setting):
 
 		"""

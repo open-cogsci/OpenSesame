@@ -124,8 +124,34 @@ class pyterm(code.InteractiveConsole):
 		global modules
 		self._locals.clear()
 		self._locals[u'modules'] = modules
-		self._locals[u'parent'] = self.parent
+		self._locals[u'qtopensesame'] = self.get_qtopensesame
+		self._locals[u'cfg'] = self.get_cfg
 		self._locals.update(_globals)
+
+	def get_qtopensesame(self):
+
+		"""
+		desc:
+			A getter for the main window.
+
+		returns:
+			type:	qtopensesame
+		"""
+
+		return self.parent.parent().parent().parent()
+
+	def get_cfg(self):
+
+		"""
+		desc:
+			A getter for the config object.
+
+		returns:
+			type:	config
+		"""
+
+		from libqtopensesame.misc.config import cfg
+		return cfg
 
 class console(QtGui.QPlainTextEdit):
 
@@ -141,12 +167,11 @@ class console(QtGui.QPlainTextEdit):
 		"""
 
 		QtGui.QPlainTextEdit.__init__(self, parent)
-		self.main_window = parent
 		self.collect_input = False
 		self._input = u""
 		self.history = []
 		self.prompt = u">>> "
-		self.pyterm = pyterm(self.main_window)
+		self.pyterm = pyterm(parent)
 		self.pyterm.textedit = self
 		self.setCursorWidth(8)
 		self.setTheme()
