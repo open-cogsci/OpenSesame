@@ -1,10 +1,12 @@
-opensesame (2.9.1~pre1-ubuntu1) trusty; urgency=medium
+opensesame (2.9.1~pre2-ubuntu1) trusty; urgency=medium
 
   * Bugs fixed
     - Fix resetting font size and family in sketchpad (#284)
     - Fix rounding issue in canvas._gabor() (#283)
     - Better detection of Exception messages (#285)
     - Fix a race condition when dropping an item on a loop or sequence
+    - Fix broken context menu in sketchpad when running a translation (#287)
+    - Correctly parse variables in video_player plug-in (#288)
   * Improvements
     - Application-wide keyboard shortcuts for tab switching
     - Add close current tab action
