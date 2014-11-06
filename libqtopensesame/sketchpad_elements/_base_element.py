@@ -295,22 +295,23 @@ class base_element(object):
 				type:	QPoint
 		"""
 
-		menu = QtGui.QMenu()
-		menu.addAction(self.theme.qicon(u'utilities-terminal'),
-			_(u'Edit script'))
-		menu.addAction(self.theme.qicon(u'go-top'), _(u'Raise to front'))
-		menu.addAction(self.theme.qicon(u'go-bottom'), _(u'Lower to bottom'))
-		menu.addAction(self.theme.qicon(u'edit-delete'), _(u'Delete'))
-		action = menu.exec_(pos)
-		if action == None:
+		from libqtopensesame._input.popup_menu import popup_menu
+		pm = popup_menu(self.main_window, [
+			(0, _(u'Edit script'), u'utilities-terminal'),
+			(1, _(u'Raise to front'), u'go-top'),
+			(2, _(u'Lower to bottom'), u'go-bottom'),
+			(3, _(u'Delete'), u'edit-delete'),
+			])
+		resp = pm.show()
+		if resp == None:
 			return
-		if action.text() == u'Edit script':
+		if resp == 0:
 			self.show_script_edit_dialog()
-		elif action.text() == u'Raise to front':
+		elif resp == 1:
 			self.properties[u'z_index'] = self.sketchpad.min_z_index() - 1
-		elif action.text() == u'Lower to bottom':
+		elif resp == 2:
 			self.properties[u'z_index'] = self.sketchpad.max_z_index() + 1
-		elif action.text() == u'Delete':
+		elif resp == 3:
 			self.sketchpad.remove_elements([self])
 		self.sketchpad.draw()
 
