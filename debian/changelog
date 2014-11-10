@@ -1,4 +1,4 @@
-opensesame (2.9.1~pre2-ubuntu1) trusty; urgency=medium
+opensesame (2.9.1~pre3-ubuntu1) trusty; urgency=medium
 
   * Bugs fixed
     - Fix resetting font size and family in sketchpad (#284)
@@ -11,6 +11,8 @@ opensesame (2.9.1~pre2-ubuntu1) trusty; urgency=medium
     - Application-wide keyboard shortcuts for tab switching
     - Add close current tab action
     - Improved focus behavior
+  * Translation updates
+    - Update German translation (de_DE)
 
  -- Sebastiaan Mathot <s.mathot@cogsci.nl>  Thu, 30 Oct 2014 14:43:09 +0100
 
