@@ -1,56 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS><TS version="2.0" language="de_DE" sourcelanguage="">
+<!DOCTYPE TS>
+<TS version="2.0" language="de_DE">
 <context>
     <name>Form</name>
     <message>
         <location filename="logger.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished">Gestalt</translation>
+        <translation>Formular</translation>
     </message>
     <message>
         <location filename="logger.ui" line="23"/>
         <source>Automatically detect and log all variables</source>
-        <translation type="unfinished">Automatisch alle Variablen erfassen und protokollieren</translation>
+        <translation>Variablen automatisch erkennen und alle loggen</translation>
     </message>
     <message>
         <location filename="logger.ui" line="30"/>
         <source>Include variables with missing values</source>
-        <translation type="unfinished">Schließe Variablen mit fehlenden Werten ein</translation>
+        <translation>Variablen mit fehlenden Werten einschließen</translation>
     </message>
     <message>
         <location filename="logger.ui" line="37"/>
         <source>Put quotes around values</source>
-        <translation type="unfinished">Schreibe Anführungszeichen um Werte</translation>
+        <translation>Werte in Anführungszeichen setzen</translation>
     </message>
     <message>
         <location filename="logger.ui" line="50"/>
         <source>Select all</source>
-        <translation type="unfinished">Alle anwählen</translation>
+        <translation>Alle anwählen</translation>
     </message>
     <message>
         <location filename="logger.ui" line="57"/>
         <source>Deselect all</source>
-        <translation type="unfinished">Alle abwählen</translation>
+        <translation>Alle abwählen</translation>
     </message>
     <message>
         <location filename="logger.ui" line="77"/>
         <source>Smart select</source>
-        <translation type="unfinished">Clevere Auswahl</translation>
+        <translation>Clevere Auswahl</translation>
     </message>
     <message>
         <location filename="logger.ui" line="84"/>
         <source>Add custom variable</source>
-        <translation type="unfinished">Benutzerdefinierte Variable hinzufügen</translation>
+        <translation>Benutzerdefinierte Variable hinzufügen</translation>
     </message>
     <message>
         <location filename="logger.ui" line="109"/>
         <source>Variable</source>
-        <translation type="unfinished">Variable</translation>
+        <translation>Variable</translation>
     </message>
     <message>
         <location filename="logger.ui" line="114"/>
         <source>Source item(s)</source>
-        <translation type="unfinished"></translation>
+        <translation>Quellitem(s)</translation>
     </message>
 </context>
 <context>
@@ -58,117 +59,117 @@
     <message>
         <location filename="general_properties.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished">Gestalt</translation>
+        <translation>Formular</translation>
     </message>
     <message>
         <location filename="general_properties.ui" line="56"/>
         <source>&lt;h3&gt;Back-end&lt;/h3&gt;</source>
-        <translation type="unfinished">&lt;h3&gt;Back-End&lt;/h3&gt;</translation>
+        <translation>&lt;h3&gt;Back-End&lt;/h3&gt;</translation>
     </message>
     <message>
         <location filename="general_properties.ui" line="94"/>
         <source>&lt;h3&gt;Resolution&lt;/h3&gt;</source>
-        <translation type="unfinished">&lt;h3&gt;Auflösung&lt;/h3&gt;</translation>
+        <translation>&lt;h3&gt;Auflösung&lt;/h3&gt;</translation>
     </message>
     <message>
         <location filename="general_properties.ui" line="119"/>
         <source>The display resolution (width) in pixels</source>
-        <translation type="unfinished">Bildschirmauflösung (Breite) in Pixeln</translation>
+        <translation>Bildschirmauflösung (Breite) in Pixel</translation>
     </message>
     <message>
         <location filename="general_properties.ui" line="145"/>
         <source>px</source>
-        <translation type="unfinished">px</translation>
+        <translation>px</translation>
     </message>
     <message>
         <location filename="general_properties.ui" line="135"/>
         <source>x</source>
-        <translation type="unfinished">x</translation>
+        <translation>x</translation>
     </message>
     <message>
         <location filename="general_properties.ui" line="142"/>
         <source>The display resolution (height) in pixels</source>
-        <translation type="unfinished">Bildschirmauflösung (Höhe) in Pixeln</translation>
+        <translation>Bildschirmauflösung (Höhe) in Pixel</translation>
     </message>
     <message>
         <location filename="general_properties.ui" line="161"/>
         <source>&lt;h3&gt;Colors&lt;/h3&gt;</source>
-        <translation type="unfinished">&lt;h3&gt;Farben&lt;/h3&gt;</translation>
+        <translation>&lt;h3&gt;Farben&lt;/h3&gt;</translation>
     </message>
     <message>
         <location filename="general_properties.ui" line="189"/>
         <source>Foreground</source>
-        <translation type="unfinished">Vordergrund</translation>
+        <translation>Vordergrund</translation>
     </message>
     <message>
         <location filename="general_properties.ui" line="196"/>
         <source>Background</source>
-        <translation type="unfinished">Hintergrund</translation>
+        <translation>Hintergrund</translation>
     </message>
     <message>
         <location filename="general_properties.ui" line="212"/>
         <source>&lt;small&gt;&lt;i&gt;Examples: &apos;white&apos;, &apos;#FFFFFF&apos;&lt;/i&gt;&lt;/small&gt;</source>
-        <translation type="unfinished">&lt;small&gt;&lt;i&gt;Beispiele: &apos;white&apos;, &apos;#FFFFFF&apos;&lt;/i&gt;&lt;/small&gt;</translation>
+        <translation>&lt;small&gt;&lt;i&gt;Beispiele: &apos;white&apos;, &apos;#FFFFFF&apos;&lt;/i&gt;&lt;/small&gt;</translation>
     </message>
     <message>
         <location filename="general_properties.ui" line="228"/>
         <source>&lt;h3&gt;Font&lt;/h3&gt;</source>
-        <translation type="unfinished">&lt;h3&gt;Schriftart&lt;/h3&gt;</translation>
+        <translation>&lt;h3&gt;Schriftart&lt;/h3&gt;</translation>
     </message>
     <message>
         <location filename="general_properties.ui" line="308"/>
         <source>&lt;h3&gt;Advanced&lt;/h3&gt;</source>
-        <translation type="unfinished">&lt;h3&gt;Erweitert&lt;/h3&gt;</translation>
+        <translation>&lt;h3&gt;Erweitert&lt;/h3&gt;</translation>
     </message>
     <message>
         <location filename="general_properties.ui" line="339"/>
         <source>Advanced settings for the selected back-end</source>
-        <translation type="unfinished">Erweiterte Einstellungen für das ausgewählte Back-End</translation>
+        <translation>Erweiterte Einstellungen für das ausgewählte Back-End</translation>
     </message>
     <message>
         <location filename="general_properties.ui" line="342"/>
         <source>Back-end settings</source>
-        <translation type="unfinished">Back-End-Einstellungen</translation>
+        <translation>Back-End-Einstellungen</translation>
     </message>
     <message>
         <location filename="general_properties.ui" line="349"/>
         <source>Edit the script for the entire experiment</source>
-        <translation type="unfinished">Skript für das gesamte Experiment bearbeiten</translation>
+        <translation>Skript für das gesamte Experiment bearbeiten</translation>
     </message>
     <message>
         <location filename="general_properties.ui" line="352"/>
         <source>Script editor</source>
-        <translation type="unfinished">Skripteditor</translation>
+        <translation>Skripteditor</translation>
     </message>
     <message>
         <location filename="general_properties.ui" line="288"/>
         <source>Allows you to access experimental variables directly by name</source>
-        <translation type="unfinished">Ermöglicht den Zugriff auf Variablen im Experiment direkt über den Namen</translation>
+        <translation>Ermöglicht Dir Variablen im Experiment direkt mit Namen anzusprechen</translation>
     </message>
     <message>
         <location filename="general_properties.ui" line="291"/>
         <source>Transparent variable management</source>
-        <translation type="unfinished">transparentes Variablenmanagement</translation>
+        <translation>transparentes Variablenmanagement</translation>
     </message>
     <message>
         <location filename="general_properties.ui" line="275"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:large; font-weight:600;&quot;&gt;Miscellaneous&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:large; font-weight:600;&quot;&gt;Verschiedenes&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:large; font-weight:600;&quot;&gt;Verschiedenes&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="general_properties.ui" line="298"/>
         <source>Enables support for bi-directional languages, such as Arabic and Hebrew</source>
-        <translation type="unfinished">Aktiviert Unterstützung für rechts-links-Schriften, wie Arabisch und Hebräisch</translation>
+        <translation>Aktiviert Unterstützung für rechts-links-Schriften, wie Arabisch und Hebräisch</translation>
     </message>
     <message>
         <location filename="general_properties.ui" line="301"/>
         <source>Bi-directional-text support</source>
-        <translation type="unfinished">Bidirektionale Schriftunterstützung</translation>
+        <translation>Bidirektionale Schriftunterstützung</translation>
     </message>
     <message>
         <location filename="general_properties.ui" line="81"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://osdoc.cogsci.nl/back-ends/about&quot;&gt;&lt;span style=&quot;font-size:small;font-style:italic; text-decoration: underline; color:#0057ae;&quot;&gt;Why is this important?&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://osdoc.cogsci.nl/back-ends/about&quot;&gt;&lt;span style=&quot;font-size:small;font-style:italic; text-decoration: underline; color:#0057ae;&quot;&gt;Wofür ist das wichtig?&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://osdoc.cogsci.nl/back-ends/about&quot;&gt;&lt;span style=&quot;font-size:small;font-style:italic; text-decoration: underline; color:#0057ae;&quot;&gt;Wofür ist das wichtig?&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
@@ -176,7 +177,7 @@
     <message>
         <location filename="font_widget.ui" line="14"/>
         <source>Form</source>
-        <translation>Gestalt</translation>
+        <translation>Formular</translation>
     </message>
     <message>
         <location filename="font_widget.ui" line="32"/>
@@ -254,122 +255,122 @@
     <message>
         <location filename="sketchpad.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished">Gestalt</translation>
+        <translation>Formular</translation>
     </message>
     <message>
         <location filename="sketchpad.ui" line="38"/>
         <source>Duration</source>
-        <translation type="unfinished">Dauer</translation>
+        <translation>Dauer</translation>
     </message>
     <message>
         <location filename="sketchpad.ui" line="51"/>
         <source>A numeric value (duration in milliseconds), &quot;keypress&quot;, or &quot;mouseclick&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>Numerischer Wert (Dauer in Millisekunden), &quot;keypress&quot; oder &quot;mouseclick&quot;</translation>
     </message>
     <message>
         <location filename="sketchpad.ui" line="83"/>
         <source>Color</source>
-        <translation type="unfinished">Farbe</translation>
+        <translation>Farbe</translation>
     </message>
     <message>
         <location filename="sketchpad.ui" line="442"/>
         <source> px</source>
-        <translation type="unfinished"></translation>
+        <translation> px</translation>
     </message>
     <message>
         <location filename="sketchpad.ui" line="112"/>
         <source>Penwidth </source>
-        <translation type="unfinished"></translation>
+        <translation>Stiftbreite </translation>
     </message>
     <message>
         <location filename="sketchpad.ui" line="144"/>
         <source>Size of the arrowhead</source>
-        <translation type="unfinished">Größe der Pfeilspitze</translation>
+        <translation>Größe der Pfeilspitze</translation>
     </message>
     <message>
         <location filename="sketchpad.ui" line="150"/>
         <source>Arrowhead </source>
-        <translation type="unfinished"></translation>
+        <translation>Pfeilspitze </translation>
     </message>
     <message>
         <location filename="sketchpad.ui" line="185"/>
         <source>Image scaling factor</source>
-        <translation type="unfinished"></translation>
+        <translation>Bildskalierungsfaktor</translation>
     </message>
     <message>
         <location filename="sketchpad.ui" line="188"/>
         <source>Scale </source>
-        <translation type="unfinished"></translation>
+        <translation>Skalierung </translation>
     </message>
     <message>
         <location filename="sketchpad.ui" line="360"/>
         <source> x</source>
-        <translation type="unfinished"></translation>
+        <translation> x</translation>
     </message>
     <message>
         <location filename="sketchpad.ui" line="232"/>
         <source>Check to draw filled objects</source>
-        <translation type="unfinished">Anklicken um ausgefülltes Objekt zu zeichnen</translation>
+        <translation>Anklicken um ausgefüllte Objekte zu zeichnen</translation>
     </message>
     <message>
         <location filename="sketchpad.ui" line="235"/>
         <source>Fill</source>
-        <translation type="unfinished"></translation>
+        <translation>Füllen</translation>
     </message>
     <message>
         <location filename="sketchpad.ui" line="261"/>
         <source>Center the object</source>
-        <translation type="unfinished">Objekt zentrieren</translation>
+        <translation>Objekt zentrieren</translation>
     </message>
     <message>
         <location filename="sketchpad.ui" line="264"/>
         <source>Center</source>
-        <translation type="unfinished"></translation>
+        <translation>Mittelpunkt</translation>
     </message>
     <message>
         <location filename="sketchpad.ui" line="293"/>
         <source>Show if</source>
-        <translation type="unfinished">Zeigen, wenn</translation>
+        <translation>Zeigen, wenn</translation>
     </message>
     <message>
         <location filename="sketchpad.ui" line="347"/>
         <source>0,0</source>
-        <translation type="unfinished"></translation>
+        <translation>0,0</translation>
     </message>
     <message>
         <location filename="sketchpad.ui" line="357"/>
         <source>Zoom factor</source>
-        <translation type="unfinished"></translation>
+        <translation>Vergrößerungsfaktor</translation>
     </message>
     <message>
         <location filename="sketchpad.ui" line="397"/>
         <source>Parse a subset of HTML tags</source>
-        <translation type="unfinished">html-Tags eingliedern</translation>
+        <translation>Subset von html-Tags eingliedern</translation>
     </message>
     <message>
         <location filename="sketchpad.ui" line="400"/>
         <source>HTML</source>
-        <translation type="unfinished"></translation>
+        <translation>HTML</translation>
     </message>
     <message>
         <location filename="sketchpad.ui" line="426"/>
         <source>Check to display the grid and enable snap-to-grid</source>
-        <translation type="unfinished">Anklicken um das Gitternetz anzuzeigen und &quot;magnetische&quot; Auswahl zu aktivieren</translation>
+        <translation>Anwählen um Gitternetz anzuzeigen und &quot;magnetisches&quot; Gitternetzl zu aktivieren</translation>
     </message>
     <message>
         <location filename="sketchpad.ui" line="429"/>
         <source>Grid</source>
-        <translation type="unfinished">Gitternetz</translation>
+        <translation>Gitternetz</translation>
     </message>
     <message>
         <location filename="sketchpad.ui" line="439"/>
         <source>Grid size</source>
-        <translation type="unfinished">Gitternetzabstände</translation>
+        <translation>Gitternetzabstände</translation>
     </message>
     <message>
         <location filename="sketchpad.ui" line="482"/>
         <source>Select and move elements</source>
-        <translation type="unfinished"></translation>
+        <translation>Elemente auswählen und bewegen</translation>
     </message>
 </context>
 <context>
@@ -469,20 +470,20 @@
         <source>* Has no effect in psycho back-end</source>
         <translation>* Hat im psycho Back-End keine Auswirkung</translation>
     </message>
-    <message encoding="UTF-8">
+    <message utf8="true">
         <location filename="gabor_settings.ui" line="89"/>
         <source> °</source>
-        <translation type="unfinished"></translation>
+        <translation> °</translation>
     </message>
     <message>
         <location filename="gabor_settings.ui" line="160"/>
         <source> px</source>
-        <translation type="unfinished"></translation>
+        <translation>px</translation>
     </message>
     <message>
         <location filename="gabor_settings.ui" line="145"/>
         <source>rectangular (no envelope)</source>
-        <translation type="unfinished"></translation>
+        <translation>rechteckig (kein Umschlag)</translation>
     </message>
 </context>
 <context>
@@ -608,7 +609,7 @@
     <message>
         <location filename="loop_widget.ui" line="14"/>
         <source>Form</source>
-        <translation>Gestalt</translation>
+        <translation>Formular</translation>
     </message>
     <message>
         <location filename="loop_widget.ui" line="32"/>
@@ -899,7 +900,7 @@
     <message>
         <location filename="noise_settings.ui" line="136"/>
         <source> px</source>
-        <translation type="unfinished"></translation>
+        <translation> px</translation>
     </message>
 </context>
 <context>
@@ -1350,32 +1351,32 @@
     <message>
         <location filename="main_window.ui" line="764"/>
         <source>Quick switcher</source>
-        <translation type="unfinished"></translation>
+        <translation>Schnellumschalter</translation>
     </message>
     <message>
         <location filename="main_window.ui" line="767"/>
         <source>Meta+O</source>
-        <translation type="unfinished"></translation>
+        <translation>Meta+O</translation>
     </message>
     <message>
         <location filename="main_window.ui" line="493"/>
         <source>Ctrl+Alt+T</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+Alt+T</translation>
     </message>
     <message>
         <location filename="main_window.ui" line="772"/>
         <source>Close current tab</source>
-        <translation type="unfinished"></translation>
+        <translation>Aktuellen Tab schließen</translation>
     </message>
     <message>
         <location filename="main_window.ui" line="775"/>
         <source>Close the current tab</source>
-        <translation type="unfinished"></translation>
+        <translation>Schließt den aktuellen Tab</translation>
     </message>
     <message>
         <location filename="main_window.ui" line="778"/>
         <source>Alt+T</source>
-        <translation type="unfinished"></translation>
+        <translation>Alt+T</translation>
     </message>
 </context>
 <context>
@@ -1471,7 +1472,7 @@
     <message>
         <location filename="pool_widget.ui" line="17"/>
         <source>Form</source>
-        <translation>Gestalt</translation>
+        <translation>Formular</translation>
     </message>
     <message>
         <location filename="pool_widget.ui" line="48"/>
@@ -1524,7 +1525,7 @@
     <message>
         <location filename="preferences_widget.ui" line="14"/>
         <source>Form</source>
-        <translation>Gestalt</translation>
+        <translation>Formular</translation>
     </message>
     <message>
         <location filename="preferences_widget.ui" line="38"/>
@@ -1670,9 +1671,6 @@
     </message>
 </context>
 <context>
-    <name>quick_switcher</name>
-</context>
-<context>
     <name>replace_dialog</name>
     <message>
         <location filename="replace_dialog.ui" line="14"/>
@@ -1745,7 +1743,7 @@
     <message>
         <location filename="sampler_widget.ui" line="14"/>
         <source>Form</source>
-        <translation>Gestalt</translation>
+        <translation>Formular</translation>
     </message>
     <message>
         <location filename="sampler_widget.ui" line="38"/>
@@ -1850,12 +1848,12 @@
     <message>
         <location filename="sampler_widget.ui" line="212"/>
         <source>Set the relative pitch of the sound (1 = original)</source>
-        <translation type="unfinished"></translation>
+        <translation>Relative Lautstärke des Tons festlegen (1 = original)</translation>
     </message>
     <message>
         <location filename="sampler_widget.ui" line="257"/>
         <source> ms</source>
-        <translation type="unfinished"></translation>
+        <translation> ms</translation>
     </message>
 </context>
 <context>
@@ -1888,7 +1886,7 @@
     <message>
         <location filename="translatables.py" line="103"/>
         <source>Apply and close</source>
-        <translation type="unfinished">Anwenden und schließen</translation>
+        <translation>Anwenden und schließen</translation>
     </message>
     <message>
         <location filename="translatables.py" line="121"/>
@@ -1950,7 +1948,7 @@ Beschreibung: %s</translation>
     <message>
         <location filename="translatables.py" line="114"/>
         <source>Which variable do you want to rename?</source>
-        <translation>Welche Variable möchsten Sie umbenennen?</translation>
+        <translation>Welche Variable möchtest Du umbenennen?</translation>
     </message>
     <message>
         <location filename="translatables.py" line="116"/>
@@ -1970,7 +1968,7 @@ Beschreibung: %s</translation>
     <message>
         <location filename="translatables.py" line="120"/>
         <source>Which variable do you want to remove?</source>
-        <translation>Welche Variable möchten Sie entfernen?</translation>
+        <translation>Welche Variable möchtest Du entfernen?</translation>
     </message>
     <message>
         <location filename="translatables.py" line="121"/>
@@ -1980,7 +1978,7 @@ Beschreibung: %s</translation>
     <message>
         <location filename="translatables.py" line="122"/>
         <source>By reducing the number of cycles, data will be lost from the table. Do you wish to continue?</source>
-        <translation>Durch das Herabsetzen der Durchgänge, gehen die Daten aus der Tabelle verloren. Möchten Sie trotzdem fortsetzen?</translation>
+        <translation>Durch das Herabsetzen der Durchgänge, gehen die Daten aus der Tabelle verloren. Möchtest Du trotzdem fortfahren?</translation>
     </message>
     <message>
         <location filename="translatables.py" line="124"/>
@@ -2621,237 +2619,238 @@ Beschreibung: %s</translation>
     <message>
         <location filename="translatables.py" line="9"/>
         <source>Failed to copy `opensesame` to `opensesame.py`, which is required for the multiprocess runner. Please copy the file manually, or select a different runner under Preferences.</source>
-        <translation type="unfinished"></translation>
+        <translation>Kopieren von &apos;opensesame&apos; zu &apos;opensesame.py&apos; gescheitert. Dies ist für die Benutzung des multiprocess-Runners notwendig. Bitte kopiere die Datei manuell oder wähle in den Einstellungen einen anderen Runner.</translation>
     </message>
     <message>
         <location filename="translatables.py" line="51"/>
         <source>&apos;%s&apos; is not a regular file and could not be added to the file pool.</source>
-        <translation type="unfinished"></translation>
+        <translation>&apos;%s&apos; ist keine normale Datei und konnte der Dateisammlung nicht hinzugefügt werden.</translation>
     </message>
     <message>
         <location filename="translatables.py" line="126"/>
         <source> starting at cycle &lt;b&gt;%s&lt;/b&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation> beginnend mit Durchgang &lt;b&gt;%s&lt;/b&gt;</translation>
     </message>
     <message>
         <location filename="translatables.py" line="128"/>
         <source> &lt;font color=&apos;red&apos;&gt;&lt;b&gt;(zero, negative, or unknown length)&lt;/b&gt;&lt;/font&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation> &lt;font color=&apos;red&apos;&gt;&lt;b&gt;(null, negativ, oder unbakannte Länge)&lt;/b&gt;&lt;/font&gt;</translation>
     </message>
     <message>
         <location filename="translatables.py" line="27"/>
         <source>You have selected the &lt;code&gt;.opensesame&lt;/code&gt; format. This means that the file pool has &lt;i&gt;not&lt;/i&gt; been saved. To save the file pool along with your experiment, select the &lt;code&gt;.opensesame.tar.gz&lt;/code&gt; format.</source>
-        <translation type="unfinished"></translation>
+        <translation>Du hast das &lt;code&gt;.opensesame&lt;/code&gt;-Format ausgewählt. Das bedeutet, dass die Dateisammlung &lt;i&gt;not&lt;/i&gt; gespeichert wurde. Um die Dateisammlung gemeinsam mit Deinem Experiment zu speichern, wähle das &lt;code&gt;.opensesame.tar.gz&lt;/code&gt;-Format.</translation>
     </message>
     <message>
         <location filename="translatables.py" line="31"/>
         <source>Image name &quot;%s&quot; is unknown or variably defined, using fallback image</source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>I haven&apos;t seen this in the program, so i&apos;m not sure about the meaning of &quot;using fallback image&quot;</translatorcomment>
+        <translation>Bild &quot;%s&quot; ist unbekannt oder variabel definiert, benutze Ersatzbild</translation>
     </message>
     <message>
         <location filename="translatables.py" line="32"/>
         <source>Penwidth &quot;%s&quot; is unknown or variably defined, using 1</source>
-        <translation type="unfinished"></translation>
+        <translation>Stiftbreite &quot;%s&quot; ist unbekannt oder variabel definiert, benutze 1</translation>
     </message>
     <message>
         <location filename="translatables.py" line="33"/>
         <source>Color &quot;%s&quot; is unknown or variably defined, using placeholder color</source>
-        <translation type="unfinished"></translation>
+        <translation>Farbe &quot;%s&quot; ist unbekannt oder variabel definiert, benutze Ersatzfarbe</translation>
     </message>
     <message>
         <location filename="translatables.py" line="34"/>
         <source>X coordinate &quot;%s&quot; is unknown or variably defined, using display center</source>
-        <translation type="unfinished"></translation>
+        <translation>X-Koordinate &quot;%s&quot; ist unbekannt oder variabel definiert, benutze Bildschirmmitte</translation>
     </message>
     <message>
         <location filename="translatables.py" line="35"/>
         <source>Y coordinate &quot;%s&quot; is unknown or variably defined, using display center</source>
-        <translation type="unfinished"></translation>
+        <translation>Y-Koordinate &quot;%s&quot; ist unbekannt oder variabel definiert, benutze Bildschirmmitte</translation>
     </message>
     <message>
         <location filename="translatables.py" line="36"/>
         <source>Width &quot;%s&quot; is unknown or variably defined, using 100</source>
-        <translation type="unfinished"></translation>
+        <translation>Breite &quot;%s&quot; ist unbekannt oder variabel definiert, benutze 100</translation>
     </message>
     <message>
         <location filename="translatables.py" line="37"/>
         <source>Height &quot;%s&quot; is unknown or variably defined, using 100</source>
-        <translation type="unfinished"></translation>
+        <translation>Höhe &quot;%s&quot; ist unbekannt oder variabel definiert, benutze 100</translation>
     </message>
     <message>
         <location filename="translatables.py" line="38"/>
         <source>Scale &quot;%s&quot; is unknown or variably defined, using 1.0</source>
-        <translation type="unfinished"></translation>
+        <translation>Skalierung &quot;%s&quot; ist unbekannt oder variabel definiert, benutze 1.0</translation>
     </message>
     <message>
         <location filename="translatables.py" line="39"/>
         <source>An item with that name already exists.</source>
-        <translation type="unfinished"></translation>
+        <translation>Es gibt bereits ein Item mit diesem Namen.</translation>
     </message>
     <message>
         <location filename="translatables.py" line="40"/>
         <source>An item name cannot be empty.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ein Item darf nicht leer sein.</translation>
     </message>
     <message>
         <location filename="translatables.py" line="70"/>
         <source>General options</source>
-        <translation type="unfinished"></translation>
+        <translation>Allgemeine Einstellungen</translation>
     </message>
     <message>
         <location filename="translatables.py" line="72"/>
         <source>Unused items</source>
-        <translation type="unfinished"></translation>
+        <translation>Unbenutzte Items</translation>
     </message>
     <message>
         <location filename="translatables.py" line="74"/>
         <source>View controls</source>
-        <translation type="unfinished"></translation>
+        <translation>Zeige Bedienoberfläche</translation>
     </message>
     <message>
         <location filename="translatables.py" line="75"/>
         <source>View script</source>
-        <translation type="unfinished"></translation>
+        <translation>Zeige Skript</translation>
     </message>
     <message>
         <location filename="translatables.py" line="76"/>
         <source>Split view</source>
-        <translation type="unfinished"></translation>
+        <translation>Geteilte Ansicht</translation>
     </message>
     <message>
         <location filename="translatables.py" line="81"/>
         <source>Item name</source>
-        <translation type="unfinished"></translation>
+        <translation>Name des Items</translation>
     </message>
     <message>
         <location filename="translatables.py" line="82"/>
         <source>Run if</source>
-        <translation type="unfinished"></translation>
+        <translation>Durchführen, wenn</translation>
     </message>
     <message>
         <location filename="translatables.py" line="88"/>
         <source>Which variable do you wish to log?</source>
-        <translation type="unfinished"></translation>
+        <translation>Welche Variable möchtest Du loggen?</translation>
     </message>
     <message>
         <location filename="translatables.py" line="101"/>
         <source>Toggle pop-out</source>
-        <translation type="unfinished"></translation>
+        <translation>Vollbildmodus</translation>
     </message>
     <message>
         <location filename="translatables.py" line="123"/>
         <source>&lt;font color=&apos;red&apos;&gt;No item to run specified&lt;/font&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;font color=&apos;red&apos;&gt;Kein Item zum Durchführen angegeben&lt;/font&gt;</translation>
     </message>
     <message>
         <location filename="translatables.py" line="132"/>
         <source>Edit element</source>
-        <translation type="unfinished"></translation>
+        <translation>Element bearbeiten</translation>
     </message>
     <message>
         <location filename="translatables.py" line="135"/>
         <source>Raise to front</source>
-        <translation type="unfinished"></translation>
+        <translation>In den Vordergrund</translation>
     </message>
     <message>
         <location filename="translatables.py" line="136"/>
         <source>Lower to bottom</source>
-        <translation type="unfinished"></translation>
+        <translation>In den Hintergrund</translation>
     </message>
     <message>
         <location filename="translatables.py" line="138"/>
         <source>Edit text</source>
-        <translation type="unfinished"></translation>
+        <translation>Text bearbeiten</translation>
     </message>
     <message>
         <location filename="translatables.py" line="10"/>
         <source>Loading extensions</source>
-        <translation type="unfinished"></translation>
+        <translation>Lade Erweiterungen</translation>
     </message>
     <message>
         <location filename="translatables.py" line="11"/>
         <source>Done</source>
-        <translation type="unfinished"></translation>
+        <translation>Fertig</translation>
     </message>
     <message>
         <location filename="translatables.py" line="12"/>
         <source>Extension: %s</source>
-        <translation type="unfinished"></translation>
+        <translation>Erweiterung: %s</translation>
     </message>
     <message>
         <location filename="translatables.py" line="23"/>
         <source>The following error occured while trying to save:&lt;br/&gt;%s</source>
-        <translation type="unfinished"></translation>
+        <translation>Beim Versuch zu Speichern trat folgender Fehler auf:&lt;br/&gt;%s</translation>
     </message>
     <message>
         <location filename="translatables.py" line="43"/>
         <source>Edit run-if statement</source>
-        <translation type="unfinished"></translation>
+        <translation>Bearbeite &quot;Durchführen, wenn&quot;-Bedingung</translation>
     </message>
     <message>
         <location filename="translatables.py" line="44"/>
         <source>Copy to clipboard</source>
-        <translation type="unfinished"></translation>
+        <translation>In Zwischenablage kopieren</translation>
     </message>
     <message>
         <location filename="translatables.py" line="45"/>
         <source>Paste from clipboard</source>
-        <translation type="unfinished"></translation>
+        <translation>Aus Zwischenablage einfügen</translation>
     </message>
     <message>
         <location filename="translatables.py" line="46"/>
         <source>Create linked copy</source>
-        <translation type="unfinished"></translation>
+        <translation>Verknüpfte Kopie erstellen</translation>
     </message>
     <message>
         <location filename="translatables.py" line="47"/>
         <source>Create unlinked copy</source>
-        <translation type="unfinished"></translation>
+        <translation>Unverknüpfte Kopie erstellen</translation>
     </message>
     <message>
         <location filename="translatables.py" line="49"/>
         <source>Permanently delete all linked copies</source>
-        <translation type="unfinished"></translation>
+        <translation>Alle verknüpften Kopien dauerhaft löschen</translation>
     </message>
     <message>
         <location filename="translatables.py" line="50"/>
         <source>Help</source>
-        <translation type="unfinished">Hilfe</translation>
+        <translation>Hilfe</translation>
     </message>
     <message>
         <location filename="translatables.py" line="73"/>
         <source>Move to unused items</source>
-        <translation type="unfinished"></translation>
+        <translation>Zu den unbenutzten Items verschieben</translation>
     </message>
     <message>
         <location filename="translatables.py" line="77"/>
         <source>Select view</source>
-        <translation type="unfinished"></translation>
+        <translation>Ansicht wählen</translation>
     </message>
     <message>
         <location filename="translatables.py" line="91"/>
         <source>Set as item to run for %s</source>
-        <translation type="unfinished"></translation>
+        <translation>Item zur Durchführung für %s</translation>
     </message>
     <message>
         <location filename="translatables.py" line="92"/>
         <source>Insert into %s</source>
-        <translation type="unfinished"></translation>
+        <translation>Einfügen in %s</translation>
     </message>
     <message>
         <location filename="translatables.py" line="93"/>
         <source>Drop below %s</source>
-        <translation type="unfinished"></translation>
+        <translation>Nach %s einfügen</translation>
     </message>
     <message>
         <location filename="translatables.py" line="94"/>
         <source>Permanently delete item</source>
-        <translation type="unfinished"></translation>
+        <translation>Item dauerhaft löschen</translation>
     </message>
     <message>
         <location filename="translatables.py" line="95"/>
         <source>Are you sure you want to permanently delete &lt;b&gt;%s&lt;/b&gt;? All linked copies of &lt;b&gt;%s&lt;/b&gt; will be deleted. You will not be able to undo this.</source>
-        <translation type="unfinished"></translation>
+        <translation>Bist Du sicher, dass Du &lt;b&gt;%s&lt;/b&gt; dauerhaft löschen willst? Alel verknüpften Kopien von &lt;b&gt;%s&lt;/b&gt; werden ebenfalls gelöscht. Du kannst diesen Vorgang nicht rückgängig machen.</translation>
     </message>
 </context>
 <context>
@@ -3047,7 +3046,7 @@ Beschreibung: %s</translation>
     <message>
         <location filename="synth_widget.ui" line="14"/>
         <source>Form</source>
-        <translation>Gestalt</translation>
+        <translation>Formular</translation>
     </message>
     <message>
         <location filename="synth_widget.ui" line="75"/>
@@ -3187,7 +3186,7 @@ Beschreibung: %s</translation>
     <message>
         <location filename="synth_widget.ui" line="282"/>
         <source> ms</source>
-        <translation type="unfinished"></translation>
+        <translation>ms</translation>
     </message>
 </context>
 <context>
@@ -3221,7 +3220,7 @@ Beschreibung: %s</translation>
     <message>
         <location filename="user_hint_widget.ui" line="14"/>
         <source>Form</source>
-        <translation>Gestalt</translation>
+        <translation>Formular</translation>
     </message>
     <message>
         <location filename="user_hint_widget.ui" line="20"/>
@@ -3246,7 +3245,7 @@ Beschreibung: %s</translation>
     <message>
         <location filename="user_hint_widget.ui" line="39"/>
         <source>Hide</source>
-        <translation type="unfinished"></translation>
+        <translation>Verbergen</translation>
     </message>
 </context>
 <context>
@@ -3254,7 +3253,7 @@ Beschreibung: %s</translation>
     <message>
         <location filename="variable_inspector.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished">Gestalt</translation>
+        <translation>Formular</translation>
     </message>
     <message>
         <location filename="variable_inspector.ui" line="52"/>
@@ -3264,32 +3263,32 @@ Beschreibung: %s</translation>
     <message>
         <location filename="variable_inspector.ui" line="36"/>
         <source>Enter a filter</source>
-        <translation type="unfinished"></translation>
+        <translation>Filter setzen</translation>
     </message>
     <message>
         <location filename="variable_inspector.ui" line="43"/>
         <source>Clear filter</source>
-        <translation type="unfinished">Filter zurücksetzen</translation>
+        <translation>Filter zurücksetzen</translation>
     </message>
     <message>
         <location filename="variable_inspector.ui" line="69"/>
         <source>Help</source>
-        <translation type="unfinished">Hilfe</translation>
+        <translation>Hilfe</translation>
     </message>
     <message>
         <location filename="variable_inspector.ui" line="123"/>
         <source>Variable</source>
-        <translation type="unfinished">Variable</translation>
+        <translation>Variable</translation>
     </message>
     <message>
         <location filename="variable_inspector.ui" line="128"/>
         <source>Value</source>
-        <translation type="unfinished">Wert</translation>
+        <translation>Wert</translation>
     </message>
     <message>
         <location filename="variable_inspector.ui" line="133"/>
         <source>In item</source>
-        <translation type="unfinished">In Item</translation>
+        <translation>In Item</translation>
     </message>
 </context>
 <context>
@@ -3297,7 +3296,7 @@ Beschreibung: %s</translation>
     <message>
         <location filename="webbrowser_widget.ui" line="14"/>
         <source>Form</source>
-        <translation>Gestalt</translation>
+        <translation>Formular</translation>
     </message>
     <message>
         <location filename="webbrowser_widget.ui" line="41"/>
@@ -3335,7 +3334,7 @@ Beschreibung: %s</translation>
     <message>
         <location filename="findWidget.ui" line="14"/>
         <source>Form</source>
-        <translation>Gestalt</translation>
+        <translation>Formular</translation>
     </message>
     <message>
         <location filename="findWidget.ui" line="23"/>
@@ -3378,7 +3377,7 @@ Beschreibung: %s</translation>
     <message>
         <location filename="prefsWidget.ui" line="14"/>
         <source>Form</source>
-        <translation>Gestalt</translation>
+        <translation>Formular</translation>
     </message>
     <message>
         <location filename="prefsWidget.ui" line="183"/>
@@ -3516,7 +3515,7 @@ Beschreibung: %s</translation>
     <message>
         <location filename="backend_settings.ui" line="14"/>
         <source>Form</source>
-        <translation>Gestalt</translation>
+        <translation>Formular</translation>
     </message>
     <message>
         <location filename="backend_settings.ui" line="53"/>
@@ -3566,7 +3565,7 @@ Einstellungen im Zusammenhang mit dem Bildschirm, Ton und Eingabegeräten</trans
     <message>
         <location filename="credits_widget.ui" line="20"/>
         <source>Form</source>
-        <translation>Gestalt</translation>
+        <translation>Formular</translation>
     </message>
     <message>
         <location filename="credits_widget.ui" line="78"/>
@@ -3613,7 +3612,7 @@ Einstellungen im Zusammenhang mit dem Bildschirm, Ton und Eingabegeräten</trans
         <source>&lt;a href=&quot;http://osdoc.cogsci.nl/donate/&quot;&gt;Donate&lt;/a&gt;</source>
         <translation>&lt;a href=&quot;http://osdoc.cogsci.nl/donate/&quot;&gt;Spenden&lt;/a&gt;</translation>
     </message>
-    <message encoding="UTF-8">
+    <message utf8="true">
         <location filename="credits_widget.ui" line="179"/>
         <source>OpenSesame [version] [codename]
 Copyright Sebastiaan Mathôt (2010-2014)</source>
@@ -3626,7 +3625,7 @@ Copyright Sebastiaan Mathôt (2010-2014)</translation>
     <message>
         <location filename="general_script_editor.ui" line="14"/>
         <source>Form</source>
-        <translation>Gestalt</translation>
+        <translation>Formular</translation>
     </message>
     <message>
         <location filename="general_script_editor.ui" line="44"/>
@@ -3646,7 +3645,7 @@ Bearbeite Dein Experiment im Skriptmodus</translation>
     <message>
         <location filename="start_new_widget.ui" line="20"/>
         <source>Form</source>
-        <translation>Gestalt</translation>
+        <translation>Formular</translation>
     </message>
     <message>
         <location filename="start_new_widget.ui" line="149"/>
