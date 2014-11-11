@@ -7,6 +7,7 @@ opensesame (2.9.1~pre3-ubuntu1) trusty; urgency=medium
     - Fix a race condition when dropping an item on a loop or sequence
     - Fix broken context menu in sketchpad when running a translation (#287)
     - Correctly parse variables in video_player plug-in (#288)
+    - Use new sketchpad-element icons also in 32x32 size
   * Improvements
     - Application-wide keyboard shortcuts for tab switching
     - Add close current tab action
