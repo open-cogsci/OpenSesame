@@ -204,11 +204,34 @@ class qtopensesame(QtGui.QMainWindow, base_component):
 		# Miscellaneous initialization
 		self.restore_state()
 		self.update_recent_files()
-		self.set_unsaved(False)
+		self.set_unsaved(False)		
+		self.init_custom_fonts()
 
 		# Initialize extensions
 		self.extension_manager = extension_manager(self)
 		self.extension_manager.fire(u'startup')
+		
+	def init_custom_fonts(self):
+		
+		"""
+		desc:
+			Registers the custom OpenSesame fonts, so that they are properly
+			displayed in the sketchpad widget.
+		"""
+		
+		from libqtopensesame.widgets.font_widget import font_widget
+		for font in font_widget.font_list:
+			try:
+				ttf = self.experiment.resource(u'%s.ttf' % font)
+			except:
+				ttf = None
+				debug.msg(u'failed to find %s' % font)
+			if ttf != None:
+				debug.msg(u'registering %s (%s)' % (font, ttf))
+				id = QtGui.QFontDatabase.addApplicationFont(ttf)
+				family = QtGui.QFontDatabase.applicationFontFamilies(id)[0]
+				QtGui.QFont.insertSubstitution(font, family)
+
 
 	def parse_command_line(self):
 
