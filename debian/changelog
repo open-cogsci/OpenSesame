@@ -1,4 +1,4 @@
-opensesame (2.9.1~pre3-ubuntu1) trusty; urgency=medium
+opensesame (2.9.1~pre4-ubuntu1) trusty; urgency=medium
 
   * Bugs fixed
     - Fix resetting font size and family in sketchpad (#284)
@@ -8,6 +8,7 @@ opensesame (2.9.1~pre3-ubuntu1) trusty; urgency=medium
     - Fix broken context menu in sketchpad when running a translation (#287)
     - Correctly parse variables in video_player plug-in (#288)
     - Use new sketchpad-element icons also in 32x32 size
+    - Fixed a bug when reducing and canceling the number of cycles in a loop
   * Improvements
     - Application-wide keyboard shortcuts for tab switching
     - Add close current tab action

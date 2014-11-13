@@ -47,6 +47,7 @@ class loop(qtstructure_item, qtitem, loop_runtime):
 		string		--	The definition string. (default=None)
 		"""
 
+		self.lock_cycles = False
 		loop_runtime.__init__(self, name, experiment, string)
 		qtitem.__init__(self)
 
@@ -259,9 +260,9 @@ class loop(qtstructure_item, qtitem, loop_runtime):
 						is removed from the table. (default=True)
 		"""
 
-		if self.cycles == 'lock':
+		if self.lock_cycles:
 			return
-		self.cycles = 'lock'
+		self.lock_cycles = True
 		debug.msg(u"cycles = %s" % cycles)
 		# Ask for confirmation before reducing the number of cycles.
 		if len(self.matrix) > cycles and confirm:
@@ -270,10 +271,13 @@ class loop(qtstructure_item, qtitem, loop_runtime):
 				_(u"By reducing the number of cycles, data will be lost from the table. Do you wish to continue?"),
 				QtGui.QMessageBox.Yes, QtGui.QMessageBox.No)
 			if resp == QtGui.QMessageBox.No:
+				self.loop_widget.ui.spin_cycles.setValue(self.cycles)
+				self.lock_cycles = False
 				return
 		for i in self.matrix.keys():
 			if i >= cycles:
 				del self.matrix[i]		
+		self.lock_cycles = False
 		self.set(u"cycles", cycles)
 
 	def call_count(self):
