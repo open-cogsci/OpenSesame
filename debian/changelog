@@ -10,6 +10,7 @@ opensesame (2.9.1-ubuntu1) trusty; urgency=medium
     - Use new sketchpad-element icons also in 32x32 size
     - Fixed a bug when reducing and canceling the number of cycles in a loop
     - Fixed display of font style in sketchpad widget
+    - Include PyQt4 plugins in Windows build
   * Improvements
     - Application-wide keyboard shortcuts for tab switching
     - Add close current tab action

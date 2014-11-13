@@ -51,6 +51,11 @@ if __name__ == u'__main__':
 			os.chdir(path)
 			if path not in sys.path:
 				sys.path.append(path)
+		
+	# Register PyQt4 plugin folder		
+	from PyQt4.QtCore import QCoreApplication
+	if os.path.exists(u'PyQt4_plugins'):
+		QCoreApplication.addLibraryPath(u'PyQt4_plugins')
 			
 	# Load debug package (this must be after the working directory change)
 	from libopensesame import debug

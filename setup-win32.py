@@ -138,6 +138,7 @@ include_sounds = True
 include_faenza = True
 include_inpout32 = True
 include_simpleio = True
+include_pyqt4_plugins = True
 python_folder = r"C:\Python_2.7.6-win32"
 python_version = "2.7"
 
@@ -232,6 +233,11 @@ if os.path.exists("dist"):
 os.mkdir("dist")
 os.mkdir(os.path.join("dist", "plugins"))
 os.mkdir(os.path.join("dist", "extensions"))
+
+# Print copy PyQt4 plugins
+if include_pyqt4_plugins:
+	shutil.copytree('%s\Lib\site-packages\PyQt4\plugins' % python_folder,
+		'dist\PyQt4_plugins')
 
 # A filter to ignore non-relevant package files
 def ignore_package_files(folder, files):
