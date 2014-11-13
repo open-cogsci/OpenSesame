@@ -37,7 +37,7 @@ class synth(object):
 		~~~ {.python}
 		# Generate and play a simple tone
 		from openexp.synth import synth
-		my_synth = synth(exp, osc='saw', freq='b2', attack=250, length='500')
+		my_synth = synth(exp, osc='saw', freq='b2', attack=250, length=500)
 		my_synth.play()
 		~~~
 
