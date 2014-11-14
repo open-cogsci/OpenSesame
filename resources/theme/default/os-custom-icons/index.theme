@@ -2,7 +2,17 @@
 Name=oscustom
 Inherits=Faenza
 Comment=Custom icons for OpenSesame
-Directories=16x16/actions,16x16/items,16x16/backends,16x16/misc,24x24/misc,32x32/actions,32x32/items,32x32/misc,32x32/sketchpad,64x64/synth
+Directories=16x16/sketchpad,16x16/actions,16x16/items,16x16/status,16x16/backends,16x16/misc,24x24/misc,32x32/actions,32x32/items,32x32/misc,64x64/synth
+
+[16x16/status]
+Size=16
+Context=Actions
+Type=fixed
+
+[16x16/sketchpad]
+Size=16
+Context=Actions
+Type=fixed
 
 [16x16/actions]
 Size=16

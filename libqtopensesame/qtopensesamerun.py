@@ -18,10 +18,10 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from PyQt4 import QtCore, QtGui
-from libqtopensesame.ui import opensesamerun_ui
+from libqtopensesame.misc.base_component import base_component
 from libqtopensesame.misc import theme
 
-class qtopensesamerun(QtGui.QMainWindow):
+class qtopensesamerun(QtGui.QMainWindow, base_component):
 
 	"""Implements the GUI for opensesamerun."""
 	
@@ -41,8 +41,7 @@ class qtopensesamerun(QtGui.QMainWindow):
 		# Construct the parent
 		QtGui.QMainWindow.__init__(self, parent)
 		# Setup the UI
-		self.ui = opensesamerun_ui.Ui_opensesamerun_mainwindow()
-		self.ui.setupUi(self)		
+		self.load_ui(u'misc.opensesamerun')
 		self.ui.button_run.clicked.connect(self.run)
 		self.theme = theme.theme(self)
 		self.ui.button_browse_experiment.clicked.connect(self.browse_experiment)

@@ -1,4 +1,4 @@
-	#-*- coding:utf-8 -*-
+#-*- coding:utf-8 -*-
 
 """
 This file is part of OpenSesame.
@@ -45,20 +45,18 @@ if Quest == None:
 
 class quest_staircase_init(item):
 
-	description = \
-		u'Initializes a new Quest staircase procedure'
+	"""
+	desc:
+		A plug-in that iniializes a Quest staircase.
+	"""
 
-	def __init__(self, name, experiment, script=None):
+	description = u'Initializes a new Quest staircase procedure'
+
+	def reset(self):
 
 		"""
-		Constructor.
-
-		Arguments:
-		name		--	The name of the plug-in.
-		experiment	--	The experiment object.
-
-		Keyword arguments:
-		script		--	A definition script. (default=None)
+		desc:
+			Initialize default variables.
 		"""
 
 		self.t_guess = .5
@@ -71,11 +69,13 @@ class quest_staircase_init(item):
 		self.min_test_value = 0
 		self.max_test_value = 1
 		self.var_test_value = u'quest_test_value'
-		item.__init__(self, name, experiment, script)
 
 	def quest_set_next_test_value(self):
 
-		"""Sets the next test value for the Quest procedure."""
+		"""
+		desc:
+			Sets the next test value for the Quest procedure.
+		"""
 
 		if self.get(u'test_value_method') == u'quantile':
 			self.experiment.quest_test_value = self.experiment.quest.quantile
@@ -95,7 +95,10 @@ class quest_staircase_init(item):
 
 	def prepare(self):
 
-		"""Prepares the plug-in."""
+		"""
+		desc:
+			Prepares the plug-in.
+		"""
 
 		self.experiment.quest = Quest.QuestObject(self.get(u't_guess'),
 			self.get(u't_guess_sd'), self.get(u'p_threshold'),
@@ -107,10 +110,12 @@ class quest_staircase_init(item):
 	def var_info(self):
 
 		"""
-		Gives a list of dictionaries with variable descriptions.
+		desc:
+			Gives a list of dictionaries with variable descriptions.
 
-		Returns:
-		A list of (name, description) tuples.
+		returns:
+			desc:	A list of (name, description) tuples.
+			type:	list
 		"""
 
 		return item.var_info(self) + [(u'quest_test_value',
@@ -118,19 +123,23 @@ class quest_staircase_init(item):
 
 class qtquest_staircase_init(quest_staircase_init, qtautoplugin):
 
-	"""The GUI part of the plug-in. Controls are defined in info.json."""
+	"""
+	desc:
+		The GUI part of the plug-in. Controls are defined in info.json.
+	"""
 
 	def __init__(self, name, experiment, script=None):
 
 		"""
-		Constructor.
+		desc:
+			Constructor.
 
-		Arguments:
-		name		--	The name of the plug-in.
-		experiment	--	The experiment object.
+		arguments:
+			name:		The name of the plug-in.
+			experiment:	The experiment object.
 
-		Keyword arguments:
-		script		--	A definition script. (default=None)
+		keywords:
+			script:		A definition script.
 		"""
 
 		quest_staircase_init.__init__(self, name, experiment, script)

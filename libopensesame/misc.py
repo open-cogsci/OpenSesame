@@ -21,8 +21,8 @@ import os
 import os.path
 import sys
 
-version = u'2.8.2'
-codename = u'Gutsy Gibson'
+version = u'2.9.1'
+codename = u'Hesitant Heisenberg'
 
 use_global_resources = '--no-global-resources' not in sys.argv
 from libopensesame import debug
@@ -305,7 +305,7 @@ def module_versions():
 	# QProgEdit
 	try:
 		import QProgEdit
-		s += u'\nQProgedit %s' % QProgEdit.version
+		s += u'\nQProgedit %s' % QProgEdit.__version__
 	except:
 		s += u'\nQProgEdit is not available'
 
@@ -353,6 +353,13 @@ def module_versions():
 		s += u"\nPyGame %s" % pygame.ver
 	except:
 		s += u"\nPyGame not available (or version is unknown)"
+
+	# PyGaze
+	try:
+		import pygaze
+		s += u'\nPyGaze %s' % pygaze.version
+	except:
+		s += u'\nPyGaze is not available'
 
 	# Pyglet
 	try:

@@ -26,7 +26,7 @@ legacy = {
 	"synth" : "legacy", \
 	"icon" : "os-pygame"
 	}
-	
+
 opengl = {
 	"description" : "uses PyGame and OpenGL", \
 	"canvas" : "opengl", \
@@ -34,8 +34,8 @@ opengl = {
 	"mouse" : "legacy", \
 	"sampler" : "legacy", \
 	"synth" : "legacy", \
-	"icon" : "os-pygame"	
-	}	
+	"icon" : "os-pygame"
+	}
 
 psycho = {
 	"description" : "uses PsychoPy, powerful stimulus generation", \
@@ -44,9 +44,9 @@ psycho = {
 	"mouse" : "psycho", \
 	"sampler" : "legacy", \
 	"synth" : "legacy", \
-	"icon" : "os-psychopy"	
+	"icon" : "os-psychopy"
 	}
-	
+
 xpyriment = {
 	"description" : "uses Expyriment", \
 	"canvas" : "xpyriment", \
@@ -55,8 +55,18 @@ xpyriment = {
 	"sampler" : "legacy", \
 	"synth" : "legacy", \
 	"icon" : "os-expyriment"
-	}	
-	
+	}
+
+xpyriment_gst = {
+	"description" : "uses Expyriment with Gstreamer for sound", \
+	"canvas" : "xpyriment", \
+	"keyboard" : "legacy", \
+	"mouse" : "xpyriment", \
+	"sampler" : "gstreamer", \
+	"synth" : "legacy", \
+	"icon" : "os-expyriment"
+	}
+
 droid = {
 	"description" : "for Android devices", \
 	"canvas" : "droid", \
@@ -65,11 +75,12 @@ droid = {
 	"sampler" : "legacy", \
 	"synth" : "droid", \
 	"icon" : "os-android"
-	}	
-	
+	}
+
 backend_list = {}
 backend_list["legacy"] = legacy
 backend_list["xpyriment"] = xpyriment
+backend_list["xpyriment-gst"] = xpyriment_gst
 backend_list["droid"] = droid
 backend_list["psycho"] = psycho
 
@@ -78,20 +89,20 @@ def match(experiment):
 	"""
 	Returns the name of the backend that is currently used by
 	the experiment or "custom" if no matching backend is found.
-	
+
 	Arguments:
 	experiment -- an instance of libopensesame.experiment.experiment
-	
+
 	Returns:
 	The name of the backend or "custom" if no matching backend is found
 	"""
-	
-	for name in backend_list:	
-		backend = backend_list[name]	
+
+	for name in backend_list:
+		backend = backend_list[name]
 		if experiment.canvas_backend == backend["canvas"] and \
 			experiment.keyboard_backend == backend["keyboard"] and \
 			experiment.mouse_backend == backend["mouse"] and \
 			experiment.sampler_backend == backend["sampler"] and \
-			experiment.synth_backend == backend["synth"]:			
+			experiment.synth_backend == backend["synth"]:
 			return name
 	return "custom"

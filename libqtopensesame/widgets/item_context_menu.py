@@ -19,90 +19,94 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 
 from PyQt4 import QtCore, QtGui
 from libqtopensesame.misc import _
+from libqtopensesame.misc.config import cfg
+from libqtopensesame.misc.base_subcomponent import base_subcomponent
 
-class item_context_menu(QtGui.QMenu):
+class item_context_menu(base_subcomponent, QtGui.QMenu):
 
-	"""Provides a basic context menu for an item"""
+	"""
+	desc:
+		Provides a basic context menu for an item.
+	"""
 
-	def __init__(self, title, parent, item, parent_item=None, index=None):
+	def __init__(self, main_window, treeitem):
 
 		"""
-		Constructor
+		desc:
+			Constructor.
 
-		Arguments:
-		title -- menu title
-		parent -- parent widget
-		item -- the item to which this context menu belongs
-
-		Keyword arguments:
-		parent_item -- the parent of the item (default=None)
-		index -- the index of the item in the parent item (if applicable)
-				 (default=None)
+		arguments:
+			main_window:
+				desc:	The main-window object.
+				type:	qtopensesame
+			treeitem:
+				desc:	The tree item.
+				type:	tree_item_item
 		"""
 
-		QtGui.QMenu.__init__(self, title, parent)
-		self.item = item
-		self.parent_item = parent_item
-		self.index = index
-
-		# The menu text
-		self.open_text = _("Open %s") % item.name
-		self.edit_text = _("Edit script")
-		self.rename_text = _("Rename")
-		self.delete_text = _("Delete")
-		self.help_text = _("%s help") % item.item_type.capitalize()
-
-		self.addAction(item.experiment.icon(item.item_type), self.open_text)
-		self.addAction(item.experiment.icon("script"), self.edit_text)
+		super(item_context_menu, self).__init__(main_window)
+		self.setup(main_window)
+		self.treeitem = treeitem
+		self.addAction(self.experiment.icon(self.item.item_type), _('Open'),
+			self.item.open_tab)
 		self.addSeparator()
-		self.addAction(item.experiment.icon("rename"), self.rename_text)
-		if parent_item != None:
-			self.addAction(item.experiment.icon("delete"), self.delete_text)
+		self.add_action(u"accessories-text-editor", _("Rename"),
+			self.treeitem.start_rename, cfg.shortcut_rename)
+		if not self.treewidget.overview_mode and self.treeitem.parent() != None:
+			self.add_action(u"accessories-text-editor",
+				_("Edit run-if statement"),
+				self.treeitem.start_edit_runif, cfg.shortcut_edit_runif)
 		self.addSeparator()
-		self.addAction(item.experiment.icon("help"), self.help_text)
+		self.add_action(u"edit-copy", _("Copy to clipboard"),
+			self.treeitem.copy, cfg.shortcut_copy_clipboard)
+		if self.treeitem.clipboard_data() != None:
+			self.add_action(u"edit-paste", _("Paste from clipboard"),
+				self.treeitem.paste, cfg.shortcut_paste_clipboard)
+		if self.treeitem.is_cloneable():
+			self.addSeparator()
+			self.add_action(u"edit-copy", _("Create linked copy"),
+				self.treeitem.create_linked_copy, cfg.shortcut_linked_copy)
+			self.add_action(u"edit-copy", _("Create unlinked copy"),
+				self.treeitem.create_unlinked_copy, cfg.shortcut_unlinked_copy)
+		if self.treeitem.is_deletable():
+			self.addSeparator()
+			self.add_action(u"list-remove", _("Delete"),
+				self.treeitem.delete, cfg.shortcut_delete)
+			self.add_action(u"list-remove",
+				_("Permanently delete all linked copies"),
+				self.treeitem.permanently_delete,
+				cfg.shortcut_permanently_delete)
+		self.addSeparator()
+		self.add_action(u"help", _("Help"), self.item.open_help_tab)
 
-	def popup(self, pos):
+	def add_action(self, icon, text, func, shortcut=None):
 
 		"""
-		Show the menu and execute the chosen action
+		desc:
+			A convenience function for adding menu actions.
 
-		Arguments:
-		pos -- the position to popup
+		arguments:
+			icon:	An icon name.
+			text:	A menu text.
+			func:	A function to call when the action is activated.
+
+		keywords:
+			shortcut:	A key sequence to activate the action.
+
+		returns:
+			type:	QAction
 		"""
 
-		action = self.exec_(pos)
-		if action == None:
-			return
-		action = unicode(action.text())
-		if action == self.open_text:
-			self.item.open_edit_tab()
-		elif action == self.edit_text:
-			self.item.open_script_tab()
-		elif action == self.rename_text:
-			self.rename()
-		elif action == self.help_text:
-			self.item.open_help_tab()
-		elif action == self.delete_text:
-			self.item.experiment.delete(self.item.name, self.parent_item, \
-				self.index)
+		action = self.addAction(self.experiment.icon(icon), text, func)
+		if shortcut != None:
+			action.setShortcut(QtGui.QKeySequence(shortcut))
+			action.setShortcutContext(QtCore.Qt.WidgetShortcut)
+		return action
 
-	def rename(self):
-
-		"""Rename an item"""
-
-		new_name, ok = QtGui.QInputDialog.getText(self, _(u'Rename'), \
-			_(u'Please enter a new name'), text=self.item.name)
-		new_name = self.item.experiment.sanitize(new_name, strict=True, \
-			allow_vars=False)
-		if ok:
-			# Do not allow names that are already in use, but do allow
-			# capitalization changes.
-			if new_name.lower() != self.item.name.lower():
-				valid = self.item.experiment.check_name(new_name)
-				if valid != True:
-					self.item.experiment.notify(valid)
-					return
-			# Accept
-			self.item.experiment.main_window.set_unsaved()
-			self.item.experiment.rename(self.item.name, new_name)
-
+	@property
+	def item(self):
+		return self.treeitem.item
+		
+	@property
+	def treewidget(self):
+		return self.treeitem.treeWidget()

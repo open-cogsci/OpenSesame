@@ -17,69 +17,70 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
-__author__ = "Sebastiaan Mathot"
-__license__ = "GPLv3"
-
 from PyQt4 import QtCore, QtGui
 from libqtopensesame.misc import _
+from libqtopensesame.widgets.base_widget import base_widget
 
-class statusbar(QtGui.QStatusBar):
+class statusbar(QtGui.QStatusBar, base_widget):
 
 	"""A fancy statusbar with icons"""
 
-	def __init__(self, parent=None):
-	
+	def __init__(self, main_window):
+
 		"""
 		Constructor
-		
+
 		Keywords arguments:
 		parent -- the parent QWidget
 		"""
-	
-		QtGui.QStatusBar.__init__(self, parent)		
+
+		super(statusbar, self).__init__(main_window)
 		self.initialized = False
-		
+
 	def init(self):
-	
+
 		"""Initialize the statusbar"""
-	
-		self.ready_icon = self.parent().experiment.label_image("status_ready")
-		self.busy_icon = self.parent().experiment.label_image("status_busy")
-		self.message = QtGui.QLabel()				
+
+		self.ready_icon = self.experiment.label_image("status_ready")
+		self.busy_icon = self.experiment.label_image("status_busy")
+		self.message = QtGui.QLabel()
 		self.addWidget(self.ready_icon)
 		self.addWidget(self.busy_icon)
-		self.addWidget(self.message)		
+		self.addWidget(self.message)
 		self.initialized = True
-		
+
 	def set_status(self, msg, timeout=5000, status="ready"):
-	
+
 		"""
 		Set a statusbar message
-		
+
 		Arguments:
 		msg -- the message
-		
+
 		Keywords arguments:
 		timeout -- the timeout of the message (default=5000)
 		status -- the message status (ready/busy) (default='ready')
 		"""
-	
+
 		if not self.initialized:
-			self.init()	
+			self.init()
 		if status == "ready":
 			self.ready_icon.show()
 			self.busy_icon.hide()
+			QtGui.QApplication.restoreOverrideCursor()
 		else:
+			QtGui.QApplication.setOverrideCursor(
+				QtGui.QCursor(QtCore.Qt.WaitCursor))			
 			self.ready_icon.hide()
-			self.busy_icon.show()	
-		self.message.setText("<small>%s</small>" % msg)	
-		
+			self.busy_icon.show()
+		self.message.setText("<small>%s</small>" % msg)		
 		if timeout != None:
-			QtCore.QTimer.singleShot(timeout, self.clear_status)	
-		
+			QtCore.QTimer.singleShot(timeout, self.clear_status)
+		QtGui.QApplication.processEvents()
+
 	def clear_status(self):
-	
+
 		"""Clear the statusbar to a default ready message"""
-	
+
 		self.set_status(_("Ready"), timeout=None)
-		
+

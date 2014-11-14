@@ -29,14 +29,19 @@ debug output, simply use the following structure:
 
 import sys
 import os.path
+import inspect
 
 def parse_stack(st):
 
 	"""
-	Generates a nice looking stacktrace for a single item.
+	desc:
+		Generates a nice looking stacktrace for a single item.
+		
+	arguments:
+		st:		A stacktrace item.
 
-	Returns:
-	A string of the stacktrace item
+	returns:
+		A string for the stacktrace item.
 	"""
 
 	return u'%s(%d).%s' % (os.path.basename(st[1]), st[2], st[3])
@@ -44,10 +49,18 @@ def parse_stack(st):
 def format_stack(st, skip=0):
 
 	"""
-	Generates a nice looking full stracktrace.
+	desc:
+		Generates a nice looking full stracktrace.
+		
+	arguments:
+		st:		A stacktrace object.
+		
+	keywords:
+		skip:	Indicates whether any initial stacktrace items should be
+				skipped.
 
-	Returns:
-	A string corresponding to the stacktrace.
+	returns:
+		A string corresponding to the stacktrace.
 	"""
 
 	st = st[skip:]
@@ -59,14 +72,15 @@ def format_stack(st, skip=0):
 		i += 1
 	return s
 
-def msg(msg=u'', reason=None):
+def _msg(msg=u'', reason=None):
 
 	"""
-	Prints a debugging message. Respects the --debug and --stack parameters.
+	desc:
+		Prints a debugging message. Respects the --debug and --stack parameters.
 
-	Keyword arguments:
-	msg 	--	A debug message. (default=u'')
-	reason	--	A specific reason for the message. (default=None)
+	keywords:
+		msg:	A debug message.
+		reason:	A reason for the message.
 	"""
 
 	global stack, max_stack
@@ -84,17 +98,40 @@ def msg(msg=u'', reason=None):
 			parse_stack(st[1]))
 	if stack:
 		print(format_stack(st, skip=2))
+		
+def _print(msg):
+	
+	"""
+	desc:
+		Prints a message to the standard output, just like the normal `print`
+		statement/ function. This is necessary to capture encoding errors while
+		printing.
+		
+	arguments:
+		msg:
+			desc:	A message to print.
+			type:	[unicode, str]
+	"""
+	
+	try:
+		print(msg)
+	except:
+		if isinstance(msg, str):
+			print(msg.decode(u'ascii', u'ignore'))
+		elif isinstance(msg, unicode):
+			print(msg.encode(u'ascii', u'ignore'))
 
 enabled = '--debug' in sys.argv or '-d' in sys.argv
 if enabled:
-	import inspect
-	stack = '--stack' in sys.argv or '-s' in sys.argv
-	if stack:
-		msg(u'debug mode enabled (stacktrace on)')
-	else:
-		msg(u'debug mode enabled (stacktrace off)')
+	msg = _msg
 else:
 	# Replace the message function with a dummy function to turn off debugging
 	# output
 	stack = False
 	msg = lambda msg=None, reason=None: None
+stack = '--stack' in sys.argv or '-s' in sys.argv
+if enabled:
+	if stack:
+		_msg(u'debug mode enabled (stacktrace on)')
+	else:
+		_msg(u'debug mode enabled (stacktrace off)')

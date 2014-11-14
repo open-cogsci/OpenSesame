@@ -19,37 +19,58 @@ along with openexp.  If not, see <http://www.gnu.org/licenses/>.
 
 from libopensesame import debug
 
-class sampler:
+def sampler(experiment, *arglist, **kwdict):
 
 	"""
-	This is a dummy class, which morphes into the appropriate backend. For a list of
-	functions, see openexp._sampler.legacy
+	desc:
+		A factory that returns a back-end specific sampler object.
+
+	arguments:
+		experiment:
+			desc:	The experiment object.
+			type:	experiment
+
+	argument-list:
+		arglist:	See sampler.__init__().
+
+	keyword-dict:
+		kwdict:		See sampler.__init__().
 	"""
 
-	def __init__(self, experiment, src):
-
-		backend = experiment.sampler_backend		
-		debug.msg('morphing into %s' % backend)
-		mod = __import__('openexp._sampler.%s' % backend, fromlist=['dummy'])			
-		cls = getattr(mod, backend)
-		self.__class__ = cls
-		cls.__init__(self, experiment, src)
-		
+	backend = experiment.get(u'sampler_backend')
+	debug.msg(u'morphing into %s' % backend)
+	mod = __import__('openexp._sampler.%s' % backend, fromlist=['dummy'])
+	cls = getattr(mod, backend)
+	return cls(experiment, *arglist, **kwdict)
 
 def init_sound(experiment):
 
-	"""Call the back-end specific init_sound function"""
+	"""
+	desc:
+		Calls the back-end specific init_sound function.
 
-	backend = experiment.sampler_backend		
+	arguments:
+		experiment:		The experiment object.
+		type:			experiment
+	"""
+
+	backend = experiment.sampler_backend
 	debug.msg('morphing into %s' % backend)
-	mod = __import__('openexp._sampler.%s' % backend, fromlist=['dummy'])			
+	mod = __import__('openexp._sampler.%s' % backend, fromlist=['dummy'])
 	mod.init_sound(experiment)
-		
+
 def close_sound(experiment):
 
-	"""Call the back-end specific close_sound function"""
+	"""
+	desc:
+		Calls the back-end specific close_sound function.
 
-	backend = experiment.sampler_backend		
+	arguments:
+		experiment:		The experiment object.
+		type:			experiment
+	"""
+
+	backend = experiment.sampler_backend
 	debug.msg('morphing into %s' % backend)
-	mod = __import__('openexp._sampler.%s' % backend, fromlist=['dummy'])			
+	mod = __import__('openexp._sampler.%s' % backend, fromlist=['dummy'])
 	mod.close_sound(experiment)

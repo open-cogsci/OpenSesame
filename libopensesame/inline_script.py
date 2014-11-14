@@ -22,48 +22,74 @@ from libopensesame import item
 from openexp import canvas
 from libopensesame.exceptions import osexception
 
-_globals = {}
-
 class inline_script(item.item):
 
-	"""Allows users to use Python code in their experiments"""
+	"""
+	desc: |
+		Allows users to use Python code in their experiments.
+
+		When you are using the inline_script item, you are essentially writing
+		the body of two functions (`prepare` and `run`) of an `inline_script`
+		object. The `inline_script` object has many more functions which you can
+		use, and these are listed below. To use these functions, you use the
+		`self.[function_name]` notation.
+
+		__Important note:__
+
+		All inline_script items share the same workspace. This means that
+		variables that are created in one inline_script are available in
+		another inline_script. Similarly, modules that are imported in one
+		inline_script are available in all other inline_scripts.
+
+		__Example:__
+
+		~~~ {.python}
+		subject_nr = self.get("subject_nr")
+		~~~
+
+		__Example:__
+
+		{% highlight python %}
+		self.sleep(1000)
+		{% endhighlight %}
+
+		__Function list:__
+
+		%--
+		toc:
+			mindepth: 2
+			maxdepth: 2
+		--%
+	"""
 
 	description = u'Executes Python code'
 
-	def __init__(self, name, experiment, string=None):
+	def reset(self):
 
-		"""<DOC>
-		Constructor. You will generally not create an inline_script item #
-		yourself, but use OpenSesame to create a body for the prepare() and #
-		run() functions.
-
-		Arguments:
-		name		--	The name of the item.
-		experiment 	--	The experiment.
-
-		Keyword arguments:
-		string		--	An item definition string (default=None).
-		</DOC>"""
+		"""See item."""
 
 		self._prepare = u''
 		self._run = u''
 		self._var_info = None
-		item.item.__init__(self, name, experiment, string)
 
 	def copy_sketchpad(self, sketchpad_name):
 
-		"""<DOC>
-		Creates a canvas that is a copy from the canvas of a sketchpad item.
+		"""
+		desc:
+			Creates a canvas that is a copy from the canvas of a sketchpad item.
 
-		Arguments:
-		sketchpad_name	--	The name of the sketchpad.
+		arguments:
+			sketchpad_name:
+				desc:	The name of the sketchpad.
+				type:	[str, unicode]
 
-		Returns:
-		An openexp canvas.
+		returns:
+			desc:	A canvas.
+			type:	canvas
 
-		Example:
-		>>> my_canvas = self.copy_sketchpad('my_sketchpad')
-		</DOC>"""
+		example: |
+			my_canvas = self.copy_sketchpad('my_sketchpad')
+		"""
 
 		c = self.offline_canvas()
 		c.copy(self.experiment.items[sketchpad_name].canvas)
@@ -71,91 +97,83 @@ class inline_script(item.item):
 
 	def offline_canvas(self, auto_prepare=True):
 
-		"""<DOC>
-		Creates an empty canvas.
+		"""
+		desc:
+			Creates an empty canvas.
 
-		Keyword arguments:
-		auto_prepare 	--	See canvas documentation. (default=True)
+		keywords:
+			auto_prepare:
+				desc:	See `openexp.canvas.__init__`.
+				type:	bool
 
-		Returns:
-		An openexp canvas.
+		returns:
+			desc:	A canvas.
+			type:	canvas
 
-		Example:
-		>>> my_canvas = self.offline_canvas()
-		</DOC>"""
+		example: |
+			my_canvas = self.offline_canvas()
+		"""
 
 		return canvas.canvas(self.experiment, self.get(u'background'), \
 			self.get(u'foreground'), auto_prepare=auto_prepare)
 
 	def prepare(self):
 
-		"""<DOC>
-		Executes the prepare script. The code that you enter in the 'prepare' #
-		tab of an inline_script item in the GUI is used as a body for this #
-		function.
-		</DOC>"""
-
-		global _globals, _locals
+		"""
+		desc:
+			Executes the prepare script. The code that you enter in the
+			'prepare' tab of an inline_script item in the GUI is used as a body
+			for this function.
+		"""
 
 		item.item.prepare(self)
 		if self.experiment.transparent_variables == u'yes':
 			self.start_transparency()
-		# Convenience variables need to be registered as globals. By specifying
-		# a __name__, the script will function as a module, so that e.g. import
-		# statements do not suffer from locality.
-		if u'exp' not in _globals:
-			_globals[u'exp'] = self.experiment
-			_globals[u'win'] = self.experiment.window
-			_globals[u'__name__'] = u'myname'
 		# 'self' must always be registered, otherwise we get confusions between
 		# the various inline_script items.
-		_globals[u'self'] = self
-		# Prepend source encoding (PEP 0263) and encode scripts. This is
-		# necessary, because the exec statement doesn't take kindly to Unicode.
-		_prepare = (u'#-*- coding:%s -*-\n' % self.encoding + self._prepare) \
-			.encode(self.encoding)
-		_run = (u'#-*- coding:%s -*-\n' % self.encoding + self._run) \
-			.encode(self.encoding)
+		self.experiment.python_workspace[u'self'] = self
 		# Compile prepare script
 		try:
-			self.cprepare = compile(_prepare, u'<string>', u'exec')
+			self.cprepare = self.experiment.python_workspace._compile(
+				self._prepare)
 		except Exception as e:
-			raise osexception(u'Failed to compile inline script', item= \
-				self.name, phase=u'prepare', exception=e)
+			raise osexception(u'Failed to compile inline script',
+				line_offset=-1, item=self.name, phase=u'prepare', exception=e)
 		# Compile run script
 		try:
-			self.crun = compile(_run, u'<string>', u'exec')
+			self.crun = self.experiment.python_workspace._compile(self._run)
 		except Exception as e:
-			raise osexception(u'Failed to compile inline script', item= \
-				self.name, phase=u'run', exception=e)
+			raise osexception(u'Failed to compile inline script',
+				line_offset=-1, item=self.name, phase=u'run', exception=e)
 		# Run prepare script
 		try:
-			exec(self.cprepare, _globals)
+			self.experiment.python_workspace._exec(self.cprepare)
 		except Exception as e:
-			raise osexception(u'Error while executing inline script', item= \
-				self.name, phase=u'prepare', exception=e)
+			raise osexception(u'Error while executing inline script',
+				line_offset=-1, item=self.name, phase=u'prepare', exception=e)
 		if self.experiment.transparent_variables == u'yes':
 			self.end_transparency()
 
 	def run(self):
 
-		"""<DOC>
-		Executes the run script. The code that you enter in the 'run' tab of #
-		an inline_script item in the GUI is used as a body for this function.
-		</DOC>"""
+		"""
+		desc:
+			Executes the run script. The code that you enter in the 'run' tab of
+			an inline_script item in the GUI is used as a body for this
+			function.
+		"""
 
-		global _globals, _locals
 		self.set_item_onset()
 		# 'self' must always be registered, otherwise we get confusions between
 		# the various inline_script items.
-		_globals[u'self'] = self
+		self.experiment.python_workspace[u'self'] = self
 		if self.experiment.transparent_variables == u'yes':
 			self.start_transparency()
 		try:
-			exec(self.crun, _globals)
+			self.experiment.python_workspace._exec(self.crun)
 		except Exception as e:
-			raise osexception(u'Error while executing inline script', item= \
-				self.name, phase=u'run', exception=e)
+			raise osexception(u'Error while executing inline script',
+				line_offset=-1, item=self.name, phase=u'run', exception=e)
 		if self.experiment.transparent_variables == u'yes':
 			self.end_transparency()
 
@@ -199,24 +217,22 @@ class inline_script(item.item):
 	def start_transparency(self):
 
 		"""
-		Registers all experiment variables in the locals dictionary. This allows
+		Registers all experimental variables. This allows
 		the user to interact with the experimental variables without needing
 		to call `exp.set()`.
 		"""
 
-		global _globals
 		for var, val in self.experiment.var_info():
-			_globals[var] = val
+			self.experiment.python_workspace[var] = val
 
 	def end_transparency(self):
 
 		"""
-		Sets all local variables, so that the user doesn't have explicitly have
+		Sets all global variables, so that the user doesn't have explicitly have
 		to call `exp.set()`.
 		"""
 
-		global _globals
-		for var, val in _globals.items():
+		for var, val in self.experiment.python_workspace.items():
 			if isinstance(val, basestring) or isinstance(val, float) or \
 				isinstance(val, int):
 				self.experiment.set(var, val)
@@ -225,8 +241,8 @@ def restore_state():
 
 	"""Restores the system state."""
 
-	global _globals
-	_globals = {}
+	# Currently does nothing.
+	pass
 
 def save_state():
 

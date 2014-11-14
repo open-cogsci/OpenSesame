@@ -17,60 +17,100 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
-__author__ = "Sebastiaan Mathot"
-__license__ = "GPLv3"
-
-from libqtopensesame.ui import user_hint_widget_ui
 from PyQt4 import QtGui
+from libqtopensesame.misc.base_subcomponent import base_subcomponent
 
-class user_hint_widget(QtGui.QFrame):
+class user_hint_widget(QtGui.QFrame, base_subcomponent):
 
-	"""Provides various informative hints to the user"""
+	"""
+	desc:
+		Provides informative hints to the user.
+	"""
 
-	def __init__(self, parent, item):
+	def __init__(self, main_window, item):
 
 		"""
-		Constructor.
+		desc:
+			Constructor.
 
-		Arguments:
-		parent		--	The parent QWidget.
-		item		--	The item to provide a header for.
+		arguments:
+			main_window:	A qtopensesame object.
+			item:			A qtitem.
 		"""
 
-		QtGui.QWidget.__init__(self)	
-		self.main_window = parent
+		super(user_hint_widget, self).__init__(main_window)
+		self.setup(main_window, ui=u'widgets.user_hint_widget')
 		self.item = item
-		self.ui = user_hint_widget_ui.Ui_user_hint_widget()
-		self.ui.setupUi(self)
-		self.ui.button_edit_script.clicked.connect(self.item.open_script_tab)
-		self.main_window.theme.apply_theme(self)
-		self.hide()
-		
-	def add_user_hint(self, hint):
-		
+		self.ui.button_hide.clicked.connect(self.dismiss)
+		self.hints = []
+		self.dismissed_hints = []
+		self.clear()
+
+	def disable(self, disabled=True):
+
 		"""
-		Adds a user hint.
-		
-		Arguments:
-		hint		--	A text with the user hint.
+		desc:
+			Disables the widget.
+
+		keywords:
+			disabled:
+				desc:	Indicates whether the widget should be disabled.
+				type:	bool
 		"""
-		
-		self.hints.append(hint)
+
+		self.ui.button_hide.setDisabled(disabled)
+
+	def add(self, hint):
+
+		"""
+		desc:
+			Adds a user hint.
+
+		arguments:
+			hint:
+				desc:	A user-hint message, or a list of messages.
+				type:	[list, unicode]
+		"""
+
+		if not isinstance(hint, list):
+			hint = [hint]
+		for _hint in hint:
+			if _hint in self.dismissed_hints:
+				continue
+			if _hint in self.hints:
+				continue
+			self.hints.append(_hint)
+
+	def dismiss(self):
+
+		"""
+		desc:
+			Dismiss all current user hints.
+		"""
+
+		self.dismissed_hints += self.hints
+		self.clear()
 
 	def clear(self):
-		
-		"""Clears all user hints."""
-		
+
+		"""
+		desc:
+			Clears all user hints.
+		"""
+
 		self.hints = []
-		self.hide()
-		
+		self.refresh()
+
 	def refresh(self):
-		
-		"""Updates the widget with the current user hints."""
-		
+
+		"""
+		desc:
+			Updates the widget with the current user hints.
+		"""
+
 		if len(self.hints) == 0:
 			self.hide()
-			return		
-		s = '\n'.join(self.hints)
+			return
+		s = u'\n'.join(self.hints)
 		self.ui.label_user_hint.setText(s)
 		self.show()

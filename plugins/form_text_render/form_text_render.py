@@ -50,7 +50,7 @@ class form_text_render(form_base.form_base):
 		string -- a definition string
 		"""
 
-		if string == None:
+		if string == None or string.strip() == u'':
 			string = default_script
 		super(form_text_render, self).__init__(name, experiment, string, \
 			item_type='form_text_render', description= \
@@ -91,7 +91,7 @@ class qtform_text_render(form_text_render, qtplugin.qtplugin):
 	def init_edit_widget(self):
 
 		"""Initialize the controls"""
-		
+
 		self.lock = True
 		qtplugin.qtplugin.init_edit_widget(self, False)
 		self.add_editor_control('form_text', 'Main form text', \

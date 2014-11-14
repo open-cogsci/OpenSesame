@@ -22,6 +22,9 @@ import os.path
 import sip
 from libopensesame.exceptions import osexception
 from libopensesame import debug, item
+from libqtopensesame.widgets.item_view_button import item_view_button
+from libqtopensesame.widgets.tree_item_item import tree_item_item
+from libqtopensesame.widgets.qtitem_splitter import qtitem_splitter
 from libqtopensesame.widgets import header_widget, user_hint_widget
 from libqtopensesame.misc import _
 from libqtopensesame.misc.config import cfg
@@ -35,7 +38,6 @@ class qtitem(QtCore.QObject):
 		"""Constructor"""
 
 		QtCore.QObject.__init__(self)
-
 		# The auto-widgets are stored in name -> (var, widget) dictionaries
 		self.auto_line_edit = {}
 		self.auto_combobox = {}
@@ -43,60 +45,159 @@ class qtitem(QtCore.QObject):
 		self.auto_slider = {}
 		self.auto_editor = {}
 		self.auto_checkbox = {}
-		self.sanity_criteria = {}
-
 		self.init_edit_widget()
-		self.init_script_widget()
-		self.script_tab = None
 		self.lock = False
-		self.edit_mode = u'edit'
-
+		self.maximized = False
 		debug.msg(u'created %s' % self.name)
 
-	def open_help_tab(self, page=None):
+	@property
+	def main_window(self):
+		return self.experiment.main_window
 
-		"""Opens a help tab."""
+	@property
+	def theme(self):
+		return self.experiment.main_window.theme
 
-		self.experiment.main_window.ui.tabwidget.open_help(self.item_type)
+	@property
+	def tabwidget(self):
+		return self.experiment.main_window.tabwidget
 
-	def open_tab(self):
+	def open_tab(self, select_in_tree=True):
 
-		"""Opens the correct tab based on the current edit mode"""
+		"""
+		desc:
+			Opens the tab if it wasn't yet open, and switches to it.
+		"""
 
-		if self.edit_mode == u'edit':
-			self.open_edit_tab()
-		else:
-			self.open_script_tab()
+		self.tabwidget.add(self.widget(), self.item_icon(), self.name)
+		if select_in_tree:
+			self.experiment.main_window.ui.itemtree.select_item(self.name)
+
+	def close_tab(self):
+
+		"""
+		desc:
+			Closes the tab if it was open.
+		"""
+
+		self.tabwidget.remove(self.widget())
+
+	def set_focus(self):
+
+		"""
+		desc:
+			Gives focus to the most important widget.
+		"""
+
+		if hasattr(self, u'focus_widget') and self.focus_widget != None:
+			self.focus_widget.setFocus()
+
+	def set_focus_widget(self, widget, override=False):
+
+		"""
+		desc:
+			Sets the widget that receives focus when the tab is opened.
+
+		arguments:
+			widget:
+				desc:	The widget to receive focus or `None` to reset.
+				type:	[QWidget, NoneType]
+
+		keywords:
+			override:
+				desc:	Indicates whether the focus widget should be changed if
+						there already is a focus widget.
+				type:	bool
+		"""
+
+		if override or not hasattr(self, u'focus_widget') or self.focus_widget == None:
+			self.focus_widget = widget
+
+	def update_item_icon(self):
+
+		"""
+		desc:
+			Updates the item icon.
+		"""
+
+		self.tabwidget.set_icon(self.widget(), self.item_icon())
+		self.experiment.items.set_icon(self.name, self.item_icon())
+		self.header_item_icon.setPixmap(
+			self.theme.qpixmap(self.item_icon(), 32))
+
+	def item_icon(self):
+
+		"""
+		returns:
+			desc:	The name of the item icon.
+			type:	unicode
+		"""
+
+		return self.item_type
+
+	def show_tab(self):
+
+		"""
+		desc:
+			Is called when the tab becomes visible, and updated the contents.
+		"""
+
+		self.update_script()
+		self.edit_widget()
+		self.set_focus()
+
+	def widget(self):
+
+		"""
+		returns:
+			desc:	The widget that is added to the tabwidget.
+			type:	QWidget
+		"""
+
+		return self.container_widget
 
 	def init_edit_widget(self, stretch=True):
 
-		"""Build the GUI controls"""
+		"""
+		desc:
+			Builds the UI.
+
+		keywords:
+			stretch:
+				desc:	Indicates whether a vertical stretch should be added to
+						the bottom of the controls. This is necessary if the
+						controls don't expand.
+				type:	bool
+		"""
 
 		# Header widget
 		self.header = header_widget.header_widget(self)
-		self.user_hint_widget = user_hint_widget.user_hint_widget( \
+		self.user_hint_widget = user_hint_widget.user_hint_widget(
 			self.experiment.main_window, self)
 		self.header_hbox = QtGui.QHBoxLayout()
-		self.header_hbox.addWidget(self.experiment.label_image(self.item_type))
+		self.header_item_icon = self.experiment.label_image(self.item_icon())
+		self.header_hbox.addWidget(self.header_item_icon)
 		self.header_hbox.addWidget(self.header)
 		self.header_hbox.addStretch()
 		self.header_hbox.setContentsMargins(0, 5, 0, 10)
 
-		# Edit script button
-		button = QtGui.QPushButton(self.experiment.icon(u"script"), u"")
-		button.setToolTip(_(u"Edit script"))
-		button.setIconSize(QtCore.QSize(16, 16))
-		QtCore.QObject.connect(button, QtCore.SIGNAL(u"clicked()"), \
-			self.open_script_tab)
-		self.header_hbox.addWidget(button)
-
+		# Maximize button
+		self.button_toggle_maximize = QtGui.QPushButton(
+			self.theme.qicon(u'view-fullscreen'), u'')
+		self.button_toggle_maximize.setToolTip(_(u'Toggle pop-out'))
+		self.button_toggle_maximize.setIconSize(QtCore.QSize(16, 16))
+		self.button_toggle_maximize.clicked.connect(self.toggle_maximize)
+		self.header_hbox.addWidget(self.button_toggle_maximize)
+		# View button
+		self.button_view = item_view_button(self)
+		self.header_hbox.addWidget(self.button_view)
 		# Help button
-		button = QtGui.QPushButton(self.experiment.icon(u"help"), u"")
-		button.setToolTip(_(u"Tell me more about the %s item") % self.item_type)
-		button.setIconSize(QtCore.QSize(16, 16))
-		QtCore.QObject.connect(button, QtCore.SIGNAL(u"clicked()"), \
-			self.open_help_tab)
-		self.header_hbox.addWidget(button)
+		self.button_help = QtGui.QPushButton(self.experiment.icon(u"help"), u"")
+		self.button_help.setToolTip(
+			_(u"Tell me more about the %s item") % self.item_type)
+		self.button_help.setIconSize(QtCore.QSize(16, 16))
+		self.button_help.clicked.connect(self.open_help_tab)
+		self.header_hbox.addWidget(self.button_help)
 
 		self.header_widget = QtGui.QWidget()
 		self.header_widget.setLayout(self.header_hbox)
@@ -112,349 +213,219 @@ class qtitem(QtCore.QObject):
 		# The edit_vbox contains the edit_grid and the header widget
 		self.edit_vbox = QtGui.QVBoxLayout()
 		self.edit_vbox.setMargin(5)
-		self.edit_vbox.addWidget(self.header_widget)
 		self.edit_vbox.addWidget(self.user_hint_widget)
 		self.edit_vbox.addWidget(self.edit_grid_widget)
 		if stretch:
 			self.edit_vbox.addStretch()
 		self._edit_widget = QtGui.QWidget()
+		self._edit_widget.setWindowIcon(self.experiment.icon(self.item_type))
 		self._edit_widget.setLayout(self.edit_vbox)
-		self._edit_widget.__edit_item__ = self.name
 
-		return self._edit_widget
+		# The _script_widget contains the script editor
+		from QProgEdit import QTabManager
+		self._script_widget = QTabManager(
+			handlerButtonText=_(u'Apply and close'), cfg=cfg)
+		self._script_widget.focusLost.connect(self.apply_script_changes)
+		self._script_widget.handlerButtonClicked.connect(self.set_view_controls)
+		self._script_widget.addTab(u'Script').setLang(u'OpenSesame')
 
-	def edit_widget(self, stretch=True):
+		# The container_widget is the top-level widget that is actually inserted
+		# into the tab widget.
+		self.splitter = qtitem_splitter(self)
+		self.set_view_controls()
+		self.splitter.splitterMoved.connect(self.splitter_moved)
+		self.container_vbox = QtGui.QVBoxLayout()
+		self.container_vbox.addWidget(self.header_widget)
+		self.container_vbox.addWidget(self.splitter)
+		self.container_widget = QtGui.QWidget()
+		self.container_widget.setLayout(self.container_vbox)
+		self.container_widget.on_activate = self.show_tab
 
-		"""
-		A dummy edit widget, to be overridden.
-
-		Keywords arguments:
-		stretch		--	DEPRECATED (default=True)
-		"""
-
-		if not stretch:
-			debug.msg(u"passing the stretch argument is deprecated", \
-				reason=u"deprecation")
-		self.user_hint_widget.clear()
-		self.header.restore_name(False)
-		self.header.refresh()
-		self._edit_widget.__edit_item__ = self.name
-		if not self.sanity_check():
-			self.open_script_tab()
-			return
-		self.auto_edit_widget()
-		self.user_hint_widget.refresh()
-		return self._edit_widget
-
-	def apply_name_change(self, rebuild=True):
+	def splitter_moved(self, pos, index):
 
 		"""
-		Apply an item name change
+		desc:
+			Is called when the splitter handle is manually moved.
 
-		Keywords arguments:
-		rebuild -- a deprecated argument (default=True)
+		arguments:
+			pos:
+				desc:	The splitter-handle position.
+				type:	int
+			index:
+				desc:	The index of the splitter handle. Since there is only
+						one handle, this is always 0.
+				type:	int
+		"""
+
+		sizes = self.splitter.sizes()
+		self.edit_size = sizes[0]
+		self.script_size = sizes[1]
+		if self.script_size == 0:
+			self.button_view.set_view_icon(u'controls')
+		elif self.edit_size == 0:
+			self.button_view.set_view_icon(u'script')
+		else:
+			self.button_view.set_view_icon(u'split')
+
+	def set_view_controls(self):
+
+		"""
+		desc:
+			Puts the splitter in control view.
+		"""
+
+		self.splitter.setSizes([self.splitter.width(), 0])
+		self.button_view.set_view_icon(u'controls')
+
+	def set_view_script(self):
+
+		"""
+		desc:
+			Puts the splitter in script view.
+		"""
+
+		self.splitter.setSizes([0, self.splitter.width()])
+		self.button_view.set_view_icon(u'script')
+
+	def set_view_split(self):
+
+		"""
+		desc:
+			Puts the splitter in split view.
+		"""
+
+		self.splitter.setSizes([self.splitter.width()/2,
+			self.splitter.width()/2])
+		self.button_view.set_view_icon(u'split')
+
+	def update(self):
+
+		"""
+		desc:
+			Updates both the script and the controls.
+		"""
+
+		self.update_script()
+		self.edit_widget()
+
+	def update_script(self):
+
+		"""
+		desc:
+			Regenerates the script and updates the script widget.
+		"""
+
+		# Normally, the script starts with a 'define' line and is indented by
+		# a tab. We want to undo this, and present only unindented content.
+		import textwrap
+		script = self.to_string()
+		script = script[script.find(u'\t'):]
+		script = textwrap.dedent(script)
+		self._script_widget.setText(script)
+
+	def edit_widget(self, *deprecated, **_deprecated):
+
+		"""
+		desc:
+			This function updates the controls based on the item state.
 		"""
 
 		debug.msg()
+		self.auto_edit_widget()
 
-		# Sanitize the name, check if it is new and valid, and if so, rename
-		new_name = self.experiment.sanitize(self.header.edit_name.text(), \
-			strict=True, allow_vars=False)
-		if new_name.lower() != self.name.lower():
-			valid = self.experiment.check_name(new_name)
-			if valid != True:
-				self.experiment.notify(valid)
-				self.header.edit_name.setText(self.name)
-				return
-		old_name = self.name
-		self.name = new_name
-		self._edit_widget.__edit_item__	= new_name
-		self.experiment.main_window.dispatch.event_name_change.emit(old_name, \
-			new_name)
-
-	def apply_edit_changes(self, rebuild=True):
+	def apply_edit_changes(self, *deprecated, **_deprecated):
 
 		"""
-		Applies the GUI controls.
-
-		Keywords arguments:
-		rebuild	--	Specifies whether the overview area (item list) should be
-					rebuild. (default=True)
+		desc:
+			Applies changes to the graphical controls.
 		"""
 
-		debug.msg(self.name)
-		if self.experiment.main_window.lock_refresh:
-			debug.msg(u"skipping, because refresh in progress")
-			return False
+		debug.msg()
 		self.auto_apply_edit_changes()
-		self.set(u"description", \
-			self.experiment.sanitize(unicode( \
-				self.header.edit_desc.text()).strip()))
-		if self.description == u"":
-			self.description = u"No description"
-		self.header.label_desc.setText(self.description)
-		self.experiment.main_window.dispatch.event_simple_change.emit(self.name)
+		self.update_script()
+		self.main_window.set_unsaved(True)
 		return True
 
-	def close_edit_tab(self, index=None):
+	def apply_script_changes(self, *deprecated, **_deprecated):
 
 		"""
-		Closes the edit tab (does nothing by default).
-
-		Keywords arguments:
-		index	--	The index of the tab in the tab area. (default=None)
+		desc:
+			Applies changes to the script, by re-parsing the item from string.
 		"""
 
-		pass
-
-	def open_edit_tab(self, index=None, focus=True):
-
-		"""
-		Opens the GUI control tab, or switches to the tab if it was already
-		open.
-
-		Keywords arguments:
-		index	--	The index of the tab (if open). (default=None)
-		focus	--	Indicates whether the tab should receive focus.
-					(default=True)
-		"""
-
-		debug.msg(u"%s (#%s)" % (self.name, hash(self)))
-
-		# Switch to edit mode and close the script tab if it was open
-		self.edit_mode = u"edit"
-		for i in range(self.experiment.ui.tabwidget.count()):
-			w = self.experiment.ui.tabwidget.widget(i)
-			if hasattr(w, u"__script_item__") and w.__script_item__ == \
-				self.name:
-				self.experiment.ui.tabwidget.removeTab(i)
-				if index == None:
-					index = i
-				break
-
-		# Focus the edit tab, instead of reopening, if it was already open
-		for i in range(self.experiment.ui.tabwidget.count()):
-			w = self.experiment.ui.tabwidget.widget(i)
-			if hasattr(w, u"__edit_item__") and w.__edit_item__ == self.name:
-				index = i
-
-		# Refresh the controls on the tab. In debug mode don't catch any errors
-		if debug.enabled:
-			widget = self.edit_widget()
-		else:
-			try:
-				widget = self.edit_widget()
-			except Exception as e:
-				self.experiment.notify(_(u"%s (Edit the script to fix this)") \
-					% e)
-				self.open_script_tab()
-				return
-
-		# Open the tab or focus the tab if it was already open
-		if index == None:
-			self.edit_tab_index = self.experiment.ui.tabwidget.addTab(widget, \
-				self.experiment.icon(self.item_type), u"%s" % self.name)
-		else:
-			self.experiment.ui.tabwidget.insertTab(index, widget, \
-				self.experiment.icon(self.item_type), u"%s" % self.name)
-			self.edit_tab_index = index
-		if focus:
-			self.experiment.ui.tabwidget.setCurrentIndex(self.edit_tab_index)
-
-	def apply_script_and_close(self):
-
-		"""Applies script changes and opens the edit tab"""
-
-		self.apply_script_changes(mode=u'edit')
-		self.experiment.main_window.select_item(self.name)
-
-	def apply_script_changes(self, rebuild=True, catch=True, mode=u'script'):
-
-		"""
-		Applies changes to the script, by regenerating the item from the script.
-
-		Keywords arguments:
-		rebuild	--	Specifies whether the overview area (item list) should be
-					rebuild. (default=True)
-		catch	--	Indicates whether exceptions should be caught and shown in a
-					notification dialog (True) or not be caught (False).
-					(default=True)
-		mode	--	Indicates whether the item should re-open in edit or script
-					mode. (default=u'script')
-		"""
-
-		debug.msg(self.name)
-		script = self.script_qprogedit.text()
-		# Create a new item and make it a clone of the current item
-		item = self.experiment.main_window.add_item(self.item_type, False, \
-			name=self.name, interactive=False)
-		if catch:
-			try:
-				self.experiment.items[item].from_string(script)
-			except Exception as e:
-				self.experiment.notify(unicode(e))
-				return
-		else:
-			self.experiment.items[item].from_string(script)
-		self.experiment.items[item].name = self.name
-		# Replace the current item
-		self.experiment.items[self.name] = self.experiment.items[item]
-		del self.experiment.items[item]
-		self.experiment.items[self.name].init_script_widget()
-		self.experiment.items[self.name].edit_mode = mode
-		self.experiment.main_window.dispatch.event_script_change.emit(self.name)
-		# The logic here is pretty complex, and is more-or-less a hack until the
-		# event handling code has been improved. Basically, if we want to apply
-		# the script and stay in script mode, we have to re-open the script tab,
-		# because the entire item is re-generated. This new tab has to be
-		# inserted in place of (i.e. with the same index as) the old tab, which
-		# has to be removed. We always refocus the tab, but if the tab doesn't
-		# actually have focus, we refocus the original tab. This is necessary
-		# to avoid repainting artifacts.
-		#
-		# See also this issue:
-		# - <https://github.com/smathot/OpenSesame/issues/219>
-		if mode == u'script':
-			currentIndex = self.experiment.ui.tabwidget.currentIndex()
-			for i in range(self.experiment.ui.tabwidget.count()):
-				w = self.experiment.ui.tabwidget.widget(i)
-				if hasattr(w, u'__script_item__') and w.__script_item__ == \
-					self.name:
-					if i == currentIndex:
-						focus = True
-					else:
-						focus = False
-					self.experiment.items[self.name].open_script_tab(index=i, \
-						focus=True)
-					self.experiment.ui.tabwidget.removeTab(i+1)
-					if not focus:
-						self.experiment.ui.tabwidget.setCurrentIndex( \
-							currentIndex)
-					break
-
-	def strip_script_line(self, s):
-
-		"""
-		Strips unwanted characters from a line of script
-
-		Arguments:
-		s -- a line of script
-
-		Returns:
-		A stripped line of script
-		"""
-
-		if len(s) > 0 and s[0] == u"\t":
-			return s[1:] + u"\n"
-		return s + u"\n"
-
-	def init_script_widget(self):
-
-		"""Build the script tab"""
-
-		from QProgEdit import QTabManager
-		self.script_qprogedit = QTabManager(handler= \
-			self.apply_script_and_close, defaultLang=u'OpenSesame', \
-			handlerButtonText=_(u'Apply and close script editor'), \
-			focusOutHandler=self.apply_script_changes, cfg=cfg)
-		self.script_qprogedit.addTab(u'Script')
-
-		hbox = QtGui.QHBoxLayout()
-		hbox.addWidget(self.experiment.label_image(self.item_type))
-		self.script_header = QtGui.QLabel()
-		hbox.addWidget(self.script_header)
-		hbox.addStretch()
-		hbox.setContentsMargins(0,0,0,0)
-		hwidget = QtGui.QWidget()
-		hwidget.setLayout(hbox)
-
-		vbox = QtGui.QVBoxLayout()
-		vbox.addWidget(hwidget)
-		vbox.addWidget(self.script_qprogedit)
-		self._script_widget = QtGui.QWidget()
-		self._script_widget.setLayout(vbox)
-		self._script_widget.__script_item__ = self.name
-
-	def script_widget(self):
-
-		"""
-		Update the script tab
-
-		Returns:
-		The QWidget containing the script tab
-		"""
-
-		self.script_header.setText( \
-			_(u"Editing script for <b>%s</b> - %s") % (self.name, \
-			self.item_type))
-		script = u""
-		for s in self.to_string().split(u"\n")[1:]:
-			script += self.strip_script_line(s)
-		self.script_qprogedit.setText(script)
-		self._script_widget.__script_item__ = self.name
-		return self._script_widget
-
-	def open_script_tab(self, index=None, focus=True):
-
-		"""
-		Open/ show the script tab
-
-		Keywords arguments:
-		index -- the index of the tab (if it is already open) (default=None)
-		focus -- indicates whether the tab should receive focus (default=True)
-		"""
-
-		debug.msg(u"%s (#%s)" % (self.name, hash(self)))
-		self.edit_mode = u"script"
-
-		# Close the edit tab
-		for i in range(self.experiment.ui.tabwidget.count()):
-			w = self.experiment.ui.tabwidget.widget(i)
-			if hasattr(w, u"__edit_item__") and w.__edit_item__ == self.name:
-				self.experiment.ui.tabwidget.removeTab(i)
-				if index == None:
-					index = i
-				break
-
-		for i in range(self.experiment.ui.tabwidget.count()):
-			w = self.experiment.ui.tabwidget.widget(i)
-			if hasattr(w, u"__script_item__") and w.__script_item__ == self.name:
-				index = i
-		if index == None:
-			self.script_tab_index = self.experiment.ui.tabwidget.addTab( \
-				self.script_widget(), self.experiment.icon(u"script"), u"%s" \
-				% self.name)
-		else:
-			self.script_tab_index = index
-			self.experiment.ui.tabwidget.insertTab(index, \
-				self.script_widget(), self.experiment.icon(u"script"), u"%s" \
-				% self.name)
-		if focus:
-			self.experiment.ui.tabwidget.setCurrentIndex(self.script_tab_index)
-
-	def close_script_tab(self, index=None):
-
-		"""
-		Close the script tab (does nothing by defaut)
-
-		Keywords arguments:
-		index -- the index of the tab in the tab area (default=None)
-		"""
-
-		pass
+		debug.msg()
+		old_script = self.to_string()
+		new_script = self._script_widget.text()
+		try:
+			self.from_string(new_script)
+		except osexception as e:
+			self.experiment.notify(e.html())
+			self.main_window.print_debug_window(e)
+			self.from_string(old_script)
+		self.edit_widget()
+		self.main_window.set_unsaved(True)
 
 	def rename(self, from_name, to_name):
 
 		"""
-		Handle the renaming of an item (not necesarrily the currnet item)
+		desc:
+			Handles renaming of an item (not necesarrily the current item).
 
-		Arguments:
-		from_name -- the old item name
-		to_name -- the new item name
+		arguments:
+			from_name:
+				desc:	The old item name.
+				type:	unicode
+			to_name:
+				desc:	The new item name
+				type:	unicode
 		"""
 
-		if self.name == from_name:
-			self.name = to_name
+		if self.name != from_name:
+			return
+		self.name = to_name
+		self.header.set_name(to_name)
+		index = self.tabwidget.indexOf(self.widget())
+		if index != None:
+			self.tabwidget.setTabText(index, to_name)
+
+	def open_help_tab(self):
+
+		"""
+		desc:
+			Opens a help tab.
+		"""
+
+		self.experiment.main_window.ui.tabwidget.open_help(self.item_type)
+
+	def toggle_maximize(self):
+
+		"""
+		desc:
+			Toggles edit-widget maximization.
+		"""
+
+		if not self.maximized:
+			# Always ignore close events. This is necessary, because otherwise
+			# the pop-out widget can be closed without re-enabling the main
+			# window.
+			self.container_widget.closeEvent = lambda e: e.ignore()
+			self.container_widget.setParent(None)
+			self.container_widget.setWindowFlags(QtCore.Qt.WindowStaysOnTopHint|\
+				QtCore.Qt.WindowMaximizeButtonHint|\
+				QtCore.Qt.CustomizeWindowHint)
+			self.container_widget.showMaximized()
+			self.container_widget.show()
+			self.button_toggle_maximize.setIcon(
+				self.theme.qicon(u'view-restore'))
+		else:
+			self.container_widget.setParent(self.main_window)
+			self.open_tab()
+			self.button_toggle_maximize.setIcon(
+				self.theme.qicon(u'view-fullscreen'))
+		self.maximized = not self.maximized
+		self.user_hint_widget.disable(self.maximized)
+		self.button_help.setDisabled(self.maximized)
+		self.main_window.setDisabled(self.maximized)
 
 	def delete(self, item_name, item_parent=None, index=None):
 
@@ -471,54 +442,8 @@ class qtitem(QtCore.QObject):
 
 		pass
 
-	def rename_var(self, item, from_name, to_name):
-
-		"""
-		A notification that a variable has been renamed
-
-		Arguments:
-		item -- the item doing the renaming
-		from_name -- the old variable name
-		to_name -- the new variable name
-		"""
-
-		pass
-
-	def item_tree_widget(self, toplevel, icon=None, name=None, tooltip=None):
-
-		"""
-		Create a single item tree widget
-
-		Arguments:
-		toplevel -- the toplevel item
-
-		Keyword arguments:
-		icon -- an icon name or None for default (default=None)
-		name -- the name of the item or None for default (default=None)
-		tooltip -- the tooltip or None for default (default=None)
-
-		Returns:
-		A QTreeWidgetItem
-		"""
-
-		if name == None:
-			name = self.name
-		if icon == None:
-			icon = self.item_type
-		if tooltip == None:
-			tooltip = _(u"Type: %s\nDescription: %s") % (self.item_type, \
-				self.description)
-		font = QtGui.QFont()
-		font.setPointSize(8)
-		font.setItalic(True)
-		widget = QtGui.QTreeWidgetItem(toplevel)
-		widget.setText(0, name)
-		widget.setIcon(0, self.experiment.icon(icon))
-		widget.name = name
-		widget.setToolTip(0, tooltip)
-		return widget
-
-	def build_item_tree(self, toplevel=None, items=[]):
+	def build_item_tree(self, toplevel=None, items=[], max_depth=-1,
+		extra_info=None):
 
 		"""
 		Construct an item tree
@@ -529,22 +454,11 @@ class qtitem(QtCore.QObject):
 				 (default=[])
 		"""
 
-		toplevel.addChild(self.item_tree_widget(toplevel))
-
-	def is_offspring(self, item):
-
-		"""
-		Checks if the item is offspring of the current item, in the sense that
-		the current item is contained by the item
-
-		Arguments:
-		item -- the potential offspring
-
-		Returns:
-		True if the current item is offspring of the item, False otherwise
-		"""
-
-		return False
+		widget = tree_item_item(self, extra_info=extra_info)
+		items.append(self.name)
+		if toplevel != None:
+			toplevel.addChild(widget)
+		return widget
 
 	def parents(self):
 
@@ -558,7 +472,7 @@ class qtitem(QtCore.QObject):
 
 		l = [self.name]
 		for item in self.experiment.items:
-			if self.experiment.items[item].is_offspring(self.name):
+			if self.experiment.items[item].is_child_item(self.name):
 				l.append(item)
 		return l
 
@@ -578,7 +492,7 @@ class qtitem(QtCore.QObject):
 		for var in self.variables:
 			if var not in exclude:
 				val = self.variables[var]
-				if isinstance(val, basestring) and u'[' in val:
+				if self.experiment.varref(val):
 					return True
 		return False
 
@@ -601,17 +515,14 @@ class qtitem(QtCore.QObject):
 
 		debug.msg()
 		for var, edit in self.auto_line_edit.iteritems():
-			edit.editingFinished.disconnect()
 			if self.has(var):
 				edit.setText(self.unistr(self.get(var, _eval=False)))
 			else:
 				edit.setText(u'')
-			edit.editingFinished.connect(self.apply_edit_changes)
 
 		for var, combobox in self.auto_combobox.iteritems():
-			combobox.currentIndexChanged.disconnect()
 			val = self.get_check(var, _eval=False, default=u'')
-			i = combobox.findText(self.unistr(self.get(var, _eval=False)))
+			i = combobox.findText(self.unistr(val))
 			# Set the combobox to the select item
 			if i >= 0:
 				combobox.setDisabled(False)
@@ -623,16 +534,15 @@ class qtitem(QtCore.QObject):
 			# If an unknown value has been specified, notify the user
 			else:
 				combobox.setDisabled(True)
-				self.user_hint_widget.add_user_hint(_(u'"%s" is set to a '
+				self.user_hint_widget.add(_(u'"%s" is set to a '
 					u'variable or unknown value and can only be edited through '
 					u'the script.' % var))
-			combobox.currentIndexChanged.connect(self.apply_edit_changes)
 
 		for var, spinbox in self.auto_spinbox.iteritems():
-			spinbox.editingFinished.disconnect()
 			if self.has(var):
 				val = self.get(var, _eval=False)
 				if type(val) in (float, int):
+					spinbox.setDisabled(False)
 					try:
 						spinbox.setValue(val)
 					except Exception as e:
@@ -640,16 +550,15 @@ class qtitem(QtCore.QObject):
 							u"Failed to set control '%s': %s") % (var, e))
 				else:
 					spinbox.setDisabled(True)
-					self.user_hint_widget.add_user_hint(_( \
+					self.user_hint_widget.add(_( \
 						u'"%s" is defined using variables and can only be edited through the script.' \
 						% var))
-			spinbox.editingFinished.connect(self.apply_edit_changes)
 
 		for var, slider in self.auto_slider.iteritems():
-			slider.valueChanged.disconnect()
 			if self.has(var):
 				val = self.get(var, _eval=False)
 				if type(val) in (float, int):
+					slider.setDisabled(False)
 					try:
 						slider.setValue(val)
 					except Exception as e:
@@ -657,20 +566,17 @@ class qtitem(QtCore.QObject):
 							u"Failed to set control '%s': %s") % (var, e))
 				else:
 					slider.setDisabled(True)
-					self.user_hint_widget.add_user_hint(_( \
+					self.user_hint_widget.add(_( \
 						u'"%s" is defined using variables and can only be edited through the script.' \
 						% var))
-			slider.valueChanged.connect(self.apply_edit_changes)
 
 		for var, checkbox in self.auto_checkbox.iteritems():
-			checkbox.toggled.disconnect()
 			if self.has(var):
 				try:
 					checkbox.setChecked(self.get(var, _eval=False) == u"yes")
 				except Exception as e:
 					self.experiment.notify(_(u"Failed to set control '%s': %s") \
 						% (var, e))
-			checkbox.toggled.connect(self.apply_edit_changes)
 
 		for var, qprogedit in self.auto_editor.iteritems():
 			if self.has(var):
@@ -708,40 +614,6 @@ class qtitem(QtCore.QObject):
 				self.experiment.notify(
 					_(u'The following characters are not allowed and have been stripped: double-quote ("), backslash (\), and newline'))
 		return sane
-
-	def sanity_check(self):
-
-		"""
-		Checks whether all variables match prespecified criteria and fall back
-		to the script editor otherwise. This is usefull to check that certain
-		variables are numeric, etc.
-		"""
-
-		debug.msg()
-		errors = []
-		for var_name, criteria in self.sanity_criteria.items():
-			msg = _(u"Invalid or missing value for variable '%s' (edit script to fix this)") \
-				% var_name
-			if u'msg' in criteria:
-				msg += u': ' + criteria[u'msg']
-			if not self.has(var_name) and u'required' in criteria and \
-				criteria[u'required']:
-				self.experiment.notify(msg)
-				return False
-			else:
-				var = self.get(var_name, _eval=False)
-				if u'type' in criteria:
-					_type = criteria[u'type']
-					if type(_type) != list:
-						_type = [_type]
-				 	if type(var) not in _type:
-						self.experiment.notify(msg)
-						return False
-				if u'func' in criteria:
-					if not criteria[u'func'](var):
-						self.experiment.notify(msg)
-						return False
-		return True
 
 	def auto_apply_edit_changes(self, rebuild=True):
 
@@ -808,28 +680,23 @@ class qtitem(QtCore.QObject):
 		if var == None:
 			var = id(widget)
 		debug.msg(var)
-
-		if isinstance(widget, QtGui.QSpinBox) or isinstance(widget, \
+		self.set_focus_widget(widget)
+		if isinstance(widget, QtGui.QSpinBox) or isinstance(widget,
 			QtGui.QDoubleSpinBox):
 			widget.editingFinished.connect(self.apply_edit_changes)
 			self.auto_spinbox[var] = widget
-
 		elif isinstance(widget, QtGui.QComboBox):
-			widget.currentIndexChanged.connect(self.apply_edit_changes)
+			widget.activated.connect(self.apply_edit_changes)
 			self.auto_combobox[var] = widget
-
 		elif isinstance(widget, QtGui.QSlider):
 			widget.editingFinished.connect(self.apply_edit_changes)
 			self.auto_slider[var] = widget
-
 		elif isinstance(widget, QtGui.QLineEdit):
 			widget.editingFinished.connect(self.apply_edit_changes)
 			self.auto_line_edit[var] = widget
-
 		elif isinstance(widget, QtGui.QCheckBox):
-			widget.toggled.connect(self.apply_edit_changes)
+			widget.clicked.connect(self.apply_edit_changes)
 			self.auto_checkbox[var] = widget
-
 		else:
 			raise Exception(u"Cannot auto-add widget of type %s" % widget)
 
@@ -860,4 +727,64 @@ class qtitem(QtCore.QObject):
 		except osexception as e:
 			self.experiment.notify( \
 				u'Failed to compile conditional statement "%s": %s' % (cond, e))
+			return default
 		return cond
+
+	def is_child_item(self, item_name):
+
+		"""
+		desc:
+			Checks if an item is somewhere downstream from the current item
+			in the experimental hierarchy.
+
+		arguments:
+			item_name:
+				desc:	The name of the child item.
+				type:	unicode
+
+		returns:
+			desc:	True if the current item is offspring of the item, False
+					otherwise.
+			type:	bool
+		"""
+
+		return False
+
+	def insert_child_item(self, item_name, index=0):
+
+		"""
+		desc:
+			Inserts a child item, if applicable to the item type.
+
+		arguments:
+			item_name:
+				desc:	The name of the child item.
+				type:	unicode
+
+		keywords:
+			index:
+				desc:	The index of the child item.
+				type:	int
+		"""
+
+		pass
+
+	def remove_child_item(self, item_name, index=0):
+
+		"""
+		desc:
+			Removes a child item, if applicable to the item type.
+
+		arguments:
+			item_name:
+				desc:	The name of the child item.
+				type:	unicode
+
+		keywords:
+			index:
+				desc:	The index of the child item, if applicable. A negative
+						value indicates all instances.
+				type:	int
+		"""
+
+		pass

@@ -1,3 +1,63 @@
+opensesame (2.9.1-ubuntu1) trusty; urgency=medium
+
+  * Bugs fixed
+    - Fix resetting font size and family in sketchpad (#284)
+    - Fix rounding issue in canvas._gabor() (#283)
+    - Better detection of Exception messages (#285)
+    - Fix a race condition when dropping an item on a loop or sequence
+    - Fix broken context menu in sketchpad when running a translation (#287)
+    - Correctly parse variables in video_player plug-in (#288)
+    - Use new sketchpad-element icons also in 32x32 size
+    - Fixed a bug when reducing and canceling the number of cycles in a loop
+    - Fixed display of font style in sketchpad widget
+    - Include PyQt4 plugins in Windows build
+  * Improvements
+    - Application-wide keyboard shortcuts for tab switching
+    - Add close current tab action
+    - Improved focus behavior
+  * Translation updates
+    - Update German translation (de_DE)
+
+ -- Sebastiaan Mathot <s.mathot@cogsci.nl>  Thu, 30 Oct 2014 14:43:09 +0100
+
+opensesame (2.9.0-ubuntu1) trusty; urgency=medium
+
+  * Bugs fixed
+    - The radius keyword to circle sketchpad elements now specifies radius, instead of diameter
+    - Allow non-latin text input (#280)
+    - Clean up temporary files on Windows (#282)
+    - Fix incorrect line numbers in inline_script tracebacks (#281)
+    - Fix detection of uppercase keys in psycho back-end (#271)
+    - Fix speciying synth frequency by key (#269)
+  * Improvements
+    - Rewritten sketchpad runtime
+    - Redesigned sketchpad gui
+    - Added quick-open-item feature
+    - Added toggle-item-maximization feature
+    - Converted GUI to base_component framework
+    - Back-ends now inherit from abstract class
+    - Drag-and-drop improvements
+    - Script and controls now simultaneously editable
+    - Realtime inline_script syntax checking
+    - Icon theme more standards-compliant
+    - Introduce GUI extension framework
+
+ -- Sebastiaan Mathot <s.mathot@cogsci.nl>  Thu, 17 Jul 2014 10:28:23 +0200
+
+opensesame (2.8.3-ubuntu1) trusty; urgency=medium
+
+  * Improvements
+    - Add German translation (de_DE)
+    - Add Russian translation (ru_RU)
+    - Remember experiment and logfile folders on Android (#259)
+    - Add show_virtual_keyboard() function to keyboard back-ends (#254)
+  * Bugs fixed
+    - Fix canvas.arrow() docstring
+    - canvas.text_size() respects line breaks and formatting (#262)
+    - Advanced loop settings are preserved in GUI (#263)
+
+ -- Sebastiaan Mathot <s.mathot@cogsci.nl>  Mon, 23 Jun 2014 20:59:27 +0200
+
 opensesame (2.8.2-ubuntu1) trusty; urgency=low
 
   * Improvements

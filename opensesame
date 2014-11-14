@@ -51,6 +51,11 @@ if __name__ == u'__main__':
 			os.chdir(path)
 			if path not in sys.path:
 				sys.path.append(path)
+		
+	# Register PyQt4 plugin folder		
+	from PyQt4.QtCore import QCoreApplication
+	if os.path.exists(u'PyQt4_plugins'):
+		QCoreApplication.addLibraryPath(u'PyQt4_plugins')
 			
 	# Load debug package (this must be after the working directory change)
 	from libopensesame import debug
@@ -79,7 +84,7 @@ if __name__ == u'__main__':
 	# command line using the --locale parameter
 	locale = unicode(QLocale().system().name())
 	for i in range(len(sys.argv)-1):
-		if sys.argv[i] == u'--locale':
+		if sys.argv[i] == '--locale':
 			locale = sys.argv[i+1]
 	qm = resource(os.path.join(u'locale', locale) + u'.qm')
 	if qm != None:
@@ -107,7 +112,6 @@ if __name__ == u'__main__':
 	elif opensesame.options.run_in_window:
 		opensesame.run_experiment(False)
 	else:
-		opensesame.check_update(always=False)
 		if start_new_tab:
 			opensesame.ui.tabwidget.open_start_new(start=True)
 	opensesame.restore_window_state()

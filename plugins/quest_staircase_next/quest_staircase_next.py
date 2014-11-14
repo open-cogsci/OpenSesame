@@ -22,48 +22,57 @@ from libqtopensesame.items.qtautoplugin import qtautoplugin
 
 class quest_staircase_next(item):
 
-	description = \
-		u'Updates the Quest test value based on a response'
+	"""
+	desc:
+		Process a response and adjust staircase level.
+	"""
 
-	def __init__(self, name, experiment, script=None):
+	description = u'Updates the Quest test value based on a response'
+
+	def reset(self):
 
 		"""
-		Constructor.
-
-		Arguments:
-		name		--	The name of the plug-in.
-		experiment	--	The experiment object.
-
-		Keyword arguments:
-		script		--	A definition script. (default=None)
+		desc:
+			Initialize default variables.
 		"""
 
 		self.response_var = u'correct'
-		item.__init__(self, name, experiment, script)
 
 	def run(self):
 
-		"""Run phase for plug-in."""
+		"""
+		desc:
+			Run phase for plug-in.
+		"""
 
-		self.experiment.quest.update(self.get(u'quest_test_value'),
-			self.get(self.get(u'response_var')))
+		resp = self.get(self.get(u'response_var'))
+		try:
+			resp = float(resp)
+		except:
+			# Don't process non-float responses
+			return
+		self.experiment.quest.update(self.get(u'quest_test_value'), resp)
 		self.experiment.quest_set_next_test_value()
 
 class qtquest_staircase_next(quest_staircase_next, qtautoplugin):
 
-	"""The GUI part of the plug-in. Controls are defined in info.json."""
+	"""
+	desc:
+		The GUI part of the plug-in. Controls are defined in info.json.
+	"""
 
 	def __init__(self, name, experiment, script=None):
 
 		"""
-		Constructor.
+		desc:
+			Constructor.
 
-		Arguments:
-		name		--	The name of the plug-in.
-		experiment	--	The experiment object.
+		arguments:
+			name:		The name of the plug-in.
+			experiment:	The experiment object.
 
-		Keyword arguments:
-		script		--	A definition script. (default=None)
+		keywords:
+			script:		A definition script.
 		"""
 
 		quest_staircase_next.__init__(self, name, experiment, script)
