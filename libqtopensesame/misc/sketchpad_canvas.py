@@ -579,10 +579,10 @@ class sketchpad_canvas(QtGui.QGraphicsScene):
 
 		"""Mimicks canvas api. See openexp._canvas.canvas."""
 
-		i = self.addText(text, self._font)
+		i = self.addText(unicode(text), self._font)
 		i.setDefaultTextColor(self._color(color))
 		if html:
-			i.setHtml(text)
+			i.setHtml(unicode(text))
 		if center:
 			# Source:
 			# http://www.cesarbs.org/blog/2011/05/30/aligning-text-in-\
