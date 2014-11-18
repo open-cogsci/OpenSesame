@@ -339,7 +339,7 @@ class sketchpad_canvas(QtGui.QGraphicsScene):
 			self.notify(
 				_(u'Image name "%s" is unknown or variably defined, using fallback image') \
 				% fname)
-			return self.sketchpad.theme.qpixmap(u'fallback')
+			return self.sketchpad.theme.qpixmap(u'os-image-fallback')
 		return QtGui.QPixmap(fname)
 
 	def _pen(self, color, penwidth, alpha=255):

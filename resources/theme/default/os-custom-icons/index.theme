@@ -64,3 +64,8 @@ Size=64
 Context=Actions
 Type=fixed
 
+[64x64/sketchpad]
+Size=64
+Context=Actions
+Type=fixed
+
