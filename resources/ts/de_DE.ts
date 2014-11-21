@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS><TS version="2.0" language="de_DE" sourcelanguage="">
+<!DOCTYPE TS>
+<TS version="2.0" language="de_DE">
 <context>
     <name>Form</name>
     <message>
@@ -58,42 +59,42 @@
     <message>
         <location filename="translatables.py" line="14"/>
         <source>Timing</source>
-        <translation type="unfinished"></translation>
+        <translation>Timing</translation>
     </message>
     <message>
         <location filename="translatables.py" line="15"/>
         <source>Duration</source>
-        <translation type="unfinished">Dauer</translation>
+        <translation>Dauer</translation>
     </message>
     <message>
         <location filename="translatables.py" line="16"/>
         <source>The average duration in milliseconds</source>
-        <translation type="unfinished"></translation>
+        <translation>Die durchschnittliche Dauer in Millisekunden</translation>
     </message>
     <message>
         <location filename="translatables.py" line="20"/>
         <source> ms</source>
-        <translation type="unfinished"></translation>
+        <translation> ms</translation>
     </message>
     <message>
         <location filename="translatables.py" line="18"/>
         <source>Jitter</source>
-        <translation type="unfinished"></translation>
+        <translation>Schwankung</translation>
     </message>
     <message>
         <location filename="translatables.py" line="19"/>
         <source>The jitter of the actual duration in milliseconds (depends on Jitter mode)</source>
-        <translation type="unfinished"></translation>
+        <translation>Schwankung um die angegebene Dauer in Millisekunden (abhängig vom Schwankungsmodus)</translation>
     </message>
     <message>
         <location filename="translatables.py" line="21"/>
         <source>Jitter mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Schwankungsmodus</translation>
     </message>
     <message>
         <location filename="translatables.py" line="22"/>
         <source>The mode for determining the actual duration (see Help)</source>
-        <translation type="unfinished"></translation>
+        <translation>Modus zur Bestimmung der eigentlichen Dauer (siehe Hilfe)</translation>
     </message>
 </context>
 <context>
@@ -101,107 +102,107 @@
     <message>
         <location filename="translatables.py" line="276"/>
         <source>Example plug-in.</source>
-        <translation type="unfinished"></translation>
+        <translation>Beispiel Plugin.</translation>
     </message>
     <message>
         <location filename="translatables.py" line="277"/>
         <source>Visual stimuli</source>
-        <translation type="unfinished"></translation>
+        <translation>Visuelle Stimuli</translation>
     </message>
     <message>
         <location filename="translatables.py" line="278"/>
         <source>Example checkbox</source>
-        <translation type="unfinished"></translation>
+        <translation>Beispiel Checkbox</translation>
     </message>
     <message>
         <location filename="translatables.py" line="279"/>
         <source>An example checkbox</source>
-        <translation type="unfinished"></translation>
+        <translation>Beispiel für eine Checkbox</translation>
     </message>
     <message>
         <location filename="translatables.py" line="280"/>
         <source>Color</source>
-        <translation type="unfinished">Farbe</translation>
+        <translation>Farbe</translation>
     </message>
     <message>
         <location filename="translatables.py" line="281"/>
         <source>An example color edit</source>
-        <translation type="unfinished"></translation>
+        <translation>Beispiel für Farbauswahl</translation>
     </message>
     <message>
         <location filename="translatables.py" line="282"/>
         <source>Select option</source>
-        <translation type="unfinished"></translation>
+        <translation>Option auswählen</translation>
     </message>
     <message>
         <location filename="translatables.py" line="283"/>
         <source>An example combobox</source>
-        <translation type="unfinished"></translation>
+        <translation>Beispiel für eine Combobox</translation>
     </message>
     <message>
         <location filename="translatables.py" line="284"/>
         <source>Select file</source>
-        <translation type="unfinished"></translation>
+        <translation>Datei auswählen</translation>
     </message>
     <message>
         <location filename="translatables.py" line="285"/>
         <source>An example filepool widget</source>
-        <translation type="unfinished"></translation>
+        <translation>Beispiel für ein Dateiauswahl-Widget</translation>
     </message>
     <message>
         <location filename="translatables.py" line="286"/>
         <source>Enter text</source>
-        <translation type="unfinished"></translation>
+        <translation>Text eingeben</translation>
     </message>
     <message>
         <location filename="translatables.py" line="287"/>
         <source>An example line_edit widget</source>
-        <translation type="unfinished"></translation>
+        <translation>Beispiel für ein line_edit-Widget</translation>
     </message>
     <message>
         <location filename="translatables.py" line="288"/>
         <source>Enter value</source>
-        <translation type="unfinished"></translation>
+        <translation>Wert eingeben</translation>
     </message>
     <message>
         <location filename="translatables.py" line="289"/>
         <source>An example spinbox widget</source>
-        <translation type="unfinished"></translation>
+        <translation>Beispiel für ein spinbox-Widget</translation>
     </message>
     <message>
         <location filename="translatables.py" line="290"/>
         <source>approx. </source>
-        <translation type="unfinished"></translation>
+        <translation>ca. </translation>
     </message>
     <message>
         <location filename="translatables.py" line="291"/>
         <source> ms</source>
-        <translation type="unfinished"></translation>
+        <translation> ms</translation>
     </message>
     <message>
         <location filename="translatables.py" line="292"/>
         <source>Select value</source>
-        <translation type="unfinished"></translation>
+        <translation>Wert auswählen</translation>
     </message>
     <message>
         <location filename="translatables.py" line="293"/>
         <source>An example slider widget</source>
-        <translation type="unfinished"></translation>
+        <translation>Beispiel für ein slider-Widget</translation>
     </message>
     <message>
         <location filename="translatables.py" line="294"/>
         <source>Some non-interactive text</source>
-        <translation type="unfinished"></translation>
+        <translation>Ein bisschen nicht-interaktiver Text</translation>
     </message>
     <message>
         <location filename="translatables.py" line="295"/>
         <source>Python editor</source>
-        <translation type="unfinished"></translation>
+        <translation>Python Editor</translation>
     </message>
     <message>
         <location filename="translatables.py" line="296"/>
         <source>An example editor widget</source>
-        <translation type="unfinished"></translation>
+        <translation>Beispiel für ein editor-Widget</translation>
     </message>
 </context>
 <context>
@@ -209,17 +210,17 @@
     <message>
         <location filename="translatables.py" line="200"/>
         <source>Open backup folder</source>
-        <translation type="unfinished"></translation>
+        <translation>Öffne Sicherungsordner</translation>
     </message>
     <message>
         <location filename="translatables.py" line="201"/>
         <source>Periodically saves your experiment to a back-up folder.</source>
-        <translation type="unfinished"></translation>
+        <translation>Erstellt regelmäßig Sicherungskopien Deines Experiments im Sicherungsordner.</translation>
     </message>
     <message>
         <location filename="translatables.py" line="202"/>
         <source>Failed to save backup ...</source>
-        <translation type="unfinished">Fehler bei der Datensicherung...</translation>
+        <translation>Fehler bei der Datensicherung...</translation>
     </message>
 </context>
 <context>
@@ -345,12 +346,12 @@
     <message>
         <location filename="translatables.py" line="381"/>
         <source>Lock dock widgets</source>
-        <translation type="unfinished"></translation>
+        <translation>Fixiere Andock-Menüs</translation>
     </message>
     <message>
         <location filename="translatables.py" line="382"/>
         <source>Manage the dock widgets for the debug window, file pool, etc.</source>
-        <translation type="unfinished"></translation>
+        <translation>Organisiere Andock-Menüs für Debugfenster, Dateisammlung, etc.</translation>
     </message>
 </context>
 <context>
@@ -358,17 +359,17 @@
     <message>
         <location filename="translatables.py" line="394"/>
         <source>Example extension</source>
-        <translation type="unfinished"></translation>
+        <translation>Beispiel Erweiterung</translation>
     </message>
     <message>
         <location filename="translatables.py" line="395"/>
         <source>An example extenstion</source>
-        <translation type="unfinished"></translation>
+        <translation>Beispiel für Erweiterung</translation>
     </message>
     <message>
         <location filename="translatables.py" line="396"/>
         <source>Some tooltip</source>
-        <translation type="unfinished"></translation>
+        <translation>Eine Schnellinfo</translation>
     </message>
 </context>
 <context>
@@ -376,77 +377,77 @@
     <message>
         <location filename="translatables.py" line="225"/>
         <source>Visual stimuli</source>
-        <translation type="unfinished"></translation>
+        <translation>Visuelle Stimuli</translation>
     </message>
     <message>
         <location filename="translatables.py" line="226"/>
         <source>Syle</source>
-        <translation type="unfinished"></translation>
+        <translation>Stil</translation>
     </message>
     <message>
         <location filename="translatables.py" line="227"/>
         <source>Style of the fixation dot</source>
-        <translation type="unfinished"></translation>
+        <translation>Stil des Fixationspunktes</translation>
     </message>
     <message>
         <location filename="translatables.py" line="228"/>
         <source>Pen width</source>
-        <translation type="unfinished">Linienstärke</translation>
+        <translation>Stiftbreite</translation>
     </message>
     <message>
         <location filename="translatables.py" line="229"/>
         <source>Specifies the pen width, or line thickness</source>
-        <translation type="unfinished"></translation>
+        <translation>Legt die Stiftbreite oder Linienstärke fest</translation>
     </message>
     <message>
         <location filename="translatables.py" line="230"/>
         <source>px</source>
-        <translation type="unfinished">px</translation>
+        <translation>px</translation>
     </message>
     <message>
         <location filename="translatables.py" line="231"/>
         <source>Duration</source>
-        <translation type="unfinished">Dauer</translation>
+        <translation>Dauer</translation>
     </message>
     <message>
         <location filename="translatables.py" line="232"/>
         <source>Expecting a value in milliseconds, &apos;keypress&apos; or &apos;mouseclick&apos;</source>
-        <translation type="unfinished"></translation>
+        <translation>Erwarte einen Wert in Millisekunden, &apos;keypress&apos; oder &apos;mouseclick&apos;</translation>
     </message>
     <message>
         <location filename="translatables.py" line="233"/>
         <source>Foreground color</source>
-        <translation type="unfinished"></translation>
+        <translation>Vordergrundfarbe</translation>
     </message>
     <message>
         <location filename="translatables.py" line="236"/>
         <source>Expecting a colorname (e.g., &apos;blue&apos;) or an HTML color (e.g., &apos;#0000FF&apos;)</source>
-        <translation type="unfinished"></translation>
+        <translation>Erwarte einen Farbnamen (z.B. &apos;blue&apos;) oder eine HTML-Farbe (z.B. &apos;#0000FF&apos;)</translation>
     </message>
     <message>
         <location filename="translatables.py" line="235"/>
         <source>Background color</source>
-        <translation type="unfinished"></translation>
+        <translation>Hintergrundfarbe</translation>
     </message>
     <message>
         <location filename="translatables.py" line="237"/>
         <source>X coordinate</source>
-        <translation type="unfinished"></translation>
+        <translation>X-Koordinate</translation>
     </message>
     <message>
         <location filename="translatables.py" line="238"/>
         <source>X-coordinate of the fixation dot (e.g., 0)</source>
-        <translation type="unfinished"></translation>
+        <translation>X-Koordinate des Fixationspunktes (z.B. 0)</translation>
     </message>
     <message>
         <location filename="translatables.py" line="239"/>
         <source>Y coordinate</source>
-        <translation type="unfinished"></translation>
+        <translation>Y-Koordinate</translation>
     </message>
     <message>
         <location filename="translatables.py" line="240"/>
         <source>Y-coordinate of the fixation dot (e.g., 0)</source>
-        <translation type="unfinished"></translation>
+        <translation>Y-Koordinate des Fixationspunktes (z.B. 0)</translation>
     </message>
 </context>
 <context>
@@ -489,7 +490,7 @@
     <message>
         <location filename="font_widget.ui" line="99"/>
         <source> pt</source>
-        <translation>pt</translation>
+        <translation> pt</translation>
     </message>
     <message>
         <location filename="font_widget.ui" line="132"/>
@@ -532,22 +533,22 @@
     <message>
         <location filename="translatables.py" line="30"/>
         <source>Form</source>
-        <translation type="unfinished"></translation>
+        <translation>Formular</translation>
     </message>
     <message>
         <location filename="translatables.py" line="31"/>
         <source>Edit the script to modify the form</source>
-        <translation type="unfinished"></translation>
+        <translation>Bearbeite das Skript, um das Formular zu verändern</translation>
     </message>
     <message>
         <location filename="translatables.py" line="32"/>
         <source>Widget column and row should be numeric</source>
-        <translation type="unfinished"></translation>
+        <translation>Widget-Spalte und -Zeile müssen numerisch sein</translation>
     </message>
     <message>
         <location filename="translatables.py" line="33"/>
         <source>cols, rows, and margins should be numeric values separated by a semi-colon</source>
-        <translation type="unfinished"></translation>
+        <translation>cols, rows und margins müssen numerische Werte enthalten und mit Semikolon getrennt werden</translation>
     </message>
 </context>
 <context>
@@ -555,67 +556,67 @@
     <message>
         <location filename="translatables.py" line="317"/>
         <source>Form</source>
-        <translation type="unfinished"></translation>
+        <translation>Formular</translation>
     </message>
     <message>
         <location filename="translatables.py" line="318"/>
         <source>Form title</source>
-        <translation type="unfinished"></translation>
+        <translation>Formularüberschrift</translation>
     </message>
     <message>
         <location filename="translatables.py" line="319"/>
         <source>Title to appear above the form text</source>
-        <translation type="unfinished"></translation>
+        <translation>Überschrift, die über dem Formulartext erscheint</translation>
     </message>
     <message>
         <location filename="translatables.py" line="320"/>
         <source>Checkbox text</source>
-        <translation type="unfinished"></translation>
+        <translation>Checkbox-Text</translation>
     </message>
     <message>
         <location filename="translatables.py" line="321"/>
         <source>Text for the checkbox</source>
-        <translation type="unfinished"></translation>
+        <translation>Text für die Checkbox</translation>
     </message>
     <message>
         <location filename="translatables.py" line="322"/>
         <source>Accept-button text</source>
-        <translation type="unfinished"></translation>
+        <translation>Einverstanden-Schaltfläche (Text)</translation>
     </message>
     <message>
         <location filename="translatables.py" line="323"/>
         <source>Text for the accept button</source>
-        <translation type="unfinished"></translation>
+        <translation>Text für die Einverstanden-Schaltfläche</translation>
     </message>
     <message>
         <location filename="translatables.py" line="324"/>
         <source>Decline-button text</source>
-        <translation type="unfinished"></translation>
+        <translation>Nicht einverstanden-Schaltfläche (Text)</translation>
     </message>
     <message>
         <location filename="translatables.py" line="325"/>
         <source>Text for the decline button</source>
-        <translation type="unfinished"></translation>
+        <translation>Text für die Nicht einverstanden-Schaltfläche</translation>
     </message>
     <message>
         <location filename="translatables.py" line="326"/>
         <source>Message on decline</source>
-        <translation type="unfinished"></translation>
+        <translation>Nachricht, wenn nicht einverstanden</translation>
     </message>
     <message>
         <location filename="translatables.py" line="327"/>
         <source>A message shown when the participant declines</source>
-        <translation type="unfinished"></translation>
+        <translation>Nachricht, die angezeigt wird, wenn TeilnehmerInnen kein Einverständnis geben</translation>
     </message>
     <message>
         <location filename="translatables.py" line="328"/>
         <source>Consent form text</source>
-        <translation type="unfinished"></translation>
+        <translation>Einverständniserklärungstext</translation>
     </message>
     <message>
         <location filename="translatables.py" line="329"/>
         <source>Text to display in the form body</source>
-        <translation type="unfinished"></translation>
+        <translation>Text, der im Formular angezeigt wird</translation>
     </message>
 </context>
 <context>
@@ -623,57 +624,57 @@
     <message>
         <location filename="translatables.py" line="243"/>
         <source>Form</source>
-        <translation type="unfinished"></translation>
+        <translation>Formular</translation>
     </message>
     <message>
         <location filename="translatables.py" line="245"/>
         <source>Form title</source>
-        <translation type="unfinished"></translation>
+        <translation>Formularüberschrift</translation>
     </message>
     <message>
         <location filename="translatables.py" line="247"/>
         <source>Response variable</source>
-        <translation type="unfinished"></translation>
+        <translation>Antwortvariable</translation>
     </message>
     <message>
         <location filename="translatables.py" line="249"/>
         <source>Allow multiple options to be selected</source>
-        <translation type="unfinished"></translation>
+        <translation>Erlaube Mehrfachauswahl</translation>
     </message>
     <message>
         <location filename="translatables.py" line="251"/>
         <source>Advance immediately to the next item once a selection has been made</source>
-        <translation type="unfinished"></translation>
+        <translation>Sofort zum nächsten Item gehen, wenn eine Auswahl gemacht wurde</translation>
     </message>
     <message>
         <location filename="translatables.py" line="252"/>
         <source>Button text</source>
-        <translation type="unfinished"></translation>
+        <translation>Schaltflächentext</translation>
     </message>
     <message>
         <location filename="translatables.py" line="253"/>
         <source>Text for the button to advance to the next item</source>
-        <translation type="unfinished"></translation>
+        <translation>Beschriftung der Schaltfläche, um zum nächsten Item zu gehen</translation>
     </message>
     <message>
         <location filename="translatables.py" line="255"/>
         <source>Your question</source>
-        <translation type="unfinished"></translation>
+        <translation>Deine Frage</translation>
     </message>
     <message>
         <location filename="translatables.py" line="256"/>
         <source>Response options (different options on different lines)</source>
-        <translation type="unfinished"></translation>
+        <translation>Antwortoptionen (eine Antwort je Zeile)</translation>
     </message>
     <message>
         <location filename="translatables.py" line="257"/>
         <source>Response options</source>
-        <translation type="unfinished"></translation>
+        <translation>Antwortoptionen</translation>
     </message>
     <message>
         <location filename="translatables.py" line="258"/>
         <source>margins should be numeric values separated by a semi-colon</source>
-        <translation type="unfinished"></translation>
+        <translation>margins muss numerische Werte enthalten, die mit Semikolon getrennt sind</translation>
     </message>
 </context>
 <context>
@@ -804,37 +805,37 @@
     <message>
         <location filename="translatables.py" line="261"/>
         <source>Form</source>
-        <translation type="unfinished"></translation>
+        <translation>Formular</translation>
     </message>
     <message>
         <location filename="translatables.py" line="262"/>
         <source>Form title</source>
-        <translation type="unfinished"></translation>
+        <translation>Formularüberschrift</translation>
     </message>
     <message>
         <location filename="translatables.py" line="263"/>
         <source>Title to appear above the form text</source>
-        <translation type="unfinished"></translation>
+        <translation>Überschrift, die über dem Formulartext erscheint</translation>
     </message>
     <message>
         <location filename="translatables.py" line="264"/>
         <source>Ok-button text</source>
-        <translation type="unfinished"></translation>
+        <translation>OK-Schaltfläche (Text)</translation>
     </message>
     <message>
         <location filename="translatables.py" line="265"/>
         <source>Text for the Ok button</source>
-        <translation type="unfinished"></translation>
+        <translation>Text für die OK-Schaltfläche</translation>
     </message>
     <message>
         <location filename="translatables.py" line="266"/>
         <source>Main form text</source>
-        <translation type="unfinished"></translation>
+        <translation>Formulartext</translation>
     </message>
     <message>
         <location filename="translatables.py" line="267"/>
         <source>Text to display in the form body</source>
-        <translation type="unfinished"></translation>
+        <translation>Text, der im Formular angezeigt wird</translation>
     </message>
 </context>
 <context>
@@ -842,37 +843,37 @@
     <message>
         <location filename="translatables.py" line="385"/>
         <source>Form</source>
-        <translation type="unfinished"></translation>
+        <translation>Formular</translation>
     </message>
     <message>
         <location filename="translatables.py" line="386"/>
         <source>Form title</source>
-        <translation type="unfinished"></translation>
+        <translation>Formularüberschrift</translation>
     </message>
     <message>
         <location filename="translatables.py" line="387"/>
         <source>Title to appear above the form text</source>
-        <translation type="unfinished"></translation>
+        <translation>Überschrift, die über dem Formulartext erscheint</translation>
     </message>
     <message>
         <location filename="translatables.py" line="388"/>
         <source>Response variable</source>
-        <translation type="unfinished"></translation>
+        <translation>Antwortvariable</translation>
     </message>
     <message>
         <location filename="translatables.py" line="389"/>
         <source>The experimental variable to save the response in</source>
-        <translation type="unfinished"></translation>
+        <translation>Die Variable Deines Experimentes, in der die Antwort gespeichert werden soll</translation>
     </message>
     <message>
         <location filename="translatables.py" line="390"/>
         <source>Your question</source>
-        <translation type="unfinished"></translation>
+        <translation>Deine Frage</translation>
     </message>
     <message>
         <location filename="translatables.py" line="391"/>
         <source>A question text</source>
-        <translation type="unfinished"></translation>
+        <translation>Text einer Frage</translation>
     </message>
 </context>
 <context>
@@ -972,7 +973,7 @@
         <source>* Has no effect in psycho back-end</source>
         <translation>* Hat im psycho Back-End keine Auswirkung</translation>
     </message>
-    <message encoding="UTF-8">
+    <message utf8="true">
         <location filename="gabor_settings.ui" line="89"/>
         <source> °</source>
         <translation> °</translation>
@@ -980,7 +981,7 @@
     <message>
         <location filename="gabor_settings.ui" line="160"/>
         <source> px</source>
-        <translation>px</translation>
+        <translation> px</translation>
     </message>
     <message>
         <location filename="gabor_settings.ui" line="145"/>
@@ -1111,22 +1112,22 @@
     <message>
         <location filename="translatables.py" line="8"/>
         <source>Help</source>
-        <translation type="unfinished">Hilfe</translation>
+        <translation>Hilfe</translation>
     </message>
     <message>
         <location filename="translatables.py" line="9"/>
         <source>Offline help</source>
-        <translation type="unfinished">Offline Hilfe</translation>
+        <translation>Offline Hilfe</translation>
     </message>
     <message>
         <location filename="translatables.py" line="10"/>
         <source>Online help</source>
-        <translation type="unfinished">Online Hilfe</translation>
+        <translation>Online Hilfe</translation>
     </message>
     <message>
         <location filename="translatables.py" line="11"/>
         <source>Adds a Help menu.</source>
-        <translation type="unfinished"></translation>
+        <translation>Fügt ein Hilfe-Menü hinzu.</translation>
     </message>
 </context>
 <context>
@@ -1134,52 +1135,52 @@
     <message>
         <location filename="translatables.py" line="299"/>
         <source>Response collection</source>
-        <translation type="unfinished"></translation>
+        <translation>Reaktion aufzeichnen</translation>
     </message>
     <message>
         <location filename="translatables.py" line="300"/>
         <source>Dummy mode (use keyboard instead of joystick)</source>
-        <translation type="unfinished"></translation>
+        <translation>Dummymodus (Tastatur anstelle von Responsebox benutzen)</translation>
     </message>
     <message>
         <location filename="translatables.py" line="301"/>
         <source>Enable dummy mode to test the experiment using a keyboard</source>
-        <translation type="unfinished"></translation>
+        <translation>Dummymodus einschalten, um das Experiment mit normaler Tastatur zu testen</translation>
     </message>
     <message>
         <location filename="translatables.py" line="302"/>
         <source>Device nr.</source>
-        <translation type="unfinished"></translation>
+        <translation>Gerät Nr.</translation>
     </message>
     <message>
         <location filename="translatables.py" line="303"/>
         <source>Identifies the joystick, in case there are multiple joysticks</source>
-        <translation type="unfinished"></translation>
+        <translation>Identifiziert die Responsebox im Fall, dass es mehrere gibt</translation>
     </message>
     <message>
         <location filename="translatables.py" line="304"/>
         <source>Correct response</source>
-        <translation type="unfinished"></translation>
+        <translation>Richtige Reaktion</translation>
     </message>
     <message>
         <location filename="translatables.py" line="307"/>
         <source>Expecting a comma-separated list of numbers between 1 and the number of joybuttons</source>
-        <translation type="unfinished"></translation>
+        <translation>Erwarte eine kommagetrennte Liste von Zahlen zwischen 1 und der Anzahl der Tasten auf der Responsebox</translation>
     </message>
     <message>
         <location filename="translatables.py" line="306"/>
         <source>Allowed responses</source>
-        <translation type="unfinished"></translation>
+        <translation>Erlaubte Reaktionen</translation>
     </message>
     <message>
         <location filename="translatables.py" line="308"/>
         <source>Timeout</source>
-        <translation type="unfinished"></translation>
+        <translation>Timeout</translation>
     </message>
     <message>
         <location filename="translatables.py" line="309"/>
         <source>Expecting a value in milliseconds of &apos;infinite&apos;</source>
-        <translation type="unfinished"></translation>
+        <translation>Erwarte einen Wert in Millisekunden oder &apos;infinite&apos;</translation>
     </message>
 </context>
 <context>
@@ -1217,12 +1218,12 @@
     <message>
         <location filename="loop_widget.ui" line="132"/>
         <source> cycle(s)</source>
-        <translation>Durchläufe</translation>
+        <translation> Durchläufe</translation>
     </message>
     <message>
         <location filename="loop_widget.ui" line="135"/>
         <source>first </source>
-        <translation>erste(n)</translation>
+        <translation>erste(n) </translation>
     </message>
     <message>
         <location filename="loop_widget.ui" line="145"/>
@@ -1468,7 +1469,7 @@
     <message>
         <location filename="noise_settings.ui" line="203"/>
         <source>Size&lt;br /&gt;&lt;i&gt;in pixels&lt;/i&gt;</source>
-        <translation>Größe&lt;br /&gt;&lt;i&gt;in Pixeln&lt;/i&gt;</translation>
+        <translation>Größe&lt;br /&gt;&lt;i&gt;in Pixel&lt;/i&gt;</translation>
     </message>
     <message>
         <location filename="noise_settings.ui" line="222"/>
@@ -1486,17 +1487,17 @@
     <message>
         <location filename="translatables.py" line="312"/>
         <source>Miscellaneous</source>
-        <translation type="unfinished">Verschiedenes</translation>
+        <translation>Verschiedenes</translation>
     </message>
     <message>
         <location filename="translatables.py" line="313"/>
         <source>Note</source>
-        <translation type="unfinished"></translation>
+        <translation>Notiz</translation>
     </message>
     <message>
         <location filename="translatables.py" line="314"/>
         <source>Type your note here</source>
-        <translation type="unfinished"></translation>
+        <translation>Gib hier Deine Notiz ein</translation>
     </message>
 </context>
 <context>
@@ -1947,7 +1948,7 @@
     <message>
         <location filename="main_window.ui" line="764"/>
         <source>Quick switcher</source>
-        <translation>Schnellumschalter</translation>
+        <translation>Schnellzugriff</translation>
     </message>
     <message>
         <location filename="main_window.ui" line="767"/>
@@ -2068,17 +2069,17 @@
     <message>
         <location filename="translatables.py" line="376"/>
         <source>Plug-in and extension manager</source>
-        <translation type="unfinished"></translation>
+        <translation>Plugin- und Erweiterungsmanager</translation>
     </message>
     <message>
         <location filename="translatables.py" line="377"/>
         <source>Enable or disable plug-ins and extensions.</source>
-        <translation type="unfinished"></translation>
+        <translation>Plugins und Erweiterungen aktivieren oder deaktivieren.</translation>
     </message>
     <message>
         <location filename="translatables.py" line="378"/>
         <source>Manage plug-ins and extensions</source>
-        <translation type="unfinished"></translation>
+        <translation>Verwalte Plugins und Erweiterungen</translation>
     </message>
 </context>
 <context>
@@ -2289,17 +2290,17 @@
     <message>
         <location filename="translatables.py" line="25"/>
         <source>PsychoPy monitor center</source>
-        <translation type="unfinished"></translation>
+        <translation>PsychoPy-Kontrollzentrum</translation>
     </message>
     <message>
         <location filename="translatables.py" line="26"/>
         <source>Launches the PsychoPy monitor center</source>
-        <translation type="unfinished"></translation>
+        <translation>Startet das PsychoPy-Kontrollzentrum</translation>
     </message>
     <message>
         <location filename="translatables.py" line="27"/>
         <source>Launch the PsychoPy monitor center</source>
-        <translation type="unfinished"></translation>
+        <translation>Starte das PsychoPy-Kontrollzentrum</translation>
     </message>
 </context>
 <context>
@@ -2307,12 +2308,12 @@
     <message>
         <location filename="translatables.py" line="354"/>
         <source>QProgEdit preferences</source>
-        <translation type="unfinished"></translation>
+        <translation>QProgEdit Einstellungen</translation>
     </message>
     <message>
         <location filename="translatables.py" line="355"/>
         <source>Editor preferences (QProgEdit)</source>
-        <translation type="unfinished"></translation>
+        <translation>Editoreinstellungen (QProgEdit)</translation>
     </message>
 </context>
 <context>
@@ -2320,57 +2321,57 @@
     <message>
         <location filename="translatables.py" line="36"/>
         <source>Staircase</source>
-        <translation type="unfinished"></translation>
+        <translation>Staircase-Methode</translation>
     </message>
     <message>
         <location filename="translatables.py" line="38"/>
         <source>Estimated threshold (used for starting test value)</source>
-        <translation type="unfinished"></translation>
+        <translation>Geschätzte Reizschwelle</translation>
     </message>
     <message>
         <location filename="translatables.py" line="40"/>
         <source>Std. dev. of estimated threshold</source>
-        <translation type="unfinished"></translation>
+        <translation>Standardabweichung der geschätzten Reizschwelle</translation>
     </message>
     <message>
         <location filename="translatables.py" line="42"/>
         <source>Desired proportion of correct responses</source>
-        <translation type="unfinished"></translation>
+        <translation>Angestrebter Anteil korrekter Reaktionen</translation>
     </message>
     <message>
         <location filename="translatables.py" line="44"/>
-        <source>Steepness of the Weibull psychometric function (&#xce;&#xb2;)</source>
-        <translation type="unfinished"></translation>
+        <source>Steepness of the Weibull psychometric function (Î²)</source>
+        <translation>Steilheit der Weibull-Verteilung (Î²)</translation>
     </message>
     <message>
         <location filename="translatables.py" line="46"/>
-        <source>Proportion of random responses at maximum stimulus intensity (&#xce;&#xb4;)</source>
-        <translation type="unfinished"></translation>
+        <source>Proportion of random responses at maximum stimulus intensity (Î´)</source>
+        <translation>Anteil zufälliger Reaktionen bei höchster Stimulusdichte  (Î´)</translation>
     </message>
     <message>
         <location filename="translatables.py" line="48"/>
-        <source>Chance level (&#xce;&#xb3;)</source>
-        <translation type="unfinished"></translation>
+        <source>Chance level (Î³)</source>
+        <translation>Zufallsniveau (Î³)</translation>
     </message>
     <message>
         <location filename="translatables.py" line="50"/>
         <source>Method to determine optimal test value</source>
-        <translation type="unfinished"></translation>
+        <translation>Methode um den optimalen Testwert zu ermitteln</translation>
     </message>
     <message>
         <location filename="translatables.py" line="52"/>
         <source>Minimum test value</source>
-        <translation type="unfinished"></translation>
+        <translation>Minimaler Testwert</translation>
     </message>
     <message>
         <location filename="translatables.py" line="54"/>
         <source>Maximum test value</source>
-        <translation type="unfinished"></translation>
+        <translation>Maximaler Testwert</translation>
     </message>
     <message>
         <location filename="translatables.py" line="56"/>
         <source>Experimental variable for test value</source>
-        <translation type="unfinished"></translation>
+        <translation>Variable für Testwert</translation>
     </message>
 </context>
 <context>
@@ -2378,12 +2379,12 @@
     <message>
         <location filename="translatables.py" line="3"/>
         <source>Staircase</source>
-        <translation type="unfinished"></translation>
+        <translation>Staircase</translation>
     </message>
     <message>
         <location filename="translatables.py" line="5"/>
         <source>Response variable (0 or 1)</source>
-        <translation type="unfinished"></translation>
+        <translation>Antwortvariable (0 oder 1)</translation>
     </message>
 </context>
 <context>
@@ -2391,12 +2392,12 @@
     <message>
         <location filename="translatables.py" line="205"/>
         <source>Quick switcher</source>
-        <translation type="unfinished">Schnellumschalter</translation>
+        <translation>Schnellzugriff</translation>
     </message>
     <message>
         <location filename="translatables.py" line="206"/>
         <source>Quickly open items and scripts.</source>
-        <translation type="unfinished"></translation>
+        <translation>Items und Scripts schnell öffnen.</translation>
     </message>
 </context>
 <context>
@@ -2472,12 +2473,12 @@
     <message>
         <location filename="translatables.py" line="221"/>
         <source>Response collection</source>
-        <translation type="unfinished"></translation>
+        <translation>Reaktion aufzeichnen</translation>
     </message>
     <message>
         <location filename="translatables.py" line="222"/>
         <source>This plug-in has no settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Das Plugin hat keine Einstellungen</translation>
     </message>
 </context>
 <context>
@@ -2490,17 +2491,17 @@
     <message>
         <location filename="sampler_widget.ui" line="38"/>
         <source>Sound file</source>
-        <translation>Tondatei</translation>
+        <translation>Audiodatei</translation>
     </message>
     <message>
         <location filename="sampler_widget.ui" line="45"/>
         <source>The sound file. Expecting a .ogg or .wav file.</source>
-        <translation>Tondatei im .ogg- oder .wav-Format.</translation>
+        <translation>Audiodatei im .ogg- oder .wav-Format.</translation>
     </message>
     <message>
         <location filename="sampler_widget.ui" line="58"/>
         <source>Select a sound file from the file pool</source>
-        <translation>Wähle eine Tondatei aus der Dateisammlung</translation>
+        <translation>Wähle eine Audiodatei aus der Dateisammlung</translation>
     </message>
     <message>
         <location filename="sampler_widget.ui" line="61"/>
@@ -3231,7 +3232,7 @@ Beschreibung: %s</translation>
     <message>
         <location filename="translatables.py" line="134"/>
         <source>Click to edit</source>
-        <translation>Zum bearbeiten klicken</translation>
+        <translation>Zum Bearbeiten klicken</translation>
     </message>
     <message>
         <location filename="translatables.py" line="145"/>
@@ -3807,7 +3808,7 @@ Beschreibung: %s</translation>
     <message>
         <location filename="synth_widget.ui" line="123"/>
         <source>Pan</source>
-        <translation>Richtung (Panning)</translation>
+        <translation>Richtung</translation>
     </message>
     <message>
         <location filename="synth_widget.ui" line="152"/>
@@ -3852,7 +3853,7 @@ Beschreibung: %s</translation>
     <message>
         <location filename="synth_widget.ui" line="265"/>
         <source>sound</source>
-        <translation>sound</translation>
+        <translation>Audio</translation>
     </message>
     <message>
         <location filename="synth_widget.ui" line="272"/>
@@ -3882,7 +3883,7 @@ Beschreibung: %s</translation>
     <message>
         <location filename="synth_widget.ui" line="345"/>
         <source>Synth controls</source>
-        <translation>Synthesizer Einstellungen</translation>
+        <translation>Synthesizer-Einstellungen</translation>
     </message>
     <message>
         <location filename="synth_widget.ui" line="367"/>
@@ -3927,7 +3928,7 @@ Beschreibung: %s</translation>
     <message>
         <location filename="synth_widget.ui" line="282"/>
         <source> ms</source>
-        <translation>ms</translation>
+        <translation> ms</translation>
     </message>
 </context>
 <context>
@@ -3935,92 +3936,92 @@ Beschreibung: %s</translation>
     <message>
         <location filename="translatables.py" line="332"/>
         <source>Visual stimuli</source>
-        <translation type="unfinished"></translation>
+        <translation>Visuelle Stimuli</translation>
     </message>
     <message>
         <location filename="translatables.py" line="333"/>
         <source>&lt;b&gt;Tip:&lt;/b&gt; Tip: Forms provide a more flexible way to present text stimuli and collect text responses.</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Tipp:&lt;/b&gt; Tip: Formulare bieten flexiblere Möglichkeiten Textstimuli darzubieten und Texteingaben aufzuzeichnen.</translation>
     </message>
     <message>
         <location filename="translatables.py" line="334"/>
         <source>Duration</source>
-        <translation type="unfinished">Dauer</translation>
+        <translation>Dauer</translation>
     </message>
     <message>
         <location filename="translatables.py" line="335"/>
         <source>Expecting a value in milliseconds, &apos;keypress&apos; or &apos;mouseclick&apos;</source>
-        <translation type="unfinished"></translation>
+        <translation>Erwarte einen Wert in Millisekunden, &apos;keypress&apos; oder &apos;mouseclick&apos;</translation>
     </message>
     <message>
         <location filename="translatables.py" line="336"/>
         <source>Foreground color</source>
-        <translation type="unfinished"></translation>
+        <translation>Vordergrundfarbe</translation>
     </message>
     <message>
         <location filename="translatables.py" line="339"/>
         <source>Expecting a colorname (e.g., &apos;blue&apos;) or an HTML color (e.g., &apos;#0000FF&apos;)</source>
-        <translation type="unfinished"></translation>
+        <translation>Erwarte einen Farbnamen (z.B. &apos;blue&apos;) oder eine HTML-Farbe (z.B. &apos;#0000FF&apos;)</translation>
     </message>
     <message>
         <location filename="translatables.py" line="338"/>
         <source>Background color</source>
-        <translation type="unfinished"></translation>
+        <translation>Hintergrundfarbe</translation>
     </message>
     <message>
         <location filename="translatables.py" line="340"/>
         <source>Font family</source>
-        <translation type="unfinished"></translation>
+        <translation>Schrifttyp</translation>
     </message>
     <message>
         <location filename="translatables.py" line="341"/>
         <source>The font family</source>
-        <translation type="unfinished"></translation>
+        <translation>Schrifttyp</translation>
     </message>
     <message>
         <location filename="translatables.py" line="342"/>
         <source>Font size</source>
-        <translation type="unfinished"></translation>
+        <translation>Schriftgröße</translation>
     </message>
     <message>
         <location filename="translatables.py" line="343"/>
         <source>The font size</source>
-        <translation type="unfinished"></translation>
+        <translation>Schriftgröße</translation>
     </message>
     <message>
         <location filename="translatables.py" line="344"/>
         <source> pt</source>
-        <translation type="unfinished">pt</translation>
+        <translation> pt</translation>
     </message>
     <message>
         <location filename="translatables.py" line="345"/>
         <source>Wrap line after</source>
-        <translation type="unfinished"></translation>
+        <translation>Zeilenumbruch einfügen nach</translation>
     </message>
     <message>
         <location filename="translatables.py" line="346"/>
         <source>Maximum number of characters per line</source>
-        <translation type="unfinished"></translation>
+        <translation>Maximale Zeichenzahl pro Zeile</translation>
     </message>
     <message>
         <location filename="translatables.py" line="347"/>
         <source> characters</source>
-        <translation type="unfinished">Zeichen</translation>
+        <translation> Zeichen</translation>
     </message>
     <message>
         <location filename="translatables.py" line="349"/>
         <source>Text alignment</source>
-        <translation type="unfinished"></translation>
+        <translation>Ausrichtung</translation>
     </message>
     <message>
         <location filename="translatables.py" line="350"/>
         <source>Text</source>
-        <translation type="unfinished"></translation>
+        <translation>Text</translation>
     </message>
     <message>
         <location filename="translatables.py" line="351"/>
         <source>The text to be displayed</source>
-        <translation type="unfinished"></translation>
+        <translation>Angezeigter Text</translation>
     </message>
 </context>
 <context>
@@ -4041,22 +4042,22 @@ Beschreibung: %s</translation>
     <message>
         <location filename="translatables.py" line="270"/>
         <source>Integrate menu and toolbar</source>
-        <translation type="unfinished"></translation>
+        <translation>Menü und Werkzeugleiste zusammenführen</translation>
     </message>
     <message>
         <location filename="translatables.py" line="271"/>
         <source>Integrates the menu into the toolbar.</source>
-        <translation type="unfinished"></translation>
+        <translation>Integriert das Menü in die Werkzeugleiste.</translation>
     </message>
     <message>
         <location filename="translatables.py" line="272"/>
         <source>Integrates the menu into the toolbar</source>
-        <translation type="unfinished"></translation>
+        <translation>Integriert das Menü in die Werkzeugleiste</translation>
     </message>
     <message>
         <location filename="translatables.py" line="273"/>
         <source>Menu</source>
-        <translation type="unfinished"></translation>
+        <translation>Menü</translation>
     </message>
 </context>
 <context>
@@ -4064,47 +4065,47 @@ Beschreibung: %s</translation>
     <message>
         <location filename="translatables.py" line="365"/>
         <source>Response collection</source>
-        <translation type="unfinished"></translation>
+        <translation>Reaktion aufzeichnen</translation>
     </message>
     <message>
         <location filename="translatables.py" line="366"/>
         <source>Correct response</source>
-        <translation type="unfinished"></translation>
+        <translation>Richtige Reaktion</translation>
     </message>
     <message>
         <location filename="translatables.py" line="367"/>
         <source>Set the correct response</source>
-        <translation type="unfinished"></translation>
+        <translation>Richtige Reaktion festlegen</translation>
     </message>
     <message>
         <location filename="translatables.py" line="368"/>
         <source>Timeout</source>
-        <translation type="unfinished"></translation>
+        <translation>Timeout</translation>
     </message>
     <message>
         <location filename="translatables.py" line="369"/>
         <source>Expecting a value in milliseconds or &apos;infinite&apos;</source>
-        <translation type="unfinished"></translation>
+        <translation>Erwarte einen Wert in Millisekunden oder &apos;infinite&apos;</translation>
     </message>
     <message>
         <location filename="translatables.py" line="370"/>
         <source>Number of columns</source>
-        <translation type="unfinished"></translation>
+        <translation>Anzahl Spalten</translation>
     </message>
     <message>
         <location filename="translatables.py" line="371"/>
         <source>Specifies the number of columns</source>
-        <translation type="unfinished"></translation>
+        <translation>Legt die Anzahl der Spalten fest</translation>
     </message>
     <message>
         <location filename="translatables.py" line="372"/>
         <source>Number of rows</source>
-        <translation type="unfinished"></translation>
+        <translation>Anzahl Zeilen</translation>
     </message>
     <message>
         <location filename="translatables.py" line="373"/>
         <source>Specifies the number of rows</source>
-        <translation type="unfinished"></translation>
+        <translation>Legt die Anzahl der Zeilen fest</translation>
     </message>
 </context>
 <context>
@@ -4112,27 +4113,27 @@ Beschreibung: %s</translation>
     <message>
         <location filename="translatables.py" line="358"/>
         <source>Check for updates</source>
-        <translation type="unfinished">Auf Updates prüfen</translation>
+        <translation>Auf Updates prüfen</translation>
     </message>
     <message>
         <location filename="translatables.py" line="359"/>
         <source>Checks whether a new version of OpenSesame is available.</source>
-        <translation type="unfinished"></translation>
+        <translation>Überprüft, ob eine neue Version von OpenSesame verfügbar ist.</translation>
     </message>
     <message>
         <location filename="translatables.py" line="360"/>
         <source>... and is sorry to say that the attempt to check for updates has failed. Please make sure that you are connected to the internet and try again later. If this problem persists, please visit &lt;a href=&apos;http://www.cogsci.nl/opensesame&apos;&gt;http://www.cogsci.nl/opensesame&lt;/a&gt; for more information.</source>
-        <translation type="unfinished">... und bedauert Dir mitteilen zu müssen, dass der Versuch nach Updates zu suchen, gescheitert ist. Bitte stelle sicher, dass Du mit dem Internet verbunden bist und versuche es später wieder. Wenn das Problem weiterhin besteht, besuche uns bitte  unter &lt;a href=&apos;http://www.cogsci.nl/opensesame&apos;&gt;http://www.cogsci.nl/opensesame&lt;/a&gt; für weitere Informationen.</translation>
+        <translation>... und muss Dir leider mitteilen, dass der Versuch nach Updates zu suchen, gescheitert ist. Bitte stelle sicher, dass Du mit dem Internet verbunden bist und versuche es später wieder. Wenn das Problem weiterhin besteht, besuche uns bitte  unter &lt;a href=&apos;http://www.cogsci.nl/opensesame&apos;&gt;http://www.cogsci.nl/opensesame&lt;/a&gt; für weitere Informationen.</translation>
     </message>
     <message>
         <location filename="translatables.py" line="361"/>
         <source>... and is happy to report that a new version of OpenSesame (%s) is available at &lt;a href=&apos;http://www.cogsci.nl/opensesame&apos;&gt;http://www.cogsci.nl/opensesame&lt;/a&gt;!</source>
-        <translation type="unfinished">...und freut sich Dir mitteilen zu können, dass eine neue Version von OpenSesame (%s) unter &lt;a href=&apos;http://www.cogsci.nl/opensesame&apos;&gt;http://www.cogsci.nl/opensesame&lt;/a&gt; verfügbar ist!</translation>
+        <translation>...und kann dir erfreulicherweise mitteilen, dass eine neue Version von OpenSesame (%s) unter &lt;a href=&apos;http://www.cogsci.nl/opensesame&apos;&gt;http://www.cogsci.nl/opensesame&lt;/a&gt; verfügbar ist!</translation>
     </message>
     <message>
         <location filename="translatables.py" line="362"/>
         <source> ... and is happy to report that you are running the most recent version of OpenSesame.</source>
-        <translation type="unfinished">... und freut sich Dir mitteilen zu können, dass Du die aktuellste Version von OpenSesame benutzt.</translation>
+        <translation>... und kann Dir erfreulicherweise mitteilen, dass Du die aktuellste Version von OpenSesame benutzt.</translation>
     </message>
 </context>
 <context>
@@ -4229,47 +4230,47 @@ Beschreibung: %s</translation>
     <message>
         <location filename="translatables.py" line="209"/>
         <source>Visual stimuli</source>
-        <translation type="unfinished"></translation>
+        <translation>Visuelle Stimuli</translation>
     </message>
     <message>
         <location filename="translatables.py" line="210"/>
         <source>Video file</source>
-        <translation type="unfinished"></translation>
+        <translation>Videodatei</translation>
     </message>
     <message>
         <location filename="translatables.py" line="211"/>
         <source>A video file</source>
-        <translation type="unfinished"></translation>
+        <translation>Eine Videodatei</translation>
     </message>
     <message>
         <location filename="translatables.py" line="212"/>
         <source>Resize to fit screen</source>
-        <translation type="unfinished"></translation>
+        <translation>Größe anpassen</translation>
     </message>
     <message>
         <location filename="translatables.py" line="213"/>
         <source>Resize the video to fit the full screen</source>
-        <translation type="unfinished"></translation>
+        <translation>Video auf die Größe des Bildschirms anpassen</translation>
     </message>
     <message>
         <location filename="translatables.py" line="216"/>
         <source>Duration</source>
-        <translation type="unfinished">Dauer</translation>
+        <translation>Dauer</translation>
     </message>
     <message>
         <location filename="translatables.py" line="215"/>
         <source>Expecting a value in milliseconds, &apos;keypress&apos; or &apos;mouseclick&apos;</source>
-        <translation type="unfinished"></translation>
+        <translation>Erwarte einen Wert in Millisekunden, &apos;keypress&apos; oder &apos;mouseclick&apos;</translation>
     </message>
     <message>
         <location filename="translatables.py" line="217"/>
         <source>Frame duration in milliseconds</source>
-        <translation type="unfinished"></translation>
+        <translation>Dauer eines Frames in Millisekunden</translation>
     </message>
     <message>
         <location filename="translatables.py" line="218"/>
         <source>ms</source>
-        <translation type="unfinished">ms</translation>
+        <translation>ms</translation>
     </message>
 </context>
 <context>
@@ -4373,7 +4374,7 @@ Beschreibung: %s</translation>
     <message>
         <location filename="prefsWidget.ui" line="40"/>
         <source> characters</source>
-        <translation>Zeichen</translation>
+        <translation> Zeichen</translation>
     </message>
     <message>
         <location filename="prefsWidget.ui" line="47"/>
@@ -4423,7 +4424,7 @@ Beschreibung: %s</translation>
     <message>
         <location filename="prefsWidget.ui" line="64"/>
         <source> pt</source>
-        <translation>pt</translation>
+        <translation> pt</translation>
     </message>
     <message>
         <location filename="prefsWidget.ui" line="113"/>
@@ -4438,7 +4439,7 @@ Beschreibung: %s</translation>
     <message>
         <location filename="prefsWidget.ui" line="85"/>
         <source>Enable automatic indentation</source>
-        <translation>Autmoatischen Einzug aktivieren</translation>
+        <translation>Automatischen Einzug aktivieren</translation>
     </message>
     <message>
         <location filename="prefsWidget.ui" line="162"/>
@@ -4593,7 +4594,7 @@ Einstellungen im Zusammenhang mit dem Bildschirm, Ton und Eingabegeräten</trans
         <source>&lt;a href=&quot;http://osdoc.cogsci.nl/donate/&quot;&gt;Donate&lt;/a&gt;</source>
         <translation>&lt;a href=&quot;http://osdoc.cogsci.nl/donate/&quot;&gt;Spenden&lt;/a&gt;</translation>
     </message>
-    <message encoding="UTF-8">
+    <message utf8="true">
         <location filename="credits_widget.ui" line="179"/>
         <source>OpenSesame [version] [codename]
 Copyright Sebastiaan Mathôt (2010-2014)</source>
