@@ -122,7 +122,7 @@ class base_extension(base_subcomponent):
 
 		label = self.info.get(u'label', None)
 		if label != None:
-			return _(label)
+			return _(label, context=self.name())
 		return None
 
 	def tooltip(self):
@@ -140,7 +140,7 @@ class base_extension(base_subcomponent):
 
 		tooltip = self.info.get(u'tooltip', None)
 		if tooltip != None:
-			return _(tooltip)
+			return _(tooltip, context=self.name())
 		return None
 
 
@@ -464,13 +464,13 @@ class base_extension(base_subcomponent):
 		r = 10000000 # Maximumum range for spinbox widgets
 		if u'settings' not in self.info:
 			return None
-		group = QtGui.QGroupBox(_(u'Extension: %s') % self.name(),
+		group = QtGui.QGroupBox(_(u'Extension: %s', context=self.name()) % self.name(),
 			self.main_window)
 		layout = QtGui.QFormLayout(group)
 		self.settings_controls = {}
 		for setting, default in self.info[u'settings'].items():
 			value = cfg[setting]
-			label = QtGui.QLabel(_(setting))
+			label = QtGui.QLabel(_(setting, context=self.name()))
 			if isinstance(default, bool):
 				control = QtGui.QCheckBox(self.main_window)
 				control.setChecked(bool(value))

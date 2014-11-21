@@ -96,13 +96,13 @@ class qtplugin(qtitem.qtitem):
 
 		if tooltip != None:
 			try:
-				widget.setToolTip(_(tooltip))
+				widget.setToolTip(_(tooltip, context=self.name))
 			except:
 				pass
 		if type(min_width) == int:
 			widget.setMinimumWidth(min_width)
 		row = self.edit_grid.rowCount()
-		self.edit_grid.addWidget(QtGui.QLabel(_(label)), row, 0)
+		self.edit_grid.addWidget(QtGui.QLabel(_(label, context=self.name)), row, 0)
 		self.edit_grid.addWidget(widget, row, 1)
 		self.set_focus_widget(widget)
 
@@ -151,7 +151,7 @@ class qtplugin(qtitem.qtitem):
 		A QCheckBox widget.
 		"""
 
-		checkbox = QtGui.QCheckBox(_(label))
+		checkbox = QtGui.QCheckBox(_(label, context=self.name))
 		checkbox.clicked.connect(self.apply_edit_changes)
 		self.add_control('', checkbox, tooltip)
 		if var != None:
@@ -364,7 +364,7 @@ class qtplugin(qtitem.qtitem):
 		qprogedit = QTabManager(cfg=cfg)
 		qprogedit.focusLost.connect(self.apply_edit_changes)
 		qprogedit.handlerButtonClicked.connect(self.apply_edit_changes)
-		qprogedit.addTab(label).setLang(lang)
+		qprogedit.addTab(_(label, context=self.name)).setLang(lang)
 
 		if var != None:
 			self.auto_editor[var] = qprogedit
@@ -385,7 +385,7 @@ class qtplugin(qtitem.qtitem):
 		"""
 
 		row = self.edit_grid.rowCount()
-		label = QtGui.QLabel(_(msg))
+		label = QtGui.QLabel(_(msg, context=self.name))
 		label.setWordWrap(True)
 		self.edit_vbox.addWidget(label)
 		return label
@@ -432,7 +432,7 @@ class qtplugin(qtitem.qtitem):
 		A QPushButton widget.
 		"""
 
-		button_apply = QtGui.QPushButton(_(label))
+		button_apply = QtGui.QPushButton(_(label, context=self.name))
 		button_apply.setIcon(self.experiment.icon(icon))
 		button_apply.setIconSize(QtCore.QSize(16, 16))
 		button_apply.clicked.connect(self.apply_edit_changes)
