@@ -4,6 +4,8 @@ opensesame (2.9.2~pre1-ubuntu1) trusty; urgency=medium
     - Fix numeric textline elements in sketchpad (#292)
   * Improvements
     - Use better fallback image in sketchpad
+    - Deprecate transparent variable management (#294)
+    - Add custom icon to debian packaging (#296)
 
  -- Sebastiaan Mathot <s.mathot@cogsci.nl>  Tue, 18 Nov 2014 14:02:42 +0100
 
