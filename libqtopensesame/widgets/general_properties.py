@@ -85,9 +85,6 @@ class general_properties(base_widget):
 				icon), self.backend_format % (backend, desc))
 		self.ui.combobox_backend.currentIndexChanged.connect(self.apply_changes)
 
-		# Variable transparency
-		self.ui.checkbox_transparent_variables.stateChanged.connect(
-			self.apply_changes)
 		# Bi-directional-text support
 		self.ui.checkbox_bidi.stateChanged.connect(self.apply_changes)
 
@@ -191,9 +188,6 @@ class general_properties(base_widget):
 		self.experiment.set(u'font_size', self.ui.widget_font.size)
 		self.experiment.set(u'font_italic', self.ui.widget_font.italic)
 		self.experiment.set(u'font_bold', self.ui.widget_font.bold)
-		# Set variable transparency
-		self.experiment.set(u'transparent_variables',
-			self.ui.checkbox_transparent_variables.isChecked())
 		# Set bi-directional text
 		self.experiment.set(u'bidi', self.ui.checkbox_bidi.isChecked())
 
@@ -243,9 +237,6 @@ class general_properties(base_widget):
 
 		# Set the font
 		self.ui.widget_font.initialize(self.experiment)
-		# Set variable transparency
-		self.ui.checkbox_transparent_variables.setChecked(
-			self.experiment.get(u'transparent_variables') == u'yes')
 		# Set bidirectional text
 		self.ui.checkbox_bidi.setChecked(self.experiment.get(u'bidi') == u'yes')
 		# Release the general tab

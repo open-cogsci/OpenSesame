@@ -127,7 +127,7 @@ class inline_script(item.item):
 		"""
 
 		item.item.prepare(self)
-		if self.experiment.transparent_variables == u'yes':
+		if self.experiment.transparent_variables == u'yes':			
 			self.start_transparency()
 		# 'self' must always be registered, otherwise we get confusions between
 		# the various inline_script items.
@@ -222,6 +222,8 @@ class inline_script(item.item):
 		to call `exp.set()`.
 		"""
 
+		import warnings
+		print(u'Warning: Transparent variable management has been deprecated')
 		for var, val in self.experiment.var_info():
 			self.experiment.python_workspace[var] = val
 
