@@ -32,6 +32,8 @@ from libqtopensesame.misc.config import cfg
 class qtitem(QtCore.QObject):
 
 	"""Base class for the GUI controls of other items"""
+	
+	initial_view = u'controls'
 
 	def __init__(self):
 
@@ -232,7 +234,16 @@ class qtitem(QtCore.QObject):
 		# The container_widget is the top-level widget that is actually inserted
 		# into the tab widget.
 		self.splitter = qtitem_splitter(self)
-		self.set_view_controls()
+		if self.initial_view == u'controls':
+			self.set_view_controls()
+		elif self.initial_view == u'script':
+			self.set_view_script()
+		elif self.initial_view == u'split':
+			self.set_view_split()
+		else:
+			debug.msg(u'Invalid initial_view: %s' % self.initial_view,
+				reason=u'warning')
+			self.set_view_controls()
 		self.splitter.splitterMoved.connect(self.splitter_moved)
 		self.container_vbox = QtGui.QVBoxLayout()
 		self.container_vbox.addWidget(self.header_widget)

@@ -29,6 +29,8 @@ from PyQt4 import QtGui, QtCore
 class form_base(item.item):
 
 	"""A generic form plug-in"""
+	
+	initial_view = u'script'
 
 	def __init__(self, name, experiment, script=None, item_type=u'form_base',
 		description=u'A generic form plug-in'):
