@@ -1,11 +1,18 @@
-opensesame (2.9.2~pre1-ubuntu1) trusty; urgency=medium
+opensesame (2.9.2~pre2-ubuntu1) utopic; urgency=medium
 
   * Bugs fixed
     - Fix numeric textline elements in sketchpad (#292)
+    - 'Reset feedback variables' option restored in feedback item (#297)
   * Improvements
     - Use better fallback image in sketchpad
     - Deprecate transparent variable management (#294)
     - Add custom icon to debian packaging (#296)
+    - Form_base plug-in shows script by default (#298)
+    - Add custom icon to debian packaging
+    - Deprecate transparent variable management option
+    - More comprehensive translation possible
+  * Translation updates
+    - German translation updated (de_DE)
 
  -- Sebastiaan Mathot <s.mathot@cogsci.nl>  Tue, 18 Nov 2014 14:02:42 +0100
 
