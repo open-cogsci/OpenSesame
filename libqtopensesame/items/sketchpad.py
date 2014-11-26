@@ -32,3 +32,13 @@ class sketchpad(feedpad, qtplugin, sketchpad_runtime):
 
 		sketchpad_runtime.__init__(self, name, experiment, string)
 		qtplugin.__init__(self)
+
+	def init_edit_widget(self):
+
+		"""
+		desc:
+			Initializes the widget.
+		"""
+		
+		feedpad.init_edit_widget(self)
+		self.sketchpad_widget.ui.widget_settings_reset_variables.hide()

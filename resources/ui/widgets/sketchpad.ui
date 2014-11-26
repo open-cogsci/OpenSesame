@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1481</width>
-    <height>559</height>
+    <width>1679</width>
+    <height>727</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -56,6 +56,32 @@
           </widget>
          </item>
          <item>
+          <widget class="QWidget" name="widget_settings_reset_variables" native="true">
+           <layout class="QHBoxLayout" name="horizontalLayout_13">
+            <property name="margin">
+             <number>0</number>
+            </property>
+            <item>
+             <widget class="QFrame" name="frame">
+              <property name="frameShape">
+               <enum>QFrame::VLine</enum>
+              </property>
+              <property name="frameShadow">
+               <enum>QFrame::Raised</enum>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QCheckBox" name="checkbox_reset_variables">
+              <property name="text">
+               <string>Reset feedback variables</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+         </item>
+         <item>
           <widget class="QWidget" name="widget_settings_color" native="true">
            <layout class="QHBoxLayout" name="horizontalLayout_6">
             <property name="margin">
@@ -69,6 +95,7 @@
               <property name="frameShadow">
                <enum>QFrame::Raised</enum>
               </property>
+              <zorder>widget_settings_reset_variables</zorder>
              </widget>
             </item>
             <item>
@@ -389,7 +416,9 @@
              <number>0</number>
             </property>
             <item>
-             <widget class="font_widget_horizontal" name="widget_font" native="true"/>
+             <widget class="font_widget_horizontal" name="widget_font" native="true">
+              <zorder>widget_settings_row1</zorder>
+             </widget>
             </item>
             <item>
              <widget class="QCheckBox" name="checkbox_html">

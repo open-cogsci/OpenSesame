@@ -44,6 +44,8 @@ class feedpad(QtCore.QObject):
 		self.add_widget(self.sketchpad_widget)
 		self.auto_add_widget(self.sketchpad_widget.ui.edit_duration,
 			u'duration')
+		self.auto_add_widget(self.sketchpad_widget.ui.checkbox_reset_variables,
+			u'reset_variables')
 
 	def element_module(self):
 
