@@ -148,7 +148,7 @@ setup(name="opensesame",
 		"libqtopensesame" : "libqtopensesame"
 		},
 	data_files=[
-		("/usr/share/icons/hicolor/scalable/apps", "data/opensesame.svg"),
+		("/usr/share/icons/hicolor/scalable/apps", ["data/opensesame.svg"]),
 		("/usr/share/opensesame", ["COPYING"]),
 		("/usr/share/mime/packages", ["data/x-opensesame-experiment.xml"]),
 		("/usr/share/applications", ["data/opensesame.desktop"]),
