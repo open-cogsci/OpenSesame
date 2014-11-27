@@ -36,7 +36,7 @@ def parse_stack(st):
 	"""
 	desc:
 		Generates a nice looking stacktrace for a single item.
-		
+
 	arguments:
 		st:		A stacktrace item.
 
@@ -51,10 +51,10 @@ def format_stack(st, skip=0):
 	"""
 	desc:
 		Generates a nice looking full stracktrace.
-		
+
 	arguments:
 		st:		A stacktrace object.
-		
+
 	keywords:
 		skip:	Indicates whether any initial stacktrace items should be
 				skipped.
@@ -88,8 +88,9 @@ def _msg(msg=u'', reason=None):
 	if reason != None:
 		print(u'[%s]' % reason)
 	# The terminal may not like anythin but plain ASCII
-	if isinstance(msg, str):
-		msg = msg.decode(u'utf-8', u'ignore')
+	#if isinstance(msg, str):
+	#	msg = msg.decode(u'utf-8', u'ignore')
+	msg = msg.encode(u'ascii', u'ignore')
 	try:
 		print(u'%s: %s' % (parse_stack(st[1]), msg))
 	except:
@@ -98,21 +99,21 @@ def _msg(msg=u'', reason=None):
 			parse_stack(st[1]))
 	if stack:
 		print(format_stack(st, skip=2))
-		
+
 def _print(msg):
-	
+
 	"""
 	desc:
 		Prints a message to the standard output, just like the normal `print`
 		statement/ function. This is necessary to capture encoding errors while
 		printing.
-		
+
 	arguments:
 		msg:
 			desc:	A message to print.
 			type:	[unicode, str]
 	"""
-	
+
 	try:
 		print(msg)
 	except:
