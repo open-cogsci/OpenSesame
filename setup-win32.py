@@ -23,24 +23,28 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 
 This script will create a binary Windows package of OpenSesame, using py2exe.
 If possible, dependencies are simply copied into a subfolder and compiled to
-.pyo format. If not possible, they are included in the library.zip file, which
-is the default py2exe way of including dependencies.
+`.pyc` format. If not possible, they are included in the `library.zip` file,
+which is the default py2exe way of including dependencies.
 
 ## Usage
 
 To compile all source files to `.pyc` (default), call the script as follows:
 
 	python setup-win32.py py2exe
-	
+
 To compile all source files to `.pyo`, call the script as follows:
 
 	python -O setup-win32.py py2exe
-	
+
 or
 
 	python -OO setup-win32.py py2exe
-	
+
 More options can be tweaked by changing the variables below.
+
+## Output
+
+The build will be stored in the `dist` subfolder.
 
 ## Python modules
 
@@ -55,13 +59,22 @@ The following Python modules should be installed:
 		  <http://www.lfd.uci.edu/~gohlke/pythonlibs/#pycairo>
 	expyriment
 	matplotlib
+		Subdependencies:
+		- python-dateutil
+			- Installed as .egg, so requires manual copying. If it fails to
+			  install due to decoding errors, the package can be copied
+		  	  manually to site-packages.
+		- pytz
+			- Installed as .egg, so requires manual copying.
+		- six
+			- Installed as .egg, so requires manual copying.
 	opencv2
 		- Download and extract the regular OpenCV2 package
 		- Copy cv2.pyd from build/python/2.7 to the Python site-packages
 		  folder
 	pil
 	psychopy
-    pyflakes
+	pyflakes
 		- This is installed as an egg and therefore not packaged properly. For
 		  packaging, simply place the `pyflakes` source folder directly in the
 		  Python site-packages.
@@ -69,22 +82,19 @@ The following Python modules should be installed:
 	pyaudio
 	pygame
 	pyglet
-		- The installer doesn't work. Need to install from .zip.
+		- The installer doesn't work. Need to install from ``.zip`.
 	pyopengl
 	pyparallel
-		- Needs to be installed through the .zip package
-		- Manually place simpleio.dll in the Python folder
+		- Needs to be installed through the `.zip` package
+		- Manually place `simpleio.dll`, which is included with the pyparallel
+		  source, in the main Python folder.
 	pyparsing
 		- Required by matplotlib. The installer doesn't work, so needs to be
 		  installed from .zip.
 	pyqt4
+		- The Python 3 modules will break on compilation, and have to be
+		  manually removed/ renamed. These are in `uic/port_v3`.
 	pyserial
-	python-dateutil
-		- Required by matplotlib. Installed as .egg, so requires manual copying.
-	pytz
-		- Required by matplotlib. Installed as .egg, so requires manual copying.
-	six
-		- Required by matplotlib. Installed as .egg, so requires manual copying.
 	numpy
 	scipy
 	vlc
@@ -96,11 +106,13 @@ The following Python modules should be installed:
 
 ## Folder structure
 
-If media_player or media_player_vlc are included, they are assumed to be one folder
-up. So the folder structure should be as follows:
+If media_player, media_player_vlc, boks, or pygaze are included, they are
+assumed to be one folder up. So the folder structure should be as follows:
 
 	/[parent foler]
 		/opensesame
+		/pygaze
+		/boks
 		/media_player
 		/media_player_vlc
 ---
@@ -139,8 +151,12 @@ include_faenza = True
 include_inpout32 = True
 include_simpleio = True
 include_pyqt4_plugins = True
-python_folder = r"C:\Python_2.7.6-win32"
-python_version = "2.7"
+
+python_folder = os.path.dirname(sys.executable)
+python_version = "%d.%d" % (sys.version_info[0], sys.version_info[1])
+
+print(u'Python folder: %s' % python_folder)
+print(u'Python version: %s' % python_version)
 
 # Determine which files we're going to keep
 if '-OO' in sys.argv:
@@ -189,9 +205,10 @@ copy_packages = [
 	'pytz',
 	'pyparsing',
 	'dateutil',
-	'six'
+	'six',
+	'wx'
 	]
-	
+
 # A list of packages that shouldn't be stripped from .py files, because it
 # breaks them.
 no_strip = [
@@ -270,11 +287,11 @@ for pkg in copy_packages:
 	if pkg_folder.endswith('site-packages'):
 		print('\tmodule %s' % _pkg.__file__)
 		shutil.copy(os.path.join(pkg_folder, '%s.py' % pkg), 'dist')
-		compileall.compile_file('dist/%s.py' % pkg)
-		os.remove('dist/%s.py' % pkg)
+		compileall.compile_file(r'dist/%s.py' % pkg)
+		os.remove(r'dist/%s.py' % pkg)
 	# For packages that are subfolder of site-packages
 	else:
-		print('\tfrom %s' % pkg_folder)		
+		print('\tfrom %s' % pkg_folder)
 		shutil.copytree(pkg_folder, pkg_target, symlinks=True, \
 			ignore=ignore_package_files)
 		compileall.compile_dir(pkg_target, force=True)
@@ -332,7 +349,6 @@ if include_gui:
 
 # Setup options
 setup(
-
 	# Use 'console' to have the programs run in a terminal and
 	# 'windows' to run them normally.
 	windows = windows,
@@ -414,7 +430,7 @@ if include_plugins:
 			if path[-1] == "~" or os.path.splitext(path)[1] in [".pyc"]:
 				print("removing file %s" % path)
 				os.remove(os.path.join("dist", "plugins", plugin, path))
-				
+
 # Include extensions
 if include_extensions:
 	print("copying extensions"	)
@@ -462,14 +478,14 @@ if include_media_player_vlc:
 		r"dist\plugins\media_player_vlc\media_player_vlc_large.png")
 	shutil.copyfile(r"..\media_player_vlc\info.json", \
 		r"dist\plugins\media_player_vlc\info.json")
-		
+
 # Include Boks plug-in
 if include_boks:
 	print("copying boks")
 	shutil.copytree(r"..\boks\opensesame\boks",
 		r"dist\plugins\boks",
 		ignore=shutil.ignore_patterns('*.pyc', '.*', '.pyo'))
-		
+
 # Include PyGaze plug-ins
 if include_pygaze:
 	print("copying pygaze")
@@ -477,7 +493,7 @@ if include_pygaze:
 		'stop_recording', 'wait']:
 		shutil.copytree(r"..\pygaze\opensesame_plugins\pygaze_%s" % plugin,
 			r"dist\plugins\pygaze_%s" % plugin,
-			ignore=shutil.ignore_patterns('*.pyc', '.*', '.pyo'))			
+			ignore=shutil.ignore_patterns('*.pyc', '.*', '.pyo'))
 
 # Include examples
 if include_examples:
