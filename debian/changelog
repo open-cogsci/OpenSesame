@@ -3,6 +3,8 @@ opensesame (2.9.2~pre2-ubuntu1) utopic; urgency=medium
   * Bugs fixed
     - Fix numeric textline elements in sketchpad (#292)
     - 'Reset feedback variables' option restored in feedback item (#297)
+    - Safely print unicode debug output (convert to ascii)
+    - Fix unicode bug in opensesamerun gui
   * Improvements
     - Use better fallback image in sketchpad
     - Deprecate transparent variable management (#294)
@@ -13,6 +15,8 @@ opensesame (2.9.2~pre2-ubuntu1) utopic; urgency=medium
     - More comprehensive translation possible
   * Translation updates
     - German translation updated (de_DE)
+  * Windows packaging
+    - Include wx for PsychoPy monitor center (#295)
 
  -- Sebastiaan Mathot <s.mathot@cogsci.nl>  Tue, 18 Nov 2014 14:02:42 +0100
 
