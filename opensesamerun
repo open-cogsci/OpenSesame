@@ -84,9 +84,11 @@ if __name__ == u"__main__":
 	else:
 		# Try to parse the experiment from a file
 		experiment = os.path.abspath(options.experiment)
-		experiment_path = os.path.dirname(experiment).decode(
-			libopensesame.misc.filesystem_encoding())	
-		try:			
+		if isinstance(experiment, str):
+			experiment = experiment.decode(
+				libopensesame.misc.filesystem_encoding())
+		experiment_path = os.path.dirname(experiment)
+		try:
 			exp = libopensesame.experiment.experiment(u"Experiment",
 				experiment, experiment_path=experiment_path)
 		except Exception as e:
@@ -114,4 +116,3 @@ if __name__ == u"__main__":
 			libopensesame.misc.messagebox(u"OpenSesame Run",
 				libopensesame.misc.strip_tags(e))
 	libopensesame.experiment.clean_up(exp.debug)
-
