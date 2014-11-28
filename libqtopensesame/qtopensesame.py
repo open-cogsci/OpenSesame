@@ -117,6 +117,9 @@ class qtopensesame(QtGui.QMainWindow, base_component):
 		# Set the filter-string for opening and saving files
 		self.file_type_filter = \
 			u"OpenSesame files (*.opensesame.tar.gz *.opensesame);;OpenSesame script and file pool (*.opensesame.tar.gz);;OpenSesame script (*.opensesame)"
+		self.file_type_filter_script = u"OpenSesame script (*.opensesame)"
+		self.file_type_filter_pool = \
+			u"OpenSesame script and file pool (*.opensesame.tar.gz)"
 
 		# Set the window message
 		self.window_message(_(u"Welcome to OpenSesame %s") % self.version)
@@ -204,21 +207,21 @@ class qtopensesame(QtGui.QMainWindow, base_component):
 		# Miscellaneous initialization
 		self.restore_state()
 		self.update_recent_files()
-		self.set_unsaved(False)		
+		self.set_unsaved(False)
 		self.init_custom_fonts()
 
 		# Initialize extensions
 		self.extension_manager = extension_manager(self)
 		self.extension_manager.fire(u'startup')
-		
+
 	def init_custom_fonts(self):
-		
+
 		"""
 		desc:
 			Registers the custom OpenSesame fonts, so that they are properly
 			displayed in the sketchpad widget.
 		"""
-		
+
 		from libqtopensesame.widgets.font_widget import font_widget
 		for font in font_widget.font_list:
 			try:
@@ -674,7 +677,7 @@ class qtopensesame(QtGui.QMainWindow, base_component):
 			return
 		self.experiment = exp
 		self.experiment.build_item_tree()
-		self.ui.tabwidget.open_general()		
+		self.ui.tabwidget.open_general()
 		if add_to_recent:
 			self.current_path = path
 			self.window_message(self.current_path)
@@ -747,14 +750,19 @@ class qtopensesame(QtGui.QMainWindow, base_component):
 				allow_vars=False))
 		else:
 			cfg.file_dialog_path = self.current_path
-		path, file_type = QtGui.QFileDialog.getSaveFileNameAndFilter( \
-			self.ui.centralwidget, _(u'Save file as ...'), directory= \
-			cfg.file_dialog_path, filter=self.file_type_filter)
-
+		if len(os.listdir(self.experiment.pool_folder)) == 0:
+			default_extension = u".opensesame"
+			default_filter = self.file_type_filter_script
+		else:
+			default_extension = u".opensesame.tar.gz"
+			default_filter = self.file_type_filter_pool
+		path, file_type = QtGui.QFileDialog.getSaveFileNameAndFilter(
+			self.ui.centralwidget, _(u'Save file as ...'),
+			directory=cfg.file_dialog_path,
+			filter=self.file_type_filter, initialFilter=default_filter)
 		if path != None and path != u"":
 			path = unicode(path)
 			cfg.file_dialog_path = os.path.dirname(path)
-
 			# If the extension has not been explicitly typed in, set it based
 			# on the selected filter and, if no filter has been set, based on
 			# whether there is content in the file pool
@@ -765,10 +773,8 @@ class qtopensesame(QtGui.QMainWindow, base_component):
 					path += u".opensesame"
 				elif u"(*.opensesame.tar.gz)" in file_type:
 					path += u".opensesame.tar.gz"
-				elif len(os.listdir(self.experiment.pool_folder)) == 0:
-					path += u".opensesame"
 				else:
-					path += u".opensesame.tar.gz"
+					path += default_extension
 				debug.msg(path)
 			# Avoid chunking of file extensions. This happens sometimes when
 			# file managers (used for the save-file dialog) have difficulty
