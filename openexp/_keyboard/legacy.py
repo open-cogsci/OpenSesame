@@ -23,9 +23,9 @@ from string import whitespace
 from libopensesame.exceptions import osexception
 from openexp._keyboard import keyboard
 
-# Whitespace and empty strings are not acceptable names for keys. These should
-# be converted to descriptions, e.g. '\t' to 'tab'
-invalid_unicode = [u''] + list(whitespace)
+# Whitespace, backspace, and empty strings are not acceptable names for keys.
+# These should be converted to descriptions, e.g. '\t' to 'tab'
+invalid_unicode = [u'', u'\x08'] + list(whitespace)
 
 class legacy(keyboard.keyboard):
 
