@@ -80,7 +80,6 @@ droid = {
 backend_list = {}
 backend_list["legacy"] = legacy
 backend_list["xpyriment"] = xpyriment
-backend_list["xpyriment-gst"] = xpyriment_gst
 backend_list["droid"] = droid
 backend_list["psycho"] = psycho
 
