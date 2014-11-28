@@ -38,6 +38,8 @@ widget 0 2 1 1 text_input return_accepts=yes focus=yes var=[form_var] stub=""
 """
 
 class form_text_input(form_base.form_base):
+	
+	initial_view = u'controls'
 
 	def __init__(self, name, experiment, string=None):
 

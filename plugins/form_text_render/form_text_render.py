@@ -36,6 +36,8 @@ widget 0 0 3 1 label text=[form_text] center=no
 """
 
 class form_text_render(form_base.form_base):
+	
+	initial_view = u'controls'
 
 	def __init__(self, name, experiment, string=None):
 

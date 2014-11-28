@@ -52,6 +52,8 @@ widget 1 3 1 1 button text=[decline_text]
 """
 
 class form_consent(form_base.form_base):
+	
+	initial_view = u'controls'
 
 	def __init__(self, name, experiment, string=None):
 

@@ -38,6 +38,8 @@ widget 1 2 1 1 button text=[ok_text]
 """
 
 class form_text_display(form_base.form_base):
+	
+	initial_view = u'controls'
 
 	def __init__(self, name, experiment, string=None):
 
