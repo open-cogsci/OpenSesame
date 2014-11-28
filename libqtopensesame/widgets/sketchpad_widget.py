@@ -50,6 +50,8 @@ class sketchpad_widget(base_widget):
 		self.initialized = False
 		self.margin = 50
 		self.canvas = self.sketchpad.canvas
+		self.arrow_cursor = QtGui.QCursor(self.theme.qpixmap(u'cursor-move'),
+			7, 2)
 		self.ui.graphics_view.setScene(self.canvas)
 		self.ui.graphics_view.setMouseTracking(True)
 		self.ui.button_pointer.clicked.connect(self.select_pointer_tool)
@@ -335,8 +337,8 @@ class sketchpad_widget(base_widget):
 		self.ui.widget_settings_scale.setVisible(False)
 		self.ui.widget_settings_fill.setVisible(False)
 		self.ui.widget_settings_center.setVisible(False)
-		self.ui.widget_settings_show_if.setVisible(False)
-		self.ui.graphics_view.setCursor(QtCore.Qt.ArrowCursor)
+		self.ui.widget_settings_show_if.setVisible(False)		
+		self.ui.graphics_view.setCursor(self.arrow_cursor)
 
 	def select_element_tool(self, element):
 
@@ -353,7 +355,11 @@ class sketchpad_widget(base_widget):
 
 		self.selected_element_tool = element
 		self.show_element_tool_settings(element)
-		self.ui.graphics_view.setCursor(element.cursor())
+		cursor = element.cursor()
+		if isinstance(cursor, tuple):
+			pixmap, hotx, hoty = cursor
+			cursor = QtGui.QCursor(self.theme.qpixmap(pixmap), hotx, hoty)
+		self.ui.graphics_view.setCursor(cursor)
 
 	def show_element_tool_settings(self, element):
 

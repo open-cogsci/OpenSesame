@@ -488,4 +488,4 @@ class base_element(object):
 			type:	int
 		"""
 
-		return QtCore.Qt.CrossCursor
+		return u'cursor-pencil', 2, 17

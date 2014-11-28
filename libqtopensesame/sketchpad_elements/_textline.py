@@ -110,4 +110,4 @@ class textline(base_element, textline_runtime):
 
 	@staticmethod
 	def cursor():
-		return QtCore.Qt.IBeamCursor
+		return u'cursor-text', -1, -1
