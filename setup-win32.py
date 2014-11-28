@@ -151,6 +151,8 @@ include_faenza = True
 include_inpout32 = True
 include_simpleio = True
 include_pyqt4_plugins = True
+release_zip = True
+release_build = 1
 
 python_folder = os.path.dirname(sys.executable)
 python_version = "%d.%d" % (sys.version_info[0], sys.version_info[1])
@@ -509,3 +511,20 @@ if include_examples:
 if include_sounds:
 	print("copying sounds")
 	shutil.copytree("sounds", os.path.join("dist", "sounds"))
+
+# Create a zip release of the folder
+if release_zip:
+	import zipfile
+	target_folder = 'opensesame-%s-win32-%s' % (libopensesame.misc.version, \
+		release_build)
+	target_zip = target_folder + '.zip'
+	shutil.move('dist', target_folder)
+	zipf = zipfile.ZipFile(target_zip, 'w', zipfile.ZIP_DEFLATED)
+	for root, dirs, files in os.walk(target_folder):
+		for file in files:
+			path = os.path.join(root, file)
+			print('Adding %s' % path)
+			zipf.write(path)
+	zipf.close()
+	shutil.move(target_folder, 'dist')
+	print('zipfile: %s' % target_zip)
