@@ -8,6 +8,7 @@ opensesame (2.9.2~pre5-ubuntu1) utopic; urgency=medium
     - Convert backspace key to key name (#286)
     - Fix a bug with variably defined properties of circle elements in sketchpad GUI (#300)
     - Fix circle properties in xpyriment back-end (#299)
+    - Fix a bug with variably defined properties of Gabor and noise patches in sketchpad GUI
   * Improvements
     - Use better fallback image in sketchpad
     - Deprecate transparent variable management (#294)

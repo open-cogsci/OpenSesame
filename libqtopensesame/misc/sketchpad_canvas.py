@@ -691,11 +691,13 @@ class sketchpad_canvas(QtGui.QGraphicsScene):
 			penwidth=penwidth)
 		return i
 
-	def image(self, fname, center=True, x=None, y=None, scale=None):
+	def image(self, image, center=True, x=None, y=None, scale=None):
 
 		"""Mimicks canvas api. See openexp._canvas.canvas."""
 
-		i = self.addPixmap(self._pixmap(fname))
+		if not isinstance(image, QtGui.QPixmap):
+			image = self._pixmap(image)			
+		i = self.addPixmap(image)
 		i.setScale(self._scale(scale))
 		i.setPos(self._point(i, x, y, center))
 		return i
@@ -705,7 +707,12 @@ class sketchpad_canvas(QtGui.QGraphicsScene):
 		"""Mimicks canvas api. See openexp._canvas.canvas."""
 
 		from openexp.canvas import gabor_file
-		image = gabor_file(*arglist, **kwdict)
+		try:
+			image = gabor_file(*arglist, **kwdict)
+		except:
+			self.notify(
+				_(u'Some properties of a Gabor patch are unknown or variably defined, using fallback image'))
+			image = self.sketchpad.theme.qpixmap(u'os-image-fallback')
 		return self.image(image, x=x, y=y, scale=1)
 
 	def noise_patch(self, x, y, *arglist, **kwdict):
@@ -713,7 +720,12 @@ class sketchpad_canvas(QtGui.QGraphicsScene):
 		"""Mimicks canvas api. See openexp._canvas.canvas."""
 
 		from openexp.canvas import noise_file
-		image = noise_file(*arglist, **kwdict)
+		try:
+			image = noise_file(*arglist, **kwdict)
+		except:
+			self.notify(
+				_(u'Some properties of a noise patch are unknown or variably defined, using fallback image'))
+			image = self.sketchpad.theme.qpixmap(u'os-image-fallback')
 		return self.image(image, x=x, y=y, scale=1)
 
 	def fixdot(self, x=None, y=None, color=None, style=u'default'):
