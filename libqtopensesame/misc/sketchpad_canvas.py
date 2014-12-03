@@ -453,6 +453,22 @@ class sketchpad_canvas(QtGui.QGraphicsScene):
 				% y)
 			return self.ycenter()
 		return y
+	
+	def _r(self, r):
+
+		"""
+		desc:
+			Safely returns a radius
+
+		returns:
+			A radius.
+		"""
+
+		if type(r) not in (int, float):
+			self.notify(
+				_('Radius "%s" is unknown or variably defined, using 50') % r)
+			return 50
+		return r
 
 	def _w(self, x):
 
@@ -668,7 +684,10 @@ class sketchpad_canvas(QtGui.QGraphicsScene):
 
 		"""Mimicks canvas api. See openexp._canvas.canvas."""
 
-		i = self.ellipse(x-r, y-r, 2*r, 2*r, fill=fill, color=color,
+		r = self._r(r)
+		x = self._x(x) - r
+		y = self._y(y) - r
+		i = self.ellipse(x, y, 2*r, 2*r, fill=fill, color=color,
 			penwidth=penwidth)
 		return i
 

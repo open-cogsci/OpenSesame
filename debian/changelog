@@ -1,4 +1,4 @@
-opensesame (2.9.2~pre4-ubuntu1) utopic; urgency=medium
+opensesame (2.9.2~pre5-ubuntu1) utopic; urgency=medium
 
   * Bugs fixed
     - Fix numeric textline elements in sketchpad (#292)
@@ -6,6 +6,7 @@ opensesame (2.9.2~pre4-ubuntu1) utopic; urgency=medium
     - Safely print unicode debug output (convert to ascii)
     - Fix unicode bug in opensesamerun gui
     - Convert backspace key to key name (#286)
+    - Fix a bug with variably defined properties of circle elements in sketchpad GUI (#300)
   * Improvements
     - Use better fallback image in sketchpad
     - Deprecate transparent variable management (#294)
