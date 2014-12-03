@@ -7,6 +7,7 @@ opensesame (2.9.2~pre5-ubuntu1) utopic; urgency=medium
     - Fix unicode bug in opensesamerun gui
     - Convert backspace key to key name (#286)
     - Fix a bug with variably defined properties of circle elements in sketchpad GUI (#300)
+    - Fix circle properties in xpyriment back-end (#299)
   * Improvements
     - Use better fallback image in sketchpad
     - Deprecate transparent variable management (#294)

@@ -187,10 +187,12 @@ class xpyriment(canvas.canvas):
 	def ellipse(self, x, y, w, h, fill=False, color=None, penwidth=None):
 
 		if color != None: color = self.color(color)
-		if penwidth == None: penwidth = self.penwidth
 		else: color = self.fgcolor
-		if fill: line_width = 0
+		if penwidth == None: penwidth = self.penwidth
 		else: line_width = penwidth
+		if fill: line_width = 0
+		elif penwidth != None: line_width = penwidth
+		else: line_width = self.penwidth
 		pos = c2p((x+w/2,y+h/2))
 		stim = stimuli.Ellipse((w, h), colour=color, line_width=line_width,
 			position=pos)
