@@ -87,9 +87,9 @@ def _msg(msg=u'', reason=None):
 	st = inspect.stack()
 	if reason != None:
 		print(u'[%s]' % reason)
-	# The terminal may not like anythin but plain ASCII
-	#if isinstance(msg, str):
-	#	msg = msg.decode(u'utf-8', u'ignore')
+	# The terminal may not like anything but plain ASCII
+	if not isinstance(msg, basestring):
+		msg = unicode(msg)
 	msg = msg.encode(u'ascii', u'ignore')
 	try:
 		print(u'%s: %s' % (parse_stack(st[1]), msg))
