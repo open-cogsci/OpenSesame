@@ -390,7 +390,7 @@ class experiment(item.item):
 			misc.codename) + \
 			u'# %s (%s)\n' % (time.ctime(), os.name) + \
 			u'# <http://www.cogsci.nl/opensesame>\n\n'
-		for var in self.variables:
+		for var in sorted(self.variables):
 			s += self.variable_to_string(var)
 		s += u'\n'
 		for item in sorted(self.items):

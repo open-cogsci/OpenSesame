@@ -362,7 +362,7 @@ class item(object):
 		s = u'define %s %s\n' % (item_type, self.name)
 		for comment in self.comments:
 			s += u'\t# %s\n' % comment.strip()
-		for var in self.variables:
+		for var in sorted(self.variables):
 			s += u'\t' + self.variable_to_string(var)
 		return s
 

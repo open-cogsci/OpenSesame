@@ -20,6 +20,7 @@ opensesame (2.9.2~pre6-ubuntu2) utopic; urgency=medium
     - Hide xpyriment-gst back-end (not ready for production)
     - Custom cursor in sketchpad for increased visibility
     - Indicate whether python-bidi is available in general properties tab
+    - List variables in alphabetical order in OpenSesame script
   * Translation updates
     - German translation updated (de_DE)
   * Windows packaging
