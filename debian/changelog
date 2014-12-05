@@ -1,4 +1,4 @@
-opensesame (2.9.2~pre5-ubuntu1) utopic; urgency=medium
+opensesame (2.9.2~pre6-ubuntu2) utopic; urgency=medium
 
   * Bugs fixed
     - Fix numeric textline elements in sketchpad (#292)
@@ -19,6 +19,7 @@ opensesame (2.9.2~pre5-ubuntu1) utopic; urgency=medium
     - More comprehensive translation possible
     - Hide xpyriment-gst back-end (not ready for production)
     - Custom cursor in sketchpad for increased visibility
+    - Indicate whether python-bidi is available in general properties tab
   * Translation updates
     - German translation updated (de_DE)
   * Windows packaging

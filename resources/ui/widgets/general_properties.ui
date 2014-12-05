@@ -346,6 +346,13 @@
            </property>
           </widget>
          </item>
+         <item row="6" column="1">
+          <widget class="QLabel" name="label_bidi_check">
+           <property name="text">
+            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:small; font-style:italic;&quot;&gt;Warning: python-bidi is not available&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+           </property>
+          </widget>
+         </item>
         </layout>
        </widget>
       </item>

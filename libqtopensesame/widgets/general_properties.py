@@ -60,14 +60,11 @@ class general_properties(base_widget):
 
 		# Initialize the color and font widgets
 		self.ui.edit_foreground.initialize(self.experiment)
+		self.ui.edit_foreground.textEdited.connect(self.apply_changes)
 		self.ui.edit_background.initialize(self.experiment)
-		QtCore.QObject.connect(self.ui.edit_foreground, QtCore.SIGNAL( \
-			u"set_color"), self.apply_changes)
-		QtCore.QObject.connect(self.ui.edit_background, QtCore.SIGNAL( \
-			u"set_color"), self.apply_changes)
+		self.ui.edit_background.textEdited.connect(self.apply_changes)
 		self.ui.widget_font.initialize(self.experiment)
-		QtCore.QObject.connect(self.ui.widget_font, QtCore.SIGNAL( \
-			u"font_changed"), self.apply_changes)
+		self.ui.widget_font.font_changed.connect(self.apply_changes)
 
 		# Connect the rest
 		self.ui.spinbox_width.editingFinished.connect(self.apply_changes)
@@ -100,7 +97,7 @@ class general_properties(base_widget):
 		"""
 
 		self.header_widget.edit_name.setText(self.experiment.title)
-		self.header_widget.label_name.setText( \
+		self.header_widget.label_name.setText(
 			u"<font size='5'><b>%s</b> - Experiment</font>&nbsp;&nbsp;&nbsp;<font color='gray'><i>Click to edit</i></font>" \
 			% self.experiment.title)
 		self.header_widget.edit_desc.setText(self.experiment.description)
@@ -122,13 +119,11 @@ class general_properties(base_widget):
 		rebuild_item_tree = False
 		self.main_window.set_busy(True)
 		# Set the title and the description
-		title = self.experiment.sanitize( \
-			self.header_widget.edit_name.text())
+		title = self.experiment.sanitize(self.header_widget.edit_name.text())
 		if title != self.experiment.get(u'title'):
 			self.experiment.set(u"title", title)
 			self.experiment.build_item_tree()
-		desc = self.experiment.sanitize( \
-			self.header_widget.edit_desc.text())
+		desc = self.experiment.sanitize(self.header_widget.edit_desc.text())
 		self.experiment.set(u"description", desc)
 
 		# Set the backend
@@ -190,7 +185,7 @@ class general_properties(base_widget):
 		self.experiment.set(u'font_bold', self.ui.widget_font.bold)
 		# Set bi-directional text
 		self.experiment.set(u'bidi', self.ui.checkbox_bidi.isChecked())
-
+		self.check_bidi()
 		# Refresh the interface and unlock the general tab
 		self.lock = False
 		self.main_window.set_busy(False)
@@ -226,7 +221,7 @@ class general_properties(base_widget):
 			self.ui.spinbox_width.setValue(int(self.experiment.width))
 			self.ui.spinbox_height.setValue(int(self.experiment.height))
 		except:
-			self.experiment.notify( \
+			self.experiment.notify(
 				_(u"Failed to parse the resolution. Expecting positive numeric values."))
 
 		# Set the colors
@@ -239,5 +234,26 @@ class general_properties(base_widget):
 		self.ui.widget_font.initialize(self.experiment)
 		# Set bidirectional text
 		self.ui.checkbox_bidi.setChecked(self.experiment.get(u'bidi') == u'yes')
+		self.check_bidi()
 		# Release the general tab
 		self.lock = False
+
+	def check_bidi(self):
+		
+		"""
+		desc:
+			Shows the bidi-check message if bi-directional text support is
+			enabled while python-bidi is not installed.
+		"""
+		
+		if self.experiment.get(u'bidi') != u'yes':
+			self.ui.label_bidi_check.hide()
+			return
+		try:
+			import bidi
+		except:
+			bidi = None
+		if bidi is None:
+			self.ui.label_bidi_check.show()
+		else:
+			self.ui.label_bidi_check.hide()
