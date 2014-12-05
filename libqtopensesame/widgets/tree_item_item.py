@@ -244,10 +244,6 @@ class tree_item_item(tree_base_item):
 			defaultButton=QtGui.QMessageBox.No) \
 			!= QtGui.QMessageBox.Yes:
 			return
-		index = self.parent().indexOfChild(self)
-		parent_item = self.parent().item
-		parent_item.remove_child_item(self.item.name, index)
-		parent_item.update()
 		del self.item_store[self.name]
 		self.close_tab()
 		self.experiment.build_item_tree()

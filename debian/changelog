@@ -9,6 +9,7 @@ opensesame (2.9.2~pre6-ubuntu2) utopic; urgency=medium
     - Fix a bug with variably defined properties of circle elements in sketchpad GUI (#300)
     - Fix circle properties in xpyriment back-end (#299)
     - Fix a bug with variably defined properties of Gabor and noise patches in sketchpad GUI
+    - Fix a bug when permanently deleting an item that is present in multiple sequence items
   * Improvements
     - Use better fallback image in sketchpad
     - Deprecate transparent variable management (#294)
