@@ -1,4 +1,4 @@
-opensesame (2.9.2~pre6-ubuntu2) utopic; urgency=medium
+opensesame (2.9.2~pre7-ubuntu1) utopic; urgency=medium
 
   * Bugs fixed
     - Fix numeric textline elements in sketchpad (#292)
@@ -24,6 +24,7 @@ opensesame (2.9.2~pre6-ubuntu2) utopic; urgency=medium
     - List variables in alphabetical order in OpenSesame script
   * Translation updates
     - German translation updated (de_DE)
+    - Add Spanish translation (es_ES)
   * Windows packaging
     - Include wx for PsychoPy monitor center (#295)
 
