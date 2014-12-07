@@ -44,6 +44,8 @@ included_plugins = [
 	'text_display',
 	'text_input',
 	'touch_response',
+	'quest_staircase_init',
+	'quest_staircase_next',
 	]
 
 # List of included extensions
