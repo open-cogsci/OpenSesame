@@ -1,4 +1,4 @@
-opensesame (2.9.2~pre7-ubuntu1) utopic; urgency=medium
+opensesame (2.9.2-ubuntu1) utopic; urgency=medium
 
   * Bugs fixed
     - Fix numeric textline elements in sketchpad (#292)
@@ -22,11 +22,13 @@ opensesame (2.9.2~pre7-ubuntu1) utopic; urgency=medium
     - Custom cursor in sketchpad for increased visibility
     - Indicate whether python-bidi is available in general properties tab
     - List variables in alphabetical order in OpenSesame script
+    - Add PsychoPy API menu to help extension
   * Translation updates
     - German translation updated (de_DE)
     - Add Spanish translation (es_ES)
   * Windows packaging
     - Include wx for PsychoPy monitor center (#295)
+    - Include quest staircase plug-ins
 
  -- Sebastiaan Mathot <s.mathot@cogsci.nl>  Tue, 18 Nov 2014 14:02:42 +0100
 
