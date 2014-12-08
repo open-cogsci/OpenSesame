@@ -79,6 +79,9 @@ class help(base_extension):
 		menu = self.online_help_menu()
 		if menu != None:
 			self.action_online_help = self.menu.addMenu(menu)
+		menu = self.psychopy_help_menu()
+		if menu != None:
+			self.action_psychopy_help = self.menu.addMenu(menu)
 		self.action_offline_help = self.menu.addAction(
 			self.theme.qicon(u'help-contents'), _(u'Offline help'))
 		self.action_offline_help.triggered.connect(self.open_offline_help)
@@ -135,9 +138,28 @@ class help(base_extension):
 			title)
 		for name, link in _dict.items():
 			if isinstance(link, basestring):
+				if not link.startswith(u'http://'):
+					link = cfg.online_help_base_url+link
 				action = menu.addAction(
-					action_page(self.main_window, name,
-						cfg.online_help_base_url+link, menu))
+					action_page(self.main_window, name.decode(u'utf-8'),
+						link, menu))
 			else:
 				self.build_menu(menu, name, link)
+		return menu
+	
+	def psychopy_help_menu(self):
+		
+		"""
+		desc:
+			Builds a PsychoPy help menu.
+			
+		returns:
+			A QMenu.			
+		"""
+		
+		import yaml
+		fd = open(self.ext_resource(u'psychopy_sitemap.yaml'))
+		sitemap = fd.read()
+		_dict = yaml.load(sitemap)
+		menu = self.build_menu(self.menu, _(u'PsychoPy API'), _dict)
 		return menu
