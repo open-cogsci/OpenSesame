@@ -21,6 +21,7 @@
 ; The extension FileAssociation.nsh must be installed. This can be
 ; done by downloading the script from the link below and copying it
 ; to a file named FileAssociation.nsh in the Include folder of NSIS.
+; - <http://nsis.sourceforge.net/File_Association>
 
 ; For each new release, adjust the PRODUCT_VERSION as follows:
 ; 	version-win32-package#
@@ -30,7 +31,7 @@
 
 ; HM NIS Edit Wizard helper defines
 !define PRODUCT_NAME "OpenSesame"
-!define PRODUCT_VERSION "2.9.1-win32-1"
+!define PRODUCT_VERSION "2.9.2-win32-1"
 !define PRODUCT_PUBLISHER "Sebastiaan Mathot"
 !define PRODUCT_WEB_SITE "http://osdocs.cogsci.nl"
 !define PRODUCT_UNINST_KEY "Software\Microsoft\Windows\CurrentVersion\Uninstall\${PRODUCT_NAME}"
