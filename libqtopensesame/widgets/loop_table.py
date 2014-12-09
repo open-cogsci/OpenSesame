@@ -83,3 +83,26 @@ class loop_table(good_looking_table.good_looking_table):
 		if self.lock:
 			return
 		self.loop.apply_edit_changes()
+
+	def set_text(self, cycle, col, text):
+
+		"""
+		desc:
+			Sets text in the loop table in a way that doesn't trigger a
+			cellChanged signal.
+
+		arguments:
+			cycle:
+				desc:	The row.
+				type:	int
+			col:
+				desc:	The column.
+				type:	int
+			text:
+				desc:	The text.
+				type:	unicode
+		"""
+
+		self.blockSignals(True)
+		self.setItem(cycle, col, QtGui.QTableWidgetItem(text))
+		self.blockSignals(False)

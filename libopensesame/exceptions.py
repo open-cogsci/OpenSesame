@@ -16,12 +16,15 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 
-# About
+---
+desc: |
+	Provides the `osexception` class for throwing OpenSesame-specific
+	exceptions.
 
-Provides the `osexception` class for throwing OpenSesame-specific exceptions.
-
+example: |
 	from libopensesame.exceptions import osexception
 	raise osexception(u'This is a custom exception!')
+---
 """
 
 import re
@@ -32,28 +35,42 @@ import inspect
 import sys
 
 class osexception(Exception):
-	
+
 	"""
-	A general Exception class for exceptions that occur within OpenSesame.
-	Ideally, only `osexception`s should occur, all other exceptions indicate
-	a (usually harmless) bug somewhere.
+	desc:
+		A general Exception class for exceptions that occur within OpenSesame.
+		Ideally, only `osexception`s should occur, all other exceptions indicate
+		a (usually harmless) bug somewhere.
 	"""
 
-	def __init__(self, msg, exception=None, **info):
-		
+	def __init__(self, msg, exception=None, line_offset=0, **info):
+
 		"""
-		Constructor.
-		
-		Arguments:
-		msg		--	An Exception message.
-		
-		Keyword arguments:
-		exception	--	An exception that was intercepted or None for
-						self-generated exceptions. (default=None)
-		**info		--	A dictionary with optional additional info for the
-						exception.
+		desc:
+			Constructor.
+
+		arguments:
+			msg:
+				desc:	An Exception message.
+				type:	[str, unicode]
+
+		keywords:
+			exception:
+				desc:	An exception that was intercepted or None for
+						self-generated exceptions.
+				type:	[Exception, NoneType]
+			line_offset:
+				desc:	A value to decrease/ increase line numbers. The primary
+						goal for this keyword is to re-align line numbers that
+						arise in inline_scripts, which need to be compensated
+						for the source encoding line that is added to the
+						source.
+				type:	int
+
+		keyword-dict:
+			info:		Optional additional info for the exception.
 		"""
-		
+
 		super(osexception, self).__init__(msg)
 		# Create both HTML and plain text representations of the Exception.
 		self._html = u'<b>%s</b><br />\n' % msg
@@ -65,20 +82,31 @@ class osexception(Exception):
 		if self.exception != None:
 			info[u'exception type'] = self.exception.__class__.__name__ \
 				.decode(self.enc, u'ignore')
-			info[u'exception message'] = self.exception.message.decode( \
-				self.enc, u'ignore')
-			try:
-				# This is a hacky way to extract the line number from the
-				# stacktrace. Since it's not clear whether this is fullproof,
-				# we try-except it for now.
-				info[u'line'] = traceback.extract_tb(sys.exc_info()[2])[-1][1]
-				# Inline script items automatically add the source encoding as
-				# the first line. Therefore, the reported line is always one
-				# after the actual line, and we need to substract 1.
-				if u'item' in info and info[u'item'] == u'inline_script':
-					info[u'line'] -= 1
-			except:
-				pass
+			# Try to get a descriptive message from the exception, either by
+			# looking at the `message` property or by using unicode(). If both
+			# fail, a placeholder message is used.
+			if hasattr(self.exception, u'message'):
+				msg = self.exception.message.decode(self.enc, u'ignore')
+			else:
+				try:
+					msg = unicode(self.exception)
+				except:
+					msg = u'Description unavailable'
+			info[u'exception message'] = msg
+			if isinstance(self.exception, SyntaxError):
+				# Syntax errors are dealt with specially, because they provide
+				# introspective information.
+				info[u'line'] = self.exception.lineno + line_offset
+				info[u'code'] = self.exception.text.decode(self.enc, u'ignore')
+			else:
+				try:
+					# This is a hacky way to extract the line number from the
+					# stacktrace. Since it's not clear whether this is
+					# fullproof, we try-except it for now.
+					info[u'line'] = traceback.extract_tb(sys.exc_info()[2]) \
+						[-1][1] + line_offset
+				except:
+					pass
 		# List any additional information that was passed
 		for key, val in info.items():
 			self._html += u'<i>%s</i>: %s<br />\n' % (key, val)
@@ -95,50 +123,54 @@ class osexception(Exception):
 			# decrease the line numer by 1, to compensate for the extra (hidden)
 			# source-encoding line that the inline script has.
 			if u'item' in info and info[u'item'] == u'inline_script':
-				for g in re.finditer( \
+				for g in re.finditer(
 					u'File "<string>", line (?P<linenr>\d+),', l):
 					try:
 						l = l.replace(g.group(), u'Inline_script, line %d,' % \
-							(int(g.group(u'linenr'))-1))
+							(int(g.group(u'linenr')) + line_offset))
 					except:
 						debug.msg(u'Failed to correct inline_script exception')
 			self._html += escape_html(l) + u'<br />\n'
 			self._plaintext += l + u'\n'
-			
+
 	def __unicode__(self):
-		
+
 		"""
-		Returns:
-		A unicode representation of the exception in plaintext.
+		returns:
+			desc:	A representation of the exception in plaintext.
+			type:	unicode
 		"""
-		
+
 		return self._plaintext
 
 	def __str__(self):
-		
+
 		"""
-		Returns:
-		A string representation of the exception in plaintext.
+		returns:
+			desc:	A representation of the exception in plaintext.
+			type:	str
 		"""
 
 		return self._plaintext.encode(u'utf-8')
-	
+
 	def plaintext(self):
-		
+
 		"""
-		Returns:
-		A string representation of the exception in plaintext.
+		returns:
+			desc:	A string representation of the exception in plaintext.
+			type:	unicode
 		"""
-		
+
 		return unicode(self)
-	
+
 	def html(self):
-		
+
 		"""
-		Returns:
-		A unicode representation of the exception in HTML format.
+		returns:
+			desc:	A representation of the exception in HTML format.
+			type:	unicode
 		"""
-		
+
 		return self._html
 
 # For backwards compatibility, we should also define the old Exception classes

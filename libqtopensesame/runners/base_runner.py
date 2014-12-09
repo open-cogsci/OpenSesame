@@ -256,3 +256,17 @@ class base_runner(object):
 			self.on_exception(ret_val)
 		elif not quick:
 			self.on_success(quick=quick)
+
+	def workspace_globals(self):
+
+		"""
+		desc:
+			Returns the experiment's globals dictionary as it was when the
+			experiment finished.
+
+		returns:
+			desc:	A globals dictionary.
+			type:	dict
+		"""
+
+		return {}

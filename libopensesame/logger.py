@@ -26,18 +26,9 @@ class logger(item.item):
 
 	description = u'Logs experimental data'
 
-	def __init__(self, name, experiment, string=None):
+	def reset(self):
 
-		"""
-		Constructor.
-
-		Arguments:
-		name		--	The name of the item.
-		experiment 	--	The experiment.
-
-		Keyword arguments:
-		string		--	An item definition string (default=None).
-		"""
+		"""See item."""
 
 		self.logvars = []
 		self.log_started = False
@@ -47,7 +38,6 @@ class logger(item.item):
 									# be ignored in the sense that they are
 									# assigned the value 'NA'. They are included
 									# in the logfile.
-		item.item.__init__(self, name, experiment, string)
 
 	def run(self):
 
@@ -96,7 +86,7 @@ class logger(item.item):
 		string -- definition string
 		"""
 
-		self.logvars = []
+		self.reset()
 		for line in string.split(u'\n'):
 			self.parse_variable(line)
 			l = self.split(line)

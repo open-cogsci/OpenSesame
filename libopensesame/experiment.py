@@ -17,6 +17,8 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
+from libopensesame.item_store import item_store
+from libopensesame.python_workspace import python_workspace
 from libopensesame.exceptions import osexception
 from libopensesame import misc, item, plugins, debug
 import os.path
@@ -32,32 +34,102 @@ pool_folders = []
 
 class experiment(item.item):
 
-	"""The main experiment class, which is the first item to be called"""
+	"""
+	desc: |
+		The `experiment` object controls the flow of the experiment. If you are
+		writing Python inline code, there are a few functions in the experiment
+		object that may be useful, mostly to `get` and `set` variables, and to
+		retrieve files from the file pool. The `experiment` object is a property
+		of the `inline_script` object, so you can access it as `self.experiment`
+		in an inline_script. For convenience, you can also refer to it simply as
+		`exp`. For example, the following script retrieves the full path to a
+		file from the pool, shows it using a canvas, and stores the timestamp of
+		the display presentation as `canvas_timestamp`, so it can be logged:
 
-	def __init__(self, name=u'experiment', string=None, pool_folder=None, experiment_path=None, fullscreen=False, auto_response=False, logfile=u'defaultlog.csv', subject_nr=0):
+		__Example:__
 
-		"""<DOC>
-		Constructor. The experiment is created automatically be OpenSesame and #
-		you will generally not need to create it yourself.
+		~~~ {.python}
+		from openexp.canvas import canvas
+		my_canvas = canvas(exp)
+		my_canvas.image(exp.get_file('my_image.png'))
+		timestamp = my_canvas.show()
+		exp.set('canvas_timestamp', timestamp)
+		~~~
 
-		Keyword arguments:
-		name 			--	The name of the experiment. (default=u'experiment')
-		string 			--	A string containing the experiment definition. #
-							(default=None)
-		pool_folder		--	A specific folder to be used for the file pool. #
-							(default=None)
-		experiment_path	--	The path of the experiment file. (default=None)
-		fullscreen		--	Indicates whether the experiment should be #
-							executed in fullscreen. (default=False)
-		auto_response	--	Indicates whether auto-response mode should be #
-							enabled. (default=False)
-		logfile			--	The logfile path. (default=u'defaultlog.csv')
-		subject_nr		--	The subject number. (default=0)
-		</DOC>"""
+		__Function list:__
+
+		%--
+		toc:
+			mindepth: 2
+			maxdepth: 2
+		--%
+	"""
+
+	def __init__(self, name=u'experiment', string=None, pool_folder=None,
+		experiment_path=None, fullscreen=False, auto_response=False,
+		logfile=u'defaultlog.csv', subject_nr=0, items=None, workspace=None,
+		resources={}):
+
+		"""
+		desc:
+			Constructor. The experiment is created automatically be OpenSesame
+			and you will generally not need to create it yourself.
+
+		keywords:
+			name:
+				desc:	The name of the experiment.
+				type:	[str, unicode]
+			string:
+				desc:	A string containing the experiment definition, the
+						name of an OpenSesame experiment file, or `None` to
+						create a blank experiment.
+				type:	[str, unicode, NoneType]
+			pool_folder:
+				desc:	A specific folder to be used for the file pool, or
+						`None` to use a new temporary folder.
+				type:	[str, unicode, NoneType]
+			experiment_path:
+				desc:	The path of the experiment file. This will need to
+						be specified even if a filename was passed using the
+						`string` keyword.
+				type:	[str, unicode, NoneType]
+			fullscreen:
+				desc:	Indicates whether the experiment should be executed in
+						fullscreen.
+				type:	bool
+			auto_response:
+				desc:	Indicates whether auto-response mode should be enabled.
+				type:	bool
+			logfile:
+				desc:	The logfile path.
+				type:	[unicode, str]
+			subject_nr:
+				desc:	The subject number.
+				type:	int
+			items:
+				desc:	An `item_store` object to be used for storing items
+						internally, or `None` to create a new item store.
+				type:	[item_store, NoneType]
+			workspace:
+				desc:	A `python_workspace` object to be used for executing
+						custom Python code, or `None` to create a new workspace.
+				type:	[python_workspace, NoneType]
+			resources:
+				desc:	A dictionary with names as keys and paths as values.
+						This serves as a look-up table for resources.
+				type:	dict
+		"""
 
 		global pool_folders
 
-		self.items = {}
+		if items == None:
+			self.items = item_store(self)
+		else:
+			self.items = items
+		if workspace == None:
+			self.python_workspace = python_workspace(self)
+		else:
+			self.python_workspace = workspace
 		self.running = False
 		self.auto_response = auto_response
 		self.plugin_folder = u'plugins'
@@ -67,6 +139,7 @@ class experiment(item.item):
 		self.title = u'My Experiment'
 		self.transparent_variables = u'no'
 		self.bidi = u'no'
+		self.resources = resources
 
 		# Set default variables
 		self.start = u'experiment'
@@ -75,8 +148,7 @@ class experiment(item.item):
 		self.sound_freq = 48000
 		self.sound_sample_size = -16 # Negative values mean signed
 		self.sound_channels = 2
-		self.sound_buf_size = 512
-		self.resources = {}
+		self.sound_buf_size = 1024
 
 		# Backend parameters
 		self.canvas_backend = u'xpyriment'
@@ -136,7 +208,13 @@ class experiment(item.item):
 		self.set_subject(subject_nr)
 		# Restore experiment path
 		if experiment_path != None:
-			self.fallback_pool_folder = os.path.join(experiment_path, u'__pool__')
+			self.fallback_pool_folder = os.path.join(experiment_path,
+				u'__pool__')
+			if os.path.exists(self.fallback_pool_folder):
+				debug.msg(u'Using fallback pool folder: %s' \
+					% self.fallback_pool_folder)
+			else:
+				self.fallback_pool_folder = None
 			self.experiment_path = experiment_path
 		else:
 			self.fallback_pool_folder = None
@@ -158,19 +236,22 @@ class experiment(item.item):
 
 	def set_subject(self, nr):
 
-		"""<DOC>
-		Sets the subject number and parity (even/ odd). This function is #
-		called automatically when an experiment is started, so you do not #
-		generally need to call it yourself.
+		"""
+		desc:
+			Sets the subject number and parity (even/ odd). This function is
+			called automatically when an experiment is started, so you do not
+			generally need to call it yourself.
 
-		Arguments:
-		nr	--	The subject nr.
+		arguments:
+			nr:
+				desc:	The subject nr.
+				type:	int
 
-		Example:
-		>>> exp.set_subject(1)
-		>>> print('Subject nr = %d' % exp.get('subject_nr'))
-		>>> print('Subject parity = %s' % exp.get('subject_parity'))
-		</DOC>"""
+		example: |
+			exp.set_subject(1)
+			print('Subject nr = %d' % exp.get('subject_nr'))
+			print('Subject parity = %s' % exp.get('subject_parity'))
+		"""
 
 		# Set the subject nr and parity
 		self.set(u'subject_nr', nr)
@@ -209,37 +290,6 @@ class experiment(item.item):
 				break
 		return line, def_str
 
-	def parse_definition(self, item_type, item_name, string):
-
-		"""
-		Initializes a single definition, using the string, and adds it to the
-		dictionary of items.
-
-		Arguments:
-		item_type	--	The item's type.
-		item_name	--	The item's name.
-		string		--	The item's definition string.
-		"""
-
-		if plugins.is_plugin(item_type):
-			# Load a plug-in
-			try:
-				item = plugins.load_plugin(item_type, item_name, self, \
-					string, self.item_prefix())
-			except Exception as e:
-				raise osexception(u"Failed to load plugin '%s'" % \
-					item_type, exception=e)
-			self.items[item_name] = item
-		else:
-			# Load one of the core items
-			debug.msg(u"loading core item '%s' from '%s'" % (item_type, \
-				self.module_container()))
-			item_module = __import__(u'%s.%s' % (self.module_container(), \
-				item_type), fromlist=[u'dummy'])
-			item_class = getattr(item_module, item_type)
-			item = item_class(item_name, self, string)
-			self.items[item_name] = item
-
 	def from_string(self, string):
 
 		"""
@@ -271,7 +321,7 @@ class experiment(item.item):
 					item_name = self.sanitize(l[2])
 					line, def_str = self.read_definition(s)
 					get_next = False
-					self.parse_definition(item_type, item_name, def_str)
+					self.items.new(item_type, item_name, def_str)
 			# Advance to next line
 			if get_next:
 				line = next(s, None)
@@ -340,7 +390,7 @@ class experiment(item.item):
 			misc.codename) + \
 			u'# %s (%s)\n' % (time.ctime(), os.name) + \
 			u'# <http://www.cogsci.nl/opensesame>\n\n'
-		for var in self.variables:
+		for var in sorted(self.variables):
 			s += self.variable_to_string(var)
 		s += u'\n'
 		for item in sorted(self.items):
@@ -375,23 +425,31 @@ class experiment(item.item):
 
 	def get_file(self, path):
 
-		"""<DOC>
-		Returns the path to a file. First checks if the file is in the file pool #
-		and then the folder of the current experiment (if any), or in the #
-		`__pool__` subfolder of the current experiment. Otherwise, simply #
-		returns the path.
+		"""
+		desc: |
+			Returns the full path to a file. The logic is as follows:
 
-		Arguments:
-		path	--	The filename.
+			1. First checks if `path` is a file in the file pool.
+			2. If not, check if `path` is a file in the folder of the current
+			   experiment (if any).
+			3. If not, check if `path` is a file in the `__pool__` subfolder of
+			   the current experiment.
+			4. If not, simply return `path`.
 
-		Returns:
-		The full path to the file.
+		arguments:
+			path:
+				desc:	A filename. This can be any type, but will be coerced
+						to `unicode` if it is not `unicode`.
 
-		Example:
-		>>> image_path = exp.get_file('my_image.png')
-		>>> my_canvas = exp.offline_canvas()
-		>>> my_canvas.image(image_path)
-		</DOC>"""
+		returns:
+			desc:	The full path to the file.
+			type:	unicode
+
+		example: |
+			image_path = exp.get_file('my_image.png')
+			my_canvas = exp.offline_canvas()
+			my_canvas.image(image_path)
+		"""
 
 		path = self.unistr(path)
 		if path.strip() == u'':
@@ -412,38 +470,49 @@ class experiment(item.item):
 
 	def file_in_pool(self, path):
 
-		"""<DOC>
-		Checks if a file is in the file pool.
+		"""
+		desc:
+			Checks if a file is in the file pool.
 
-		Returns:
-		A Boolean indicating if the file is in the pool.
+		returns:
+			desc:	A bool indicating if the file is in the pool.
+			type:	bool
 
-		Example:
-		>>> if not exp.file_in_pool('my_image.png'):
-		>>> 	print('my_image.png could not be found!')
-		>>> else:
-		>>> 	image_path = exp.get_file('my_image.png')
-		>>> 	my_canvas = exp.offline_canvas()
-		>>> 	my_canvas.image(image_path)
-		</DOC>"""
+		example: |
+			if not exp.file_in_pool('my_image.png'):
+				print('my_image.png could not be found!')
+			else:
+				image_path = exp.get_file('my_image.png')
+				my_canvas = exp.offline_canvas()
+				my_canvas.image(image_path)
+		"""
 
 		return os.path.exists(self.get_file(path))
 
-	def save(self, path, overwrite=False):
+	def save(self, path, overwrite=False, update_path=True):
 
 		"""
-		Saves the experiment to file. If no extension is provided,
-		.opensesame.tar.gz is chosen by default.
+		desc:
+			Saves the experiment to file. If no extension is provided,
+			.opensesame.tar.gz is chosen by default.
 
-		Arguments:
-		path		--	The target file to save to.
+		arguments:
+			path:
+				desc:	The target file to save to.
+				type:	[str, unicode]
 
-		Keyword arguments:
-		overwrite	--	A boolean indicating if existing files should be
-						overwritten. (default=False)
+		keywords:
+			overwrite:
+				desc:	Indicates if existing files should be overwritten.
+				type:	bool
+			update_path:
+				desc:	Indicates if the experiment_path attribute should be
+						updated.
+				type:	bool
 
-		Returns:
-		The path on successfull saving or False otherwise.
+		returns:
+			desc:	The path on successful saving or False otherwise.
+			type:	[unicode, bool]
 		"""
 
 		if isinstance(path, str):
@@ -483,15 +552,17 @@ class experiment(item.item):
 		# Unicode sanitized to ASCII format. Again, this is necessary to deal
 		# with poor Unicode support in .tar.gz.
 		tmp_pool = tempfile.mkdtemp(suffix=u'.opensesame.pool')
+		pool_folders.append(tmp_pool)
 		for fname in os.listdir(self.pool_folder):
 			sname = self.usanitize(fname)
-			shutil.copyfile(os.path.join(self.pool_folder, fname), \
+			shutil.copyfile(os.path.join(self.pool_folder, fname),
 				os.path.join(tmp_pool, sname))
 		tar.add(tmp_pool, u'pool', True)
 		tar.close()
 		# Move the file to the intended location
 		shutil.move(tmp_path, path)
-		self.experiment_path = os.path.dirname(path)
+		if update_path:
+			self.experiment_path = os.path.dirname(path)
 		return path
 
 	def open(self, src):
@@ -617,6 +688,7 @@ class experiment(item.item):
 
 		from openexp import canvas
 		canvas.init_display(self)
+		self.python_workspace[u'win'] = self.window
 
 	def init_log(self):
 
@@ -633,7 +705,7 @@ class experiment(item.item):
 			self.logfile = os.path.join(self.experiment_path, self.logfile)
 		# Open the logfile
 		self._log = codecs.open(self.logfile, u'w', encoding=self.encoding)
-		print(u"experiment.init_log(): using '%s' as logfile (%s)" % \
+		debug._print(u"experiment.init_log(): using '%s' as logfile (%s)" % \
 			(self.logfile, self.encoding))
 
 	def save_state(self):

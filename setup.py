@@ -18,38 +18,14 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
-from distutils.core import setup
 import glob
 import os
-import os.path
-import fnmatch
-import libqtopensesame.qtopensesame
+import shutil
+from distutils.core import setup
 import libopensesame.misc
-
-# List of included plug-ins
-included_plugins = [
-	'advanced_delay',
-	'external_script',
-	'fixation_dot',
-	'form_base',
-	'form_text_input',
-	'form_consent',
-	'form_text_display',
-	'form_multiple_choice',
-	'joystick',
-	'notepad',
-	'parallel',
-	'port_reader',
-	'repeat_cycle',
-	'reset_feedback',
-	'srbox',
-	'text_display',
-	'text_input',
-	'touch_response',
-	]
+from setup_shared  import included_plugins, included_extensions
 
 share_folder = "/usr/share/opensesame"
-
 exclude_resources = [
 	'.hidden',
 	'eco_alt_template.opensesame.tar.gz'
@@ -58,10 +34,11 @@ exclude_resources = [
 def resources():
 
 	"""
-	Create a list of all resource files that need to be included
+	desc:
+		Create a list of all resource files that need to be included
 
-	Returns:
-	A list of resource files
+	returns:
+		A list of (target folder, filenames) tuples.
 	"""
 
 	l = []
@@ -76,34 +53,65 @@ def resources():
 					root, f)] ) )
 	return l
 
-def plugins():
+def recursive_glob(src_folder, target_folder):
 
 	"""
-	Create a list of all plugins that need to be included in the release
+	desc:
+		Recursively gets all files that are in src folder.
 
-	Returns:
-	A list of plugins
+	arguments:
+		src_folder:		The source folder.
+		target_folder:	The target folder.
+
+	returns:
+		A list of (target folder, filenames) tuples.
 	"""
 
-	global included_plugins
 	l = []
-	for plugin in os.listdir("plugins"):
-		if plugin in included_plugins:
-			# Copy all files in the plug-in folder, but not any subdirectories,
-			# because those will trigger an error
-			target_folder = os.path.join(share_folder, "plugins", plugin)
-			src_folder = "plugins/%s" % plugin
-			file_list = []
-			for fname in os.listdir(src_folder):
-				path = os.path.join(src_folder, fname)
-				if not os.path.isdir(path):
-					file_list.append(path)
-			l.append( (target_folder, file_list) )
-	# Copy plug-in subfolders where necessary. These are manual hacks to deal
-	# with plug-ins that have subdirectories.
-	l.append( (os.path.join(share_folder, 'plugins/joystick/_libjoystick'), \
-		glob.glob('plugins/joystick/_libjoystick/*')) )
+	print src_folder
+	path_list = []
+	for path in os.listdir(src_folder):
+		full_path = os.path.join(src_folder, path)
+		if os.path.isdir(full_path):
+			l += recursive_glob(full_path, os.path.join(target_folder, path))
+			continue
+		if path.startswith('.'):
+			continue
+		if path.endswith('.pyc'):
+			continue
+		if path.endswith('.pyo'):
+			continue
+		if path.endswith('~'):
+			continue
+		print('\t%s' % full_path)
+		path_list.append(full_path)
+	l.append( (target_folder, path_list) )
 	return l
+
+def plugins(included, _type='plugins'):
+
+	"""
+	desc:
+		Create a list of all plugin files that need to be included.
+
+	arguments:
+		included:	A list of included plugin names.
+		_type:		The plugin type, i.e. 'plugins' or 'extensions'.
+
+	returns:
+		A list of (target folder, filenames) tuples.
+	"""
+
+	l = []
+	for plugin in os.listdir(_type):
+		if plugin in included:
+			target_folder = os.path.join(share_folder, _type, plugin)
+			src_folder = os.path.join(_type, plugin)
+			l += recursive_glob(src_folder, target_folder)
+	return l
+
+# Temporarily create README.txt
+shutil.copy('readme.md', 'README.txt')
 
 setup(name="opensesame",
 	version = libopensesame.misc.version,
@@ -121,14 +129,18 @@ setup(name="opensesame",
 		"libopensesame",
 		"libopensesame.widgets",
 		"libopensesame.widgets.themes",
+		"libopensesame.sketchpad_elements",
 		"libqtopensesame",
+		"libqtopensesame.extensions",
 		"libqtopensesame.actions",
 		"libqtopensesame.dialogs",
 		"libqtopensesame.items",
 		"libqtopensesame.misc",
 		"libqtopensesame.runners",
-		"libqtopensesame.ui",
 		"libqtopensesame.widgets",
+		"libqtopensesame.validators",
+		"libqtopensesame.sketchpad_elements",
+		"libqtopensesame._input",
 		],
 	package_dir = {
 		"openexp" : "openexp",
@@ -136,13 +148,20 @@ setup(name="opensesame",
 		"libqtopensesame" : "libqtopensesame"
 		},
 	data_files=[
+		("/usr/share/icons/hicolor/scalable/apps", ["data/opensesame.svg"]),
 		("/usr/share/opensesame", ["COPYING"]),
 		("/usr/share/mime/packages", ["data/x-opensesame-experiment.xml"]),
 		("/usr/share/applications", ["data/opensesame.desktop"]),
 		("/usr/share/opensesame/help", glob.glob("help/*.md")),
 		("/usr/share/opensesame/sounds", glob.glob("sounds/*")),
-		("/usr/share/opensesame/examples", \
+		("/usr/share/opensesame/examples",
 			glob.glob("examples/*.opensesame") + \
 			glob.glob("examples/*.opensesame.tar.gz")),
-		] + plugins() + resources()
+		] + \
+		plugins(included=included_plugins, _type='plugins') + \
+		plugins(included=included_extensions, _type='extensions') + \
+		resources()
 	)
+
+# Clean up temporary readme
+os.remove('README.txt')

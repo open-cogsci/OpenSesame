@@ -38,6 +38,8 @@ widget 0 2 1 1 text_input return_accepts=yes focus=yes var=[form_var] stub=""
 """
 
 class form_text_input(form_base.form_base):
+	
+	initial_view = u'controls'
 
 	def __init__(self, name, experiment, string=None):
 
@@ -52,27 +54,15 @@ class form_text_input(form_base.form_base):
 		string		--	A definition string. (default=None)
 		"""
 
-		if string == None:
+		if string == None or string.strip() == u'':
 			string = default_script
-			
+
 		# Due to dynamic loading, we need to implement this super() hack. See
 		# <http://thingspython.wordpress.com/2010/09/27/another-super-wrinkle-raising-typeerror/>
-		self.super_form_text_input = super(form_text_input, self)		
-		self.super_form_text_input.__init__(name, experiment, string, \
-			item_type=u'form_text_input', description= \
-			u'A simple text input form')
-
-	def from_string(self, script):
-
-		"""
-		Re-generates the form from a definition script.
-
-		Arguments:
-		script		--	The definition script.
-		"""
-
-		self._widgets = []
-		self.super_form_text_input.from_string(script)
+		self.super_form_text_input = super(form_text_input, self)
+		self.super_form_text_input.__init__(name, experiment, string,
+			item_type=u'form_text_input',
+			description=u'A simple text input form')
 
 	def var_info(self):
 
@@ -85,10 +75,10 @@ class form_text_input(form_base.form_base):
 
 		return self.super_form_text_input.var_info() + \
 			[(self.get(u'form_var'), u'[Depends on response]')]
-		
+
 class qtform_text_input(form_text_input, qtautoplugin):
-	
+
 	def __init__(self, name, experiment, script=None):
 
 		form_text_input.__init__(self, name, experiment, script)
-		qtautoplugin.__init__(self, __file__)	
+		qtautoplugin.__init__(self, __file__)

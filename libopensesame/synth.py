@@ -27,33 +27,23 @@ class synth(sampler.sampler, item.item):
 
 	description = u'A basic sound synthesizer'
 
-	def __init__(self, name, experiment, string = None):
-	
-		"""
-		Constructor.
+	def reset(self):
 
-		Arguments:
-		name 		--	The name of the item.
-		experiment 	--	The experiment.
-
-		Keyword arguments:
-		string		-- 	The item definition string. (default=None)
-		"""
+		"""See item."""
 
 		self.item_type = u'synth'
 		self.freq = 440
 		self.length = 100
 		self.osc = u'sine'
-		self.pan = 0		
+		self.pan = 0
 		self.attack = 0
 		self.decay = 5
 		self.volume = 1.0
 		self.duration = u'sound'
 		self.block = False
-		item.item.__init__(self, name, experiment, string)	
-		
+
 	def prepare(self):
-	
+
 		"""Prepares for playback."""
 
 		item.item.prepare(self)

@@ -24,21 +24,12 @@ class feedback(sketchpad.sketchpad):
 
 	description = u'Provides feedback to the participant'
 
-	def __init__(self, name, experiment, string=None):
+	def reset(self):
 
-		"""
-		Constructor
+		"""See item."""
 
-		Arguments:
-		name 		--	The item name
-		experiment 	--	The experiment object.
-
-		Keyword arguments:
-		string		--	A definition string. (default=None)
-		"""
-
+		super(feedback, self).reset()
 		self.reset_variables = u'yes'
-		sketchpad.sketchpad.__init__(self, name, experiment, string)
 
 	def prepare(self):
 

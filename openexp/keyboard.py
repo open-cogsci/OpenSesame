@@ -19,20 +19,26 @@ along with openexp.  If not, see <http://www.gnu.org/licenses/>.
 
 from libopensesame import debug
 
-class keyboard:
+def keyboard(experiment, *arglist, **kwdict):
 
 	"""
-	Based on the keyboard_backend variable in the experiment, this class
-	morphs into the appropriate keyboard backend class.
+	desc:
+		A factory that returns a back-end specific keyboard object.
+
+	arguments:
+		experiment:
+			desc:	The experiment object.
+			type:	experiment
+
+	argument-list:
+		arglist:	See keyboard.__init__().
+
+	keyword-dict:
+		kwdict:		See keyboard.__init__().
 	"""
 
-	def __init__(self, experiment, keylist=None, timeout=None):		
-	
-		backend = experiment.keyboard_backend		
-		debug.msg('morphing into %s' % backend)
-		mod = __import__('openexp._keyboard.%s' % backend, fromlist=['dummy'])			
-		cls = getattr(mod, backend)
-		self.__class__ = cls
-		cls.__init__(self, experiment, keylist, timeout)
-			
-
+	backend = experiment.get(u'keyboard_backend')
+	debug.msg(u'morphing into %s' % backend)
+	mod = __import__('openexp._keyboard.%s' % backend, fromlist=['dummy'])
+	cls = getattr(mod, backend)
+	return cls(experiment, *arglist, **kwdict)

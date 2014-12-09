@@ -17,88 +17,121 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
-__author__ = "Sebastiaan Mathot"
-__license__ = "GPLv3"
-
 from PyQt4 import QtCore, QtGui
 from libopensesame import debug
 from libqtopensesame.misc import _
+from libqtopensesame.widgets.base_widget import base_widget
 
-class header_widget(QtGui.QWidget):
+class header_widget(base_widget):
 
-	"""Editable labels for the item's name and description"""
+	"""
+	desc:
+		Editable labels for an item's name and description.
+	"""
 
 	def __init__(self, item):
 
 		"""
-		Constructor
+		desc:
+			Constructor.
 
-		Arguments:
-		item -- the item to provide a header for
+		arguments:
+			item: 			A qtitem object.
 		"""
 
-		QtGui.QWidget.__init__(self)
+		super(header_widget, self).__init__(item.main_window)
 		self.setCursor(QtCore.Qt.IBeamCursor)
 		self.setToolTip(_(u"Click to edit"))
 		self.item = item
 		self.label_name = QtGui.QLabel()
-		self.label_name.id = u"name"
 		self.edit_name = QtGui.QLineEdit()
-		self.edit_name.editingFinished.connect(self.restore_name)
+		self.edit_name.editingFinished.connect(self.apply_name)
 		self.edit_name.hide()
 		self.label_desc = QtGui.QLabel()
-		self.label_desc.id = u"desc"
 		self.edit_desc = QtGui.QLineEdit()
-		self.edit_desc.editingFinished.connect(self.restore_desc)
+		self.edit_desc.editingFinished.connect(self.apply_desc)
 		self.edit_desc.hide()
-			
+
 		vbox = QtGui.QVBoxLayout()
 		vbox.setContentsMargins(8, 0, 0, 0)
 		vbox.setSpacing(0)
 		vbox.addWidget(self.label_name)
 		vbox.addWidget(self.edit_name)
 		vbox.addWidget(self.label_desc)
-		vbox.addWidget(self.edit_desc)		
+		vbox.addWidget(self.edit_desc)
 		self.refresh()
 		self.setLayout(vbox)
 
 	def refresh(self):
 
-		"""Update the header"""
+		"""
+		desc:
+			Updates the header so that it's content match the item.
+		"""
 
-		self.edit_name.setText(self.item.name)
-		self.label_name.setText( \
-			u"<font size='5'><b>%s</b> - %s</font>&nbsp;&nbsp;&nbsp;<font color='gray'><i>Click to edit</i></font>" \
-			% (self.item.name, self.item.item_type.replace(u"_", u" ").title()))
-		self.edit_desc.setText(self.item.description)
-		self.label_desc.setText(self.item.description)
+		self.set_name(self.item.name)
+		self.set_desc(self.item.description)
 
-	def restore_name(self, apply_name_change=True):
+	def set_name(self, name):
 
 		"""
-		Apply the name change and revert the edit control back to the static
-		label
+		desc:
+			Sets the name.
 
-		Keywords arguments:
-		apply_name_change -- indicates of the name change should be applied
-							 (default=True)
+		arguments:
+			name:	A name.
+			type:	unicode
 		"""
-		
-		debug.msg(u"apply_name_change = %s" % apply_name_change)
-		if apply_name_change:
-			self.item.apply_name_change()			
-		self.refresh()					
+
+		self.label_name.setText(
+			(u"<font size='5'><b>%s</b> - %s</font>&nbsp;&nbsp;&nbsp;"
+			u"<font color='gray'><i>Click to edit</i></font>") \
+			% (name, self.item.item_type.replace(u"_", u" ").title()))
+		self.edit_name.setText(name)
+
+	def set_desc(self, desc):
+
+		"""
+		desc:
+			Sets the description.
+
+		arguments:
+			name:	A description.
+			type:	unicode
+		"""
+
+		self.edit_desc.setText(desc)
+		self.label_desc.setText(desc)
+
+	def apply_name(self):
+
+		"""
+		desc:
+			Applies the name change and revert the edit control back to the
+			static label.
+		"""
+
+		if self.label_name.isVisible():
+			return
+		debug.msg()
 		self.label_name.show()
 		self.edit_name.hide()
+		self.item_store.rename(self.item.name, unicode(self.edit_name.text()))
 
-	def restore_desc(self):
+	def apply_desc(self):
 
-		"""Apply the description change and revert the edit	back to the label"""
-		
-		self.item.apply_edit_changes()			
-		self.refresh()
+		"""
+		desc:
+			Applies the description change and revert the edit back to the
+			label.
+		"""
+
+		if self.label_desc.isVisible():
+			return
+		debug.msg()
 		self.label_desc.show()
 		self.edit_desc.hide()
+		self.item.apply_edit_changes()
 
 	def mousePressEvent(self, event):
 
@@ -112,17 +145,15 @@ class header_widget(QtGui.QWidget):
 		"""
 
 		target = self.childAt(event.pos())
-
-		if target != None and hasattr(target, u"id"):
-			if target.id == u"name":
-				self.restore_desc()
-				self.label_name.hide()
-				self.edit_name.show()
-				self.edit_name.selectAll()
-				self.edit_name.setFocus()
-			else:
-				self.restore_name()
-				self.label_desc.hide()
-				self.edit_desc.show()
-				self.edit_desc.selectAll()
-				self.edit_desc.setFocus()
+		if target == self.label_name:
+			self.apply_desc()
+			self.label_name.hide()
+			self.edit_name.show()
+			self.edit_name.selectAll()
+			self.edit_name.setFocus()
+		elif target == self.label_desc:
+			self.apply_name()
+			self.label_desc.hide()
+			self.edit_desc.show()
+			self.edit_desc.selectAll()
+			self.edit_desc.setFocus()

@@ -20,115 +20,46 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 from PyQt4 import QtCore, QtGui
 import libopensesame.plugins
 from libopensesame import debug
-from libqtopensesame.misc import config, _
+from libqtopensesame.misc import _
+from libqtopensesame.misc.base_subcomponent import base_subcomponent
+from libqtopensesame.misc.config import cfg
+from libqtopensesame.widgets.toolbar_items_label import toolbar_items_label
+from libqtopensesame.widgets.toolbar_items_item import toolbar_items_item
 
-class widget_item(QtGui.QLabel):
+class toolbar_items(base_subcomponent, QtGui.QToolBar):
 
-	"""A draggable toolbar icon"""
+	"""
+	desc:
+		The item toolbar, which allows you to insert items into the experiment
+		through drag and drop.
+	"""
 
-	def __init__(self, pixmap, item, main_window):
-
-		"""
-		Constructor
-
-		Arguments:
-		icon -- a QIcon
-		item -- the item name
-		main_window -- the main window
-		"""
-
-		self.main_window = main_window
-		self.item = item
-		self.pixmap = pixmap
-
-		QtGui.QLabel.__init__(self)
-		self.setMargin(6)
-		self.setToolTip( \
-			_("Drag this <b>%s</b> item to the intended location in the overview area or into the item list of a sequence tab") \
-			% self.item)
-		self.setCursor(QtGui.QCursor(QtCore.Qt.OpenHandCursor))
-		self.setPixmap(self.pixmap)
-
-	def mouseMoveEvent(self, e):
+	def __init__(self, parent):
 
 		"""
-		Start a drag operation and drop it if it was accepted by item overview
+		desc:
+			Constructor.
 
-		Arguments:
-		e -- a mouse event
+		arguments:
+			parent:
+				desc:	The parent.
+				type:	QWidget
 		"""
 
-		if e.buttons() != QtCore.Qt.LeftButton:
-			return
-
-		mimedata = QtCore.QMimeData()
-		mimedata.setText("__osnew__ %s" % self.item)
-
-		drag = QtGui.QDrag(self)
-		drag.setMimeData(mimedata)
-		drag.setHotSpot(e.pos() - self.rect().topLeft())
-		drag.setPixmap(self.pixmap)
-
-		if drag.start(QtCore.Qt.CopyAction) == QtCore.Qt.CopyAction:
-			if self.item == "loop":
-				self.main_window.drop_item(self.main_window.add_loop)
-			elif self.item == "sequence":
-				self.main_window.drop_item(self.main_window.add_sequence)
-			else:
-				self.main_window.drop_item(self.item)
-		else:
-			debug.msg("drop cancelled")
-
-class toolbar_label(QtGui.QFrame):
-
-	"""A toolbar label"""
-
-	def __init__(self, label):
-
-		"""
-		Constructor
-
-		Arguments:
-		label -- the text for the label
-		"""
-
-		QtGui.QWidget.__init__(self)
-
-		l = QtGui.QLabel(label)
-		l.setMaximumWidth(90)
-		l.setIndent(5)
-		l.setWordWrap(True)
-
-		hbox = QtGui.QHBoxLayout()
-		hbox.addWidget(l)
-		hbox.setMargin(0)
-
-		self.setLayout(hbox)
-
-class toolbar_items(QtGui.QToolBar):
-
-	"""This class implements the drag-and-droppable item toolbar"""
-
-	def __init__(self, parent=None):
-
-		"""
-		Constructor
-
-		Keywords arguments:
-		parent -- parent widget
-		"""
-
-		QtGui.QToolBar.__init__(self, parent)
-		self.main_window = None
+		super(toolbar_items, self).__init__(parent)
+		self.setup(parent)
 		self.orientationChanged.connect(self.build)
 
 	def add_content(self, content):
 
 		"""
-		Add double rows of content to the toolbar
+		desc:
+			Add double rows of content to the toolbar.
 
-		Arguments:
-		content -- a list of content widgets
+		arguments:
+			content:
+				desc:	A list of content widgets.
+				type:	list
 		"""
 
 		if self.orientation() == QtCore.Qt.Horizontal:
@@ -151,31 +82,31 @@ class toolbar_items(QtGui.QToolBar):
 				l.addStretch()
 			self.addWidget(w)
 
-	def build(self, dummy=None):
+	def build(self):
 
 		"""
-		Populate the toolbar with items (core and plugins)
-
-		Keywords arguments:
-		dummy -- a dummy argument (default=None)
+		desc:
+			Populates the toolbar with items.
 		"""
 
-		# Only do something if the main_window has been attached
-		if self.main_window == None:
+		# This function is called first when no experiment has been loaded yet.
+		try:
+			self.experiment
+		except:
 			return
 
 		# Remove old items
 		self.clear()
 
 		if self.orientation() == QtCore.Qt.Vertical:
-			self.addWidget(toolbar_label(_("<small>Commonly used</small>")))
+			self.addWidget(toolbar_items_label(self, u'Commonly used'))
 
 		# Add the core items
 		content = []
-		for item in self.main_window.experiment.core_items:
-			content.append(widget_item(self.main_window.theme.qpixmap(item, \
-				size=config.get_config("toolbar_size")), item, \
-				self.main_window))
+		for item in self.experiment.core_items:
+			w = toolbar_items_item(self, item, self.theme.qpixmap(item,
+				size=cfg.toolbar_size))
+			content.append(w)
 		self.add_content(content)
 
 		# Create a dictionary of plugins by category. We also maintain a list
@@ -193,17 +124,16 @@ class toolbar_items(QtGui.QToolBar):
 		for cat in cat_list:
 			self.addSeparator()
 			if self.orientation() == QtCore.Qt.Vertical:
-				self.addWidget(toolbar_label("<small>%s</small>" % cat))
+				self.addWidget(toolbar_items_label(self, cat))
 			content = []
 			for plugin in cat_dict[cat]:
-				debug.msg("adding plugin '%s'" % plugin)
-				if config.get_config("toolbar_size") == 16:
-					pixmap = QtGui.QPixmap( \
+				debug.msg(u"adding plugin '%s'" % plugin)
+				if cfg.toolbar_size == 16:
+					pixmap = QtGui.QPixmap(
 						libopensesame.plugins.plugin_icon_small(plugin))
 				else:
-					pixmap = QtGui.QPixmap( \
-						libopensesame.plugins.plugin_icon_large(plugin))					
-				content.append(widget_item(pixmap, plugin, self.main_window))
+					pixmap = QtGui.QPixmap(
+						libopensesame.plugins.plugin_icon_large(plugin))
+				w = toolbar_items_item(self, plugin, pixmap)
+				content.append(w)
 			self.add_content(content)
-
-

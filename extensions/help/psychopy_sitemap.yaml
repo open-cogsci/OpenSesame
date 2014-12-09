@@ -1,0 +1,35 @@
+Core: http://www.psychopy.org/api/core.html
+Data: http://www.psychopy.org/api/data.html
+Event: http://www.psychopy.org/api/event.html
+Filters: http://www.psychopy.org/api/filters.html
+GUI: http://www.psychopy.org/api/gui.html
+Hardware: http://www.psychopy.org/api/hardware.html
+IOHub: http://www.psychopy.org/api/iohub.html
+Info: http://www.psychopy.org/api/info.html
+Logging: http://www.psychopy.org/api/logging.html
+Microphone: http://www.psychopy.org/api/microphone.html
+Misc: http://www.psychopy.org/api/misc.html
+Monitors: http://www.psychopy.org/api/monitors.html
+Parallel: http://www.psychopy.org/api/parallel.html
+Serial: http://www.psychopy.org/api/serial.html
+Sound: http://www.psychopy.org/api/sound.html
+Tools: http://www.psychopy.org/api/tools.html
+Visual:
+  Aperture: http://www.psychopy.org/api/visual/aperture.html#psychopy.visual.Aperture
+  BufferImageStim: http://www.psychopy.org/api/visual/bufferimagestim.html#psychopy.visual.BufferImageStim
+  Circle: http://www.psychopy.org/api/visual/circle.html#psychopy.visual.Circle
+  CustomMouse: http://www.psychopy.org/api/visual/custommouse.html#psychopy.visual.CustomMouse
+  DotStim: http://www.psychopy.org/api/visual/dotstim.html#psychopy.visual.DotStim
+  ElementArrayStim: http://www.psychopy.org/api/visual/elementarraystim.html#psychopy.visual.ElementArrayStim
+  GratingStim: http://www.psychopy.org/api/visual/gratingstim.html#psychopy.visual.GratingStim
+  ImageStim: http://www.psychopy.org/api/visual/imagestim.html#psychopy.visual.ImageStim
+  Line: http://www.psychopy.org/api/visual/line.html#psychopy.visual.Line
+  MovieStim: http://www.psychopy.org/api/visual/moviestim.html#psychopy.visual.MovieStim
+  Polygon: http://www.psychopy.org/api/visual/polygon.html#psychopy.visual.Polygon
+  RadialStim: http://www.psychopy.org/api/visual/radialstim.html#psychopy.visual.RadialStim
+  RatingScale: http://www.psychopy.org/api/visual/ratingscale.html#psychopy.visual.RatingScale
+  Rect: http://www.psychopy.org/api/visual/rect.html#psychopy.visual.Rect
+  ShapeStim: http://www.psychopy.org/api/visual/shapestim.html#psychopy.visual.ShapeStim
+  SimpleImageStim: http://www.psychopy.org/api/visual/simpleimagestim.html#psychopy.visual.SimpleImageStim
+  TextStim: http://www.psychopy.org/api/visual/textstim.html#psychopy.visual.TextStim
+Web: http://www.psychopy.org/api/web.html

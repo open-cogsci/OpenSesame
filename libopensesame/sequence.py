@@ -27,22 +27,12 @@ class sequence(item.item):
 
 	description = u'Runs a number of items in sequence'
 
-	def __init__(self, name, experiment, string=None):
+	def reset(self):
 
-		"""
-		Constructor.
-
-		Arguments:
-		name 		--	The name of the item.
-		experiment 	--	The experiment.
-
-		Keyword arguments:
-		string		-- 	The item definition string. (default=None)
-		"""
+		"""See item."""
 
 		self.items = []
 		self.flush_keyboard = u'yes'
-		item.item.__init__(self, name, experiment, string)
 
 	def run(self):
 
@@ -83,6 +73,7 @@ class sequence(item.item):
 		string 	--	A definition string.
 		"""
 
+		self.reset()
 		for i in string.split(u'\n'):
 			self.parse_variable(i)
 			i = self.split(i.strip())
