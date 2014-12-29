@@ -21,6 +21,7 @@ from libopensesame import sketchpad_elements
 from libopensesame import debug
 from libopensesame.exceptions import osexception
 from libopensesame.item import item
+from libopensesame.signalslot import signal
 from libopensesame.generic_response import generic_response
 from openexp.canvas import canvas
 
@@ -39,6 +40,12 @@ class sketchpad(item, generic_response):
 
 		self.duration = u'keypress'
 		self.elements = []
+
+	def init_signals(self):
+
+		"""See item."""
+
+		self.on_shown = signal(self.experiment, args=[], kwargs=[])
 
 	def element_module(self):
 
@@ -109,6 +116,7 @@ class sketchpad(item, generic_response):
 		"""
 
 		self.set_item_onset(self.canvas.show())
+		self.on_shown.emit()
 		self.set_sri(False)
 		self.process_response()
 
