@@ -45,6 +45,9 @@ class mouse_response(item.item, generic_response.generic_response):
 		self.resp_codes[4] = u'scroll_up'
 		self.resp_codes[5] = u'scroll_down'
 
+	def init_signals(self):
+		generic_response.generic_response.init_signals(self)		
+
 	def prepare(self):
 
 		"""Prepares the item."""
@@ -84,4 +87,3 @@ class mouse_response(item.item, generic_response.generic_response):
 		l.append( (u'cursor_x', u'[Depends on response]') )
 		l.append( (u'cursor_y', u'[Depends on response]') )
 		return l
-

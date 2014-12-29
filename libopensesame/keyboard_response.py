@@ -36,6 +36,9 @@ class keyboard_response(item.item, generic_response.generic_response):
 		self.duration = u'keypress'
 		self.process_feedback = True
 
+	def init_signals(self):
+		generic_response.generic_response.init_signals(self)
+
 	def prepare(self):
 
 		"""Prepares the item."""

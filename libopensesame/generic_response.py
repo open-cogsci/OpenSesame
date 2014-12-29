@@ -21,6 +21,7 @@ import random
 import openexp.keyboard
 import openexp.mouse
 from libopensesame import debug
+from libopensesame.signalslot import signal
 from libopensesame.exceptions import osexception
 
 class generic_response:
@@ -32,6 +33,19 @@ class generic_response:
 
 	auto_response = u"a"
 	process_feedback = False
+
+	def init_signals(self):
+
+		"""See item."""
+
+		self.on_response = signal(self.experiment, args=[],
+			kwargs=['response', 'response_time', 'correct'])
+		self.on_correct = signal(self.experiment, args=[],
+			kwargs=['response', 'response_time', 'correct'])
+		self.on_incorrect = signal(self.experiment, args=[],
+			kwargs=['response', 'response_time', 'correct'])
+		self.on_timeout = signal(self.experiment, args=[],
+			kwargs=['response', 'response_time', 'correct'])
 
 	def prepare_timeout(self):
 
@@ -186,6 +200,23 @@ class generic_response:
 			self.experiment.set(u"average_response_time", self.experiment.avg_rt)
 			self.experiment.set(u"correct_%s" % self.get(u"name"), \
 				self.get(u"correct"))
+			# Send signals
+			self.on_response.emit(response=self.experiment.response,
+				response_time=self.experiment.response_time,
+				correct=self.experiment.correct)
+			if self._timeout != None \
+				and self.experiment.response_time >= self._timeout:
+				self.on_timeout.emit(response=self.experiment.response,
+					response_time=self.experiment.response_time,
+					correct=self.experiment.correct)
+			elif self.experiment.correct == 1:
+				self.on_correct.emit(response=self.experiment.response,
+					response_time=self.experiment.response_time,
+					correct=self.experiment.correct)
+			elif self.experiment.correct == 0:
+				self.on_incorrect.emit(response=self.experiment.response,
+					response_time=self.experiment.response_time,
+					correct=self.experiment.correct)
 
 	def set_sri(self, reset=False):
 
