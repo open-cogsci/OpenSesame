@@ -21,11 +21,13 @@ import openexp.mouse
 import openexp.keyboard
 from libopensesame.exceptions import osexception
 from libopensesame import debug, regexp
+from signalslot import signal, slot
 import codecs
 import string
 import os
 import sys
 import pygame
+import inspect
 
 class item(object):
 
@@ -46,9 +48,10 @@ class item(object):
 		string		--	An definition string. (default=None).
 		"""
 
-		self.reset()
-		self.name = name
 		self.experiment = experiment
+		self.reset()
+		self.init_signals()
+		self.name = name
 		self.debug = debug.enabled
 		self.count = 0
 		# A number of keywords are reserved, which means that they cannot be
@@ -75,9 +78,10 @@ class item(object):
 			self.round_decimals = 2
 		self.variables = {}
 		self.comments = []
+		self._signals = None
 		if string != None:
 			self.from_string(string)
-			
+
 	def reset(self):
 
 		"""
@@ -94,6 +98,8 @@ class item(object):
 		self.time = self.experiment._time_func
 		self.sleep = self.experiment._sleep_func
 		self.experiment.set(u'count_%s' % self.name, self.count)
+		for name, signal in self.signals():
+			signal.prepare()
 		self.count += 1
 
 	def run(self):
@@ -119,6 +125,9 @@ class item(object):
 		if self.parse_comment(line):
 			return True
 		l = self.split(line.strip())
+		# Same for parse_signals
+		if self.parse_signal(line, l):
+			return True
 		if len(l) > 0 and l[0] == u'set':
 			if len(l) != 3:
 				raise osexception( \
@@ -306,6 +315,7 @@ class item(object):
 
 		debug.msg()
 		self.reset()
+		self.init_signals()
 		textblock_var = None
 		self.variables = {}
 		for line in string.split(u'\n'):
@@ -359,12 +369,13 @@ class item(object):
 
 		if item_type == None:
 			item_type = self.item_type
-		s = u'define %s %s\n' % (item_type, self.name)
+		l = [u'define %s %s\n' % (item_type, self.name)]
 		for comment in self.comments:
-			s += u'\t# %s\n' % comment.strip()
+			l.append(u'\t# %s\n' % comment.strip())
+		l.append(self.signals_to_string())
 		for var in sorted(self.variables):
-			s += u'\t' + self.variable_to_string(var)
-		return s
+			l.append(u'\t%s' % self.variable_to_string(var))
+		return u''.join(l)
 
 	def resolution(self):
 
@@ -1153,6 +1164,107 @@ class item(object):
 
 		self.experiment._log.flush()
 		os.fsync(self.experiment._log)
+
+	def signals(self):
+
+		"""
+		desc:
+			Gives all signals that the item can emit.
+
+		returns:
+			desc:	A list of (name, signal) tuples.
+			type:	list
+		"""
+
+		# Cache the results for the future access
+		if self._signals is None:
+			self._signals = []
+			for name, attr in self.__dict__.iteritems():
+				if isinstance(attr, signal):
+					self._signals.append((name, attr))
+		return self._signals
+
+	def signal(self, name):
+
+		"""
+		desc:
+			Gets a signal by name.
+
+		arguments:
+			name:
+				desc:	The name of a signal.
+				type:	[str, unicode]
+
+		returns:
+			type:	signal
+		"""
+
+		for _name, _signal in self.signals():
+			if _name == name:
+				return _signal
+		return None
+
+	def parse_signal(self, line, l):
+
+		"""
+		visible:
+			False
+
+		desc:
+			Parses a line of OpenSesame script for signal-slot connections.
+
+		arguments:
+			line:
+				desc:	The line of script.
+				type:	[str, unicode]
+			l:
+				desc:	The line of script split by whitespace.
+				type:	list
+
+		returns:
+			desc:	True if a connection was parsed, False otherwise.
+			type:	bool
+		"""
+
+		if len(l) < 2 or l[0] != u'connect':
+			return False
+		if len(l) != 3:
+			raise osexception(u'Invalid connect statement: %s' % line)
+		signal = self.signal(l[1])
+		if signal == None:
+			raise osexception(u'Invalid signal: %s' % l[1])
+		debug.msg(u'connecting slot \'%s\' to signal \'%s\'' % (l[2], l[1]))
+		signal.connect(l[2])
+		return True
+
+	def signals_to_string(self):
+
+		"""
+		visible:
+			False
+
+		desc:
+			Encodes all signal-slot connections to OpenSesame script.
+
+		returns:
+			desc:	OpenSesame script.
+			type:	unicode
+		"""
+
+		l = []
+		for _name, _signal in self.signals():
+			for _slot in _signal.slots:
+				l.append(u'\tconnect %s %s\n' % (_name, _slot))
+		return u''.join(l)
+
+	def init_signals(self):
+
+		"""
+		desc:
+			Initializes all signals.
+		"""
+
+		pass
 
 def osreplace(exc):
 

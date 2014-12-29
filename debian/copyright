@@ -9,6 +9,13 @@ Licenses: GPL-3
  On Debian systems, the full text of the GNU General Public License version 3
  can be found in the file `/usr/share/common-licenses/GPL-3'.
 
+Files: libopensesame/signalslot/_signal.py
+Copyright: 2014, Numergy
+ 2014, Sebastiaan Mathot
+Licenses: GPL-3
+ On Debian systems, the full text of the GNU General Public License version 3
+ can be found in the file `/usr/share/common-licenses/GPL-3'.
+
 Files: resources/*.ttf
 Copyright: 2006, 2007, 2008, 2009, 2010 Google Corp.
  Droid is a trademark of Google Corp.
