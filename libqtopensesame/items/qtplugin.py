@@ -25,6 +25,7 @@ from libqtopensesame.misc import _
 from libqtopensesame.widgets import color_edit, pool_widget
 from libopensesame import debug, misc
 from libqtopensesame.misc.config import cfg
+from libopensesame.py3compat import *
 
 class qtplugin(qtitem.qtitem):
 
@@ -42,8 +43,8 @@ class qtplugin(qtitem.qtitem):
 		if plugin_file != None:
 			# The __file__ variable is generally a str, which will cause unicode
 			# errors. Therefore, convert this here if necessary.
-			if isinstance(plugin_file, str):
-				plugin_file = plugin_file.decode(misc.filesystem_encoding())
+			plugin_file = safe_decode(plugin_file,
+				enc=misc.filesystem_encoding())
 			# These lines makes sure that the icons and help file are recognized
 			# by OpenSesame.
 			self.plugin_folder = os.path.dirname(plugin_file)
@@ -459,7 +460,7 @@ class qtplugin(qtitem.qtitem):
 
 		def browse_pool():
 			s = pool_widget.select_from_pool(self.experiment.main_window)
-			if unicode(s) == "":
+			if str(s) == "":
 				return
 			edit_widget.setText(s)
 			self.apply_edit_changes()
@@ -474,10 +475,9 @@ class qtplugin(qtitem.qtitem):
 		True if changes have been made, False otherwise.
 		"""
 
-		for var, qprogedit in self.auto_editor.iteritems():
+		for var, qprogedit in self.auto_editor.items():
 			if qprogedit.isAnyModified():
 				debug.msg(u'applying pending editor changes')
 				self.apply_edit_changes()
 				return True
 		return qtitem.qtitem.get_ready(self)
-

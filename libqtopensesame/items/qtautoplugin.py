@@ -17,6 +17,8 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
+from libopensesame.py3compat import *
+
 import os
 from libopensesame import plugins
 from libqtopensesame.items.qtplugin import qtplugin
@@ -74,7 +76,7 @@ class qtautoplugin(qtplugin):
 								u'You must specify "%s" for %s controls in info.yaml') \
 								% (option, c[u'type']))
 			# Set missing keywords to None
-			for keyword, default in keywords.iteritems():
+			for keyword, default in keywords.items():
 				if keyword not in c:
 					c[keyword] = default
 			# Parse checkbox

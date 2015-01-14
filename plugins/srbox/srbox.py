@@ -114,7 +114,7 @@ class srbox(item.item, generic_response.generic_response):
 			# Prepare the light byte
 			s = "010" # Control string
 			for i in range(5):
-				if unicode(5 - i) in unicode(self.get("lights")):
+				if str(5 - i) in str(self.get("lights")):
 					s += "1"
 				else:
 					s += "0"

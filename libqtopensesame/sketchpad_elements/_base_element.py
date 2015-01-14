@@ -17,6 +17,7 @@ You should have received a copy of the GNU General Public License
 along with openexp.  If not, see <http://www.gnu.org/licenses/>.
 """
 
+from libopensesame.py3compat import *
 from libopensesame.exceptions import osexception
 from libqtopensesame.misc import _
 from PyQt4 import QtGui, QtCore
@@ -193,7 +194,7 @@ class base_element(object):
 		effect = QtGui.QGraphicsOpacityEffect()
 		return effect
 
-	def get_property(self, name, _type=unicode):
+	def get_property(self, name, _type=str):
 
 		"""
 		desc:
@@ -214,8 +215,8 @@ class base_element(object):
 		if name not in properties:
 			return None
 		val = properties[name]
-		if _type == unicode:
-			return unicode(val)
+		if _type == str:
+			return str(val)
 		if _type == int:
 			return int(val)
 		if _type == float:

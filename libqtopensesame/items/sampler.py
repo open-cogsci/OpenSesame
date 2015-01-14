@@ -17,6 +17,8 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
+from libopensesame.py3compat import *
+
 from libopensesame.sampler import sampler as sampler_runtime
 from libqtopensesame.misc import _
 from libqtopensesame.items.qtplugin import qtplugin
@@ -74,7 +76,7 @@ class sampler(sampler_runtime, qtplugin):
 		"""
 
 		s = pool_widget.select_from_pool(self.main_window)
-		if unicode(s) == u'':
+		if str(s) == u'':
 			return
 		self.sampler_widget.ui.edit_sample.setText(s)
 		self.apply_edit_changes()

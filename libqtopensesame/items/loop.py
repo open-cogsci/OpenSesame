@@ -17,6 +17,8 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
+from libopensesame.py3compat import *
+
 import copy
 from libopensesame.loop import loop as loop_runtime
 from libqtopensesame.items.qtitem import qtitem
@@ -91,7 +93,7 @@ class loop(qtstructure_item, qtitem, loop_runtime):
 
 		if ok:
 			l = self.cyclevar_list()
-			var_name = unicode(var_name)
+			var_name = str(var_name)
 
 			# Split by space, because a name may be followed by a default value
 			_l = var_name.split()
@@ -179,7 +181,7 @@ class loop(qtstructure_item, qtitem, loop_runtime):
 			_new_var, ok = QtGui.QInputDialog.getText(self.loop_table, \
 				_(u'New variable'), _(u'Enter a new variable name'), text=old_var)
 			if ok and _new_var != old_var:
-				old_var = unicode(old_var)
+				old_var = str(old_var)
 				new_var = self.experiment.sanitize(_new_var, strict=True, \
 					allow_vars=False)
 				if _new_var != new_var or new_var == "":
@@ -207,7 +209,7 @@ class loop(qtstructure_item, qtitem, loop_runtime):
 			_(u"Remove variable"), _(u"Which variable do you want to remove?"), \
 			var_list)
 		if ok:
-			var = unicode(var)
+			var = str(var)
 			for i in self.matrix:
 				if var in self.matrix[i]:
 					del self.matrix[i][var]
@@ -276,7 +278,7 @@ class loop(qtstructure_item, qtitem, loop_runtime):
 				return
 		for i in self.matrix.keys():
 			if i >= cycles:
-				del self.matrix[i]		
+				del self.matrix[i]
 		self.lock_cycles = False
 		self.set(u"cycles", cycles)
 
@@ -402,7 +404,7 @@ class loop(qtstructure_item, qtitem, loop_runtime):
 				self.matrix[self.i][var] = val
 			self.i += 1
 			return
-		var = d.keys()[0]
+		var = list(d.keys())[0]
 		for val in d[var]:
 			_d = copy.copy(d)
 			del _d[var]
@@ -425,7 +427,7 @@ class loop(qtstructure_item, qtitem, loop_runtime):
 					item = d.get_item(row, col)
 					if item == None:
 						break
-					s = unicode(item.text())
+					s = str(item.text())
 					if s == u'':
 						break
 					if row == 0:
@@ -547,12 +549,12 @@ class loop(qtstructure_item, qtitem, loop_runtime):
 			self.matrix[_row] = {}
 			weight = 1
 			for col in range(self.loop_table.columnCount()):
-				var = unicode(self.loop_table.horizontalHeaderItem(col).text())
+				var = str(self.loop_table.horizontalHeaderItem(col).text())
 				cell = self.loop_table.item(row, col)
 				if cell == None:
 					val = u''
 				else:
-					val = unicode(self.loop_table.item(row, col).text())
+					val = str(self.loop_table.item(row, col).text())
 				if var == weight_var:
 					try:
 						weight = int(val)
@@ -581,7 +583,7 @@ class loop(qtstructure_item, qtitem, loop_runtime):
 		"""
 
 		# Set item to run
-		item = unicode(self.loop_widget.ui.combobox_item.currentText())
+		item = str(self.loop_widget.ui.combobox_item.currentText())
 		self.set(u'item', item)
 		# Validate and set the break-if statement
 		break_if = self.clean_cond(self.loop_widget.ui.edit_break_if.text(),
@@ -593,12 +595,12 @@ class loop(qtstructure_item, qtitem, loop_runtime):
 		for row in range(self.loop_table.rowCount()):
 			self.matrix[row] = {}
 			for col in range(self.loop_table.columnCount()):
-				var = unicode(self.loop_table.horizontalHeaderItem(col).text())
+				var = str(self.loop_table.horizontalHeaderItem(col).text())
 				cell = self.loop_table.item(row, col)
 				if cell == None:
 					val = u''
 				else:
-					val = unicode(self.loop_table.item(row, col).text())
+					val = str(self.loop_table.item(row, col).text())
 				if not self.sanitize_check(val):
 					val = self.sanitize(val)
 				self.matrix[row][var] = val

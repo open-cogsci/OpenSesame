@@ -19,6 +19,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 
 from libopensesame.exceptions import osexception
 from libopensesame import item, debug
+from libopensesame.py3compat import *
 import openexp.keyboard
 from random import *
 from math import *
@@ -160,7 +161,7 @@ class loop(item.item):
 			# By starting with an "=" sign, users can incorporate a
 			# Python statement, for example to call functions from
 			# the random or math module
-			if type(val) == unicode and len(val) > 1 and val[0] == "=":
+			if isinstance(val, basestring) and len(val) > 1 and val[0] == "=":
 				try:
 					val = eval(val[1:])
 				except Exception as e:
@@ -205,4 +206,3 @@ class loop(item.item):
 		for var in var_list:
 			l.append( (var, u'[' + u', '.join(var_list[var]) + u']'))
 		return l
-

@@ -41,6 +41,7 @@ if __name__ == u"__main__":
 
 	import libopensesame.misc
 	import libopensesame.experiment
+	from libopensesame.py3compat import *
 	# Parse the command line options
 	options = libopensesame.misc.opensesamerun_options()
 	app = None
@@ -84,9 +85,9 @@ if __name__ == u"__main__":
 	else:
 		# Try to parse the experiment from a file
 		experiment = os.path.abspath(options.experiment)
-		if isinstance(experiment, str):
-			experiment = experiment.decode(
-				libopensesame.misc.filesystem_encoding())
+		if isinstance(experiment, basestring):
+			experiment = safe_decode(experiment,
+				enc=libopensesame.misc.filesystem_encoding())
 		experiment_path = os.path.dirname(experiment)
 		try:
 			exp = libopensesame.experiment.experiment(u"Experiment",

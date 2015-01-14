@@ -30,6 +30,7 @@ debug output, simply use the following structure:
 import sys
 import os.path
 import inspect
+from libopensesame.py3compat import *
 
 def parse_stack(st):
 
@@ -85,12 +86,12 @@ def _msg(msg=u'', reason=None):
 
 	global stack, max_stack
 	st = inspect.stack()
-	if reason != None:
+	if reason is not None:
 		print(u'[%s]' % reason)
 	# The terminal may not like anything but plain ASCII
 	if not isinstance(msg, basestring):
-		msg = unicode(msg)
-	msg = msg.encode(u'ascii', u'ignore')
+		msg = str(msg)
+	msg = safe_encode(msg, enc=u'ascii', errors=u'ignore')
 	try:
 		print(u'%s: %s' % (parse_stack(st[1]), msg))
 	except:
@@ -117,10 +118,10 @@ def _print(msg):
 	try:
 		print(msg)
 	except:
-		if isinstance(msg, str):
-			print(msg.decode(u'ascii', u'ignore'))
-		elif isinstance(msg, unicode):
-			print(msg.encode(u'ascii', u'ignore'))
+		if isinstance(msg, bytes):
+			print(safe_decode(msg, enc=u'ascii', errors=u'ignore'))
+		elif isinstance(msg, str):
+			print(safe_encode(msg, enc=u'ascii', errors=u'ignore'))
 
 enabled = '--debug' in sys.argv or '-d' in sys.argv
 if enabled:

@@ -19,6 +19,7 @@ along with openexp.  If not, see <http://www.gnu.org/licenses/>.
 
 from libopensesame import debug
 from libopensesame.exceptions import osexception
+from libopensesame.py3compat import *
 
 class base_element(object):
 
@@ -215,7 +216,7 @@ class base_element(object):
 			type:		[unicode, int, float]
 		"""
 
-		if not isinstance(val, unicode):
+		if not isinstance(val, basestring):
 			return val
 		val = val.replace(u'\\', u'\\\\')
 		val = val.replace(u'"', u'\\"')
@@ -284,4 +285,3 @@ class base_element(object):
 		"""
 
 		return eval(self.sketchpad.compile_cond(self.properties[u'show_if']))
-

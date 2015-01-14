@@ -17,6 +17,8 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
+from libopensesame.py3compat import *
+
 from libopensesame import debug, misc
 from libqtopensesame.misc import _
 from libqtopensesame.misc.config import cfg
@@ -104,7 +106,7 @@ class pool_widget(base_widget):
 
 		basename = ""
 		for path in files:
-			path = unicode(path)
+			path = str(path)
 			debug.msg(path)
 			basename = os.path.basename(path)
 			if not os.path.isfile(path):
@@ -142,7 +144,7 @@ class pool_widget(base_widget):
 			directory=cfg.default_pool_folder)
 		if len(path_list) == 0:
 			return
-		cfg.default_pool_folder = os.path.dirname(unicode(path_list[0]))
+		cfg.default_pool_folder = os.path.dirname(str(path_list[0]))
 		self.add(path_list)
 
 	def select(self, fname):
@@ -156,7 +158,7 @@ class pool_widget(base_widget):
 
 		for i in range(self.ui.list_pool.count()):
 			item = self.ui.list_pool.item(i)
-			if unicode(item.text()) == fname:
+			if str(item.text()) == fname:
 				self.ui.list_pool.setCurrentItem(item)
 
 	def file_type(self, fname):
@@ -181,7 +183,7 @@ class pool_widget(base_widget):
 
 		"""Refresh the contents of the pool widget"""
 
-		filt = unicode(self.ui.edit_pool_filter.text()).lower()
+		filt = str(self.ui.edit_pool_filter.text()).lower()
 		self.ui.list_pool.clear()
 
 		# This function can be called after the pool has been cleaned
@@ -245,7 +247,7 @@ class pool_widget(base_widget):
 			_(u"Remove from pool"))
 		menu.addAction(self.experiment.icon(u"rename"), _(u"Rename"))
 		menu.triggered.connect(self.context_action)
-		self.context_target = unicode(item.text())
+		self.context_target = str(item.text())
 		menu.exec_(event.globalPos())
 
 	def context_action(self, action):
@@ -257,7 +259,7 @@ class pool_widget(base_widget):
 		action -- the action to be performed
 		"""
 
-		a = unicode(action.text())
+		a = str(action.text())
 		f = os.path.join(self.experiment.pool_folder, \
 			self.context_target)
 
@@ -271,7 +273,7 @@ class pool_widget(base_widget):
 			l = []
 			suffix = ''
 			for item in self.ui.list_pool.selectedItems()[:self.max_len]:
-				l.append(unicode(item.text()))
+				l.append(str(item.text()))
 			if len(self.ui.list_pool.selectedItems()) > self.max_len:
 				suffix = _('And %d more file(s)') % \
 					(len(self.ui.list_pool.selectedItems())-self.max_len)
@@ -287,7 +289,7 @@ class pool_widget(base_widget):
 			# Create a list of files to be removed
 			dL = []
 			for item in self.ui.list_pool.selectedItems():
-				dL.append(unicode(item.text()))
+				dL.append(str(item.text()))
 
 			# Remove the files
 			try:
@@ -304,7 +306,7 @@ class pool_widget(base_widget):
 				_(u"Please enter a new name for '%s'") \
 				% self.context_target, text = self.context_target)
 			if ok:
-				new_name = unicode(new_name)
+				new_name = str(new_name)
 
 				if os.path.exists(os.path.join( \
 					self.experiment.pool_folder, new_name)):
@@ -389,4 +391,4 @@ def select_from_pool(main_window, parent=None):
 	selected = widget.ui.list_pool.currentItem()
 	if selected == None:
 		return ""
-	return unicode(selected.text())
+	return str(selected.text())

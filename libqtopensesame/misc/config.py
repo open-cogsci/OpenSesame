@@ -37,6 +37,7 @@ New style:
 	print(cfg.my_setting) # get
 """
 
+from libopensesame.py3compat import *
 from libopensesame.exceptions import osexception
 from PyQt4 import QtCore
 import libopensesame.misc
@@ -144,23 +145,23 @@ class config(object):
 
 		# Apply OS specific override settings
 		if platform.system() == u"Windows":
-			for key, value in self.config_windows.iteritems():
+			for key, value in self.config_windows.items():
 				self.config[key] = value
 		elif platform.system() == u"Darwin":
-			for key, value in self.config_mac.iteritems():
+			for key, value in self.config_mac.items():
 				self.config[key] = value
 		elif platform.system() == u"Linux":
-			for key, value in self.config_linux.iteritems():
+			for key, value in self.config_linux.items():
 				self.config[key] = value
 
 	def __str__(self):
 
-		return unicode(self).encode(u'utf-8')
+		return str(self).encode(u'utf-8')
 
 	def __unicode__(self):
 
 		s = u''
-		for key, val in self.config.iteritems():
+		for key, val in self.config.items():
 			if not isinstance(val, basestring) and not isinstance(val, int) \
 				and not isinstance(val, float):
 				val = type(val)
@@ -299,9 +300,9 @@ class config(object):
 		if self.api == 1:
 			if type(default) == bool:
 				value = value.toBool()
-			elif type(default) == str:
+			elif type(default) in [str, bytes]:
 				try:
-					value = unicode(value.toString())
+					value = str(value.toString())
 				except:
 					value = default
 			elif type(default) == int:
@@ -317,7 +318,7 @@ class config(object):
 			elif type(default) == QtCore.QStringList:
 				value = value.toStringList()
 			elif type(default) == unicode:
-				value = unicode(value.toString())
+				value = str(value.toString())
 
 		# The newer api returns some things as strings, so we still have to
 		# do some type conversion

@@ -17,6 +17,8 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
+from libopensesame.py3compat import *
+
 import os
 from PyQt4 import QtCore, QtGui, uic
 from libopensesame import debug
@@ -47,20 +49,7 @@ class base_component(object):
 							the file 'resources/ui/dialogs/quick_switcher.ui'.
 		"""
 
-		from libqtopensesame.qtopensesame import qtopensesame
-		# If the main_window is actually not the main window, but a widget that
-		# has the main window somewhere above it in the hierarchy, we traverse
-		# upwards.
-		from libqtopensesame.qtopensesame import qtopensesame
-		while not isinstance(main_window, qtopensesame):
-			if hasattr(main_window, u'main_window'):
-				_parent = main_window.main_window
-			else:
-				_parent = main_window.parent()
-				if _parent == None:
-					raise osexception(u'Invalid main_window')
-			main_window = _parent
-		self.main_window = main_window
+		self.main_window = self.get_main_window(main_window)
 		self.load_ui(ui)
 		if hasattr(self.main_window, u'theme'):
 			self.main_window.theme.apply_theme(self)
@@ -93,7 +82,35 @@ class base_component(object):
 					# ... otherwise use the static resources function.
 					from libopensesame import misc
 					ui_path = misc.resource(os.path.join(*path_list)+u'.ui')
-			debug.msg(u'dynamically loading ui: %s' % ui_path)			
+			debug.msg(u'dynamically loading ui: %s' % ui_path)
 			self.ui = uic.loadUi(open(ui_path), self)
 		else:
 			self.ui = None
+
+	def get_main_window(self, main_window):
+
+		"""
+		desc:
+			If the main_window is actually not the main window, but a widget
+			that has the main window somewhere above it in the hierarchy, we
+			traverse upwards.
+
+		arguments:
+			main_window:	An object that is the main window or a descendant of
+							the main window.
+
+		returns:
+			desc:	The main window.
+			type:	qtopensesame
+		"""
+
+		from libqtopensesame.qtopensesame import qtopensesame
+		while not isinstance(main_window, qtopensesame):
+			if hasattr(main_window, u'main_window'):
+				_parent = main_window.main_window
+			else:
+				_parent = main_window.parent()
+				if _parent == None:
+					raise osexception(u'Invalid main_window')
+			main_window = _parent
+		return main_window

@@ -24,6 +24,7 @@ from libqtopensesame.misc import _
 from libqtopensesame.extensions import base_extension
 from libqtopensesame.misc.base_subcomponent import base_subcomponent
 from libqtopensesame.misc.config import cfg
+from libopensesame.py3compat import *
 
 class action_page(QtGui.QAction, base_subcomponent):
 
@@ -45,9 +46,9 @@ class action_page(QtGui.QAction, base_subcomponent):
 			menu:			The menu for the action.
 		"""
 
+		QtGui.QAction.__init__(self, main_window.theme.qicon(
+			u'applications-internet'), title, menu)
 		self.setup(main_window)
-		QtGui.QAction.__init__(self, self.theme.qicon(u'applications-internet'),
-			title, menu)
 		self.title = title
 		self.link = link
 		self.triggered.connect(self.open_page)
@@ -67,7 +68,7 @@ class help(base_extension):
 	desc:
 		An extension that implements the help menu.
 	"""
-	
+
 	def event_startup(self):
 
 		"""
@@ -103,14 +104,17 @@ class help(base_extension):
 			Build online help menu based on remote sitemap.
 		"""
 
-		import urllib2
+		if py3:
+			from urllib.request import urlopen
+		else:
+			from urllib2 import urlopen
 		import yaml
 		version = misc.version
 		if u'~' in version:
 			version = version[:version.find(u'~')]
 		sitemap_url = cfg.online_help_sitemap.replace(u'[version]', version)
 		try:
-			fd = urllib2.urlopen(sitemap_url)
+			fd = urlopen(sitemap_url)
 			sitemap = fd.read()
 			_dict = yaml.load(sitemap)
 		except:
@@ -141,22 +145,22 @@ class help(base_extension):
 				if not link.startswith(u'http://'):
 					link = cfg.online_help_base_url+link
 				action = menu.addAction(
-					action_page(self.main_window, name.decode(u'utf-8'),
-						link, menu))
+					action_page(self.main_window, safe_decode(name,
+						enc=u'utf-8'), link, menu))
 			else:
 				self.build_menu(menu, name, link)
 		return menu
-	
+
 	def psychopy_help_menu(self):
-		
+
 		"""
 		desc:
 			Builds a PsychoPy help menu.
-			
+
 		returns:
-			A QMenu.			
+			A QMenu.
 		"""
-		
+
 		import yaml
 		fd = open(self.ext_resource(u'psychopy_sitemap.yaml'))
 		sitemap = fd.read()

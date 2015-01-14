@@ -20,6 +20,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 from PyQt4 import QtCore, QtGui, QtWebKit
 from libqtopensesame.widgets.base_widget import base_widget
 from libopensesame import debug
+from libopensesame.py3compat import *
 import os.path
 import sys
 
@@ -86,8 +87,8 @@ class webbrowser(base_widget):
 		if url.endswith(u'.md'):
 			try:
 				import markdown
-				html = markdown.markdown(open(url).read().decode(u'utf-8', \
-					'ignore'))
+				html = markdown.markdown(safe_decode(open(url),
+					errors=u'ignore'))
 				html += u'<style type="text/css">%s</style>' % \
 					open(self.main_window.theme.resource( \
 					u'markdown.css')).read()

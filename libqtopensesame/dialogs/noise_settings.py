@@ -19,6 +19,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 
 from PyQt4 import QtCore, QtGui
 from libqtopensesame.dialogs.patch_settings import patch_settings
+from libopensesame.py3compat import *
 
 class noise_settings(patch_settings):
 
@@ -52,13 +53,13 @@ class noise_settings(patch_settings):
 			return None
 		properties = {
 			u'env'		: self.env_map[
-				unicode(self.ui.combobox_env.currentText())],
+				str(self.ui.combobox_env.currentText())],
 			u'size'		: self.ui.spinbox_size.value(),
 			u'stdev'	: self.ui.spinbox_stdev.value(),
-			u'color1'	: unicode(self.ui.edit_color1.text()),
-			u'color2'	: unicode(self.ui.edit_color2.text()),
+			u'color1'	: str(self.ui.edit_color1.text()),
+			u'color2'	: str(self.ui.edit_color2.text()),
 			u'bgmode'	: self.bgmode_map[
-				unicode(self.ui.combobox_bgmode.currentText())]
+				str(self.ui.combobox_bgmode.currentText())]
 			}
 		return properties
 

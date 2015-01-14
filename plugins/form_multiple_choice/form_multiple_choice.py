@@ -88,7 +88,7 @@ class form_multiple_choice(item.item):
 
 		# Build the form
 		try:
-			margins = [float(i) for i in unicode(self.margins).split(u';')]
+			margins = [float(i) for i in str(self.margins).split(u';')]
 		except:
 			raise osexception( \
 				_(u'margins should be numeric values separated by a semi-colon'))

@@ -17,6 +17,8 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
+from libopensesame.py3compat import *
+
 from libopensesame import debug
 from libqtopensesame.misc.base_subcomponent import base_subcomponent
 from libqtopensesame.misc import config, _

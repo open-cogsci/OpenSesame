@@ -17,6 +17,7 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
+from libopensesame.py3compat import *
 import os
 import math
 from libqtopensesame.misc import drag_and_drop
@@ -453,7 +454,7 @@ class sketchpad_canvas(QtGui.QGraphicsScene):
 				% y)
 			return self.ycenter()
 		return y
-	
+
 	def _r(self, r):
 
 		"""
@@ -564,13 +565,13 @@ class sketchpad_canvas(QtGui.QGraphicsScene):
 
 		"""Mimicks canvas api. See openexp._canvas.canvas."""
 
-		return self.sketchpad.get(u'width')/2
+		return int(self.sketchpad.get(u'width')/2)
 
 	def ycenter(self):
 
 		"""Mimicks canvas api. See openexp._canvas.canvas."""
 
-		return self.sketchpad.get(u'height')/2
+		return int(self.sketchpad.get(u'height')/2)
 
 
 	def set_bgcolor(self, color):
@@ -595,10 +596,10 @@ class sketchpad_canvas(QtGui.QGraphicsScene):
 
 		"""Mimicks canvas api. See openexp._canvas.canvas."""
 
-		i = self.addText(unicode(text), self._font)
+		i = self.addText(str(text), self._font)
 		i.setDefaultTextColor(self._color(color))
 		if html:
-			i.setHtml(unicode(text))
+			i.setHtml(str(text))
 		if center:
 			# Source:
 			# http://www.cesarbs.org/blog/2011/05/30/aligning-text-in-\
@@ -696,7 +697,7 @@ class sketchpad_canvas(QtGui.QGraphicsScene):
 		"""Mimicks canvas api. See openexp._canvas.canvas."""
 
 		if not isinstance(image, QtGui.QPixmap):
-			image = self._pixmap(image)			
+			image = self._pixmap(image)
 		i = self.addPixmap(image)
 		i.setScale(self._scale(scale))
 		i.setPos(self._point(i, x, y, center))

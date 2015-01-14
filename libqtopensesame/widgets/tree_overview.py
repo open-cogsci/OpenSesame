@@ -17,6 +17,8 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
+from libopensesame.py3compat import *
+
 from PyQt4 import QtCore, QtGui
 from libqtopensesame.misc.config import cfg
 from libqtopensesame.misc import _
@@ -207,7 +209,7 @@ class tree_overview(base_subcomponent, QtGui.QTreeWidget):
 		if col == 0:
 			if hasattr(treeitem, u'name'):
 				from_name = treeitem.name
-				to_name = unicode(treeitem.text(0))
+				to_name = str(treeitem.text(0))
 				to_name = self.experiment.items.rename(from_name, to_name)
 				if to_name == None:
 					self.itemChanged.disconnect()
@@ -225,7 +227,7 @@ class tree_overview(base_subcomponent, QtGui.QTreeWidget):
 				parent_item_name, index = self.parent_from_ancestry(ancestry)
 				parent_item = self.experiment.items[parent_item_name]
 				if parent_item.item_type == u'sequence':
-					cond = unicode(treeitem.text(1))
+					cond = str(treeitem.text(1))
 					if cond.strip() == u'':
 						cond = u'always'
 					cond = parent_item.clean_cond(cond)
@@ -457,7 +459,7 @@ class tree_overview(base_subcomponent, QtGui.QTreeWidget):
 			return
 		# Get the target item, check if it exists, and, if so, drop the source
 		# item on it.
-		target_item_name = unicode(target_treeitem.text(0))
+		target_item_name = str(target_treeitem.text(0))
 		if target_item_name not in self.experiment.items:
 			debug.msg(u'Don\'t know how to drop on %s' % target_item_name)
 			if e != None:
@@ -538,7 +540,7 @@ class tree_overview(base_subcomponent, QtGui.QTreeWidget):
 					del self.experiment.items[item.name]
 					self.main_window.set_busy(False)
 					return
-				parent_item_name = unicode(parent_treeitem.text(0))
+				parent_item_name = str(parent_treeitem.text(0))
 				parent_item = self.experiment.items[parent_item_name]
 				if isinstance(parent_item, sequence):
 					break
@@ -665,7 +667,7 @@ class tree_overview(base_subcomponent, QtGui.QTreeWidget):
 		children = []
 		for i in range(item.childCount()):
 			child = item.child(i)
-			children.append(unicode(child.text(0)))
+			children.append(str(child.text(0)))
 			children += self.recursive_children(child)
 		return children
 

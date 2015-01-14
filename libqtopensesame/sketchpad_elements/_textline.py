@@ -18,6 +18,7 @@ along with openexp.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 import os
+from libopensesame.py3compat import *
 from libopensesame.exceptions import osexception
 from libqtopensesame.misc import _
 from libqtopensesame.sketchpad_elements._base_element import base_element
@@ -90,7 +91,7 @@ class textline(base_element, textline_runtime):
 			type:	unicode
 		"""
 
-		text = unicode(text)
+		text = str(text)
 		text = text.replace(os.linesep, u'<br />')
 		text = text.replace(u'\n', u'<br />')
 		text = text.replace(u'"', u'')

@@ -20,6 +20,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 from PyQt4 import QtCore, QtGui
 from libqtopensesame.misc import _
 from libqtopensesame.widgets.tree_base_item import tree_base_item
+from libopensesame.py3compat import *
 
 class tree_item_item(tree_base_item):
 
@@ -99,14 +100,14 @@ class tree_item_item(tree_base_item):
 		"""
 
 		treeitem = self
-		item_name = unicode(treeitem.text(0))
+		item_name = str(treeitem.text(0))
 		l = []
 		while True:
 			if treeitem.parent() != None:
 				index = treeitem.parent().indexOfChild(treeitem)
 			else:
 				index = 0
-			l.append(unicode(treeitem.text(0))+u':'+unicode(index))
+			l.append(str(treeitem.text(0))+u':'+str(index))
 			treeitem = treeitem.parent()
 			if treeitem == None or not treeitem.droppable:
 				break
@@ -144,7 +145,7 @@ class tree_item_item(tree_base_item):
 		"""
 
 		super(tree_item_item, self).rename(from_name, to_name)
-		if unicode(self.text(0)) == from_name:
+		if str(self.text(0)) == from_name:
 			self.setText(0, to_name)
 			self.name = to_name
 
@@ -156,7 +157,7 @@ class tree_item_item(tree_base_item):
 		"""
 
 		self.treeWidget().editItem(self, 0)
-		
+
 	def start_edit_runif(self):
 
 		"""
@@ -167,14 +168,14 @@ class tree_item_item(tree_base_item):
 		"""
 
 		if not self.treeWidget().overview_mode:
-			self.treeWidget().editItem(self, 1)		
+			self.treeWidget().editItem(self, 1)
 
 	def set_icon(self, name, icon):
 
 		"""See tree_base_item."""
 
 		super(tree_item_item, self).set_icon(name, icon)
-		if unicode(self.text(0)) == name:
+		if str(self.text(0)) == name:
 			self.setIcon(0, self.theme.qicon(icon))
 
 	def drop_hint(self):
@@ -264,7 +265,7 @@ class tree_item_item(tree_base_item):
 			u'ancestry'			: u'',
 			u'script'			: self.item.to_string()
 			}
-		text = json.dumps(data).decode('utf-8')
+		text = safe_decode(json.dumps(data))
 		QtGui.QApplication.clipboard().setText(text)
 
 	def clipboard_data(self):
@@ -281,7 +282,7 @@ class tree_item_item(tree_base_item):
 		import json
 		from libqtopensesame.misc import drag_and_drop
 
-		text = unicode(QtGui.QApplication.clipboard().text())
+		text = str(QtGui.QApplication.clipboard().text())
 		try:
 			data = json.loads(text)
 		except:

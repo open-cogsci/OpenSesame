@@ -17,6 +17,8 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
+from libopensesame.py3compat import *
+
 from PyQt4 import QtCore, QtGui
 from libqtopensesame import sketchpad_elements
 from libqtopensesame.sketchpad_elements._base_element import base_element
@@ -117,7 +119,7 @@ class sketchpad_widget(base_widget):
 		"""
 
 		for element in self.sketchpad.selected_elements():
-			element.set_property(u'font_family', unicode(family))
+			element.set_property(u'font_family', str(family))
 			element.set_property(u'font_size', size)
 			element.set_property(u'font_italic', italic, yes_no=True)
 			element.set_property(u'font_bold', bold, yes_no=True)
@@ -163,7 +165,7 @@ class sketchpad_widget(base_widget):
 			Applies changes to the color picker.
 		"""
 
-		color = unicode(color)
+		color = str(color)
 		for element in self.sketchpad.selected_elements():
 			element.set_property(u'color', color)
 		self.draw()
@@ -175,7 +177,7 @@ class sketchpad_widget(base_widget):
 			Applies changes to the show-if field.
 		"""
 
-		show_if = unicode(self.ui.edit_show_if.text())
+		show_if = str(self.ui.edit_show_if.text())
 		show_if = self.sketchpad.clean_cond(show_if)
 		for element in self.sketchpad.selected_elements():
 			element.set_property(u'show_if', show_if)
@@ -465,7 +467,7 @@ class sketchpad_widget(base_widget):
 			type:	unicode
 		"""
 
-		return unicode(self.ui.edit_color.text())
+		return str(self.ui.edit_color.text())
 
 	def current_penwidth(self):
 
@@ -526,7 +528,7 @@ class sketchpad_widget(base_widget):
 			type:	unicode
 		"""
 
-		return unicode(self.ui.edit_show_if.text())
+		return str(self.ui.edit_show_if.text())
 
 	def current_font_family(self):
 
@@ -536,7 +538,7 @@ class sketchpad_widget(base_widget):
 			type:	unicode
 		"""
 
-		return unicode(self.ui.widget_font.family)
+		return str(self.ui.widget_font.family)
 
 	def current_font_size(self):
 

@@ -17,6 +17,8 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
+from libopensesame.py3compat import *
+
 from PyQt4 import QtCore, QtGui
 
 class good_looking_table(QtGui.QTableWidget):
@@ -132,7 +134,7 @@ class good_looking_table(QtGui.QTableWidget):
 			for column in range(_range.leftColumn(), _range.rightColumn()+1):
 				item = self.item(row, column)
 				if item != None:
-					value = unicode(item.text())
+					value = str(item.text())
 				else:
 					value = u''
 				columns.append(value)
@@ -144,7 +146,7 @@ class good_looking_table(QtGui.QTableWidget):
 
 		"""Pastes text from the clipboard into the table."""
 
-		selection = unicode(self.clipboard().mimeData().text())
+		selection = str(self.clipboard().mimeData().text())
 		rows = selection.split(u'\n')
 		current_row = self.currentRow()
 		for row in rows:

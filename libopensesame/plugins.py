@@ -22,6 +22,7 @@ import sys
 import yaml
 from libopensesame import debug, misc
 from libopensesame.exceptions import osexception
+from libopensesame.py3compat import *
 
 # Caching variables
 _plugin_dict = {}
@@ -58,7 +59,10 @@ def plugin_folders(only_existing=True, _type=u'plugins'):
 
 	# For all platforms, the plugins folder relative to the working directory
 	# should be searched
-	path = os.path.join(os.getcwdu(), _type)
+	if py3:
+		path = os.path.join(os.getcwd(), _type)
+	else:
+		path = os.path.join(os.getcwdu(), _type)
 	if not only_existing or os.path.exists(path):
 		l.append(path)
 
@@ -81,8 +85,8 @@ def plugin_folders(only_existing=True, _type=u'plugins'):
 
 	elif os.name == u'nt':
 		# Windows
-		path = os.path.join(os.environ[u'APPDATA'].decode(
-			misc.filesystem_encoding()), u'.opensesame', _type)
+		path = os.path.join(safe_decode(os.environ[u'APPDATA'],
+			enc=misc.filesystem_encoding()), u'.opensesame', _type)
 		if not only_existing or os.path.exists(path):
 			l.append(path)
 
@@ -162,7 +166,7 @@ def plugin_properties(plugin, _type=u'plugins'):
 	if os.path.exists(info_yaml):
 		# Read the yaml file and replace all tabs by spaces. This is necessary,
 		# because yaml doesn't accept tab-based indentation, whereas json does.
-		s = open(info_yaml).read().decode(u'utf-8')
+		s = safe_decode(open(info_yaml).read(), enc=u'utf-8')
 		s = s.replace(u'\t', u'    ')
 		try:
 			_properties[plugin] = yaml.load(s)
@@ -298,13 +302,15 @@ def import_plugin(plugin, _type=u'plugins'):
 	folder = plugin_folder(plugin, _type=_type)
 	for tmpl in src_templates:
 		if os.path.exists(os.path.join(folder, tmpl % plugin)):
-			path = os.path.join(folder, tmpl % plugin).encode(
-				misc.filesystem_encoding())
+			path = os.path.join(folder, tmpl % plugin)
+			if not py3:
+				path = safe_encode(path, enc=misc.filesystem_encoding())
 			return imp.load_source(plugin, path)
 	for tmpl in bytecode_templates:
 		if os.path.exists(os.path.join(folder, tmpl % plugin)):
-			path = os.path.join(plugin, tmpl % plugin).encode(
-				misc.filesystem_encoding())
+			path = os.path.join(plugin, tmpl % plugin)
+			if not py3:
+				path = safe_encode(path, enc=misc.filesystem_encoding())
 			return imp.load_compiled(plugin, path)
 
 def load_plugin(plugin, item_name, experiment, string, prefix=u'',
@@ -393,8 +399,7 @@ def load_mod(path, mod, pkg=None):
 	"""
 
 	import imp
-	if isinstance(path, str):
-		path = path.decode(sys.getfilesystemencoding())
+	path = safe_decode(path, enc=sys.getfilesystemencoding())
 	if not os.path.isdir(path):
 		path = os.path.dirname(path)
 	if pkg != None:
@@ -403,4 +408,5 @@ def load_mod(path, mod, pkg=None):
 	if not os.path.exists(path):
 		raise osexception(u'%s does not exist' % path)
 	debug.msg(u'loading module from %s' % path)
-	return imp.load_source(mod, path.encode(sys.getfilesystemencoding()))
+	return imp.load_source(mod, safe_encode(path,
+		enc=sys.getfilesystemencoding()))

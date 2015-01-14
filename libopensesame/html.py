@@ -17,6 +17,8 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
+from libopensesame.py3compat import *
+
 import os
 from HTMLParser import HTMLParser
 from libopensesame import debug
@@ -290,7 +292,7 @@ class html(HTMLParser):
 			current_style = self.default_style.copy()
 		else:
 			current_style = self.style_stack[-1].copy()
-		for tag, val in keywords.iteritems():
+		for tag, val in keywords.items():
 			current_style[tag] = val
 		self.style_stack.append(current_style)
 

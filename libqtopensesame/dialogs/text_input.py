@@ -17,6 +17,8 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
+from libopensesame.py3compat import *
+
 from PyQt4 import QtCore, QtGui
 from libqtopensesame.dialogs.base_dialog import base_dialog
 
@@ -60,5 +62,5 @@ class text_input(base_dialog):
 		"""
 
 		if self.exec_() == QtGui.QDialog.Accepted:
-			return unicode(self.ui.textedit_input.toPlainText())
+			return str(self.ui.textedit_input.toPlainText())
 		return None

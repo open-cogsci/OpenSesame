@@ -45,6 +45,7 @@ desc:
 import json
 from PyQt4 import QtCore, QtGui
 from libopensesame import debug
+from libopensesame.py3compat import *
 
 # For unknown mimetypes
 invalid_data = {
@@ -110,14 +111,14 @@ def receive(drop_event):
 		url = urls[0]
 		if not url.isLocalFile():
 			return invalid_data
-		path = unicode(url.toLocalFile())
+		path = str(url.toLocalFile())
 		data = {
 			u'type' : u'url-local',
 			u'url'	: path
 			}
 		return data
 	# Process JSON text data
-	text = unicode(mimedata.text())
+	text = str(mimedata.text())
 	try:
 		data = json.loads(text)
 	except:
@@ -148,7 +149,7 @@ def send(drag_src, data):
 		type:		QDrag
 	"""
 
-	text = json.dumps(data).decode('utf-8')
+	text = safe_decode(json.dumps(data), enc=u'utf-8')
 	mimedata = QtCore.QMimeData()
 	mimedata.setText(text)
 	drag = QtGui.QDrag(drag_src)

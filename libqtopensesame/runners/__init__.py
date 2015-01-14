@@ -17,6 +17,8 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
+from libopensesame.py3compat import *
+
 from libqtopensesame.runners.base_runner import base_runner
 from libqtopensesame.runners.inprocess_runner import inprocess_runner
 from libqtopensesame.runners.external_runner import external_runner

@@ -23,6 +23,7 @@ from libqtopensesame.misc import config, _
 from libopensesame import debug
 from libopensesame.exceptions import osexception
 from libopensesame.experiment import experiment
+from libopensesame.py3compat import *
 
 class base_runner(object):
 
@@ -88,9 +89,10 @@ class base_runner(object):
 				import tempfile
 				from libopensesame import misc
 				debug.msg(u'Failed to open %s' % logfile)
-				logfile = os.path.join(tempfile.gettempdir().decode(
-					misc.filesystem_encoding()), tempfile.gettempprefix() \
-					.decode(misc.filesystem_encoding())+u'quickrun.csv')
+				logfile = os.path.join(safe_decode(tempfile.gettempdir(),
+					enc=misc.filesystem_encoding()), safe_decode(
+					tempfile.gettempprefix(),
+					enc=misc.filesystem_encoding())+u'quickrun.csv')
 				debug.msg(u'Using temporary file %s' % logfile)
 				remember_logfile = False
 		else:
@@ -99,7 +101,7 @@ class base_runner(object):
 				u'default_logfile_folder'), u'subject-%d.csv' % subject_nr)
 			# Get the data file
 			csv_filter = u'Comma-separated values (*.csv)'
-			logfile = unicode(QtGui.QFileDialog.getSaveFileName( \
+			logfile = str(QtGui.QFileDialog.getSaveFileName( \
 				self.main_window.ui.centralwidget, \
 				_(u"Choose location for logfile (press 'escape' for default location)"), \
 				suggested_path, filter=csv_filter))

@@ -125,7 +125,7 @@ class automatic_backup(base_extension):
 			autosave_path = u''
 		else:
 			path = os.path.join(self.autosave_folder,
-				u'%s.opensesame.tar.gz'% unicode(time.ctime()).replace(u':',
+				u'%s.opensesame.tar.gz'% str(time.ctime()).replace(u':',
 				u'_'))
 			try:
 				self.main_window.get_ready()

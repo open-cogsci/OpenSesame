@@ -17,6 +17,8 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
+from libopensesame.py3compat import *
+
 from libopensesame import debug
 import libopensesame.experiment
 import libopensesame.plugins
@@ -354,7 +356,7 @@ class experiment(libopensesame.experiment.experiment):
 
 		combobox.setCurrentIndex(0)
 		for i in range(combobox.count()):
-			if unicode(combobox.itemText(i)) == text:
+			if str(combobox.itemText(i)) == text:
 				combobox.setCurrentIndex(i)
 				break
 

@@ -17,6 +17,8 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
+from libopensesame.py3compat import *
+
 from PyQt4 import QtCore, QtGui
 from libqtopensesame.misc.base_component import base_component
 from libqtopensesame.misc import theme
@@ -24,20 +26,20 @@ from libqtopensesame.misc import theme
 class qtopensesamerun(QtGui.QMainWindow, base_component):
 
 	"""Implements the GUI for opensesamerun."""
-	
+
 	def __init__(self, options, parent=None):
-		
+
 		"""
 		Constructor.
-		
+
 		Arguments:
 		options		--	Command-line arguments passed to opensesamerun, as
 						parsed by `libopensesame.misc.opensesamerun_options()`.
-		
+
 		Keyword arguments:
 		parent		--	A parent QWidget. (default=None)
 		"""
-			
+
 		# Construct the parent
 		QtGui.QMainWindow.__init__(self, parent)
 		# Setup the UI
@@ -53,11 +55,11 @@ class qtopensesamerun(QtGui.QMainWindow, base_component):
 		self.ui.checkbox_pylink.setChecked(self.options.pylink)
 		self.ui.spinbox_subject_nr.setValue(int(self.options.subject))
 		self.ui.edit_logfile.setText(self.options.logfile)
-		
+
 	def browse_experiment(self):
-	
+
 		"""Locates the experiment file."""
-		
+
 		file_type_filter = \
 			u"OpenSesame files (*.opensesame.tar.gz *.opensesame);;OpenSesame script and file pool (*.opensesame.tar.gz);;OpenSesame script (*.opensesame)"
 		path = QtGui.QFileDialog.getOpenFileName(self, \
@@ -65,35 +67,35 @@ class qtopensesamerun(QtGui.QMainWindow, base_component):
 		if path == u"":
 			return
 		self.ui.edit_experiment.setText(path)
-		
+
 	def browse_logfile(self):
-	
+
 		"""Locates the logfile.	"""
-			
+
 		path = QtGui.QFileDialog.getSaveFileName(self, \
 			u"Choose a location for the logfile")
 		if path == u"":
 			return
 		self.ui.edit_logfile.setText(path)
-		
+
 	def show(self):
-	
+
 		"""Sets the run flag to false."""
-	
+
 		self.run = False
 		QtGui.QMainWindow.show(self)
-			
+
 	def run(self):
-	
+
 		"""
 		Does not actual run the experiment, but marks the application for
 		running later.
 		"""
-	
-		self.run = True		
-		self.options.experiment = unicode(self.ui.edit_experiment.text())
+
+		self.run = True
+		self.options.experiment = str(self.ui.edit_experiment.text())
 		self.options.subject = self.ui.spinbox_subject_nr.value()
-		self.options.logfile = unicode(self.ui.edit_logfile.text())		
+		self.options.logfile = str(self.ui.edit_logfile.text())		
 		self.options.fullscreen = self.ui.checkbox_fullscreen.isChecked()
 		self.options.custom_resolution = \
 			self.ui.checkbox_custom_resolution.isChecked()

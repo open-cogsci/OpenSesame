@@ -17,6 +17,8 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
+from libopensesame.py3compat import *
+
 from libqtopensesame.misc.config import cfg
 from libqtopensesame.dialogs.base_dialog import base_dialog
 

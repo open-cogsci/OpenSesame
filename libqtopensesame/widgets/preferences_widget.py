@@ -17,6 +17,8 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
+from libopensesame.py3compat import *
+
 from libopensesame import debug
 from libopensesame.exceptions import osexception
 from libqtopensesame.widgets.base_widget import base_widget
@@ -98,7 +100,7 @@ class preferences_widget(base_widget):
 			i += 1
 		for style in QtGui.QStyleFactory.keys():
 			self.ui.combobox_style.addItem(style)
-			if config.get_config(u'style') == unicode(style):
+			if config.get_config(u'style') == str(style):
 				self.ui.combobox_style.setCurrentIndex(i)
 			i += 1
 		# Set the theme combobox
@@ -146,10 +148,10 @@ class preferences_widget(base_widget):
 				config.set_config(u'runner', runner)
 
 		config.set_config(u'theme',
-			unicode(self.ui.combobox_theme.currentText()))
+			str(self.ui.combobox_theme.currentText()))
 
 		config.set_config(u'style',
-			unicode(self.ui.combobox_style.currentText()))
+			str(self.ui.combobox_style.currentText()))
 		self.main_window.save_state()
 
 		self.lock = False

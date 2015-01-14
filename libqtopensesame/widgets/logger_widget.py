@@ -17,6 +17,8 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
+from libopensesame.py3compat import *
+
 from PyQt4 import QtCore, QtGui
 from libqtopensesame.misc import _
 from libqtopensesame.widgets.base_widget import base_widget
@@ -184,5 +186,5 @@ class logger_widget(base_widget):
 		l = []
 		for checkbox in self.checkboxes:
 			if checkbox.isChecked():
-				l.append(unicode(checkbox.var))
+				l.append(str(checkbox.var))
 		return l

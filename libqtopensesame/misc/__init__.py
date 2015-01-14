@@ -17,6 +17,8 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
+from libopensesame.py3compat import *
+
 import sys
 if '--catch-translatables' in sys.argv:
 
@@ -50,5 +52,5 @@ else:
 		The translated string.
 		"""
 
-		return unicode(QCoreApplication.translate(context, s,
+		return str(QCoreApplication.translate(context, s,
 			encoding=QCoreApplication.UnicodeUTF8))

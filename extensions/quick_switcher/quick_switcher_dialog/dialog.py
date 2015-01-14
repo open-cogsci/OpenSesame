@@ -96,7 +96,7 @@ class quick_switcher(base_dialog):
 
 		l = []
 		for action in actions:
-			text = unicode(action.text())
+			text = str(action.text())
 			# Skip separators
 			if text == u'':
 				continue
@@ -137,7 +137,7 @@ class quick_switcher(base_dialog):
 			Populates the item list based on the filter text.
 		"""
 
-		query = unicode(self.ui.filter_line_edit.text()).lower()
+		query = str(self.ui.filter_line_edit.text()).lower()
 		for i in range(self.ui.items_list_widget.count()):
 			list_widget_item = self.ui.items_list_widget.item(i)
 			element = self.ui.items_list_widget.itemWidget(list_widget_item)

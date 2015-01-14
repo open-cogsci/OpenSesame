@@ -20,6 +20,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 from PyQt4 import QtCore, QtGui
 from libqtopensesame.dialogs.base_dialog import base_dialog
 from libqtopensesame.misc import _
+from libopensesame.py3compat import *
 
 class new_loop_sequence_dialog(base_dialog):
 
@@ -82,7 +83,7 @@ class new_loop_sequence_dialog(base_dialog):
 		"""
 
 		self.action = u'new'
-		self.item_type = unicode(self.ui.combobox_new.currentText())
+		self.item_type = str(self.ui.combobox_new.currentText())
 		self.accept()
 
 	def select_item(self):
@@ -94,5 +95,5 @@ class new_loop_sequence_dialog(base_dialog):
 		"""
 
 		self.action = u'select'
-		self.item_name = unicode(self.ui.combobox_select.currentText())
+		self.item_name = str(self.ui.combobox_select.currentText())
 		self.accept()

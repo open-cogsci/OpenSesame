@@ -20,6 +20,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 from libopensesame import plugins
 from libopensesame.misc import debug
 from libopensesame.exceptions import osexception
+from libopensesame.py3compat import *
 
 class item_store(object):
 

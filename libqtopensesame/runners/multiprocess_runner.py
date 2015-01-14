@@ -17,6 +17,7 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
+from libopensesame.py3compat import *
 import os
 import sys
 from libqtopensesame.runners import base_runner
@@ -24,13 +25,13 @@ from PyQt4 import QtGui
 from libopensesame.exceptions import osexception
 
 class multiprocess_runner(base_runner):
-	
+
 	"""Runs an experiment in another process using multiprocessing."""
-	
+
 	def execute(self):
-		
+
 		"""See base_runner.execute()."""
-		
+
 		import platform
 		# In OS X the multiprocessing module is horribly broken, but a fixed
 		# version has been released as the 'billiard' module
@@ -39,10 +40,13 @@ class multiprocess_runner(base_runner):
 			multiprocessing.forking_enable(0)
 		else:
 			import multiprocessing
-	
+
 		from libqtopensesame.misc import process, _
 		from libopensesame import misc, debug
-		from StringIO import StringIO
+		if py3:
+			from io import StringIO
+		else:
+			from StringIO import StringIO
 		if os.name == u'nt':
 			# Under Windows, the multiprocess runner assumes that there is a
 			# file called `opensesame.py` or `opensesame.pyc`. If this file does
@@ -55,7 +59,7 @@ class multiprocess_runner(base_runner):
 				try:
 					shutil.copyfile(os.path.join(os_folder, u'opensesame'), \
 						os.path.join(os_folder, u'opensesame.py'))
-				except Exception as e:			
+				except Exception as e:
 					return osexception( \
 						_(u'Failed to copy `opensesame` to `opensesame.py`, which is required for the multiprocess runner. Please copy the file manually, or select a different runner under Preferences.'), exception=e)
 		self.channel = multiprocessing.Queue()
@@ -64,7 +68,7 @@ class multiprocess_runner(base_runner):
 		# Start process!
 		self.exp_process.start()
 		# Variables used for ugly hack to suppress 'None' print by Queue.get()
-		_stdout = sys.stdout	
+		_stdout = sys.stdout
 		_pit = StringIO()
 		# Wait for experiment to finish.
 		# Listen for incoming messages in the meantime.

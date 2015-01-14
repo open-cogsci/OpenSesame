@@ -17,6 +17,8 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
+from libopensesame.py3compat import *
+
 from PyQt4 import QtCore, QtGui
 from libopensesame import debug
 from libqtopensesame.misc import _
@@ -116,7 +118,7 @@ class header_widget(base_widget):
 		debug.msg()
 		self.label_name.show()
 		self.edit_name.hide()
-		self.item_store.rename(self.item.name, unicode(self.edit_name.text()))
+		self.item_store.rename(self.item.name, str(self.edit_name.text()))
 
 	def apply_desc(self):
 

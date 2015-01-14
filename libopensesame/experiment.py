@@ -21,6 +21,7 @@ from libopensesame.item_store import item_store
 from libopensesame.python_workspace import python_workspace
 from libopensesame.exceptions import osexception
 from libopensesame import misc, item, plugins, debug
+from libopensesame.py3compat import *
 import os.path
 import shutil
 import sys
@@ -158,7 +159,8 @@ class experiment(item.item):
 		self.synth_backend = u'legacy'
 
 		# Save the date and time, and the version of OpenSesame
-		self.datetime = time.strftime(u'%c').decode(self.encoding, u'ignore')
+		self.datetime = safe_decode(time.strftime(u'%c'), enc=self.encoding,
+			errors=u'ignore')
 		self.opensesame_version = misc.version
 		self.opensesame_codename = misc.codename
 
@@ -192,8 +194,8 @@ class experiment(item.item):
 			# string. This fix has been adapted from:
 			# - <http://bugs.python.org/issue1681974>
 			self.pool_folder = tempfile.mkdtemp(suffix= \
-				u'.opensesame_pool', dir=tempfile.gettempdir().decode( \
-				encoding=misc.filesystem_encoding()))
+				u'.opensesame_pool', dir=safe_decode(tempfile.gettempdir(),
+				enc=misc.filesystem_encoding()))
 			pool_folders.append(self.pool_folder)
 			debug.msg(u'creating new pool folder')
 		else:
@@ -515,8 +517,7 @@ class experiment(item.item):
 			type:	[unicode, bool]
 		"""
 
-		if isinstance(path, str):
-			path = path.decode(self.encoding)
+		path = safe_decode(path, enc=self.encoding)
 		debug.msg(u'asked to save "%s"' % path)
 		# Determine the extension
 		ext = os.path.splitext(path)[1].lower()
@@ -585,9 +586,7 @@ class experiment(item.item):
 		if not os.path.exists(src):
 			debug.msg(u'opening from unicode string')
 			self.experiment_path = None
-			if isinstance(src, unicode):
-				return src
-			return src.decode(self.encoding, u'replace')
+			return safe_decode(src, enc=self.encoding, errors=u'replace')
 		# If the file is a regular text script,
 		# read it and return it
 		ext = u'.opensesame.tar.gz'
@@ -603,13 +602,13 @@ class experiment(item.item):
 			# Here, all paths except name are Unicode. In addition, fname is
 			# Unicode unsanitized, because the files as saved are Unicode
 			# sanitized (see save()).
-			uname = name.decode(self.encoding)
+			uname = safe_decode(name, enc=self.encoding)
 			folder, fname = os.path.split(uname)
 			fname = self.unsanitize(fname)
 			if folder == u"pool":
 				debug.msg(u"extracting '%s'" % uname)
-				tar.extract(name, self.pool_folder.encode( \
-					misc.filesystem_encoding()))
+				tar.extract(name, safe_encode(self.pool_folder,
+					enc=misc.filesystem_encoding()))
 				os.rename(os.path.join(self.pool_folder, uname), \
 					os.path.join(self.pool_folder, fname))
 				os.rmdir(os.path.join(self.pool_folder, folder))
@@ -662,12 +661,12 @@ class experiment(item.item):
 
 		l = []
 		# Create a dictionary of items that also includes the experiment
-		item_dict = dict(self.items.items() + [(u'global', self)]).items()
+		item_dict = dict(list(self.items.items()) + [(u'global', self)]).items()
 		seen = []
 		for item_name, item in item_dict:
 			# Create a dictionary of variables that includes the broadcasted
 			# ones as wel as the indirectly registered ones (using item.set())
-			var_dict = item.var_info() + item.variables.items()
+			var_dict = item.var_info() + list(item.variables.items())
 			for var, val in var_dict:
 				if var not in seen and (filt in var.lower() or filt in \
 					self.unistr(val).lower() or filt in item_name.lower()):
@@ -780,5 +779,3 @@ def clean_up(verbose=False):
 			if verbose:
 				print(u"experiment.clean_up(): failed to remove '%s'" % path)
 	canvas.clean_up(verbose)
-
-

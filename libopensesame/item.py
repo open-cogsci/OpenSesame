@@ -21,11 +21,15 @@ import openexp.mouse
 import openexp.keyboard
 from libopensesame.exceptions import osexception
 from libopensesame import debug, regexp
+from libopensesame.py3compat import *
 import codecs
 import string
 import os
 import sys
-import pygame
+try:
+	import pygame
+except:
+	pygame = None
 
 class item(object):
 
@@ -66,7 +70,7 @@ class item(object):
 			self.name, reason=u'deprecation')
 		# Deduce item_type from class name
 		prefix = self.experiment.item_prefix()
-		self.item_type = unicode(self.__class__.__name__)
+		self.item_type = str(self.__class__.__name__)
 		if self.item_type.startswith(prefix):
 			self.item_type = self.item_type[len(prefix):]
 		if not hasattr(self, u'description'):
@@ -77,7 +81,7 @@ class item(object):
 		self.comments = []
 		if string != None:
 			self.from_string(string)
-			
+
 	def reset(self):
 
 		"""
@@ -756,7 +760,7 @@ class item(object):
 
 		# Only unicode needs to be evaluated
 		text = self.auto_type(text)
-		if type(text) != unicode:
+		if not isinstance(text, basestring):
 			return text
 
 		# Prepare a template for rounding floats
@@ -771,7 +775,7 @@ class item(object):
 			if not soft_ignore or self.has(var):
 				val = self.get(var)
 				# Quote strings if necessary
-				if type(val) == unicode and quote_str:
+				if isinstance(val, basestring) and quote_str:
 					val = u"'" + val + u"'"
 				# Round floats
 				elif round_float and type(val) == float:
@@ -853,7 +857,7 @@ class item(object):
 						l.append(word.lower())
 				else:
 					val = self.auto_type(word)
-					if type(val) == unicode:
+					if isinstance(val, basestring):
 						l.append(u"u\"%s\"" % word)
 					else:
 						l.append(self.unistr(word))
@@ -950,7 +954,7 @@ class item(object):
 		"""
 
 		if strict:
-			_s = codecs.encode(s, u'ascii', u'ignore')
+			_s = safe_encode(codecs, enc=u'ascii', errors=u'ignore')
 		else:
 			_s = codecs.encode(s, u'ascii', u'osreplace')
 		_s = str(_s)
@@ -1004,15 +1008,11 @@ class item(object):
 			type:	unicode
 		"""
 
-		# Unicode strings cannot (and need not) be encoded again
-		if isinstance(val, unicode):
-			return val
-		# Regular strings need to be encoded using the correct encoding
-		if isinstance(val, str):
-			return unicode(val, encoding=self.encoding, errors=u'replace')
+		if isinstance(val, basestring):
+			return safe_decode(val, enc=self.encoding, errors=u'replace')
 		# Numeric values are encoded right away
 		if isinstance(val, int) or isinstance(val, float):
-			return unicode(val)
+			return str(val)
 		# Some types need to be converted to unicode, but require the encoding
 		# and errors parameters. Notable examples are Exceptions, which have
 		# strange characters under some locales, such as French. It even appears
@@ -1020,12 +1020,12 @@ class item(object):
 		# Presumably, there is a better way to do this, but for now this at
 		# least gives sensible results.
 		try:
-			return unicode(str(val), encoding=self.encoding, errors=u'replace')
+			return str(bytes(val), encoding=self.encoding, errors=u'replace')
 		except:
 			pass
 		# For other types, the unicode representation doesn't require a specific
 		# encoding. This mostly applies to non-stringy things, such as integers.
-		return unicode(val)
+		return str(val)
 
 	def split(self, u):
 
@@ -1043,9 +1043,11 @@ class item(object):
 		"""
 
 		import shlex
+		if py3:
+			return shlex.split(u)
 		try:
-			return [chunk.decode(self.encoding) for chunk in shlex.split( \
-				u.encode(self.encoding))]
+			return [safe_decode(chunk, enc=self.encoding) for chunk in \
+				shlex.split(safe_encode(u, enc=self.encoding))]
 		except Exception as e:
 			raise osexception( \
 				u'Failed to parse line "%s". Is there a closing quotation missing?' \
@@ -1071,9 +1073,10 @@ class item(object):
 		"""
 
 		try:
-			if type(col) == unicode:
+			if type(col) == str:
 				col = str(col)
-			pygame.Color(col)
+			if pygame is not None:
+				pygame.Color(col)
 		except Exception as e:
 			raise osexception( \
 				u"'%s' is not a valid color. See http://www.w3schools.com/html/html_colornames.asp for an overview of valid color names" \

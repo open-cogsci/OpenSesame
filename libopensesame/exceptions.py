@@ -30,6 +30,7 @@ example: |
 import re
 from libopensesame.misc import escape_html
 from libopensesame import debug
+from libopensesame.py3compat import *
 import traceback
 import inspect
 import sys
@@ -80,16 +81,18 @@ class osexception(Exception):
 		# summarize this exception here.
 		self.exception = exception
 		if self.exception != None:
-			info[u'exception type'] = self.exception.__class__.__name__ \
-				.decode(self.enc, u'ignore')
+			info[u'exception type'] = safe_decode(
+				self.exception.__class__.__name__, enc=self.enc,
+				errors=u'ignore')
 			# Try to get a descriptive message from the exception, either by
-			# looking at the `message` property or by using unicode(). If both
+			# looking at the `message` property or by using str(). If both
 			# fail, a placeholder message is used.
 			if hasattr(self.exception, u'message'):
-				msg = self.exception.message.decode(self.enc, u'ignore')
+				msg = safe_decode(self.exception.message, enc=self.enc,
+					errors='ignore')
 			else:
 				try:
-					msg = unicode(self.exception)
+					msg = str(self.exception)
 				except:
 					msg = u'Description unavailable'
 			info[u'exception message'] = msg
@@ -97,7 +100,8 @@ class osexception(Exception):
 				# Syntax errors are dealt with specially, because they provide
 				# introspective information.
 				info[u'line'] = self.exception.lineno + line_offset
-				info[u'code'] = self.exception.text.decode(self.enc, u'ignore')
+				info[u'code'] = safe_decode(self.exception.text, enc=self.enc,
+					errors=u'ignore')
 			else:
 				try:
 					# This is a hacky way to extract the line number from the
@@ -114,7 +118,13 @@ class osexception(Exception):
 		# If an Exception is passed, we should include a traceback.
 		if self.exception == None:
 			return
-		tb = traceback.format_exc(self.exception).decode(self.enc, u'ignore')
+		if py3:
+			tb = traceback.format_exc()
+		else:
+			tb = safe_decode(traceback.format_exc(self.exception), enc=self.enc,
+				errors=u'ignore')
+		# print(self.exception)
+		# tb = str(traceback.format_exc(self.exception))
 		self._html += u'<br /><b>Traceback (also in debug window)</b>:<br />\n'
 		self._plaintext += u'\nTraceback:\n'
 		for l in tb.split(u'\n')[1:]:
@@ -151,7 +161,9 @@ class osexception(Exception):
 			type:	str
 		"""
 
-		return self._plaintext.encode(u'utf-8')
+		if py3:
+			return self._plaintext
+		return safe_encode(self._plaintext)
 
 	def plaintext(self):
 
@@ -161,7 +173,7 @@ class osexception(Exception):
 			type:	unicode
 		"""
 
-		return unicode(self)
+		return str(self)
 
 	def html(self):
 

@@ -17,6 +17,7 @@ You should have received a copy of the GNU General Public License
 along with openexp.  If not, see <http://www.gnu.org/licenses/>.
 """
 
+from libopensesame.py3compat import *
 from libqtopensesame.sketchpad_elements._base_line_arrow import base_line_arrow
 from libopensesame.sketchpad_elements import arrow as arrow_runtime
 

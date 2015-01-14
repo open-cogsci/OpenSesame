@@ -25,6 +25,7 @@ loaded at runtime, and therefore escape the detection of py2exe.
 
 import sys
 from libopensesame import debug
+from libopensesame.py3compat import *
 
 # Below is a quick hack to deal with pylinks quirky behavior.
 # Pylink needs to be imported prior to pygame, otherwise it

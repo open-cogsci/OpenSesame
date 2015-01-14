@@ -17,6 +17,8 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
+from libopensesame.py3compat import *
+
 from libopensesame.feedback import feedback as feedback_runtime
 from libqtopensesame.items.qtplugin import qtplugin
 from libqtopensesame.items.feedpad import feedpad

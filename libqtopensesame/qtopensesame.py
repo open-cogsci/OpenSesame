@@ -27,6 +27,7 @@ from libopensesame.exceptions import osexception
 import libopensesame.experiment
 import libopensesame.plugins
 import libopensesame.misc
+from libopensesame.py3compat import *
 import os.path
 import os
 import sys
@@ -656,7 +657,7 @@ class qtopensesame(QtGui.QMainWindow, base_component):
 			self.ui.tabwidget.open_general()
 			return
 		if path == None:
-			path = unicode(QtGui.QFileDialog.getOpenFileName(
+			path = str(QtGui.QFileDialog.getOpenFileName(
 				self.ui.centralwidget, _(u"Open file"),
 				filter=self.file_type_filter, directory=cfg.file_dialog_path))
 		if path == None or path == u'' or (not path.lower().endswith(
@@ -761,7 +762,7 @@ class qtopensesame(QtGui.QMainWindow, base_component):
 			directory=cfg.file_dialog_path,
 			filter=self.file_type_filter, initialFilter=default_filter)
 		if path != None and path != u"":
-			path = unicode(path)
+			path = str(path)
 			cfg.file_dialog_path = os.path.dirname(path)
 			# If the extension has not been explicitly typed in, set it based
 			# on the selected filter and, if no filter has been set, based on
@@ -990,5 +991,5 @@ class qtopensesame(QtGui.QMainWindow, base_component):
 			type:	unicode
 		"""
 
-		_id = `QtGui.QApplication.instance()`.decode(self.enc)
+		_id = safe_decode(repr(QtGui.QApplication.instance()), enc=self.enc)
 		return _id

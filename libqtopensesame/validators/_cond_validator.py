@@ -17,8 +17,9 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
+from libopensesame.py3compat import *
 from PyQt4 import QtCore, QtGui
-from _base_validator import base_validator
+from libqtopensesame.validators._base_validator import base_validator
 
 class cond_validator(base_validator):
 
@@ -34,7 +35,7 @@ class cond_validator(base_validator):
 	def is_valid(self, val):
 
 		try:
-			self.experiment.compile_cond(unicode(val))
+			self.experiment.compile_cond(str(val))
 			return True
 		except:
 			return False

@@ -17,6 +17,7 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
-from _cond_validator import cond_validator
-from _timeout_validator import timeout_validator
-from _duration_validator import duration_validator
+from libopensesame.py3compat import *
+from libqtopensesame.validators._cond_validator import cond_validator
+from libqtopensesame.validators._timeout_validator import timeout_validator
+from libqtopensesame.validators._duration_validator import duration_validator

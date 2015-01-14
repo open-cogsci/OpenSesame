@@ -25,6 +25,7 @@ from PyQt4 import QtGui, QtCore
 from libopensesame import debug
 from libqtopensesame.misc import _
 from libqtopensesame.misc.config import cfg
+from libopensesame.py3compat import *
 
 def modules():
 
@@ -70,8 +71,7 @@ class output_buffer:
 		s -- a string
 		"""
 
-		if isinstance(s, str):
-			s = s.decode(u'utf-8', u'replace')
+		s = safe_decode(s, errors=u'replace')
 		if s.strip() != u'':
 			self.plaintext.appendPlainText(s)
 			QtGui.QApplication.processEvents()
@@ -105,8 +105,7 @@ class pyterm(code.InteractiveConsole):
 		s -- the output string
 		"""
 
-		if isinstance(s, str):
-			s = s.decode(u'utf-8', u'replace')
+		s = safe_decode(s, errors=u'replace')
 		print(s.replace(u'\n', u''))
 
 	def set_workspace_globals(self, _globals={}):
@@ -250,7 +249,7 @@ class console(QtGui.QPlainTextEdit):
 			if e.key() in [QtCore.Qt.Key_Enter, QtCore.Qt.Key_Return]:
 				self._input += u"\n"
 			else:
-				self._input += unicode(e.text())
+				self._input += str(e.text())
 				QtGui.QPlainTextEdit.keyPressEvent(self, e)
 
 		# Emulate the console
@@ -279,7 +278,7 @@ class console(QtGui.QPlainTextEdit):
 		"""Execute a command"""
 
 		try:
-			s = unicode(self.document().lastBlock().text())[len(self.prompt):]
+			s = str(self.document().lastBlock().text())[len(self.prompt):]
 		except:
 			self.appendPlainText( \
 				_(u"Error: Command contains invalid characters"))
@@ -303,4 +302,3 @@ class console(QtGui.QPlainTextEdit):
 		if not c.atEnd() and c.blockNumber()+1 < self.document().blockCount():
 			c.movePosition(QtGui.QTextCursor.End)
 			self.setTextCursor(c)
-

@@ -19,25 +19,32 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 
 from libopensesame.py3compat import *
 
-from libqtopensesame.widgets.base_widget import base_widget
+import sys
 
-class synth_widget(base_widget):
+if sys.version_info >= (3,0,0):
+	py3 = True
+	basestring = str
+	# Emulate QString type.
+	# TODO: Use the new PyQt4 API, instead of emulating the old one.
+	from PyQt4 import QtCore
+	QtCore.QString = str
+else:
+	bytes = str
+	str = unicode
+	py3 = False
 
-	"""
-	desc:
-		The sampler controls.
-	"""
+def safe_decode(s, enc='utf-8', errors='strict'):
+	if isinstance(s, str):
+		return s
+	return s.decode(enc, errors)
 
-	def __init__(self, main_window):
+def safe_encode(s, enc='utf-8', errors='strict'):
+	if isinstance(s, bytes):
+		return s
+	return s.encode(enc, errors)
 
-		"""
-		desc:
-			Constructor.
-
-		arguments:
-			main_window:	A qtopensesame object.
-		"""
-
-		super(synth_widget, self).__init__(main_window,
-			ui=u'widgets.synth_widget')
-
+__all__ = ['py3', 'safe_decode', 'safe_encode']
+if not py3:
+	__all__ += ['str', 'bytes']
+else:
+	__all__ += ['basestring']

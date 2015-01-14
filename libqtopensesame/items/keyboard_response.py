@@ -17,6 +17,8 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
+from libopensesame.py3compat import *
+
 from libopensesame.keyboard_response import keyboard_response as \
 	keyboard_response_runtime
 from libqtopensesame.validators import timeout_validator

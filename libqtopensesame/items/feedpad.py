@@ -17,6 +17,8 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
+from libopensesame.py3compat import *
+
 from PyQt4 import QtGui, QtCore
 from libqtopensesame.misc import _
 from libqtopensesame.misc.sketchpad_canvas import sketchpad_canvas
@@ -24,7 +26,7 @@ from libqtopensesame.widgets.sketchpad_widget import sketchpad_widget
 from libqtopensesame.items.qtplugin import qtplugin
 from libqtopensesame import sketchpad_elements
 
-class feedpad(QtCore.QObject):
+class feedpad(object):
 
 	"""
 	desc:

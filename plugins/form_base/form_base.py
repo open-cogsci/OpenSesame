@@ -147,9 +147,9 @@ class form_base(item.item):
 
 		# Prepare the form
 		try:
-			cols = [float(i) for i in unicode(self.cols).split(';')]
-			rows = [float(i) for i in unicode(self.rows).split(';')]
-			margins = [float(i) for i in unicode(self.margins).split(';')]
+			cols = [float(i) for i in str(self.cols).split(';')]
+			rows = [float(i) for i in str(self.rows).split(';')]
+			margins = [float(i) for i in str(self.margins).split(';')]
 		except:
 			raise osexception( \
 				_(u'cols, rows, and margins should be numeric values separated by a semi-colon'))
@@ -160,7 +160,7 @@ class form_base(item.item):
 		for _w in self._widgets:
 			# Evaluate all keyword arguments
 			w = {}
-			for var, val in _w.iteritems():
+			for var, val in _w.items():
 				w[var] = self.eval_text(val)
 
 			_type = w[u'type']

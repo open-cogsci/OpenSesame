@@ -17,6 +17,8 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
+from libopensesame.py3compat import *
+
 from libopensesame import debug
 from libqtopensesame.widgets.base_widget import base_widget
 from PyQt4 import QtCore, QtGui
@@ -54,7 +56,7 @@ class variable_inspector(base_widget):
 		scrollpos = self.ui.table_variables.verticalScrollBar().sliderPosition()
 		col = self.ui.table_variables.currentColumn()
 		row = self.ui.table_variables.currentRow()
-		filt = unicode(self.ui.edit_variable_filter.text())
+		filt = str(self.ui.edit_variable_filter.text())
 		self.ui.table_variables.setSortingEnabled(False)
 		i = 0
 		for var, val, item in self.experiment.var_list(filt):

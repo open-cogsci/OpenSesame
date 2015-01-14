@@ -17,6 +17,8 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
+from libopensesame.py3compat import *
+
 from PyQt4 import QtCore, QtGui
 from libqtopensesame.widgets.base_widget import base_widget
 from libqtopensesame.misc import _
@@ -55,7 +57,7 @@ class font_widget_base(base_widget):
 			u'font_widget'):
 			font, ok = QtGui.QFontDialog.getFont(self.get_font())
 			if ok:
-				self.family = unicode(font.family())
+				self.family = str(font.family())
 			else:
 				self.family = self.experiment.get(u'font_family')
 			self.update_family_combobox()

@@ -17,15 +17,16 @@ You should have received a copy of the GNU General Public License
 along with openexp.  If not, see <http://www.gnu.org/licenses/>.
 """
 
-from _arrow import arrow
-from _circle import circle
-from _ellipse import ellipse
-from _fixdot import fixdot
-from _gabor import gabor
-from _image import image
-from _line import line
-from _noise import noise
-from _textline import textline
-from _rect import rect
+from libopensesame.py3compat import *
+from libqtopensesame.sketchpad_elements._arrow import arrow
+from libqtopensesame.sketchpad_elements._circle import circle
+from libqtopensesame.sketchpad_elements._ellipse import ellipse
+from libqtopensesame.sketchpad_elements._fixdot import fixdot
+from libqtopensesame.sketchpad_elements._gabor import gabor
+from libqtopensesame.sketchpad_elements._image import image
+from libqtopensesame.sketchpad_elements._line import line
+from libqtopensesame.sketchpad_elements._noise import noise
+from libqtopensesame.sketchpad_elements._textline import textline
+from libqtopensesame.sketchpad_elements._rect import rect
 elements = [textline, fixdot, line, arrow, rect, circle, ellipse, image, gabor,
 	noise]

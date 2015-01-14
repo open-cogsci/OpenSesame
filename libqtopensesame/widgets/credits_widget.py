@@ -20,6 +20,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 from libopensesame import misc
 from libqtopensesame.misc import config
 from libqtopensesame.widgets.base_widget import base_widget
+from libopensesame.py3compat import *
 from PyQt4 import QtGui, QtCore
 
 class credits_widget(base_widget):
@@ -41,7 +42,7 @@ class credits_widget(base_widget):
 
 		super(credits_widget, self).__init__(main_window,
 			ui=u'widgets.credits_widget')
-		self.ui.label_opensesame.setText(unicode( \
+		self.ui.label_opensesame.setText(str( \
 			self.ui.label_opensesame.text()).replace(u"[version]",
 			misc.version).replace(u"[codename]", misc.codename))
 		self.ui.label_website.mousePressEvent = self.open_website

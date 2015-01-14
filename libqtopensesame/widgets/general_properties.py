@@ -17,6 +17,8 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
+from libopensesame.py3compat import *
+
 from libopensesame import debug
 from PyQt4 import QtCore, QtGui
 from libopensesame import misc
@@ -129,7 +131,7 @@ class general_properties(base_widget):
 		# Set the backend
 		if self.ui.combobox_backend.isEnabled():
 			i = self.ui.combobox_backend.currentIndex()
-			backend = openexp.backend_info.backend_list.values()[i]
+			backend = list(openexp.backend_info.backend_list.values())[i]
 			self.experiment.set(u"canvas_backend", backend[u"canvas"])
 			self.experiment.set(u"keyboard_backend", backend[u"keyboard"])
 			self.experiment.set(u"mouse_backend", backend[u"mouse"])
@@ -239,13 +241,13 @@ class general_properties(base_widget):
 		self.lock = False
 
 	def check_bidi(self):
-		
+
 		"""
 		desc:
 			Shows the bidi-check message if bi-directional text support is
 			enabled while python-bidi is not installed.
 		"""
-		
+
 		if self.experiment.get(u'bidi') != u'yes':
 			self.ui.label_bidi_check.hide()
 			return

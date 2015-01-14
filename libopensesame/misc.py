@@ -26,6 +26,7 @@ codename = u'Hesitant Heisenberg'
 
 use_global_resources = '--no-global-resources' not in sys.argv
 from libopensesame import debug
+from libopensesame.py3compat import *
 
 def change_working_dir():
 
@@ -36,7 +37,7 @@ def change_working_dir():
 	if os.name == "nt":
 		try:
 			# Extract the part of the description containing the path
-			s = unicode(libqtopensesame.qtopensesame)
+			s = str(libqtopensesame.qtopensesame)
 			i = s.find(u'from \'') + 6
 			j = s.find(u'\'>\'') - 1
 			s = s[i:j]
@@ -186,7 +187,7 @@ def strip_tags(s):
 	"""
 
 	import re
-	return re.compile(r'<.*?>').sub('', unicode(s).replace("<br />", \
+	return re.compile(r'<.*?>').sub('', str(s).replace("<br />", \
 		"\n").replace("<br>", "\n"))
 
 def resource(name):
@@ -204,9 +205,7 @@ def resource(name):
 
 	global use_global_resources
 
-	if isinstance(name, str):
-		name = name.decode(u'utf-8')
-	path = os.path.join(u'resources', name)
+	path = os.path.join(u'resources', safe_decode(name, enc=u'utf-8'))
 	if os.path.exists(path):
 		return os.path.join(u'resources', name)
 	if os.name == u'posix' and use_global_resources:
@@ -233,9 +232,7 @@ def home_folder():
 		home_folder = os.environ[u"HOME"]
 	else:
 		home_folder = os.environ[u"HOME"]
-	if isinstance(home_folder, str):
-		home_folder = home_folder.decode(filesystem_encoding())
-	return home_folder
+	return safe_decode(home_folder, enc=filesystem_encoding())
 
 def opensesame_folder():
 
@@ -261,12 +258,12 @@ def opensesame_folder():
 	import imp
 	if (hasattr(sys, u'frozen') or hasattr(sys, u'importers') or \
 		imp.is_frozen(u'__main__')):
-		path = os.path.dirname(sys.executable).decode( \
-			sys.getfilesystemencoding())
+		path = safe_decode(os.path.dirname(sys.executable),
+			enc=sys.getfilesystemencoding())
 	else:
 		# To get the opensesame folder, simply jump to levels up
-		path = os.path.dirname(__file__).decode( \
-			sys.getfilesystemencoding())
+		path = safe_decode(os.path.dirname(__file__),
+			enc=sys.getfilesystemencoding())
 		path = os.path.normpath(os.path.join(path, u'..'))
 	return path
 

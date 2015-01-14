@@ -49,7 +49,7 @@ class quick_open_element_action(base_widget):
 		super(quick_open_element_action, self).__init__(dialog)
 		self.dialog = dialog
 		self.action = action
-		self.text = unicode(action.text())
+		self.text = str(action.text())
 		self.path_to_action = u' : '.join(path_to_action)
 		if self.action.icon().isNull():
 			self.icon = self.theme.qlabel(u'system-run')

@@ -17,6 +17,8 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
+from libopensesame.py3compat import *
+
 import sys
 from IPython.frontend.qt.console.ipython_widget import IPythonWidget
 from IPython.frontend.qt.kernelmanager import QtKernelManager

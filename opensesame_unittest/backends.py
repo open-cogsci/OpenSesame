@@ -67,7 +67,7 @@ class check_backend_argspec(unittest.TestCase):
 			# Check whether the function has been implemented
 			self.assertNotIn(u'raise NotImplementedError()', chk_src)
 			# Check whether docstrings match
-			self.assertEqual(unicode(chk_df), unicode(ref_df))
+			self.assertEqual(str(chk_df), str(ref_df))
 		print(u'Done!')
 
 	@yamldoc.validate

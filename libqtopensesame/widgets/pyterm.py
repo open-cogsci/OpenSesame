@@ -17,9 +17,11 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
+from libopensesame.py3compat import *
+
 import sys
 
 if "--ipython" in sys.argv:
-	from pyterm_ipython import console, output_buffer
+	from libqtopensesame.widgets.pyterm_ipython import console, output_buffer
 else:
-	from pyterm_original import console, output_buffer
+	from libqtopensesame.widgets.pyterm_original import console, output_buffer

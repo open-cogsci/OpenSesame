@@ -17,6 +17,7 @@ You should have received a copy of the GNU General Public License
 along with openexp.  If not, see <http://www.gnu.org/licenses/>.
 """
 
+from libopensesame.py3compat import *
 from libqtopensesame.misc.config import cfg
 from libqtopensesame.sketchpad_elements._base_element import base_element
 
@@ -25,7 +26,7 @@ class base_line_arrow(base_element):
 	"""
 	desc:
 		A base class for line and arrow elements.
-		
+
 		See base_element for docstrings and function descriptions.
 	"""
 

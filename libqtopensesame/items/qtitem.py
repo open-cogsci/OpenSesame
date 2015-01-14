@@ -17,6 +17,8 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
+from libopensesame.py3compat import *
+
 from PyQt4 import QtCore, QtGui
 import os.path
 import sip
@@ -29,17 +31,16 @@ from libqtopensesame.widgets import header_widget, user_hint_widget
 from libqtopensesame.misc import _
 from libqtopensesame.misc.config import cfg
 
-class qtitem(QtCore.QObject):
+class qtitem(object):
 
 	"""Base class for the GUI controls of other items"""
-	
+
 	initial_view = u'controls'
 
 	def __init__(self):
 
 		"""Constructor"""
 
-		QtCore.QObject.__init__(self)
 		# The auto-widgets are stored in name -> (var, widget) dictionaries
 		self.auto_line_edit = {}
 		self.auto_combobox = {}
@@ -525,13 +526,13 @@ class qtitem(QtCore.QObject):
 		"""Update the GUI controls based on the auto-widgets"""
 
 		debug.msg()
-		for var, edit in self.auto_line_edit.iteritems():
+		for var, edit in self.auto_line_edit.items():
 			if self.has(var):
 				edit.setText(self.unistr(self.get(var, _eval=False)))
 			else:
 				edit.setText(u'')
 
-		for var, combobox in self.auto_combobox.iteritems():
+		for var, combobox in self.auto_combobox.items():
 			val = self.get_check(var, _eval=False, default=u'')
 			i = combobox.findText(self.unistr(val))
 			# Set the combobox to the select item
@@ -549,7 +550,7 @@ class qtitem(QtCore.QObject):
 					u'variable or unknown value and can only be edited through '
 					u'the script.' % var))
 
-		for var, spinbox in self.auto_spinbox.iteritems():
+		for var, spinbox in self.auto_spinbox.items():
 			if self.has(var):
 				val = self.get(var, _eval=False)
 				if type(val) in (float, int):
@@ -565,7 +566,7 @@ class qtitem(QtCore.QObject):
 						u'"%s" is defined using variables and can only be edited through the script.' \
 						% var))
 
-		for var, slider in self.auto_slider.iteritems():
+		for var, slider in self.auto_slider.items():
 			if self.has(var):
 				val = self.get(var, _eval=False)
 				if type(val) in (float, int):
@@ -581,7 +582,7 @@ class qtitem(QtCore.QObject):
 						u'"%s" is defined using variables and can only be edited through the script.' \
 						% var))
 
-		for var, checkbox in self.auto_checkbox.iteritems():
+		for var, checkbox in self.auto_checkbox.items():
 			if self.has(var):
 				try:
 					checkbox.setChecked(self.get(var, _eval=False) == u"yes")
@@ -589,7 +590,7 @@ class qtitem(QtCore.QObject):
 					self.experiment.notify(_(u"Failed to set control '%s': %s") \
 						% (var, e))
 
-		for var, qprogedit in self.auto_editor.iteritems():
+		for var, qprogedit in self.auto_editor.items():
 			if self.has(var):
 				try:
 					qprogedit.setText(self.unistr(self.get(var, _eval=False)))
@@ -636,9 +637,9 @@ class qtitem(QtCore.QObject):
 		"""
 
 		debug.msg()
-		for var, edit in self.auto_line_edit.iteritems():
+		for var, edit in self.auto_line_edit.items():
 			if edit.isEnabled() and isinstance(var, basestring):
-				val = unicode(edit.text()).strip()
+				val = str(edit.text()).strip()
 				if val != u"":
 					self.set(var, val)
 
@@ -649,19 +650,19 @@ class qtitem(QtCore.QObject):
 				else:
 					self.unset(var)
 
-		for var, combobox in self.auto_combobox.iteritems():
+		for var, combobox in self.auto_combobox.items():
 			if combobox.isEnabled() and isinstance(var, basestring):
-				self.set(var, unicode(combobox.currentText()))
+				self.set(var, str(combobox.currentText()))
 
-		for var, spinbox in self.auto_spinbox.iteritems():
+		for var, spinbox in self.auto_spinbox.items():
 			if spinbox.isEnabled() and isinstance(var, basestring):
 				self.set(var, spinbox.value())
 
-		for var, slider in self.auto_slider.iteritems():
+		for var, slider in self.auto_slider.items():
 			if slider.isEnabled() and isinstance(var, basestring):
 				self.set(var, slider.value())
 
-		for var, checkbox in self.auto_checkbox.iteritems():
+		for var, checkbox in self.auto_checkbox.items():
 			if checkbox.isEnabled() and isinstance(var, basestring):
 				if checkbox.isChecked():
 					val = u"yes"
@@ -669,7 +670,7 @@ class qtitem(QtCore.QObject):
 					val = u"no"
 				self.set(var, val)
 
-		for var, qprogedit in self.auto_editor.iteritems():
+		for var, qprogedit in self.auto_editor.items():
 			if isinstance(var, basestring):
 				self.set(var, qprogedit.text())
 

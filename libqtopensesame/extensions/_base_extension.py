@@ -24,6 +24,7 @@ from libopensesame.exceptions import osexception
 from libqtopensesame.misc import _
 from libqtopensesame.misc.config import cfg
 from libqtopensesame.misc.base_subcomponent import base_subcomponent
+from libopensesame.py3compat import *
 
 class base_extension(base_subcomponent):
 
@@ -369,7 +370,7 @@ class base_extension(base_subcomponent):
 			type:	unicode
 		"""
 
-		return self.__class__.__name__.decode(u'utf-8')
+		return safe_decode(self.__class__.__name__, enc=u'utf-8')
 
 	def register_ui_files(self):
 
@@ -516,7 +517,7 @@ class base_extension(base_subcomponent):
 			elif isinstance(default, int) or isinstance(default, float):
 				cfg[setting] = control.value()
 			else:
-				cfg[setting] = unicode(control.text())
+				cfg[setting] = str(control.text())
 
 	def ext_resource(self, resource):
 
