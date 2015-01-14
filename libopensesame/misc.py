@@ -164,10 +164,13 @@ def messagebox(title, msg):
 	msg -- the message
 	"""
 
-	import Tkinter
+	if py3:
+		import tkinter as Tkinter
+	else:
+		import Tkinter
 	root = Tkinter.Tk()
 	root.title(title)
-	l = Tkinter.Label(root, text=msg, justify=Tkinter.LEFT, padx=8, pady=8, \
+	l = Tkinter.Label(root, text=msg, justify=Tkinter.LEFT, padx=8, pady=8,
 		wraplength=300)
 	l.pack()
 	b = Tkinter.Button(root, text=u"Ok", command=root.quit)

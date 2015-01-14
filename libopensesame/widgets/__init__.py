@@ -19,14 +19,12 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 
 from libopensesame.py3compat import *
 
-from _button import button
-from _checkbox import checkbox
-from _form import form
-from _image import image
-from _image_button import image_button
-from _label import label
-from _rating_scale import rating_scale
-from _text_input import text_input
-from _widget import widget
-
-
+from libopensesame.widgets._button import button
+from libopensesame.widgets._checkbox import checkbox
+from libopensesame.widgets._form import form
+from libopensesame.widgets._image import image
+from libopensesame.widgets._image_button import image_button
+from libopensesame.widgets._label import label
+from libopensesame.widgets._rating_scale import rating_scale
+from libopensesame.widgets._text_input import text_input
+from libopensesame.widgets._widget import widget

@@ -120,7 +120,7 @@ class form(object):
 			u'background'))
 
 		if theme == u'gray':
-			from themes.gray import gray
+			from libopensesame.widgets.themes.gray import gray
 			self.theme_engine = gray(self)
 		else:
 			from themes.plain import plain
@@ -230,7 +230,7 @@ class form(object):
 
 		index = self.cell_index(index)
 		col = index % len(self.cols)
-		row = index / len(self.cols)
+		row = index // len(self.cols)
 		colspan, rowspan = self.span[index]
 		return col, row, colspan, rowspan
 
@@ -247,7 +247,7 @@ class form(object):
 		"""
 
 		col = index % len(self.cols)
-		row = index / len(self.cols)
+		row = index // len(self.cols)
 		colspan, rowspan = self.span[index]
 		effective_width = self.width-self.margins[1]-self.margins[3]
 		effective_height = self.height-self.margins[0]-self.margins[2]

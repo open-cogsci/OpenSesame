@@ -20,7 +20,10 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 from libopensesame.py3compat import *
 
 import os
-from HTMLParser import HTMLParser
+if py3:
+	from html.parser import HTMLParser
+else:
+	from HTMLParser import HTMLParser
 from libopensesame import debug
 
 try:

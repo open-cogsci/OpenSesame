@@ -217,10 +217,7 @@ class legacy(canvas.canvas):
 
 	def image(self, fname, center=True, x=None, y=None, scale=None):
 
-		if isinstance(fname, unicode):
-			_fname = fname.encode(self.experiment.encoding)
-		else:
-			_fname = fname
+		_fname = safe_decode(fname)
 		try:
 			surface = pygame.image.load(_fname)
 		except pygame.error as e:

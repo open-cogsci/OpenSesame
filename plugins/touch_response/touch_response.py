@@ -45,7 +45,7 @@ class touch_response(mouse_response):
 		self._ncol = 2
 		self._nrow = 1
 		mouse_response.__init__(self, name, experiment, script)
-		
+
 	def process_response_mouseclick(self, retval):
 
 		"""Processes a mouseclick response."""
@@ -54,8 +54,8 @@ class touch_response(mouse_response):
 		button, pos, self.experiment.end_response_interval = retval
 		if pos != None:
 			x, y = pos
-			col = x / (self.experiment.width / self._ncol)
-			row = y / (self.experiment.height / self._nrow)
+			col = x // (self.experiment.width / self._ncol)
+			row = y // (self.experiment.height / self._nrow)
 			cell = row * self._ncol + col + 1
 			self.experiment.set(u'cursor_x', x)
 			self.experiment.set(u'cursor_y', y)

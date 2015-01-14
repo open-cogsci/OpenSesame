@@ -565,13 +565,13 @@ class sketchpad_canvas(QtGui.QGraphicsScene):
 
 		"""Mimicks canvas api. See openexp._canvas.canvas."""
 
-		return int(self.sketchpad.get(u'width')/2)
+		return self.sketchpad.get(u'width') // 2
 
 	def ycenter(self):
 
 		"""Mimicks canvas api. See openexp._canvas.canvas."""
 
-		return int(self.sketchpad.get(u'height')/2)
+		return self.sketchpad.get(u'height') // 2
 
 
 	def set_bgcolor(self, color):

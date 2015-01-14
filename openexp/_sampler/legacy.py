@@ -82,9 +82,9 @@ class legacy(sampler.sampler):
 						u"openexp._sampler.legacy.__init__() the file '%s' is not an .ogg or .wav file" \
 						% src)
 				# The mixer chokes on unicode pathnames that contain special
-				# characters. To avoid this we convert to str with the filesystem
-				# encoding.
-				if isinstance(src, unicode):
+				# characters. To avoid this we convert to str with the
+				# filesystem encoding. (Python 2 only).
+				if not py3 and isinstance(src, str):
 					import sys
 					src = src.encode(misc.filesystem_encoding())
 			self.sound = mixer.Sound(src)
@@ -188,4 +188,3 @@ def init_sound(experiment):
 def close_sound(experiment):
 
 	mixer.quit()
-

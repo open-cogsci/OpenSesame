@@ -607,8 +607,11 @@ class experiment(item.item):
 			fname = self.unsanitize(fname)
 			if folder == u"pool":
 				debug.msg(u"extracting '%s'" % uname)
-				tar.extract(name, safe_encode(self.pool_folder,
-					enc=misc.filesystem_encoding()))
+				if py3:
+					tar.extract(name, self.pool_folder)
+				else:
+					tar.extract(name, safe_encode(self.pool_folder,
+						enc=misc.filesystem_encoding()))
 				os.rename(os.path.join(self.pool_folder, uname), \
 					os.path.join(self.pool_folder, fname))
 				os.rmdir(os.path.join(self.pool_folder, folder))

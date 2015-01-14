@@ -1292,10 +1292,10 @@ def _color(color):
 		A pygame color object.
 	"""
 
-	if isinstance(color, unicode):
-		return pygame.Color(str(color))
-	if isinstance(color, str):
-		return pygame.Color(color)
+	if isinstance(color, basestring):
+		if py3:
+			return pygame.Color(color)
+		return pygame.Color(safe_encode(color))
 	if isinstance(color, int):
 		return pygame.Color(color, color, color, 255)
 	if isinstance(color, float):

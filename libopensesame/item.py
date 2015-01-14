@@ -954,10 +954,10 @@ class item(object):
 		"""
 
 		if strict:
-			_s = safe_encode(codecs, enc=u'ascii', errors=u'ignore')
+			_s = safe_encode(s, enc=u'ascii', errors=u'ignore')
 		else:
 			_s = codecs.encode(s, u'ascii', u'osreplace')
-		_s = str(_s)
+		_s = safe_decode(_s)
 		return _s.replace(os.linesep, '\n')
 
 	def unsanitize(self, s):
@@ -973,9 +973,9 @@ class item(object):
 		"""
 
 		if not isinstance(s, basestring):
-			raise osexception( \
-			u'unsanitize() expects first argument to be unicode or str, not "%s"' \
-			% type(s))
+			raise osexception(
+				u'unsanitize() expects first argument to be unicode or str, not "%s"' \
+				% type(s))
 		s = self.unistr(s)
 		while True:
 			m = regexp.unsanitize.search(s)
@@ -1020,7 +1020,8 @@ class item(object):
 		# Presumably, there is a better way to do this, but for now this at
 		# least gives sensible results.
 		try:
-			return str(bytes(val), encoding=self.encoding, errors=u'replace')
+			return safe_decode(bytes(val), encoding=self.encoding,
+				errors=u'replace')
 		except:
 			pass
 		# For other types, the unicode representation doesn't require a specific

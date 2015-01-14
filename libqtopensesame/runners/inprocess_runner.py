@@ -33,19 +33,19 @@ class inprocess_runner(base_runner):
 
 		# Exceptions during the run phase are important and returned so that the
 		# user is notified.
-		e = None
+		retval = None
 		try:
 			self.experiment.run()
 		except Exception as e:
 			if not isinstance(e, osexception):
-				e = osexception(u'Unexpected error', e)
+				reval = osexception(u'Unexpected error', e)
 		# Exceptions during the end phase are less important and only printed
 		# to the debug window.
 		try:
 			self.experiment.end()
 		except Exception as _e:
 			debug.msg(u'Exception during experiment.end(): %s' % _e)
-		return e
+		return retval
 
 	def workspace_globals(self):
 
