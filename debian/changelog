@@ -1,7 +1,8 @@
-opensesame (2.9.3-ubuntu1) utopic; urgency=medium
+opensesame (2.9.3~pre1-ubuntu1) utopic; urgency=medium
 
   * Bugs fixed
     - Font size was specified in points instead of pixels in GUI
+    - Legacy back-end crashed when specifying system font in general properties
 
  -- Sebastiaan Mathot <sebastiaan@mantis>  Fri, 16 Jan 2015 09:59:40 +0100
 
