@@ -453,7 +453,7 @@ class sketchpad_canvas(QtGui.QGraphicsScene):
 				% y)
 			return self.ycenter()
 		return y
-	
+
 	def _r(self, r):
 
 		"""
@@ -588,7 +588,8 @@ class sketchpad_canvas(QtGui.QGraphicsScene):
 			weight = QtGui.QFont.Bold
 		else:
 			weight = QtGui.QFont.Normal
-		self._font = QtGui.QFont(style, size, weight, italic)
+		self._font = QtGui.QFont(style, weight=weight, italic=italic)
+		self._font.setPixelSize(size)
 
 	def text(self, text, center=True, x=None, y=None, max_width=None,
 		color=None, bidi=None, html=True):
@@ -696,7 +697,7 @@ class sketchpad_canvas(QtGui.QGraphicsScene):
 		"""Mimicks canvas api. See openexp._canvas.canvas."""
 
 		if not isinstance(image, QtGui.QPixmap):
-			image = self._pixmap(image)			
+			image = self._pixmap(image)
 		i = self.addPixmap(image)
 		i.setScale(self._scale(scale))
 		i.setPos(self._point(i, x, y, center))

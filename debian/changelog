@@ -1,3 +1,10 @@
+opensesame (2.9.3-ubuntu1) utopic; urgency=medium
+
+  * Bugs fixed
+    - Font size was specified in points instead of pixels in GUI
+
+ -- Sebastiaan Mathot <sebastiaan@mantis>  Fri, 16 Jan 2015 09:59:40 +0100
+
 opensesame (2.9.2-ubuntu1) utopic; urgency=medium
 
   * Bugs fixed
