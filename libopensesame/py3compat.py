@@ -24,10 +24,6 @@ import sys
 if sys.version_info >= (3,0,0):
 	py3 = True
 	basestring = str
-	# Emulate QString type.
-	# TODO: Use the new PyQt4 API, instead of emulating the old one.
-	from PyQt4 import QtCore
-	QtCore.QString = str
 else:
 	bytes = str
 	str = unicode

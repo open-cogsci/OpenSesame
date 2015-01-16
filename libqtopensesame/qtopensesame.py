@@ -194,7 +194,7 @@ class qtopensesame(QtGui.QMainWindow, base_component):
 			QtGui.QKeySequence(), self, self.ui.edit_stdout.setFocus)
 		self.ui.shortcut_variables = QtGui.QShortcut( \
 			QtGui.QKeySequence(), self, \
-			self.ui.variable_inspector.set_focus())
+			self.ui.variable_inspector.set_focus)
 		self.ui.shortcut_pool = QtGui.QShortcut( \
 			QtGui.QKeySequence(), self, \
 			self.ui.pool_widget.ui.edit_pool_filter.setFocus)
@@ -291,9 +291,8 @@ class qtopensesame(QtGui.QMainWindow, base_component):
 
 		"""Restores the configuration settings, but doesn't apply anything"""
 
-		if self.options.start_clean:
-			cfg.clear()
-		cfg.restore()
+		if not self.options.start_clean:
+			cfg.restore()
 
 	def restore_state(self):
 

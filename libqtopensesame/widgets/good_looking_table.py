@@ -180,17 +180,17 @@ class good_looking_table(QtGui.QTableWidget):
 		Gets the contents of the table.
 
 		Returns:
-		A QStringList for the table contents.
+		A list for the table contents.
 		"""
 
-		contents = QtCore.QStringList()
+		contents = []
 		for row in range(self.rowCount()):
 			for column in range(self.columnCount()):
 				i = self.item(row, column)
 				if i != None:
 					contents.append(i.text())
 				else:
-					contents.append(QtCore.QString())
+					contents.append(u'')
 		return contents
 
 	def set_contents(self, contents):
@@ -199,7 +199,7 @@ class good_looking_table(QtGui.QTableWidget):
 		Sets the table contents.
 
 		Arguments:
-		contents	--	a QStringList.
+		contents	--	a list.
 		"""
 
 		column = 0
@@ -226,4 +226,3 @@ if __name__ == "__main__":
 	widget.show()
 	app.exec_()
 	print(widget.get_contents())
-

@@ -53,5 +53,5 @@ class toolbar_items_label(base_subcomponent, QtGui.QFrame):
 		l.setWordWrap(True)
 		hbox = QtGui.QHBoxLayout()
 		hbox.addWidget(l)
-		hbox.setMargin(0)
+		# hbox.setMargin(0)
 		self.setLayout(hbox)

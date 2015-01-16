@@ -77,7 +77,7 @@ class toolbar_items(base_subcomponent, QtGui.QToolBar):
 					l.setSpacing(16)
 					w = QtGui.QWidget()
 					w.setLayout(l)
-				c.setMargin(0)
+				# c.setMargin(0)
 				l.addWidget(c)
 				i += 1
 			if i % 2 == 1:

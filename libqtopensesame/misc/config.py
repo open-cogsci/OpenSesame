@@ -43,9 +43,6 @@ from PyQt4 import QtCore
 import libopensesame.misc
 from libopensesame import debug
 import platform
-import sip
-if sip.getapi(u'QString') == 2:
-	QtCore.QStringList = list
 
 class config(object):
 
@@ -61,7 +58,7 @@ class config(object):
 		u"disabled_extensions" : "",
 		u"file_dialog_path" : "",
 		u"locale" : u"default",
-		u"loop_wizard" : QtCore.QStringList(),
+		u"loop_wizard" : [],
 		u"onetabmode" : True,
 		u"qProgEditCommentShortcut" : u'Ctrl+M',
 		u"qProgEditUncommentShortcut" : u'Ctrl+Shift+M',
@@ -137,12 +134,6 @@ class config(object):
 
 		"""Constructor"""
 
-		# Determine the sip api that is used, because this depends on whether
-		# or not IPython is loaded
-		object.__setattr__(self, u'api', sip.getapi(u'QString'))
-		if self.api not in (1,2):
-			raise Exception(u'config: unknown api %s' % self.api)
-
 		# Apply OS specific override settings
 		if platform.system() == u"Windows":
 			for key, value in self.config_windows.items():
@@ -156,7 +147,9 @@ class config(object):
 
 	def __str__(self):
 
-		return str(self).encode(u'utf-8')
+		if py3:
+			return self.__unicode__()
+		return safe_encode(self.__unicode__())
 
 	def __unicode__(self):
 
@@ -256,11 +249,9 @@ class config(object):
 
 		if args == None:
 			return
-
 		for arg in args.split(u";"):
 			a = arg.split(u"=")
 			if len(a) == 2:
-
 				# Automagically determine the data type
 				if a[1] == u"True":
 					val = True
@@ -274,7 +265,6 @@ class config(object):
 							val = float(a[1])
 						except:
 							val = a[1]
-
 				# Apply the argument
 				try:
 					self.__setattr__(a[0], val)
@@ -286,50 +276,55 @@ class config(object):
 
 		"""
 		desc:
-			Typecasts a QVariant to a normal type that matches the type of a
-			default value.
+			Typecasts a value to a normal type that matches the type of a
+			default value. This is necessary, because under some combinations
+			of Python 2/3 and PyQt 4/5 settings are returned as QVariant
+			objects, whereas on other combinations the type casting occurs
+			automatically.
 
 		arguments:
-			value:		The QVariant to typecast.
+			value:		A value.
 			default:	A default value.
 
 		returns:
 			A value.
 		"""
 
-		if self.api == 1:
-			if type(default) == bool:
+		if type(default) == bool:
+			if isinstance(value, QtCore.QVariant):
 				value = value.toBool()
-			elif type(default) in [str, bytes]:
-				try:
-					value = str(value.toString())
-				except:
-					value = default
-			elif type(default) == int:
-				value = value.toInt()[0]
-			elif type(default) == QtCore.QPoint:
-				value = value.toPoint()
-			elif type(default) == QtCore.QSize:
-				value = value.toSize()
-			elif type(default) == QtCore.QByteArray:
-				value = value.toByteArray()
-			elif type(default) == QtCore.QString:
-				value = value.toString()
-			elif type(default) == QtCore.QStringList:
-				value = value.toStringList()
-			elif type(default) == unicode:
-				value = str(value.toString())
-
-		# The newer api returns some things as strings, so we still have to
-		# do some type conversion
-		else:
-			if type(default) == bool:
+			else:
 				if value == u'false':
 					value = False
 				else:
 					value = True
-			elif type(default) == int:
-				value = int(value)
+		elif type(default) == int:
+			if isinstance(value, QtCore.QVariant):
+				value, ok = value.toInt()
+				if not ok:
+					value = default
+			else:
+				try:
+					value = int(value)
+				except:
+					value = default
+		elif isinstance(default, basestring):
+			if isinstance(value, QtCore.QVariant):
+				value = value.toString()
+			else:
+				try:
+					value = str(value)
+				except:
+					value = default
+		elif isinstance(default, QtCore.QPoint) and \
+			isinstance(value, QtCore.QVariant):
+				value = value.toPoint()
+		elif isinstance(default, QtCore.QSize) and \
+			isinstance(value, QtCore.QVariant):
+				value = value.toSize()
+		elif isinstance(default, QtCore.QByteArray) and \
+			isinstance(value, QtCore.QVariant):
+				value = value.toByteArray()
 		return value
 
 	def restore(self):

@@ -210,12 +210,12 @@ class qtitem(object):
 		self.edit_grid = QtGui.QGridLayout()
 		self.edit_grid.setColumnStretch(2, 2)
 		self.edit_grid_widget = QtGui.QWidget()
-		self.edit_grid.setMargin(0)
+		# self.edit_grid.setMargin(0)
 		self.edit_grid_widget.setLayout(self.edit_grid)
 
 		# The edit_vbox contains the edit_grid and the header widget
 		self.edit_vbox = QtGui.QVBoxLayout()
-		self.edit_vbox.setMargin(5)
+		# self.edit_vbox.setMargin(5)
 		self.edit_vbox.addWidget(self.user_hint_widget)
 		self.edit_vbox.addWidget(self.edit_grid_widget)
 		if stretch:

@@ -52,6 +52,11 @@ if __name__ == u'__main__':
 			if path not in sys.path:
 				sys.path.append(path)
 
+	# Change Qt API
+	import sip
+	sip.setapi('QString', 2)
+	sip.setapi('QVariant', 2)
+
 	# Register PyQt4 plugin folder
 	from PyQt4.QtCore import QCoreApplication
 	if os.path.exists(u'PyQt4_plugins'):
@@ -77,7 +82,7 @@ if __name__ == u'__main__':
 	opensesame = qtopensesame(app)
 	app.processEvents()
 	# Import the remaining modules
-	from PyQt4.QtCore import SIGNAL, QObject, QLocale, QTranslator
+	from PyQt4.QtCore import QObject, QLocale, QTranslator
 	from libopensesame.misc import resource
 	from libopensesame.py3compat import *
 	import os.path
@@ -98,7 +103,6 @@ if __name__ == u'__main__':
 	# Now that the window is shown, load the remaining modules and resume the
 	# GUI initialization.
 	opensesame.resume_init()
-	QObject.connect(app, SIGNAL(u'quit()'), opensesame.close)
 	# Open an experiment if it has been specified as a command line argument
 	# and suppress the new wizard in that case.
 	import os.path

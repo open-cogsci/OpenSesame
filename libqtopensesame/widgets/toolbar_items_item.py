@@ -54,7 +54,7 @@ class toolbar_items_item(base_subcomponent, QtGui.QLabel):
 		self.setup(parent)
 		self.item = item
 		self.pixmap = pixmap
-		self.setMargin(6)
+		# self.setMargin(6)
 		self.setToolTip(_(
 			"Drag this <b>%s</b> item to the intended location in the overview "
 			"area or into the item list of a sequence tab") % self.item)
