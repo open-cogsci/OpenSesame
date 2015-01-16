@@ -177,7 +177,7 @@
         </property>
         <property name="text">
          <string>OpenSesame [version] [codename]
-Copyright Sebastiaan Mathôt (2010-2014)</string>
+Copyright Sebastiaan Mathôt (2010-2015)</string>
         </property>
         <property name="alignment">
          <set>Qt::AlignBottom|Qt::AlignRight|Qt::AlignTrailing</set>
