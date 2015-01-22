@@ -1074,8 +1074,10 @@ class item(object):
 		"""
 
 		try:
-			if type(col) == str:
-				col = str(col)
+			if py3:
+				col = safe_decode(col)
+			else:
+				col = safe_encode(col)
 			if pygame is not None:
 				pygame.Color(col)
 		except Exception as e:
