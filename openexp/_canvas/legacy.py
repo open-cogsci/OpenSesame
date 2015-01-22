@@ -312,9 +312,10 @@ def init_display(experiment):
 	experiment.surface = pygame.display.get_surface()
 
 	# Create a font, falling back to the default font
-	experiment.font = pygame.font.Font(experiment.resource(
-		u"%s.ttf" % experiment.font_family), experiment.font_size)
-	if experiment.font == None:
+	try:
+		experiment.font = pygame.font.Font(experiment.resource(
+			u"%s.ttf" % experiment.font_family), experiment.font_size)
+	except:
 		debug.msg(u"'%s.ttf' not found, falling back to default font" \
 			% experiment.font_family)
 		experiment.font = pygame.font.Font(None, experiment.font_size)

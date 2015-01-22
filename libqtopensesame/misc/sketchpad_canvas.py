@@ -589,7 +589,8 @@ class sketchpad_canvas(QtGui.QGraphicsScene):
 			weight = QtGui.QFont.Bold
 		else:
 			weight = QtGui.QFont.Normal
-		self._font = QtGui.QFont(style, size, weight, italic)
+		self._font = QtGui.QFont(style, weight=weight, italic=italic)
+		self._font.setPixelSize(size)
 
 	def text(self, text, center=True, x=None, y=None, max_width=None,
 		color=None, bidi=None, html=True):
