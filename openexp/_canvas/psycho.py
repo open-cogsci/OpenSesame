@@ -89,9 +89,9 @@ class psycho(canvas.canvas):
 		self.experiment = experiment
 		self.html = html.html()
 		self.min_penwidth = 1
-		if fgcolor == None:
+		if fgcolor is None:
 			fgcolor = self.experiment.get(u"foreground")
-		if bgcolor == None:
+		if bgcolor is None:
 			bgcolor = self.experiment.get(u"background")
 		self.set_fgcolor(fgcolor)
 		self.set_bgcolor(bgcolor)
@@ -146,7 +146,7 @@ class psycho(canvas.canvas):
 	def clear(self, color=None):
 
 		self.stim_list = []
-		if color != None:
+		if color is not None:
 			color = self.color(color)
 		else:
 			color = self.bgcolor
@@ -158,13 +158,13 @@ class psycho(canvas.canvas):
 
 	def line(self, sx, sy, ex, ey, color=None, penwidth=None):
 
-		if color == None:
+		if color is None:
 			color = self.fgcolor
 		self.shapestim( [[sx, sy], [ex, ey]], color=color, penwidth=penwidth)
 
 	def rect(self, x, y, w, h, fill=False, color=None, penwidth=None):
 
-		if color == None:
+		if color is None:
 			color = self.fgcolor
 		else:
 			color = self.color(color)
@@ -179,9 +179,9 @@ class psycho(canvas.canvas):
 
 	def ellipse(self, x, y, w, h, fill=False, color=None, penwidth=None):
 
-		if penwidth == None:
+		if penwidth is None:
 			penwidth = self.penwidth
-		if color != None:
+		if color is not None:
 			color = self.color(color)
 		else:
 			color = self.fgcolor
@@ -204,7 +204,7 @@ class psycho(canvas.canvas):
 	def set_font(self, style=None, size=None, italic=None, bold=None,
 		underline=None):
 
-		if style != None:
+		if style is not None:
 			# If a font is taken from the file pool, it is not registered with
 			# PyGlet, and we therefore need to register it now.
 			if self.experiment.file_in_pool(u'%s.ttf' % style):
@@ -237,16 +237,16 @@ class psycho(canvas.canvas):
 
 		im = Image.open(fname)
 
-		if scale != None:
+		if scale is not None:
 			w = im.size[0] * scale
 			h = im.size[1] * scale
 		else:
 			w, h = im.size
 
 		# Calculate the position
-		if x == None:
+		if x is None:
 			x = self.xcenter()
-		if y == None:
+		if y is None:
 			y = self.ycenter()
 		if not center:
 			x += w/2
@@ -358,13 +358,13 @@ class psycho(canvas.canvas):
 		else:
 			_vertices = vertices
 
-		if color == None:
+		if color is None:
 			color = self.fgcolor
 		if fill:
 			fill = color
 		else:
 			fill = None
-		if penwidth == None:
+		if penwidth is None:
 			penwidth = self.penwidth
 		stim = visual.ShapeStim(self.experiment.window, units="pix",
 			lineWidth=penwidth, vertices=_vertices, lineColor=color,
@@ -429,7 +429,7 @@ def close_display(experiment):
 
 	global _old_gamma
 	# Restore display gamma if necessary
-	if _old_gamma != None:
+	if _old_gamma is not None:
 		experiment.window.setGamma(_old_gamma)
 	# This causes a (harmless) exception in some cases, so we catch it to
 	# prevent confusion

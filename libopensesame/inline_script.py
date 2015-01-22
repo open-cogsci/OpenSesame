@@ -190,7 +190,7 @@ class inline_script(item.item):
 
 		# Don't parse the script if it isn't necessary, since
 		# regular expressions are a bit slow
-		if self._var_info != None:
+		if self._var_info is not None:
 			return self._var_info
 
 		l = item.item.var_info(self)

@@ -65,9 +65,9 @@ class legacy(canvas.canvas):
 
 		self.experiment = experiment
 		self.html = html.html()
-		if fgcolor == None:
+		if fgcolor is None:
 			fgcolor = self.experiment.get(u"foreground")
-		if bgcolor == None:
+		if bgcolor is None:
 			bgcolor = self.experiment.get(u"background")
 		self.set_fgcolor(fgcolor)
 		self.set_bgcolor(bgcolor)
@@ -96,7 +96,7 @@ class legacy(canvas.canvas):
 			A PyGame font.
 		"""
 
-		if self._current_font == None:
+		if self._current_font is None:
 			# First see if the font refers to a file in the resources/ filepool
 			try:
 				font_path = self.experiment.resource(u'%s.ttf' % \
@@ -130,7 +130,7 @@ class legacy(canvas.canvas):
 
 	def clear(self, color=None):
 
-		if color != None:
+		if color is not None:
 			color = self.color(color)
 		else:
 			color = self.bgcolor
@@ -145,21 +145,21 @@ class legacy(canvas.canvas):
 
 	def line(self, sx, sy, ex, ey, color=None, penwidth=None):
 
-		if color != None:
+		if color is not None:
 			color = self.color(color)
 		else:
 			color = self.fgcolor
-		if penwidth == None:
+		if penwidth is None:
 			penwidth = self.penwidth
 		pygame.draw.line(self.surface, color, (sx, sy), (ex, ey), penwidth)
 
 	def rect(self, x, y, w, h, fill=False, color=None, penwidth=None):
 
-		if color != None:
+		if color is not None:
 			color = self.color(color)
 		else:
 			color = self.fgcolor
-		if penwidth == None:
+		if penwidth is None:
 			penwidth = self.penwidth
 		if fill:
 			pygame.draw.rect(self.surface, color, (x, y, w, h), 0)
@@ -168,11 +168,11 @@ class legacy(canvas.canvas):
 
 	def ellipse(self, x, y, w, h, fill=False, color=None, penwidth=None):
 
-		if color != None:
+		if color is not None:
 			color = self.color(color)
 		else:
 			color = self.fgcolor
-		if penwidth == None:
+		if penwidth is None:
 			penwidth = self.penwidth
 		x = int(x)
 		y = int(y)
@@ -193,11 +193,11 @@ class legacy(canvas.canvas):
 
 	def polygon(self, vertices, fill=False, color=None, penwidth=None):
 
-		if color != None:
+		if color is not None:
 			color = self.color(color)
 		else:
 			color = self.fgcolor
-		if penwidth == None:
+		if penwidth is None:
 			penwidth = self.penwidth
 		if fill:
 			width = 0
@@ -223,7 +223,7 @@ class legacy(canvas.canvas):
 		except pygame.error as e:
 			raise osexception(
 				u"'%s' is not a supported image format" % fname)
-		if scale != None:
+		if scale is not None:
 			try:
 				surface = pygame.transform.smoothscale(surface,
 					(int(surface.get_width()*scale),
@@ -235,9 +235,9 @@ class legacy(canvas.canvas):
 					(int(surface.get_width()*scale),
 					int(surface.get_height()*scale)))
 		size = surface.get_size()
-		if x == None:
+		if x is None:
 			x = self.xcenter()
-		if y == None:
+		if y is None:
 			y = self.ycenter()
 		if center:
 			x -= size[0] / 2

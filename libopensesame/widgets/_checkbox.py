@@ -131,12 +131,12 @@ class checkbox(button):
 				type:	tuple
 		"""
 
-		if self.group != None:
+		if self.group is not None:
 			# If the checkbox is part of a group than checking it will uncheck
 			# all other checkboxes in the group, and check the current one
 			for widget in self.form.widgets:
-				if widget != None and widget.type == u'checkbox' and \
-					widget.group == self.group and self.group != None:
+				if widget is not None and widget.type == u'checkbox' and \
+					widget.group == self.group and self.group is not None:
 					widget.set_checked(False)
 			self.set_checked(True)
 		else:
@@ -191,9 +191,9 @@ class checkbox(button):
 				type:	[str, unicode, NoneType]
 		"""
 		
-		if var == None:
+		if var is None:
 			var = self.var
-		if var == None:
+		if var is None:
 			return
 		
 		# Set the response variable
@@ -207,9 +207,9 @@ class checkbox(button):
 			widget_list += [self]
 		
 		for widget in widget_list:
-			if widget != None and widget.type == u'checkbox' and \
+			if widget is not None and widget.type == u'checkbox' and \
 				widget.var == self.var:
-				if widget.group != self.group and self.group != None:
+				if widget.group != self.group and self.group is not None:
 					raise osexception(_( \
 						u'All checkbox widgets without a group or within the same group should have the same variable.'))
 				if widget.checked or widget.checked == u'yes':

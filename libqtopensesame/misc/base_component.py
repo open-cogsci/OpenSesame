@@ -64,7 +64,7 @@ class base_component(object):
 			ui:			An id for a user-interface file, or None.
 		"""
 
-		if ui != None:
+		if ui is not None:
 			# If the UI file has been explicitly registered, which is the case
 			# for extensions
 			if hasattr(self, u'experiment') and ui in self.experiment.resources:
@@ -110,7 +110,7 @@ class base_component(object):
 				_parent = main_window.main_window
 			else:
 				_parent = main_window.parent()
-				if _parent == None:
+				if _parent is None:
 					raise osexception(u'Invalid main_window')
 			main_window = _parent
 		return main_window

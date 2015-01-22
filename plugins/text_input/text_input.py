@@ -72,7 +72,7 @@ class text_input(item.item, generic_response.generic_response):
 
 		# If no start response interval has been set, set it to the onset of
 		# the current response item
-		if self.experiment.start_response_interval == None:
+		if self.experiment.start_response_interval is None:
 			self.experiment.start_response_interval = self.get("time_%s" % \
 				self.name)
 
@@ -140,7 +140,7 @@ class text_input(item.item, generic_response.generic_response):
 			else:
 				o = -1
 
-			if response_time == None:
+			if response_time is None:
 				response_time = time
 
 			# Process the response

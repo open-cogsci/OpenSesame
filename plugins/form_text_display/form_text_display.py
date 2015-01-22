@@ -54,7 +54,7 @@ class form_text_display(form_base.form_base):
 		string		--	A definition string. (default=None)
 		"""
 
-		if string == None or string.strip() == u'':
+		if string is None or string.strip() == u'':
 			string = default_script
 		# Due to dynamic loading, we need to implement this super() hack. See
 		# <http://thingspython.wordpress.com/2010/09/27/another-super-wrinkle-raising-typeerror/>

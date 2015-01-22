@@ -48,7 +48,7 @@ class theme:
 		self.main_window = main_window
 		self.fallback_icon = QtGui.QIcon(os.path.join(misc.resource(u"theme"),
 			u"fallback.png"))
-		if theme == None:
+		if theme is None:
 			self.theme = config.get_config(u"theme")
 		else:
 			self.theme = theme
@@ -58,7 +58,7 @@ class theme:
 		# The theme folder must exist, and contain a file called __theme__.py,
 		# if not, we fall back to the default theme, which is assumed to always
 		# exist.
-		if self.theme_folder == None or not os.path.exists(
+		if self.theme_folder is None or not os.path.exists(
 			os.path.join(self.theme_folder, u'__theme__.py')):
 			debug.msg(u"theme '%s' does not exist, using 'default'" % theme, \
 				reason=u"warning")
@@ -134,7 +134,7 @@ class theme:
 		A QPixmap
 		"""
 
-		if size == None:
+		if size is None:
 			if icon in self.icon_map:
 				size = self.icon_map[icon][1]
 			else:

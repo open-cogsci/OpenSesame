@@ -42,13 +42,13 @@ class droid(legacy):
 
 	def get_key(self, keylist=None, timeout=None):
 
-		if not self.persistent_virtual_keyboard and android != None:
+		if not self.persistent_virtual_keyboard and android is not None:
 			android.show_keyboard()
 		start_time = pygame.time.get_ticks()
 		time = start_time
-		if keylist == None:
+		if keylist is None:
 			keylist = self._keylist
-		if timeout == None:
+		if timeout is None:
 			timeout = self.timeout
 		while True:
 			time = pygame.time.get_ticks()
@@ -61,7 +61,7 @@ class droid(legacy):
 				# keyboard layouts doesn't work for Android, so we use key
 				# names. I'm not sure what effect this will have on non-QWERTY
 				# virtual keyboards.
-				if android != None:
+				if android is not None:
 					key = pygame.key.name(event.key)
 				else:
 					# If we're not on Android, simply use the same logic as the
@@ -71,22 +71,22 @@ class droid(legacy):
 						key = self.key_name(event.key)
 					else:
 						key = event.unicode
-				if keylist == None or key in keylist:
-					if not self.persistent_virtual_keyboard and android != None:
+				if keylist is None or key in keylist:
+					if not self.persistent_virtual_keyboard and android is not None:
 						android.hide_keyboard()
 					return key, time
-			if timeout != None and time-start_time >= timeout:
+			if timeout is not None and time-start_time >= timeout:
 				break
 			# Allow Android interrupt
-			if android != None and android.check_pause():
+			if android is not None and android.check_pause():
 				android.wait_for_resume()
-		if not self.persistent_virtual_keyboard and android != None:
+		if not self.persistent_virtual_keyboard and android is not None:
 			android.hide_keyboard()
 		return None, time
 
 	def show_virtual_keyboard(self, visible=True):
 
-		if android == None:
+		if android is None:
 			return
 		self.persistent_virtual_keyboard = visible
 		if visible:

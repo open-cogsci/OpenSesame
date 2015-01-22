@@ -128,8 +128,8 @@ class widget(object):
 				type:	[str, unicode, NoneType]
 		"""
 
-		if var == None:
+		if var is None:
 			var = self.var
-		if var == None:
+		if var is None:
 			return
 		self.form.experiment.set(var, val)

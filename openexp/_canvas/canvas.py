@@ -447,11 +447,11 @@ class canvas(object):
 			my_canvas.text('Text in italic serif')
 		"""
 
-		if style != None: self.font_style = style
-		if size != None: self.font_size = size
-		if italic != None: self.font_italic = italic
-		if bold != None: self.font_bold = bold
-		if underline != None: self.font_underline = underline
+		if style is not None: self.font_style = style
+		if size is not None: self.font_size = size
+		if italic is not None: self.font_italic = italic
+		if bold is not None: self.font_bold = bold
+		if underline is not None: self.font_underline = underline
 
 	def fixdot(self, x=None, y=None, color=None, style=u'default'):
 
@@ -495,13 +495,13 @@ class canvas(object):
 			my_canvas.fixdot()
 		"""
 
-		if color != None:
+		if color is not None:
 			color = self.color(color)
 		else:
 			color = self.fgcolor
-		if x == None:
+		if x is None:
 			x = self.xcenter()
-		if y == None:
+		if y is None:
 			y = self.ycenter()
 		h = 2
 		if u'large' in style:
@@ -848,11 +848,11 @@ class canvas(object):
 			my_canvas.text('Some text with <b>boldface</b> and <i>italics</i>')
 		"""
 
-		if color != None: color = self.color(color)
+		if color is not None: color = self.color(color)
 		else: color = self.fgcolor
-		if bidi == None: bidi = self.bidi
-		if x == None: x = self.xcenter()
-		if y == None: y = self.ycenter()
+		if bidi is None: bidi = self.bidi
+		if x is None: x = self.xcenter()
+		if y is None: y = self.ycenter()
 		self.html.reset()
 		self.html.render(text, x, y, self, max_width=max_width, center=center, \
 			color=color, html=html, bidi=bidi)

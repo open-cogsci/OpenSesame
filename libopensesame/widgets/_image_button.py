@@ -93,7 +93,7 @@ class image_button(image):
 		"""
 	
 		image.__init__(self, form, path, adjust=adjust, frame=frame)
-		if image_id == None:
+		if image_id is None:
 			self.image_id = path
 		else:
 			self.image_id = image_id

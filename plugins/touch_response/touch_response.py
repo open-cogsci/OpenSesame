@@ -52,7 +52,7 @@ class touch_response(mouse_response):
 
 		self.experiment.start_response_interval = self.sri
 		button, pos, self.experiment.end_response_interval = retval
-		if pos != None:
+		if pos is not None:
 			x, y = pos
 			col = x // (self.experiment.width / self._ncol)
 			row = y // (self.experiment.height / self._nrow)

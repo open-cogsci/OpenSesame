@@ -155,7 +155,7 @@ class base_element(object):
 		# Check if all values that need to be specified have indeed been
 		# specified.
 		for var, val in self.properties.items():
-			if val == None:
+			if val is None:
 				raise osexception(
 					(u'Required keyword \'%s\' has not been specified in '
 					u'sketchpad element \'%s\' in item \'%s\'') % (var,
@@ -239,7 +239,7 @@ class base_element(object):
 		for var, default in self.defaults:
 			val = self.properties[var]
 			val = self.escape(val)
-			if default == None and not self.only_keywords:
+			if default is None and not self.only_keywords:
 				s += u' %s' % val
 			else:
 				s += u' %s=%s' % (var, val)

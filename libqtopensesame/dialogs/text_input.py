@@ -45,7 +45,7 @@ class text_input(base_dialog):
 
 		super(text_input, self).__init__(main_window,
 			ui=u'dialogs.text_input_dialog')
-		if msg != None:
+		if msg is not None:
 			self.ui.label_message.setText(msg)
 		self.ui.textedit_input.setPlainText(content)
 		self.ui.textedit_input.setFont(self.experiment.monospace())

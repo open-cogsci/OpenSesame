@@ -93,7 +93,7 @@ class multiprocess_runner(base_runner):
 				return msg
 			# Anything that is not a string, not an Exception, and not None is
 			# unexpected
-			elif msg != None:
+			elif msg is not None:
 				return osexception( \
 					u"Illegal message type received from child process: %s (%s)" \
 					% (msg, type(msg)))

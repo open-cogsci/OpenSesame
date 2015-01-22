@@ -47,8 +47,8 @@ class notification(base_dialog):
 		super(notification, self).__init__(main_window,
 			ui=u'dialogs.notification_dialog')
 		self.ui.textedit_notification.setHtml(msg)
-		if title != None:
+		if title is not None:
 			self.ui.label_title.setText(title)
-		if icon != None:
+		if icon is not None:
 			self.ui.label_notification.setPixmap(self.theme.qpixmap(icon))
 		self.adjustSize()

@@ -300,11 +300,11 @@ define inline_script dynamic_search_display
 		
 		# Poll the keyboard and break out after a fixed duration (speed)
 		resp = None
-		while self.time() - t < speed and resp == None:
+		while self.time() - t < speed and resp is None:
 			resp, time = my_keyboard.get_key()
-			if resp != None:
+			if resp is not None:
 				break			
-		if resp != None:
+		if resp is not None:
 			break			
 					
 	# Clear the window

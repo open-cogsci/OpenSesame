@@ -89,7 +89,7 @@ class inline_script(inline_script_runtime, qtplugin):
 		widget = tree_inline_script_item(self, extra_info=extra_info,
 			symbols=(max_depth < 0 or max_depth > 1))
 		items.append(self.name)
-		if toplevel != None:
+		if toplevel is not None:
 			toplevel.addChild(widget)
 		return widget
 

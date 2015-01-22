@@ -46,9 +46,9 @@ class opengl(openexp._canvas.legacy.legacy):
 
 		self.experiment = experiment
 		self.html = html.html()
-		if fgcolor == None:
+		if fgcolor is None:
 			fgcolor = self.experiment.get("foreground")
-		if bgcolor == None:
+		if bgcolor is None:
 			bgcolor = self.experiment.get("background")
 
 		self.fgcolor = self.color(fgcolor)
@@ -147,7 +147,7 @@ class opengl(openexp._canvas.legacy.legacy):
 
 		"""see openexp._canvas.legacy"""
 
-		if color == None:
+		if color is None:
 			color = self.fgcolor
 		color = self.color(color)
 
@@ -180,7 +180,7 @@ class opengl(openexp._canvas.legacy.legacy):
 
 		"""see openexp._canvas.legacy"""
 
-		if color == None:
+		if color is None:
 			color = self.fgcolor
 		color = self.color(color)
 
@@ -225,7 +225,7 @@ class opengl(openexp._canvas.legacy.legacy):
 
 		"""see openexp._canvas.legacy"""
 
-		if color == None:
+		if color is None:
 			color = self.fgcolor
 		color = self.color(color)
 
@@ -247,7 +247,7 @@ class opengl(openexp._canvas.legacy.legacy):
 
 		"""see openexp._canvas.legacy"""
 
-		if color == None:
+		if color is None:
 			color = self.fgcolor
 		color = self.color(color)
 
@@ -300,17 +300,17 @@ class opengl(openexp._canvas.legacy.legacy):
 
 		"""see openexp._canvas.legacy"""
 
-		if color == None:
+		if color is None:
 			color = self.fgcolor
 		color = self.color(color)
 
 		surface = self.font.render(text, self.antialias, color)
 		size = self.font.size(text)
 
-		if x == None:
+		if x is None:
 			x = self.xcenter()
 
-		if y == None:
+		if y is None:
 			y = self.ycenter()
 
 		if center:
@@ -335,15 +335,15 @@ class opengl(openexp._canvas.legacy.legacy):
 		except pygame.error as e:
 			raise osexception("'%s' is not a supported image format" % fname)
 
-		if scale != None:
+		if scale is not None:
 			surface = pygame.transform.smoothscale(surface, (int(surface.get_width() * scale), int(surface.get_height() * scale)))
 
 		size = surface.get_size()
 
-		if x == None:
+		if x is None:
 			x = self.xcenter()
 
-		if y == None:
+		if y is None:
 			y = self.ycenter()
 
 		if center:
@@ -439,7 +439,7 @@ def init_display(experiment):
 
 	# Create a font, falling back to the default font
 	experiment.font = pygame.font.Font(experiment.resource("%s.ttf" % experiment.font_family), experiment.font_size)
-	if experiment.font == None:
+	if experiment.font is None:
 		experiment.font = pygame.font.Font(None, experiment.font_size)
 
 def close_display(experiment):

@@ -59,7 +59,7 @@ def init_display(experiment):
 	experiment.time = experiment._time_func
 	experiment.sleep = experiment._sleep_func
 	# Initialze the Android device if necessary
-	if android != None:
+	if android is not None:
 		android.init()
 		android.map_key(android.KEYCODE_BACK, pygame.K_ESCAPE)
 		dpi = android.get_dpi()
@@ -87,12 +87,12 @@ def init_display(experiment):
 	for i in range(10):
 		pygame.display.flip()
 		pygame.time.delay(100)
-	if android != None and android.check_pause():
+	if android is not None and android.check_pause():
 		android.wait_for_resume()
 
 def close_display(experiment):
 
 	# On Android, we don't quit the display, as this appears to exit the
 	# application altogether.
-	if android == None:
+	if android is None:
 		pygame.display.quit()

@@ -110,7 +110,7 @@ class start_new_widget(base_widget):
 		"""Open the selected file"""
 
 		item = self.ui.list_recent.currentItem()
-		if item != None:
+		if item is not None:
 			self.main_window.open_file(path= \
 				self.ui.list_recent.currentItem().file)
 			self.close()

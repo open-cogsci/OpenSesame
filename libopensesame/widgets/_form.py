@@ -103,7 +103,7 @@ class form(object):
 			self.rows = [float(r)/sum(rows) for r in rows]
 
 		self.experiment = experiment
-		if item != None:
+		if item is not None:
 			self.item = item
 		else:
 			self.item = experiment
@@ -148,20 +148,20 @@ class form(object):
 
 		i = 0
 		self.mouse = mouse(self.experiment)
-		if focus_widget != None:
+		if focus_widget is not None:
 			self.render()
 			resp = focus_widget.on_mouse_click(None)
-			if resp != None:
+			if resp is not None:
 				return
 		while True:
 			self.render()
 			button, xy, time = self.mouse.get_click(visible=True)
 			pos = self.xy_to_index(xy)
-			if pos != None:
+			if pos is not None:
 				w = self.widgets[pos]
-				if w != None:
+				if w is not None:
 					resp = self.widgets[pos].on_mouse_click(xy)
-					if resp != None:
+					if resp is not None:
 						return resp
 
 	def cell_index(self, pos):
@@ -198,7 +198,7 @@ class form(object):
 		"""
 
 		for index1 in range(len(self.widgets)):
-			if self.widgets[index1] == None:
+			if self.widgets[index1] is None:
 				continue
 			l = self.get_cell(index1)
 			colspan, rowspan = self.span[index1]
@@ -211,7 +211,7 @@ class form(object):
 						raise osexception( \
 							u'The widget at position (%d, %s) falls outside of your form' \
 							% (l[0], l[1]))
-					if self.widgets[index2] != None:
+					if self.widgets[index2] is not None:
 						raise osexception( \
 							u'The widget at position (%d, %d) overlaps with another widget' \
 							% (l[0], l[1]))
@@ -272,7 +272,7 @@ class form(object):
 		self.validate_geometry()
 		self.canvas.clear()
 		for widget in self.widgets:
-			if widget != None:
+			if widget is not None:
 				widget.render()
 		self.canvas.show()
 

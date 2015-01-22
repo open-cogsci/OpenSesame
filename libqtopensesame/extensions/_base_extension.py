@@ -122,7 +122,7 @@ class base_extension(base_subcomponent):
 		"""
 
 		label = self.info.get(u'label', None)
-		if label != None:
+		if label is not None:
 			return _(label, context=self.name())
 		return None
 
@@ -140,7 +140,7 @@ class base_extension(base_subcomponent):
 		"""
 
 		tooltip = self.info.get(u'tooltip', None)
-		if tooltip != None:
+		if tooltip is not None:
 			return _(tooltip, context=self.name())
 		return None
 
@@ -172,7 +172,7 @@ class base_extension(base_subcomponent):
 				type:	bool
 		"""
 
-		if self.action == None or not self.checkable():
+		if self.action is None or not self.checkable():
 			return
 		self.action.setChecked(checked)
 
@@ -222,7 +222,7 @@ class base_extension(base_subcomponent):
 		"""
 
 		menu_pos = self.info.get(u'menu', None)
-		if menu_pos == None:
+		if menu_pos is None:
 			return None
 		return (menu_pos.get(u'submenu', None),
 			menu_pos.get(u'index', -1),
@@ -244,7 +244,7 @@ class base_extension(base_subcomponent):
 		"""
 
 		toolbar_pos = self.info.get(u'toolbar', None)
-		if toolbar_pos == None:
+		if toolbar_pos is None:
 			return None
 		return (toolbar_pos.get(u'index', -1),
 			toolbar_pos.get(u'separator_before', False),
@@ -308,11 +308,11 @@ class base_extension(base_subcomponent):
 				index += 1
 			before = widget.actions()[index]
 		if separator_after:
-			if before == None:
+			if before is None:
 				before = widget.addSeparator()
 			else:
 				before = widget.insertSeparator(before)
-		if before == None:
+		if before is None:
 			widget.addAction(action)
 		else:
 			widget.insertAction(before, action)
@@ -394,7 +394,7 @@ class base_extension(base_subcomponent):
 			and/ or the toolbar.
 		"""
 
-		if self.label() != None:
+		if self.label() is not None:
 			# Create an action to be inserted into the menu and/ or toolbar
 			icon = self.icon()
 			if isinstance(icon, basestring):
@@ -402,19 +402,19 @@ class base_extension(base_subcomponent):
 			self.action = QtGui.QAction(icon, self.label(), self.main_window)
 			self.action.triggered.connect(self._activate)
 			self.action.setCheckable(self.checkable())
-			if self.tooltip() != None:
+			if self.tooltip() is not None:
 				self.action.setToolTip(self.tooltip())
-			if self.shortcut() != None:
+			if self.shortcut() is not None:
 				self.action.setShortcuts([self.shortcut()])
 			# Insert the action into the menu
-			if self.menu_pos() != None:
+			if self.menu_pos() is not None:
 				submenu_text, index, separator_before, separator_after = \
 					self.menu_pos()
 				submenu = self.get_submenu(submenu_text)
 				self.add_action(submenu, self.action, index, separator_before,
 					separator_after)
 			# Insert the action into the toolbar
-			if self.toolbar_pos() != None:
+			if self.toolbar_pos() is not None:
 				index, separator_before, separator_after = self.toolbar_pos()
 				self.add_action(self.toolbar, self.action, index,
 					separator_before, separator_after)

@@ -40,7 +40,7 @@ class qtplugin(qtitem.qtitem):
 		plugin_file		-- The path to the plugin script. (default=None)
 		"""
 
-		if plugin_file != None:
+		if plugin_file is not None:
 			# The __file__ variable is generally a str, which will cause unicode
 			# errors. Therefore, convert this here if necessary.
 			plugin_file = safe_decode(plugin_file,
@@ -95,7 +95,7 @@ class qtplugin(qtitem.qtitem):
 		min_width	--	A minimum width for the widget. (default=None)
 		"""
 
-		if tooltip != None:
+		if tooltip is not None:
 			try:
 				widget.setToolTip(_(tooltip, context=self.name))
 			except:
@@ -129,10 +129,10 @@ class qtplugin(qtitem.qtitem):
 
 		edit = QtGui.QLineEdit()
 		edit.editingFinished.connect(self.apply_edit_changes)
-		if validator != None:
+		if validator is not None:
 			edit.setValidator(validator)
 		self.add_control(label, edit, tooltip, min_width)
-		if var != None:
+		if var is not None:
 			self.auto_line_edit[var] = edit
 		return edit
 
@@ -155,7 +155,7 @@ class qtplugin(qtitem.qtitem):
 		checkbox = QtGui.QCheckBox(_(label, context=self.name))
 		checkbox.clicked.connect(self.apply_edit_changes)
 		self.add_control('', checkbox, tooltip)
-		if var != None:
+		if var is not None:
 			self.auto_checkbox[var] = checkbox
 		return checkbox
 
@@ -185,7 +185,7 @@ class qtplugin(qtitem.qtitem):
 		QtCore.QObject.connect(edit, QtCore.SIGNAL('set_color'), \
 			self.apply_edit_changes)
 		self.add_control(label, edit, tooltip, min_width)
-		if var != None:
+		if var is not None:
 			self.auto_line_edit[var] = edit
 		return edit
 
@@ -211,7 +211,7 @@ class qtplugin(qtitem.qtitem):
 			combobox.addItem(o)
 		combobox.activated.connect(self.apply_edit_changes)
 		self.add_control(label, combobox, tooltip)
-		if var != None:
+		if var is not None:
 			self.auto_combobox[var] = combobox
 		return combobox
 
@@ -245,7 +245,7 @@ class qtplugin(qtitem.qtitem):
 		if suffix != u'':
 			spinbox.setSuffix(suffix)
 		self.add_control(label, spinbox, tooltip)
-		if var != None:
+		if var is not None:
 			self.auto_spinbox[var] = spinbox
 		return spinbox
 
@@ -290,7 +290,7 @@ class qtplugin(qtitem.qtitem):
 			rlabel.setText(right_label)
 			layout.addWidget(rlabel)
 		slider.sliderMoved.connect(self.apply_edit_changes)
-		if var != None:
+		if var is not None:
 			self.auto_slider[var] = slider
 		widget = QtGui.QWidget()
 		widget.setLayout(layout)
@@ -321,9 +321,9 @@ class qtplugin(qtitem.qtitem):
 
 		edit = QtGui.QLineEdit()
 		edit.editingFinished.connect(self.apply_edit_changes)
-		if var != None:
+		if var is not None:
 			self.auto_line_edit[var] = edit
-		if click_func == None:
+		if click_func is None:
 			click_func = self.browse_pool_func(edit)
 		button = QtGui.QPushButton(self.experiment.icon(u'browse'), u'Browse')
 		button.setIconSize(QtCore.QSize(16, 16))
@@ -367,7 +367,7 @@ class qtplugin(qtitem.qtitem):
 		qprogedit.handlerButtonClicked.connect(self.apply_edit_changes)
 		qprogedit.addTab(_(label, context=self.name)).setLang(lang)
 
-		if var != None:
+		if var is not None:
 			self.auto_editor[var] = qprogedit
 		self.edit_vbox.addWidget(qprogedit)
 		self.set_focus_widget(qprogedit)

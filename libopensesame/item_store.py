@@ -115,7 +115,7 @@ class item_store(object):
 			type:	unicode
 		"""
 
-		if suggestion == None:
+		if suggestion is None:
 			name = item_type
 		else:
 			name = self.experiment.sanitize(suggestion, strict=True,

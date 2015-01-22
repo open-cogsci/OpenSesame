@@ -100,7 +100,7 @@ class video_player(item.item):
 			# Get the frame		
 			self.src = cv.QueryFrame(self.video)
 			# Check for the end of the video
-			if self.src == None:
+			if self.src is None:
 				break		
 			# Resize if requested and convert the resulting image to
 			# RGB format, which is compatible with PyGame

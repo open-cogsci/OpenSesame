@@ -150,7 +150,7 @@ class ExperimentProcess(multiprocessing.Process):
 		except Exception as e_exp:
 			print(u'An Exception occurred during exp.end(): %s' % e_exp)
 		# Communicate the exception and exit with error
-		if e_run != None:
+		if e_run is not None:
 			self.output.put(e_run)
 			sys.exit(1)
 		# Exit with success

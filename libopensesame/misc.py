@@ -103,7 +103,7 @@ def opensesamerun_options():
 	options, args = parser.parse_args(sys.argv)
 
 	# Set the default logfile based on the subject nr
-	if options.logfile == None:
+	if options.logfile is None:
 		options.logfile = u"subject%s.csv" % options.subject
 
 	if len(sys.argv) > 1 and os.path.exists:
@@ -450,7 +450,7 @@ def filesystem_encoding():
 	"""
 
 	enc = sys.getfilesystemencoding()
-	if enc == None:
+	if enc is None:
 		enc = u'utf-8'
 	return enc
 

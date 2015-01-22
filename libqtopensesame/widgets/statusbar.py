@@ -76,7 +76,7 @@ class statusbar(QtGui.QStatusBar, base_widget):
 			self.ready_icon.hide()
 			self.busy_icon.show()
 		self.message.setText("<small>%s</small>" % msg)		
-		if timeout != None:
+		if timeout is not None:
 			QtCore.QTimer.singleShot(timeout, self.clear_status)
 		QtGui.QApplication.processEvents()
 

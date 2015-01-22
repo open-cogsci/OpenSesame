@@ -41,7 +41,7 @@ class gabor(base_element, gabor_runtime):
 		d = gabor_settings(self.sketchpad._edit_widget)
 		d.set_properties(self.properties)
 		properties = d.get_properties()
-		if properties == None:
+		if properties is None:
 			return
 		self.properties.update(properties)
 		self.sketchpad.draw()
@@ -51,7 +51,7 @@ class gabor(base_element, gabor_runtime):
 
 		d = gabor_settings(sketchpad._edit_widget)
 		properties = d.get_properties()
-		if properties == None:
+		if properties is None:
 			return
 		properties.update({
 				u'x':			pos[0],

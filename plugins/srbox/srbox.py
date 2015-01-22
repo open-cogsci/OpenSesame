@@ -149,7 +149,7 @@ class srbox(item.item, generic_response.generic_response):
 
 		# If no start response interval has been set, set it to the onset of
 		# the current response item
-		if self.experiment.start_response_interval == None:
+		if self.experiment.start_response_interval is None:
 			self.experiment.start_response_interval = self.get("time_%s" \
 				% self.name)
 
@@ -195,7 +195,7 @@ class srbox(item.item, generic_response.generic_response):
 		"""Neatly close the connection to the srbox"""
 
 		if not hasattr(self.experiment, "srbox") or \
-			self.experiment.srbox == None:
+			self.experiment.srbox is None:
 				debug.msg("no active srbox")
 				return
 		try:

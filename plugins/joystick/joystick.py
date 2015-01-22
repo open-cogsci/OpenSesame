@@ -111,7 +111,7 @@ class joystick(item.item, generic_response.generic_response):
 		self._keyboard.flush()
 		# If no start response interval has been set, set it to the onset of
 		# the current response item
-		if self.experiment.start_response_interval == None:
+		if self.experiment.start_response_interval is None:
 			self.experiment.start_response_interval = self.get(u'time_%s' \
 				% self.name)
 		if self.has(u'_dummy') and self.get(u'_dummy') == u'yes':

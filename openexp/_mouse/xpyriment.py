@@ -61,14 +61,14 @@ class xpyriment(legacy.legacy):
 
 	def get_click(self, buttonlist=None, timeout=None, visible=None):
 
-		if buttonlist == None:
+		if buttonlist is None:
 			buttonlist = self.buttonlist
-		if timeout == None:
+		if timeout is None:
 			timeout = self.timeout
-		if visible == None:
+		if visible is None:
 			visible = self.visible
 
-		if self.cursor == None:
+		if self.cursor is None:
 			pygame.mouse.set_visible(visible)
 		elif visible:
 			pygame.mouse.set_visible(False)
@@ -84,7 +84,7 @@ class xpyriment(legacy.legacy):
 			time = pygame.time.get_ticks()
 
 			# Draw a cusom cursor if necessary
-			if self.cursor != None and visible:
+			if self.cursor is not None and visible:
 				x, y = pygame.mouse.get_pos()
 				self.experiment.window.blit(bg_surface, (0,0))
 				self.cursor.position = c2p((x+dx, y+dy))
@@ -96,7 +96,7 @@ class xpyriment(legacy.legacy):
 					raise osexception( \
 						"The escape key was pressed.")
 				if event.type == MOUSEBUTTONDOWN:
-					if buttonlist == None or event.button in buttonlist:
+					if buttonlist is None or event.button in buttonlist:
 						pygame.mouse.set_visible(self.visible)
 
 						# Compensate for the fact that the screen is padded
@@ -107,9 +107,9 @@ class xpyriment(legacy.legacy):
 							-self.experiment.height)/2
 
 						return event.button, (x,y), time
-			if timeout != None and time-start_time >= timeout:
+			if timeout is not None and time-start_time >= timeout:
 				break
 
-		if self.cursor == None:
+		if self.cursor is None:
 			pygame.mouse.set_visible(self.visible)
 		return None, None, time

@@ -48,7 +48,7 @@ for ts in os.listdir('resources/ts'):
 							nObsolete += 1
 						else:
 							tra = i.text
-			if tra == None:
+			if tra is None:
 				continue
 			if src.count('%s') != tra.count('%s') or src.count('%d') != \
 				tra.count('%d') or src.count('%f') != tra.count('%f'):

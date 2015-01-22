@@ -206,7 +206,7 @@ def parse_folder(path, context=None, translate=True, py=True, yaml=True):
 	"""
 
 	for f in os.listdir(path):
-		if context != None:
+		if context is not None:
 			_context = context
 		elif path in [u'extensions', u'plugins']:
 			_context = f

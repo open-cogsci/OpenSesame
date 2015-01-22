@@ -74,9 +74,9 @@ class xpyriment(canvas.canvas):
 		self.html = html.html()
 		self.auto_prepare = auto_prepare
 		self.prepared = False
-		if fgcolor == None:
+		if fgcolor is None:
 			fgcolor = self.experiment.get(u'foreground')
-		if bgcolor == None:
+		if bgcolor is None:
 			bgcolor = self.experiment.get(u'background')
 		self.set_fgcolor(fgcolor)
 		self.set_bgcolor(bgcolor)
@@ -151,15 +151,15 @@ class xpyriment(canvas.canvas):
 
 	def clear(self, color=None):
 
-		if color != None: self._canvas_color = self.color(color)
+		if color is not None: self._canvas_color = self.color(color)
 		else: self._canvas_color = self.bgcolor
 		self.stim_list = []
 		self.prepare()
 
 	def line(self, sx, sy, ex, ey, color=None, penwidth=None):
 
-		if penwidth == None: penwidth = self.penwidth
-		if color != None: color = self.color(color)
+		if penwidth is None: penwidth = self.penwidth
+		if color is not None: color = self.color(color)
 		else: color = self.fgcolor
 		stim = stimuli.Line(c2p((sx,sy)), c2p((ex,ey)),
 			line_width=penwidth, colour=color, anti_aliasing=self.aa)
@@ -168,7 +168,7 @@ class xpyriment(canvas.canvas):
 	def rect(self, x, y, w, h, fill=False, color=None, penwidth=None):
 
 		if fill:
-			if color != None: color = self.color(color)
+			if color is not None: color = self.color(color)
 			else: color = self.fgcolor
 			# The position of the stimulus is the center, not the top-left
 			pos = c2p((x+w/2,y+h/2))
@@ -188,12 +188,12 @@ class xpyriment(canvas.canvas):
 
 	def ellipse(self, x, y, w, h, fill=False, color=None, penwidth=None):
 
-		if color != None: color = self.color(color)
+		if color is not None: color = self.color(color)
 		else: color = self.fgcolor
-		if penwidth == None: penwidth = self.penwidth
+		if penwidth is None: penwidth = self.penwidth
 		else: line_width = penwidth
 		if fill: line_width = 0
-		elif penwidth != None: line_width = penwidth
+		elif penwidth is not None: line_width = penwidth
 		else: line_width = self.penwidth
 		pos = c2p((x+w/2,y+h/2))
 		stim = stimuli.Ellipse((w, h), colour=color, line_width=line_width,
@@ -202,8 +202,8 @@ class xpyriment(canvas.canvas):
 
 	def polygon(self, vertices, fill=False, color=None, penwidth=None):
 
-		if penwidth == None: penwidth = self.penwidth
-		if color != None: color = self.color(color)
+		if penwidth is None: penwidth = self.penwidth
+		if color is not None: color = self.color(color)
 		else: color = self.fgcolor
 		if fill: line_width = 0
 		else: line_width = penwidth
@@ -264,22 +264,22 @@ class xpyriment(canvas.canvas):
 
 	def image(self, fname, center=True, x=None, y=None, scale=None):
 
-		if x == None: x = self.xcenter()
-		if y == None: y = self.ycenter()
+		if x is None: x = self.xcenter()
+		if y is None: y = self.ycenter()
 		if center == False:
 			if isinstance(fname, unicode):
 				_fname = fname.encode(self.experiment.encoding)
 			else:
 				_fname = fname
 			surf = pygame.image.load(_fname)
-			if scale == None:
+			if scale is None:
 				x += surf.get_width()/2
 				y += surf.get_height()/2
 			else:
 				x += scale*surf.get_width()/2
 				y += scale*surf.get_height()/2
 		stim = stimuli.Picture(fname, position=c2p((x,y)))
-		if scale != None: stim.scale( (scale, scale) )
+		if scale is not None: stim.scale( (scale, scale) )
 		self.add_stim(stim)
 
 	def gabor(self, x, y, orient, freq, env=u"gaussian", size=96, stdev=12,

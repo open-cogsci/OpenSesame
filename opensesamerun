@@ -59,7 +59,7 @@ if __name__ == u"__main__":
 			sys.exit()
 		# Create the GUI and show it
 		import libqtopensesame.qtopensesamerun
-		if app == None:
+		if app is None:
 			app = QtGui.QApplication(sys.argv)
 			myapp = libqtopensesame.qtopensesamerun.qtopensesamerun(options)
 		QtCore.QObject.connect(app, QtCore.SIGNAL(u"sys.exit()"), myapp.close)

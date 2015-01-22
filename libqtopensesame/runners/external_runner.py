@@ -91,7 +91,7 @@ class external_runner(base_runner):
 			# to make sure that the new process is shown (otherwise it will crash
 			# on Windows).
 			retcode = None
-			while retcode == None:
+			while retcode is None:
 				retcode = p.poll()
 				QtGui.QApplication.processEvents()
 				time.sleep(1)

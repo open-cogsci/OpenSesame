@@ -123,11 +123,11 @@ class experiment(item.item):
 
 		global pool_folders
 
-		if items == None:
+		if items is None:
 			self.items = item_store(self)
 		else:
 			self.items = items
-		if workspace == None:
+		if workspace is None:
 			self.python_workspace = python_workspace(self)
 		else:
 			self.python_workspace = workspace
@@ -188,7 +188,7 @@ class experiment(item.item):
 		self._stack = debug.stack
 
 		# Pool folder
-		if pool_folder == None:
+		if pool_folder is None:
 			# On some systems tempfile.mkdtemp() triggers a UnicodeDecodeError.
 			# This is resolved by passing the dir explicitly as a Unicode
 			# string. This fix has been adapted from:
@@ -209,7 +209,7 @@ class experiment(item.item):
 		# Default subject info
 		self.set_subject(subject_nr)
 		# Restore experiment path
-		if experiment_path != None:
+		if experiment_path is not None:
 			self.fallback_pool_folder = os.path.join(experiment_path,
 				u'__pool__')
 			if os.path.exists(self.fallback_pool_folder):
@@ -278,7 +278,7 @@ class experiment(item.item):
 		# Read the string until the end of the definition
 		def_str = u''
 		line = next(s, None)
-		if line == None:
+		if line is None:
 			return None, u''
 		get_next = False
 		while True:
@@ -288,7 +288,7 @@ class experiment(item.item):
 				else:
 					def_str += line + u'\n'
 			line = next(s, None)
-			if line == None:
+			if line is None:
 				break
 		return line, def_str
 
@@ -304,7 +304,7 @@ class experiment(item.item):
 		debug.msg(u"building experiment")
 		s = iter(string.split("\n"));
 		line = next(s, None)
-		while line != None:
+		while line is not None:
 			get_next = True
 			try:
 				l = self.split(line)
@@ -413,13 +413,13 @@ class experiment(item.item):
 		"""
 
 		name = self.unistr(name)
-		if self != None:
+		if self is not None:
 			if name in self.resources:
 				return self.resources[name]
 			if os.path.exists(self.get_file(name)):
 				return self.get_file(name)
 		path = misc.resource(name)
-		if path == None:
+		if path is None:
 			raise Exception( \
 				u"The resource '%s' could not be found in libopensesame.experiment.resource()" \
 				% name)
@@ -460,10 +460,10 @@ class experiment(item.item):
 				u"specify a valid filename.")
 		if os.path.exists(os.path.join(self.pool_folder, path)):
 			return os.path.join(self.pool_folder, path)
-		if self.experiment_path != None:
+		if self.experiment_path is not None:
 			if os.path.exists(os.path.join(self.experiment_path, path)):
 				return os.path.join(self.experiment_path, path)
-			if self.fallback_pool_folder != None and os.path.exists(
+			if self.fallback_pool_folder is not None and os.path.exists(
 				os.path.join(self.experiment_path, self.fallback_pool_folder,
 				path)):
 				return os.path.join(self.experiment_path,
@@ -697,13 +697,13 @@ class experiment(item.item):
 		"""Opens the logile."""
 
 		# Do not open the logfile if it's already open
-		if self._log != None:
+		if self._log is not None:
 			return
 		# If only a filename is present, we interpret this filename as relative
 		# to the experiment folder, instead of relative to the current working
 		# directory.
 		if os.path.basename(self.logfile) == self.logfile and \
-			self.experiment_path != None:
+			self.experiment_path is not None:
 			self.logfile = os.path.join(self.experiment_path, self.logfile)
 		# Open the logfile
 		self._log = codecs.open(self.logfile, u'w', encoding=self.encoding)

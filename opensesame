@@ -93,7 +93,7 @@ if __name__ == u'__main__':
 		if sys.argv[i] == '--locale':
 			locale = sys.argv[i+1]
 	qm = resource(os.path.join(u'locale', locale) + u'.qm')
-	if qm != None:
+	if qm is not None:
 		debug.msg(u'installing %s translator' % qm)
 		translator = QTranslator()
 		translator.load(qm)

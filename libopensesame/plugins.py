@@ -101,7 +101,7 @@ def is_plugin(item_type, _type=u'plugins'):
 	True if the item_type is a plugin, False otherwise.
 	"""
 
-	return plugin_folder(item_type, _type=_type) != None
+	return plugin_folder(item_type, _type=_type) is not None
 
 def plugin_disabled(plugin, _type=u'plugins'):
 
@@ -402,7 +402,7 @@ def load_mod(path, mod, pkg=None):
 	path = safe_decode(path, enc=sys.getfilesystemencoding())
 	if not os.path.isdir(path):
 		path = os.path.dirname(path)
-	if pkg != None:
+	if pkg is not None:
 		path = os.path.join(path, pkg)
 	path = os.path.join(path, mod+u'.py')
 	if not os.path.exists(path):

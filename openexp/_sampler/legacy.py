@@ -71,7 +71,7 @@ class legacy(sampler.sampler):
 
 	def __init__(self, experiment, src):
 
-		if src != None:
+		if src is not None:
 			if isinstance(src, basestring):
 				if not os.path.exists(src):
 					raise osexception( \
@@ -105,7 +105,7 @@ class legacy(sampler.sampler):
 	def pitch(self, p):
 
 		# On Android, numpy does not exist and this is not supported
-		if numpy == None:
+		if numpy is None:
 			return
 		if type(p) not in (int, float) or p <= 0:
 			raise osexception(
@@ -122,7 +122,7 @@ class legacy(sampler.sampler):
 	def pan(self, p):
 
 		# On Android, numpy does not exist and this is not supported
-		if numpy == None:
+		if numpy is None:
 			return
 		if type(p) not in (int, float) and p not in (u"left", u"right"):
 			raise osexception(

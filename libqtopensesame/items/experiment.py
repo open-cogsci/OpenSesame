@@ -157,7 +157,7 @@ class experiment(libopensesame.experiment.experiment):
 		self.ui.itemtree.insertTopLevelItem(1, self.treeitem_unused)
 		self.treeitem_general.expand()
 		self.treeitem_unused.collapse()
-		if select != None:
+		if select is not None:
 			l = self.ui.itemtree.select_item(select)
 
 	def rename(self, from_name, to_name):
@@ -272,7 +272,7 @@ class experiment(libopensesame.experiment.experiment):
 		A QComboBox.
 		"""
 
-		if c == None:
+		if c is None:
 			index = 0
 			c = QtGui.QComboBox(self.ui.centralwidget)
 		else:
@@ -281,7 +281,7 @@ class experiment(libopensesame.experiment.experiment):
 		i = 0
 		# If we are trying to select a non-existing item, add a dummy entry to
 		# the combobox
-		if select != None and select not in self.experiment.items:
+		if select is not None and select not in self.experiment.items:
 			c.addItem(u'')
 			c.setCurrentIndex(0)
 			c.setItemIcon(i, self.icon(u'go-down'))
@@ -318,7 +318,7 @@ class experiment(libopensesame.experiment.experiment):
 		A QComboBox
 		"""
 
-		if c == None:
+		if c is None:
 			c = QtGui.QComboBox(self.ui.centralwidget)
 		else:
 			c.clear()
@@ -398,7 +398,7 @@ class experiment(libopensesame.experiment.experiment):
 		"""
 
 		from libqtopensesame.dialogs.text_input import text_input
-		if parent == None:
+		if parent is None:
 			parent = self.main_window
 		tid = text_input(parent, msg=message, content=content)
 		return tid.get_input()
@@ -454,9 +454,9 @@ class experiment(libopensesame.experiment.experiment):
 		widget	--	The QWidget to be cleared.
 		"""
 
-		if widget != None:
+		if widget is not None:
 			layout = widget.layout()
-			if layout != None:
+			if layout is not None:
 				while layout.count() > 0:
 					item = layout.takeAt(0)
 					if not item:

@@ -192,7 +192,7 @@ class pool_widget(base_widget):
 			return
 
 		file_list = os.listdir(self.experiment.pool_folder)
-		if self.experiment.fallback_pool_folder != None:
+		if self.experiment.fallback_pool_folder is not None:
 			file_list += os.listdir(self.experiment.fallback_pool_folder)
 		for fname in file_list:
 			debug.msg(fname)
@@ -238,7 +238,7 @@ class pool_widget(base_widget):
 
 		item = self.ui.list_pool.itemAt(self.ui.list_pool.mapFromGlobal( \
 			event.globalPos()))
-		if item == None:
+		if item is None:
 			return
 		menu = QtGui.QMenu()
 		menu.addAction(item.icon, _(u"Open"))
@@ -367,7 +367,7 @@ def select_from_pool(main_window, parent=None):
 					widget.
 	"""
 
-	if parent == None:
+	if parent is None:
 		parent = main_window.ui.centralwidget
 	d = QtGui.QDialog(parent)
 	widget = pool_widget(main_window)
@@ -389,6 +389,6 @@ def select_from_pool(main_window, parent=None):
 		return ""
 
 	selected = widget.ui.list_pool.currentItem()
-	if selected == None:
+	if selected is None:
 		return ""
 	return str(selected.text())

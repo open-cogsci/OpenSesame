@@ -42,7 +42,7 @@ class sequence(item.item):
 
 		self.set_item_onset()
 		# Optionally flush the responses to catch escape presses
-		if self._keyboard != None:
+		if self._keyboard is not None:
 			self._keyboard.flush()
 		for item, cond in self._items:
 			if eval(cond):

@@ -112,7 +112,7 @@ class loop(qtstructure_item, qtitem, loop_runtime):
 				return
 
 			# Check if the variable already exists
-			if l != None and var_name in l:
+			if l is not None and var_name in l:
 				self.experiment.notify( \
 					_(u"A variable with the name '%s' already exists") \
 						% var_name)
@@ -170,7 +170,7 @@ class loop(qtstructure_item, qtitem, loop_runtime):
 		"""Presents a dialog and rename a variable."""
 
 		var_list = self.cyclevar_list()
-		if var_list == None:
+		if var_list is None:
 			return
 
 		old_var, ok = QtGui.QInputDialog.getItem( \
@@ -202,7 +202,7 @@ class loop(qtstructure_item, qtitem, loop_runtime):
 		"""Presents a dialog and remove a variable."""
 
 		var_list = self.cyclevar_list()
-		if var_list == None:
+		if var_list is None:
 			return
 
 		var, ok = QtGui.QInputDialog.getItem(self.experiment.ui.centralwidget, \
@@ -353,7 +353,7 @@ class loop(qtstructure_item, qtitem, loop_runtime):
 
 		# Determine the order in which the columns are displayed
 		column_order = []
-		if self.cyclevar_list() != None:
+		if self.cyclevar_list() is not None:
 			if self.has(u"column_order"):
 				for var in self.unistr(self.get(u"column_order")).split(u";"):
 					if var in self.cyclevar_list():
@@ -425,7 +425,7 @@ class loop(qtstructure_item, qtitem, loop_runtime):
 				var = None
 				for row in range(d.row_count()):
 					item = d.get_item(row, col)
-					if item == None:
+					if item is None:
 						break
 					s = str(item.text())
 					if s == u'':
@@ -433,7 +433,7 @@ class loop(qtstructure_item, qtitem, loop_runtime):
 					if row == 0:
 						var = self.experiment.sanitize(s, True)
 						var_dict[var] = []
-					elif var != None:
+					elif var is not None:
 						var_dict[var].append(s)
 
 			# If the variable wizard was not parsed correctly, provide a
@@ -533,7 +533,7 @@ class loop(qtstructure_item, qtitem, loop_runtime):
 		"""Repeat certain cycles based on the value in a particular column"""
 
 		var_list = self.cyclevar_list()
-		if var_list == None:
+		if var_list is None:
 			return
 
 		weight_var, ok = QtGui.QInputDialog.getItem(
@@ -551,7 +551,7 @@ class loop(qtstructure_item, qtitem, loop_runtime):
 			for col in range(self.loop_table.columnCount()):
 				var = str(self.loop_table.horizontalHeaderItem(col).text())
 				cell = self.loop_table.item(row, col)
-				if cell == None:
+				if cell is None:
 					val = u''
 				else:
 					val = str(self.loop_table.item(row, col).text())
@@ -597,7 +597,7 @@ class loop(qtstructure_item, qtitem, loop_runtime):
 			for col in range(self.loop_table.columnCount()):
 				var = str(self.loop_table.horizontalHeaderItem(col).text())
 				cell = self.loop_table.item(row, col)
-				if cell == None:
+				if cell is None:
 					val = u''
 				else:
 					val = str(self.loop_table.item(row, col).text())
@@ -620,7 +620,7 @@ class loop(qtstructure_item, qtitem, loop_runtime):
 
 		items.append(self.name)
 		widget = tree_item_item(self, extra_info=extra_info)
-		if toplevel != None:
+		if toplevel is not None:
 			toplevel.addChild(widget)
 		if (max_depth < 0 or max_depth > 1) \
 			and self.item in self.experiment.items:

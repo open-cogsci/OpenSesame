@@ -135,12 +135,12 @@ class libsrbox:
 				raise osexception( \
 					"libsrbox does not know how to auto-detect the SR Box on your platform. Please specify a device.")
 
-		if self._srbox == None:
+		if self._srbox is None:
 			raise osexception( \
 				"libsrbox failed to auto-detect an SR Box. Please specify a device.")
 		debug.msg("using device %s" % dev)
 		# Turn off all lights
-		if self._srbox != None:
+		if self._srbox is not None:
 			self._srbox.write('\x64')
 
 	def send(self, ch):
@@ -208,7 +208,7 @@ class libsrbox:
 
 		c = self.experiment.time()
 		t = c
-		while timeout == None or t - c < timeout:
+		while timeout is None or t - c < timeout:
 
 			j = self._srbox.read(1)
 			t = self.experiment.time()
@@ -217,28 +217,28 @@ class libsrbox:
 
 				if k != 0:
 					l = []
-					if k | self.BUTTON1 == 255 and (allowed_buttons == None or \
+					if k | self.BUTTON1 == 255 and (allowed_buttons is None or \
 						1 in allowed_buttons):
 						l.append(1)
-					if k | self.BUTTON2 == 255 and (allowed_buttons == None or \
+					if k | self.BUTTON2 == 255 and (allowed_buttons is None or \
 						2 in allowed_buttons):
 						l.append(2)
-					if k | self.BUTTON3 == 255 and (allowed_buttons == None or \
+					if k | self.BUTTON3 == 255 and (allowed_buttons is None or \
 						3 in allowed_buttons):
 						l.append(3)
-					if k | self.BUTTON4 == 255 and (allowed_buttons == None or \
+					if k | self.BUTTON4 == 255 and (allowed_buttons is None or \
 						4 in allowed_buttons):
 						l.append(4)
-					if k | self.BUTTON5 == 255 and (allowed_buttons == None or \
+					if k | self.BUTTON5 == 255 and (allowed_buttons is None or \
 						5 in allowed_buttons):
 						l.append(5)
-					if k | self.BUTTON6 == 255 and (allowed_buttons == None or \
+					if k | self.BUTTON6 == 255 and (allowed_buttons is None or \
 						6 in allowed_buttons):
 						l.append(6)
-					if k | self.BUTTON7 == 255 and (allowed_buttons == None or \
+					if k | self.BUTTON7 == 255 and (allowed_buttons is None or \
 						7 in allowed_buttons):
 						l.append(7)
-					if k | self.BUTTON8 == 255 and (allowed_buttons == None or \
+					if k | self.BUTTON8 == 255 and (allowed_buttons is None or \
 						8 in allowed_buttons):
 						l.append(8)
 					if l != []:

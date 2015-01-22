@@ -80,7 +80,7 @@ class automatic_backup(base_extension):
 			Suspend autosave timer when the experiment starts.
 		"""
 
-		if self.autosave_timer != None:
+		if self.autosave_timer is not None:
 			debug.msg(u"stopping autosave timer")
 			self.autosave_timer.stop()
 
@@ -91,7 +91,7 @@ class automatic_backup(base_extension):
 			Resume autosave timer when the experiment ends.
 		"""
 
-		if self.autosave_timer != None:
+		if self.autosave_timer is not None:
 			debug.msg(u"resuming autosave timer")
 			self.autosave_timer.start()
 

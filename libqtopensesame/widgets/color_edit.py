@@ -69,7 +69,7 @@ class color_edit(base_widget):
 
 		color = self.experiment.colorpicker(self.experiment.sanitize(
 			self.text()))
-		if color == None:
+		if color is None:
 			return
 		self.setText(color)
 		self.apply()
@@ -131,9 +131,9 @@ class color_edit(base_widget):
 		"""
 
 		debug.msg(u'color = %s' % color)
-		if experiment == None:
+		if experiment is None:
 			experiment = self.experiment
-		if color == None:
+		if color is None:
 			color = experiment.get(u'foreground', _eval=False)
 		self.setText(color)
 		self.button.setIcon(self.theme.qicon(u'os-color-picker'))

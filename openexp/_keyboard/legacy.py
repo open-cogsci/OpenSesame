@@ -70,9 +70,9 @@ class legacy(keyboard.keyboard):
 		start_time = pygame.time.get_ticks()
 		time = start_time
 
-		if keylist == None:
+		if keylist is None:
 			keylist = self._keylist
-		if timeout == None:
+		if timeout is None:
 			timeout = self.timeout
 
 		while True:
@@ -86,9 +86,9 @@ class legacy(keyboard.keyboard):
 					key = self.key_name(event.key)
 				else:
 					key = event.unicode
-				if keylist == None or key in keylist:
+				if keylist is None or key in keylist:
 					return key, time
-			if timeout != None and time-start_time >= timeout:
+			if timeout is not None and time-start_time >= timeout:
 				break
 		return None, time
 

@@ -28,19 +28,19 @@ try:
 	debug.msg(u'Loading Quest module directly')
 except:
 	debug.msg(u'Failed to load Quest module directly')
-if Quest == None:
+if Quest is None:
 	try:
 		from psychopy.contrib import quest as Quest
 		debug.msg(u'Loading Quest module from PsychoPy')
 	except:
 		debug.msg(u'Failed to load Quest module from PsychoPy')
-if Quest == None:
+if Quest is None:
 	try:
 		Quest = plugins.load_mod(__file__, u'Quest')
 		debug.msg(u'Loading Quest module from plug-in folder')
 	except:
 		debug.msg(u'Failed to load Quest module from plug-in folder')
-if Quest == None:
+if Quest is None:
 		raise osexception(u'Failed to load Quest module.')
 
 class quest_staircase_init(item):

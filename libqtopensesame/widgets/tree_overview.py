@@ -110,7 +110,7 @@ class tree_overview(base_subcomponent, QtGui.QTreeWidget):
 		"""
 
 		target_treeitem = self.currentItem()
-		if target_treeitem != None:
+		if target_treeitem is not None:
 			target_treeitem.copy()
 
 	def paste_item(self):
@@ -122,7 +122,7 @@ class tree_overview(base_subcomponent, QtGui.QTreeWidget):
 		"""
 
 		target_treeitem = self.currentItem()
-		if target_treeitem != None:
+		if target_treeitem is not None:
 			target_treeitem.paste()
 
 	def delete_item(self):
@@ -134,7 +134,7 @@ class tree_overview(base_subcomponent, QtGui.QTreeWidget):
 		"""
 
 		target_treeitem = self.currentItem()
-		if target_treeitem != None:
+		if target_treeitem is not None:
 			target_treeitem.delete()
 
 	def permanently_delete_item(self):
@@ -146,7 +146,7 @@ class tree_overview(base_subcomponent, QtGui.QTreeWidget):
 		"""
 
 		target_treeitem = self.currentItem()
-		if target_treeitem != None:
+		if target_treeitem is not None:
 			target_treeitem.permanently_delete()
 
 	def create_linked_copy(self):
@@ -158,7 +158,7 @@ class tree_overview(base_subcomponent, QtGui.QTreeWidget):
 		"""
 
 		target_treeitem = self.currentItem()
-		if target_treeitem != None:
+		if target_treeitem is not None:
 			target_treeitem.create_linked_copy()
 
 	def create_unlinked_copy(self):
@@ -170,7 +170,7 @@ class tree_overview(base_subcomponent, QtGui.QTreeWidget):
 		"""
 
 		target_treeitem = self.currentItem()
-		if target_treeitem != None:
+		if target_treeitem is not None:
 			target_treeitem.create_unlinked_copy()
 
 	def select_item(self, name):
@@ -211,7 +211,7 @@ class tree_overview(base_subcomponent, QtGui.QTreeWidget):
 				from_name = treeitem.name
 				to_name = str(treeitem.text(0))
 				to_name = self.experiment.items.rename(from_name, to_name)
-				if to_name == None:
+				if to_name is None:
 					self.itemChanged.disconnect()
 					treeitem.setText(0, from_name)
 					self.itemChanged.connect(self.text_edited)
@@ -255,7 +255,7 @@ class tree_overview(base_subcomponent, QtGui.QTreeWidget):
 			return
 		# Get item and open tab.
 		target_treeitem = self.itemAt(e.pos())
-		if target_treeitem == None:
+		if target_treeitem is None:
 			return
 		if self.overview_mode:
 			target_treeitem.open_tab()
@@ -281,7 +281,7 @@ class tree_overview(base_subcomponent, QtGui.QTreeWidget):
 		# Drags are not started right away, but only after the mouse has been
 		# pressed for a minimum interval. To accomplish this, we set a timer,
 		# and cancel the timer when the mouse cursor is released.
-		if self.drag_timer != None:
+		if self.drag_timer is not None:
 			self.drag_timer.stop()
 		self.pending_drag_data = data
 		self.drag_timer = QtCore.QTimer()
@@ -297,7 +297,7 @@ class tree_overview(base_subcomponent, QtGui.QTreeWidget):
 			Starts a pending drag operation (if any).
 		"""
 
-		if self.pending_drag_data == None:
+		if self.pending_drag_data is None:
 			return
 		drag_and_drop.send(self, self.pending_drag_data)
 		self.pending_drag_data = None
@@ -361,7 +361,7 @@ class tree_overview(base_subcomponent, QtGui.QTreeWidget):
 			type:	bool
 		"""
 
-		return treeitem != None and treeitem.droppable(data)
+		return treeitem is not None and treeitem.droppable(data)
 
 	def draggable(self, treeitem):
 
@@ -379,7 +379,7 @@ class tree_overview(base_subcomponent, QtGui.QTreeWidget):
 			type:	bool
 		"""
 
-		return treeitem != None and treeitem.draggable()
+		return treeitem is not None and treeitem.draggable()
 
 	def drop_event_item_move(self, data, e):
 
@@ -410,7 +410,7 @@ class tree_overview(base_subcomponent, QtGui.QTreeWidget):
 			e.ignore()
 			return
 		parent_item_name, index = self.parent_from_ancestry(data[u'ancestry'])
-		if parent_item_name == None:
+		if parent_item_name is None:
 			debug.msg(u'Drop ignored: no parent')
 			e.ignore()
 			return
@@ -445,15 +445,15 @@ class tree_overview(base_subcomponent, QtGui.QTreeWidget):
 
 		self.main_window.set_busy(True)
 		if not drag_and_drop.matches(data, [u'item-existing', u'item-new']):
-			if e != None:
+			if e is not None:
 				e.ignore()
 			self.main_window.set_busy(False)
 			return
 		# Ignore drops on non-droppable tree items.
-		if target_treeitem == None:
+		if target_treeitem is None:
 			target_treeitem = self.itemAt(e.pos())
 		if not self.droppable(target_treeitem, data):
-			if e != None:
+			if e is not None:
 				e.ignore()
 			self.main_window.set_busy(False)
 			return
@@ -462,7 +462,7 @@ class tree_overview(base_subcomponent, QtGui.QTreeWidget):
 		target_item_name = str(target_treeitem.text(0))
 		if target_item_name not in self.experiment.items:
 			debug.msg(u'Don\'t know how to drop on %s' % target_item_name)
-			if e != None:
+			if e is not None:
 				e.ignore()
 			self.structure_change.emit()
 			self.main_window.set_busy(False)
@@ -495,7 +495,7 @@ class tree_overview(base_subcomponent, QtGui.QTreeWidget):
 		inserted = False
 		# If the item has no parent or if it is the experiment starting point,
 		# we insert into it directly.
-		if target_treeitem.parent() == None or \
+		if target_treeitem.parent() is None or \
 			target_item.name == self.experiment.start:
 			target_item.insert_child_item(item.name)
 			inserted = True
@@ -513,7 +513,7 @@ class tree_overview(base_subcomponent, QtGui.QTreeWidget):
 					(1, _('Insert after %s' % target_item.name), 'list-add')
 					]).show()
 				# If the popup was cancelled
-				if resp == None:
+				if resp is None:
 					e.accept()
 					del self.experiment.items[item.name]
 					self.main_window.set_busy(False)
@@ -535,7 +535,7 @@ class tree_overview(base_subcomponent, QtGui.QTreeWidget):
 					# coordinates.
 					target_treeitem = self.itemAt(e.pos())
 					parent_treeitem = target_treeitem.parent()
-				if parent_treeitem == None:
+				if parent_treeitem is None:
 					e.accept()
 					del self.experiment.items[item.name]
 					self.main_window.set_busy(False)
@@ -547,7 +547,7 @@ class tree_overview(base_subcomponent, QtGui.QTreeWidget):
 				target_treeitem = parent_treeitem
 			index = parent_treeitem.indexOfChild(target_treeitem)+1
 			parent_item.insert_child_item(item.name, index=index)
-		if e != None:
+		if e is not None:
 			e.accept()
 		self.structure_change.emit()
 		if self.overview_mode:
@@ -634,7 +634,7 @@ class tree_overview(base_subcomponent, QtGui.QTreeWidget):
 		"""
 
 		item = self.itemAt(e.pos())
-		if item != None:
+		if item is not None:
 			item.show_context_menu(e.globalPos())
 
 	def keyPressEvent(self, e):
@@ -646,7 +646,7 @@ class tree_overview(base_subcomponent, QtGui.QTreeWidget):
 		e -- a QKeyEvent
 		"""
 
-		if self.currentItem() == None:
+		if self.currentItem() is None:
 			return
 		super(tree_overview, self).keyPressEvent(e)
 		if e.key() in [QtCore.Qt.Key_Up, QtCore.Qt.Key_Down,
@@ -734,9 +734,9 @@ class tree_overview(base_subcomponent, QtGui.QTreeWidget):
 		if self.overview_mode:
 			return
 		target_treeitem = self.currentItem()
-		if target_treeitem == None:
+		if target_treeitem is None:
 			return
-		if target_treeitem.parent() == None:
+		if target_treeitem.parent() is None:
 			# The top-level item is the sequence itself, which doesn't have a
 			# run-if statement.
 			return
@@ -750,5 +750,5 @@ class tree_overview(base_subcomponent, QtGui.QTreeWidget):
 		"""
 
 		target_treeitem = self.currentItem()
-		if target_treeitem != None:
+		if target_treeitem is not None:
 			self.editItem(target_treeitem, 0)

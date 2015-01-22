@@ -227,7 +227,7 @@ class qtopensesame(QtGui.QMainWindow, base_component):
 			except:
 				ttf = None
 				debug.msg(u'failed to find %s' % font)
-			if ttf != None:
+			if ttf is not None:
 				debug.msg(u'registering %s (%s)' % (font, ttf))
 				id = QtGui.QFontDatabase.addApplicationFont(ttf)
 				family = QtGui.QFontDatabase.applicationFontFamilies(id)[0]
@@ -461,7 +461,7 @@ class qtopensesame(QtGui.QMainWindow, base_component):
 					(default=None)
 		"""
 
-		if msg != None:
+		if msg is not None:
 			self.window_msg = msg
 			if os.name == u'nt':
 				self.window_msg = self.window_msg.replace(u'/', u'\\')
@@ -494,7 +494,7 @@ class qtopensesame(QtGui.QMainWindow, base_component):
 		"""
 
 		w = self.ui.tabwidget.get_widget(u'__preferences__')
-		if w != None:
+		if w is not None:
 			w.set_controls()
 
 	def show_text_in_toolbar(self):
@@ -551,7 +551,7 @@ class qtopensesame(QtGui.QMainWindow, base_component):
 						pool (default = None)
 		"""
 
-		if make_visible != None:
+		if make_visible is not None:
 			self.ui.action_show_pool.setChecked(make_visible)
 		if not self.ui.action_show_pool.isChecked():
 			self.ui.dock_pool.setVisible(False)
@@ -613,7 +613,7 @@ class qtopensesame(QtGui.QMainWindow, base_component):
 		from libqtopensesame.actions import recent_action
 
 		# Add the current path to the front of the list
-		if self.current_path != None and os.path.exists(self.current_path):
+		if self.current_path is not None and os.path.exists(self.current_path):
 			if self.current_path in self.recent_files:
 				self.recent_files.remove(self.current_path)
 			self.recent_files.insert(0, self.current_path)
@@ -654,11 +654,11 @@ class qtopensesame(QtGui.QMainWindow, base_component):
 		if not self.save_unsaved_changes():
 			self.ui.tabwidget.open_general()
 			return
-		if path == None:
+		if path is None:
 			path = str(QtGui.QFileDialog.getOpenFileName(
 				self.ui.centralwidget, _(u"Open file"),
 				filter=self.file_type_filter, directory=cfg.file_dialog_path))
-		if path == None or path == u'' or (not path.lower().endswith(
+		if path is None or path == u'' or (not path.lower().endswith(
 			u'.opensesame') and not path.lower().endswith(
 			u'.opensesame.tar.gz')):
 			return
@@ -705,7 +705,7 @@ class qtopensesame(QtGui.QMainWindow, base_component):
 				 displayed in a notification (default=True)
 		"""
 
-		if self.current_path == None:
+		if self.current_path is None:
 			self.save_file_as()
 			return
 		self.extension_manager.fire(u'save_experiment', path=self.current_path)
@@ -743,7 +743,7 @@ class qtopensesame(QtGui.QMainWindow, base_component):
 
 		"""Save the current experiment after asking for a file name"""
 
-		if self.current_path == None:
+		if self.current_path is None:
 			cfg.file_dialog_path = os.path.join(self.home_folder, \
 				self.experiment.sanitize(self.experiment.title, strict=True, \
 				allow_vars=False))
@@ -759,7 +759,7 @@ class qtopensesame(QtGui.QMainWindow, base_component):
 			self.ui.centralwidget, _(u'Save file as ...'),
 			directory=cfg.file_dialog_path,
 			filter=self.file_type_filter, initialFilter=default_filter)
-		if path != None and path != u"":
+		if path is not None and path != u"":
 			path = str(path)
 			cfg.file_dialog_path = os.path.dirname(path)
 			# If the extension has not been explicitly typed in, set it based
@@ -845,7 +845,7 @@ class qtopensesame(QtGui.QMainWindow, base_component):
 		"""
 
 		from libqtopensesame.widgets import pool_widget
-		if parent == None:
+		if parent is None:
 			parent = self
 		_file = pool_widget.select_from_pool(self, parent=parent)
 		if _file == u'':

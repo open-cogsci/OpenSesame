@@ -76,6 +76,6 @@ class popup_menu(QtGui.QMenu, base_subcomponent):
 		"""
 
 		action = self.exec_(QtGui.QCursor.pos())
-		if action == None:
+		if action is None:
 			return None
 		return action._id

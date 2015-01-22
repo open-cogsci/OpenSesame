@@ -47,22 +47,22 @@ class legacy(basejoystick):
 
 		"""See _libjoystick.basejoystick"""
 
-		if joybuttonlist == None or joybuttonlist == []:
+		if joybuttonlist is None or joybuttonlist == []:
 			joybuttonlist = self._joybuttonlist
-		if timeout == None:
+		if timeout is None:
 			timeout = self.timeout
 
 		start_time = pygame.time.get_ticks()
 		time = start_time
 
-		while timeout == None or time - start_time <= timeout:
+		while timeout is None or time - start_time <= timeout:
 			time = pygame.time.get_ticks()
 			for event in pygame.event.get():
 				if event.type == KEYDOWN:
 					if event.key == pygame.K_ESCAPE:
 						raise osexception(u"The escape key was pressed.")
 				if event.type == JOYBUTTONDOWN:
-					if joybuttonlist == None or event.button + 1 in \
+					if joybuttonlist is None or event.button + 1 in \
 						joybuttonlist:
 						bpress = event.button + 1
 						return bpress, time
@@ -73,14 +73,14 @@ class legacy(basejoystick):
 
 		"""See _libjoystick.basejoystick"""
 
-		if timeout == None:
+		if timeout is None:
 			timeout = self.timeout
 
 		pos = []
 		start_time = pygame.time.get_ticks()
 		time = start_time
 
-		while timeout == None or time - start_time < timeout:
+		while timeout is None or time - start_time < timeout:
 			time = pygame.time.get_ticks()
 			for event in pygame.event.get():
 				if event.type == KEYDOWN:
@@ -97,14 +97,14 @@ class legacy(basejoystick):
 
 		"""See _libjoystick.basejoystick"""
 
-		if timeout == None:
+		if timeout is None:
 			timeout = self.timeout
 
 		ballpos = []
 		start_time = pygame.time.get_ticks()
 		time = start_time
 
-		while timeout == None or time - start_time < timeout:
+		while timeout is None or time - start_time < timeout:
 			time = pygame.time.get_ticks()
 			for event in pygame.event.get():
 				if event.type == KEYDOWN:
@@ -121,14 +121,14 @@ class legacy(basejoystick):
 
 		"""See _libjoystick.basejoystick"""
 
-		if timeout == None:
+		if timeout is None:
 			timeout = self.timeout
 
 		hatpos = []
 		start_time = pygame.time.get_ticks()
 		time = start_time
 
-		while timeout == None or time - start_time < timeout:
+		while timeout is None or time - start_time < timeout:
 			time = pygame.time.get_ticks()
 			for event in pygame.event.get():
 				if event.type == KEYDOWN:
@@ -145,9 +145,9 @@ class legacy(basejoystick):
 
 		"""See _libjoystick.basejoystick"""
 
-		if joybuttonlist == None or joybuttonlist == []:
+		if joybuttonlist is None or joybuttonlist == []:
 			joybuttonlist = self._joybuttonlist
-		if timeout == None:
+		if timeout is None:
 			timeout = self.timeout
 
 		pos = []
@@ -157,14 +157,14 @@ class legacy(basejoystick):
 		start_time = pygame.time.get_ticks()
 		time = start_time
 
-		while timeout == None or time - start_time <= timeout:
+		while timeout is None or time - start_time <= timeout:
 			time = pygame.time.get_ticks()
 			for event in pygame.event.get():
 				if event.type == KEYDOWN:
 					if event.key == pygame.K_ESCAPE:
 						raise osexception(u"The escape key was pressed.")
 				if event.type == JOYBUTTONDOWN:
-					if joybuttonlist == None or event.button + 1 in \
+					if joybuttonlist is None or event.button + 1 in \
 						joybuttonlist:
 						eventtype = u'joybuttonpress'
 						bpress = event.button + 1

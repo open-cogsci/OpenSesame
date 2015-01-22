@@ -35,7 +35,7 @@ class ellipse(base_rect_ellipse, ellipse_runtime):
 	@classmethod
 	def mouse_press(cls, sketchpad, pos):
 
-		if cls.pos_start != None:
+		if cls.pos_start is not None:
 			return
 		cls.pos_start = pos
 		xc = sketchpad.canvas.xcenter()

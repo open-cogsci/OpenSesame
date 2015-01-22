@@ -66,7 +66,7 @@ class preferences_widget(base_widget):
 					% ext.name())
 				self.console.write(e)
 				continue
-			if w != None:
+			if w is not None:
 				self.ui.layout_preferences.addWidget(w)
 		self.ui.container_widget.adjustSize()
 

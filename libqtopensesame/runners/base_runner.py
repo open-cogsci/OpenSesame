@@ -185,11 +185,11 @@ class base_runner(object):
 			return False
 		# Get and set the subject number
 		subject_nr = self.get_subject_nr(quick=quick)
-		if subject_nr == None:
+		if subject_nr is None:
 			return False
 		# Get and set the logfile
 		logfile = self.get_logfile(quick=quick, subject_nr=subject_nr)
-		if logfile == None:
+		if logfile is None:
 			return False
 		# Build a new experiment. This can trigger a script error.
 		try:
@@ -258,7 +258,7 @@ class base_runner(object):
 			auto_response=auto_response):
 			return
 		ret_val = self.execute()
-		if ret_val != None:
+		if ret_val is not None:
 			self.on_exception(ret_val)
 		elif not quick:
 			self.on_success(quick=quick)

@@ -48,7 +48,7 @@ define inline_script search_display
 		
 		# Wait for a keypress
 		key, time = kb.get_key(timeout = 80)	
-		if key != None:
+		if key is not None:
 			break
 		
 		# Show the mask
@@ -56,10 +56,10 @@ define inline_script search_display
 		
 		# Wait for the keypress
 		key, time = kb.get_key(timeout = 20)	
-		if key != None:
+		if key is not None:
 			break
 		
-	if key != None:
+	if key is not None:
 	
 		# If a key was pressed, determine the response, response_time and correct variables
 		response_time = time - start_time
@@ -99,7 +99,7 @@ define inline_script search_display
 		random.seed()
 			
 		d = None
-		while d == None or d < margin:
+		while d is None or d < margin:
 			x = random.randint(margin, self.get("width") - margin)
 			y = random.randint(margin, self.get("height") - margin)			
 			if len(pos_list) == 0:

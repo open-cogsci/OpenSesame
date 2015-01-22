@@ -81,7 +81,7 @@ class basejoystick(object):
 				type:	[list, NoneType]
 		"""
 
-		if joybuttonlist == None or joybuttonlist == []:
+		if joybuttonlist is None or joybuttonlist == []:
 			self._joybuttonlist = None
 		else:
 			self._joybuttonlist = []

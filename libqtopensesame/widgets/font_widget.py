@@ -114,21 +114,21 @@ class font_widget_base(base_widget):
 						(default=None)
 		"""
 
-		if experiment == None:
+		if experiment is None:
 			experiment = self.experiment
-		if family == None:
+		if family is None:
 			self.family = experiment.get(u'font_family')
 		else:
 			self.family = family
-		if italic == None:
+		if italic is None:
 			self.italic = experiment.get(u'font_italic') == u'yes'
 		else:
 			self.italic = italic
-		if bold == None:
+		if bold is None:
 			self.bold = experiment.get(u'font_bold') == u'yes'
 		else:
 			self.bold = bold
-		if size == None:
+		if size is None:
 			self.size = experiment.get(u'font_size')
 		else:
 			self.size = size

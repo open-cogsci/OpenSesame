@@ -108,7 +108,7 @@ class label(widget):
 				type:	bool
 		"""
 
-		if self.form.item != None:
+		if self.form.item is not None:
 			text = self.form.item.eval_text(text)
 		else:
 			text = self.form.experiment.eval_text(text)

@@ -218,7 +218,7 @@ class tab_widget(base_subcomponent, QtGui.QTabWidget):
 		"""
 
 		i = self.get_index(tab_name)
-		if i == None:
+		if i is None:
 			return None
 		return self.widget(i)
 
@@ -362,7 +362,7 @@ class tab_widget(base_subcomponent, QtGui.QTabWidget):
 		"""
 
 		i = self.get_index(tab_name)
-		if i == None:
+		if i is None:
 			return False
 		self.setCurrentIndex(i)
 		return True

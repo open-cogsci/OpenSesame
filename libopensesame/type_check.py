@@ -47,10 +47,10 @@ def float_list(l, desc, min_len=None, max_len=None):
 		raise osexception( \
 			u'Expecting a list or compatible type not "%s" for "%s"' % (l, \
 				desc))
-	if min_len != None and len(l) < min_len:
+	if min_len is not None and len(l) < min_len:
 		raise osexception( \
 			u'Expecting a list of at least %d items for "%s"' % (min_len, desc))
-	if max_len != None and len(l) > max_len:
+	if max_len is not None and len(l) > max_len:
 		raise osexception( \
 			u'Expecting a list of at most %d items for "%s"' % (max_len, desc))
 	return l

@@ -47,19 +47,19 @@ class droid(legacy.legacy):
 		
 	def get_click(self, buttonlist=None, timeout=None, visible=None):
 	
-		if android == None:
+		if android is None:
 			pygame.mouse.set_visible(True)
-		if buttonlist == None:
+		if buttonlist is None:
 			buttonlist = self.buttonlist
-		if timeout == None:
+		if timeout is None:
 			timeout = self.timeout
-		if visible == None:
+		if visible is None:
 			visible = self.visible
 		enable_escape = self.experiment.get_check(u'enable_escape', u'no', \
 			[u'yes', u'no']) == u'yes'
 		start_time = pygame.time.get_ticks()
 		time = start_time		
-		while timeout == None or time - start_time < timeout:
+		while timeout is None or time - start_time < timeout:
 			time = pygame.time.get_ticks()
 			# Process the input
 			for event in pygame.event.get():
@@ -79,10 +79,10 @@ class droid(legacy.legacy):
 										u'width')-64 and event.pos[1] < 64:
 										raise osexception( \
 											u"The escape sequence was clicked/ tapped")
-					if buttonlist == None or event.button in buttonlist:
+					if buttonlist is None or event.button in buttonlist:
 						return event.button, event.pos, time
 			# Allow Android interrupt
-			if android != None and android.check_pause():
+			if android is not None and android.check_pause():
 				android.wait_for_resume()
 		return None, None, time
 

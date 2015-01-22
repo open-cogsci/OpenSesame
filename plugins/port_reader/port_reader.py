@@ -69,7 +69,7 @@ class port_reader(item.item, generic_response.generic_response):
 			time = self.time()
 			if val != self.resting_value:
 				break
-			if self._timeout != None and time - self.sri > self._timeout:
+			if self._timeout is not None and time - self.sri > self._timeout:
 				val = "timeout"
 				break
 		return val, time

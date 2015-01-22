@@ -96,7 +96,7 @@ class tree_inline_script_phase_item(tree_base_item):
 		"""
 
 		treewidget = self.treeWidget()
-		if treewidget == None:
+		if treewidget is None:
 			return [self]
 		l = treewidget.findItems(self.inline_script.name,
 			QtCore.Qt.MatchFixedString|QtCore.Qt.MatchRecursive, 0)

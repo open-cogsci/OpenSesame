@@ -207,13 +207,13 @@ define inline_script search_display
 	my_mouse = mouse(exp, timeout=5000)
 	t1 = self.my_canvas.show()
 	button, pos, t2 = my_mouse.get_click()
-	if pos == None:
+	if pos is None:
 		click_x, click_y = 0, 0 # Timeout
 	else:
 		click_x, click_y = pos
 	
 	correct = 0
-	if pos != None:
+	if pos is not None:
 		d = sqrt((self.get('target_x')-click_x)**2 + (self.get('target_y')-click_y)**2)
 		if d < 100:
 			correct = 1

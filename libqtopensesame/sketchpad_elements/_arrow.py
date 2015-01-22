@@ -33,7 +33,7 @@ class arrow(base_line_arrow, arrow_runtime):
 	@classmethod
 	def mouse_release(cls, sketchpad, pos):
 
-		if cls.pos_start == None:
+		if cls.pos_start is None:
 			return
 		dx = pos[0] - cls.pos_start[0]
 		dy = pos[1] - cls.pos_start[1]

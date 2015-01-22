@@ -102,7 +102,7 @@ class quick_switcher(base_dialog):
 				continue
 			_path_to_action = path_to_action + [text]
 			menu = action.menu()
-			if menu == None:
+			if menu is None:
 				l.append(quick_open_element_action(self, action,
 					_path_to_action))
 			else:
@@ -147,7 +147,7 @@ class quick_switcher(base_dialog):
 			elif not match and not list_widget_item.isHidden():
 				list_widget_item.setHidden(True)
 		i = self.first_index()
-		if i != None:
+		if i is not None:
 			self.ui.items_list_widget.setCurrentRow(i)
 
 	def first_item(self):
@@ -196,9 +196,9 @@ class quick_switcher(base_dialog):
 				the list.
 		"""
 
-		if list_widget_item == None:
+		if list_widget_item is None:
 			list_widget_item = self.first_item()
-		if list_widget_item == None or list_widget_item.isHidden():
+		if list_widget_item is None or list_widget_item.isHidden():
 			self.accept()
 			return
 		element = self.ui.items_list_widget.itemWidget(list_widget_item)

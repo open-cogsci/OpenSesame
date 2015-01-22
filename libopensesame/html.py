@@ -150,7 +150,7 @@ class html(HTMLParser):
 		text = canvas.experiment.unistr(text)
 		debug.msg(text)
 		# Parse bi-directional strings
-		if bidi and bidi_func != None:
+		if bidi and bidi_func is not None:
 			text = bidi_func(text)
 		# Convert line breaks to HTML break tags
 		text = text.replace(os.linesep, u'<br />').replace(u'\n', u'<br />')
@@ -168,11 +168,11 @@ class html(HTMLParser):
 		backup_style = self.default_style.copy()
 
 		# Optionally override color
-		if color != None:
+		if color is not None:
 			self.default_style[u'color'] = color
 
 		# Set the maximum width
-		if max_width == None:
+		if max_width is None:
 			max_x = canvas.experiment.width
 		else:
 			if center:

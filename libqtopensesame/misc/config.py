@@ -247,7 +247,7 @@ class config(object):
 		args -- the string of command line arguments
 		"""
 
-		if args == None:
+		if args is None:
 			return
 		for arg in args.split(u";"):
 			a = arg.split(u"=")

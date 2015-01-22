@@ -60,7 +60,7 @@ class external_script(item.item):
 		# Pass the word on to the parent
 		item.item.prepare(self)
 		
-		if self.module == None:
+		if self.module is None:
 			try:
 				self.module = imp.load_source("file", os.path.join( \
 					self.experiment.pool_folder, self.file))

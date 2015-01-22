@@ -96,7 +96,7 @@ class sequence(qtstructure_item, qtplugin, sequence_runtime):
 
 		"""See qtitem."""
 
-		if item_parent == None or (item_parent == self.name and index == None):
+		if item_parent is None or (item_parent == self.name and index is None):
 			redo = True
 			while redo:
 				redo = False
@@ -105,7 +105,7 @@ class sequence(qtstructure_item, qtplugin, sequence_runtime):
 						self.items = self.items[:i]+self.items[i+1:]
 						redo = True
 						break
-		elif item_parent == self.name and index != None:
+		elif item_parent == self.name and index is not None:
 			if self.items[index][0] == item_name:
 				self.items = self.items[:index]+self.items[index+1:]
 
@@ -121,7 +121,7 @@ class sequence(qtstructure_item, qtplugin, sequence_runtime):
 				if item in self.experiment.items:
 					self.experiment.items[item].build_item_tree(widget, items,
 						max_depth=max_depth-1, extra_info=cond)
-		if toplevel != None:
+		if toplevel is not None:
 			toplevel.addChild(widget)
 		else:
 			widget.set_draggable(False)

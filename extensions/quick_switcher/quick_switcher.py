@@ -66,6 +66,6 @@ class quick_switcher(base_extension):
 			Pops up the quick-switcher dialog.
 		"""
 
-		if not hasattr(self, u'd') or self.d == None:
+		if not hasattr(self, u'd') or self.d is None:
 			self.init_dialog()
 		self.d.exec_()

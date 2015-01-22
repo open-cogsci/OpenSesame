@@ -67,7 +67,7 @@ class parallel(sequence.sequence):
 		"""
 			
 		# Optionally flush the responses to catch escape presses
-		if self._keyboard != None:
+		if self._keyboard is not None:
 			self._keyboard.flush()
 			
 		# Do nothing if there are no items
@@ -93,7 +93,7 @@ class parallel(sequence.sequence):
 			t.start()
 			
 		# Run the main item
-		if main_item != None:
+		if main_item is not None:
 			self.launch_time = self.time()
 			main_item.run()
 					
@@ -103,7 +103,7 @@ class parallel(sequence.sequence):
 			for t in tl:
 				if t.is_alive():
 					alive = True
-				if t.exception != None:
+				if t.exception is not None:
 					raise t.exception
 			if alive:
 				self.sleep(100)

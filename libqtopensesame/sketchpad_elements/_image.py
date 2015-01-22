@@ -35,7 +35,7 @@ class image(base_element, image_runtime):
 
 		_file = sketchpad.main_window.select_from_pool(
 			parent=sketchpad._edit_widget)
-		if _file == None:
+		if _file is None:
 			return None
 		properties = {
 			u'x':		pos[0],

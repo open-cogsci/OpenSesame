@@ -54,14 +54,14 @@ class item_context_menu(base_subcomponent, QtGui.QMenu):
 		self.addSeparator()
 		self.add_action(u"accessories-text-editor", _("Rename"),
 			self.treeitem.start_rename, cfg.shortcut_rename)
-		if not self.treewidget.overview_mode and self.treeitem.parent() != None:
+		if not self.treewidget.overview_mode and self.treeitem.parent() is not None:
 			self.add_action(u"accessories-text-editor",
 				_("Edit run-if statement"),
 				self.treeitem.start_edit_runif, cfg.shortcut_edit_runif)
 		self.addSeparator()
 		self.add_action(u"edit-copy", _("Copy to clipboard"),
 			self.treeitem.copy, cfg.shortcut_copy_clipboard)
-		if self.treeitem.clipboard_data() != None:
+		if self.treeitem.clipboard_data() is not None:
 			self.add_action(u"edit-paste", _("Paste from clipboard"),
 				self.treeitem.paste, cfg.shortcut_paste_clipboard)
 		if self.treeitem.is_cloneable():
@@ -100,7 +100,7 @@ class item_context_menu(base_subcomponent, QtGui.QMenu):
 		"""
 
 		action = self.addAction(self.experiment.icon(icon), text, func)
-		if shortcut != None:
+		if shortcut is not None:
 			action.setShortcut(QtGui.QKeySequence(shortcut))
 			action.setShortcutContext(QtCore.Qt.WidgetShortcut)
 		return action

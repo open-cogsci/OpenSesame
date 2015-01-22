@@ -29,7 +29,7 @@ class base_rect_ellipse(base_element):
 	@classmethod
 	def mouse_release(cls, sketchpad, pos):
 
-		if cls.pos_start == None:
+		if cls.pos_start is None:
 			return
 		w = pos[0]-cls.pos_start[0]
 		h = pos[1]-cls.pos_start[1]
@@ -56,7 +56,7 @@ class base_rect_ellipse(base_element):
 	@classmethod
 	def mouse_move(cls, sketchpad, pos):
 
-		if cls.pos_start == None:
+		if cls.pos_start is None:
 			return
 		xc = sketchpad.canvas.xcenter()
 		yc = sketchpad.canvas.ycenter()

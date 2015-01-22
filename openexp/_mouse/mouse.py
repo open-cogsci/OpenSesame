@@ -51,7 +51,7 @@ class mouse(object):
 		my_canvas = canvas(exp)
 		while True:
 			button, position, timestamp = my_mouse.get_click(timeout=20)
-			if button != None:
+			if button is not None:
 				break
 			pos, time = my_mouse.get_pos()
 			my_canvas.clear()
@@ -132,7 +132,7 @@ class mouse(object):
 			my_mouse.set_buttonlist( [1,2] )
 		"""
 
-		if buttonlist == None:
+		if buttonlist is None:
 			self.buttonlist = None
 		else:
 			self.buttonlist = []
@@ -227,7 +227,7 @@ class mouse(object):
 			from openexp.mouse import mouse
 			my_mouse = mouse(exp)
 			button, position, timestamp = my_mouse.get_click()
-			if button == None:
+			if button is None:
 				print('A timeout occurred!')
 		"""
 

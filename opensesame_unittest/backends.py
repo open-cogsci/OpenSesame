@@ -57,7 +57,7 @@ class check_backend_argspec(unittest.TestCase):
 		# Loop through all functions
 		for name, ref_obj in ref_cls.__dict__.items():
 			ref_df = yamldoc.DocFactory(ref_obj, types=[u'function'])
-			if ref_df == None:
+			if ref_df is None:
 				continue
 			chk_obj = getattr(chk_cls, name)
 			chk_df = yamldoc.DocFactory(chk_obj, types=[u'function'])

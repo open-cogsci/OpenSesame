@@ -100,7 +100,7 @@ class feedpad(object):
 				type:	base_element
 		"""
 
-		if element == None:
+		if element is None:
 			return
 		self.elements.append(element)
 		self.draw()

@@ -52,7 +52,7 @@ class form_text_render(form_base.form_base):
 		string -- a definition string
 		"""
 
-		if string == None or string.strip() == u'':
+		if string is None or string.strip() == u'':
 			string = default_script
 		super(form_text_render, self).__init__(name, experiment, string, \
 			item_type='form_text_render', description= \

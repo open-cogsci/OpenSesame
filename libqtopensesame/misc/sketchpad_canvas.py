@@ -113,7 +113,7 @@ class sketchpad_canvas(QtGui.QGraphicsScene):
 			return
 		# Select the pointed-at element
 		element = self.element_at(e.scenePos())
-		if element == None:
+		if element is None:
 			return
 		element.show_edit_dialog()
 
@@ -144,17 +144,17 @@ class sketchpad_canvas(QtGui.QGraphicsScene):
 			for element in self.sketchpad.elements:
 				element.select(False)
 		element = self.element_at(e.scenePos())
-		if QtCore.Qt.RightButton & e.button() and element != None:
+		if QtCore.Qt.RightButton & e.button() and element is not None:
 			# The right buttons pops up a context menu.
 			element.show_context_menu(e.screenPos())
 		if QtCore.Qt.LeftButton & e.button():
 			# The left button selects and drags.
-			if self.selected_element_tool != None:
+			if self.selected_element_tool is not None:
 				# When in pointer-tool mode, mouse clicks create new elements.
 				self.sketchpad.add_element(
 					self.selected_element_tool.mouse_press(self.sketchpad,
 					self.cursor_pos(e)))
-			elif element == None:
+			elif element is None:
 				self.sketchpad.select_pointer_tool()
 			else:
 				element.select()
@@ -180,7 +180,7 @@ class sketchpad_canvas(QtGui.QGraphicsScene):
 				type:	QMouseEvent
 		"""
 
-		if self.selected_element_tool != None:
+		if self.selected_element_tool is not None:
 			self.sketchpad.add_element(
 				self.selected_element_tool.mouse_release(self.sketchpad,
 				self.cursor_pos(e)))
@@ -202,9 +202,9 @@ class sketchpad_canvas(QtGui.QGraphicsScene):
 		for element in self.sketchpad.elements:
 			element.highlight(False)
 		# Only highlight elements if the pointer tool is selected
-		if self.selected_element_tool == None:
+		if self.selected_element_tool is None:
 			element = self.element_at(e.scenePos())
-			if element != None:
+			if element is not None:
 				element.highlight()
 		else:
 			self.selected_element_tool.mouse_move(self.sketchpad, cursor_pos)
@@ -255,16 +255,16 @@ class sketchpad_canvas(QtGui.QGraphicsScene):
 		# First try to see if there's an exact position match ...
 		graphics_item = self.itemAt(pos)
 		# ... if not, try if there's an element that encompasses the position.
-		if graphics_item == None:
+		if graphics_item is None:
 			for item in self.items():
 				if item.boundingRect().contains(pos):
 					graphics_item = item
 		# ... else don't find an element.
-		if graphics_item == None:
+		if graphics_item is None:
 			return None
 		# If the item is part of a group, we want the group, not the invdividual
 		# item, because the group has the element property.
-		if graphics_item.group() != None:
+		if graphics_item.group() is not None:
 			graphics_item = graphics_item.group()
 		return graphics_item.element
 

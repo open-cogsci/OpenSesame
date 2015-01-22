@@ -60,11 +60,11 @@ class psycho(mouse.mouse):
 		
 	def get_click(self, buttonlist=None, timeout=None, visible=None):
 	
-		if buttonlist == None:
+		if buttonlist is None:
 			buttonlist = self.buttonlist
-		if timeout == None:
+		if timeout is None:
 			timeout = self.timeout
-		if visible == None:
+		if visible is None:
 			visible = self.visible
 		self.mouse.setVisible(visible)
 		start_time = 1000.0 * self.experiment.clock.getTime()
@@ -75,21 +75,21 @@ class psycho(mouse.mouse):
 		while True:
 			time = 1000.0 * self.experiment.clock.getTime()			
 			buttons, times = self.mouse.getPressed(getTime=True)
-			if buttons[0] and (buttonlist == None or 1 in buttonlist):
+			if buttons[0] and (buttonlist is None or 1 in buttonlist):
 				button = 1
 				pos = self.mouse.getPos()
 				break
-			if buttons[1] and (buttonlist == None or 2 in buttonlist):
+			if buttons[1] and (buttonlist is None or 2 in buttonlist):
 				button = 2
 				pos = self.mouse.getPos()
 				break
-			if buttons[2] and (buttonlist == None or 3 in buttonlist):
+			if buttons[2] and (buttonlist is None or 3 in buttonlist):
 				button = 3
 				pos = self.mouse.getPos()
 				break
-			if timeout != None and time-start_time >= timeout:
+			if timeout is not None and time-start_time >= timeout:
 				break
-		if pos != None:
+		if pos is not None:
 			pos = pos[0]+self.experiment.width/2, \
 				self.experiment.height/2-pos[1]
 		self.mouse.setVisible(self.visible)

@@ -83,12 +83,12 @@ class psycho(keyboard.keyboard):
 
 	def get_key(self, keylist=None, timeout=None):
 
-		if keylist == None:
+		if keylist is None:
 			keylist = self._keylist
-		if timeout == None:
+		if timeout is None:
 			timeout = self.timeout
 
-		if keylist == None:
+		if keylist is None:
 			_keylist = None
 		else:
 			_keylist = keylist + ["escape"]
@@ -103,9 +103,9 @@ class psycho(keyboard.keyboard):
 				time *= 1000.0
 				if key == "escape":
 					raise osexception("The escape key was pressed.")
-				elif keylist == None or key in keylist:
+				elif keylist is None or key in keylist:
 					return key, time
-			if timeout != None and time-start_time >= timeout:
+			if timeout is not None and time-start_time >= timeout:
 				break
 
 		return None, time

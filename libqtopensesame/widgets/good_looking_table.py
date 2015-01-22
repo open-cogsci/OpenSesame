@@ -43,7 +43,7 @@ class good_looking_table(QtGui.QTableWidget):
 		self.clipboard = QtGui.QApplication.clipboard
 		self.build_context_menu(icons)
 		# If there is only one parameter, this is the parent
-		if columns == None:
+		if columns is None:
 			QtGui.QTableWidget.__init__(self, rows)
 		else:
 			QtGui.QTableWidget.__init__(self, rows, columns, parent)
@@ -133,7 +133,7 @@ class good_looking_table(QtGui.QTableWidget):
 			columns = []
 			for column in range(_range.leftColumn(), _range.rightColumn()+1):
 				item = self.item(row, column)
-				if item != None:
+				if item is not None:
 					value = str(item.text())
 				else:
 					value = u''
@@ -171,7 +171,7 @@ class good_looking_table(QtGui.QTableWidget):
 			for column in range(selected_range.leftColumn(), \
 				selected_range.rightColumn() + 1):
 				item = self.item(row, column)
-				if item != None:
+				if item is not None:
 					item.setText(u'')
 
 	def get_contents(self):
@@ -187,7 +187,7 @@ class good_looking_table(QtGui.QTableWidget):
 		for row in range(self.rowCount()):
 			for column in range(self.columnCount()):
 				i = self.item(row, column)
-				if i != None:
+				if i is not None:
 					contents.append(i.text())
 				else:
 					contents.append(u'')

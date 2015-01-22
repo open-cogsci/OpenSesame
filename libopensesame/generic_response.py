@@ -65,12 +65,12 @@ class generic_response:
 		A simulated (response_time, response) tuple
 		"""
 
-		if self._timeout == None:
+		if self._timeout is None:
 			self.sleep(random.randint(200, 1000))
 		else:
 			self.sleep(random.randint(min(self._timeout, 200), self._timeout))
 
-		if self._allowed_responses == None:
+		if self._allowed_responses is None:
 			resp = self.auto_response
 		else:
 			resp = random.choice(self._allowed_responses)
@@ -105,7 +105,7 @@ class generic_response:
 		self.experiment.response, pos, self.experiment.end_response_interval = \
 			retval
 		self.synonyms = self._mouse.synonyms(self.experiment.response)
-		if pos != None:
+		if pos is not None:
 			self.experiment.cursor_x = pos[0]
 			self.experiment.cursor_y = pos[1]
 		else:
@@ -122,7 +122,7 @@ class generic_response:
 
 		# If the duration function did not give any kind of return value
 		# there is no response to process
-		if retval == None:
+		if retval is None:
 			return
 
 		process_func = u"process_response_%s" % self.get(u"duration")
@@ -159,7 +159,7 @@ class generic_response:
 				# If a correct_response has been defined, we use it to determine
 				# accuracy etc.
 				correct_response = self.get(u"correct_response")
-				if hasattr(self, u"synonyms") and self.synonyms != None:
+				if hasattr(self, u"synonyms") and self.synonyms is not None:
 					if correct_response in self.synonyms or \
 						self.unistr(correct_response) in self.synonyms:
 						self.experiment.correct = 1
@@ -204,7 +204,7 @@ class generic_response:
 			self.experiment.start_response_interval = self.get("time_%s" % \
 				self.name)
 
-		if self.experiment.start_response_interval == None:
+		if self.experiment.start_response_interval is None:
 			self.sri = self.get(u"time_%s" % self.name)
 		else:
 			self.sri = self.experiment.start_response_interval

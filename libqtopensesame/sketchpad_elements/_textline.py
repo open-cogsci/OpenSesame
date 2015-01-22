@@ -46,7 +46,7 @@ class textline(base_element, textline_runtime):
 			message=_(u'Please enter a text for the textline'),
 			content=self.properties[u'text'].replace(u'<br />', u'\n'),
 			parent=self.sketchpad._edit_widget)
-		if text == None:
+		if text is None:
 			return
 		self.properties[u'text'] = self.clean_text(text)
 		self.sketchpad.draw()
@@ -57,7 +57,7 @@ class textline(base_element, textline_runtime):
 		text = sketchpad.experiment.text_input(title=_(u'New textline'),
 			message=_(u'Please enter a text for the textline'),
 			parent=sketchpad._edit_widget)
-		if text == None:
+		if text is None:
 			return None
 		properties = {
 				u'x':			pos[0],

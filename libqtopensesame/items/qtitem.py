@@ -92,7 +92,7 @@ class qtitem(object):
 			Gives focus to the most important widget.
 		"""
 
-		if hasattr(self, u'focus_widget') and self.focus_widget != None:
+		if hasattr(self, u'focus_widget') and self.focus_widget is not None:
 			self.focus_widget.setFocus()
 
 	def set_focus_widget(self, widget, override=False):
@@ -113,7 +113,7 @@ class qtitem(object):
 				type:	bool
 		"""
 
-		if override or not hasattr(self, u'focus_widget') or self.focus_widget == None:
+		if override or not hasattr(self, u'focus_widget') or self.focus_widget is None:
 			self.focus_widget = widget
 
 	def update_item_icon(self):
@@ -397,7 +397,7 @@ class qtitem(object):
 		self.name = to_name
 		self.header.set_name(to_name)
 		index = self.tabwidget.indexOf(self.widget())
-		if index != None:
+		if index is not None:
 			self.tabwidget.setTabText(index, to_name)
 
 	def open_help_tab(self):
@@ -468,7 +468,7 @@ class qtitem(object):
 
 		widget = tree_item_item(self, extra_info=extra_info)
 		items.append(self.name)
-		if toplevel != None:
+		if toplevel is not None:
 			toplevel.addChild(widget)
 		return widget
 
@@ -689,7 +689,7 @@ class qtitem(object):
 		"""
 
 		# Use the object id as a fallback name
-		if var == None:
+		if var is None:
 			var = id(widget)
 		debug.msg(var)
 		self.set_focus_widget(widget)

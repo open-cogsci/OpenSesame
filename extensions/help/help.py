@@ -78,10 +78,10 @@ class help(base_extension):
 
 		self.menu = self.menubar.addMenu(_(u'Help'))
 		menu = self.online_help_menu()
-		if menu != None:
+		if menu is not None:
 			self.action_online_help = self.menu.addMenu(menu)
 		menu = self.psychopy_help_menu()
-		if menu != None:
+		if menu is not None:
 			self.action_psychopy_help = self.menu.addMenu(menu)
 		self.action_offline_help = self.menu.addAction(
 			self.theme.qicon(u'help-contents'), _(u'Offline help'))

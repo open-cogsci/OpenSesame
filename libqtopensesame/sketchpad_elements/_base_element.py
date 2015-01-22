@@ -50,7 +50,7 @@ class base_element(object):
 				type:	[dict, NoneType]
 		"""
 
-		if properties != None:
+		if properties is not None:
 			string = u'draw %s' % (self.__class__.__name__)
 			for var, val in properties.items():
 				string += u' %s="%s"' % (var, val)
@@ -264,7 +264,7 @@ class base_element(object):
 		string = self.experiment.text_input(_(u'Edit element'),
 			message=_(u'Element script'), content=self.to_string(),
 			parent=self.sketchpad._edit_widget)
-		if string == None:
+		if string is None:
 			return
 		try:
 			self.from_string(string)
@@ -304,7 +304,7 @@ class base_element(object):
 			(3, _(u'Delete'), u'edit-delete'),
 			])
 		resp = pm.show()
-		if resp == None:
+		if resp is None:
 			return
 		if resp == 0:
 			self.show_script_edit_dialog()

@@ -68,7 +68,7 @@ class new_loop_sequence_dialog(base_dialog):
 		# The parents list is excluded from the list of possible children, but
 		# this list if empty if there are no parents or the parent is the main
 		# experiment sequence
-		if self._parent == None or _parent not in self.experiment.items:
+		if self._parent is None or _parent not in self.experiment.items:
 			parents = []
 		else:
 			parents = self.experiment.items[_parent].parents()

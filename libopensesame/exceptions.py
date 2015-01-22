@@ -80,7 +80,7 @@ class osexception(Exception):
 		# If an Exception is passed, i.e. if we are catching an Exception,
 		# summarize this exception here.
 		self.exception = exception
-		if self.exception != None:
+		if self.exception is not None:
 			info[u'exception type'] = safe_decode(
 				self.exception.__class__.__name__, enc=self.enc,
 				errors=u'ignore')
@@ -116,7 +116,7 @@ class osexception(Exception):
 			self._html += u'<i>%s</i>: %s<br />\n' % (key, val)
 			self._plaintext += u'%s: %s\n' % (key, val)
 		# If an Exception is passed, we should include a traceback.
-		if self.exception == None:
+		if self.exception is None:
 			return
 		if py3:
 			tb = traceback.format_exc()

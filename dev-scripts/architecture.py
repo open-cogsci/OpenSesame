@@ -109,7 +109,7 @@ def docstr(obj):
 	"""
 
 	doc = u''
-	if obj.__doc__ == None:
+	if obj.__doc__ is None:
 		return u'Auto-generated object.'
 	for r in re.finditer(u'<DOC>(.*?)</DOC>', obj.__doc__, re.M|re.S):
 		doc += r.groups()[0]

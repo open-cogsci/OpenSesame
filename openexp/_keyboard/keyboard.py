@@ -124,7 +124,7 @@ class keyboard(object):
 			my_keyboard.set_keylist( ['z', 'm'] )
 		"""
 
-		if keylist == None:
+		if keylist is None:
 			self._keylist = None
 		else:
 			self._keylist = []
@@ -173,7 +173,7 @@ class keyboard(object):
 			from openexp.keyboard import keyboard
 			my_keyboard = keyboard(exp, timeout=2000)
 			response, timestamp = my_keyboard.get_key()
-			if response == None:
+			if response is None:
 				print('A timeout occurred!')
 		"""
 

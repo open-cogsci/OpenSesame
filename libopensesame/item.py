@@ -79,7 +79,7 @@ class item(object):
 			self.round_decimals = 2
 		self.variables = {}
 		self.comments = []
-		if string != None:
+		if string is not None:
 			self.from_string(string)
 
 	def reset(self):
@@ -242,12 +242,12 @@ class item(object):
 			u'total_responses') + 1)
 		self.experiment.set(u'response', response)
 		self.experiment.set(u'response_time', response_time)
-		if response_time != None:
+		if response_time is not None:
 			if type(response_time) not in (int, float):
 				raise osexception(u'response should be a numeric value or None')
 			self.experiment.set(u'total_response_time', self.experiment.get( \
 			u'total_response_time') + self.get(u'response_time'))
-		if correct != None:
+		if correct is not None:
 			if correct not in (0, 1, True, False, None):
 				raise osexception( \
 					u'correct should be 0, 1, True, False, or None')
@@ -316,7 +316,7 @@ class item(object):
 			line_stripped = line.strip()
 			# The end of a textblock
 			if line_stripped == u'__end__':
-				if textblock_var == None:
+				if textblock_var is None:
 					self.experiment.notify( \
 						u'It appears that a textblock has been closed without being opened. The most likely reason is that you have used the string "__end__", which has a special meaning for OpenSesame.')
 				else:
@@ -326,7 +326,7 @@ class item(object):
 			# a textblock is not already ongoing, and only if the textblock
 			# start is of the format __VARNAME__
 			elif line_stripped[:2] == u'__' and line_stripped[-2:] == u'__' \
-				and textblock_var == None:
+				and textblock_var is None:
 				textblock_var = line_stripped[2:-2]
 				if textblock_var in self.reserved_words:
 					textblock_var = u'_' + textblock_var
@@ -339,7 +339,7 @@ class item(object):
 				# based on the opening __varname__ line.
 				strip_tab = line[0] == u'\t'
 			# Collect the contents of a textblock
-			elif textblock_var != None:
+			elif textblock_var is not None:
 				if strip_tab:
 					textblock_val += line[1:] + u'\n'
 				else:
@@ -361,7 +361,7 @@ class item(object):
 		The unicode definition string
 		"""
 
-		if item_type == None:
+		if item_type is None:
 			item_type = self.item_type
 		s = u'define %s %s\n' % (item_type, self.name)
 		for comment in self.comments:
@@ -575,13 +575,13 @@ class item(object):
 				print('This is a validly-cued trial')
 		"""
 
-		if default == None:
+		if default is None:
 			val = self.get(var, _eval=_eval)
 		elif self.has(var):
 			val = self.get(var, _eval=_eval)
 		else:
 			val = default
-		if valid != None and val not in valid:
+		if valid is not None and val not in valid:
 			raise osexception( \
 				u"Variable '%s' is '%s', expecting '%s'" % (var, val, \
 				u" or ".join(valid)))
@@ -704,7 +704,7 @@ class item(object):
 		time -- the timestamp or None to use the current time (default = None)
 		"""
 
-		if time == None:
+		if time is None:
 			time = self.time()
 		setattr(self.experiment, u'time_%s' % self.name, time)
 
@@ -769,7 +769,7 @@ class item(object):
 		# Find and replace all variables in the text
 		while True:
 			m = regexp.find_variable.search(text)
-			if m == None:
+			if m is None:
 				break
 			var = m.group(0)[1:-1]
 			if not soft_ignore or self.has(var):
@@ -979,7 +979,7 @@ class item(object):
 		s = self.unistr(s)
 		while True:
 			m = regexp.unsanitize.search(s)
-			if m == None:
+			if m is None:
 				break
 			s = s.replace(m.group(0), unichr(int(m.group(1), 16)), 1)
 		return s

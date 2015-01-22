@@ -68,7 +68,7 @@ class stdout_file(object):
 		"""
 
 		self.stdout.write(s+'\n')
-		if self.fd != None:
+		if self.fd is not None:
 			self.fd.write(s)
 			self.fd.flush()
 
@@ -76,7 +76,7 @@ def main():
 
 	"""The main routine, which is called automatically by pgs4a"""
 
-	if android != None:
+	if android is not None:
 		sys.stdout = stdout_file(sys.stdout)
 
 	# First start the menu experiment

@@ -53,7 +53,7 @@ class tree_item_item(tree_base_item):
 		tooltip = _(u"Type: %s\nDescription: %s") % (item.item_type,
 			item.description)
 		self.setText(0, item.name)
-		if extra_info != None:
+		if extra_info is not None:
 			self.setText(1, extra_info)
 		self.setFlags(QtCore.Qt.ItemIsEditable | self.flags())
 		self.setIcon(0, self.experiment.icon(item.item_icon()))
@@ -103,13 +103,13 @@ class tree_item_item(tree_base_item):
 		item_name = str(treeitem.text(0))
 		l = []
 		while True:
-			if treeitem.parent() != None:
+			if treeitem.parent() is not None:
 				index = treeitem.parent().indexOfChild(treeitem)
 			else:
 				index = 0
 			l.append(str(treeitem.text(0))+u':'+str(index))
 			treeitem = treeitem.parent()
-			if treeitem == None or not treeitem.droppable:
+			if treeitem is None or not treeitem.droppable:
 				break
 		return item_name, u'.'.join(l)
 
@@ -180,7 +180,7 @@ class tree_item_item(tree_base_item):
 
 	def drop_hint(self):
 
-		if self.treeWidget().overview_mode or self.parent() == None:
+		if self.treeWidget().overview_mode or self.parent() is None:
 			if self.item.item_type == u'loop':
 				return _(u'Set as item to run for %s') % self.name
 			if self.item.item_type == u'sequence':
@@ -299,7 +299,7 @@ class tree_item_item(tree_base_item):
 		"""
 
 		data = self.clipboard_data()
-		if data != None:
+		if data is not None:
 			self.treeWidget().drop_event_item_new(data, target_treeitem=self)
 
 	def create_linked_copy(self):

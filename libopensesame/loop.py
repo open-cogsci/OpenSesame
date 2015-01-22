@@ -132,7 +132,7 @@ class loop(item.item):
 		while len(l) > 0:
 			cycle = l.pop(0)
 			self.apply_cycle(cycle)
-			if self._break_if != None and eval(self._break_if):
+			if self._break_if is not None and eval(self._break_if):
 				break
 			self.experiment.set(u'repeat_cycle', 0)
 			_item.prepare()

@@ -202,7 +202,7 @@ class rating_scale(widget):
 				type:	int
 		"""
 		
-		if val != None and (val >= len(self.nodes) or val < 0):
+		if val is not None and (val >= len(self.nodes) or val < 0):
 			raise osexception( \
 				u'Trying to select a non-existing node (%s). Did you specify an incorrect default value?' \
 				% val)

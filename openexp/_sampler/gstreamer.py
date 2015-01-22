@@ -100,7 +100,7 @@ class gstreamer(sampler.sampler):
 		self.bus = self.player.get_bus()
 		self.bus.enable_sync_message_emission()
 
-		if src != None:
+		if src is not None:
 			if not os.path.exists(src):
 				raise osexception(
 					u"openexp._sampler.gstreamer.__init__() the file '%s' does not exist" \

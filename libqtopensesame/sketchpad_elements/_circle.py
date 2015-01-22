@@ -31,7 +31,7 @@ class circle(base_element, circle_runtime):
 	@classmethod
 	def mouse_press(cls, sketchpad, pos):
 
-		if cls.pos_start != None:
+		if cls.pos_start is not None:
 			return
 		cls.pos_start = pos
 		xc = sketchpad.canvas.xcenter()
@@ -43,7 +43,7 @@ class circle(base_element, circle_runtime):
 	@classmethod
 	def mouse_release(cls, sketchpad, pos):
 
-		if cls.pos_start == None:
+		if cls.pos_start is None:
 			cls.pos_start = pos
 			return None
 		if cls.radius(pos) < 1:
@@ -67,7 +67,7 @@ class circle(base_element, circle_runtime):
 	@classmethod
 	def mouse_move(cls, sketchpad, pos):
 
-		if cls.pos_start == None:
+		if cls.pos_start is None:
 			return
 		xc = sketchpad.canvas.xcenter()
 		yc = sketchpad.canvas.ycenter()
@@ -91,7 +91,7 @@ class circle(base_element, circle_runtime):
 	def click(sketchpad, pos):
 
 		global pos_start
-		if pos_start == None:
+		if pos_start is None:
 			pos_start = pos
 			return None
 		r = cls.radius(pos)
