@@ -17,23 +17,20 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
+from libopensesame.py3compat import *
 from PyQt4 import QtCore, QtGui
-from libqtopensesame.misc import includes, _
 from libqtopensesame.misc.base_component import base_component
 from libqtopensesame.misc.config import cfg
 from libqtopensesame.items import experiment
-from libopensesame import debug, misc
+from libqtopensesame.misc import _
+from libopensesame import debug
 from libopensesame.exceptions import osexception
 import libopensesame.experiment
 import libopensesame.plugins
 import libopensesame.misc
-from libopensesame.py3compat import *
 import os.path
 import os
 import sys
-import time
-import traceback
-import subprocess
 
 class qtopensesame(QtGui.QMainWindow, base_component):
 
@@ -74,7 +71,6 @@ class qtopensesame(QtGui.QMainWindow, base_component):
 		from libopensesame import misc
 		from libqtopensesame.misc import theme
 		from libqtopensesame.extensions import extension_manager
-		import platform
 		import random
 
 		# Set some initial variables
@@ -103,6 +99,7 @@ class qtopensesame(QtGui.QMainWindow, base_component):
 		# Setup the UI
 		self.load_ui(u'misc.main_window')
 		self.ui.itemtree.setup(self)
+		self.ui.console.setup(self)
 		self.ui.tabwidget.main_window = self
 
 		# Load a theme
@@ -191,7 +188,7 @@ class qtopensesame(QtGui.QMainWindow, base_component):
 		self.ui.shortcut_tabwidget = QtGui.QShortcut( \
 			QtGui.QKeySequence(), self, self.ui.tabwidget.setFocus)
 		self.ui.shortcut_stdout = QtGui.QShortcut( \
-			QtGui.QKeySequence(), self, self.ui.edit_stdout.setFocus)
+			QtGui.QKeySequence(), self, self.ui.console.setFocus)
 		self.ui.shortcut_variables = QtGui.QShortcut( \
 			QtGui.QKeySequence(), self, \
 			self.ui.variable_inspector.set_focus)
@@ -540,6 +537,8 @@ class qtopensesame(QtGui.QMainWindow, base_component):
 		if not self.ui.action_show_stdout.isChecked():
 			self.ui.dock_stdout.setVisible(False)
 			return
+		self.ui.console.focus()
+		print(self.focusWidget())
 		self.ui.dock_stdout.setVisible(True)
 
 	def refresh_pool(self, make_visible=None):
@@ -672,7 +671,7 @@ class qtopensesame(QtGui.QMainWindow, base_component):
 		except Exception as e:
 			if not isinstance(e, osexception):
 				e = osexception(msg=u'Failed to open file', exception=e)
-			self.print_debug_window(e)
+			self.ui.console.write(e)
 			self.experiment.notify(e.html(), title=u'Exception')
 			return
 		self.experiment = exp
@@ -717,7 +716,7 @@ class qtopensesame(QtGui.QMainWindow, base_component):
 		try:
 			self.get_ready()
 		except osexception as e:
-			self.print_debug_window(e)
+			self.ui.console.write(e)
 			self.experiment.notify(
 				_(u"The following error occured while trying to save:<br/>%s") \
 				% e)
@@ -730,7 +729,7 @@ class qtopensesame(QtGui.QMainWindow, base_component):
 		except Exception as e:
 			if not catch:
 				raise e
-			self.print_debug_window(e)
+			self.ui.console.write(e)
 			self.experiment.notify(_(u"Failed to save file. Error: %s") % e)
 			self.set_busy(False)
 			return
@@ -898,19 +897,6 @@ class qtopensesame(QtGui.QMainWindow, base_component):
 						redo = True
 						break
 
-	def print_debug_window(self, msg):
-
-		"""
-		Prints a message to the debug window.
-
-		Arguments:
-		msg		--	An object to print to the debug window.
-		"""
-
-		from libqtopensesame.widgets import pyterm
-		out = pyterm.output_buffer(self.ui.edit_stdout)
-		out.write(self.experiment.unistr(msg))
-
 	def run_experiment(self, dummy=None, fullscreen=True, quick=False):
 
 		"""
@@ -926,18 +912,14 @@ class qtopensesame(QtGui.QMainWindow, base_component):
 						testing the experiment. (default=False)
 		"""
 
-		from libqtopensesame.widgets import pyterm
-
 		self.extension_manager.fire(u'run_experiment', fullscreen=fullscreen)
 		# Disable the entire Window, so that we can't interact with OpenSesame.
 		# TODO: This should be more elegant, so that we selectively disable
 		# parts of the GUI.
 		if sys.platform != 'darwin':
 			self.setDisabled(True)
-		# Reroute the standard output to the debug window
-		buf = pyterm.output_buffer(self.ui.edit_stdout)
-		sys.stdout = buf
-		# Launch the runner!
+		self.ui.console.capture_stdout()
+		print(u'\n')
 		if cfg.runner == u'multiprocess':
 			from libqtopensesame.runners import multiprocess_runner as runner
 		elif cfg.runner == u'inprocess':
@@ -948,11 +930,9 @@ class qtopensesame(QtGui.QMainWindow, base_component):
 		_runner = runner(self)
 		_runner.run(quick=quick, fullscreen=fullscreen,
 			auto_response=self.experiment.auto_response)
-		self.ui.edit_stdout.pyterm.set_workspace_globals(
-			_runner.workspace_globals())
-		# Undo the standard output rerouting
-		sys.stdout = sys.__stdout__
-		self.ui.edit_stdout.show_prompt()
+		self.ui.console.set_workspace_globals(_runner.workspace_globals())
+		self.ui.console.release_stdout()
+		self.ui.console.show_prompt()
 		# Re-enable the GUI.
 		if sys.platform != 'darwin':
 			self.setDisabled(False)

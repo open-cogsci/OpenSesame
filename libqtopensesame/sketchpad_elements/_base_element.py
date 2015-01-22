@@ -270,7 +270,7 @@ class base_element(object):
 			self.from_string(string)
 		except osexception as e:
 			self.experiment.notify(e)
-			self.main_window.print_debug_window(e)
+			self.console.write(e)
 			self.from_string(old_string)
 			return
 		self.sketchpad.draw()

@@ -64,7 +64,7 @@ class preferences_widget(base_widget):
 				self.notify(
 					u'Extension %s failed to return settings widget (see debug window for stack trace)' \
 					% ext.name())
-				self.main_window.print_debug_window(e)
+				self.console.write(e)
 				continue
 			if w != None:
 				self.ui.layout_preferences.addWidget(w)

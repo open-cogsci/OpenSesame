@@ -17,98 +17,39 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
+from libopensesame.py3compat import *
 import code
 import sys
-import os
 import time
 from PyQt4 import QtGui, QtCore
 from libopensesame import debug
 from libqtopensesame.misc import _
 from libqtopensesame.misc.config import cfg
-from libopensesame.py3compat import *
-
-def modules():
-
-	"""Print version info"""
-
-	from libopensesame.misc import module_versions
-	print(module_versions())
-
-class output_buffer:
-
-	"""Used to capture the standard output and reroute it to the debug window"""
-
-	def __init__(self, plaintext):
-
-		"""
-		Constructor
-
-		Keyword arguments:
-		plaintext -- a QPlainTextEdit widget
-		"""
-
-		self.plaintext = plaintext
-
-	def readline(self):
-
-		"""Input is crudely supported through an input dialog"""
-
-		self.plaintext._input = ""
-		self.plaintext.collect_input = True
-		while len(self.plaintext._input) == 0 or self.plaintext._input[-1] != \
-			"\n":
-			time.sleep(0.01)
-			QtGui.QApplication.processEvents()
-		self.plaintext.collect_input = False
-		return self.plaintext._input
-
-	def write(self, s):
-
-		"""
-		Write a string
-
-		Arguments:
-		s -- a string
-		"""
-
-		s = safe_decode(s, errors=u'replace')
-		if s.strip() != u'':
-			self.plaintext.appendPlainText(s)
-			QtGui.QApplication.processEvents()
-
-	def flush(self):
-
-		"""Dummy flush function for compatibility."""
-
-		pass
+from libqtopensesame.console._base_console import base_console
 
 class pyterm(code.InteractiveConsole):
 
-	"""Custom Python interpreter"""
+	"""
+	desc:
+		Custom Python interpreter.
+	"""
 
-	def __init__(self, parent, textedit=None):
+	def __init__(self, textedit):
 
-		"""Constructor"""
+		"""
+		desc:
+			Constructor.
+
+		arguments:
+			textedit:
+				type: fallback_console.
+		"""
 
 		self._locals = {}
-		self.parent = parent
-		self.set_workspace_globals()
-		code.InteractiveConsole.__init__(self, self._locals)
 		self.textedit = textedit
+		code.InteractiveConsole.__init__(self, self._locals)
 
-	def write(self, s):
-
-		"""
-		Simply redirect everything to the standard output.
-
-		Arguments:
-		s -- the output string
-		"""
-
-		s = safe_decode(s, errors=u'replace')
-		print(s.replace(u'\n', u''))
-
-	def set_workspace_globals(self, _globals={}):
+	def set_locals(self, _locals={}):
 
 		"""
 		desc:
@@ -120,58 +61,33 @@ class pyterm(code.InteractiveConsole):
 				type:	dict
 		"""
 
-		global modules
 		self._locals.clear()
-		self._locals[u'modules'] = modules
-		self._locals[u'qtopensesame'] = self.get_qtopensesame
-		self._locals[u'cfg'] = self.get_cfg
-		self._locals.update(_globals)
+		self._locals.update(_locals)
 
-	def get_qtopensesame(self):
+class fallback_console(base_console, QtGui.QPlainTextEdit):
 
-		"""
-		desc:
-			A getter for the main window.
+	"""
+	desc:
+		A basic debug window.
+	"""
 
-		returns:
-			type:	qtopensesame
-		"""
-
-		return self.parent.parent().parent().parent()
-
-	def get_cfg(self):
+	def __init__(self, main_window):
 
 		"""
 		desc:
-			A getter for the config object.
+			Constructor.
 
-		returns:
-			type:	config
+		arguments:
+			main_window:	The main window object.
 		"""
 
-		from libqtopensesame.misc.config import cfg
-		return cfg
-
-class console(QtGui.QPlainTextEdit):
-
-	"""A nice console widget"""
-
-	def __init__(self, parent=None):
-
-		"""
-		Constructor
-
-		Keywords arguments:
-		parent -- parent QWidget
-		"""
-
-		QtGui.QPlainTextEdit.__init__(self, parent)
+		super(fallback_console, self).__init__(main_window)
 		self.collect_input = False
 		self._input = u""
 		self.history = []
 		self.prompt = u">>> "
-		self.pyterm = pyterm(parent)
-		self.pyterm.textedit = self
+		self.pyterm = pyterm(self)
+		self.set_workspace_globals()
 		self.setCursorWidth(8)
 		self.setTheme()
 		self.welcome()
@@ -179,7 +95,10 @@ class console(QtGui.QPlainTextEdit):
 
 	def setTheme(self):
 
-		"""Sets the theme, based on the QProgEdit settings."""
+		"""
+		desc:
+			Sets the theme, based on the QProgEdit settings.
+		"""
 
 		self.setFont(QtGui.QFont(cfg.qProgEditFontFamily, \
 			cfg.qProgEditFontSize))
@@ -202,25 +121,30 @@ class console(QtGui.QPlainTextEdit):
 	def focusInEvent(self, e):
 
 		"""
-		Process focus-in events to set the style of the debug window.
+		desc:
+			Processes focus-in events to set the style of the debug window.
 
-		Arguments:
-		e		--	A focus-in event.
+		arguments:
+			e:
+				type:	QFocusEvent
 		"""
 
 		self.setTheme()
-		super(console, self).focusInEvent(e)
+		super(fallback_console, self).focusInEvent(e)
 
 	def clear(self):
 
-		"""Clear and draw prompt"""
+		"""See base_console."""
 
 		QtGui.QPlainTextEdit.clear(self)
 		self.show_prompt()
 
 	def welcome(self):
 
-		"""Print welcome information"""
+		"""
+		desc:
+			Prints welcome information.
+		"""
 
 		s = u"Python %d.%d.%d" % (sys.version_info[0], sys.version_info[1], \
 			sys.version_info[2]) \
@@ -231,17 +155,19 @@ class console(QtGui.QPlainTextEdit):
 
 	def show_prompt(self, suffix=""):
 
-		"""Show a prompt"""
+		"""See base_console."""
 
 		self.appendPlainText(self.prompt+suffix)
 
 	def keyPressEvent(self, e):
 
 		"""
-		Handle key presses
+		desc:
+			Handles key presses.
 
-		Arguments:
-		e -- a QKeyEvent
+		arguments:
+			e:
+				type:	QKeyEvent
 		"""
 
 		# Emulate the standard input
@@ -251,7 +177,6 @@ class console(QtGui.QPlainTextEdit):
 			else:
 				self._input += str(e.text())
 				QtGui.QPlainTextEdit.keyPressEvent(self, e)
-
 		# Emulate the console
 		else:
 			self.jump_to_end()
@@ -275,7 +200,10 @@ class console(QtGui.QPlainTextEdit):
 
 	def execute(self):
 
-		"""Execute a command"""
+		"""
+		desc:
+			Executes a command.
+		"""
 
 		try:
 			s = str(self.document().lastBlock().text())[len(self.prompt):]
@@ -286,19 +214,54 @@ class console(QtGui.QPlainTextEdit):
 			return
 		if len(s) > 0:
 			self.history.append(s)
-		buf = output_buffer(self)
-		sys.stdout = buf
-		sys.stdin = buf
+		self.capture_stdout()
 		self.pyterm.push(s)
-		sys.stdout = sys.__stdout__
-		sys.stdin = sys.__stdin__
+		self.release_stdout()
 		self.show_prompt()
 
 	def jump_to_end(self):
 
-		"""Restore the cursor to the end of the textedit"""
+		"""
+		desc:
+			Restore the cursor to the end of the textedit.
+		"""
 
 		c = self.textCursor()
 		if not c.atEnd() and c.blockNumber()+1 < self.document().blockCount():
 			c.movePosition(QtGui.QTextCursor.End)
 			self.setTextCursor(c)
+
+	def readline(self):
+
+		"""
+		desc:
+			Implements text input.
+
+		returns:
+			The input text.
+		"""
+
+		self._input = u''
+		self.collect_input = True
+		while len(self._input) == 0 or self._input[-1] != u'\n':
+			time.sleep(0.01)
+			QtGui.QApplication.processEvents()
+		self.collect_input = False
+		return self._input
+
+	def write(self, s):
+
+		"""See base_console."""
+
+		s = str(s)
+		if s.strip() != u'':
+			self.appendPlainText(s)
+			QtGui.QApplication.processEvents()
+
+	def set_workspace_globals(self, _globals={}):
+
+		"""See base_console."""
+
+		_globals = _globals.copy()
+		_globals.update(self.default_globals())
+		self.pyterm.set_locals(_globals)

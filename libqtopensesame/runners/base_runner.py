@@ -48,6 +48,10 @@ class base_runner(object):
 
 		self.main_window = main_window
 
+	@property
+	def console(self):
+		return self.main_window.ui.console
+
 	def execute(self):
 
 		"""
@@ -176,7 +180,7 @@ class base_runner(object):
 		except Exception as e:
 			if not isinstance(e, osexception):
 				e = osexception(u'Unexpected error', exception=e)
-			self.main_window.print_debug_window(e)
+			self.console.write(e)
 			self.main_window.experiment.notify(e.html())
 			return False
 		# Get and set the subject number
@@ -197,7 +201,7 @@ class base_runner(object):
 		except Exception as e:
 			if not isinstance(e, osexception):
 				e = osexception(u'Unexpected error', exception=e)
-			self.main_window.print_debug_window(e)
+			self.console.write(e)
 			self.main_window.experiment.notify(e.html())
 		return True
 
@@ -212,7 +216,7 @@ class base_runner(object):
 
 		if not isinstance(e, osexception):
 			e = osexception(msg=u'Unexpected error', exception=e)
-		self.main_window.print_debug_window(e)
+		self.console.write(e)
 		self.main_window.experiment.notify(e.html(), title=u'Exception')
 
 	def on_success(self, quick=False):

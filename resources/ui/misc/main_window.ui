@@ -52,7 +52,7 @@
      <x>0</x>
      <y>0</y>
      <width>920</width>
-     <height>23</height>
+     <height>24</height>
     </rect>
    </property>
    <widget class="QMenu" name="menu_file">
@@ -118,7 +118,7 @@
    <property name="minimumSize">
     <size>
      <width>200</width>
-     <height>118</height>
+     <height>119</height>
     </size>
    </property>
    <property name="features">
@@ -200,7 +200,7 @@
          <number>0</number>
         </property>
         <item>
-         <widget class="console" name="edit_stdout">
+         <widget class="console" name="console">
           <property name="readOnly">
            <bool>false</bool>
           </property>
@@ -793,7 +793,7 @@
   <customwidget>
    <class>console</class>
    <extends>QPlainTextEdit</extends>
-   <header>libqtopensesame.widgets.pyterm.h</header>
+   <header>libqtopensesame.console.h</header>
   </customwidget>
   <customwidget>
    <class>statusbar</class>
@@ -812,7 +812,7 @@
   <connection>
    <sender>button_clear_stdout</sender>
    <signal>clicked()</signal>
-   <receiver>edit_stdout</receiver>
+   <receiver>console</receiver>
    <slot>clear()</slot>
    <hints>
     <hint type="sourcelabel">

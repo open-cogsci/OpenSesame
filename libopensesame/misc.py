@@ -319,6 +319,12 @@ def module_versions():
 	except:
 		s += u'\nExpyriment is not available (or version is unknown)'
 
+	try:
+		import IPython
+		s += u'\nIPython %s' % IPython.__version__
+	except:
+		s += u'\nIPython is not available'
+
 	# NumPy
 	try:
 		import numpy

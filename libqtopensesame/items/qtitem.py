@@ -372,7 +372,7 @@ class qtitem(object):
 			self.from_string(new_script)
 		except osexception as e:
 			self.experiment.notify(e.html())
-			self.main_window.print_debug_window(e)
+			self.console.write(e)
 			self.from_string(old_script)
 		self.edit_widget()
 		self.main_window.set_unsaved(True)

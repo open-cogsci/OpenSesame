@@ -18,10 +18,9 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame.py3compat import *
-
-import sys
-
-if "--ipython" in sys.argv:
-	from libqtopensesame.widgets.pyterm_ipython import console, output_buffer
-else:
-	from libqtopensesame.widgets.pyterm_original import console, output_buffer
+try:
+	from libqtopensesame.console._ipython_console \
+		import ipython_console as console
+except:
+	from libqtopensesame.console._fallback_console \
+		import fallback_console as console

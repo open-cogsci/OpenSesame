@@ -72,7 +72,7 @@ class general_script_editor(base_widget):
 				resources=self.experiment.resources)
 		except osexception as e:
 			self.notify(e.html())
-			self.main_window.print_debug_window(e)
+			self.console.write(e)
 			return
 		self.main_window.experiment = exp
 		self.main_window.tabwidget.close_all()

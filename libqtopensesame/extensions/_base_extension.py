@@ -279,7 +279,7 @@ class base_extension(base_subcomponent):
 			self.notify(
 				u'Extension %s misbehaved on activate (see debug window for stack trace)' \
 				% self.name())
-			self.main_window.print_debug_window(e)
+			self.console.write(e)
 
 	def add_action(self, widget, action, index, separator_before,
 		separator_after):

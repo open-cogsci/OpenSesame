@@ -483,7 +483,7 @@ class tree_overview(base_subcomponent, QtGui.QTreeWidget):
 				self.notify(
 					u'Failed to load plug-in %s (see debug window for stack trace)' \
 					% data[u'item-type'])
-				self.main_window.print_debug_window(ex)
+				self.console.write(ex)
 				e.accept()
 				self.main_window.set_busy(False)
 				return

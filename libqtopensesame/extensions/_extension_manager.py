@@ -59,7 +59,7 @@ class extension_manager(base_subcomponent):
 				self.notify(
 					u'Failed to load extension %s (see debug window for stack trace)' \
 					% ext_name)
-				self.main_window.print_debug_window(e)
+				self.console.write(e)
 			self._extensions.append(ext)
 			for event in ext.supported_events():
 				if event not in self.events:
@@ -93,4 +93,4 @@ class extension_manager(base_subcomponent):
 				self.notify(
 					u'Extension %s misbehaved on event %s (see debug window for stack trace)' \
 					% (ext.name(), event))
-				self.main_window.print_debug_window(e)
+				self.console.write(e)
