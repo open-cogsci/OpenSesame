@@ -18,9 +18,6 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame.py3compat import *
-
-
-
 import platform
 # In OS X the multiprocessing module is horribly broken, but a fixed
 # version has been released as the 'billiard' module
@@ -29,6 +26,7 @@ if platform.system() == 'Darwin':
 	multiprocessing.forking_enable(0)
 else:
 	import multiprocessing
+import pickle
 
 class OutputChannel:
 
@@ -124,9 +122,9 @@ class ExperimentProcess(multiprocessing.Process):
 		sys.stderr = pipeToMainProcess
 		# First initialize the experiment and catch any resulting Exceptions
 		try:
-			exp = experiment(string=self.script, pool_folder= \
-				self.pool_folder, experiment_path=self.experiment_path, \
-				fullscreen=self.fullscreen, auto_response=self.auto_response, \
+			exp = experiment(string=self.script, pool_folder= self.pool_folder,
+				experiment_path=self.experiment_path,
+				fullscreen=self.fullscreen, auto_response=self.auto_response,
 				subject_nr=self.subject_nr, logfile=self.logfile)
 		except Exception as e:
 			if not isinstance(e, osexception):
@@ -139,9 +137,11 @@ class ExperimentProcess(multiprocessing.Process):
 		e_run = None
 		try:
 			exp.run()
+			print('done!')
 		except Exception as e_run:
 			if not isinstance(e_run, osexception):
 				e_run = osexception(u'Unexpected error', exception=e_run)
+		self.put_dict(exp.python_workspace._globals)
 		# End the experiment and catch any Exceptions. These exceptions are just
 		# printed out and not explicitly passed on to the user, because they are
 		# less important than the run-related exceptions.
@@ -155,3 +155,17 @@ class ExperimentProcess(multiprocessing.Process):
 			sys.exit(1)
 		# Exit with success
 		sys.exit(0)
+
+	def put_dict(self, d):
+
+		"""
+		desc:
+			Sends a dict through the queue in a pickle-safe way.
+		"""
+
+		for key, value in d.items():
+			try:
+				pickle.dumps(value)
+			except:
+				del d[key]
+		self.output.put(d)

@@ -254,7 +254,8 @@ class base_runner(object):
 							enabled. (default=False)
 		"""
 
-		if not self.init_experiment(quick=quick, fullscreen=fullscreen, \
+		self.console.capture_stdout()
+		if not self.init_experiment(quick=quick, fullscreen=fullscreen,
 			auto_response=auto_response):
 			return
 		ret_val = self.execute()
@@ -262,6 +263,9 @@ class base_runner(object):
 			self.on_exception(ret_val)
 		elif not quick:
 			self.on_success(quick=quick)
+		self.console.set_workspace_globals(self.workspace_globals())
+		self.console.release_stdout()
+		self.console.show_prompt()
 
 	def workspace_globals(self):
 

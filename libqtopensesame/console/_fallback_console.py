@@ -87,7 +87,6 @@ class fallback_console(base_console, QtGui.QPlainTextEdit):
 		self.history = []
 		self.prompt = u">>> "
 		self.pyterm = pyterm(self)
-		self.set_workspace_globals()
 		self.setCursorWidth(8)
 		self.setTheme()
 		self.welcome()
@@ -265,3 +264,10 @@ class fallback_console(base_console, QtGui.QPlainTextEdit):
 		_globals = _globals.copy()
 		_globals.update(self.default_globals())
 		self.pyterm.set_locals(_globals)
+
+	def setup(self, main_window):
+
+		"""See base_subcomponent."""
+
+		super(fallback_console, self).setup(main_window)
+		self.set_workspace_globals()

@@ -18,10 +18,15 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame.py3compat import *
-from PyQt4 import QtGui
 import sys
 from libqtopensesame.misc.base_subcomponent import base_subcomponent
+from libqtopensesame.misc.config import cfg
 from libopensesame import misc
+if py3:
+	from io import StringIO
+else:
+	from StringIO import StringIO
+
 
 class base_console(base_subcomponent):
 
@@ -29,6 +34,11 @@ class base_console(base_subcomponent):
 	desc:
 		A base console for debug-window consoles.
 	"""
+
+	def __init__(self, main_window):
+
+		super(base_console, self).__init__(main_window)
+		self.vault = StringIO()
 
 	def clear(self):
 
@@ -57,7 +67,12 @@ class base_console(base_subcomponent):
 			type:	dict
 		"""
 
-		return {'modules': misc.module_versions}
+		return {
+			'modules': misc.module_versions,
+			'console' : self,
+			'opensesame' : self.main_window,
+			'cfg' : cfg
+			}
 
 	def flush(self):
 
@@ -108,7 +123,7 @@ class base_console(base_subcomponent):
 			Dummy function, that needs to exist.
 		"""
 
-		pass
+		pass		
 
 	def show_prompt(self):
 
@@ -118,3 +133,13 @@ class base_console(base_subcomponent):
 		"""
 
 		pass
+
+	def suppress_stdout(self):
+
+		"""
+		desc:
+			Suppresses stdout.
+		"""
+
+		sys.stdout = self.vault
+		sys.stderr = self.vault

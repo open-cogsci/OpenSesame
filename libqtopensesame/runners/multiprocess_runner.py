@@ -42,11 +42,8 @@ class multiprocess_runner(base_runner):
 			import multiprocessing
 
 		from libqtopensesame.misc import process, _
-		from libopensesame import misc, debug
-		if py3:
-			from io import StringIO
-		else:
-			from StringIO import StringIO
+		from libopensesame import misc
+		self._workspace_globals = {}
 		if os.name == u'nt':
 			# Under Windows, the multiprocess runner assumes that there is a
 			# file called `opensesame.py` or `opensesame.pyc`. If this file does
@@ -57,45 +54,52 @@ class multiprocess_runner(base_runner):
 				and not os.path.exists(os.path.join(os_folder, u'opensesame.py')):
 				import shutil
 				try:
-					shutil.copyfile(os.path.join(os_folder, u'opensesame'), \
+					shutil.copyfile(os.path.join(os_folder, u'opensesame'),
 						os.path.join(os_folder, u'opensesame.py'))
 				except Exception as e:
-					return osexception( \
+					return osexception(
 						_(u'Failed to copy `opensesame` to `opensesame.py`, which is required for the multiprocess runner. Please copy the file manually, or select a different runner under Preferences.'), exception=e)
 		self.channel = multiprocessing.Queue()
-		self.exp_process = process.ExperimentProcess(self.experiment, \
+		self.exp_process = process.ExperimentProcess(self.experiment,
 			self.channel)
 		# Start process!
 		self.exp_process.start()
-		# Variables used for ugly hack to suppress 'None' print by Queue.get()
-		_stdout = sys.stdout
-		_pit = StringIO()
 		# Wait for experiment to finish.
 		# Listen for incoming messages in the meantime.
 		while self.exp_process.is_alive() or not self.channel.empty():
 			QtGui.QApplication.processEvents()
 			# Make sure None is not printed. Ugly hack for a bug in the Queue
 			# class?
-			sys.stdout = _pit
+			self.console.suppress_stdout()
 			# Wait for messages. Will throw Exception if no message is received
 			# before timeout.
 			try:
 				msg = self.channel.get(True, 0.05)
 			except:
-				msg = None
+				continue
 			# Restore connection to stdout
-			sys.stdout = _stdout
-			# For standard print statements
+			self.console.capture_stdout()
+			# print('recv: %s (%s)' % (type(msg), msg))
 			if isinstance(msg, basestring):
 				sys.stdout.write(msg)
-			# Errors arrive as a tuple with (Error object, traceback)
-			elif isinstance(msg, Exception):
+				continue
+			# Capture exceptions
+			if isinstance(msg, Exception):
 				return msg
+			# The workspace globals are sent as a dict
+			if isinstance(msg, dict):
+				self._workspace_globals = msg
+				continue
 			# Anything that is not a string, not an Exception, and not None is
 			# unexpected
-			elif msg is not None:
-				return osexception( \
-					u"Illegal message type received from child process: %s (%s)" \
-					% (msg, type(msg)))
+			return osexception(
+				u"Illegal message type received from child process: %s (%s)" \
+				% (msg, type(msg)))
 		# Return None if experiment finished without problems
 		return None
+
+	def workspace_globals(self):
+
+		"""See base_runner."""
+
+		return self._workspace_globals

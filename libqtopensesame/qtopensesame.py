@@ -918,7 +918,6 @@ class qtopensesame(QtGui.QMainWindow, base_component):
 		# parts of the GUI.
 		if sys.platform != 'darwin':
 			self.setDisabled(True)
-		self.ui.console.capture_stdout()
 		print(u'\n')
 		if cfg.runner == u'multiprocess':
 			from libqtopensesame.runners import multiprocess_runner as runner
@@ -930,9 +929,6 @@ class qtopensesame(QtGui.QMainWindow, base_component):
 		_runner = runner(self)
 		_runner.run(quick=quick, fullscreen=fullscreen,
 			auto_response=self.experiment.auto_response)
-		self.ui.console.set_workspace_globals(_runner.workspace_globals())
-		self.ui.console.release_stdout()
-		self.ui.console.show_prompt()
 		# Re-enable the GUI.
 		if sys.platform != 'darwin':
 			self.setDisabled(False)

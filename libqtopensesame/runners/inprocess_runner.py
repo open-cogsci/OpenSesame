@@ -38,7 +38,7 @@ class inprocess_runner(base_runner):
 			self.experiment.run()
 		except Exception as e:
 			if not isinstance(e, osexception):
-				reval = osexception(u'Unexpected error', e)
+				retval = osexception(u'Unexpected error', e)
 		# Exceptions during the end phase are less important and only printed
 		# to the debug window.
 		try:

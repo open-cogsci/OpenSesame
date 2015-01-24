@@ -45,7 +45,6 @@ class ipython_console(base_console, QtGui.QWidget):
 		kernel_manager.start_kernel()
 		self.kernel = kernel_manager.kernel
 		self.kernel.gui = 'qt4'
-		self.kernel.shell.push(self.default_globals())
 		kernel_client = kernel_manager.client()
 		kernel_client.start_channels()
 		self.control = IPythonWidget()
@@ -85,3 +84,10 @@ class ipython_console(base_console, QtGui.QWidget):
 		"""See base_console."""
 
 		self.kernel.shell.push(_globals)
+
+	def setup(self, main_window):
+
+		"""See base_subcomponent."""
+
+		super(ipython_console, self).setup(main_window)
+		self.kernel.shell.push(self.default_globals())
