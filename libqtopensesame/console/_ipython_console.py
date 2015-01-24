@@ -19,9 +19,63 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 
 from libopensesame.py3compat import *
 from PyQt4 import QtGui
-from IPython.qt.console.rich_ipython_widget import IPythonWidget
+from IPython.qt.console.rich_ipython_widget import RichIPythonWidget
 from IPython.qt.inprocess import QtInProcessKernelManager
 from libqtopensesame.console._base_console import base_console
+from libqtopensesame.misc.config import cfg
+
+def _style(cs, token):
+
+	"""
+	desc:
+		Extracts the color from a QProgEdit style spec.
+
+	arguments:
+		cs:
+			desc:	A QProgEdit colorscheme.
+			type:	dict
+		token:
+			desc:	The style name.
+			type:	[str, unicode]
+
+	returns:
+		desc:	A color string.
+		type:	unicode
+	"""
+
+	color = cs.get(token, u'#000000')
+	if isinstance(color, tuple):
+		return color[0]
+	return color
+
+def pygments_style_factory(cs):
+
+	"""
+	arguments:
+		cs:
+			desc:	A QProgEdit colorscheme.
+			type:	dict
+
+	returns:
+		desc:	A Pygments Style class that emulates the QProgEdit colorscheme.
+		type:	Style
+	"""
+
+	from pygments.style import Style
+	from pygments import token
+	class my_style(Style):
+		default_style = u''
+		styles = {
+			token.Comment 	: _style(cs, 'Comment'),
+			token.Keyword	: _style(cs, 'Keyword'),
+			token.Name		: _style(cs, 'Identifier'),
+			token.String	: _style(cs, 'Double-quoted string'),
+			token.Error		: _style(cs, 'Invalid'),
+			token.Number	: _style(cs, 'Number'),
+			token.Operator	: _style(cs, 'Operator'),
+			token.Generic	: _style(cs, 'Default'),
+		}
+	return my_style
 
 class ipython_console(base_console, QtGui.QWidget):
 
@@ -47,7 +101,8 @@ class ipython_console(base_console, QtGui.QWidget):
 		self.kernel.gui = 'qt4'
 		kernel_client = kernel_manager.client()
 		kernel_client.start_channels()
-		self.control = IPythonWidget()
+		self.control = RichIPythonWidget()
+		self.control.banner = self.banner()
 		self.control.kernel_manager = kernel_manager
 		self.control.kernel_client = kernel_client
 		self.verticalLayout = QtGui.QVBoxLayout(self)
@@ -84,6 +139,33 @@ class ipython_console(base_console, QtGui.QWidget):
 		"""See base_console."""
 
 		self.kernel.shell.push(_globals)
+
+	def setTheme(self):
+
+		"""
+		desc:
+			Sets the theme, based on the QProgEdit settings.
+		"""
+
+		pass
+		from QProgEdit import QColorScheme
+		if not hasattr(QColorScheme, cfg.qProgEditColorScheme):
+			debug.msg(u'Failed to set debug-output colorscheme')
+			return u''
+		cs = getattr(QColorScheme, cfg.qProgEditColorScheme)
+		self.control._highlighter.set_style(pygments_style_factory(cs))
+		qss = u'''QPlainTextEdit, QTextEdit {
+				background-color: %(Background)s;
+				color: %(Default)s;
+			}
+			.in-prompt { color: %(Prompt in)s; }
+			.in-prompt-number { font-weight: bold; }
+			.out-prompt { color: %(Prompt out)s; }
+			.out-prompt-number { font-weight: bold; }
+			''' % cs
+		self.control.style_sheet = qss
+		self.control._control.setFont(QtGui.QFont(cfg.qProgEditFontFamily,
+			cfg.qProgEditFontSize))
 
 	def setup(self, main_window):
 

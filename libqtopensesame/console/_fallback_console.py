@@ -19,7 +19,6 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 
 from libopensesame.py3compat import *
 import code
-import sys
 import time
 from PyQt4 import QtGui, QtCore
 from libopensesame import debug
@@ -88,8 +87,7 @@ class fallback_console(base_console, QtGui.QPlainTextEdit):
 		self.prompt = u">>> "
 		self.pyterm = pyterm(self)
 		self.setCursorWidth(8)
-		self.setTheme()
-		self.welcome()
+		self.appendPlainText(self.banner())
 		self.show_prompt()
 
 	def setTheme(self):
@@ -99,7 +97,7 @@ class fallback_console(base_console, QtGui.QPlainTextEdit):
 			Sets the theme, based on the QProgEdit settings.
 		"""
 
-		self.setFont(QtGui.QFont(cfg.qProgEditFontFamily, \
+		self.setFont(QtGui.QFont(cfg.qProgEditFontFamily,
 			cfg.qProgEditFontSize))
 		from QProgEdit import QColorScheme
 		if not hasattr(QColorScheme, cfg.qProgEditColorScheme):
@@ -117,40 +115,12 @@ class fallback_console(base_console, QtGui.QPlainTextEdit):
 		self.setStyleSheet(u'background-color: "%s"; color: "%s";' \
 			% (background, foreground))
 
-	def focusInEvent(self, e):
-
-		"""
-		desc:
-			Processes focus-in events to set the style of the debug window.
-
-		arguments:
-			e:
-				type:	QFocusEvent
-		"""
-
-		self.setTheme()
-		super(fallback_console, self).focusInEvent(e)
-
 	def clear(self):
 
 		"""See base_console."""
 
 		QtGui.QPlainTextEdit.clear(self)
 		self.show_prompt()
-
-	def welcome(self):
-
-		"""
-		desc:
-			Prints welcome information.
-		"""
-
-		s = u"Python %d.%d.%d" % (sys.version_info[0], sys.version_info[1], \
-			sys.version_info[2]) \
-			+ u"\nType \"help()\", \"copyright()\", \"credits()\" or \"license()\" for more information." \
-			+ u"\nType \"modules()\" for details about installed modules and version information." \
-			+ u"\nUse the \"print([msg])\" statement in inline_script items to print to this debug window."
-		self.insertPlainText(s)
 
 	def show_prompt(self, suffix=""):
 

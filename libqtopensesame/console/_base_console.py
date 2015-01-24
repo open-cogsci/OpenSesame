@@ -92,6 +92,20 @@ class base_console(base_subcomponent):
 
 		pass
 
+	def focusInEvent(self, e):
+
+		"""
+		desc:
+			Processes focus-in events to set the style of the debug window.
+
+		arguments:
+			e:
+				type:	QFocusEvent
+		"""
+
+		self.setTheme()
+		super(fallback_console, self).focusInEvent(e)
+
 	def release_stdout(self):
 
 		"""
@@ -123,7 +137,7 @@ class base_console(base_subcomponent):
 			Dummy function, that needs to exist.
 		"""
 
-		pass		
+		pass
 
 	def show_prompt(self):
 
@@ -134,6 +148,13 @@ class base_console(base_subcomponent):
 
 		pass
 
+	def setup(self, main_window):
+
+		"""See base_subcomponent."""
+
+		super(base_console, self).setup(main_window)
+		self.setTheme()
+
 	def suppress_stdout(self):
 
 		"""
@@ -143,3 +164,19 @@ class base_console(base_subcomponent):
 
 		sys.stdout = self.vault
 		sys.stderr = self.vault
+
+	def banner(self):
+
+		"""
+		returns:
+			A banner shown when initializing the debug window.
+		"""
+
+		s = u'''Python %d.%d.%d
+
+* Type "help()", "copyright()", "credits()" or "license()" for more information.
+* Type "print(modules())" for details about installed modules and version information.
+* Use the "print([msg])" function in inline_script items to print to this debug window.
+* Inspect inline_script variables when an experiment is finished.
+''' % (sys.version_info[0], sys.version_info[1], sys.version_info[2])
+		return s

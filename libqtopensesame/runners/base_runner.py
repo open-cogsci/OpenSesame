@@ -255,6 +255,7 @@ class base_runner(object):
 		"""
 
 		self.console.capture_stdout()
+		print(u'\n')
 		if not self.init_experiment(quick=quick, fullscreen=fullscreen,
 			auto_response=auto_response):
 			return
