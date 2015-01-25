@@ -104,7 +104,7 @@ class base_console(base_subcomponent):
 		"""
 
 		self.setTheme()
-		super(fallback_console, self).focusInEvent(e)
+		super(base_console, self).focusInEvent(e)
 
 	def release_stdout(self):
 
@@ -115,6 +115,16 @@ class base_console(base_subcomponent):
 
 		sys.stdout = sys.__stdout__
 		sys.stderr = sys.__stderr__
+
+	def reset(self):
+
+		"""
+		desc:
+			Resets the console, which clears the window and resets the
+			workspace.
+		"""
+
+		pass
 
 	def set_workspace_globals(self, _globals={}):
 

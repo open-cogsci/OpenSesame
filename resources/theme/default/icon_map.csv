@@ -53,7 +53,8 @@ button_browse_logfile,document-open,
 button_browse_pool,folder-open,16
 button_cancel,window-close,
 button_circle,os-circle,
-button_clear_stdout,edit-clear,
+button_clear_console,edit-clear,
+button_reset_console,view-refresh,
 button_close,window-close,
 button_colorpicker,text-css,16
 button_edit_script,utilities-terminal,16
@@ -62,7 +63,7 @@ button_fixdot,os-fixdot,
 button_forum,applications-internet,
 button_gabor,os-gabor,
 button_help_pool,help-contents,16
-button_help_stdout,help-contents,
+button_help_console,help-contents,
 button_help_variables,help-contents,
 button_image,os-image,
 button_line,os-line,
@@ -164,4 +165,3 @@ unsaved_changes,emblem-important,16
 unused,user-trash,
 video,video-x-generic,
 wizard,dialog-information,
-

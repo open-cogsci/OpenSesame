@@ -80,6 +80,7 @@ class config(object):
 		u'qProgEditValidate' : False,
 		u"quick_run_logfile": u"quickrun.csv",
 		u"recent_files" : u"",
+		u"reset_console_on_experiment_start" : True,
 		u"shortcut_itemtree" : u"Ctrl+1",
 		u"shortcut_tabwidget" : u"Ctrl+2",
 		u"shortcut_stdout" : u"Ctrl+3",

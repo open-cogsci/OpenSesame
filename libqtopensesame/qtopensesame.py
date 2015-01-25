@@ -153,8 +153,12 @@ class qtopensesame(QtGui.QMainWindow, base_component):
 		self.ui.action_show_stdout.triggered.connect(self.refresh_stdout)
 		self.ui.action_preferences.triggered.connect(
 			self.ui.tabwidget.open_preferences)
-		self.ui.button_help_stdout.clicked.connect(
+
+		# Setup console
+		self.ui.button_help_console.clicked.connect(
 			self.ui.tabwidget.open_stdout_help)
+		self.ui.button_reset_console.clicked.connect(
+			self.ui.console.reset)
 
 		# Setup the overview area
 		self.ui.dock_overview.show()

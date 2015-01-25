@@ -122,17 +122,19 @@ class ipython_console(base_console, QtGui.QWidget):
 
 		self.control._control.setFocus()
 
+	def reset(self):
+
+		"""See base_console."""
+
+		self.kernel.shell.reset()
+		self.kernel.shell.push(self.default_globals())
+		self.clear()
+
 	def show_prompt(self):
 
 		"""See base_console."""
 
 		self.control._show_interpreter_prompt()
-
-	def write(self, s):
-
-		"""See base_console."""
-
-		self.control._append_plain_text(str(s))
 
 	def set_workspace_globals(self, _globals={}):
 
@@ -173,3 +175,9 @@ class ipython_console(base_console, QtGui.QWidget):
 
 		super(ipython_console, self).setup(main_window)
 		self.kernel.shell.push(self.default_globals())
+
+	def write(self, s):
+
+		"""See base_console."""
+
+		self.control._append_plain_text(str(s))

@@ -19,7 +19,8 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 
 import os
 from PyQt4 import QtGui
-from libqtopensesame.misc import config, _
+from libqtopensesame.misc import _
+from libqtopensesame.misc.config import cfg
 from libopensesame import debug
 from libopensesame.exceptions import osexception
 from libopensesame.experiment import experiment
@@ -84,9 +85,8 @@ class base_runner(object):
 
 		remember_logfile = True
 		if quick:
-			logfile = os.path.join(config.get_config( \
-				u'default_logfile_folder'), config.get_config( \
-				u'quick_run_logfile'))
+			logfile = os.path.join(cfg.default_logfile_folder,
+				cfg.quick_run_logfile)
 			try:
 				open(logfile, u'w').close()
 			except:
@@ -101,8 +101,8 @@ class base_runner(object):
 				remember_logfile = False
 		else:
 			# Suggested filename
-			suggested_path = os.path.join(config.get_config( \
-				u'default_logfile_folder'), u'subject-%d.csv' % subject_nr)
+			suggested_path = os.path.join(cfg.default_logfile_folder,
+				u'subject-%d.csv' % subject_nr)
 			# Get the data file
 			csv_filter = u'Comma-separated values (*.csv)'
 			logfile = str(QtGui.QFileDialog.getSaveFileName( \
@@ -112,8 +112,8 @@ class base_runner(object):
 			# An empty string indicates that the dialogue was cancelled, in
 			# which case we fall back to a default location.
 			if logfile == u'':
-				logfile = os.path.join(config.get_config( \
-						'default_logfile_folder'), u'defaultlog.csv')
+				logfile = os.path.join(cfg.default_logfile_folder,
+					u'defaultlog.csv')
 			# If a logfile was provided, but it did not have a proper extension,
 			# we add a `.csv` extension.
 			else:
@@ -130,7 +130,7 @@ class base_runner(object):
 			return None
 		if remember_logfile:
 			# Remember the logfile folder for the next run
-			config.set_config('default_logfile_folder', os.path.dirname(logfile))
+			cfg.default_logfile_folder = os.path.dirname(logfile)
 		return logfile
 
 	def get_subject_nr(self, quick=False):
@@ -254,8 +254,10 @@ class base_runner(object):
 							enabled. (default=False)
 		"""
 
+		if cfg.reset_console_on_experiment_start:
+			self.console.reset()
 		self.console.capture_stdout()
-		print(u'\n')
+		self.console.write(u'\n')
 		if not self.init_experiment(quick=quick, fullscreen=fullscreen,
 			auto_response=auto_response):
 			return

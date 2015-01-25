@@ -216,7 +216,7 @@
             <number>0</number>
            </property>
            <item>
-            <widget class="QPushButton" name="button_help_stdout">
+            <widget class="QPushButton" name="button_help_console">
              <property name="sizePolicy">
               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                <horstretch>0</horstretch>
@@ -229,38 +229,28 @@
              <property name="text">
               <string/>
              </property>
-             <property name="icon">
-              <iconset>
-               <normaloff>:/icons/help.png</normaloff>:/icons/help.png</iconset>
-             </property>
-             <property name="iconSize">
-              <size>
-               <width>16</width>
-               <height>16</height>
-              </size>
-             </property>
              <property name="flat">
               <bool>false</bool>
              </property>
             </widget>
            </item>
            <item>
-            <widget class="QPushButton" name="button_clear_stdout">
+            <widget class="QPushButton" name="button_clear_console">
              <property name="toolTip">
               <string>Clear debug window</string>
              </property>
              <property name="text">
               <string/>
              </property>
-             <property name="icon">
-              <iconset>
-               <normaloff>:/icons/clear.png</normaloff>:/icons/clear.png</iconset>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="button_reset_console">
+             <property name="toolTip">
+              <string>Reset debug window</string>
              </property>
-             <property name="iconSize">
-              <size>
-               <width>16</width>
-               <height>16</height>
-              </size>
+             <property name="text">
+              <string/>
              </property>
             </widget>
            </item>
@@ -810,7 +800,7 @@
  <resources/>
  <connections>
   <connection>
-   <sender>button_clear_stdout</sender>
+   <sender>button_clear_console</sender>
    <signal>clicked()</signal>
    <receiver>console</receiver>
    <slot>clear()</slot>

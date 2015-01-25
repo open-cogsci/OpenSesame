@@ -120,6 +120,7 @@ class fallback_console(base_console, QtGui.QPlainTextEdit):
 		"""See base_console."""
 
 		QtGui.QPlainTextEdit.clear(self)
+		self.appendPlainText(self.banner())
 		self.show_prompt()
 
 	def show_prompt(self, suffix=""):
@@ -217,6 +218,14 @@ class fallback_console(base_console, QtGui.QPlainTextEdit):
 			QtGui.QApplication.processEvents()
 		self.collect_input = False
 		return self._input
+
+	def reset(self):
+
+		"""See base_console."""
+
+		self.pyterm.set_locals()
+		self.set_workspace_globals()
+		self.clear()
 
 	def write(self, s):
 
