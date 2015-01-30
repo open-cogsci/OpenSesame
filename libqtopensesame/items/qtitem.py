@@ -181,7 +181,6 @@ class qtitem(object):
 		self.header_item_icon = self.experiment.label_image(self.item_icon())
 		self.header_hbox.addWidget(self.header_item_icon)
 		self.header_hbox.addWidget(self.header)
-		self.header_hbox.addStretch()
 		self.header_hbox.setContentsMargins(0, 5, 0, 10)
 
 		# Maximize button
@@ -344,6 +343,7 @@ class qtitem(object):
 
 		debug.msg()
 		self.auto_edit_widget()
+		self.header.refresh()
 
 	def apply_edit_changes(self, *deprecated, **_deprecated):
 
