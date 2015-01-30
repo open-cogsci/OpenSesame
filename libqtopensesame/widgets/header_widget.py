@@ -48,6 +48,7 @@ class header_widget(base_widget):
 		self.edit_name.editingFinished.connect(self.apply_name)
 		self.edit_name.hide()
 		self.label_desc = QtGui.QLabel()
+		self.label_desc.setWordWrap(True)
 		self.edit_desc = QtGui.QLineEdit()
 		self.edit_desc.editingFinished.connect(self.apply_desc)
 		self.edit_desc.hide()
@@ -60,6 +61,7 @@ class header_widget(base_widget):
 		vbox.addWidget(self.label_desc)
 		vbox.addWidget(self.edit_desc)
 		self.refresh()
+		self.setSizePolicy(QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Fixed)
 		self.setLayout(vbox)
 
 	def refresh(self):
@@ -129,6 +131,10 @@ class header_widget(base_widget):
 		if self.label_desc.isVisible():
 			return
 		debug.msg()
+		description = unicode(self.edit_desc.text())
+		description = self.item.sanitize(description)
+		self.item.set(u'description', description)
+		self.label_desc.setText(description)
 		self.label_desc.show()
 		self.edit_desc.hide()
 		self.item.apply_edit_changes()

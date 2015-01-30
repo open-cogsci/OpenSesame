@@ -32,7 +32,7 @@ from libqtopensesame.misc.config import cfg
 class qtitem(QtCore.QObject):
 
 	"""Base class for the GUI controls of other items"""
-	
+
 	initial_view = u'controls'
 
 	def __init__(self):
@@ -180,7 +180,6 @@ class qtitem(QtCore.QObject):
 		self.header_item_icon = self.experiment.label_image(self.item_icon())
 		self.header_hbox.addWidget(self.header_item_icon)
 		self.header_hbox.addWidget(self.header)
-		self.header_hbox.addStretch()
 		self.header_hbox.setContentsMargins(0, 5, 0, 10)
 
 		# Maximize button
@@ -343,6 +342,7 @@ class qtitem(QtCore.QObject):
 
 		debug.msg()
 		self.auto_edit_widget()
+		self.header.refresh()
 
 	def apply_edit_changes(self, *deprecated, **_deprecated):
 
