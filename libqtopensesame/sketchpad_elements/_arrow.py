@@ -54,3 +54,7 @@ class arrow(base_line_arrow, arrow_runtime):
 		cls.pos_start = None
 		sketchpad.canvas.removeItem(cls.preview)
 		return e
+
+	@staticmethod
+	def requires_arrow_size():
+		return True
