@@ -721,9 +721,9 @@ class tree_overview(base_subcomponent, QtGui.QTreeWidget):
 		for i in range(self.topLevelItemCount()):
 			self.topLevelItem(i).set_icon(name, icon)
 		self.itemChanged.connect(self.text_edited)
-		
+
 	def start_edit_runif(self):
-		
+
 		"""
 		desc:
 			Edits the run-if statement. This is not applicable in overview mode.
@@ -739,9 +739,9 @@ class tree_overview(base_subcomponent, QtGui.QTreeWidget):
 			# run-if statement.
 			return
 		self.editItem(target_treeitem, 1)
-			
+
 	def start_rename(self):
-		
+
 		"""
 		desc:
 			Edits the item name.

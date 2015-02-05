@@ -276,7 +276,7 @@ class loop(qtstructure_item, qtitem, loop_runtime):
 				return
 		for i in self.matrix.keys():
 			if i >= cycles:
-				del self.matrix[i]		
+				del self.matrix[i]
 		self.lock_cycles = False
 		self.set(u"cycles", cycles)
 
@@ -486,6 +486,7 @@ class loop(qtstructure_item, qtitem, loop_runtime):
 		self.loop_table = loop_table.loop_table(self, self.cycles,
 			self.cyclevar_count())
 		self.edit_vbox.addWidget(self.loop_table)
+		self.set_focus_widget(None)
 
 	def update_widget_state(self):
 
@@ -625,6 +626,12 @@ class loop(qtstructure_item, qtitem, loop_runtime):
 			self.experiment.items[self.item].build_item_tree(widget, items,
 				max_depth=max_depth-1)
 		return items
+
+	def children(self):
+
+		"""See qtitem."""
+
+		return [self.item] + self.experiment.items[self.item].children()
 
 	def is_child_item(self, item):
 
