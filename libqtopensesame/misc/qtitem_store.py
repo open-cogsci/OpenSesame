@@ -50,7 +50,7 @@ class qtitem_store(item_store):
 	@property
 	def itemtree(self):
 		return self.experiment.main_window.itemtree
-		
+
 	@property
 	def extension_manager(self):
 		return self.main_window.extension_manager
@@ -70,11 +70,11 @@ class qtitem_store(item_store):
 		del self.__items__[name]
 		for _name in self:
 			self[_name].remove_child_item(name, index=-1)
-		
+
 	def new(self, _type, name=None, script=None):
-		
+
 		"""See item_store."""
-		
+
 		item = super(qtitem_store, self).new(_type, name=name, script=script)
 		self.main_window.set_unsaved(True)
 		return item
@@ -155,25 +155,16 @@ class qtitem_store(item_store):
 
 		self.itemtree.set_icon(name, icon)
 
-	def is_unused(self, name):
+	def used(self):
 
 		"""
-		arguments:
-			name:	An item name.
-			type:	unicode
-
 		returns:
-			desc:	True if the item is unused, False otherwise.
-			type:	bool
+			desc:	A list of used item names.
+			type:	list
 		"""
 
-		for _name in self:
-			if self[_name].is_child_item(name):
-				if not self.is_unused(_name):
-					return False
-		if name == self.experiment.start:
-			return False
-		return True
+		return [self.experiment.start] \
+			+ self.experiment.items[self.experiment.start].children()
 
 	def unused(self):
 
@@ -183,8 +174,5 @@ class qtitem_store(item_store):
 			type:	list
 		"""
 
-		l = []
-		for name in self:
-			if self.is_unused(name):
-				l.append(name)
-		return l
+		_used = self.used()
+		return filter(lambda item: item not in _used, self.__items__.keys())

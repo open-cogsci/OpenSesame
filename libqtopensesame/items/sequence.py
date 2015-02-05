@@ -144,6 +144,15 @@ class sequence(qtstructure_item, qtplugin, sequence_runtime):
 
 		self.items[index] = self.items[index][0], cond
 
+	def children(self):
+
+		"""See qtitem."""
+
+		_children = []
+		for item, cond in self.items:
+			_children += [item] + self.experiment.items[item].children()
+		return _children
+
 	def is_child_item(self, item):
 
 		"""See qtitem."""
