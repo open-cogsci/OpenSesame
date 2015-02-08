@@ -49,7 +49,6 @@ class variable_inspector(base_widget):
 			Refresh the variable-inspector table.
 		"""
 
-		debug.msg()
 		if self.unsorted:
 			self.ui.table_variables.sortItems(0, QtCore.Qt.AscendingOrder)
 			self.unsorted = False

@@ -117,7 +117,6 @@ class header_widget(base_widget):
 
 		if self.label_name.isVisible():
 			return
-		debug.msg()
 		self.label_name.show()
 		self.edit_name.hide()
 		self.item_store.rename(self.item.name, str(self.edit_name.text()))
@@ -132,7 +131,6 @@ class header_widget(base_widget):
 
 		if self.label_desc.isVisible():
 			return
-		debug.msg()
 		description = unicode(self.edit_desc.text())
 		description = self.item.sanitize(description)
 		self.item.set(u'description', description)

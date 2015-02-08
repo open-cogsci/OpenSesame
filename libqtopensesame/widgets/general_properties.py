@@ -117,7 +117,6 @@ class general_properties(base_widget):
 			return
 		self.lock = True
 
-		debug.msg()
 		rebuild_item_tree = False
 		self.main_window.set_busy(True)
 		# Set the title and the description
@@ -198,8 +197,6 @@ class general_properties(base_widget):
 		desc:
 			Updates the controls of the general tab.
 		"""
-
-		debug.msg()
 
 		# Lock the general tab to prevent a recursive loop
 		self.lock = True

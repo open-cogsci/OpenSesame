@@ -80,8 +80,6 @@ class preferences_widget(base_widget):
 		if self.lock:
 			return
 		self.lock = True
-		debug.msg()
-
 		self.ui.checkbox_autoresponse.setChecked(
 			self.experiment.auto_response)
 		self.ui.checkbox_toolbar_text.setChecked(
@@ -119,8 +117,6 @@ class preferences_widget(base_widget):
 		if self.lock:
 			return
 		self.lock = True
-		debug.msg()
-
 		self.experiment.auto_response = \
 			self.ui.checkbox_autoresponse.isChecked()
 		self.main_window.ui.action_enable_auto_response.setChecked(

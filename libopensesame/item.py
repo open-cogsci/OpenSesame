@@ -308,7 +308,6 @@ class item(object):
 		string	--	The definition string.
 		"""
 
-		debug.msg()
 		self.reset()
 		textblock_var = None
 		self.variables = {}

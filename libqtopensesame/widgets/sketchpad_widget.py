@@ -339,7 +339,7 @@ class sketchpad_widget(base_widget):
 		self.ui.widget_settings_scale.setVisible(False)
 		self.ui.widget_settings_fill.setVisible(False)
 		self.ui.widget_settings_center.setVisible(False)
-		self.ui.widget_settings_show_if.setVisible(False)		
+		self.ui.widget_settings_show_if.setVisible(False)
 		self.ui.graphics_view.setCursor(self.arrow_cursor)
 
 	def select_element_tool(self, element):

@@ -342,7 +342,6 @@ class qtitem(base_qtobject):
 			This function updates the controls based on the item state.
 		"""
 
-		debug.msg()
 		self.auto_edit_widget()
 		self.header.refresh()
 
@@ -353,7 +352,6 @@ class qtitem(base_qtobject):
 			Applies changes to the graphical controls.
 		"""
 
-		debug.msg()
 		self.auto_apply_edit_changes()
 		self.update_script()
 		self.main_window.set_unsaved(True)
@@ -366,7 +364,6 @@ class qtitem(base_qtobject):
 			Applies changes to the script, by re-parsing the item from string.
 		"""
 
-		debug.msg()
 		old_script = self.to_string()
 		new_script = self._script_widget.text()
 		try:
@@ -526,7 +523,6 @@ class qtitem(base_qtobject):
 
 		"""Update the GUI controls based on the auto-widgets"""
 
-		debug.msg()
 		for var, edit in self.auto_line_edit.items():
 			if self.has(var):
 				edit.setText(self.unistr(self.get(var, _eval=False)))
@@ -637,7 +633,6 @@ class qtitem(base_qtobject):
 		rebuild -- deprecated (does nothing) (default=True)
 		"""
 
-		debug.msg()
 		for var, edit in self.auto_line_edit.items():
 			if edit.isEnabled() and isinstance(var, basestring):
 				val = str(edit.text()).strip()

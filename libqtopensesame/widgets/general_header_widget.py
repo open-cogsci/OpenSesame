@@ -65,7 +65,6 @@ class general_header_widget(header_widget):
 
 		if self.label_name.isVisible():
 			return
-		debug.msg()
 		self.label_name.show()
 		self.edit_name.hide()
 		self.general_tab.apply_changes()
@@ -81,7 +80,6 @@ class general_header_widget(header_widget):
 
 		if self.label_desc.isVisible():
 			return
-		debug.msg()
 		self.label_desc.show()
 		self.edit_desc.hide()
 		self.general_tab.apply_changes()

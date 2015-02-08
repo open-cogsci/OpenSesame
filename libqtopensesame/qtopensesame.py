@@ -299,8 +299,6 @@ class qtopensesame(QtGui.QMainWindow, base_component):
 
 		"""Restore the current window to the saved state"""
 
-		debug.msg()
-
 		# Force configuration options that were set via the command line
 		cfg.parse_cmdline_args(self.options._config)
 		self.recent_files = []
@@ -351,7 +349,6 @@ class qtopensesame(QtGui.QMainWindow, base_component):
 		if self.options.start_clean:
 			debug.msg(u'Not restoring window state')
 			return
-		debug.msg()
 		self.restoreState(cfg._initial_window_state)
 		self.restoreGeometry(cfg._initial_window_geometry)
 
@@ -359,7 +356,6 @@ class qtopensesame(QtGui.QMainWindow, base_component):
 
 		"""Restores the state of the current window"""
 
-		debug.msg()
 		cfg.size = self.size()
 		cfg.pos = self.pos()
 		cfg._initial_window_geometry = self.saveGeometry()
@@ -888,7 +884,6 @@ class qtopensesame(QtGui.QMainWindow, base_component):
 
 		# Redo the get_ready loop until no items report having done
 		# anything
-		debug.msg()
 		redo = True
 		done = []
 		while redo:
