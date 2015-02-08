@@ -27,51 +27,16 @@ debug output, simply use the following structure:
 	debug.print(u'This is a debug message')
 """
 
-import sys
-import os.path
-import inspect
 from libopensesame.py3compat import *
+import sys
 
-def parse_stack(st):
+stack_lvl = 0
+msg_nr = 0
 
-	"""
-	desc:
-		Generates a nice looking stacktrace for a single item.
+def indent(d=1):
 
-	arguments:
-		st:		A stacktrace item.
-
-	returns:
-		A string for the stacktrace item.
-	"""
-
-	return u'%s(%d).%s' % (os.path.basename(st[1]), st[2], st[3])
-
-def format_stack(st, skip=0):
-
-	"""
-	desc:
-		Generates a nice looking full stracktrace.
-
-	arguments:
-		st:		A stacktrace object.
-
-	keywords:
-		skip:	Indicates whether any initial stacktrace items should be
-				skipped.
-
-	returns:
-		A string corresponding to the stacktrace.
-	"""
-
-	st = st[skip:]
-	st.reverse()
-	i = 1
-	s = u''
-	while len(st) > 0:
-		s += u' %.3d\t%s\n' % (i, parse_stack(st.pop()))
-		i += 1
-	return s
+	global stack_lvl
+	stack_lvl += d
 
 def _msg(msg=u'', reason=None):
 
@@ -84,22 +49,19 @@ def _msg(msg=u'', reason=None):
 		reason:	A reason for the message.
 	"""
 
-	global stack, max_stack
-	st = inspect.stack()
+	global stack, max_stack, msg_nr
 	if reason is not None:
-		print(u'[%s]' % reason)
+		msg = u'[%s] %s' % (reason, msg)
 	# The terminal may not like anything but plain ASCII
 	if not isinstance(msg, basestring):
 		msg = str(msg)
 	msg = safe_encode(msg, enc=u'ascii', errors=u'ignore')
 	try:
-		print(u'%s: %s' % (parse_stack(st[1]), msg))
+		print(u'%.6d %s%s' % (msg_nr, u'| '*stack_lvl, msg))
 	except:
 		# This should not happen!
-		print(u'%s: Failed to print message to debug window' % \
-			parse_stack(st[1]))
-	if stack:
-		print(format_stack(st, skip=2))
+		print(u'%.6d %sFailed to print message' % (msg_nr, u'| '*stack_lvl))
+	msg_nr += 1
 
 def _print(msg):
 
@@ -129,11 +91,6 @@ if enabled:
 else:
 	# Replace the message function with a dummy function to turn off debugging
 	# output
-	stack = False
 	msg = lambda msg=None, reason=None: None
-stack = '--stack' in sys.argv or '-s' in sys.argv
 if enabled:
-	if stack:
-		_msg(u'debug mode enabled (stacktrace on)')
-	else:
-		_msg(u'debug mode enabled (stacktrace off)')
+	_msg(u'debug mode enabled')

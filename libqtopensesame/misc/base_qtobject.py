@@ -26,6 +26,7 @@ if '--debug' in sys.argv:
 	import types
 	import time
 	from decorator import decorator
+	from libopensesame import debug
 
 	i = 0
 	lvl = 0
@@ -39,16 +40,14 @@ if '--debug' in sys.argv:
 		"""
 
 		def inner(fnc, *args, **kwargs):
-			global i, lvl
-			print('%.5d: call %s%s.%s()' % (i, '| '*lvl, cls, name))
-			i += 1
-			lvl += 1
+			debug.msg(u'call %s.%s()' % (cls, name))
+			debug.indent(1)
 			t0 = time.time()
 			retval = fnc(*args, **kwargs)
 			t1 = time.time()
-			lvl -= 1
-			print('       done %s%s.%s() %.2f ms' % ('| '*lvl, cls, name,
-				1000.*(t1-t0)))
+			debug.indent(-1)
+			dur = 1000.*(t1-t0)
+			debug.msg(u'done %s.%s() in %.2f ms' % (cls, name, dur))
 			return retval
 
 		return decorator(inner, fnc)
@@ -61,13 +60,15 @@ if '--debug' in sys.argv:
 		"""
 
 		def __new__(cls, name, bases, dict):
-			global i, lvl
-			print(u'%.5d: new  %s%s' % (i, '| '*lvl, name))
-			i += 1
+			debug.msg(u'new  %s' % name)
 			cls = pyqtWrapperType.__new__(cls, name, bases, dict)
-			for key, val in cls.__dict__.items():
-				if isinstance(val, types.FunctionType):
-					setattr(cls, key, debug_decorator(name, key, val))
+			# Don't decorate the console objects, because it leads to infinite
+			# recursion: They generate a write call everytime their write
+			# function is called.
+			if u'console' not in name:
+				for key, val in cls.__dict__.items():
+					if isinstance(val, types.FunctionType):
+						setattr(cls, key, debug_decorator(name, key, val))
 			return cls
 
 	# Use the base_qtmetaclass in a way that is compatible with Python 2 and 3.
