@@ -30,8 +30,9 @@ from libqtopensesame.widgets.qtitem_splitter import qtitem_splitter
 from libqtopensesame.widgets import header_widget, user_hint_widget
 from libqtopensesame.misc import _
 from libqtopensesame.misc.config import cfg
+from libqtopensesame.misc.base_qtobject import base_qtobject
 
-class qtitem(object):
+class qtitem(base_qtobject):
 
 	"""Base class for the GUI controls of other items"""
 

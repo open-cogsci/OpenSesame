@@ -23,8 +23,9 @@ import os
 from PyQt4 import QtCore, QtGui, uic
 from libopensesame import debug
 from libopensesame.exceptions import osexception
+from libqtopensesame.misc.base_qtobject import base_qtobject
 
-class base_component(object):
+class base_component(base_qtobject):
 
 	"""
 	desc:
