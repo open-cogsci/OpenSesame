@@ -742,6 +742,16 @@ class qtitem(object):
 			return default
 		return cond
 
+	def children(self):
+
+		"""
+		returns:
+			desc:	A list of children, including grand children, and so on.
+			type:	list
+		"""
+
+		return []
+
 	def is_child_item(self, item_name):
 
 		"""
