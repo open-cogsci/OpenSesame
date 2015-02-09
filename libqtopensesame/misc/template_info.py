@@ -21,6 +21,7 @@ templates = [
 	('templates/default.opensesame', 'Default template'),
 	('templates/extended_template.opensesame', 'Extended template'),
 	('templates/android_template.opensesame', 'Runtime for Android template'),
+	('templates/pygaze_template.opensesame', 'PyGaze eye-tracking template'),
 	('templates/eco_alt_template.opensesame.tar.gz',
 			'Stimulus set: an ecological alternative to Snodgrass & Vanderwart'),
 	('templates/gaped_template.opensesame.tar.gz', 

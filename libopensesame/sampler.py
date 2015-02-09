@@ -27,18 +27,9 @@ class sampler(item.item, generic_response.generic_response):
 
 	description = u'Plays a sound file in .wav or .ogg format'
 
-	def __init__(self, name, experiment, string = None):
+	def reset(self):
 
-		"""
-		Constructor.
-
-		Arguments:
-		name 		--	The name of the item.
-		experiment 	--	The experiment.
-
-		Keyword arguments:
-		string		-- 	The item definition string. (default=None)
-		"""
+		"""See item."""
 
 		self.sample = u''
 		self.pan = 0
@@ -48,7 +39,6 @@ class sampler(item.item, generic_response.generic_response):
 		self.stop_after = 0
 		self.duration = u'sound'
 		self.block = False
-		item.item.__init__(self, name, experiment, string)
 
 	def prepare_duration_sound(self):
 

@@ -96,17 +96,18 @@ class qtplugin(qtitem.qtitem):
 
 		if tooltip != None:
 			try:
-				widget.setToolTip(_(tooltip))
+				widget.setToolTip(_(tooltip, context=self.name))
 			except:
 				pass
 		if type(min_width) == int:
 			widget.setMinimumWidth(min_width)
 		row = self.edit_grid.rowCount()
-		self.edit_grid.addWidget(QtGui.QLabel(_(label)), row, 0)
+		self.edit_grid.addWidget(QtGui.QLabel(_(label, context=self.name)), row, 0)
 		self.edit_grid.addWidget(widget, row, 1)
+		self.set_focus_widget(widget)
 
-	def add_line_edit_control(self, var, label, tooltip=None, default=None, \
-		min_width=None):
+	def add_line_edit_control(self, var, label, tooltip=None, default=None,
+		min_width=None, validator=None):
 
 		"""
 		Adds a QLineEdit control that is linked to a variable.
@@ -119,6 +120,7 @@ class qtplugin(qtitem.qtitem):
 		tooltip 	--	A tooltip text. (default=None)
 		default 	--	DEPRECATED
 		min_width 	--	A minimum width for the widget. (default=None)
+		validator	--
 
 		Returns:
 		A QLineEdit widget.
@@ -126,6 +128,8 @@ class qtplugin(qtitem.qtitem):
 
 		edit = QtGui.QLineEdit()
 		edit.editingFinished.connect(self.apply_edit_changes)
+		if validator != None:
+			edit.setValidator(validator)
 		self.add_control(label, edit, tooltip, min_width)
 		if var != None:
 			self.auto_line_edit[var] = edit
@@ -147,8 +151,8 @@ class qtplugin(qtitem.qtitem):
 		A QCheckBox widget.
 		"""
 
-		checkbox = QtGui.QCheckBox(_(label))
-		checkbox.toggled.connect(self.apply_edit_changes)
+		checkbox = QtGui.QCheckBox(_(label, context=self.name))
+		checkbox.clicked.connect(self.apply_edit_changes)
 		self.add_control('', checkbox, tooltip)
 		if var != None:
 			self.auto_checkbox[var] = checkbox
@@ -175,7 +179,7 @@ class qtplugin(qtitem.qtitem):
 		A color_edit widget.
 		"""
 
-		edit = color_edit.color_edit()
+		edit = color_edit.color_edit(self.main_window)
 		edit.initialize(self.experiment)
 		QtCore.QObject.connect(edit, QtCore.SIGNAL('set_color'), \
 			self.apply_edit_changes)
@@ -204,7 +208,7 @@ class qtplugin(qtitem.qtitem):
 		combobox = QtGui.QComboBox()
 		for o in options:
 			combobox.addItem(o)
-		combobox.currentIndexChanged.connect(self.apply_edit_changes)
+		combobox.activated.connect(self.apply_edit_changes)
 		self.add_control(label, combobox, tooltip)
 		if var != None:
 			self.auto_combobox[var] = combobox
@@ -284,7 +288,7 @@ class qtplugin(qtitem.qtitem):
 			rlabel = QtGui.QLabel()
 			rlabel.setText(right_label)
 			layout.addWidget(rlabel)
-		slider.valueChanged.connect(self.apply_edit_changes)
+		slider.sliderMoved.connect(self.apply_edit_changes)
 		if var != None:
 			self.auto_slider[var] = slider
 		widget = QtGui.QWidget()
@@ -357,12 +361,15 @@ class qtplugin(qtitem.qtitem):
 			lang = u'python'
 		else:
 			lang = u'text'
-		qprogedit = QTabManager(handler=self.apply_edit_changes, defaultLang= \
-			lang, cfg=cfg, focusOutHandler=self.apply_edit_changes)
-		qprogedit.addTab(label)
+		qprogedit = QTabManager(cfg=cfg)
+		qprogedit.focusLost.connect(self.apply_edit_changes)
+		qprogedit.handlerButtonClicked.connect(self.apply_edit_changes)
+		qprogedit.addTab(_(label, context=self.name)).setLang(lang)
+
 		if var != None:
 			self.auto_editor[var] = qprogedit
 		self.edit_vbox.addWidget(qprogedit)
+		self.set_focus_widget(qprogedit)
 		return qprogedit
 
 	def add_text(self, msg):
@@ -378,10 +385,29 @@ class qtplugin(qtitem.qtitem):
 		"""
 
 		row = self.edit_grid.rowCount()
-		label = QtGui.QLabel(_(msg))
+		label = QtGui.QLabel(_(msg, context=self.name))
 		label.setWordWrap(True)
 		self.edit_vbox.addWidget(label)
 		return label
+
+	def add_widget(self, w):
+
+		"""
+		desc:
+			Adds a QWidget to the controls.
+
+		arguments:
+			w:
+				desc:	A widget.
+				type:	QWidget
+
+		returns:
+			desc:		The widget.
+			type:		QWidget
+		"""
+
+		self.edit_vbox.addWidget(w)
+		return w
 
 	def add_stretch(self):
 
@@ -406,7 +432,7 @@ class qtplugin(qtitem.qtitem):
 		A QPushButton widget.
 		"""
 
-		button_apply = QtGui.QPushButton(_(label))
+		button_apply = QtGui.QPushButton(_(label, context=self.name))
 		button_apply.setIcon(self.experiment.icon(icon))
 		button_apply.setIconSize(QtCore.QSize(16, 16))
 		button_apply.clicked.connect(self.apply_edit_changes)
@@ -449,7 +475,7 @@ class qtplugin(qtitem.qtitem):
 		"""
 
 		for var, qprogedit in self.auto_editor.iteritems():
-			if qprogedit.isModified():
+			if qprogedit.isAnyModified():
 				debug.msg(u'applying pending editor changes')
 				self.apply_edit_changes()
 				return True

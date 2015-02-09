@@ -1,3 +1,5 @@
+#-*- coding:utf-8 -*-
+
 """
 This file is part of OpenSesame.
 
@@ -22,6 +24,45 @@ import os
 
 class libsrbox:
 
+	"""
+	desc: |
+		If you insert the srbox plugin at the start of your experiment, an
+		instance of `libsrbox` automatically becomes part of the experiment
+		object and can be accessed from within an inline_script item as
+		`exp.srbox`.
+
+		__Important note 1:__
+
+		If you do not specify a device, the plug-in will try to autodetect the
+		SR Box port. However, on some systems this freezes the experiment, so
+		it is better to explicitly specify a device.
+
+		__Important note 2:__
+
+		You need to call [libsrbox.start] to put the SR Box in sending mode,
+		before calling [libsrbox.get_button_press] to collect a button press.
+
+		__Function list:__
+
+		%--
+		toc:
+			mindepth: 2
+			maxdepth: 2
+		--%
+
+		__Example:__
+
+		~~~ {.python}
+		t0 = self.time()
+		exp.srbox.start()
+		t1, buttonlist = exp.srbox.get_button_press(allowed_buttons=[1,2])
+		if 1 in buttonlist:
+			response_time = t1 - t0
+			print('Button 1 was pressed in %d ms!' % response_time)
+		exp.srbox.stop()
+		~~~
+	"""
+
 	# The PST sr box only supports five buttons, but some of the VU boxes use
 	# higher button numbers
 	BUTTON1 = int('11111110', 2)
@@ -35,15 +76,22 @@ class libsrbox:
 
 	def __init__(self, experiment, dev=None):
 
-		"""<DOC>
-		Constructor. Connects to the SR Box.
+		"""
+		desc:
+			Constructor. An `srbox` object is created automatically by the
+			`srbox` plug-in, and you do not generally need to call the
+			constructor yourself.
 
-		Arguments:
-		experiment -- Opensesame experiment.
+		arguments:
+			experiment:
+				desc:	An Opensesame experiment.
+				type:	experiment
 
-		Keywords arguments:
-		dev -- The srbox device port or None for auto-detect (default=None).
-		</DOC>"""
+		keywowrds:
+			dev:
+				desc:	The srbox device port or `None` for auto-detect.
+				type:	[str, unicode, NoneType]
+		"""
 
 		self.experiment = experiment
 		self._srbox = None
@@ -97,27 +145,26 @@ class libsrbox:
 
 	def send(self, ch):
 
-		"""<DOC>
-		Sends a single character.
+		"""
+		desc:
+			Sends a single character to the SR Box.
 
-		Arguments:
-		ch -- The character to send.
-		</DOC>"""
+		arguments:
+			ch:
+				desc:	The character to send.
+				type:	str
+		"""
 
 		self._srbox.write(ch)
 
 	def start(self):
 
-		"""<DOC>
-		Turns on sending mode, to start giving output.
-
-		Example:
-		>>> exp.srbox.start()
-		>>> timestamp, buttonlist = exp.srbox.get_button_press(allowed_buttons=[1,2])
-		>>> if 1 in buttonlist:
-		>>> 		print('Button 1 was pressed!')
-		>>> exp.srbox.stop()
-		</DOC>"""
+		"""
+		desc:
+			Turns on sending mode, so that the SR Box starts to send output.
+			The SR Box must be in sending mode when you call
+			[libsrbox.get_button_press].
+		"""
 
 		# Write the start byte
 		self._srbox.flushOutput()
@@ -126,16 +173,10 @@ class libsrbox:
 
 	def stop(self):
 
-		"""<DOC>
-		Turns off sending mode, to stop giving output.
-
-		Example:
-		>>> exp.srbox.start()
-		>>> timestamp, buttonlist = exp.srbox.get_button_press(allowed_buttons=[1,2])
-		>>> if 1 in buttonlist:
-		>>> 		print('Button 1 was pressed!')
-		>>> exp.srbox.stop()
-		</DOC>"""
+		"""
+		desc:
+			Turns off sending mode, so that the SR Box stops giving output.
+		"""
 
 		# Write the stop byte and flush the input
 		self._srbox.flushOutput()
@@ -144,26 +185,26 @@ class libsrbox:
 
 	def get_button_press(self, allowed_buttons=None, timeout=None):
 
-		"""<DOC>
-		Gets a button press from the SR box.
+		"""
+		desc:
+			Collect a button press from the SR box. This function will return
+			right away if a button is already pressed.
 
-		Keywords arguments:
-		allowed_buttons -- A list of buttons that are accepted or None to accept #
-						   all buttons. Valid buttons are integers 1 through 8. #
-						   (default=None)
-		timeout -- A timeout value or None for no timeout. (default=None)
+		keywords:
+			allowed_buttons:
+				desc:	A list of buttons that are accepted or `None` to accept
+						all buttons. Valid buttons are integers 1 through 8.
+				type:	[list, NoneType]
+			timeout:
+				desc:	A timeout value in milliseconds or `None` for no
+						timeout.
+				type:	[int, float, NoneType]
 
-		Returns:
-		A timestamp, buttonlist tuple. The buttonlist consists of a list of #
-		button numbers.
-
-		Example:
-		>>> exp.srbox.start()
-		>>> timestamp, buttonlist = exp.srbox.get_button_press(allowed_buttons=[1,2])
-		>>> if 1 in buttonlist:
-		>>> 		print('Button 1 was pressed!')
-		>>> exp.srbox.stop()
-		</DOC>"""
+		returns:
+			desc:	A timestamp, buttonlist tuple. The buttonlist consists of a
+					list of button numbers.
+			type:	tuple
+		"""
 
 		c = self.experiment.time()
 		t = c
@@ -206,9 +247,9 @@ class libsrbox:
 
 	def close(self):
 
-		"""<DOC> TODO
-		Closes the connection to the srbox. This is (sometimes?) required in #
-		order to re-use the SR Box in the same session of OpenSesame.
-		</DOC>"""
+		"""
+		desc:
+			Closes the connection to the srbox.
+		"""
 
 		self._srbox.close()

@@ -19,76 +19,82 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 
 from libopensesame import debug
 from libqtopensesame.misc import config, _
+from libqtopensesame.widgets.base_widget import base_widget
 from PyQt4 import QtGui, QtCore
 
-class unused_widget(QtGui.QWidget):
+class unused_widget(base_widget):
 
-	"""The unused items widget"""
+	"""
+	desc:
+		The unused items widget.
+	"""
 
-	def __init__(self, parent=None):
+	tab_name = u'__unused__'
+
+	def __init__(self, main_window):
 
 		"""
-		Constructor.
+		desc:
+			Constructor.
 
-		Keywords arguments:
-		parent	--	The parent QWidget. (default=None)
+		arguments:
+			main_window:
+				desc:	The main-window object.
+				type:	qtopensesame
 		"""
-				
-		self.main_window = parent
-		self.experiment = self.main_window.experiment
-		QtGui.QWidget.__init__(self, parent)
 
-		# Set the header, with the icon, label and script button
+		super(unused_widget, self).__init__(main_window)
 		header_hbox = QtGui.QHBoxLayout()
-		header_hbox.addWidget(self.experiment.label_image(u"unused"))
+		header_hbox.addWidget(self.theme.qlabel(u"unused"))
 		header_label = QtGui.QLabel()
 		header_label.setText(_(u"<b><font size='5'>Unused</font></b>"))
 		header_hbox.addWidget(header_label)
 		header_hbox.addStretch()
-		header_widget = QtGui.QWidget()
-		header_widget.setLayout(header_hbox)
-
-		purge_button = QtGui.QPushButton(self.experiment.icon(u"purge"), \
+		user_hint_widget = QtGui.QWidget()
+		user_hint_widget.setLayout(header_hbox)
+		self.purge_button = QtGui.QPushButton(self.theme.qicon(u"purge"),
 			_(u"Permanently delete unused items"))
-		purge_button.setIconSize(QtCore.QSize(16, 16))
-		QtCore.QObject.connect(purge_button, QtCore.SIGNAL(u"clicked()"), \
-			self.purge_unused)
-
+		self.purge_button.setIconSize(QtCore.QSize(16, 16))
+		self.purge_button.clicked.connect(self.purge_unused)
 		purge_hbox = QtGui.QHBoxLayout()
-		purge_hbox.addWidget(purge_button)
+		purge_hbox.addWidget(self.purge_button)
 		purge_hbox.addStretch()
 		purge_widget = QtGui.QWidget()
 		purge_widget.setLayout(purge_hbox)
-
 		vbox = QtGui.QVBoxLayout()
-		vbox.addWidget(header_widget)
+		vbox.addWidget(user_hint_widget)
 		vbox.addWidget(purge_widget)
 		vbox.addStretch()
-		
 		self.setLayout(vbox)
 		self.__unused_tab__ = True
 
 	def purge_unused(self):
 
-		"""Remove all unused items from the items list"""
+		"""
+		desc:
+			Purges all unused items.
+		"""
 
 		# Ask confirmation
-		resp = QtGui.QMessageBox.question(self.main_window.ui.centralwidget, \
-			_(u"Permanently delete items?"), \
-			_(u"Are you sure you want to permanently delete all unused items? This action cannot be undone."), \
+		resp = QtGui.QMessageBox.question(self.main_window.ui.centralwidget,
+			_(u"Permanently delete items?"),
+			_(u"Are you sure you want to permanently delete all unused items? "
+			u"This action cannot be undone."),
 			QtGui.QMessageBox.Yes, QtGui.QMessageBox.No)
 		if resp == QtGui.QMessageBox.No:
 			return
-		
-		# We need a loop, because items may become unused
-		# by deletion of their unused parent items
-		while len(self.main_window.experiment.unused_items) > 0:
-			for item in self.main_window.experiment.unused_items:
-				if item in self.main_window.experiment.items:
-					del self.main_window.experiment.items[item]
-			self.main_window.experiment.build_item_tree()
-						
-		# Notify dispatch
-		self.main_window.dispatch.event_structure_change.emit(u'')		
-		self.main_window.ui.tabwidget.close_all()
-		self.main_window.ui.tabwidget.open_general()
+		for item_name in self.experiment.items.unused():
+			self.experiment.items[item_name].close_tab()
+			del self.experiment.items[item_name]
+		self.experiment.build_item_tree()
+		self.purge_button.setDisabled(True)
+		self.extension_manager.fire(u'purge_unused_items')
+
+	def on_activate(self):
+
+		"""
+		desc:
+			Is called when the widget becomes visible.
+		"""
+
+		self.purge_button.setDisabled(len(self.experiment.items.unused()) == 0)

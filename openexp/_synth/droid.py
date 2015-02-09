@@ -17,18 +17,13 @@ You should have received a copy of the GNU General Public License
 along with openexp.  If not, see <http://www.gnu.org/licenses/>.
 """
 
+from openexp._synth import synth
 from libopensesame.exceptions import osexception
 
-class droid(object):
+class droid(synth.synth):
 
-	"""The synth generates a sound"""
-	
-	def __init__(self, experiment, **keywords):
-	
-		"""See openexp._synth.legacy"""
+	def __init__(self, experiment, osc="sine", freq=440, length=100, attack=0,
+		decay=5):
 
-		raise osexception( \
+		raise osexception(
 			'The synth is not supported on the droid back-end, sorry!')
-		
-
-		

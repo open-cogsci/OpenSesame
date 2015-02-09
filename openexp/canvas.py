@@ -22,105 +22,134 @@ import tempfile
 import pygame
 import os
 
-temp_files = [] # Contains a list of temporary files that should be cleaned up
+ # A list of temporary files that should be cleaned up.
+temp_files = []
 
-class canvas:
+def canvas(experiment, *arglist, **kwdict):
 
-	"""A 'magic' class that morphs into the approriate backend from openexp._canvas"""
+	"""
+	desc:
+		A factory that returns a back-end specific canvas object.
 
-	def __init__(self, experiment, bgcolor=None, fgcolor=None, auto_prepare=True):
+	arguments:
+		experiment:
+			desc:	The experiment object.
+			type:	experiment
 
-		backend = experiment.canvas_backend
-		debug.msg('morphing into %s' % backend)
-		mod = __import__('openexp._canvas.%s' % backend, fromlist=['dummy'])
-		cls = getattr(mod, backend)
-		self.__class__ = cls
-		cls.__init__(self, experiment, bgcolor, fgcolor, auto_prepare)
+	argument-list:
+		arglist:	See canvas.__init__().
+
+	keyword-dict:
+		kwdict:		See canvas.__init__().
+	"""
+
+	backend = experiment.get(u'canvas_backend')
+	debug.msg(u'morphing into %s' % backend)
+	mod = __import__('openexp._canvas.%s' % backend, fromlist=['dummy'])
+	cls = getattr(mod, backend)
+	return cls(experiment, *arglist, **kwdict)
 
 def init_display(experiment):
 
-	"""Call the back-end specific init_display function"""
+	"""
+	desc:
+		Calls the back-end specific init_display function.
 
-	backend = experiment.canvas_backend
+	arguments:
+		experiment:		The experiment object.
+		type:			experiment
+	"""
+
+	backend = experiment.get(u'canvas_backend')
 	debug.msg('morphing into %s' % backend)
 	mod = __import__('openexp._canvas.%s' % backend, fromlist=['dummy'])
 	mod.init_display(experiment)
 
 def close_display(experiment):
 
-	"""Call the back-end specific close_display function"""
+	"""
+	desc:
+		Calls the back-end specific close_display function.
 
-	backend = experiment.canvas_backend
+	arguments:
+		experiment:		The experiment object.
+		type:			experiment
+	"""
+
+	backend = experiment.get(u'canvas_backend')
 	debug.msg('morphing into %s' % backend)
 	mod = __import__('openexp._canvas.%s' % backend, fromlist=['dummy'])
 	mod.close_display(experiment)
 
-def clean_up(verbose = False):
+def clean_up(verbose=False):
 
 	"""
-	Cleans up the temporary pool folders
+	desc:
+		Cleans up temporary pool folders.
 
-	Keyword arguments:
-	verbose		--	a boolean indicating if debugging output should be provided
-					(default = False)
+	keywords:
+		verbose:
+			desc:	Indicates if debugging output should be provided.
+			type:	bool
 	"""
 
 	global temp_files
-
 	if verbose:
-		print("canvas.clean_up()")
-
+		print(u"canvas.clean_up()")
 	for path in temp_files:
 		if verbose:
-			print("canvas.clean_up(): removing '%s'" % path)
+			print(u"canvas.clean_up(): removing '%s'" % path)
 		try:
 			os.remove(path)
 		except Exception as e:
 			if verbose:
-				print("canvas.clean_up(): failed to remove '%s': %s" \
+				print(u"canvas.clean_up(): failed to remove '%s': %s" \
 					% (path, e))
 
-def gabor_file(orient, freq, env = "gaussian", size = 96, stdev = 12, phase = 0, col1 = "white", col2 = "black", bgmode = "avg"):
+def gabor_file(*arglist, **kwdict):
 
 	"""
-	Creates a temporary file containing a Gabor patch.
+	desc:
+		Creates a temporary file containing a Gabor patch.
 
-	Keyword arguments:
-	See canvas.noise_patch()
+	argument-list:
+		arglist:	See canvas.gabor() for a description of arguments.
 
-	Returns:
-	A path to the image file
-	"""
+	keyword-dict:
+		kwdict:		See canvas.gabor() for a description of keywords.
 
-	global temp_files
-	import openexp._canvas.legacy
-	surface = openexp._canvas.legacy._gabor(orient, freq, env, size, stdev, phase, col1, col2, bgmode)
-
-	tmp = tempfile.mkstemp(suffix = ".png")	[1]
-	pygame.image.save(surface, tmp)
-	temp_files.append(tmp)
-
-	return tmp
-
-def noise_file(env = "gaussian", size = 96, stdev = 12, col1 = "white", col2 = "black", bgmode = "avg"):
-
-	"""
-	Creates a temporary file containing a noise patch.
-
-	Keyword arguments:
-	See canvas.noise_patch()
-
-	Returns:
-	A path to the image file
+	returns:
+		A path to the image file.
 	"""
 
 	global temp_files
-	import openexp._canvas.legacy
-	surface = openexp._canvas.legacy._noise_patch(env, size, stdev, col1, col2, bgmode)
-
-	tmp = tempfile.mkstemp(suffix = ".png")	[1]
+	from openexp._canvas import canvas
+	surface = canvas._gabor(*arglist, **kwdict)
+	tmp = tempfile.mkstemp(suffix='.png')[1]
 	pygame.image.save(surface, tmp)
 	temp_files.append(tmp)
-
 	return tmp
 
+def noise_file(*arglist, **kwdict):
+
+	"""
+	desc:
+		Creates a temporary file containing a noise patch.
+
+	argument-list:
+		arglist:	See canvas.noise_path() for a description of arguments.
+
+	keyword-dict:
+		kwdict:		See canvas.noise_path() for a description of keywords.
+
+	returns:
+		A path to the image file.
+	"""
+
+	global temp_files
+	from openexp._canvas import canvas
+	surface = canvas._noise_patch(*arglist, **kwdict)
+	tmp = tempfile.mkstemp(suffix='.png')[1]
+	pygame.image.save(surface, tmp)
+	temp_files.append(tmp)
+	return tmp

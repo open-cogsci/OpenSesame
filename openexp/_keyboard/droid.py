@@ -30,18 +30,20 @@ except ImportError:
 class droid(legacy):
 
 	"""
-	Keyboard back-end for Android devices. Only changes the legacy back-end by
-	allowing Android-specific interrupts.
-	"""			
+	desc: |
+		This is a keyboard backend built on top of PyGame, adapted for Android
+		devices.
+
+		For function specifications and docstrings, see
+		`openexp._keyboard.keyboard`.
+	"""
 
 	def get_key(self, keylist=None, timeout=None):
 
-		"""See openexp._keyboard.legacy"""
-		
 		if not self.persistent_virtual_keyboard and android != None:
-			android.show_keyboard()		
+			android.show_keyboard()
 		start_time = pygame.time.get_ticks()
-		time = start_time		
+		time = start_time
 		if keylist == None:
 			keylist = self._keylist
 		if timeout == None:
@@ -70,19 +72,17 @@ class droid(legacy):
 				if keylist == None or key in keylist:
 					if not self.persistent_virtual_keyboard and android != None:
 						android.hide_keyboard()
-					return key, time				
+					return key, time
 			if timeout != None and time-start_time >= timeout:
 				break
 			# Allow Android interrupt
 			if android != None and android.check_pause():
 				android.wait_for_resume()
 		if not self.persistent_virtual_keyboard and android != None:
-			android.hide_keyboard()				
+			android.hide_keyboard()
 		return None, time
 
 	def show_virtual_keyboard(self, visible=True):
-
-		"""See openexp._keyboard.legacy"""
 
 		if android == None:
 			return

@@ -18,10 +18,11 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame import debug
+from libqtopensesame.misc.base_subcomponent import base_subcomponent
 from libqtopensesame.misc import config, _
 from PyQt4 import QtGui, QtCore
 
-class tab_widget(QtGui.QTabWidget):
+class tab_widget(base_subcomponent, QtGui.QTabWidget):
 
 	"""A custom tab widget with some extra functionality"""
 
@@ -35,14 +36,45 @@ class tab_widget(QtGui.QTabWidget):
 		"""
 
 		QtGui.QTabWidget.__init__(self, parent)
+		base_subcomponent.setup(self, parent)
 		try:
 			self.tabCloseRequested.connect(self.removeTab)
 		except:
 			# Catch what appears to be a bug in earlier versions of PyQt4.
 			self.tabCloseRequested.connect(self._removeTab)
 		self.currentChanged.connect(self.index_changed)
-		self.setSizePolicy(QtGui.QSizePolicy.MinimumExpanding, \
+		self.setSizePolicy(QtGui.QSizePolicy.MinimumExpanding,
 			QtGui.QSizePolicy.MinimumExpanding)
+		self.shortcut_switch_left = QtGui.QShortcut(
+			QtGui.QKeySequence.PreviousChild, self.main_window,
+			self.switch_prev, self.switch_prev)
+		self.shortcut_switch_right = QtGui.QShortcut(
+			QtGui.QKeySequence.NextChild, self.main_window,
+			self.switch_next, self.switch_next)
+
+	def switch_prev(self):
+
+		"""
+		desc:
+			Switches to the previous tab.
+		"""
+
+		i = self.currentIndex() - 1
+		if i < 0:
+			i = self.count()-1
+		self.setCurrentIndex(i)
+
+	def switch_next(self):
+
+		"""
+		desc:
+			Switches to the next tab.
+		"""
+
+		i = self.currentIndex() + 1
+		if i >= self.count():
+			i = 0
+		self.setCurrentIndex(i)
 
 	def _removeTab(self, i):
 
@@ -68,8 +100,47 @@ class tab_widget(QtGui.QTabWidget):
 		name -- a name for the tab
 		"""
 
-		self.setCurrentIndex(self.addTab(widget, \
-			self.main_window.experiment.icon(icon), _(name)))
+
+		index = self.indexOf(widget)
+		if index < 0:
+			index = self.addTab(widget, self.main_window.experiment.icon(icon),
+			   _(name))
+		self.setCurrentIndex(index)
+
+	def remove(self, widget):
+
+		"""
+		desc:
+			Removes the tab with a given widget in it.
+
+		arguments:
+			widget:
+				desc:	The widget in the tab.
+				type:	QWidget
+		"""
+
+		index = self.indexOf(widget)
+		if index >= 0:
+			self.removeTab(index)
+
+	def set_icon(self, widget, icon):
+
+		"""
+		desc:
+			Sets the icon for a tab with a specific widget.
+
+		arguments:
+			widget:
+				desc:	A widget.
+				type:	QWidget
+			icon:
+				desc:	An icon name.
+				type:	unicode
+		"""
+
+		index = self.indexOf(widget)
+		if index >= 0:
+			self.setTabIcon(index, self.theme.qicon(icon))
 
 	def close_all(self):
 
@@ -149,12 +220,6 @@ class tab_widget(QtGui.QTabWidget):
 			return None
 		return self.widget(i)
 
-	def open_about(self):
-
-		"""Open the about help tab"""
-
-		self.open_browser(u'http://osdoc.cogsci.nl/about/')
-
 	def open_browser(self, url):
 
 		"""
@@ -167,7 +232,7 @@ class tab_widget(QtGui.QTabWidget):
 		from libqtopensesame.widgets import webbrowser
 		browser = webbrowser.webbrowser(self.main_window)
 		browser.load(url)
-		self.add(browser, u"web-browser", u'Help')
+		self.add(browser, u"applications-internet", u'Help')
 
 	def open_help(self, item):
 
@@ -216,12 +281,6 @@ class tab_widget(QtGui.QTabWidget):
 		w = general_properties(self.main_window)
 		self.add(w, u'experiment', u'General properties')
 
-	def open_general_help(self):
-
-		"""Open the general help tab"""
-
-		self.open_help(u'general')
-
 	def open_general_script(self):
 
 		"""Opens the general script editor"""
@@ -230,7 +289,7 @@ class tab_widget(QtGui.QTabWidget):
 			return
 		from libqtopensesame.widgets.general_script_editor import \
 			general_script_editor
-		self.add(general_script_editor(self.main_window), u'terminal', \
+		self.add(general_script_editor(self.main_window), u'utilities-terminal',
 			u'General script editor')
 
 	def open_osdoc(self):
@@ -249,7 +308,7 @@ class tab_widget(QtGui.QTabWidget):
 
 		"""Opens the unused tab"""
 
-		if self.switch(u'__general__'):
+		if self.switch(u'__unused__'):
 			return
 		from libqtopensesame.widgets.unused_widget import unused_widget
 		w = unused_widget(self.main_window)
@@ -310,13 +369,17 @@ class tab_widget(QtGui.QTabWidget):
 
 		"""Toggles onetabmode"""
 
-		config.set_config(u"onetabmode", \
+		config.set_config(u"onetabmode",
 			self.main_window.ui.action_onetabmode.isChecked())
 		if config.get_config(u"onetabmode"):
 			self.close_other()
 		self.setTabsClosable(not config.get_config(u"onetabmode"))
-		self.main_window.ui.action_close_other_tabs.setEnabled(not \
-			config.get_config(u"onetabmode"))
+		self.main_window.ui.action_close_all_tabs.setEnabled(
+			not config.get_config(u"onetabmode"))
+		self.main_window.ui.action_close_current_tab.setEnabled(
+			not config.get_config(u"onetabmode"))
+		self.main_window.ui.action_close_other_tabs.setEnabled(
+			not config.get_config(u"onetabmode"))
 
 	def index_changed(self, index):
 
@@ -332,4 +395,3 @@ class tab_widget(QtGui.QTabWidget):
 		w = self.currentWidget()
 		if hasattr(w, u'on_activate'):
 			w.on_activate()
-

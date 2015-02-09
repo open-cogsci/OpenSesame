@@ -17,14 +17,14 @@ You should have received a copy of the GNU General Public License
 along with openexp.  If not, see <http://www.gnu.org/licenses/>.
 """
 
-from button import button
-from checkbox import checkbox
-from form import form
-from image import image
-from image_button import image_button
-from label import label
-from rating_scale import rating_scale
-from text_input import text_input
-from widget import widget
+from _button import button
+from _checkbox import checkbox
+from _form import form
+from _image import image
+from _image_button import image_button
+from _label import label
+from _rating_scale import rating_scale
+from _text_input import text_input
+from _widget import widget
 
 

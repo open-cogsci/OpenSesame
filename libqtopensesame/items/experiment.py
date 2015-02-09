@@ -20,6 +20,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 from libopensesame import debug
 import libopensesame.experiment
 import libopensesame.plugins
+from libqtopensesame.misc.qtitem_store import qtitem_store
 from PyQt4 import QtCore, QtGui
 import os.path
 
@@ -27,30 +28,53 @@ class experiment(libopensesame.experiment.experiment):
 
 	"""Contains various GUI controls for the experiment"""
 
-	def __init__(self, main_window, name, string=None, pool_folder=None):
+	def __init__(self, main_window, name, string=None, pool_folder=None,
+		experiment_path=None, resources={}):
 
 		"""
-		Constructor.
+		desc:
+			Constructor. The experiment is created automatically be OpenSesame
+			and you will generally not need to create it yourself.
 
-		Arguments:
-		main_window	--	The main window object.
-		name		--	The name of the experiment.
+		arguments:
+			main_window:
+				desc:	The main-window object.
+				type:	qtopensesame
+			name:
+				desc:	The name of the experiment.
+				type:	[str, unicode]
 
-		Keyword arguments:
-		string		--	A definition string for the experiment or None to
-						start with an empty experiment. (default=None)
-		pool_folder	--	A path to be used for the file pool or None to use a
-						system-specific temporary folder. (default=None)
+		keywords:
+			string:
+				desc:	A string containing the experiment definition, the
+						name of an OpenSesame experiment file, or `None` to
+						create a blank experiment.
+				type:	[str, unicode, NoneType]
+			pool_folder:
+				desc:	A specific folder to be used for the file pool, or
+						`None` to use a new temporary folder.
+				type:	[str, unicode, NoneType]
+			experiment_path:
+				desc:	The path of the experiment file. This will need to
+						be specified even if a filename was passed using the
+						`string` keyword.
+				type:	[str, unicode, NoneType]
+			resources:
+				desc:	A dictionary with names as keys and paths as values.
+						This serves as a look-up table for resources.
+				type:	dict
 		"""
 
 		self.main_window = main_window
 		self.ui = self.main_window.ui
 		self.unused_items = []
-		self.core_items = u"loop", u"sequence", u"sketchpad", u"feedback", \
-			u"sampler", u"synth", u"keyboard_response", u"mouse_response", \
-			u"logger", u"inline_script"
-		libopensesame.experiment.experiment.__init__(self, name, string, \
-			pool_folder)
+		self.core_items = [u"loop", u"sequence", u"sketchpad", u"feedback",
+			u"sampler", u"synth", u"keyboard_response", u"mouse_response",
+			u"logger", u"inline_script"]
+		items = qtitem_store(self)
+		libopensesame.experiment.experiment.__init__(self, name, string,
+			pool_folder, items=items, experiment_path=experiment_path,
+			resources=resources)
 
 	def help(self, name):
 
@@ -106,7 +130,8 @@ class experiment(libopensesame.experiment.experiment):
 
 		return u'qt'
 
-	def build_item_tree(self, toplevel=None, items=[]):
+	def build_item_tree(self, toplevel=None, items=[], max_depth=-1,
+		select=None):
 
 		"""
 		Constructs an item tree.
@@ -120,51 +145,18 @@ class experiment(libopensesame.experiment.experiment):
 		An updated list of items that have been added.
 		"""
 
+		from libqtopensesame.widgets.tree_unused_items_item import \
+			tree_unused_items_item
+		from libqtopensesame.widgets.tree_general_item import tree_general_item
 		self.ui.itemtree.clear()
-		items = []
-
-		# First build the tree of the experiment
-		widget = QtGui.QTreeWidgetItem(self.ui.itemtree)
-		widget.setText(0, self.title)
-		widget.setIcon(0, self.icon("os-experiment"))
-		widget.setToolTip(0, "General options")
-		widget.name = "__general__"
-		self.ui.itemtree.insertTopLevelItem(0, widget)
-
-		if self.start in self.items:
-			items.append(self.items[self.start])
-			self.items[self.start].build_item_tree(widget, items)
-		widget.setExpanded(True)
-
-		# Next build a tree with left over items
-		self.unused_widget = QtGui.QTreeWidgetItem(self.ui.itemtree)
-		self.unused_widget.setText(0, "Unused items")
-		self.unused_widget.setIcon(0, self.icon("unused"))
-		self.unused_widget.name = "__unused__"
-		self.unused_widget.setToolTip(0, "Unused items")
-		self.unused_widget.setToolTip(1, "Unused items")
-		self.ui.itemtree.insertTopLevelItem(1, widget)
-
-		self.unused_items = []
-		c = 0
-		for i in self.items:
-			if self.items[i] not in items:
-				self.unused_items.append(i)
-				self.items[i].build_item_tree(self.unused_widget, items)
-				c += 1
-		self.unused_widget.setExpanded(False)
-
-		font = QtGui.QFont()
-		font.setPointSize(8)
-		font.setItalic(True)
-
-		if c > 0:
-			self.unused_widget.setText(1, "contains items")
-		else:
-			self.unused_widget.setText(1, "empty")
-		self.unused_widget.setFont(1, font)
-
-		return items
+		self.treeitem_general = tree_general_item(self)
+		self.treeitem_unused = tree_unused_items_item(self.main_window)
+		self.ui.itemtree.insertTopLevelItem(0, self.treeitem_general)
+		self.ui.itemtree.insertTopLevelItem(1, self.treeitem_unused)
+		self.treeitem_general.expand()
+		self.treeitem_unused.collapse()
+		if select != None:
+			l = self.ui.itemtree.select_item(select)
 
 	def rename(self, from_name, to_name):
 
@@ -176,38 +168,8 @@ class experiment(libopensesame.experiment.experiment):
 		to_name		--	The new name.
 		"""
 
-		to_name = self.sanitize(to_name, True)
-		debug.msg("from '%s' to '%s'" % (from_name, to_name))
-
-		# Make sure the entry point is updated when renamed
 		if self.get("start") == from_name:
 			self.set("start", to_name)
-
-		# This only changes the name in the object, it doesn't update the GUI
-		# in case a tab is opened
-		for item in self.items:
-			self.items[item].rename(from_name, to_name)
-		new_items = {}
-		for item in self.items:
-			if item == from_name:
-				new_items[to_name] = self.items[item]
-			else:
-				new_items[item] = self.items[item]
-		self.items = new_items
-
-		# Walk through all open tabs to re-open them when needed
-		for i in range(self.experiment.ui.tabwidget.count()):
-			w = self.experiment.ui.tabwidget.widget(i)
-			if hasattr(w, "__edit_item__") and w.__edit_item__ == from_name:
-				self.experiment.ui.tabwidget.setTabText(i, to_name)
-				self.items[to_name].header.restore_name(False)
-				w.edit_item = to_name
-			if hasattr(w, "__script_item__") and w.__script_item__ == from_name:
-				w.script_item = to_name
-				self.experiment.ui.tabwidget.setTabText(i, to_name)
-				self.items[to_name].script_widget()
-
-		self.main_window.refresh()
 
 	def check_name(self, name):
 
@@ -250,26 +212,7 @@ class experiment(libopensesame.experiment.experiment):
 			return
 		for item in self.items:
 			self.items[item].delete(item_name, item_parent, index)
-		self.main_window.refresh()
 		self.main_window.close_item_tab(item_name)
-
-	def unique_name(self, name):
-
-		"""
-		Returns a unique name that resembles the desired name.
-
-		Arguments:
-		name	--	The desired name.
-
-		Returns:
-		A unique name.
-		"""
-
-		for item in self.items:
-			if item == name:
-				name = u'_' + name
-				return self.unique_name(name)
-		return name
 
 	def icon(self, name):
 
@@ -337,9 +280,9 @@ class experiment(libopensesame.experiment.experiment):
 		# If we are trying to select a non-existing item, add a dummy entry to
 		# the combobox
 		if select != None and select not in self.experiment.items:
-			c.addItem(u'[Please select an item]')
+			c.addItem(u'')
 			c.setCurrentIndex(0)
-			c.setItemIcon(i, self.icon(u'down'))
+			c.setItemIcon(i, self.icon(u'go-down'))
 			i += 1
 		# Add all existing items (except excluded) in alphabetical order
 		for item in sorted(self.experiment.items):
@@ -428,49 +371,35 @@ class experiment(libopensesame.experiment.experiment):
 		icon	--	A custom icon or None for default icon. (default=None)
 		"""
 
-		from libqtopensesame.ui import notification_dialog_ui
-		a = QtGui.QDialog(self.main_window)
-		a.ui = notification_dialog_ui.Ui_notification_dialog()
-		a.ui.setupUi(a)
-		self.main_window.theme.apply_theme(a)
-		a.ui.textedit_notification.setHtml(self.unistr(msg))
-		if title != None:
-			a.ui.label_title.setText(title)
-		if icon != None:
-			a.ui.label_notification.setPixmap(self.main_window.theme.qpixmap( \
-				icon))
-		a.adjustSize()
-		a.show()
+		from libqtopensesame.dialogs.notification import notification
+		nd = notification(self.main_window, msg=self.unistr(msg), title=title,
+			icon=icon)
+		nd.show()
 
-	def text_input(self, title, message=None, content=u''):
+	def text_input(self, title, message=None, content=u'', parent=None):
 
 		"""
-		Pops up a text input dialog.
+		dexc:
+			Pops up a text input dialog.
 
-		Arguments:
-		title		--	The title for the dialog.
+		arguments:
+			title:		The title for the dialog.
 
-		Keywords arguments:
-		message		--	A text message. (default=None)
-		contents	--	The initial contents. (default=u'')
+		keywords:
+			message:	A text message.
+			contents:	The initial contents.
+			parent:		A parent QWidget or None to use the main window as
+						parent.
 
-		Returns:
-		A string of text or None if cancel was pressed.
+		returns:
+			A string of text or None if cancel was pressed.
 		"""
 
-		from libqtopensesame.ui import text_input_dialog_ui
-		a = QtGui.QDialog(self.main_window)
-		a.ui = text_input_dialog_ui.Ui_text_input_dialog()
-		a.ui.setupUi(a)
-		self.main_window.theme.apply_theme(a)
-		if message != None:
-			a.ui.label_message.setText(message)
-		a.ui.textedit_input.setPlainText(content)
-		a.ui.textedit_input.setFont(self.monospace())
-		a.adjustSize()
-		if a.exec_() == QtGui.QDialog.Accepted:
-			return unicode(a.ui.textedit_input.toPlainText())
-		return None
+		from libqtopensesame.dialogs.text_input import text_input
+		if parent == None:
+			parent = self.main_window
+		tid = text_input(parent, msg=message, content=content)
+		return tid.get_input()
 
 	def colorpicker(self, title=u'Pick a color', initial_color=None):
 
@@ -536,3 +465,25 @@ class experiment(libopensesame.experiment.experiment):
 						w.deleteLater()
 						QtCore.QCoreApplication.sendPostedEvents(w, QtCore.QEvent.DeferredDelete)
 
+	def varref(self, val):
+
+		"""
+		desc:
+			Checks whether a value contains a variable reference, for example:
+
+				'This is [width] px'
+
+		arguments:
+			val:
+				desc:	The value to check. This can be any type, but only
+						str and unicode can contain variable references.
+
+		returns:
+			desc:		True if a variable reference was found, False otherwise.
+			type:		bool
+		"""
+
+		if not isinstance(val, basestring):
+			return False
+		# TODO: Improve with regular expression
+		return u'[' in val

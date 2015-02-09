@@ -21,6 +21,7 @@ import openexp.mouse
 import openexp.keyboard
 from libopensesame.exceptions import osexception
 from libopensesame import debug, regexp
+import codecs
 import string
 import os
 import sys
@@ -45,6 +46,7 @@ class item(object):
 		string		--	An definition string. (default=None).
 		"""
 
+		self.reset()
 		self.name = name
 		self.experiment = experiment
 		self.debug = debug.enabled
@@ -75,6 +77,15 @@ class item(object):
 		self.comments = []
 		if string != None:
 			self.from_string(string)
+			
+	def reset(self):
+
+		"""
+		desc:
+			Resets all item variables to their default value.
+		"""
+
+		pass
 
 	def prepare(self):
 
@@ -192,28 +203,35 @@ class item(object):
 
 	def set_response(self, response=None, response_time=None, correct=None):
 
-		"""<DOC>
-		Processes a response in such a way that feedback variables are updated #
-		as well.
+		"""
+		desc:
+			Processes a response in such a way that feedback variables are
+			updated as well.
 
-		Keyword arguments:
-		response		--	The response value. (default=None)
-		response_time	--	The response time. (default=None)
-		correct			--	The correctness value. (default=None)
+		keywords:
+			response:
+				desc:	The response value.
+			response_time:
+				desc:	The response time, or None.
+				type:	[int, float, NoneType]
+			correct:
+				desc:	The correctness value, which should be 0, 1, True,
+						False, or None.
+				type:	[int, bool, NoneType]
 
-		Example:
-		>>> from openexp.keyboard import keyboard
-		>>> my_keyboard = keyboard(exp)
-		>>> t1 = self.time()
-		>>> button, timestamp = my_keyboard.get_key()
-		>>> if button == 'left':
-		>>> 	correct = 1
-		>>> else:
-		>>> 	correct = 0
-		>>> rt = timestamp - t1
-		>>> self.set_response(response=button, response_time=rt, \
-		>>> 	correct=correct)
-		</DOC>"""
+		example: |
+			from openexp.keyboard import keyboard
+			my_keyboard = keyboard(exp)
+			t1 = self.time()
+			button, timestamp = my_keyboard.get_key()
+			if button == 'left':
+				correct = 1
+			else:
+				correct = 0
+			rt = timestamp - t1
+			self.set_response(response=button, response_time=rt,
+				correct=correct)
+		"""
 
 		# Handle response variables.
 		self.experiment.set(u'total_responses', self.experiment.get( \
@@ -287,6 +305,7 @@ class item(object):
 		"""
 
 		debug.msg()
+		self.reset()
 		textblock_var = None
 		self.variables = {}
 		for line in string.split(u'\n'):
@@ -343,24 +362,29 @@ class item(object):
 		s = u'define %s %s\n' % (item_type, self.name)
 		for comment in self.comments:
 			s += u'\t# %s\n' % comment.strip()
-		for var in self.variables:
+		for var in sorted(self.variables):
 			s += u'\t' + self.variable_to_string(var)
 		return s
 
 	def resolution(self):
 
-		"""<DOC>
-		Returns the display resolution and check whether the resolution is valid.
+		"""
+		desc: |
+			Returns the display resolution and checks whether the resolution is
+			valid.
 
-		Note: The meaning of 'resolution' depends on the back-end. For example, #
-		the legacy and OpenGL back-ends change the actual resolution of the #
-		display, whereas the other back-ends do not alter the actual display #
-		resolution, 	but create a 'virtual display' with the requested resolution #
-		that is presented in the center of the display.
+			__Important note:__
 
-		Returns:
-		A (width, height) tuple
-		</DOC>"""
+			The meaning of 'resolution' depends on the back-end. For example,
+			the legacy back-end changes the actual resolution of the display,
+			whereas the other back-ends do not alter the actual display
+			resolution, but create a 'virtual display' with the requested
+			resolution that is presented in the center of the display.
+
+		returns:
+			desc:	A (width, height) tuple
+			type:	tuple
+		"""
 
 		w = self.get(u'width')
 		h = self.get(u'height')
@@ -371,30 +395,32 @@ class item(object):
 
 	def set(self, var, val):
 
-		"""<DOC>
-		Sets an OpenSesame variable.
+		"""
+		desc: |
+			Sets an OpenSesame variable.
 
-		If you want to set a variable so that it is available in other items as #
-		well (such as the logger item, so you can log the variable), you need #
-		to use the set() function from the experiment. So, in an inline_script #
-		item you would generally set a variable with exp.set(), rather #
-		than self.set().
+			If you want to set a variable so that it is available in other items
+			as well (such as the logger item, so you can log the variable), you
+			need to use the set() function from the experiment. So, in an
+			inline_script item you would generally set a variable with
+			exp.set(), rather than self.set().
 
-		Please note that you can only set simple variable types (str, unicode, #
-		float, and int). If you use the set function to save an object, it will #
-		be converted to a string representation. To make complex variables #
-		globally accessible in your experiment, please use the global keyword.
+			__Important note:__
 
-		The type of the value can be anything. However, see get() for an #
-		explanation of how data-types are handled.
+			You can only set simple variable types (unicode, float, and int).
+			If you use the set function to save another type of variable, it
+			will be converted to a unicode representation.
 
-		Arguments:
-		var -- The name of an OpenSesame variable.
-		val -- The value.
+		arguments:
+			var:
+				desc:	The name of an experimental variable.
+				type:	[str, unicode]
+			val:
+				desc:	A value.
 
-		Example:
-		>>> exp.set('my_timestamp', self.time())
-		</DOC>"""
+		example: |
+			exp.set('my_timestamp', self.time())
+		"""
 
 		# Make sure the variable name and the value are of the correct types
 		var = self.unistr(var)
@@ -416,18 +442,21 @@ class item(object):
 
 	def unset(self, var):
 
-		"""<DOC>
-		Unsets (forgets) an OpenSesame variable.
+		"""
+		desc:
+			Unsets (forgets) an OpenSesame variable.
 
-		Arguments:
-		var -- The name of an OpenSesame variable.
+		arguments:
+			var:
+				desc:	The name of an OpenSesame variable.
+				type:	[str, unicode]
 
-		Example:
-		>>> self.set('var', 'Hello world!')
-		>>> print(self.get('var')) # Prints 'Hello world!'
-		>>> self.unset('variable_to_forget')
-		>>> print(self.get('var')) # Gives error!
-		</DOC>"""
+		example: |
+			self.set('var', 'Hello world!')
+			print(self.get('var')) # Prints 'Hello world!'
+			self.unset('variable_to_forget')
+			print(self.get('var')) # Gives error!
+		"""
 
 		var = self.unistr(var)
 		if var in self.variables:
@@ -439,42 +468,46 @@ class item(object):
 
 	def get(self, var, _eval=True):
 
-		"""<DOC>
-		Returns the value of an OpenSesame variable. Checks first if the #
-		variable exists 'locally' in the item and, if not, checks if the #
-		variable exists 'globally' in the experiment.
+		"""
+		desc: |
+			Returns the value of an OpenSesame variable. Checks first if the
+			variable exists 'locally' in the item and, if not, checks if the
+			variable exists 'globally' in the experiment.
 
-		The type of the returned value can be int, float, or unicode #
-		(string). The appropriate type is automatically selected, e.g. '10' #
-		is returned as int, '10.1' as float, and 'some text' as unicode.
+			The type of the returned value can be int, float, or unicode
+			(string). The appropriate type is automatically selected, e.g. '10'
+			is returned as int, '10.1' as float, and 'some text' as unicode.
 
-		The _eval parameter is used to specify whether the value of the #
-		variable should be evaluated, in case it contains references to other #
-		variables. This is best illustrated by example 2 below.
+			The _eval parameter is used to specify whether the value of the
+			variable should be evaluated, in case it contains references to
+			other variables. This is best illustrated by example 2 below.
 
-		Arguments:
-		var -- The name of an OpenSesame variable.
-		_eval -- Indicates whether the variable should be evaluated, i.e. #
-				 whether containing variables should be processed #
-				 (default=True).
+		arguments:
+			var:
+				desc:	The name of an OpenSesame variable.
+				type:	[str, unicode]
 
-		Exceptions:
-		A osexception is raised if the variable is not found.
+		keywords:
+			_eval:
+				desc:	Indicates whether the variable should be evaluated, i.e.
+						whether containing variables should be processed.
+				type:	bool
 
-		Returns:
-		The value.
+		returns:
+			desc:	The value.
+			type:	[unicode, int, float]
 
-		Example:
-		>>> if self.get('cue') == 'valid':
-		>>>		print('This is a validly cued trial')
+		example: |
+			# Example 1
+			if self.get('cue') == 'valid':
+				print('This is a validly cued trial')
 
-		Example 2:
-		>>> exp.set('var1', 'I like [var2]')
-		>>> exp.set('var2', 'OpenSesame')
-		>>> print(self.get('var1')) # prints 'I like OpenSesame'
-		>>> print(self.get('var1', _eval=False)) # prints 'I like [var2]'
-
-		</DOC>"""
+			# Example 2
+			exp.set('var1', 'I like [var2]')
+			exp.set('var2', 'OpenSesame')
+			print(self.get('var1')) # prints 'I like OpenSesame'
+			print(self.get('var1', _eval=False)) # prints 'I like [var2]'
+		"""
 
 		var = self.unistr(var)
 		# Avoid recursion
@@ -502,31 +535,41 @@ class item(object):
 
 	def get_check(self, var, default=None, valid=None, _eval=True):
 
-		"""<DOC>
-		Similar to get(), but falls back to a default if the variable has not #
-		been set. It also raises an error if the value is not part of the valid #
-		list.
+		"""
+		desc:
+			Similar to get(), but falls back to a default if the variable has
+			not been set. It also raises an error if the value is not part of
+			the valid list.
 
-		Arguments:
-		var -- The name of an OpenSesame variable
-		default -- A default 'fallback' value or None for no fallback, in which #
-				   case an exception is rased if the value does not exist.
-		valid -- A list of allowed values (or None for no restrictions). An #
-				 exception is raised if the value is not an allowed value.
-		_eval -- Indicates whether the variable should be evaluated, i.e. #
-				 whether containing variables should be processed (default=True).
+		arguments:
+			var:
+				desc:	The name of an OpenSesame variable
+				type:	[unicode, str]
 
-		Exceptions:
-		Raises a osexception if the variable is not defined and there is no #
-		default value, or if the variable value is not part of the 'valid' list.
+		keywords:
+			default:
+				desc:	A default 'fallback' value or None for no fallback, in
+						which case an exception is rased if the variable does
+						not exist.
+				type:	[unicode, float, int]
+			valid:
+				desc:	A list of allowed values (or None for no restrictions).
+						An exception is raised if the value is not an allowed
+						value.
+				type:	[list, NoneType]
+			_eval:
+				desc:	Indicates whether the variable should be evaluated, i.e.
+						whether containing variables should be processed.
+				type:	bool
 
-		Returns:
-		The value
+		returns:
+			desc:	The value
+			type:	[unicode, float, int]
 
-		Example:
-		>>> if self.get_check('cue', default='invalid') == 'valid':
-		>>>		print('This is a validly-cued trial')
-		</DOC>"""
+		example: |
+			if self.get_check('cue', default='invalid') == 'valid':
+				print('This is a validly-cued trial')
+		"""
 
 		if default == None:
 			val = self.get(var, _eval=_eval)
@@ -542,41 +585,49 @@ class item(object):
 
 	def has(self, var):
 
-		"""<DOC>
-		Checks if an OpenSesame variable exists, either in the item or in the #
-		experiment.
+		"""
+		desc:
+			Checks if an OpenSesame variable exists, either in the item or in
+			the experiment.
 
-		Arguments:
-		var -- The name of an OpenSesame variable.
+		arguments:
+			var:
+				desc:	The name of an OpenSesame variable.
+				type:	[str, unicode]
 
-		Returns:
-		True if the variable exists, False if not.
+		returns:
+			desc:	True if the variable exists, False if not.
+			type:	bool
 
-		Example:
-		>>> if not self.has('response'):
-		>>> 	print('No response has been collected yet')
-
-		</DOC>"""
+		example: |
+			if not self.has('response'):
+				print('No response has been collected yet')
+		"""
 
 		var = self.unistr(var)
 		return hasattr(self, var) or hasattr(self.experiment, var)
 
 	def get_refs(self, text):
 
-		"""<DOC>
-		Returns a list of variables that are referred to by a string of text.
+		"""
+		desc:
+			Returns a list of variables that are referred to by a string of
+			text.
 
-		Arguments:
-		text -- A string of text.
+		arguments:
+			text:
+				desc:	A string of text. This can be any type, but will coerced
+						to unicode if it is not unicode.
 
-		Returns:
-		A list of variable names or an empty list if the string contains no #
-		references.
+		returns:
+			desc:	A list of variable names or an empty list if the string
+					contains no references.
+			type:	list
 
-		Example:
-		>>> print(self.get_refs('There are [two] [references] here'))
-		>>> # Prints ['two', 'references']
-		</DOC>"""
+		Example: |
+			print(self.get_refs('There are [two] [references] here'))
+			# Prints ['two', 'references']
+		"""
 
 		text = self.unistr(text)
 
@@ -599,24 +650,27 @@ class item(object):
 
 	def auto_type(self, val):
 
-		"""<DOC>
-		Converts a value into the 'best fitting' or 'simplest' type that is #
-		compatible with the value.
+		"""
+		desc:
+			Converts a value into the 'best fitting' or 'simplest' type that is
+			compatible with the value.
 
-		Arguments:
-		val -- A value.
+		arguments:
+			val:
+				desc:	A value. This can be any type.
 
-		Returns:
-		The same value converted to the 'best fitting' type.
+		returns:
+			desc:	The same value converted to the 'best fitting' type.
+			type:	[unicode, int, float]
 
-		Example:
-		>>> print(type(self.auto_type('1'))) # Prints 'int'
-		>>> print(type(self.auto_type('1.1'))) # Prints 'float'
-		>>> print(type(self.auto_type('some text'))) # Prints 'unicode'
-		>>> # Note: Boolean values are converted to 'yes' / 'no' and are
-		>>> # therefore also returned as unicode objects.
-		>>> print(type(self.auto_type(True))) # Prints 'unicode'
-		</DOC>"""
+		Example: |
+			print(type(self.auto_type('1'))) # Prints 'int'
+			print(type(self.auto_type('1.1'))) # Prints 'float'
+			print(type(self.auto_type('some text'))) # Prints 'unicode'
+			# Note: Boolean values are converted to 'yes' / 'no' and are
+			# therefore also returned as unicode objects.
+			print(type(self.auto_type(True))) # Prints 'unicode'
+		"""
 
 		# Booleans are converted to True/ False
 		if type(val) == bool:
@@ -661,33 +715,44 @@ class item(object):
 
 		pass
 
-	def eval_text(self, text, round_float=False, soft_ignore=False, quote_str=False):
+	def eval_text(self, text, round_float=False, soft_ignore=False,
+		quote_str=False):
 
-		"""<DOC>
-		Evaluates a string of text, so that all variable references (e.g., #
-		'[var]') are replaced by values.
+		"""
+		desc:
+			Evaluates a string of text, so that all variable references (e.g.,
+			'[var]') are replaced by values.
 
-		Arguments:
-		text -- The text to be evaluated.
+		arguments:
+			text:
+				desc:	The text to be evaluated. This can be any type, but only
+						str and unicode types will be evaluated.
 
-		Keyword arguments:
-		round_float -- A Boolean indicating whether float values should be #
-					   rounded to a precision of [round_decimals]. #
-					   round_decimals is an OpenSesame variable that has a #
-					   default value of 2. (Default=False)
-		soft_ignore -- A Boolean indicating whether missing variables should be #
-					   ignored, rather than cause an exception (default=False).
-		quote_str -- A Boolean indicating whether string variables should be #
-					 surrounded by single quotes (default=False).
+		keywords:
+			round_float:
+				desc:	A Boolean indicating whether float values should be
+						rounded to a precision of [round_decimals].
+						round_decimals is an OpenSesame variable that has a
+						default value of 2.
+				type:	bool
+			soft_ignore:
+				desc:		A Boolean indicating whether missing variables
+							should be ignored, rather than cause an exception.
+				type:		bool
+			quote_str:
+				desc:		A Boolean indicating whether string variables should
+							be surrounded by single quotes (default=False).
+				type:		bool
 
-		Returns:
-		The evaluated text.
+		returns:
+			desc:	The evaluated text.
+			type:	[unicode, int, float]
 
-		Example:
-		>>> exp.set('var', 'evaluated')
-		>>> # Prints 'This string has been evaluated
-		>>> print(self.eval_text('This string has been [var]'))
-		</DOC>"""
+		example: |
+			exp.set('var', 'evaluated')
+			print(self.eval_text('This string has been [var]'))
+			# Prints 'This string has been evaluated
+		"""
 
 		# Only unicode needs to be evaluated
 		text = self.auto_type(text)
@@ -823,27 +888,35 @@ class item(object):
 
 	def sanitize(self, s, strict=False, allow_vars=True):
 
-		"""<DOC>
-		Removes invalid characters (notably quotes) from the string.
+		"""
+		desc:
+			Removes invalid characters (notably quotes) from the string.
 
-		Arguments:
-		s -- The string (unicode or str) to be sanitized.
+		arguments:
+			s:
+				desc:	The string to be sanitized. This can be any type, but
+						if it is not unicode, it will be coerced to unicode.
 
-		Keyword arguments:
-		strict -- If True, all except underscores and alphanumeric characters are
-				  stripped (default=False).
-		allow_vars -- If True, square brackets are not sanitized, so you can use
-					  variables (default=True).
+		keywords:
+			strict:
+				desc:	If True, all except underscores and alphanumeric
+						characters are stripped.
+				type:	bool
+			allow_vars:
+				desc:	If True, square brackets are not sanitized, so you can
+						use variables.
+				type:	bool
 
-		Returns:
-		A sanitized unicode string
+		returns:
+			desc:	A sanitized string.
+			type:	unicode
 
-		Example:
-		>>> # Prints 'Universit Aix-Marseille'
-		>>> print(self.sanitize('\"Université Aix-Marseille\"'))
-		>>> # Prints 'UniversitAixMarseille'
-		>>> print(self.sanitize('\"Université Aix-Marseille\""', strict=True))
-		</DOC>"""
+		example: |
+			# Prints 'Universit Aix-Marseille'
+			print(self.sanitize('\"Université Aix-Marseille\"'))
+			# Prints 'UniversitAixMarseille'
+			print(self.sanitize('\"Université Aix-Marseille\""', strict=True))
+		"""
 
 		s = self.unistr(s)
 		if strict:
@@ -855,36 +928,33 @@ class item(object):
 	def usanitize(self, s, strict=False):
 
 		"""
-		Convert all special characters to U+XXXX notation, so that the resulting
-		string can be treated as plain ASCII text.
+		desc:
+			Converts all non-ASCII characters to U+XXXX notation, so that the
+			resulting string can be treated as plain ASCII text.
 
-		Arguments:
-		s -- A unicode string to be santized
+		arguments:
+			s:
+				desc:	A unicode string to be santized
+				type:	unicode
 
-		Keyword arguments:
-		strict -- if True, special characters are ignored rather than recoded
-				  (default=False)
+		keywords:
+			strict:
+				desc:	If True, special characters are ignored rather than
+						recoded.
+				type:	bool
 
-		Returns:
-		A regular Python string with all special characters replaced by U+XXXX
-		notation
+		returns:
+			desc:	A regular Python string with all special characters replaced
+					by U+XXXX notation or ignored (if strict).
+			type:	str
 		"""
 
-		if not isinstance(s, unicode):
-			raise osexception( \
-				u'usanitize() expects first argument to be unicode, not "%s"' \
-				% type(s))
-
-		_s = ''
-		for ch in s:
-			# Encode non ASCII and slash characters
-			if ord(ch) > 127 or ord(ch) == 92:
-				if not strict:
-					_s += 'U+%.4X' % ord(ch)
-			else:
-				_s += ch
+		if strict:
+			_s = codecs.encode(s, u'ascii', u'ignore')
+		else:
+			_s = codecs.encode(s, u'ascii', u'osreplace')
+		_s = str(_s)
 		return _s.replace(os.linesep, '\n')
-
 
 	def unsanitize(self, s):
 
@@ -912,24 +982,27 @@ class item(object):
 
 	def unistr(self, val):
 
-		"""<DOC>
-		Converts a value to a unicode string. This function is mostly #
-		necessary to make sure that normal strings with special characters are #
-		correctly encoded into unicode, and don't result in TypeErrors.
-		
-		The conversion logic is as follows:
-		
-		- unicode values are returned unchanged.
-		- str values are decoded using utf-8.
-		- all other types are typecast to unicode, assuming utf-8 encoding where #
-		  applicable.
+		"""
+		desc: |
+			Converts a value to a unicode string. This function is mostly
+			necessary to make sure that normal strings with special characters
+			are correctly encoded into unicode, and don't result in TypeErrors.
 
-		Arguments:
-		val -- A value of any type.
+			The conversion logic is as follows:
 
-		Returns:
-		A unicode string.
-		</DOC>"""
+			- unicode values are returned unchanged.
+			- str values are decoded using utf-8.
+			- all other types are typecast to unicode, assuming utf-8 encoding
+			  where applicable.
+
+		arguments:
+			val:
+				desc:	A value of any type.
+
+		returns:
+			desc:	A unicode string.
+			type:	unicode
+		"""
 
 		# Unicode strings cannot (and need not) be encoded again
 		if isinstance(val, unicode):
@@ -980,23 +1053,22 @@ class item(object):
 
 	def color_check(self, col):
 
-		"""<DOC>
-		Checks whether a string is a valid color name.
+		"""
+		desc:
+			Checks whether a string is a valid color name. Raises an exception
+			if `col` is not a valid color.
 
-		Arguments:
-		col -- The color to check.
+		arguments:
+			col:	The color to check.
 
-		Exceptions:
-		Raises a osexception if col is not a valid color.
-
-		Example:
-		>>> # Ok
-		>>> print(self.color_check('red'))
-		>>> # Ok
-		>>> print(self.color_check('#FFFFFF'))
-		>>> # Raises osexception
-		>>> print(self.color_check('this is not a color'))
-		</DOC>"""
+		example: |
+			# Ok
+			print(self.color_check('red'))
+			# Ok
+			print(self.color_check('#FFFFFF'))
+			# Raises osexception
+			print(self.color_check('this is not a color'))
+		"""
 
 		try:
 			if type(col) == unicode:
@@ -1009,15 +1081,18 @@ class item(object):
 
 	def sleep(self, ms):
 
-		"""<DOC>
-		Sleeps for a specified duration.
+		"""
+		desc:
+			Sleeps for a specified duration.
 
-		Arguments:
-		ms -- An integer value specifying the duration in milliseconds.
+		arguments:
+			ms:
+				desc:	An value specifying the duration in milliseconds.
+				type:	[int, float]
 
-		Example:
-		>>> self.sleep(1000) # Sleeps one second
-		</DOC>"""
+		example: |
+			self.sleep(1000) # Sleeps one second
+		"""
 
 		# This function is set by item.prepare()
 		raise osexception( \
@@ -1025,15 +1100,20 @@ class item(object):
 
 	def time(self):
 
-		"""<DOC>
-		Returns the current time.
+		"""
+		desc:
+			Returns a timestamp for the current time. This timestamp only has
+			a relative meaning, i.e. you can use it to determine the interval
+			between two moments, but not the actual time. Whether the timestamp
+			is a `float` or `int` depends on the back-end.
 
-		Returns:
-		A timestamp of the current time.
+		returns:
+			desc:	A timestamp of the current time.
+			type:	[int, float]
 
-		Example:
-		>>> print('The time is %s' % self.time())
-		</DOC>"""
+		example: |
+			print('The time is %s' % self.time())
+		"""
 
 		# This function is set by item.prepare()
 		raise osexception( \
@@ -1041,30 +1121,58 @@ class item(object):
 
 	def log(self, msg):
 
-		"""<DOC>
-		Writes a message to the log file. Note that using the log() function in #
-		combination with a logger item may result in messy log files.
+		"""
+		desc:
+			Writes a message to the log file. Note that using the `log()`
+			function in combination with a logger item may result in messy log
+			files.
 
-		msg	--	A message. This can be any type and will we be converted to a #
-				unicode string using the logic described in `unistr()`.
+		arguments:
+			msg:
+				desc:	A message. This can be any type and will we be converted
+						to a unicode string using the logic described in
+						[unistr].
 
-		Example:
-		>>> self.log('TIMESTAMP = %s' % self.time())
-		</DOC>"""
+		example: |
+			self.log('TIMESTAMP = %s' % self.time())
+		"""
 
 		self.experiment._log.write(u'%s\n' % self.unistr(msg))
 
 	def flush_log(self):
 
-		"""<DOC>
-		Forces any pending write operations to the log file to be written to #
-		disk.
+		"""
+		desc:
+			Forces any pending write operations to the log file to be written to
+			disk.
 
-		Example:
-		>>> self.log('TRIAL FINISHED')
-		>>> self.flush_log()
-		</DOC>"""
+		example: |
+			self.log('TRIAL FINISHED')
+			self.flush_log()
+		"""
 
 		self.experiment._log.flush()
 		os.fsync(self.experiment._log)
 
+def osreplace(exc):
+
+	"""
+	desc:
+		A replacement function to allow opensame-style replacement of unicode
+		characters.
+
+	arguments:
+		exc:
+			type:	UnicodeEncodeError
+
+	returns:
+		desc:	A (replacement, end) tuple.
+		type:	tuple
+	"""
+
+	_s = u''
+	for ch in exc.object[exc.start:exc.end]:
+		_s += u'U+%.4X' % ord(ch)
+	return _s, exc.end
+
+codecs.register_error(u'osreplace', osreplace)

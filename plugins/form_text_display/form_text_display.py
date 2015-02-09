@@ -38,6 +38,8 @@ widget 1 2 1 1 button text=[ok_text]
 """
 
 class form_text_display(form_base.form_base):
+	
+	initial_view = u'controls'
 
 	def __init__(self, name, experiment, string=None):
 
@@ -52,10 +54,10 @@ class form_text_display(form_base.form_base):
 		string		--	A definition string. (default=None)
 		"""
 
-		if string == None:
+		if string == None or string.strip() == u'':
 			string = default_script
 		# Due to dynamic loading, we need to implement this super() hack. See
-		# <http://thingspython.wordpress.com/2010/09/27/another-super-wrinkle-raising-typeerror/>			
+		# <http://thingspython.wordpress.com/2010/09/27/another-super-wrinkle-raising-typeerror/>
 		self.super_form_text_display = super(form_text_display, self)
 		self.super_form_text_display.__init__(name, experiment, string, \
 			item_type=u'form_text_display', description= \
@@ -72,11 +74,11 @@ class form_text_display(form_base.form_base):
 
 		self._widgets = []
 		self.super_form_text_display.from_string(script)
-		
+
 class qtform_text_display(form_text_display, qtautoplugin):
-	
+
 	def __init__(self, name, experiment, script=None):
 
 		form_text_display.__init__(self, name, experiment, script)
-		qtautoplugin.__init__(self, __file__)	
+		qtautoplugin.__init__(self, __file__)
 

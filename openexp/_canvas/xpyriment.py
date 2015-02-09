@@ -19,7 +19,7 @@ along with openexp.  If not, see <http://www.gnu.org/licenses/>.
 
 import numpy as np
 import copy
-import openexp._canvas.legacy
+from openexp._canvas import canvas
 from libopensesame.exceptions import osexception
 from libopensesame import debug, html
 import pygame
@@ -48,9 +48,14 @@ def c2p(pos):
 	return pos[0] - control.defaults.window_size[0]/2, \
 		control.defaults.window_size[1]/2 - pos[1]
 
-class xpyriment(openexp._canvas.legacy.legacy):
+class xpyriment(canvas.canvas):
 
-	"""This is a canvas backend built on top of Expyriment"""
+	"""
+	desc:
+		This is a canvas backend built on top of Expyriment.
+		For function specifications and docstrings, see
+		`openexp._canvas.canvas`.
+	"""
 
 	settings = {
 		u"expyriment_opengl" : {
@@ -60,9 +65,8 @@ class xpyriment(openexp._canvas.legacy.legacy):
 			},
 		}
 
-	def __init__(self, experiment, bgcolor=None, fgcolor=None, auto_prepare=True):
-
-		"""See openexp._canvas.legacy"""
+	def __init__(self, experiment, bgcolor=None, fgcolor=None,
+		auto_prepare=True):
 
 		self.experiment = experiment
 		self.html = html.html()
@@ -83,17 +87,11 @@ class xpyriment(openexp._canvas.legacy.legacy):
 		self.aa = 10
 		self.clear()
 
-	def flip(self, x=True, y=False):
+	def color(self, color):
 
-		"""See openexp._canvas.legacy"""
-
-		# TODO
-		raise osexception( \
-			u"openexp._canvas.xpyriment.flip(): the flip() function has not been implemented for the xpyriment back-end!")
+		return canvas._color(color)
 
 	def copy(self, canvas):
-
-		"""See openexp._canvas.legacy"""
 
 		self.fgcolor = canvas.fgcolor
 		self.bgcolor = canvas.bgcolor
@@ -115,13 +113,14 @@ class xpyriment(openexp._canvas.legacy.legacy):
 	def add_stim(self, stim, prepare=True):
 
 		"""
-		Adds a stimulus to the stimulus list
+		desc:
+			Adds a stimulus to the stimulus list.
 
-		Arguments:
-		stim -- the stimulus
+		arguments:
+			stim:		the stimulus
 
-		Keyword arguments:
-		prepare -- indicates whether we should prepare (default=True)
+		keywords:
+			prepare:	indicates whether we should prepare.
 		"""
 
 		self.stim_list.append(stim)
@@ -131,12 +130,10 @@ class xpyriment(openexp._canvas.legacy.legacy):
 
 	def prepare(self):
 
-		"""See openexp._canvas.legacy"""
-
 		if not self.prepared:
-			self._canvas = stimuli.Canvas( \
-				self.experiment.expyriment.screen.size, colour= \
-				self._canvas_color)
+			self._canvas = stimuli.Canvas(
+				self.experiment.expyriment.screen.size,
+				colour=self._canvas_color)
 			for stim in self.stim_list:
 				stim.plot(self._canvas)
 			self._canvas.preload()
@@ -145,8 +142,6 @@ class xpyriment(openexp._canvas.legacy.legacy):
 
 	def show(self):
 
-		"""See openexp._canvas.legacy"""
-
 		if not self.prepared: self.prepare()
 		self._canvas.present()
 		self.experiment.last_shown_canvas = self._canvas
@@ -154,71 +149,62 @@ class xpyriment(openexp._canvas.legacy.legacy):
 
 	def clear(self, color=None):
 
-		"""See openexp._canvas.legacy"""
-
 		if color != None: self._canvas_color = self.color(color)
 		else: self._canvas_color = self.bgcolor
 		self.stim_list = []
 		self.prepare()
 
-	def line(self, sx, sy, ex, ey, color=None):
+	def line(self, sx, sy, ex, ey, color=None, penwidth=None):
 
-		"""See openexp._canvas.legacy"""
-
+		if penwidth == None: penwidth = self.penwidth
 		if color != None: color = self.color(color)
 		else: color = self.fgcolor
-		stim = stimuli.Line(c2p((sx,sy)), c2p((ex,ey)), line_width= \
-			self.penwidth, colour=color, anti_aliasing=self.aa)
+		stim = stimuli.Line(c2p((sx,sy)), c2p((ex,ey)),
+			line_width=penwidth, colour=color, anti_aliasing=self.aa)
 		self.add_stim(stim)
 
-	def rect(self, x, y, w, h, fill=False, color=None):
-
-		"""See openexp._canvas.legacy"""
+	def rect(self, x, y, w, h, fill=False, color=None, penwidth=None):
 
 		if fill:
 			if color != None: color = self.color(color)
 			else: color = self.fgcolor
 			# The position of the stimulus is the center, not the top-left
 			pos = c2p((x+w/2,y+h/2))
-			#stim = stimuli.Rectangle(size=(w,h), position=pos, colour= \
-			#	color, anti_aliasing=self.aa)
-			# Anti-aliasing gone as of 0.6.1
-			stim = stimuli.Rectangle(size=(w,h), position=pos, colour= \
-				color)
+			stim = stimuli.Rectangle(size=(w,h), position=pos,
+				colour=color)
 			self.add_stim(stim)
-
 		# Unfilled shapes are drawn using a polygon
 		else:
 			# For now, do not use a polygon, because it's really slow when
 			# rendering, which is particularly problematic for forms.
 			# self.polygon( [(x,y), (x+w,y), (x+w,y+w), (x,y+w), (x,y)], \
 			# color=color)
-			self.line(x, y, x+w, y, color=color)
-			self.line(x+w, y, x+w, y+h, color=color)
-			self.line(x, y+h, x+w, y+h, color=color)
-			self.line(x, y, x, y+h, color=color)
+			self.line(x, y, x+w, y, color=color, penwidth=penwidth)
+			self.line(x+w, y, x+w, y+h, color=color, penwidth=penwidth)
+			self.line(x, y+h, x+w, y+h, color=color, penwidth=penwidth)
+			self.line(x, y, x, y+h, color=color, penwidth=penwidth)
 
-	def ellipse(self, x, y, w, h, fill=False, color=None):
-
-		"""See openexp._canvas.legacy"""
+	def ellipse(self, x, y, w, h, fill=False, color=None, penwidth=None):
 
 		if color != None: color = self.color(color)
 		else: color = self.fgcolor
+		if penwidth == None: penwidth = self.penwidth
+		else: line_width = penwidth
 		if fill: line_width = 0
+		elif penwidth != None: line_width = penwidth
 		else: line_width = self.penwidth
 		pos = c2p((x+w/2,y+h/2))
-		stim = stimuli.Ellipse((w, h), colour=color, line_width=line_width, \
+		stim = stimuli.Ellipse((w, h), colour=color, line_width=line_width,
 			position=pos)
 		self.add_stim(stim)
 
-	def polygon(self, vertices, fill=False, color=None):
+	def polygon(self, vertices, fill=False, color=None, penwidth=None):
 
-		"""See openexp._canvas.legacy"""
-
+		if penwidth == None: penwidth = self.penwidth
 		if color != None: color = self.color(color)
 		else: color = self.fgcolor
 		if fill: line_width = 0
-		else: line_width = self.penwidth
+		else: line_width = penwidth
 		# The coordinate transformations are a bit awkard. Shape expects
 		# a list of vertices that start form (0,0), but the position of the
 		# shape is the center of the shape. So we first need to determine
@@ -228,7 +214,7 @@ class xpyriment(openexp._canvas.legacy.legacy):
 			max(p[0] for p in vertices)) / 2, \
 			(min(p[1] for p in vertices) + \
 			max(p[1] for p in vertices)) / 2
-		stim = stimuli.Shape(colour=color, position=c2p(center), \
+		stim = stimuli.Shape(colour=color, position=c2p(center),
 			anti_aliasing=self.aa, line_width=line_width)
 		l = p2v([c2p(p) for p in vertices])
 		for v in l: stim.add_vertex(v)
@@ -236,14 +222,10 @@ class xpyriment(openexp._canvas.legacy.legacy):
 
 	def set_bgcolor(self, color):
 
-		"""See openexp._canvas.set_bgcolor"""
-
 		self.bgcolor = self.color(color)
 		self._canvas_color = self.bgcolor
 
 	def _text_size(self, text):
-
-		"""See openexp._canvas.legacy"""
 
 		try:
 			_font = self.experiment.resource(u"%s.ttf" % self.font_style)
@@ -257,8 +239,6 @@ class xpyriment(openexp._canvas.legacy.legacy):
 
 	def _text(self, text, x, y):
 
-		"""See openexp._canvas.legacy"""
-
 		try:
 			_font = self.experiment.resource(u"%s.ttf" % self.font_style)
 		except:
@@ -268,23 +248,19 @@ class xpyriment(openexp._canvas.legacy.legacy):
 		x += w/2
 		y += h/2
 
-		stim = stimuli.TextLine(text, position=c2p((x,y)), \
-			text_colour=self.fgcolor, text_font=_font, \
-			text_size=self.font_size, text_bold=self.font_bold, \
+		stim = stimuli.TextLine(text, position=c2p((x,y)),
+			text_colour=self.fgcolor, text_font=_font,
+			text_size=self.font_size, text_bold=self.font_bold,
 			text_italic=self.font_italic, text_underline=self.font_underline)
 		self.add_stim(stim)
 
 	def textline(self, text, line, color=None):
 
-		"""See openexp._canvas.legacy"""
-
 		size = self.text_size(text)
-		self.text(text, True, self.xcenter(), self.ycenter()+1.5*line*size[1], \
+		self.text(text, True, self.xcenter(), self.ycenter()+1.5*line*size[1],
 			color=color)
 
 	def image(self, fname, center=True, x=None, y=None, scale=None):
-
-		"""See openexp._canvas.legacy"""
 
 		if x == None: x = self.xcenter()
 		if y == None: y = self.ycenter()
@@ -304,35 +280,24 @@ class xpyriment(openexp._canvas.legacy.legacy):
 		if scale != None: stim.scale( (scale, scale) )
 		self.add_stim(stim)
 
-	def gabor(self, x, y, orient, freq, env=u"gaussian", size=96, stdev=12, \
+	def gabor(self, x, y, orient, freq, env=u"gaussian", size=96, stdev=12,
 		phase=0, col1=u"white", col2=u"black", bgmode=u"avg"):
 
-		"""See openexp._canvas.legacy"""
-
-		surface = openexp._canvas.legacy._gabor(orient, freq, env, size, \
-			stdev, phase, col1, col2, bgmode)
-		stim = stimuli._visual.Visual(position=c2p((x,y)))
-		stim._surface = surface
-		self.add_stim(stim)
-
-	def noise_patch(self, x, y, env=u"gaussian", size=96, stdev=12, \
-		col1=u"white", col2=u"black", bgmode=u"avg"):
-
-		"""See openexp._canvas.legacy"""
-
-		surface = openexp._canvas.legacy._noise_patch(env, size, stdev, col1, \
+		surface = canvas._gabor(orient, freq, env, size, stdev, phase, col1,
 			col2, bgmode)
 		stim = stimuli._visual.Visual(position=c2p((x,y)))
 		stim._surface = surface
 		self.add_stim(stim)
 
-"""
-Static methods
-"""
+	def noise_patch(self, x, y, env=u"gaussian", size=96, stdev=12,
+		col1=u"white", col2=u"black", bgmode=u"avg"):
+
+		surface = canvas._noise_patch(env, size, stdev, col1, col2, bgmode)
+		stim = stimuli._visual.Visual(position=c2p((x,y)))
+		stim._surface = surface
+		self.add_stim(stim)
 
 def init_display(experiment):
-
-	"""See openexp._canvas.legacy"""
 
 	import pygame
 
@@ -367,7 +332,5 @@ def init_display(experiment):
 	pygame.event.set_allowed(pygame.MOUSEBUTTONUP)
 
 def close_display(experiment):
-
-	"""See openexp._canvas.legacy"""
 
 	control.end()

@@ -18,15 +18,15 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from PyQt4 import QtCore, QtGui
-from libqtopensesame.ui.start_new_widget_ui import Ui_widget_start_new
+from libqtopensesame.widgets.base_widget import base_widget
 from libqtopensesame.misc import template_info
 import random
 import os
 
-class start_new_widget(QtGui.QWidget):
+class start_new_widget(base_widget):
 
 	"""Start new dialog presented when starting with a clean experiment"""
-	
+
 	def __init__(self, main_window, start=False):
 
 		"""
@@ -34,70 +34,64 @@ class start_new_widget(QtGui.QWidget):
 
 		Arguments:
 		main_window -- a the main ui
-		
+
 		Keyword arguments:
 		start -- indicates whether the widget is opened because OpenSesame has
 				 started (True) or because the new button has been clicked
 				 (False) (default=True)
 		"""
 
-		QtGui.QDialog.__init__(self, main_window)
-
-		self.main_window = main_window
-		self.ui = Ui_widget_start_new()
-		self.ui.setupUi(self)
-		self.ui.widget_credits.initialize(self.main_window)
-		self.main_window.theme.apply_theme(self)
+		super(start_new_widget, self).__init__(main_window,
+			ui=u'widgets.start_new_widget')
 		if start:
-			self.tab_name = '__start_wizard__'
+			self.tab_name = u'__start_wizard__'
 		else:
-			self.tab_name = '__new_wizard__'
-
-		# Initialize templates						
+			self.tab_name = u'__new_wizard__'
+		# Initialize templates
 		for path, desc in template_info.templates:
 			try:
-				path = self.main_window.experiment.resource(path)
+				path = self.experiment.resource(path)
 			except:
 				continue
 			item = QtGui.QListWidgetItem(self.ui.list_templates)
 			item.setText(desc)
 			item.file = path
-			item.setIcon(self.main_window.experiment.icon("wizard"))
+			item.setIcon(self.experiment.icon(u"document-open-recent"))
 			self.ui.list_templates.addItem(item)
 		self.ui.list_templates.setCurrentRow(0)
-		self.ui.list_templates.itemDoubleClicked.connect(self.open_template)		
+		self.ui.list_templates.itemDoubleClicked.connect(self.open_template)
 
 		# Initialize recent
 		if len(self.main_window.recent_files) == 0:
 			self.ui.list_recent.hide()
 			self.ui._label_recent.hide()
-		else:		
+		else:
 			for f in self.main_window.recent_files:
 				item = QtGui.QListWidgetItem(self.ui.list_recent)
 				item.setText(os.path.basename(f))
 				item.file = f
-				item.setIcon(self.main_window.experiment.icon("experiment"))
-			self.ui.list_recent.setCurrentRow(0)	
+				item.setIcon(self.experiment.icon(u"experiment"))
+			self.ui.list_recent.setCurrentRow(0)
 			self.ui.list_recent.itemDoubleClicked.connect(self.open_recent)
-		
+
 		# Connect buttons
 		self.ui.button_browse.clicked.connect(self.main_window.open_file)
 		self.ui.button_osdoc.clicked.connect( \
 			self.main_window.ui.tabwidget.open_osdoc)
 		self.ui.button_forum.clicked.connect( \
 			self.main_window.ui.tabwidget.open_forum)
-		self.ui.button_cancel.clicked.connect(self.cancel)			
-			
+		self.ui.button_cancel.clicked.connect(self.cancel)
+
 		# Show the correct header
 		if start:
 			self.ui.widget_header_new.hide()
 		else:
 			self.ui.widget_header_start.hide()
-			
+
 	def cancel(self):
-		
+
 		"""Cancel the start_new_wizard"""
-		
+
 		self.main_window.ui.tabwidget.close_current()
 		self.main_window.ui.tabwidget.open_general()
 

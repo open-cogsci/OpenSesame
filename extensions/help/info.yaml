@@ -1,0 +1,4 @@
+description: Adds a Help menu.
+settings:
+  online_help_base_url: http://osdoc.cogsci.nl
+  online_help_sitemap: http://osdoc.cogsci.nl/[version]/sitemap.yml

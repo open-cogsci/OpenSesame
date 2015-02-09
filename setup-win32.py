@@ -17,27 +17,36 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 
-About
-=====
+----
+
+## About
 
 This script will create a binary Windows package of OpenSesame, using py2exe.
 If possible, dependencies are simply copied into a subfolder and compiled to
-.pyo format. If not possible, they are included in the library.zip file, which
-is the default py2exe way of including dependencies.
+`.pyc` format. If not possible, they are included in the `library.zip` file,
+which is the default py2exe way of including dependencies.
 
-Usage
-=====
+## Usage
 
-Python should be called with the -O argument. Otherwise, the dependencies
-will be compiled to .pyc, instead of .pyo, and the .py source files will not be
-pruned. And that doesn't look very professional (although it does work).
+To compile all source files to `.pyc` (default), call the script as follows:
 
-	./python -O setup-win32.py py2exe
+	python setup-win32.py py2exe
+
+To compile all source files to `.pyo`, call the script as follows:
+
+	python -O setup-win32.py py2exe
+
+or
+
+	python -OO setup-win32.py py2exe
 
 More options can be tweaked by changing the variables below.
 
-Python modules
-==============
+## Output
+
+The build will be stored in the `dist` subfolder.
+
+## Python modules
 
 The following Python modules should be installed:
 
@@ -50,13 +59,22 @@ The following Python modules should be installed:
 		  <http://www.lfd.uci.edu/~gohlke/pythonlibs/#pycairo>
 	expyriment
 	matplotlib
+		Subdependencies:
+		- python-dateutil
+			- Installed as .egg, so requires manual copying. If it fails to
+			  install due to decoding errors, the package can be copied
+		  	  manually to site-packages.
+		- pytz
+			- Installed as .egg, so requires manual copying.
+		- six
+			- Installed as .egg, so requires manual copying.
 	opencv2
 		- Download and extract the regular OpenCV2 package
 		- Copy cv2.pyd from build/python/2.7 to the Python site-packages
 		  folder
 	pil
 	psychopy
-    pyflakes
+	pyflakes
 		- This is installed as an egg and therefore not packaged properly. For
 		  packaging, simply place the `pyflakes` source folder directly in the
 		  Python site-packages.
@@ -64,18 +82,19 @@ The following Python modules should be installed:
 	pyaudio
 	pygame
 	pyglet
-		- The installer doesn't work. Need to install from .zip.
+		- The installer doesn't work. Need to install from ``.zip`.
 	pyopengl
 	pyparallel
-		- Needs to be installed through the .zip package
-		- Manually place simpleio.dll in the Python folder
+		- Needs to be installed through the `.zip` package
+		- Manually place `simpleio.dll`, which is included with the pyparallel
+		  source, in the main Python folder.
 	pyparsing
 		- Required by matplotlib. The installer doesn't work, so needs to be
 		  installed from .zip.
 	pyqt4
+		- The Python 3 modules will break on compilation, and have to be
+		  manually removed/ renamed. These are in `uic/port_v3`.
 	pyserial
-	python-dateutil
-		- Required by matplotlib
 	numpy
 	scipy
 	vlc
@@ -85,16 +104,18 @@ The following Python modules should be installed:
 		- Choose the version for VLC 2.0
 		- Available from <http://liris.cnrs.fr/advene/download/python-ctypes/>
 
-Folder structure
-================
+## Folder structure
 
-If media_player or media_player_vlc are included, they are assumed to be one folder
-up. So the folder structure should be as follows:
+If media_player, media_player_vlc, boks, or pygaze are included, they are
+assumed to be one folder up. So the folder structure should be as follows:
 
 	/[parent foler]
 		/opensesame
+		/pygaze
+		/boks
 		/media_player
 		/media_player_vlc
+---
 
 """
 
@@ -111,28 +132,7 @@ import libqtopensesame.qtopensesame
 import libopensesame.misc
 import psychopy
 import urllib
-
-# List of included plug-ins
-included_plugins = [
-	'advanced_delay',
-	'external_script',
-	'fixation_dot',
-	'form_base',
-	'form_text_input',
-	'form_consent',
-	'form_text_display',
-	'form_multiple_choice',
-	'joystick',
-	'notepad',
-	'parallel',
-	'port_reader',
-	'repeat_cycle',
-	'reset_feedback',
-	'srbox',
-	'text_display',
-	'text_input',
-	'touch_response',
-	]
+from setup_shared  import included_plugins, included_extensions
 
 # Set this to False to build a 'light' version without the Qt4 gui. This
 # options currently breaks opensesamerun as well, so don't set it to False.
@@ -140,15 +140,43 @@ include_gui = True
 
 # Miscellaneous settings
 include_plugins = True
+include_extensions = True
 include_media_player = False
 include_media_player_vlc = True
+include_boks = True
+include_pygaze = True
 include_examples = True
 include_sounds = True
 include_faenza = True
 include_inpout32 = True
 include_simpleio = True
-python_folder = r"C:\Python_2.7.6-win32"
-python_version = "2.7"
+include_pyqt4_plugins = True
+release_zip = True
+release_build = 1
+
+python_folder = os.path.dirname(sys.executable)
+python_version = "%d.%d" % (sys.version_info[0], sys.version_info[1])
+
+print(u'Python folder: %s' % python_folder)
+print(u'Python version: %s' % python_version)
+
+# Determine which files we're going to keep
+if '-OO' in sys.argv:
+	strip_ext = '.py', '.pyc'
+	keep_ext = '.pyo'
+	optimize = 2
+	print(u'Compiling to .pyo')
+elif '-O' in sys.argv:
+	strip_ext = '.py', '.pyc'
+	keep_ext = '.pyo'
+	optimize = 1
+	print(u'Compiling to .pyo')
+else:
+	strip_ext = '.py', '.pyo'
+	keep_ext = '.pyc'
+	optimize = 0
+	print(u'Compiling to .pyc')
+print(u'Optimize = %d' % optimize)
 
 # Packages that are too be copied for the site-packages folder, rather than
 # included by py2exe in the library .zip file. Copying packages is in general
@@ -174,6 +202,19 @@ copy_packages = [
 	'markdown',
 	'matplotlib',
 	'bidi',
+	'yaml',
+	'pygaze',
+	'pytz',
+	'pyparsing',
+	'dateutil',
+	'six',
+	'wx'
+	]
+
+# A list of packages that shouldn't be stripped from .py files, because it
+# breaks them.
+no_strip = [
+	'expyriment'
 	]
 
 # Packages that are part of the standard Python packages, but should not be
@@ -197,6 +238,7 @@ include_packages = [
 	'PyQt4.Qsci',
 	'PyQt4.QtWebKit',
 	'PyQt4.QtNetwork',
+	'PyQt4.uic',
 	]
 
 exclude_dll = [
@@ -209,6 +251,12 @@ if os.path.exists("dist"):
 	shutil.rmtree("dist")
 os.mkdir("dist")
 os.mkdir(os.path.join("dist", "plugins"))
+os.mkdir(os.path.join("dist", "extensions"))
+
+# Print copy PyQt4 plugins
+if include_pyqt4_plugins:
+	shutil.copytree('%s\Lib\site-packages\PyQt4\plugins' % python_folder,
+		'dist\PyQt4_plugins')
 
 # A filter to ignore non-relevant package files
 def ignore_package_files(folder, files):
@@ -226,7 +274,7 @@ def strip_py(folder):
 			strip_py(path)
 			continue
 		base, ext = os.path.splitext(path)
-		if (ext in ('.py', '.pyc') and os.path.exists(base+'.pyo')) or \
+		if (ext in strip_ext and os.path.exists(base+keep_ext)) or \
 			path[-1] == '~':
 			print('stripping %s' % path)
 			os.remove(path)
@@ -236,15 +284,23 @@ for pkg in copy_packages:
 	print('copying packages %s ... ' % pkg)
 	exec('import %s as _pkg' % pkg)
 	pkg_folder = os.path.dirname(_pkg.__file__)
-	print('\tfrom %s' % pkg_folder)
 	pkg_target = os.path.join("dist", pkg)
-	shutil.copytree(pkg_folder, pkg_target, symlinks=True, \
-		ignore=ignore_package_files)
-	compileall.compile_dir(pkg_target, force=True)
-	# Expyriment assumes that certain source files are available, see
-	# http://code.google.com/p/expyriment/issues/detail?id=16
-	if pkg != 'expyriment':
-		strip_py(pkg_target)
+	# For modules that are .py files in site-packages
+	if pkg_folder.endswith('site-packages'):
+		print('\tmodule %s' % _pkg.__file__)
+		shutil.copy(os.path.join(pkg_folder, '%s.py' % pkg), 'dist')
+		compileall.compile_file(r'dist/%s.py' % pkg)
+		os.remove(r'dist/%s.py' % pkg)
+	# For packages that are subfolder of site-packages
+	else:
+		print('\tfrom %s' % pkg_folder)
+		shutil.copytree(pkg_folder, pkg_target, symlinks=True, \
+			ignore=ignore_package_files)
+		compileall.compile_dir(pkg_target, force=True)
+		# Expyriment assumes that certain source files are available, see
+		# http://code.google.com/p/expyriment/issues/detail?id=16
+		if pkg != no_strip:
+			strip_py(pkg_target)
 
 # Create a list of standard pakcages that should be included
 # http://stackoverflow.com/questions/6463918/how-can-i-get-a-list-of-all-the-python-standard-library-modules
@@ -295,14 +351,13 @@ if include_gui:
 
 # Setup options
 setup(
-
 	# Use 'console' to have the programs run in a terminal and
 	# 'windows' to run them normally.
 	windows = windows,
 	options = {
 		"py2exe" : {
 		"compressed" : True,
-		"optimize": 2,
+		"optimize": optimize,
 		"bundle_files": 3,
 		"excludes": copy_packages,
 		"includes" : std_pkg + include_packages,
@@ -370,13 +425,25 @@ if include_inpout32:
 if include_plugins:
 	print("copying plugins"	)
 	for plugin in included_plugins:
-		print("copying plugin", plugin)
+		print("copying plugin %s" % plugin)
 		shutil.copytree(os.path.join("plugins", plugin), os.path.join("dist", \
 			"plugins", plugin))
 		for path in os.listdir(os.path.join("plugins", plugin)):
 			if path[-1] == "~" or os.path.splitext(path)[1] in [".pyc"]:
-				print("removing file", path)
+				print("removing file %s" % path)
 				os.remove(os.path.join("dist", "plugins", plugin, path))
+
+# Include extensions
+if include_extensions:
+	print("copying extensions"	)
+	for extension in included_extensions:
+		print("copying extension %s" % extension)
+		shutil.copytree(os.path.join("extensions", extension),
+			os.path.join("dist", "extensions", extension))
+		for path in os.listdir(os.path.join("extensions", extension)):
+			if path[-1] == "~" or os.path.splitext(path)[1] in [".pyc"]:
+				print("removing file %s" % path)
+				os.remove(os.path.join("dist", "extensions", extension, path))
 
 # Include old media_player
 if include_media_player:
@@ -414,6 +481,22 @@ if include_media_player_vlc:
 	shutil.copyfile(r"..\media_player_vlc\info.json", \
 		r"dist\plugins\media_player_vlc\info.json")
 
+# Include Boks plug-in
+if include_boks:
+	print("copying boks")
+	shutil.copytree(r"..\boks\opensesame\boks",
+		r"dist\plugins\boks",
+		ignore=shutil.ignore_patterns('*.pyc', '.*', '.pyo'))
+
+# Include PyGaze plug-ins
+if include_pygaze:
+	print("copying pygaze")
+	for plugin in ['init', 'log', 'drift_correct', 'start_recording',
+		'stop_recording', 'wait']:
+		shutil.copytree(r"..\pygaze\opensesame_plugins\pygaze_%s" % plugin,
+			r"dist\plugins\pygaze_%s" % plugin,
+			ignore=shutil.ignore_patterns('*.pyc', '.*', '.pyo'))
+
 # Include examples
 if include_examples:
 	print("copying examples")
@@ -421,10 +504,27 @@ if include_examples:
 	for path in os.listdir(os.path.join("dist", "examples")):
 		if path[-1] == "~" or os.path.splitext(path)[1] not in [".opensesame", \
 			".gz"]:
-			print("removing file", path)
+			print("removing file %s" % path)
 			os.remove(os.path.join("dist", "examples", path))
 
 # Include sounds
 if include_sounds:
 	print("copying sounds")
 	shutil.copytree("sounds", os.path.join("dist", "sounds"))
+
+# Create a zip release of the folder
+if release_zip:
+	import zipfile
+	target_folder = 'opensesame_%s-win32-%s' % (libopensesame.misc.version, \
+		release_build)
+	target_zip = target_folder + '.zip'
+	shutil.move('dist', target_folder)
+	zipf = zipfile.ZipFile(target_zip, 'w', zipfile.ZIP_DEFLATED)
+	for root, dirs, files in os.walk(target_folder):
+		for file in files:
+			path = os.path.join(root, file)
+			print('Adding %s' % path)
+			zipf.write(path)
+	zipf.close()
+	shutil.move(target_folder, 'dist')
+	print('zipfile: %s' % target_zip)
