@@ -86,9 +86,15 @@ class multiprocess_runner(base_runner):
 			# Capture exceptions
 			if isinstance(msg, Exception):
 				return msg
-			# The workspace globals are sent as a dict
+			# The workspace globals are sent as a dict. A special __pause__ key
+			# indicates whether the experiment should be paused or resumed.
 			if isinstance(msg, dict):
 				self._workspace_globals = msg
+				if u'__pause__' in msg:
+					if msg[u'__pause__']:
+						self.pause()
+					else:
+						self.resume()
 				continue
 			# Anything that is not a string, not an Exception, and not None is
 			# unexpected

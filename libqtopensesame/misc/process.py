@@ -135,6 +135,7 @@ class ExperimentProcess(multiprocessing.Process):
 		print(u'Starting experiment as %s' % self.name)
 		# Run the experiment and catch any Exceptions.
 		e_run = None
+		exp.output_channel = self.output
 		try:
 			exp.run()
 			print('done!')

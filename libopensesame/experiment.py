@@ -352,6 +352,39 @@ class experiment(item.item):
 
 		self.end()
 
+	def pause(self):
+
+		"""
+		desc:
+			Pauses the experiment, sends the Python workspace to the GUI, and
+			waits for the GUI to send a resume signal. This requires an output
+			channel.
+		"""
+
+		from openexp.canvas import canvas
+		from openexp.keyboard import keyboard
+		import pickle
+		if not hasattr(self, u'output_channel'):
+			debug.msg(u'Cannot pause, because there is no output channel.')
+			return
+		d = self.python_workspace._globals.copy()
+		for key, value in d.items():
+			try:
+				pickle.dumps(value)
+			except:
+				del d[key]
+		d[u'__pause__'] = True
+		self.output_channel.put(d)
+		pause_canvas = canvas(self)
+		pause_canvas.text(
+			u'The experiment has been paused.<br />Press spacebar to resume...')
+		pause_keyboard = keyboard(self, keylist=[u'space'])
+		pause_canvas.show()
+		try:
+			pause_keyboard.get_key()
+		finally:
+			self.output_channel.put({'__pause__' : False})
+
 	def cleanup(self):
 
 		"""Calls all the cleanup functions."""

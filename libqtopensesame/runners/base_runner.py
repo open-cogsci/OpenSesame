@@ -283,3 +283,24 @@ class base_runner(object):
 		"""
 
 		return {}
+
+	def pause(self):
+
+		self.console.set_workspace_globals(self.workspace_globals())
+		print(u'The experiment has been paused. Switch back to the experiment window and press space to resume.')
+		self.console.show_prompt()
+		self.main_window.setDisabled(False)
+		self.main_window.action_run_in_window.setDisabled(True)
+		self.main_window.action_run.setDisabled(True)
+		self.main_window.action_run_quick.setDisabled(True)
+		self.main_window.action_quit.setDisabled(True)
+		self.main_window.raise_()
+		self.main_window.activateWindow()
+
+	def resume(self):
+
+		self.main_window.action_run_in_window.setDisabled(False)
+		self.main_window.action_run.setDisabled(False)
+		self.main_window.action_run_quick.setDisabled(False)
+		self.main_window.action_quit.setDisabled(False)
+		self.main_window.setDisabled(True)
