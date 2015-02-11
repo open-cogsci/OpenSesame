@@ -23,6 +23,7 @@ from IPython.qt.console.rich_ipython_widget import RichIPythonWidget
 from IPython.qt.inprocess import QtInProcessKernelManager
 from libqtopensesame.console._base_console import base_console
 from libqtopensesame.misc.config import cfg
+from libopensesame import debug
 
 def _style(cs, token):
 

@@ -538,7 +538,6 @@ class qtopensesame(QtGui.QMainWindow, base_component):
 			self.ui.dock_stdout.setVisible(False)
 			return
 		self.ui.console.focus()
-		print(self.focusWidget())
 		self.ui.dock_stdout.setVisible(True)
 
 	def refresh_pool(self, make_visible=None):
