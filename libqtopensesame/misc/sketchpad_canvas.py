@@ -628,19 +628,21 @@ class sketchpad_canvas(QtGui.QGraphicsScene):
 
 		"""Mimicks canvas api. See openexp._canvas.canvas."""
 
-		a = math.atan2(ey - sy, ex - sx)
-		sx1 = ex + arrow_size * math.cos(a + math.radians(135))
-		sy1 = ey + arrow_size * math.sin(a + math.radians(135))
-		sx2 = ex + arrow_size * math.cos(a + math.radians(225))
-		sy2 = ey + arrow_size * math.sin(a + math.radians(225))
+		d = math.sqrt((ey-sy)**2 + (sx-ex)**2)
+		angle = math.atan2(ey-sy,ex-sx)
+
+		# calculate points between each of the vertices
+		p0 = (sx,sy)
+		p1 = (sx+ 0.5*arrow_size*math.cos(angle-math.pi/2),sy + 0.5*arrow_size*math.sin(angle-math.pi/2))
+		p2 = (p1[0]+proportion*math.cos(angle)*d, p1[1]+proportion*math.sin(angle)*d)
+		p3 = (p2[0]+ arrow_size * math.cos(angle-math.pi/2),p2[1]+ arrow_size * math.sin(angle-math.pi/2))
+		p4 = (ex,ey)
+		p7 = (sx+ 0.5*arrow_size*math.cos(angle+math.pi/2),sy + 0.5*arrow_size*math.sin(angle+math.pi/2))
+		p6 = (p7[0]+proportion*math.cos(angle)*d, p7[1]+proportion*math.sin(angle)*d)
+		p5 = (p6[0]+ arrow_size * math.cos(angle+math.pi/2),p6[1]+ arrow_size * math.sin(angle+math.pi/2))
+
 		group = QtGui.QGraphicsItemGroup()
-		i = self.line(sx, sy, ex, ey, color=color, penwidth=penwidth,
-			add=False)
-		group.addToGroup(i)
-		i = self.line(sx1, sy1, ex, ey, color=color, penwidth=penwidth,
-			add=False)
-		group.addToGroup(i)
-		i = self.line(sx2, sy2, ex, ey, color=color, penwidth=penwidth,
+		i = self.polygon([p0,p1,p2,p3,p4,p5,p6,p7], color = color, fill = fill, penwdith = penwidth, 
 			add=False)
 		group.addToGroup(i)
 		self.addItem(group)
