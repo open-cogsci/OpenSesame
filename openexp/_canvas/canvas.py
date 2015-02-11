@@ -596,13 +596,12 @@ class canvas(object):
 
 		raise NotImplementedError()
 
-	def arrow(self, sx, sy, ex, ey, arrow_size=5, color=None, penwidth=None):
+	def arrow(self, sx, sy, ex, ey, arrow_size=5, proportion=0.8, color=None, fill=False, penwidth = None):
 
 		"""
 		desc:
-			Draws an arrow. An arrow is a line, with an arrowhead at (ex, ey).
-			The angle between the arrowhead lines and the arrow line is 45
-			degrees.
+			Draws an arrow. An arrow is a polygon with 7 vertices. The arrowhead is located at (ex, ey).
+			The imaginary line between (sx,sy) and (ex,ey) cuts the arrow in two equal halves.
 
 		arguments:
 			sx:
@@ -620,11 +619,19 @@ class canvas(object):
 
 		keywords:
 			arrow_size:
-				desc:	The length of the arrow-head lines in pixels.
+				desc:	The width of the arrow in pixels.
 				type:	int
+			proportion:
+				desc:	The proportion of arrow body lenth to total arrow length.
+				type:	float [0,1)
+
 			color:
 				desc:	"%arg_fgcolor"
 				type:	[str, unicode, NoneType]
+			fill:
+				desc:	"%arg_fill"
+				type:	bool
+
 			penwidth:
 				desc:	"%arg_penwidth"
 				type:	int
@@ -637,15 +644,22 @@ class canvas(object):
 			my_canvas.arrow(0, 0, w, h, arrow_size=10)
 		"""
 
-		self.line(sx, sy, ex, ey, color=color, penwidth=penwidth)
-		a = math.atan2(ey - sy, ex - sx)
-		_sx = ex + arrow_size * math.cos(a + math.radians(135))
-		_sy = ey + arrow_size * math.sin(a + math.radians(135))
-		self.line(_sx, _sy, ex, ey, color=color, penwidth=penwidth)
-		_sx = ex + arrow_size * math.cos(a + math.radians(225))
-		_sy = ey + arrow_size * math.sin(a + math.radians(225))
-		self.line(_sx, _sy, ex, ey, color=color, penwidth=penwidth)
+		d = math.sqrt((ey-sy)**2 + (sx-ex)**2)
+		angle = math.atan2(ey-sy,ex-sx)
 
+		# calculate points between each of the vertices
+		p0 = (sx,sy)
+		p1 = (sx+ 0.5*pt*math.cos(angle-math.pi/2),sy + 0.5*pt*math.sin(angle-math.pi/2))
+		p2 = (p1[0]+proportion*math.cos(angle)*d, p1[1]+proportion*math.sin(angle)*d)
+		p3 = (p2[0]+ pt * math.cos(angle-math.pi/2),p2[1]+ pt * math.sin(angle-math.pi/2))
+		p4 = (ex,ey)
+		p7 = (sx+ 0.5*pt*math.cos(angle+math.pi/2),sy + 0.5*pt*math.sin(angle+math.pi/2))
+		p6 = (p7[0]+proportion*math.cos(angle)*d, p7[1]+proportion*math.sin(angle)*d)
+		p5 = (p6[0]+ pt * math.cos(angle+math.pi/2),p6[1]+ pt * math.sin(angle+math.pi/2))
+
+		self.polygon([p0,p1,p2,p3,p4,p5,p6,p7], color = color, fill = fill, penwdith = penwidth)
+
+		
 	def rect(self, x, y, w, h, fill=False, color=None, penwidth=None):
 
 		"""
@@ -732,7 +746,7 @@ class canvas(object):
 
 		"""
 		desc:
-			Draws a polygon that defined by a list of vertices. I.e. a shape of
+			Draws a polygon  defined by a list of vertices. I.e. a shape of
 			points connected by lines.
 
 		arguments:
