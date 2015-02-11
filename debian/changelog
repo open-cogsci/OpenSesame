@@ -1,3 +1,10 @@
+opensesame (2.9.4~pre1-ubuntu1) utopic; urgency=medium
+
+  * Bugs fixed
+    - Prevent indirect recursion errors in overview area
+
+ -- Sebastiaan Mathot <sebastiaan@mantis>  Wed, 11 Feb 2015 11:34:23 +0100
+
 opensesame (2.9.3-ubuntu1) utopic; urgency=medium
 
   * Bugs fixed
