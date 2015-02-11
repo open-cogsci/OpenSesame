@@ -1,4 +1,11 @@
-opensesame (2.9.3~pre1-ubuntu1) utopic; urgency=medium
+opensesame (2.9.4~pre1-ubuntu1) utopic; urgency=medium
+
+  * Bugs fixed
+    - Prevent indirect recursion errors in overview area
+
+ -- Sebastiaan Mathot <sebastiaan@mantis>  Wed, 11 Feb 2015 11:34:23 +0100
+
+opensesame (2.9.3-ubuntu1) utopic; urgency=medium
 
   * Bugs fixed
     - Font size was specified in points instead of pixels in GUI
@@ -7,6 +14,7 @@ opensesame (2.9.3~pre1-ubuntu1) utopic; urgency=medium
     - Fix a bug where description changes weren't applied
   * Improvements
     - Allow descriptions to wrap over multiple lines for better screen use
+    - Massively improved performance for large experiments (#305)
 
  -- Sebastiaan Mathot <sebastiaan@mantis>  Fri, 16 Jan 2015 09:59:40 +0100
 

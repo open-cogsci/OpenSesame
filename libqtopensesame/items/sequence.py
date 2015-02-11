@@ -152,6 +152,8 @@ class sequence(qtstructure_item, qtplugin, sequence_runtime):
 
 		_children = []
 		for item, cond in self.items:
+			if item not in self.experiment.items:
+				continue
 			_children += [item] + self.experiment.items[item].children()
 		return _children
 

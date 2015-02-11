@@ -633,6 +633,8 @@ class loop(qtstructure_item, qtitem, loop_runtime):
 
 		"""See qtitem."""
 
+		if self.item not in self.experiment.items:
+			return []
 		return [self.item] + self.experiment.items[self.item].children()
 
 	def is_child_item(self, item):
