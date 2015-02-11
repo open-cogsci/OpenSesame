@@ -17,6 +17,8 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
+from libopensesame.py3compat import *
+
 import openexp.mouse
 from libopensesame.mouse_response import mouse_response
 from libqtopensesame.items.qtautoplugin import qtautoplugin
