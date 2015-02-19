@@ -63,15 +63,14 @@ class logger(item.item):
 
 		l = []
 		for var in self.logvars:
-			try:
-				val = self.unistr(self.get(var))
-			except osexception as e:
-				if self.get(u'ignore_missing') == u'yes':
-					val = u'NA'
-				else:
-					raise osexception( \
-						u"Logger '%s' tries to log the variable '%s', but this variable is not available. Please deselect '%s' in logger '%s' or enable the 'Use NA for variables that have not been set' option." \
-						% (self.name, var, var, self.name))
+			if var in self.var:
+				val = self.var.get(var)
+			elif self.get(u'ignore_missing') == u'yes':
+				val = u'NA'
+			else:
+				raise osexception(
+					u"Logger '%s' tries to log the variable '%s', but this variable is not available. Please deselect '%s' in logger '%s' or enable the 'Use NA for variables that have not been set' option." \
+					% (self.name, var, var, self.name))
 			l.append(val)
 
 		if self.get(u'use_quotes') == u'yes':
@@ -108,4 +107,3 @@ class logger(item.item):
 		for logvar in self.logvars:
 			s += u'\tlog "%s"\n' % logvar
 		return s
-

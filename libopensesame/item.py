@@ -18,6 +18,8 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 import openexp.mouse
+from libopensesame.var_store import var_store
+import warnings
 import openexp.keyboard
 from libopensesame.exceptions import osexception
 from libopensesame import debug, regexp
@@ -50,6 +52,8 @@ class item(object):
 		string		--	An definition string. (default=None).
 		"""
 
+		if not hasattr(self, u'var'):
+			self.var = var_store(self, parent=experiment.var)
 		self.reset()
 		self.name = name
 		self.experiment = experiment
@@ -77,7 +81,6 @@ class item(object):
 			self.description = u'Default description'
 		if not hasattr(self, u'round_decimals'):
 			self.round_decimals = 2
-		self.variables = {}
 		self.comments = []
 		if string is not None:
 			self.from_string(string)
@@ -128,7 +131,7 @@ class item(object):
 				raise osexception( \
 					u'Error parsing variable definition: "%s"' % line)
 			else:
-				self.set(l[1], l[2])
+				self.var.set(l[1], l[2])
 				return True
 		return False
 
@@ -273,6 +276,13 @@ class item(object):
 		self.experiment.set(u'response_time_%s' % self.get(u'name'), \
 			self.experiment.get(u'response_time'))
 
+	def __getattr__(self, var):
+
+		if var in self.var:
+			warnings.warn(u'called %s as item property' % var)
+			return self.var.get(var)
+		raise osexception(u'%s not found' % var)
+
 	def variable_to_string(self, var):
 
 		"""
@@ -285,7 +295,7 @@ class item(object):
 		A definition string.
 		"""
 
-		val = self.unistr(self.variables[var])
+		val = self.unistr(self.var.get(var))
 		# Multiline variables are stored as a block
 		if u'\n' in val or u'"' in val:
 			s = u'__%s__\n' % var
@@ -310,7 +320,6 @@ class item(object):
 
 		self.reset()
 		textblock_var = None
-		self.variables = {}
 		for line in string.split(u'\n'):
 			line_stripped = line.strip()
 			# The end of a textblock
@@ -319,7 +328,7 @@ class item(object):
 					self.experiment.notify( \
 						u'It appears that a textblock has been closed without being opened. The most likely reason is that you have used the string "__end__", which has a special meaning for OpenSesame.')
 				else:
-					self.set(textblock_var, textblock_val)
+					self.var.set(textblock_var, textblock_val)
 					textblock_var = None
 			# The beginning of a textblock. A new textblock is only started when
 			# a textblock is not already ongoing, and only if the textblock
@@ -365,7 +374,7 @@ class item(object):
 		s = u'define %s %s\n' % (item_type, self.name)
 		for comment in self.comments:
 			s += u'\t# %s\n' % comment.strip()
-		for var in sorted(self.variables):
+		for var in self.var:
 			s += u'\t' + self.variable_to_string(var)
 		return s
 
@@ -398,217 +407,28 @@ class item(object):
 
 	def set(self, var, val):
 
-		"""
-		desc: |
-			Sets an OpenSesame variable.
-
-			If you want to set a variable so that it is available in other items
-			as well (such as the logger item, so you can log the variable), you
-			need to use the set() function from the experiment. So, in an
-			inline_script item you would generally set a variable with
-			exp.set(), rather than self.set().
-
-			__Important note:__
-
-			You can only set simple variable types (unicode, float, and int).
-			If you use the set function to save another type of variable, it
-			will be converted to a unicode representation.
-
-		arguments:
-			var:
-				desc:	The name of an experimental variable.
-				type:	[str, unicode]
-			val:
-				desc:	A value.
-
-		example: |
-			exp.set('my_timestamp', self.time())
-		"""
-
-		# Make sure the variable name and the value are of the correct types
-		var = self.unistr(var)
-		val = self.auto_type(val)
-		# Check whether the variable name is valid
-		if regexp.sanitize_var_name.sub(u'_', var) != var:
-			raise osexception( \
-				u'"%s" is not a valid variable name. Variable names must consist of alphanumeric characters and underscores, and may not start with a digit.' \
-				% var)
-		# Check whether the variable name is not protected
-		if var in self.reserved_words:
-			raise osexception( \
-				u'"%s" is a reserved keyword (i.e. it has a special meaning for OpenSesame), and therefore cannot be used as a variable name. Sorry!' \
-				% var)
-
-		# Register the variables
-		setattr(self, var, val)
-		self.variables[var] = val
+		warnings.warn(u'item.set() is deprecated (for var %s)' % var)
+		setattr(self.var, var, val)
 
 	def unset(self, var):
 
-		"""
-		desc:
-			Unsets (forgets) an OpenSesame variable.
-
-		arguments:
-			var:
-				desc:	The name of an OpenSesame variable.
-				type:	[str, unicode]
-
-		example: |
-			self.set('var', 'Hello world!')
-			print(self.get('var')) # Prints 'Hello world!'
-			self.unset('variable_to_forget')
-			print(self.get('var')) # Gives error!
-		"""
-
-		var = self.unistr(var)
-		if var in self.variables:
-			del self.variables[var]
-		try:
-			delattr(self, var)
-		except:
-			pass
+		warnings.warn(u'item.unset() is deprecated (for var %s)' % var)
+		del self.var[var]
 
 	def get(self, var, _eval=True):
 
-		"""
-		desc: |
-			Returns the value of an OpenSesame variable. Checks first if the
-			variable exists 'locally' in the item and, if not, checks if the
-			variable exists 'globally' in the experiment.
-
-			The type of the returned value can be int, float, or unicode
-			(string). The appropriate type is automatically selected, e.g. '10'
-			is returned as int, '10.1' as float, and 'some text' as unicode.
-
-			The _eval parameter is used to specify whether the value of the
-			variable should be evaluated, in case it contains references to
-			other variables. This is best illustrated by example 2 below.
-
-		arguments:
-			var:
-				desc:	The name of an OpenSesame variable.
-				type:	[str, unicode]
-
-		keywords:
-			_eval:
-				desc:	Indicates whether the variable should be evaluated, i.e.
-						whether containing variables should be processed.
-				type:	bool
-
-		returns:
-			desc:	The value.
-			type:	[unicode, int, float]
-
-		example: |
-			# Example 1
-			if self.get('cue') == 'valid':
-				print('This is a validly cued trial')
-
-			# Example 2
-			exp.set('var1', 'I like [var2]')
-			exp.set('var2', 'OpenSesame')
-			print(self.get('var1')) # prints 'I like OpenSesame'
-			print(self.get('var1', _eval=False)) # prints 'I like [var2]'
-		"""
-
-		var = self.unistr(var)
-		# Avoid recursion
-		if var == self._get_lock:
-			raise osexception( \
-				u"Recursion detected! Is variable '%s' defined in terms of itself (e.g., 'var = [var]') in item '%s'" \
-				% (var, self.name))
-		# Get the variable
-		if hasattr(self, var):
-			val = getattr(self, var)
-		else:
-			try:
-				val = getattr(self.experiment, var)
-			except:
-				raise osexception( \
-					u"Variable '%s' is not set in item '%s'.<br /><br />You are trying to use a variable that does not exist. Make sure that you have spelled and capitalized the variable name correctly. You may wish to use the variable inspector (Control + I) to find the intended variable." \
-					% (var, self.name))
-		if _eval:
-			# Lock to avoid recursion and start evaluating possible variables
-			self._get_lock = var
-			val = self.eval_text(val)
-			self._get_lock = None
-			# Done!
-		return val
+		warnings.warn(u'item.unset() is deprecated (for var %s)' % var)
+		return self.var.get(var, _eval=_eval)
 
 	def get_check(self, var, default=None, valid=None, _eval=True):
 
-		"""
-		desc:
-			Similar to get(), but falls back to a default if the variable has
-			not been set. It also raises an error if the value is not part of
-			the valid list.
-
-		arguments:
-			var:
-				desc:	The name of an OpenSesame variable
-				type:	[unicode, str]
-
-		keywords:
-			default:
-				desc:	A default 'fallback' value or None for no fallback, in
-						which case an exception is rased if the variable does
-						not exist.
-				type:	[unicode, float, int]
-			valid:
-				desc:	A list of allowed values (or None for no restrictions).
-						An exception is raised if the value is not an allowed
-						value.
-				type:	[list, NoneType]
-			_eval:
-				desc:	Indicates whether the variable should be evaluated, i.e.
-						whether containing variables should be processed.
-				type:	bool
-
-		returns:
-			desc:	The value
-			type:	[unicode, float, int]
-
-		example: |
-			if self.get_check('cue', default='invalid') == 'valid':
-				print('This is a validly-cued trial')
-		"""
-
-		if default is None:
-			val = self.get(var, _eval=_eval)
-		elif self.has(var):
-			val = self.get(var, _eval=_eval)
-		else:
-			val = default
-		if valid is not None and val not in valid:
-			raise osexception( \
-				u"Variable '%s' is '%s', expecting '%s'" % (var, val, \
-				u" or ".join(valid)))
-		return val
+		warnings.warn(u'item.get_check() is deprecated (for var %s)' % var)
+		return self.var.get(var, default=default, _eval=_eval, valid=valid)
 
 	def has(self, var):
 
-		"""
-		desc:
-			Checks if an OpenSesame variable exists, either in the item or in
-			the experiment.
-
-		arguments:
-			var:
-				desc:	The name of an OpenSesame variable.
-				type:	[str, unicode]
-
-		returns:
-			desc:	True if the variable exists, False if not.
-			type:	bool
-
-		example: |
-			if not self.has('response'):
-				print('No response has been collected yet')
-		"""
-
-		var = self.unistr(var)
-		return hasattr(self, var) or hasattr(self.experiment, var)
+		warnings.warn(u'item.has() is deprecated (for var %s)' % var)
+		return var in self.var
 
 	def get_refs(self, text):
 

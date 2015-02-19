@@ -499,9 +499,9 @@ class qtitem(base_qtobject):
 		True if there are variably defined variables, False otherwise
 		"""
 
-		for var in self.variables:
+		for var in self.var:
 			if var not in exclude:
-				val = self.variables[var]
+				val = self.var.get(var)
 				if self.experiment.varref(val):
 					return True
 		return False

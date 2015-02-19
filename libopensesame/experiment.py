@@ -17,6 +17,7 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
+from libopensesame.var_store import var_store
 from libopensesame.item_store import item_store
 from libopensesame.python_workspace import python_workspace
 from libopensesame.exceptions import osexception
@@ -123,6 +124,7 @@ class experiment(item.item):
 
 		global pool_folders
 
+		self.var = var_store(self)
 		if items is None:
 			self.items = item_store(self)
 		else:
@@ -424,7 +426,7 @@ class experiment(item.item):
 			misc.codename) + \
 			u'# %s (%s)\n' % (time.ctime(), os.name) + \
 			u'# <http://www.cogsci.nl/opensesame>\n\n'
-		for var in sorted(self.variables):
+		for var in self.var:
 			s += self.variable_to_string(var)
 		s += u'\n'
 		for item in sorted(self.items):
@@ -677,8 +679,8 @@ class experiment(item.item):
 		"""
 
 		l = []
-		for var in self.variables:
-			l.append( (var, self.variables[var]) )
+		for var in self.var:
+			l.append( (var, self.var.get(var)) )
 		return l
 
 	def var_list(self, filt=u''):
@@ -701,7 +703,7 @@ class experiment(item.item):
 		for item_name, item in item_dict:
 			# Create a dictionary of variables that includes the broadcasted
 			# ones as wel as the indirectly registered ones (using item.set())
-			var_dict = item.var_info() + list(item.variables.items())
+			var_dict = item.var_info() + item.var.items()
 			for var, val in var_dict:
 				if var not in seen and (filt in var.lower() or filt in \
 					self.unistr(val).lower() or filt in item_name.lower()):

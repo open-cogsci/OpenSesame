@@ -39,7 +39,7 @@ class sketchpad(item, generic_response):
 
 		"""See item."""
 
-		self.duration = u'keypress'
+		self.var.duration = u'keypress'
 		self.elements = []
 
 	def element_module(self):
@@ -95,9 +95,8 @@ class sketchpad(item, generic_response):
 
 		super(sketchpad, self).prepare()
 		generic_response.prepare(self)
-		self.canvas = canvas(self.experiment,
-			fgcolor=self.get(u'foreground'),
-			bgcolor=self.get(u'background'), auto_prepare=False)
+		self.canvas = canvas(self.experiment, fgcolor=self.var.foreground,
+			bgcolor=self.var.background, auto_prepare=False)
 		for element in self.elements:
 			if element.is_shown():
 				element.draw()

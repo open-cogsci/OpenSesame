@@ -39,19 +39,19 @@ class generic_response:
 
 		"""Prepares the response timeout"""
 
-		if self.get(u"timeout") == u"infinite":
+		if self.var.timeout == u"infinite":
 			self._timeout = None
 		else:
 			try:
-				self._timeout = int(self.get(u"timeout"))
+				self._timeout = int(self.var.timeout)
 			except:
 				raise osexception( \
 					u"'%s' is not a valid timeout in keyboard_response '%s'. Expecting a positive integer or 'infinite'." \
-					% (self.get(u"timeout"), self.name))
+					% (self.var.timeout, self.name))
 			if self._timeout < 0:
 				raise osexception( \
 					u"'%s' is not a valid timeout in keyboard_response '%s'. Expecting a positive integer or 'infinite'." \
-					% (self.get(u"timeout"), self.name))
+					% (self.var.timeout, self.name))
 
 	def auto_responder(self, dev=u'keyboard'):
 
@@ -77,8 +77,8 @@ class generic_response:
 
 		debug.msg(u"generic_response.auto_responder(): responding '%s'" % resp)
 		if dev == u'mouse':
-			pos = random.randint(0, self.get(u'width')), random.randint( \
-				0, self.get(u'height'))
+			pos = random.randint(0, self.var.width), random.randint(0,
+				self.var.height)
 			return resp, pos, self.time()
 		return resp, self.time()
 
@@ -94,23 +94,23 @@ class generic_response:
 
 		self.experiment.start_response_interval = self.sri
 		key, self.experiment.end_response_interval = retval
-		self.experiment.response = self.sanitize(key)
-		self.synonyms = self._keyboard.synonyms(self.experiment.response)
+		self.experiment.var.response = self.sanitize(key)
+		self.synonyms = self._keyboard.synonyms(self.experiment.var.response)
 
 	def process_response_mouseclick(self, retval):
 
 		"""Process a mouseclick response"""
 
 		self.experiment.start_response_interval = self.sri
-		self.experiment.response, pos, self.experiment.end_response_interval = \
+		self.experiment.var.response, pos, self.experiment.end_response_interval = \
 			retval
-		self.synonyms = self._mouse.synonyms(self.experiment.response)
+		self.synonyms = self._mouse.synonyms(self.experiment.var.response)
 		if pos is not None:
-			self.experiment.cursor_x = pos[0]
-			self.experiment.cursor_y = pos[1]
+			self.experiment.var.cursor_x = pos[0]
+			self.experiment.var.cursor_y = pos[1]
 		else:
-			self.experiment.cursor_x = u'NA'
-			self.experiment.cursor_y = u'NA'
+			self.experiment.var.cursor_x = u'NA'
+			self.experiment.var.cursor_y = u'NA'
 
 	def process_response(self):
 
@@ -125,13 +125,13 @@ class generic_response:
 		if retval is None:
 			return
 
-		process_func = u"process_response_%s" % self.get(u"duration")
+		process_func = u"process_response_%s" % self.var.duration
 		if hasattr(self, process_func):
 			getattr(self, process_func)(retval)
 		else:
 			raise osexception( \
 				u"Don't know how to process responses for duration '%s' in item '%s'" \
-				% (self.get(u"duration"), self.name))
+				% (self.var.duration, self.name))
 
 		self.response_bookkeeping()
 
@@ -214,26 +214,26 @@ class generic_response:
 		"""Prepare the response timeout"""
 
 		# Set the timeout
-		if not self.has(u"timeout") or self.get(u"timeout") == u"infinite":
+		if not self.has(u"timeout") or self.var.timeout == u"infinite":
 			self._timeout = None
 		else:
 			try:
-				self._timeout = int(self.get(u"timeout"))
+				self._timeout = int(self.var.timeout)
 			except:
 				raise osexception( \
 					u"'%s' is not a valid timeout in item '%s'. Expecting a positive integer or 'infinite'." \
-					% (self.get(u"timeout"), self.name))
+					% (self.var.timeout, self.name))
 			if self._timeout < 0:
 				raise osexception( \
 					u"'%s' is not a valid timeout in item '%s'. Expecting a positive integer or 'infinite'." \
-					% (self.get(u"timeout"), self.name))
+					% (self.var.timeout, self.name))
 
 	def prepare_allowed_responses(self):
 
 		"""Prepare the allowed responses"""
 
 		# Prepare the allowed responses
-		dur = self.get(u"duration")
+		dur = self.var.duration
 		if self.has(u"allowed_responses"):
 			if dur == u"keypress":
 
@@ -278,10 +278,10 @@ class generic_response:
 
 		"""Prepare the duration"""
 
-		if type(self.get(u"duration")) == int:
+		if type(self.var.duration) == int:
 
 			# Prepare a duration in milliseconds
-			self._duration = int(self.get(u"duration"))
+			self._duration = int(self.var.duration)
 			if self._duration == 0:
 				self._duration_func = self.dummy
 			else:
@@ -291,13 +291,13 @@ class generic_response:
 
 			# Prepare a special duration, such as 'keypress', which are
 			# handles by special functions
-			prepare_func = u"prepare_duration_%s" % self.get(u"duration")
+			prepare_func = u"prepare_duration_%s" % self.var.duration
 			if hasattr(self, prepare_func):
 				getattr(self, prepare_func)()
 			else:
 				raise osexception( \
 					u"'%s' is not a valid duration in item '%s'" % \
-					(self.get(u"duration"), self.name))
+					(self.var.duration, self.name))
 
 	def prepare_duration_keypress(self):
 
