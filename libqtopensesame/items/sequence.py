@@ -64,6 +64,8 @@ class sequence(qtstructure_item, qtplugin, sequence_runtime):
 		self.add_checkbox_control(u'flush_keyboard',
 			u'Flush pending key presses at sequence start',
 			u'Flush pending key presses at sequence start')
+		self.add_text(
+			u'<b>Important</b>: A sequence has <a href="http://osdoc.cogsci.nl/usage/prepare-run">a variable preparation time</a>.')
 
 	def edit_widget(self):
 
