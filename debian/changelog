@@ -7,6 +7,7 @@ opensesame (2.9.5~pre1-ubuntu1) utopic; urgency=medium
   * Improvements
     - Explicitly notify of variable sequence preparation time
     - Add form template
+    - Add show_cursor option to touch_response plug-in 
 
  -- Sebastiaan Mathot <sebastiaan@mantis>  Mon, 02 Mar 2015 13:42:35 +0100
 
