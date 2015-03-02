@@ -2,6 +2,7 @@ opensesame (2.9.5~pre1-ubuntu1) utopic; urgency=medium
 
   * Bugs fixed
     - Don't delete an item when a drop is cancelled
+    - Remove all references to deprecated keyboard.to_chr()
   * Improvements
     - Explicitly notify of variable sequence preparation time
 
