@@ -6,6 +6,7 @@ opensesame (2.9.5~pre1-ubuntu1) utopic; urgency=medium
     - Remove empty response options in form_multiple_choice
   * Improvements
     - Explicitly notify of variable sequence preparation time
+    - Add form template
 
  -- Sebastiaan Mathot <sebastiaan@mantis>  Mon, 02 Mar 2015 13:42:35 +0100
 
