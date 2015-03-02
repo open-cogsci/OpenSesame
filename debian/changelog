@@ -1,36 +1,9 @@
-opensesame (2.9.5-ubuntu1) utopic; urgency=medium
+opensesame (2.9.5~pre1-ubuntu1) utopic; urgency=medium
 
   * Bugs fixed
     - Don't delete an item when a drop is cancelled
-    - Remove all references to deprecated keyboard.to_chr()
-    - Remove empty response options in form_multiple_choice
-    - Also rename and delete files in fallback pool folder
-    - Don't crash on invalid fixdot style in sketchpad canvas
-    - Don't crash when experiment-start item is invalid
-    - Fix a bug in image form widget that prevented dubious images from being shown
-    - Don't (re)decode unicode exception messages
-    - Convert delete key to key name in legacy keyboard back-end
-    - Re-initialize numpy random seed on experiment start
-    - Ensure proper encoding of image paths in legacy back-end
-    - Don't crash on variably defined font sizes in sketchpad widget
-    - Don't crash when pygame.PixelArray doesn't work
-    - Don't crash when loading plugin's from bytecode
-    - Don't crash on variably defined cycles in loop item
-    - Don't prepend underscore when renaming an item to the same name
   * Improvements
     - Explicitly notify of variable sequence preparation time
-    - Add form template
-    - Add show_cursor option to touch_response plug-in 
-    - Ask for confirmation before replacing a loop's item to run
-    - Show the number of unused items in the overview area
-    - Warn when there are multiple unlinked loggers
-    - Warn when the file pool is too large
-    - Clean up old file pool when opening experiment
-    - Clean up temporary file pool when saving experiment
-    - Allow cursor movement in text-input form widget
-    - Accept numeric enter in text-input form widget
-    - Add autorun functionality to Android runtime
-    - Open tab of newly created linked and unlinked copies
 
  -- Sebastiaan Mathot <sebastiaan@mantis>  Mon, 02 Mar 2015 13:42:35 +0100
 
