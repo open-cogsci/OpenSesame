@@ -384,9 +384,9 @@ class qtplugin(qtitem.qtitem):
 		A QLabel widget.
 		"""
 
-		row = self.edit_grid.rowCount()
 		label = QtGui.QLabel(_(msg, context=self.name))
 		label.setWordWrap(True)
+		label.setOpenExternalLinks(True)
 		self.edit_vbox.addWidget(label)
 		return label
 
@@ -480,4 +480,3 @@ class qtplugin(qtitem.qtitem):
 				self.apply_edit_changes()
 				return True
 		return qtitem.qtitem.get_ready(self)
-
