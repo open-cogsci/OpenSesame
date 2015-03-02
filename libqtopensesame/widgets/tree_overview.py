@@ -519,7 +519,11 @@ class tree_overview(base_subcomponent, QtGui.QTreeWidget):
 				# If the popup was cancelled
 				if resp == None:
 					e.accept()
-					del self.experiment.items[item.name]
+					# Delete the item if it was new or didn't originate from
+					# this application.
+					if data[u'type'] == u'item-new' \
+						or data[u'application-id'] != self.main_window._id():
+						del self.experiment.items[item.name]
 					self.main_window.set_busy(False)
 					return
 				# If the user chose to insert into the target item
@@ -577,6 +581,7 @@ class tree_overview(base_subcomponent, QtGui.QTreeWidget):
 			self.drop_event_item_move(data, e)
 		elif data[u'type'] == u'url-local':
 			self.main_window.open_file(path=data[u'url'])
+			e.accept()
 		else:
 			e.ignore()
 
