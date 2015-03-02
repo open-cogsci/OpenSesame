@@ -189,17 +189,24 @@ class pool_widget(base_widget):
 		if not os.path.exists(self.experiment.pool_folder):
 			return
 
-		file_list = os.listdir(self.experiment.pool_folder)
-		if self.experiment.fallback_pool_folder != None:
-			file_list += os.listdir(self.experiment.fallback_pool_folder)
-		for fname in file_list:
-			debug.msg(fname)
+		file_list = []
+		if os.path.exists(self.experiment.pool_folder):
+			file_list += [os.path.join(self.experiment.pool_folder, path) for \
+				path in os.listdir(self.experiment.pool_folder)]
+		if self.experiment.fallback_pool_folder is not None and \
+			os.path.exists(self.experiment.fallback_pool_folder):
+			file_list += [os.path.join(
+				self.experiment.fallback_pool_folder, path) for \
+				path in os.listdir(self.experiment.fallback_pool_folder)]
+		for path in file_list:
+			debug.msg(path)
+			fname = os.path.basename(path)
 			if filt in fname.lower():
 				icon = self.experiment.icon(self.file_type(fname))
 				item = QtGui.QListWidgetItem(icon, fname)
 				item.icon = icon
-				item.path = os.path.join( \
-					self.experiment.pool_folder, fname)
+				item.path = path
+				item.setToolTip(path)
 				self.ui.list_pool.addItem(item)
 
 	def open_file(self, path):
@@ -245,7 +252,7 @@ class pool_widget(base_widget):
 			_(u"Remove from pool"))
 		menu.addAction(self.experiment.icon(u"rename"), _(u"Rename"))
 		menu.triggered.connect(self.context_action)
-		self.context_target = unicode(item.text())
+		self.context_target = item.path
 		menu.exec_(event.globalPos())
 
 	def context_action(self, action):
@@ -258,8 +265,7 @@ class pool_widget(base_widget):
 		"""
 
 		a = unicode(action.text())
-		f = os.path.join(self.experiment.pool_folder, \
-			self.context_target)
+		f = self.context_target
 
 		if a == _(u"Open"):
 			self.open_file(f)
@@ -287,27 +293,27 @@ class pool_widget(base_widget):
 			# Create a list of files to be removed
 			dL = []
 			for item in self.ui.list_pool.selectedItems():
-				dL.append(unicode(item.text()))
+				dL.append(item.path)
 
 			# Remove the files
 			try:
 				for f in dL:
-					os.remove(os.path.join( \
-						self.experiment.pool_folder, f))
-				debug.msg(u"removed '%s'" % self.context_target)
+					os.remove(f)
+				debug.msg(u"removed '%s'" % f)
 			except:
-				debug.msg(u"failed to remove '%s'" % self.context_target)
+				debug.msg(u"failed to remove '%s'" % f)
 		else:
 
 			# Rename the file
-			new_name, ok = QtGui.QInputDialog.getText(self, _(u"Rename"), \
+			new_name, ok = QtGui.QInputDialog.getText(self, _(u"Rename"),
 				_(u"Please enter a new name for '%s'") \
-				% self.context_target, text = self.context_target)
+				% os.path.basename(self.context_target),
+				text=os.path.basename(self.context_target))
 			if ok:
 				new_name = unicode(new_name)
 
-				if os.path.exists(os.path.join( \
-					self.experiment.pool_folder, new_name)):
+				if os.path.exists(os.path.join(
+					os.path.dirname(self.context_target), new_name)):
 					self.experiment.notify( \
 						_(u"There already is a file named '%s' in the file pool") \
 						% new_name)
@@ -315,7 +321,7 @@ class pool_widget(base_widget):
 
 				try:
 					os.rename(f, os.path.join( \
-						self.experiment.pool_folder, new_name))
+						os.path.dirname(self.context_target), new_name))
 					debug.msg(u"renamed '%s' to '%s'" % (self.context_target, \
 						new_name))
 				except:
