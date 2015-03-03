@@ -516,6 +516,12 @@ class tree_overview(base_subcomponent, QtGui.QTreeWidget):
 				resp = popup_menu(self, [(0, question, icon),
 					(1, _('Insert after %s' % target_item.name), 'list-add')
 					]).show()
+				# Confirmation
+				if resp == 0 and target_item.item_type == u'loop' and \
+					target_item.item in self.experiment.items:
+					resp = popup_menu(self, [(0, _(u'I know, do it!'), icon)],
+						title=_(u'This will replace %s' % (target_item.item))
+						).show()
 				# If the popup was cancelled
 				if resp == None:
 					e.accept()
