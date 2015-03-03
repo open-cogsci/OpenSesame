@@ -26,6 +26,7 @@ try:
 	from yamldoc import inherit as docinherit
 except:
 	docinherit = type
+import warnings
 
 class keyboard(object):
 
@@ -284,3 +285,15 @@ class keyboard(object):
 		"""
 
 		pass
+
+	def to_chr(self, key):
+
+		"""
+		visible: False
+
+		desc:
+			A deprecated function for backwards compatibility.
+		"""
+
+		warnings.warn(u'keyboard.to_chr() has been deprecated.')
+		return key

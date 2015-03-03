@@ -31,7 +31,7 @@ class popup_menu(QtGui.QMenu, base_subcomponent):
 		user response.
 	"""
 
-	def __init__(self, main_window, actions, cancel=True):
+	def __init__(self, main_window, actions, cancel=True, title=None):
 
 		"""
 		desc:
@@ -54,6 +54,15 @@ class popup_menu(QtGui.QMenu, base_subcomponent):
 
 		QtGui.QMenu.__init__(self, main_window)
 		self.setup(main_window)
+
+		if title is not None:
+			action = QtGui.QAction(self.theme.qicon(u'dialog-information'),
+				title, self)
+			action._id = None
+			action.setDisabled(True)
+			self.addAction(action)
+			self.addSeparator()
+
 		for _id, text, icon in actions:
 			action = QtGui.QAction(self.theme.qicon(icon), text, self)
 			action._id = _id
@@ -64,6 +73,7 @@ class popup_menu(QtGui.QMenu, base_subcomponent):
 				_(u'Cancel'), self)
 			action._id = None
 			self.addAction(action)
+
 
 	def show(self):
 

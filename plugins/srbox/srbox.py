@@ -159,7 +159,6 @@ class srbox(item.item, generic_response.generic_response):
 			resp, self.experiment.end_response_interval = self._resp_func( \
 				None, self._timeout)
 			try:
-				resp = self._keyboard.to_chr(resp)
 				if resp not in ('timeout', None):
 					resp = int(resp)
 			except:
@@ -205,13 +204,13 @@ class srbox(item.item, generic_response.generic_response):
 			debug.msg("failed to close srbox")
 
 	def var_info(self):
-		
+
 		"""
 		Give a list of dictionaries with variable descriptions
 
 		Returns:
 		A list of (name, description) tuples
-		"""		
+		"""
 
 		return item.item.var_info(self) + \
 			generic_response.generic_response.var_info(self)
@@ -321,5 +320,3 @@ class qtsrbox(srbox, qtplugin.qtplugin):
 
 		# Return the _edit_widget
 		return self._edit_widget
-
-

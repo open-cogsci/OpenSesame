@@ -22,7 +22,7 @@ import os.path
 import sys
 
 version = u'3.0.0~pre1'
-codename = u'Idiosyncratic Ibn al-Haytham'
+codename = u'Interactive Ising'
 
 use_global_resources = '--no-global-resources' not in sys.argv
 from libopensesame import debug

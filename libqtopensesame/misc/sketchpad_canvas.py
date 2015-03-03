@@ -739,6 +739,7 @@ class sketchpad_canvas(QtGui.QGraphicsScene):
 		y = self._y(y)
 		group = QtGui.QGraphicsItemGroup()
 		h = 2
+		known = True
 		if style == u'default':
 			style = u'open-medium'
 		if u'large' in style:
@@ -748,7 +749,8 @@ class sketchpad_canvas(QtGui.QGraphicsScene):
 		elif u'small' in style:
 			s = 4
 		else:
-			raise osexception(u'Unknown fixdot style: %s' % self.style)
+			known = False
+			s = 8
 		if u'open' in style:
 			i = self.ellipse(x-s, y-s, 2*s, 2*s, fill=True, color=color,
 				add=False)
@@ -766,6 +768,12 @@ class sketchpad_canvas(QtGui.QGraphicsScene):
 			i = self.line(x-s, y, x+s, y, color=color, add=False, penwidth=1)
 			group.addToGroup(i)
 		else:
-			raise osexception(u'Unknown fixdot style: %s' % self.style)
+			i = self.ellipse(x-s, y-s, 2*s, 2*s, fill=True, color=color,
+				add=True)
+			group.addToGroup(i)
+			known = False
 		self.addItem(group)
+		if not known:
+			self.notify(_(u'Fixdot style "%s" is unknown or variably defined') \
+				% style)
 		return group

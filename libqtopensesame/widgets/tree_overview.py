@@ -518,10 +518,20 @@ class tree_overview(base_subcomponent, QtGui.QTreeWidget):
 				resp = popup_menu(self, [(0, question, icon),
 					(1, _('Insert after %s' % target_item.name), 'list-add')
 					]).show()
+				# Confirmation
+				if resp == 0 and target_item.item_type == u'loop' and \
+					target_item.item in self.experiment.items:
+					resp = popup_menu(self, [(0, _(u'I know, do it!'), icon)],
+						title=_(u'This will replace %s' % (target_item.item))
+						).show()
 				# If the popup was cancelled
 				if resp is None:
 					e.accept()
-					del self.experiment.items[item.name]
+					# Delete the item if it was new or didn't originate from
+					# this application.
+					if data[u'type'] == u'item-new' \
+						or data[u'application-id'] != self.main_window._id():
+						del self.experiment.items[item.name]
 					self.main_window.set_busy(False)
 					return
 				# If the user chose to insert into the target item
@@ -579,6 +589,7 @@ class tree_overview(base_subcomponent, QtGui.QTreeWidget):
 			self.drop_event_item_move(data, e)
 		elif data[u'type'] == u'url-local':
 			self.main_window.open_file(path=data[u'url'])
+			e.accept()
 		else:
 			e.ignore()
 

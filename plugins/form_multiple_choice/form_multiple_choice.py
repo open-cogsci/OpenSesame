@@ -62,7 +62,9 @@ class form_multiple_choice(item.item):
 
 		# Parse the option list
 		option_list = self.get(u'options').split(u'\n') # split by return
-		option_list.pop(len(option_list)-1) # remove last (empty) option
+		# Filter out empty options
+		option_list = filter(lambda option: option != u'', option_list)
+		# option_list.pop(len(option_list)-1) # remove last (empty) option
 		if len(option_list) == 0:
 			raise osexception( \
 				u'You must specify at least one response option in form_multiple_choice item "%s"' \
@@ -164,5 +166,3 @@ class qtform_multiple_choice(form_multiple_choice, qtautoplugin):
 			u'allow_multiple') == u'no')
 		self.line_edit_button_text.setEnabled(self.get(u'allow_multiple') == \
 			u'yes' or self.get(u'advance_immediately') == u'no')
-
-

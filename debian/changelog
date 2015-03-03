@@ -1,7 +1,25 @@
-opensesame (2.9.4~pre1-ubuntu1) utopic; urgency=medium
+opensesame (2.9.5~pre2-ubuntu1) utopic; urgency=medium
+
+  * Bugs fixed
+    - Don't delete an item when a drop is cancelled
+    - Remove all references to deprecated keyboard.to_chr()
+    - Remove empty response options in form_multiple_choice
+    - Also rename and delete files in fallback pool folder
+    - Don't crash on invalid fixdot style in sketchpad canvas
+  * Improvements
+    - Explicitly notify of variable sequence preparation time
+    - Add form template
+    - Add show_cursor option to touch_response plug-in 
+    - Ask for confirmation before replacing a loop's item to run
+    - Show the number of unused items in the overview area
+
+ -- Sebastiaan Mathot <sebastiaan@mantis>  Mon, 02 Mar 2015 13:42:35 +0100
+
+opensesame (2.9.4-ubuntu1) utopic; urgency=medium
 
   * Bugs fixed
     - Prevent indirect recursion errors in overview area
+    - Don't crash on empty loop item
 
  -- Sebastiaan Mathot <sebastiaan@mantis>  Wed, 11 Feb 2015 11:34:23 +0100
 
