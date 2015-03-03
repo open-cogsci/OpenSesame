@@ -10,6 +10,7 @@ opensesame (2.9.5~pre2-ubuntu1) utopic; urgency=medium
     - Add form template
     - Add show_cursor option to touch_response plug-in 
     - Ask for confirmation before replacing a loop's item to run
+    - Show the number of unused items in the overview area
 
  -- Sebastiaan Mathot <sebastiaan@mantis>  Mon, 02 Mar 2015 13:42:35 +0100
 
