@@ -43,14 +43,16 @@ class tree_unused_items_item(tree_base_item):
 
 		super(tree_unused_items_item, self).__init__()
 		self.setup(main_window)
-		self.setText(0, _(u'Unused items'))
 		self.setIcon(0, self.theme.qicon(u'unused'))
 		self.setToolTip(0, _(u'Unused items'))
 		self._droppable = True
 		self._draggable = False
 		self.name = u'__unused__'
+		i = 0
 		for item_name in self.experiment.items.unused():
 			self.experiment.items[item_name].build_item_tree(self, max_depth=1)
+			i += 1
+		self.setText(0, _(u'Unused items') + u' (%s)' % i)
 
 	def droppable(self, data):
 
