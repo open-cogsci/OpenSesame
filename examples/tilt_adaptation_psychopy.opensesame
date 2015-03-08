@@ -86,8 +86,8 @@ define inline_script stimuli_and_response
 	
 	# Prepare the stimuli
 	fixdot = visual.PatchStim(self.experiment.window, tex = None, size = 10, mask = "circle", color = "white")
-	adapter = visual.PatchStim(self.experiment.window, tex = "sin", size = 256, mask = "gauss", sf = 0.05, ori = self.get("adapter"))
-	tester = visual.PatchStim(self.experiment.window, tex = "sin", size = 256, mask = "gauss", sf = 0.05, ori = self.get("tester"))
+	adapter = visual.PatchStim(self.experiment.window, tex = "sin", size = 256, mask = "gauss", sf = 0.05, ori = self.var.get("adapter"))
+	tester = visual.PatchStim(self.experiment.window, tex = "sin", size = 256, mask = "gauss", sf = 0.05, ori = self.var.get("tester"))
 	
 	# Draw the stimuli one by one
 	fixdot.draw()
@@ -117,7 +117,7 @@ define inline_script stimuli_and_response
 		
 	# By setting the response in this way it will be recognized by
 	# OpenSesame and automatically logged by the logger item
-	self.experiment.set("response", response)
+	self.experiment.var.set("response", response)
 	__end__
 	set _prepare ""
 	set description "Executes Python code"

@@ -91,9 +91,9 @@ class ExperimentProcess(multiprocessing.Process):
 		# and rebuild the exp object in there.
 		self.script = exp.to_string()
 		self.pool_folder = exp.pool_folder
-		self.subject_nr = exp.subject_nr
-		self.experiment_path = exp.experiment_path
-		self.fullscreen = exp.fullscreen
+		self.subject_nr = exp.var.subject_nr
+		self.experiment_path = exp.var.experiment_path
+		self.fullscreen = exp.var.fullscreen
 		self.logfile = exp.logfile
 		self.auto_response = exp.auto_response
 

@@ -64,7 +64,7 @@ class joystick(item.item, generic_response.generic_response):
 		# Prepare the allowed responses
 		if self.has(u"allowed_responses"):
 			self._allowed_responses = []
-			for r in self.unistr(self.get(u"allowed_responses")).split(u";"):
+			for r in self.unistr(self.var.get(u"allowed_responses")).split(u";"):
 				if r.strip() != "":
 					try:
 						r = int(r)
@@ -84,11 +84,11 @@ class joystick(item.item, generic_response.generic_response):
 		debug.msg(u"allowed responses has been set to %s" % self._allowed_responses)
 		# In case of dummy-mode:
 		self._keyboard = openexp.keyboard.keyboard(self.experiment)
-		if self.has(u"_dummy") and self.get(u"_dummy") == u"yes":
+		if self.has(u"_dummy") and self.var.get(u"_dummy") == u"yes":
 			self._resp_func = self._keyboard.get_key
 		# Not in dummy-mode:
 		else:
-			timeout = self.get(u"timeout")
+			timeout = self.var.get(u"timeout")
 			# Dynamically load a joystick instance
 			if not hasattr(self.experiment, u"joystick"):
 				_joystick = plugins.load_mod(__file__, u'libjoystick')
@@ -112,9 +112,9 @@ class joystick(item.item, generic_response.generic_response):
 		# If no start response interval has been set, set it to the onset of
 		# the current response item
 		if self.experiment.start_response_interval is None:
-			self.experiment.start_response_interval = self.get(u'time_%s' \
+			self.experiment.start_response_interval = self.var.get(u'time_%s' \
 				% self.name)
-		if self.has(u'_dummy') and self.get(u'_dummy') == u'yes':
+		if self.has(u'_dummy') and self.var.get(u'_dummy') == u'yes':
 			# In dummy mode, no one can hear you scream! Oh, and we simply
 			# take input from the keyboard
 			resp, self.experiment.end_response_interval = self._resp_func( \

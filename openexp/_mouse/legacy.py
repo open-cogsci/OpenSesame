@@ -53,7 +53,7 @@ class legacy(mouse.mouse):
 		self.set_buttonlist(buttonlist)
 		self.set_timeout(timeout)
 		self.set_visible(visible)
-		if self.experiment.get_check('custom_cursor', 'no') == 'yes':
+		if self.experiment.var.get('custom_cursor', 'no') == 'yes':
 			self.cursor = pygame.image.load(self.experiment.resource( \
 				'cursor.png'))
 		else:
@@ -76,7 +76,7 @@ class legacy(mouse.mouse):
 			timeout = self.timeout
 		if visible is None:
 			visible = self.visible
-		enable_escape = self.experiment.get_check('enable_escape', 'no', \
+		enable_escape = self.experiment.var.get('enable_escape', 'no', \
 			['yes', 'no']) == 'yes'
 		if self.cursor is None:
 			pygame.mouse.set_visible(visible)
@@ -112,7 +112,7 @@ class legacy(mouse.mouse):
 						while pygame.time.get_ticks() - _time < 2000:
 							for event in pygame.event.get():
 								if event.type == MOUSEBUTTONDOWN:
-									if event.pos[0] > self.experiment.get( \
+									if event.pos[0] > self.experiment.var.get( \
 										'width')-64 and event.pos[1] < 64:
 										raise osexception( \
 											"The escape sequence was clicked/ tapped")

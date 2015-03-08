@@ -18,9 +18,6 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame.py3compat import *
-
-from PyQt4 import QtGui, QtCore
-from libqtopensesame.misc import _
 from libqtopensesame.misc.sketchpad_canvas import sketchpad_canvas
 from libqtopensesame.widgets.sketchpad_widget import sketchpad_widget
 from libqtopensesame.items.qtplugin import qtplugin
@@ -46,8 +43,6 @@ class feedpad(object):
 		self.add_widget(self.sketchpad_widget)
 		self.auto_add_widget(self.sketchpad_widget.ui.edit_duration,
 			u'duration')
-		self.auto_add_widget(self.sketchpad_widget.ui.checkbox_reset_variables,
-			u'reset_variables')
 
 	def element_module(self):
 
@@ -283,10 +278,6 @@ class feedpad(object):
 	@property
 	def current_font_italic(self):
 		return self.sketchpad_widget.current_font_italic
-
-	@property
-	def current_html(self):
-		return self.sketchpad_widget.current_html
 
 	@property
 	def current_html(self):

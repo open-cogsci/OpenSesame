@@ -35,7 +35,7 @@ class backend_settings(base_widget):
 
 		for backend_type in ["canvas", "keyboard", "mouse", "synth", \
 			"sampler"]:
-			backend = self.experiment.get("%s_backend" \
+			backend = self.experiment.var.get("%s_backend" \
 				% backend_type)
 			backend_module = __import__(u'openexp._%s.%s' % (backend_type, \
 				backend), fromlist=[u'dummy'])
@@ -86,7 +86,7 @@ class settings_edit(QtGui.QLineEdit, base_subcomponent):
 
 		"""Apply changes"""
 
-		self.experiment.set(self.var, self.experiment.sanitize(self.text()))
+		self.experiment.var.set(self.var, self.experiment.sanitize(self.text()))
 
 class settings_widget(base_widget):
 
@@ -112,7 +112,7 @@ class settings_widget(base_widget):
 		self.setLayout(self.layout)
 		for var, desc in settings.items():
 			if self.experiment.has(var):
-				val = self.experiment.get(var)
+				val = self.experiment.var.get(var)
 			else:
 				val = desc[u"default"]
 			label = QtGui.QLabel()

@@ -39,7 +39,7 @@ def sampler(experiment, *arglist, **kwdict):
 		kwdict:		See sampler.__init__().
 	"""
 
-	backend = experiment.get(u'sampler_backend')
+	backend = experiment.var.get(u'sampler_backend')
 	debug.msg(u'morphing into %s' % backend)
 	mod = __import__('openexp._sampler.%s' % backend, fromlist=['dummy'])
 	cls = getattr(mod, backend)
@@ -56,7 +56,7 @@ def init_sound(experiment):
 		type:			experiment
 	"""
 
-	backend = experiment.sampler_backend
+	backend = experiment.var.sampler_backend
 	debug.msg('morphing into %s' % backend)
 	mod = __import__('openexp._sampler.%s' % backend, fromlist=['dummy'])
 	mod.init_sound(experiment)
@@ -72,7 +72,7 @@ def close_sound(experiment):
 		type:			experiment
 	"""
 
-	backend = experiment.sampler_backend
+	backend = experiment.var.sampler_backend
 	debug.msg('morphing into %s' % backend)
 	mod = __import__('openexp._sampler.%s' % backend, fromlist=['dummy'])
 	mod.close_sound(experiment)

@@ -49,8 +49,8 @@ class inline_script(inline_script_runtime, qtplugin):
 		super(inline_script, self).apply_edit_changes(self)
 		sp = self.qprogedit.text(index=0)
 		sr = self.qprogedit.text(index=1)
-		self.set(u'_prepare', sp)
-		self.set(u'_run', sr)
+		self.var.set(u'_prepare', sp)
+		self.var.set(u'_run', sr)
 		self.update_item_icon()
 
 	def set_focus(self):
@@ -75,9 +75,9 @@ class inline_script(inline_script_runtime, qtplugin):
 		"""
 
 		if self.experiment.python_workspace.check_syntax(
-			self.unistr(self.get(u'_prepare', _eval=False)))\
-			and self.experiment.python_workspace.check_syntax(
-			self.unistr(self.get(u'_run', _eval=False))):
+			self.unistr(self.var.get(u'_prepare', _eval=False)))\
+				and self.experiment.python_workspace.check_syntax(
+			self.unistr(self.var.get(u'_run', _eval=False))):
 			return u'os-inline_script'
 		return u'os-inline_script-syntax-error'
 

@@ -214,7 +214,7 @@ define inline_script search_display
 	
 	correct = 0
 	if pos is not None:
-		d = sqrt((self.get('target_x')-click_x)**2 + (self.get('target_y')-click_y)**2)
+		d = sqrt((self.var.get('target_x')-click_x)**2 + (self.var.get('target_y')-click_y)**2)
 		if d < 100:
 			correct = 1
 		
@@ -223,12 +223,12 @@ define inline_script search_display
 	exp.set('correct', correct)
 	exp.set('response_time', response_time)
 	
-	exp.set('total_responses', self.get('total_responses')+1)
-	exp.set('total_correct', self.get('total_correct')+correct)
-	exp.set('total_response_time', self.get('total_response_time')+response_time)
+	exp.set('total_responses', self.var.get('total_responses')+1)
+	exp.set('total_correct', self.var.get('total_correct')+correct)
+	exp.set('total_response_time', self.var.get('total_response_time')+response_time)
 	
-	avg_rt = self.get('total_response_time')/self.get('total_responses')
-	acc = 100.*self.get('total_correct')/self.get('total_responses')
+	avg_rt = self.var.get('total_response_time')/self.var.get('total_responses')
+	acc = 100.*self.var.get('total_correct')/self.var.get('total_responses')
 	
 	exp.set('average_response_time', avg_rt)
 	exp.set('avg_rt', avg_rt)
@@ -240,12 +240,12 @@ define inline_script search_display
 	from random import shuffle, choice
 	from math import cos, sin, pi
 	
-	N = self.get('N')
-	targetShape = self.get('targetShape')
-	distractor = self.get('distractor')
+	N = self.var.get('N')
+	targetShape = self.var.get('targetShape')
+	distractor = self.var.get('distractor')
 	targetColor = choice(['red', 'green'])
-	xc = self.get('width')/2
-	yc = self.get('height')/2
+	xc = self.var.get('width')/2
+	yc = self.var.get('height')/2
 	
 	stimPositions = range(0, N)
 	shuffle(stimPositions)

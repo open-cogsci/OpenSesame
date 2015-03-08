@@ -149,12 +149,12 @@ define keyboard_response keyboard_response
 define inline_script counterbalance
 	set _run ""
 	___prepare__
-	if self.get("subject_parity") == "odd":
-		self.experiment.set("verb_key", "z")
-		self.experiment.set("noun_key", "slash")
+	if self.var.get("subject_parity") == "odd":
+		self.experiment.var.set("verb_key", "z")
+		self.experiment.var.set("noun_key", "slash")
 	else:
-		self.experiment.set("verb_key", "z")
-		self.experiment.set("noun_key", "slash")
+		self.experiment.var.set("verb_key", "z")
+		self.experiment.var.set("noun_key", "slash")
 	__end__
 	set description "Executes Python code"
 

@@ -94,7 +94,7 @@ define inline_script inline_script_get_axes
 	RUNTIME = 5000 # ms
 	
 	# variables
-	dpos = [self.get("width")/2, self.get("height")/2] # sets dot position to screen center
+	dpos = [self.var.get("width")/2, self.var.get("height")/2] # sets dot position to screen center
 	
 	# create canvas object
 	my_canvas = canvas(exp)
@@ -154,13 +154,13 @@ define inline_script inline_script_getinput
 	
 	# constants
 	DRADIUS = 5 # dot radius
-	CRADIUS = self.get("cradius") # circle radius
+	CRADIUS = self.var.get("cradius") # circle radius
 	BASICCANVAS = 'basic_screen'
 	JB = [1] # list of allowed joystick buttons
 	
 	# variables
-	dpos = [self.get("width")/2, self.get("height")/2] # sets dot position to screen center
-	cpos = [self.get("cxpos")+(self.get("width")/2), self.get("cypos")+(self.get("height")/2)]
+	dpos = [self.var.get("width")/2, self.var.get("height")/2] # sets dot position to screen center
+	cpos = [self.var.get("cxpos")+(self.var.get("width")/2), self.var.get("cypos")+(self.var.get("height")/2)]
 	# cxpos is defined in _loop, as a value between minus [width]/2, since in sketchpads
 	# (0,0) is the center of the screen, whereas in inline_script canvas-functions (0,0)
 	# is the top left; this explains the weird formula
@@ -187,9 +187,9 @@ define inline_script inline_script_getinput
 			a = dpos[0] - cpos[0] # distance between x-coordinates of dot and circle
 			b = dpos[1] - cpos[1] # distance between y-coordinates of dot and circle
 			if numpy.sqrt((a**2)+(b**2)) < CRADIUS: # Pythagoras
-				self.experiment.set("correct", 1)
+				self.experiment.var.set("correct", 1)
 			else:
-				self.experiment.set("correct", 0)
+				self.experiment.var.set("correct", 0)
 			running = False
 		elif event == "joyaxismotion":
 			dpos[0] += 10 * value[0]

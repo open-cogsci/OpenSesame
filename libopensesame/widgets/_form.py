@@ -107,8 +107,8 @@ class form(object):
 			self.item = item
 		else:
 			self.item = experiment
-		self.width = experiment.get(u'width')
-		self.height = experiment.get(u'height')
+		self.width = experiment.var.get(u'width')
+		self.height = experiment.var.get(u'height')
 		self.spacing = spacing
 		self.margins = type_check.float_list(margins, u'form margins', \
 			min_len=4, max_len=4)

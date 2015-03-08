@@ -75,16 +75,16 @@ class xpyriment(canvas.canvas):
 		self.auto_prepare = auto_prepare
 		self.prepared = False
 		if fgcolor is None:
-			fgcolor = self.experiment.get(u'foreground')
+			fgcolor = self.experiment.var.get(u'foreground')
 		if bgcolor is None:
-			bgcolor = self.experiment.get(u'background')
+			bgcolor = self.experiment.var.get(u'background')
 		self.set_fgcolor(fgcolor)
 		self.set_bgcolor(bgcolor)
-		self.bidi = self.experiment.get(u'bidi')==u'yes'
-		self.set_font(style=self.experiment.font_family, size= \
-			self.experiment.font_size, bold=self.experiment.font_bold==u'yes', \
-			italic=self.experiment.font_italic==u'yes', underline= \
-			self.experiment.font_underline==u'yes')
+		self.bidi = self.experiment.var.get(u'bidi')==u'yes'
+		self.set_font(style=self.experiment.var.font_family, size= \
+			self.experiment.var.font_size, bold=self.experiment.var.font_bold==u'yes', \
+			italic=self.experiment.var.font_italic==u'yes', underline= \
+			self.experiment.var.font_underline==u'yes')
 		self.penwidth = 1
 		self.aa = 10
 		self.clear()
@@ -307,16 +307,16 @@ def init_display(experiment):
 	io.defaults.mouse_track_button_events = False
 	control.defaults.initialize_delay = 0
 	control.defaults.event_logging = 0
-	control.defaults.window_mode = experiment.get(u'fullscreen') == u'no'
+	control.defaults.window_mode = experiment.var.fullscreen != u'yes'
 	control.defaults.fast_quit = True
 	control.defaults.window_size = experiment.resolution()
 	control.defaults.auto_create_subject_id = True
-	control.defaults.open_gl = experiment.get_check(u'expyriment_opengl', \
+	control.defaults.open_gl = experiment.var.get(u'expyriment_opengl', \
 		xpyriment.settings[u'expyriment_opengl'][u'default']) == u'yes'
-	control.defaults.audiosystem_sample_rate = experiment.get(u'sound_freq')
-	control.defaults.audiosystem_bit_depth = experiment.get(u'sound_sample_size')
-	control.defaults.audiosystem_channels = experiment.get(u'sound_channels')
-	control.defaults.audiosystem_buffer_size = experiment.get(u'sound_buf_size')
+	control.defaults.audiosystem_sample_rate = experiment.var.get(u'sound_freq')
+	control.defaults.audiosystem_bit_depth = experiment.var.get(u'sound_sample_size')
+	control.defaults.audiosystem_channels = experiment.var.get(u'sound_channels')
+	control.defaults.audiosystem_buffer_size = experiment.var.get(u'sound_buf_size')
 
 	# Initialize
 	exp = control.initialize()

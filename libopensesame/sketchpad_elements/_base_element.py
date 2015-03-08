@@ -59,13 +59,11 @@ class base_element(object):
 			(u'show_if', u'always')
 			]
 		self.sketchpad = sketchpad
+		self.var = self.sketchpad.var
 		self.from_string(string)
 
 	@property
 	def canvas(self): return self.sketchpad.canvas
-
-	@property
-	def get(self): return self.sketchpad.get
 
 	@property
 	def get_file(self): return self.sketchpad.experiment.get_file
@@ -256,8 +254,8 @@ class base_element(object):
 		"""
 
 		properties = {}
-		xc = self.get(u'width')/2
-		yc = self.get(u'height')/2
+		xc = self.var.get(u'width')/2
+		yc = self.var.get(u'height')/2
 		for var, val in self.properties.items():
 			if var == u'text':
 				round_float = True

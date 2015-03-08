@@ -53,7 +53,7 @@ class patch_settings(base_dialog):
 		super(patch_settings, self).__init__(main_window, ui=self.ui_file())
 		self.ui.combobox_env.currentIndexChanged.connect(self.apply_env)
 		self.ui.edit_color1.initialize()
-		self.ui.edit_color2.initialize(color=self.experiment.get(u'background'))
+		self.ui.edit_color2.initialize(color=self.experiment.var.get(u'background'))
 		self.ui.apply_env()
 
 	def ui_file(self):

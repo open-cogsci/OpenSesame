@@ -88,11 +88,11 @@ class form_consent(form_base.form_base):
 			# unclear, but passing the __class__ property resolves it. See also
 			# <http://thingspython.wordpress.com/2010/09/27/another-super-wrinkle-raising-typeerror/>
 			self.super_form_consent.run()
-			if self.get(u'checkbox_status') == self.get(u'checkbox_text') and \
-				self.get(u'accept_status') == u'yes':
+			if self.var.get(u'checkbox_status') == self.var.get(u'checkbox_text') and \
+				self.var.get(u'accept_status') == u'yes':
 				break
 			c = canvas(self.experiment)
-			c.text(self.get(u'decline_message'))
+			c.text(self.var.get(u'decline_message'))
 			c.show()
 			self.sleep(5000)
 

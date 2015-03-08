@@ -44,7 +44,7 @@ class line(base_element):
 			(u'y1'		, None),
 			(u'x2'		, None),
 			(u'y2'		, None),
-			(u'color'	, sketchpad.get(u'foreground')),
+			(u'color'	, sketchpad.var.get(u'foreground')),
 			(u'penwidth', 1),
 			]
 		super(line, self).__init__(sketchpad, string, defaults=defaults)

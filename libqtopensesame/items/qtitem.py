@@ -524,13 +524,17 @@ class qtitem(base_qtobject):
 		"""Update the GUI controls based on the auto-widgets"""
 
 		for var, edit in self.auto_line_edit.items():
-			if self.has(var):
-				edit.setText(self.unistr(self.get(var, _eval=False)))
+			if isinstance(var, int):
+				continue
+			if var in self.var:
+				edit.setText(self.unistr(self.var.get(var, _eval=False)))
 			else:
 				edit.setText(u'')
 
 		for var, combobox in self.auto_combobox.items():
-			val = self.get_check(var, _eval=False, default=u'')
+			if isinstance(var, int):
+				continue
+			val = self.var.get(var, _eval=False, default=u'')
 			i = combobox.findText(self.unistr(val))
 			# Set the combobox to the select item
 			if i >= 0:
@@ -548,8 +552,10 @@ class qtitem(base_qtobject):
 					u'the script.' % var))
 
 		for var, spinbox in self.auto_spinbox.items():
-			if self.has(var):
-				val = self.get(var, _eval=False)
+			if isinstance(var, int):
+				continue
+			if var in self.var:
+				val = self.var.get(var, _eval=False)
 				if type(val) in (float, int):
 					spinbox.setDisabled(False)
 					try:
@@ -564,8 +570,10 @@ class qtitem(base_qtobject):
 						% var))
 
 		for var, slider in self.auto_slider.items():
-			if self.has(var):
-				val = self.get(var, _eval=False)
+			if isinstance(var, int):
+				continue
+			if var in self.var:
+				val = self.var.get(var, _eval=False)
 				if type(val) in (float, int):
 					slider.setDisabled(False)
 					try:
@@ -580,17 +588,22 @@ class qtitem(base_qtobject):
 						% var))
 
 		for var, checkbox in self.auto_checkbox.items():
-			if self.has(var):
+			if isinstance(var, int):
+				continue
+			if var in self.var:
 				try:
-					checkbox.setChecked(self.get(var, _eval=False) == u"yes")
+					checkbox.setChecked(self.var.get(var, _eval=False) == u"yes")
 				except Exception as e:
 					self.experiment.notify(_(u"Failed to set control '%s': %s") \
 						% (var, e))
 
 		for var, qprogedit in self.auto_editor.items():
-			if self.has(var):
+			if isinstance(var, int):
+				continue
+			if var in self.var:
 				try:
-					qprogedit.setText(self.unistr(self.get(var, _eval=False)))
+					qprogedit.setText(self.unistr(self.var.get(var,
+						_eval=False)))
 				except Exception as e:
 					self.experiment.notify(_(u"Failed to set control '%s': %s") \
 						% (var, e))
@@ -634,41 +647,50 @@ class qtitem(base_qtobject):
 		"""
 
 		for var, edit in self.auto_line_edit.items():
+			if isinstance(var, int):
+				continue
 			if edit.isEnabled() and isinstance(var, basestring):
 				val = str(edit.text()).strip()
-				if val != u"":
-					self.set(var, val)
-
-				# If the variable has no value, we assign a default value if it
-				# has been specified, and unset it otherwise.
-				elif hasattr(edit, u"default"):
-					self.set(var, edit.default)
+				if val == u"" and hasattr(edit, u"default"):
+					# If the variable has no value, we assign a default value if
+					# it has been specified, and unset it otherwise.
+					self.var.set(var, edit.default)
 				else:
-					self.unset(var)
+					self.var.set(var, val)
 
 		for var, combobox in self.auto_combobox.items():
+			if isinstance(var, int):
+				continue
 			if combobox.isEnabled() and isinstance(var, basestring):
-				self.set(var, str(combobox.currentText()))
+				self.var.set(var, str(combobox.currentText()))
 
 		for var, spinbox in self.auto_spinbox.items():
+			if isinstance(var, int):
+				continue
 			if spinbox.isEnabled() and isinstance(var, basestring):
-				self.set(var, spinbox.value())
+				self.var.set(var, spinbox.value())
 
 		for var, slider in self.auto_slider.items():
+			if isinstance(var, int):
+				continue
 			if slider.isEnabled() and isinstance(var, basestring):
-				self.set(var, slider.value())
+				self.var.set(var, slider.value())
 
 		for var, checkbox in self.auto_checkbox.items():
+			if isinstance(var, int):
+				continue
 			if checkbox.isEnabled() and isinstance(var, basestring):
 				if checkbox.isChecked():
 					val = u"yes"
 				else:
 					val = u"no"
-				self.set(var, val)
+				self.var.set(var, val)
 
 		for var, qprogedit in self.auto_editor.items():
+			if isinstance(var, int):
+				continue
 			if isinstance(var, basestring):
-				self.set(var, qprogedit.text())
+				self.var.set(var, qprogedit.text())
 
 		return True
 

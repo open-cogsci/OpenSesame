@@ -36,7 +36,7 @@ class psycho(mouse.mouse):
 	def __init__(self, experiment, buttonlist=None, timeout=None,
 		visible=False):
 	
-		if experiment.canvas_backend != "psycho":
+		if experiment.var.canvas_backend != "psycho":
 			raise osexception( \
 				"The psycho mouse backend must be used in combination with the psycho canvas backend!")
 		self.experiment = experiment
@@ -90,8 +90,8 @@ class psycho(mouse.mouse):
 			if timeout is not None and time-start_time >= timeout:
 				break
 		if pos is not None:
-			pos = pos[0]+self.experiment.width/2, \
-				self.experiment.height/2-pos[1]
+			pos = pos[0]+self.experiment.var.width/2, \
+				self.experiment.var.height/2-pos[1]
 		self.mouse.setVisible(self.visible)
 		return button, pos, time
 
@@ -99,8 +99,8 @@ class psycho(mouse.mouse):
 
 		x, y = self.mouse.getPos()
 		t = self.experiment.time()
-		x = x + self.experiment.width/2
-		y = self.experiment.height/2 - y
+		x = x + self.experiment.var.width/2
+		y = self.experiment.var.height/2 - y
 		return (x, y), t
 
 	def get_pressed(self):

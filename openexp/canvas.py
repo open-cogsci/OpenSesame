@@ -48,7 +48,7 @@ def canvas(experiment, *arglist, **kwdict):
 		kwdict:		See canvas.__init__().
 	"""
 
-	backend = experiment.get(u'canvas_backend')
+	backend = experiment.var.get(u'canvas_backend')
 	debug.msg(u'morphing into %s' % backend)
 	mod = __import__('openexp._canvas.%s' % backend, fromlist=['dummy'])
 	cls = getattr(mod, backend)
@@ -65,7 +65,7 @@ def init_display(experiment):
 		type:			experiment
 	"""
 
-	backend = experiment.get(u'canvas_backend')
+	backend = experiment.var.get(u'canvas_backend')
 	debug.msg('morphing into %s' % backend)
 	mod = __import__('openexp._canvas.%s' % backend, fromlist=['dummy'])
 	mod.init_display(experiment)
@@ -81,7 +81,7 @@ def close_display(experiment):
 		type:			experiment
 	"""
 
-	backend = experiment.get(u'canvas_backend')
+	backend = experiment.var.get(u'canvas_backend')
 	debug.msg('morphing into %s' % backend)
 	mod = __import__('openexp._canvas.%s' % backend, fromlist=['dummy'])
 	mod.close_display(experiment)

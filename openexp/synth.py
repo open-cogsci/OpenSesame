@@ -39,7 +39,7 @@ def synth(experiment, *arglist, **kwdict):
 		kwdict:		See synth.__init__().
 	"""
 
-	backend = experiment.get(u'synth_backend')
+	backend = experiment.var.get(u'synth_backend')
 	debug.msg(u'morphing into %s' % backend)
 	mod = __import__('openexp._synth.%s' % backend, fromlist=['dummy'])
 	cls = getattr(mod, backend)

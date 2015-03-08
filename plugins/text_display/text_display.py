@@ -55,20 +55,20 @@ class text_display(item, generic_response):
 		# Pass the word on to the parent
 		item.prepare(self)
 		# Create an offline canvas
-		self.c = openexp.canvas.canvas(self.experiment, self.get( \
-			u"background"), self.get(u"foreground"))
-		self.c.set_font(self.get(u"font_family"), self.get(u"font_size"))
+		self.c = openexp.canvas.canvas(self.experiment, self.var.get( \
+			u"background"), self.var.get(u"foreground"))
+		self.c.set_font(self.var.get(u"font_family"), self.var.get(u"font_size"))
 		# Make sure that the content is a unicode string that is evaluated
 		# for variables and then split into separated lines, using either the
 		# os-specific or the Unix-style line separator.
-		content = self.unistr(self.get(u'content'))
+		content = self.unistr(self.var.get(u'content'))
 		content = content.replace(os.linesep, u'\n')
 		content = self.eval_text(content).split(u"\n")
 		# Do line wrapping
 		_content = []
 		for line in content:
-			while len(line) > self.get(u"maxchar"):
-				i = line.rfind(" ", 0, self.get(u"maxchar"))
+			while len(line) > self.var.get(u"maxchar"):
+				i = line.rfind(" ", 0, self.var.get(u"maxchar"))
 				if i < 0:
 					raise osexception( \
 						u"Failed to do line wrapping in text_display '%s'. Perhaps one of the words is longer than the maximum number of characters per line?" \
@@ -78,7 +78,7 @@ class text_display(item, generic_response):
 			_content.append(line)
 		content = _content
 
-		if self.get(u"align") != u"center":
+		if self.var.get(u"align") != u"center":
 			try:
 				max_width = 0
 				max_height = 0
@@ -89,14 +89,14 @@ class text_display(item, generic_response):
 			except:
 				raise osexception( \
 					u"Failed to use alignment '%s' in text_display '%s'. Perhaps this alignment is not supported by the back-end. Please use 'center' alignment." \
-					% (self.get(u"align"), self.name))
+					% (self.var.get(u"align"), self.name))
 
 		line_nr = -len(content) / 2
 		for line in content:
 
-			if self.get(u"align") == u"center":
+			if self.var.get(u"align") == u"center":
 				self.c.textline(line, line_nr)
-			elif self.get(u"align") == u"left":
+			elif self.var.get(u"align") == u"left":
 				self.c.text(line, False, self.c.xcenter()-0.5*max_width, \
 					self.c.ycenter()+1.5*line_nr*max_height)
 			else:

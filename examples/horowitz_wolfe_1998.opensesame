@@ -218,8 +218,8 @@ define inline_script search_display
 		random.seed()
 		d = None
 		while d == None or d < margin:
-			x = random.randint(margin, self.get("width") - margin)
-			y = random.randint(margin, self.get("height") - margin)
+			x = random.randint(margin, self.var.get("width") - margin)
+			y = random.randint(margin, self.var.get("height") - margin)
 			if len(pos_list) == 0:
 				break
 			for _x, _y in pos_list:
@@ -289,10 +289,10 @@ define inline_script search_display
 		mask_display.fixdot()
 		# Draw all stimuli
 		pos_list = []
-		for j in range(self.get("set_size")):
+		for j in range(self.var.get("set_size")):
 			x, y = random_pos(self, pos_list, stim_margin)
 			# If the target is present, the first stimulus is the target
-			if self.get("target") == "present" and j == 0:
+			if self.var.get("target") == "present" and j == 0:
 				draw_T(self, search_display, stim_size, x, y)
 			else:
 				draw_L(self, search_display, stim_size, x, y)
@@ -327,9 +327,9 @@ define inline_script search_display
 		# If a key was pressed, determine the response, response_time and correct variables
 		response_time = time - start_time
 		synonyms = kb.synonyms(response)
-		if ("z" in synonyms and self.get("target") == "present") or ("slash" in synonyms and self.get("target") == "absent"):
+		if ("z" in synonyms and self.var.get("target") == "present") or ("slash" in synonyms and self.var.get("target") == "absent"):
 			correct = 1
-			self.experiment.set("total_correct", self.get("total_correct") + 1)
+			self.experiment.var.set("total_correct", self.var.get("total_correct") + 1)
 		else:
 			correct = 0
 	else:
@@ -338,14 +338,14 @@ define inline_script search_display
 		response_time = self.time() - start_time
 		response = "timeout"
 	# Do some bookkeeping so we can give feedback in the feedback item
-	self.experiment.set("total_responses", self.get("total_responses") + 1)
-	self.experiment.set("total_response_time", self.get("total_response_time") + response_time)
-	self.experiment.set("avg_rt", self.get("total_response_time") / self.get("total_responses"))
-	self.experiment.set("acc", 100.0 * self.get("total_correct") / self.get("total_responses"))
+	self.experiment.var.set("total_responses", self.var.get("total_responses") + 1)
+	self.experiment.var.set("total_response_time", self.var.get("total_response_time") + response_time)
+	self.experiment.var.set("avg_rt", self.var.get("total_response_time") / self.var.get("total_responses"))
+	self.experiment.var.set("acc", 100.0 * self.var.get("total_correct") / self.var.get("total_responses"))
 	# These variables are important for logging
-	self.experiment.set("correct", correct)
-	self.experiment.set("response_time", response_time)
-	self.experiment.set("response", response)
+	self.experiment.var.set("correct", correct)
+	self.experiment.var.set("response_time", response_time)
+	self.experiment.var.set("response", response)
 	__end__
 	set description "Executes Python code"
 

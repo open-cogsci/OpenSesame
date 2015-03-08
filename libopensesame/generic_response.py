@@ -141,13 +141,13 @@ class generic_response:
 
 		# The respone and response_time variables are always set, for every
 		# response item
-		self.experiment.set(u"response_time", \
+		self.experiment.var.set(u"response_time", \
 			self.experiment.end_response_interval - \
 			self.experiment.start_response_interval)
-		self.experiment.set(u"response_%s" % self.get(u"name"), \
-			self.get(u"response"))
-		self.experiment.set(u"response_time_%s" % self.get(u"name"), \
-			self.get(u"response_time"))
+		self.experiment.var.set(u"response_%s" % self.name,
+			self.var.get(u"response"))
+		self.experiment.var.set(u"response_time_%s" % self.name,
+			self.var.get(u"response_time"))
 		self.experiment.start_response_interval = None
 
 		# But correctness information is only set for dedicated response items,
@@ -158,7 +158,7 @@ class generic_response:
 			if self.has(u"correct_response"):
 				# If a correct_response has been defined, we use it to determine
 				# accuracy etc.
-				correct_response = self.get(u"correct_response")
+				correct_response = self.var.get(u"correct_response")
 				if hasattr(self, u"synonyms") and self.synonyms is not None:
 					if correct_response in self.synonyms or \
 						self.unistr(correct_response) in self.synonyms:
@@ -180,14 +180,14 @@ class generic_response:
 			# Do some response bookkeeping
 			self.experiment.total_response_time += self.experiment.response_time
 			self.experiment.total_responses += 1
-			self.experiment.set(u"acc", 100.0 * self.experiment.total_correct / \
+			self.experiment.var.set(u"acc", 100.0 * self.experiment.total_correct / \
 				self.experiment.total_responses)
-			self.experiment.set(u"avg_rt", self.experiment.total_response_time / \
+			self.experiment.var.set(u"avg_rt", self.experiment.total_response_time / \
 				self.experiment.total_responses)
-			self.experiment.set(u"accuracy", self.experiment.acc)
-			self.experiment.set(u"average_response_time", self.experiment.avg_rt)
-			self.experiment.set(u"correct_%s" % self.get(u"name"), \
-				self.get(u"correct"))
+			self.experiment.var.set(u"accuracy", self.experiment.acc)
+			self.experiment.var.set(u"average_response_time", self.experiment.avg_rt)
+			self.experiment.var.set(u"correct_%s" % self.name,
+				self.var.get(u"correct"))
 
 	def set_sri(self, reset=False):
 
@@ -200,12 +200,12 @@ class generic_response:
 		"""
 
 		if reset:
-			self.sri = self.get(u"time_%s" % self.name)
-			self.experiment.start_response_interval = self.get("time_%s" % \
+			self.sri = self.var.get(u"time_%s" % self.name)
+			self.experiment.start_response_interval = self.var.get("time_%s" % \
 				self.name)
 
 		if self.experiment.start_response_interval is None:
-			self.sri = self.get(u"time_%s" % self.name)
+			self.sri = self.var.get(u"time_%s" % self.name)
 		else:
 			self.sri = self.experiment.start_response_interval
 
@@ -238,7 +238,7 @@ class generic_response:
 			if dur == u"keypress":
 
 				# Prepare valid keypress responses
-				l = self.experiment.unistr(self.get(u"allowed_responses")).split( \
+				l = self.experiment.unistr(self.var.get(u"allowed_responses")).split( \
 					u";")
 				self._allowed_responses = l
 
@@ -246,7 +246,7 @@ class generic_response:
 
 				# Prepare valid mouseclick responses
 				self._allowed_responses = []
-				for r in self.experiment.unistr(self.get( \
+				for r in self.experiment.unistr(self.var.get( \
 					u"allowed_responses")).split(";"):
 					if r in self.resp_codes.values():
 						for code, resp in self.resp_codes.items():
@@ -270,7 +270,7 @@ class generic_response:
 			if len(self._allowed_responses) == 0:
 				raise osexception( \
 					u"'%s' are not valid allowed responses in keyboard_response '%s'" \
-					% (self.get(u"allowed_responses"), self.name))
+					% (self.var.get(u"allowed_responses"), self.name))
 		else:
 			self._allowed_responses = None
 
@@ -350,14 +350,11 @@ class generic_response:
 		l = []
 		l.append( (u"response", u"[Depends on response]") )
 		l.append( (u"response_time", u"[Depends on response]") )
-		l.append( (u"response_%s" % self.get(u"name", _eval=False), \
-			u"[Depends on response]") )
-		l.append( ("response_time_%s" % self.get(u"name", _eval=False), \
-			u"[Depends on response]") )
+		l.append( (u"response_%s" % self.name, u"[Depends on response]") )
+		l.append( ("response_time_%s" % self.name, u"[Depends on response]") )
 		if self.process_feedback:
 			l.append( (u"correct", u"[Depends on response]") )
-			l.append( (u"correct_%s" % self.get(u"name", _eval=False), \
-				u"[Depends on response]") )
+			l.append( (u"correct_%s" % self.name, u"[Depends on response]") )
 			l.append( (u"average_response_time", u"[Depends on response]") )
 			l.append( (u"avg_rt", u"[Depends on response]") )
 			l.append( (u"accuracy", u"[Depends on response]") )

@@ -47,13 +47,13 @@ class quest_staircase_next(item):
 			Run phase for plug-in.
 		"""
 
-		resp = self.get(self.get(u'response_var'))
+		resp = self.var.get(self.var.get(u'response_var'))
 		try:
 			resp = float(resp)
 		except:
 			# Don't process non-float responses
 			return
-		self.experiment.quest.update(self.get(u'quest_test_value'), resp)
+		self.experiment.quest.update(self.var.get(u'quest_test_value'), resp)
 		self.experiment.quest_set_next_test_value()
 
 class qtquest_staircase_next(quest_staircase_next, qtautoplugin):

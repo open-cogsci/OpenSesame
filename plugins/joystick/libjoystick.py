@@ -34,7 +34,7 @@ def libjoystick(experiment, **kwargs):
 	**kwargs		--	A keyword-argument dictionary.
 	"""
 
-	if experiment.get(u'canvas_backend') == u'psycho':
+	if experiment.var.get(u'canvas_backend') == u'psycho':
 		raise osexception(
 			u'The joystick plug-in does not yet support the psycho back-end')
 	backend = u'legacy'

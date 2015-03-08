@@ -201,8 +201,8 @@ class qtopensesame(QtGui.QMainWindow, base_component):
 			self.ui.pool_widget.ui.edit_pool_filter.setFocus)
 
 		# Create the initial experiment, which is the default template.
-		self.experiment = experiment.experiment(self, u"New experiment", \
-			open(misc.resource(os.path.join(u"templates", \
+		self.experiment = experiment.experiment(self, u"New experiment",
+			open(misc.resource(os.path.join(u"templates",
 				u"default.opensesame")), u"r").read())
 		self.experiment.build_item_tree()
 
@@ -744,7 +744,7 @@ class qtopensesame(QtGui.QMainWindow, base_component):
 
 		if self.current_path is None:
 			cfg.file_dialog_path = os.path.join(self.home_folder, \
-				self.experiment.sanitize(self.experiment.title, strict=True, \
+				self.experiment.sanitize(self.experiment.var.title, strict=True, \
 				allow_vars=False))
 		else:
 			cfg.file_dialog_path = self.current_path
@@ -813,11 +813,11 @@ class qtopensesame(QtGui.QMainWindow, base_component):
 			self.experiment.notify(e.html())
 			return
 		script = script.replace(u"\nset height \"%s\"\n" % \
-			self.experiment.get(u"height"), u"\nset height \"%s\"\n" % height)
+			self.experiment.var.get(u"height"), u"\nset height \"%s\"\n" % height)
 		script = script.replace(u"\nset width \"%s\"\n" % \
-			self.experiment.get(u"width"), u"\nset width \"%s\"\n" % width)
+			self.experiment.var.get(u"width"), u"\nset width \"%s\"\n" % width)
 		try:
-			tmp = experiment.experiment(self, name=self.experiment.title,
+			tmp = experiment.experiment(self, name=self.experiment.var.title,
 				string=script, pool_folder=self.experiment.pool_folder,
 				experiment_path=self.experiment.experiment_path,
 				resources=self.experiment.resources)

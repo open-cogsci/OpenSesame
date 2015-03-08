@@ -55,7 +55,7 @@ class droid(legacy.legacy):
 			timeout = self.timeout
 		if visible is None:
 			visible = self.visible
-		enable_escape = self.experiment.get_check(u'enable_escape', u'no', \
+		enable_escape = self.experiment.var.get(u'enable_escape', u'no', \
 			[u'yes', u'no']) == u'yes'
 		start_time = pygame.time.get_ticks()
 		time = start_time		
@@ -75,7 +75,7 @@ class droid(legacy.legacy):
 						while pygame.time.get_ticks() - _time < 2000:
 							for event in pygame.event.get():
 								if event.type == MOUSEBUTTONDOWN:
-									if event.pos[0] > self.experiment.get( \
+									if event.pos[0] > self.experiment.var.get( \
 										u'width')-64 and event.pos[1] < 64:
 										raise osexception( \
 											u"The escape sequence was clicked/ tapped")

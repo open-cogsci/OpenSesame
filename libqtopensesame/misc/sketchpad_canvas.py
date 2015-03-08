@@ -527,8 +527,8 @@ class sketchpad_canvas(QtGui.QGraphicsScene):
 			rect:		A QRect object.
 		"""
 
-		xc = self.xcenter()
-		yc = self.ycenter()
+		xc = int(self.xcenter())
+		yc = int(self.ycenter())
 		w = 2*xc
 		h = 2*yc
 		painter.fillRect(QtCore.QRect(0, 0, w, h), self._color(self.bgcolor))
@@ -559,19 +559,19 @@ class sketchpad_canvas(QtGui.QGraphicsScene):
 		super(sketchpad_canvas, self).clear()
 		self.notifications = []
 		self.elements = []
-		self.set_bgcolor(self.sketchpad.get(u'background'))
+		self.set_bgcolor(self.sketchpad.var.get(u'background'))
 
 	def xcenter(self):
 
 		"""Mimicks canvas api. See openexp._canvas.canvas."""
 
-		return self.sketchpad.get(u'width') // 2
+		return self.sketchpad.var.get(u'width') // 2
 
 	def ycenter(self):
 
 		"""Mimicks canvas api. See openexp._canvas.canvas."""
 
-		return self.sketchpad.get(u'height') // 2
+		return self.sketchpad.var.get(u'height') // 2
 
 
 	def set_bgcolor(self, color):

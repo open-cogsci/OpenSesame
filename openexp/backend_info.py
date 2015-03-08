@@ -100,10 +100,10 @@ def match(experiment):
 
 	for name in backend_list:
 		backend = backend_list[name]
-		if experiment.canvas_backend == backend["canvas"] and \
-			experiment.keyboard_backend == backend["keyboard"] and \
-			experiment.mouse_backend == backend["mouse"] and \
-			experiment.sampler_backend == backend["sampler"] and \
-			experiment.synth_backend == backend["synth"]:
+		if experiment.var.canvas_backend == backend["canvas"] and \
+			experiment.var.keyboard_backend == backend["keyboard"] and \
+			experiment.var.mouse_backend == backend["mouse"] and \
+			experiment.var.sampler_backend == backend["sampler"] and \
+			experiment.var.synth_backend == backend["synth"]:
 			return name
 	return "custom"

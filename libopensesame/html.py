@@ -173,7 +173,7 @@ class html(HTMLParser):
 
 		# Set the maximum width
 		if max_width is None:
-			max_x = canvas.experiment.width
+			max_x = canvas.experiment.var.width
 		else:
 			if center:
 				max_x = x + max_width/2

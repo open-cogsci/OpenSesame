@@ -52,7 +52,7 @@ class general_header_widget(header_widget):
 			Updates the header so that it's content match the item.
 		"""
 
-		self.set_name(self.experiment.title)
+		self.set_name(self.experiment.var.title)
 		self.set_desc(self.experiment.description)
 
 	def apply_name(self):

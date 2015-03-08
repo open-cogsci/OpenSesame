@@ -32,11 +32,11 @@ class mouse_response(item.item, generic_response.generic_response):
 
 		"""See item."""
 
-		self.flush = u'yes'
-		self.show_cursor = u'yes'
-		self.timeout = u'infinite'
+		self.var.flush = u'yes'
+		self.var.show_cursor = u'yes'
+		self.var.timeout = u'infinite'
+		self.var.duration = u'mouseclick'
 		self.auto_response = 1
-		self.duration = u'mouseclick'
 		self.process_feedback = True
 
 		self.resp_codes = {}
@@ -53,7 +53,7 @@ class mouse_response(item.item, generic_response.generic_response):
 
 		item.item.prepare(self)
 		generic_response.generic_response.prepare(self)
-		self._flush = self.get(u'flush') == u'yes'
+		self._flush = self.var.flush == u'yes'
 
 	def run(self):
 
@@ -86,4 +86,3 @@ class mouse_response(item.item, generic_response.generic_response):
 		l.append( (u'cursor_x', u'[Depends on response]') )
 		l.append( (u'cursor_y', u'[Depends on response]') )
 		return l
-

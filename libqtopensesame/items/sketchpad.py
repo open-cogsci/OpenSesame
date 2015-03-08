@@ -18,7 +18,6 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame.py3compat import *
-
 from libopensesame.sketchpad import sketchpad as sketchpad_runtime
 from libqtopensesame.items.qtplugin import qtplugin
 from libqtopensesame.items.feedpad import feedpad
@@ -41,6 +40,6 @@ class sketchpad(feedpad, qtplugin, sketchpad_runtime):
 		desc:
 			Initializes the widget.
 		"""
-		
+
 		feedpad.init_edit_widget(self)
 		self.sketchpad_widget.ui.widget_settings_reset_variables.hide()

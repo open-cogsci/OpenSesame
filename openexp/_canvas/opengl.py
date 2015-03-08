@@ -47,16 +47,16 @@ class opengl(openexp._canvas.legacy.legacy):
 		self.experiment = experiment
 		self.html = html.html()
 		if fgcolor is None:
-			fgcolor = self.experiment.get("foreground")
+			fgcolor = self.experiment.var.get("foreground")
 		if bgcolor is None:
-			bgcolor = self.experiment.get("background")
+			bgcolor = self.experiment.var.get("background")
 
 		self.fgcolor = self.color(fgcolor)
 		self.bgcolor = self.color(bgcolor)
 		self.penwidth = 1
 		self.antialias = True
 		self.font = self.experiment.font
-		self.bidi = self.experiment.get(u'bidi')==u'yes'
+		self.bidi = self.experiment.var.get(u'bidi')==u'yes'
 		# set to have no objects
 		self.showables = []
 		self.clear()
@@ -87,13 +87,13 @@ class opengl(openexp._canvas.legacy.legacy):
 
 		"""see openexp._canvas.legacy"""
 
-		return self.experiment.get('width') / 2
+		return self.experiment.var.get('width') / 2
 
 	def ycenter(self):
 
 		"""see openexp._canvas.legacy"""
 
-		return self.experiment.get('height') / 2
+		return self.experiment.var.get('height') / 2
 
 	def show(self):
 
@@ -427,7 +427,7 @@ def init_display(experiment):
 
 	# Create the window and the surface
 	experiment.window = pygame.display.set_mode(experiment.resolution(), mode)
-	pygame.display.set_caption(experiment.title)
+	pygame.display.set_caption(experiment.var.title)
 	pygame.mouse.set_visible(False)
 	experiment.surface = pygame.display.get_surface()
 
@@ -438,9 +438,9 @@ def init_display(experiment):
 	experiment.sleep = experiment._sleep_func
 
 	# Create a font, falling back to the default font
-	experiment.font = pygame.font.Font(experiment.resource("%s.ttf" % experiment.font_family), experiment.font_size)
+	experiment.font = pygame.font.Font(experiment.resource("%s.ttf" % experiment.var.font_family), experiment.var.font_size)
 	if experiment.font is None:
-		experiment.font = pygame.font.Font(None, experiment.font_size)
+		experiment.font = pygame.font.Font(None, experiment.var.font_size)
 
 def close_display(experiment):
 

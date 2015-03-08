@@ -79,7 +79,7 @@ class repeat_cycle(item.item):
 		"""Run the item"""
 		
 		if eval(self._condition):
-			self.experiment.set('repeat_cycle', 1)
+			self.experiment.var.set('repeat_cycle', 1)
 		return True
 					
 class qtrepeat_cycle(repeat_cycle, qtplugin.qtplugin):

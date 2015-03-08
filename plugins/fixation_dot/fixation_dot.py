@@ -63,13 +63,13 @@ class fixation_dot(item, generic_response):
 		item.prepare(self)
 		generic_response.prepare(self)
 		# Create a canvas.
-		self.c = canvas(self.experiment, self.get(u'background'), \
-			self.get(u'foreground'))
+		self.c = canvas(self.experiment, self.var.get(u'background'), \
+			self.var.get(u'foreground'))
 		# Set the coordinates.
-		self._x = self.get(u'x') + self.c.xcenter()
-		self._y = self.get(u'y') + self.c.ycenter()
+		self._x = self.var.get(u'x') + self.c.xcenter()
+		self._y = self.var.get(u'y') + self.c.ycenter()
 		# Draw the fixation dot.
-		self.c.set_penwidth(self.get(u'penwidth'))
+		self.c.set_penwidth(self.var.get(u'penwidth'))
 		if self.style == u'default':
 			self.c.fixdot(self._x, self._y)
 		elif self.style == u'filled':

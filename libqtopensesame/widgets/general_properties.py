@@ -98,10 +98,10 @@ class general_properties(base_widget):
 			description.
 		"""
 
-		self.header_widget.edit_name.setText(self.experiment.title)
+		self.header_widget.edit_name.setText(self.experiment.var.title)
 		self.header_widget.label_name.setText(
 			u"<font size='5'><b>%s</b> - Experiment</font>&nbsp;&nbsp;&nbsp;<font color='gray'><i>Click to edit</i></font>" \
-			% self.experiment.title)
+			% self.experiment.var.title)
 		self.header_widget.edit_desc.setText(self.experiment.description)
 		self.header_widget.label_desc.setText(self.experiment.description)
 
@@ -121,35 +121,35 @@ class general_properties(base_widget):
 		self.main_window.set_busy(True)
 		# Set the title and the description
 		title = self.experiment.sanitize(self.header_widget.edit_name.text())
-		if title != self.experiment.get(u'title'):
-			self.experiment.set(u"title", title)
+		if title != self.experiment.var.get(u'title'):
+			self.experiment.var.set(u"title", title)
 			self.experiment.build_item_tree()
 		desc = self.experiment.sanitize(self.header_widget.edit_desc.text())
-		self.experiment.set(u"description", desc)
+		self.experiment.var.set(u"description", desc)
 
 		# Set the backend
 		if self.ui.combobox_backend.isEnabled():
 			i = self.ui.combobox_backend.currentIndex()
 			backend = list(openexp.backend_info.backend_list.values())[i]
-			self.experiment.set(u"canvas_backend", backend[u"canvas"])
-			self.experiment.set(u"keyboard_backend", backend[u"keyboard"])
-			self.experiment.set(u"mouse_backend", backend[u"mouse"])
-			self.experiment.set(u"sampler_backend", backend[u"sampler"])
-			self.experiment.set(u"synth_backend", backend[u"synth"])
+			self.experiment.var.set(u"canvas_backend", backend[u"canvas"])
+			self.experiment.var.set(u"keyboard_backend", backend[u"keyboard"])
+			self.experiment.var.set(u"mouse_backend", backend[u"mouse"])
+			self.experiment.var.set(u"sampler_backend", backend[u"sampler"])
+			self.experiment.var.set(u"synth_backend", backend[u"synth"])
 		else:
 			debug.msg(
 				u'not setting back-end, because a custom backend is selected')
 
 		# Set the display width
 		width = self.ui.spinbox_width.value()
-		if self.experiment.get(u"width") != width:
+		if self.experiment.var.get(u"width") != width:
 			self.main_window.update_resolution(width,
-				self.experiment.get(u"height"))
+				self.experiment.var.get(u"height"))
 
 		# Set the display height
 		height = self.ui.spinbox_height.value()
-		if self.experiment.get(u"height") != height:
-			self.main_window.update_resolution(self.experiment.get(u"width"),
+		if self.experiment.var.get(u"height") != height:
+			self.main_window.update_resolution(self.experiment.var.get(u"width"),
 				height)
 
 		# Set the foreground color
@@ -161,9 +161,9 @@ class general_properties(base_widget):
 		except Exception as e:
 			if refs == []:
 				self.experiment.notify(e)
-				foreground = self.experiment.get(u"foreground")
+				foreground = self.experiment.var.get(u"foreground")
 				self.ui.edit_foreground.setText(foreground)
-		self.experiment.set(u"foreground", foreground)
+		self.experiment.var.set(u"foreground", foreground)
 
 		# Set the background color
 		background = self.experiment.sanitize(self.ui.edit_background.text())
@@ -174,18 +174,18 @@ class general_properties(base_widget):
 		except Exception as e:
 			if refs == []:
 				self.experiment.notify(e)
-				background = self.experiment.get(u"background")
+				background = self.experiment.var.get(u"background")
 				self.ui.edit_background.setText(background)
-		self.experiment.set(u"background", foreground)
-		self.experiment.set(u"background", background)
+		self.experiment.var.set(u"background", foreground)
+		self.experiment.var.set(u"background", background)
 
 		# Set the font
-		self.experiment.set(u'font_family', self.ui.widget_font.family)
-		self.experiment.set(u'font_size', self.ui.widget_font.size)
-		self.experiment.set(u'font_italic', self.ui.widget_font.italic)
-		self.experiment.set(u'font_bold', self.ui.widget_font.bold)
+		self.experiment.var.set(u'font_family', self.ui.widget_font.family)
+		self.experiment.var.set(u'font_size', self.ui.widget_font.size)
+		self.experiment.var.set(u'font_italic', self.ui.widget_font.italic)
+		self.experiment.var.set(u'font_bold', self.ui.widget_font.bold)
 		# Set bi-directional text
-		self.experiment.set(u'bidi', self.ui.checkbox_bidi.isChecked())
+		self.experiment.var.set(u'bidi', self.ui.checkbox_bidi.isChecked())
 		self.check_bidi()
 		# Refresh the interface and unlock the general tab
 		self.lock = False
@@ -217,22 +217,22 @@ class general_properties(base_widget):
 
 		# Set the resolution
 		try:
-			self.ui.spinbox_width.setValue(int(self.experiment.width))
-			self.ui.spinbox_height.setValue(int(self.experiment.height))
+			self.ui.spinbox_width.setValue(int(self.experiment.var.width))
+			self.ui.spinbox_height.setValue(int(self.experiment.var.height))
 		except:
 			self.experiment.notify(
 				_(u"Failed to parse the resolution. Expecting positive numeric values."))
 
 		# Set the colors
 		self.ui.edit_foreground.setText(self.experiment.unistr(
-			self.experiment.foreground))
+			self.experiment.var.foreground))
 		self.ui.edit_background.setText(self.experiment.unistr(
-			self.experiment.background))
+			self.experiment.var.background))
 
 		# Set the font
 		self.ui.widget_font.initialize(self.experiment)
 		# Set bidirectional text
-		self.ui.checkbox_bidi.setChecked(self.experiment.get(u'bidi') == u'yes')
+		self.ui.checkbox_bidi.setChecked(self.experiment.var.get(u'bidi') == u'yes')
 		self.check_bidi()
 		# Release the general tab
 		self.lock = False
@@ -245,7 +245,7 @@ class general_properties(base_widget):
 			enabled while python-bidi is not installed.
 		"""
 
-		if self.experiment.get(u'bidi') != u'yes':
+		if self.experiment.var.get(u'bidi') != u'yes':
 			self.ui.label_bidi_check.hide()
 			return
 		try:

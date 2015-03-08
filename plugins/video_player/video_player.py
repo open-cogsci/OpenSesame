@@ -57,17 +57,17 @@ class video_player(item.item):
 	
 		"""Opens the video file for playback."""
 			
-		if self.experiment.get(u'canvas_backend') != u'legacy':
+		if self.experiment.var.get(u'canvas_backend') != u'legacy':
 			raise osexception( \
 				u'The video_player plug-in requires the legacy back-end!')
 			
 		item.item.prepare(self)			
-		path = self.experiment.get_file(self.get(u'video_src'))
+		path = self.experiment.get_file(self.var.get(u'video_src'))
 		# Open the video file
 		self.video = cv.CreateFileCapture(path)
 		# Convert the string to a boolean, for slightly faster evaluations in
 		# the run phase
-		self._fullscreen = self.get(u'fullscreen') == u"yes"
+		self._fullscreen = self.var.get(u'fullscreen') == u"yes"
 		# The dimensions of the video
 		self._w = int(cv.GetCaptureProperty(self.video, cv.CV_CAP_PROP_FRAME_WIDTH))
 		self._h = int(cv.GetCaptureProperty(self.video, cv.CV_CAP_PROP_FRAME_HEIGHT))
@@ -76,15 +76,15 @@ class video_player(item.item):
 			# temporary images need to be fullscreen size
 			self._x = 0
 			self._y = 0		
-			self.src_tmp = cv.CreateMat(self.experiment.height, \
-				self.experiment.width, cv.CV_8UC3)
-			self.src_rgb = cv.CreateMat(self.experiment.height, \
-				self.experiment.width, cv.CV_8UC3)			
+			self.src_tmp = cv.CreateMat(self.experiment.var.height, \
+				self.experiment.var.width, cv.CV_8UC3)
+			self.src_rgb = cv.CreateMat(self.experiment.var.height, \
+				self.experiment.var.width, cv.CV_8UC3)			
 		else:
 			# Otherwise the location of the video depends on its dimensions and the
 			# temporary image is the same size as the video
-			self._x = max(0, (self.experiment.width - self._w) / 2)
-			self._y = max(0, (self.experiment.height - self._h) / 2)
+			self._x = max(0, (self.experiment.var.width - self._w) / 2)
+			self._y = max(0, (self.experiment.var.height - self._h) / 2)
 			self.src_rgb = cv.CreateMat(self._h, self._w, cv.CV_8UC3)
 				
 	def run(self):
@@ -119,20 +119,20 @@ class video_player(item.item):
 			pygame.display.flip()
 			# Pause before jumping to the next frame
 			pygame.time.wait(
-				self.get(u'frame_dur') - pygame.time.get_ticks() + t)
+				self.var.get(u'frame_dur') - pygame.time.get_ticks() + t)
 			t = pygame.time.get_ticks()
-			if type(self.get(u'duration')) == int:
+			if type(self.var.get(u'duration')) == int:
 				# Wait for a specified duration
-				if t - start_t >= self.get(u'duration'):
+				if t - start_t >= self.var.get(u'duration'):
 					go = False
 			# Catch escape presses
 			for event in pygame.event.get():		
 				if event.type == KEYDOWN:					
 					if event.key == pygame.K_ESCAPE:
 						raise osexception(u"The escape key was pressed.")
-					if self.get(u'duration') == u"keypress":
+					if self.var.get(u'duration') == u"keypress":
 						go = False
-				if event.type == MOUSEBUTTONDOWN and self.get(u'duration') == \
+				if event.type == MOUSEBUTTONDOWN and self.var.get(u'duration') == \
 					u"mouseclick":
 					go = False
 		# Release the camera	

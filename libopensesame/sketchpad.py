@@ -18,9 +18,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame.py3compat import *
-
 from libopensesame import sketchpad_elements
-from libopensesame import debug
 from libopensesame.exceptions import osexception
 from libopensesame.item import item
 from libopensesame.generic_response import generic_response
@@ -139,6 +137,7 @@ class sketchpad(item, generic_response):
 		"""
 
 		l = item.var_info(self)
-		if self.get(u'duration', _eval=False) in [u'keypress', u'mouseclick']:
+		if self.var.get(u'duration', _eval=False) in \
+			[u'keypress', u'mouseclick']:
 			l += generic_response.var_info(self)
 		return l

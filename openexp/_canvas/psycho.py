@@ -90,17 +90,17 @@ class psycho(canvas.canvas):
 		self.html = html.html()
 		self.min_penwidth = 1
 		if fgcolor is None:
-			fgcolor = self.experiment.get(u"foreground")
+			fgcolor = self.experiment.var.get(u"foreground")
 		if bgcolor is None:
-			bgcolor = self.experiment.get(u"background")
+			bgcolor = self.experiment.var.get(u"background")
 		self.set_fgcolor(fgcolor)
 		self.set_bgcolor(bgcolor)
 		self.set_penwidth(1)
-		self.bidi = self.experiment.get(u'bidi')==u'yes'
-		self.set_font(style=self.experiment.font_family, size= \
-			self.experiment.font_size, bold=self.experiment.font_bold==u'yes', \
-			italic=self.experiment.font_italic==u'yes', underline= \
-			self.experiment.font_underline==u'yes')
+		self.bidi = self.experiment.var.get(u'bidi')==u'yes'
+		self.set_font(style=self.experiment.var.font_family, size= \
+			self.experiment.var.font_size, bold=self.experiment.var.font_bold==u'yes', \
+			italic=self.experiment.var.font_italic==u'yes', underline= \
+			self.experiment.var.font_underline==u'yes')
 		# We need to map the simple font names used by OpenSesame onto the
 		# actual names of the fonts.
 		self.font_map = {
@@ -153,7 +153,7 @@ class psycho(canvas.canvas):
 		if self.experiment.background != color:
 			# The background is simply a rectangle, because of the double flip
 			# required by set_color()
-			self.rect(0, 0, self.experiment.width, self.experiment.height,
+			self.rect(0, 0, self.experiment.var.width, self.experiment.var.height,
 				color=color, fill=True)
 
 	def line(self, sx, sy, ex, ey, color=None, penwidth=None):
@@ -230,7 +230,7 @@ class psycho(canvas.canvas):
 		stim = visual.TextStim(win=self.experiment.window, text=text,
 			alignHoriz=u'left', alignVert=u'top', pos=pos, color=self.fgcolor,
 			font=font, height= self.font_size, wrapWidth= \
-			self.experiment.width, bold=self.font_bold, italic=self.font_italic)
+			self.experiment.var.width, bold=self.font_bold, italic=self.font_italic)
 		self.stim_list.append(stim)
 
 	def image(self, fname, center=True, x=None, y=None, scale=None):
@@ -383,10 +383,10 @@ def init_display(experiment):
 	global _experiment, _old_gamma
 	_experiment = experiment
 	# Set the PsychoPy monitor, default to testMonitor
-	monitor = experiment.get_check(u'psychopy_monitor', u'testMonitor')
-	waitblanking = experiment.get_check(u'psychopy_waitblanking', u'yes', \
+	monitor = experiment.var.get(u'psychopy_monitor', u'testMonitor')
+	waitblanking = experiment.var.get(u'psychopy_waitblanking', u'yes', \
 		[u'yes', u'no']) == u'yes'
-	screen = experiment.get_check(u'psychopy_screen', 0)
+	screen = experiment.var.get(u'psychopy_screen', 0)
 	# Print some information to the debug window
 	print(u'openexp._canvas.psycho.init_display(): waitblanking = %s' % \
 		waitblanking)
@@ -404,7 +404,7 @@ def init_display(experiment):
 	experiment.sleep = experiment._sleep_func
 	experiment.window.winHandle.set_caption(u'OpenSesame (PsychoPy backend)')
 	# Set Gamma value if specified
-	gamma = experiment.get_check(u'psychopy_gamma', u'unchanged')
+	gamma = experiment.var.get(u'psychopy_gamma', u'unchanged')
 	if type(gamma) in (int, float) and gamma > 0:
 		_old_gamma = experiment.window.gamma
 		experiment.window.setGamma(gamma)
@@ -420,7 +420,7 @@ def init_display(experiment):
 	core.quit = _psychopy_clean_quit
 	# Optionally change the logging level to avoid a lot of warnings in the
 	# debug window
-	if experiment.get_check(u'psychopy_suppress_warnings', u'yes'):
+	if experiment.var.get(u'psychopy_suppress_warnings', u'yes'):
 		logging.console.setLevel(logging.CRITICAL)
 	# We need to initialize the pygame mixer, because PsychoPy uses that as well
 	pygame.mixer.init()

@@ -65,7 +65,7 @@ class psycho(keyboard.keyboard):
 
 	def __init__(self, experiment, keylist=None, timeout=None):
 
-		if experiment.canvas_backend != u"psycho":
+		if experiment.var.canvas_backend != u"psycho":
 			raise osexception(
 				u"The psycho keyboard backend must be used in combination with "
 				u"the psycho canvas backend!")

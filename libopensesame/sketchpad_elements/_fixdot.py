@@ -42,7 +42,7 @@ class fixdot(base_element):
 		defaults = [
 			(u'x'		, None),
 			(u'y'		, None),
-			(u'color'	, sketchpad.get(u'foreground')),
+			(u'color'	, sketchpad.var.get(u'foreground')),
 			(u'style'	, u'default'),
 			]
 		super(fixdot, self).__init__(sketchpad, string, defaults=defaults)

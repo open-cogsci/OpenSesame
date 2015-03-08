@@ -50,7 +50,7 @@ class xpyriment(legacy.legacy):
 		self.set_buttonlist(buttonlist)
 		self.set_timeout(timeout)
 		self.set_visible(visible)
-		if self.experiment.get_check('custom_cursor', 'no') == 'yes':
+		if self.experiment.var.get('custom_cursor', 'no') == 'yes':
 			if self.experiment.expyriment.screen._fullscreen:
 				raise osexception(
 					'The xpyriment mouse back-end does not support custom cursors in fullscreen mode (you can change this in the back-end settings)')
@@ -102,9 +102,9 @@ class xpyriment(legacy.legacy):
 						# Compensate for the fact that the screen is padded
 						x, y = event.pos
 						x -= (self.experiment.expyriment.screen.window_size[0] \
-							-self.experiment.width)/2
+							-self.experiment.var.width)/2
 						y -= (self.experiment.expyriment.screen.window_size[1] \
-							-self.experiment.height)/2
+							-self.experiment.var.height)/2
 
 						return event.button, (x,y), time
 			if timeout is not None and time-start_time >= timeout:

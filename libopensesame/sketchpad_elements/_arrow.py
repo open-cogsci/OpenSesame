@@ -45,7 +45,7 @@ class arrow(base_element):
 			(u'x2'			, None),
 			(u'y2'			, None),
 			(u'arrow_size'	, 20),
-			(u'color'		, sketchpad.get(u'foreground')),
+			(u'color'		, sketchpad.var.get(u'foreground')),
 			(u'penwidth'	, 1),
 			]
 		super(arrow, self).__init__(sketchpad, string, defaults=defaults)

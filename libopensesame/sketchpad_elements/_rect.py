@@ -45,7 +45,7 @@ class rect(base_element):
 			(u'w'		, None),
 			(u'h'		, None),
 			(u'fill'	, 0),
-			(u'color'	, sketchpad.get(u'foreground')),
+			(u'color'	, sketchpad.var.get(u'foreground')),
 			(u'penwidth', 1),
 			]
 		super(rect, self).__init__(sketchpad, string, defaults=defaults)

@@ -110,9 +110,9 @@ define quest_staircase_next quest_staircase_next
 define inline_script show_patch
 	___run__
 	# Set the stimulus parameters
-	target.ori = self.get('ori')
-	target.contrast = self.get('contrast')
-	mask.contrast = self.get('contrast')
+	target.ori = self.var.get('ori')
+	target.contrast = self.var.get('contrast')
+	mask.contrast = self.var.get('contrast')
 	# Show the gabor and mask it
 	target.draw()
 	win.flip()

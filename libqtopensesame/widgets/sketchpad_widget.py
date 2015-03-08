@@ -306,7 +306,7 @@ class sketchpad_widget(base_widget):
 		"""
 
 		if self.ui.edit_color.text() == u'':
-			self.ui.edit_color.setText(self.sketchpad.get(u'foreground'))
+			self.ui.edit_color.setText(self.sketchpad.var.get(u'foreground'))
 		if self.ui.edit_show_if.text() == u'':
 			self.ui.edit_show_if.setText(u'always')
 
@@ -417,8 +417,8 @@ class sketchpad_widget(base_widget):
 			Sets the size of the QGraphicsView to the experiment resolution.
 		"""
 
-		w = self.sketchpad.get(u'width')
-		h = self.sketchpad.get(u'height')
+		w = self.sketchpad.var.get(u'width')
+		h = self.sketchpad.var.get(u'height')
 		self.ui.graphics_view.setSceneRect(-self.margin, -self.margin,
 			w+2*self.margin, h+2*self.margin)
 

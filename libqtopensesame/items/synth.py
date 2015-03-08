@@ -18,13 +18,10 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame.py3compat import *
-
 from libopensesame.synth import synth as synth_runtime
-from libqtopensesame.misc import _
 from libqtopensesame.items.qtplugin import qtplugin
 from libqtopensesame.widgets.synth_widget import synth_widget
 from libqtopensesame.validators import duration_validator
-from PyQt4 import QtCore, QtGui
 
 class synth(synth_runtime, qtplugin):
 
@@ -89,13 +86,13 @@ class synth(synth_runtime, qtplugin):
 		"""
 
 		self.synth_widget.ui.dial_pan.setDisabled(
-			type(self.get(u'pan', _eval=False)) not in (int, float))
+			type(self.var.get(u'pan', _eval=False)) not in (int, float))
 		self.synth_widget.ui.dial_decay.setDisabled(
-			type(self.get(u'decay', _eval=False)) not in (int, float))
+			type(self.var.get(u'decay', _eval=False)) not in (int, float))
 		self.synth_widget.ui.dial_attack.setDisabled(
-			type(self.get(u'attack', _eval=False)) not in (int, float))
+			type(self.var.get(u'attack', _eval=False)) not in (int, float))
 		self.synth_widget.ui.dial_volume.setDisabled(
-			type(self.get(u'volume', _eval=False)) not in (int, float))
+			type(self.var.get(u'volume', _eval=False)) not in (int, float))
 		self.synth_widget.ui.dial_pan.setValue(
 			self.synth_widget.ui.spin_pan.value())
 		self.synth_widget.ui.dial_decay.setValue(
@@ -113,13 +110,13 @@ class synth(synth_runtime, qtplugin):
 		"""
 
 		if self.synth_widget.ui.dial_attack.isEnabled():
-			self.set(u"attack", self.synth_widget.ui.dial_attack.value())
+			self.var.set(u"attack", self.synth_widget.ui.dial_attack.value())
 		if self.synth_widget.ui.dial_decay.isEnabled():
-			self.set(u"decay", self.synth_widget.ui.dial_decay.value())
+			self.var.set(u"decay", self.synth_widget.ui.dial_decay.value())
 		if self.synth_widget.ui.dial_pan.isEnabled():
-			self.set(u"pan", self.synth_widget.ui.dial_pan.value())
+			self.var.set(u"pan", self.synth_widget.ui.dial_pan.value())
 		if self.synth_widget.ui.dial_volume.isEnabled():
-			self.set(u"volume", .01*self.synth_widget.ui.dial_volume.value())
+			self.var.set(u"volume", .01*self.synth_widget.ui.dial_volume.value())
 		self.edit_widget()
 		self.update_script()
 
@@ -128,7 +125,7 @@ class synth(synth_runtime, qtplugin):
 		"""See qtitem."""
 
 		super(synth, self).edit_widget()
-		osc = self.get(u'osc', _eval=False)
+		osc = self.var.get(u'osc', _eval=False)
 		self.synth_widget.ui.button_sine.setChecked(osc == u'sine')
 		self.synth_widget.ui.button_saw.setChecked(osc == u'saw')
 		self.synth_widget.ui.button_square.setChecked(osc == u'square')
@@ -141,7 +138,7 @@ class synth(synth_runtime, qtplugin):
 			Selects the sine oscillator
 		"""
 
-		self.set(u"osc", u"sine")
+		self.var.osc = u"sine"
 		self.update()
 
 	def set_saw(self):
@@ -151,7 +148,7 @@ class synth(synth_runtime, qtplugin):
 			Selects the saw oscillator
 		"""
 
-		self.set(u"osc", u"saw")
+		self.var.osc = u"saw"
 		self.update()
 
 	def set_square(self):
@@ -161,7 +158,7 @@ class synth(synth_runtime, qtplugin):
 			Selects the square oscillator
 		"""
 
-		self.set(u"osc", u"square")
+		self.var.osc = u"square"
 		self.update()
 
 	def set_white_noise(self):
@@ -171,5 +168,5 @@ class synth(synth_runtime, qtplugin):
 			Selects the noise oscillator
 		"""
 
-		self.set(u"osc", u"white_noise")
+		self.var.osc = u"white_noise"
 		self.update()

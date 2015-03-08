@@ -76,7 +76,7 @@ class form_text_input(form_base.form_base):
 		"""
 
 		return self.super_form_text_input.var_info() + \
-			[(self.get(u'form_var'), u'[Depends on response]')]
+			[(self.var.get(u'form_var'), u'[Depends on response]')]
 
 class qtform_text_input(form_text_input, qtautoplugin):
 

@@ -34,14 +34,14 @@ class loop(item.item):
 
 		"""See item."""
 
-		self.cycles = 1
-		self.repeat = 1
-		self.skip = 0
-		self.offset = u'no'
+		self.var.cycles = 1
+		self.var.repeat = 1
+		self.var.skip = 0
+		self.var.offset = u'no'
 		self.matrix = {}
-		self.order = u'random'
-		self.item = u''
-		self.break_if = u'never'
+		self.var.order = u'random'
+		self.var.item = u''
+		self.var.break_if = u'never'
 
 	def from_string(self, string):
 
@@ -59,7 +59,7 @@ class loop(item.item):
 			i = self.split(i.strip())
 			if len(i) > 0:
 				if i[0] == u'run' and len(i) > 1:
-					self.item = i[1]
+					self.var.item = i[1]
 				if i[0] == u'setcycle' and len(i) > 3:
 					cycle = int(i[1])
 					var = i[2]
@@ -82,65 +82,65 @@ class loop(item.item):
 		self.set_item_onset()
 
 		# Prepare the break if condition
-		if self.break_if != u'':
-			self._break_if = self.compile_cond(self.break_if)
+		if self.var.break_if != u'':
+			self._break_if = self.compile_cond(self.var.break_if)
 		else:
 			self._break_if = None
 
 		# First generate a list of cycle numbers
 		l = []
 		# Walk through all complete repeats
-		whole_repeats = int(self.get(u'repeat'))
+		whole_repeats = int(self.var.repeat)
 		for j in range(whole_repeats):
-			for i in range(self.get(u'cycles')):
+			for i in range(self.var.cycles):
 				l.append(i)
 
 		# Add the leftover repeats
-		partial_repeats = self.get(u'repeat') - whole_repeats
+		partial_repeats = self.var.repeat - whole_repeats
 		if partial_repeats > 0:
-			all_cycles = range(self.get(u'cycles'))
+			all_cycles = range(self.var.cycles)
 			_sample = sample(all_cycles, int(len(all_cycles) * partial_repeats))
 			for i in _sample:
 				l.append(i)
 
 		# Randomize the list if necessary
-		if self.order == u'random':
+		if self.var.order == u'random':
 			shuffle(l)
 
 		# In sequential order, the offset and the skip are relevant
 		else:
-			if len(l) < self.skip:
+			if len(l) < self.var.skip:
 				raise osexception( \
 					u'The value of skip is too high in loop item "%s":: You cannot skip more cycles than there are.' \
 					% self.name)
-			if self.offset == u'yes':
-				l = l[self.skip:] + l[:self.skip]
+			if self.var.offset == u'yes':
+				l = l[self.var.skip:] + l[:self.var.skip]
 			else:
-				l = l[self.skip:]
+				l = l[self.var.skip:]
 
 		# Create a keyboard to flush responses between cycles
 		self._keyboard = openexp.keyboard.keyboard(self.experiment)
 
 		# Make sure the item to run exists
-		if self.item not in self.experiment.items:
+		if self.var.item not in self.experiment.items:
 			raise osexception( \
 				u"Could not find item '%s', which is called by loop item '%s'" \
-				% (self.item, self.name))
+				% (self.var.item, self.name))
 
 		# And run!
-		_item = self.experiment.items[self.item]
+		_item = self.experiment.items[self.var.item]
 		while len(l) > 0:
 			cycle = l.pop(0)
 			self.apply_cycle(cycle)
 			if self._break_if is not None and eval(self._break_if):
 				break
-			self.experiment.set(u'repeat_cycle', 0)
+			self.experiment.var.repeat_cycle = 0
 			_item.prepare()
 			_item.run()
-			if self.experiment.get(u'repeat_cycle'):
+			if self.experiment.var.repeat_cycle:
 				debug.msg(u'repeating cycle %d' % cycle)
 				l.append(cycle)
-				if self.order == u'random':
+				if self.var.order == u'random':
 					shuffle(l)
 
 	def apply_cycle(self, cycle):
@@ -169,7 +169,7 @@ class loop(item.item):
 						u"Failed to evaluate '%s' in loop item '%s': %s" \
 						% (val[1:], self.name, e))
 			# Set it!
-			self.experiment.set(var, val)
+			self.experiment.var.set(var, val)
 
 	def to_string(self):
 
@@ -184,7 +184,7 @@ class loop(item.item):
 		for i in self.matrix:
 			for var in self.matrix[i]:
 				s += u'\tsetcycle %d %s "%s"\n' % (i, var, self.matrix[i][var])
-		s += u'\trun %s\n' % self.item
+		s += u'\trun %s\n' % self.var.item
 		return s
 
 	def var_info(self):

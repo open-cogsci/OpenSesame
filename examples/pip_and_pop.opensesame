@@ -82,9 +82,9 @@ define inline_script dynamic_search_display
 	from psychopy.visual import PatchStim
 	from random import randint, choice, sample
 	from math import sqrt
-	n_dist = self.get("n_dist") # Nr of distractors
+	n_dist = self.var.get("n_dist") # Nr of distractors
 	margin = 100 # Margin from the screen borders
-	ori_target = self.get("ori_target") # Orientation of the target
+	ori_target = self.var.get("ori_target") # Orientation of the target
 	ori_dist = 30, 60, 120, 150 # Possible distractor orientations
 	min_d = 64 # Minimum distance between stimuli
 	size = 16, 64 # Size of the stimuli
@@ -92,11 +92,11 @@ define inline_script dynamic_search_display
 	target_chance = 10 # How often is the target selected
 	min_target_interval = 150 # The minimum interval between two target flips
 	min_t = 500 # The target is not allowed to flip before 500ms after the trial start
-	sound = self.get("sound") == "yes"
-	xmin = margin-self.get("width")/2
-	xmax = self.get("width")/2-margin
-	ymin = margin-self.get("height")/2
-	ymax = self.get("height")/2-margin
+	sound = self.var.get("sound") == "yes"
+	xmin = margin-self.var.get("width")/2
+	xmax = self.var.get("width")/2-margin
+	ymin = margin-self.var.get("height")/2
+	ymax = self.var.get("height")/2-margin
 	colors = "red", "green"
 	# Draw and remember the fixation dot
 	stim = PatchStim(self.experiment.window, tex=None, mask="circle", pos=(0,0), size=16, color="white")
@@ -180,13 +180,13 @@ define inline_script dynamic_search_display
 	self.experiment.window.flip()
 
 	response_time = time-sri
-	if response == self.get("correct_response"):
+	if response == self.var.get("correct_response"):
 		correct = 1
 	else:
 		correct = 0
-	self.experiment.set("response", response)
-	self.experiment.set("response_time", response_time)
-	self.experiment.set("correct", correct)
+	self.experiment.var.set("response", response)
+	self.experiment.var.set("response_time", response_time)
+	self.experiment.var.set("correct", correct)
 	# Maintain feedback data
 	self.experiment.total_response_time += response_time
 	self.experiment.total_responses += 1

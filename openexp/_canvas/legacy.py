@@ -66,20 +66,20 @@ class legacy(canvas.canvas):
 		self.experiment = experiment
 		self.html = html.html()
 		if fgcolor is None:
-			fgcolor = self.experiment.get(u"foreground")
+			fgcolor = self.experiment.var.get(u"foreground")
 		if bgcolor is None:
-			bgcolor = self.experiment.get(u"background")
+			bgcolor = self.experiment.var.get(u"background")
 		self.set_fgcolor(fgcolor)
 		self.set_bgcolor(bgcolor)
 		self.penwidth = 1
 		self.antialias = True
 		self.surface = self.experiment.surface.copy()
 		self._current_font = None
-		self.bidi = self.experiment.get(u'bidi')==u'yes'
-		self.set_font(style=self.experiment.font_family, size= \
-			self.experiment.font_size, bold=self.experiment.font_bold==u'yes', \
-			italic=self.experiment.font_italic==u'yes', underline= \
-			self.experiment.font_underline==u'yes')
+		self.bidi = self.experiment.var.get(u'bidi')==u'yes'
+		self.set_font(style=self.experiment.var.font_family, size= \
+			self.experiment.var.font_size, bold=self.experiment.var.font_bold==u'yes', \
+			italic=self.experiment.var.font_italic==u'yes', underline= \
+			self.experiment.var.font_underline==u'yes')
 		self.clear()
 
 	def color(self, color):
@@ -270,7 +270,7 @@ def init_display(experiment):
 
 	# Determine the video mode
 	mode = 0
-	if experiment.get_check(u"pygame_hwsurface", u"yes",
+	if experiment.var.get(u"pygame_hwsurface", u"yes",
 		[u"yes", u"no"]) == u"yes":
 		mode = mode | pygame.HWSURFACE
 		print(
@@ -279,7 +279,7 @@ def init_display(experiment):
 		print(
 			u"openexp._canvas.legacy.init_display(): not enabling hardware surface")
 
-	if experiment.get_check(u"pygame_doublebuf", u"yes",
+	if experiment.var.get(u"pygame_doublebuf", u"yes",
 		[u"yes", u"no"]) == u"yes":
 		mode = mode | pygame.DOUBLEBUF
 		print(
@@ -294,15 +294,15 @@ def init_display(experiment):
 		print(
 			u"openexp._canvas.legacy.init_display(): warning: video mode not ok")
 
-	if experiment.fullscreen:
+	if experiment.var.fullscreen == u'yes':
 		mode = mode | pygame.FULLSCREEN
 
-	if experiment.get_check(u'pygame_window_frame', u'yes', [u'yes', u'no']) \
+	if experiment.var.get(u'pygame_window_frame', u'yes', [u'yes', u'no']) \
 		== u'no':
 		mode = mode | pygame.NOFRAME
 
-	if experiment.get_check(u'pygame_window_pos', u'auto') != u'auto':
-		os.environ[u'SDL_VIDEO_WINDOW_POS'] = experiment.get(
+	if experiment.var.get(u'pygame_window_pos', u'auto') != u'auto':
+		os.environ[u'SDL_VIDEO_WINDOW_POS'] = experiment.var.get(
 			u'pygame_window_pos')
 
 	# Create the window and the surface
@@ -314,11 +314,11 @@ def init_display(experiment):
 	# Create a font, falling back to the default font
 	try:
 		experiment.font = pygame.font.Font(experiment.resource(
-			u"%s.ttf" % experiment.font_family), experiment.font_size)
+			u"%s.ttf" % experiment.var.font_family), experiment.var.font_size)
 	except:
 		debug.msg(u"'%s.ttf' not found, falling back to default font" \
-			% experiment.font_family)
-		experiment.font = pygame.font.Font(None, experiment.font_size)
+			% experiment.var.font_family)
+		experiment.font = pygame.font.Font(None, experiment.var.font_size)
 
 	# Set the time functions to use pygame
 	experiment._time_func = pygame.time.get_ticks

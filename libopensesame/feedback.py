@@ -18,8 +18,6 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame.py3compat import *
-
-from libopensesame.exceptions import osexception
 from libopensesame import sketchpad
 
 class feedback(sketchpad.sketchpad):
@@ -31,7 +29,7 @@ class feedback(sketchpad.sketchpad):
 		"""See item."""
 
 		super(feedback, self).reset()
-		self.reset_variables = u'yes'
+		self.var.reset_variables = u'yes'
 
 	def prepare(self):
 
@@ -44,7 +42,6 @@ class feedback(sketchpad.sketchpad):
 		"""Runs the item."""
 
 		sketchpad.sketchpad.prepare(self)
-		not sketchpad.sketchpad.run(self)
-		if self.reset_variables == u'yes':
+		sketchpad.sketchpad.run(self)
+		if self.var.reset_variables == u'yes':
 			self.experiment.reset_feedback()
-

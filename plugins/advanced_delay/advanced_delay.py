@@ -54,16 +54,16 @@ class advanced_delay(item.item):
 		item.item.prepare(self)
 		# Sanity check on the duration value, which should be a positive numeric
 		# value.
-		if type(self.get('duration')) not in (int, float) or \
-			self.get('duration') < 0:
+		if type(self.var.get('duration')) not in (int, float) or \
+			self.var.get('duration') < 0:
 			raise osexception( \
 				u'Duration should be a positive numeric value in advanced_delay %s' \
 				% self.name)
-		if self.get(u'jitter_mode') == u'Uniform':
-			self._duration = random.uniform(self.get(u'duration')-self.get( \
-				u'jitter')/2, self.get(u'duration')+self.get(u'jitter')/2)
-		elif self.get(u'jitter_mode') == u'Std. Dev.':
-			self._duration = random.gauss(self.get(u'duration'), self.get( \
+		if self.var.get(u'jitter_mode') == u'Uniform':
+			self._duration = random.uniform(self.var.get(u'duration')-self.var.get( \
+				u'jitter')/2, self.var.get(u'duration')+self.var.get(u'jitter')/2)
+		elif self.var.get(u'jitter_mode') == u'Std. Dev.':
+			self._duration = random.gauss(self.var.get(u'duration'), self.var.get( \
 				u'jitter'))
 		else:
 			raise osexception( \
@@ -72,7 +72,7 @@ class advanced_delay(item.item):
 		if self._duration < 0:
 			self._duration = 0
 		self._duration = int(self._duration)
-		self.experiment.set(u'delay_%s' % self.name, self._duration)
+		self.experiment.var.set(u'delay_%s' % self.name, self._duration)
 		debug.msg(u"delay for %s ms" % self._duration)
 
 	def run(self):

@@ -34,12 +34,11 @@ class logger(item.item):
 
 		self.logvars = []
 		self.log_started = False
-		self.use_quotes = u'yes'
-		self.auto_log = u'yes'
-		self.ignore_missing = u'yes' # This means that missing variables should
-									# be ignored in the sense that they are
-									# assigned the value 'NA'. They are included
-									# in the logfile.
+		self.var.use_quotes = u'yes'
+		self.var.auto_log = u'yes'
+		# This means that missing variables should be ignored in the sense that
+		# they are assigned the value 'NA'. They are included in the logfile.
+		self.var.ignore_missing = u'yes'
 
 	def run(self):
 
@@ -49,10 +48,10 @@ class logger(item.item):
 		if not self.log_started:
 			self.log_started = True
 			# If auto logging is enabled, collect all variables
-			if self.get(u'auto_log') == u'yes':
+			if self.var.get(u'auto_log') == u'yes':
 				self.logvars = []
-				for logvar, val, item in self.experiment.var_list():
-					if (self.has(logvar) or self.get(u'ignore_missing') == \
+				for logvar, val, _item in self.experiment.var_list():
+					if (self.has(logvar) or self.var.get(u'ignore_missing') == \
 						u'yes') and logvar not in self.logvars:
 						self.logvars.append(logvar)
 						debug.msg(u'auto-logging "%s"' % logvar)
@@ -65,7 +64,7 @@ class logger(item.item):
 		for var in self.logvars:
 			if var in self.var:
 				val = self.var.get(var)
-			elif self.get(u'ignore_missing') == u'yes':
+			elif self.var.get(u'ignore_missing') == u'yes':
 				val = u'NA'
 			else:
 				raise osexception(
@@ -73,7 +72,7 @@ class logger(item.item):
 					% (self.name, var, var, self.name))
 			l.append(val)
 
-		if self.get(u'use_quotes') == u'yes':
+		if self.var.get(u'use_quotes') == u'yes':
 			self.log(u'"' + (u'","'.join(l)) + u'"')
 		else:
 			self.log(u",".join(l))

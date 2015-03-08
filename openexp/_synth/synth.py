@@ -97,7 +97,7 @@ class synth(object):
 
 		self.experiment = experiment
 		# We need to multiply the rate by two to get a stereo signal
-		rate = 2*self.experiment.get_check(u'sampler_frequency', 48100)
+		rate = 2*self.experiment.var.get(u'sampler_frequency', 48100)
 		if not hasattr(self, u'osc_%s' % osc):
 			raise osexception(u'Invalid oscillator for synth: %s' % osc)
 		osc_fnc = getattr(self, u'osc_%s' % osc)

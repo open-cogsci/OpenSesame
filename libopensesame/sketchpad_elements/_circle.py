@@ -44,7 +44,7 @@ class circle(base_element):
 			(u'y'		, None),
 			(u'r'		, None),
 			(u'fill'	, 0),
-			(u'color'	, sketchpad.get(u'foreground')),
+			(u'color'	, sketchpad.var.get(u'foreground')),
 			(u'penwidth', 1),
 			]
 		super(circle, self).__init__(sketchpad, string, defaults=defaults)

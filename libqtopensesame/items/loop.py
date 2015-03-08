@@ -18,19 +18,17 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame.py3compat import *
-
 import copy
 from libopensesame.loop import loop as loop_runtime
 from libqtopensesame.items.qtitem import qtitem
 from libqtopensesame.items.qtstructure_item import qtstructure_item
 from libqtopensesame.misc import _
-from libqtopensesame.misc.config import cfg
 from libqtopensesame.widgets import loop_table
 from libqtopensesame.widgets.loop_widget import loop_widget
 from libqtopensesame.widgets.tree_item_item import tree_item_item
 from libqtopensesame.validators import cond_validator
 from libopensesame import debug
-from PyQt4 import QtCore, QtGui
+from PyQt4 import QtGui
 
 class loop(qtstructure_item, qtitem, loop_runtime):
 
@@ -64,8 +62,8 @@ class loop(qtstructure_item, qtitem, loop_runtime):
 		"""
 
 		qtitem.rename(self, from_name, to_name)
-		if self.item == from_name:
-			self.item = to_name
+		if self.var.item == from_name:
+			self.var.item = to_name
 
 	def delete(self, item_name, item_parent=None, index=None):
 
@@ -80,8 +78,8 @@ class loop(qtstructure_item, qtitem, loop_runtime):
 		index			--	The index of the item in the parent. (default=None)
 		"""
 
-		if self.item == item_name and item_parent == self.name:
-			self.item = u""
+		if self.var.item == item_name and item_parent == self.name:
+			self.var.item = u""
 
 	def add_cyclevar(self):
 
@@ -118,7 +116,7 @@ class loop(qtstructure_item, qtitem, loop_runtime):
 						% var_name)
 				return
 
-			for i in range(self.cycles):
+			for i in range(self.var.cycles):
 				if i not in self.matrix:
 					self.matrix[i] = {}
 				self.matrix[i][var_name] = default
@@ -245,9 +243,10 @@ class loop(qtstructure_item, qtitem, loop_runtime):
 		The number of cycles.
 		"""
 
-		if type(self.cycles) != int:
+		cycles = self.var.get(u'cycles', _eval=False)
+		if not isinstance(cycles, float):
 			return 0
-		return max(self.cycles, len(self.matrix))
+		return int(max(cycles, len(self.matrix)))
 
 	def set_cycle_count(self, cycles, confirm=True):
 
@@ -273,14 +272,14 @@ class loop(qtstructure_item, qtitem, loop_runtime):
 				_(u"By reducing the number of cycles, data will be lost from the table. Do you wish to continue?"),
 				QtGui.QMessageBox.Yes, QtGui.QMessageBox.No)
 			if resp == QtGui.QMessageBox.No:
-				self.loop_widget.ui.spin_cycles.setValue(self.cycles)
+				self.loop_widget.ui.spin_cycles.setValue(self.var.cycles)
 				self.lock_cycles = False
 				return
 		for i in self.matrix.keys():
 			if i >= cycles:
 				del self.matrix[i]
 		self.lock_cycles = False
-		self.set(u"cycles", cycles)
+		self.var.set(u"cycles", cycles)
 
 	def call_count(self):
 
@@ -293,9 +292,9 @@ class loop(qtstructure_item, qtitem, loop_runtime):
 		"""
 
 		try:
-			if self.order == u"sequential" and self.offset != u"yes":
-				return int(self.cycles * self.repeat - self.skip)
-			return int(self.cycles * self.repeat)
+			if self.var.order == u"sequential" and self.var.offset != u"yes":
+				return int(self.var.cycles * self.var.repeat - self.var.skip)
+			return int(self.var.cycles * self.var.repeat)
 		except:
 			return 0
 
@@ -303,20 +302,20 @@ class loop(qtstructure_item, qtitem, loop_runtime):
 
 		"""Refreshes the cycle count summary."""
 
-		if self.item not in self.experiment.items:
+		if self.var.item not in self.experiment.items:
 			s = _(u"<font color='red'>No item to run specified</font>")
 		else:
 			cc = self.call_count()
-			if self.order == u'sequential' and self.offset != u'yes':
+			if self.var.order == u'sequential' and self.var.offset != u'yes':
 				s = _(u"<b>%s</b> will be called <b>%s</b> x <b>%s</b> - <b>%s</b> = <b>%s</b> times in <b>%s</b> order") \
-					% (self.item, self.cycles, self.repeat, self.skip, cc, \
-					self.order)
+					% (self.var.item, self.var.cycles, self.var.repeat, self.var.skip, cc, \
+					self.var.order)
 			else:
 				s = _(u"<b>%s</b> will be called <b>%s</b> x <b>%s</b> = <b>%s</b> times in <b>%s</b> order") \
-					% (self.item, self.cycles, self.repeat, cc, self.order)
-			if self.order == u"sequential" and self.skip > 0:
-				s += _(u" starting at cycle <b>%s</b>") % self.skip
-				if self.offset == u"yes" and self.skip >= cc:
+					% (self.var.item, self.var.cycles, self.var.repeat, cc, self.var.order)
+			if self.var.order == u"sequential" and self.var.skip > 0:
+				s += _(u" starting at cycle <b>%s</b>") % self.var.skip
+				if self.var.offset == u"yes" and self.var.skip >= cc:
 					s += _(u" <font color='red'><b>(too many cycles skipped)</b></font>")
 			if cc < 1:
 				s += _(u" <font color='red'><b>(zero, negative, or unknown length)</b></font>")
@@ -337,7 +336,7 @@ class loop(qtstructure_item, qtitem, loop_runtime):
 
 		# Don't crash if the cycle variable is variable, simply provide an
 		# error message (due to the sanity check) and disable the loop table.
-		if type(self.cycles) != int:
+		if not isinstance(self.var.get('cycles', _eval=False), float):
 			self.loop_table.setEnabled(False)
 			self.lock = False
 			return
@@ -345,17 +344,17 @@ class loop(qtstructure_item, qtitem, loop_runtime):
 
 		# Don't clear and resize the table if this is not necessary, because
 		# this makes the cursor jump
-		if self.loop_table.rowCount() != self.cycles or \
+		if self.loop_table.rowCount() != self.var.cycles or \
 			self.loop_table.columnCount() != self.cyclevar_count():
 			self.loop_table.clear()
-			self.loop_table.setRowCount(self.cycles)
+			self.loop_table.setRowCount(self.var.cycles)
 			self.loop_table.setColumnCount(self.cyclevar_count())
 
 		# Determine the order in which the columns are displayed
 		column_order = []
 		if self.cyclevar_list() is not None:
-			if self.has(u"column_order"):
-				for var in self.unistr(self.get(u"column_order")).split(u";"):
+			if column_order in self.var:
+				for var in self.unistr(self.var.column_order).split(u";"):
 					if var in self.cyclevar_list():
 						column_order.append(var)
 			for var in self.cyclevar_list():
@@ -379,8 +378,8 @@ class loop(qtstructure_item, qtitem, loop_runtime):
 					self.experiment.unistr(self.matrix[cycle][var]))
 
 		# Store the number of cycles and the column order
-		self.set(u"cycles", max(self.get(u"cycles"), self.cycle_count()))
-		self.set(u"column_order", u";".join(column_order))
+		self.var.cycles = max(self.var.cycles, self.cycle_count())
+		self.var.column_order = u";".join(column_order)
 
 		if lock:
 			self.lock = False
@@ -485,7 +484,7 @@ class loop(qtstructure_item, qtitem, loop_runtime):
 			self.experiment.icon(u"random"))
 		self.loop_widget.ui.combobox_order.setItemIcon(1,
 			self.experiment.icon(u"sequential"))
-		self.loop_table = loop_table.loop_table(self, self.cycles,
+		self.loop_table = loop_table.loop_table(self, self.var.cycles,
 			self.cyclevar_count())
 		self.edit_vbox.addWidget(self.loop_table)
 		self.set_focus_widget(None)
@@ -498,7 +497,7 @@ class loop(qtstructure_item, qtitem, loop_runtime):
 		"""
 
 		self.refresh_summary()
-		if self.get(u"order") == u"random":
+		if self.var.order == u"random":
 			self.loop_widget.ui.label_skip.setDisabled(True)
 			self.loop_widget.ui.spin_skip.setDisabled(True)
 			self.loop_widget.ui.checkbox_offset.setDisabled(True)
@@ -506,11 +505,11 @@ class loop(qtstructure_item, qtitem, loop_runtime):
 			self.loop_widget.ui.label_skip.setDisabled(False)
 			self.loop_widget.ui.spin_skip.setDisabled(False)
 			self.loop_widget.ui.checkbox_offset.setDisabled(
-				type(self.skip) != int or self.skip < 1)
-		break_if = self.get(u'break_if', _eval=False)
+				type(self.var.skip) != int or self.var.skip < 1)
+		break_if = self.var.get(u'break_if', _eval=False)
 		if break_if not in [u'never', u''] or \
-			self.get(u'offset', _eval=False) == u'yes' or \
-			self.get(u'skip', _eval=False) != 0:
+			self.var.get(u'offset', _eval=False) == u'yes' or \
+			self.var.get(u'skip', _eval=False) != 0:
 			self.loop_widget.ui.checkbox_advanced.setChecked(True)
 			self.loop_widget.ui.widget_advanced.show()
 
@@ -519,13 +518,13 @@ class loop(qtstructure_item, qtitem, loop_runtime):
 		"""Set the loop controls from the variables"""
 
 		# Update the item combobox
-		self.experiment.item_combobox(self.item, self.parents(),
+		self.experiment.item_combobox(self.var.item, self.parents(),
 			self.loop_widget.ui.combobox_item)
 		super(loop, self).edit_widget()
 		self.refresh_loop_table(lock=False)
 		self.loop_widget.ui.spin_cycles.setValue(self.cycle_count())
 		# Update advanced settings
-		break_if = self.get(u'break_if', _eval=False)
+		break_if = self.var.get(u'break_if', _eval=False)
 		self.loop_widget.ui.edit_break_if.setText(break_if)
 		self.update_widget_state()
 
@@ -585,12 +584,12 @@ class loop(qtstructure_item, qtitem, loop_runtime):
 
 		# Set item to run
 		item = str(self.loop_widget.ui.combobox_item.currentText())
-		self.set(u'item', item)
+		self.var.set(u'item', item)
 		# Validate and set the break-if statement
 		break_if = self.clean_cond(self.loop_widget.ui.edit_break_if.text(),
 			default=u'never')
 		self.loop_widget.ui.edit_break_if.setText(break_if)
-		self.set(u'break_if', break_if)
+		self.var.set(u'break_if', break_if)
 		# Walk through the loop table and apply all changes
 		self.matrix = {}
 		for row in range(self.loop_table.rowCount()):
@@ -624,8 +623,8 @@ class loop(qtstructure_item, qtitem, loop_runtime):
 		if toplevel is not None:
 			toplevel.addChild(widget)
 		if (max_depth < 0 or max_depth > 1) \
-			and self.item in self.experiment.items:
-			self.experiment.items[self.item].build_item_tree(widget, items,
+			and self.var.item in self.experiment.items:
+			self.experiment.items[self.var.item].build_item_tree(widget, items,
 				max_depth=max_depth-1)
 		return items
 
@@ -633,22 +632,22 @@ class loop(qtstructure_item, qtitem, loop_runtime):
 
 		"""See qtitem."""
 
-		if self.item not in self.experiment.items:
+		if self.var.item not in self.experiment.items:
 			return []
-		return [self.item] + self.experiment.items[self.item].children()
+		return [self.var.item] + self.experiment.items[self.var.item].children()
 
 	def is_child_item(self, item):
 
 		"""See qtitem."""
 
-		return self.item == item or (self.item in self.experiment.items and \
-			self.experiment.items[self.item].is_child_item(item))
+		return self.var.item == item or (self.var.item in self.experiment.items and \
+			self.experiment.items[self.var.item].is_child_item(item))
 
 	def insert_child_item(self, item_name, index=0):
 
 		"""See qtitem."""
 
-		self.item = item_name
+		self.var.item = item_name
 		self.update()
 		self.main_window.set_unsaved(True)
 
@@ -656,7 +655,7 @@ class loop(qtstructure_item, qtitem, loop_runtime):
 
 		"""See qtitem."""
 
-		if item_name == self.item:
-			self.item = u''
+		if item_name == self.var.item:
+			self.var.item = u''
 		self.update()
 		self.main_window.set_unsaved(True)

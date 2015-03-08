@@ -18,9 +18,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame.py3compat import *
-
 from libopensesame import item, generic_response
-import openexp.keyboard
 
 class keyboard_response(item.item, generic_response.generic_response):
 
@@ -32,10 +30,10 @@ class keyboard_response(item.item, generic_response.generic_response):
 
 		"""See item."""
 
-		self.flush = u'yes'
-		self.timeout = u'infinite'
+		self.var.flush = u'yes'
+		self.var.timeout = u'infinite'
+		self.var.duration = u'keypress'
 		self.auto_response = u'space'
-		self.duration = u'keypress'
 		self.process_feedback = True
 
 	def prepare(self):
@@ -44,7 +42,7 @@ class keyboard_response(item.item, generic_response.generic_response):
 
 		item.item.prepare(self)
 		generic_response.generic_response.prepare(self)
-		self._flush = self.get(u'flush') == u'yes'
+		self._flush = self.var.flush == u'yes'
 
 	def run(self):
 

@@ -34,3 +34,9 @@ class feedback(feedpad, qtplugin, feedback_runtime):
 
 		feedback_runtime.__init__(self, name, experiment, string)
 		qtplugin.__init__(self)
+
+	def init_edit_widget(self):
+
+		feedpad.init_edit_widget(self)
+		self.auto_add_widget(self.sketchpad_widget.ui.checkbox_reset_variables,
+			u'reset_variables')

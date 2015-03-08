@@ -150,8 +150,8 @@ class canvas(object):
 			from random import randint
 			my_canvas = canvas(exp, auto_prepare=False)
 			for i in range(1000):
-				x = randint(0, self.get('width'))
-				y = randint(0, self.get('height'))
+				x = randint(0, self.var.get('width'))
+				y = randint(0, self.var.get('height'))
 				my_canvas.fixdot(x, y)
 			my_canvas.prepare()
 			my_canvas.show()
@@ -232,7 +232,7 @@ class canvas(object):
 			my_canvas.line(x1, y1, x2, y2)
 		"""
 
-		return self.experiment.get(u'width') / 2
+		return self.experiment.var.get(u'width') / 2
 
 	def ycenter(self):
 
@@ -255,7 +255,7 @@ class canvas(object):
 			my_canvas.line(x1, y1, x2, y2)
 		"""
 
-		return self.experiment.get(u'height') / 2
+		return self.experiment.var.get(u'height') / 2
 
 	def prepare(self):
 
@@ -591,8 +591,8 @@ class canvas(object):
 		Example: |
 			from openexp.canvas import canvas
 			my_canvas = canvas(exp)
-			w = self.get('width')
-			h = self.get('height')
+			w = self.var.get('width')
+			h = self.var.get('height')
 			my_canvas.line(0, 0, w, h)
 		"""
 
@@ -634,8 +634,8 @@ class canvas(object):
 		Example: |
 			from openexp.canvas import canvas
 			my_canvas = canvas(exp)
-			w = self.get('width')/2
-			h = self.get('height')/2
+			w = self.var.get('width')/2
+			h = self.var.get('height')/2
 			my_canvas.arrow(0, 0, w, h, arrow_size=10)
 		"""
 
@@ -682,8 +682,8 @@ class canvas(object):
 		example: |
 			from openexp.canvas import canvas
 			my_canvas = canvas(exp)
-			w = self.get('width')-10
-			h = self.get('height')-10
+			w = self.var.get('width')-10
+			h = self.var.get('height')-10
 			my_canvas.rect(10, 10, w, h, fill=True)
 		"""
 
@@ -723,8 +723,8 @@ class canvas(object):
 		example: |
 			from openexp.canvas import canvas
 			my_canvas = canvas(exp)
-			w = self.get('width')-10
-			h = self.get('height')-10
+			w = self.var.get('width')-10
+			h = self.var.get('height')-10
 			my_canvas.ellipse(10, 10, w, h, fill=True)
 		"""
 

@@ -44,14 +44,14 @@ class tree_general_item(tree_base_item):
 
 		super(tree_general_item, self).__init__()
 		self.setup(main_window)
-		self.setText(0, self.experiment.title)
+		self.setText(0, self.experiment.var.title)
 		self.setIcon(0, self.theme.qicon(u'os-experiment'))
 		self.setToolTip(0, _(u'General options'))
 		self._droppable = False
 		self._draggable = False
 		self.name = u'__general__'
-		if self.experiment.start in self.experiment.items:
-			self.experiment.items[self.experiment.start].build_item_tree(self)
+		if self.experiment.var.start in self.experiment.items:
+			self.experiment.items[self.experiment.var.start].build_item_tree(self)
 			self.child(0).set_draggable(False)
 		self.expand()
 

@@ -44,11 +44,11 @@ class textline(base_element):
 			(u'y'			, None),
 			(u'text'		, None),
 			(u'center'		, 1),
-			(u'color'		, sketchpad.get(u'foreground')),
-			(u'font_family'	, sketchpad.get(u'font_family')),
-			(u'font_size'	, sketchpad.get(u'font_size')),
-			(u'font_bold'	, sketchpad.get(u'font_bold')),
-			(u'font_italic'	, sketchpad.get(u'font_italic')),
+			(u'color'		, sketchpad.var.get(u'foreground')),
+			(u'font_family'	, sketchpad.var.get(u'font_family')),
+			(u'font_size'	, sketchpad.var.get(u'font_size')),
+			(u'font_bold'	, sketchpad.var.get(u'font_bold')),
+			(u'font_italic'	, sketchpad.var.get(u'font_italic')),
 			(u'html'		, u'yes'),
 			]
 		super(textline, self).__init__(sketchpad, string, defaults=defaults)

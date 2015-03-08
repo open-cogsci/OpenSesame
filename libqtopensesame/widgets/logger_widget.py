@@ -18,8 +18,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame.py3compat import *
-
-from PyQt4 import QtCore, QtGui
+from PyQt4 import QtGui
 from libqtopensesame.misc import _
 from libqtopensesame.widgets.base_widget import base_widget
 
@@ -165,7 +164,7 @@ class logger_widget(base_widget):
 				self.table_var.setCellWidget(row, 1, QtGui.QLabel(var))
 				self.table_var.setCellWidget(row, 2, QtGui.QLabel("custom"))
 				row += 1
-		if self.logger.get(u'auto_log', _eval=False) == u'yes':
+		if self.logger.var.get(u'auto_log', _eval=False) == u'yes':
 			auto = True
 		else:
 			auto = False

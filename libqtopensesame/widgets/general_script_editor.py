@@ -65,7 +65,7 @@ class general_script_editor(base_widget):
 		if resp == QtGui.QMessageBox.No:
 			return
 		try:
-			exp = experiment(self.main_window, name=self.experiment.title,
+			exp = experiment(self.main_window, name=self.experiment.var.title,
 				string=self.ui.qprogedit.text(),
 				pool_folder=self.experiment.pool_folder,
 				experiment_path=self.experiment.experiment_path,

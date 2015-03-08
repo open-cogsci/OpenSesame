@@ -17,17 +17,13 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
-import openexp.mouse
+from libopensesame.py3compat import *
 from libopensesame.var_store import var_store
 import warnings
-import openexp.keyboard
 from libopensesame.exceptions import osexception
 from libopensesame import debug, regexp
-from libopensesame.py3compat import *
 import codecs
-import string
 import os
-import sys
 try:
 	import pygame
 except:
@@ -79,8 +75,6 @@ class item(object):
 			self.item_type = self.item_type[len(prefix):]
 		if not hasattr(self, u'description'):
 			self.description = u'Default description'
-		if not hasattr(self, u'round_decimals'):
-			self.round_decimals = 2
 		self.comments = []
 		if string is not None:
 			self.from_string(string)
@@ -100,7 +94,7 @@ class item(object):
 
 		self.time = self.experiment._time_func
 		self.sleep = self.experiment._sleep_func
-		self.experiment.set(u'count_%s' % self.name, self.count)
+		self.experiment.var.set(u'count_%s' % self.name, self.count)
 		self.count += 1
 
 	def run(self):
@@ -241,45 +235,46 @@ class item(object):
 		"""
 
 		# Handle response variables.
-		self.experiment.set(u'total_responses', self.experiment.get( \
+		self.experiment.var.set(u'total_responses', self.experiment.var.get( \
 			u'total_responses') + 1)
-		self.experiment.set(u'response', response)
-		self.experiment.set(u'response_time', response_time)
+		self.experiment.var.set(u'response', response)
+		self.experiment.var.set(u'response_time', response_time)
 		if response_time is not None:
 			if type(response_time) not in (int, float):
 				raise osexception(u'response should be a numeric value or None')
-			self.experiment.set(u'total_response_time', self.experiment.get( \
-			u'total_response_time') + self.get(u'response_time'))
+			self.experiment.var.set(u'total_response_time', self.experiment.var.get( \
+			u'total_response_time') + self.var.get(u'response_time'))
 		if correct is not None:
 			if correct not in (0, 1, True, False, None):
 				raise osexception( \
 					u'correct should be 0, 1, True, False, or None')
 			if correct:
-				self.experiment.set(u'total_correct', self.experiment.get( \
+				self.experiment.var.set(u'total_correct', self.experiment.var.get( \
 					u'total_correct') + 1)
-				self.experiment.set(u'correct', 1)
+				self.experiment.var.set(u'correct', 1)
 			else:
-				self.experiment.set(u'correct', 0)
+				self.experiment.var.set(u'correct', 0)
 		# Set feedback variables
-		self.experiment.set(u'acc', 100.0 * self.experiment.get( \
-			u'total_correct') / self.experiment.get(u'total_responses'))
-		self.experiment.set(u'avg_rt', self.experiment.get( \
-			u'total_response_time') / self.experiment.get(u'total_responses'))
-		self.experiment.set(u'accuracy', self.experiment.get(u'acc'))
-		self.experiment.set(u'average_response_time', self.experiment.get( \
+		self.experiment.var.set(u'acc', 100.0 * self.experiment.var.get( \
+			u'total_correct') / self.experiment.var.get(u'total_responses'))
+		self.experiment.var.set(u'avg_rt', self.experiment.var.get( \
+			u'total_response_time') / self.experiment.var.get(u'total_responses'))
+		self.experiment.var.set(u'accuracy', self.experiment.var.get(u'acc'))
+		self.experiment.var.set(u'average_response_time', self.experiment.var.get( \
 			u'avg_rt'))
 		# Copy the response variables to variables with a name suffix.
-		self.experiment.set(u'correct_%s' % self.get(u'name'), \
-			self.experiment.get(u'correct'))
-		self.experiment.set(u'response_%s' % self.get(u'name'), \
-			self.experiment.get(u'response'))
-		self.experiment.set(u'response_time_%s' % self.get(u'name'), \
-			self.experiment.get(u'response_time'))
+		self.experiment.var.set(u'correct_%s' % self.name,
+			self.experiment.var.get(u'correct'))
+		self.experiment.var.set(u'response_%s' % self.name,
+			self.experiment.var.get(u'response'))
+		self.experiment.var.set(u'response_time_%s' % self.name,
+			self.experiment.var.get(u'response_time'))
 
 	def __getattr__(self, var):
 
 		if var in self.var:
-			warnings.warn(u'called %s as item property' % var)
+			warnings.warn(u'called %s as item property' % var,
+				DeprecationWarning)
 			return self.var.get(var)
 		raise osexception(u'%s not found' % var)
 
@@ -295,7 +290,7 @@ class item(object):
 		A definition string.
 		"""
 
-		val = self.unistr(self.var.get(var))
+		val = self.unistr(self.var.get(var, _eval=False))
 		# Multiline variables are stored as a block
 		if u'\n' in val or u'"' in val:
 			s = u'__%s__\n' % var
@@ -306,8 +301,13 @@ class item(object):
 			s += u'\n\t__end__\n'
 			return s
 		# Regular variables
-		else:
+		try:
+			val = float(val)
+		except:
 			return u'set %s "%s"\n' % (var, val)
+		if val == int(val):
+			return u'set %s %d\n' % (var, val)
+		return u'set %s %s\n' % (var, val)
 
 	def from_string(self, string):
 
@@ -398,8 +398,8 @@ class item(object):
 			type:	tuple
 		"""
 
-		w = self.get(u'width')
-		h = self.get(u'height')
+		w = self.var.get(u'width')
+		h = self.var.get(u'height')
 		if type(w) != int or type(h) != int:
 			raise osexception( \
 				u'(%s, %s) is not a valid resolution' % (w, h))
@@ -407,27 +407,32 @@ class item(object):
 
 	def set(self, var, val):
 
-		warnings.warn(u'item.set() is deprecated (for var %s)' % var)
+		warnings.warn(u'item.set() is deprecated (for var %s)' % var,
+			DeprecationWarning)
 		setattr(self.var, var, val)
 
 	def unset(self, var):
 
-		warnings.warn(u'item.unset() is deprecated (for var %s)' % var)
-		del self.var[var]
+		warnings.warn(u'item.unset() is deprecated (for var %s)' % var,
+			DeprecationWarning)
+		self.var.unset(var)
 
 	def get(self, var, _eval=True):
 
-		warnings.warn(u'item.unset() is deprecated (for var %s)' % var)
+		warnings.warn(u'item.get() is deprecated (for var %s)' % var,
+			DeprecationWarning)
 		return self.var.get(var, _eval=_eval)
 
 	def get_check(self, var, default=None, valid=None, _eval=True):
 
-		warnings.warn(u'item.get_check() is deprecated (for var %s)' % var)
+		warnings.warn(u'item.var.get() is deprecated (for var %s)' % var,
+			DeprecationWarning)
 		return self.var.get(var, default=default, _eval=_eval, valid=valid)
 
 	def has(self, var):
 
-		warnings.warn(u'item.has() is deprecated (for var %s)' % var)
+		warnings.warn(u'item.has() is deprecated (for var %s)' % var,
+			DeprecationWarning)
 		return var in self.var
 
 	def get_refs(self, text):
@@ -584,7 +589,7 @@ class item(object):
 
 		# Prepare a template for rounding floats
 		if round_float:
-			float_template = u'%%.%sf' % self.get("round_decimals")
+			float_template = u'%%.%sf' % self.var.round_decimals
 		# Find and replace all variables in the text
 		while True:
 			m = regexp.find_variable.search(text)
@@ -592,7 +597,7 @@ class item(object):
 				break
 			var = m.group(0)[1:-1]
 			if not soft_ignore or self.has(var):
-				val = self.get(var)
+				val = self.var.get(var)
 				# Quote strings if necessary
 				if isinstance(val, basestring) and quote_str:
 					val = u"'" + val + u"'"
@@ -624,7 +629,7 @@ class item(object):
 		src = cond
 
 		# If the conditional statement is preceded by a '=', it is interpreted as
-		# Python code, like 'self.get("correct") == 1'. In this case we only have
+		# Python code, like 'self.var.get("correct") == 1'. In this case we only have
 		# to strip the preceding space
 		if len(src) > 0 and src[0] == u'=':
 			code = src[1:]
@@ -662,7 +667,7 @@ class item(object):
 			i = 0
 			for word in self.split(cond):
 				if len(word) > 2 and word[0] == u"[" and word[-1] == u"]":
-					l.append(u"self.get(u'%s')" % word[1:-1])
+					l.append(u"self.var.get(u'%s')" % word[1:-1])
 				elif word == u"=":
 					l.append(u"==")
 				elif word.lower() == u"always":

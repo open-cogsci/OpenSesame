@@ -46,7 +46,7 @@ class inline_script(item.item):
 		__Example:__
 
 		~~~ {.python}
-		subject_nr = self.get("subject_nr")
+		subject_nr = self.var.get("subject_nr")
 		~~~
 
 		__Example:__
@@ -70,8 +70,8 @@ class inline_script(item.item):
 
 		"""See item."""
 
-		self._prepare = u''
-		self._run = u''
+		self.var._prepare = u''
+		self.var._run = u''
 		self._var_info = None
 
 	def copy_sketchpad(self, sketchpad_name):
@@ -116,8 +116,8 @@ class inline_script(item.item):
 			my_canvas = self.offline_canvas()
 		"""
 
-		return canvas.canvas(self.experiment, self.get(u'background'), \
-			self.get(u'foreground'), auto_prepare=auto_prepare)
+		return canvas.canvas(self.experiment, self.var.background,
+			self.var.foreground, auto_prepare=auto_prepare)
 
 	def prepare(self):
 
@@ -129,7 +129,7 @@ class inline_script(item.item):
 		"""
 
 		item.item.prepare(self)
-		if self.experiment.transparent_variables == u'yes':			
+		if self.experiment.transparent_variables == u'yes':
 			self.start_transparency()
 		# 'self' must always be registered, otherwise we get confusions between
 		# the various inline_script items.
@@ -137,13 +137,14 @@ class inline_script(item.item):
 		# Compile prepare script
 		try:
 			self.cprepare = self.experiment.python_workspace._compile(
-				self._prepare)
+				self.var._prepare)
 		except Exception as e:
 			raise osexception(u'Failed to compile inline script',
 				line_offset=-1, item=self.name, phase=u'prepare', exception=e)
 		# Compile run script
 		try:
-			self.crun = self.experiment.python_workspace._compile(self._run)
+			self.crun = self.experiment.python_workspace._compile(
+				self.var._run)
 		except Exception as e:
 			raise osexception(u'Failed to compile inline script',
 				line_offset=-1, item=self.name, phase=u'run', exception=e)
@@ -197,16 +198,16 @@ class inline_script(item.item):
 
 		m = re.findall( \
 			u"self.experiment.set\(\"(\w+)\"(\s*),(\s*)(\"*)([^\"\)]*)(\"*)", \
-			self._prepare + self._run) \
+			self.var._prepare + self.var._run) \
 			+ re.findall( \
 			u"self.experiment.set\('(\w+)'(\s*),(\s*)('*)([^'\)]*)('*)", \
-			self._prepare + self._run) \
+			self.var._prepare + self.var._run) \
 			+ re.findall( \
 			u"exp.set\(\"(\w+)\"(\s*),(\s*)(\"*)([^\"\)]*)(\"*)", \
-			self._prepare + self._run) \
+			self.var._prepare + self.var._run) \
 			+ re.findall( \
 			u"exp.set\('(\w+)'(\s*),(\s*)('*)([^'\)]*)('*)", \
-			self._prepare + self._run)
+			self.var._prepare + self.var._run)
 
 		for var, s1, s2, q1, val, q2 in m:
 			if q1 != u'"':
@@ -239,7 +240,7 @@ class inline_script(item.item):
 		for var, val in self.experiment.python_workspace.items():
 			if isinstance(val, basestring) or isinstance(val, float) or \
 				isinstance(val, int):
-				self.experiment.set(var, val)
+				self.experiment.var.set(var, val)
 
 def restore_state():
 

@@ -502,7 +502,7 @@ class tree_overview(base_subcomponent, QtGui.QTreeWidget):
 		# If the item has no parent or if it is the experiment starting point,
 		# we insert into it directly.
 		if target_treeitem.parent() is None or \
-			target_item.name == self.experiment.start:
+			target_item.name == self.experiment.var.start:
 			target_item.insert_child_item(item.name)
 			inserted = True
 		else:

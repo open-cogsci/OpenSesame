@@ -18,14 +18,11 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame.py3compat import *
-
 from libopensesame.sampler import sampler as sampler_runtime
-from libqtopensesame.misc import _
 from libqtopensesame.items.qtplugin import qtplugin
 from libqtopensesame.widgets.sampler_widget import sampler_widget
 from libqtopensesame.widgets import pool_widget
 from libqtopensesame.validators import duration_validator
-from PyQt4 import QtCore, QtGui
 
 class sampler(sampler_runtime, qtplugin):
 
@@ -103,11 +100,11 @@ class sampler(sampler_runtime, qtplugin):
 		"""
 
 		self.sampler_widget.ui.dial_pan.setDisabled(
-			type(self.get(u'pan', _eval=False)) not in (int, float))
+			type(self.var.get(u'pan', _eval=False)) not in (int, float))
 		self.sampler_widget.ui.dial_pitch.setDisabled(
-			type(self.get(u'pitch', _eval=False)) not in (int, float))
+			type(self.var.get(u'pitch', _eval=False)) not in (int, float))
 		self.sampler_widget.ui.dial_volume.setDisabled(
-			type(self.get(u'volume', _eval=False)) not in (int, float))
+			type(self.var.get(u'volume', _eval=False)) not in (int, float))
 		self.sampler_widget.ui.dial_pan.setValue(
 			self.sampler_widget.ui.spin_pan.value())
 		self.sampler_widget.ui.dial_pitch.setValue(
@@ -123,10 +120,10 @@ class sampler(sampler_runtime, qtplugin):
 		"""
 
 		if self.sampler_widget.ui.dial_pan.isEnabled():
-			self.set(u"pan", self.sampler_widget.ui.dial_pan.value())
+			self.var.set(u"pan", self.sampler_widget.ui.dial_pan.value())
 		if self.sampler_widget.ui.dial_pitch.isEnabled():
-			self.set(u"pitch", .01*self.sampler_widget.ui.dial_pitch.value())
+			self.var.set(u"pitch", .01*self.sampler_widget.ui.dial_pitch.value())
 		if self.sampler_widget.ui.dial_volume.isEnabled():
-			self.set(u"volume", .01*self.sampler_widget.ui.dial_volume.value())
+			self.var.set(u"volume", .01*self.sampler_widget.ui.dial_volume.value())
 		self.edit_widget()
 		self.update_script()

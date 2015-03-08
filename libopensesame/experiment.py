@@ -139,46 +139,45 @@ class experiment(item.item):
 		self.start_response_interval = None
 		self.cleanup_functions = []
 		self.restart = False
-		self.title = u'My Experiment'
-		self.transparent_variables = u'no'
-		self.bidi = u'no'
 		self.resources = resources
 
 		# Set default variables
-		self.start = u'experiment'
+		self.var.start = u'experiment'
+		self.var.title = u'My Experiment'
+		self.var.transparent_variables = u'no'
+		self.var.bidi = u'no'
+		self.var.round_decimals = 2
 
 		# Sound parameters
-		self.sound_freq = 48000
-		self.sound_sample_size = -16 # Negative values mean signed
-		self.sound_channels = 2
-		self.sound_buf_size = 1024
+		self.var.sound_freq = 48000
+		self.var.sound_sample_size = -16 # Negative values mean signed
+		self.var.sound_channels = 2
+		self.var.sound_buf_size = 1024
 
 		# Backend parameters
-		self.canvas_backend = u'xpyriment'
-		self.keyboard_backend = u'legacy'
-		self.mouse_backend = u'xpyriment'
-		self.sampler_backend = u'legacy'
-		self.synth_backend = u'legacy'
-
-		# Save the date and time, and the version of OpenSesame
-		self.datetime = safe_decode(time.strftime(u'%c'), enc=self.encoding,
-			errors=u'ignore')
-		self.opensesame_version = misc.version
-		self.opensesame_codename = misc.codename
+		self.var.canvas_backend = u'xpyriment'
+		self.var.keyboard_backend = u'legacy'
+		self.var.mouse_backend = u'xpyriment'
+		self.var.sampler_backend = u'legacy'
+		self.var.synth_backend = u'legacy'
 
 		# Display parameters
-		self.width = 1024
-		self.height = 768
-		self.background = u'black'
-		self.foreground = u'white'
-		self.fullscreen = fullscreen
+		self.var.width = 1024
+		self.var.height = 768
+		self.var.background = u'black'
+		self.var.foreground = u'white'
+		if fullscreen is not None:
+			if fullscreen:
+				self.var.fullscreen = u'yes'
+			else:
+				self.var.fullscreen = u'no'
 
 		# Font parameters
-		self.font_size = 18
-		self.font_family = u'mono'
-		self.font_italic = u'no'
-		self.font_bold = u'no'
-		self.font_underline = u'no'
+		self.var.font_size = 18
+		self.var.font_family = u'mono'
+		self.var.font_italic = u'no'
+		self.var.font_bold = u'no'
+		self.var.font_underline = u'no'
 
 		# Logfile parameters
 		self._log = None
@@ -257,11 +256,11 @@ class experiment(item.item):
 		"""
 
 		# Set the subject nr and parity
-		self.set(u'subject_nr', nr)
+		self.var.subject_nr = nr
 		if nr % 2 == 0:
-			self.set(u'subject_parity', u'even')
+			self.var.subject_parity = u'even'
 		else:
-			self.set(u'subject_parity', u'odd')
+			self.var.subject_parity = u'odd'
 
 	def read_definition(self, s):
 
@@ -333,6 +332,12 @@ class experiment(item.item):
 
 		"""Runs the experiment."""
 
+		# Save the date and time, and the version of OpenSesame
+		self.var.datetime = safe_decode(time.strftime(u'%c'), enc=self.encoding,
+			errors=u'ignore')
+		self.var.opensesame_version = misc.version
+		self.var.opensesame_codename = misc.codename
+
 		self.save_state()
 		self.running = True
 		self.init_display()
@@ -342,7 +347,7 @@ class experiment(item.item):
 
 		print(u"experiment.run(): experiment started at %s" % time.ctime())
 
-		if self.start in self.items:
+		if self.var.start in self.items:
 			self.items[self.start].prepare()
 			self.items[self.start].run()
 		else:
@@ -660,13 +665,13 @@ class experiment(item.item):
 
 		"""Resets the feedback variables (acc, avg_rt, etc.)."""
 
-		self.total_responses = 0
-		self.total_correct = 0
-		self.total_response_time = 0
-		self.avg_rt = u"undefined"
-		self.average_response_time = u"undefined"
-		self.accuracy = u"undefined"
-		self.acc = u"undefined"
+		self.var.total_responses = 0
+		self.var.total_correct = 0
+		self.var.total_response_time = 0
+		self.var.avg_rt = u"undefined"
+		self.var.average_response_time = u"undefined"
+		self.var.accuracy = u"undefined"
+		self.var.acc = u"undefined"
 
 	def var_info(self):
 

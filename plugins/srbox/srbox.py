@@ -73,7 +73,7 @@ class srbox(item.item, generic_response.generic_response):
 		# Prepare the allowed responses
 		if self.has("allowed_responses"):
 			self._allowed_responses = []
-			for r in self.unistr(self.get("allowed_responses")).split(";"):
+			for r in self.unistr(self.var.get("allowed_responses")).split(";"):
 				if r.strip() != "":
 					try:
 						r = int(r)
@@ -94,13 +94,13 @@ class srbox(item.item, generic_response.generic_response):
 		debug.msg("allowed responses set to %s" % self._allowed_responses)
 
 		self._keyboard = openexp.keyboard.keyboard(self.experiment)
-		if self.get('_dummy') == 'yes':
+		if self.var.get('_dummy') == 'yes':
 			self._resp_func = self._keyboard.get_key
 
 		else:
 
 			# Prepare the device string
-			dev = self.get("dev")
+			dev = self.var.get("dev")
 			if dev == "autodetect":
 				dev = None
 
@@ -114,12 +114,12 @@ class srbox(item.item, generic_response.generic_response):
 			# Prepare the light byte
 			s = "010" # Control string
 			for i in range(5):
-				if str(5 - i) in str(self.get("lights")):
+				if str(5 - i) in str(self.var.get("lights")):
 					s += "1"
 				else:
 					s += "0"
 			self._lights = chr(int(s, 2))
-			debug.msg("lights string set to %s (%s)" % (s, self.get("lights")))
+			debug.msg("lights string set to %s (%s)" % (s, self.var.get("lights")))
 
 			# Prepare auto response
 			if self.experiment.auto_response:
@@ -150,10 +150,10 @@ class srbox(item.item, generic_response.generic_response):
 		# If no start response interval has been set, set it to the onset of
 		# the current response item
 		if self.experiment.start_response_interval is None:
-			self.experiment.start_response_interval = self.get("time_%s" \
+			self.experiment.start_response_interval = self.var.get("time_%s" \
 				% self.name)
 
-		if self.get('_dummy') == 'yes':
+		if self.var.get('_dummy') == 'yes':
 
 			# In dummy mode, we simply take the numeric keys from the keyboard
 			resp, self.experiment.end_response_interval = self._resp_func( \

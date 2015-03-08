@@ -76,7 +76,7 @@ class experiment(libopensesame.experiment.experiment):
 		items = qtitem_store(self)
 		libopensesame.experiment.experiment.__init__(self, name, string,
 			pool_folder, items=items, experiment_path=experiment_path,
-			resources=resources)
+			resources=resources, fullscreen=None)
 
 	def help(self, name):
 
@@ -170,8 +170,8 @@ class experiment(libopensesame.experiment.experiment):
 		to_name		--	The new name.
 		"""
 
-		if self.get("start") == from_name:
-			self.set("start", to_name)
+		if self.var.start == from_name:
+			self.var.start = to_name
 
 	def check_name(self, name):
 
@@ -208,7 +208,7 @@ class experiment(libopensesame.experiment.experiment):
 							applicable. (default=None)
 		"""
 
-		if self.start == item_name:
+		if self.var.start == item_name:
 			self.notify( \
 				u'You cannot delete the entry point of the experiment!')
 			return

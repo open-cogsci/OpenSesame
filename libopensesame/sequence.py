@@ -34,7 +34,7 @@ class sequence(item.item):
 		"""See item."""
 
 		self.items = []
-		self.flush_keyboard = u'yes'
+		self.var.flush_keyboard = u'yes'
 
 	def run(self):
 
@@ -88,7 +88,7 @@ class sequence(item.item):
 		"""Prepares the sequence."""
 
 		item.item.prepare(self)
-		if self.get(u'flush_keyboard') == u'yes':
+		if self.var.flush_keyboard == u'yes':
 			# Create a keyboard to flush responses at the start of the run phase
 			self._keyboard = openexp.keyboard.keyboard(self.experiment)
 		else:
@@ -115,4 +115,3 @@ class sequence(item.item):
 		for _item, cond in self.items:
 			s += u'\trun %s "%s"\n' % (_item, cond)
 		return s
-

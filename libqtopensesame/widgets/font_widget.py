@@ -59,7 +59,7 @@ class font_widget_base(base_widget):
 			if ok:
 				self.family = str(font.family())
 			else:
-				self.family = self.experiment.get(u'font_family')
+				self.family = self.experiment.var.get(u'font_family')
 			self.update_family_combobox()
 		self._apply()
 
@@ -117,19 +117,19 @@ class font_widget_base(base_widget):
 		if experiment is None:
 			experiment = self.experiment
 		if family is None:
-			self.family = experiment.get(u'font_family')
+			self.family = experiment.var.get(u'font_family')
 		else:
 			self.family = family
 		if italic is None:
-			self.italic = experiment.get(u'font_italic') == u'yes'
+			self.italic = experiment.var.get(u'font_italic') == u'yes'
 		else:
 			self.italic = italic
 		if bold is None:
-			self.bold = experiment.get(u'font_bold') == u'yes'
+			self.bold = experiment.var.get(u'font_bold') == u'yes'
 		else:
 			self.bold = bold
 		if size is None:
-			self.size = experiment.get(u'font_size')
+			self.size = experiment.var.get(u'font_size')
 		else:
 			self.size = size
 		if self.ui.combobox_family.findText(self.family) < 0:

@@ -33,15 +33,14 @@ class synth(sampler.sampler, item.item):
 
 		"""See item."""
 
-		self.item_type = u'synth'
-		self.freq = 440
-		self.length = 100
-		self.osc = u'sine'
-		self.pan = 0
-		self.attack = 0
-		self.decay = 5
-		self.volume = 1.0
-		self.duration = u'sound'
+		self.var.freq = 440
+		self.var.length = 100
+		self.var.osc = u'sine'
+		self.var.pan = 0
+		self.var.attack = 0
+		self.var.decay = 5
+		self.var.volume = 1.0
+		self.var.duration = u'sound'
 		self.block = False
 
 	def prepare(self):
@@ -50,17 +49,16 @@ class synth(sampler.sampler, item.item):
 
 		item.item.prepare(self)
 		try:
-			self.sampler = openexp.synth.synth(self.experiment, \
-				self.get(u'osc'), self.get(u'freq'), self.get(u'length'), \
-				self.get(u'attack'), self.get(u'decay'))
+			self.sampler = openexp.synth.synth(self.experiment, self.var.osc,
+				self.var.freq, self.var.length, self.var.attack, self.var.decay)
 		except Exception as e:
-			raise osexception( \
+			raise osexception(
 				u"Failed to generate sound in synth '%s': %s" % (self.name, e))
-		pan = self.get(u'pan')
+		pan = self.var.pan
 		if pan == -20:
 			pan = u'left'
 		elif pan == 20:
 			pan = u'right'
 		self.sampler.pan(pan)
-		self.sampler.volume(self.get(u'volume'))
+		self.sampler.volume(self.var.volume)
 		generic_response.generic_response.prepare(self)

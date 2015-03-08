@@ -56,16 +56,16 @@ class touch_response(mouse_response):
 		button, pos, self.experiment.end_response_interval = retval
 		if pos is not None:
 			x, y = pos
-			col = x // (self.experiment.width / self._ncol)
-			row = y // (self.experiment.height / self._nrow)
+			col = x // (self.experiment.var.width / self._ncol)
+			row = y // (self.experiment.var.height / self._nrow)
 			cell = row * self._ncol + col + 1
-			self.experiment.set(u'cursor_x', x)
-			self.experiment.set(u'cursor_y', y)
-			self.experiment.set(u'response', cell)
+			self.experiment.var.set(u'cursor_x', x)
+			self.experiment.var.set(u'cursor_y', y)
+			self.experiment.var.set(u'response', cell)
 		else:
-			self.experiment.set(u'cursor_x', u'NA')
-			self.experiment.set(u'cursor_y', u'NA')
-			self.experiment.set(u'response', None)
+			self.experiment.var.set(u'cursor_x', u'NA')
+			self.experiment.var.set(u'cursor_y', u'NA')
+			self.experiment.var.set(u'response', None)
 
 class qttouch_response(touch_response, qtautoplugin):
 

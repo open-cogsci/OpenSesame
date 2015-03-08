@@ -195,7 +195,7 @@ define inline_script search_display
 	# target, distractor and non-targets
 	#
 	
-	if self.get("condition") == "color":
+	if self.var.get("condition") == "color":
 	
 		# In the color condition, participants search
 		# for a green circle. The nontargets are red
@@ -244,12 +244,12 @@ define inline_script search_display
 	
 	# If the distractor is present, get a random orientation
 	# and add it to the list of stimuli
-	if self.get("distractor") == "present":
+	if self.var.get("distractor") == "present":
 		distractor_orient = random.choice( (22.5, 45, 67.5, 112.5, 135, 157.5) )
 		stimuli.append( (distractor_color, distractor_shape, distractor_orient) )
 	
 	# Add the remaining nontarget stimuli to the list
-	for i in range(self.get("display_size") - len(stimuli)):
+	for i in range(self.var.get("display_size") - len(stimuli)):
 		nontarget_orient = random.choice( (22.5, 45, 67.5, 112.5, 135, 157.5) )
 		stimuli.append( (nontarget_color, nontarget_shape, nontarget_orient) )
 	
@@ -266,9 +266,9 @@ define inline_script search_display
 	#
 	
 	if target_orient == 0:
-		self.experiment.set("correct_response", "z")
+		self.experiment.var.set("correct_response", "z")
 	else:
-		self.experiment.set("correct_response", "slash")
+		self.experiment.var.set("correct_response", "slash")
 	
 	#
 	# STEP 4
@@ -292,7 +292,7 @@ define inline_script search_display
 	
 	# The angular separation of the stimuli depends on the
 	# display size.
-	angular_separation = 360.0 / self.get("display_size")
+	angular_separation = 360.0 / self.var.get("display_size")
 	
 	# The first stimulis is drawn at angle 0
 	angle = 0
@@ -301,8 +301,8 @@ define inline_script search_display
 	for color, shape, orient in stimuli:
 	
 		# Determine the coordinates of the stimulus
-		x = self.get("width") / 2 + radius * math.cos(math.radians(angle))
-		y = self.get("height") / 2 + radius * math.sin(math.radians(angle))
+		x = self.var.get("width") / 2 + radius * math.cos(math.radians(angle))
+		y = self.var.get("height") / 2 + radius * math.sin(math.radians(angle))
 	
 		# Set the color of the stimulus
 		self.c.set_fgcolor(color)

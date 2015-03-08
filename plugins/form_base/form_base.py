@@ -136,7 +136,7 @@ class form_base(item.item):
 		"""Runs the item."""
 
 		self.set_item_onset()
-		if self.get(u'only_render') == u'yes':
+		if self.var.get(u'only_render') == u'yes':
 			self._form.render()
 		else:
 			self._form._exec(focus_widget=self.focus_widget)

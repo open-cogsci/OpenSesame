@@ -39,7 +39,7 @@ def keyboard(experiment, *arglist, **kwdict):
 		kwdict:		See keyboard.__init__().
 	"""
 
-	backend = experiment.get(u'keyboard_backend')
+	backend = experiment.var.get(u'keyboard_backend')
 	debug.msg(u'morphing into %s' % backend)
 	mod = __import__('openexp._keyboard.%s' % backend, fromlist=['dummy'])
 	cls = getattr(mod, backend)

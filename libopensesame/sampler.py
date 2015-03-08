@@ -18,7 +18,6 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame.py3compat import *
-
 from libopensesame.exceptions import osexception
 from libopensesame import item, generic_response, debug
 import openexp.sampler
@@ -33,13 +32,13 @@ class sampler(item.item, generic_response.generic_response):
 
 		"""See item."""
 
-		self.sample = u''
-		self.pan = 0
-		self.pitch = 1
-		self.fade_in = 0
-		self.volume = 1.0
-		self.stop_after = 0
-		self.duration = u'sound'
+		self.var.sample = u''
+		self.var.pan = 0
+		self.var.pitch = 1
+		self.var.fade_in = 0
+		self.var.stop_after = 0
+		self.var.volume = 1.0
+		self.var.duration = u'sound'
 		self.block = False
 
 	def prepare_duration_sound(self):
@@ -54,31 +53,31 @@ class sampler(item.item, generic_response.generic_response):
 		"""Prepares for playback."""
 
 		item.item.prepare(self)
-		if self.sample.strip() == u'':
-			raise osexception( \
+		if self.unistr(self.var.sample).strip() == u'':
+			raise osexception(
 				u'No sample has been specified in sampler "%s"' % self.name)
-		sample = self.experiment.get_file(self.eval_text(self.sample))
+		sample = self.experiment.get_file(self.var.sample)
 		if debug.enabled:
 			self.sampler = openexp.sampler.sampler(self.experiment, sample)
 		else:
 			try:
 				self.sampler = openexp.sampler.sampler(self.experiment, sample)
 			except Exception as e:
-				raise osexception( \
+				raise osexception(
 					u'Failed to load sample in sampler "%s": %s' % (self.name, \
 					e))
 
-		pan = self.get(u'pan')
+		pan = self.var.get(u'pan')
 		if pan == -20:
 			pan = u'left'
 		elif pan == 20:
 			pan = u'right'
 
 		self.sampler.pan(pan)
-		self.sampler.volume(self.get(u'volume'))
-		self.sampler.pitch(self.get(u'pitch'))
-		self.sampler.fade_in(self.get(u'fade_in'))
-		self.sampler.stop_after(self.get(u'stop_after'))
+		self.sampler.volume(self.var.get(u'volume'))
+		self.sampler.pitch(self.var.get(u'pitch'))
+		self.sampler.fade_in(self.var.get(u'fade_in'))
+		self.sampler.stop_after(self.var.get(u'stop_after'))
 		generic_response.generic_response.prepare(self)
 
 	def run(self):
