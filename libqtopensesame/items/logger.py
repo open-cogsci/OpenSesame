@@ -21,6 +21,7 @@ from PyQt4 import QtCore, QtGui
 from libopensesame import debug
 from libopensesame.logger import logger as logger_runtime
 from libqtopensesame.items.qtplugin import qtplugin
+from libqtopensesame.misc import _
 from libqtopensesame.widgets.logger_widget import logger_widget
 
 class logger(logger_runtime, qtplugin):
@@ -56,6 +57,12 @@ class logger(logger_runtime, qtplugin):
 		"""See qtitem."""
 
 		super(logger, self).edit_widget()
+		for item in self.experiment.items.values():
+			if item.item_type == self.item_type and item is not self:
+				self.user_hint_widget.add(
+					_(u'You have multiple unlinked loggers. This can lead to messy log files.'))
+				self.user_hint_widget.refresh()
+				break
 		self.logger_widget.update()
 
 	def apply_edit_changes(self):
