@@ -21,7 +21,7 @@ import os
 import os.path
 import sys
 
-version = u'2.9.5'
+version = u'2.9.5~pre3'
 codename = u'Hesitant Heisenberg'
 
 use_global_resources = '--no-global-resources' not in sys.argv
@@ -264,7 +264,7 @@ def opensesame_folder():
 		path = os.path.dirname(sys.executable).decode( \
 			sys.getfilesystemencoding())
 	else:
-		# To get the opensesame folder, simply jump to level up
+		# To get the opensesame folder, simply jump to levels up
 		path = os.path.dirname(__file__).decode( \
 			sys.getfilesystemencoding())
 		path = os.path.normpath(os.path.join(path, u'..'))
