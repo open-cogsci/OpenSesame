@@ -18,6 +18,13 @@
 	background-color: #729fcf;
 }
 
+#label_size_warning {
+	background-color: #729fcf;
+	color: #ffffff;
+	border-radius: 2px;
+	padding: 4px;
+}
+
 #user_hint_widget,
 #widget_variable_inspector_header_box,
 #widget_debug_window_header_box,
