@@ -756,13 +756,14 @@ class experiment(item.item):
 			u"experiment._time_func(): This function should be set by the canvas backend.")
 
 
-def clean_up(verbose=False):
+def clean_up(verbose=False, keep=[]):
 
 	"""
 	Cleans up the temporary pool folders.
 
 	Keyword arguments:
-	verbose		--	A boolean indicating if debugging output should be given.
+	verbose		--	A boolean indicating if debugging o
+	utput should be given.
 					(default=False)
 	"""
 
@@ -772,6 +773,8 @@ def clean_up(verbose=False):
 		print(u"experiment.clean_up()")
 
 	for path in pool_folders:
+		if path in keep:
+			continue
 		if verbose:
 			print(u"experiment.clean_up(): removing '%s'" % path)
 		try:
@@ -780,5 +783,3 @@ def clean_up(verbose=False):
 			if verbose:
 				print(u"experiment.clean_up(): failed to remove '%s'" % path)
 	canvas.clean_up(verbose)
-
-
