@@ -57,6 +57,7 @@ class config(object):
 		u"disabled_plugins" : "",
 		u"disabled_extensions" : "",
 		u"file_dialog_path" : "",
+		u"file_pool_size_warning" : 104857600,
 		u"locale" : u"default",
 		u"loop_wizard" : [],
 		u"onetabmode" : True,

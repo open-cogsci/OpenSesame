@@ -73,6 +73,7 @@ class pool_widget(base_widget):
 			u"view-list-details"))
 		self.ui.combobox_view.setItemIcon(1, self.main_window.theme.qicon( \
 			u"view-list-icons"))
+		self.ui.label_size_warning.setVisible(False)
 
 	def help(self):
 
@@ -200,8 +201,10 @@ class pool_widget(base_widget):
 			file_list += [os.path.join(
 				self.experiment.fallback_pool_folder, path) for \
 				path in os.listdir(self.experiment.fallback_pool_folder)]
+		size = 0
 		for path in file_list:
 			debug.msg(path)
+			size += os.path.getsize(path)
 			fname = os.path.basename(path)
 			if filt in fname.lower():
 				icon = self.experiment.icon(self.file_type(fname))
@@ -210,6 +213,15 @@ class pool_widget(base_widget):
 				item.path = path
 				item.setToolTip(path)
 				self.ui.list_pool.addItem(item)
+		debug.msg(u'pool is %d bytes' % size)
+		if size > cfg.file_pool_size_warning:
+			self.ui.label_size_warning.setText(_('Your file pool is larger '
+				'than usual (%d MB). This increases loading and saving time. '
+				'Consider moving files from the file pool to the experiment '
+				'folder.') % (size / 1048576))
+			self.ui.label_size_warning.setVisible(True)
+		else:
+			self.ui.label_size_warning.setVisible(False)
 
 	def open_file(self, path):
 

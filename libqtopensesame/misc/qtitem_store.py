@@ -165,8 +165,10 @@ class qtitem_store(item_store):
 			type:	list
 		"""
 
+		if self.experiment.var.start not in self:
+			return []
 		return [self.experiment.var.start] \
-			+ self.experiment.items[self.experiment.var.start].children()
+			+ self[self.experiment.var.start].children()
 
 	def unused(self):
 

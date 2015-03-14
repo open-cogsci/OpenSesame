@@ -673,6 +673,8 @@ class qtopensesame(QtGui.QMainWindow, base_component):
 			self.ui.console.write(e)
 			self.experiment.notify(e.html(), title=u'Exception')
 			return
+		libopensesame.experiment.clean_up(verbose=debug.enabled,
+			keep=[exp.pool_folder])
 		self.experiment = exp
 		self.experiment.build_item_tree()
 		self.ui.tabwidget.open_general()
