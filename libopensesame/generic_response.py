@@ -18,7 +18,6 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame.py3compat import *
-
 import random
 import openexp.keyboard
 import openexp.mouse
@@ -37,20 +36,18 @@ class generic_response:
 
 	def prepare_timeout(self):
 
-		"""Prepares the response timeout"""
+		"""Prepare the response timeout"""
 
-		if self.var.timeout == u"infinite":
+		# Set the timeout
+		if self.var.get(u'timeout', default=u'infinite') == u'infinite':
 			self._timeout = None
 		else:
 			try:
 				self._timeout = int(self.var.timeout)
+				assert(self._timeout >= 0)
 			except:
-				raise osexception( \
-					u"'%s' is not a valid timeout in keyboard_response '%s'. Expecting a positive integer or 'infinite'." \
-					% (self.var.timeout, self.name))
-			if self._timeout < 0:
-				raise osexception( \
-					u"'%s' is not a valid timeout in keyboard_response '%s'. Expecting a positive integer or 'infinite'." \
+				raise osexception(
+					u"'%s' is not a valid timeout in item '%s'. Expecting a positive integer or 'infinite'." \
 					% (self.var.timeout, self.name))
 
 	def auto_responder(self, dev=u'keyboard'):
@@ -155,39 +152,41 @@ class generic_response:
 		# the feedback
 		if self.process_feedback:
 			debug.msg(u"processing feedback for '%s'" % self.name)
-			if self.has(u"correct_response"):
+			if u"correct_response" in self.var:
 				# If a correct_response has been defined, we use it to determine
 				# accuracy etc.
-				correct_response = self.var.get(u"correct_response")
+				correct_response = self.var.correct_response
 				if hasattr(self, u"synonyms") and self.synonyms is not None:
 					if correct_response in self.synonyms or \
 						self.unistr(correct_response) in self.synonyms:
-						self.experiment.correct = 1
+						self.experiment.var.correct = 1
 						self.experiment.total_correct += 1
 					else:
-						self.experiment.correct = 0
+						self.experiment.var.correct = 0
 				else:
-					if self.experiment.response in (correct_response, \
+					if self.experiment.response in (correct_response,
 						self.unistr(correct_response)):
-						self.experiment.correct = 1
+						self.experiment.var.correct = 1
 						self.experiment.total_correct += 1
 					else:
-						self.experiment.correct = 0
+						self.experiment.var.correct = 0
 			else:
 				# If a correct_response hasn't been defined, we simply set
 				# correct to undefined
-				self.experiment.correct = u"undefined"
+				self.experiment.var.correct = u"undefined"
 			# Do some response bookkeeping
-			self.experiment.total_response_time += self.experiment.response_time
+			self.experiment.total_response_time += \
+				self.experiment.var.response_time
 			self.experiment.total_responses += 1
-			self.experiment.var.set(u"acc", 100.0 * self.experiment.total_correct / \
-				self.experiment.total_responses)
-			self.experiment.var.set(u"avg_rt", self.experiment.total_response_time / \
-				self.experiment.total_responses)
-			self.experiment.var.set(u"accuracy", self.experiment.acc)
-			self.experiment.var.set(u"average_response_time", self.experiment.avg_rt)
+			self.experiment.var.accuracy = self.experiment.var.acc = \
+				100.0 * self.experiment.total_correct / \
+				self.experiment.total_responses
+			self.experiment.var.average_response_time = \
+				self.experiment.var.avg_rt = \
+				self.experiment.total_response_time / \
+				self.experiment.total_responses
 			self.experiment.var.set(u"correct_%s" % self.name,
-				self.var.get(u"correct"))
+				self.var.correct)
 
 	def set_sri(self, reset=False):
 
@@ -209,70 +208,51 @@ class generic_response:
 		else:
 			self.sri = self.experiment.start_response_interval
 
-	def prepare_timeout(self):
-
-		"""Prepare the response timeout"""
-
-		# Set the timeout
-		if not self.has(u"timeout") or self.var.timeout == u"infinite":
-			self._timeout = None
-		else:
-			try:
-				self._timeout = int(self.var.timeout)
-			except:
-				raise osexception( \
-					u"'%s' is not a valid timeout in item '%s'. Expecting a positive integer or 'infinite'." \
-					% (self.var.timeout, self.name))
-			if self._timeout < 0:
-				raise osexception( \
-					u"'%s' is not a valid timeout in item '%s'. Expecting a positive integer or 'infinite'." \
-					% (self.var.timeout, self.name))
-
 	def prepare_allowed_responses(self):
 
 		"""Prepare the allowed responses"""
 
-		# Prepare the allowed responses
-		dur = self.var.duration
-		if self.has(u"allowed_responses"):
-			if dur == u"keypress":
-
-				# Prepare valid keypress responses
-				l = self.experiment.unistr(self.var.get(u"allowed_responses")).split( \
-					u";")
-				self._allowed_responses = l
-
-			elif dur == u"mouseclick":
-
-				# Prepare valid mouseclick responses
-				self._allowed_responses = []
-				for r in self.experiment.unistr(self.var.get( \
-					u"allowed_responses")).split(";"):
-					if r in self.resp_codes.values():
-						for code, resp in self.resp_codes.items():
-							if resp == r:
-								self._allowed_responses.append(code)
-					else:
-						try:
-							r = int(r)
-							if r in self.resp_codes:
-								self._allowed_responses.append(r)
-							else:
-								raise osexception( \
-									u"Unknown allowed_response '%s' in mouse_response item '%s'" \
-									% (r, self.name))
-						except Exception as e:
-							raise osexception( \
-								u"Unknown allowed_response '%s' in mouse_response item '%s'" \
-								% (r, self.name), exception=e)
-
-			# If allowed responses are provided, the list should not be empty
-			if len(self._allowed_responses) == 0:
-				raise osexception( \
-					u"'%s' are not valid allowed responses in keyboard_response '%s'" \
-					% (self.var.get(u"allowed_responses"), self.name))
-		else:
+		if self.var.get(u'allowed_responses', default=u'') == u'':
 			self._allowed_responses = None
+			return
+
+		# Create a list of allowed responses that are separated by semicolons.
+		# Also trim any whitespace.
+		allowed_responses = [allowed_response.strip() for allowed_response in \
+			self.experiment.unistr(self.var.allowed_responses).split(u";")]
+
+		if self.var.duration == u"keypress":
+			# For keypress responses, we don't check if the allowed responses
+			# make sense.
+			self._allowed_responses = allowed_responses
+
+		elif self.var.duration == u"mouseclick":
+			# For mouse clicks, we check whether allowed responses make sense
+			self._allowed_responses = []
+			for r in allowed_responses:
+				if r in self.resp_codes.values():
+					for code, resp in self.resp_codes.items():
+						if resp == r:
+							self._allowed_responses.append(code)
+				else:
+					try:
+						r = int(r)
+						if r in self.resp_codes:
+							self._allowed_responses.append(r)
+						else:
+							raise osexception(
+								u"Unknown allowed_response '%s' in mouse_response item '%s'" \
+								% (r, self.name))
+					except Exception as e:
+						raise osexception(
+							u"Unknown allowed_response '%s' in mouse_response item '%s'" \
+							% (r, self.name), exception=e)
+
+		# If allowed responses are provided, the list should not be empty
+		if len(self._allowed_responses) == 0:
+			raise osexception(
+				u"'%s' are not valid allowed responses in keyboard_response '%s'" \
+				% (self.var.get(u"allowed_responses"), self.name))
 
 	def prepare_duration(self):
 

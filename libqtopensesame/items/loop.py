@@ -244,7 +244,9 @@ class loop(qtstructure_item, qtitem, loop_runtime):
 		"""
 
 		cycles = self.var.get(u'cycles', _eval=False)
-		if not isinstance(cycles, float):
+		try:
+			cycles = int(cycles)
+		except:
 			return 0
 		return int(max(cycles, len(self.matrix)))
 
@@ -336,7 +338,10 @@ class loop(qtstructure_item, qtitem, loop_runtime):
 
 		# Don't crash if the cycle variable is variable, simply provide an
 		# error message (due to the sanity check) and disable the loop table.
-		if not isinstance(self.var.get('cycles', _eval=False), float):
+		cycles = self.var.get('cycles', _eval=False)
+		try:
+			cycles = int(cycles)
+		except:
 			self.loop_table.setEnabled(False)
 			self.lock = False
 			return
@@ -353,7 +358,7 @@ class loop(qtstructure_item, qtitem, loop_runtime):
 		# Determine the order in which the columns are displayed
 		column_order = []
 		if self.cyclevar_list() is not None:
-			if column_order in self.var:
+			if u'column_order' in self.var:
 				for var in self.unistr(self.var.column_order).split(u";"):
 					if var in self.cyclevar_list():
 						column_order.append(var)
@@ -369,8 +374,6 @@ class loop(qtstructure_item, qtitem, loop_runtime):
 			i += 1
 
 		# Fill the table
-		var_columns = {}
-		new_column = 0
 		for cycle in self.matrix:
 			for var in self.matrix[cycle]:
 				col = column_order.index(var)

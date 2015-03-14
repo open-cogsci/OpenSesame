@@ -62,6 +62,8 @@ class var_store(object):
 			warnings.warn(u'var %s is stored as attribute of item %s' \
 				% (var, self.__item__.name))
 			return True
+		if self.__parent__ is not None:
+			return self.__parent__.__contains__(var)
 		return False
 
 	def __delattr__(self, var):
@@ -155,6 +157,10 @@ class var_store(object):
 			return int(val)
 		return val
 
+	def has(self, var):
+
+		return self.__contains__(var)
+
 	def set(self, var, val):
 
 		"""
@@ -178,7 +184,7 @@ class var_store(object):
 		desc:
 			Implements variable deletion.
 		"""
-		
+
 		self.__delattr__(var)
 
 	def __iter__(self):

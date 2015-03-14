@@ -63,7 +63,7 @@ class logger(item.item):
 		l = []
 		for var in self.logvars:
 			if var in self.var:
-				val = self.var.get(var)
+				val = self.unistr(self.var.get(var))
 			elif self.var.get(u'ignore_missing') == u'yes':
 				val = u'NA'
 			else:

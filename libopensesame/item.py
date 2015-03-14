@@ -55,19 +55,7 @@ class item(object):
 		self.experiment = experiment
 		self.debug = debug.enabled
 		self.count = 0
-		# A number of keywords are reserved, which means that they cannot be
-		# used as variable names
-		self.reserved_words = [u'experiment', u'variables', u'comments', \
-			u'item_type']
-		for attr in dir(item):
-			if hasattr(getattr(item, attr), u'__call__'):
-				self.reserved_words.append(attr)
-
 		self._get_lock = None
-		# item_type shouldn't be explicitly set anymore.
-		if hasattr(self, u'item_type'):
-			debug.msg(u'item_type has been set explicitly in item "%s"' % \
-			self.name, reason=u'deprecation')
 		# Deduce item_type from class name
 		prefix = self.experiment.item_prefix()
 		self.item_type = str(self.__class__.__name__)
@@ -272,7 +260,7 @@ class item(object):
 
 	def __getattr__(self, var):
 
-		if var in self.var:
+		if var in self.var.__vars__:
 			warnings.warn(u'called %s as item property' % var,
 				DeprecationWarning)
 			return self.var.get(var)
@@ -336,8 +324,6 @@ class item(object):
 			elif line_stripped[:2] == u'__' and line_stripped[-2:] == u'__' \
 				and textblock_var is None:
 				textblock_var = line_stripped[2:-2]
-				if textblock_var in self.reserved_words:
-					textblock_var = u'_' + textblock_var
 				if textblock_var != u'':
 					textblock_val = u''
 				else:

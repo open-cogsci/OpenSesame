@@ -651,12 +651,15 @@ class qtitem(base_qtobject):
 				continue
 			if edit.isEnabled() and isinstance(var, basestring):
 				val = str(edit.text()).strip()
-				if val == u"" and hasattr(edit, u"default"):
-					# If the variable has no value, we assign a default value if
-					# it has been specified, and unset it otherwise.
-					self.var.set(var, edit.default)
-				else:
+				if val != u'':
 					self.var.set(var, val)
+					continue
+				# If no text was entered, we use a default if available ...
+				if hasattr(edit, u'default'):
+					self.var.set(var, edit.default)
+					continue
+				# ... or unset the variable if no default is available.
+				self.var.unset(var)
 
 		for var, combobox in self.auto_combobox.items():
 			if isinstance(var, int):
