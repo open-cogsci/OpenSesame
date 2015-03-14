@@ -18,7 +18,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame.py3compat import *
-from PyQt4 import QtCore, QtGui
+from PyQt4 import QtGui
 from libqtopensesame.misc.base_subcomponent import base_subcomponent
 
 class base_validator(base_subcomponent, QtGui.QValidator):
@@ -39,18 +39,14 @@ class base_validator(base_subcomponent, QtGui.QValidator):
 
 		return True
 
-	def set_text(self, val, text):
-
-		val.remove(0, len(val))
-		val.insert(0, text)
-
 	def validate(self, val, pos):
 
-		if self.is_valid(str(val)):
-			return (self.Acceptable, pos)
-		return (self.Intermediate, pos)
+		if self.is_valid(val):
+			return self.Acceptable, val, pos
+		return self.Intermediate, val, pos
 
 	def fixup(self, val):
 
-		if not self.is_valid(str(val)):
-			self.set_text(val, self.default)
+		if not self.is_valid(val):
+			return self.default
+		return val
