@@ -19,17 +19,18 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 
 from libopensesame.var_store import var_store
 from libopensesame.item_store import item_store
+from libopensesame.file_pool_store import file_pool_store
 from libopensesame.python_workspace import python_workspace
 from libopensesame.exceptions import osexception
-from libopensesame import misc, item, plugins, debug
+from libopensesame import misc, item, debug
 from libopensesame.py3compat import *
 import os.path
 import shutil
-import sys
 import time
 import tarfile
 import tempfile
 import codecs
+import warnings
 
 # Contains a list of all pool folders, which need to be removed on program exit
 pool_folders = []
@@ -125,6 +126,7 @@ class experiment(item.item):
 		global pool_folders
 
 		self.var = var_store(self)
+		self.pool = file_pool_store(self, folder=pool_folder)
 		if items is None:
 			self.items = item_store(self)
 		else:
@@ -187,22 +189,6 @@ class experiment(item.item):
 		# but nevertheless keep it so we don't need qtopensesame
 		self.debug = debug.enabled
 
-		# Pool folder
-		if pool_folder is None:
-			# On some systems tempfile.mkdtemp() triggers a UnicodeDecodeError.
-			# This is resolved by passing the dir explicitly as a Unicode
-			# string. This fix has been adapted from:
-			# - <http://bugs.python.org/issue1681974>
-			self.pool_folder = tempfile.mkdtemp(suffix= \
-				u'.opensesame_pool', dir=safe_decode(tempfile.gettempdir(),
-				enc=misc.filesystem_encoding()))
-			pool_folders.append(self.pool_folder)
-			debug.msg(u'creating new pool folder')
-		else:
-			debug.msg(u'reusing existing pool folder')
-			self.pool_folder = pool_folder
-		debug.msg(u'pool folder is \'%s\'' % self.pool_folder)
-
 		string = self.open(string)
 		item.item.__init__(self, name, self, string)
 
@@ -210,16 +196,45 @@ class experiment(item.item):
 		self.set_subject(subject_nr)
 		# Restore experiment path
 		if experiment_path is not None:
-			self.fallback_pool_folder = os.path.join(experiment_path,
-				u'__pool__')
-			if os.path.exists(self.fallback_pool_folder):
-				debug.msg(u'Using fallback pool folder: %s' \
-					% self.fallback_pool_folder)
-			else:
-				self.fallback_pool_folder = None
 			self.experiment_path = experiment_path
-		else:
-			self.fallback_pool_folder = None
+
+	@property
+	def pool_folder(self):
+
+		"""Deprecated."""
+
+		warnings.warn(
+			u'experiment.pool_folder is deprecated. Use file_pool_store instead.',
+			DeprecationWarning)
+		return self.pool.folder()
+
+	@property
+	def fallback_pool_folder(self):
+
+		"""Deprecated."""
+
+		warnings.warn(
+			u'experiment.fallback_pool_folder is deprecated. Use file_pool_store instead.',
+			DeprecationWarning)
+		return self.pool.fallback_folder()
+
+	def get_file(self, path):
+
+		"""Deprecated."""
+
+		warnings.warn(
+			u'experiment.get_file() is deprecated. Use file_pool_store instead.',
+			DeprecationWarning)
+		return self.pool[path]
+
+	def file_in_pool(self, path):
+
+		"""Deprecated."""
+
+		warnings.warn(
+			u'experiment.file_in_pool() is deprecated. Use file_pool_store instead.',
+			DeprecationWarning)
+		return path in self.pool
 
 	def module_container(self):
 
@@ -463,72 +478,6 @@ class experiment(item.item):
 				u"The resource '%s' could not be found in libopensesame.experiment.resource()" \
 				% name)
 		return path
-
-	def get_file(self, path):
-
-		"""
-		desc: |
-			Returns the full path to a file. The logic is as follows:
-
-			1. First checks if `path` is a file in the file pool.
-			2. If not, check if `path` is a file in the folder of the current
-			   experiment (if any).
-			3. If not, check if `path` is a file in the `__pool__` subfolder of
-			   the current experiment.
-			4. If not, simply return `path`.
-
-		arguments:
-			path:
-				desc:	A filename. This can be any type, but will be coerced
-						to `unicode` if it is not `unicode`.
-
-		returns:
-			desc:	The full path to the file.
-			type:	unicode
-
-		example: |
-			image_path = exp.get_file('my_image.png')
-			my_canvas = exp.offline_canvas()
-			my_canvas.image(image_path)
-		"""
-
-		path = self.unistr(path)
-		if path.strip() == u'':
-			raise osexception(
-				u"An empty string was passed to experiment.get_file(). Please "
-				u"specify a valid filename.")
-		if os.path.exists(os.path.join(self.pool_folder, path)):
-			return os.path.join(self.pool_folder, path)
-		if self.experiment_path is not None:
-			if os.path.exists(os.path.join(self.experiment_path, path)):
-				return os.path.join(self.experiment_path, path)
-			if self.fallback_pool_folder is not None and os.path.exists(
-				os.path.join(self.experiment_path, self.fallback_pool_folder,
-				path)):
-				return os.path.join(self.experiment_path,
-					self.fallback_pool_folder, path)
-		return path
-
-	def file_in_pool(self, path):
-
-		"""
-		desc:
-			Checks if a file is in the file pool.
-
-		returns:
-			desc:	A bool indicating if the file is in the pool.
-			type:	bool
-
-		example: |
-			if not exp.file_in_pool('my_image.png'):
-				print('my_image.png could not be found!')
-			else:
-				image_path = exp.get_file('my_image.png')
-				my_canvas = exp.offline_canvas()
-				my_canvas.image(image_path)
-		"""
-
-		return os.path.exists(self.get_file(path))
 
 	def save(self, path, overwrite=False, update_path=True):
 
