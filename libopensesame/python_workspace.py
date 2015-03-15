@@ -18,6 +18,9 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame.py3compat import *
+import libopensesame.python_workspace_api as api
+from libopensesame import debug
+import types
 
 class python_workspace(object):
 
@@ -47,12 +50,20 @@ class python_workspace(object):
 		"""
 
 		self.experiment = experiment
+		api.experiment = experiment
 		# By setting the __name__ global, the workspace will operate as a
 		# module, so that e.g. import statements don't suffer from locality.
 		self._globals = {
 			u'__name__'		: u'python_workspace',
 			u'exp'			: self.experiment,
+			u'var'			: self.experiment.var,
 			}
+		# All functions from the api modules are also loaded into the globals.
+		# This way they can be called directly by name.
+		for name, item in api.__dict__.items():
+			if isinstance(item, types.FunctionType):
+				debug.msg(u'api function detected: %s()' % name)
+				self._globals[name] = item
 
 	def check_syntax(self, script):
 
