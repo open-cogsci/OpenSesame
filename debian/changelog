@@ -16,6 +16,7 @@ opensesame (2.9.5~pre4-ubuntu1) utopic; urgency=medium
     - Warn when there are multiple unlinked loggers
     - Warn when the file pool is too large
     - Clean up old file pool when opening experiment
+    - Clean up temporary file pool when saving experiment
 
  -- Sebastiaan Mathot <sebastiaan@mantis>  Mon, 02 Mar 2015 13:42:35 +0100
 
