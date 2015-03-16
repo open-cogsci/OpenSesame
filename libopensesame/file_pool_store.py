@@ -24,8 +24,6 @@ import tempfile
 import os
 import shutil
 
-pool_folders = []
-
 class file_pool_store(object):
 
 	"""
@@ -34,8 +32,6 @@ class file_pool_store(object):
 	"""
 
 	def __init__(self, experiment, folder=None):
-
-		global pool_folders
 
 		self.experiment = experiment
 		if folder is None:
@@ -46,12 +42,18 @@ class file_pool_store(object):
 			self.__folder__ = tempfile.mkdtemp(suffix=u'.opensesame_pool',
 				dir=safe_decode(tempfile.gettempdir(),
 				enc=misc.filesystem_encoding()))
-			pool_folders.append(self.__folder__)
 			debug.msg(u'creating new pool folder')
 		else:
 			debug.msg(u'reusing existing pool folder')
 			self.__folder__ = folder
 		debug.msg(u'pool folder is \'%s\'' % self.__folder__)
+
+	def clean_up(self):
+
+		try:
+			shutil.rmtree(self.__folder__)
+		except:
+			debug.msg(u'Failed to remove %s' % self.__folder__)
 
 	def __contains__(self, path):
 
@@ -72,6 +74,8 @@ class file_pool_store(object):
 				my_canvas.image(image_path)
 		"""
 
+		if path == u'':
+			return False
 		return os.path.exists(self[path])
 
 	def __delitem__(self, path):
@@ -117,7 +121,7 @@ class file_pool_store(object):
 
 	def __iter__(self):
 
-		pass
+		return file_pool_store_iterator(self)
 
 	def __len__(self):
 
@@ -125,17 +129,17 @@ class file_pool_store(object):
 
 	def add(self, path):
 
-		shutil.copyfile(external_path, os.path.join(self.__folder__,
-			os.path.basename(path)))
+		shutil.copyfile(path,
+			os.path.join(self.__folder__, os.path.basename(path)))
 
 	def files(self):
 
 		_files = []
-		for _folder in self.folder():
+		for _folder in self.folders():
 			for _file in os.listdir(_folder):
 				if os.path.isfile(os.path.join(_folder, _file)):
 					_files.append(_file)
-		return _files
+		return sorted(_files)
 
 	def fallback_folder(self):
 
@@ -148,7 +152,8 @@ class file_pool_store(object):
 
 		return self.__folder__
 
-	def folders(self, include_experiment_path=False):
+	def folders(self, include_fallback_folder=True,
+		include_experiment_path=False):
 
 		_folders = [self.__folder__]
 		if self.experiment.experiment_path is None or \
@@ -156,7 +161,7 @@ class file_pool_store(object):
 				return _folders
 		fallback_folder = os.path.join(self.experiment.experiment_path,
 			u'__pool__')
-		if os.path.exists(fallback_folder):
+		if include_fallback_folder and os.path.exists(fallback_folder):
 			_folders.append(fallback_folder)
 		if include_experiment_path:
 			_folders.append(self.experiment.experiment_path)
@@ -164,4 +169,32 @@ class file_pool_store(object):
 
 	def rename(self, old_path, new_path):
 
-		pass
+		path = self[old_path]
+		dirname, basename = os.path.split(path)
+		os.rename(path, os.path.join(dirname, new_path))
+
+	def size(self):
+
+		return sum([os.path.getsize(self[path]) for path in self])
+
+class file_pool_store_iterator(object):
+
+	def __init__(self, pool):
+
+		self.pool = pool
+		self.files = pool.files()
+
+	def __iter__(self):
+
+		return self
+
+	def __next__(self):
+
+		# For Python 3
+		return self.next()
+
+	def next(self):
+
+		if len(self.files) == 0:
+			raise StopIteration
+		return self.files.pop()

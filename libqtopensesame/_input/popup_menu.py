@@ -18,8 +18,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame.py3compat import *
-
-from PyQt4 import QtCore, QtGui
+from PyQt4 import QtGui
 from libqtopensesame.misc.base_subcomponent import base_subcomponent
 from libqtopensesame.misc import _
 
@@ -73,7 +72,6 @@ class popup_menu(QtGui.QMenu, base_subcomponent):
 				_(u'Cancel'), self)
 			action._id = None
 			self.addAction(action)
-
 
 	def show(self):
 

@@ -32,9 +32,6 @@ import tempfile
 import codecs
 import warnings
 
-# Contains a list of all pool folders, which need to be removed on program exit
-pool_folders = []
-
 class experiment(item.item):
 
 	"""
@@ -122,8 +119,6 @@ class experiment(item.item):
 						This serves as a look-up table for resources.
 				type:	dict
 		"""
-
-		global pool_folders
 
 		self.var = var_store(self)
 		self.pool = file_pool_store(self, folder=pool_folder)
@@ -750,31 +745,7 @@ class experiment(item.item):
 		raise osexception( \
 			u"experiment._time_func(): This function should be set by the canvas backend.")
 
-
 def clean_up(verbose=False, keep=[]):
 
-	"""
-	Cleans up the temporary pool folders.
-
-	Keyword arguments:
-	verbose		--	A boolean indicating if debugging o
-	utput should be given.
-					(default=False)
-	"""
-
-	from openexp import canvas
-	global pool_folders
-	if verbose:
-		print(u"experiment.clean_up()")
-
-	for path in pool_folders:
-		if path in keep:
-			continue
-		if verbose:
-			print(u"experiment.clean_up(): removing '%s'" % path)
-		try:
-			shutil.rmtree(path)
-		except:
-			if verbose:
-				print(u"experiment.clean_up(): failed to remove '%s'" % path)
-	canvas.clean_up(verbose)
+	warnings.warn(u'libopensesame.experiment.clean_up() is deprecated' % var,
+		DeprecationWarning)

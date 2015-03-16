@@ -66,3 +66,7 @@ class base_subcomponent(base_component):
 	@property
 	def console(self):
 		return self.main_window.console
+
+	@property
+	def pool(self):
+		return self.main_window.experiment.pool
