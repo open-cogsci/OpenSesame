@@ -86,7 +86,9 @@ class osexception(Exception):
 			# looking at the `message` property or by using unicode(). If both
 			# fail, a placeholder message is used.
 			if hasattr(self.exception, u'message'):
-				msg = self.exception.message.decode(self.enc, u'ignore')
+				msg = self.exception.message
+				if isinstance(msg, str):
+					msg = msg.decode(self.enc, u'ignore')
 			else:
 				try:
 					msg = unicode(self.exception)
