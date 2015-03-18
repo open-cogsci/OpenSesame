@@ -152,6 +152,8 @@ class text_input(label):
 			elif resp == u'backspace' or o == 8:
 				self.text = self.text[:self.caretPos-1] + self.text[self.caretPos:]
 				self.caretPos = max(0,self.caretPos-1)
+			elif resp == u'delete':
+				self.text = self.text[:self.caretPos] + self.text[self.caretPos+1:]
 			elif resp == u'tab':
 				self.focus = False
 				my_keyboard.show_virtual_keyboard(False)
