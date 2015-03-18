@@ -1,4 +1,4 @@
-opensesame (2.9.5~pre5-ubuntu1) utopic; urgency=medium
+opensesame (2.9.5~pre6-ubuntu1) utopic; urgency=medium
 
   * Bugs fixed
     - Don't delete an item when a drop is cancelled
@@ -7,6 +7,8 @@ opensesame (2.9.5~pre5-ubuntu1) utopic; urgency=medium
     - Also rename and delete files in fallback pool folder
     - Don't crash on invalid fixdot style in sketchpad canvas
     - Don't crash when experiment-start item is invalid
+    - Fix a bug in image form widget that prevented dubious images from being shown
+    - Don't (re)decode unicode exception messages
   * Improvements
     - Explicitly notify of variable sequence preparation time
     - Add form template
