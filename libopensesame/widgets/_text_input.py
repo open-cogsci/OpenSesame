@@ -158,7 +158,7 @@ class text_input(label):
 				self.focus = False
 				my_keyboard.show_virtual_keyboard(False)
 				return None
-			elif resp == u'return':
+			elif resp == u'return' or resp == u'enter':
 				if self.return_accepts:
 					my_keyboard.show_virtual_keyboard(False)
 					return self.text
