@@ -25,7 +25,7 @@ from openexp._keyboard import keyboard
 
 # Whitespace, backspace, and empty strings are not acceptable names for keys.
 # These should be converted to descriptions, e.g. '\t' to 'tab'
-invalid_unicode = [u'', u'\x08'] + list(whitespace)
+invalid_unicode = [u'', u'\x08', u'\x7f'] + list(whitespace)
 
 class legacy(keyboard.keyboard):
 
