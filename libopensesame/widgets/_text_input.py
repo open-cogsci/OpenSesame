@@ -55,7 +55,7 @@ class text_input(label):
 
 	def __init__(self, form, text=u'', frame=True, center=False,
 		stub=u'Type here ...', return_accepts=False, var=None):
-	
+
 		"""
 		desc:
 			Constructor.
@@ -89,12 +89,12 @@ class text_input(label):
 						used to log the widget status.
 				type:	[str, unicode, NoneType]
 		"""
-		
+
 		if type(return_accepts) != bool:
 			return_accepts = return_accepts == u'yes'
-	
+
 		label.__init__(self, form, text, frame=frame, center=center)
-		self.type = u'text_input'		
+		self.type = u'text_input'
 		self.stub = self.form.experiment.unistr(stub)
 		self.prompt = u'_'
 		self.return_accepts = return_accepts
@@ -102,9 +102,9 @@ class text_input(label):
 		self.text = self.form.experiment.unistr(text)
 		self.set_var(text)
 		self.caret_pos = None
-		
+
 	def render(self):
-	
+
 		"""
 		desc:
 			Draws the widget.
@@ -116,39 +116,39 @@ class text_input(label):
 			else:
 				self.draw_frame(self.rect, style=u'light')
 		if self.text == '' and not self.focus:
-			self.draw_text(self.stub, html=False)	
+			self.draw_text(self.stub, html=False)
 		elif self.focus:
-			self.draw_text(self.text[:self.caret_pos] + self.prompt + 
-							self.text[self.caret_pos:], html=False)	
+			self.draw_text(self.text[:self.caret_pos] + self.prompt +
+							self.text[self.caret_pos:], html=False)
 		else:
-			self.draw_text(self.text, html=False)	
-				
+			self.draw_text(self.text, html=False)
+
 	def on_mouse_click(self, pos):
-	
+
 		"""
 		desc:
 			Is called whenever the user clicks on the widget. Activates the text
 			input for typing text.
-		
+
 		arguments:
 			pos:
 				desc:	An (x, y) coordinates tuple.
 				type:	tuple
 		"""
-		
+
 		self.focus = True
 		self.caret_pos = len(self.text)
 		my_keyboard = keyboard(self.form.experiment)
 		my_keyboard.show_virtual_keyboard(True)
-		while True:		
-			self.form.render()		
+		while True:
+			self.form.render()
 			resp, time = my_keyboard.get_key()
 			try:
 				o = ord(resp)
 			except:
 				o = None
-			if resp == u'space':			
-				self.text = self.text[:self.caret_pos] + ' ' +\
+			if resp == u'space':
+				self.text = self.text[:self.caret_pos] + u' ' +\
 							self.text[self.caret_pos:]
 				self.caret_pos +=1
 			elif resp == u'backspace' or o == 8:
@@ -179,4 +179,3 @@ class text_input(label):
 							self.text[self.caret_pos:]
 				self.caret_pos +=1
 			self.set_var(self.text)
-
