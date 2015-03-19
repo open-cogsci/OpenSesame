@@ -101,6 +101,7 @@ class text_input(label):
 		self.var = var
 		self.text = self.form.experiment.unistr(text)
 		self.set_var(text)
+		self.caret_pos = None
 		
 	def render(self):
 	
@@ -117,7 +118,8 @@ class text_input(label):
 		if self.text == '' and not self.focus:
 			self.draw_text(self.stub, html=False)	
 		elif self.focus:
-			self.draw_text(self.text+self.prompt, html=False)	
+			self.draw_text(self.text[:self.caret_pos] + self.prompt + 
+							self.text[self.caret_pos:], html=False)	
 		else:
 			self.draw_text(self.text, html=False)	
 				
@@ -135,6 +137,7 @@ class text_input(label):
 		"""
 		
 		self.focus = True
+		self.caret_pos = len(self.text)
 		my_keyboard = keyboard(self.form.experiment)
 		my_keyboard.show_virtual_keyboard(True)
 		while True:		
@@ -145,9 +148,16 @@ class text_input(label):
 			except:
 				o = None
 			if resp == u'space':			
-				self.text += ' '
+				self.text = self.text[:self.caret_pos] + ' ' +\
+							self.text[self.caret_pos:]
+				self.caret_pos +=1
 			elif resp == u'backspace' or o == 8:
-				self.text = self.text[:-1]
+				self.text = self.text[:self.caret_pos-1] +\
+							self.text[self.caret_pos:]
+				self.caret_pos = max(0,self.caret_pos-1)
+			elif resp == u'delete':
+				self.text = self.text[:self.caret_pos] +\
+							self.text[self.caret_pos+1:]
 			elif resp == u'tab':
 				self.focus = False
 				my_keyboard.show_virtual_keyboard(False)
@@ -160,7 +170,13 @@ class text_input(label):
 					self.focus = False
 					my_keyboard.show_virtual_keyboard(False)
 					return None
+			elif resp == u'left':
+				self.caret_pos = max(0,self.caret_pos-1)
+			elif resp == u'right':
+				self.caret_pos = min(len(self.text),self.caret_pos+1)
 			elif len(resp) == 1:
-				self.text += resp
+				self.text = self.text[:self.caret_pos] + resp +\
+							self.text[self.caret_pos:]
+				self.caret_pos +=1
 			self.set_var(self.text)
 
