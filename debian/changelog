@@ -1,4 +1,4 @@
-opensesame (2.9.5~pre6-ubuntu1) utopic; urgency=medium
+opensesame (2.9.5~pre8-ubuntu1) utopic; urgency=medium
 
   * Bugs fixed
     - Don't delete an item when a drop is cancelled
@@ -9,6 +9,8 @@ opensesame (2.9.5~pre6-ubuntu1) utopic; urgency=medium
     - Don't crash when experiment-start item is invalid
     - Fix a bug in image form widget that prevented dubious images from being shown
     - Don't (re)decode unicode exception messages
+    - Convert delete key to key name in legacy keyboard back-end
+    - Re-initialize numpy random seed on experiment start
   * Improvements
     - Explicitly notify of variable sequence preparation time
     - Add form template
@@ -19,6 +21,8 @@ opensesame (2.9.5~pre6-ubuntu1) utopic; urgency=medium
     - Warn when the file pool is too large
     - Clean up old file pool when opening experiment
     - Clean up temporary file pool when saving experiment
+    - Allow cursor movement in text-input form widget
+    - Accept numeric enter in text-input form widget
 
  -- Sebastiaan Mathot <sebastiaan@mantis>  Mon, 02 Mar 2015 13:42:35 +0100
 
