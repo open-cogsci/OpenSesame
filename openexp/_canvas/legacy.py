@@ -215,10 +215,11 @@ class legacy(canvas.canvas):
 
 	def image(self, fname, center=True, x=None, y=None, scale=None):
 
-		if isinstance(fname, unicode):
-			_fname = fname.encode(self.experiment.encoding)
-		else:
-			_fname = fname
+		# If the filename is a str, we first decode it to unicode
+		if isinstance(fname, str):
+			_fname = fname.decode(self.experiment.encoding)
+		# Next, we encode the filename to a str in the filesystem encoding
+		_fname = fname.encode(misc.filesystem_encoding())
 		try:
 			surface = pygame.image.load(_fname)
 		except pygame.error as e:
