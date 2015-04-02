@@ -1,4 +1,4 @@
-opensesame (2.9.5~pre8-ubuntu1) utopic; urgency=medium
+opensesame (2.9.5~pre9-ubuntu1) utopic; urgency=medium
 
   * Bugs fixed
     - Don't delete an item when a drop is cancelled
@@ -11,6 +11,8 @@ opensesame (2.9.5~pre8-ubuntu1) utopic; urgency=medium
     - Don't (re)decode unicode exception messages
     - Convert delete key to key name in legacy keyboard back-end
     - Re-initialize numpy random seed on experiment start
+    - Ensure proper encoding of image paths in legacy back-end
+    - Don't crash on variably defined font sizes in sketchpad widget
   * Improvements
     - Explicitly notify of variable sequence preparation time
     - Add form template
