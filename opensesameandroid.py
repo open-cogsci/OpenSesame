@@ -22,6 +22,7 @@ import os
 import sys
 import pygame
 import traceback
+import yaml
 from libopensesame.experiment import experiment, clean_up
 try:
 	import android
@@ -79,19 +80,34 @@ def main():
 	if android != None:
 		sys.stdout = stdout_file(sys.stdout)
 
-	# First start the menu experiment
-	src = 'resources/android/menu.opensesame'
-	print('Launching %s' % src)
-	menu = experiment('Experiment', src)
-	menu.run()
-	menu.end()
-	clean_up(menu.debug)
+	# First check if an autorun file has been specified. This is a yaml file
+	# with the experiment path, subject nr, and logfile in it.
+	for folder in sdcard_folders:
+		path = os.path.join(folder, 'opensesame-autorun.yml')
+		print path
+		if os.path.exists(path):
+			d = yaml.load(open(path))
+			experiment_path = d['experiment']
+			subject_nr = d['subject_nr']
+			logfile = d['logfile']
+			break
+	# If no autorun file has been specified, we launch the menu experiment.
+	else:
+		src = 'resources/android/menu.opensesame'
+		print('Launching %s' % src)
+		menu = experiment('Experiment', src)
+		menu.run()
+		menu.end()
+		clean_up(menu.debug)
+		experiment_path = menu._experiment
+		subject_nr = menu._subject_nr
+		logfile = menu._logfile
 
 	# Next run the actual experiment!
-	exp = experiment('Experiment', menu._experiment)
-	print('Launching %s' % menu._experiment)
-	exp.set_subject(menu._subject_nr)
-	exp.logfile = menu._logfile
+	exp = experiment('Experiment', experiment_path)
+	print('Launching %s' % experiment_path)
+	exp.set_subject(subject_nr)
+	exp.logfile = logfile
 
 	# Capture exceptions and write them to the standard output so they can be
 	# inspected
