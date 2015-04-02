@@ -13,6 +13,8 @@ opensesame (2.9.5~pre9-ubuntu1) utopic; urgency=medium
     - Re-initialize numpy random seed on experiment start
     - Ensure proper encoding of image paths in legacy back-end
     - Don't crash on variably defined font sizes in sketchpad widget
+    - Don't crash when pygame.PixelArray doesn't work
+    - Don't crash when loading plugin's from bytecode
   * Improvements
     - Explicitly notify of variable sequence preparation time
     - Add form template
@@ -25,6 +27,7 @@ opensesame (2.9.5~pre9-ubuntu1) utopic; urgency=medium
     - Clean up temporary file pool when saving experiment
     - Allow cursor movement in text-input form widget
     - Accept numeric enter in text-input form widget
+    - Add autorun functionality to Android runtime
 
  -- Sebastiaan Mathot <sebastiaan@mantis>  Mon, 02 Mar 2015 13:42:35 +0100
 
