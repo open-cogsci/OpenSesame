@@ -303,7 +303,7 @@ def import_plugin(plugin, _type=u'plugins'):
 			return imp.load_source(plugin, path)
 	for tmpl in bytecode_templates:
 		if os.path.exists(os.path.join(folder, tmpl % plugin)):
-			path = os.path.join(plugin, tmpl % plugin).encode(
+			path = os.path.join(folder, tmpl % plugin).encode(
 				misc.filesystem_encoding())
 			return imp.load_compiled(plugin, path)
 
