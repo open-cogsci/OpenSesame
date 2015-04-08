@@ -675,8 +675,6 @@ class qtopensesame(QtGui.QMainWindow, base_component):
 			self.print_debug_window(e)
 			self.experiment.notify(e.html(), title=u'Exception')
 			return
-		libopensesame.experiment.clean_up(verbose=debug.enabled,
-			keep=[exp.pool_folder])
 		self.experiment = exp
 		self.experiment.build_item_tree()
 		self.ui.tabwidget.open_general()
@@ -948,8 +946,7 @@ class qtopensesame(QtGui.QMainWindow, base_component):
 			# For the same reason, inOSX the default runner is set to inprocess 
 			# for now in misc.config
 			if sys.platform == "darwin" and getattr(sys, 'frozen', None):
-				self.experiment.notify(u"Multiprocessing does not work in the OSX app version yet. \
-							 Please change the runner to 'inprocess' in the preferences panel")
+				print "Multiprocessing does not work yet in the OSX app version"
 		elif cfg.runner == u'inprocess':
 			from libqtopensesame.runners import inprocess_runner as runner
 		elif cfg.runner == u'external':
