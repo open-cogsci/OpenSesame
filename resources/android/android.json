@@ -4,7 +4,7 @@
 "include_pil": true,
 "name": "OpenSesame runtime for Android",
 "icon_name": "OpenSesame",
-"version": "2.9.5~pre9",
+"version": "2.9.5~pre11",
 "permissions": ["INTERNET", "VIBRATE"],
 "include_sqlite": false,
-"numeric_version": "25"}
+"numeric_version": "26"}
