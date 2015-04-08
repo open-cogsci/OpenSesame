@@ -264,7 +264,7 @@ def opensesame_folder():
 		path = os.path.dirname(sys.executable).decode( \
 			sys.getfilesystemencoding())
 	else:
-		# To get the opensesame folder, simply jump to levels up
+		# To get the opensesame folder, simply jump to level up
 		path = os.path.dirname(__file__).decode( \
 			sys.getfilesystemencoding())
 		path = os.path.normpath(os.path.join(path, u'..'))

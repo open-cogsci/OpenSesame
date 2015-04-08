@@ -127,7 +127,9 @@ class config(object):
 	config_linux = {
 		u"theme" : u"gnome"
 		}
-	config_mac = {}
+	config_mac = {
+		u"runner" : u"inprocess"
+		}
 	config_windows = {
 		u'qProgEditFontFamily' : u'Courier New'
 		}
