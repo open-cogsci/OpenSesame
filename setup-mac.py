@@ -64,12 +64,20 @@ setup(
 			 			  'PyQt4.QtOpenGL', 'PyQt4.QtScript', 'PyQt4.QtSql', 'PyQt4.QtTest', 'PyQt4.QtXml', 'PyQt4.phonon',\
 			 			  'rpy2',
 			 			  ],
-			 'resources' : ['qt_menu.nib', 'resources', 'sounds', 'plugins', 'extensions', 'help', 'data'],
+			 'resources' : ['qt_menu.nib', 'resources', 'sounds', 'plugins', 'extensions', 'help', 'data', 'examples'],
 			 'packages' : ['openexp','expyriment','psychopy','QProgEdit','libqtopensesame','libopensesame'],
-			 'iconfile' : 'resources/opensesame.icns',			
+			 'iconfile' : 'resources/opensesame.icns',
+			 'plist': {
+				'CFBundleName': 'OpenSesame',
+				'CFBundleShortVersionString':'2.9.4',
+				'CFBundleVersion': '2.9.4',
+				'CFBundleIdentifier':'nl.cogsci.osdoc',
+				'NSHumanReadableCopyright': 'Sebastiaan Mathot (2010-2015)',
+				'CFBundleDevelopmentRegion': 'English', 	
 			}
-		   },
-    setup_requires=['py2app'],
+		}
+	},
+   	setup_requires=['py2app'],
 )
 
 # Clean up qt_menu.nib
