@@ -30,6 +30,7 @@ opensesame (2.9.5~pre13-ubuntu1) utopic; urgency=medium
     - Allow cursor movement in text-input form widget
     - Accept numeric enter in text-input form widget
     - Add autorun functionality to Android runtime
+    - Open tab of newly created linked and unlinked copies
 
  -- Sebastiaan Mathot <sebastiaan@mantis>  Mon, 02 Mar 2015 13:42:35 +0100
 
