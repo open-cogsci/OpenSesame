@@ -1,4 +1,4 @@
-opensesame (2.9.5~pre12-ubuntu1) utopic; urgency=medium
+opensesame (2.9.5~pre13-ubuntu1) utopic; urgency=medium
 
   * Bugs fixed
     - Don't delete an item when a drop is cancelled
@@ -16,6 +16,7 @@ opensesame (2.9.5~pre12-ubuntu1) utopic; urgency=medium
     - Don't crash when pygame.PixelArray doesn't work
     - Don't crash when loading plugin's from bytecode
     - Don't crash on variably defined cycles in loop item
+    - Don't prepend underscore when renaming an item to the same name
   * Improvements
     - Explicitly notify of variable sequence preparation time
     - Add form template
