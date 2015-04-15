@@ -350,6 +350,7 @@ class experiment(item.item):
 
 		self.save_state()
 		self.running = True
+		self.init_random()
 		self.init_display()
 		self.init_sound()
 		self.init_log()
@@ -664,6 +665,31 @@ class experiment(item.item):
 					l.append( (var, val, item_name) )
 					seen.append(var)
 		return l
+
+	def init_random(self):
+
+		"""
+		desc:
+			Initializes the random number generators. For some reason, the numpy
+			random seed is not re-initialized when the experiment is started
+			again with the multiprocess runner, resulting in identical random
+			runs. The standard random module doesn't suffer from this problem.
+			But to be on the safe side, we now explicitly re-initialize the
+			random seed.
+
+			See also:
+
+			- <http://forum.cogsci.nl/index.php?p=/discussion/1441/>
+		"""
+
+		import random
+		random.seed()
+		try:
+			# Don't assume that numpy is available
+			import numpy
+			numpy.random.seed()
+		except:
+			pass
 
 	def init_sound(self):
 

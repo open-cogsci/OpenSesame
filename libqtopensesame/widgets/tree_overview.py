@@ -190,6 +190,7 @@ class tree_overview(base_subcomponent, QtGui.QTreeWidget):
 			return
 		for _l in l:
 			_l.setSelected(True)
+		self.experiment.items[name].open_tab(select_in_tree=False)
 
 	def text_edited(self, treeitem, col):
 

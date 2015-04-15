@@ -62,16 +62,16 @@ class image(widget):
 	"""
 
 	def __init__(self, form, path=None, adjust=True, frame=False):
-	
+
 		"""
 		desc:
 			Constructor.
-		
+
 		arguments:
 			form:
 				desc:	The parent form.
 				type:	form
-		
+
 		keywords:
 			path:
 				desc:	The full path to the image. To show an image from the
@@ -87,29 +87,29 @@ class image(widget):
 						widget.
 				type:	bool
 		"""
-	
+
 		if type(adjust) != bool:
-			adjust = adjust == u'yes'			
+			adjust = adjust == u'yes'
 		if type(frame) != bool:
-			frame = frame == u'yes'						
-	
+			frame = frame == u'yes'
+
 		widget.__init__(self, form)
 		self.adjust = adjust
 		self.frame = frame
 		self.path = path
 		self.type = u'image'
-				
+
 	def render(self):
-	
+
 		"""
 		desc:
 			Draws the widget.
 		"""
-	
+
 		if not os.path.exists(self.path):
 			raise osexception( \
 				u'No valid path has been specified in image widget')
-		
+
 		x, y, w, h = self.rect
 		x += w/2
 		y += h/2
@@ -119,24 +119,24 @@ class image(widget):
 			self.draw_frame(self.rect)
 
 	def set_rect(self, rect):
-	
+
 		"""
 		desc:
 			Sets the widget geometry.
-		
+
 		arguments:
 			rect:
 				desc:	A (left, top, width, height) tuple.
 				type:	tuple
 		"""
-	
-		self.rect = rect	
+
+		self.rect = rect
 		if self.adjust:
 			x, y, w, h = self.rect
 			try:
 				img = Image.open(self.path)
 				img_w, img_h = img.size
-			except:				
+			except:
 				try:
 					import pygame
 					img = pygame.image.load(self.path)
@@ -144,7 +144,7 @@ class image(widget):
 					raise osexception( \
 						u'Failed to open image "%s". Perhaps the file is not an image, or the image format is not supported.' \
 						% self.path)
-				img_w, img_h = img.get_width()			
+				img_w, img_h = img.get_size()
 			scale_x = 1.*w/img_w
 			scale_y = 1.*h/img_h
 			self.scale = min(scale_x, scale_y)

@@ -516,6 +516,23 @@ class sketchpad_canvas(QtGui.QGraphicsScene):
 			return 1.0
 		return scale
 
+
+	def _font_size(self, font_size):
+
+		"""
+		desc:
+			Safely returns a font_size.
+
+		returns:
+			A font size.
+		"""
+
+		if not isinstance(font_size, int):
+			self.notify(_('Font size "%s" is invalid or variably defined, using 18') \
+				% font_size)
+			return 18
+		return font_size
+
 	def drawBackground(self, painter, rect):
 
 		"""
@@ -590,7 +607,7 @@ class sketchpad_canvas(QtGui.QGraphicsScene):
 		else:
 			weight = QtGui.QFont.Normal
 		self._font = QtGui.QFont(style, weight=weight, italic=italic)
-		self._font.setPixelSize(size)
+		self._font.setPixelSize(self._font_size(size))
 
 	def text(self, text, center=True, x=None, y=None, max_width=None,
 		color=None, bidi=None, html=True):

@@ -1159,7 +1159,10 @@ def _gabor(orient, freq, env=u"gaussian", size=96, stdev=12, phase=0,
 		return canvas_cache[key]
 	# Create a surface
 	surface = pygame.Surface( (size, size) )
-	px = pygame.PixelArray(surface)
+	try:
+		px = pygame.PixelArray(surface)
+	except:
+		px = None
 	# Conver the orientation to radians
 	orient = math.radians(orient)
 	col1 = _color(col1)
@@ -1199,7 +1202,10 @@ def _gabor(orient, freq, env=u"gaussian", size=96, stdev=12, phase=0,
 			r = col1.r * amp + col2.r * (1.0 - amp)
 			g = col1.g * amp + col2.g * (1.0 - amp)
 			b = col1.b * amp + col2.b * (1.0 - amp)
-			px[rx][ry] = round(r), round(g), round(b)
+			if px is None:
+				surface.set_at((rx, ry), (round(r), round(g), round(b)))
+			else:
+				px[rx][ry] = round(r), round(g), round(b)
 	canvas_cache[key] = surface
 	del px
 	return surface
@@ -1223,7 +1229,10 @@ def _noise_patch(env=u"gaussian", size=96, stdev=12, col1=u"white",
 		return canvas_cache[key]
 	# Create a surface
 	surface = pygame.Surface( (size, size) )
-	px = pygame.PixelArray(surface)
+	try:
+		px = pygame.PixelArray(surface)
+	except:
+		px = None
 	col1 = _color(col1)
 	col2 = _color(col2)
 	# rx and ry reflect the real coordinates in the
@@ -1256,7 +1265,10 @@ def _noise_patch(env=u"gaussian", size=96, stdev=12, col1=u"white",
 			r = col1.r * amp + col2.r * (1.0 - amp)
 			g = col1.g * amp + col2.g * (1.0 - amp)
 			b = col1.b * amp + col2.b * (1.0 - amp)
-			px[rx][ry] = round(r), round(g), round(b)
+			if px is None:
+				surface.set_at((rx, ry), (round(r), round(g), round(b)))
+			else:
+				px[rx][ry] = round(r), round(g), round(b)
 	canvas_cache[key] = surface
 	del px
 	return surface

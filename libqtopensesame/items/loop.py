@@ -487,8 +487,8 @@ class loop(qtstructure_item, qtitem, loop_runtime):
 			self.experiment.icon(u"random"))
 		self.loop_widget.ui.combobox_order.setItemIcon(1,
 			self.experiment.icon(u"sequential"))
-		self.loop_table = loop_table.loop_table(self, self.var.cycles,
-			self.cyclevar_count())
+		self.loop_table = loop_table.loop_table(self,
+			self.var.get(u'cycles', _eval=False), self.cyclevar_count())
 		self.edit_vbox.addWidget(self.loop_table)
 		self.set_focus_widget(None)
 
@@ -525,6 +525,8 @@ class loop(qtstructure_item, qtitem, loop_runtime):
 			self.loop_widget.ui.combobox_item)
 		super(loop, self).edit_widget()
 		self.refresh_loop_table(lock=False)
+		self.loop_widget.ui.spin_cycles.setEnabled(
+			isinstance(self.get(u'cycles', _eval=False), int))
 		self.loop_widget.ui.spin_cycles.setValue(self.cycle_count())
 		# Update advanced settings
 		break_if = self.var.get(u'break_if', _eval=False)

@@ -66,8 +66,7 @@ class droid(legacy):
 				else:
 					# If we're not on Android, simply use the same logic as the
 					# legacy back-end.
-					if event.unicode in invalid_unicode or \
-						event.unicode not in printable:
+					if event.unicode in invalid_unicode:
 						key = self.key_name(event.key)
 					else:
 						key = event.unicode

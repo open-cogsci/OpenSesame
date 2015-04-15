@@ -120,6 +120,8 @@ class qtitem_store(item_store):
 		if from_name not in self:
 			self.experiment.notify(_(u'Item "%s" doesn\'t exist' % from_name))
 			return None
+		if from_name == to_name:
+			return None
 		to_name = self.valid_name(self[from_name].item_type, suggestion=to_name)
 		if to_name in self:
 			self.experiment.notify(_(u'An item with that name already exists.'))
