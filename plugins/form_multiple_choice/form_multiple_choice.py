@@ -63,7 +63,7 @@ class form_multiple_choice(item.item):
 		# Parse the option list
 		option_list = self.var.get(u'options').split(u'\n') # split by return
 		# Filter out empty options
-		option_list = filter(lambda option: option != u'', option_list)
+		option_list = list(filter(lambda option: option != u'', option_list))
 		# option_list.pop(len(option_list)-1) # remove last (empty) option
 		if len(option_list) == 0:
 			raise osexception( \

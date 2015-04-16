@@ -48,7 +48,9 @@ class item(object):
 		string		--	An definition string. (default=None).
 		"""
 
-		if not hasattr(self, u'var'):
+		try:
+			object.__getattr__(self, u'var')
+		except:
 			self.var = var_store(self, parent=experiment.var)
 		self.reset()
 		self.name = name
@@ -264,7 +266,12 @@ class item(object):
 			warnings.warn(u'called %s as item property' % var,
 				DeprecationWarning)
 			return self.var.get(var)
-		raise osexception(u'%s not found' % var)
+		if hasattr(self.__class__, var):
+			warnings.warn(
+				u'called %s as item property and stored as class attribute' \
+				% var, DeprecationWarning)
+			return self.__class__.var
+		raise AttributeError(u'%s not found' % var)
 
 	def variable_to_string(self, var):
 
@@ -516,7 +523,7 @@ class item(object):
 
 		if time is None:
 			time = self.time()
-		setattr(self.experiment, u'time_%s' % self.name, time)
+		self.experiment.var.set(u'time_%s' % self.name, time)
 
 	def dummy(self, **args):
 
@@ -791,6 +798,8 @@ class item(object):
 			m = regexp.unsanitize.search(s)
 			if m is None:
 				break
+			if py3:
+				unichr = chr
 			s = s.replace(m.group(0), unichr(int(m.group(1), 16)), 1)
 		return s
 

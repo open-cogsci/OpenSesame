@@ -12,7 +12,7 @@ set title "Runtime GUI for Android"
 set coordinates "relative"
 set start "experiment"
 set sampler_backend "legacy"
-set transparent_variables "no"
+
 set foreground "white"
 set font_bold "no"
 set description "Implements the launcher menu for the Android runtime"

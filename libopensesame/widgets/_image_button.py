@@ -39,10 +39,10 @@ class image_button(image):
 		from libopensesame import widgets
 		form = widgets.form(self.experiment)
 		# The full path to the image needs to be provided.
-		# self.experiment.get_file() can be used to retrieve the full path
+		# self.experiment.pool can be used to retrieve the full path
 		# to an image in the file pool.
 		image_button = widgets.image_button(form,
-			path=self.experiment.get_file('5.png'), var='response')
+			path=self.experiment.pool['5.png'], var='response')
 		form.set_widget(image_button, (0,0))
 		form._exec()
 		~~~
@@ -58,7 +58,7 @@ class image_button(image):
 
 	def __init__(self, form, path=None, adjust=True, frame=False, image_id=None,
 		var=None):
-	
+
 		"""
 		desc:
 			Constructor.
@@ -91,7 +91,7 @@ class image_button(image):
 						used to log the widget status.
 				type:	[str, unicode, NoneType]
 		"""
-	
+
 		image.__init__(self, form, path, adjust=adjust, frame=frame)
 		if image_id is None:
 			self.image_id = path
@@ -99,21 +99,20 @@ class image_button(image):
 			self.image_id = image_id
 		self.type = u'image_button'
 		self.var = var
-		self.set_var(False)				
-				
+		self.set_var(False)
+
 	def on_mouse_click(self, pos):
-	
+
 		"""
 		desc:
 			Is called whenever the user clicks on the widget. Returns the
 			image_id or the path to the image if no image_id has been specified.
-		
+
 		arguments:
 			pos:
 				desc:	An (x, y) coordinate tuple.
 				type:	tuple
 		"""
-	
+
 		self.set_var(True)
 		return self.image_id
-

@@ -66,7 +66,7 @@ class base_element(object):
 	def canvas(self): return self.sketchpad.canvas
 
 	@property
-	def get_file(self): return self.sketchpad.experiment.get_file
+	def pool(self): return self.sketchpad.experiment.pool
 
 	@property
 	def name(self): return self.sketchpad.name

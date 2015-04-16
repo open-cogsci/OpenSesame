@@ -45,6 +45,18 @@ class html(HTMLParser):
 	valid_end_tags = u'i', u'b', u'u', u'span'
 	valid_start_tags = u'i', u'b', u'u', u'span', u'br'
 
+	def __init__(self):
+
+		"""
+		desc:
+			Constructor. Overridden to explicitly specify conver_charrefs.
+		"""
+
+		if py3:
+			HTMLParser.__init__(self, convert_charrefs=False)
+		else:
+			HTMLParser.__init__(self)
+
 	def handle_data(self, data):
 
 		"""

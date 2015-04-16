@@ -68,8 +68,8 @@ class theme:
 		self.theme_info = os.path.join(self.theme_folder, u"__theme__.py")
 		if os.path.exists(self.theme_info):
 			info = imp.load_source(self.theme, self.theme_info)
-			self._qss = path = \
-				open(os.path.join(self.theme_folder, info.qss)).read()
+			with open(os.path.join(self.theme_folder, info.qss)) as fd:
+				self._qss = path = fd.read()
 			self._icon_map = info.icon_map
 			self._icon_theme = info.icon_theme
 		self.load_icon_map()
@@ -177,19 +177,20 @@ class theme:
 		self.icon_map = {}
 		path = os.path.join(self.theme_folder, self._icon_map)
 		debug.msg(path)
-		for l in open(path):
-			l = l.split(",")
-			if len(l) == 3:
-				try:
-					size = int(l[2])
-				except:
-					size = 32
-				alias = l[0].strip()
-				name = l[1].strip()
-				if alias in self.icon_map:
-					debug.msg(u"alias '%s' already in icon map, overwriting" % \
-						alias, reason=u"warning")
-				self.icon_map[alias] = name, size
+		with open(path) as fd:
+			for l in fd:
+				l = l.split(",")
+				if len(l) == 3:
+					try:
+						size = int(l[2])
+					except:
+						size = 32
+					alias = l[0].strip()
+					name = l[1].strip()
+					if alias in self.icon_map:
+						debug.msg(u"alias '%s' already in icon map, overwriting" % \
+							alias, reason=u"warning")
+					self.icon_map[alias] = name, size
 
 	def load_icons(self, ui):
 
@@ -237,4 +238,3 @@ class theme:
 		"""
 
 		return os.path.join(self.theme_folder, fname)
-

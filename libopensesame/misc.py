@@ -312,9 +312,10 @@ def module_versions():
 	# Expyriment
 	try:
 		_out = sys.stdout
-		sys.stdout = open(os.devnull, 'w')
-		import expyriment
-		sys.stdout = _out
+		with open(os.devnull, 'w') as fd:
+			sys.stdout = fd
+			import expyriment
+			sys.stdout = _out
 		s += u'\nExpyriment %s' % expyriment.get_version()
 	except:
 		s += u'\nExpyriment is not available (or version is unknown)'

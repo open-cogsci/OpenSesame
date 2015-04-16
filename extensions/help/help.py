@@ -162,8 +162,8 @@ class help(base_extension):
 		"""
 
 		import yaml
-		fd = open(self.ext_resource(u'psychopy_sitemap.yaml'))
-		sitemap = fd.read()
+		with open(self.ext_resource(u'psychopy_sitemap.yaml')) as fd:
+			sitemap = fd.read()
 		_dict = yaml.load(sitemap)
 		menu = self.build_menu(self.menu, _(u'PsychoPy API'), _dict)
 		return menu

@@ -39,6 +39,8 @@ class inprocess_runner(base_runner):
 		except Exception as e:
 			if not isinstance(e, osexception):
 				retval = osexception(u'Unexpected error', e)
+			else:
+				retval = e
 		# Exceptions during the end phase are less important and only printed
 		# to the debug window.
 		try:

@@ -181,4 +181,5 @@ class qtitem_store(item_store):
 		"""
 
 		_used = self.used()
-		return filter(lambda item: item not in _used, self.__items__.keys())
+		return list(filter(lambda item: item not in _used,
+			self.__items__.keys()))

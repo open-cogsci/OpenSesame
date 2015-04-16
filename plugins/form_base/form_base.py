@@ -31,7 +31,7 @@ from PyQt4 import QtGui, QtCore
 class form_base(item.item):
 
 	"""A generic form plug-in"""
-	
+
 	initial_view = u'script'
 
 	def __init__(self, name, experiment, script=None, item_type=u'form_base',
@@ -59,13 +59,13 @@ class form_base(item.item):
 			Resets plug-in to initial values.
 		"""
 
-		self.cols = u'2;2'
-		self.rows = u'2;2'
-		self.spacing = 10
+		self.var.cols = u'2;2'
+		self.var.rows = u'2;2'
+		self.var.spacing = 10
+		self.var._theme = u'gray'
+		self.var.only_render = u'no'
+		self.var.margins = u'50;50;50;50'
 		self.focus_widget = None
-		self._theme = u'gray'
-		self.only_render = u'no'
-		self.margins = u'50;50;50;50'
 		self._widgets = []
 
 	def parse_line(self, line):
@@ -178,7 +178,7 @@ class form_base(item.item):
 
 			# Translate paths into full file names
 			if u'path' in w:
-				w[u'path'] = self.experiment.get_file(w[u'path'])
+				w[u'path'] = self.experiment.pool[w[u'path']]
 
 			# Process focus keyword
 			focus = False

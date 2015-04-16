@@ -129,8 +129,6 @@ class inline_script(item.item):
 		"""
 
 		item.item.prepare(self)
-		if self.experiment.transparent_variables == u'yes':
-			self.start_transparency()
 		# 'self' must always be registered, otherwise we get confusions between
 		# the various inline_script items.
 		self.experiment.python_workspace[u'self'] = self
@@ -154,8 +152,6 @@ class inline_script(item.item):
 		except Exception as e:
 			raise osexception(u'Error while executing inline script',
 				line_offset=-1, item=self.name, phase=u'prepare', exception=e)
-		if self.experiment.transparent_variables == u'yes':
-			self.end_transparency()
 
 	def run(self):
 
@@ -170,15 +166,11 @@ class inline_script(item.item):
 		# 'self' must always be registered, otherwise we get confusions between
 		# the various inline_script items.
 		self.experiment.python_workspace[u'self'] = self
-		if self.experiment.transparent_variables == u'yes':
-			self.start_transparency()
 		try:
 			self.experiment.python_workspace._exec(self.crun)
 		except Exception as e:
 			raise osexception(u'Error while executing inline script',
 				line_offset=-1, item=self.name, phase=u'run', exception=e)
-		if self.experiment.transparent_variables == u'yes':
-			self.end_transparency()
 
 	def var_info(self):
 
@@ -216,31 +208,6 @@ class inline_script(item.item):
 		self._var_info = l
 
 		return l
-
-	def start_transparency(self):
-
-		"""
-		Registers all experimental variables. This allows
-		the user to interact with the experimental variables without needing
-		to call `exp.set()`.
-		"""
-
-		import warnings
-		print(u'Warning: Transparent variable management has been deprecated')
-		for var, val in self.experiment.var_info():
-			self.experiment.python_workspace[var] = val
-
-	def end_transparency(self):
-
-		"""
-		Sets all global variables, so that the user doesn't have explicitly have
-		to call `exp.set()`.
-		"""
-
-		for var, val in self.experiment.python_workspace.items():
-			if isinstance(val, basestring) or isinstance(val, float) or \
-				isinstance(val, int):
-				self.experiment.var.set(var, val)
 
 def restore_state():
 

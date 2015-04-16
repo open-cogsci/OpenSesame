@@ -71,7 +71,7 @@ class srbox(item.item, generic_response.generic_response):
 		item.item.prepare(self)
 
 		# Prepare the allowed responses
-		if self.has("allowed_responses"):
+		if u'allowed_responses' in self.var:
 			self._allowed_responses = []
 			for r in self.unistr(self.var.get("allowed_responses")).split(";"):
 				if r.strip() != "":

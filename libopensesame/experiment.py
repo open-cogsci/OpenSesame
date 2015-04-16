@@ -51,7 +51,7 @@ class experiment(item.item):
 		~~~ {.python}
 		from openexp.canvas import canvas
 		my_canvas = canvas(exp)
-		my_canvas.image(exp.get_file('my_image.png'))
+		my_canvas.image(exp.pool['my_image.png'])
 		timestamp = my_canvas.show()
 		exp.set('canvas_timestamp', timestamp)
 		~~~
@@ -141,7 +141,6 @@ class experiment(item.item):
 		# Set default variables
 		self.var.start = u'experiment'
 		self.var.title = u'My Experiment'
-		self.var.transparent_variables = u'no'
 		self.var.bidi = u'no'
 		self.var.round_decimals = 2
 
@@ -163,11 +162,10 @@ class experiment(item.item):
 		self.var.height = 768
 		self.var.background = u'black'
 		self.var.foreground = u'white'
-		if fullscreen is not None:
-			if fullscreen:
-				self.var.fullscreen = u'yes'
-			else:
-				self.var.fullscreen = u'no'
+		if fullscreen:
+			self.var.fullscreen = u'yes'
+		else:
+			self.var.fullscreen = u'no'
 
 		# Font parameters
 		self.var.font_size = 18
@@ -359,8 +357,8 @@ class experiment(item.item):
 		print(u"experiment.run(): experiment started at %s" % time.ctime())
 
 		if self.var.start in self.items:
-			self.items[self.start].prepare()
-			self.items[self.start].run()
+			self.items[self.var.start].prepare()
+			self.items[self.var.start].run()
 		else:
 			raise osexception( \
 				"Could not find item '%s', which is the entry point of the experiment" \
@@ -466,8 +464,8 @@ class experiment(item.item):
 		if self is not None:
 			if name in self.resources:
 				return self.resources[name]
-			if os.path.exists(self.get_file(name)):
-				return self.get_file(name)
+			if os.path.exists(self.pool[name]):
+				return self.pool[name]
 		path = misc.resource(name)
 		if path is None:
 			raise Exception( \
@@ -510,9 +508,8 @@ class experiment(item.item):
 			if os.path.exists(path) and not overwrite:
 				return False
 			debug.msg(u'saving as .opensesame file')
-			f = open(path, u'w')
-			f.write(self.usanitize(self.to_string()))
-			f.close()
+			with open(path, u'w') as fd:
+				fd.write(self.usanitize(self.to_string()))
 			self.experiment_path = os.path.dirname(path)
 			return path
 		# Use the .opensesame.tar.gz extension by default
@@ -524,9 +521,8 @@ class experiment(item.item):
 		# Write the script to a text file
 		script = self.to_string()
 		script_path = os.path.join(self.pool_folder, u'script.opensesame')
-		f = open(script_path, u"w")
-		f.write(self.usanitize(script))
-		f.close()
+		with open(script_path, u"w") as fd:
+			fd.write(self.usanitize(script))
 		# Create the archive in a a temporary folder and move it afterwards.
 		# This hack is needed, because tarfile fails on a Unicode path.
 		tmp_path = tempfile.mktemp(suffix=u'.opensesame.tar.gz')
@@ -582,7 +578,13 @@ class experiment(item.item):
 		if src[-len(ext):] != ext:
 			debug.msg(u'opening .opensesame file')
 			self.experiment_path = os.path.dirname(src)
-			return self.unsanitize(open(src, u'rU').read())
+			# Universal newlines mode is deprecated in Python 3
+			if py3:
+				mode = u'r'
+			else:
+				mode = u'rU'
+			with open(src, mode) as fd:
+				return self.unsanitize(fd.read())
 		debug.msg(u"opening .opensesame.tar.gz file")
 		# If the file is a .tar.gz archive, extract the pool to the pool folder
 		# and return the contents of opensesame.script.
@@ -606,7 +608,12 @@ class experiment(item.item):
 				os.rmdir(os.path.join(self.pool_folder, folder))
 		script_path = os.path.join(self.pool_folder, u"script.opensesame")
 		tar.extract(u"script.opensesame", self.pool_folder)
-		script = self.unsanitize(open(script_path, u"rU").read())
+		if py3:
+			mode = u'r'
+		else:
+			mode = u'rU'
+		with open(script_path, mode) as fd:
+			script = self.unsanitize(fd.read())
 		os.remove(script_path)
 		self.experiment_path = os.path.dirname(src)
 		return script

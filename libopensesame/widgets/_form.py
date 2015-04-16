@@ -115,9 +115,8 @@ class form(object):
 		n_cells = len(self.cols)*len(self.rows)
 		self.widgets = [None]*n_cells
 		self.span = [(1,1)]*n_cells
-		self.canvas = canvas(self.experiment, auto_prepare=False, fgcolor= \
-			self.item.get(u'foreground'), bgcolor=self.item.get( \
-			u'background'))
+		self.canvas = canvas(self.experiment, auto_prepare=False,
+			fgcolor=self.item.var.foreground, bgcolor=self.item.var.background)
 
 		if theme == u'gray':
 			from libopensesame.widgets.themes.gray import gray

@@ -160,14 +160,14 @@ class generic_response:
 					if correct_response in self.synonyms or \
 						self.unistr(correct_response) in self.synonyms:
 						self.experiment.var.correct = 1
-						self.experiment.total_correct += 1
+						self.experiment.var.total_correct += 1
 					else:
 						self.experiment.var.correct = 0
 				else:
 					if self.experiment.response in (correct_response,
 						self.unistr(correct_response)):
 						self.experiment.var.correct = 1
-						self.experiment.total_correct += 1
+						self.experiment.var.total_correct += 1
 					else:
 						self.experiment.var.correct = 0
 			else:
@@ -175,16 +175,16 @@ class generic_response:
 				# correct to undefined
 				self.experiment.var.correct = u"undefined"
 			# Do some response bookkeeping
-			self.experiment.total_response_time += \
+			self.experiment.var.total_response_time += \
 				self.experiment.var.response_time
-			self.experiment.total_responses += 1
+			self.experiment.var.total_responses += 1
 			self.experiment.var.accuracy = self.experiment.var.acc = \
-				100.0 * self.experiment.total_correct / \
-				self.experiment.total_responses
+				100.0 * self.experiment.var.total_correct / \
+				self.experiment.var.total_responses
 			self.experiment.var.average_response_time = \
 				self.experiment.var.avg_rt = \
-				self.experiment.total_response_time / \
-				self.experiment.total_responses
+				self.experiment.var.total_response_time / \
+				self.experiment.var.total_responses
 			self.experiment.var.set(u"correct_%s" % self.name,
 				self.var.correct)
 

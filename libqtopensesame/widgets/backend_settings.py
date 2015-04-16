@@ -111,7 +111,7 @@ class settings_widget(base_widget):
 		self.layout.setFieldGrowthPolicy(QtGui.QFormLayout.FieldsStayAtSizeHint)
 		self.setLayout(self.layout)
 		for var, desc in settings.items():
-			if self.experiment.has(var):
+			if var in self.experiment.var:
 				val = self.experiment.var.get(var)
 			else:
 				val = desc[u"default"]

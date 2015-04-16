@@ -21,7 +21,7 @@ set subject_nr "0"
 set subject_parity "even"
 set synth_backend "legacy"
 set title "Visual search has no memory"
-set transparent_variables "no"
+
 set width "1024"
 
 define notepad about_this_experiment

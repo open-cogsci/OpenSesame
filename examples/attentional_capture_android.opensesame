@@ -7,7 +7,7 @@ set subject_parity "even"
 set font_size "18"
 set description "An attention capture paradigm, modified for the Android runtime"
 set title "Attentional capture for Android"
-set transparent_variables "no"
+
 set font_family "mono"
 set font_bold "no"
 set coordinates "relative"

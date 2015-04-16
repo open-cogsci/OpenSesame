@@ -7,7 +7,7 @@ set subject_parity "even"
 set font_size "18"
 set description "An example experiment that implements basic counterbalancing"
 set title "Counterbalancing example"
-set transparent_variables "no"
+
 set start "experiment"
 set font_bold "no"
 set coordinates "relative"

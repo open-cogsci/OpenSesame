@@ -166,7 +166,8 @@ def plugin_properties(plugin, _type=u'plugins'):
 	if os.path.exists(info_yaml):
 		# Read the yaml file and replace all tabs by spaces. This is necessary,
 		# because yaml doesn't accept tab-based indentation, whereas json does.
-		s = safe_decode(open(info_yaml).read(), enc=u'utf-8')
+		with open(info_yaml) as fd:
+			s = safe_decode(fd.read(), enc=u'utf-8')
 		s = s.replace(u'\t', u'    ')
 		try:
 			_properties[plugin] = yaml.load(s)
@@ -176,16 +177,17 @@ def plugin_properties(plugin, _type=u'plugins'):
 	# Old-style plug-ins, using info.txt
 	elif os.path.exists(info_txt):
 		_properties[plugin] = {}
-		for l in open(info_txt, u'r'):
-			a = l.split(":")
-			if len(a) == 2:
-				val = a[1].strip()
-				var = a[0].strip()
-				try:
-					val = int(val)
-				except:
-					pass
-				_properties[plugin][var] = val
+		with open(info_txt, u'r') as fd:
+			for l in fd:
+				a = l.split(":")
+				if len(a) == 2:
+					val = a[1].strip()
+					var = a[0].strip()
+					try:
+						val = int(val)
+					except:
+						pass
+					_properties[plugin][var] = val
 	else:
 		_properties[plugin] = {}
 		debug.msg( \

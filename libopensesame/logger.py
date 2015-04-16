@@ -51,8 +51,8 @@ class logger(item.item):
 			if self.var.get(u'auto_log') == u'yes':
 				self.logvars = []
 				for logvar, val, _item in self.experiment.var_list():
-					if (self.has(logvar) or self.var.get(u'ignore_missing') == \
-						u'yes') and logvar not in self.logvars:
+					if logvar in self.var or self.var.ignore_missing == u'yes' \
+						and logvar not in self.logvars:
 						self.logvars.append(logvar)
 						debug.msg(u'auto-logging "%s"' % logvar)
 			# Sort the logvars to ascertain a consistent ordering

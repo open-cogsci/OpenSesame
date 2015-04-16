@@ -13,7 +13,7 @@ set title "PyGaze eye-tracking template"
 set coordinates "relative"
 set width "1024"
 set sampler_backend "legacy"
-set transparent_variables "no"
+
 set foreground "white"
 set font_bold "no"
 set description "A template for eye-tracking experiments"

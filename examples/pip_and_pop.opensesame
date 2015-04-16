@@ -24,7 +24,7 @@ set subject_nr "0"
 set subject_parity "even"
 set synth_backend "legacy"
 set title "Pip & Pop"
-set transparent_variables "no"
+
 set width "1024"
 
 define notepad about_this_experiment
@@ -188,11 +188,11 @@ define inline_script dynamic_search_display
 	self.experiment.var.set("response_time", response_time)
 	self.experiment.var.set("correct", correct)
 	# Maintain feedback data
-	self.experiment.total_response_time += response_time
-	self.experiment.total_responses += 1
-	self.experiment.total_correct += correct
-	self.experiment.acc = 100.0 * self.experiment.total_correct / self.experiment.total_responses
-	self.experiment.avg_rt = self.experiment.total_response_time / self.experiment.total_responses
+	self.experiment.var.total_response_time += response_time
+	self.experiment.var.total_responses += 1
+	self.experiment.var.total_correct += correct
+	self.experiment.acc = 100.0 * self.experiment.var.total_correct / self.experiment.var.total_responses
+	self.experiment.avg_rt = self.experiment.var.total_response_time / self.experiment.var.total_responses
 	__end__
 	set description "Executes Python code"
 

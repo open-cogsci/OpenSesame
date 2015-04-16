@@ -208,7 +208,7 @@ class psycho(canvas.canvas):
 			# If a font is taken from the file pool, it is not registered with
 			# PyGlet, and we therefore need to register it now.
 			if self.experiment.file_in_pool(u'%s.ttf' % style):
-				font_path = self.experiment.get_file(u'%s.ttf' % style)
+				font_path = self.experiment.pool[u'%s.ttf' % style]
 				register_font(font_path)
 		super(psycho, self).set_font(style=style, size=size, italic=italic,
 			bold=bold, underline=underline)

@@ -201,9 +201,10 @@ class qtopensesame(QtGui.QMainWindow, base_component):
 			self.ui.pool_widget.ui.edit_pool_filter.setFocus)
 
 		# Create the initial experiment, which is the default template.
-		self.experiment = experiment.experiment(self, u"New experiment",
-			open(misc.resource(os.path.join(u"templates",
-				u"default.opensesame")), u"r").read())
+		with open(misc.resource(os.path.join(u"templates",
+			u"default.opensesame")), u"r") as fd:
+			self.experiment = experiment.experiment(self, u"New experiment",
+				fd.read())
 		self.experiment.build_item_tree()
 
 		# Miscellaneous initialization
@@ -923,7 +924,7 @@ class qtopensesame(QtGui.QMainWindow, base_component):
 
 			# Multiprocessing dus not work if opensesame is packaged as an app
 			# under OSX. For now just display a warning message and do nothing
-			# For the same reason, inOSX the default runner is set to inprocess 
+			# For the same reason, inOSX the default runner is set to inprocess
 			# for now in misc.config
 			if sys.platform == "darwin" and getattr(sys, 'frozen', None):
 				self.experiment.notify(u"Multiprocessing does not work in the OSX app version yet. \

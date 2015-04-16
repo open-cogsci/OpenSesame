@@ -69,7 +69,7 @@ class file_pool_store(object):
 			if not exp.file_in_pool('my_image.png'):
 				print('my_image.png could not be found!')
 			else:
-				image_path = exp.get_file('my_image.png')
+				image_path = exp.pool['my_image.png']
 				my_canvas = exp.offline_canvas()
 				my_canvas.image(image_path)
 		"""
@@ -105,7 +105,7 @@ class file_pool_store(object):
 			type:	unicode
 
 		example: |
-			image_path = exp.get_file('my_image.png')
+			image_path = exp.pool['my_image.png']
 			my_canvas = exp.offline_canvas()
 			my_canvas.image(image_path)
 		"""

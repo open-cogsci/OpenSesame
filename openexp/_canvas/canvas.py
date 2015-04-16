@@ -971,7 +971,7 @@ class canvas(object):
 			from openexp.canvas import canvas
 			my_canvas = canvas(exp)
 			# Determine the absolute path:
-			path = exp.get_file(u'image_in_pool.png')
+			path = exp.pool[u'image_in_pool.png']
 			my_canvas.image(path)
 		"""
 

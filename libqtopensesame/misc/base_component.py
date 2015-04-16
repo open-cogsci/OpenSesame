@@ -84,7 +84,8 @@ class base_component(base_qtobject):
 					from libopensesame import misc
 					ui_path = misc.resource(os.path.join(*path_list)+u'.ui')
 			debug.msg(u'dynamically loading ui: %s' % ui_path)
-			self.ui = uic.loadUi(open(ui_path), self)
+			with open(ui_path) as fd:
+				self.ui = uic.loadUi(fd, self)
 		else:
 			self.ui = None
 

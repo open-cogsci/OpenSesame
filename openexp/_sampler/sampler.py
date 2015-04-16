@@ -48,7 +48,7 @@ class sampler(object):
 
 		~~~ {.python}
 		from openexp.sampler import sampler
-		my_sampler = sampler(exp, exp.get_file('bark.ogg'))
+		my_sampler = sampler(exp, exp.pool['bark.ogg'])
 		my_sampler.play()
 		~~~
 
@@ -79,7 +79,7 @@ class sampler(object):
 
 		example: |
 			from openexp.sampler import sampler
-			src = exp.get_file('my_sound.ogg')
+			src = exp.pool[u'my_sound.ogg']
 			my_sampler = sampler(exp, src)
 		"""
 
@@ -99,7 +99,7 @@ class sampler(object):
 
 		example: |
 			from openexp.sampler import sampler
-			src = exp.get_file('my_sound.ogg')
+			src = exp.pool[u'my_sound.ogg']
 			my_sampler = sampler(exp, src)
 			my_sampler.stop_after(100)
 		"""
@@ -123,7 +123,7 @@ class sampler(object):
 
 		example: |
 			from openexp.sampler import sampler
-			src = exp.get_file('my_sound.ogg')
+			src = exp.pool[u'my_sound.ogg']
 			my_sampler = sampler(exp, src)
 			my_sampler.fade_in(100)
 		"""
@@ -146,7 +146,7 @@ class sampler(object):
 
 		example: |
 			from openexp.sampler import sampler
-			src = exp.get_file('my_sound.ogg')
+			src = exp.pool[u'my_sound.ogg']
 			my_sampler = sampler(exp, src)
 			my_sampler.volume(0.5)
 		"""
@@ -167,7 +167,7 @@ class sampler(object):
 
 		example: |
 			from openexp.sampler import sampler
-			src = exp.get_file('my_sound.ogg')
+			src = exp.pool[u'my_sound.ogg']
 			my_sampler = sampler(exp, src)
 			my_sampler.pitch(2.0)
 		"""
@@ -191,7 +191,7 @@ class sampler(object):
 
 		example: |
 			from openexp.sampler import sampler
-			src = exp.get_file('my_sound.ogg')
+			src = exp.pool[u'my_sound.ogg']
 			my_sampler = sampler(exp, src)
 			my_sampler.pan('left')
 		"""
@@ -213,7 +213,7 @@ class sampler(object):
 
 		example: |
 			from openexp.sampler import sampler
-			src = exp.get_file('my_sound.ogg')
+			src = exp.pool[u'my_sound.ogg']
 			my_sampler = sampler(exp, src)
 			my_sampler.play()
 		"""
@@ -228,7 +228,7 @@ class sampler(object):
 
 		example: |
 			from openexp.sampler import sampler
-			src = exp.get_file('my_sound.ogg')
+			src = exp.pool[u'my_sound.ogg']
 			my_sampler = sampler(exp, src)
 			my_sampler.play()
 			self.sleep(100)
@@ -245,7 +245,7 @@ class sampler(object):
 
 		example: |
 			from openexp.sampler import sampler
-			src = exp.get_file('my_sound.ogg')
+			src = exp.pool[u'my_sound.ogg']
 			my_sampler = sampler(exp, src)
 			my_sampler.play()
 			self.sleep(100)
@@ -264,7 +264,7 @@ class sampler(object):
 
 		example: |
 			from openexp.sampler import sampler
-			src = exp.get_file('my_sound.ogg')
+			src = exp.pool[u'my_sound.ogg']
 			my_sampler = sampler(exp, src)
 			my_sampler.play()
 			self.sleep(100)
@@ -287,7 +287,7 @@ class sampler(object):
 
 		Example: |
 			from openexp.sampler import sampler
-			src = exp.get_file('my_sound.ogg')
+			src = exp.pool[u'my_sound.ogg']
 			my_sampler = sampler(exp, src)
 			my_sampler.play()
 			self.sleep(100)
@@ -306,7 +306,7 @@ class sampler(object):
 
 		example: |
 			from openexp.sampler import sampler
-			src = exp.get_file('my_sound.ogg')
+			src = exp.pool[u'my_sound.ogg']
 			my_sampler = sampler(exp, src)
 			my_sampler.play()
 			my_sampler.wait()

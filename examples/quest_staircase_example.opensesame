@@ -12,7 +12,7 @@ set title "Quest Staircase example"
 set coordinates "relative"
 set start "experiment"
 set sampler_backend "legacy"
-set transparent_variables "no"
+
 set foreground "white"
 set font_bold "no"
 set description "Demonstrates the plug-ins that implement the Quest staircase procedure (Watson & Pelli, 1983)"

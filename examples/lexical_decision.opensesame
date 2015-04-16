@@ -7,7 +7,7 @@ set subject_parity "even"
 set font_size "18"
 set description "A simple lexical-decision example experiment"
 set title "Lexical decision"
-set transparent_variables "no"
+
 set start "experiment"
 set font_bold "no"
 set coordinates "relative"

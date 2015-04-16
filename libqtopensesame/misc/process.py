@@ -93,7 +93,7 @@ class ExperimentProcess(multiprocessing.Process):
 		self.pool_folder = exp.pool_folder
 		self.subject_nr = exp.var.subject_nr
 		self.experiment_path = exp.var.experiment_path
-		self.fullscreen = exp.var.fullscreen
+		self.fullscreen = exp.var.fullscreen == u'yes'
 		self.logfile = exp.logfile
 		self.auto_response = exp.auto_response
 

@@ -7,7 +7,7 @@ set subject_parity "even"
 set font_size "18"
 set description "A simple example experiment using the synth"
 set title "Synth example"
-set transparent_variables "no"
+
 set font_bold "no"
 set sampler_backend "legacy"
 set coordinates "relative"
