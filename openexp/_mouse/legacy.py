@@ -20,11 +20,12 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 from libopensesame.py3compat import *
 
 from openexp._mouse import mouse
+from openexp._coordinates.legacy import legacy as legacy_coordinates
 from libopensesame.exceptions import osexception
 import pygame
 from pygame.locals import *
 
-class legacy(mouse.mouse):
+class legacy(mouse.mouse, legacy_coordinates):
 
 	"""
 	desc:
@@ -50,12 +51,16 @@ class legacy(mouse.mouse):
 		visible=False):
 
 		self.experiment = experiment
+		self.xcenter = self.experiment.var.width/2
+		self.ycenter = self.experiment.var.height/2
 		self.set_buttonlist(buttonlist)
 		self.set_timeout(timeout)
 		self.set_visible(visible)
+		self.uniform_coordinates = \
+			self.experiment.var.uniform_coordinates==u'yes'
 		if self.experiment.var.get('custom_cursor', 'no') == 'yes':
-			self.cursor = pygame.image.load(self.experiment.resource( \
-				'cursor.png'))
+			self.cursor = pygame.image.load(
+				self.experiment.resource('cursor.png'))
 		else:
 			self.cursor = None
 
@@ -66,7 +71,7 @@ class legacy(mouse.mouse):
 
 	def set_pos(self, pos=(0,0)):
 
-		pygame.mouse.set_pos(pos)
+		pygame.mouse.set_pos(self.to_xy(pos))
 
 	def get_click(self, buttonlist=None, timeout=None, visible=None):
 
@@ -120,7 +125,7 @@ class legacy(mouse.mouse):
 					if (buttonlist is None or event.button in buttonlist):
 						if self.cursor is None:
 							pygame.mouse.set_visible(self.visible)
-						return event.button, event.pos, time
+						return event.button, self.from_xy(event.pos), time
 			if timeout is not None and time-start_time >= timeout:
 				break
 
@@ -131,7 +136,7 @@ class legacy(mouse.mouse):
 	def get_pos(self):
 
 		pygame.event.get()
-		return pygame.mouse.get_pos(), self.experiment.time()
+		return self.from_xy(pygame.mouse.get_pos()), self.experiment.time()
 
 	def get_pressed(self):
 

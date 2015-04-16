@@ -417,9 +417,9 @@ class sketchpad_widget(base_widget):
 			Sets the size of the QGraphicsView to the experiment resolution.
 		"""
 
-		w = self.sketchpad.var.get(u'width')
-		h = self.sketchpad.var.get(u'height')
-		self.ui.graphics_view.setSceneRect(-self.margin, -self.margin,
+		w = self.sketchpad.var.width
+		h = self.sketchpad.var.height
+		self.ui.graphics_view.setSceneRect(-self.margin-w/2, -self.margin-h/2,
 			w+2*self.margin, h+2*self.margin)
 
 	def draw(self, refresh=False):

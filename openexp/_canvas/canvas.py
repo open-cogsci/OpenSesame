@@ -500,9 +500,9 @@ class canvas(object):
 		else:
 			color = self.fgcolor
 		if x is None:
-			x = self.xcenter()
+			x = 0
 		if y is None:
-			y = self.ycenter()
+			y = 0
 		h = 2
 		if u'large' in style:
 			s = 16
@@ -851,8 +851,8 @@ class canvas(object):
 		if color is not None: color = self.color(color)
 		else: color = self.fgcolor
 		if bidi is None: bidi = self.bidi
-		if x is None: x = self.xcenter()
-		if y is None: y = self.ycenter()
+		if x is None: x = 0
+		if y is None: y = 0
 		self.html.reset()
 		self.html.render(text, x, y, self, max_width=max_width, center=center, \
 			color=color, html=html, bidi=bidi)
@@ -902,39 +902,6 @@ class canvas(object):
 		"""
 
 		raise NotImplementedError()
-
-	def textline(self, text, line, color=None):
-
-		"""
-		desc: |
-			A convenience function that draws a line of text based on a line
-			number. The text strings are centered on the X-axis and vertically
-			spaced with 1.5 times the line height as determined by text_size().
-
-			__Note:__
-
-			This function has been deprecated.
-
-		visible:		False
-
-		arguments:
-			text:
-				desc:	A string of text.
-				type:	[str, unicode]
-			line:
-				desc:	A line number, where 0 is the center and > 0 is below
-						the center.
-				type:	int
-
-		keywords:
-			color:
-				desc:	"%arg_fgcolor"
-				type:	[str, unicode, NoneType]
-		"""
-
-		size = self.text_size(text)
-		self.text(text, True, self.xcenter(), self.ycenter()+1.5*line*size[1],
-			color=color)
 
 	def image(self, fname, center=True, x=None, y=None, scale=None):
 

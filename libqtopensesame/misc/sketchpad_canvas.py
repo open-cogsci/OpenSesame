@@ -290,13 +290,13 @@ class sketchpad_canvas(QtGui.QGraphicsScene):
 
 		pos = e.scenePos().toPoint()
 		if grid:
-			x = pos.x() + 0.5 * self.grid - self.xcenter()
-			y = pos.y() + 0.5 * self.grid - self.ycenter()
+			x = pos.x() + 0.5 * self.grid
+			y = pos.y() + 0.5 * self.grid
 			x = x - x % self.grid
 			y = y - y % self.grid
 		else:
-			x = pos.x() - self.xcenter()
-			y = pos.y() - self.ycenter()
+			x = pos.x()
+			y = pos.y()
 		return x, y
 
 	def notify(self, msg):
@@ -548,26 +548,26 @@ class sketchpad_canvas(QtGui.QGraphicsScene):
 		yc = int(self.ycenter())
 		w = 2*xc
 		h = 2*yc
-		painter.fillRect(QtCore.QRect(0, 0, w, h), self._color(self.bgcolor))
+		painter.fillRect(QtCore.QRect(-xc, -yc, w, h), self._color(self.bgcolor))
 		painter.setPen(self._pen(cfg.sketchpad_grid_color,
 			cfg.sketchpad_grid_thickness_thin, cfg.sketchpad_grid_opacity))
-		painter.drawRect(QtCore.QRect(0, 0, w, h))
+		painter.drawRect(QtCore.QRect(-xc, -yc, w, h))
 		# Draw all lines except for the center ones, because they should be
 		# thicker
 		if self.grid > 1:
-			for x in range(xc, w+1, self.grid):
-				painter.drawLine(x, 0, x, h)
-			for x in range(xc-self.grid, -1, -self.grid):
-				painter.drawLine(x, 0, x, h)
-			for y in range(yc, h+1, self.grid):
-				painter.drawLine(0, y, w, y)
-			for y in range(yc-self.grid, -1, -self.grid):
-				painter.drawLine(0, y, w, y)
+			for x in range(0, xc+1, self.grid):
+				painter.drawLine(x, -yc, x, yc)
+			for x in range(-self.grid, -xc-1, -self.grid):
+				painter.drawLine(x, -yc, x, yc)
+			for y in range(0, yc+1, self.grid):
+				painter.drawLine(-xc, y, xc, y)
+			for y in range(-self.grid, -yc-1, -self.grid):
+				painter.drawLine(-xc, y, xc, y)
 		# Draw thicker central lines
 		painter.setPen(self._pen(cfg.sketchpad_grid_color,
 			cfg.sketchpad_grid_thickness_thick, cfg.sketchpad_grid_opacity))
-		painter.drawLine(0, yc, w, yc)
-		painter.drawLine(xc, 0, xc, h)
+		painter.drawLine(-xc, 0, xc, 0)
+		painter.drawLine(0, -yc, 0, yc)
 
 	def clear(self):
 

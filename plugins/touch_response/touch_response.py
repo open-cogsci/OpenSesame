@@ -30,23 +30,10 @@ class touch_response(mouse_response):
 	description = \
 		u'A grid-based response item, convenient for touch screens'
 
-	def __init__(self, name, experiment, script=None):
+	def reset(self):
 
-		"""
-		Constructor.
-
-		Arguments:
-		name		--	The name of the plug-in.
-		experiment	--	The experiment object.
-
-		Keyword arguments:
-		script		--	A definition script. (default=None)
-		"""
-
-		# Set default values.
-		self._ncol = 2
-		self._nrow = 1
-		mouse_response.__init__(self, name, experiment, script)
+		self.var._ncol = 2
+		self.var._nrow = 1
 
 	def process_response_mouseclick(self, retval):
 
@@ -56,16 +43,21 @@ class touch_response(mouse_response):
 		button, pos, self.experiment.end_response_interval = retval
 		if pos is not None:
 			x, y = pos
-			col = x // (self.experiment.var.width / self._ncol)
-			row = y // (self.experiment.var.height / self._nrow)
-			cell = row * self._ncol + col + 1
-			self.experiment.var.set(u'cursor_x', x)
-			self.experiment.var.set(u'cursor_y', y)
-			self.experiment.var.set(u'response', cell)
+			if self.experiment.var.uniform_coordinates == u'yes':
+				_x = x+self.experiment.var.width/2
+				_y = y+self.experiment.var.height/2
+			else:
+				_x, _y = x, y
+			col = _x // (self.experiment.var.width / self.var._ncol)
+			row = _y // (self.experiment.var.height / self.var._nrow)
+			cell = row * self.var._ncol + col + 1
+			self.experiment.var.cursor_x = x
+			self.experiment.var.cursor_y = y
+			self.experiment.var.response = cell
 		else:
-			self.experiment.var.set(u'cursor_x', u'NA')
-			self.experiment.var.set(u'cursor_y', u'NA')
-			self.experiment.var.set(u'response', None)
+			self.experiment.var.cursor_x = u'NA'
+			self.experiment.var.cursor_y = u'NA'
+			self.experiment.var.response = None
 
 class qttouch_response(touch_response, qtautoplugin):
 

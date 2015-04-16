@@ -149,6 +149,10 @@ class var_store(object):
 			object.__setattr__(self, u'__lock__', var)
 			val = self.__item__.eval_text(val)
 			object.__setattr__(self, u'__lock__', None)
+		if isinstance(val, bool):
+			if val:
+				return u'yes'
+			return u'no'			
 		try:
 			val = float(val)
 		except:

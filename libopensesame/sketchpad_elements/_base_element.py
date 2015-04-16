@@ -52,7 +52,7 @@ class base_element(object):
 		# written value-only style. `fix_coordinates` specifies whether
 		# coordinates should be translated to top-left = 0,0.
 		self.only_keywords = False
-		self.fix_coordinates = True
+		self.fix_coordinates = sketchpad.var.uniform_coordinates!=u'yes'
 		debug.msg(self._type)
 		self.defaults = defaults + [
 			(u'z_index', 0),

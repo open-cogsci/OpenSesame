@@ -143,6 +143,10 @@ class experiment(item.item):
 		self.var.title = u'My Experiment'
 		self.var.bidi = u'no'
 		self.var.round_decimals = 2
+		# In version 2.9.X and before, the sketchpad used 0,0 for the screen
+		# center, whereas scripting items used 0,0 for the top-left. By setting
+		# uniform_coordinates to 'yes', 0,0 is used for the center in all cases.
+		self.var.uniform_coordinates = u'no'
 
 		# Sound parameters
 		self.var.sound_freq = 48000

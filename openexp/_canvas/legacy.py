@@ -25,8 +25,9 @@ import os
 from libopensesame.exceptions import osexception
 from libopensesame import debug, html, misc
 from openexp._canvas import canvas
+from openexp._coordinates.legacy import legacy as legacy_coordinates
 
-class legacy(canvas.canvas):
+class legacy(canvas.canvas, legacy_coordinates):
 
 	"""
 	desc:
@@ -66,20 +67,23 @@ class legacy(canvas.canvas):
 		self.experiment = experiment
 		self.html = html.html()
 		if fgcolor is None:
-			fgcolor = self.experiment.var.get(u"foreground")
+			fgcolor = self.experiment.var.foreground
 		if bgcolor is None:
-			bgcolor = self.experiment.var.get(u"background")
+			bgcolor = self.experiment.var.background
 		self.set_fgcolor(fgcolor)
 		self.set_bgcolor(bgcolor)
 		self.penwidth = 1
 		self.antialias = True
 		self.surface = self.experiment.surface.copy()
 		self._current_font = None
-		self.bidi = self.experiment.var.get(u'bidi')==u'yes'
-		self.set_font(style=self.experiment.var.font_family, size= \
-			self.experiment.var.font_size, bold=self.experiment.var.font_bold==u'yes', \
-			italic=self.experiment.var.font_italic==u'yes', underline= \
-			self.experiment.var.font_underline==u'yes')
+		self.bidi = self.experiment.var.bidi==u'yes'
+		self.uniform_coordinates = \
+			self.experiment.var.uniform_coordinates==u'yes'
+		self.set_font(style=self.experiment.var.font_family,
+			size=self.experiment.var.font_size,
+			bold=self.experiment.var.font_bold==u'yes',
+			italic=self.experiment.var.font_italic==u'yes',
+			underline=self.experiment.var.font_underline==u'yes')
 		self.clear()
 
 	def color(self, color):
@@ -127,7 +131,6 @@ class legacy(canvas.canvas):
 		pygame.display.flip()
 		return pygame.time.get_ticks()
 
-
 	def clear(self, color=None):
 
 		if color is not None:
@@ -151,6 +154,8 @@ class legacy(canvas.canvas):
 			color = self.fgcolor
 		if penwidth is None:
 			penwidth = self.penwidth
+		sx, sy = self.to_xy(sx, sy)
+		ex, ey = self.to_xy(ex, ey)
 		pygame.draw.line(self.surface, color, (sx, sy), (ex, ey), penwidth)
 
 	def rect(self, x, y, w, h, fill=False, color=None, penwidth=None):
@@ -161,6 +166,7 @@ class legacy(canvas.canvas):
 			color = self.fgcolor
 		if penwidth is None:
 			penwidth = self.penwidth
+		x, y = self.to_xy(x, y)
 		if fill:
 			pygame.draw.rect(self.surface, color, (x, y, w, h), 0)
 		else:
@@ -178,6 +184,7 @@ class legacy(canvas.canvas):
 		y = int(y)
 		w = int(w)
 		h = int(h)
+		x, y = self.to_xy(x, y)
 		if fill:
 			pygame.draw.ellipse(self.surface, color, (x, y, w, h), 0)
 		else:
@@ -203,12 +210,14 @@ class legacy(canvas.canvas):
 			width = 0
 		else:
 			width = penwidth
+		vertices = [self.to_xy(x, y) for x, y in vertices]
 		pygame.draw.polygon(self.surface, color, vertices, width)
 
 	def _text(self, text, x, y):
 
 		font = self._font()
 		surface = font.render(text, self.antialias, self.fgcolor)
+		x, y = self.to_xy(x, y)
 		self.surface.blit(surface, (x, y))
 
 	def _text_size(self, text):
@@ -235,10 +244,7 @@ class legacy(canvas.canvas):
 					(int(surface.get_width()*scale),
 					int(surface.get_height()*scale)))
 		size = surface.get_size()
-		if x is None:
-			x = self.xcenter()
-		if y is None:
-			y = self.ycenter()
+		x, y = self.to_xy(x, y)
 		if center:
 			x -= size[0] / 2
 			y -= size[1] / 2
@@ -249,12 +255,14 @@ class legacy(canvas.canvas):
 
 		surface = canvas._gabor(orient, freq, env, size, stdev, phase, col1,
 			col2, bgmode)
+		x, y = self.to_xy(x, y)
 		self.surface.blit(surface, (x - 0.5 * size, y - 0.5 * size))
 
 	def noise_patch(self, x, y, env=u"gaussian", size=96, stdev=12,
 		col1=u"white", col2=u"black", bgmode=u"avg"):
 
 		surface = canvas._noise_patch(env, size, stdev, col1, col2, bgmode)
+		x, y = self.to_xy(x, y)
 		self.surface.blit(surface, (x - 0.5 * size, y - 0.5 * size))
 
 def init_display(experiment):

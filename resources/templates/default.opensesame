@@ -14,6 +14,7 @@ set subject_nr "0"
 set canvas_backend "legacy"
 set start "experiment"
 set synth_backend "legacy"
+set uniform_coordinates "yes"
 
 define sequence experiment
 	run getting_started "always"

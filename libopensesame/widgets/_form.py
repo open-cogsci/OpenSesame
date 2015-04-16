@@ -259,7 +259,12 @@ class form(object):
 		if w <= 0 or h <= 0:
 			raise osexception( \
 				u'There is not enough space to show some form widgets. Please modify the form geometry!')
-		return x1+self.margins[3], y1+self.margins[0], w, h
+		x = x1+self.margins[3]
+		y = y1+self.margins[0]
+		if self.experiment.var.uniform_coordinates == u'yes':
+			x -= self.width/2
+			y -= self.height/2
+		return x, y, w, h
 
 	def render(self):
 

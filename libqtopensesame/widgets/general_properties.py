@@ -71,6 +71,10 @@ class general_properties(base_widget):
 		# Connect the rest
 		self.ui.spinbox_width.editingFinished.connect(self.apply_changes)
 		self.ui.spinbox_height.editingFinished.connect(self.apply_changes)
+		self.ui.checkbox_bidi.stateChanged.connect(self.apply_changes)
+		self.ui.checkbox_uniform_coordinates.stateChanged.connect(
+			self.apply_changes)
+
 		self.ui.button_script_editor.clicked.connect(
 			self.main_window.ui.tabwidget.open_general_script)
 		self.ui.button_backend_settings.clicked.connect(
@@ -83,9 +87,6 @@ class general_properties(base_widget):
 			self.ui.combobox_backend.addItem(self.main_window.theme.qicon(
 				icon), self.backend_format % (backend, desc))
 		self.ui.combobox_backend.currentIndexChanged.connect(self.apply_changes)
-
-		# Bi-directional-text support
-		self.ui.checkbox_bidi.stateChanged.connect(self.apply_changes)
 
 		self.tab_name = u'__general_properties__'
 		self.on_activate = self.refresh
@@ -121,36 +122,36 @@ class general_properties(base_widget):
 		self.main_window.set_busy(True)
 		# Set the title and the description
 		title = self.experiment.sanitize(self.header_widget.edit_name.text())
-		if title != self.experiment.var.get(u'title'):
-			self.experiment.var.set(u"title", title)
+		if title != self.experiment.var.title:
+			self.experiment.var.title = title
 			self.experiment.build_item_tree()
 		desc = self.experiment.sanitize(self.header_widget.edit_desc.text())
-		self.experiment.var.set(u"description", desc)
+		self.experiment.var.description = desc
 
 		# Set the backend
 		if self.ui.combobox_backend.isEnabled():
 			i = self.ui.combobox_backend.currentIndex()
 			backend = list(openexp.backend_info.backend_list.values())[i]
-			self.experiment.var.set(u"canvas_backend", backend[u"canvas"])
-			self.experiment.var.set(u"keyboard_backend", backend[u"keyboard"])
-			self.experiment.var.set(u"mouse_backend", backend[u"mouse"])
-			self.experiment.var.set(u"sampler_backend", backend[u"sampler"])
-			self.experiment.var.set(u"synth_backend", backend[u"synth"])
+			self.experiment.var.canvas_backend = backend[u"canvas"]
+			self.experiment.var.keyboard_backend = backend[u"keyboard"]
+			self.experiment.var.mouse_backend = backend[u"mouse"]
+			self.experiment.var.sampler_backend = backend[u"sampler"]
+			self.experiment.var.synth_backend = backend[u"synth"]
 		else:
 			debug.msg(
 				u'not setting back-end, because a custom backend is selected')
 
 		# Set the display width
 		width = self.ui.spinbox_width.value()
-		if self.experiment.var.get(u"width") != width:
-			self.main_window.update_resolution(width,
-				self.experiment.var.get(u"height"))
+		if self.experiment.var.width != width:
+			self.main_window.update_resolution(
+				width, self.experiment.var.height)
 
 		# Set the display height
 		height = self.ui.spinbox_height.value()
-		if self.experiment.var.get(u"height") != height:
-			self.main_window.update_resolution(self.experiment.var.get(u"width"),
-				height)
+		if self.experiment.var.height != height:
+			self.main_window.update_resolution(
+				self.experiment.var.width, height)
 
 		# Set the foreground color
 		foreground = self.experiment.sanitize(self.ui.edit_foreground.text())
@@ -161,9 +162,9 @@ class general_properties(base_widget):
 		except Exception as e:
 			if refs == []:
 				self.experiment.notify(e)
-				foreground = self.experiment.var.get(u"foreground")
+				foreground = self.experiment.var.foreground
 				self.ui.edit_foreground.setText(foreground)
-		self.experiment.var.set(u"foreground", foreground)
+		self.experiment.var.foreground = foreground
 
 		# Set the background color
 		background = self.experiment.sanitize(self.ui.edit_background.text())
@@ -174,18 +175,20 @@ class general_properties(base_widget):
 		except Exception as e:
 			if refs == []:
 				self.experiment.notify(e)
-				background = self.experiment.var.get(u"background")
+				background = self.experiment.var.background
 				self.ui.edit_background.setText(background)
-		self.experiment.var.set(u"background", foreground)
-		self.experiment.var.set(u"background", background)
+		self.experiment.var.background = foreground
+		self.experiment.var.background = background
 
 		# Set the font
-		self.experiment.var.set(u'font_family', self.ui.widget_font.family)
-		self.experiment.var.set(u'font_size', self.ui.widget_font.size)
-		self.experiment.var.set(u'font_italic', self.ui.widget_font.italic)
-		self.experiment.var.set(u'font_bold', self.ui.widget_font.bold)
+		self.experiment.var.font_family = self.ui.widget_font.family
+		self.experiment.var.font_size = self.ui.widget_font.size
+		self.experiment.var.font_italic = self.ui.widget_font.italic
+		self.experiment.var.font_bold = self.ui.widget_font.bold
 		# Set bi-directional text
-		self.experiment.var.set(u'bidi', self.ui.checkbox_bidi.isChecked())
+		self.experiment.var.bidi = self.ui.checkbox_bidi.isChecked()
+		self.experiment.var.uniform_coordinates = \
+			self.ui.checkbox_uniform_coordinates.isChecked()
 		self.check_bidi()
 		# Refresh the interface and unlock the general tab
 		self.lock = False
@@ -229,10 +232,10 @@ class general_properties(base_widget):
 		self.ui.edit_background.setText(self.experiment.unistr(
 			self.experiment.var.background))
 
-		# Set the font
 		self.ui.widget_font.initialize(self.experiment)
-		# Set bidirectional text
-		self.ui.checkbox_bidi.setChecked(self.experiment.var.get(u'bidi') == u'yes')
+		self.ui.checkbox_bidi.setChecked(self.experiment.var.bidi == u'yes')
+		self.ui.checkbox_uniform_coordinates.setChecked(
+			self.experiment.var.uniform_coordinates == u'yes')
 		self.check_bidi()
 		# Release the general tab
 		self.lock = False
@@ -245,7 +248,7 @@ class general_properties(base_widget):
 			enabled while python-bidi is not installed.
 		"""
 
-		if self.experiment.var.get(u'bidi') != u'yes':
+		if self.experiment.var.bidi != u'yes':
 			self.ui.label_bidi_check.hide()
 			return
 		try:

@@ -58,10 +58,8 @@ class base_rect_ellipse(base_element):
 
 		if cls.pos_start is None:
 			return
-		xc = sketchpad.canvas.xcenter()
-		yc = sketchpad.canvas.ycenter()
-		x = cls.pos_start[0]+xc
-		y = cls.pos_start[1]+yc
+		x = cls.pos_start[0]
+		y = cls.pos_start[1]
 		w = pos[0]-cls.pos_start[0]
 		h = pos[1]-cls.pos_start[1]
 		if w < 0:

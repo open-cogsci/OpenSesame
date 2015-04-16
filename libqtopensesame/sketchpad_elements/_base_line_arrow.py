@@ -48,10 +48,8 @@ class base_line_arrow(base_element):
 		if cls.pos_start is not None:
 			return
 		cls.pos_start = pos
-		xc = sketchpad.canvas.xcenter()
-		yc = sketchpad.canvas.ycenter()
-		cls.preview = sketchpad.canvas.line(pos[0]+xc, pos[1]+yc, pos[0]+xc,
-			pos[1]+yc, color=cfg.sketchpad_preview_color,
+		cls.preview = sketchpad.canvas.line(pos[0], pos[1], pos[0], pos[1],
+			color=cfg.sketchpad_preview_color,
 			penwidth=cfg.sketchpad_preview_penwidth)
 
 	@classmethod
@@ -59,10 +57,7 @@ class base_line_arrow(base_element):
 
 		if cls.pos_start is None:
 			return
-		xc = sketchpad.canvas.xcenter()
-		yc = sketchpad.canvas.ycenter()
-		cls.preview.setLine(cls.pos_start[0]+xc, cls.pos_start[1]+yc, pos[0]+xc,
-			pos[1]+yc)
+		cls.preview.setLine(cls.pos_start[0], cls.pos_start[1], pos[0], pos[1])
 
 	@classmethod
 	def reset(cls):

@@ -37,16 +37,18 @@ class droid(legacy.legacy):
 		For function specifications and docstrings, see
 		`openexp._mouse.mouse`.
 	"""
-	
+
 	def __init__(self, experiment, buttonlist=None, timeout=None, visible=False):
-	
+
 		self.experiment = experiment
 		self.set_buttonlist(buttonlist)
 		self.set_timeout(timeout)
-		self.set_visible(visible)		
-		
+		self.set_visible(visible)
+		self.uniform_coordinates = \
+			self.experiment.var.uniform_coordinates==u'yes'
+
 	def get_click(self, buttonlist=None, timeout=None, visible=None):
-	
+
 		if android is None:
 			pygame.mouse.set_visible(True)
 		if buttonlist is None:
@@ -58,7 +60,7 @@ class droid(legacy.legacy):
 		enable_escape = self.experiment.var.get(u'enable_escape', u'no', \
 			[u'yes', u'no']) == u'yes'
 		start_time = pygame.time.get_ticks()
-		time = start_time		
+		time = start_time
 		while timeout is None or time - start_time < timeout:
 			time = pygame.time.get_ticks()
 			# Process the input
@@ -80,9 +82,8 @@ class droid(legacy.legacy):
 										raise osexception( \
 											u"The escape sequence was clicked/ tapped")
 					if buttonlist is None or event.button in buttonlist:
-						return event.button, event.pos, time
+						return event.button, self.from_xy(event.pos), time
 			# Allow Android interrupt
 			if android is not None and android.check_pause():
 				android.wait_for_resume()
 		return None, None, time
-
