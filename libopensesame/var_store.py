@@ -25,12 +25,46 @@ class var_store(object):
 
 	"""
 	desc: |
-		A simple object to access experimental variables.
+		The `var` object provides access to experimental variables.
+		Experimental variables are the variables that live in the GUI, and are
+		commonly set as independent variables in the `loop` item, referred
+		to using the square-bracket (`[my_variable]`) notation, and logged by
+		the `logger` item.
+
+		In addition to the functions listed below, the following semantics are
+		supported:
+
+		__Example__:
+
+		~~~ .python
+		# Set an experimental variable
+		var.my_variable = u'my_value'
+		# Get an experimental variable
+		print(u'Subject nr = %d' % var.subject_nr)
+		# Delete (unset) an experimental variable
+		del var.my_variable
+		# Check if an experimental variable exists
+		if u'my_variable' in var:
+		    print(u'my_variable exists!')
+		# Loop through all experimental variables
+		for var_name in var:
+		    print(u'variable found: %s' % var_name)
+		~~~
+
+		__Function list:__
+
+		%--
+		toc:
+			mindepth: 2
+			maxdepth: 2
+		--%
 	"""
 
 	def __init__(self, item, parent=None):
 
 		"""
+		visible: False
+
 		desc:
 			Constructor.
 
@@ -38,6 +72,8 @@ class var_store(object):
 			item:
 				desc:	The associated item.
 				type:	item
+
+		keywords:
 			parent:
 				desc:	The parent var_store (i.e. for the experiment) or `None`
 						for no parent.
@@ -52,6 +88,8 @@ class var_store(object):
 	def __contains__(self, var):
 
 		"""
+		visible: False
+
 		desc:
 			Implements the `in` operator to check if a variable exists.
 		"""
@@ -69,6 +107,8 @@ class var_store(object):
 	def __delattr__(self, var):
 
 		"""
+		visible: False
+
 		desc:
 			Implements the `del` statement to delete a variable.
 		"""
@@ -83,6 +123,8 @@ class var_store(object):
 	def __getattr__(self, var):
 
 		"""
+		visible: False
+
 		desc:
 			Implements property retrieval to allow direct access to variables.
 		"""
@@ -92,6 +134,8 @@ class var_store(object):
 	def __setattr__(self, var, val):
 
 		"""
+		visible: False
+
 		desc:
 			Implements property assignment.
 		"""
@@ -102,7 +146,7 @@ class var_store(object):
 
 		"""
 		desc:
-			Implements advanced variable retrieval.
+			Gets an experimental variable.
 
 		arguments:
 			var:
@@ -121,6 +165,13 @@ class var_store(object):
 			valid:
 				desc:	A list of valid values, or `None` to allow all values.
 				type:	[NoneType, list]
+
+		example: |
+			print('my_variable = %s' % var.get(u'my_variable'))
+			# Equivalent to:
+			print('my_variable = %s' % var.my_variable)
+			# But if you want to pass keyword arguments you need to use `get()`:
+			var.get(u'my_variable', default=u'a_default_value')
 		"""
 
 		if self.__lock__ == var:
@@ -152,7 +203,7 @@ class var_store(object):
 		if isinstance(val, bool):
 			if val:
 				return u'yes'
-			return u'no'			
+			return u'no'
 		try:
 			val = float(val)
 		except:
@@ -163,13 +214,30 @@ class var_store(object):
 
 	def has(self, var):
 
+		"""
+		desc:
+			Checks if an experimental variable exists.
+
+		arguments:
+			var:
+				desc:	The variable to check.
+				type:	[str, unicode]
+
+		example: |
+			if var.has(u'my_variable'):
+				print(u'my_variable has been defined!')
+			# Equivalent to:
+			if u'my_variable' in var:
+				print(u'my_variable has been defined!')
+		"""
+
 		return self.__contains__(var)
 
 	def set(self, var, val):
 
 		"""
 		desc:
-			Implements variable assignment.
+			Sets and experimental variable.
 
 		arguments:
 			var:
@@ -178,6 +246,11 @@ class var_store(object):
 			val:
 				desc:	The value to assign.
 				type:	any
+
+		example: |
+			var.set(u'my_variable', u'my_value')
+			# Equivalent to
+			var.my_variable = u'my_value'
 		"""
 
 		self.__setattr__(var, val)
@@ -186,7 +259,17 @@ class var_store(object):
 
 		"""
 		desc:
-			Implements variable deletion.
+			Deletes a variable.
+
+		arguments:
+			var:
+				desc:	The variable to delete.
+				type:	[str, unicode]
+
+		example: |
+			var.unset(u'my_variable')
+			# Equivalent to:
+			del var.my_variable
 		"""
 
 		self.__delattr__(var)
@@ -194,6 +277,8 @@ class var_store(object):
 	def __iter__(self):
 
 		"""
+		visible: False
+
 		desc:
 			Implements the iterator.
 		"""
@@ -202,13 +287,48 @@ class var_store(object):
 
 	def __len__(self):
 
+		"""
+		visible: False
+
+		desc:
+			Returns the number of experimental variables that are stored in the
+			`var_store` object.
+
+		returns:
+			desc:	The number of experimental variables.
+			type:	int
+		"""
+
 		return len(self.__vars__)
 
 	def vars(self):
 
+		"""
+		desc:
+			Returns a list of experimental variables. Because experimental
+			variables can be stored in multiple places, this list may not be
+			exhaustive. That is, `u'my_var' in var` may return `True`, while
+			u'my_var' is not in the list of variables as returned by this
+			function.
+
+		returns:
+			desc:	A list of variable names.
+			type:	list
+		"""
+
 		return sorted(list(self.__vars__.keys()))
 
 	def items(self):
+
+		"""
+		desc:
+			Returns a list of (variable_name, value) tuples. See [vars] for a
+			note about the non-exhaustiveness of this function.
+
+		returns:
+			desc:	A list of (variable_name, value) tuples.
+			type:	list
+		"""
 
 		return list(self.__vars__.items())
 

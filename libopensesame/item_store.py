@@ -25,13 +25,43 @@ from libopensesame.py3compat import *
 class item_store(object):
 
 	"""
-	desc:
-		A collection of items. It can be used as a dictionary, or as property.
+	desc: |
+		The `items` object provides dict-like access to the items. It's mainly
+		useful for programatically executing items.
+
+		In addition to the functions listed below, the following semantics are
+		supported:
+
+		__Example__:
+
+		~~~ .python
+		# Programmatically prepare and run a sketchpad item.
+		items[u'my_sketchpad'].prepare()
+		items[u'my_sketchpad'].run()
+		# Check if an item exists
+		if u'my_sketchpad' in items:
+			print(u'my_sketchpad exists')
+		# Delete an item
+		del items[u'my_sketchpad']
+		# Walk through all item names
+		for item_name in items:
+			print(item_name)
+		~~~
+
+		__Function list:__
+
+		%--
+		toc:
+			mindepth: 2
+			maxdepth: 2
+		--%
 	"""
 
 	def __init__(self, experiment):
 
 		"""
+		visible: False
+
 		desc:
 			Constructor.
 
@@ -67,6 +97,11 @@ class item_store(object):
 		returns:
 			desc:	The newly generated item.
 			type:	item
+
+		examples: |
+			items.new(u'sketchpad', name=u'my_sketchpad')
+			items[u'my_sketchpad'].prepare()
+			items[u'my_sketchpad'].run()
 		"""
 
 		debug.msg(u'creating %s' % _type)
@@ -146,14 +181,38 @@ class item_store(object):
 
 	@property
 	def items(self):
+
+		"""
+		name: items
+
+		desc:
+			Returns a list of (item name, item object) tuples.
+		"""
+
 		return self.__items__.items
 
 	@property
 	def keys(self):
+
+		"""
+		name: keys
+
+		desc:
+			Returns a list of item names.
+		"""
+
 		return self.__items__.keys
 
 	@property
 	def values(self):
+
+		"""
+		name: values
+
+		desc:
+			Returns a list of `item` objects.
+		"""
+
 		return self.__items__.values
 
 	@property
