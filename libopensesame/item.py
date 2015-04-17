@@ -799,8 +799,10 @@ class item(object):
 			if m is None:
 				break
 			if py3:
-				unichr = chr
-			s = s.replace(m.group(0), unichr(int(m.group(1), 16)), 1)
+				_unichr = chr
+			else:
+				_unichr = unichr
+			s = s.replace(m.group(0), _unichr(int(m.group(1), 16)), 1)
 		return s
 
 	def unistr(self, val):
