@@ -21,8 +21,8 @@ from libopensesame.py3compat import *
 
 import pygame
 import pyglet
-import math
 from openexp._canvas import canvas
+from openexp._coordinates.psycho import psycho as psycho_coordinates
 from libopensesame.exceptions import osexception
 from libopensesame import debug, html
 try: # Try both import statements
@@ -30,7 +30,6 @@ try: # Try both import statements
 except:
 	import Image
 import numpy as np
-import os.path
 
 try:
 	from psychopy import core, visual, logging
@@ -44,7 +43,7 @@ if not hasattr(visual, u'GratingStim'):
 	raise osexception(
 		u'PsychoPy is missing the GratingStim() class. Please update your version of PsychoPy! For installation instructions, please visit http://www.psychopy.org/.')
 
-class psycho(canvas.canvas):
+class psycho(canvas.canvas, psycho_coordinates):
 
 	"""
 	desc:
@@ -87,20 +86,22 @@ class psycho(canvas.canvas):
 		auto_prepare=True):
 
 		self.experiment = experiment
+		psycho_coordinates.__init__(self)
 		self.html = html.html()
 		self.min_penwidth = 1
 		if fgcolor is None:
-			fgcolor = self.experiment.var.get(u"foreground")
+			fgcolor = self.experiment.var.foreground
 		if bgcolor is None:
-			bgcolor = self.experiment.var.get(u"background")
+			bgcolor = self.experiment.var.background
 		self.set_fgcolor(fgcolor)
 		self.set_bgcolor(bgcolor)
 		self.set_penwidth(1)
-		self.bidi = self.experiment.var.get(u'bidi')==u'yes'
-		self.set_font(style=self.experiment.var.font_family, size= \
-			self.experiment.var.font_size, bold=self.experiment.var.font_bold==u'yes', \
-			italic=self.experiment.var.font_italic==u'yes', underline= \
-			self.experiment.var.font_underline==u'yes')
+		self.bidi = self.experiment.var.bidi==u'yes'
+		self.set_font(style=self.experiment.var.font_family,
+			size=self.experiment.var.font_size,
+			bold=self.experiment.var.font_bold==u'yes',
+			italic=self.experiment.var.font_italic==u'yes',
+			underline=self.experiment.var.font_underline==u'yes')
 		# We need to map the simple font names used by OpenSesame onto the
 		# actual names of the fonts.
 		self.font_map = {
@@ -153,7 +154,7 @@ class psycho(canvas.canvas):
 		if self.experiment.background != color:
 			# The background is simply a rectangle, because of the double flip
 			# required by set_color()
-			self.rect(0, 0, self.experiment.var.width, self.experiment.var.height,
+			self.rect(0, 0, self._width, self._height,
 				color=color, fill=True)
 
 	def line(self, sx, sy, ex, ey, color=None, penwidth=None):
@@ -172,7 +173,7 @@ class psycho(canvas.canvas):
 			self.shapestim( [[x, y], [x+w, y], [x+w, y+h], [x, y+h]], color,
 				close=True, penwidth=penwidth)
 		else:
-			pos = x + w/2 - self.xcenter(), self.ycenter() - y - h/2
+			pos = self.to_xy(x+w/2, y+h/2)
 			stim = visual.GratingStim(win=self.experiment.window, pos=pos,
 				size=[w, h], color=color, tex=None, interpolate=False)
 			self.stim_list.append(stim)
@@ -185,14 +186,14 @@ class psycho(canvas.canvas):
 			color = self.color(color)
 		else:
 			color = self.fgcolor
-		pos = x - self.xcenter() + w/2, self.ycenter() - y - h/2
-		stim = visual.GratingStim(win=self.experiment.window, mask=u'circle', \
+		pos = self.to_xy(x+w/2, y+h/2)
+		stim = visual.GratingStim(win=self.experiment.window, mask=u'circle',
 			pos=pos, size=[w, h], color=color, tex=None, interpolate=True)
 		self.stim_list.append(stim)
 		if not fill:
-			stim = visual.GratingStim(win = self.experiment.window, \
-				mask=u'circle', pos=pos, size=[w-2*penwidth, \
-				h-2*penwidth], color=self.bgcolor, tex=None, \
+			stim = visual.GratingStim(win = self.experiment.window,
+				mask=u'circle', pos=pos, size=[w-2*penwidth,
+				h-2*penwidth], color=self.bgcolor, tex=None,
 				interpolate=True)
 			self.stim_list.append(stim)
 
@@ -226,11 +227,12 @@ class psycho(canvas.canvas):
 			font = self.font_map[self.font_style]
 		else:
 			font = self.font_style
-		pos = x - self.xcenter(), self.ycenter() - y
+		pos = self.to_xy(x, y)
 		stim = visual.TextStim(win=self.experiment.window, text=text,
 			alignHoriz=u'left', alignVert=u'top', pos=pos, color=self.fgcolor,
-			font=font, height= self.font_size, wrapWidth= \
-			self.experiment.var.width, bold=self.font_bold, italic=self.font_italic)
+			font=font, height= self.font_size, wrapWidth=
+			self.experiment.var.width, bold=self.font_bold,
+				italic=self.font_italic)
 		self.stim_list.append(stim)
 
 	def image(self, fname, center=True, x=None, y=None, scale=None):
@@ -251,8 +253,7 @@ class psycho(canvas.canvas):
 		if not center:
 			x += w/2
 			y += h/2
-		pos = x - self.xcenter(), self.ycenter() - y
-
+		pos = self.to_xy(x, y)
 		stim = visual.ImageStim(win=self.experiment.window, image=fname,
 			pos=pos, size=(w,h))
 		self.stim_list.append(stim)
@@ -260,7 +261,7 @@ class psycho(canvas.canvas):
 	def gabor(self, x, y, orient, freq, env=u"gaussian", size=96, stdev=12,
 		phase=0, col1=u"white", col2=u'black', bgmode=u'avg'):
 
-		pos = x - self.xcenter(), self.ycenter() - y
+		pos = self.to_xy(x, y)
 		_env, _size, s = self.env_to_mask(env, size, stdev)
 		p = visual.GratingStim(win=self.experiment.window, pos=pos, ori=-orient,
 			mask=_env, size=_size, sf=freq, phase=phase, color=col1)
@@ -269,7 +270,7 @@ class psycho(canvas.canvas):
 	def noise_patch(self, x, y, env=u"gaussian", size=96, stdev=12,
 		col1=u"white", col2=u"black", bgmode=u"avg"):
 
-		pos = x - self.xcenter(), self.ycenter() - y
+		pos = self.to_xy(x, y)
 		_env, _size, s = self.env_to_mask(env, size, stdev)
 		tex = 2*(np.random.random([s,s])-0.5)
 		p = visual.GratingStim(win=self.experiment.window, tex=tex, pos=pos,
@@ -350,11 +351,7 @@ class psycho(canvas.canvas):
 		"""
 
 		if fix_coor:
-			# Convert the coordinates into the PsychoPy format, in which 0,0 is
-			# the center of the screen and negative y-coordinates are down.
-			_vertices = []
-			for x, y in vertices:
-				_vertices.append( [x - self.xcenter(), self.ycenter() - y] )
+			_vertices = [self.to_xy(xy) for xy in vertices]
 		else:
 			_vertices = vertices
 
@@ -393,9 +390,9 @@ def init_display(experiment):
 	print(u'openexp._canvas.psycho.init_display(): monitor = %s' % monitor)
 	print(u'openexp._canvas.psycho.init_display(): screen = %s' % screen)
 	# Initialize the PsychoPy window and set various functions
-	experiment.window = visual.Window( experiment.resolution(), screen=screen, \
-		waitBlanking=waitblanking, fullscr=experiment.fullscreen, \
-		monitor=monitor, units=u'pix', rgb=experiment.background)
+	experiment.window = visual.Window(experiment.resolution(), screen=screen,
+		waitBlanking=waitblanking, fullscr=experiment.var.fullscreen==u'yes',
+		monitor=monitor, units=u'pix', rgb=experiment.var.background)
 	experiment.window.setMouseVisible(False)
 	experiment.clock = core.Clock()
 	experiment._time_func = _time

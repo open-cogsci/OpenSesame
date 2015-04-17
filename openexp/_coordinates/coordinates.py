@@ -24,7 +24,21 @@ class coordinates(object):
 		A base class for classes that need to perform coordinate conversions.
 	"""
 
-	def to_xy(self, x, y=None):
+	def __init__(self):
+
+		"""
+		desc:
+			Constructor.
+		"""
+
+		self.uniform_coordinates = \
+			self.experiment.var.uniform_coordinates==u'yes'
+		self._width = self.experiment.var.width
+		self._height = self.experiment.var.height
+		self._xcenter = self._width/2
+		self._ycenter = self._height/2
+
+	def to_xy(self, x, y=None, dev=u'canvas'):
 
 		"""
 		desc:
@@ -41,6 +55,11 @@ class coordinates(object):
 			y:
 				desc:	A y coordinate. Only applicable if x was not a tuple.
 				type:	[float, int, NoneType]
+			dev:
+				desc:	The device for which the coordinates should be
+						transformed, in case different devices uses different
+						coordinate systems.
+				type:	[unicode, str]
 
 		returns:
 			desc:	An (x, y) coordinate tuple in the back-end specific
@@ -50,7 +69,7 @@ class coordinates(object):
 
 		raise NotImplementedError()
 
-	def from_xy(self, x, y=None):
+	def from_xy(self, x, y=None, dev=u'canvas'):
 
 		"""
 		desc:
@@ -67,6 +86,11 @@ class coordinates(object):
 			y:
 				desc:	A y coordinate. Only applicable if x was not a tuple.
 				type:	[float, int, NoneType]
+			dev:
+				desc:	The device for which the coordinates should be
+						transformed, in case different devices uses different
+						coordinate systems.
+				type:	[unicode, str]
 
 		returns:
 			desc:	An (x, y) coordinate tuple in the OpenSesame reference

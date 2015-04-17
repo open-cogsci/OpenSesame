@@ -184,8 +184,11 @@ class mouse(object):
 	def set_pos(self, pos=(0,0)):
 
 		"""
-		desc:
+		desc: |
 			Sets the position of the mouse cursor.
+
+			__Warning:__ `set_pos()` is unreliable and will silently fail on
+			some systems.
 
 		keywords:
 			pos:
@@ -198,7 +201,7 @@ class mouse(object):
 			my_mouse.set_pos(pos=(0,0))
 		"""
 
-		raise NotImplementedError()
+		pass
 
 	def get_click(self, buttonlist=None, timeout=None, visible=None):
 

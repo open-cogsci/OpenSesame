@@ -65,6 +65,7 @@ class legacy(canvas.canvas, legacy_coordinates):
 		auto_prepare=True):
 
 		self.experiment = experiment
+		legacy_coordinates.__init__(self)
 		self.html = html.html()
 		if fgcolor is None:
 			fgcolor = self.experiment.var.foreground
@@ -77,8 +78,6 @@ class legacy(canvas.canvas, legacy_coordinates):
 		self.surface = self.experiment.surface.copy()
 		self._current_font = None
 		self.bidi = self.experiment.var.bidi==u'yes'
-		self.uniform_coordinates = \
-			self.experiment.var.uniform_coordinates==u'yes'
 		self.set_font(style=self.experiment.var.font_family,
 			size=self.experiment.var.font_size,
 			bold=self.experiment.var.font_bold==u'yes',

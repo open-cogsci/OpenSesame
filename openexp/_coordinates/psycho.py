@@ -20,7 +20,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 from libopensesame.py3compat import *
 from openexp._coordinates.coordinates import coordinates
 
-class legacy(coordinates):
+class psycho(coordinates):
 
 	"""
 	desc:
@@ -32,14 +32,17 @@ class legacy(coordinates):
 
 		if y is None:
 			x, y = x
-		if not self.uniform_coordinates:
-			return x, y
-		return x + self._xcenter, y + self._ycenter
+		# For PsychoPy, 0,0 is the display center and positive y
+		# coordinates are down.
+		if self.uniform_coordinates:
+			return x, -y
+		return x - self._xcenter, self._ycenter - y
 
 	def from_xy(self, x, y=None, dev=u'canvas'):
 
 		if y is None:
 			x, y = x
-		if not self.uniform_coordinates:
-			return x, y
-		return x - self._xcenter, y - self._ycenter
+		print('x, y = %d, %s' % (x, y))
+		if self.uniform_coordinates:
+			return x, -y
+		return x + self._xcenter, self._ycenter - y

@@ -19,38 +19,19 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 
 from libopensesame.py3compat import *
 
-import numpy as np
-import copy
 from openexp._canvas import canvas
 from libopensesame.exceptions import osexception
-from libopensesame import debug, html
+from libopensesame import html
 import pygame
 try:
-	from expyriment import control, stimuli, misc, io
-	from expyriment.misc.geometry import coordinates2position, \
-		points_to_vertices as p2v
+	from expyriment import control, stimuli, io
+	from expyriment.misc.geometry import points_to_vertices as p2v
 except:
 	raise osexception(
 		u'Failed to import expyriment, probably because it is not (correctly) installed. For installation instructions, please visit http://www.expyriment.org/.')
+from openexp._coordinates.xpyriment import xpyriment as xpyriment_coordinates
 
-def c2p(pos):
-
-	"""
-	Converts coordinates (where 0,0 is the display center) to position (where
-	0,0 is the top-left). This function is used instead of coordinates2position,
-	because we want the virtual screen to be centered in fullscreen mode.
-
-	Arguments:
-	pos -- an (x,y) tuple
-
-	Returns:
-	An (x,y) tuple
-	"""
-
-	return pos[0] - control.defaults.window_size[0]/2, \
-		control.defaults.window_size[1]/2 - pos[1]
-
-class xpyriment(canvas.canvas):
+class xpyriment(canvas.canvas, xpyriment_coordinates):
 
 	"""
 	desc:
@@ -71,20 +52,22 @@ class xpyriment(canvas.canvas):
 		auto_prepare=True):
 
 		self.experiment = experiment
+		xpyriment_coordinates.__init__(self)
 		self.html = html.html()
 		self.auto_prepare = auto_prepare
 		self.prepared = False
 		if fgcolor is None:
-			fgcolor = self.experiment.var.get(u'foreground')
+			fgcolor = self.experiment.var.foreground
 		if bgcolor is None:
-			bgcolor = self.experiment.var.get(u'background')
+			bgcolor = self.experiment.var.background
 		self.set_fgcolor(fgcolor)
 		self.set_bgcolor(bgcolor)
-		self.bidi = self.experiment.var.get(u'bidi')==u'yes'
-		self.set_font(style=self.experiment.var.font_family, size= \
-			self.experiment.var.font_size, bold=self.experiment.var.font_bold==u'yes', \
-			italic=self.experiment.var.font_italic==u'yes', underline= \
-			self.experiment.var.font_underline==u'yes')
+		self.bidi = self.experiment.var.bidi==u'yes'
+		self.set_font(style=self.experiment.var.font_family,
+			size=self.experiment.var.font_size,
+			bold=self.experiment.var.font_bold==u'yes',
+			italic=self.experiment.var.font_italic==u'yes',
+			underline=self.experiment.var.font_underline==u'yes')
 		self.penwidth = 1
 		self.aa = 10
 		self.clear()
@@ -161,7 +144,7 @@ class xpyriment(canvas.canvas):
 		if penwidth is None: penwidth = self.penwidth
 		if color is not None: color = self.color(color)
 		else: color = self.fgcolor
-		stim = stimuli.Line(c2p((sx,sy)), c2p((ex,ey)),
+		stim = stimuli.Line(self.to_xy((sx,sy)), self.to_xy((ex,ey)),
 			line_width=penwidth, colour=color, anti_aliasing=self.aa)
 		self.add_stim(stim)
 
@@ -171,7 +154,7 @@ class xpyriment(canvas.canvas):
 			if color is not None: color = self.color(color)
 			else: color = self.fgcolor
 			# The position of the stimulus is the center, not the top-left
-			pos = c2p((x+w/2,y+h/2))
+			pos = self.to_xy((x+w/2,y+h/2))
 			stim = stimuli.Rectangle(size=(w,h), position=pos,
 				colour=color)
 			self.add_stim(stim)
@@ -195,7 +178,7 @@ class xpyriment(canvas.canvas):
 		if fill: line_width = 0
 		elif penwidth is not None: line_width = penwidth
 		else: line_width = self.penwidth
-		pos = c2p((x+w/2,y+h/2))
+		pos = self.to_xy((x+w/2,y+h/2))
 		stim = stimuli.Ellipse((w, h), colour=color, line_width=line_width,
 			position=pos)
 		self.add_stim(stim)
@@ -216,9 +199,9 @@ class xpyriment(canvas.canvas):
 			max(p[0] for p in vertices)) / 2, \
 			(min(p[1] for p in vertices) + \
 			max(p[1] for p in vertices)) / 2
-		stim = stimuli.Shape(colour=color, position=c2p(center),
+		stim = stimuli.Shape(colour=color, position=self.to_xy(center),
 			anti_aliasing=self.aa, line_width=line_width)
-		l = p2v([c2p(p) for p in vertices])
+		l = p2v([self.to_xy(p) for p in vertices])
 		for v in l: stim.add_vertex(v)
 		self.add_stim(stim)
 
@@ -250,7 +233,7 @@ class xpyriment(canvas.canvas):
 		x += w/2
 		y += h/2
 
-		stim = stimuli.TextLine(text, position=c2p((x,y)),
+		stim = stimuli.TextLine(text, position=self.to_xy((x,y)),
 			text_colour=self.fgcolor, text_font=_font,
 			text_size=self.font_size, text_bold=self.font_bold,
 			text_italic=self.font_italic, text_underline=self.font_underline)
@@ -278,7 +261,7 @@ class xpyriment(canvas.canvas):
 			else:
 				x += scale*surf.get_width()/2
 				y += scale*surf.get_height()/2
-		stim = stimuli.Picture(fname, position=c2p((x,y)))
+		stim = stimuli.Picture(fname, position=self.to_xy((x,y)))
 		if scale is not None: stim.scale( (scale, scale) )
 		self.add_stim(stim)
 
@@ -287,7 +270,7 @@ class xpyriment(canvas.canvas):
 
 		surface = canvas._gabor(orient, freq, env, size, stdev, phase, col1,
 			col2, bgmode)
-		stim = stimuli._visual.Visual(position=c2p((x,y)))
+		stim = stimuli._visual.Visual(position=self.to_xy((x,y)))
 		stim._surface = surface
 		self.add_stim(stim)
 
@@ -295,7 +278,7 @@ class xpyriment(canvas.canvas):
 		col1=u"white", col2=u"black", bgmode=u"avg"):
 
 		surface = canvas._noise_patch(env, size, stdev, col1, col2, bgmode)
-		stim = stimuli._visual.Visual(position=c2p((x,y)))
+		stim = stimuli._visual.Visual(position=self.to_xy((x,y)))
 		stim._surface = surface
 		self.add_stim(stim)
 

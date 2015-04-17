@@ -25,8 +25,9 @@ import pygame
 from pygame.locals import *
 from expyriment import stimuli
 from expyriment.misc.geometry import coordinates2position as c2p
+from openexp._coordinates.xpyriment import xpyriment as xpyriment_coordinates
 
-class xpyriment(legacy.legacy):
+class xpyriment(xpyriment_coordinates, legacy.legacy):
 
 	"""
 	desc:
@@ -47,6 +48,7 @@ class xpyriment(legacy.legacy):
 		visible=False):
 
 		self.experiment = experiment
+		xpyriment_coordinates.__init__(self)
 		self.set_buttonlist(buttonlist)
 		self.set_timeout(timeout)
 		self.set_visible(visible)
@@ -98,15 +100,8 @@ class xpyriment(legacy.legacy):
 				if event.type == MOUSEBUTTONDOWN:
 					if buttonlist is None or event.button in buttonlist:
 						pygame.mouse.set_visible(self.visible)
-
-						# Compensate for the fact that the screen is padded
-						x, y = event.pos
-						x -= (self.experiment.expyriment.screen.window_size[0] \
-							-self.experiment.var.width)/2
-						y -= (self.experiment.expyriment.screen.window_size[1] \
-							-self.experiment.var.height)/2
-
-						return event.button, (x,y), time
+						return event.button, self.from_xy(event.pos,
+							dev='mouse'), time
 			if timeout is not None and time-start_time >= timeout:
 				break
 

@@ -51,18 +51,16 @@ class legacy(mouse.mouse, legacy_coordinates):
 		visible=False):
 
 		self.experiment = experiment
-		self.xcenter = self.experiment.var.width/2
-		self.ycenter = self.experiment.var.height/2
+		legacy_coordinates.__init__(self)
 		self.set_buttonlist(buttonlist)
 		self.set_timeout(timeout)
 		self.set_visible(visible)
-		self.uniform_coordinates = \
-			self.experiment.var.uniform_coordinates==u'yes'
 		if self.experiment.var.get('custom_cursor', 'no') == 'yes':
 			self.cursor = pygame.image.load(
 				self.experiment.resource('cursor.png'))
 		else:
 			self.cursor = None
+
 
 	def set_visible(self, visible=True):
 
@@ -71,7 +69,7 @@ class legacy(mouse.mouse, legacy_coordinates):
 
 	def set_pos(self, pos=(0,0)):
 
-		pygame.mouse.set_pos(self.to_xy(pos))
+		pygame.mouse.set_pos(self.to_xy(pos, dev='mouse'))
 
 	def get_click(self, buttonlist=None, timeout=None, visible=None):
 
