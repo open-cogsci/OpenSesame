@@ -29,39 +29,6 @@ class inline_script(item.item):
 	"""
 	desc: |
 		Allows users to use Python code in their experiments.
-
-		When you are using the inline_script item, you are essentially writing
-		the body of two functions (`prepare` and `run`) of an `inline_script`
-		object. The `inline_script` object has many more functions which you can
-		use, and these are listed below. To use these functions, you use the
-		`self.[function_name]` notation.
-
-		__Important note:__
-
-		All inline_script items share the same workspace. This means that
-		variables that are created in one inline_script are available in
-		another inline_script. Similarly, modules that are imported in one
-		inline_script are available in all other inline_scripts.
-
-		__Example:__
-
-		~~~ {.python}
-		subject_nr = self.var.get("subject_nr")
-		~~~
-
-		__Example:__
-
-		{% highlight python %}
-		self.sleep(1000)
-		{% endhighlight %}
-
-		__Function list:__
-
-		%--
-		toc:
-			mindepth: 2
-			maxdepth: 2
-		--%
 	"""
 
 	description = u'Executes Python code'
@@ -73,51 +40,6 @@ class inline_script(item.item):
 		self.var._prepare = u''
 		self.var._run = u''
 		self._var_info = None
-
-	def copy_sketchpad(self, sketchpad_name):
-
-		"""
-		desc:
-			Creates a canvas that is a copy from the canvas of a sketchpad item.
-
-		arguments:
-			sketchpad_name:
-				desc:	The name of the sketchpad.
-				type:	[str, unicode]
-
-		returns:
-			desc:	A canvas.
-			type:	canvas
-
-		example: |
-			my_canvas = self.copy_sketchpad('my_sketchpad')
-		"""
-
-		c = self.offline_canvas()
-		c.copy(self.experiment.items[sketchpad_name].canvas)
-		return c
-
-	def offline_canvas(self, auto_prepare=True):
-
-		"""
-		desc:
-			Creates an empty canvas.
-
-		keywords:
-			auto_prepare:
-				desc:	See `openexp.canvas.__init__`.
-				type:	bool
-
-		returns:
-			desc:	A canvas.
-			type:	canvas
-
-		example: |
-			my_canvas = self.offline_canvas()
-		"""
-
-		return canvas.canvas(self.experiment, self.var.background,
-			self.var.foreground, auto_prepare=auto_prepare)
 
 	def prepare(self):
 
@@ -208,6 +130,32 @@ class inline_script(item.item):
 		self._var_info = l
 
 		return l
+
+	def copy_sketchpad(self, sketchpad_name):
+
+		"""
+		desc:
+			Deprecated function.
+		"""
+
+		warnings.warn(u'self.copy_sketchpad() is deprecated. '
+			'Use copy_sketchpad() instead.',
+			DeprecationWarning)
+		c = self.offline_canvas()
+		c.copy(self.experiment.items[sketchpad_name].canvas)
+		return c
+
+	def offline_canvas(self, auto_prepare=True):
+
+		"""
+		desc:
+			Deprecated function.
+		"""
+
+		warnings.warn(u'self.offline_canvas() is deprecated. '
+			'Use canvas() instead.', DeprecationWarning)
+		return canvas.canvas(self.experiment, self.var.background,
+			self.var.foreground, auto_prepare=auto_prepare)
 
 def restore_state():
 

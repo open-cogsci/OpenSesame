@@ -118,6 +118,26 @@ def synth(*arglist, **kwdict):
 
 # Miscellaneous API	functions
 
+def copy_sketchpad(name):
+
+	"""
+	desc:
+		Returns a copy of a `sketchpad`'s canvas.
+
+	arguments:
+		desc:
+			name:	The name of the `sketchpad`.
+			type:	[str, unicode]
+
+	returns:
+		desc:	A copy of the `sketchpad`'s canvas.
+		type:	canvas
+	"""
+
+	c = canvas()
+	c.copy(experiment.items[name].canvas)
+	return c
+
 def flush_log():
 
 	"""

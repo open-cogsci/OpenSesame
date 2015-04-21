@@ -35,34 +35,8 @@ import warnings
 class experiment(item.item):
 
 	"""
-	desc: |
-		The `experiment` object controls the flow of the experiment. If you are
-		writing Python inline code, there are a few functions in the experiment
-		object that may be useful, mostly to `get` and `set` variables, and to
-		retrieve files from the file pool. The `experiment` object is a property
-		of the `inline_script` object, so you can access it as `self.experiment`
-		in an inline_script. For convenience, you can also refer to it simply as
-		`exp`. For example, the following script retrieves the full path to a
-		file from the pool, shows it using a canvas, and stores the timestamp of
-		the display presentation as `canvas_timestamp`, so it can be logged:
-
-		__Example:__
-
-		~~~ {.python}
-		from openexp.canvas import canvas
-		my_canvas = canvas(exp)
-		my_canvas.image(exp.pool['my_image.png'])
-		timestamp = my_canvas.show()
-		exp.set('canvas_timestamp', timestamp)
-		~~~
-
-		__Function list:__
-
-		%--
-		toc:
-			mindepth: 2
-			maxdepth: 2
-		--%
+	desc:
+		A special item that controls the flow of the experiment.
 	"""
 
 	def __init__(self, name=u'experiment', string=None, pool_folder=None,
