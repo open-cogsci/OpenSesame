@@ -18,17 +18,10 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame.py3compat import *
-
-# If available, use the yaml.inherit metaclass to copy the docstrings from
-# keyboard onto the back-end-specific implementations of this class
-# (legacy, etc.)
-try:
-	from yamldoc import inherit as docinherit
-except:
-	docinherit = type
+from openexp.backend import backend, configurable
 import warnings
 
-class keyboard(object):
+class keyboard(backend):
 
 	"""
 	desc: |
@@ -36,134 +29,136 @@ class keyboard(object):
 
 		__Example:__
 
-		~~~ {.python}
+		~~~ .python
 		# Wait for a 'z' or 'x' key with a timeout of 3000 ms
-		from openexp.keyboard import keyboard
-		my_keyboard = keyboard(exp, keylist=['z', 'x'], timeout=3000)
-		start_time = self.time()
+		my_keyboard = keyboard(keylist=['z', 'x'], timeout=3000)
+		start_time = time()
 		key, end_time = my_keyboard.get_key()
-		exp.set('response', key)
-		exp.set('response_time', end_time - start_time)
+		var.response = key
+		var.response_time = end_time - start_time
 		~~~
 
-		__Function list:__
+		__Overview:__
 
 		%--
 		toc:
 			mindepth: 2
-			maxdepth: 2
+			maxdepth: 3
 		--%
 
-		%--
-		constant:
-			arg_keylist:
-				A list of human-readable keys that are accepted or `None` to
-				accept all keys.
-			arg_timeout:
-				A numeric value specifying a timeout in milliseconds or `None`
-				for no (i.e. infinite) timeout.
-		--%
+		## Things to know
+
+		### Key names
+
+		- Key names may differ between backends.
+		- Keys can be identified either by character or name, and are
+		  case-insentive. For example:
+		  - The key 'a' is represented by 'a' and 'A'
+		  - The up arrow is represented by 'up' and 'UP'
+		  - The '/' key is represented by '/', 'slash', and 'SLASH'
+		  - The spacebar is represented by 'space' and 'SPACE'
+		- To find out the name of key, you can:
+		  - Click on the 'list available keys' button of the
+		    `keyboard_response` item.
+		  - Collect a key press with a `keyboard_response` item, and display
+		    the key name through a `feedback` item with the text 'You
+		    pressed [response]' in it.
+
+		### Response keywords
+
+		Functions that accept `**resp_args` take the following keyword
+		arguments:
+
+		- `timeout` specifies a timeout value in milliseconds, or is set to
+		  `None` to disable the timeout.
+		- `keylist` specifies a list of keys that are accepted, or is set to
+		  `None` accept all keys.
+
+		~~~ .python
+		# Get a left or right arrow press with a timeout of 3000 ms
+		my_keyboard = keyboard()
+		key, time = my_keyboard.get_key(keylist=[u'left', u'right'],
+			timeout=3000)
+		~~~
+
+		Response keywords only affect the current operation (except when passed
+		to [keyboard.\_\_init\_\_][__init__]). To change the behavior for all
+		subsequent operations, set the response properties directly:
+
+		~~~ .python
+		# Get two key A or B presses with a 5000 ms timeout
+		my_keyboard = keyboard()
+		my_keyboard.keylist = [u'a', u'b']
+		my_keyboard.timeout = 5000
+		key1, time1 = my_keyboard.get_key()
+		key2, time2 = my_keyboard.get_key()
+		~~~
+
+		Or pass the response options to [keyboard.\_\_init\_\_][__init__]:
+
+		~~~ .python
+		# Get two key A or B presses with a 5000 ms timeout
+		my_keyboard = keyboard(keylist=[u'a', u'b'], timeout=5000)
+		key1, time1 = my_keyboard.get_key()
+		key2, time2 = my_keyboard.get_key()
+		~~~
 	"""
 
-	__metaclass__ = docinherit
-
-	def __init__(self, experiment, keylist=None, timeout=None):
+	def __init__(self, experiment, **resp_args):
 
 		"""
 		desc: |
-			Constructor. Intializes the keyboard object.
-
-			Keys can be identified either by character or name. This is case
-			insensitive. Naming keys using ASCII (integer) key codes is
-			deprecated.
-
-			For example:
-
-			- The key 'a' is represented by 'a' and 'A'.
-			- The up arrow is represented by 'up' and 'UP'.
-			- The '/' key is represented by '/', 'slash', and 'SLASH'.
-			- The spacebar is represented by 'space' and 'SPACE'.
-
-			For a complete list of available key names, click on the
-			'list available keys' button in the keyboard_response tab within
-			OpenSesame.
+			Constructor to create a new `keyboard` object. You do not generally
+			call this constructor directly, but use the `keyboard()` function,
+			which is described here: [/python/common/]().
 
 		arguments:
 			experiment:
 				desc:		The experiment object.
 				type:		experiment
 
-		keywords:
-			keylist:
-				desc:	"%arg_keylist"
-				type:	[list, NoneType]
-			timeout:
-				desc:	"%arg_timeout"
-				type:	[int, float, NoneType]
+		keyword-dict:
+			resp_args:
+				Optional [response keywords] (`timeout` and `keylist`) that will
+				be used as the default for this `keyboard` object.
 
 		example: |
-			from openexp.keyboard import keyboard
-			my_keyboard = keyboard(exp, keylist=['z', 'm'], timeout=2000)
+			my_keyboard = keyboard(keylist=['z', 'm'], timeout=2000)
 		"""
 
-		raise NotImplementedError()
+		self.experiment = experiment
+		backend.__init__(self, configurables={
+			u'timeout' : self.assert_numeric_or_None,
+			u'keylist' : self.assert_list_or_None,
+			}, **resp_args)
 
-	def set_keylist(self, keylist=None):
+	def set_config(self, **cfg):
 
-		"""
-		desc:
-			Sets the list of accepted keys.
+		# Add synonyms to keylist
+		if u'keylist' in cfg and isinstance(cfg[u'keylist'], list):
+			for key in list(cfg[u'keylist']):
+				cfg[u'keylist'] += self.synonyms(key)
+		backend.set_config(self, **cfg)
 
-		keywords:
-			keylist:
-				desc:	"%arg_keylist"
-				type:	[list, NoneType]
+	def default_config(self):
 
-		example: |
-			from openexp.keyboard import keyboard
-			my_keyboard = keyboard(exp)
-			my_keyboard.set_keylist( ['z', 'm'] )
-		"""
+		return {
+			u'timeout' 			: None,
+			u'keylist'			: None,
+			}
 
-		if keylist is None:
-			self._keylist = None
-		else:
-			self._keylist = []
-			for key in keylist:
-				self._keylist += self.synonyms(key)
-
-	def set_timeout(self, timeout=None):
-
-		"""
-		desc:
-			Sets a timeout.
-
-		keywords:
-			timeout:
-				desc:	"%arg_timeout"
-				type:	[int, float, NoneType]
-
-		example: |
-			from openexp.keyboard import keyboard
-			my_keyboard = keyboard(exp)
-			my_keyboard.set_timeout(2000)
-		"""
-
-		self.timeout = timeout
-
-	def get_key(self, keylist=None, timeout=None):
+	@configurable
+	def get_key(self, **resp_args):
 
 		"""
 		desc:
 			Collects a single key press.
 
-		keywords:
-			keylist:
-				desc:	"%arg_keylist"
-				type:	[list, NoneType]
-			timeout:
-				desc:	"%arg_timeout"
-				type:	[int, float, NoneType]
+		keyword-dict:
+			resp_args:
+				Optional [response keywords] (`timeout` and `keylist`) that will
+				be used for this call to [keyboard.get_key] this does not
+				affect subsequent operations.
 
 		returns:
 			desc:		A `(key, timestamp)` tuple. `key` is None if a timeout
@@ -171,11 +166,10 @@ class keyboard(object):
 			type:		tuple
 
 		example: |
-			from openexp.keyboard import keyboard
-			my_keyboard = keyboard(exp, timeout=2000)
-			response, timestamp = my_keyboard.get_key()
+			my_keyboard = keyboard()
+			response, timestamp = my_keyboard.get_key(timeout=5000)
 			if response is None:
-				print('A timeout occurred!')
+				print(u'A timeout occurred!')
 		"""
 
 		raise NotImplementedError()
@@ -193,11 +187,10 @@ class keyboard(object):
 			type:	list
 
 		example: |
-			from openexp.keyboard import keyboard
-			my_keyboard = keyboard(exp)
+			my_keyboard = keyboard()
 			moderators = my_keyboard.get_mods()
-			if 'shift' in moderators:
-				print('The shift-key is down!')
+			if u'shift' in moderators:
+				print(u'The shift-key is down!')
 		"""
 
 		raise NotImplementedError()
@@ -249,8 +242,7 @@ class keyboard(object):
 			type:	bool
 
 		Example: |
-			from openexp.keyboard import keyboard
-			my_keyboard = keyboard(exp)
+			my_keyboard = keyboard()
 			my_keyboard.flush()
 			response, timestamp = my_keyboard.get_key()
 		"""
@@ -276,8 +268,7 @@ class keyboard(object):
 				type:	bool
 
 		example: |
-			from openexp.keyboard import keyboard
-			my_keyboard = keyboard(exp)
+			my_keyboard = keyboard()
 			my_keyboard.show_virtual_keyboard(True)
 			response1, timestamp2 = my_keyboard.get_key()
 			response2, timestamp2 = my_keyboard.get_key()
@@ -286,14 +277,37 @@ class keyboard(object):
 
 		pass
 
+	# Deprecated functions
+
 	def to_chr(self, key):
 
 		"""
-		visible: False
-
-		desc:
-			A deprecated function for backwards compatibility.
+		visible:	False
+		desc:		deprecated
 		"""
 
-		warnings.warn(u'keyboard.to_chr() has been deprecated.')
+		warnings.warn(u'keyboard.to_chr() has been deprecated.',
+			DeprecationWarning)
 		return key
+
+	def set_keylist(self, keylist=None):
+
+		"""
+		visible:	False
+		desc:		deprecated
+		"""
+
+		warnings.warn(u'keyboard.set_keylist() has been deprecated. '
+			'Use keyboard.keylist instead.', DeprecationWarning)
+		self.keylist = keylist
+
+	def set_timeout(self, timeout=None):
+
+		"""
+		visible:	False
+		desc:		deprecated
+		"""
+
+		warnings.warn(u'keyboard.set_timeout() has been deprecated. '
+			'Use keyboard.timeout instead.', DeprecationWarning)
+		self.timeout = timeout

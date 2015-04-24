@@ -28,6 +28,7 @@ from libqtopensesame.widgets.general_header_widget import general_header_widget
 from libqtopensesame.widgets.base_widget import base_widget
 from libqtopensesame.items import experiment
 from libqtopensesame.misc import config
+from openexp._color.color import color
 import openexp.backend_info
 import sip
 
@@ -158,7 +159,7 @@ class general_properties(base_widget):
 		refs = []
 		try:
 			refs = self.experiment.get_refs(foreground)
-			self.experiment.color_check(foreground)
+			color.to_hex(foreground)
 		except Exception as e:
 			if refs == []:
 				self.experiment.notify(e)
@@ -171,7 +172,7 @@ class general_properties(base_widget):
 		refs = []
 		try:
 			refs = self.experiment.get_refs(background)
-			self.experiment.color_check(background)
+			color.to_hex(background)
 		except Exception as e:
 			if refs == []:
 				self.experiment.notify(e)

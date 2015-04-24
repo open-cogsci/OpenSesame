@@ -875,37 +875,6 @@ class item(object):
 				u'Failed to parse line "%s". Is there a closing quotation missing?' \
 				% u, exception=e)
 
-	def color_check(self, col):
-
-		"""
-		desc:
-			Checks whether a string is a valid color name. Raises an exception
-			if `col` is not a valid color.
-
-		arguments:
-			col:	The color to check.
-
-		example: |
-			# Ok
-			print(self.color_check('red'))
-			# Ok
-			print(self.color_check('#FFFFFF'))
-			# Raises osexception
-			print(self.color_check('this is not a color'))
-		"""
-
-		try:
-			if py3:
-				col = safe_decode(col)
-			else:
-				col = safe_encode(col)
-			if pygame is not None:
-				pygame.Color(col)
-		except Exception as e:
-			raise osexception( \
-				u"'%s' is not a valid color. See http://www.w3schools.com/html/html_colornames.asp for an overview of valid color names" \
-				% self.unistr(col), exception=e)
-
 	def sleep(self, ms):
 
 		"""

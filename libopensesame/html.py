@@ -170,10 +170,10 @@ class html(HTMLParser):
 		# Initialize the style
 		self.canvas = canvas
 		self.default_style = {
-			u'style' : canvas.font_style,
+			u'style' : canvas.font_family,
 			u'bold' : canvas.font_bold,
 			u'italic' : canvas.font_italic,
-			u'color' : canvas.fgcolor,
+			u'color' : canvas.color,
 			u'size' : canvas.font_size,
 			u'underline' : canvas.font_underline
 			}

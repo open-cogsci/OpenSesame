@@ -18,4 +18,28 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame.py3compat import *
+from libopensesame import debug
 
+def color(experiment, *arglist, **kwdict):
+
+	"""
+	desc:
+		A factory that returns a back-end specific color object.
+
+	arguments:
+		experiment:
+			desc:	The experiment object.
+			type:	experiment
+
+	argument-list:
+		arglist:	See color.__init__().
+
+	keyword-dict:
+		kwdict:		See color.__init__().
+	"""
+
+	backend = experiment.var.get(u'canvas_backend')
+	debug.msg(u'morphing into %s' % backend)
+	mod = __import__('openexp._color.%s' % backend, fromlist=['dummy'])
+	cls = getattr(mod, backend)
+	return cls(experiment, *arglist, **kwdict)

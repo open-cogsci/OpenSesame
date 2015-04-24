@@ -75,6 +75,7 @@ module_list = [
 # required for OpenSesame
 package_list = [
 	'yaml',
+	'webcolors',
 	'libopensesame',
 	'libqtopensesame',
 	'openexp'

@@ -24,6 +24,7 @@ from pygame.locals import *
 from string import whitespace
 from libopensesame.exceptions import osexception
 from openexp._keyboard import keyboard
+from openexp.backend import configurable
 
 # Whitespace, backspace, and empty strings are not acceptable names for keys.
 # These should be converted to descriptions, e.g. '\t' to 'tab'
@@ -38,8 +39,9 @@ class legacy(keyboard.keyboard):
 		`openexp._keyboard.keyboard`.
 	"""
 
-	def __init__(self, experiment, keylist=None, timeout=None):
+	def __init__(self, experiment, **resp_args):
 
+		keyboard.keyboard.__init__(self, experiment, **resp_args)
 		pygame.init()
 		self.key_code_to_name = {}
 		self.key_name_to_code = {}
@@ -61,20 +63,14 @@ class legacy(keyboard.keyboard):
 				self.key_name_to_code[name3] = code
 				self.key_name_to_code[name4] = code
 		self.persistent_virtual_keyboard = False
-		self.experiment = experiment
-		self.set_keylist(keylist)
-		self.set_timeout(timeout)
 
-	def get_key(self, keylist=None, timeout=None):
+	@configurable
+	def get_key(self):
 
 		start_time = pygame.time.get_ticks()
 		time = start_time
-
-		if keylist is None:
-			keylist = self._keylist
-		if timeout is None:
-			timeout = self.timeout
-
+		keylist = self.keylist
+		timeout = self.timeout
 		while True:
 			time = pygame.time.get_ticks()
 			for event in pygame.event.get():

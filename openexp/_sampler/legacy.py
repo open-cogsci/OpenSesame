@@ -18,13 +18,13 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame.py3compat import *
-
-import pygame
 from pygame.locals import *
+import pygame
 from openexp._sampler import sampler
 from libopensesame.exceptions import osexception
 from libopensesame import misc
 from openexp.keyboard import keyboard
+from openexp.backend import configurable
 import os.path
 try:
 	import numpy
@@ -69,7 +69,7 @@ class legacy(sampler.sampler):
 			},
 		}
 
-	def __init__(self, experiment, src):
+	def __init__(self, experiment, src, **playback_args):
 
 		if src is not None:
 			if isinstance(src, basestring):
@@ -88,28 +88,31 @@ class legacy(sampler.sampler):
 					import sys
 					src = src.encode(misc.filesystem_encoding())
 			self.sound = mixer.Sound(src)
-		self.experiment = experiment
+		sampler.sampler.__init__(self, experiment, src, **playback_args)
 		self.keyboard = keyboard(experiment)
-		self._stop_after = 0
-		self._fade_in = 0
-		self._volume = 1.0
 
-	def volume(self, vol):
+	def set_config(self, **cfg):
 
-		if type(vol) not in (int, float) or vol < 0 or vol > 1:
-			raise osexception(
-				u"openexp._sampler.legacy.volume() requires a number between 0.0 and 1.0")
-		self._volume = vol
-		self.sound.set_volume(vol)
+		if u'duration' in cfg and cfg[u'duration'] is None:
+			cfg[u'duration'] = 0
+		if u'fade_in' in cfg and cfg[u'fade_in'] is None:
+			cfg[u'fade_in'] = 0
+		sampler.sampler.set_config(self, **cfg)
+		if u'volume' in cfg:
+			self.sound.set_volume(cfg[u'volume'])
+		if u'pitch' in cfg:
+			self.adjust_pitch(cfg[u'pitch'])
+		if u'pan' in cfg:
+			self.adjust_pan(cfg[u'pan'])
 
-	def pitch(self, p):
+	def adjust_pitch(self, p):
 
 		# On Android, numpy does not exist and this is not supported
 		if numpy is None:
 			return
 		if type(p) not in (int, float) or p <= 0:
 			raise osexception(
-				u"openexp._sampler.legacy.pitch() requires a positive number")
+				u"openexp._sampler.legacy.pitch should be a positive number")
 		if p == 1:
 			return
 		buf = pygame.sndarray.array(self.sound)
@@ -119,14 +122,14 @@ class legacy(sampler.sampler):
 		self.sound = pygame.sndarray.make_sound(
 			numpy.array(_buf, dtype=u"int16"))
 
-	def pan(self, p):
+	def adjust_pan(self, p):
 
 		# On Android, numpy does not exist and this is not supported
 		if numpy is None:
 			return
 		if type(p) not in (int, float) and p not in (u"left", u"right"):
 			raise osexception(
-				u"openexp._sampler.legacy.pan() requires a number or 'left', 'right'")
+				u"openexp._sampler.legacy.pan should be a number or 'left', 'right'")
 		if p == 0:
 			return
 		buf = pygame.sndarray.array(self.sound)
@@ -145,10 +148,11 @@ class legacy(sampler.sampler):
 			buf[i][1] = r
 		self.sound = pygame.sndarray.make_sound(numpy.array(buf))
 
-	def play(self, block=False):
+	@configurable
+	def play(self, **playback_args):
 
-		self.sound.play(maxtime=self._stop_after, fade_ms=self._fade_in)
-		if block:
+		self.sound.play(maxtime=self.duration, fade_ms=self.fade_in)
+		if self.block:
 			self.wait()
 
 	def stop(self):

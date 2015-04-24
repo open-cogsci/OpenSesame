@@ -19,7 +19,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 
 from libopensesame.py3compat import *
 
-from libopensesame import debug
+from openexp._color.color import color
 import libopensesame.experiment
 import libopensesame.plugins
 from libqtopensesame.misc.qtitem_store import qtitem_store
@@ -418,13 +418,13 @@ class experiment(libopensesame.experiment.experiment):
 		"""
 
 		try:
-			self.color_check(initial_color)
+			color.to_hex(initial_color)
 		except:
 			initial_color = u'white'
-		color = QtGui.QColorDialog.getColor(QtGui.QColor(initial_color), \
+		_color = QtGui.QColorDialog.getColor(QtGui.QColor(initial_color), \
 			self.main_window, title)
-		if color.isValid():
-			return self.sanitize(color.name())
+		if _color.isValid():
+			return self.sanitize(_color.name())
 		return None
 
 	def monospace(self):

@@ -26,12 +26,14 @@ from libopensesame.py3compat import *
 
 # Factory functions
 
-def canvas(*arglist, **kwdict):
+def canvas(auto_prepare=True, **style_args):
 
 	"""
-	desc:
+	desc: |
 		Creates a new `canvas` object. For a list of arguments and keywords,
-		see the `canvas` documention.
+		see:
+
+		- [/python/canvas/](/python/canvas/)
 
 	returns:
 		desc:	A `canvas` object.
@@ -42,14 +44,16 @@ def canvas(*arglist, **kwdict):
 	"""
 
 	from openexp.canvas import canvas
-	return canvas(experiment, *arglist, **kwdict)
+	return canvas(experiment, auto_prepare=auto_prepare, **style_args)
 
-def keyboard(*arglist, **kwdict):
+def keyboard(**resp_args):
 
 	"""
-	desc:
+	desc: |
 		Creates a new `keyboard` object. For a list of arguments and keywords,
-		see the `keyboard` documention.
+		see:
+
+		- [/python/keyboard/](/python/keyboard/)
 
 	returns:
 		desc:	A `keyboard` object.
@@ -60,14 +64,16 @@ def keyboard(*arglist, **kwdict):
 	"""
 
 	from openexp.keyboard import keyboard
-	return keyboard(experiment, *arglist, **kwdict)
+	return keyboard(experiment, **resp_args)
 
-def mouse(*arglist, **kwdict):
+def mouse(**resp_args):
 
 	"""
-	desc:
+	desc: |
 		Creates a new `mouse` object. For a list of arguments and keywords,
-		see the `mouse` documention.
+		see:
+
+		- [/python/mouse/](/python/mouse/)
 
 	returns:
 		desc:	A `mouse` object.
@@ -80,12 +86,14 @@ def mouse(*arglist, **kwdict):
 	from openexp.mouse import mouse
 	return mouse(experiment, *arglist, **kwdict)
 
-def sampler(*arglist, **kwdict):
+def sampler(src, **playback_args):
 
 	"""
-	desc:
+	desc: |
 		Creates a new `sampler` object. For a list of arguments and keywords,
-		see the `sampler` documention.
+		see:
+
+		- [/python/sampler/](/python/sampler/)
 
 	returns:
 		desc:	A `sampler` object.
@@ -96,27 +104,46 @@ def sampler(*arglist, **kwdict):
 	"""
 
 	from openexp.sampler import sampler
-	return sampler(experiment, *arglist, **kwdict)
+	return sampler(experiment, src, **playback_args)
 
-def synth(*arglist, **kwdict):
+# Miscellaneous API	functions
+
+def synth(osc="sine", freq=440, length=100, attack=0, decay=5):
 
 	"""
 	desc:
-		Creates a new `synth` object. For a list of arguments and keywords,
-		see the `synth` documention.
+		Synthesizes a sound and returns it as a `sampler` object.
+
+	keywords:
+		osc:
+			desc:	Oscillator, can be "sine", "saw", "square" or
+					"white_noise".
+			type:	[str, unicode]
+		freq:
+			desc:	Frequency, either an integer value (value in hertz) or a
+					string ("A1", "eb2", etc.).
+			type:	[str, unicode, int, float]
+		length:
+			desc:	The length of the sound in milliseconds.
+			type:	[int, float]
+		attack:
+			desc:	The attack (fade-in) time in milliseconds.
+			type:	[int, float]
+		decay:
+			desc:	The decay (fade-out) time in milliseconds.
+			type:	[int, float]
 
 	returns:
-		desc:	A `synth` object.
-		type:	synth
+		desc:	A `sampler` object.
+		type:	sampler
 
 	example: |
-		my_synth = synth()
+		my_sampler = synth(freq=u'b2', length=500)
 	"""
 
 	from openexp.synth import synth
-	return synth(experiment, *arglist, **kwdict)
-
-# Miscellaneous API	functions
+	return synth(experiment, osc=osc, freq=freq, length=length, attack=attack,
+		decay=decay)
 
 def copy_sketchpad(name):
 
@@ -125,8 +152,8 @@ def copy_sketchpad(name):
 		Returns a copy of a `sketchpad`'s canvas.
 
 	arguments:
-		desc:
-			name:	The name of the `sketchpad`.
+		name:
+			desc:	The name of the `sketchpad`.
 			type:	[str, unicode]
 
 	returns:

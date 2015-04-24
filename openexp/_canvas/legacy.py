@@ -23,7 +23,8 @@ import pygame
 from pygame.locals import *
 import os
 from libopensesame.exceptions import osexception
-from libopensesame import debug, html, misc
+from libopensesame import debug
+from openexp.backend import configurable
 from openexp._canvas import canvas
 from openexp._coordinates.legacy import legacy as legacy_coordinates
 
@@ -61,67 +62,39 @@ class legacy(canvas.canvas, legacy_coordinates):
 			}
 		}
 
-	def __init__(self, experiment, bgcolor=None, fgcolor=None,
-		auto_prepare=True):
+	def __init__(self, experiment, auto_prepare=True, **style_args):
 
-		self.experiment = experiment
+		canvas.canvas.__init__(self, experiment, auto_prepare=auto_prepare,
+			**style_args)
 		legacy_coordinates.__init__(self)
-		self.html = html.html()
-		if fgcolor is None:
-			fgcolor = self.experiment.var.foreground
-		if bgcolor is None:
-			bgcolor = self.experiment.var.background
-		self.set_fgcolor(fgcolor)
-		self.set_bgcolor(bgcolor)
-		self.penwidth = 1
 		self.antialias = True
 		self.surface = self.experiment.surface.copy()
-		self._current_font = None
-		self.bidi = self.experiment.var.bidi==u'yes'
-		self.set_font(style=self.experiment.var.font_family,
-			size=self.experiment.var.font_size,
-			bold=self.experiment.var.font_bold==u'yes',
-			italic=self.experiment.var.font_italic==u'yes',
-			underline=self.experiment.var.font_underline==u'yes')
 		self.clear()
 
-	def color(self, color):
+	def set_config(self, **cfg):
 
-		return canvas._color(color)
-
-	def _font(self):
-
-		"""
-		desc:
-			Creates a PyGame font instance based on the current font settings.
-
-		returns:
-			A PyGame font.
-		"""
-
-		if self._current_font is None:
+		canvas.canvas.set_config(self, **cfg)
+		for key, val in cfg.items():
+			if u'font_' in key:
+				self._font = None
+		if self._font is None:
 			# First see if the font refers to a file in the resources/ filepool
 			try:
-				font_path = self.experiment.resource(u'%s.ttf' % \
-					self.font_style)
-				self._current_font = pygame.font.Font(font_path, self.font_size)
+				font_path = self.experiment.resource(
+					u'%s.ttf' % self.font_family)
+				self._font = pygame.font.Font(font_path, self.font_size)
 			# If not, try to match a system font
 			except:
-				self._current_font = pygame.font.SysFont(self.font_style, \
+				self._font = pygame.font.SysFont(self.font_family,
 					self.font_size)
-			self._current_font.set_bold(self.font_bold)
-			self._current_font.set_italic(self.font_italic)
-			self._current_font.set_underline(self.font_underline)
-		return self._current_font
+			self._font.set_bold(self.font_bold)
+			self._font.set_italic(self.font_italic)
+			self._font.set_underline(self.font_underline)
 
 	def copy(self, canvas):
 
 		self.surface = canvas.surface.copy()
-		self.font_style = canvas.font_style
-		self.font_style = canvas.font_style
-		self.penwidth = canvas.penwidth
-		self.fgcolor = canvas.fgcolor
-		self.bgcolor = canvas.bgcolor
+		self.set_config(canvas.get_config())
 
 	def show(self):
 
@@ -130,98 +103,80 @@ class legacy(canvas.canvas, legacy_coordinates):
 		pygame.display.flip()
 		return pygame.time.get_ticks()
 
+	@configurable
 	def clear(self, color=None):
 
 		if color is not None:
-			color = self.color(color)
-		else:
-			color = self.bgcolor
-		self.surface.fill(color)
+			if u'color' in cfg:
+				warnings.warn(u'color is a deprecated style argument for '
+					'canvas.clear(). Use background_color instead.',
+					DeprecationWarning)
+			self.background_color = color
+		self.surface.fill(self.background_color.backend_color)
 
-	def set_font(self, style=None, size=None, italic=None, bold=None,
-		underline=None):
+	@configurable
+	def line(self, sx, sy, ex, ey):
 
-		self._current_font = None
-		super(legacy, self).set_font(style=style, size=size, italic=italic,
-			bold=bold, underline=underline)
-
-	def line(self, sx, sy, ex, ey, color=None, penwidth=None):
-
-		if color is not None:
-			color = self.color(color)
-		else:
-			color = self.fgcolor
-		if penwidth is None:
-			penwidth = self.penwidth
 		sx, sy = self.to_xy(sx, sy)
 		ex, ey = self.to_xy(ex, ey)
-		pygame.draw.line(self.surface, color, (sx, sy), (ex, ey), penwidth)
+		pygame.draw.line(self.surface, self.color.backend_color, (sx, sy),
+			(ex, ey), self.penwidth)
 
-	def rect(self, x, y, w, h, fill=False, color=None, penwidth=None):
+	@configurable
+	def rect(self, x, y, w, h):
 
-		if color is not None:
-			color = self.color(color)
-		else:
-			color = self.fgcolor
-		if penwidth is None:
-			penwidth = self.penwidth
 		x, y = self.to_xy(x, y)
-		if fill:
-			pygame.draw.rect(self.surface, color, (x, y, w, h), 0)
+		if self.fill:
+			pygame.draw.rect(self.surface, self.color.backend_color,
+				(x, y, w, h), 0)
 		else:
-			pygame.draw.rect(self.surface, color, (x, y, w, h), penwidth)
+			pygame.draw.rect(self.surface, self.color.backend_color,
+				(x, y, w, h), self.penwidth)
 
-	def ellipse(self, x, y, w, h, fill=False, color=None, penwidth=None):
+	@configurable
+	def ellipse(self, x, y, w, h):
 
-		if color is not None:
-			color = self.color(color)
-		else:
-			color = self.fgcolor
-		if penwidth is None:
-			penwidth = self.penwidth
 		x = int(x)
 		y = int(y)
 		w = int(w)
 		h = int(h)
 		x, y = self.to_xy(x, y)
-		if fill:
-			pygame.draw.ellipse(self.surface, color, (x, y, w, h), 0)
+		if self.fill:
+			pygame.draw.ellipse(self.surface, self.color.backend_color,
+				(x, y, w, h), 0)
 		else:
 			# Because the default way of drawing thick lines gives ugly results
 			# for ellipses, we draw thick ellipses manually, by drawing an
 			# ellipse with the background color inside of it
-			i = penwidth / 2
-			j = penwidth - i
-			pygame.draw.ellipse(self.surface, color, (x-i, y-i, w+2*i, h+2*i),
+			i = self.penwidth / 2
+			j = self.penwidth - i
+			pygame.draw.ellipse(self.surface, self.color.backend_color,
+				(x-i, y-i, w+2*i, h+2*i), 0)
+			pygame.draw.ellipse(self.surface,
+				self.background_color.backend_color, (x+j, y+j, w-2*j, h-2*j),
 				0)
-			pygame.draw.ellipse(self.surface, self.bgcolor, (x+j, y+j, w-2*j,
-				h-2*j), 0)
 
-	def polygon(self, vertices, fill=False, color=None, penwidth=None):
+	@configurable
+	def polygon(self, vertices):
 
-		if color is not None:
-			color = self.color(color)
-		else:
-			color = self.fgcolor
-		if penwidth is None:
-			penwidth = self.penwidth
-		if fill:
+		if self.fill:
 			width = 0
 		else:
 			width = penwidth
 		vertices = [self.to_xy(x, y) for x, y in vertices]
-		pygame.draw.polygon(self.surface, color, vertices, width)
+		pygame.draw.polygon(self.surface, self.color.backend_color, vertices,
+			width)
 
 	def _text(self, text, x, y):
 
-		font = self._font()
-		surface = font.render(text, self.antialias, self.fgcolor)
+		surface = self._font.render(text, self.antialias,
+			self.color.backend_color)
 		x, y = self.to_xy(x, y)
 		self.surface.blit(surface, (x, y))
 
 	def _text_size(self, text):
 
-		return self._font().size(text)
+		return self._font.size(text)
 
 	def image(self, fname, center=True, x=None, y=None, scale=None):
 

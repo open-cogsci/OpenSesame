@@ -208,7 +208,8 @@ copy_packages = [
 	'pyparsing',
 	'dateutil',
 	'six',
-	'wx'
+	'wx',
+	'webcolors'
 	]
 
 # A list of packages that shouldn't be stripped from .py files, because it

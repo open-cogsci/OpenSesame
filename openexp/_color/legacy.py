@@ -18,10 +18,11 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame.py3compat import *
+import pygame
+from openexp._color.color import color
 
-from openexp._synth import synth
+class legacy(color):
 
-# For now, the legacy back-end doesn't add anything over the base class.
-class legacy(synth.synth):
+	def to_backend_color(self, hexcolor):
 
-	pass
+		return pygame.Color(hexcolor)

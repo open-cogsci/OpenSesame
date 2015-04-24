@@ -18,7 +18,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame.py3compat import *
-
+import warnings
 import re
 from libopensesame import item
 from openexp import canvas
@@ -154,8 +154,8 @@ class inline_script(item.item):
 
 		warnings.warn(u'self.offline_canvas() is deprecated. '
 			'Use canvas() instead.', DeprecationWarning)
-		return canvas.canvas(self.experiment, self.var.background,
-			self.var.foreground, auto_prepare=auto_prepare)
+		return canvas.canvas(self.experiment, auto_prepare=auto_prepare,
+			background_color=self.var.background, color=self.var.foreground)
 
 def restore_state():
 

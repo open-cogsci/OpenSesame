@@ -18,56 +18,123 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame.py3compat import *
-
-# If available, use the yaml.inherit metaclass to copy the docstrings from
-# mouse onto the back-end-specific implementations of this class
-# (legacy, etc.)
-try:
-	from yamldoc import inherit as docinherit
-except:
-	docinherit = type
-
+from openexp.backend import backend, configurable
 from libopensesame.exceptions import osexception
 
-class sampler(object):
+class sampler(backend):
 
 	"""
 	desc: |
-		The `sampler` module provides functionality to play sound samples in
-		`.ogg` and `.wav` format (Audacity is an excellent free tool to convert
-		samples from other formats).
+		The `sampler` module provides functionality to play sound samples.
 
-		__Important note:__
+		__Example:__
+
+		~~~ .python
+		src = exp.pool['bark.ogg']
+		my_sampler = sampler(src, volume=.5)
+		my_sampler.play()
+		~~~
+
+		__Overview:__
+
+		%--
+		toc:
+			mindepth: 2
+			maxdepth: 3
+		--%
+
+		## Things to know
+
+		### Sampling rate
 
 		If you find that your sample plays to slowly (low pitch) or too quickly
 		(high pitch), make sure that the sampling rate of your sample matches
 		the sampling rate of the sampler back-end as specified under back-end
 		settings.
 
-		__Example:__
+		### Supported file formats
 
-		~~~ {.python}
-		from openexp.sampler import sampler
-		my_sampler = sampler(exp, exp.pool['bark.ogg'])
+		Sound files in `.wav` and `.ogg` format are supported. If you need to
+		convert samples from a different format, you can use
+		[Audacity](http://sourceforge.net/projects/audacity/).
+
+		### Backwards incompatible changes from 2.9 to 3.0
+
+		The following are now properties, as described under
+		[playback keywords]:
+
+		- [sampler.volume]
+		- [sampler.fade_in]
+		- [sampler.pitch]
+		- [sampler.pan]
+
+		Therefore, the following will no longer work:
+
+		~~~ .python
+		sampler.volume(.5)
+		~~~
+
+		And has to be changed to:
+
+		~~~ .python
+		sampler.volume = .5
+		~~~
+
+		### Playback keywords
+
+		Functions that accept `**playback_args` take the following keyword
+		arguments:
+
+		- `volume` specifies a volume between `0.0` (silent) and `1.0`
+		  (maximum).
+		- `pitch` specifies a pitch (or playback speed), where values > 1
+		  indicate a higher pitch, and values < 1 indicate a lower pitch.
+		- `pan` specifies a panning, where values < 0 indicate panning to the
+		  left, and values > 0 indicate panning to the right. Alternatively, you
+		  can set pan to 'left' or 'right' to play only a single channel.
+		- `duration` specifies the duration of the the sound in milliseconds, or
+		  is set to `0` or `None` to play the full sound.
+		- `fade_in` specifies the fade-in time (or attack) of the sound, or is
+		  set to `0` or `None` to disable fade-in.
+		- `block` indicates whether the experiment should block (`True`) during
+		  playback or not (`False`).
+
+		~~~ .python
+		src = exp.pool['bark.ogg']
+		my_sampler = sampler(src)
+		my_sampler.play(volume=.5, pan='left')
+		~~~
+
+		Playback keywords only affect the current operation (except when passed
+		to [sampler.\_\_init\_\_][__init__]). To change the behavior for all
+		subsequent operations, set the playback properties directly:
+
+		~~~ .python
+		src = exp.pool['bark.ogg']
+		my_sampler = sampler(src)
+		my_sampler.volume = .5
+		my_sampler.pan = 'left'
+		my_sampler.play()
 		my_sampler.play()
 		~~~
 
-		__Function list:__
+		Or pass the playback keywords to [sampler.\_\_init\_\_][__init__]:
 
-		%--
-		toc:
-			mindepth: 2
-			maxdepth: 2
-		--%
+		~~~ .python
+		src = exp.pool['bark.ogg']
+		my_sampler = sampler(src, volume=.5, pan='left')
+		my_sampler.play()
+		my_sampler.play()
+		~~~
 	"""
 
-	__metaclass__ = docinherit
-
-	def __init__(self, experiment, src):
+	def __init__(self, experiment, src, **playback_args):
 
 		"""
-		desc:
-			Initializes the sampler with a specified file.
+		desc: |
+			Constructor to create a new `sampler` object. You do not generally
+			call this constructor directly, but use the `sampler()` function,
+			which is described here: [/python/sampler/]().
 
 		arguments:
 			experiment:
@@ -77,145 +144,60 @@ class sampler(object):
 				desc:	The full path to a `.wav` or `.ogg` file.
 				type:	[unicode, str]
 
-		example: |
-			from openexp.sampler import sampler
-			src = exp.pool[u'my_sound.ogg']
-			my_sampler = sampler(exp, src)
-		"""
-
-		raise NotImplementedError()
-
-	def stop_after(self, ms):
-
-		"""
-		desc:
-			Specifies a duration after which the sampler stops playing.
-
-		arguments:
-			ms:
-				desc:	An integer value specifying the duration in
-						milliseconds.
-				type:	int
+		keyword-dict:
+			playback_args:
+				Optional [playback keywords] that will be used as the default
+				for this `sampler` object.
 
 		example: |
-			from openexp.sampler import sampler
 			src = exp.pool[u'my_sound.ogg']
-			my_sampler = sampler(exp, src)
-			my_sampler.stop_after(100)
+			my_sampler = sampler(src, volume=.5)
 		"""
 
-		if type(ms) != int or ms < 0:
+		self.experiment = experiment
+		backend.__init__(self, configurables={
+			u'volume' : self.assert_numeric,
+			u'pan' : self.assert_pan,
+			u'pitch' : self.assert_numeric,
+			u'duration' : self.assert_numeric_or_None,
+			u'fade_in' : self.assert_numeric_or_None,
+			u'block' : self.assert_bool,
+			}, **playback_args)
+
+	def default_config(self):
+
+		return {
+			u'volume' 			: 1.,
+			u'pan'				: 0.,
+			u'pitch'			: 1.,
+			u'duration'			: None,
+			u'fade_in'			: None,
+			u'block'			: False,
+			}
+
+	def assert_pan(self, key, val):
+
+		if not isinstance(val, int) and not isinstance(val, float) \
+			and val not in [u'left', u'right']:
 			raise osexception(
-				u"openexp._sampler.legacy.stop_after() requires a positive integer")
-		self._stop_after = ms
+				u'pan should be numeric, \'left\', or \'right\', not %s' % val)
 
-	def fade_in(self, ms):
-
-		"""
-		desc:
-			Sets a fade-in time in milliseconds.
-
-		arguments:
-			ms:
-				desc:	An integer value specifying the duration in
-						milliseconds.
-				type:	int
-
-		example: |
-			from openexp.sampler import sampler
-			src = exp.pool[u'my_sound.ogg']
-			my_sampler = sampler(exp, src)
-			my_sampler.fade_in(100)
-		"""
-
-		if type(ms) != int or ms < 0:
-			raise osexception(
-				u"openexp._sampler.legacy.fade_in() requires a positive integer")
-		self._fade_in = ms
-
-	def volume(self, vol):
-
-		"""
-		desc:
-			Sets the volume.
-
-		arguments:
-			vol:
-				desc:	A volume level between 0.0 (silent) and 1.0 (full).
-				type:	[int, float]
-
-		example: |
-			from openexp.sampler import sampler
-			src = exp.pool[u'my_sound.ogg']
-			my_sampler = sampler(exp, src)
-			my_sampler.volume(0.5)
-		"""
-
-		raise NotImplementedError()
-
-	def pitch(self, p):
-
-		"""
-		desc:
-			Sets the relative pitch of the sample.
-
-		arguments:
-			p:
-				desc:	The pitch. p > 1.0 slows the sample down, p < 1.0 speeds
-						the sample up.
-				type:	[int, float]
-
-		example: |
-			from openexp.sampler import sampler
-			src = exp.pool[u'my_sound.ogg']
-			my_sampler = sampler(exp, src)
-			my_sampler.pitch(2.0)
-		"""
-
-		raise NotImplementedError()
-
-	def pan(self, p):
-
-		"""
-		desc:
-			Sets the panning of the sample. The volume of the "unpanned" channel
-			decreases, the volume of the other channel remains the same. To
-			fully mute one channel specify "left" (mutes right, pans to left) or
-			"right" (mutes left, pans to right").
-
-		arguments:
-			p:
-				desc:	Panning. A float (p < 0 = to left, p > 0 = to right) or
-						string ("left" or "right").
-				type:	[int, float, str, unicode]
-
-		example: |
-			from openexp.sampler import sampler
-			src = exp.pool[u'my_sound.ogg']
-			my_sampler = sampler(exp, src)
-			my_sampler.pan('left')
-		"""
-
-		raise NotImplementedError()
-
-	def play(self, block=False):
+	@configurable
+	def play(self, **playback_args):
 
 		"""
 		desc:
 			Plays the sound.
 
-		keywords:
-			block:
-				desc:	If True, the function blocks until the sound is
-						finished. If False, the function returns right away
-						and the sound is played in the background.
-				type:	bool
+		keyword-dict:
+			playback_args:
+				Optional [playback keywords] that will be used for this call to
+				[sampler.play]. This does not affect subsequent operations.
 
 		example: |
-			from openexp.sampler import sampler
 			src = exp.pool[u'my_sound.ogg']
-			my_sampler = sampler(exp, src)
-			my_sampler.play()
+			my_sampler = sampler(src)
+			my_sampler.play(pitch=.5, block=True)
 		"""
 
 		raise NotImplementedError()
@@ -227,11 +209,10 @@ class sampler(object):
 			Stops the currently playing sound (if any).
 
 		example: |
-			from openexp.sampler import sampler
 			src = exp.pool[u'my_sound.ogg']
-			my_sampler = sampler(exp, src)
+			my_sampler = sampler(src)
 			my_sampler.play()
-			self.sleep(100)
+			sleep(100)
 			my_sampler.stop()
 		"""
 
@@ -244,13 +225,12 @@ class sampler(object):
 			Pauses playback (if any).
 
 		example: |
-			from openexp.sampler import sampler
 			src = exp.pool[u'my_sound.ogg']
-			my_sampler = sampler(exp, src)
+			my_sampler = sampler(src)
 			my_sampler.play()
-			self.sleep(100)
+			sleep(100)
 			my_sampler.pause()
-			self.sleep(100)
+			sleep(100)
 			my_sampler.resume()
 		"""
 
@@ -263,13 +243,12 @@ class sampler(object):
 			Resumes playback (if any).
 
 		example: |
-			from openexp.sampler import sampler
 			src = exp.pool[u'my_sound.ogg']
-			my_sampler = sampler(exp, src)
+			my_sampler = sampler(src)
 			my_sampler.play()
-			self.sleep(100)
+			sleep(100)
 			my_sampler.pause()
-			self.sleep(100)
+			sleep(100)
 			my_sampler.resume()
 		"""
 
@@ -286,11 +265,10 @@ class sampler(object):
 			type:	bool
 
 		Example: |
-			from openexp.sampler import sampler
 			src = exp.pool[u'my_sound.ogg']
-			my_sampler = sampler(exp, src)
+			my_sampler = sampler(src)
 			my_sampler.play()
-			self.sleep(100)
+			sleep(100)
 			if my_sampler.is_playing():
 				print('The sampler is still playing!')
 		"""
@@ -305,15 +283,27 @@ class sampler(object):
 			no sound is playing.
 
 		example: |
-			from openexp.sampler import sampler
 			src = exp.pool[u'my_sound.ogg']
-			my_sampler = sampler(exp, src)
+			my_sampler = sampler(src)
 			my_sampler.play()
 			my_sampler.wait()
 			print('The sampler is finished!')
 		"""
 
 		raise NotImplementedError()
+
+	# Deprecated functions
+
+	def stop_after(self, ms):
+
+		"""
+		visible:	False
+		desc:		deprecated
+		"""
+
+		warnings.warn(u'sampler.stop_after() has been deprecated. '
+			'Use sampler.duration instead.', DeprecationWarning)
+		self.duration = ms
 
 def init_sound(experiment):
 

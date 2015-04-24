@@ -18,95 +18,164 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame.py3compat import *
-
+import warnings
 import random
 import pygame
 import math
 from libopensesame.exceptions import osexception
+from libopensesame.html import html
+from openexp.backend import backend, configurable
+from openexp.color import color
 
-# If available, use the yaml.inherit metaclass to copy the docstrings from
-# canvas onto the back-end-specific implementations of this class (legacy, etc.)
-try:
-	from yamldoc import inherit as docinherit
-except:
-	docinherit = type
-
-class canvas(object):
+class canvas(backend):
 
 	"""
 	desc: |
-		The `canvas` class is used for display presentation.
-
-		__Important note:__
-
-		When using a `canvas` all coordinates are specified
-		relative to the top-left of the display, and not, as in `sketchpad`s,
-		relative to the display center.
+		The `canvas` class is used to present visual stimuli.
 
 		__Example__:
 
-		~~~ {.python}
-		# Create a canvas with a central fixation dot and show it.
-		from openexp.canvas import canvas
-		my_canvas = canvas(exp)
+		~~~ .python
+		# Create and show a canvas with a central fixation dot
+		my_canvas = canvas()
 		my_canvas.fixdot()
 		my_canvas.show()
 		~~~
 
-		__Function list:__
+		__Overview:__
 
 		%--
 		toc:
 			mindepth: 2
-			maxdepth: 2
+			maxdepth: 3
 		--%
+
+		## Things to know
+
+		### Coordinates
+
+		- When *Uniform coordinates* is set to 'yes', coordinates are
+		  relative to the center of the display. That is, (0,0) is the center.
+		  This is the default as of OpenSesame 3.0.0.
+		- When *Uniform coordinates* is set to 'no', coordinates are relative to
+		  the top-left of the display. That is, (0,0) is the top-left. This was
+		  the default in OpenSesame 2.9.X and earlier.
+
+		### Style keywords
+
+		All functions that accept `**style_args` take the following keyword
+		arguments:
+
+		- `color` specifies the foreground color. For valid color
+		  specifications, see [colors].
+		- `background_color` specifies the background color. For valid color
+		  specifications, see [colors].
+		- `fill` indicates whether rectangles, circles, polygons, and ellipses
+		  are filled (`True`), or drawn as an outline (`False`).
+		- `penwidth` indicates a penwidth in pixels and should be `int` or
+		  `float`.
+		- `bidi` indicates whether bidirectional-text support is enabled, and
+		  should be `True` or `False`.
+		- `html` indicates whether HTML-tags are interpreted, and should be
+		  `True` or `False`. For supported tags, see [/usage/text/]().
+		- `font_family` is the name of a font family, such as 'sans'.
+		- `font_italic` indicates whether text should italics, and should be
+		  `True` or `False`.
+		- `font_bold` indicates whether text should bold, and should be
+		  `True` or `False`.
+		- `font_underline` indicates whether text should underlined, and should
+		  be `True` or `False`.
+
+		~~~ .python
+		# Draw a green fixation dot
+		my_canvas = canvas()
+		my_canvas.fixdot(color='green')
+		my_canvas.show()
+		~~~
+
+		Style keywords only affect the current drawing operation (except when
+		passed to [canvas.\_\_init\_\_][__init__]). To change the style for all
+		subsequent drawing operations, set style properties, such as
+		[canvas.color], directly:
+
+		~~~ .python
+		# Draw a red cross with a 2px penwidth
+		my_canvas = canvas()
+		my_canvas.color = u'red'
+		my_canvas.penwidth = 2
+		my_canvas.line(-10, -10, 10, 10)
+		my_canvas.line(-10, 10, 10, -10)
+		my_canvas.show()
+		~~~
+
+		Or pass the style properties to [canvas.\_\_init\_\_][__init__]:
+
+		~~~ .python
+		# Draw a red cross with a 2px penwidth
+		my_canvas = canvas(color=u'red', penwidth=2)
+		my_canvas.line(-10, -10, 10, 10)
+		my_canvas.line(-10, 10, 10, -10)
+		my_canvas.show()
+		~~~
+
+		### Colors
+
+		You can specify colors in the following CSS3-compatible ways:
+
+		- __Color names:__ 'red', 'black', etc. A full list of valid color names
+		  can be found
+		  [here](http://www.w3.org/TR/SVG11/types.html#ColorKeywords).
+		- __Seven-character hexadecimal strings:__ '#FF0000', '#000000', etc.
+		  Here, values range from '00' to 'FF', so that '#FF0000' is bright red.
+		- __Four-character hexadecimal strings:__ '#F00', '#000', etc. Here,
+		  values range from '0' to 'F' so that '#F00' is bright red.
+		- __RGB strings:__ 'rgb(255,0,0)', 'rgb(0,0,0)', etc. Here, values
+		  range from '0' to '255' so that 'rgb(255,0,0)' is bright red.
+		- __RGB percentage strings:__ 'rgb(100%,0%,0%)', 'rgb(0%,0%,0%)', etc.
+		  Here, values range from '0%' to '100%' so that 'rgb(100%,0%,0%)' is
+		  bright red.
+		- __RGB tuples:__ `(255, 0, 0)`, `(0, 0 ,0)`, etc. Here, values range
+		  from `0` to `255` so that `(255,0,0)' is bright red.
+		- __Luminance values:__  `255`, `0`, etc. Here, values range from `0` to
+		  `255` so that `255` is white.
+
+		~~~ .python
+		# Various ways to specify green
+		my_canvas.fixdot(color=u'green')
+		my_canvas.fixdot(color=u'#00ff00')
+		my_canvas.fixdot(color=u'#0f0')
+		my_canvas.fixdot(color=u'rgb(0,255,0)')
+		my_canvas.fixdot(color=u'rgb(0%,100%,0%)')
+		my_canvas.fixdot(color=(0,255,0))
+		# Specify a luminance value (white)
+		my_canvas.fixdot(color=255)
+		~~~
 
 		%--
 		constant:
-			arg_fgcolor: |
-				A human-readable foreground color, such as 'red', an
-				HTML-style color value, such as '#FF0000', or `None` to use the
-				canvas default. This argument will not change the canvas default
-				foreground as set by [canvas.set_fgcolor].
-			arg_bgcolor: |
-				A human-readable background color, such as 'red', an
-				HTML-style color value, such as '#FF0000', or `None` to use the
-				canvas default. This argument will not change the canvas default
-				background as set by [canvas.set_bgcolor].
-			arg_penwidth: |
-				A penwidth in pixels, or `None` to use the canvas default. This
-				argument will not change the canvas default penwidth as set by
-				[canvas.set_penwidth].
 			arg_max_width: |
 				The maximum width of the text in pixels, before wrapping to a
 				new line, or `None` to wrap at screen edge.
-			arg_bidi: |
-				A bool indicating bi-directional text support should be enabled,
-				or `None` to use the experiment default. This does not affect
-				the canvas default bidi setting as set by [canvas.set_bidi].
-			arg_html: |
-				A bool indicating whether a subset of HTML tags should be
-				interpreted. For more information, see </usage/text/>.
 			arg_bgmode: |
 				Specifies whether the background is the average of col1 col2
 				('avg', corresponding to a typical Gabor patch), or equal to
 				col2 ('col2'), useful for blending into the	background. Note:
 				this parameter is ignored by the psycho backend, which uses
 				increasing transparency for the background.
-			arg_fill: |
-				Specifies whether the shape should be filled (True) or consist
-				of an outline (False).
+			arg_style: |
+				Optional [style keywords] that specify the style of the current
+				drawing operation. This does not affect subsequent drawing
+				operations.
 		--%
 	"""
 
-	__metaclass__ = docinherit
-
-	def __init__(self, experiment, bgcolor=None, fgcolor=None,
-		auto_prepare=True):
+	def __init__(self, experiment, auto_prepare=True, **style_args):
 
 		"""
-		desc:
-			Constructor to create a new `canvas` object.
+		desc: |
+			Constructor to create a new `canvas` object. You do not generally
+			call this constructor directly, but use the `canvas()` function,
+			which is described here: [/python/common/]().
 
 		arguments:
 			experiment:
@@ -114,14 +183,6 @@ class canvas(object):
 				type:	experiment
 
 		keywords:
-			bgcolor:
-				desc:	A human-readable background color or None to use
-						experiment default.
-				type:	[str, unicode, NoneType]
-			fgcolor:
-				desc:	A human-readable foreground color or None to use
-						experiment default.
-				type:	[str, unicode, NoneType]
 			auto_prepare:
 				desc:	Indicates whether the canvas should be automatically
 						prepared after each drawing operation, so that
@@ -137,51 +198,130 @@ class canvas(object):
 						other backends.
 				type:	bool
 
+		keyword-dict:
+			style_args:
+				Optional [style keywords], which will be used as the default
+				for all drawing operations on this `canvas`.
+
 		example: |
 			# Example 1: Show a central fixation dot.
-			from openexp.canvas import canvas
-			my_canvas = canvas(exp)
+			my_canvas = canvas()
 			my_canvas.fixdot()
 			my_canvas.show()
 
 			# Example 2: Show many randomly positioned fixation dot. Here we
 			# disable `auto_prepare`, so that drawing goes more quickly.
-			from openexp.canvas import canvas
 			from random import randint
-			my_canvas = canvas(exp, auto_prepare=False)
+			my_canvas = canvas(auto_prepare=False)
 			for i in range(1000):
-				x = randint(0, self.var.get('width'))
-				y = randint(0, self.var.get('height'))
+				x = randint(0, my_canvas.width)
+				y = randint(0, my_canvas.height)
 				my_canvas.fixdot(x, y)
 			my_canvas.prepare()
 			my_canvas.show()
 		"""
 
-		raise NotImplementedError()
+		self.experiment = experiment
+		self._width = self.experiment.var.width
+		self._height = self.experiment.var.height
+		backend.__init__(self, configurables={
+			u'color' : None,
+			u'background_color' : None,
+			u'fill' : self.assert_bool,
+			u'penwidth' : self.assert_numeric,
+			u'bidi' : self.assert_bool,
+			u'html' : self.assert_bool,
+			u'font_family' : self.assert_string,
+			u'font_size' : self.assert_numeric,
+			u'font_italic' : self.assert_bool,
+			u'font_bold' : self.assert_bool,
+			u'font_underline' : self.assert_bool,
+			}, **style_args)
+		self.html_renderer = html()
 
-	def color(self, color):
+	def set_config(self, **cfg):
+
+		# Remap deprecated names
+		if u'bgcolor' in cfg:
+			warnings.warn(u'bgcolor is a deprecated style argument. '
+				'Use background_color instead.',
+				DeprecationWarning)
+			cfg[u'background_color'] = cfg[u'bgcolor']
+			del cfg['bgcolor']
+		if u'fgcolor' in cfg:
+			warnings.warn(u'fgcolor is a deprecated style argument. '
+				'Use color instead.', DeprecationWarning)
+			cfg[u'color'] = cfg[u'fgcolor']
+			del cfg['fgcolor']
+		if u'font_style' in cfg:
+			warnings.warn(u'font_style is a deprecated style argument. '
+				'Use font_family instead.',	DeprecationWarning)
+			cfg[u'font_family'] = cfg[u'font_style']
+			del cfg['font_style']
+		# Convert color to backend specific colors
+		if u'color' in cfg and not hasattr(cfg[u'color'], u'backend_color'):
+			cfg[u'color'] = color(self.experiment, cfg[u'color'])
+		if u'background_color' in cfg \
+			and not hasattr(cfg[u'background_color'], u'backend_color'):
+			cfg[u'background_color'] = color(self.experiment,
+				cfg[u'background_color'])
+		backend.set_config(self, **cfg)
+
+	def default_config(self):
+
+		return {
+			u'penwidth' 		: 1,
+			u'fill'				: False,
+			u'html'				: True,
+			u'bidi'				: self.experiment.var.bidi==u'yes',
+			u'color'			: self.experiment.var.foreground,
+			u'background_color'	: self.experiment.var.background,
+			u'font_size'		: self.experiment.var.font_size,
+			u'font_family'		: self.experiment.var.font_family,
+			u'font_bold'		: self.experiment.var.font_bold==u'yes',
+			u'font_italic'		: self.experiment.var.font_italic==u'yes',
+			u'font_underline'	: self.experiment.var.font_underline==u'yes',
+			}
+
+	@property
+	def size(self):
 
 		"""
+		name:
+			size
+
 		desc:
-			Transforms a "human-readable" color into the format that is used by
-			the back-end (e.g., a PyGame color).
-
-		visible: False
-
-		arguments:
-			color: |
-				A color in one the following formats (by example):
-				- 255, 255, 255 (rgb)
-				- 255, 255, 255, 255 (rgba)
-				- #f57900 (case-insensitive html)
-				- 100 (integer intensity value 0 .. 255, for gray-scale)
-				- 0.1 (float intensity value 0 .. 1.0, for gray-scale)
-
-		returns:
-			A color in a back-end-specific format.
+			The size of the canvas as a `(width, height)` tuple. This is a
+			read-only property.
 		"""
 
-		raise NotImplementedError()
+		return self._width, self._height
+
+	@property
+	def width(self):
+
+		"""
+		name:
+			width
+
+		desc:
+			The width of the canvas. This is a read-only property.
+		"""
+
+		return self._width
+
+	@property
+	def height(self):
+
+		"""
+		name:
+			height
+
+		desc:
+			The height of the canvas. This is a read-only property.
+		"""
+
+		return self._height
 
 	def copy(self, canvas):
 
@@ -200,62 +340,15 @@ class canvas(object):
 				type:	canvas
 
 		example: |
-			from openexp.canvas import canvas
-			my_canvas = canvas(exp)
+			my_canvas = canvas()
 			my_canvas.fixdot(x=100, color='green')
-			my_copied_canvas = canvas(exp)
+			my_copied_canvas = canvas()
 			my_copied_canvas.copy(my_canvas)
 			my_copied_canvas.fixdot(x=200, color="blue")
 			my_copied_canvas.show()
 		"""
 
 		raise NotImplementedError()
-
-	def xcenter(self):
-
-		"""
-		desc:
-			Returns the center X coordinate of the `canvas` in pixels.
-
-		returns:
-			desc:	The center X coordinate.
-			type:	int
-
-		example: |
-			# Draw a diagonal line through the center of the canvas
-			from openexp.canvas import canvas
-			my_canvas = canvas(exp)
-			x1 = my_canvas.xcenter() - 100
-			y1 = my_canvas.ycenter() - 100
-			x2 = my_canvas.xcenter() + 100
-			y2 = my_canvas.ycenter() + 100
-			my_canvas.line(x1, y1, x2, y2)
-		"""
-
-		return self.experiment.var.get(u'width') / 2
-
-	def ycenter(self):
-
-		"""
-		desc:
-			Returns the center Y coordinate of the `canvas` in pixels.
-
-		returns:
-			desc:	The center Y coordinate.
-			type:	int
-
-		example: |
-			# Draw a diagonal line through the center of the canvas
-			from openexp.canvas import canvas
-			my_canvas = canvas(exp)
-			x1 = my_canvas.xcenter() - 100
-			y1 = my_canvas.ycenter() - 100
-			x2 = my_canvas.xcenter() + 100
-			y2 = my_canvas.ycenter() + 100
-			my_canvas.line(x1, y1, x2, y2)
-		"""
-
-		return self.experiment.var.get(u'height') / 2
 
 	def prepare(self):
 
@@ -287,8 +380,7 @@ class canvas(object):
 
 
 		example: |
-			from openexp.canvas import canvas
-			my_canvas = canvas(exp)
+			my_canvas = canvas()
 			my_canvas.fixdot()
 			t = my_canvas.show()
 			exp.set('time_fixdot', t)
@@ -296,7 +388,8 @@ class canvas(object):
 
 		raise NotImplementedError()
 
-	def clear(self, color=None):
+	@configurable
+	def clear(self, color=None, **style_args):
 
 		"""
 		desc:
@@ -306,16 +399,17 @@ class canvas(object):
 			it.
 
 		keywords:
-			color:
-				desc:	"%arg_bgcolor"
-				type:	[str, unicode, NoneType]
+			color: 	Deprecated. Specify `background_color` as part of
+					`style_args` instead.
+
+		keyword-dict:
+			style_args:	"%arg_style"
 
 		example: |
-			from openexp.canvas import canvas
-			my_canvas = canvas(exp)
+			my_canvas = canvas()
 			my_canvas.fixdot(color='green')
 			my_canvas.show()
-			self.sleep(1000)
+			sleep(1000)
 			my_canvas.clear()
 			my_canvas.fixdot(color='red')
 			my_canvas.show()
@@ -323,137 +417,8 @@ class canvas(object):
 
 		raise NotImplementedError()
 
-	def set_bidi(self, bidi):
-
-		"""
-		desc:
-			Enables or disables bi-directional text support.
-
-		arguments:
-			bidi:
-				desc:	True to enable bi-directional text support, False to
-						disable.
-				type:	bool
-
-		example: |
-			from openexp.canvas import canvas
-			my_canvas = canvas(exp)
-			my_canvas.set_bidi(True)
-			my_canvas.text(u'חלק מטקסט')
-		"""
-
-		self.bidi = bidi
-
-	def set_penwidth(self, penwidth):
-
-		"""
-		desc:
-			Sets the default penwidth for subsequent drawing operations.
-
-		arguments:
-			penwidth:
-				desc:	A penwidth in pixels.
-				type:	int
-
-		example: |
-			from openexp.canvas import canvas
-			my_canvas = canvas(exp)
-			my_canvas.set_penwidth(10)
-			my_canvas.line(100, 100, 200, 200)
-		"""
-
-		self.penwidth = penwidth
-
-	def set_fgcolor(self, color):
-
-		"""
-		desc:
-			Sets the default foreground color for subsequent drawing operations.
-
-		arguments:
-			color:
-				desc:	"%arg_fgcolor"
-				type:	[str, unicode]
-
-		example: |
-			from openexp.canvas import canvas
-			my_canvas = canvas(exp)
-			my_canvas.set_fgcolor('green')
-			my_canvas.text('Green text', y=200)
-			my_canvas.set_fgcolor('red')
-			my_canvas.text('Red text', y=400)
-		"""
-
-		self.fgcolor = self.color(color)
-
-	def set_bgcolor(self, color):
-
-		"""
-		desc:
-			Sets the default background color for subsequent drawing operations,
-			notably [canvas.clear].
-
-		arguments:
-			color:
-				desc:	"%arg_bgcolor"
-				type:	[str, unicode]
-
-		example: |
-			from openexp.canvas import canvas
-			my_canvas = canvas(exp)
-			my_canvas.set_bgcolor('gray')
-			my_canvas.clear()
-		"""
-
-		self.bgcolor = self.color(color)
-
-	def set_font(self, style=None, size=None, italic=None, bold=None,
-		underline=None):
-
-		"""
-		desc:
-			Sets the default font for subsequent drawing operations, notably
-			[canvas.text].
-
-		keywords:
-			style:
-				desc:	A font family. This can be one of the default fonts
-						(e.g., 'mono'), a system font (e.g., 'arial'), the
-						name of a `.ttf` font file in the file pool (without
-						the `.ttf` extension), or `None` to use the experiment
-						default.
-				type:	[str, unicode]
-			size:
-				desc:	A font size in pixels, or `None` to use the experiment
-						default.
-				type:	int
-			italic:
-				desc:	A bool indicating whether the font should be italic, or
-						`None` to use the experiment default.
-				type:	bool, NoneType
-			bold:
-				desc:	A bool indicating whether the font should be bold, or
-						`None` to use the experiment default.
-				type:	bool, NoneType
-			underline:
-				desc:	A bool indicating whether the font should be underlined,
-						or `None` to use the experiment default.
-				type:	bool, NoneType
-
-		example: |
-			from openexp.canvas import canvas
-			my_canvas = canvas(exp)
-			my_canvas.set_font(style='serif', italic=True)
-			my_canvas.text('Text in italic serif')
-		"""
-
-		if style is not None: self.font_style = style
-		if size is not None: self.font_size = size
-		if italic is not None: self.font_italic = italic
-		if bold is not None: self.font_bold = bold
-		if underline is not None: self.font_underline = underline
-
-	def fixdot(self, x=None, y=None, color=None, style=u'default'):
+	@configurable
+	def fixdot(self, x=None, y=None, style=u'default', **style_args):
 
 		"""
 		desc: |
@@ -478,9 +443,6 @@ class canvas(object):
 				desc:	The Y coordinate of the dot center, or None to draw a
 						vertically centered dot.
 				type:	[int, NoneType]
-			color:
-				desc:	"%arg_fgcolor"
-				type:	[str, unicode, NoneType]
 			style:
 				desc: |
 						The fixation-dot style. One of: default, large-filled,
@@ -489,16 +451,14 @@ class canvas(object):
 						default equals medium-open.
 				type:	[str, unicode]
 
+		keyword-dict:
+			style_args:	"%arg_style"
+
 		example: |
-			from openexp.canvas import canvas
-			my_canvas = canvas(exp)
+			my_canvas = canvas()
 			my_canvas.fixdot()
 		"""
 
-		if color is not None:
-			color = self.color(color)
-		else:
-			color = self.fgcolor
 		if x is None:
 			x = 0
 		if y is None:
@@ -513,17 +473,19 @@ class canvas(object):
 		else:
 			raise osexception(u'Unknown style: %s' % self.style)
 		if u'open' in style or style == u'default':
-			self.ellipse(x-s, y-s, 2*s, 2*s, True, color=color)
-			self.ellipse(x-h, y-h, 2*h, 2*h, True, color=self.bgcolor)
+			self.ellipse(x-s, y-s, 2*s, 2*s, fill=True)
+			self.ellipse(x-h, y-h, 2*h, 2*h, fill=True,
+				color=self.background_color)
 		elif u'filled' in style:
-			self.ellipse(x-s, y-s, 2*s, 2*s, True, color=color)
+			self.ellipse(x-s, y-s, 2*s, 2*s, fill=True)
 		elif u'cross' in style:
-			self.line(x, y-s, x, y+s, color=color)
-			self.line(x-s, y, x+s, y, color=color)
+			self.line(x, y-s, x, y+s)
+			self.line(x-s, y, x+s, y)
 		else:
 			raise osexception(u'Unknown style: %s' % self.style)
 
-	def circle(self, x, y, r, fill=False, color=None, penwidth=None):
+	@configurable
+	def circle(self, x, y, r, **style_args):
 
 		"""
 		desc:
@@ -540,27 +502,18 @@ class canvas(object):
 				desc:	The radius of the circle.
 				type:	int
 
-		keywords:
-			fill:
-				desc:	"%arg_fill"
-				type:	bool
-			color:
-				desc:	"%arg_fgcolor"
-				type:	[str, unicode, NoneType]
-			penwidth:
-				desc:	"%arg_penwidth"
-				type:	int
+		keyword-dict:
+			style_args:	"%arg_style"
 
 		example: |
-			from openexp.canvas import canvas
-			my_canvas = canvas(exp)
+			my_canvas = canvas()
 			my_canvas.circle(100, 100, 50, fill=True, color='red')
 		"""
 
-		self.ellipse(x-r, y-r, 2*r, 2*r, fill=fill, color=color,
-			penwidth=penwidth)
+		self.ellipse(x-r, y-r, 2*r, 2*r)
 
-	def line(self, sx, sy, ex, ey, color=None, penwidth=None):
+	@configurable
+	def line(self, sx, sy, ex, ey, **style_args):
 
 		"""
 		desc:
@@ -580,25 +533,20 @@ class canvas(object):
 				desc:	The bottom Y coordinate.
 				type:	int
 
-		keywords:
-			color:
-				desc:	"%arg_fgcolor"
-				type:	[str, unicode, NoneType]
-			penwidth:
-				desc:	"%arg_penwidth"
-				type:	int
+		keyword-dict:
+			style_args:	"%arg_style"
 
 		Example: |
-			from openexp.canvas import canvas
-			my_canvas = canvas(exp)
-			w = self.var.get('width')
-			h = self.var.get('height')
+			my_canvas = canvas()
+			w = self.var.width
+			h = self.var.height
 			my_canvas.line(0, 0, w, h)
 		"""
 
 		raise NotImplementedError()
 
-	def arrow(self, sx, sy, ex, ey, arrow_size=5, color=None, penwidth=None):
+	@configurable
+	def arrow(self, sx, sy, ex, ey, arrow_size=5, **style_args):
 
 		"""
 		desc:
@@ -624,31 +572,26 @@ class canvas(object):
 			arrow_size:
 				desc:	The length of the arrow-head lines in pixels.
 				type:	int
-			color:
-				desc:	"%arg_fgcolor"
-				type:	[str, unicode, NoneType]
-			penwidth:
-				desc:	"%arg_penwidth"
-				type:	int
+
+		keyword-dict:
+			style_args:	"%arg_style"
 
 		Example: |
-			from openexp.canvas import canvas
-			my_canvas = canvas(exp)
-			w = self.var.get('width')/2
-			h = self.var.get('height')/2
-			my_canvas.arrow(0, 0, w, h, arrow_size=10)
+			my_canvas = canvas()
+			my_canvas.arrow(-10, 10, 20, 20, arrow_size=10)
 		"""
 
-		self.line(sx, sy, ex, ey, color=color, penwidth=penwidth)
+		self.line(sx, sy, ex, ey)
 		a = math.atan2(ey - sy, ex - sx)
 		_sx = ex + arrow_size * math.cos(a + math.radians(135))
 		_sy = ey + arrow_size * math.sin(a + math.radians(135))
-		self.line(_sx, _sy, ex, ey, color=color, penwidth=penwidth)
+		self.line(_sx, _sy, ex, ey)
 		_sx = ex + arrow_size * math.cos(a + math.radians(225))
 		_sy = ey + arrow_size * math.sin(a + math.radians(225))
-		self.line(_sx, _sy, ex, ey, color=color, penwidth=penwidth)
+		self.line(_sx, _sy, ex, ey)
 
-	def rect(self, x, y, w, h, fill=False, color=None, penwidth=None):
+	@configurable
+	def rect(self, x, y, w, h, **style_args):
 
 		"""
 		desc:
@@ -668,28 +611,18 @@ class canvas(object):
 				desc:	The height.
 				type:	int
 
-		keywords:
-			fill:
-				desc:	"%arg_fill"
-				type:	bool
-			color:
-				desc:	"%arg_fgcolor"
-				type:	[str, unicode, NoneType]
-			penwidth:
-				desc:	"%arg_penwidth"
-				type:	int
+		keyword-dict:
+			style_args:	"%arg_style"
 
 		example: |
-			from openexp.canvas import canvas
-			my_canvas = canvas(exp)
-			w = self.var.get('width')-10
-			h = self.var.get('height')-10
-			my_canvas.rect(10, 10, w, h, fill=True)
+			my_canvas = canvas()
+			my_canvas.rect(-10, -10, 20, 20, fill=True)
 		"""
 
 		raise NotImplementedError()
 
-	def ellipse(self, x, y, w, h, fill=False, color=None, penwidth=None):
+	@configurable
+	def ellipse(self, x, y, w, h, **style_args):
 
 		"""
 		desc:
@@ -709,28 +642,18 @@ class canvas(object):
 				desc:	The height.
 				type:	int
 
-		keywords:
-			fill:
-				desc:	"%arg_fill"
-				type:	bool
-			color:
-				desc:	"%arg_fgcolor"
-				type:	[str, unicode, NoneType]
-			penwidth:
-				desc:	"%arg_penwidth"
-				type:	int
+		keyword-dict:
+			style_args:	"%arg_style"
 
 		example: |
-			from openexp.canvas import canvas
-			my_canvas = canvas(exp)
-			w = self.var.get('width')-10
-			h = self.var.get('height')-10
-			my_canvas.ellipse(10, 10, w, h, fill=True)
+			my_canvas = canvas()
+			my_canvas.ellipse(-10, -10, 20, 20, fill=True)
 		"""
 
 		raise NotImplementedError()
 
-	def polygon(self, vertices, fill=False, color=None, penwidth=None):
+	@configurable
+	def polygon(self, vertices, **style_args):
 
 		"""
 		desc:
@@ -744,20 +667,11 @@ class canvas(object):
 						will draw a triangle.
 				type:	list
 
-		keywords:
-			fill:
-				desc:	"%arg_fill"
-				type:	bool
-			color:
-				desc:	"%arg_fgcolor"
-				type:	[str, unicode, NoneType]
-			penwidth:
-				desc:	"%arg_penwidth"
-				type:	int
+		keyword-dict:
+			style_args:	"%arg_style"
 
 		example: |
-			from openexp.canvas import canvas
-			my_canvas = canvas(exp)
+			my_canvas = canvas()
 			n1 = 0,0
 			n2 = 100, 100
 			n3 = 0, 100
@@ -766,7 +680,8 @@ class canvas(object):
 
 		raise NotImplementedError()
 
-	def text_size(self, text, max_width=None, bidi=None, html=True):
+	@configurable
+	def text_size(self, text, max_width=None, **style_args):
 
 		"""
 		desc:
@@ -781,12 +696,9 @@ class canvas(object):
 			max_width:
 				desc:	"%arg_max_width"
 				type:	[int, NoneType]
-			bidi:
-				desc:	"%arg_bidi"
-				type:	[bool, NoneType]
-			html:
-				desc:	"%arg_html"
-				type:	bool
+
+		keyword-dict:
+			style_args:	"%arg_style"
 
 		returns:
 			desc:	A (width, height) tuple containing the dimensions of the
@@ -794,18 +706,18 @@ class canvas(object):
 			type:	tuple
 
 		example: |
-			from openexp.canvas import canvas
-			my_canvas = canvas(exp)
+			my_canvas = canvas()
 			w, h = my_canvas.text_size('Some text')
 		"""
 
 		self.html.reset()
-		width, height = self.html.render(text, 0, 0, self, max_width=max_width,
-			html=html, bidi=bidi, dry_run=True)
+		width, height = self.html_renderer.render(text, 0, 0, self,
+			max_width=max_width, html=self.html, bidi=self.bidi, dry_run=True)
 		return width, height
 
+	@configurable
 	def text(self, text, center=True, x=None, y=None, max_width=None,
-		color=None, bidi=None, html=True):
+		**style_args):
 
 		"""
 		desc:
@@ -832,30 +744,20 @@ class canvas(object):
 			max_width:
 				desc:	"%arg_max_width"
 				type:	[int, NoneType]
-			color:
-				desc:	"%arg_fgcolor"
-				type:	[str, unicode, NoneType]
-			bidi:
-				desc:	"%arg_bidi"
-				type:	[bool, NoneType]
-			html:
-				desc:	"%arg_html"
-				type:	bool
+
+		keyword-dict:
+			style_args:	"%arg_style"
 
 		example: |
-			from openexp.canvas import canvas
-			my_canvas = canvas(exp)
+			my_canvas = canvas()
 			my_canvas.text('Some text with <b>boldface</b> and <i>italics</i>')
 		"""
 
-		if color is not None: color = self.color(color)
-		else: color = self.fgcolor
-		if bidi is None: bidi = self.bidi
 		if x is None: x = 0
 		if y is None: y = 0
-		self.html.reset()
-		self.html.render(text, x, y, self, max_width=max_width, center=center, \
-			color=color, html=html, bidi=bidi)
+		self.html_renderer.reset()
+		self.html_renderer.render(text, x, y, self, max_width=max_width,
+			center=center)
 
 	def _text(self, text, x, y):
 
@@ -935,8 +837,7 @@ class canvas(object):
 				type:	[float, int, NoneType]
 
 		example: |
-			from openexp.canvas import canvas
-			my_canvas = canvas(exp)
+			my_canvas = canvas()
 			# Determine the absolute path:
 			path = exp.pool[u'image_in_pool.png']
 			my_canvas.image(path)
@@ -995,8 +896,7 @@ class canvas(object):
 				type:	[str, unicode]
 
 		example: |
-			from openexp.canvas import canvas
-			my_canvas = canvas(exp)
+			my_canvas = canvas()
 			my_canvas.gabor(100, 100, 45, .05)
 		"""
 
@@ -1043,12 +943,81 @@ class canvas(object):
 				type:	[str, unicode]
 
 		example: |
-			from openexp.canvas import canvas
-			my_canvas = canvas(exp)
+			my_canvas = canvas()
 			my_canvas.noise_patch(100, 100, env='circular')
 		"""
 
 		raise NotImplementedError()
+
+	# Deprecated functions
+
+	def xcenter(self):
+
+		"""
+		visible:	False
+		desc:		deprecated
+		"""
+
+		return self.experiment.var.get(u'width') / 2
+
+	def ycenter(self):
+
+		"""
+		visible:	False
+		desc:		deprecated
+		"""
+
+		return self.experiment.var.get(u'height') / 2
+
+	def set_bidi(self, bidi):
+
+		"""
+		visible:	False
+		desc:		deprecated
+		"""
+
+		self.bidi = bidi
+
+	def set_penwidth(self, penwidth):
+
+		"""
+		visible:	False
+		desc:		deprecated
+		"""
+
+		self.penwidth = penwidth
+
+	def set_fgcolor(self, color):
+
+		"""
+		visible:	False
+		desc:		deprecated
+		"""
+
+		self.color = color
+
+	def set_bgcolor(self, color):
+
+		"""
+		visible:	False
+		desc:		deprecated
+		"""
+
+		self.bgcolor = self.color
+
+	def set_font(self, style=None, size=None, italic=None, bold=None,
+		underline=None):
+
+		"""
+		visible:	False
+		desc:		deprecated
+		"""
+
+		if style is not None: self.font_family = style
+		if size is not None: self.font_size = size
+		if italic is not None: self.font_italic = italic
+		if bold is not None: self.font_bold = bold
+		if underline is not None: self.font_underline = underline
 
 def init_display(experiment):
 
@@ -1260,32 +1229,3 @@ def _match_env(env):
 	if env not in env_synonyms:
 		raise osexception(u"'%s' is not a valid envelope" % env)
 	return env_synonyms[env]
-
-def _color(color):
-
-	"""
-	desc:
-		Creates a PyGame color object.
-
-	returns:
-		A pygame color object.
-	"""
-
-	if isinstance(color, basestring):
-		if py3:
-			return pygame.Color(color)
-		return pygame.Color(safe_encode(color))
-	if isinstance(color, int):
-		return pygame.Color(color, color, color, 255)
-	if isinstance(color, float):
-		i = int(255 * color)
-		return pygame.Color(i, i, i, 255)
-	if isinstance(color, tuple):
-		if len(color) == 3:
-			return pygame.Color(color[0], color[1], color[2], 255)
-		if len(color) > 3:
-			return pygame.Color(color[0], color[1], color[2], color[3])
-		raise osexception(u'Unknown color: %s' % color)
-	if isinstance(color, pygame.Color):
-		return color
-	raise osexception(u'Unknown color: %s' % color)

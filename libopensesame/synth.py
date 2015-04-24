@@ -49,8 +49,9 @@ class synth(sampler.sampler, item.item):
 
 		item.item.prepare(self)
 		try:
-			self.sampler = openexp.synth.synth(self.experiment, self.var.osc,
-				self.var.freq, self.var.length, self.var.attack, self.var.decay)
+			self.sampler = openexp.synth.synth(self.experiment,
+				osc=self.var.osc, freq=self.var.freq, length=self.var.length,
+				attack=self.var.attack, decay=self.var.decay)
 		except Exception as e:
 			raise osexception(
 				u"Failed to generate sound in synth '%s': %s" % (self.name, e))
