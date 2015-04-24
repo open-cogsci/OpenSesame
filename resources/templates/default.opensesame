@@ -23,7 +23,7 @@ define notepad getting_started
 	__note__
 	Hi,
 
-	Welcome to OpenSesame 2.9.3 "Hesitant Heisenberg"!
+	Welcome to OpenSesame 2.9.6 "Hesitant Heisenberg"!
 
 	If you are new to OpenSesame, you may wish to follow one of the tutorials,
 	which can be found online. There are also many example experiments, which will
@@ -50,4 +50,4 @@ define sketchpad welcome
 	set reset_variables "no"
 	set start_response_interval "no"
 	set description "Displays stimuli"
-	draw textline 0 0 "OpenSesame 2.9.3 <i>Hesitant Heisenberg</i>" center=1 color="white" font_family="serif" font_size=32 font_bold="no" font_italic="no" html="yes" z_index=0 show_if="always"
+	draw textline 0 0 "OpenSesame 2.9.6 <i>Hesitant Heisenberg</i>" center=1 color="white" font_family="serif" font_size=32 font_bold="no" font_italic="no" html="yes" z_index=0 show_if="always"
