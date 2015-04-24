@@ -143,8 +143,8 @@ class backend(object):
 				docstring(key))
 			setattr(self.__class__, key, fnc)
 		self.__cfg__ = {}
-		_cfg = cfg.copy()
-		_cfg.update(self.default_config())
+		_cfg = self.default_config().copy()
+		_cfg.update(cfg)
 		self.set_config(**_cfg)
 
 	def assert_list_or_None(self, key, val):
