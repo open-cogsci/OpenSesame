@@ -79,7 +79,7 @@ class color(object):
 		"""
 
 		if isinstance(colorspec, int):
-			return webcolors.rgb_to_hex((color, color, color))
+			return webcolors.rgb_to_hex((colorspec, colorspec, colorspec))
 		if isinstance(colorspec, tuple):
 			if len(colorspec) != 3:
 				raise osexception(
