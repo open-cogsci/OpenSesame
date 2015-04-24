@@ -410,5 +410,7 @@ def load_mod(path, mod, pkg=None):
 	if not os.path.exists(path):
 		raise osexception(u'%s does not exist' % path)
 	debug.msg(u'loading module from %s' % path)
-	return imp.load_source(mod, safe_encode(path,
-		enc=sys.getfilesystemencoding()))
+	if not py3:
+		mod = safe_encode(mod, enc=sys.getfilesystemencoding())
+		path = safe_encode(path, enc=sys.getfilesystemencoding())
+	return imp.load_source(mod, path)
