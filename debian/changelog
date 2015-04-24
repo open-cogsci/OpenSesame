@@ -1,3 +1,10 @@
+opensesame (2.9.6-ubuntu1) utopic; urgency=medium
+
+  * Improvements
+    - Use the same default logfile in opensesamerun and opensesame
+
+ -- Sebastiaan Mathot <sebastiaan@mantis>  Fri, 24 Apr 2015 13:47:31 +0200
+
 opensesame (2.9.5-ubuntu1) utopic; urgency=medium
 
   * Bugs fixed
