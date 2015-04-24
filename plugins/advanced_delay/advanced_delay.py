@@ -18,55 +18,47 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame.py3compat import *
-
 from libopensesame.exceptions import osexception
 from libopensesame import item, debug
 from libqtopensesame.items.qtautoplugin import qtautoplugin
-from PyQt4 import QtGui, QtCore
 import random
 
 class advanced_delay(item.item):
 
 	description = u'Waits for a specified duration'
 
-	def __init__(self, name, experiment, script=None):
+	def reset(self):
 
 		"""
-		Constructor.
-
-		Arguments:
-		name		--	The name of the plug-in.
-		experiment	--	The experiment object.
-
-		Keyword arguments:
-		script		--	A definition script. (default=None)
+		desc:
+			Initialize plug-in.
 		"""
 
-		self.duration = 1000
-		self.jitter = 0
-		self.jitter_mode = u'Uniform'
-		item.item.__init__(self, name, experiment, script)
+		self.var.duration = 1000
+		self.var.jitter = 0
+		self.var.jitter_mode = u'Uniform'
 
 	def prepare(self):
 
-		"""The preparation phase of the plug-in."""
+		"""
+		desc:
+			The preparation phase of the plug-in.
+		"""
 
 		item.item.prepare(self)
 		# Sanity check on the duration value, which should be a positive numeric
 		# value.
-		if type(self.var.get('duration')) not in (int, float) or \
-			self.var.get('duration') < 0:
-			raise osexception( \
+		if type(self.var.duration) not in (int, float) or self.var.duration < 0:
+			raise osexception(
 				u'Duration should be a positive numeric value in advanced_delay %s' \
 				% self.name)
-		if self.var.get(u'jitter_mode') == u'Uniform':
-			self._duration = random.uniform(self.var.get(u'duration')-self.var.get( \
-				u'jitter')/2, self.var.get(u'duration')+self.var.get(u'jitter')/2)
-		elif self.var.get(u'jitter_mode') == u'Std. Dev.':
-			self._duration = random.gauss(self.var.get(u'duration'), self.var.get( \
-				u'jitter'))
+		if self.var.jitter_mode == u'Uniform':
+			self._duration = random.uniform(self.var.duration-self.var.jitter/2,
+				self.var.duration+self.var.jitter/2)
+		elif self.var.jitter_mode == u'Std. Dev.':
+			self._duration = random.gauss(self.var.duration, self.var.jitter)
 		else:
-			raise osexception( \
+			raise osexception(
 				u'Unknown jitter mode in advanced_delay %s' % self.name)
 		# Don't allow negative durations.
 		if self._duration < 0:
@@ -77,7 +69,10 @@ class advanced_delay(item.item):
 
 	def run(self):
 
-		"""The run phase of the plug-in."""
+		"""
+		desc:
+			The run phase of the plug-in.
+		"""
 
 		self.set_item_onset(self.time())
 		self.sleep(self._duration)
@@ -102,4 +97,3 @@ class qtadvanced_delay(advanced_delay, qtautoplugin):
 
 		advanced_delay.__init__(self, name, experiment, script)
 		qtautoplugin.__init__(self, __file__)
-

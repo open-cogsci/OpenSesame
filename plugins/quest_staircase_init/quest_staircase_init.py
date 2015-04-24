@@ -61,16 +61,16 @@ class quest_staircase_init(item):
 			Initialize default variables.
 		"""
 
-		self.t_guess = .5
-		self.t_guess_sd = .25
-		self.p_threshold = .75
-		self.beta = 3.5
-		self.delta = .01
-		self.gamma = .5
-		self.test_value_method = u'quantile'
-		self.min_test_value = 0
-		self.max_test_value = 1
-		self.var_test_value = u'quest_test_value'
+		self.var.t_guess = .5
+		self.var.t_guess_sd = .25
+		self.var.p_threshold = .75
+		self.var.beta = 3.5
+		self.var.delta = .01
+		self.var.gamma = .5
+		self.var.test_value_method = u'quantile'
+		self.var.min_test_value = 0
+		self.var.max_test_value = 1
+		self.var.var_test_value = u'quest_test_value'
 
 	def quest_set_next_test_value(self):
 
@@ -79,21 +79,21 @@ class quest_staircase_init(item):
 			Sets the next test value for the Quest procedure.
 		"""
 
-		if self.var.get(u'test_value_method') == u'quantile':
+		if self.var.test_value_method == u'quantile':
 			self.experiment.quest_test_value = self.experiment.quest.quantile
-		elif self.var.get(u'test_value_method') == u'mean':
+		elif self.var.test_value_method == u'mean':
 			self.experiment.quest_test_value = self.experiment.quest.mean
-		elif self.var.get(u'test_value_method') == u'mode':
+		elif self.var.test_value_method == u'mode':
 			self.experiment.quest_test_value = self.experiment.quest.mode
 		else:
 			raise osexception(
 				u'Unknown test_value_method \'%s\' in quest_staircase_init' \
-				% self.var.get(u'test_value_method'))
-		test_value = max(self.var.get(u'min_test_value'), min(
-			self.var.get(u'max_test_value'), self.experiment.quest_test_value()))
+				% self.var.test_value_method)
+		test_value = max(self.var.min_test_value, min(
+			self.var.max_test_value, self.experiment.quest_test_value()))
 		debug.msg(u'quest_test_value = %s' % test_value)
-		self.experiment.var.set(u'quest_test_value', test_value)
-		self.experiment.var.set(self.var.get(u'var_test_value'), test_value)
+		self.experiment.var.quest_test_value = test_value
+		self.experiment.var.set(self.var.var_test_value, test_value)
 
 	def prepare(self):
 
@@ -102,9 +102,9 @@ class quest_staircase_init(item):
 			Prepares the plug-in.
 		"""
 
-		self.experiment.quest = Quest.QuestObject(self.var.get(u't_guess'),
-			self.var.get(u't_guess_sd'), self.var.get(u'p_threshold'),
-			self.var.get(u'beta'), self.var.get(u'delta'), self.var.get(u'gamma'))
+		self.experiment.quest = Quest.QuestObject(self.var.t_guess,
+			self.var.t_guess_sd, self.var.p_threshold, self.var.beta,
+			self.var.delta, self.var.gamma)
 		self.experiment.quest_set_next_test_value = \
 			self.quest_set_next_test_value
 		self.experiment.quest_set_next_test_value()

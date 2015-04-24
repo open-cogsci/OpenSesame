@@ -31,49 +31,42 @@ class form_multiple_choice(item.item):
 
 	description = u'A simple multiple choice item'
 
-	def __init__(self, name, experiment, string=None):
+	def reset(self):
 
 		"""
-		Constructor
-
-		Arguments:
-		name		--	The name of the item.
-		experiment	--	The experiment instance.
-
-		Keyword arguments:
-		string		--	A definition string. (default=None)
+		desc:
+			Initialize plug-in.
 		"""
 
-		self.options = u'Yes\nNo\nMaybe'
-		self.question = u'Your question'
-		self.form_title = u'Form title'
-		self.form_var = u'response'
-		self.advance_immediately = u'yes'
-		self.allow_multiple = u'yes'
-		self.button_text = u'Ok'
-		self.spacing = 10
-		self.margins = u'50;50;50;50'
-		self._theme = u'gray'
-		item.item.__init__(self, name, experiment, string)
+		self.var.options = u'Yes\nNo\nMaybe'
+		self.var.question = u'Your question'
+		self.var.form_title = u'Form title'
+		self.var.form_var = u'response'
+		self.var.advance_immediately = u'yes'
+		self.var.allow_multiple = u'yes'
+		self.var.button_text = u'Ok'
+		self.var.spacing = 10
+		self.var.margins = u'50;50;50;50'
+		self.var._theme = u'gray'
 
 	def run(self):
 
 		"""Run the item"""
 
 		# Parse the option list
-		option_list = self.var.get(u'options').split(u'\n') # split by return
+		option_list = self.var.options.split(u'\n') # split by return
 		# Filter out empty options
 		option_list = list(filter(lambda option: option != u'', option_list))
 		# option_list.pop(len(option_list)-1) # remove last (empty) option
 		if len(option_list) == 0:
-			raise osexception( \
+			raise osexception(
 				u'You must specify at least one response option in form_multiple_choice item "%s"' \
 				% self.name)
 
 		# Determine whether a button is shown and determine the number of rows
 		rows = len(option_list) + 2
-		if self.var.get(u'advance_immediately') == u'no' or \
-			self.var.get(u'allow_multiple') == u'yes':
+		if self.var.advance_immediately == u'no' \
+			or self.var.allow_multiple == u'yes':
 			show_button = True
 			click_accepts = False
 			rows += 1
@@ -82,13 +75,13 @@ class form_multiple_choice(item.item):
 			click_accepts = True
 
 		# Determine the group for the checkboxes
-		if self.var.get(u'allow_multiple') == u'no':
+		if self.var.allow_multiple == u'no':
 			group = u'response_group'
 		else:
 			group = None
 
 		# The variable in which the response is stored
-		var = self.var.get(u'form_var')
+		var = self.var.form_var
 
 		# Build the form
 		try:
@@ -97,18 +90,17 @@ class form_multiple_choice(item.item):
 			raise osexception( \
 				_(u'margins should be numeric values separated by a semi-colon'))
 		form = widgets.form(self.experiment, cols=1, rows=rows,
-			spacing=self.var.get(u'spacing'), margins=margins,
-			theme=self.var.get(u'_theme'), item=self)
-		form.set_widget(widgets.label(form, self.var.get(u'form_title')), (0,0))
-		form.set_widget(widgets.label(form, self.var.get(u'question')), (0,1))
+			spacing=self.var.spacing, margins=margins,
+			theme=self.var._theme, item=self)
+		form.set_widget(widgets.label(form, self.var.form_title), (0,0))
+		form.set_widget(widgets.label(form, self.var.question), (0,1))
 		i = 2
 		for option in option_list:
-			form.set_widget(widgets.checkbox(form, option, group=group, \
-				click_accepts=click_accepts, var=var), (0,i))
+			form.set_widget(widgets.checkbox(form, option,
+				group=group, click_accepts=click_accepts, var=var), (0,i))
 			i += 1
 		if show_button:
-			form.set_widget(widgets.button(form, self.var.get(u'button_text')), \
-				(0,i))
+			form.set_widget(widgets.button(form, self.var.button_text), (0,i))
 
 		# Go!
 		form._exec()

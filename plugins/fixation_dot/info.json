@@ -7,15 +7,18 @@
 		{
 			"type"		: "combobox",
 			"var"		: "style",
-			"label"		: "Syle",
+			"label"		: "Style",
 			"options"	: [
 				"default",
-				"filled",
-				"filled-small",
-				"empty",
-				"empty-small",
-				"cross",
-				"cross-small"
+				"large-filled",
+				"medium-filled",
+				"small-filled",
+				"large-open",
+				"medium-open",
+				"small-open",
+				"large-cross",
+				"medium-cross",
+				"small-cross",
 			],
 			"tooltip"	: "Style of the fixation dot"
 		},

@@ -23,10 +23,6 @@ from libopensesame.exceptions import osexception
 from libopensesame import item, generic_response, debug
 from libqtopensesame.items.qtautoplugin import qtautoplugin
 import openexp.keyboard
-import imp
-import os
-import os.path
-from PyQt4 import QtGui, QtCore
 
 class joystick(item.item, generic_response.generic_response):
 
@@ -47,52 +43,58 @@ class joystick(item.item, generic_response.generic_response):
 		string		--	A definition string. (default=None)
 		"""
 
-		self.timeout = u'infinite'
-		self.allowed_responses = u''
-		self._dummy = u'no'
-		self._device = 0
 		item.item.__init__(self, name, experiment, string)
 		self.process_feedback = True
 
+	def reset(self):
+
+		"""
+		desc:
+			Initialize the plug-in.
+		"""
+
+		self.var.timeout = u'infinite'
+		self.var.allowed_responses = u''
+		self.var._dummy = u'no'
+		self.var._device = 0
+
 	def prepare(self):
 
-		"""Prepares the item."""
+		"""
+		desc:
+			Prepares the item.
+		"""
 
-		# Pass the word on to the parent
 		item.item.prepare(self)
-
-		# Prepare the allowed responses
-		if allowed_responses in self.var:
-			self._allowed_responses = []
-			for r in self.unistr(self.var.get(u"allowed_responses")).split(u";"):
-				if r.strip() != "":
-					try:
-						r = int(r)
-					except:
-						raise osexception( \
-							u"'%s' is not a valid response on your joystick/gamepad. Expecting a number in the range of 1 to the amount of buttons." \
-							% (r,self.name))
-					if r < 0 or r > 255:
-						raise osexception( \
-							u"'%s' is not a valid response on your joystick/gamepad. Expecting a number in the range of 1 to the amount of buttons." \
-							% (r, self.name))
-					self._allowed_responses.append(r)
-			if len(self._allowed_responses) == 0:
-				self._allowed_responses = None
-		else:
+		self._allowed_responses = []
+		for r in self.unistr(self.var.allowed_responses).split(u";"):
+			if r.strip() != "":
+				try:
+					r = int(r)
+				except:
+					raise osexception(
+						u"'%s' is not a valid response on your joystick/gamepad. Expecting a number in the range of 1 to the amount of buttons." \
+						% (r,self.name))
+				if r < 0 or r > 255:
+					raise osexception(
+						u"'%s' is not a valid response on your joystick/gamepad. Expecting a number in the range of 1 to the amount of buttons." \
+						% (r, self.name))
+				self._allowed_responses.append(r)
+		if len(self._allowed_responses) == 0:
 			self._allowed_responses = None
-		debug.msg(u"allowed responses has been set to %s" % self._allowed_responses)
+		debug.msg(
+			u"allowed responses has been set to %s" % self._allowed_responses)
 		# In case of dummy-mode:
 		self._keyboard = openexp.keyboard.keyboard(self.experiment)
-		if u'_dummy' in self.var and self.var._dummy == u"yes":
+		if self.var._dummy == u"yes":
 			self._resp_func = self._keyboard.get_key
 		# Not in dummy-mode:
 		else:
-			timeout = self.var.get(u"timeout")
+			timeout = self.var.timeout
 			# Dynamically load a joystick instance
 			if not hasattr(self.experiment, u"joystick"):
 				_joystick = plugins.load_mod(__file__, u'libjoystick')
-				self.experiment.joystick = _joystick.libjoystick( \
+				self.experiment.joystick = _joystick.libjoystick(
 					self.experiment, device=self._device)
 			# Prepare auto response
 			if self.experiment.auto_response:
@@ -103,7 +105,10 @@ class joystick(item.item, generic_response.generic_response):
 
 	def run(self):
 
-		"""Runs the item."""
+		"""
+		desc:
+			Runs the item.
+		"""
 
 		# Set the onset time
 		self.set_item_onset()
@@ -112,16 +117,16 @@ class joystick(item.item, generic_response.generic_response):
 		# If no start response interval has been set, set it to the onset of
 		# the current response item
 		if self.experiment.start_response_interval is None:
-			self.experiment.start_response_interval = self.var.get(u'time_%s' \
-				% self.name)
-		if u'_dummy' in self.var and self.var._dummy == u'yes':
+			self.experiment.start_response_interval = self.var.get(
+				u'time_%s' % self.name)
+		if self.var._dummy == u'yes':
 			# In dummy mode, no one can hear you scream! Oh, and we simply
 			# take input from the keyboard
-			resp, self.experiment.end_response_interval = self._resp_func( \
-				None, self._timeout)
+			resp, self.experiment.end_response_interval = self._resp_func(
+				keylist=None, timeout=self._timeout)
 		else:
 			# Get the response
-			resp, self.experiment.end_response_interval = self._resp_func( \
+			resp, self.experiment.end_response_interval = self._resp_func(
 				self._allowed_responses, self._timeout)
 		debug.msg(u'received %s' % resp)
 		self.experiment.response = resp

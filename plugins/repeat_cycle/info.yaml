@@ -1,0 +1,8 @@
+category: Miscellaneous
+description: Marks the current loop cycle so that it is repeated
+controls:
+-
+    label: Repeat if
+    tooltip: A conditional statement that determines when the cycle is repeated
+    type: line_edit
+    var: condition
