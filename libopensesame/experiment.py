@@ -758,5 +758,5 @@ class experiment(item.item):
 
 def clean_up(verbose=False, keep=[]):
 
-	warnings.warn(u'libopensesame.experiment.clean_up() is deprecated' % var,
+	warnings.warn(u'libopensesame.experiment.clean_up() is deprecated',
 		DeprecationWarning)
