@@ -103,7 +103,7 @@ def opensesamerun_options():
 
 	# Set the default logfile based on the subject nr
 	if options.logfile == None:
-		options.logfile = u"subject%s.csv" % options.subject
+		options.logfile = u"subject-%s.csv" % options.subject
 
 	if len(sys.argv) > 1 and os.path.exists:
 		options.experiment = sys.argv[1]
