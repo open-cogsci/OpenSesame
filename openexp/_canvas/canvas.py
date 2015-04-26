@@ -224,6 +224,7 @@ class canvas(backend):
 		self.experiment = experiment
 		self._width = self.experiment.var.width
 		self._height = self.experiment.var.height
+		self.auto_prepare = auto_prepare
 		backend.__init__(self, configurables={
 			u'color' : None,
 			u'background_color' : None,
@@ -422,7 +423,7 @@ class canvas(backend):
 
 		"""
 		desc: |
-			Draws a fixation dot.
+			Draws a fixation dot. The default style is medium-open.
 
 			- 'large-filled' is a filled circle with a 16px radius.
 			- 'medium-filled' is a filled circle with an 8px radius.
@@ -710,7 +711,7 @@ class canvas(backend):
 			w, h = my_canvas.text_size('Some text')
 		"""
 
-		self.html.reset()
+		self.html_renderer.reset()
 		width, height = self.html_renderer.render(text, 0, 0, self,
 			max_width=max_width, html=self.html, bidi=self.bidi, dry_run=True)
 		return width, height
@@ -1019,33 +1020,35 @@ class canvas(backend):
 		if bold is not None: self.font_bold = bold
 		if underline is not None: self.font_underline = underline
 
-def init_display(experiment):
+	@staticmethod
+	def init_display(experiment):
 
-	"""
-	desc:
-		Initializes the display before the experiment begins.
+		"""
+		desc:
+			Initializes the display before the experiment begins.
 
-	arguments:
-		experiment:
-			desc:	An experiment object.
-			type:	experiment
-	"""
+		arguments:
+			experiment:
+				desc:	An experiment object.
+				type:	experiment
+		"""
 
-	raise NotImplementedError()
+		raise NotImplementedError()
 
-def close_display(experiment):
+	@staticmethod
+	def close_display(experiment):
 
-	"""
-	desc:
-		Closes the display after the experiment is finished.
+		"""
+		desc:
+			Closes the display after the experiment is finished.
 
-	arguments:
-		experiment:
-			desc:	An experiment object.
-			type:	experiment
-	"""
+		arguments:
+			experiment:
+				desc:	An experiment object.
+				type:	experiment
+		"""
 
-	raise NotImplementedError()
+		raise NotImplementedError()
 
 # Translation mapping from envelope names
 env_synonyms = {}

@@ -176,19 +176,21 @@ class legacy(sampler.sampler):
 		while mixer.get_busy():
 			self.keyboard.flush()
 
-def init_sound(experiment):
+	@staticmethod
+	def init_sound(experiment):
 
-	print(
-		u"openexp.sampler._legacy.init_sound(): sampling freq = %d, buffer size = %d" \
-		% (experiment.var.sound_freq, experiment.var.sound_buf_size))
-	if hasattr(mixer, u'get_init') and mixer.get_init():
 		print(
-			u'openexp.sampler._legacy.init_sound(): mixer already initialized, closing')
-		pygame.mixer.quit()
-	mixer.pre_init(experiment.var.sound_freq, experiment.var.sound_sample_size, \
-		experiment.var.sound_channels, experiment.var.sound_buf_size)
-	mixer.init()
+			u"openexp.sampler._legacy.init_sound(): sampling freq = %d, buffer size = %d" \
+			% (experiment.var.sound_freq, experiment.var.sound_buf_size))
+		if hasattr(mixer, u'get_init') and mixer.get_init():
+			print(
+				u'openexp.sampler._legacy.init_sound(): mixer already initialized, closing')
+			pygame.mixer.quit()
+		mixer.pre_init(experiment.var.sound_freq, experiment.var.sound_sample_size, \
+			experiment.var.sound_channels, experiment.var.sound_buf_size)
+		mixer.init()
 
-def close_sound(experiment):
+	@staticmethod
+	def close_sound(experiment):
 
-	mixer.quit()
+		mixer.quit()

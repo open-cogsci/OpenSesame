@@ -18,9 +18,8 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame.py3compat import *
-
-import pygame
 from pygame.locals import *
+import pygame
 import os
 from libopensesame.exceptions import osexception
 from libopensesame import debug
@@ -183,7 +182,7 @@ class legacy(canvas.canvas, legacy_coordinates):
 		_fname = safe_decode(fname)
 		try:
 			surface = pygame.image.load(_fname)
-		except pygame.error as e:
+		except pygame.error:
 			raise osexception(
 				u"'%s' is not a supported image format" % fname)
 		if scale is not None:
@@ -219,75 +218,71 @@ class legacy(canvas.canvas, legacy_coordinates):
 		x, y = self.to_xy(x, y)
 		self.surface.blit(surface, (x - 0.5 * size, y - 0.5 * size))
 
-def init_display(experiment):
+	@staticmethod
+	def init_display(experiment):
 
-	# Intialize PyGame
-	pygame.init()
+		# Intialize PyGame
+		pygame.init()
 
-	# Set the window icon
-	surf = pygame.Surface( (32, 32) )
-	surf.fill( (255, 255, 255) )
-	pygame.draw.circle(surf, (0, 0, 255), (16, 16), 10, 4)
-	pygame.display.set_icon(surf)
+		# Set the window icon
+		surf = pygame.Surface( (32, 32) )
+		surf.fill( (255, 255, 255) )
+		pygame.draw.circle(surf, (0, 0, 255), (16, 16), 10, 4)
+		pygame.display.set_icon(surf)
 
-	# Determine the video mode
-	mode = 0
-	if experiment.var.get(u"pygame_hwsurface", u"yes",
-		[u"yes", u"no"]) == u"yes":
-		mode = mode | pygame.HWSURFACE
-		print(
-			u"openexp._canvas.legacy.init_display(): enabling hardware surface")
-	else:
-		print(
-			u"openexp._canvas.legacy.init_display(): not enabling hardware surface")
+		# Determine the video mode
+		mode = 0
+		if experiment.var.get(u"pygame_hwsurface", u"yes",
+			[u"yes", u"no"]) == u"yes":
+			mode = mode | pygame.HWSURFACE
+			print(
+				u"openexp._canvas.legacy.init_display(): enabling hardware surface")
+		else:
+			print(
+				u"openexp._canvas.legacy.init_display(): not enabling hardware surface")
 
-	if experiment.var.get(u"pygame_doublebuf", u"yes",
-		[u"yes", u"no"]) == u"yes":
-		mode = mode | pygame.DOUBLEBUF
-		print(
-			u"openexp._canvas.legacy.init_display(): enabling double buffering")
-	else:
-		print(
-			u"openexp._canvas.legacy.init_display(): not enabling double buffering")
+		if experiment.var.get(u"pygame_doublebuf", u"yes",
+			[u"yes", u"no"]) == u"yes":
+			mode = mode | pygame.DOUBLEBUF
+			print(
+				u"openexp._canvas.legacy.init_display(): enabling double buffering")
+		else:
+			print(
+				u"openexp._canvas.legacy.init_display(): not enabling double buffering")
 
-	if pygame.display.mode_ok(experiment.resolution(), mode):
-		print(u"openexp._canvas.legacy.init_display(): video mode ok")
-	else:
-		print(
-			u"openexp._canvas.legacy.init_display(): warning: video mode not ok")
+		if pygame.display.mode_ok(experiment.resolution(), mode):
+			print(u"openexp._canvas.legacy.init_display(): video mode ok")
+		else:
+			print(
+				u"openexp._canvas.legacy.init_display(): warning: video mode not ok")
 
-	if experiment.var.fullscreen == u'yes':
-		mode = mode | pygame.FULLSCREEN
+		if experiment.var.fullscreen == u'yes':
+			mode = mode | pygame.FULLSCREEN
 
-	if experiment.var.get(u'pygame_window_frame', u'yes', [u'yes', u'no']) \
-		== u'no':
-		mode = mode | pygame.NOFRAME
+		if experiment.var.get(u'pygame_window_frame', u'yes', [u'yes', u'no']) \
+			== u'no':
+			mode = mode | pygame.NOFRAME
 
-	if experiment.var.get(u'pygame_window_pos', u'auto') != u'auto':
-		os.environ[u'SDL_VIDEO_WINDOW_POS'] = experiment.var.get(
-			u'pygame_window_pos')
+		if experiment.var.get(u'pygame_window_pos', u'auto') != u'auto':
+			os.environ[u'SDL_VIDEO_WINDOW_POS'] = experiment.var.get(
+				u'pygame_window_pos')
 
-	# Create the window and the surface
-	experiment.window = pygame.display.set_mode(experiment.resolution(), mode)
-	pygame.display.set_caption(u'OpenSesame (legacy backend)')
-	pygame.mouse.set_visible(False)
-	experiment.surface = pygame.display.get_surface()
+		# Create the window and the surface
+		experiment.window = pygame.display.set_mode(experiment.resolution(), mode)
+		pygame.display.set_caption(u'OpenSesame (legacy backend)')
+		pygame.mouse.set_visible(False)
+		experiment.surface = pygame.display.get_surface()
 
-	# Create a font, falling back to the default font
-	try:
-		experiment.font = pygame.font.Font(experiment.resource(
-			u"%s.ttf" % experiment.var.font_family), experiment.var.font_size)
-	except:
-		debug.msg(u"'%s.ttf' not found, falling back to default font" \
-			% experiment.var.font_family)
-		experiment.font = pygame.font.Font(None, experiment.var.font_size)
+		# Create a font, falling back to the default font
+		try:
+			experiment.font = pygame.font.Font(experiment.resource(
+				u"%s.ttf" % experiment.var.font_family), experiment.var.font_size)
+		except:
+			debug.msg(u"'%s.ttf' not found, falling back to default font" \
+				% experiment.var.font_family)
+			experiment.font = pygame.font.Font(None, experiment.var.font_size)
 
-	# Set the time functions to use pygame
-	experiment._time_func = pygame.time.get_ticks
-	experiment._sleep_func = pygame.time.delay
-	experiment.time = experiment._time_func
-	experiment.sleep = experiment._sleep_func
+	@staticmethod
+	def close_display(experiment):
 
-def close_display(experiment):
-
-	pygame.display.quit()
+		pygame.display.quit()

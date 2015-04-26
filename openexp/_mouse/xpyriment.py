@@ -18,11 +18,11 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame.py3compat import *
-
-from openexp._mouse import legacy
+from pygame.locals import *
+from openexp._mouse import legacy, mouse
+from openexp.backend import configurable
 from libopensesame.exceptions import osexception
 import pygame
-from pygame.locals import *
 from expyriment import stimuli
 from expyriment.misc.geometry import coordinates2position as c2p
 from openexp._coordinates.xpyriment import xpyriment as xpyriment_coordinates
@@ -44,14 +44,10 @@ class xpyriment(xpyriment_coordinates, legacy.legacy):
 			}
 		}
 
-	def __init__(self, experiment, buttonlist=None, timeout=None,
-		visible=False):
+	def __init__(self, experiment, **resp_args):
 
-		self.experiment = experiment
+		mouse.mouse.__init__(self, experiment, **resp_args)
 		xpyriment_coordinates.__init__(self)
-		self.set_buttonlist(buttonlist)
-		self.set_timeout(timeout)
-		self.set_visible(visible)
 		if self.experiment.var.get('custom_cursor', 'no') == 'yes':
 			if self.experiment.expyriment.screen._fullscreen:
 				raise osexception(
@@ -61,14 +57,12 @@ class xpyriment(xpyriment_coordinates, legacy.legacy):
 		else:
 			self.cursor = None
 
-	def get_click(self, buttonlist=None, timeout=None, visible=None):
+	@configurable
+	def get_click(self):
 
-		if buttonlist is None:
-			buttonlist = self.buttonlist
-		if timeout is None:
-			timeout = self.timeout
-		if visible is None:
-			visible = self.visible
+		buttonlist = self.buttonlist
+		timeout = self.timeout
+		visible = self.visible
 
 		if self.cursor is None:
 			pygame.mouse.set_visible(visible)

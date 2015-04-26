@@ -18,12 +18,11 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame.py3compat import *
-
-import sys
-import pygame
 from pygame.locals import *
+import pygame
 from openexp._mouse import legacy
 from libopensesame.exceptions import osexception
+from openexp.backend import configurable
 try:
 	import android
 except ImportError:
@@ -38,26 +37,14 @@ class droid(legacy.legacy):
 		`openexp._mouse.mouse`.
 	"""
 
-	def __init__(self, experiment, buttonlist=None, timeout=None, visible=False):
-
-		self.experiment = experiment
-		self.set_buttonlist(buttonlist)
-		self.set_timeout(timeout)
-		self.set_visible(visible)
-		self.uniform_coordinates = \
-			self.experiment.var.uniform_coordinates==u'yes'
-
-	def get_click(self, buttonlist=None, timeout=None, visible=None):
+	@configurable
+	def get_click(self):
 
 		if android is None:
 			pygame.mouse.set_visible(True)
-		if buttonlist is None:
-			buttonlist = self.buttonlist
-		if timeout is None:
-			timeout = self.timeout
-		if visible is None:
-			visible = self.visible
-		enable_escape = self.experiment.var.get(u'enable_escape', u'no', \
+		buttonlist = self.buttonlist
+		timeout = self.timeout
+		enable_escape = self.experiment.var.get(u'enable_escape', u'no',
 			[u'yes', u'no']) == u'yes'
 		start_time = pygame.time.get_ticks()
 		time = start_time
@@ -77,9 +64,10 @@ class droid(legacy.legacy):
 						while pygame.time.get_ticks() - _time < 2000:
 							for event in pygame.event.get():
 								if event.type == MOUSEBUTTONDOWN:
-									if event.pos[0] > self.experiment.var.get( \
-										u'width')-64 and event.pos[1] < 64:
-										raise osexception( \
+									if event.pos[0] > \
+										self.experiment.var.width-64 and \
+										event.pos[1] < 64:
+										raise osexception(
 											u"The escape sequence was clicked/ tapped")
 					if buttonlist is None or event.button in buttonlist:
 						return event.button, self.from_xy(event.pos), time

@@ -20,6 +20,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 from libopensesame.py3compat import *
 from openexp.backend import backend, configurable
 from libopensesame.exceptions import osexception
+import warnings
 
 class mouse(backend):
 

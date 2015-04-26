@@ -1,3 +1,4 @@
+
 #-*- coding:utf-8 -*-
 
 """
@@ -18,6 +19,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame.py3compat import *
+import yaml
 from libopensesame.exceptions import osexception
 from functools import partial
 import inspect
@@ -27,6 +29,132 @@ try:
 except:
 	FunctionDoc = None
 	docinherit = type
+
+_backend_info = None
+_backend_types = [u'canvas', u'keyboard', u'mouse', u'sampler', u'color',
+	u'clock']
+
+def backend_info(experiment):
+
+	"""
+	arguments:
+		experiment:
+			desc:	The experiment object.
+			type:	experiment
+
+	returns:
+		desc:	A dictionary with backend information.
+		type:	dict
+	"""
+
+	global _backend_info
+	# Use caching
+	if _backend_info is not None:
+		return _backend_info
+	with open(experiment.resource(u'backend_info.yaml')) as fd:
+		d = yaml.load(fd)
+	l = []
+	for name, info in d.items():
+		if (py3 and not info[u'py3']) or (not py3 and not info[u'py2']):
+			l.append(name)
+			print('delete %s' % name)
+	for name in l:
+		del d[name]
+	_backend_info = d
+	return d
+
+def backend_guess(experiment, _type):
+
+	"""
+	desc:
+		Guesses the backend of a specific type.
+
+	arguments:
+		experiment:
+			desc:	The experiment object.
+			type:	experiment
+		_type:
+			desc:	A backend type, e.g. 'canvas'
+			type:	str
+
+	returns:
+		desc:	A backend, e.g. 'legacy'
+		type:	str
+	"""
+
+	if u'%s_backend' % _type in experiment.var:
+		return experiment.var.get(u'%s_backend' % _type)
+	d = backend_info(experiment)
+	return d[experiment.var.canvas_backend][_type]
+
+def backend_match(experiment):
+
+	"""
+	desc:
+		Tries to determine which combination of backends is used by the
+		experiment.
+
+	arguments:
+		experiment:
+			desc:	The experiment object.
+			type:	experiment
+
+	returns:
+		desc:	The name of a backend combination, e.g. 'legacy'.
+		type:	str
+	"""
+
+	for name, info in backend_info(experiment).items():
+		for _type in _backend_types:
+			if backend_guess(experiment, _type) != info[_type]:
+				break
+		else:
+			return name
+	return u'custom'
+
+def get_backend_mod(experiment, _type):
+
+	"""
+	desc:
+		Gets a backend module.
+
+	arguments:
+		experiment:
+			desc:	The experiment object.
+			type:	experiment
+		_type:
+			desc:	The backend type, e.g. u'canvas'.
+			type:	str
+
+	returns:
+		desc:	A module that contains the backend.
+		type:	module
+	"""
+
+	name = backend_guess(experiment, _type)
+	return __import__('openexp._%s.%s' % (_type, name), fromlist=['dummy'])
+
+def get_backend_class(experiment, _type):
+
+	"""
+	desc:
+		Gets a backend class.
+
+	arguments:
+		_type:
+			desc:	The backend type, e.g. u'canvas'.
+			type:	str
+		experiment:
+			desc:	The experiment object.
+			type:	experiment
+
+	returns:
+		desc:	A backend class.
+		type:	type
+	"""
+
+	name = backend_guess(experiment, _type)
+	return getattr(get_backend_mod(experiment, _type), name)
 
 def configurable(fnc):
 

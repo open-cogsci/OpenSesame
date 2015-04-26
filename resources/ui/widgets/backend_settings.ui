@@ -14,7 +14,16 @@
    <string>Form</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
-   <property name="margin">
+   <property name="leftMargin">
+    <number>4</number>
+   </property>
+   <property name="topMargin">
+    <number>4</number>
+   </property>
+   <property name="rightMargin">
+    <number>4</number>
+   </property>
+   <property name="bottomMargin">
     <number>4</number>
    </property>
    <item>
@@ -27,8 +36,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>818</width>
-        <height>842</height>
+        <width>816</width>
+        <height>840</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_7">
@@ -38,7 +47,16 @@
           <property name="spacing">
            <number>16</number>
           </property>
-          <property name="margin">
+          <property name="leftMargin">
+           <number>4</number>
+          </property>
+          <property name="topMargin">
+           <number>4</number>
+          </property>
+          <property name="rightMargin">
+           <number>4</number>
+          </property>
+          <property name="bottomMargin">
            <number>4</number>
           </property>
           <item>
@@ -166,11 +184,11 @@ Various settings related to the control of the display, sound, and input devices
         </widget>
        </item>
        <item>
-        <widget class="QGroupBox" name="group_synth">
+        <widget class="QGroupBox" name="group_clock">
          <property name="title">
-          <string>Synth</string>
+          <string>Clock</string>
          </property>
-         <layout class="QVBoxLayout" name="layout_synth">
+         <layout class="QVBoxLayout" name="layout_clock">
           <property name="leftMargin">
            <number>0</number>
           </property>
@@ -181,7 +199,32 @@ Various settings related to the control of the display, sound, and input devices
            <number>0</number>
           </property>
           <item>
-           <widget class="QLabel" name="label_synth">
+           <widget class="QLabel" name="label_clock">
+            <property name="text">
+             <string>TextLabel</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <widget class="QGroupBox" name="group_color">
+         <property name="title">
+          <string>Color</string>
+         </property>
+         <layout class="QVBoxLayout" name="layout_color">
+          <property name="leftMargin">
+           <number>0</number>
+          </property>
+          <property name="rightMargin">
+           <number>0</number>
+          </property>
+          <property name="bottomMargin">
+           <number>0</number>
+          </property>
+          <item>
+           <widget class="QLabel" name="label_color">
             <property name="text">
              <string>TextLabel</string>
             </property>

@@ -18,12 +18,10 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame.py3compat import *
-
-from libopensesame.exceptions import osexception
 from openexp._coordinates.psycho import psycho as psycho_coordinates
 from openexp._mouse import mouse
 from psychopy import event
-import psychopy.visual
+from openexp.backend import configurable
 
 class psycho(mouse.mouse, psycho_coordinates):
 
@@ -34,59 +32,40 @@ class psycho(mouse.mouse, psycho_coordinates):
 		`openexp._mouse.mouse`.
 	"""
 
-	def __init__(self, experiment, buttonlist=None, timeout=None,
-		visible=False):
+	def __init__(self, experiment, **resp_args):
 
-		if experiment.var.canvas_backend != "psycho":
-			raise osexception( \
-				"The psycho mouse backend must be used in combination with the psycho canvas backend!")
-		self.experiment = experiment
+		mouse.mouse.__init__(self, experiment, **resp_args)
 		psycho_coordinates.__init__(self)
-		self.set_buttonlist(buttonlist)
-		self.set_timeout(timeout)
 		self.mouse = event.Mouse(visible=False, win=self.experiment.window)
-		self.set_visible(visible)
 		event.mouseButtons = [0, 0, 0]
 
-	def set_visible(self, visible=True):
+	@configurable
+	def get_click(self):
 
-		self.visible = visible
-		self.mouse.setVisible(visible)
-
-	def get_click(self, buttonlist=None, timeout=None, visible=None):
-
-		if buttonlist is None:
-			buttonlist = self.buttonlist
-		if timeout is None:
-			timeout = self.timeout
-		if visible is None:
-			visible = self.visible
-		self.mouse.setVisible(visible)
-		start_time = 1000.0 * self.experiment.clock.getTime()
-		time = start_time
+		buttonlist = self.buttonlist
+		timeout = self.timeout
+		self.mouse.setVisible(self.visible)
+		start_time = self.experiment.clock.time()
 		button = None
 		pos = None
 		self.mouse.clickReset()
 		while True:
-			time = 1000.0 * self.experiment.clock.getTime()
+			time = self.experiment.clock.time()
 			buttons, times = self.mouse.getPressed(getTime=True)
-			if buttons[0] and (buttonlist is None or 1 in buttonlist):
-				button = 1
-				pos = self.mouse.getPos()
-				break
-			if buttons[1] and (buttonlist is None or 2 in buttonlist):
-				button = 2
-				pos = self.mouse.getPos()
-				break
-			if buttons[2] and (buttonlist is None or 3 in buttonlist):
-				button = 3
-				pos = self.mouse.getPos()
-				break
-			if timeout is not None and time-start_time >= timeout:
-				break
+			for i in (1,2,3):
+				if buttons[i-1] and (buttonlist is None or i-1 in buttonlist):
+					button = i
+					pos = self.mouse.getPos()
+					time = times[i]
+					break
+			else:
+				if timeout is not None and time-start_time >= timeout:
+					break
+				continue
+			break
 		if pos is not None:
 			pos = self.from_xy(pos)
-		self.mouse.setVisible(self.visible)
+		self.mouse.setVisible(False)
 		return button, pos, time
 
 	def get_pos(self):

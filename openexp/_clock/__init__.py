@@ -18,25 +18,3 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame.py3compat import *
-from openexp import backend
-
-def mouse(experiment, *arglist, **kwdict):
-
-	"""
-	desc:
-		A factory that returns a back-end specific mouse object.
-
-	arguments:
-		experiment:
-			desc:	The experiment object.
-			type:	experiment
-
-	argument-list:
-		arglist:	See mouse.__init__().
-
-	keyword-dict:
-		kwdict:		See mouse.__init__().
-	"""
-
-	cls = backend.get_backend_class(experiment, u'mouse')
-	return cls(experiment, *arglist, **kwdict)

@@ -28,7 +28,7 @@ try:
 	import android
 except ImportError:
 	android = None
-	
+
 initialized = False
 resolution = 1280, 800 # resolution is hardcoded for now
 
@@ -39,60 +39,60 @@ class droid(legacy):
 	backend, except for the display initialization.
 	"""
 
-	pass
+	@staticmethod
+	def init_display(experiment):
 
-def init_display(experiment):
+		if experiment.resolution() != resolution:
+			raise osexception( \
+			'The droid back-end requires a resolution of %d x %d. Your display will be scaled automatically to fit devices with different resolutions.' \
+			% resolution)
 
-	if experiment.resolution() != resolution:
-		raise osexception( \
-		'The droid back-end requires a resolution of %d x %d. Your display will be scaled automatically to fit devices with different resolutions.' \
-		% resolution)
+		# Intialize PyGame
+		if not pygame.display.get_init():
+			pygame.init()
+		experiment.window = pygame.display.set_mode(resolution)
+		experiment.surface = pygame.display.get_surface()
+		# Set the time functions to use pygame
+		experiment._time_func = pygame.time.get_ticks
+		experiment._sleep_func = pygame.time.delay
+		experiment.time = experiment._time_func
+		experiment.sleep = experiment._sleep_func
+		# Initialze the Android device if necessary
+		if android is not None:
+			android.init()
+			android.map_key(android.KEYCODE_BACK, pygame.K_ESCAPE)
+			dpi = android.get_dpi()
+		else:
+			# A dummy dpi if we are not on Android
+			dpi = 96
+		# Log the device characteristics
+		info = pygame.display.Info()
+		diag = hypot(info.current_w, info.current_h) / dpi
+		if diag < 6: # 6" is the minimum size to be considered a tablet
+			is_tablet = 'yes'
+		else:
+			is_tablet = 'no'
+		experiment.set('device_resolution_width', info.current_w)
+		experiment.set('device_resolution_height', info.current_h)
+		experiment.set('device_dpi', dpi)
+		experiment.set('device_screen_diag', diag)
+		experiment.set('device_is_tablet', is_tablet)
 
-	# Intialize PyGame
-	if not pygame.display.get_init():
-		pygame.init()
-	experiment.window = pygame.display.set_mode(resolution)	
-	experiment.surface = pygame.display.get_surface()	
-	# Set the time functions to use pygame
-	experiment._time_func = pygame.time.get_ticks
-	experiment._sleep_func = pygame.time.delay
-	experiment.time = experiment._time_func
-	experiment.sleep = experiment._sleep_func
-	# Initialze the Android device if necessary
-	if android is not None:
-		android.init()
-		android.map_key(android.KEYCODE_BACK, pygame.K_ESCAPE)
-		dpi = android.get_dpi()
-	else:
-		# A dummy dpi if we are not on Android
-		dpi = 96
-	# Log the device characteristics
-	info = pygame.display.Info()
-	diag = hypot(info.current_w, info.current_h) / dpi
-	if diag < 6: # 6" is the minimum size to be considered a tablet
-		is_tablet = 'yes'
-	else:
-		is_tablet = 'no'
-	experiment.set('device_resolution_width', info.current_w)
-	experiment.set('device_resolution_height', info.current_h)
-	experiment.set('device_dpi', dpi)
-	experiment.set('device_screen_diag', diag)
-	experiment.set('device_is_tablet', is_tablet)
-		
-	# Start with a splash screen		
-	splash = pygame.image.load(experiment.resource('android-splash.jpg'))
-	x = resolution[0]/2 - splash.get_width()/2
-	y = resolution[1]/2 - splash.get_height()/2
-	experiment.surface.blit(splash, (x,y))	
-	for i in range(10):
-		pygame.display.flip()
-		pygame.time.delay(100)
-	if android is not None and android.check_pause():
-		android.wait_for_resume()
+		# Start with a splash screen
+		splash = pygame.image.load(experiment.resource('android-splash.jpg'))
+		x = resolution[0]/2 - splash.get_width()/2
+		y = resolution[1]/2 - splash.get_height()/2
+		experiment.surface.blit(splash, (x,y))
+		for i in range(10):
+			pygame.display.flip()
+			pygame.time.delay(100)
+		if android is not None and android.check_pause():
+			android.wait_for_resume()
 
-def close_display(experiment):
+	@staticmethod
+	def close_display(experiment):
 
-	# On Android, we don't quit the display, as this appears to exit the
-	# application altogether.
-	if android is None:
-		pygame.display.quit()
+		# On Android, we don't quit the display, as this appears to exit the
+		# application altogether.
+		if android is None:
+			pygame.display.quit()

@@ -18,8 +18,8 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame.py3compat import *
-
 from libopensesame import debug
+from openexp import backend
 import tempfile
 try:
 	import pygame
@@ -48,10 +48,7 @@ def canvas(experiment, *arglist, **kwdict):
 		kwdict:		See canvas.__init__().
 	"""
 
-	backend = experiment.var.get(u'canvas_backend')
-	debug.msg(u'morphing into %s' % backend)
-	mod = __import__('openexp._canvas.%s' % backend, fromlist=['dummy'])
-	cls = getattr(mod, backend)
+	cls = backend.get_backend_class(experiment, u'canvas')
 	return cls(experiment, *arglist, **kwdict)
 
 def init_display(experiment):
@@ -65,10 +62,8 @@ def init_display(experiment):
 		type:			experiment
 	"""
 
-	backend = experiment.var.get(u'canvas_backend')
-	debug.msg('morphing into %s' % backend)
-	mod = __import__('openexp._canvas.%s' % backend, fromlist=['dummy'])
-	mod.init_display(experiment)
+	cls = backend.get_backend_class(experiment, u'canvas')
+	cls.init_display(experiment)
 
 def close_display(experiment):
 
@@ -81,10 +76,8 @@ def close_display(experiment):
 		type:			experiment
 	"""
 
-	backend = experiment.var.get(u'canvas_backend')
-	debug.msg('morphing into %s' % backend)
-	mod = __import__('openexp._canvas.%s' % backend, fromlist=['dummy'])
-	mod.close_display(experiment)
+	cls = backend.get_backend_class(experiment, u'canvas')
+	cls.close_display(experiment)
 
 def clean_up(verbose=False):
 

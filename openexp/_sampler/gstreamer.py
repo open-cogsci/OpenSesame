@@ -230,10 +230,12 @@ class gstreamer(sampler.sampler):
 		while not self._end_of_stream_reached:
 			self.keyboard.flush()
 
-def init_sound(experiment):
+	@staticmethod
+	def init_sound(experiment):
 
-	pass
+		pass
 
-def close_sound(experiment):
+		@staticmethod
+	def close_sound(experiment):
 
-	pass
+		pass

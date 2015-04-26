@@ -18,7 +18,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame.py3compat import *
-from libopensesame import debug
+from openexp import backend
 
 def color(experiment, *arglist, **kwdict):
 
@@ -38,8 +38,5 @@ def color(experiment, *arglist, **kwdict):
 		kwdict:		See color.__init__().
 	"""
 
-	backend = experiment.var.get(u'canvas_backend')
-	debug.msg(u'morphing into %s' % backend)
-	mod = __import__('openexp._color.%s' % backend, fromlist=['dummy'])
-	cls = getattr(mod, backend)
+	cls = backend.get_backend_class(experiment, u'color')
 	return cls(experiment, *arglist, **kwdict)

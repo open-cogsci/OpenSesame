@@ -18,10 +18,9 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame.py3compat import *
-
 from openexp._canvas import canvas
 from libopensesame.exceptions import osexception
-from libopensesame import html
+from openexp.backend import configurable
 import pygame
 try:
 	from expyriment import control, stimuli, io
@@ -48,44 +47,18 @@ class xpyriment(canvas.canvas, xpyriment_coordinates):
 			},
 		}
 
-	def __init__(self, experiment, bgcolor=None, fgcolor=None,
-		auto_prepare=True):
+	def __init__(self, experiment, auto_prepare=True, **style_args):
 
-		self.experiment = experiment
+		canvas.canvas.__init__(self, experiment, auto_prepare=auto_prepare,
+			**style_args)
 		xpyriment_coordinates.__init__(self)
-		self.html = html.html()
-		self.auto_prepare = auto_prepare
 		self.prepared = False
-		if fgcolor is None:
-			fgcolor = self.experiment.var.foreground
-		if bgcolor is None:
-			bgcolor = self.experiment.var.background
-		self.set_fgcolor(fgcolor)
-		self.set_bgcolor(bgcolor)
-		self.bidi = self.experiment.var.bidi==u'yes'
-		self.set_font(style=self.experiment.var.font_family,
-			size=self.experiment.var.font_size,
-			bold=self.experiment.var.font_bold==u'yes',
-			italic=self.experiment.var.font_italic==u'yes',
-			underline=self.experiment.var.font_underline==u'yes')
-		self.penwidth = 1
 		self.aa = 10
 		self.clear()
 
-	def color(self, color):
-
-		return canvas._color(color)
-
 	def copy(self, canvas):
 
-		self.fgcolor = canvas.fgcolor
-		self.bgcolor = canvas.bgcolor
-		self.font_style = canvas.font_style
-		self.font_size = canvas.font_size
-		self.font_italic = canvas.font_italic
-		self.font_bold = canvas.font_bold
-		self.font_underline = canvas.font_underline
-		self.penwidth = canvas.penwidth
+		self.set_config(canvas.get_config())
 		self.auto_prepare = canvas.auto_prepare
 		self.aa = canvas.aa
 		self.prepared = False
@@ -100,6 +73,8 @@ class xpyriment(canvas.canvas, xpyriment_coordinates):
 		"""
 		desc:
 			Adds a stimulus to the stimulus list.
+
+			Note: For internal use.
 
 		arguments:
 			stim:		the stimulus
@@ -118,7 +93,7 @@ class xpyriment(canvas.canvas, xpyriment_coordinates):
 		if not self.prepared:
 			self._canvas = stimuli.Canvas(
 				self.experiment.expyriment.screen.size,
-				colour=self._canvas_color)
+				colour=self.background_color.backend_color)
 			for stim in self.stim_list:
 				stim.plot(self._canvas)
 			self._canvas.preload()
@@ -132,31 +107,34 @@ class xpyriment(canvas.canvas, xpyriment_coordinates):
 		self.experiment.last_shown_canvas = self._canvas
 		return self.experiment.time()
 
+	@configurable
 	def clear(self, color=None):
 
-		if color is not None: self._canvas_color = self.color(color)
-		else: self._canvas_color = self.bgcolor
+		if color is not None:
+			if u'color' in cfg:
+				warnings.warn(u'color is a deprecated style argument for '
+					'canvas.clear(). Use background_color instead.',
+					DeprecationWarning)
+			self.background_color = color
 		self.stim_list = []
 		self.prepare()
 
-	def line(self, sx, sy, ex, ey, color=None, penwidth=None):
+	@configurable
+	def line(self, sx, sy, ex, ey):
 
-		if penwidth is None: penwidth = self.penwidth
-		if color is not None: color = self.color(color)
-		else: color = self.fgcolor
 		stim = stimuli.Line(self.to_xy((sx,sy)), self.to_xy((ex,ey)),
-			line_width=penwidth, colour=color, anti_aliasing=self.aa)
+			line_width=self.penwidth, colour=self.color.backend_color,
+			anti_aliasing=self.aa)
 		self.add_stim(stim)
 
-	def rect(self, x, y, w, h, fill=False, color=None, penwidth=None):
+	@configurable
+	def rect(self, x, y, w, h):
 
-		if fill:
-			if color is not None: color = self.color(color)
-			else: color = self.fgcolor
+		if self.fill:
 			# The position of the stimulus is the center, not the top-left
 			pos = self.to_xy((x+w/2,y+h/2))
 			stim = stimuli.Rectangle(size=(w,h), position=pos,
-				colour=color)
+				colour=self.color.backend_color)
 			self.add_stim(stim)
 		# Unfilled shapes are drawn using a polygon
 		else:
@@ -164,32 +142,30 @@ class xpyriment(canvas.canvas, xpyriment_coordinates):
 			# rendering, which is particularly problematic for forms.
 			# self.polygon( [(x,y), (x+w,y), (x+w,y+w), (x,y+w), (x,y)], \
 			# color=color)
-			self.line(x, y, x+w, y, color=color, penwidth=penwidth)
-			self.line(x+w, y, x+w, y+h, color=color, penwidth=penwidth)
-			self.line(x, y+h, x+w, y+h, color=color, penwidth=penwidth)
-			self.line(x, y, x, y+h, color=color, penwidth=penwidth)
+			self.line(x, y, x+w, y)
+			self.line(x+w, y, x+w, y+h)
+			self.line(x, y+h, x+w, y+h)
+			self.line(x, y, x, y+h)
 
-	def ellipse(self, x, y, w, h, fill=False, color=None, penwidth=None):
+	@configurable
+	def ellipse(self, x, y, w, h):
 
-		if color is not None: color = self.color(color)
-		else: color = self.fgcolor
-		if penwidth is None: penwidth = self.penwidth
-		else: line_width = penwidth
-		if fill: line_width = 0
-		elif penwidth is not None: line_width = penwidth
-		else: line_width = self.penwidth
+		if self.fill:
+			line_width = 0
+		else:
+			line_width = self.penwidth
 		pos = self.to_xy((x+w/2,y+h/2))
-		stim = stimuli.Ellipse((w, h), colour=color, line_width=line_width,
-			position=pos)
+		stim = stimuli.Ellipse((w, h), colour=self.color.backend_color,
+			line_width=line_width, position=pos)
 		self.add_stim(stim)
 
-	def polygon(self, vertices, fill=False, color=None, penwidth=None):
+	@configurable
+	def polygon(self, vertices):
 
-		if penwidth is None: penwidth = self.penwidth
-		if color is not None: color = self.color(color)
-		else: color = self.fgcolor
-		if fill: line_width = 0
-		else: line_width = penwidth
+		if self.fill:
+			line_width = 0
+		else:
+			line_width = self.penwidth
 		# The coordinate transformations are a bit awkard. Shape expects
 		# a list of vertices that start form (0,0), but the position of the
 		# shape is the center of the shape. So we first need to determine
@@ -199,25 +175,22 @@ class xpyriment(canvas.canvas, xpyriment_coordinates):
 			max(p[0] for p in vertices)) / 2, \
 			(min(p[1] for p in vertices) + \
 			max(p[1] for p in vertices)) / 2
-		stim = stimuli.Shape(colour=color, position=self.to_xy(center),
-			anti_aliasing=self.aa, line_width=line_width)
+		stim = stimuli.Shape(colour=self.color.backend_color,
+			position=self.to_xy(center), anti_aliasing=self.aa,
+			line_width=line_width)
 		l = p2v([self.to_xy(p) for p in vertices])
 		for v in l: stim.add_vertex(v)
 		self.add_stim(stim)
 
-	def set_bgcolor(self, color):
-
-		self.bgcolor = self.color(color)
-		self._canvas_color = self.bgcolor
 
 	def _text_size(self, text):
 
 		try:
-			_font = self.experiment.resource(u"%s.ttf" % self.font_style)
+			_font = self.experiment.resource(u"%s.ttf" % self.font_family)
 		except:
-			_font = self.font_style
-		stim = stimuli.TextLine(text, text_font=_font, \
-			text_size=self.font_size, text_bold=self.font_bold, \
+			_font = self.font_family
+		stim = stimuli.TextLine(text, text_font=_font,
+			text_size=self.font_size, text_bold=self.font_bold,
 			text_italic=self.font_italic)
 		surf = stim._create_surface()
 		return surf.get_width(), surf.get_height()
@@ -225,7 +198,7 @@ class xpyriment(canvas.canvas, xpyriment_coordinates):
 	def _text(self, text, x, y):
 
 		try:
-			_font = self.experiment.resource(u"%s.ttf" % self.font_style)
+			_font = self.experiment.resource(u"%s.ttf" % self.font_family)
 		except:
 			_font = self.font_style
 
@@ -234,34 +207,28 @@ class xpyriment(canvas.canvas, xpyriment_coordinates):
 		y += h/2
 
 		stim = stimuli.TextLine(text, position=self.to_xy((x,y)),
-			text_colour=self.fgcolor, text_font=_font,
+			text_colour=self.color.backend_color, text_font=_font,
 			text_size=self.font_size, text_bold=self.font_bold,
 			text_italic=self.font_italic, text_underline=self.font_underline)
 		self.add_stim(stim)
 
-	def textline(self, text, line, color=None):
-
-		size = self.text_size(text)
-		self.text(text, True, self.xcenter(), self.ycenter()+1.5*line*size[1],
-			color=color)
-
 	def image(self, fname, center=True, x=None, y=None, scale=None):
 
-		if x is None: x = self.xcenter()
-		if y is None: y = self.ycenter()
-		if center == False:
-			if isinstance(fname, unicode):
-				_fname = fname.encode(self.experiment.encoding)
-			else:
-				_fname = fname
-			surf = pygame.image.load(_fname)
+		x, y = self.to_xy(x, y)
+		if not center:
+			_fname = safe_decode(fname)
+			try:
+				surf = pygame.image.load(_fname)
+			except pygame.error:
+				raise osexception(
+					u"'%s' is not a supported image format" % fname)
 			if scale is None:
 				x += surf.get_width()/2
 				y += surf.get_height()/2
 			else:
 				x += scale*surf.get_width()/2
 				y += scale*surf.get_height()/2
-		stim = stimuli.Picture(fname, position=self.to_xy((x,y)))
+		stim = stimuli.Picture(fname, position=(x,y))
 		if scale is not None: stim.scale( (scale, scale) )
 		self.add_stim(stim)
 
@@ -282,40 +249,40 @@ class xpyriment(canvas.canvas, xpyriment_coordinates):
 		stim._surface = surface
 		self.add_stim(stim)
 
-def init_display(experiment):
+	@staticmethod
+	def init_display(experiment):
 
-	import pygame
+		import pygame
 
-	# Configure Expyriment
-	io.defaults.mouse_track_button_events = False
-	control.defaults.initialize_delay = 0
-	control.defaults.event_logging = 0
-	control.defaults.window_mode = experiment.var.fullscreen != u'yes'
-	control.defaults.fast_quit = True
-	control.defaults.window_size = experiment.resolution()
-	control.defaults.auto_create_subject_id = True
-	control.defaults.open_gl = experiment.var.get(u'expyriment_opengl', \
-		xpyriment.settings[u'expyriment_opengl'][u'default']) == u'yes'
-	control.defaults.audiosystem_sample_rate = experiment.var.get(u'sound_freq')
-	control.defaults.audiosystem_bit_depth = experiment.var.get(u'sound_sample_size')
-	control.defaults.audiosystem_channels = experiment.var.get(u'sound_channels')
-	control.defaults.audiosystem_buffer_size = experiment.var.get(u'sound_buf_size')
+		# Configure Expyriment
+		io.defaults.mouse_track_button_events = False
+		control.defaults.initialize_delay = 0
+		control.defaults.event_logging = 0
+		control.defaults.window_mode = experiment.var.fullscreen != u'yes'
+		control.defaults.fast_quit = True
+		control.defaults.window_size = experiment.resolution()
+		control.defaults.auto_create_subject_id = True
+		control.defaults.open_gl = experiment.var.get(u'expyriment_opengl',
+			xpyriment.settings[u'expyriment_opengl'][u'default']) == u'yes'
+		control.defaults.audiosystem_sample_rate = experiment.var.sound_freq
+		control.defaults.audiosystem_bit_depth = \
+			experiment.var.sound_sample_size
+		control.defaults.audiosystem_channels = experiment.var.sound_channels
+		control.defaults.audiosystem_buffer_size = \
+			experiment.var.sound_buf_size
 
-	# Initialize
-	exp = control.initialize()
-	experiment._time_func = pygame.time.get_ticks
-	experiment._sleep_func = pygame.time.delay
-	experiment.time = experiment._time_func
-	experiment.sleep = experiment._sleep_func
-	experiment.window = exp.screen._surface
-	experiment.expyriment = exp
+		# Initialize
+		exp = control.initialize()
+		experiment.window = exp.screen._surface
+		experiment.expyriment = exp
 
-	# TODO: In order to set the window title and to allow mouse responses we
-	# need to bypass expyriment for now
-	pygame.display.set_caption(u'OpenSesame (Expyriment backend)')
-	pygame.event.set_allowed(pygame.MOUSEBUTTONDOWN)
-	pygame.event.set_allowed(pygame.MOUSEBUTTONUP)
+		# TODO: In order to set the window title and to allow mouse responses we
+		# need to bypass expyriment for now
+		pygame.display.set_caption(u'OpenSesame (Expyriment backend)')
+		pygame.event.set_allowed(pygame.MOUSEBUTTONDOWN)
+		pygame.event.set_allowed(pygame.MOUSEBUTTONUP)
 
-def close_display(experiment):
+	@staticmethod
+	def close_display(experiment):
 
-	control.end()
+		control.end()

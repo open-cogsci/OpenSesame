@@ -18,11 +18,9 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame.py3compat import *
-
-import pygame
-import sys
-import openexp
 from openexp._keyboard.legacy import *
+import pygame
+from openexp.backend import configurable
 
 try:
 	import android
@@ -40,16 +38,15 @@ class droid(legacy):
 		`openexp._keyboard.keyboard`.
 	"""
 
-	def get_key(self, keylist=None, timeout=None):
+	@configurable
+	def get_key(self):
 
 		if not self.persistent_virtual_keyboard and android is not None:
 			android.show_keyboard()
 		start_time = pygame.time.get_ticks()
 		time = start_time
-		if keylist is None:
-			keylist = self._keylist
-		if timeout is None:
-			timeout = self.timeout
+		keylist = self.keylist
+		timeout = self.timeout
 		while True:
 			time = pygame.time.get_ticks()
 			for event in pygame.event.get():

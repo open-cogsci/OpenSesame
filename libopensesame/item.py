@@ -69,6 +69,11 @@ class item(object):
 		if string is not None:
 			self.from_string(string)
 
+	@property
+	def clock(self):
+
+		return self.experiment._clock
+
 	def reset(self):
 
 		"""
@@ -82,8 +87,6 @@ class item(object):
 
 		"""Implements the prepare phase of the item."""
 
-		self.time = self.experiment._time_func
-		self.sleep = self.experiment._sleep_func
 		self.experiment.var.set(u'count_%s' % self.name, self.count)
 		self.count += 1
 
@@ -877,43 +880,11 @@ class item(object):
 
 	def sleep(self, ms):
 
-		"""
-		desc:
-			Sleeps for a specified duration.
-
-		arguments:
-			ms:
-				desc:	An value specifying the duration in milliseconds.
-				type:	[int, float]
-
-		example: |
-			self.sleep(1000) # Sleeps one second
-		"""
-
-		# This function is set by item.prepare()
-		raise osexception( \
-			u'item.sleep(): This function should be set by the canvas backend.')
+		return self.clock.sleep(ms)
 
 	def time(self):
 
-		"""
-		desc:
-			Returns a timestamp for the current time. This timestamp only has
-			a relative meaning, i.e. you can use it to determine the interval
-			between two moments, but not the actual time. Whether the timestamp
-			is a `float` or `int` depends on the back-end.
-
-		returns:
-			desc:	A timestamp of the current time.
-			type:	[int, float]
-
-		example: |
-			print('The time is %s' % self.time())
-		"""
-
-		# This function is set by item.prepare()
-		raise osexception( \
-			u"item.time(): This function should be set by the canvas backend.")
+		return self.clock.time()
 
 	def log(self, msg):
 

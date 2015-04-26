@@ -305,30 +305,32 @@ class sampler(backend):
 			'Use sampler.duration instead.', DeprecationWarning)
 		self.duration = ms
 
-def init_sound(experiment):
+	@staticmethod
+	def init_sound(experiment):
 
-	"""
-	desc:
-		Initializes the pygame mixer before the experiment begins.
+		"""
+		desc:
+			Initializes the pygame mixer before the experiment begins.
 
-	arguments:
-		experiment:
-			desc:	The experiment object.
-			type:	experiment
-	"""
+		arguments:
+			experiment:
+				desc:	The experiment object.
+				type:	experiment
+		"""
 
-	raise NotImplementedError()
+		raise NotImplementedError()
 
-def close_sound(experiment):
+	@staticmethod
+	def close_sound(experiment):
 
-	"""
-	desc:
-		Closes the mixer after the experiment is finished.
+		"""
+		desc:
+			Closes the mixer after the experiment is finished.
 
-	arguments:
-		experiment:
-			desc:	The experiment object.
-			type:	experiment
-	"""
+		arguments:
+			experiment:
+				desc:	The experiment object.
+				type:	experiment
+		"""
 
-	raise NotImplementedError()
+		raise NotImplementedError()

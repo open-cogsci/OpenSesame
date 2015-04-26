@@ -18,11 +18,11 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame.py3compat import *
-
 from libopensesame.exceptions import osexception
 from openexp._keyboard import keyboard
 from psychopy import event
 import pyglet.window.key
+from openexp.backend import configurable
 
 class psycho(keyboard.keyboard):
 
@@ -33,7 +33,7 @@ class psycho(keyboard.keyboard):
 		`openexp._keyboard.keyboard`.
 	"""
 
-	# The keymap is an incomplete attempt at translating keys from the PyGame 
+	# The keymap is an incomplete attempt at translating keys from the PyGame
 	# names to the names used by PsychoPy
 	keymap = {
 		'!' : 'exclamation',
@@ -61,17 +61,7 @@ class psycho(keyboard.keyboard):
 		']' : 'bracketright',
 		'^' : None,
 		'_' : 'underscore'
-		}	
-
-	def __init__(self, experiment, keylist=None, timeout=None):
-
-		if experiment.var.canvas_backend != u"psycho":
-			raise osexception(
-				u"The psycho keyboard backend must be used in combination with "
-				u"the psycho canvas backend!")
-		self.experiment = experiment
-		self.set_keylist(keylist)
-		self.set_timeout(timeout)
+		}
 
 	def valid_keys(self):
 
@@ -81,33 +71,25 @@ class psycho(keyboard.keyboard):
 				l.append(i)
 		return l
 
-	def get_key(self, keylist=None, timeout=None):
+	@configurable
+	def get_key(self):
 
-		if keylist is None:
-			keylist = self._keylist
-		if timeout is None:
-			timeout = self.timeout
-
-		if keylist is None:
-			_keylist = None
-		else:
-			_keylist = keylist + ["escape"]
-			
-		start_time = 1000.0 * self.experiment.clock.getTime()
-		time = start_time
-		
+		keylist = self.keylist
+		if keylist is not None:
+			keylist += [u'escape']
+		timeout = self.timeout
+		start_time = self.experiment.clock.time()
 		while True:
-			time = 1000.0 * self.experiment.clock.getTime()
-			keys = event.getKeys(_keylist, timeStamped=self.experiment.clock)
+			time = self.experiment.clock.time()
+			keys = event.getKeys(keylist, timeStamped=True)
 			for key, time in keys:
 				time *= 1000.0
-				if key == "escape":
-					raise osexception("The escape key was pressed.")
-				elif keylist is None or key in keylist:
+				if key == u"escape":
+					raise osexception(u"The escape key was pressed.")
+				if keylist is None or key in keylist:
 					return key, time
 			if timeout is not None and time-start_time >= timeout:
 				break
-
 		return None, time
 
 	def get_mods(self):
@@ -124,12 +106,12 @@ class psycho(keyboard.keyboard):
 			if l[-1].upper() != l[-1].lower():
 				l.append(l[-1].upper())
 			return l
-		
+
 		# Sanity check
 		if not isinstance(key, basestring):
-			raise osexception('Key names should be string or numeric, not %s' \
-				% type(key))
-		
+			raise osexception(
+				u'Key names should be string or numeric, not %s' % type(key))
+
 		# Make a list of all conceivable ways that a key might be referred to.
 		l = [key]
 		if key != key.upper():
@@ -140,9 +122,9 @@ class psycho(keyboard.keyboard):
 			if key == char:
 				l.append(name)
 			if key.lower() == name:
-				l.append(char)	
+				l.append(char)
 		# Make sure that we can deal with None/ timeout responses
-		if key.lower() == 'none':
+		if key.lower() == u'none':
 			l.append(None)
 		# Make sure that we convert numeric strings to ints as well
 		try:
@@ -156,8 +138,7 @@ class psycho(keyboard.keyboard):
 
 		keypressed = False
 		for key in event.getKeys():
-			if key == "escape":
-				raise osexception("The escape key was pressed.")
+			if key == u"escape":
+				raise osexception(u"The escape key was pressed.")
 			keypressed = True
 		return keypressed
-

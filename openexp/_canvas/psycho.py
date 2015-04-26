@@ -21,10 +21,11 @@ from libopensesame.py3compat import *
 
 import pygame
 import pyglet
+from openexp.backend import configurable
 from openexp._canvas import canvas
 from openexp._coordinates.psycho import psycho as psycho_coordinates
 from libopensesame.exceptions import osexception
-from libopensesame import debug, html
+from libopensesame import debug
 try: # Try both import statements
 	from PIL import Image
 except:
@@ -42,6 +43,13 @@ if not hasattr(visual, u'ImageStim'):
 if not hasattr(visual, u'GratingStim'):
 	raise osexception(
 		u'PsychoPy is missing the GratingStim() class. Please update your version of PsychoPy! For installation instructions, please visit http://www.psychopy.org/.')
+
+# Store the experiment as a singleton, to be used in the _time() function
+_experiment = None
+# Store the old display gamma value
+_old_gamma = None
+# Contains a list of fonts that have been explicitly registered with PyGlet
+_registered_fonts = []
 
 class psycho(canvas.canvas, psycho_coordinates):
 
@@ -82,26 +90,12 @@ class psycho(canvas.canvas, psycho_coordinates):
 			}
 		}
 
-	def __init__(self, experiment, bgcolor=None, fgcolor=None,
-		auto_prepare=True):
+	def __init__(self, experiment, auto_prepare=True, **style_args):
 
-		self.experiment = experiment
+		canvas.canvas.__init__(self, experiment, auto_prepare=auto_prepare,
+			**style_args)
 		psycho_coordinates.__init__(self)
-		self.html = html.html()
 		self.min_penwidth = 1
-		if fgcolor is None:
-			fgcolor = self.experiment.var.foreground
-		if bgcolor is None:
-			bgcolor = self.experiment.var.background
-		self.set_fgcolor(fgcolor)
-		self.set_bgcolor(bgcolor)
-		self.set_penwidth(1)
-		self.bidi = self.experiment.var.bidi==u'yes'
-		self.set_font(style=self.experiment.var.font_family,
-			size=self.experiment.var.font_size,
-			bold=self.experiment.var.font_bold==u'yes',
-			italic=self.experiment.var.font_italic==u'yes',
-			underline=self.experiment.var.font_underline==u'yes')
 		# We need to map the simple font names used by OpenSesame onto the
 		# actual names of the fonts.
 		self.font_map = {
@@ -115,104 +109,82 @@ class psycho(canvas.canvas, psycho_coordinates):
 			}
 		self.clear()
 
-	def color(self, color):
+	def set_config(self, **cfg):
 
-		if type(color) in (tuple, list):
-			# PsycoPy want tuples to be between 0 and 1, so we normalize the
-			# tuple if the format is incorrect (i.e. 0-255).
-			r = color[0]
-			g = color[1]
-			b = color[2]
-			if r>1 or g>1 or b>1:
-				r = 1.*r/255
-				g = 1.*g/255
-				b = 1.*b/255
-				color = r,g,b
-		return color
-
-	def copy(self, canvas):
-
-		self.stim_list = canvas.stim_list + []
-		self.bgcolor = canvas.bgcolor
-		self.fgcolor = canvas.fgcolor
-		self.penwidth = canvas.penwidth
-
-	def show(self):
-
-		for stim in self.stim_list:
-			stim.draw()
-		self.experiment.window.flip(clearBuffer = True)
-		return 1000.0 * self.experiment.clock.getTime()
-
-	def clear(self, color=None):
-
-		self.stim_list = []
-		if color is not None:
-			color = self.color(color)
-		else:
-			color = self.bgcolor
-		if self.experiment.background != color:
-			# The background is simply a rectangle, because of the double flip
-			# required by set_color()
-			self.rect(0, 0, self._width, self._height,
-				color=color, fill=True)
-
-	def line(self, sx, sy, ex, ey, color=None, penwidth=None):
-
-		if color is None:
-			color = self.fgcolor
-		self.shapestim( [[sx, sy], [ex, ey]], color=color, penwidth=penwidth)
-
-	def rect(self, x, y, w, h, fill=False, color=None, penwidth=None):
-
-		if color is None:
-			color = self.fgcolor
-		else:
-			color = self.color(color)
-		if not fill:
-			self.shapestim( [[x, y], [x+w, y], [x+w, y+h], [x, y+h]], color,
-				close=True, penwidth=penwidth)
-		else:
-			pos = self.to_xy(x+w/2, y+h/2)
-			stim = visual.GratingStim(win=self.experiment.window, pos=pos,
-				size=[w, h], color=color, tex=None, interpolate=False)
-			self.stim_list.append(stim)
-
-	def ellipse(self, x, y, w, h, fill=False, color=None, penwidth=None):
-
-		if penwidth is None:
-			penwidth = self.penwidth
-		if color is not None:
-			color = self.color(color)
-		else:
-			color = self.fgcolor
-		pos = self.to_xy(x+w/2, y+h/2)
-		stim = visual.GratingStim(win=self.experiment.window, mask=u'circle',
-			pos=pos, size=[w, h], color=color, tex=None, interpolate=True)
-		self.stim_list.append(stim)
-		if not fill:
-			stim = visual.GratingStim(win = self.experiment.window,
-				mask=u'circle', pos=pos, size=[w-2*penwidth,
-				h-2*penwidth], color=self.bgcolor, tex=None,
-				interpolate=True)
-			self.stim_list.append(stim)
-
-	def polygon(self, vertices, fill=False, color=None, penwidth=None):
-
-		self.shapestim(vertices, fill=fill, color=color, fix_coor=True,
-			close=True, penwidth=penwidth)
-
-	def set_font(self, style=None, size=None, italic=None, bold=None,
-		underline=None):
-
-		if style is not None:
+		if u'font_family' in cfg:
+			style = cfg[u'font_family']
 			# If a font is taken from the file pool, it is not registered with
 			# PyGlet, and we therefore need to register it now.
 			if self.experiment.file_in_pool(u'%s.ttf' % style):
 				font_path = self.experiment.pool[u'%s.ttf' % style]
 				register_font(font_path)
-		super(psycho, self).set_font(style=style, size=size, italic=italic,
-			bold=bold, underline=underline)
+		canvas.canvas.set_config(self, **cfg)
+
+	def copy(self, canvas):
+
+		self.stim_list = canvas.stim_list + []
+		self.set_config(canvas.get_config())
+
+	def show(self):
+
+		for stim in self.stim_list:
+			stim.draw()
+		self.experiment.window.flip(clearBuffer=True)
+		return self.experiment.clock.time()
+
+	@configurable
+	def clear(self, color=None):
+
+		self.stim_list = []
+		if color is not None:
+			if u'color' in cfg:
+				warnings.warn(u'color is a deprecated style argument for '
+					'canvas.clear(). Use background_color instead.',
+					DeprecationWarning)
+			self.background_color = color
+		# The background is simply a rectangle, because of the double flip
+		# required by set_color()
+		self.rect(0, 0, self._width, self._height,
+			color=self.background_color.backend_color, fill=True)
+
+	@configurable
+	def line(self, sx, sy, ex, ey):
+
+		self.shapestim( [[sx, sy], [ex, ey]], color=self.color.backend_color,
+			penwidth=self.penwidth)
+
+	@configurable
+	def rect(self, x, y, w, h):
+
+		if not self.fill:
+			self.shapestim( [[x, y], [x+w, y], [x+w, y+h], [x, y+h]],
+				self.color.backend_color, close=True, penwidth=self.penwidth)
+		else:
+			pos = self.to_xy(x+w/2, y+h/2)
+			stim = visual.GratingStim(win=self.experiment.window, pos=pos,
+				size=[w, h], color=self.color.backend_color, tex=None,
+				interpolate=False)
+			self.stim_list.append(stim)
+
+	@configurable
+	def ellipse(self, x, y, w, h):
+
+		pos = self.to_xy(x+w/2, y+h/2)
+		stim = visual.GratingStim(win=self.experiment.window, mask=u'circle',
+			pos=pos, size=[w, h], color=self.color.backend_color, tex=None,
+			interpolate=True)
+		self.stim_list.append(stim)
+		if not self.fill:
+			stim = visual.GratingStim(win=self.experiment.window,
+				mask=u'circle', pos=pos, size=[w-2*self.penwidth,
+				h-2*self.penwidth], color=self.self.bgcolor, tex=None,
+				interpolate=True)
+			self.stim_list.append(stim)
+
+	@configurable
+	def polygon(self, vertices):
+
+		self.shapestim(vertices, fix_coor=True, close=True)
 
 	def _text_size(self, text):
 
@@ -223,16 +195,15 @@ class psycho(canvas.canvas, psycho_coordinates):
 
 	def _text(self, text, x, y):
 
-		if self.font_style in self.font_map:
-			font = self.font_map[self.font_style]
+		if self.font_family in self.font_map:
+			font = self.font_map[self.font_family]
 		else:
-			font = self.font_style
+			font = self.font_family
 		pos = self.to_xy(x, y)
 		stim = visual.TextStim(win=self.experiment.window, text=text,
-			alignHoriz=u'left', alignVert=u'top', pos=pos, color=self.fgcolor,
-			font=font, height= self.font_size, wrapWidth=
-			self.experiment.var.width, bold=self.font_bold,
-				italic=self.font_italic)
+			alignHoriz=u'left', alignVert=u'top', pos=pos,
+			color=self.color.backend_color, font=font, height= self.font_size,
+			wrapWidth=self._width, bold=self.font_bold, italic=self.font_italic)
 		self.stim_list.append(stim)
 
 	def image(self, fname, center=True, x=None, y=None, scale=None):
@@ -368,73 +339,63 @@ class psycho(canvas.canvas, psycho_coordinates):
 			closeShape=close, fillColor=fill, interpolate=False)
 		self.stim_list.append(stim)
 
-# Store the experiment as a singleton, to be used in the _time() function
-_experiment = None
-# Store the old display gamma value
-_old_gamma = None
-# Contains a list of fonts that have been explicitly registered with PyGlet
-_registered_fonts = []
+	@staticmethod
+	def init_display(experiment):
 
-def init_display(experiment):
+		global _experiment, _old_gamma
+		_experiment = experiment
+		# Set the PsychoPy monitor, default to testMonitor
+		monitor = experiment.var.get(u'psychopy_monitor', u'testMonitor')
+		waitblanking = experiment.var.get(u'psychopy_waitblanking', u'yes', \
+			[u'yes', u'no']) == u'yes'
+		screen = experiment.var.get(u'psychopy_screen', 0)
+		# Print some information to the debug window
+		print(u'openexp._canvas.psycho.init_display(): waitblanking = %s' % \
+			waitblanking)
+		print(u'openexp._canvas.psycho.init_display(): monitor = %s' % monitor)
+		print(u'openexp._canvas.psycho.init_display(): screen = %s' % screen)
+		# Initialize the PsychoPy window and set various functions
+		experiment.window = visual.Window(experiment.resolution(), screen=screen,
+			waitBlanking=waitblanking, fullscr=experiment.var.fullscreen==u'yes',
+			monitor=monitor, units=u'pix', rgb=experiment.var.background)
+		experiment.window.setMouseVisible(False)
+		experiment.window.winHandle.set_caption(u'OpenSesame (PsychoPy backend)')
+		# Set Gamma value if specified
+		gamma = experiment.var.get(u'psychopy_gamma', u'unchanged')
+		if type(gamma) in (int, float) and gamma > 0:
+			_old_gamma = experiment.window.gamma
+			experiment.window.setGamma(gamma)
+		elif gamma != u'unchanged':
+			raise osexception( \
+				u'Gamma should be a positive numeric value or "unchanged"')
+		# Register the built-in OpenSesame fonts.
+		for font in [u'sans', u'serif', u'mono', u'arabic', u'hebrew', u'hindi',
+			u'chinese-japanese-korean']:
+			font_path = experiment.resource(u'%s.ttf' % font)
+			register_font(font_path)
+		# Override the default quit function, so that the application is not exited
+		core.quit = _psychopy_clean_quit
+		# Optionally change the logging level to avoid a lot of warnings in the
+		# debug window
+		if experiment.var.get(u'psychopy_suppress_warnings', u'yes'):
+			logging.console.setLevel(logging.CRITICAL)
+		# We need to initialize the pygame mixer, because PsychoPy uses that as well
+		pygame.mixer.init()
 
-	global _experiment, _old_gamma
-	_experiment = experiment
-	# Set the PsychoPy monitor, default to testMonitor
-	monitor = experiment.var.get(u'psychopy_monitor', u'testMonitor')
-	waitblanking = experiment.var.get(u'psychopy_waitblanking', u'yes', \
-		[u'yes', u'no']) == u'yes'
-	screen = experiment.var.get(u'psychopy_screen', 0)
-	# Print some information to the debug window
-	print(u'openexp._canvas.psycho.init_display(): waitblanking = %s' % \
-		waitblanking)
-	print(u'openexp._canvas.psycho.init_display(): monitor = %s' % monitor)
-	print(u'openexp._canvas.psycho.init_display(): screen = %s' % screen)
-	# Initialize the PsychoPy window and set various functions
-	experiment.window = visual.Window(experiment.resolution(), screen=screen,
-		waitBlanking=waitblanking, fullscr=experiment.var.fullscreen==u'yes',
-		monitor=monitor, units=u'pix', rgb=experiment.var.background)
-	experiment.window.setMouseVisible(False)
-	experiment.clock = core.Clock()
-	experiment._time_func = _time
-	experiment._sleep_func = _sleep
-	experiment.time = experiment._time_func
-	experiment.sleep = experiment._sleep_func
-	experiment.window.winHandle.set_caption(u'OpenSesame (PsychoPy backend)')
-	# Set Gamma value if specified
-	gamma = experiment.var.get(u'psychopy_gamma', u'unchanged')
-	if type(gamma) in (int, float) and gamma > 0:
-		_old_gamma = experiment.window.gamma
-		experiment.window.setGamma(gamma)
-	elif gamma != u'unchanged':
-		raise osexception( \
-			u'Gamma should be a positive numeric value or "unchanged"')
-	# Register the built-in OpenSesame fonts.
-	for font in [u'sans', u'serif', u'mono', u'arabic', u'hebrew', u'hindi', \
-		u'chinese-japanese-korean']:
-		font_path = experiment.resource(u'%s.ttf' % font)
-		register_font(font_path)
-	# Override the default quit function, so that the application is not exited
-	core.quit = _psychopy_clean_quit
-	# Optionally change the logging level to avoid a lot of warnings in the
-	# debug window
-	if experiment.var.get(u'psychopy_suppress_warnings', u'yes'):
-		logging.console.setLevel(logging.CRITICAL)
-	# We need to initialize the pygame mixer, because PsychoPy uses that as well
-	pygame.mixer.init()
+	@staticmethod
+	def close_display(experiment):
 
-def close_display(experiment):
-
-	global _old_gamma
-	# Restore display gamma if necessary
-	if _old_gamma is not None:
-		experiment.window.setGamma(_old_gamma)
-	# This causes a (harmless) exception in some cases, so we catch it to
-	# prevent confusion
-	try:
-		experiment.window.close()
-	except:
-		debug.msg(u'An error occurred while closing the PsychoPy window.', \
-			reason=u'warning')
+		global _old_gamma
+		# Restore display gamma if necessary
+		if _old_gamma is not None:
+			experiment.window.setGamma(_old_gamma)
+		# This causes a (harmless) exception in some cases, so we catch it to
+		# prevent confusion
+		try:
+			experiment.window.close()
+		except:
+			debug.msg(u'An error occurred while closing the PsychoPy window.',
+				reason=u'warning')
 
 def register_font(font_path):
 
@@ -453,31 +414,6 @@ def register_font(font_path):
 	debug.msg(u'registering %s' % font_path)
 	pyglet.font.add_file(font_path)
 	_registered_fonts.append(font_path)
-
-def _time():
-
-	"""
-	desc:
-		A time function.
-
-	returns:
-		The current time in milliseconds.
-	"""
-
-	global _experiment
-	return 1000.0*_experiment.clock.getTime()
-
-def _sleep(ms):
-
-	"""
-	desc:
-		A sleep function.
-
-	arguments:
-		ms:		A sleep duration in milliseconds.
-	"""
-
-	core.wait(.001*ms)
 
 def _psychopy_clean_quit():
 

@@ -18,19 +18,13 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame.py3compat import *
-
 from libopensesame import debug
-from PyQt4 import QtCore, QtGui
-from libopensesame import misc
+from PyQt4 import QtGui
 from libqtopensesame.misc import _
-import libopensesame.exceptions
 from libqtopensesame.widgets.general_header_widget import general_header_widget
 from libqtopensesame.widgets.base_widget import base_widget
-from libqtopensesame.items import experiment
-from libqtopensesame.misc import config
 from openexp._color.color import color
-import openexp.backend_info
-import sip
+from openexp import backend
 
 class general_properties(base_widget):
 
@@ -82,11 +76,11 @@ class general_properties(base_widget):
 			self.main_window.ui.tabwidget.open_backend_settings)
 
 		# Set the backend combobox
-		for backend in openexp.backend_info.backend_list:
-			desc = openexp.backend_info.backend_list[backend][u"description"]
-			icon = openexp.backend_info.backend_list[backend][u"icon"]
+		for name, info in backend.backend_info(self.experiment).items():
+			desc = info[u"description"]
+			icon = info[u"icon"]
 			self.ui.combobox_backend.addItem(self.main_window.theme.qicon(
-				icon), self.backend_format % (backend, desc))
+				icon), self.backend_format % (name, desc))
 		self.ui.combobox_backend.currentIndexChanged.connect(self.apply_changes)
 
 		self.tab_name = u'__general_properties__'
@@ -119,7 +113,6 @@ class general_properties(base_widget):
 			return
 		self.lock = True
 
-		rebuild_item_tree = False
 		self.main_window.set_busy(True)
 		# Set the title and the description
 		title = self.experiment.sanitize(self.header_widget.edit_name.text())
@@ -132,12 +125,13 @@ class general_properties(base_widget):
 		# Set the backend
 		if self.ui.combobox_backend.isEnabled():
 			i = self.ui.combobox_backend.currentIndex()
-			backend = list(openexp.backend_info.backend_list.values())[i]
-			self.experiment.var.canvas_backend = backend[u"canvas"]
-			self.experiment.var.keyboard_backend = backend[u"keyboard"]
-			self.experiment.var.mouse_backend = backend[u"mouse"]
-			self.experiment.var.sampler_backend = backend[u"sampler"]
-			self.experiment.var.synth_backend = backend[u"synth"]
+			_backend = list(backend.backend_info(self.experiment).values())[i]
+			self.experiment.var.canvas_backend = _backend[u"canvas"]
+			self.experiment.var.keyboard_backend = _backend[u"keyboard"]
+			self.experiment.var.mouse_backend = _backend[u"mouse"]
+			self.experiment.var.sampler_backend = _backend[u"sampler"]
+			self.experiment.var.clock_backend = _backend[u"clock"]
+			self.experiment.var.color_backend = _backend[u"color"]
 		else:
 			debug.msg(
 				u'not setting back-end, because a custom backend is selected')
@@ -209,14 +203,15 @@ class general_properties(base_widget):
 		self.set_header_label()
 
 		# Select the backend
-		backend = openexp.backend_info.match(self.experiment)
-		if backend == u"custom":
+		_backend = backend.backend_match(self.experiment)
+		if _backend == u"custom":
 			self.ui.combobox_backend.setDisabled(True)
 		else:
 			self.ui.combobox_backend.setDisabled(False)
-			desc = openexp.backend_info.backend_list[backend][u"description"]
+			desc = backend.backend_info(self.experiment)[_backend]\
+				[u"description"]
 			i = self.ui.combobox_backend.findText(
-				self.backend_format % (backend, desc))
+				self.backend_format % (_backend, desc))
 			self.ui.combobox_backend.setCurrentIndex(i)
 
 		# Set the resolution

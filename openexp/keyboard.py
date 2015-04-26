@@ -18,8 +18,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame.py3compat import *
-
-from libopensesame import debug
+from openexp import backend
 
 def keyboard(experiment, *arglist, **kwdict):
 
@@ -39,8 +38,5 @@ def keyboard(experiment, *arglist, **kwdict):
 		kwdict:		See keyboard.__init__().
 	"""
 
-	backend = experiment.var.get(u'keyboard_backend')
-	debug.msg(u'morphing into %s' % backend)
-	mod = __import__('openexp._keyboard.%s' % backend, fromlist=['dummy'])
-	cls = getattr(mod, backend)
+	cls = backend.get_backend_class(experiment, u'keyboard')
 	return cls(experiment, *arglist, **kwdict)

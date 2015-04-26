@@ -252,38 +252,3 @@ def set_subject_nr(nr):
 	"""
 
 	experiment.set_subject(nr)
-
-def sleep(ms):
-
-	"""
-	desc:
-		Waits (sleeps) for a specified duration.
-
-	arguments:
-		ms:
-			desc:	An value specifying the duration in milliseconds.
-			type:	[int, float]
-
-	example: |
-		sleep(1000) # Sleep one second
-	"""
-
-	experiment.sleep(ms)
-
-def time():
-
-	"""
-	desc:
-		Returns a timestamp for the current time. This timestamp only has
-		a relative meaning, i.e. you can use it to determine the interval
-		between two moments, but not the actual time.
-
-	returns:
-		desc:	A timestamp of the current time.
-		type:	float
-
-	example: |
-		print('The time is %s' % time())
-	"""
-
-	return experiment.time()

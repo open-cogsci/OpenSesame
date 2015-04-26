@@ -18,25 +18,20 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame.py3compat import *
-from openexp import backend
+from openexp._clock.clock import clock
+from psychopy import core
 
-def mouse(experiment, *arglist, **kwdict):
+class psycho(clock):
 
 	"""
 	desc:
-		A factory that returns a back-end specific mouse object.
-
-	arguments:
-		experiment:
-			desc:	The experiment object.
-			type:	experiment
-
-	argument-list:
-		arglist:	See mouse.__init__().
-
-	keyword-dict:
-		kwdict:		See mouse.__init__().
+		For docstrings, see openexp._clock.clock.
 	"""
 
-	cls = backend.get_backend_class(experiment, u'mouse')
-	return cls(experiment, *arglist, **kwdict)
+	def time(self):
+
+		return 1000.*core.getTime()
+
+	def sleep(self, ms):
+
+		core.wait(.001*ms)

@@ -159,10 +159,8 @@ class experiment(item.item):
 		# This is some duplication of the option parser in qtopensesame,
 		# but nevertheless keep it so we don't need qtopensesame
 		self.debug = debug.enabled
-
 		string = self.open(string)
 		item.item.__init__(self, name, self, string)
-
 		# Default subject info
 		self.set_subject(subject_nr)
 		# Restore experiment path
@@ -323,11 +321,11 @@ class experiment(item.item):
 			errors=u'ignore')
 		self.var.opensesame_version = misc.version
 		self.var.opensesame_codename = misc.codename
-
 		self.save_state()
 		self.running = True
 		self.init_random()
 		self.init_display()
+		self.init_clock()
 		self.init_sound()
 		self.init_log()
 		self.reset_feedback()
@@ -691,6 +689,13 @@ class experiment(item.item):
 		canvas.init_display(self)
 		self.python_workspace[u'win'] = self.window
 
+	def init_clock(self):
+
+		"""Initializes the clock backend."""
+
+		from openexp.clock import clock
+		self._clock = clock(self)
+
 	def init_log(self):
 
 		"""Opens the logile."""
@@ -724,37 +729,6 @@ class experiment(item.item):
 
 		from libopensesame import inline_script
 		inline_script.restore_state()
-
-	def _sleep_func(self, ms):
-
-		"""
-		Sleeps for a specific time.
-
-		* This is a stub that should be replaced by a proper function by the
-		  canvas backend. See openexp._canvas.legacy.init_display()
-
-		Arguments:
-		ms	--	The sleep duration.
-		"""
-
-		raise osexception( \
-			u"experiment._sleep_func(): This function should be set by the canvas backend.")
-
-	def _time_func(self):
-
-		"""
-		Gets the time.
-
-		* This is a stub that should be replaced by a proper function by the
-		  canvas backend. See openexp._canvas.legacy.init_display()
-
-		Returns:
-		A timestamp in milliseconds. Depending on the backend, this may be an
-		int or a float.
-		"""
-
-		raise osexception( \
-			u"experiment._time_func(): This function should be set by the canvas backend.")
 
 def clean_up(verbose=False, keep=[]):
 

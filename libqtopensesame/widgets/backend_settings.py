@@ -24,6 +24,7 @@ import sip
 from libqtopensesame.misc import _
 from libqtopensesame.widgets.base_widget import base_widget
 from libqtopensesame.misc.base_subcomponent import base_subcomponent
+from openexp import backend
 
 class backend_settings(base_widget):
 
@@ -33,14 +34,8 @@ class backend_settings(base_widget):
 			ui=u'widgets.backend_settings')
 		self.tab_name = '__backend_settings__'
 
-		for backend_type in ["canvas", "keyboard", "mouse", "synth", \
-			"sampler"]:
-			backend = self.experiment.var.get("%s_backend" \
-				% backend_type)
-			backend_module = __import__(u'openexp._%s.%s' % (backend_type, \
-				backend), fromlist=[u'dummy'])
-			_backend = getattr(backend_module, backend)
-			group = getattr(self.ui, u'group_%s' % backend_type)
+		for backend_type in backend._backend_types:
+			_backend = backend.get_backend_class(self.experiment, backend_type)
 			layout = getattr(self.ui, u'layout_%s' % backend_type)
 			label = getattr(self.ui, u'label_%s' % backend_type)
 			# Horribly ugly way to clear the previous settings
@@ -49,12 +44,11 @@ class backend_settings(base_widget):
 				layout.removeItem(w)
 				w.widget().hide()
 				sip.delete(w)
-
 			if not hasattr(_backend, "settings") or _backend.settings == \
 				None:
-				label.setText(_("No settings for %s") % backend)
+				label.setText(_("No settings for %s") % _backend.__name__)
 			else:
-				label.setText(_("Settings for %s:") % backend)
+				label.setText(_("Settings for %s:") % _backend.__name__)
 				layout.addWidget(settings_widget(self.main_window,
 					_backend.settings))
 
