@@ -34,6 +34,7 @@ class touch_response(mouse_response):
 
 		self.var._ncol = 2
 		self.var._nrow = 1
+		mouse_response.reset(self)
 
 	def process_response_mouseclick(self, retval):
 
