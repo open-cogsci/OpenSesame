@@ -36,7 +36,7 @@ class circle(base_element, circle_runtime):
 		cls.pos_start = pos
 		xc = sketchpad.canvas.xcenter()
 		yc = sketchpad.canvas.ycenter()
-		cls.preview = sketchpad.canvas.circle(pos[0]+xc, pos[1]+yc, 0,
+		cls.preview = sketchpad.canvas.circle(pos[0], pos[1], 0,
 			color=cfg.sketchpad_preview_color,
 			penwidth=cfg.sketchpad_preview_penwidth)
 
@@ -72,8 +72,8 @@ class circle(base_element, circle_runtime):
 		xc = sketchpad.canvas.xcenter()
 		yc = sketchpad.canvas.ycenter()
 		r = cls.radius(pos)
-		x = cls.pos_start[0]+xc-r
-		y = cls.pos_start[1]+yc-r
+		x = cls.pos_start[0]-r
+		y = cls.pos_start[1]-r
 		cls.preview.setRect(x, y, 2*r, 2*r)
 
 	@classmethod
