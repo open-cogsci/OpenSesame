@@ -110,14 +110,14 @@ class checkbox(button):
 			click_accepts = click_accepts == u'yes'
 		button.__init__(self, form, text, frame=frame, center=False)
 		self.type = u'checkbox'
-		self.group = group		
+		self.group = group
 		self.box_size = 16
 		self.box_pad = self.x_pad
 		self.x_pad += self.x_pad + self.box_size
 		self.var = var
 		self.click_accepts = click_accepts
 		self.set_checked(checked)
-				
+
 	def on_mouse_click(self, pos):
 
 		"""
@@ -143,69 +143,69 @@ class checkbox(button):
 			# If the checkbox is not part of a group then checking it will
 			# toggle its check status
 			self.set_checked(not self.checked)
-								
+
 		if self.click_accepts:
 			return self.text
-				
+
 	def render(self):
-	
+
 		"""
 		desc:
 			Draws the widget.
 		"""
-	
+
 		x, y, w, h = self.rect
 		self.form.theme_engine.box(x+self.box_pad, y+self.y_pad, \
 			checked=self.checked)
 		self.draw_text(self.text)
-		
+
 	def set_checked(self, checked=True):
-	
+
 		"""
 		desc:
 			Sets the checked status of the checkbox.
-		
+
 		keywords:
 			checked:
 				desc:	The checked status.
 				type:	bool
 		"""
-		
+
 		self.checked = checked
 		self.set_var(checked)
-				
+
 	def set_var(self, val, var=None):
-	
+
 		"""
 		desc:
 			Sets an experimental variable.
-		
+
 		arguments:
 			val:
 				desc:	A value.
 				type:	[str, unicode]
-		
+
 		keywords:
 			var:
 				desc:	A variable name, or `None` to use widget default.
 				type:	[str, unicode, NoneType]
 		"""
-		
+
 		if var is None:
 			var = self.var
 		if var is None:
 			return
-		
+
 		# Set the response variable
 		l_val = []
-				
+
 		# When this function is called via the constructor, the checkbox is not
 		# yet part of the form. Therefore, we need to add it explicitly to the
 		# widget list.
 		widget_list = self.form.widgets[:]
 		if self not in self.form.widgets:
 			widget_list += [self]
-		
+
 		for widget in widget_list:
 			if widget is not None and widget.type == u'checkbox' and \
 				widget.var == self.var:
@@ -217,4 +217,4 @@ class checkbox(button):
 		val = u';'.join(l_val)
 		if val == u'':
 			val = u'no'
-		self.form.experiment.set(var, val)		
+		button.set_var(self, val, var=var)

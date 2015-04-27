@@ -90,9 +90,9 @@ class ExperimentProcess(multiprocessing.Process):
 		# therefore pull out all relevant data to pass on to the new process
 		# and rebuild the exp object in there.
 		self.script = exp.to_string()
-		self.pool_folder = exp.pool_folder
+		self.pool_folder = exp.pool.folder()
 		self.subject_nr = exp.var.subject_nr
-		self.experiment_path = exp.var.experiment_path
+		self.experiment_path = exp.experiment_path
 		self.fullscreen = exp.var.fullscreen == u'yes'
 		self.logfile = exp.logfile
 		self.auto_response = exp.auto_response

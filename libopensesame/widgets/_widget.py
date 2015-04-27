@@ -132,4 +132,4 @@ class widget(object):
 			var = self.var
 		if var is None:
 			return
-		self.form.experiment.set(var, val)
+		self.form.experiment.var.set(var, val)

@@ -116,8 +116,8 @@ class joystick(item.item, generic_response.generic_response):
 		self._keyboard.flush()
 		# If no start response interval has been set, set it to the onset of
 		# the current response item
-		if self.experiment.start_response_interval is None:
-			self.experiment.start_response_interval = self.var.get(
+		if self.experiment._start_response_interval is None:
+			self.experiment._start_response_interval = self.var.get(
 				u'time_%s' % self.name)
 		if self.var._dummy == u'yes':
 			# In dummy mode, no one can hear you scream! Oh, and we simply
@@ -129,7 +129,7 @@ class joystick(item.item, generic_response.generic_response):
 			resp, self.experiment.end_response_interval = self._resp_func(
 				self._allowed_responses, self._timeout)
 		debug.msg(u'received %s' % resp)
-		self.experiment.response = resp
+		self.experiment.var.response = resp
 		generic_response.generic_response.response_bookkeeping(self)
 
 	def var_info(self):

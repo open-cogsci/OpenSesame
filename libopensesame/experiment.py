@@ -107,7 +107,7 @@ class experiment(item.item):
 		self.running = False
 		self.auto_response = auto_response
 		self.plugin_folder = u'plugins'
-		self.start_response_interval = None
+		self._start_response_interval = None
 		self.cleanup_functions = []
 		self.restart = False
 		self.resources = resources
@@ -496,7 +496,7 @@ class experiment(item.item):
 		debug.msg(u"saving as .opensesame.tar.gz file")
 		# Write the script to a text file
 		script = self.to_string()
-		script_path = os.path.join(self.pool_folder, u'script.opensesame')
+		script_path = os.path.join(self.pool.folder(), u'script.opensesame')
 		with open(script_path, u"w") as fd:
 			fd.write(self.usanitize(script))
 		# Create the archive in a a temporary folder and move it afterwards.
@@ -509,9 +509,9 @@ class experiment(item.item):
 		# Unicode sanitized to ASCII format. Again, this is necessary to deal
 		# with poor Unicode support in .tar.gz.
 		tmp_pool = tempfile.mkdtemp(suffix=u'.opensesame.pool')
-		for fname in os.listdir(self.pool_folder):
+		for fname in os.listdir(self.pool.folder()):
 			sname = self.usanitize(fname)
-			shutil.copyfile(os.path.join(self.pool_folder, fname),
+			shutil.copyfile(os.path.join(self.pool.folder(), fname),
 				os.path.join(tmp_pool, sname))
 		tar.add(tmp_pool, u'pool', True)
 		tar.close()
@@ -575,15 +575,15 @@ class experiment(item.item):
 			if folder == u"pool":
 				debug.msg(u"extracting '%s'" % uname)
 				if py3:
-					tar.extract(name, self.pool_folder)
+					tar.extract(name, self.pool.folder())
 				else:
-					tar.extract(name, safe_encode(self.pool_folder,
+					tar.extract(name, safe_encode(self.pool.folder(),
 						enc=misc.filesystem_encoding()))
-				os.rename(os.path.join(self.pool_folder, uname), \
-					os.path.join(self.pool_folder, fname))
-				os.rmdir(os.path.join(self.pool_folder, folder))
-		script_path = os.path.join(self.pool_folder, u"script.opensesame")
-		tar.extract(u"script.opensesame", self.pool_folder)
+				os.rename(os.path.join(self.pool.folder(), uname), \
+					os.path.join(self.pool.folder(), fname))
+				os.rmdir(os.path.join(self.pool.folder(), folder))
+		script_path = os.path.join(self.pool.folder(), u"script.opensesame")
+		tar.extract(u"script.opensesame", self.pool.folder())
 		if py3:
 			mode = u'r'
 		else:

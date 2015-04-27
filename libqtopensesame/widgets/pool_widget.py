@@ -101,7 +101,7 @@ class pool_widget(base_widget):
 			Opens the pool folder in the file manager in an OS specific way.
 		"""
 
-		misc.open_url(self.experiment.pool_folder)
+		misc.open_url(self.experiment.pool.folder())
 
 	def add(self, files):
 

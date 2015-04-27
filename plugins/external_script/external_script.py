@@ -63,7 +63,7 @@ class external_script(item.item):
 		if self.module is None:
 			try:
 				self.module = imp.load_source("file", os.path.join( \
-					self.experiment.pool_folder, self.file))
+					self.experiment.pool.folder(), self.file))
 			except Exception as e:
 				raise osexception( \
 					"Failed to import '%s' in the prepare phase of external_script item '%s': %s" \

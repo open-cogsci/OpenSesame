@@ -89,7 +89,7 @@ class generic_response:
 
 		"""Process a keypress response"""
 
-		self.experiment.start_response_interval = self.sri
+		self.experiment._start_response_interval = self.sri
 		key, self.experiment.end_response_interval = retval
 		self.experiment.var.response = self.sanitize(key)
 		self.synonyms = self._keyboard.synonyms(self.experiment.var.response)
@@ -98,7 +98,7 @@ class generic_response:
 
 		"""Process a mouseclick response"""
 
-		self.experiment.start_response_interval = self.sri
+		self.experiment._start_response_interval = self.sri
 		self.experiment.var.response, pos, self.experiment.end_response_interval = \
 			retval
 		self.synonyms = self._mouse.synonyms(self.experiment.var.response)
@@ -140,12 +140,12 @@ class generic_response:
 		# response item
 		self.experiment.var.set(u"response_time", \
 			self.experiment.end_response_interval - \
-			self.experiment.start_response_interval)
+			self.experiment._start_response_interval)
 		self.experiment.var.set(u"response_%s" % self.name,
 			self.var.get(u"response"))
 		self.experiment.var.set(u"response_time_%s" % self.name,
 			self.var.get(u"response_time"))
-		self.experiment.start_response_interval = None
+		self.experiment._start_response_interval = None
 
 		# But correctness information is only set for dedicated response items,
 		# such as keyboard_response items, because otherwise we might confound
@@ -200,13 +200,13 @@ class generic_response:
 
 		if reset:
 			self.sri = self.var.get(u"time_%s" % self.name)
-			self.experiment.start_response_interval = self.var.get("time_%s" % \
+			self.experiment._start_response_interval = self.var.get("time_%s" % \
 				self.name)
 
-		if self.experiment.start_response_interval is None:
+		if self.experiment._start_response_interval is None:
 			self.sri = self.var.get(u"time_%s" % self.name)
 		else:
-			self.sri = self.experiment.start_response_interval
+			self.sri = self.experiment._start_response_interval
 
 	def prepare_allowed_responses(self):
 

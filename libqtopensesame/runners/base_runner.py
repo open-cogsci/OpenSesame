@@ -194,7 +194,7 @@ class base_runner(object):
 		# Build a new experiment. This can trigger a script error.
 		try:
 			self.experiment = experiment(string=script, pool_folder= \
-				self.main_window.experiment.pool_folder, experiment_path= \
+				self.main_window.experiment.pool.folder(), experiment_path= \
 				self.main_window.experiment.experiment_path, fullscreen= \
 				fullscreen, auto_response=auto_response, subject_nr= \
 				subject_nr, logfile=logfile)

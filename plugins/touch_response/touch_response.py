@@ -40,7 +40,7 @@ class touch_response(mouse_response):
 
 		"""Processes a mouseclick response."""
 
-		self.experiment.start_response_interval = self.sri
+		self.experiment._start_response_interval = self.sri
 		button, pos, self.experiment.end_response_interval = retval
 		if pos is not None:
 			x, y = pos

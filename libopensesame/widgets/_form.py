@@ -107,10 +107,10 @@ class form(object):
 			self.item = item
 		else:
 			self.item = experiment
-		self.width = experiment.var.get(u'width')
-		self.height = experiment.var.get(u'height')
+		self.width = experiment.var.width
+		self.height = experiment.var.height
 		self.spacing = spacing
-		self.margins = type_check.float_list(margins, u'form margins', \
+		self.margins = type_check.float_list(margins, u'form margins',
 			min_len=4, max_len=4)
 		n_cells = len(self.cols)*len(self.rows)
 		self.widgets = [None]*n_cells
@@ -208,11 +208,11 @@ class form(object):
 					if index1 == index2:
 						continue
 					if len(self.widgets) <= index2:
-						raise osexception( \
+						raise osexception(
 							u'The widget at position (%d, %s) falls outside of your form' \
 							% (l[0], l[1]))
 					if self.widgets[index2] is not None:
-						raise osexception( \
+						raise osexception(
 							u'The widget at position (%d, %d) overlaps with another widget' \
 							% (l[0], l[1]))
 
@@ -258,7 +258,7 @@ class form(object):
 		w = x2-x1
 		h = y2-y1
 		if w <= 0 or h <= 0:
-			raise osexception( \
+			raise osexception(
 				u'There is not enough space to show some form widgets. Please modify the form geometry!')
 		x = x1+self.margins[3]
 		y = y1+self.margins[0]

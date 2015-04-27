@@ -67,7 +67,7 @@ class general_script_editor(base_widget):
 		try:
 			exp = experiment(self.main_window, name=self.experiment.var.title,
 				string=self.ui.qprogedit.text(),
-				pool_folder=self.experiment.pool_folder,
+				pool_folder=self.experiment.pool.folder(),
 				experiment_path=self.experiment.experiment_path,
 				resources=self.experiment.resources)
 		except osexception as e:

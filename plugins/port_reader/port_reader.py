@@ -94,7 +94,7 @@ class port_reader(item.item, generic_response.generic_response):
 
 		"""Process a portinput response"""
 
-		self.experiment.start_response_interval = self.sri			
+		self.experiment._start_response_interval = self.sri			
 		self.experiment.response, self.experiment.end_response_interval = retval		
 								
 	def prepare(self):

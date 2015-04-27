@@ -85,9 +85,9 @@ class form_multiple_choice(item.item):
 
 		# Build the form
 		try:
-			margins = [float(i) for i in str(self.margins).split(u';')]
+			margins = [float(i) for i in str(self.var.margins).split(u';')]
 		except:
-			raise osexception( \
+			raise osexception(
 				_(u'margins should be numeric values separated by a semi-colon'))
 		form = widgets.form(self.experiment, cols=1, rows=rows,
 			spacing=self.var.spacing, margins=margins,

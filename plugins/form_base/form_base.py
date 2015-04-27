@@ -123,7 +123,7 @@ class form_base(item.item):
 			del w[u'row']
 			del w[u'colspan']
 			del w[u'rowspan']
-			s += u'\twidget %s %s %s %s %s' % (col, row, colspan, rowspan, \
+			s += u'\twidget %s %s %s %s %s' % (col, row, colspan, rowspan,
 				_type)
 			for keyword, value in w.items():
 				s += ' %s="%s"' % (keyword, value)
@@ -136,7 +136,7 @@ class form_base(item.item):
 		"""Runs the item."""
 
 		self.set_item_onset()
-		if self.var.get(u'only_render') == u'yes':
+		if self.var.only_render == u'yes':
 			self._form.render()
 		else:
 			self._form._exec(focus_widget=self.focus_widget)
@@ -149,14 +149,15 @@ class form_base(item.item):
 
 		# Prepare the form
 		try:
-			cols = [float(i) for i in str(self.cols).split(';')]
-			rows = [float(i) for i in str(self.rows).split(';')]
-			margins = [float(i) for i in str(self.margins).split(';')]
+			cols = [float(i) for i in str(self.var.cols).split(u';')]
+			rows = [float(i) for i in str(self.var.rows).split(u';')]
+			margins = [float(i) for i in str(self.var.margins).split(u';')]
 		except:
-			raise osexception( \
+			raise osexception(
 				_(u'cols, rows, and margins should be numeric values separated by a semi-colon'))
-		self._form = widgets.form(self.experiment, cols=cols, rows=rows, \
-			margins=margins, spacing=self.spacing, theme=self._theme, item=self)
+		self._form = widgets.form(self.experiment, cols=cols, rows=rows,
+			margins=margins, spacing=self.var.spacing, theme=self.var._theme,
+			item=self)
 
 		# Prepare the widgets
 		for _w in self._widgets:
@@ -191,10 +192,10 @@ class form_base(item.item):
 			try:
 				_w = getattr(widgets, _type)(self._form, **w)
 			except Exception as e:
-				raise osexception( \
+				raise osexception(
 					u'Failed to create widget "%s": %s' % (_type, e))
-			self._form.set_widget(_w, (col, row), colspan=colspan, \
-					rowspan=rowspan)
+			self._form.set_widget(_w, (col, row), colspan=colspan,
+				rowspan=rowspan)
 
 			# Add as focus widget
 			if focus:

@@ -72,8 +72,8 @@ class text_input(item.item, generic_response.generic_response):
 
 		# If no start response interval has been set, set it to the onset of
 		# the current response item
-		if self.experiment.start_response_interval is None:
-			self.experiment.start_response_interval = self.var.get("time_%s" % \
+		if self.experiment._start_response_interval is None:
+			self.experiment._start_response_interval = self.var.get("time_%s" % \
 				self.name)
 
 		self._keyboard = openexp.keyboard.keyboard(self.experiment)
@@ -107,7 +107,7 @@ class text_input(item.item, generic_response.generic_response):
 				break
 
 			if self._check_timeout and self.time() - \
-				self.experiment.start_response_interval > self.timeout:
+				self.experiment._start_response_interval > self.timeout:
 				break
 
 			# Fill the canvas and put it to the screen

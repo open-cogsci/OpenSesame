@@ -149,8 +149,8 @@ class srbox(item.item, generic_response.generic_response):
 
 		# If no start response interval has been set, set it to the onset of
 		# the current response item
-		if self.experiment.start_response_interval is None:
-			self.experiment.start_response_interval = self.var.get("time_%s" \
+		if self.experiment._start_response_interval is None:
+			self.experiment._start_response_interval = self.var.get("time_%s" \
 				% self.name)
 
 		if self.var.get('_dummy') == 'yes':

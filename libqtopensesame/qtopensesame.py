@@ -760,7 +760,7 @@ class qtopensesame(QtGui.QMainWindow, base_component):
 				allow_vars=False))
 		else:
 			cfg.file_dialog_path = self.current_path
-		if len(os.listdir(self.experiment.pool_folder)) == 0:
+		if len(os.listdir(self.experiment.pool.folder())) == 0:
 			default_extension = u".opensesame"
 			default_filter = self.file_type_filter_script
 		else:
@@ -795,7 +795,7 @@ class qtopensesame(QtGui.QMainWindow, base_component):
 				u'.opensesame')
 			# Warn if we are saving in .opensesame format and there are files
 			# in the file pool.
-			if len(os.listdir(self.experiment.pool_folder)) > 0 \
+			if len(os.listdir(self.experiment.pool.folder())) > 0 \
 				and path.lower().endswith(u'.opensesame'):
 				self.experiment.notify(
 					_(u'You have selected the <code>.opensesame</code> format. This means that the file pool has <i>not</i> been saved. To save the file pool along with your experiment, select the <code>.opensesame.tar.gz</code> format.'))
@@ -830,7 +830,7 @@ class qtopensesame(QtGui.QMainWindow, base_component):
 			self.experiment.var.get(u"width"), u"\nset width \"%s\"\n" % width)
 		try:
 			tmp = experiment.experiment(self, name=self.experiment.var.title,
-				string=script, pool_folder=self.experiment.pool_folder,
+				string=script, pool_folder=self.experiment.pool.folder(),
 				experiment_path=self.experiment.experiment_path,
 				resources=self.experiment.resources)
 		except osexception as error:
@@ -876,7 +876,7 @@ class qtopensesame(QtGui.QMainWindow, base_component):
 
 		renamed = False
 		_fname = os.path.basename(fname)
-		while os.path.exists(os.path.join(self.experiment.pool_folder, _fname)):
+		while os.path.exists(os.path.join(self.experiment.pool.folder(), _fname)):
 			_fname = u"_" + _fname
 			renamed = True
 
@@ -886,7 +886,7 @@ class qtopensesame(QtGui.QMainWindow, base_component):
 				_(u"The file has been renamed to '%s', because the file pool already contains a file named '%s'.") \
 				% (_fname, os.path.basename(fname)))
 
-		shutil.copyfile(fname, os.path.join(self.experiment.pool_folder, _fname))
+		shutil.copyfile(fname, os.path.join(self.experiment.pool.folder(), _fname))
 		self.refresh_pool(True)
 
 	def get_ready(self):
