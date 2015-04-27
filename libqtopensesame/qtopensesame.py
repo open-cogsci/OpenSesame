@@ -31,6 +31,7 @@ import libopensesame.misc
 import os.path
 import os
 import sys
+import warnings
 
 class qtopensesame(QtGui.QMainWindow, base_component):
 
@@ -95,6 +96,7 @@ class qtopensesame(QtGui.QMainWindow, base_component):
 
 		# Restore the configuration
 		self.restore_config()
+		self.set_warnings()
 
 		# Setup the UI
 		self.load_ui(u'misc.main_window')
@@ -245,49 +247,57 @@ class qtopensesame(QtGui.QMainWindow, base_component):
 
 		import optparse
 
-		parser = optparse.OptionParser( \
-			u"usage: opensesame [experiment] [options]", \
-			version = u"%s '%s'" % (self.version, self.codename))
+		parser = optparse.OptionParser(
+			u"usage: opensesame [experiment] [options]",
+			version=u"%s '%s'" % (self.version, self.codename))
 		parser.set_defaults(debug=False)
-		parser.set_defaults(run=False)
-		parser.set_defaults(run_in_window=False)
-		group = optparse.OptionGroup(parser, u"Immediately run an experiment")
-		group.add_option(u"-r", u"--run", action=u"store_true", dest=u"run", \
-			help=u"Run fullscreen")
-		group.add_option(u"-w", u"--run-in-window", action=u"store_true", \
-			dest=u"run_in_window", help=u"Run in window")
-		parser.add_option_group(group)
 		group = optparse.OptionGroup(parser, u"Miscellaneous options")
-		group.add_option(u"-c", u"--config", action=u"store", dest=u"_config", \
-			help=u"Set a configuration option, e.g, '--config auto_update_check=False;scintilla_font_size=10'. For a complete list of configuration options, please refer to the source of config.py.")
-		group.add_option(u"-t", u"--theme", action=u"store", dest=u"_theme", \
+		group.add_option(u"-c", u"--config", action=u"store", dest=u"_config",
+			help=\
+			u"Set a configuration option, e.g, '--config auto_update_check=False;scintilla_font_size=10'. For a complete list of configuration options, please refer to the source of config.py.")
+		group.add_option(u"-t", u"--theme", action=u"store", dest=u"_theme",
 			help=u"Specify a GUI theme")
-		group.add_option(u"-d", u"--debug", action=u"store_true", dest= \
-			u"debug", help= \
+		group.add_option(u"-d", u"--debug", action=u"store_true",
+			dest=u"debug", help= \
 			u"Print lots of debugging messages to the standard output")
-		group.add_option(u"--start-clean", action=u"store_true", dest= \
-			u"start_clean", help= \
+		group.add_option(u"--start-clean", action=u"store_true",
+			dest=u"start_clean", help=\
 			u"Do not load configuration and do not restore window geometry")
-		group.add_option(u"-s", u"--stack", action=u"store_true", dest= \
-			u"_stack", help=u"Print stack trace (only in debug mode)")
-		group.add_option(u"-p", u"--preload", action=u"store_true", dest= \
-			u"preload", help=u"Preload Python modules")
-		group.add_option(u"--pylink", action=u"store_true", dest=u"pylink", \
+		group.add_option(u"-p", u"--preload", action=u"store_true",
+			dest=u"preload", help=u"Preload Python modules")
+		group.add_option(u"--pylink", action=u"store_true", dest=u"pylink",
 			help=u"Load PyLink before PyGame (necessary for using the Eyelink plug-ins in non-dummy mode)")
-		group.add_option(u"--ipython", action=u"store_true", dest=u"ipython", \
-			help=u"Enable the IPython interpreter")
-		group.add_option(u"--locale", action=u"store_true", dest=u"locale", \
+		group.add_option(u"--locale", action=u"store_true", dest=u"locale",
 			help=u"Specify localization")
-		group.add_option(u"--catch-translatables", action=u"store_true", \
+		group.add_option(u"--catch-translatables", action=u"store_true",
 			dest=u"catch_translatables", help=u"Log all translatable text")
-		group.add_option(u"--no-global-resources", action=u"store_true", dest= \
-			u"no_global_resources", help= \
-			u"Do not use global resources on *nix")
+		group.add_option(u"--no-global-resources", action=u"store_true",
+			dest=u"no_global_resources",
+			help=u"Do not use global resources on *nix")
+		group.add_option(u'-w', u"--warnings", action=u"store_true",
+			dest=u"warnings", help=u"Show elaborate warnings")
 		parser.add_option_group(group)
 		self.options, args = parser.parse_args(sys.argv)
-		if self.options.run and self.options.run_in_window:
-			parser.error( \
-				u"Options -r / --run and -w / --run-in-window are mutually exclusive.")
+
+	def set_warnings(self):
+
+		"""
+		desc:
+			Sets a custom warning function, if specified on the command line.
+		"""
+
+		if '-w' not in sys.argv and '--warnings' not in sys.argv:
+			return
+		warnings.simplefilter(u'always')
+		import traceback
+		def warn_with_traceback(message, category, filename, lineno, line=None):
+			print(u'***startwarning***')
+			traceback.print_stack()
+			print
+			print(warnings.formatwarning(message, category, filename, lineno,
+				line))
+			print(u'***endwarning***')
+		warnings.showwarning = warn_with_traceback
 
 	def restore_config(self):
 

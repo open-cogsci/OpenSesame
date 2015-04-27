@@ -64,17 +64,6 @@ if __name__ == u'__main__':
 
 	# Load debug package (this must be after the working directory change)
 	from libopensesame import debug
-	# The IPython modules must be loaded before PyQt4
-	if "--ipython" in sys.argv:
-		try:
-			from IPython.frontend.qt.console.ipython_widget import \
-				IPythonWidget
-			debug.msg(u'IPython loaded')
-		except:
-			sys.argv.remove(u'--ipython')
-			debug.msg( \
-				u'Failed to load IPython. Is IPython QtConsole installed?', \
-				reason=u'warning')
 	# Do the basic window initialization
 	from PyQt4.QtGui import QApplication
 	app = QApplication(sys.argv)
@@ -111,14 +100,8 @@ if __name__ == u'__main__':
 		opensesame.open_file(path=sys.argv[1])
 	else:
 		start_new_tab = True
-	# Run the app (the startup method depends on command line parameters)
-	if opensesame.options.run:
-		opensesame.run_experiment()
-	elif opensesame.options.run_in_window:
-		opensesame.run_experiment(False)
-	else:
-		if start_new_tab:
-			opensesame.ui.tabwidget.open_start_new(start=True)
+	if start_new_tab:
+		opensesame.ui.tabwidget.open_start_new(start=True)
 	opensesame.restore_window_state()
 	opensesame.refresh()
 	opensesame.show()
