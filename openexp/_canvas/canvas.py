@@ -713,7 +713,7 @@ class canvas(backend):
 
 		self.html_renderer.reset()
 		width, height = self.html_renderer.render(text, 0, 0, self,
-			max_width=max_width, html=self.html, bidi=self.bidi, dry_run=True)
+			max_width=max_width, dry_run=True)
 		return width, height
 
 	@configurable

@@ -93,8 +93,8 @@ class sketchpad(item, generic_response):
 
 		super(sketchpad, self).prepare()
 		generic_response.prepare(self)
-		self.canvas = canvas(self.experiment, fgcolor=self.var.foreground,
-			bgcolor=self.var.background, auto_prepare=False)
+		self.canvas = canvas(self.experiment, color=self.var.foreground,
+			background_color=self.var.background, auto_prepare=False)
 		for element in self.elements:
 			if element.is_shown():
 				element.draw()

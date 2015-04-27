@@ -78,8 +78,11 @@ class color(object):
 			type:	unicode
 		"""
 
-		if isinstance(colorspec, int):
+		try:
+			colorspec = int(colorspec)
 			return webcolors.rgb_to_hex((colorspec, colorspec, colorspec))
+		except:
+			pass
 		if isinstance(colorspec, tuple):
 			if len(colorspec) != 3:
 				raise osexception(

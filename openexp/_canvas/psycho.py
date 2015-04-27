@@ -150,15 +150,14 @@ class psycho(canvas.canvas, psycho_coordinates):
 	@configurable
 	def line(self, sx, sy, ex, ey):
 
-		self.shapestim( [[sx, sy], [ex, ey]], color=self.color.backend_color,
-			penwidth=self.penwidth)
+		self.shapestim( [[sx, sy], [ex, ey]])
 
 	@configurable
 	def rect(self, x, y, w, h):
 
 		if not self.fill:
 			self.shapestim( [[x, y], [x+w, y], [x+w, y+h], [x, y+h]],
-				self.color.backend_color, close=True, penwidth=self.penwidth)
+				close=True)
 		else:
 			pos = self.to_xy(x+w/2, y+h/2)
 			stim = visual.GratingStim(win=self.experiment.window, pos=pos,
@@ -177,8 +176,8 @@ class psycho(canvas.canvas, psycho_coordinates):
 		if not self.fill:
 			stim = visual.GratingStim(win=self.experiment.window,
 				mask=u'circle', pos=pos, size=[w-2*self.penwidth,
-				h-2*self.penwidth], color=self.self.bgcolor, tex=None,
-				interpolate=True)
+				h-2*self.penwidth], color=self.background_color.backend_color,
+				tex=None, interpolate=True)
 			self.stim_list.append(stim)
 
 	@configurable
@@ -296,8 +295,7 @@ class psycho(canvas.canvas, psycho_coordinates):
 			_size = size
 		return	(_env, _size, s)
 
-	def shapestim(self, vertices, color=None, fill=False, fix_coor=True,
-		close=False, penwidth=None):
+	def shapestim(self, vertices, fix_coor=True, close=False):
 
 		"""
 		desc:
@@ -314,29 +312,25 @@ class psycho(canvas.canvas, psycho_coordinates):
 						vertices of the shape
 
 		keywords:
-			color:		The color of the shape.
-			fill:		A boolean indicating wether the shape should be filled.
 			fix_coor:	A boolean indicating whether the vertices are in
 						OpenSesame or PsychoPy format.
-			penwidth:	The penwidth.
+			close:		Indicates whether the shape should be closed.
 		"""
 
 		if fix_coor:
 			_vertices = [self.to_xy(xy) for xy in vertices]
 		else:
 			_vertices = vertices
-
-		if color is None:
-			color = self.fgcolor
 		if fill:
-			fill = color
+			fill = self.color.backend_color
 		else:
 			fill = None
 		if penwidth is None:
 			penwidth = self.penwidth
-		stim = visual.ShapeStim(self.experiment.window, units="pix",
-			lineWidth=penwidth, vertices=_vertices, lineColor=color,
-			closeShape=close, fillColor=fill, interpolate=False)
+		stim = visual.ShapeStim(self.experiment.window, units=u"pix",
+			lineWidth=self.penwidth, vertices=_vertices,
+			lineColor=self.color.backend_color, closeShape=close,
+			fillColor=fill, interpolate=False)
 		self.stim_list.append(stim)
 
 	@staticmethod

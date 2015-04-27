@@ -287,8 +287,8 @@ class generic_response:
 		if self.experiment.auto_response:
 			self._duration_func = self.auto_responder
 		else:
-			self._keyboard.set_timeout(self._timeout)
-			self._keyboard.set_keylist(self._allowed_responses)
+			self._keyboard.set_config(timeout=self._timeout,
+				keylist=self._allowed_responses)
 			self._duration_func = self._keyboard.get_key
 
 	def prepare_duration_mouseclick(self):
@@ -300,8 +300,8 @@ class generic_response:
 			self._duration_func = self.auto_responder_mouse
 		else:
 			# Prepare mouseclick
-			self._mouse.set_timeout(self._timeout)
-			self._mouse.set_buttonlist(self._allowed_responses)
+			self._mouse.set_config(timeout=self._timeout,
+				buttonlist=self._allowed_responses)
 			self._duration_func = self._mouse.get_click
 
 	def prepare(self):

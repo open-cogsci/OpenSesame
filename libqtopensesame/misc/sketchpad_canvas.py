@@ -20,6 +20,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 from libopensesame.py3compat import *
 import os
 import math
+from openexp._color.color import color
 from libqtopensesame.misc import drag_and_drop
 from libqtopensesame.misc import _
 from libqtopensesame.misc.config import cfg
@@ -404,7 +405,7 @@ class sketchpad_canvas(QtGui.QGraphicsScene):
 			y -= r.height()/2
 		return QtCore.QPoint(x, y)
 
-	def _color(self, color):
+	def _color(self, _color):
 
 		"""
 		desc:
@@ -414,12 +415,14 @@ class sketchpad_canvas(QtGui.QGraphicsScene):
 			A QColor object.
 		"""
 
-		if self.is_var(color):
+		try:
+			hexcolor = color(self.sketchpad.experiment, _color).hexcolor
+		except:
 			self.notify(
 				_(u'Color "%s" is unknown or variably defined, using placeholder color') \
-				% color)
+				% _color)
 			return QtGui.QColor(self.placeholder_color)
-		return QtGui.QColor(color)
+		return QtGui.QColor(hexcolor)
 
 	def _x(self, x):
 
@@ -548,7 +551,8 @@ class sketchpad_canvas(QtGui.QGraphicsScene):
 		yc = int(self.ycenter())
 		w = 2*xc
 		h = 2*yc
-		painter.fillRect(QtCore.QRect(-xc, -yc, w, h), self._color(self.bgcolor))
+		painter.fillRect(QtCore.QRect(-xc, -yc, w, h), self._color(
+			self.background_color))
 		painter.setPen(self._pen(cfg.sketchpad_grid_color,
 			cfg.sketchpad_grid_thickness_thin, cfg.sketchpad_grid_opacity))
 		painter.drawRect(QtCore.QRect(-xc, -yc, w, h))
@@ -576,7 +580,7 @@ class sketchpad_canvas(QtGui.QGraphicsScene):
 		super(sketchpad_canvas, self).clear()
 		self.notifications = []
 		self.elements = []
-		self.set_bgcolor(self.sketchpad.var.get(u'background'))
+		self.background_color = self.sketchpad.var.background
 
 	def xcenter(self):
 
@@ -589,13 +593,6 @@ class sketchpad_canvas(QtGui.QGraphicsScene):
 		"""Mimicks canvas api. See openexp._canvas.canvas."""
 
 		return self.sketchpad.var.get(u'height') // 2
-
-
-	def set_bgcolor(self, color):
-
-		"""Mimicks canvas api. See openexp._canvas.canvas."""
-
-		self.bgcolor = color
 
 	def set_font(self, style=None, size=None, italic=None, bold=None,
 		underline=None):
@@ -773,7 +770,7 @@ class sketchpad_canvas(QtGui.QGraphicsScene):
 				add=False)
 			group.addToGroup(i)
 			i = self.ellipse(x-h, y-h, 2*h, 2*h, fill=True,
-				color=self.bgcolor, add=False)
+				color=self.background_color, add=False)
 			group.addToGroup(i)
 		elif u'filled' in style:
 			i = self.ellipse(x-s, y-s, 2*s, 2*s, fill=True, color=color,

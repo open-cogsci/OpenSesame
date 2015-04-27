@@ -25,7 +25,7 @@ if py3:
 else:
 	from HTMLParser import HTMLParser
 from libopensesame import debug
-
+from libopensesame.exceptions import osexception
 try:
 	from bidi.algorithm import get_display as bidi_func
 except:
@@ -106,30 +106,41 @@ class html(HTMLParser):
 
 		if tag not in self.valid_start_tags:
 			return
-
 		if tag == u'br':
 			self.text.append(self.paragraph)
 			self.paragraph = []
 			return
-
 		self.current_tag = tag
-
 		if tag == u'span':
 			style = {}
 			for var, val in attrs:
+				if var == u'style':
+					var = u'font_family'
+				elif var == u'bold':
+					var = u'font_bold'
+				elif var == u'italic':
+					var = u'font_italic'
+				elif var == u'bold':
+					var = u'font_underline'
+				elif var == u'size':
+					var = u'font_size'
+					try:
+						val = int(val)
+					except:
+						raise osexception(u'Invalid font size: %s' % val)
 				style[str(var)] = val
 			self.push_style(**style)
 		elif tag == u'b':
-			self.push_style(bold=True)
+			self.push_style(font_bold=True)
 		elif tag == u'i':
-			self.push_style(italic=True)
+			self.push_style(font_italic=True)
 		elif tag == u'u':
-			self.push_style(underline=True)
+			self.push_style(font_underline=True)
 		else:
 			debug.msg(u'Unrecognized tag: %s' % tag)
 
-	def render(self, text, x, y, canvas, max_width=None, center=False, \
-		color=None, bidi=False, html=True, dry_run=False):
+	def render(self, text, x, y, canvas, max_width=None, center=False,
+		dry_run=False):
 
 		"""
 		Renders an HTML formatted string onto a canvas.
@@ -145,11 +156,6 @@ class html(HTMLParser):
 						occur, or None to wrap at screen edge. (default=None)
 		center 		--	Indicates whether the text should be center aligned.
 						(default=False)
-		color		--	Indicates the color of the text or None for canvas
-						default. (default=None)
-		bidi		--	Indicates whether bi-directional text support should be
-						enabled. (default=False)
-		html		--	Indicates whether HTML should be parsed. (default=True)
 		dry_run		--	Indicates whether a dry run should be performed, in
 						which case the size of the to-be-written text is
 						returned without modifying the canvas.
@@ -158,30 +164,17 @@ class html(HTMLParser):
 		None if dry_run is False, or a (width, height) tuple if dry_run is True.
 		"""
 
-		# Make sure that it's a string
-		text = canvas.experiment.unistr(text)
+		text = safe_decode(text)
 		debug.msg(text)
 		# Parse bi-directional strings
-		if bidi and bidi_func is not None:
+		if canvas.bidi and bidi_func is not None:
 			text = bidi_func(text)
 		# Convert line breaks to HTML break tags
 		text = text.replace(os.linesep, u'<br />').replace(u'\n', u'<br />')
 
 		# Initialize the style
 		self.canvas = canvas
-		self.default_style = {
-			u'style' : canvas.font_family,
-			u'bold' : canvas.font_bold,
-			u'italic' : canvas.font_italic,
-			u'color' : canvas.color,
-			u'size' : canvas.font_size,
-			u'underline' : canvas.font_underline
-			}
-		backup_style = self.default_style.copy()
-
-		# Optionally override color
-		if color is not None:
-			self.default_style[u'color'] = color
+		backup_cfg = canvas.get_config()
 
 		# Set the maximum width
 		if max_width is None:
@@ -200,7 +193,7 @@ class html(HTMLParser):
 		self.push_style()
 
 		# Optionally parse HTML
-		if html:
+		if self.canvas.html:
 			self.feed(text)
 		else:
 			self.handle_data(text)
@@ -219,12 +212,7 @@ class html(HTMLParser):
 				width = 0
 				dy = canvas._text_size(u'dummy')[1]
 				for word, style in paragraph:
-
-					# Set the style
-					canvas.set_font(style[u'style'], int(style[u'size']), \
-						bold=style[u'bold'], italic=style[u'italic'], \
-						underline=style[u'underline'])
-
+					canvas.set_config(**style)
 					# Line wrap if we run out of the screen
 					dx, dy = canvas._text_size(word)
 					if _x+dx > max_x + (max_x-x):
@@ -256,13 +244,7 @@ class html(HTMLParser):
 					_x = x
 				dy = canvas._text_size(u'dummy')[1]
 				for word, style in paragraph:
-
-					# Set the style
-					canvas.set_font(style[u'style'], int(style[u'size']), \
-						bold=style[u'bold'], italic=style[u'italic'], underline= \
-						style[u'underline'])
-					canvas.set_fgcolor(style[u'color'])
-
+					canvas.set_config(**style)
 					# Line wrap if we run out of the screen
 					dx, dy = canvas._text_size(word)
 					if _x+dx > max_x:
@@ -280,9 +262,7 @@ class html(HTMLParser):
 				_y += dy
 
 		# Restore the canvas font and colors
-		canvas.set_fgcolor(backup_style[u'color'])
-		canvas.set_font(backup_style[u'style'], int(backup_style[u'size']), \
-			bold=backup_style[u'bold'], italic=backup_style[u'italic'])
+		canvas.set_config(**backup_cfg)
 		if dry_run:
 			return max_width, height
 
@@ -304,7 +284,7 @@ class html(HTMLParser):
 		"""
 
 		if len(self.style_stack) == 0:
-			current_style = self.default_style.copy()
+			current_style = self.canvas.get_config()
 		else:
 			current_style = self.style_stack[-1].copy()
 		for tag, val in keywords.items():
