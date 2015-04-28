@@ -328,6 +328,7 @@ class experiment(item.item):
 		self.init_clock()
 		self.init_sound()
 		self.init_log()
+		self.python_workspace.init_globals()
 		self.reset_feedback()
 
 		print(u"experiment.run(): experiment started at %s" % time.ctime())

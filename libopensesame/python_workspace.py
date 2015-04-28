@@ -51,15 +51,25 @@ class python_workspace(object):
 
 		self.experiment = experiment
 		api.experiment = experiment
+		self._globals = {}
+
+	def init_globals(self):
+
+		"""
+		desc:
+			Initialize the global workspace.
+		"""
+
 		# By setting the __name__ global, the workspace will operate as a
 		# module, so that e.g. import statements don't suffer from locality.
-		self._globals = {
+		self._globals.update({
 			u'__name__'		: u'python_workspace',
 			u'exp'			: self.experiment,
 			u'var'			: self.experiment.var,
 			u'pool'			: self.experiment.pool,
 			u'items'		: self.experiment.items,
-			}
+			u'clock'		: self.experiment._clock
+			})
 		# All functions from the api modules are also loaded into the globals.
 		# This way they can be called directly by name.
 		for name, item in api.__dict__.items():
