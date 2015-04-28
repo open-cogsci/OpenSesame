@@ -85,7 +85,7 @@ class psycho(keyboard.keyboard):
 			for key, time in keys:
 				time *= 1000.0
 				if key == u"escape":
-					raise osexception(u"The escape key was pressed.")
+					self.experiment.pause()
 				if keylist is None or key in keylist:
 					return key, time
 			if timeout is not None and time-start_time >= timeout:
@@ -139,6 +139,6 @@ class psycho(keyboard.keyboard):
 		keypressed = False
 		for key in event.getKeys():
 			if key == u"escape":
-				raise osexception(u"The escape key was pressed.")
+				self.experiment.pause()
 			keypressed = True
 		return keypressed

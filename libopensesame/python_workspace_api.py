@@ -252,3 +252,12 @@ def set_subject_nr(nr):
 	"""
 
 	experiment.set_subject(nr)
+
+def pause():
+
+	"""
+	desc:
+		Pauses the experiment.
+	"""
+
+	experiment.pause()

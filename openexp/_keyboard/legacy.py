@@ -77,7 +77,7 @@ class legacy(keyboard.keyboard):
 				if event.type != pygame.KEYDOWN:
 					continue
 				if event.key == pygame.K_ESCAPE:
-					raise osexception(u'The escape key was pressed.')
+					self.experiment.pause()
 				if event.unicode in invalid_unicode:
 					key = self.key_name(event.key)
 				else:
@@ -121,8 +121,7 @@ class legacy(keyboard.keyboard):
 			if event.type == KEYDOWN:
 				keypressed = True
 				if event.key == pygame.K_ESCAPE:
-					raise osexception( \
-						u"The escape key was pressed.")
+					self.experiment.paused()
 		return keypressed
 
 	def key_name(self, key):

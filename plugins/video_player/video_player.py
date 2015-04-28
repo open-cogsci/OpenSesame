@@ -129,7 +129,7 @@ class video_player(item.item):
 			for event in pygame.event.get():
 				if event.type == KEYDOWN:
 					if event.key == pygame.K_ESCAPE:
-						raise osexception(u"The escape key was pressed.")
+						self.experiment.pause()
 					if self.var.get(u'duration') == u"keypress":
 						go = False
 				if event.type == MOUSEBUTTONDOWN and self.var.get(u'duration') == \

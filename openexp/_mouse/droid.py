@@ -53,7 +53,7 @@ class droid(legacy.legacy):
 			# Process the input
 			for event in pygame.event.get():
 				if event.type == KEYDOWN and event.key == pygame.K_ESCAPE:
-					raise osexception(u"The escape key was pressed.")
+					self.experiment.pause()
 				if event.type == MOUSEBUTTONDOWN:
 					# Check escape sequence. If the top-left and top-right
 					# corner are clicked successively within 2000ms, the

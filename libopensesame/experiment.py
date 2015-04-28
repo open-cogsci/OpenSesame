@@ -111,6 +111,7 @@ class experiment(item.item):
 		self.cleanup_functions = []
 		self.restart = False
 		self.resources = resources
+		self.paused = False
 
 		# Set default variables
 		self.var.start = u'experiment'
@@ -354,12 +355,15 @@ class experiment(item.item):
 			channel.
 		"""
 
+		if not hasattr(self, u'output_channel'):
+			raise osexception(
+				u'The experiment was aborted')
+		if self.paused:
+			return
+		self.paused = True
 		from openexp.canvas import canvas
 		from openexp.keyboard import keyboard
 		import pickle
-		if not hasattr(self, u'output_channel'):
-			debug.msg(u'Cannot pause, because there is no output channel.')
-			return
 		d = self.python_workspace._globals.copy()
 		for key, value in d.items():
 			try:
@@ -370,12 +374,17 @@ class experiment(item.item):
 		self.output_channel.put(d)
 		pause_canvas = canvas(self)
 		pause_canvas.text(
-			u'The experiment has been paused.<br />Press spacebar to resume...')
-		pause_keyboard = keyboard(self, keylist=[u'space'])
+			u'The experiment has been paused<br /><br />'
+			u'Press spacebar to resume<br />'
+			u'Press Q to quit')
+		pause_keyboard = keyboard(self, keylist=[u'space', u'q'])
 		pause_canvas.show()
 		try:
-			pause_keyboard.get_key()
+			key, time = pause_keyboard.get_key()
+			if key == u'q':
+				raise osexception(u'The experiment was aborted')
 		finally:
+			self.paused = False
 			self.output_channel.put({'__pause__' : False})
 
 	def cleanup(self):

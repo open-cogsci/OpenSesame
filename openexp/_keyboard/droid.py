@@ -53,7 +53,7 @@ class droid(legacy):
 				if event.type != pygame.KEYDOWN:
 					continue
 				if event.key == pygame.K_ESCAPE:
-					raise osexception("The escape key was pressed.")
+					self.experiment.pause()
 				# TODO The unicode mechanism that ensures compatibility between
 				# keyboard layouts doesn't work for Android, so we use key
 				# names. I'm not sure what effect this will have on non-QWERTY

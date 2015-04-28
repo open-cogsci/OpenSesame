@@ -60,7 +60,7 @@ class legacy(basejoystick):
 			for event in pygame.event.get():
 				if event.type == KEYDOWN:
 					if event.key == pygame.K_ESCAPE:
-						raise osexception(u"The escape key was pressed.")
+						self.experiment.pause()
 				if event.type == JOYBUTTONDOWN:
 					if joybuttonlist is None or event.button + 1 in \
 						joybuttonlist:
@@ -85,7 +85,7 @@ class legacy(basejoystick):
 			for event in pygame.event.get():
 				if event.type == KEYDOWN:
 					if event.key == pygame.K_ESCAPE:
-						raise osexception(u"The escape key was pressed.")
+						self.experiment.pause()
 				if event.type == JOYAXISMOTION:
 					for axis in range(self.js.get_numaxes()):
 						pos.append(self.js.get_axis(axis))
@@ -109,7 +109,7 @@ class legacy(basejoystick):
 			for event in pygame.event.get():
 				if event.type == KEYDOWN:
 					if event.key == pygame.K_ESCAPE:
-						raise osexception(u"The escape key was pressed.")
+						self.experiment.pause()
 				if event.type == JOYBALLMOTION:
 					for ball in range(self.js.get_numballs()):
 						ballpos.append(self.js.get_ball(ball))
@@ -133,7 +133,7 @@ class legacy(basejoystick):
 			for event in pygame.event.get():
 				if event.type == KEYDOWN:
 					if event.key == pygame.K_ESCAPE:
-						raise osexception(u"The escape key was pressed.")
+						self.experiment.pause()
 				if event.type == JOYHATMOTION:
 					for hat in range(self.js.get_numhats()):
 						hatpos.append(self.js.get_hat(hat))
@@ -162,7 +162,7 @@ class legacy(basejoystick):
 			for event in pygame.event.get():
 				if event.type == KEYDOWN:
 					if event.key == pygame.K_ESCAPE:
-						raise osexception(u"The escape key was pressed.")
+						self.experiment.pause()
 				if event.type == JOYBUTTONDOWN:
 					if joybuttonlist is None or event.button + 1 in \
 						joybuttonlist:
@@ -202,7 +202,7 @@ class legacy(basejoystick):
 		joyinput = False
 		for event in pygame.event.get():
 			if event.type == KEYDOWN and event.key == pygame.K_ESCAPE:
-				raise osexception(u"The escape key was pressed.")
+				self.experiment.pause()
 			if event.type == JOYBUTTONDOWN or event.type == JOYAXISMOTION or \
 				event.type == JOYBALLMOTION or event.type == JOYHATMOTION:
 				joyinput = True

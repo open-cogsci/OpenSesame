@@ -88,7 +88,7 @@ class legacy(mouse.mouse, legacy_coordinates):
 			# Process the input
 			for event in pygame.event.get():
 				if event.type == KEYDOWN and event.key == pygame.K_ESCAPE:
-					raise osexception(u"The escape key was pressed.")
+					self.experiment.pause()
 				if event.type == MOUSEBUTTONDOWN:
 
 					# Check escape sequence. If the top-left and top-right
@@ -131,7 +131,7 @@ class legacy(mouse.mouse, legacy_coordinates):
 		buttonclicked = False
 		for event in pygame.event.get():
 			if event.type == KEYDOWN and event.key == pygame.K_ESCAPE:
-				raise osexception(u"The escape key was pressed.")
+				self.experiment.pause()
 			if event.type == MOUSEBUTTONDOWN:
 				buttonclicked = True
 		return buttonclicked
