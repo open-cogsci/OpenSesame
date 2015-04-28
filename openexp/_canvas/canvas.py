@@ -754,8 +754,7 @@ class canvas(backend):
 			my_canvas.text('Some text with <b>boldface</b> and <i>italics</i>')
 		"""
 
-		if x is None: x = 0
-		if y is None: y = 0
+		x, y = self.none_to_center(x, y)
 		self.html_renderer.reset()
 		self.html_renderer.render(text, x, y, self, max_width=max_width,
 			center=center)

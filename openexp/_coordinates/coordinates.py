@@ -38,6 +38,37 @@ class coordinates(object):
 		self._xcenter = self._width/2
 		self._ycenter = self._height/2
 
+	def none_to_center(self, x, y):
+
+		"""
+		desc:
+			Interpretes None coordinates as the display center.
+
+		arguments:
+			x:
+				desc:	An X coordinate.
+				type:	[int, float, NoneType]
+			y:
+				desc:	A Y coordinate.
+				type:	[int, float, NoneType]
+
+		returns:
+			desc:	An (x, y) coordinate tuple.
+			type:	tuple
+		"""
+
+		if x is None:
+			if not self.uniform_coordinates:
+				x = self._xcenter
+			else:
+				x = 0
+		if y is None:
+			if not self.uniform_coordinates:
+				y = self._ycenter
+			else:
+				y = 0
+		return x, y
+
 	def to_xy(self, x, y=None, dev=u'canvas'):
 
 		"""
@@ -74,13 +105,12 @@ class coordinates(object):
 		"""
 		desc:
 			Converts coordinates from the back-end specific reference frame to
-			the OpenSesame reference frame. `None` values are taken as the
-			display center.
+			the OpenSesame reference frame.
 
 		arguments:
 			x:
 				desc:	An x coordinate, or an (x,y) tuple.
-				type:	[float, int, NoneType, tuple]
+				type:	[float, int, tuple]
 
 		keywords:
 			y:

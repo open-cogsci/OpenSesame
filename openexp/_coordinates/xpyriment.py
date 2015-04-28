@@ -37,8 +37,9 @@ class xpyriment(coordinates):
 
 	def to_xy(self, x, y=None, dev=u'canvas'):
 
-		if y is None:
+		if isinstance(x, tuple):
 			x, y = x
+		x, y = self.none_to_center(x, y)
 		if dev == u'canvas':
 			# For expyriment, 0,0 is the display center and positive y
 			# coordinates are down.
@@ -56,7 +57,7 @@ class xpyriment(coordinates):
 
 	def from_xy(self, x, y=None, dev=u'canvas'):
 
-		if y is None:
+		if isinstance(x, tuple):
 			x, y = x
 		if dev != u'mouse':
 			raise osexception(u'Invalid device: %s' % dev)

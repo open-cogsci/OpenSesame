@@ -30,8 +30,9 @@ class psycho(coordinates):
 
 	def to_xy(self, x, y=None, dev=u'canvas'):
 
-		if y is None:
+		if isinstance(x, tuple):
 			x, y = x
+		x, y = self.none_to_center(x, y)
 		# For PsychoPy, 0,0 is the display center and positive y
 		# coordinates are down.
 		if self.uniform_coordinates:

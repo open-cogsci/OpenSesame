@@ -30,15 +30,16 @@ class legacy(coordinates):
 
 	def to_xy(self, x, y=None, dev=u'canvas'):
 
-		if y is None:
+		if isinstance(x, tuple):
 			x, y = x
+		x, y = self.none_to_center(x, y)
 		if not self.uniform_coordinates:
 			return x, y
 		return x + self._xcenter, y + self._ycenter
 
 	def from_xy(self, x, y=None, dev=u'canvas'):
 
-		if y is None:
+		if isinstance(x, tuple):
 			x, y = x
 		if not self.uniform_coordinates:
 			return x, y
