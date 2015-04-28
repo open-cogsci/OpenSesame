@@ -41,7 +41,6 @@ class legacy(keyboard.keyboard):
 
 	def __init__(self, experiment, **resp_args):
 
-		keyboard.keyboard.__init__(self, experiment, **resp_args)
 		pygame.init()
 		self.key_code_to_name = {}
 		self.key_name_to_code = {}
@@ -63,6 +62,7 @@ class legacy(keyboard.keyboard):
 				self.key_name_to_code[name3] = code
 				self.key_name_to_code[name4] = code
 		self.persistent_virtual_keyboard = False
+		keyboard.keyboard.__init__(self, experiment, **resp_args)
 
 	@configurable
 	def get_key(self):
