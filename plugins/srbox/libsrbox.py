@@ -112,7 +112,7 @@ class libsrbox:
 			if os.name == "nt":
 				for i in range(255):
 					try:
-						dev = "COM%d" % i
+						dev = "COM%d" % (i+1) #as COM ports start from 1 on Windows
 						self._srbox = serial.Serial(dev, timeout=0, \
 							baudrate=19200)
 						break
