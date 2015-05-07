@@ -141,7 +141,7 @@ class libsrbox:
 		debug.msg("using device %s" % dev)
 		# Turn off all lights
 		if self._srbox != None:
-			self._srbox.write('\x64')
+			self._srbox.write('\x00')
 
 	def send(self, ch):
 
