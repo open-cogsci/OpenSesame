@@ -690,7 +690,7 @@ class qtopensesame(QtGui.QMainWindow, base_component):
 			self.current_path = None
 		self.set_auto_response()
 		self.set_unsaved(False)
-		self.refresh_pool()
+		self.ui.pool_widget.refresh()
 		self.refresh_variable_inspector()
 		self.extension_manager.fire(u'open_experiment', path=path)
 		self.set_status(u"Opened %s" % path)
@@ -945,7 +945,7 @@ class qtopensesame(QtGui.QMainWindow, base_component):
 
 			# Multiprocessing dus not work if opensesame is packaged as an app
 			# under OSX. For now just display a warning message and do nothing
-			# For the same reason, inOSX the default runner is set to inprocess 
+			# For the same reason, inOSX the default runner is set to inprocess
 			# for now in misc.config
 			if sys.platform == "darwin" and getattr(sys, 'frozen', None):
 				self.experiment.notify(u"Multiprocessing does not work in the OSX app version yet. \
