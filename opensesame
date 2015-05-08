@@ -31,7 +31,7 @@ if __name__ == u'__main__':
 	# version has been released as the 'billiard' module
 	if platform.system() == 'Darwin':
 		from billiard import freeze_support, forking_enable
-		forking_enable(0)		
+		forking_enable(0)
 	else:
 		from multiprocessing import freeze_support
 	freeze_support()
@@ -51,12 +51,12 @@ if __name__ == u'__main__':
 			os.chdir(path)
 			if path not in sys.path:
 				sys.path.append(path)
-		
-	# Register PyQt4 plugin folder		
+
+	# Register PyQt4 plugin folder
 	from PyQt4.QtCore import QCoreApplication
 	if os.path.exists(u'PyQt4_plugins'):
 		QCoreApplication.addLibraryPath(u'PyQt4_plugins')
-			
+
 	# Load debug package (this must be after the working directory change)
 	from libopensesame import debug
 	# The IPython modules must be loaded before PyQt4
@@ -75,35 +75,38 @@ if __name__ == u'__main__':
 	app = QApplication(sys.argv)
 	from libqtopensesame.qtopensesame import qtopensesame
 	opensesame = qtopensesame(app)
-	app.processEvents()	
+	app.processEvents()
 	# Import the remaining modules
-	from PyQt4.QtCore import SIGNAL, QObject, QLocale, QTranslator	
-	from libopensesame.misc import resource
-	import os.path	
+	from PyQt4.QtCore import SIGNAL, QObject, QLocale, QTranslator
+	from libopensesame import misc
+	import os.path
 	# Load the locale for UI translation. The locale can be specified on the
 	# command line using the --locale parameter
 	locale = unicode(QLocale().system().name())
 	for i in range(len(sys.argv)-1):
 		if sys.argv[i] == '--locale':
 			locale = sys.argv[i+1]
-	qm = resource(os.path.join(u'locale', locale) + u'.qm')
+	qm = misc.resource(os.path.join(u'locale', locale) + u'.qm')
 	if qm != None:
 		debug.msg(u'installing %s translator' % qm)
 		translator = QTranslator()
 		translator.load(qm)
 		app.installTranslator(translator)
 	else:
-		debug.msg(u'no translator found for %s' % locale)	
+		debug.msg(u'no translator found for %s' % locale)
 	# Now that the window is shown, load the remaining modules and resume the
 	# GUI initialization.
 	opensesame.resume_init()
-	QObject.connect(app, SIGNAL(u'quit()'), opensesame.close)	
+	QObject.connect(app, SIGNAL(u'quit()'), opensesame.close)
 	# Open an experiment if it has been specified as a command line argument
 	# and suppress the new wizard in that case.
 	import os.path
 	if len(sys.argv) >= 2 and os.path.isfile(sys.argv[1]):
 		start_new_tab = False
-		opensesame.open_file(path=sys.argv[1])
+		path = sys.argv[1]
+		path = path.decode(misc.filesystem_encoding(), errors=u'ignore')
+		print(path)
+		opensesame.open_file(path=path)
 	else:
 		start_new_tab = True
 	# Run the app (the startup method depends on command line parameters)
@@ -118,7 +121,6 @@ if __name__ == u'__main__':
 	opensesame.refresh()
 	opensesame.show()
 	# Added for OS X, otherwise Window will not appear
-	opensesame.raise_()	
+	opensesame.raise_()
 	# Exit using the application exit status
 	sys.exit(app.exec_())
-

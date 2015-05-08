@@ -72,22 +72,28 @@ if __name__ == u"__main__":
 		if not myapp.run:
 			sys.exit()
 
+	# Decode the experiment path and logfile
+	experiment = os.path.abspath(options.experiment)
+	if isinstance(experiment, str):
+		experiment = experiment.decode(libopensesame.misc.filesystem_encoding(),
+			errors=u'ignore')
+	experiment_path = os.path.dirname(experiment)
+	logfile = options.logfile
+	if isinstance(logfile, str):
+		logfile = logfile.decode(libopensesame.misc.filesystem_encoding(),
+			errors=u'ignore')
+		print(logfile)
+
 	if options.debug:
 		# In debug mode, don't try to catch any exceptions
 		exp = libopensesame.experiment.experiment(u"Experiment",
-			options.experiment)
+			experiment, experiment_path=experiment_path)
 		exp.set_subject(options.subject)
 		exp.fullscreen = options.fullscreen
-		exp.logfile = options.logfile
+		exp.logfile = logfile
 		exp.run()
 		exp.end()
 	else:
-		# Try to parse the experiment from a file
-		experiment = os.path.abspath(options.experiment)
-		if isinstance(experiment, str):
-			experiment = experiment.decode(
-				libopensesame.misc.filesystem_encoding())
-		experiment_path = os.path.dirname(experiment)
 		try:
 			exp = libopensesame.experiment.experiment(u"Experiment",
 				experiment, experiment_path=experiment_path)
@@ -98,7 +104,7 @@ if __name__ == u"__main__":
 		# Set some options
 		exp.set_subject(options.subject)
 		exp.fullscreen = options.fullscreen
-		exp.logfile = options.logfile
+		exp.logfile = logfile
 		# Initialize random number generator
 		import random
 		random.seed()
