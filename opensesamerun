@@ -82,7 +82,6 @@ if __name__ == u"__main__":
 	if isinstance(logfile, str):
 		logfile = logfile.decode(libopensesame.misc.filesystem_encoding(),
 			errors=u'ignore')
-		print(logfile)
 
 	if options.debug:
 		# In debug mode, don't try to catch any exceptions

@@ -105,7 +105,6 @@ if __name__ == u'__main__':
 		start_new_tab = False
 		path = sys.argv[1]
 		path = path.decode(misc.filesystem_encoding(), errors=u'ignore')
-		print(path)
 		opensesame.open_file(path=path)
 	else:
 		start_new_tab = True
