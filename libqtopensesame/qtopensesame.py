@@ -209,6 +209,7 @@ class qtopensesame(QtGui.QMainWindow, base_component):
 		self.update_recent_files()
 		self.set_unsaved(False)
 		self.init_custom_fonts()
+		self.ui.variable_inspector.refresh()
 
 		# Initialize extensions
 		self.extension_manager = extension_manager(self)
@@ -691,7 +692,7 @@ class qtopensesame(QtGui.QMainWindow, base_component):
 		self.set_auto_response()
 		self.set_unsaved(False)
 		self.ui.pool_widget.refresh()
-		self.refresh_variable_inspector()
+		self.ui.variable_inspector.refresh()
 		self.extension_manager.fire(u'open_experiment', path=path)
 		self.set_status(u"Opened %s" % path)
 
