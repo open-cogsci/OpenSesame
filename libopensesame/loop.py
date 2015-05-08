@@ -51,6 +51,8 @@ class loop(item.item):
 		string 		--	An item definition string.
 		"""
 
+		self.variables = {}
+		self.comments = []
 		self.reset()
 		for i in string.split(u'\n'):
 			self.parse_variable(i)
@@ -205,4 +207,3 @@ class loop(item.item):
 		for var in var_list:
 			l.append( (var, u'[' + u', '.join(var_list[var]) + u']'))
 		return l
-

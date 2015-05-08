@@ -73,6 +73,8 @@ class sequence(item.item):
 		string 	--	A definition string.
 		"""
 
+		self.variables = {}
+		self.comments = []
 		self.reset()
 		for i in string.split(u'\n'):
 			self.parse_variable(i)
@@ -113,4 +115,3 @@ class sequence(item.item):
 		for _item, cond in self.items:
 			s += u'\trun %s "%s"\n' % (_item, cond)
 		return s
-

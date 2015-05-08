@@ -299,6 +299,8 @@ class experiment(item.item):
 		string	--	The definition string.
 		"""
 
+		self.variables = {}
+		self.comments = []
 		debug.msg(u"building experiment")
 		s = iter(string.split("\n"));
 		line = next(s, None)
