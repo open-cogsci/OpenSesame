@@ -76,7 +76,7 @@ class text_input(item.item, generic_response.generic_response):
 			self.experiment.start_response_interval = self.get("time_%s" % \
 				self.name)
 
-		self._keyboard = openexp.keyboard.keyboard(self.experiment)
+		self._keyboard = openexp.keyboard.keyboard(self.experiment, timeout = self.timeout)
 
 		# Create a canvas
 		c = openexp.canvas.canvas(self.experiment, self.get("background"), \
