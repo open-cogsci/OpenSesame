@@ -1,4 +1,4 @@
-opensesame (2.9.6~pre1-ubuntu1) utopic; urgency=medium
+opensesame (2.9.6~pre2-ubuntu1) vivid; urgency=medium
 
   * Improvements
     - Use the same default logfile in opensesamerun and opensesame
@@ -10,6 +10,7 @@ opensesame (2.9.6~pre1-ubuntu1) utopic; urgency=medium
     - Inform experiment of response variables in form_base plugin (#325) 
     - Refresh variable inspector on program start 
     - Clear variables and comments before parsing item-definition strings (#324) 
+    - Fix timeout issue in (deprecated) text_input plugin
 
  -- Sebastiaan Mathot <sebastiaan@mantis>  Fri, 24 Apr 2015 13:47:31 +0200
 
