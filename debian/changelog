@@ -4,6 +4,7 @@ opensesame (2.9.6~pre2-ubuntu1) vivid; urgency=medium
     - Use the same default logfile in opensesamerun and opensesame
     - srbox plug-in: turn off all lights on init
     - srbox plug-in: don't search (non-existent) COM0 on Windows
+    - Add visual drop indicator
   * Bugs fixed
     - Refresh file pool when opening experiment from command line (#320) 
     - Fix unicode bugs when launching opensesame and opensesamerun from command line (#323) 
