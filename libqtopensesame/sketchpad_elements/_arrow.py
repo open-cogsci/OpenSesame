@@ -20,6 +20,9 @@ along with openexp.  If not, see <http://www.gnu.org/licenses/>.
 from libqtopensesame.sketchpad_elements._base_line_arrow import base_line_arrow
 from libopensesame.sketchpad_elements import arrow as arrow_runtime
 
+
+
+
 class arrow(base_line_arrow, arrow_runtime):
 
 	"""
@@ -47,7 +50,9 @@ class arrow(base_line_arrow, arrow_runtime):
 				u'y2':		pos[1],
 				u'color': 	sketchpad.current_color(),
 				u'penwidth'	: sketchpad.current_penwidth(),
-				u'arrow_size'	: sketchpad.current_arrow_size(),
+				u'proportion'	: sketchpad.current_proportion(),
+				u'arrow_width'	: sketchpad.current_arrow_width(),
+				u'fill'		: sketchpad.current_fill(),
 				u'show_if'	: sketchpad.current_show_if()
 			}
 		e = arrow(sketchpad, properties=properties)
@@ -56,5 +61,14 @@ class arrow(base_line_arrow, arrow_runtime):
 		return e
 
 	@staticmethod
-	def requires_arrow_size():
+	def requires_arrow_width():
 		return True
+
+	@staticmethod
+	def requires_proportion():
+		return True
+
+	@staticmethod
+	def requires_fill():
+		return True
+

@@ -596,35 +596,43 @@ class canvas(object):
 
 		raise NotImplementedError()
 
-	def arrow(self, sx, sy, ex, ey, arrow_size=5, color=None, penwidth=None):
+
+	def arrow(self,sx,sy,ex,ey,proportion = 0.7, arrow_width = 30,color = None, 
+		fill= False, penwidth = None):
 
 		"""
 		desc:
-			Draws an arrow. An arrow is a line, with an arrowhead at (ex, ey).
-			The angle between the arrowhead lines and the arrow line is 45
-			degrees.
+			Draws an arrow. An arrow is a polygon consisting of 7 vertices,
+			with an arrowhead pointing at (ex, ey). 
 
 		arguments:
 			sx:
-				desc:	The left X coordinate.
+				desc:	The X coordinate of the arrow's base.
 				type:	int
 			sy:
-				desc:	The top Y coordinate.
+				desc:	The Y coordinate of the arrow's base.
 				type:	int
 			ex:
-				desc:	The right X coordinate.
+				desc:	The X coordinate of the arrow's tip.
 				type:	int
 			ey:
-				desc:	The bottom Y coordinate.
+				desc:	The Y coordinate of the arrow's tip..
 				type:	int
 
 		keywords:
-			arrow_size:
-				desc:	The length of the arrow-head lines in pixels.
-				type:	int
+			proportion:
+				desc:	Proportion of the arrow body length to the total arrow length
+				type:	float (0,1)
+			arrow_width:
+				desc:	The expansion of the arrow-head perpendicular to the pointing 
+						direction in pixels
+				type:	int (preferably even)
 			color:
 				desc:	"%arg_fgcolor"
 				type:	[str, unicode, NoneType]
+			fill:
+				desc:	"%arg_fill"
+				type:	[bool]				
 			penwidth:
 				desc:	"%arg_penwidth"
 				type:	int
@@ -634,17 +642,47 @@ class canvas(object):
 			my_canvas = canvas(exp)
 			w = self.get('width')/2
 			h = self.get('height')/2
-			my_canvas.arrow(0, 0, w, h, arrow_size=10)
+			my_canvas.arrow(0, 0, w, h, arrow_width=40,proportion = 0.8)
 		"""
 
-		self.line(sx, sy, ex, ey, color=color, penwidth=penwidth)
-		a = math.atan2(ey - sy, ex - sx)
-		_sx = ex + arrow_size * math.cos(a + math.radians(135))
-		_sy = ey + arrow_size * math.sin(a + math.radians(135))
-		self.line(_sx, _sy, ex, ey, color=color, penwidth=penwidth)
-		_sx = ex + arrow_size * math.cos(a + math.radians(225))
-		_sy = ey + arrow_size * math.sin(a + math.radians(225))
-		self.line(_sx, _sy, ex, ey, color=color, penwidth=penwidth)
+		# length 
+		d = math.sqrt((ey-sy)**2 + (sx-ex)**2)
+		# direction  
+		angle = math.atan2(ey-sy,ex-sx)
+
+
+		# calculate points between each of the vertices, according to this scheme
+		#    3	
+		#    |\
+		#    | \
+		# 1--2  \
+        # |      \
+		# 0	      4
+		# |		 /
+		# 7--6  /
+		#    | /
+		#    |/	
+		#    5
+		p0 = (sx,sy)
+		p4 = (ex,ey)
+
+		p1 = (sx + 0.25 * arrow_width * math.cos(angle - math.pi/2),\
+			sy + 0.25 * arrow_width * math.sin(angle - math.pi/2))
+
+		p2 = (p1[0] + proportion*math.cos(angle) * d, \
+		 	p1[1] + proportion * math.sin(angle) * d)
+		p3 = (p2[0] + 0.25 * arrow_width * math.cos(angle - math.pi/2), \
+			p2[1] + 0.25 * arrow_width * math.sin(angle - math.pi/2))
+		
+		p7 = (sx + 0.25 * arrow_width*math.cos(angle + math.pi/2), \
+			sy + 0.25 * arrow_width*math.sin(angle + math.pi/2))
+		p6 = (p7[0] + proportion * math.cos(angle) * d, \
+		 	p7[1] + proportion * math.sin(angle) * d)
+		p5 = (p6[0] + 0.25 * arrow_width * math.cos(angle + math.pi/2), \
+			p6[1] + 0.25 * arrow_width * math.sin(angle + math.pi/2))
+
+		self.polygon([p0,p1,p2,p3,p4,p5,p6,p7], color = color, fill = fill, penwidth = penwidth)
+
 
 	def rect(self, x, y, w, h, fill=False, color=None, penwidth=None):
 

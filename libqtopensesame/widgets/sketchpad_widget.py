@@ -60,6 +60,9 @@ class sketchpad_widget(base_widget):
 		self.ui.edit_color.textEdited.connect(self.apply_color)
 		self.ui.edit_show_if.editingFinished.connect(self.apply_show_if)
 		self.ui.spinbox_arrow_size.valueChanged.connect(self.apply_arrow_size)
+		self.ui.spinbox_proportion.valueChanged.connect(self.apply_proportion)
+		self.ui.spinbox_arrow_width.valueChanged.connect(self.apply_arrow_width)
+
 		self.ui.checkbox_center.toggled.connect(self.apply_center)
 		self.ui.checkbox_fill.toggled.connect(self.apply_fill)
 		self.ui.checkbox_html.toggled.connect(self.apply_html)
@@ -203,6 +206,28 @@ class sketchpad_widget(base_widget):
 		for element in self.sketchpad.selected_elements():
 			element.set_property(u'arrow_size', arrow_size)
 		self.draw()
+	
+	def apply_arrow_width(self, arrow_width):
+
+		"""
+		desc:
+			Applies changes to the arrow_size spinbox.
+		"""
+
+		for element in self.sketchpad.selected_elements():
+			element.set_property(u'arrow_width', arrow_width)
+		self.draw()
+
+	def apply_proportion(self, proportion):
+
+		"""
+		desc:
+			Applies changes to the arrow_size spinbox.
+		"""
+
+		for element in self.sketchpad.selected_elements():
+			element.set_property(u'proportion', proportion)
+		self.draw()
 
 	def show_element_settings(self, element):
 
@@ -231,6 +256,12 @@ class sketchpad_widget(base_widget):
 		if element.requires_arrow_size():
 			self.ui.spinbox_arrow_size.setValue(element.get_property(
 				u'arrow_size', _type=int))
+		if element.requires_arrow_width():
+			self.ui.spinbox_arrow_width.setValue(element.get_property(
+				u'arrow_width', _type=int))
+		if element.requires_proportion():
+			self.ui.spinbox_proportion.setValue(element.get_property(
+				u'proportion', _type=float))
 		if element.requires_scale():
 			self.ui.spinbox_scale.setValue(element.get_property(u'scale',
 				_type=float))
@@ -334,6 +365,8 @@ class sketchpad_widget(base_widget):
 		self.ui.widget_settings_color.setVisible(False)
 		self.ui.widget_settings_penwidth.setVisible(False)
 		self.ui.widget_settings_arrow_size.setVisible(False)
+		self.ui.widget_settings_arrow_width.setVisible(False)
+		self.ui.widget_settings_proportion.setVisible(False)
 		self.ui.widget_settings_scale.setVisible(False)
 		self.ui.widget_settings_fill.setVisible(False)
 		self.ui.widget_settings_center.setVisible(False)
@@ -379,6 +412,10 @@ class sketchpad_widget(base_widget):
 		self.ui.widget_settings_penwidth.setVisible(element.requires_penwidth())
 		self.ui.widget_settings_arrow_size.setVisible(
 			element.requires_arrow_size())
+		self.ui.widget_settings_arrow_width.setVisible(
+			element.requires_arrow_width())
+		self.ui.widget_settings_proportion.setVisible(
+			element.requires_proportion())
 		self.ui.widget_settings_scale.setVisible(element.requires_scale())
 		self.ui.widget_settings_fill.setVisible(element.requires_fill())
 		self.ui.widget_settings_center.setVisible(element.requires_center())
@@ -497,6 +534,26 @@ class sketchpad_widget(base_widget):
 		"""
 
 		return self.ui.spinbox_arrow_size.value()
+
+	def current_arrow_width(self):
+
+		"""
+		returns:
+			desc:	The current arrow size.
+			type:	int
+		"""
+
+		return self.ui.spinbox_arrow_width.value()
+
+	def current_proportion(self):
+
+		"""
+		returns:
+			desc:	The current arrow size.
+			type:	int
+		"""
+
+		return self.ui.spinbox_proportion.value()
 
 	def current_fill(self):
 

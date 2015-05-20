@@ -424,6 +424,32 @@ class base_element(object):
 		return False
 
 	@staticmethod
+	def requires_proportion():
+
+		"""
+		desc:
+			Indicates whether the element requires arrow-proportion settings.
+
+		returns:
+			type:	bool
+		"""
+
+		return False
+		
+	@staticmethod
+	def requires_arrow_width():
+
+		"""
+		desc:
+			Indicates whether the element requires arrow_width settings.
+
+		returns:
+			type:	bool
+		"""
+
+		return False
+
+	@staticmethod
 	def requires_scale():
 
 		"""
@@ -435,7 +461,6 @@ class base_element(object):
 		"""
 
 		return False
-
 	@staticmethod
 	def requires_fill():
 
