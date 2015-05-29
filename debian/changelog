@@ -1,4 +1,4 @@
-opensesame (2.9.6~pre3-ubuntu1) vivid; urgency=medium
+opensesame (2.9.6-ubuntu1) vivid; urgency=medium
 
   * Improvements
     - Use the same default logfile in opensesamerun and opensesame
@@ -6,11 +6,11 @@ opensesame (2.9.6~pre3-ubuntu1) vivid; urgency=medium
     - srbox plug-in: don't search (non-existent) COM0 on Windows
     - Add visual drop indicator
   * Bugs fixed
-    - Refresh file pool when opening experiment from command line (#320) 
-    - Fix unicode bugs when launching opensesame and opensesamerun from command line (#323) 
-    - Inform experiment of response variables in form_base plugin (#325) 
-    - Refresh variable inspector on program start 
-    - Clear variables and comments before parsing item-definition strings (#324) 
+    - Refresh file pool when opening experiment from command line (#320)
+    - Fix unicode bugs when launching opensesame and opensesamerun from command line (#323)
+    - Inform experiment of response variables in form_base plugin (#325)
+    - Refresh variable inspector on program start
+    - Clear variables and comments before parsing item-definition strings (#324)
     - Fix timeout issue in (deprecated) text_input plugin
     - Fix libsrbox example docstring
 
@@ -38,7 +38,7 @@ opensesame (2.9.5-ubuntu1) utopic; urgency=medium
   * Improvements
     - Explicitly notify of variable sequence preparation time
     - Add form template
-    - Add show_cursor option to touch_response plug-in 
+    - Add show_cursor option to touch_response plug-in
     - Ask for confirmation before replacing a loop's item to run
     - Show the number of unused items in the overview area
     - Warn when there are multiple unlinked loggers
