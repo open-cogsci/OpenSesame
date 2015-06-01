@@ -75,6 +75,11 @@ class item(object):
 
 		return self.experiment._clock
 
+	@property
+	def log(self):
+
+		return self.experiment._log
+
 	def reset(self):
 
 		"""
@@ -890,40 +895,10 @@ class item(object):
 
 		return self.clock.time()
 
-	def log(self, msg):
-
-		"""
-		desc:
-			Writes a message to the log file. Note that using the `log()`
-			function in combination with a logger item may result in messy log
-			files.
-
-		arguments:
-			msg:
-				desc:	A message. This can be any type and will we be converted
-						to a unicode string using the logic described in
-						[unistr].
-
-		example: |
-			self.log('TIMESTAMP = %s' % self.time())
-		"""
-
-		self.experiment._log.write(u'%s\n' % self.unistr(msg))
-
 	def flush_log(self):
 
-		"""
-		desc:
-			Forces any pending write operations to the log file to be written to
-			disk.
-
-		example: |
-			self.log('TRIAL FINISHED')
-			self.flush_log()
-		"""
-
-		self.experiment._log.flush()
-		os.fsync(self.experiment._log)
+		warnings.warn(u'item.flush_log() has been deprecated',
+			DeprecationWarning)
 
 def osreplace(exc):
 

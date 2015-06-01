@@ -25,20 +25,6 @@
     </widget>
    </item>
    <item>
-    <widget class="QCheckBox" name="checkbox_ignore_missing">
-     <property name="text">
-      <string>Include variables with missing values</string>
-     </property>
-    </widget>
-   </item>
-   <item>
-    <widget class="QCheckBox" name="checkbox_use_quotes">
-     <property name="text">
-      <string>Put quotes around values</string>
-     </property>
-    </widget>
-   </item>
-   <item>
     <widget class="QWidget" name="widget" native="true">
      <layout class="QHBoxLayout" name="horizontalLayout">
       <property name="margin">

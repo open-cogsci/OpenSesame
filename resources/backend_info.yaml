@@ -6,6 +6,7 @@ legacy:
   sampler: legacy
   color: legacy
   clock: legacy
+  log: csv
   icon: os-pygame
   py2: true
   py3: true
@@ -17,6 +18,7 @@ psycho:
   sampler: legacy
   color: psycho
   clock: legacy
+  log: csv
   icon: os-psychopy
   py2: true
   py3: false
@@ -29,6 +31,7 @@ xpyriment:
   synth: legacy
   color: legacy
   clock: legacy
+  log: csv
   icon: os-expyriment
   py2: true
   py3: false
@@ -40,6 +43,7 @@ droid:
   sampler: legacy
   color: legacy
   clock: legacy
+  log: csv
   icon: os-android
   py2: true
   py3: true

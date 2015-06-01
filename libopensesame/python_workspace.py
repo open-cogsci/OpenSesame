@@ -68,7 +68,8 @@ class python_workspace(object):
 			u'var'			: self.experiment.var,
 			u'pool'			: self.experiment.pool,
 			u'items'		: self.experiment.items,
-			u'clock'		: self.experiment._clock
+			u'clock'		: self.experiment._clock,
+			u'log'			: self.experiment._log,
 			})
 		# All functions from the api modules are also loaded into the globals.
 		# This way they can be called directly by name.

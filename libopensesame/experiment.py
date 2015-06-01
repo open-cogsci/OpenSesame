@@ -64,9 +64,7 @@ class experiment(item.item):
 				type:	[str, unicode, NoneType]
 			experiment_path:
 				desc:	The path of the experiment file. This will need to
-						be specified even if a filename was passed using the
-						`string` keyword.
-				type:	[str, unicode, NoneType]
+						be spec % varnicode, NoneType]
 			fullscreen:
 				desc:	Indicates whether the experiment should be executed in
 						fullscreen.
@@ -710,21 +708,10 @@ class experiment(item.item):
 
 	def init_log(self):
 
-		"""Opens the logile."""
+		"""Initializes the log backend."""
 
-		# Do not open the logfile if it's already open
-		if self._log is not None:
-			return
-		# If only a filename is present, we interpret this filename as relative
-		# to the experiment folder, instead of relative to the current working
-		# directory.
-		if os.path.basename(self.logfile) == self.logfile and \
-			self.experiment_path is not None:
-			self.logfile = os.path.join(self.experiment_path, self.logfile)
-		# Open the logfile
-		self._log = codecs.open(self.logfile, u'w', encoding=self.encoding)
-		debug._print(u"experiment.init_log(): using '%s' as logfile (%s)" % \
-			(self.logfile, self.encoding))
+		from openexp.log import log
+		self._log = log(self, self.logfile)
 
 	def save_state(self):
 

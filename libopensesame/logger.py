@@ -33,49 +33,17 @@ class logger(item.item):
 		"""See item."""
 
 		self.logvars = []
-		self.log_started = False
-		self.var.use_quotes = u'yes'
 		self.var.auto_log = u'yes'
-		# This means that missing variables should be ignored in the sense that
-		# they are assigned the value 'NA'. They are included in the logfile.
-		self.var.ignore_missing = u'yes'
 
 	def run(self):
 
 		"""Log the selected variables"""
 
 		self.set_item_onset()
-		if not self.log_started:
-			self.log_started = True
-			# If auto logging is enabled, collect all variables
-			if self.var.get(u'auto_log') == u'yes':
-				self.logvars = []
-				for logvar, val, _item in self.experiment.var_list():
-					if logvar in self.var or self.var.ignore_missing == u'yes' \
-						and logvar not in self.logvars:
-						self.logvars.append(logvar)
-						debug.msg(u'auto-logging "%s"' % logvar)
-			# Sort the logvars to ascertain a consistent ordering
-			self.logvars.sort()
-			# Draw the first line with variables
-			self.log(u','.join(self.logvars))
-
-		l = []
-		for var in self.logvars:
-			if var in self.var:
-				val = self.unistr(self.var.get(var))
-			elif self.var.get(u'ignore_missing') == u'yes':
-				val = u'NA'
-			else:
-				raise osexception(
-					u"Logger '%s' tries to log the variable '%s', but this variable is not available. Please deselect '%s' in logger '%s' or enable the 'Use NA for variables that have not been set' option." \
-					% (self.name, var, var, self.name))
-			l.append(val)
-
-		if self.var.get(u'use_quotes') == u'yes':
-			self.log(u'"' + (u'","'.join(l)) + u'"')
+		if self.var.auto_log:
+			self.experiment.log.write_vars()
 		else:
-			self.log(u",".join(l))
+			self.experiment.log.write_vars(self.logvars)
 
 	def from_string(self, string):
 

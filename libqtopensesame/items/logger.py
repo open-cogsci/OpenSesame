@@ -46,10 +46,6 @@ class logger(logger_runtime, qtplugin):
 		self.add_widget(self.logger_widget)
 		self.auto_add_widget(self.logger_widget.ui.checkbox_auto_log,
 			u'auto_log')
-		self.auto_add_widget(self.logger_widget.ui.checkbox_ignore_missing,
-			u'ignore_missing')
-		self.auto_add_widget(self.logger_widget.ui.checkbox_use_quotes,
-			u'use_quotes')
 
 	def edit_widget(self):
 

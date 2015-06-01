@@ -32,7 +32,7 @@ except:
 
 _backend_info = None
 _backend_types = [u'canvas', u'keyboard', u'mouse', u'sampler', u'color',
-	u'clock']
+	u'clock', u'log']
 
 def backend_info(experiment):
 
