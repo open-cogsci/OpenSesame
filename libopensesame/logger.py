@@ -86,6 +86,8 @@ class logger(item.item):
 		string -- definition string
 		"""
 
+		self.variables = {}
+		self.comments = []
 		self.reset()
 		for line in string.split(u'\n'):
 			self.parse_variable(line)

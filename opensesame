@@ -97,7 +97,9 @@ if __name__ == u'__main__':
 	import os.path
 	if len(sys.argv) >= 2 and os.path.isfile(sys.argv[1]):
 		start_new_tab = False
-		opensesame.open_file(path=sys.argv[1])
+		path = sys.argv[1]
+		path = path.decode(misc.filesystem_encoding(), errors=u'ignore')
+		opensesame.open_file(path=path)
 	else:
 		start_new_tab = True
 	if start_new_tab:

@@ -67,6 +67,7 @@ class form_base(item.item):
 		self.var.margins = u'50;50;50;50'
 		self.focus_widget = None
 		self._widgets = []
+		self._variables = []
 
 	def parse_line(self, line):
 
@@ -99,6 +100,8 @@ class form_base(item.item):
 		w[u'row'] = row
 		w[u'colspan'] = colspan
 		w[u'rowspan'] = rowspan
+		if u'var' in w:
+			self._variables.append(w[u'var'])
 		self._widgets.append(w)
 
 	def to_string(self):
@@ -200,6 +203,22 @@ class form_base(item.item):
 			# Add as focus widget
 			if focus:
 				self.focus_widget = _w
+
+	def var_info(self):
+
+		"""
+		desc:
+			Add response variables to var info list.
+
+		returns:
+			desc:	A list of (var_name, description) tuples.
+			type:	list
+		"""
+
+		l = item.item.var_info(self)
+		for var in self._variables:
+			l.append( (var, u'[Response variable]') )
+		return l
 
 class qtform_base(form_base, qtautoplugin):
 

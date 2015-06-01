@@ -64,6 +64,8 @@ class sketchpad(item, generic_response):
 			string:		A definition string.
 		"""
 
+		self.variables = {}
+		self.comments = []
 		self.reset()
 		for line in string.split(u'\n'):
 			if not self.parse_variable(line):

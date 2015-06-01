@@ -100,6 +100,9 @@ class tree_overview(base_subcomponent, QtGui.QTreeWidget):
 			QtGui.QKeySequence(cfg.shortcut_unlinked_copy), self,
 			self.create_unlinked_copy,
 			context=QtCore.Qt.WidgetWithChildrenShortcut)
+		self.drop_indicator = None
+		self.drop_indicator_pen = QtGui.QPen(QtGui.QBrush(
+			QtGui.QColor(u'#73d216')), 2, QtCore.Qt.SolidLine)
 
 	def copy_item(self):
 
@@ -301,7 +304,18 @@ class tree_overview(base_subcomponent, QtGui.QTreeWidget):
 		if self.pending_drag_data is None:
 			return
 		drag_and_drop.send(self, self.pending_drag_data)
+		self.end_drag()
 		self.pending_drag_data = None
+
+	def end_drag(self):
+
+		"""
+		desc:
+			Ends a drag operation.
+		"""
+
+		self.drop_indicator = None
+		self.viewport().update()
 
 	def mouseReleaseEvent(self, e):
 
@@ -593,6 +607,7 @@ class tree_overview(base_subcomponent, QtGui.QTreeWidget):
 			e.accept()
 		else:
 			e.ignore()
+		self.end_drag()
 
 	def dragEnterEvent(self, e):
 
@@ -614,6 +629,20 @@ class tree_overview(base_subcomponent, QtGui.QTreeWidget):
 		else:
 			e.ignore()
 
+	def dragLeaveEvent(self, e):
+
+		"""
+		desc:
+			Cancels the drop indicator when a drag leaves.
+
+		arguments:
+			e:
+				desc:	A drag-move event.
+				type:	QDragLeaveEvent
+		"""
+
+		self.end_drag()
+
 	def dragMoveEvent(self, e):
 
 		"""
@@ -628,17 +657,54 @@ class tree_overview(base_subcomponent, QtGui.QTreeWidget):
 		"""
 
 		data = drag_and_drop.receive(e)
+		self.drop_indicator = None
 		if drag_and_drop.matches(data, [u'url-local']):
 			e.accept()
+			self.end_drag()
 			return
 		if not drag_and_drop.matches(data, [u'item-new', u'item-existing']):
 			e.accept()
+			self.end_drag()
 			return
 		target = self.itemAt(e.pos())
 		if not self.droppable(target, data):
+			self.end_drag()
 			e.ignore()
 			return
 		e.accept()
+		# Update the drop indicator
+		index = self.indexFromItem(target)
+		rect = self.visualRect(index)
+		if target.name == u'__unused__' or (
+			target.item.item_type in (u'loop', u'sequence') and \
+			target.item.name != self.experiment.start and \
+			target.parent() is not None):
+			self.drop_indicator = rect
+		else:
+			self.drop_indicator = QtCore.QRect(rect.left(), rect.bottom(),
+				rect.width(), 0)
+		self.viewport().update()
+
+	def paintEvent(self, e):
+
+		"""
+		desc:
+			A custom pain event for the drop_indicator.
+
+		arguments:
+			e:
+				type:	QPaintEvent
+		"""
+
+		painter = QtGui.QPainter(self.viewport())
+		self.drawTree(painter, e.region())
+		if self.drop_indicator is not None:
+			painter.setPen(self.drop_indicator_pen)
+			if self.drop_indicator.height() == 0:
+				painter.drawLine(self.drop_indicator.topLeft(),
+					self.drop_indicator.topRight())
+			else:
+				painter.drawRect(self.drop_indicator)
 
 	def contextMenuEvent(self, e):
 

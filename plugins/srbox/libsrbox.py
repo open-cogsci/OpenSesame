@@ -57,7 +57,7 @@ class libsrbox:
 		~~~ {.python}
 		t0 = self.time()
 		exp.srbox.start()
-		t1, buttonlist = exp.srbox.get_button_press(allowed_buttons=[1,2])
+		buttonlist, t1 = exp.srbox.get_button_press(allowed_buttons=[1,2])
 		if 1 in buttonlist:
 			response_time = t1 - t0
 			print('Button 1 was pressed in %d ms!' % response_time)
@@ -114,7 +114,7 @@ class libsrbox:
 			if os.name == "nt":
 				for i in range(255):
 					try:
-						dev = "COM%d" % i
+						dev = "COM%d" % (i+1) #as COM ports start from 1 on Windows
 						self._srbox = serial.Serial(dev, timeout=0, \
 							baudrate=19200)
 						break
@@ -143,7 +143,7 @@ class libsrbox:
 		debug.msg("using device %s" % dev)
 		# Turn off all lights
 		if self._srbox is not None:
-			self._srbox.write('\x64')
+			self._srbox.write('\x00')
 
 	def send(self, ch):
 

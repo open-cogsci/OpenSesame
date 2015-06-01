@@ -65,7 +65,8 @@ class item(object):
 			self.item_type = self.item_type[len(prefix):]
 		if not hasattr(self, u'description'):
 			self.description = u'Default description'
-		self.comments = []
+		if not hasattr(self, u'round_decimals'):
+			self.round_decimals = 2
 		if string is not None:
 			self.from_string(string)
 
@@ -316,8 +317,11 @@ class item(object):
 		string	--	The definition string.
 		"""
 
-		self.reset()
+		debug.msg()
 		textblock_var = None
+		self.variables = {}
+		self.reset()
+		self.comments = []
 		for line in string.split(u'\n'):
 			line_stripped = line.strip()
 			# The end of a textblock
