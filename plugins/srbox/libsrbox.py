@@ -55,7 +55,7 @@ class libsrbox:
 		~~~ {.python}
 		t0 = self.time()
 		exp.srbox.start()
-		t1, buttonlist = exp.srbox.get_button_press(allowed_buttons=[1,2])
+		buttonlist, t1 = exp.srbox.get_button_press(allowed_buttons=[1,2])
 		if 1 in buttonlist:
 			response_time = t1 - t0
 			print('Button 1 was pressed in %d ms!' % response_time)
