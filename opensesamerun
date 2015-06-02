@@ -76,13 +76,13 @@ if __name__ == u"__main__":
 	# Decode the experiment path and logfile
 	experiment = os.path.abspath(options.experiment)
 	if isinstance(experiment, str):
-		experiment = experiment.decode(libopensesame.misc.filesystem_encoding(),
-			errors=u'ignore')
+		experiment = safe_decode(experiment,
+			enc=libopensesame.misc.filesystem_encoding(), errors=u'ignore')
 	experiment_path = os.path.dirname(experiment)
 	logfile = options.logfile
 	if isinstance(logfile, str):
-		logfile = logfile.decode(libopensesame.misc.filesystem_encoding(),
-			errors=u'ignore')
+		logfile = safe_decode(logfile,
+			enc=libopensesame.misc.filesystem_encoding(), errors=u'ignore')
 
 	if options.debug:
 		# In debug mode, don't try to catch any exceptions
