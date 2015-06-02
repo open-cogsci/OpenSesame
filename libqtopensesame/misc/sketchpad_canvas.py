@@ -415,6 +415,8 @@ class sketchpad_canvas(QtGui.QGraphicsScene):
 			A QColor object.
 		"""
 
+		if isinstance(_color, QtGui.QColor):
+			return _color
 		try:
 			hexcolor = color(self.sketchpad.experiment, _color).hexcolor
 		except:
