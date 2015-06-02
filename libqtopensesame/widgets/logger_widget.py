@@ -111,7 +111,7 @@ class logger_widget(base_widget):
 
 		name = self.text_input(_(u'Add custom variable'),
 			message=_(u'Which variable do you wish to log?'))
-		if self.experiment.sanitize(name, strict=True,
+		if self.experiment.syntax.sanitize(name, strict=True,
 			allow_vars=False) != name:
 			self.notify(_(u'"%s" is not a valid variable name!' % name))
 			return

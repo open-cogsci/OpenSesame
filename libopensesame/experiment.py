@@ -21,6 +21,7 @@ from libopensesame.var_store import var_store
 from libopensesame.item_store import item_store
 from libopensesame.file_pool_store import file_pool_store
 from libopensesame.python_workspace import python_workspace
+from libopensesame.syntax import syntax
 from libopensesame.exceptions import osexception
 from libopensesame import misc, item, debug
 from libopensesame.py3compat import *
@@ -94,14 +95,15 @@ class experiment(item.item):
 
 		self.var = var_store(self)
 		self.pool = file_pool_store(self, folder=pool_folder)
+		self._syntax = syntax(self)
 		if items is None:
 			self.items = item_store(self)
 		else:
 			self.items = items
 		if workspace is None:
-			self.python_workspace = python_workspace(self)
+			self._python_workspace = python_workspace(self)
 		else:
-			self.python_workspace = workspace
+			self._python_workspace = workspace
 		self.running = False
 		self.auto_response = auto_response
 		self.plugin_folder = u'plugins'
@@ -292,7 +294,7 @@ class experiment(item.item):
 		while line is not None:
 			get_next = True
 			try:
-				l = self.split(line)
+				l = self.syntax.split(line)
 			except ValueError as e:
 				raise osexception( \
 					u"Failed to parse script. Maybe it contains illegal characters or unclosed quotes?", \
@@ -305,7 +307,7 @@ class experiment(item.item):
 						raise osexception( \
 							u'Failed to parse definition', line=line)
 					item_type = l[1]
-					item_name = self.sanitize(l[2])
+					item_name = self.syntax.sanitize(l[2])
 					line, def_str = self.read_definition(s)
 					get_next = False
 					self.items.new(item_type, item_name, def_str)
@@ -446,7 +448,7 @@ class experiment(item.item):
 		folder.
 		"""
 
-		name = self.unistr(name)
+		name = safe_decode(name)
 		if self is not None:
 			if name in self.resources:
 				return self.resources[name]
@@ -495,7 +497,7 @@ class experiment(item.item):
 				return False
 			debug.msg(u'saving as .opensesame file')
 			with open(path, u'w') as fd:
-				fd.write(self.usanitize(self.to_string()))
+				fd.write(self.syntax.to_ascii(self.to_string()))
 			self.experiment_path = os.path.dirname(path)
 			return path
 		# Use the .opensesame.tar.gz extension by default
@@ -508,7 +510,7 @@ class experiment(item.item):
 		script = self.to_string()
 		script_path = os.path.join(self.pool.folder(), u'script.opensesame')
 		with open(script_path, u"w") as fd:
-			fd.write(self.usanitize(script))
+			fd.write(self.syntax.to_ascii(script))
 		# Create the archive in a a temporary folder and move it afterwards.
 		# This hack is needed, because tarfile fails on a Unicode path.
 		tmp_path = tempfile.mktemp(suffix=u'.opensesame.tar.gz')
@@ -520,7 +522,7 @@ class experiment(item.item):
 		# with poor Unicode support in .tar.gz.
 		tmp_pool = tempfile.mkdtemp(suffix=u'.opensesame.pool')
 		for fname in os.listdir(self.pool.folder()):
-			sname = self.usanitize(fname)
+			sname = self.syntax.to_ascii(fname)
 			shutil.copyfile(os.path.join(self.pool.folder(), fname),
 				os.path.join(tmp_pool, sname))
 		tar.add(tmp_pool, u'pool', True)
@@ -570,18 +572,18 @@ class experiment(item.item):
 			else:
 				mode = u'rU'
 			with open(src, mode) as fd:
-				return self.unsanitize(fd.read())
+				return self._syntax.from_ascii(fd.read())
 		debug.msg(u"opening .opensesame.tar.gz file")
 		# If the file is a .tar.gz archive, extract the pool to the pool folder
 		# and return the contents of opensesame.script.
 		tar = tarfile.open(src, u'r:gz')
 		for name in tar.getnames():
 			# Here, all paths except name are Unicode. In addition, fname is
-			# Unicode unsanitized, because the files as saved are Unicode
+			# Unicode from_asciid, because the files as saved are Unicode
 			# sanitized (see save()).
 			uname = safe_decode(name, enc=self.encoding)
 			folder, fname = os.path.split(uname)
-			fname = self.unsanitize(fname)
+			fname = self._syntax.from_ascii(fname)
 			if folder == u"pool":
 				debug.msg(u"extracting '%s'" % uname)
 				if py3:
@@ -599,7 +601,7 @@ class experiment(item.item):
 		else:
 			mode = u'rU'
 		with open(script_path, mode) as fd:
-			script = self.unsanitize(fd.read())
+			script = self._syntax.from_ascii(fd.read())
 		os.remove(script_path)
 		self.experiment_path = os.path.dirname(src)
 		return script
@@ -654,7 +656,7 @@ class experiment(item.item):
 			var_dict = item.var_info() + item.var.items()
 			for var, val in var_dict:
 				if var not in seen and (filt in var.lower() or filt in \
-					self.unistr(val).lower() or filt in item_name.lower()):
+					safe_decode(val).lower() or filt in item_name.lower()):
 					l.append( (var, val, item_name) )
 					seen.append(var)
 		return l

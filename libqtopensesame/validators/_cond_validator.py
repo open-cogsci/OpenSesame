@@ -34,7 +34,7 @@ class cond_validator(base_validator):
 	def is_valid(self, val):
 
 		try:
-			self.experiment.compile_cond(str(val))
+			self.experiment.syntax.compile_cond(str(val))
 			return True
 		except:
 			return False

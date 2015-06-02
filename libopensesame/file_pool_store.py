@@ -175,7 +175,7 @@ class file_pool_store(object):
 			type:	unicode
 		"""
 
-		path = self.experiment.unistr(path)
+		path = safe_decode(path)
 		if path.strip() == u'':
 			raise osexception(u'Cannot get empty filename from file pool.')
 		for folder in self.folders(include_experiment_path=True):

@@ -45,7 +45,7 @@ class sequence(item.item):
 		if self._keyboard is not None:
 			self._keyboard.flush()
 		for item, cond in self._items:
-			if eval(cond):
+			if self.python_workspace._eval(cond):
 				self.experiment.items[item].run()
 
 	def parse_run(self, i):
@@ -80,7 +80,7 @@ class sequence(item.item):
 		self.reset()
 		for i in string.split(u'\n'):
 			self.parse_variable(i)
-			i = self.split(i.strip())
+			i = self.syntax.split(i.strip())
 			if len(i) > 0:
 				if i[0] == u'run' and len(i) > 1:
 					self.items.append(self.parse_run(i))
@@ -102,7 +102,7 @@ class sequence(item.item):
 					u"Could not find item '%s', which is called by sequence item '%s'" \
 					% (_item, self.name))
 			self.experiment.items[_item].prepare()
-			self._items.append( (_item, self.compile_cond(cond)) )
+			self._items.append( (_item, self.syntax.compile_cond(cond)) )
 
 	def to_string(self):
 

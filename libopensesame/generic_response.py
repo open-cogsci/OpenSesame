@@ -91,7 +91,7 @@ class generic_response:
 
 		self.experiment._start_response_interval = self.sri
 		key, self.experiment.end_response_interval = retval
-		self.experiment.var.response = self.sanitize(key)
+		self.experiment.var.response = self.syntax.sanitize(key)
 		self.synonyms = self._keyboard.synonyms(self.experiment.var.response)
 
 	def process_response_mouseclick(self, retval):
@@ -158,14 +158,14 @@ class generic_response:
 				correct_response = self.var.correct_response
 				if hasattr(self, u"synonyms") and self.synonyms is not None:
 					if correct_response in self.synonyms or \
-						self.unistr(correct_response) in self.synonyms:
+						safe_decode(correct_response) in self.synonyms:
 						self.experiment.var.correct = 1
 						self.experiment.var.total_correct += 1
 					else:
 						self.experiment.var.correct = 0
 				else:
 					if self.experiment.response in (correct_response,
-						self.unistr(correct_response)):
+						safe_decode(correct_response)):
 						self.experiment.var.correct = 1
 						self.experiment.var.total_correct += 1
 					else:
@@ -219,7 +219,7 @@ class generic_response:
 		# Create a list of allowed responses that are separated by semicolons.
 		# Also trim any whitespace.
 		allowed_responses = [allowed_response.strip() for allowed_response in \
-			self.experiment.unistr(self.var.allowed_responses).split(u";")]
+			safe_decode(self.var.allowed_responses).split(u";")]
 
 		if self.var.duration == u"keypress":
 			# For keypress responses, we don't check if the allowed responses

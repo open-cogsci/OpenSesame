@@ -69,7 +69,7 @@ class sketchpad(item, generic_response):
 		self.reset()
 		for line in string.split(u'\n'):
 			if not self.parse_variable(line):
-				l = self.split(line)
+				l = self.syntax.split(line)
 				if len(l) > 0:
 					if l[0] == u'draw':
 						if len(l) == 1:

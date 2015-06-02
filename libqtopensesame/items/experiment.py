@@ -190,7 +190,7 @@ class experiment(libopensesame.experiment.experiment):
 			return u'Empty names are not allowed.'
 		if name.lower() in [item.lower() for item in self.items.keys()]:
 			return u'An item with that name already exists.'
-		if name != self.sanitize(name, strict=True, allow_vars=False):
+		if name != self.syntax.sanitize(name, strict=True, allow_vars=False):
 			return u'Name contains special characters. Only alphanumeric characters and underscores are allowed.'
 		return True
 
@@ -374,7 +374,7 @@ class experiment(libopensesame.experiment.experiment):
 		"""
 
 		from libqtopensesame.dialogs.notification import notification
-		nd = notification(self.main_window, msg=self.unistr(msg), title=title,
+		nd = notification(self.main_window, msg=safe_decode(msg), title=title,
 			icon=icon)
 		nd.show()
 
@@ -424,7 +424,7 @@ class experiment(libopensesame.experiment.experiment):
 		_color = QtGui.QColorDialog.getColor(QtGui.QColor(initial_color), \
 			self.main_window, title)
 		if _color.isValid():
-			return self.sanitize(_color.name())
+			return self.syntax.sanitize(_color.name())
 		return None
 
 	def monospace(self):

@@ -59,7 +59,7 @@ class logger(item.item):
 		self.reset()
 		for line in string.split(u'\n'):
 			self.parse_variable(line)
-			l = self.split(line)
+			l = self.syntax.split(line)
 			if len(l) > 1 and l[0] == u'log':
 				self.logvars.append(l[1])
 

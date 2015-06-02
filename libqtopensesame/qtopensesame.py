@@ -757,7 +757,7 @@ class qtopensesame(QtGui.QMainWindow, base_component):
 
 		if self.current_path is None:
 			cfg.file_dialog_path = os.path.join(self.home_folder, \
-				self.experiment.sanitize(self.experiment.var.title, strict=True, \
+				self.experiment.syntax.sanitize(self.experiment.var.title, strict=True, \
 				allow_vars=False))
 		else:
 			cfg.file_dialog_path = self.current_path

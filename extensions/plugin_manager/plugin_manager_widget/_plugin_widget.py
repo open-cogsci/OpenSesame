@@ -47,14 +47,14 @@ class plugin_widget(base_widget):
 		self.ui.label_name.setText(plugin)
 		self.ui.label_folder.setText(self.info[u'plugin_folder'])
 		if u'description' in self.info:
-			self.ui.label_description.setText(self.unistr(
+			self.ui.label_description.setText(safe_decode(
 				self.info[u'description']))
 		if u'author' in self.info:
-			self.ui.label_author.setText(self.unistr(self.info[u'author']))
+			self.ui.label_author.setText(safe_decode(self.info[u'author']))
 		if u'version' in self.info:
-			self.ui.label_version.setText(self.unistr(self.info[u'version']))
+			self.ui.label_version.setText(safe_decode(self.info[u'version']))
 		if u'url' in self.info:
-			self.ui.label_url.setText(self.unistr(self.info[u'url']))
+			self.ui.label_url.setText(safe_decode(self.info[u'url']))
 		self.ui.checkbox_enable.setChecked(self.is_enabled())
 		self.ui.checkbox_enable.clicked.connect(self.toggle)
 

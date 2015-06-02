@@ -61,9 +61,9 @@ class text_display(item, generic_response):
 		# Make sure that the content is a unicode string that is evaluated
 		# for variables and then split into separated lines, using either the
 		# os-specific or the Unix-style line separator.
-		content = self.unistr(self.var.get(u'content'))
+		content = safe_decode(self.var.get(u'content'))
 		content = content.replace(os.linesep, u'\n')
-		content = self.eval_text(content).split(u"\n")
+		content = self.syntax.eval_text(content).split(u"\n")
 		# Do line wrapping
 		_content = []
 		for line in content:

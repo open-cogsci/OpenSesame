@@ -153,7 +153,7 @@ class item_store(object):
 		if suggestion is None:
 			name = item_type
 		else:
-			name = self.experiment.sanitize(suggestion, strict=True,
+			name = self.experiment.syntax.sanitize(suggestion, strict=True,
 				allow_vars=False)
 			if len(name) == 0:
 				name = item_type

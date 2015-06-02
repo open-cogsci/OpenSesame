@@ -49,7 +49,7 @@ class repeat_cycle(item.item):
 		"""
 
 		item.item.prepare(self)
-		self._condition = self.compile_cond(self.var.get(u'condition',
+		self._condition = self.syntax.compile_cond(self.var.get(u'condition',
 			_eval=False))
 		return True
 
@@ -60,7 +60,7 @@ class repeat_cycle(item.item):
 			Run the item.
 		"""
 
-		if eval(self._condition):
+		if self.python_workspace._eval(self._condition):
 			self.experiment.var.repeat_cycle = 1
 		return True
 

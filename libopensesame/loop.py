@@ -58,7 +58,7 @@ class loop(item.item):
 		for i in string.split(u'\n'):
 			self.parse_variable(i)
 			# Extract the item to run
-			i = self.split(i.strip())
+			i = self.syntax.split(i.strip())
 			if len(i) > 0:
 				if i[0] == u'run' and len(i) > 1:
 					self.var.item = i[1]
@@ -85,7 +85,7 @@ class loop(item.item):
 
 		# Prepare the break if condition
 		if self.var.break_if != u'':
-			self._break_if = self.compile_cond(self.var.break_if)
+			self._break_if = self.syntax.compile_cond(self.var.break_if)
 		else:
 			self._break_if = None
 
@@ -134,7 +134,8 @@ class loop(item.item):
 		while len(l) > 0:
 			cycle = l.pop(0)
 			self.apply_cycle(cycle)
-			if self._break_if is not None and eval(self._break_if):
+			if self._break_if is not None and \
+				self.python_workspace._eval(self._break_if):
 				break
 			self.experiment.var.repeat_cycle = 0
 			_item.prepare()
@@ -204,7 +205,7 @@ class loop(item.item):
 			for var in self.matrix[i]:
 				if var not in var_list:
 					var_list[var] = []
-				var_list[var].append(self.unistr(self.matrix[i][var]))
+				var_list[var].append(safe_decode(self.matrix[i][var]))
 		for var in var_list:
 			l.append( (var, u'[' + u', '.join(var_list[var]) + u']'))
 		return l

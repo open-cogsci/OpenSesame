@@ -111,7 +111,7 @@ class legacy(keyboard.keyboard):
 		# If the key is not familiar, simply return it plus its string
 		# representation.
 		if key not in self.key_name_to_code:
-			return [key, self.experiment.unistr(key)]
+			return [key, safe_decode(key)]
 		return self.key_code_to_name[self.key_name_to_code[key]]
 
 	def flush(self):

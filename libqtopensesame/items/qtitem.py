@@ -527,7 +527,7 @@ class qtitem(base_qtobject):
 			if isinstance(var, int):
 				continue
 			if var in self.var:
-				edit.setText(self.unistr(self.var.get(var, _eval=False)))
+				edit.setText(safe_decode(self.var.get(var, _eval=False)))
 			else:
 				edit.setText(u'')
 
@@ -535,7 +535,7 @@ class qtitem(base_qtobject):
 			if isinstance(var, int):
 				continue
 			val = self.var.get(var, _eval=False, default=u'')
-			i = combobox.findText(self.unistr(val))
+			i = combobox.findText(safe_decode(val))
 			# Set the combobox to the select item
 			if i >= 0:
 				combobox.setDisabled(False)
@@ -602,7 +602,7 @@ class qtitem(base_qtobject):
 				continue
 			if var in self.var:
 				try:
-					qprogedit.setText(self.unistr(self.var.get(var,
+					qprogedit.setText(safe_decode(self.var.get(var,
 						_eval=False)))
 				except Exception as e:
 					self.experiment.notify(_(u"Failed to set control '%s': %s") \
@@ -627,7 +627,7 @@ class qtitem(base_qtobject):
 		True if s is sane, False otherwise.
 		"""
 
-		sane = s == self.sanitize(s, strict=strict, allow_vars=allow_vars)
+		sane = s == self.syntax.sanitize(s, strict=strict, allow_vars=allow_vars)
 		if not sane and notify:
 			if strict:
 				self.experiment.notify(
@@ -750,15 +750,15 @@ class qtitem(base_qtobject):
 					(default=u'always')
 		"""
 
-		cond = self.unistr(cond)
+		cond = safe_decode(cond)
 		if not self.sanitize_check(cond):
-			cond = self.sanitize(cond)
+			cond = self.syntax.sanitize(cond)
 		if cond.strip() == u'':
 			cond = default
 		try:
-			self.compile_cond(cond)
+			self.syntax.compile_cond(cond)
 		except osexception as e:
-			self.experiment.notify( \
+			self.experiment.notify(
 				u'Failed to compile conditional statement "%s": %s' % (cond, e))
 			return default
 		return cond

@@ -102,7 +102,7 @@ class loop(qtstructure_item, qtitem, loop_runtime):
 				default = ""
 
 			# Check for valid variable names
-			var_name = self.experiment.sanitize(var_name, strict=True, \
+			var_name = self.experiment.syntax.sanitize(var_name, strict=True, \
 				allow_vars=False)
 			if var_name == u"":
 				self.experiment.notify( \
@@ -180,7 +180,7 @@ class loop(qtstructure_item, qtitem, loop_runtime):
 				_(u'New variable'), _(u'Enter a new variable name'), text=old_var)
 			if ok and _new_var != old_var:
 				old_var = str(old_var)
-				new_var = self.experiment.sanitize(_new_var, strict=True, \
+				new_var = self.experiment.syntax.sanitize(_new_var, strict=True, \
 					allow_vars=False)
 				if _new_var != new_var or new_var == "":
 					self.experiment.notify( \
@@ -359,7 +359,7 @@ class loop(qtstructure_item, qtitem, loop_runtime):
 		column_order = []
 		if self.cyclevar_list() is not None:
 			if u'column_order' in self.var:
-				for var in self.unistr(self.var.column_order).split(u";"):
+				for var in safe_decode(self.var.column_order).split(u";"):
 					if var in self.cyclevar_list():
 						column_order.append(var)
 			for var in self.cyclevar_list():
@@ -378,7 +378,7 @@ class loop(qtstructure_item, qtitem, loop_runtime):
 			for var in self.matrix[cycle]:
 				col = column_order.index(var)
 				self.loop_table.set_text(cycle, col,
-					self.experiment.unistr(self.matrix[cycle][var]))
+					safe_decode(self.matrix[cycle][var]))
 
 		# Store the number of cycles and the column order
 		self.var.cycles = max(self.var.cycles, self.cycle_count())
@@ -433,7 +433,7 @@ class loop(qtstructure_item, qtitem, loop_runtime):
 					if s == u'':
 						break
 					if row == 0:
-						var = self.experiment.sanitize(s, True)
+						var = self.experiment.syntax.sanitize(s, True)
 						var_dict[var] = []
 					elif var is not None:
 						var_dict[var].append(s)
@@ -607,7 +607,7 @@ class loop(qtstructure_item, qtitem, loop_runtime):
 				else:
 					val = str(self.loop_table.item(row, col).text())
 				if not self.sanitize_check(val):
-					val = self.sanitize(val)
+					val = self.syntax.sanitize(val)
 				self.matrix[row][var] = val
 		row = self.loop_table.currentRow()
 		column = self.loop_table.currentColumn()

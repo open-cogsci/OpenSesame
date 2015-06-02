@@ -132,7 +132,7 @@ class header_widget(base_widget):
 		if self.label_desc.isVisible():
 			return
 		description = unicode(self.edit_desc.text())
-		description = self.item.sanitize(description)
+		description = self.item.syntax.sanitize(description)
 		self.item.set(u'description', description)
 		self.label_desc.setText(description)
 		self.label_desc.show()

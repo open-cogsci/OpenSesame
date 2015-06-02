@@ -72,7 +72,7 @@ class base_element(object):
 	def name(self): return self.sketchpad.name
 
 	@property
-	def split(self): return self.sketchpad.split
+	def syntax(self): return self.sketchpad.syntax
 
 	@property
 	def experiment(self): return self.sketchpad.experiment
@@ -110,7 +110,7 @@ class base_element(object):
 			string:		A definition string.
 		"""
 
-		l  = self.split(string)
+		l  = self.syntax.split(string)
 		if len(l) < 2 or l[0] != u'draw' or l[1] != self._type:
 			raise osexception(u'Invalid sketchpad-element definition: \'%s\'' \
 				% string)
@@ -261,7 +261,7 @@ class base_element(object):
 				round_float = True
 			else:
 				round_float = False
-			val = self.sketchpad.eval_text(val, round_float=round_float)
+			val = self.sketchpad.syntax.eval_text(val, round_float=round_float)
 			if self.fix_coordinates and type(val) in (int, float):
 				if var in [u'x', u'x1', u'x2']:
 					val += xc
@@ -282,4 +282,5 @@ class base_element(object):
 			type:	bool
 		"""
 
-		return eval(self.sketchpad.compile_cond(self.properties[u'show_if']))
+		return self.experiment.python_workspace._eval(
+			self.experiment.syntax.compile_cond(self.properties[u'show_if']))

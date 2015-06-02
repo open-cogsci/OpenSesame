@@ -21,9 +21,7 @@ from libopensesame.py3compat import *
 from libopensesame.var_store import var_store
 import warnings
 from libopensesame.exceptions import osexception
-from libopensesame import debug, regexp
-import codecs
-import os
+from libopensesame import debug
 try:
 	import pygame
 except:
@@ -72,13 +70,19 @@ class item(object):
 
 	@property
 	def clock(self):
-
 		return self.experiment._clock
 
 	@property
 	def log(self):
-
 		return self.experiment._log
+
+	@property
+	def syntax(self):
+		return self.experiment._syntax
+
+	@property
+	def python_workspace(self):
+		return self.experiment._python_workspace
 
 	def reset(self):
 
@@ -118,7 +122,7 @@ class item(object):
 		# all from_string() derivatives need to be modified
 		if self.parse_comment(line):
 			return True
-		l = self.split(line.strip())
+		l = self.syntax.split(line.strip())
 		if len(l) > 0 and l[0] == u'set':
 			if len(l) != 3:
 				raise osexception( \
@@ -128,7 +132,7 @@ class item(object):
 				return True
 		return False
 
-	def parse_keywords(self, line, unsanitize=False, _eval=False):
+	def parse_keywords(self, line, from_ascii=False, _eval=False):
 
 		"""
 		Parses keywords, e.g. 'my_keyword=my_value'.
@@ -137,7 +141,7 @@ class item(object):
 		line		--	A single definition line.
 
 		Keyword arguments:
-		unsanitize	--	DEPRECATED KEYWORD.
+		from_ascii	--	DEPRECATED KEYWORD.
 		_eval		--	Indicates whether the values should be evaluated.
 						(default=False)
 
@@ -146,7 +150,7 @@ class item(object):
 		"""
 
 		# Parse keywords
-		l = self.split(line.strip())
+		l = self.syntax.split(line.strip())
 		keywords = {}
 		for i in l:
 			j = i.find(u'=')
@@ -165,7 +169,7 @@ class item(object):
 					var = str(i[:j])
 					val = self.auto_type(i[j+1:])
 					if _eval:
-						val = self.eval_text(val)
+						val = self.syntax.eval_text(val)
 					keywords[var] = val
 		return keywords
 
@@ -279,7 +283,7 @@ class item(object):
 			warnings.warn(
 				u'called %s as item property and stored as class attribute' \
 				% var, DeprecationWarning)
-			return self.__class__.var
+			return getattr(self.__class__, var)
 		raise AttributeError(u'%s not found' % var)
 
 	def variable_to_string(self, var):
@@ -294,7 +298,7 @@ class item(object):
 		A definition string.
 		"""
 
-		val = self.unistr(self.var.get(var, _eval=False))
+		val = safe_decode(self.var.get(var, _eval=False))
 		# Multiline variables are stored as a block
 		if u'\n' in val or u'"' in val:
 			s = u'__%s__\n' % var
@@ -462,7 +466,7 @@ class item(object):
 			# Prints ['two', 'references']
 		"""
 
-		text = self.unistr(text)
+		text = safe_decode(text)
 
 		l = []
 		start = -1
@@ -522,7 +526,7 @@ class item(object):
 				return float(val)
 		except:
 			# Else, fall back to unicde
-			return self.unistr(val)
+			return safe_decode(val)
 
 	def set_item_onset(self, time=None):
 
@@ -548,165 +552,6 @@ class item(object):
 
 		pass
 
-	def eval_text(self, text, round_float=False, soft_ignore=False,
-		quote_str=False):
-
-		"""
-		desc:
-			Evaluates a string of text, so that all variable references (e.g.,
-			'[var]') are replaced by values.
-
-		arguments:
-			text:
-				desc:	The text to be evaluated. This can be any type, but only
-						str and unicode types will be evaluated.
-
-		keywords:
-			round_float:
-				desc:	A Boolean indicating whether float values should be
-						rounded to a precision of [round_decimals].
-						round_decimals is an OpenSesame variable that has a
-						default value of 2.
-				type:	bool
-			soft_ignore:
-				desc:		A Boolean indicating whether missing variables
-							should be ignored, rather than cause an exception.
-				type:		bool
-			quote_str:
-				desc:		A Boolean indicating whether string variables should
-							be surrounded by single quotes (default=False).
-				type:		bool
-
-		returns:
-			desc:	The evaluated text.
-			type:	[unicode, int, float]
-
-		example: |
-			exp.set('var', 'evaluated')
-			print(self.eval_text('This string has been [var]'))
-			# Prints 'This string has been evaluated
-		"""
-
-		# Only unicode needs to be evaluated
-		text = self.auto_type(text)
-		if not isinstance(text, basestring):
-			return text
-
-		# Prepare a template for rounding floats
-		if round_float:
-			float_template = u'%%.%sf' % self.var.round_decimals
-		# Find and replace all variables in the text
-		while True:
-			m = regexp.find_variable.search(text)
-			if m is None:
-				break
-			var = m.group(0)[1:-1]
-			if not soft_ignore or self.has(var):
-				val = self.var.get(var)
-				# Quote strings if necessary
-				if isinstance(val, basestring) and quote_str:
-					val = u"'" + val + u"'"
-				# Round floats
-				elif round_float and type(val) == float:
-					val = float_template % val
-				else:
-					val = self.unistr(val)
-				text = text.replace(m.group(0), val, 1)
-		return self.auto_type(text)
-
-	def compile_cond(self, cond, bytecode=True):
-
-		"""
-		Create Python code for a given conditional statement.
-
-		Arguments:
-		cond		--	The conditional statement (e.g., '[correct] = 1')
-
-		Keyword arguments:
-		bytecode	--	A boolean indicating whether the generated code should
-						be byte compiled (default=True).
-
-		Returns:
-		Python code (possibly byte compiled) that reflects the conditional
-		statement.
-		"""
-
-		src = cond
-
-		# If the conditional statement is preceded by a '=', it is interpreted as
-		# Python code, like 'self.var.get("correct") == 1'. In this case we only have
-		# to strip the preceding space
-		if len(src) > 0 and src[0] == u'=':
-			code = src[1:]
-			debug.msg(u'Python-style conditional statement: %s' % code)
-
-		# Otherwise, it is interpreted as a traditional run if statement, like
-		# '[correct] = 1'
-		else:
-			operators = u"!=", u"==", u"=", u"<", u">", u">=", u"<=", u"+", \
-				u"-", u"(", u")", u"/", u"*", u"%", u"~", u"**", u"^"
-			op_chars = u"!", u"=", u"=", u"<", u">", u"+", u"-", u"(", u")", \
-				u"/", u"*", u"%", u"~", u"*", u"^"
-			whitespace = u" ", u"\t", u"\n"
-			keywords = u"and", u"or", u"is", u"not", u"true", u"false"
-			capitalize = u"true", u"false", u"none"
-
-			# Try to fix missing spaces
-			redo = True
-			while redo:
-				redo = False
-				for i in range(len(cond)):
-					if cond[i] in op_chars:
-						if i != 0 and cond[i-1] not in op_chars + whitespace:
-							cond = cond[:i] + u" " + cond[i:]
-							redo = True
-							break
-						if i < len(cond)-1 and cond[i+1] not in \
-							op_chars+whitespace:
-							cond = cond[:i+1] + u" " + cond[i+1:]
-							redo = True
-							break
-
-			# Rebuild the conditional string
-			l = []
-			i = 0
-			for word in self.split(cond):
-				if len(word) > 2 and word[0] == u"[" and word[-1] == u"]":
-					l.append(u"self.var.get(u'%s')" % word[1:-1])
-				elif word == u"=":
-					l.append(u"==")
-				elif word.lower() == u"always":
-					l.append(u"True")
-				elif word.lower() == u"never":
-					l.append(u"False")
-				elif word.lower() in operators + keywords:
-					if word.lower() in capitalize:
-						l.append(word.capitalize())
-					else:
-						l.append(word.lower())
-				else:
-					val = self.auto_type(word)
-					if isinstance(val, basestring):
-						l.append(u"u\"%s\"" % word)
-					else:
-						l.append(self.unistr(word))
-				i += 1
-
-			code = u" ".join(l)
-			if code != u"True":
-				debug.msg(u"'%s' => '%s'" % (src, code))
-
-		# Optionally compile the conditional statement to bytecode and return
-		if not bytecode:
-			return code
-		try:
-			bytecode = compile(code, u"<conditional statement>", u"eval")
-		except:
-			raise osexception( \
-				u"'%s' is not a valid conditional statement in sequence item '%s'" \
-				% (cond, self.name))
-		return bytecode
-
 	def var_info(self):
 
 		"""
@@ -718,174 +563,6 @@ class item(object):
 
 		return [ (u"time_%s" % self.name, u"[Timestamp of last item call]"), \
 			(u"count_%s" % self.name, u"[Number of item calls]") ]
-
-	def sanitize(self, s, strict=False, allow_vars=True):
-
-		"""
-		desc:
-			Removes invalid characters (notably quotes) from the string.
-
-		arguments:
-			s:
-				desc:	The string to be sanitized. This can be any type, but
-						if it is not unicode, it will be coerced to unicode.
-
-		keywords:
-			strict:
-				desc:	If True, all except underscores and alphanumeric
-						characters are stripped.
-				type:	bool
-			allow_vars:
-				desc:	If True, square brackets are not sanitized, so you can
-						use variables.
-				type:	bool
-
-		returns:
-			desc:	A sanitized string.
-			type:	unicode
-
-		example: |
-			# Prints 'Universit Aix-Marseille'
-			print(self.sanitize('\"Université Aix-Marseille\"'))
-			# Prints 'UniversitAixMarseille'
-			print(self.sanitize('\"Université Aix-Marseille\""', strict=True))
-		"""
-
-		s = self.unistr(s)
-		if strict:
-			if allow_vars:
-				return regexp.sanitize_strict_vars.sub(u'', s)
-			return regexp.sanitize_strict_novars.sub(u'', s)
-		return regexp.sanitize_loose.sub(u'', s)
-
-	def usanitize(self, s, strict=False):
-
-		"""
-		desc:
-			Converts all non-ASCII characters to U+XXXX notation, so that the
-			resulting string can be treated as plain ASCII text.
-
-		arguments:
-			s:
-				desc:	A unicode string to be santized
-				type:	unicode
-
-		keywords:
-			strict:
-				desc:	If True, special characters are ignored rather than
-						recoded.
-				type:	bool
-
-		returns:
-			desc:	A regular Python string with all special characters replaced
-					by U+XXXX notation or ignored (if strict).
-			type:	str
-		"""
-
-		if strict:
-			_s = safe_encode(s, enc=u'ascii', errors=u'ignore')
-		else:
-			_s = codecs.encode(s, u'ascii', u'osreplace')
-		_s = safe_decode(_s)
-		return _s.replace(os.linesep, '\n')
-
-	def unsanitize(self, s):
-
-		"""
-		Converts the U+XXXX notation back to actual Unicode encoding
-
-		Arguments:
-		s -- a regular string to be unsanitized
-
-		Returns:
-		A unicode string with special characters
-		"""
-
-		if not isinstance(s, basestring):
-			raise osexception(
-				u'unsanitize() expects first argument to be unicode or str, not "%s"' \
-				% type(s))
-		s = self.unistr(s)
-		while True:
-			m = regexp.unsanitize.search(s)
-			if m is None:
-				break
-			if py3:
-				_unichr = chr
-			else:
-				_unichr = unichr
-			s = s.replace(m.group(0), _unichr(int(m.group(1), 16)), 1)
-		return s
-
-	def unistr(self, val):
-
-		"""
-		desc: |
-			Converts a value to a unicode string. This function is mostly
-			necessary to make sure that normal strings with special characters
-			are correctly encoded into unicode, and don't result in TypeErrors.
-
-			The conversion logic is as follows:
-
-			- unicode values are returned unchanged.
-			- str values are decoded using utf-8.
-			- all other types are typecast to unicode, assuming utf-8 encoding
-			  where applicable.
-
-		arguments:
-			val:
-				desc:	A value of any type.
-
-		returns:
-			desc:	A unicode string.
-			type:	unicode
-		"""
-
-		if isinstance(val, basestring):
-			return safe_decode(val, enc=self.encoding, errors=u'replace')
-		# Numeric values are encoded right away
-		if isinstance(val, int) or isinstance(val, float):
-			return str(val)
-		# Some types need to be converted to unicode, but require the encoding
-		# and errors parameters. Notable examples are Exceptions, which have
-		# strange characters under some locales, such as French. It even appears
-		# that, at least in some cases, they have to be encodeed to str first.
-		# Presumably, there is a better way to do this, but for now this at
-		# least gives sensible results.
-		try:
-			return safe_decode(bytes(val), encoding=self.encoding,
-				errors=u'replace')
-		except:
-			pass
-		# For other types, the unicode representation doesn't require a specific
-		# encoding. This mostly applies to non-stringy things, such as integers.
-		return str(val)
-
-	def split(self, u):
-
-		"""
-		Splits a unicode string in the same way as shlex.split(). Unfortunately,
-		shlex doesn't handle unicode properly, so this wrapper function is
-		required.
-
-		Arguments:
-		u -- a unicode string
-
-		Returns:
-		A list of unicode strings, split as described here:
-		http://docs.python.org/library/shlex.html#shlex.split
-		"""
-
-		import shlex
-		if py3:
-			return shlex.split(u)
-		try:
-			return [safe_decode(chunk, enc=self.encoding) for chunk in \
-				shlex.split(safe_encode(u, enc=self.encoding))]
-		except Exception as e:
-			raise osexception( \
-				u'Failed to parse line "%s". Is there a closing quotation missing?' \
-				% u, exception=e)
 
 	def sleep(self, ms):
 
@@ -899,26 +576,3 @@ class item(object):
 
 		warnings.warn(u'item.flush_log() has been deprecated',
 			DeprecationWarning)
-
-def osreplace(exc):
-
-	"""
-	desc:
-		A replacement function to allow opensame-style replacement of unicode
-		characters.
-
-	arguments:
-		exc:
-			type:	UnicodeEncodeError
-
-	returns:
-		desc:	A (replacement, end) tuple.
-		type:	tuple
-	"""
-
-	_s = u''
-	for ch in exc.object[exc.start:exc.end]:
-		_s += u'U+%.4X' % ord(ch)
-	return _s, exc.end
-
-codecs.register_error(u'osreplace', osreplace)

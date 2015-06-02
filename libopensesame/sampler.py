@@ -53,7 +53,7 @@ class sampler(item.item, generic_response.generic_response):
 		"""Prepares for playback."""
 
 		item.item.prepare(self)
-		if self.unistr(self.var.sample).strip() == u'':
+		if safe_decode(self.var.sample).strip() == u'':
 			raise osexception(
 				u'No sample has been specified in sampler "%s"' % self.name)
 		sample = self.experiment.get_file(self.var.sample)

@@ -73,7 +73,7 @@ class srbox(item.item, generic_response.generic_response):
 		# Prepare the allowed responses
 		if u'allowed_responses' in self.var:
 			self._allowed_responses = []
-			for r in self.unistr(self.var.get("allowed_responses")).split(";"):
+			for r in safe_decode(self.var.get("allowed_responses")).split(";"):
 				if r.strip() != "":
 					try:
 						r = int(r)

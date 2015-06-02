@@ -115,11 +115,11 @@ class general_properties(base_widget):
 
 		self.main_window.set_busy(True)
 		# Set the title and the description
-		title = self.experiment.sanitize(self.header_widget.edit_name.text())
+		title = self.experiment.syntax.sanitize(self.header_widget.edit_name.text())
 		if title != self.experiment.var.title:
 			self.experiment.var.title = title
 			self.experiment.build_item_tree()
-		desc = self.experiment.sanitize(self.header_widget.edit_desc.text())
+		desc = self.experiment.syntax.sanitize(self.header_widget.edit_desc.text())
 		self.experiment.var.description = desc
 
 		# Set the backend
@@ -149,7 +149,7 @@ class general_properties(base_widget):
 				self.experiment.var.width, height)
 
 		# Set the foreground color
-		foreground = self.experiment.sanitize(self.ui.edit_foreground.text())
+		foreground = self.experiment.syntax.sanitize(self.ui.edit_foreground.text())
 		refs = []
 		try:
 			refs = self.experiment.get_refs(foreground)
@@ -162,7 +162,7 @@ class general_properties(base_widget):
 		self.experiment.var.foreground = foreground
 
 		# Set the background color
-		background = self.experiment.sanitize(self.ui.edit_background.text())
+		background = self.experiment.syntax.sanitize(self.ui.edit_background.text())
 		refs = []
 		try:
 			refs = self.experiment.get_refs(background)
@@ -223,9 +223,9 @@ class general_properties(base_widget):
 				_(u"Failed to parse the resolution. Expecting positive numeric values."))
 
 		# Set the colors
-		self.ui.edit_foreground.setText(self.experiment.unistr(
+		self.ui.edit_foreground.setText(safe_decode(
 			self.experiment.var.foreground))
-		self.ui.edit_background.setText(self.experiment.unistr(
+		self.ui.edit_background.setText(safe_decode(
 			self.experiment.var.background))
 
 		self.ui.widget_font.initialize(self.experiment)

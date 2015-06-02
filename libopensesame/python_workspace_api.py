@@ -179,25 +179,6 @@ def flush_log():
 
 	experiment.flush_log()
 
-def log(msg):
-
-	"""
-	desc:
-		Writes a message to the log file. Note that using the `log()` function
-		in combination with a `logger` item is usually a bad idea, because it
-		results in messy log files.
-
-	arguments:
-		msg:
-			desc:	A message. This can be any type and will we be converted
-					to a (unicode) string.
-
-	example: |
-		log('timestamp = %s' % time())
-	"""
-
-	experiment.log(msg)
-
 def set_response(response=None, response_time=None, correct=None):
 
 	"""

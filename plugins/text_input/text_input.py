@@ -96,7 +96,7 @@ class text_input(item.item, generic_response.generic_response):
 
 		margin = 32
 
-		question = self.eval_text(self.var.get("_question"))
+		question = self.syntax.eval_text(self.var.get("_question"))
 
 		resp = ""
 		response = ""
@@ -152,7 +152,7 @@ class text_input(item.item, generic_response.generic_response):
 			elif len(resp) == 1:
 				response += resp
 
-		self.experiment.var.set("response", self.experiment.sanitize(response))
+		self.experiment.var.set("response", self.experiment.syntax.sanitize(response))
 		self.experiment.end_response_interval = response_time
 		self.response_bookkeeping()
 

@@ -1,3 +1,4 @@
+
 #-*- coding:utf-8 -*-
 
 """
@@ -135,6 +136,23 @@ class python_workspace(object):
 		"""
 
 		exec(bytecode, self._globals)
+
+	def _eval(self, bytecode):
+
+		"""
+		desc:
+			Evaluates bytecode.
+
+		arguments:
+			bytecode:
+				desc:	A chunk of bytecode.
+				type:	code
+
+		returns:
+			The evaluated value of the bytecode
+		"""
+
+		return eval(bytecode, self._globals)
 
 	# The properties below emulate a dict interface.
 

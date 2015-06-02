@@ -17,8 +17,6 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
-from libopensesame.py3compat import *
-
 import sys
 
 if sys.version_info >= (3,0,0):
@@ -32,7 +30,24 @@ else:
 def safe_decode(s, enc='utf-8', errors='strict'):
 	if isinstance(s, str):
 		return s
-	return s.decode(enc, errors)
+	if isinstance(s, bytes):
+		return s.decode(enc, errors)
+	# Numeric values are encoded right away
+	if isinstance(s, int) or isinstance(s, float):
+		return str(s)
+	# Some types need to be converted to unicode, but require the encoding
+	# and errors parameters. Notable examples are Exceptions, which have
+	# strange characters under some locales, such as French. It even appears
+	# that, at least in some cases, they have to be encodeed to str first.
+	# Presumably, there is a better way to do this, but for now this at
+	# least gives sensible results.
+	try:
+		return safe_decode(bytes(s), enc=enc, errors=errors)
+	except:
+		pass
+	# For other types, the unicode representation doesn't require a specific
+	# encoding. This mostly applies to non-stringy things, such as integers.
+	return str(s)
 
 def safe_encode(s, enc='utf-8', errors='strict'):
 	if isinstance(s, bytes):

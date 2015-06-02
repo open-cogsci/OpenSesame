@@ -96,22 +96,19 @@ class label(widget):
 		"""
 		desc:
 			Draws text inside the widget.
-		
+
 		arguments:
 			text:
 				desc:	The text to draw.
 				type:	[str, unicode]
-		
+
 		keywords:
 			html:
 				desc:	Indicates whether HTML should be parsed.
 				type:	bool
 		"""
 
-		if self.form.item is not None:
-			text = self.form.item.eval_text(text)
-		else:
-			text = self.form.experiment.eval_text(text)
+		text = self.form.experiment.eval_text(text)
 		text = self.form.experiment.unistr(text).replace(u'\t', self.tab_str)
 		x, y, w, h = self.rect
 		if self.center:
@@ -134,4 +131,3 @@ class label(widget):
 		if self.frame:
 			self.draw_frame(self.rect)
 		self.draw_text(self.text)
-

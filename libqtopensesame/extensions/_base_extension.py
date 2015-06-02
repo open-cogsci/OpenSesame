@@ -495,7 +495,7 @@ class base_extension(base_subcomponent):
 				control.setValue(value)
 				control.editingFinished.connect(self.apply_settings_widget)
 			else:
-				control = QtGui.QLineEdit(self.experiment.unistr(value))
+				control = QtGui.QLineEdit(safe_decode(value))
 				control.editingFinished.connect(self.apply_settings_widget)
 			self.settings_controls[setting] = control
 			layout.addRow(label, control)

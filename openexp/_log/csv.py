@@ -56,7 +56,7 @@ class csv(log):
 
 	def write(self, msg, newline=True):
 
-		self.experiment._log.write(self.experiment.unistr(msg))
+		self._log.write(safe_decode(msg))
 		if newline:
 			self._log.write(u'\n')
 		# Flush to avoid pending write operations
@@ -74,6 +74,6 @@ class csv(log):
 		l = []
 		for var in var_list:
 			val = self.experiment.var.get(var, default=u'NA')
-			val = self.experiment.unistr(val)
+			val = safe_decode(val)
 			l.append(u'"%s"' % val.replace(u'"', u'\\"'))
 		self.write(u','.join(l))

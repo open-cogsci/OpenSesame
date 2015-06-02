@@ -60,7 +60,7 @@ class variable_inspector(base_widget):
 		i = 0
 		for var, val, item in self.experiment.var_list(filt):
 			self.ui.table_variables.insertRow(i)
-			val = self.experiment.unistr(val)
+			val = safe_decode(val)
 			self.ui.table_variables.setItem(i, 0,
 				sortable(var, u'%s_%s_%s' % (var,val,item)))
 			self.ui.table_variables.setItem(i, 1, sortable(val,

@@ -78,7 +78,7 @@ class form_base(item.item):
 		line	--	A single definition line.
 		"""
 
-		l = self.split(line.strip())
+		l = self.syntax.split(line.strip())
 		if len(l) < 6 or l[0] != u'widget':
 			return
 
@@ -167,7 +167,7 @@ class form_base(item.item):
 			# Evaluate all keyword arguments
 			w = {}
 			for var, val in _w.items():
-				w[var] = self.eval_text(val)
+				w[var] = self.syntax.eval_text(val)
 
 			_type = w[u'type']
 			col = w[u'col']

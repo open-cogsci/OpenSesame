@@ -72,7 +72,7 @@ class settings_edit(QtGui.QLineEdit, base_subcomponent):
 
 		super(settings_edit, self).__init__()
 		self.setup(main_window)
-		self.setText(self.experiment.unistr(val))
+		self.setText(safe_decode(val))
 		self.var = var
 		self.editingFinished.connect(self.apply_setting)
 
@@ -80,7 +80,7 @@ class settings_edit(QtGui.QLineEdit, base_subcomponent):
 
 		"""Apply changes"""
 
-		self.experiment.var.set(self.var, self.experiment.sanitize(self.text()))
+		self.experiment.var.set(self.var, self.experiment.syntax.sanitize(self.text()))
 
 class settings_widget(base_widget):
 

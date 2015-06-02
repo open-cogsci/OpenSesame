@@ -67,7 +67,7 @@ class color_edit(base_widget):
 			Picks a color with the colorpicker dialog.
 		"""
 
-		color = self.experiment.colorpicker(self.experiment.sanitize(
+		color = self.experiment.colorpicker(self.experiment.syntax.sanitize(
 			self.text()))
 		if color is None:
 			return

@@ -21,20 +21,6 @@ from libopensesame.py3compat import *
 
 import re
 
-# Strict no-variables is used to remove all characters except
-# alphanumeric ones
-sanitize_strict_novars = re.compile(r'[^\w]')		
-
-# Strict with variables is used to remove all characters except
-# alphanumeric ones and [] signs that indicate variables
-sanitize_strict_vars = re.compile(r'[^\w\[\]]')		
-# Loose is used to remove double-quotes, slashes, and newlines
-sanitize_loose = re.compile(r'[\n\"\\]')		
-
-# Unsanitization is used to replace U+XXXX unicode notation
-unsanitize = re.compile( \
-	r'U\+([A-F0-9]{4})')
-
 # Used to find variables in a string
 find_variable = re.compile(r'\[\w+\]')
 

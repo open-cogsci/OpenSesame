@@ -198,7 +198,7 @@ class var_store(object):
 				% (var, valid, val))
 		if _eval:
 			object.__setattr__(self, u'__lock__', var)
-			val = self.__item__.eval_text(val)
+			val = self.__item__.syntax.eval_text(val)
 			object.__setattr__(self, u'__lock__', None)
 		if isinstance(val, bool):
 			if val:
