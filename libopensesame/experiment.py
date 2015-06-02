@@ -160,7 +160,8 @@ class experiment(item.item):
 		# This is some duplication of the option parser in qtopensesame,
 		# but nevertheless keep it so we don't need qtopensesame
 		self.debug = debug.enabled
-		string = self.open(string)
+		if string is not None:
+			string = self.open(string)
 		item.item.__init__(self, name, self, string)
 		# Default subject info
 		self.set_subject(subject_nr)

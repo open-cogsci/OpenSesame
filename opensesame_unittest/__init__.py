@@ -18,8 +18,9 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 import unittest
-from opensesame_unittest import parsing, backends, syntax, color
-unittest.main(parsing, exit=False)
-unittest.main(backends, exit=False)
-unittest.main(syntax, exit=False)
-unittest.main(color)
+from opensesame_unittest import parsing, backends, compilable, color, syntax
+
+for mod in (parsing, backends, compilable, color, syntax):
+	res = unittest.main(mod, exit=False)
+	if len(res.result.errors) > 0 or len(res.result.failures) > 0:
+		exit(1)

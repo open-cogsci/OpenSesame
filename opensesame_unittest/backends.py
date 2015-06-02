@@ -22,6 +22,7 @@ import types
 import yamldoc
 import unittest
 import inspect
+from libopensesame.py3compat import *
 
 class check_backend_argspec(unittest.TestCase):
 
@@ -45,10 +46,10 @@ class check_backend_argspec(unittest.TestCase):
 		arguments:
 			ref_cls:
 				desc:	The reference class.
-				type:	inherit
+				type:	type
 			chk_cls:
 				desc:	The implementation class.
-				type:	inherit
+				type:	type
 		"""
 
 		print(u'Starting new check ...')
@@ -62,12 +63,14 @@ class check_backend_argspec(unittest.TestCase):
 			chk_obj = getattr(chk_cls, name)
 			chk_df = yamldoc.DocFactory(chk_obj, types=[u'function'])
 			print(u'\tChecking %s ...' % chk_obj)
-			self.assertEqual(ref_df.argSpec(), chk_df.argSpec())
-			chk_src = inspect.getsource(chk_obj).strip().decode(u'utf-8')
+			# Remove keyword dictionaries from the argument specification,
+			# because these can change because of the @configurable decorator.
+			ref_argSpec = ref_df.argSpec()._replace(keywords = None)
+			chk_argSpec = chk_df.argSpec()._replace(keywords = None)
+			self.assertEqual(ref_argSpec, chk_argSpec)
+			chk_src = safe_decode(inspect.getsource(chk_obj).strip())
 			# Check whether the function has been implemented
 			self.assertNotIn(u'raise NotImplementedError()', chk_src)
-			# Check whether docstrings match
-			self.assertEqual(str(chk_df), str(ref_df))
 		print(u'Done!')
 
 	@yamldoc.validate
@@ -80,7 +83,7 @@ class check_backend_argspec(unittest.TestCase):
 		arguments:
 			category:
 				desc:	A back-end category, such as 'canvas'.
-				type:	unicode
+				type:	[unicode, str]
 			backends:
 				desc:	A list of back-end names that should be checked.
 				type:	list
@@ -91,6 +94,9 @@ class check_backend_argspec(unittest.TestCase):
 			fromlist=[u'dummy'])
 		ref_cls = getattr(ref_mod, category)
 		for backend in backends:
+			# PsychoPy and Expyriment are not Python 3 compatible
+			if py3 and backend in ['xpyriment', 'psycho']:
+				continue
 			chk_mod = __import__(u'openexp._%s.%s' % (category, backend),
 				fromlist=[u'dummy'])
 			chk_cls = getattr(chk_mod, backend)
@@ -108,9 +114,9 @@ class check_backend_argspec(unittest.TestCase):
 		self.checkBackendCategory(u'keyboard', ['legacy', 'droid', 'psycho'])
 		self.checkBackendCategory(u'mouse', ['legacy', 'droid', 'xpyriment',
 			'psycho'])
-		self.checkBackendCategory(u'sampler', ['legacy', 'gstreamer'])
-		self.checkBackendCategory(u'synth', ['legacy', 'droid'])
-
+		self.checkBackendCategory(u'sampler', ['legacy'])
+		self.checkBackendCategory(u'clock', ['legacy', 'psycho'])
+		self.checkBackendCategory(u'log', ['csv'])
 
 if __name__ == '__main__':
 	unittest.main()

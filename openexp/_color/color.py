@@ -78,11 +78,8 @@ class color(object):
 			type:	unicode
 		"""
 
-		try:
-			colorspec = int(colorspec)
+		if isinstance(colorspec, int):
 			return webcolors.rgb_to_hex((colorspec, colorspec, colorspec))
-		except:
-			pass
 		if isinstance(colorspec, tuple):
 			if len(colorspec) != 3:
 				raise osexception(
@@ -93,6 +90,11 @@ class color(object):
 						u'Invalid color specification: %s' % str(colorspec))
 			return webcolors.rgb_to_hex(colorspec)
 		if isinstance(colorspec, basestring):
+			try:
+				colorspec = int(colorspec)
+				return webcolors.rgb_to_hex((colorspec, colorspec, colorspec))
+			except:
+				pass
 			if colorspec.startswith(u'#'):
 				try:
 					return webcolors.rgb_to_hex(

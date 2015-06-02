@@ -18,73 +18,78 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
+import os
 import yamldoc
 import unittest
-import os
+from libopensesame.experiment import experiment
+from libopensesame.exceptions import osexception
 
 class check_syntax(unittest.TestCase):
 
 	"""
-	desc: |
-		Checks whether all `.py` files can be compiled.
+	desc:
+		Checks whether OpenSesame syntax is correctly parsed
 	"""
 
+	def checkCmd(self, s, cmd, arglist, kwdict):
 
-	@yamldoc.validate
-	def checkFile(self, path):
+		print(u'Checking: %s' % s)
+		_cmd, _arglist, _kwdict = self.exp.syntax.parse_cmd(s)
+		self.assertTrue(cmd == _cmd)
+		self.assertTrue(arglist == _arglist)
+		self.assertTrue(kwdict == _kwdict)
 
-		"""
-		desc:
-			Checks the syntax of a single `.py` source file.
+	def checkEvalText(self, sIn, sOut):
 
-		arguments:
-			path:
-				desc:	The full path to the file.
-				type:	[str, unicode]
-		"""
+		print(u'Checking: %s -> %s' % (sIn, sOut))
+		self.assertTrue(self.exp.syntax.eval_text(sIn) == sOut)
 
-		print(u'Checking file %s' % path)
-		src = open(path).read()
-		compile(src, u'<string>', u'exec')
+	def checkCnd(self, sIn, sOut):
 
-	@yamldoc.validate
-	def checkFolder(self, root):
+		print(u'Checking: %s -> %s' % (sIn, sOut))
+		self.assertTrue(
+			self.exp.syntax.compile_cond(sIn, bytecode=False) == sOut)
 
-		"""
-		desc:
-			Checks the syntax of all `.py` source files within a folder.
-
-		arguments:
-			root:
-				desc:	The directory to start from.
-				type:	[str, unicode]
-		"""
-
-		for dirpath, dirnames, filenames in os.walk(root):
-			for dirname in dirnames:
-				path = os.path.join(dirpath, dirname)
-				self.checkFolder(path)
-			for filename in filenames:
-				if not filename.endswith(u'.py'):
-					continue
-				path = os.path.join(dirpath, filename)
-				self.checkFile(path)
 
 	def runTest(self):
 
 		"""
 		desc:
-			Checks the syntax of all `.py` source files.
+			Walk through the test
 		"""
 
-		for folder in [
-			u'plugins',
-			u'extensions',
-			u'libqtopensesame',
-			u'libopensesame',
-			u'openexp'
-			]:
-			self.checkFolder(folder)
+		self.exp = experiment()
+		self.checkCmd(u'widget 0 0 1 1 label text="Tést 123"',
+			u'widget', [u'0', u'0', u'1', u'1', u'label'],
+			{u'text' : u'Tést 123'})
+		self.checkCmd(u'test', u'test',	[], {})
+		self.checkCmd(u'test "\\"quoted\\""',
+			u'test', [u'\"quoted\"'], {})
+		self.checkCmd(u'test test="\\"quoted\\""', u'test',	[],
+			{u'test' : u'\"quoted\"'},)
+		with self.assertRaises(osexception):
+			print(u'Testing exception ...')
+			self.checkCmd(u'widget 0 0 1 1 label text="Tést 123',
+				u'widget', [u'0', u'0', u'1', u'1', u'label'],
+				{u'text' : u'Tést 123'})
+		self.checkEvalText(u'[width]', u'1024')
+		self.checkEvalText(u'[no var]', u'[no var]')
+		self.checkEvalText(u'[nóvar]', u'[nóvar]')
+		self.checkEvalText(u'\[width]', u'\[width]')
+		self.checkEvalText(u'[width] x [height]', u'1024 x 768')
+		self.checkEvalText(u'[=10*10]', u'100')
+		self.checkEvalText(u'\[=10*10]', u'\[=10*10]')
+		self.checkEvalText(u'[=u"tést"]', u'tést')
+		self.checkEvalText(u'[="\[test\]"]', u'[test]')
+		self.checkCnd(u'[width] > 100', u'var.width > 100')
+		self.checkCnd(u'always', u'True')
+		self.checkCnd(u'ALWAYS', u'True')
+		self.checkCnd(u'never', u'False')
+		self.checkCnd(u'NEVER', u'False')
+		self.checkCnd(u'[width] = 1024', u'var.width == 1024')
+		self.checkCnd(u'[width] = 1024 and [height] == 768',
+			u'var.width == 1024 and var.height == 768')
+		self.checkCnd(u'=var.width > 100', u'var.width > 100')
 
 if __name__ == '__main__':
 	unittest.main()

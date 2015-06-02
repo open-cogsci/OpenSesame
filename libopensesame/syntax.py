@@ -46,18 +46,18 @@ class syntax(object):
 		# - Start with a letter or underscore
 		# - Consists only of letters, numbers, or underscores, except for
 		# - The last character, which is an equals sign
-		self.re_cmd = re.compile(ur'\A[_a-zA-Z]+[_a-zA-Z0-9]*=')
+		self.re_cmd = re.compile(r'\A[_a-zA-Z]+[_a-zA-Z0-9]*=')
 		# A regular expression to match [variables] in text
-		self.re_txt = re.compile(ur'(?<!\\)(\[[_a-zA-Z]+[_a-zA-Z0-9]*\])')
+		self.re_txt = re.compile(r'(?<!\\)(\[[_a-zA-Z]+[_a-zA-Z0-9]*\])')
 		# A regular expression to match inline Python statements, like so:
 		# [=10*10]
 		# [\[test\]]
-		self.re_txt_py = re.compile(ur'(?<!\\)(\[=.*?[^\\]\])')
+		self.re_txt_py = re.compile(r'(?<!\\)(\[=.*?[^\\]\])')
 		# Catch single equals signs
-		self.re_single_eq = re.compile(ur'(?<!=)(=)(?!=)')
+		self.re_single_eq = re.compile(r'(?<!=)(=)(?!=)')
 		# Catch 'never' and 'always'
-		self.re_never = re.compile(ur'\bnever\b', re.I)
-		self.re_always = re.compile(ur'\balways\b', re.I)
+		self.re_never = re.compile(r'\bnever\b', re.I)
+		self.re_always = re.compile(r'\balways\b', re.I)
 		# Strict no-variables is used to remove all characters except
 		# alphanumeric ones
 		self.re_sanitize_strict_novars = re.compile(r'[^\w]')
@@ -95,7 +95,7 @@ class syntax(object):
 		except Exception as e:
 			raise osexception(
 				u'Failed to parse line "%s". Is there a closing quotation missing?' \
-				% u, exception=e)
+				% s, exception=e)
 
 	def parse_cmd(self, cmd):
 
@@ -121,7 +121,7 @@ class syntax(object):
 			type:	tuple
 		"""
 
-		l = self.syntax.split(cmd)
+		l = self.split(cmd)
 		if len(l) == 0:
 			return None, [], {}
 		cmd = l[0]
@@ -177,7 +177,8 @@ class syntax(object):
 		# Detect Python inlines [=10*10]
 		for var in self.re_txt_py.findall(txt):
 			py = var[2:-1].replace(u'\[', u'[').replace(u'\]', u']')
-			txt = txt.replace(var, self.experiment.python_workspace._eval(py))
+			val = self.experiment.python_workspace._eval(py)
+			txt = txt.replace(var, safe_decode(val))
 		return txt
 
 	def compile_cond(self, cnd, bytecode=True):
