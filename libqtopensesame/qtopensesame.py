@@ -28,7 +28,6 @@ from libopensesame.exceptions import osexception
 import libopensesame.experiment
 import libopensesame.plugins
 import libopensesame.misc
-import os.path
 import os
 import sys
 import warnings

@@ -72,13 +72,13 @@ class check_syntax(unittest.TestCase):
 			self.checkCmd(u'widget 0 0 1 1 label text="Tést 123',
 				u'widget', [u'0', u'0', u'1', u'1', u'label'],
 				{u'text' : u'Tést 123'})
-		self.checkEvalText(u'[width]', u'1024')
+		self.checkEvalText(r'\\[width] = \[width] = [width]', u'\[width] = [width] = 1024')
 		self.checkEvalText(u'[no var]', u'[no var]')
 		self.checkEvalText(u'[nóvar]', u'[nóvar]')
-		self.checkEvalText(u'\[width]', u'\[width]')
+		self.checkEvalText(u'\[width]', u'[width]')
 		self.checkEvalText(u'[width] x [height]', u'1024 x 768')
 		self.checkEvalText(u'[=10*10]', u'100')
-		self.checkEvalText(u'\[=10*10]', u'\[=10*10]')
+		self.checkEvalText(u'\[=10*10]', u'[=10*10]')
 		self.checkEvalText(u'[=u"tést"]', u'tést')
 		self.checkEvalText(u'[="\[test\]"]', u'[test]')
 		self.checkCnd(u'[width] > 100', u'var.width > 100')

@@ -23,8 +23,9 @@ from openexp._color.color import color
 import libopensesame.experiment
 import libopensesame.plugins
 from libqtopensesame.misc.qtitem_store import qtitem_store
+from libqtopensesame.misc.qtsyntax import qtsyntax
 from PyQt4 import QtCore, QtGui
-import os.path
+import os
 
 class experiment(libopensesame.experiment.experiment):
 
@@ -73,10 +74,11 @@ class experiment(libopensesame.experiment.experiment):
 		self.core_items = [u"loop", u"sequence", u"sketchpad", u"feedback",
 			u"sampler", u"synth", u"keyboard_response", u"mouse_response",
 			u"logger", u"inline_script"]
-		items = qtitem_store(self)
+		self.items = qtitem_store(self)
+		self._syntax = qtsyntax(self)
 		libopensesame.experiment.experiment.__init__(self, name, string,
-			pool_folder, items=items, experiment_path=experiment_path,
-			resources=resources, fullscreen=None)
+			pool_folder, experiment_path=experiment_path, resources=resources,
+			fullscreen=None)
 
 	def help(self, name):
 

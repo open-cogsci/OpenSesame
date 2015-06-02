@@ -20,6 +20,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 import shlex
 import re
 import codecs
+import os
 from libopensesame.exceptions import osexception
 from libopensesame.py3compat import *
 
@@ -166,20 +167,25 @@ class syntax(object):
 			return txt
 		if round_float:
  			float_template = u'%%.%sf' % self.experiment.var.round_decimals
-		# Detect regular [variables]
-		for var in self.re_txt.findall(txt):
-			val = self.experiment.var.get(var[1:-1])
+		while True:
+			m = self.re_txt.search(txt)
+			if m is None:
+				break
+			val = self.experiment.var.get(m.group()[1:-1])
 			if round_float and isinstance(val, float):
 				val = float_template % val
 			else:
 				val = safe_decode(val)
-			txt = txt.replace(var, val)
+			txt = txt[:m.start(0)] + val + txt[m.end(0):]
 		# Detect Python inlines [=10*10]
-		for var in self.re_txt_py.findall(txt):
-			py = var[2:-1].replace(u'\[', u'[').replace(u'\]', u']')
+		while True:
+			m = self.re_txt_py.search(txt)
+			if m is None:
+				break
+			py = self.unescape(m.group()[2:-1])
 			val = self.experiment.python_workspace._eval(py)
-			txt = txt.replace(var, safe_decode(val))
-		return txt
+			txt = txt[:m.start(0)] + safe_decode(val) + txt[m.end(0):]
+		return self.unescape(txt)
 
 	def compile_cond(self, cnd, bytecode=True):
 
@@ -212,8 +218,12 @@ class syntax(object):
 			cnd = cnd[1:]
 		else:
 			# Replace [variables] by var.variables
-			for var in self.re_txt.findall(cnd):
-				cnd = cnd.replace(var, u'var.%s' % var[1:-1])
+			while True:
+				m = self.re_txt.search(cnd)
+				if m is None:
+					break
+				cnd = cnd[:m.start()] + u'var.%s' % m.group()[1:-1] \
+					+ cnd[m.end():]
 			# Replace single equals signs (=) by doubles (==)
 			cnd = self.re_single_eq.sub(u'==', cnd)
 			# Replace always and never words by True or False
@@ -225,7 +235,11 @@ class syntax(object):
 			except:
 				raise osexception(
 					u"'%s' is not a valid conditional statement" % cnd)
-		return cnd
+		return self.unescape(cnd)
+
+	def unescape(self, s):
+
+		return s.replace(u'\[', u'[').replace(u'\]', u']')
 
 	def sanitize(self, s, strict=False, allow_vars=True):
 

@@ -63,15 +63,6 @@ class feedpad(object):
 
 		self.sketchpad_widget.ui.edit_duration.setFocus()
 
-	def eval_text(self, s, round_float=True):
-
-		"""
-		desc:
-			Re-implemented to avoid text evaluation.
-		"""
-
-		return s
-
 	def edit_widget(self):
 
 		"""

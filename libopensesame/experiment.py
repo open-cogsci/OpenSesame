@@ -25,12 +25,11 @@ from libopensesame.syntax import syntax
 from libopensesame.exceptions import osexception
 from libopensesame import misc, item, debug
 from libopensesame.py3compat import *
-import os.path
+import os
 import shutil
 import time
 import tarfile
 import tempfile
-import codecs
 import warnings
 
 class experiment(item.item):
@@ -42,8 +41,7 @@ class experiment(item.item):
 
 	def __init__(self, name=u'experiment', string=None, pool_folder=None,
 		experiment_path=None, fullscreen=False, auto_response=False,
-		logfile=u'defaultlog.csv', subject_nr=0, items=None, workspace=None,
-		resources={}):
+		logfile=u'defaultlog.csv', subject_nr=0, workspace=None, resources={}):
 
 		"""
 		desc:
@@ -79,10 +77,6 @@ class experiment(item.item):
 			subject_nr:
 				desc:	The subject number.
 				type:	int
-			items:
-				desc:	An `item_store` object to be used for storing items
-						internally, or `None` to create a new item store.
-				type:	[item_store, NoneType]
 			workspace:
 				desc:	A `python_workspace` object to be used for executing
 						custom Python code, or `None` to create a new workspace.
@@ -95,11 +89,12 @@ class experiment(item.item):
 
 		self.var = var_store(self)
 		self.pool = file_pool_store(self, folder=pool_folder)
-		self._syntax = syntax(self)
-		if items is None:
+		# The _syntax and items objects may already have been created by
+		# libqtopensesame.experiment.
+		if not hasattr(self, u'_syntax'):
+			self._syntax = syntax(self)
+		if not hasattr(self, u'items'):
 			self.items = item_store(self)
-		else:
-			self.items = items
 		if workspace is None:
 			self._python_workspace = python_workspace(self)
 		else:
