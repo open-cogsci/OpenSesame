@@ -29,18 +29,9 @@ class loop(item.item):
 
 	description = u'Repeatedly runs another item'
 
-	def __init__(self, name, experiment, string = None):
+	def reset(self):
 
-		"""
-		Constructor.
-
-		Arguments:
-		name		--	The name of the item.
-		experiment 	--	The experiment.
-
-		Keyword arguments:
-		string		--	An item definition string (default=None).
-		"""
+		"""See item."""
 
 		self.cycles = 1
 		self.repeat = 1
@@ -49,8 +40,7 @@ class loop(item.item):
 		self.matrix = {}
 		self.order = u'random'
 		self.item = u''
-		self.break_if = u''
-		item.item.__init__(self, name, experiment, string)
+		self.break_if = u'never'
 
 	def from_string(self, string):
 
@@ -61,6 +51,9 @@ class loop(item.item):
 		string 		--	An item definition string.
 		"""
 
+		self.variables = {}
+		self.comments = []
+		self.reset()
 		for i in string.split(u'\n'):
 			self.parse_variable(i)
 			# Extract the item to run
@@ -86,6 +79,8 @@ class loop(item.item):
 	def run(self):
 
 		"""Runs the loop."""
+
+		self.set_item_onset()
 
 		# Prepare the break if condition
 		if self.break_if != u'':
@@ -186,7 +181,7 @@ class loop(item.item):
 		A definition string.
 		"""
 
-		s = item.item.to_string(self, u'loop')
+		s = super(loop, self).to_string()
 		for i in self.matrix:
 			for var in self.matrix[i]:
 				s += u'\tsetcycle %d %s "%s"\n' % (i, var, self.matrix[i][var])
@@ -212,4 +207,3 @@ class loop(item.item):
 		for var in var_list:
 			l.append( (var, u'[' + u', '.join(var_list[var]) + u']'))
 		return l
-

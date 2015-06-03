@@ -20,7 +20,7 @@ along with openexp.  If not, see <http://www.gnu.org/licenses/>.
 import pygame
 import pyglet
 import math
-import openexp._canvas.legacy
+from openexp._canvas import canvas
 from libopensesame.exceptions import osexception
 from libopensesame import debug, html
 try: # Try both import statements
@@ -36,15 +36,20 @@ except:
 	raise osexception(
 		u'Failed to import PsychoPy, probably because it is not (correctly) installed. For installation instructions, please visit http://www.psychopy.org/.')
 if not hasattr(visual, u'ImageStim'):
-	raise osexception( \
+	raise osexception(
 		u'PsychoPy is missing the ImageStim() class. Please update your version of PsychoPy! For installation instructions, please visit http://www.psychopy.org/.')
 if not hasattr(visual, u'GratingStim'):
-	raise osexception( \
+	raise osexception(
 		u'PsychoPy is missing the GratingStim() class. Please update your version of PsychoPy! For installation instructions, please visit http://www.psychopy.org/.')
 
-class psycho(openexp._canvas.legacy.legacy):
+class psycho(canvas.canvas):
 
-	"""This is a canvas backend built on top of PsychoPy (with Pyglet)"""
+	"""
+	desc:
+		This is a canvas backend built on top of PsychoPy (with Pyglet).
+		For function specifications and docstrings, see
+		`openexp._canvas.canvas`.
+	"""
 
 	# The settings variable is used by the GUI to provide a list of back-end
 	# settings
@@ -76,10 +81,8 @@ class psycho(openexp._canvas.legacy.legacy):
 			}
 		}
 
-	def __init__(self, experiment, bgcolor=None, fgcolor=None, auto_prepare= \
-		True):
-
-		"""See openexp._canvas.legacy"""
+	def __init__(self, experiment, bgcolor=None, fgcolor=None,
+		auto_prepare=True):
 
 		self.experiment = experiment
 		self.html = html.html()
@@ -111,8 +114,6 @@ class psycho(openexp._canvas.legacy.legacy):
 
 	def color(self, color):
 
-		"""See openexp._canvas.legacy"""
-
 		if type(color) in (tuple, list):
 			# PsycoPy want tuples to be between 0 and 1, so we normalize the
 			# tuple if the format is incorrect (i.e. 0-255).
@@ -126,17 +127,7 @@ class psycho(openexp._canvas.legacy.legacy):
 				color = r,g,b
 		return color
 
-	def flip(self, x=True, y=False):
-
-		"""See openexp._canvas.legacy"""
-
-		# TODO
-		raise osexception( \
-			u"openexp._canvas.psycho.flip(): the flip() function has not been implemented for the psycho back-end!")
-
 	def copy(self, canvas):
-
-		"""See openexp._canvas.legacy"""
 
 		self.stim_list = canvas.stim_list + []
 		self.bgcolor = canvas.bgcolor
@@ -145,16 +136,12 @@ class psycho(openexp._canvas.legacy.legacy):
 
 	def show(self):
 
-		"""See openexp._canvas.legacy"""
-
 		for stim in self.stim_list:
 			stim.draw()
 		self.experiment.window.flip(clearBuffer = True)
 		return 1000.0 * self.experiment.clock.getTime()
 
 	def clear(self, color=None):
-
-		"""See openexp._canvas.legacy"""
 
 		self.stim_list = []
 		if color != None:
@@ -164,75 +151,56 @@ class psycho(openexp._canvas.legacy.legacy):
 		if self.experiment.background != color:
 			# The background is simply a rectangle, because of the double flip
 			# required by set_color()
-			self.rect(0, 0, self.experiment.width, self.experiment.height, \
+			self.rect(0, 0, self.experiment.width, self.experiment.height,
 				color=color, fill=True)
 
-	def circle(self, x, y, r, fill=False, color=None):
-
-		"""See openexp._canvas.legacy"""
-
-		self.ellipse(x-r, y-r, 2*r, 2*r, fill = fill, color = color)
-
-	def line(self, sx, sy, ex, ey, color=None):
-
-		"""See openexp._canvas.legacy"""
-
+	def line(self, sx, sy, ex, ey, color=None, penwidth=None):
 
 		if color == None:
 			color = self.fgcolor
-		self.shapestim( [[sx, sy], [ex, ey]], color = color)
+		self.shapestim( [[sx, sy], [ex, ey]], color=color, penwidth=penwidth)
 
-	def rect(self, x, y, w, h, fill=False, color=None):
-
-		"""See openexp._canvas.legacy"""
+	def rect(self, x, y, w, h, fill=False, color=None, penwidth=None):
 
 		if color == None:
 			color = self.fgcolor
 		else:
 			color = self.color(color)
-
 		if not fill:
-			self.shapestim( [[x, y], [x+w, y], [x+w, y+h], [x, y+h]], color, \
-				close=True)
+			self.shapestim( [[x, y], [x+w, y], [x+w, y+h], [x, y+h]], color,
+				close=True, penwidth=penwidth)
 		else:
 			pos = x + w/2 - self.xcenter(), self.ycenter() - y - h/2
-			stim = visual.GratingStim(win=self.experiment.window, pos=pos, \
+			stim = visual.GratingStim(win=self.experiment.window, pos=pos,
 				size=[w, h], color=color, tex=None, interpolate=False)
 			self.stim_list.append(stim)
 
-	def ellipse(self, x, y, w, h, fill=False, color=None):
+	def ellipse(self, x, y, w, h, fill=False, color=None, penwidth=None):
 
-		"""See openexp._canvas.legacy"""
-
+		if penwidth == None:
+			penwidth = self.penwidth
 		if color != None:
 			color = self.color(color)
 		else:
 			color = self.fgcolor
-
 		pos = x - self.xcenter() + w/2, self.ycenter() - y - h/2
-
 		stim = visual.GratingStim(win=self.experiment.window, mask=u'circle', \
 			pos=pos, size=[w, h], color=color, tex=None, interpolate=True)
 		self.stim_list.append(stim)
-
 		if not fill:
 			stim = visual.GratingStim(win = self.experiment.window, \
-				mask=u'circle', pos=pos, size=[w-2*self.penwidth, \
-				h-2*self.penwidth], color=self.bgcolor, tex=None, \
+				mask=u'circle', pos=pos, size=[w-2*penwidth, \
+				h-2*penwidth], color=self.bgcolor, tex=None, \
 				interpolate=True)
 			self.stim_list.append(stim)
 
-	def polygon(self, vertices, fill=False, color=None):
+	def polygon(self, vertices, fill=False, color=None, penwidth=None):
 
-		"""See openexp._canvas.legacy"""
+		self.shapestim(vertices, fill=fill, color=color, fix_coor=True,
+			close=True, penwidth=penwidth)
 
-		self.shapestim(vertices, fill=fill, color=color, fix_coor=True, \
-			close=True)
-
-	def set_font(self, style=None, size=None, italic=None, bold=None, \
+	def set_font(self, style=None, size=None, italic=None, bold=None,
 		underline=None):
-
-		"""See openexp._canvas.legacy"""
 
 		if style != None:
 			# If a font is taken from the file pool, it is not registered with
@@ -240,12 +208,10 @@ class psycho(openexp._canvas.legacy.legacy):
 			if self.experiment.file_in_pool(u'%s.ttf' % style):
 				font_path = self.experiment.get_file(u'%s.ttf' % style)
 				register_font(font_path)
-		openexp._canvas.legacy.legacy.set_font(self, style=style, size=size, \
-			italic=italic, bold=bold, underline=underline)
+		super(psycho, self).set_font(style=style, size=size, italic=italic,
+			bold=bold, underline=underline)
 
-	def text_size(self, text):
-
-		"""See openexp._canvas.legacy"""
+	def _text_size(self, text):
 
 		self._text(text, 0, 0)
 		s = self.stim_list.pop()
@@ -254,29 +220,18 @@ class psycho(openexp._canvas.legacy.legacy):
 
 	def _text(self, text, x, y):
 
-		"""See openexp._canvas.legacy"""
-
 		if self.font_style in self.font_map:
 			font = self.font_map[self.font_style]
 		else:
 			font = self.font_style
 		pos = x - self.xcenter(), self.ycenter() - y
-		stim = visual.TextStim(win=self.experiment.window, text=text, \
-			alignHoriz=u'left', alignVert=u'top', pos=pos, color=self.fgcolor, \
+		stim = visual.TextStim(win=self.experiment.window, text=text,
+			alignHoriz=u'left', alignVert=u'top', pos=pos, color=self.fgcolor,
 			font=font, height= self.font_size, wrapWidth= \
 			self.experiment.width, bold=self.font_bold, italic=self.font_italic)
 		self.stim_list.append(stim)
 
-	def textline(self, text, line, color=None):
-
-		"""See openexp._canvas.legacy"""
-
-		self.text(text, True, self.xcenter(), self.ycenter() + 1.5 * line * \
-			self.font_size, color = color)
-
 	def image(self, fname, center=True, x=None, y=None, scale=None):
-
-		"""See openexp._canvas.legacy"""
 
 		im = Image.open(fname)
 
@@ -296,14 +251,12 @@ class psycho(openexp._canvas.legacy.legacy):
 			y += h/2
 		pos = x - self.xcenter(), self.ycenter() - y
 
-		stim = visual.ImageStim(win=self.experiment.window, image=fname, \
+		stim = visual.ImageStim(win=self.experiment.window, image=fname,
 			pos=pos, size=(w,h))
 		self.stim_list.append(stim)
 
-	def gabor(self, x, y, orient, freq, env=u"gaussian", size=96, stdev=12, \
-		phase=0, col1=u"white", col2=None, bgmode=None):
-
-		"""See openexp._canvas.legacy"""
+	def gabor(self, x, y, orient, freq, env=u"gaussian", size=96, stdev=12,
+		phase=0, col1=u"white", col2=u'black', bgmode=u'avg'):
 
 		pos = x - self.xcenter(), self.ycenter() - y
 		_env, _size, s = self.env_to_mask(env, size, stdev)
@@ -311,10 +264,8 @@ class psycho(openexp._canvas.legacy.legacy):
 			mask=_env, size=_size, sf=freq, phase=phase, color=col1)
 		self.stim_list.append(p)
 
-	def noise_patch(self, x, y, env=u"gaussian", size=96, stdev=12, \
+	def noise_patch(self, x, y, env=u"gaussian", size=96, stdev=12,
 		col1=u"white", col2=u"black", bgmode=u"avg"):
-
-		"""See openexp._canvas.legacy"""
 
 		pos = x - self.xcenter(), self.ycenter() - y
 		_env, _size, s = self.env_to_mask(env, size, stdev)
@@ -326,22 +277,25 @@ class psycho(openexp._canvas.legacy.legacy):
 	def env_to_mask(self, env, size, stdev):
 
 		"""
-		* Note: Specific to the PsychoPy backend, primarily intended for
-				internal use. Using this function directly will break your
-				experiment when switching backends.
+		desc:
+			Converts an envelope name to a PsychoPy mask. Also returns the
+			appropriate patch size and the smallest power-of-two size
 
-		Converts an envelope name to a PsychoPy mask. Also returns the
-		appropriate patch size and the smallest power-of-two size
+			__Note:__
 
-		Arguments:
-		env -- an envelope name
-		size -- a size value
+			Specific to the PsychoPy backend, primarily intended for internal
+			use. Using this function directly will break your experiment when
+			switching backends.
 
-		Returns:
-		A (psychopy_mask, mask_size, power_of_two_size) tuple
+		arguments:
+			env:	An envelope name.
+			size:	A size value.
+
+		returns:
+			A (psychopy_mask, mask_size, power_of_two_size) tuple.
 		"""
 
-		env = openexp._canvas.legacy._match_env(env)
+		env = canvas._match_env(env)
 
 		# Get the smallest power-of-two size
 		i = 2
@@ -368,25 +322,29 @@ class psycho(openexp._canvas.legacy.legacy):
 			_size = size
 		return	(_env, _size, s)
 
-	def shapestim(self, vertices, color=None, fill=False, fix_coor=True, \
-		close=False):
+	def shapestim(self, vertices, color=None, fill=False, fix_coor=True,
+		close=False, penwidth=None):
 
 		"""
-		* Note: Specific to the PsychoPy backend, primarily intended for
-				internal use. Using this function directly will break your
-				experiment when switching backends.
+		desc:
+			Draws a stimulus definied by a list of vertices
 
-		Draws a stimulus definied by a list of vertices
+			__Note:__
 
-		Arguments:
-		vertices -- A list of lists, like [[0,0],[10,10]] containing the
-					vertices of the shape
+			Specific to the PsychoPy backend, primarily intended for internal
+			use. Using this function directly will break your experiment when
+			switching backends.
 
-		Keyword arguments:
-		color -- the color of the shape
-		fill -- a boolean indicating wether the shape should be filles
-		fix_coor -- a boolean indicating whether the vertices are in OpenSesame
-					or PsychoPy format
+		arguments:
+			vertices:	A list of lists, like [[0,0],[10,10]] containing the
+						vertices of the shape
+
+		keywords:
+			color:		The color of the shape.
+			fill:		A boolean indicating wether the shape should be filled.
+			fix_coor:	A boolean indicating whether the vertices are in
+						OpenSesame or PsychoPy format.
+			penwidth:	The penwidth.
 		"""
 
 		if fix_coor:
@@ -404,15 +362,12 @@ class psycho(openexp._canvas.legacy.legacy):
 			fill = color
 		else:
 			fill = None
-
-		stim = visual.ShapeStim(self.experiment.window, units="pix", \
-			lineWidth=self.penwidth, vertices=_vertices, lineColor=color, \
+		if penwidth == None:
+			penwidth = self.penwidth
+		stim = visual.ShapeStim(self.experiment.window, units="pix",
+			lineWidth=penwidth, vertices=_vertices, lineColor=color,
 			closeShape=close, fillColor=fill, interpolate=False)
 		self.stim_list.append(stim)
-
-"""
-Static methods
-"""
 
 # Store the experiment as a singleton, to be used in the _time() function
 _experiment = None
@@ -422,8 +377,6 @@ _old_gamma = None
 _registered_fonts = []
 
 def init_display(experiment):
-
-	"""See openexp._canvas.legacy"""
 
 	global _experiment, _old_gamma
 	_experiment = experiment
@@ -472,8 +425,6 @@ def init_display(experiment):
 
 def close_display(experiment):
 
-	"""See openexp._canvas.legacy"""
-
 	global _old_gamma
 	# Restore display gamma if necessary
 	if _old_gamma != None:
@@ -489,11 +440,12 @@ def close_display(experiment):
 def register_font(font_path):
 
 	"""
-	Register a font with PyGlet. If the font has already been registered, this
-	function does nothing.
+	desc:
+		Register a font with PyGlet. If the font has already been registered,
+		this function does nothing.
 
-	Arguments:
-	font_path	--	The full path to the font file.
+	arguments:
+		font_path:	The full path to the font file.
 	"""
 
 	global _registered_fonts
@@ -505,24 +457,36 @@ def register_font(font_path):
 
 def _time():
 
-	"""See openexp._canvas.legacy"""
+	"""
+	desc:
+		A time function.
+
+	returns:
+		The current time in milliseconds.
+	"""
 
 	global _experiment
 	return 1000.0*_experiment.clock.getTime()
 
 def _sleep(ms):
 
-	"""See openexp._canvas.legacy"""
+	"""
+	desc:
+		A sleep function.
+
+	arguments:
+		ms:		A sleep duration in milliseconds.
+	"""
 
 	core.wait(.001*ms)
 
 def _psychopy_clean_quit():
 
 	"""
-	When PsychoPy encounters an error, it does a sys.exit() which is not what
-	we want, because it closes OpenSesame altogether. Instead, we nicely inform
-
-	the user that PsychoPy has signalled an error.
+	desc:
+		When PsychoPy encounters an error, it does a sys.exit() which is not
+		what we want, because it closes OpenSesame altogether. Instead, we
+		nicely inform the user that PsychoPy has signalled an error.
 	"""
 
 	raise osexception( \

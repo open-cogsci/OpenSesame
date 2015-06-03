@@ -18,16 +18,19 @@ along with openexp.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame.exceptions import osexception
-import openexp._keyboard.legacy
+from openexp._keyboard import keyboard
 from psychopy import event
 import pyglet.window.key
 
-class psycho(openexp._keyboard.legacy.legacy):
+class psycho(keyboard.keyboard):
 
 	"""
-	This is a canvas backend that uses PsychoPy
+	desc:
+		This is a keyboard backend built on top of PsychoPy.
+		For function specifications and docstrings, see
+		`openexp._keyboard.keyboard`.
 	"""
-	
+
 	# The keymap is an incomplete attempt at translating keys from the PyGame 
 	# names to the names used by PsychoPy
 	keymap = {
@@ -60,19 +63,15 @@ class psycho(openexp._keyboard.legacy.legacy):
 
 	def __init__(self, experiment, keylist=None, timeout=None):
 
-		"""See openexp._keyboard.legacy"""
-
-		if experiment.canvas_backend != "psycho":
-			raise osexception( \
-				"The psycho keyboard backend must be used in combination with the psycho canvas backend!")
-
+		if experiment.canvas_backend != u"psycho":
+			raise osexception(
+				u"The psycho keyboard backend must be used in combination with "
+				u"the psycho canvas backend!")
 		self.experiment = experiment
 		self.set_keylist(keylist)
-		self.set_timeout(timeout)				
+		self.set_timeout(timeout)
 
 	def valid_keys(self):
-
-		"""See openexp._keyboard.legacy"""
 
 		l = []
 		for i in dir(pyglet.window.key):
@@ -80,35 +79,7 @@ class psycho(openexp._keyboard.legacy.legacy):
 				l.append(i)
 		return l
 
-	def set_keylist(self, keylist=None):
-
-		"""See openexp._keyboard.legacy"""
-
-		if keylist == None:
-			self._keylist = None
-		else:
-			_keylist = []
-			for key in keylist:
-				if key in self.keymap:
-					_keylist.append(self.keymap[key])
-				else:				
-					if not hasattr(pyglet.window.key, key.upper()) and not \
-						hasattr(pyglet.window.key, "NUM_%s" % key):
-						raise osexception( \
-							"The key '%s' is not recognized by the psycho keyboard backend. Please refer to <a href='http://pyglet.org/doc/api/pyglet.window.key-module.html'>http://pyglet.org/doc/api/pyglet.window.key-module.html</a> for a list of valid keys." \
-							% key)
-					_keylist.append(key)
-			self._keylist = _keylist
-
-	def set_timeout(self, timeout=None):
-
-		"""See openexp._keyboard.legacy"""
-
-		self.timeout = timeout
-
 	def get_key(self, keylist=None, timeout=None):
-
-		"""See openexp._keyboard.legacy"""
 
 		if keylist == None:
 			keylist = self._keylist
@@ -129,9 +100,8 @@ class psycho(openexp._keyboard.legacy.legacy):
 			for key, time in keys:
 				time *= 1000.0
 				if key == "escape":
-					raise osexception( \
-						"The escape key was pressed.")
-				elif keylist == None or key in keylist:				
+					raise osexception("The escape key was pressed.")
+				elif keylist == None or key in keylist:
 					return key, time
 			if timeout != None and time-start_time >= timeout:
 				break
@@ -140,22 +110,11 @@ class psycho(openexp._keyboard.legacy.legacy):
 
 	def get_mods(self):
 
-		"""See openexp._keyboard.legacy"""
-
 		# TODO: Accept moderator keys
 		return []
 
-	def shift(self, key):
-
-		"""See openexp._keyboard.legacy"""
-
-		# TODO: Accept moderator keys
-		return key
-
 	def synonyms(self, key):
 
-		"""See openexp._keyboard.legacy"""
-		
 		# Respond correctly if a keycode is passed, rather than a Unicode string
 		# key description.
 		if type(key) == int:
@@ -166,12 +125,14 @@ class psycho(openexp._keyboard.legacy.legacy):
 		
 		# Sanity check
 		if not isinstance(key, basestring):
-			raise osexception( \
-				'Key names should be string or numeric, not %s' % type(key))
+			raise osexception('Key names should be string or numeric, not %s' \
+				% type(key))
 		
 		# Make a list of all conceivable ways that a key might be referred to.
-		l = [key, key.upper()]
-		if key.upper() != key.lower():
+		l = [key]
+		if key != key.upper():
+			l.append(key.upper())
+		if key != key.lower():
 			l.append(key.lower())
 		for char, name in self.keymap.items():
 			if key == char:
@@ -191,13 +152,10 @@ class psycho(openexp._keyboard.legacy.legacy):
 
 	def flush(self):
 
-		"""See openexp._keyboard.legacy"""
-
 		keypressed = False
 		for key in event.getKeys():
 			if key == "escape":
-				raise osexception( \
-					"The escape key was pressed.")
+				raise osexception("The escape key was pressed.")
 			keypressed = True
 		return keypressed
 

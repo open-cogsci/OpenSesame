@@ -21,8 +21,8 @@ import os
 import os.path
 import sys
 
-version = u'2.8.1'
-codename = u'Gutsy Gibson'
+version = u'2.9.6'
+codename = u'Hesitant Heisenberg'
 
 use_global_resources = '--no-global-resources' not in sys.argv
 from libopensesame import debug
@@ -103,7 +103,7 @@ def opensesamerun_options():
 
 	# Set the default logfile based on the subject nr
 	if options.logfile == None:
-		options.logfile = u"subject%s.csv" % options.subject
+		options.logfile = u"subject-%s.csv" % options.subject
 
 	if len(sys.argv) > 1 and os.path.exists:
 		options.experiment = sys.argv[1]
@@ -264,7 +264,7 @@ def opensesame_folder():
 		path = os.path.dirname(sys.executable).decode( \
 			sys.getfilesystemencoding())
 	else:
-		# To get the opensesame folder, simply jump to levels up
+		# To get the opensesame folder, simply jump to level up
 		path = os.path.dirname(__file__).decode( \
 			sys.getfilesystemencoding())
 		path = os.path.normpath(os.path.join(path, u'..'))
@@ -305,7 +305,7 @@ def module_versions():
 	# QProgEdit
 	try:
 		import QProgEdit
-		s += u'\nQProgedit %s' % QProgEdit.version
+		s += u'\nQProgedit %s' % QProgEdit.__version__
 	except:
 		s += u'\nQProgEdit is not available'
 
@@ -353,6 +353,13 @@ def module_versions():
 		s += u"\nPyGame %s" % pygame.ver
 	except:
 		s += u"\nPyGame not available (or version is unknown)"
+
+	# PyGaze
+	try:
+		import pygaze
+		s += u'\nPyGaze %s' % pygaze.version
+	except:
+		s += u'\nPyGaze is not available'
 
 	# Pyglet
 	try:

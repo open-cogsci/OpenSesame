@@ -20,23 +20,20 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 from PyQt4 import QtCore, QtGui
 import sip
 from libqtopensesame.misc import _
-from libqtopensesame.ui.backend_settings_ui import \
-	Ui_widget_backend_settings
+from libqtopensesame.widgets.base_widget import base_widget
+from libqtopensesame.misc.base_subcomponent import base_subcomponent
 
-class backend_settings(QtGui.QWidget):
+class backend_settings(base_widget):
 
 	def __init__(self, main_window):
-	
-		self.main_window = main_window
-		QtGui.QWidget.__init__(self, main_window)
-		self.ui = Ui_widget_backend_settings()
-		self.ui.setupUi(self)
-		self.main_window.theme.apply_theme(self)
+
+		super(backend_settings, self).__init__(main_window,
+			ui=u'widgets.backend_settings')
 		self.tab_name = '__backend_settings__'
-		
+
 		for backend_type in ["canvas", "keyboard", "mouse", "synth", \
 			"sampler"]:
-			backend = self.main_window.experiment.get("%s_backend" \
+			backend = self.experiment.get("%s_backend" \
 				% backend_type)
 			backend_module = __import__(u'openexp._%s.%s' % (backend_type, \
 				backend), fromlist=[u'dummy'])
@@ -56,14 +53,14 @@ class backend_settings(QtGui.QWidget):
 				label.setText(_("No settings for %s") % backend)
 			else:
 				label.setText(_("Settings for %s:") % backend)
-				layout.addWidget(settings_widget( \
-					self.main_window.experiment, _backend.settings, self))
-					
-class settings_edit(QtGui.QLineEdit):
+				layout.addWidget(settings_widget(self.main_window,
+					_backend.settings))
+
+class settings_edit(QtGui.QLineEdit, base_subcomponent):
 
 	"""An edit widget for a single variable"""
 
-	def __init__(self, experiment, var, val, parent=None):
+	def __init__(self, main_window, var, val):
 
 		"""
 		Constructor
@@ -77,10 +74,10 @@ class settings_edit(QtGui.QLineEdit):
 		parent -- parent QWidget (default=None)
 		"""
 
-		QtGui.QLineEdit.__init__(self, experiment.unistr(val))
-		self._parent = parent
+		super(settings_edit, self).__init__()
+		self.setup(main_window)
+		self.setText(self.experiment.unistr(val))
 		self.var = var
-		self.experiment = experiment
 		self.editingFinished.connect(self.apply_setting)
 
 	def apply_setting(self):
@@ -88,13 +85,12 @@ class settings_edit(QtGui.QLineEdit):
 		"""Apply changes"""
 
 		self.experiment.set(self.var, self.experiment.sanitize(self.text()))
-		self._parent._parent.main_window.refresh()
 
-class settings_widget(QtGui.QWidget):
+class settings_widget(base_widget):
 
 	"""A widget containing a number of settings"""
 
-	def __init__(self, experiment, settings, parent=None):
+	def __init__(self, main_window, settings):
 
 		"""
 		Constructor
@@ -107,9 +103,7 @@ class settings_widget(QtGui.QWidget):
 		parent -- parent QWidget (default=None)
 		"""
 
-		QtGui.QWidget.__init__(self, parent)
-		self._parent = parent
-		self.experiment = experiment
+		super(settings_widget, self).__init__(main_window)
 		self.settings = settings
 		self.layout = QtGui.QFormLayout(self)
 		self.layout.setFieldGrowthPolicy(QtGui.QFormLayout.FieldsStayAtSizeHint)
@@ -118,9 +112,10 @@ class settings_widget(QtGui.QWidget):
 			if self.experiment.has(var):
 				val = self.experiment.get(var)
 			else:
-				val = desc["default"]
+				val = desc[u"default"]
 			label = QtGui.QLabel()
-			label.setText("%(name)s<br /><small><i>%(description)s</i></small>" % desc)
+			label.setText(
+				u"%(name)s<br /><small><i>%(description)s</i></small>" % desc)
 			label.setTextFormat(QtCore.Qt.RichText)
-			edit = settings_edit(self.experiment, var, val, self)
+			edit = settings_edit(self.main_window, var, val)
 			self.layout.addRow(label, edit)

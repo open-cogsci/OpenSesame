@@ -18,47 +18,50 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from PyQt4 import QtCore, QtGui, QtWebKit
+from libqtopensesame.widgets.base_widget import base_widget
 from libopensesame import debug
-from libqtopensesame.ui import webbrowser_widget_ui
 import os.path
 import sys
 
 class small_webview(QtWebKit.QWebView):
 
 	"""
-	A wrapper around QWebView too override the sizeHint, which prevents the
-	browser from resizing to small sizes
+	desc:
+		A wrapper around QWebView too override the sizeHint, which prevents the
+		browser from resizing to small sizes.
 	"""
 
 	def sizeHint(self):
 
 		"""
-		Give size hint
+		desc:
+			Gives a size hint.
 
-		Returns:
-		A QSize
+		returns:
+			A QSize
 		"""
 
 		return QtCore.QSize(100,100)
 
-class webbrowser(QtGui.QWidget):
+class webbrowser(base_widget):
 
-	"""A simple browser tab"""
+	"""
+	desc:
+		A browser widget used to display online and offline help pages.
+	"""
 
-	def __init__(self, parent):
+	def __init__(self, main_window):
 
 		"""
-		Constructor
+		desc:
+			Constructor.
 
-		Keyword arguments:
-		parent -- the parent QWidget (default=None)
+		keywords:
+			main_window:	A qtopensesame object.
 		"""
 
-		QtGui.QWidget.__init__(self, parent)
-		self.main_window = parent
-		self.ui = webbrowser_widget_ui.Ui_webbrowser_widget()
-		self.ui.setupUi(self)
-
+		super(webbrowser, self).__init__(main_window,
+			ui=u'widgets.webbrowser_widget')
 		self.ui.webview = small_webview(self)
 		self.ui.webview.loadProgress.connect(self.update_progressbar)
 		self.ui.webview.loadStarted.connect(self.load_started)
@@ -73,10 +76,11 @@ class webbrowser(QtGui.QWidget):
 	def load(self, url):
 
 		"""
-		Load a webpage
+		desc:
+			Loads a webpage.
 
-		Arguments:
-		url -- the webpage to load
+		arguments:
+			url:	The url to load.
 		"""
 
 		if url.endswith(u'.md'):
@@ -97,41 +101,60 @@ class webbrowser(QtGui.QWidget):
 
 	def load_finished(self):
 
-		"""Hide the statusbar to indicate that loading is finished"""
+		"""
+		desc:
+			Hides the statusbar to indicate that loading is finished.
+		"""
 
 		self.ui.label_load_progress.setText(u'Done')
 
 	def update_progressbar(self, progress):
 
 		"""
-		Update the progressbar to indicate the load progress
+		desc:
+			Updates the progressbar to indicate the load progress.
 
-		Arguments:
-		progress -- the load progress
+		arguments:
+			progress:	The load progress.
 		"""
 
 		self.ui.label_load_progress.setText(u'%d%%' % progress)
 
 	def load_started(self):
 
-		"""Show the statusbar to indicate that loading has started"""
+		"""
+		desc:
+			Shows the statusbar to indicate that loading has started.
+		"""
 
 		self.ui.label_load_progress.setText(u'Starting ...')
 
 	def open_osdoc(self):
 
-		"""Open osdoc.cogsci.nl"""
+		"""
+		desc:
+			Opens osdoc.cogsci.nl.
+		"""
 
 		self.load(u'http://osdoc.cogsci.nl/')
 
 	def open_forum(self):
 
-		"""Open forum.cogsci.nl"""
+		"""
+		desc:
+			Opens forum.cogsci.nl.
+		"""
 
 		self.load(u'http://forum.cogsci.nl/')
 
 	def url_changed(self, url):
 
-		"""Update the url bat"""
+		"""
+		desc:
+			Updates the url bar.
+
+		arguments:
+			url:	A url string.
+		"""
 
 		self.ui.edit_url.setText(url.toString())

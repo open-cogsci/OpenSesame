@@ -26,7 +26,7 @@ import os.path
 from PyQt4 import QtGui, QtCore
 
 class form_multiple_choice(item.item):
-	
+
 	description = u'A simple multiple choice item'
 
 	def __init__(self, name, experiment, string=None):
@@ -41,7 +41,7 @@ class form_multiple_choice(item.item):
 		Keyword arguments:
 		string		--	A definition string. (default=None)
 		"""
-		
+
 		self.options = u'Yes\nNo\nMaybe'
 		self.question = u'Your question'
 		self.form_title = u'Form title'
@@ -49,20 +49,25 @@ class form_multiple_choice(item.item):
 		self.advance_immediately = u'yes'
 		self.allow_multiple = u'yes'
 		self.button_text = u'Ok'
+		self.spacing = 10
+		self.margins = u'50;50;50;50'
+		self._theme = u'gray'
 		item.item.__init__(self, name, experiment, string)
-		
+
 	def run(self):
-		
+
 		"""Run the item"""
-		
+
 		# Parse the option list
 		option_list = self.get(u'options').split(u'\n') # split by return
-		option_list.pop(len(option_list)-1) # remove last (empty) option
+		# Filter out empty options
+		option_list = filter(lambda option: option != u'', option_list)
+		# option_list.pop(len(option_list)-1) # remove last (empty) option
 		if len(option_list) == 0:
 			raise osexception( \
 				u'You must specify at least one response option in form_multiple_choice item "%s"' \
 				% self.name)
-			
+
 		# Determine whether a button is shown and determine the number of rows
 		rows = len(option_list) + 2
 		if self.get(u'advance_immediately') == u'no' or \
@@ -73,18 +78,25 @@ class form_multiple_choice(item.item):
 		else:
 			show_button = False
 			click_accepts = True
-			
+
 		# Determine the group for the checkboxes
 		if self.get(u'allow_multiple') == u'no':
 			group = u'response_group'
 		else:
-			group = None			
-			
+			group = None
+
 		# The variable in which the response is stored
 		var = self.get(u'form_var')
-		
+
 		# Build the form
-		form = widgets.form(self.experiment, cols=1, rows=rows)		
+		try:
+			margins = [float(i) for i in unicode(self.margins).split(u';')]
+		except:
+			raise osexception( \
+				_(u'margins should be numeric values separated by a semi-colon'))
+		form = widgets.form(self.experiment, cols=1, rows=rows,
+			spacing=self.get(u'spacing'), margins=margins,
+			theme=self.get(u'_theme'), item=self)
 		form.set_widget(widgets.label(form, self.get(u'form_title')), (0,0))
 		form.set_widget(widgets.label(form, self.get(u'question')), (0,1))
 		i = 2
@@ -98,18 +110,18 @@ class form_multiple_choice(item.item):
 
 		# Go!
 		form._exec()
-		
+
 	def var_info(self):
-		
+
 		"""
 		Return a list of dictionaries with variable descriptions
 
 		Returns:
 		A list of (name, description) tuples
 		"""
-		
+
 		return item.item.var_info(self) + \
-			[(self.get(u'form_var'), u'[Depends on response]')]
+			[(u'form_var', u'[Depends on response]')]
 
 class qtform_multiple_choice(form_multiple_choice, qtautoplugin):
 
@@ -127,11 +139,11 @@ class qtform_multiple_choice(form_multiple_choice, qtautoplugin):
 		Keyword arguments:
 		string		--	A definition string. (default=None)
 		"""
-		
+
 		form_multiple_choice.__init__(self, name, experiment, string)
 		qtautoplugin.__init__(self, __file__)
 		self.custom_interactions()
-		
+
 	def apply_edit_changes(self):
 
 		"""Apply the controls"""
@@ -140,17 +152,15 @@ class qtform_multiple_choice(form_multiple_choice, qtautoplugin):
 			return False
 		self.custom_interactions()
 		return True
-	
+
 	def custom_interactions(self):
-		
+
 		"""
 		The advance_immediately option is not applicable if multiple items can
 		be selected.
 		"""
-		
+
 		self.checkbox_advance_immediately.setEnabled(self.get( \
 			u'allow_multiple') == u'no')
 		self.line_edit_button_text.setEnabled(self.get(u'allow_multiple') == \
 			u'yes' or self.get(u'advance_immediately') == u'no')
-		
-

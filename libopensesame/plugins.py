@@ -19,11 +19,12 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 
 import os
 import sys
-import json
+import yaml
 from libopensesame import debug, misc
+from libopensesame.exceptions import osexception
 
 # Caching variables
-_list = None
+_plugin_dict = {}
 _folders = {}
 _properties = {}
 
@@ -33,33 +34,40 @@ _properties = {}
 src_templates = [u'%s.py']
 bytecode_templates = [u'%s.pyo', u'%s.pyc']
 
-def plugin_folders(only_existing=True):
+def plugin_folders(only_existing=True, _type=u'plugins'):
 
 	"""
-	Returns a list of plugin folders.
+	desc:
+		Returns a list of plugin folders.
 
-	Keywords arguments:
-	only_existing	--	Specifies if only existing folders should be returned.
-						(default=True)
+	keywords:
+		only_existing:
+			desc:	Specifies if only existing folders should be returned.
+			type:	bool
+		_type:
+			desc:	Indicates whether runtime plugins ('plugins') or GUI
+					extensions ('extensions') should be listed.
+			type:	[str, unicode]
 
-	Returns:
-	A list of folders.
+	returns:
+		desc:	A list of folders.
+		type:	list
 	"""
 
 	l = []
 
 	# For all platforms, the plugins folder relative to the working directory
 	# should be searched
-	path = os.path.join(os.getcwdu(), u'plugins')
+	path = os.path.join(os.getcwdu(), _type)
 	if not only_existing or os.path.exists(path):
 		l.append(path)
 
 	if os.name == u'posix' and u'HOME' in os.environ:
 		# Regular Linux distributions. TODO: How well does this apply to Mac OS?
-		path = os.path.join(os.environ[u'HOME'], u'.opensesame', u'plugins')
+		path = os.path.join(os.environ[u'HOME'], u'.opensesame', _type)
 		if not only_existing or os.path.exists(path):
 			l.append(path)
-		path = u'/usr/share/opensesame/plugins'
+		path = u'/usr/share/opensesame/%s' % _type
 		if not only_existing or os.path.exists(path):
 			l.append(path)
 
@@ -67,20 +75,20 @@ def plugin_folders(only_existing=True):
 		# Android can be recognized by the fact that the HOME variable is not
 		# available. We can simply use the relative path `plugins`, which will
 		# (always?) point to `/data/data/nl.cogsci.nl/opensesame/files/plugins`
-		path = u'plugins'
+		path = _type
 		if not only_existing or os.path.exists(path):
 			l.append(path)
 
 	elif os.name == u'nt':
 		# Windows
-		path = os.path.join(os.environ[u'APPDATA'].decode( \
-			misc.filesystem_encoding()), u'.opensesame', u'plugins')
+		path = os.path.join(os.environ[u'APPDATA'].decode(
+			misc.filesystem_encoding()), u'.opensesame', _type)
 		if not only_existing or os.path.exists(path):
 			l.append(path)
 
 	return l
 
-def is_plugin(item_type):
+def is_plugin(item_type, _type=u'plugins'):
 
 	"""
 	Checks if a given item type corresponds to a plugin.
@@ -89,9 +97,9 @@ def is_plugin(item_type):
 	True if the item_type is a plugin, False otherwise.
 	"""
 
-	return plugin_folder(item_type) != None
+	return plugin_folder(item_type, _type=_type) != None
 
-def plugin_disabled(plugin):
+def plugin_disabled(plugin, _type=u'plugins'):
 
 	"""
 	Checks if a plugin has been disabled. If the config module cannot be loaded
@@ -105,9 +113,9 @@ def plugin_disabled(plugin):
 	"""
 
 	from libqtopensesame.misc import config
-	return plugin in config.get_config(u'disabled_plugins').split(u';')
+	return plugin in config.get_config(u'disabled_%s' % _type).split(u';')
 
-def plugin_property(plugin, _property, default=0):
+def plugin_property(plugin, _property, default=0, _type=u'plugins'):
 
 	"""
 	Returns a property of a plug-in.
@@ -123,41 +131,67 @@ def plugin_property(plugin, _property, default=0):
 	The property value.
 	"""
 
+	return plugin_properties(plugin, _type=_type).get(_property, default)
+
+def plugin_properties(plugin, _type=u'plugins'):
+
+	"""
+	desc:
+		Gets the info dictionary for a plugin.
+
+	arguments:
+		plugin:		The plugin name.
+		_type:		The plugin type (i.e. 'plugins' or 'extensions').
+
+	returns:
+		An info dictionary.
+	"""
+
 	global _properties
-	if plugin in _properties and _property in _properties[plugin]:
-		return _properties[plugin][_property]
-	if plugin not in _properties:
-		_properties[plugin] = {}
-	info_txt = os.path.join(plugin_folder(plugin), u'info.txt')
-	info_json = os.path.join(plugin_folder(plugin), u'info.json')
-	# New-style plug-ins, using info.json
-	if os.path.exists(info_json):
+	if plugin in _properties:
+		return _properties[plugin]
+	folder = plugin_folder(plugin, _type=_type)
+	info_txt = os.path.join(folder, u'info.txt')
+	info_yaml = os.path.join(folder, u'info.yaml')
+	# For backwards compatibility, also look for a .json file. These can be
+	# processed just like a .yaml file, because json is a yaml subset, with the
+	# exception of allow tab-based indentation (see below).
+	if not os.path.exists(info_yaml):
+		info_yaml = os.path.join(folder, u'info.json')
+	# New-style plug-ins, using info.yaml
+	if os.path.exists(info_yaml):
+		# Read the yaml file and replace all tabs by spaces. This is necessary,
+		# because yaml doesn't accept tab-based indentation, whereas json does.
+		s = open(info_yaml).read().decode(u'utf-8')
+		s = s.replace(u'\t', u'    ')
 		try:
-			_json = json.load(open(info_json))
+			_properties[plugin] = yaml.load(s)
 		except:
-			debug.msg(u'Failed to parse %s' % info_json)
-			_json = {}
-		if _property in _json:
-			return _json[_property]
+			debug.msg(u'Failed to parse %s' % info_yaml)
+			_properties[plugin] = {}
 	# Old-style plug-ins, using info.txt
 	elif os.path.exists(info_txt):
+		_properties[plugin] = {}
 		for l in open(info_txt, u'r'):
 			a = l.split(":")
-			if len(a) == 2 and a[0] == _property:
+			if len(a) == 2:
 				val = a[1].strip()
+				var = a[0].strip()
 				try:
 					val = int(val)
-				finally:
-					_properties[plugin][_property] = val
-					return val
-		_properties[plugin][_property] = default
+				except:
+					pass
+				_properties[plugin][var] = val
 	else:
+		_properties[plugin] = {}
 		debug.msg( \
 			u'Failed to read plug-in information (%s) from info.[txt|json]' \
-			% plugin)
-	return default
+			% plugin, reason=u'warning')
+	_properties[plugin][u'plugin_folder'] = folder
+	_properties[plugin][u'type'] = _type
+	return _properties[plugin]
 
-def plugin_category(plugin):
+def plugin_category(plugin, _type=u'plugins'):
 
 	"""
 	Returns the category of a plugin.
@@ -166,9 +200,10 @@ def plugin_category(plugin):
 	A category.
 	"""
 
-	return plugin_property(plugin, u'category', default=u'Miscellaneous')
+	return plugin_property(plugin, u'category', default=u'Miscellaneous',
+		_type=_type)
 
-def list_plugins(filter_disabled=True):
+def list_plugins(filter_disabled=True, _type=u'plugins'):
 
 	"""
 	Returns a list of plugins.
@@ -177,26 +212,25 @@ def list_plugins(filter_disabled=True):
 	A list of plugins (item_types).
 	"""
 
-	global _list
-	if _list != None:
-		return [plugin for plugin in _list if not (filter_disabled and \
-			plugin_disabled(plugin))]
-
+	global _plugin_dict
+	if _type in _plugin_dict:
+		return [plugin for plugin in _plugin_dict[_type] \
+			if not (filter_disabled and plugin_disabled(plugin, _type=_type))]
 	plugins = []
-	for folder in plugin_folders():
+	for folder in plugin_folders(_type=_type):
 		for plugin in os.listdir(folder):
-			if is_plugin(plugin):
-				_plugin = plugin, plugin_property(plugin, u'priority')
+			if is_plugin(plugin, _type=_type):
+				_plugin = plugin, plugin_property(plugin, u'priority',
+					_type=_type)
 				if _plugin not in plugins:
 					plugins.append(_plugin)
-
 	# Sort (inversely) by priority
 	plugins.sort(key=lambda p: -p[1])
-	_list = [plugin[0] for plugin in plugins]
-	return [plugin for plugin in _list if not (filter_disabled and \
-		plugin_disabled(plugin))]
-	
-def plugin_folder(plugin):
+	_plugin_dict[_type] = [plugin[0] for plugin in plugins]
+	return [plugin for plugin in _plugin_dict[_type] \
+		if not (filter_disabled and plugin_disabled(plugin, _type=_type))]
+
+def plugin_folder(plugin, _type=u'plugins'):
 
 	"""
 	Returns the folder of a plugin
@@ -212,7 +246,7 @@ def plugin_folder(plugin):
 
 	if plugin in _folders:
 		return _folders[plugin]
-	for folder in plugin_folders():
+	for folder in plugin_folders(_type=_type):
 		plugin = str(plugin)
 		for tmpl in src_templates + bytecode_templates:
 			if os.path.exists(os.path.join(folder, plugin, tmpl % plugin)):
@@ -221,7 +255,7 @@ def plugin_folder(plugin):
 				return f
 	return None
 
-def plugin_icon_large(plugin):
+def plugin_icon_large(plugin, _type=u'plugins'):
 
 	"""
 	Return the large icon for a plugin
@@ -233,9 +267,10 @@ def plugin_icon_large(plugin):
 	The full path to an icon
 	"""
 
-	return os.path.join(plugin_folder(plugin), u'%s_large.png' % plugin)
+	return os.path.join(plugin_folder(plugin, _type=_type),
+		u'%s_large.png' % plugin)
 
-def plugin_icon_small(plugin):
+def plugin_icon_small(plugin, _type=u'plugins'):
 
 	"""
 	Return the small icon for a plugin
@@ -247,9 +282,9 @@ def plugin_icon_small(plugin):
 	The full path to an icon
 	"""
 
-	return os.path.join(plugin_folder(plugin), u'%s.png' % plugin)
+	return os.path.join(plugin_folder(plugin, _type=_type), u'%s.png' % plugin)
 
-def import_plugin(plugin):
+def import_plugin(plugin, _type=u'plugins'):
 
 	"""
 	Imports plugin module
@@ -260,18 +295,20 @@ def import_plugin(plugin):
 
 	import imp
 	plugin = str(plugin)
+	folder = plugin_folder(plugin, _type=_type)
 	for tmpl in src_templates:
-		if os.path.exists(os.path.join(plugin_folder(plugin), tmpl % plugin)):
-			path = os.path.join(plugin_folder(plugin), tmpl % plugin).encode( \
+		if os.path.exists(os.path.join(folder, tmpl % plugin)):
+			path = os.path.join(folder, tmpl % plugin).encode(
 				misc.filesystem_encoding())
 			return imp.load_source(plugin, path)
 	for tmpl in bytecode_templates:
-		if os.path.exists(os.path.join(plugin_folder(plugin), tmpl % plugin)):
-			path = os.path.join(plugin_folder(plugin), tmpl % plugin).encode( \
+		if os.path.exists(os.path.join(folder, tmpl % plugin)):
+			path = os.path.join(folder, tmpl % plugin).encode(
 				misc.filesystem_encoding())
 			return imp.load_compiled(plugin, path)
 
-def load_plugin(plugin, item_name, experiment, string, prefix=u''):
+def load_plugin(plugin, item_name, experiment, string, prefix=u'',
+	_type=u'plugins'):
 
 	"""
 	Returns an instance of the plugin.
@@ -290,8 +327,80 @@ def load_plugin(plugin, item_name, experiment, string, prefix=u''):
 	An item (plugin instance).
 	"""
 
-	item_module = import_plugin(plugin)
+	sys.path.append(plugin_folder(plugin, _type=_type))
+	item_module = import_plugin(plugin, _type=_type)
 	item_class = getattr(item_module, prefix+plugin)
 	item = item_class(item_name, experiment, string)
 	return item
 
+def load_extension(ext_name, main_window):
+
+	"""
+	desc:
+		Creates an instance of an extension.
+
+	arguments:
+		ext_name:		The extension name.
+		main_window:	The main window object.
+
+	returns:
+		An extension object.
+	"""
+
+	sys.path.append(plugin_folder(ext_name, _type=u'extensions'))
+	mod = import_plugin(ext_name, _type=u'extensions')
+	cls = getattr(mod, ext_name)
+	ext = cls(main_window, info=plugin_properties(ext_name,
+		_type=u'extensions'))
+	return ext
+
+def load_cls(path, cls, mod, pkg=None):
+
+	"""
+	Dynamically loads a module from a path and return a class from the module
+
+	Arguments:
+	path		--	A folder or file name. If a filename is specified, the
+					file's directory will be used as path.
+	cls			--	The class name.
+	mod			--	The name of a module, which corresponds to the name of the
+					source file without the `.py` extension.
+	pkg			--	The module's package. This is effectively a subfolder that
+					is added to the path. (default=None)
+
+	Returns:
+	A Python class.
+	"""
+
+	mod = load_mod(path, mod, pkg)
+	return getattr(mod, cls)
+
+def load_mod(path, mod, pkg=None):
+
+	"""
+	Dynamically loads a module from a path.
+
+	Arguments:
+	path		--	A folder or file name. If a filename is specified, the
+					file's directory will be used as path.
+	mod			--	The name of a module, which corresponds to the name of the
+					source file without the `.py` extension.
+	pkg			--	The module's package. This is effectively a subfolder that
+					is added to the path. (default=None)
+
+	Returns:
+	A Python module.
+	"""
+
+	import imp
+	if isinstance(path, str):
+		path = path.decode(sys.getfilesystemencoding())
+	if not os.path.isdir(path):
+		path = os.path.dirname(path)
+	if pkg != None:
+		path = os.path.join(path, pkg)
+	path = os.path.join(path, mod+u'.py')
+	if not os.path.exists(path):
+		raise osexception(u'%s does not exist' % path)
+	debug.msg(u'loading module from %s' % path)
+	return imp.load_source(mod, path.encode(sys.getfilesystemencoding()))

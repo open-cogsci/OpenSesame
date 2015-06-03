@@ -90,9 +90,9 @@ class pyterm(code.InteractiveConsole):
 
 		"""Constructor"""
 
-		global modules
-
-		self._locals = {u'modules' : modules, u'parent' : parent}
+		self._locals = {}
+		self.parent = parent
+		self.set_workspace_globals()
 		code.InteractiveConsole.__init__(self, self._locals)
 		self.textedit = textedit
 
@@ -109,6 +109,50 @@ class pyterm(code.InteractiveConsole):
 			s = s.decode(u'utf-8', u'replace')
 		print(s.replace(u'\n', u''))
 
+	def set_workspace_globals(self, _globals={}):
+
+		"""
+		desc:
+			Updates the globals dictionary for the console's workspace.
+
+		keywords:
+			_globals:
+				desc:	A globals dictionary
+				type:	dict
+		"""
+
+		global modules
+		self._locals.clear()
+		self._locals[u'modules'] = modules
+		self._locals[u'qtopensesame'] = self.get_qtopensesame
+		self._locals[u'cfg'] = self.get_cfg
+		self._locals.update(_globals)
+
+	def get_qtopensesame(self):
+
+		"""
+		desc:
+			A getter for the main window.
+
+		returns:
+			type:	qtopensesame
+		"""
+
+		return self.parent.parent().parent().parent()
+
+	def get_cfg(self):
+
+		"""
+		desc:
+			A getter for the config object.
+
+		returns:
+			type:	config
+		"""
+
+		from libqtopensesame.misc.config import cfg
+		return cfg
+
 class console(QtGui.QPlainTextEdit):
 
 	"""A nice console widget"""
@@ -123,12 +167,11 @@ class console(QtGui.QPlainTextEdit):
 		"""
 
 		QtGui.QPlainTextEdit.__init__(self, parent)
-		self.main_window = parent
 		self.collect_input = False
 		self._input = u""
 		self.history = []
 		self.prompt = u">>> "
-		self.pyterm = pyterm(self.main_window)
+		self.pyterm = pyterm(parent)
 		self.pyterm.textedit = self
 		self.setCursorWidth(8)
 		self.setTheme()

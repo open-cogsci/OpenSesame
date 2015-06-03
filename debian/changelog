@@ -1,4 +1,196 @@
-opensesame (2.8.1-1) unstable; urgency=low
+opensesame (2.9.6-ubuntu1) vivid; urgency=medium
+
+  * Improvements
+    - Use the same default logfile in opensesamerun and opensesame
+    - srbox plug-in: turn off all lights on init
+    - srbox plug-in: don't search (non-existent) COM0 on Windows
+    - Add visual drop indicator
+  * Bugs fixed
+    - Refresh file pool when opening experiment from command line (#320)
+    - Fix unicode bugs when launching opensesame and opensesamerun from command line (#323)
+    - Inform experiment of response variables in form_base plugin (#325)
+    - Refresh variable inspector on program start
+    - Clear variables and comments before parsing item-definition strings (#324)
+    - Fix timeout issue in (deprecated) text_input plugin
+    - Fix libsrbox example docstring
+
+ -- Sebastiaan Mathot <sebastiaan@mantis>  Fri, 24 Apr 2015 13:47:31 +0200
+
+opensesame (2.9.5-ubuntu1) utopic; urgency=medium
+
+  * Bugs fixed
+    - Don't delete an item when a drop is cancelled
+    - Remove all references to deprecated keyboard.to_chr()
+    - Remove empty response options in form_multiple_choice
+    - Also rename and delete files in fallback pool folder
+    - Don't crash on invalid fixdot style in sketchpad canvas
+    - Don't crash when experiment-start item is invalid
+    - Fix a bug in image form widget that prevented dubious images from being shown
+    - Don't (re)decode unicode exception messages
+    - Convert delete key to key name in legacy keyboard back-end
+    - Re-initialize numpy random seed on experiment start
+    - Ensure proper encoding of image paths in legacy back-end
+    - Don't crash on variably defined font sizes in sketchpad widget
+    - Don't crash when pygame.PixelArray doesn't work
+    - Don't crash when loading plugin's from bytecode
+    - Don't crash on variably defined cycles in loop item
+    - Don't prepend underscore when renaming an item to the same name
+  * Improvements
+    - Explicitly notify of variable sequence preparation time
+    - Add form template
+    - Add show_cursor option to touch_response plug-in
+    - Ask for confirmation before replacing a loop's item to run
+    - Show the number of unused items in the overview area
+    - Warn when there are multiple unlinked loggers
+    - Warn when the file pool is too large
+    - Clean up old file pool when opening experiment
+    - Clean up temporary file pool when saving experiment
+    - Allow cursor movement in text-input form widget
+    - Accept numeric enter in text-input form widget
+    - Add autorun functionality to Android runtime
+    - Open tab of newly created linked and unlinked copies
+
+ -- Sebastiaan Mathot <sebastiaan@mantis>  Mon, 02 Mar 2015 13:42:35 +0100
+
+opensesame (2.9.4-ubuntu1) utopic; urgency=medium
+
+  * Bugs fixed
+    - Prevent indirect recursion errors in overview area
+    - Don't crash on empty loop item
+
+ -- Sebastiaan Mathot <sebastiaan@mantis>  Wed, 11 Feb 2015 11:34:23 +0100
+
+opensesame (2.9.3-ubuntu1) utopic; urgency=medium
+
+  * Bugs fixed
+    - Font size was specified in points instead of pixels in GUI
+    - Legacy back-end crashed when specifying system font in general properties
+    - Show arrow-size field in sketchpad
+    - Fix a bug where description changes weren't applied
+  * Improvements
+    - Allow descriptions to wrap over multiple lines for better screen use
+    - Massively improved performance for large experiments (#305)
+
+ -- Sebastiaan Mathot <sebastiaan@mantis>  Fri, 16 Jan 2015 09:59:40 +0100
+
+opensesame (2.9.2-ubuntu1) utopic; urgency=medium
+
+  * Bugs fixed
+    - Fix numeric textline elements in sketchpad (#292)
+    - 'Reset feedback variables' option restored in feedback item (#297)
+    - Safely print unicode debug output (convert to ascii)
+    - Fix unicode bug in opensesamerun gui
+    - Convert backspace key to key name (#286)
+    - Fix a bug with variably defined properties of circle elements in sketchpad GUI (#300)
+    - Fix circle properties in xpyriment back-end (#299)
+    - Fix a bug with variably defined properties of Gabor and noise patches in sketchpad GUI
+    - Fix a bug when permanently deleting an item that is present in multiple sequence items
+  * Improvements
+    - Use better fallback image in sketchpad
+    - Deprecate transparent variable management (#294)
+    - Add custom icon to debian packaging (#296)
+    - Form_base plug-in shows script by default (#298)
+    - Add custom icon to debian packaging
+    - Deprecate transparent variable management option
+    - More comprehensive translation possible
+    - Hide xpyriment-gst back-end (not ready for production)
+    - Custom cursor in sketchpad for increased visibility
+    - Indicate whether python-bidi is available in general properties tab
+    - List variables in alphabetical order in OpenSesame script
+    - Add PsychoPy API menu to help extension
+  * Translation updates
+    - German translation updated (de_DE)
+    - Add Spanish translation (es_ES)
+  * Windows packaging
+    - Include wx for PsychoPy monitor center (#295)
+    - Include quest staircase plug-ins
+
+ -- Sebastiaan Mathot <s.mathot@cogsci.nl>  Tue, 18 Nov 2014 14:02:42 +0100
+
+opensesame (2.9.1-ubuntu1) trusty; urgency=medium
+
+  * Bugs fixed
+    - Fix resetting font size and family in sketchpad (#284)
+    - Fix rounding issue in canvas._gabor() (#283)
+    - Better detection of Exception messages (#285)
+    - Fix a race condition when dropping an item on a loop or sequence
+    - Fix broken context menu in sketchpad when running a translation (#287)
+    - Correctly parse variables in video_player plug-in (#288)
+    - Use new sketchpad-element icons also in 32x32 size
+    - Fixed a bug when reducing and canceling the number of cycles in a loop
+    - Fixed display of font style in sketchpad widget
+    - Include PyQt4 plugins in Windows build
+  * Improvements
+    - Application-wide keyboard shortcuts for tab switching
+    - Add close current tab action
+    - Improved focus behavior
+  * Translation updates
+    - Update German translation (de_DE)
+
+ -- Sebastiaan Mathot <s.mathot@cogsci.nl>  Thu, 30 Oct 2014 14:43:09 +0100
+
+opensesame (2.9.0-ubuntu1) trusty; urgency=medium
+
+  * Bugs fixed
+    - The radius keyword to circle sketchpad elements now specifies radius, instead of diameter
+    - Allow non-latin text input (#280)
+    - Clean up temporary files on Windows (#282)
+    - Fix incorrect line numbers in inline_script tracebacks (#281)
+    - Fix detection of uppercase keys in psycho back-end (#271)
+    - Fix speciying synth frequency by key (#269)
+  * Improvements
+    - Rewritten sketchpad runtime
+    - Redesigned sketchpad gui
+    - Added quick-open-item feature
+    - Added toggle-item-maximization feature
+    - Converted GUI to base_component framework
+    - Back-ends now inherit from abstract class
+    - Drag-and-drop improvements
+    - Script and controls now simultaneously editable
+    - Realtime inline_script syntax checking
+    - Icon theme more standards-compliant
+    - Introduce GUI extension framework
+
+ -- Sebastiaan Mathot <s.mathot@cogsci.nl>  Thu, 17 Jul 2014 10:28:23 +0200
+
+opensesame (2.8.3-ubuntu1) trusty; urgency=medium
+
+  * Improvements
+    - Add German translation (de_DE)
+    - Add Russian translation (ru_RU)
+    - Remember experiment and logfile folders on Android (#259)
+    - Add show_virtual_keyboard() function to keyboard back-ends (#254)
+  * Bugs fixed
+    - Fix canvas.arrow() docstring
+    - canvas.text_size() respects line breaks and formatting (#262)
+    - Advanced loop settings are preserved in GUI (#263)
+
+ -- Sebastiaan Mathot <s.mathot@cogsci.nl>  Mon, 23 Jun 2014 20:59:27 +0200
+
+opensesame (2.8.2-ubuntu1) trusty; urgency=low
+
+  * Improvements
+    - Improve support for psycho back-end on OSX
+    - Improve support for multiprocessing on OSX
+    - Open experiments by dropping on the overview area
+    - Add fallback pool folder to facilitate versioning
+    - Allow margins, spacing, and theme to be specified in
+      `form_multiple_choice` plug-in (#255)
+    - Safely convert messages to unicode in `item.log()`
+    - Fall back to temporary folder when the default logfile is not writable in quickrun mode
+  * Bugs fixed
+    - Fix autosave folder dialog on OSX (#250)
+    - Fix sampler crashing on filenames with special characters (#244)
+    - All items set `time_[item name]` variables (#243)
+    - Do not crash on purely numeric text when using bi-direction language support (#253)
+    - Correctly evaluate conditional statements with special characters
+    - Fixed confusion in tab manager when saving while having an open and modified item script
+    - Fix translation bug for non-ASCII str objects
+    - Fix a unicode bug where exceptions with images with special-character paths where obscured
+
+ -- Sebastiaan Mathot <s.mathot@cogsci.nl>  Thu, 17 Apr 2014 17:14:10 +0200
+
+opensesame (2.8.1-ubuntu1) saucy; urgency=low
 
   * Bugs fixed
     - Do not choke on translations in font-selection dialog

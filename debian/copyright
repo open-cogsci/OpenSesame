@@ -84,6 +84,18 @@ License: GPL-3
  The full text of the GNU General Public License version 3 is available on
  Debian systems in /usr/share/common-licenses/GPL-3.
 
+Files: resources/ts/ru_RU.ts
+Copyright: 2014, Validimir Kosonogov
+Licenses: GPL-3
+ The full text of the GNU General Public License version 3 is available on
+ Debian systems in /usr/share/common-licenses/GPL-3.
+
+Files: resources/ts/de_DE.ts
+Copyright: 2014, Timo Lueke
+Licenses: GPL-3
+ The full text of the GNU General Public License version 3 is available on
+ Debian systems in /usr/share/common-licenses/GPL-3.
+
 Files: resources/templates/eco_alt_template.opensesame.tar.gz
 Copyright: 2012, Francisco Javier Moreno-Martinez
            2012, Pedro R. Montoro

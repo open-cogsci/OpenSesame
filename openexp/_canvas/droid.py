@@ -41,8 +41,6 @@ class droid(legacy):
 
 def init_display(experiment):
 
-	"""See openexp._canvas.legacy"""
-	
 	if experiment.resolution() != resolution:
 		raise osexception( \
 		'The droid back-end requires a resolution of %d x %d. Your display will be scaled automatically to fit devices with different resolutions.' \
@@ -91,8 +89,6 @@ def init_display(experiment):
 		android.wait_for_resume()
 
 def close_display(experiment):
-
-	"""See openexp._canvas.legacy"""
 
 	# On Android, we don't quit the display, as this appears to exit the
 	# application altogether.

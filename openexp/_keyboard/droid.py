@@ -30,18 +30,20 @@ except ImportError:
 class droid(legacy):
 
 	"""
-	Keyboard back-end for Android devices. Only changes the legacy back-end by
-	allowing Android-specific interrupts.
-	"""			
+	desc: |
+		This is a keyboard backend built on top of PyGame, adapted for Android
+		devices.
+
+		For function specifications and docstrings, see
+		`openexp._keyboard.keyboard`.
+	"""
 
 	def get_key(self, keylist=None, timeout=None):
 
-		"""See openexp._keyboard.legacy"""
-		
-		if android != None:
-			android.show_keyboard()		
+		if not self.persistent_virtual_keyboard and android != None:
+			android.show_keyboard()
 		start_time = pygame.time.get_ticks()
-		time = start_time		
+		time = start_time
 		if keylist == None:
 			keylist = self._keylist
 		if timeout == None:
@@ -52,22 +54,39 @@ class droid(legacy):
 				if event.type != pygame.KEYDOWN:
 					continue
 				if event.key == pygame.K_ESCAPE:
-					raise osexception( \
-						"The escape key was pressed.")
+					raise osexception("The escape key was pressed.")
 				# TODO The unicode mechanism that ensures compatibility between
 				# keyboard layouts doesn't work for Android, so we use key
 				# names. I'm not sure what effect this will have on non-QWERTY
 				# virtual keyboards.
-				key = pygame.key.name(event.key)
+				if android != None:
+					key = pygame.key.name(event.key)
+				else:
+					# If we're not on Android, simply use the same logic as the
+					# legacy back-end.
+					if event.unicode in invalid_unicode:
+						key = self.key_name(event.key)
+					else:
+						key = event.unicode
 				if keylist == None or key in keylist:
-					if android != None:
+					if not self.persistent_virtual_keyboard and android != None:
 						android.hide_keyboard()
-					return key, time				
+					return key, time
 			if timeout != None and time-start_time >= timeout:
 				break
 			# Allow Android interrupt
 			if android != None and android.check_pause():
 				android.wait_for_resume()
-		if android != None:
-			android.hide_keyboard()				
+		if not self.persistent_virtual_keyboard and android != None:
+			android.hide_keyboard()
 		return None, time
+
+	def show_virtual_keyboard(self, visible=True):
+
+		if android == None:
+			return
+		self.persistent_virtual_keyboard = visible
+		if visible:
+			android.show_keyboard()
+		else:
+			android.hide_keyboard()

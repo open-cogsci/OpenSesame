@@ -42,7 +42,7 @@ try:
 	shutil.rmtree("qt_menu.nib")
 except:
 	pass
-shutil.copytree("/Library/Frameworks/QtGui.framework/Resources/qt_menu.nib", "qt_menu.nib")
+shutil.copytree("/usr/local/Frameworks/QtGui.framework/Resources/qt_menu.nib", "qt_menu.nib")
 
 # Py2app doesn't like extensionless Python scripts
 try:
@@ -59,13 +59,25 @@ setup(
     data_files = ['opensesame.py'],
     options = {'py2app' : 
 			{'argv_emulation': False, 
-			 'includes' : ['sip', 'PyQt4.QtNetwork', 'pygame', 'numpy', 'serial', 'openexp', 'libqtopensesame','libopensesame','libopensesame.widgets', 'libqtopensesame.widgets', 'opensesamerun','cv','cv2'],
-			 'resources' : ['qt_menu.nib', 'qt.conf', 'resources', 'sounds', 'plugins', 'help', 'data'],
-			 'packages' : ['expyriment'],
-			 'iconfile' : 'resources/opensesame.icns',			
+			 'includes' : ['PyQt4.QtNetwork','serial','opensesamerun','skimage','sip','billiard','wx'],
+			 'excludes': ['Finder','idlelib', 'gtk', 'sqlite3', 'matplotlib', 'pandas', 'PyQt4.QtDesigner',\
+			 			  'PyQt4.QtOpenGL', 'PyQt4.QtScript', 'PyQt4.QtSql', 'PyQt4.QtTest', 'PyQt4.QtXml', 'PyQt4.phonon',\
+			 			  'rpy2',
+			 			  ],
+			 'resources' : ['qt_menu.nib', 'resources', 'sounds', 'plugins', 'extensions', 'help', 'data', 'examples'],
+			 'packages' : ['openexp','expyriment','psychopy','QProgEdit','libqtopensesame','libopensesame'],
+			 'iconfile' : 'resources/opensesame.icns',
+			 'plist': {
+				'CFBundleName': 'OpenSesame',
+				'CFBundleShortVersionString':'2.9.4',
+				'CFBundleVersion': '2.9.4',
+				'CFBundleIdentifier':'nl.cogsci.osdoc',
+				'NSHumanReadableCopyright': 'Sebastiaan Mathot (2010-2015)',
+				'CFBundleDevelopmentRegion': 'English', 	
 			}
-		   },
-    setup_requires=['py2app'],
+		}
+	},
+   	setup_requires=['py2app'],
 )
 
 # Clean up qt_menu.nib

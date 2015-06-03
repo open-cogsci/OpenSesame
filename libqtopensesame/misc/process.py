@@ -17,7 +17,16 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
-import multiprocessing
+
+
+import platform
+# In OS X the multiprocessing module is horribly broken, but a fixed
+# version has been released as the 'billiard' module
+if platform.system() == 'Darwin':
+	import billiard as multiprocessing
+	multiprocessing.forking_enable(0)
+else:
+	import multiprocessing
 
 class OutputChannel:
 

@@ -26,25 +26,15 @@ class keyboard_response(item.item, generic_response.generic_response):
 
 	description = u'Collects keyboard responses'
 
-	def __init__(self, name, experiment, string=None):
+	def reset(self):
 
-		"""
-		Constructor.
-
-		Arguments:
-		name 		--	The name of the item.
-		experiment 	--	The experiment.
-
-		Keyword arguments:
-		string		-- 	The item definition string. (default=None)
-		"""
+		"""See item."""
 
 		self.flush = u'yes'
 		self.timeout = u'infinite'
 		self.auto_response = u'space'
 		self.duration = u'keypress'
 		self.process_feedback = True
-		item.item.__init__(self, name, experiment, string)
 
 	def prepare(self):
 
@@ -68,13 +58,13 @@ class keyboard_response(item.item, generic_response.generic_response):
 		self.process_response()
 
 	def var_info(self):
-		
+
 		"""
 		Gives a list of dictionaries with variable descriptions.
 
 		Returns:
 		A list of (name, description) tuples.
-		"""		
+		"""
 
 		return item.item.var_info(self) + \
 			generic_response.generic_response.var_info(self)

@@ -31,16 +31,30 @@ class multiprocess_runner(base_runner):
 		
 		"""See base_runner.execute()."""
 		
-		import multiprocessing
+		import platform
+		# In OS X the multiprocessing module is horribly broken, but a fixed
+		# version has been released as the 'billiard' module
+		if platform.system() == 'Darwin':
+			import billiard as multiprocessing
+			multiprocessing.forking_enable(0)
+		else:
+			import multiprocessing
+	
 		from libqtopensesame.misc import process, _
 		from libopensesame import misc, debug
 		from StringIO import StringIO
-		if os.name == u'nt':
-			# Under Windows, the multiprocess runner assumes that there is a
+		if os.name == u'nt' or (sys.platform == u'darwin' and not hasattr(sys,"frozen")):
+			# Under Windows and OSX, the multiprocess runner assumes that there is a
 			# file called `opensesame.py` or `opensesame.pyc`. If this file does
 			# not exist, try to copy it from the main script (`opensesame`). If
 			# this fails, provide an informative error message.
 			os_folder = misc.opensesame_folder()
+			
+			# misc.opensesame_folder() doesn't work for OSX and returns None then, 
+			# so determine OpenSesame's rootdir in another way
+			if os_folder is None:
+				os_folder = os.path.dirname(os.path.abspath(sys.modules['__main__'].__file__))
+
 			if not os.path.exists(os.path.join(os_folder, u'opensesame.pyc')) \
 				and not os.path.exists(os.path.join(os_folder, u'opensesame.py')):
 				import shutil

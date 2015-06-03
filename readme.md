@@ -2,7 +2,7 @@
 
 *A graphical experiment builder for the social sciences*
 
-Copyright, 2010-2014, Sebastiaan Mathôt and contributors.
+Copyright, 2010-2015, Sebastiaan Mathôt and contributors.
 
 <http://www.cogsci.nl/smathot>
 
@@ -37,5 +37,3 @@ Installation instructions and documentation are available on the documentation w
 ... which is itself also hosted on GitHub:
 
 - <https://github.com/smathot/osdoc>
-
-

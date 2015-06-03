@@ -18,41 +18,43 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from PyQt4 import QtCore, QtGui
+from libqtopensesame.dialogs.base_dialog import base_dialog
 from libqtopensesame.widgets import sketchpad_widget
 
-class sketchpad_dialog(QtGui.QDialog):
+class sketchpad_dialog(base_dialog):
 
-	"""This dialog is the pop-out version of the sketchpad_widget"""
+	"""
+	desc:
+		The pop-out version of the sketchpad_widget.
+	"""
 
-	def __init__(self, parent, sketchpad):
-	
+	def __init__(self, main_window, sketchpad):
+
 		"""
-		Constructor
-		
-		Arguments:
-		parent -- parent QWidget
-		
-		Keyword arguments:
-		sketchpad -- sketchpad item
+		desc:
+			Constructor.
+
+		arguments:
+			main_window:	A qtopensesame object.
+			sketchpad:		A sketchpad object.
 		"""
-	
-		QtGui.QDialog.__init__(self, parent, \
+
+		super(sketchpad_dialog, self).__init__(main_window, flags= \
 			QtCore.Qt.WindowMinMaxButtonsHint | QtCore.Qt.WindowCloseButtonHint)
 		self.sketchpad = sketchpad
-		self.tools_widget = sketchpad_widget.sketchpad_widget(self.sketchpad, \
-			parent=self, embed=False)							
-		self.close_button = QtGui.QPushButton( \
-			self.sketchpad.experiment.icon("close"), "Close")
+		self.tools_widget = sketchpad_widget.sketchpad_widget(self.sketchpad,
+			parent=self, embed=False)
+		self.close_button = QtGui.QPushButton(self.theme.qicon(u"close"),
+			u"Close")
 		self.close_button.setIconSize(QtCore.QSize(16,16))
-		QtCore.QObject.connect(self.close_button, QtCore.SIGNAL("clicked()"), \
-			self.accept)			
+		self.close_button.clicked.connect(self.accept)
 		self.hbox = QtGui.QHBoxLayout()
 		self.hbox.addStretch()
 		self.hbox.addWidget(self.close_button)
-		self.hbox.setContentsMargins(0, 0, 0, 0)		
+		self.hbox.setContentsMargins(0, 0, 0, 0)
 		self.hbox_widget = QtGui.QWidget()
-		self.hbox_widget.setLayout(self.hbox)		
+		self.hbox_widget.setLayout(self.hbox)
 		self.vbox = QtGui.QVBoxLayout()
 		self.vbox.addWidget(self.tools_widget)
-		self.vbox.addWidget(self.hbox_widget)					
+		self.vbox.addWidget(self.hbox_widget)
 		self.setLayout(self.vbox)

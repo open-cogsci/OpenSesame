@@ -39,7 +39,7 @@ class html(HTMLParser):
 
 	valid_end_tags = u'i', u'b', u'u', u'span'
 	valid_start_tags = u'i', u'b', u'u', u'span', u'br'
-	
+
 	def handle_data(self, data):
 
 		"""
@@ -112,7 +112,7 @@ class html(HTMLParser):
 			debug.msg(u'Unrecognized tag: %s' % tag)
 
 	def render(self, text, x, y, canvas, max_width=None, center=False, \
-		color=None, bidi=False, html=True):
+		color=None, bidi=False, html=True, dry_run=False):
 
 		"""
 		Renders an HTML formatted string onto a canvas.
@@ -133,14 +133,20 @@ class html(HTMLParser):
 		bidi		--	Indicates whether bi-directional text support should be
 						enabled. (default=False)
 		html		--	Indicates whether HTML should be parsed. (default=True)
+		dry_run		--	Indicates whether a dry run should be performed, in
+						which case the size of the to-be-written text is
+						returned without modifying the canvas.
+
+		Returns:
+		None if dry_run is False, or a (width, height) tuple if dry_run is True.
 		"""
 
+		# Make sure that it's a string
+		text = canvas.experiment.unistr(text)
 		debug.msg(text)
 		# Parse bi-directional strings
 		if bidi and bidi_func != None:
 			text = bidi_func(text)
-		# Make sure that it's a string
-		text = canvas.experiment.unistr(text)
 		# Convert line breaks to HTML break tags
 		text = text.replace(os.linesep, u'<br />').replace(u'\n', u'<br />')
 
@@ -186,12 +192,15 @@ class html(HTMLParser):
 		# If we want to center the next, we need a dry run to calculate all the
 		# line lengths and determine the vertical and horizontal offset for each
 		# line
-		if center:
+		max_width = 0
+		height = 0
+		if center or dry_run:
 			l_x_offset = []
 			_y = y
 			for paragraph in self.text:
 				_x = x
-				dy = canvas.text_size(u'dummy')[1]
+				width = 0
+				dy = canvas._text_size(u'dummy')[1]
 				for word, style in paragraph:
 
 					# Set the style
@@ -200,60 +209,65 @@ class html(HTMLParser):
 						underline=style[u'underline'])
 
 					# Line wrap if we run out of the screen
-					dx, dy = canvas.text_size(word)
+					dx, dy = canvas._text_size(word)
 					if _x+dx > max_x + (max_x-x):
 						l_x_offset.append(-(_x-x)/2)
 						_x = x
 						_y += dy
-						dx = canvas.text_size(word.lstrip())[0]
+						dx = canvas._text_size(word.lstrip())[0]
 						word = word.lstrip()
 
 					# Draw!
 					_x += dx
+					width += dx
 				l_x_offset.append(-(_x-x)/2)
 				_y += dy
+				max_width = max(max_width, width)
+				height += dy
 			l_x_offset.reverse()
 			y_offset = -(_y-y)/2
-
-		# Now render it onto the canvas
-		if center:
-			_y = y+y_offset
-		else:
-			_y = y
-		for paragraph in self.text:
+		if not dry_run:
+			# Now render it onto the canvas
 			if center:
-				_x = x+l_x_offset.pop()
+				_y = y+y_offset
 			else:
-				_x = x
-			dy = canvas.text_size(u'dummy')[1]
-			for word, style in paragraph:
+				_y = y
+			for paragraph in self.text:
+				if center:
+					_x = x+l_x_offset.pop()
+				else:
+					_x = x
+				dy = canvas._text_size(u'dummy')[1]
+				for word, style in paragraph:
 
-				# Set the style
-				canvas.set_font(style[u'style'], int(style[u'size']), \
-					bold=style[u'bold'], italic=style[u'italic'], underline= \
-					style[u'underline'])
-				canvas.set_fgcolor(style[u'color'])
+					# Set the style
+					canvas.set_font(style[u'style'], int(style[u'size']), \
+						bold=style[u'bold'], italic=style[u'italic'], underline= \
+						style[u'underline'])
+					canvas.set_fgcolor(style[u'color'])
 
-				# Line wrap if we run out of the screen
-				dx, dy = canvas.text_size(word)
-				if _x+dx > max_x:
-					if center:
-						_x = x+l_x_offset.pop()
-					else:
-						_x = x
-					_y += dy
-					dx = canvas.text_size(word.lstrip())[0]
-					word = word.lstrip()
+					# Line wrap if we run out of the screen
+					dx, dy = canvas._text_size(word)
+					if _x+dx > max_x:
+						if center:
+							_x = x+l_x_offset.pop()
+						else:
+							_x = x
+						_y += dy
+						dx = canvas._text_size(word.lstrip())[0]
+						word = word.lstrip()
 
-				# Draw!
-				canvas._text(word, _x, _y)
-				_x += dx
-			_y += dy
+					# Draw!
+					canvas._text(word, _x, _y)
+					_x += dx
+				_y += dy
 
 		# Restore the canvas font and colors
 		canvas.set_fgcolor(backup_style[u'color'])
 		canvas.set_font(backup_style[u'style'], int(backup_style[u'size']), \
 			bold=backup_style[u'bold'], italic=backup_style[u'italic'])
+		if dry_run:
+			return max_width, height
 
 	def pop_style(self):
 

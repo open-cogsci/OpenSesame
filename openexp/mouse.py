@@ -19,19 +19,26 @@ along with openexp.  If not, see <http://www.gnu.org/licenses/>.
 
 from libopensesame import debug
 
-class mouse:
+def mouse(experiment, *arglist, **kwdict):
 
 	"""
-	Based on the mouse_backend variable in the experiment, this class
-	morphs into the appropriate keyboard backend class.
+	desc:
+		A factory that returns a back-end specific mouse object.
+
+	arguments:
+		experiment:
+			desc:	The experiment object.
+			type:	experiment
+
+	argument-list:
+		arglist:	See mouse.__init__().
+
+	keyword-dict:
+		kwdict:		See mouse.__init__().
 	"""
 
-	def __init__(self, experiment, buttonlist=None, timeout=None, visible=False):
-	
-		backend = experiment.mouse_backend		
-		debug.msg('morphing into %s' % backend)
-		mod = __import__('openexp._mouse.%s' % backend, fromlist=['dummy'])			
-		cls = getattr(mod, backend)
-		self.__class__ = cls
-		cls.__init__(self, experiment, buttonlist, timeout, visible)
-		
+	backend = experiment.get(u'mouse_backend')
+	debug.msg(u'morphing into %s' % backend)
+	mod = __import__('openexp._mouse.%s' % backend, fromlist=['dummy'])
+	cls = getattr(mod, backend)
+	return cls(experiment, *arglist, **kwdict)

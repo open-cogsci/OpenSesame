@@ -21,6 +21,7 @@ __author__ = "Sebastiaan Mathot"
 __license__ = "GPLv3"
 
 from libqtopensesame.widgets import good_looking_table
+from libqtopensesame.misc import _
 from PyQt4 import QtCore, QtGui
 
 class loop_table(good_looking_table.good_looking_table):
@@ -51,7 +52,12 @@ class loop_table(good_looking_table.good_looking_table):
 		icons["paste"] = self.loop.experiment.icon("paste")
 		icons["clear"] = self.loop.experiment.icon("clear")
 
-		good_looking_table.good_looking_table.__init__(self, \
+		if not isinstance(rows, int):
+			self.loop.user_hint_widget.add(
+				_(u'Invalid or variably defined number of cycles: %s' % rows))
+			self.loop.user_hint_widget.refresh()
+			rows = 0
+		good_looking_table.good_looking_table.__init__(self,
 			rows, columns, icons, parent)
 		self.cellChanged.connect(self.apply_changes)
 
@@ -83,3 +89,26 @@ class loop_table(good_looking_table.good_looking_table):
 		if self.lock:
 			return
 		self.loop.apply_edit_changes()
+
+	def set_text(self, cycle, col, text):
+
+		"""
+		desc:
+			Sets text in the loop table in a way that doesn't trigger a
+			cellChanged signal.
+
+		arguments:
+			cycle:
+				desc:	The row.
+				type:	int
+			col:
+				desc:	The column.
+				type:	int
+			text:
+				desc:	The text.
+				type:	unicode
+		"""
+
+		self.blockSignals(True)
+		self.setItem(cycle, col, QtGui.QTableWidgetItem(text))
+		self.blockSignals(False)

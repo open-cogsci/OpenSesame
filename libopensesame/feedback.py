@@ -22,36 +22,27 @@ from libopensesame import sketchpad
 
 class feedback(sketchpad.sketchpad):
 
-	def __init__(self, name, experiment, string=None):
-	
-		"""
-		Constructor
-		
-		Arguments:
-		name -- the item name
-		experiment -- the experiment
-		
-		Keyword arguments:
-		string -- a definitions tring (default=None)
-		"""
+	description = u'Provides feedback to the participant'
 
-		self.description = u"Provides feedback to the participant"
-		self.reset_variables = u"yes"
-		sketchpad.sketchpad.__init__(self, name, experiment, string)
-		self.item_type = u"feedback"
-		
+	def reset(self):
+
+		"""See item."""
+
+		super(feedback, self).reset()
+		self.reset_variables = u'yes'
+
 	def prepare(self):
-		
+
 		"""Prepares the item."""
-				
+
 		pass
-		
+
 	def run(self):
-	
+
 		"""Runs the item."""
-		
+
 		sketchpad.sketchpad.prepare(self)
 		not sketchpad.sketchpad.run(self)
 		if self.reset_variables == u'yes':
 			self.experiment.reset_feedback()
-						
+

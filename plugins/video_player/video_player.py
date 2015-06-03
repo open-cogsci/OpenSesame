@@ -60,12 +60,12 @@ class video_player(item.item):
 				u'The video_player plug-in requires the legacy back-end!')
 			
 		item.item.prepare(self)			
-		path = self.experiment.get_file(self.video_src)
+		path = self.experiment.get_file(self.get(u'video_src'))
 		# Open the video file
 		self.video = cv.CreateFileCapture(path)
 		# Convert the string to a boolean, for slightly faster evaluations in
 		# the run phase
-		self._fullscreen = self.fullscreen == u"yes"
+		self._fullscreen = self.get(u'fullscreen') == u"yes"
 		# The dimensions of the video
 		self._w = int(cv.GetCaptureProperty(self.video, cv.CV_CAP_PROP_FRAME_WIDTH))
 		self._h = int(cv.GetCaptureProperty(self.video, cv.CV_CAP_PROP_FRAME_HEIGHT))
@@ -116,20 +116,21 @@ class video_player(item.item):
 			self.experiment.surface.blit(pg_img, (self._x, self._y))	
 			pygame.display.flip()
 			# Pause before jumping to the next frame
-			pygame.time.wait(self.frame_dur - pygame.time.get_ticks() + t)
+			pygame.time.wait(
+				self.get(u'frame_dur') - pygame.time.get_ticks() + t)
 			t = pygame.time.get_ticks()
-			if type(self.duration) == int:
+			if type(self.get(u'duration')) == int:
 				# Wait for a specified duration
-				if t - start_t >= self.duration:
+				if t - start_t >= self.get(u'duration'):
 					go = False
 			# Catch escape presses
 			for event in pygame.event.get():		
 				if event.type == KEYDOWN:					
 					if event.key == pygame.K_ESCAPE:
 						raise osexception(u"The escape key was pressed.")
-					if self.duration == u"keypress":	
+					if self.get(u'duration') == u"keypress":
 						go = False
-				if event.type == MOUSEBUTTONDOWN and self.duration == \
+				if event.type == MOUSEBUTTONDOWN and self.get(u'duration') == \
 					u"mouseclick":
 					go = False
 		# Release the camera	
