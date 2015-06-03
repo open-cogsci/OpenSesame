@@ -5,7 +5,7 @@ Source: http://www.cogsci.nl/software/opensesame
 
 Files: *
 Copyright: 2010-2014, Sebastiaan Mathot
-Licenses: GPL-3
+License: GPL-3
  On Debian systems, the full text of the GNU General Public License version 3
  can be found in the file `/usr/share/common-licenses/GPL-3'.
 
@@ -18,7 +18,7 @@ License: Apache-2.0
 
 Files: resources/chinese-japanese-korean.ttf
 Copyright: 2008-2009, The WenQuanYi Project Board of Trustees
-Licenses: GPL-2+
+License: GPL-2+
  The full text of the GNU General Public License version 2 is available on
  Debian systems in /usr/share/common-licenses/GPL-2.
 
@@ -26,14 +26,14 @@ Files: resources/hindi.ttf
 Copyright: 2003, Automatic Control Equipments, Pune, INDIA
  2006, Modular Infotech Pvt Ltd.
  2009, Red Hat, Inc.
-Licenses: GPL-2+
+License: GPL-2+
  The full text of the GNU General Public License version 2 is available on
  Debian systems in /usr/share/common-licenses/GPL-2.
 
 Files: resources/hebrew.ttf
 Copyright: 2012, HaGilda <info@hagilda.com>
  2012, Mushon Zer-Aviv
-Licenses: OFL-1.1
+License: OFL-1.1
  The full text of the SIL Open Font License version 1.1 is available on
  <http://scripts.sil.org/cms/scripts/page.php?site_id=nrsi&id=OFL>
 
@@ -86,13 +86,13 @@ License: GPL-3
 
 Files: resources/ts/ru_RU.ts
 Copyright: 2014, Validimir Kosonogov
-Licenses: GPL-3
+License: GPL-3
  The full text of the GNU General Public License version 3 is available on
  Debian systems in /usr/share/common-licenses/GPL-3.
 
 Files: resources/ts/de_DE.ts
 Copyright: 2014, Timo Lueke
-Licenses: GPL-3
+License: GPL-3
  The full text of the GNU General Public License version 3 is available on
  Debian systems in /usr/share/common-licenses/GPL-3.
 

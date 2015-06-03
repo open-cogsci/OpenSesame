@@ -5,7 +5,7 @@ Maintainer: Sebastiaan Mathot <s.mathot@cogsci.nl>
 Build-Depends: debhelper (>= 7.0.50~), pyqt4-dev-tools,
   python-all, python-qscintilla2, python-pygame (>= 1.8.1~), python-yaml
 XS-Python-Version: >= 2.6
-Standards-Version: 3.9.4
+Standards-Version: 3.9.6
 Vcs-Git: git://git.debian.org/git/pkg-exppsy/opensesame.git -b debian
 Vcs-Browser: http://anonscm.debian.org/cgit/pkg-exppsy/opensesame.git
 Homepage: http://www.cogsci.nl/software/opensesame
