@@ -12,7 +12,7 @@
 
 # one ring to rule them all ...
 %:
-	dh $@
+	dh $@  --with python2
 
 override_dh_auto_clean:
 	dh_auto_clean

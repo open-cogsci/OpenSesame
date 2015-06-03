@@ -1,3 +1,14 @@
+opensesame (2.9.6-1) unstable; urgency=medium
+
+  * Upload to Debian unstable
+  * debian/
+    - upstream migrated to upstream/metadata
+    - drop use of python-support in favor of dh_python2 (Closes: #786077)
+    - adjusted Vcs rules to point to a clone on alioth (debian branch)
+    - watch file added
+
+ -- Yaroslav Halchenko <debian@onerussian.com>  Wed, 03 Jun 2015 08:34:04 -0400
+
 opensesame (2.9.6-ubuntu1) vivid; urgency=medium
 
   * Improvements
