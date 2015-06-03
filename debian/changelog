@@ -6,8 +6,9 @@ opensesame (2.9.6-1) unstable; urgency=medium
     - drop use of python-support in favor of dh_python2 (Closes: #786077)
     - adjusted Vcs rules to point to a clone on alioth (debian branch)
     - watch file added
+    - added rudimentary gbp.conf for git-buildpackage
 
- -- Yaroslav Halchenko <debian@onerussian.com>  Wed, 03 Jun 2015 08:34:04 -0400
+ -- Yaroslav Halchenko <debian@onerussian.com>  Wed, 03 Jun 2015 08:53:35 -0400
 
 opensesame (2.9.6-ubuntu1) vivid; urgency=medium
 
