@@ -5,6 +5,8 @@ opensesame (2.9.6-1) unstable; urgency=medium
     - upstream migrated to upstream/metadata
     - watch file added
     - added rudimentary gbp.conf for git-buildpackage
+  * debian/changelog
+    - fixed up previous emails for Sebastiaan to stay uniform
   * debian/copyright
     - fixed field typo (Licenses: -> License:). Thanks lintian
   * debian/control
@@ -30,7 +32,7 @@ opensesame (2.9.6-ubuntu1) vivid; urgency=medium
     - Fix timeout issue in (deprecated) text_input plugin
     - Fix libsrbox example docstring
 
- -- Sebastiaan Mathot <sebastiaan@mantis>  Fri, 24 Apr 2015 13:47:31 +0200
+ -- Sebastiaan Mathot <s.mathot@cogsci.nl>  Fri, 24 Apr 2015 13:47:31 +0200
 
 opensesame (2.9.5-ubuntu1) utopic; urgency=medium
 
@@ -66,7 +68,7 @@ opensesame (2.9.5-ubuntu1) utopic; urgency=medium
     - Add autorun functionality to Android runtime
     - Open tab of newly created linked and unlinked copies
 
- -- Sebastiaan Mathot <sebastiaan@mantis>  Mon, 02 Mar 2015 13:42:35 +0100
+ -- Sebastiaan Mathot <s.mathot@cogsci.nl>  Mon, 02 Mar 2015 13:42:35 +0100
 
 opensesame (2.9.4-ubuntu1) utopic; urgency=medium
 
@@ -74,7 +76,7 @@ opensesame (2.9.4-ubuntu1) utopic; urgency=medium
     - Prevent indirect recursion errors in overview area
     - Don't crash on empty loop item
 
- -- Sebastiaan Mathot <sebastiaan@mantis>  Wed, 11 Feb 2015 11:34:23 +0100
+ -- Sebastiaan Mathot <s.mathot@cogsci.nl>  Wed, 11 Feb 2015 11:34:23 +0100
 
 opensesame (2.9.3-ubuntu1) utopic; urgency=medium
 
@@ -87,7 +89,7 @@ opensesame (2.9.3-ubuntu1) utopic; urgency=medium
     - Allow descriptions to wrap over multiple lines for better screen use
     - Massively improved performance for large experiments (#305)
 
- -- Sebastiaan Mathot <sebastiaan@mantis>  Fri, 16 Jan 2015 09:59:40 +0100
+ -- Sebastiaan Mathot <s.mathot@cogsci.nl>  Fri, 16 Jan 2015 09:59:40 +0100
 
 opensesame (2.9.2-ubuntu1) utopic; urgency=medium
 
