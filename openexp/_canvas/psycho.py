@@ -393,7 +393,8 @@ def init_display(experiment):
 	# Initialize the PsychoPy window and set various functions
 	experiment.window = visual.Window( experiment.resolution(), screen=screen, \
 		waitBlanking=waitblanking, fullscr=experiment.fullscreen, \
-		monitor=monitor, units=u'pix', rgb=experiment.background)
+		monitor=monitor, units=u'pix', rgb=experiment.background,
+		winType=u'pyglet')
 	experiment.window.setMouseVisible(False)
 	experiment.clock = core.Clock()
 	experiment._time_func = _time
