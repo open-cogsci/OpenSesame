@@ -72,6 +72,8 @@ class sequence(qtstructure_item, qtplugin, sequence_runtime):
 		"""See qtitem."""
 
 		super(sequence, self).edit_widget()
+		if self.treewidget.locked:
+			return
 		self.treewidget.clear()
 		self.toplevel_treeitem = self.build_item_tree(max_depth=2)
 		self.treewidget.addTopLevelItem(self.toplevel_treeitem)

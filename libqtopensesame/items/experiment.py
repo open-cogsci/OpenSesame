@@ -140,11 +140,10 @@ class experiment(libopensesame.experiment.experiment):
 		toplevel	--	The toplevel widget. (default=None)
 		items		--	A list of items that have already been added, to
 						prevent recursion. (default=[])
-
-		Returns:
-		An updated list of items that have been added.
 		"""
 
+		if self.ui.itemtree.locked:
+			return
 		from libqtopensesame.widgets.tree_unused_items_item import \
 			tree_unused_items_item
 		from libqtopensesame.widgets.tree_general_item import tree_general_item
@@ -156,7 +155,7 @@ class experiment(libopensesame.experiment.experiment):
 		self.treeitem_general.expand()
 		self.treeitem_unused.collapse()
 		if select != None:
-			l = self.ui.itemtree.select_item(select)
+			self.ui.itemtree.select_item(select)
 
 	def rename(self, from_name, to_name):
 

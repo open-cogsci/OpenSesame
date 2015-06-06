@@ -58,6 +58,7 @@ class tree_overview(base_subcomponent, QtGui.QTreeWidget):
 		"""
 
 		super(tree_overview, self).__init__(main_window)
+		self.locked = False
 		self.overview_mode = overview_mode
 		self.setAcceptDrops(True)
 		if self.overview_mode:
@@ -425,8 +426,8 @@ class tree_overview(base_subcomponent, QtGui.QTreeWidget):
 			return
 		target_item_name, target_item_ancestry = target_treeitem.ancestry()
 		item_name = data[u'item-name']
-		if target_item_ancestry.startswith(u'%s:' % item_name) or \
-			u'.%s:' % item_name  in target_item_ancestry:
+		item = self.experiment.items[item_name]
+		if target_item_name in item.children():
 			debug.msg(u'Drop ignored: recursion prevented')
 			self.main_window.set_status(
 				_(u'Drop cancelled: Recursion prevented'))
@@ -442,9 +443,11 @@ class tree_overview(base_subcomponent, QtGui.QTreeWidget):
 				debug.msg(u'Don\'t know how to remove item from %s' \
 					% parent_item_name)
 			else:
+				self.locked = True
 				self.experiment.items[parent_item_name].remove_child_item(
 					item_name, index)
-		self.drop_event_item_new(data, e)
+				self.locked = False
+		self.drop_event_item_new(data, e, target_treeitem=target_treeitem)
 
 	def drop_event_item_new(self, data, e=None, target_treeitem=None):
 
