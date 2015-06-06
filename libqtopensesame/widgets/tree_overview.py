@@ -23,6 +23,7 @@ from libqtopensesame.misc import _
 from libqtopensesame.misc import drag_and_drop
 from libqtopensesame.misc.base_subcomponent import base_subcomponent
 from libqtopensesame.widgets.tree_item_item import tree_item_item
+from libqtopensesame.widgets.tree_append_button import tree_append_button
 from libqtopensesame._input.popup_menu import popup_menu
 from libopensesame import debug
 from libopensesame.exceptions import osexception
@@ -73,6 +74,9 @@ class tree_overview(base_subcomponent, QtGui.QTreeWidget):
 				QtGui.QKeySequence(cfg.shortcut_edit_runif), self,
 				self.start_edit_runif,
 				context=QtCore.Qt.WidgetWithChildrenShortcut)
+			self.append_button = tree_append_button(self)
+		else:
+			self.append_button = None
 		self.shortcut_rename = QtGui.QShortcut(
 			QtGui.QKeySequence(cfg.shortcut_rename), self,
 			self.start_rename,
@@ -834,3 +838,28 @@ class tree_overview(base_subcomponent, QtGui.QTreeWidget):
 		target_treeitem = self.currentItem()
 		if target_treeitem != None:
 			self.editItem(target_treeitem, 0)
+
+	def setup(self, main_window):
+
+		"""
+		desc:
+			This function needs to be overridden so that the append button is
+			also set up.
+		"""
+
+		super(tree_overview, self).setup(main_window)
+		if self.append_button is not None:
+			self.append_button.setup(main_window)
+
+	def clear(self):
+
+		"""
+		desc:
+			If the tree is cleared, we need to unset the target tree item in the
+			append menu (if any).
+		"""
+
+		super(tree_overview, self).clear()
+		if self.append_button is None:
+			return
+		self.append_button.append_menu.target_treeitem = None

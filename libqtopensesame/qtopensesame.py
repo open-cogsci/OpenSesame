@@ -101,11 +101,9 @@ class qtopensesame(QtGui.QMainWindow, base_component):
 
 		# Setup the UI
 		self.load_ui(u'misc.main_window')
+		self.theme = theme.theme(self, self.options._theme)
 		self.ui.itemtree.setup(self)
 		self.ui.tabwidget.main_window = self
-
-		# Load a theme
-		self.theme = theme.theme(self, self.options._theme)
 
 		# Determine the home folder
 		self.home_folder = libopensesame.misc.home_folder()

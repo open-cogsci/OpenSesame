@@ -21,6 +21,7 @@ from PyQt4 import QtCore, QtGui
 from libqtopensesame.misc import _
 from libqtopensesame.misc.config import cfg
 from libqtopensesame.misc.base_subcomponent import base_subcomponent
+from libqtopensesame.widgets.tree_append_menu import tree_append_menu
 
 class item_context_menu(base_subcomponent, QtGui.QMenu):
 
@@ -76,6 +77,14 @@ class item_context_menu(base_subcomponent, QtGui.QMenu):
 				_("Permanently delete all linked copies"),
 				self.treeitem.permanently_delete,
 				cfg.shortcut_permanently_delete)
+		if self.treeitem.has_append_menu():
+			# An append menu for sequence items
+			menu = tree_append_menu(self.treeitem.treeWidget(), self.treeitem)
+			action = QtGui.QAction(self.theme.qicon(u'list-add'),
+				u'Append item', self)
+			action.setMenu(menu)
+			self.addSeparator()
+			self.addAction(action)
 		self.addSeparator()
 		self.add_action(u"help", _("Help"), self.item.open_help_tab)
 
@@ -106,7 +115,7 @@ class item_context_menu(base_subcomponent, QtGui.QMenu):
 	@property
 	def item(self):
 		return self.treeitem.item
-		
+
 	@property
 	def treewidget(self):
 		return self.treeitem.treeWidget()
