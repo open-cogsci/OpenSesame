@@ -70,6 +70,10 @@ class tree_item_item(tree_base_item):
 	def close_tab(self):
 		return self.item.close_tab
 
+	def has_append_menu(self):
+
+		return self.item.item_type == u'sequence'
+	
 	def ancestry(self):
 
 		"""
@@ -156,7 +160,7 @@ class tree_item_item(tree_base_item):
 		"""
 
 		self.treeWidget().editItem(self, 0)
-		
+
 	def start_edit_runif(self):
 
 		"""
@@ -167,7 +171,7 @@ class tree_item_item(tree_base_item):
 		"""
 
 		if not self.treeWidget().overview_mode:
-			self.treeWidget().editItem(self, 1)		
+			self.treeWidget().editItem(self, 1)
 
 	def set_icon(self, name, icon):
 

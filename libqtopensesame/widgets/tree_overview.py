@@ -23,6 +23,7 @@ from libqtopensesame.misc import _
 from libqtopensesame.misc import drag_and_drop
 from libqtopensesame.misc.base_subcomponent import base_subcomponent
 from libqtopensesame.widgets.tree_item_item import tree_item_item
+from libqtopensesame.widgets.tree_append_button import tree_append_button
 from libqtopensesame._input.popup_menu import popup_menu
 from libopensesame import debug
 from libopensesame.exceptions import osexception
@@ -57,6 +58,7 @@ class tree_overview(base_subcomponent, QtGui.QTreeWidget):
 		"""
 
 		super(tree_overview, self).__init__(main_window)
+		self.locked = False
 		self.overview_mode = overview_mode
 		self.setAcceptDrops(True)
 		if self.overview_mode:
@@ -73,6 +75,9 @@ class tree_overview(base_subcomponent, QtGui.QTreeWidget):
 				QtGui.QKeySequence(cfg.shortcut_edit_runif), self,
 				self.start_edit_runif,
 				context=QtCore.Qt.WidgetWithChildrenShortcut)
+			self.append_button = tree_append_button(self)
+		else:
+			self.append_button = None
 		self.shortcut_rename = QtGui.QShortcut(
 			QtGui.QKeySequence(cfg.shortcut_rename), self,
 			self.start_rename,
@@ -421,8 +426,8 @@ class tree_overview(base_subcomponent, QtGui.QTreeWidget):
 			return
 		target_item_name, target_item_ancestry = target_treeitem.ancestry()
 		item_name = data[u'item-name']
-		if target_item_ancestry.startswith(u'%s:' % item_name) or \
-			u'.%s:' % item_name  in target_item_ancestry:
+		item = self.experiment.items[item_name]
+		if target_item_name in item.children():
 			debug.msg(u'Drop ignored: recursion prevented')
 			self.main_window.set_status(
 				_(u'Drop cancelled: Recursion prevented'))
@@ -438,9 +443,11 @@ class tree_overview(base_subcomponent, QtGui.QTreeWidget):
 				debug.msg(u'Don\'t know how to remove item from %s' \
 					% parent_item_name)
 			else:
+				self.locked = True
 				self.experiment.items[parent_item_name].remove_child_item(
 					item_name, index)
-		self.drop_event_item_new(data, e)
+				self.locked = False
+		self.drop_event_item_new(data, e, target_treeitem=target_treeitem)
 
 	def drop_event_item_new(self, data, e=None, target_treeitem=None):
 
@@ -834,3 +841,28 @@ class tree_overview(base_subcomponent, QtGui.QTreeWidget):
 		target_treeitem = self.currentItem()
 		if target_treeitem != None:
 			self.editItem(target_treeitem, 0)
+
+	def setup(self, main_window):
+
+		"""
+		desc:
+			This function needs to be overridden so that the append button is
+			also set up.
+		"""
+
+		super(tree_overview, self).setup(main_window)
+		if self.append_button is not None:
+			self.append_button.setup(main_window)
+
+	def clear(self):
+
+		"""
+		desc:
+			If the tree is cleared, we need to unset the target tree item in the
+			append menu (if any).
+		"""
+
+		super(tree_overview, self).clear()
+		if self.append_button is None:
+			return
+		self.append_button.append_menu.target_treeitem = None

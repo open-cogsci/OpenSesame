@@ -3,7 +3,7 @@
 <context>
     <name>Form</name>
     <message>
-        <location filename="logger.ui" line="14"/>
+        <location filename="loop.ui" line="14"/>
         <source>Form</source>
         <translation type="unfinished">Окно</translation>
     </message>
@@ -52,46 +52,76 @@
         <source>Source item(s)</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="loop_operation.ui" line="32"/>
+        <source>TextLabel</source>
+        <translation type="unfinished">Надпись</translation>
+    </message>
+    <message>
+        <location filename="loop.ui" line="38"/>
+        <source>Item to run</source>
+        <translation type="unfinished">Составляющая</translation>
+    </message>
+    <message>
+        <location filename="loop.ui" line="45"/>
+        <source>PushButton</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="loop.ui" line="68"/>
+        <source>When running the experiment, do the following:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="loop.ui" line="96"/>
+        <source>Add</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="loop.ui" line="109"/>
+        <source>Preview</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>advanced_delay</name>
     <message>
-        <location filename="translatables.py" line="14"/>
+        <location filename="translatables.py" line="15"/>
         <source>Timing</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="translatables.py" line="15"/>
+        <location filename="translatables.py" line="16"/>
         <source>Duration</source>
         <translation type="unfinished">Длительность</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="16"/>
+        <location filename="translatables.py" line="17"/>
         <source>The average duration in milliseconds</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="translatables.py" line="20"/>
+        <location filename="translatables.py" line="21"/>
         <source> ms</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="translatables.py" line="18"/>
+        <location filename="translatables.py" line="19"/>
         <source>Jitter</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="translatables.py" line="19"/>
+        <location filename="translatables.py" line="20"/>
         <source>The jitter of the actual duration in milliseconds (depends on Jitter mode)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="translatables.py" line="21"/>
+        <location filename="translatables.py" line="22"/>
         <source>Jitter mode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="translatables.py" line="22"/>
+        <location filename="translatables.py" line="23"/>
         <source>The mode for determining the actual duration (see Help)</source>
         <translation type="unfinished"></translation>
     </message>
@@ -99,107 +129,107 @@
 <context>
     <name>auto_example</name>
     <message>
-        <location filename="translatables.py" line="276"/>
+        <location filename="translatables.py" line="289"/>
         <source>Example plug-in.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="translatables.py" line="277"/>
+        <location filename="translatables.py" line="290"/>
         <source>Visual stimuli</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="translatables.py" line="278"/>
+        <location filename="translatables.py" line="291"/>
         <source>Example checkbox</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="translatables.py" line="279"/>
+        <location filename="translatables.py" line="292"/>
         <source>An example checkbox</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="translatables.py" line="280"/>
+        <location filename="translatables.py" line="293"/>
         <source>Color</source>
         <translation type="unfinished">Цвет</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="281"/>
+        <location filename="translatables.py" line="294"/>
         <source>An example color edit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="translatables.py" line="282"/>
+        <location filename="translatables.py" line="295"/>
         <source>Select option</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="translatables.py" line="283"/>
+        <location filename="translatables.py" line="296"/>
         <source>An example combobox</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="translatables.py" line="284"/>
+        <location filename="translatables.py" line="297"/>
         <source>Select file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="translatables.py" line="285"/>
+        <location filename="translatables.py" line="298"/>
         <source>An example filepool widget</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="translatables.py" line="286"/>
+        <location filename="translatables.py" line="299"/>
         <source>Enter text</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="translatables.py" line="287"/>
+        <location filename="translatables.py" line="300"/>
         <source>An example line_edit widget</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="translatables.py" line="288"/>
+        <location filename="translatables.py" line="301"/>
         <source>Enter value</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="translatables.py" line="289"/>
+        <location filename="translatables.py" line="302"/>
         <source>An example spinbox widget</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="translatables.py" line="290"/>
+        <location filename="translatables.py" line="303"/>
         <source>approx. </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="translatables.py" line="291"/>
+        <location filename="translatables.py" line="304"/>
         <source> ms</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="translatables.py" line="292"/>
+        <location filename="translatables.py" line="305"/>
         <source>Select value</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="translatables.py" line="293"/>
+        <location filename="translatables.py" line="306"/>
         <source>An example slider widget</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="translatables.py" line="294"/>
+        <location filename="translatables.py" line="307"/>
         <source>Some non-interactive text</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="translatables.py" line="295"/>
+        <location filename="translatables.py" line="308"/>
         <source>Python editor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="translatables.py" line="296"/>
+        <location filename="translatables.py" line="309"/>
         <source>An example editor widget</source>
         <translation type="unfinished"></translation>
     </message>
@@ -207,17 +237,17 @@
 <context>
     <name>automatic_backup</name>
     <message>
-        <location filename="translatables.py" line="200"/>
+        <location filename="translatables.py" line="226"/>
         <source>Open backup folder</source>
         <translation type="unfinished">Открыть папку с точками восстановления</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="201"/>
+        <location filename="translatables.py" line="227"/>
         <source>Periodically saves your experiment to a back-up folder.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="translatables.py" line="202"/>
+        <location filename="translatables.py" line="225"/>
         <source>Failed to save backup ...</source>
         <translation type="unfinished">Не удалось сохранить точку восстановления...</translation>
     </message>
@@ -285,39 +315,39 @@
         <translation type="unfinished">&lt;h3&gt;Начертание&lt;/h3&gt;</translation>
     </message>
     <message>
-        <location filename="general_properties.ui" line="308"/>
+        <location filename="general_properties.ui" line="288"/>
         <source>&lt;h3&gt;Advanced&lt;/h3&gt;</source>
         <translation type="unfinished">&lt;h3&gt;Расширенные настройки&lt;/h3&gt;</translation>
     </message>
     <message>
-        <location filename="general_properties.ui" line="339"/>
+        <location filename="general_properties.ui" line="319"/>
         <source>Advanced settings for the selected back-end</source>
         <translation type="unfinished">Дополнительные настройки для выбранного движка</translation>
     </message>
     <message>
-        <location filename="general_properties.ui" line="342"/>
+        <location filename="general_properties.ui" line="322"/>
         <source>Back-end settings</source>
         <translation type="unfinished">Свойства движка</translation>
     </message>
     <message>
-        <location filename="general_properties.ui" line="349"/>
+        <location filename="general_properties.ui" line="329"/>
         <source>Edit the script for the entire experiment</source>
         <translation type="unfinished">Изменить приказник всего опыта</translation>
     </message>
     <message>
-        <location filename="general_properties.ui" line="352"/>
+        <location filename="general_properties.ui" line="332"/>
         <source>Script editor</source>
         <translation type="unfinished">Правщик приказника</translation>
     </message>
     <message>
         <location filename="general_properties.ui" line="288"/>
         <source>Allows you to access experimental variables directly by name</source>
-        <translation type="unfinished">Позволяет пользоваться переменными, используя их имена</translation>
+        <translation type="obsolete">Позволяет пользоваться переменными, используя их имена</translation>
     </message>
     <message>
         <location filename="general_properties.ui" line="291"/>
         <source>Transparent variable management</source>
-        <translation type="unfinished">Прозрачное управление переменными</translation>
+        <translation type="obsolete">Прозрачное управление переменными</translation>
     </message>
     <message>
         <location filename="general_properties.ui" line="275"/>
@@ -325,12 +355,12 @@
         <translation type="unfinished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:large; font-weight:600;&quot;&gt;Разное&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="general_properties.ui" line="298"/>
+        <location filename="general_properties.ui" line="342"/>
         <source>Enables support for bi-directional languages, such as Arabic and Hebrew</source>
         <translation type="unfinished">Включает поддержку некоторых языков (арабский, иврит, и т.д.)</translation>
     </message>
     <message>
-        <location filename="general_properties.ui" line="301"/>
+        <location filename="general_properties.ui" line="345"/>
         <source>Bi-directional-text support</source>
         <translation type="unfinished">Поддержка письма в двух направлениях</translation>
     </message>
@@ -339,16 +369,21 @@
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://osdoc.cogsci.nl/back-ends/about&quot;&gt;&lt;span style=&quot;font-size:small;font-style:italic; text-decoration: underline; color:#0057ae;&quot;&gt;Why is this important?&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://osdoc.cogsci.nl/back-ends/about&quot;&gt;&lt;span style=&quot;font-size:small;font-style:italic; text-decoration: underline; color:#0057ae;&quot;&gt;Что это такое?&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
+    <message>
+        <location filename="general_properties.ui" line="352"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:small; font-style:italic;&quot;&gt;Warning: python-bidi is not available&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>dock_manager</name>
     <message>
-        <location filename="translatables.py" line="381"/>
+        <location filename="translatables.py" line="392"/>
         <source>Lock dock widgets</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="translatables.py" line="382"/>
+        <location filename="translatables.py" line="393"/>
         <source>Manage the dock widgets for the debug window, file pool, etc.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -356,17 +391,17 @@
 <context>
     <name>example</name>
     <message>
-        <location filename="translatables.py" line="394"/>
+        <location filename="translatables.py" line="409"/>
         <source>Example extension</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="translatables.py" line="395"/>
+        <location filename="translatables.py" line="410"/>
         <source>An example extenstion</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="translatables.py" line="396"/>
+        <location filename="translatables.py" line="411"/>
         <source>Some tooltip</source>
         <translation type="unfinished"></translation>
     </message>
@@ -374,77 +409,77 @@
 <context>
     <name>fixation_dot</name>
     <message>
-        <location filename="translatables.py" line="225"/>
+        <location filename="translatables.py" line="238"/>
         <source>Visual stimuli</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="translatables.py" line="226"/>
+        <location filename="translatables.py" line="239"/>
         <source>Syle</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="translatables.py" line="227"/>
+        <location filename="translatables.py" line="240"/>
         <source>Style of the fixation dot</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="translatables.py" line="228"/>
+        <location filename="translatables.py" line="241"/>
         <source>Pen width</source>
         <translation type="unfinished">Толщина ручки</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="229"/>
+        <location filename="translatables.py" line="242"/>
         <source>Specifies the pen width, or line thickness</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="translatables.py" line="230"/>
+        <location filename="translatables.py" line="243"/>
         <source>px</source>
         <translation type="unfinished"> тчк</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="231"/>
+        <location filename="translatables.py" line="244"/>
         <source>Duration</source>
         <translation type="unfinished">Длительность</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="232"/>
+        <location filename="translatables.py" line="245"/>
         <source>Expecting a value in milliseconds, &apos;keypress&apos; or &apos;mouseclick&apos;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="translatables.py" line="233"/>
+        <location filename="translatables.py" line="246"/>
         <source>Foreground color</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="translatables.py" line="236"/>
+        <location filename="translatables.py" line="249"/>
         <source>Expecting a colorname (e.g., &apos;blue&apos;) or an HTML color (e.g., &apos;#0000FF&apos;)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="translatables.py" line="235"/>
+        <location filename="translatables.py" line="248"/>
         <source>Background color</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="translatables.py" line="237"/>
+        <location filename="translatables.py" line="250"/>
         <source>X coordinate</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="translatables.py" line="238"/>
+        <location filename="translatables.py" line="251"/>
         <source>X-coordinate of the fixation dot (e.g., 0)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="translatables.py" line="239"/>
+        <location filename="translatables.py" line="252"/>
         <source>Y coordinate</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="translatables.py" line="240"/>
+        <location filename="translatables.py" line="253"/>
         <source>Y-coordinate of the fixation dot (e.g., 0)</source>
         <translation type="unfinished"></translation>
     </message>
@@ -489,7 +524,7 @@
     <message>
         <location filename="font_widget.ui" line="99"/>
         <source> pt</source>
-        <translation>  </translation>
+        <translation type="obsolete">  </translation>
     </message>
     <message>
         <location filename="font_widget.ui" line="132"/>
@@ -526,26 +561,31 @@
         <source>hindi</source>
         <translation type="obsolete">хинди</translation>
     </message>
+    <message>
+        <location filename="font_widget.ui" line="99"/>
+        <source> px</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>form_base</name>
     <message>
-        <location filename="translatables.py" line="30"/>
+        <location filename="translatables.py" line="68"/>
         <source>Form</source>
         <translation type="unfinished">Окно</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="31"/>
+        <location filename="translatables.py" line="69"/>
         <source>Edit the script to modify the form</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="translatables.py" line="32"/>
+        <location filename="translatables.py" line="66"/>
         <source>Widget column and row should be numeric</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="translatables.py" line="33"/>
+        <location filename="translatables.py" line="67"/>
         <source>cols, rows, and margins should be numeric values separated by a semi-colon</source>
         <translation type="unfinished"></translation>
     </message>
@@ -621,57 +661,57 @@
 <context>
     <name>form_multiple_choice</name>
     <message>
-        <location filename="translatables.py" line="243"/>
+        <location filename="translatables.py" line="256"/>
         <source>Form</source>
         <translation type="unfinished">Окно</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="245"/>
+        <location filename="translatables.py" line="258"/>
         <source>Form title</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="translatables.py" line="247"/>
+        <location filename="translatables.py" line="260"/>
         <source>Response variable</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="translatables.py" line="249"/>
+        <location filename="translatables.py" line="262"/>
         <source>Allow multiple options to be selected</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="translatables.py" line="251"/>
+        <location filename="translatables.py" line="264"/>
         <source>Advance immediately to the next item once a selection has been made</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="translatables.py" line="252"/>
+        <location filename="translatables.py" line="265"/>
         <source>Button text</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="translatables.py" line="253"/>
+        <location filename="translatables.py" line="266"/>
         <source>Text for the button to advance to the next item</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="translatables.py" line="255"/>
+        <location filename="translatables.py" line="268"/>
         <source>Your question</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="translatables.py" line="256"/>
+        <location filename="translatables.py" line="269"/>
         <source>Response options (different options on different lines)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="translatables.py" line="257"/>
+        <location filename="translatables.py" line="270"/>
         <source>Response options</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="translatables.py" line="258"/>
+        <location filename="translatables.py" line="271"/>
         <source>margins should be numeric values separated by a semi-colon</source>
         <translation type="unfinished"></translation>
     </message>
@@ -694,145 +734,150 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="sketchpad.ui" line="83"/>
+        <location filename="sketchpad.ui" line="110"/>
         <source>Color</source>
         <translation type="unfinished">Цвет</translation>
     </message>
     <message>
-        <location filename="sketchpad.ui" line="442"/>
+        <location filename="sketchpad.ui" line="471"/>
         <source> px</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="sketchpad.ui" line="112"/>
+        <location filename="sketchpad.ui" line="139"/>
         <source>Penwidth </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="sketchpad.ui" line="144"/>
+        <location filename="sketchpad.ui" line="171"/>
         <source>Size of the arrowhead</source>
         <translation type="unfinished">Размер стрелки</translation>
     </message>
     <message>
-        <location filename="sketchpad.ui" line="150"/>
+        <location filename="sketchpad.ui" line="177"/>
         <source>Arrowhead </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="sketchpad.ui" line="185"/>
+        <location filename="sketchpad.ui" line="212"/>
         <source>Image scaling factor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="sketchpad.ui" line="188"/>
+        <location filename="sketchpad.ui" line="215"/>
         <source>Scale </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="sketchpad.ui" line="360"/>
+        <location filename="sketchpad.ui" line="387"/>
         <source> x</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="sketchpad.ui" line="232"/>
+        <location filename="sketchpad.ui" line="259"/>
         <source>Check to draw filled objects</source>
         <translation type="unfinished">Заполнять нарисованные тела</translation>
     </message>
     <message>
-        <location filename="sketchpad.ui" line="235"/>
+        <location filename="sketchpad.ui" line="262"/>
         <source>Fill</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="sketchpad.ui" line="261"/>
+        <location filename="sketchpad.ui" line="288"/>
         <source>Center the object</source>
         <translation type="unfinished">Поместить в середину</translation>
     </message>
     <message>
-        <location filename="sketchpad.ui" line="264"/>
+        <location filename="sketchpad.ui" line="291"/>
         <source>Center</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="sketchpad.ui" line="293"/>
+        <location filename="sketchpad.ui" line="320"/>
         <source>Show if</source>
         <translation type="unfinished">Показать, если</translation>
     </message>
     <message>
-        <location filename="sketchpad.ui" line="347"/>
+        <location filename="sketchpad.ui" line="374"/>
         <source>0,0</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="sketchpad.ui" line="357"/>
+        <location filename="sketchpad.ui" line="384"/>
         <source>Zoom factor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="sketchpad.ui" line="397"/>
+        <location filename="sketchpad.ui" line="426"/>
         <source>Parse a subset of HTML tags</source>
         <translation type="unfinished">Проверить HTML</translation>
     </message>
     <message>
-        <location filename="sketchpad.ui" line="400"/>
+        <location filename="sketchpad.ui" line="429"/>
         <source>HTML</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="sketchpad.ui" line="426"/>
+        <location filename="sketchpad.ui" line="455"/>
         <source>Check to display the grid and enable snap-to-grid</source>
         <translation type="unfinished">Показывает или прячет решётку на полотне</translation>
     </message>
     <message>
-        <location filename="sketchpad.ui" line="429"/>
+        <location filename="sketchpad.ui" line="458"/>
         <source>Grid</source>
         <translation type="unfinished">Решётка</translation>
     </message>
     <message>
-        <location filename="sketchpad.ui" line="439"/>
+        <location filename="sketchpad.ui" line="468"/>
         <source>Grid size</source>
         <translation type="unfinished">Размерность решётки</translation>
     </message>
     <message>
-        <location filename="sketchpad.ui" line="482"/>
+        <location filename="sketchpad.ui" line="511"/>
         <source>Select and move elements</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="sketchpad.ui" line="77"/>
+        <source>Reset feedback variables</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>form_text_display</name>
     <message>
-        <location filename="translatables.py" line="261"/>
+        <location filename="translatables.py" line="274"/>
         <source>Form</source>
         <translation type="unfinished">Окно</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="262"/>
+        <location filename="translatables.py" line="275"/>
         <source>Form title</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="translatables.py" line="263"/>
+        <location filename="translatables.py" line="276"/>
         <source>Title to appear above the form text</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="translatables.py" line="264"/>
+        <location filename="translatables.py" line="277"/>
         <source>Ok-button text</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="translatables.py" line="265"/>
+        <location filename="translatables.py" line="278"/>
         <source>Text for the Ok button</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="translatables.py" line="266"/>
+        <location filename="translatables.py" line="279"/>
         <source>Main form text</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="translatables.py" line="267"/>
+        <location filename="translatables.py" line="280"/>
         <source>Text to display in the form body</source>
         <translation type="unfinished"></translation>
     </message>
@@ -840,37 +885,37 @@
 <context>
     <name>form_text_input</name>
     <message>
-        <location filename="translatables.py" line="385"/>
+        <location filename="translatables.py" line="365"/>
         <source>Form</source>
         <translation type="unfinished">Окно</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="386"/>
+        <location filename="translatables.py" line="366"/>
         <source>Form title</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="translatables.py" line="387"/>
+        <location filename="translatables.py" line="367"/>
         <source>Title to appear above the form text</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="translatables.py" line="388"/>
+        <location filename="translatables.py" line="368"/>
         <source>Response variable</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="translatables.py" line="389"/>
+        <location filename="translatables.py" line="369"/>
         <source>The experimental variable to save the response in</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="translatables.py" line="390"/>
+        <location filename="translatables.py" line="370"/>
         <source>Your question</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="translatables.py" line="391"/>
+        <location filename="translatables.py" line="371"/>
         <source>A question text</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1124,60 +1169,65 @@
         <translation type="unfinished">Справочник в Сети</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="11"/>
+        <location filename="translatables.py" line="12"/>
         <source>Adds a Help menu.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="translatables.py" line="11"/>
+        <source>PsychoPy API</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>joystick</name>
     <message>
-        <location filename="translatables.py" line="299"/>
+        <location filename="translatables.py" line="396"/>
         <source>Response collection</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="translatables.py" line="300"/>
+        <location filename="translatables.py" line="397"/>
         <source>Dummy mode (use keyboard instead of joystick)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="translatables.py" line="301"/>
+        <location filename="translatables.py" line="398"/>
         <source>Enable dummy mode to test the experiment using a keyboard</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="translatables.py" line="302"/>
+        <location filename="translatables.py" line="399"/>
         <source>Device nr.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="translatables.py" line="303"/>
+        <location filename="translatables.py" line="400"/>
         <source>Identifies the joystick, in case there are multiple joysticks</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="translatables.py" line="304"/>
+        <location filename="translatables.py" line="401"/>
         <source>Correct response</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="translatables.py" line="307"/>
+        <location filename="translatables.py" line="404"/>
         <source>Expecting a comma-separated list of numbers between 1 and the number of joybuttons</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="translatables.py" line="306"/>
+        <location filename="translatables.py" line="403"/>
         <source>Allowed responses</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="translatables.py" line="308"/>
+        <location filename="translatables.py" line="405"/>
         <source>Timeout</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="translatables.py" line="309"/>
+        <location filename="translatables.py" line="406"/>
         <source>Expecting a value in milliseconds of &apos;infinite&apos;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2065,17 +2115,17 @@
 <context>
     <name>plugin_manager</name>
     <message>
-        <location filename="translatables.py" line="376"/>
+        <location filename="translatables.py" line="387"/>
         <source>Plug-in and extension manager</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="translatables.py" line="377"/>
+        <location filename="translatables.py" line="388"/>
         <source>Enable or disable plug-ins and extensions.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="translatables.py" line="378"/>
+        <location filename="translatables.py" line="389"/>
         <source>Manage plug-ins and extensions</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2093,37 +2143,37 @@
         <translation type="obsolete">&lt;b&gt;Склад записей&lt;/b&gt;&lt;br /&gt;&lt;small&gt;&lt;i&gt;Можете перетащить сюда Ваши записи с внутреннего носителя&lt;/i&gt;&lt;/small&gt;</translation>
     </message>
     <message>
-        <location filename="pool_widget.ui" line="48"/>
+        <location filename="pool_widget.ui" line="58"/>
         <source>Enter a filter</source>
         <translation>Введите отсеиватель</translation>
     </message>
     <message>
-        <location filename="pool_widget.ui" line="61"/>
+        <location filename="pool_widget.ui" line="71"/>
         <source>Clear filter</source>
         <translation>Очистить отсеиватель</translation>
     </message>
     <message>
-        <location filename="pool_widget.ui" line="81"/>
+        <location filename="pool_widget.ui" line="91"/>
         <source>Help</source>
         <translation>Помощь</translation>
     </message>
     <message>
-        <location filename="pool_widget.ui" line="116"/>
+        <location filename="pool_widget.ui" line="126"/>
         <source>Add file</source>
         <translation>Добавить запись</translation>
     </message>
     <message>
-        <location filename="pool_widget.ui" line="153"/>
+        <location filename="pool_widget.ui" line="163"/>
         <source>Open file pool in file manager</source>
         <translation>Открыть папку со складом</translation>
     </message>
     <message>
-        <location filename="pool_widget.ui" line="180"/>
+        <location filename="pool_widget.ui" line="190"/>
         <source>View as list</source>
         <translation>Показать в виде списка</translation>
     </message>
     <message>
-        <location filename="pool_widget.ui" line="189"/>
+        <location filename="pool_widget.ui" line="199"/>
         <source>View as icons</source>
         <translation>Показать в виде значков</translation>
     </message>
@@ -2131,6 +2181,11 @@
         <location filename="pool_widget.ui" line="38"/>
         <source>ICON</source>
         <translation type="obsolete">Значок</translation>
+    </message>
+    <message>
+        <location filename="pool_widget.ui" line="23"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Warning text&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2285,17 +2340,17 @@
 <context>
     <name>psychopy_monitor_center</name>
     <message>
-        <location filename="translatables.py" line="25"/>
+        <location filename="translatables.py" line="26"/>
         <source>PsychoPy monitor center</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="translatables.py" line="26"/>
+        <location filename="translatables.py" line="27"/>
         <source>Launches the PsychoPy monitor center</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="translatables.py" line="27"/>
+        <location filename="translatables.py" line="28"/>
         <source>Launch the PsychoPy monitor center</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2303,12 +2358,12 @@
 <context>
     <name>qprogedit_preferences</name>
     <message>
-        <location filename="translatables.py" line="354"/>
+        <location filename="translatables.py" line="355"/>
         <source>QProgEdit preferences</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="translatables.py" line="355"/>
+        <location filename="translatables.py" line="354"/>
         <source>Editor preferences (QProgEdit)</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2316,57 +2371,57 @@
 <context>
     <name>quest_staircase_init</name>
     <message>
-        <location filename="translatables.py" line="36"/>
+        <location filename="translatables.py" line="43"/>
         <source>Staircase</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="translatables.py" line="38"/>
+        <location filename="translatables.py" line="45"/>
         <source>Estimated threshold (used for starting test value)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="translatables.py" line="40"/>
+        <location filename="translatables.py" line="47"/>
         <source>Std. dev. of estimated threshold</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="translatables.py" line="42"/>
+        <location filename="translatables.py" line="49"/>
         <source>Desired proportion of correct responses</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="translatables.py" line="44"/>
+        <location filename="translatables.py" line="51"/>
         <source>Steepness of the Weibull psychometric function (&#xce;&#xb2;)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="translatables.py" line="46"/>
+        <location filename="translatables.py" line="53"/>
         <source>Proportion of random responses at maximum stimulus intensity (&#xce;&#xb4;)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="translatables.py" line="48"/>
+        <location filename="translatables.py" line="55"/>
         <source>Chance level (&#xce;&#xb3;)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="translatables.py" line="50"/>
+        <location filename="translatables.py" line="57"/>
         <source>Method to determine optimal test value</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="translatables.py" line="52"/>
+        <location filename="translatables.py" line="59"/>
         <source>Minimum test value</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="translatables.py" line="54"/>
+        <location filename="translatables.py" line="61"/>
         <source>Maximum test value</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="translatables.py" line="56"/>
+        <location filename="translatables.py" line="63"/>
         <source>Experimental variable for test value</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2387,12 +2442,12 @@
 <context>
     <name>quick_switcher</name>
     <message>
-        <location filename="translatables.py" line="205"/>
+        <location filename="translatables.py" line="230"/>
         <source>Quick switcher</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="translatables.py" line="206"/>
+        <location filename="translatables.py" line="231"/>
         <source>Quickly open items and scripts.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2468,12 +2523,12 @@
 <context>
     <name>reset_feedback</name>
     <message>
-        <location filename="translatables.py" line="221"/>
+        <location filename="translatables.py" line="234"/>
         <source>Response collection</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="translatables.py" line="222"/>
+        <location filename="translatables.py" line="235"/>
         <source>This plug-in has no settings</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2599,12 +2654,12 @@
 <context>
     <name>script</name>
     <message>
-        <location filename="translatables.py" line="190"/>
+        <location filename="translatables.py" line="154"/>
         <source>Edit script</source>
         <translation>Изменить приказник</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="158"/>
+        <location filename="translatables.py" line="117"/>
         <source>Tell me more about the %s item</source>
         <translation>Вывести больше о составляющей %s </translation>
     </message>
@@ -2624,7 +2679,7 @@
         <translation type="obsolete">Вы уверены, что хотите забыть все изменения в этом приказнике?</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="159"/>
+        <location filename="translatables.py" line="118"/>
         <source>Apply and close</source>
         <translation type="unfinished">Применить и закрыть</translation>
     </message>
@@ -2649,14 +2704,14 @@
         <translation type="obsolete">Изменить приказник для &lt;b&gt;%s&lt;/b&gt; - %s</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="146"/>
+        <location filename="translatables.py" line="216"/>
         <source>Type: %s
 Description: %s</source>
         <translation>Вид: %s
 Описание: %s</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="161"/>
+        <location filename="translatables.py" line="120"/>
         <source>Failed to set control &apos;%s&apos;: %s</source>
         <translation>Не получилось изменить&apos;%s&apos;: %s</translation>
     </message>
@@ -2666,67 +2721,67 @@ Description: %s</source>
         <translation type="obsolete">Неправильное или пропущенное значение переменной &apos;%s&apos; (изменить приказник, чтобы исправить это)</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="171"/>
+        <location filename="translatables.py" line="128"/>
         <source>New variable</source>
         <translation>Новая переменная</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="167"/>
+        <location filename="translatables.py" line="124"/>
         <source>Enter a variable name, optionally followed by a default value (i.e., &quot;varname defaultvalue&quot;)</source>
         <translation>Введите имя переменной, следующей за переменной по умолчанию (то есть., &quot;varname defaultvalue&quot;)</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="174"/>
+        <location filename="translatables.py" line="131"/>
         <source>A variable with the name &apos;%s&apos; already exists</source>
         <translation>Переменная с именем &apos;%s&apos; уже существует</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="169"/>
+        <location filename="translatables.py" line="126"/>
         <source>Rename variable</source>
         <translation>Переименовать переменную</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="170"/>
+        <location filename="translatables.py" line="127"/>
         <source>Which variable do you want to rename?</source>
         <translation>Какую переменную Вы хотите переименовать?</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="172"/>
+        <location filename="translatables.py" line="129"/>
         <source>Enter a new variable name</source>
         <translation>Ввести новое имя переменной</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="173"/>
+        <location filename="translatables.py" line="130"/>
         <source>Please use only letters, numbers and underscores</source>
         <translation>Используйте только буквы и цифры</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="175"/>
+        <location filename="translatables.py" line="132"/>
         <source>Remove variable</source>
         <translation>Удалить переменную</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="176"/>
+        <location filename="translatables.py" line="133"/>
         <source>Which variable do you want to remove?</source>
         <translation>Какую переменную Вы хотите удалить?</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="177"/>
+        <location filename="translatables.py" line="134"/>
         <source>Remove cycles?</source>
         <translation>Удалить круги?</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="178"/>
+        <location filename="translatables.py" line="135"/>
         <source>By reducing the number of cycles, data will be lost from the table. Do you wish to continue?</source>
         <translation>Если Вы уменьшите количество кругов, Вы потеряете данные из ячеицы. Продолжить?</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="180"/>
+        <location filename="translatables.py" line="137"/>
         <source>&lt;b&gt;%s&lt;/b&gt; will be called &lt;b&gt;%s&lt;/b&gt; x &lt;b&gt;%s&lt;/b&gt; - &lt;b&gt;%s&lt;/b&gt; = &lt;b&gt;%s&lt;/b&gt; times in &lt;b&gt;%s&lt;/b&gt; order</source>
         <translation>&lt;b&gt;%s&lt;/b&gt; будет вызываться &lt;b&gt;%s&lt;/b&gt; x &lt;b&gt;%s&lt;/b&gt; - &lt;b&gt;%s&lt;/b&gt; = &lt;b&gt;%s&lt;/b&gt; раз в &lt;b&gt;%s&lt;/b&gt; порядке</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="181"/>
+        <location filename="translatables.py" line="138"/>
         <source>&lt;b&gt;%s&lt;/b&gt; will be called &lt;b&gt;%s&lt;/b&gt; x &lt;b&gt;%s&lt;/b&gt; = &lt;b&gt;%s&lt;/b&gt; times in &lt;b&gt;%s&lt;/b&gt; order</source>
         <translation>&lt;b&gt;%s&lt;/b&gt; будет вызываться &lt;b&gt;%s&lt;/b&gt; x &lt;b&gt;%s&lt;/b&gt; = &lt;b&gt;%s&lt;/b&gt; раз в &lt;b&gt;%s&lt;/b&gt; порядке</translation>
     </message>
@@ -2736,7 +2791,7 @@ Description: %s</source>
         <translation type="obsolete">начиная с круга &lt;b&gt;%d&lt;/b&gt;</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="183"/>
+        <location filename="translatables.py" line="140"/>
         <source> &lt;font color=&apos;red&apos;&gt;&lt;b&gt;(too many cycles skipped)&lt;/b&gt;&lt;/font&gt;</source>
         <translation> &lt;font color=&apos;red&apos;&gt;&lt;b&gt;(слишком много кругов пропущено)&lt;/b&gt;&lt;/font&gt;</translation>
     </message>
@@ -2746,7 +2801,7 @@ Description: %s</source>
         <translation type="obsolete"> &lt;font color=&apos;red&apos;&gt;&lt;b&gt;(пустая или отрицательная длина)&lt;/b&gt;&lt;/font&gt;</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="164"/>
+        <location filename="translatables.py" line="146"/>
         <source>The following key names are valid:&lt;br /&gt;</source>
         <translation>Возможны следующие ключи:&lt;br /&gt;</translation>
     </message>
@@ -2781,22 +2836,22 @@ Description: %s</source>
         <translation type="obsolete">Добавить существующую составляющую</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="147"/>
+        <location filename="translatables.py" line="198"/>
         <source>Append new item</source>
-        <translation type="obsolete">Добавить новую составляющую</translation>
+        <translation type="unfinished">Добавить новую составляющую</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="69"/>
+        <location filename="translatables.py" line="98"/>
         <source>Welcome to OpenSesame %s</source>
         <translation>Добро пожаловать в &quot;Сезам, откройся&quot; %s</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="70"/>
+        <location filename="translatables.py" line="99"/>
         <source>Busy ...</source>
         <translation>Подождите...</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="71"/>
+        <location filename="translatables.py" line="100"/>
         <source>Done!</source>
         <translation>Готов к работе!</translation>
     </message>
@@ -2811,17 +2866,17 @@ Description: %s</source>
         <translation type="obsolete">Не удалось сохранить точку восстановления...</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="72"/>
+        <location filename="translatables.py" line="101"/>
         <source>Save changes?</source>
         <translation>Сохранить изменения?</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="73"/>
+        <location filename="translatables.py" line="102"/>
         <source>Your experiment contains unsaved changes. Do you want to save your experiment?</source>
         <translation>В Вашем опыте имеются несохранённые изменения. Хотите сохранить Ваш опыт?</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="74"/>
+        <location filename="translatables.py" line="103"/>
         <source>%s [unsaved]</source>
         <translation>%s [несохранено]</translation>
     </message>
@@ -2851,17 +2906,17 @@ Description: %s</source>
         <translation type="obsolete">Необходим перезапуск. Вы хотите сохранить текущий опыт и перезапустить &quot;Сезам, откройся&quot;?</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="75"/>
+        <location filename="translatables.py" line="104"/>
         <source>Quit?</source>
         <translation>Выйти?</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="76"/>
+        <location filename="translatables.py" line="105"/>
         <source>Are you sure you want to quit OpenSesame?</source>
         <translation>Вы уверены, что хотите выйти?</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="77"/>
+        <location filename="translatables.py" line="106"/>
         <source>(No recent files)</source>
         <translation>(Нет последних записей)</translation>
     </message>
@@ -2876,17 +2931,17 @@ Description: %s</source>
         <translation type="obsolete">Невозможно сохранить запись, так как приказник не может быть создан. Произошла следующая ошибка:&lt;br/&gt;%s</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="80"/>
+        <location filename="translatables.py" line="109"/>
         <source>Saved as %s</source>
         <translation>Сохранено как %s</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="81"/>
+        <location filename="translatables.py" line="110"/>
         <source>Failed to save file. Error: %s</source>
         <translation>Не удалось сохранить. Ошибка: %s</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="82"/>
+        <location filename="translatables.py" line="111"/>
         <source>Save file as ...</source>
         <translation>Сохранить запись как...</translation>
     </message>
@@ -2896,22 +2951,22 @@ Description: %s</source>
         <translation type="obsolete">Не удалось изменить разрешение полотна:</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="84"/>
+        <location filename="translatables.py" line="113"/>
         <source>Could not parse script: %s</source>
         <translation>Не могу исследовать приказник: %s</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="153"/>
+        <location filename="translatables.py" line="208"/>
         <source>&lt;b&gt;&lt;font size=&apos;5&apos;&gt;Unused&lt;/font&gt;&lt;/b&gt;</source>
         <translation>&lt;b&gt;&lt;font size=&apos;5&apos;&gt;Корзина&lt;/font&gt;&lt;/b&gt;</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="154"/>
+        <location filename="translatables.py" line="209"/>
         <source>Permanently delete unused items</source>
         <translation>Удалить навсегда неиспользуемые составляющие</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="155"/>
+        <location filename="translatables.py" line="210"/>
         <source>Permanently delete items?</source>
         <translation>Удалить навсегда эти составляющие?</translation>
     </message>
@@ -2921,12 +2976,12 @@ Description: %s</source>
         <translation type="obsolete">Вы уверены, что хотите удалить навсегда неиспользуемые составляющие. Восстановить потом их не удастся.</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="85"/>
+        <location filename="translatables.py" line="114"/>
         <source>File renamed</source>
         <translation>Запись переименована</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="86"/>
+        <location filename="translatables.py" line="115"/>
         <source>The file has been renamed to &apos;%s&apos;, because the file pool already contains a file named &apos;%s&apos;.</source>
         <translation>Эта запись была переименована в &apos;%s&apos;, потому что склад уже содержит запись с именем &apos;%s&apos;.</translation>
     </message>
@@ -2936,32 +2991,32 @@ Description: %s</source>
         <translation type="obsolete">&lt;b&gt;Не могу запустить opensesamerun&lt;/b&gt;&lt;br /&gt;Убедитесь, что opensesamerun (или opensesamerun.exe) присутствует, исправьте приказник, или уберите в запускающем (в настройках &quot;Сезам, откройся&quot;) &quot;Одновременно с &quot;Сезам, откройся&quot;&apos;.&lt;br&gt;&lt;pre&gt;%s&lt;/pre&gt;</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="63"/>
+        <location filename="translatables.py" line="94"/>
         <source>Finished!</source>
         <translation>Закончено!</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="64"/>
+        <location filename="translatables.py" line="95"/>
         <source>The experiment is finished and data has been logged to &apos;%s&apos;. Do you want to copy the logfile to the file pool?</source>
         <translation>Опыт закончен и данных сохранены в &apos;%s&apos; Хотите отправить запись с этими данными на склад?</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="61"/>
+        <location filename="translatables.py" line="92"/>
         <source>Subject number</source>
         <translation>Порядковое имя испытуемого</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="62"/>
+        <location filename="translatables.py" line="93"/>
         <source>Please enter the subject number</source>
         <translation>Введите порядковое имя испытуемого</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="59"/>
+        <location filename="translatables.py" line="90"/>
         <source>Choose location for logfile (press &apos;escape&apos; for default location)</source>
         <translation>Выберите местоположение для записи собираемых данных</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="60"/>
+        <location filename="translatables.py" line="91"/>
         <source>The logfile &apos;%s&apos; is not writable. Please choose another location for the logfile.</source>
         <translation>Запись для сбора данных &apos;%s&apos; не получилось создать. Выберите другое место для сохранения.</translation>
     </message>
@@ -3031,7 +3086,7 @@ Description: %s</source>
         <translation type="obsolete">(Вне полотна)</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="193"/>
+        <location filename="translatables.py" line="173"/>
         <source>Delete</source>
         <translation>Удалить</translation>
     </message>
@@ -3046,17 +3101,17 @@ Description: %s</source>
         <translation type="obsolete">Добавить составляющую полотна</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="189"/>
+        <location filename="translatables.py" line="153"/>
         <source>Element script</source>
         <translation>Приказник</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="196"/>
+        <location filename="translatables.py" line="150"/>
         <source>New textline</source>
         <translation>Новая строка</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="197"/>
+        <location filename="translatables.py" line="151"/>
         <source>Please enter a text for the textline</source>
         <translation>Введите слова</translation>
     </message>
@@ -3088,57 +3143,57 @@ Description: %s</source>
 &apos;%s&apos;</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="108"/>
+        <location filename="translatables.py" line="179"/>
         <source>Overwrite</source>
         <translation>Перезаписать</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="109"/>
+        <location filename="translatables.py" line="180"/>
         <source>A file named &apos;%s&apos; already exists in the pool. Do you want to overwrite this file?</source>
         <translation>Запись с именем &apos;%s&apos; уже существует на складе. Хотите переписать эту запись?</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="110"/>
+        <location filename="translatables.py" line="181"/>
         <source>Add files to pool</source>
         <translation>Добавить записи на склад</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="115"/>
+        <location filename="translatables.py" line="186"/>
         <source>Remove from pool</source>
         <translation>Удалить со склада</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="119"/>
+        <location filename="translatables.py" line="190"/>
         <source>Rename</source>
         <translation>Переименовать</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="117"/>
+        <location filename="translatables.py" line="188"/>
         <source>Remove</source>
         <translation>Удалить</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="120"/>
+        <location filename="translatables.py" line="191"/>
         <source>Please enter a new name for &apos;%s&apos;</source>
         <translation>Пожалуйста, введите новое имя для &apos;%s&apos;</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="121"/>
+        <location filename="translatables.py" line="192"/>
         <source>There already is a file named &apos;%s&apos; in the file pool</source>
         <translation>На складе уже существует запись &apos;%s&apos;</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="156"/>
+        <location filename="translatables.py" line="193"/>
         <source>Cancel</source>
         <translation>Отменить</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="123"/>
+        <location filename="translatables.py" line="194"/>
         <source>Select</source>
         <translation>Выбрать</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="124"/>
+        <location filename="translatables.py" line="195"/>
         <source>Select file from pool</source>
         <translation>ВЫбрать запись со склада</translation>
     </message>
@@ -3193,17 +3248,17 @@ Description: %s</source>
         <translation type="obsolete">Больше о &quot;Сезам, откройся&quot;</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="141"/>
+        <location filename="translatables.py" line="213"/>
         <source>No settings for %s</source>
         <translation>Нет настроек для %s</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="142"/>
+        <location filename="translatables.py" line="214"/>
         <source>Settings for %s:</source>
         <translation>Настройки для %s:</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="152"/>
+        <location filename="translatables.py" line="196"/>
         <source>Failed to parse the resolution. Expecting positive numeric values.</source>
         <translation>Не получилось исследовать разрешение. Ожидается положительное число.</translation>
     </message>
@@ -3223,32 +3278,32 @@ Description: %s</source>
         <translation type="obsolete">Введите новое имя</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="134"/>
+        <location filename="translatables.py" line="222"/>
         <source>Click to edit</source>
         <translation>Нажмите, чтобы изменить</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="145"/>
+        <location filename="translatables.py" line="197"/>
         <source>Error: Command contains invalid characters</source>
         <translation>Ошибка: Введены знаки, которые нельзя использовать</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="125"/>
+        <location filename="translatables.py" line="215"/>
         <source>Ready</source>
         <translation>Готов к работе!</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="78"/>
+        <location filename="translatables.py" line="107"/>
         <source>Open file</source>
         <translation>Открыть опыт</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="135"/>
+        <location filename="translatables.py" line="211"/>
         <source>Apply?</source>
         <translation>Применить?</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="136"/>
+        <location filename="translatables.py" line="212"/>
         <source>Are you sure you want to apply the changes to the general script?</source>
         <translation>Вы уверены, что хотите применить изменения в общем приказнике?</translation>
     </message>
@@ -3258,52 +3313,52 @@ Description: %s</source>
         <translation type="obsolete">Не получилось исследовать приказник (см. окно отладки): %s</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="114"/>
+        <location filename="translatables.py" line="185"/>
         <source>Open</source>
         <translation>Открыть</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="116"/>
+        <location filename="translatables.py" line="187"/>
         <source>And %d more file(s)</source>
         <translation>И %d больше записей</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="118"/>
+        <location filename="translatables.py" line="189"/>
         <source>&lt;p&gt;Are you sure you want to remove the following files from the file pool? This operation will only affect the OpenSesame file pool, not the original files on your disk.&lt;/p&gt;&lt;p&gt;&lt;b&gt; - %s&lt;/b&gt;&lt;/p&gt;&lt;p&gt;%s&lt;/p&gt;</source>
         <translation>&lt;p&gt; Вы уверены что хотите удалить эти записи со склада? Это действие коснётся только склад в &quot;Сезам, откройся&quot;, но не записи на Вашем внутреннем носителе.&lt;/p&gt;&lt;p&gt;&lt;b&gt; - %s&lt;/b&gt;&lt;/p&gt;&lt;p&gt;%s&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="162"/>
+        <location filename="translatables.py" line="121"/>
         <source>All non-alphanumeric characters except underscores have been stripped</source>
         <translation>Все знаки не являющиеся числами и буквами были зачищены</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="163"/>
+        <location filename="translatables.py" line="122"/>
         <source>The following characters are not allowed and have been stripped: double-quote (&quot;), backslash (), and newline</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="translatables.py" line="165"/>
+        <location filename="translatables.py" line="145"/>
         <source>&quot;%s&quot; is not a valid qtautoplugin control</source>
         <translation>&quot;%s&quot; не подходит для qtautoplugin</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="185"/>
+        <location filename="translatables.py" line="142"/>
         <source>You provided an empty or invalid variable definition. For an example of a valid variable definition, open the variable wizard and select &quot;Show example&quot;.</source>
         <translation>Вы ввели пустое или недопустимое значение для определения переменной. Чтобы посмотреть пример, откройте доску переменных и нажмите &quot;Показать пример&quot;.</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="186"/>
+        <location filename="translatables.py" line="143"/>
         <source>Apply weight</source>
         <translation>Применить веса</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="187"/>
+        <location filename="translatables.py" line="144"/>
         <source>Which variable contains the weights?</source>
         <translation>Какая переменная содержит веса?</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="143"/>
+        <location filename="translatables.py" line="176"/>
         <source>Add custom variable</source>
         <translation>Добавить свою переменную</translation>
     </message>
@@ -3353,238 +3408,293 @@ Description: %s</source>
         <translation type="obsolete">Взять значения в кавычки</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="65"/>
+        <location filename="translatables.py" line="89"/>
         <source>Failed to copy `opensesame` to `opensesame.py`, which is required for the multiprocess runner. Please copy the file manually, or select a different runner under Preferences.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="translatables.py" line="107"/>
+        <location filename="translatables.py" line="178"/>
         <source>&apos;%s&apos; is not a regular file and could not be added to the file pool.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="translatables.py" line="182"/>
+        <location filename="translatables.py" line="139"/>
         <source> starting at cycle &lt;b&gt;%s&lt;/b&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="translatables.py" line="184"/>
+        <location filename="translatables.py" line="141"/>
         <source> &lt;font color=&apos;red&apos;&gt;&lt;b&gt;(zero, negative, or unknown length)&lt;/b&gt;&lt;/font&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="translatables.py" line="83"/>
+        <location filename="translatables.py" line="112"/>
         <source>You have selected the &lt;code&gt;.opensesame&lt;/code&gt; format. This means that the file pool has &lt;i&gt;not&lt;/i&gt; been saved. To save the file pool along with your experiment, select the &lt;code&gt;.opensesame.tar.gz&lt;/code&gt; format.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="translatables.py" line="87"/>
+        <location filename="translatables.py" line="74"/>
         <source>Image name &quot;%s&quot; is unknown or variably defined, using fallback image</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="translatables.py" line="88"/>
+        <location filename="translatables.py" line="75"/>
         <source>Penwidth &quot;%s&quot; is unknown or variably defined, using 1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="translatables.py" line="89"/>
+        <location filename="translatables.py" line="76"/>
         <source>Color &quot;%s&quot; is unknown or variably defined, using placeholder color</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="translatables.py" line="90"/>
+        <location filename="translatables.py" line="77"/>
         <source>X coordinate &quot;%s&quot; is unknown or variably defined, using display center</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="translatables.py" line="91"/>
+        <location filename="translatables.py" line="78"/>
         <source>Y coordinate &quot;%s&quot; is unknown or variably defined, using display center</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="translatables.py" line="92"/>
+        <location filename="translatables.py" line="80"/>
         <source>Width &quot;%s&quot; is unknown or variably defined, using 100</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="translatables.py" line="93"/>
+        <location filename="translatables.py" line="81"/>
         <source>Height &quot;%s&quot; is unknown or variably defined, using 100</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="translatables.py" line="94"/>
+        <location filename="translatables.py" line="82"/>
         <source>Scale &quot;%s&quot; is unknown or variably defined, using 1.0</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="translatables.py" line="95"/>
+        <location filename="translatables.py" line="87"/>
         <source>An item with that name already exists.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="translatables.py" line="96"/>
+        <location filename="translatables.py" line="88"/>
         <source>An item name cannot be empty.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="translatables.py" line="126"/>
+        <location filename="translatables.py" line="165"/>
         <source>General options</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="translatables.py" line="128"/>
+        <location filename="translatables.py" line="163"/>
         <source>Unused items</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="translatables.py" line="130"/>
+        <location filename="translatables.py" line="158"/>
         <source>View controls</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="translatables.py" line="131"/>
+        <location filename="translatables.py" line="159"/>
         <source>View script</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="translatables.py" line="132"/>
+        <location filename="translatables.py" line="160"/>
         <source>Split view</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="translatables.py" line="137"/>
+        <location filename="translatables.py" line="201"/>
         <source>Item name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="translatables.py" line="138"/>
+        <location filename="translatables.py" line="202"/>
         <source>Run if</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="translatables.py" line="144"/>
+        <location filename="translatables.py" line="177"/>
         <source>Which variable do you wish to log?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="translatables.py" line="157"/>
+        <location filename="translatables.py" line="116"/>
         <source>Toggle pop-out</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="translatables.py" line="179"/>
+        <location filename="translatables.py" line="136"/>
         <source>&lt;font color=&apos;red&apos;&gt;No item to run specified&lt;/font&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="translatables.py" line="188"/>
+        <location filename="translatables.py" line="152"/>
         <source>Edit element</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="translatables.py" line="191"/>
+        <location filename="translatables.py" line="155"/>
         <source>Raise to front</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="translatables.py" line="192"/>
+        <location filename="translatables.py" line="156"/>
         <source>Lower to bottom</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="translatables.py" line="194"/>
+        <location filename="translatables.py" line="148"/>
         <source>Edit text</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="translatables.py" line="66"/>
+        <location filename="translatables.py" line="96"/>
         <source>Loading extensions</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="translatables.py" line="67"/>
+        <location filename="translatables.py" line="97"/>
         <source>Done</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="translatables.py" line="68"/>
-        <source>Extension: %s</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="translatables.py" line="79"/>
+        <location filename="translatables.py" line="108"/>
         <source>The following error occured while trying to save:&lt;br/&gt;%s</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="translatables.py" line="99"/>
+        <location filename="translatables.py" line="168"/>
         <source>Edit run-if statement</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="translatables.py" line="100"/>
+        <location filename="translatables.py" line="169"/>
         <source>Copy to clipboard</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="translatables.py" line="101"/>
+        <location filename="translatables.py" line="170"/>
         <source>Paste from clipboard</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="translatables.py" line="102"/>
+        <location filename="translatables.py" line="171"/>
         <source>Create linked copy</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="translatables.py" line="103"/>
+        <location filename="translatables.py" line="172"/>
         <source>Create unlinked copy</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="translatables.py" line="105"/>
+        <location filename="translatables.py" line="174"/>
         <source>Permanently delete all linked copies</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="translatables.py" line="106"/>
+        <location filename="translatables.py" line="175"/>
         <source>Help</source>
         <translation type="unfinished">Помощь</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="129"/>
+        <location filename="translatables.py" line="164"/>
         <source>Move to unused items</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="translatables.py" line="133"/>
+        <location filename="translatables.py" line="161"/>
         <source>Select view</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="translatables.py" line="147"/>
+        <location filename="translatables.py" line="217"/>
         <source>Set as item to run for %s</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="translatables.py" line="148"/>
+        <location filename="translatables.py" line="218"/>
         <source>Insert into %s</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="translatables.py" line="149"/>
+        <location filename="translatables.py" line="219"/>
         <source>Drop below %s</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="translatables.py" line="150"/>
+        <location filename="translatables.py" line="220"/>
         <source>Permanently delete item</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="translatables.py" line="151"/>
+        <location filename="translatables.py" line="221"/>
         <source>Are you sure you want to permanently delete &lt;b&gt;%s&lt;/b&gt;? All linked copies of &lt;b&gt;%s&lt;/b&gt; will be deleted. You will not be able to undo this.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="translatables.py" line="73"/>
+        <source>Please confirm</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="translatables.py" line="79"/>
+        <source>Radius &quot;%s&quot; is unknown or variably defined, using 50</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="translatables.py" line="83"/>
+        <source>Font size &quot;%s&quot; is invalid or variably defined, using 18</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="translatables.py" line="84"/>
+        <source>Some properties of a Gabor patch are unknown or variably defined, using fallback image</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="translatables.py" line="85"/>
+        <source>Some properties of a noise patch are unknown or variably defined, using fallback image</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="translatables.py" line="86"/>
+        <source>Fixdot style &quot;%s&quot; is unknown or variably defined</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="translatables.py" line="147"/>
+        <source>You have multiple unlinked loggers. This can lead to messy log files.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="translatables.py" line="199"/>
+        <source>Append linked copy</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="translatables.py" line="200"/>
+        <source>Append unlinked copy</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="translatables.py" line="203"/>
+        <source>Drop cancelled: Target not droppable</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="translatables.py" line="204"/>
+        <source>Drop cancelled: Recursion prevented</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="translatables.py" line="207"/>
+        <source>I know, do it!</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4033,22 +4143,22 @@ Description: %s</source>
 <context>
     <name>toolbar_menu</name>
     <message>
-        <location filename="translatables.py" line="270"/>
+        <location filename="translatables.py" line="284"/>
         <source>Integrate menu and toolbar</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="translatables.py" line="271"/>
+        <location filename="translatables.py" line="285"/>
         <source>Integrates the menu into the toolbar.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="translatables.py" line="272"/>
+        <location filename="translatables.py" line="286"/>
         <source>Integrates the menu into the toolbar</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="translatables.py" line="273"/>
+        <location filename="translatables.py" line="283"/>
         <source>Menu</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4056,75 +4166,85 @@ Description: %s</source>
 <context>
     <name>touch_response</name>
     <message>
-        <location filename="translatables.py" line="365"/>
+        <location filename="translatables.py" line="374"/>
         <source>Response collection</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="translatables.py" line="366"/>
+        <location filename="translatables.py" line="375"/>
         <source>Correct response</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="translatables.py" line="367"/>
+        <location filename="translatables.py" line="376"/>
         <source>Set the correct response</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="translatables.py" line="368"/>
+        <location filename="translatables.py" line="377"/>
         <source>Timeout</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="translatables.py" line="369"/>
+        <location filename="translatables.py" line="378"/>
         <source>Expecting a value in milliseconds or &apos;infinite&apos;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="translatables.py" line="370"/>
+        <location filename="translatables.py" line="379"/>
         <source>Number of columns</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="translatables.py" line="371"/>
+        <location filename="translatables.py" line="380"/>
         <source>Specifies the number of columns</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="translatables.py" line="372"/>
+        <location filename="translatables.py" line="381"/>
         <source>Number of rows</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="translatables.py" line="373"/>
+        <location filename="translatables.py" line="382"/>
         <source>Specifies the number of rows</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="translatables.py" line="383"/>
+        <source>Show cursor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="translatables.py" line="384"/>
+        <source>Show a mouse cursor (if supported on device)</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>update_checker</name>
     <message>
-        <location filename="translatables.py" line="358"/>
+        <location filename="translatables.py" line="361"/>
         <source>Check for updates</source>
         <translation type="unfinished">Проверить обновления</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="359"/>
+        <location filename="translatables.py" line="362"/>
         <source>Checks whether a new version of OpenSesame is available.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="translatables.py" line="360"/>
+        <location filename="translatables.py" line="358"/>
         <source>... and is sorry to say that the attempt to check for updates has failed. Please make sure that you are connected to the internet and try again later. If this problem persists, please visit &lt;a href=&apos;http://www.cogsci.nl/opensesame&apos;&gt;http://www.cogsci.nl/opensesame&lt;/a&gt; for more information.</source>
         <translation type="unfinished">Проверка обновлений не удалась. Проверьте, подключены ли Вы к Сети. Или посетите &lt;a href=&apos;http://www.cogsci.nl/opensesame&apos;&gt;http://www.cogsci.nl/opensesame&lt;/a&gt;</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="361"/>
+        <location filename="translatables.py" line="359"/>
         <source>... and is happy to report that a new version of OpenSesame (%s) is available at &lt;a href=&apos;http://www.cogsci.nl/opensesame&apos;&gt;http://www.cogsci.nl/opensesame&lt;/a&gt;!</source>
         <translation type="unfinished">Рады сообщить Вам, что новое исполнение &quot;Сезам, откройся&quot; (%s) доступно на &lt;a href=&apos;http://www.cogsci.nl/opensesame&apos;&gt;http://www.cogsci.nl/opensesame&lt;/a&gt;!</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="362"/>
+        <location filename="translatables.py" line="360"/>
         <source> ... and is happy to report that you are running the most recent version of OpenSesame.</source>
         <translation type="unfinished">Вы пользуетесь последним исполнением &quot;Сезам, откройся&quot;</translation>
     </message>
@@ -4221,47 +4341,47 @@ Description: %s</source>
 <context>
     <name>video_player</name>
     <message>
-        <location filename="translatables.py" line="209"/>
+        <location filename="translatables.py" line="31"/>
         <source>Visual stimuli</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="translatables.py" line="210"/>
+        <location filename="translatables.py" line="32"/>
         <source>Video file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="translatables.py" line="211"/>
+        <location filename="translatables.py" line="33"/>
         <source>A video file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="translatables.py" line="212"/>
+        <location filename="translatables.py" line="34"/>
         <source>Resize to fit screen</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="translatables.py" line="213"/>
+        <location filename="translatables.py" line="35"/>
         <source>Resize the video to fit the full screen</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="translatables.py" line="216"/>
+        <location filename="translatables.py" line="38"/>
         <source>Duration</source>
         <translation type="unfinished">Длительность</translation>
     </message>
     <message>
-        <location filename="translatables.py" line="215"/>
+        <location filename="translatables.py" line="37"/>
         <source>Expecting a value in milliseconds, &apos;keypress&apos; or &apos;mouseclick&apos;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="translatables.py" line="217"/>
+        <location filename="translatables.py" line="39"/>
         <source>Frame duration in milliseconds</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="translatables.py" line="218"/>
+        <location filename="translatables.py" line="40"/>
         <source>ms</source>
         <translation type="unfinished"> мс</translation>
     </message>
@@ -4591,9 +4711,15 @@ Various settings related to the control of the display, sound, and input devices
         <location filename="credits_widget.ui" line="179"/>
         <source>OpenSesame [version] [codename]
 Copyright Sebastiaan Mathôt (2010-2014)</source>
-        <translation type="unfinished">&quot;Сезам, откройся&quot; [version] [codename]
+        <translation type="obsolete">&quot;Сезам, откройся&quot; [version] [codename]
 Права принадлежат Себастьяну Матоту (Sebastiaan Mathôt) (2010-2014)
 Перевод: Владимир Косоногов (vladimirkosonogov@yandex.ru)</translation>
+    </message>
+    <message encoding="UTF-8">
+        <location filename="credits_widget.ui" line="179"/>
+        <source>OpenSesame [version] [codename]
+Copyright Sebastiaan Mathôt (2010-2015)</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
