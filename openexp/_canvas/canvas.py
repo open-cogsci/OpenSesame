@@ -596,9 +596,8 @@ class canvas(object):
 
 		raise NotImplementedError()
 
-
-	def arrow(self,sx,sy,ex,ey,proportion = 0.7, arrow_width = 30,color = None, 
-		fill= False, penwidth = None):
+	def arrow(self, sx, sy, ex, ey, proportion=0.7, arrow_width=30,
+		arrowhead_width=0.5, color=None, fill=False, penwidth=None):
 
 		"""
 		desc:
@@ -621,12 +620,17 @@ class canvas(object):
 
 		keywords:
 			proportion:
-				desc:	Proportion of the arrow body length to the total arrow length
+				desc:	Proportion of the arrow body length to the total 
+						arrow length
 				type:	float (0,1)
 			arrow_width:
-				desc:	The expansion of the arrow-head perpendicular to the pointing 
-						direction in pixels
+				desc:	The expansion of the arrow perpendicular to 
+						the pointing direction in pixels
 				type:	int (preferably even)
+			arrowhead_width:
+				desc:	The proportion of width of arrowhead to total arrow 
+						width
+				type:	float (0,1)
 			color:
 				desc:	"%arg_fgcolor"
 				type:	[str, unicode, NoneType]
@@ -649,39 +653,25 @@ class canvas(object):
 		d = math.sqrt((ey-sy)**2 + (sx-ex)**2)
 		# direction  
 		angle = math.atan2(ey-sy,ex-sx)
-
-
-		# calculate points between each of the vertices, according to this scheme
-		#    3	
-		#    |\
-		#    | \
-		# 1--2  \
-        # |      \
-		# 0	      4
-		# |		 /
-		# 7--6  /
-		#    | /
-		#    |/	
-		#    5
+		head_width = arrowhead_width/2.0 
+		body_width = (1-arrowhead_width)/2.0 
+		# calculate coordinates
 		p0 = (sx,sy)
 		p4 = (ex,ey)
-
-		p1 = (sx + 0.25 * arrow_width * math.cos(angle - math.pi/2),\
-			sy + 0.25 * arrow_width * math.sin(angle - math.pi/2))
-
+		p1 = (sx +body_width * arrow_width * math.cos(angle - math.pi/2),\
+			sy + body_width * arrow_width * math.sin(angle - math.pi/2))
 		p2 = (p1[0] + proportion*math.cos(angle) * d, \
 		 	p1[1] + proportion * math.sin(angle) * d)
-		p3 = (p2[0] + 0.25 * arrow_width * math.cos(angle - math.pi/2), \
-			p2[1] + 0.25 * arrow_width * math.sin(angle - math.pi/2))
-		
-		p7 = (sx + 0.25 * arrow_width*math.cos(angle + math.pi/2), \
-			sy + 0.25 * arrow_width*math.sin(angle + math.pi/2))
+		p3 = (p2[0]+head_width * arrow_width * math.cos(angle-math.pi/2),\
+			p2[1] + head_width * arrow_width * math.sin(angle-math.pi/2))
+		p7 = (sx + body_width * arrow_width*math.cos(angle + math.pi/2),\
+			sy + body_width * arrow_width*math.sin(angle + math.pi/2))
 		p6 = (p7[0] + proportion * math.cos(angle) * d, \
 		 	p7[1] + proportion * math.sin(angle) * d)
-		p5 = (p6[0] + 0.25 * arrow_width * math.cos(angle + math.pi/2), \
-			p6[1] + 0.25 * arrow_width * math.sin(angle + math.pi/2))
-
-		self.polygon([p0,p1,p2,p3,p4,p5,p6,p7], color = color, fill = fill, penwidth = penwidth)
+		p5 = (p6[0]+head_width * arrow_width * math.cos(angle+math.pi/2),\
+			p6[1]+head_width * arrow_width * math.sin(angle+math.pi/2))
+		self.polygon([p0,p1,p2,p3,p4,p5,p6,p7], color=color, fill=fill, \
+			penwidth=penwidth)
 
 
 	def rect(self, x, y, w, h, fill=False, color=None, penwidth=None):

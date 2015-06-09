@@ -644,34 +644,32 @@ class sketchpad_canvas(QtGui.QGraphicsScene):
 		# direction  
 		angle = math.atan2(ey-sy,ex-sx)
 
+	def arrow(self, sx, sy, ex, ey, proportion=0.7, arrow_width=30, 
+		arrowhead_width=0.5, color=None, fill=False, penwidth=None, add=True):
 
+		"""Mimicks canvas api. See openexp._canvas.canvas."""
 
-
-	def arrow(self,sx,sy,ex,ey,proportion = 0.7, arrow_width = 30,color = None, 
-		fill= False, penwidth = None, add = True):
 		# length
 		d = math.sqrt((ey-sy)**2 + (sx-ex)**2)
 		# direction  
 		angle = math.atan2(ey-sy,ex-sx)
-		
+		head_width = arrowhead_width/2.0 
+		body_width = (1-arrowhead_width)/2.0 
+		# calculate coordinates
 		p0 = (sx,sy)
 		p4 = (ex,ey)
-
-		p1 = (sx + 0.25 * arrow_width * math.cos(angle - math.pi/2),\
-			sy + 0.25 * arrow_width * math.sin(angle - math.pi/2))
-
+		p1 = (sx +body_width * arrow_width * math.cos(angle - math.pi/2),\
+			sy + body_width * arrow_width * math.sin(angle - math.pi/2))
 		p2 = (p1[0] + proportion*math.cos(angle) * d, \
 		 	p1[1] + proportion * math.sin(angle) * d)
-		p3 = (p2[0] + 0.25 * arrow_width * math.cos(angle - math.pi/2), \
-			p2[1] + 0.25 * arrow_width * math.sin(angle - math.pi/2))
-		
-		p7 = (sx + 0.25 * arrow_width*math.cos(angle + math.pi/2), \
-			sy + 0.25 * arrow_width*math.sin(angle + math.pi/2))
+		p3 = (p2[0]+head_width * arrow_width * math.cos(angle-math.pi/2),\
+			p2[1] + head_width * arrow_width * math.sin(angle-math.pi/2))
+		p7 = (sx + body_width * arrow_width*math.cos(angle + math.pi/2),\
+			sy + body_width * arrow_width*math.sin(angle + math.pi/2))
 		p6 = (p7[0] + proportion * math.cos(angle) * d, \
 		 	p7[1] + proportion * math.sin(angle) * d)
-		p5 = (p6[0] + 0.25 * arrow_width * math.cos(angle + math.pi/2), \
-			p6[1] + 0.25 * arrow_width * math.sin(angle + math.pi/2))
-
+		p5 = (p6[0]+head_width * arrow_width * math.cos(angle+math.pi/2),\
+			p6[1]+head_width * arrow_width * math.sin(angle+math.pi/2))
 		color = self._color(color)
 		if fill:
 			pen = self._pen(color, 1)

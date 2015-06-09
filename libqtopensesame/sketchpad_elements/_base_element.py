@@ -450,6 +450,19 @@ class base_element(object):
 		return False
 
 	@staticmethod
+	def requires_arrowhead_width():
+
+		"""
+		desc:
+			Indicates whether the element requires arrowhead_width settings.
+
+		returns:
+			type:	bool
+		"""
+
+		return False
+
+	@staticmethod
 	def requires_scale():
 
 		"""
@@ -461,6 +474,7 @@ class base_element(object):
 		"""
 
 		return False
+		
 	@staticmethod
 	def requires_fill():
 

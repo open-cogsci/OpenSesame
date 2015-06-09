@@ -253,6 +253,10 @@ class feedpad(QtCore.QObject):
 	@property
 	def current_arrow_width(self):
 		return self.sketchpad_widget.current_arrow_width
+
+	@property
+	def current_arrowhead_width(self):
+		return self.sketchpad_widget.current_arrowhead_width
 	
 	@property
 	def current_proportion(self):
