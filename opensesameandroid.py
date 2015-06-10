@@ -72,6 +72,7 @@ class stdout_file(object):
 		if self.fd != None:
 			self.fd.write(s)
 			self.fd.flush()
+			os.fsync(self.fd.fileno())
 
 def main():
 
