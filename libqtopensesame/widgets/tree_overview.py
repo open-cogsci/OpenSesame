@@ -438,16 +438,29 @@ class tree_overview(base_subcomponent, QtGui.QTreeWidget):
 			debug.msg(u'Drop ignored: no parent')
 			e.ignore()
 			return
+		# The logic below is a bit complicated, but works as follows:
+		# - If we're in a move action, remove the dragged item from its parent,
+		#   and set need_restore so that we know this happened.
+		# - Try to drop the dragged item onto the target item
+		# - If the drop action was unsuccesful, and if need_restore is set,
+		#   re-add the dragged item to its former parent.
+		need_restore = False
 		if not QtCore.Qt.ControlModifier & e.keyboardModifiers():
 			if parent_item_name not in self.experiment.items:
 				debug.msg(u'Don\'t know how to remove item from %s' \
 					% parent_item_name)
 			else:
 				self.locked = True
+				need_restore = True
 				self.experiment.items[parent_item_name].remove_child_item(
 					item_name, index)
 				self.locked = False
-		self.drop_event_item_new(data, e, target_treeitem=target_treeitem)
+		if self.drop_event_item_new(data, e, target_treeitem=target_treeitem):
+			return
+		if need_restore:
+			self.experiment.items[parent_item_name].insert_child_item(
+				item_name, index)
+			self.experiment.build_item_tree()
 
 	def drop_event_item_new(self, data, e=None, target_treeitem=None):
 
@@ -467,6 +480,10 @@ class tree_overview(base_subcomponent, QtGui.QTreeWidget):
 			target_treeitem:
 				desc:	A target tree item or None in a drop event is specified.
 				type:	[tree_base_item, NoneType]
+
+		returns:
+			desc:	True if the drop was successful, False otherwise.
+			type:	bool
 		"""
 
 		self.main_window.set_busy(True)
@@ -474,7 +491,7 @@ class tree_overview(base_subcomponent, QtGui.QTreeWidget):
 			if e != None:
 				e.ignore()
 			self.main_window.set_busy(False)
-			return
+			return False
 		# Ignore drops on non-droppable tree items.
 		if target_treeitem == None:
 			target_treeitem = self.itemAt(e.pos())
@@ -482,7 +499,7 @@ class tree_overview(base_subcomponent, QtGui.QTreeWidget):
 			if e != None:
 				e.ignore()
 			self.main_window.set_busy(False)
-			return
+			return False
 		# Get the target item, check if it exists, and, if so, drop the source
 		# item on it.
 		target_item_name = unicode(target_treeitem.text(0))
@@ -492,7 +509,7 @@ class tree_overview(base_subcomponent, QtGui.QTreeWidget):
 				e.ignore()
 			self.structure_change.emit()
 			self.main_window.set_busy(False)
-			return
+			return False
 		target_item = self.experiment.items[target_item_name]
 		# Get the item to be inserted. If the drop type is item-new, we need
 		# to create a new item, otherwise we get an existin item. Also, if
@@ -512,7 +529,7 @@ class tree_overview(base_subcomponent, QtGui.QTreeWidget):
 				self.main_window.print_debug_window(ex)
 				e.accept()
 				self.main_window.set_busy(False)
-				return
+				return False
 			self.extension_manager.fire(u'new_item',
 				name=data[u'item-name'], _type=data[u'item-type'])
 		else:
@@ -553,7 +570,7 @@ class tree_overview(base_subcomponent, QtGui.QTreeWidget):
 						or data[u'application-id'] != self.main_window._id():
 						del self.experiment.items[item.name]
 					self.main_window.set_busy(False)
-					return
+					return False
 				# If the user chose to insert into the target item
 				if resp == 0:
 					target_item.insert_child_item(item.name)
@@ -575,7 +592,7 @@ class tree_overview(base_subcomponent, QtGui.QTreeWidget):
 					e.accept()
 					del self.experiment.items[item.name]
 					self.main_window.set_busy(False)
-					return
+					return False
 				parent_item_name = unicode(parent_treeitem.text(0))
 				parent_item = self.experiment.items[parent_item_name]
 				if isinstance(parent_item, sequence):
@@ -589,6 +606,7 @@ class tree_overview(base_subcomponent, QtGui.QTreeWidget):
 		if self.overview_mode:
 			item.open_tab()
 		self.main_window.set_busy(False)
+		return True
 
 	def dropEvent(self, e):
 
