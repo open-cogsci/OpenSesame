@@ -424,20 +424,23 @@ class tree_overview(base_subcomponent, QtGui.QTreeWidget):
 				_(u'Drop cancelled: Target not droppable'))
 			e.ignore()
 			return
-		target_item_name, target_item_ancestry = target_treeitem.ancestry()
-		item_name = data[u'item-name']
-		item = self.experiment.items[item_name]
-		if target_item_name in item.children():
-			debug.msg(u'Drop ignored: recursion prevented')
-			self.main_window.set_status(
-				_(u'Drop cancelled: Recursion prevented'))
-			e.ignore()
-			return
-		parent_item_name, index = self.parent_from_ancestry(data[u'ancestry'])
-		if parent_item_name == None:
-			debug.msg(u'Drop ignored: no parent')
-			e.ignore()
-			return
+		# If the drop comes from this application, check for recursion etc.
+		if data[u'application-id'] == self.main_window._id():
+			target_item_name, target_item_ancestry = target_treeitem.ancestry()
+			item_name = data[u'item-name']
+			item = self.experiment.items[item_name]
+			if target_item_name in item.children():
+				debug.msg(u'Drop ignored: recursion prevented')
+				self.main_window.set_status(
+					_(u'Drop cancelled: Recursion prevented'))
+				e.ignore()
+				return
+			parent_item_name, index = self.parent_from_ancestry(
+				data[u'ancestry'])
+			if parent_item_name == None:
+				debug.msg(u'Drop ignored: no parent')
+				e.ignore()
+				return
 		# The logic below is a bit complicated, but works as follows:
 		# - If we're in a move action, remove the dragged item from its parent,
 		#   and set need_restore so that we know this happened.
@@ -445,7 +448,8 @@ class tree_overview(base_subcomponent, QtGui.QTreeWidget):
 		# - If the drop action was unsuccesful, and if need_restore is set,
 		#   re-add the dragged item to its former parent.
 		need_restore = False
-		if not QtCore.Qt.ControlModifier & e.keyboardModifiers():
+		if not QtCore.Qt.ControlModifier & e.keyboardModifiers() and \
+			data[u'application-id'] == self.main_window._id():
 			if parent_item_name not in self.experiment.items:
 				debug.msg(u'Don\'t know how to remove item from %s' \
 					% parent_item_name)
