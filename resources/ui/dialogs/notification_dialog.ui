@@ -73,6 +73,9 @@ background-color: #729fcf;</string>
        <family>Monospace</family>
       </font>
      </property>
+     <property name="openExternalLinks">
+      <bool>true</bool>
+     </property>
     </widget>
    </item>
    <item>
