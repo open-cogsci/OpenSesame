@@ -22,7 +22,6 @@ from libqtopensesame.misc.config import cfg
 from libqtopensesame.misc import _
 from libqtopensesame.misc import drag_and_drop
 from libqtopensesame.misc.base_subcomponent import base_subcomponent
-from libqtopensesame.widgets.tree_item_item import tree_item_item
 from libqtopensesame.widgets.tree_append_button import tree_append_button
 from libqtopensesame._input.popup_menu import popup_menu
 from libopensesame import debug
@@ -504,6 +503,12 @@ class tree_overview(base_subcomponent, QtGui.QTreeWidget):
 				e.ignore()
 			self.main_window.set_busy(False)
 			return False
+		# Accept drops on the unused items bin
+		if target_treeitem.name == u'__unused__':
+			e.accept()
+			self.structure_change.emit()
+			self.main_window.set_busy(False)
+			return True
 		# Get the target item, check if it exists, and, if so, drop the source
 		# item on it.
 		target_item_name = unicode(target_treeitem.text(0))
