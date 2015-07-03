@@ -660,7 +660,9 @@ class experiment(item.item):
 	def init_random(self):
 
 		"""
-		desc:
+		visible: False
+
+		desc: |
 			Initializes the random number generators. For some reason, the numpy
 			random seed is not re-initialized when the experiment is started
 			again with the multiprocess runner, resulting in identical random

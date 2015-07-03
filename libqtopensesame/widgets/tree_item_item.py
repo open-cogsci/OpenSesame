@@ -71,6 +71,10 @@ class tree_item_item(tree_base_item):
 	def close_tab(self):
 		return self.item.close_tab
 
+	def has_append_menu(self):
+
+		return self.item.item_type == u'sequence'
+	
 	def ancestry(self):
 
 		"""

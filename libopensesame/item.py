@@ -65,8 +65,7 @@ class item(object):
 			self.description = u'Default description'
 		if not hasattr(self, u'round_decimals'):
 			self.round_decimals = 2
-		if string is not None:
-			self.from_string(string)
+		self.from_string(string)
 
 	@property
 	def clock(self):
@@ -320,10 +319,13 @@ class item(object):
 	def from_string(self, string):
 
 		"""
-		Parses the item from a definition string.
+		desc:
+			Parses the item from a definition string.
 
-		Arguments:
-		string	--	The definition string.
+		arguments:
+			string:
+				desc:	A definition string, or None to reset the item.
+				type:	[str, NoneType]
 		"""
 
 		debug.msg()
@@ -331,6 +333,8 @@ class item(object):
 		self.variables = {}
 		self.reset()
 		self.comments = []
+		if string is None:
+			return
 		for line in string.split(u'\n'):
 			line_stripped = line.strip()
 			# The end of a textblock

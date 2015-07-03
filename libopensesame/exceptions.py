@@ -100,8 +100,9 @@ class osexception(Exception):
 				# Syntax errors are dealt with specially, because they provide
 				# introspective information.
 				info[u'line'] = self.exception.lineno + line_offset
-				info[u'code'] = safe_decode(self.exception.text, enc=self.enc,
-					errors=u'ignore')
+				if self.exception.text is not None:
+					info[u'code'] = safe_decode(self.exception.text,
+						enc=self.enc, errors=u'ignore')
 			else:
 				try:
 					# This is a hacky way to extract the line number from the

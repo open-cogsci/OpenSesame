@@ -90,6 +90,10 @@ class tree_base_item(base_subcomponent, QtGui.QTreeWidgetItem):
 
 		self._draggable = draggable
 
+	def has_append_menu(self):
+
+		return False
+
 	def expand(self):
 
 		"""

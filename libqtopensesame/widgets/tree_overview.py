@@ -24,7 +24,7 @@ from libqtopensesame.misc.config import cfg
 from libqtopensesame.misc import _
 from libqtopensesame.misc import drag_and_drop
 from libqtopensesame.misc.base_subcomponent import base_subcomponent
-from libqtopensesame.widgets.tree_item_item import tree_item_item
+from libqtopensesame.widgets.tree_append_button import tree_append_button
 from libqtopensesame._input.popup_menu import popup_menu
 from libopensesame import debug
 from libopensesame.exceptions import osexception
@@ -59,6 +59,7 @@ class tree_overview(base_subcomponent, QtGui.QTreeWidget):
 		"""
 
 		super(tree_overview, self).__init__(main_window)
+		self.locked = False
 		self.overview_mode = overview_mode
 		self.setAcceptDrops(True)
 		if self.overview_mode:
@@ -75,6 +76,9 @@ class tree_overview(base_subcomponent, QtGui.QTreeWidget):
 				QtGui.QKeySequence(cfg.shortcut_edit_runif), self,
 				self.start_edit_runif,
 				context=QtCore.Qt.WidgetWithChildrenShortcut)
+			self.append_button = tree_append_button(self)
+		else:
+			self.append_button = None
 		self.shortcut_rename = QtGui.QShortcut(
 			QtGui.QKeySequence(cfg.shortcut_rename), self,
 			self.start_rename,
@@ -421,28 +425,46 @@ class tree_overview(base_subcomponent, QtGui.QTreeWidget):
 				_(u'Drop cancelled: Target not droppable'))
 			e.ignore()
 			return
-		target_item_name, target_item_ancestry = target_treeitem.ancestry()
-		item_name = data[u'item-name']
-		if target_item_ancestry.startswith(u'%s:' % item_name) or \
-			u'.%s:' % item_name  in target_item_ancestry:
-			debug.msg(u'Drop ignored: recursion prevented')
-			self.main_window.set_status(
-				_(u'Drop cancelled: Recursion prevented'))
-			e.ignore()
-			return
-		parent_item_name, index = self.parent_from_ancestry(data[u'ancestry'])
-		if parent_item_name is None:
-			debug.msg(u'Drop ignored: no parent')
-			e.ignore()
-			return
-		if not QtCore.Qt.ControlModifier & e.keyboardModifiers():
+		# If the drop comes from this application, check for recursion etc.
+		if data[u'application-id'] == self.main_window._id():
+			target_item_name, target_item_ancestry = target_treeitem.ancestry()
+			item_name = data[u'item-name']
+			if target_item_ancestry.startswith(u'%s:' % item_name) or \
+				u'.%s:' % item_name  in target_item_ancestry:
+				debug.msg(u'Drop ignored: recursion prevented')
+				self.main_window.set_status(
+					_(u'Drop cancelled: Recursion prevented'))
+				e.ignore()
+				return
+			parent_item_name, index = self.parent_from_ancestry(data[u'ancestry'])
+			if parent_item_name is None:
+				debug.msg(u'Drop ignored: no parent')
+				e.ignore()
+				return
+		# The logic below is a bit complicated, but works as follows:
+		# - If we're in a move action, remove the dragged item from its parent,
+		#   and set need_restore so that we know this happened.
+		# - Try to drop the dragged item onto the target item
+		# - If the drop action was unsuccesful, and if need_restore is set,
+		#   re-add the dragged item to its former parent.
+		need_restore = False
+		if not QtCore.Qt.ControlModifier & e.keyboardModifiers() and \
+			data[u'application-id'] == self.main_window._id():
 			if parent_item_name not in self.experiment.items:
 				debug.msg(u'Don\'t know how to remove item from %s' \
 					% parent_item_name)
 			else:
+				self.locked = True
+				need_restore = True
 				self.experiment.items[parent_item_name].remove_child_item(
 					item_name, index)
-		self.drop_event_item_new(data, e)
+				self.locked = False
+		if self.drop_event_item_new(data, e, target_treeitem=target_treeitem):
+			return
+		if need_restore:
+			self.experiment.items[parent_item_name].insert_child_item(
+				item_name, index)
+			self.experiment.build_item_tree()
 
 	def drop_event_item_new(self, data, e=None, target_treeitem=None):
 
@@ -462,6 +484,10 @@ class tree_overview(base_subcomponent, QtGui.QTreeWidget):
 			target_treeitem:
 				desc:	A target tree item or None in a drop event is specified.
 				type:	[tree_base_item, NoneType]
+
+		returns:
+			desc:	True if the drop was successful, False otherwise.
+			type:	bool
 		"""
 
 		self.main_window.set_busy(True)
@@ -469,7 +495,7 @@ class tree_overview(base_subcomponent, QtGui.QTreeWidget):
 			if e is not None:
 				e.ignore()
 			self.main_window.set_busy(False)
-			return
+			return False
 		# Ignore drops on non-droppable tree items.
 		if target_treeitem is None:
 			target_treeitem = self.itemAt(e.pos())
@@ -477,7 +503,13 @@ class tree_overview(base_subcomponent, QtGui.QTreeWidget):
 			if e is not None:
 				e.ignore()
 			self.main_window.set_busy(False)
-			return
+			return False
+		# Accept drops on the unused items bin
+		if target_treeitem.name == u'__unused__':
+			e.accept()
+			self.structure_change.emit()
+			self.main_window.set_busy(False)
+			return True
 		# Get the target item, check if it exists, and, if so, drop the source
 		# item on it.
 		target_item_name = str(target_treeitem.text(0))
@@ -487,7 +519,7 @@ class tree_overview(base_subcomponent, QtGui.QTreeWidget):
 				e.ignore()
 			self.structure_change.emit()
 			self.main_window.set_busy(False)
-			return
+			return False
 		target_item = self.experiment.items[target_item_name]
 		# Get the item to be inserted. If the drop type is item-new, we need
 		# to create a new item, otherwise we get an existin item. Also, if
@@ -507,7 +539,7 @@ class tree_overview(base_subcomponent, QtGui.QTreeWidget):
 				self.console.write(ex)
 				e.accept()
 				self.main_window.set_busy(False)
-				return
+				return False
 			self.extension_manager.fire(u'new_item',
 				name=data[u'item-name'], _type=data[u'item-type'])
 		else:
@@ -548,7 +580,7 @@ class tree_overview(base_subcomponent, QtGui.QTreeWidget):
 						or data[u'application-id'] != self.main_window._id():
 						del self.experiment.items[item.name]
 					self.main_window.set_busy(False)
-					return
+					return False
 				# If the user chose to insert into the target item
 				if resp == 0:
 					target_item.insert_child_item(item.name)
@@ -570,7 +602,7 @@ class tree_overview(base_subcomponent, QtGui.QTreeWidget):
 					e.accept()
 					del self.experiment.items[item.name]
 					self.main_window.set_busy(False)
-					return
+					return False
 				parent_item_name = str(parent_treeitem.text(0))
 				parent_item = self.experiment.items[parent_item_name]
 				if isinstance(parent_item, sequence):
@@ -584,6 +616,7 @@ class tree_overview(base_subcomponent, QtGui.QTreeWidget):
 		if self.overview_mode:
 			item.open_tab()
 		self.main_window.set_busy(False)
+		return True
 
 	def dropEvent(self, e):
 
@@ -836,3 +869,28 @@ class tree_overview(base_subcomponent, QtGui.QTreeWidget):
 		target_treeitem = self.currentItem()
 		if target_treeitem is not None:
 			self.editItem(target_treeitem, 0)
+
+	def setup(self, main_window):
+
+		"""
+		desc:
+			This function needs to be overridden so that the append button is
+			also set up.
+		"""
+
+		super(tree_overview, self).setup(main_window)
+		if self.append_button is not None:
+			self.append_button.setup(main_window)
+
+	def clear(self):
+
+		"""
+		desc:
+			If the tree is cleared, we need to unset the target tree item in the
+			append menu (if any).
+		"""
+
+		super(tree_overview, self).clear()
+		if self.append_button is None:
+			return
+		self.append_button.append_menu.target_treeitem = None

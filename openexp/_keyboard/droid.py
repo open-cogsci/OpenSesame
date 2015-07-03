@@ -60,6 +60,9 @@ class droid(legacy):
 				# virtual keyboards.
 				if android is not None:
 					key = pygame.key.name(event.key)
+					if len(key) == 1 and (event.mod & pygame.KMOD_LSHIFT or \
+						event.mod & pygame.KMOD_RSHIFT):
+						key = key.upper()
 				else:
 					# If we're not on Android, simply use the same logic as the
 					# legacy back-end.

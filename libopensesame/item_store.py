@@ -161,6 +161,12 @@ class item_store(object):
 			name = u'_' + name
 		return name
 
+	def _type(self, name):
+
+		if name not in self:
+			return None
+		return self[name].item_type
+
 	# The properties below emulate a dict interface.
 
 	@property
