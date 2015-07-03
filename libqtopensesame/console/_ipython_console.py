@@ -150,7 +150,6 @@ class ipython_console(base_console, QtGui.QWidget):
 			Sets the theme, based on the QProgEdit settings.
 		"""
 
-		pass
 		from QProgEdit import QColorScheme
 		if not hasattr(QColorScheme, cfg.qProgEditColorScheme):
 			debug.msg(u'Failed to set debug-output colorscheme')
