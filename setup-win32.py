@@ -130,8 +130,9 @@ import sys
 import shutil
 import libqtopensesame.qtopensesame
 import libopensesame.misc
-import psychopy
+from libopensesame.py3compat import *
 import urllib
+from stdlib_list import stdlib_list
 from setup_shared  import included_plugins, included_extensions
 
 # Set this to False to build a 'light' version without the Qt4 gui. This
@@ -142,16 +143,16 @@ include_gui = True
 include_plugins = True
 include_extensions = True
 include_media_player = False
-include_media_player_vlc = True
-include_boks = True
-include_pygaze = True
+include_media_player_vlc = False
+include_boks = False
+include_pygaze = False
 include_examples = True
 include_sounds = True
 include_faenza = True
-include_inpout32 = True
+include_inpout32 = False
 include_simpleio = True
 include_pyqt4_plugins = True
-release_zip = True
+release_zip = False
 release_build = 1
 
 python_folder = os.path.dirname(sys.executable)
@@ -193,7 +194,7 @@ copy_packages = [
 	'scipy',
 	'numpy',
 	'serial',
-	'parallel',
+	#'parallel',
 	'OpenGL',
 	'PIL',
 	'pygame',
@@ -218,21 +219,29 @@ no_strip = [
 	'expyriment'
 	]
 
-# Packages that are part of the standard Python packages, but should not be
-# included
+# # Packages that are part of the standard Python packages, but should not be
+# # included
 exclude_packages = [
 	'idlelib',
 	'antigravity', # Kind of funny, importing this opens: http://xkcd.com/353/
 	'test', # Avoid automated tests, because they take ages
+	# The following packages/ modules are detected but fail to load for a
+	# variety of reasons
+	'__main__', 'distutils.command.bdist_packager', 'fcntl', 'fpectl', 'grp',
+	'nis', 'os.path', 'ossaudiodev', 'posix', 'pwd', 'readline', 'resource',
+	'site', 'spwd', 'syslog', 'termios', 'xml.parsers.expat.errors',
+	'xml.parsers.expat.model'
 	]
 
 # Packages that are not part of the standard Python packages (or not detected
-# as such), but should nevertheless be included
+# as such), but should nevertheless be included. These are different from the
+# copy_packages in that they are not copied, but included through the standard
+# py2exe way of including it in `library.zip`.
 include_packages = [
-	'pyaudio',
-	'cairo',
-	'Image',
-	'cv2',
+	#'pyaudio',
+	#'cairo',
+	'PIL',
+	#'cv2',
 	'sip',
 	'PyQt4.QtCore',
 	'PyQt4.QtGui',
@@ -281,62 +290,40 @@ def strip_py(folder):
 			os.remove(path)
 
 # Copy packages
+failed_packages = []
 for pkg in copy_packages:
 	print('copying packages %s ... ' % pkg)
-	exec('import %s as _pkg' % pkg)
+	try:
+		exec('import %s as _pkg' % pkg)
+	except ImportError:
+		failed_packages.append(pkg)
+		continue
 	pkg_folder = os.path.dirname(_pkg.__file__)
 	pkg_target = os.path.join("dist", pkg)
 	# For modules that are .py files in site-packages
 	if pkg_folder.endswith('site-packages'):
 		print('\tmodule %s' % _pkg.__file__)
 		shutil.copy(os.path.join(pkg_folder, '%s.py' % pkg), 'dist')
-		compileall.compile_file(r'dist/%s.py' % pkg)
+		# In Python 3, the legacy parameter indicates that the byte-compiled
+		# file should be placed alongside the source file.
+		if py3:
+			compileall.compile_file(r'dist/%s.py' % pkg, legacy=True)
+		else:
+			compileall.compile_file(r'dist/%s.py' % pkg)
 		os.remove(r'dist/%s.py' % pkg)
 	# For packages that are subfolder of site-packages
 	else:
 		print('\tfrom %s' % pkg_folder)
 		shutil.copytree(pkg_folder, pkg_target, symlinks=True, \
 			ignore=ignore_package_files)
-		compileall.compile_dir(pkg_target, force=True)
+		if py3:
+			compileall.compile_dir(pkg_target, force=True, legacy=True)
+		else:
+			compileall.compile_dir(pkg_target, force=True)
 		# Expyriment assumes that certain source files are available, see
 		# http://code.google.com/p/expyriment/issues/detail?id=16
 		if pkg != no_strip:
 			strip_py(pkg_target)
-
-# Create a list of standard pakcages that should be included
-# http://stackoverflow.com/questions/6463918/how-can-i-get-a-list-of-all-the-python-standard-library-modules
-print('detecting standard Python packages and modules ... ')
-std_pkg = []
-std_lib = sysconfig.get_python_lib(standard_lib=True)
-for top, dirs, files in os.walk(std_lib):
-	for nm in files:
-		prefix = top[len(std_lib)+1:]
-		if prefix[:13] == 'site-packages':
-			continue
-		if nm == '__init__.py':
-			pkg = top[len(std_lib)+1:].replace(os.path.sep,'.')
-		elif nm[-3:] == '.py':
-			pkg =  os.path.join(prefix, nm)[:-3].replace(os.path.sep,'.')
-		elif nm[-3:] == '.so' and top[-11:] == 'lib-dynload':
-			pkg = nm[0:-3]
-		if pkg[0] == '_':
-			continue
-		exclude = False
-		for _pkg in exclude_packages:
-			if pkg.find(_pkg) == 0:
-				exclude = True
-				break
-		if exclude:
-			continue
-		try:
-			exec('import %s' % pkg)
-		except:
-			continue
-		print(pkg)
-		std_pkg.append(pkg)
-for pkg in sys.builtin_module_names:
-	print(pkg)
-	std_pkg.append(pkg)
 
 windows_opensesame = {
 		"script" : "opensesame",
@@ -350,6 +337,13 @@ windows = [windows_opensesamerun]
 if include_gui:
 	windows += [windows_opensesame]
 
+# Create a list of all standard packages plus explicitly included packages,
+# minus explicitly excluded packages
+includes = []
+for pkg in stdlib_list(python_version) + include_packages:
+	if pkg not in exclude_packages:
+		includes.append(pkg)
+
 # Setup options
 setup(
 	# Use 'console' to have the programs run in a terminal and
@@ -361,7 +355,7 @@ setup(
 		"optimize": optimize,
 		"bundle_files": 3,
 		"excludes": copy_packages,
-		"includes" : std_pkg + include_packages,
+		"includes" : includes,
 		"dll_excludes" : exclude_dll,
 		}
 	}
@@ -400,17 +394,14 @@ shutil.copyfile("COPYING", os.path.join("dist", "COPYING"))
 if include_gui:
 	shutil.copytree("help", os.path.join("dist", "help"))
 
-print("copying PyGame/ SDLL dll's")
-shutil.copyfile(r"%s\Lib\site-packages\pygame\SDL_ttf.dll" \
-	% python_folder, r"dist\SDL_ttf.dll")
-shutil.copyfile(r"%s\Lib\site-packages\pygame\libfreetype-6.dll" \
-	% python_folder, r"dist\libfreetype-6.dll")
-shutil.copyfile(r"%s\Lib\site-packages\pygame\libogg-0.dll" \
-	% python_folder, r"dist\libogg-0.dll")
-
-print("copying PIL.pth")
-shutil.copyfile(r"%s\Lib\site-packages\PIL.pth" \
-	% python_folder, r"dist\PIL.pth")
+print(u'copying PyGame/ SDLL dll\'s')
+folder = u'%s/Lib/site-packages/pygame' % python_folder
+for fname in os.listdir(folder):
+	if not fname.endswith('.dll'):
+		continue
+	path = os.path.join(folder, fname)
+	print('Copying %s' % path)
+	shutil.copyfile(path, os.path.join(u'dist', fname))
 
 if include_simpleio:
 	print("copying simpleio.dll")
@@ -516,8 +507,8 @@ if include_sounds:
 # Create a zip release of the folder
 if release_zip:
 	import zipfile
-	target_folder = 'opensesame_%s-win32-%s' % (libopensesame.misc.version, \
-		release_build)
+	target_folder = 'opensesame_%s-win32-py%s-%s' \
+		% (libopensesame.misc.version, python_verson, release_build)
 	target_zip = target_folder + '.zip'
 	shutil.move('dist', target_folder)
 	zipf = zipfile.ZipFile(target_zip, 'w', zipfile.ZIP_DEFLATED)
@@ -529,3 +520,6 @@ if release_zip:
 	zipf.close()
 	shutil.move(target_folder, 'dist')
 	print('zipfile: %s' % target_zip)
+
+if len(failed_packages) > 0:
+	print('The following packages were not copied: %s' % failed_packages)
