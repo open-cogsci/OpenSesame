@@ -89,7 +89,7 @@ class multiprocess_runner(base_runner):
 			self.console.capture_stdout()
 			# print('recv: %s (%s)' % (type(msg), msg))
 			if isinstance(msg, basestring):
-				sys.stdout.write(msg)
+				sys.stdout.write(safe_decode(msg, errors='ignore'))
 				continue
 			# Capture exceptions
 			if isinstance(msg, Exception):
