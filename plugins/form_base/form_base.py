@@ -1,3 +1,4 @@
+
 #-*- coding:utf-8 -*-
 
 """
@@ -18,15 +19,10 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame.py3compat import *
-
 from libopensesame.exceptions import osexception
 from libopensesame import item, widgets
 from libqtopensesame.items.qtautoplugin import qtautoplugin
 from libqtopensesame.misc import _
-import openexp.canvas
-import openexp.keyboard
-import os.path
-from PyQt4 import QtGui, QtCore
 
 class form_base(item.item):
 
@@ -78,31 +74,14 @@ class form_base(item.item):
 		line	--	A single definition line.
 		"""
 
-		l = self.syntax.split(line.strip())
-		if len(l) < 6 or l[0] != u'widget':
+		cmd, arglist, kwdict = self.syntax.parse_cmd(line)
+		if cmd != u'widget':
 			return
-
-		# Verify that the position variables are integers
-		try:
-			col = int(l[1])
-			row = int(l[2])
-			colspan = int(l[3])
-			rowspan = int(l[4])
-		except:
-			raise osexception( \
-				_(u'Widget column and row should be numeric'))
-
-		# Parse the widget into a dictionary and store it in the list of
-		# widgets
-		w = self.parse_keywords(line)
-		w[u'type'] = l[5]
-		w[u'col'] = col
-		w[u'row'] = row
-		w[u'colspan'] = colspan
-		w[u'rowspan'] = rowspan
-		if u'var' in w:
-			self._variables.append(w[u'var'])
-		self._widgets.append(w)
+		if len(arglist) != 5:
+			raise osexception(_(u'Invalid widget specification: %s' % line))
+		self._widgets.append((arglist, kwdict))
+		if u'var' in kwdict:
+			self._variables.append(kwdict[u'var'])
 
 	def to_string(self):
 
@@ -114,23 +93,8 @@ class form_base(item.item):
 		"""
 
 		s = item.item.to_string(self, self.item_type)
-		for w in self._widgets:
-			w = w.copy()
-			_type = w[u'type']
-			col = w[u'col']
-			row = w[u'row']
-			colspan = w[u'colspan']
-			rowspan = w[u'rowspan']
-			del w[u'type']
-			del w[u'col']
-			del w[u'row']
-			del w[u'colspan']
-			del w[u'rowspan']
-			s += u'\twidget %s %s %s %s %s' % (col, row, colspan, rowspan,
-				_type)
-			for keyword, value in w.items():
-				s += ' %s="%s"' % (keyword, value)
-			s += u'\n'
+		for arglist, kwdict in self._widgets:
+			s += u'\t%s\n' % self.syntax.create_cmd(u'widget', arglist, kwdict)
 		s += u'\n'
 		return s
 
@@ -162,46 +126,43 @@ class form_base(item.item):
 			margins=margins, spacing=self.var.spacing, theme=self.var._theme,
 			item=self)
 
-		# Prepare the widgets
-		for _w in self._widgets:
-			# Evaluate all keyword arguments
-			w = {}
-			for var, val in _w.items():
-				w[var] = self.syntax.eval_text(val)
-
-			_type = w[u'type']
-			col = w[u'col']
-			row = w[u'row']
-			colspan = w[u'colspan']
-			rowspan = w[u'rowspan']
-			del w[u'type']
-			del w[u'col']
-			del w[u'row']
-			del w[u'colspan']
-			del w[u'rowspan']
-
+		for arglist, kwdict in self._widgets:
+			# Evaluate all values
+			arglist = [self.syntax.eval_text(arg) for arg in arglist]
+			for key, val in kwdict.items():
+				kwdict[key] = self.syntax.eval_text(val, var=self.var)
 			# Translate paths into full file names
-			if u'path' in w:
-				w[u'path'] = self.experiment.pool[w[u'path']]
-
+			if u'path' in kwdict:
+				kwdict[u'path'] = self.experiment.pool[w[u'path']]
 			# Process focus keyword
 			focus = False
-			if u'focus' in w:
-				if w[u'focus'] == u'yes':
+			if u'focus' in kwdict:
+				if kwdict[u'focus'] == u'yes':
 					focus = True
-				del w[u'focus']
-
+				del kwdict[u'focus']
+			# Parse arguments
+			_type = arglist[4]
+			try:
+				col = int(arglist[0])
+				row = int(arglist[1])
+				colspan = int(arglist[2])
+				rowspan = int(arglist[3])
+			except:
+				raise osexception(
+					_(u'In a form widget col, row, colspan, and rowspan should be integer'))
 			# Create the widget and add it to the form
 			try:
-				_w = getattr(widgets, _type)(self._form, **w)
+				_w = getattr(widgets, _type)(self._form, **kwdict)
 			except Exception as e:
 				raise osexception(
 					u'Failed to create widget "%s": %s' % (_type, e))
 			self._form.set_widget(_w, (col, row), colspan=colspan,
 				rowspan=rowspan)
-
 			# Add as focus widget
 			if focus:
+				if self.focus_widget is not None:
+					raise osexception(
+						_(u'You can only specify one focus widget'))
 				self.focus_widget = _w
 
 	def var_info(self):
