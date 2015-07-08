@@ -25,4 +25,6 @@ class legacy(color):
 
 	def to_backend_color(self, hexcolor):
 
-		return pygame.Color(hexcolor)
+		if py3:
+			return pygame.Color(hexcolor)
+		return pygame.Color(safe_encode(hexcolor))
