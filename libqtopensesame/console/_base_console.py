@@ -39,6 +39,8 @@ class base_console(base_subcomponent):
 
 		super(base_console, self).__init__(main_window)
 		self.vault = StringIO()
+		self.orig_stdout = sys.stdout
+		self.orig_stderr = sys.stderr
 
 	def clear(self):
 
@@ -113,8 +115,8 @@ class base_console(base_subcomponent):
 			Stops capturing stdout.
 		"""
 
-		sys.stdout = sys.__stdout__
-		sys.stderr = sys.__stderr__
+		sys.stdout = self.orig_stdout
+		sys.stderr = self.orig_stderr
 
 	def reset(self):
 
