@@ -50,7 +50,6 @@ class check_syntax(unittest.TestCase):
 		self.assertTrue(
 			self.exp.syntax.compile_cond(sIn, bytecode=False) == sOut)
 
-
 	def runTest(self):
 
 		"""
@@ -90,6 +89,9 @@ class check_syntax(unittest.TestCase):
 		self.checkCnd(u'[width] = 1024 and [height] == 768',
 			u'var.width == 1024 and var.height == 768')
 		self.checkCnd(u'=var.width > 100', u'var.width > 100')
+		self.checkCnd(u'"yes" = yes', u'"yes" == "yes"')
+		self.checkCnd(u'("a b c" = abc) or (x != 10) and ([width] == 100)',
+			u'("a b c" == "abc") or ("x" != 10) and (var.width == 100)')
 
 if __name__ == '__main__':
 	unittest.main()

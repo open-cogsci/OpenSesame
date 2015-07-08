@@ -55,7 +55,7 @@ class syntax(object):
 		# [\[test\]]
 		self.re_txt_py = re.compile(r'(?<!\\)(\[=.*?[^\\]\])')
 		# Catch single equals signs
-		self.re_single_eq = re.compile(r'(?<!=)(=)(?!=)')
+		self.re_single_eq = re.compile(r'(?<![=!])(=)(?!=)')
 		# Catch 'never' and 'always'
 		self.re_never = re.compile(r'\bnever\b', re.I)
 		self.re_always = re.compile(r'\balways\b', re.I)
@@ -138,7 +138,34 @@ class syntax(object):
 				arglist.append(s)
 		return cmd, arglist, kwdict
 
-	def eval_text(self, txt, round_float=False):
+	def create_cmd(self, cmd, arglist=[], kwdict={}):
+
+		"""
+		desc:
+			Generates a command string.
+
+		arguments:
+			cmd:
+				desc:	The command.
+				type:	str
+
+		keywords:
+			arglist:
+				desc:	A list of compulsory order-specified arguments.
+				type:	list
+			kwdict:
+				desc:	A dict of optional named keywords.
+				type:	dict
+		"""
+
+		l = [cmd]
+		for arg in arglist:
+			l.append(self.safe_wrap(arg))
+		for key, val in kwdict.items():
+			l.append(u'%s=%s' % (key, self.safe_wrap(val)))
+		return u' '.join(l)
+
+	def eval_text(self, txt, round_float=False, var=None):
 
 		"""
 		desc:
@@ -165,13 +192,15 @@ class syntax(object):
 
 		if not isinstance(txt, basestring):
 			return txt
+		if var is None:
+			var = self.experiment.var
 		if round_float:
- 			float_template = u'%%.%sf' % self.experiment.var.round_decimals
+ 			float_template = u'%%.%sf' % var.round_decimals
 		while True:
 			m = self.re_txt.search(txt)
 			if m is None:
 				break
-			val = self.experiment.var.get(m.group()[1:-1])
+			val = var.get(m.group()[1:-1])
 			if round_float and isinstance(val, float):
 				val = float_template % val
 			else:
@@ -186,6 +215,28 @@ class syntax(object):
 			val = self.experiment.python_workspace._eval(py)
 			txt = txt[:m.start(0)] + safe_decode(val) + txt[m.end(0):]
 		return self.unescape(txt)
+
+	def quotable_symbol(self, s):
+
+		"""
+		returns:
+			desc:	True if s is a symbol that should be quoted in a conditional
+					statement, and False otherwise.
+			type:	bool
+		"""
+
+		# Don't quote operators
+		if s in [u'not', u'or', 'and']:
+			return False
+		# Don't quote special keywords
+		if s.lower() in [u'always', u'never']:
+			return False
+		# Don't quote numeric values
+		try:
+			int(s)
+			return False
+		except:
+			return True
 
 	def compile_cond(self, cnd, bytecode=True):
 
@@ -217,6 +268,55 @@ class syntax(object):
 		if cnd.startswith(u'='):
 			cnd = cnd[1:]
 		else:
+			# Quote all non-quoted symbols. This can be probably be done through
+			# a clever regular expression, but for now we use a simple loop.
+			while True:
+				in_quote = False
+				in_var = False
+				symbol_start = None
+				for i, ch in enumerate(cnd):
+					# Don't scan within quoted strings
+					if ch == u'"':
+						in_quote = not in_quote
+						continue
+					if in_quote:
+						continue
+					# Don't scan within variable definitions
+					if ch == u'[':
+						in_var = True
+						continue
+					elif ch == u']':
+						in_var = False
+						continue
+					if in_var:
+						continue
+					# Detect symbols starts, i.e. the first alphanumeric character
+					if ch.isalnum():
+						if symbol_start is None:
+							symbol_start = i
+					# Detect symbol ends, i.e. the first non-alphanumeric character
+					# after an alphanumeric character.
+					elif symbol_start is not None:
+						symbol = cnd[symbol_start:i]
+						symbol_range = symbol_start, i
+						symbol_start = None
+						if not self.quotable_symbol(symbol):
+							continue
+						cnd = cnd[:symbol_range[0]] + u'"' + symbol + u'"' \
+							+ cnd[symbol_range[1]:]
+						break
+				else:
+					# The for-else clause happens when the for loop was not
+					# broken. If no break occurred, then nothing was quoted,
+					# and we don't need to restart the for loop, i.e. we can
+					# break the infinite while. We only need to check that there
+					# was no symbol still being processed, in which case it
+					# needs to be quoted.
+					if symbol_start is not None:
+						symbol = cnd[symbol_start:]
+						if self.quotable_symbol(symbol):
+							cnd = cnd[:symbol_start] + u'"' + symbol + u'"'
+					break
 			# Replace [variables] by var.variables
 			while True:
 				m = self.re_txt.search(cnd)
@@ -239,13 +339,55 @@ class syntax(object):
 
 	def unescape(self, s):
 
+		"""
+		desc:
+			Unescapes square brackets in text.
+
+		arguments:
+			s:
+				desc:	The text to unescape.
+				type:	str
+
+		returns:
+			desc:	The unescaped text.
+			type:	str
+		"""
+
 		return s.replace(u'\[', u'[').replace(u'\]', u']')
+
+	def safe_wrap(self, s):
+
+		"""
+		desc:
+			Wraps and escapes a text so that it can safely be embedded in a
+			command string. For example:
+
+			He said: "hi"
+
+			would become:
+
+			"He said: \"hi\""
+
+		arguments:
+			s:
+				desc:	The text to wrap.
+				type:	str
+
+		returns:
+			desc:	The wrapped text.
+			type:	str
+		"""
+
+		s = safe_decode(s)
+		if not s.replace(u'_', u'').isalnum():
+			s = u'"%s"' % s.replace(u'"', u'\\"')
+		return s
 
 	def sanitize(self, s, strict=False, allow_vars=True):
 
 		"""
 		desc:
-			Removes invalid characters (notably quotes) from the string.
+			Removes invalid characters q(notably quotes) from the string.
 
 		arguments:
 			s:
