@@ -124,12 +124,8 @@ class experiment(item.item):
 		self.var.sound_channels = 2
 		self.var.sound_buf_size = 1024
 
-		# Backend parameters
+		# Default backend
 		self.var.canvas_backend = u'xpyriment'
-		self.var.keyboard_backend = u'legacy'
-		self.var.mouse_backend = u'xpyriment'
-		self.var.sampler_backend = u'legacy'
-		self.var.synth_backend = u'legacy'
 
 		# Display parameters
 		self.var.width = 1024
