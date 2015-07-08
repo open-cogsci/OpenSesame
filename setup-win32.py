@@ -26,9 +26,66 @@ If possible, dependencies are simply copied into a subfolder and compiled to
 `.pyc` format. If not possible, they are included in the `library.zip` file,
 which is the default py2exe way of including dependencies.
 
+## WinPython-based process
+
+The easiest way to create a package is to start from a WinPython distribution,
+which already comes with many of the dependencie. From there, only a few
+remaining dependencies need to be installed.
+
+### Notes
+
+pyqt4 is installed, but contains mixed bindings for py2 and py3. These have to
+be manually removed. These are in `uic/port_v[3|2]`.
+
+### All Python versions
+
+The following packages are the same for Python 2 and 3:
+
+- QProgEdit (>= 3.0.0)
+- markdown
+- bidi
+- webcolors
+
+### Python 2.7
+
+The following packages have specific python 2 installers, or are only available
+for Python 2:
+
+- pygame 1.9.1
+- cv2
+	- Download and extract the regular OpenCV2 package
+	- Copy cv2.pyd from build/python/2.7 to the Python site-packages
+	  folder
+- psychopy 1.82.02
+- expyriment 0.8.0
+	- Installer is currently broken, and needs to be manually hacked.
+- pyglet
+- wx
+- parallel
+	- Manually place `simpleio.dll`, which is included with the pyparallel
+	  source, in the main Python folder.
+- vlc
+	- Required only for media_player_vlc
+	- Place vlc.py in the media_player_vlc folder. See below for folder
+	  structure.
+	- Choose the version for VLC 2.0
+	- Available from <http://liris.cnrs.fr/advene/download/python-ctypes/>
+
+### Python 3.4
+
+- pygame
+	- Available from: <http://www.lfd.uci.edu/~gohlke/pythonlibs/#pygame>
+- pyaudio
+	- Available from: <http://www.lfd.uci.edu/~gohlke/pythonlibs/#pyaudio>
+
 ## Usage
 
-To compile all source files to `.pyc` (default), call the script as follows:
+First, a list of all importable modules from the Python standar library must be
+created. This is done by runnning:
+
+	python setup-pkg-list.py
+
+Next, compile all source files to `.pyc` (default) as follows:
 
 	python setup-win32.py py2exe
 
@@ -44,65 +101,8 @@ More options can be tweaked by changing the variables below.
 
 ## Output
 
-The build will be stored in the `dist` subfolder.
-
-## Python modules
-
-The following Python modules should be installed:
-
-	bidi
-		- This is installed as an egg and therefore not packaged properly. For
-		  packaging, simply place the `bidi` source folder directly in the
-		  Python site-packages.
-	cairo
-		- Unofficial Windows builds can be downloaded from
-		  <http://www.lfd.uci.edu/~gohlke/pythonlibs/#pycairo>
-	expyriment
-	matplotlib
-		Subdependencies:
-		- python-dateutil
-			- Installed as .egg, so requires manual copying. If it fails to
-			  install due to decoding errors, the package can be copied
-		  	  manually to site-packages.
-		- pytz
-			- Installed as .egg, so requires manual copying.
-		- six
-			- Installed as .egg, so requires manual copying.
-	opencv2
-		- Download and extract the regular OpenCV2 package
-		- Copy cv2.pyd from build/python/2.7 to the Python site-packages
-		  folder
-	pil
-	psychopy
-	pyflakes
-		- This is installed as an egg and therefore not packaged properly. For
-		  packaging, simply place the `pyflakes` source folder directly in the
-		  Python site-packages.
-	py2exe
-	pyaudio
-	pygame
-	pyglet
-		- The installer doesn't work. Need to install from ``.zip`.
-	pyopengl
-	pyparallel
-		- Needs to be installed through the `.zip` package
-		- Manually place `simpleio.dll`, which is included with the pyparallel
-		  source, in the main Python folder.
-	pyparsing
-		- Required by matplotlib. The installer doesn't work, so needs to be
-		  installed from .zip.
-	pyqt4
-		- The Python 3 modules will break on compilation, and have to be
-		  manually removed/ renamed. These are in `uic/port_v3`.
-	pyserial
-	numpy
-	scipy
-	vlc
-		- Required only for media_player_vlc
-		- Place vlc.py in the media_player_vlc folder. See below for folder
-		  structure.
-		- Choose the version for VLC 2.0
-		- Available from <http://liris.cnrs.fr/advene/download/python-ctypes/>
+The build will be stored in the `dist` subfolder. In addition, a `zip` is build
+if release_zip is set to True.
 
 ## Folder structure
 
@@ -119,6 +119,12 @@ assumed to be one folder up. So the folder structure should be as follows:
 
 """
 
+from libopensesame.py3compat import *
+if not py3:
+	import sip
+	sip.setapi(u'QString', 2)
+	sip.setapi(u'QVariant', 2)
+
 from distutils.core import setup
 import distutils.sysconfig as sysconfig
 import compileall
@@ -130,7 +136,6 @@ import sys
 import shutil
 import libqtopensesame.qtopensesame
 import libopensesame.misc
-from libopensesame.py3compat import *
 import urllib
 from stdlib_list import stdlib_list
 from setup_shared  import included_plugins, included_extensions
@@ -143,16 +148,16 @@ include_gui = True
 include_plugins = True
 include_extensions = True
 include_media_player = False
-include_media_player_vlc = False
-include_boks = False
-include_pygaze = False
+include_media_player_vlc = not py3
+include_boks = not py3
+include_pygaze = not py3
 include_examples = True
 include_sounds = True
 include_faenza = True
-include_inpout32 = False
+include_inpout32 = True
 include_simpleio = True
 include_pyqt4_plugins = True
-release_zip = False
+release_zip = True
 release_build = 1
 
 python_folder = os.path.dirname(sys.executable)
@@ -188,30 +193,38 @@ copy_packages = [
 	'QProgEdit',
 	'libopensesame',
 	'openexp',
-	'expyriment',
-	'psychopy',
     'pyflakes',
 	'scipy',
 	'numpy',
 	'serial',
-	#'parallel',
+	'IPython',
+	'pygments',
+	'PyQt4',
 	'OpenGL',
 	'PIL',
 	'pygame',
-	'pyglet',
 	'libqtopensesame',
 	'markdown',
 	'matplotlib',
 	'bidi',
 	'yaml',
-	'pygaze',
 	'pytz',
 	'pyparsing',
 	'dateutil',
 	'six',
 	'wx',
-	'webcolors'
+	'webcolors',
+	'zmq'
 	]
+
+if not py3:
+	copy_packages += [
+		'parallel',
+		'expyriment',
+		'psychopy',
+		'pyglet',
+		'pygaze',
+		]
 
 # A list of packages that shouldn't be stripped from .py files, because it
 # breaks them.
@@ -219,37 +232,23 @@ no_strip = [
 	'expyriment'
 	]
 
-# # Packages that are part of the standard Python packages, but should not be
-# # included
-exclude_packages = [
-	'idlelib',
-	'antigravity', # Kind of funny, importing this opens: http://xkcd.com/353/
-	'test', # Avoid automated tests, because they take ages
-	# The following packages/ modules are detected but fail to load for a
-	# variety of reasons
-	'__main__', 'distutils.command.bdist_packager', 'fcntl', 'fpectl', 'grp',
-	'nis', 'os.path', 'ossaudiodev', 'posix', 'pwd', 'readline', 'resource',
-	'site', 'spwd', 'syslog', 'termios', 'xml.parsers.expat.errors',
-	'xml.parsers.expat.model'
-	]
+# Packages that are part of the standard Python packages, but should not be
+# included
+exclude_packages = ['os.path']
 
 # Packages that are not part of the standard Python packages (or not detected
 # as such), but should nevertheless be included. These are different from the
 # copy_packages in that they are not copied, but included through the standard
 # py2exe way of including it in `library.zip`.
 include_packages = [
-	#'pyaudio',
-	#'cairo',
-	'PIL',
-	#'cv2',
+	'pyaudio',
 	'sip',
-	'PyQt4.QtCore',
-	'PyQt4.QtGui',
-	'PyQt4.Qsci',
-	'PyQt4.QtWebKit',
-	'PyQt4.QtNetwork',
-	'PyQt4.uic',
 	]
+
+if not py3:
+	include_packages += [
+		'cv2'
+		]
 
 exclude_dll = [
 	"MSVCP90.DLL",
@@ -314,7 +313,7 @@ for pkg in copy_packages:
 	# For packages that are subfolder of site-packages
 	else:
 		print('\tfrom %s' % pkg_folder)
-		shutil.copytree(pkg_folder, pkg_target, symlinks=True, \
+		shutil.copytree(pkg_folder, pkg_target, symlinks=True,
 			ignore=ignore_package_files)
 		if py3:
 			compileall.compile_dir(pkg_target, force=True, legacy=True)
@@ -337,12 +336,13 @@ windows = [windows_opensesamerun]
 if include_gui:
 	windows += [windows_opensesame]
 
-# Create a list of all standard packages plus explicitly included packages,
-# minus explicitly excluded packages
-includes = []
-for pkg in stdlib_list(python_version) + include_packages:
-	if pkg not in exclude_packages:
-		includes.append(pkg)
+# Read the previously generated packages list, and exclude the explicitly
+# excluded packages
+with open('pkg-list-py%s.txt' % python_version) as fd:
+	for pkg in fd:
+		pkg = pkg.strip()
+		if pkg not in exclude_packages:
+			include_packages.append(pkg)
 
 # Setup options
 setup(
@@ -355,7 +355,7 @@ setup(
 		"optimize": optimize,
 		"bundle_files": 3,
 		"excludes": copy_packages,
-		"includes" : includes,
+		"includes" : include_packages,
 		"dll_excludes" : exclude_dll,
 		}
 	}
@@ -507,8 +507,8 @@ if include_sounds:
 # Create a zip release of the folder
 if release_zip:
 	import zipfile
-	target_folder = 'opensesame_%s-win32-py%s-%s' \
-		% (libopensesame.misc.version, python_verson, release_build)
+	target_folder = 'opensesame_%s-py%s-win32-%s' \
+		% (libopensesame.misc.version, python_version, release_build)
 	target_zip = target_folder + '.zip'
 	shutil.move('dist', target_folder)
 	zipf = zipfile.ZipFile(target_zip, 'w', zipfile.ZIP_DEFLATED)
