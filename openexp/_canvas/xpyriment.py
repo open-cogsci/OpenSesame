@@ -155,7 +155,7 @@ class xpyriment(canvas.canvas, xpyriment_coordinates):
 		else:
 			line_width = self.penwidth
 		pos = self.to_xy((x+w/2,y+h/2))
-		stim = stimuli.Ellipse((w, h), colour=self.color.backend_color,
+		stim = stimuli.Ellipse((w/2, h/2), colour=self.color.backend_color,
 			line_width=line_width, position=pos)
 		self.add_stim(stim)
 
