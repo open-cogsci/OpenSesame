@@ -285,6 +285,8 @@ class experiment(item.item):
 		self.variables = {}
 		self.comments = []
 		debug.msg(u"building experiment")
+		if string is None:
+			return
 		s = iter(string.split("\n"));
 		line = next(s, None)
 		while line is not None:
