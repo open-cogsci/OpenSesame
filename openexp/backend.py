@@ -57,7 +57,6 @@ def backend_info(experiment):
 	for name, info in d.items():
 		if (py3 and not info[u'py3']) or (not py3 and not info[u'py2']):
 			l.append(name)
-			print('delete %s' % name)
 	for name in l:
 		del d[name]
 	_backend_info = d
