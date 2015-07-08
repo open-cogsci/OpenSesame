@@ -108,8 +108,8 @@ class label(widget):
 				type:	bool
 		"""
 
-		text = self.form.experiment.eval_text(text)
-		text = self.form.experiment.unistr(text).replace(u'\t', self.tab_str)
+		text = self.form.experiment.syntax.eval_text(text)
+		text = safe_decode(text).replace(u'\t', self.tab_str)
 		x, y, w, h = self.rect
 		if self.center:
 			x += w/2

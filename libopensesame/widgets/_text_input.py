@@ -97,11 +97,11 @@ class text_input(label):
 
 		label.__init__(self, form, text, frame=frame, center=center)
 		self.type = u'text_input'
-		self.stub = self.form.experiment.unistr(stub)
+		self.stub = safe_decode(stub)
 		self.prompt = u'_'
 		self.return_accepts = return_accepts
 		self.var = var
-		self.text = self.form.experiment.unistr(text)
+		self.text = safe_decode(text)
 		self.set_var(text)
 		self.caret_pos = None
 

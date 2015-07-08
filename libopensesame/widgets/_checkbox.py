@@ -213,7 +213,7 @@ class checkbox(button):
 					raise osexception(_( \
 						u'All checkbox widgets without a group or within the same group should have the same variable.'))
 				if widget.checked or widget.checked == u'yes':
-					l_val.append(self.form.experiment.unistr(widget.text))
+					l_val.append(safe_decode(widget.text))
 		val = u';'.join(l_val)
 		if val == u'':
 			val = u'no'

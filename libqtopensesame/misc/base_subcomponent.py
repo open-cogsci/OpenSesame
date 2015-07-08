@@ -60,10 +60,6 @@ class base_subcomponent(base_component):
 		return self.main_window.extension_manager
 
 	@property
-	def unistr(self):
-		return self.main_window.experiment.unistr
-
-	@property
 	def console(self):
 		return self.main_window.console
 
