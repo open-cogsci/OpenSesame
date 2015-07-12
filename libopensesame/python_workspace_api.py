@@ -179,6 +179,18 @@ def flush_log():
 
 	experiment.flush_log()
 
+def reset_feedback():
+
+	"""
+	desc:
+		Resets all feedback variables to their initial state.
+
+	example: |
+		reset_feedback()
+	"""
+
+	experiment.reset_feedback()
+
 def set_response(response=None, response_time=None, correct=None):
 
 	"""
