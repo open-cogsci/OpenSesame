@@ -30,8 +30,8 @@ def canvas(auto_prepare=True, **style_args):
 
 	"""
 	desc: |
-		Creates a new `canvas` object. For a list of arguments and keywords,
-		see:
+		A convenience function that creates a new `canvas` object. For a
+		description of possible keywords, see:
 
 		- [/python/canvas/](/python/canvas/)
 
@@ -40,7 +40,10 @@ def canvas(auto_prepare=True, **style_args):
 		type:	canvas
 
 	example: |
-		my_canvas = canvas()
+		my_canvas = canvas(color=u'red', penwidth=2)
+		my_canvas.line(-10, -10, 10, 10)
+		my_canvas.line(-10, 10, 10, -10)
+		my_canvas.show()
 	"""
 
 	from openexp.canvas import canvas
@@ -50,8 +53,8 @@ def keyboard(**resp_args):
 
 	"""
 	desc: |
-		Creates a new `keyboard` object. For a list of arguments and keywords,
-		see:
+		A convenience function that creates a new `keyboard` object. For a
+		description of possible keywords, see:
 
 		- [/python/keyboard/](/python/keyboard/)
 
@@ -60,7 +63,8 @@ def keyboard(**resp_args):
 		type:	keyboard
 
 	example: |
-		my_keyboard = keyboard()
+		my_keyboard = keyboard(keylist=[u'a', u'b'], timeout=5000)
+		key, time = my_keyboard.get_key()
 	"""
 
 	from openexp.keyboard import keyboard
@@ -70,8 +74,8 @@ def mouse(**resp_args):
 
 	"""
 	desc: |
-		Creates a new `mouse` object. For a list of arguments and keywords,
-		see:
+		A convenience function that creates a new `mouse` object. For a
+		description of possible keywords, see:
 
 		- [/python/mouse/](/python/mouse/)
 
@@ -80,7 +84,8 @@ def mouse(**resp_args):
 		type:	mouse
 
 	example: |
-		my_mouse = mouse()
+		my_mouse = mouse(keylist=[1,3], timeout=5000)
+		button, time = my_mouse.get_button()
 	"""
 
 	from openexp.mouse import mouse
@@ -90,8 +95,8 @@ def sampler(src, **playback_args):
 
 	"""
 	desc: |
-		Creates a new `sampler` object. For a list of arguments and keywords,
-		see:
+		A convenience function that creates a new `sampler` object. For a
+		description of possible keywords, see:
 
 		- [/python/sampler/](/python/sampler/)
 
@@ -100,7 +105,9 @@ def sampler(src, **playback_args):
 		type:	sampler
 
 	example: |
-		my_sampler = sampler()
+		src = exp.pool['bark.ogg']
+		my_sampler = sampler(src, volume=.5, pan='left')
+		my_sampler.play()
 	"""
 
 	from openexp.sampler import sampler
@@ -159,25 +166,15 @@ def copy_sketchpad(name):
 	returns:
 		desc:	A copy of the `sketchpad`'s canvas.
 		type:	canvas
+
+	example: |
+		my_canvas = copy_sketchpad('my_sketchpad')
+		my_canvas.show()
 	"""
 
 	c = canvas()
 	c.copy(experiment.items[name].canvas)
 	return c
-
-def flush_log():
-
-	"""
-	desc:
-		Forces any pending write operations to the log file to be written to
-		disk.
-
-	example: |
-		log('TRIAL FINISHED')
-		flush_log()
-	"""
-
-	experiment.flush_log()
 
 def reset_feedback():
 
