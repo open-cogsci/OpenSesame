@@ -143,6 +143,31 @@ class ipython_console(base_console, QtGui.QWidget):
 
 		self.kernel.shell.push(_globals)
 
+	def validTheme(self, cs):
+
+		"""
+		returns:
+			desc:	True if the colorscheme is valid, False otherwise.
+			type:	bool
+		"""
+
+		for key in [
+			u'Background',
+			u'Default',
+			u'Prompt in',
+			u'Prompt out',
+			u'Comment',
+			u'Keyword',
+			u'Identifier',
+			u'Double-quoted string',
+			u'Invalid',
+			u'Number',
+			u'Operator',
+			]:
+			if key not in cs:
+				return False
+		return True
+
 	def setTheme(self):
 
 		"""
@@ -155,6 +180,9 @@ class ipython_console(base_console, QtGui.QWidget):
 			debug.msg(u'Failed to set debug-output colorscheme')
 			return u''
 		cs = getattr(QColorScheme, cfg.qProgEditColorScheme)
+		if not self.validTheme(cs):
+			debug.msg(u'Invalid debug-output colorscheme')
+			return u''
 		self.control._highlighter.set_style(pygments_style_factory(cs))
 		qss = u'''QPlainTextEdit, QTextEdit {
 				background-color: %(Background)s;
