@@ -294,41 +294,26 @@ class config(object):
 			A value.
 		"""
 
-		if type(default) == bool:
-			if isinstance(value, QtCore.QVariant):
-				value = value.toBool()
-			else:
-				if value == u'false':
-					value = False
-				else:
-					value = True
-		elif type(default) == int:
-			if isinstance(value, QtCore.QVariant):
-				value, ok = value.toInt()
-				if not ok:
-					value = default
-			else:
-				try:
-					value = int(value)
-				except:
-					value = default
-		elif isinstance(default, basestring):
-			if isinstance(value, QtCore.QVariant):
-				value = value.toString()
-			else:
-				try:
-					value = str(value)
-				except:
-					value = default
-		elif isinstance(default, QtCore.QPoint) and \
-			isinstance(value, QtCore.QVariant):
-				value = value.toPoint()
-		elif isinstance(default, QtCore.QSize) and \
-			isinstance(value, QtCore.QVariant):
-				value = value.toSize()
-		elif isinstance(default, QtCore.QByteArray) and \
-			isinstance(value, QtCore.QVariant):
-				value = value.toByteArray()
+		if isinstance(default, bool):
+			if isinstance(value, basestring):
+				return value == u'true'
+			try:
+				return bool(value)
+			except:
+				print('Failed to convert %s' % value)
+				return default
+		if isinstance(default, int):
+			try:
+				return int(value)
+			except:
+				print('Failed to convert %s' % value)
+				return default
+		if isinstance(default, float):
+			try:
+				return float(value)
+			except:
+				print('Failed to convert %s' % value)
+				return default
 		return value
 
 	def restore(self):
@@ -342,7 +327,6 @@ class config(object):
 		qsettings.beginGroup(u"MainWindow")
 		for setting, default in self.config.items():
 			value = qsettings.value(setting, default)
-			# The older (default) api requires an explicit type conversion
 			value = self.type_qvariant(value, default)
 			self.config[setting] = value
 		qsettings.endGroup()
