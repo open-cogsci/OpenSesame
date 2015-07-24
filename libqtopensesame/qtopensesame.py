@@ -311,6 +311,7 @@ class qtopensesame(QtGui.QMainWindow, base_component):
 		self.recent_files = []
 		if self.options.start_clean:
 			debug.msg(u'Not restoring state')
+			self.theme.set_toolbar_size(cfg.toolbar_size)
 			return
 		self.resize(cfg.size)
 		self.move(cfg.pos)
