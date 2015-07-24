@@ -74,7 +74,6 @@ class webbrowser(base_widget):
 		self.ui.button_osdoc.clicked.connect(self.open_osdoc)
 		self.ui.button_forum.clicked.connect(self.open_forum)
 		self.main_window.theme.apply_theme(self)
-		# self.history = QtWebKit.QWebHistoryInterface(self.ui.webview)
 
 	def load(self, url):
 
@@ -90,22 +89,36 @@ class webbrowser(base_widget):
 			url = url.toString()
 		if url.endswith(u'.md'):
 			self.ui.top_widget.hide()
-			try:
-				import markdown
-				with open(url) as fd:
-					html = markdown.markdown(safe_decode(fd.read(),
-						errors=u'ignore'))
-				html += u'<style type="text/css">%s</style>' % \
-					open(self.main_window.theme.resource( \
-					u'markdown.css')).read()
-			except Exception as e:
-				debug.msg(safe_decode(e))
-				html = \
-					u'<p>Python markdown must be installed to view this page. Sorry!</p>'
-			self.ui.webview.setHtml(html, QtCore.QUrl(url))
-		else:
-			self.ui.top_widget.show()
-			self.ui.webview.load(QtCore.QUrl(url))
+			with open(url) as fd:
+				md = safe_decode(fd.read(), errors=u'ignore')
+			self.load_markdown(md)
+			return
+		self.ui.top_widget.show()
+		self.ui.webview.load(QtCore.QUrl(url))
+		self.ui.webview.page().setLinkDelegationPolicy(
+			self.ui.webview.page().DelegateAllLinks)
+
+	def load_markdown(self, md):
+
+		"""
+		desc:
+			Loads a Markdown text string.
+
+		arguments:
+			md:		A Markdown text string.
+		"""
+
+		self.ui.top_widget.hide()
+		try:
+			import markdown
+			html = markdown.markdown(md, errors=u'ignore')
+			with open(self.main_window.theme.resource(u'markdown.css')) as fd:
+				html += u'<style type="text/css">%s</style>' % fd.read()
+		except Exception as e:
+			debug.msg(safe_decode(e))
+			html = \
+				u'<p>Python markdown must be installed to view this page. Sorry!</p>'
+		self.ui.webview.setHtml(html)
 		self.ui.webview.page().setLinkDelegationPolicy(
 			self.ui.webview.page().DelegateAllLinks)
 
@@ -173,7 +186,7 @@ class webbrowser(base_widget):
 
 		"""
 		desc:
-			Process link-clicks to capture special URLs.
+			Prohavecess link-clicks to capture special URLs.
 
 		arguments:
 			url:
@@ -204,7 +217,11 @@ class webbrowser(base_widget):
 				type:	str
 		"""
 
-		cmd = cmd[13:].split(u'.')
+		cmd = cmd[13:]
+		if os.path.exists(cmd):
+			self.main_window.open_file(path=cmd, add_to_recent=False)
+			return
+		cmd = cmd.split(u'.')
 		if len(cmd) == 2 and cmd[0] == u'action':
 			try:
 				action = getattr(self.main_window.ui, u'action_%s' % cmd[1])

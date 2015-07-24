@@ -372,6 +372,16 @@ class base_extension(base_subcomponent):
 
 		return safe_decode(self.__class__.__name__, enc=u'utf-8')
 
+	def folder(self):
+
+		"""
+		returns:
+			desc:	The folder of the extension.
+			type:	unicode
+		"""
+
+		return self.info[u'plugin_folder']
+
 	def register_ui_files(self):
 
 		"""
@@ -565,5 +575,9 @@ class base_extension(base_subcomponent):
 
 		from libqtopensesame.widgets.webbrowser import webbrowser
 		wb = webbrowser(self.main_window)
-		wb.load(self.ext_resource(src))
+		try:
+			src = self.ext_resource(src)
+			wb.load(src)
+		except:
+			wb.load_markdown(src)		
 		self.main_window.tabwidget.add(wb, icon, _(title))
