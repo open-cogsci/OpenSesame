@@ -23,6 +23,8 @@ desc:
 """
 
 from libopensesame.py3compat import *
+from libopensesame.exceptions import osexception
+import random
 
 # Factory functions
 
@@ -242,6 +244,34 @@ def set_subject_nr(nr):
 	"""
 
 	experiment.set_subject(nr)
+
+def sometimes(p=.5):
+
+	"""
+	desc: |
+		Returns True with a certain probability. (For more advanced
+		randomization, use the Python `random` module.)
+
+	keywords:
+		p:
+			desc:	The probability of returning True.
+			type:	float
+
+	returns:
+		desc:	True or False
+		type:	bool
+
+	example: |
+		if sometimes():
+			print('Sometimes you win')
+		else:
+			print('Sometimes you loose')
+	"""
+
+	if (not isinstance(p, float) and not isinstance(p, int)) or p < 0 or p > 1:
+		raise osexception(
+			u'p should be a numeric value between 0 and 1, not "%s"' % p)
+	return random.random() < p
 
 def pause():
 
