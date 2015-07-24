@@ -1,0 +1,281 @@
+---
+API: 2
+Citation: Friesen, C. K., & Kingstone, A. (1998). The eyes have it! Reflexive orienting
+  is triggered by nonpredictive gaze. *Psychonomic Bulletin & Review*, *5*, 490-495.
+  <http://doi.org/10.3758/BF03208827>
+Description: Experiment from the step-by-step tutorial
+OpenSesame: 3.0.0~pre2
+Platform: posix
+Title: 'Gaze cuing: The eyes have it!
+
+  '
+---
+set width 1024
+set uniform_coordinates "yes"
+set transparent_variables "no"
+set title "Gaze cuing: The eyes have it!"
+set synth_backend "legacy"
+set subject_parity "even"
+set subject_nr 0
+set start "experiment"
+set sampler_backend "legacy"
+set mouse_backend "xpyriment"
+set keyboard_backend "legacy"
+set height 768
+set foreground "black"
+set font_size 18
+set font_italic "no"
+set font_family "mono"
+set font_bold "no"
+set description "Default description"
+set coordinates "relative"
+set compensation 0
+set color_backend "legacy"
+set clock_backend "legacy"
+set canvas_backend "xpyriment"
+set bidi "no"
+set background "white"
+
+define sketchpad blank
+	set start_response_interval "no"
+	set duration 100
+	set description "Clear the screen to indicate that the trial is finished"
+
+define loop block_loop
+	set skip 0
+	set repeat 1
+	set order "random"
+	set offset "no"
+	set item "trial_sequence"
+	set description "A block of trials"
+	set cycles 16
+	set column_order "soa;left_letter;correct_response;gaze;right_letter"
+	set break_if "never"
+	setcycle 0 soa "100"
+	setcycle 0 left_letter "F"
+	setcycle 0 correct_response "z"
+	setcycle 0 gaze "left.png"
+	setcycle 0 right_letter "X"
+	setcycle 1 soa "100"
+	setcycle 1 left_letter "H"
+	setcycle 1 correct_response "slash"
+	setcycle 1 gaze "left.png"
+	setcycle 1 right_letter "X"
+	setcycle 2 soa "100"
+	setcycle 2 left_letter "X"
+	setcycle 2 correct_response "z"
+	setcycle 2 gaze "left.png"
+	setcycle 2 right_letter "F"
+	setcycle 3 soa "100"
+	setcycle 3 left_letter "X"
+	setcycle 3 correct_response "slash"
+	setcycle 3 gaze "left.png"
+	setcycle 3 right_letter "H"
+	setcycle 4 soa "100"
+	setcycle 4 left_letter "F"
+	setcycle 4 correct_response "z"
+	setcycle 4 gaze "right.png"
+	setcycle 4 right_letter "X"
+	setcycle 5 soa "100"
+	setcycle 5 left_letter "H"
+	setcycle 5 correct_response "slash"
+	setcycle 5 gaze "right.png"
+	setcycle 5 right_letter "X"
+	setcycle 6 soa "100"
+	setcycle 6 left_letter "X"
+	setcycle 6 correct_response "z"
+	setcycle 6 gaze "right.png"
+	setcycle 6 right_letter "F"
+	setcycle 7 soa "100"
+	setcycle 7 left_letter "X"
+	setcycle 7 correct_response "slash"
+	setcycle 7 gaze "right.png"
+	setcycle 7 right_letter "H"
+	setcycle 8 soa "1000"
+	setcycle 8 left_letter "F"
+	setcycle 8 correct_response "z"
+	setcycle 8 gaze "left.png"
+	setcycle 8 right_letter "X"
+	setcycle 9 soa "1000"
+	setcycle 9 left_letter "H"
+	setcycle 9 correct_response "slash"
+	setcycle 9 gaze "left.png"
+	setcycle 9 right_letter "X"
+	setcycle 10 soa "1000"
+	setcycle 10 left_letter "X"
+	setcycle 10 correct_response "z"
+	setcycle 10 gaze "left.png"
+	setcycle 10 right_letter "F"
+	setcycle 11 soa "1000"
+	setcycle 11 left_letter "X"
+	setcycle 11 correct_response "slash"
+	setcycle 11 gaze "left.png"
+	setcycle 11 right_letter "H"
+	setcycle 12 soa "1000"
+	setcycle 12 left_letter "F"
+	setcycle 12 correct_response "z"
+	setcycle 12 gaze "right.png"
+	setcycle 12 right_letter "X"
+	setcycle 13 soa "1000"
+	setcycle 13 left_letter "H"
+	setcycle 13 correct_response "slash"
+	setcycle 13 gaze "right.png"
+	setcycle 13 right_letter "X"
+	setcycle 14 soa "1000"
+	setcycle 14 left_letter "X"
+	setcycle 14 correct_response "z"
+	setcycle 14 gaze "right.png"
+	setcycle 14 right_letter "F"
+	setcycle 15 soa "1000"
+	setcycle 15 left_letter "X"
+	setcycle 15 correct_response "slash"
+	setcycle 15 gaze "right.png"
+	setcycle 15 right_letter "H"
+	run trial_sequence
+
+define sequence block_sequence
+	set flush_keyboard "yes"
+	set description "A block of trials, followed by feedback"
+	run reset_feedback "always"
+	run block_loop "always"
+	run feedback "always"
+
+define sketchpad cue
+	set start_response_interval "no"
+	set duration "[soa]"
+	set description "A gaze cue. Click on 'Edit script' to see the definition."
+	draw image 0 0 "[gaze]" scale=1 center=1 z_index=0 show_if="always"
+
+define sketchpad end_of_practice
+	set start_response_interval "no"
+	set duration "keypress"
+	set description "Indicate that the practice phase has ended"
+	draw textline 0 -32 "The practice phase is finished" center=1 color="black" font_family="mono" font_size=18 font_bold="no" font_italic="no" html="yes" z_index=0 show_if="always"
+	draw textline 0 32 "Press any key to continue ..." center=1 color="black" font_family="mono" font_size=18 font_bold="no" font_italic="no" html="yes" z_index=0 show_if="always"
+
+define sampler error_sound
+	set volume 1
+	set stop_after 0
+	set sample "notify1.ogg"
+	set pitch 1
+	set pan 0
+	set fade_in 0
+	set duration "sound"
+	set description "Play a sound if a mistake was made"
+
+define sequence experiment
+	set flush_keyboard "yes"
+	set description "The main sequence of the experiment"
+	run form_instructions "always"
+	run practice_loop "always"
+	run end_of_practice "always"
+	run experimental_loop "always"
+	run goodbye "always"
+
+define loop experimental_loop
+	set skip 0
+	set repeat 5
+	set order "sequential"
+	set offset "no"
+	set item "block_sequence"
+	set description "The experiment consists of five blocks"
+	set cycles 1
+	set column_order "practice"
+	set break_if "never"
+	setcycle 0 practice "no"
+	run block_sequence
+
+define feedback feedback
+	set reset_variables "yes"
+	set duration "keypress"
+	draw textline 0 -64 "Your average reaction time was [avg_rt]ms" center=1 color="black" font_family="mono" font_size=18 font_bold="no" font_italic="no" html="yes" z_index=0 show_if="always"
+	draw textline 0 0 "Your accuracy was [acc]%" center=1 color="black" font_family="mono" font_size=18 font_bold="no" font_italic="no" html="yes" z_index=0 show_if="always"
+	draw textline 0 64 "Press any key to continue ..." center=1 color="black" font_family="mono" font_size=18 font_bold="no" font_italic="no" html="yes" z_index=0 show_if="always"
+
+define sketchpad fixdot
+	set start_response_interval "no"
+	set duration 750
+	set description "A fixation dot"
+	draw fixdot 0 0 color="black" style="default" z_index=0 show_if="always"
+
+define form_text_display form_instructions
+	set spacing 10
+	set rows "1;4;1"
+	set only_render "no"
+	set ok_text "Let's go!"
+	set margins "50;50;50;50"
+	set form_title "<span size=24>Instructions</span>"
+	__form_text__
+	Your task is to indicate whether an <b>F</b> or an <b>H</b> is present.
+	- Press the <b>z</b>-key if you see an <b>F</b>
+	- Press the <b>/</b>-key (slash) if you see an <b>H</b>
+	If you make a mistake, you will hear a sound.
+	Be as fast as possible!
+	__end__
+	set description "A simple text display form"
+	set cols "1;1;1"
+	set _theme "gray"
+	widget 0 0 3 1 label text="[form_title]"
+	widget 0 1 3 1 label text="[form_text]" center=no
+	widget 1 2 1 1 button text="[ok_text]"
+
+
+define sketchpad goodbye
+	set start_response_interval "no"
+	set duration "keypress"
+	set description "Say goodbye"
+	draw textline 0 -32 "The experiment is finished" center=1 color="black" font_family="mono" font_size=18 font_bold="no" font_italic="no" html="yes" z_index=0 show_if="always"
+	draw textline 0 32 "Press any key to exit ..." center=1 color="black" font_family="mono" font_size=18 font_bold="no" font_italic="no" html="yes" z_index=0 show_if="always"
+
+define keyboard_response keyboard_response
+	set timeout 2000
+	set flush "yes"
+	set duration "keypress"
+	set description "Collects keyboard responses"
+	set allowed_responses "z;slash"
+
+define logger logger
+	set description "Logs experimental data"
+	set auto_log "yes"
+
+define sketchpad neutral_gaze
+	set start_response_interval "no"
+	set duration 1000
+	set description "A neutral gaze"
+	draw image 0 0 "neutral.png" scale=1 center=1 z_index=0 show_if="always"
+
+define loop practice_loop
+	set skip 0
+	set repeat 1
+	set order "random"
+	set offset "no"
+	set item "block_sequence"
+	set description "A single practice block"
+	set cycles 1
+	set column_order "practice"
+	set break_if "never"
+	setcycle 0 practice "yes"
+	run block_sequence
+
+define reset_feedback reset_feedback
+
+define sketchpad target
+	set start_response_interval "yes"
+	set duration 100
+	set description "A gaze cue and a target. Click on 'Edit script' to see the definition."
+	draw image 0 0 "[gaze]" scale=1 center=1 z_index=0 show_if="always"
+	draw textline -288 0 "[left_letter]" center=1 color="black" font_family="mono" font_size=32 font_bold="no" font_italic="no" html="yes" z_index=0 show_if="always"
+	draw textline 288 0 "[right_letter]" center=1 color="black" font_family="mono" font_size=32 font_bold="no" font_italic="no" html="yes" z_index=0 show_if="always"
+
+define sequence trial_sequence
+	set flush_keyboard "yes"
+	set description "A single trial"
+	run fixdot "always"
+	run neutral_gaze "always"
+	run cue "always"
+	run target "always"
+	run keyboard_response "always"
+	run blank "always"
+	run error_sound "[correct] = 0"
+	run logger "always"
+
