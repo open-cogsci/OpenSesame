@@ -91,23 +91,29 @@ class tab_widget(base_subcomponent, QtGui.QTabWidget):
 
 		self.removeTab(i)
 
-	def add(self, widget, icon, name):
+	def add(self, widget, icon, name, switch=True):
 
 		"""
-		Open a tab and switch to it
+		desc:
+			Open a tab, or switches to it if the tab already exists.
 
-		Arguments:
-		widget -- a QWidget for the tab
-		icon -- the name of an icon or a QIcon
-		name -- a name for the tab
+		arguments:
+			widget: A QWidget for the tab
+			icon:	The name of an icon or a QIcon
+			name:	A name for the tab
+
+		keywords:
+			switch:
+				desc:	Indicates whether the tab should be switched to.
+				type:	bool
 		"""
-
 
 		index = self.indexOf(widget)
 		if index < 0:
 			index = self.addTab(widget, self.main_window.experiment.icon(icon),
-			   _(name))
-		self.setCurrentIndex(index)
+				_(name))
+		if switch:
+			self.setCurrentIndex(index)
 
 	def remove(self, widget):
 
@@ -331,15 +337,21 @@ class tab_widget(base_subcomponent, QtGui.QTabWidget):
 			self.add(preferences_widget.preferences_widget(self.main_window), \
 				u"options", u"Preferences")
 
-	def open_start_new(self, start=False):
+	def open_start_new(self, start=False, switch=True):
 
 		"""
-		Opens the start new tab
+		desc:
+			Opens the start-new tab
 
-		Keyword arguments:
-		start -- indicates whether the widget is opened because OpenSesame has
-				 started (True) or because the new button has been clicked
-				 (False) (default=True)
+		keywords:
+			start:
+			 	desc:	Indicates whether the widget is opened because
+						OpenSesame has started (True) or because the new button
+						has been clicked (False).
+				type:	bool
+			switch:
+				desc:	Indicates whether the new tab should be switched to.
+				type: 	bool
 		"""
 
 		if start:
@@ -350,7 +362,7 @@ class tab_widget(base_subcomponent, QtGui.QTabWidget):
 				return
 		from libqtopensesame.widgets.start_new_widget import start_new_widget
 		w = start_new_widget(self.main_window, start=start)
-		self.add(w, u'os-experiment', u'Get started')
+		self.add(w, u'os-experiment', u'Get started', switch=switch)
 
 	def switch(self, tab_name):
 

@@ -541,3 +541,29 @@ class base_extension(base_subcomponent):
 		if not os.path.exists(path):
 			raise osexception(u'Extension resource not found: %s' % path)
 		return path
+
+	def notification_tab(self, src, icon=u'dialog-information',
+		title=u'Attention!'):
+
+		"""
+		desc:
+			Opens a notification tab, typically a Markdown file.
+
+		arguments:
+			src:
+				desc:	The file name, which is located with `ext_resource()`.
+				type:	str
+
+		keywords:
+			icon:
+				desc:	The name of the tab icon.
+				type:	str
+			title:
+				desc:	The tab title.
+				type:	str
+		"""
+
+		from libqtopensesame.widgets.webbrowser import webbrowser
+		wb = webbrowser(self.main_window)
+		wb.load(self.ext_resource(src))
+		self.main_window.tabwidget.add(wb, icon, _(title))

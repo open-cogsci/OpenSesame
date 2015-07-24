@@ -68,11 +68,13 @@ class webbrowser(base_widget):
 		self.ui.webview.loadStarted.connect(self.load_started)
 		self.ui.webview.loadFinished.connect(self.load_finished)
 		self.ui.webview.urlChanged.connect(self.url_changed)
+		self.ui.webview.linkClicked.connect(self.link_clicked)
 		self.ui.layout_main.addWidget(self.ui.webview)
 		self.ui.button_back.clicked.connect(self.ui.webview.back)
 		self.ui.button_osdoc.clicked.connect(self.open_osdoc)
 		self.ui.button_forum.clicked.connect(self.open_forum)
 		self.main_window.theme.apply_theme(self)
+		# self.history = QtWebKit.QWebHistoryInterface(self.ui.webview)
 
 	def load(self, url):
 
@@ -84,11 +86,15 @@ class webbrowser(base_widget):
 			url:	The url to load.
 		"""
 
+		if isinstance(url, QtCore.QUrl):
+			url = url.toString()
 		if url.endswith(u'.md'):
+			self.ui.top_widget.hide()
 			try:
 				import markdown
-				html = markdown.markdown(safe_decode(open(url),
-					errors=u'ignore'))
+				with open(url) as fd:
+					html = markdown.markdown(safe_decode(fd.read(),
+						errors=u'ignore'))
 				html += u'<style type="text/css">%s</style>' % \
 					open(self.main_window.theme.resource( \
 					u'markdown.css')).read()
@@ -98,7 +104,10 @@ class webbrowser(base_widget):
 					u'<p>Python markdown must be installed to view this page. Sorry!</p>'
 			self.ui.webview.setHtml(html, QtCore.QUrl(url))
 		else:
+			self.ui.top_widget.show()
 			self.ui.webview.load(QtCore.QUrl(url))
+		self.ui.webview.page().setLinkDelegationPolicy(
+			self.ui.webview.page().DelegateAllLinks)
 
 	def load_finished(self):
 
@@ -159,3 +168,51 @@ class webbrowser(base_widget):
 		"""
 
 		self.ui.edit_url.setText(url.toString())
+
+	def link_clicked(self, url):
+
+		"""
+		desc:
+			Process link-clicks to capture special URLs.
+
+		arguments:
+			url:
+				type:	QUrl
+		"""
+
+		url = url.toString()
+		if url.startswith(u'opensesame://'):
+			self.command(url)
+			return
+		if url.startswith(u'new:'):
+			wb = webbrowser(self.main_window)
+			wb.load(url[4:])
+			self.main_window.tabwidget.open_browser(url[4:])
+			return
+		self.load(url)
+
+	def command(self, cmd):
+
+		"""
+		desc:
+			Processes commands that are embedded in urls to trigger actions and
+			events.
+
+		arguments:
+			cmd:
+				desc:	A command string, such as 'action.save'.
+				type:	str
+		"""
+
+		cmd = cmd[13:].split(u'.')
+		if len(cmd) == 2 and cmd[0] == u'action':
+			try:
+				action = getattr(self.main_window.ui, u'action_%s' % cmd[1])
+			except:
+				self.experiment.notify(u'Invalid action: %s' % cmd[1])
+				return
+			action.trigger()
+			return
+		if len(cmd) == 2 and cmd[0] == u'event':
+			self.main_window.extension_manager.fire(cmd[1])
+			return

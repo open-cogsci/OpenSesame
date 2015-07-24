@@ -103,7 +103,7 @@ if __name__ == u'__main__':
 	else:
 		start_new_tab = True
 	if start_new_tab:
-		opensesame.ui.tabwidget.open_start_new(start=True)
+		opensesame.ui.tabwidget.open_start_new(start=True, switch=False)
 	opensesame.restore_window_state()
 	opensesame.refresh()
 	opensesame.show()
