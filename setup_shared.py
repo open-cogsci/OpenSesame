@@ -58,4 +58,6 @@ included_extensions = [
 	'qprogedit_preferences',
 	'dock_manager',
 	'psychopy_monitor_center',
+	'opensesame_3_notifications',
+	'example_experiments'
 	]
