@@ -21,6 +21,9 @@ import shlex
 import re
 import codecs
 import os
+import time
+import yaml
+from libopensesame import misc
 from libopensesame.exceptions import osexception
 from libopensesame.py3compat import *
 
@@ -69,6 +72,32 @@ class syntax(object):
 		self.re_sanitize_loose = re.compile(r'[\n\"\\]')
 		# Unsanitization is used to replace U+XXXX unicode notation
 		self.re_from_ascii = re.compile(r'U\+([A-F0-9]{4})')
+		self.re_front_matter = re.compile(r'---(?P<info>.*)---')
+
+	def parse_front_matter(self, s):
+
+		m = self.re_front_matter.match(s)
+		try:
+			d = yaml.load(m.group(u'info'))
+		except:
+			d = {}
+		if u'API' not in d:
+			d[u'API'] = 1
+		return d
+
+	def generate_front_matter(self):
+
+		if not py3:
+			version = safe_encode(misc.version)
+		else:
+			version = misc.version
+		d = {
+			'OpenSesame' : version,
+			'API' : 2,
+			'Date' : time.ctime(),
+			'Platform' : os.name
+			}
+		return u'---\n%s---\n' % yaml.dump(d, default_flow_style=False)
 
 	def split(self, s):
 
