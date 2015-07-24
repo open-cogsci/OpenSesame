@@ -21,7 +21,6 @@ import shlex
 import re
 import codecs
 import os
-import time
 import yaml
 from libopensesame import misc
 from libopensesame.exceptions import osexception
@@ -72,32 +71,60 @@ class syntax(object):
 		self.re_sanitize_loose = re.compile(r'[\n\"\\]')
 		# Unsanitization is used to replace U+XXXX unicode notation
 		self.re_from_ascii = re.compile(r'U\+([A-F0-9]{4})')
-		self.re_front_matter = re.compile(r'---(?P<info>.*)---')
+		self.re_front_matter = re.compile(r'---(?P<info>.*)---', re.S)
 
 	def parse_front_matter(self, s):
+
+		"""
+		desc:
+			Parses the YAML front matter at the start of the script.
+
+		arguments:
+			s:
+				desc:	The script.
+				type:	str
+
+		returns:
+			desc:	A (d, s) tuple, where d is a dict with the front matter, and
+					and s is the script with the front matter stripped off.
+			type:	dict
+		"""
 
 		m = self.re_front_matter.match(s)
 		try:
 			d = yaml.load(m.group(u'info'))
+			s = s[len(m.group(0)):]
 		except:
 			d = {}
 		if u'API' not in d:
-			d[u'API'] = 1
-		return d
+			d['API'] = 1
+		return d, s
 
 	def generate_front_matter(self):
+
+		"""
+		desc:
+			Generates YAML front matter. Any existing front matter is copied,
+			except for the `OpenSesame`, `API`, and `Platform` fields, which are
+			updated.
+
+		returns:
+			desc:	A front matter string.
+			type:	str
+		"""
 
 		if not py3:
 			version = safe_encode(misc.version)
 		else:
 			version = misc.version
-		d = {
+		self.experiment.front_matter.update({
 			'OpenSesame' : version,
 			'API' : 2,
-			'Date' : time.ctime(),
 			'Platform' : os.name
-			}
-		return u'---\n%s---\n' % yaml.dump(d, default_flow_style=False)
+			})
+		return u'---\n%s---\n' % safe_decode(yaml.dump(
+			self.experiment.front_matter, default_flow_style=False,
+			allow_unicode=True))
 
 	def split(self, s):
 

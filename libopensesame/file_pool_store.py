@@ -207,6 +207,19 @@ class file_pool_store(object):
 
 		return len(self.files())
 
+	def count_included(self):
+
+		"""
+		visible: False
+
+		returns:
+			desc:	The number of files that are in the main pool folder, i.e.
+					the folder that is included with the experiment.
+			type:	int
+		"""
+
+		return len(os.listdir(self.folder()))
+
 	def add(self, path):
 
 		"""

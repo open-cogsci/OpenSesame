@@ -112,11 +112,9 @@ class qtopensesame(QtGui.QMainWindow, base_component):
 			os.mkdir(os.path.join(self.home_folder, u".opensesame"))
 
 		# Set the filter-string for opening and saving files
-		self.file_type_filter = \
-			u"OpenSesame files (*.opensesame.tar.gz *.opensesame);;OpenSesame script and file pool (*.opensesame.tar.gz);;OpenSesame script (*.opensesame)"
-		self.file_type_filter_script = u"OpenSesame script (*.opensesame)"
-		self.file_type_filter_pool = \
-			u"OpenSesame script and file pool (*.opensesame.tar.gz)"
+		self.save_file_filter =u'OpenSesame files (*.osexp)'
+		self.open_file_filter = \
+			u'OpenSesame files (*.osexp *.opensesame.tar.gz *.opensesame);;'
 
 		# Set the window message
 		self.window_message(_(u"Welcome to OpenSesame %s") % self.version)
@@ -651,24 +649,32 @@ class qtopensesame(QtGui.QMainWindow, base_component):
 	def open_file(self, dummy=None, path=None, add_to_recent=True):
 
 		"""
-		Open a .opensesame or .opensesame.tar.gz file
+		desc:
+			Opens an experiment file.
 
-		Keyword arguments:
-		dummy -- An unused argument which is passed by the signal (default=None)
-		path -- The path to the file. If None, a file dialog is presented
-				(default=None)
+		keywords:
+			dummy:		Dummy argument passed by event handler.
+			path:
+			 	desc:	The path to the file. If None, a file dialog is
+						presented.
+				type:	[str, NoneType]
+			add_to_recent:
+				desc:	Indicates whether the file should be added to the list
+						of recent experiments.
+				type:	bool
 		"""
 
 		if not self.save_unsaved_changes():
 			self.ui.tabwidget.open_general()
 			return
 		if path is None:
-			path = str(QtGui.QFileDialog.getOpenFileName(
+			path = QtGui.QFileDialog.getOpenFileName(
 				self.ui.centralwidget, _(u"Open file"),
-				filter=self.file_type_filter, directory=cfg.file_dialog_path))
-		if path is None or path == u'' or (not path.lower().endswith(
-			u'.opensesame') and not path.lower().endswith(
-			u'.opensesame.tar.gz')):
+				filter=self.open_file_filter, directory=cfg.file_dialog_path)
+		if path is None or path == u'' or ( \
+			not path.lower().endswith(u'.opensesame') and \
+			not  path.lower().endswith(u'.opensesame.tar.gz') and \
+			not path.lower().endswith(u'.osexp')):
 			return
 		self.set_status(u"Opening ...", status=u'busy')
 		self.ui.tabwidget.close_all()
@@ -701,17 +707,22 @@ class qtopensesame(QtGui.QMainWindow, base_component):
 		self.extension_manager.fire(u'open_experiment', path=path)
 		self.set_status(u"Opened %s" % path)
 
-	def save_file(self, dummy=None, remember=True, catch=True):
+	def save_file(self):
 
 		"""
-		Save the current experiment
+		desc:
+			Saves the current experiment.
 
-		Keyword arguments:
-		dummy -- a dummy argument passed by the signal handler (default=None)
-		remember -- a boolean indicating whether the file should be included in
-					the list of recent files (default=True)
-		catch -- a boolean indicating whether exceptions should be caught and
-				 displayed in a notification (default=True)
+		keywords:
+			dummy:		A dummy argument passed by the signal handler.
+			remember:
+				desc:	Indicates whether the file should be included in the
+						list of recent files.
+				type:	bool
+			catch:
+			 	desc:	Indicates whether exceptions should be caught and
+				 		displayed in a notification.
+				type:	bool
 		"""
 
 		if self.current_path is None:
@@ -733,72 +744,40 @@ class qtopensesame(QtGui.QMainWindow, base_component):
 			return
 		# Try to save the experiment if it doesn't exist already
 		try:
-			resp = self.experiment.save(self.current_path, overwrite=True)
+			self.experiment.save(self.current_path, overwrite=True)
 			self.set_status(_(u"Saved as %s") % self.current_path)
 		except Exception as e:
-			if not catch:
-				raise e
 			self.ui.console.write(e)
 			self.experiment.notify(_(u"Failed to save file. Error: %s") % e)
 			self.set_busy(False)
 			return
-		if remember:
-			self.update_recent_files()
+		self.update_recent_files()
 		self.set_unsaved(False)
 		self.window_message(self.current_path)
 		self.set_busy(False)
 
 	def save_file_as(self):
 
-		"""Save the current experiment after asking for a file name"""
+		"""
+		desc:
+			Saves the current experiment after asking for a file name.
+		"""
 
+		# Choose a default file name based on the experiment title
 		if self.current_path is None:
-			cfg.file_dialog_path = os.path.join(self.home_folder, \
-				self.experiment.syntax.sanitize(self.experiment.var.title, strict=True, \
-				allow_vars=False))
+			cfg.file_dialog_path = os.path.join(self.home_folder,
+				self.experiment.syntax.sanitize(self.experiment.var.title,
+				strict=True, allow_vars=False))
 		else:
 			cfg.file_dialog_path = self.current_path
-		if len(os.listdir(self.experiment.pool.folder())) == 0:
-			default_extension = u".opensesame"
-			default_filter = self.file_type_filter_script
-		else:
-			default_extension = u".opensesame.tar.gz"
-			default_filter = self.file_type_filter_pool
 		path, file_type = QtGui.QFileDialog.getSaveFileNameAndFilter(
 			self.ui.centralwidget, _(u'Save file as ...'),
-			directory=cfg.file_dialog_path,
-			filter=self.file_type_filter, initialFilter=default_filter)
-		if path is not None and path != u"":
-			path = str(path)
-			cfg.file_dialog_path = os.path.dirname(path)
-			# If the extension has not been explicitly typed in, set it based
-			# on the selected filter and, if no filter has been set, based on
-			# whether there is content in the file pool
-			if path[-18:].lower() != u".opensesame.tar.gz" and \
-				path[-11:].lower() != u".opensesame":
-				debug.msg(u"automagically determing file type")
-				if u"(*.opensesame)" in file_type:
-					path += u".opensesame"
-				elif u"(*.opensesame.tar.gz)" in file_type:
-					path += u".opensesame.tar.gz"
-				else:
-					path += default_extension
-				debug.msg(path)
-			# Avoid chunking of file extensions. This happens sometimes when
-			# file managers (used for the save-file dialog) have difficulty
-			# with multi-part extensions.
-			path = path.replace(u'.opensesame.opensesame', u'.opensesame')
-			path = path.replace(u'.opensesame.tar.opensesame', u'.opensesame')
-			path = path.replace(u'.opensesame.tar.gz.opensesame',
-				u'.opensesame')
-			# Warn if we are saving in .opensesame format and there are files
-			# in the file pool.
-			if len(os.listdir(self.experiment.pool.folder())) > 0 \
-				and path.lower().endswith(u'.opensesame'):
-				self.experiment.notify(
-					_(u'You have selected the <code>.opensesame</code> format. This means that the file pool has <i>not</i> been saved. To save the file pool along with your experiment, select the <code>.opensesame.tar.gz</code> format.'))
-			self.current_path = path
-			self.save_file()
+			directory=cfg.file_dialog_path, filter=self.save_file_filter)
+		if path is None or path == u"":
+			return
+		cfg.file_dialog_path = os.path.dirname(path)
+		self.current_path = path
+		self.save_file()
 
 	def update_resolution(self, width, height):
 

@@ -22,10 +22,12 @@ import sys
 if sys.version_info >= (3,0,0):
 	py3 = True
 	basestring = str
+	universal_newline_mode = u'rU'
 else:
 	bytes = str
 	str = unicode
 	py3 = False
+	universal_newline_mode = u'r'
 
 def safe_decode(s, enc='utf-8', errors='strict'):
 	if isinstance(s, str):
@@ -54,7 +56,7 @@ def safe_encode(s, enc='utf-8', errors='strict'):
 		return s
 	return s.encode(enc, errors)
 
-__all__ = ['py3', 'safe_decode', 'safe_encode']
+__all__ = ['py3', 'safe_decode', 'safe_encode', 'universal_newline_mode']
 if not py3:
 	__all__ += ['str', 'bytes']
 else:
