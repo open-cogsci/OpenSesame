@@ -1,3 +1,6 @@
+---
+API: 2
+---
 set foreground "white"
 set subject_parity "even"
 set description "Default description"
