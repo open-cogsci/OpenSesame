@@ -18,6 +18,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame.py3compat import *
+from libopensesame.exceptions import osexception
 from openexp.sampler import sampler
 try:
 	import numpy as np
@@ -49,6 +50,12 @@ def synth(experiment, osc="sine", freq=440, length=100, attack=0, decay=5):
 	if np is None:
 		raise osexception(
 			u'The synth is not available, because numpy is missing.')
+	if attack < 0 or attack > length:
+		raise osexception(
+			u'Attack must be a numeric value between 0 and the sound length')
+	if decay < 0 or decay > length:
+		raise osexception(
+			u'Decay must be a numeric value between 0 and the sound length')
 	# We need to multiply the rate by two to get a stereo signal
 	rate = 2*experiment.var.get(u'sampler_frequency', 48100)
 	signal = osc_gen(osc, key_to_freq(freq), length, rate)
@@ -150,10 +157,12 @@ def envelope(length, attack, decay, rate):
 	attack *= .001
 	decay *= .001
 	e = np.ones(length*rate)
-	attack = int(attack*rate)
-	e[:attack] = np.linspace(0, 1, attack)
-	decay = int(decay*rate)
-	e[-decay:] = np.linspace(1, 0, decay)
+	if attack > 0:
+		attack = int(attack*rate)
+		e[:attack] *= np.linspace(0, 1, attack)
+	if decay > 0:
+		decay = int(decay*rate)
+		e[-decay:] *= np.linspace(1, 0, decay)
 	return e
 
 def to_int_16(a):

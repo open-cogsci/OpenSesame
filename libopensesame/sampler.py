@@ -66,18 +66,17 @@ class sampler(item.item, generic_response.generic_response):
 				raise osexception(
 					u'Failed to load sample in sampler "%s": %s' % (self.name, \
 					e))
-
-		pan = self.var.get(u'pan')
+		pan = self.var.pan
 		if pan == -20:
 			pan = u'left'
 		elif pan == 20:
 			pan = u'right'
-
-		self.sampler.pan(pan)
-		self.sampler.volume(self.var.get(u'volume'))
-		self.sampler.pitch(self.var.get(u'pitch'))
-		self.sampler.fade_in(self.var.get(u'fade_in'))
-		self.sampler.stop_after(self.var.get(u'stop_after'))
+		self.sampler.pan = pan
+		self.sampler.volume = self.var.volume
+		self.sampler.pitch = self.var.pitch
+		self.sampler.fade_in = self.var.fade_in
+		self.sampler.duration = self.var.stop_after
+		self.sampler.block = self.block
 		generic_response.generic_response.prepare(self)
 
 	def run(self):
@@ -86,7 +85,7 @@ class sampler(item.item, generic_response.generic_response):
 
 		self.set_item_onset()
 		self.set_sri()
-		self.sampler.play(self.block)
+		self.sampler.play()
 		self.process_response()
 
 	def var_info(self):

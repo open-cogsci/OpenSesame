@@ -60,6 +60,6 @@ class synth(sampler.sampler, item.item):
 			pan = u'left'
 		elif pan == 20:
 			pan = u'right'
-		self.sampler.pan(pan)
-		self.sampler.volume(self.var.volume)
+		self.sampler.pan = pan
+		self.sampler.volume = self.var.volume
 		generic_response.generic_response.prepare(self)

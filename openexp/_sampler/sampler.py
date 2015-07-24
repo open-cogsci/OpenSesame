@@ -63,10 +63,12 @@ class sampler(backend):
 		The following are now properties, as described under
 		[playback keywords]:
 
-		- [sampler.volume]
+		- [sampler.block]
+		- [sampler.duration]
 		- [sampler.fade_in]
-		- [sampler.pitch]
 		- [sampler.pan]
+		- [sampler.pitch]
+		- [sampler.volume]
 
 		Therefore, the following will no longer work:
 
