@@ -17,6 +17,7 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
+import platform
 from PyQt4 import QtCore, QtGui, QtWebKit
 from libqtopensesame.widgets.base_widget import base_widget
 from libopensesame import debug
@@ -218,8 +219,16 @@ class webbrowser(base_widget):
 		"""
 
 		cmd = cmd[13:]
-		if os.path.exists(cmd):
-			self.main_window.open_file(path=cmd, add_to_recent=False)
+		# This is quite a hacky workaround for Windows. The file paths are
+		# automatically transformed into a Unix-like slashforward format.
+		# Windows therefore cannot find the paths anymomre. To fix this, we
+		# insert a colon, and normpath it.
+		if platform.system() == u'Windows':
+			_cmd = os.path.normpath(cmd[0] + u':' + cmd[1:])
+		else:
+			_cmd = cmd
+		if os.path.exists(_cmd):
+			self.main_window.open_file(path=_cmd, add_to_recent=False)
 			return
 		cmd = cmd.split(u'.')
 		if len(cmd) == 2 and cmd[0] == u'action':
