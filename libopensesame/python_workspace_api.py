@@ -25,6 +25,7 @@ desc:
 from libopensesame.py3compat import *
 from libopensesame.exceptions import osexception
 import random
+import math
 
 # Factory functions
 
@@ -230,7 +231,7 @@ def set_subject_nr(nr):
 		Sets the subject number and parity (even/ odd). This function is called
 		automatically when an experiment is started, so you only need to call it
 		yourself if you overwrite the subject number that was specified when the
-		experiment was launcherd.
+		experiment was launched.
 
 	arguments:
 		nr:
@@ -270,7 +271,7 @@ def sometimes(p=.5):
 
 	if (not isinstance(p, float) and not isinstance(p, int)) or p < 0 or p > 1:
 		raise osexception(
-			u'p should be a numeric value between 0 and 1, not "%s"' % p)
+			_(u'p should be a numeric value between 0 and 1, not "%s"' % p))
 	return random.random() < p
 
 def pause():
@@ -281,3 +282,183 @@ def pause():
 	"""
 
 	experiment.pause()
+
+def polar_to_xy(rho, phi, pole=(0,0), units=u'degrees'):
+
+	"""
+	desc:
+		Converts polar coordinates (distance, angle) to Cartesian coordinates
+		(x, y).
+
+	arguments:
+		rho:
+			desc:	The radial coordinate, also distance or eccentricity.
+			type:	float
+		phi:
+			desc:	The angular coordinate. This reflects a counterclockwise
+					rotation, where 0 is straight right. The units can be
+					degrees or radians, depending on the `units` keyword.
+			type:	float
+
+	keywords:
+		pole:
+			desc:	The refence point.
+			type:	tuple
+		units:
+			desc:	The units for phi. This can be 'degrees' or 'radians'.
+			type:	str
+
+	returns:
+		desc:	An (x, y) coordinate tuple.
+		type:	tuple
+
+	example: |
+		# Draw a cross
+		x1, y1 = polar_to_xy(100, 45)
+		x2, y2 = polar_to_xy(100, -45)
+		c = canvas()
+		c.line(x1, y1, -x1, -y1)
+		c.line(x2, y2, -x2, -y2)
+		c.show()
+	"""
+
+	try:
+		rho = float(rho)
+	except:
+		raise osexception(_(u'rho should be numeric in polar_to_xy()'))
+	try:
+		phi = float(phi)
+	except:
+		raise osexception(_(u'phi should be numeric in polar_to_xy()'))
+	phi = parse_phi(phi, units)
+	ox, oy = parse_pole(pole)
+	x = rho * math.cos(phi) + ox
+	y = rho * math.sin(phi) + oy
+	return x, y
+
+def xy_to_polar(x, y, pole=(0,0), units=u'degrees'):
+
+	"""
+	desc:
+		Converts Cartesian coordinates (x, y) to polar coordinates (distance,
+		angle).
+
+	arguments:
+		x:
+			desc:	The X coordinate.
+			type:	float
+		y:
+			desc:	The Y coordinate.
+			type:	float
+
+	keywords:
+		pole:
+			desc:	The refence point.
+			type:	tuple
+		units:
+			desc:	The units for phi. This can be 'degrees' or 'radians'.
+			type:	str
+
+	returns:
+		desc:	An (rho, phi) coordinate tuple. Here, `rho` is the radial
+				coordinate, also distance or eccentricity. `phi` is the angular
+				coordinate, in degrees or radians, depending on the `units`
+				keyword. `phi` reflects a counterclockwise rotation, where 0 is
+				straight right.
+		type:	tuple
+
+	example: |
+		rho, phi = xy_to_polar(100, 100)
+	"""
+
+	try:
+		x = float(x)
+	except:
+		raise osexception(_(u'x should be numeric in xy_to_polar()'))
+	try:
+		y = float(y)
+	except:
+		raise osexception(_(u'y should be numeric in xy_to_polar()'))
+	ox, oy = parse_pole(pole)
+	dx = x-ox
+	dy = y-oy
+	rho = math.sqrt(dx**2 + dy**2)
+	phi = parse_phi(math.atan2(dy, dx), units)
+	return rho, phi
+
+def xy_circle(n, rho, phi0=0, pole=(0,0), units=u'degrees'):
+
+	"""
+	desc:
+		Generates a list of points (x,y coordinates) in a circle. This can be
+		used to draw stimuli in a circular arrangement.
+
+	arguments:
+		n:
+			desc:	The number of x,y coordinates to generate.
+			type:	int
+		rho:
+			desc:	The radial coordinate, also distance or eccentricity, of the
+					first point.
+			type:	float
+
+	keywords:
+		phi0:
+			desc:	The angular coordinate for the first coordinate.
+			type:	float
+		pole:
+			desc:	The refence point.
+			type:	tuple
+		units:
+			desc:	The units for phi. This can be 'degrees' or 'radians'.
+			type:	str
+
+	returns:
+		desc:	A list of (x,y) coordinate tuples.
+		type:	list
+
+	example: |
+		# Draw 8 rectangles around a central fixation dot
+		c = canvas()
+		c.fixdot()
+		for x, y in xy_circle(8, 100):
+			c.rect(x-10, y-10, 20, 20)
+		c.show()
+	"""
+
+	if not isinstance(n, int):
+		raise osexception(_(u'N should be integer in xy_circle()'))
+	l = []
+	phi0 = parse_phi(phi0, units)
+	for i in range(n):
+		l.append(polar_to_xy(rho, phi0, pole=pole, units=u'radians'))
+		phi0 += 2*math.pi/n
+	return l
+
+def parse_phi(phi, units):
+
+	"""
+	visible: False
+	"""
+
+	if units == u'degrees':
+		phi = math.radians(phi)
+	elif units != u'radians':
+		raise osexception(
+			_(u'units should be "degrees" or "radians"'))
+	return phi
+
+def parse_pole(pole):
+
+	"""
+	visible: False
+	"""
+
+	try:
+		ox = float(pole[0])
+		oy = float(pole[1])
+		assert(len(pole) == 2)
+	except:
+		raise osexception(_(u'pole should be a tuple (or similar) of length '
+			u'with two numeric values'))
+	return ox, oy
