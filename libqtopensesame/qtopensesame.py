@@ -776,6 +776,8 @@ class qtopensesame(QtGui.QMainWindow, base_component):
 			directory=cfg.file_dialog_path, filter=self.save_file_filter)
 		if path is None or path == u"":
 			return
+		if not path.lower().endswith(u'.osexp'):
+			path += u'.osexp'
 		cfg.file_dialog_path = os.path.dirname(path)
 		self.current_path = path
 		self.save_file()
