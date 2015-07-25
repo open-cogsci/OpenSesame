@@ -76,7 +76,6 @@ class general_script_editor(base_widget):
 			return
 		self.main_window.experiment = exp
 		self.main_window.tabwidget.close_all()
-		self.main_window.tabwidget.open_general()
 		self.experiment.build_item_tree()
 		self.extension_manager.fire(u'regenerate')
 

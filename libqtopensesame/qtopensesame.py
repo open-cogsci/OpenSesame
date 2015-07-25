@@ -678,7 +678,7 @@ class qtopensesame(QtGui.QMainWindow, base_component):
 			not path.lower().endswith(u'.osexp')):
 			return
 		self.set_status(u"Opening ...", status=u'busy')
-		self.ui.tabwidget.close_all()
+		self.ui.tabwidget.close_all(avoid_empty=False)
 		cfg.file_dialog_path = os.path.dirname(path)
 		try:
 			exp = experiment.experiment(self, u"Experiment", path,

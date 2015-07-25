@@ -53,7 +53,7 @@ class general_header_widget(header_widget):
 		"""
 
 		self.set_name(self.experiment.var.title)
-		self.set_desc(self.experiment.description)
+		self.set_desc(self.experiment.var.description)
 
 	def apply_name(self):
 

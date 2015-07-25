@@ -150,22 +150,40 @@ class tab_widget(base_subcomponent, QtGui.QTabWidget):
 		if index >= 0:
 			self.setTabIcon(index, self.theme.qicon(icon))
 
-	def close_all(self):
+	def close_all(self, dummy=None, avoid_empty=True):
 
-		"""Close all tabs"""
+		"""
+		desc:
+			Closes all tabs.
+
+		keywords:
+			avoid_empty:
+				desc:	Indicates whether the general tab should be
+						automatically opened if all tabs are closed.
+				type:	bool
+		"""
 
 		while self.count() > 0:
 			self.removeTab(0)
-		if self.count() == 0:
+		if avoid_empty and self.count() == 0:
 			self.open_general()
 
-	def close_current(self):
+	def close_current(self, dummy=None, avoid_empty=True):
 
-		"""Close the current tab"""
+		"""
+		desc:
+			Closes the current tab.
+
+		keywords:
+			avoid_empty:
+				desc:	Indicates whether the general tab should be
+						automatically opened if all tabs are closed.
+				type:	bool
+		"""
 
 		self.removeTab(self.currentIndex())
-		if self.count() == 0:
-			self.open_general()		
+		if avoid_empty and self.count() == 0:
+			self.open_general()
 
 	def close_other(self):
 
