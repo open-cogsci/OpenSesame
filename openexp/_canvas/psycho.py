@@ -150,7 +150,7 @@ class psycho(canvas.canvas, psycho_coordinates):
 	@configurable
 	def line(self, sx, sy, ex, ey):
 
-		self.shapestim( [[sx, sy], [ex, ey]])
+		self.shapestim( [(sx, sy), (ex, ey)])
 
 	@configurable
 	def rect(self, x, y, w, h):
@@ -318,19 +318,17 @@ class psycho(canvas.canvas, psycho_coordinates):
 		"""
 
 		if fix_coor:
-			_vertices = [self.to_xy(xy) for xy in vertices]
+			_vertices = [self.to_xy(tuple(xy)) for xy in vertices]
 		else:
 			_vertices = vertices
-		if fill:
-			fill = self.color.backend_color
+		if self.fill:
+			fill_color = self.backend_color
 		else:
-			fill = None
-		if penwidth is None:
-			penwidth = self.penwidth
+			fill_color = None
 		stim = visual.ShapeStim(self.experiment.window, units=u"pix",
 			lineWidth=self.penwidth, vertices=_vertices,
 			lineColor=self.color.backend_color, closeShape=close,
-			fillColor=fill, interpolate=False)
+			fillColor=fill_color, interpolate=False)
 		self.stim_list.append(stim)
 
 	@staticmethod

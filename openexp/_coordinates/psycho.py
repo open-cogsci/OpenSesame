@@ -43,7 +43,6 @@ class psycho(coordinates):
 
 		if y is None:
 			x, y = x
-		print('x, y = %d, %s' % (x, y))
 		if self.uniform_coordinates:
 			return x, -y
 		return x + self._xcenter, self._ycenter - y
