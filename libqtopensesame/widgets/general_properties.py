@@ -98,8 +98,8 @@ class general_properties(base_widget):
 		self.header_widget.label_name.setText(
 			u"<font size='5'><b>%s</b> - Experiment</font>&nbsp;&nbsp;&nbsp;<font color='gray'><i>Click to edit</i></font>" \
 			% self.experiment.var.title)
-		self.header_widget.edit_desc.setText(self.experiment.description)
-		self.header_widget.label_desc.setText(self.experiment.description)
+		self.header_widget.edit_desc.setText(self.experiment.var.description)
+		self.header_widget.label_desc.setText(self.experiment.var.description)
 
 	def apply_changes(self):
 
