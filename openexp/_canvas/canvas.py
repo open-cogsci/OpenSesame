@@ -461,9 +461,15 @@ class canvas(backend):
 		"""
 
 		if x is None:
-			x = 0
+			if self.uniform_coordinates:
+				x = 0
+			else:
+				x = self._width/2
 		if y is None:
-			y = 0
+			if self.uniform_coordinates:
+				y = 0
+			else:
+				y = self._height/2
 		h = 2
 		if u'large' in style:
 			s = 16
