@@ -156,12 +156,16 @@ class tab_widget(base_subcomponent, QtGui.QTabWidget):
 
 		while self.count() > 0:
 			self.removeTab(0)
+		if self.count() == 0:
+			self.open_general()
 
 	def close_current(self):
 
 		"""Close the current tab"""
 
 		self.removeTab(self.currentIndex())
+		if self.count() == 0:
+			self.open_general()		
 
 	def close_other(self):
 
