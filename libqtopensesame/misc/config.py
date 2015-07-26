@@ -43,6 +43,7 @@ from PyQt4 import QtCore
 import libopensesame.misc
 from libopensesame import debug
 import platform
+import sys
 
 class config(object):
 
@@ -60,7 +61,7 @@ class config(object):
 		u"file_pool_size_warning" : 104857600,
 		u"locale" : u"default",
 		u"loop_wizard" : [],
-		u"onetabmode" : True,
+		u"onetabmode" : False,
 		u"qProgEditCommentShortcut" : u'Ctrl+M',
 		u"qProgEditUncommentShortcut" : u'Ctrl+Shift+M',
 		u'qProgEditFontFamily' : u'Monospace',
@@ -77,7 +78,7 @@ class config(object):
 		u'qProgEditShowIndent' : False,
 		u'qProgEditShowFolding' : True,
 		u'qProgEditAutoComplete' : True,
-		u'qProgEditColorScheme' : u'SolarizedDark',
+		u'qProgEditColorScheme' : u'Monokai',
 		u'qProgEditValidate' : False,
 		u"quick_run_logfile": u"quickrun.csv",
 		u"recent_files" : u"",
@@ -235,7 +236,9 @@ class config(object):
 
 		qsettings = QtCore.QSettings(u"cogscinl", u"opensesame")
 		qsettings.beginGroup(u"MainWindow")
-		if setting not in self.config:
+		if '--start-clean' in sys.argv:
+			self.config[setting] = default
+		elif setting not in self.config:
 			value = qsettings.value(setting, default)
 			value = self.type_qvariant(value, default)
 			self.config[setting] = value
