@@ -1,0 +1,328 @@
+---
+API: 2
+Citation: 'Theeuwes, J. (1992). Perceptual selectivity for color and form. *Perception
+  & Psychophysics*, *51*(6), 599–606. <http://doi.org/10.3758/BF03211656>
+
+  '
+Description: An attentional capture experiment, loosely based on Theeuwes (1992)
+OpenSesame: 3.0.0~pre2
+Platform: posix
+Title: Attentional capture
+---
+set width 1024
+set uniform_coordinates "yes"
+set title "Attentional capture"
+set subject_parity "even"
+set subject_nr 0
+set start "experiment"
+set sampler_backend "legacy"
+set mouse_backend "legacy"
+set keyboard_backend "legacy"
+set height 768
+set foreground "white"
+set font_size 18
+set font_italic "no"
+set font_family "mono"
+set font_bold "no"
+set description "Loosely based on Theeuwes (1992)"
+set coordinates "relative"
+set compensation 0
+set color_backend "legacy"
+set clock_backend "legacy"
+set canvas_backend "legacy"
+set bidi "no"
+set background "black"
+
+define notepad about_this_example
+	__note__
+	This is an example of an attentional capture experiment. The task of the
+	participant is to report the orientation of a line segment in a unique shape
+	(a circle among diamonds or a diamond amongn squares). On some trials, a
+	distractor shape with a unique color is present; on other trials, no such
+	distractor is present. The typical finding is that the distractor captures
+	attention, which results in reduced performance (slower and less accurate) on
+	distractor-present trials, compared to distractor-absent trials.
+	
+	This example is based on, but not identical to, the experiments from:
+	
+	- Theeuwes, J. (1992). Perceptual selectivity for color and form. Perception &
+	  Psychophysics, 51(6), 599–606. http://doi.org/10.3758/BF03211656
+	__end__
+	set description "Some pointers to help you gest started!"
+
+define loop block_loop
+	set skip 0
+	set repeat 10
+	set order "random"
+	set offset "no"
+	set item "trial_sequence"
+	set description "A single block of trials"
+	set cycles 2
+	set column_order "distractor"
+	set break_if "never"
+	setcycle 0 distractor "present"
+	setcycle 1 distractor "absent"
+	run trial_sequence
+
+define sequence block_sequence
+	set flush_keyboard "yes"
+	set description "A sequence containing a single block of trials followed by feedback to the participant"
+	run reset_feedback "always"
+	run block_loop "always"
+	run feedback "always"
+
+define inline_script constants
+	___run__
+	# The distance of the stimuli from the center
+	eccentricity = 250
+	# The size of the shapes
+	stim_size = 100
+	# The length of the line segments in the shapes
+	line_size = 75
+	# The number of stimuli
+	set_size = 8
+	# The line thickness of the stimuli
+	penwidth = 4
+	# The possible colors, shapes, and orientations
+	colors = ['blue', 'yellow']
+	shapes = ['rect', 'circle']
+	all_orientations = 0, 30, 60, 90, 120, 150
+	nontarget_orientations = 30, 60, 120, 150
+	target_orientations = [ ('z', 0), ('/', 90) ]
+	__end__
+	set _prepare ""
+
+define sketchpad end_of_experiment
+	set start_response_interval "no"
+	set duration "keypress"
+	set description "A sketchpad notifying the participant that the experiment is finished"
+	draw textline 0 0 "The experiment is finished!<br /><br />Thank you for your participation<br /><br />Press any key to exit" center=1 color="white" font_family="sans" font_size=32 font_bold="no" font_italic="no" html="yes" z_index=0 show_if="always"
+
+define sketchpad end_of_practice
+	set start_response_interval "no"
+	set duration "keypress"
+	set description "A sketchpad notifying the participant that the practice phase is finished"
+	draw textline 0 0 "The practice phase is finished<br /><br />The real experiment starts now<br /><br />Press any key to continue" center=1 color="white" font_family="sans" font_size=32 font_bold="no" font_italic="no" html="yes" z_index=0 show_if="always"
+
+define sequence experiment
+	set flush_keyboard "yes"
+	set description "The main sequence of the experiment"
+	run about_this_example "always"
+	run instructions "always"
+	run constants "always"
+	run functions "always"
+	run practice_loop "always"
+	run end_of_practice "always"
+	run experimental_loop "always"
+	run end_of_experiment "always"
+
+define loop experimental_loop
+	set skip 0
+	set repeat 5
+	set order "random"
+	set offset "no"
+	set item "block_sequence"
+	set description "A loop containing one or more experimental blocks"
+	set cycles 1
+	set column_order "practice"
+	set break_if "never"
+	setcycle 0 practice "no"
+	run block_sequence
+
+define feedback feedback
+	set reset_variables "yes"
+	set duration "keypress"
+	set description "Provides feedback to the participant"
+	draw textline 0 0 "End of block [=var.count_block_loop+1]<br /><br />Your average response time was [avg_rt] ms<br />Your accuracy was [acc] %<br /><br />Press any key to continue" center=1 color="white" font_family="sans" font_size=32 font_bold="no" font_italic="no" html="yes" z_index=0 show_if="always"
+
+define sketchpad fixdot
+	set duration 495
+	draw fixdot 0 0 color="white" style="default" z_index=0 show_if="always"
+
+define inline_script functions
+	___run__
+	def draw_premask(cnvs, x, y):
+		
+		"""
+		Draws a premask, which has the target shape and color, and has all possible
+		line segments in it.
+		
+		arguments:
+			cnvs:	The canvas to draw on.
+			x:		The x coordinate.
+			y:		The y coordinate.
+		"""
+		
+		if var.target_shape == 'circle':
+			cnvs.circle(x, y, stim_size/2, color=var.target_color)
+		else:
+			cnvs.rect(x-stim_size/2, y-stim_size/2, stim_size, stim_size,
+				color=var.target_color)
+		for orientation in all_orientations:
+			dx, dy = xy_from_polar(line_size/2, orientation)
+			cnvs.line(x+dx, y+dy, x-dx, y-dy)
+			
+	def draw_target(cnvs, x, y):
+		
+		"""
+		Draws a target, which has the target shape and color, and has one line
+		segment with the target orientation in it.
+		
+		arguments:
+			cnvs:	The canvas to draw on.
+			x:		The x coordinate.
+			y:		The y coordinate.
+		"""
+		
+		if var.target_shape == 'circle':
+			cnvs.circle(x, y, stim_size/2, color=var.target_color)
+		else:
+			cnvs.rect(x-stim_size/2, y-stim_size/2, stim_size, stim_size,
+				color=var.target_color)
+		dx, dy = xy_from_polar(line_size/2, target_orientation)
+		cnvs.line(x+dx, y+dy, x-dx, y-dy)
+		
+	def draw_nontarget(cnvs, x, y, color):
+		
+		"""
+		Draws a non-target, which has the target shape, and a line segment with
+		a random orientation in it (not vertical or horizontal).
+		
+		arguments:
+			cnvs:	The canvas to draw on.
+			x:		The x coordinate.
+			y:		The y coordinate.
+			color:	The shape color.
+		"""	
+		
+		if var.nontarget_shape == 'circle':
+			cnvs.circle(x, y, stim_size/2, color=color)
+		else:
+			cnvs.rect(x-stim_size/2, y-stim_size/2, stim_size, stim_size,
+				color=color)
+		orientation = random.choice(nontarget_orientations)
+		dx, dy = xy_from_polar(line_size/2, orientation)
+		cnvs.line(x+dx, y+dy, x-dx, y-dy)
+	__end__
+	set _prepare ""
+
+define sketchpad green_fixdot
+	set duration 495
+	draw fixdot 0 0 color="green" style="default" z_index=0 show_if="always"
+
+define sketchpad instructions
+	set start_response_interval "no"
+	set duration "keypress"
+	set description "A sketchpad containing the instructions for the participant"
+	draw textline 0 -192 "<b>Instructions</b><br /><br />Indicate the orientation of the <br />line segment in the unique shape<br /><br />Be as fast and accurate as possible!" center=1 color="white" font_family="sans" font_size=32 font_bold="no" font_italic="no" html="yes" z_index=0 show_if="always"
+	draw circle -384 32 64 fill=0 color="blue" penwidth=4 z_index=0 show_if="always"
+	draw circle 384 32 64 fill=0 color="yellow" penwidth=4 z_index=0 show_if="always"
+	draw line -416 32 -352 32 color="white" penwidth=4 z_index=0 show_if="always"
+	draw line 384 0 384 64 color="white" penwidth=4 z_index=0 show_if="always"
+	draw textline -288 160 "If horizontal press<br /><b>Z</b>" center=1 color="white" font_family="sans" font_size=32 font_bold="no" font_italic="no" html="yes" z_index=0 show_if="always"
+	draw textline 288 160 "If vertical press<br /><b>/ (slash)</b>" center=1 color="white" font_family="sans" font_size=32 font_bold="no" font_italic="no" html="yes" z_index=0 show_if="always"
+	draw textline 0 320 "Press any key to continue" center=1 color="white" font_family="sans" font_size=32 font_bold="no" font_italic="no" html="yes" z_index=0 show_if="always"
+	draw rect -288 -32 128 128 fill=0 color="yellow" penwidth=4 z_index=0 show_if="always"
+	draw line -256 32 -192 32 color="white" penwidth=4 z_index=0 show_if="always"
+	draw rect 160 -32 128 128 fill=0 color="blue" penwidth=4 z_index=0 show_if="always"
+	draw line 224 0 224 64 color="white" penwidth=4 z_index=0 show_if="always"
+
+define keyboard_response keyboard_response
+	set timeout 3000
+	set flush "yes"
+	set duration "keypress"
+	set description "Collects keyboard responses"
+	set allowed_responses "z;/"
+
+define logger logger
+	set description "Logs experimental data"
+	set auto_log "yes"
+
+define loop practice_loop
+	set skip 0
+	set repeat 1
+	set order "random"
+	set offset "no"
+	set item "block_sequence"
+	set description "A loop containing one or more practice blocks"
+	set cycles 1
+	set column_order "practice"
+	set break_if "never"
+	setcycle 0 practice "yes"
+	run block_sequence
+
+define sketchpad red_fixdot
+	set duration 495
+	draw fixdot 0 0 color="red" style="default" z_index=0 show_if="always"
+
+define reset_feedback reset_feedback
+
+define inline_script trial_script
+	___run__
+	premask_canvas.show()
+	clock.sleep(495)
+	target_canvas.show()
+	__end__
+	___prepare__
+	import random
+	
+	# First determine the target and distractor positions. Positions are indices,
+	# i.e. values between 0 and the number of items.
+	positions = range(set_size)
+	random.shuffle(positions)
+	var.target_pos = positions[0]
+	if var.distractor == 'present':
+		var.distractor_pos = positions[1]
+	else:
+		var.distractor_pos = None
+	
+	# Get a random target orientation, and the associated correct response
+	var.correct_response, target_orientation = random.choice(target_orientations)
+	
+	# Determine the target color and shape
+	random.shuffle(colors)
+	var.target_color = colors[0]
+	var.distractor_color = colors[1]
+	random.shuffle(shapes)
+	var.target_shape = shapes[0]
+	var.nontarget_shape = shapes[1]
+	
+	# Draw the premask canvas. Premasks have the target shape and color, and have
+	# all possible line segments in it.
+	premask_canvas = canvas()
+	premask_canvas.penwidth = penwidth
+	premask_canvas.fixdot()
+	for x, y in xy_circle(set_size, eccentricity):
+		 # defined in the `functions` item
+		draw_premask(premask_canvas, x, y)
+	
+	# Draw the target canvas. The target canvas has three types of stimuli on it.
+	# - nontargets, which have the target color and nontarget shape
+	# - a distractor (on 50% of trials), which has the distractor color and
+	#   nontarget shape
+	# - a target, which has the target color and shape
+	target_canvas = canvas()
+	target_canvas.penwidth = penwidth
+	target_canvas.fixdot()
+	for pos, (x, y) in enumerate(xy_circle(set_size, eccentricity)):
+		if pos == var.target_pos:
+			# defined in the `functions` item
+			draw_target(target_canvas, x, y)
+		elif pos == var.distractor_pos:
+			# defined in the `functions` item
+			draw_nontarget(target_canvas, x, y, color=var.distractor_color)
+		else:
+			# defined in the `functions` item:
+			draw_nontarget(target_canvas, x, y, color=var.target_color)
+	__end__
+
+define sequence trial_sequence
+	set flush_keyboard "yes"
+	set description "Runs a number of items in sequence"
+	run fixdot "always"
+	run trial_script "always"
+	run keyboard_response "always"
+	run green_fixdot "[correct] = 1"
+	run red_fixdot "[correct] = 0"
+	run logger "always"
+
