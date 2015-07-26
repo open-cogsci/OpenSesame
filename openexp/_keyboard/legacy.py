@@ -121,7 +121,7 @@ class legacy(keyboard.keyboard):
 			if event.type == KEYDOWN:
 				keypressed = True
 				if event.key == pygame.K_ESCAPE:
-					self.experiment.paused()
+					self.experiment.pause()
 		return keypressed
 
 	def key_name(self, key):
