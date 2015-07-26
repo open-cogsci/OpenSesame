@@ -95,6 +95,7 @@ class qtopensesame(QtGui.QMainWindow, base_component):
 
 		# Restore the configuration
 		self.restore_config()
+		self.set_style()
 		self.set_warnings()
 
 		# Setup the UI
@@ -344,7 +345,6 @@ class qtopensesame(QtGui.QMainWindow, base_component):
 		else:
 			self.ui.toolbar_main.setToolButtonStyle( \
 				QtCore.Qt.ToolButtonIconOnly)
-		self.set_style()
 		self.theme.set_toolbar_size(cfg.toolbar_size)
 
 	def restore_window_state(self):
