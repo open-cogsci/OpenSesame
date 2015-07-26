@@ -74,7 +74,7 @@ class header_widget(base_widget):
 		"""
 
 		self.set_name(self.item.name)
-		self.set_desc(self.item.description)
+		self.set_desc(self.item.var.description)
 
 	def set_name(self, name):
 

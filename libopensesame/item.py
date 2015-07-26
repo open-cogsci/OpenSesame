@@ -62,7 +62,9 @@ class item(object):
 		if self.item_type.startswith(prefix):
 			self.item_type = self.item_type[len(prefix):]
 		if not hasattr(self, u'description'):
-			self.description = u'Default description'
+			self.var.description = u'Default description'
+		else:
+			self.var.description = self.description
 		if not hasattr(self, u'round_decimals'):
 			self.round_decimals = 2
 		self.from_string(string)

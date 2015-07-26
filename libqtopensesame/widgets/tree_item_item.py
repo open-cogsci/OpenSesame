@@ -51,7 +51,7 @@ class tree_item_item(tree_base_item):
 		self.setup(item.main_window)
 		self.item = item
 		tooltip = _(u"Type: %s\nDescription: %s") % (item.item_type,
-			item.description)
+			item.var.description)
 		self.setText(0, item.name)
 		if extra_info is not None:
 			self.setText(1, extra_info)
@@ -74,7 +74,7 @@ class tree_item_item(tree_base_item):
 	def has_append_menu(self):
 
 		return self.item.item_type == u'sequence'
-	
+
 	def ancestry(self):
 
 		"""
