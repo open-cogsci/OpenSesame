@@ -447,6 +447,15 @@ class sketchpad_widget(base_widget):
 		self.sketchpad.user_hint_widget.refresh()
 		self.sketchpad.apply_edit_changes()
 
+	def center(self):
+
+		"""
+		desc:
+			Centers the canvas view.
+		"""
+
+		self.ui.graphics_view.centerOn(0,0)
+
 	def set_cursor_pos(self, xy):
 
 		"""

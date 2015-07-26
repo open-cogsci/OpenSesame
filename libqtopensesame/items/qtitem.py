@@ -182,7 +182,7 @@ class qtitem(base_qtobject):
 		self.header_item_icon = self.experiment.label_image(self.item_icon())
 		self.header_hbox.addWidget(self.header_item_icon)
 		self.header_hbox.addWidget(self.header)
-		self.header_hbox.setContentsMargins(0, 5, 0, 10)
+		self.header_hbox.setContentsMargins(0, 0, 0, 0)
 
 		# Maximize button
 		self.button_toggle_maximize = QtGui.QPushButton(
@@ -210,14 +210,14 @@ class qtitem(base_qtobject):
 		self.edit_grid = QtGui.QGridLayout()
 		self.edit_grid.setColumnStretch(2, 2)
 		self.edit_grid_widget = QtGui.QWidget()
-		# self.edit_grid.setMargin(0)
 		self.edit_grid_widget.setLayout(self.edit_grid)
 
 		# The edit_vbox contains the edit_grid and the header widget
 		self.edit_vbox = QtGui.QVBoxLayout()
-		# self.edit_vbox.setMargin(5)
 		self.edit_vbox.addWidget(self.user_hint_widget)
 		self.edit_vbox.addWidget(self.edit_grid_widget)
+		self.edit_vbox.setContentsMargins(0, 0, 0, 0)
+		self.edit_vbox.setSpacing(0)
 		if stretch:
 			self.edit_vbox.addStretch()
 		self._edit_widget = QtGui.QWidget()
@@ -247,6 +247,7 @@ class qtitem(base_qtobject):
 			self.set_view_controls()
 		self.splitter.splitterMoved.connect(self.splitter_moved)
 		self.container_vbox = QtGui.QVBoxLayout()
+		self.container_vbox.setContentsMargins(4, 0, 4, 4)
 		self.container_vbox.addWidget(self.header_widget)
 		self.container_vbox.addWidget(self.splitter)
 		self.container_widget = QtGui.QWidget()

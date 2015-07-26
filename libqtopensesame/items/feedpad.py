@@ -43,6 +43,7 @@ class feedpad(object):
 		self.add_widget(self.sketchpad_widget)
 		self.auto_add_widget(self.sketchpad_widget.ui.edit_duration,
 			u'duration')
+		self.first_refresh = True
 
 	def element_module(self):
 
@@ -73,6 +74,9 @@ class feedpad(object):
 		qtplugin.edit_widget(self)
 		self.sketchpad_widget.initialize()
 		self.sketchpad_widget.draw()
+		if self.first_refresh:
+			self.sketchpad_widget.center()
+			self.first_refresh = False
 
 	def add_element(self, element):
 
