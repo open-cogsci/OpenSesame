@@ -271,7 +271,7 @@ def sometimes(p=.5):
 
 	if (not isinstance(p, float) and not isinstance(p, int)) or p < 0 or p > 1:
 		raise osexception(
-			_(u'p should be a numeric value between 0 and 1, not "%s"' % p))
+			u'p should be a numeric value between 0 and 1, not "%s"' % p)
 	return random.random() < p
 
 def pause():
@@ -283,7 +283,7 @@ def pause():
 
 	experiment.pause()
 
-def polar_to_xy(rho, phi, pole=(0,0), units=u'degrees'):
+def xy_from_polar(rho, phi, pole=(0,0)):
 
 	"""
 	desc:
@@ -296,17 +296,14 @@ def polar_to_xy(rho, phi, pole=(0,0), units=u'degrees'):
 			type:	float
 		phi:
 			desc:	The angular coordinate. This reflects a counterclockwise
-					rotation, where 0 is straight right. The units can be
-					degrees or radians, depending on the `units` keyword.
+					rotation in degrees (i.e. not radians), where 0 is straight
+					right.
 			type:	float
 
 	keywords:
 		pole:
 			desc:	The refence point.
 			type:	tuple
-		units:
-			desc:	The units for phi. This can be 'degrees' or 'radians'.
-			type:	str
 
 	returns:
 		desc:	An (x, y) coordinate tuple.
@@ -314,8 +311,8 @@ def polar_to_xy(rho, phi, pole=(0,0), units=u'degrees'):
 
 	example: |
 		# Draw a cross
-		x1, y1 = polar_to_xy(100, 45)
-		x2, y2 = polar_to_xy(100, -45)
+		x1, y1 = xy_from_polar(100, 45)
+		x2, y2 = xy_from_polar(100, -45)
 		c = canvas()
 		c.line(x1, y1, -x1, -y1)
 		c.line(x2, y2, -x2, -y2)
@@ -325,18 +322,18 @@ def polar_to_xy(rho, phi, pole=(0,0), units=u'degrees'):
 	try:
 		rho = float(rho)
 	except:
-		raise osexception(_(u'rho should be numeric in polar_to_xy()'))
+		raise osexception(u'rho should be numeric in xy_from_polar()')
 	try:
 		phi = float(phi)
 	except:
-		raise osexception(_(u'phi should be numeric in polar_to_xy()'))
-	phi = parse_phi(phi, units)
+		raise osexception(u'phi should be numeric in xy_from_polar()')
+	phi = math.radians(phi)
 	ox, oy = parse_pole(pole)
 	x = rho * math.cos(phi) + ox
 	y = rho * math.sin(phi) + oy
 	return x, y
 
-def xy_to_polar(x, y, pole=(0,0), units=u'degrees'):
+def xy_to_polar(x, y, pole=(0,0)):
 
 	"""
 	desc:
@@ -355,16 +352,12 @@ def xy_to_polar(x, y, pole=(0,0), units=u'degrees'):
 		pole:
 			desc:	The refence point.
 			type:	tuple
-		units:
-			desc:	The units for phi. This can be 'degrees' or 'radians'.
-			type:	str
 
 	returns:
 		desc:	An (rho, phi) coordinate tuple. Here, `rho` is the radial
 				coordinate, also distance or eccentricity. `phi` is the angular
-				coordinate, in degrees or radians, depending on the `units`
-				keyword. `phi` reflects a counterclockwise rotation, where 0 is
-				straight right.
+				coordinate in degrees (i.e. not radians), and reflects a
+				counterclockwise rotation, where 0 is straight right.
 		type:	tuple
 
 	example: |
@@ -374,19 +367,53 @@ def xy_to_polar(x, y, pole=(0,0), units=u'degrees'):
 	try:
 		x = float(x)
 	except:
-		raise osexception(_(u'x should be numeric in xy_to_polar()'))
+		raise osexception(u'x should be numeric in xy_to_polar()')
 	try:
 		y = float(y)
 	except:
-		raise osexception(_(u'y should be numeric in xy_to_polar()'))
+		raise osexception(u'y should be numeric in xy_to_polar()')
 	ox, oy = parse_pole(pole)
 	dx = x-ox
 	dy = y-oy
 	rho = math.sqrt(dx**2 + dy**2)
-	phi = parse_phi(math.atan2(dy, dx), units)
+	phi = math.degrees(math.atan2(dy, dx))
 	return rho, phi
 
-def xy_circle(n, rho, phi0=0, pole=(0,0), units=u'degrees'):
+def xy_distance(x1, y1, x2, y2):
+
+	"""
+	desc:
+		Gives the distance between two points.
+
+	arguments:
+		x1:
+			desc:	The x coordinate of the first point.
+			type:	float
+		y1:
+			desc:	The y coordinate of the first point.
+			type:	float
+		x2:
+			desc:	The x coordinate of the second point.
+			type:	float
+		y2:
+			desc:	The y coordinate of the second point.
+			type:	float
+
+	returns:
+		desc:	The distance between the two points.
+		type:	float
+	"""
+
+	try:
+		x1 = float(x1)
+		y1 = float(y1)
+		x2 = float(x2)
+		y2 = float(y2)
+	except:
+		raise osexception(u'Coordinates should be numeric in xy_distance()')
+	return math.sqrt((x1-x2)**2+(y1-y2)**2)
+
+def xy_circle(n, rho, phi0=0, pole=(0,0)):
 
 	"""
 	desc:
@@ -404,14 +431,13 @@ def xy_circle(n, rho, phi0=0, pole=(0,0), units=u'degrees'):
 
 	keywords:
 		phi0:
-			desc:	The angular coordinate for the first coordinate.
+			desc:	The angular coordinate for the first coordinate. This is a
+					counterclockwise rotation in degrees (i.e. not radians),
+					where 0 is straight right.
 			type:	float
 		pole:
 			desc:	The refence point.
 			type:	tuple
-		units:
-			desc:	The units for phi. This can be 'degrees' or 'radians'.
-			type:	str
 
 	returns:
 		desc:	A list of (x,y) coordinate tuples.
@@ -426,27 +452,170 @@ def xy_circle(n, rho, phi0=0, pole=(0,0), units=u'degrees'):
 		c.show()
 	"""
 
-	if not isinstance(n, int):
-		raise osexception(_(u'N should be integer in xy_circle()'))
+	if not isinstance(n, int) or n < 0:
+		raise osexception(u'n should be a non-negative integer in xy_circle()')
+	try:
+		phi0 = float(phi0)
+	except:
+		raise osexception(u'phi0 should be numeric in xy_circle()')
 	l = []
-	phi0 = parse_phi(phi0, units)
 	for i in range(n):
-		l.append(polar_to_xy(rho, phi0, pole=pole, units=u'radians'))
-		phi0 += 2*math.pi/n
+		l.append(xy_from_polar(rho, phi0, pole=pole))
+		phi0 += 360./n
 	return l
 
-def parse_phi(phi, units):
+def xy_grid(n, spacing, pole=(0,0)):
 
 	"""
-	visible: False
+	desc:
+		Generates a list of points (x,y coordinates) in a grid. This can be
+		used to draw stimuli in a grid arrangement.
+
+	arguments:
+		n:
+			desc:	An `int` that indicates the number of columns and rows, so
+					that `n=2` indicates a 2x2 grid, or a (n_col, n_row)
+					`tuple`, so that `n=(2,3)` indicates a 2x3 grid.
+			type:	[int, tuple]
+		spacing:
+			desc:	A numeric value that indicates the spacing between cells, or
+					a (col_spacing, row_spacing) tuple.
+			type:	float
+
+	keywords:
+		pole:
+			desc:	The refence point.
+			type:	tuple
+
+	returns:
+		desc:	A list of (x,y) coordinate tuples.
+		type:	list
+
+	example: |
+		# Draw a 4x4 grid of rectangles
+		c = canvas()
+		c.fixdot()
+		for x, y in xy_grid(4, 100):
+			c.rect(x-10, y-10, 20, 20)
+		c.show()
 	"""
 
-	if units == u'degrees':
-		phi = math.radians(phi)
-	elif units != u'radians':
-		raise osexception(
-			_(u'units should be "degrees" or "radians"'))
-	return phi
+	try:
+		n_col, n_row = n
+	except:
+		n_col = n_row = n
+	try:
+		n_col = int(n_col)
+		n_row = int(n_row)
+		assert(n_col >= 0)
+		assert(n_row >= 0)
+	except:
+		raise osexception(u'n should be a non-negative integer or a tuple of '
+				u'two non-negative integers in xy_grid()')
+	try:
+		s_col, s_row = spacing
+	except:
+		s_col = s_row = spacing
+	try:
+		s_col = float(s_col)
+		s_row = float(s_row)
+		assert(s_col >= 0)
+		assert(s_row >= 0)
+	except:
+		raise osexception(u'spacing should be a non-negative numeric or a '
+			u'tuple of two non-negative numerics in xy_grid()')
+	pole = parse_pole(pole)
+	l = []
+	for row in range(n_row):
+		y = (row - (n_row-1) / 2.) * s_row + pole[1]
+		for col in range(n_col):
+			x = (col - (n_col-1) / 2.) * s_col + pole[0]
+			l.append((x, y))
+	return l
+
+def xy_random(n, width, height, min_dist=0, pole=(0,0)):
+
+	"""
+	desc:
+		Generates a list of random points (x,y coordinates) with a minimum
+		spacing between each pair of points. This function will raise an
+		`osexception` when the coordinate list cannot be generated, typically
+		because there are too many points, the min_dist is set too high, or the
+		width or height are set too low.
+
+	arguments:
+		n:
+			desc:	The number of points to generate.
+			type:	int
+		width:
+			desc:	The width of the field with random points.
+			type:	float
+		height:
+			desc:	The height of the field with random points.
+			type:	float
+
+	keywords:
+		min_dist:
+			desc:	The minimum distance between each point.
+			type:	float
+		pole:
+			desc:	The refence point.
+			type:	tuple
+
+	returns:
+		desc:	A list of (x,y) coordinate tuples.
+		type:	list
+
+	example: |
+		# Draw a 50 rectangles in a random grid
+		c = canvas()
+		c.fixdot()
+		for x, y in xy_random(50, 500, 500, min_dist=40):
+			c.rect(x-10, y-10, 20, 20)
+		c.show()
+	"""
+
+	if not isinstance(n, int) or n < 0:
+		raise osexception(u'n should be a non-negative integer in xy_random()')
+	try:
+		width = float(width)
+	except:
+		raise osexception(u'width should be numeric in xy_random()')
+	try:
+		height = float(height)
+	except:
+		raise osexception(u'height should be numeric in xy_random()')
+	try:
+		min_dist = float(min_dist)
+	except:
+		raise osexception(u'min_dist should be numeric in xy_random()')
+	pole = parse_pole(pole)
+	max_try = 1000
+	for t1 in range(max_try):
+		l = []
+		for i in range(n):
+			for t2 in range(max_try):
+				x1 = (random.random()-.5)*width + pole[0]
+				y1 = (random.random()-.5)*height + pole[1]
+				for x2, y2 in l:
+					if xy_distance(x1, y1, x2, y2) < min_dist:
+						break
+				else:
+					# Point does not collide, so add to the list
+					l.append( (x1, y1) )
+					break
+			else:
+				# All level-2 tries have failed, so break to start a new level-1
+				# try.
+				break
+		else:
+			# All points have been successfully added, so return the list
+			return l
+	# All level-1 tries have failed
+	raise osexception(
+		u'Failed to generate random coordinates in xy_random()')
+
+# Helper functions that are not part of the public API
 
 def parse_pole(pole):
 
@@ -459,6 +628,6 @@ def parse_pole(pole):
 		oy = float(pole[1])
 		assert(len(pole) == 2)
 	except:
-		raise osexception(_(u'pole should be a tuple (or similar) of length '
-			u'with two numeric values'))
+		raise osexception(u'pole should be a tuple (or similar) of length '
+			u'with two numeric values')
 	return ox, oy
