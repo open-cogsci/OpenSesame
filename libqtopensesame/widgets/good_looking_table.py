@@ -202,6 +202,8 @@ class good_looking_table(QtGui.QTableWidget):
 		contents	--	a list.
 		"""
 
+		if contents is None:
+			return
 		column = 0
 		row = 0
 		for i in contents:

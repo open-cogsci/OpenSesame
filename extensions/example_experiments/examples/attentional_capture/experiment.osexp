@@ -5,7 +5,7 @@ Citation: 'Theeuwes, J. (1992). Perceptual selectivity for color and form. *Perc
 
   '
 Description: An attentional capture experiment, loosely based on Theeuwes (1992)
-OpenSesame: 3.0.0~pre2
+OpenSesame: 3.0.0~pre3
 Platform: posix
 Title: Attentional capture
 ---
@@ -72,6 +72,7 @@ define sequence block_sequence
 	run feedback "always"
 
 define inline_script constants
+	set description "Executes Python code"
 	___run__
 	# The distance of the stimuli from the center
 	eccentricity = 250
@@ -137,9 +138,11 @@ define feedback feedback
 
 define sketchpad fixdot
 	set duration 495
+	set description "Displays stimuli"
 	draw fixdot 0 0 color="white" style="default" z_index=0 show_if="always"
 
 define inline_script functions
+	set description "Executes Python code"
 	___run__
 	def draw_premask(cnvs, x, y):
 		
@@ -208,6 +211,7 @@ define inline_script functions
 
 define sketchpad green_fixdot
 	set duration 495
+	set description "Displays stimuli"
 	draw fixdot 0 0 color="green" style="default" z_index=0 show_if="always"
 
 define sketchpad instructions
@@ -253,11 +257,14 @@ define loop practice_loop
 
 define sketchpad red_fixdot
 	set duration 495
+	set description "Displays stimuli"
 	draw fixdot 0 0 color="red" style="default" z_index=0 show_if="always"
 
 define reset_feedback reset_feedback
+	set description "Resets the feedback variables, such as 'avg_rt' and 'acc'"
 
 define inline_script trial_script
+	set description "Executes Python code"
 	___run__
 	premask_canvas.show()
 	clock.sleep(495)
@@ -268,7 +275,7 @@ define inline_script trial_script
 	
 	# First determine the target and distractor positions. Positions are indices,
 	# i.e. values between 0 and the number of items.
-	positions = range(set_size)
+	positions = list(range(set_size))
 	random.shuffle(positions)
 	var.target_pos = positions[0]
 	if var.distractor == 'present':

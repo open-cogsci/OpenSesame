@@ -65,8 +65,6 @@ class item(object):
 			self.var.description = u'Default description'
 		else:
 			self.var.description = self.description
-		if not hasattr(self, u'round_decimals'):
-			self.round_decimals = 2
 		self.from_string(string)
 
 	@property

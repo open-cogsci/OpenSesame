@@ -462,8 +462,7 @@ class experiment(item.item):
 
 		"""
 		desc:
-			Saves the experiment to file. If no extension is provided,
-			.opensesame.tar.gz is chosen by default.
+			Saves the experiment to file.
 
 		arguments:
 			path:
@@ -492,7 +491,7 @@ class experiment(item.item):
 		if self.pool.count_included() == 0:
 			debug.msg(u'saving as plain text (without file pool)')
 			with open(path, u'w') as fd:
-				fd.write(safe_encode(self.to_string()))
+				fd.write(safe_str(self.to_string()))
 			self.experiment_path = os.path.dirname(path)
 			return path
 		debug.msg(u'saving as .tar.gz archive (with file pool)')
@@ -500,7 +499,7 @@ class experiment(item.item):
 		script = self.to_string()
 		script_path = os.path.join(self.pool.folder(), u'script.opensesame')
 		with open(script_path, u'w') as fd:
-			fd.write(safe_encode(script))
+			fd.write(safe_str(script))
 		# Create the archive in a a temporary folder and move it afterwards.
 		# This hack is needed, because tarfile fails on a Unicode path.
 		tmp_path = tempfile.mktemp(suffix=u'.osexp')
