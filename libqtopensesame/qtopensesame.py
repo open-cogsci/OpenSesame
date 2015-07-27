@@ -200,7 +200,7 @@ class qtopensesame(QtGui.QMainWindow, base_component):
 
 		# Create the initial experiment, which is the default template.
 		with open(misc.resource(os.path.join(u"templates",
-			u"default.opensesame")), u"r") as fd:
+			u"default.osexp")), u"r") as fd:
 			self.experiment = experiment.experiment(self, u"New experiment",
 				fd.read())
 		self.experiment.build_item_tree()

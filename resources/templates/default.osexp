@@ -1,0 +1,57 @@
+---
+API: 2
+---
+set foreground "white"
+set subject_parity "even"
+set description "Default description"
+set title "New experiment"
+set sampler_backend "legacy"
+set coordinates "relative"
+set height "768"
+set mouse_backend "legacy"
+set width "1024"
+set compensation "0"
+set keyboard_backend "legacy"
+set background "black"
+set subject_nr "0"
+set canvas_backend "legacy"
+set start "experiment"
+set synth_backend "legacy"
+set uniform_coordinates "yes"
+
+define sequence experiment
+	run getting_started "always"
+	run welcome "always"
+
+define notepad getting_started
+	__note__
+	Hi,
+
+	Welcome to OpenSesame 3.0.0 "Interactive Ising"!
+
+	If you are new to OpenSesame, you may wish to follow one of the tutorials,
+	which can be found online. There are also many example experiments, which will
+	help you to get started with creating your own. These can be found in the
+	"examples" folder provided with OpenSesame or, again, online.
+
+	For more information, please refer to OpenSesame documentation area:
+
+	- <http://osdoc.cogsci.nl/>
+
+	And feel free to ask for help on the forum:
+
+	- <http://forum.cogsci.nl/>
+
+	Have fun with OpenSesame!
+
+	--
+	Sebastiaan
+	__end__
+	set description "Some pointers to help you get started!"
+
+define sketchpad welcome
+	set duration "keypress"
+	set reset_variables "no"
+	set start_response_interval "no"
+	set description "Displays stimuli"
+	draw textline 0 0 "OpenSesame 3.0.0 <i>Interactive Ising</i>" center=1 color="white" font_family="serif" font_size=32 font_bold="no" font_italic="no" html="yes" z_index=0 show_if="always"
