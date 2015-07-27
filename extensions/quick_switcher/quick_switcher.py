@@ -29,7 +29,7 @@ class quick_switcher(base_extension):
 		The quick-switcher allows you to quickly navigate to items and
 		functions, and to quickly activate menu actions.
 	"""
-	
+
 	# We need to (re)initialize the dialog on startup and after structural
 	# changes.
 
@@ -38,13 +38,13 @@ class quick_switcher(base_extension):
 
 	def event_open_experiment(self, path):
 		self.d = None
-		
+
 	def event_rename_item(self, from_name, to_name):
 		self.d = None
-		
+
 	def event_new_item(self, name, _type):
 		self.d = None
-		
+
 	def event_purge_unused_items(self):
 		self.d = None
 
@@ -58,8 +58,10 @@ class quick_switcher(base_extension):
 			Re-init the dialog.
 		"""
 
+		self.set_busy()
 		from quick_switcher_dialog.dialog import quick_switcher
 		self.d = quick_switcher(self.main_window)
+		self.set_busy(False)
 
 	def activate(self):
 

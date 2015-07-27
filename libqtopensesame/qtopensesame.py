@@ -384,9 +384,10 @@ class qtopensesame(QtGui.QMainWindow, base_component):
 		"""
 
 		if state:
-			self.set_status(_(u"Busy ..."), status=u"busy")
+			QtGui.QApplication.setOverrideCursor(QtGui.QCursor(
+				QtCore.Qt.WaitCursor))
 		else:
-			self.set_status(_(u"Done!"))
+			QtGui.QApplication.restoreOverrideCursor()
 		QtGui.QApplication.processEvents()
 
 	def set_style(self):
@@ -442,22 +443,6 @@ class qtopensesame(QtGui.QMainWindow, base_component):
 		self.window_message()
 		debug.msg(u"unsaved = %s" % unsaved_changes)
 
-	def set_status(self, msg, timeout=5000, status=u'ready'):
-
-		"""
-		Prints a text message to the statusbar.
-
-		Arguments:
-		msg			--	The message.
-
-		Keyword arguments:
-		timeout		--	A value in milliseconds after which the message is
-						removed. (default=5000)
-		status		--	The status. (default=u'ready')
-		"""
-
-		self.ui.statusbar.set_status(msg, timeout=timeout, status=status)
-
 	def window_message(self, msg=None):
 
 		"""
@@ -494,7 +479,7 @@ class qtopensesame(QtGui.QMainWindow, base_component):
 
 		self.experiment.build_item_tree()
 		item = self.tabwidget.current_item()
-		if item is not None:			
+		if item is not None:
 			self.experiment.items[item].update()
 
 	def update_preferences_tab(self):
@@ -680,7 +665,7 @@ class qtopensesame(QtGui.QMainWindow, base_component):
 			not  path.lower().endswith(u'.opensesame.tar.gz') and \
 			not path.lower().endswith(u'.osexp')):
 			return
-		self.set_status(u"Opening ...", status=u'busy')
+		self.set_busy()
 		self.ui.tabwidget.close_all(avoid_empty=False)
 		cfg.file_dialog_path = os.path.dirname(path)
 		try:
@@ -709,7 +694,7 @@ class qtopensesame(QtGui.QMainWindow, base_component):
 		self.ui.pool_widget.refresh()
 		self.ui.variable_inspector.refresh()
 		self.extension_manager.fire(u'open_experiment', path=path)
-		self.set_status(u"Opened %s" % path)
+		self.set_busy(False)
 
 	def save_file(self):
 
@@ -749,7 +734,7 @@ class qtopensesame(QtGui.QMainWindow, base_component):
 		# Try to save the experiment if it doesn't exist already
 		try:
 			self.experiment.save(self.current_path, overwrite=True)
-			self.set_status(_(u"Saved as %s") % self.current_path)
+			self.set_busy(False)
 		except Exception as e:
 			self.ui.console.write(e)
 			self.experiment.notify(_(u"Failed to save file. Error: %s") % e)

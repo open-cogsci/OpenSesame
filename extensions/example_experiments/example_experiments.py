@@ -72,11 +72,13 @@ class example_experiments(base_extension):
 			Initializes the plug-in by building a Markdown page with examples.
 		"""
 
+		self.set_busy()
 		self.example_folder = os.path.join(self.folder(), 'examples')
 		self.experiments = []
 		for path in sorted(os.listdir(self.example_folder)):
 			self.add_experiment(path)
 		self.generate_markdown()
+		self.set_busy(False)
 
 	def generate_markdown(self):
 

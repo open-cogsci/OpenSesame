@@ -33,7 +33,7 @@ class automatic_backup(base_extension):
 	desc:
 		An extension that periodically saves the experiment.
 	"""
-	
+
 	def activate(self):
 
 		"""
@@ -122,17 +122,14 @@ class automatic_backup(base_extension):
 			Autosave the experiment if there are unsaved changes.
 		"""
 
-		if not self.main_window.unsaved_changes:
-			self.set_status(u'No unsaved changes, skipping backup')
-			autosave_path = u''
-		else:
+		if self.main_window.unsaved_changes:
 			path = os.path.join(self.autosave_folder,
-				u'%s.opensesame.tar.gz'% str(time.ctime()).replace(u':',
+				u'%s.osexp' % str(time.ctime()).replace(u':',
 				u'_'))
 			try:
 				self.main_window.get_ready()
 				self.experiment.save(path, overwrite=True, update_path=False)
 				debug.msg(u"saving backup as %s" % path)
 			except:
-				self.set_status(_(u'Failed to save backup ...'))
+				pass
 		self.start_autosave_timer()

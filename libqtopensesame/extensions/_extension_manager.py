@@ -45,8 +45,7 @@ class extension_manager(base_subcomponent):
 		"""
 
 		self.setup(main_window)
-		self.main_window.set_status(_(u'Loading extensions'), timeout=None,
-			status=u'busy')
+		self.main_window.set_busy()
 		QtGui.QApplication.processEvents()
 		self._extensions = []
 		self.events = {}
@@ -65,7 +64,7 @@ class extension_manager(base_subcomponent):
 				if event not in self.events:
 					self.events[event] = []
 				self.events[event].append(ext)
-		self.main_window.set_status(_(u'Done'), status=u'ready')
+		self.main_window.set_busy(False)
 
 	def fire(self, event, **kwdict):
 

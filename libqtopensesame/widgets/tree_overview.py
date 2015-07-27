@@ -421,8 +421,6 @@ class tree_overview(base_subcomponent, QtGui.QTreeWidget):
 		target_treeitem = self.itemAt(e.pos())
 		if not self.droppable(target_treeitem, data):
 			debug.msg(u'Drop ignored: target not droppable')
-			self.main_window.set_status(
-				_(u'Drop cancelled: Target not droppable'))
 			e.ignore()
 			return
 		# If the drop comes from this application, check for recursion etc.
@@ -432,8 +430,6 @@ class tree_overview(base_subcomponent, QtGui.QTreeWidget):
 			if target_item_ancestry.startswith(u'%s:' % item_name) or \
 				u'.%s:' % item_name  in target_item_ancestry:
 				debug.msg(u'Drop ignored: recursion prevented')
-				self.main_window.set_status(
-					_(u'Drop cancelled: Recursion prevented'))
 				e.ignore()
 				return
 			parent_item_name, index = self.parent_from_ancestry(data[u'ancestry'])
@@ -508,7 +504,7 @@ class tree_overview(base_subcomponent, QtGui.QTreeWidget):
 		# in the bin)
 		if target_treeitem.name == u'__unused__' or \
 			(target_treeitem.parent() is not None and \
-			target_treeitem.parent().name == u'__unused__'):			
+			target_treeitem.parent().name == u'__unused__'):
 			e.accept()
 			self.structure_change.emit()
 			self.main_window.set_busy(False)

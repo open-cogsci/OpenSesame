@@ -99,14 +99,14 @@ class base_extension(base_subcomponent):
 		return self.main_window.statusBar()
 
 	@property
-	def set_status(self):
+	def set_busy(self):
 
 		"""
 		returns:
-			desc:	A shortcut to `qtopensesame.set_status`.
+			desc:	A shortcut to `qtopensesame.set_busy`.
 		"""
 
-		return self.main_window.set_status
+		return self.main_window.set_busy
 
 	def label(self):
 
@@ -579,5 +579,5 @@ class base_extension(base_subcomponent):
 			src = self.ext_resource(src)
 			wb.load(src)
 		except:
-			wb.load_markdown(src)		
+			wb.load_markdown(src)
 		self.main_window.tabwidget.add(wb, icon, _(title))

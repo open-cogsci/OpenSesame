@@ -31,7 +31,7 @@ class plugin_manager(base_extension):
 	def event_startup(self):
 
 		self._widget = None
-	
+
 	def activate(self):
 
 		"""
@@ -50,8 +50,8 @@ class plugin_manager(base_extension):
 		"""
 
 		if self._widget is None:
-			self.set_status(u'Loading ...', timeout=None, status=u'busy')
+			self.set_busy()
 			from plugin_manager_widget import plugin_manager_widget
 			self._widget = plugin_manager_widget(self.main_window)
-			self.set_status(u'Done!', timeout=None, status=u'ready')
+			self.set_busy(False)
 		return self._widget

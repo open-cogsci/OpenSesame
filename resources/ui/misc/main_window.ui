@@ -52,7 +52,7 @@
      <x>0</x>
      <y>0</y>
      <width>920</width>
-     <height>24</height>
+     <height>31</height>
     </rect>
    </property>
    <widget class="QMenu" name="menu_file">
@@ -113,12 +113,11 @@
    <addaction name="menu_view"/>
    <addaction name="menu_tools"/>
   </widget>
-  <widget class="statusbar" name="statusbar"/>
   <widget class="QDockWidget" name="dock_overview">
    <property name="minimumSize">
     <size>
      <width>200</width>
-     <height>119</height>
+     <height>120</height>
     </size>
    </property>
    <property name="features">
@@ -784,11 +783,6 @@
    <class>console</class>
    <extends>QPlainTextEdit</extends>
    <header>libqtopensesame.console.h</header>
-  </customwidget>
-  <customwidget>
-   <class>statusbar</class>
-   <extends>QStatusBar</extends>
-   <header>libqtopensesame.widgets.statusbar.h</header>
   </customwidget>
   <customwidget>
    <class>tab_widget</class>
