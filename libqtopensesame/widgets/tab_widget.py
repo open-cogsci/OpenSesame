@@ -422,6 +422,9 @@ class tab_widget(base_subcomponent, QtGui.QTabWidget):
 			self.main_window.ui.action_onetabmode.isChecked())
 		if config.get_config(u"onetabmode"):
 			self.close_other()
+			self.tabBar().setVisible(False)
+		else:
+			self.tabBar().setVisible(True)
 		self.setTabsClosable(not config.get_config(u"onetabmode"))
 		self.main_window.ui.action_close_all_tabs.setEnabled(
 			not config.get_config(u"onetabmode"))
