@@ -209,7 +209,7 @@ class tree_item_item(tree_base_item):
 			type:	bool
 		"""
 
-		return self.parent().name == u'__unused__'
+		return self.parent() is not None and self.parent().name == u'__unused__'
 
 	def is_cloneable(self):
 
