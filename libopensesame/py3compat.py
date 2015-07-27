@@ -56,7 +56,13 @@ def safe_encode(s, enc='utf-8', errors='strict'):
 		return s
 	return s.encode(enc, errors)
 
-__all__ = ['py3', 'safe_decode', 'safe_encode', 'universal_newline_mode']
+if py3:
+	safe_str = safe_decode
+else:
+	safe_str = safe_encode
+
+__all__ = ['py3', 'safe_decode', 'safe_encode', 'safe_str',
+	'universal_newline_mode']
 if not py3:
 	__all__ += ['str', 'bytes']
 else:

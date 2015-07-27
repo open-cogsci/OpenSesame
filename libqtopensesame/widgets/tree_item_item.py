@@ -202,6 +202,16 @@ class tree_item_item(tree_base_item):
 
 		return hasattr(self.parent(), u'item')
 
+	def is_unused(self):
+
+		"""
+		returns:
+			desc:	True if the item is unused, False otherwise.
+			type:	bool
+		"""
+
+		return self.parent().name == u'__unused__'
+
 	def is_cloneable(self):
 
 		"""
@@ -239,7 +249,7 @@ class tree_item_item(tree_base_item):
 			Permanently deletes the item, if possible.
 		"""
 
-		if not self.is_deletable():
+		if not self.is_deletable() and not self.is_unused():
 			return
 		if QtGui.QMessageBox.question(self.treeWidget(),
 			_(u'Permanently delete item'),
@@ -251,7 +261,7 @@ class tree_item_item(tree_base_item):
 			return
 		del self.item_store[self.name]
 		self.close_tab()
-		self.experiment.build_item_tree()
+		self.treeWidget().structure_change.emit()
 
 	def copy(self):
 

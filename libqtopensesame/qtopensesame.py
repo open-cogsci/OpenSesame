@@ -493,6 +493,10 @@ class qtopensesame(QtGui.QMainWindow, base_component):
 		"""
 
 		self.experiment.build_item_tree()
+		item = self.tabwidget.current_item()
+		if item is not None:
+			print('refresh')
+			self.experiment.items[item].update()
 
 	def update_preferences_tab(self):
 
