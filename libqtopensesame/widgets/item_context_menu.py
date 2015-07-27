@@ -77,6 +77,11 @@ class item_context_menu(base_subcomponent, QtGui.QMenu):
 				_("Permanently delete all linked copies"),
 				self.treeitem.permanently_delete,
 				cfg.shortcut_permanently_delete)
+		elif self.treeitem.is_unused():
+			self.addSeparator()
+			self.add_action(u"list-remove", _("Permanently delete"),
+				self.treeitem.permanently_delete,
+				cfg.shortcut_permanently_delete)
 		if self.treeitem.has_append_menu():
 			# An append menu for sequence items
 			menu = tree_append_menu(self.treeitem.treeWidget(), self.treeitem)
