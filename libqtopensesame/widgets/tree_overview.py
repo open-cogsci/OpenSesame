@@ -503,8 +503,10 @@ class tree_overview(base_subcomponent, QtGui.QTreeWidget):
 				e.ignore()
 			self.main_window.set_busy(False)
 			return False
-		# Accept drops on the unused items bin
-		if target_treeitem.name == u'__unused__':
+		# Accept drops on the unused items bin and unused items (i.e. items
+		# in the bin)
+		if target_treeitem.name in [u'__unused__'] \
+			+ self.experiment.items.unused():
 			e.accept()
 			self.structure_change.emit()
 			self.main_window.set_busy(False)
@@ -707,7 +709,8 @@ class tree_overview(base_subcomponent, QtGui.QTreeWidget):
 		# Update the drop indicator
 		index = self.indexFromItem(target)
 		rect = self.visualRect(index)
-		if target.name == u'__unused__' or (
+		if target.name == u'__unused__' or ( \
+			target.item.name in self.experiment.items.used() and \
 			target.item.item_type in (u'loop', u'sequence') and \
 			target.item.name != self.experiment.start and \
 			target.parent() is not None):
