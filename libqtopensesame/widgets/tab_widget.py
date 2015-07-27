@@ -202,6 +202,19 @@ class tab_widget(base_subcomponent, QtGui.QTabWidget):
 				return i
 		return None
 
+	def current_item(self):
+
+		"""
+		returns:
+			desc:	The name of the currently visible item, or None if no item
+					is currently visible.
+			type:	[str, NoneType]
+		"""
+
+		w = self.currentWidget()
+		if hasattr(w, u'__item__'):
+			return w.__item__
+		return None
 
 	def get_widget(self, tab_name):
 

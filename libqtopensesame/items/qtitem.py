@@ -250,6 +250,7 @@ class qtitem(QtCore.QObject):
 		self.container_widget = QtGui.QWidget()
 		self.container_widget.setLayout(self.container_vbox)
 		self.container_widget.on_activate = self.show_tab
+		self.container_widget.__item__ = self.name
 
 	def splitter_moved(self, pos, index):
 

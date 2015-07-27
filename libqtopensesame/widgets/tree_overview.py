@@ -505,8 +505,9 @@ class tree_overview(base_subcomponent, QtGui.QTreeWidget):
 			return False
 		# Accept drops on the unused items bin and unused items (i.e. items
 		# in the bin)
-		if target_treeitem.name in [u'__unused__'] \
-			+ self.experiment.items.unused():
+		if target_treeitem.name == u'__unused__' or \
+			(target_treeitem.parent() is not None and \
+			target_treeitem.parent().name == u'__unused__'):			
 			e.accept()
 			self.structure_change.emit()
 			self.main_window.set_busy(False)
