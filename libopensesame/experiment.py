@@ -615,11 +615,19 @@ class experiment(item.item):
 			folder, fname = os.path.split(uname)
 			fname = self.unsanitize(fname)
 			if folder == u"pool":
+				# NOTE: When merging into `ising`, this needs to be ported to
+				# the py3compat system, and Python 3 compatibility needs to be
+				# checked.
 				debug.msg(u"extracting '%s'" % uname)
-				tar.extract(name, self.pool_folder.encode( \
+				# Tar requires the pool folder to be encoded
+				tar.extract(name, self.pool_folder.encode(
 					misc.filesystem_encoding()))
-				os.rename(os.path.join(self.pool_folder, uname), \
-					os.path.join(self.pool_folder, fname))
+				# And so does os.rename
+				from_name = os.path.join(self.pool_folder, uname).encode(
+					misc.filesystem_encoding())
+				to_name = os.path.join(self.pool_folder, fname).encode(
+					misc.filesystem_encoding())
+				os.rename(from_name, to_name)
 				os.rmdir(os.path.join(self.pool_folder, folder))
 		script_path = os.path.join(self.pool_folder, u"script.opensesame")
 		tar.extract(u"script.opensesame", self.pool_folder)
