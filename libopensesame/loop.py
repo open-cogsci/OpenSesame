@@ -54,6 +54,8 @@ class loop(item.item):
 		self.variables = {}
 		self.comments = []
 		self.reset()
+		if string is None:
+			return
 		for i in string.split(u'\n'):
 			self.parse_variable(i)
 			# Extract the item to run
