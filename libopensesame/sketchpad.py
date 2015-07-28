@@ -67,6 +67,8 @@ class sketchpad(item, generic_response):
 		self.variables = {}
 		self.comments = []
 		self.reset()
+		if string is None:
+			return
 		for line in string.split(u'\n'):
 			if not self.parse_variable(line):
 				l = self.syntax.split(line)
