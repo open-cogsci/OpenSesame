@@ -37,7 +37,7 @@ class undo_stack(object):
 			self.history.append( (key, self.current[key]) )
 		self.current[key] = state
 		if len(self.history) > cfg.max_undo_history:
-			self.history[-cfg.max_undo_history:]
+			self.history = self.history[-cfg.max_undo_history:]
 
 	def can_undo(self):
 
@@ -69,6 +69,10 @@ class undo_manager(base_extension):
 		self.console.set_workspace_globals({u'undo_manager' : self})
 
 	def event_open_experiment(self, path):
+
+		self.initialize()
+
+	def event_regenerate(self):
 
 		self.initialize()
 
