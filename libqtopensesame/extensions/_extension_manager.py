@@ -59,6 +59,7 @@ class extension_manager(base_subcomponent):
 					u'Failed to load extension %s (see debug window for stack trace)' \
 					% ext_name)
 				self.console.write(e)
+				continue
 			self._extensions.append(ext)
 			for event in ext.supported_events():
 				if event not in self.events:
