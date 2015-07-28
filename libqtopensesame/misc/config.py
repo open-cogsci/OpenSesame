@@ -64,7 +64,7 @@ class config(object):
 		u"onetabmode" : False,
 		u"qProgEditCommentShortcut" : u'Ctrl+M',
 		u"qProgEditUncommentShortcut" : u'Ctrl+Shift+M',
-		u'qProgEditFontFamily' : u'Monospace',
+		u'qProgEditFontFamily' : u'Droid Sans Mono',
 		u'qProgEditFontSize' : 10,
 		u'qProgEditLineNumbers' : True,
 		u'qProgEditHighlightCurrentLine' : False,
@@ -110,8 +110,6 @@ class config(object):
 		u"url_website" : u"http://www.cogsci.nl/opensesame",
 		u"url_facebook" : u"http://www.facebook.com/cognitivescience",
 		u"url_twitter" : u"http://www.twitter.com/cogscinl",
-		u"version_check_url" : \
-			u"http://files.cogsci.nl/software/opensesame/MOST_RECENT_VERSION.TXT",
 		u'sketchpad_placeholder_color' : u'#00FF00',
 		u'sketchpad_grid_color' : u'#00FF00',
 		u'sketchpad_grid_thickness_thin' : 2,
@@ -131,9 +129,7 @@ class config(object):
 	config_mac = {
 		u"runner" : u"inprocess"
 		}
-	config_windows = {
-		u'qProgEditFontFamily' : u'Courier New'
-		}
+	config_windows = {}
 
 	def __init__(self):
 

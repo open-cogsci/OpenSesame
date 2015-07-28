@@ -100,6 +100,7 @@ class ipython_console(base_console, QtGui.QWidget):
 		kernel_manager.start_kernel()
 		self.kernel = kernel_manager.kernel
 		self.kernel.gui = 'qt4'
+		self.kernel.shell.banner1 = ''
 		kernel_client = kernel_manager.client()
 		kernel_client.start_channels()
 		self.control = RichIPythonWidget()

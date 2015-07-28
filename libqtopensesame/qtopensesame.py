@@ -80,7 +80,10 @@ class qtopensesame(QtGui.QMainWindow, base_component):
 		self.lock_refresh = False
 		self.unsaved_changes = False
 
-		# Make sure that QProgEdit doesn't complain about some standard names
+		# Make sure that QProgEdit doesn't complain about some standard names,
+		# and register the bundled monospace font (Droid Sans Mono) so that we
+		# can use it anywhere.
+		QtGui.QFontDatabase.addApplicationFont(misc.resource(u'mono.ttf'))
 		from QProgEdit import validate
 		validate.addPythonBuiltins([u'exp', u'win', u'self'])
 

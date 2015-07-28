@@ -188,7 +188,7 @@ class qtitem(base_qtobject):
 		self.header_item_icon = self.experiment.label_image(self.item_icon())
 		self.header_hbox.addWidget(self.header_item_icon)
 		self.header_hbox.addWidget(self.header)
-		self.header_hbox.setContentsMargins(0, 0, 0, 0)
+		self.header_hbox.setContentsMargins(0, 2, 0, 0)
 
 		# Maximize button
 		self.button_toggle_maximize = QtGui.QPushButton(
