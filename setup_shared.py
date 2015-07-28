@@ -59,5 +59,6 @@ included_extensions = [
 	'dock_manager',
 	'psychopy_monitor_center',
 	'opensesame_3_notifications',
-	'example_experiments'
+	'example_experiments',
+	'undo_manager'
 	]
