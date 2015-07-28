@@ -323,7 +323,7 @@ class experiment(item.item):
 		self.var.datetime = safe_decode(time.strftime(u'%c'), enc=self.encoding,
 			errors=u'ignore')
 		self.var.opensesame_version = metadata.__version__
-		self.var.opensesame_codename = metadata.__codename__
+		self.var.opensesame_codename = metadata.codename
 		self.save_state()
 		self.running = True
 		self.init_random()
