@@ -30,13 +30,13 @@ define sequence experiment
 
 define inline_script inline_script
 	___run__
-	from libopensesame import widgets, debug, misc
+	from libopensesame import widgets, debug, misc, metadata
 	import os
 	try:
-		import android	
+		import android
 	except:
 		android = None
-	
+
 	default_folders = [
 			'/sdcard/Experiments/',
 			'/mnt/sdcard/Experiments/',
@@ -46,16 +46,16 @@ define inline_script inline_script
 			]
 	example_src = 'examples/'
 	max_file_list_size = 8
-	
+
 	# According to <https://github.com/keesj/gomo/wiki/AndroidUserland>, the
 	# standard location for the external storage is `/mnt/sdcard`, but there are
 	# apparently some alternative routes as well and it probably depends on the
 	# Android version. The logic here is to try a few default locations and fall
-	# back to a '?' if none of the default paths exists.	
+	# back to a '?' if none of the default paths exists.
 	for src in default_folders:
 		if os.path.isdir(src):
 			break
-	
+
 	# Try to load the experiment and logfile path from the settings file
 	save_path = os.path.join(src, 'opensesame-settings.txt')
 	experiment_folder = src
@@ -72,25 +72,25 @@ define inline_script inline_script
 			if len(l) != 2:
 				continue
 			if l[0] == 'experiment_folder' and os.path.exists(l[1]):
-				experiment_folder = l[1]					
+				experiment_folder = l[1]
 			if l[0] == 'logfile_folder' and os.path.exists(l[1]):
 				logfile_folder = l[1]
 	print('experiment_folder = %s' % experiment_folder)
 	print('logfile_folder = %s' % logfile_folder)
-		
+
 	# Create a form to select the experiment folder
 	form = widgets.form(exp, cols=[1], rows=[1,4], margins=[32,32,32,32])
-	label_title = widgets.label(form, 
+	label_title = widgets.label(form,
 		text=('Which folder contains your experiments?'
 		'<br /><span size=16>Examples will be auto-detected</span>'
-		'<br><span size=16>(%s)</span>') % misc.version)
+		'<br><span size=16>(%s)</span>') % metadata.__version__)
 	text_input_src = widgets.text_input(form, text=experiment_folder, var='_src',
 		return_accepts=True)
 	form.set_widget(label_title, (0,0))
 	form.set_widget(text_input_src, (0,1))
 	form._exec(focus_widget=text_input_src)
 	src = exp._src
-		
+
 	# Detect available experiments
 	experiments = []
 	if os.path.isdir(src):
@@ -100,9 +100,9 @@ define inline_script inline_script
 	if os.path.isdir(example_src) and example_src != src:
 		for path in os.listdir(example_src):
 			if path.endswith('.opensesame') or path.endswith('.opensesame.tar.gz'):
-				experiments.append(os.path.join(example_src, path))			
+				experiments.append(os.path.join(example_src, path))
 	experiments = experiments[:max_file_list_size]
-	
+
 	# Create a form	to select the experiment
 	form = widgets.form(exp, cols=[1], rows=[1]*max_file_list_size+[1],
 		margins=[32,32,32,32])
@@ -116,7 +116,7 @@ define inline_script inline_script
 			text='Select experiment<br><span size=16>Showing up to %d files</span>' U+005C
 			% max_file_list_size)
 		form.set_widget(label_title, (0,0))
-		for path in experiments:	
+		for path in experiments:
 			# We want to have a pretty name, and show the full path smaller below
 			name = os.path.basename(path).split('.')[0].replace('_', ' ').capitalize()
 			text = '%s<br /><span size=16>%s</span>' % (name, path)
@@ -125,7 +125,7 @@ define inline_script inline_script
 			form.set_widget(button_exp, (0,i))
 			i += 1
 	exp._experiment = path_dict[form._exec()]
-	
+
 	# Create a form to select the subject nr
 	form = widgets.form(exp, cols=[1], rows=[1,4], margins=[32,32,32,32])
 	label_title = widgets.label(form, text='Enter subject number')
@@ -141,7 +141,7 @@ define inline_script inline_script
 			break
 		except:
 			pass
-			
+
 	# Create a form to select the logfile
 	form = widgets.form(exp, cols=[1], rows=[1,4], margins=[32,32,32,32])
 	label_title = widgets.label(form, text='Enter location for logfile')
@@ -151,7 +151,7 @@ define inline_script inline_script
 	form.set_widget(label_title, (0,0))
 	form.set_widget(text_input_logfile, (0,1))
 	form._exec(focus_widget=text_input_logfile)
-	
+
 	# Try to save the experiment and logfile folders to a settings file.
 	try:
 		fd = open(save_path, 'w')
@@ -165,4 +165,3 @@ define inline_script inline_script
 	__end__
 	set _prepare ""
 	set description "Executes Python code"
-

@@ -23,7 +23,7 @@ from libopensesame.file_pool_store import file_pool_store
 from libopensesame.python_workspace import python_workspace
 from libopensesame.syntax import syntax
 from libopensesame.exceptions import osexception
-from libopensesame import misc, item, debug
+from libopensesame import misc, item, debug, metadata
 from libopensesame.py3compat import *
 import os
 import shutil
@@ -322,8 +322,8 @@ class experiment(item.item):
 		# Save the date and time, and the version of OpenSesame
 		self.var.datetime = safe_decode(time.strftime(u'%c'), enc=self.encoding,
 			errors=u'ignore')
-		self.var.opensesame_version = misc.version
-		self.var.opensesame_codename = misc.codename
+		self.var.opensesame_version = metadata.__version__
+		self.var.opensesame_codename = metadata.__codename__
 		self.save_state()
 		self.running = True
 		self.init_random()

@@ -18,3 +18,11 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame.py3compat import *
+from distutils.version import StrictVersion
+
+__version__ = u'3.0.0a4'
+strict_version = StrictVersion(__version__)
+# The version without the prerelease (if any)
+main_version = '.'.join([str(i) for i in strict_version.version])
+codename = u'Interactive Ising'
+channel = u'dev'

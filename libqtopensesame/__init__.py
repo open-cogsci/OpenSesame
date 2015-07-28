@@ -18,12 +18,10 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame.py3compat import *
-
-__author__ = "Sebastiaan Mathot"
-__license__ = "GPLv3"
+from libopensesame.metadata import __version__
 
 from PyQt4 import QtCore
-if QtCore.QCoreApplication is not None:	
+if QtCore.QCoreApplication is not None:
 	# Redirect certain things so that the old way of from libqtopensesame import
 	# qtplugin still works.
 	from libqtopensesame.items import qtplugin

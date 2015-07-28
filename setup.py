@@ -22,7 +22,7 @@ import glob
 import os
 import shutil
 from distutils.core import setup
-import libopensesame.misc
+import libopensesame
 from setup_shared  import included_plugins, included_extensions
 
 share_folder = "/usr/share/opensesame"
@@ -114,7 +114,7 @@ def plugins(included, _type='plugins'):
 shutil.copy('readme.md', 'README.txt')
 
 setup(name="opensesame",
-	version = libopensesame.misc.version,
+	version = libopensesame.__version__,
 	description = "A graphical experiment builder for the social sciences",
 	author = "Sebastiaan Mathot",
 	author_email = "s.mathot@cogsci.nl",

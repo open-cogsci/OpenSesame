@@ -22,7 +22,7 @@ import re
 import codecs
 import os
 import yaml
-from libopensesame import misc
+from libopensesame import metadata
 from libopensesame.exceptions import osexception
 from libopensesame.py3compat import *
 
@@ -113,12 +113,8 @@ class syntax(object):
 			type:	str
 		"""
 
-		if not py3:
-			version = safe_encode(misc.version)
-		else:
-			version = misc.version
 		self.experiment.front_matter.update({
-			'OpenSesame' : version,
+			'OpenSesame' : safe_str(metadata.__version__),
 			'API' : 2,
 			'Platform' : os.name
 			})

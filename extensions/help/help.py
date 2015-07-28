@@ -19,7 +19,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 
 from PyQt4 import QtGui
 from libopensesame import debug
-from libopensesame import misc
+from libopensesame import metadata
 from libqtopensesame.misc import _
 from libqtopensesame.extensions import base_extension
 from libqtopensesame.misc.base_subcomponent import base_subcomponent
@@ -109,10 +109,8 @@ class help(base_extension):
 		else:
 			from urllib2 import urlopen
 		import yaml
-		version = misc.version
-		if u'~' in version:
-			version = version[:version.find(u'~')]
-		sitemap_url = cfg.online_help_sitemap.replace(u'[version]', version)
+		sitemap_url = cfg.online_help_sitemap.replace(u'[version]',
+			metadata.main_version)
 		try:
 			fd = urlopen(sitemap_url)
 			sitemap = fd.read()

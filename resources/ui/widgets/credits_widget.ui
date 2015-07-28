@@ -176,7 +176,7 @@
          </sizepolicy>
         </property>
         <property name="text">
-         <string>OpenSesame [version] [codename]
+         <string>OpenSesame %(version)s (%(channel)s channel) %(codename)s
 Copyright Sebastiaan Mathôt (2010-2015)</string>
         </property>
         <property name="alignment">

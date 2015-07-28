@@ -68,15 +68,15 @@ class qtopensesame(QtGui.QMainWindow, base_component):
 
 		"""Resume GUI initialization"""
 
-		from libopensesame import misc
+		from libopensesame import misc, metadata
 		from libqtopensesame.misc import theme
 		from libqtopensesame.extensions import extension_manager
 		import random
 
 		# Set some initial variables
 		self.current_path = None
-		self.version = misc.version
-		self.codename = misc.codename
+		self.version = metadata.__version__
+		self.codename = metadata.codename
 		self.lock_refresh = False
 		self.unsaved_changes = False
 

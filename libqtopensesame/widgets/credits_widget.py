@@ -17,7 +17,7 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
-from libopensesame import misc
+from libopensesame import misc, metadata
 from libqtopensesame.misc import config
 from libqtopensesame.widgets.base_widget import base_widget
 from libopensesame.py3compat import *
@@ -42,9 +42,11 @@ class credits_widget(base_widget):
 
 		super(credits_widget, self).__init__(main_window,
 			ui=u'widgets.credits_widget')
-		self.ui.label_opensesame.setText(str( \
-			self.ui.label_opensesame.text()).replace(u"[version]",
-			misc.version).replace(u"[codename]", misc.codename))
+		self.ui.label_opensesame.setText(self.ui.label_opensesame.text() % {
+			u'version' : metadata.__version__,
+			u'codename' : metadata.codename,
+			u'channel' : metadata.channel
+			})
 		self.ui.label_website.mousePressEvent = self.open_website
 		self.ui.label_facebook.mousePressEvent = self.open_facebook
 		self.ui.label_twitter.mousePressEvent = self.open_twitter

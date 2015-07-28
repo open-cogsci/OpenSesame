@@ -508,7 +508,7 @@ if include_sounds:
 if release_zip:
 	import zipfile
 	target_folder = 'opensesame_%s-py%s-win32-%s' \
-		% (libopensesame.misc.version, python_version, release_build)
+		% (libopensesame.__version__, python_version, release_build)
 	target_zip = target_folder + '.zip'
 	shutil.move('dist', target_folder)
 	zipf = zipfile.ZipFile(target_zip, 'w', zipfile.ZIP_DEFLATED)
