@@ -404,6 +404,7 @@ class qtitem(base_qtobject):
 		if self.name != from_name:
 			return
 		self.name = to_name
+		self.container_widget.__item__ = self.name
 		self.header.set_name(to_name)
 		index = self.tabwidget.indexOf(self.widget())
 		if index is not None:

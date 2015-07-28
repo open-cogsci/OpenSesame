@@ -261,7 +261,6 @@ class tree_item_item(tree_base_item):
 			return
 		del self.item_store[self.name]
 		self.close_tab()
-		self.treeWidget().structure_change.emit()
 
 	def copy(self):
 
