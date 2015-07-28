@@ -118,7 +118,7 @@ class qtopensesame(QtGui.QMainWindow, base_component):
 			u'OpenSesame files (*.osexp *.opensesame.tar.gz *.opensesame);;'
 
 		# Set the window message
-		self.window_message(_(u"Welcome to OpenSesame %s") % self.version)
+		self.window_message(_(u"New experiment"))
 
 		# Set the window icon
 		self.setWindowIcon(self.theme.qicon(u"opensesame"))
@@ -432,36 +432,37 @@ class qtopensesame(QtGui.QMainWindow, base_component):
 	def set_unsaved(self, unsaved_changes=True):
 
 		"""
-		Set the unsaved changes status
+		desc:
+			Sets the unsaved changes status.
 
-		Keyword arguments:
-		unsaved_changes -- a boolean indicating if there are unsaved changes
-						   (default=True)
+		keywords:
+			unsaved_changes:
+			 	desc:	Indicates if there are unsaved changes.
+				type:	bool
 		"""
 
 		self.unsaved_changes = unsaved_changes
 		self.window_message()
-		debug.msg(u"unsaved = %s" % unsaved_changes)
 
 	def window_message(self, msg=None):
 
 		"""
-		Display a message in the window border, including an unsaved message
-		indicator.
+		desc:
+			Display a message in the window border, including an unsaved message
+			indicator.
 
-		Keyword arguments:
-		msg		--	An optional message, if the message should be changed.
-					(default=None)
+		keywords:
+			msg:
+				desc:	A message, or None to refresh the window message.
+				type:	[str, NoneType]
 		"""
 
 		if msg is not None:
 			self.window_msg = msg
-			if os.name == u'nt':
-				self.window_msg = self.window_msg.replace(u'/', u'\\')
 		if self.unsaved_changes:
-			self.setWindowTitle(_(u"%s [unsaved]") % self.window_msg)
+			self.setWindowTitle(self.window_msg + u' * - OpenSesame')
 		else:
-			self.setWindowTitle(self.window_msg)
+			self.setWindowTitle(self.window_msg + u'- OpenSesame')
 
 	def set_immediate_rename(self):
 

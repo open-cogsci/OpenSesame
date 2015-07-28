@@ -73,7 +73,9 @@ class qtitem(base_qtobject):
 			Opens the tab if it wasn't yet open, and switches to it.
 		"""
 
+		unsaved = self.main_window.unsaved_changes
 		self.tabwidget.add(self.widget(), self.item_icon(), self.name)
+		self.main_window.set_unsaved(unsaved)
 		if select_in_tree:
 			self.experiment.main_window.ui.itemtree.select_item(self.name)
 
@@ -335,7 +337,9 @@ class qtitem(base_qtobject):
 		script = self.to_string()
 		script = script[script.find(u'\t'):]
 		script = textwrap.dedent(script)
-		self._script_widget.setText(script)
+		if self._script_widget.text() != script:
+			self.main_window.set_unsaved()
+			self._script_widget.setText(script)
 
 	def edit_widget(self, *deprecated, **_deprecated):
 
@@ -356,7 +360,6 @@ class qtitem(base_qtobject):
 
 		self.auto_apply_edit_changes()
 		self.update_script()
-		self.main_window.set_unsaved(True)
 		return True
 
 	def apply_script_changes(self, *deprecated, **_deprecated):
@@ -374,8 +377,9 @@ class qtitem(base_qtobject):
 			self.experiment.notify(e.html())
 			self.console.write(e)
 			self.from_string(old_script)
+		if old_script != new_script:
+			self.main_window.set_unsaved()
 		self.edit_widget()
-		self.main_window.set_unsaved(True)
 
 	def rename(self, from_name, to_name):
 
@@ -529,9 +533,11 @@ class qtitem(base_qtobject):
 			if isinstance(var, int):
 				continue
 			if var in self.var:
-				edit.setText(safe_decode(self.var.get(var, _eval=False)))
+				val = safe_decode(self.var.get(var, _eval=False))
 			else:
-				edit.setText(u'')
+				val = u''
+			if val != edit.text():
+				edit.setText(val)
 
 		for var, combobox in self.auto_combobox.items():
 			if isinstance(var, int):
@@ -540,75 +546,60 @@ class qtitem(base_qtobject):
 			i = combobox.findText(safe_decode(val))
 			# Set the combobox to the select item
 			if i >= 0:
-				combobox.setDisabled(False)
-				combobox.setCurrentIndex(i)
+				if i != combobox.currentIndex() or not combobox.isEnabled():
+					combobox.setDisabled(False)
+					combobox.setCurrentIndex(i)
 			# If no value was specified, set the combobox to a blank item
 			elif val == u'':
-				combobox.setDisabled(False)
-				combobox.setCurrentIndex(-1)
+				if combobox.currentIndex() >= 0 or not combobox.isEnabled():
+					combobox.setDisabled(False)
+					combobox.setCurrentIndex(-1)
 			# If an unknown value has been specified, notify the user
 			else:
-				combobox.setDisabled(True)
-				self.user_hint_widget.add(_(u'"%s" is set to a '
-					u'variable or unknown value and can only be edited through '
-					u'the script.' % var))
+				if combobox.isEnabled():
+					combobox.setDisabled(True)
+					self.user_hint_widget.add(_(u'"%s" is set to a variable or '
+						u'unknown value and can only be edited through '
+						u'the script.') % var)
 
-		for var, spinbox in self.auto_spinbox.items():
+		for var, spinbox in list(self.auto_spinbox.items()) \
+			+ list(self.auto_slider.items()):
 			if isinstance(var, int):
 				continue
 			if var in self.var:
 				val = self.var.get(var, _eval=False)
 				if type(val) in (float, int):
+					if spinbox.value() == val and spinbox.isEnabled():
+						continue
 					spinbox.setDisabled(False)
 					try:
 						spinbox.setValue(val)
 					except Exception as e:
-						self.experiment.notify(_( \
-							u"Failed to set control '%s': %s") % (var, e))
+						self.experiment.notify(
+							_(u"Failed to set control '%s': %s") % (var, e))
 				else:
+					if not spinbox.isEnabled():
+						continue
 					spinbox.setDisabled(True)
-					self.user_hint_widget.add(_( \
-						u'"%s" is defined using variables and can only be edited through the script.' \
-						% var))
-
-		for var, slider in self.auto_slider.items():
-			if isinstance(var, int):
-				continue
-			if var in self.var:
-				val = self.var.get(var, _eval=False)
-				if type(val) in (float, int):
-					slider.setDisabled(False)
-					try:
-						slider.setValue(val)
-					except Exception as e:
-						self.experiment.notify(_( \
-							u"Failed to set control '%s': %s") % (var, e))
-				else:
-					slider.setDisabled(True)
-					self.user_hint_widget.add(_( \
-						u'"%s" is defined using variables and can only be edited through the script.' \
-						% var))
+					self.user_hint_widget.add(_(u'"%s" is defined using '
+						'variables and can only be edited through the '
+						'script.') % var)
 
 		for var, checkbox in self.auto_checkbox.items():
 			if isinstance(var, int):
 				continue
 			if var in self.var:
-				try:
-					checkbox.setChecked(self.var.get(var, _eval=False) == u"yes")
-				except Exception as e:
-					self.experiment.notify(_(u"Failed to set control '%s': %s") \
-						% (var, e))
+				val = self.var.get(var, _eval=False) == u"yes"
+				if val != checkbox.isChecked():
+					checkbox.setChecked(val)
 
 		for var, qprogedit in self.auto_editor.items():
 			if isinstance(var, int):
 				continue
 			if var in self.var:
-				try:
-					qprogedit.setText(safe_decode(self.var.get(var,
-						_eval=False)))
-				except Exception as e:
-					self.experiment.notify(_(u"Failed to set control '%s': %s") \
-						% (var, e))
+				val = safe_decode(self.var.get(var, _eval=False))
+				if val != qprogedit.text():
+					qprogedit.setText(val)
 
 	def sanitize_check(self, s, strict=False, allow_vars=True, notify=True):
 
