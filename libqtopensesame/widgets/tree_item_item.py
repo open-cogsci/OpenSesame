@@ -260,6 +260,14 @@ class tree_item_item(tree_base_item):
 			return
 		del self.item_store[self.name]
 		self.close_tab()
+		try:
+			# Sometimes the treeWidget has already been deleted, in which case
+			# this gives an Exception. But it when it hasn't been deleted, a
+			# structure_change has to be emitted, otherwise the GUI doesn't
+			# update properly.
+			self.treeWidget().structure_change.emit()
+		except:
+			pass
 
 	def copy(self):
 
