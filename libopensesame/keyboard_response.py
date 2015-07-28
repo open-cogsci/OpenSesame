@@ -33,6 +33,8 @@ class keyboard_response(item.item, generic_response.generic_response):
 		self.var.flush = u'yes'
 		self.var.timeout = u'infinite'
 		self.var.duration = u'keypress'
+		self.var.unset(u'allowed_responses')
+		self.var.unset(u'correct_response')
 		self.auto_response = u'space'
 		self.process_feedback = True
 

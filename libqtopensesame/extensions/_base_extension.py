@@ -55,6 +55,11 @@ class base_extension(base_subcomponent):
 		self.register_config()
 
 	@property
+	def console(self):
+
+		return self.main_window.ui.console
+
+	@property
 	def menubar(self):
 
 		"""
@@ -175,6 +180,23 @@ class base_extension(base_subcomponent):
 		if self.action is None or not self.checkable():
 			return
 		self.action.setChecked(checked)
+
+	def set_enabled(self, enabled=True):
+
+		"""
+		desc:
+			Enables/ disables the action. If there is no action, this is
+			silently ignored.
+
+		arguments:
+			enabled:
+				desc:	The enabled status.
+				type:	bool
+		"""
+
+		if self.action is None:
+			return
+		self.action.setEnabled(enabled)
 
 	def icon(self):
 

@@ -72,6 +72,7 @@ class qtitem_store(item_store):
 		del self.__items__[name]
 		for _name in self:
 			self[_name].remove_child_item(name, index=-1)
+		self.extension_manager.fire(u'delete_item', name=name)
 
 	def new(self, _type, name=None, script=None):
 

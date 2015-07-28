@@ -182,6 +182,7 @@ class sequence(qtstructure_item, qtplugin, sequence_runtime):
 			self.items.insert(index, self.last_removed_child)
 		else:
 			self.items.insert(index, (item_name, u'always'))
+		self.update()
 		self.main_window.set_unsaved(True)
 
 	def remove_child_item(self, item_name, index=0):
@@ -199,4 +200,5 @@ class sequence(qtstructure_item, qtplugin, sequence_runtime):
 			# it's run-if statement if it is re-added.
 			self.last_removed_child = self.items[index]
 			del self.items[index]
+		self.update()
 		self.main_window.set_unsaved(True)

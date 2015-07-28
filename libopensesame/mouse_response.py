@@ -36,6 +36,8 @@ class mouse_response(item.item, generic_response.generic_response):
 		self.var.show_cursor = u'yes'
 		self.var.timeout = u'infinite'
 		self.var.duration = u'mouseclick'
+		self.var.unset(u'allowed_responses')
+		self.var.unset(u'correct_response')		
 		self.auto_response = 1
 		self.process_feedback = True
 

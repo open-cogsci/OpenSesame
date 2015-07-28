@@ -1,0 +1,13 @@
+description: Implements undo
+icon: edit-undo
+label: Undo
+shortcut: Alt+Ctrl+Z
+menu:
+  index: 0
+  separator_after: true
+  submenu: Tools
+toolbar:
+  index: -1
+  separator_before: true
+settings:
+  max_undo_history: 100

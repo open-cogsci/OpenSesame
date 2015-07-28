@@ -95,7 +95,7 @@ class example(base_extension):
 				desc:	The full path of the experiment file.
 				type:	unicode
 		"""
-		
+
 		debug.msg(u'Event fired: save_experiment(path=%s)' % path)
 
 	def event_open_experiment(self, path):
@@ -121,7 +121,7 @@ class example(base_extension):
 		"""
 
 		debug.msg(u'Event fired: close')
-		
+
 	def event_rename_item(self, from_name, to_name):
 
 		"""
@@ -156,6 +156,14 @@ class example(base_extension):
 		"""
 
 		debug.msg(u'Event fired: new_item(name=%s, _type=%s)' % (name, _type))
+
+	def event_change_item(self, name):
+
+		debug.msg(u'Event fired: change_item(name=%s)' % name)
+
+	def event_delete_item(self, name):
+
+		debug.msg(u'Event fired: delete_item(name=%s)' % name)
 
 	def event_purge_unused_items(self):
 

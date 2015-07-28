@@ -66,6 +66,10 @@ class qtitem(base_qtobject):
 	def tabwidget(self):
 		return self.experiment.main_window.tabwidget
 
+	@property
+	def extension_manager(self):
+		return self.experiment.main_window.extension_manager
+
 	def open_tab(self, select_in_tree=True):
 
 		"""
@@ -340,6 +344,7 @@ class qtitem(base_qtobject):
 		if self._script_widget.text() != script:
 			self.main_window.set_unsaved()
 			self._script_widget.setText(script)
+			self.extension_manager.fire(u'change_item', name=self.name)
 
 	def edit_widget(self, *deprecated, **_deprecated):
 
