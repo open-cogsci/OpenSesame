@@ -21,9 +21,6 @@ import os
 import os.path
 import sys
 
-version = u'3.0.0~pre3'
-codename = u'Interactive Ising'
-
 use_global_resources = '--no-global-resources' not in sys.argv
 from libopensesame import debug
 from libopensesame.py3compat import *
