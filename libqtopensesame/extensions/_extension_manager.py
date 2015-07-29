@@ -26,6 +26,23 @@ from libopensesame.exceptions import osexception
 from libqtopensesame.misc import _
 from libqtopensesame.misc.base_subcomponent import base_subcomponent
 
+def suspend_events(fnc):
+
+	"""
+	desc:
+		A decorator that causes all the extension manager to be suspended while
+		the function is executed.
+	"""
+
+	def inner(self, *args, **kwdict):
+
+		self.extension_manager.suspend()
+		retval = fnc(self, *args, **kwdict)
+		self.extension_manager.resume()
+		return retval
+
+	return inner
+
 class extension_manager(base_subcomponent):
 
 	"""
@@ -49,6 +66,8 @@ class extension_manager(base_subcomponent):
 		QtGui.QApplication.processEvents()
 		self._extensions = []
 		self.events = {}
+		self._suspended = False
+		self._suspended_until = None
 		for ext_name in plugins.list_plugins(_type=u'extensions'):
 			try:
 				ext = plugins.load_extension(ext_name, self.main_window)
@@ -81,6 +100,11 @@ class extension_manager(base_subcomponent):
 					particular event.
 		"""
 
+		if self._suspended_until == event:
+			self._suspended = False
+			self._suspended_until = None
+		if self._suspended:
+			return
 		if event == u'open_experiment':
 			for ext in self._extensions:
 				ext.register_ui_files()
@@ -94,3 +118,37 @@ class extension_manager(base_subcomponent):
 					u'Extension %s misbehaved on event %s (see debug window for stack trace)' \
 					% (ext.name(), event))
 				self.console.write(e)
+
+	def suspend(self):
+
+		"""
+		desc:
+			Suspends all events.
+		"""
+
+		self._suspended = True
+
+	def suspend_until(self, event):
+
+		"""
+		desc:
+			Suspends all events until a specific event is fired. This is useful
+			for situations where you want to supress all events between a
+			starting and ending event.
+
+		argument:
+			desc:	The unlocking event.
+			type:	str
+		"""
+
+		self._suspended = True
+		self._suspended_until = event
+
+	def resume(self):
+
+		"""
+		desc:
+			Resumes all events.
+		"""
+
+		self._suspended = False

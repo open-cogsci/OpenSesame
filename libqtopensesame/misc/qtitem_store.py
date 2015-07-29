@@ -69,6 +69,7 @@ class qtitem_store(item_store):
 				type:	[str, unicode]
 		"""
 
+		self.extension_manager.fire(u'prepare_delete_item', name=name)
 		del self.__items__[name]
 		for _name in self:
 			self[_name].remove_child_item(name, index=-1)
@@ -130,6 +131,8 @@ class qtitem_store(item_store):
 		if to_name == u'':
 			self.experiment.notify(_(u'An item name cannot be empty.'))
 			return None
+		self.extension_manager.fire(u'prepare_rename_item', from_name=from_name,
+			to_name=to_name)
 		# Copy the item in the __items__dictionary
 		self.__items__[to_name] = self.__items__[from_name]
 		del self.__items__[from_name]

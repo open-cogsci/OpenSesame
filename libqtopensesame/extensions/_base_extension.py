@@ -418,6 +418,45 @@ class base_extension(base_subcomponent):
 					os.path.splitext(path)[0])] = os.path.join(
 					self.info[u'plugin_folder'], path)
 
+	def qaction(self, icon, label, target, checkable=False, tooltip=None,
+		shortcut=None):
+
+		"""
+		arguments:
+			icon:
+				desc:	An icon name.
+				type:	str
+			label:
+				desc:	A label
+				type:	str
+			target:
+				desc:	A function to be called when the action is triggered.
+				type:	FunctionType
+
+		keywords:
+			checkable:
+				desc:	The checkable status of the action.
+				type:	bool
+			tooltip:
+				desc:	A tooltip, or None for no tooltip.
+				type:	[str, Nonetype]
+			shortcut:
+				desc:	A keyboard shortcut, or None for no shortcut.
+				type:	[str, NoneType]
+
+		returns:
+			type: QAction
+		"""
+
+		action = QtGui.QAction(self.theme.qicon(icon), label, self.main_window)
+		action.triggered.connect(target)
+		action.setCheckable(checkable)
+		if tooltip is not None:
+			action.setToolTip(tooltip)
+		if shortcut is not None:
+			action.setShortcuts([shortcut])
+		return action
+
 	def create_action(self):
 
 		"""
@@ -427,17 +466,9 @@ class base_extension(base_subcomponent):
 		"""
 
 		if self.label() is not None:
-			# Create an action to be inserted into the menu and/ or toolbar
-			icon = self.icon()
-			if isinstance(icon, basestring):
-				icon = self.theme.qicon(icon)
-			self.action = QtGui.QAction(icon, self.label(), self.main_window)
-			self.action.triggered.connect(self._activate)
-			self.action.setCheckable(self.checkable())
-			if self.tooltip() is not None:
-				self.action.setToolTip(self.tooltip())
-			if self.shortcut() is not None:
-				self.action.setShortcuts([self.shortcut()])
+			self.action = self.qaction(self.icon(), self.label(),
+				self._activate, checkable=self.checkable(),
+				tooltip=self.tooltip(), shortcut=self.shortcut())
 			# Insert the action into the menu
 			if self.menu_pos() is not None:
 				submenu_text, index, separator_before, separator_after = \

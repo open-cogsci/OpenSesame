@@ -85,6 +85,7 @@ class unused_widget(base_widget):
 			QtGui.QMessageBox.Yes, QtGui.QMessageBox.No)
 		if resp == QtGui.QMessageBox.No:
 			return
+		self.extension_manager.fire(u'prepare_purge_unused_items')
 		for item_name in self.experiment.items.unused():
 			self.experiment.items[item_name].close_tab()
 			del self.experiment.items[item_name]

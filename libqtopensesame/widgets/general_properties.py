@@ -114,12 +114,15 @@ class general_properties(base_widget):
 		self.lock = True
 
 		self.main_window.set_busy(True)
+		self.main_window.extension_manager.fire(u'prepare_change_experiment')
 		# Set the title and the description
-		title = self.experiment.syntax.sanitize(self.header_widget.edit_name.text())
+		title = self.experiment.syntax.sanitize(
+			self.header_widget.edit_name.text())
 		if title != self.experiment.var.title:
 			self.experiment.var.title = title
 			self.experiment.build_item_tree()
-		desc = self.experiment.syntax.sanitize(self.header_widget.edit_desc.text())
+		desc = self.experiment.syntax.sanitize(
+			self.header_widget.edit_desc.text())
 		self.experiment.var.description = desc
 
 		# Set the backend
@@ -187,6 +190,7 @@ class general_properties(base_widget):
 		self.check_bidi()
 		# Refresh the interface and unlock the general tab
 		self.lock = False
+		self.main_window.extension_manager.fire(u'change_experiment')
 		self.main_window.set_busy(False)
 
 	def refresh(self):

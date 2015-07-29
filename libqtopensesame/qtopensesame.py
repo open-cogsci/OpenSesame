@@ -467,13 +467,6 @@ class qtopensesame(QtGui.QMainWindow, base_component):
 		else:
 			self.setWindowTitle(self.window_msg + u'- OpenSesame')
 
-	def set_immediate_rename(self):
-
-		"""Set the immediate rename option based on the menu action"""
-
-		cfg.immediate_rename = self.ui.action_immediate_rename.isChecked()
-		debug.msg(u"set to %s" % cfg.immediate_rename)
-
 	def update_overview_area(self):
 
 		"""
@@ -773,6 +766,33 @@ class qtopensesame(QtGui.QMainWindow, base_component):
 		cfg.file_dialog_path = os.path.dirname(path)
 		self.current_path = path
 		self.save_file()
+
+	def regenerate(self, script):
+
+		"""
+		desc:
+			Regenerates the current experiment from script, and updates the GUI.
+
+		argument:
+			script:
+				desc:	The new experiment script.
+				type:	str
+		"""
+
+		try:
+			exp = experiment.experiment(self, name=self.experiment.var.title,
+				string=script, pool_folder=self.experiment.pool.folder(),
+				experiment_path=self.experiment.experiment_path,
+				resources=self.experiment.resources)
+		except osexception as e:
+			self.notify(e.html())
+			self.console.write(e)
+			return
+		self.extension_manager.fire(u'prepare_regenerate')
+		self.experiment = exp
+		self.tabwidget.close_all()
+		self.experiment.build_item_tree()
+		self.extension_manager.fire(u'regenerate')
 
 	def update_resolution(self, width, height):
 

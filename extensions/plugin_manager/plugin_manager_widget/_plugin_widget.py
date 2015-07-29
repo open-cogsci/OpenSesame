@@ -1,4 +1,4 @@
- 
+
 #-*- coding:utf-8 -*-
 
 """
@@ -18,6 +18,7 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
+from libopensesame.py3compat import *
 from libopensesame import plugins
 from libqtopensesame.misc.config import cfg
 from libqtopensesame.widgets.base_widget import base_widget
