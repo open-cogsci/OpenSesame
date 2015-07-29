@@ -150,7 +150,8 @@ class qtopensesame(QtGui.QMainWindow, base_component):
 		self.ui.action_show_overview.triggered.connect(self.toggle_overview)
 		self.ui.action_show_variable_inspector.triggered.connect(
 			self.refresh_variable_inspector)
-		self.ui.action_show_pool.triggered.connect(self.refresh_pool)
+		self.ui.action_show_pool.triggered.connect(
+			self.toggle_pool)
 		self.ui.action_show_stdout.triggered.connect(self.refresh_stdout)
 		self.ui.action_preferences.triggered.connect(
 			self.ui.tabwidget.open_preferences)
@@ -533,7 +534,7 @@ class qtopensesame(QtGui.QMainWindow, base_component):
 		self.ui.console.focus()
 		self.ui.dock_stdout.setVisible(True)
 
-	def refresh_pool(self, make_visible=None):
+	def toggle_pool(self, make_visible):
 
 		"""
 		Refresh the file pool
@@ -833,53 +834,6 @@ class qtopensesame(QtGui.QMainWindow, base_component):
 		self.ui.tabwidget.close_other()
 		self.update_overview_area()
 		self.extension_manager.fire(u'regenerate')
-
-	def select_from_pool(self, parent=None):
-
-		"""
-		desc:
-			Opens the file-pool selection dialog.
-
-		keywords:
-			parent:		The parent QWidget or None to use main window.
-
-		returns:
-			A filename or None if no file was selected.
-		"""
-
-		from libqtopensesame.widgets import pool_widget
-		if parent is None:
-			parent = self
-		_file = pool_widget.select_from_pool(self, parent=parent)
-		if _file == u'':
-			return None
-		return _file
-
-	def copy_to_pool(self, fname):
-
-		"""
-		Copy a file to the file pool
-
-		Arguments:
-		fname -- full path to file
-		"""
-
-		import shutil
-
-		renamed = False
-		_fname = os.path.basename(fname)
-		while os.path.exists(os.path.join(self.experiment.pool.folder(), _fname)):
-			_fname = u"_" + _fname
-			renamed = True
-
-		if renamed:
-			QtGui.QMessageBox.information(self.ui.centralwidget, \
-				_(u"File renamed"), \
-				_(u"The file has been renamed to '%s', because the file pool already contains a file named '%s'.") \
-				% (_fname, os.path.basename(fname)))
-
-		shutil.copyfile(fname, os.path.join(self.experiment.pool.folder(), _fname))
-		self.refresh_pool(True)
 
 	def get_ready(self):
 

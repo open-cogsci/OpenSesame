@@ -232,13 +232,15 @@ class base_runner(object):
 
 		if quick:
 			return
-		resp = QtGui.QMessageBox.question(self.main_window.ui.centralwidget, \
-			_(u"Finished!"), \
-			_(u"The experiment is finished and data has been logged to '%s'. Do you want to copy the logfile to the file pool?") \
-			% self.experiment.logfile, QtGui.QMessageBox.Yes, \
+		resp = QtGui.QMessageBox.question(self.main_window.ui.centralwidget,
+			_(u"Finished!"),
+			_(u"The experiment is finished and data has been logged to '%s'. "
+			u"Do you want to copy the logfile to the file pool?") \
+			% self.experiment.logfile, QtGui.QMessageBox.Yes,
 			QtGui.QMessageBox.No)
 		if resp == QtGui.QMessageBox.Yes:
-			self.main_window.copy_to_pool(self.experiment.logfile)
+			self.main_window.ui.pool_widget.add([self.experiment.logfile],
+				rename=True)
 
 	def run(self, quick=False, fullscreen=False, auto_response=False):
 
@@ -262,12 +264,12 @@ class base_runner(object):
 			auto_response=auto_response):
 			return
 		ret_val = self.execute()
+		self.console.release_stdout()
 		if ret_val is not None:
 			self.on_exception(ret_val)
 		elif not quick:
 			self.on_success(quick=quick)
 		self.console.set_workspace_globals(self.workspace_globals())
-		self.console.release_stdout()
 		self.console.show_prompt()
 
 	def workspace_globals(self):

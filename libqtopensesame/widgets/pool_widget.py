@@ -103,7 +103,7 @@ class pool_widget(base_widget):
 
 		misc.open_url(self.experiment.pool.folder())
 
-	def add(self, files):
+	def add(self, files, rename=False):
 
 		"""
 		desc:
@@ -115,19 +115,19 @@ class pool_widget(base_widget):
 				type:	list
 		"""
 
-		basename = ""
 		for path in files:
-			path = str(path)
 			basename = os.path.basename(path)
-			poolname = os.path.join(self.pool.folder(), basename)
-			debug.msg(path)
-			if os.path.exists(poolname):
-				c = confirmation(self.main_window,
-					_(u"A file named '%s' already exists in the pool. Do you want to overwrite this file?") \
-					% basename)
-				if not c.show():
-					continue
-			self.pool.add(path)
+			if self.pool.in_folder(basename):
+				if rename:
+					while self.pool.in_folder(basename):
+						basename = u'_' + basename
+				else:
+					c = confirmation(self.main_window,
+						_(u"A file named '%s' already exists in the pool. Do you want to overwrite this file?") \
+						% basename)
+					if not c.show():
+						continue
+			self.pool.add(path, new_name=basename)
 		self.refresh()
 		self.select(basename)
 

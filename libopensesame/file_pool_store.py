@@ -220,7 +220,7 @@ class file_pool_store(object):
 
 		return len(os.listdir(self.folder()))
 
-	def add(self, path):
+	def add(self, path, new_name=None):
 
 		"""
 		desc:
@@ -231,12 +231,19 @@ class file_pool_store(object):
 				desc:	The full path to the file on disk.
 				type:	[str, unicode]
 
+		keywords:
+			new_name:
+				desc:	A new name for the file in the pool, or None to use the
+						file's original name.
+				type:	[str, NoneType]
+
 		example: |
 			pool.add(u'/home/username/Pictures/my_ing.png')
 		"""
 
-		shutil.copyfile(path,
-			os.path.join(self.__folder__, os.path.basename(path)))
+		if new_name is None:
+			new_name = os.path.basename(path)
+		shutil.copyfile(path, os.path.join(self.__folder__, new_name))
 
 	def files(self):
 
@@ -298,6 +305,25 @@ class file_pool_store(object):
 		"""
 
 		return self.__folder__
+
+	def in_folder(self, path):
+
+		"""
+		desc:
+			Checks whether path is in the pool folder. This is different from
+			the `path in pool` syntax in that it only checks the main pool
+			folder, and not the fallback pool folder and experiment folder.
+
+		arguments:
+			path:
+				desc:	A file basename to check.
+				type:	str
+
+		returns:
+			type:	bool
+		"""
+
+		return os.path.exists(os.path.join(self.__folder__, path))
 
 	def folders(self, include_fallback_folder=True,
 		include_experiment_path=False):

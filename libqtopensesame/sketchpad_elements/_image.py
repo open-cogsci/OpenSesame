@@ -33,9 +33,10 @@ class image(base_element, image_runtime):
 	@classmethod
 	def mouse_press(cls, sketchpad, pos):
 
-		_file = sketchpad.main_window.select_from_pool(
+		from libqtopensesame.widgets import pool_widget
+		_file = pool_widget.select_from_pool(sketchpad.main_window,
 			parent=sketchpad._edit_widget)
-		if _file is None:
+		if _file == u'':
 			return None
 		properties = {
 			u'x':		pos[0],
