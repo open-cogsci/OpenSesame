@@ -258,6 +258,9 @@ class base_runner(object):
 
 		if cfg.reset_console_on_experiment_start:
 			self.console.reset()
+		self.main_window.set_run_status(u'running')
+		self.main_window.extension_manager.fire(u'run_experiment',
+			fullscreen=fullscreen)
 		self.console.capture_stdout()
 		self.console.write(u'\n')
 		if not self.init_experiment(quick=quick, fullscreen=fullscreen,
@@ -271,6 +274,9 @@ class base_runner(object):
 			self.on_success(quick=quick)
 		self.console.set_workspace_globals(self.workspace_globals())
 		self.console.show_prompt()
+		self.main_window.set_run_status(u'finished')
+		self.main_window.extension_manager.fire(u'end_experiment')
+
 
 	def workspace_globals(self):
 
@@ -291,6 +297,7 @@ class base_runner(object):
 		self.console.set_workspace_globals(self.workspace_globals())
 		print(u'The experiment has been paused. Switch back to the experiment window and press space to resume.')
 		self.console.show_prompt()
+		self.main_window.set_run_status(u'paused')
 		self.main_window.setDisabled(False)
 		self.main_window.action_run_in_window.setDisabled(True)
 		self.main_window.action_run.setDisabled(True)
@@ -298,9 +305,12 @@ class base_runner(object):
 		self.main_window.action_quit.setDisabled(True)
 		self.main_window.raise_()
 		self.main_window.activateWindow()
+		self.main_window.extension_manager.fire(u'pause_experiment')
 
 	def resume(self):
 
+		self.main_window.set_run_status(u'running')
+		self.main_window.extension_manager.fire(u'resume_experiment')
 		self.main_window.action_run_in_window.setDisabled(False)
 		self.main_window.action_run.setDisabled(False)
 		self.main_window.action_run_quick.setDisabled(False)

@@ -91,9 +91,8 @@ class log(object):
 
 		if self._all_vars is None:
 			self._all_vars = []
-			for var, val, _item in self.experiment.var_list():
+			for var in self.experiment.var.inspect():
 				self._all_vars.append(var)
-			self._all_vars.sort()
 		return self._all_vars
 
 	def open(self, path):

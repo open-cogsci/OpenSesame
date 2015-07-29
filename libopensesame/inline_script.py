@@ -24,6 +24,10 @@ from libopensesame import item
 from openexp import canvas
 from libopensesame.exceptions import osexception
 
+extract_old_style = re.compile(
+	r'(self.experiment.set|exp.set|var.set)\(u?[\'"]([_a-zA-Z]+[_a-zA-Z0-9]*)[\'"]')
+extract_new_style = re.compile(r'var.([_a-zA-Z]+[_a-zA-Z0-9]*)\s*=')
+
 class inline_script(item.item):
 
 	"""
@@ -103,32 +107,12 @@ class inline_script(item.item):
 		A list of (variable, description) tuples.
 		"""
 
-		# Don't parse the script if it isn't necessary, since
-		# regular expressions are a bit slow
-		if self._var_info is not None:
-			return self._var_info
-
 		l = item.item.var_info(self)
-
-		m = re.findall( \
-			u"self.experiment.set\(\"(\w+)\"(\s*),(\s*)(\"*)([^\"\)]*)(\"*)", \
-			self.var._prepare + self.var._run) \
-			+ re.findall( \
-			u"self.experiment.set\('(\w+)'(\s*),(\s*)('*)([^'\)]*)('*)", \
-			self.var._prepare + self.var._run) \
-			+ re.findall( \
-			u"exp.set\(\"(\w+)\"(\s*),(\s*)(\"*)([^\"\)]*)(\"*)", \
-			self.var._prepare + self.var._run) \
-			+ re.findall( \
-			u"exp.set\('(\w+)'(\s*),(\s*)('*)([^'\)]*)('*)", \
-			self.var._prepare + self.var._run)
-
-		for var, s1, s2, q1, val, q2 in m:
-			if q1 != u'"':
-				val = u'[Set to \'%s\']' % val
-			l.append( (var, val) )
-		self._var_info = l
-
+		script = self._prepare + self._run
+		for dummy, var in re.findall(extract_old_style, script):
+			l.append( (var, None) )
+		for var in re.findall(extract_new_style, script):
+			l.append( (var, None) )
 		return l
 
 	def copy_sketchpad(self, sketchpad_name):

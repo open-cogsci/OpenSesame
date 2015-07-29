@@ -226,6 +226,7 @@ class fallback_console(base_console, QtGui.QPlainTextEdit):
 		self.pyterm.set_locals()
 		self.set_workspace_globals()
 		self.clear()
+		super(ipython_console, self).reset()
 
 	def write(self, s):
 

@@ -79,6 +79,7 @@ class qtopensesame(QtGui.QMainWindow, base_component):
 		self.codename = metadata.codename
 		self.lock_refresh = False
 		self.unsaved_changes = False
+		self._run_status = u'inactive'
 
 		# Make sure that QProgEdit doesn't complain about some standard names,
 		# and register the bundled monospace font (Droid Sans Mono) so that we
@@ -148,8 +149,6 @@ class qtopensesame(QtGui.QMainWindow, base_component):
 		self.ui.action_onetabmode.triggered.connect(
 			self.ui.tabwidget.toggle_onetabmode)
 		self.ui.action_show_overview.triggered.connect(self.toggle_overview)
-		self.ui.action_show_variable_inspector.triggered.connect(
-			self.refresh_variable_inspector)
 		self.ui.action_show_pool.triggered.connect(
 			self.toggle_pool)
 		self.ui.action_show_stdout.triggered.connect(self.refresh_stdout)
@@ -166,15 +165,6 @@ class qtopensesame(QtGui.QMainWindow, base_component):
 		self.ui.dock_overview.show()
 		self.ui.dock_overview.visibilityChanged.connect( \
 			self.ui.action_show_overview.setChecked)
-
-		# Setup the variable inspector
-		from libqtopensesame.widgets.variable_inspector import \
-			variable_inspector
-		self.ui.variable_inspector = variable_inspector(self)
-		self.ui.dock_variable_inspector.hide()
-		self.ui.dock_variable_inspector.visibilityChanged.connect(
-			self.ui.action_show_variable_inspector.setChecked)
-		self.ui.dock_variable_inspector.setWidget(self.ui.variable_inspector)
 
 		# Setup the file pool
 		from libqtopensesame.widgets.pool_widget import pool_widget
@@ -195,9 +185,6 @@ class qtopensesame(QtGui.QMainWindow, base_component):
 			QtGui.QKeySequence(), self, self.ui.tabwidget.setFocus)
 		self.ui.shortcut_stdout = QtGui.QShortcut( \
 			QtGui.QKeySequence(), self, self.ui.console.setFocus)
-		self.ui.shortcut_variables = QtGui.QShortcut( \
-			QtGui.QKeySequence(), self, \
-			self.ui.variable_inspector.set_focus)
 		self.ui.shortcut_pool = QtGui.QShortcut( \
 			QtGui.QKeySequence(), self, \
 			self.ui.pool_widget.ui.edit_pool_filter.setFocus)
@@ -214,7 +201,6 @@ class qtopensesame(QtGui.QMainWindow, base_component):
 		self.update_recent_files()
 		self.set_unsaved(False)
 		self.init_custom_fonts()
-		self.ui.variable_inspector.refresh()
 
 		# Initialize extensions
 		self.extension_manager = extension_manager(self)
@@ -328,8 +314,6 @@ class qtopensesame(QtGui.QMainWindow, base_component):
 			cfg.shortcut_tabwidget))
 		self.ui.shortcut_stdout.setKey(QtGui.QKeySequence(cfg.shortcut_stdout))
 		self.ui.shortcut_pool.setKey(QtGui.QKeySequence(cfg.shortcut_pool))
-		self.ui.shortcut_variables.setKey(QtGui.QKeySequence( \
-			cfg.shortcut_variables))
 		# Unpack the string with recent files and only remember those that exist
 		for path in cfg.recent_files.split(u";;"):
 			if os.path.exists(path):
@@ -552,22 +536,6 @@ class qtopensesame(QtGui.QMainWindow, base_component):
 		self.ui.dock_pool.setVisible(True)
 		self.ui.pool_widget.refresh()
 
-	def refresh_variable_inspector(self, dummy=None):
-
-		"""
-		Refresh the variable inspector and sets the visibility based on the menu
-		action status
-
-		Keyword arguments:
-		dummy -- a dummy argument passed by the signal handler
-		"""
-
-		if self.ui.action_show_variable_inspector.isChecked():
-			self.ui.dock_variable_inspector.setVisible(True)
-			self.ui.variable_inspector.refresh()
-		else:
-			self.ui.dock_variable_inspector.setVisible(False)
-
 	def closeEvent(self, e):
 
 		"""
@@ -690,9 +658,17 @@ class qtopensesame(QtGui.QMainWindow, base_component):
 		self.set_auto_response()
 		self.set_unsaved(False)
 		self.ui.pool_widget.refresh()
-		self.ui.variable_inspector.refresh()
+		self.ui.console.reset()
 		self.extension_manager.fire(u'open_experiment', path=path)
 		self.set_busy(False)
+
+	def set_run_status(self, status):
+
+		self._run_status = status
+
+	def run_status(self):
+
+		return self._run_status
 
 	def save_file(self):
 
@@ -868,7 +844,6 @@ class qtopensesame(QtGui.QMainWindow, base_component):
 						testing the experiment. (default=False)
 		"""
 
-		self.extension_manager.fire(u'run_experiment', fullscreen=fullscreen)
 		# Disable the entire Window, so that we can't interact with OpenSesame.
 		# TODO: This should be more elegant, so that we selectively disable
 		# parts of the GUI.
@@ -896,7 +871,6 @@ class qtopensesame(QtGui.QMainWindow, base_component):
 		# Re-enable the GUI.
 		if sys.platform != 'darwin':
 			self.setDisabled(False)
-		self.extension_manager.fire(u'end_experiment')
 
 	def run_experiment_in_window(self):
 

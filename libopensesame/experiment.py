@@ -621,34 +621,6 @@ class experiment(item.item):
 			l.append( (var, self.var.get(var)) )
 		return l
 
-	def var_list(self, filt=u''):
-
-		"""
-		Returns a list of (name, value, description) tuples with variable
-		descriptions for all items
-
-		Keyword arguments:
-		filt	--	A search string to filter by. (default=u'')
-
-		Returns:
-		A list of tupless
-		"""
-
-		l = []
-		# Create a dictionary of items that also includes the experiment
-		item_dict = dict(list(self.items.items()) + [(u'global', self)]).items()
-		seen = []
-		for item_name, item in item_dict:
-			# Create a dictionary of variables that includes the broadcasted
-			# ones as wel as the indirectly registered ones (using item.set())
-			var_dict = item.var_info() + item.var.items()
-			for var, val in var_dict:
-				if var not in seen and (filt in var.lower() or filt in \
-					safe_decode(val).lower() or filt in item_name.lower()):
-					l.append( (var, val, item_name) )
-					seen.append(var)
-		return l
-
 	def init_random(self):
 
 		"""

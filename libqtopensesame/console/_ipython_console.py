@@ -131,12 +131,19 @@ class ipython_console(base_console, QtGui.QWidget):
 		self.kernel.shell.reset()
 		self.kernel.shell.push(self.default_globals())
 		self.clear()
+		super(ipython_console, self).reset()
 
 	def show_prompt(self):
 
 		"""See base_console."""
 
 		self.control._show_interpreter_prompt()
+
+	def get_workspace_globals(self):
+
+		"""See base_console."""
+
+		return self.kernel.shell.user_global_ns.copy()
 
 	def set_workspace_globals(self, _globals={}):
 

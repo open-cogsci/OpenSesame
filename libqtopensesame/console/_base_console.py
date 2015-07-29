@@ -126,7 +126,19 @@ class base_console(base_subcomponent):
 			workspace.
 		"""
 
-		pass
+		self.main_window.set_run_status(u'inactive')
+		self.main_window.extension_manager.fire(u'reset_console')
+
+	def get_workspace_globals(self):
+
+		"""
+		returns:
+			desc:	The console's globals dict.
+			type:	dict
+
+		"""
+
+		return {}
 
 	def set_workspace_globals(self, _globals={}):
 

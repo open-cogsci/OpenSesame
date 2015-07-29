@@ -332,6 +332,55 @@ class var_store(object):
 
 		return list(self.__vars__.items())
 
+	def inspect(self):
+
+		d = {}
+		for item_name, item in self.__item__.items.items() \
+			+ [(u'global', self.__item__)]:
+			for var, desc in item.var_info():
+				if var not in d:
+					d[var] = {u'source' : []}
+				d[var][u'source'].append(item_name)
+				d[var][u'value'] = None
+				d[var][u'alive'] = False
+		for var in self:
+			if var not in d:
+				d[var] = {u'source' : [u'?']}
+			d[var][u'value'] = self.get(var)
+			d[var][u'alive'] = True
+		return d
+
+	def __reduce__(self):
+
+		return (var_store_pickle, (self.inspect(), ))
+
+class var_store_pickle(var_store):
+
+	def __init__(self, inspect):
+
+		object.__setattr__(self, u'__inspect__', inspect)
+		_vars = {}
+		for var, info in inspect.items():
+			if info[u'alive']:
+				_vars[var] = info[u'value']
+		object.__setattr__(self, u'__vars__', _vars)
+
+	def __contains__(self, var):
+
+		if var in self.__vars__:
+			return True
+		return False
+
+	def get(self, var, default=None, _eval=True, valid=None):
+
+		if var not in self:
+			raise AttributeError(u'The variable %s does not exist' % var)
+		return self.__vars__[var]
+
+	def inspect(self):
+
+		return self.__inspect__
+
 class var_store_iterator(object):
 
 	def __init__(self, var):

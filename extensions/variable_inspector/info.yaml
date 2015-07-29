@@ -1,0 +1,13 @@
+description: Graphical variable inspector
+icon: os-inspector
+label: Show variable inspector
+shortcut: Ctrl+I
+checkable: true
+menu:
+  index: 8
+  submenu: View
+toolbar:
+  index: 14
+settings:
+  variable_inspector_visible: false
+tooltip: Show variable inspector
