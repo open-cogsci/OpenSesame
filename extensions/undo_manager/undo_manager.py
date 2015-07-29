@@ -163,7 +163,6 @@ class undo_manager(base_extension):
 		key1, state1 = self.stack.peek(-1)
 		key2, state2 = self.stack.peek(-2)
 		if key1 == key2 == u'__experiment__' and state1 == state2:
-			print('Prune unchanged!')
 			self.stack.history = self.stack.history[:-2]
 			return True
 		return False
