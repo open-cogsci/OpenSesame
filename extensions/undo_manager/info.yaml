@@ -1,11 +1,12 @@
-description: Implements undo
-icon: edit-undo
-label: Undo
-shortcut: Alt+Ctrl+Z
+description: Implements undo/ redo
+icon: edit-redo
+label: Redo
+shortcut: Alt+Ctrl+Shift+Z
+tooltip: Redo most recently undone action
 menu:
   index: 0
   separator_after: true
-  submenu: Tools
+  submenu: Edit
 toolbar:
   index: -1
   separator_before: true

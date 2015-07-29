@@ -18,127 +18,212 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame.py3compat import *
-from libqtopensesame.extensions import base_extension
-from libqtopensesame.misc.config import cfg
+from libqtopensesame.extensions import base_extension, suspend_events
+from libqtopensesame.misc import _
+from PyQt4.QtGui import QMenu, QToolBar
+from undo_stack import undo_stack
 import difflib
-
-class undo_stack(object):
-
-	def __init__(self):
-
-		self.current = {}
-		self.history = []
-
-	def add(self, key, state):
-
-		if key in self.current:
-			if self.current[key] == state:
-				return
-			self.history.append( (key, self.current[key]) )
-		self.current[key] = state
-		if len(self.history) > cfg.max_undo_history:
-			self.history = self.history[-cfg.max_undo_history:]
-
-	def can_undo(self):
-
-		return len(self.history) > 0
-
-	def __len__(self):
-
-		return len(self.history)
-
-	def pop(self):
-
-		if len(self.history) == 0:
-			return None, None
-		key, state = self.history.pop()
-		self.current[key] = state
-		return key, state
-
-	def last(self):
-
-		if len(self.history) == 0:
-			return None, None
-		return self.history[-1]
 
 class undo_manager(base_extension):
 
+	"""
+	desc:
+		An extension that implements undo/ redo.
+	"""
+
 	def event_startup(self):
 
+		"""
+		desc:
+			Initializes the extension on startup.
+		"""
+
+		self.undo_action = self.qaction(u'edit-undo', _(u'Undo'), self.undo,
+			tooltip=_(u'Undo most recent action'),
+			shortcut=u'Alt+Ctrl+Z')
+		for w in self.action.associatedWidgets():
+			if not isinstance(w, QMenu) and not isinstance(w, QToolBar):
+				continue
+			w.insertAction(self.action, self.undo_action)
 		self.initialize()
 		self.console.set_workspace_globals({u'undo_manager' : self})
 
 	def event_open_experiment(self, path):
 
-		self.initialize()
-
-	def event_regenerate(self):
-
-		self.initialize()
-
-	def event_delete_item(self, name):
-
-		self.initialize()
-
-	def event_rename_item(self, from_name, to_name):
-
-		self.initialize()
-
-	def event_purge_unused_items(self):
+		"""
+		desc:
+			Re-initializes when a new experiment is opened.
+		"""
 
 		self.initialize()
 
 	def event_change_item(self, name):
 
-		if self.in_undo:
-			return
+		"""
+		desc:
+			Remember an items state when it has changed.
+		"""
+
 		self.remember_item_state(name)
 
 	def activate(self):
 
-		self.undo()
+		"""
+		desc:
+			Activated the redo action (undo is added as custom action in
+			event_startup).
+		"""
+
+		self.redo()
 
 	def initialize(self):
 
+		"""
+		desc:
+			Initializes an empty undo stack.
+		"""
+
 		self.stack = undo_stack()
-		self.in_undo = False
 		for item in self.experiment.items:
 			self.remember_item_state(item)
+		self.undo_action.setEnabled(self.stack.can_undo())
+
+	def remember_experiment_state_before(self):
+
+		"""
+		desc:
+			Remember the entire experiment state before it has changed.
+		"""
+
+		self.remember_experiment_state()
+
+	def remember_experiment_state_after(self):
+
+		"""
+		desc:
+			Remember the entire experiment state after it has changed, and
+			update the current-item status. If no change has actually occurred
+			the last two experiments are discarded.
+		"""
+
+		self.remember_experiment_state()
+		if self.prune_unchanged_experiment():
+			return
+		for item in self.experiment.items:
+			self.make_current(item)
+
+	def make_current(self, item):
+
+		"""
+		desc:
+			Update the current-item status for one item.
+
+		arguments:
+			item:	The item name.
+		"""
+
+		script = self.experiment.items[item].to_string()
+		self.stack.set_current(item, script)
 
 	def remember_item_state(self, item):
 
+		"""
+		desc:
+			Push the state of an item to the undo stack.
+
+		arguments:
+			item:	The item name.
+		"""
+
 		script = self.experiment.items[item].to_string()
 		self.stack.add(item, script)
-		self.set_enabled(self.stack.can_undo())
+		self.set_enabled(self.stack.can_redo())
+		self.undo_action.setEnabled(self.stack.can_undo())
 
-	def undo(self, n=1):
+	def remember_experiment_state(self):
 
-		n = min(n, len(self.stack))
-		if n <= 0:
+		"""
+		desc:
+			Push the state of the entire experiment to the undo stack.
+		"""
+
+		script = self.experiment.to_string()
+		self.stack.add(u'__experiment__', script)
+		self.set_enabled(self.stack.can_redo())
+		self.undo_action.setEnabled(self.stack.can_undo())
+
+	def prune_unchanged_experiment(self):
+
+		"""
+		desc:
+			If the last two items on the undo stack are full experiments, and
+			there is no change between them, discard them.
+		"""
+
+		key1, state1 = self.stack.peek(-1)
+		key2, state2 = self.stack.peek(-2)
+		if key1 == key2 == u'__experiment__' and state1 == state2:
+			print('Prune unchanged!')
+			self.stack.history = self.stack.history[:-2]
+			return True
+		return False
+
+	@suspend_events
+	def undo(self, dummy=False):
+
+		"""
+		desc:
+			Perform an undo action.
+		"""
+
+		if len(self.stack) == 0:
 			return
-		self.in_undo = True
-		for i in range(n):
-			item, script = self.stack.pop()
+		item, script = self.stack.undo()
+		if item == u'__experiment__':
+			self.main_window.regenerate(script)
+		else:
 			if item not in self.experiment.items:
-				break
+				return
 			self.experiment.items[item].from_string(script)
-		if item in self.experiment.items:
 			self.experiment.items[item].update()
 			self.experiment.items[item].open_tab()
-		self.in_undo = False
-		self.set_enabled(self.stack.can_undo())
+		self.set_enabled(self.stack.can_redo())
+		self.undo_action.setEnabled(self.stack.can_undo())
+
+	@suspend_events
+	def redo(self):
+
+		"""
+		desc:
+			Perform a redo action.
+		"""
+
+		item, script = self.stack.redo()
+		if item not in self.experiment.items:
+			return
+		self.experiment.items[item].from_string(script)
+		self.experiment.items[item].update()
+		self.experiment.items[item].open_tab()
+		self.set_enabled(self.stack.can_redo())
+		self.undo_action.setEnabled(self.stack.can_undo())
 
 	def show(self):
 
-		item, old_script = self.stack.last()
+		"""
+		desc:
+			Print a summary of undo actions to the debug window.
+		"""
+
+		item, old_script = self.stack.peek()
 		if item is None:
 			print(u'\nThe undo stack is empty')
 			return
-		self.console.write(
-			u'\nShowing most recent undo operation (of %d):\n\n' \
-			% len(self.stack))
-		self.console.write(u'item: %s\n\n' % item)
-		new_script = self.stack.current[item]
+		self.console.write(u'\nMost recent: %s\n\n' % item)
+		if item == u'__experiment__':
+			old_script = self.stack.peek(-2)[1]
+			new_script = self.stack.peek(-1)[1]
+		else:
+			new_script = self.stack.current[item][0]
 		for line in difflib.ndiff(old_script.splitlines(),
 			new_script.splitlines()):
 			if line.startswith(u'+'):
@@ -149,3 +234,44 @@ class undo_manager(base_extension):
 				continue
 			self.console.write(line + u'\n')
 		self.console.write(u'\x1b[0m')
+		self.console.write(u'\nFull stack:\n\n')
+		for i, (item, script) in enumerate(self.stack.history[::-1]):
+			self.console.write(u'%d - %s\n' % (i, item))
+
+	# All these events simply undo by restoring the complete experiment state.
+	# This is crude, but works for now.
+
+	def event_prepare_regenerate(self):
+		self.extension_manager.suspend_until(u'regenerate')
+		self.remember_experiment_state_before()
+
+	def event_regenerate(self):
+		self.remember_experiment_state_after()
+
+	def event_prepare_delete_item(self, name):
+		self.extension_manager.suspend_until(u'delete_item')
+		self.remember_experiment_state_before()
+
+	def event_delete_item(self, name):
+		self.remember_experiment_state_after()
+
+	def event_prepare_rename_item(self, from_name, to_name):
+		self.extension_manager.suspend_until(u'rename_item')
+		self.remember_experiment_state_before()
+
+	def event_rename_item(self, from_name, to_name):
+		self.remember_experiment_state_after()
+
+	def event_prepare_purge_unused_items(self):
+		self.extension_manager.suspend_until(u'purge_unused_items')
+		self.remember_experiment_state_before()
+
+	def event_purge_unused_items(self):
+		self.remember_experiment_state_after()
+
+	def event_prepare_change_experiment(self):
+		self.extension_manager.suspend_until(u'change_experiment')
+		self.remember_experiment_state_before()
+
+	def event_change_experiment(self):
+		self.remember_experiment_state_after()

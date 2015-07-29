@@ -58,7 +58,7 @@
      <x>0</x>
      <y>0</y>
      <width>920</width>
-     <height>21</height>
+     <height>31</height>
     </rect>
    </property>
    <widget class="QMenu" name="menu_file">
@@ -114,10 +114,16 @@
     </property>
     <addaction name="action_preferences"/>
    </widget>
+   <widget class="QMenu" name="menu_edit">
+    <property name="title">
+     <string>Edit</string>
+    </property>
+   </widget>
    <addaction name="menu_file"/>
-   <addaction name="menu_run"/>
+   <addaction name="menu_edit"/>
    <addaction name="menu_view"/>
    <addaction name="menu_tools"/>
+   <addaction name="menu_run"/>
   </widget>
   <widget class="QDockWidget" name="dock_overview">
    <property name="minimumSize">
