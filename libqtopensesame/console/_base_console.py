@@ -22,6 +22,7 @@ import sys
 from libqtopensesame.misc.base_subcomponent import base_subcomponent
 from libqtopensesame.misc.config import cfg
 from libopensesame import misc
+from libopensesame import metadata
 if py3:
 	from io import StringIO
 else:
@@ -196,11 +197,11 @@ class base_console(base_subcomponent):
 			A banner shown when initializing the debug window.
 		"""
 
-		s = u'''Python %d.%d.%d
+		s = u'''Python %s
 
 * Type "help()", "copyright()", "credits()" or "license()" for more information.
 * Type "print(modules())" for details about installed modules and version information.
 * Use the "print([msg])" function in inline_script items to print to this debug window.
 * Inspect inline_script variables when an experiment is finished.
-''' % (sys.version_info[0], sys.version_info[1], sys.version_info[2])
+''' % metadata.python_version
 		return s
