@@ -45,7 +45,8 @@ class credits_widget(base_widget):
 		self.ui.label_opensesame.setText(self.ui.label_opensesame.text() % {
 			u'version' : metadata.__version__,
 			u'codename' : metadata.codename,
-			u'channel' : metadata.channel
+			u'channel' : metadata.channel,
+			u'python_version' : metadata.python_version
 			})
 		self.ui.label_website.mousePressEvent = self.open_website
 		self.ui.label_facebook.mousePressEvent = self.open_facebook
