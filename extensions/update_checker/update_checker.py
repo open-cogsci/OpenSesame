@@ -36,7 +36,10 @@ class update_checker(base_extension):
 
 	def check_for_updates(self, always=True):
 
-		import urllib
+		if py3:
+			from urllib.request import urlopen
+		else:
+			from urllib2 import urlopen
 		from distutils.version import StrictVersion
 		from libopensesame import metadata
 		import yaml
@@ -47,7 +50,7 @@ class update_checker(base_extension):
 		debug.msg(u"opening %s" % cfg.remote_metadata_url)
 		success = True
 		try:
-			fd = urllib.urlopen(cfg.remote_metadata_url)
+			fd = urlopen(cfg.remote_metadata_url)
 			s = fd.read()
 			fd.close()
 		except:

@@ -348,7 +348,7 @@ class var_store(object):
 		"""
 
 		d = {}
-		for item_name, item in self.__item__.items.items() \
+		for item_name, item in list(self.__item__.items.items()) \
 			+ [(u'global', self.__item__)]:
 			for var, desc in item.var_info():
 				if var not in d:
