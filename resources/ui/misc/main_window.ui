@@ -28,8 +28,17 @@
     <property name="spacing">
      <number>4</number>
     </property>
-    <property name="margin">
+    <property name="leftMargin">
+     <number>2</number>
+    </property>
+    <property name="topMargin">
      <number>4</number>
+    </property>
+    <property name="rightMargin">
+     <number>2</number>
+    </property>
+    <property name="bottomMargin">
+     <number>2</number>
     </property>
     <item>
      <widget class="tab_widget" name="tabwidget">
@@ -104,7 +113,6 @@
     <addaction name="action_onetabmode"/>
     <addaction name="separator"/>
     <addaction name="action_show_overview"/>
-    <addaction name="action_show_variable_inspector"/>
     <addaction name="action_show_pool"/>
     <addaction name="action_show_stdout"/>
    </widget>
@@ -129,7 +137,7 @@
    <property name="minimumSize">
     <size>
      <width>200</width>
-     <height>120</height>
+     <height>121</height>
     </size>
    </property>
    <property name="features">
@@ -143,6 +151,21 @@
    </attribute>
    <widget class="QWidget" name="dock_widget_overview">
     <layout class="QVBoxLayout" name="verticalLayout">
+     <property name="spacing">
+      <number>4</number>
+     </property>
+     <property name="leftMargin">
+      <number>2</number>
+     </property>
+     <property name="topMargin">
+      <number>4</number>
+     </property>
+     <property name="rightMargin">
+      <number>2</number>
+     </property>
+     <property name="bottomMargin">
+      <number>2</number>
+     </property>
      <item>
       <widget class="tree_overview" name="itemtree">
        <property name="autoExpandDelay">
@@ -161,20 +184,6 @@
     </layout>
    </widget>
   </widget>
-  <widget class="QDockWidget" name="dock_variable_inspector">
-   <property name="allowedAreas">
-    <set>Qt::AllDockWidgetAreas</set>
-   </property>
-   <property name="windowTitle">
-    <string>Variable inspector</string>
-   </property>
-   <attribute name="dockWidgetArea">
-    <number>2</number>
-   </attribute>
-   <widget class="QWidget" name="dock_variable_inspector_widget">
-    <layout class="QVBoxLayout" name="verticalLayout_2"/>
-   </widget>
-  </widget>
   <widget class="QDockWidget" name="dock_pool">
    <property name="sizePolicy">
     <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
@@ -189,7 +198,23 @@
     <number>2</number>
    </attribute>
    <widget class="QWidget" name="dock_pool_widget">
-    <layout class="QVBoxLayout" name="verticalLayout_3"/>
+    <layout class="QVBoxLayout" name="verticalLayout_3">
+     <property name="spacing">
+      <number>4</number>
+     </property>
+     <property name="leftMargin">
+      <number>2</number>
+     </property>
+     <property name="topMargin">
+      <number>4</number>
+     </property>
+     <property name="rightMargin">
+      <number>2</number>
+     </property>
+     <property name="bottomMargin">
+      <number>2</number>
+     </property>
+    </layout>
    </widget>
   </widget>
   <widget class="QDockWidget" name="dock_stdout">
@@ -204,6 +229,21 @@
    </attribute>
    <widget class="QWidget" name="dockWidgetContents_3">
     <layout class="QVBoxLayout" name="verticalLayout_4">
+     <property name="spacing">
+      <number>4</number>
+     </property>
+     <property name="leftMargin">
+      <number>2</number>
+     </property>
+     <property name="topMargin">
+      <number>4</number>
+     </property>
+     <property name="rightMargin">
+      <number>2</number>
+     </property>
+     <property name="bottomMargin">
+      <number>2</number>
+     </property>
      <item>
       <widget class="QWidget" name="widget_5" native="true">
        <layout class="QHBoxLayout" name="horizontalLayout_6">
@@ -240,9 +280,6 @@
              <property name="text">
               <string/>
              </property>
-             <property name="flat">
-              <bool>false</bool>
-             </property>
             </widget>
            </item>
            <item>
@@ -258,7 +295,7 @@
            <item>
             <widget class="QPushButton" name="button_reset_console">
              <property name="toolTip">
-              <string>Reset debug window</string>
+              <string>Reset workspace</string>
              </property>
              <property name="text">
               <string/>
@@ -322,7 +359,6 @@
    <addaction name="separator"/>
    <addaction name="action_show_overview"/>
    <addaction name="action_show_pool"/>
-   <addaction name="action_show_variable_inspector"/>
    <addaction name="action_show_stdout"/>
   </widget>
   <widget class="toolbar_items" name="toolbar_items">
@@ -554,24 +590,6 @@
    </property>
    <property name="text">
     <string>Check for updates</string>
-   </property>
-  </action>
-  <action name="action_show_variable_inspector">
-   <property name="checkable">
-    <bool>true</bool>
-   </property>
-   <property name="icon">
-    <iconset>
-     <normaloff>:/icons/variable_inspector_large.png</normaloff>:/icons/variable_inspector_large.png</iconset>
-   </property>
-   <property name="text">
-    <string>Show variable inspector</string>
-   </property>
-   <property name="toolTip">
-    <string>Show variable inspector (Control+I)</string>
-   </property>
-   <property name="shortcut">
-    <string>Ctrl+I</string>
    </property>
   </action>
   <action name="action_add_sampler">

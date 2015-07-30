@@ -13,14 +13,16 @@ a:hover {
 }
 
 h1 {
-	border-bottom: dotted 1px #3465a4; 
-	font-size: 1.5em;
+	border-bottom: dotted 1px #3465a4;
+	font-size: 2em;
+	font-weight: normal;
 	color: #3465a4
 }
 
 h2 {
-	border-bottom: dotted 1px #3465a4; 
-	font-size: 1.1em;
+	border-bottom: dotted 1px #3465a4;
+	font-size: 1.5em;
+	font-weight: normal;
 	color: #3465a4;
 }
 

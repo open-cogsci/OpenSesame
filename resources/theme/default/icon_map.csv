@@ -55,7 +55,7 @@ button_browse_pool,folder-open,16
 button_cancel,window-close,
 button_circle,os-circle,
 button_clear_console,edit-clear,
-button_reset_console,view-refresh,
+button_reset_console,process-stop,
 button_close,window-close,
 button_colorpicker,text-css,16
 button_edit_script,utilities-terminal,16

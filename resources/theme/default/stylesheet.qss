@@ -1,10 +1,3 @@
-#sequence_container {
-	border: none;
-	border-bottom-color: black;
-	border-bottom-width: 1px;
-	border-bottom-style: dotted;
-}
-
 #label_contribute,
 #label_donate,
 #label_cogscinl,
@@ -113,4 +106,8 @@ QDockWidget::close-button:hover {
 
 QDockWidget::float-button:hover {
 	background: #8ae234;
+}
+
+QTabWidget QTreeView::item {
+	padding: 4px;
 }
