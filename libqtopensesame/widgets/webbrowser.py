@@ -194,7 +194,6 @@ class webbrowser(base_widget):
 		"""
 
 		url = url.toString()
-		print(url)
 		if url.startswith(u'opensesame://'):
 			self.command(url)
 			return
@@ -219,7 +218,6 @@ class webbrowser(base_widget):
 		"""
 
 		cmd = cmd[13:]
-		print(cmd)
 		# This is quite a hacky workaround for Windows. The file paths are
 		# automatically transformed into a Unix-like slashforward format.
 		# Windows therefore cannot find the paths anymomre. To fix this, we
@@ -249,6 +247,5 @@ class webbrowser(base_widget):
 			elif len(cmd) == 3 and cmd[1] in [u'extension', u'plugin']:
 				path = os.path.join(plugins.plugin_folder(cmd[2], _type=cmd[1]),
 					cmd[2]+u'.md')
-				print(path)
 				self.load(path)
 			return
