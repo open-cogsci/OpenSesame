@@ -726,7 +726,7 @@
     <string>Show overview area</string>
    </property>
    <property name="shortcut">
-    <string>Ctrl+Shift+O</string>
+    <string>Ctrl+\</string>
    </property>
   </action>
   <action name="action_onetabmode">
