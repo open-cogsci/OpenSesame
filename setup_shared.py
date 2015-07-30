@@ -60,5 +60,6 @@ included_extensions = [
 	'opensesame_3_notifications',
 	'example_experiments',
 	'undo_manager',
-	'bug_report'
+	'bug_report',
+	'variable_inspector'
 	]

@@ -507,10 +507,11 @@ if include_sounds:
 # Create a zip release of the folder
 if release_zip:
 	import zipfile
-	target_folder = 'opensesame_%s-py%s-win32-%s' \
+	target_folder = u'opensesame_%s-py%s-win32-%s' \
 		% (libopensesame.__version__, python_version, release_build)
-	target_zip = target_folder + '.zip'
-	shutil.move('dist', target_folder)
+	target_zip = target_folder + u'.zip'
+	print('zipping to %s' % target_zip)
+	shutil.move(u'dist', target_folder)
 	zipf = zipfile.ZipFile(target_zip, 'w', zipfile.ZIP_DEFLATED)
 	for root, dirs, files in os.walk(target_folder):
 		for file in files:
