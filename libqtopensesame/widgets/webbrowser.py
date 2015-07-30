@@ -20,10 +20,9 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 import platform
 from PyQt4 import QtCore, QtGui, QtWebKit
 from libqtopensesame.widgets.base_widget import base_widget
-from libopensesame import debug
+from libopensesame import debug, plugins
 from libopensesame.py3compat import *
 import os.path
-import sys
 
 class small_webview(QtWebKit.QWebView):
 
@@ -195,6 +194,7 @@ class webbrowser(base_widget):
 		"""
 
 		url = url.toString()
+		print(url)
 		if url.startswith(u'opensesame://'):
 			self.command(url)
 			return
@@ -219,6 +219,7 @@ class webbrowser(base_widget):
 		"""
 
 		cmd = cmd[13:]
+		print(cmd)
 		# This is quite a hacky workaround for Windows. The file paths are
 		# automatically transformed into a Unix-like slashforward format.
 		# Windows therefore cannot find the paths anymomre. To fix this, we
@@ -241,4 +242,13 @@ class webbrowser(base_widget):
 			return
 		if len(cmd) == 2 and cmd[0] == u'event':
 			self.main_window.extension_manager.fire(cmd[1])
+			return
+		if len(cmd) > 1 and cmd[0] == u'help':
+			if len(cmd) == 2:
+				self.main_window.ui.tabwidget.open_help(cmd[1])
+			elif len(cmd) == 3 and cmd[1] in [u'extension', u'plugin']:
+				path = os.path.join(plugins.plugin_folder(cmd[2], _type=cmd[1]),
+					cmd[2]+u'.md')
+				print(path)
+				self.load(path)
 			return
