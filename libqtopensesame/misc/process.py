@@ -135,14 +135,14 @@ class ExperimentProcess(multiprocessing.Process):
 		print(u'Starting experiment as %s' % self.name)
 		# Run the experiment and catch any Exceptions.
 		e_run = None
-		exp.output_channel = self.output
+		exp.set_output_channel(self.output)
 		try:
 			exp.run()
 			print('done!')
 		except Exception as e_run:
 			if not isinstance(e_run, osexception):
 				e_run = osexception(u'Unexpected error', exception=e_run)
-		self.put_dict(exp.python_workspace._globals)
+		exp.transmit_workspace()
 		# End the experiment and catch any Exceptions. These exceptions are just
 		# printed out and not explicitly passed on to the user, because they are
 		# less important than the run-related exceptions.
@@ -156,17 +156,3 @@ class ExperimentProcess(multiprocessing.Process):
 			sys.exit(1)
 		# Exit with success
 		sys.exit(0)
-
-	def put_dict(self, d):
-
-		"""
-		desc:
-			Sends a dict through the queue in a pickle-safe way.
-		"""
-
-		for key, value in d.items():
-			try:
-				pickle.dumps(value)
-			except:
-				del d[key]
-		self.output.put(d)

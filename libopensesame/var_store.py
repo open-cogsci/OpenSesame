@@ -334,6 +334,19 @@ class var_store(object):
 
 	def inspect(self):
 
+		"""
+		visible: False
+
+		desc:
+			Generates a description of all experimental variables, both alive
+			and hypothetical.
+
+		returns:
+			desc:	A dict where variable names are keys, and values are dicts
+					with source, value, and alive keys.
+			type:	dict
+		"""
+
 		d = {}
 		for item_name, item in self.__item__.items.items() \
 			+ [(u'global', self.__item__)]:
@@ -352,9 +365,24 @@ class var_store(object):
 
 	def __reduce__(self):
 
+		"""
+		visible: False
+
+		desc:
+			Implements custom pickling. See var_store_pickle.
+		"""
 		return (var_store_pickle, (self.inspect(), ))
 
 class var_store_pickle(var_store):
+
+	"""
+	desc:
+		A read-only view of the var_store, which is used to inspect the Python
+		workspace in the debug window and variable inspector. The real var_store
+		is pickled using the `__reduce__()` method, transferred through the
+		experiment's output_channel, and then unpickled into a
+		`var_store_pickle` object.
+	"""
 
 	def __init__(self, inspect):
 
@@ -371,6 +399,10 @@ class var_store_pickle(var_store):
 			return True
 		return False
 
+	def __setattr__(self, var, val):
+
+		raise osexception(u'This var object is read-only')
+
 	def get(self, var, default=None, _eval=True, valid=None):
 
 		if var not in self:
@@ -382,6 +414,11 @@ class var_store_pickle(var_store):
 		return self.__inspect__
 
 class var_store_iterator(object):
+
+	"""
+	desc:
+		Implements an iterator over all variables in a var_store.
+	"""
 
 	def __init__(self, var):
 

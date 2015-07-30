@@ -26,6 +26,7 @@ from libopensesame.exceptions import osexception
 from libopensesame import misc, item, debug, metadata
 from libopensesame.py3compat import *
 import os
+import pickle
 import shutil
 import time
 import tarfile
@@ -41,7 +42,8 @@ class experiment(item.item):
 
 	def __init__(self, name=u'experiment', string=None, pool_folder=None,
 		experiment_path=None, fullscreen=False, auto_response=False,
-		logfile=u'defaultlog.csv', subject_nr=0, workspace=None, resources={}):
+		logfile=u'defaultlog.csv', subject_nr=0, workspace=None, resources={},
+		heartbeat_interval=1):
 
 		"""
 		desc:
@@ -85,6 +87,10 @@ class experiment(item.item):
 				desc:	A dictionary with names as keys and paths as values.
 						This serves as a look-up table for resources.
 				type:	dict
+			heartbeat_interval:
+				desc:	A heartbeat interval in seconds, or <= 0 to disable
+						heartbeats.
+				type:	[int, float]
 		"""
 
 		self.var = var_store(self)
@@ -101,12 +107,14 @@ class experiment(item.item):
 			self._python_workspace = workspace
 		self.running = False
 		self.auto_response = auto_response
+		self.heartbeat_interval = heartbeat_interval
 		self.plugin_folder = u'plugins'
 		self._start_response_interval = None
 		self.cleanup_functions = []
 		self.restart = False
 		self.resources = resources
 		self.paused = False
+		self.output_channel = None
 
 		# Set default variables
 		self.var.start = u'experiment'
@@ -315,6 +323,44 @@ class experiment(item.item):
 			if get_next:
 				line = next(s, None)
 
+	def transmit_workspace(self, **extra):
+
+		"""
+		desc:
+			Sends the current workspace through the output channel. If there is
+			no output channel, this function does nothing.
+
+		keyword-dict:
+			extra:	Any extra items in the workspace dict to be sent.
+		"""
+
+		if self.output_channel is None:
+			return
+		d = self.python_workspace._globals.copy()
+		d.update(extra)
+		for key, value in d.items():
+			try:
+				pickle.dumps(value)
+			except:
+				del d[key]
+		self.output_channel.put(d)
+
+	def set_output_channel(self, output_channel):
+
+		"""
+		desc:
+			Sets the output channel, which is used to communicate the workspace
+			between the experiment and the launch process (typically the GUI).
+
+		arguments:
+			output_channel:
+				desc: 	The output object, which must support a `put` method.
+		"""
+
+		if not hasattr(output_channel, u'put'):
+			raise osexception(u'Invalid output_channel: %s' % output_channel)
+		self.output_channel = output_channel
+
 	def run(self):
 
 		"""Runs the experiment."""
@@ -333,7 +379,7 @@ class experiment(item.item):
 		self.init_log()
 		self.python_workspace.init_globals()
 		self.reset_feedback()
-
+		self.init_heartbeat()
 		print(u"experiment.run(): experiment started at %s" % time.ctime())
 
 		if self.var.start in self.items:
@@ -357,37 +403,32 @@ class experiment(item.item):
 			channel.
 		"""
 
-		if not hasattr(self, u'output_channel'):
-			raise osexception(
-				u'The experiment was aborted')
 		if self.paused:
 			return
-		self.paused = True
+
 		from openexp.canvas import canvas
 		from openexp.keyboard import keyboard
-		import pickle
-		d = self.python_workspace._globals.copy()
-		for key, value in d.items():
-			try:
-				pickle.dumps(value)
-			except:
-				del d[key]
-		d[u'__pause__'] = True
-		self.output_channel.put(d)
+
+		self.paused = True
+		self.transmit_workspace(__pause__=True)
 		pause_canvas = canvas(self)
 		pause_canvas.text(
 			u'The experiment has been paused<br /><br />'
 			u'Press spacebar to resume<br />'
 			u'Press Q to quit')
-		pause_keyboard = keyboard(self, keylist=[u'space', u'q'])
+		pause_keyboard = keyboard(self, keylist=[u'space', u'q'], timeout=0)
 		pause_canvas.show()
 		try:
-			key, time = pause_keyboard.get_key()
-			if key == u'q':
-				raise osexception(u'The experiment was aborted')
+			while True:
+				key, _time = pause_keyboard.get_key()
+				if key == u'q':
+					raise osexception(u'The experiment was aborted')
+				if key == u'space':
+					break
+				time.sleep(.25)
 		finally:
 			self.paused = False
-			self.output_channel.put({'__pause__' : False})
+			self.transmit_workspace(__pause__=False)
 
 	def cleanup(self):
 
@@ -621,12 +662,25 @@ class experiment(item.item):
 			l.append( (var, self.var.get(var)) )
 		return l
 
+	def init_heartbeat(self):
+
+		"""
+		desc:
+			Initializes heartbeat.
+		"""
+
+		if self.heartbeat_interval <= 0 or self.var.fullscreen == u'yes' or \
+			self.output_channel is None:
+			self.heartbeat = None
+			return
+		from libopensesame.heartbeat import heartbeat
+		self.heartbeat = heartbeat(self, interval=self.heartbeat_interval)
+		self.heartbeat.start()
+
 	def init_random(self):
 
 		"""
-		visible: False
-
-		desc: |
+		desc:
 			Initializes the random number generators. For some reason, the numpy
 			random seed is not re-initialized when the experiment is started
 			again with the multiprocess runner, resulting in identical random

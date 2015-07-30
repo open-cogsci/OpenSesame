@@ -80,6 +80,7 @@ class qtopensesame(QtGui.QMainWindow, base_component):
 		self.lock_refresh = False
 		self.unsaved_changes = False
 		self._run_status = u'inactive'
+		self.block_close_event = False
 
 		# Make sure that QProgEdit doesn't complain about some standard names,
 		# and register the bundled monospace font (Droid Sans Mono) so that we
@@ -547,6 +548,9 @@ class qtopensesame(QtGui.QMainWindow, base_component):
 				type:	QCloseEvent
 		"""
 
+		if self.block_close_event:
+			e.ignore()
+			return
 		if debug.enabled or self.devmode:
 			libopensesame.experiment.clean_up(debug.enabled)
 			self.save_state()
@@ -844,11 +848,7 @@ class qtopensesame(QtGui.QMainWindow, base_component):
 						testing the experiment. (default=False)
 		"""
 
-		# Disable the entire Window, so that we can't interact with OpenSesame.
-		# TODO: This should be more elegant, so that we selectively disable
-		# parts of the GUI.
-		if sys.platform != 'darwin':
-			self.setDisabled(True)
+		self.enable(False)
 		print(u'\n')
 		if cfg.runner == u'multiprocess':
 			from libqtopensesame.runners import multiprocess_runner as runner
@@ -868,9 +868,7 @@ class qtopensesame(QtGui.QMainWindow, base_component):
 		_runner = runner(self)
 		_runner.run(quick=quick, fullscreen=fullscreen,
 			auto_response=self.experiment.auto_response)
-		# Re-enable the GUI.
-		if sys.platform != 'darwin':
-			self.setDisabled(False)
+		self.enable(True)
 
 	def run_experiment_in_window(self):
 
@@ -883,6 +881,29 @@ class qtopensesame(QtGui.QMainWindow, base_component):
 		"""Run the experiment without asking for subject nr and logfile"""
 
 		self.run_experiment(fullscreen=False, quick=True)
+
+	def enable(self, enabled=True):
+
+		"""
+		desc:
+			Enable or disable parts of the GUI (i.e. those parts that should be
+			disabled when the experiment is running.
+
+		arguments:
+			enabled:
+				type:	bool
+		"""
+
+		if sys.platform == 'darwin':
+			return
+		self.block_close_event = not enabled
+		self.ui.dock_overview.setEnabled(enabled)
+		self.ui.centralwidget.setEnabled(enabled)
+		self.ui.toolbar_main.setEnabled(enabled)
+		self.ui.toolbar_items.setEnabled(enabled)
+		self.ui.menubar.setEnabled(enabled)
+		self.ui.dock_pool.setEnabled(enabled)
+		self.ui.dock_overview.setEnabled(enabled)
 
 	def refresh(self, *deprecated, **_deprecated):
 

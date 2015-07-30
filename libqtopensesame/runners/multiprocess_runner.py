@@ -20,6 +20,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 from libopensesame.py3compat import *
 import os
 import sys
+import time
 from libqtopensesame.runners import base_runner
 from PyQt4 import QtGui
 from libopensesame.exceptions import osexception
@@ -43,6 +44,7 @@ class multiprocess_runner(base_runner):
 
 		from libqtopensesame.misc import process, _
 		from libopensesame import misc
+
 		self._workspace_globals = {}
 		if os.name == u'nt' or (sys.platform == u'darwin' \
 			and not hasattr(sys,"frozen")):
@@ -52,12 +54,11 @@ class multiprocess_runner(base_runner):
 			# (`opensesame`). If this fails, provide an informative error
 			# message.
 			os_folder = misc.opensesame_folder()
-
 			# misc.opensesame_folder() doesn't work for OSX and returns None then,
 			# so determine OpenSesame's rootdir in another way
 			if os_folder is None:
-				os_folder = os.path.dirname(os.path.abspath(sys.modules['__main__'].__file__))
-
+				os_folder = os.path.dirname(
+					os.path.abspath(sys.modules['__main__'].__file__))
 			if not os.path.exists(os.path.join(os_folder, u'opensesame.pyc')) \
 				and not os.path.exists(os.path.join(os_folder, u'opensesame.py')):
 				import shutil
@@ -75,7 +76,13 @@ class multiprocess_runner(base_runner):
 		# Wait for experiment to finish.
 		# Listen for incoming messages in the meantime.
 		while self.exp_process.is_alive() or not self.channel.empty():
+			# We need to process the GUI. To make the GUI feel more responsive
+			# during pauses, we refresh the GUI more often when paused.
 			QtGui.QApplication.processEvents()
+			if self.paused:
+				for i in range(25):
+					time.sleep(.01)
+					QtGui.QApplication.processEvents()
 			# Make sure None is not printed. Ugly hack for a bug in the Queue
 			# class?
 			self.console.suppress_stdout()
@@ -87,9 +94,8 @@ class multiprocess_runner(base_runner):
 				continue
 			# Restore connection to stdout
 			self.console.capture_stdout()
-			# print('recv: %s (%s)' % (type(msg), msg))
 			if isinstance(msg, basestring):
-				sys.stdout.write(safe_decode(msg, errors='ignore'))
+				sys.stdout.write(safe_decode(msg, errors=u'ignore'))
 				continue
 			# Capture exceptions
 			if isinstance(msg, Exception):
@@ -98,7 +104,10 @@ class multiprocess_runner(base_runner):
 			# indicates whether the experiment should be paused or resumed.
 			if isinstance(msg, dict):
 				self._workspace_globals = msg
-				if u'__pause__' in msg:
+				if u'__heartbeat__' in msg:
+					self.console.set_workspace_globals(msg)
+					self.main_window.extension_manager.fire(u'heartbeat')
+				elif u'__pause__' in msg:
 					if msg[u'__pause__']:
 						self.pause()
 					else:
