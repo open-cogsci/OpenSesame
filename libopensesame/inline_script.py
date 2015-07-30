@@ -140,17 +140,3 @@ class inline_script(item.item):
 			'Use canvas() instead.', DeprecationWarning)
 		return canvas.canvas(self.experiment, auto_prepare=auto_prepare,
 			background_color=self.var.background, color=self.var.foreground)
-
-def restore_state():
-
-	"""Restores the system state."""
-
-	# Currently does nothing.
-	pass
-
-def save_state():
-
-	"""Saves the system state."""
-
-	# Currently does nothing.
-	pass

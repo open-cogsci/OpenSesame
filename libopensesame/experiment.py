@@ -370,7 +370,6 @@ class experiment(item.item):
 			errors=u'ignore')
 		self.var.opensesame_version = metadata.__version__
 		self.var.opensesame_codename = metadata.codename
-		self.save_state()
 		self.running = True
 		self.init_random()
 		self.init_display()
@@ -454,7 +453,6 @@ class experiment(item.item):
 		sampler.close_sound(self)
 		canvas.close_display(self)
 		self.cleanup()
-		self.restore_state()
 
 	def to_string(self):
 
@@ -730,22 +728,6 @@ class experiment(item.item):
 
 		from openexp.log import log
 		self._log = log(self, self.logfile)
-
-	def save_state(self):
-
-		"""
-		Saves the system state so that it can be restored after the experiment.
-		"""
-
-		from libopensesame import inline_script
-		inline_script.save_state()
-
-	def restore_state(self):
-
-		"""Restores the system to the state as saved by save_state()."""
-
-		from libopensesame import inline_script
-		inline_script.restore_state()
 
 def clean_up(verbose=False, keep=[]):
 
