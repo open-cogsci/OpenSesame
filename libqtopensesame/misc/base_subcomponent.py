@@ -18,7 +18,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame.py3compat import *
-
+from libqtopensesame.misc import drag_and_drop
 from libqtopensesame.misc.base_component import base_component
 
 class base_subcomponent(base_component):
@@ -28,6 +28,68 @@ class base_subcomponent(base_component):
 		A base class for all components that require an experiment and theme
 		property.
 	"""
+
+	def set_supported_drop_types(self, types=None):
+
+		if not hasattr(self, u'setAcceptDrops'):
+			raise osexception(u'Not a QWidget')
+		if types is None:
+			self.setAcceptDrops(False)
+			self.supported_drop_types = None
+			return
+		self.setAcceptDrops(True)
+		self.supported_drop_types = types
+
+	def dragEnterEvent(self, e):
+
+		"""
+		desc:
+			Handles drag-enter events to see if they are supported
+
+		arguments:
+			e:
+				desc:	A drag-enter event.
+				type:	QDragEnterEvent
+		"""
+
+		data = drag_and_drop.receive(e)
+		if drag_and_drop.matches(data, self.supported_drop_types):
+			e.accept()
+		else:
+			e.ignore()
+
+	def dropEvent(self, e):
+
+		"""
+		desc:
+			Handles drop events and accepts them if supported.
+
+		arguments:
+			e:
+				desc:	A drop event.
+				type:	QDropEvent
+		"""
+
+		data = drag_and_drop.receive(e)
+		if drag_and_drop.matches(data, self.supported_drop_types):
+			e.accept()
+			self.accept_drop(data)
+		else:
+			e.ignore()
+
+	def accept_drop(self, data):
+
+		"""
+		desc:
+			Is called after a supported drop type. Should be re-implemented.
+
+		arguments:
+			data:
+				desc:	The drop data.
+				type:	dict
+		"""
+
+		pass
 
 	# These properties allow for cleaner programming, without dot references.
 

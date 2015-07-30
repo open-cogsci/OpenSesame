@@ -107,6 +107,8 @@ class tree_overview(base_subcomponent, QtGui.QTreeWidget):
 		self.drop_indicator = None
 		self.drop_indicator_pen = QtGui.QPen(QtGui.QBrush(
 			QtGui.QColor(u'#73d216')), 2, QtCore.Qt.SolidLine)
+		self.set_supported_drop_types([u'item-new', u'item-existing',
+			u'url-local'])
 
 	def copy_item(self):
 
@@ -566,7 +568,7 @@ class tree_overview(base_subcomponent, QtGui.QTreeWidget):
 					]).show()
 				# Confirmation
 				if resp == 0 and target_item.item_type == u'loop' and \
-					target_item.item in self.experiment.items:
+					target_item.var.item in self.experiment.items:
 					resp = popup_menu(self, [(0, _(u'I know, do it!'), icon)],
 						title=_(u'This will replace %s' % (target_item.item))
 						).show()
@@ -621,14 +623,13 @@ class tree_overview(base_subcomponent, QtGui.QTreeWidget):
 
 		"""
 		desc:
-			Handles drop events for file opening and item creation.
+			Accept drops.
 
 		arguments:
 			e:
 				desc:	A drop event.
-				type:	QDropEvent
+				type:	QDragLeaveEvent
 		"""
-
 		data = drag_and_drop.receive(e)
 		if data[u'type'] == u'item-new':
 			self.drop_event_item_new(data, e)
@@ -640,26 +641,6 @@ class tree_overview(base_subcomponent, QtGui.QTreeWidget):
 		else:
 			e.ignore()
 		self.end_drag()
-
-	def dragEnterEvent(self, e):
-
-		"""
-		desc:
-			Handles drag-enter events to see if the item tree can handle
-			incoming drops.
-
-		arguments:
-			e:
-				desc:	A drag-enter event.
-				type:	QDragEnterEvent
-		"""
-
-		data = drag_and_drop.receive(e)
-		if drag_and_drop.matches(data, [u'item-new', u'item-existing',
-			u'url-local']):
-			e.accept()
-		else:
-			e.ignore()
 
 	def dragLeaveEvent(self, e):
 
