@@ -39,6 +39,9 @@ desc:
 
 	-	type:		item-clone
 		item:		[item name]
+
+	-	type:		variable
+		variable:	[variable name]
 ---
 """
 

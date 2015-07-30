@@ -67,6 +67,8 @@ class syntax(object):
 		# Strict with variables is used to remove all characters except
 		# alphanumeric ones and [] signs that indicate variables
 		self.re_sanitize_strict_vars = re.compile(r'[^\w\[\]]')
+		# Matches valid variable names
+		self.re_valid_var_name = re.compile(r'^[_a-zA-Z]+[_a-zA-Z0-9]*$')
 		# Loose is used to remove double-quotes, slashes, and newlines
 		self.re_sanitize_loose = re.compile(r'[\n\"\\]')
 		# Unsanitization is used to replace U+XXXX unicode notation
@@ -537,6 +539,23 @@ class syntax(object):
 				_unichr = unichr
 			s = s.replace(m.group(0), _unichr(int(m.group(1), 16)), 1)
 		return s
+
+	def valid_var_name(self, s):
+
+		"""
+		desc:
+			Checks whether a string is a valid variable name.
+
+		arguments:
+			s:
+				desc:	The string to check.
+				type:	str
+
+		returns:
+			type:	True if s is a variable valid name, False if not.
+		"""
+
+		return re.match(self.re_valid_var_name, s)
 
 def osreplace(exc):
 

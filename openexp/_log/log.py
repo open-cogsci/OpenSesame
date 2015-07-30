@@ -90,9 +90,7 @@ class log(object):
 		"""
 
 		if self._all_vars is None:
-			self._all_vars = []
-			for var in self.experiment.var.inspect():
-				self._all_vars.append(var)
+			self._all_vars = list(self.experiment.var.inspect().keys())
 		return self._all_vars
 
 	def open(self, path):

@@ -18,13 +18,14 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame.py3compat import *
-
-from libopensesame.exceptions import osexception
-from libopensesame import item, debug
+from libopensesame import item
 
 class logger(item.item):
 
-	"""The logger item logs variables to a plain text .csv file"""
+	"""
+	desc:
+		The logger item logs experimental data (i.e. variables).
+	"""
 
 	description = u'Logs experimental data'
 
@@ -33,26 +34,28 @@ class logger(item.item):
 		"""See item."""
 
 		self.logvars = []
+		self._logvars = None
 		self.var.auto_log = u'yes'
 
 	def run(self):
 
-		"""Log the selected variables"""
+		"""See item."""
 
 		self.set_item_onset()
-		if self.var.auto_log:
-			self.experiment.log.write_vars()
-		else:
-			self.experiment.log.write_vars(self.logvars)
+		if self._logvars is None:
+			if self.var.auto_log == u'yes':
+				self._logvars = self.experiment.log.all_vars()
+			else:
+				self._logvars = []
+			for var in self.logvars:
+				if var not in self._logvars:
+					self._logvars.append(var)
+			self._logvars.sort()
+		self.experiment.log.write_vars(self._logvars)
 
 	def from_string(self, string):
 
-		"""
-		Parse the logger from a definition string
-
-		Arguments:
-		string -- definition string
-		"""
+		"""See item."""
 
 		self.variables = {}
 		self.comments = []
@@ -61,20 +64,16 @@ class logger(item.item):
 			return
 		for line in string.split(u'\n'):
 			self.parse_variable(line)
-			l = self.syntax.split(line)
-			if len(l) > 1 and l[0] == u'log':
-				self.logvars.append(l[1])
+			cmd, arglist, kwdict = self.experiment.syntax.parse_cmd(line)
+			if cmd == u'log' and len(arglist) > 0:
+				self.logvars += arglist
 
 	def to_string(self):
 
-		"""
-		Encode the logger back into a definition string
-
-		Returns:
-		A definition string
-		"""
+		"""See item."""
 
 		s = item.item.to_string(self, u'logger')
 		for logvar in self.logvars:
-			s += u'\tlog "%s"\n' % logvar
+			s += u'\t' + self.experiment.syntax.create_cmd(
+				u'log', [logvar]) + u'\n'
 		return s

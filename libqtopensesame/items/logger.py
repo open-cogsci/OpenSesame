@@ -55,7 +55,8 @@ class logger(logger_runtime, qtplugin):
 		for item in self.experiment.items.values():
 			if item.item_type == self.item_type and item is not self:
 				self.user_hint_widget.add(
-					_(u'You have multiple unlinked loggers. This can lead to messy log files.'))
+					_(u'You have multiple unlinked loggers. This can lead to '
+					u'messy log files.'))
 				self.user_hint_widget.refresh()
 				break
 		self.logger_widget.update()
@@ -64,6 +65,5 @@ class logger(logger_runtime, qtplugin):
 
 		"""See qtitem."""
 
-		self.logvars = self.logger_widget.var_selection()
 		super(logger, self).apply_edit_changes()
 		self.logger_widget.update()

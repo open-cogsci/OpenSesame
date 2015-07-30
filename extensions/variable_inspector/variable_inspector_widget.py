@@ -21,6 +21,7 @@ from libopensesame.py3compat import *
 from libqtopensesame.misc import _
 from variable_inspector_cell import variable_inspector_cell
 from libqtopensesame.widgets.base_widget import base_widget
+from libqtopensesame.misc import drag_and_drop
 
 class variable_inspector_widget(base_widget):
 
@@ -47,6 +48,7 @@ class variable_inspector_widget(base_widget):
 		self.ui.edit_variable_filter.textChanged.connect(self.refresh)
 		self.ui.button_help_variables.clicked.connect(self.ext.open_help)
 		self.ui.button_reset.clicked.connect(self.ext.reset)
+		self.ui.table_variables.mousePressEvent = self.start_drag
 		self.refresh()
 
 	def var(self):
@@ -63,6 +65,26 @@ class variable_inspector_widget(base_widget):
 		if u'var' in d and hasattr(d[u'var'], u'inspect'):
 			return d[u'var'], True
 		return self.experiment.var, False
+
+	def start_drag(self, e):
+
+		"""
+		desc:
+			Starts a variable drag operation.
+
+		arguments:
+			e:
+				type:	QMousePressEvent
+		"""
+
+		item = self.ui.table_variables.itemAt(e.pos())
+		row = self.ui.table_variables.row(item)
+		var = self.ui.table_variables.item(row, 0).text()
+		drag_and_drop.send(self.ui.table_variables,
+			{
+			u'type' : u'variable',
+			u'variable' : var}
+			)
 
 	def refresh(self):
 
