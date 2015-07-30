@@ -56,9 +56,9 @@ included_extensions = [
 	'toolbar_menu',
 	'update_checker',
 	'qprogedit_preferences',
-	'dock_manager',
 	'psychopy_monitor_center',
 	'opensesame_3_notifications',
 	'example_experiments',
-	'undo_manager'
+	'undo_manager',
+	'bug_report'
 	]
