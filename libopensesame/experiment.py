@@ -387,7 +387,7 @@ class experiment(item.item):
 		else:
 			raise osexception( \
 				"Could not find item '%s', which is the entry point of the experiment" \
-				% self.start)
+				% self.var.start)
 
 		print(u"experiment.run(): experiment finished at %s" % time.ctime())
 

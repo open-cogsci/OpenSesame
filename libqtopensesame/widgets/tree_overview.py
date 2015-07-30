@@ -710,7 +710,7 @@ class tree_overview(base_subcomponent, QtGui.QTreeWidget):
 		if target.name == u'__unused__' or ( \
 			target.item.name in self.experiment.items.used() and \
 			target.item.item_type in (u'loop', u'sequence') and \
-			target.item.name != self.experiment.start and \
+			target.item.name != self.experiment.var.start and \
 			target.parent() is not None):
 			self.drop_indicator = rect
 		else:
