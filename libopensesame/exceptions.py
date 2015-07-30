@@ -32,7 +32,6 @@ from libopensesame.misc import escape_html
 from libopensesame import debug
 from libopensesame.py3compat import *
 import traceback
-import inspect
 import sys
 
 class osexception(Exception):
@@ -84,17 +83,10 @@ class osexception(Exception):
 			info[u'exception type'] = safe_decode(
 				self.exception.__class__.__name__, enc=self.enc,
 				errors=u'ignore')
-			# Try to get a descriptive message from the exception, either by
-			# looking at the `message` property or by using str(). If both
-			# fail, a placeholder message is used.
-			if hasattr(self.exception, u'message'):
-				msg = safe_decode(self.exception.message, enc=self.enc,
-					errors='ignore')
-			else:
-				try:
-					msg = str(self.exception)
-				except:
-					msg = u'Description unavailable'
+			try:
+				msg = str(self.exception)
+			except:
+				msg = u'Description unavailable'
 			info[u'exception message'] = msg
 			if isinstance(self.exception, SyntaxError):
 				# Syntax errors are dealt with specially, because they provide
