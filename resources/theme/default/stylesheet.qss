@@ -69,45 +69,6 @@
 	font-size: 8pt;
 }
 
-QDockWidget {
-	color: #ffffff;
-}
-
-QDockWidget::title {
-	background-color: #729fcf;
-	border-radius: 2px;
-	padding: 2px 2px 2px 4px;
-}
-
-QDockWidget::close-button,
-QDockWidget::float-button {
-	border-radius: 2px;
-	background: #eeeeec;
-	padding: 1px 0px 0px 0px;
-	width: 16px;
-	subcontrol-position: top right;
-	subcontrol-origin: margin;
-	position: absolute;
-	top: 2px;
-	bottom: 2px;
-}
-
-QDockWidget::close-button {
-	right: 4px;
-}
-
-QDockWidget::float-button {
-	right: 22px;
-}
-
-QDockWidget::close-button:hover {
-	background: #ef2929;
-}
-
-QDockWidget::float-button:hover {
-	background: #8ae234;
-}
-
 QTabWidget QTreeView::item {
 	padding: 4px;
 }
