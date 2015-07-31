@@ -81,11 +81,11 @@ class example(base_extension):
 	def event_change_item(self, name):
 		debug.msg(u'Event fired: change_item(name=%s)' % name)
 
-	def event_prepare_change_experiment(self, name):
-		debug.msg(u'Event fired: prepare_change_experiment(name=%s)' % name)
+	def event_prepare_change_experiment(self):
+		debug.msg(u'Event fired: prepare_change_experiment')
 
-	def event_change_experiment(self, name):
-		debug.msg(u'Event fired: change_experiment(name=%s)' % name)
+	def event_change_experiment(self):
+		debug.msg(u'Event fired: change_experiment')
 
 	def event_prepare_delete_item(self, name):
 		debug.msg(u'Event fired: prepare_delete_item(name=%s)' % name)
