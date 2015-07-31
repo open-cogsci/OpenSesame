@@ -49,8 +49,8 @@ class inline_script(inline_script_runtime, qtplugin):
 		super(inline_script, self).apply_edit_changes(self)
 		sp = self.qprogedit.text(index=0)
 		sr = self.qprogedit.text(index=1)
-		self.var.set(u'_prepare', sp)
-		self.var.set(u'_run', sr)
+		self.var._prepare = sp
+		self.var._run = sr
 		self.update_item_icon()
 
 	def set_focus(self):
@@ -107,7 +107,7 @@ class inline_script(inline_script_runtime, qtplugin):
 		self.qprogedit.addTab(u'Run').setLang(u'Python')
 		# Switch to the run phase, unless there is only content for the prepare
 		# phase.
-		if self._run == u'' and self._prepare != u'':
+		if self.var._run == u'' and self.var._prepare != u'':
 			self.qprogedit.setCurrentIndex(0)
 		else:
 			self.qprogedit.setCurrentIndex(1)
@@ -118,8 +118,8 @@ class inline_script(inline_script_runtime, qtplugin):
 		"""See qtitem."""
 
 		super(inline_script, self).edit_widget()
-		self.qprogedit.tab(0).setText(safe_decode(self._prepare))
-		self.qprogedit.tab(1).setText(safe_decode(self._run))
+		self.qprogedit.tab(0).setText(safe_decode(self.var._prepare))
+		self.qprogedit.tab(1).setText(safe_decode(self.var._run))
 
 	def get_ready(self):
 
