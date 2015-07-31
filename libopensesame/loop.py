@@ -87,7 +87,8 @@ class loop(item.item):
 
 		# Prepare the break if condition
 		if self.var.break_if != u'':
-			self._break_if = self.syntax.compile_cond(self.var.break_if)
+			self._break_if = self.syntax.compile_cond(
+				self.var.get(u'break_if', _eval=False))
 		else:
 			self._break_if = None
 

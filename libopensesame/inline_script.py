@@ -61,14 +61,14 @@ class inline_script(item.item):
 		# Compile prepare script
 		try:
 			self.cprepare = self.experiment.python_workspace._compile(
-				self.var._prepare)
+				self.var.get(u'_prepare', _eval=False))
 		except Exception as e:
 			raise osexception(u'Failed to compile inline script',
 				line_offset=-1, item=self.name, phase=u'prepare', exception=e)
 		# Compile run script
 		try:
 			self.crun = self.experiment.python_workspace._compile(
-				self.var._run)
+				self.var.get(u'_run', _eval=False))
 		except Exception as e:
 			raise osexception(u'Failed to compile inline script',
 				line_offset=-1, item=self.name, phase=u'run', exception=e)
@@ -108,7 +108,8 @@ class inline_script(item.item):
 		"""
 
 		l = item.item.var_info(self)
-		script = self.var._prepare + self.var._run
+		script = self.var.get(u'_prepare', _eval=False) + \
+			self.var.get(u'_run', _eval=False)
 		for dummy, var in re.findall(extract_old_style, script):
 			l.append( (var, None) )
 		for var in re.findall(extract_new_style, script):
