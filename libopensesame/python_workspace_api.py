@@ -92,7 +92,7 @@ def mouse(**resp_args):
 	"""
 
 	from openexp.mouse import mouse
-	return mouse(experiment, *arglist, **kwdict)
+	return mouse(experiment, **resp_args)
 
 def sampler(src, **playback_args):
 
