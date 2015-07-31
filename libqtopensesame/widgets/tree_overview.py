@@ -24,13 +24,14 @@ from libqtopensesame.misc.config import cfg
 from libqtopensesame.misc import _
 from libqtopensesame.misc import drag_and_drop
 from libqtopensesame.misc.base_subcomponent import base_subcomponent
+from libqtopensesame.misc.base_draggable import base_draggable
 from libqtopensesame.widgets.tree_append_button import tree_append_button
 from libqtopensesame._input.popup_menu import popup_menu
 from libopensesame import debug
 from libopensesame.exceptions import osexception
 from libopensesame.sequence import sequence
 
-class tree_overview(base_subcomponent, QtGui.QTreeWidget):
+class tree_overview(base_subcomponent, base_draggable, QtGui.QTreeWidget):
 
 	"""
 	desc:

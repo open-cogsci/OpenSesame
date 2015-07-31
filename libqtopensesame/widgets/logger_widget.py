@@ -21,6 +21,7 @@ from libopensesame.py3compat import *
 from PyQt4 import QtGui
 from libqtopensesame.misc import _
 from libqtopensesame.widgets.base_widget import base_widget
+from libqtopensesame.misc.base_draggable import base_draggable
 
 class remove_custom_var_button(QtGui.QPushButton):
 
@@ -36,7 +37,7 @@ class remove_custom_var_button(QtGui.QPushButton):
 
 		self.logger_widget.remove_custom_variable(self.var)
 
-class logger_widget(base_widget):
+class logger_widget(base_widget, base_draggable):
 
 	"""
 	desc:
