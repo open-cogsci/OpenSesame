@@ -26,6 +26,7 @@ h2 {
 	color: #3465a4;
 }
 
-code, pre {
-	font-family: "Courier New", monospace;
+.highlight span, code, pre {
+	font-family: monospace, "Courier New"!important;
+	word-wrap: break-word;
 }

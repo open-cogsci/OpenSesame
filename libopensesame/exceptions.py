@@ -30,9 +30,20 @@ example: |
 import re
 from libopensesame.misc import escape_html
 from libopensesame import debug
+from libopensesame.item_stack import item_stack_singleton
 from libopensesame.py3compat import *
 import traceback
+import time
 import sys
+try:
+	from pygments import highlight
+	if py3:
+		from pygments.lexers import Python3TracebackLexer as TracebackLexer
+	else:
+		from pygments.lexers import PythonTracebackLexer as TracebackLexer
+	from pygments.formatters import HtmlFormatter
+except:
+	highlight = None
 
 class osexception(Exception):
 
@@ -104,10 +115,14 @@ class osexception(Exception):
 						[-1][1] + line_offset
 				except:
 					pass
+		info[u'item-stack'] = str(item_stack_singleton)
+		info[u'time'] = time.ctime()
 		# List any additional information that was passed
+		self._html += u'<h2>Details:</h2><ul>'
 		for key, val in info.items():
-			self._html += u'<i>%s</i>: %s<br />\n' % (key, val)
+			self._html += u'<li>%s: <code>%s</code></li>\n' % (key, val)
 			self._plaintext += u'%s: %s\n' % (key, val)
+		self._html += u'</ul>'
 		# If an Exception is passed, we should include a traceback.
 		if self.exception is None:
 			return
@@ -116,10 +131,9 @@ class osexception(Exception):
 		else:
 			tb = safe_decode(traceback.format_exc(self.exception), enc=self.enc,
 				errors=u'ignore')
-		# print(self.exception)
-		# tb = str(traceback.format_exc(self.exception))
-		self._html += u'<br /><b>Traceback (also in debug window)</b>:<br />\n'
+		self._html += u'<h2>Traceback (also in debug window):</h2><code>\n'
 		self._plaintext += u'\nTraceback:\n'
+		_tb = u''
 		for l in tb.split(u'\n')[1:]:
 			# It is confusing that the contents of the inline script are
 			# described as <string>, so replace that. In addition, we need to
@@ -133,8 +147,12 @@ class osexception(Exception):
 							(int(g.group(u'linenr')) + line_offset))
 					except:
 						debug.msg(u'Failed to correct inline_script exception')
-			self._html += escape_html(l) + u'<br />\n'
-			self._plaintext += l + u'\n'
+			_tb += l + u'\n'
+		self._plaintext += _tb
+		if highlight is None:
+			self._html += u'<code>%s</code>' % escape_html(_tb)
+		else:
+			self._html += highlight(_tb, TracebackLexer(), HtmlFormatter())
 
 	def __unicode__(self):
 

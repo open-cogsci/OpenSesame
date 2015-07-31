@@ -133,7 +133,6 @@ class loop(item.item):
 				% (self.var.item, self.name))
 
 		# And run!
-		_item = self.experiment.items[self.var.item]
 		while len(l) > 0:
 			cycle = l.pop(0)
 			self.apply_cycle(cycle)
@@ -141,8 +140,7 @@ class loop(item.item):
 				self.python_workspace._eval(self._break_if):
 				break
 			self.experiment.var.repeat_cycle = 0
-			_item.prepare()
-			_item.run()
+			self.experiment.items.execute(self.var.item)
 			if self.experiment.var.repeat_cycle:
 				debug.msg(u'repeating cycle %d' % cycle)
 				l.append(cycle)

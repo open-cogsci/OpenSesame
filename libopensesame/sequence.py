@@ -44,9 +44,9 @@ class sequence(item.item):
 		# Optionally flush the responses to catch escape presses
 		if self._keyboard is not None:
 			self._keyboard.flush()
-		for item, cond in self._items:
+		for _item, cond in self._items:
 			if self.python_workspace._eval(cond):
-				self.experiment.items[item].run()
+				self.experiment.items.run(_item)
 
 	def parse_run(self, i):
 
@@ -103,7 +103,7 @@ class sequence(item.item):
 				raise osexception( \
 					u"Could not find item '%s', which is called by sequence item '%s'" \
 					% (_item, self.name))
-			self.experiment.items[_item].prepare()
+			self.experiment.items.prepare(_item)
 			self._items.append( (_item, self.syntax.compile_cond(cond)) )
 
 	def to_string(self):

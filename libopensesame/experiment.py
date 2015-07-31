@@ -24,6 +24,7 @@ from libopensesame.python_workspace import python_workspace
 from libopensesame.syntax import syntax
 from libopensesame.exceptions import osexception
 from libopensesame import misc, item, debug, metadata
+from libopensesame.item_stack import item_stack_singleton
 from libopensesame.py3compat import *
 import os
 import pickle
@@ -382,8 +383,8 @@ class experiment(item.item):
 		print(u"experiment.run(): experiment started at %s" % time.ctime())
 
 		if self.var.start in self.items:
-			self.items[self.var.start].prepare()
-			self.items[self.var.start].run()
+			item_stack_singleton.clear()
+			self.items.execute(self.var.start)
 		else:
 			raise osexception( \
 				"Could not find item '%s', which is the entry point of the experiment" \

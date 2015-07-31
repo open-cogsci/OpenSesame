@@ -20,6 +20,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 from libopensesame import plugins
 from libopensesame.misc import debug
 from libopensesame.exceptions import osexception
+from libopensesame.item_stack import item_stack_singleton
 from libopensesame.py3compat import *
 
 class item_store(object):
@@ -73,6 +74,54 @@ class item_store(object):
 
 		self.__items__ = {}
 		self.experiment = experiment
+
+	def execute(self, name):
+
+		"""
+		desc:
+			Executes the run and prepare phases of an item, and updates the item
+			stack.
+
+		arguments:
+			name:
+				desc:	An item name.
+				type:	str
+		"""
+
+		self.prepare(name)
+		self.run(name)
+
+	def run(self, name):
+
+		"""
+		desc:
+			Executes the run phase of an item, and updates the item stack.
+
+		arguments:
+			name:
+				desc:	An item name.
+				type:	str
+		"""
+
+		item_stack_singleton.push(name, u'run')
+		self[name].run()
+		item_stack_singleton.pop()
+
+	def prepare(self, name):
+
+		"""
+		desc:
+			Executes the prepare phase of an item, and updates the item stack.
+
+		arguments:
+			name:
+				desc:	An item name.
+				type:	str
+		"""
+
+		item_stack_singleton.push(name, u'prepare')
+		self[name].prepare()
+		item_stack_singleton.pop()
 
 	def new(self, _type, name=None, script=None):
 

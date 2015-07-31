@@ -190,9 +190,8 @@ class var_store(object):
 		elif default is not None:
 			val = default
 		else:
-			raise osexception(
-				u"Variable '%s' is not set in item '%s'.<br /><br />You are trying to use a variable that does not exist. Make sure that you have spelled and capitalized the variable name correctly. You may wish to use the variable inspector (Control + I) to find the intended variable." \
-				% (var, self.__item__.name))
+			raise osexception((u'The variable \'%s\' does not exist. Tip: Use '
+				u'the variable inspector (Ctrl+I) to see all variables.') % var)
 		if valid is not None and val not in valid:
 			raise osexception(u'Variable %s should be in %s, not %s' \
 				% (var, valid, val))

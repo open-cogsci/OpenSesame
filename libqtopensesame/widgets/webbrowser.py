@@ -75,6 +75,16 @@ class webbrowser(base_widget):
 		self.ui.button_forum.clicked.connect(self.open_forum)
 		self.main_window.theme.apply_theme(self)
 
+		self.markdown_css = u'<style type="text/css">'
+		with open(self.main_window.theme.resource(u'markdown.css')) as fd:
+			self.markdown_css += fd.read()
+		try:
+			from pygments.formatters import HtmlFormatter
+			self.markdown_css += HtmlFormatter().get_style_defs('.highlight')
+		except:
+			pass
+		self.markdown_css += u'</style>'
+
 	def load(self, url):
 
 		"""
@@ -111,9 +121,7 @@ class webbrowser(base_widget):
 		self.ui.top_widget.hide()
 		try:
 			import markdown
-			html = markdown.markdown(md, errors=u'ignore')
-			with open(self.main_window.theme.resource(u'markdown.css')) as fd:
-				html += u'<style type="text/css">%s</style>' % fd.read()
+			html = markdown.markdown(md, errors=u'ignore') + self.markdown_css
 		except Exception as e:
 			debug.msg(safe_decode(e))
 			html = \

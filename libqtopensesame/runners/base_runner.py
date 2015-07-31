@@ -218,7 +218,12 @@ class base_runner(object):
 		if not isinstance(e, osexception):
 			e = osexception(msg=u'Unexpected error', exception=e)
 		self.console.write(e)
-		self.main_window.experiment.notify(e.html(), title=u'Exception')
+		from libqtopensesame.widgets.webbrowser import webbrowser
+		wb = webbrowser(self.main_window)
+		md = _(u'# Stopped\n\nThe experiment did not finish normally for the '
+			u'following reason:\n\n') + e.html()
+		wb.load_markdown(md)
+		self.main_window.tabwidget.add(wb, u'process-stop', _(u'Stopped'))
 
 	def on_success(self, quick=False):
 
