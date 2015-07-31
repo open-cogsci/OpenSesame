@@ -36,9 +36,6 @@ class qtopensesame(QtGui.QMainWindow, base_component):
 
 	"""The main class of the OpenSesame GUI"""
 
-	# Set to False for release!
-	devmode = False
-
 	def __init__(self, app, parent=None):
 
 		"""
@@ -551,7 +548,8 @@ class qtopensesame(QtGui.QMainWindow, base_component):
 		if self.block_close_event:
 			e.ignore()
 			return
-		if debug.enabled or self.devmode:
+		from libopensesame import metadata
+		if debug.enabled or metadata.channel == u'dev':
 			libopensesame.experiment.clean_up(debug.enabled)
 			self.save_state()
 			e.accept()
