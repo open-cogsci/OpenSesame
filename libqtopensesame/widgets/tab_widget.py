@@ -447,3 +447,33 @@ class tab_widget(base_subcomponent, QtGui.QTabWidget):
 		w = self.currentWidget()
 		if hasattr(w, u'on_activate'):
 			w.on_activate()
+
+	def open_markdown(self, md, icon=u'dialog-information',
+		title=u'Attention!'):
+
+		"""
+		desc:
+			Opens a Markdown-formatted tab.
+
+		arguments:
+			md:
+				desc:	If it ends with `.md`, this is interpreted as a file
+						name. Otherwise, it is interpreted as markdown text.
+				type:	str
+
+		keywords:
+			icon:
+				desc:	The name of the tab icon.
+				type:	str
+			title:
+				desc:	The tab title.
+				type:	str
+		"""
+
+		from libqtopensesame.widgets.webbrowser import webbrowser
+		wb = webbrowser(self.main_window)
+		if md.endswith(u'.md'):
+			wb.load(md)
+		else:
+			wb.load_markdown(md)
+		self.main_window.tabwidget.add(wb, icon, _(title))

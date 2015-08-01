@@ -51,7 +51,8 @@ class variable_inspector(base_extension):
 			Opens the help tab.
 		"""
 
-		self.notification_tab(u'variable_inspector.md',
+		self.tabwidget.open_markdown(
+			self.ext_resource(u'variable_inspector.md'),
 			title=_(u'Help: Variable inspector'))
 
 	def set_visible(self, visible):

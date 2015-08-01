@@ -18,10 +18,11 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 import platform
-from PyQt4 import QtCore, QtGui, QtWebKit
+from PyQt4 import QtCore, QtWebKit
 from libqtopensesame.widgets.base_widget import base_widget
-from libopensesame import debug, plugins
+from libopensesame import plugins
 from libopensesame.py3compat import *
+from libqtopensesame.misc.markdown_parser import markdown_parser
 import os.path
 
 class small_webview(QtWebKit.QWebView):
@@ -74,16 +75,7 @@ class webbrowser(base_widget):
 		self.ui.button_osdoc.clicked.connect(self.open_osdoc)
 		self.ui.button_forum.clicked.connect(self.open_forum)
 		self.main_window.theme.apply_theme(self)
-
-		self.markdown_css = u'<style type="text/css">'
-		with open(self.main_window.theme.resource(u'markdown.css')) as fd:
-			self.markdown_css += fd.read()
-		try:
-			from pygments.formatters import HtmlFormatter
-			self.markdown_css += HtmlFormatter().get_style_defs('.highlight')
-		except:
-			pass
-		self.markdown_css += u'</style>'
+		self.markdown_parser = markdown_parser(self)
 
 	def load(self, url):
 
@@ -119,14 +111,7 @@ class webbrowser(base_widget):
 		"""
 
 		self.ui.top_widget.hide()
-		try:
-			import markdown
-			html = markdown.markdown(md, errors=u'ignore') + self.markdown_css
-		except Exception as e:
-			debug.msg(safe_decode(e))
-			html = \
-				u'<p>Python markdown must be installed to view this page. Sorry!</p>'
-		self.ui.webview.setHtml(html)
+		self.ui.webview.setHtml(self.markdown_parser.to_html(md))
 		self.ui.webview.page().setLinkDelegationPolicy(
 			self.ui.webview.page().DelegateAllLinks)
 

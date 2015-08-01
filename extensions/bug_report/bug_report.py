@@ -153,13 +153,14 @@ class bug_report(base_extension):
 			resp = safe_decode(fd.read(), errors=u'ignore')
 			fd.close()
 		except:
-			self.notification_tab(u'failure.md',
+			self.tabwidget.open_markdown(self.ext_resource(u'failure.md'),
 				title=_(u'Bug report not sent'))
 			return
 		if resp == u'OK':
-			self.notification_tab(u'success.md', title=_(u'Bug report sent'))
+			self.tabwidget.open_markdown(self.ext_resource(u'success.md'),
+				title=_(u'Bug report sent'))
 		else:
-			self.notification_tab(u'failure.md',
+			self.tabwidget.open_markdown(self.ext_resource(u'failure.md'),
 				title=_(u'Bug report not sent'))
 
 	def captured_err(self):
@@ -179,5 +180,5 @@ class bug_report(base_extension):
 				errors=u'ignore'),
 			u'platform' : metadata.platform,
 			}
-		self.notification_tab(md, title=_(u'Oops ...'))
+		self.tabwidget.open_markdown(md, title=_(u'Oops ...'))
 		self.stderr.clear()

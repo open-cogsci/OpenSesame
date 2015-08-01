@@ -74,15 +74,16 @@ class update_checker(base_extension):
 					debug.msg(u"stable_version is not strict")
 					success = False
 		if not success:
-			self.notification_tab(u'failed.md')
+			self.tabwidget.open_markdown(self.ext_resource(u'failed.md'))
 			return
 		if remote_strict_version > metadata.strict_version:
 			debug.msg(u"new version available")
 			with open(self.ext_resource(u'update-available.md')) as fd:
 				s = fd.read()
-			self.notification_tab(s % remote_metadata,
+			self.tabwidget.open_markdown(s % remote_metadata,
 				title=u'Update available!')
 		else:
 			debug.msg(u"up to date")
 			if always:
-				self.notification_tab(u'up-to-date.md', title=u'Up to date!')
+				self.tabwidget.open_markdown(
+					self.ext_resource(u'up-to-date.md'), title=u'Up to date!')

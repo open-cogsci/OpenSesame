@@ -106,5 +106,5 @@ class example_experiments(base_extension):
 
 		if not self.initialized:
 			self.initialize()
-		self.notification_tab(self.md, icon=u'help-contents',
+		self.tabwidget.open_markdown(self.md, icon=u'help-contents',
 			title=u'Example experiments')

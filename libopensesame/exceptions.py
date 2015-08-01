@@ -35,15 +35,6 @@ from libopensesame.py3compat import *
 import traceback
 import time
 import sys
-try:
-	from pygments import highlight
-	if py3:
-		from pygments.lexers import Python3TracebackLexer as TracebackLexer
-	else:
-		from pygments.lexers import PythonTracebackLexer as TracebackLexer
-	from pygments.formatters import HtmlFormatter
-except:
-	highlight = None
 
 class osexception(Exception):
 
@@ -84,7 +75,7 @@ class osexception(Exception):
 
 		super(osexception, self).__init__(msg)
 		# Create both HTML and plain text representations of the Exception.
-		self._html = u'<b>%s</b><br />\n' % msg
+		self._md = u'%s\n\n' % msg
 		self._plaintext = u'\n%s\n\n' % msg
 		self.enc = u'utf-8'
 		# If an Exception is passed, i.e. if we are catching an Exception,
@@ -118,11 +109,11 @@ class osexception(Exception):
 		info[u'item-stack'] = str(item_stack_singleton)
 		info[u'time'] = time.ctime()
 		# List any additional information that was passed
-		self._html += u'<h2>Details:</h2><ul>'
+		self._md += u'## Details\n\n'
 		for key, val in info.items():
-			self._html += u'<li>%s: <code>%s</code></li>\n' % (key, val)
+			self._md += u'- %s: `%s`\n' % (key, val)
 			self._plaintext += u'%s: %s\n' % (key, val)
-		self._html += u'</ul>'
+		self._md += u'\n'
 		# If an Exception is passed, we should include a traceback.
 		if self.exception is None:
 			return
@@ -131,7 +122,7 @@ class osexception(Exception):
 		else:
 			tb = safe_decode(traceback.format_exc(self.exception), enc=self.enc,
 				errors=u'ignore')
-		self._html += u'<h2>Traceback (also in debug window):</h2><code>\n'
+		self._md += u'## Traceback (also in debug window)\n\n'
 		self._plaintext += u'\nTraceback:\n'
 		_tb = u''
 		for l in tb.split(u'\n')[1:]:
@@ -149,10 +140,7 @@ class osexception(Exception):
 						debug.msg(u'Failed to correct inline_script exception')
 			_tb += l + u'\n'
 		self._plaintext += _tb
-		if highlight is None:
-			self._html += u'<code>%s</code>' % escape_html(_tb)
-		else:
-			self._html += highlight(_tb, TracebackLexer(), HtmlFormatter())
+		self._md += u'~~~ .traceback\n%s\n~~~\n' % _tb
 
 	def __unicode__(self):
 
@@ -186,15 +174,15 @@ class osexception(Exception):
 
 		return str(self)
 
-	def html(self):
+	def markdown(self):
 
 		"""
 		returns:
-			desc:	A representation of the exception in HTML format.
+			desc:	A representation of the exception in Markdown format.
 			type:	unicode
 		"""
 
-		return self._html
+		return self._md
 
 # For backwards compatibility, we should also define the old Exception classes
 runtime_error = osexception
