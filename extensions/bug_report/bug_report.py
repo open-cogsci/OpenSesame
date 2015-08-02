@@ -98,7 +98,7 @@ class bug_report(base_extension):
 		sys.stderr = self.stderr
 		self.traceback = None
 
-	def event_end_experiment(self):
+	def event_end_experiment(self, ret_val):
 
 		"""
 		desc:

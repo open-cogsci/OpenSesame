@@ -59,6 +59,7 @@ class log(object):
 		"""
 
 		self.experiment = experiment
+		self.experiment.var.logfile = path
 		self._all_vars = None
 		self.open(path)
 

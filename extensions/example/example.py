@@ -54,7 +54,7 @@ class example(base_extension):
 	def event_run_experiment(self, fullscreen):
 		debug.msg(u'Event fired: run_experiment(fullscreen=%s)' % fullscreen)
 
-	def event_end_experiment(self):
+	def event_end_experiment(self, ret_val):
 		debug.msg(u'Event fired: end_experiment')
 
 	def event_save_experiment(self, path):

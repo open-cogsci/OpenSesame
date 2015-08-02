@@ -115,7 +115,7 @@ class variable_inspector(base_extension):
 	def event_run_experiment(self, fullscreen):
 		self.refresh()
 
-	def event_end_experiment(self):
+	def event_end_experiment(self, ret_val):
 		self.refresh()
 
 	def event_reset_console(self):

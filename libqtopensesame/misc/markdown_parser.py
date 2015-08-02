@@ -97,6 +97,7 @@ class markdown_parser(base_subcomponent):
 				lexer = self.python_lexer
 			else:
 				md = md.replace(orig, u'<code>%s</code>\n' % script)
+				continue
 			new = highlight(script, lexer, self.html_formatter)
 			md = md.replace(orig, new)
 		return md

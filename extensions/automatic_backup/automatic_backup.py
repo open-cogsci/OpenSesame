@@ -86,7 +86,7 @@ class automatic_backup(base_extension):
 			debug.msg(u"stopping autosave timer")
 			self.autosave_timer.stop()
 
-	def event_end_experiment(self):
+	def event_end_experiment(self, ret_val):
 
 		"""
 		desc:

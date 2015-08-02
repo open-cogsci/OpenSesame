@@ -206,46 +206,6 @@ class base_runner(object):
 			self.main_window.experiment.notify(e.html())
 		return True
 
-	def on_exception(self, e):
-
-		"""
-		Is called when an exception has occurred during the experiment.
-
-		Arguments:
-		e		--	An exception, or an (exception, traceback) tuple.
-		"""
-
-		if not isinstance(e, osexception):
-			e = osexception(msg=u'Unexpected error', exception=e)
-		self.console.write(e)
-		md = _(u'# Stopped\n\nThe experiment did not finish normally for the '
-			u'following reason:\n\n- ') + e.markdown()
-		self.main_window.tabwidget.open_markdown(md, u'process-stop',
-			_(u'Stopped'))
-
-	def on_success(self, quick=False):
-
-		"""
-		Is called when an experiment has successfully ended, and gives the user
-		the opportunity to copy the logfile to the file pool.
-
-		Keyword arguments:
-		quick		--	Indicates whether we are quickrunning the experiment.
-						(default=False)
-		"""
-
-		if quick:
-			return
-		resp = QtGui.QMessageBox.question(self.main_window.ui.centralwidget,
-			_(u"Finished!"),
-			_(u"The experiment is finished and data has been logged to '%s'. "
-			u"Do you want to copy the logfile to the file pool?") \
-			% self.experiment.logfile, QtGui.QMessageBox.Yes,
-			QtGui.QMessageBox.No)
-		if resp == QtGui.QMessageBox.Yes:
-			self.main_window.ui.pool_widget.add([self.experiment.logfile],
-				rename=True)
-
 	def run(self, quick=False, fullscreen=False, auto_response=False):
 
 		"""
@@ -272,15 +232,11 @@ class base_runner(object):
 			return
 		ret_val = self.execute()
 		self.console.release_stdout()
-		if ret_val is not None:
-			self.on_exception(ret_val)
-		elif not quick:
-			self.on_success(quick=quick)
 		self.console.set_workspace_globals(self.workspace_globals())
 		self.console.show_prompt()
 		self.main_window.set_run_status(u'finished')
-		self.main_window.extension_manager.fire(u'end_experiment')
-
+		self.main_window.extension_manager.fire(u'end_experiment',
+			ret_val=ret_val)
 
 	def workspace_globals(self):
 
