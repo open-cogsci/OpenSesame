@@ -74,7 +74,7 @@ class base_console(base_subcomponent):
 			'modules': misc.module_versions,
 			'console' : self,
 			'opensesame' : self.main_window,
-			'cfg' : cfg
+			'cfg' : cfg,
 			}
 
 	def flush(self):
@@ -140,6 +140,20 @@ class base_console(base_subcomponent):
 		"""
 
 		return {}
+
+	def execute(self, s):
+
+		"""
+		desc:
+			Executes a code snippet.
+
+		arguments:
+			s:
+				desc:	A code snippet.
+				type:	str
+		"""
+
+		pass
 
 	def set_workspace_globals(self, _globals={}):
 

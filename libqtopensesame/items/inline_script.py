@@ -99,7 +99,8 @@ class inline_script(inline_script_runtime, qtplugin):
 
 		from QProgEdit import QTabManager
 		super(inline_script, self).init_edit_widget(stretch=False)
-		self.qprogedit = QTabManager(cfg=cfg)
+		self.qprogedit = QTabManager(cfg=cfg, runButton=True)
+		self.qprogedit.execute.connect(self.main_window.console.execute)
 		self.qprogedit.handlerButtonClicked.connect(self.apply_edit_changes)
 		self.qprogedit.focusLost.connect(self.apply_edit_changes)
 		self.qprogedit.cursorRowChanged.connect(self.apply_edit_changes)

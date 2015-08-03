@@ -217,3 +217,10 @@ class ipython_console(base_console, QtGui.QWidget):
 		"""See base_console."""
 
 		self.control._append_plain_text(str(s))
+
+	def execute(self, s):
+
+		"""See base_console."""
+
+		self.main_window.ui.dock_stdout.setVisible(True)
+		self.control.execute(s)

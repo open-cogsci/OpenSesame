@@ -119,6 +119,11 @@ class config(object):
 		u'sketchpad_preview_penwidth' : 2,
 		u'qProgEditSwitchLeftShortcut' : u'Alt+Left',
 		u'qProgEditSwitchRightShortcut' : u'Alt+Right',
+		u'qProgEditShowFindShortcut' : u'Ctrl+F',
+		u'qProgEditHideFindShortcut' : u'Escape',
+		u'qProgEditTogglePrefsShortcut' : u'Ctrl+Shift+P',
+		u'qProgEditRunSelectedShortcut' : u'Alt+R',
+		u'qProgEditRunAllShortcut' : u'Shift+Alt+R',
 		u'qProgEditSymbolTreeWidgetItemIcon' : u'os-symbol',
 		}
 
