@@ -51,6 +51,11 @@ class quick_switcher(base_extension):
 	def event_regenerate(self):
 		self.d = None
 
+	def event_change_item(self, name):
+
+		if self.experiment.items._type(name) == u'inline_script':
+			self.d = None
+
 	def init_dialog(self):
 
 		"""
