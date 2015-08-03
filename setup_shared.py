@@ -61,5 +61,6 @@ included_extensions = [
 	'example_experiments',
 	'undo_manager',
 	'bug_report',
-	'variable_inspector'
+	'variable_inspector',
+	'after_experiment'
 	]
