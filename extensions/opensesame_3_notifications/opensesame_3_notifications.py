@@ -77,7 +77,7 @@ class opensesame_3_notifications(base_extension):
 			return
 		if self.experiment.front_matter[u'API'] >= 2:
 			return
-		self.tabwidget.open_markdownself.ext_resource((u'old-experiment.md'))
+		self.tabwidget.open_markdown(self.ext_resource(u'old-experiment.md'))
 		self.main_window.current_path = None
 		self.main_window.window_message(u'New experiment')
 		self.main_window.set_unsaved(True)
