@@ -67,6 +67,10 @@ class qtitem(base_qtobject):
 		return self.experiment.main_window.tabwidget
 
 	@property
+	def console(self):
+		return self.experiment.main_window.console
+
+	@property
 	def extension_manager(self):
 		return self.experiment.main_window.extension_manager
 
@@ -379,7 +383,9 @@ class qtitem(base_qtobject):
 		try:
 			self.from_string(new_script)
 		except osexception as e:
-			self.experiment.notify(e.html())
+			md = _(u'# Error\n\nFailed to apply script for the '
+				u'following reason:\n\n- ') + e.markdown()
+			self.tabwidget.open_markdown(md)
 			self.console.write(e)
 			self.from_string(old_script)
 		if old_script != new_script:

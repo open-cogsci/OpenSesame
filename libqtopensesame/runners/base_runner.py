@@ -54,6 +54,10 @@ class base_runner(object):
 	def console(self):
 		return self.main_window.ui.console
 
+	@property
+	def tabwidget(self):
+		return self.main_window.tabwidget
+
 	def execute(self):
 
 		"""
@@ -181,8 +185,10 @@ class base_runner(object):
 		except Exception as e:
 			if not isinstance(e, osexception):
 				e = osexception(u'Unexpected error', exception=e)
+			md = _(u'# Error\n\nFailed to generate experiment for the '
+				u'following reason:\n\n- ') + e.markdown()
 			self.console.write(e)
-			self.main_window.experiment.notify(e.html())
+			self.tabwidget.open_markdown(md)
 			return False
 		# Get and set the subject number
 		subject_nr = self.get_subject_nr(quick=quick)
@@ -202,8 +208,10 @@ class base_runner(object):
 		except Exception as e:
 			if not isinstance(e, osexception):
 				e = osexception(u'Unexpected error', exception=e)
+			md = _(u'# Error\n\nFailed to parse experiment for the '
+				u'following reason:\n\n- ') + e.markdown()
 			self.console.write(e)
-			self.main_window.experiment.notify(e.html())
+			self.tabwidget.open_markdown(md)
 		return True
 
 	def run(self, quick=False, fullscreen=False, auto_response=False):

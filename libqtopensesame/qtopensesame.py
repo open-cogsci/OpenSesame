@@ -642,8 +642,11 @@ class qtopensesame(QtGui.QMainWindow, base_component):
 		except Exception as e:
 			if not isinstance(e, osexception):
 				e = osexception(msg=u'Failed to open file', exception=e)
+			md = _(u'# Failed to open\n\nFailed to open the file for the '
+				u'following reason:\n\n- ') + e.markdown()
+			self.tabwidget.open_markdown(md)
 			self.ui.console.write(e)
-			self.experiment.notify(e.html(), title=u'Exception')
+			self.set_busy(False)
 			return
 		self.experiment.pool.clean_up()
 		self.experiment = exp
@@ -764,7 +767,9 @@ class qtopensesame(QtGui.QMainWindow, base_component):
 				experiment_path=self.experiment.experiment_path,
 				resources=self.experiment.resources)
 		except osexception as e:
-			self.notify(e.html())
+			md = _(u'# Parsing error\n\nFailed to parse the script for the '
+				u'following reason:\n\n- ') + e.markdown()
+			self.tabwidget.open_markdown(md)
 			self.console.write(e)
 			return
 		self.extension_manager.fire(u'prepare_regenerate')
@@ -793,7 +798,9 @@ class qtopensesame(QtGui.QMainWindow, base_component):
 			if not isinstance(e, osexception):
 				e = osexception(u'Failed to change the display resolution',
 					exception=e)
-			self.experiment.notify(e.html())
+			md = _(u'# Error\n\nFailed to change display resolution for the '
+				u'following reason:\n\n- ') + e.markdown()
+			self.tabwidget.open_markdown(md)
 			return
 		script = script.replace(u"\nset height \"%s\"\n" % \
 			self.experiment.var.get(u"height"), u"\nset height \"%s\"\n" % height)
