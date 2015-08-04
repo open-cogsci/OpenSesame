@@ -1,0 +1,21 @@
+category: Miscellaneous
+description: Runs Python code from a file
+controls:
+-
+	  label: Script file
+      name: line_edit_file
+	  tooltip: A Python (.py) script
+      type: filepool
+      var: file
+-
+	  label: Prepare function in script
+      name: line_edit_prepare
+	  tooltip: The name of a function to execute during the prepare phase
+      type: line_edit
+      var: prepare_func
+-
+	  label: Run function in script
+      name: line_edit_run
+	  tooltip: The name of a function to execute during the run phase
+      type: line_edit
+      var: run_func
