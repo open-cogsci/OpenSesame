@@ -239,8 +239,16 @@ class feedpad(object):
 		return self.sketchpad_widget.current_penwidth
 
 	@property
-	def current_arrow_size(self):
-		return self.sketchpad_widget.current_arrow_size
+	def current_arrow_head_width(self):
+		return self.sketchpad_widget.current_arrow_head_width
+
+	@property
+	def current_arrow_body_width(self):
+		return self.sketchpad_widget.current_arrow_body_width
+
+	@property
+	def current_arrow_body_length(self):
+		return self.sketchpad_widget.current_arrow_body_length
 
 	@property
 	def current_scale(self):

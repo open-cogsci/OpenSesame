@@ -158,13 +158,13 @@ class legacy(canvas.canvas, legacy_coordinates):
 	@configurable
 	def polygon(self, vertices):
 
-		if self.fill:
-			width = 0
-		else:
-			width = penwidth
 		vertices = [self.to_xy(x, y) for x, y in vertices]
+		if self.fill:
+			penwidth = 0
+		else:
+			penwidth = self.penwidth
 		pygame.draw.polygon(self.surface, self.color.backend_color, vertices,
-			width)
+			penwidth)
 
 	def _text(self, text, x, y):
 

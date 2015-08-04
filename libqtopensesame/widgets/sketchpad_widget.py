@@ -61,7 +61,12 @@ class sketchpad_widget(base_widget):
 		self.ui.spinbox_penwidth.valueChanged.connect(self.apply_penwidth)
 		self.ui.edit_color.textEdited.connect(self.apply_color)
 		self.ui.edit_show_if.editingFinished.connect(self.apply_show_if)
-		self.ui.spinbox_arrow_size.valueChanged.connect(self.apply_arrow_size)
+		self.ui.spinbox_arrow_head_width.valueChanged.connect(
+			self.apply_arrow_head_width)
+		self.ui.spinbox_arrow_body_width.valueChanged.connect(
+			self.apply_arrow_body_width)
+		self.ui.spinbox_arrow_body_length.valueChanged.connect(
+			self.apply_arrow_body_length)
 		self.ui.checkbox_center.toggled.connect(self.apply_center)
 		self.ui.checkbox_fill.toggled.connect(self.apply_fill)
 		self.ui.checkbox_html.toggled.connect(self.apply_html)
@@ -195,15 +200,37 @@ class sketchpad_widget(base_widget):
 			element.set_property(u'penwidth', penwidth)
 		self.draw()
 
-	def apply_arrow_size(self, arrow_size):
+	def apply_arrow_body_width(self, arrow_body_width):
 
 		"""
 		desc:
-			Applies changes to the arrow_size spinbox.
+			Applies changes to the arrow_body_width spinbox.
 		"""
 
 		for element in self.sketchpad.selected_elements():
-			element.set_property(u'arrow_size', arrow_size)
+			element.set_property(u'arrow_body_width', arrow_body_width)
+		self.draw()
+
+	def apply_arrow_head_width(self, arrow_head_width):
+
+		"""
+		desc:
+			Applies changes to the arrow_head_width spinbox.
+		"""
+
+		for element in self.sketchpad.selected_elements():
+			element.set_property(u'arrow_head_width', arrow_head_width)
+		self.draw()
+
+	def apply_arrow_body_length(self, arrow_body_length):
+
+		"""
+		desc:
+			Applies changes to the arrow_body_length spinbox.
+		"""
+
+		for element in self.sketchpad.selected_elements():
+			element.set_property(u'arrow_body_length', arrow_body_length)
 		self.draw()
 
 	def show_element_settings(self, element):
@@ -230,9 +257,15 @@ class sketchpad_widget(base_widget):
 		if element.requires_penwidth():
 			self.ui.spinbox_penwidth.setValue(element.get_property(u'penwidth',
 				_type=int))
-		if element.requires_arrow_size():
-			self.ui.spinbox_arrow_size.setValue(element.get_property(
-				u'arrow_size', _type=int))
+		if element.requires_arrow_head_width():
+			self.ui.spinbox_arrow_head_width.setValue(element.get_property(
+				u'arrow_head_width', _type=float))
+		if element.requires_arrow_body_width():
+			self.ui.spinbox_arrow_body_width.setValue(element.get_property(
+				u'arrow_body_width', _type=float))
+		if element.requires_arrow_body_length():
+			self.ui.spinbox_arrow_body_length.setValue(element.get_property(
+				u'arrow_body_length', _type=float))
 		if element.requires_scale():
 			self.ui.spinbox_scale.setValue(element.get_property(u'scale',
 				_type=float))
@@ -335,7 +368,9 @@ class sketchpad_widget(base_widget):
 		self.ui.widget_settings_text.setVisible(False)
 		self.ui.widget_settings_color.setVisible(False)
 		self.ui.widget_settings_penwidth.setVisible(False)
-		self.ui.widget_settings_arrow_size.setVisible(False)
+		self.ui.widget_settings_arrow_head_width.setVisible(False)
+		self.ui.widget_settings_arrow_body_width.setVisible(False)
+		self.ui.widget_settings_arrow_body_length.setVisible(False)
 		self.ui.widget_settings_scale.setVisible(False)
 		self.ui.widget_settings_fill.setVisible(False)
 		self.ui.widget_settings_center.setVisible(False)
@@ -379,8 +414,12 @@ class sketchpad_widget(base_widget):
 		self.ui.widget_settings_text.setVisible(element.requires_text())
 		self.ui.widget_settings_color.setVisible(element.requires_color())
 		self.ui.widget_settings_penwidth.setVisible(element.requires_penwidth())
-		self.ui.widget_settings_arrow_size.setVisible(
-			element.requires_arrow_size())
+		self.ui.widget_settings_arrow_head_width.setVisible(
+			element.requires_arrow_head_width())
+		self.ui.widget_settings_arrow_body_width.setVisible(
+			element.requires_arrow_body_width())
+		self.ui.widget_settings_arrow_body_length.setVisible(
+			element.requires_arrow_body_length())
 		self.ui.widget_settings_scale.setVisible(element.requires_scale())
 		self.ui.widget_settings_fill.setVisible(element.requires_fill())
 		self.ui.widget_settings_center.setVisible(element.requires_center())
@@ -499,15 +538,35 @@ class sketchpad_widget(base_widget):
 
 		return self.ui.spinbox_scale.value()
 
-	def current_arrow_size(self):
+	def current_arrow_body_width(self):
 
 		"""
 		returns:
-			desc:	The current arrow size.
+			desc:	The current arrow body_width.
 			type:	int
 		"""
 
-		return self.ui.spinbox_arrow_size.value()
+		return self.ui.spinbox_arrow_body_width.value()
+
+	def current_arrow_body_length(self):
+
+		"""
+		returns:
+			desc:	The current arrow width.
+			type:	int
+		"""
+
+		return self.ui.spinbox_arrow_body_length.value()
+
+	def current_arrow_head_width(self):
+
+		"""
+		returns:
+			desc:	The current arrowhead width.
+			type:	float
+		"""
+
+		return self.ui.spinbox_arrow_head_width.value()
 
 	def current_fill(self):
 

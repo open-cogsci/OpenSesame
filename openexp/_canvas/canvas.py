@@ -553,49 +553,51 @@ class canvas(backend):
 		raise NotImplementedError()
 
 	@configurable
-	def arrow(self, sx, sy, ex, ey, arrow_size=5, **style_args):
+	def arrow(self, sx, sy, ex, ey, body_length=0.8, body_width=.5,
+		head_width=30, **style_args):
 
 		"""
 		desc:
-			Draws an arrow. An arrow is a line, with an arrowhead at (ex, ey).
-			The angle between the arrowhead lines and the arrow line is 45
-			degrees.
+			Draws an arrow. An arrow is a polygon consisting of 7 vertices,
+			with an arrowhead pointing at (ex, ey).
 
 		arguments:
 			sx:
-				desc:	The left X coordinate.
+				desc:	The X coordinate of the arrow's base.
 				type:	int
 			sy:
-				desc:	The top Y coordinate.
+				desc:	The Y coordinate of the arrow's base.
 				type:	int
 			ex:
-				desc:	The right X coordinate.
+				desc:	The X coordinate of the arrow's tip.
 				type:	int
 			ey:
-				desc:	The bottom Y coordinate.
+				desc:	The Y coordinate of the arrow's tip..
 				type:	int
 
 		keywords:
-			arrow_size:
-				desc:	The length of the arrow-head lines in pixels.
-				type:	int
-
-		keyword-dict:
-			style_args:	"%arg_style"
+			body_length:
+				desc:	Proportional length of the arrow body relative to
+						the full arrow [0-1].
+				type:	float
+			body_width:
+				desc:	Proportional width (thickness) of the arrow body
+						relative to the full arrow [0-1].
+				type:	float
+			head_width:
+				desc:	Width (thickness) of the arrow head in pixels.
+				type:	float
 
 		Example: |
 			my_canvas = canvas()
-			my_canvas.arrow(-10, 10, 20, 20, arrow_size=10)
+			w = var.width/2
+			h = var.height/2
+			my_canvas.arrow(0, 0, w, h, head_width=100, body_length=0.5)
+			my_canvas.show()
 		"""
 
-		self.line(sx, sy, ex, ey)
-		a = math.atan2(ey - sy, ex - sx)
-		_sx = ex + arrow_size * math.cos(a + math.radians(135))
-		_sy = ey + arrow_size * math.sin(a + math.radians(135))
-		self.line(_sx, _sy, ex, ey)
-		_sx = ex + arrow_size * math.cos(a + math.radians(225))
-		_sy = ey + arrow_size * math.sin(a + math.radians(225))
-		self.line(_sx, _sy, ex, ey)
+		self.polygon(self.arrow_shape(sx, sy, ex, ey, body_width=body_width,
+			body_length=body_length, head_width=head_width))
 
 	@configurable
 	def rect(self, x, y, w, h, **style_args):
@@ -1054,6 +1056,40 @@ class canvas(backend):
 		"""
 
 		raise NotImplementedError()
+
+	@staticmethod
+	def arrow_shape(sx, sy, ex, ey, body_length=0.8, body_width=.5,
+		head_width=30):
+
+		"""
+		visible: False
+
+		returns:
+			Returns a list of (x, y) tuples that specify an arrow shape. See
+			canvas.canvas() for keywords.
+		"""
+
+		# length
+		d = math.sqrt((ey-sy)**2 + (sx-ex)**2)
+		# direction
+		angle = math.atan2(ey-sy,ex-sx)
+		_head_width = (1-body_width)/2.0
+		body_width = body_width/2.0
+		# calculate coordinates
+		p4 = (ex,ey)
+		p1 = (sx +body_width * head_width * math.cos(angle - math.pi/2),\
+			sy + body_width * head_width * math.sin(angle - math.pi/2))
+		p2 = (p1[0] + body_length*math.cos(angle) * d, \
+		 	p1[1] + body_length * math.sin(angle) * d)
+		p3 = (p2[0]+_head_width * head_width * math.cos(angle-math.pi/2),\
+			p2[1] + _head_width * head_width * math.sin(angle-math.pi/2))
+		p7 = (sx + body_width * head_width*math.cos(angle + math.pi/2),\
+			sy + body_width * head_width*math.sin(angle + math.pi/2))
+		p6 = (p7[0] + body_length * math.cos(angle) * d, \
+		 	p7[1] + body_length * math.sin(angle) * d)
+		p5 = (p6[0]+_head_width * head_width * math.cos(angle+math.pi/2),\
+			p6[1]+_head_width * head_width * math.sin(angle+math.pi/2))
+		return [p1, p2, p3, p4, p5, p6, p7]
 
 # Translation mapping from envelope names
 env_synonyms = {}

@@ -40,13 +40,16 @@ class arrow(base_element):
 		"""
 
 		defaults = [
-			(u'x1'			, None),
-			(u'y1'			, None),
-			(u'x2'			, None),
-			(u'y2'			, None),
-			(u'arrow_size'	, 20),
-			(u'color'		, sketchpad.var.get(u'foreground')),
-			(u'penwidth'	, 1),
+			(u'x1'				, None),
+			(u'y1'				, None),
+			(u'x2'				, None),
+			(u'y2'				, None),
+			(u'arrow_head_width', 30),
+			(u'arrow_body_width', 0.5),
+			(u'arrow_body_length', 0.8),
+			(u'color'			, sketchpad.var.foreground),
+			(u'penwidth'		, 1),
+			(u'fill'			, True),
 			]
 		super(arrow, self).__init__(sketchpad, string, defaults=defaults)
 
@@ -62,5 +65,7 @@ class arrow(base_element):
 			properties[u'x2'], properties[u'y2'],
 			color=properties[u'color'],
 			penwidth=properties[u'penwidth'],
-			arrow_size=properties[u'arrow_size'])
-
+			head_width=properties[u'arrow_head_width'],
+			body_width=properties[u'arrow_body_width'],
+			body_length=properties[u'arrow_body_length'],
+			fill=properties[u'fill'])

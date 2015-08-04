@@ -89,12 +89,12 @@ class syntax(object):
 		"""
 
 		try:
-			val = float(val)
+			f = float(val)
 		except:
-			return val
-		if int(val) == val:
-			return int(val)
-		return safe_decode(val, errors=u'ignore')
+			return safe_decode(val, errors=u'ignore')
+		if int(f) == f:
+			return int(f)
+		return f
 
 	def parse_front_matter(self, s):
 

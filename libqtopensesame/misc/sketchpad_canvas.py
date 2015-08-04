@@ -476,6 +476,23 @@ class sketchpad_canvas(QtGui.QGraphicsScene):
 			return 50
 		return r
 
+	def _p(self, r):
+
+		"""
+		desc:
+			Safely returns a proportion
+
+		returns:
+			A radius.
+		"""
+
+		if type(r) not in (int, float):
+			self.notify(
+				_('Proportion "%s" is unknown or variably defined, using .5') \
+				% r)
+			return .5
+		return r
+
 	def _w(self, x):
 
 		"""
@@ -641,27 +658,32 @@ class sketchpad_canvas(QtGui.QGraphicsScene):
 			self.addItem(i)
 		return i
 
-	def arrow(self, sx, sy, ex, ey, arrow_size=5, color=None, penwidth=None):
+	def arrow(self, sx, sy, ex, ey, body_length=0.8, body_width=.5,
+		head_width=30, color=None, fill=False, penwidth=None, add=True):
 
 		"""Mimicks canvas api. See openexp._canvas.canvas."""
 
-		a = math.atan2(ey - sy, ex - sx)
-		sx1 = ex + arrow_size * math.cos(a + math.radians(135))
-		sy1 = ey + arrow_size * math.sin(a + math.radians(135))
-		sx2 = ex + arrow_size * math.cos(a + math.radians(225))
-		sy2 = ey + arrow_size * math.sin(a + math.radians(225))
-		group = QtGui.QGraphicsItemGroup()
-		i = self.line(sx, sy, ex, ey, color=color, penwidth=penwidth,
-			add=False)
-		group.addToGroup(i)
-		i = self.line(sx1, sy1, ex, ey, color=color, penwidth=penwidth,
-			add=False)
-		group.addToGroup(i)
-		i = self.line(sx2, sy2, ex, ey, color=color, penwidth=penwidth,
-			add=False)
-		group.addToGroup(i)
-		self.addItem(group)
-		return group
+		from openexp._canvas.canvas import canvas
+		shape = canvas.arrow_shape(self._x(sx), self._y(sy), self._x(ex),
+			self._y(ey), body_length=self._p(body_length),
+			body_width=self._p(body_width),
+			head_width=self._w(head_width))
+		color = self._color(color)
+		if fill:
+			pen = self._pen(color, 1)
+			brush = self._brush(color)
+		else:
+			pen = self._pen(color, penwidth)
+			brush = QtGui.QBrush()
+		polygon = QtGui.QPolygonF()
+		for point in shape:
+			polygon <<  QtCore.QPointF(point[0],point[1])
+		i = QtGui.QGraphicsPolygonItem(polygon)
+		i.setPen(pen)
+		i.setBrush(brush)
+		if add:
+			self.addItem(i)
+		return i
 
 	def rect(self, x, y, w, h, fill=False, color=None, penwidth=None):
 

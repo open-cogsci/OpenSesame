@@ -322,7 +322,7 @@ class psycho(canvas.canvas, psycho_coordinates):
 		else:
 			_vertices = vertices
 		if self.fill:
-			fill_color = self.backend_color
+			fill_color = self.color.backend_color
 		else:
 			fill_color = None
 		stim = visual.ShapeStim(self.experiment.window, units=u"pix",

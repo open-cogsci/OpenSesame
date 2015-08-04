@@ -415,11 +415,37 @@ class base_element(object):
 		return False
 
 	@staticmethod
-	def requires_arrow_size():
+	def requires_arrow_head_width():
 
 		"""
 		desc:
-			Indicates whether the element requires arrow-size settings.
+			Indicates whether the element requires arrow_head_width settings.
+
+		returns:
+			type:	bool
+		"""
+
+		return False
+
+	@staticmethod
+	def requires_arrow_body_width():
+
+		"""
+		desc:
+			Indicates whether the element requires arrow_body_width settings.
+
+		returns:
+			type:	bool
+		"""
+
+		return False
+
+	@staticmethod
+	def requires_arrow_body_length():
+
+		"""
+		desc:
+			Indicates whether the element requires arrow_body_length settings.
 
 		returns:
 			type:	bool
