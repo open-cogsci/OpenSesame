@@ -726,8 +726,9 @@ class qtitem(base_qtobject):
 		elif isinstance(widget, QtGui.QComboBox):
 			widget.activated.connect(self.apply_edit_changes)
 			self.auto_combobox[var] = widget
-		elif isinstance(widget, QtGui.QSlider):
-			widget.editingFinished.connect(self.apply_edit_changes)
+		elif isinstance(widget, QtGui.QSlider) \
+			or isinstance(widget, QtGui.QDial):
+			widget.valueChanged.connect(self.apply_edit_changes)
 			self.auto_slider[var] = widget
 		elif isinstance(widget, QtGui.QLineEdit):
 			widget.editingFinished.connect(self.apply_edit_changes)
