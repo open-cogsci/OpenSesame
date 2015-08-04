@@ -54,15 +54,19 @@ class synth(synth_runtime, qtplugin):
 		self.auto_add_widget(self.synth_widget.ui.edit_duration, u'duration')
 		self.synth_widget.ui.edit_duration.setValidator(
 			duration_validator(self, default=u'sound'))
-		self.synth_widget.ui.dial_attack.valueChanged.connect(self.apply_dials)
-		self.synth_widget.ui.dial_decay.valueChanged.connect(self.apply_dials)
-		self.synth_widget.ui.dial_pan.valueChanged.connect(self.apply_dials)
-		self.synth_widget.ui.dial_volume.valueChanged.connect(self.apply_dials)
 		self.synth_widget.ui.button_sine.clicked.connect(self.set_sine)
 		self.synth_widget.ui.button_saw.clicked.connect(self.set_saw)
 		self.synth_widget.ui.button_square.clicked.connect(self.set_square)
 		self.synth_widget.ui.button_white_noise.clicked.connect(
 			self.set_white_noise)
+		self.connect_dials()
+
+	def update(self):
+
+		"""See qtitem."""
+
+		super(synth, self).update()
+		self.update_dials()
 
 	def apply_edit_changes(self):
 
@@ -85,6 +89,7 @@ class synth(synth_runtime, qtplugin):
 			Updates the dials to match the corresponding spinboxes.
 		"""
 
+		self.disconnect_dials()
 		self.synth_widget.ui.dial_pan.setDisabled(
 			type(self.var.get(u'pan', _eval=False)) not in (int, float))
 		self.synth_widget.ui.dial_decay.setDisabled(
@@ -101,6 +106,7 @@ class synth(synth_runtime, qtplugin):
 			self.synth_widget.ui.spin_attack.value())
 		self.synth_widget.ui.dial_volume.setValue(
 			100*self.synth_widget.ui.spin_volume.value())
+		self.connect_dials()
 
 	def apply_dials(self):
 
@@ -117,8 +123,31 @@ class synth(synth_runtime, qtplugin):
 			self.var.set(u"pan", self.synth_widget.ui.dial_pan.value())
 		if self.synth_widget.ui.dial_volume.isEnabled():
 			self.var.set(u"volume", .01*self.synth_widget.ui.dial_volume.value())
-		self.edit_widget()
-		self.update_script()
+		self.update()
+
+	def connect_dials(self):
+
+		"""
+		desc:
+			Connects the dials.
+		"""
+
+		self.synth_widget.ui.dial_attack.valueChanged.connect(self.apply_dials)
+		self.synth_widget.ui.dial_decay.valueChanged.connect(self.apply_dials)
+		self.synth_widget.ui.dial_pan.valueChanged.connect(self.apply_dials)
+		self.synth_widget.ui.dial_volume.valueChanged.connect(self.apply_dials)
+
+	def disconnect_dials(self):
+
+		"""
+		desc:
+			Disconnects the dials.
+		"""
+
+		self.synth_widget.ui.dial_attack.valueChanged.disconnect()
+		self.synth_widget.ui.dial_decay.valueChanged.disconnect()
+		self.synth_widget.ui.dial_pan.valueChanged.disconnect()
+		self.synth_widget.ui.dial_volume.valueChanged.disconnect()
 
 	def edit_widget(self):
 

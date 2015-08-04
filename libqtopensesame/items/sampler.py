@@ -59,9 +59,6 @@ class sampler(sampler_runtime, qtplugin):
 			duration_validator(self, default=u'sound'))
 		self.sampler_widget.ui.button_browse_sample.clicked.connect(
 			self.browse_sample)
-		self.sampler_widget.ui.dial_pan.sliderMoved.connect(self.apply_dials)
-		self.sampler_widget.ui.dial_volume.sliderMoved.connect(self.apply_dials)
-		self.sampler_widget.ui.dial_pitch.sliderMoved.connect(self.apply_dials)
 		self.set_focus_widget(self.sampler_widget.ui.edit_sample, override=True)
 		self.update_dials()
 
@@ -77,6 +74,13 @@ class sampler(sampler_runtime, qtplugin):
 			return
 		self.sampler_widget.ui.edit_sample.setText(s)
 		self.apply_edit_changes()
+
+	def update(self):
+
+		"""See qtitem."""
+
+		super(sampler, self).update()
+		self.update_dials()
 
 	def apply_edit_changes(self):
 
@@ -99,6 +103,7 @@ class sampler(sampler_runtime, qtplugin):
 			Updates the dials to match the corresponding spinboxes.
 		"""
 
+		self.disconnect_dials()
 		self.sampler_widget.ui.dial_pan.setDisabled(
 			type(self.var.get(u'pan', _eval=False)) not in (int, float))
 		self.sampler_widget.ui.dial_pitch.setDisabled(
@@ -111,6 +116,7 @@ class sampler(sampler_runtime, qtplugin):
 			100*self.sampler_widget.ui.spin_pitch.value())
 		self.sampler_widget.ui.dial_volume.setValue(
 			100*self.sampler_widget.ui.spin_volume.value())
+		self.connect_dials()
 
 	def apply_dials(self):
 
@@ -125,5 +131,26 @@ class sampler(sampler_runtime, qtplugin):
 			self.var.set(u"pitch", .01*self.sampler_widget.ui.dial_pitch.value())
 		if self.sampler_widget.ui.dial_volume.isEnabled():
 			self.var.set(u"volume", .01*self.sampler_widget.ui.dial_volume.value())
-		self.edit_widget()
-		self.update_script()
+		self.update()
+
+	def connect_dials(self):
+
+		"""
+		desc:
+			Connects the dials.
+		"""
+
+		self.sampler_widget.ui.dial_pan.sliderMoved.connect(self.apply_dials)
+		self.sampler_widget.ui.dial_volume.sliderMoved.connect(self.apply_dials)
+		self.sampler_widget.ui.dial_pitch.sliderMoved.connect(self.apply_dials)
+
+	def disconnect_dials(self):
+
+		"""
+		desc:
+			Disconnects the dials.
+		"""
+
+		self.sampler_widget.ui.dial_pan.sliderMoved.disconnect()
+		self.sampler_widget.ui.dial_volume.sliderMoved.disconnect()
+		self.sampler_widget.ui.dial_pitch.sliderMoved.disconnect()
