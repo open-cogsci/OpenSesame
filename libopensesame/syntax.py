@@ -75,6 +75,27 @@ class syntax(object):
 		self.re_from_ascii = re.compile(r'U\+([A-F0-9]{4})')
 		self.re_front_matter = re.compile(r'---(?P<info>.*)---', re.S)
 
+	def auto_type(self, val):
+
+		"""
+		desc:
+			Casts a value to its best-fitting type, i.e. float, int, or unicode.
+
+		arguments:
+			val:	A value of any type.
+
+		returns:
+			An auto-typed value.
+		"""
+
+		try:
+			val = float(val)
+		except:
+			return val
+		if int(val) == val:
+			return int(val)
+		return safe_decode(val, errors=u'ignore')
+
 	def parse_front_matter(self, s):
 
 		"""
@@ -187,9 +208,9 @@ class syntax(object):
 			if m is not None:
 				arg = s[:m.end()-1]
 				val = s[m.end():]
-				kwdict[arg] = val
+				kwdict[arg] = self.auto_type(val)
 			else:
-				arglist.append(s)
+				arglist.append(self.auto_type(s))
 		return cmd, arglist, kwdict
 
 	def create_cmd(self, cmd, arglist=[], kwdict={}):
@@ -215,7 +236,7 @@ class syntax(object):
 		l = [cmd]
 		for arg in arglist:
 			l.append(self.safe_wrap(arg))
-		for key, val in kwdict.items():
+		for key, val in sorted(kwdict.items()):
 			l.append(u'%s=%s' % (key, self.safe_wrap(val)))
 		return u' '.join(l)
 
@@ -433,15 +454,18 @@ class syntax(object):
 		"""
 
 		s = safe_decode(s)
-		if not s.replace(u'_', u'').isalnum():
-			s = u'"%s"' % s.replace(u'"', u'\\"')
+		try:
+			float(s)
+		except:
+			if not s.replace(u'_', u'').isalnum():
+				s = u'"%s"' % s.replace(u'"', u'\\"')
 		return s
 
 	def sanitize(self, s, strict=False, allow_vars=True):
 
 		"""
 		desc:
-			Removes invalid characters q(notably quotes) from the string.
+			Removes invalid characters (notably quotes) from the string.
 
 		arguments:
 			s:

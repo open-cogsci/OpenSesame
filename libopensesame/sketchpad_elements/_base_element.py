@@ -100,56 +100,31 @@ class base_element(object):
 
 		pass
 
-	def from_string(self, string):
+	def from_string(self, s):
 
 		"""
 		desc:
 			Parse a definition string for the element.
 
 		arguments:
-			string:		A definition string.
+			s:		A definition string.
 		"""
 
-		l  = self.syntax.split(string)
-		if len(l) < 2 or l[0] != u'draw' or l[1] != self._type:
-			raise osexception(u'Invalid sketchpad-element definition: \'%s\'' \
-				% string)
+		cmd, arglist, kwdict = self.syntax.parse_cmd(s)
+		if cmd != u'draw' or len(arglist) == 0 or arglist[0] != self._type:
+			raise osexception(
+				u'Invalid sketchpad-element definition: \'%s\'' % s)
 		# First load the default values
 		self.properties = {}
 		for var, val in self.defaults:
 			self.properties[var] = val
-		# Parse the specified values
-		keyword_nr = 0
-		vars_parsed = []
-		for keyword in l[2:]:
-			i = keyword.find(u'=')
-			if i >= 0:
-				var = keyword[:i]
-				# If the keyword is not known, we assumed that it's not a
-				# keyword at all, but part of the value. This is mostly a hack
-				# necessary to maintain backwards compatibility for the texline
-				# element, which may have strings of text that look like keyword
-				# -value specifications, but are really just text, like:
-				# "Accuracy = [acc] ms"
-				if self.valid_keyword(var):
-					val = keyword[i+1:]
-				else:
-					debug.msg(
-						u'Invalid keyword "%s", assuming "%s"' \
-						% (var, self.defaults[keyword_nr][0]))
-					var = self.defaults[keyword_nr][0]
-					val = keyword
-			else:
-				var = self.defaults[keyword_nr][0]
-				val = keyword
-			if var in vars_parsed:
-				raise osexception(
-					(u'The keyword \'%s\' has been specified multiple times in '
-					u'sketchpad element \'%s\' in item \'%s\'') % (var,
-					self._type, self.name))
-			vars_parsed.append(var)
-			self.properties[var] = self.sketchpad.auto_type(val)
-			keyword_nr += 1
+		# Parse the argument list. This is the old way, in which arguments where
+		# passed by order.
+		for i, val in enumerate(arglist[1:]):
+			var = self.defaults[i][0]
+			self.properties[var] = val
+		# Now parse keywords
+		self.properties.update(kwdict)
 		# Check if all values that need to be specified have indeed been
 		# specified.
 		for var, val in self.properties.items():
@@ -233,15 +208,7 @@ class base_element(object):
 			type:	unicode
 		"""
 
-		s = u'draw %s' % self._type
-		for var, default in self.defaults:
-			val = self.properties[var]
-			val = self.escape(val)
-			if default is None and not self.only_keywords:
-				s += u' %s' % val
-			else:
-				s += u' %s=%s' % (var, val)
-		return s
+		return self.syntax.create_cmd(u'draw', [self._type], self.properties)
 
 	def eval_properties(self):
 
