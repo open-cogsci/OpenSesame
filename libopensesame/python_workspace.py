@@ -101,6 +101,23 @@ class python_workspace(object):
 			return False
 		return True
 
+	def run_file(self, path):
+
+		"""
+		desc:
+			Reads and executes a files.
+
+		arguments:
+			path:
+				desc:	The full path to a Python file.
+				type:	str
+		"""
+
+		with open(path) as fd:
+			script = fd.read()
+		bytecode = self._compile(script)
+		self._exec(bytecode)
+
 	def _compile(self, script):
 
 		"""
