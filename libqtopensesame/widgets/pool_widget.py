@@ -400,7 +400,7 @@ def select_from_pool(main_window, parent=None):
 	d.setLayout(vbox)
 	d.setWindowTitle(_(u"Select file from pool"))
 	res = d.exec_()
-	main_window.refresh_pool()
+	main_window.ui.pool_widget.refresh()
 	if res == QtGui.QDialog.Rejected:
 		return u""
 	selected = widget.ui.list_pool.currentItem()
