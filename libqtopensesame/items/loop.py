@@ -585,7 +585,11 @@ class loop(qtstructure_item, qtitem, loop_runtime):
 
 		# Set item to run
 		item = unicode(self.loop_widget.ui.combobox_item.currentText())
-		self.set(u'item', item)
+		if item != self.get(u'item'):
+			self.set(u'item', item)
+			rebuild_item_tree = True
+		else:
+			rebuild_item_tree = False
 		# Validate and set the break-if statement
 		break_if = self.clean_cond(self.loop_widget.ui.edit_break_if.text(),
 			default=u'never')
@@ -611,7 +615,8 @@ class loop(qtstructure_item, qtitem, loop_runtime):
 		self.refresh_loop_table()
 		self.loop_table.setCurrentCell(row, column)
 		super(loop, self).apply_edit_changes()
-		self.experiment.build_item_tree()
+		if rebuild_item_tree:
+			self.experiment.build_item_tree()
 		self.update_widget_state()
 
 	def build_item_tree(self, toplevel=None, items=[], max_depth=-1,

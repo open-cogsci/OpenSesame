@@ -73,7 +73,7 @@ class tree_item_item(tree_base_item):
 	def has_append_menu(self):
 
 		return self.item.item_type == u'sequence'
-	
+
 	def ancestry(self):
 
 		"""
@@ -201,6 +201,16 @@ class tree_item_item(tree_base_item):
 
 		return hasattr(self.parent(), u'item')
 
+	def is_unused(self):
+
+		"""
+		returns:
+			desc:	True if the item is unused, False otherwise.
+			type:	bool
+		"""
+
+		return self.parent() is not None and self.parent().name == u'__unused__'
+
 	def is_cloneable(self):
 
 		"""
@@ -238,7 +248,7 @@ class tree_item_item(tree_base_item):
 			Permanently deletes the item, if possible.
 		"""
 
-		if not self.is_deletable():
+		if not self.is_deletable() and not self.is_unused():
 			return
 		if QtGui.QMessageBox.question(self.treeWidget(),
 			_(u'Permanently delete item'),
@@ -250,7 +260,14 @@ class tree_item_item(tree_base_item):
 			return
 		del self.item_store[self.name]
 		self.close_tab()
-		self.experiment.build_item_tree()
+		try:
+			# Sometimes the treeWidget has already been deleted, in which case
+			# this gives an Exception. But it when it hasn't been deleted, a
+			# structure_change has to be emitted, otherwise the GUI doesn't
+			# update properly.
+			self.treeWidget().structure_change.emit()
+		except:
+			pass
 
 	def copy(self):
 

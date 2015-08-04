@@ -76,6 +76,8 @@ class sequence(item.item):
 		self.variables = {}
 		self.comments = []
 		self.reset()
+		if string is None:
+			return
 		for i in string.split(u'\n'):
 			self.parse_variable(i)
 			i = self.split(i.strip())

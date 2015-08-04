@@ -72,6 +72,7 @@ class stdout_file(object):
 		if self.fd != None:
 			self.fd.write(s)
 			self.fd.flush()
+			os.fsync(self.fd.fileno())
 
 def main():
 
@@ -104,7 +105,11 @@ def main():
 		logfile = menu._logfile
 
 	# Next run the actual experiment!
-	exp = experiment('Experiment', experiment_path)
+	try:
+		exp = experiment('Experiment', experiment_path)
+	except Exception as e:
+		for s in traceback.format_exc(e).split("\n"):
+			print(s)
 	print('Launching %s' % experiment_path)
 	exp.set_subject(subject_nr)
 	exp.logfile = logfile

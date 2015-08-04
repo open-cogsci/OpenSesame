@@ -250,6 +250,7 @@ class qtitem(QtCore.QObject):
 		self.container_widget = QtGui.QWidget()
 		self.container_widget.setLayout(self.container_vbox)
 		self.container_widget.on_activate = self.show_tab
+		self.container_widget.__item__ = self.name
 
 	def splitter_moved(self, pos, index):
 
@@ -394,6 +395,7 @@ class qtitem(QtCore.QObject):
 		if self.name != from_name:
 			return
 		self.name = to_name
+		self.container_widget.__item__ = self.name
 		self.header.set_name(to_name)
 		index = self.tabwidget.indexOf(self.widget())
 		if index != None:

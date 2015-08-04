@@ -1,3 +1,23 @@
+opensesame (2.9.7~pre3-ubuntu1) vivid; urgency=medium
+
+  * Improvements
+    - Add append menu to overview and sequence
+    - Add permanently delete menu option to unused items
+  * Bugs fixed
+    - Use px (not pt) as units in font GUI
+    - Explicitly set window type in psycho backend (#331)
+    - Fix recursion errors in drag-and-drop
+    - Restore structure when a drag is canceled (#337)
+    - Fix inconsistent folding/unfolding behavior in overview area (#336)
+    - Fix missing debug output on Android (#346)
+    - Allow uppercase text input on Android (#341)
+    - Allow external links in notification dialog (#340)
+    - Fix drag-and-drop between different instances of OpenSesame (#338)
+    - Fix a crash when dropping an item onto an unused item (#343)
+    - Fix a crash on Android when there are filenames with special characters in the file pool (#345)
+
+ -- Sebastiaan Mathot <sebastiaan@mantis>  Wed, 24 Jun 2015 19:27:04 +0200
+
 opensesame (2.9.6-ubuntu1) vivid; urgency=medium
 
   * Improvements

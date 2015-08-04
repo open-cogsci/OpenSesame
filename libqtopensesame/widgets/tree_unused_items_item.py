@@ -56,7 +56,8 @@ class tree_unused_items_item(tree_base_item):
 
 	def droppable(self, data):
 
-		return drag_and_drop.matches(data, [u'item-existing'])
+		return drag_and_drop.matches(data, [u'item-existing']) and \
+			data[u'application-id'] == self.main_window._id()
 
 	def drop_hint(self):
 
