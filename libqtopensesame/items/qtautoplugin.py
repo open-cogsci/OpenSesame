@@ -22,6 +22,7 @@ from libopensesame.py3compat import *
 import os
 from libopensesame import plugins
 from libqtopensesame.items.qtplugin import qtplugin
+from libqtopensesame import validators
 from libqtopensesame.misc import _
 
 class qtautoplugin(qtplugin):
@@ -120,6 +121,15 @@ class qtautoplugin(qtplugin):
 			else:
 				raise Exception(_(u'"%s" is not a valid qtautoplugin control') \
 					% controls[u'type'])
+			# Add an optional validator
+			if u'validator' in c:
+				try:
+					validator = getattr(validators,
+						u'%s_validator' % c[u'validator'])
+				except:
+					raise osexception(
+						u'Invalid validator: %s' % c[u'validator'])
+				widget.setValidator(validator(self.main_window))
 			# Add the widget as an item property when the 'name' option is
 			# specified.
 			if u'name' in c:
