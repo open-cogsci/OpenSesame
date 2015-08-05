@@ -60,6 +60,7 @@ class base_element(object):
 		self.fix_coordinates = False
 		self.selected = False
 		self.highlighted = False
+		self.graphics_item = None
 
 	@property
 	def main_window(self):
@@ -134,6 +135,10 @@ class base_element(object):
 			Redraws this element.
 		"""
 
+		if self.graphics_item is None:
+			# Sometimes update is called before draw, and the graphics_item
+			# doesn't exist yet.
+			return
 		if self.highlighted:
 			self.graphics_item.setGraphicsEffect(self.highlighted_effect())
 		elif self.selected:
