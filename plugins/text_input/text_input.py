@@ -134,7 +134,7 @@ class text_input(item.item, generic_response.generic_response):
 			c.show()
 
 			# Get the response and the moderators (shift etc.)
-			resp, time = self._keyboard.get_key()
+			resp, time = self._keyboard.get_key(keylist=None, timeout=0)
 			if resp!=None and len(resp) == 1:
 				o = ord(resp)
 			else:
