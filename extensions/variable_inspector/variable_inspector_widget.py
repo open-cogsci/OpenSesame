@@ -51,6 +51,15 @@ class variable_inspector_widget(base_widget):
 		self.ui.table_variables.mousePressEvent = self.start_drag
 		self.refresh()
 
+	def focus(self):
+
+		"""
+		desc:
+			Sets the focus to the filter box.
+		"""
+
+		self.ui.edit_variable_filter.setFocus()
+
 	def var(self):
 
 		"""

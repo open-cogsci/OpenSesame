@@ -22,7 +22,7 @@ from libqtopensesame.extensions import base_extension
 from libqtopensesame.misc import _
 from libqtopensesame.misc.config import cfg
 from variable_inspector_dockwidget import variable_inspector_dockwidget
-from PyQt4 import QtCore
+from PyQt4 import QtCore, QtGui
 
 class variable_inspector(base_extension):
 
@@ -43,6 +43,19 @@ class variable_inspector(base_extension):
 		self.main_window.addDockWidget(QtCore.Qt.RightDockWidgetArea,
 			self.dock_widget)
 		self.set_visible(cfg.variable_inspector_visible)
+		self.shortcut_focus = QtGui.QShortcut(QtGui.QKeySequence(
+			cfg.variable_inspector_focus_shortcut), self.main_window,
+			self.focus, context=QtCore.Qt.ApplicationShortcut)
+
+	def focus(self):
+
+		"""
+		desc:
+			Makes the dock visible and sets the focus to the filter box.
+		"""
+
+		self.set_visible(True)
+		self.dock_widget.widget().focus()
 
 	def open_help(self):
 
@@ -70,6 +83,7 @@ class variable_inspector(base_extension):
 		self.set_checked(visible)
 		if visible:
 			self.dock_widget.show()
+			self.dock_widget.widget().focus()
 		else:
 			self.dock_widget.hide()
 

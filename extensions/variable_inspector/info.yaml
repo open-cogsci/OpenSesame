@@ -10,4 +10,5 @@ toolbar:
   index: 14
 settings:
   variable_inspector_visible: false
+  variable_inspector_focus_shortcut: Ctrl+5
 tooltip: Show variable inspector

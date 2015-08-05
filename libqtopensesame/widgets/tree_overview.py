@@ -23,6 +23,7 @@ from PyQt4 import QtCore, QtGui
 from libqtopensesame.misc.config import cfg
 from libqtopensesame.misc import _
 from libqtopensesame.misc import drag_and_drop
+from libqtopensesame.misc.shortcut import shortcut
 from libqtopensesame.misc.base_subcomponent import base_subcomponent
 from libqtopensesame.misc.base_draggable import base_draggable
 from libqtopensesame.widgets.tree_append_button import tree_append_button
@@ -73,43 +74,33 @@ class tree_overview(base_subcomponent, base_draggable, QtGui.QTreeWidget):
 		self.pending_drag_data = None
 		self.drag_timer = None
 		if not self.overview_mode:
-			self.shortcut_edit_runif = QtGui.QShortcut(
-				QtGui.QKeySequence(cfg.shortcut_edit_runif), self,
-				self.start_edit_runif,
-				context=QtCore.Qt.WidgetWithChildrenShortcut)
+			shortcut(self, cfg.shortcut_edit_runif, self.start_edit_runif)
 			self.append_button = tree_append_button(self)
 		else:
 			self.append_button = None
-		self.shortcut_rename = QtGui.QShortcut(
-			QtGui.QKeySequence(cfg.shortcut_rename), self,
-			self.start_rename,
-			context=QtCore.Qt.WidgetWithChildrenShortcut)
-		self.shortcut_copy_item = QtGui.QShortcut(
-			QtGui.QKeySequence(cfg.shortcut_copy_clipboard), self,
-			self.copy_item, context=QtCore.Qt.WidgetWithChildrenShortcut)
-		self.shortcut_paste_item = QtGui.QShortcut(
-			QtGui.QKeySequence(cfg.shortcut_paste_clipboard), self,
-			self.paste_item, context=QtCore.Qt.WidgetWithChildrenShortcut)
-		self.shortcut_delete_item = QtGui.QShortcut(
-			QtGui.QKeySequence(cfg.shortcut_delete), self, self.delete_item,
-			context=QtCore.Qt.WidgetWithChildrenShortcut)
-		self.shortcut_delete_item = QtGui.QShortcut(
-			QtGui.QKeySequence(cfg.shortcut_permanently_delete), self,
-			self.permanently_delete_item,
-			context=QtCore.Qt.WidgetWithChildrenShortcut)
-		self.shortcut_linked_copy = QtGui.QShortcut(
-			QtGui.QKeySequence(cfg.shortcut_linked_copy), self,
-			self.create_linked_copy,
-			context=QtCore.Qt.WidgetWithChildrenShortcut)
-		self.shortcut_unlinked_copy = QtGui.QShortcut(
-			QtGui.QKeySequence(cfg.shortcut_unlinked_copy), self,
-			self.create_unlinked_copy,
-			context=QtCore.Qt.WidgetWithChildrenShortcut)
+		shortcut(self, cfg.shortcut_context_menu, self.show_context_menu)
+		shortcut(self, cfg.shortcut_rename, self.start_rename)
+		shortcut(self, cfg.shortcut_copy_clipboard, self.copy_item)
+		shortcut(self, cfg.shortcut_paste_clipboard, self.paste_item)
+		shortcut(self, cfg.shortcut_delete, self.delete_item)
+		shortcut(self, cfg.shortcut_permanently_delete,
+			self.permanently_delete_item)
+		shortcut(self, cfg.shortcut_linked_copy, self.create_linked_copy)
+		shortcut(self, cfg.shortcut_unlinked_copy, self.create_unlinked_copy)
 		self.drop_indicator = None
 		self.drop_indicator_pen = QtGui.QPen(QtGui.QBrush(
 			QtGui.QColor(u'#73d216')), 2, QtCore.Qt.SolidLine)
 		self.set_supported_drop_types([u'item-new', u'item-existing',
 			u'url-local'])
+
+	def show_context_menu(self):
+
+		item = self.currentItem()
+		if item is None:
+			return
+		index = self.indexFromItem(item)
+		rect = self.visualRect(index)
+		item.show_context_menu(self.mapToGlobal(rect.topLeft()))
 
 	def copy_item(self):
 
@@ -183,7 +174,7 @@ class tree_overview(base_subcomponent, base_draggable, QtGui.QTreeWidget):
 		if target_treeitem is not None:
 			target_treeitem.create_unlinked_copy()
 
-	def select_item(self, name):
+	def select_item(self, name, open_tab=True):
 
 		"""
 		desc:
@@ -200,7 +191,8 @@ class tree_overview(base_subcomponent, base_draggable, QtGui.QTreeWidget):
 			return
 		for _l in l:
 			_l.setSelected(True)
-		self.experiment.items[name].open_tab(select_in_tree=False)
+		if open_tab:
+			self.experiment.items[name].open_tab(select_in_tree=False)
 
 	def text_edited(self, treeitem, col):
 
@@ -876,3 +868,14 @@ class tree_overview(base_subcomponent, base_draggable, QtGui.QTreeWidget):
 		if self.append_button is None:
 			return
 		self.append_button.append_menu.target_treeitem = None
+
+	def focusInEvent(self, e):
+
+		"""
+		desc:
+			Select the general tab if no item is currently selected.
+		"""
+
+		super(tree_overview, self).focusInEvent(e)
+		if len(self.selectedItems()) == 0:
+			self.setCurrentItem(self.topLevelItem(0))

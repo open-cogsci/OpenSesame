@@ -224,3 +224,8 @@ class ipython_console(base_console, QtGui.QWidget):
 
 		self.main_window.ui.dock_stdout.setVisible(True)
 		self.control.execute(s)
+
+	def focusInEvent(self, e):
+
+		self.control.setFocus()
+		e.accept()

@@ -1,3 +1,4 @@
+
 #-*- coding:utf-8 -*-
 
 """
@@ -158,7 +159,7 @@ class qtitem(base_qtobject):
 
 		self.update_script()
 		self.edit_widget()
-		self.set_focus()
+		self.main_window.ui.itemtree.select_item(self.name, open_tab=False)
 
 	def widget(self):
 

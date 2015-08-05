@@ -370,6 +370,19 @@ class pool_widget(base_widget):
 		self.add(files)
 		event.acceptProposedAction()
 
+	def focusInEvent(self, e):
+
+		"""
+		desc:
+			Focus the filter edit when the widget receives focus.
+
+		arguments:
+			e:
+				type:	QFocusEvent
+		"""
+
+		self.ui.edit_pool_filter.setFocus()
+
 def select_from_pool(main_window, parent=None):
 
 	"""

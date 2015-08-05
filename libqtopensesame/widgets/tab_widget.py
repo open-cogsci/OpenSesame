@@ -477,3 +477,15 @@ class tab_widget(base_subcomponent, QtGui.QTabWidget):
 		else:
 			wb.load_markdown(md)
 		self.main_window.tabwidget.add(wb, icon, _(title))
+
+	def focus(self):
+
+		"""
+		desc:
+			Properly give focus to the current widget (if any).
+		"""
+
+		item = self.current_item()
+		if item is None:
+			return
+		self.experiment.items[item].set_focus()

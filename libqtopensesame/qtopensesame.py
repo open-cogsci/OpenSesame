@@ -161,7 +161,7 @@ class qtopensesame(QtGui.QMainWindow, base_component):
 
 		# Setup the overview area
 		self.ui.dock_overview.show()
-		self.ui.dock_overview.visibilityChanged.connect( \
+		self.ui.dock_overview.visibilityChanged.connect(
 			self.ui.action_show_overview.setChecked)
 
 		# Setup the file pool
@@ -173,19 +173,18 @@ class qtopensesame(QtGui.QMainWindow, base_component):
 		self.ui.dock_pool.setWidget(self.ui.pool_widget)
 
 		# Uncheck the debug window button on debug window close
-		self.ui.dock_stdout.visibilityChanged.connect( \
+		self.ui.dock_stdout.visibilityChanged.connect(
 			self.ui.action_show_stdout.setChecked)
 
 		# Initialize keyboard shortcuts
-		self.ui.shortcut_itemtree = QtGui.QShortcut( \
-			QtGui.QKeySequence(), self, self.ui.itemtree.setFocus)
-		self.ui.shortcut_tabwidget = QtGui.QShortcut( \
-			QtGui.QKeySequence(), self, self.ui.tabwidget.setFocus)
-		self.ui.shortcut_stdout = QtGui.QShortcut( \
-			QtGui.QKeySequence(), self, self.ui.console.setFocus)
-		self.ui.shortcut_pool = QtGui.QShortcut( \
-			QtGui.QKeySequence(), self, \
-			self.ui.pool_widget.ui.edit_pool_filter.setFocus)
+		self.ui.shortcut_itemtree = QtGui.QShortcut(QtGui.QKeySequence(), self,
+			self.focus_overview_area)
+		self.ui.shortcut_tabwidget = QtGui.QShortcut(
+			QtGui.QKeySequence(), self, self.ui.tabwidget.focus)
+		self.ui.shortcut_stdout = QtGui.QShortcut(QtGui.QKeySequence(), self,
+			self.focus_debug_window)
+		self.ui.shortcut_pool = QtGui.QShortcut(QtGui.QKeySequence(), self,
+			self.focus_file_pool)
 
 		# Create the initial experiment, which is the default template.
 		with open(misc.resource(os.path.join(u"templates",
@@ -203,6 +202,36 @@ class qtopensesame(QtGui.QMainWindow, base_component):
 		# Initialize extensions
 		self.extension_manager = extension_manager(self)
 		self.extension_manager.fire(u'startup')
+
+	def focus_debug_window(self):
+
+		"""
+		desc:
+			Shows and focuses the debug window.
+		"""
+
+		self.ui.console.focus()
+		self.ui.dock_stdout.setVisible(True)
+
+	def focus_overview_area(self):
+
+		"""
+		desc:
+			Shows and focuses the overview area.
+		"""
+
+		self.ui.itemtree.setFocus()
+		self.ui.dock_overview.setVisible(True)
+
+	def focus_file_pool(self):
+
+		"""
+		desc:
+			Shows and focuses the file pool.
+		"""
+
+		self.ui.pool_widget.setFocus()
+		self.ui.dock_pool.setVisible(True)
 
 	def init_custom_fonts(self):
 
@@ -239,7 +268,9 @@ class qtopensesame(QtGui.QMainWindow, base_component):
 		group = optparse.OptionGroup(parser, u"Miscellaneous options")
 		group.add_option(u"-c", u"--config", action=u"store", dest=u"_config",
 			help=\
-			u"Set a configuration option, e.g, '--config auto_update_check=False;scintilla_font_size=10'. For a complete list of configuration options, please refer to the source of config.py.")
+			u"Set a configuration option, e.g, '--config auto_update_check="
+			u"False;scintilla_font_size=10'. For a complete list of "
+			u"configuration options, please refer to the source of config.py.")
 		group.add_option(u"-t", u"--theme", action=u"store", dest=u"_theme",
 			help=u"Specify a GUI theme")
 		group.add_option(u"-d", u"--debug", action=u"store_true",
@@ -306,9 +337,9 @@ class qtopensesame(QtGui.QMainWindow, base_component):
 		self.move(cfg.pos)
 		self.experiment.auto_response = cfg.auto_response
 		# Set the keyboard shortcuts
-		self.ui.shortcut_itemtree.setKey(QtGui.QKeySequence( \
+		self.ui.shortcut_itemtree.setKey(QtGui.QKeySequence(
 			cfg.shortcut_itemtree))
-		self.ui.shortcut_tabwidget.setKey(QtGui.QKeySequence( \
+		self.ui.shortcut_tabwidget.setKey(QtGui.QKeySequence(
 			cfg.shortcut_tabwidget))
 		self.ui.shortcut_stdout.setKey(QtGui.QKeySequence(cfg.shortcut_stdout))
 		self.ui.shortcut_pool.setKey(QtGui.QKeySequence(cfg.shortcut_pool))
@@ -319,17 +350,16 @@ class qtopensesame(QtGui.QMainWindow, base_component):
 				self.recent_files.append(path)
 			else:
 				debug.msg(u"missing recent file '%s'" % path)
-		self.ui.action_enable_auto_response.setChecked( \
+		self.ui.action_enable_auto_response.setChecked(
 			self.experiment.auto_response)
 		self.ui.action_onetabmode.setChecked(cfg.onetabmode)
-		self.ui.action_compact_toolbar.setChecked( \
-			cfg.toolbar_size == 16)
+		self.ui.action_compact_toolbar.setChecked(cfg.toolbar_size==16)
 		self.ui.tabwidget.toggle_onetabmode()
 		if cfg.toolbar_text:
-			self.ui.toolbar_main.setToolButtonStyle( \
+			self.ui.toolbar_main.setToolButtonStyle(
 				QtCore.Qt.ToolButtonTextUnderIcon)
 		else:
-			self.ui.toolbar_main.setToolButtonStyle( \
+			self.ui.toolbar_main.setToolButtonStyle(
 				QtCore.Qt.ToolButtonIconOnly)
 		self.theme.set_toolbar_size(cfg.toolbar_size)
 
@@ -532,6 +562,7 @@ class qtopensesame(QtGui.QMainWindow, base_component):
 			self.ui.dock_pool.setVisible(False)
 			return
 		self.ui.dock_pool.setVisible(True)
+		self.ui.pool_widget.setFocus()
 		self.ui.pool_widget.refresh()
 
 	def closeEvent(self, e):
