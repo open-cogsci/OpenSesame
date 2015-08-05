@@ -45,6 +45,7 @@ class form_multiple_choice(item.item):
 		self.var.advance_immediately = u'yes'
 		self.var.allow_multiple = u'yes'
 		self.var.button_text = u'Ok'
+		self.var.timeout = u'infinite'
 		self.var.spacing = 10
 		self.var.margins = u'50;50;50;50'
 		self.var._theme = u'gray'
@@ -89,9 +90,13 @@ class form_multiple_choice(item.item):
 		except:
 			raise osexception(
 				_(u'margins should be numeric values separated by a semi-colon'))
+		if self.var.timeout == u'infinite':
+			timeout = None
+		else:
+			timeout = self.var.timeout				
 		form = widgets.form(self.experiment, cols=1, rows=rows,
-			spacing=self.var.spacing, margins=margins,
-			theme=self.var._theme, item=self)
+			spacing=self.var.spacing, margins=margins, theme=self.var._theme,
+			item=self, timeout=timeout)
 		form.set_widget(widgets.label(form, self.var.form_title), (0,0))
 		form.set_widget(widgets.label(form, self.var.question), (0,1))
 		i = 2

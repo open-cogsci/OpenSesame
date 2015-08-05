@@ -60,6 +60,7 @@ class form_base(item.item):
 		self.var.spacing = 10
 		self.var._theme = u'gray'
 		self.var.only_render = u'no'
+		self.var.timeout = u'infinite'
 		self.var.margins = u'50;50;50;50'
 		self.focus_widget = None
 		self._widgets = []
@@ -122,9 +123,13 @@ class form_base(item.item):
 		except:
 			raise osexception(
 				_(u'cols, rows, and margins should be numeric values separated by a semi-colon'))
+		if self.var.timeout == u'infinite':
+			timeout = None
+		else:
+			timeout = self.var.timeout
 		self._form = widgets.form(self.experiment, cols=cols, rows=rows,
 			margins=margins, spacing=self.var.spacing, theme=self.var._theme,
-			item=self)
+			item=self, timeout=timeout)
 
 		for arglist, kwdict in self._widgets:
 			# Evaluate all values

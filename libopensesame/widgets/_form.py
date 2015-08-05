@@ -53,7 +53,7 @@ class form(object):
 	"""
 
 	def __init__(self, experiment, cols=2, rows=2, spacing=10,
-		margins=(100, 100, 100, 100), theme=u'gray', item=None):
+		margins=(100, 100, 100, 100), theme=u'gray', item=None, timeout=None):
 
 		"""
 		desc:
@@ -88,6 +88,10 @@ class form(object):
 			item:
 				desc:	The item of which the form is part.
 				type:	[item, NoneType]
+			timeout:
+				desc:	A timeout value in milliseconds, or None if no timeout
+						exists.
+				type:	[int, float, NoneType]
 		"""
 
 		# Normalize the column and row sizes so that they add up to 1
@@ -107,6 +111,7 @@ class form(object):
 			self.item = item
 		else:
 			self.item = experiment
+		self.timeout = timeout
 		self.width = experiment.var.width
 		self.height = experiment.var.height
 		self.spacing = spacing
@@ -156,27 +161,53 @@ class form(object):
 		returns:
 			desc:	Gives the return value of the form, which depends on how the
 					user interacted with the widgets. For example, if the user
-					pressed a button, the button text will be returned.
+					pressed a button, the button text will be returned. If a
+					timeout occurred, None will be returned.
 		"""
 
+		self.start_time = None
 		if len(self) == 0:
 			raise osexception(u'The form contains no widgets')
-		self.mouse = mouse(self.experiment)
+		self.mouse = mouse(self.experiment, timeout=0)
 		if focus_widget is not None:
 			self.render()
+			if self.timed_out():
+				self.experiment.var.form_response = None
+				return None
 			resp = focus_widget.on_mouse_click(None)
 			if resp is not None:
 				return
 		while True:
 			self.render()
+			if self.timed_out():
+				self.experiment.var.form_response = None
+				return None
 			button, xy, time = self.mouse.get_click(visible=True)
+			if xy is None:
+				continue
 			pos = self.xy_to_index(xy)
 			if pos is not None:
 				w = self.widgets[pos]
 				if w is not None:
 					resp = self.widgets[pos].on_mouse_click(xy)
 					if resp is not None:
+						self.experiment.var.form_response = resp
 						return resp
+
+	def timed_out(self):
+
+		"""
+		returns:
+			desc:	True if a timeout occurred, False otherwise.
+			type:	bool
+		"""
+
+		if self.timeout is None:
+			return False
+		if self.start_time is None:
+			self.start_time = self.item.clock.time()
+			return False
+		return self.item.clock.time()-self.start_time >= self.timeout
 
 	def cell_index(self, pos):
 

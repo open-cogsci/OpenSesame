@@ -140,11 +140,15 @@ class text_input(label):
 
 		self.focus = True
 		self.caret_pos = len(self.text)
-		my_keyboard = keyboard(self.form.experiment)
+		my_keyboard = keyboard(self.form.experiment, timeout=0)
 		my_keyboard.show_virtual_keyboard(True)
 		while True:
 			self.form.render()
+			if self.form.timed_out():
+				return None
 			resp, time = my_keyboard.get_key()
+			if resp is None:
+				continue
 			try:
 				o = ord(resp)
 			except:
