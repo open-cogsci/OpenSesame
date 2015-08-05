@@ -126,6 +126,19 @@ class form(object):
 			from themes.plain import plain
 			self.theme_engine = plain(self)
 
+	def __len__(self):
+
+		"""
+		desc:
+			Implements the `len()` syntax.
+
+		returns:
+			desc:	The number of widgets in the form.
+			type:	int
+		"""
+
+		return sum([w is not None for w in self.widgets])
+
 	def _exec(self, focus_widget=None):
 
 		"""
@@ -146,7 +159,8 @@ class form(object):
 					pressed a button, the button text will be returned.
 		"""
 
-		i = 0
+		if len(self) == 0:
+			raise osexception(u'The form contains no widgets')
 		self.mouse = mouse(self.experiment)
 		if focus_widget is not None:
 			self.render()
