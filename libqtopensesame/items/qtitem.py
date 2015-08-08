@@ -602,9 +602,17 @@ class qtitem(base_qtobject):
 			if isinstance(var, int):
 				continue
 			if var in self.var:
-				val = self.var.get(var, _eval=False) == u"yes"
-				if val != checkbox.isChecked():
-					checkbox.setChecked(val)
+				val = self.var.get(var, _eval=False)
+				if val in [u'yes', u'no']:
+					checkbox.setDisabled(False)
+					checked = val == u'yes'
+					if checked != checkbox.isChecked():
+						checkbox.setChecked(checked)
+				else:
+					checkbox.setDisabled(True)
+					self.user_hint_widget.add(_(u'"%s" is defined using '
+						u'variables or has an invalid value, and can only be '
+						u'edited through the script.') % var)
 
 		for var, qprogedit in self.auto_editor.items():
 			if isinstance(var, int):
@@ -613,6 +621,8 @@ class qtitem(base_qtobject):
 				val = safe_decode(self.var.get(var, _eval=False))
 				if val != qprogedit.text():
 					qprogedit.setText(val)
+
+		self.user_hint_widget.refresh()
 
 	def sanitize_check(self, s, strict=False, allow_vars=True, notify=True):
 
