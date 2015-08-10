@@ -22,7 +22,7 @@ import os.path
 import sys
 
 use_global_resources = '--no-global-resources' not in sys.argv
-from libopensesame import debug
+from libopensesame import debug, metadata
 from libopensesame.py3compat import *
 
 def change_working_dir():
@@ -278,7 +278,7 @@ def module_versions():
 
 	from PyQt4 import QtCore
 
-	s = u"OpenSesame %s" % version
+	s = u"OpenSesame %s" % metadata.__version__
 	s += u"\nPython %s" % sys.version
 
 	# OpenCV
