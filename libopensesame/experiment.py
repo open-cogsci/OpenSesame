@@ -629,7 +629,7 @@ class experiment(item.item):
 		script_path = os.path.join(self.pool.folder(), u"script.opensesame")
 		tar.extract(u"script.opensesame", self.pool.folder())
 		with open(script_path, universal_newline_mode) as fd:
-			script = fd.read()
+			script = safe_decode(fd.read())
 		os.remove(script_path)
 		self.experiment_path = os.path.dirname(src)
 		return script
