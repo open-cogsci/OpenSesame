@@ -27,6 +27,6 @@ h2 {
 }
 
 .highlight span, code, pre {
-	font-family: monospace, "Courier New"!important;
+	font-family: "ubuntu mono", monospace, "Courier New"!important;
 	word-wrap: break-word;
 }
