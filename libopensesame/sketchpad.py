@@ -70,22 +70,20 @@ class sketchpad(item, generic_response):
 		if string is None:
 			return
 		for line in string.split(u'\n'):
-			if not self.parse_variable(line):
-				l = self.syntax.split(line)
-				if len(l) > 0:
-					if l[0] == u'draw':
-						if len(l) == 1:
-							raise osexception(
-								u'Incomplete draw command: \'%s\'' % line)
-						element_type = l[1]
-						if not hasattr(self.element_module(), element_type):
-							raise osexception(
-								u'Unknown sketchpad element: \'%s\'' \
-								% element_type)
-						element_class = getattr(self.element_module(),
-							element_type)
-						element = element_class(self, line)
-						self.elements.append(element)
+			if self.parse_variable(line):
+				continue
+			cmd, arglist, kwdict = self.syntax.parse_cmd(line)
+			if cmd != u'draw':
+				continue
+			if len(arglist) == 0:
+				raise osexception(u'Incomplete draw command: \'%s\'' % line)
+			element_type = arglist[0]
+			if not hasattr(self.element_module(), element_type):
+				raise osexception(
+					u'Unknown sketchpad element: \'%s\'' % element_type)
+			element_class = getattr(self.element_module(), element_type)
+			element = element_class(self, line)
+			self.elements.append(element)
 		self.elements.sort(key=lambda element: -element.z_index)
 
 	def prepare(self):

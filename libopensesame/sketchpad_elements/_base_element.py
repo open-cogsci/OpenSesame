@@ -221,14 +221,15 @@ class base_element(object):
 		"""
 
 		properties = {}
-		xc = self.var.get(u'width')/2
-		yc = self.var.get(u'height')/2
+		xc = self.var.width/2
+		yc = self.var.height/2
 		for var, val in self.properties.items():
 			if var == u'text':
 				round_float = True
 			else:
 				round_float = False
-			val = self.sketchpad.syntax.eval_text(val, round_float=round_float)
+			val = self.sketchpad.syntax.auto_type(
+				self.sketchpad.syntax.eval_text(val, round_float=round_float))
 			if self.fix_coordinates and type(val) in (int, float):
 				if var in [u'x', u'x1', u'x2']:
 					val += xc
