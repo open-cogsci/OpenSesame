@@ -5,6 +5,8 @@ include resources/templates/*.opensesame
 include setup_shared.py
 include readme.md
 exclude .hidden
+exclude sounds
+exclude resources/templates/eco_alt_template.opensesame.tar.gz
 recursive-include resources/theme *
 recursive-exclude resources/theme *~
 recursive-exclude resources/theme *.pyc
@@ -12,7 +14,6 @@ recursive-exclude resources/theme *.pyo
 include examples/*.opensesame
 include examples/*.opensesame.tar.gz
 include help/*.md
-include sounds/*
 include COPYING
 recursive-include plugins/advanced_delay *
 recursive-include plugins/external_script *

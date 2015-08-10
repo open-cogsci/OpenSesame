@@ -1,8 +1,8 @@
-opensesame (2.9.7-1) unstable; urgency=medium
+opensesame (2.9.7-3) unstable; urgency=medium
 
   * Upload to Debian unstable
 
- -- Sebastiaan Mathot <sebastiaan@mantis>  Fri, 07 Aug 2015 11:26:27 +0200
+ -- Sebastiaan Mathot <s.mathot@cogsci.nl>  Fri, 07 Aug 2015 11:26:27 +0200
 
 opensesame (2.9.6-1) unstable; urgency=medium
 
