@@ -79,6 +79,12 @@ class qtopensesame(QtGui.QMainWindow, base_component):
 		self._run_status = u'inactive'
 		self.block_close_event = False
 
+		# Make sure that icons are shown in context menu, regardless of the
+		# system settings. This is necessary, because Ubuntu doesn't show menu
+		# icons by default.
+		QtGui.QApplication.setAttribute(QtCore.Qt.AA_DontShowIconsInMenus,
+			False)
+
 		# Make sure that QProgEdit doesn't complain about some standard names,
 		# and register the bundled monospace font (Droid Sans Mono) so that we
 		# can use it anywhere.
