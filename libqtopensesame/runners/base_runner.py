@@ -272,8 +272,6 @@ class base_runner(object):
 			u'window and press space to resume.')
 		self.console.show_prompt()
 		self.main_window.set_run_status(u'paused')
-		self.main_window.raise_()
-		self.main_window.activateWindow()
 		self.main_window.extension_manager.fire(u'pause_experiment')
 		self.paused = True
 
