@@ -117,7 +117,11 @@ def plugin_disabled(plugin, _type=u'plugins'):
 	"""
 
 	from libqtopensesame.misc import config
-	return plugin in config.get_config(u'disabled_%s' % _type).split(u';')
+	if plugin_property(plugin, u'disabled', _type=_type):
+		return True
+	if plugin in config.get_config(u'disabled_%s' % _type).split(u';'):
+		return True
+	return False
 
 def plugin_property(plugin, _property, default=0, _type=u'plugins'):
 
