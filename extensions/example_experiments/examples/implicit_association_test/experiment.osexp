@@ -1,0 +1,407 @@
+---
+API: 2
+Citation: 'Greenwald, A. G., McGhee, D. E., & Schwartz, J. K. L. (1998). Measuring
+  individual differences in implicit cognition: The Implicit Association Test. *Journal
+  of Personality and Social Psychology*, *74*, 1464-1480. <http://doi.org/10.1037/0022-3514.74.6.1464>'
+Description: 'How strongly do you associate British with funny, and German with boring?
+  (Note to Germans: This is a joke.) Method based on Greenwald et al. (1998).'
+OpenSesame: 3.0.0a10
+Platform: posix
+Title: Implicit-association test
+---
+set width 1024
+set uniform_coordinates "yes"
+set title "Implicit-association test"
+set synth_backend "legacy"
+set subject_parity "even"
+set subject_nr 0
+set start "experiment"
+set sampler_backend "legacy"
+set mouse_backend "legacy"
+set keyboard_backend "legacy"
+set height 768
+set foreground "white"
+set font_size 32
+set font_italic "no"
+set font_family "sans"
+set font_bold "no"
+set description "An example of an implicit-association test"
+set coordinates "relative"
+set compensation 0
+set color_backend "legacy"
+set clock_backend "legacy"
+set canvas_backend "legacy"
+set bidi "no"
+set background "gray"
+
+define notepad about_this_example
+	__note__
+	This is an example of an implicit-association test (IAT), in which we investigate how strong people associate British with funny, and German with boring. A slight departure of the tradition (IAT), as described below, is that there are five tasks, instead of seven. This is because the combined tasks are not preceded by a practice phase.
+	
+	From Wikipedia:
+	
+	- <https://en.wikipedia.org/wiki/Implicit-association_test>
+	
+	The implicit-association test (IAT) is a measure within social psychology designed to detect the strength of a person's automatic association between mental representations of objects (concepts) in memory. The IAT was introduced in the scientific literature in 1998 by Anthony Greenwald, Debbie McGhee, Joyce Sherry, and Jordan Schwartz. The IAT is now widely used in social psychology research and is used to some extent in clinical, cognitive, and developmental psychology research.
+	
+	A computer-based measure, the IAT requires that users rapidly categorize two target concepts with an attribute (e.g. the concepts "male" and "female" with the attribute "logical"), such that easier pairings (faster responses) are interpreted as more strongly associated in memory than more difficult pairings (slower responses).
+	
+	A typical IAT procedure involves a series of seven tasks. In the first task, an individual is asked to categorize stimuli into two categories. For example, a person might be presented with a computer screen on which the word "Black" appears in the top left-hand corner and the word "White" appears in the top right-hand corner. In the middle of the screen a word, such as a first name, that is typically associated with either the categories of "Black" or "White." For each word that appears in the middle of the screen, the person is asked to sort the word into the appropriate category by pressing the appropriate left-hand or right-hand key. On the second task, the person would complete a similar sorting procedure with an attribute of some kind. For example, the word "Pleasant" might now appear in the top left-hand corner of the screen and the word "Unpleasant" in the top right-hand corner. In the middle of the screen would appear a word that is either pleasant or unpleasant. Once again, the person would be asked to sort each word as being either pleasant or unpleasant by pressing the appropriate key. On the third task, individuals are asked to complete a combined task that includes both the categories and attributes from the first two tasks. In this example, the words "Black/Pleasant" might appear in the top left-hand corner while the words "White/Unpleasant" would appear in the top right-hand corner. Individuals would then see a series of stimuli in the center of the screen consisting of either a name or word. They would be asked to press the left-hand key if the name or word belongs to the "Black/Pleasant" category or the right-hand key if it belongs to the "White/Unpleasant" category. The fourth task is a repeat of the third task but with more repetitions of the names, words, or images.
+	
+	The fifth task is a repeat of the first task with the exception that the position of the two target words would be reversed. For example, "Black" would now appear in the top right-hand corner of the screen and "White" in the top left-hand corner. The sixth task would be a repeat of the third, except that the objects and subjects of study would be in opposite pairings from previous trials. In this case, "Black/Unpleasant" would now appear in the top right-hand corner and "White/Pleasant" would now appear in the top left-hand corner. The seventh task is a repeat of the sixth task but with more repetitions of the names, words, or images. If the categories under study (e.g. Black or White) are associated with the presented attributes (e.g. Pleasant/Unpleasant) to differing degrees, the pairing reflecting the stronger association (or the "compatible" pairing) should be easier for the participant.[1] In the Black/White-Pleasant/Unpleasant example, a participant will be able to categorize more quickly when White and Pleasant are paired together than when Black and Pleasant are paired if he or she has more positive associations with White people than with Black people (and vice versa if Black and Pleasant are categorized more quickly).
+	
+	Variations of the IAT include the Go/No-go Association Test (GNAT),[8] the Brief-IAT and the Single-Category IAT. An idiographic approach using the IAT and the SC-IAT for measuring implicit anxiety showed that personalized stimulus selection did not affect the outcome, reliabilities and correlations to outside criteria.
+	__end__
+	set description "Some pointers to help you get started!"
+
+define feedback combined_instructions
+	set start_response_interval "no"
+	set reset_variables "no"
+	set duration "keypress"
+	set description "Displays stimuli"
+	draw textline center=1 color=white font_bold=no font_family=sans font_italic=no font_size=32 html=yes show_if=always text="Your will now do both tasks at the same time.<br /><br />Classify British/ German names:<br /><br />If you see a <b>British</b> name press the <b>[british_response]</b> key<br />If you see a <b>German</b> name press the <b>[german_response]</b> key<br /><br />And classify funny/ boring words:<br /><br />If you see a <b>funny</b> word press the <b>[funny_response]</b> key<br />If you see a <b>boring</b> word press the <b>[boring_response]</b> key<br />" x=0 y=-64 z_index=0
+	draw textline center=1 color=white font_bold=no font_family=sans font_italic=no font_size=32 html=yes show_if=always text="Press any key to continue" x=0 y=288 z_index=0
+
+define loop combined_loop
+	set skip 0
+	set repeat 1
+	set order "random"
+	set offset "no"
+	set item "combined_sequence"
+	set description "Repeatedly runs another item"
+	set cycles 24
+	set column_order "category;item;correct_response"
+	set break_if "never"
+	setcycle 0 category "british"
+	setcycle 0 item "Jack"
+	setcycle 0 correct_response "[british_response]"
+	setcycle 1 category "british"
+	setcycle 1 item "George"
+	setcycle 1 correct_response "[british_response]"
+	setcycle 2 category "british"
+	setcycle 2 item "Harry"
+	setcycle 2 correct_response "[british_response]"
+	setcycle 3 category "british"
+	setcycle 3 item "Grace"
+	setcycle 3 correct_response "[british_response]"
+	setcycle 4 category "british"
+	setcycle 4 item "Abigail"
+	setcycle 4 correct_response "[british_response]"
+	setcycle 5 category "british"
+	setcycle 5 item "Daisy"
+	setcycle 5 correct_response "[british_response]"
+	setcycle 6 category "german"
+	setcycle 6 item "Niklas"
+	setcycle 6 correct_response "[german_response]"
+	setcycle 7 category "german"
+	setcycle 7 item "Jannik"
+	setcycle 7 correct_response "[german_response]"
+	setcycle 8 category "german"
+	setcycle 8 item "Niels"
+	setcycle 8 correct_response "[german_response]"
+	setcycle 9 category "german"
+	setcycle 9 item "Leonie"
+	setcycle 9 correct_response "[german_response]"
+	setcycle 10 category "german"
+	setcycle 10 item "Nele"
+	setcycle 10 correct_response "[german_response]"
+	setcycle 11 category "german"
+	setcycle 11 item "Pia"
+	setcycle 11 correct_response "[german_response]"
+	setcycle 12 category "funny"
+	setcycle 12 item "Joke"
+	setcycle 12 correct_response "[funny_response]"
+	setcycle 13 category "funny"
+	setcycle 13 item "Laugh"
+	setcycle 13 correct_response "[funny_response]"
+	setcycle 14 category "funny"
+	setcycle 14 item "Humor"
+	setcycle 14 correct_response "[funny_response]"
+	setcycle 15 category "funny"
+	setcycle 15 item "Comedian"
+	setcycle 15 correct_response "[funny_response]"
+	setcycle 16 category "funny"
+	setcycle 16 item "9gag"
+	setcycle 16 correct_response "[funny_response]"
+	setcycle 17 category "funny"
+	setcycle 17 item "Meme"
+	setcycle 17 correct_response "[funny_response]"
+	setcycle 18 category "boring"
+	setcycle 18 item "Tedious"
+	setcycle 18 correct_response "[boring_response]"
+	setcycle 19 category "boring"
+	setcycle 19 item "Sleepy"
+	setcycle 19 correct_response "[boring_response]"
+	setcycle 20 category "boring"
+	setcycle 20 item "Lesson"
+	setcycle 20 correct_response "[boring_response]"
+	setcycle 21 category "boring"
+	setcycle 21 item "Repetition"
+	setcycle 21 correct_response "[boring_response]"
+	setcycle 22 category "boring"
+	setcycle 22 item "Queue"
+	setcycle 22 correct_response "[boring_response]"
+	setcycle 23 category "boring"
+	setcycle 23 item "Waiting"
+	setcycle 23 correct_response "[boring_response]"
+	run combined_sequence
+
+define sequence combined_sequence
+	set flush_keyboard "yes"
+	set description "Runs a number of items in sequence"
+	run combined_target "always"
+	run keyboard_response "always"
+	run correct_feedback "[correct] = 1"
+	run incorrect_feedback "[correct] = 0"
+	run logger "always"
+
+define sketchpad combined_target
+	set duration 0
+	set description "Displays stimuli"
+	draw textline center=1 color=white font_bold=no font_family=mono font_italic=no font_size=32 html=yes show_if=always text="[item]" x=0 y=0 z_index=0
+	draw textline center=1 color=white font_bold=no font_family=sans font_italic=no font_size=16 html=yes show_if=always text="Funny: [funny_response]<br />Boring: [boring_response]<br />British: [british_response]<br />German: [german_response]" x=0 y=-288 z_index=0
+	draw rect color=white fill=0 h=128 penwidth=1 show_if=always w=320 x=-160 y=-352 z_index=0
+
+define sequence combined_task
+	set flush_keyboard "yes"
+	set description "Runs a number of items in sequence"
+	run combined_instructions "always"
+	run combined_loop "always"
+
+define sketchpad correct_feedback
+	set duration 150
+	set description "Displays stimuli"
+	draw fixdot color=green show_if=always style=default x=0 y=0 z_index=0
+
+define sequence experiment
+	set flush_keyboard "yes"
+	set description "Runs a number of items in sequence"
+	run about_this_example "always"
+	run first_response_mapping "always"
+	run first_instructions "always"
+	run name_task "always"
+	run funny_task "always"
+	run combined_task "always"
+	run second_response_mapping "always"
+	run second_instructions "always"
+	run name_task "always"
+	run combined_task "always"
+	run goodbye "always"
+
+define feedback first_instructions
+	set reset_variables "yes"
+	set duration "keypress"
+	set description "Displays stimuli"
+	draw textline center=1 color=white font_bold=no font_family=sans font_italic=no font_size=32 html=yes show_if=always text="This experiment consists of 5 tasks<br /><br />In each task you will classify:<br /><br />a name as German or British<br />or a word as funny or boring<br />or both at the same time<br /><br />Please read the instructions carefully<br />and respond as fast and accurately as possible!<br /><br />Press any key to continue" x=-32 y=0 z_index=0
+
+define inline_script first_response_mapping
+	set description "Executes Python code"
+	___run__
+	if var.subject_parity == 'even':
+		var.british_response = 'left'
+		var.german_response = 'right'
+	else:
+		var.german_response = 'left'
+		var.british_response = 'right'
+		
+	var.funny_response = 'left'
+	var.boring_response = 'right'
+	__end__
+	set _prepare ""
+
+define feedback funny_instructions
+	set start_response_interval "no"
+	set reset_variables "no"
+	set duration "keypress"
+	set description "Displays stimuli"
+	draw textline center=1 color=white font_bold=no font_family=sans font_italic=no font_size=32 html=yes show_if=always text="Your task is to say wether a word is associated with<br /><b>funny</b> or <b>boring</b><br /><br />If you see a <b>funny</b> word press the <b>[funny_response]</b> key<br />If you see a <b>boring</b> word press the <b>[boring_response]</b> key<br />" x=0 y=0 z_index=0
+	draw textline center=1 color=white font_bold=no font_family=sans font_italic=no font_size=32 html=yes show_if=always text="Press any key to continue" x=0 y=288 z_index=0
+
+define loop funny_loop
+	set skip 0
+	set repeat 1
+	set order "random"
+	set offset "no"
+	set item "funny_sequence"
+	set description "Repeatedly runs another item"
+	set cycles 12
+	set column_order "category;item;correct_response"
+	set break_if "never"
+	setcycle 0 category "funny"
+	setcycle 0 item "Joke"
+	setcycle 0 correct_response "[funny_response]"
+	setcycle 1 category "funny"
+	setcycle 1 item "Laugh"
+	setcycle 1 correct_response "[funny_response]"
+	setcycle 2 category "funny"
+	setcycle 2 item "Humor"
+	setcycle 2 correct_response "[funny_response]"
+	setcycle 3 category "funny"
+	setcycle 3 item "Comedian"
+	setcycle 3 correct_response "[funny_response]"
+	setcycle 4 category "funny"
+	setcycle 4 item "9gag"
+	setcycle 4 correct_response "[funny_response]"
+	setcycle 5 category "funny"
+	setcycle 5 item "Meme"
+	setcycle 5 correct_response "[funny_response]"
+	setcycle 6 category "boring"
+	setcycle 6 item "Tedious"
+	setcycle 6 correct_response "[boring_response]"
+	setcycle 7 category "boring"
+	setcycle 7 item "Sleepy"
+	setcycle 7 correct_response "[boring_response]"
+	setcycle 8 category "boring"
+	setcycle 8 item "Lesson"
+	setcycle 8 correct_response "[boring_response]"
+	setcycle 9 category "boring"
+	setcycle 9 item "Repetition"
+	setcycle 9 correct_response "[boring_response]"
+	setcycle 10 category "boring"
+	setcycle 10 item "Queue"
+	setcycle 10 correct_response "[boring_response]"
+	setcycle 11 category "boring"
+	setcycle 11 item "Waiting"
+	setcycle 11 correct_response "[boring_response]"
+	run funny_sequence
+
+define sequence funny_sequence
+	set flush_keyboard "yes"
+	set description "Runs a number of items in sequence"
+	run funny_target "always"
+	run keyboard_response "always"
+	run correct_feedback "[correct] = 1"
+	run incorrect_feedback "[correct] = 0"
+
+define sketchpad funny_target
+	set duration 0
+	set description "Displays stimuli"
+	draw textline center=1 color=white font_bold=no font_family=mono font_italic=no font_size=32 html=yes show_if=always text="[item]" x=0 y=0 z_index=0
+	draw textline center=1 color=white font_bold=no font_family=sans font_italic=no font_size=16 html=yes show_if=always text="Funny: [funny_response]<br />Boring: [boring_response]" x=0 y=-288 z_index=0
+	draw rect color=white fill=0 h=128 penwidth=1 show_if=always w=320 x=-160 y=-352 z_index=0
+
+define sequence funny_task
+	set flush_keyboard "yes"
+	set description "Runs a number of items in sequence"
+	run funny_instructions "always"
+	run funny_loop "always"
+
+define sketchpad goodbye
+	set duration "keypress"
+	set description "Displays stimuli"
+	draw textline center=1 color=white font_bold=no font_family=sans font_italic=no font_size=32 html=yes show_if=always text="The experiment is finished!<br /><br />Thank you for your participation<br /><br />Press any key to exit" x=0 y=0 z_index=0
+
+define sketchpad incorrect_feedback
+	set duration 150
+	set description "Displays stimuli"
+	draw fixdot color=red show_if=always style=default x=0 y=0 z_index=0
+
+define keyboard_response keyboard_response
+	set timeout "infinite"
+	set flush "yes"
+	set duration "keypress"
+	set description "Collects keyboard responses"
+	set allowed_responses "left;right"
+
+define logger logger
+	set description "Logs experimental data"
+	set auto_log "yes"
+
+define feedback name_instructions
+	set start_response_interval "no"
+	set reset_variables "no"
+	set duration "keypress"
+	set description "Displays stimuli"
+	draw textline center=1 color=white font_bold=no font_family=sans font_italic=no font_size=32 html=yes show_if=always text="Your task is to classify names as <br /><b>British</b> or <b>German</b><br /><br />If you see a <b>British</b> name press the <b>[british_response]</b> key<br />If you see a <b>German</b> name press the <b>[german_response]</b> key<br />" x=0 y=0 z_index=0
+	draw textline center=1 color=white font_bold=no font_family=sans font_italic=no font_size=32 html=yes show_if=always text="Press any key to continue" x=0 y=288 z_index=0
+
+define loop name_loop
+	set skip 0
+	set repeat 1
+	set order "random"
+	set offset "no"
+	set item "name_sequence"
+	set description "Repeatedly runs another item"
+	set cycles 12
+	set column_order "category;item;correct_response"
+	set break_if "never"
+	setcycle 0 category "british"
+	setcycle 0 item "Jack"
+	setcycle 0 correct_response "[british_response]"
+	setcycle 1 category "british"
+	setcycle 1 item "George"
+	setcycle 1 correct_response "[british_response]"
+	setcycle 2 category "british"
+	setcycle 2 item "Harry"
+	setcycle 2 correct_response "[british_response]"
+	setcycle 3 category "british"
+	setcycle 3 item "Grace"
+	setcycle 3 correct_response "[british_response]"
+	setcycle 4 category "british"
+	setcycle 4 item "Abigail"
+	setcycle 4 correct_response "[british_response]"
+	setcycle 5 category "british"
+	setcycle 5 item "Daisy"
+	setcycle 5 correct_response "[british_response]"
+	setcycle 6 category "german"
+	setcycle 6 item "Niklas"
+	setcycle 6 correct_response "[german_response]"
+	setcycle 7 category "german"
+	setcycle 7 item "Jannik"
+	setcycle 7 correct_response "[german_response]"
+	setcycle 8 category "german"
+	setcycle 8 item "Niels"
+	setcycle 8 correct_response "[german_response]"
+	setcycle 9 category "german"
+	setcycle 9 item "Leonie"
+	setcycle 9 correct_response "[german_response]"
+	setcycle 10 category "german"
+	setcycle 10 item "Nele"
+	setcycle 10 correct_response "[german_response]"
+	setcycle 11 category "german"
+	setcycle 11 item "Pia"
+	setcycle 11 correct_response "[german_response]"
+	run name_sequence
+
+define sequence name_sequence
+	set flush_keyboard "yes"
+	set description "Runs a number of items in sequence"
+	run name_target "always"
+	run keyboard_response "always"
+	run correct_feedback "[correct] = 1"
+	run incorrect_feedback "[correct] = 0"
+
+define sketchpad name_target
+	set duration 0
+	set description "Displays stimuli"
+	draw textline center=1 color=white font_bold=no font_family=mono font_italic=no font_size=32 html=yes show_if=always text="[item]" x=0 y=0 z_index=0
+	draw textline center=1 color=white font_bold=no font_family=sans font_italic=no font_size=16 html=yes show_if=always text="British name: [british_response]<br />German name: [german_response]" x=0 y=-288 z_index=0
+	draw rect color=white fill=0 h=128 penwidth=1 show_if=always w=384 x=-192 y=-352 z_index=0
+
+define sequence name_task
+	set flush_keyboard "yes"
+	set description "Runs a number of items in sequence"
+	run name_instructions "always"
+	run name_loop "always"
+
+define feedback second_instructions
+	set reset_variables "yes"
+	set duration "keypress"
+	set description "Displays stimuli"
+	draw textline center=1 color=white font_bold=no font_family=sans font_italic=no font_size=32 html=yes show_if=always text="Now you will again classify<br />names as German or British<br /><br />But attention: the responses are reversed!<br /><br />Press any key to continue" x=0 y=0 z_index=0
+
+define inline_script second_response_mapping
+	set description "Executes Python code"
+	___run__
+	if var.subject_parity == 'odd':
+		var.british_response = 'left'
+		var.german_response = 'right'
+	else:
+		var.german_response = 'left'
+		var.british_response = 'right'
+		
+	var.funny_response = 'left'
+	var.boring_response = 'right'
+	__end__
+	set _prepare ""
+
