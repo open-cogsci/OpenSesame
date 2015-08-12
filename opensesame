@@ -52,6 +52,10 @@ if __name__ == u'__main__':
 			if path not in sys.path:
 				sys.path.append(path)
 
+	from libopensesame.misc import resource, filesystem_encoding, \
+		parse_environment_file
+	parse_environment_file()
+
 	# Change Qt API
 	import sip
 	sip.setapi('QString', 2)
@@ -72,7 +76,6 @@ if __name__ == u'__main__':
 	app.processEvents()
 	# Import the remaining modules
 	from PyQt4.QtCore import QObject, QLocale, QTranslator
-	from libopensesame.misc import resource, filesystem_encoding
 	from libopensesame.py3compat import *
 	import os.path
 	# Load the locale for UI translation. The locale can be specified on the

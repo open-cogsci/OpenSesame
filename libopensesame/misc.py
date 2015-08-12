@@ -25,6 +25,28 @@ use_global_resources = '--no-global-resources' not in sys.argv
 from libopensesame import debug, metadata
 from libopensesame.py3compat import *
 
+def parse_environment_file():
+
+	"""
+	desc:
+		Parses the environment.yaml file if it exists.
+	"""
+
+	if not os.path.exists(u'environment.yaml'):
+		return
+	import yaml
+	with open(u'environment.yaml') as fd:
+		d = yaml.load(fd.read())
+	# Convert all values from UTF8 to the filesystem encoding
+	for key, val in d.items():
+		d[key] = safe_encode(safe_decode(val), enc=filesystem_encoding())
+	# The Python path is added to sys.path, the rest is added as an environment
+	# variable.
+	if u'PYTHON_PATH' in d:
+		sys.path += d[u'PYTHON_PATH'].split(';')
+		del d[u'PYTHON_PATH']
+	os.environ.update(d)
+
 def change_working_dir():
 
 	"""A horrifyingly ugly hack to change the working directory under Windows"""

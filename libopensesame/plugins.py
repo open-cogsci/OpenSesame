@@ -90,6 +90,17 @@ def plugin_folders(only_existing=True, _type=u'plugins'):
 		if not only_existing or os.path.exists(path):
 			l.append(path)
 
+	# Get the environment variables
+	if _type == u'plugins':
+		key = u'OPENSESAME_PLUGIN_PATH'
+	else:
+		key = u'OPENSESAME_EXTENSION_PATH'
+	if key in os.environ:
+		for path in os.environ[key].split(';'):
+			path = safe_decode(path, enc=misc.filesystem_encoding())
+			if os.path.exists(path):
+				l.append(path)
+
 	return l
 
 def is_plugin(item_type, _type=u'plugins'):
