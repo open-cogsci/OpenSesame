@@ -14,16 +14,7 @@
    <string>Form</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
-   <property name="leftMargin">
-    <number>4</number>
-   </property>
-   <property name="topMargin">
-    <number>4</number>
-   </property>
-   <property name="rightMargin">
-    <number>4</number>
-   </property>
-   <property name="bottomMargin">
+   <property name="margin">
     <number>4</number>
    </property>
    <item>
@@ -36,8 +27,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>816</width>
-        <height>840</height>
+        <width>818</width>
+        <height>842</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_7">
@@ -47,16 +38,7 @@
           <property name="spacing">
            <number>16</number>
           </property>
-          <property name="leftMargin">
-           <number>4</number>
-          </property>
-          <property name="topMargin">
-           <number>4</number>
-          </property>
-          <property name="rightMargin">
-           <number>4</number>
-          </property>
-          <property name="bottomMargin">
+          <property name="margin">
            <number>4</number>
           </property>
           <item>
@@ -225,6 +207,31 @@ Various settings related to the control of the display, sound, and input devices
           </property>
           <item>
            <widget class="QLabel" name="label_color">
+            <property name="text">
+             <string>TextLabel</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <widget class="QGroupBox" name="group_log">
+         <property name="title">
+          <string>Log</string>
+         </property>
+         <layout class="QVBoxLayout" name="layout_log">
+          <property name="leftMargin">
+           <number>0</number>
+          </property>
+          <property name="rightMargin">
+           <number>0</number>
+          </property>
+          <property name="bottomMargin">
+           <number>0</number>
+          </property>
+          <item>
+           <widget class="QLabel" name="label_log">
             <property name="text">
              <string>TextLabel</string>
             </property>
