@@ -67,7 +67,11 @@ class psycho(mouse.mouse, psycho_coordinates):
 			pos = self.from_xy(pos)
 		self.mouse.setVisible(False)
 		return button, pos, time
-
+		
+	def show_cursor(self, show=True):
+		
+		self.mouse.setVisible(visibility)
+		
 	def get_pos(self):
 
 		return self.from_xy(self.mouse.getPos()), self.experiment.time()

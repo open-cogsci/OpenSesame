@@ -60,6 +60,10 @@ class legacy(mouse.mouse, legacy_coordinates):
 	def set_pos(self, pos=(0,0)):
 
 		pygame.mouse.set_pos(self.to_xy(pos, dev='mouse'))
+		
+	def show_cursor(self, show=True):
+		
+		pygame.mouse.set_visible(show)
 
 	@configurable
 	def get_click(self):
@@ -114,7 +118,7 @@ class legacy(mouse.mouse, legacy_coordinates):
 				break
 
 		if self.cursor is None:
-			pygame.mouse.set_visible(self.visible)
+			pygame.mouse.set_visible(False)
 		return None, None, time
 
 	def get_pos(self):

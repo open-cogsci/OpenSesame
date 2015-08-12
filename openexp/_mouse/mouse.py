@@ -167,7 +167,26 @@ class mouse(backend):
 			u'buttonlist'		: None,
 			u'visible'			: False
 			}
-
+			
+	def show_cursor(self, show=True):
+		
+		"""
+		desc: |
+			Immediately changes the visibility of the mouse cursor.
+			
+			__Note:__ In most cases, you will want to use the `visible`
+			[keyword][Response keywords], which changes the visibility during
+			response collection.
+			
+		arguments:
+			show:
+				desc: 	Indicates whether the cursor is shown (True) or hidden
+						(False).
+				type:	bool
+		"""
+		
+		pass
+		
 	def set_pos(self, pos=(0,0)):
 
 		"""

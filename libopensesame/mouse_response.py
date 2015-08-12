@@ -65,14 +65,14 @@ class mouse_response(item.item, generic_response.generic_response):
 		self.set_item_onset()
 		# Show cursor if necessary
 		if self.show_cursor == u'yes':
-			self._mouse.set_visible(True)
+			self._mouse.visible = True
 		# Flush responses, to make sure that earlier responses are not carried
 		# over.
 		if self._flush:
 			self._mouse.flush()
 		self.set_sri()
 		self.process_response()
-		self._mouse.set_visible(False)
+		self._mouse.visible = False
 
 	def var_info(self):
 
