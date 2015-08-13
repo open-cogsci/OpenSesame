@@ -40,6 +40,7 @@ if __name__ == u"__main__":
 				sys.path.append(path)
 
 	import libopensesame.misc
+	libopensesame.misc.parse_environment_file()
 	import libopensesame.experiment
 	from libopensesame.py3compat import *
 	# Parse the command line options

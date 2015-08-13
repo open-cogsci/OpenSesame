@@ -78,12 +78,10 @@ def opensesamerun_options():
 	"""Parse the command line options for opensesamerun"""
 
 	import optparse
-	global version, codename
-
-	parser = optparse.OptionParser( \
+	
+	parser = optparse.OptionParser(
 		u'usage: opensesamerun [experiment] [options]', version=u'%s \'%s\'' % \
-		(version, codename))
-
+		(metadata.__version__, metadata.codename))
 	parser.set_defaults(subject=0)
 	parser.set_defaults(logfile=None)
 	parser.set_defaults(debug=False)
