@@ -73,11 +73,11 @@ class opensesame_3_notifications(base_extension):
 				type:	unicode
 		"""
 
-		if not cfg.os3n_old_experiment_notification:
-			return
 		if self.experiment.front_matter[u'API'] >= 2:
 			return
-		self.tabwidget.open_markdown(self.ext_resource(u'old-experiment.md'))
 		self.main_window.current_path = None
 		self.main_window.window_message(u'New experiment')
 		self.main_window.set_unsaved(True)
+		if not cfg.os3n_old_experiment_notification:
+			return
+		self.tabwidget.open_markdown(self.ext_resource(u'old-experiment.md'))
