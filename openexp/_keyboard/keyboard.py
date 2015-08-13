@@ -137,7 +137,8 @@ class keyboard(backend):
 		# Add synonyms to keylist
 		if u'keylist' in cfg and isinstance(cfg[u'keylist'], list):
 			for key in list(cfg[u'keylist']):
-				cfg[u'keylist'] += self.synonyms(key)
+				cfg[u'keylist'] += [key for key in self.synonyms(key) \
+					if key not in cfg[u'keylist']]
 		backend.set_config(self, **cfg)
 
 	def default_config(self):
