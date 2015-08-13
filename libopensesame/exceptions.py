@@ -86,7 +86,7 @@ class osexception(Exception):
 				self.exception.__class__.__name__, enc=self.enc,
 				errors=u'ignore')
 			try:
-				msg = str(self.exception)
+				msg = safe_decode(self.exception.message, errors=u'ignore')
 			except:
 				msg = u'Description unavailable'
 			info[u'exception message'] = msg
