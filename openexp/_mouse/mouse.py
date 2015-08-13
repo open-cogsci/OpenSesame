@@ -142,6 +142,7 @@ class mouse(backend):
 		"""
 
 		self.experiment = experiment
+		self._cursor_shown = False
 		backend.__init__(self, configurables={
 			u'timeout' : self.assert_numeric_or_None,
 			u'buttonlist' : self.assert_list_or_None,
@@ -185,7 +186,7 @@ class mouse(backend):
 				type:	bool
 		"""
 		
-		pass
+		self._cursor_shown = show
 		
 	def set_pos(self, pos=(0,0)):
 

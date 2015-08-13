@@ -168,7 +168,8 @@ class form(object):
 		self.start_time = None
 		if len(self) == 0:
 			raise osexception(u'The form contains no widgets')
-		self.mouse = mouse(self.experiment, timeout=0)
+		self.mouse = mouse(self.experiment, timeout=5)
+		self.mouse.show_cursor()
 		if focus_widget is not None:
 			self.render()
 			if self.timed_out():
@@ -193,6 +194,7 @@ class form(object):
 					if resp is not None:
 						self.experiment.var.form_response = resp
 						return resp
+		self.mouse.hide_cursor()
 
 	def timed_out(self):
 

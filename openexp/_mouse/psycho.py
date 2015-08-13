@@ -65,12 +65,13 @@ class psycho(mouse.mouse, psycho_coordinates):
 			break
 		if pos is not None:
 			pos = self.from_xy(pos)
-		self.mouse.setVisible(False)
+		self.mouse.setVisible(self._cursor_shown)
 		return button, pos, time
 		
 	def show_cursor(self, show=True):
 		
-		self.mouse.setVisible(visibility)
+		self.mouse.setVisible(show)
+		mouse.mouse.show_cursor(self, show=show)
 		
 	def get_pos(self):
 

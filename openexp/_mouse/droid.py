@@ -41,7 +41,7 @@ class droid(legacy.legacy):
 	def get_click(self):
 
 		if android is None:
-			pygame.mouse.set_visible(True)
+			pygame.mouse.set_visible(self.visible)
 		buttonlist = self.buttonlist
 		timeout = self.timeout
 		enable_escape = self.experiment.var.get(u'enable_escape', u'no',

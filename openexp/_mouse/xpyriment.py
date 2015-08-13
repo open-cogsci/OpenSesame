@@ -36,69 +36,34 @@ class xpyriment(xpyriment_coordinates, legacy.legacy):
 		`openexp._mouse.mouse`.
 	"""
 
-	settings = {
-		u"custom_cursor" : {
-			u"name" : u"Custom cursor",
-			u"description" : u"Bypass the system mouse cursor",
-			u"default" : u"no"
-			}
-		}
+	settings = {}
 
 	def __init__(self, experiment, **resp_args):
 
 		mouse.mouse.__init__(self, experiment, **resp_args)
 		xpyriment_coordinates.__init__(self)
-		if self.experiment.var.get('custom_cursor', 'no') == 'yes':
-			if self.experiment.expyriment.screen._fullscreen:
-				raise osexception(
-					'The xpyriment mouse back-end does not support custom cursors in fullscreen mode (you can change this in the back-end settings)')
-			self.cursor = stimuli.Picture(self.experiment.resource(
-				'cursor.png'))
-		else:
-			self.cursor = None
 
 	@configurable
 	def get_click(self):
 
 		buttonlist = self.buttonlist
 		timeout = self.timeout
-		visible = self.visible
-
-		if self.cursor is None:
-			pygame.mouse.set_visible(visible)
-		elif visible:
-			pygame.mouse.set_visible(False)
-			bg_surface = self.experiment.last_shown_canvas._get_surface().copy()
-			dx, dy = self.cursor.surface_size
-			dx /= 2
-			dy /= 2
-
+		pygame.mouse.set_visible(self.visible)
 		start_time = pygame.time.get_ticks()
 		time = start_time
-
 		while True:
 			time = pygame.time.get_ticks()
-
-			# Draw a cusom cursor if necessary
-			if self.cursor is not None and visible:
-				x, y = pygame.mouse.get_pos()
-				self.experiment.window.blit(bg_surface, (0,0))
-				self.cursor.position = c2p((x+dx, y+dy))
-				self.cursor.present(clear=False)
-
 			# Process the input
 			for event in pygame.event.get([MOUSEBUTTONDOWN, KEYDOWN]):
 				if event.type == KEYDOWN and event.key == pygame.K_ESCAPE:
-					raise osexception( \
+					raise osexception(
 						"The escape key was pressed.")
 				if event.type == MOUSEBUTTONDOWN:
 					if buttonlist is None or event.button in buttonlist:
-						pygame.mouse.set_visible(self.visible)
+						pygame.mouse.set_visible(self._cursor_shown)
 						return event.button, self.from_xy(event.pos,
 							dev='mouse'), time
 			if timeout is not None and time-start_time >= timeout:
 				break
-
-		if self.cursor is None:
-			pygame.mouse.set_visible(self.visible)
+		pygame.mouse.set_visible(self._cursor_shown)
 		return None, None, time

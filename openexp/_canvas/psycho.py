@@ -350,7 +350,7 @@ class psycho(canvas.canvas, psycho_coordinates):
 		experiment.window = visual.Window(experiment.resolution(), screen=screen,
 			waitBlanking=waitblanking, fullscr=experiment.var.fullscreen==u'yes',
 			monitor=monitor, units=u'pix', rgb=experiment.var.background,
-			winType=u'pyglet')
+			winType=u'pyglet', allowStencil=True)
 		experiment.window.setMouseVisible(False)
 		experiment.window.winHandle.set_caption(u'OpenSesame (PsychoPy backend)')
 		# Set Gamma value if specified
