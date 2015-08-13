@@ -43,7 +43,7 @@ def parse_environment_file():
 	# The Python path is added to sys.path, the rest is added as an environment
 	# variable.
 	if u'PYTHON_PATH' in d:
-		sys.path += d[u'PYTHON_PATH'].split(';')
+		sys.path = d[u'PYTHON_PATH'].split(';') + sys.path
 		del d[u'PYTHON_PATH']
 	os.environ.update(d)
 
