@@ -32,10 +32,15 @@ class backend_settings(base_widget):
 
 		super(backend_settings, self).__init__(main_window,
 			ui=u'widgets.backend_settings')
-		self.tab_name = '__backend_settings__'
+		self.tab_name = u'__backend_settings__'
 
 		for backend_type in backend._backend_types:
-			_backend = backend.get_backend_class(self.experiment, backend_type)
+			try:
+				_backend = backend.get_backend_class(self.experiment,
+					backend_type)
+			except:
+				_backend = None
+				
 			layout = getattr(self.ui, u'layout_%s' % backend_type)
 			label = getattr(self.ui, u'label_%s' % backend_type)
 			# Horribly ugly way to clear the previous settings
@@ -44,11 +49,13 @@ class backend_settings(base_widget):
 				layout.removeItem(w)
 				w.widget().hide()
 				sip.delete(w)
-			if not hasattr(_backend, "settings") or _backend.settings == \
+			if _backend is None:
+				label.setText(_(u"Failed to load backend"))				
+			elif not hasattr(_backend, u"settings") or _backend.settings == \
 				None:
-				label.setText(_("No settings for %s") % _backend.__name__)
+				label.setText(_(u"No settings for %s") % _backend.__name__)
 			else:
-				label.setText(_("Settings for %s:") % _backend.__name__)
+				label.setText(_(u"Settings for %s:") % _backend.__name__)
 				layout.addWidget(settings_widget(self.main_window,
 					_backend.settings))
 
