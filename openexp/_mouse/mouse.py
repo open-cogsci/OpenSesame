@@ -177,9 +177,9 @@ class mouse(backend):
 			
 			__Note:__ In most cases, you will want to use the `visible`
 			[keyword][Response keywords], which changes the visibility during
-			response collection.
+			response collection, that is, while `mouse.get_click()` is called.
 			
-		arguments:
+		keywords:
 			show:
 				desc: 	Indicates whether the cursor is shown (True) or hidden
 						(False).
