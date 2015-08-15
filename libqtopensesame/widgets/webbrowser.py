@@ -65,6 +65,10 @@ class webbrowser(base_widget):
 		super(webbrowser, self).__init__(main_window,
 			ui=u'widgets.webbrowser_widget')
 		self.ui.webview = small_webview(self)
+		# Touch events are enabled by default, and this has the effect that
+		# touch events are broken for all other widgets once the webbrowser has
+		# been used. This affects at least Ubuntu 15.05.
+		self.ui.webview.setAttribute(QtCore.Qt.WA_AcceptTouchEvents, False)
 		self.ui.webview.loadProgress.connect(self.update_progressbar)
 		self.ui.webview.loadStarted.connect(self.load_started)
 		self.ui.webview.loadFinished.connect(self.load_finished)
