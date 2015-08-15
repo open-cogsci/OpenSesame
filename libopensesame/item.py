@@ -580,3 +580,10 @@ class item(object):
 
 		warnings.warn(u'item.flush_log() has been deprecated',
 			DeprecationWarning)
+
+	def split(self, s):
+		
+		warnings.warn(
+			u'item.split() has been deprecated. Please use syntax.split()',
+			DeprecationWarning)
+		return self.syntax.split(s)
