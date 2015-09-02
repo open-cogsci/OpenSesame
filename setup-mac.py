@@ -69,10 +69,10 @@ setup(
 			 'iconfile' : 'resources/opensesame.icns',
 			 'plist': {
 				'CFBundleName': 'OpenSesame',
-				'CFBundleShortVersionString':'2.9.4',
-				'CFBundleVersion': '2.9.4',
+				'CFBundleShortVersionString':'2.9.7',
+				'CFBundleVersion': '2.9.7',
 				'CFBundleIdentifier':'nl.cogsci.osdoc',
-				'NSHumanReadableCopyright': 'Sebastiaan Mathot (2010-2015)',
+				'NSHumanReadableCopyright': 'Sebastiaan Mathôt (2010-2015)',
 				'CFBundleDevelopmentRegion': 'English', 	
 			}
 		}
