@@ -72,7 +72,7 @@ setup(
 				'CFBundleShortVersionString':'2.9.7',
 				'CFBundleVersion': '2.9.7',
 				'CFBundleIdentifier':'nl.cogsci.osdoc',
-				'NSHumanReadableCopyright': 'Sebastiaan Mathôt (2010-2015)',
+				'NSHumanReadableCopyright': 'Sebastiaan Mathot (2010-2015)',
 				'CFBundleDevelopmentRegion': 'English', 	
 			}
 		}
