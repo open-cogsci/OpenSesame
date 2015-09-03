@@ -281,14 +281,14 @@ class sketchpad_widget(base_widget):
 			self.ui.checkbox_html.setChecked(element.get_property(u'html',
 				_type=bool))
 		self.show_element_tool_settings(element)
-		
+
 	def zoom_fit(self):
-		
+
 		"""
 		desc:
 			Sets the best-fitting zoom level.
 		"""
-		
+
 		w = self.sketchpad.var.width
 		h = self.sketchpad.var.height
 		l = -w/2
@@ -297,15 +297,16 @@ class sketchpad_widget(base_widget):
 			mode=QtCore.Qt.KeepAspectRatio)
 		zoom = self.ui.graphics_view.transform().m11()
 		self.ui.spinbox_zoom.setValue(zoom)
-		
+
 	def zoom_1(self):
-		
+
 		"""
 		desc:
 			Sets the zoom level to 1 (no zoom).
-		"""				
-		
+		"""
+
 		self.zoom(1)
+		self.ui.spinbox_zoom.setValue(1)
 
 	def zoom(self, value):
 
