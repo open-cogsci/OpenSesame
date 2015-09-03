@@ -151,7 +151,6 @@ include_media_player = False
 include_media_player_vlc = not py3
 include_boks = not py3
 include_pygaze = not py3
-include_examples = True
 include_sounds = True
 include_faenza = True
 include_inpout32 = True
@@ -488,16 +487,6 @@ if include_pygaze:
 		shutil.copytree(r"..\pygaze\opensesame_plugins\pygaze_%s" % plugin,
 			r"dist\plugins\pygaze_%s" % plugin,
 			ignore=shutil.ignore_patterns('*.pyc', '.*', '.pyo'))
-
-# Include examples
-if include_examples:
-	print("copying examples")
-	shutil.copytree("examples", os.path.join("dist", "examples"))
-	for path in os.listdir(os.path.join("dist", "examples")):
-		if path[-1] == "~" or os.path.splitext(path)[1] not in [".opensesame", \
-			".gz"]:
-			print("removing file %s" % path)
-			os.remove(os.path.join("dist", "examples", path))
 
 # Include sounds
 if include_sounds:
