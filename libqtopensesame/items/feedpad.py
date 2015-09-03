@@ -76,6 +76,7 @@ class feedpad(object):
 		self.sketchpad_widget.draw()
 		if self.first_refresh:
 			self.sketchpad_widget.center()
+			self.sketchpad_widget.zoom_fit()
 			self.first_refresh = False
 
 	def add_element(self, element):

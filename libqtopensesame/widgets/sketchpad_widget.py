@@ -73,6 +73,8 @@ class sketchpad_widget(base_widget):
 		self.ui.widget_font.font_changed.connect(self.apply_font)
 		self.ui.checkbox_grid.toggled.connect(self.apply_grid)
 		self.ui.spinbox_grid.valueChanged.connect(self.apply_grid)
+		self.ui.button_zoom_fit.clicked.connect(self.zoom_fit)
+		self.ui.button_zoom_1.clicked.connect(self.zoom_1)
 		# Set the minimum height of the settings widget to the height that it
 		# has when all controls are visible. This prevents the display from
 		# jumping.
@@ -279,6 +281,31 @@ class sketchpad_widget(base_widget):
 			self.ui.checkbox_html.setChecked(element.get_property(u'html',
 				_type=bool))
 		self.show_element_tool_settings(element)
+		
+	def zoom_fit(self):
+		
+		"""
+		desc:
+			Sets the best-fitting zoom level.
+		"""
+		
+		w = self.sketchpad.var.width
+		h = self.sketchpad.var.height
+		l = -w/2
+		t = -h/2
+		self.ui.graphics_view.fitInView(l, t, w, h,
+			mode=QtCore.Qt.KeepAspectRatio)
+		zoom = self.ui.graphics_view.transform().m11()
+		self.ui.spinbox_zoom.setValue(zoom)
+		
+	def zoom_1(self):
+		
+		"""
+		desc:
+			Sets the zoom level to 1 (no zoom).
+		"""				
+		
+		self.zoom(1)
 
 	def zoom(self, value):
 
