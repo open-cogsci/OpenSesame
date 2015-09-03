@@ -87,10 +87,9 @@ class header_widget(base_widget):
 			type:	unicode
 		"""
 
-		self.label_name.setText(
-			(u"<font size='5'><b>%s</b> - %s</font>&nbsp;&nbsp;&nbsp;"
-			u"<font color='gray'><i>Click to edit</i></font>") \
-			% (name, self.item.item_type.replace(u"_", u" ").title()))
+		self.label_name.setText((u"<font size='5'>%s"
+			u"<font color='gray'> &ndash; %s</font></font>") \
+			% (name, self.item.item_type.replace(u"_", u" ")))
 		self.edit_name.setText(name)
 
 	def set_desc(self, desc):

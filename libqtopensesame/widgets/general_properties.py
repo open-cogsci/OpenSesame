@@ -51,6 +51,7 @@ class general_properties(base_widget):
 		header_hbox.addWidget(self.experiment.label_image(u"experiment"))
 		header_hbox.addWidget(self.header_widget)
 		header_hbox.addStretch()
+		header_hbox.setContentsMargins(4, 2, 0, 16)
 		header_widget = QtGui.QWidget()
 		header_widget.setLayout(header_hbox)
 		self.ui.container_layout.insertWidget(0, header_widget)
@@ -95,8 +96,8 @@ class general_properties(base_widget):
 		"""
 
 		self.header_widget.edit_name.setText(self.experiment.var.title)
-		self.header_widget.label_name.setText(
-			u"<font size='5'><b>%s</b> - Experiment</font>&nbsp;&nbsp;&nbsp;<font color='gray'><i>Click to edit</i></font>" \
+		self.header_widget.label_name.setText((u"<font size='5'>%s"
+			u"<font color='gray'> &ndash; experiment</font></font>") \
 			% self.experiment.var.title)
 		self.header_widget.edit_desc.setText(self.experiment.var.description)
 		self.header_widget.label_desc.setText(self.experiment.var.description)
