@@ -28,11 +28,6 @@ desc:
 	-	type:			url-local
 		url:			[url]
 
-	-	type:			item-new
-		item-type:		[item type]
-		item-name:		[suggested name]
-		script:			[script]
-
 	-	type:			item-existing
 		item-name:		[item name]
 		QTreeWidgetItem	[representation of QTreeWidgetItem]
@@ -42,6 +37,15 @@ desc:
 
 	-	type:		variable
 		variable:	[variable name]
+		
+	-	type:			item-snippet
+		main-item-name:	[suggested name]		
+		
+		items:
+			-	item-name:	[suggested name]
+				item-type:	[item type]
+				script:		[script]
+			-	[...]
 ---
 """
 

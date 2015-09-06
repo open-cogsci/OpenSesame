@@ -80,17 +80,18 @@ class tree_overview(base_subcomponent, base_draggable, QtGui.QTreeWidget):
 			self.append_button = None
 		shortcut(self, cfg.shortcut_context_menu, self.show_context_menu)
 		shortcut(self, cfg.shortcut_rename, self.start_rename)
-		shortcut(self, cfg.shortcut_copy_clipboard, self.copy_item)
+		shortcut(self, cfg.shortcut_copy_clipboard_unlinked,
+			self.copy_item_unlinked)
+		shortcut(self, cfg.shortcut_copy_clipboard_linked,
+			self.copy_item_linked)
 		shortcut(self, cfg.shortcut_paste_clipboard, self.paste_item)
 		shortcut(self, cfg.shortcut_delete, self.delete_item)
 		shortcut(self, cfg.shortcut_permanently_delete,
 			self.permanently_delete_item)
-		shortcut(self, cfg.shortcut_linked_copy, self.create_linked_copy)
-		shortcut(self, cfg.shortcut_unlinked_copy, self.create_unlinked_copy)
 		self.drop_indicator = None
 		self.drop_indicator_pen = QtGui.QPen(QtGui.QBrush(
 			QtGui.QColor(u'#73d216')), 2, QtCore.Qt.SolidLine)
-		self.set_supported_drop_types([u'item-new', u'item-existing',
+		self.set_supported_drop_types([u'item-snippet', u'item-existing',
 			u'url-local'])
 
 	def show_context_menu(self):
@@ -102,17 +103,29 @@ class tree_overview(base_subcomponent, base_draggable, QtGui.QTreeWidget):
 		rect = self.visualRect(index)
 		item.show_context_menu(self.mapToGlobal(rect.topLeft()))
 
-	def copy_item(self):
+	def copy_item_unlinked(self):
 
 		"""
 		desc:
 			Copies the currently selected treeitem to the clipboard (if
-			supported by the treeitem).
+			supported by the treeitem) as an unlinked copy.
 		"""
 
 		target_treeitem = self.currentItem()
 		if target_treeitem is not None:
-			target_treeitem.copy()
+			target_treeitem.copy_unlinked()
+	
+	def copy_item_linked(self):
+
+		"""
+		desc:
+			Copies the currently selected treeitem to the clipboard (if
+			supported by the treeitem) as a linked copy.
+		"""
+
+		target_treeitem = self.currentItem()
+		if target_treeitem is not None:
+			target_treeitem.copy_linked()
 
 	def paste_item(self):
 
@@ -270,17 +283,15 @@ class tree_overview(base_subcomponent, base_draggable, QtGui.QTreeWidget):
 		target_item_name, target_item_ancestry = target_treeitem.ancestry()
 		target_item = self.experiment.items[target_item_name]
 		data = 	{
+				u'type'				: u'item-existing',
+				u'move'				: True,
 				u'item-name'		: target_item.name,
 				u'item-type'		: target_item.item_type,
 				u'ancestry'			: target_item_ancestry,
 				u'script'			: target_item.to_string(),
-				u'application-id'	: self.main_window._id()
+				u'application-id'	: self.main_window._id(),
+				u'QTreeWidgetItem'	: str(target_treeitem),
 				}
-		if (QtCore.Qt.ControlModifier & e.modifiers()) and \
-			(QtCore.Qt.ShiftModifier & e.modifiers()):
-			data[u'type'] = u'item-new'
-		else:
-			data[u'type'] = u'item-existing'
 		# Drags are not started right away, but only after the mouse has been
 		# pressed for a minimum interval. To accomplish this, we set a timer,
 		# and cancel the timer when the mouse cursor is released.
@@ -395,7 +406,7 @@ class tree_overview(base_subcomponent, base_draggable, QtGui.QTreeWidget):
 
 		return treeitem is not None and treeitem.draggable()
 
-	def drop_event_item_move(self, data, e):
+	def drop_event_item_existing(self, data, e=None, target_treeitem=None):
 
 		"""
 		desc:
@@ -411,27 +422,46 @@ class tree_overview(base_subcomponent, base_draggable, QtGui.QTreeWidget):
 		"""
 
 		if not drag_and_drop.matches(data, [u'item-existing']):
-			e.ignore()
+			if e is not None:
+				e.ignore()
 			return
-		target_treeitem = self.itemAt(e.pos())
+		# Only accept existing-item drops from this application
+		if data[u'application-id'] != self.main_window._id():
+			debug.msg(u'Drop ignored: from different instance')
+			if e is not None:
+				e.ignore()
+			return
+		if target_treeitem is None:
+			target_treeitem = self.itemAt(e.pos())
 		if not self.droppable(target_treeitem, data):
 			debug.msg(u'Drop ignored: target not droppable')
-			e.ignore()
+			if e is not None:
+				e.ignore()
 			return
-		# If the drop comes from this application, check for recursion etc.
-		if data[u'application-id'] == self.main_window._id():
+		# Don't drop on the same item that was the source (if any)
+		if u'QTreeWidgetItem' in data and \
+			data[u'QTreeWidgetItem'] == str(target_treeitem):
+			debug.msg(u'Drop ignored: dropping on self')
+			if e is not None:
+				e.ignore()
+			return
+		item_name = data[u'item-name']
+		# Check for recursion when dropping sequences and loops
+		if data[u'item-type'] in [u'sequence', u'loop']:
 			target_item_name, target_item_ancestry = target_treeitem.ancestry()
-			item_name = data[u'item-name']
 			if target_item_ancestry.startswith(u'%s:' % item_name) or \
 				u'.%s:' % item_name  in target_item_ancestry:
 				debug.msg(u'Drop ignored: recursion prevented')
-				e.ignore()
+				if e is not None:
+					e.ignore()
 				return
-			parent_item_name, index = self.parent_from_ancestry(data[u'ancestry'])
-			if parent_item_name is None:
-				debug.msg(u'Drop ignored: no parent')
+		# Don't drop on undroppable parents
+		parent_item_name, index = self.parent_from_ancestry(data[u'ancestry'])
+		if parent_item_name is None:
+			debug.msg(u'Drop ignored: no parent')
+			if e is not None:
 				e.ignore()
-				return
+			return
 		# The logic below is a bit complicated, but works as follows:
 		# - If we're in a move action, remove the dragged item from its parent,
 		#   and set need_restore so that we know this happened.
@@ -439,8 +469,7 @@ class tree_overview(base_subcomponent, base_draggable, QtGui.QTreeWidget):
 		# - If the drop action was unsuccesful, and if need_restore is set,
 		#   re-add the dragged item to its former parent.
 		need_restore = False
-		if not QtCore.Qt.ControlModifier & e.keyboardModifiers() and \
-			data[u'application-id'] == self.main_window._id():
+		if data[u'move']:
 			if parent_item_name not in self.experiment.items:
 				debug.msg(u'Don\'t know how to remove item from %s' \
 					% parent_item_name)
@@ -456,7 +485,70 @@ class tree_overview(base_subcomponent, base_draggable, QtGui.QTreeWidget):
 			self.experiment.items[parent_item_name].insert_child_item(
 				item_name, index)
 			self.experiment.build_item_tree()
+			
+	def drop_get_item_snippet(self, data):
+		
+		"""
+		desc:
+			Gets the item and list of newly created items for item-snippet
+			drops.
+			
+		arguments:
+			data:
+				desc:	The drop data.
+				type:	dict
+				
+		returns:
+			desc:	An (name, new_items) tuple.
+			type:	tuple
+		"""		
+		
+		for item_dict in data[u'items']:
+			if not self.experiment.items.valid_type(item_dict[u'item-type']):
+				raise osexception(
+					_(u'Unknown item type: %s') % item_dict[u'item-type'])
+		rename = []
+		new_items = []
+		main_item = None
+		for item_dict in data[u'items']:
+			item = self.experiment.items.new(item_dict[u'item-type'],
+				item_dict[u'item-name'], item_dict[u'script'])
+			if item_dict[u'item-name'] == data[u'main-item-name']:
+				main_item = item
+			# If the item didn't get the suggested name
+			if item.name !=	item_dict[u'item-name']:
+				rename.append( (item_dict[u'item-name'], item.name) )
+			new_items.append(item)
+			self.extension_manager.fire(u'new_item', name=item.name,
+				_type=item.item_type)
+		# Inform all newly created items of any renames that occurred
+		for old_name, new_name in rename:
+			for item in new_items:
+				item.rename(old_name, new_name)
+		return main_item, [item.name for item in new_items]
 
+	def drop_get_item_existing(self, data):
+		
+		"""
+		desc:
+			Gets the item and list of newly created items for existing-item
+			drops.
+			
+		arguments:
+			data:
+				desc:	The drop data.
+				type:	dict
+				
+		returns:
+			desc:	An (name, new_items) tuple, where new_items is always empty
+					for existing-item drops.
+			type:	tuple
+		"""
+		
+		if data[u'item-name'] not in self.experiment.items:
+			raise osexception(u'Unknown item: %s' % data[u'item-name'])
+		return self.experiment.items[data[u'item-name']], []
+		
 	def drop_event_item_new(self, data, e=None, target_treeitem=None):
 
 		"""
@@ -482,7 +574,7 @@ class tree_overview(base_subcomponent, base_draggable, QtGui.QTreeWidget):
 		"""
 
 		self.main_window.set_busy(True)
-		if not drag_and_drop.matches(data, [u'item-existing', u'item-new']):
+		if not drag_and_drop.matches(data, [u'item-snippet', u'item-existing']):
 			if e is not None:
 				e.ignore()
 			self.main_window.set_busy(False)
@@ -506,7 +598,7 @@ class tree_overview(base_subcomponent, base_draggable, QtGui.QTreeWidget):
 			return True
 		# Get the target item, check if it exists, and, if so, drop the source
 		# item on it.
-		target_item_name = str(target_treeitem.text(0))
+		target_item_name = target_treeitem.text(0)
 		if target_item_name not in self.experiment.items:
 			debug.msg(u'Don\'t know how to drop on %s' % target_item_name)
 			if e is not None:
@@ -515,29 +607,10 @@ class tree_overview(base_subcomponent, base_draggable, QtGui.QTreeWidget):
 			self.main_window.set_busy(False)
 			return False
 		target_item = self.experiment.items[target_item_name]
-		# Get the item to be inserted. If the drop type is item-new, we need
-		# to create a new item, otherwise we get an existin item. Also, if
-		# the drop doesn't originate from this application, we create a new
-		# item.
-		if data[u'type'] == u'item-new' \
-			or data[u'application-id'] != self.main_window._id():
-			try:
-				item = self.experiment.items.new(data[u'item-type'],
-					data[u'item-name'], data[u'script'])
-			except Exception as ex:
-				if not isinstance(e, osexception):
-					ex = osexception(msg=u'Plug-in error', exception=ex)
-				self.notify(
-					u'Failed to load plug-in %s (see debug window for stack trace)' \
-					% data[u'item-type'])
-				self.console.write(ex)
-				e.accept()
-				self.main_window.set_busy(False)
-				return False
-			self.extension_manager.fire(u'new_item',
-				name=data[u'item-name'], _type=data[u'item-type'])
+		if data[u'type'] == u'item-existing':
+			item, new_items = self.drop_get_item_existing(data)
 		else:
-			item = self.experiment.items[data[u'item-name']]
+			item, new_items = self.drop_get_item_snippet(data)
 
 		inserted = False
 		# If the item has no parent or if it is the experiment starting point,
@@ -567,13 +640,11 @@ class tree_overview(base_subcomponent, base_draggable, QtGui.QTreeWidget):
 						).show()
 				# If the popup was cancelled
 				if resp is None:
-					e.accept()
-					# Delete the item if it was new or didn't originate from
-					# this application.
-					if data[u'type'] == u'item-new' \
-						or data[u'application-id'] != self.main_window._id():
-						del self.experiment.items[item.name]
+					if e is not None:
+						e.accept()
 					self.main_window.set_busy(False)
+					for item in new_items:
+						del self.experiment.items[item]
 					return False
 				# If the user chose to insert into the target item
 				if resp == 0:
@@ -623,11 +694,12 @@ class tree_overview(base_subcomponent, base_draggable, QtGui.QTreeWidget):
 				desc:	A drop event.
 				type:	QDragLeaveEvent
 		"""
+		
 		data = drag_and_drop.receive(e)
-		if data[u'type'] == u'item-new':
+		if data[u'type'] == u'item-snippet':
 			self.drop_event_item_new(data, e)
 		elif data[u'type'] == u'item-existing':
-			self.drop_event_item_move(data, e)
+			self.drop_event_item_existing(data, e)
 		elif data[u'type'] == u'url-local':
 			self.main_window.open_file(path=data[u'url'])
 			e.accept()
@@ -668,7 +740,7 @@ class tree_overview(base_subcomponent, base_draggable, QtGui.QTreeWidget):
 			e.accept()
 			self.end_drag()
 			return
-		if not drag_and_drop.matches(data, [u'item-new', u'item-existing']):
+		if not drag_and_drop.matches(data, [u'item-snippet', u'item-existing']):
 			e.accept()
 			self.end_drag()
 			return

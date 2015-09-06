@@ -57,6 +57,10 @@ class item_store(object):
 			maxdepth: 2
 		--%
 	"""
+	
+	built_in_types = [u'sequence', u'loop', u'sketchpad', u'feedback',
+		u'keyboard_response', u'mouse_response', u'sampler', u'synth',
+		u'inline_script', u'logger']
 
 	def __init__(self, experiment):
 
@@ -200,15 +204,18 @@ class item_store(object):
 		"""
 
 		if suggestion is None:
-			name = item_type
+			name = u'new_%s' % item_type
 		else:
 			name = self.experiment.syntax.sanitize(suggestion, strict=True,
 				allow_vars=False)
 			if len(name) == 0:
 				name = item_type
-		while name in self:
-			name = u'_' + name
-		return name
+		_name = name
+		i = 1
+		while _name in self:			
+			_name = u'%s_%d' % (name, i)
+			i += 1
+		return _name
 
 	def _type(self, name):
 

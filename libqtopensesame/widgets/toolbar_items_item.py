@@ -75,10 +75,14 @@ class toolbar_items_item(base_subcomponent, QtGui.QLabel):
 
 		if e.buttons() != QtCore.Qt.LeftButton:
 			return
+		name = u'new_%s' % self.item
 		data = {
-			u'type'			: u'item-new',
-			u'item-type'	: self.item,
-			u'item-name'	: self.item,
-			u'script'		: u'',
+			u'type'				: u'item-snippet',
+			u'main-item-name'	: name,
+			u'items'			: [{
+				u'item-type'	: self.item,
+				u'item-name'	: name,
+				u'script'		: u''
+				}]
 			}
 		drag_and_drop.send(self, data)

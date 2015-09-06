@@ -20,6 +20,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 from libopensesame.py3compat import *
 
 from libopensesame.item_store import item_store
+from libopensesame import plugins
 from libqtopensesame.misc import _
 from libqtopensesame.misc.base_subcomponent import base_subcomponent
 
@@ -30,7 +31,7 @@ class qtitem_store(item_store):
 		The GUI counterpart of the item store, which also distributes item
 		changes etc.
 	"""
-
+	
 	def __init__(self, experiment):
 
 		"""
@@ -82,21 +83,6 @@ class qtitem_store(item_store):
 		item = super(qtitem_store, self).new(_type, name=name, script=script)
 		self.main_window.set_unsaved(True)
 		return item
-
-	def unlinked_copy(self, item):
-
-		"""
-		desc:
-			Creates an unlinked (deep) copy of an item.
-
-		arguments:
-			item:	The item to copy.
-
-		returns:
-			The new item.
-		"""
-
-		return self.new(item.item_type, item.name, item.to_string())
 
 	def rename(self, from_name, to_name):
 
@@ -187,3 +173,22 @@ class qtitem_store(item_store):
 		_used = self.used()
 		return list(filter(lambda item: item not in _used,
 			self.__items__.keys()))
+			
+	def valid_type(self, _type):
+		
+		"""
+		arguments:
+			_type:
+				desc:	The item type to check.
+				type:	str
+		
+		returns:
+			desc: 	True if _type is a valid type, False otherwise.
+			type:	bool
+		"""
+
+		if plugins.is_plugin(_type):
+			return True
+		if _type in self.built_in_types:
+			return True
+		return False

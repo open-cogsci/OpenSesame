@@ -60,17 +60,13 @@ class item_context_menu(base_subcomponent, QtGui.QMenu):
 				_("Edit run-if statement"),
 				self.treeitem.start_edit_runif, cfg.shortcut_edit_runif)
 		self.addSeparator()
-		self.add_action(u"edit-copy", _("Copy to clipboard"),
-			self.treeitem.copy, cfg.shortcut_copy_clipboard)
+		self.add_action(u"edit-copy", _("Copy (unlinked)"),
+			self.treeitem.copy_unlinked, cfg.shortcut_copy_clipboard_unlinked)
+		self.add_action(u"edit-copy", _("Copy (linked)"),
+			self.treeitem.copy_linked, cfg.shortcut_copy_clipboard_linked)
 		if self.treeitem.clipboard_data() is not None:
-			self.add_action(u"edit-paste", _("Paste from clipboard"),
+			self.add_action(u"edit-paste", _("Paste"),
 				self.treeitem.paste, cfg.shortcut_paste_clipboard)
-		if self.treeitem.is_cloneable():
-			self.addSeparator()
-			self.add_action(u"edit-copy", _("Create linked copy"),
-				self.treeitem.create_linked_copy, cfg.shortcut_linked_copy)
-			self.add_action(u"edit-copy", _("Create unlinked copy"),
-				self.treeitem.create_unlinked_copy, cfg.shortcut_unlinked_copy)
 		if self.treeitem.is_deletable():
 			self.addSeparator()
 			self.add_action(u"list-remove", _("Delete"),

@@ -271,24 +271,69 @@ class tree_item_item(tree_base_item):
 		except:
 			pass
 
-	def copy(self):
-
+	def copy_unlinked(self):
+		
 		"""
 		desc:
-			Copy the item to the clipboard in json text format.
+			Copies a snippet of the current item plus children to the keyboard.
 		"""
-
+		
 		import json
-
+		
 		data = {
-			u'type'				: u'item-new',
-			u'item-name'		: self.item.name,
-			u'item-type'		: self.item.item_type,
-			u'ancestry'			: u'',
-			u'script'			: self.item.to_string()
+			u'type'				: u'item-snippet',
+			u'main-item-name'	: self.item.name,
+			u'items'			: [],
 			}
+			
+		for item_name in [self.item.name] \
+			+ self.experiment.items[self.item.name].children():
+			item = self.experiment.items[item_name]
+			data[u'items'].append({
+				u'item-name'	: item_name,
+				u'item-type'	: item.item_type,
+				u'script'		: item.to_string()
+				})
+				
 		text = safe_decode(json.dumps(data))
 		QtGui.QApplication.clipboard().setText(text)
+		
+	def copy_linked(self):
+		
+		"""
+		desc:
+			Copies a linked copy to the keyboard
+		"""
+		
+		import json
+		
+		data = {
+			u'type'				: u'item-existing',
+			u'item-name'		: self.item.name,
+			u'item-type'		: self.item.item_type,
+			u'move'				: False,
+			u'application-id'	: self.main_window._id(),
+			u'ancestry'			: self.ancestry()[1],
+			}
+						
+		text = safe_decode(json.dumps(data))
+		QtGui.QApplication.clipboard().setText(text)
+		
+	def paste(self):
+		
+		"""
+		desc:
+			Pastes clipboard data onto the current item, if possible.
+		"""
+	
+		data = self.clipboard_data()
+		if data is None:
+			return
+		if data[u'type'] == u'item-existing':
+			self.treeWidget().drop_event_item_existing(data,
+				target_treeitem=self)
+		else:
+			self.treeWidget().drop_event_item_new(data, target_treeitem=self)
 
 	def clipboard_data(self):
 
@@ -304,43 +349,11 @@ class tree_item_item(tree_base_item):
 		import json
 		from libqtopensesame.misc import drag_and_drop
 
-		text = str(QtGui.QApplication.clipboard().text())
+		text = QtGui.QApplication.clipboard().text()
 		try:
 			data = json.loads(text)
 		except:
 			return None
-		if drag_and_drop.matches(data, [u'item-new']):
+		if drag_and_drop.matches(data, [u'item-snippet', u'item-existing']):
 			return data
 		return None
-
-	def paste(self):
-
-		"""
-		desc:
-			Pastes clipboard data onto the current item, if possible.
-		"""
-
-		data = self.clipboard_data()
-		if data is not None:
-			self.treeWidget().drop_event_item_new(data, target_treeitem=self)
-
-	def create_linked_copy(self):
-
-		if not self.is_cloneable():
-			return
-		index = self.parent().indexOfChild(self)
-		parent_item = self.parent().item
-		parent_item.insert_child_item(self.item.name, index+1)
-		parent_item.update()
-		self.experiment.build_item_tree(select=self.item.name)
-
-	def create_unlinked_copy(self):
-
-		if not self.is_cloneable():
-			return
-		index = self.parent().indexOfChild(self)
-		item = self.item_store.unlinked_copy(self.item)
-		parent_item = self.parent().item
-		parent_item.insert_child_item(item.name, index+1)
-		parent_item.update()
-		self.experiment.build_item_tree(select=item.name)
