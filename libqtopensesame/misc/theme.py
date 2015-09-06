@@ -98,7 +98,7 @@ class theme:
 		"""
 		Get an icon from the theme
 
-		Arguments:
+		Arguments:p
 		icon -- the icon name
 
 		Returns:
@@ -107,9 +107,16 @@ class theme:
 
 		if isinstance(icon, QtGui.QIcon):
 			return icon
-		if hasattr(self, u'experiment') and u'%s_large.png' % icon in \
-			self.experiment.resources:
-			return QtGui.QIcon(self.experiment.resource(u'%s_large.png' % icon))
+		if hasattr(self, u'experiment') and (u'%s_large.png' % icon in \
+			self.experiment.resources or '%s.png' in self.experiment.resources):
+			qicon = QtGui.QIcon()
+			if u'%s_large.png' % icon in self.experiment.resources:
+				qicon.addFile(self.experiment.resource(
+					u'%s_large.png' % icon), size=QtCore.QSize(32,32))
+			if u'%s.png' % icon in self.experiment.resources:
+				qicon.addFile(self.experiment.resource(u'%s.png' % icon),
+					size=QtCore.QSize(16,16))
+			return qicon
 		if icon in self.icon_map:
 			name = self.icon_map[icon][0]
 		else:

@@ -49,10 +49,10 @@ class loop_table(good_looking_table.good_looking_table):
 		self.lock = False
 
 		icons = {}
-		icons["cut"] = self.loop.experiment.icon("cut")
-		icons["copy"] = self.loop.experiment.icon("copy")
-		icons["paste"] = self.loop.experiment.icon("paste")
-		icons["clear"] = self.loop.experiment.icon("clear")
+		icons["cut"] = self.loop.theme.qicon("cut")
+		icons["copy"] = self.loop.theme.qicon("copy")
+		icons["paste"] = self.loop.theme.qicon("paste")
+		icons["clear"] = self.loop.theme.qicon("clear")
 
 		if not isinstance(rows, int):
 			self.loop.user_hint_widget.add(

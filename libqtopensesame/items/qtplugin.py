@@ -48,19 +48,37 @@ class qtplugin(qtitem.qtitem):
 			# These lines makes sure that the icons and help file are recognized
 			# by OpenSesame.
 			self.plugin_folder = os.path.dirname(plugin_file)
-			self.experiment.resources[u'%s.png' % self.item_type] = \
-				os.path.join(self.plugin_folder, u'%s.png' % self.item_type)
-			self.experiment.resources[u'%s_large.png' % self.item_type] = \
-				os.path.join(self.plugin_folder, u'%s_large.png' \
-				% self.item_type)
+			icon16 = os.path.join(
+				self.plugin_folder, u'%s.png' % self.item_type)
+			icon32 = os.path.join(
+				self.plugin_folder, u'%s_large.png' % self.item_type)
+			self.experiment.resources[u'%s.png' % self.item_type] = icon16
+			self.experiment.resources[u'%s_large.png' % self.item_type] = icon32
 			self.experiment.resources[u'%s.html' % self.item_type] = \
 				os.path.join(self.plugin_folder, u'%s.html' \
 				% self.item_type)
 			self.experiment.resources[u'%s.md' % self.item_type] = \
 				os.path.join(self.plugin_folder, u'%s.md' \
 				% self.item_type)
+			self.qicon = QtGui.QIcon()
+			self.qicon.addFile(icon16, QtCore.QSize(16,16))
+			self.qicon.addFile(icon32, QtCore.QSize(32,32))
+		else:
+			self.qicon = None
 		self.lock = False
 		qtitem.qtitem.__init__(self)
+		
+	def item_icon(self):
+
+		"""
+		returns:
+			desc:	The name of the item icon.
+			type:	unicode
+		"""
+
+		if self.qicon is not None:
+			return self.qicon
+		return self.item_type
 
 	def edit_widget(self):
 
@@ -325,7 +343,7 @@ class qtplugin(qtitem.qtitem):
 			self.auto_line_edit[var] = edit
 		if click_func is None:
 			click_func = self.browse_pool_func(edit)
-		button = QtGui.QPushButton(self.experiment.icon(u'browse'), u'Browse')
+		button = QtGui.QPushButton(self.theme.qicon(u'browse'), u'Browse')
 		button.setIconSize(QtCore.QSize(16, 16))
 		button.clicked.connect(click_func)
 		hbox = QtGui.QHBoxLayout()
@@ -434,7 +452,7 @@ class qtplugin(qtitem.qtitem):
 		"""
 
 		button_apply = QtGui.QPushButton(_(label, context=self.name))
-		button_apply.setIcon(self.experiment.icon(icon))
+		button_apply.setIcon(self.theme.qicon(icon))
 		button_apply.setIconSize(QtCore.QSize(16, 16))
 		button_apply.clicked.connect(self.apply_edit_changes)
 		button_apply.setToolTip(tooltip)

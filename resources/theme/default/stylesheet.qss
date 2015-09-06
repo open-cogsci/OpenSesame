@@ -69,6 +69,6 @@
 	font-size: 8pt;
 }
 
-QTabWidget QTreeView::item {
-	padding: 4px;
+QTreeView::item {
+	padding: 2px;
 }

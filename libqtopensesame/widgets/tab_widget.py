@@ -110,7 +110,7 @@ class tab_widget(base_subcomponent, QtGui.QTabWidget):
 
 		index = self.indexOf(widget)
 		if index < 0:
-			index = self.addTab(widget, self.main_window.experiment.icon(icon),
+			index = self.addTab(widget, self.main_window.theme.qicon(icon),
 				_(name))
 		if switch:
 			self.setCurrentIndex(index)

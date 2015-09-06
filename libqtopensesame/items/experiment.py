@@ -218,45 +218,6 @@ class experiment(libopensesame.experiment.experiment):
 			self.items[item].delete(item_name, item_parent, index)
 		self.main_window.close_item_tab(item_name)
 
-	def icon(self, name):
-
-		"""
-		Returns a QIcon for a given name (such as an item type).
-
-		Arguments:
-		name	--	A name. (e.g., u'sequence')
-
-		Returns:
-		A QIcon.
-		"""
-
-
-		# TODO This hack is necessary to avoid breaking compatibility with the
-		# old resources system, but plug-ins should not do this anymore!
-		if (name+u'.png') in self.resources:
-			return QtGui.QIcon(self.resource(name+u'.png'))
-		return self.main_window.theme.qicon(name)
-
-	def label_image(self, name):
-
-		"""
-		Returns a QLabel for a given name (such as an item type).
-
-		Arguments:
-		name	--	A name. (e.g., u'sequence')
-
-		Returns:
-		A QLabel.
-		"""
-
-		# TODO This hack is necessary to avoid breaking compatibility with the
-		# old resources system, but plug-ins should not do this anymore!
-		if (name+u'_large.png') in self.resources:
-			l = QtGui.QLabel()
-			l.setPixmap(QtGui.QPixmap(self.resource(name+u'_large.png')))
-			return l
-		return self.main_window.theme.qlabel(name)
-
 	def item_combobox(self, select=None, exclude=[], c=None):
 
 		"""

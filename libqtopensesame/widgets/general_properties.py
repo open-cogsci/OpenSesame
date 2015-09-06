@@ -48,7 +48,7 @@ class general_properties(base_widget):
 		# Set the header, with the icon, label and script button
 		self.header_widget = general_header_widget(self, self.main_window)
 		header_hbox = QtGui.QHBoxLayout()
-		header_hbox.addWidget(self.experiment.label_image(u"experiment"))
+		header_hbox.addWidget(self.theme.qlabel(u"experiment"))
 		header_hbox.addWidget(self.header_widget)
 		header_hbox.addStretch()
 		header_hbox.setContentsMargins(4, 2, 0, 16)

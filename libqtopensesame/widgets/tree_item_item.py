@@ -56,7 +56,7 @@ class tree_item_item(tree_base_item):
 		if extra_info is not None:
 			self.setText(1, extra_info)
 		self.setFlags(QtCore.Qt.ItemIsEditable | self.flags())
-		self.setIcon(0, self.experiment.icon(item.item_icon()))
+		self.setIcon(0, self.theme.qicon(item.item_icon()))
 		self.name = item.name
 		# Only allow drops on used items
 		self._droppable = self.item.name in self.item.experiment.items.used()

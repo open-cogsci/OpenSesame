@@ -43,10 +43,10 @@ class loop_wizard(base_dialog):
 		super(loop_wizard, self).__init__(main_window,
 			ui=u'dialogs.loop_wizard_dialog')
 		icons = {}
-		icons[u"cut"] = self.experiment.icon(u"cut")
-		icons[u"copy"] = self.experiment.icon(u"copy")
-		icons[u"paste"] = self.experiment.icon(u"paste")
-		icons[u"clear"] = self.experiment.icon(u"clear")
+		icons[u"cut"] = self.theme.qicon(u"cut")
+		icons[u"copy"] = self.theme.qicon(u"copy")
+		icons[u"paste"] = self.theme.qicon(u"paste")
+		icons[u"clear"] = self.theme.qicon(u"clear")
 		self.ui.table_example.build_context_menu(icons)
 		self.ui.table_wizard.build_context_menu(icons)
 		self.ui.table_example.hide()

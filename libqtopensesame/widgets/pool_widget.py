@@ -199,7 +199,7 @@ class pool_widget(base_widget):
 			debug.msg(path)
 			fname = os.path.basename(path)
 			if filt in fname.lower():
-				icon = self.experiment.icon(self.file_type(fname))
+				icon = self.theme.qicon(self.file_type(fname))
 				item = QtGui.QListWidgetItem(icon, fname)
 				item.setFlags(item.flags()|QtCore.Qt.ItemIsEditable)
 				item.icon = icon

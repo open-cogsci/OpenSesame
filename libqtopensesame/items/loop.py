@@ -484,9 +484,9 @@ class loop(qtstructure_item, qtitem, loop_runtime):
 		self.loop_widget.ui.button_apply_weights.clicked.connect(
 			self.apply_weights)
 		self.loop_widget.ui.combobox_order.setItemIcon(0,
-			self.experiment.icon(u"random"))
+			self.theme.qicon(u"random"))
 		self.loop_widget.ui.combobox_order.setItemIcon(1,
-			self.experiment.icon(u"sequential"))
+			self.theme.qicon(u"sequential"))
 		self.loop_table = loop_table.loop_table(self,
 			self.var.get(u'cycles', _eval=False), self.cyclevar_count())
 		self.edit_vbox.addWidget(self.loop_table)

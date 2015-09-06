@@ -190,7 +190,7 @@ class qtitem(base_qtobject):
 		self.user_hint_widget = user_hint_widget.user_hint_widget(
 			self.experiment.main_window, self)
 		self.header_hbox = QtGui.QHBoxLayout()
-		self.header_item_icon = self.experiment.label_image(self.item_icon())
+		self.header_item_icon = self.theme.qlabel(self.item_icon())
 		self.header_hbox.addWidget(self.header_item_icon)
 		self.header_hbox.addWidget(self.header)
 		self.header_hbox.setContentsMargins(0, 2, 0, 0)
@@ -206,7 +206,7 @@ class qtitem(base_qtobject):
 		self.button_view = item_view_button(self)
 		self.header_hbox.addWidget(self.button_view)
 		# Help button
-		self.button_help = QtGui.QPushButton(self.experiment.icon(u"help"), u"")
+		self.button_help = QtGui.QPushButton(self.theme.qicon(u"help"), u"")
 		self.button_help.setToolTip(
 			_(u"Tell me more about the %s item") % self.item_type)
 		self.button_help.setIconSize(QtCore.QSize(16, 16))
@@ -232,7 +232,7 @@ class qtitem(base_qtobject):
 		if stretch:
 			self.edit_vbox.addStretch()
 		self._edit_widget = QtGui.QWidget()
-		self._edit_widget.setWindowIcon(self.experiment.icon(self.item_type))
+		self._edit_widget.setWindowIcon(self.theme.qicon(self.item_type))
 		self._edit_widget.setLayout(self.edit_vbox)
 
 		# The _script_widget contains the script editor
