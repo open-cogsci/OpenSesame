@@ -247,14 +247,15 @@ class experiment(libopensesame.experiment.experiment):
 		if select is not None and select not in self.experiment.items:
 			c.addItem(u'')
 			c.setCurrentIndex(0)
-			c.setItemIcon(i, self.icon(u'go-down'))
+			c.setItemIcon(i, self.main_window.theme.qicon(u'go-down'))
 			i += 1
 		# Add all existing items (except excluded) in alphabetical order
 		for item in sorted(self.experiment.items):
 			if item not in exclude:
 				item_type = self.experiment.items[item].item_type
 				c.addItem(item)
-				c.setItemIcon(i, self.icon(self.experiment.items[item].item_type))
+				c.setItemIcon(i, self.main_window.theme.qicon(
+					self.experiment.items[item].item_type))
 				if self.experiment.items[item].name == select:
 					index = i
 				i += 1
@@ -289,7 +290,7 @@ class experiment(libopensesame.experiment.experiment):
 		# Add all core items in alphabetical order.
 		for item in sorted(self.core_items):
 			c.addItem(item)
-			c.setItemIcon(i, self.icon(item))
+			c.setItemIcon(i, self.main_window.theme.qicon(item))
 			if item == select:
 				c.setCurrentIndex(i)
 			i += 1
