@@ -179,10 +179,10 @@ class file_pool_store(object):
 		if path.strip() == u'':
 			raise osexception(u'Cannot get empty filename from file pool.')
 		for folder in self.folders(include_experiment_path=True):
-			_path = os.path.join(folder, path)
+			_path = os.path.normpath(os.path.join(folder, path))
 			if os.path.exists(_path):
 				return _path
-		return path
+		return os.path.normpath(path)
 
 	def __iter__(self):
 
