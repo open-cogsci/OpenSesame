@@ -22,7 +22,7 @@ from pygame.locals import *
 import pygame
 import os
 from libopensesame.exceptions import osexception
-from libopensesame import debug
+from libopensesame import debug, misc
 from openexp.backend import configurable
 from openexp._canvas import canvas
 from openexp._coordinates.legacy import legacy as legacy_coordinates
@@ -179,7 +179,7 @@ class legacy(canvas.canvas, legacy_coordinates):
 
 	def image(self, fname, center=True, x=None, y=None, scale=None):
 
-		_fname = safe_decode(fname)
+		_fname = safe_str(fname, enc=misc.filesystem_encoding())
 		try:
 			surface = pygame.image.load(_fname)
 		except pygame.error:
