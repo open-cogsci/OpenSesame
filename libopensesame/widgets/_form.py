@@ -134,6 +134,8 @@ class form(object):
 	def __len__(self):
 
 		"""
+		visible: False
+
 		desc:
 			Implements the `len()` syntax.
 
@@ -199,6 +201,8 @@ class form(object):
 	def timed_out(self):
 
 		"""
+		visible: False
+
 		returns:
 			desc:	True if a timeout occurred, False otherwise.
 			type:	bool
