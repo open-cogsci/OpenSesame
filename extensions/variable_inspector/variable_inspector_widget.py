@@ -87,6 +87,8 @@ class variable_inspector_widget(base_widget):
 		"""
 
 		item = self.ui.table_variables.itemAt(e.pos())
+		if item is None:
+			return
 		row = self.ui.table_variables.row(item)
 		var = self.ui.table_variables.item(row, 0).text()
 		drag_and_drop.send(self.ui.table_variables,
