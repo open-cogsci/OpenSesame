@@ -19,8 +19,6 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame.py3compat import *
-
-from openexp._color.color import color
 import libopensesame.experiment
 import libopensesame.plugins
 from libqtopensesame.misc.qtitem_store import qtitem_store
@@ -366,30 +364,6 @@ class experiment(libopensesame.experiment.experiment):
 			parent = self.main_window
 		tid = text_input(parent, msg=message, content=content)
 		return tid.get_input()
-
-	def colorpicker(self, title=u'Pick a color', initial_color=None):
-
-		"""
-		Pops up a colorpicker dialog and returns a color in hexadecimal RGB
-		notation.
-
-		Keywords arguments:
-		title			--	Title of the dialog. (default=u'Pick a color')
-		initial_color	--	The color to start with. (default=None)
-
-		Returns:
-		A color string or None if the dialog was canceled.
-		"""
-
-		try:
-			color.to_hex(initial_color)
-		except:
-			initial_color = u'white'
-		_color = QtGui.QColorDialog.getColor(QtGui.QColor(initial_color), \
-			self.main_window, title)
-		if _color.isValid():
-			return self.syntax.sanitize(_color.name())
-		return None
 
 	def monospace(self):
 

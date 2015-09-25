@@ -18,7 +18,6 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame.py3compat import *
-
 from PyQt4 import QtCore, QtGui
 from libqtopensesame.widgets.base_widget import base_widget
 from libqtopensesame.misc import _
@@ -28,8 +27,8 @@ class font_widget_base(base_widget):
 	"""A font selection widget"""
 
 	max_size = 64
-	font_list = [u'mono', u'sans', u'serif', u'arabic', \
-		u'chinese-japanese-korean', u'hebrew', u'hindi', _(u'other ...', \
+	font_list = [u'mono', u'sans', u'serif', u'arabic',
+		u'chinese-japanese-korean', u'hebrew', u'hindi', _(u'other ...',
 		context=u'font_widget')]
 
 	font_changed = QtCore.pyqtSignal(['QString', int, bool, bool])
@@ -44,7 +43,8 @@ class font_widget_base(base_widget):
 		self.bold = self.ui.checkbox_bold.isChecked()
 		self.ui.label_example.setFont(self.get_font())
 		self.emit(QtCore.SIGNAL(u"font_changed"))
-		self.font_changed.emit(self.family, self.size, self.italic, self.bold)
+		self.font_changed.emit(self.family, self.size, self.italic,
+			self.bold)
 
 	def apply_family(self):
 
@@ -53,13 +53,16 @@ class font_widget_base(base_widget):
 		dialog if the user has selected 'other ...'
 		"""
 
-		if self.ui.combobox_family.currentText() == _(u'other ...', context= \
-			u'font_widget'):
-			font, ok = QtGui.QFontDialog.getFont(self.get_font())
+		if self.ui.combobox_family.currentText() == _(u'other ...',
+			context=u'font_widget'):
+			print(self._parent)
+			font, ok = QtGui.QFontDialog.getFont(self.get_font(),
+				parent=self._parent)
 			if ok:
 				self.family = str(font.family())
 			else:
-				self.family = self.experiment.var.get(u'font_family')
+				self.family = self.experiment.var.get(u'font_family',
+					_eval=False)
 			self.update_family_combobox()
 		self._apply()
 
@@ -76,8 +79,8 @@ class font_widget_base(base_widget):
 			weight = QtGui.QFont.Bold
 		else:
 			weight = QtGui.QFont.Normal
-		return QtGui.QFont(self.family, min(self.max_size, self.size), weight, \
-			self.italic)
+		return QtGui.QFont(self.family, min(self.max_size, self.size),
+			weight, self.italic)
 
 	def set_font(self, family=None, italic=None, bold=None, size=None):
 
@@ -87,33 +90,36 @@ class font_widget_base(base_widget):
 			initialize().
 		"""
 
-
 		self.ui.combobox_family.activated.disconnect()
 		self.ui.checkbox_italic.clicked.disconnect()
 		self.ui.checkbox_bold.clicked.disconnect()
 		self.ui.spinbox_size.editingFinished.disconnect()
-		self.initialize(family=family, italic=italic, bold=bold, size=size)
+		self.initialize(family=family, italic=italic, bold=bold,
+			size=size, parent=self._parent)
 
-	def initialize(self, experiment=None, family=None, italic=None, bold=None,
-		size=None):
+	def initialize(self, experiment=None, family=None, italic=None,
+		bold=None, size=None, parent=None):
 
 		"""
-		Initializes the widget.
+		desc:
+			Initializes the widget.
 
-		Arguments:
-		experiment	--	The experiment.
+		arguments:
+			experiment:		The experiment.
 
-		Keyword arguments:
-		family		--	The font family or None to use experiment default.
-						(default=None)
-		italic		--	The font italic state or None to use experiment default.
-						(default=None)
-		bold		--	The font bold state or None to use experiment default.
-						(default=None)
-		size		--	The font size or None to use experiment default.
-						(default=None)
+		keywords:
+			family:	The font family or None to use experiment default.
+			italic:	The font italic state or None to use experiment
+					default.
+			bold:	font bold state or None to use experiment default.
+			size:	The font size or None to use experiment default.
+			parent:	A parent QWidget.
 		"""
 
+		if parent is not None:
+			self._parent = parent
+		else:
+			self._parent = self.main_window
 		if experiment is None:
 			experiment = self.experiment
 		if family is None:
@@ -121,15 +127,17 @@ class font_widget_base(base_widget):
 		else:
 			self.family = family
 		if italic is None:
-			self.italic = experiment.var.get(u'font_italic') == u'yes'
+			self.italic = experiment.var.get(u'font_italic',
+				_eval=False) == u'yes'
 		else:
 			self.italic = italic
 		if bold is None:
-			self.bold = experiment.var.get(u'font_bold') == u'yes'
+			self.bold = experiment.var.get(u'font_bold',
+				_eval=False) == u'yes'
 		else:
 			self.bold = bold
 		if size is None:
-			self.size = experiment.var.get(u'font_size')
+			self.size = experiment.var.get(u'font_size', _eval=False)
 		else:
 			self.size = size
 		if self.ui.combobox_family.findText(self.family) < 0:

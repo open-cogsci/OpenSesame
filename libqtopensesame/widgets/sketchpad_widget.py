@@ -354,10 +354,11 @@ class sketchpad_widget(base_widget):
 			Initializes the sketchpad widget.
 		"""
 
-		if not self.initialized:
-			self.ui.edit_color.initialize(experiment=self.experiment)
-			self.ui.widget_font.initialize(experiment=self.experiment)
-			self.initialized = True
+		if self.initialized:
+			return
+		self.ui.edit_color.initialize(experiment=self.experiment, parent=self)
+		self.ui.widget_font.initialize(experiment=self.experiment, parent=self)
+		self.initialized = True
 
 	def init_settings(self):
 

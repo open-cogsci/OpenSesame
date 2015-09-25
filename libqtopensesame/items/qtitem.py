@@ -437,6 +437,7 @@ class qtitem(base_qtobject):
 			# Always ignore close events. This is necessary, because otherwise
 			# the pop-out widget can be closed without re-enabling the main
 			# window.
+			self.main_window.block_close_event = True
 			self.container_widget.closeEvent = lambda e: e.ignore()
 			self.container_widget.setParent(None)
 			self.container_widget.setWindowFlags(QtCore.Qt.WindowStaysOnTopHint|\
@@ -447,6 +448,7 @@ class qtitem(base_qtobject):
 			self.button_toggle_maximize.setIcon(
 				self.theme.qicon(u'view-restore'))
 		else:
+			self.main_window.block_close_event = False
 			self.container_widget.setParent(self.main_window)
 			self.open_tab()
 			self.button_toggle_maximize.setIcon(

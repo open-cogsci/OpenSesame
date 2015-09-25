@@ -22,6 +22,7 @@ from libopensesame.py3compat import *
 from PyQt4 import QtCore, QtGui
 from libopensesame import debug
 from libqtopensesame.widgets.base_widget import base_widget
+from libqtopensesame.misc import _
 
 class color_edit(base_widget):
 
@@ -47,6 +48,7 @@ class color_edit(base_widget):
 
 		super(color_edit, self).__init__(main_window)
 		self.edit = QtGui.QLineEdit()
+		self._parent = None
 		self.edit.setSizePolicy(QtGui.QSizePolicy.Minimum,
 			QtGui.QSizePolicy.Minimum)
 		self.edit.editingFinished.connect(self.apply)
@@ -67,11 +69,12 @@ class color_edit(base_widget):
 			Picks a color with the colorpicker dialog.
 		"""
 
-		color = self.experiment.colorpicker(self.experiment.syntax.sanitize(
-			self.text()))
-		if color is None:
+		from openexp._color.color import color
+		_color = QtGui.QColorDialog.getColor(QtGui.QColor(u'white'), self._parent,
+			_(u'Pick a color'))
+		if not _color.isValid():
 			return
-		self.setText(color)
+		self.setText(_color.name())
 		self.apply()
 
 	def text(self):
@@ -112,7 +115,7 @@ class color_edit(base_widget):
 		self.textChanged.emit(self.text())
 		self.textEdited.emit(self.text())
 
-	def initialize(self, experiment=None, color=None):
+	def initialize(self, experiment=None, color=None, parent=None):
 
 		"""
 		desc:
@@ -128,9 +131,14 @@ class color_edit(base_widget):
 				color:	An initial color or None to start with experiment
 						foreground.
 				type:	[unicode, NoneType]
+			parent:	A parent QWidget.
 		"""
 
 		debug.msg(u'color = %s' % color)
+		if parent is not None:
+			self._parent = parent
+		else:
+			self._parent = self.main_window
 		if experiment is None:
 			experiment = self.experiment
 		if color is None:
