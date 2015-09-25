@@ -455,22 +455,10 @@ if include_media_player:
 if include_media_player_vlc:
 	print("copying media_player_vlc")
 	os.mkdir("dist\plugins\media_player_vlc")
-	shutil.copyfile(r"..\media_player_vlc\vlc.py", \
-		r"dist\plugins\media_player_vlc\vlc.py")
-	shutil.copyfile( \
-		r"..\media_player_vlc\media_player_vlc.py", \
-		r"dist\plugins\media_player_vlc\media_player_vlc.py")
-	shutil.copyfile( \
-		r"..\media_player_vlc\media_player_vlc.md", \
-		r"dist\plugins\media_player_vlc\media_player_vlc.md")
-	shutil.copyfile( \
-		r"..\media_player_vlc\media_player_vlc.png", \
-		r"dist\plugins\media_player_vlc\media_player_vlc.png")
-	shutil.copyfile( \
-		r"..\media_player_vlc\media_player_vlc_large.png", \
-		r"dist\plugins\media_player_vlc\media_player_vlc_large.png")
-	shutil.copyfile(r"..\media_player_vlc\info.json", \
-		r"dist\plugins\media_player_vlc\info.json")
+	for fname in [u'vlc.py', u'media_player_vlc.py', u'media_player_vlc.md',
+		u'media_player_vlc.png', u'media_player_vlc_large.png', u'info.yaml']:
+		shutil.copyfile(r"..\media_player_vlc\media_player_vlc\%s" % fname,
+			r"dist\plugins\media_player_vlc\%s" % fname)
 
 # Include Boks plug-in
 if include_boks:
