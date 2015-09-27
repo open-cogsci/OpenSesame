@@ -86,7 +86,7 @@ class osexception(Exception):
 				self.exception.__class__.__name__, enc=self.enc,
 				errors=u'ignore')
 			try:
-				msg = safe_decode(self.exception.message, errors=u'ignore')
+				msg = safe_decode(self.exception, errors=u'ignore')
 			except:
 				msg = u'Description unavailable'
 			info[u'exception message'] = msg
@@ -97,15 +97,6 @@ class osexception(Exception):
 				if self.exception.text is not None:
 					info[u'code'] = safe_decode(self.exception.text,
 						enc=self.enc, errors=u'ignore')
-			else:
-				try:
-					# This is a hacky way to extract the line number from the
-					# stacktrace. Since it's not clear whether this is
-					# fullproof, we try-except it for now.
-					info[u'line'] = traceback.extract_tb(sys.exc_info()[2]) \
-						[-1][1] + line_offset
-				except:
-					pass
 		info[u'item-stack'] = str(item_stack_singleton)
 		info[u'time'] = time.ctime()
 		# List any additional information that was passed
