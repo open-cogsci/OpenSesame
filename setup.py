@@ -22,7 +22,7 @@ import glob
 import os
 import shutil
 from distutils.core import setup
-import libopensesame
+from libopensesame import metadata
 from setup_shared  import included_plugins, included_extensions
 
 share_folder = "/usr/share/opensesame"
@@ -114,19 +114,22 @@ def plugins(included, _type='plugins'):
 shutil.copy('readme.md', 'README.txt')
 
 setup(name="opensesame",
-	version = libopensesame.__version__,
+	version = metadata.__version__,
 	description = "A graphical experiment builder for the social sciences",
 	author = "Sebastiaan Mathot",
 	author_email = "s.mathot@cogsci.nl",
 	url = "http://osdoc.cogsci.nl/",
 	scripts = ["opensesame", "opensesamerun"],
-	packages = ["openexp",
+	packages = [
+		"openexp",
 		"openexp._canvas",
 		"openexp._keyboard",
 		"openexp._mouse",
 		"openexp._sampler",
-		"openexp._synth",
 		"openexp._coordinates",
+		"openexp._clock",
+		"openexp._log",
+		"openexp._color",
 		"libopensesame",
 		"libopensesame.widgets",
 		"libopensesame.widgets.themes",
@@ -155,11 +158,8 @@ setup(name="opensesame",
 		("/usr/share/mime/packages", ["data/x-opensesame-experiment.xml"]),
 		("/usr/share/applications", ["data/opensesame.desktop"]),
 		("/usr/share/opensesame/help", glob.glob("help/*.md")),
-		("/usr/share/opensesame/sounds", glob.glob("sounds/*")),
-		("/usr/share/opensesame/examples",
-			glob.glob("examples/*.opensesame") + \
-			glob.glob("examples/*.opensesame.tar.gz")),
-		] + \
+		("/usr/share/opensesame/sounds", glob.glob("sounds/*"))
+		] +
 		plugins(included=included_plugins, _type='plugins') + \
 		plugins(included=included_extensions, _type='extensions') + \
 		resources()

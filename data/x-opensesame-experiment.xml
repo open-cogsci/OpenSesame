@@ -3,6 +3,7 @@
     <mime-type type="application/x-opensesame-experiment">
 		<comment>OpenSesame experiment</comment>
 		<icon>applications-science</icon>
+        <glob pattern="*.osexp"/>
         <glob pattern="*.opensesame"/>
 		<glob pattern="*.opensesame.tar.gz"/>
     </mime-type>

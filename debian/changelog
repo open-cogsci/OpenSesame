@@ -1,3 +1,9 @@
+opensesame (3.0.0a16-ubuntu1) vivid; urgency=medium
+
+  * New major release
+
+ -- Sebastiaan Mathot <sebastiaan@mantis>  Sun, 27 Sep 2015 16:18:16 +0200
+
 opensesame (2.9.7-ubuntu1) vivid; urgency=medium
 
   * Improvements
