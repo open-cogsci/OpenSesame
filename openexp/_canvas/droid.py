@@ -72,11 +72,11 @@ class droid(legacy):
 			is_tablet = 'yes'
 		else:
 			is_tablet = 'no'
-		experiment.set('device_resolution_width', info.current_w)
-		experiment.set('device_resolution_height', info.current_h)
-		experiment.set('device_dpi', dpi)
-		experiment.set('device_screen_diag', diag)
-		experiment.set('device_is_tablet', is_tablet)
+		experiment.var.device_resolution_width = info.current_w
+		experiment.var.device_resolution_height = info.current_h
+		experiment.var.device_dpi = dpi
+		experiment.var.device_screen_diag = diag
+		experiment.var.device_is_tablet = is_tablet
 
 		# Start with a splash screen
 		splash = pygame.image.load(experiment.resource('android-splash.jpg'))
