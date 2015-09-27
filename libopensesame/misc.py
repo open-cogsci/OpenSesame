@@ -39,7 +39,7 @@ def parse_environment_file():
 		d = yaml.load(fd.read())
 	# Convert all values from UTF8 to the filesystem encoding
 	for key, val in d.items():
-		d[key] = safe_encode(safe_decode(val), enc=filesystem_encoding())
+		d[key] = safe_str(safe_decode(val), enc=filesystem_encoding())
 	# The Python path is added to sys.path, the rest is added as an environment
 	# variable.
 	if u'PYTHON_PATH' in d:
@@ -78,7 +78,7 @@ def opensesamerun_options():
 	"""Parse the command line options for opensesamerun"""
 
 	import optparse
-	
+
 	parser = optparse.OptionParser(
 		u'usage: opensesamerun [experiment] [options]', version=u'%s \'%s\'' % \
 		(metadata.__version__, metadata.codename))
