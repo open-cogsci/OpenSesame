@@ -10,47 +10,42 @@
     <message>
         <location filename="logger.ui" line="23"/>
         <source>Automatically detect and log all variables</source>
-        <translation type="unfinished">Приложение само находит и собирает данные по всем переменным</translation>
+        <translation type="obsolete">Приложение само находит и собирает данные по всем переменным</translation>
     </message>
     <message>
         <location filename="logger.ui" line="30"/>
         <source>Include variables with missing values</source>
-        <translation type="unfinished">Добавить переменные с отсутствующими значениями</translation>
+        <translation type="obsolete">Добавить переменные с отсутствующими значениями</translation>
     </message>
     <message>
         <location filename="logger.ui" line="37"/>
         <source>Put quotes around values</source>
-        <translation type="unfinished">Взять значения в кавычки</translation>
+        <translation type="obsolete">Взять значения в кавычки</translation>
     </message>
     <message>
         <location filename="logger.ui" line="50"/>
         <source>Select all</source>
-        <translation type="unfinished">Выбрать всё</translation>
+        <translation type="obsolete">Выбрать всё</translation>
     </message>
     <message>
         <location filename="logger.ui" line="57"/>
         <source>Deselect all</source>
-        <translation type="unfinished">Отменить выбор всего</translation>
+        <translation type="obsolete">Отменить выбор всего</translation>
     </message>
     <message>
         <location filename="logger.ui" line="77"/>
         <source>Smart select</source>
-        <translation type="unfinished">Умный выбор</translation>
+        <translation type="obsolete">Умный выбор</translation>
     </message>
     <message>
-        <location filename="logger.ui" line="84"/>
+        <location filename="logger.ui" line="36"/>
         <source>Add custom variable</source>
         <translation type="unfinished">Добавить свою переменную</translation>
     </message>
     <message>
         <location filename="logger.ui" line="109"/>
         <source>Variable</source>
-        <translation type="unfinished">Переменная</translation>
-    </message>
-    <message>
-        <location filename="logger.ui" line="114"/>
-        <source>Source item(s)</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Переменная</translation>
     </message>
     <message>
         <location filename="loop_operation.ui" line="32"/>
@@ -80,6 +75,21 @@
     <message>
         <location filename="loop.ui" line="109"/>
         <source>Preview</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="logger.ui" line="23"/>
+        <source>Log all variables (recommended)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="logger.ui" line="70"/>
+        <source>Custom variable</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="logger.ui" line="75"/>
+        <source>Source(s)</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -260,82 +270,82 @@
         <translation type="unfinished">Окно</translation>
     </message>
     <message>
-        <location filename="general_properties.ui" line="56"/>
+        <location filename="general_properties.ui" line="68"/>
         <source>&lt;h3&gt;Back-end&lt;/h3&gt;</source>
         <translation type="unfinished">Движок</translation>
     </message>
     <message>
-        <location filename="general_properties.ui" line="94"/>
+        <location filename="general_properties.ui" line="106"/>
         <source>&lt;h3&gt;Resolution&lt;/h3&gt;</source>
         <translation type="unfinished">&lt;h3&gt;Разрешение&lt;/h3&gt;</translation>
     </message>
     <message>
-        <location filename="general_properties.ui" line="119"/>
+        <location filename="general_properties.ui" line="131"/>
         <source>The display resolution (width) in pixels</source>
         <translation type="unfinished">Разрешение (ширина) в точках</translation>
     </message>
     <message>
-        <location filename="general_properties.ui" line="145"/>
+        <location filename="general_properties.ui" line="157"/>
         <source>px</source>
         <translation type="unfinished"> тчк</translation>
     </message>
     <message>
-        <location filename="general_properties.ui" line="135"/>
+        <location filename="general_properties.ui" line="147"/>
         <source>x</source>
         <translation type="unfinished">х</translation>
     </message>
     <message>
-        <location filename="general_properties.ui" line="142"/>
+        <location filename="general_properties.ui" line="154"/>
         <source>The display resolution (height) in pixels</source>
         <translation type="unfinished">Разрешение (высота) в точках</translation>
     </message>
     <message>
-        <location filename="general_properties.ui" line="161"/>
+        <location filename="general_properties.ui" line="173"/>
         <source>&lt;h3&gt;Colors&lt;/h3&gt;</source>
         <translation type="unfinished">&lt;h3&gt;Цвета&lt;/h3&gt;</translation>
     </message>
     <message>
-        <location filename="general_properties.ui" line="189"/>
+        <location filename="general_properties.ui" line="201"/>
         <source>Foreground</source>
         <translation type="unfinished">Переднее поле</translation>
     </message>
     <message>
-        <location filename="general_properties.ui" line="196"/>
+        <location filename="general_properties.ui" line="208"/>
         <source>Background</source>
         <translation type="unfinished">Заднее поле</translation>
     </message>
     <message>
-        <location filename="general_properties.ui" line="212"/>
+        <location filename="general_properties.ui" line="224"/>
         <source>&lt;small&gt;&lt;i&gt;Examples: &apos;white&apos;, &apos;#FFFFFF&apos;&lt;/i&gt;&lt;/small&gt;</source>
         <translation type="unfinished">&lt;small&gt;&lt;i&gt;Например: &apos;white&apos;, &apos;#FFFFFF&apos;&lt;/i&gt;&lt;/small&gt;</translation>
     </message>
     <message>
-        <location filename="general_properties.ui" line="228"/>
+        <location filename="general_properties.ui" line="240"/>
         <source>&lt;h3&gt;Font&lt;/h3&gt;</source>
         <translation type="unfinished">&lt;h3&gt;Начертание&lt;/h3&gt;</translation>
     </message>
     <message>
-        <location filename="general_properties.ui" line="288"/>
+        <location filename="general_properties.ui" line="287"/>
         <source>&lt;h3&gt;Advanced&lt;/h3&gt;</source>
         <translation type="unfinished">&lt;h3&gt;Расширенные настройки&lt;/h3&gt;</translation>
     </message>
     <message>
-        <location filename="general_properties.ui" line="319"/>
+        <location filename="general_properties.ui" line="318"/>
         <source>Advanced settings for the selected back-end</source>
         <translation type="unfinished">Дополнительные настройки для выбранного движка</translation>
     </message>
     <message>
-        <location filename="general_properties.ui" line="322"/>
+        <location filename="general_properties.ui" line="321"/>
         <source>Back-end settings</source>
         <translation type="unfinished">Свойства движка</translation>
     </message>
     <message>
-        <location filename="general_properties.ui" line="329"/>
+        <location filename="general_properties.ui" line="328"/>
         <source>Edit the script for the entire experiment</source>
         <translation type="unfinished">Изменить приказник всего опыта</translation>
     </message>
     <message>
-        <location filename="general_properties.ui" line="332"/>
+        <location filename="general_properties.ui" line="331"/>
         <source>Script editor</source>
         <translation type="unfinished">Правщик приказника</translation>
     </message>
@@ -350,28 +360,38 @@
         <translation type="obsolete">Прозрачное управление переменными</translation>
     </message>
     <message>
-        <location filename="general_properties.ui" line="275"/>
+        <location filename="general_properties.ui" line="368"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:large; font-weight:600;&quot;&gt;Miscellaneous&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:large; font-weight:600;&quot;&gt;Разное&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="general_properties.ui" line="342"/>
+        <location filename="general_properties.ui" line="341"/>
         <source>Enables support for bi-directional languages, such as Arabic and Hebrew</source>
         <translation type="unfinished">Включает поддержку некоторых языков (арабский, иврит, и т.д.)</translation>
     </message>
     <message>
-        <location filename="general_properties.ui" line="345"/>
+        <location filename="general_properties.ui" line="344"/>
         <source>Bi-directional-text support</source>
         <translation type="unfinished">Поддержка письма в двух направлениях</translation>
     </message>
     <message>
-        <location filename="general_properties.ui" line="81"/>
+        <location filename="general_properties.ui" line="93"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://osdoc.cogsci.nl/back-ends/about&quot;&gt;&lt;span style=&quot;font-size:small;font-style:italic; text-decoration: underline; color:#0057ae;&quot;&gt;Why is this important?&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://osdoc.cogsci.nl/back-ends/about&quot;&gt;&lt;span style=&quot;font-size:small;font-style:italic; text-decoration: underline; color:#0057ae;&quot;&gt;Что это такое?&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="general_properties.ui" line="352"/>
+        <location filename="general_properties.ui" line="351"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:small; font-style:italic;&quot;&gt;Warning: python-bidi is not available&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="general_properties.ui" line="358"/>
+        <source>If enabled, (0,0) always refers to the center of the display</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="general_properties.ui" line="361"/>
+        <source>Uniform coordinates</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -724,123 +744,163 @@
         <translation type="unfinished">Окно</translation>
     </message>
     <message>
-        <location filename="sketchpad.ui" line="38"/>
+        <location filename="sketchpad.ui" line="50"/>
         <source>Duration</source>
         <translation type="unfinished">Длительность</translation>
     </message>
     <message>
-        <location filename="sketchpad.ui" line="51"/>
+        <location filename="sketchpad.ui" line="63"/>
         <source>A numeric value (duration in milliseconds), &quot;keypress&quot;, or &quot;mouseclick&quot;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="sketchpad.ui" line="110"/>
+        <location filename="sketchpad.ui" line="121"/>
         <source>Color</source>
         <translation type="unfinished">Цвет</translation>
     </message>
     <message>
-        <location filename="sketchpad.ui" line="471"/>
+        <location filename="sketchpad.ui" line="609"/>
         <source> px</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="sketchpad.ui" line="139"/>
+        <location filename="sketchpad.ui" line="150"/>
         <source>Penwidth </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="sketchpad.ui" line="171"/>
         <source>Size of the arrowhead</source>
-        <translation type="unfinished">Размер стрелки</translation>
+        <translation type="obsolete">Размер стрелки</translation>
     </message>
     <message>
-        <location filename="sketchpad.ui" line="177"/>
-        <source>Arrowhead </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="sketchpad.ui" line="212"/>
+        <location filename="sketchpad.ui" line="317"/>
         <source>Image scaling factor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="sketchpad.ui" line="215"/>
+        <location filename="sketchpad.ui" line="320"/>
         <source>Scale </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="sketchpad.ui" line="387"/>
+        <location filename="sketchpad.ui" line="496"/>
         <source> x</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="sketchpad.ui" line="259"/>
+        <location filename="sketchpad.ui" line="364"/>
         <source>Check to draw filled objects</source>
         <translation type="unfinished">Заполнять нарисованные тела</translation>
     </message>
     <message>
-        <location filename="sketchpad.ui" line="262"/>
+        <location filename="sketchpad.ui" line="367"/>
         <source>Fill</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="sketchpad.ui" line="288"/>
+        <location filename="sketchpad.ui" line="393"/>
         <source>Center the object</source>
         <translation type="unfinished">Поместить в середину</translation>
     </message>
     <message>
-        <location filename="sketchpad.ui" line="291"/>
+        <location filename="sketchpad.ui" line="396"/>
         <source>Center</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="sketchpad.ui" line="320"/>
+        <location filename="sketchpad.ui" line="425"/>
         <source>Show if</source>
         <translation type="unfinished">Показать, если</translation>
     </message>
     <message>
-        <location filename="sketchpad.ui" line="374"/>
+        <location filename="sketchpad.ui" line="583"/>
         <source>0,0</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="sketchpad.ui" line="384"/>
+        <location filename="sketchpad.ui" line="493"/>
         <source>Zoom factor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="sketchpad.ui" line="426"/>
+        <location filename="sketchpad.ui" line="536"/>
         <source>Parse a subset of HTML tags</source>
         <translation type="unfinished">Проверить HTML</translation>
     </message>
     <message>
-        <location filename="sketchpad.ui" line="429"/>
+        <location filename="sketchpad.ui" line="539"/>
         <source>HTML</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="sketchpad.ui" line="455"/>
+        <location filename="sketchpad.ui" line="593"/>
         <source>Check to display the grid and enable snap-to-grid</source>
         <translation type="unfinished">Показывает или прячет решётку на полотне</translation>
     </message>
     <message>
-        <location filename="sketchpad.ui" line="458"/>
+        <location filename="sketchpad.ui" line="596"/>
         <source>Grid</source>
         <translation type="unfinished">Решётка</translation>
     </message>
     <message>
-        <location filename="sketchpad.ui" line="468"/>
+        <location filename="sketchpad.ui" line="606"/>
         <source>Grid size</source>
         <translation type="unfinished">Размерность решётки</translation>
     </message>
     <message>
-        <location filename="sketchpad.ui" line="511"/>
+        <location filename="sketchpad.ui" line="649"/>
         <source>Select and move elements</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="sketchpad.ui" line="77"/>
+        <location filename="sketchpad.ui" line="89"/>
         <source>Reset feedback variables</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="sketchpad.ui" line="182"/>
+        <source>Proportional length of the base relative to the arrow head</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="sketchpad.ui" line="185"/>
+        <source>Body length </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="sketchpad.ui" line="235"/>
+        <source> prop</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="sketchpad.ui" line="229"/>
+        <source>Proportional width (thickness) of the base relative to the arrow head</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="sketchpad.ui" line="232"/>
+        <source>Body width </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="sketchpad.ui" line="276"/>
+        <source>Width (thickness) of the arrow head</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="sketchpad.ui" line="282"/>
+        <source>Head width </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="sketchpad.ui" line="467"/>
+        <source>Best-fitting zoom level</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="sketchpad.ui" line="480"/>
+        <source>Original zoom level</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1564,17 +1624,17 @@
         <translation>Сезам, откройся</translation>
     </message>
     <message>
-        <location filename="main_window.ui" line="60"/>
+        <location filename="main_window.ui" line="75"/>
         <source>File</source>
         <translation>Опыт</translation>
     </message>
     <message>
-        <location filename="main_window.ui" line="64"/>
+        <location filename="main_window.ui" line="79"/>
         <source>Recent files</source>
         <translation>Недавние записи</translation>
     </message>
     <message>
-        <location filename="main_window.ui" line="83"/>
+        <location filename="main_window.ui" line="98"/>
         <source>Run</source>
         <translation>Запустить</translation>
     </message>
@@ -1584,29 +1644,29 @@
         <translation type="obsolete">Составляющие</translation>
     </message>
     <message>
-        <location filename="main_window.ui" line="93"/>
+        <location filename="main_window.ui" line="108"/>
         <source>View</source>
         <translation>Вид</translation>
     </message>
     <message>
-        <location filename="main_window.ui" line="107"/>
+        <location filename="main_window.ui" line="121"/>
         <source>Tools</source>
         <translation>Орудия</translation>
     </message>
     <message>
-        <location filename="main_window.ui" line="128"/>
+        <location filename="main_window.ui" line="147"/>
         <source>Overview</source>
         <translation>Обзорный лист</translation>
     </message>
     <message>
-        <location filename="main_window.ui" line="145"/>
+        <location filename="main_window.ui" line="179"/>
         <source>Name</source>
         <translation>Имя</translation>
     </message>
     <message>
         <location filename="main_window.ui" line="158"/>
         <source>Variable inspector</source>
-        <translation>Проверить переменные</translation>
+        <translation type="obsolete">Проверить переменные</translation>
     </message>
     <message>
         <location filename="opensesame.ui" line="265"/>
@@ -1619,7 +1679,7 @@
         <translation type="obsolete">Отменить отсеиватель</translation>
     </message>
     <message>
-        <location filename="main_window.ui" line="227"/>
+        <location filename="main_window.ui" line="278"/>
         <source>Help</source>
         <translation>Помощь</translation>
     </message>
@@ -1639,388 +1699,403 @@
         <translation type="obsolete">В составляющей</translation>
     </message>
     <message>
-        <location filename="main_window.ui" line="175"/>
+        <location filename="main_window.ui" line="195"/>
         <source>File pool</source>
         <translation>Склад записей</translation>
     </message>
     <message>
-        <location filename="main_window.ui" line="189"/>
+        <location filename="main_window.ui" line="225"/>
         <source>Debug window</source>
         <translation>Окно отладки</translation>
     </message>
     <message>
-        <location filename="main_window.ui" line="250"/>
+        <location filename="main_window.ui" line="288"/>
         <source>Clear debug window</source>
         <translation>Очистить окно отладки</translation>
     </message>
     <message>
-        <location filename="main_window.ui" line="291"/>
+        <location filename="main_window.ui" line="329"/>
         <source>Main toolbar</source>
         <translation>Доска орудий</translation>
     </message>
     <message>
-        <location filename="main_window.ui" line="329"/>
+        <location filename="main_window.ui" line="366"/>
         <source>Toolbar items</source>
         <translation>Приборная доска</translation>
     </message>
     <message>
-        <location filename="main_window.ui" line="344"/>
+        <location filename="main_window.ui" line="381"/>
         <source>Open</source>
         <translation>Открыть</translation>
     </message>
     <message>
-        <location filename="main_window.ui" line="347"/>
+        <location filename="main_window.ui" line="384"/>
         <source>Open (Ctrl+0)</source>
         <translation>Открыть (Ctrl+0)</translation>
     </message>
     <message>
-        <location filename="main_window.ui" line="350"/>
+        <location filename="main_window.ui" line="387"/>
         <source>Ctrl+O</source>
         <translation>Ctrl+O</translation>
     </message>
     <message>
-        <location filename="main_window.ui" line="359"/>
+        <location filename="main_window.ui" line="396"/>
         <source>Save</source>
         <translation>Сохранить</translation>
     </message>
     <message>
-        <location filename="main_window.ui" line="362"/>
+        <location filename="main_window.ui" line="399"/>
         <source>Save (Control+S)</source>
         <translation>Сохранить  (Control+S)</translation>
     </message>
     <message>
-        <location filename="main_window.ui" line="365"/>
+        <location filename="main_window.ui" line="402"/>
         <source>Ctrl+S</source>
         <translation>Ctrl+S</translation>
     </message>
     <message>
-        <location filename="main_window.ui" line="374"/>
+        <location filename="main_window.ui" line="411"/>
         <source>Save as</source>
         <translation>Сохранить как...</translation>
     </message>
     <message>
-        <location filename="main_window.ui" line="377"/>
+        <location filename="main_window.ui" line="414"/>
         <source>Save as (Control+Shift+S)</source>
         <translation>Сохранить как... (Control+Shift+S)</translation>
     </message>
     <message>
-        <location filename="main_window.ui" line="380"/>
+        <location filename="main_window.ui" line="417"/>
         <source>Ctrl+Shift+S</source>
         <translation>Ctrl+Shift+S</translation>
     </message>
     <message>
-        <location filename="main_window.ui" line="389"/>
+        <location filename="main_window.ui" line="426"/>
         <source>Quit</source>
         <translation>Выйти</translation>
     </message>
     <message>
-        <location filename="main_window.ui" line="392"/>
+        <location filename="main_window.ui" line="429"/>
         <source>Quit (Alt+F4)</source>
         <translation>Выйти (Alt+F4)</translation>
     </message>
     <message>
-        <location filename="main_window.ui" line="397"/>
+        <location filename="main_window.ui" line="434"/>
         <source>Run fullscreen</source>
         <translation>Запустить на всё полотно</translation>
     </message>
     <message>
-        <location filename="main_window.ui" line="400"/>
+        <location filename="main_window.ui" line="437"/>
         <source>Run fullscreen (Control+R)</source>
         <translation>На всё полотно (Control+R)</translation>
     </message>
     <message>
-        <location filename="main_window.ui" line="403"/>
+        <location filename="main_window.ui" line="440"/>
         <source>Ctrl+R</source>
         <translation>Ctrl+R</translation>
     </message>
     <message>
-        <location filename="main_window.ui" line="412"/>
+        <location filename="main_window.ui" line="449"/>
         <source>New</source>
         <translation>Новый</translation>
     </message>
     <message>
-        <location filename="main_window.ui" line="415"/>
+        <location filename="main_window.ui" line="452"/>
         <source>New (Control+N)</source>
         <translation>Новый (Control+N)</translation>
     </message>
     <message>
-        <location filename="main_window.ui" line="418"/>
+        <location filename="main_window.ui" line="455"/>
         <source>Ctrl+N</source>
         <translation>Ctrl+N</translation>
     </message>
     <message>
-        <location filename="main_window.ui" line="427"/>
+        <location filename="main_window.ui" line="464"/>
         <source>Add sequence</source>
         <translation>Добавить последовательность</translation>
     </message>
     <message>
-        <location filename="main_window.ui" line="436"/>
+        <location filename="main_window.ui" line="473"/>
         <source>Add sketchpad</source>
         <translation>Добавить полотно</translation>
     </message>
     <message>
-        <location filename="main_window.ui" line="445"/>
+        <location filename="main_window.ui" line="482"/>
         <source>Add keyboard response</source>
         <translation>Добавить ответ ключницей</translation>
     </message>
     <message>
-        <location filename="main_window.ui" line="454"/>
+        <location filename="main_window.ui" line="491"/>
         <source>Add logger</source>
         <translation type="unfinished">Добавить сборщик данных</translation>
     </message>
     <message>
-        <location filename="main_window.ui" line="463"/>
+        <location filename="main_window.ui" line="500"/>
         <source>Add loop</source>
         <translation>Добавить кольцо</translation>
     </message>
     <message>
-        <location filename="main_window.ui" line="472"/>
+        <location filename="main_window.ui" line="509"/>
         <source>Add feedback</source>
         <translation>Добавить обратную связь</translation>
     </message>
     <message>
-        <location filename="main_window.ui" line="481"/>
+        <location filename="main_window.ui" line="518"/>
         <source>Add inline script</source>
         <translation>Добавить приказник</translation>
     </message>
     <message>
-        <location filename="main_window.ui" line="490"/>
+        <location filename="main_window.ui" line="527"/>
         <source>Close all tabs</source>
         <translation>Закрыть все вкладки</translation>
     </message>
     <message>
-        <location filename="main_window.ui" line="502"/>
+        <location filename="main_window.ui" line="539"/>
         <source>Close other tabs</source>
         <translation>Закрыть другие вкладки</translation>
     </message>
     <message>
-        <location filename="main_window.ui" line="505"/>
+        <location filename="main_window.ui" line="542"/>
         <source>Close other tabs (Control+T)</source>
         <translation>Закрыть другие вкладки (Control+T)</translation>
     </message>
     <message>
-        <location filename="main_window.ui" line="508"/>
+        <location filename="main_window.ui" line="545"/>
         <source>Ctrl+T</source>
         <translation>Ctrl+T</translation>
     </message>
     <message>
-        <location filename="main_window.ui" line="526"/>
+        <location filename="main_window.ui" line="563"/>
         <source>About</source>
         <translation>О нас</translation>
     </message>
     <message>
-        <location filename="main_window.ui" line="535"/>
+        <location filename="main_window.ui" line="572"/>
         <source>Add mouse response</source>
         <translation>Добавить ответ мышкой</translation>
     </message>
     <message>
-        <location filename="main_window.ui" line="540"/>
+        <location filename="main_window.ui" line="577"/>
         <source>Run in window</source>
         <translation>Открыть в окне</translation>
     </message>
     <message>
-        <location filename="main_window.ui" line="543"/>
+        <location filename="main_window.ui" line="580"/>
         <source>Run in window (Control+W)</source>
         <translation>Открыть в окне (Ctrl+W)</translation>
     </message>
     <message>
-        <location filename="main_window.ui" line="546"/>
+        <location filename="main_window.ui" line="583"/>
         <source>Ctrl+W</source>
         <translation>Ctrl+W</translation>
     </message>
     <message>
-        <location filename="main_window.ui" line="555"/>
+        <location filename="main_window.ui" line="592"/>
         <source>Check for updates</source>
         <translation>Проверить обновления</translation>
     </message>
     <message>
         <location filename="main_window.ui" line="567"/>
         <source>Show variable inspector</source>
-        <translation type="unfinished">Показать проверщик переменных</translation>
+        <translation type="obsolete">Показать проверщик переменных</translation>
     </message>
     <message>
         <location filename="main_window.ui" line="570"/>
         <source>Show variable inspector (Control+I)</source>
-        <translation>Показать проверщик переменных (Control+I)</translation>
+        <translation type="obsolete">Показать проверщик переменных (Control+I)</translation>
     </message>
     <message>
         <location filename="main_window.ui" line="573"/>
         <source>Ctrl+I</source>
-        <translation>Ctrl+I</translation>
+        <translation type="obsolete">Ctrl+I</translation>
     </message>
     <message>
-        <location filename="main_window.ui" line="582"/>
+        <location filename="main_window.ui" line="601"/>
         <source>Add sampler</source>
         <translation>Добавить звукозапись</translation>
     </message>
     <message>
-        <location filename="main_window.ui" line="585"/>
+        <location filename="main_window.ui" line="604"/>
         <source>Add sound sampler</source>
         <translation>Добавить звукозапись</translation>
     </message>
     <message>
-        <location filename="main_window.ui" line="594"/>
+        <location filename="main_window.ui" line="613"/>
         <source>Add synth</source>
         <translation>Добавить гудок</translation>
     </message>
     <message>
-        <location filename="main_window.ui" line="597"/>
+        <location filename="main_window.ui" line="616"/>
         <source>Add sound synthesizer</source>
         <translation>Добавить гудок</translation>
     </message>
     <message>
-        <location filename="main_window.ui" line="609"/>
+        <location filename="main_window.ui" line="628"/>
         <source>Show file pool</source>
         <translation>Показать склад записей</translation>
     </message>
     <message>
-        <location filename="main_window.ui" line="612"/>
+        <location filename="main_window.ui" line="631"/>
         <source>Ctrl+P</source>
         <translation>Ctrl+P</translation>
     </message>
     <message>
-        <location filename="main_window.ui" line="624"/>
+        <location filename="main_window.ui" line="643"/>
         <source>Show debug window</source>
         <translation>Показать окно отладки</translation>
     </message>
     <message>
-        <location filename="main_window.ui" line="627"/>
+        <location filename="main_window.ui" line="646"/>
         <source>Show debug window (standard output) and a Python interpreter (Control+D)</source>
         <translation>Показать окно отладки и разработчик Питон (Control+D)</translation>
     </message>
     <message>
-        <location filename="main_window.ui" line="630"/>
+        <location filename="main_window.ui" line="649"/>
         <source>Ctrl+D</source>
         <translation>Ctrl+D</translation>
     </message>
     <message>
-        <location filename="main_window.ui" line="638"/>
+        <location filename="main_window.ui" line="657"/>
         <source>Enable auto response</source>
         <translation type="unfinished">Воображаемый испытуемый</translation>
     </message>
     <message>
-        <location filename="main_window.ui" line="646"/>
+        <location filename="main_window.ui" line="665"/>
         <source>Plugins</source>
         <translation>Дополнения</translation>
     </message>
     <message>
-        <location filename="main_window.ui" line="655"/>
+        <location filename="main_window.ui" line="674"/>
         <source>Random tip</source>
         <translation>Случайный совет</translation>
     </message>
     <message>
-        <location filename="main_window.ui" line="658"/>
+        <location filename="main_window.ui" line="677"/>
         <source>Show a random tip</source>
         <translation>Показать случайный совет</translation>
     </message>
     <message>
-        <location filename="main_window.ui" line="667"/>
+        <location filename="main_window.ui" line="686"/>
         <source>Open backup folder</source>
         <translation>Открыть папку с точками восстановления</translation>
     </message>
     <message>
-        <location filename="main_window.ui" line="676"/>
+        <location filename="main_window.ui" line="695"/>
         <source>Submit a bug</source>
         <translation>Сообщить об ошибке</translation>
     </message>
     <message>
-        <location filename="main_window.ui" line="685"/>
+        <location filename="main_window.ui" line="704"/>
         <source>Contribute</source>
         <translation>Помочь разработчикам</translation>
     </message>
     <message>
-        <location filename="main_window.ui" line="694"/>
+        <location filename="main_window.ui" line="713"/>
         <source>Preferences</source>
         <translation>Настройки</translation>
     </message>
     <message>
-        <location filename="main_window.ui" line="699"/>
+        <location filename="main_window.ui" line="718"/>
         <source>Dummy</source>
         <translation>Болванчик</translation>
     </message>
     <message>
-        <location filename="main_window.ui" line="707"/>
+        <location filename="main_window.ui" line="726"/>
         <source>Show overview area</source>
         <translation>Показать обзорный лист</translation>
     </message>
     <message>
         <location filename="main_window.ui" line="710"/>
         <source>Ctrl+Shift+O</source>
-        <translation>Ctrl+Shift+O</translation>
+        <translation type="obsolete">Ctrl+Shift+O</translation>
     </message>
     <message>
-        <location filename="main_window.ui" line="722"/>
+        <location filename="main_window.ui" line="741"/>
         <source>One tab mode</source>
         <translation>Только одна вкладка</translation>
     </message>
     <message>
-        <location filename="main_window.ui" line="725"/>
+        <location filename="main_window.ui" line="744"/>
         <source>Enable one tab mode</source>
         <translation>Показывать только одну вкладку</translation>
     </message>
     <message>
-        <location filename="main_window.ui" line="733"/>
+        <location filename="main_window.ui" line="752"/>
         <source>Compact toolbar</source>
         <translation>Уменьшенная приборная доска</translation>
     </message>
     <message>
-        <location filename="main_window.ui" line="517"/>
+        <location filename="main_window.ui" line="554"/>
         <source>Offline help</source>
         <translation>Справочник без подключения к Сети</translation>
     </message>
     <message>
-        <location filename="main_window.ui" line="738"/>
+        <location filename="main_window.ui" line="757"/>
         <source>Online help</source>
         <translation>Справочник в Сети</translation>
     </message>
     <message>
-        <location filename="main_window.ui" line="743"/>
+        <location filename="main_window.ui" line="762"/>
         <source>Online forum</source>
         <translation>Сообщество в Сети</translation>
     </message>
     <message>
-        <location filename="main_window.ui" line="748"/>
+        <location filename="main_window.ui" line="767"/>
         <source>Quick run</source>
         <translation>Быстрый запуск</translation>
     </message>
     <message>
-        <location filename="main_window.ui" line="751"/>
+        <location filename="main_window.ui" line="770"/>
         <source>Give your experiment a quick test run</source>
         <translation>Быстро запустить Ваш опыт</translation>
     </message>
     <message>
-        <location filename="main_window.ui" line="754"/>
+        <location filename="main_window.ui" line="773"/>
         <source>Ctrl+Shift+W</source>
         <translation>Ctrl+Shift+W</translation>
     </message>
     <message>
-        <location filename="main_window.ui" line="764"/>
+        <location filename="main_window.ui" line="783"/>
         <source>Quick switcher</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="main_window.ui" line="767"/>
+        <location filename="main_window.ui" line="786"/>
         <source>Meta+O</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="main_window.ui" line="493"/>
+        <location filename="main_window.ui" line="530"/>
         <source>Ctrl+Alt+T</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="main_window.ui" line="772"/>
+        <location filename="main_window.ui" line="791"/>
         <source>Close current tab</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="main_window.ui" line="775"/>
+        <location filename="main_window.ui" line="794"/>
         <source>Close the current tab</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="main_window.ui" line="778"/>
+        <location filename="main_window.ui" line="797"/>
         <source>Alt+T</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="main_window.ui" line="127"/>
+        <source>Edit</source>
+        <translation type="unfinished">Изменить</translation>
+    </message>
+    <message>
+        <location filename="main_window.ui" line="298"/>
+        <source>Reset workspace</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="main_window.ui" line="729"/>
+        <source>Ctrl+\</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4300,7 +4375,7 @@ Description: %s</source>
     <message>
         <location filename="variable_inspector.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished">Окно</translation>
+        <translation type="obsolete">Окно</translation>
     </message>
     <message>
         <location filename="variable_inspector.ui" line="52"/>
@@ -4308,34 +4383,24 @@ Description: %s</source>
         <translation type="obsolete">Проверить переменные</translation>
     </message>
     <message>
-        <location filename="variable_inspector.ui" line="36"/>
-        <source>Enter a filter</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="variable_inspector.ui" line="43"/>
-        <source>Clear filter</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="variable_inspector.ui" line="69"/>
         <source>Help</source>
-        <translation type="unfinished">Помощь</translation>
+        <translation type="obsolete">Помощь</translation>
     </message>
     <message>
         <location filename="variable_inspector.ui" line="123"/>
         <source>Variable</source>
-        <translation type="unfinished">Переменная</translation>
+        <translation type="obsolete">Переменная</translation>
     </message>
     <message>
         <location filename="variable_inspector.ui" line="128"/>
         <source>Value</source>
-        <translation type="unfinished">Значение</translation>
+        <translation type="obsolete">Значение</translation>
     </message>
     <message>
         <location filename="variable_inspector.ui" line="133"/>
         <source>In item</source>
-        <translation type="unfinished">В составляющей</translation>
+        <translation type="obsolete">В составляющей</translation>
     </message>
 </context>
 <context>
@@ -4432,37 +4497,37 @@ Description: %s</source>
         <translation>Окно</translation>
     </message>
     <message>
-        <location filename="findWidget.ui" line="23"/>
+        <location filename="findWidget.ui" line="29"/>
         <source>Replace:</source>
         <translation>Заменить:</translation>
     </message>
     <message>
-        <location filename="findWidget.ui" line="33"/>
+        <location filename="findWidget.ui" line="39"/>
         <source>Find:</source>
         <translation>Найти:</translation>
     </message>
     <message>
-        <location filename="findWidget.ui" line="49"/>
+        <location filename="findWidget.ui" line="58"/>
         <source>Search</source>
         <translation>Поиск</translation>
     </message>
     <message>
-        <location filename="findWidget.ui" line="61"/>
+        <location filename="findWidget.ui" line="70"/>
         <source>Replace</source>
         <translation>Заменить</translation>
     </message>
     <message>
-        <location filename="findWidget.ui" line="73"/>
+        <location filename="findWidget.ui" line="82"/>
         <source>Replace all</source>
         <translation>Заменить всё</translation>
     </message>
     <message>
-        <location filename="findWidget.ui" line="94"/>
+        <location filename="findWidget.ui" line="106"/>
         <source>Case sensitive</source>
         <translation>Чувствительно к заглавным буквам</translation>
     </message>
     <message>
-        <location filename="findWidget.ui" line="101"/>
+        <location filename="findWidget.ui" line="113"/>
         <source>Match whole words</source>
         <translation>Совпадение целых слов</translation>
     </message>
@@ -4475,132 +4540,132 @@ Description: %s</source>
         <translation>Окно</translation>
     </message>
     <message>
-        <location filename="prefsWidget.ui" line="183"/>
+        <location filename="prefsWidget.ui" line="189"/>
         <source>Show 80 character word-wrap marker</source>
         <translation>Показывать границу 80 знаков</translation>
     </message>
     <message>
-        <location filename="prefsWidget.ui" line="78"/>
+        <location filename="prefsWidget.ui" line="84"/>
         <source>Tab width</source>
         <translation>Ширина отступа строки</translation>
     </message>
     <message>
-        <location filename="prefsWidget.ui" line="40"/>
+        <location filename="prefsWidget.ui" line="46"/>
         <source> characters</source>
         <translation> знаков</translation>
     </message>
     <message>
-        <location filename="prefsWidget.ui" line="47"/>
+        <location filename="prefsWidget.ui" line="53"/>
         <source>Font family</source>
         <translation>Семейство начертаний</translation>
     </message>
     <message>
-        <location filename="prefsWidget.ui" line="141"/>
+        <location filename="prefsWidget.ui" line="147"/>
         <source>Show whitespace</source>
         <translation>Помечать отступ строки</translation>
     </message>
     <message>
-        <location filename="prefsWidget.ui" line="92"/>
+        <location filename="prefsWidget.ui" line="98"/>
         <source>Show line numbers</source>
         <translation>Помечать числа строк</translation>
     </message>
     <message>
-        <location filename="prefsWidget.ui" line="23"/>
+        <location filename="prefsWidget.ui" line="29"/>
         <source>Enable word wrapping</source>
         <translation>Перенос слов</translation>
     </message>
     <message>
-        <location filename="prefsWidget.ui" line="148"/>
+        <location filename="prefsWidget.ui" line="154"/>
         <source>Enable block folding</source>
         <translation>Разрешить сворачивание абзацев</translation>
     </message>
     <message>
-        <location filename="prefsWidget.ui" line="169"/>
+        <location filename="prefsWidget.ui" line="175"/>
         <source>Enable automatic completion</source>
         <translation>Разрешить приложению заканчивать строки</translation>
     </message>
     <message>
-        <location filename="prefsWidget.ui" line="71"/>
+        <location filename="prefsWidget.ui" line="77"/>
         <source>Show end-of-lines</source>
         <translation>Помечать концы строк</translation>
     </message>
     <message>
-        <location filename="prefsWidget.ui" line="54"/>
+        <location filename="prefsWidget.ui" line="60"/>
         <source>Show indentation</source>
         <translation>Помечать начало абзаца</translation>
     </message>
     <message>
-        <location filename="prefsWidget.ui" line="106"/>
+        <location filename="prefsWidget.ui" line="112"/>
         <source>Font size</source>
         <translation>Размер начертания</translation>
     </message>
     <message>
-        <location filename="prefsWidget.ui" line="64"/>
+        <location filename="prefsWidget.ui" line="70"/>
         <source> pt</source>
         <translation>  </translation>
     </message>
     <message>
-        <location filename="prefsWidget.ui" line="113"/>
+        <location filename="prefsWidget.ui" line="119"/>
         <source>Highlight current line</source>
         <translation>Подсветить текущую строку</translation>
     </message>
     <message>
-        <location filename="prefsWidget.ui" line="120"/>
+        <location filename="prefsWidget.ui" line="126"/>
         <source>Highlight matching brackets</source>
         <translation>Показать совпадающие скобки</translation>
     </message>
     <message>
-        <location filename="prefsWidget.ui" line="85"/>
+        <location filename="prefsWidget.ui" line="91"/>
         <source>Enable automatic indentation</source>
         <translation>Включить самодеятельные скобки</translation>
     </message>
     <message>
-        <location filename="prefsWidget.ui" line="162"/>
+        <location filename="prefsWidget.ui" line="168"/>
         <source>Color scheme</source>
         <translation>Набор цветов</translation>
     </message>
     <message>
-        <location filename="prefsWidget.ui" line="30"/>
+        <location filename="prefsWidget.ui" line="36"/>
         <source>A color scheme for the editor component</source>
         <translation>Цветовое исполнение приложения</translation>
     </message>
     <message>
-        <location filename="prefsWidget.ui" line="37"/>
+        <location filename="prefsWidget.ui" line="43"/>
         <source>The tab width for the editor component</source>
         <translation>Ширина отступа строки</translation>
     </message>
     <message>
-        <location filename="prefsWidget.ui" line="61"/>
+        <location filename="prefsWidget.ui" line="67"/>
         <source>The font size for the editor component</source>
         <translation>Размер начертания</translation>
     </message>
     <message>
-        <location filename="prefsWidget.ui" line="99"/>
+        <location filename="prefsWidget.ui" line="105"/>
         <source>The font font the editor component</source>
         <translation>Вид начертания </translation>
     </message>
     <message>
-        <location filename="prefsWidget.ui" line="127"/>
+        <location filename="prefsWidget.ui" line="133"/>
         <source>Comment shortcut</source>
         <translation>Замечание по значку</translation>
     </message>
     <message>
-        <location filename="prefsWidget.ui" line="134"/>
+        <location filename="prefsWidget.ui" line="140"/>
         <source>A keyboard shortcut, such as Ctrl+Shift+M</source>
         <translation>Горячий ключ вида Ctrl+Shift+M</translation>
     </message>
     <message>
-        <location filename="prefsWidget.ui" line="155"/>
+        <location filename="prefsWidget.ui" line="161"/>
         <source>A keyboard shortcut, such as Ctrl+M</source>
         <translation>Горячий ключ вида Ctrl+M</translation>
     </message>
     <message>
-        <location filename="prefsWidget.ui" line="176"/>
+        <location filename="prefsWidget.ui" line="182"/>
         <source>Uncomment shortcut</source>
         <translation>Убрать замечание по значку</translation>
     </message>
     <message>
-        <location filename="prefsWidget.ui" line="190"/>
+        <location filename="prefsWidget.ui" line="196"/>
         <source>Validate content</source>
         <translation>Проверять содержимое</translation>
     </message>
@@ -4630,7 +4695,7 @@ Various settings related to the control of the display, sound, and input devices
         <translation>Полотно</translation>
     </message>
     <message>
-        <location filename="backend_settings.ui" line="186"/>
+        <location filename="backend_settings.ui" line="236"/>
         <source>TextLabel</source>
         <translation>Надпись</translation>
     </message>
@@ -4652,7 +4717,22 @@ Various settings related to the control of the display, sound, and input devices
     <message>
         <location filename="backend_settings.ui" line="171"/>
         <source>Synth</source>
-        <translation>Гудок</translation>
+        <translation type="obsolete">Гудок</translation>
+    </message>
+    <message>
+        <location filename="backend_settings.ui" line="171"/>
+        <source>Clock</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="backend_settings.ui" line="196"/>
+        <source>Color</source>
+        <translation type="unfinished">Цвет</translation>
+    </message>
+    <message>
+        <location filename="backend_settings.ui" line="221"/>
+        <source>Log</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4700,12 +4780,12 @@ Various settings related to the control of the display, sound, and input devices
     <message>
         <location filename="credits_widget.ui" line="121"/>
         <source>&lt;a href=&quot;http://osdoc.cogsci.nl/contribute/&quot;&gt;Contribute&lt;/a&gt;</source>
-        <translation>&lt;a href=&quot;http://osdoc.cogsci.nl/contribute/&quot;&gt;Участвовать в разработке&lt;/a&gt;</translation>
+        <translation type="obsolete">&lt;a href=&quot;http://osdoc.cogsci.nl/contribute/&quot;&gt;Участвовать в разработке&lt;/a&gt;</translation>
     </message>
     <message>
         <location filename="credits_widget.ui" line="131"/>
         <source>&lt;a href=&quot;http://osdoc.cogsci.nl/donate/&quot;&gt;Donate&lt;/a&gt;</source>
-        <translation>&lt;a href=&quot;http://osdoc.cogsci.nl/donate/&quot;&gt;Сделать пожертвование&lt;/a&gt;</translation>
+        <translation type="obsolete">&lt;a href=&quot;http://osdoc.cogsci.nl/donate/&quot;&gt;Сделать пожертвование&lt;/a&gt;</translation>
     </message>
     <message encoding="UTF-8">
         <location filename="credits_widget.ui" line="179"/>
@@ -4716,8 +4796,8 @@ Copyright Sebastiaan Mathôt (2010-2014)</source>
 Перевод: Владимир Косоногов (vladimirkosonogov@yandex.ru)</translation>
     </message>
     <message encoding="UTF-8">
-        <location filename="credits_widget.ui" line="179"/>
-        <source>OpenSesame [version] [codename]
+        <location filename="credits_widget.ui" line="146"/>
+        <source>OpenSesame %(version)s %(codename)s
 Copyright Sebastiaan Mathôt (2010-2015)</source>
         <translation type="unfinished"></translation>
     </message>

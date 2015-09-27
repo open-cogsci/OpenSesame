@@ -10,47 +10,42 @@
     <message>
         <location filename="logger.ui" line="23"/>
         <source>Automatically detect and log all variables</source>
-        <translation type="unfinished">自动检测和记录所有变量</translation>
+        <translation type="obsolete">自动检测和记录所有变量</translation>
     </message>
     <message>
         <location filename="logger.ui" line="30"/>
         <source>Include variables with missing values</source>
-        <translation type="unfinished">包含带缺失值的变量</translation>
+        <translation type="obsolete">包含带缺失值的变量</translation>
     </message>
     <message>
         <location filename="logger.ui" line="37"/>
         <source>Put quotes around values</source>
-        <translation type="unfinished">在数值左右放置引号</translation>
+        <translation type="obsolete">在数值左右放置引号</translation>
     </message>
     <message>
         <location filename="logger.ui" line="50"/>
         <source>Select all</source>
-        <translation type="unfinished">选择所有</translation>
+        <translation type="obsolete">选择所有</translation>
     </message>
     <message>
         <location filename="logger.ui" line="57"/>
         <source>Deselect all</source>
-        <translation type="unfinished">取消选择所有</translation>
+        <translation type="obsolete">取消选择所有</translation>
     </message>
     <message>
         <location filename="logger.ui" line="77"/>
         <source>Smart select</source>
-        <translation type="unfinished">智能筛选</translation>
+        <translation type="obsolete">智能筛选</translation>
     </message>
     <message>
-        <location filename="logger.ui" line="84"/>
+        <location filename="logger.ui" line="36"/>
         <source>Add custom variable</source>
         <translation type="unfinished">添加自定义变量</translation>
     </message>
     <message>
         <location filename="logger.ui" line="109"/>
         <source>Variable</source>
-        <translation type="unfinished">变量</translation>
-    </message>
-    <message>
-        <location filename="logger.ui" line="114"/>
-        <source>Source item(s)</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">变量</translation>
     </message>
     <message>
         <location filename="loop_operation.ui" line="32"/>
@@ -80,6 +75,21 @@
     <message>
         <location filename="loop.ui" line="109"/>
         <source>Preview</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="logger.ui" line="23"/>
+        <source>Log all variables (recommended)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="logger.ui" line="70"/>
+        <source>Custom variable</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="logger.ui" line="75"/>
+        <source>Source(s)</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -260,82 +270,82 @@
         <translation type="unfinished">表单</translation>
     </message>
     <message>
-        <location filename="general_properties.ui" line="56"/>
+        <location filename="general_properties.ui" line="68"/>
         <source>&lt;h3&gt;Back-end&lt;/h3&gt;</source>
         <translation type="unfinished">&lt;h3&gt;后端&lt;/h3&gt;</translation>
     </message>
     <message>
-        <location filename="general_properties.ui" line="94"/>
+        <location filename="general_properties.ui" line="106"/>
         <source>&lt;h3&gt;Resolution&lt;/h3&gt;</source>
         <translation type="unfinished">&lt;h3&gt;分辨率&lt;/h3&gt;</translation>
     </message>
     <message>
-        <location filename="general_properties.ui" line="119"/>
+        <location filename="general_properties.ui" line="131"/>
         <source>The display resolution (width) in pixels</source>
         <translation type="unfinished">显示分辨率为 (宽度) 像素</translation>
     </message>
     <message>
-        <location filename="general_properties.ui" line="145"/>
+        <location filename="general_properties.ui" line="157"/>
         <source>px</source>
         <translation type="unfinished">像素</translation>
     </message>
     <message>
-        <location filename="general_properties.ui" line="135"/>
+        <location filename="general_properties.ui" line="147"/>
         <source>x</source>
         <translation type="unfinished">x</translation>
     </message>
     <message>
-        <location filename="general_properties.ui" line="142"/>
+        <location filename="general_properties.ui" line="154"/>
         <source>The display resolution (height) in pixels</source>
         <translation type="unfinished">显示分辨率为 (高度) 像素</translation>
     </message>
     <message>
-        <location filename="general_properties.ui" line="161"/>
+        <location filename="general_properties.ui" line="173"/>
         <source>&lt;h3&gt;Colors&lt;/h3&gt;</source>
         <translation type="unfinished">&lt;h3&gt;颜色&lt;/h3&gt;</translation>
     </message>
     <message>
-        <location filename="general_properties.ui" line="189"/>
+        <location filename="general_properties.ui" line="201"/>
         <source>Foreground</source>
         <translation type="unfinished">前景</translation>
     </message>
     <message>
-        <location filename="general_properties.ui" line="196"/>
+        <location filename="general_properties.ui" line="208"/>
         <source>Background</source>
         <translation type="unfinished">背景</translation>
     </message>
     <message>
-        <location filename="general_properties.ui" line="212"/>
+        <location filename="general_properties.ui" line="224"/>
         <source>&lt;small&gt;&lt;i&gt;Examples: &apos;white&apos;, &apos;#FFFFFF&apos;&lt;/i&gt;&lt;/small&gt;</source>
         <translation type="unfinished">&lt;small&gt;&lt;i&gt;例子: &apos;白色&apos;, &apos;#FFFFFF&apos;&lt;/i&gt;&lt;/small&gt;</translation>
     </message>
     <message>
-        <location filename="general_properties.ui" line="228"/>
+        <location filename="general_properties.ui" line="240"/>
         <source>&lt;h3&gt;Font&lt;/h3&gt;</source>
         <translation type="unfinished">&lt;h3&gt;字体&lt;/h3&gt;</translation>
     </message>
     <message>
-        <location filename="general_properties.ui" line="288"/>
+        <location filename="general_properties.ui" line="287"/>
         <source>&lt;h3&gt;Advanced&lt;/h3&gt;</source>
         <translation type="unfinished">&lt;h3&gt;高级&lt;/h3&gt;</translation>
     </message>
     <message>
-        <location filename="general_properties.ui" line="319"/>
+        <location filename="general_properties.ui" line="318"/>
         <source>Advanced settings for the selected back-end</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="general_properties.ui" line="322"/>
+        <location filename="general_properties.ui" line="321"/>
         <source>Back-end settings</source>
         <translation type="unfinished">后端设置</translation>
     </message>
     <message>
-        <location filename="general_properties.ui" line="329"/>
+        <location filename="general_properties.ui" line="328"/>
         <source>Edit the script for the entire experiment</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="general_properties.ui" line="332"/>
+        <location filename="general_properties.ui" line="331"/>
         <source>Script editor</source>
         <translation type="unfinished">脚本编辑器</translation>
     </message>
@@ -345,28 +355,38 @@
         <translation type="obsolete">透明的变量管理</translation>
     </message>
     <message>
-        <location filename="general_properties.ui" line="275"/>
+        <location filename="general_properties.ui" line="368"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:large; font-weight:600;&quot;&gt;Miscellaneous&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="general_properties.ui" line="342"/>
+        <location filename="general_properties.ui" line="341"/>
         <source>Enables support for bi-directional languages, such as Arabic and Hebrew</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="general_properties.ui" line="345"/>
+        <location filename="general_properties.ui" line="344"/>
         <source>Bi-directional-text support</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="general_properties.ui" line="81"/>
+        <location filename="general_properties.ui" line="93"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://osdoc.cogsci.nl/back-ends/about&quot;&gt;&lt;span style=&quot;font-size:small;font-style:italic; text-decoration: underline; color:#0057ae;&quot;&gt;Why is this important?&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="general_properties.ui" line="352"/>
+        <location filename="general_properties.ui" line="351"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:small; font-style:italic;&quot;&gt;Warning: python-bidi is not available&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="general_properties.ui" line="358"/>
+        <source>If enabled, (0,0) always refers to the center of the display</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="general_properties.ui" line="361"/>
+        <source>Uniform coordinates</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -699,123 +719,163 @@
         <translation type="unfinished">表单</translation>
     </message>
     <message>
-        <location filename="sketchpad.ui" line="38"/>
+        <location filename="sketchpad.ui" line="50"/>
         <source>Duration</source>
         <translation type="unfinished">持续时间</translation>
     </message>
     <message>
-        <location filename="sketchpad.ui" line="51"/>
+        <location filename="sketchpad.ui" line="63"/>
         <source>A numeric value (duration in milliseconds), &quot;keypress&quot;, or &quot;mouseclick&quot;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="sketchpad.ui" line="110"/>
+        <location filename="sketchpad.ui" line="121"/>
         <source>Color</source>
         <translation type="unfinished">颜色</translation>
     </message>
     <message>
-        <location filename="sketchpad.ui" line="471"/>
+        <location filename="sketchpad.ui" line="609"/>
         <source> px</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="sketchpad.ui" line="139"/>
+        <location filename="sketchpad.ui" line="150"/>
         <source>Penwidth </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="sketchpad.ui" line="171"/>
         <source>Size of the arrowhead</source>
-        <translation type="unfinished">箭头大小</translation>
+        <translation type="obsolete">箭头大小</translation>
     </message>
     <message>
-        <location filename="sketchpad.ui" line="177"/>
-        <source>Arrowhead </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="sketchpad.ui" line="212"/>
+        <location filename="sketchpad.ui" line="317"/>
         <source>Image scaling factor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="sketchpad.ui" line="215"/>
+        <location filename="sketchpad.ui" line="320"/>
         <source>Scale </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="sketchpad.ui" line="387"/>
+        <location filename="sketchpad.ui" line="496"/>
         <source> x</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="sketchpad.ui" line="259"/>
+        <location filename="sketchpad.ui" line="364"/>
         <source>Check to draw filled objects</source>
         <translation type="unfinished">勾选以绘制填色物件</translation>
     </message>
     <message>
-        <location filename="sketchpad.ui" line="262"/>
+        <location filename="sketchpad.ui" line="367"/>
         <source>Fill</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="sketchpad.ui" line="288"/>
+        <location filename="sketchpad.ui" line="393"/>
         <source>Center the object</source>
         <translation type="unfinished">物件居中</translation>
     </message>
     <message>
-        <location filename="sketchpad.ui" line="291"/>
+        <location filename="sketchpad.ui" line="396"/>
         <source>Center</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="sketchpad.ui" line="320"/>
+        <location filename="sketchpad.ui" line="425"/>
         <source>Show if</source>
         <translation type="unfinished">显示if</translation>
     </message>
     <message>
-        <location filename="sketchpad.ui" line="374"/>
+        <location filename="sketchpad.ui" line="583"/>
         <source>0,0</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="sketchpad.ui" line="384"/>
+        <location filename="sketchpad.ui" line="493"/>
         <source>Zoom factor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="sketchpad.ui" line="426"/>
+        <location filename="sketchpad.ui" line="536"/>
         <source>Parse a subset of HTML tags</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="sketchpad.ui" line="429"/>
+        <location filename="sketchpad.ui" line="539"/>
         <source>HTML</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="sketchpad.ui" line="455"/>
+        <location filename="sketchpad.ui" line="593"/>
         <source>Check to display the grid and enable snap-to-grid</source>
         <translation type="unfinished">勾选以显示网格并启用对齐网格</translation>
     </message>
     <message>
-        <location filename="sketchpad.ui" line="458"/>
+        <location filename="sketchpad.ui" line="596"/>
         <source>Grid</source>
         <translation type="unfinished">网格</translation>
     </message>
     <message>
-        <location filename="sketchpad.ui" line="468"/>
+        <location filename="sketchpad.ui" line="606"/>
         <source>Grid size</source>
         <translation type="unfinished">网格大小</translation>
     </message>
     <message>
-        <location filename="sketchpad.ui" line="511"/>
+        <location filename="sketchpad.ui" line="649"/>
         <source>Select and move elements</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="sketchpad.ui" line="77"/>
+        <location filename="sketchpad.ui" line="89"/>
         <source>Reset feedback variables</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="sketchpad.ui" line="182"/>
+        <source>Proportional length of the base relative to the arrow head</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="sketchpad.ui" line="185"/>
+        <source>Body length </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="sketchpad.ui" line="235"/>
+        <source> prop</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="sketchpad.ui" line="229"/>
+        <source>Proportional width (thickness) of the base relative to the arrow head</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="sketchpad.ui" line="232"/>
+        <source>Body width </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="sketchpad.ui" line="276"/>
+        <source>Width (thickness) of the arrow head</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="sketchpad.ui" line="282"/>
+        <source>Head width </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="sketchpad.ui" line="467"/>
+        <source>Best-fitting zoom level</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="sketchpad.ui" line="480"/>
+        <source>Original zoom level</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1509,17 +1569,17 @@
         <translation>OpenSeasame</translation>
     </message>
     <message>
-        <location filename="main_window.ui" line="60"/>
+        <location filename="main_window.ui" line="75"/>
         <source>File</source>
         <translation>文件</translation>
     </message>
     <message>
-        <location filename="main_window.ui" line="64"/>
+        <location filename="main_window.ui" line="79"/>
         <source>Recent files</source>
         <translation>最近文档</translation>
     </message>
     <message>
-        <location filename="main_window.ui" line="83"/>
+        <location filename="main_window.ui" line="98"/>
         <source>Run</source>
         <translation>运行</translation>
     </message>
@@ -1529,29 +1589,29 @@
         <translation type="obsolete">项目</translation>
     </message>
     <message>
-        <location filename="main_window.ui" line="93"/>
+        <location filename="main_window.ui" line="108"/>
         <source>View</source>
         <translation>视图</translation>
     </message>
     <message>
-        <location filename="main_window.ui" line="107"/>
+        <location filename="main_window.ui" line="121"/>
         <source>Tools</source>
         <translation>工具</translation>
     </message>
     <message>
-        <location filename="main_window.ui" line="128"/>
+        <location filename="main_window.ui" line="147"/>
         <source>Overview</source>
         <translation>概览</translation>
     </message>
     <message>
-        <location filename="main_window.ui" line="145"/>
+        <location filename="main_window.ui" line="179"/>
         <source>Name</source>
         <translation>名称</translation>
     </message>
     <message>
         <location filename="main_window.ui" line="158"/>
         <source>Variable inspector</source>
-        <translation>变量检查器</translation>
+        <translation type="obsolete">变量检查器</translation>
     </message>
     <message>
         <location filename="opensesame.ui" line="265"/>
@@ -1564,7 +1624,7 @@
         <translation type="obsolete">清除过滤器</translation>
     </message>
     <message>
-        <location filename="main_window.ui" line="227"/>
+        <location filename="main_window.ui" line="278"/>
         <source>Help</source>
         <translation>帮助</translation>
     </message>
@@ -1584,388 +1644,403 @@
         <translation type="obsolete">项目中</translation>
     </message>
     <message>
-        <location filename="main_window.ui" line="175"/>
+        <location filename="main_window.ui" line="195"/>
         <source>File pool</source>
         <translation>文档池</translation>
     </message>
     <message>
-        <location filename="main_window.ui" line="189"/>
+        <location filename="main_window.ui" line="225"/>
         <source>Debug window</source>
         <translation>调试窗口</translation>
     </message>
     <message>
-        <location filename="main_window.ui" line="250"/>
+        <location filename="main_window.ui" line="288"/>
         <source>Clear debug window</source>
         <translation>清除调试窗口</translation>
     </message>
     <message>
-        <location filename="main_window.ui" line="291"/>
+        <location filename="main_window.ui" line="329"/>
         <source>Main toolbar</source>
         <translation>主工具栏</translation>
     </message>
     <message>
-        <location filename="main_window.ui" line="329"/>
+        <location filename="main_window.ui" line="366"/>
         <source>Toolbar items</source>
         <translation>工具栏项目</translation>
     </message>
     <message>
-        <location filename="main_window.ui" line="344"/>
+        <location filename="main_window.ui" line="381"/>
         <source>Open</source>
         <translation>打开</translation>
     </message>
     <message>
-        <location filename="main_window.ui" line="347"/>
+        <location filename="main_window.ui" line="384"/>
         <source>Open (Ctrl+0)</source>
         <translation>打开 (Ctrl+0)</translation>
     </message>
     <message>
-        <location filename="main_window.ui" line="350"/>
+        <location filename="main_window.ui" line="387"/>
         <source>Ctrl+O</source>
         <translation>Ctrl+O</translation>
     </message>
     <message>
-        <location filename="main_window.ui" line="359"/>
+        <location filename="main_window.ui" line="396"/>
         <source>Save</source>
         <translation>保存</translation>
     </message>
     <message>
-        <location filename="main_window.ui" line="362"/>
+        <location filename="main_window.ui" line="399"/>
         <source>Save (Control+S)</source>
         <translation>保存 (Control+S)</translation>
     </message>
     <message>
-        <location filename="main_window.ui" line="365"/>
+        <location filename="main_window.ui" line="402"/>
         <source>Ctrl+S</source>
         <translation>Ctrl+S</translation>
     </message>
     <message>
-        <location filename="main_window.ui" line="374"/>
+        <location filename="main_window.ui" line="411"/>
         <source>Save as</source>
         <translation>另存为</translation>
     </message>
     <message>
-        <location filename="main_window.ui" line="377"/>
+        <location filename="main_window.ui" line="414"/>
         <source>Save as (Control+Shift+S)</source>
         <translation>另存为 (Control+Shift+S)</translation>
     </message>
     <message>
-        <location filename="main_window.ui" line="380"/>
+        <location filename="main_window.ui" line="417"/>
         <source>Ctrl+Shift+S</source>
         <translation>Ctrl+Shift+S</translation>
     </message>
     <message>
-        <location filename="main_window.ui" line="389"/>
+        <location filename="main_window.ui" line="426"/>
         <source>Quit</source>
         <translation>退出</translation>
     </message>
     <message>
-        <location filename="main_window.ui" line="392"/>
+        <location filename="main_window.ui" line="429"/>
         <source>Quit (Alt+F4)</source>
         <translation>退出 (Alt+F4)</translation>
     </message>
     <message>
-        <location filename="main_window.ui" line="397"/>
+        <location filename="main_window.ui" line="434"/>
         <source>Run fullscreen</source>
         <translation>全屏运行</translation>
     </message>
     <message>
-        <location filename="main_window.ui" line="400"/>
+        <location filename="main_window.ui" line="437"/>
         <source>Run fullscreen (Control+R)</source>
         <translation>全屏运行 (Control+R)</translation>
     </message>
     <message>
-        <location filename="main_window.ui" line="403"/>
+        <location filename="main_window.ui" line="440"/>
         <source>Ctrl+R</source>
         <translation>Ctrl+R</translation>
     </message>
     <message>
-        <location filename="main_window.ui" line="412"/>
+        <location filename="main_window.ui" line="449"/>
         <source>New</source>
         <translation>新建</translation>
     </message>
     <message>
-        <location filename="main_window.ui" line="415"/>
+        <location filename="main_window.ui" line="452"/>
         <source>New (Control+N)</source>
         <translation>新建 (Control+N)</translation>
     </message>
     <message>
-        <location filename="main_window.ui" line="418"/>
+        <location filename="main_window.ui" line="455"/>
         <source>Ctrl+N</source>
         <translation>Ctrl+N</translation>
     </message>
     <message>
-        <location filename="main_window.ui" line="427"/>
+        <location filename="main_window.ui" line="464"/>
         <source>Add sequence</source>
         <translation>添加序列</translation>
     </message>
     <message>
-        <location filename="main_window.ui" line="436"/>
+        <location filename="main_window.ui" line="473"/>
         <source>Add sketchpad</source>
         <translation>添加画板</translation>
     </message>
     <message>
-        <location filename="main_window.ui" line="445"/>
+        <location filename="main_window.ui" line="482"/>
         <source>Add keyboard response</source>
         <translation>添加键盘反应</translation>
     </message>
     <message>
-        <location filename="main_window.ui" line="454"/>
+        <location filename="main_window.ui" line="491"/>
         <source>Add logger</source>
         <translation>添加记录器</translation>
     </message>
     <message>
-        <location filename="main_window.ui" line="463"/>
+        <location filename="main_window.ui" line="500"/>
         <source>Add loop</source>
         <translation>添加循环</translation>
     </message>
     <message>
-        <location filename="main_window.ui" line="472"/>
+        <location filename="main_window.ui" line="509"/>
         <source>Add feedback</source>
         <translation>添加反馈</translation>
     </message>
     <message>
-        <location filename="main_window.ui" line="481"/>
+        <location filename="main_window.ui" line="518"/>
         <source>Add inline script</source>
         <translation>添加内嵌脚本</translation>
     </message>
     <message>
-        <location filename="main_window.ui" line="490"/>
+        <location filename="main_window.ui" line="527"/>
         <source>Close all tabs</source>
         <translation>关闭所有标签</translation>
     </message>
     <message>
-        <location filename="main_window.ui" line="502"/>
+        <location filename="main_window.ui" line="539"/>
         <source>Close other tabs</source>
         <translation>关闭其他标签</translation>
     </message>
     <message>
-        <location filename="main_window.ui" line="505"/>
+        <location filename="main_window.ui" line="542"/>
         <source>Close other tabs (Control+T)</source>
         <translation>关闭其他标签 (Control+T)</translation>
     </message>
     <message>
-        <location filename="main_window.ui" line="508"/>
+        <location filename="main_window.ui" line="545"/>
         <source>Ctrl+T</source>
         <translation>Ctrl+T</translation>
     </message>
     <message>
-        <location filename="main_window.ui" line="526"/>
+        <location filename="main_window.ui" line="563"/>
         <source>About</source>
         <translation>关于</translation>
     </message>
     <message>
-        <location filename="main_window.ui" line="535"/>
+        <location filename="main_window.ui" line="572"/>
         <source>Add mouse response</source>
         <translation>添加鼠标反应</translation>
     </message>
     <message>
-        <location filename="main_window.ui" line="540"/>
+        <location filename="main_window.ui" line="577"/>
         <source>Run in window</source>
         <translation>在窗口中运行</translation>
     </message>
     <message>
-        <location filename="main_window.ui" line="543"/>
+        <location filename="main_window.ui" line="580"/>
         <source>Run in window (Control+W)</source>
         <translation>在窗口中运行 (Control+W)</translation>
     </message>
     <message>
-        <location filename="main_window.ui" line="546"/>
+        <location filename="main_window.ui" line="583"/>
         <source>Ctrl+W</source>
         <translation>Ctrl+W</translation>
     </message>
     <message>
-        <location filename="main_window.ui" line="555"/>
+        <location filename="main_window.ui" line="592"/>
         <source>Check for updates</source>
         <translation>检查更新</translation>
     </message>
     <message>
         <location filename="main_window.ui" line="567"/>
         <source>Show variable inspector</source>
-        <translation>显示变量检查器</translation>
+        <translation type="obsolete">显示变量检查器</translation>
     </message>
     <message>
         <location filename="main_window.ui" line="570"/>
         <source>Show variable inspector (Control+I)</source>
-        <translation>显示变量检查器 (Control+I)</translation>
+        <translation type="obsolete">显示变量检查器 (Control+I)</translation>
     </message>
     <message>
         <location filename="main_window.ui" line="573"/>
         <source>Ctrl+I</source>
-        <translation>Ctrl+I</translation>
+        <translation type="obsolete">Ctrl+I</translation>
     </message>
     <message>
-        <location filename="main_window.ui" line="582"/>
+        <location filename="main_window.ui" line="601"/>
         <source>Add sampler</source>
         <translation>添加采样</translation>
     </message>
     <message>
-        <location filename="main_window.ui" line="585"/>
+        <location filename="main_window.ui" line="604"/>
         <source>Add sound sampler</source>
         <translation>添加声音采样</translation>
     </message>
     <message>
-        <location filename="main_window.ui" line="594"/>
+        <location filename="main_window.ui" line="613"/>
         <source>Add synth</source>
         <translation>添加合成器</translation>
     </message>
     <message>
-        <location filename="main_window.ui" line="597"/>
+        <location filename="main_window.ui" line="616"/>
         <source>Add sound synthesizer</source>
         <translation>添加声音合成器</translation>
     </message>
     <message>
-        <location filename="main_window.ui" line="609"/>
+        <location filename="main_window.ui" line="628"/>
         <source>Show file pool</source>
         <translation>显示文档池</translation>
     </message>
     <message>
-        <location filename="main_window.ui" line="612"/>
+        <location filename="main_window.ui" line="631"/>
         <source>Ctrl+P</source>
         <translation>Ctrl+P</translation>
     </message>
     <message>
-        <location filename="main_window.ui" line="624"/>
+        <location filename="main_window.ui" line="643"/>
         <source>Show debug window</source>
         <translation>显示调试窗口</translation>
     </message>
     <message>
-        <location filename="main_window.ui" line="627"/>
+        <location filename="main_window.ui" line="646"/>
         <source>Show debug window (standard output) and a Python interpreter (Control+D)</source>
         <translation>显示调试窗口 (标准输出)和Python编码解释器</translation>
     </message>
     <message>
-        <location filename="main_window.ui" line="630"/>
+        <location filename="main_window.ui" line="649"/>
         <source>Ctrl+D</source>
         <translation>Ctrl+D</translation>
     </message>
     <message>
-        <location filename="main_window.ui" line="638"/>
+        <location filename="main_window.ui" line="657"/>
         <source>Enable auto response</source>
         <translation>启动自动反应</translation>
     </message>
     <message>
-        <location filename="main_window.ui" line="646"/>
+        <location filename="main_window.ui" line="665"/>
         <source>Plugins</source>
         <translation>插件</translation>
     </message>
     <message>
-        <location filename="main_window.ui" line="655"/>
+        <location filename="main_window.ui" line="674"/>
         <source>Random tip</source>
         <translation>随机小窍门</translation>
     </message>
     <message>
-        <location filename="main_window.ui" line="658"/>
+        <location filename="main_window.ui" line="677"/>
         <source>Show a random tip</source>
         <translation>显示随机小窍门</translation>
     </message>
     <message>
-        <location filename="main_window.ui" line="667"/>
+        <location filename="main_window.ui" line="686"/>
         <source>Open backup folder</source>
         <translation>打开备份文件夹</translation>
     </message>
     <message>
-        <location filename="main_window.ui" line="676"/>
+        <location filename="main_window.ui" line="695"/>
         <source>Submit a bug</source>
         <translation>提交漏洞</translation>
     </message>
     <message>
-        <location filename="main_window.ui" line="685"/>
+        <location filename="main_window.ui" line="704"/>
         <source>Contribute</source>
         <translation>贡献</translation>
     </message>
     <message>
-        <location filename="main_window.ui" line="694"/>
+        <location filename="main_window.ui" line="713"/>
         <source>Preferences</source>
         <translation>首选项</translation>
     </message>
     <message>
-        <location filename="main_window.ui" line="699"/>
+        <location filename="main_window.ui" line="718"/>
         <source>Dummy</source>
         <translation>虚设</translation>
     </message>
     <message>
-        <location filename="main_window.ui" line="707"/>
+        <location filename="main_window.ui" line="726"/>
         <source>Show overview area</source>
         <translation>显示概览区</translation>
     </message>
     <message>
         <location filename="main_window.ui" line="710"/>
         <source>Ctrl+Shift+O</source>
-        <translation>Ctrl+Shift+O</translation>
+        <translation type="obsolete">Ctrl+Shift+O</translation>
     </message>
     <message>
-        <location filename="main_window.ui" line="722"/>
+        <location filename="main_window.ui" line="741"/>
         <source>One tab mode</source>
         <translation>单一标签模式</translation>
     </message>
     <message>
-        <location filename="main_window.ui" line="725"/>
+        <location filename="main_window.ui" line="744"/>
         <source>Enable one tab mode</source>
         <translation>启用单一标签模式</translation>
     </message>
     <message>
-        <location filename="main_window.ui" line="733"/>
+        <location filename="main_window.ui" line="752"/>
         <source>Compact toolbar</source>
         <translation>压缩工具栏</translation>
     </message>
     <message>
-        <location filename="main_window.ui" line="517"/>
+        <location filename="main_window.ui" line="554"/>
         <source>Offline help</source>
         <translation>离线帮助</translation>
     </message>
     <message>
-        <location filename="main_window.ui" line="738"/>
+        <location filename="main_window.ui" line="757"/>
         <source>Online help</source>
         <translation>在线帮助</translation>
     </message>
     <message>
-        <location filename="main_window.ui" line="743"/>
+        <location filename="main_window.ui" line="762"/>
         <source>Online forum</source>
         <translation>在线讨论区</translation>
     </message>
     <message>
-        <location filename="main_window.ui" line="748"/>
+        <location filename="main_window.ui" line="767"/>
         <source>Quick run</source>
         <translation>快速运行</translation>
     </message>
     <message>
-        <location filename="main_window.ui" line="751"/>
+        <location filename="main_window.ui" line="770"/>
         <source>Give your experiment a quick test run</source>
         <translation>快速测试你的实验</translation>
     </message>
     <message>
-        <location filename="main_window.ui" line="754"/>
+        <location filename="main_window.ui" line="773"/>
         <source>Ctrl+Shift+W</source>
         <translation>Ctrl+Shift+W</translation>
     </message>
     <message>
-        <location filename="main_window.ui" line="764"/>
+        <location filename="main_window.ui" line="783"/>
         <source>Quick switcher</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="main_window.ui" line="767"/>
+        <location filename="main_window.ui" line="786"/>
         <source>Meta+O</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="main_window.ui" line="493"/>
+        <location filename="main_window.ui" line="530"/>
         <source>Ctrl+Alt+T</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="main_window.ui" line="772"/>
+        <location filename="main_window.ui" line="791"/>
         <source>Close current tab</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="main_window.ui" line="775"/>
+        <location filename="main_window.ui" line="794"/>
         <source>Close the current tab</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="main_window.ui" line="778"/>
+        <location filename="main_window.ui" line="797"/>
         <source>Alt+T</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="main_window.ui" line="127"/>
+        <source>Edit</source>
+        <translation type="unfinished">编辑</translation>
+    </message>
+    <message>
+        <location filename="main_window.ui" line="298"/>
+        <source>Reset workspace</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="main_window.ui" line="729"/>
+        <source>Ctrl+\</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4336,7 +4411,7 @@ href=&apos;http://www.cogsci.nl/opensesame&apos;&gt;http://www.cogsci.nl/openses
     <message>
         <location filename="variable_inspector.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished">表单</translation>
+        <translation type="obsolete">表单</translation>
     </message>
     <message>
         <location filename="variable_inspector.ui" line="52"/>
@@ -4346,32 +4421,32 @@ href=&apos;http://www.cogsci.nl/opensesame&apos;&gt;http://www.cogsci.nl/openses
     <message>
         <location filename="variable_inspector.ui" line="36"/>
         <source>Enter a filter</source>
-        <translation type="unfinished">输入过滤器</translation>
+        <translation type="obsolete">输入过滤器</translation>
     </message>
     <message>
         <location filename="variable_inspector.ui" line="43"/>
         <source>Clear filter</source>
-        <translation type="unfinished">清除过滤器</translation>
+        <translation type="obsolete">清除过滤器</translation>
     </message>
     <message>
         <location filename="variable_inspector.ui" line="69"/>
         <source>Help</source>
-        <translation type="unfinished">帮助</translation>
+        <translation type="obsolete">帮助</translation>
     </message>
     <message>
         <location filename="variable_inspector.ui" line="123"/>
         <source>Variable</source>
-        <translation type="unfinished">变量</translation>
+        <translation type="obsolete">变量</translation>
     </message>
     <message>
         <location filename="variable_inspector.ui" line="128"/>
         <source>Value</source>
-        <translation type="unfinished">数值</translation>
+        <translation type="obsolete">数值</translation>
     </message>
     <message>
         <location filename="variable_inspector.ui" line="133"/>
         <source>In item</source>
-        <translation type="unfinished">项目中</translation>
+        <translation type="obsolete">项目中</translation>
     </message>
 </context>
 <context>
@@ -4468,37 +4543,37 @@ href=&apos;http://www.cogsci.nl/opensesame&apos;&gt;http://www.cogsci.nl/openses
         <translation type="unfinished">表单</translation>
     </message>
     <message>
-        <location filename="findWidget.ui" line="23"/>
+        <location filename="findWidget.ui" line="29"/>
         <source>Replace:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="findWidget.ui" line="33"/>
+        <location filename="findWidget.ui" line="39"/>
         <source>Find:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="findWidget.ui" line="49"/>
+        <location filename="findWidget.ui" line="58"/>
         <source>Search</source>
         <translation type="unfinished">查找</translation>
     </message>
     <message>
-        <location filename="findWidget.ui" line="61"/>
+        <location filename="findWidget.ui" line="70"/>
         <source>Replace</source>
         <translation type="unfinished">替换</translation>
     </message>
     <message>
-        <location filename="findWidget.ui" line="73"/>
+        <location filename="findWidget.ui" line="82"/>
         <source>Replace all</source>
         <translation type="unfinished">替换所有</translation>
     </message>
     <message>
-        <location filename="findWidget.ui" line="94"/>
+        <location filename="findWidget.ui" line="106"/>
         <source>Case sensitive</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="findWidget.ui" line="101"/>
+        <location filename="findWidget.ui" line="113"/>
         <source>Match whole words</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4511,132 +4586,132 @@ href=&apos;http://www.cogsci.nl/opensesame&apos;&gt;http://www.cogsci.nl/openses
         <translation type="unfinished">表单</translation>
     </message>
     <message>
-        <location filename="prefsWidget.ui" line="183"/>
+        <location filename="prefsWidget.ui" line="189"/>
         <source>Show 80 character word-wrap marker</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="prefsWidget.ui" line="78"/>
+        <location filename="prefsWidget.ui" line="84"/>
         <source>Tab width</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="prefsWidget.ui" line="40"/>
+        <location filename="prefsWidget.ui" line="46"/>
         <source> characters</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="prefsWidget.ui" line="47"/>
+        <location filename="prefsWidget.ui" line="53"/>
         <source>Font family</source>
         <translation type="unfinished">字体库</translation>
     </message>
     <message>
-        <location filename="prefsWidget.ui" line="141"/>
+        <location filename="prefsWidget.ui" line="147"/>
         <source>Show whitespace</source>
         <translation type="unfinished">显示空格</translation>
     </message>
     <message>
-        <location filename="prefsWidget.ui" line="92"/>
+        <location filename="prefsWidget.ui" line="98"/>
         <source>Show line numbers</source>
         <translation type="unfinished">显示行数</translation>
     </message>
     <message>
-        <location filename="prefsWidget.ui" line="23"/>
+        <location filename="prefsWidget.ui" line="29"/>
         <source>Enable word wrapping</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="prefsWidget.ui" line="148"/>
+        <location filename="prefsWidget.ui" line="154"/>
         <source>Enable block folding</source>
         <translation type="unfinished">启用区组折叠</translation>
     </message>
     <message>
-        <location filename="prefsWidget.ui" line="169"/>
+        <location filename="prefsWidget.ui" line="175"/>
         <source>Enable automatic completion</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="prefsWidget.ui" line="71"/>
+        <location filename="prefsWidget.ui" line="77"/>
         <source>Show end-of-lines</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="prefsWidget.ui" line="54"/>
+        <location filename="prefsWidget.ui" line="60"/>
         <source>Show indentation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="prefsWidget.ui" line="106"/>
+        <location filename="prefsWidget.ui" line="112"/>
         <source>Font size</source>
         <translation type="unfinished">字体大小</translation>
     </message>
     <message>
-        <location filename="prefsWidget.ui" line="64"/>
+        <location filename="prefsWidget.ui" line="70"/>
         <source> pt</source>
         <translation type="unfinished">磅</translation>
     </message>
     <message>
-        <location filename="prefsWidget.ui" line="113"/>
+        <location filename="prefsWidget.ui" line="119"/>
         <source>Highlight current line</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="prefsWidget.ui" line="120"/>
+        <location filename="prefsWidget.ui" line="126"/>
         <source>Highlight matching brackets</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="prefsWidget.ui" line="85"/>
+        <location filename="prefsWidget.ui" line="91"/>
         <source>Enable automatic indentation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="prefsWidget.ui" line="162"/>
+        <location filename="prefsWidget.ui" line="168"/>
         <source>Color scheme</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="prefsWidget.ui" line="30"/>
+        <location filename="prefsWidget.ui" line="36"/>
         <source>A color scheme for the editor component</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="prefsWidget.ui" line="37"/>
+        <location filename="prefsWidget.ui" line="43"/>
         <source>The tab width for the editor component</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="prefsWidget.ui" line="61"/>
+        <location filename="prefsWidget.ui" line="67"/>
         <source>The font size for the editor component</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="prefsWidget.ui" line="99"/>
+        <location filename="prefsWidget.ui" line="105"/>
         <source>The font font the editor component</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="prefsWidget.ui" line="127"/>
+        <location filename="prefsWidget.ui" line="133"/>
         <source>Comment shortcut</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="prefsWidget.ui" line="134"/>
+        <location filename="prefsWidget.ui" line="140"/>
         <source>A keyboard shortcut, such as Ctrl+Shift+M</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="prefsWidget.ui" line="155"/>
+        <location filename="prefsWidget.ui" line="161"/>
         <source>A keyboard shortcut, such as Ctrl+M</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="prefsWidget.ui" line="176"/>
+        <location filename="prefsWidget.ui" line="182"/>
         <source>Uncomment shortcut</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="prefsWidget.ui" line="190"/>
+        <location filename="prefsWidget.ui" line="196"/>
         <source>Validate content</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4666,7 +4741,7 @@ Various settings related to the control of the display, sound, and input devices
         <translation>画布</translation>
     </message>
     <message>
-        <location filename="backend_settings.ui" line="186"/>
+        <location filename="backend_settings.ui" line="236"/>
         <source>TextLabel</source>
         <translation>文字标签</translation>
     </message>
@@ -4688,7 +4763,22 @@ Various settings related to the control of the display, sound, and input devices
     <message>
         <location filename="backend_settings.ui" line="171"/>
         <source>Synth</source>
-        <translation>合成器</translation>
+        <translation type="obsolete">合成器</translation>
+    </message>
+    <message>
+        <location filename="backend_settings.ui" line="171"/>
+        <source>Clock</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="backend_settings.ui" line="196"/>
+        <source>Color</source>
+        <translation type="unfinished">颜色</translation>
+    </message>
+    <message>
+        <location filename="backend_settings.ui" line="221"/>
+        <source>Log</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4740,19 +4830,9 @@ Copyright Sebastiaan Mathôt (2010-2013)</source>
         <translation type="obsolete">OpenSesame [版本] [代号]
 版权归 Sebastiaan Mathôt 所有 (2010-2013)</translation>
     </message>
-    <message>
-        <location filename="credits_widget.ui" line="121"/>
-        <source>&lt;a href=&quot;http://osdoc.cogsci.nl/contribute/&quot;&gt;Contribute&lt;/a&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="credits_widget.ui" line="131"/>
-        <source>&lt;a href=&quot;http://osdoc.cogsci.nl/donate/&quot;&gt;Donate&lt;/a&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message encoding="UTF-8">
-        <location filename="credits_widget.ui" line="179"/>
-        <source>OpenSesame [version] [codename]
+        <location filename="credits_widget.ui" line="146"/>
+        <source>OpenSesame %(version)s %(codename)s
 Copyright Sebastiaan Mathôt (2010-2015)</source>
         <translation type="unfinished"></translation>
     </message>

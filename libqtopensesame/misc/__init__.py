@@ -26,7 +26,7 @@ if '--catch-translatables' in sys.argv:
 	from libopensesame import misc
 	import os.path
 	path = misc.resource(os.path.join(u'ts', u'translatables.txt'))
-	def _(s):
+	def _(s, context=u'script'):
 		l = open(path).read().split(u'\n')
 		if s not in l:
 			f = open(path, u'a')
