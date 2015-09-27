@@ -58,6 +58,7 @@ class sketchpad_widget(base_widget):
 		self.ui.graphics_view.setMouseTracking(True)
 		self.ui.button_pointer.clicked.connect(self.select_pointer_tool)
 		self.ui.spinbox_zoom.valueChanged.connect(self.zoom)
+		self.ui.spinbox_scale.valueChanged.connect(self.apply_scale)
 		self.ui.spinbox_penwidth.valueChanged.connect(self.apply_penwidth)
 		self.ui.edit_color.textEdited.connect(self.apply_color)
 		self.ui.edit_show_if.editingFinished.connect(self.apply_show_if)
@@ -154,6 +155,17 @@ class sketchpad_widget(base_widget):
 			element.set_property(u'fill', int(fill))
 		self.draw()
 
+	def apply_scale(self, scale):
+
+		"""
+		desc:
+			Applies toggling of the center checkbox.
+		"""
+
+		for element in self.sketchpad.selected_elements():
+			element.set_property(u'scale', scale)
+		self.draw()
+
 	def apply_center(self, center):
 
 		"""
@@ -246,31 +258,39 @@ class sketchpad_widget(base_widget):
 			element:	A sketchpad element.
 		"""
 
-		if element.requires_show_if():
-			self.ui.edit_show_if.setText(element.get_property(u'show_if'))
-		if element.requires_color():
-			self.ui.edit_color.setText(element.get_property(u'color'))
-		if element.requires_center():
-			self.ui.checkbox_center.setChecked(element.get_property(u'center',
-				_type=bool))
-		if element.requires_fill():
-			self.ui.checkbox_fill.setChecked(element.get_property(u'fill',
-				_type=bool))
-		if element.requires_penwidth():
-			self.ui.spinbox_penwidth.setValue(element.get_property(u'penwidth',
-				_type=int))
-		if element.requires_arrow_head_width():
-			self.ui.spinbox_arrow_head_width.setValue(element.get_property(
-				u'arrow_head_width', _type=float))
-		if element.requires_arrow_body_width():
-			self.ui.spinbox_arrow_body_width.setValue(element.get_property(
-				u'arrow_body_width', _type=float))
-		if element.requires_arrow_body_length():
-			self.ui.spinbox_arrow_body_length.setValue(element.get_property(
-				u'arrow_body_length', _type=float))
-		if element.requires_scale():
-			self.ui.spinbox_scale.setValue(element.get_property(u'scale',
-				_type=float))
+		# Float/ int properties need to be checked before they are apllied
+		for prop, _type in [
+			(u'penwidth', int),
+			(u'arrow_head_width', float),
+			(u'arrow_body_width', float),
+			(u'arrow_body_length', float),
+			(u'scale', float),
+			(u'show_if', str),
+			(u'color', str),
+			(u'center', bool),
+			(u'fill', bool),
+			]:
+			# Check if the selected element requires the property
+			req_fnc = getattr(element, u'requires_%s' % prop)
+			if not req_fnc():
+				continue
+			# Check if the property can be retrieved. If not, that means it's
+			# variably defined, or it has an invalid type.
+			try:
+				val = element.get_property(prop, _type=_type)
+			except:
+				continue
+			# Adjust the widget
+			if _type in (int, float):
+				spinbox = getattr(self.ui, u'spinbox_%s' % prop)
+				spinbox.setValue(val)
+			elif _type == bool:
+				checkbox = getattr(self.ui, u'checkbox_%s' % prop)
+				checkbox.setChecked(val)
+			else:
+				edit = getattr(self.ui, u'edit_%s' % prop)
+				edit.setText(val)
+		# Text needs special treatment
 		if element.requires_text():
 			self.ui.widget_font.set_font(
 				family=element.get_property(u'font_family'),

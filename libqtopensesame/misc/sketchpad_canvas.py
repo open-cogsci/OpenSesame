@@ -380,7 +380,23 @@ class sketchpad_canvas(QtGui.QGraphicsScene):
 			return 1
 		return penwidth
 
-	def _point(self, i, x, y, center):
+	def _scale(self, scale):
+
+		"""
+		desc:
+			Safely returns a scale.
+
+		returns:
+			An float scale.
+		"""
+
+		if type(scale) not in (int, float):
+			self.notify(
+				_(u'Scale "%s" is unknown or variably defined, using 1') % scale)
+			return 1
+		return scale
+
+	def _point(self, i, x, y, center, scale):
 
 		"""
 		desc:
@@ -392,6 +408,7 @@ class sketchpad_canvas(QtGui.QGraphicsScene):
 			y:		A Y coordinate.
 			center:	A boolean indicating whether the point should reflect the
 					center of i (True), or the top-left (False).
+			scale:	A scaling factor.
 
 		returns:
 			A QPoint object.
@@ -399,10 +416,11 @@ class sketchpad_canvas(QtGui.QGraphicsScene):
 
 		x = self._x(x)
 		y = self._y(y)
+		scale = self._scale(scale)
 		if center:
 			r = i.boundingRect()
-			x -= r.width()/2
-			y -= r.height()/2
+			x -= r.width()*scale/2
+			y -= r.height()*scale/2
 		return QtCore.QPoint(x, y)
 
 	def _color(self, _color):
@@ -644,7 +662,7 @@ class sketchpad_canvas(QtGui.QGraphicsScene):
 			cursor = i.textCursor()
 			cursor.mergeBlockFormat(fmt)
 			i.setTextCursor(cursor)
-		i.setPos(self._point(i, x, y, center))
+		i.setPos(self._point(i, x, y, center, scale=1))
 		return i
 
 	def line(self, sx, sy, ex, ey, color=None, penwidth=None, add=True):
@@ -739,7 +757,7 @@ class sketchpad_canvas(QtGui.QGraphicsScene):
 			image = self._pixmap(image)
 		i = self.addPixmap(image)
 		i.setScale(self._scale(scale))
-		i.setPos(self._point(i, x, y, center))
+		i.setPos(self._point(i, x, y, center, scale))
 		return i
 
 	def gabor(self, x, y, *arglist, **kwdict):
