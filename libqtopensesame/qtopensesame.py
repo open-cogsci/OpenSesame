@@ -839,10 +839,14 @@ class qtopensesame(QtGui.QMainWindow, base_component):
 				u'following reason:\n\n- ') + e.markdown()
 			self.tabwidget.open_markdown(md)
 			return
-		script = script.replace(u"\nset height \"%s\"\n" % \
-			self.experiment.var.get(u"height"), u"\nset height \"%s\"\n" % height)
-		script = script.replace(u"\nset width \"%s\"\n" % \
-			self.experiment.var.get(u"width"), u"\nset width \"%s\"\n" % width)
+		old_cmd = self.experiment.syntax.create_cmd(
+			u'set', [u'height', self.experiment.var.height])
+		new_cmd = self.experiment.syntax.create_cmd(u'set', [u'height', height])
+		script = script.replace(old_cmd, new_cmd)
+		old_cmd = self.experiment.syntax.create_cmd(
+			u'set', [u'width', self.experiment.var.width])
+		new_cmd = self.experiment.syntax.create_cmd(u'set', [u'width', width])
+		script = script.replace(old_cmd, new_cmd)
 		try:
 			tmp = experiment.experiment(self, name=self.experiment.var.title,
 				string=script, pool_folder=self.experiment.pool.folder(),

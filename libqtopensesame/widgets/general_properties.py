@@ -142,15 +142,10 @@ class general_properties(base_widget):
 
 		# Set the display width
 		width = self.ui.spinbox_width.value()
-		if self.experiment.var.width != width:
-			self.main_window.update_resolution(
-				width, self.experiment.var.height)
-
-		# Set the display height
 		height = self.ui.spinbox_height.value()
-		if self.experiment.var.height != height:
-			self.main_window.update_resolution(
-				self.experiment.var.width, height)
+		if self.experiment.var.width != width or \
+			self.experiment.var.height != height:
+			self.main_window.update_resolution(width, height)
 
 		# Set the foreground color
 		foreground = self.experiment.syntax.sanitize(self.ui.edit_foreground.text())
