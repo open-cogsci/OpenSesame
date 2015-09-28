@@ -19,32 +19,20 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 
 from libopensesame.py3compat import *
 
-class plain:
+import os
+from libopensesame.widgets.themes.gray import gray
+from libopensesame.widgets.themes.plain import plain
+
+class gray_large(gray):
 
 	def __init__(self, form):
 
-		self.form = form
-		if self.form.clicks:
-			from openexp.sampler import sampler
-			import os
-			self.click_sound = sampler(self.form.experiment,
-				self.form.experiment.resource(os.path.join(
-				'widgets', 'interaction.ogg')),
-				duration=0, volume=.5)
-
-	def box(self, x, y, checked=False):
-
-		self.form.canvas.rect(x, y, 16, 16, fill=checked)
+		plain.__init__(self, form)
+		self.box_checked_image = self.form.experiment.resource(os.path.join(
+			'widgets', 'gray', 'box-checked-large.png'))
+		self.box_unchecked_image = self.form.experiment.resource(os.path.join(
+			'widgets', 'gray', 'box-unchecked-large.png'))
 
 	def box_size(self):
 
-		return 16
-
-	def frame(self, x, y, w, h, style='normal'):
-
-		self.form.canvas.rect(x, y, w, h)
-
-	def click(self):
-
-		if self.form.clicks:
-			self.click_sound.play()
+		return 32

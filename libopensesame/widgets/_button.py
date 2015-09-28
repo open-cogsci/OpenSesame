@@ -57,16 +57,16 @@ class button(label):
 	"""
 
 	def __init__(self, form, text=u'button', frame=True, center=True, var=None):
-	
+
 		"""
 		desc:
 			Constructor.
-		
+
 		arguments:
 			form:
 				desc:	The parent form.
 				type:	form
-		
+
 		keywords:
 			text:
 				desc:	Button text.
@@ -83,19 +83,19 @@ class button(label):
 						used to log the widget status.
 				type:	[str, unicode, NoneType]
 		"""
-	
+
 		label.__init__(self, form, text, frame=frame, center=center)
 		self.type = u'button'
 		self.var = var
 		self.set_var(False)
-				
+
 	def on_mouse_click(self, pos):
-	
+
 		"""
 		desc:
 			Is called when the user clicks on the button. Returns the button
 			text.
-		
+
 		arguments:
 			pos:
 				desc:	An (x, y) coordinates tuple.
@@ -105,6 +105,7 @@ class button(label):
 			desc:	The button text.
 			type:	unicode
 		"""
-	
+
+		self.theme_engine.click()
 		self.set_var(True)
 		return self.text

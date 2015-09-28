@@ -114,5 +114,6 @@ class image_button(image):
 				type:	tuple
 		"""
 
+		self.theme_engine.click()
 		self.set_var(True)
 		return self.image_id

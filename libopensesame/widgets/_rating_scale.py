@@ -61,16 +61,16 @@ class rating_scale(widget):
 
 	def __init__(self, form, nodes=5, click_accepts=False,
 		orientation=u'horizontal', var=None, default=None):
-	
+
 		"""
 		desc:
 			Constructor.
-		
+
 		arguments:
 			form:
 				desc:	The parent form.
 				type:	form
-		
+
 		keywords:
 			nodes:
 				desc:	The number of nodes or a list of node identifiers (e.g.,
@@ -103,13 +103,12 @@ class rating_scale(widget):
 						number, where 0 is the first node.
 				type:	[int, NoneType]
 		"""
-		
+
 		if isinstance(click_accepts, basestring):
 			click_accepts = click_accepts == u'yes'
-		
+
 		widget.__init__(self, form)
 		self.type = u'rating_scale'
-		self.box_size = 16
 		self.click_accepts = click_accepts
 		self.pos_list = []
 		self.var = var
@@ -121,33 +120,34 @@ class rating_scale(widget):
 		else:
 			self.nodes = nodes
 		self.set_value(default)
-			
+
 	def on_mouse_click(self, pos):
-	
+
 		"""
 		desc:
 			Is called whenever the user clicks on the widget. Selects the
 			correct value from the scale and optionally closes the form.
-		
+
 		arguments:
 			pos:
 				desc:	An (x, y) coordinates tuple.
 				type:	tuple
 		"""
-	
+
 		x, y = pos
 		i = 0
 		for _x, _y in self.pos_list:
 			if x >= _x and x <= _x+self.box_size and y >= _y and y <= \
 				_y+self.box_size:
+				self.theme_engine.click()
 				self.set_value(i)
 				if self.click_accepts:
-					return i	
+					return i
 				break
 			i += 1
-		
+
 	def render(self):
-	
+
 		"""
 		desc:
 			Draws the widget.
@@ -155,8 +155,8 @@ class rating_scale(widget):
 
 		x, y, w, h = self.rect
 		cx = x+w/2
-		cy = y+h/2		
-		_h = self.form.theme_engine.box_size()		
+		cy = y+h/2
+		_h = self.form.theme_engine.box_size()
 		if self.orientation == u'horizontal':
 			# Some ugly maths, but basically it evenly spaces the checkboxes and
 			# draws a frame around it.
@@ -189,19 +189,19 @@ class rating_scale(widget):
 			raise osexception( \
 				u'rating_scale orientation must be "horizontal" or "vertical", not "%s"' % \
 				self.orientation)
-			
+
 	def set_value(self, val):
-	
+
 		"""
 		desc:
 			Sets the rating scale value.
-		
+
 		arguments:
 			val:
 				desc:	The value.
 				type:	int
 		"""
-		
+
 		if val is not None and (val >= len(self.nodes) or val < 0):
 			raise osexception( \
 				u'Trying to select a non-existing node (%s). Did you specify an incorrect default value?' \

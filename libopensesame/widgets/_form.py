@@ -53,7 +53,8 @@ class form(object):
 	"""
 
 	def __init__(self, experiment, cols=2, rows=2, spacing=10,
-		margins=(100, 100, 100, 100), theme=u'gray', item=None, timeout=None):
+		margins=(100, 100, 100, 100), theme=u'gray', item=None, timeout=None,
+		clicks=True):
 
 		"""
 		desc:
@@ -92,6 +93,11 @@ class form(object):
 				desc:	A timeout value in milliseconds, or None if no timeout
 						exists.
 				type:	[int, float, NoneType]
+			clicks:
+				desc:	If enabled, an auditory click is played on user
+						interactions. This can help to make interactions feel
+						smoother if there is some visual lag.
+				type:	bool
 		"""
 
 		# Normalize the column and row sizes so that they add up to 1
@@ -115,6 +121,7 @@ class form(object):
 		self.width = experiment.var.width
 		self.height = experiment.var.height
 		self.spacing = spacing
+		self.clicks = clicks
 		self.margins = type_check.float_list(margins, u'form margins',
 			min_len=4, max_len=4)
 		n_cells = len(self.cols)*len(self.rows)
@@ -123,13 +130,11 @@ class form(object):
 		self.canvas = canvas(self.experiment, auto_prepare=False,
 			color=self.item.var.foreground,
 			background_color=self.item.var.background)
-
-		if theme == u'gray':
-			from libopensesame.widgets.themes.gray import gray
-			self.theme_engine = gray(self)
-		else:
-			from themes.plain import plain
-			self.theme_engine = plain(self)
+		# Dynamically load the theme object
+		theme_mod = __import__(
+			u'libopensesame.widgets.themes.%s' % theme, fromlist=[u'dummy'])
+		theme_cls = getattr(theme_mod, theme)
+		self.theme_engine = theme_cls(self)
 
 	def __len__(self):
 

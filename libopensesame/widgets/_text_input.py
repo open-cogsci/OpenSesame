@@ -140,6 +140,7 @@ class text_input(label):
 
 		self.focus = True
 		self.caret_pos = len(self.text)
+		self.theme_engine.click()
 		my_keyboard = keyboard(self.form.experiment, timeout=0)
 		my_keyboard.show_virtual_keyboard(True)
 		while True:
@@ -169,6 +170,7 @@ class text_input(label):
 				my_keyboard.show_virtual_keyboard(False)
 				return None
 			elif resp == u'return' or resp == u'enter':
+				self.theme_engine.click()
 				if self.return_accepts:
 					my_keyboard.show_virtual_keyboard(False)
 					return self.text

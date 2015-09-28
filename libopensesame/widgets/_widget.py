@@ -53,6 +53,14 @@ class widget(object):
 				u'The first parameter passed to the constructor of a form widget should be a form, not "%s"' \
 				% form)
 
+	@property
+	def box_size(self):
+		return self.form.theme_engine.box_size()
+
+	@property
+	def theme_engine(self):
+		return self.form.theme_engine
+
 	def draw_frame(self, rect=None, style=u'normal'):
 
 		"""

@@ -111,7 +111,6 @@ class checkbox(button):
 		button.__init__(self, form, text, frame=frame, center=False)
 		self.type = u'checkbox'
 		self.group = group
-		self.box_size = 16
 		self.box_pad = self.x_pad
 		self.x_pad += self.x_pad + self.box_size
 		self.var = var
@@ -131,6 +130,7 @@ class checkbox(button):
 				type:	tuple
 		"""
 
+		self.theme_engine.click()
 		if self.group is not None:
 			# If the checkbox is part of a group than checking it will uncheck
 			# all other checkboxes in the group, and check the current one

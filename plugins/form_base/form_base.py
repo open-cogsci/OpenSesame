@@ -62,7 +62,6 @@ class form_base(item.item):
 		self.var.only_render = u'no'
 		self.var.timeout = u'infinite'
 		self.var.margins = u'50;50;50;50'
-		self.focus_widget = None
 		self._widgets = []
 		self._variables = []
 
@@ -131,14 +130,16 @@ class form_base(item.item):
 			margins=margins, spacing=self.var.spacing, theme=self.var._theme,
 			item=self, timeout=timeout)
 
-		for arglist, kwdict in self._widgets:
+		self.focus_widget = None
+		for arglist, orig_kwdict in self._widgets:
+			kwdict = orig_kwdict.copy()
 			# Evaluate all values
 			arglist = [self.syntax.eval_text(arg) for arg in arglist]
 			for key, val in kwdict.items():
 				kwdict[key] = self.syntax.eval_text(val, var=self.var)
 			# Translate paths into full file names
 			if u'path' in kwdict:
-				kwdict[u'path'] = self.experiment.pool[w[u'path']]
+				kwdict[u'path'] = self.experiment.pool[kwdict[u'path']]
 			# Process focus keyword
 			focus = False
 			if u'focus' in kwdict:
