@@ -30,7 +30,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 
 ## Build environment
 
-Currently, most development is done on Kubuntu 14.04. Most of the dependencies
+Currently, most development is done on Ubuntu 15.04. Most of the dependencies
 for pgs4a are described on their homepage, but in addition you need to install
 the Oracle Java JDK (v8 currently used). This is available from
 `ppa:webupd8team/java`. Instructions taken from:
@@ -69,16 +69,17 @@ if 'install' in sys.argv:
 module_list = [
 	'HTMLParser',
 	'markupbase',
+	'webcolors',
 	]
 
 # A list of pure Python packages that are not included by default but are
 # required for OpenSesame
 package_list = [
 	'yaml',
-	'webcolors',
 	'libopensesame',
 	'libqtopensesame',
-	'openexp'
+	'openexp',
+	'distutils'
 	]
 
 # A list of files/folders in the resources folder that should be copied
@@ -86,13 +87,14 @@ resources_whitelist = [
 	'widgets',
 	'gray',
 	'android',
-	'menu.opensesame',
+	'menu.osexp',
 	'box-checked.png',
 	'box-unchecked.png',
 	'mono.ttf',
 	'sans.ttf',
 	'serif.ttf',
-	'android-splash.jpg'
+	'android-splash.jpg',
+	'backend_info.yaml'
 	]
 
 # A filter to ignore non-relevant package files
@@ -111,14 +113,6 @@ def ignore_resources(folder, files):
 			l.append(f)
 	return l
 
-# A filter to strip non-relevant examples
-def ignore_examples(folder, files):
-	l = []
-	for f in files:
-		if '_android' not in f:
-			l.append(f)
-	return l
-
 target = os.path.join(pgs4a_folder, 'opensesame')
 
 if os.path.exists(target):
@@ -128,17 +122,23 @@ print('Creating %s' % target)
 os.mkdir(target)
 
 print('Copying resources')
-shutil.copytree('resources', os.path.join(target, 'resources'), \
+shutil.copytree('resources', os.path.join(target, 'resources'),
 	ignore=ignore_resources)
-print('Copying examples')
-shutil.copytree('examples', os.path.join(target, 'examples'), \
-	ignore=ignore_examples)
+
+print('Copying example(s)')
+os.mkdir(os.path.join(target, u'examples'))
+shutil.copyfile(
+	u'extensions/example_experiments/examples/gaze_cuing/experiment.osexp',
+	os.path.join(target, u'examples', u'gaze_cuing.osexp'))
+shutil.copytree(
+	u'extensions/example_experiments/examples/gaze_cuing/__pool__',
+	os.path.join(target, u'examples/__pool__'))
 
 print('Copying plugins')
 os.mkdir(os.path.join(target, 'plugins'))
 for plugin in included_plugins:
 	print('Copying plugin %s' % plugin)
-	shutil.copytree(os.path.join('plugins', plugin), os.path.join(target, \
+	shutil.copytree(os.path.join('plugins', plugin), os.path.join(target,
 		'plugins', plugin))
 
 print('Copying modules')

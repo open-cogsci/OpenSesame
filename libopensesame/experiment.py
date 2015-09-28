@@ -65,8 +65,10 @@ class experiment(item.item):
 						`None` to use a new temporary folder.
 				type:	[str, unicode, NoneType]
 			experiment_path:
-				desc:	The path of the experiment file. This will need to
-						be spec % varnicode, NoneType]
+				desc:	The path of the experiment file. This is the folder that
+						the experiment is in, not the path to the experiment
+						file.
+				type:	str
 			fullscreen:
 				desc:	Indicates whether the experiment should be executed in
 						fullscreen.
@@ -417,11 +419,13 @@ class experiment(item.item):
 			u'Press spacebar to resume<br />'
 			u'Press Q to quit')
 		pause_keyboard = keyboard(self, keylist=[u'space', u'q'], timeout=0)
+		pause_keyboard.show_virtual_keyboard()
 		pause_canvas.show()
 		try:
 			while True:
 				key, _time = pause_keyboard.get_key()
 				if key == u'q':
+					pause_keyboard.show_virtual_keyboard(False)
 					raise osexception(u'The experiment was aborted')
 				if key == u'space':
 					break
@@ -429,6 +433,7 @@ class experiment(item.item):
 		finally:
 			self.paused = False
 			self.transmit_workspace(__pause__=False)
+		pause_keyboard.show_virtual_keyboard(False)
 
 	def cleanup(self):
 
