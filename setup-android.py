@@ -90,11 +90,18 @@ resources_whitelist = [
 	'menu.osexp',
 	'box-checked.png',
 	'box-unchecked.png',
+	'box-checked-large.png',
+	'box-unchecked-large.png',
 	'mono.ttf',
 	'sans.ttf',
 	'serif.ttf',
+	'hebrew.ttf',
+	'hindi.ttf',
+	'chinese-japanese-korean.ttf',
+	'arabic.ttf',
 	'android-splash.jpg',
-	'backend_info.yaml'
+	'backend_info.yaml',
+	'interaction.ogg'
 	]
 
 # A filter to ignore non-relevant package files
