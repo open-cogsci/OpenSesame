@@ -37,8 +37,7 @@ class item_store(object):
 
 		~~~ .python
 		# Programmatically prepare and run a sketchpad item.
-		items[u'my_sketchpad'].prepare()
-		items[u'my_sketchpad'].run()
+		items.execute(u'my_sketchpad')
 		# Check if an item exists
 		if u'my_sketchpad' in items:
 			print(u'my_sketchpad exists')
@@ -57,7 +56,7 @@ class item_store(object):
 			maxdepth: 2
 		--%
 	"""
-	
+
 	built_in_types = [u'sequence', u'loop', u'sketchpad', u'feedback',
 		u'keyboard_response', u'mouse_response', u'sampler', u'synth',
 		u'inline_script', u'logger']
@@ -212,7 +211,7 @@ class item_store(object):
 				name = item_type
 		_name = name
 		i = 1
-		while _name in self:			
+		while _name in self:
 			_name = u'%s_%d' % (name, i)
 			i += 1
 		return _name
