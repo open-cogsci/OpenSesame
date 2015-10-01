@@ -23,6 +23,7 @@ import pygame
 import pyglet
 from openexp.backend import configurable
 from openexp._canvas import canvas
+from openexp.color import color
 from openexp._coordinates.psycho import psycho as psycho_coordinates
 from libopensesame.exceptions import osexception
 from libopensesame import debug
@@ -347,9 +348,12 @@ class psycho(canvas.canvas, psycho_coordinates):
 		print(u'openexp._canvas.psycho.init_display(): monitor = %s' % monitor)
 		print(u'openexp._canvas.psycho.init_display(): screen = %s' % screen)
 		# Initialize the PsychoPy window and set various functions
-		experiment.window = visual.Window(experiment.resolution(), screen=screen,
-			waitBlanking=waitblanking, fullscr=experiment.var.fullscreen==u'yes',
-			monitor=monitor, units=u'pix', rgb=experiment.var.background,
+
+		experiment.window = visual.Window(experiment.resolution(),
+			screen=screen, waitBlanking=waitblanking,
+			fullscr=experiment.var.fullscreen==u'yes', monitor=monitor,
+			units=u'pix',
+			rgb=color(experiment, experiment.var.background).backend_color,
 			winType=u'pyglet', allowStencil=True)
 		experiment.window.setMouseVisible(False)
 		experiment.window.winHandle.set_caption(u'OpenSesame (PsychoPy backend)')
