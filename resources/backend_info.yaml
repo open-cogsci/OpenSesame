@@ -17,7 +17,7 @@ psycho:
   mouse: psycho
   sampler: legacy
   color: psycho
-  clock: legacy
+  clock: psycho
   log: csv
   icon: os-psychopy
   py2: true
