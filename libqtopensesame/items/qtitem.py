@@ -1,4 +1,3 @@
-
 #-*- coding:utf-8 -*-
 
 """
@@ -240,6 +239,7 @@ class qtitem(base_qtobject):
 		self._script_widget = QTabManager(
 			handlerButtonText=_(u'Apply and close'), cfg=cfg)
 		self._script_widget.focusLost.connect(self.apply_script_changes)
+		self._script_widget.cursorRowChanged.connect(self.apply_script_changes)
 		self._script_widget.handlerButtonClicked.connect(self.set_view_controls)
 		self._script_widget.addTab(u'Script').setLang(u'OpenSesame')
 
@@ -461,14 +461,21 @@ class qtitem(base_qtobject):
 	def delete(self, item_name, item_parent=None, index=None):
 
 		"""
-		Delete an item (not necessarily the current one)
+		desc:
+			Is called when an item is deleted (not necessarily the current one).
 
-		Arguments:
-		item_name -- the name of the item to be deleted
+		arguments:
+			item_name:
+			 	desc:	The name of the item to be deleted.
+				type:	str
 
-		Keywords arguments:
-		item_parent -- the parent item (default=None)
-		index -- the index of the item in the parent (default=None)
+		keywords:
+			item_parent:
+			 	desc:	The name of the parent item.
+				type:	str
+			index:
+			 	desc:	The index of the item in the parent.
+				type:	int
 		"""
 
 		pass
@@ -477,12 +484,20 @@ class qtitem(base_qtobject):
 		extra_info=None):
 
 		"""
-		Construct an item tree
+		desc:
+			Constructs an item tree.
 
-		Keyword arguments:
-		toplevel -- the toplevel widget (default = None)
-		items -- a list of items that have been added, to prevent recursion
-				 (default=[])
+		keywords:
+			toplevel:
+			 	desc:	The toplevel widget.
+				type:	tree_base_item
+			items:
+				desc:	A list of item names that have already been added, to
+				 		prevent recursion.
+				tyep:	list
+
+		returns:
+			type:	tree_item_item
 		"""
 
 		widget = tree_item_item(self, extra_info=extra_info)
@@ -494,11 +509,9 @@ class qtitem(base_qtobject):
 	def parents(self):
 
 		"""
-		Creates a list of all the items	that the current sequences is connected
-		to upstream
-
-		Returns:
-		A list of item names
+		returns:
+			desc:	A list of all parents (names) of the current item.
+			type:	list
 		"""
 
 		l = [self.name]
@@ -507,42 +520,28 @@ class qtitem(base_qtobject):
 				l.append(item)
 		return l
 
-	def variable_vars(self, exclude=[]):
-
-		"""
-		Determines if one of the variables of the current item is defined in
-		terms of another variable
-
-		Keywords arguments:
-		exclude -- a list of variables that should not be checked
-
-		Returns:
-		True if there are variably defined variables, False otherwise
-		"""
-
-		for var in self.var:
-			if var not in exclude:
-				val = self.var.get(var)
-				if self.experiment.varref(val):
-					return True
-		return False
-
 	def get_ready(self):
 
 		"""
-		This function should be overridden to do any last-minute stuff that
-		and item should do before an experiment is actually run, such as
-		applying pending script changes.
+		desc:
+			This function should be overridden to do any last-minute stuff that
+			and item should do before an experiment is actually run, such as
+			applying pending script changes.
 
-		Returns:
-		True if some action has been taken, False if nothing was done
+		returns:
+			desc:	True if some action has been taken, False if nothing was
+					done.
+			type:	bool
 		"""
 
 		return False
 
 	def auto_edit_widget(self):
 
-		"""Update the GUI controls based on the auto-widgets"""
+		"""
+		desc:
+			Updates the GUI controls based on the auto-widgets.
+		"""
 
 		for var, edit in self.auto_line_edit.items():
 			if isinstance(var, int):
@@ -626,42 +625,14 @@ class qtitem(base_qtobject):
 
 		self.user_hint_widget.refresh()
 
-	def sanitize_check(self, s, strict=False, allow_vars=True, notify=True):
-
-		"""
-		Checks whether a string is sane (i.e. unchanged by sanitize()) and
-		optionally presents a warning.
-
-		Arguments:
-		s			--	The string to check.
-
-		Keyword arguments:
-		strict		--	See sanitize().
-		allow_vars	--	See sanitize().
-		notify		--	Indicates whether a notification should be presented if
-						the string is not sane.
-
-		Returns:
-		True if s is sane, False otherwise.
-		"""
-
-		sane = s == self.syntax.sanitize(s, strict=strict, allow_vars=allow_vars)
-		if not sane and notify:
-			if strict:
-				self.experiment.notify(
-					_(u'All non-alphanumeric characters except underscores have been stripped'))
-			else:
-				self.experiment.notify(
-					_(u'The following characters are not allowed and have been stripped: double-quote ("), backslash (\), and newline'))
-		return sane
-
 	def auto_apply_edit_changes(self, rebuild=True):
 
 		"""
-		Apply the auto-widget controls
+		desc:
+			Applies the auto-widget controls.
 
-		Keyword arguments:
-		rebuild -- deprecated (does nothing) (default=True)
+		keywords:
+			rebuild:	Deprecated (does nothing).
 		"""
 
 		for var, edit in self.auto_line_edit.items():
@@ -718,13 +689,17 @@ class qtitem(base_qtobject):
 	def auto_add_widget(self, widget, var=None):
 
 		"""
-		Add a widget to the list of auto-widgets
+		desc:
+			Adds a widget to the list of auto-widgets.
 
-		Arguments:
-		widget -- a QWidget
+		arguments:
+			widget:
+			 	type:	QWidget
 
-		Keyword arguments:
-		var -- the variable to be linked to the widget (default=None)
+		keywords:
+			var:	The name of the experimental variable to be linked to the
+					widget, or None to use an automatically chosen name.
+			type:	[str, NoneType]
 		"""
 
 		# Use the object id as a fallback name
@@ -755,23 +730,28 @@ class qtitem(base_qtobject):
 	def clean_cond(self, cond, default=u'always'):
 
 		"""
-		Cleans a conditional statement. May raise a dialog box if problems are
-		encountered.
+		desc:
+			Cleans a conditional statement. May raise a dialog box if problems
+			are encountered.
 
-		Arguments:
-		cond	--	A (potentially filthy) conditional statement.
+		arguments:
+			cond:
+				desc:	A conditional statement.
+				type:	str
 
-		Keyword arguments:
-		default	--	A default value to use for empty
+		keywords:
+			default:
+				desc:	A default conditional statement, which is used for empty
+						and invalid statements.
+				type:	str
 
-		Returns:
-		cond	--	A clean conditional statement conditional statements.
-					(default=u'always')
+		returns:
+			cond:
+				desc:	A clean conditional statement.
+				type:	str
 		"""
 
-		cond = safe_decode(cond)
-		if not self.sanitize_check(cond):
-			cond = self.syntax.sanitize(cond)
+		cond = self.syntax.sanitize(cond)
 		if cond.strip() == u'':
 			cond = default
 		try:

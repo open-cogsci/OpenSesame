@@ -610,8 +610,7 @@ class loop(qtstructure_item, qtitem, loop_runtime):
 					val = u''
 				else:
 					val = str(self.loop_table.item(row, col).text())
-				if not self.sanitize_check(val):
-					val = self.syntax.sanitize(val)
+				val = self.syntax.sanitize(val)
 				self.matrix[row][var] = val
 		row = self.loop_table.currentRow()
 		column = self.loop_table.currentColumn()
