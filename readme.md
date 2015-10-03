@@ -6,6 +6,8 @@ Copyright, 2010-2015, Sebastiaan Mathôt and contributors.
 
 <http://osdoc.cogsci.nl/>
 
+[![Build Status](https://travis-ci.org/smathot/OpenSesame.svg?branch=ising)](https://travis-ci.org/smathot/OpenSesame)
+
 ## Features
 
 - __A comprehensive graphical user interface__--flexible and easy-to-use
