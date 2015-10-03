@@ -69,8 +69,12 @@ class multiprocess_runner(base_runner):
 					return osexception(
 						_(u'Failed to copy `opensesame` to `opensesame.py`, which is required for the multiprocess runner. Please copy the file manually, or select a different runner under Preferences.'), exception=e)
 		self.channel = multiprocessing.Queue()
-		self.exp_process = process.ExperimentProcess(self.experiment,
-			self.channel)
+		try:
+			self.exp_process = process.ExperimentProcess(self.experiment,
+				self.channel)
+		except Exception as e:
+			return osexception(_(u'Failed to initialize experiment process'),
+				exception=e)
 		# Start process!
 		self.exp_process.start()
 		# Wait for experiment to finish.
