@@ -8,4 +8,4 @@ addons:
     - python-yaml
     - python-webcolors
     - python-pygame
-script: run_unittests.py
+script: ./run_unittests.py
