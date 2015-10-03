@@ -8,4 +8,4 @@ addons:
     - python-yaml
     - python-webcolors
     - python-pygame
-script: opensesame_unittest/__init__.py
+script: run_unittests.py
