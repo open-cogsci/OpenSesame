@@ -94,9 +94,18 @@ class check_backend_argspec(unittest.TestCase):
 			fromlist=[u'dummy'])
 		ref_cls = getattr(ref_mod, category)
 		for backend in backends:
-			# PsychoPy and Expyriment are not Python 3 compatible
-			if py3 and backend in ['xpyriment', 'psycho']:
-				continue
+			if backend == 'xpyriment':
+				try:
+					import expyriment
+				except:
+					print('Expyriment is not installed, skipping test')
+					continue
+			if backend == 'psycho':
+				try:
+					import psychopy
+				except:
+					print('PsychoPy is not installed, skipping test')
+					continue
 			chk_mod = __import__(u'openexp._%s.%s' % (category, backend),
 				fromlist=[u'dummy'])
 			chk_cls = getattr(chk_mod, backend)

@@ -1,0 +1,11 @@
+language: python
+python:
+  - "2.7"
+  - "3.4"
+install:
+  - pip install pygame webcolors PyYaml PyQt4 qscintilla2
+  - wget https://github.com/smathot/QProgEdit/archive/release/3.0.1.tar.gz -O qprogedit.tar.gz
+  - tar -zxvf qprogedit.tar.gz
+  - cd QProgEdit-release-3.0.1/
+  - python setup.py install
+script: opensesame_unittest/__init__.py

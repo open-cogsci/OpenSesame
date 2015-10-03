@@ -59,7 +59,7 @@ class check_syntax(unittest.TestCase):
 
 		self.exp = experiment()
 		self.checkCmd(u'widget 0 0 1 1 label text="Tést 123"',
-			u'widget', [u'0', u'0', u'1', u'1', u'label'],
+			u'widget', [0, 0, 1, 1, u'label'],
 			{u'text' : u'Tést 123'})
 		self.checkCmd(u'test', u'test',	[], {})
 		self.checkCmd(u'test "\\"quoted\\""',
@@ -69,9 +69,10 @@ class check_syntax(unittest.TestCase):
 		with self.assertRaises(osexception):
 			print(u'Testing exception ...')
 			self.checkCmd(u'widget 0 0 1 1 label text="Tést 123',
-				u'widget', [u'0', u'0', u'1', u'1', u'label'],
+				u'widget', [0, 0, 1, 1, u'label'],
 				{u'text' : u'Tést 123'})
-		self.checkEvalText(r'\\[width] = \[width] = [width]', u'\[width] = [width] = 1024')
+		self.checkEvalText(r'\\[width] = \[width] = [width]',
+			u'\[width] = [width] = 1024')
 		self.checkEvalText(u'[no var]', u'[no var]')
 		self.checkEvalText(u'[nóvar]', u'[nóvar]')
 		self.checkEvalText(u'\[width]', u'[width]')
