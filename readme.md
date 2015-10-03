@@ -1,10 +1,26 @@
 # OpenSesame
 
-*A graphical experiment builder for the social sciences*
+OpenSesame is a tool to create experiments for psychology, neuroscience, and experimental economics.
 
 Copyright, 2010-2015, Sebastiaan Mathôt and contributors.
 
-<http://www.cogsci.nl/smathot>
+<http://osdoc.cogsci.nl/>
+
+## Features
+
+- __A comprehensive graphical user interface__--flexible and easy-to-use
+- __Support for Python scripting__--add the power of Python to your experiment
+- __Support for external devices__--use your eye tracker, button box, EEG equipment, etc.
+- __Free and open source__--released under the GPL3
+- __Crossplatform__--runs on Windows, Mac OS, Linux, and Android (runtime only)
+
+## Branches
+
+Each major version of OpenSesame lives in its own branch. The master branch contains the latest stable version.
+
+- `gibson` - 2.8
+- `heisenberg` - 2.9
+- `ising` - 3.0
 
 ## About
 
