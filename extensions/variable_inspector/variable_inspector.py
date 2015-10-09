@@ -38,6 +38,7 @@ class variable_inspector(base_extension):
 			Initializes the variable inspector dock widget.
 		"""
 
+		self.need_refresh = False
 		self.dock_widget = variable_inspector_dockwidget(self.main_window, self)
 		self.dock_widget.visibilityChanged.connect(self.set_visible)
 		self.main_window.addDockWidget(QtCore.Qt.RightDockWidgetArea,
@@ -82,6 +83,9 @@ class variable_inspector(base_extension):
 		cfg.variable_inspector_visible = visible
 		self.set_checked(visible)
 		if visible:
+			if self.need_refresh:
+				self.dock_widget.widget().refresh()
+				self.need_refresh = False
 			self.dock_widget.show()
 			self.dock_widget.widget().focus()
 		else:
@@ -105,6 +109,9 @@ class variable_inspector(base_extension):
 
 		if self.dock_widget.isVisible():
 			self.dock_widget.widget().refresh()
+			self.need_refresh = False
+		else:
+			self.need_refresh = True
 
 	def reset(self):
 

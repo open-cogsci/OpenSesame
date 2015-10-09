@@ -110,8 +110,10 @@ class variable_inspector_widget(base_widget):
 		row = self.ui.table_variables.currentRow()
 		filt = str(self.ui.edit_variable_filter.text())
 		var_store, alive = self.var()
+		self.ui.label_no_heartbeat.setVisible(
+			not self.main_window.runner_cls.has_heartbeat())
 		self.ui.label_status.setText(
-			_(u'Experiment status: <b>%s</b>' % self.main_window.run_status()))
+			_(u'Experiment status: <b>%s</b>') % self.main_window.run_status())
 		if alive and self.main_window.run_status() == u'finished':
 			self.ui.widget_reset_message.show()
 		else:

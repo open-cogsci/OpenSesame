@@ -49,7 +49,7 @@ class variable_inspector_cell(QtGui.QTableWidgetItem):
 		if text is None:
 			text = u''
 		elif isinstance(text, list):
-			text = u','.join(text)
+			text = u','.join([safe_decode(s) for s in text])
 		elif isinstance(text, int) or isinstance(text, float):
 			text = str(text)
 			a = QtCore.Qt.AlignRight
