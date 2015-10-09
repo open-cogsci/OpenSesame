@@ -130,3 +130,10 @@ class multiprocess_runner(base_runner):
 		"""See base_runner."""
 
 		return self._workspace_globals
+
+	@staticmethod
+	def has_heartbeat():
+
+		"""See base_runner."""
+
+		return True

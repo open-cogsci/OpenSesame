@@ -888,25 +888,31 @@ class qtopensesame(QtGui.QMainWindow, base_component):
 
 		self.enable(False)
 		print(u'\n')
-		if cfg.runner == u'multiprocess':
-			from libqtopensesame.runners import multiprocess_runner as runner
-
-			# Multiprocessing dus not work if opensesame is packaged as an app
-			# under OSX. For now just display a warning message and do nothing
-			# For the same reason, inOSX the default runner is set to inprocess
-			# for now in misc.config
-			if sys.platform == "darwin" and getattr(sys, 'frozen', None):
-				self.experiment.notify(u"Multiprocessing does not work in the OSX app version yet. \
-							 Please change the runner to 'inprocess' in the preferences panel")
-		elif cfg.runner == u'inprocess':
-			from libqtopensesame.runners import inprocess_runner as runner
-		elif cfg.runner == u'external':
-			from libqtopensesame.runners import external_runner as runner
-		debug.msg(u'using %s runner' % runner)
-		_runner = runner(self)
+		debug.msg(u'using %s runner' % cfg.runner)
+		_runner = self.runner_cls(self)
 		_runner.run(quick=quick, fullscreen=fullscreen,
 			auto_response=self.experiment.auto_response)
 		self.enable(True)
+
+	@property
+	def runner_cls(self):
+
+		"""
+		returns:
+			desc:	A runner class.
+			type:	base_runner
+		"""
+
+		# Multiprocessing dus not work if opensesame is packaged as an app
+		# under OSX. For now just display a warning message and do nothing
+		# For the same reason, inOSX the default runner is set to inprocess
+		# for now in misc.config
+		if sys.platform == "darwin" and getattr(sys, 'frozen', None):
+			self.experiment.notify(u'Multiprocessing does not work in the OSX '
+				'app version yet. Please change the runner to \'inprocess\' in '
+				'the preferences panel')
+		from libqtopensesame import runners
+		return getattr(runners, u'%s_runner' % cfg.runner)
 
 	def run_experiment_in_window(self):
 

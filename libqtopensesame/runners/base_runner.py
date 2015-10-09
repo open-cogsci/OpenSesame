@@ -285,3 +285,14 @@ class base_runner(object):
 		self.paused = False
 		self.main_window.set_run_status(u'running')
 		self.main_window.extension_manager.fire(u'resume_experiment')
+
+	@staticmethod
+	def has_heartbeat():
+
+		"""
+		desc:
+			Gives True if the runner supports heartbeats, which are used to
+			update the variable inspector, and False otherwise.
+		"""
+
+		return False
