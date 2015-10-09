@@ -236,41 +236,35 @@ class item(object):
 				correct=correct)
 		"""
 
+		var = self.experiment.var
+		# Sanity checks
+		if not isinstance(response_time, int) and \
+			not isinstance(response_time, float) and response_time is not None:
+			raise osexception(u'response should be a numeric value or None')
+		if correct not in (0, 1, True, False, None):
+			raise osexception(
+				u'correct should be 0, 1, True, False, or None')
 		# Handle response variables.
-		self.experiment.var.set(u'total_responses', self.experiment.var.get( \
-			u'total_responses') + 1)
-		self.experiment.var.set(u'response', response)
-		self.experiment.var.set(u'response_time', response_time)
+		var.total_responses += 1
+		var.response = response
+		var.response_time = response_time
 		if response_time is not None:
-			if type(response_time) not in (int, float):
-				raise osexception(u'response should be a numeric value or None')
-			self.experiment.var.set(u'total_response_time', self.experiment.var.get( \
-			u'total_response_time') + self.var.get(u'response_time'))
-		if correct is not None:
-			if correct not in (0, 1, True, False, None):
-				raise osexception( \
-					u'correct should be 0, 1, True, False, or None')
-			if correct:
-				self.experiment.var.set(u'total_correct', self.experiment.var.get( \
-					u'total_correct') + 1)
-				self.experiment.var.set(u'correct', 1)
-			else:
-				self.experiment.var.set(u'correct', 0)
+			var.total_response_time += response_time
+		if correct is None:
+			var.correct = u'undefined'
+		elif correct:
+			var.total_correct += 1
+			var.correct = 1
+		else:
+			var.correct = 0
 		# Set feedback variables
-		self.experiment.var.set(u'acc', 100.0 * self.experiment.var.get( \
-			u'total_correct') / self.experiment.var.get(u'total_responses'))
-		self.experiment.var.set(u'avg_rt', self.experiment.var.get( \
-			u'total_response_time') / self.experiment.var.get(u'total_responses'))
-		self.experiment.var.set(u'accuracy', self.experiment.var.get(u'acc'))
-		self.experiment.var.set(u'average_response_time', self.experiment.var.get( \
-			u'avg_rt'))
+		var.accuracy = var.acc = 100. * var.total_correct / var.total_responses
+		var.average_response_time = var.avg_rt = \
+			var.total_response_time / var.total_responses
 		# Copy the response variables to variables with a name suffix.
-		self.experiment.var.set(u'correct_%s' % self.name,
-			self.experiment.var.get(u'correct'))
-		self.experiment.var.set(u'response_%s' % self.name,
-			self.experiment.var.get(u'response'))
-		self.experiment.var.set(u'response_time_%s' % self.name,
-			self.experiment.var.get(u'response_time'))
+		var.set(u'correct_%s' % self.name, var.correct)
+		var.set(u'response_%s' % self.name, var.response)
+		var.set(u'response_time_%s' % self.name, var.response_time)
 
 	def __getattr__(self, var):
 
@@ -582,7 +576,7 @@ class item(object):
 			DeprecationWarning)
 
 	def split(self, s):
-		
+
 		warnings.warn(
 			u'item.split() has been deprecated. Please use syntax.split()',
 			DeprecationWarning)
