@@ -431,26 +431,6 @@ class qtopensesame(QtGui.QMainWindow, base_component):
 			self.ui.action_enable_auto_response.isChecked()
 		self.update_preferences_tab()
 
-	def save_unsaved_changes(self):
-
-		"""
-		If there are unsaved changes, present a dialog and save the changes if
-		requested
-		"""
-
-		if not self.unsaved_changes:
-			return True
-		resp = QtGui.QMessageBox.question(self.ui.centralwidget, \
-			_(u"Save changes?"), \
-			_(u"Your experiment contains unsaved changes. Do you want to save your experiment?"), \
-			QtGui.QMessageBox.Yes, QtGui.QMessageBox.No, \
-				QtGui.QMessageBox.Cancel)
-		if resp == QtGui.QMessageBox.Cancel:
-			return False
-		if resp == QtGui.QMessageBox.Yes:
-			self.save_file()
-		return True
-
 	def set_unsaved(self, unsaved_changes=True):
 
 		"""
@@ -571,6 +551,31 @@ class qtopensesame(QtGui.QMainWindow, base_component):
 		self.ui.pool_widget.setFocus()
 		self.ui.pool_widget.refresh()
 
+	def save_unsaved_changes(self):
+
+		"""
+		desc:
+			Checks whether there are unsaved changes. If so, the user can
+			choose to discard or save these changes, or to cancel.
+
+		returns:
+			desc:	False if the user has cancelled, True otherwise.
+			type:	bool
+		"""
+
+		from libqtopensesame._input.confirmation import confirmation
+		if not self.unsaved_changes:
+			return True
+		resp = confirmation(self,
+			msg=_(u'Your experiment contains unsaved changes. Do you want to save your experiment?'),
+			title=_(u'Save changes?'), allow_cancel=True,
+			default=u'cancel').show()
+		if resp is None:
+			return False
+		if resp:
+			self.save_file()
+		return True
+
 	def closeEvent(self, e):
 
 		"""
@@ -585,19 +590,6 @@ class qtopensesame(QtGui.QMainWindow, base_component):
 		if self.block_close_event:
 			e.ignore()
 			return
-		from libopensesame import metadata
-		if debug.enabled or metadata.channel == u'dev':
-			libopensesame.experiment.clean_up(debug.enabled)
-			self.save_state()
-			e.accept()
-			return
-		resp = QtGui.QMessageBox.question(self.ui.centralwidget, _(u"Quit?"),
-			_(u"Are you sure you want to quit OpenSesame?"),
-			QtGui.QMessageBox.Yes, QtGui.QMessageBox.No)
-		if resp == QtGui.QMessageBox.No:
-			if not isinstance(e, bool):
-				e.ignore()
-				return
 		if not self.save_unsaved_changes():
 			e.ignore()
 			return
