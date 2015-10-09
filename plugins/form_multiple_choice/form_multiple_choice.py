@@ -93,10 +93,10 @@ class form_multiple_choice(item.item):
 		if self.var.timeout == u'infinite':
 			timeout = None
 		else:
-			timeout = self.var.timeout				
+			timeout = self.var.timeout
 		form = widgets.form(self.experiment, cols=1, rows=rows,
 			spacing=self.var.spacing, margins=margins, theme=self.var._theme,
-			item=self, timeout=timeout)
+			item=self, timeout=timeout, clicks=self.var.form_clicks==u'yes')
 		form.set_widget(widgets.label(form, self.var.form_title), (0,0))
 		form.set_widget(widgets.label(form, self.var.question), (0,1))
 		i = 2

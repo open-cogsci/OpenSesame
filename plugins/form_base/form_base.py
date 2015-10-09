@@ -128,7 +128,7 @@ class form_base(item.item):
 			timeout = self.var.timeout
 		self._form = widgets.form(self.experiment, cols=cols, rows=rows,
 			margins=margins, spacing=self.var.spacing, theme=self.var._theme,
-			item=self, timeout=timeout)
+			item=self, timeout=timeout, clicks=self.var.form_clicks==u'yes')
 
 		self.focus_widget = None
 		for arglist, orig_kwdict in self._widgets:

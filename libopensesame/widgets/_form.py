@@ -54,7 +54,7 @@ class form(object):
 
 	def __init__(self, experiment, cols=2, rows=2, spacing=10,
 		margins=(100, 100, 100, 100), theme=u'gray', item=None, timeout=None,
-		clicks=True):
+		clicks=False):
 
 		"""
 		desc:

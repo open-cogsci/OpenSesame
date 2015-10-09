@@ -124,6 +124,7 @@ class experiment(item.item):
 		self.var.title = u'My Experiment'
 		self.var.bidi = u'no'
 		self.var.round_decimals = 2
+		self.var.form_clicks = u'no'
 		# In version 2.9.X and before, the sketchpad used 0,0 for the screen
 		# center, whereas scripting items used 0,0 for the top-left. By setting
 		# uniform_coordinates to 'yes', 0,0 is used for the center in all cases.
