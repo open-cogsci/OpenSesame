@@ -26,10 +26,11 @@ class confirmation(QtGui.QMessageBox, base_subcomponent):
 
 	"""
 	desc:
-		A simple yes/ confirmation dialog.
+		A simple yes/ no/ cancel confirmation dialog.
 	"""
 
-	def __init__(self, main_window, msg):
+	def __init__(self, main_window, msg, title=None, allow_cancel=False,
+		default=u'no'):
 
 		"""
 		desc:
@@ -42,14 +43,36 @@ class confirmation(QtGui.QMessageBox, base_subcomponent):
 			msg:
 				desc:	The message.
 				type:	[unicode, str]
+			title:
+				desc:	A Window title or None for a default title.
+				type:	[str, NoneType]
+			allow_cancel:
+				desc:	Indicates whether a cancel button should be included,
+						in addition to the yes and no buttons.
+				type:	bool
+			default:
+				desc:	The button that is active by default, 'no', 'yes', or
+						'cancel'
+				type:	str
 		"""
 
 		QtGui.QMessageBox.__init__(self, main_window)
 		self.setup(main_window)
 		self.yes = self.addButton(QtGui.QMessageBox.Yes)
 		self.no = self.addButton(QtGui.QMessageBox.No)
-		self.setDefaultButton(QtGui.QMessageBox.No)
-		self.setWindowTitle(_(u'Please confirm'))
+		if allow_cancel:
+			self.cancel = self.addButton(QtGui.QMessageBox.Cancel)
+		else:
+			self.cancel = None
+		if default == u'no':
+			self.setDefaultButton(QtGui.QMessageBox.No)
+		elif default == u'yes':
+			self.setDefaultButton(QtGui.QMessageBox.Yes)
+		elif default == u'cancel' and allow_cancel:
+			self.setDefaultButton(QtGui.QMessageBox.Cancel)
+		if title is None:
+			title = _(u'Please confirm')
+		self.setWindowTitle(title)
 		self.setText(msg)
 
 	def show(self):
@@ -59,9 +82,13 @@ class confirmation(QtGui.QMessageBox, base_subcomponent):
 			Shows the confirmation dialog.
 
 		returns:
-			desc:	True if confirmed, False otherwise.
-			type:	bool
+			desc:	True if confirmed, False disconfirmed, and None if
+					cancelled.
+			type:	[bool, NoneType]
 		"""
 
 		self.exec_()
-		return self.clickedButton() == self.yes
+		button = self.clickedButton()
+		if self.cancel is not None and button is self.cancel:
+			return None
+		return button == self.yes
