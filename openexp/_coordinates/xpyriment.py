@@ -42,7 +42,7 @@ class xpyriment(coordinates):
 		x, y = self.none_to_center(x, y)
 		if self._canvas_dev:
 			# For expyriment, 0,0 is the display center and positive y
-			# coordinates are down.
+			# coordinates are up.
 			if self.uniform_coordinates:
 				return x, -y
 			return x - self._xcenter, self._ycenter - y

@@ -224,10 +224,10 @@ class xpyriment(canvas.canvas, xpyriment_coordinates):
 					u"'%s' is not a supported image format" % fname)
 			if scale is None:
 				x += surf.get_width()/2
-				y += surf.get_height()/2
+				y -= surf.get_height()/2
 			else:
 				x += scale*surf.get_width()/2
-				y += scale*surf.get_height()/2
+				y -= scale*surf.get_height()/2
 		stim = stimuli.Picture(fname, position=(x,y))
 		if scale is not None: stim.scale( (scale, scale) )
 		self.add_stim(stim)
