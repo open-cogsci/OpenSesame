@@ -1,22 +1,12 @@
 ---
 API: 2
-OpenSesame: 3.0.0~pre3
-Platform: posix
-api: 2
-date: Mon Mar  2 17:05:55 2015
-opensesame: 3.0.0~pre1
-platform: posix
-version: 23
 ---
 set width 1024
+set uniform_coordinates "yes"
 set title "Form template"
-set synth_backend "legacy"
 set subject_parity "even"
 set subject_nr 0
 set start "experiment"
-set sampler_backend "legacy"
-set mouse_backend "legacy"
-set keyboard_backend "legacy"
 set height 768
 set foreground "black"
 set font_size 24
@@ -27,20 +17,19 @@ set description "A simple template for form-based questionnaires"
 set coordinates "relative"
 set compensation 0
 set canvas_backend "legacy"
-set bidi "no"
+set bidi "yes"
 set background "white"
 
 define notepad about_this_template
 	__note__
-	Hi,
-	This template already contains the basic structure
-	needed for a typical questionnaire, consisting of
-	open and multiple-choice questions.
-	For more information, please refer to the website:
-	<http://www.cogsci.nl/opensesame>
+	This template already contains the basic structure of a typical questionnaire,
+	consisting of open and multiple-choice questions.
+
+	For more information, please visit:
+
+	- <http://osdoc.cogsci.nl/>
+
 	Have fun with OpenSesame!
-	--
-	Sebastiaan
 	__end__
 	set description "Some pointers to help you get started!"
 
@@ -53,6 +42,7 @@ define sequence experiment
 	run goodbye "always"
 
 define form_text_display goodbye
+	set timeout "infinite"
 	set spacing 10
 	set rows "1;4;1"
 	set only_render "no"
@@ -64,11 +54,12 @@ define form_text_display goodbye
 	set cols "1;1;1"
 	set _theme "gray"
 	widget 0 0 3 1 label text="[form_title]"
-	widget 0 1 3 1 label text="[form_text]" center=no
+	widget 0 1 3 1 label center=no text="[form_text]"
 	widget 1 2 1 1 button text="[ok_text]"
 
 
 define form_text_display instructions
+	set timeout "infinite"
 	set spacing 10
 	set rows "1;4;1"
 	set only_render "no"
@@ -82,7 +73,7 @@ define form_text_display instructions
 	set cols "1;1;1"
 	set _theme "gray"
 	widget 0 0 3 1 label text="[form_title]"
-	widget 0 1 3 1 label text="[form_text]" center=no
+	widget 0 1 3 1 label center=no text="[form_text]"
 	widget 1 2 1 1 button text="[ok_text]"
 
 
@@ -91,15 +82,16 @@ define logger logger
 	set ignore_missing "yes"
 	set description "Logs experimental data"
 	set auto_log "no"
-	log "response"
-	log "question_option1"
-	log "question_option2"
-	log "question_text"
-	log "question_type"
-	log "question_option3"
-	log "count_question_sequence"
+	log response
+	log question_option1
+	log question_option2
+	log question_text
+	log question_type
+	log question_option3
+	log count_question_sequence
 
 define form_multiple_choice mc_question
+	set timeout "infinite"
 	set spacing 10
 	__question__
 	[question_text]
@@ -119,6 +111,7 @@ define form_multiple_choice mc_question
 	set _theme "gray"
 
 define form_text_input open_question
+	set timeout "infinite"
 	set spacing 10
 	set rows "1;1;6"
 	set only_render "no"
@@ -132,8 +125,8 @@ define form_text_input open_question
 	set cols 1
 	set _theme "gray"
 	widget 0 0 1 1 label text="[form_title]"
-	widget 0 1 1 1 label text="[form_question]" center=no
-	widget 0 2 1 1 text_input focus=yes var="[form_var]" return_accepts=yes stub=""
+	widget 0 1 1 1 label center=no text="[form_question]"
+	widget 0 2 1 1 text_input focus=yes return_accepts=yes stub="" var="[form_var]"
 
 
 define loop question_loop
@@ -146,21 +139,21 @@ define loop question_loop
 	set cycles 3
 	set column_order "question_type;question_text;question_option1;question_option2;question_option3"
 	set break_if "never"
+	setcycle 0 question_option1 ""
 	setcycle 0 question_option2 ""
 	setcycle 0 question_option3 ""
 	setcycle 0 question_text "Open question"
 	setcycle 0 question_type "open"
-	setcycle 0 question_option1 ""
+	setcycle 1 question_option1 "A"
 	setcycle 1 question_option2 "B"
 	setcycle 1 question_option3 ""
 	setcycle 1 question_text "Multiple-choice question (2 options)"
 	setcycle 1 question_type "mc"
-	setcycle 1 question_option1 "A"
+	setcycle 2 question_option1 "A"
 	setcycle 2 question_option2 "B"
 	setcycle 2 question_option3 "C"
 	setcycle 2 question_text "Multiple-choice question (3 options)"
 	setcycle 2 question_type "mc"
-	setcycle 2 question_option1 "A"
 	run question_sequence
 
 define sequence question_sequence
@@ -169,4 +162,3 @@ define sequence question_sequence
 	run mc_question "[question_type] = mc"
 	run open_question "[question_type] = open"
 	run logger "always"
-
