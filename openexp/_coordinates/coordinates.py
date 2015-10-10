@@ -17,6 +17,10 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
+from openexp._canvas.canvas import canvas
+from openexp._mouse.mouse import mouse
+from libopensesame.exceptions import osexception
+
 class coordinates(object):
 
 	"""
@@ -37,6 +41,11 @@ class coordinates(object):
 		self._height = self.experiment.var.height
 		self._xcenter = self._width/2
 		self._ycenter = self._height/2
+		self._mouse_dev = isinstance(self, mouse)
+		self._canvas_dev = isinstance(self, canvas)
+		if not self._mouse_dev and not self._canvas_dev:
+			raise osexception(
+				u'coordinates class should be coparent with canvas or mouse class')
 
 	def none_to_center(self, x, y):
 
@@ -69,7 +78,7 @@ class coordinates(object):
 				y = 0
 		return x, y
 
-	def to_xy(self, x, y=None, dev=u'canvas'):
+	def to_xy(self, x, y=None):
 
 		"""
 		desc:
@@ -86,11 +95,6 @@ class coordinates(object):
 			y:
 				desc:	A y coordinate. Only applicable if x was not a tuple.
 				type:	[float, int, NoneType]
-			dev:
-				desc:	The device for which the coordinates should be
-						transformed, in case different devices uses different
-						coordinate systems.
-				type:	[unicode, str]
 
 		returns:
 			desc:	An (x, y) coordinate tuple in the back-end specific
@@ -100,7 +104,7 @@ class coordinates(object):
 
 		raise NotImplementedError()
 
-	def from_xy(self, x, y=None, dev=u'canvas'):
+	def from_xy(self, x, y=None):
 
 		"""
 		desc:
@@ -116,11 +120,6 @@ class coordinates(object):
 			y:
 				desc:	A y coordinate. Only applicable if x was not a tuple.
 				type:	[float, int, NoneType]
-			dev:
-				desc:	The device for which the coordinates should be
-						transformed, in case different devices uses different
-						coordinate systems.
-				type:	[unicode, str]
 
 		returns:
 			desc:	An (x, y) coordinate tuple in the OpenSesame reference

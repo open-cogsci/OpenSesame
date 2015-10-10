@@ -28,7 +28,7 @@ class psycho(coordinates):
 		`openexp._coordinates.coordinates`.
 	"""
 
-	def to_xy(self, x, y=None, dev=u'canvas'):
+	def to_xy(self, x, y=None):
 
 		if isinstance(x, tuple):
 			x, y = x
@@ -39,7 +39,7 @@ class psycho(coordinates):
 			return x, -y
 		return x - self._xcenter, self._ycenter - y
 
-	def from_xy(self, x, y=None, dev=u'canvas'):
+	def from_xy(self, x, y=None):
 
 		if y is None:
 			x, y = x

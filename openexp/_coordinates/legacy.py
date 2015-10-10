@@ -28,7 +28,7 @@ class legacy(coordinates):
 		`openexp._coordinates.coordinates`.
 	"""
 
-	def to_xy(self, x, y=None, dev=u'canvas'):
+	def to_xy(self, x, y=None):
 
 		if isinstance(x, tuple):
 			x, y = x
@@ -37,7 +37,7 @@ class legacy(coordinates):
 			return x, y
 		return x + self._xcenter, y + self._ycenter
 
-	def from_xy(self, x, y=None, dev=u'canvas'):
+	def from_xy(self, x, y=None):
 
 		if isinstance(x, tuple):
 			x, y = x

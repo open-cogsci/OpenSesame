@@ -49,10 +49,10 @@ class legacy(mouse.mouse, legacy_coordinates):
 
 	def set_pos(self, pos=(0,0)):
 
-		pygame.mouse.set_pos(self.to_xy(pos, dev='mouse'))
-		
+		pygame.mouse.set_pos(self.to_xy(pos))
+
 	def show_cursor(self, show=True):
-		
+
 		pygame.mouse.set_visible(show)
 		mouse.mouse.show_cursor(self, show=show)
 

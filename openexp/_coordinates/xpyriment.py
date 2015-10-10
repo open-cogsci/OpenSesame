@@ -35,32 +35,31 @@ class xpyriment(coordinates):
 		self._xwcenter = self.experiment.expyriment.screen.window_size[0]/2
 		self._ywcenter = self.experiment.expyriment.screen.window_size[1]/2
 
-	def to_xy(self, x, y=None, dev=u'canvas'):
+	def to_xy(self, x, y=None):
 
 		if isinstance(x, tuple):
 			x, y = x
 		x, y = self.none_to_center(x, y)
-		if dev == u'canvas':
+		if self._canvas_dev:
 			# For expyriment, 0,0 is the display center and positive y
 			# coordinates are down.
 			if self.uniform_coordinates:
 				return x, -y
 			return x - self._xcenter, self._ycenter - y
-		if dev == u'mouse':
+		if self._mouse_dev:
 			# The mouse is centered on the top-left, but we need to take into
 			# account that the display is padded in fullscreen mode.
 			if self.uniform_coordinates:
 				return x + self._xwcenter, y + self._ywcenter
 			return x + self._xwcenter - self._xcenter, \
 				y + self._ywcenter - self._ycenter
-		raise osexception(u'Invalid device: %s' % dev)
 
-	def from_xy(self, x, y=None, dev=u'canvas'):
+	def from_xy(self, x, y=None):
 
 		if isinstance(x, tuple):
 			x, y = x
-		if dev != u'mouse':
-			raise osexception(u'Invalid device: %s' % dev)
+		if not self._mouse_dev:
+			raise osexception(u'Only mouse supported')
 		if self.uniform_coordinates:
 			return x - self._xwcenter, y - self._ywcenter
 		return x - self._xwcenter + self._xcenter, \
