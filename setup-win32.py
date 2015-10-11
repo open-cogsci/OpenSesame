@@ -158,6 +158,7 @@ include_simpleio = True
 include_pyqt4_plugins = True
 release_zip = True
 release_build = 1
+channel = u'win32'
 
 python_folder = os.path.dirname(sys.executable)
 python_version = "%d.%d" % (sys.version_info[0], sys.version_info[1])
@@ -254,10 +255,18 @@ exclude_dll = [
 	"libzmq.dll",
 	]
 
-# Create empty destination folders
-if os.path.exists("dist"):
-	shutil.rmtree("dist")
-os.mkdir("dist")
+# Create empty destination folders. For some reason, rmtree and mkdir usually
+# fail, so we keep trying until it works.
+while os.path.exists("dist"):
+	try:
+		shutil.rmtree("dist")
+	except:
+		print(u'Trying to delete dist ...')
+while not os.path.exists("dist"):
+	try:
+		os.mkdir("dist")
+	except:
+		print(u'Trying to recreate dist ...')
 os.mkdir(os.path.join("dist", "plugins"))
 os.mkdir(os.path.join("dist", "extensions"))
 
@@ -314,6 +323,13 @@ for pkg in copy_packages:
 		print('\tfrom %s' % pkg_folder)
 		shutil.copytree(pkg_folder, pkg_target, symlinks=True,
 			ignore=ignore_package_files)
+		# Set the correct metadata channel
+		if pkg == 'libopensesame' and channel is not None:
+			with open(u'dist/libopensesame/metadata.py') as fd:
+				s = fd.read()
+			s = s.replace(u"channel = u'dev'", u"channel = u'%s'" % channel)
+			with open(u'dist/libopensesame/metadata.py', u'w') as fd:
+				fd.write(s)
 		if py3:
 			compileall.compile_dir(pkg_target, force=True, legacy=True)
 		else:
