@@ -34,7 +34,7 @@ except:
 import numpy as np
 
 try:
-	from psychopy import core, visual, logging
+	from psychopy import core, visual, logging, event
 except:
 	raise osexception(
 		u'Failed to import PsychoPy, probably because it is not (correctly) installed. For installation instructions, please visit http://www.psychopy.org/.')
@@ -355,7 +355,7 @@ class psycho(canvas.canvas, psycho_coordinates):
 			units=u'pix',
 			rgb=color(experiment, experiment.var.background).backend_color,
 			winType=u'pyglet', allowStencil=True)
-		experiment.window.setMouseVisible(False)
+		event.Mouse(visible=False, win=experiment.window)
 		experiment.window.winHandle.set_caption(u'OpenSesame (PsychoPy backend)')
 		# Set Gamma value if specified
 		gamma = experiment.var.get(u'psychopy_gamma', u'unchanged')
