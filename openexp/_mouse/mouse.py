@@ -88,7 +88,8 @@ class mouse(backend):
 		- `buttonlist` specifies a list of buttons that are accepted, or is set
 		  to `None` accept all keys.
 		- `visible` indicates whether the mouse cursor becomes visible when a
-		  click is collected (`True` or `False`).
+		  click is collected (`True` or `False`). To immediately change cursor
+		  visibility, use [mouse.show_cursor].
 
 		~~~ .python
 		# Get a left or right button press with a timeout of 3000 ms
@@ -168,26 +169,26 @@ class mouse(backend):
 			u'buttonlist'		: None,
 			u'visible'			: False
 			}
-			
+
 	def show_cursor(self, show=True):
-		
+
 		"""
 		desc: |
 			Immediately changes the visibility of the mouse cursor.
-			
+
 			__Note:__ In most cases, you will want to use the `visible`
 			[keyword][Response keywords], which changes the visibility during
 			response collection, that is, while `mouse.get_click()` is called.
-			
+
 		keywords:
 			show:
 				desc: 	Indicates whether the cursor is shown (True) or hidden
 						(False).
 				type:	bool
 		"""
-		
+
 		self._cursor_shown = show
-		
+
 	def set_pos(self, pos=(0,0)):
 
 		"""
@@ -296,6 +297,8 @@ class mouse(backend):
 	def synonyms(self, button):
 
 		"""
+		visible: False
+
 		desc:
 			Gives a list of synonyms for a mouse button. For example, 1 and
 			'left_button' are synonyms.
