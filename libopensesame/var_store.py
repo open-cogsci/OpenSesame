@@ -358,7 +358,7 @@ class var_store(object):
 		for var in self:
 			if var not in d:
 				d[var] = {u'source' : [u'?']}
-			d[var][u'value'] = self.get(var)
+			d[var][u'value'] = self.get(var, _eval=False)
 			d[var][u'alive'] = True
 		return d
 

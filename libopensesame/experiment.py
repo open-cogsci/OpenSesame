@@ -664,7 +664,7 @@ class experiment(item.item):
 
 		l = []
 		for var in self.var:
-			l.append( (var, self.var.get(var)) )
+			l.append( (var, self.var.get(var, _eval=False)) )
 		return l
 
 	def init_heartbeat(self):

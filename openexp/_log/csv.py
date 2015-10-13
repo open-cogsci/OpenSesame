@@ -73,7 +73,7 @@ class csv(log):
 			self._header_written = True
 		l = []
 		for var in var_list:
-			val = self.experiment.var.get(var, default=u'NA')
+			val = self.experiment.var.get(var, _eval=False, default=u'NA')
 			val = safe_decode(val)
 			l.append(u'"%s"' % val.replace(u'"', u'\\"'))
 		self.write(u','.join(l))

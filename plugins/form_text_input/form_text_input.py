@@ -40,7 +40,7 @@ widget 0 2 1 1 text_input return_accepts=yes focus=yes var=[form_var] stub=""
 """
 
 class form_text_input(form_base.form_base):
-	
+
 	initial_view = u'controls'
 
 	def __init__(self, name, experiment, string=None):
@@ -76,7 +76,7 @@ class form_text_input(form_base.form_base):
 		"""
 
 		return self.super_form_text_input.var_info() + \
-			[(self.var.get(u'form_var'), u'[Depends on response]')]
+			[(self.var.get(u'form_var', _eval=False), u'[Depends on response]')]
 
 class qtform_text_input(form_text_input, qtautoplugin):
 
