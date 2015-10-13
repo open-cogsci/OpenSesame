@@ -180,6 +180,8 @@ class legacy(canvas.canvas, legacy_coordinates):
 	def image(self, fname, center=True, x=None, y=None, scale=None):
 
 		_fname = safe_str(fname, enc=misc.filesystem_encoding())
+		if not os.path.isfile(_fname):
+			raise osexception(u'"%s" does not exist' % fname)
 		try:
 			surface = pygame.image.load(_fname)
 		except pygame.error:
