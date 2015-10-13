@@ -458,7 +458,7 @@ class sketchpad_canvas(QtGui.QGraphicsScene):
 			self.notify(
 				_('X coordinate "%s" is unknown or variably defined, using display center') \
 				% x)
-			return self.xcenter()
+			return 0
 		return x
 
 	def _y(self, y):
@@ -475,7 +475,7 @@ class sketchpad_canvas(QtGui.QGraphicsScene):
 			self.notify(
 				_('Y coordinate "%s" is unknown or variably defined, using display center') \
 				% y)
-			return self.ycenter()
+			return 0
 		return y
 
 	def _r(self, r):
