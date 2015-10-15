@@ -216,15 +216,10 @@ class psycho(canvas.canvas, psycho_coordinates):
 		else:
 			w, h = im.size
 
-		# Calculate the position
-		if x is None:
-			x = self.xcenter()
-		if y is None:
-			y = self.ycenter()
+		pos = self.to_xy(x, y)
 		if not center:
 			x += w/2
 			y += h/2
-		pos = self.to_xy(x, y)
 		stim = visual.ImageStim(win=self.experiment.window, image=fname,
 			pos=pos, size=(w,h))
 		self.stim_list.append(stim)
