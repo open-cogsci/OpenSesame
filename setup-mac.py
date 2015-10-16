@@ -20,7 +20,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 This scripts builds OpenSesame as a standalone application for Mac OS.
 
 Usage:
-    python setup.py py2app
+    python setup-mac.py py2app
 """
 
 from setuptools import setup
@@ -69,11 +69,25 @@ setup(
 			 'iconfile' : 'resources/opensesame.icns',
 			 'plist': {
 				'CFBundleName': 'OpenSesame',
-				'CFBundleShortVersionString':'2.9.4',
-				'CFBundleVersion': '2.9.4',
+				'CFBundleShortVersionString':'2.9.7',
+				'CFBundleVersion': '2.9.7',
 				'CFBundleIdentifier':'nl.cogsci.osdoc',
 				'NSHumanReadableCopyright': 'Sebastiaan Mathot (2010-2015)',
-				'CFBundleDevelopmentRegion': 'English', 	
+				'CFBundleDevelopmentRegion': 'English', 
+				'CFBundleDocumentTypes': [ 
+					{
+                    			'CFBundleTypeExtensions' : ['opensesame'],
+                    			'CFBundleTypeIconFile' : 'opensesame.icns',
+                    			'CFBundleTypeRole' : 'Editor',
+                    			'CFBundleTypeName' : 'OpenSesame File',
+					},
+					{
+                    			'CFBundleTypeExtensions' : ['gz'],
+                    			'CFBundleTypeIconFile' : 'opensesame.icns',
+                    			'CFBundleTypeRole' : 'Editor',
+					}
+                                ]
+
 			}
 		}
 	},
