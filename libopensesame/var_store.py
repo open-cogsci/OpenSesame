@@ -87,6 +87,10 @@ class var_store(object):
 
 	def check_var_name(self, var):
 
+		try:
+			self.__item__.experiment
+		except:
+			return
 		if isinstance(var, basestring) and \
 			self.__item__.experiment.syntax.valid_var_name(var):
 			return
