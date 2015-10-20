@@ -18,7 +18,6 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame.py3compat import *
-
 from libopensesame.exceptions import osexception
 from libopensesame import debug
 import serial
@@ -29,9 +28,9 @@ class libsrbox:
 	"""
 	desc: |
 		If you insert the srbox plugin at the start of your experiment, an
-		instance of `libsrbox` automatically becomes part of the experiment
+		instance of `srbox` automatically becomes part of the experiment
 		object and can be accessed from within an inline_script item as
-		`exp.srbox`.
+		`srbox`.
 
 		__Important note 1:__
 
@@ -54,14 +53,14 @@ class libsrbox:
 
 		__Example:__
 
-		~~~ {.python}
-		t0 = self.time()
-		exp.srbox.start()
-		buttonlist, t1 = exp.srbox.get_button_press(allowed_buttons=[1,2])
-		if 1 in buttonlist:
+		~~~ .python
+		t0 = clock.time()
+		srbox.start()
+		button, t1 = srbox.get_button_press(allowed_buttons=[1,2])
+		if button == 1:
 			response_time = t1 - t0
 			print('Button 1 was pressed in %d ms!' % response_time)
-		exp.srbox.stop()
+		srbox.stop()
 		~~~
 	"""
 
@@ -75,6 +74,8 @@ class libsrbox:
 	BUTTON6 = int('11011111', 2)
 	BUTTON7 = int('10111111', 2)
 	BUTTON8 = int('01111111', 2)
+	BYTEMASKS = [BUTTON1, BUTTON2, BUTTON3, BUTTON4, BUTTON5, BUTTON6, BUTTON7,
+		BUTTON8]
 
 	def __init__(self, experiment, dev=None):
 
@@ -97,6 +98,7 @@ class libsrbox:
 
 		self.experiment = experiment
 		self._srbox = None
+		self._started = False
 
 		# If a device has been specified, use it
 		if dev not in (None, "", "autodetect"):
@@ -168,10 +170,13 @@ class libsrbox:
 			[libsrbox.get_button_press].
 		"""
 
+		if self._started:
+			return
 		# Write the start byte
 		self._srbox.flushOutput()
 		self._srbox.flushInput()
 		self._srbox.write('\xA0')
+		self._started = True
 
 	def stop(self):
 
@@ -180,17 +185,24 @@ class libsrbox:
 			Turns off sending mode, so that the SR Box stops giving output.
 		"""
 
+		if not self._started:
+			return
 		# Write the stop byte and flush the input
 		self._srbox.flushOutput()
 		self._srbox.flushInput()
 		self._srbox.write('\x20')
+		self._started = False
 
 	def get_button_press(self, allowed_buttons=None, timeout=None):
 
 		"""
-		desc:
-			Collect a button press from the SR box. This function will return
-			right away if a button is already pressed.
+		desc: |
+			Collect a button press from the SR box.
+
+			__Changed in 3.0.1:__ This function no longer returns right away if
+			a button was already pressed. Only state changes are recognized.
+			In addition, a single button number is returned, rather than a list
+			of button numbers.
 
 		keywords:
 			allowed_buttons:
@@ -203,49 +215,47 @@ class libsrbox:
 				type:	[int, float, NoneType]
 
 		returns:
-			desc:	A timestamp, buttonlist tuple. The buttonlist consists of a
-					list of button numbers.
+			desc:	A button_nr, timestamp tuple. button_nr is None if no button
+			 		was pressed (i.e. a timeout occurred).
 			type:	tuple
 		"""
 
-		c = self.experiment.time()
-		t = c
-		while timeout is None or t - c < timeout:
-
-			j = self._srbox.read(1)
-			t = self.experiment.time()
-			if j != "" and j != '\x00':
-				k = ord(j)
-
-				if k != 0:
-					l = []
-					if k | self.BUTTON1 == 255 and (allowed_buttons is None or \
-						1 in allowed_buttons):
-						l.append(1)
-					if k | self.BUTTON2 == 255 and (allowed_buttons is None or \
-						2 in allowed_buttons):
-						l.append(2)
-					if k | self.BUTTON3 == 255 and (allowed_buttons is None or \
-						3 in allowed_buttons):
-						l.append(3)
-					if k | self.BUTTON4 == 255 and (allowed_buttons is None or \
-						4 in allowed_buttons):
-						l.append(4)
-					if k | self.BUTTON5 == 255 and (allowed_buttons is None or \
-						5 in allowed_buttons):
-						l.append(5)
-					if k | self.BUTTON6 == 255 and (allowed_buttons is None or \
-						6 in allowed_buttons):
-						l.append(6)
-					if k | self.BUTTON7 == 255 and (allowed_buttons is None or \
-						7 in allowed_buttons):
-						l.append(7)
-					if k | self.BUTTON8 == 255 and (allowed_buttons is None or \
-						8 in allowed_buttons):
-						l.append(8)
-					if l != []:
-						return l, t
-		return None, t
+		if not self._started:
+			raise osexception(
+				u'Please call srbox.start() before srbox.get_button_press()')
+		t0 = self.experiment.time()
+		# Create a list of buttonr, bytemask tuples.
+		bytemasks = []
+		for buttonnr, bytemask in enumerate(self.BYTEMASKS):
+			if allowed_buttons is None or buttonnr+1 in allowed_buttons:
+				bytemasks.append((buttonnr+1, bytemask))
+		inputbyte0 = None
+		while True:
+			# Get a valid character and convert it to a byte
+			inputchar = self._srbox.read(1)
+			if inputchar == '':
+				continue
+			inputbyte1 = ord(inputchar)
+			# Check for a timeout
+			t1 = self.experiment.time()
+			if timeout is not None and t1 - t0 > timeout:
+				break
+			# To check for state changes, we need an old and a new state.
+			# Therefore, on the first loop we don't do anything.
+			if inputbyte0 is None:
+				inputbyte0 = inputbyte1
+				continue
+			# Ignore no responses
+			if not inputbyte1:
+				inputbyte0 = inputbyte1
+				continue
+			# Walk through all valid buttons
+			for buttonnr, bytemask in bytemasks:
+				if inputbyte1 | bytemask == 255 and \
+					inputbyte0 | bytemask != 255:
+					return buttonnr, t1
+			inputbyte0 = inputbyte1
+		return None, t1
 
 	def close(self):
 
@@ -255,3 +265,4 @@ class libsrbox:
 		"""
 
 		self._srbox.close()
+		self._started = False
