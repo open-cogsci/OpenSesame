@@ -44,14 +44,14 @@ class auto_example(item):
 		# in info.json. If you do not provide default values, the plug-in will
 		# work, but the variables will be undefined when they are not explicitly
 		# set in the GUI.
-		self._checkbox = u'yes' # yes = checked, no = unchecked
-		self._color = u'white'
-		self._option = u'Option 1'
-		self._file = u''
-		self._text = u'Default text'
-		self._spinbox_value = 1
-		self._slider_value = 1
-		self._script = u'print 10'
+		self.var._checkbox = u'yes' # yes = checked, no = unchecked
+		self.var._color = u'white'
+		self.var._option = u'Option 1'
+		self.var._file = u''
+		self.var._text = u'Default text'
+		self.var._spinbox_value = 1
+		self.var._slider_value = 1
+		self.var._script = u'print 10'
 
 	def prepare(self):
 
@@ -69,10 +69,10 @@ class auto_example(item):
 
 		# self.set_item_onset() sets the time_[item name] variable. Optionally,
 		# you can pass a timestamp, such as returned by canvas.show().
-		self.set_item_onset(self.c.show())			
+		self.set_item_onset(self.c.show())
 
 class qtauto_example(auto_example, qtautoplugin):
-	
+
 	"""
 	This class handles the GUI aspect of the plug-in. By using qtautoplugin, we
 	usually need to do hardly anything, because the GUI is defined in info.json.
@@ -82,11 +82,11 @@ class qtauto_example(auto_example, qtautoplugin):
 
 		"""
 		Constructor.
-		
+
 		Arguments:
 		name		--	The name of the plug-in.
 		experiment	--	The experiment object.
-		
+
 		Keyword arguments:
 		script		--	A definition script. (default=None)
 		"""
@@ -116,5 +116,3 @@ class qtauto_example(auto_example, qtautoplugin):
 		# disabling the QLineEdit when the QCheckBox is uncheckhed.
 		self.checkbox_widget.stateChanged.connect( \
 			self.line_edit_widget.setEnabled)
-
-

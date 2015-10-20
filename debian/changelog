@@ -5,6 +5,7 @@ opensesame (3.0.1a1-ubuntu1) vivid; urgency=medium
     - Catch syntax warnings in inline_script items
   * Improvements
     - Give more informative error messages when using invalid variable names
+    - Update auto_example plugin
 
  -- Sebastiaan Mathot <sebastiaan@mantis>  Tue, 20 Oct 2015 10:58:57 +0200
 
