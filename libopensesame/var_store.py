@@ -85,6 +85,13 @@ class var_store(object):
 		object.__setattr__(self, u'__vars__', {})
 		object.__setattr__(self, u'__lock__', None)
 
+	def check_var_name(self, var):
+
+		if isinstance(var, basestring) and \
+			self.__item__.experiment.syntax.valid_var_name(var):
+			return
+		raise osexception(u'"%s" is not a valid variable name' % var)
+
 	def __contains__(self, var):
 
 		"""
@@ -94,6 +101,7 @@ class var_store(object):
 			Implements the `in` operator to check if a variable exists.
 		"""
 
+		self.check_var_name(var)
 		if var in self.__vars__:
 			return True
 		if hasattr(self.__item__, var):
@@ -174,6 +182,7 @@ class var_store(object):
 			var.get(u'my_variable', default=u'a_default_value')
 		"""
 
+		self.check_var_name(var)
 		if self.__lock__ == var:
 			raise osexception(
 				u"Recursion detected! Is variable '%s' defined in terms of itself (e.g., 'var = [var]') in item '%s'" \
@@ -252,6 +261,7 @@ class var_store(object):
 			var.my_variable = u'my_value'
 		"""
 
+		self.check_var_name(var)
 		self.__setattr__(var, val)
 
 	def unset(self, var):
@@ -271,6 +281,7 @@ class var_store(object):
 			del var.my_variable
 		"""
 
+		self.check_var_name(var)
 		self.__delattr__(var)
 
 	def __iter__(self):

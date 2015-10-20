@@ -3,6 +3,8 @@ opensesame (3.0.1a1-ubuntu1) vivid; urgency=medium
   * Bugs fixed
     - Fix crash on fallback_console reset
     - Catch syntax warnings in inline_script items
+  * Improvements
+    - Give more informative error messages when using invalid variable names
 
  -- Sebastiaan Mathot <sebastiaan@mantis>  Tue, 20 Oct 2015 10:58:57 +0200
 

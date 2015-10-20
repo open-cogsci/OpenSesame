@@ -24,6 +24,7 @@ from libopensesame import plugins
 from libqtopensesame.items.qtplugin import qtplugin
 from libqtopensesame import validators
 from libqtopensesame.misc import _
+from libopensesame.exceptions import osexception
 
 class qtautoplugin(qtplugin):
 
@@ -66,16 +67,20 @@ class qtautoplugin(qtplugin):
 		for c in self.info[u'controls']:
 			# Check whether all required options have been specified
 			if u'type' not in c:
-				raise Exception(_( \
-					u'You must specify "type" for %s controls in info.yaml') \
+				raise osexception(
+					_(u'You must specify "type" for %s controls in info.yaml') \
 					% option)
 			for types, options in required:
 				if c[u'type'] in types:
 					for option in options:
 						if option not in c:
-							raise Exception(_( \
-								u'You must specify "%s" for %s controls in info.yaml') \
+							raise osexception(
+								_(u'You must specify "%s" for %s controls in info.yaml') \
 								% (option, c[u'type']))
+			if u'var' in c and not self.syntax.valid_var_name(c[u'var']):
+				raise osexception(
+					_(u'Invalid variable name (%s) specified in %s plugin info') %
+					(c[u'var'], self.item_type))
 			# Set missing keywords to None
 			for keyword, default in keywords.items():
 				if keyword not in c:
