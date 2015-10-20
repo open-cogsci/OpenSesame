@@ -1,3 +1,10 @@
+opensesame (3.0.1a1-ubuntu1) vivid; urgency=medium
+
+  * Bugs fixed
+    - Fix crash on fallback_console reset
+
+ -- Sebastiaan Mathot <sebastiaan@mantis>  Tue, 20 Oct 2015 10:58:57 +0200
+
 opensesame (3.0.0-ubuntu1) vivid; urgency=medium
 
   * New major release
