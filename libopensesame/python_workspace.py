@@ -22,6 +22,7 @@ from libopensesame.py3compat import *
 import libopensesame.python_workspace_api as api
 from libopensesame import debug
 import types
+import warnings
 
 class python_workspace(object):
 
@@ -91,16 +92,20 @@ class python_workspace(object):
 				type:	unicode
 
 		returns:
-			desc:	True if the script is correct, False otherwise.
-			type:	bool
+			desc:	0 if script is correct, 1 if there is a syntax warning, and
+					2 if there is a syntax error.
+			type:	int
 		"""
 
-		try:
-			self._compile(script)
-		except:
-			return False
-		return True
-
+		with warnings.catch_warnings(record=True) as warning_list:
+			try:
+				self._compile(safe_decode(script))
+			except:
+				return 2
+		if warning_list:
+			return 1
+		return 0
+		
 	def run_file(self, path):
 
 		"""

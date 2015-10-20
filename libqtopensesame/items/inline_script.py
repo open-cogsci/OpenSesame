@@ -74,12 +74,16 @@ class inline_script(inline_script_runtime, qtplugin):
 			type:	unicode
 		"""
 
-		if self.experiment.python_workspace.check_syntax(
-			safe_decode(self.var.get(u'_prepare', _eval=False)))\
-				and self.experiment.python_workspace.check_syntax(
-			safe_decode(self.var.get(u'_run', _eval=False))):
-			return u'os-inline_script'
-		return u'os-inline_script-syntax-error'
+		status = max(
+			self.experiment.python_workspace.check_syntax(
+				self.var.get(u'_prepare', _eval=False)),
+			self.experiment.python_workspace.check_syntax(
+				self.var.get(u'_run', _eval=False)))
+		if status == 2:
+			return u'os-inline_script-syntax-error'
+		if status == 1:
+			return u'os-inline_script-syntax-warning'
+		return u'os-inline_script'
 
 	def build_item_tree(self, toplevel=None, items=[], max_depth=-1,
 		extra_info=None):
