@@ -270,7 +270,7 @@ class pool_widget(base_widget):
 		if action == 0:
 			self.open_file(path)
 		elif action == 1:
-			self.delete_selected_files(path)
+			self.delete_selected_files()
 		elif action == 2:
 			self.ui.list_pool.editItem(item)
 
