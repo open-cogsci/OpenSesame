@@ -114,7 +114,7 @@ def plugins(included, _type='plugins'):
 shutil.copy('readme.md', 'README.txt')
 
 setup(name="opensesame",
-	version = metadata.__version__,
+	version = metadata.deb_version,
 	description = "A graphical experiment builder for the social sciences",
 	author = "Sebastiaan Mathot",
 	author_email = "s.mathot@cogsci.nl",

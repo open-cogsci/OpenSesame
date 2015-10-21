@@ -23,8 +23,13 @@ import sys
 
 __version__ = u'3.0.1a2'
 strict_version = StrictVersion(__version__)
-# The version without the prerelease (if any)
+# The version without the prerelease (if any): e.g. 3.0.0
 main_version = u'.'.join([str(i) for i in strict_version.version])
+# The version following the debian convention: e.g. 3.0.0~a1
+if strict_version.prerelease is None:
+	deb_version = main_version
+else:
+	deb_version = main_version + u'~%s%d' % strict_version.prerelease
 python_version = u'%d.%d.%d' % (sys.version_info[0], sys.version_info[1], \
 	sys.version_info[2])
 codename = u'Interactive Ising'
