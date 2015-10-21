@@ -85,13 +85,17 @@ class qtopensesame(QtGui.QMainWindow, base_component):
 		QtGui.QApplication.setAttribute(QtCore.Qt.AA_DontShowIconsInMenus,
 			False)
 
-		# Make sure that QProgEdit doesn't complain about some standard names,
-		# and register the bundled monospace font (Droid Sans Mono) so that we
-		# can use it anywhere.
+		# Do a few things to customize QProgEdit behavior:
+		# - Register the bundled monospace font (Droid Sans Mono)
+		# - Make sure that QProgEdit doesn't complain about some standard names
+		# - Ignore undefined name warnings, which don't play well with
+		#   OpenSesame's single workspace
 		QtGui.QFontDatabase.addApplicationFont(misc.resource(u'mono.ttf'))
 		from QProgEdit import validate
 		validate.addPythonBuiltins([u'exp', u'win', u'self'])
-
+		if hasattr(validate, u'setPyFlakesFilter'):
+			validate.setPyFlakesFilter(
+				lambda msg: msg.message == u'undefined name %r')
 		# Initialize random number generator
 		random.seed()
 

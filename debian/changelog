@@ -7,6 +7,7 @@ opensesame (3.0.1a1-ubuntu1) vivid; urgency=medium
   * Improvements
     - Give more informative error messages when using invalid variable names
     - Update auto_example plugin
+    - Ignore 'undefined name' warnings when validating Python code (requires QProgEdit >= 3.1.0)
 
  -- Sebastiaan Mathot <sebastiaan@mantis>  Tue, 20 Oct 2015 10:58:57 +0200
 
