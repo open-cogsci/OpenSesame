@@ -145,13 +145,14 @@ class libsrbox:
 		debug.msg("using device %s" % dev)
 		# Turn off all lights
 		if self._srbox is not None:
-			self._srbox.write('\x00')
+			self._srbox.write('\x60')
 
 	def send(self, ch):
 
 		"""
 		desc:
 			Sends a single character to the SR Box.
+			Send '\x60' to turn off all lights, '\x61' for light 1 on, '\x62' for light 2 on,'\x63' for lights 1 and 2 on etc. 
 
 		arguments:
 			ch:
