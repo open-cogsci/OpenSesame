@@ -29,8 +29,7 @@ class libsrbox:
 	desc: |
 		If you insert the srbox plugin at the start of your experiment, an
 		instance of `srbox` automatically becomes part of the experiment
-		object and can be accessed from within an inline_script item as
-		`srbox`.
+		object and can be accessed within an inline_script item as `srbox`.
 
 		__Important note 1:__
 
@@ -40,8 +39,8 @@ class libsrbox:
 
 		__Important note 2:__
 
-		You need to call [libsrbox.start] to put the SR Box in sending mode,
-		before calling [libsrbox.get_button_press] to collect a button press.
+		You need to call [srbox.start] to put the SR Box in sending mode,
+		before calling [srbox.get_button_press] to collect a button press.
 
 		__Function list:__
 
@@ -56,7 +55,8 @@ class libsrbox:
 		~~~ .python
 		t0 = clock.time()
 		srbox.start()
-		button, t1 = srbox.get_button_press(allowed_buttons=[1,2])
+		button, t1 = srbox.get_button_press(allowed_buttons=[1,2],
+			require_state_change=True)
 		if button == 1:
 			response_time = t1 - t0
 			print('Button 1 was pressed in %d ms!' % response_time)
@@ -105,7 +105,7 @@ class libsrbox:
 			try:
 				self._srbox = serial.Serial(dev, timeout=0, baudrate=19200)
 			except Exception as e:
-				raise osexception( \
+				raise osexception(
 					"Failed to open device port '%s' in libsrbox: '%s'" \
 					% (dev, e))
 
@@ -114,10 +114,10 @@ class libsrbox:
 			# platform and find the first accessible device. On Windows,
 			# devices are labeled COM[X], on Linux there are labeled /dev/tty[X]
 			if os.name == "nt":
-				for i in range(255):
+				for i in range(1, 256):
 					try:
-						dev = "COM%d" % (i+1) #as COM ports start from 1 on Windows
-						self._srbox = serial.Serial(dev, timeout=0, \
+						dev = "COM%d" % i
+						self._srbox = serial.Serial(dev, timeout=0,
 							baudrate=19200)
 						break
 					except Exception as e:
@@ -129,18 +129,18 @@ class libsrbox:
 					if path[:3] == "tty":
 						try:
 							dev = "/dev/%s" % path
-							self._srbox = serial.Serial(dev, timeout=0, \
+							self._srbox = serial.Serial(dev, timeout=0,
 								baudrate=19200)
 							break
 						except Exception as e:
 							self._srbox = None
 							pass
 			else:
-				raise osexception( \
+				raise osexception(
 					"libsrbox does not know how to auto-detect the SR Box on your platform. Please specify a device.")
 
 		if self._srbox is None:
-			raise osexception( \
+			raise osexception(
 				"libsrbox failed to auto-detect an SR Box. Please specify a device.")
 		debug.msg("using device %s" % dev)
 		# Turn off all lights
@@ -152,7 +152,7 @@ class libsrbox:
 		"""
 		desc:
 			Sends a single character to the SR Box.
-			Send '\x60' to turn off all lights, '\x61' for light 1 on, '\x62' for light 2 on,'\x63' for lights 1 and 2 on etc. 
+			Send '\x60' to turn off all lights, '\x61' for light 1 on, '\x62' for light 2 on,'\x63' for lights 1 and 2 on etc.
 
 		arguments:
 			ch:
@@ -168,7 +168,7 @@ class libsrbox:
 		desc:
 			Turns on sending mode, so that the SR Box starts to send output.
 			The SR Box must be in sending mode when you call
-			[libsrbox.get_button_press].
+			[srbox.get_button_press].
 		"""
 
 		if self._started:
@@ -194,16 +194,12 @@ class libsrbox:
 		self._srbox.write('\x20')
 		self._started = False
 
-	def get_button_press(self, allowed_buttons=None, timeout=None):
+	def get_button_press(self, allowed_buttons=None, timeout=None,
+		require_state_change=False):
 
 		"""
 		desc: |
-			Collect a button press from the SR box.
-
-			__Changed in 3.0.1:__ This function no longer returns right away if
-			a button was already pressed. Only state changes are recognized.
-			In addition, a single button number is returned, rather than a list
-			of button numbers.
+			Collects a button press from the SR box.
 
 		keywords:
 			allowed_buttons:
@@ -211,13 +207,17 @@ class libsrbox:
 						all buttons. Valid buttons are integers 1 through 8.
 				type:	[list, NoneType]
 			timeout:
-				desc:	A timeout value in milliseconds or `None` for no
+			desc:	A timeout value in milliseconds or `None` for no
 						timeout.
 				type:	[int, float, NoneType]
+			require_state_change:
+				desc:	Indicates whether already pressed button should be
+						accepted (False), or whether only a state change from
+						unpressed to pressed is accepted (True).
 
 		returns:
-			desc:	A button_nr, timestamp tuple. button_nr is None if no button
-			 		was pressed (i.e. a timeout occurred).
+			desc:	A button_list, timestamp tuple. button_list is None if no
+					button was pressed (i.e. a timeout occurred).
 			type:	tuple
 		"""
 
@@ -243,18 +243,30 @@ class libsrbox:
 				break
 			# To check for state changes, we need an old and a new state.
 			# Therefore, on the first loop we don't do anything.
-			if inputbyte0 is None:
+			if require_state_change and inputbyte0 is None:
 				inputbyte0 = inputbyte1
 				continue
 			# Ignore no responses
 			if not inputbyte1:
 				inputbyte0 = inputbyte1
 				continue
-			# Walk through all valid buttons
-			for buttonnr, bytemask in bytemasks:
-				if inputbyte1 | bytemask == 255 and \
-					inputbyte0 | bytemask != 255:
-					return buttonnr, t1
+			if require_state_change:
+				# If a state change is required, a button should be pressed now
+				# but not before. Because there is only one state change at a
+				# time, we can return right away.
+				for buttonnr, bytemask in bytemasks:
+					if inputbyte1 | bytemask == 255 and \
+						inputbyte0 | bytemask != 255:
+						return [buttonnr], t1
+			else:
+				# If no state change is required, only consider the last input
+				# and create a list of all buttons that are pressed.
+				button_list = []
+				for button_nr, bytemask in bytemasks:
+					if inputbyte1 | bytemask == 255:
+						button_list.append(button_nr)
+				if button_list:
+					return button_list, t1
 			inputbyte0 = inputbyte1
 		return None, t1
 
@@ -262,7 +274,8 @@ class libsrbox:
 
 		"""
 		desc:
-			Closes the connection to the srbox.
+			Closes the connection to the srbox. This is done automatically by
+			the `srbox` plugin when the experiment finishes.
 		"""
 
 		self._srbox.close()

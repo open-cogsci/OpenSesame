@@ -46,6 +46,7 @@ class srbox(item.item, generic_response.generic_response):
 		self.var.lights = u''
 		self.var.dev = u'autodetect'
 		self.var._dummy = u'no'
+		self.var.require_state_change = u'no'
 		self.process_feedback = True
 
 	def prepare(self):
@@ -57,6 +58,7 @@ class srbox(item.item, generic_response.generic_response):
 
 		item.item.prepare(self)
 		self.prepare_timeout()
+		self._require_state_change = self.require_state_change == u'yes'
 		# Prepare the allowed responses
 		self._allowed_responses = None
 		if u'allowed_responses' in self.var:
@@ -130,11 +132,15 @@ class srbox(item.item, generic_response.generic_response):
 				self.experiment.srbox.send(self._lights)
 				self.experiment.srbox.start()
 				resp, self.experiment.end_response_interval = \
-					self._resp_func(self._allowed_responses, self._timeout)
+					self._resp_func(allowed_buttons=self._allowed_responses,
+						timeout=self._timeout,
+						require_state_change=self._require_state_change)
 				self.experiment.srbox.stop()
 			except Exception as e:
 				raise osexception(
 					"An error occured in srbox '%s': %s." % (self.name, e))
+			if isinstance(resp, list):
+				resp = resp[0]
 		debug.msg("received %s" % resp)
 		self.experiment.var.response = resp
 		generic_response.generic_response.response_bookkeeping(self)

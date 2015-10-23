@@ -5,6 +5,11 @@ controls:
   type: checkbox
   tooltip: Enable to respond with the keyboard instead of an SR Box
 -
+  label: Ignore buttons that are already pressed
+  var: require_state_change
+  type: checkbox
+  tooltip: Require a button-state change, so that already-pressed buttons are ignored
+-
   label: Device name
   var: dev
   type: line_edit
