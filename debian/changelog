@@ -1,4 +1,4 @@
-opensesame (3.0.1~a4-ubuntu1) vivid; urgency=medium
+opensesame (3.0.1-ubuntu1) vivid; urgency=medium
 
   * Bugs fixed
     - Fix crash on fallback_console reset
