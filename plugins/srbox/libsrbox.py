@@ -207,7 +207,7 @@ class libsrbox:
 						all buttons. Valid buttons are integers 1 through 8.
 				type:	[list, NoneType]
 			timeout:
-			desc:	A timeout value in milliseconds or `None` for no
+				desc:	A timeout value in milliseconds or `None` for no
 						timeout.
 				type:	[int, float, NoneType]
 			require_state_change:
