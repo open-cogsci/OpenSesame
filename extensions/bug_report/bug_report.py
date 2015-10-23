@@ -171,7 +171,7 @@ class bug_report(base_extension):
 		"""
 
 		with open(self.ext_resource(u'report.md')) as fd:
-			md = fd.read()
+			md = safe_decode(fd.read())
 		self.traceback = self.stderr.buffer
 		md = md % {
 			u'traceback' : self.indent(self.stderr.buffer),

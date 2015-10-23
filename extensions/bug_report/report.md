@@ -15,6 +15,10 @@ Information:
 - OpenSesame: %(version)s
 - Python: %(python_version)s
 
+Don't show me this message!
+
+- If you don't want to see bug-report messages in the future, you can disable the bug_report extension under Menu → Tools → Plug-in and extension manager. This does not automagically solve the problem--it only suppresses the report!
+
 Error message:
 
 %(traceback)s
