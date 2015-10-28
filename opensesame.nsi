@@ -16,7 +16,7 @@
 ; USAGE
 ; -----
 ; This script assumes that the binary is located in
-; 	C:\Users\Dévélõpe®\Documents\gît\opensesame-ising\dist
+; 	C:\Users\DÃ©vÃ©lÃµpeÂ®\Documents\gÃ®t\opensesame-ising\dist
 ;
 ; The extension FileAssociation.nsh must be installed. This can be
 ; done by downloading the script from the link below and copying it
@@ -33,7 +33,7 @@
 !define PRODUCT_NAME "OpenSesame"
 !define PRODUCT_VERSION "3.0.1-py2.7-win32-2"
 !define PRODUCT_PUBLISHER "Sebastiaan Mathot"
-!define PRODUCT_WEB_SITE "http://osdocs.cogsci.nl"
+!define PRODUCT_WEB_SITE "http://osdoc.cogsci.nl"
 !define PRODUCT_UNINST_KEY "Software\Microsoft\Windows\CurrentVersion\Uninstall\${PRODUCT_NAME}"
 !define PRODUCT_UNINST_ROOT_KEY "HKLM"
 
@@ -43,7 +43,7 @@
 
 ; MUI Settings
 !define MUI_ABORTWARNING
-!define MUI_ICON "C:\Users\Dévélõpe®\Documents\gît\opensesame-ising\resources\opensesame.ico"
+!define MUI_ICON "C:\Users\DÃ©vÃ©lÃµpeÂ®\Documents\gÃ®t\opensesame-ising\resources\opensesame.ico"
 !define MUI_UNICON "${NSISDIR}\Contrib\Graphics\Icons\modern-uninstall.ico"
 
 ; Welcome page
@@ -105,7 +105,7 @@ Section "OpenSesame" SEC01
   RMDir /r "$INSTDIR\yaml"
   RMDir /r "$INSTDIR\zmq"
   SetOverwrite try
-  File /r "C:\Users\Dévélõpe®\Documents\gît\opensesame-ising\dist\*.*"
+  File /r "C:\Users\DÃ©vÃ©lÃµpeÂ®\Documents\gÃ®t\opensesame-ising\dist\*.*"
   ${registerExtension} "$INSTDIR\opensesame.exe" ".osexp" "OpenSesame experiment"
   ${registerExtension} "$INSTDIR\opensesame.exe" ".opensesame" "OpenSesame script"
   ${registerExtension} "$INSTDIR\opensesame.exe" ".gz" "OpenSesame experiment archive"
