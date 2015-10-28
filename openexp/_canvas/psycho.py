@@ -124,7 +124,7 @@ class psycho(canvas.canvas, psycho_coordinates):
 	def copy(self, canvas):
 
 		self.stim_list = canvas.stim_list + []
-		self.set_config(canvas.get_config())
+		self.set_config(**canvas.get_config())
 
 	def show(self):
 

@@ -58,7 +58,7 @@ class xpyriment(canvas.canvas, xpyriment_coordinates):
 
 	def copy(self, canvas):
 
-		self.set_config(canvas.get_config())
+		self.set_config(**canvas.get_config())
 		self.auto_prepare = canvas.auto_prepare
 		self.aa = canvas.aa
 		self.prepared = False

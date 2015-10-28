@@ -93,7 +93,7 @@ class legacy(canvas.canvas, legacy_coordinates):
 	def copy(self, canvas):
 
 		self.surface = canvas.surface.copy()
-		self.set_config(canvas.get_config())
+		self.set_config(**canvas.get_config())
 
 	def show(self):
 
