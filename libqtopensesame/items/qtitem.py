@@ -727,41 +727,6 @@ class qtitem(base_qtobject):
 		else:
 			raise Exception(u"Cannot auto-add widget of type %s" % widget)
 
-	def clean_cond(self, cond, default=u'always'):
-
-		"""
-		desc:
-			Cleans a conditional statement. May raise a dialog box if problems
-			are encountered.
-
-		arguments:
-			cond:
-				desc:	A conditional statement.
-				type:	str
-
-		keywords:
-			default:
-				desc:	A default conditional statement, which is used for empty
-						and invalid statements.
-				type:	str
-
-		returns:
-			cond:
-				desc:	A clean conditional statement.
-				type:	str
-		"""
-
-		cond = self.syntax.sanitize(cond)
-		if cond.strip() == u'':
-			cond = default
-		try:
-			self.syntax.compile_cond(cond)
-		except osexception as e:
-			self.experiment.notify(
-				u'Failed to compile conditional statement "%s": %s' % (cond, e))
-			return default
-		return cond
-
 	def children(self):
 
 		"""

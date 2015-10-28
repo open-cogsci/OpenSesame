@@ -346,14 +346,18 @@ class syntax(object):
 			# Quote all non-quoted symbols. This can be probably be done through
 			# a clever regular expression, but for now we use a simple loop.
 			while True:
-				in_quote = False
+				in_quote = None
 				in_var = False
 				symbol_start = None
 				for i, ch in enumerate(cnd):
 					# Don't scan within quoted strings
-					if ch == u'"':
-						in_quote = not in_quote
-						continue
+					if in_quote is None:
+						if ch in u'"\'':
+							in_quote = ch
+							continue
+					elif ch == in_quote:
+							in_quote = None
+							continue
 					if in_quote:
 						continue
 					# Don't scan within variable definitions

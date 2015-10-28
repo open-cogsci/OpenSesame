@@ -80,12 +80,17 @@ class sequence(item.item):
 		self.reset()
 		if string is None:
 			return
-		for i in string.split(u'\n'):
-			self.parse_variable(i)
-			i = self.syntax.split(i.strip())
-			if len(i) > 0:
-				if i[0] == u'run' and len(i) > 1:
-					self.items.append(self.parse_run(i))
+		for s in string.split(u'\n'):
+			self.parse_variable(s)
+			cmd, arglist, kwdict = self.syntax.parse_cmd(s)
+			if cmd != u'run' or not len(arglist):
+				continue
+			_item = arglist[0]
+			if len(arglist) == 1:
+				cond = u'always'
+			else:
+				cond = arglist[1]
+			self.items.append((_item, cond))
 
 	def prepare(self):
 
@@ -117,5 +122,5 @@ class sequence(item.item):
 
 		s = item.item.to_string(self, self.item_type)
 		for _item, cond in self.items:
-			s += u'\trun %s "%s"\n' % (_item, cond)
+			s += u'\t' + self.syntax.create_cmd(u'run', [_item, cond]) + u'\n'
 		return s

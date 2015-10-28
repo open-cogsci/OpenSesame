@@ -91,6 +91,8 @@ class check_syntax(unittest.TestCase):
 			u'var.width == 1024 and var.height == 768')
 		self.checkCnd(u'=var.width > 100', u'var.width > 100')
 		self.checkCnd(u'"yes" = yes', u'"yes" == "yes"')
+		self.checkCnd(u'yes = \'yes\'', u'"yes" == \'yes\'')
+		self.checkCnd(u'"y\'es" = \'y"es\'', u'"y\'es" == \'y"es\'')
 		self.checkCnd(u'("a b c" = abc) or (x != 10) and ([width] == 100)',
 			u'("a b c" == "abc") or ("x" != 10) and (var.width == 100)')
 

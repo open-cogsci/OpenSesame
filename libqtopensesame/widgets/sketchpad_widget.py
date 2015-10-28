@@ -25,6 +25,7 @@ from libqtopensesame.sketchpad_elements._base_element import base_element
 from libqtopensesame.widgets.sketchpad_element_button import \
 	sketchpad_element_button
 from libqtopensesame.widgets.base_widget import base_widget
+from libqtopensesame.validators import cond_validator
 
 class sketchpad_widget(base_widget):
 
@@ -62,6 +63,8 @@ class sketchpad_widget(base_widget):
 		self.ui.spinbox_penwidth.valueChanged.connect(self.apply_penwidth)
 		self.ui.edit_color.textEdited.connect(self.apply_color)
 		self.ui.edit_show_if.editingFinished.connect(self.apply_show_if)
+		self.ui.edit_show_if.setValidator(cond_validator(self,
+			default=u'always'))
 		self.ui.spinbox_arrow_head_width.valueChanged.connect(
 			self.apply_arrow_head_width)
 		self.ui.spinbox_arrow_body_width.valueChanged.connect(
@@ -196,8 +199,7 @@ class sketchpad_widget(base_widget):
 			Applies changes to the show-if field.
 		"""
 
-		show_if = str(self.ui.edit_show_if.text())
-		show_if = self.sketchpad.clean_cond(show_if)
+		show_if = self.ui.edit_show_if.text()
 		for element in self.sketchpad.selected_elements():
 			element.set_property(u'show_if', show_if)
 			self.ui.edit_show_if.setText(show_if)

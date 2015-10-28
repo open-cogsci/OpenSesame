@@ -594,11 +594,7 @@ class loop(qtstructure_item, qtitem, loop_runtime):
 			rebuild_item_tree = True
 		else:
 			rebuild_item_tree = False
-		# Validate and set the break-if statement
-		break_if = self.clean_cond(self.loop_widget.ui.edit_break_if.text(),
-			default=u'never')
-		self.loop_widget.ui.edit_break_if.setText(break_if)
-		self.var.set(u'break_if', break_if)
+		self.var.break_if = self.loop_widget.ui.edit_break_if.text()
 		# Walk through the loop table and apply all changes
 		self.matrix = {}
 		for row in range(self.loop_table.rowCount()):

@@ -114,7 +114,7 @@ class tree_overview(base_subcomponent, base_draggable, QtGui.QTreeWidget):
 		target_treeitem = self.currentItem()
 		if target_treeitem is not None:
 			target_treeitem.copy_unlinked()
-	
+
 	def copy_item_linked(self):
 
 		"""
@@ -246,7 +246,6 @@ class tree_overview(base_subcomponent, base_draggable, QtGui.QTreeWidget):
 					cond = str(treeitem.text(1))
 					if cond.strip() == u'':
 						cond = u'always'
-					cond = parent_item.clean_cond(cond)
 					parent_item.set_run_if(index, cond)
 					self.itemChanged.disconnect()
 					treeitem.setText(1, cond)
@@ -485,24 +484,24 @@ class tree_overview(base_subcomponent, base_draggable, QtGui.QTreeWidget):
 			self.experiment.items[parent_item_name].insert_child_item(
 				item_name, index)
 			self.experiment.build_item_tree()
-			
+
 	def drop_get_item_snippet(self, data):
-		
+
 		"""
 		desc:
 			Gets the item and list of newly created items for item-snippet
 			drops.
-			
+
 		arguments:
 			data:
 				desc:	The drop data.
 				type:	dict
-				
+
 		returns:
 			desc:	An (name, new_items) tuple.
 			type:	tuple
-		"""		
-		
+		"""
+
 		for item_dict in data[u'items']:
 			if not self.experiment.items.valid_type(item_dict[u'item-type']):
 				raise osexception(
@@ -528,27 +527,27 @@ class tree_overview(base_subcomponent, base_draggable, QtGui.QTreeWidget):
 		return main_item, [item.name for item in new_items]
 
 	def drop_get_item_existing(self, data):
-		
+
 		"""
 		desc:
 			Gets the item and list of newly created items for existing-item
 			drops.
-			
+
 		arguments:
 			data:
 				desc:	The drop data.
 				type:	dict
-				
+
 		returns:
 			desc:	An (name, new_items) tuple, where new_items is always empty
 					for existing-item drops.
 			type:	tuple
 		"""
-		
+
 		if data[u'item-name'] not in self.experiment.items:
 			raise osexception(u'Unknown item: %s' % data[u'item-name'])
 		return self.experiment.items[data[u'item-name']], []
-		
+
 	def drop_event_item_new(self, data, e=None, target_treeitem=None):
 
 		"""
@@ -694,7 +693,7 @@ class tree_overview(base_subcomponent, base_draggable, QtGui.QTreeWidget):
 				desc:	A drop event.
 				type:	QDragLeaveEvent
 		"""
-		
+
 		data = drag_and_drop.receive(e)
 		if data[u'type'] == u'item-snippet':
 			self.drop_event_item_new(data, e)
