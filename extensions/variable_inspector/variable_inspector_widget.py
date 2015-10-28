@@ -123,7 +123,7 @@ class variable_inspector_widget(base_widget):
 			d = {}
 			for var, info in var_store.inspect().items():
 				if filt in var or (info[u'value'] is not None and \
-					filt in str(info[u'value'])) or \
+					filt in safe_decode(info[u'value'], errors=u'ignore')) or \
 					filt in u' '.join(info[u'source']):
 					d[var] = info
 		else:
