@@ -52,6 +52,7 @@ class qtitem(base_qtobject):
 		self.init_edit_widget()
 		self.lock = False
 		self.maximized = False
+		self.set_validator()
 		debug.msg(u'created %s' % self.name)
 
 	@property
@@ -240,7 +241,8 @@ class qtitem(base_qtobject):
 			handlerButtonText=_(u'Apply and close'), cfg=cfg)
 		self._script_widget.focusLost.connect(self.apply_script_changes)
 		self._script_widget.cursorRowChanged.connect(self.apply_script_changes)
-		self._script_widget.handlerButtonClicked.connect(self.set_view_controls)
+		self._script_widget.handlerButtonClicked.connect(
+			self.apply_script_changes_and_switch_view)
 		self._script_widget.addTab(u'Script').setLang(u'OpenSesame')
 
 		# The container_widget is the top-level widget that is actually inserted
@@ -376,22 +378,76 @@ class qtitem(base_qtobject):
 
 		"""
 		desc:
-			Applies changes to the script, by re-parsing the item from string.
+			Applies changes to the script.
 		"""
 
-		old_script = self.to_string()
+		if not self.validate_script():
+			return
 		new_script = self._script_widget.text()
-		try:
-			self.from_string(new_script)
-		except osexception as e:
-			md = _(u'# Error\n\nFailed to apply script for the '
-				u'following reason:\n\n- ') + e.markdown()
-			self.tabwidget.open_markdown(md)
-			self.console.write(e)
-			self.from_string(old_script)
+		old_script = self.to_string()
+		self.from_string(new_script)
 		if old_script != new_script:
 			self.main_window.set_unsaved()
 		self.edit_widget()
+
+	def apply_script_changes_and_switch_view(self, *deprecated, **_deprecated):
+
+		"""
+		desc:
+			Applies changes to the script if possible. If so, switches to the
+			controls view.
+		"""
+
+		if self.validate_script():
+			self.set_view_controls()
+
+	def validate_script(self):
+
+		"""
+		desc:
+			Checks whether the script is syntactically valid. If not, the
+			offending line is highlighted if QProgEdit suppors setInvalid().
+
+		returns:
+			type:	bool
+		"""
+
+		script = self._script_widget.text()
+		# First create a dummy item to see if the string can be parsed.
+		try:
+			self.validator(self.name, self.experiment, script)
+			return True
+		except osexception as e:
+			# If an error occurs, we first parse the first line, then the first
+			# and second, and so on, until we find the error.
+			l = script.split(u'\n')
+			for line_nr, line in enumerate(l):
+				test_script = u'\n'.join(l[:line_nr])
+				try:
+					self.validator(self.name, self.experiment, test_script)
+				except osexception as e:
+					if hasattr(self._script_widget, u'setInvalid'):
+						self._script_widget.setInvalid(line_nr, e.markdown())
+					break
+			self.console.write(e)
+			return False
+
+	def set_validator(self):
+
+		"""
+		desc:
+			Sets the validator class, that is, the class that is used to parse
+			scripts to see if they are syntactically correct. Currently, we use
+			the class that defines from_string().
+		"""
+
+		import inspect
+		meth = self.from_string
+		for cls in inspect.getmro(meth.im_class):
+			if meth.__name__ in cls.__dict__:
+				break
+		debug.msg(u'validator: %s' % cls)
+		self.validator = cls
 
 	def rename(self, from_name, to_name):
 
