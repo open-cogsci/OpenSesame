@@ -130,7 +130,10 @@ def plugin_disabled(plugin, _type=u'plugins'):
 	from libqtopensesame.misc import config
 	if plugin_property(plugin, u'disabled', _type=_type):
 		return True
-	if plugin in config.get_config(u'disabled_%s' % _type).split(u';'):
+	# Check if disabled_plugins is not empty in which case it is a 
+	# QPyNullVariant which does not have split() method
+	disabled_plugins = config.get_config(u'disabled_%s' % _type)
+	if hasattr(disabled_plugins, u"split") and plugin in disabled_plugins.split(u';'):
 		return True
 	return False
 
