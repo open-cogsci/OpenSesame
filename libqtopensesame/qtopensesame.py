@@ -353,13 +353,16 @@ class qtopensesame(QtGui.QMainWindow, base_component):
 			cfg.shortcut_tabwidget))
 		self.ui.shortcut_stdout.setKey(QtGui.QKeySequence(cfg.shortcut_stdout))
 		self.ui.shortcut_pool.setKey(QtGui.QKeySequence(cfg.shortcut_pool))
+		
 		# Unpack the string with recent files and only remember those that exist
-		for path in cfg.recent_files.split(u";;"):
-			if os.path.exists(path):
-				debug.msg(u"adding recent file '%s'" % path)
-				self.recent_files.append(path)
-			else:
-				debug.msg(u"missing recent file '%s'" % path)
+		recent_files = cfg.recent_files
+		if hasattr(recent_files, u"split"):
+			for path in recent_files.split(u";;"):
+				if os.path.exists(path):
+					debug.msg(u"adding recent file '%s'" % path)
+					self.recent_files.append(path)
+				else:
+					debug.msg(u"missing recent file '%s'" % path)
 		self.ui.action_enable_auto_response.setChecked(
 			self.experiment.auto_response)
 		self.ui.action_onetabmode.setChecked(cfg.onetabmode)
