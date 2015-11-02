@@ -9,6 +9,7 @@ opensesame (3.0.2~a2-ubuntu1) wily; urgency=medium
     - Fix canvas.copy() (#355)
     - Fix variable inspection (don't crash on empty values)
     - Fix a crash when renaming a variable to itself
+    - Fix a crash when creating a linked copy of a non-existing item
   * Improvements
     - Improved validation of variable names in loop item
     - Improved validation of OpenSesame-script syntax

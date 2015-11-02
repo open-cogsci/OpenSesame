@@ -578,6 +578,14 @@ class tree_overview(base_subcomponent, base_draggable, QtGui.QTreeWidget):
 				e.ignore()
 			self.main_window.set_busy(False)
 			return False
+		if data[u'type'] == u'item-existing' and \
+			data[u'item-name'] not in self.experiment.items:
+			self.experiment.notify(_(u'Cannot create linked copy of "%s". Has '
+				u'the item been permanently deleted?') % data[u'item-name'])
+			if e is not None:
+				e.ignore()
+			self.main_window.set_busy(False)
+			return False
 		# Ignore drops on non-droppable tree items.
 		if target_treeitem is None:
 			target_treeitem = self.itemAt(e.pos())
