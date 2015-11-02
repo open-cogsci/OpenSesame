@@ -1,4 +1,4 @@
-opensesame (3.0.2~a2-ubuntu1) wily; urgency=medium
+opensesame (3.0.2~a3-ubuntu1) wily; urgency=medium
 
   * Bugs fixed
     - Don't crash on non-ascii values in variable inspector 
@@ -11,6 +11,7 @@ opensesame (3.0.2~a2-ubuntu1) wily; urgency=medium
     - Fix a crash when renaming a variable to itself
     - Fix a crash when creating a linked copy of a non-existing item
     - [Mac OS] Fix a crash when restoring config (#360)
+    - Safely decode input in syntax (fixes non-ascii text in Python forms)
   * Improvements
     - Improved validation of variable names in loop item
     - Improved validation of OpenSesame-script syntax
