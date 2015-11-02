@@ -108,8 +108,8 @@ class inline_script(item.item):
 		"""
 
 		l = item.item.var_info(self)
-		script = self.var.get(u'_prepare', _eval=False) + \
-			self.var.get(u'_run', _eval=False)
+		script = self.var.get(u'_prepare', _eval=False, default=u'') + \
+			self.var.get(u'_run', _eval=False, default=u'')
 		for dummy, var in re.findall(extract_old_style, script):
 			l.append( (var, None) )
 		for var in re.findall(extract_new_style, script):

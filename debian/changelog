@@ -7,6 +7,7 @@ opensesame (3.0.2~a2-ubuntu1) wily; urgency=medium
     - Fix typo in bug_report success notification
     - Fix incorrect URL in Windows installer
     - Fix canvas.copy() (#355)
+    - Fix variable inspection (don't crash on empty values)
 
  -- Sebastiaan Mathot <sebastiaan@mantis>  Mon, 26 Oct 2015 14:31:00 +0100
 

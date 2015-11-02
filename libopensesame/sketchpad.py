@@ -139,7 +139,7 @@ class sketchpad(item, generic_response):
 		"""
 
 		l = item.var_info(self)
-		if self.var.get(u'duration', _eval=False) in \
+		if self.var.get(u'duration', _eval=False, default=u'') in \
 			[u'keypress', u'mouseclick']:
 			l += generic_response.var_info(self)
 		return l

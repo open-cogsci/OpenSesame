@@ -365,6 +365,8 @@ class var_store(object):
 		for item_name, item in list(self.__item__.items.items()) \
 			+ [(u'global', self.__item__)]:
 			for var, desc in item.var_info():
+				if not self.__item__.experiment.syntax.valid_var_name(var):
+					continue
 				if var not in d:
 					d[var] = {u'source' : []}
 				d[var][u'source'].append(item_name)

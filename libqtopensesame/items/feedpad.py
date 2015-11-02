@@ -22,6 +22,7 @@ from libqtopensesame.misc.sketchpad_canvas import sketchpad_canvas
 from libqtopensesame.widgets.sketchpad_widget import sketchpad_widget
 from libqtopensesame.items.qtplugin import qtplugin
 from libqtopensesame import sketchpad_elements
+from libqtopensesame.validators import duration_validator
 
 class feedpad(object):
 
@@ -43,6 +44,8 @@ class feedpad(object):
 		self.add_widget(self.sketchpad_widget)
 		self.auto_add_widget(self.sketchpad_widget.ui.edit_duration,
 			u'duration')
+		self.sketchpad_widget.ui.edit_duration.setValidator(
+			duration_validator(self))
 		self.first_refresh = True
 
 	def element_module(self):
