@@ -2,12 +2,16 @@ opensesame (3.0.2~a2-ubuntu1) wily; urgency=medium
 
   * Bugs fixed
     - Don't crash on non-ascii values in variable inspector 
-    - Improved handling of OpenSesame script changes and validation
+    - Fix crash on invalid OpenSesame script
     - Improved validation and quote handling in conditional statements (#356)
     - Fix typo in bug_report success notification
     - Fix incorrect URL in Windows installer
     - Fix canvas.copy() (#355)
     - Fix variable inspection (don't crash on empty values)
+    - Fix a crash when renaming a variable to itself
+  * Improvements
+    - Improved validation of variable names in loop item
+    - Improved validation of OpenSesame-script syntax
 
  -- Sebastiaan Mathot <sebastiaan@mantis>  Mon, 26 Oct 2015 14:31:00 +0100
 

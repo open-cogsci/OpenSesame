@@ -85,44 +85,29 @@ class loop(qtstructure_item, qtitem, loop_runtime):
 
 		"""Presents a dialog and add a variable,"""
 
-		var_name, ok = QtGui.QInputDialog.getText(self.loop_table, \
-			_(u'New variable'), \
+		var_name, ok = QtGui.QInputDialog.getText(self.loop_table,
+			_(u'New variable'),
 			_(u'Enter a variable name, optionally followed by a default value (i.e., \"varname defaultvalue\")'))
 
-		if ok:
-			l = self.cyclevar_list()
-			var_name = str(var_name)
-
-			# Split by space, because a name may be followed by a default value
-			_l = var_name.split()
-			if len(_l) > 1:
-				default = _l[1]
-				var_name = _l[0]
-			else:
-				default = ""
-
-			# Check for valid variable names
-			var_name = self.experiment.syntax.sanitize(var_name, strict=True, \
-				allow_vars=False)
-			if var_name == u"":
-				self.experiment.notify( \
-					u"Variable names must consist of alphanumeric characters and underscores, and must not be empty")
-				return
-
-			# Check if the variable already exists
-			if l is not None and var_name in l:
-				self.experiment.notify( \
-					_(u"A variable with the name '%s' already exists") \
-						% var_name)
-				return
-
-			for i in range(self.var.cycles):
-				if i not in self.matrix:
-					self.matrix[i] = {}
-				self.matrix[i][var_name] = default
-
-			self.refresh_loop_table()
-			self.apply_edit_changes()
+		if not ok:
+			return
+		l = self.cyclevar_list()
+		var_name = str(var_name)
+		# Split by space, because a name may be followed by a default value
+		_l = var_name.split()
+		if len(_l) > 1:
+			default = _l[1]
+			var_name = _l[0]
+		else:
+			default = u""
+		if not self.name_valid_and_unique(var_name):
+			return
+		for i in range(self.var.cycles):
+			if i not in self.matrix:
+				self.matrix[i] = {}
+			self.matrix[i][var_name] = default
+		self.refresh_loop_table()
+		self.apply_edit_changes()
 
 	def cyclevar_list(self):
 
@@ -163,6 +148,33 @@ class loop(qtstructure_item, qtitem, loop_runtime):
 				del self.matrix[i][from_name]
 				self.matrix[i][to_name] = val
 
+	def name_valid_and_unique(self, name):
+
+		"""
+		desc:
+			Checks if a variable name is syntactically valid and unique.
+
+		arguments:
+			name:	The name to check.
+
+		returns:
+			True if the name is valid and unique, False otherwise.
+		"""
+
+		if not self.syntax.valid_var_name(name):
+			self.experiment.notify(
+				_(u'"%s" is not a valid variable name. Valid names consist of '
+				u'letters, numbers, and underscores, and do not start with a '
+				u'number.') % name)
+			return False
+		var_list = self.cyclevar_list()
+		if var_list is not None and name in var_list:
+			self.experiment.notify(
+				_(u"A variable with the name '%s' already exists") % \
+				name)
+			return False
+		return True
+
 	def rename_cyclevar(self):
 
 		"""Presents a dialog and rename a variable."""
@@ -170,30 +182,23 @@ class loop(qtstructure_item, qtitem, loop_runtime):
 		var_list = self.cyclevar_list()
 		if var_list is None:
 			return
-
-		old_var, ok = QtGui.QInputDialog.getItem( \
-			self.experiment.ui.centralwidget, _(u"Rename variable"), \
-			_(u"Which variable do you want to rename?"), var_list, \
+		# Get the original variable
+		old_var, ok = QtGui.QInputDialog.getItem(
+			self.experiment.ui.centralwidget, _(u"Rename variable"),
+			_(u"Which variable do you want to rename?"), var_list,
 			editable=False)
-		if ok:
-			_new_var, ok = QtGui.QInputDialog.getText(self.loop_table, \
-				_(u'New variable'), _(u'Enter a new variable name'), text=old_var)
-			if ok and _new_var != old_var:
-				old_var = str(old_var)
-				new_var = self.experiment.syntax.sanitize(_new_var, strict=True, \
-					allow_vars=False)
-				if _new_var != new_var or new_var == "":
-					self.experiment.notify( \
-						_(u"Please use only letters, numbers and underscores"))
-					return
-				if new_var in var_list:
-					self.experiment.notify( \
-						_(u"A variable with the name '%s' already exists") % \
-						new_var)
-					return
-			self.rename_var(self.name, old_var, new_var)
-			self.refresh_loop_table()
-			self.apply_edit_changes()
+		if not ok:
+			return
+		# Get the new variable name
+		new_var, ok = QtGui.QInputDialog.getText(self.loop_table,
+			_(u'New variable'), _(u'Enter a new variable name'), text=old_var)
+		if not ok or new_var == old_var:
+			return
+		if not self.name_valid_and_unique(new_var):
+			return
+		self.rename_var(self.name, old_var, new_var)
+		self.refresh_loop_table()
+		self.apply_edit_changes()
 
 	def remove_cyclevar(self):
 
