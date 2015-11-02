@@ -267,6 +267,7 @@ class syntax(object):
 
 		if not isinstance(txt, basestring):
 			return txt
+		txt = safe_decode(txt)
 		if var is None:
 			var = self.experiment.var
 		if round_float:
@@ -432,6 +433,7 @@ class syntax(object):
 			type:	str
 		"""
 
+		s = safe_decode(s)
 		return s.replace(u'\[', u'[').replace(u'\]', u']')
 
 	def safe_wrap(self, s):
