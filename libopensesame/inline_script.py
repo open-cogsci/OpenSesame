@@ -62,6 +62,8 @@ class inline_script(item.item):
 		try:
 			self.cprepare = self.experiment.python_workspace._compile(
 				self.var.get(u'_prepare', _eval=False))
+		except osexception:
+			raise
 		except Exception as e:
 			raise osexception(u'Failed to compile inline script',
 				line_offset=-1, item=self.name, phase=u'prepare', exception=e)
@@ -69,12 +71,16 @@ class inline_script(item.item):
 		try:
 			self.crun = self.experiment.python_workspace._compile(
 				self.var.get(u'_run', _eval=False))
+		except osexception:
+			raise
 		except Exception as e:
 			raise osexception(u'Failed to compile inline script',
 				line_offset=-1, item=self.name, phase=u'run', exception=e)
 		# Run prepare script
 		try:
 			self.experiment.python_workspace._exec(self.cprepare)
+		except osexception:
+			raise
 		except Exception as e:
 			raise osexception(u'Error while executing inline script',
 				line_offset=-1, item=self.name, phase=u'prepare', exception=e)
@@ -94,6 +100,8 @@ class inline_script(item.item):
 		self.experiment.python_workspace[u'self'] = self
 		try:
 			self.experiment.python_workspace._exec(self.crun)
+		except osexception:
+			raise
 		except Exception as e:
 			raise osexception(u'Error while executing inline script',
 				line_offset=-1, item=self.name, phase=u'run', exception=e)

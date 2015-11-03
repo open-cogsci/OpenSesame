@@ -113,7 +113,7 @@ class after_experiment(base_extension):
 			u'time': time.ctime(),
 			u'logfile': logfile
 			}
-		self.tabwidget.open_markdown(md, u'dialog-information', _(u'Finished'))
+		self.tabwidget.open_markdown(md, u'os-finished-success', _(u'Finished'))
 
 	def handle_exception(self, e):
 
@@ -129,7 +129,14 @@ class after_experiment(base_extension):
 
 		if not isinstance(e, osexception):
 			e = osexception(msg=u'Unexpected error', exception=e)
+		if e.user_triggered:
+			icon = u'os-finished-user-interrupt'
+			title = _(u'Aborted')
+			md = _(u'# Aborted\n\n- ') + e.markdown()
+		else:
+			icon = u'os-finished-error'
+			title = _(u'Stopped')
+			md = _(u'# Stopped\n\nThe experiment did not finish normally for the '
+				u'following reason:\n\n- ') + e.markdown()
 		self.console.write(e)
-		md = _(u'# Stopped\n\nThe experiment did not finish normally for the '
-			u'following reason:\n\n- ') + e.markdown()
-		self.tabwidget.open_markdown(md, u'process-stop', _(u'Stopped'))
+		self.tabwidget.open_markdown(md, icon, title)

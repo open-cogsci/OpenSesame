@@ -78,6 +78,8 @@ class osexception(Exception):
 		self._md = u'%s\n\n' % msg
 		self._plaintext = u'\n%s\n\n' % msg
 		self.enc = u'utf-8'
+		self.user_triggered = u'user_triggered' in info \
+			and info[u'user_triggered']
 		# If an Exception is passed, i.e. if we are catching an Exception,
 		# summarize this exception here.
 		self.exception = exception

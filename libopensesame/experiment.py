@@ -427,7 +427,8 @@ class experiment(item.item):
 				key, _time = pause_keyboard.get_key()
 				if key == u'q':
 					pause_keyboard.show_virtual_keyboard(False)
-					raise osexception(u'The experiment was aborted')
+					raise osexception(u'The experiment was aborted',
+						user_triggered=True)
 				if key == u'space':
 					break
 				time.sleep(.25)
