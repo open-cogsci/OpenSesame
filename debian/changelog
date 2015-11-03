@@ -1,4 +1,4 @@
-opensesame (3.0.2~a4-ubuntu1) wily; urgency=medium
+opensesame (3.0.2~a5-ubuntu1) wily; urgency=medium
 
   * Bugs fixed
     - Don't crash on non-ascii values in variable inspector 
@@ -15,6 +15,7 @@ opensesame (3.0.2~a4-ubuntu1) wily; urgency=medium
   * Improvements
     - Improved validation of variable names in loop item
     - Improved validation of OpenSesame-script syntax
+    - Improved exception handling (including run-status emoticons)
 
  -- Sebastiaan Mathot <sebastiaan@mantis>  Mon, 26 Oct 2015 14:31:00 +0100
 
