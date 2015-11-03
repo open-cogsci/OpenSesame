@@ -417,7 +417,7 @@ class qtitem(base_qtobject):
 		try:
 			self.validator(self.name, self.experiment, script)
 			return True
-		except osexception as e:
+		except Exception as e:
 			# If an error occurs, we first parse the first line, then the first
 			# and second, and so on, until we find the error.
 			l = script.split(u'\n')
@@ -425,7 +425,7 @@ class qtitem(base_qtobject):
 				test_script = u'\n'.join(l[:line_nr])
 				try:
 					self.validator(self.name, self.experiment, test_script)
-				except osexception as e:
+				except Exception as e:
 					if hasattr(self._script_widget, u'setInvalid'):
 						self._script_widget.setInvalid(line_nr, e.markdown())
 					break

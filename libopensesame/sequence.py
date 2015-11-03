@@ -48,6 +48,15 @@ class sequence(item.item):
 			if self.python_workspace._eval(cond):
 				self.experiment.items.run(_item)
 
+	def set_validator(self):
+
+		"""
+		desc:
+			See qtitem.
+		"""
+
+		self.validator = sequence
+
 	def parse_run(self, i):
 
 		"""

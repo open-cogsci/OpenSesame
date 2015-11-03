@@ -65,6 +65,15 @@ class form_base(item.item):
 		self._widgets = []
 		self._variables = []
 
+	def set_validator(self):
+
+		"""
+		desc:
+			See qtitem.
+		"""
+
+		self.validator = form_base
+
 	def parse_line(self, line):
 
 		"""
