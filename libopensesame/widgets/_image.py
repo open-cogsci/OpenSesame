@@ -132,6 +132,8 @@ class image(widget):
 
 		self.rect = rect
 		_path = safe_str(self.path, enc=misc.filesystem_encoding())
+		if not os.path.isfile(_path):
+			raise osexception(u'"%s" does not exist' % _path)
 		if self.adjust:
 			x, y, w, h = self.rect
 			try:
