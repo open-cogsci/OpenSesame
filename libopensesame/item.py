@@ -295,6 +295,7 @@ class item(object):
 		# Multiline variables are stored as a block
 		if u'\n' in val or u'"' in val:
 			s = u'__%s__\n' % var
+			val = val.replace(u'__end__', u'\\__end__')
 			for l in val.split(u'\n'):
 				s += '\t%s\n' % l
 			while s[-1] in (u'\t', u'\n'):
@@ -334,11 +335,11 @@ class item(object):
 			# The end of a textblock
 			if line_stripped == u'__end__':
 				if textblock_var is None:
-					self.experiment.notify( \
-						u'It appears that a textblock has been closed without being opened. The most likely reason is that you have used the string "__end__", which has a special meaning for OpenSesame.')
-				else:
-					self.var.set(textblock_var, textblock_val)
-					textblock_var = None
+					raise osexception(u'It appears that a textblock has been '
+						u'closed without being opened.')
+				self.var.set(textblock_var,
+					textblock_val.replace(u'\\__end__', u'__end__'))
+				textblock_var = None
 			# The beginning of a textblock. A new textblock is only started when
 			# a textblock is not already ongoing, and only if the textblock
 			# start is of the format __VARNAME__
