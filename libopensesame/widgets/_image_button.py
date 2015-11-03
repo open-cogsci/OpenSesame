@@ -37,12 +37,12 @@ class image_button(image):
 
 		~~~ {.python}
 		from libopensesame import widgets
-		form = widgets.form(self.experiment)
+		form = widgets.form(exp)
 		# The full path to the image needs to be provided.
 		# self.experiment.pool can be used to retrieve the full path
 		# to an image in the file pool.
-		image_button = widgets.image_button(form,
-			path=self.experiment.pool['5.png'], var='response')
+		image_button = widgets.image_button(form, path=pool['5.png'],
+			var='response')
 		form.set_widget(image_button, (0,0))
 		form._exec()
 		~~~

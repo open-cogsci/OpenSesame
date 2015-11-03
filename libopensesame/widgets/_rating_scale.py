@@ -41,7 +41,7 @@ class rating_scale(widget):
 
 		~~~ {.python}
 		from libopensesame import widgets
-		form = widgets.form(self.experiment)
+		form = widgets.form(exp)
 		label = widgets.label(form, text='I like fluffy kittens')
 		rating_scale = widgets.rating_scale(form, nodes=['Agree', "Don't know",
 			'Disagree'], var='response')

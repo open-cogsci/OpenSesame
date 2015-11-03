@@ -40,7 +40,7 @@ class button(label):
 
 		~~~ {.python}
 		from libopensesame import widgets
-		form = widgets.form(self.experiment)
+		form = widgets.form(exp)
 		button = widgets.button(form, text='Click me!', frame=True, center=True,
 			var='response')
 		form.set_widget(button, (0,0))

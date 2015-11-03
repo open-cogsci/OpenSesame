@@ -40,7 +40,7 @@ class checkbox(button):
 
 		~~~ {.python}
 		from libopensesame import widgets
-		form = widgets.form(self.experiment)
+		form = widgets.form(exp)
 		checkbox1 = widgets.checkbox(form, text='Option 1', group='group')
 		checkbox2 = widgets.checkbox(form, text='Option 2', group='group')
 		form.set_widget(checkbox1, (0,0))

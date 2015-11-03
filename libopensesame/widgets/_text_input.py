@@ -40,8 +40,9 @@ class text_input(label):
 
 		~~~ {.python}
 		from libopensesame import widgets
-		form = widgets.form(self.experiment)
-		text_input = widgets.text_input(form, var='response', return_accepts=True)
+		form = widgets.form(exp)
+		text_input = widgets.text_input(form, var='response',
+			return_accepts=True)
 		form.set_widget(text_input, (0,0))
 		form._exec()
 		~~~

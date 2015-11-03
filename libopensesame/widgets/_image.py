@@ -43,11 +43,11 @@ class image(widget):
 
 		~~~ {.python}
 		from libopensesame import widgets
-		form = widgets.form(self.experiment)
+		form = widgets.form(exp)
 		# The full path to the image needs to be provided.
 		# self.experiment.pool can be used to retrieve the full path
 		# to an image in the file pool.
-		image = widgets.image(form, path=self.experiment.poool['5.png'])
+		image = widgets.image(form, path=pool['5.png'])
 		form.set_widget(image, (0,0))
 		form._exec()
 		~~~

@@ -37,7 +37,7 @@ class form(object):
 
 		~~~ {.python}
 		from libopensesame import widgets
-		form = widgets.form(self.experiment)
+		form = widgets.form(exp)
 		label = widgets.label(form, text='label)
 		form.set_widget(label, (0,0))
 		form._exec()
