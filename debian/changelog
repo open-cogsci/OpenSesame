@@ -1,7 +1,7 @@
-opensesame (3.0.2~a5-ubuntu1) wily; urgency=medium
+opensesame (3.0.2-ubuntu1) wily; urgency=medium
 
   * Bugs fixed
-    - Don't crash on non-ascii values in variable inspector 
+    - Don't crash on non-ascii values in variable inspector
     - Fix crash on invalid OpenSesame script
     - Improved validation and quote handling in conditional statements (#356)
     - Fix typo in bug_report success notification
