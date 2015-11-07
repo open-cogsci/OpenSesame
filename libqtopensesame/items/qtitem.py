@@ -443,7 +443,7 @@ class qtitem(base_qtobject):
 
 		import inspect
 		meth = self.from_string
-		for cls in inspect.getmro(meth.im_class):
+		for cls in inspect.getmro(self.__class__):
 			if meth.__name__ in cls.__dict__:
 				break
 		debug.msg(u'validator: %s' % cls)
