@@ -68,7 +68,7 @@ def recursive_glob(src_folder, target_folder):
 	"""
 
 	l = []
-	print src_folder
+	print(src_folder)
 	path_list = []
 	for path in os.listdir(src_folder):
 		full_path = os.path.join(src_folder, path)
