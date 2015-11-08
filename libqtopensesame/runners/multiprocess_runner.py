@@ -57,8 +57,7 @@ class multiprocess_runner(base_runner):
 			# misc.opensesame_folder() doesn't work for OSX and returns None then,
 			# so determine OpenSesame's rootdir in another way
 			if os_folder is None:
-				os_folder = os.path.dirname(
-					os.path.abspath(sys.modules['__main__'].__file__))
+				os_folder = os.getcwd()
 			if not os.path.exists(os.path.join(os_folder, u'opensesame.pyc')) \
 				and not os.path.exists(os.path.join(os_folder, u'opensesame.py')):
 				import shutil
