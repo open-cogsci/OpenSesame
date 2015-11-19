@@ -73,7 +73,7 @@ class syntax(object):
 		self.re_sanitize_loose = re.compile(r'[\n\"\\]')
 		# Unsanitization is used to replace U+XXXX unicode notation
 		self.re_from_ascii = re.compile(r'U\+([A-F0-9]{4})')
-		self.re_front_matter = re.compile(r'---(?P<info>.*)---', re.S)
+		self.re_front_matter = re.compile(r'---(?P<info>.*?)---', re.S)
 
 	def auto_type(self, val):
 
