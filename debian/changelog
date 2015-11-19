@@ -5,6 +5,7 @@ opensesame (3.0.3a1-ubuntu1) wiley; urgency=medium
     - Restore overview area when drop fails (#361)
     - Warn on missing `__end__` statements in OpenSesame script (#364) 
     - Don't be greedy when parsing YAML front matter (#369)
+    - Fix external_runner (#371)
 
  -- Sebastiaan Mathot <sebastiaan@mantis>  Sat, 07 Nov 2015 16:51:44 +0100
 
