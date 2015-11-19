@@ -527,10 +527,15 @@ class sketchpad_widget(base_widget):
 				type:	bool
 		"""
 
+		def z_sort(element):
+			if isinstance(element.z_index, (int, float)):
+				return -element.z_index
+			return 0
+
 		if refresh:
 			self.canvas.invalidate()
 		self.canvas.clear()
-		self.elements.sort(key=lambda element: -element.z_index)
+		self.elements.sort(key=z_sort)
 		for element in self.elements:
 			element.draw()
 		self.sketchpad.user_hint_widget.clear()
