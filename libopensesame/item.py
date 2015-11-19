@@ -363,6 +363,8 @@ class item(object):
 			# Parse regular variables
 			elif not self.parse_variable(line):
 				self.parse_line(line)
+		if textblock_var is not None:
+			raise osexception(u'Missing __end__ block for multiline variable.')
 
 	def to_string(self, item_type=None):
 
