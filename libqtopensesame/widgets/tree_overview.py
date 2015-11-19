@@ -617,8 +617,20 @@ class tree_overview(base_subcomponent, base_draggable, QtGui.QTreeWidget):
 		if data[u'type'] == u'item-existing':
 			item, new_items = self.drop_get_item_existing(data)
 		else:
-			item, new_items = self.drop_get_item_snippet(data)
-
+			# Creating an item may fail, and we therefore need to clean up when
+			# this happens. But we don't catch the Exception itself, because it
+			# will be handled with higher up, for example by the bug_report
+			# extension.
+			try:
+				item = None
+				item, new_items = self.drop_get_item_snippet(data)
+			finally:
+				if item is None:
+					if e is not None:
+						e.ignore()
+					self.structure_change.emit()
+					self.main_window.set_busy(False)
+					self.end_drag()
 		inserted = False
 		# If the item has no parent or if it is the experiment starting point,
 		# we insert into it directly.

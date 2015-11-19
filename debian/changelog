@@ -2,6 +2,7 @@ opensesame (3.0.3a1-ubuntu1) wiley; urgency=medium
 
   * Bugs fixed
     - Fix Python-3 compatibility for script validator
+    - Restore overview area when drop fails (#361)
 
  -- Sebastiaan Mathot <sebastiaan@mantis>  Sat, 07 Nov 2015 16:51:44 +0100
 
