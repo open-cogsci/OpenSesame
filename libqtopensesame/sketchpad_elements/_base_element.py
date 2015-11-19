@@ -94,9 +94,11 @@ class base_element(object):
 		"""
 
 		for var, val in self.properties.items():
-			if var in [u'x', u'x1', u'x2']:
+			if var in [u'x', u'x1', u'x2'] and \
+				isinstance(self.properties[var], (int, float)):
 				self.properties[var] += dx
-			if var in [u'y', u'y1', u'y2']:
+			if var in [u'y', u'y1', u'y2'] and \
+				isinstance(self.properties[var], (int, float)):
 				self.properties[var] += dy
 
 	def set_pos(self, x=0, y=0):
