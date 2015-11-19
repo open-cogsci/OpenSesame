@@ -127,6 +127,8 @@ class good_looking_table(QtGui.QTableWidget):
 
 		"""Copies data from the table into the clipboard."""
 
+		if not self.selectedRanges():
+			return
 		_range = self.selectedRanges()[0]
 		rows = []
 		for row in range(_range.topRow(), _range.bottomRow()+1):
@@ -165,6 +167,8 @@ class good_looking_table(QtGui.QTableWidget):
 
 		"""Clears the selected cells."""
 
+		if not self.selectedRanges():
+			return
 		selected_range = self.selectedRanges()[0]
 		for row in range(selected_range.topRow(), selected_range.bottomRow() + \
 			1):

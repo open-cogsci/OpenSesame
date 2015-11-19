@@ -8,6 +8,7 @@ opensesame (3.0.3a1-ubuntu1) wiley; urgency=medium
     - Fix external_runner (#371)
     - Improve handling of variably defined font and sketchpad element settings (#372)
     - Don't crash when moving sketchpad elements with variably defined positions (#373)
+    - Don't crash when copy-pasting in loop table when no cells are selected (#374)
 
  -- Sebastiaan Mathot <sebastiaan@mantis>  Sat, 07 Nov 2015 16:51:44 +0100
 
