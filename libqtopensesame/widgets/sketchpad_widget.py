@@ -131,7 +131,8 @@ class sketchpad_widget(base_widget):
 
 		for element in self.sketchpad.selected_elements():
 			element.set_property(u'font_family', str(family))
-			element.set_property(u'font_size', size)
+			if size >= 0:
+				element.set_property(u'font_size', size)
 			element.set_property(u'font_italic', italic, yes_no=True)
 			element.set_property(u'font_bold', bold, yes_no=True)
 		self.draw()
@@ -285,7 +286,8 @@ class sketchpad_widget(base_widget):
 			# Adjust the widget
 			if _type in (int, float):
 				spinbox = getattr(self.ui, u'spinbox_%s' % prop)
-				spinbox.setValue(val)
+				if isinstance(val, (int, float)):
+					spinbox.setValue(val)
 			elif _type == bool:
 				checkbox = getattr(self.ui, u'checkbox_%s' % prop)
 				checkbox.setChecked(val)
@@ -296,7 +298,7 @@ class sketchpad_widget(base_widget):
 		if element.requires_text():
 			self.ui.widget_font.set_font(
 				family=element.get_property(u'font_family'),
-				size=element.get_property(u'font_size', _type=int),
+				size=element.get_property(u'font_size', _type=int, fallback=-1),
 				bold=element.get_property(u'font_bold', _type=bool),
 				italic=element.get_property(u'font_italic', _type=bool)
 				)

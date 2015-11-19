@@ -567,7 +567,7 @@ class sketchpad_canvas(QtGui.QGraphicsScene):
 			A font size.
 		"""
 
-		if not isinstance(font_size, int):
+		if not isinstance(font_size, int) or font_size < 0:
 			self.notify(_('Font size "%s" is invalid or variably defined, using 18') \
 				% font_size)
 			return 18

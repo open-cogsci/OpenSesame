@@ -140,6 +140,8 @@ class font_widget_base(base_widget):
 			self.size = experiment.var.get(u'font_size', _eval=False)
 		else:
 			self.size = size
+		if not isinstance(self.size, int) or self.size <= 0:
+			self.size = 18
 		if self.ui.combobox_family.findText(self.family) < 0:
 			self.ui.combobox_family.addItem(self.family)
 		self.ui.combobox_family.setCurrentIndex(

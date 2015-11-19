@@ -202,7 +202,7 @@ class base_element(object):
 		effect = QtGui.QGraphicsOpacityEffect()
 		return effect
 
-	def get_property(self, name, _type=str):
+	def get_property(self, name, _type=str, fallback=None):
 
 		"""
 		desc:
@@ -212,7 +212,9 @@ class base_element(object):
 			name:	The property name.
 
 		keywords:
-			_type:	The property type.
+			_type:		The property type.
+			fallback:	A fallback value, in case the value cannot be cast to
+						the requested type.
 
 		returns:
 			The property in the specified type, or None if the property doesn't
@@ -226,9 +228,15 @@ class base_element(object):
 		if _type == str:
 			return str(val)
 		if _type == int:
-			return int(val)
+			try:
+				return int(val)
+			except:
+				return fallback
 		if _type == float:
-			return float(val)
+			try:
+				return float(val)
+			except:
+				return fallback
 		if _type == bool:
 			if val in (u'yes', u'1'):
 				return True
