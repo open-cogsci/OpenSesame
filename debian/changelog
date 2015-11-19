@@ -10,6 +10,7 @@ opensesame (3.0.3a1-ubuntu1) wiley; urgency=medium
     - Don't crash when moving sketchpad elements with variably defined positions (#373)
     - Don't crash when copy-pasting in loop table when no cells are selected (#374)
     - Fall back to z_index=0 when an invalid z_index has been specified for sketchpad elements (#375)
+    - Don't crash on empty filename in image element in sketchpad (#377)
 
  -- Sebastiaan Mathot <sebastiaan@mantis>  Sat, 07 Nov 2015 16:51:44 +0100
 
