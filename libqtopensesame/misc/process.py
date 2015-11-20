@@ -139,9 +139,11 @@ class ExperimentProcess(multiprocessing.Process):
 		try:
 			exp.run()
 			print('done!')
-		except Exception as e_run:
-			if not isinstance(e_run, osexception):
-				e_run = osexception(u'Unexpected error', exception=e_run)
+		except Exception as e:
+			if not isinstance(e, osexception):
+				e_run = osexception(u'Unexpected error', exception=_e)
+			else:
+				e_run = e
 		exp.transmit_workspace()
 		# End the experiment and catch any Exceptions. These exceptions are just
 		# printed out and not explicitly passed on to the user, because they are

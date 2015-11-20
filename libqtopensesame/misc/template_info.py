@@ -19,12 +19,17 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 
 from libopensesame.py3compat import *
 
-templates = [
-	('templates/default.osexp', 'Default template'),
-	('templates/extended_template.osexp', 'Extended template'),
-	('templates/form_template.osexp', 'Form template (questionnaires)'),
-	('templates/android_template.osexp', 'Runtime for Android template'),
-	('templates/pygaze_template.osexp', 'PyGaze eye-tracking template'),
-	('templates/eco_alt_template.osexp',
-			'Stimulus set: an ecological alternative to Snodgrass & Vanderwart'),
-	]
+if py3:
+	templates = [
+		('templates/default.osexp', 'Default template (legacy backend)')
+		]
+else:
+	templates = [
+		('templates/default.osexp', 'Default template'),
+		('templates/extended_template.osexp', 'Extended template'),
+		('templates/form_template.osexp', 'Form template (questionnaires)'),
+		('templates/android_template.osexp', 'Runtime for Android template'),
+		('templates/pygaze_template.osexp', 'PyGaze eye-tracking template'),
+		('templates/eco_alt_template.osexp',
+				'Stimulus set: an ecological alternative to Snodgrass & Vanderwart'),
+		]

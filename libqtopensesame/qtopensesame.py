@@ -196,10 +196,15 @@ class qtopensesame(QtGui.QMainWindow, base_component):
 		self.ui.shortcut_pool = QtGui.QShortcut(QtGui.QKeySequence(), self,
 			self.focus_file_pool)
 
-		# Create the initial experiment, which is the default template.
-		with open(misc.resource(os.path.join(u"templates",
-			u"default.osexp")), u"r") as fd:
-			self.experiment = experiment.experiment(self, u"New experiment",
+		# Create the initial experiment, which is the default template. Because
+		# not all backends are supported under Python 3, we use a different
+		# backend for each.
+		if py3:
+			tmpl = u'default-py3.osexp'
+		else:
+			tmpl = u'default.osexp'
+		with open(misc.resource(os.path.join(u'templates', tmpl)), u'r') as fd:
+			self.experiment = experiment.experiment(self, u'New experiment',
 				fd.read())
 		self.experiment.build_item_tree()
 
@@ -353,7 +358,7 @@ class qtopensesame(QtGui.QMainWindow, base_component):
 			cfg.shortcut_tabwidget))
 		self.ui.shortcut_stdout.setKey(QtGui.QKeySequence(cfg.shortcut_stdout))
 		self.ui.shortcut_pool.setKey(QtGui.QKeySequence(cfg.shortcut_pool))
-		
+
 		# Unpack the string with recent files and only remember those that exist
 		recent_files = cfg.recent_files
 		if hasattr(recent_files, u"split"):
@@ -914,10 +919,11 @@ class qtopensesame(QtGui.QMainWindow, base_component):
 		# under OSX. For now just display a warning message and do nothing
 		# For the same reason, inOSX the default runner is set to inprocess
 		# for now in misc.config
-		if sys.platform == "darwin" and getattr(sys, 'frozen', None):
-			self.experiment.notify(u'Multiprocessing does not work in the OSX '
-				'app version yet. Please change the runner to \'inprocess\' in '
-				'the preferences panel')
+		if cfg.runner == u'multiprocess' and sys.platform == "darwin" \
+			and getattr(sys, 'frozen', None):
+			self.experiment.notify(u'Multiprocessing does not work in the '
+				u'OSX app version yet. Please change the runner to '
+				u'\'inprocess\' in the preferences panel')
 		from libqtopensesame import runners
 		return getattr(runners, u'%s_runner' % cfg.runner)
 

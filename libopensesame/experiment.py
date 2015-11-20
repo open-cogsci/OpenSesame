@@ -342,7 +342,7 @@ class experiment(item.item):
 			return
 		d = self.python_workspace._globals.copy()
 		d.update(extra)
-		for key, value in d.items():
+		for key, value in d.copy().items():
 			try:
 				pickle.dumps(value)
 			except:
