@@ -445,15 +445,21 @@ class tree_overview(base_subcomponent, base_draggable, QtGui.QTreeWidget):
 				e.ignore()
 			return
 		item_name = data[u'item-name']
-		# Check for recursion when dropping sequences and loops
+		# Check for recursion when dropping sequences and loops. The target item
+		# may not have the dropped item in its ancestry. However, the target
+		# item may occur multiple times in the experiment, so we need to check
+		# that this constraint holds for all linked copies of the target item.
 		if data[u'item-type'] in [u'sequence', u'loop']:
-			target_item_name, target_item_ancestry = target_treeitem.ancestry()
-			if target_item_ancestry.startswith(u'%s:' % item_name) or \
-				u'.%s:' % item_name  in target_item_ancestry:
-				debug.msg(u'Drop ignored: recursion prevented')
-				if e is not None:
-					e.ignore()
-				return
+			for linked_target_treeitem in self.findItems(target_treeitem.name,
+				QtCore.Qt.MatchFixedString|QtCore.Qt.MatchRecursive):
+				target_item_name, target_item_ancestry = \
+					linked_target_treeitem.ancestry()
+				if target_item_ancestry.startswith(u'%s:' % item_name) or \
+					u'.%s:' % item_name  in target_item_ancestry:
+					debug.msg(u'Drop ignored: recursion prevented')
+					if e is not None:
+						e.ignore()
+					return
 		# Don't drop on undroppable parents
 		parent_item_name, index = self.parent_from_ancestry(data[u'ancestry'])
 		if parent_item_name is None:
