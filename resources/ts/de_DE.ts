@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS><TS version="2.0" language="de_DE" sourcelanguage="">
+<!DOCTYPE TS>
+<TS version="2.0" language="de_DE">
 <context>
     <name>Form</name>
     <message>
@@ -55,47 +56,47 @@
     <message>
         <location filename="loop_operation.ui" line="32"/>
         <source>TextLabel</source>
-        <translation type="unfinished">TextLabel</translation>
+        <translation>TextLabel</translation>
     </message>
     <message>
         <location filename="loop.ui" line="38"/>
         <source>Item to run</source>
-        <translation type="unfinished">Zu startendes Item</translation>
+        <translation>Zu startendes Item</translation>
     </message>
     <message>
         <location filename="loop.ui" line="45"/>
         <source>PushButton</source>
-        <translation type="unfinished"></translation>
+        <translation>PushButton</translation>
     </message>
     <message>
         <location filename="loop.ui" line="68"/>
         <source>When running the experiment, do the following:</source>
-        <translation type="unfinished"></translation>
+        <translation>Wenn ein Experiment getestet wird, tu folgendes:</translation>
     </message>
     <message>
         <location filename="loop.ui" line="96"/>
         <source>Add</source>
-        <translation type="unfinished"></translation>
+        <translation>Hinzufügen</translation>
     </message>
     <message>
         <location filename="loop.ui" line="109"/>
         <source>Preview</source>
-        <translation type="unfinished"></translation>
+        <translation>Vorschau</translation>
     </message>
     <message>
         <location filename="logger.ui" line="23"/>
         <source>Log all variables (recommended)</source>
-        <translation type="unfinished"></translation>
+        <translation>Registriere alle Variablen (empfohlen)</translation>
     </message>
     <message>
         <location filename="logger.ui" line="70"/>
         <source>Custom variable</source>
-        <translation type="unfinished"></translation>
+        <translation>Benutzerdefinierte Variable</translation>
     </message>
     <message>
         <location filename="logger.ui" line="75"/>
         <source>Source(s)</source>
-        <translation type="unfinished"></translation>
+        <translation>Quelle(n)</translation>
     </message>
 </context>
 <context>
@@ -146,17 +147,17 @@
     <message>
         <location filename="translatables.py" line="3"/>
         <source>Handles the end of an experimental run</source>
-        <translation type="unfinished"></translation>
+        <translation>Regelt das Ende eines experimentellen Laufs</translation>
     </message>
     <message>
         <location filename="translatables.py" line="4"/>
         <source>Finished</source>
-        <translation type="unfinished"></translation>
+        <translation>Beendet</translation>
     </message>
     <message>
         <location filename="translatables.py" line="5"/>
         <source>Stopped</source>
-        <translation type="unfinished"></translation>
+        <translation>Gestoppt</translation>
     </message>
 </context>
 <context>
@@ -290,27 +291,27 @@
     <message>
         <location filename="translatables.py" line="32"/>
         <source>Bug report not sent</source>
-        <translation type="unfinished"></translation>
+        <translation>Fehlerbericht nicht gesendet</translation>
     </message>
     <message>
         <location filename="translatables.py" line="32"/>
         <source>Bug report sent</source>
-        <translation type="unfinished"></translation>
+        <translation>Fehlerbericht gesendet</translation>
     </message>
     <message>
         <location filename="translatables.py" line="32"/>
         <source>Oops ...</source>
-        <translation type="unfinished"></translation>
+        <translation>Oops ...</translation>
     </message>
     <message>
         <location filename="translatables.py" line="32"/>
         <source>Bug report</source>
-        <translation type="unfinished"></translation>
+        <translation>Fehlerbericht</translation>
     </message>
     <message>
         <location filename="translatables.py" line="32"/>
         <source>Sends a bug report when an exception occurs</source>
-        <translation type="unfinished"></translation>
+        <translation>Sendet einen Fehlerbericht wenn eine Exception geschieht</translation>
     </message>
 </context>
 <context>
@@ -433,17 +434,17 @@
     <message>
         <location filename="general_properties.ui" line="351"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:small; font-style:italic;&quot;&gt;Warning: python-bidi is not available&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:small; font-style:italic;&quot;&gt;Warnung: python-bidi ist nicht verfügbar&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="general_properties.ui" line="358"/>
         <source>If enabled, (0,0) always refers to the center of the display</source>
-        <translation type="unfinished"></translation>
+        <translation>Falls aktiviert, bezieht sich (0,0) immer auf die Mitte des Bildschirms</translation>
     </message>
     <message>
         <location filename="general_properties.ui" line="361"/>
         <source>Uniform coordinates</source>
-        <translation type="unfinished"></translation>
+        <translation>Uniforme Koordinaten</translation>
     </message>
 </context>
 <context>
@@ -482,12 +483,12 @@
     <message>
         <location filename="translatables.py" line="32"/>
         <source>Example experiments</source>
-        <translation type="unfinished"></translation>
+        <translation>Beispielexperimente</translation>
     </message>
     <message>
         <location filename="translatables.py" line="32"/>
         <source>Shows a list of example experiments</source>
-        <translation type="unfinished"></translation>
+        <translation>Zeigt eine Liste von Beispielexperimenten</translation>
     </message>
 </context>
 <context>
@@ -495,42 +496,42 @@
     <message>
         <location filename="translatables.py" line="32"/>
         <source>Runs Python code from a file</source>
-        <translation type="unfinished"></translation>
+        <translation>Führt Python code von einer Datei aus</translation>
     </message>
     <message>
         <location filename="translatables.py" line="32"/>
         <source>Miscellaneous</source>
-        <translation type="unfinished">Verschiedenes</translation>
+        <translation>Verschiedenes</translation>
     </message>
     <message>
         <location filename="translatables.py" line="32"/>
         <source>Script file</source>
-        <translation type="unfinished"></translation>
+        <translation>Skriptdatei</translation>
     </message>
     <message>
         <location filename="translatables.py" line="32"/>
         <source>A Python (.py) script</source>
-        <translation type="unfinished"></translation>
+        <translation>Ein Python (.py) Skript</translation>
     </message>
     <message>
         <location filename="translatables.py" line="32"/>
         <source>Prepare function in script</source>
-        <translation type="unfinished"></translation>
+        <translation>Bereite Funktion in Skript vor</translation>
     </message>
     <message>
         <location filename="translatables.py" line="32"/>
         <source>The name of a function to execute during the prepare phase</source>
-        <translation type="unfinished"></translation>
+        <translation>Der Name einer Funktion, die während der Vorbereitungsphase ausgeführt wird</translation>
     </message>
     <message>
         <location filename="translatables.py" line="32"/>
         <source>Run function in script</source>
-        <translation type="unfinished"></translation>
+        <translation>Runfunktion in Skript</translation>
     </message>
     <message>
         <location filename="translatables.py" line="32"/>
         <source>The name of a function to execute during the run phase</source>
-        <translation type="unfinished"></translation>
+        <translation>Der Name einer Funktion die während der Runphase durchgeführt wird</translation>
     </message>
 </context>
 <context>
@@ -613,7 +614,7 @@
     <message>
         <location filename="translatables.py" line="32"/>
         <source>Style</source>
-        <translation type="unfinished"></translation>
+        <translation>Stil</translation>
     </message>
 </context>
 <context>
@@ -696,7 +697,7 @@
     <message>
         <location filename="font_widget.ui" line="99"/>
         <source> px</source>
-        <translation type="unfinished"> px</translation>
+        <translation> px</translation>
     </message>
 </context>
 <context>
@@ -724,12 +725,12 @@
     <message>
         <location filename="translatables.py" line="32"/>
         <source>In a form widget col, row, colspan, and rowspan should be integer</source>
-        <translation type="unfinished"></translation>
+        <translation>In einem form widget sollten col, row, colspan and rowspan ganzzahlig sein </translation>
     </message>
     <message>
         <location filename="translatables.py" line="32"/>
         <source>You can only specify one focus widget</source>
-        <translation type="unfinished"></translation>
+        <translation>Du kannst lediglich ein Fokus widget spezifizieren</translation>
     </message>
 </context>
 <context>
@@ -860,12 +861,12 @@
     <message>
         <location filename="translatables.py" line="32"/>
         <source>Timeout</source>
-        <translation type="unfinished">Timeout</translation>
+        <translation>Timeout</translation>
     </message>
     <message>
         <location filename="translatables.py" line="32"/>
         <source>Response timeout</source>
-        <translation type="unfinished"></translation>
+        <translation>Antwort timeout</translation>
     </message>
 </context>
 <context>
@@ -993,52 +994,52 @@
     <message>
         <location filename="sketchpad.ui" line="89"/>
         <source>Reset feedback variables</source>
-        <translation type="unfinished"></translation>
+        <translation>Zurücksetzen der Feedbackvariablen</translation>
     </message>
     <message>
         <location filename="sketchpad.ui" line="182"/>
         <source>Proportional length of the base relative to the arrow head</source>
-        <translation type="unfinished"></translation>
+        <translation>Proportionale Länge des Körpers relativ zum Kopf des Pfeiles</translation>
     </message>
     <message>
         <location filename="sketchpad.ui" line="185"/>
         <source>Body length </source>
-        <translation type="unfinished"></translation>
+        <translation>Körperlänge</translation>
     </message>
     <message>
         <location filename="sketchpad.ui" line="235"/>
         <source> prop</source>
-        <translation type="unfinished"></translation>
+        <translation>prop</translation>
     </message>
     <message>
         <location filename="sketchpad.ui" line="229"/>
         <source>Proportional width (thickness) of the base relative to the arrow head</source>
-        <translation type="unfinished"></translation>
+        <translation>Proportionale Breite des Körpers relativ zum Kopf des Pfeiles</translation>
     </message>
     <message>
         <location filename="sketchpad.ui" line="232"/>
         <source>Body width </source>
-        <translation type="unfinished"></translation>
+        <translation>Körperbreite</translation>
     </message>
     <message>
         <location filename="sketchpad.ui" line="276"/>
         <source>Width (thickness) of the arrow head</source>
-        <translation type="unfinished"></translation>
+        <translation>Breite des Pfeilkopfes</translation>
     </message>
     <message>
         <location filename="sketchpad.ui" line="282"/>
         <source>Head width </source>
-        <translation type="unfinished"></translation>
+        <translation>Kopfweite</translation>
     </message>
     <message>
         <location filename="sketchpad.ui" line="467"/>
         <source>Best-fitting zoom level</source>
-        <translation type="unfinished"></translation>
+        <translation>Am besten passende Zoom-stufe</translation>
     </message>
     <message>
         <location filename="sketchpad.ui" line="480"/>
         <source>Original zoom level</source>
-        <translation type="unfinished"></translation>
+        <translation>Ursprüngliche Zoom-stufe</translation>
     </message>
 </context>
 <context>
@@ -1119,12 +1120,12 @@
     <message>
         <location filename="translatables.py" line="32"/>
         <source>Timeout</source>
-        <translation type="unfinished">Timeout</translation>
+        <translation>Timeout</translation>
     </message>
     <message>
         <location filename="translatables.py" line="32"/>
         <source>A response timeout</source>
-        <translation type="unfinished"></translation>
+        <translation>Ein Antwort timeout</translation>
     </message>
 </context>
 <context>
@@ -1224,7 +1225,7 @@
         <source>* Has no effect in psycho back-end</source>
         <translation>* Hat im psycho Back-End keine Auswirkung</translation>
     </message>
-    <message encoding="UTF-8">
+    <message utf8="true">
         <location filename="gabor_settings.ui" line="89"/>
         <source> °</source>
         <translation> °</translation>
@@ -1383,7 +1384,7 @@
     <message>
         <location filename="translatables.py" line="11"/>
         <source>PsychoPy API</source>
-        <translation type="unfinished"></translation>
+        <translation>PsychoPy API</translation>
     </message>
 </context>
 <context>
@@ -1769,12 +1770,12 @@
     <message>
         <location filename="translatables.py" line="32"/>
         <source>OpenSesame 3 notifications</source>
-        <translation type="unfinished"></translation>
+        <translation>OpenSesame 3 Benachrichtigungen</translation>
     </message>
     <message>
         <location filename="translatables.py" line="32"/>
         <source>Provides tips for new users of OpenSesame 3</source>
-        <translation type="unfinished"></translation>
+        <translation>Bietet Tipps für neue Nutzer von OpenSesame 3 an</translation>
     </message>
 </context>
 <context>
@@ -2247,17 +2248,17 @@
     <message>
         <location filename="main_window.ui" line="127"/>
         <source>Edit</source>
-        <translation type="unfinished">Bearbeiten</translation>
+        <translation>Bearbeiten</translation>
     </message>
     <message>
         <location filename="main_window.ui" line="298"/>
         <source>Reset workspace</source>
-        <translation type="unfinished"></translation>
+        <translation>Setze Arbeitsbereich zurück</translation>
     </message>
     <message>
         <location filename="main_window.ui" line="729"/>
         <source>Ctrl+\</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+\</translation>
     </message>
 </context>
 <context>
@@ -2421,7 +2422,7 @@
     <message>
         <location filename="pool_widget.ui" line="23"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Warning text&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Warnungstext&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
@@ -2629,17 +2630,17 @@
     </message>
     <message>
         <location filename="translatables.py" line="32"/>
-        <source>Steepness of the Weibull psychometric function (&#xce;&#xb2;)</source>
+        <source>Steepness of the Weibull psychometric function (Î²)</source>
         <translation>Steilheit der Weibull-Verteilung (Î²)</translation>
     </message>
     <message>
         <location filename="translatables.py" line="32"/>
-        <source>Proportion of random responses at maximum stimulus intensity (&#xce;&#xb4;)</source>
+        <source>Proportion of random responses at maximum stimulus intensity (Î´)</source>
         <translation>Anteil zufälliger Reaktionen bei höchster Stimulusdichte  (Î´)</translation>
     </message>
     <message>
         <location filename="translatables.py" line="32"/>
-        <source>Chance level (&#xce;&#xb3;)</source>
+        <source>Chance level (Î³)</source>
         <translation>Zufallsniveau (Î³)</translation>
     </message>
     <message>
@@ -2694,22 +2695,22 @@
     <message>
         <location filename="translatables.py" line="32"/>
         <source>Marks the current loop cycle so that it is repeated</source>
-        <translation type="unfinished"></translation>
+        <translation>Markiert den aktuellen Loop Durchläufe, so dass dieser wiederholt wird</translation>
     </message>
     <message>
         <location filename="translatables.py" line="32"/>
         <source>Miscellaneous</source>
-        <translation type="unfinished">Verschiedenes</translation>
+        <translation>Verschiedenes</translation>
     </message>
     <message>
         <location filename="translatables.py" line="32"/>
         <source>Repeat if</source>
-        <translation type="unfinished"></translation>
+        <translation>Wiederhole, wenn</translation>
     </message>
     <message>
         <location filename="translatables.py" line="32"/>
         <source>A conditional statement that determines when the cycle is repeated</source>
-        <translation type="unfinished"></translation>
+        <translation>Eine konditionale Aussage, die entscheidet wann ein Durchlauf wiederholt wird</translation>
     </message>
 </context>
 <context>
@@ -3098,7 +3099,7 @@ Beschreibung: %s</translation>
     <message>
         <location filename="translatables.py" line="32"/>
         <source>Append new item</source>
-        <translation type="unfinished">Neues Item einfügen</translation>
+        <translation>Neues Item einfügen</translation>
     </message>
     <message>
         <location filename="translatables.py" line="98"/>
@@ -3909,112 +3910,112 @@ Beschreibung: %s</translation>
     <message>
         <location filename="translatables.py" line="32"/>
         <source>Please confirm</source>
-        <translation type="unfinished"></translation>
+        <translation>Bitte bestätige</translation>
     </message>
     <message>
         <location filename="translatables.py" line="32"/>
         <source>Radius &quot;%s&quot; is unknown or variably defined, using 50</source>
-        <translation type="unfinished"></translation>
+        <translation>Radius &quot;%s&quot; ist unbekannt oder variable definiert, benutze 50</translation>
     </message>
     <message>
         <location filename="translatables.py" line="32"/>
         <source>Font size &quot;%s&quot; is invalid or variably defined, using 18</source>
-        <translation type="unfinished"></translation>
+        <translation>Schriftgröße &quot;%s&quot; ist ungültig oder variabel definiert, benutze 18</translation>
     </message>
     <message>
         <location filename="translatables.py" line="32"/>
         <source>Some properties of a Gabor patch are unknown or variably defined, using fallback image</source>
-        <translation type="unfinished"></translation>
+        <translation>Einige Eigenschaften des Gabor-patch sind unbekannt oder variabel definiert, benutze Rückfallbild</translation>
     </message>
     <message>
         <location filename="translatables.py" line="32"/>
         <source>Some properties of a noise patch are unknown or variably defined, using fallback image</source>
-        <translation type="unfinished"></translation>
+        <translation>Einige Eigenschaften des Rausch-paches sind unbekannt oder variabel definiert, benutze Rückfallbild</translation>
     </message>
     <message>
         <location filename="translatables.py" line="32"/>
         <source>Fixdot style &quot;%s&quot; is unknown or variably defined</source>
-        <translation type="unfinished"></translation>
+        <translation>Fixdot Stil &quot;%s&quot; ist unbekannt oder variabel definiert</translation>
     </message>
     <message>
         <location filename="translatables.py" line="32"/>
         <source>I know, do it!</source>
-        <translation type="unfinished"></translation>
+        <translation>Weiß ich, mach es!</translation>
     </message>
     <message>
         <location filename="translatables.py" line="32"/>
         <source>Scale &quot;%s&quot; is unknown or variably defined, using 1</source>
-        <translation type="unfinished"></translation>
+        <translation>Skalierung &quot;%s&quot; ist unbekannt oder variabel definiert, benutze 1</translation>
     </message>
     <message>
         <location filename="translatables.py" line="32"/>
         <source>Proportion &quot;%s&quot; is unknown or variably defined, using .5</source>
-        <translation type="unfinished"></translation>
+        <translation>Proportion &quot;%s&quot; ist unbekannt oder variabel definiert, benutze 5</translation>
     </message>
     <message>
         <location filename="translatables.py" line="32"/>
         <source>Failed to initialize experiment process</source>
-        <translation type="unfinished"></translation>
+        <translation>Initiliasierung des Experimentsprozess fehlgeschlagen</translation>
     </message>
     <message>
         <location filename="translatables.py" line="32"/>
         <source>New experiment</source>
-        <translation type="unfinished"></translation>
+        <translation>Neues Experiment</translation>
     </message>
     <message>
         <location filename="translatables.py" line="32"/>
         <source>Sequence contains non-existing item: %s</source>
-        <translation type="unfinished"></translation>
+        <translation>Sequenz enthält ein nicht existentes Item: %s</translation>
     </message>
     <message>
         <location filename="translatables.py" line="32"/>
         <source>Pick a color</source>
-        <translation type="unfinished"></translation>
+        <translation>Wähle eine Farbe</translation>
     </message>
     <message>
         <location filename="translatables.py" line="32"/>
         <source>Copy (unlinked)</source>
-        <translation type="unfinished"></translation>
+        <translation>Kopiere (unverknüpft)</translation>
     </message>
     <message>
         <location filename="translatables.py" line="32"/>
         <source>Copy (linked)</source>
-        <translation type="unfinished"></translation>
+        <translation>Kopiere (verknüpft)</translation>
     </message>
     <message>
         <location filename="translatables.py" line="32"/>
         <source>Paste</source>
-        <translation type="unfinished"></translation>
+        <translation>Einfügen</translation>
     </message>
     <message>
         <location filename="translatables.py" line="32"/>
         <source>Permanently delete</source>
-        <translation type="unfinished"></translation>
+        <translation>Lösche dauerhaft</translation>
     </message>
     <message>
         <location filename="translatables.py" line="32"/>
         <source>custom</source>
-        <translation type="unfinished"></translation>
+        <translation>benutzerdefiniert</translation>
     </message>
     <message>
         <location filename="translatables.py" line="32"/>
         <source>Failed to rename &quot;%s&quot; to &quot;%s&quot;.</source>
-        <translation type="unfinished"></translation>
+        <translation>Fehlgeschlagen &quot;%s&quot; in &quot;%s&quot; umzubenennen.</translation>
     </message>
     <message>
         <location filename="translatables.py" line="32"/>
         <source>Append existing item (linked)</source>
-        <translation type="unfinished"></translation>
+        <translation>Füge existentes Item hinzu (verknüpft)</translation>
     </message>
     <message>
         <location filename="translatables.py" line="32"/>
         <source>Unknown item type: %s</source>
-        <translation type="unfinished"></translation>
+        <translation>Unbekannter Itemtyp %s</translation>
     </message>
     <message>
         <location filename="translatables.py" line="32"/>
         <source>Failed to load backend</source>
-        <translation type="unfinished"></translation>
+        <translation>Laden des Backends fehlgeschlagen</translation>
     </message>
 </context>
 <context>
@@ -4448,7 +4449,7 @@ Beschreibung: %s</translation>
     <message>
         <location filename="translatables.py" line="32"/>
         <source>&lt;b&gt;Warning:&lt;/b&gt; The text_display plug-in has been removed. Please use a different way to present text, as described on &lt;a href=&quot;http://osdoc.cogsci.nl/usage/text&quot;&gt;http://osdoc.cogsci.nl/usage/text&lt;/a&gt;.)</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Warnung:&lt;/b&gt; Das text_display plug-in wurde entfernt. Bitte benutze eine andere Art um Text darzustellen, so wie beschrieben auf &lt;a href=&quot;http://osdoc.cogsci.nl/usage/text&quot;&gt;http://osdoc.cogsci.nl/usage/text&lt;/a&gt;.)</translation>
     </message>
 </context>
 <context>
@@ -4456,12 +4457,12 @@ Beschreibung: %s</translation>
     <message>
         <location filename="translatables.py" line="31"/>
         <source>miscellaneous</source>
-        <translation type="unfinished"></translation>
+        <translation>Verschiedenes</translation>
     </message>
     <message>
         <location filename="translatables.py" line="32"/>
         <source>&lt;b&gt;Warning:&lt;/b&gt; The text_input plug-in has been removed. To collect text input, please use a form, as described on &lt;a href=&quot;http://osdoc.cogsci.nl/forms&quot;&gt;http://osdoc.cogsci.nl/forms/&lt;/a&gt;.)</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Warnung:&lt;/b&gt; Das text_input plug-in wurde entfernt. Um Texteingaben zu sammeln, benutze bitte ein Formular, so wie beschrieben auf &lt;a href=&quot;http://osdoc.cogsci.nl/forms&quot;&gt;http://osdoc.cogsci.nl/forms/&lt;/a&gt;.)</translation>
     </message>
 </context>
 <context>
@@ -4550,12 +4551,12 @@ Beschreibung: %s</translation>
     <message>
         <location filename="translatables.py" line="32"/>
         <source>Show cursor</source>
-        <translation type="unfinished"></translation>
+        <translation>Zeige Maus</translation>
     </message>
     <message>
         <location filename="translatables.py" line="32"/>
         <source>Show a mouse cursor (if supported on device)</source>
-        <translation type="unfinished"></translation>
+        <translation>Zeig einen Mauscursor (falls unterstützt vom Gerät)</translation>
     </message>
 </context>
 <context>
@@ -4563,27 +4564,27 @@ Beschreibung: %s</translation>
     <message>
         <location filename="translatables.py" line="32"/>
         <source>Redo</source>
-        <translation type="unfinished"></translation>
+        <translation>Stelle wieder her</translation>
     </message>
     <message>
         <location filename="translatables.py" line="32"/>
         <source>Implements undo/ redo</source>
-        <translation type="unfinished"></translation>
+        <translation>Implementiert Rückgängig/Wiederherstellen</translation>
     </message>
     <message>
         <location filename="translatables.py" line="32"/>
         <source>Redo most recently undone action</source>
-        <translation type="unfinished"></translation>
+        <translation>Stelle letzte rückgängig gemachte Handlung wieder her</translation>
     </message>
     <message>
         <location filename="translatables.py" line="32"/>
         <source>Undo</source>
-        <translation type="unfinished"></translation>
+        <translation>Rückgängig</translation>
     </message>
     <message>
         <location filename="translatables.py" line="32"/>
         <source>Undo most recent action</source>
-        <translation type="unfinished"></translation>
+        <translation>Mache letzte Handlung rückgängig</translation>
     </message>
 </context>
 <context>
@@ -4670,7 +4671,7 @@ Beschreibung: %s</translation>
     <message>
         <location filename="translatables.py" line="32"/>
         <source>Variable inspector</source>
-        <translation type="unfinished">Variablenassistent</translation>
+        <translation>Variablenassistent</translation>
     </message>
     <message>
         <location filename="variable_inspector.ui" line="36"/>
@@ -4705,22 +4706,22 @@ Beschreibung: %s</translation>
     <message>
         <location filename="translatables.py" line="32"/>
         <source>Show variable inspector</source>
-        <translation type="unfinished">Zeige Variablenassistenten</translation>
+        <translation>Zeige Variablenassistenten</translation>
     </message>
     <message>
         <location filename="translatables.py" line="32"/>
         <source>Graphical variable inspector</source>
-        <translation type="unfinished"></translation>
+        <translation>Graphischer Variablenassistent</translation>
     </message>
     <message>
         <location filename="translatables.py" line="32"/>
         <source>Help: Variable inspector</source>
-        <translation type="unfinished"></translation>
+        <translation>Hilfe: Variablenassistent</translation>
     </message>
     <message>
         <location filename="translatables.py" line="32"/>
         <source>Experiment status: &lt;b&gt;%s&lt;/b&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>Experiment status: &lt;b&gt;%s&lt;/b&gt;</translation>
     </message>
 </context>
 <context>
@@ -5042,17 +5043,17 @@ Einstellungen im Zusammenhang mit dem Bildschirm, Ton und Eingabegeräten</trans
     <message>
         <location filename="backend_settings.ui" line="171"/>
         <source>Clock</source>
-        <translation type="unfinished"></translation>
+        <translation>Uhr</translation>
     </message>
     <message>
         <location filename="backend_settings.ui" line="196"/>
         <source>Color</source>
-        <translation type="unfinished">Farbe</translation>
+        <translation>Farbe</translation>
     </message>
     <message>
         <location filename="backend_settings.ui" line="221"/>
         <source>Log</source>
-        <translation type="unfinished"></translation>
+        <translation>Log</translation>
     </message>
 </context>
 <context>
@@ -5107,18 +5108,19 @@ Einstellungen im Zusammenhang mit dem Bildschirm, Ton und Eingabegeräten</trans
         <source>&lt;a href=&quot;http://osdoc.cogsci.nl/donate/&quot;&gt;Donate&lt;/a&gt;</source>
         <translation type="obsolete">&lt;a href=&quot;http://osdoc.cogsci.nl/donate/&quot;&gt;Spenden&lt;/a&gt;</translation>
     </message>
-    <message encoding="UTF-8">
+    <message utf8="true">
         <location filename="credits_widget.ui" line="179"/>
         <source>OpenSesame [version] [codename]
 Copyright Sebastiaan Mathôt (2010-2014)</source>
         <translation type="obsolete">OpenSesame [version] [codename]
 Copyright Sebastiaan Mathôt (2010-2014)</translation>
     </message>
-    <message encoding="UTF-8">
+    <message utf8="true">
         <location filename="credits_widget.ui" line="146"/>
         <source>OpenSesame %(version)s %(codename)s
 Copyright Sebastiaan Mathôt (2010-2015)</source>
-        <translation type="unfinished"></translation>
+        <translation>OpenSesame % (version)s %(codename)s
+Copyright Sebastiaan Mathôt (2010-2015)</translation>
     </message>
 </context>
 <context>
