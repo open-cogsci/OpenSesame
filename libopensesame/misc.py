@@ -335,6 +335,7 @@ def module_versions():
 			sys.stdout = _out
 		s += u'\nExpyriment %s' % expyriment.get_version()
 	except:
+		sys.stdout = _out
 		s += u'\nExpyriment is not available (or version is unknown)'
 
 	try:
