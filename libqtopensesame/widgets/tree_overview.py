@@ -238,6 +238,13 @@ class tree_overview(base_subcomponent, base_draggable, QtGui.QTreeWidget):
 				treeitem.name = to_name
 				self.text_change.emit()
 		elif col == 1:
+			# Don't allow editing the run-if statement of the top-level sequence
+			# if we are in non-overview mode.
+			if treeitem.parent() is None:
+				self.itemChanged.disconnect()
+				treeitem.setText(1, u'')
+				self.itemChanged.connect(self.text_edited)
+				return
 			if hasattr(treeitem, u'ancestry'):
 				parent_item_name, ancestry = treeitem.ancestry()
 				parent_item_name, index = self.parent_from_ancestry(ancestry)
@@ -938,7 +945,8 @@ class tree_overview(base_subcomponent, base_draggable, QtGui.QTreeWidget):
 		"""
 
 		target_treeitem = self.currentItem()
-		if target_treeitem is not None:
+		if target_treeitem is not None \
+			and target_treeitem.flags() & QtCore.Qt.ItemIsEditable:
 			self.editItem(target_treeitem, 0)
 
 	def setup(self, main_window):
