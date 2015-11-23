@@ -13,6 +13,7 @@ opensesame (3.0.3~a3-ubuntu1) wily; urgency=medium
     - Don't crash on empty filename in image element in sketchpad (#377)
     - Fix recursion error in overview area with multiple linked copies (#376)
     - Don't try to copy and edit non copyable/editable treeitems
+    - Don't crash when failing to get size information for file pool
   * Improvements
     - Fix templates for Python 3
     - Fix Exception handling for multiprocess_runner in Python 3

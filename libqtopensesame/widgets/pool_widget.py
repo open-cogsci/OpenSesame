@@ -206,7 +206,10 @@ class pool_widget(base_widget):
 				item.path = path
 				item.setToolTip(path)
 				self.ui.list_pool.addItem(item)
-		size = self.pool.size()
+		try:
+			size = self.pool.size()
+		except:
+			size = -1
 		debug.msg(u'pool is %d bytes' % size)
 		if size > cfg.file_pool_size_warning:
 			self.ui.label_size_warning.setText(_('Your file pool is larger '
