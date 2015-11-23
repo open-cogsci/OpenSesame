@@ -19,8 +19,15 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 
 from libopensesame.py3compat import *
 from PyQt4 import QtGui
-from IPython.qt.console.rich_ipython_widget import RichIPythonWidget
-from IPython.qt.inprocess import QtInProcessKernelManager
+try:
+	# New-style Jupyter imports
+	from qtconsole.rich_jupyter_widget import RichJupyterWidget \
+		as RichIPythonWidget
+	from qtconsole.inprocess import QtInProcessKernelManager
+except:
+	# Old-style IPython imports
+	from IPython.qt.console.rich_ipython_widget import RichIPythonWidget
+	from IPython.qt.inprocess import QtInProcessKernelManager
 from libqtopensesame.console._base_console import base_console
 from libqtopensesame.misc.config import cfg
 from libopensesame import debug
