@@ -938,7 +938,8 @@ class tree_overview(base_subcomponent, base_draggable, QtGui.QTreeWidget):
 		"""
 
 		target_treeitem = self.currentItem()
-		if target_treeitem is not None:
+		if target_treeitem is not None \
+			and target_treeitem.flags() & QtCore.Qt.ItemIsEditable:
 			self.editItem(target_treeitem, 0)
 
 	def setup(self, main_window):

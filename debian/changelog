@@ -12,6 +12,7 @@ opensesame (3.0.3~a3-ubuntu1) wily; urgency=medium
     - Fall back to z_index=0 when an invalid z_index has been specified for sketchpad elements (#375)
     - Don't crash on empty filename in image element in sketchpad (#377)
     - Fix recursion error in overview area with multiple linked copies (#376)
+    - Don't try to copy and edit non copyable/editable treeitems
   * Improvements
     - Fix templates for Python 3
     - Fix Exception handling for multiprocess_runner in Python 3

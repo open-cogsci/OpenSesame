@@ -58,6 +58,14 @@ class tree_base_item(base_subcomponent, QtGui.QTreeWidgetItem):
 
 		pass
 
+	def copy_linked(self):
+
+		pass
+
+	def copy_unlinked(self):
+
+		pass
+
 	def delete(self):
 
 		pass
