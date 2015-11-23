@@ -5119,7 +5119,7 @@ Copyright Sebastiaan Mathôt (2010-2014)</translation>
         <location filename="credits_widget.ui" line="146"/>
         <source>OpenSesame %(version)s %(codename)s
 Copyright Sebastiaan Mathôt (2010-2015)</source>
-        <translation>OpenSesame % (version)s %(codename)s
+        <translation>OpenSesame %(version)s %(codename)s
 Copyright Sebastiaan Mathôt (2010-2015)</translation>
     </message>
 </context>
