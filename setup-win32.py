@@ -136,7 +136,10 @@ import sys
 import shutil
 import libqtopensesame.qtopensesame
 import libopensesame.misc
-import urllib
+if py3:
+	from urllib.request import urlretrieve
+else:
+	from urllib import urlretrieve
 from stdlib_list import stdlib_list
 from setup_shared  import included_plugins, included_extensions
 
@@ -153,7 +156,7 @@ include_boks = not py3
 include_pygaze = not py3
 include_sounds = True
 include_faenza = True
-include_inpout32 = True
+include_inpout32 = not py3
 include_simpleio = True
 include_pyqt4_plugins = True
 release_zip = True
@@ -233,8 +236,16 @@ no_strip = [
 	]
 
 # Packages that are part of the standard Python packages, but should not be
-# included
+# included, because they cause trouble
 exclude_packages = ['os.path']
+if py3:
+	exclude_packages += [
+	'__main__',
+	'site',
+	'xml.parsers.expat.errors',
+	'xml.parsers.expat.model',
+	'xml.parsers.expat'
+	]
 
 # Packages that are not part of the standard Python packages (or not detected
 # as such), but should nevertheless be included. These are different from the
@@ -425,7 +436,7 @@ if include_simpleio:
 
 if include_inpout32:
 	print("copying inpout32.dll")
-	urllib.urlretrieve ("http://files.cogsci.nl/misc/inpout32.dll", \
+	urlretrieve("http://files.cogsci.nl/misc/inpout32.dll", \
 		r"dist\inpout32.dll")
 
 # Include plug-ins
