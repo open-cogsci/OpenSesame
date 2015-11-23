@@ -14,6 +14,7 @@ opensesame (3.0.3~a3-ubuntu1) wily; urgency=medium
     - Fix recursion error in overview area with multiple linked copies (#376)
     - Don't try to copy and edit non copyable/editable treeitems
     - Don't crash when failing to get size information for file pool
+    - Catch invalid variable names in logger script
   * Improvements
     - Fix templates for Python 3
     - Fix Exception handling for multiprocess_runner in Python 3

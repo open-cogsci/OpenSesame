@@ -19,6 +19,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 
 from libopensesame.py3compat import *
 from libopensesame import item
+from libopensesame.exceptions import osexception
 
 class logger(item.item):
 
@@ -66,6 +67,10 @@ class logger(item.item):
 			self.parse_variable(line)
 			cmd, arglist, kwdict = self.experiment.syntax.parse_cmd(line)
 			if cmd == u'log' and len(arglist) > 0:
+				for var in arglist:
+					if not self.experiment.syntax.valid_var_name(
+						safe_decode(var)):
+						raise osexception(u'Invalid variable name: %s' % var)
 				self.logvars += arglist
 
 	def to_string(self):
