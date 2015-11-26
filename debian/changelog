@@ -1,9 +1,9 @@
-opensesame (3.0.3~a4-ubuntu1) wily; urgency=medium
+opensesame (3.0.3-ubuntu1) wily; urgency=medium
 
   * Bugs fixed
     - Fix Python-3 compatibility for script validator
     - Restore overview area when drop fails (#361)
-    - Warn on missing `__end__` statements in OpenSesame script (#364) 
+    - Warn on missing `__end__` statements in OpenSesame script (#364)
     - Don't be greedy when parsing YAML front matter (#369)
     - Fix external_runner (#371)
     - Improve handling of variably defined font and sketchpad element settings (#372)
