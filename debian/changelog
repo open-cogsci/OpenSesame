@@ -1,4 +1,4 @@
-opensesame (3.0.3~a3-ubuntu1) wily; urgency=medium
+opensesame (3.0.3~a4-ubuntu1) wily; urgency=medium
 
   * Bugs fixed
     - Fix Python-3 compatibility for script validator
@@ -16,10 +16,12 @@ opensesame (3.0.3~a3-ubuntu1) wily; urgency=medium
     - Don't crash when failing to get size information for file pool
     - Catch invalid variable names in logger script
     - Don't allow editing run-if statement of top-level sequence in sequence-view
+    - Fix gabor and noise-patch elements
   * Improvements
     - Fix templates for Python 3
     - Fix Exception handling for multiprocess_runner in Python 3
     - Update German translation (de_DE)
+    - Update droid template to API 2 (avoids warning)
 
  -- Sebastiaan Mathot <sebastiaan@mantis>  Sat, 07 Nov 2015 16:51:44 +0100
 
