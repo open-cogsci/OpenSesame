@@ -103,22 +103,22 @@
        <widget class="QComboBox" name="combobox_env">
         <item>
          <property name="text">
-          <string>gaussian</string>
+          <string notr="true">gaussian</string>
          </property>
         </item>
         <item>
          <property name="text">
-          <string>linear</string>
+          <string notr="true">linear</string>
          </property>
         </item>
         <item>
          <property name="text">
-          <string>circular (sharp edge)</string>
+          <string notr="true">circular (sharp edge)</string>
          </property>
         </item>
         <item>
          <property name="text">
-          <string>rectangle (no envelope)</string>
+          <string notr="true">rectangle (no envelope)</string>
          </property>
         </item>
        </widget>
@@ -187,12 +187,12 @@
        <widget class="QComboBox" name="combobox_bgmode">
         <item>
          <property name="text">
-          <string>Color average</string>
+          <string notr="true">Color average</string>
          </property>
         </item>
         <item>
          <property name="text">
-          <string>Color 2</string>
+          <string notr="true">Color 2</string>
          </property>
         </item>
        </widget>

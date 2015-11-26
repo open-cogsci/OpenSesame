@@ -1119,6 +1119,23 @@ env_synonyms[u"l"] = u"l"
 
 canvas_cache = {}
 
+def _color(col):
+
+	"""
+	desc:
+		Wrapper function for _gabor and _noise_patch to convert color names to
+		PyGame color objects.
+
+	argumens:
+		col:	A color specification.
+
+	returns:
+		A PyGame color object.
+	"""
+
+	from openexp._color.legacy import legacy
+	return legacy(None, col).backend_color
+
 def _gabor(orient, freq, env=u"gaussian", size=96, stdev=12, phase=0,
 	col1=u"white", col2=u"black", bgmode=u"avg"):
 
