@@ -1,3 +1,10 @@
+opensesame (3.0.4-ubuntu1) wily; urgency=medium
+
+  * Bugs fixed
+    - Fix regression where sketchpad didn't use the file pool
+
+ -- Sebastiaan Mathot <sebastiaan@mantis>  Sat, 28 Nov 2015 20:25:08 +0100
+
 opensesame (3.0.3-ubuntu1) wily; urgency=medium
 
   * Bugs fixed
