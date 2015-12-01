@@ -141,7 +141,7 @@ class ExperimentProcess(multiprocessing.Process):
 			print('done!')
 		except Exception as e:
 			if not isinstance(e, osexception):
-				e_run = osexception(u'Unexpected error', exception=_e)
+				e_run = osexception(u'Unexpected error', exception=e)
 			else:
 				e_run = e
 		exp.transmit_workspace()
