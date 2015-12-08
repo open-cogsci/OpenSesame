@@ -534,7 +534,7 @@ class loop(qtstructure_item, qtitem, loop_runtime):
 			isinstance(self.var.get(u'cycles', _eval=False), int))
 		self.loop_widget.ui.spin_cycles.setValue(self.cycle_count())
 		# Update advanced settings
-		break_if = self.var.get(u'break_if', _eval=False)
+		break_if = safe_decode(self.var.get(u'break_if', _eval=False))
 		self.loop_widget.ui.edit_break_if.setText(break_if)
 		self.update_widget_state()
 
