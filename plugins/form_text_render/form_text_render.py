@@ -17,6 +17,7 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
+from libopensesame.py3compat import *
 from libopensesame import item, exceptions, generic_response, widgets, plugins
 from libqtopensesame import qtplugin
 from openexp.canvas import canvas
@@ -36,7 +37,7 @@ widget 0 0 3 1 label text=[form_text] center=no
 """
 
 class form_text_render(form_base.form_base):
-	
+
 	initial_view = u'controls'
 
 	def __init__(self, name, experiment, string=None):

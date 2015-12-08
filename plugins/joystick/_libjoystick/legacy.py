@@ -22,6 +22,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 
 """
 
+from libopensesame.py3compat import *
 import pygame
 from pygame.locals import *
 from pygame.joystick import Joystick

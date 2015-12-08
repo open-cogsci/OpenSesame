@@ -1,3 +1,5 @@
+#-*- coding:utf-8 -*-
+
 """
 30-05-2012
 Author: Edwin Dalmaijer
@@ -18,6 +20,7 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame. If not, see <http://www.gnu.org/licenses/>.
 """
 
+from libopensesame.py3compat import *
 from libopensesame import plugins
 from libopensesame.exceptions import osexception
 from libopensesame import item, generic_response, debug

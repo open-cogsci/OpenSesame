@@ -1,4 +1,6 @@
 #!/usr/bin/env python
+#-*- coding:utf-8 -*-
+# NO UNITTEST
 # parallel port access using the ppdev driver
 
 import sys
@@ -176,7 +178,7 @@ class Parallel:
     lowerCase fashion and should be portable between Linux and
     Windows.  This way, any code you write for this class will (or
     should) also work with the Windows version of this class.
-    
+
     """
     def __init__(self, port = 0, exclusive = False):
         if type(port) == type(""):
@@ -416,7 +418,7 @@ class Parallel:
         like PPWCONTROL but acts on a restricted set of control
         lines. The ioctl parameter is a pointer to a struct
         ppdev_frob_struct:
-        
+
         struct ppdev_frob_struct {
             unsigned char mask;
             unsigned char val;
@@ -568,7 +570,7 @@ class Parallel:
         """Sets the states of the data bus line drivers (pins 2-9)"""
         self._data=d
         return self.PPWDATA(d)
-    
+
     def getData(self):
         """Gets the states of the data bus line (pin 2-9)"""
         return self.PPRDATA()
@@ -593,4 +595,3 @@ class Parallel:
     def getInBusy(self):
         """Returns the level on the Busy pin (11)"""
         return (self.PPRSTATUS() & PARPORT_STATUS_BUSY) == 0
-

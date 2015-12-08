@@ -1,3 +1,5 @@
+#-*- coding:utf-8 -*-
+
 """
 This file is part of OpenSesame.
 
@@ -15,6 +17,7 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
+from libopensesame.py3compat import *
 from libopensesame.exceptions import osexception
 from libopensesame import item, generic_response, debug
 from libqtopensesame import qtplugin

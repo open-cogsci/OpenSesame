@@ -1,3 +1,5 @@
+#-*- coding:utf-8 -*-
+
 """
 This file is part of OpenSesame.
 
@@ -15,6 +17,7 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
+from libopensesame.py3compat import *
 from libopensesame.item import item
 from libqtopensesame.items.qtautoplugin import qtautoplugin
 
@@ -24,7 +27,7 @@ class notepad(item):
 
 	description = \
 			u'A simple notepad to document your experiment. This plug-in does nothing.'
-					
+
 class qtnotepad(notepad, qtautoplugin):
 
 	"""Notepad plug-in GUI"""

@@ -18,6 +18,7 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
+from libopensesame.py3compat import *
 import yamldoc
 import unittest
 import os
@@ -42,9 +43,19 @@ class check_compilable(unittest.TestCase):
 				type:	[str, unicode]
 		"""
 
-		print(u'Checking file %s' % path)
+		print(u'- %s' % path)
 		src = open(path).read()
+		usrc = safe_decode(src)
+		if u'\n# NO UNITTEST\n' in usrc:
+			return
 		compile(src, u'<string>', u'exec')
+		self.assertTrue(
+			usrc.startswith(
+				u'#!/usr/bin/env python\n#-*- coding:utf-8 -*-\n') or \
+			usrc.startswith(
+				u'#-*- coding:utf-8 -*-\n'))
+		if not path.endswith(u'py3compat.py'):
+			self.assertTrue(u'\nfrom libopensesame.py3compat import *\n' in usrc)
 
 	@yamldoc.validate
 	def checkFolder(self, root):
@@ -74,8 +85,10 @@ class check_compilable(unittest.TestCase):
 		"""
 		desc:
 			Checks the syntax of all `.py` source files.
+
 		"""
 
+		print(u'Checking whether all files are compilable and valid ...\n')
 		for folder in [
 			u'plugins',
 			u'extensions',
