@@ -250,5 +250,6 @@ class base_element(object):
 			type:	bool
 		"""
 
+		self.experiment.python_workspace[u'self'] = self.sketchpad
 		return self.experiment.python_workspace._eval(
 			self.experiment.syntax.compile_cond(self.properties[u'show_if']))

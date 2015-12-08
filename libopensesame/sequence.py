@@ -45,6 +45,7 @@ class sequence(item.item):
 		if self._keyboard is not None:
 			self._keyboard.flush()
 		for _item, cond in self._items:
+			self.python_workspace[u'self'] = self
 			if self.python_workspace._eval(cond):
 				self.experiment.items.run(_item)
 
@@ -73,7 +74,7 @@ class sequence(item.item):
 		cond = u'always'
 		if len(i) > 2:
 			cond = i[2]
-		return i[1], cond
+		return name, cond
 
 	def from_string(self, string):
 

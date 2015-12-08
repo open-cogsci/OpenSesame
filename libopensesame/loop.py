@@ -136,9 +136,10 @@ class loop(item.item):
 		while len(l) > 0:
 			cycle = l.pop(0)
 			self.apply_cycle(cycle)
-			if self._break_if is not None and \
-				self.python_workspace._eval(self._break_if):
-				break
+			if self._break_if is not None:
+				self.python_workspace[u'self'] = self
+				if self.python_workspace._eval(self._break_if):
+					break
 			self.experiment.var.repeat_cycle = 0
 			self.experiment.items.execute(self.var.item)
 			if self.experiment.var.repeat_cycle:
