@@ -81,9 +81,11 @@ class psycho(keyboard.keyboard):
 		start_time = self.experiment.clock.time()
 		while True:
 			time = self.experiment.clock.time()
-			keys = event.getKeys(keylist, timeStamped=True)
-			for key, time in keys:
-				time *= 1000.0
+			# Don't use the timeStamped keyword, because it bugs on older
+			# versions of PsychoPy (at least 1.79.01 under Ubuntu 14.04).
+			# See https://github.com/smathot/OpenSesame/issues/381
+			keys = event.getKeys(keylist)
+			for key in keys:
 				if key == u"escape":
 					self.experiment.pause()
 				if keylist is None or key in keylist:
