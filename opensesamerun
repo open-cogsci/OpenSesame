@@ -53,6 +53,10 @@ if __name__ == u"__main__":
 		# give an error instead of showing a GUI. This makes sure that even
 		# without PyQt4, people can still run experiments.
 		try:
+			# Change Qt API
+			import sip
+			sip.setapi('QString', 2)
+			sip.setapi('QVariant', 2)			
 			from PyQt4 import QtGui, QtCore
 		except:
 			libopensesame.misc.messagebox(u"OpenSesame Run",

@@ -18,7 +18,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame.py3compat import *
-
+from libopensesame import metadata
 from PyQt4 import QtCore, QtGui
 from libqtopensesame.misc.base_component import base_component
 from libqtopensesame.misc import theme
@@ -45,6 +45,8 @@ class qtopensesamerun(QtGui.QMainWindow, base_component):
 		# Setup the UI
 		self.load_ui(u'misc.opensesamerun')
 		self.ui.button_run.clicked.connect(self.run)
+		self.ui.label_header.setText(
+			self.ui.label_header.text() % metadata.__version__)
 		self.theme = theme.theme(self)
 		self.ui.button_browse_experiment.clicked.connect(self.browse_experiment)
 		self.ui.button_browse_logfile.clicked.connect(self.browse_logfile)
@@ -61,7 +63,7 @@ class qtopensesamerun(QtGui.QMainWindow, base_component):
 		"""Locates the experiment file."""
 
 		file_type_filter = \
-			u"OpenSesame files (*.opensesame.tar.gz *.opensesame);;OpenSesame script and file pool (*.opensesame.tar.gz);;OpenSesame script (*.opensesame)"
+			u"OpenSesame files (*.osexp *.opensesame.tar.gz *.opensesame);;OpenSesame script and file pool (*.opensesame.tar.gz);;OpenSesame script (*.opensesame)"
 		path = QtGui.QFileDialog.getOpenFileName(self, \
 			u"Open experiment file", filter = file_type_filter)
 		if path == u"":
@@ -95,7 +97,7 @@ class qtopensesamerun(QtGui.QMainWindow, base_component):
 		self.run = True
 		self.options.experiment = str(self.ui.edit_experiment.text())
 		self.options.subject = self.ui.spinbox_subject_nr.value()
-		self.options.logfile = str(self.ui.edit_logfile.text())		
+		self.options.logfile = str(self.ui.edit_logfile.text())
 		self.options.fullscreen = self.ui.checkbox_fullscreen.isChecked()
 		self.options.custom_resolution = \
 			self.ui.checkbox_custom_resolution.isChecked()

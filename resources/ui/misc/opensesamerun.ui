@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>429</width>
-    <height>381</height>
+    <width>470</width>
+    <height>389</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -46,9 +46,10 @@ color: rgb(255, 255, 255);</string>
         </widget>
        </item>
        <item>
-        <widget class="QLabel" name="label_6">
+        <widget class="QLabel" name="label_header">
          <property name="text">
-          <string>&lt;b&gt;OpenSesame Run&lt;/b&gt;&lt;br /&gt;&lt;small&gt;&lt;i&gt;Run your OpenSesame experiment&lt;/i&gt;&lt;/small&gt;</string>
+          <string>&lt;b&gt;Run, OpenSesame, run!&lt;/b&gt;&lt;br /&gt;
+&lt;small&gt;%s&lt;/small&gt;</string>
          </property>
         </widget>
        </item>
