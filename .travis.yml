@@ -6,6 +6,7 @@ virtualenv:
   system_site_packages: true
 before_script:
   - "export DISPLAY=:99.0"
+  - "export AUDIODEV=null" # PyGame needs audio device
   - "sh -e /etc/init.d/xvfb start"
   - sleep 3 # give xvfb some time to start
 addons:
