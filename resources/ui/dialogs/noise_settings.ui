@@ -118,7 +118,7 @@
         </item>
         <item>
          <property name="text">
-          <string notr="true">rectangle (no envelope)</string>
+          <string notr="true">rectangular (no envelope)</string>
          </property>
         </item>
        </widget>

@@ -7,9 +7,11 @@ opensesame (3.0.5~a1-ubuntu1) wily; urgency=medium
     - Fix missing py3compat import in joystick
     - Fix keyboard timestamps for older versions of PsychoPy (#381)
     - Show .osexp files while browsing with opensesamerun GUI (#385)
+    - Fix rectangular envelope in noise patches
   * Improvements
     - Add unit test for required py3compat import and encoding declaration
     - Show version info in opensesamerun GUI
+
 
  -- Sebastiaan Mathot <sebastiaan@mantis>  Tue, 01 Dec 2015 17:15:57 +0100
 
