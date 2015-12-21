@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 #-*- coding:utf-8 -*-
 
 """
@@ -18,10 +19,32 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 import unittest
-from opensesame_unittest import backends, compilable, color, syntax, response, \
-	headless
+import os
+from libopensesame.experiment import experiment
 
-for mod in (backends, compilable, color, syntax, response, headless):
-	res = unittest.main(mod, exit=False)
-	if len(res.result.errors) > 0 or len(res.result.failures) > 0:
-		exit(1)
+class check_headless(unittest.TestCase):
+
+	"""
+	desc:
+		Runs several experiments in headless mode (i.e. on a virtual X server)
+		to see if they execute correctly.
+	"""
+
+	def runTest(self):
+
+		"""
+		desc:
+			Walks through the test.
+		"""
+
+		experiment_path = os.path.join(os.path.dirname(__file__), u'data')
+		for experiment_file in [u'response_test.osexp',
+				u'sketchpad_test.osexp']:
+			print(u'Testing %s' % experiment_file)
+			e = experiment(
+				experiment_path=experiment_path,
+				string=os.path.join(experiment_path, experiment_file))
+			e.run()
+
+if __name__ == '__main__':
+	unittest.main()

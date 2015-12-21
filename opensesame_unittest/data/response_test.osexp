@@ -1,0 +1,75 @@
+---
+API: 2
+OpenSesame: 3.0.5a1
+Platform: posix
+---
+set width 1024
+set uniform_coordinates "yes"
+set title "Basic response test"
+set subject_parity "even"
+set subject_nr 0
+set start "experiment"
+set sampler_backend "legacy"
+set mouse_backend "legacy"
+set keyboard_backend "legacy"
+set height 768
+set foreground "white"
+set font_size 18
+set font_italic "no"
+set font_family "mono"
+set font_bold "no"
+set description "Default description"
+set coordinates "uniform"
+set compensation 0
+set color_backend "legacy"
+set clock_backend "legacy"
+set canvas_backend "legacy"
+set bidi "no"
+set background "black"
+
+define sequence experiment
+	set flush_keyboard "yes"
+	set description "Runs a number of items in sequence"
+	run loop always
+	run validate always
+
+define keyboard_response keyboard_response
+	set timeout 20
+	set flush "yes"
+	set duration "keypress"
+	set description "Collects keyboard responses"
+
+define loop loop
+	set skip 0
+	set repeat 10
+	set order "random"
+	set offset "no"
+	set item "sequence"
+	set description "Repeatedly runs another item"
+	set cycles 2
+	set column_order "correct_response"
+	set break_if "never"
+	setcycle 0 correct_response "None"
+	setcycle 1 correct_response "space"
+	run sequence
+
+define sequence sequence
+	set flush_keyboard "yes"
+	set description "Runs a number of items in sequence"
+	run target always
+	run keyboard_response always
+
+define sketchpad target
+	set duration 0
+	set description "Displays stimuli"
+
+define inline_script validate
+	set description "Executes Python code"
+	___run__
+	print('accuracy: %.2f' % var.accuracy)
+	print('avg_rt: %.2f' % var.avg_rt)
+	assert(var.accuracy == 50)
+	assert(var.avg_rt >= 19 and var.avg_rt <= 21)
+	__end__
+	set _prepare ""
+
