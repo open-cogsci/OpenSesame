@@ -15,6 +15,7 @@ addons:
     - python-pygame
     - python-yaml
     - python-scipy
+    - python-imaging
 before_install:
   - pip install webcolors
   - wget https://github.com/smathot/python-yamldoc/archive/release/0.2.0.tar.gz -O yamldoc.tar.gz
