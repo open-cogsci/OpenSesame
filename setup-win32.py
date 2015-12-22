@@ -71,9 +71,9 @@ for Python 2:
 	- Choose the version for VLC 2.0
 	- Available from <http://liris.cnrs.fr/advene/download/python-ctypes/>
 
-### Python 3.4
+### Python 3.4 and 3.5
 
-- pygame
+- pygame (1.9.2)
 	- Available from: <http://www.lfd.uci.edu/~gohlke/pythonlibs/#pygame>
 - pyaudio
 	- Available from: <http://www.lfd.uci.edu/~gohlke/pythonlibs/#pyaudio>
@@ -81,21 +81,17 @@ for Python 2:
 ## Usage
 
 First, a list of all importable modules from the Python standar library must be
-created. This is done by runnning:
+created. This requires Python `stdlib-list`, which is available from:
+
+- <https://github.com/jackmaney/python-stdlib-list>
+
+The list can be built by runnning:
 
 	python setup-pkg-list.py
 
 Next, compile all source files to `.pyc` (default) as follows:
 
 	python setup-win32.py py2exe
-
-To compile all source files to `.pyo`, call the script as follows:
-
-	python -O setup-win32.py py2exe
-
-or
-
-	python -OO setup-win32.py py2exe
 
 More options can be tweaked by changing the variables below.
 
@@ -140,7 +136,6 @@ if py3:
 	from urllib.request import urlretrieve
 else:
 	from urllib import urlretrieve
-from stdlib_list import stdlib_list
 from setup_shared  import included_plugins, included_extensions
 
 # Set this to False to build a 'light' version without the Qt4 gui. This
@@ -157,8 +152,9 @@ include_pygaze = not py3
 include_sounds = True
 include_faenza = True
 include_inpout32 = not py3
-include_simpleio = True
+include_simpleio = not py3
 include_pyqt4_plugins = True
+jupyter = py3
 release_zip = True
 release_build = 1
 channel = u'win32'
@@ -218,6 +214,24 @@ copy_packages = [
 	'wx',
 	'webcolors',
 	'zmq'
+	]
+
+if jupyter:
+	copy_packages += [
+		'jupyter_client',
+		'jupyter_console',
+		'jupyter_core',
+		'qtconsole',
+		'ipython_genutils',
+		'traitlets',
+		'ipykernel',
+		'ipyparallel',
+		'ipywidgets',
+		'decorator',
+		'jupyter',
+		'pickleshare',
+		'path',
+		'simplegeneric',
 	]
 
 if not py3:

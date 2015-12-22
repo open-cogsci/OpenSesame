@@ -74,11 +74,18 @@ class capture_stderr(object):
 
 		self.buffer += safe_decode(msg, errors=u'ignore')
 		self.timer.start(1)
-		sys.__stderr__.write(msg)
+		if sys.__stderr__ is not None:
+			sys.__stderr__.write(msg)
 
 	def flush(self):
 
-		sys.__stderr__.flush()
+		"""
+		desc:
+			Flushes the standard error if available.
+		"""
+
+		if sys.__stderr__ is not None:
+			sys.__stderr__.flush()
 
 class bug_report(base_extension):
 

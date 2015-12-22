@@ -75,6 +75,7 @@ class base_console(base_subcomponent):
 			'console' : self,
 			'opensesame' : self.main_window,
 			'cfg' : cfg,
+			'__spec__' : None, # Required by multiprocessing
 			}
 
 	def flush(self):
