@@ -8,10 +8,10 @@ opensesame (3.0.5~a1-ubuntu1) wily; urgency=medium
     - Fix keyboard timestamps for older versions of PsychoPy (#381)
     - Show .osexp files while browsing with opensesamerun GUI (#385)
     - Fix rectangular envelope in noise patches
+    - Fix too-many-files-open error with gabor and noise elements in sketchpad
   * Improvements
     - Add unit test for required py3compat import and encoding declaration
     - Show version info in opensesamerun GUI
-
 
  -- Sebastiaan Mathot <sebastiaan@mantis>  Tue, 01 Dec 2015 17:15:57 +0100
 

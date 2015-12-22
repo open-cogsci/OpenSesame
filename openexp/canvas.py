@@ -18,12 +18,11 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame.py3compat import *
-from libopensesame import debug
 from openexp import backend
 import tempfile
 try:
 	import pygame
-except:
+except ImportError:
 	pass
 import os
 
@@ -120,13 +119,13 @@ def gabor_file(*arglist, **kwdict):
 		A path to the image file.
 	"""
 
-	global temp_files
-	from openexp._canvas import canvas
-	surface = canvas._gabor(*arglist, **kwdict)
-	tmp = tempfile.mkstemp(suffix='.png')[1]
-	pygame.image.save(surface, tmp)
-	temp_files.append(tmp)
-	return tmp
+	from openexp._canvas import canvas as _canvas
+	surface = _canvas._gabor(*arglist, **kwdict)
+	fd, fname = tempfile.mkstemp(suffix=u'.png')
+	pygame.image.save(surface, fname)
+	temp_files.append(fname)
+	os.close(fd)
+	return fname
 
 def noise_file(*arglist, **kwdict):
 
@@ -144,10 +143,10 @@ def noise_file(*arglist, **kwdict):
 		A path to the image file.
 	"""
 
-	global temp_files
-	from openexp._canvas import canvas
-	surface = canvas._noise_patch(*arglist, **kwdict)
-	tmp = tempfile.mkstemp(suffix='.png')[1]
-	pygame.image.save(surface, tmp)
-	temp_files.append(tmp)
-	return tmp
+	from openexp._canvas import canvas as _canvas
+	surface = _canvas._noise_patch(*arglist, **kwdict)
+	fd, fname = tempfile.mkstemp(suffix=u'.png')
+	pygame.image.save(surface, fname)
+	temp_files.append(fname)
+	os.close(fd)
+	return fname
