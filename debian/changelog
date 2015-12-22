@@ -9,6 +9,7 @@ opensesame (3.0.5~a1-ubuntu1) wily; urgency=medium
     - Show .osexp files while browsing with opensesamerun GUI (#385)
     - Fix rectangular envelope in noise patches
     - Fix too-many-files-open error with gabor and noise elements in sketchpad
+    - Remove Python-3-incompatible relative imports from plugin_manager
   * Improvements
     - Add unit test for required py3compat import and encoding declaration
     - Show version info in opensesamerun GUI

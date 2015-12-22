@@ -18,6 +18,5 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame.py3compat import *
-
-from _plugin_manager_widget import plugin_manager_widget
-from _plugin_widget import plugin_widget
+from plugin_manager_widget._plugin_manager_widget import plugin_manager_widget
+from plugin_manager_widget._plugin_widget import plugin_widget
