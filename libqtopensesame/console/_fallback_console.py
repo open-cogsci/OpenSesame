@@ -237,6 +237,12 @@ class fallback_console(base_console, QtGui.QPlainTextEdit):
 			self.appendPlainText(s)
 			QtGui.QApplication.processEvents()
 
+	def get_workspace_globals(self):
+
+		"""See base_console."""
+
+		return self.pyterm._locals
+
 	def set_workspace_globals(self, _globals={}):
 
 		"""See base_console."""
