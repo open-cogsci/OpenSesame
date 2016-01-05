@@ -18,6 +18,17 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame.py3compat import *
+
+# If OpenSesame is launched with pythonw.exe under Windows, the standard
+# channels are not available. This will cause IPython to crash sometimes, so we
+# need to explicitly create null channels. See also:
+# - <https://github.com/smathot/OpenSesame/issues/363>
+import sys
+import os
+if (not py3 and sys.stderr.fileno() == -2) or (py3 and sys.stderr is None):
+	sys.stdout = sys.stderr = open(os.devnull, u'w')
+	sys.stdin = open(os.devnull, u'r')
+
 from PyQt4 import QtGui
 try:
 	# New-style Jupyter imports
