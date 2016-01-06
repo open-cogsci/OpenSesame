@@ -25,7 +25,8 @@ from libopensesame.py3compat import *
 # - <https://github.com/smathot/OpenSesame/issues/363>
 import sys
 import os
-if (not py3 and sys.stderr.fileno() == -2) or (py3 and sys.stderr is None):
+if (sys.stderr is None or \
+	(hasattr(sys.stderr, u'fileno') and sys.stderr.fileno() == -2)):
 	sys.stdout = sys.stderr = open(os.devnull, u'w')
 	sys.stdin = open(os.devnull, u'r')
 
