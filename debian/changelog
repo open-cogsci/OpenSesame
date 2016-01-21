@@ -1,3 +1,9 @@
+opensesame (3.0.6a1-ubuntu1) wily; urgency=medium
+
+  * Bugs fixed
+
+ -- Sebastiaan Mathot <sebastiaan@mantis>  Thu, 21 Jan 2016 20:55:07 +0100
+
 opensesame (3.0.5-ubuntu1) wily; urgency=medium
 
   * Bugs fixed
