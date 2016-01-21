@@ -1,6 +1,7 @@
 opensesame (3.0.6a1-ubuntu1) wily; urgency=medium
 
   * Bugs fixed
+    - Fix a crash when adding an empty list to the file pool
 
  -- Sebastiaan Mathot <sebastiaan@mantis>  Thu, 21 Jan 2016 20:55:07 +0100
 

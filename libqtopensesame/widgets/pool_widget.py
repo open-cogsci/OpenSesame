@@ -115,6 +115,8 @@ class pool_widget(base_widget):
 				type:	list
 		"""
 
+		if not files:
+			return
 		for path in files:
 			basename = os.path.basename(path)
 			if self.pool.in_folder(basename):
