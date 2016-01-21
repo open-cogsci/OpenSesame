@@ -168,9 +168,16 @@ class experiment(item.item):
 		item.item.__init__(self, name, self, string)
 		# Default subject info
 		self.set_subject(subject_nr)
-		# Restore experiment path
+		# Restore experiment path, which is either the full path (including
+		# filename), only the folder, or None.
 		if experiment_path is not None:
-			self.experiment_path = experiment_path
+			if os.path.isfile(experiment_path):
+				self.var.experiment_path, self.var.experiment_file = \
+					self.experiment_path, self.experiment_file = \
+						os.path.split(experiment_path)
+			else:
+				self.var.experiment_path = self.experiment_path \
+					= experiment_path
 
 	@property
 	def pool_folder(self):

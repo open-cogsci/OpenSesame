@@ -198,13 +198,22 @@ class base_runner(object):
 		logfile = self.get_logfile(quick=quick, subject_nr=subject_nr)
 		if logfile is None:
 			return False
+		# The experiment can be either the full path to the experiment file,
+		# the folder of the experiment file, or None.
+		if self.main_window.experiment.experiment_path is not None:
+			experiment_path = self.main_window.experiment.experiment_path
+			if self.main_window.current_path is not None:
+				experiment_path = os.path.join(experiment_path,
+					self.main_window.current_path)
+		else:
+			experiment_path = None
 		# Build a new experiment. This can trigger a script error.
 		try:
-			self.experiment = experiment(string=script, pool_folder= \
-				self.main_window.experiment.pool.folder(), experiment_path= \
-				self.main_window.experiment.experiment_path, fullscreen= \
-				fullscreen, auto_response=auto_response, subject_nr= \
-				subject_nr, logfile=logfile)
+			self.experiment = experiment(string=script,
+				pool_folder=self.main_window.experiment.pool.folder(),
+				experiment_path=experiment_path, fullscreen=fullscreen,
+				auto_response=auto_response, subject_nr=subject_nr,
+				logfile=logfile)
 		except Exception as e:
 			if not isinstance(e, osexception):
 				e = osexception(u'Unexpected error', exception=e)
@@ -212,6 +221,7 @@ class base_runner(object):
 				u'following reason:\n\n- ') + e.markdown()
 			self.console.write(e)
 			self.tabwidget.open_markdown(md)
+			return False
 		return True
 
 	def run(self, quick=False, fullscreen=False, auto_response=False):
