@@ -46,13 +46,19 @@ class variable_inspector_cell(QtGui.QTableWidgetItem):
 		f = QtGui.QFont()
 		if info[u'alive']:
 			f.setBold(True)
-		if text is None:
-			text = u''
-		elif isinstance(text, list):
-			text = u','.join([safe_decode(s) for s in text])
-		elif isinstance(text, int) or isinstance(text, float):
-			text = str(text)
-			a = QtCore.Qt.AlignRight
+		if not isinstance(text, basestring):
+			try:
+				len(text)
+			except TypeError:
+				if text is None:
+					text = u''
+				elif isinstance(text, int) or isinstance(text, float):
+					text = str(text)
+					a = QtCore.Qt.AlignRight
+				else:
+					text = safe_decode(text, errors=u'ignore')
+			else:
+				text = u','.join([safe_decode(s) for s in text])
 		QtGui.QTableWidgetItem.__init__(self, text)
 		self.setFont(f)
 		self.setTextAlignment(a)
