@@ -45,16 +45,6 @@ class pool_widget(base_widget):
 			main_window: The main-window object.
 		"""
 
-		# Known image and sound extensions
-		self.exts = {u"image" : (u".png", u".jpg", u".bmp", u".gif",
-			u".jpeg"),
-			u"sound" : (u".ogg", u".wav"),
-			u"text" : (u".txt", u".csv", u".tsv"),
-			u"python" : (u".py", u".pyc"),
-			u"video" : (u".avi", u".mpg", u".wmv", u".mpeg", u".mov", u".ogv",
-				u".mp4", u".flv"),
-			u"pdf" : (u".pdf"),
-			}
 		self.max_len = 5
 		super(pool_widget, self).__init__(main_window,
 			ui=u'widgets.pool_widget')
@@ -129,7 +119,11 @@ class pool_widget(base_widget):
 						% basename)
 					if not c.show():
 						continue
-			self.pool.add(path, new_name=basename)
+			try:
+				self.pool.add(path, new_name=basename)
+			except IOError as e:
+				self.notify(_(u'Failed to copy %s to file pool') % path)
+				self.console.write(safe_decode(e, errors=u'ignore'))
 		self.refresh()
 		self.select(basename)
 
@@ -166,28 +160,6 @@ class pool_widget(base_widget):
 			if item.text() == fname:
 				self.ui.list_pool.setCurrentItem(item)
 
-	def file_type(self, fname):
-
-		"""
-		desc:
-			Determine the type of a file based on the extension.
-
-		arguments:
-			fname:
-				desc:	The file under investigation
-				type:	[str, unicode]
-
-		returns:
-			desc:	A string with the filetype or "unknown".
-			type:	unicode
-		"""
-
-		ext = os.path.splitext(fname)[1].lower()
-		for file_type in self.exts:
-			if ext in self.exts[file_type]:
-				return file_type
-		return u"unknown"
-
 	def refresh(self):
 
 		"""
@@ -195,13 +167,20 @@ class pool_widget(base_widget):
 			Refreshes the contents of the pool widget.
 		"""
 
+		try:
+			path_iterator = iter(self.pool)
+		except Exception as e:
+			self.notify(_(u'Failed to refresh file pool'))
+			self.console.write(safe_decode(e, errors=u'ignore'))
+			return
 		filt = self.ui.edit_pool_filter.text().lower()
 		self.ui.list_pool.clear()
-		for path in self.pool:
+		for path in path_iterator:
 			debug.msg(path)
 			fname = os.path.basename(path)
 			if filt in fname.lower():
-				icon = self.theme.qicon(self.file_type(fname))
+				icon = self.theme.qfileicon(self.pool[path])
+				self.console.write(path)
 				item = QtGui.QListWidgetItem(icon, fname)
 				item.setFlags(item.flags()|QtCore.Qt.ItemIsEditable)
 				item.icon = icon

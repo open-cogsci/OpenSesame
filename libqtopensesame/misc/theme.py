@@ -93,6 +93,21 @@ class theme:
 		if hasattr(widget, u"ui"):
 			self.load_icons(widget.ui)
 
+	def qfileicon(self, path):
+
+		"""
+		desc:
+			Gets an filetype icon for a file.
+
+		arguments:
+			path:	The full path to the file. The file must exist.
+
+		returns:
+			type:	QIcon
+		"""
+
+		return QtGui.QFileIconProvider().icon(QtCore.QFileInfo(path))
+
 	def qicon(self, icon):
 
 		"""

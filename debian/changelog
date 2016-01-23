@@ -4,10 +4,12 @@ opensesame (3.0.6a1-ubuntu1) wily; urgency=medium
     - Fix a crash when adding an empty list to the file pool
     - Handle exotic variable types better in variable inspector (#388)
     - Fix initial state of auto_example plug-in (#389)
+    - Catch errors in file pool
   * Improvements
     - Add `experiment_file` experimental variable, which contains the file name of the experiment (#387)
     - Catch warnings when creating a new item and provide an informative message
     - Update default logfile location after save as (#370)
+    - Improve file-type icons in file pool
 
  -- Sebastiaan Mathot <sebastiaan@mantis>  Thu, 21 Jan 2016 20:55:07 +0100
 
