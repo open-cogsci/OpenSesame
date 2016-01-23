@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>406</width>
-    <height>37</height>
+    <height>48</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -21,6 +21,9 @@
      </property>
      <property name="text">
       <string>User hints</string>
+     </property>
+     <property name="openExternalLinks">
+      <bool>true</bool>
      </property>
     </widget>
    </item>
