@@ -113,6 +113,8 @@ class qtauto_example(auto_example, qtautoplugin):
 		# control. A checkbox will be a QCheckBox, a line_edit will be a
 		# QLineEdit. Here we connect the stateChanged signal of the QCheckBox,
 		# to the setEnabled() slot of the QLineEdit. This has the effect of
-		# disabling the QLineEdit when the QCheckBox is uncheckhed.
-		self.checkbox_widget.stateChanged.connect( \
+		# disabling the QLineEdit when the QCheckBox is uncheckhed. We also
+		# explictly set the starting state.
+		self.line_edit_widget.setEnabled(self.checkbox_widget.isChecked())
+		self.checkbox_widget.stateChanged.connect(
 			self.line_edit_widget.setEnabled)
