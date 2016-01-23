@@ -666,9 +666,9 @@ class qtopensesame(QtGui.QMainWindow, base_component):
 			self.ui.tabwidget.open_general()
 			return
 		if path is None:
-			path = QtGui.QFileDialog.getOpenFileName(
-				self.ui.centralwidget, _(u"Open file"),
-				filter=self.open_file_filter, directory=cfg.file_dialog_path)
+			path = QtGui.QFileDialog.getOpenFileName(self.ui.centralwidget,
+				_(u"Open file"), filter=self.open_file_filter,
+				directory=cfg.file_dialog_path)
 		if path is None or path == u'' or ( \
 			not path.lower().endswith(u'.opensesame') and \
 			not  path.lower().endswith(u'.opensesame.tar.gz') and \
@@ -788,6 +788,7 @@ class qtopensesame(QtGui.QMainWindow, base_component):
 			path += u'.osexp'
 		cfg.file_dialog_path = os.path.dirname(path)
 		self.current_path = path
+		cfg.default_logfile_folder = os.path.dirname(self.current_path)
 		self.save_file()
 
 	def regenerate(self, script):
