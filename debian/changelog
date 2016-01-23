@@ -10,6 +10,7 @@ opensesame (3.0.6a1-ubuntu1) wily; urgency=medium
     - Catch warnings when creating a new item and provide an informative message
     - Update default logfile location after save as (#370)
     - Improve file-type icons in file pool
+    - Add deprecation warning to parallel plugin (use coroutines instead)
 
  -- Sebastiaan Mathot <sebastiaan@mantis>  Thu, 21 Jan 2016 20:55:07 +0100
 
