@@ -22,7 +22,6 @@ from libopensesame.py3compat import *
 from libopensesame.item_store import item_store
 from libopensesame import plugins
 from libqtopensesame.misc import _
-from libqtopensesame.misc.base_subcomponent import base_subcomponent
 
 class qtitem_store(item_store):
 
@@ -31,7 +30,7 @@ class qtitem_store(item_store):
 		The GUI counterpart of the item store, which also distributes item
 		changes etc.
 	"""
-	
+
 	def __init__(self, experiment):
 
 		"""
@@ -58,6 +57,14 @@ class qtitem_store(item_store):
 	def extension_manager(self):
 		return self.main_window.extension_manager
 
+	@property
+	def tabwidget(self):
+		return self.main_window.tabwidget
+
+	@property
+	def console(self):
+		return self.main_window.console
+
 	def __delitem__(self, name):
 
 		"""
@@ -80,7 +87,14 @@ class qtitem_store(item_store):
 
 		"""See item_store."""
 
-		item = super(qtitem_store, self).new(_type, name=name, script=script)
+		import warnings
+		with warnings.catch_warnings(record=True) as warning_list:
+			item = super(qtitem_store, self).new(_type, name=name,
+				script=script)
+		if warning_list:
+			import yaml
+			self.tabwidget.open_help(u'new_item_warning')
+			self.console.write(yaml.dump(warning_list))
 		self.main_window.set_unsaved(True)
 		return item
 
@@ -173,15 +187,15 @@ class qtitem_store(item_store):
 		_used = self.used()
 		return list(filter(lambda item: item not in _used,
 			self.__items__.keys()))
-			
+
 	def valid_type(self, _type):
-		
+
 		"""
 		arguments:
 			_type:
 				desc:	The item type to check.
 				type:	str
-		
+
 		returns:
 			desc: 	True if _type is a valid type, False otherwise.
 			type:	bool
