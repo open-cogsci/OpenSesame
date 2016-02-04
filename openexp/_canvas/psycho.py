@@ -145,7 +145,11 @@ class psycho(canvas.canvas, psycho_coordinates):
 			self.background_color = color
 		# The background is simply a rectangle, because of the double flip
 		# required by set_color()
-		self.rect(0, 0, self._width, self._height,
+		if self.uniform_coordinates:
+			x, y = -self._width/2, -self._height/2
+		else:
+			x, y = 0, 0
+		self.rect(x, y, self._width, self._height,
 			color=self.background_color.backend_color, fill=True)
 
 	@configurable
