@@ -21,7 +21,7 @@ from libopensesame.py3compat import *
 from distutils.version import StrictVersion
 import sys
 
-__version__ = u'3.0.6a1'
+__version__ = u'3.1.0a1'
 strict_version = StrictVersion(__version__)
 # The version without the prerelease (if any): e.g. 3.0.0
 main_version = u'.'.join([str(i) for i in strict_version.version])
@@ -32,6 +32,6 @@ else:
 	deb_version = main_version + u'~%s%d' % strict_version.prerelease
 python_version = u'%d.%d.%d' % (sys.version_info[0], sys.version_info[1], \
 	sys.version_info[2])
-codename = u'Interactive Ising'
+codename = u'Jazzy James'
 channel = u'dev'
 platform = sys.platform
