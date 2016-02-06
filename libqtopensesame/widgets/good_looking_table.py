@@ -19,9 +19,9 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 
 from libopensesame.py3compat import *
 
-from PyQt4 import QtCore, QtGui
+from qtpy import QtCore, QtWidgets
 
-class good_looking_table(QtGui.QTableWidget):
+class good_looking_table(QtWidgets.QTableWidget):
 
 	"""Extended the QTableWidget for copy-pasting, etc."""
 
@@ -40,13 +40,13 @@ class good_looking_table(QtGui.QTableWidget):
 		parent	--	The parent QWidget. (default=None)
 		"""
 
-		self.clipboard = QtGui.QApplication.clipboard
+		self.clipboard = QtWidgets.QApplication.clipboard
 		self.build_context_menu(icons)
 		# If there is only one parameter, this is the parent
 		if columns is None:
-			QtGui.QTableWidget.__init__(self, rows)
+			QtWidgets.QTableWidget.__init__(self, rows)
 		else:
-			QtGui.QTableWidget.__init__(self, rows, columns, parent)
+			QtWidgets.QTableWidget.__init__(self, rows, columns, parent)
 		self.setGridStyle(QtCore.Qt.DotLine)
 		self.setAlternatingRowColors(True)
 
@@ -59,7 +59,7 @@ class good_looking_table(QtGui.QTableWidget):
 		icons	--	A dictionary with icon names. (default={})
 		"""
 
-		self.menu = QtGui.QMenu()
+		self.menu = QtWidgets.QMenu()
 		if "cut" in icons:
 			self.menu.addAction(icons["cut"], "Cut", self.cut)
 		else:
@@ -114,7 +114,7 @@ class good_looking_table(QtGui.QTableWidget):
 			self.paste()
 			e.ignore()
 		else:
-			QtGui.QTableWidget.keyPressEvent(self, e)
+			QtWidgets.QTableWidget.keyPressEvent(self, e)
 
 	def cut(self):
 
@@ -157,7 +157,7 @@ class good_looking_table(QtGui.QTableWidget):
 			for cell in cells:
 				if current_column >= self.columnCount():
 					break
-				item = QtGui.QTableWidgetItem()
+				item = QtWidgets.QTableWidgetItem()
 				item.setText(cell)
 				self.setItem(current_row, current_column, item)
 				current_column += 1
@@ -212,7 +212,7 @@ class good_looking_table(QtGui.QTableWidget):
 		row = 0
 		for i in contents:
 			# Set the item
-			item = QtGui.QTableWidgetItem()
+			item = QtWidgets.QTableWidgetItem()
 			item.setText(i)
 			self.setItem(row, column, item)
 			# Advance to next cell with wraparound
@@ -226,7 +226,7 @@ if __name__ == "__main__":
 	"""If called standalone, this class shows a demo table"""
 
 	import sys
-	app = QtGui.QApplication(sys.argv)
+	app = QtWidgets.QApplication(sys.argv)
 	widget = good_looking_table(10, 10)
 	widget.setWindowTitle("Good looking table")
 	widget.show()

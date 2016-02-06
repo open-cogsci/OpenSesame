@@ -18,7 +18,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame.py3compat import *
-from PyQt4 import QtCore, QtGui
+from qtpy import QtGui, QtCore, QtWidgets
 from libqtopensesame.misc.base_component import base_component
 from libqtopensesame.misc.config import cfg
 from libqtopensesame.items import experiment
@@ -32,7 +32,7 @@ import os
 import sys
 import warnings
 
-class qtopensesame(QtGui.QMainWindow, base_component):
+class qtopensesame(QtWidgets.QMainWindow, base_component):
 
 	"""The main class of the OpenSesame GUI"""
 
@@ -54,10 +54,10 @@ class qtopensesame(QtGui.QMainWindow, base_component):
 			# Workaround for Qt issue on OS X that causes QMainWindow to
 			# hide when adding QToolBar, see
 			# https://bugreports.qt-project.org/browse/QTBUG-4300
-			QtGui.QMainWindow.__init__(self, parent, \
+			QtWidgets.QMainWindow.__init__(self, parent, \
 				QtCore.Qt.MacWindowToolBarButtonHint)
 		else:
-			QtGui.QMainWindow.__init__(self, parent)
+			QtWidgets.QMainWindow.__init__(self, parent)
 		self.app = app
 		self.first_show = True
 
@@ -82,7 +82,7 @@ class qtopensesame(QtGui.QMainWindow, base_component):
 		# Make sure that icons are shown in context menu, regardless of the
 		# system settings. This is necessary, because Ubuntu doesn't show menu
 		# icons by default.
-		QtGui.QApplication.setAttribute(QtCore.Qt.AA_DontShowIconsInMenus,
+		QtWidgets.QApplication.setAttribute(QtCore.Qt.AA_DontShowIconsInMenus,
 			False)
 
 		# Do a few things to customize QProgEdit behavior:
@@ -187,13 +187,13 @@ class qtopensesame(QtGui.QMainWindow, base_component):
 			self.ui.action_show_stdout.setChecked)
 
 		# Initialize keyboard shortcuts
-		self.ui.shortcut_itemtree = QtGui.QShortcut(QtGui.QKeySequence(), self,
+		self.ui.shortcut_itemtree = QtWidgets.QShortcut(QtGui.QKeySequence(), self,
 			self.focus_overview_area)
-		self.ui.shortcut_tabwidget = QtGui.QShortcut(
+		self.ui.shortcut_tabwidget = QtWidgets.QShortcut(
 			QtGui.QKeySequence(), self, self.ui.tabwidget.focus)
-		self.ui.shortcut_stdout = QtGui.QShortcut(QtGui.QKeySequence(), self,
+		self.ui.shortcut_stdout = QtWidgets.QShortcut(QtGui.QKeySequence(), self,
 			self.focus_debug_window)
-		self.ui.shortcut_pool = QtGui.QShortcut(QtGui.QKeySequence(), self,
+		self.ui.shortcut_pool = QtWidgets.QShortcut(QtGui.QKeySequence(), self,
 			self.focus_file_pool)
 
 		# Create the initial experiment, which is the default template. Because
@@ -418,18 +418,18 @@ class qtopensesame(QtGui.QMainWindow, base_component):
 		"""
 
 		if state:
-			QtGui.QApplication.setOverrideCursor(QtGui.QCursor(
+			QtWidgets.QApplication.setOverrideCursor(QtGui.QCursor(
 				QtCore.Qt.WaitCursor))
 		else:
-			QtGui.QApplication.restoreOverrideCursor()
-		QtGui.QApplication.processEvents()
+			QtWidgets.QApplication.restoreOverrideCursor()
+		QtWidgets.QApplication.processEvents()
 
 	def set_style(self):
 
 		"""Appply the application style"""
 
-		if cfg.style in QtGui.QStyleFactory.keys():
-			self.setStyle(QtGui.QStyleFactory.create(cfg.style))
+		if cfg.style in QtWidgets.QStyleFactory.keys():
+			self.setStyle(QtWidgets.QStyleFactory.create(cfg.style))
 			debug.msg(u"using style '%s'" % cfg.style)
 		else:
 			debug.msg(u"ignoring unknown style '%s'" % cfg.style)
@@ -628,7 +628,7 @@ class qtopensesame(QtGui.QMainWindow, base_component):
 		# Build the menu
 		self.ui.menu_recent_files.clear()
 		if len(self.recent_files) == 0:
-			a = QtGui.QAction(_(u"(No recent files)"), \
+			a = QtWidgets.QAction(_(u"(No recent files)"), \
 				self.ui.menu_recent_files)
 			a.setDisabled(True)
 			self.ui.menu_recent_files.addAction(a)
@@ -666,7 +666,7 @@ class qtopensesame(QtGui.QMainWindow, base_component):
 			self.ui.tabwidget.open_general()
 			return
 		if path is None:
-			path = QtGui.QFileDialog.getOpenFileName(self.ui.centralwidget,
+			path = QtWidgets.QFileDialog.getOpenFileName(self.ui.centralwidget,
 				_(u"Open file"), filter=self.open_file_filter,
 				directory=cfg.file_dialog_path)
 		if path is None or path == u'' or ( \
@@ -740,7 +740,7 @@ class qtopensesame(QtGui.QMainWindow, base_component):
 		self.extension_manager.fire(u'save_experiment', path=self.current_path)
 		# Indicate that we're busy
 		self.set_busy(True)
-		QtGui.QApplication.processEvents()
+		QtWidgets.QApplication.processEvents()
 		# Get ready
 		try:
 			self.get_ready()
@@ -779,7 +779,7 @@ class qtopensesame(QtGui.QMainWindow, base_component):
 				strict=True, allow_vars=False))
 		else:
 			cfg.file_dialog_path = self.current_path
-		path, file_type = QtGui.QFileDialog.getSaveFileNameAndFilter(
+		path, file_type = QtWidgets.QFileDialog.getSaveFileNameAndFilter(
 			self.ui.centralwidget, _(u'Save file as ...'),
 			directory=cfg.file_dialog_path, filter=self.save_file_filter)
 		if path is None or path == u"":
@@ -983,5 +983,5 @@ class qtopensesame(QtGui.QMainWindow, base_component):
 			type:	unicode
 		"""
 
-		_id = safe_decode(repr(QtGui.QApplication.instance()), enc=self.enc)
+		_id = safe_decode(repr(QtWidgets.QApplication.instance()), enc=self.enc)
 		return _id

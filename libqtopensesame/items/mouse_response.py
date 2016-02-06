@@ -23,7 +23,7 @@ from libopensesame.mouse_response import mouse_response as \
 	mouse_response_runtime
 from libqtopensesame.items.qtplugin import qtplugin
 from libqtopensesame.validators import timeout_validator
-from PyQt4 import QtCore, QtGui
+from qtpy import QtCore, QtWidgets
 
 class mouse_response(mouse_response_runtime, qtplugin):
 

@@ -18,7 +18,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame.py3compat import *
-from PyQt4 import QtGui
+from qtpy import QtGui
 from libqtopensesame.misc.base_subcomponent import base_subcomponent
 
 class base_validator(base_subcomponent, QtGui.QValidator):

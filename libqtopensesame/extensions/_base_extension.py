@@ -19,7 +19,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 
 from libopensesame.py3compat import *
 import os
-from PyQt4 import QtGui
+from qtpy import QtWidgets
 from libopensesame import debug
 from libopensesame.exceptions import osexception
 from libqtopensesame.misc import _
@@ -359,7 +359,7 @@ class base_extension(base_subcomponent):
 		menu_name = u'menu_%s' % menu_text.lower()
 		if not hasattr(self.main_window.ui, menu_name):
 			menu_name = u'menu_tools'
-			menu = QtGui.QMenu(menu_text)
+			menu = QtWidgets.QMenu(menu_text)
 			self.menubar.addMenu(menu)
 			setattr(self.main_window.ui, menu_name, menu)
 		return getattr(self.main_window.ui, menu_name)
@@ -448,7 +448,7 @@ class base_extension(base_subcomponent):
 			type: QAction
 		"""
 
-		action = QtGui.QAction(self.theme.qicon(icon), label, self.main_window)
+		action = QtWidgets.QAction(self.theme.qicon(icon), label, self.main_window)
 		action.triggered.connect(target)
 		action.setCheckable(checkable)
 		if tooltip is not None:
@@ -528,15 +528,15 @@ class base_extension(base_subcomponent):
 		r = 10000000 # Maximumum range for spinbox widgets
 		if u'settings' not in self.info:
 			return None
-		group = QtGui.QGroupBox(_(u'Extension: %s', context=self.name()) % self.name(),
+		group = QtWidgets.QGroupBox(_(u'Extension: %s', context=self.name()) % self.name(),
 			self.main_window)
-		layout = QtGui.QFormLayout(group)
+		layout = QtWidgets.QFormLayout(group)
 		self.settings_controls = {}
 		for setting, default in self.info[u'settings'].items():
 			value = cfg[setting]
-			label = QtGui.QLabel(_(setting, context=self.name()))
+			label = QtWidgets.QLabel(_(setting, context=self.name()))
 			if isinstance(default, bool):
-				control = QtGui.QCheckBox(self.main_window)
+				control = QtWidgets.QCheckBox(self.main_window)
 				control.setChecked(bool(value))
 				control.clicked.connect(self.apply_settings_widget)
 			elif isinstance(default, int):
@@ -544,7 +544,7 @@ class base_extension(base_subcomponent):
 					value = int(value)
 				except:
 					value = default
-				control = QtGui.QSpinBox(self.main_window)
+				control = QtWidgets.QSpinBox(self.main_window)
 				control.setRange(-r, r)
 				control.setValue(value)
 				control.editingFinished.connect(self.apply_settings_widget)
@@ -553,12 +553,12 @@ class base_extension(base_subcomponent):
 					value = float(value)
 				except:
 					value = default
-				control = QtGui.QDoubleSpinBox(self.main_window)
+				control = QtWidgets.QDoubleSpinBox(self.main_window)
 				control.setRange(-r, r)
 				control.setValue(value)
 				control.editingFinished.connect(self.apply_settings_widget)
 			else:
-				control = QtGui.QLineEdit(safe_decode(value))
+				control = QtWidgets.QLineEdit(safe_decode(value))
 				control.editingFinished.connect(self.apply_settings_widget)
 			self.settings_controls[setting] = control
 			layout.addRow(label, control)

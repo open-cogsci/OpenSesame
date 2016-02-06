@@ -24,7 +24,7 @@ import openexp.keyboard
 import imp
 import os
 import os.path
-from PyQt4 import QtGui, QtCore
+from qtpy import QtWidgets, QtCore
 import libsrbox
 from libopensesame.py3compat import *
 

@@ -37,10 +37,10 @@ desc:
 
 	-	type:		variable
 		variable:	[variable name]
-		
+
 	-	type:			item-snippet
-		main-item-name:	[suggested name]		
-		
+		main-item-name:	[suggested name]
+
 		items:
 			-	item-name:	[suggested name]
 				item-type:	[item type]
@@ -50,7 +50,7 @@ desc:
 """
 
 import json
-from PyQt4 import QtCore, QtGui
+from qtpy import QtCore, QtGui, QtWidgets
 from libopensesame import debug
 from libopensesame.py3compat import *
 
@@ -161,4 +161,4 @@ def send(drag_src, data):
 	mimedata.setText(text)
 	drag = QtGui.QDrag(drag_src)
 	drag.setMimeData(mimedata)
-	drag.start()
+	drag.exec_()

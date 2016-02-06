@@ -19,7 +19,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 
 from libopensesame.py3compat import *
 
-from PyQt4 import QtCore, QtGui
+from qtpy import QtCore, QtWidgets
 from libqtopensesame.dialogs.base_dialog import base_dialog
 
 class text_input(base_dialog):
@@ -61,6 +61,6 @@ class text_input(base_dialog):
 			A string with text input or None of the dialog was not accepted.
 		"""
 
-		if self.exec_() == QtGui.QDialog.Accepted:
+		if self.exec_() == QtWidgets.QDialog.Accepted:
 			return str(self.ui.textedit_input.toPlainText())
 		return None

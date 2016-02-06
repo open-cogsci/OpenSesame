@@ -22,9 +22,9 @@ from libopensesame.py3compat import *
 from libopensesame import debug
 from libqtopensesame.misc.base_subcomponent import base_subcomponent
 from libqtopensesame.misc import config, _
-from PyQt4 import QtGui, QtCore
+from qtpy import QtGui, QtWidgets, QtCore
 
-class tab_widget(base_subcomponent, QtGui.QTabWidget):
+class tab_widget(base_subcomponent, QtWidgets.QTabWidget):
 
 	"""A custom tab widget with some extra functionality"""
 
@@ -37,20 +37,20 @@ class tab_widget(base_subcomponent, QtGui.QTabWidget):
 		parent -- the parent QWidget
 		"""
 
-		QtGui.QTabWidget.__init__(self, parent)
+		QtWidgets.QTabWidget.__init__(self, parent)
 		base_subcomponent.setup(self, parent)
 		try:
 			self.tabCloseRequested.connect(self.removeTab)
 		except:
-			# Catch what appears to be a bug in earlier versions of PyQt4.
+			# Catch what appears to be a bug in earlier versions of qtpy.
 			self.tabCloseRequested.connect(self._removeTab)
 		self.currentChanged.connect(self.index_changed)
-		self.setSizePolicy(QtGui.QSizePolicy.MinimumExpanding,
-			QtGui.QSizePolicy.MinimumExpanding)
-		self.shortcut_switch_left = QtGui.QShortcut(
+		self.setSizePolicy(QtWidgets.QSizePolicy.MinimumExpanding,
+			QtWidgets.QSizePolicy.MinimumExpanding)
+		self.shortcut_switch_left = QtWidgets.QShortcut(
 			QtGui.QKeySequence.PreviousChild, self.main_window,
 			self.switch_prev, self.switch_prev)
-		self.shortcut_switch_right = QtGui.QShortcut(
+		self.shortcut_switch_right = QtWidgets.QShortcut(
 			QtGui.QKeySequence.NextChild, self.main_window,
 			self.switch_next, self.switch_next)
 
@@ -83,7 +83,7 @@ class tab_widget(base_subcomponent, QtGui.QTabWidget):
 		"""
 		This is simply a wrapper around QTabWidget.removeTab(). For some reason,
 		connecting this function to tabCloseRequested causes an exception on
-		older versions of PyQt4. This functions is a workaround.
+		older versions of qtpy. This functions is a workaround.
 
 		Arguments:
 		i		--	The index of the tab to close.

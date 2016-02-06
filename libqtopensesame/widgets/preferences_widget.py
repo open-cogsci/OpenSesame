@@ -23,7 +23,7 @@ from libopensesame import debug
 from libopensesame.exceptions import osexception
 from libqtopensesame.widgets.base_widget import base_widget
 from libqtopensesame.misc import config, theme
-from PyQt4 import QtCore, QtGui
+from qtpy import QtCore, QtWidgets
 import os
 
 class preferences_widget(base_widget):
@@ -96,7 +96,7 @@ class preferences_widget(base_widget):
 			self.ui.combobox_style.addItem(u"[Default]")
 			self.ui.combobox_style.setCurrentIndex(i)
 			i += 1
-		for style in QtGui.QStyleFactory.keys():
+		for style in QtWidgets.QStyleFactory.keys():
 			self.ui.combobox_style.addItem(style)
 			if config.get_config(u'style') == str(style):
 				self.ui.combobox_style.setCurrentIndex(i)

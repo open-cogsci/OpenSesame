@@ -19,10 +19,10 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 
 from libopensesame.py3compat import *
 
-from PyQt4 import QtCore, QtGui
+from qtpy import QtCore, QtWidgets
 from libqtopensesame.misc.base_subcomponent import base_subcomponent
 
-class qtitem_splitter(base_subcomponent, QtGui.QSplitter):
+class qtitem_splitter(base_subcomponent, QtWidgets.QSplitter):
 
 	"""
 	desc:

@@ -19,7 +19,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 
 from libopensesame.py3compat import *
 
-from PyQt4 import QtCore, QtGui
+from qtpy import QtCore, QtWidgets
 from libqtopensesame.misc import _
 from libqtopensesame.widgets.tree_item_item import tree_item_item
 from libqtopensesame.widgets.tree_inline_script_phase_item import \

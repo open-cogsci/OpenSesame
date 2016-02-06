@@ -19,7 +19,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 
 from libopensesame.py3compat import *
 from libopensesame import debug
-from PyQt4 import QtGui
+from qtpy import QtWidgets
 from libqtopensesame.misc import _
 from libqtopensesame.widgets.general_header_widget import general_header_widget
 from libqtopensesame.widgets.base_widget import base_widget
@@ -47,12 +47,12 @@ class general_properties(base_widget):
 
 		# Set the header, with the icon, label and script button
 		self.header_widget = general_header_widget(self, self.main_window)
-		header_hbox = QtGui.QHBoxLayout()
+		header_hbox = QtWidgets.QHBoxLayout()
 		header_hbox.addWidget(self.theme.qlabel(u"experiment"))
 		header_hbox.addWidget(self.header_widget)
 		header_hbox.addStretch()
 		header_hbox.setContentsMargins(4, 2, 0, 16)
-		header_widget = QtGui.QWidget()
+		header_widget = QtWidgets.QWidget()
 		header_widget.setLayout(header_hbox)
 		self.ui.container_layout.insertWidget(0, header_widget)
 

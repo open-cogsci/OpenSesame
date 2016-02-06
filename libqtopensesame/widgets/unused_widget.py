@@ -22,7 +22,7 @@ from libopensesame.py3compat import *
 from libopensesame import debug
 from libqtopensesame.misc import config, _
 from libqtopensesame.widgets.base_widget import base_widget
-from PyQt4 import QtGui, QtCore
+from qtpy import QtWidgets, QtCore
 
 class unused_widget(base_widget):
 
@@ -46,24 +46,24 @@ class unused_widget(base_widget):
 		"""
 
 		super(unused_widget, self).__init__(main_window)
-		header_hbox = QtGui.QHBoxLayout()
+		header_hbox = QtWidgets.QHBoxLayout()
 		header_hbox.addWidget(self.theme.qlabel(u"unused"))
-		header_label = QtGui.QLabel()
+		header_label = QtWidgets.QLabel()
 		header_label.setText(_(u"<b><font size='5'>Unused</font></b>"))
 		header_hbox.addWidget(header_label)
 		header_hbox.addStretch()
-		user_hint_widget = QtGui.QWidget()
+		user_hint_widget = QtWidgets.QWidget()
 		user_hint_widget.setLayout(header_hbox)
-		self.purge_button = QtGui.QPushButton(self.theme.qicon(u"purge"),
+		self.purge_button = QtWidgets.QPushButton(self.theme.qicon(u"purge"),
 			_(u"Permanently delete unused items"))
 		self.purge_button.setIconSize(QtCore.QSize(16, 16))
 		self.purge_button.clicked.connect(self.purge_unused)
-		purge_hbox = QtGui.QHBoxLayout()
+		purge_hbox = QtWidgets.QHBoxLayout()
 		purge_hbox.addWidget(self.purge_button)
 		purge_hbox.addStretch()
-		purge_widget = QtGui.QWidget()
+		purge_widget = QtWidgets.QWidget()
 		purge_widget.setLayout(purge_hbox)
-		vbox = QtGui.QVBoxLayout()
+		vbox = QtWidgets.QVBoxLayout()
 		vbox.addWidget(user_hint_widget)
 		vbox.addWidget(purge_widget)
 		vbox.addStretch()
@@ -78,12 +78,12 @@ class unused_widget(base_widget):
 		"""
 
 		# Ask confirmation
-		resp = QtGui.QMessageBox.question(self.main_window.ui.centralwidget,
+		resp = QtWidgets.QMessageBox.question(self.main_window.ui.centralwidget,
 			_(u"Permanently delete items?"),
 			_(u"Are you sure you want to permanently delete all unused items? "
 			u"This action cannot be undone."),
-			QtGui.QMessageBox.Yes, QtGui.QMessageBox.No)
-		if resp == QtGui.QMessageBox.No:
+			QtWidgets.QMessageBox.Yes, QtWidgets.QMessageBox.No)
+		if resp == QtWidgets.QMessageBox.No:
 			return
 		self.extension_manager.fire(u'prepare_purge_unused_items')
 		for item_name in self.experiment.items.unused():

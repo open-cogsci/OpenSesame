@@ -19,7 +19,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 
 from libopensesame.py3compat import *
 
-from PyQt4 import QtCore, QtGui
+from qtpy import QtCore, QtWidgets
 import os.path
 import sip
 from libopensesame.exceptions import osexception
@@ -189,14 +189,14 @@ class qtitem(base_qtobject):
 		self.header = header_widget.header_widget(self)
 		self.user_hint_widget = user_hint_widget.user_hint_widget(
 			self.experiment.main_window, self)
-		self.header_hbox = QtGui.QHBoxLayout()
+		self.header_hbox = QtWidgets.QHBoxLayout()
 		self.header_item_icon = self.theme.qlabel(self.item_icon())
 		self.header_hbox.addWidget(self.header_item_icon)
 		self.header_hbox.addWidget(self.header)
 		self.header_hbox.setContentsMargins(0, 2, 0, 0)
 
 		# Maximize button
-		self.button_toggle_maximize = QtGui.QPushButton(
+		self.button_toggle_maximize = QtWidgets.QPushButton(
 			self.theme.qicon(u'view-fullscreen'), u'')
 		self.button_toggle_maximize.setToolTip(_(u'Toggle pop-out'))
 		self.button_toggle_maximize.setIconSize(QtCore.QSize(16, 16))
@@ -206,32 +206,32 @@ class qtitem(base_qtobject):
 		self.button_view = item_view_button(self)
 		self.header_hbox.addWidget(self.button_view)
 		# Help button
-		self.button_help = QtGui.QPushButton(self.theme.qicon(u"help"), u"")
+		self.button_help = QtWidgets.QPushButton(self.theme.qicon(u"help"), u"")
 		self.button_help.setToolTip(
 			_(u"Tell me more about the %s item") % self.item_type)
 		self.button_help.setIconSize(QtCore.QSize(16, 16))
 		self.button_help.clicked.connect(self.open_help_tab)
 		self.header_hbox.addWidget(self.button_help)
 
-		self.header_widget = QtGui.QWidget()
+		self.header_widget = QtWidgets.QWidget()
 		self.header_widget.setLayout(self.header_hbox)
 
 		# The edit_grid is the layout that contains the actual controls for the
 		# items.
-		self.edit_grid = QtGui.QGridLayout()
+		self.edit_grid = QtWidgets.QGridLayout()
 		self.edit_grid.setColumnStretch(2, 2)
-		self.edit_grid_widget = QtGui.QWidget()
+		self.edit_grid_widget = QtWidgets.QWidget()
 		self.edit_grid_widget.setLayout(self.edit_grid)
 
 		# The edit_vbox contains the edit_grid and the header widget
-		self.edit_vbox = QtGui.QVBoxLayout()
+		self.edit_vbox = QtWidgets.QVBoxLayout()
 		self.edit_vbox.addWidget(self.user_hint_widget)
 		self.edit_vbox.addWidget(self.edit_grid_widget)
 		self.edit_vbox.setContentsMargins(0, 0, 0, 0)
 		self.edit_vbox.setSpacing(0)
 		if stretch:
 			self.edit_vbox.addStretch()
-		self._edit_widget = QtGui.QWidget()
+		self._edit_widget = QtWidgets.QWidget()
 		self._edit_widget.setWindowIcon(self.theme.qicon(self.item_type))
 		self._edit_widget.setLayout(self.edit_vbox)
 
@@ -259,11 +259,11 @@ class qtitem(base_qtobject):
 				reason=u'warning')
 			self.set_view_controls()
 		self.splitter.splitterMoved.connect(self.splitter_moved)
-		self.container_vbox = QtGui.QVBoxLayout()
+		self.container_vbox = QtWidgets.QVBoxLayout()
 		self.container_vbox.setContentsMargins(4, 0, 4, 4)
 		self.container_vbox.addWidget(self.header_widget)
 		self.container_vbox.addWidget(self.splitter)
-		self.container_widget = QtGui.QWidget()
+		self.container_widget = QtWidgets.QWidget()
 		self.container_widget.setLayout(self.container_vbox)
 		self.container_widget.on_activate = self.show_tab
 		self.container_widget.__item__ = self.name
@@ -763,21 +763,21 @@ class qtitem(base_qtobject):
 			var = id(widget)
 		debug.msg(var)
 		self.set_focus_widget(widget)
-		if isinstance(widget, QtGui.QSpinBox) or isinstance(widget,
-			QtGui.QDoubleSpinBox):
+		if isinstance(widget, QtWidgets.QSpinBox) or isinstance(widget,
+			QtWidgets.QDoubleSpinBox):
 			widget.editingFinished.connect(self.apply_edit_changes)
 			self.auto_spinbox[var] = widget
-		elif isinstance(widget, QtGui.QComboBox):
+		elif isinstance(widget, QtWidgets.QComboBox):
 			widget.activated.connect(self.apply_edit_changes)
 			self.auto_combobox[var] = widget
-		elif isinstance(widget, QtGui.QSlider) \
-			or isinstance(widget, QtGui.QDial):
+		elif isinstance(widget, QtWidgets.QSlider) \
+			or isinstance(widget, QtWidgets.QDial):
 			widget.valueChanged.connect(self.apply_edit_changes)
 			self.auto_slider[var] = widget
-		elif isinstance(widget, QtGui.QLineEdit):
+		elif isinstance(widget, QtWidgets.QLineEdit):
 			widget.editingFinished.connect(self.apply_edit_changes)
 			self.auto_line_edit[var] = widget
-		elif isinstance(widget, QtGui.QCheckBox):
+		elif isinstance(widget, QtWidgets.QCheckBox):
 			widget.clicked.connect(self.apply_edit_changes)
 			self.auto_checkbox[var] = widget
 		else:

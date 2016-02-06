@@ -19,7 +19,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 
 from libopensesame.py3compat import *
 
-from PyQt4 import QtCore, QtGui
+from qtpy import QtCore, QtGui, QtWidgets
 import libopensesame.plugins
 from libopensesame import debug
 from libqtopensesame.misc import _
@@ -28,7 +28,7 @@ from libqtopensesame.misc.config import cfg
 from libqtopensesame.widgets.toolbar_items_label import toolbar_items_label
 from libqtopensesame.widgets.toolbar_items_item import toolbar_items_item
 
-class toolbar_items(base_subcomponent, QtGui.QToolBar):
+class toolbar_items(base_subcomponent, QtWidgets.QToolBar):
 
 	"""
 	desc:
@@ -73,9 +73,9 @@ class toolbar_items(base_subcomponent, QtGui.QToolBar):
 				if i % 2 == 0:
 					if i > 0:
 						self.addWidget(w)
-					l = QtGui.QHBoxLayout()
+					l = QtWidgets.QHBoxLayout()
 					l.setSpacing(16)
-					w = QtGui.QWidget()
+					w = QtWidgets.QWidget()
 					w.setLayout(l)
 				# c.setMargin(0)
 				l.addWidget(c)

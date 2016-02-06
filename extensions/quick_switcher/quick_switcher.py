@@ -19,7 +19,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 
 from libopensesame.py3compat import *
 
-from PyQt4 import QtGui
+from qtpy import QtWidgets
 from libqtopensesame.extensions import base_extension
 
 class quick_switcher(base_extension):

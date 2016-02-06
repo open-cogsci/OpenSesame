@@ -19,7 +19,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 
 import os
 import sys
-from PyQt4 import QtCore, QtGui
+from qtpy import QtGui, QtCore, QtWidgets
 from libqtopensesame.items import qtitem
 from libqtopensesame.misc import _
 from libqtopensesame.widgets import color_edit, pool_widget
@@ -67,7 +67,7 @@ class qtplugin(qtitem.qtitem):
 			self.qicon = None
 		self.lock = False
 		qtitem.qtitem.__init__(self)
-		
+
 	def item_icon(self):
 
 		"""
@@ -121,7 +121,7 @@ class qtplugin(qtitem.qtitem):
 		if type(min_width) == int:
 			widget.setMinimumWidth(min_width)
 		row = self.edit_grid.rowCount()
-		self.edit_grid.addWidget(QtGui.QLabel(_(label, context=self.name)), row, 0)
+		self.edit_grid.addWidget(QtWidgets.QLabel(_(label, context=self.name)), row, 0)
 		self.edit_grid.addWidget(widget, row, 1)
 		self.set_focus_widget(widget)
 
@@ -145,7 +145,7 @@ class qtplugin(qtitem.qtitem):
 		A QLineEdit widget.
 		"""
 
-		edit = QtGui.QLineEdit()
+		edit = QtWidgets.QLineEdit()
 		edit.editingFinished.connect(self.apply_edit_changes)
 		if validator is not None:
 			edit.setValidator(validator)
@@ -170,7 +170,7 @@ class qtplugin(qtitem.qtitem):
 		A QCheckBox widget.
 		"""
 
-		checkbox = QtGui.QCheckBox(_(label, context=self.name))
+		checkbox = QtWidgets.QCheckBox(_(label, context=self.name))
 		checkbox.clicked.connect(self.apply_edit_changes)
 		self.add_control('', checkbox, tooltip)
 		if var is not None:
@@ -224,7 +224,7 @@ class qtplugin(qtitem.qtitem):
 		A QComboBox widget.
 		"""
 
-		combobox = QtGui.QComboBox()
+		combobox = QtWidgets.QComboBox()
 		for o in options:
 			combobox.addItem(o)
 		combobox.activated.connect(self.apply_edit_changes)
@@ -254,7 +254,7 @@ class qtplugin(qtitem.qtitem):
 		A QSpinBox widget.
 		"""
 
-		spinbox = QtGui.QSpinBox()
+		spinbox = QtWidgets.QSpinBox()
 		spinbox.setMinimum(min_val)
 		spinbox.setMaximum(max_val)
 		spinbox.editingFinished.connect(self.apply_edit_changes)
@@ -289,28 +289,28 @@ class qtplugin(qtitem.qtitem):
 		A QSlider widget.
 		"""
 
-		slider = QtGui.QSlider(QtCore.Qt.Horizontal)
+		slider = QtWidgets.QSlider(QtCore.Qt.Horizontal)
 		slider.setFocusPolicy(QtCore.Qt.NoFocus)
 		slider.setGeometry(30, 40, 100, 30)
 		slider.setRange(min_val, max_val)
 		slider.setSingleStep(1000)
 		#Take care of layout
-		layout = QtGui.QHBoxLayout()
+		layout = QtWidgets.QHBoxLayout()
 		layout.setMargin(0)
 		layout.setSpacing(5)
 		if left_label:
-			llabel = QtGui.QLabel()
+			llabel = QtWidgets.QLabel()
 			llabel.setText(left_label)
 			layout.addWidget(llabel)
 		layout.addWidget(slider)
 		if right_label:
-			rlabel = QtGui.QLabel()
+			rlabel = QtWidgets.QLabel()
 			rlabel.setText(right_label)
 			layout.addWidget(rlabel)
 		slider.sliderMoved.connect(self.apply_edit_changes)
 		if var is not None:
 			self.auto_slider[var] = slider
-		widget = QtGui.QWidget()
+		widget = QtWidgets.QWidget()
 		widget.setLayout(layout)
 		self.add_control(label, widget, tooltip)
 		return slider
@@ -337,20 +337,20 @@ class qtplugin(qtitem.qtitem):
 		A QLineEdit widget that contains the path of the selected file.
 		"""
 
-		edit = QtGui.QLineEdit()
+		edit = QtWidgets.QLineEdit()
 		edit.editingFinished.connect(self.apply_edit_changes)
 		if var is not None:
 			self.auto_line_edit[var] = edit
 		if click_func is None:
 			click_func = self.browse_pool_func(edit)
-		button = QtGui.QPushButton(self.theme.qicon(u'browse'), u'Browse')
+		button = QtWidgets.QPushButton(self.theme.qicon(u'browse'), u'Browse')
 		button.setIconSize(QtCore.QSize(16, 16))
 		button.clicked.connect(click_func)
-		hbox = QtGui.QHBoxLayout()
+		hbox = QtWidgets.QHBoxLayout()
 		hbox.setMargin(0)
 		hbox.addWidget(edit)
 		hbox.addWidget(button)
-		widget = QtGui.QWidget()
+		widget = QtWidgets.QWidget()
 		widget.setLayout(hbox)
 		self.add_control(label, widget, tooltip)
 		return edit
@@ -403,7 +403,7 @@ class qtplugin(qtitem.qtitem):
 		A QLabel widget.
 		"""
 
-		label = QtGui.QLabel(_(msg, context=self.name))
+		label = QtWidgets.QLabel(_(msg, context=self.name))
 		label.setWordWrap(True)
 		label.setOpenExternalLinks(True)
 		self.edit_vbox.addWidget(label)
@@ -451,16 +451,16 @@ class qtplugin(qtitem.qtitem):
 		A QPushButton widget.
 		"""
 
-		button_apply = QtGui.QPushButton(_(label, context=self.name))
+		button_apply = QtWidgets.QPushButton(_(label, context=self.name))
 		button_apply.setIcon(self.theme.qicon(icon))
 		button_apply.setIconSize(QtCore.QSize(16, 16))
 		button_apply.clicked.connect(self.apply_edit_changes)
 		button_apply.setToolTip(tooltip)
-		hbox = QtGui.QHBoxLayout()
+		hbox = QtWidgets.QHBoxLayout()
 		hbox.setContentsMargins(0, 0, 0, 0)
 		hbox.addStretch()
 		hbox.addWidget(button_apply)
-		widget = QtGui.QWidget()
+		widget = QtWidgets.QWidget()
 		widget.setLayout(hbox)
 		return widget
 

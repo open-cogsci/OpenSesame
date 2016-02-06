@@ -24,7 +24,7 @@ from libqtopensesame.misc.config import cfg
 from libqtopensesame.widgets.base_widget import base_widget
 from libqtopensesame._input.popup_menu import popup_menu
 from libqtopensesame._input.confirmation import confirmation
-from PyQt4 import QtCore, QtGui
+from qtpy import QtCore, QtWidgets
 import os
 import os.path
 
@@ -80,9 +80,9 @@ class pool_widget(base_widget):
 		"""
 
 		if self.ui.combobox_view.currentIndex() == 0:
-			self.ui.list_pool.setViewMode(QtGui.QListView.ListMode)
+			self.ui.list_pool.setViewMode(QtWidgets.QListView.ListMode)
 		else:
-			self.ui.list_pool.setViewMode(QtGui.QListView.IconMode)
+			self.ui.list_pool.setViewMode(QtWidgets.QListView.IconMode)
 
 	def browse(self):
 
@@ -135,7 +135,7 @@ class pool_widget(base_widget):
 
 		"""
 
-		path_list = QtGui.QFileDialog.getOpenFileNames(
+		path_list = QtWidgets.QFileDialog.getOpenFileNames(
 			self.main_window.ui.centralwidget, _(u"Add files to pool"),
 			directory=cfg.default_pool_folder)
 		if len(path_list) == 0:
@@ -181,7 +181,7 @@ class pool_widget(base_widget):
 			if filt in fname.lower():
 				icon = self.theme.qfileicon(self.pool[path])
 				self.console.write(path)
-				item = QtGui.QListWidgetItem(icon, fname)
+				item = QtWidgets.QListWidgetItem(icon, fname)
 				item.setFlags(item.flags()|QtCore.Qt.ItemIsEditable)
 				item.icon = icon
 				item.path = path
@@ -383,22 +383,22 @@ def select_from_pool(main_window, parent=None):
 
 	if parent is None:
 		parent = main_window.ui.centralwidget
-	d = QtGui.QDialog(parent)
+	d = QtWidgets.QDialog(parent)
 	widget = pool_widget(main_window)
 	widget.refresh()
-	bbox = QtGui.QDialogButtonBox(d)
-	bbox.addButton(_(u"Cancel"), QtGui.QDialogButtonBox.RejectRole)
-	bbox.addButton(_(u"Select"), QtGui.QDialogButtonBox.AcceptRole)
+	bbox = QtWidgets.QDialogButtonBox(d)
+	bbox.addButton(_(u"Cancel"), QtWidgets.QDialogButtonBox.RejectRole)
+	bbox.addButton(_(u"Select"), QtWidgets.QDialogButtonBox.AcceptRole)
 	bbox.accepted.connect(d.accept)
 	bbox.rejected.connect(d.reject)
-	vbox = QtGui.QVBoxLayout()
+	vbox = QtWidgets.QVBoxLayout()
 	vbox.addWidget(widget)
 	vbox.addWidget(bbox)
 	d.setLayout(vbox)
 	d.setWindowTitle(_(u"Select file from pool"))
 	res = d.exec_()
 	main_window.ui.pool_widget.refresh()
-	if res == QtGui.QDialog.Rejected:
+	if res == QtWidgets.QDialog.Rejected:
 		return u""
 	selected = widget.ui.list_pool.currentItem()
 	if selected is None:

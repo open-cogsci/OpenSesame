@@ -22,7 +22,7 @@ from libopensesame.py3compat import *
 
 if '--debug' in sys.argv:
 
-	from PyQt4.QtCore import pyqtWrapperType
+	from qtpy.QtCore import pyqtWrapperType
 	import types
 	import time
 	from decorator import decorator

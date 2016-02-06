@@ -36,7 +36,7 @@ if '--catch-translatables' in sys.argv:
 		return s
 
 else:
-	from PyQt4.QtCore import QCoreApplication
+	from qtpy.QtCore import QCoreApplication
 	def _(s, context=u'script'):
 
 		"""
@@ -52,5 +52,8 @@ else:
 		The translated string.
 		"""
 
-		return str(QCoreApplication.translate(context, s,
-			encoding=QCoreApplication.UnicodeUTF8))
+		if py3:
+			return QCoreApplication.translate(context, s)
+		else:
+			return QCoreApplication.translate(context, s,
+				encoding=QCoreApplication.UnicodeUTF8)

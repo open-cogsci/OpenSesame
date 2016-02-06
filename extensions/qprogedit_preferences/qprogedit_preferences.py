@@ -19,7 +19,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 
 from libopensesame.py3compat import *
 
-from PyQt4 import QtGui
+from qtpy import QtWidgets
 from libqtopensesame.extensions import base_extension
 from libqtopensesame.misc.config import cfg
 from libqtopensesame.misc import _
@@ -49,9 +49,9 @@ class qprogedit_preferences(base_extension):
 		w = tm.tab(0).prefs
 		w.show()
 		w.refresh()
-		group = QtGui.QGroupBox(_(u'Editor preferences (QProgEdit)'),
+		group = QtWidgets.QGroupBox(_(u'Editor preferences (QProgEdit)'),
 			self.main_window)
-		layout = QtGui.QHBoxLayout(group)
+		layout = QtWidgets.QHBoxLayout(group)
 		layout.addWidget(w)
 		group.setLayout(layout)
 		return group

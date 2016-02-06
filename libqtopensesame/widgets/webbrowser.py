@@ -18,7 +18,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 import platform
-from PyQt4 import QtCore, QtWebKit
+from qtpy import QtCore, QtWebKit
 from libqtopensesame.widgets.base_widget import base_widget
 from libopensesame import plugins
 from libopensesame.py3compat import *

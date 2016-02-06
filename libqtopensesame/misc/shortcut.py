@@ -18,9 +18,9 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame.py3compat import *
-from PyQt4 import QtCore, QtGui
+from qtpy import QtGui, QtCore, QtWidgets
 
-class shortcut(QtGui.QShortcut):
+class shortcut(QtWidgets.QShortcut):
 
 	def __init__(self, parent, key_sequence, target,
 		_global=False):
@@ -31,4 +31,3 @@ class shortcut(QtGui.QShortcut):
 			context = QtCore.Qt.WidgetWithChildrenShortcut
 		super(shortcut, self).__init__(QtGui.QKeySequence(key_sequence), parent,
 			target, context=context)
-			

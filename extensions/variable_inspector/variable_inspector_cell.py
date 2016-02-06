@@ -18,9 +18,9 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame.py3compat import *
-from PyQt4 import QtCore, QtGui
+from qtpy import QtCore, QtGui, QtWidgets
 
-class variable_inspector_cell(QtGui.QTableWidgetItem):
+class variable_inspector_cell(QtWidgets.QTableWidgetItem):
 
 	"""
 	desc:
@@ -59,6 +59,6 @@ class variable_inspector_cell(QtGui.QTableWidgetItem):
 					text = safe_decode(text, errors=u'ignore')
 			else:
 				text = u','.join([safe_decode(s) for s in text])
-		QtGui.QTableWidgetItem.__init__(self, text)
+		QtWidgets.QTableWidgetItem.__init__(self, text)
 		self.setFont(f)
 		self.setTextAlignment(a)

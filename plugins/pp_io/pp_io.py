@@ -21,7 +21,7 @@ from libopensesame.py3compat import *
 from libopensesame import item
 from libqtopensesame import qtplugin
 
-from PyQt4 import QtGui, QtCore
+from qtpy import QtWidgets, QtCore
 
 import warnings
 import os
@@ -132,8 +132,8 @@ class qtpp_io(pp_io, qtplugin.qtplugin):
 	"""
 	This class (the class named qt[name of module] handles
 	the GUI part of the plugin. For more information about
-	GUI programming using PyQt4, see:
-	<http://www.riverbankcomputing.co.uk/static/Docs/PyQt4/html/classes.html>
+	GUI programming using qtpy, see:
+	<http://www.riverbankcomputing.co.uk/static/Docs/qtpy/html/classes.html>
 	"""
 
 	def __init__(self, name, experiment, string = None):

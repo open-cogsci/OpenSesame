@@ -19,13 +19,13 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 
 from libopensesame.py3compat import *
 
-from PyQt4 import QtCore, QtGui
+from qtpy import QtCore, QtGui, QtWidgets
 from libqtopensesame.misc import _
 from libqtopensesame.misc.config import cfg
 from libqtopensesame.misc.base_subcomponent import base_subcomponent
 from libqtopensesame.widgets.tree_append_menu import tree_append_menu
 
-class item_context_menu(base_subcomponent, QtGui.QMenu):
+class item_context_menu(base_subcomponent, QtWidgets.QMenu):
 
 	"""
 	desc:
@@ -83,7 +83,7 @@ class item_context_menu(base_subcomponent, QtGui.QMenu):
 		if self.treeitem.has_append_menu():
 			# An append menu for sequence items
 			menu = tree_append_menu(self.treeitem.treeWidget(), self.treeitem)
-			action = QtGui.QAction(self.theme.qicon(u'list-add'),
+			action = QtWidgets.QAction(self.theme.qicon(u'list-add'),
 				u'Append item', self)
 			action.setMenu(menu)
 			self.addSeparator()

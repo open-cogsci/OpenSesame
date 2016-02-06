@@ -19,7 +19,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 
 from libopensesame.py3compat import *
 
-from PyQt4 import QtCore, QtGui
+from qtpy import QtCore, QtGui, QtWidgets
 from libqtopensesame import sketchpad_elements
 from libqtopensesame.sketchpad_elements._base_element import base_element
 from libqtopensesame.widgets.sketchpad_element_button import \

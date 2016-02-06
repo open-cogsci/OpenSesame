@@ -21,9 +21,9 @@ from libopensesame.py3compat import *
 
 from libqtopensesame.misc import _
 from libqtopensesame.misc.base_subcomponent import base_subcomponent
-from PyQt4 import QtCore, QtGui
+from qtpy import QtCore, QtWidgets
 
-class sketchpad_element_button(base_subcomponent, QtGui.QPushButton):
+class sketchpad_element_button(base_subcomponent, QtWidgets.QPushButton):
 
 	"""
 	desc:

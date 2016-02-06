@@ -17,7 +17,7 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
-from PyQt4 import QtCore, QtGui
+from qtpy import QtCore, QtWidgets
 from libqtopensesame.dialogs.patch_settings import patch_settings
 from libopensesame.py3compat import *
 
@@ -49,7 +49,7 @@ class noise_settings(patch_settings):
 			type:	dict
 		"""
 
-		if self.exec_() != QtGui.QDialog.Accepted:
+		if self.exec_() != QtWidgets.QDialog.Accepted:
 			return None
 		properties = {
 			u'env'		: self.env_map[

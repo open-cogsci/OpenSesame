@@ -23,7 +23,7 @@ from libqtopensesame import qtplugin
 from openexp.canvas import canvas
 import openexp.keyboard
 import os.path
-from PyQt4 import QtGui, QtCore
+from qtpy import QtWidgets, QtCore
 
 form_base = plugins.import_plugin('form_base')
 

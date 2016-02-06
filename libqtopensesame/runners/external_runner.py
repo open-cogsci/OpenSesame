@@ -26,7 +26,7 @@ from libopensesame import debug
 from libqtopensesame.misc import config
 from libqtopensesame.runners import base_runner
 
-from PyQt4 import QtGui
+from qtpy import QtWidgets
 import time
 
 class external_runner(base_runner):
@@ -87,7 +87,7 @@ class external_runner(base_runner):
 			retcode = None
 			while retcode is None:
 				retcode = p.poll()
-				QtGui.QApplication.processEvents()
+				QtWidgets.QApplication.processEvents()
 				time.sleep(1)
 			debug.msg(u"opensesamerun returned %d" % retcode)
 			print

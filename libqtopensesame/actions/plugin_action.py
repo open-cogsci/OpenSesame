@@ -22,10 +22,10 @@ from libopensesame.py3compat import *
 __author__ = "Sebastiaan Mathot"
 __license__ = "GPLv3"
 
-from PyQt4 import QtGui
+from qtpy import QtWidgets
 from libopensesame import plugins
 
-class plugin_action(QtGui.QAction):
+class plugin_action(QtWidgets.QAction):
 
 	"""Menu action for a plugin"""
 
@@ -43,7 +43,7 @@ class plugin_action(QtGui.QAction):
 		self.main_window = main_window
 		icon = QtGui.QIcon(plugins.plugin_icon_large(plugin))
 		self.plugin = plugin
-		QtGui.QAction.__init__(self, icon, "Add %s" % plugin, menu)
+		QtWidgets.QAction.__init__(self, icon, "Add %s" % plugin, menu)
 		self.triggered.connect(self.add_plugin)
 
 	def add_plugin(self, dummy = None):

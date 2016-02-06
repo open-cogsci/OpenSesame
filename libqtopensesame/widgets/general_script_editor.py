@@ -19,7 +19,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 
 from libopensesame.py3compat import *
 
-from PyQt4 import QtCore, QtGui
+from qtpy import QtCore, QtWidgets
 from libqtopensesame.misc import _
 from libopensesame.exceptions import osexception
 from libqtopensesame.items.experiment import experiment
@@ -59,10 +59,10 @@ class general_script_editor(base_widget):
 			Confirms and applies the script changes.
 		"""
 
-		resp = QtGui.QMessageBox.question(self.main_window, _(u'Apply?'),
+		resp = QtWidgets.QMessageBox.question(self.main_window, _(u'Apply?'),
 			_(u'Are you sure you want to apply the changes to the general script?'),
-			QtGui.QMessageBox.Yes, QtGui.QMessageBox.No)
-		if resp == QtGui.QMessageBox.No:
+			QtWidgets.QMessageBox.Yes, QtWidgets.QMessageBox.No)
+		if resp == QtWidgets.QMessageBox.No:
 			return
 		self.main_window.regenerate(self.ui.qprogedit.text())
 

@@ -19,7 +19,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 
 from libopensesame.py3compat import *
 
-from PyQt4 import QtCore, QtGui
+from qtpy import QtCore, QtWidgets
 from libopensesame import plugins
 from libqtopensesame.dialogs.base_dialog import base_dialog
 from quick_switcher_dialog.item import quick_open_element_item
@@ -53,7 +53,7 @@ class quick_switcher(base_dialog):
 		self.items = []
 		for item_name in self.experiment.items:
 			item = self.experiment.items[item_name]
-			list_widget_item = QtGui.QListWidgetItem()
+			list_widget_item = QtWidgets.QListWidgetItem()
 			element = quick_open_element_item(item)
 			list_widget_item.setSizeHint(element.minimumSizeHint())
 			self.ui.items_list_widget.addItem(list_widget_item)
@@ -62,7 +62,7 @@ class quick_switcher(base_dialog):
 				item.edit_widget()
 				for phase in (u'Run', u'Prepare'):
 					for symbol in item.qprogedit.tab(phase).symbols():
-						list_widget_item = QtGui.QListWidgetItem()
+						list_widget_item = QtWidgets.QListWidgetItem()
 						element = quick_open_element_symbol(item, phase, symbol)
 						list_widget_item.setSizeHint(element.minimumSizeHint())
 						self.ui.items_list_widget.addItem(list_widget_item)
@@ -70,7 +70,7 @@ class quick_switcher(base_dialog):
 							list_widget_item, element)
 		for element in self.action_elements(
 			self.main_window.menubar.actions()):
-			list_widget_item = QtGui.QListWidgetItem()
+			list_widget_item = QtWidgets.QListWidgetItem()
 			list_widget_item.setSizeHint(element.minimumSizeHint())
 			self.ui.items_list_widget.addItem(list_widget_item)
 			self.ui.items_list_widget.setItemWidget(list_widget_item,
@@ -130,7 +130,7 @@ class quick_switcher(base_dialog):
 
 		self.ui.label_quick_switcher_wait.show()
 		self.ui.items_list_widget.hide()
-		QtGui.QApplication.processEvents()
+		QtWidgets.QApplication.processEvents()
 
 	def filter_list(self):
 

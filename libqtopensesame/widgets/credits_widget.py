@@ -21,7 +21,7 @@ from libopensesame import misc, metadata
 from libqtopensesame.misc import config
 from libqtopensesame.widgets.base_widget import base_widget
 from libopensesame.py3compat import *
-from PyQt4 import QtGui, QtCore
+from qtpy import QtWidgets, QtCore
 
 class credits_widget(base_widget):
 

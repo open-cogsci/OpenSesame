@@ -19,7 +19,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 
 from libopensesame.py3compat import *
 
-from PyQt4 import QtCore, QtGui
+from qtpy import QtCore, QtWidgets
 from libqtopensesame.dialogs.base_dialog import base_dialog
 from libqtopensesame.widgets import sketchpad_widget
 
@@ -46,17 +46,17 @@ class sketchpad_dialog(base_dialog):
 		self.sketchpad = sketchpad
 		self.tools_widget = sketchpad_widget.sketchpad_widget(self.sketchpad,
 			parent=self, embed=False)
-		self.close_button = QtGui.QPushButton(self.theme.qicon(u"close"),
+		self.close_button = QtWidgets.QPushButton(self.theme.qicon(u"close"),
 			u"Close")
 		self.close_button.setIconSize(QtCore.QSize(16,16))
 		self.close_button.clicked.connect(self.accept)
-		self.hbox = QtGui.QHBoxLayout()
+		self.hbox = QtWidgets.QHBoxLayout()
 		self.hbox.addStretch()
 		self.hbox.addWidget(self.close_button)
 		self.hbox.setContentsMargins(0, 0, 0, 0)
-		self.hbox_widget = QtGui.QWidget()
+		self.hbox_widget = QtWidgets.QWidget()
 		self.hbox_widget.setLayout(self.hbox)
-		self.vbox = QtGui.QVBoxLayout()
+		self.vbox = QtWidgets.QVBoxLayout()
 		self.vbox.addWidget(self.tools_widget)
 		self.vbox.addWidget(self.hbox_widget)
 		self.setLayout(self.vbox)

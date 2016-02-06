@@ -28,7 +28,7 @@ from libqtopensesame.widgets.loop_widget import loop_widget
 from libqtopensesame.widgets.tree_item_item import tree_item_item
 from libqtopensesame.validators import cond_validator
 from libopensesame import debug
-from PyQt4 import QtGui
+from qtpy import QtWidgets
 
 class loop(qtstructure_item, qtitem, loop_runtime):
 
@@ -85,7 +85,7 @@ class loop(qtstructure_item, qtitem, loop_runtime):
 
 		"""Presents a dialog and add a variable,"""
 
-		var_name, ok = QtGui.QInputDialog.getText(self.loop_table,
+		var_name, ok = QtWidgets.QInputDialog.getText(self.loop_table,
 			_(u'New variable'),
 			_(u'Enter a variable name, optionally followed by a default value (i.e., \"varname defaultvalue\")'))
 
@@ -183,14 +183,14 @@ class loop(qtstructure_item, qtitem, loop_runtime):
 		if var_list is None:
 			return
 		# Get the original variable
-		old_var, ok = QtGui.QInputDialog.getItem(
+		old_var, ok = QtWidgets.QInputDialog.getItem(
 			self.experiment.ui.centralwidget, _(u"Rename variable"),
 			_(u"Which variable do you want to rename?"), var_list,
 			editable=False)
 		if not ok:
 			return
 		# Get the new variable name
-		new_var, ok = QtGui.QInputDialog.getText(self.loop_table,
+		new_var, ok = QtWidgets.QInputDialog.getText(self.loop_table,
 			_(u'New variable'), _(u'Enter a new variable name'), text=old_var)
 		if not ok or new_var == old_var:
 			return
@@ -208,7 +208,7 @@ class loop(qtstructure_item, qtitem, loop_runtime):
 		if var_list is None:
 			return
 
-		var, ok = QtGui.QInputDialog.getItem(self.experiment.ui.centralwidget, \
+		var, ok = QtWidgets.QInputDialog.getItem(self.experiment.ui.centralwidget, \
 			_(u"Remove variable"), _(u"Which variable do you want to remove?"), \
 			var_list)
 		if ok:
@@ -274,11 +274,11 @@ class loop(qtstructure_item, qtitem, loop_runtime):
 		debug.msg(u"cycles = %s" % cycles)
 		# Ask for confirmation before reducing the number of cycles.
 		if len(self.matrix) > cycles and confirm:
-			resp = QtGui.QMessageBox.question(self.experiment.ui.centralwidget,
+			resp = QtWidgets.QMessageBox.question(self.experiment.ui.centralwidget,
 				_(u"Remove cycles?"),
 				_(u"By reducing the number of cycles, data will be lost from the table. Do you wish to continue?"),
-				QtGui.QMessageBox.Yes, QtGui.QMessageBox.No)
-			if resp == QtGui.QMessageBox.No:
+				QtWidgets.QMessageBox.Yes, QtWidgets.QMessageBox.No)
+			if resp == QtWidgets.QMessageBox.No:
 				self.loop_widget.ui.spin_cycles.setValue(self.var.cycles)
 				self.lock_cycles = False
 				return
@@ -375,7 +375,7 @@ class loop(qtstructure_item, qtitem, loop_runtime):
 		i = 0
 		for var in column_order:
 			self.loop_table.setHorizontalHeaderItem(i, \
-				QtGui.QTableWidgetItem(var))
+				QtWidgets.QTableWidgetItem(var))
 			i += 1
 
 		# Fill the table
@@ -423,7 +423,7 @@ class loop(qtstructure_item, qtitem, loop_runtime):
 
 		from libqtopensesame.dialogs.loop_wizard import loop_wizard
 		d = loop_wizard(self.experiment.main_window)
-		if d.exec_() == QtGui.QDialog.Accepted:
+		if d.exec_() == QtWidgets.QDialog.Accepted:
 			#cfg.loop_wizard = a.ui.table_wizard.get_contents()
 			debug.msg(u"filling loop table")
 			# First read the table into a dictionary of variables
@@ -546,7 +546,7 @@ class loop(qtstructure_item, qtitem, loop_runtime):
 		if var_list is None:
 			return
 
-		weight_var, ok = QtGui.QInputDialog.getItem(
+		weight_var, ok = QtWidgets.QInputDialog.getItem(
 			self.experiment.ui.centralwidget, _(u"Apply weight"),
 			_(u"Which variable contains the weights?"), var_list,
 			editable=False)

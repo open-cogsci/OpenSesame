@@ -18,7 +18,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 import os
-from PyQt4 import QtGui
+from qtpy import QtWidgets
 from libqtopensesame.misc import _
 from libqtopensesame.misc.config import cfg
 from libopensesame import debug
@@ -43,7 +43,7 @@ class base_runner(object):
 		Constructor.
 
 		Arguments:
-		main_window		--	An QtGui.QMainWindow object. Typically this will be
+		main_window		--	An QtWidgets.QMainWindow object. Typically this will be
 							the qtopensesame object.
 		"""
 
@@ -110,7 +110,7 @@ class base_runner(object):
 				u'subject-%d.csv' % subject_nr)
 			# Get the data file
 			csv_filter = u'Comma-separated values (*.csv)'
-			logfile = str(QtGui.QFileDialog.getSaveFileName( \
+			logfile = str(QtWidgets.QFileDialog.getSaveFileName( \
 				self.main_window.ui.centralwidget, \
 				_(u"Choose location for logfile (press 'escape' for default location)"), \
 				suggested_path, filter=csv_filter))
@@ -155,7 +155,7 @@ class base_runner(object):
 
 		if quick:
 			return 999
-		subject_nr, ok = QtGui.QInputDialog.getInt( \
+		subject_nr, ok = QtWidgets.QInputDialog.getInt( \
 			self.main_window.ui.centralwidget, _(u'Subject number'), \
 			_(u'Please enter the subject number'), min=0)
 		if not ok:

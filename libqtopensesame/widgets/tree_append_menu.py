@@ -21,9 +21,9 @@ from libopensesame.py3compat import *
 from libqtopensesame.misc import _
 from libqtopensesame.misc.base_subcomponent import base_subcomponent
 from libopensesame import plugins
-from PyQt4 import QtGui
+from qtpy import QtWidgets, QtGui
 
-class append_existing_action(base_subcomponent, QtGui.QAction):
+class append_existing_action(base_subcomponent, QtWidgets.QAction):
 
 	"""
 	desc:
@@ -72,7 +72,7 @@ class append_existing_action(base_subcomponent, QtGui.QAction):
 		item_name = self.item_name
 		target_item.insert_child_item(item_name, len(target_item.items))
 
-class append_new_action(base_subcomponent, QtGui.QAction):
+class append_new_action(base_subcomponent, QtWidgets.QAction):
 
 	"""
 	desc:
@@ -124,7 +124,7 @@ class append_new_action(base_subcomponent, QtGui.QAction):
 		item = self.experiment.items.new(self.item_type)
 		target_item.insert_child_item(item.name, len(target_item.items))
 
-class tree_append_menu(base_subcomponent, QtGui.QMenu):
+class tree_append_menu(base_subcomponent, QtWidgets.QMenu):
 
 	"""
 	desc:
@@ -154,10 +154,10 @@ class tree_append_menu(base_subcomponent, QtGui.QMenu):
 		self.setup(tree_overview)
 		self.target_treeitem = target_treeitem
 		self.tree_overview = tree_overview
-		self.action_new_items = QtGui.QAction(self.theme.qicon(u'list-add'),
+		self.action_new_items = QtWidgets.QAction(self.theme.qicon(u'list-add'),
 			_(u'Append new item'), self)
 		self.addAction(self.action_new_items)
-		self.action_linked_copy = QtGui.QAction(self.theme.qicon(u'edit-copy'),
+		self.action_linked_copy = QtWidgets.QAction(self.theme.qicon(u'edit-copy'),
 			_(u'Append existing item (linked)'), self)
 		self.addAction(self.action_linked_copy)
 		self.aboutToShow.connect(self.refresh)
@@ -223,7 +223,7 @@ class tree_append_menu(base_subcomponent, QtGui.QMenu):
 				continue
 			self._items.append(item_name)
 		self._items.sort()
-		m = QtGui.QMenu(self)
+		m = QtWidgets.QMenu(self)
 		for item_name in self._items:
 			m.addAction(append_existing_action(self, m, item_name))
 		return m
@@ -240,7 +240,7 @@ class tree_append_menu(base_subcomponent, QtGui.QMenu):
 
 		if self._new_items_menu is not None:
 			return self._new_items_menu
-		self._new_items_menu = QtGui.QMenu(self)
+		self._new_items_menu = QtWidgets.QMenu(self)
 		for item_type in self.experiment.core_items + [None] + \
 			sorted(plugins.list_plugins()):
 			if item_type is None:

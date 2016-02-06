@@ -23,7 +23,7 @@ from libopensesame.exceptions import osexception
 from libqtopensesame.misc import _
 from libqtopensesame.sketchpad_elements._base_element import base_element
 from libopensesame.sketchpad_elements import textline as textline_runtime
-from PyQt4 import QtCore, QtGui
+from qtpy import QtCore, QtWidgets
 
 class textline(base_element, textline_runtime):
 

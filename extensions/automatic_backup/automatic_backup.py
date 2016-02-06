@@ -21,7 +21,7 @@ from libopensesame.py3compat import *
 
 import os
 import time
-from PyQt4 import QtGui, QtCore
+from qtpy import QtWidgets, QtCore
 from libopensesame import debug, misc
 from libqtopensesame.misc import _
 from libqtopensesame.extensions import base_extension

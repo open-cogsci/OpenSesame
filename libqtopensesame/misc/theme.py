@@ -23,7 +23,7 @@ import os.path
 import imp
 from libopensesame import debug, misc
 from libqtopensesame.misc import config
-from PyQt4 import QtGui, QtCore
+from qtpy import QtGui, QtWidgets, QtCore
 
 available_themes = [u'default']
 
@@ -106,7 +106,7 @@ class theme:
 			type:	QIcon
 		"""
 
-		return QtGui.QFileIconProvider().icon(QtCore.QFileInfo(path))
+		return QtWidgets.QFileIconProvider().icon(QtCore.QFileInfo(path))
 
 	def qicon(self, icon):
 
@@ -179,7 +179,7 @@ class theme:
 		A QLabel
 		"""
 
-		l = QtGui.QLabel()
+		l = QtWidgets.QLabel()
 		l.setPixmap(self.qpixmap(icon, size=size))
 		return l
 

@@ -20,9 +20,9 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 from libopensesame.py3compat import *
 
 from libqtopensesame.misc.base_subcomponent import base_subcomponent
-from PyQt4 import QtCore, QtGui
+from qtpy import QtCore, QtWidgets
 
-class base_dialog(QtGui.QDialog, base_subcomponent):
+class base_dialog(QtWidgets.QDialog, base_subcomponent):
 
 	"""
 	desc:

@@ -20,7 +20,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 from libopensesame.py3compat import *
 import code
 import time
-from PyQt4 import QtGui, QtCore
+from qtpy import QtGui, QtWidgets, QtCore
 from libopensesame import debug
 from libqtopensesame.misc import _
 from libqtopensesame.misc.config import cfg
@@ -63,7 +63,7 @@ class pyterm(code.InteractiveConsole):
 		self._locals.clear()
 		self._locals.update(_locals)
 
-class fallback_console(base_console, QtGui.QPlainTextEdit):
+class fallback_console(base_console, QtWidgets.QPlainTextEdit):
 
 	"""
 	desc:
@@ -119,7 +119,7 @@ class fallback_console(base_console, QtGui.QPlainTextEdit):
 
 		"""See base_console."""
 
-		QtGui.QPlainTextEdit.clear(self)
+		QtWidgets.QPlainTextEdit.clear(self)
 		self.appendPlainText(self.banner())
 		self.show_prompt()
 
@@ -146,7 +146,7 @@ class fallback_console(base_console, QtGui.QPlainTextEdit):
 				self._input += u"\n"
 			else:
 				self._input += str(e.text())
-				QtGui.QPlainTextEdit.keyPressEvent(self, e)
+				QtWidgets.QPlainTextEdit.keyPressEvent(self, e)
 		# Emulate the console
 		else:
 			self.jump_to_end()
@@ -166,7 +166,7 @@ class fallback_console(base_console, QtGui.QPlainTextEdit):
 				QtCore.Qt.Key_Up, QtCore.Qt.Key_Down] and e.key() != \
 				QtCore.Qt.Key_Left or self.textCursor().positionInBlock() > \
 				len(self.prompt):
-				QtGui.QPlainTextEdit.keyPressEvent(self, e)
+				QtWidgets.QPlainTextEdit.keyPressEvent(self, e)
 
 	def execute(self):
 
@@ -215,7 +215,7 @@ class fallback_console(base_console, QtGui.QPlainTextEdit):
 		self.collect_input = True
 		while len(self._input) == 0 or self._input[-1] != u'\n':
 			time.sleep(0.01)
-			QtGui.QApplication.processEvents()
+			QtWidgets.QApplication.processEvents()
 		self.collect_input = False
 		return self._input
 
@@ -235,7 +235,7 @@ class fallback_console(base_console, QtGui.QPlainTextEdit):
 		s = str(s)
 		if s.strip() != u'':
 			self.appendPlainText(s)
-			QtGui.QApplication.processEvents()
+			QtWidgets.QApplication.processEvents()
 
 	def get_workspace_globals(self):
 

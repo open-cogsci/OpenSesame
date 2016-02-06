@@ -18,11 +18,11 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame.py3compat import *
-from PyQt4 import QtGui
+from qtpy import QtWidgets
 from variable_inspector_widget import variable_inspector_widget
 from libqtopensesame.misc import _
 
-class variable_inspector_dockwidget(QtGui.QDockWidget):
+class variable_inspector_dockwidget(QtWidgets.QDockWidget):
 
 	"""
 	desc:

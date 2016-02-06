@@ -19,11 +19,11 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 
 from libopensesame.py3compat import *
 from libopensesame import metadata
-from PyQt4 import QtCore, QtGui
+from qtpy import QtCore, QtWidgets
 from libqtopensesame.misc.base_component import base_component
 from libqtopensesame.misc import theme
 
-class qtopensesamerun(QtGui.QMainWindow, base_component):
+class qtopensesamerun(QtWidgets.QMainWindow, base_component):
 
 	"""Implements the GUI for opensesamerun."""
 
@@ -41,7 +41,7 @@ class qtopensesamerun(QtGui.QMainWindow, base_component):
 		"""
 
 		# Construct the parent
-		QtGui.QMainWindow.__init__(self, parent)
+		QtWidgets.QMainWindow.__init__(self, parent)
 		# Setup the UI
 		self.load_ui(u'misc.opensesamerun')
 		self.ui.button_run.clicked.connect(self.run)
@@ -64,7 +64,7 @@ class qtopensesamerun(QtGui.QMainWindow, base_component):
 
 		file_type_filter = \
 			u"OpenSesame files (*.osexp *.opensesame.tar.gz *.opensesame);;OpenSesame script and file pool (*.opensesame.tar.gz);;OpenSesame script (*.opensesame)"
-		path = QtGui.QFileDialog.getOpenFileName(self, \
+		path = QtWidgets.QFileDialog.getOpenFileName(self, \
 			u"Open experiment file", filter = file_type_filter)
 		if path == u"":
 			return
@@ -74,7 +74,7 @@ class qtopensesamerun(QtGui.QMainWindow, base_component):
 
 		"""Locates the logfile.	"""
 
-		path = QtGui.QFileDialog.getSaveFileName(self, \
+		path = QtWidgets.QFileDialog.getSaveFileName(self, \
 			u"Choose a location for the logfile")
 		if path == u"":
 			return
@@ -85,7 +85,7 @@ class qtopensesamerun(QtGui.QMainWindow, base_component):
 		"""Sets the run flag to false."""
 
 		self.run = False
-		QtGui.QMainWindow.show(self)
+		QtWidgets.QMainWindow.show(self)
 
 	def run(self):
 

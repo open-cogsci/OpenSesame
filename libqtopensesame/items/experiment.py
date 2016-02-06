@@ -22,7 +22,7 @@ import libopensesame.experiment
 import libopensesame.plugins
 from libqtopensesame.misc.qtitem_store import qtitem_store
 from libqtopensesame.misc.qtsyntax import qtsyntax
-from PyQt4 import QtCore, QtGui
+from qtpy import QtCore, QtWidgets
 import os
 
 class experiment(libopensesame.experiment.experiment):
@@ -234,7 +234,7 @@ class experiment(libopensesame.experiment.experiment):
 
 		if c is None:
 			index = 0
-			c = QtGui.QComboBox(self.ui.centralwidget)
+			c = QtWidgets.QComboBox(self.ui.centralwidget)
 		else:
 			index = max(0, c.currentIndex())
 			c.clear()
@@ -280,7 +280,7 @@ class experiment(libopensesame.experiment.experiment):
 		"""
 
 		if c is None:
-			c = QtGui.QComboBox(self.ui.centralwidget)
+			c = QtWidgets.QComboBox(self.ui.centralwidget)
 		else:
 			c.clear()
 		i = 0

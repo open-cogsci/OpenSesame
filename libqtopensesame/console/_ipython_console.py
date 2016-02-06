@@ -30,7 +30,7 @@ if (sys.stderr is None or \
 	sys.stdout = sys.stderr = open(os.devnull, u'w')
 	sys.stdin = open(os.devnull, u'r')
 
-from PyQt4 import QtGui
+from qtpy import QtWidgets, QtGui
 try:
 	# New-style Jupyter imports
 	from qtconsole.rich_jupyter_widget import RichJupyterWidget \
@@ -97,7 +97,7 @@ def pygments_style_factory(cs):
 		}
 	return my_style
 
-class ipython_console(base_console, QtGui.QWidget):
+class ipython_console(base_console, QtWidgets.QWidget):
 
 	"""
 	desc:
@@ -126,7 +126,7 @@ class ipython_console(base_console, QtGui.QWidget):
 		self.control.banner = self.banner()
 		self.control.kernel_manager = kernel_manager
 		self.control.kernel_client = kernel_client
-		self.verticalLayout = QtGui.QVBoxLayout(self)
+		self.verticalLayout = QtWidgets.QVBoxLayout(self)
 		self.verticalLayout.setContentsMargins(0,0,0,0)
 		self.setLayout(self.verticalLayout)
 		self.verticalLayout.addWidget(self.control)

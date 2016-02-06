@@ -57,7 +57,7 @@ if __name__ == u"__main__":
 			import sip
 			sip.setapi('QString', 2)
 			sip.setapi('QVariant', 2)
-			from PyQt4 import QtGui, QtCore
+			from qtpy import QtGui, QtCore, QtWidgets
 		except:
 			libopensesame.misc.messagebox(u"OpenSesame Run",
 				u"Incorrect or missing options.\n\nRun 'opensesame --help' from a terminal (or command prompt) to see a list of available options, or install Python Qt4 to enable the graphical user interface.")
@@ -65,9 +65,8 @@ if __name__ == u"__main__":
 		# Create the GUI and show it
 		import libqtopensesame.qtopensesamerun
 		if app is None:
-			app = QtGui.QApplication(sys.argv)
+			app = QtWidgets.QApplication(sys.argv)
 			myapp = libqtopensesame.qtopensesamerun.qtopensesamerun(options)
-		QtCore.QObject.connect(app, QtCore.SIGNAL(u"sys.exit()"), myapp.close)
 		myapp.show()
 		app.exec_()
 

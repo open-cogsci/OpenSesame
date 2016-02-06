@@ -19,7 +19,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 
 from libopensesame.py3compat import *
 
-from PyQt4 import QtCore, QtGui
+from qtpy import QtCore, QtWidgets
 from libqtopensesame.misc import _
 from libqtopensesame.misc.config import cfg
 from libqtopensesame.extensions import base_extension
@@ -39,13 +39,13 @@ class toolbar_menu(base_extension):
 			from the main menu bar.
 		"""
 
-		self.menu = QtGui.QMenu()
+		self.menu = QtWidgets.QMenu()
 		for action in self.menubar.actions():
 			self.menu.addAction(action)
-		self.stretch = QtGui.QWidget()
-		self.stretch.setSizePolicy(QtGui.QSizePolicy.Expanding,
-			QtGui.QSizePolicy.Expanding)
-		self.button = QtGui.QPushButton(self.theme.qicon(self.icon()),
+		self.stretch = QtWidgets.QWidget()
+		self.stretch.setSizePolicy(QtWidgets.QSizePolicy.Expanding,
+			QtWidgets.QSizePolicy.Expanding)
+		self.button = QtWidgets.QPushButton(self.theme.qicon(self.icon()),
 			_(u'Menu'))
 		self.button.setMenu(self.menu)
 		self.button.setIconSize(QtCore.QSize(cfg.toolbar_size,

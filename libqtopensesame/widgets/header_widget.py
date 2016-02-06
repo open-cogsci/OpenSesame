@@ -19,7 +19,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 
 from libopensesame.py3compat import *
 
-from PyQt4 import QtCore, QtGui
+from qtpy import QtCore, QtWidgets
 from libopensesame import debug
 from libqtopensesame.misc import _
 from libqtopensesame.widgets.base_widget import base_widget
@@ -45,17 +45,17 @@ class header_widget(base_widget):
 		self.setCursor(QtCore.Qt.IBeamCursor)
 		self.setToolTip(_(u"Click to edit"))
 		self.item = item
-		self.label_name = QtGui.QLabel()
-		self.edit_name = QtGui.QLineEdit()
+		self.label_name = QtWidgets.QLabel()
+		self.edit_name = QtWidgets.QLineEdit()
 		self.edit_name.editingFinished.connect(self.apply_name)
 		self.edit_name.hide()
-		self.label_desc = QtGui.QLabel()
+		self.label_desc = QtWidgets.QLabel()
 		self.label_desc.setWordWrap(True)
-		self.edit_desc = QtGui.QLineEdit()
+		self.edit_desc = QtWidgets.QLineEdit()
 		self.edit_desc.editingFinished.connect(self.apply_desc)
 		self.edit_desc.hide()
 
-		vbox = QtGui.QVBoxLayout()
+		vbox = QtWidgets.QVBoxLayout()
 		vbox.setContentsMargins(8, 0, 0, 0)
 		vbox.setSpacing(0)
 		vbox.addWidget(self.label_name)
@@ -63,7 +63,7 @@ class header_widget(base_widget):
 		vbox.addWidget(self.label_desc)
 		vbox.addWidget(self.edit_desc)
 		self.refresh()
-		self.setSizePolicy(QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Fixed)
+		self.setSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Fixed)
 		self.setLayout(vbox)
 
 	def refresh(self):

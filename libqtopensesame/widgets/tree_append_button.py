@@ -20,9 +20,9 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 from libopensesame.py3compat import *
 from libqtopensesame.misc.base_subcomponent import base_subcomponent
 from libqtopensesame.widgets.tree_append_menu import tree_append_menu
-from PyQt4 import QtGui
+from qtpy import QtWidgets
 
-class tree_append_button(base_subcomponent, QtGui.QPushButton):
+class tree_append_button(base_subcomponent, QtWidgets.QPushButton):
 
 	"""
 	desc:

@@ -20,7 +20,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 from libopensesame.py3compat import *
 from libqtopensesame.extensions import base_extension, suspend_events
 from libqtopensesame.misc import _
-from PyQt4.QtGui import QMenu, QToolBar
+from qtpy.QtWidgets import QMenu, QToolBar
 from undo_stack import undo_stack
 import difflib
 

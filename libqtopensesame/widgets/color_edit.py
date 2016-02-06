@@ -19,7 +19,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 
 from libopensesame.py3compat import *
 
-from PyQt4 import QtCore, QtGui
+from qtpy import QtCore, QtWidgets
 from libopensesame import debug
 from libqtopensesame.widgets.base_widget import base_widget
 from libqtopensesame.misc import _
@@ -47,16 +47,16 @@ class color_edit(base_widget):
 		"""
 
 		super(color_edit, self).__init__(main_window)
-		self.edit = QtGui.QLineEdit()
+		self.edit = QtWidgets.QLineEdit()
 		self._parent = None
-		self.edit.setSizePolicy(QtGui.QSizePolicy.Minimum,
-			QtGui.QSizePolicy.Minimum)
+		self.edit.setSizePolicy(QtWidgets.QSizePolicy.Minimum,
+			QtWidgets.QSizePolicy.Minimum)
 		self.edit.editingFinished.connect(self.apply)
 		self.editingFinished = self.edit.editingFinished
-		self.button = QtGui.QPushButton()
+		self.button = QtWidgets.QPushButton()
 		self.button.setIconSize(QtCore.QSize(16,16))
 		self.button.clicked.connect(self.colorpicker)
-		layout = QtGui.QHBoxLayout()
+		layout = QtWidgets.QHBoxLayout()
 		layout.setContentsMargins(0,0,0,0)
 		layout.addWidget(self.edit)
 		layout.addWidget(self.button)

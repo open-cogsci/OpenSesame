@@ -151,6 +151,10 @@ class sampler(sampler_runtime, qtplugin):
 			Disconnects the dials.
 		"""
 
-		self.sampler_widget.ui.dial_pan.sliderMoved.disconnect()
+		try:
+			self.sampler_widget.ui.dial_pan.sliderMoved.disconnect()
+		except TypeError:
+			# There were no connections
+			return
 		self.sampler_widget.ui.dial_volume.sliderMoved.disconnect()
 		self.sampler_widget.ui.dial_pitch.sliderMoved.disconnect()

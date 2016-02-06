@@ -22,7 +22,7 @@ import os
 import sys
 import time
 from libqtopensesame.runners import base_runner
-from PyQt4 import QtGui
+from qtpy import QtWidgets
 from libopensesame.exceptions import osexception
 
 class multiprocess_runner(base_runner):
@@ -82,11 +82,11 @@ class multiprocess_runner(base_runner):
 		while self.exp_process.is_alive() or not self.channel.empty():
 			# We need to process the GUI. To make the GUI feel more responsive
 			# during pauses, we refresh the GUI more often when paused.
-			QtGui.QApplication.processEvents()
+			QtWidgets.QApplication.processEvents()
 			if self.paused:
 				for i in range(25):
 					time.sleep(.01)
-					QtGui.QApplication.processEvents()
+					QtWidgets.QApplication.processEvents()
 			# Make sure None is not printed. Ugly hack for a bug in the Queue
 			# class?
 			self.console.suppress_stdout()

@@ -17,7 +17,7 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
-from PyQt4 import QtGui
+from qtpy import QtWidgets
 from libopensesame import debug
 from libopensesame import metadata
 from libqtopensesame.misc import _
@@ -26,7 +26,7 @@ from libqtopensesame.misc.base_subcomponent import base_subcomponent
 from libqtopensesame.misc.config import cfg
 from libopensesame.py3compat import *
 
-class action_page(QtGui.QAction, base_subcomponent):
+class action_page(QtWidgets.QAction, base_subcomponent):
 
 	"""
 	desc:
@@ -46,7 +46,7 @@ class action_page(QtGui.QAction, base_subcomponent):
 			menu:			The menu for the action.
 		"""
 
-		QtGui.QAction.__init__(self, main_window.theme.qicon(
+		QtWidgets.QAction.__init__(self, main_window.theme.qicon(
 			u'applications-internet'), title, menu)
 		self.setup(main_window)
 		self.title = title

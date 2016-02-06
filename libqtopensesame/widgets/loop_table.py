@@ -24,7 +24,7 @@ __license__ = "GPLv3"
 
 from libqtopensesame.widgets import good_looking_table
 from libqtopensesame.misc import _
-from PyQt4 import QtCore, QtGui
+from qtpy import QtCore, QtWidgets
 
 class loop_table(good_looking_table.good_looking_table):
 
@@ -112,5 +112,5 @@ class loop_table(good_looking_table.good_looking_table):
 		"""
 
 		self.blockSignals(True)
-		self.setItem(cycle, col, QtGui.QTableWidgetItem(text))
+		self.setItem(cycle, col, QtWidgets.QTableWidgetItem(text))
 		self.blockSignals(False)

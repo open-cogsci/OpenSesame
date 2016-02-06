@@ -22,7 +22,7 @@ from libqtopensesame.extensions import base_extension
 from libqtopensesame.misc import _
 from libqtopensesame.misc.config import cfg
 from libopensesame import metadata
-from PyQt4 import QtCore
+from qtpy import QtCore
 import sys
 import yaml
 import os

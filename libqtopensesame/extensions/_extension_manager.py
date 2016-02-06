@@ -20,7 +20,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 from libopensesame.py3compat import *
 
 import sys
-from PyQt4 import QtGui, QtCore
+from qtpy import QtWidgets, QtCore
 from libopensesame import plugins
 from libopensesame.exceptions import osexception
 from libqtopensesame.misc import _
@@ -63,7 +63,7 @@ class extension_manager(base_subcomponent):
 
 		self.setup(main_window)
 		self.main_window.set_busy()
-		QtGui.QApplication.processEvents()
+		QtWidgets.QApplication.processEvents()
 		self._extensions = []
 		self.events = {}
 		self._suspended = False

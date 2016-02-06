@@ -20,7 +20,7 @@ along with openexp.  If not, see <http://www.gnu.org/licenses/>.
 from libopensesame.py3compat import *
 from libopensesame.exceptions import osexception
 from libqtopensesame.misc import _
-from PyQt4 import QtGui, QtCore
+from qtpy import QtWidgets, QtGui, QtCore
 
 class base_element(object):
 
@@ -184,7 +184,7 @@ class base_element(object):
 			A QGraphicsEffect object.
 		"""
 
-		effect = QtGui.QGraphicsDropShadowEffect()
+		effect = QtWidgets.QGraphicsDropShadowEffect()
 		effect.setColor(QtGui.QColor('#00FF00'))
 		effect.setBlurRadius(32)
 		effect.setOffset(8,8)
@@ -201,7 +201,7 @@ class base_element(object):
 		"""
 
 
-		effect = QtGui.QGraphicsOpacityEffect()
+		effect = QtWidgets.QGraphicsOpacityEffect()
 		return effect
 
 	def get_property(self, name, _type=str, fallback=None):

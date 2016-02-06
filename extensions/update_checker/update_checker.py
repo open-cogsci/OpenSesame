@@ -18,7 +18,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame.py3compat import *
-from PyQt4 import QtGui
+from qtpy import QtWidgets
 from libopensesame import debug
 from libqtopensesame.misc import _
 from libqtopensesame.extensions import base_extension

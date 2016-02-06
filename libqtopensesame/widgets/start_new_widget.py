@@ -19,7 +19,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 
 from libopensesame.py3compat import *
 
-from PyQt4 import QtCore, QtGui
+from qtpy import QtCore, QtWidgets
 from libqtopensesame.widgets.base_widget import base_widget
 from libqtopensesame.misc import template_info
 import random
@@ -55,7 +55,7 @@ class start_new_widget(base_widget):
 				path = self.experiment.resource(path)
 			except:
 				continue
-			item = QtGui.QListWidgetItem(self.ui.list_templates)
+			item = QtWidgets.QListWidgetItem(self.ui.list_templates)
 			item.setText(desc)
 			item.file = path
 			item.setIcon(self.theme.qicon(u"document-open-recent"))
@@ -69,7 +69,7 @@ class start_new_widget(base_widget):
 			self.ui._label_recent.hide()
 		else:
 			for f in self.main_window.recent_files:
-				item = QtGui.QListWidgetItem(self.ui.list_recent)
+				item = QtWidgets.QListWidgetItem(self.ui.list_recent)
 				item.setText(os.path.basename(f))
 				item.file = f
 				item.setIcon(self.theme.qicon(u"experiment"))

@@ -18,11 +18,11 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame.py3compat import *
-from PyQt4 import QtGui
+from qtpy import QtWidgets
 from libqtopensesame.misc.base_subcomponent import base_subcomponent
 from libqtopensesame.misc import _
 
-class confirmation(QtGui.QMessageBox, base_subcomponent):
+class confirmation(QtWidgets.QMessageBox, base_subcomponent):
 
 	"""
 	desc:
@@ -56,20 +56,20 @@ class confirmation(QtGui.QMessageBox, base_subcomponent):
 				type:	str
 		"""
 
-		QtGui.QMessageBox.__init__(self, main_window)
+		QtWidgets.QMessageBox.__init__(self, main_window)
 		self.setup(main_window)
-		self.yes = self.addButton(QtGui.QMessageBox.Yes)
-		self.no = self.addButton(QtGui.QMessageBox.No)
+		self.yes = self.addButton(QtWidgets.QMessageBox.Yes)
+		self.no = self.addButton(QtWidgets.QMessageBox.No)
 		if allow_cancel:
-			self.cancel = self.addButton(QtGui.QMessageBox.Cancel)
+			self.cancel = self.addButton(QtWidgets.QMessageBox.Cancel)
 		else:
 			self.cancel = None
 		if default == u'no':
-			self.setDefaultButton(QtGui.QMessageBox.No)
+			self.setDefaultButton(QtWidgets.QMessageBox.No)
 		elif default == u'yes':
-			self.setDefaultButton(QtGui.QMessageBox.Yes)
+			self.setDefaultButton(QtWidgets.QMessageBox.Yes)
 		elif default == u'cancel' and allow_cancel:
-			self.setDefaultButton(QtGui.QMessageBox.Cancel)
+			self.setDefaultButton(QtWidgets.QMessageBox.Cancel)
 		if title is None:
 			title = _(u'Please confirm')
 		self.setWindowTitle(title)

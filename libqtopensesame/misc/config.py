@@ -39,7 +39,7 @@ New style:
 
 from libopensesame.py3compat import *
 from libopensesame.exceptions import osexception
-from PyQt4 import QtCore
+from qtpy import QtCore
 import libopensesame.misc
 from libopensesame import debug
 import platform

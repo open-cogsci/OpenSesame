@@ -21,7 +21,7 @@ from libopensesame.py3compat import *
 from libopensesame.exceptions import osexception
 from libopensesame import item, generic_response, debug
 from libqtopensesame import qtplugin
-from PyQt4 import QtGui, QtCore
+from qtpy import QtWidgets, QtCore
 try:
 	from ctypes import windll
 except:

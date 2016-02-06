@@ -20,7 +20,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 from libopensesame.py3compat import *
 from libopensesame.item import item
 from libqtopensesame.items.qtautoplugin import qtautoplugin
-from PyQt4 import QtGui, QtCore
+from qtpy import QtWidgets, QtCore
 
 class reset_feedback(item):
 

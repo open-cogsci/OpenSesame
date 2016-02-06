@@ -17,7 +17,7 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
-from PyQt4 import QtCore, QtGui
+from qtpy import QtCore, QtWidgets
 from libqtopensesame.misc import _
 from libqtopensesame.widgets.tree_base_item import tree_base_item
 from libopensesame.py3compat import *
@@ -252,13 +252,13 @@ class tree_item_item(tree_base_item):
 
 		if not self.is_deletable() and not self.is_unused():
 			return
-		if QtGui.QMessageBox.question(self.treeWidget(),
+		if QtWidgets.QMessageBox.question(self.treeWidget(),
 			_(u'Permanently delete item'),
 			_(u'Are you sure you want to permanently delete <b>%s</b>? All linked copies of <b>%s</b> will be deleted. You will not be able to undo this.') \
 			% (self.name, self.name),
-			buttons=(QtGui.QMessageBox.Yes|QtGui.QMessageBox.No),
-			defaultButton=QtGui.QMessageBox.No) \
-			!= QtGui.QMessageBox.Yes:
+			buttons=(QtWidgets.QMessageBox.Yes|QtWidgets.QMessageBox.No),
+			defaultButton=QtWidgets.QMessageBox.No) \
+			!= QtWidgets.QMessageBox.Yes:
 			return
 		del self.item_store[self.name]
 		self.close_tab()
@@ -296,7 +296,7 @@ class tree_item_item(tree_base_item):
 				})
 				
 		text = safe_decode(json.dumps(data))
-		QtGui.QApplication.clipboard().setText(text)
+		QtWidgets.QApplication.clipboard().setText(text)
 		
 	def copy_linked(self):
 		
@@ -317,7 +317,7 @@ class tree_item_item(tree_base_item):
 			}
 						
 		text = safe_decode(json.dumps(data))
-		QtGui.QApplication.clipboard().setText(text)
+		QtWidgets.QApplication.clipboard().setText(text)
 		
 	def paste(self):
 		
@@ -349,7 +349,7 @@ class tree_item_item(tree_base_item):
 		import json
 		from libqtopensesame.misc import drag_and_drop
 
-		text = QtGui.QApplication.clipboard().text()
+		text = QtWidgets.QApplication.clipboard().text()
 		try:
 			data = json.loads(text)
 		except:

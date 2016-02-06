@@ -19,11 +19,11 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 
 from libopensesame.py3compat import *
 
-from PyQt4 import QtCore, QtGui
+from qtpy import QtCore, QtWidgets
 from libqtopensesame.misc import _
 from libqtopensesame.misc.base_subcomponent import base_subcomponent
 
-class item_view_button(base_subcomponent, QtGui.QPushButton):
+class item_view_button(base_subcomponent, QtWidgets.QPushButton):
 
 	"""
 	desc:
@@ -47,7 +47,7 @@ class item_view_button(base_subcomponent, QtGui.QPushButton):
 		self.setup(item)
 		self.set_view_icon(u'controls')
 		self.setIconSize(QtCore.QSize(16,16))
-		self.menu_view = QtGui.QMenu()
+		self.menu_view = QtWidgets.QMenu()
 		self.menu_view.addAction(self.view_controls_icon(),
 			_(u'View controls'), self.item.set_view_controls)
 		self.menu_view.addAction(self.view_script_icon(), _(u'View script'),

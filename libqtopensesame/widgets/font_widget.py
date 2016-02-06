@@ -18,7 +18,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame.py3compat import *
-from PyQt4 import QtCore, QtGui
+from qtpy import QtCore, QtGui, QtWidgets
 from libqtopensesame.widgets.base_widget import base_widget
 from libqtopensesame.misc import _
 
@@ -42,7 +42,6 @@ class font_widget_base(base_widget):
 		self.italic = self.ui.checkbox_italic.isChecked()
 		self.bold = self.ui.checkbox_bold.isChecked()
 		self.ui.label_example.setFont(self.get_font())
-		self.emit(QtCore.SIGNAL(u"font_changed"))
 		self.font_changed.emit(self.family, self.size, self.italic,
 			self.bold)
 

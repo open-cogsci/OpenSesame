@@ -19,7 +19,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 
 from libopensesame.py3compat import *
 
-from PyQt4 import QtCore, QtGui
+from qtpy import QtGui, QtCore, QtWidgets
 from libqtopensesame.misc.config import cfg
 from libqtopensesame.misc import _
 from libqtopensesame.misc import drag_and_drop
@@ -32,7 +32,7 @@ from libopensesame import debug
 from libopensesame.exceptions import osexception
 from libopensesame.sequence import sequence
 
-class tree_overview(base_subcomponent, base_draggable, QtGui.QTreeWidget):
+class tree_overview(base_subcomponent, base_draggable, QtWidgets.QTreeWidget):
 
 	"""
 	desc:

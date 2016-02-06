@@ -19,9 +19,9 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 
 from libopensesame.py3compat import *
 from libqtopensesame.misc.base_subcomponent import base_subcomponent
-from PyQt4 import QtGui
+from qtpy import QtWidgets
 
-class base_widget(QtGui.QWidget, base_subcomponent):
+class base_widget(QtWidgets.QWidget, base_subcomponent):
 
 	"""
 	desc:

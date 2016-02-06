@@ -19,7 +19,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 
 from libopensesame.py3compat import *
 
-from PyQt4 import QtCore, QtGui
+from qtpy import QtCore, QtWidgets
 from libqtopensesame.widgets.base_widget import base_widget
 
 class quick_open_element_action(base_widget):
@@ -57,9 +57,9 @@ class quick_open_element_action(base_widget):
 			self.icon = self.theme.qlabel(u'system-run')
 		else:
 			self.icon = self.theme.qlabel(self.action.icon())
-		self.label = QtGui.QLabel(u'action <b>%s</b><br /><i>%s</i>' \
+		self.label = QtWidgets.QLabel(u'action <b>%s</b><br /><i>%s</i>' \
 			% (self.text, self.path_to_action))
-		self.layout = QtGui.QHBoxLayout(self)
+		self.layout = QtWidgets.QHBoxLayout(self)
 		self.layout.addWidget(self.icon)
 		self.layout.addWidget(self.label)
 		self.layout.addStretch()

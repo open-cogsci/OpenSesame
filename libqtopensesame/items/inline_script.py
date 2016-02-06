@@ -29,7 +29,7 @@ from libqtopensesame.misc import _
 from libqtopensesame.misc.config import cfg
 from libqtopensesame.widgets.tree_inline_script_item import \
 	tree_inline_script_item
-from PyQt4 import QtCore, QtGui
+from qtpy import QtCore, QtWidgets
 
 class inline_script(inline_script_runtime, qtplugin):
 

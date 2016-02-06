@@ -22,7 +22,7 @@ from libqtopensesame.extensions import base_extension
 from libqtopensesame.misc import _
 from libqtopensesame.misc.config import cfg
 from variable_inspector_dockwidget import variable_inspector_dockwidget
-from PyQt4 import QtCore, QtGui
+from qtpy import QtCore, QtGui, QtWidgets
 
 class variable_inspector(base_extension):
 
@@ -44,7 +44,7 @@ class variable_inspector(base_extension):
 		self.main_window.addDockWidget(QtCore.Qt.RightDockWidgetArea,
 			self.dock_widget)
 		self.set_visible(cfg.variable_inspector_visible)
-		self.shortcut_focus = QtGui.QShortcut(QtGui.QKeySequence(
+		self.shortcut_focus = QtWidgets.QShortcut(QtGui.QKeySequence(
 			cfg.variable_inspector_focus_shortcut), self.main_window,
 			self.focus, context=QtCore.Qt.ApplicationShortcut)
 

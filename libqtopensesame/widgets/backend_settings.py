@@ -19,7 +19,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 
 from libopensesame.py3compat import *
 
-from PyQt4 import QtCore, QtGui
+from qtpy import QtCore, QtWidgets
 import sip
 from libqtopensesame.misc import _
 from libqtopensesame.widgets.base_widget import base_widget
@@ -59,7 +59,7 @@ class backend_settings(base_widget):
 				layout.addWidget(settings_widget(self.main_window,
 					_backend.settings))
 
-class settings_edit(QtGui.QLineEdit, base_subcomponent):
+class settings_edit(QtWidgets.QLineEdit, base_subcomponent):
 
 	"""An edit widget for a single variable"""
 
@@ -108,15 +108,15 @@ class settings_widget(base_widget):
 
 		super(settings_widget, self).__init__(main_window)
 		self.settings = settings
-		self.layout = QtGui.QFormLayout(self)
-		self.layout.setFieldGrowthPolicy(QtGui.QFormLayout.FieldsStayAtSizeHint)
+		self.layout = QtWidgets.QFormLayout(self)
+		self.layout.setFieldGrowthPolicy(QtWidgets.QFormLayout.FieldsStayAtSizeHint)
 		self.setLayout(self.layout)
 		for var, desc in settings.items():
 			if var in self.experiment.var:
 				val = self.experiment.var.get(var)
 			else:
 				val = desc[u"default"]
-			label = QtGui.QLabel()
+			label = QtWidgets.QLabel()
 			label.setText(
 				u"%(name)s<br /><small><i>%(description)s</i></small>" % desc)
 			label.setTextFormat(QtCore.Qt.RichText)

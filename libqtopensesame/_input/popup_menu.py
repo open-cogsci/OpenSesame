@@ -18,11 +18,11 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame.py3compat import *
-from PyQt4 import QtGui
+from qtpy import QtWidgets, QtGui
 from libqtopensesame.misc.base_subcomponent import base_subcomponent
 from libqtopensesame.misc import _
 
-class popup_menu(QtGui.QMenu, base_subcomponent):
+class popup_menu(QtWidgets.QMenu, base_subcomponent):
 
 	"""
 	desc:
@@ -51,11 +51,11 @@ class popup_menu(QtGui.QMenu, base_subcomponent):
 				type:	bool
 		"""
 
-		QtGui.QMenu.__init__(self, main_window)
+		QtWidgets.QMenu.__init__(self, main_window)
 		self.setup(main_window)
 
 		if title is not None:
-			action = QtGui.QAction(self.theme.qicon(u'dialog-information'),
+			action = QtWidgets.QAction(self.theme.qicon(u'dialog-information'),
 				title, self)
 			action._id = None
 			action.setDisabled(True)
@@ -63,12 +63,12 @@ class popup_menu(QtGui.QMenu, base_subcomponent):
 			self.addSeparator()
 
 		for _id, text, icon in actions:
-			action = QtGui.QAction(self.theme.qicon(icon), text, self)
+			action = QtWidgets.QAction(self.theme.qicon(icon), text, self)
 			action._id = _id
 			self.addAction(action)
 		if cancel:
 			self.addSeparator()
-			action = QtGui.QAction(self.theme.qicon(u'edit-clear'),
+			action = QtWidgets.QAction(self.theme.qicon(u'edit-clear'),
 				_(u'Cancel'), self)
 			action._id = None
 			self.addAction(action)

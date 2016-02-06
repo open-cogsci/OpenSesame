@@ -19,9 +19,9 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 
 from libopensesame.py3compat import *
 
-from PyQt4 import QtGui, QtCore
+from qtpy import QtWidgets, QtCore
 from libqtopensesame.widgets.base_widget import base_widget
 
-class sketchpad_graphics_view(QtGui.QGraphicsView, base_widget):
+class sketchpad_graphics_view(QtWidgets.QGraphicsView, base_widget):
 
 	pass

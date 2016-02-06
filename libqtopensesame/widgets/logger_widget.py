@@ -18,12 +18,12 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame.py3compat import *
-from PyQt4 import QtGui
+from qtpy import QtWidgets
 from libqtopensesame.misc import _
 from libqtopensesame.widgets.base_widget import base_widget
 from libqtopensesame.misc.base_draggable import base_draggable
 
-class remove_custom_var_button(QtGui.QPushButton):
+class remove_custom_var_button(QtWidgets.QPushButton):
 
 	def __init__(self, logger_widget, icon, var):
 
@@ -113,12 +113,12 @@ class logger_widget(base_widget, base_draggable):
 				self.logger.theme.qicon(u'list-remove'), var)
 			self.table_var.insertRow(row)
 			self.table_var.setCellWidget(row, 0, button)
-			self.table_var.setCellWidget(row, 1, QtGui.QLabel(var))
+			self.table_var.setCellWidget(row, 1, QtWidgets.QLabel(var))
 			if var in d:
 				source = u','.join(d[var][u'source'])
 			else:
 				source = _(u'custom')
-			self.table_var.setCellWidget(row, 2, QtGui.QLabel(source))
+			self.table_var.setCellWidget(row, 2, QtWidgets.QLabel(source))
 		self.table_var.setRowCount(len(self.logger.logvars))
 
 	def accept_drop(self, data):

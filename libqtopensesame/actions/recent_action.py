@@ -22,10 +22,10 @@ from libopensesame.py3compat import *
 __author__ = "Sebastiaan Mathot"
 __license__ = "GPLv3"
 
-from PyQt4 import QtGui
+from qtpy import QtWidgets
 import os.path
 
-class recent_action(QtGui.QAction):
+class recent_action(QtWidgets.QAction):
 
 	"""Menu action for a recently opened file"""
 
@@ -40,7 +40,7 @@ class recent_action(QtGui.QAction):
 		menu -- the menu into which the action should be inserted
 		"""
 
-		QtGui.QAction.__init__(self, os.path.basename(path), menu)
+		QtWidgets.QAction.__init__(self, os.path.basename(path), menu)
 		self.main_window = main_window
 		self.triggered.connect(self.open_file)
 		self.path = path

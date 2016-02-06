@@ -19,10 +19,10 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 
 from libopensesame.py3compat import *
 
-from PyQt4 import QtGui
+from qtpy import QtWidgets
 from libqtopensesame.misc.base_subcomponent import base_subcomponent
 
-class user_hint_widget(QtGui.QFrame, base_subcomponent):
+class user_hint_widget(QtWidgets.QFrame, base_subcomponent):
 
 	"""
 	desc:

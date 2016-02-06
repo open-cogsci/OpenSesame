@@ -24,9 +24,9 @@ from openexp._color.color import color
 from libqtopensesame.misc import drag_and_drop
 from libqtopensesame.misc import _
 from libqtopensesame.misc.config import cfg
-from PyQt4 import QtGui, QtCore
+from qtpy import QtWidgets, QtGui, QtCore
 
-class sketchpad_canvas(QtGui.QGraphicsScene):
+class sketchpad_canvas(QtWidgets.QGraphicsScene):
 
 	"""
 	desc:
@@ -254,7 +254,7 @@ class sketchpad_canvas(QtGui.QGraphicsScene):
 		"""
 
 		# First try to see if there's an exact position match ...
-		graphics_item = self.itemAt(pos)
+		graphics_item = self.itemAt(pos, QtGui.QTransform())
 		# ... if not, try if there's an element that encompasses the position.
 		if graphics_item is None:
 			for item in self.items():
@@ -669,7 +669,7 @@ class sketchpad_canvas(QtGui.QGraphicsScene):
 
 		"""Mimicks canvas api. See openexp._canvas.canvas."""
 
-		i = QtGui.QGraphicsLineItem(self._x(sx), self._y(sy), self._x(ex),
+		i = QtWidgets.QGraphicsLineItem(self._x(sx), self._y(sy), self._x(ex),
 			self._y(ey))
 		i.setPen(self._pen(color, penwidth))
 		if add:
@@ -693,10 +693,10 @@ class sketchpad_canvas(QtGui.QGraphicsScene):
 		else:
 			pen = self._pen(color, penwidth)
 			brush = QtGui.QBrush()
-		polygon = QtGui.QPolygonF()
+		polygon = QtWidgets.QPolygonF()
 		for point in shape:
 			polygon <<  QtCore.QPointF(point[0],point[1])
-		i = QtGui.QGraphicsPolygonItem(polygon)
+		i = QtWidgets.QGraphicsPolygonItem(polygon)
 		i.setPen(pen)
 		i.setBrush(brush)
 		if add:
@@ -730,7 +730,7 @@ class sketchpad_canvas(QtGui.QGraphicsScene):
 		else:
 			pen = self._pen(color, penwidth)
 			brush = QtGui.QBrush()
-		i = QtGui.QGraphicsEllipseItem(self._x(x), self._y(y), self._w(w),
+		i = QtWidgets.QGraphicsEllipseItem(self._x(x), self._y(y), self._w(w),
 			self._h(h))
 		i.setPen(pen)
 		i.setBrush(brush)
@@ -793,7 +793,7 @@ class sketchpad_canvas(QtGui.QGraphicsScene):
 		color = self._color(color)
 		x = self._x(x)
 		y = self._y(y)
-		group = QtGui.QGraphicsItemGroup()
+		group = QtWidgets.QGraphicsItemGroup()
 		h = 2
 		known = True
 		if style == u'default':

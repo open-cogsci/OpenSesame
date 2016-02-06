@@ -19,7 +19,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 
 from libopensesame.py3compat import *
 
-from PyQt4 import QtCore, QtGui
+from qtpy import QtCore, QtWidgets
 from libqtopensesame.widgets.base_widget import base_widget
 
 class quick_open_element_symbol(base_widget):
@@ -52,9 +52,9 @@ class quick_open_element_symbol(base_widget):
 		self.phase = phase
 		self.lineNo, self._type, self.name, self.argspec = symbol
 		self.icon = self.theme.qlabel(u'os-symbol')
-		self.label = QtGui.QLabel(u'%s <b>%s</b><br /><i>In: %s [%s:%d]</i>' % (
+		self.label = QtWidgets.QLabel(u'%s <b>%s</b><br /><i>In: %s [%s:%d]</i>' % (
 			self._type, self.name, self.item.name, self.phase, self.lineNo))
-		self.layout = QtGui.QHBoxLayout(self)
+		self.layout = QtWidgets.QHBoxLayout(self)
 		self.layout.addWidget(self.icon)
 		self.layout.addWidget(self.label)
 		self.layout.addStretch()
