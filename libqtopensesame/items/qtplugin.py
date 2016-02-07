@@ -21,11 +21,12 @@ import os
 import sys
 from qtpy import QtGui, QtCore, QtWidgets
 from libqtopensesame.items import qtitem
-from libqtopensesame.misc import _
 from libqtopensesame.widgets import color_edit, pool_widget
 from libopensesame import debug, misc
 from libqtopensesame.misc.config import cfg
 from libopensesame.py3compat import *
+from libqtopensesame.misc.translate import translation_context
+_ = translation_context(u'qtplugin', category=u'core')
 
 class qtplugin(qtitem.qtitem):
 
@@ -63,6 +64,15 @@ class qtplugin(qtitem.qtitem):
 			self.qicon = QtGui.QIcon()
 			self.qicon.addFile(icon16, QtCore.QSize(16,16))
 			self.qicon.addFile(icon32, QtCore.QSize(32,32))
+			# Install a translation file if there is one. Most plugins have
+			# their translations as part of the OpenSesame main translations.
+			# However, separate plugins can bring their own translation.
+			translation_file = os.path.join(self.plugin_folder, u'locale',
+				u'%s.qm' % self.main_window._locale)
+			if os.path.exists(translation_file):
+				translator = QtCore.QTranslator()
+				translator.load(translation_file)
+				QtCore.QCoreApplication.installTranslator(translator)
 		else:
 			self.qicon = None
 		self.lock = False
@@ -115,13 +125,13 @@ class qtplugin(qtitem.qtitem):
 
 		if tooltip is not None:
 			try:
-				widget.setToolTip(_(tooltip, context=self.name))
+				widget.setToolTip(tooltip)
 			except:
 				pass
 		if type(min_width) == int:
 			widget.setMinimumWidth(min_width)
 		row = self.edit_grid.rowCount()
-		self.edit_grid.addWidget(QtWidgets.QLabel(_(label, context=self.name)), row, 0)
+		self.edit_grid.addWidget(QtWidgets.QLabel(label), row, 0)
 		self.edit_grid.addWidget(widget, row, 1)
 		self.set_focus_widget(widget)
 
@@ -170,7 +180,7 @@ class qtplugin(qtitem.qtitem):
 		A QCheckBox widget.
 		"""
 
-		checkbox = QtWidgets.QCheckBox(_(label, context=self.name))
+		checkbox = QtWidgets.QCheckBox(label)
 		checkbox.clicked.connect(self.apply_edit_changes)
 		self.add_control('', checkbox, tooltip)
 		if var is not None:
@@ -383,7 +393,7 @@ class qtplugin(qtitem.qtitem):
 		qprogedit = QTabManager(cfg=cfg)
 		qprogedit.focusLost.connect(self.apply_edit_changes)
 		qprogedit.handlerButtonClicked.connect(self.apply_edit_changes)
-		qprogedit.addTab(_(label, context=self.name)).setLang(lang)
+		qprogedit.addTab(label).setLang(lang)
 
 		if var is not None:
 			self.auto_editor[var] = qprogedit
@@ -403,7 +413,7 @@ class qtplugin(qtitem.qtitem):
 		A QLabel widget.
 		"""
 
-		label = QtWidgets.QLabel(_(msg, context=self.name))
+		label = QtWidgets.QLabel(msg)
 		label.setWordWrap(True)
 		label.setOpenExternalLinks(True)
 		self.edit_vbox.addWidget(label)
@@ -451,7 +461,7 @@ class qtplugin(qtitem.qtitem):
 		A QPushButton widget.
 		"""
 
-		button_apply = QtWidgets.QPushButton(_(label, context=self.name))
+		button_apply = QtWidgets.QPushButton(label)
 		button_apply.setIcon(self.theme.qicon(icon))
 		button_apply.setIconSize(QtCore.QSize(16, 16))
 		button_apply.clicked.connect(self.apply_edit_changes)

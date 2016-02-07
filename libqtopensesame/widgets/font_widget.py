@@ -20,7 +20,8 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 from libopensesame.py3compat import *
 from qtpy import QtCore, QtGui, QtWidgets
 from libqtopensesame.widgets.base_widget import base_widget
-from libqtopensesame.misc import _
+from libqtopensesame.misc.translate import translation_context
+_ = translation_context(u'font_widget', category=u'core')
 
 class font_widget_base(base_widget):
 

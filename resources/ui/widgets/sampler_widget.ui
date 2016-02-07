@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>sampler_widget</class>
- <widget class="QWidget" name="sampler_widget">
+ <class>ui_sampler_widget</class>
+ <widget class="QWidget" name="ui_sampler_widget">
   <property name="geometry">
    <rect>
     <x>0</x>

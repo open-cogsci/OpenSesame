@@ -20,9 +20,10 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 from libopensesame.py3compat import *
 from qtpy import QtWidgets
 from libopensesame import debug
-from libqtopensesame.misc import _
 from libqtopensesame.extensions import base_extension
 from libqtopensesame.misc.config import cfg
+from libqtopensesame.misc.translate import translation_context
+_ = translation_context(u'update_checker', category=u'extension')
 
 class update_checker(base_extension):
 

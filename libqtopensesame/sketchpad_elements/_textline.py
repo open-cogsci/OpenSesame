@@ -20,10 +20,11 @@ along with openexp.  If not, see <http://www.gnu.org/licenses/>.
 import os
 from libopensesame.py3compat import *
 from libopensesame.exceptions import osexception
-from libqtopensesame.misc import _
 from libqtopensesame.sketchpad_elements._base_element import base_element
 from libopensesame.sketchpad_elements import textline as textline_runtime
 from qtpy import QtCore, QtWidgets
+from libqtopensesame.misc.translate import translation_context
+_ = translation_context(u'sketchpad', category=u'item')
 
 class textline(base_element, textline_runtime):
 

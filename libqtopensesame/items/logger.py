@@ -20,8 +20,9 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 from libopensesame.py3compat import *
 from libopensesame.logger import logger as logger_runtime
 from libqtopensesame.items.qtplugin import qtplugin
-from libqtopensesame.misc import _
 from libqtopensesame.widgets.logger_widget import logger_widget
+from libqtopensesame.misc.translate import translation_context
+_ = translation_context(u'logger', category=u'item')
 
 class logger(logger_runtime, qtplugin):
 
@@ -55,8 +56,7 @@ class logger(logger_runtime, qtplugin):
 		for item in self.experiment.items.values():
 			if item.item_type == self.item_type and item is not self:
 				self.user_hint_widget.add(
-					_(u'You have multiple unlinked loggers. This can lead to '
-					u'messy log files.'))
+					_(u'You have multiple unlinked loggers. This can lead to messy log files.'))
 				self.user_hint_widget.refresh()
 				break
 		self.logger_widget.update()

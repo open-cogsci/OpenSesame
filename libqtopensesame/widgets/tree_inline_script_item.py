@@ -18,14 +18,14 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame.py3compat import *
-
 from qtpy import QtCore, QtWidgets
-from libqtopensesame.misc import _
 from libqtopensesame.widgets.tree_item_item import tree_item_item
 from libqtopensesame.widgets.tree_inline_script_phase_item import \
 	tree_inline_script_phase_item
 from libqtopensesame.widgets.tree_inline_script_symbol_item import \
 	tree_inline_script_symbol_item
+from libqtopensesame.misc.translate import translation_context
+_ = translation_context(u'tree_inline_script_item', category=u'core')
 
 class tree_inline_script_item(tree_item_item):
 

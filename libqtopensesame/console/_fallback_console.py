@@ -22,9 +22,10 @@ import code
 import time
 from qtpy import QtGui, QtWidgets, QtCore
 from libopensesame import debug
-from libqtopensesame.misc import _
 from libqtopensesame.misc.config import cfg
 from libqtopensesame.console._base_console import base_console
+from libqtopensesame.misc.translate import translation_context
+_ = translation_context(u'console', category=u'core')
 
 class pyterm(code.InteractiveConsole):
 

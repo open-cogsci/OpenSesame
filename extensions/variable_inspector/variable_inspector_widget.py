@@ -18,10 +18,11 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame.py3compat import *
-from libqtopensesame.misc import _
 from variable_inspector_cell import variable_inspector_cell
 from libqtopensesame.widgets.base_widget import base_widget
 from libqtopensesame.misc import drag_and_drop
+from libqtopensesame.misc.translate import translation_context
+_ = translation_context(u'variable_inspector', category=u'extension')
 
 class variable_inspector_widget(base_widget):
 

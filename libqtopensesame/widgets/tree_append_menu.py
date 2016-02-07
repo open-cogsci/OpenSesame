@@ -18,10 +18,11 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame.py3compat import *
-from libqtopensesame.misc import _
 from libqtopensesame.misc.base_subcomponent import base_subcomponent
 from libopensesame import plugins
 from qtpy import QtWidgets, QtGui
+from libqtopensesame.misc.translate import translation_context
+_ = translation_context(u'tree_append_menu', category=u'core')
 
 class append_existing_action(base_subcomponent, QtWidgets.QAction):
 

@@ -22,7 +22,6 @@ from qtpy import QtGui, QtCore, QtWidgets
 from libqtopensesame.misc.base_component import base_component
 from libqtopensesame.misc.config import cfg
 from libqtopensesame.items import experiment
-from libqtopensesame.misc import _
 from libopensesame import debug
 from libopensesame.exceptions import osexception
 import libopensesame.experiment
@@ -31,6 +30,8 @@ import libopensesame.misc
 import os
 import sys
 import warnings
+from libqtopensesame.misc.translate import translation_context
+_ = translation_context(u'qtopensesame', category=u'core')
 
 class qtopensesame(QtWidgets.QMainWindow, base_component):
 
@@ -371,7 +372,6 @@ class qtopensesame(QtWidgets.QMainWindow, base_component):
 		self.ui.action_enable_auto_response.setChecked(
 			self.experiment.auto_response)
 		self.ui.action_onetabmode.setChecked(cfg.onetabmode)
-		self.ui.action_compact_toolbar.setChecked(cfg.toolbar_size==16)
 		self.ui.tabwidget.toggle_onetabmode()
 		if cfg.toolbar_text:
 			self.ui.toolbar_main.setToolButtonStyle(

@@ -19,13 +19,14 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 
 from libopensesame.py3compat import *
 from libqtopensesame.extensions import base_extension
-from libqtopensesame.misc import _
 from libqtopensesame.misc.config import cfg
 from libopensesame import metadata
 from qtpy import QtCore
 import sys
 import yaml
 import os
+from libqtopensesame.misc.translate import translation_context
+_ = translation_context(u'bug_report', category=u'extension')
 
 class capture_stderr(object):
 

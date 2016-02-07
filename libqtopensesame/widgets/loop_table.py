@@ -18,13 +18,10 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame.py3compat import *
-
-__author__ = "Sebastiaan Mathot"
-__license__ = "GPLv3"
-
 from libqtopensesame.widgets import good_looking_table
-from libqtopensesame.misc import _
 from qtpy import QtCore, QtWidgets
+from libqtopensesame.misc.translate import translation_context
+_ = translation_context(u'loop', category=u'item')
 
 class loop_table(good_looking_table.good_looking_table):
 

@@ -18,9 +18,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame.py3compat import *
-
 from qtpy import QtCore, QtWidgets
-from libqtopensesame.misc import _
 from libqtopensesame.widgets.tree_base_item import tree_base_item
 
 class tree_inline_script_phase_item(tree_base_item):

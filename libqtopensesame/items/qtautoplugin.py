@@ -23,8 +23,10 @@ import os
 from libopensesame import plugins
 from libqtopensesame.items.qtplugin import qtplugin
 from libqtopensesame import validators
-from libqtopensesame.misc import _
+from libqtopensesame.misc.translate import translation_context
 from libopensesame.exceptions import osexception
+
+_ = translation_context(u'qtautoplugin', category=u'core')
 
 class qtautoplugin(qtplugin):
 
@@ -39,6 +41,8 @@ class qtautoplugin(qtplugin):
 		"""Construct the GUI controls based on info.yaml"""
 
 		qtplugin.init_edit_widget(self, False)
+		item_type_translate = translation_context(self.item_type,
+			category=u'plugin')
 		self.info = plugins.plugin_properties(self.item_type, _type=u'plugins')
 		# Some options are required. Which options are requires depends on the
 		# specific widget.
@@ -85,40 +89,44 @@ class qtautoplugin(qtplugin):
 			for keyword, default in keywords.items():
 				if keyword not in c:
 					c[keyword] = default
+			# Translate translatable fields
+			c[u'label'] = item_type_translate(c[u'label'])
+			if c[u'tooltip'] is not None:
+				c[u'tooltip'] = item_type_translate(c[u'tooltip'])
 			# Parse checkbox
 			if c[u'type'] == u'checkbox':
-				widget = self.add_checkbox_control(c[u'var'], c[u'label'], \
+				widget = self.add_checkbox_control(c[u'var'], c[u'label'],
 					tooltip=c[u'tooltip'])
 			# Parse color_edit
 			elif c[u'type'] == u'color_edit':
-				widget = self.add_color_edit_control(c[u'var'], c[u'label'], \
+				widget = self.add_color_edit_control(c[u'var'], c[u'label'],
 					tooltip=c[u'tooltip'], min_width=c[u'min_width'])
 			# Parse combobox
 			elif c[u'type'] == u'combobox':
-				widget = self.add_combobox_control(c[u'var'], c[u'label'], \
+				widget = self.add_combobox_control(c[u'var'], c[u'label'],
 					c[u'options'], tooltip=c[u'tooltip'])
 			# Parse editor
 			elif c[u'type'] == u'editor':
-				widget = self.add_editor_control(c[u'var'], c[u'label'], \
+				widget = self.add_editor_control(c[u'var'], c[u'label'],
 					syntax=c[u'syntax'], tooltip=c[u'tooltip'])
 				need_stretch = False
 			# Parse filepool
 			elif c[u'type'] == u'filepool':
-				widget = self.add_filepool_control(c[u'var'], c[u'label'], \
+				widget = self.add_filepool_control(c[u'var'], c[u'label'],
 					tooltip=c[u'tooltip'])
 			# Parse line_edit
 			elif c[u'type'] == u'line_edit':
-				widget = self.add_line_edit_control(c[u'var'], c[u'label'], \
+				widget = self.add_line_edit_control(c[u'var'], c[u'label'],
 					tooltip=c[u'tooltip'], min_width=c[u'min_width'])
 			# Parse spinbox
 			elif c[u'type'] == u'spinbox':
-				widget = self.add_spinbox_control(c[u'var'], c[u'label'], \
-					c[u'min_val'], c[u'max_val'], prefix=c[u'prefix'], suffix= \
-					c[u'suffix'], tooltip=c[u'tooltip'])
+				widget = self.add_spinbox_control(c[u'var'], c[u'label'],
+					c[u'min_val'], c[u'max_val'], prefix=c[u'prefix'],
+					suffix=c[u'suffix'], tooltip=c[u'tooltip'])
 			# Parse slider
 			elif c[u'type'] == u'slider':
-				widget = self.add_slider_control(c[u'var'], c[u'label'], \
-					c[u'min_val'], c[u'max_val'], left_label=c[u'left_label'], \
+				widget = self.add_slider_control(c[u'var'], c[u'label'],
+					c[u'min_val'], c[u'max_val'], left_label=c[u'left_label'],
 					right_label=c[u'right_label'], tooltip=c[u'tooltip'])
 			# Parse text
 			elif c[u'type'] == u'text':
@@ -139,8 +147,7 @@ class qtautoplugin(qtplugin):
 			# specified.
 			if u'name' in c:
 				if hasattr(self, c[u'name']):
-					raise Exception(_( \
-						u'Name "%s" is already taken in qtautoplugin control') \
+					raise Exception(_(u'Name "%s" is already taken in qtautoplugin control') \
 						% c[u'name'])
 				setattr(self, c[u'name'], widget)
 		if need_stretch:

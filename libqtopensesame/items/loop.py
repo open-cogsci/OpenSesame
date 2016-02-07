@@ -22,13 +22,14 @@ import copy
 from libopensesame.loop import loop as loop_runtime
 from libqtopensesame.items.qtitem import qtitem
 from libqtopensesame.items.qtstructure_item import qtstructure_item
-from libqtopensesame.misc import _
 from libqtopensesame.widgets import loop_table
 from libqtopensesame.widgets.loop_widget import loop_widget
 from libqtopensesame.widgets.tree_item_item import tree_item_item
 from libqtopensesame.validators import cond_validator
 from libopensesame import debug
 from qtpy import QtWidgets
+from libqtopensesame.misc.translate import translation_context
+_ = translation_context(u'loop', category=u'item')
 
 class loop(qtstructure_item, qtitem, loop_runtime):
 

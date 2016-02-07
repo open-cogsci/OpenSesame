@@ -27,7 +27,11 @@ import threading
 from libopensesame import sequence, debug
 from libqtopensesame.items import sequence as qtsequence
 from libqtopensesame.items import qtplugin
-from libqtopensesame.misc import _
+try:
+	from libqtopensesame.misc.translate import translation_context
+	_ = translation_context(u'parallel', category=u'plugin')
+except ImportError:
+	pass
 
 class parallel_process(threading.Thread):
 

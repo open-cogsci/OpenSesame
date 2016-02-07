@@ -18,8 +18,6 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame.py3compat import *
-
-from libqtopensesame.misc import _
 from libopensesame.exceptions import osexception
 from libopensesame.widgets._button import button
 
@@ -210,8 +208,8 @@ class checkbox(button):
 			if widget is not None and widget.type == u'checkbox' and \
 				widget.var == self.var:
 				if widget.group != self.group and self.group is not None:
-					raise osexception(_( \
-						u'All checkbox widgets without a group or within the same group should have the same variable.'))
+					raise osexception(
+						u'All checkbox widgets without a group or within the same group should have the same variable.')
 				if widget.checked or widget.checked == u'yes':
 					l_val.append(safe_decode(widget.text))
 		val = u';'.join(l_val)

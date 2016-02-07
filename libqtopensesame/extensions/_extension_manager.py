@@ -18,13 +18,13 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame.py3compat import *
-
 import sys
 from qtpy import QtWidgets, QtCore
 from libopensesame import plugins
 from libopensesame.exceptions import osexception
-from libqtopensesame.misc import _
 from libqtopensesame.misc.base_subcomponent import base_subcomponent
+from libqtopensesame.misc.translate import translation_context
+_ = translation_context(u'extension_manager', category=u'core')
 
 def suspend_events(fnc):
 

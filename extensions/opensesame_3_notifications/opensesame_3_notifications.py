@@ -20,7 +20,8 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 from libopensesame.py3compat import *
 from libqtopensesame.extensions import base_extension
 from libqtopensesame.misc.config import cfg
-from libqtopensesame.misc import _
+from libqtopensesame.misc.translate import translation_context
+_ = translation_context(u'opensesame_3_notifications', category=u'extension')
 
 class opensesame_3_notifications(base_extension):
 

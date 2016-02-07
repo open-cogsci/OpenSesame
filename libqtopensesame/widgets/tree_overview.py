@@ -18,10 +18,8 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame.py3compat import *
-
 from qtpy import QtGui, QtCore, QtWidgets
 from libqtopensesame.misc.config import cfg
-from libqtopensesame.misc import _
 from libqtopensesame.misc import drag_and_drop
 from libqtopensesame.misc.shortcut import shortcut
 from libqtopensesame.misc.base_subcomponent import base_subcomponent
@@ -31,6 +29,8 @@ from libqtopensesame._input.popup_menu import popup_menu
 from libopensesame import debug
 from libopensesame.exceptions import osexception
 from libopensesame.sequence import sequence
+from libqtopensesame.misc.translate import translation_context
+_ = translation_context(u'tree_overview', category=u'core')
 
 class tree_overview(base_subcomponent, base_draggable, QtWidgets.QTreeWidget):
 

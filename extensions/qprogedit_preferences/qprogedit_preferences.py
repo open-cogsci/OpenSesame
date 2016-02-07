@@ -22,7 +22,8 @@ from libopensesame.py3compat import *
 from qtpy import QtWidgets
 from libqtopensesame.extensions import base_extension
 from libqtopensesame.misc.config import cfg
-from libqtopensesame.misc import _
+from libqtopensesame.misc.translate import translation_context
+_ = translation_context(u'qprogedit_preferences', category=u'extension')
 
 class qprogedit_preferences(base_extension):
 

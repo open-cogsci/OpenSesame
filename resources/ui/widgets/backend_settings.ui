@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>widget_backend_settings</class>
- <widget class="QWidget" name="widget_backend_settings">
+ <class>ui_backend_settings</class>
+ <widget class="QWidget" name="ui_backend_settings">
   <property name="geometry">
    <rect>
     <x>0</x>

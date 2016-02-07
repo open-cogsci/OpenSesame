@@ -22,9 +22,9 @@ import os
 from qtpy import QtWidgets
 from libopensesame import debug
 from libopensesame.exceptions import osexception
-from libqtopensesame.misc import _
 from libqtopensesame.misc.config import cfg
 from libqtopensesame.misc.base_subcomponent import base_subcomponent
+from libqtopensesame.misc.translate import translation_context
 
 class base_extension(base_subcomponent):
 
@@ -48,6 +48,7 @@ class base_extension(base_subcomponent):
 		"""
 
 		debug.msg(u'creating %s' % self.name())
+		self._ = translation_context(self.name(), category=u'extension')
 		self.info = info
 		self.setup(main_window)
 		self.register_ui_files()
@@ -128,7 +129,7 @@ class base_extension(base_subcomponent):
 
 		label = self.info.get(u'label', None)
 		if label is not None:
-			return _(label, context=self.name())
+			return self._(label)
 		return None
 
 	def tooltip(self):
@@ -146,7 +147,7 @@ class base_extension(base_subcomponent):
 
 		tooltip = self.info.get(u'tooltip', None)
 		if tooltip is not None:
-			return _(tooltip, context=self.name())
+			return self._(tooltip)
 		return None
 
 
@@ -528,13 +529,13 @@ class base_extension(base_subcomponent):
 		r = 10000000 # Maximumum range for spinbox widgets
 		if u'settings' not in self.info:
 			return None
-		group = QtWidgets.QGroupBox(_(u'Extension: %s', context=self.name()) % self.name(),
+		group = QtWidgets.QGroupBox(self._(u'Extension: %s') % self.name(),
 			self.main_window)
 		layout = QtWidgets.QFormLayout(group)
 		self.settings_controls = {}
 		for setting, default in self.info[u'settings'].items():
 			value = cfg[setting]
-			label = QtWidgets.QLabel(_(setting, context=self.name()))
+			label = QtWidgets.QLabel(self._(setting))
 			if isinstance(default, bool):
 				control = QtWidgets.QCheckBox(self.main_window)
 				control.setChecked(bool(value))

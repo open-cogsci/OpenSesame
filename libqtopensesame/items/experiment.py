@@ -22,7 +22,7 @@ import libopensesame.experiment
 import libopensesame.plugins
 from libqtopensesame.misc.qtitem_store import qtitem_store
 from libqtopensesame.misc.qtsyntax import qtsyntax
-from qtpy import QtCore, QtWidgets
+from qtpy import QtCore, QtWidgets, QtGui
 import os
 
 class experiment(libopensesame.experiment.experiment):

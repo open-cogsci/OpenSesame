@@ -18,13 +18,13 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame.py3compat import *
-
 from qtpy import QtCore, QtWidgets
 import sip
-from libqtopensesame.misc import _
 from libqtopensesame.widgets.base_widget import base_widget
 from libqtopensesame.misc.base_subcomponent import base_subcomponent
 from openexp import backend
+from libqtopensesame.misc.translate import translation_context
+_ = translation_context(u'backend_settings', category=u'core')
 
 class backend_settings(base_widget):
 
@@ -40,7 +40,7 @@ class backend_settings(base_widget):
 					backend_type)
 			except:
 				_backend = None
-				
+
 			layout = getattr(self.ui, u'layout_%s' % backend_type)
 			label = getattr(self.ui, u'label_%s' % backend_type)
 			# Horribly ugly way to clear the previous settings
@@ -50,7 +50,7 @@ class backend_settings(base_widget):
 				w.widget().hide()
 				sip.delete(w)
 			if _backend is None:
-				label.setText(_(u"Failed to load backend"))				
+				label.setText(_(u"Failed to load backend"))
 			elif not hasattr(_backend, u"settings") or _backend.settings == \
 				None:
 				label.setText(_(u"No settings for %s") % _backend.__name__)

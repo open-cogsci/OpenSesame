@@ -20,11 +20,12 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 from libopensesame.py3compat import *
 from libopensesame import debug
 from qtpy import QtWidgets
-from libqtopensesame.misc import _
 from libqtopensesame.widgets.general_header_widget import general_header_widget
 from libqtopensesame.widgets.base_widget import base_widget
 from openexp._color.color import color
 from openexp import backend
+from libqtopensesame.misc.translate import translation_context
+_ = translation_context(u'general_properties', category=u'core')
 
 class general_properties(base_widget):
 

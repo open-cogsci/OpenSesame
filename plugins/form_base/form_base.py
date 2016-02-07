@@ -21,7 +21,11 @@ from libopensesame.py3compat import *
 from libopensesame.exceptions import osexception
 from libopensesame import item, widgets
 from libqtopensesame.items.qtautoplugin import qtautoplugin
-from libqtopensesame.misc import _
+try:
+	from libqtopensesame.misc.translate import translation_context
+	_ = translation_context(u'form_base', category=u'plugin')
+except ImportError:
+	pass
 
 class form_base(item.item):
 

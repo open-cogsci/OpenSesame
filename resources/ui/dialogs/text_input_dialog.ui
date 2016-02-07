@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>text_input_dialog</class>
- <widget class="QDialog" name="text_input_dialog">
+ <class>ui_text_input_dialog</class>
+ <widget class="QDialog" name="ui_text_input_dialog">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -90,7 +90,7 @@ background-color: #729fcf;</string>
   <connection>
    <sender>buttonBox</sender>
    <signal>accepted()</signal>
-   <receiver>text_input_dialog</receiver>
+   <receiver>ui_text_input_dialog</receiver>
    <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -106,7 +106,7 @@ background-color: #729fcf;</string>
   <connection>
    <sender>buttonBox</sender>
    <signal>rejected()</signal>
-   <receiver>text_input_dialog</receiver>
+   <receiver>ui_text_input_dialog</receiver>
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">

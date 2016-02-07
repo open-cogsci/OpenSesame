@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>preferences_widget</class>
- <widget class="QWidget" name="preferences_widget">
+ <class>ui_preferences_widget</class>
+ <widget class="QWidget" name="ui_preferences_widget">
   <property name="geometry">
    <rect>
     <x>0</x>

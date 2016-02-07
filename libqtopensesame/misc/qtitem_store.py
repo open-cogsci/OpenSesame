@@ -18,10 +18,10 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame.py3compat import *
-
 from libopensesame.item_store import item_store
 from libopensesame import plugins
-from libqtopensesame.misc import _
+from libqtopensesame.misc.translate import translation_context
+_ = translation_context(u'qtitem_store', category=u'core')
 
 class qtitem_store(item_store):
 

@@ -18,12 +18,12 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame.py3compat import *
-
 from qtpy import QtCore, QtGui, QtWidgets
 from libopensesame import debug
-from libqtopensesame.misc import _
 from libqtopensesame.misc.base_subcomponent import base_subcomponent
 from libqtopensesame.misc import drag_and_drop
+from libqtopensesame.misc.translate import translation_context
+_ = translation_context(u'toolbar_items_item', category=u'core')
 
 class toolbar_items_item(base_subcomponent, QtWidgets.QLabel):
 
@@ -55,9 +55,8 @@ class toolbar_items_item(base_subcomponent, QtWidgets.QLabel):
 		self.item = item
 		self.pixmap = pixmap
 		# self.setMargin(6)
-		self.setToolTip(_(
-			"Drag this <b>%s</b> item to the intended location in the overview "
-			"area or into the item list of a sequence tab") % self.item)
+		self.setToolTip(_("Drag this <b>%s</b> item to the intended location in the overview area or into the item list of a sequence tab") \
+			% self.item)
 		self.setCursor(QtGui.QCursor(QtCore.Qt.OpenHandCursor))
 		self.setPixmap(self.pixmap)
 

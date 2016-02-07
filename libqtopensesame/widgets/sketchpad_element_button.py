@@ -18,10 +18,10 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame.py3compat import *
-
-from libqtopensesame.misc import _
 from libqtopensesame.misc.base_subcomponent import base_subcomponent
 from qtpy import QtCore, QtWidgets
+from libqtopensesame.misc.translate import translation_context
+_ = translation_context(u'sketchpad', category=u'item')
 
 class sketchpad_element_button(base_subcomponent, QtWidgets.QPushButton):
 

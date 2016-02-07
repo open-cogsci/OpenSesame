@@ -18,13 +18,13 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame.py3compat import *
-
 from qtpy import QtCore, QtWidgets
-from libqtopensesame.misc import _
 from libopensesame.exceptions import osexception
 from libqtopensesame.items.experiment import experiment
 from libqtopensesame.widgets.base_widget import base_widget
 from libqtopensesame.misc.config import cfg
+from libqtopensesame.misc.translate import translation_context
+_ = translation_context(u'general_script_editor', category=u'core')
 
 class general_script_editor(base_widget):
 

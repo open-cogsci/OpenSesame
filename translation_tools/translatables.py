@@ -18,21 +18,26 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame.py3compat import *
-from qtpy import QtWidgets
-from variable_inspector_widget import variable_inspector_widget
-from libqtopensesame.misc.translate import translation_context
-_ = translation_context(u'variable_inspector', category=u'extension')
 
-class variable_inspector_dockwidget(QtWidgets.QDockWidget):
+class Translatables(object):
 
-	"""
-	desc:
-		A QDocktWidget that holds the variable inspector.
-	"""
+	def __init__(self):
 
-	def __init__(self, main_window, ext):
+		self._translatables = {}
 
-		super(variable_inspector_dockwidget, self).__init__(
-			_(u'Variable inspector'), main_window)
-		self.setWidget(variable_inspector_widget(main_window, ext))
-		self.setObjectName(u'variable_inspector')
+	def add(self, context, translatable):
+
+		if context not in self._translatables:
+			self._translatables[context] = []
+		self._translatables[context].append(translatable)
+
+	def __str__(self):
+
+		l = []
+		for context, translatables in self._translatables.items():
+			l.append(u'class %s:\n\tdef _():' % context)
+			for s in translatables:
+				s = s.replace(u"'", u"\\'")
+				s = s.replace(u'\n', u'\\n')
+				l.append(u'\t\tself.tr(\'%s\')' % s)
+		return u'\n'.join(l) + u'\n'

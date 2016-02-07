@@ -18,15 +18,15 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame.py3compat import *
-
 from qtpy import QtCore, QtGui, QtWidgets
 import libopensesame.plugins
 from libopensesame import debug
-from libqtopensesame.misc import _
 from libqtopensesame.misc.base_subcomponent import base_subcomponent
 from libqtopensesame.misc.config import cfg
 from libqtopensesame.widgets.toolbar_items_label import toolbar_items_label
 from libqtopensesame.widgets.toolbar_items_item import toolbar_items_item
+from libqtopensesame.misc.translate import translation_context
+_ = translation_context(u'toolbar_items', category=u'core')
 
 class toolbar_items(base_subcomponent, QtWidgets.QToolBar):
 
@@ -101,7 +101,7 @@ class toolbar_items(base_subcomponent, QtWidgets.QToolBar):
 		self.clear()
 
 		if self.orientation() == QtCore.Qt.Vertical:
-			self.addWidget(toolbar_items_label(self, u'Commonly used'))
+			self.addWidget(toolbar_items_label(self, _(u'Commonly used')))
 
 		# Add the core items
 		content = []

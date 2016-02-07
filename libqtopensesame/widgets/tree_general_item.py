@@ -18,10 +18,10 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame.py3compat import *
-
 from qtpy import QtCore, QtWidgets
-from libqtopensesame.misc import _
 from libqtopensesame.widgets.tree_base_item import tree_base_item
+from libqtopensesame.misc.translate import translation_context
+_ = translation_context(u'tree_general_item', category=u'core')
 
 class tree_general_item(tree_base_item):
 

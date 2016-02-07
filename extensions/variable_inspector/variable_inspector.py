@@ -19,10 +19,11 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 
 from libopensesame.py3compat import *
 from libqtopensesame.extensions import base_extension
-from libqtopensesame.misc import _
 from libqtopensesame.misc.config import cfg
 from variable_inspector_dockwidget import variable_inspector_dockwidget
 from qtpy import QtCore, QtGui, QtWidgets
+from libqtopensesame.misc.translate import translation_context
+_ = translation_context(u'variable_inspector', category=u'extension')
 
 class variable_inspector(base_extension):
 

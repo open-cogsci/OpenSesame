@@ -18,9 +18,10 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from qtpy import QtCore, QtWidgets
-from libqtopensesame.misc import _
 from libqtopensesame.widgets.tree_base_item import tree_base_item
 from libopensesame.py3compat import *
+from libqtopensesame.misc.translate import translation_context
+_ = translation_context(u'tree_item_item', category=u'core')
 
 class tree_item_item(tree_base_item):
 
@@ -272,20 +273,20 @@ class tree_item_item(tree_base_item):
 			pass
 
 	def copy_unlinked(self):
-		
+
 		"""
 		desc:
 			Copies a snippet of the current item plus children to the keyboard.
 		"""
-		
+
 		import json
-		
+
 		data = {
 			u'type'				: u'item-snippet',
 			u'main-item-name'	: self.item.name,
 			u'items'			: [],
 			}
-			
+
 		for item_name in [self.item.name] \
 			+ self.experiment.items[self.item.name].children():
 			item = self.experiment.items[item_name]
@@ -294,19 +295,19 @@ class tree_item_item(tree_base_item):
 				u'item-type'	: item.item_type,
 				u'script'		: item.to_string()
 				})
-				
+
 		text = safe_decode(json.dumps(data))
 		QtWidgets.QApplication.clipboard().setText(text)
-		
+
 	def copy_linked(self):
-		
+
 		"""
 		desc:
 			Copies a linked copy to the keyboard
 		"""
-		
+
 		import json
-		
+
 		data = {
 			u'type'				: u'item-existing',
 			u'item-name'		: self.item.name,
@@ -315,17 +316,17 @@ class tree_item_item(tree_base_item):
 			u'application-id'	: self.main_window._id(),
 			u'ancestry'			: self.ancestry()[1],
 			}
-						
+
 		text = safe_decode(json.dumps(data))
 		QtWidgets.QApplication.clipboard().setText(text)
-		
+
 	def paste(self):
-		
+
 		"""
 		desc:
 			Pastes clipboard data onto the current item, if possible.
 		"""
-	
+
 		data = self.clipboard_data()
 		if data is None:
 			return

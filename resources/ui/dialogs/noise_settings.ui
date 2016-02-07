@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>noise_patch_dialog</class>
- <widget class="QDialog" name="noise_patch_dialog">
+ <class>ui_noise_settings</class>
+ <widget class="QDialog" name="ui_noise_settings">
   <property name="geometry">
    <rect>
     <x>0</x>

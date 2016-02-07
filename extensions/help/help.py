@@ -20,11 +20,12 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 from qtpy import QtWidgets
 from libopensesame import debug
 from libopensesame import metadata
-from libqtopensesame.misc import _
 from libqtopensesame.extensions import base_extension
 from libqtopensesame.misc.base_subcomponent import base_subcomponent
 from libqtopensesame.misc.config import cfg
 from libopensesame.py3compat import *
+from libqtopensesame.misc.translate import translation_context
+_ = translation_context(u'help', category=u'extension')
 
 class action_page(QtWidgets.QAction, base_subcomponent):
 

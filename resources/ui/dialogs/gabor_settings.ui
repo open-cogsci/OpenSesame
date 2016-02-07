@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>gabor_dialog</class>
- <widget class="QDialog" name="gabor_dialog">
+ <class>ui_gabor_settings</class>
+ <widget class="QDialog" name="ui_gabor_settings">
   <property name="geometry">
    <rect>
     <x>0</x>

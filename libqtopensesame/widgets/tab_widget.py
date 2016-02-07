@@ -21,8 +21,10 @@ from libopensesame.py3compat import *
 
 from libopensesame import debug
 from libqtopensesame.misc.base_subcomponent import base_subcomponent
-from libqtopensesame.misc import config, _
+from libqtopensesame.misc import config
 from qtpy import QtGui, QtWidgets, QtCore
+from libqtopensesame.misc.translate import translation_context
+_ = translation_context(u'tab_widget', category=u'core')
 
 class tab_widget(base_subcomponent, QtWidgets.QTabWidget):
 

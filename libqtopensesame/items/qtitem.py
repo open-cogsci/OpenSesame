@@ -1,3 +1,4 @@
+
 #-*- coding:utf-8 -*-
 
 """
@@ -18,7 +19,6 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame.py3compat import *
-
 from qtpy import QtCore, QtWidgets
 import os.path
 import sip
@@ -28,9 +28,10 @@ from libqtopensesame.widgets.item_view_button import item_view_button
 from libqtopensesame.widgets.tree_item_item import tree_item_item
 from libqtopensesame.widgets.qtitem_splitter import qtitem_splitter
 from libqtopensesame.widgets import header_widget, user_hint_widget
-from libqtopensesame.misc import _
 from libqtopensesame.misc.config import cfg
 from libqtopensesame.misc.base_qtobject import base_qtobject
+from libqtopensesame.misc.translate import translation_context
+_ = translation_context(u'qtitem', category=u'core')
 
 class qtitem(base_qtobject):
 

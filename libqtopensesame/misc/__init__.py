@@ -18,42 +18,5 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame.py3compat import *
-
-import sys
-if '--catch-translatables' in sys.argv:
-
-	# Automatically catches all strings that require translation
-	from libopensesame import misc
-	import os.path
-	path = misc.resource(os.path.join(u'ts', u'translatables.txt'))
-	def _(s, context=u'script'):
-		l = open(path).read().split(u'\n')
-		if s not in l:
-			f = open(path, u'a')
-			f.write(s + u'\n')
-			print(u'New translatable: '+s)
-			f.close()
-		return s
-
-else:
-	from qtpy.QtCore import QCoreApplication
-	def _(s, context=u'script'):
-
-		"""
-		Translates a string of text.
-
-		Arguments:
-		s			--	The string to translate.
-
-		Keyword arguments:
-		context		--	The translation context. (default=u'script')
-
-		Returns:
-		The translated string.
-		"""
-
-		if py3:
-			return QCoreApplication.translate(context, s)
-		else:
-			return QCoreApplication.translate(context, s,
-				encoding=QCoreApplication.UnicodeUTF8)
+from libqtopensesame.misc.translate import translation_context
+_ = translation_context(u'unknown')

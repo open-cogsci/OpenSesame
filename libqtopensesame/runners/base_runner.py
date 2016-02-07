@@ -19,12 +19,13 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 
 import os
 from qtpy import QtWidgets
-from libqtopensesame.misc import _
 from libqtopensesame.misc.config import cfg
 from libopensesame import debug
 from libopensesame.exceptions import osexception
 from libopensesame.experiment import experiment
 from libopensesame.py3compat import *
+from libqtopensesame.misc.translate import translation_context
+_ = translation_context(u'base_runner', category=u'core')
 
 class base_runner(object):
 

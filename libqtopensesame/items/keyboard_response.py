@@ -18,15 +18,14 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame.py3compat import *
-
 from libopensesame.keyboard_response import keyboard_response as \
 	keyboard_response_runtime
 from libqtopensesame.validators import timeout_validator
 from libqtopensesame.items.qtplugin import qtplugin
-from libqtopensesame.misc import _
 from openexp.keyboard import keyboard
 from qtpy import QtCore, QtWidgets
-import cgi
+from libqtopensesame.misc.translate import translation_context
+_ = translation_context(u'keyboard_response', category=u'item')
 
 class keyboard_response(keyboard_response_runtime, qtplugin):
 

@@ -19,10 +19,11 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 
 from libopensesame.py3compat import *
 from libqtopensesame.extensions import base_extension, suspend_events
-from libqtopensesame.misc import _
 from qtpy.QtWidgets import QMenu, QToolBar
 from undo_stack import undo_stack
 import difflib
+from libqtopensesame.misc.translate import translation_context
+_ = translation_context(u'undo_manager', category=u'extension')
 
 class undo_manager(base_extension):
 

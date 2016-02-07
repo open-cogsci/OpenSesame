@@ -18,10 +18,10 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame.py3compat import *
-
 from libopensesame import debug
-from libqtopensesame.misc import _
 from libqtopensesame.widgets.header_widget import header_widget
+from libqtopensesame.misc.translate import translation_context
+_ = translation_context(u'general_header_widget', category=u'core')
 
 class general_header_widget(header_widget):
 

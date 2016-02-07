@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>opensesamerun_mainwindow</class>
- <widget class="QMainWindow" name="opensesamerun_mainwindow">
+ <class>ui_opensesamerun</class>
+ <widget class="QMainWindow" name="ui_opensesamerun">
   <property name="geometry">
    <rect>
     <x>0</x>

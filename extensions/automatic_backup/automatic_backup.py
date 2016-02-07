@@ -23,9 +23,11 @@ import os
 import time
 from qtpy import QtWidgets, QtCore
 from libopensesame import debug, misc
-from libqtopensesame.misc import _
 from libqtopensesame.extensions import base_extension
 from libqtopensesame.misc.config import cfg
+from libqtopensesame.misc.translate import translation_context
+_ = translation_context(u'automatic_backup', category=u'extension')
+
 
 class automatic_backup(base_extension):
 

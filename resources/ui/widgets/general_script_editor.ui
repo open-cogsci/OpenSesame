@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>widget_general_script_editor</class>
- <widget class="QWidget" name="widget_general_script_editor">
+ <class>ui_general_script_editor</class>
+ <widget class="QWidget" name="ui_general_script_editor">
   <property name="geometry">
    <rect>
     <x>0</x>

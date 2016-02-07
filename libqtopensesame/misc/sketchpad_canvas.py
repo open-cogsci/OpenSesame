@@ -22,9 +22,10 @@ import os
 import math
 from openexp._color.color import color
 from libqtopensesame.misc import drag_and_drop
-from libqtopensesame.misc import _
 from libqtopensesame.misc.config import cfg
 from qtpy import QtWidgets, QtGui, QtCore
+from libqtopensesame.misc.translate import translation_context
+_ = translation_context(u'sketchpad', category=u'item')
 
 class sketchpad_canvas(QtWidgets.QGraphicsScene):
 

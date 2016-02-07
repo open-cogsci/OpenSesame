@@ -86,6 +86,7 @@ if __name__ == u'__main__':
 	for i in range(len(sys.argv)-1):
 		if sys.argv[i] == '--locale':
 			locale = sys.argv[i+1]
+	opensesame._locale = locale
 	qm = resource(os.path.join(u'locale', locale) + u'.qm')
 	if qm is not None:
 		debug.msg(u'installing %s translator' % qm)

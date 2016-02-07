@@ -20,7 +20,8 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 from libopensesame.py3compat import *
 from qtpy import QtWidgets
 from libqtopensesame.misc.base_subcomponent import base_subcomponent
-from libqtopensesame.misc import _
+from libqtopensesame.misc.translate import translation_context
+_ = translation_context(u'confirmation', category=u'core')
 
 class confirmation(QtWidgets.QMessageBox, base_subcomponent):
 

@@ -20,10 +20,11 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 from libopensesame.py3compat import *
 from libopensesame.exceptions import osexception
 from libqtopensesame.extensions import base_extension
-from libqtopensesame.misc import _
 from libopensesame import misc
 import time
 import os
+from libqtopensesame.misc.translate import translation_context
+_ = translation_context(u'after_experiment', category=u'extension')
 
 class after_experiment(base_extension):
 

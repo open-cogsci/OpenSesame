@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>opensesame_mainwindow</class>
- <widget class="QMainWindow" name="opensesame_mainwindow">
+ <class>ui_mainwindow</class>
+ <widget class="QMainWindow" name="ui_mainwindow">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -67,7 +67,7 @@
      <x>0</x>
      <y>0</y>
      <width>920</width>
-     <height>31</height>
+     <height>24</height>
     </rect>
    </property>
    <widget class="QMenu" name="menu_file">
@@ -381,7 +381,7 @@
     <string>Open</string>
    </property>
    <property name="toolTip">
-    <string>Open (Ctrl+0)</string>
+    <string>Open an experiment</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+O</string>
@@ -396,7 +396,7 @@
     <string>Save</string>
    </property>
    <property name="toolTip">
-    <string>Save (Control+S)</string>
+    <string>Save an experiment</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+S</string>
@@ -411,7 +411,7 @@
     <string>Save as</string>
    </property>
    <property name="toolTip">
-    <string>Save as (Control+Shift+S)</string>
+    <string>Save an experiment under another name</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+Shift+S</string>
@@ -426,7 +426,7 @@
     <string>Quit</string>
    </property>
    <property name="toolTip">
-    <string>Quit (Alt+F4)</string>
+    <string>Quit OpenSesame</string>
    </property>
   </action>
   <action name="action_run">
@@ -434,7 +434,7 @@
     <string>Run fullscreen</string>
    </property>
    <property name="toolTip">
-    <string>Run fullscreen (Control+R)</string>
+    <string>Run experiment in fullscreen</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+R</string>
@@ -449,73 +449,10 @@
     <string>New</string>
    </property>
    <property name="toolTip">
-    <string>New (Control+N)</string>
+    <string>Start a new experiment</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+N</string>
-   </property>
-  </action>
-  <action name="action_add_sequence">
-   <property name="icon">
-    <iconset>
-     <normaloff>:/icons/sequence_large.png</normaloff>:/icons/sequence_large.png</iconset>
-   </property>
-   <property name="text">
-    <string>Add sequence</string>
-   </property>
-  </action>
-  <action name="action_add_sketchpad">
-   <property name="icon">
-    <iconset>
-     <normaloff>:/icons/sketchpad_large.png</normaloff>:/icons/sketchpad_large.png</iconset>
-   </property>
-   <property name="text">
-    <string>Add sketchpad</string>
-   </property>
-  </action>
-  <action name="action_add_keyboard_response">
-   <property name="icon">
-    <iconset>
-     <normaloff>:/icons/keyboard_response_large.png</normaloff>:/icons/keyboard_response_large.png</iconset>
-   </property>
-   <property name="text">
-    <string>Add keyboard response</string>
-   </property>
-  </action>
-  <action name="action_add_logger">
-   <property name="icon">
-    <iconset>
-     <normaloff>:/icons/logger_large.png</normaloff>:/icons/logger_large.png</iconset>
-   </property>
-   <property name="text">
-    <string>Add logger</string>
-   </property>
-  </action>
-  <action name="action_add_loop">
-   <property name="icon">
-    <iconset>
-     <normaloff>:/icons/loop_large.png</normaloff>:/icons/loop_large.png</iconset>
-   </property>
-   <property name="text">
-    <string>Add loop</string>
-   </property>
-  </action>
-  <action name="action_add_feedback">
-   <property name="icon">
-    <iconset>
-     <normaloff>:/icons/feedback_large.png</normaloff>:/icons/feedback_large.png</iconset>
-   </property>
-   <property name="text">
-    <string>Add feedback</string>
-   </property>
-  </action>
-  <action name="action_add_inline_script">
-   <property name="icon">
-    <iconset>
-     <normaloff>:/icons/inline_script_large.png</normaloff>:/icons/inline_script_large.png</iconset>
-   </property>
-   <property name="text">
-    <string>Add inline script</string>
    </property>
   </action>
   <action name="action_close_all_tabs">
@@ -539,37 +476,10 @@
     <string>Close other tabs</string>
    </property>
    <property name="toolTip">
-    <string>Close other tabs (Control+T)</string>
+    <string>Close other tabs</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+T</string>
-   </property>
-  </action>
-  <action name="action_help">
-   <property name="icon">
-    <iconset>
-     <normaloff>:/icons/help_large.png</normaloff>:/icons/help_large.png</iconset>
-   </property>
-   <property name="text">
-    <string>Offline help</string>
-   </property>
-  </action>
-  <action name="action_about">
-   <property name="icon">
-    <iconset>
-     <normaloff>:/icons/about_large.png</normaloff>:/icons/about_large.png</iconset>
-   </property>
-   <property name="text">
-    <string>About</string>
-   </property>
-  </action>
-  <action name="action_add_mouse_response">
-   <property name="icon">
-    <iconset>
-     <normaloff>:/icons/mouse_response_large.png</normaloff>:/icons/mouse_response_large.png</iconset>
-   </property>
-   <property name="text">
-    <string>Add mouse response</string>
    </property>
   </action>
   <action name="action_run_in_window">
@@ -577,43 +487,10 @@
     <string>Run in window</string>
    </property>
    <property name="toolTip">
-    <string>Run in window (Control+W)</string>
+    <string>Run experiment in window</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+W</string>
-   </property>
-  </action>
-  <action name="action_check_for_update">
-   <property name="icon">
-    <iconset>
-     <normaloff>:/icons/update_large.png</normaloff>:/icons/update_large.png</iconset>
-   </property>
-   <property name="text">
-    <string>Check for updates</string>
-   </property>
-  </action>
-  <action name="action_add_sampler">
-   <property name="icon">
-    <iconset>
-     <normaloff>:/icons/sampler_large.png</normaloff>:/icons/sampler_large.png</iconset>
-   </property>
-   <property name="text">
-    <string>Add sampler</string>
-   </property>
-   <property name="toolTip">
-    <string>Add sound sampler</string>
-   </property>
-  </action>
-  <action name="action_add_synth">
-   <property name="icon">
-    <iconset>
-     <normaloff>:/icons/synth_large.png</normaloff>:/icons/synth_large.png</iconset>
-   </property>
-   <property name="text">
-    <string>Add synth</string>
-   </property>
-   <property name="toolTip">
-    <string>Add sound synthesizer</string>
    </property>
   </action>
   <action name="action_show_pool">
@@ -643,7 +520,7 @@
     <string>Show debug window</string>
    </property>
    <property name="toolTip">
-    <string>Show debug window (standard output) and a Python interpreter (Control+D)</string>
+    <string>Show debug window (standard output) and a Python interpreter</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+D</string>
@@ -655,53 +532,6 @@
    </property>
    <property name="text">
     <string>Enable auto response</string>
-   </property>
-  </action>
-  <action name="actionPlugins">
-   <property name="enabled">
-    <bool>false</bool>
-   </property>
-   <property name="text">
-    <string>Plugins</string>
-   </property>
-  </action>
-  <action name="action_show_random_tip">
-   <property name="icon">
-    <iconset>
-     <normaloff>:/icons/about_large.png</normaloff>:/icons/about_large.png</iconset>
-   </property>
-   <property name="text">
-    <string>Random tip</string>
-   </property>
-   <property name="toolTip">
-    <string>Show a random tip</string>
-   </property>
-  </action>
-  <action name="action_open_autosave_folder">
-   <property name="icon">
-    <iconset>
-     <normaloff>:/icons/pool_large.png</normaloff>:/icons/pool_large.png</iconset>
-   </property>
-   <property name="text">
-    <string>Open backup folder</string>
-   </property>
-  </action>
-  <action name="action_submit_a_bug">
-   <property name="icon">
-    <iconset>
-     <normaloff>:/icons/submit_bug.png</normaloff>:/icons/submit_bug.png</iconset>
-   </property>
-   <property name="text">
-    <string>Submit a bug</string>
-   </property>
-  </action>
-  <action name="action_contribute">
-   <property name="icon">
-    <iconset>
-     <normaloff>:/icons/contribute.png</normaloff>:/icons/contribute.png</iconset>
-   </property>
-   <property name="text">
-    <string>Contribute</string>
    </property>
   </action>
   <action name="action_preferences">
@@ -744,24 +574,6 @@
     <string>Enable one tab mode</string>
    </property>
   </action>
-  <action name="action_compact_toolbar">
-   <property name="checkable">
-    <bool>true</bool>
-   </property>
-   <property name="text">
-    <string>Compact toolbar</string>
-   </property>
-  </action>
-  <action name="action_online_documentation">
-   <property name="text">
-    <string>Online help</string>
-   </property>
-  </action>
-  <action name="action_online_forum">
-   <property name="text">
-    <string>Online forum</string>
-   </property>
-  </action>
   <action name="action_run_quick">
    <property name="text">
     <string>Quick run</string>
@@ -771,19 +583,6 @@
    </property>
    <property name="shortcut">
     <string>Ctrl+Shift+W</string>
-   </property>
-  </action>
-  <action name="action_quick_switcher">
-   <property name="icon">
-    <iconset theme="forward">
-     <normaloff/>
-    </iconset>
-   </property>
-   <property name="text">
-    <string>Quick switcher</string>
-   </property>
-   <property name="shortcut">
-    <string>Meta+O</string>
    </property>
   </action>
   <action name="action_close_current_tab">

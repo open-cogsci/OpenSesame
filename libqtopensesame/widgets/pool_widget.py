@@ -19,7 +19,6 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 
 from libopensesame.py3compat import *
 from libopensesame import debug, misc
-from libqtopensesame.misc import _
 from libqtopensesame.misc.config import cfg
 from libqtopensesame.widgets.base_widget import base_widget
 from libqtopensesame._input.popup_menu import popup_menu
@@ -27,6 +26,8 @@ from libqtopensesame._input.confirmation import confirmation
 from qtpy import QtCore, QtWidgets
 import os
 import os.path
+from libqtopensesame.misc.translate import translation_context
+_ = translation_context(u'pool_widget', category=u'core')
 
 class pool_widget(base_widget):
 
