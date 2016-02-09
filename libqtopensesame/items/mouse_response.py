@@ -18,16 +18,19 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame.py3compat import *
-
 from libopensesame.mouse_response import mouse_response as \
 	mouse_response_runtime
 from libqtopensesame.items.qtplugin import qtplugin
 from libqtopensesame.validators import timeout_validator
-from qtpy import QtCore, QtWidgets
+from qtpy import QtCore
+from libqtopensesame.misc.translate import translation_context
+_ = translation_context(u'mouse_response', category=u'item')
 
 class mouse_response(mouse_response_runtime, qtplugin):
 
 	"""mouse_response item GUI"""
+
+	description = _(u'Collects mouse responses')
 
 	def __init__(self, name, experiment, string=None):
 
@@ -51,19 +54,14 @@ class mouse_response(mouse_response_runtime, qtplugin):
 
 		super(mouse_response, self).init_edit_widget(stretch=True)
 		# Use auto-controls for most stuff
-		self.add_line_edit_control('correct_response', 'Correct response',
-			tooltip='Set the correct response')
-		self.add_line_edit_control('allowed_responses', 'Allowed responses',
-			tooltip=(u'Set the allowed responses seperated by a semi-colon, '
-			u'e.g., "left_button;right_button"'))
-		self.add_line_edit_control('timeout', 'Timeout',
-			tooltip='Set the response timeout in milliseconds, or "infinite"',
+		self.add_line_edit_control(u'correct_response', _(u'Correct response'),
+			tooltip=_(u'Set the correct response'))
+		self.add_line_edit_control(u'allowed_responses', _(u'Allowed responses'),
+			tooltip=_(u'Set the allowed responses seperated by a semi-colon, e.g., "left_button;right_button"'))
+		self.add_line_edit_control(u'timeout', _(u'Timeout'),
+			tooltip=_(u'Set the response timeout in milliseconds, or "infinite"'),
 			validator=timeout_validator(self))
-		self.add_checkbox_control('show_cursor', 'Visible mouse cursor',
-			tooltip='If checked, the mouse cursor will be visible')
-		self.add_checkbox_control('flush', 'Flush pending mouse clicks',
-			tooltip='Flush pending mouse clicks')
-		self.add_text(
-			u'<small><i><b>Note:</b> Change the "custom cursor" option in the '
-			u'backend settings to switch between the system cursor and the '
-			u'custom OpenSesame cursor</i></small>')
+		self.add_checkbox_control(u'show_cursor', _(u'Visible mouse cursor'),
+			tooltip=_(u'If checked, the mouse cursor will be visible'))
+		self.add_checkbox_control(u'flush', _(u'Flush pending mouse clicks'),
+			tooltip=_(u'Flush pending mouse clicks'))

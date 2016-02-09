@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>Form</class>
- <widget class="QWidget" name="Form">
+ <class>extension_plugin_manager</class>
+ <widget class="QWidget" name="extension_plugin_manager">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -34,8 +34,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>672</width>
-        <height>405</height>
+        <width>676</width>
+        <height>407</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="layout_container">

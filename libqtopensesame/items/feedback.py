@@ -22,6 +22,8 @@ from libopensesame.py3compat import *
 from libopensesame.feedback import feedback as feedback_runtime
 from libqtopensesame.items.qtplugin import qtplugin
 from libqtopensesame.items.feedpad import feedpad
+from libqtopensesame.misc.translate import translation_context
+_ = translation_context(u'feeback', category=u'item')
 
 class feedback(feedpad, qtplugin, feedback_runtime):
 
@@ -29,6 +31,8 @@ class feedback(feedpad, qtplugin, feedback_runtime):
 	desc:
 		The feedback controls are implemented in feedpad.
 	"""
+
+	description = _(u'Provides feedback to the participant')
 
 	def __init__(self, name, experiment, string=None):
 

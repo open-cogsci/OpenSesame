@@ -662,7 +662,7 @@ class tree_overview(base_subcomponent, base_draggable, QtWidgets.QTreeWidget):
 					question = _('Insert into %s') % target_item.name
 					icon = u'os-sequence'
 				resp = popup_menu(self, [(0, question, icon),
-					(1, _('Insert after %s' % target_item.name), 'list-add')
+					(1, _('Insert after %s') % target_item.name, 'list-add')
 					]).show()
 				# Confirmation
 				if resp == 0 and target_item.item_type == u'loop' and \

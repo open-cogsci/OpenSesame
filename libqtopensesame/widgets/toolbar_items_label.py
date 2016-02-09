@@ -21,7 +21,7 @@ from libopensesame.py3compat import *
 from qtpy import QtCore, QtWidgets
 from libqtopensesame.misc.base_subcomponent import base_subcomponent
 from libqtopensesame.misc.translate import translation_context
-_ = translation_context(u'toolbar_items_label', category=u'core')
+_ = translation_context(u'item_category', category=u'core')
 
 class toolbar_items_label(base_subcomponent, QtWidgets.QFrame):
 

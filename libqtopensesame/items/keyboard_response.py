@@ -31,6 +31,8 @@ class keyboard_response(keyboard_response_runtime, qtplugin):
 
 	"""keyboard_response item GUI"""
 
+	description = _(u'Collects keyboard responses')
+
 	def __init__(self, name, experiment, string=None):
 
 		"""
@@ -53,28 +55,27 @@ class keyboard_response(keyboard_response_runtime, qtplugin):
 
 		super(keyboard_response, self).init_edit_widget(stretch=True)
 		# Use auto-controls for most stuff
-		self.add_line_edit_control('correct_response', 'Correct response',
-			tooltip='Set the correct response')
-		self.add_line_edit_control('allowed_responses', 'Allowed responses',
-			tooltip= \
-			'Set the allowed responses seperated by a semi-colon, e.g., "z;/"')
-		self.add_line_edit_control('timeout', 'Timeout',
-			tooltip='Set the response timeout in milliseconds, or "infinite"',
+		self.add_line_edit_control(u'correct_response', _(u'Correct response'),
+			tooltip=_(u'Set the correct response'))
+		self.add_line_edit_control(u'allowed_responses', _(u'Allowed responses'),
+			tooltip=_(u'Set the allowed responses seperated by a semi-colon, e.g., "z;/"'))
+		self.add_line_edit_control(u'timeout', _(u'Timeout'),
+			tooltip=_(u'Set the response timeout in milliseconds, or "infinite"'),
 			validator=timeout_validator(self))
-		self.add_checkbox_control('flush', 'Flush pending keypresses',
-			tooltip='Flush pending keypresses')
+		self.add_checkbox_control(u'flush', _(u'Flush pending keypresses'),
+			tooltip=_(u'Flush pending keypresses'))
 		# List available keys
-		button_list_keys = QtWidgets.QPushButton(self.theme.qicon("help-about"),
-			"List available keys")
+		button_list_keys = QtWidgets.QPushButton(
+			self.theme.qicon(u"help-about"), _(u"List available keys"))
 		button_list_keys.setIconSize(QtCore.QSize(16,16))
 		button_list_keys.clicked.connect(self.list_keys)
-		self.add_control('', button_list_keys, 'List available keys')
+		self.add_control(u'', button_list_keys, _(u'List available keys'))
 
 	def list_keys(self):
 
 		"""Show a dialog with available key names"""
 
 		my_keyboard = keyboard(self.experiment)
-		s = _('The following key names are valid:<br />') \
-			+ '<br />'.join(my_keyboard.valid_keys())
+		s = _(u'The following key names are valid:<br />') \
+			+ u'<br />'.join(my_keyboard.valid_keys())
 		self.experiment.notify(s)

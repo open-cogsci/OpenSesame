@@ -109,7 +109,7 @@ class after_experiment(base_extension):
 		if logfile is None:
 			logfile = u'Unknown logfile'
 		with open(self.ext_resource(u'finished.md')) as fd:
-			md = fd.read()
+			md = safe_decode(fd.read())
 		md = md % {
 			u'time': time.ctime(),
 			u'logfile': logfile
@@ -137,7 +137,7 @@ class after_experiment(base_extension):
 		else:
 			icon = u'os-finished-error'
 			title = _(u'Stopped')
-			md = _(u'# Stopped\n\nThe experiment did not finish normally for the '
-				u'following reason:\n\n- ') + e.markdown()
+			md = _(u'# Stopped\n\nThe experiment did not finish normally for the following reason:\n\n- ') \
+				+ e.markdown()
 		self.console.write(e)
 		self.tabwidget.open_markdown(md, icon, title)

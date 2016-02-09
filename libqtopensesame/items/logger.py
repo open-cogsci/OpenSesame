@@ -31,6 +31,8 @@ class logger(logger_runtime, qtplugin):
 		GUI controls for the logger item.
 	"""
 
+	description = _(u'Logs experimental data')
+
 	def __init__(self, name, experiment, string=None):
 
 		"""See item."""

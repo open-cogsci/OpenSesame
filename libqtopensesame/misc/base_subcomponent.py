@@ -66,3 +66,7 @@ class base_subcomponent(base_component):
 	@property
 	def pool(self):
 		return self.main_window.experiment.pool
+
+	@property
+	def locale(self):
+		return self.main_window._locale

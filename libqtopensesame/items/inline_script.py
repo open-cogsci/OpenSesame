@@ -28,10 +28,14 @@ from libqtopensesame.misc.config import cfg
 from libqtopensesame.widgets.tree_inline_script_item import \
 	tree_inline_script_item
 from qtpy import QtCore, QtWidgets
+from libqtopensesame.misc.translate import translation_context
+_ = translation_context(u'inline_script', category=u'item')
 
 class inline_script(inline_script_runtime, qtplugin):
 
 	"""The inline_script GUI controls"""
+
+	description = _(u'Executes Python code'	)
 
 	def __init__(self, name, experiment, string=None):
 
@@ -106,8 +110,8 @@ class inline_script(inline_script_runtime, qtplugin):
 		self.qprogedit.handlerButtonClicked.connect(self.apply_edit_changes)
 		self.qprogedit.focusLost.connect(self.apply_edit_changes)
 		self.qprogedit.cursorRowChanged.connect(self.apply_edit_changes)
-		self.qprogedit.addTab(u'Prepare').setLang(u'Python')
-		self.qprogedit.addTab(u'Run').setLang(u'Python')
+		self.qprogedit.addTab(_(u'Prepare')).setLang(u'Python')
+		self.qprogedit.addTab(_(u'Run')).setLang(u'Python')
 		# Switch to the run phase, unless there is only content for the prepare
 		# phase.
 		if self.var._run == u'' and self.var._prepare != u'':

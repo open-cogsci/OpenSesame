@@ -28,7 +28,7 @@ class logger(item.item):
 		The logger item logs experimental data (i.e. variables).
 	"""
 
-	description = u'Logs experimental data'
+	description = u'Logs experimental dataxxxx'
 
 	def reset(self):
 

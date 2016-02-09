@@ -113,7 +113,7 @@ class tab_widget(base_subcomponent, QtWidgets.QTabWidget):
 		index = self.indexOf(widget)
 		if index < 0:
 			index = self.addTab(widget, self.main_window.theme.qicon(icon),
-				_(name))
+				name)
 		if switch:
 			self.setCurrentIndex(index)
 
@@ -277,7 +277,7 @@ class tab_widget(base_subcomponent, QtWidgets.QTabWidget):
 		from libqtopensesame.widgets import webbrowser
 		browser = webbrowser.webbrowser(self.main_window)
 		browser.load(url)
-		self.add(browser, u"applications-internet", u'Help')
+		self.add(browser, u"applications-internet", _(u'Help'))
 
 	def open_help(self, item):
 
@@ -307,8 +307,8 @@ class tab_widget(base_subcomponent, QtWidgets.QTabWidget):
 		if self.switch(u'__backend_settings__'):
 			return
 		from libqtopensesame.widgets.backend_settings import backend_settings
-		self.add(backend_settings(self.main_window), u'backend', \
-			u'Back-end settings')
+		self.add(backend_settings(self.main_window), u'backend',
+			_(u'Back-end settings'))
 
 	def open_forum(self):
 
@@ -324,7 +324,7 @@ class tab_widget(base_subcomponent, QtWidgets.QTabWidget):
 			return
 		from libqtopensesame.widgets.general_properties import general_properties
 		w = general_properties(self.main_window)
-		self.add(w, u'experiment', u'General properties')
+		self.add(w, u'experiment', _(u'General properties'))
 
 	def open_general_script(self):
 
@@ -335,7 +335,7 @@ class tab_widget(base_subcomponent, QtWidgets.QTabWidget):
 		from libqtopensesame.widgets.general_script_editor import \
 			general_script_editor
 		self.add(general_script_editor(self.main_window), u'utilities-terminal',
-			u'General script editor')
+			_(u'General script editor'))
 
 	def open_osdoc(self):
 
@@ -357,7 +357,7 @@ class tab_widget(base_subcomponent, QtWidgets.QTabWidget):
 			return
 		from libqtopensesame.widgets.unused_widget import unused_widget
 		w = unused_widget(self.main_window)
-		self.add(w, u'unused', u'Unused items')
+		self.add(w, u'unused', _(u'Unused items'))
 
 	def open_variables_help(self):
 
@@ -371,8 +371,8 @@ class tab_widget(base_subcomponent, QtWidgets.QTabWidget):
 
 		from libqtopensesame.widgets import preferences_widget
 		if not self.switch(u"__preferences__"):
-			self.add(preferences_widget.preferences_widget(self.main_window), \
-				u"options", u"Preferences")
+			self.add(preferences_widget.preferences_widget(self.main_window),
+				u"options", _(u"Preferences"))
 
 	def open_start_new(self, start=False, switch=True):
 
@@ -399,7 +399,7 @@ class tab_widget(base_subcomponent, QtWidgets.QTabWidget):
 				return
 		from libqtopensesame.widgets.start_new_widget import start_new_widget
 		w = start_new_widget(self.main_window, start=start)
-		self.add(w, u'os-experiment', u'Get started', switch=switch)
+		self.add(w, u'os-experiment', _(u'Get started'), switch=switch)
 
 	def switch(self, tab_name):
 
@@ -478,7 +478,7 @@ class tab_widget(base_subcomponent, QtWidgets.QTabWidget):
 			wb.load(md)
 		else:
 			wb.load_markdown(md)
-		self.main_window.tabwidget.add(wb, icon, _(title))
+		self.main_window.tabwidget.add(wb, icon, title)
 
 	def focus(self):
 

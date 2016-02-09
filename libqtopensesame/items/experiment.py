@@ -24,6 +24,8 @@ from libqtopensesame.misc.qtitem_store import qtitem_store
 from libqtopensesame.misc.qtsyntax import qtsyntax
 from qtpy import QtCore, QtWidgets, QtGui
 import os
+from libqtopensesame.misc.translate import translation_context
+_ = translation_context(u'experiment', category=u'item')
 
 class experiment(libopensesame.experiment.experiment):
 
@@ -78,6 +80,14 @@ class experiment(libopensesame.experiment.experiment):
 			pool_folder, experiment_path=experiment_path, resources=resources,
 			fullscreen=None)
 
+	@property
+	def default_title(self):
+		return _(u'New experiment')
+
+	@property
+	def default_description(self):
+		return _(u'Default description')
+		
 	def help(self, name):
 
 		"""

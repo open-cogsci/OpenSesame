@@ -95,7 +95,7 @@ background-color: #729fcf;</string>
   <connection>
    <sender>buttonBox</sender>
    <signal>accepted()</signal>
-   <receiver>notification_dialog</receiver>
+   <receiver>ui_notification_dialog</receiver>
    <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -111,7 +111,7 @@ background-color: #729fcf;</string>
   <connection>
    <sender>buttonBox</sender>
    <signal>rejected()</signal>
-   <receiver>notification_dialog</receiver>
+   <receiver>ui_notification_dialog</receiver>
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">

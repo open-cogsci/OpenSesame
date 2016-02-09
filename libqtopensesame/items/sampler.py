@@ -23,6 +23,8 @@ from libqtopensesame.items.qtplugin import qtplugin
 from libqtopensesame.widgets.sampler_widget import sampler_widget
 from libqtopensesame.widgets import pool_widget
 from libqtopensesame.validators import duration_validator
+from libqtopensesame.misc.translate import translation_context
+_ = translation_context(u'sampler', category=u'item')
 
 class sampler(sampler_runtime, qtplugin):
 
@@ -30,6 +32,8 @@ class sampler(sampler_runtime, qtplugin):
 	desc:
 		GUI controls for the sampler item.
 	"""
+
+	description = _(u'Plays a sound file in .wav or .ogg format')
 
 	def __init__(self, name, experiment, string=None):
 

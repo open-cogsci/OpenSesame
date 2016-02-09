@@ -34,6 +34,8 @@ class sequence(qtstructure_item, qtplugin, sequence_runtime):
 		GUI controls for the sequence item.
 	"""
 
+	description = _(u'Runs a number of items in sequence')
+
 	def __init__(self, name, experiment, string=None):
 
 		"""
@@ -64,10 +66,10 @@ class sequence(qtstructure_item, qtplugin, sequence_runtime):
 		self.set_focus_widget(self.treewidget)
 		self.edit_vbox.addWidget(self.treewidget)
 		self.add_checkbox_control(u'flush_keyboard',
-			u'Flush pending key presses at sequence start',
-			u'Flush pending key presses at sequence start')
+			_(u'Flush pending key presses at sequence start'),
+			_(u'Flush pending key presses at sequence start'))
 		self.add_text(
-			u'<b>Important</b>: A sequence has <a href="http://osdoc.cogsci.nl/usage/prepare-run">a variable preparation time</a>.')
+			_(u'<b>Important</b>: A sequence has <a href="http://osdoc.cogsci.nl/usage/prepare-run">a variable preparation time</a>.'))
 
 	def edit_widget(self):
 

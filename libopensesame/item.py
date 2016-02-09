@@ -62,7 +62,7 @@ class item(object):
 		if self.item_type.startswith(prefix):
 			self.item_type = self.item_type[len(prefix):]
 		if not hasattr(self, u'description'):
-			self.var.description = u'Default description'
+			self.var.description = self.default_description
 		else:
 			self.var.description = self.description
 		self.from_string(string)
@@ -82,6 +82,10 @@ class item(object):
 	@property
 	def python_workspace(self):
 		return self.experiment._python_workspace
+
+	@property
+	def default_description(self):
+		return u'Default description'
 
 	def reset(self):
 

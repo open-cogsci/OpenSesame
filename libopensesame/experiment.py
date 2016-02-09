@@ -121,7 +121,7 @@ class experiment(item.item):
 
 		# Set default variables
 		self.var.start = u'experiment'
-		self.var.title = u'My Experiment'
+		self.var.title = self.default_title
 		self.var.bidi = u'no'
 		self.var.round_decimals = 2
 		self.var.form_clicks = u'no'
@@ -198,6 +198,10 @@ class experiment(item.item):
 			u'experiment.fallback_pool_folder is deprecated. Use file_pool_store instead.',
 			DeprecationWarning)
 		return self.pool.fallback_folder()
+
+	@property
+	def default_title(self):
+		return u'New experiment'
 
 	def get_file(self, path):
 

@@ -50,7 +50,7 @@ class sketchpad_element_button(base_subcomponent, QtWidgets.QPushButton):
 		self.setFlat(True)
 		self.setCheckable(True)
 		self.setIcon(self.theme.qicon(u'os-%s' % self.name))
-		self.setToolTip(_(u'Draw %s element' % self.name))
+		self.setToolTip(_(u'Draw %s element') % self.name)
 		self.clicked.connect(self.select)
 
 	def select(self, checked):

@@ -18,11 +18,12 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame.py3compat import *
-
 from libopensesame import debug
-from libqtopensesame.misc import config, _
+from libqtopensesame.misc import config
 from libqtopensesame.widgets.base_widget import base_widget
 from qtpy import QtWidgets, QtCore
+from libqtopensesame.misc.translate import translation_context
+_ = translation_context(u'unused_widget', category=u'core')
 
 class unused_widget(base_widget):
 

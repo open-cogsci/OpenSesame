@@ -22,6 +22,8 @@ from libopensesame.synth import synth as synth_runtime
 from libqtopensesame.items.qtplugin import qtplugin
 from libqtopensesame.widgets.synth_widget import synth_widget
 from libqtopensesame.validators import duration_validator
+from libqtopensesame.misc.translate import translation_context
+_ = translation_context(u'synth', category=u'item')
 
 class synth(synth_runtime, qtplugin):
 
@@ -29,6 +31,8 @@ class synth(synth_runtime, qtplugin):
 	desc:
 		GUI controls for the synth item.
 	"""
+
+	description = _(u'A basic sound synthesizer')
 
 	def __init__(self, name, experiment, string=None):
 

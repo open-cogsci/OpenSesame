@@ -1,4 +1,3 @@
-
 #-*- coding:utf-8 -*-
 
 """
@@ -75,6 +74,10 @@ class qtitem(base_qtobject):
 	@property
 	def extension_manager(self):
 		return self.experiment.main_window.extension_manager
+
+	@property
+	def default_description(self):
+		return _(u'Default description')
 
 	def open_tab(self, select_in_tree=True):
 

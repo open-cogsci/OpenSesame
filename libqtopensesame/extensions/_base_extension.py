@@ -601,6 +601,10 @@ class base_extension(base_subcomponent):
 			type:	unicode
 		"""
 
+		path = os.path.join(self.info[u'plugin_folder'], u'locale', self.locale,
+			resource)
+		if os.path.exists(path):
+			return path
 		path = os.path.join(self.info[u'plugin_folder'], resource)
 		if not os.path.exists(path):
 			raise osexception(u'Extension resource not found: %s' % path)
