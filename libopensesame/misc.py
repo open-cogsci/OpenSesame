@@ -296,7 +296,7 @@ def module_versions():
 	A string with version numbers
 	"""
 
-	from PyQt4 import QtCore
+	from qtpy import QtCore
 
 	s = u"OpenSesame %s" % metadata.__version__
 	s += u"\nPython %s" % sys.version
