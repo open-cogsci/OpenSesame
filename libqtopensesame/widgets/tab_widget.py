@@ -374,33 +374,6 @@ class tab_widget(base_subcomponent, QtWidgets.QTabWidget):
 			self.add(preferences_widget.preferences_widget(self.main_window),
 				u"options", _(u"Preferences"))
 
-	def open_start_new(self, start=False, switch=True):
-
-		"""
-		desc:
-			Opens the start-new tab
-
-		keywords:
-			start:
-			 	desc:	Indicates whether the widget is opened because
-						OpenSesame has started (True) or because the new button
-						has been clicked (False).
-				type:	bool
-			switch:
-				desc:	Indicates whether the new tab should be switched to.
-				type: 	bool
-		"""
-
-		if start:
-			if self.switch(u'__start_wizard__'):
-				return
-		else:
-			if self.switch(u'__new_wizard__'):
-				return
-		from libqtopensesame.widgets.start_new_widget import start_new_widget
-		w = start_new_widget(self.main_window, start=start)
-		self.add(w, u'os-experiment', _(u'Get started'), switch=switch)
-
 	def switch(self, tab_name):
 
 		"""

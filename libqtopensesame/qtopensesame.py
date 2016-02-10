@@ -139,7 +139,6 @@ class qtopensesame(QtWidgets.QMainWindow, base_component):
 		# Make the connections
 		self.ui.itemtree.structure_change.connect(self.update_overview_area)
 		self.ui.action_quit.triggered.connect(self.close)
-		self.ui.action_new.triggered.connect(self.new_file)
 		self.ui.action_open.triggered.connect(self.open_file)
 		self.ui.action_save.triggered.connect(self.save_file)
 		self.ui.action_save_as.triggered.connect(self.save_file_as)
@@ -637,12 +636,6 @@ class qtopensesame(QtWidgets.QMainWindow, base_component):
 				self.ui.menu_recent_files.addAction( \
 					recent_action.recent_action(path, self, \
 					self.ui.menu_recent_files))
-
-	def new_file(self):
-
-		"""Discard the current experiment and start with a new file"""
-
-		self.ui.tabwidget.open_start_new()
 
 	def open_file(self, dummy=None, path=None, add_to_recent=True):
 

@@ -84,7 +84,6 @@
      </property>
      <addaction name="actionDummy"/>
     </widget>
-    <addaction name="action_new"/>
     <addaction name="action_open"/>
     <addaction name="action_save"/>
     <addaction name="action_save_as"/>
@@ -322,7 +321,6 @@
    <attribute name="toolBarBreak">
     <bool>false</bool>
    </attribute>
-   <addaction name="action_new"/>
    <addaction name="action_open"/>
    <addaction name="action_save"/>
    <addaction name="separator"/>
@@ -414,21 +412,6 @@
    </property>
    <property name="shortcut">
     <string>Ctrl+R</string>
-   </property>
-  </action>
-  <action name="action_new">
-   <property name="icon">
-    <iconset>
-     <normaloff>:/icons/new_large.png</normaloff>:/icons/new_large.png</iconset>
-   </property>
-   <property name="text">
-    <string>New …</string>
-   </property>
-   <property name="toolTip">
-    <string>Start a new experiment</string>
-   </property>
-   <property name="shortcut">
-    <string>Ctrl+N</string>
    </property>
   </action>
   <action name="action_close_all_tabs">
