@@ -14,6 +14,12 @@
    <string>Form</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
+   <property name="spacing">
+    <number>0</number>
+   </property>
+   <property name="margin">
+    <number>12</number>
+   </property>
    <item>
     <widget class="QScrollArea" name="scrollArea">
      <widget class="QWidget" name="container_widget">
@@ -26,6 +32,12 @@
        </rect>
       </property>
       <layout class="QVBoxLayout" name="layout_preferences">
+       <property name="spacing">
+        <number>12</number>
+       </property>
+       <property name="margin">
+        <number>12</number>
+       </property>
        <item>
         <widget class="QGroupBox" name="groupBox_2">
          <property name="sizePolicy">
@@ -41,11 +53,17 @@
           <property name="leftMargin">
            <number>0</number>
           </property>
+          <property name="topMargin">
+           <number>12</number>
+          </property>
           <property name="rightMargin">
            <number>0</number>
           </property>
           <property name="bottomMargin">
            <number>0</number>
+          </property>
+          <property name="verticalSpacing">
+           <number>6</number>
           </property>
           <item row="0" column="0">
            <widget class="QCheckBox" name="checkbox_autoresponse">
@@ -73,7 +91,7 @@
            <number>0</number>
           </property>
           <property name="topMargin">
-           <number>9</number>
+           <number>12</number>
           </property>
           <property name="rightMargin">
            <number>0</number>
@@ -145,7 +163,7 @@
            <number>0</number>
           </property>
           <property name="topMargin">
-           <number>9</number>
+           <number>12</number>
           </property>
           <property name="rightMargin">
            <number>0</number>

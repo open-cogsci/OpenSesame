@@ -14,8 +14,11 @@
    <string>Form</string>
   </property>
   <layout class="QVBoxLayout" name="layout_vbox">
+   <property name="spacing">
+    <number>12</number>
+   </property>
    <property name="margin">
-    <number>4</number>
+    <number>12</number>
    </property>
    <item>
     <widget class="QWidget" name="widget" native="true">
@@ -27,10 +30,10 @@
      </property>
      <layout class="QHBoxLayout" name="horizontalLayout">
       <property name="spacing">
-       <number>16</number>
+       <number>12</number>
       </property>
       <property name="margin">
-       <number>4</number>
+       <number>0</number>
       </property>
       <item>
        <widget class="QLabel" name="label_warning_icon">

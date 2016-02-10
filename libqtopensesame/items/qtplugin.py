@@ -131,8 +131,7 @@ class qtplugin(qtitem.qtitem):
 		if type(min_width) == int:
 			widget.setMinimumWidth(min_width)
 		row = self.edit_grid.rowCount()
-		self.edit_grid.addWidget(QtWidgets.QLabel(label), row, 0)
-		self.edit_grid.addWidget(widget, row, 1)
+		self.edit_grid.insertRow(row, label, widget)
 		self.set_focus_widget(widget)
 
 	def add_line_edit_control(self, var, label, tooltip=None, default=None,
@@ -416,6 +415,7 @@ class qtplugin(qtitem.qtitem):
 		label = QtWidgets.QLabel(msg)
 		label.setWordWrap(True)
 		label.setOpenExternalLinks(True)
+		# self.add_control(u'', label)
 		self.edit_vbox.addWidget(label)
 		return label
 

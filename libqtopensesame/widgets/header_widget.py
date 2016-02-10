@@ -55,14 +55,15 @@ class header_widget(base_widget):
 		self.edit_desc.hide()
 
 		vbox = QtWidgets.QVBoxLayout()
-		vbox.setContentsMargins(8, 0, 0, 0)
+		vbox.setContentsMargins(0, 0, 0, 0)
 		vbox.setSpacing(0)
 		vbox.addWidget(self.label_name)
 		vbox.addWidget(self.edit_name)
 		vbox.addWidget(self.label_desc)
 		vbox.addWidget(self.edit_desc)
 		self.refresh()
-		self.setSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Fixed)
+		self.setSizePolicy(QtWidgets.QSizePolicy.Expanding,
+			QtWidgets.QSizePolicy.Fixed)
 		self.setLayout(vbox)
 
 	def refresh(self):

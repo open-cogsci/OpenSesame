@@ -59,15 +59,19 @@ class sequence(qtstructure_item, qtplugin, sequence_runtime):
 		"""See qtitem."""
 
 		super(sequence, self).init_edit_widget(False)
+		self.checkbox_flush_keyboard = QtWidgets.QCheckBox(
+			_(u'Flush pending key presses at sequence start'))
+		self.checkbox_flush_keyboard.setToolTip(
+			_(u'Flush pending key presses at sequence start'))
+		self.auto_add_widget(self.checkbox_flush_keyboard,
+			var=u'flush_keyboard')
+		self.edit_vbox.addWidget(self.checkbox_flush_keyboard)
 		self.treewidget = tree_overview(self.main_window, overview_mode=False)
 		self.treewidget.setup(self.main_window)
 		self.treewidget.structure_change.connect(self.update)
 		self.treewidget.text_change.connect(self.update_script)
 		self.set_focus_widget(self.treewidget)
 		self.edit_vbox.addWidget(self.treewidget)
-		self.add_checkbox_control(u'flush_keyboard',
-			_(u'Flush pending key presses at sequence start'),
-			_(u'Flush pending key presses at sequence start'))
 		self.add_text(
 			_(u'<b>Important</b>: A sequence has <a href="http://osdoc.cogsci.nl/usage/prepare-run">a variable preparation time</a>.'))
 

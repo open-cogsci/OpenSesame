@@ -779,8 +779,8 @@ class qtopensesame(QtWidgets.QMainWindow, base_component):
 				strict=True, allow_vars=False))
 		else:
 			cfg.file_dialog_path = self.current_path
-		path, file_type = QtWidgets.QFileDialog.getSaveFileNameAndFilter(
-			self.ui.centralwidget, _(u'Save file as ...'),
+		path, file_type = QtWidgets.QFileDialog.getSaveFileName(
+			self.ui.centralwidget, _(u'Save as…'),
 			directory=cfg.file_dialog_path, filter=self.save_file_filter)
 		if path is None or path == u"":
 			return

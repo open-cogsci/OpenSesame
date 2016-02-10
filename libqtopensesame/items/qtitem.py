@@ -37,6 +37,7 @@ class qtitem(base_qtobject):
 	"""Base class for the GUI controls of other items"""
 
 	initial_view = u'controls'
+	label_align = u'right'
 
 	def __init__(self):
 
@@ -197,7 +198,8 @@ class qtitem(base_qtobject):
 		self.header_item_icon = self.theme.qlabel(self.item_icon())
 		self.header_hbox.addWidget(self.header_item_icon)
 		self.header_hbox.addWidget(self.header)
-		self.header_hbox.setContentsMargins(0, 2, 0, 0)
+		self.header_hbox.setContentsMargins(0, 0, 0, 0)
+		self.header_hbox.setSpacing(12)
 
 		# Maximize button
 		self.button_toggle_maximize = QtWidgets.QPushButton(
@@ -222,8 +224,14 @@ class qtitem(base_qtobject):
 
 		# The edit_grid is the layout that contains the actual controls for the
 		# items.
-		self.edit_grid = QtWidgets.QGridLayout()
-		self.edit_grid.setColumnStretch(2, 2)
+		self.edit_grid = QtWidgets.QFormLayout()
+		if self.label_align == u'right':
+			self.edit_grid.setLabelAlignment(QtCore.Qt.AlignRight)
+		self.edit_grid.setFieldGrowthPolicy(
+			QtWidgets.QFormLayout.FieldsStayAtSizeHint)
+		self.edit_grid.setContentsMargins(0, 0, 0, 0)
+		self.edit_grid.setVerticalSpacing(6)
+		self.edit_grid.setHorizontalSpacing(12)
 		self.edit_grid_widget = QtWidgets.QWidget()
 		self.edit_grid_widget.setLayout(self.edit_grid)
 
@@ -232,7 +240,7 @@ class qtitem(base_qtobject):
 		self.edit_vbox.addWidget(self.user_hint_widget)
 		self.edit_vbox.addWidget(self.edit_grid_widget)
 		self.edit_vbox.setContentsMargins(0, 0, 0, 0)
-		self.edit_vbox.setSpacing(0)
+		self.edit_vbox.setSpacing(12)
 		if stretch:
 			self.edit_vbox.addStretch()
 		self._edit_widget = QtWidgets.QWidget()
@@ -264,7 +272,8 @@ class qtitem(base_qtobject):
 			self.set_view_controls()
 		self.splitter.splitterMoved.connect(self.splitter_moved)
 		self.container_vbox = QtWidgets.QVBoxLayout()
-		self.container_vbox.setContentsMargins(4, 0, 4, 4)
+		self.container_vbox.setContentsMargins(12, 12, 12, 12)
+		self.container_vbox.setSpacing(18)
 		self.container_vbox.addWidget(self.header_widget)
 		self.container_vbox.addWidget(self.splitter)
 		self.container_widget = QtWidgets.QWidget()

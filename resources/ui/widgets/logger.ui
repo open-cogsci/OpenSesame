@@ -6,43 +6,49 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>404</width>
-    <height>358</height>
+    <width>710</width>
+    <height>301</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Form</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
+   <property name="spacing">
+    <number>12</number>
+   </property>
    <property name="margin">
     <number>0</number>
    </property>
    <item>
-    <widget class="QCheckBox" name="checkbox_auto_log">
-     <property name="text">
-      <string>Log all variables (recommended)</string>
-     </property>
-    </widget>
-   </item>
-   <item>
-    <widget class="QPushButton" name="button_add_custom_variable">
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
-     <property name="text">
-      <string>Add custom variable</string>
-     </property>
-    </widget>
-   </item>
-   <item>
-    <widget class="QWidget" name="widget" native="true">
-     <layout class="QHBoxLayout" name="horizontalLayout">
+    <widget class="QWidget" name="widget_2" native="true">
+     <layout class="QHBoxLayout" name="horizontalLayout_2">
+      <property name="spacing">
+       <number>12</number>
+      </property>
       <property name="margin">
        <number>0</number>
       </property>
+      <item>
+       <widget class="QCheckBox" name="checkbox_auto_log">
+        <property name="text">
+         <string>Log all variables (recommended)</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="button_add_custom_variable">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="text">
+         <string>Add custom variable</string>
+        </property>
+       </widget>
+      </item>
      </layout>
     </widget>
    </item>

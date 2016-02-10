@@ -137,7 +137,7 @@
    <property name="minimumSize">
     <size>
      <width>200</width>
-     <height>121</height>
+     <height>124</height>
     </size>
    </property>
    <property name="features">
@@ -152,19 +152,10 @@
    <widget class="QWidget" name="dock_widget_overview">
     <layout class="QVBoxLayout" name="verticalLayout">
      <property name="spacing">
-      <number>4</number>
+      <number>0</number>
      </property>
-     <property name="leftMargin">
-      <number>2</number>
-     </property>
-     <property name="topMargin">
-      <number>4</number>
-     </property>
-     <property name="rightMargin">
-      <number>2</number>
-     </property>
-     <property name="bottomMargin">
-      <number>2</number>
+     <property name="margin">
+      <number>6</number>
      </property>
      <item>
       <widget class="tree_overview" name="itemtree">
@@ -200,19 +191,10 @@
    <widget class="QWidget" name="dock_pool_widget">
     <layout class="QVBoxLayout" name="verticalLayout_3">
      <property name="spacing">
-      <number>4</number>
+      <number>0</number>
      </property>
-     <property name="leftMargin">
-      <number>2</number>
-     </property>
-     <property name="topMargin">
-      <number>4</number>
-     </property>
-     <property name="rightMargin">
-      <number>2</number>
-     </property>
-     <property name="bottomMargin">
-      <number>2</number>
+     <property name="margin">
+      <number>0</number>
      </property>
     </layout>
    </widget>
@@ -230,25 +212,19 @@
    <widget class="QWidget" name="dockWidgetContents_3">
     <layout class="QVBoxLayout" name="verticalLayout_4">
      <property name="spacing">
-      <number>4</number>
+      <number>0</number>
      </property>
-     <property name="leftMargin">
-      <number>2</number>
-     </property>
-     <property name="topMargin">
-      <number>4</number>
-     </property>
-     <property name="rightMargin">
-      <number>2</number>
-     </property>
-     <property name="bottomMargin">
-      <number>2</number>
+     <property name="margin">
+      <number>0</number>
      </property>
      <item>
       <widget class="QWidget" name="widget_5" native="true">
        <layout class="QHBoxLayout" name="horizontalLayout_6">
+        <property name="spacing">
+         <number>12</number>
+        </property>
         <property name="margin">
-         <number>0</number>
+         <number>6</number>
         </property>
         <item>
          <widget class="console" name="console">
@@ -261,7 +237,7 @@
          <widget class="QWidget" name="widget_3" native="true">
           <layout class="QVBoxLayout" name="verticalLayout_5">
            <property name="spacing">
-            <number>2</number>
+            <number>6</number>
            </property>
            <property name="margin">
             <number>0</number>
@@ -378,7 +354,7 @@
      <normaloff>:/icons/open_large.png</normaloff>:/icons/open_large.png</iconset>
    </property>
    <property name="text">
-    <string>Open</string>
+    <string>Open …</string>
    </property>
    <property name="toolTip">
     <string>Open an experiment</string>
@@ -408,7 +384,7 @@
      <normaloff>:/icons/saveas_large.png</normaloff>:/icons/saveas_large.png</iconset>
    </property>
    <property name="text">
-    <string>Save as</string>
+    <string>Save as …</string>
    </property>
    <property name="toolTip">
     <string>Save an experiment under another name</string>
@@ -431,7 +407,7 @@
   </action>
   <action name="action_run">
    <property name="text">
-    <string>Run fullscreen</string>
+    <string>Run fullscreen …</string>
    </property>
    <property name="toolTip">
     <string>Run experiment in fullscreen</string>
@@ -446,7 +422,7 @@
      <normaloff>:/icons/new_large.png</normaloff>:/icons/new_large.png</iconset>
    </property>
    <property name="text">
-    <string>New</string>
+    <string>New …</string>
    </property>
    <property name="toolTip">
     <string>Start a new experiment</string>
@@ -484,7 +460,7 @@
   </action>
   <action name="action_run_in_window">
    <property name="text">
-    <string>Run in window</string>
+    <string>Run in window …</string>
    </property>
    <property name="toolTip">
     <string>Run experiment in window</string>
@@ -568,7 +544,7 @@
      <normaloff>:/icons/onetabmode_large.png</normaloff>:/icons/onetabmode_large.png</iconset>
    </property>
    <property name="text">
-    <string>One tab mode</string>
+    <string>One-tab mode</string>
    </property>
    <property name="toolTip">
     <string>Enable one tab mode</string>

@@ -20,8 +20,10 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 from libopensesame.py3compat import *
 from libqtopensesame.misc.base_subcomponent import base_subcomponent
 import re
+import os
 try:
 	import markdown
+	from markdown.extensions import attr_list
 except:
 	markdown = None
 try:
@@ -56,7 +58,9 @@ class markdown_parser(base_subcomponent):
 		self.setup(main_window)
 		self.css = u'<style type="text/css">'
 		with open(self.main_window.theme.resource(u'markdown.css')) as fd:
-			self.css += fd.read()
+			self.css += safe_decode(fd.read()) % {u'background_image' : \
+				os.path.abspath(self.main_window.theme.resource(
+				u'background.jpg'))}
 		if highlight is not None:
 			self.traceback_lexer = TracebackLexer()
 			self.python_lexer = PythonLexer()
@@ -65,6 +69,7 @@ class markdown_parser(base_subcomponent):
 			self.re_script = re.compile(
 				r'^~~~\s*.(?P<syntax>\w+)(?P<script>.*?)^~~~', re.S | re.M)
 		self.css += u'</style>'
+		self.ext = [attr_list.AttrListExtension()]
 
 	def highlight(self, md):
 
@@ -121,4 +126,5 @@ class markdown_parser(base_subcomponent):
 		md = self.highlight(md)
 		if markdown is None:
 			return u'<pre>%s</pre>' % md
-		return markdown.markdown(md, errors=u'ignore') + self.css
+		return markdown.markdown(md, extensions=self.ext, errors=u'ignore') \
+			+ self.css

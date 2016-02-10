@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>310</width>
-    <height>128</height>
+    <width>301</width>
+    <height>164</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -15,166 +15,119 @@
   </property>
   <layout class="QVBoxLayout" name="vertical_layout">
    <property name="spacing">
-    <number>4</number>
+    <number>6</number>
    </property>
    <property name="margin">
     <number>0</number>
    </property>
    <item>
-    <widget class="QWidget" name="widget_family_container" native="true">
-     <layout class="QHBoxLayout" name="font_widget_layout">
+    <widget class="QComboBox" name="combobox_family">
+     <item>
+      <property name="text">
+       <string notr="true">mono</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string notr="true">sans</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string notr="true">serif</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string notr="true">arabic</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string notr="true">chinese-japanese-korean</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string notr="true">hebrew</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string notr="true">hindi</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>other ...</string>
+      </property>
+     </item>
+    </widget>
+   </item>
+   <item>
+    <widget class="QSpinBox" name="spinbox_size">
+     <property name="suffix">
+      <string> px</string>
+     </property>
+     <property name="minimum">
+      <number>-1</number>
+     </property>
+     <property name="maximum">
+      <number>1024</number>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QWidget" name="widget" native="true">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <layout class="QHBoxLayout" name="horizontalLayout">
+      <property name="spacing">
+       <number>12</number>
+      </property>
       <property name="margin">
        <number>0</number>
       </property>
       <item>
-       <widget class="QLabel" name="label_family">
+       <widget class="QCheckBox" name="checkbox_italic">
+        <property name="font">
+         <font>
+          <italic>true</italic>
+         </font>
+        </property>
         <property name="text">
-         <string>Font family</string>
+         <string>Italic</string>
         </property>
        </widget>
       </item>
       <item>
-       <widget class="QComboBox" name="combobox_family">
-        <item>
-         <property name="text">
-          <string notr="true">mono</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string notr="true">sans</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string notr="true">serif</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string notr="true">arabic</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string notr="true">chinese-japanese-korean</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string notr="true">hebrew</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string notr="true">hindi</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>other ...</string>
-         </property>
-        </item>
+       <widget class="QCheckBox" name="checkbox_bold">
+        <property name="font">
+         <font>
+          <weight>75</weight>
+          <bold>true</bold>
+         </font>
+        </property>
+        <property name="text">
+         <string>Bold</string>
+        </property>
        </widget>
       </item>
      </layout>
     </widget>
    </item>
    <item>
-    <widget class="QWidget" name="widget_size_container" native="true">
-     <layout class="QHBoxLayout" name="horizontalLayout_3">
-      <property name="margin">
-       <number>0</number>
-      </property>
-      <item>
-       <widget class="QLabel" name="label_size">
-        <property name="text">
-         <string>Font size</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QSpinBox" name="spinbox_size">
-        <property name="suffix">
-         <string> px</string>
-        </property>
-        <property name="minimum">
-         <number>-1</number>
-        </property>
-        <property name="maximum">
-         <number>1024</number>
-        </property>
-       </widget>
-      </item>
-     </layout>
-    </widget>
-   </item>
-   <item>
-    <widget class="QWidget" name="widget_misc_container" native="true">
-     <layout class="QHBoxLayout" name="horizontalLayout_4">
-      <property name="margin">
-       <number>0</number>
-      </property>
-      <item>
-       <widget class="QWidget" name="widget_style_container" native="true">
-        <layout class="QVBoxLayout" name="verticalLayout">
-         <property name="margin">
-          <number>0</number>
-         </property>
-         <item>
-          <widget class="QCheckBox" name="checkbox_italic">
-           <property name="font">
-            <font>
-             <italic>true</italic>
-            </font>
-           </property>
-           <property name="text">
-            <string>Italic</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QCheckBox" name="checkbox_bold">
-           <property name="font">
-            <font>
-             <weight>75</weight>
-             <bold>true</bold>
-            </font>
-           </property>
-           <property name="text">
-            <string>Bold</string>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </widget>
-      </item>
-      <item>
-       <widget class="QFrame" name="widget_example">
-        <property name="frameShape">
-         <enum>QFrame::StyledPanel</enum>
-        </property>
-        <property name="frameShadow">
-         <enum>QFrame::Raised</enum>
-        </property>
-        <layout class="QVBoxLayout" name="verticalLayout_2">
-         <property name="margin">
-          <number>4</number>
-         </property>
-         <item>
-          <widget class="QLabel" name="label_example">
-           <property name="text">
-            <string>Example</string>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignCenter</set>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </widget>
-      </item>
-     </layout>
+    <widget class="QLabel" name="label_example">
+     <property name="text">
+      <string>Example</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
     </widget>
    </item>
   </layout>

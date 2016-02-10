@@ -7,6 +7,8 @@ The experiment finished successfully.
 
 You can:
 
-- [Open log file](opensesame://event.after_experiment_open_logfile)
-- [Open log-file folder](opensesame://event.after_experiment_open_logfile_folder)
-- [Copy log file to file pool](opensesame://event.after_experiment_copy_logfile)
+[Open log file](opensesame://event.after_experiment_open_logfile){: .button}
+
+[Open log-file folder](opensesame://event.after_experiment_open_logfile_folder){: .button}
+
+[Copy log file to file pool](opensesame://event.after_experiment_copy_logfile){: .button}

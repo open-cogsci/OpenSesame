@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>2247</width>
-    <height>736</height>
+    <height>620</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -15,7 +15,7 @@
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <property name="spacing">
-    <number>4</number>
+    <number>12</number>
    </property>
    <property name="margin">
     <number>0</number>
@@ -24,7 +24,7 @@
     <widget class="QWidget" name="widget_settings" native="true">
      <layout class="QVBoxLayout" name="verticalLayout_2">
       <property name="spacing">
-       <number>4</number>
+       <number>6</number>
       </property>
       <property name="margin">
        <number>0</number>
@@ -33,7 +33,7 @@
        <widget class="QWidget" name="widget_settings_row1" native="true">
         <layout class="QHBoxLayout" name="horizontalLayout_2">
          <property name="spacing">
-          <number>2</number>
+          <number>6</number>
          </property>
          <property name="margin">
           <number>0</number>
@@ -110,7 +110,7 @@
              </widget>
             </item>
             <item>
-             <widget class="color_edit" name="edit_color">
+             <widget class="color_edit" name="edit_color" native="true">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
                 <horstretch>0</horstretch>
@@ -516,7 +516,7 @@
        <widget class="QWidget" name="widget_settings_row2" native="true">
         <layout class="QHBoxLayout" name="horizontalLayout_7">
          <property name="spacing">
-          <number>2</number>
+          <number>6</number>
          </property>
          <property name="margin">
           <number>0</number>
@@ -699,8 +699,9 @@
  <customwidgets>
   <customwidget>
    <class>color_edit</class>
-   <extends>QLineEdit</extends>
-   <header>libqtopensesame/widgets/color_edit.h</header>
+   <extends>QWidget</extends>
+   <header>libqtopensesame.widgets.color_edit.h</header>
+   <container>1</container>
   </customwidget>
   <customwidget>
    <class>sketchpad_graphics_view</class>
