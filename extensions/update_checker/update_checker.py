@@ -87,4 +87,5 @@ class update_checker(base_extension):
 			debug.msg(u"up to date")
 			if always:
 				self.tabwidget.open_markdown(
-					self.ext_resource(u'up-to-date.md'), title=u'Up to date!')
+					self.ext_resource(u'up-to-date.md'),
+					title=_(u'Up to date!'))
