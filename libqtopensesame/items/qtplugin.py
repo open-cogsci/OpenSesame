@@ -131,6 +131,8 @@ class qtplugin(qtitem.qtitem):
 		if type(min_width) == int:
 			widget.setMinimumWidth(min_width)
 		row = self.edit_grid.rowCount()
+		label = QtWidgets.QLabel(label)
+		label.setAlignment(self.edit_grid.labelAlignment())
 		self.edit_grid.insertRow(row, label, widget)
 		self.set_focus_widget(widget)
 
@@ -156,6 +158,7 @@ class qtplugin(qtitem.qtitem):
 
 		edit = QtWidgets.QLineEdit()
 		edit.editingFinished.connect(self.apply_edit_changes)
+		edit.setMinimumWidth(200)
 		if validator is not None:
 			edit.setValidator(validator)
 		self.add_control(label, edit, tooltip, min_width)
@@ -208,6 +211,7 @@ class qtplugin(qtitem.qtitem):
 		"""
 
 		edit = color_edit.color_edit(self.main_window)
+		edit.setMinimumWidth(200)
 		edit.initialize(self.experiment)
 		QtCore.QObject.connect(edit, QtCore.SIGNAL('set_color'), \
 			self.apply_edit_changes)
@@ -234,6 +238,7 @@ class qtplugin(qtitem.qtitem):
 		"""
 
 		combobox = QtWidgets.QComboBox()
+		combobox.setMinimumWidth(200)
 		for o in options:
 			combobox.addItem(o)
 		combobox.activated.connect(self.apply_edit_changes)
@@ -242,8 +247,16 @@ class qtplugin(qtitem.qtitem):
 			self.auto_combobox[var] = combobox
 		return combobox
 
-	def add_spinbox_control(self, var, label, min_val, max_val, prefix=u'', \
-		suffix=u'', tooltip=None):
+	def add_doublespinbox_control(self, *args, **kwdict):
+
+		self._add_spinbox_control(QtWidgets.QDoubleSpinBox, *args, **kwdict)
+
+	def add_spinbox_control(self, *args, **kwdict):
+
+		self._add_spinbox_control(QtWidgets.QSpinBox, *args, **kwdict)
+
+	def _add_spinbox_control(self, cls, var, label, min_val, max_val,
+		prefix=u'', suffix=u'', tooltip=None):
 
 		"""
 		Adds a QSpinBox control that is linked to a variable.
@@ -263,10 +276,11 @@ class qtplugin(qtitem.qtitem):
 		A QSpinBox widget.
 		"""
 
-		spinbox = QtWidgets.QSpinBox()
+		spinbox = cls()
 		spinbox.setMinimum(min_val)
 		spinbox.setMaximum(max_val)
 		spinbox.editingFinished.connect(self.apply_edit_changes)
+		spinbox.setMinimumWidth(200)
 		if prefix != u'':
 			spinbox.setPrefix(prefix)
 		if suffix != u'':
@@ -348,6 +362,7 @@ class qtplugin(qtitem.qtitem):
 
 		edit = QtWidgets.QLineEdit()
 		edit.editingFinished.connect(self.apply_edit_changes)
+		edit.setMinimumWidth(200)
 		if var is not None:
 			self.auto_line_edit[var] = edit
 		if click_func is None:
@@ -356,9 +371,10 @@ class qtplugin(qtitem.qtitem):
 		button.setIconSize(QtCore.QSize(16, 16))
 		button.clicked.connect(click_func)
 		hbox = QtWidgets.QHBoxLayout()
-		hbox.setMargin(0)
 		hbox.addWidget(edit)
 		hbox.addWidget(button)
+		hbox.setContentsMargins(0,0,0,0)
+		hbox.setSpacing(6)
 		widget = QtWidgets.QWidget()
 		widget.setLayout(hbox)
 		self.add_control(label, widget, tooltip)

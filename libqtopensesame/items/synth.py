@@ -20,7 +20,6 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 from libopensesame.py3compat import *
 from libopensesame.synth import synth as synth_runtime
 from libqtopensesame.items.qtplugin import qtplugin
-from libqtopensesame.widgets.synth_widget import synth_widget
 from libqtopensesame.validators import duration_validator
 from libqtopensesame.misc.translate import translation_context
 _ = translation_context(u'synth', category=u'item')
@@ -45,161 +44,28 @@ class synth(synth_runtime, qtplugin):
 
 		"""See qtitem."""
 
-		super(synth, self).init_edit_widget(self)
-		self.synth_widget = synth_widget(self.main_window)
-		self.add_widget(self.synth_widget)
-		self.add_stretch()
-		self.auto_add_widget(self.synth_widget.ui.edit_freq, u'freq')
-		self.auto_add_widget(self.synth_widget.ui.spin_attack, u'attack')
-		self.auto_add_widget(self.synth_widget.ui.spin_decay, u'decay')
-		self.auto_add_widget(self.synth_widget.ui.spin_volume, u'volume')
-		self.auto_add_widget(self.synth_widget.ui.spin_pan, u'pan')
-		self.auto_add_widget(self.synth_widget.ui.spin_length, u'length')
-		self.auto_add_widget(self.synth_widget.ui.edit_duration, u'duration')
-		self.synth_widget.ui.edit_duration.setValidator(
-			duration_validator(self, default=u'sound'))
-		self.synth_widget.ui.button_sine.clicked.connect(self.set_sine)
-		self.synth_widget.ui.button_saw.clicked.connect(self.set_saw)
-		self.synth_widget.ui.button_square.clicked.connect(self.set_square)
-		self.synth_widget.ui.button_white_noise.clicked.connect(
-			self.set_white_noise)
-		self.connect_dials()
-
-	def update(self):
-
-		"""See qtitem."""
-
-		super(synth, self).update()
-		self.update_dials()
-
-	def apply_edit_changes(self):
-
-		"""See qtitem."""
-
-		super(synth, self).apply_edit_changes()
-		self.update_dials()
-
-	def apply_script_changes(self):
-
-		"""See qtitem."""
-
-		super(synth, self).apply_script_changes()
-		self.update_dials()
-
-	def update_dials(self):
-
-		"""
-		desc:
-			Updates the dials to match the corresponding spinboxes.
-		"""
-
-		self.disconnect_dials()
-		self.synth_widget.ui.dial_pan.setDisabled(
-			type(self.var.get(u'pan', _eval=False)) not in (int, float))
-		self.synth_widget.ui.dial_decay.setDisabled(
-			type(self.var.get(u'decay', _eval=False)) not in (int, float))
-		self.synth_widget.ui.dial_attack.setDisabled(
-			type(self.var.get(u'attack', _eval=False)) not in (int, float))
-		self.synth_widget.ui.dial_volume.setDisabled(
-			type(self.var.get(u'volume', _eval=False)) not in (int, float))
-		self.synth_widget.ui.dial_pan.setValue(
-			self.synth_widget.ui.spin_pan.value())
-		self.synth_widget.ui.dial_decay.setValue(
-			self.synth_widget.ui.spin_decay.value())
-		self.synth_widget.ui.dial_attack.setValue(
-			self.synth_widget.ui.spin_attack.value())
-		self.synth_widget.ui.dial_volume.setValue(
-			100*self.synth_widget.ui.spin_volume.value())
-		self.connect_dials()
-
-	def apply_dials(self):
-
-		"""
-		desc:
-			Applies changes to the dials.
-		"""
-
-		if self.synth_widget.ui.dial_attack.isEnabled():
-			self.var.set(u"attack", self.synth_widget.ui.dial_attack.value())
-		if self.synth_widget.ui.dial_decay.isEnabled():
-			self.var.set(u"decay", self.synth_widget.ui.dial_decay.value())
-		if self.synth_widget.ui.dial_pan.isEnabled():
-			self.var.set(u"pan", self.synth_widget.ui.dial_pan.value())
-		if self.synth_widget.ui.dial_volume.isEnabled():
-			self.var.set(u"volume", .01*self.synth_widget.ui.dial_volume.value())
-		self.update()
-
-	def connect_dials(self):
-
-		"""
-		desc:
-			Connects the dials.
-		"""
-
-		self.synth_widget.ui.dial_attack.valueChanged.connect(self.apply_dials)
-		self.synth_widget.ui.dial_decay.valueChanged.connect(self.apply_dials)
-		self.synth_widget.ui.dial_pan.valueChanged.connect(self.apply_dials)
-		self.synth_widget.ui.dial_volume.valueChanged.connect(self.apply_dials)
-
-	def disconnect_dials(self):
-
-		"""
-		desc:
-			Disconnects the dials.
-		"""
-
-		self.synth_widget.ui.dial_attack.valueChanged.disconnect()
-		self.synth_widget.ui.dial_decay.valueChanged.disconnect()
-		self.synth_widget.ui.dial_pan.valueChanged.disconnect()
-		self.synth_widget.ui.dial_volume.valueChanged.disconnect()
-
-	def edit_widget(self):
-
-		"""See qtitem."""
-
-		super(synth, self).edit_widget()
-		osc = self.var.get(u'osc', _eval=False)
-		self.synth_widget.ui.button_sine.setChecked(osc == u'sine')
-		self.synth_widget.ui.button_saw.setChecked(osc == u'saw')
-		self.synth_widget.ui.button_square.setChecked(osc == u'square')
-		self.synth_widget.ui.button_white_noise.setChecked(osc == u'noise')
-
-	def set_sine(self):
-
-		"""
-		desc:
-			Selects the sine oscillator
-		"""
-
-		self.var.osc = u"sine"
-		self.update()
-
-	def set_saw(self):
-
-		"""
-		desc:
-			Selects the saw oscillator
-		"""
-
-		self.var.osc = u"saw"
-		self.update()
-
-	def set_square(self):
-
-		"""
-		desc:
-			Selects the square oscillator
-		"""
-
-		self.var.osc = u"square"
-		self.update()
-
-	def set_white_noise(self):
-
-		"""
-		desc:
-			Selects the noise oscillator
-		"""
-
-		self.var.osc = u"white_noise"
-		self.update()
+		qtplugin.init_edit_widget(self)
+		self.add_combobox_control(u'osc', _(u'Waveform'),
+			[u'sine', u'saw', u'square', u'white_noise'],
+			tooltip=_(u'The waveform for the sound'))
+		self.add_line_edit_control(u'freq',
+			_(u'Frequency (in Hz) or note (e.g. \'A1\')'),
+			tooltip=_(u'A frequency (in Hz) or a note (e.g. \'A1\''))
+		self.add_spinbox_control(u'attack', _(u'Attack'),
+			min_val=0, max_val=10000000,
+			tooltip=_(u'The attack (or fade-in) time'), suffix=_(u' ms'))
+		self.add_spinbox_control(u'decay', _(u'Decay'),
+			min_val=0, max_val=10000000,
+			tooltip=_(u'The decay (or fade-out) time'), suffix=_(u' ms'))
+		self.add_doublespinbox_control(u'volume', _(u'Volume'),
+			min_val=0, max_val=1,
+			tooltip=_(u'The sound volume'), suffix=_(u' x maximum'))
+		self.add_doublespinbox_control(u'pan', _(u'Panning'),
+			min_val=-20, max_val=20, suffix=_(u' toward right'),
+			tooltip=_(u'The panning of the sound. Left is negative, right is positive.'))
+		self.add_spinbox_control(u'length', _(u'Length'),
+			min_val=0, max_val=10000000,
+			tooltip=_(u'The sound length'), suffix=_(u' ms'))
+		self.add_line_edit_control(u'duration', _(u'Duration'),
+			tooltip=_(u"Expecting a duration in ms, 'sound' (to wait until the sound is finished playing), 'keypress', 'mouseclick', or a variable (e.g., '[synth_dur]')."),
+			validator=duration_validator(self, default=u'sound'))

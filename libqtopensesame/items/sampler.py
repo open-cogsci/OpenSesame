@@ -20,8 +20,6 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 from libopensesame.py3compat import *
 from libopensesame.sampler import sampler as sampler_runtime
 from libqtopensesame.items.qtplugin import qtplugin
-from libqtopensesame.widgets.sampler_widget import sampler_widget
-from libqtopensesame.widgets import pool_widget
 from libqtopensesame.validators import duration_validator
 from libqtopensesame.misc.translate import translation_context
 _ = translation_context(u'sampler', category=u'item')
@@ -46,119 +44,24 @@ class sampler(sampler_runtime, qtplugin):
 
 		"""See qtitem."""
 
-		super(sampler, self).init_edit_widget()
-		self.sampler_widget = sampler_widget(self.main_window)
-		self.add_widget(self.sampler_widget)
-		self.add_stretch()
-		self.auto_add_widget(self.sampler_widget.ui.spin_pan, u'pan')
-		self.auto_add_widget(self.sampler_widget.ui.spin_volume, u'volume')
-		self.auto_add_widget(self.sampler_widget.ui.spin_pitch, u'pitch')
-		self.auto_add_widget(self.sampler_widget.ui.spin_stop_after,
-			u'stop_after')
-		self.auto_add_widget(self.sampler_widget.ui.spin_fade_in, u'fade_in')
-		self.auto_add_widget(self.sampler_widget.ui.edit_sample, u'sample')
-		self.auto_add_widget(self.sampler_widget.ui.edit_duration, u'duration')
-		self.auto_add_widget(self.sampler_widget.ui.spin_pan, u'pan')
-		self.sampler_widget.ui.edit_duration.setValidator(
-			duration_validator(self, default=u'sound'))
-		self.sampler_widget.ui.button_browse_sample.clicked.connect(
-			self.browse_sample)
-		self.set_focus_widget(self.sampler_widget.ui.edit_sample, override=True)
-		self.update_dials()
-
-	def browse_sample(self):
-
-		"""
-		desc:
-			Presents a file dialog to browse for the sample.
-		"""
-
-		s = pool_widget.select_from_pool(self.main_window)
-		if str(s) == u'':
-			return
-		self.sampler_widget.ui.edit_sample.setText(s)
-		self.apply_edit_changes()
-
-	def update(self):
-
-		"""See qtitem."""
-
-		super(sampler, self).update()
-		self.update_dials()
-
-	def apply_edit_changes(self):
-
-		"""See qtitem."""
-
-		super(sampler, self).apply_edit_changes()
-		self.update_dials()
-
-	def apply_script_changes(self):
-
-		"""See qtitem."""
-
-		super(sampler, self).apply_script_changes()
-		self.update_dials()
-
-	def update_dials(self):
-
-		"""
-		desc:
-			Updates the dials to match the corresponding spinboxes.
-		"""
-
-		self.disconnect_dials()
-		self.sampler_widget.ui.dial_pan.setDisabled(
-			type(self.var.get(u'pan', _eval=False)) not in (int, float))
-		self.sampler_widget.ui.dial_pitch.setDisabled(
-			type(self.var.get(u'pitch', _eval=False)) not in (int, float))
-		self.sampler_widget.ui.dial_volume.setDisabled(
-			type(self.var.get(u'volume', _eval=False)) not in (int, float))
-		self.sampler_widget.ui.dial_pan.setValue(
-			self.sampler_widget.ui.spin_pan.value())
-		self.sampler_widget.ui.dial_pitch.setValue(
-			100*self.sampler_widget.ui.spin_pitch.value())
-		self.sampler_widget.ui.dial_volume.setValue(
-			100*self.sampler_widget.ui.spin_volume.value())
-		self.connect_dials()
-
-	def apply_dials(self):
-
-		"""
-		desc:
-			Applies changes to the dials.
-		"""
-
-		if self.sampler_widget.ui.dial_pan.isEnabled():
-			self.var.set(u"pan", self.sampler_widget.ui.dial_pan.value())
-		if self.sampler_widget.ui.dial_pitch.isEnabled():
-			self.var.set(u"pitch", .01*self.sampler_widget.ui.dial_pitch.value())
-		if self.sampler_widget.ui.dial_volume.isEnabled():
-			self.var.set(u"volume", .01*self.sampler_widget.ui.dial_volume.value())
-		self.update()
-
-	def connect_dials(self):
-
-		"""
-		desc:
-			Connects the dials.
-		"""
-
-		self.sampler_widget.ui.dial_pan.sliderMoved.connect(self.apply_dials)
-		self.sampler_widget.ui.dial_volume.sliderMoved.connect(self.apply_dials)
-		self.sampler_widget.ui.dial_pitch.sliderMoved.connect(self.apply_dials)
-
-	def disconnect_dials(self):
-
-		"""
-		desc:
-			Disconnects the dials.
-		"""
-
-		try:
-			self.sampler_widget.ui.dial_pan.sliderMoved.disconnect()
-		except TypeError:
-			# There were no connections
-			return
-		self.sampler_widget.ui.dial_volume.sliderMoved.disconnect()
-		self.sampler_widget.ui.dial_pitch.sliderMoved.disconnect()
+		qtplugin.init_edit_widget(self)
+		self.add_filepool_control(u'sample', _(u'Sound file'),
+			tooltip=_(u'A sound file in .ogg or .wav format'))
+		self.add_doublespinbox_control(u'volume', _(u'Volume'),
+			min_val=0, max_val=1,
+			tooltip=_(u'The sound volume'), suffix=_(u' x original'))
+		self.add_doublespinbox_control(u'pan', _(u'Panning'),
+			min_val=-20, max_val=20, suffix=_(u' toward right'),
+			tooltip=_(u'The panning of the sound. Left is negative, right is positive.'))
+		self.add_doublespinbox_control(u'pitch', _(u'Pitch'), min_val=0,
+			max_val=1000,
+			tooltip=_(u'The sound pitch'), suffix=_(u' x original'))
+		self.add_spinbox_control(u'stop_after', _(u'Stop after'),
+			min_val=0, max_val=10000000,
+			tooltip=_(u'The sound pitch'), suffix=_(u' ms'))
+		self.add_spinbox_control(u'fade_in', _(u'Fade in'),
+			min_val=0, max_val=10000000,
+			tooltip=_(u'The fade-in time'), suffix=_(u' ms'))
+		self.add_line_edit_control(u'duration', _(u'Duration'),
+			tooltip=_(u"Expecting a duration in ms, 'sound' (to wait until the sound is finished playing), 'keypress', 'mouseclick', or a variable (e.g., '[synth_dur]')."),
+			validator=duration_validator(self, default=u'sound'))
