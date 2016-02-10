@@ -66,6 +66,17 @@ def plugin_folders(only_existing=True, _type=u'plugins'):
 	if not only_existing or os.path.exists(path):
 		l.append(path)
 
+	# Get the environment variables
+	if _type == u'plugins':
+		key = u'OPENSESAME_PLUGIN_PATH'
+	else:
+		key = u'OPENSESAME_EXTENSION_PATH'
+	if key in os.environ:
+		for path in os.environ[key].split(';'):
+			path = safe_decode(path, enc=misc.filesystem_encoding())
+			if os.path.exists(path):
+				l.append(path)
+
 	if os.name == u'posix' and u'HOME' in os.environ:
 		# Regular Linux distributions. TODO: How well does this apply to Mac OS?
 		path = os.path.join(os.environ[u'HOME'], u'.opensesame', _type)
@@ -89,17 +100,6 @@ def plugin_folders(only_existing=True, _type=u'plugins'):
 			enc=misc.filesystem_encoding()), u'.opensesame', _type)
 		if not only_existing or os.path.exists(path):
 			l.append(path)
-
-	# Get the environment variables
-	if _type == u'plugins':
-		key = u'OPENSESAME_PLUGIN_PATH'
-	else:
-		key = u'OPENSESAME_EXTENSION_PATH'
-	if key in os.environ:
-		for path in os.environ[key].split(';'):
-			path = safe_decode(path, enc=misc.filesystem_encoding())
-			if os.path.exists(path):
-				l.append(path)
 
 	return l
 
@@ -130,7 +130,7 @@ def plugin_disabled(plugin, _type=u'plugins'):
 	from libqtopensesame.misc import config
 	if plugin_property(plugin, u'disabled', _type=_type):
 		return True
-	# Check if disabled_plugins is not empty in which case it is a 
+	# Check if disabled_plugins is not empty in which case it is a
 	# QPyNullVariant which does not have split() method
 	disabled_plugins = config.get_config(u'disabled_%s' % _type)
 	if hasattr(disabled_plugins, u"split") and plugin in disabled_plugins.split(u';'):
