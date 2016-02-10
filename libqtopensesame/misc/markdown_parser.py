@@ -23,7 +23,7 @@ import re
 import os
 try:
 	import markdown
-	from markdown.extensions import attr_list
+	from markdown.extensions import attr_list, extra
 except:
 	markdown = None
 try:
@@ -69,7 +69,7 @@ class markdown_parser(base_subcomponent):
 			self.re_script = re.compile(
 				r'^~~~\s*.(?P<syntax>\w+)(?P<script>.*?)^~~~', re.S | re.M)
 		self.css += u'</style>'
-		self.ext = [attr_list.AttrListExtension()]
+		self.ext = [attr_list.AttrListExtension(), extra.ExtraExtension()]
 
 	def highlight(self, md):
 

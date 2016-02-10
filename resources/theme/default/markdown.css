@@ -10,6 +10,11 @@ body {
 	background: url("file://%(background_image)s") no-repeat top right;
 }
 
+table tr td {
+	vertical-align: top;
+	padding-right: 36px;
+}
+
 a {
 	color: #3465a4;
 }
@@ -83,4 +88,11 @@ h2 {
 .green-button:hover {
 	color: #ffffff;
 	background-color: #4e9a06;
+}
+
+.footer {
+	color: #555753;
+	font-size: 0.8em;
+	border-top: solid 1px #555753;
+	float: right;
 }
