@@ -61,7 +61,7 @@
       <item>
        <widget class="QLineEdit" name="edit_pool_filter">
         <property name="toolTip">
-         <string>Enter a filter</string>
+         <string>Search filter</string>
         </property>
        </widget>
       </item>
@@ -151,6 +151,9 @@
       </item>
       <item>
        <widget class="QPushButton" name="button_refresh">
+        <property name="toolTip">
+         <string>Refresh</string>
+        </property>
         <property name="text">
          <string/>
         </property>

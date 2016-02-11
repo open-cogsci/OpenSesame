@@ -444,6 +444,10 @@ def open_url(url):
 	"""
 
 	debug.msg(url)
+	if url.startswith(u'http://') or url.startswith(u'https://'):
+		import webbrowser
+		webbrowser.open(url)
+		return
 	import platform
 	import subprocess
 	if platform.system() == u"Linux":

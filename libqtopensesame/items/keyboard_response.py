@@ -56,20 +56,19 @@ class keyboard_response(keyboard_response_runtime, qtplugin):
 		super(keyboard_response, self).init_edit_widget(stretch=True)
 		# Use auto-controls for most stuff
 		self.add_line_edit_control(u'correct_response', _(u'Correct response'),
-			tooltip=_(u'Set the correct response'))
+			info=_(u'Leave empty to use "correct_response"'))
 		self.add_line_edit_control(u'allowed_responses', _(u'Allowed responses'),
-			tooltip=_(u'Set the allowed responses seperated by a semi-colon, e.g., "z;/"'))
+			info=_(u'Separated by semicolons, e.g. "z;/"'))
 		self.add_line_edit_control(u'timeout', _(u'Timeout'),
-			tooltip=_(u'Set the response timeout in milliseconds, or "infinite"'),
+			info=_(u'In milliseconds or "infinite"'),
 			validator=timeout_validator(self))
-		self.add_checkbox_control(u'flush', _(u'Flush pending keypresses'),
-			tooltip=_(u'Flush pending keypresses'))
+		self.add_checkbox_control(u'flush', _(u'Flush pending keypresses'))
 		# List available keys
 		button_list_keys = QtWidgets.QPushButton(
 			self.theme.qicon(u"help-about"), _(u"List available keys"))
 		button_list_keys.setIconSize(QtCore.QSize(16,16))
 		button_list_keys.clicked.connect(self.list_keys)
-		self.add_control(u'', button_list_keys, _(u'List available keys'))
+		self.add_control(u'', button_list_keys)
 
 	def list_keys(self):
 

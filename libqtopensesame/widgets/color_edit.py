@@ -18,7 +18,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame.py3compat import *
-from qtpy import QtCore, QtWidgets
+from qtpy import QtCore, QtWidgets, QtGui
 from libopensesame import debug
 from libqtopensesame.widgets.base_widget import base_widget
 from libqtopensesame.misc.translate import translation_context
@@ -70,7 +70,7 @@ class color_edit(base_widget):
 		"""
 
 		from openexp._color.color import color
-		_color = QtGui.QColorDialog.getColor(QtGui.QColor(u'white'), self._parent,
+		_color = QtWidgets.QColorDialog.getColor(QtGui.QColor(u'white'), self._parent,
 			_(u'Pick a color'))
 		if not _color.isValid():
 			return

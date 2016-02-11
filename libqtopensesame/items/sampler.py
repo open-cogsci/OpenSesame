@@ -46,22 +46,17 @@ class sampler(sampler_runtime, qtplugin):
 
 		qtplugin.init_edit_widget(self)
 		self.add_filepool_control(u'sample', _(u'Sound file'),
-			tooltip=_(u'A sound file in .ogg or .wav format'))
+			info=_(u'In .ogg or .wav format'))
 		self.add_doublespinbox_control(u'volume', _(u'Volume'),
-			min_val=0, max_val=1,
-			tooltip=_(u'The sound volume'), suffix=_(u' x original'))
-		self.add_doublespinbox_control(u'pan', _(u'Panning'),
-			min_val=-20, max_val=20, suffix=_(u' toward right'),
-			tooltip=_(u'The panning of the sound. Left is negative, right is positive.'))
+			min_val=0, max_val=1, suffix=_(u' x original'))
+		self.add_line_edit_control(u'pan', _(u'Panning'),
+			info=_(u'Positive values toward the right; "left" or "right" for full panning'))
 		self.add_doublespinbox_control(u'pitch', _(u'Pitch'), min_val=0,
-			max_val=1000,
-			tooltip=_(u'The sound pitch'), suffix=_(u' x original'))
+			max_val=1000, suffix=_(u' x original'))
 		self.add_spinbox_control(u'stop_after', _(u'Stop after'),
-			min_val=0, max_val=10000000,
-			tooltip=_(u'The sound pitch'), suffix=_(u' ms'))
+			min_val=0, max_val=10000000, suffix=_(u' ms'))
 		self.add_spinbox_control(u'fade_in', _(u'Fade in'),
-			min_val=0, max_val=10000000,
-			tooltip=_(u'The fade-in time'), suffix=_(u' ms'))
+			min_val=0, max_val=10000000, suffix=_(u' ms'))
 		self.add_line_edit_control(u'duration', _(u'Duration'),
-			tooltip=_(u"Expecting a duration in ms, 'sound' (to wait until the sound is finished playing), 'keypress', 'mouseclick', or a variable (e.g., '[synth_dur]')."),
+			info=_(u'In milliseconds, "sound", "keypress", or "mouseclick"'),
 			validator=duration_validator(self, default=u'sound'))

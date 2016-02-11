@@ -17,6 +17,7 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
+from libopensesame import metadata
 from libopensesame.py3compat import *
 from libqtopensesame.misc.base_subcomponent import base_subcomponent
 import re
@@ -37,6 +38,8 @@ try:
 	from pygments.formatters import HtmlFormatter
 except:
 	highlight = None
+from libqtopensesame.misc.translate import translation_context
+_ = translation_context(u'markdown', category=u'core')
 
 class markdown_parser(base_subcomponent):
 
@@ -70,6 +73,16 @@ class markdown_parser(base_subcomponent):
 				r'^~~~\s*.(?P<syntax>\w+)(?P<script>.*?)^~~~', re.S | re.M)
 		self.css += u'</style>'
 		self.ext = [attr_list.AttrListExtension(), extra.ExtraExtension()]
+		self.footer = u'''
+<p>
+<a class="red-button" href="opensesame://action.close_current_tab">%s</a>
+</p>
+
+<div class="footer">
+OpenSesame %s %s —
+Copyright <a href="http://www.cogsci.nl/smathot">Sebastiaan Mathôt</a> 2010-2016
+</div>
+''' % (_(u'Dismiss this message'), metadata.__version__, metadata.codename)
 
 	def highlight(self, md):
 
@@ -127,4 +140,4 @@ class markdown_parser(base_subcomponent):
 		if markdown is None:
 			return u'<pre>%s</pre>' % md
 		return markdown.markdown(md, extensions=self.ext, errors=u'ignore') \
-			+ self.css
+			+ self.css + self.footer

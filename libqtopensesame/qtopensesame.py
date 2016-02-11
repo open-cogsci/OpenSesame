@@ -128,7 +128,7 @@ class qtopensesame(QtWidgets.QMainWindow, base_component):
 		# Set the filter-string for opening and saving files
 		self.save_file_filter =u'OpenSesame files (*.osexp)'
 		self.open_file_filter = \
-			u'OpenSesame files (*.osexp *.opensesame.tar.gz *.opensesame);;'
+			u'OpenSesame files (*.osexp *.opensesame.tar.gz *.opensesame)'
 
 		# Set the window message
 		self.window_message(_(u"New experiment"))
@@ -659,9 +659,9 @@ class qtopensesame(QtWidgets.QMainWindow, base_component):
 			self.ui.tabwidget.open_general()
 			return
 		if path is None:
-			path = QtWidgets.QFileDialog.getOpenFileName(self.ui.centralwidget,
-				_(u"Open file"), filter=self.open_file_filter,
-				directory=cfg.file_dialog_path)
+			path, file_filter = QtWidgets.QFileDialog.getOpenFileName(
+				self.ui.centralwidget, _(u"Open file"),
+				filter=self.open_file_filter, directory=cfg.file_dialog_path)
 		if path is None or path == u'' or ( \
 			not path.lower().endswith(u'.opensesame') and \
 			not  path.lower().endswith(u'.opensesame.tar.gz') and \

@@ -13,11 +13,11 @@ Start a new experiment:<br />
 
 </td></tr></table>
 
-Or:
+Have you considered supporting OpenSesame? It's easy and quick.
 
-[Read the documentation](http://osdoc.cogsci.nl){: .green-button}<br />
+[Donate through PayPal](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=QEWKSAY4WMKRW){: .green-button}
+
+Or learn more:
+
+[Read the documentation](http://osdoc.cogsci.nl){: .button}<br />
 [Ask a question on the forum](http://forum.cogsci.nl){: .button}<br />
-[Dismiss this message](opensesame://action.close_current_tab){: .red-button}
-
-OpenSesame %(version)s %(codename)s — Copyright [Sebastiaan Mathôt](http://www.cogsci.nl/smathot) 2010-2016
-{: .footer}

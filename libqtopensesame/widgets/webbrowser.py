@@ -20,10 +20,11 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 import platform
 from qtpy import QtCore, QtWebKit
 from libqtopensesame.widgets.base_widget import base_widget
-from libopensesame import plugins
+from libopensesame import plugins, misc
 from libopensesame.py3compat import *
 from libqtopensesame.misc.markdown_parser import markdown_parser
 import os.path
+import webbrowser as external_webbrowser
 
 class small_webview(QtWebKit.QWebView):
 
@@ -183,7 +184,7 @@ class webbrowser(base_widget):
 
 		"""
 		desc:
-			Prohavecess link-clicks to capture special URLs.
+			Process link-clicks to capture special URLs.
 
 		arguments:
 			url:
@@ -199,7 +200,10 @@ class webbrowser(base_widget):
 			wb.load(url[4:])
 			self.main_window.tabwidget.open_browser(url[4:])
 			return
-		self.load(url)
+		if url.startswith(u'http://osdoc.cogsci.nl'):
+			self.load(url)
+			return
+		misc.open_url(url)
 
 	def command(self, cmd):
 

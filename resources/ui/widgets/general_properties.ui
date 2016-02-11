@@ -61,34 +61,43 @@
        </widget>
       </item>
       <item row="0" column="1">
-       <widget class="QWidget" name="widget_backend" native="true">
+       <widget class="QComboBox" name="combobox_backend"/>
+      </item>
+      <item row="1" column="1">
+       <widget class="QPushButton" name="button_backend_settings">
         <property name="sizePolicy">
-         <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
           <horstretch>0</horstretch>
           <verstretch>0</verstretch>
          </sizepolicy>
         </property>
-        <layout class="QVBoxLayout" name="verticalLayout">
-         <property name="margin">
-          <number>0</number>
-         </property>
-         <item>
-          <widget class="QComboBox" name="combobox_backend"/>
-         </item>
-         <item>
-          <widget class="QLabel" name="label_backend_2">
-           <property name="text">
-            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://osdoc.cogsci.nl/back-ends/about&quot;&gt;&lt;span style=&quot;font-size:small;font-style:italic; text-decoration: underline; color:#0057ae;&quot;&gt;Why is this important?&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-           </property>
-           <property name="openExternalLinks">
-            <bool>true</bool>
-           </property>
-          </widget>
-         </item>
-        </layout>
+        <property name="minimumSize">
+         <size>
+          <width>200</width>
+          <height>0</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>Back-end settings</string>
+        </property>
+        <property name="icon">
+         <iconset theme="preferences-system">
+          <normaloff/>
+         </iconset>
+        </property>
        </widget>
       </item>
-      <item row="1" column="1">
+      <item row="2" column="1">
+       <widget class="QLabel" name="label_backend_2">
+        <property name="text">
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://osdoc.cogsci.nl/back-ends/about&quot;&gt;&lt;span style=&quot;font-size:small;font-style:italic; text-decoration: underline; color:#0057ae;&quot;&gt;Why is this important?&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        </property>
+        <property name="openExternalLinks">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="1">
        <spacer name="verticalSpacer_4">
         <property name="orientation">
          <enum>Qt::Vertical</enum>
@@ -101,7 +110,7 @@
         </property>
        </spacer>
       </item>
-      <item row="2" column="0">
+      <item row="4" column="0">
        <widget class="QLabel" name="label_resolution">
         <property name="text">
          <string>Resolution</string>
@@ -111,7 +120,7 @@
         </property>
        </widget>
       </item>
-      <item row="2" column="1">
+      <item row="4" column="1">
        <widget class="QFrame" name="frame_resolution">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
@@ -168,27 +177,14 @@
         </layout>
        </widget>
       </item>
-      <item row="3" column="1">
-       <spacer name="verticalSpacer_3">
-        <property name="orientation">
-         <enum>Qt::Vertical</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>20</width>
-          <height>6</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
-      <item row="4" column="0">
+      <item row="5" column="0">
        <widget class="QLabel" name="label_foreground">
         <property name="text">
          <string>Foreground</string>
         </property>
        </widget>
       </item>
-      <item row="4" column="1">
+      <item row="5" column="1">
        <widget class="color_edit" name="edit_foreground" native="true">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
@@ -196,16 +192,22 @@
           <verstretch>0</verstretch>
          </sizepolicy>
         </property>
+        <property name="minimumSize">
+         <size>
+          <width>200</width>
+          <height>0</height>
+         </size>
+        </property>
        </widget>
       </item>
-      <item row="5" column="0">
+      <item row="6" column="0">
        <widget class="QLabel" name="label_background">
         <property name="text">
          <string>Background</string>
         </property>
        </widget>
       </item>
-      <item row="5" column="1">
+      <item row="6" column="1">
        <widget class="color_edit" name="edit_background" native="true">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
@@ -213,39 +215,26 @@
           <verstretch>0</verstretch>
          </sizepolicy>
         </property>
+        <property name="minimumSize">
+         <size>
+          <width>200</width>
+          <height>0</height>
+         </size>
+        </property>
        </widget>
       </item>
-      <item row="6" column="1">
-       <widget class="QLabel" name="label_colors_examples">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
+      <item row="7" column="0">
+       <widget class="QLabel" name="label_font">
         <property name="text">
-         <string>&lt;small&gt;&lt;i&gt;Examples: 'white', '#FFFFFF'&lt;/i&gt;&lt;/small&gt;</string>
+         <string>Font</string>
         </property>
         <property name="alignment">
          <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
         </property>
-        <property name="wordWrap">
-         <bool>true</bool>
-        </property>
        </widget>
       </item>
       <item row="7" column="1">
-       <spacer name="verticalSpacer_2">
-        <property name="orientation">
-         <enum>Qt::Vertical</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>20</width>
-          <height>6</height>
-         </size>
-        </property>
-       </spacer>
+       <widget class="font_widget" name="widget_font" native="true"/>
       </item>
       <item row="8" column="1">
        <widget class="QFrame" name="frame_colors">
@@ -265,54 +254,7 @@
         </layout>
        </widget>
       </item>
-      <item row="9" column="0">
-       <widget class="QLabel" name="label_font">
-        <property name="text">
-         <string>Font</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
-        </property>
-       </widget>
-      </item>
       <item row="9" column="1">
-       <widget class="QFrame" name="frame_font">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="frameShape">
-         <enum>QFrame::NoFrame</enum>
-        </property>
-        <property name="frameShadow">
-         <enum>QFrame::Raised</enum>
-        </property>
-        <layout class="QHBoxLayout" name="horizontalLayout_4">
-         <property name="margin">
-          <number>0</number>
-         </property>
-         <item>
-          <widget class="font_widget" name="widget_font" native="true">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="minimumSize">
-            <size>
-             <width>10</width>
-             <height>10</height>
-            </size>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </widget>
-      </item>
-      <item row="10" column="1">
        <spacer name="verticalSpacer">
         <property name="orientation">
          <enum>Qt::Vertical</enum>
@@ -325,7 +267,7 @@
         </property>
        </spacer>
       </item>
-      <item row="11" column="0">
+      <item row="10" column="0">
        <widget class="QLabel" name="label_miscellaneous">
         <property name="text">
          <string>Miscellaneous</string>
@@ -338,7 +280,7 @@
         </property>
        </widget>
       </item>
-      <item row="11" column="1">
+      <item row="10" column="1">
        <widget class="QCheckBox" name="checkbox_uniform_coordinates">
         <property name="toolTip">
          <string>If enabled, (0,0) always refers to the center of the display</string>
@@ -348,7 +290,7 @@
         </property>
        </widget>
       </item>
-      <item row="12" column="1">
+      <item row="11" column="1">
        <widget class="QCheckBox" name="checkbox_bidi">
         <property name="toolTip">
          <string>Enables support for bi-directional languages, such as Arabic and Hebrew</string>
@@ -358,14 +300,14 @@
         </property>
        </widget>
       </item>
-      <item row="13" column="1">
+      <item row="12" column="1">
        <widget class="QLabel" name="label_bidi_check">
         <property name="text">
          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:small; font-style:italic;&quot;&gt;Warning: python-bidi is not available&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
         </property>
        </widget>
       </item>
-      <item row="14" column="1">
+      <item row="13" column="1">
        <widget class="QPushButton" name="button_script_editor">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
@@ -373,31 +315,23 @@
           <verstretch>0</verstretch>
          </sizepolicy>
         </property>
+        <property name="minimumSize">
+         <size>
+          <width>200</width>
+          <height>0</height>
+         </size>
+        </property>
         <property name="text">
          <string>General script</string>
         </property>
         <property name="icon">
-         <iconset theme="utilities-terminal"/>
+         <iconset theme="utilities-terminal">
+          <normaloff/>
+         </iconset>
         </property>
        </widget>
       </item>
-      <item row="15" column="1">
-       <widget class="QPushButton" name="button_backend_settings">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="text">
-         <string>Back-end settings</string>
-        </property>
-        <property name="icon">
-         <iconset theme="preferences-system"/>
-        </property>
-       </widget>
-      </item>
-      <item row="16" column="1">
+      <item row="14" column="1">
        <widget class="QFrame" name="frame_advanced">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Fixed" vsizetype="Preferred">

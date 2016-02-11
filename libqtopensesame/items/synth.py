@@ -46,26 +46,20 @@ class synth(synth_runtime, qtplugin):
 
 		qtplugin.init_edit_widget(self)
 		self.add_combobox_control(u'osc', _(u'Waveform'),
-			[u'sine', u'saw', u'square', u'white_noise'],
-			tooltip=_(u'The waveform for the sound'))
+			[u'sine', u'saw', u'square', u'white_noise'])
 		self.add_line_edit_control(u'freq',
-			_(u'Frequency (in Hz) or note (e.g. \'A1\')'),
-			tooltip=_(u'A frequency (in Hz) or a note (e.g. \'A1\''))
+			_(u'Frequency'),
+			info=_(u'In Hertz or as note, e.g. "A1"'))
 		self.add_spinbox_control(u'attack', _(u'Attack'),
-			min_val=0, max_val=10000000,
-			tooltip=_(u'The attack (or fade-in) time'), suffix=_(u' ms'))
+			min_val=0, max_val=10000000, suffix=_(u' ms'))
 		self.add_spinbox_control(u'decay', _(u'Decay'),
-			min_val=0, max_val=10000000,
-			tooltip=_(u'The decay (or fade-out) time'), suffix=_(u' ms'))
+			min_val=0, max_val=10000000, suffix=_(u' ms'))
 		self.add_doublespinbox_control(u'volume', _(u'Volume'),
-			min_val=0, max_val=1,
-			tooltip=_(u'The sound volume'), suffix=_(u' x maximum'))
-		self.add_doublespinbox_control(u'pan', _(u'Panning'),
-			min_val=-20, max_val=20, suffix=_(u' toward right'),
-			tooltip=_(u'The panning of the sound. Left is negative, right is positive.'))
+			min_val=0, max_val=1, suffix=_(u' x maximum'))
+		self.add_line_edit_control(u'pan', _(u'Panning'),
+			info=_(u'Positive values toward the right; "left" or "right" for full panning'))
 		self.add_spinbox_control(u'length', _(u'Length'),
-			min_val=0, max_val=10000000,
-			tooltip=_(u'The sound length'), suffix=_(u' ms'))
+			min_val=0, max_val=10000000, suffix=_(u' ms'))
 		self.add_line_edit_control(u'duration', _(u'Duration'),
-			tooltip=_(u"Expecting a duration in ms, 'sound' (to wait until the sound is finished playing), 'keypress', 'mouseclick', or a variable (e.g., '[synth_dur]')."),
+			info=_(u'In milliseconds, "sound", "keypress", or "mouseclick"'),
 			validator=duration_validator(self, default=u'sound'))

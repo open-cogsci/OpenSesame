@@ -55,13 +55,11 @@ class mouse_response(mouse_response_runtime, qtplugin):
 		super(mouse_response, self).init_edit_widget(stretch=True)
 		# Use auto-controls for most stuff
 		self.add_line_edit_control(u'correct_response', _(u'Correct response'),
-			tooltip=_(u'Set the correct response'))
+			info=_(u'Leave empty to use "correct_response"'))
 		self.add_line_edit_control(u'allowed_responses', _(u'Allowed responses'),
-			tooltip=_(u'Set the allowed responses seperated by a semi-colon, e.g., "left_button;right_button"'))
+			info=_(u'Separated by semicolons, e.g. "left_button;right_button"'))
 		self.add_line_edit_control(u'timeout', _(u'Timeout'),
-			tooltip=_(u'Set the response timeout in milliseconds, or "infinite"'),
+			tooltip=_(u'In milliseconds or "infinite"'),
 			validator=timeout_validator(self))
-		self.add_checkbox_control(u'show_cursor', _(u'Visible mouse cursor'),
-			tooltip=_(u'If checked, the mouse cursor will be visible'))
-		self.add_checkbox_control(u'flush', _(u'Flush pending mouse clicks'),
-			tooltip=_(u'Flush pending mouse clicks'))
+		self.add_checkbox_control(u'show_cursor', _(u'Visible mouse cursor'))
+		self.add_checkbox_control(u'flush', _(u'Flush pending mouse clicks'))

@@ -2,8 +2,7 @@
 
 An unexpected error occurred. Do you want to send a bug report? This is automatic, and prevents similar problems in the future.
 
-- [Send the error message](opensesame://event.bug_report_send)
-- [Do not send the error message](opensesame://action.close_current_tab)
+[Send the error message](opensesame://event.bug_report_send){: .green-button}
 
 Privacy:
 

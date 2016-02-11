@@ -35,10 +35,11 @@ class qtplugin(qtitem.qtitem):
 	def __init__(self, plugin_file=None):
 
 		"""
-		Constructor.
+		desc:
+			Constructor.
 
-		Arguments:
-		plugin_file		-- The path to the plugin script. (default=None)
+		arguments:
+			plugin_file:	The location of the plugin script file.
 		"""
 
 		if plugin_file is not None:
@@ -92,35 +93,40 @@ class qtplugin(qtitem.qtitem):
 
 	def edit_widget(self):
 
-		"""Updates the GUI controls."""
+		"""
+		desc:
+			Updates the GUI controls.
+		"""
 
 		qtitem.qtitem.edit_widget(self)
 		self.auto_edit_widget()
 
-	def apply_edit_changes(self, rebuild=True):
+	def apply_edit_changes(self):
 
 		"""
-		Applies the controls.
-
-		Keyword arguments:
-		rebuild		-- DEPRECATED
+		desc:
+			Applies the controls.
 		"""
 
-		return qtitem.qtitem.apply_edit_changes(self, rebuild) and \
-			self.auto_apply_edit_changes(rebuild)
+		return qtitem.qtitem.apply_edit_changes(self) and \
+			self.auto_apply_edit_changes()
 
-	def add_control(self, label, widget, tooltip=None, min_width=None):
+	def add_control(self, label, widget, tooltip=None, min_width=200,
+		info=None):
 
 		"""
-		Adds a generic control QWidget.
+		desc:
+			Adds a generic control QWidget.
 
-		Arguments:
-		label		--	A text label.
-		widget		--	A control QWidget.
+		arguments:
+			label:	A text label.
+			widget:	A QWidget.
 
-		Keyword arguments:
-		tooltip		--	A tooltip text. (default=None)
-		min_width	--	A minimum width for the widget. (default=None)
+		keywords:
+			tooltip:	A tooltip text.
+			min_width:	A minimum width for the widget.
+			info:		Additional info, to be presented to the right of the
+						control.
 		"""
 
 		if tooltip is not None:
@@ -128,32 +134,42 @@ class qtplugin(qtitem.qtitem):
 				widget.setToolTip(tooltip)
 			except:
 				pass
-		if type(min_width) == int:
+		if isinstance(min_width, int):
 			widget.setMinimumWidth(min_width)
 		row = self.edit_grid.rowCount()
 		label = QtWidgets.QLabel(label)
 		label.setAlignment(self.edit_grid.labelAlignment())
-		self.edit_grid.insertRow(row, label, widget)
+		if info is None:
+			self.edit_grid.insertRow(row, label, widget)
+		else:
+			hbox = QtWidgets.QHBoxLayout()
+			hbox.setContentsMargins(0,0,0,0)
+			hbox.setSpacing(12)
+			hbox.addWidget(widget)
+			hbox.addWidget(QtGui.QLabel(u'<small><i>%s</i></small>' % info))
+			container = QtWidgets.QWidget()
+			container.setLayout(hbox)
+			self.edit_grid.insertRow(row, label, container)
 		self.set_focus_widget(widget)
 
-	def add_line_edit_control(self, var, label, tooltip=None, default=None,
-		min_width=None, validator=None):
+	def add_line_edit_control(self, var, label, validator=None, **kwdict):
 
 		"""
-		Adds a QLineEdit control that is linked to a variable.
+		desc:
+			Adds a QLineEdit control that is linked to a variable.
 
-		Arguments:
-		var			--	Name of the associated variable.
-		label 		--	Label text.
+		arguments:
+			var:	The associated variable.
+			label:	The label text.
 
-		Keyword arguments:
-		tooltip 	--	A tooltip text. (default=None)
-		default 	--	DEPRECATED
-		min_width 	--	A minimum width for the widget. (default=None)
-		validator	--
+		keywords:
+			validator:	A validator object.
 
-		Returns:
-		A QLineEdit widget.
+		keyword-dict:
+			kwdict:		A keyword dict to be passed on to add_control().
+
+		returns:
+			A QLineEdit widget.
 		"""
 
 		edit = QtWidgets.QLineEdit()
@@ -161,80 +177,77 @@ class qtplugin(qtitem.qtitem):
 		edit.setMinimumWidth(200)
 		if validator is not None:
 			edit.setValidator(validator)
-		self.add_control(label, edit, tooltip, min_width)
+		self.add_control(label, edit, **kwdict)
 		if var is not None:
 			self.auto_line_edit[var] = edit
 		return edit
 
-	def add_checkbox_control(self, var, label, tooltip=None):
+	def add_checkbox_control(self, var, label, **kwdict):
 
 		"""
-		Adds a QCheckBox control that is linked to a variable.
+		desc:
+			Adds a QCheckBox control that is linked to a variable.
 
-		Arguments:
-		var			--	Name of the associated variable.
-		label 		--	Label text.
+		arguments:
+			var:	The associated variable.
+			label:	The label text.
 
-		Keyword arguments:
-		tooltip 	--	A tooltip text. (default=None)
+		keyword-dict:
+			kwdict:		A keyword dict to be passed on to add_control().
 
-		Returns:
-		A QCheckBox widget.
+		returns:
+			A QCheckBox widget.
 		"""
 
 		checkbox = QtWidgets.QCheckBox(label)
 		checkbox.clicked.connect(self.apply_edit_changes)
-		self.add_control('', checkbox, tooltip)
+		self.add_control(u'', checkbox, **kwdict)
 		if var is not None:
 			self.auto_checkbox[var] = checkbox
 		return checkbox
 
-	def add_color_edit_control(self, var, label, tooltip=None, default=None, \
-		min_width=None):
+	def add_color_edit_control(self, var, label, **kwdict):
 
 		"""
-		Adds a colorpicker control, consisting of a QLineEdit and QColorDialog.
-		Some basic checking is done to ascertain that only valid color names or
-		variably defined entries are accepted.
+		desc:
+			Adds a color_edit control.
 
-		Arguments:
-		var			--	Name of the associated variable.
-		label 		--	Label text.
+		arguments:
+			var:	The associated variable.
+			label:	The label text.
 
-		Keyword arguments:
-		tooltip 	--	A tooltip text. (default=None)
-		default 	--	DEPRECATED
-		min_width 	--	A minimum width for the widget. (default=None)
+		keyword-dict:
+			kwdict:		A keyword dict to be passed on to add_control().
 
-		Returns:
-		A color_edit widget.
+		returns:
+			A color_edit widget.
 		"""
 
 		edit = color_edit.color_edit(self.main_window)
 		edit.setMinimumWidth(200)
 		edit.initialize(self.experiment)
-		QtCore.QObject.connect(edit, QtCore.SIGNAL('set_color'), \
-			self.apply_edit_changes)
-		self.add_control(label, edit, tooltip, min_width)
+		edit.textEdited.connect(self.apply_edit_changes)
+		self.add_control(label, edit, **kwdict)
 		if var is not None:
 			self.auto_line_edit[var] = edit
 		return edit
 
-	def add_combobox_control(self, var, label, options, tooltip=None):
+	def add_combobox_control(self, var, label, options, **kwdict):
 
 		"""
-		Adds a QComboBox control that is linked to a variable.
+		desc:
+			Adds a QComboBox control that is linked to a variable.
 
-		Arguments:
-		var			-- 	Name of the associated variable.
-		label 		--	Label text.
-		options 	--	A list of options.
+		arguments:
+			var:		The associated variable.
+			label:		The label text.
+			options:	A list of options.
 
-		Keyword arguments:
-		tooltip 	--	A tooltip text. (default=None)
+		keyword-dict:
+			kwdict:		A keyword dict to be passed on to add_control().
 
-		Returns:
-		A QComboBox widget.
+		returns:
+			A QComboBox widget.
 		"""
 
 		combobox = QtWidgets.QComboBox()
@@ -242,38 +255,53 @@ class qtplugin(qtitem.qtitem):
 		for o in options:
 			combobox.addItem(o)
 		combobox.activated.connect(self.apply_edit_changes)
-		self.add_control(label, combobox, tooltip)
+		self.add_control(label, combobox, **kwdict)
 		if var is not None:
 			self.auto_combobox[var] = combobox
 		return combobox
 
 	def add_doublespinbox_control(self, *args, **kwdict):
 
-		self._add_spinbox_control(QtWidgets.QDoubleSpinBox, *args, **kwdict)
+		"""
+		desc:
+			Adds a QDoubleSpinBox. See _add_spinbox_control().
+		"""
+
+		return self._add_spinbox_control(QtWidgets.QDoubleSpinBox, *args,
+			**kwdict)
 
 	def add_spinbox_control(self, *args, **kwdict):
 
-		self._add_spinbox_control(QtWidgets.QSpinBox, *args, **kwdict)
+		"""
+		desc:
+			Adds a QSpinBox. See _add_spinbox_control().
+		"""
+
+		return self._add_spinbox_control(QtWidgets.QSpinBox, *args, **kwdict)
 
 	def _add_spinbox_control(self, cls, var, label, min_val, max_val,
-		prefix=u'', suffix=u'', tooltip=None):
+		prefix=u'', suffix=u'', **kwdict):
 
 		"""
-		Adds a QSpinBox control that is linked to a variable.
+		desc:
+			Adds a QSpinBox or QDoubleSpinBox control that is linked to a
+			variable.
 
-		Arguments:
-		var			-- 	Name of the associated variable.
-		label 		-- 	Label text.
-		min_val 	-- 	A minimum value.
-		max_val 	-- 	A maximum value.
+		arguments:
+			var:		The associated variable.
+			label:		The label text.
+			min_val:	A minimum value.
+			max_val:	A maximum value.
 
 		Keyword arguments:
-		prefix 		-- 	A prefix text. (default=u'')
-		suffix 		-- 	A suffix text. (default=u'')
-		tooltip 	-- 	A tooltip text. (default=None)
+			prefix:		A prefix text.
+			suffix:		A suffix text.
 
-		Returns:
-		A QSpinBox widget.
+		keyword-dict:
+			kwdict:		A keyword dict to be passed on to add_control().
+
+		returns:
+			A QSpinBox widget.
 		"""
 
 		spinbox = cls()
@@ -285,31 +313,32 @@ class qtplugin(qtitem.qtitem):
 			spinbox.setPrefix(prefix)
 		if suffix != u'':
 			spinbox.setSuffix(suffix)
-		self.add_control(label, spinbox, tooltip)
+		self.add_control(label, spinbox, **kwdict)
 		if var is not None:
 			self.auto_spinbox[var] = spinbox
 		return spinbox
 
-	def add_slider_control(self, var, label, min_val, max_val, left_label=u'', \
-		right_label=u'', tooltip=None, default=None):
+	def add_slider_control(self, var, label, min_val, max_val, left_label=u'',
+		right_label=u'', **kwdict):
 
 		"""
 		Adds a QSlider control that is linked to a variable.
 
-		Arguments:
-		var			--	Name of the associated variable.
-		label 		--	Label text.
-		min_val 	--	A minimum value.
-		max_val 	--	A maximum value.
+		arguments:
+			var:		The associated variable.
+			label:		The label text.
+			min_val:	A minimum value.
+			max_val:	A maximum value.
 
 		Keyword arguments:
-		left_label 	--	A label for the left side (default="")
-		right_label	--	A label for the right side (default="")
-		tooltip		--	A tooltip text. (default=None)
-		default		--	DEPRECATED
+			left_label:		A label for the left side.
+			right_label:	A label for the right side.
 
-		Returns:
-		A QSlider widget.
+		keyword-dict:
+			kwdict:		A keyword dict to be passed on to add_control().
+
+		returns:
+			A QSlider widget.
 		"""
 
 		slider = QtWidgets.QSlider(QtCore.Qt.Horizontal)
@@ -335,29 +364,30 @@ class qtplugin(qtitem.qtitem):
 			self.auto_slider[var] = slider
 		widget = QtWidgets.QWidget()
 		widget.setLayout(layout)
-		self.add_control(label, widget, tooltip)
+		self.add_control(label, widget, **kwdict)
 		return slider
 
-	def add_filepool_control(self, var, label, click_func=None, tooltip=None, \
-		default=None):
+	def add_filepool_control(self, var, label, click_func=None, **kwdict):
 
 		"""
-		Adds a control to select a file from the file pool, and is linked to a
-		variable.
+		desc:
+			Adds a control to select a file from the file pool, and is linked to
+			a variable.
 
-		Arguments:
-		var			--	Name of the associated variable.
-		label 		--	Label text.
+		arguments:
+			var:		The associated variable.
+			label:		The label text.
 
-		Keyword arguments:
-		click_func 	--	A custom function to be called when a file is selected.
+		keywords:
+			click_func:	A custom function to be called when a file is selected.
 						If no click_func is specified, file selection will be
 						handled automatically. (default=None)
-		tooltip 	--	A tooltip text. (default=None)
-		default		--	DEPRECATED
 
-		Returns:
-		A QLineEdit widget that contains the path of the selected file.
+		keyword-dict:
+			kwdict:		A keyword dict to be passed on to add_control().
+
+		returns:
+			A QLineEdit widget that contains the path of the selected file.
 		"""
 
 		edit = QtWidgets.QLineEdit()
@@ -377,27 +407,24 @@ class qtplugin(qtitem.qtitem):
 		hbox.setSpacing(6)
 		widget = QtWidgets.QWidget()
 		widget.setLayout(hbox)
-		self.add_control(label, widget, tooltip)
+		self.add_control(label, widget, **kwdict)
 		return edit
 
-	def add_editor_control(self, var, label, syntax=False, tooltip=None, \
-		default=None):
+	def add_editor_control(self, var, label, syntax=False):
 
 		"""
 		Adds a QProgEdit that is linked to a variable.
 
-		Arguments:
-		var			--	Name of the associated variable.
-		label 		--	Label text.
+		arguments:
+			var:		The associated variable.
+			label:		The label text.
 
-		Keyword arguments:
-		syntax 		--	A boolean indicating whether Python syntax highlighting
-						should be activated. (default=False)
-		tooltip		--	A tooltip text. (default=None)
-		default		--	DEPRECATED
+		keywords:
+			syntax:		A boolean indicating whether Python syntax highlighting
+						should be activated.
 
-		Returns:
-		A QProgEdit widget.
+		returns:
+			A QProgEdit widget.
 		"""
 
 		from QProgEdit import QTabManager
@@ -409,7 +436,6 @@ class qtplugin(qtitem.qtitem):
 		qprogedit.focusLost.connect(self.apply_edit_changes)
 		qprogedit.handlerButtonClicked.connect(self.apply_edit_changes)
 		qprogedit.addTab(label).setLang(lang)
-
 		if var is not None:
 			self.auto_editor[var] = qprogedit
 		self.edit_vbox.addWidget(qprogedit)
@@ -419,19 +445,19 @@ class qtplugin(qtitem.qtitem):
 	def add_text(self, msg):
 
 		"""
-		Adds a non-interactive QLabel for description purposes.
+		desc:
+			Adds a non-interactive QLabel for description purposes.
 
-		Arguments:
-		msg		--	A text message.
+		arguments:
+			msg:	A text message.
 
-		Returns:
-		A QLabel widget.
+		returns:
+			A QLabel.
 		"""
 
 		label = QtWidgets.QLabel(msg)
 		label.setWordWrap(True)
 		label.setOpenExternalLinks(True)
-		# self.add_control(u'', label)
 		self.edit_vbox.addWidget(label)
 		return label
 
@@ -456,50 +482,24 @@ class qtplugin(qtitem.qtitem):
 
 	def add_stretch(self):
 
-		"""Pad empty space below the controls"""
+		"""
+		desc:
+			Pads empty space below the controls.
+		"""
 
 		self.edit_vbox.addStretch()
-
-	def apply_button(self, label=u'Apply', icon=u'apply', \
-		tooltip=u'Apply changes'):
-
-		"""
-		Returns a right-outlined apply QPushButton. The widget is not added
-		automatically to the controls. I.e. you need to implement your own
-		connections to make the button functional.
-
-		Keyword arguments:
-		label		-- A label text. (default=u'Apply')
-		icon		-- An icon name. (default=u'Apply')
-		tooltip		-- A tooltip text. (default=u'Apply changes')
-
-		Returns:
-		A QPushButton widget.
-		"""
-
-		button_apply = QtWidgets.QPushButton(label)
-		button_apply.setIcon(self.theme.qicon(icon))
-		button_apply.setIconSize(QtCore.QSize(16, 16))
-		button_apply.clicked.connect(self.apply_edit_changes)
-		button_apply.setToolTip(tooltip)
-		hbox = QtWidgets.QHBoxLayout()
-		hbox.setContentsMargins(0, 0, 0, 0)
-		hbox.addStretch()
-		hbox.addWidget(button_apply)
-		widget = QtWidgets.QWidget()
-		widget.setLayout(hbox)
-		return widget
 
 	def browse_pool_func(self, edit_widget):
 
 		"""
-		Returns a function to present a file dialog to browse the file pool.
+		desc:
+			Returns a function to present a file dialog to browse the file pool.
 
-		Arguments:
-		edit_widget		--	A QLineEdit widget.
+		arguments:
+			edit_widget:	A QLineEdit widget.
 
-		Returns:
-		A function that presents a filepool dialog and sets the edit_widget.
+		returns:
+			A function that presents a filepool dialog and sets the edit_widget.
 		"""
 
 		def browse_pool():
@@ -513,10 +513,11 @@ class qtplugin(qtitem.qtitem):
 	def get_ready(self):
 
 		"""
-		Applies pending script changes.
+		desc:
+			Applies pending script changes.
 
-		Returns:
-		True if changes have been made, False otherwise.
+		returns:
+			True if changes have been made, False otherwise.
 		"""
 
 		for var, qprogedit in self.auto_editor.items():

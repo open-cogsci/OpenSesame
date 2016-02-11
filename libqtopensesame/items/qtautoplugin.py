@@ -57,7 +57,7 @@ class qtautoplugin(qtplugin):
 		# Keywords are optional parameters that are set to some default if they
 		# are not specified.
 		keywords = {
-			u'tooltip' : None,
+			u'info' : None,
 			u'min_width' : None,
 			u'prefix' : u'',
 			u'suffix' : u'',
@@ -91,43 +91,43 @@ class qtautoplugin(qtplugin):
 					c[keyword] = default
 			# Translate translatable fields
 			c[u'label'] = item_type_translate(c[u'label'])
-			if c[u'tooltip'] is not None:
-				c[u'tooltip'] = item_type_translate(c[u'tooltip'])
+			if c[u'info'] is not None:
+				c[u'info'] = item_type_translate(c[u'info'])
 			# Parse checkbox
 			if c[u'type'] == u'checkbox':
 				widget = self.add_checkbox_control(c[u'var'], c[u'label'],
-					tooltip=c[u'tooltip'])
+					info=c[u'info'])
 			# Parse color_edit
 			elif c[u'type'] == u'color_edit':
 				widget = self.add_color_edit_control(c[u'var'], c[u'label'],
-					tooltip=c[u'tooltip'], min_width=c[u'min_width'])
+					info=c[u'info'], min_width=c[u'min_width'])
 			# Parse combobox
 			elif c[u'type'] == u'combobox':
 				widget = self.add_combobox_control(c[u'var'], c[u'label'],
-					c[u'options'], tooltip=c[u'tooltip'])
+					c[u'options'], info=c[u'info'])
 			# Parse editor
 			elif c[u'type'] == u'editor':
 				widget = self.add_editor_control(c[u'var'], c[u'label'],
-					syntax=c[u'syntax'], tooltip=c[u'tooltip'])
+					syntax=c[u'syntax'])
 				need_stretch = False
 			# Parse filepool
 			elif c[u'type'] == u'filepool':
 				widget = self.add_filepool_control(c[u'var'], c[u'label'],
-					tooltip=c[u'tooltip'])
+					info=c[u'info'])
 			# Parse line_edit
 			elif c[u'type'] == u'line_edit':
 				widget = self.add_line_edit_control(c[u'var'], c[u'label'],
-					tooltip=c[u'tooltip'], min_width=c[u'min_width'])
+					info=c[u'info'], min_width=c[u'min_width'])
 			# Parse spinbox
 			elif c[u'type'] == u'spinbox':
 				widget = self.add_spinbox_control(c[u'var'], c[u'label'],
 					c[u'min_val'], c[u'max_val'], prefix=c[u'prefix'],
-					suffix=c[u'suffix'], tooltip=c[u'tooltip'])
+					suffix=c[u'suffix'], info=c[u'info'])
 			# Parse slider
 			elif c[u'type'] == u'slider':
 				widget = self.add_slider_control(c[u'var'], c[u'label'],
 					c[u'min_val'], c[u'max_val'], left_label=c[u'left_label'],
-					right_label=c[u'right_label'], tooltip=c[u'tooltip'])
+					right_label=c[u'right_label'], info=c[u'info'])
 			# Parse text
 			elif c[u'type'] == u'text':
 				widget = self.add_text(c[u'label'])
