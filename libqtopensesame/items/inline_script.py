@@ -48,7 +48,7 @@ class inline_script(inline_script_runtime, qtplugin):
 
 		"""See qtitem."""
 
-		super(inline_script, self).apply_edit_changes(self)
+		qtplugin.apply_edit_changes(self)
 		sp = self.qprogedit.text(index=0)
 		sr = self.qprogedit.text(index=1)
 		self.var._prepare = sp

@@ -17,40 +17,41 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
-from libopensesame.exceptions import osexception
-from libopensesame import item, debug
 from libopensesame.py3compat import *
+from libopensesame.exceptions import osexception
+from libopensesame import item
+from datamatrix import operations, DataMatrix
+from pseudorandom import Enforce, MaxRep, MinDist
 import openexp.keyboard
-from random import *
-from math import *
+import warnings
 
 class loop(item.item):
 
 	"""A loop item runs a single other item multiple times"""
 
 	description = u'Repeatedly runs another item'
+	valid_orders = u'sequential', u'random', u'advanced'
 
 	def reset(self):
 
 		"""See item."""
 
-		self.var.cycles = 1
+		self.ef = None
+		self.dm = DataMatrix(length=0)
+		self.live_dm = None
+		self.live_row = None
+		self.operations = []
+		self._item = u''
+
 		self.var.repeat = 1
-		self.var.skip = 0
-		self.var.offset = u'no'
-		self.matrix = {}
+		self.var.continuous = u'no'
 		self.var.order = u'random'
-		self.var.item = u''
 		self.var.break_if = u'never'
+		self.var.break_if_on_first = u'yes'
 
 	def from_string(self, string):
 
-		"""
-		Creates a loop from a definition in a string.
-
-		Arguments:
-		string 		--	An item definition string.
-		"""
+		"""See item."""
 
 		self.variables = {}
 		self.comments = []
@@ -59,155 +60,216 @@ class loop(item.item):
 			return
 		for i in string.split(u'\n'):
 			self.parse_variable(i)
-			# Extract the item to run
-			i = self.syntax.split(i.strip())
-			if len(i) > 0:
-				if i[0] == u'run' and len(i) > 1:
-					self.var.item = i[1]
-				if i[0] == u'setcycle' and len(i) > 3:
-					cycle = int(i[1])
-					var = i[2]
-					val = i[3]
-					try:
-						if int(val) == float(val):
-							val = int(val)
-						else:
-							val = float(val)
-					except:
-						pass
-					if cycle not in self.matrix:
-						self.matrix[cycle] = {}
-					self.matrix[cycle][var] = val
-
-	def run(self):
-
-		"""Runs the loop."""
-
-		self.set_item_onset()
-
-		# Prepare the break if condition
-		if self.var.break_if != u'':
-			self._break_if = self.syntax.compile_cond(
-				self.var.get(u'break_if', _eval=False))
-		else:
-			self._break_if = None
-
-		# First generate a list of cycle numbers
-		l = []
-		# Walk through all complete repeats
-		whole_repeats = int(self.var.repeat)
-		for j in range(whole_repeats):
-			for i in range(self.var.cycles):
-				l.append(i)
-
-		# Add the leftover repeats
-		partial_repeats = self.var.repeat - whole_repeats
-		if partial_repeats > 0:
-			all_cycles = range(self.var.cycles)
-			_sample = sample(all_cycles, int(len(all_cycles) * partial_repeats))
-			for i in _sample:
-				l.append(i)
-
-		# Randomize the list if necessary
-		if self.var.order == u'random':
-			shuffle(l)
-
-		# In sequential order, the offset and the skip are relevant
-		else:
-			if len(l) < self.var.skip:
-				raise osexception( \
-					u'The value of skip is too high in loop item "%s":: You cannot skip more cycles than there are.' \
-					% self.name)
-			if self.var.offset == u'yes':
-				l = l[self.var.skip:] + l[:self.var.skip]
-			else:
-				l = l[self.var.skip:]
-
-		# Create a keyboard to flush responses between cycles
-		self._keyboard = openexp.keyboard.keyboard(self.experiment)
-
-		# Make sure the item to run exists
-		if self.var.item not in self.experiment.items:
-			raise osexception( \
-				u"Could not find item '%s', which is called by loop item '%s'" \
-				% (self.var.item, self.name))
-
-		# And run!
-		while len(l) > 0:
-			cycle = l.pop(0)
-			self.apply_cycle(cycle)
-			if self._break_if is not None:
-				self.python_workspace[u'self'] = self
-				if self.python_workspace._eval(self._break_if):
-					break
-			self.experiment.var.repeat_cycle = 0
-			self.experiment.items.execute(self.var.item)
-			if self.experiment.var.repeat_cycle:
-				debug.msg(u'repeating cycle %d' % cycle)
-				l.append(cycle)
-				if self.var.order == u'random':
-					shuffle(l)
-
-	def apply_cycle(self, cycle):
-
-		"""
-		Sets all the loop variables according to the cycle.
-
-		Arguments:
-		cycle 		--	The cycle nr.
-		"""
-
-		# If the cycle is not defined, we don't have to do anything
-		if cycle not in self.matrix:
-			return
-		# Otherwise apply all variables from the cycle
-		for var in self.matrix[cycle]:
-			val = self.matrix[cycle][var]
-			# By starting with an "=" sign, users can incorporate a
-			# Python statement, for example to call functions from
-			# the random or math module
-			if isinstance(val, basestring) and len(val) > 1 and val[0] == "=":
+			cmd, arglist, kwdict = self.syntax.parse_cmd(i)
+			if cmd == u'run':
+				if len(arglist) != 1 or kwdict:
+					raise osexception(u'Invalid run command: %s' % i)
+				self._item = arglist[0]
+				continue
+			if cmd == u'setcycle':
+				if len(arglist) != 3 or kwdict:
+					raise osexception(u'Invalid setcycle command: %s' % i)
+				row, var, val = tuple(arglist)
+				if row >= len(self.dm):
+					self.dm.length = row+1
+				if var not in self.dm:
+					self.dm[var] = u''
+				self.dm[row][var] = val
+				continue
+			if cmd == u'constrain':
+				self.ef = Enforce(self.dm)
+				if len(arglist) != 1:
+					raise osexception(u'Invalid constrain command: %s' % i)
+				colname = arglist[0]
 				try:
-					val = eval(val[1:])
-				except Exception as e:
-					raise osexception( \
-						u"Failed to evaluate '%s' in loop item '%s': %s" \
-						% (val[1:], self.name, e))
-			# Set it!
-			self.experiment.var.set(var, val)
+					col = self.dm[colname]
+				except:
+					raise osexception(u'Invalid column name: %s' % colname)
+				for constraint, value in kwdict.items():
+					if constraint == u'maxrep':
+						self.ef.add_constraint(MaxRep, cols=[col], maxrep=value)
+						continue
+					if constraint == u'mindist':
+						self.ef.add_constraint(MinDist, cols=[col],
+							mindist=value)
+						continue
+					raise osexception(u'Invalid constrain command: %s' % i)
+				continue
+			if cmd in [u'shuffle', u'sort', u'sortby', u'reverse', u'roll']:
+				self.operations.append( (cmd, arglist) )
 
 	def to_string(self):
 
-		"""
-		Creates a definition string for the loop.
+		"""See item."""
 
-		Returns:
-		A definition string.
-		"""
-
-		s = super(loop, self).to_string()
-		for i in self.matrix:
-			for var in self.matrix[i]:
-				s += u'\tsetcycle %d %s "%s"\n' % (i, var, self.matrix[i][var])
-		s += u'\trun %s\n' % self.var.item
+		s = item.item.to_string(self)
+		for i, row in enumerate(self.dm):
+			for name, val in row:
+				s += u'\t%s\n' % \
+					self.syntax.create_cmd(u'setcycle', [i, name, val])
+		if self.ef is not None:
+			d = {}
+			for constraint in self.ef.constraints:
+				col = constraint.cols[0]
+				if col not in d:
+					d[col] = {}
+				if isinstance(constraint, MaxRep):
+					d[col][u'maxrep'] = constraint.maxrep
+				elif isinstance(constraint, MinDist):
+					d[col][u'mindist'] = constraint.mindist
+			for col, kwdict in d.items():
+				s += u'\t%s\n' % self.syntax.create_cmd(u'constrain', [col],
+					kwdict)
+		for cmd, arglist in self.operations:
+			s += u'\t%s\n' % self.syntax.create_cmd(cmd, arglist)
+		s += u'\t%s\n' % self.syntax.create_cmd(u'run', [self._item])
 		return s
+
+	def _require_arglist(self, cmd, arglist):
+
+		"""
+		desc:
+			Checks whether a non-empty argument list has been specified, and
+			raises an Exception otherwise.
+
+		arguments:
+			cmd:
+				desc:	The command to check for.
+				type:	str
+			arglist:
+				desc:	The argument list to check.
+				type:	list
+		"""
+
+		if not arglist:
+			raise osexception(u'Invalid argument list for %s' % cmd)
+
+	def _create_live_datamatrix(self):
+
+		"""
+		desc:
+			Builds a live DataMatrix. That is, it takes the orignal DataMatrix
+			and applies all the operations as specified.
+
+		returns:
+			desc:	A live DataMatrix.
+			type:	DataMatrix
+		"""
+
+		length = int(len(self.dm) * self.var.repeat)
+		dm = DataMatrix(length=0)
+		while len(dm) < length:
+			i = min(length-len(dm), len(self.dm))
+			if self.var.order == u'random':
+				dm <<= operations.shuffle(self.dm[:i])
+			else:
+				dm <<= self.dm[:i]
+		if self.var.order != u'advanced':
+			if self.operations or self.ef is not None:
+				warnings.warn(
+					u'Advanced loop operations are specified, but loop order is not advanced.')
+		if self.var.order == u'sequential':
+			return dm
+		if self.var.order == u'random':
+			return operations.shuffle(dm)
+		if self.var.order == u'advanced':
+			if self.ef is not None:
+				dm = self.ef.enforce()
+			for cmd, arglist in self.operations:
+				# The column name is always specified last, or not at all
+				if arglist:
+					try:
+						colname = arglist[-1]
+						col = dm[colname]
+					except:
+						raise osexception(
+							u'Column %s does not exist' % arglist[-1])
+				if cmd == u'shuffle':
+					if not arglist:
+						dm = operations.shuffle(dm)
+					else:
+						dm[colname] = operations.shuffle(col)
+				elif cmd == u'sort':
+					self._require_arglist(cmd, arglist)
+					dm[colname] = operations.sort(col)
+				elif cmd == u'sortby':
+					self._require_arglist(cmd, arglist)
+					dm = operations.sort(dm, by=col)
+				elif cmd == u'reverse':
+					if not arglist:
+						dm = dm[::-1]
+					else:
+						dm[colname] = col[::-1]
+				elif cmd == u'roll':
+					self._require_arglist(cmd, arglist)
+					steps = arglist.pop(0)
+					if not arglist:
+						dm = dm[-steps:] << dm[:-steps]
+					else:
+						dm[colname] = list(col[-steps:]) + list(col[:-steps])
+			return dm
+		raise osexception(u'Invalid order: %s' % self.var.order)
+
+	def prepare(self):
+
+		"""See item."""
+
+		# Deprecation errors
+		if (self.var.has(u'skip') and self.var.skip != 0) \
+			or (self.var.has(u'offset') and self.var.offset != u'no'):
+			raise osexception(
+				u'The skip and offset options have been removed. Please refer to the documentation of the loop item for more information.')
+		# Compile break-if statement
+		break_if = self.var.get(u'break_if', _eval=False)
+		if break_if not in (u'never', u''):
+			self._break_if = self.syntax.compile_cond(break_if)
+		else:
+			self._break_if = None
+		# Create a keyboard to flush responses between cycles
+		self._keyboard = openexp.keyboard.keyboard(self.experiment)
+		# Make sure the item to run exists
+		if self._item not in self.experiment.items:
+			raise osexception(
+				u"Could not find item '%s', which is called by loop item '%s'" \
+				% (self._item, self.name))
+		# And run!
+		if self.live_dm is None or self.var.continuous == u'no':
+			self.live_dm = self._create_live_datamatrix()
+			self.live_row = 0
+
+	def run(self):
+
+		"""See item."""
+
+		self.set_item_onset()
+		while self.live_row < len(self.live_dm):
+			self.experiment.var.repeat_cycle = 0
+			for name, val in self.live_dm[self.live_row]:
+				self.experiment.var.set(name, val)
+			# Evaluate the run if statement
+			if self._break_if is not None and \
+				(self.live_row or self.var.break_if_on_first == u'yes'):
+				self.python_workspace[u'self'] = self
+				if self.python_workspace._eval(self._break_if):
+					break
+			# Run the item!
+			self.experiment.items.execute(self._item)
+			# If the repeat_cycle flag was set, run the item again later
+			if self.experiment.var.repeat_cycle:
+				self.live_dm <<= self.live_dm[self.live_row:self.live_row+1]
+				if self.var.order == u'random':
+					self.live_dm = self.live_dm[:self.live_row+1] \
+						<< operations.shuffle(self.live_dm[self.live_row+1:])
+			self.live_row += 1
+		else:
+			# If the loop finished without breaking, it needs to be reset on
+			# the next run of the loop item
+			self.live_row = None
+			self.live_dm = None
 
 	def var_info(self):
 
-		"""
-		Describes the variables specific to the loop.
+		"""See item."""
 
-		Returns:
-		A list of (variable name, description) tuples.
-		"""
-
-		l = item.item.var_info(self)
-		var_list = {}
-		for i in self.matrix:
-			for var in self.matrix[i]:
-				if var not in var_list:
-					var_list[var] = []
-				var_list[var].append(safe_decode(self.matrix[i][var]))
-		for var in var_list:
-			l.append( (var, u'[' + u', '.join(var_list[var]) + u']'))
-		return l
+		return item.item.var_info(self) + [ (colname, safe_decode(col)) \
+			for colname, col in self.dm.columns]

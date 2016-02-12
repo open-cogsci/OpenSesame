@@ -18,9 +18,11 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame.py3compat import *
-
 from libqtopensesame.misc.config import cfg
 from libqtopensesame.dialogs.base_dialog import base_dialog
+from datamatrix import DataMatrix, operations
+from qdatamatrix import QDataMatrix
+from qtpy import QtWidgets
 
 class loop_wizard(base_dialog):
 
@@ -29,7 +31,7 @@ class loop_wizard(base_dialog):
 		The loop-wizard dialog
 	"""
 
-	def __init__(self, main_window, msg=None):
+	def __init__(self, main_window):
 
 		"""
 		desc:
@@ -37,56 +39,14 @@ class loop_wizard(base_dialog):
 
 		arguments:
 			main_window:	The main window object.
-			msg:			A text message.
 		"""
 
 		super(loop_wizard, self).__init__(main_window,
 			ui=u'dialogs.loop_wizard_dialog')
-		icons = {}
-		icons[u"cut"] = self.theme.qicon(u"cut")
-		icons[u"copy"] = self.theme.qicon(u"copy")
-		icons[u"paste"] = self.theme.qicon(u"paste")
-		icons[u"clear"] = self.theme.qicon(u"clear")
-		self.ui.table_example.build_context_menu(icons)
-		self.ui.table_wizard.build_context_menu(icons)
+		self._dm = DataMatrix(length=0)
+		self._qdm = QDataMatrix(self._dm)
+		self.ui.hbox_container.addWidget(self._qdm)
 		self.ui.table_example.hide()
-		self.ui.table_wizard.setRowCount(255)
-		self.ui.table_wizard.setColumnCount(255)
-		self.ui.table_wizard.set_contents(cfg.loop_wizard)
-
-	def column_count(self):
-
-		"""
-		returns:
-			The number of used columns in the table.
-		"""
-
-		return self.ui.table_wizard.columnCount()
-
-	def row_count(self):
-
-		"""
-		returns:
-			The number of used rows in the table.
-		"""
-
-		return self.ui.table_wizard.rowCount()
-
-	def get_item(self, row, column):
-
-		"""
-		desc:
-			Gets an item from the table.
-
-		arguments:
-			row:	A row number.
-			column:	A column number.
-
-		returns:
-			An item.
-		"""
-
-		return self.ui.table_wizard.item(row, column)
 
 	def exec_(self):
 
@@ -98,6 +58,7 @@ class loop_wizard(base_dialog):
 			The dialog return status.
 		"""
 
-		ret_val = super(loop_wizard, self).exec_()
-		cfg.loop_wizard = self.ui.table_wizard.get_contents()
-		return ret_val
+		retval = base_dialog.exec_(self)
+		if retval == QtWidgets.QDialog.Rejected:
+			return None
+		return operations.fullfactorial(self._dm)

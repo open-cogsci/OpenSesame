@@ -11,75 +11,35 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Loop Variable Wizard</string>
+   <string>Generate full-factorial design</string>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout">
+  <layout class="QVBoxLayout" name="vbox_container">
+   <property name="spacing">
+    <number>12</number>
+   </property>
+   <property name="margin">
+    <number>12</number>
+   </property>
    <item>
-    <widget class="QWidget" name="widget" native="true">
-     <layout class="QHBoxLayout" name="horizontalLayout">
-      <property name="margin">
-       <number>0</number>
-      </property>
-      <item>
-       <widget class="QLabel" name="label_wizard">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="text">
-         <string/>
-        </property>
-        <property name="pixmap">
-         <pixmap>:/icons/wizard_large.png</pixmap>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QLabel" name="label_2">
-        <property name="text">
-         <string>&lt;b&gt;Loop variable wizard&lt;/b&gt;&lt;br /&gt;&lt;small&gt;Enter the names of the variables (factors) in the first row in the table below. Under the variable names, enter the levels of the variables.&lt;br /&gt;&lt;i&gt;Note: This will overwrite the current loop table&lt;/i&gt;&lt;/small&gt;</string>
-        </property>
-        <property name="wordWrap">
-         <bool>true</bool>
-        </property>
-       </widget>
-      </item>
-     </layout>
+    <widget class="QLabel" name="label_2">
+     <property name="text">
+      <string>To generate a full-factorial design, enter variable names (factors) in the first row of the table below. Below the variable names, enter the levels of the variables.&lt;br /&gt;&lt;br /&gt;
+&lt;b&gt;Note:&lt;/b&gt; This will overwrite the current loop table</string>
+     </property>
+     <property name="wordWrap">
+      <bool>true</bool>
+     </property>
     </widget>
    </item>
    <item>
-    <widget class="QWidget" name="widget_2" native="true">
-     <layout class="QHBoxLayout" name="horizontalLayout_2">
-      <property name="margin">
-       <number>0</number>
-      </property>
-      <item>
-       <widget class="QCheckBox" name="checkBox">
-        <property name="text">
-         <string>Show example</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <spacer name="horizontalSpacer">
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>40</width>
-          <height>20</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
-     </layout>
+    <widget class="QCheckBox" name="checkBox">
+     <property name="text">
+      <string>Show example</string>
+     </property>
     </widget>
    </item>
    <item>
-    <widget class="good_looking_table" name="table_example">
+    <widget class="QTableWidget" name="table_example">
      <property name="editTriggers">
       <set>QAbstractItemView::NoEditTriggers</set>
      </property>
@@ -260,16 +220,15 @@
     </widget>
    </item>
    <item>
-    <widget class="good_looking_table" name="table_wizard">
-     <property name="gridStyle">
-      <enum>Qt::DotLine</enum>
-     </property>
-     <attribute name="horizontalHeaderVisible">
-      <bool>false</bool>
-     </attribute>
-     <attribute name="verticalHeaderVisible">
-      <bool>false</bool>
-     </attribute>
+    <widget class="QWidget" name="widget_container" native="true">
+     <layout class="QHBoxLayout" name="hbox_container">
+      <property name="spacing">
+       <number>0</number>
+      </property>
+      <property name="margin">
+       <number>0</number>
+      </property>
+     </layout>
     </widget>
    </item>
    <item>
@@ -284,47 +243,8 @@
    </item>
   </layout>
  </widget>
- <customwidgets>
-  <customwidget>
-   <class>good_looking_table</class>
-   <extends>QTableWidget</extends>
-   <header location="global">libqtopensesame/widgets/good_looking_table.h</header>
-  </customwidget>
- </customwidgets>
  <resources/>
  <connections>
-  <connection>
-   <sender>buttonBox</sender>
-   <signal>accepted()</signal>
-   <receiver>loop_wizard_dialog</receiver>
-   <slot>accept()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>248</x>
-     <y>254</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>157</x>
-     <y>274</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>buttonBox</sender>
-   <signal>rejected()</signal>
-   <receiver>loop_wizard_dialog</receiver>
-   <slot>reject()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>316</x>
-     <y>260</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>286</x>
-     <y>274</y>
-    </hint>
-   </hints>
-  </connection>
   <connection>
    <sender>checkBox</sender>
    <signal>toggled(bool)</signal>
@@ -338,6 +258,38 @@
     <hint type="destinationlabel">
      <x>220</x>
      <y>170</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>buttonBox</sender>
+   <signal>accepted()</signal>
+   <receiver>ui_loop_wizard_dialog</receiver>
+   <slot>accept()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>238</x>
+     <y>443</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>238</x>
+     <y>235</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>buttonBox</sender>
+   <signal>rejected()</signal>
+   <receiver>ui_loop_wizard_dialog</receiver>
+   <slot>reject()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>238</x>
+     <y>443</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>238</x>
+     <y>235</y>
     </hint>
    </hints>
   </connection>

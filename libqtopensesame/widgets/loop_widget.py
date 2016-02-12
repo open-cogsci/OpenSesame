@@ -24,7 +24,7 @@ class loop_widget(base_widget):
 
 	"""
 	desc:
-		A credits window, embedded in the start-new widget.
+		A widget for the loop controls.
 	"""
 
 	def __init__(self, main_window):

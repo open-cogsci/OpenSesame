@@ -87,7 +87,7 @@ class experiment(libopensesame.experiment.experiment):
 	@property
 	def default_description(self):
 		return _(u'Default description')
-		
+
 	def help(self, name):
 
 		"""
@@ -224,112 +224,6 @@ class experiment(libopensesame.experiment.experiment):
 		for item in self.items:
 			self.items[item].delete(item_name, item_parent, index)
 		self.main_window.close_item_tab(item_name)
-
-	def item_combobox(self, select=None, exclude=[], c=None):
-
-		"""
-		Returns a QComboBox that contains all the items of the experiment.
-
-		Keyword arguments:
-		select	--	The item to be selected initially or None to select
-					nothing. (default=None)
-		exclude	--	A list of items that should not be included in the list.
-					(default=[])
-		c		--	A QComboBox that should be cleared and re-filled.
-					(default=None)
-
-		Returns:
-		A QComboBox.
-		"""
-
-		if c is None:
-			index = 0
-			c = QtWidgets.QComboBox(self.ui.centralwidget)
-		else:
-			index = max(0, c.currentIndex())
-			c.clear()
-		i = 0
-		# If we are trying to select a non-existing item, add a dummy entry to
-		# the combobox
-		if select is not None and select not in self.experiment.items:
-			c.addItem(u'')
-			c.setCurrentIndex(0)
-			c.setItemIcon(i, self.main_window.theme.qicon(u'go-down'))
-			i += 1
-		# Add all existing items (except excluded) in alphabetical order
-		for item in sorted(self.experiment.items):
-			if item not in exclude:
-				item_type = self.experiment.items[item].item_type
-				c.addItem(item)
-				c.setItemIcon(i, self.main_window.theme.qicon(
-					self.experiment.items[item].item_type))
-				if self.experiment.items[item].name == select:
-					index = i
-				i += 1
-		c.setCurrentIndex(index)
-		return c
-
-	def item_type_combobox(self, core_items=True, plugins=True, c=None, \
-		select=None):
-
-		"""
-		Returns a combobox with all the item types and plug-ins.
-
-		Keyword arguments:
-		core_items	--	A boolean indicating whether core items should be
-						included. (default=True)
-		plugins		--	A boolean indicating whether plug-ins should be
-						inculuded. (default=True)
-		c			--	A QComboBox that should be cleared and re-filled.
-						(default=None)
-		select		--	The item type that should be selected initially.
-						(default=None)
-
-		Returns:
-		A QComboBox
-		"""
-
-		if c is None:
-			c = QtWidgets.QComboBox(self.ui.centralwidget)
-		else:
-			c.clear()
-		i = 0
-		# Add all core items in alphabetical order.
-		for item in sorted(self.core_items):
-			c.addItem(item)
-			c.setItemIcon(i, self.main_window.theme.qicon(item))
-			if item == select:
-				c.setCurrentIndex(i)
-			i += 1
-		if core_items and plugins:
-			c.addItem(u'')
-			i += 1
-		# Add all plug-ins in alphabetical order. We need to sort the list here
-		# because `list_plugins()` sorts by priority.
-		for plugin in sorted(libopensesame.plugins.list_plugins()):
-			c.addItem(plugin)
-			c.setItemIcon(i, QtGui.QIcon( \
-				libopensesame.plugins.plugin_icon_small(plugin)))
-			if plugin == select:
-				c.setCurrentIndex(i)
-			i += 1
-		return c
-
-	def combobox_text_select(self, combobox, text):
-
-		"""
-		Finds a text in a combobox and selects the corresponding item.
-
-		Arguments:
-		combobox	--	A QComboBox.
-		text		--	A text string to select, if a match is found.
-		"""
-
-		combobox.setCurrentIndex(0)
-		for i in range(combobox.count()):
-			if str(combobox.itemText(i)) == text:
-				combobox.setCurrentIndex(i)
-				break
 
 	def notify(self, msg, title=None, icon=None):
 

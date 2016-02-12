@@ -6,160 +6,279 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>811</width>
-    <height>318</height>
+    <width>1042</width>
+    <height>160</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <layout class="QGridLayout" name="gridLayout">
-   <property name="verticalSpacing">
-    <number>8</number>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <property name="spacing">
+    <number>12</number>
    </property>
    <property name="margin">
     <number>0</number>
    </property>
-   <item row="6" column="0">
-    <widget class="QWidget" name="widget_buttons" native="true">
-     <layout class="QHBoxLayout" name="horizontalLayout">
-      <property name="margin">
+   <item>
+    <widget class="QWidget" name="hbox_controls" native="true">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Fixed" vsizetype="Maximum">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <layout class="QHBoxLayout" name="horizontalLayout_4">
+      <property name="spacing">
+       <number>12</number>
+      </property>
+      <property name="leftMargin">
+       <number>0</number>
+      </property>
+      <property name="topMargin">
+       <number>0</number>
+      </property>
+      <property name="rightMargin">
+       <number>100</number>
+      </property>
+      <property name="bottomMargin">
        <number>0</number>
       </property>
       <item>
-       <widget class="QPushButton" name="button_add_cyclevar">
-        <property name="text">
-         <string>Add variable</string>
-        </property>
-        <property name="iconSize">
-         <size>
-          <width>16</width>
-          <height>16</height>
-         </size>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QPushButton" name="button_rename_cyclevar">
-        <property name="text">
-         <string>Rename variable</string>
-        </property>
-        <property name="iconSize">
-         <size>
-          <width>16</width>
-          <height>16</height>
-         </size>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QPushButton" name="button_remove_cyclevar">
-        <property name="text">
-         <string>Remove variable</string>
-        </property>
-        <property name="iconSize">
-         <size>
-          <width>16</width>
-          <height>16</height>
-         </size>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QPushButton" name="button_apply_weights">
-        <property name="text">
-         <string>Apply weights</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <spacer name="spacer_buttons">
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>40</width>
-          <height>20</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
-      <item>
-       <widget class="QPushButton" name="button_wizard">
-        <property name="text">
-         <string>Variable wizard</string>
-        </property>
-        <property name="iconSize">
-         <size>
-          <width>16</width>
-          <height>16</height>
-         </size>
-        </property>
-       </widget>
-      </item>
-     </layout>
-    </widget>
-   </item>
-   <item row="2" column="0">
-    <widget class="QFrame" name="frame">
-     <property name="frameShape">
-      <enum>QFrame::StyledPanel</enum>
-     </property>
-     <property name="frameShadow">
-      <enum>QFrame::Raised</enum>
-     </property>
-     <layout class="QVBoxLayout" name="verticalLayout">
-      <property name="margin">
-       <number>4</number>
-      </property>
-      <item>
-       <widget class="QCheckBox" name="checkbox_advanced">
-        <property name="text">
-         <string>Show advanced options</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QWidget" name="widget_advanced" native="true">
-        <layout class="QGridLayout" name="gridLayout_3">
+       <widget class="QWidget" name="form_controls_left" native="true">
+        <layout class="QFormLayout" name="formLayout">
+         <property name="fieldGrowthPolicy">
+          <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
+         </property>
+         <property name="labelAlignment">
+          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+         </property>
+         <property name="horizontalSpacing">
+          <number>12</number>
+         </property>
          <property name="margin">
           <number>0</number>
          </property>
-         <item row="1" column="1">
-          <widget class="QSpinBox" name="spin_skip">
-           <property name="suffix">
-            <string> cycle(s)</string>
-           </property>
-           <property name="prefix">
-            <string>first </string>
-           </property>
-           <property name="maximum">
-            <number>10000</number>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="0">
-          <widget class="QLabel" name="label_skip">
-           <property name="text">
-            <string>At loop start, skip the</string>
-           </property>
-          </widget>
-         </item>
          <item row="0" column="0">
-          <widget class="QLabel" name="label">
+          <widget class="QLabel" name="label_item">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
            <property name="text">
-            <string>Break if</string>
+            <string>Run</string>
            </property>
           </widget>
          </item>
          <item row="0" column="1">
-          <widget class="QLineEdit" name="edit_break_if"/>
+          <widget class="item_combobox" name="combobox_item">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="minimumSize">
+            <size>
+             <width>200</width>
+             <height>0</height>
+            </size>
+           </property>
+          </widget>
          </item>
-         <item row="2" column="0" colspan="2">
-          <widget class="QCheckBox" name="checkbox_offset">
+         <item row="1" column="0">
+          <widget class="QLabel" name="label_length">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
            <property name="text">
-            <string>Run skipped cycles at end of loop (offset mode)</string>
+            <string>Length</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="1">
+          <widget class="QSpinBox" name="spinbox_length">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="minimumSize">
+            <size>
+             <width>200</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="suffix">
+            <string> cycle(s)</string>
+           </property>
+           <property name="maximum">
+            <number>10000000</number>
+           </property>
+           <property name="value">
+            <number>1</number>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="0">
+          <widget class="QLabel" name="label_order">
+           <property name="text">
+            <string>Order</string>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="1">
+          <widget class="QComboBox" name="combobox_order">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="minimumSize">
+            <size>
+             <width>200</width>
+             <height>0</height>
+            </size>
+           </property>
+           <item>
+            <property name="text">
+             <string>random</string>
+            </property>
+            <property name="icon">
+             <iconset theme="media-playlist-shuffle">
+              <normaloff/>
+             </iconset>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>sequential</string>
+            </property>
+            <property name="icon">
+             <iconset theme="media-playlist-repeat">
+              <normaloff/>
+             </iconset>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>advanced</string>
+            </property>
+            <property name="icon">
+             <iconset theme="utilities-terminal">
+              <normaloff/>
+             </iconset>
+            </property>
+           </item>
+          </widget>
+         </item>
+         <item row="3" column="1">
+          <widget class="QPushButton" name="button_preview">
+           <property name="minimumSize">
+            <size>
+             <width>200</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="text">
+            <string>Preview </string>
+           </property>
+           <property name="icon">
+            <iconset theme="x-office-spreadsheet">
+             <normaloff/>
+            </iconset>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </item>
+      <item>
+       <widget class="QWidget" name="form_controls_right" native="true">
+        <layout class="QFormLayout" name="formLayout_2">
+         <property name="horizontalSpacing">
+          <number>12</number>
+         </property>
+         <property name="margin">
+          <number>0</number>
+         </property>
+         <item row="0" column="0">
+          <widget class="QLabel" name="label_break_if">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="text">
+            <string>Break if</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="1">
+          <widget class="QLineEdit" name="edit_break_if">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="minimumSize">
+            <size>
+             <width>200</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="text">
+            <string>never</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="1">
+          <widget class="QCheckBox" name="checkbox_break_if_on_first">
+           <property name="text">
+            <string>Evaluate on first cycle</string>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="1">
+          <widget class="QCheckBox" name="checkbox_continuous">
+           <property name="text">
+            <string>Resume after break</string>
+           </property>
+          </widget>
+         </item>
+         <item row="3" column="1">
+          <widget class="QPushButton" name="button_wizard">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="minimumSize">
+            <size>
+             <width>200</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="text">
+            <string>Full-factorial design</string>
+           </property>
+           <property name="icon">
+            <iconset theme="help-about">
+             <normaloff/>
+            </iconset>
            </property>
           </widget>
          </item>
@@ -169,134 +288,25 @@
      </layout>
     </widget>
    </item>
-   <item row="0" column="0">
-    <widget class="QWidget" name="widget_options" native="true">
-     <layout class="QGridLayout" name="gridLayout_2">
-      <property name="margin">
-       <number>0</number>
-      </property>
-      <item row="0" column="0">
-       <widget class="QLabel" name="label_item">
-        <property name="text">
-         <string>Item to run</string>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="1">
-       <widget class="QComboBox" name="combobox_item"/>
-      </item>
-      <item row="3" column="0">
-       <widget class="QLabel" name="label_cycles">
-        <property name="text">
-         <string>Cycles</string>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="3">
-       <widget class="QComboBox" name="combobox_order">
-        <item>
-         <property name="text">
-          <string notr="true">random</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string notr="true">sequential</string>
-         </property>
-        </item>
-       </widget>
-      </item>
-      <item row="0" column="2">
-       <widget class="QLabel" name="label_order">
-        <property name="text">
-         <string>Order</string>
-        </property>
-       </widget>
-      </item>
-      <item row="3" column="1">
-       <widget class="QSpinBox" name="spin_cycles">
-        <property name="maximum">
-         <number>10000000</number>
-        </property>
-       </widget>
-      </item>
-      <item row="3" column="2">
-       <widget class="QLabel" name="label_repeat">
-        <property name="text">
-         <string>Repeat</string>
-        </property>
-       </widget>
-      </item>
-      <item row="3" column="3">
-       <widget class="QDoubleSpinBox" name="spin_repeat">
-        <property name="prefix">
-         <string>each cycle </string>
-        </property>
-        <property name="suffix">
-         <string> time(s)</string>
-        </property>
-        <property name="maximum">
-         <double>100000.000000000000000</double>
-        </property>
-       </widget>
-      </item>
-     </layout>
-    </widget>
-   </item>
-   <item row="1" column="0">
-    <widget class="QFrame" name="frame_summary">
-     <property name="frameShape">
-      <enum>QFrame::StyledPanel</enum>
+   <item>
+    <widget class="QLabel" name="label_summary">
+     <property name="text">
+      <string>Summary</string>
      </property>
-     <property name="frameShadow">
-      <enum>QFrame::Raised</enum>
+     <property name="wordWrap">
+      <bool>true</bool>
      </property>
-     <layout class="QHBoxLayout" name="horizontalLayout_2">
-      <property name="margin">
-       <number>4</number>
-      </property>
-      <item>
-       <widget class="QLabel" name="label_info">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="text">
-         <string>TextLabel</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QLabel" name="label_summary">
-        <property name="text">
-         <string>Automatic summary</string>
-        </property>
-       </widget>
-      </item>
-     </layout>
     </widget>
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>item_combobox</class>
+   <extends>QComboBox</extends>
+   <header>libqtopensesame._input.item_combobox.h</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
- <connections>
-  <connection>
-   <sender>checkbox_advanced</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>widget_advanced</receiver>
-   <slot>setVisible(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>379</x>
-     <y>83</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>379</x>
-     <y>144</y>
-    </hint>
-   </hints>
-  </connection>
- </connections>
+ <connections/>
 </ui>

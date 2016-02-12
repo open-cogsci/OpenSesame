@@ -186,7 +186,7 @@ if "--preload" in sys.argv:
 
 	debug.msg("preloading OSX dependencies")
 	try:
-		from libqtopensesame.widgets import pool_widget, statusbar, tree_overview, toolbar_items, variable_inspector, good_looking_table
+		from libqtopensesame.widgets import pool_widget, statusbar, tree_overview, toolbar_items, variable_inspector
 		from libqtopensesame.items import exceptions, experiment, feedback, generic_response, inline_script, item, keyboard_response, logger, loop, misc, mouse_response, plugins, sampler, sequence, sketchpad, synth
 	except Exception as e:
 		debug.msg('Failed to load libqtopensesame.items modules')
