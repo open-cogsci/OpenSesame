@@ -26,6 +26,7 @@ from libqtopensesame.misc.base_subcomponent import base_subcomponent
 from libqtopensesame.misc.base_draggable import base_draggable
 from libqtopensesame.widgets.tree_append_button import tree_append_button
 from libqtopensesame._input.popup_menu import popup_menu
+from libqtopensesame.items.qtstructure_item import qtstructure_item
 from libopensesame import debug
 from libopensesame.exceptions import osexception
 from libopensesame.sequence import sequence
@@ -456,7 +457,7 @@ class tree_overview(base_subcomponent, base_draggable, QtWidgets.QTreeWidget):
 		# may not have the dropped item in its ancestry. However, the target
 		# item may occur multiple times in the experiment, so we need to check
 		# that this constraint holds for all linked copies of the target item.
-		if data[u'item-type'] in [u'sequence', u'loop']:
+		if data[u'item-type'] in [u'sequence', u'loop', u'coroutines']:
 			for linked_target_treeitem in self.findItems(target_treeitem.name,
 				QtCore.Qt.MatchFixedString|QtCore.Qt.MatchRecursive):
 				target_item_name, target_item_ancestry = \
@@ -652,24 +653,12 @@ class tree_overview(base_subcomponent, base_draggable, QtWidgets.QTreeWidget):
 			target_item.insert_child_item(item.name)
 			inserted = True
 		else:
-			if target_item.item_type in (u'loop', u'sequence'):
+			if isinstance(target_item, qtstructure_item):
 				self.main_window.set_busy(False)
-				# Choose appropriate option
-				if target_item.item_type == u'loop':
-					question = _('Set as item to run for %s') % target_item.name
-					icon = u'os-loop'
-				else:
-					question = _('Insert into %s') % target_item.name
-					icon = u'os-sequence'
-				resp = popup_menu(self, [(0, question, icon),
-					(1, _('Insert after %s') % target_item.name, 'list-add')
+				resp = popup_menu(self, [
+					(0, _('Insert into %s') % target_item.name, u'go-next'),
+					(1, _('Insert after %s') % target_item.name, u'go-down')
 					]).show()
-				# Confirmation
-				if resp == 0 and target_item.item_type == u'loop' and \
-					target_item.var.item in self.experiment.items:
-					resp = popup_menu(self, [(0, _(u'I know, do it!'), icon)],
-						title=_(u'This will replace %s' % (target_item.item))
-						).show()
 				# If the popup was cancelled
 				if resp is None:
 					if e is not None:
@@ -787,7 +776,7 @@ class tree_overview(base_subcomponent, base_draggable, QtWidgets.QTreeWidget):
 		rect = self.visualRect(index)
 		if target.name == u'__unused__' or ( \
 			target.item.name in self.experiment.items.used() and \
-			target.item.item_type in (u'loop', u'sequence') and \
+			isinstance(target.item, qtstructure_item) and \
 			target.item.name != self.experiment.var.start and \
 			target.parent() is not None):
 			self.drop_indicator = rect
