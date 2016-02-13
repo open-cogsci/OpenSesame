@@ -32,7 +32,7 @@ class toolbar_items_item(base_subcomponent, QtWidgets.QLabel):
 		A draggable toolbar icon.
 	"""
 
-	def __init__(self, parent, item, pixmap):
+	def __init__(self, parent, item, pixmap=None):
 
 		"""
 		desc:
@@ -53,7 +53,10 @@ class toolbar_items_item(base_subcomponent, QtWidgets.QLabel):
 		super(toolbar_items_item, self).__init__(parent)
 		self.setup(parent)
 		self.item = item
-		self.pixmap = pixmap
+		if pixmap is None:
+			self.pixmap = self.theme.qpixmap(item)
+		else:
+			self.pixmap = pixmap
 		# self.setMargin(6)
 		self.setToolTip(_("Drag this <b>%s</b> item to the intended location in the overview area or into the item list of a sequence tab") \
 			% self.item)

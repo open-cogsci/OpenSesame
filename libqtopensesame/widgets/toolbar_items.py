@@ -19,8 +19,8 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 
 from libopensesame.py3compat import *
 from qtpy import QtCore, QtGui, QtWidgets
-import libopensesame.plugins
-from libopensesame import debug
+from collections import OrderedDict
+from libopensesame import debug, plugins
 from libqtopensesame.misc.base_subcomponent import base_subcomponent
 from libqtopensesame.misc.config import cfg
 from libqtopensesame.widgets.toolbar_items_label import toolbar_items_label
@@ -64,25 +64,23 @@ class toolbar_items(base_subcomponent, QtWidgets.QToolBar):
 				type:	list
 		"""
 
-		if self.orientation() == QtCore.Qt.Horizontal:
-			for c in content:
-				self.addWidget(c)
-		else:
-			i = 0
-			for c in content:
-				if i % 2 == 0:
-					if i > 0:
-						self.addWidget(w)
+		for i, c in enumerate(content):
+			if not i % 2:
+				if i > 0:
+					self.addWidget(w)
+				if self.orientation() == QtCore.Qt.Horizontal:
+					l = QtWidgets.QVBoxLayout()
+					l.setContentsMargins(6,6,6,6)
+				else:
 					l = QtWidgets.QHBoxLayout()
-					l.setSpacing(16)
-					w = QtWidgets.QWidget()
-					w.setLayout(l)
-				# c.setMargin(0)
-				l.addWidget(c)
-				i += 1
-			if i % 2 == 1:
-				l.addStretch()
-			self.addWidget(w)
+					l.setContentsMargins(6,6,6,6)
+				l.setSpacing(12)
+				w = QtWidgets.QWidget()
+				w.setLayout(l)
+			l.addWidget(c)
+		if not i % 2:
+			l.addStretch()
+		self.addWidget(w)
 
 	def build(self):
 
@@ -96,46 +94,28 @@ class toolbar_items(base_subcomponent, QtWidgets.QToolBar):
 			self.experiment
 		except:
 			return
-
-		# Remove old items
 		self.clear()
-
 		if self.orientation() == QtCore.Qt.Vertical:
 			self.addWidget(toolbar_items_label(self, _(u'Commonly used')))
-
 		# Add the core items
-		content = []
-		for item in self.experiment.core_items:
-			w = toolbar_items_item(self, item, self.theme.qpixmap(item,
-				size=cfg.toolbar_size))
-			content.append(w)
-		self.add_content(content)
-
+		self.add_content([toolbar_items_item(self, item) \
+			for item in self.experiment.core_items])
 		# Create a dictionary of plugins by category. We also maintain a list
 		# to preserve the order of the categories.
-		cat_list = []
-		cat_dict = {}
-		for plugin in libopensesame.plugins.list_plugins():
-			cat = libopensesame.plugins.plugin_category(plugin)
+		cat_dict = OrderedDict()
+		for plugin in plugins.list_plugins():
+			cat = plugins.plugin_category(plugin)
 			if cat not in cat_dict:
 				cat_dict[cat] = []
-				cat_list.append(cat)
 			cat_dict[cat].append(plugin)
-
 		# Add the plugins
-		for cat in cat_list:
+		for cat, cat_plugins in cat_dict.items():
 			self.addSeparator()
 			if self.orientation() == QtCore.Qt.Vertical:
 				self.addWidget(toolbar_items_label(self, cat))
 			content = []
-			for plugin in cat_dict[cat]:
+			for plugin in cat_plugins:
 				debug.msg(u"adding plugin '%s'" % plugin)
-				if cfg.toolbar_size == 16:
-					pixmap = QtGui.QPixmap(
-						libopensesame.plugins.plugin_icon_small(plugin))
-				else:
-					pixmap = QtGui.QPixmap(
-						libopensesame.plugins.plugin_icon_large(plugin))
-				w = toolbar_items_item(self, plugin, pixmap)
-				content.append(w)
+				content.append(toolbar_items_item(self, plugin,
+					QtGui.QPixmap(plugins.plugin_icon_large(plugin))))
 			self.add_content(content)
