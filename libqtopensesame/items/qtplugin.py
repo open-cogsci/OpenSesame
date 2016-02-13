@@ -146,7 +146,7 @@ class qtplugin(qtitem.qtitem):
 			hbox.setContentsMargins(0,0,0,0)
 			hbox.setSpacing(12)
 			hbox.addWidget(widget)
-			hbox.addWidget(QtGui.QLabel(u'<small><i>%s</i></small>' % info))
+			hbox.addWidget(QtWidgets.QLabel(u'<small><i>%s</i></small>' % info))
 			container = QtWidgets.QWidget()
 			container.setLayout(hbox)
 			self.edit_grid.insertRow(row, label, container)
