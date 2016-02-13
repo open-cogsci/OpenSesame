@@ -67,8 +67,8 @@ class get_started(base_extension):
 					cls = u'green-button'
 				else:
 					cls = u'button'
-				md = u'<a href="opensesame://%s" class="%s">%s</a><br />' % \
-					(path, cls, os.path.basename(path))
+				md = u'<a href="opensesame://event.open_recent_%d" class="%s">%s</a><br />' % \
+					(i, cls, os.path.basename(path))
 				recent.append(md)
 		# Create markdown
 		with open(self.ext_resource(u'get_started.md')) as fd:
@@ -81,6 +81,17 @@ class get_started(base_extension):
 			}
 		self.tabwidget.open_markdown(md, title=_(u'Get started!'),
 			icon=u'opensesame')
+
+	def event_open_recent_0(self):
+		self.main_window.open_file(path=self.main_window.recent_files[0])
+	def event_open_recent_1(self):
+		self.main_window.open_file(path=self.main_window.recent_files[1])
+	def event_open_recent_2(self):
+		self.main_window.open_file(path=self.main_window.recent_files[2])
+	def event_open_recent_3(self):
+		self.main_window.open_file(path=self.main_window.recent_files[3])
+	def event_open_recent_4(self):
+		self.main_window.open_file(path=self.main_window.recent_files[4])
 
 	def event_startup(self):
 

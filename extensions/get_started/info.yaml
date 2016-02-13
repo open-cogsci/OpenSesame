@@ -11,5 +11,5 @@ menu:
 toolbar:
   index: 0
   separator_after: false
-  separator_before: true
+  separator_before: false
 tooltip: Start a new experiment
