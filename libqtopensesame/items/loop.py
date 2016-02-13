@@ -19,6 +19,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 
 from libopensesame.py3compat import *
 from qdatamatrix import QDataMatrix
+from pseudorandom import EnforceFailed
 from libopensesame.loop import loop as loop_runtime
 from libqtopensesame.items.qtitem import qtitem
 from libqtopensesame.items.qtstructure_item import qtstructure_item
@@ -79,22 +80,24 @@ class loop(qtstructure_item, qtitem, loop_runtime):
 
 		import time
 
-		t0 = time.time()
-		dm = self._create_live_datamatrix()
-		render_time = time.time()-t0
-		l = [_(u'# Loop-table preview'), u'\n\n']
-		l.append(_(u'Rendered in %.4f s') % render_time)
-		l.append(u'\n\n<table><thead><tr>')
-		l.append(u''.join([u'<th>%s</th>' % column_name \
-			for column_name in dm.column_names]))
-		l.append(u'</tr></thead><tbody>')
-		for row in dm:
-			l.append(u'<tr>' \
-				+ u''.join([u'<th>%s</th>' % val for name, val in row]) \
-				+ u'</tr>')
-		l.append(u'</tbody></table>')
+		l = [_(u'# Preview of loop table'), u'\n\n']
+		try:
+			dm = self._create_live_datamatrix()
+		except EnforceFailed:
+			l.append(
+				_(u'Failed to generate preview. Have you specified impossible constraints?'))
+		else:
+			l.append(u'\n\n<table><thead><tr>')
+			l.append(u''.join([u'<th>%s</th>' % column_name \
+				for column_name in dm.column_names]))
+			l.append(u'</tr></thead><tbody>')
+			for row in dm:
+				l.append(u'<tr>' \
+					+ u''.join([u'<th>%s</th>' % val for name, val in row]) \
+					+ u'</tr>')
+			l.append(u'</tbody></table>')
 		md = u'\n'.join(l)
-		self.tabwidget.open_markdown(md)
+		self.tabwidget.open_markdown(md, title=u'Loop preview', icon=u'os-loop')
 
 	def _apply_item(self):
 
@@ -117,6 +120,12 @@ class loop(qtstructure_item, qtitem, loop_runtime):
 
 	def _apply_table(self):
 
+		if len(self.dm) == 0:
+			self.dm.length = 1
+			self.qdm.refresh()
+		if len(self.dm.columns) == 0:
+			self.dm.empty_column = u''
+			self.qdm.refresh()
 		self.update_script()
 		self._update_length()
 

@@ -21,7 +21,7 @@ from libopensesame.py3compat import *
 from libopensesame.exceptions import osexception
 from libopensesame import item
 from datamatrix import operations, DataMatrix
-from pseudorandom import Enforce, MaxRep, MinDist
+from pseudorandom import Enforce, MaxRep, MinDist, InvalidConstraint
 import openexp.keyboard
 import warnings
 
@@ -86,17 +86,25 @@ class loop(item.item):
 				except:
 					raise osexception(u'Invalid column name: %s' % colname)
 				for constraint, value in kwdict.items():
-					if constraint == u'maxrep':
-						self.ef.add_constraint(MaxRep, cols=[col], maxrep=value)
-						continue
-					if constraint == u'mindist':
-						self.ef.add_constraint(MinDist, cols=[col],
-							mindist=value)
-						continue
+					try:
+						if constraint == u'maxrep':
+							self.ef.add_constraint(MaxRep, cols=[col],
+								maxrep=value)
+							continue
+						if constraint == u'mindist':
+							self.ef.add_constraint(MinDist, cols=[col],
+								mindist=value)
+							continue
+					except InvalidConstraint as e:
+						raise osexception(e)
 					raise osexception(u'Invalid constrain command: %s' % i)
 				continue
 			if cmd in [u'shuffle', u'sort', u'sortby', u'reverse', u'roll']:
 				self.operations.append( (cmd, arglist) )
+		if len(self.dm) == 0:
+			self.dm.length = 1
+		if len(self.dm.columns) == 0:
+			self.dm.empty_column = u''
 
 	def to_string(self):
 
@@ -164,10 +172,6 @@ class loop(item.item):
 				dm <<= operations.shuffle(self.dm[:i])
 			else:
 				dm <<= self.dm[:i]
-		if self.var.order != u'advanced':
-			if self.operations or self.ef is not None:
-				warnings.warn(
-					u'Advanced loop operations are specified, but loop order is not advanced.')
 		if self.var.order == u'sequential':
 			return dm
 		if self.var.order == u'random':
