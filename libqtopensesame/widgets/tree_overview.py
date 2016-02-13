@@ -294,6 +294,7 @@ class tree_overview(base_subcomponent, base_draggable, QtWidgets.QTreeWidget):
 				u'move'				: True,
 				u'item-name'		: target_item.name,
 				u'item-type'		: target_item.item_type,
+				u'structure-item'	: isinstance(target_item, qtstructure_item),
 				u'ancestry'			: target_item_ancestry,
 				u'script'			: target_item.to_string(),
 				u'application-id'	: self.main_window._id(),
@@ -457,7 +458,7 @@ class tree_overview(base_subcomponent, base_draggable, QtWidgets.QTreeWidget):
 		# may not have the dropped item in its ancestry. However, the target
 		# item may occur multiple times in the experiment, so we need to check
 		# that this constraint holds for all linked copies of the target item.
-		if data[u'item-type'] in [u'sequence', u'loop', u'coroutines']:
+		if data.get(u'structure-item', False):
 			for linked_target_treeitem in self.findItems(target_treeitem.name,
 				QtCore.Qt.MatchFixedString|QtCore.Qt.MatchRecursive):
 				target_item_name, target_item_ancestry = \
