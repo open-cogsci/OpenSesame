@@ -158,7 +158,7 @@ class qtautoplugin(qtplugin):
 
 		"""Applies the controls. I.e. sets the variables from the controls."""
 
-		if not qtplugin.apply_edit_changes(self, False) or self.lock:
+		if not qtplugin.apply_edit_changes(self) or self.lock:
 			return False
 		return True
 

@@ -105,7 +105,7 @@ class qtform_text_render(form_text_render, qtplugin.qtplugin):
 
 		"""Apply the controls"""
 
-		if not qtplugin.qtplugin.apply_edit_changes(self, False) or self.lock:
+		if not qtplugin.qtplugin.apply_edit_changes(self) or self.lock:
 			return False
 		return True
 

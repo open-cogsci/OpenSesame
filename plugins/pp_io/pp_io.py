@@ -190,7 +190,7 @@ class qtpp_io(pp_io, qtplugin.qtplugin):
 		"""
 
 		# Abort if the parent reports failure of if the controls are locked
-		if not qtplugin.qtplugin.apply_edit_changes(self, False) or self.lock:
+		if not qtplugin.qtplugin.apply_edit_changes(self) or self.lock:
 			return False
 
 		# Refresh the main window, so that changes become visible everywhere
