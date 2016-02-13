@@ -438,9 +438,9 @@ class qtitem(base_qtobject):
 				test_script = u'\n'.join(l[:line_nr])
 				try:
 					self.validator(self.name, self.experiment, test_script)
-				except Exception as e:
+				except Exception as e_:
 					if hasattr(self._script_widget, u'setInvalid'):
-						self._script_widget.setInvalid(line_nr, e.markdown())
+						self._script_widget.setInvalid(line_nr, e_.markdown())
 					break
 			self.console.write(e)
 			return False
