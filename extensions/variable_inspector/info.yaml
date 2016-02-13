@@ -7,7 +7,7 @@ menu:
   index: 8
   submenu: View
 toolbar:
-  index: 14
+  index: 13
 settings:
   variable_inspector_visible: false
   variable_inspector_focus_shortcut: Ctrl+5
