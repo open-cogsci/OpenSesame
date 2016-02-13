@@ -1,5 +1,5 @@
 {
-	"category"	: "Timing",
+	"category"	: "Flow control",
 	"controls" : [
 		{
 			"type"		: "spinbox",

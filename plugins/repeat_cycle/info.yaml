@@ -1,4 +1,4 @@
-category: Miscellaneous
+category: Flow control
 description: Marks the current loop cycle so that it is repeated
 controls:
 -
