@@ -64,29 +64,29 @@ setup(
 			 			  'PyQt4.QtOpenGL', 'PyQt4.QtScript', 'PyQt4.QtSql', 'PyQt4.QtTest', 'PyQt4.QtXml', 'PyQt4.phonon',\
 			 			  'rpy2',
 			 			  ],
-			 'resources' : ['qt_menu.nib', 'resources', 'sounds', 'plugins', 'extensions', 'help', 'data', 'examples'],
+			 'resources' : ['qt_menu.nib', 'resources', 'sounds', 'plugins', 'extensions', 'help', 'data'],
 			 'packages' : ['openexp','expyriment','psychopy','QProgEdit','libqtopensesame','libopensesame'],
 			 'iconfile' : 'resources/opensesame.icns',
 			 'plist': {
 				'CFBundleName': 'OpenSesame',
-				'CFBundleShortVersionString':'2.9.7',
-				'CFBundleVersion': '2.9.7',
+				'CFBundleShortVersionString':'3.0.5',
+				'CFBundleVersion': '3.0.5',
 				'CFBundleIdentifier':'nl.cogsci.osdoc',
 				'NSHumanReadableCopyright': 'Sebastiaan Mathot (2010-2015)',
 				'CFBundleDevelopmentRegion': 'English', 	
 				'CFBundleDocumentTypes': [ 
 					{
-                    			'CFBundleTypeExtensions' : ['opensesame'],
-                    			'CFBundleTypeIconFile' : 'opensesame.icns',
-                    			'CFBundleTypeRole' : 'Editor',
-                    			'CFBundleTypeName' : 'OpenSesame File',
+                    	'CFBundleTypeExtensions' : ['opensesame'],
+                    	'CFBundleTypeIconFile' : 'opensesame.icns',
+                    	'CFBundleTypeRole' : 'Editor',
+                    	'CFBundleTypeName' : 'OpenSesame File',
 					},
 					{
-                    			'CFBundleTypeExtensions' : ['gz'],
-                    			'CFBundleTypeIconFile' : 'opensesame.icns',
-                    			'CFBundleTypeRole' : 'Editor',
+                    	'CFBundleTypeExtensions' : ['gz'],
+                    	'CFBundleTypeIconFile' : 'opensesame.icns',
+                    	'CFBundleTypeRole' : 'Editor',
 					}
-                                ]
+				]
 			}
 		}
 	},
