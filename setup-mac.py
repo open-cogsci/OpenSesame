@@ -72,20 +72,15 @@ setup(
 				'CFBundleShortVersionString':'3.0.5',
 				'CFBundleVersion': '3.0.5',
 				'CFBundleIdentifier':'nl.cogsci.osdoc',
-				'NSHumanReadableCopyright': 'Sebastiaan Mathot (2010-2015)',
+				'NSHumanReadableCopyright': 'Sebastiaan Mathot (2010-2016)',
 				'CFBundleDevelopmentRegion': 'English', 	
 				'CFBundleDocumentTypes': [ 
 					{
-                    	'CFBundleTypeExtensions' : ['opensesame'],
-                    	'CFBundleTypeIconFile' : 'opensesame.icns',
+                    	'CFBundleTypeExtensions' : ['osexp'],
+                    	'CFBundleTypeIconFile' : 'resources/opensesame.icns',
                     	'CFBundleTypeRole' : 'Editor',
                     	'CFBundleTypeName' : 'OpenSesame File',
 					},
-					{
-                    	'CFBundleTypeExtensions' : ['gz'],
-                    	'CFBundleTypeIconFile' : 'opensesame.icns',
-                    	'CFBundleTypeRole' : 'Editor',
-					}
 				]
 			}
 		}
