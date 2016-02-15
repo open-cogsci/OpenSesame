@@ -27,6 +27,8 @@ from setuptools import setup
 import os
 import shutil
 
+from setup_shared  import included_plugins, included_extensions
+
 # Clean up previous builds
 try:
 	shutil.rmtree("dist")
@@ -59,12 +61,12 @@ setup(
     data_files = ['opensesame.py'],
     options = {'py2app' : 
 			{'argv_emulation': False, 
-			 'includes' : ['PyQt4.QtNetwork','serial','opensesamerun','skimage','sip','billiard','wx'],
+			 'includes' : ['PyQt4.QtNetwork', 'serial', 'opensesamerun', 'skimage', 'sip', 'billiard', 'ipython'],
 			 'excludes': ['Finder','idlelib', 'gtk', 'sqlite3', 'matplotlib', 'pandas', 'PyQt4.QtDesigner',\
 			 			  'PyQt4.QtOpenGL', 'PyQt4.QtScript', 'PyQt4.QtSql', 'PyQt4.QtTest', 'PyQt4.QtXml', 'PyQt4.phonon',\
 			 			  'rpy2',
 			 			  ],
-			 'resources' : ['qt_menu.nib', 'resources', 'sounds', 'plugins', 'extensions', 'help', 'data'],
+			 'resources' : ['qt_menu.nib', 'resources', 'sounds', 'help', 'data'],
 			 'packages' : ['openexp','expyriment','psychopy','QProgEdit','libqtopensesame','libopensesame'],
 			 'iconfile' : 'resources/opensesame.icns',
 			 'plist': {
@@ -91,9 +93,17 @@ setup(
 # Clean up qt_menu.nib
 shutil.rmtree("qt_menu.nib")
 
-# Remove unwanted plugins from build
-shutil.rmtree("dist/opensesame.app/Contents/Resources/plugins/pp_io")
-shutil.rmtree("dist/opensesame.app/Contents/Resources/plugins/port_reader")
+# Psychopy monitor center does not play nicely together with the OpenSesame GUI
+if 'psychopy_monitor_center' in included_extensions:
+	del included_extensions[included_extensions.index('psychopy_monitor_center')]
+
+# Copy extensions into app
+for extension in included_extensions:
+	shutil.copytree(os.path.join("extensions",extension), os.path.join("dist/opensesame.app/Contents/Resources/extensions/",extension))
+
+# Copy plugins into app
+for plugin in included_plugins:
+	shutil.copytree(os.path.join("plugins",plugin), os.path.join("dist/opensesame.app/Contents/Resources/plugins/",plugin))
 
 # Remove opensesame.py
 try:
