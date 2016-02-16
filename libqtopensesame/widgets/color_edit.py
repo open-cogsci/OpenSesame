@@ -111,7 +111,6 @@ class color_edit(base_widget):
 			Emits a 'set_color' signal to indicate that a color has been picked.
 		"""
 
-		self.emit(QtCore.SIGNAL(u'set_color'))
 		self.textChanged.emit(self.text())
 		self.textEdited.emit(self.text())
 
