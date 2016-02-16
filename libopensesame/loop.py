@@ -110,6 +110,9 @@ class loop(item.item):
 
 		"""See item."""
 
+		# Older versions of OpenSesame use an explicit cycles variable, so we
+		# set this here for backwards compatibility.
+		self.var.cycles = len(self.dm)
 		s = item.item.to_string(self)
 		for i, row in enumerate(self.dm):
 			for name, val in row:
@@ -169,7 +172,7 @@ class loop(item.item):
 		while len(dm) < length:
 			i = min(length-len(dm), len(self.dm))
 			if self.var.order == u'random':
-				dm <<= operations.shuffle(self.dm[:i])
+				dm <<= operations.shuffle(self.dm)[:i]
 			else:
 				dm <<= self.dm[:i]
 		if self.var.order == u'sequential':
