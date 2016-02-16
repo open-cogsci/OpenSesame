@@ -192,7 +192,7 @@ copy_packages = [
 	'QProgEdit',
 	'libopensesame',
 	'openexp',
-    'pyflakes',
+	'pyflakes',
 	'scipy',
 	'numpy',
 	'serial',
