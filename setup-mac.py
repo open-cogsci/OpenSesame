@@ -60,16 +60,24 @@ setup(
     app = ['opensesame.py'],
     data_files = ['opensesame.py'],
     options = {'py2app' : 
-			{'argv_emulation': False, 
-			 'includes' : ['PyQt4.QtNetwork', 'serial', 'opensesamerun', 'skimage', 'sip', 'billiard', 'ipython'],
-			 'excludes': ['Finder','idlelib', 'gtk', 'sqlite3', 'matplotlib', 'pandas', 'PyQt4.QtDesigner',\
-			 			  'PyQt4.QtOpenGL', 'PyQt4.QtScript', 'PyQt4.QtSql', 'PyQt4.QtTest', 'PyQt4.QtXml', 'PyQt4.phonon',\
-			 			  'rpy2',
-			 			  ],
-			 'resources' : ['qt_menu.nib', 'resources', 'sounds', 'help', 'data'],
-			 'packages' : ['openexp','expyriment','psychopy','QProgEdit','libqtopensesame','libopensesame'],
-			 'iconfile' : 'resources/opensesame.icns',
-			 'plist': {
+		{
+			'argv_emulation': False, 
+			'includes' : [
+				'PyQt4.QtNetwork', 'serial', 'opensesamerun', 'skimage', 'sip', \
+				'billiard',
+			],
+			'excludes': [
+				'Finder','idlelib', 'gtk', 'matplotlib', 'pandas', 'PyQt4.QtDesigner',\
+			 	'PyQt4.QtOpenGL', 'PyQt4.QtScript', 'PyQt4.QtSql', 'PyQt4.QtTest', \
+			 	'PyQt4.QtXml', 'PyQt4.phonon', 'rpy2', 'wx',
+			],
+			'resources' : ['qt_menu.nib', 'resources', 'sounds', 'help', 'data'],
+			'packages' : [
+				'openexp','expyriment','psychopy','QProgEdit','libqtopensesame','libopensesame',\
+				'IPython','ipykernel','jupyter_client','qtconsole','pygments','OpenGL_accelerate',
+			],
+			'iconfile' : 'resources/opensesame.icns',
+			'plist': {
 				'CFBundleName': 'OpenSesame',
 				'CFBundleShortVersionString':'3.0.5',
 				'CFBundleVersion': '3.0.5',
