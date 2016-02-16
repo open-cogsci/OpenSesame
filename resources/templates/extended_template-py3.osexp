@@ -1,0 +1,136 @@
+---
+API: 2
+---
+set width 1024
+set uniform_coordinates "yes"
+set title "Extended template"
+set subject_parity "even"
+set subject_nr 0
+set start "experiment"
+set height 768
+set foreground "white"
+set font_size 18
+set font_italic "no"
+set font_family "mono"
+set font_bold "no"
+set description "A template containing a practice and an experimental phase"
+set coordinates "uniform"
+set compensation 0
+set canvas_backend "legacy"
+set bidi "yes"
+set background "black"
+
+define notepad about_this_template
+	__note__
+	This template already contains the basic structure of a typical experiment.
+	It consists of a practice phase, followed by an experimental phase. For more
+	information, please visit <http://osdoc.cogsci.nl/>
+
+	Have fun with OpenSesame!
+	__end__
+	set description "Some pointers to help you gest started!"
+
+define loop block_loop
+	set skip 0
+	set repeat 1
+	set order "random"
+	set offset "no"
+	set item "trial_sequence"
+	set description "A single block of trials"
+	set cycles 1
+	set column_order ""
+	set break_if "never"
+	run trial_sequence
+
+define sequence block_sequence
+	set flush_keyboard "yes"
+	set description "A sequence containing a single block of trials followed by feedback to the participant"
+	run reset_feedback "always"
+	run block_loop "always"
+	run feedback "always"
+
+define sketchpad end_of_experiment
+	set start_response_interval "no"
+	set duration "keypress"
+	set description "A sketchpad notifying the participant that the experiment is finished"
+	draw textline center=1 color=white font_bold=no font_family=mono font_italic=no font_size=18 html=yes show_if=always text="Press any key to exit" x=0 y=0 z_index=0
+
+define sketchpad end_of_practice
+	set start_response_interval "no"
+	set duration "keypress"
+	set description "A sketchpad notifying the participant that the practice phase is finished"
+	draw textline center=1 color=white font_bold=no font_family=mono font_italic=no font_size=18 html=yes show_if=always text="Press any key to continue" x=0 y=0 z_index=0
+
+define sequence experiment
+	set flush_keyboard "yes"
+	set description "The main sequence of the experiment"
+	run about_this_template "always"
+	run instructions "always"
+	run practice_loop "always"
+	run end_of_practice "always"
+	run experimental_loop "always"
+	run end_of_experiment "always"
+
+define loop experimental_loop
+	set skip 0
+	set repeat 1
+	set order "random"
+	set offset "no"
+	set item "block_sequence"
+	set description "A loop containing one or more experimental blocks"
+	set cycles 1
+	set column_order "practice"
+	set break_if "never"
+	setcycle 0 practice "no"
+	run block_sequence
+
+define feedback feedback
+	set reset_variables "yes"
+	set duration "keypress"
+	set description "Provides feedback to the participant"
+	draw textline center=1 color=white font_bold=no font_family=mono font_italic=no font_size=18 html=yes show_if=always text="Your average response time was [avg_rt]ms<br /><br />Your accuracy was [acc]%<br /><br />Press any key to continue" x=0.0 y=0.0 z_index=0
+
+define sketchpad instructions
+	set start_response_interval "no"
+	set duration "keypress"
+	set description "A sketchpad containing the instructions for the participant"
+	draw textline center=1 color=white font_bold=no font_family=mono font_italic=no font_size=18 html=yes show_if=always text="Press any key to begin!" x=0 y=0 z_index=0
+
+define keyboard_response keyboard_response
+	set timeout "infinite"
+	set flush "yes"
+	set duration "keypress"
+	set description "Collects keyboard responses"
+
+define logger logger
+	set description "Logs experimental data"
+	set auto_log "yes"
+
+define loop practice_loop
+	set skip 0
+	set repeat 1
+	set order "random"
+	set offset "no"
+	set item "block_sequence"
+	set description "A loop containing one or more practice blocks"
+	set cycles 1
+	set column_order "practice"
+	set break_if "never"
+	setcycle 0 practice "yes"
+	run block_sequence
+
+define reset_feedback reset_feedback
+	set description "Resets the feedback variables, such as 'avg_rt' and 'acc'"
+
+define sketchpad sketchpad
+	set start_response_interval "no"
+	set duration 0
+	set description "Displays stimuli"
+	draw fixdot color=white show_if=always style=default x=0 y=0 z_index=0
+
+define sequence trial_sequence
+	set flush_keyboard "yes"
+	set description "A single trial"
+	run sketchpad "always"
+	run keyboard_response "always"
+	run logger "always"
