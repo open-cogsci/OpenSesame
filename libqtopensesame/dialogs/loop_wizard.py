@@ -22,6 +22,7 @@ from libqtopensesame.misc.config import cfg
 from libqtopensesame.dialogs.base_dialog import base_dialog
 from datamatrix import DataMatrix, operations
 from qdatamatrix import QDataMatrix
+import pickle
 from qtpy import QtWidgets
 
 class loop_wizard(base_dialog):
@@ -43,7 +44,11 @@ class loop_wizard(base_dialog):
 
 		super(loop_wizard, self).__init__(main_window,
 			ui=u'dialogs.loop_wizard_dialog')
-		self._dm = DataMatrix(length=0)
+		try:
+			self._dm = pickle.loads(cfg.loop_wizard)
+			assert(isinstance(self._dm, DataMatrix))
+		except:
+			self._dm = DataMatrix(length=0)
 		self._qdm = QDataMatrix(self._dm)
 		self.ui.hbox_container.addWidget(self._qdm)
 		self.ui.table_example.hide()
@@ -61,4 +66,5 @@ class loop_wizard(base_dialog):
 		retval = base_dialog.exec_(self)
 		if retval == QtWidgets.QDialog.Rejected:
 			return None
+		cfg.loop_wizard = pickle.dumps(self._dm)
 		return operations.fullfactorial(self._dm)

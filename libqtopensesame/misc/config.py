@@ -60,7 +60,7 @@ class config(object):
 		u"file_dialog_path" : "",
 		u"file_pool_size_warning" : 104857600,
 		u"locale" : u"default",
-		u"loop_wizard" : [],
+		u"loop_wizard" : None,
 		u"onetabmode" : False,
 		u"qProgEditCommentShortcut" : u'Ctrl+M',
 		u"qProgEditUncommentShortcut" : u'Ctrl+Shift+M',
