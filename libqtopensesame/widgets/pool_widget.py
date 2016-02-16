@@ -181,7 +181,6 @@ class pool_widget(base_widget):
 			fname = os.path.basename(path)
 			if filt in fname.lower():
 				icon = self.theme.qfileicon(self.pool[path])
-				self.console.write(path)
 				item = QtWidgets.QListWidgetItem(icon, fname)
 				item.setFlags(item.flags()|QtCore.Qt.ItemIsEditable)
 				item.icon = icon
