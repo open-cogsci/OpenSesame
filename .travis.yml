@@ -21,10 +21,10 @@ before_install:
   - wget https://github.com/smathot/python-yamldoc/archive/release/0.2.0.tar.gz -O yamldoc.tar.gz
   - tar -xzvf yamldoc.tar.gz
   - export PYTHONPATH=$PYTHONPATH:python-yamldoc-release-0.2.0
-  - wget https://github.com/smathot/python-datamatrix/archive/master.tar.gz
-  - tar -xvf master.tar.gz
+  - wget https://github.com/smathot/python-datamatrix/archive/master.tar.gz -O datamatrix.tar.gz
+  - tar -xvf datamatrix.tar.gz
   - export PYTHONPATH=$PYTHONPATH:python-datamatrix-master
-  - wget https://github.com/smathot/python-pseudorandom/archive/master.tar.gz
-  - tar -xvf master.tar.gz
+  - wget https://github.com/smathot/python-pseudorandom/archive/master.tar.gz -O pseudorandom.tar.gz
+  - tar -xvf pseudorandom.tar.gz
   - export PYTHONPATH=$PYTHONPATH:python-pseudorandom-master
 script: ./run_unittests.py
