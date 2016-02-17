@@ -47,6 +47,20 @@ class feedpad(object):
 		self.sketchpad_widget.ui.edit_duration.setValidator(
 			duration_validator(self))
 		self.first_refresh = True
+		self._lock = False
+
+	def apply_script_changes(self):
+
+		"""See qtitem."""
+
+		# Without this hack, the script changes will automatically trigger a
+		# draw(), which triggers a call to apply_edit_changes, which updates the
+		# script. To avoid this feedback loop, temporarily disable apply edit
+		# changes.
+		f = self.apply_edit_changes
+		self.apply_edit_changes = lambda: None
+		qtplugin.apply_script_changes(self)
+		self.apply_edit_changes = f
 
 	def element_module(self):
 
