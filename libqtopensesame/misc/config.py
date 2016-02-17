@@ -329,7 +329,10 @@ class config(object):
 		qsettings = QtCore.QSettings(u"cogscinl", u"opensesame")
 		qsettings.beginGroup(u"MainWindow")
 		for setting, default in self.config.items():
-			value = qsettings.value(setting, default)
+			try:
+				value = qsettings.value(setting, default)
+			except TypeError:
+				continue
 			value = self.type_qvariant(value, default)
 			self.config[setting] = value
 		qsettings.endGroup()
