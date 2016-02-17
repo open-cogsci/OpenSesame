@@ -367,7 +367,7 @@ class qtplugin(qtitem.qtitem):
 		self.add_control(label, widget, **kwdict)
 		return slider
 
-	def add_filepool_control(self, var, label, click_func=None, **kwdict):
+	def add_filepool_control(self, var, label, **kwdict):
 
 		"""
 		desc:
@@ -387,27 +387,15 @@ class qtplugin(qtitem.qtitem):
 			kwdict:		A keyword dict to be passed on to add_control().
 
 		returns:
-			A QLineEdit widget that contains the path of the selected file.
+			A pool_select widget that contains the path of the selected file.
 		"""
 
-		edit = QtWidgets.QLineEdit()
+		from libqtopensesame._input.pool_select import pool_select
+		edit = pool_select(self.main_window)
 		edit.editingFinished.connect(self.apply_edit_changes)
-		edit.setMinimumWidth(200)
 		if var is not None:
 			self.auto_line_edit[var] = edit
-		if click_func is None:
-			click_func = self.browse_pool_func(edit)
-		button = QtWidgets.QPushButton(self.theme.qicon(u'browse'), u'Browse')
-		button.setIconSize(QtCore.QSize(16, 16))
-		button.clicked.connect(click_func)
-		hbox = QtWidgets.QHBoxLayout()
-		hbox.addWidget(edit)
-		hbox.addWidget(button)
-		hbox.setContentsMargins(0,0,0,0)
-		hbox.setSpacing(6)
-		widget = QtWidgets.QWidget()
-		widget.setLayout(hbox)
-		self.add_control(label, widget, **kwdict)
+		self.add_control(label, edit, **kwdict)
 		return edit
 
 	def add_editor_control(self, var, label, syntax=False):
@@ -488,27 +476,6 @@ class qtplugin(qtitem.qtitem):
 		"""
 
 		self.edit_vbox.addStretch()
-
-	def browse_pool_func(self, edit_widget):
-
-		"""
-		desc:
-			Returns a function to present a file dialog to browse the file pool.
-
-		arguments:
-			edit_widget:	A QLineEdit widget.
-
-		returns:
-			A function that presents a filepool dialog and sets the edit_widget.
-		"""
-
-		def browse_pool():
-			s = pool_widget.select_from_pool(self.experiment.main_window)
-			if str(s) == "":
-				return
-			edit_widget.setText(s)
-			self.apply_edit_changes()
-		return browse_pool
 
 	def get_ready(self):
 

@@ -27,6 +27,7 @@ from libqtopensesame.widgets.item_view_button import item_view_button
 from libqtopensesame.widgets.tree_item_item import tree_item_item
 from libqtopensesame.widgets.qtitem_splitter import qtitem_splitter
 from libqtopensesame.widgets import header_widget, user_hint_widget
+from libqtopensesame._input.pool_select import pool_select
 from libqtopensesame.misc.config import cfg
 from libqtopensesame.misc.base_qtobject import base_qtobject
 from libqtopensesame.misc.translate import translation_context
@@ -755,7 +756,7 @@ class qtitem(base_qtobject):
 
 		return True
 
-	def auto_add_widget(self, widget, var=None):
+	def auto_add_widget(self, widget, var=None, apply_func=None):
 
 		"""
 		desc:
@@ -774,24 +775,27 @@ class qtitem(base_qtobject):
 		# Use the object id as a fallback name
 		if var is None:
 			var = id(widget)
+		if apply_func is None:
+			apply_func = self.apply_edit_changes
 		debug.msg(var)
 		self.set_focus_widget(widget)
 		if isinstance(widget, QtWidgets.QSpinBox) or isinstance(widget,
 			QtWidgets.QDoubleSpinBox):
-			widget.editingFinished.connect(self.apply_edit_changes)
+			widget.editingFinished.connect(apply_func)
 			self.auto_spinbox[var] = widget
 		elif isinstance(widget, QtWidgets.QComboBox):
-			widget.activated.connect(self.apply_edit_changes)
+			widget.activated.connect(apply_func)
 			self.auto_combobox[var] = widget
 		elif isinstance(widget, QtWidgets.QSlider) \
 			or isinstance(widget, QtWidgets.QDial):
-			widget.valueChanged.connect(self.apply_edit_changes)
+			widget.valueChanged.connect(apply_func)
 			self.auto_slider[var] = widget
-		elif isinstance(widget, QtWidgets.QLineEdit):
-			widget.editingFinished.connect(self.apply_edit_changes)
+		elif isinstance(widget, QtWidgets.QLineEdit) or isinstance(widget,
+			pool_select):
+			widget.editingFinished.connect(apply_func)
 			self.auto_line_edit[var] = widget
 		elif isinstance(widget, QtWidgets.QCheckBox):
-			widget.clicked.connect(self.apply_edit_changes)
+			widget.clicked.connect(apply_func)
 			self.auto_checkbox[var] = widget
 		else:
 			raise Exception(u"Cannot auto-add widget of type %s" % widget)
