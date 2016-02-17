@@ -23,7 +23,6 @@ from libopensesame import item
 from datamatrix import operations, DataMatrix
 from pseudorandom import Enforce, MaxRep, MinDist, InvalidConstraint
 import openexp.keyboard
-import warnings
 
 class loop(item.item):
 
@@ -31,6 +30,17 @@ class loop(item.item):
 
 	description = u'Repeatedly runs another item'
 	valid_orders = u'sequential', u'random', u'advanced'
+
+	commands = [
+		u'fullfactorial',
+		u'shuffle',
+		u'slice',
+		u'sort',
+		u'sortby',
+		u'reverse',
+		u'roll',
+		u'weight',
+		]
 
 	def reset(self):
 
@@ -48,6 +58,8 @@ class loop(item.item):
 		self.var.order = u'random'
 		self.var.break_if = u'never'
 		self.var.break_if_on_first = u'yes'
+		self.var.source = u'table' # file or table
+		self.var.source_file = u''
 
 	def from_string(self, string):
 
@@ -99,7 +111,7 @@ class loop(item.item):
 						raise osexception(e)
 					raise osexception(u'Invalid constrain command: %s' % i)
 				continue
-			if cmd in [u'shuffle', u'sort', u'sortby', u'reverse', u'roll']:
+			if cmd in self.commands:
 				self.operations.append( (cmd, arglist) )
 		if len(self.dm) == 0:
 			self.dm.length = 1
@@ -136,7 +148,7 @@ class loop(item.item):
 		s += u'\t%s\n' % self.syntax.create_cmd(u'run', [self._item])
 		return s
 
-	def _require_arglist(self, cmd, arglist):
+	def _require_arglist(self, cmd, arglist, minlen=1):
 
 		"""
 		desc:
@@ -152,7 +164,7 @@ class loop(item.item):
 				type:	list
 		"""
 
-		if not arglist:
+		if len(arglist) < minlen:
 			raise osexception(u'Invalid argument list for %s' % cmd)
 
 	def _create_live_datamatrix(self):
@@ -167,20 +179,38 @@ class loop(item.item):
 			type:	DataMatrix
 		"""
 
-		length = int(len(self.dm) * self.var.repeat)
+		if self.var.source == u'table':
+			src_dm = self.dm
+		else:
+			from datamatrix import io
+			src = self.experiment.pool[self.var.source_file]
+			if src.endswith(u'.xlsx'):
+				try:
+					src_dm = io.readxlsx(src)
+				except Exception as e:
+					raise osexception(u'Failed to read .xlsx file: %s' % src,
+						exception=e)
+			else:
+				try:
+					src_dm = io.readtxt(src)
+				except Exception as e:
+					raise osexception(u'Failed to read text file: %s' % src,
+						exception=e)
+		length = int(len(src_dm) * self.var.repeat)
 		dm = DataMatrix(length=0)
 		while len(dm) < length:
-			i = min(length-len(dm), len(self.dm))
+			i = min(length-len(dm), len(src_dm))
 			if self.var.order == u'random':
-				dm <<= operations.shuffle(self.dm)[:i]
+				dm <<= operations.shuffle(src_dm)[:i]
 			else:
-				dm <<= self.dm[:i]
+				dm <<= src_dm[:i]
 		if self.var.order == u'sequential':
 			return dm
 		if self.var.order == u'random':
 			return operations.shuffle(dm)
 		if self.var.order == u'advanced':
 			if self.ef is not None:
+				self.ef.dm = src_dm
 				dm = self.ef.enforce()
 			for cmd, arglist in self.operations:
 				# The column name is always specified last, or not at all
@@ -191,11 +221,16 @@ class loop(item.item):
 					except:
 						raise osexception(
 							u'Column %s does not exist' % arglist[-1])
-				if cmd == u'shuffle':
+				if cmd == u'fullfactorial':
+					dm = operations.fullfactorial(dm)
+				elif cmd == u'shuffle':
 					if not arglist:
 						dm = operations.shuffle(dm)
 					else:
 						dm[colname] = operations.shuffle(col)
+				elif cmd == u'slice':
+					self._require_arglist(cmd, arglist, minlen=2)
+					dm = dm[arglist[0]: arglist[1]]
 				elif cmd == u'sort':
 					self._require_arglist(cmd, arglist)
 					dm[colname] = operations.sort(col)
@@ -209,11 +244,14 @@ class loop(item.item):
 						dm[colname] = col[::-1]
 				elif cmd == u'roll':
 					self._require_arglist(cmd, arglist)
-					steps = arglist.pop(0)
+					steps = arglist[0]
 					if not arglist:
 						dm = dm[-steps:] << dm[:-steps]
 					else:
 						dm[colname] = list(col[-steps:]) + list(col[:-steps])
+				elif cmd == u'weight':
+					self._require_arglist(cmd, arglist)
+					dm = operations.weight(col)
 			return dm
 		raise osexception(u'Invalid order: %s' % self.var.order)
 

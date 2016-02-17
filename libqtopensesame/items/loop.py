@@ -21,6 +21,7 @@ from libopensesame.py3compat import *
 from qdatamatrix import QDataMatrix
 from pseudorandom import EnforceFailed
 from libopensesame.loop import loop as loop_runtime
+from libopensesame.exceptions import osexception
 from libqtopensesame.items.qtitem import qtitem
 from libqtopensesame.items.qtstructure_item import qtstructure_item
 from libqtopensesame.widgets.loop_widget import loop_widget
@@ -54,17 +55,21 @@ class loop(qtstructure_item, qtitem, loop_runtime):
 		self.edit_vbox.addWidget(self.loop_widget)
 		self.edit_vbox.addWidget(self.qdm)
 		self.set_focus_widget(self.qdm)
+		self.auto_add_widget(self.loop_widget.ui.spinbox_repeat, u'repeat')
 		self.auto_add_widget(self.loop_widget.ui.combobox_order, u'order')
+		self.auto_add_widget(self.loop_widget.ui.combobox_source, u'source',
+			apply_func=self._apply_source)
+		self.auto_add_widget(
+			self.loop_widget.ui.edit_source_file, u'source_file')
 		self.auto_add_widget(self.loop_widget.ui.edit_break_if, u'break_if')
 		self.auto_add_widget(self.loop_widget.ui.checkbox_break_if_on_first,
 			u'checkbox_break_if_on_first')
 		self.auto_add_widget(self.loop_widget.ui.checkbox_continuous,
 			u'continuous')
-		self.loop_widget.ui.spinbox_length.editingFinished.connect(
-			self._apply_length)
 		self.loop_widget.ui.combobox_item.activated.connect(self._apply_item)
 		self.loop_widget.ui.button_preview.clicked.connect(self._show_preview)
 		self.loop_widget.ui.button_wizard.clicked.connect(self._show_wizard)
+
 
 	def _show_wizard(self):
 
@@ -83,9 +88,9 @@ class loop(qtstructure_item, qtitem, loop_runtime):
 		l = [_(u'# Preview of loop table'), u'\n\n']
 		try:
 			dm = self._create_live_datamatrix()
-		except EnforceFailed:
+		except (osexception, EnforceFailed):
 			l.append(
-				_(u'Failed to generate preview. Have you specified impossible constraints?'))
+				_(u'Failed to generate preview. Are you using a non-existing source file, or have you specified impossible constraints?'))
 		else:
 			l.append(u'\n\n<table><thead><tr>')
 			l.append(u''.join([u'<th>%s</th>' % column_name \
@@ -109,15 +114,6 @@ class loop(qtstructure_item, qtitem, loop_runtime):
 
 		self.loop_widget.ui.combobox_item.select(self._item)
 
-	def _apply_length(self):
-
-		length = self.loop_widget.ui.spinbox_length.value()
-		if len(self.dm):
-			self.var.repeat = 1.*length/len(self.dm)
-		else:
-			self.var.repeat = 1
-		self.update_script()
-
 	def _apply_table(self):
 
 		if len(self.dm) == 0:
@@ -127,17 +123,20 @@ class loop(qtstructure_item, qtitem, loop_runtime):
 			self.dm.empty_column = u''
 			self.qdm.refresh()
 		self.update_script()
-		self._update_length()
 
-	def _update_length(self):
+	def _apply_source(self):
 
-		repeat = self.var.get(u'repeat', _eval=False)
-		if not len(self.dm) or not isinstance(repeat, (int, float)):
-			self.loop_widget.ui.spinbox_length.setEnabled(False)
-			self.loop_widget.ui.spinbox_length.setValue(0)
-			return
-		self.loop_widget.ui.spinbox_length.setEnabled(True)
-		self.loop_widget.ui.spinbox_length.setValue(int(repeat*len(self.dm)))
+		self.var.source = self.loop_widget.ui.combobox_source.currentText()
+		self._update_source()
+		self._update_script()
+
+	def _update_source(self):
+
+		file_mode = self.var.get(u'source', _eval=False) != u'table'
+		self.loop_widget.ui.label_source_file.setVisible(file_mode)
+		self.loop_widget.ui.edit_source_file.setVisible(file_mode)
+		self.loop_widget.ui.spacer.setVisible(file_mode)
+		self.qdm.setVisible(not file_mode)
 
 	def _row_count_text(self, n):
 
@@ -145,7 +144,7 @@ class loop(qtstructure_item, qtitem, loop_runtime):
 			return _(u'one row occurs')
 		if n == 2:
 			return _(u'two rows occur')
-		return _(u'%d rows occur' % n)
+		return _(u'%s rows occur' % n)
 
 	def _time_count_text(self, n):
 
@@ -155,40 +154,51 @@ class loop(qtstructure_item, qtitem, loop_runtime):
 			return _(u'once')
 		if n == 2:
 			return _(u'twice')
-		return _(u'%d times' % n)
+		return _(u'%s times' % n)
+
+	def _set_summary(self, msg):
+
+		self.loop_widget.ui.label_summary.setText(
+			u'<small>'+ msg + u'</small>')
 
 	def _update_summary(self):
 
+		if self._item not in self.experiment.items:
+			self._set_summary(_(u'Warning: No item to run has been specified'))
+			return
 		repeat = self.var.get(u'repeat', _eval=False)
 		order = self.var.get(u'order', _eval=False)
 		if not isinstance(repeat, (float, int)) \
 			or order not in self.valid_orders:
-			l = [_(u'Sorry, I don\t know how to summarize this!')]
+			self._set_summary(
+				_(u'Note: Order or repeat is unknown or variably defined'))
+			return
+		if self.var.get(u'source', _eval=False) != u'table':
+			self._set_summary(
+				_(u'Note: Loop data will be read from file'))
+			return
+
+		f, i = math.modf(repeat)
+		length = int(repeat*len(self.dm))
+		numrows = len(self.dm)
+		r_freq = int(i+1)
+		n_freq = int(f * numrows)
+		r_rare = int(i)
+		n_rare = numrows - n_freq
+		s = _(u'Summary: <b>%s</b> will be called <b>%s</b> in <b>%s</b> order.') \
+			% (self._item, self._time_count_text(length), order)
+		s += u' ' + _(u'The number of rows is %s.') % numrows
+		if n_freq == 0:
+			s += u' ' + _(u'All rows occur %s.') % self._time_count_text(r_rare)
+		elif n_rare == 0:
+			s += u' ' + _(u'All rows occur %s.') % self._time_count_text(r_freq)
 		else:
-			f, i = math.modf(repeat)
-			l = []
-			l.append(
-				_(u'Summary: <b>%s</b> will be called <b>%s</b> in <b>%s</b> order.') \
-				% (self._item, self._time_count_text(repeat*len(self.dm)), order))
-			l.append(_(u'The number of rows is %d.') % len(self.dm))
-			if f == 0:
-				if not len(self.dm):
-					l.append(_(u'This means that the loop is empty.'))
-				else:
-					l.append(_(u'This means that all rows occur %s.') \
-						% self._time_count_text(repeat))
-			else:
-				r_freq = i+1
-				n_freq = int(f * len(self.dm))
-				r_rare = i
-				n_rare = len(self.dm) - n_freq
-				l.append(_(u'This means that %s %s and %s %s.') \
-					% (self._row_count_text(n_freq), \
-					self._time_count_text(r_freq), \
-					self._row_count_text(n_rare), \
-					self._time_count_text(r_rare)))
-		s = u'<small>'+u' '.join(l)+u'</small>'
-		self.loop_widget.ui.label_summary.setText(s)
+			s += u' ' + _(u'This means that %s %s and %s %s.') \
+				% (self._row_count_text(n_freq), \
+				self._time_count_text(r_freq), \
+				self._row_count_text(n_rare), \
+				self._time_count_text(r_rare))
+		self._set_summary(s)
 
 	def edit_widget(self):
 
@@ -200,9 +210,9 @@ class loop(qtstructure_item, qtitem, loop_runtime):
 		self.loop_widget.ui.combobox_item.select(self._item)
 		self.qdm.dm = self.dm
 		self.qdm.refresh()
-		self._update_length()
 		self._update_summary()
 		self._update_item()
+		self._update_source()
 
 	def update_script(self):
 

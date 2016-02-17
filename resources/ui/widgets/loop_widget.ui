@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1042</width>
-    <height>160</height>
+    <width>1108</width>
+    <height>292</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -97,32 +97,7 @@
             </sizepolicy>
            </property>
            <property name="text">
-            <string>Length</string>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="1">
-          <widget class="QSpinBox" name="spinbox_length">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="minimumSize">
-            <size>
-             <width>200</width>
-             <height>0</height>
-            </size>
-           </property>
-           <property name="suffix">
-            <string> cycle(s)</string>
-           </property>
-           <property name="maximum">
-            <number>10000000</number>
-           </property>
-           <property name="value">
-            <number>1</number>
+            <string>Repeat</string>
            </property>
           </widget>
          </item>
@@ -149,7 +124,7 @@
            </property>
            <item>
             <property name="text">
-             <string>random</string>
+             <string notr="true">random</string>
             </property>
             <property name="icon">
              <iconset theme="media-playlist-shuffle">
@@ -159,7 +134,7 @@
            </item>
            <item>
             <property name="text">
-             <string>sequential</string>
+             <string notr="true">sequential</string>
             </property>
             <property name="icon">
              <iconset theme="media-playlist-repeat">
@@ -169,7 +144,7 @@
            </item>
            <item>
             <property name="text">
-             <string>advanced</string>
+             <string notr="true">advanced</string>
             </property>
             <property name="icon">
              <iconset theme="utilities-terminal">
@@ -180,20 +155,79 @@
           </widget>
          </item>
          <item row="3" column="1">
-          <widget class="QPushButton" name="button_preview">
+          <widget class="QComboBox" name="combobox_source">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
            <property name="minimumSize">
             <size>
              <width>200</width>
              <height>0</height>
             </size>
            </property>
+           <item>
+            <property name="text">
+             <string notr="true">table</string>
+            </property>
+            <property name="icon">
+             <iconset theme="x-office-spreadsheet"/>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string notr="true">file</string>
+            </property>
+            <property name="icon">
+             <iconset theme="folder-open"/>
+            </property>
+           </item>
+          </widget>
+         </item>
+         <item row="3" column="0">
+          <widget class="QLabel" name="label_source">
            <property name="text">
-            <string>Preview </string>
+            <string>Source</string>
            </property>
-           <property name="icon">
-            <iconset theme="x-office-spreadsheet">
-             <normaloff/>
-            </iconset>
+          </widget>
+         </item>
+         <item row="4" column="0">
+          <widget class="QLabel" name="label_source_file">
+           <property name="text">
+            <string>File</string>
+           </property>
+          </widget>
+         </item>
+         <item row="4" column="1">
+          <widget class="pool_select" name="edit_source_file"/>
+         </item>
+         <item row="1" column="1">
+          <widget class="QDoubleSpinBox" name="spinbox_repeat">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="minimumSize">
+            <size>
+             <width>200</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="prefix">
+            <string>each cycle </string>
+           </property>
+           <property name="suffix">
+            <string> x</string>
+           </property>
+           <property name="maximum">
+            <double>10000.000000000000000</double>
+           </property>
+           <property name="value">
+            <double>1.000000000000000</double>
            </property>
           </widget>
          </item>
@@ -282,6 +316,24 @@
            </property>
           </widget>
          </item>
+         <item row="4" column="1">
+          <widget class="QPushButton" name="button_preview">
+           <property name="minimumSize">
+            <size>
+             <width>200</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="text">
+            <string>Preview </string>
+           </property>
+           <property name="icon">
+            <iconset theme="x-office-spreadsheet">
+             <normaloff/>
+            </iconset>
+           </property>
+          </widget>
+         </item>
         </layout>
        </widget>
       </item>
@@ -298,6 +350,16 @@
      </property>
     </widget>
    </item>
+   <item>
+    <widget class="QWidget" name="spacer" native="true">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+    </widget>
+   </item>
   </layout>
  </widget>
  <customwidgets>
@@ -306,7 +368,24 @@
    <extends>QComboBox</extends>
    <header>libqtopensesame._input.item_combobox.h</header>
   </customwidget>
+  <customwidget>
+   <class>pool_select</class>
+   <extends>QLineEdit</extends>
+   <header>libqtopensesame/_input/pool_select.h</header>
+  </customwidget>
  </customwidgets>
+ <tabstops>
+  <tabstop>combobox_item</tabstop>
+  <tabstop>spinbox_repeat</tabstop>
+  <tabstop>combobox_order</tabstop>
+  <tabstop>combobox_source</tabstop>
+  <tabstop>edit_source_file</tabstop>
+  <tabstop>edit_break_if</tabstop>
+  <tabstop>checkbox_break_if_on_first</tabstop>
+  <tabstop>checkbox_continuous</tabstop>
+  <tabstop>button_wizard</tabstop>
+  <tabstop>button_preview</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>
