@@ -18,14 +18,8 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame.py3compat import *
-
-from libopensesame import item, exceptions, generic_response, widgets, plugins
+from libopensesame import plugins
 from libqtopensesame.items.qtautoplugin import qtautoplugin
-from openexp.canvas import canvas
-import openexp.keyboard
-import os.path
-from qtpy import QtWidgets, QtCore
-
 form_base = plugins.import_plugin(u'form_base')
 
 default_script = u"""
@@ -39,8 +33,9 @@ widget 0 1 3 1 label text=[form_text] center=no
 widget 1 2 1 1 button text=[ok_text]
 """
 
+
 class form_text_display(form_base.form_base):
-	
+
 	initial_view = u'controls'
 
 	def __init__(self, name, experiment, string=None):
@@ -61,9 +56,9 @@ class form_text_display(form_base.form_base):
 		# Due to dynamic loading, we need to implement this super() hack. See
 		# <http://thingspython.wordpress.com/2010/09/27/another-super-wrinkle-raising-typeerror/>
 		self.super_form_text_display = super(form_text_display, self)
-		self.super_form_text_display.__init__(name, experiment, string, \
-			item_type=u'form_text_display', description= \
-			u'A simple text display form')
+		self.super_form_text_display.__init__(name, experiment, string,
+			item_type=u'form_text_display',
+			description=u'A simple text display form')
 
 	def from_string(self, script):
 
@@ -83,4 +78,3 @@ class qtform_text_display(form_text_display, qtautoplugin):
 
 		form_text_display.__init__(self, name, experiment, script)
 		qtautoplugin.__init__(self, __file__)
-

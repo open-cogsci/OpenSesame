@@ -84,6 +84,10 @@ class item(object):
 		return self.experiment._python_workspace
 
 	@property
+	def responses(self):
+		return self.experiment._responses
+
+	@property
 	def default_description(self):
 		return u'Default description'
 
@@ -212,63 +216,14 @@ class item(object):
 
 		"""
 		desc:
-			Processes a response in such a way that feedback variables are
-			updated as well.
-
-		keywords:
-			response:
-				desc:	The response value.
-			response_time:
-				desc:	The response time, or None.
-				type:	[int, float, NoneType]
-			correct:
-				desc:	The correctness value, which should be 0, 1, True,
-						False, or None.
-				type:	[int, bool, NoneType]
-
-		example: |
-			from openexp.keyboard import keyboard
-			my_keyboard = keyboard(exp)
-			t1 = self.time()
-			button, timestamp = my_keyboard.get_key()
-			if button == 'left':
-				correct = 1
-			else:
-				correct = 0
-			rt = timestamp - t1
-			self.set_response(response=button, response_time=rt,
-				correct=correct)
+			Deprecated by response store.
 		"""
 
-		var = self.experiment.var
-		# Sanity checks
-		if not isinstance(response_time, int) and \
-			not isinstance(response_time, float) and response_time is not None:
-			raise osexception(u'response should be a numeric value or None')
-		if correct not in (0, 1, True, False, None):
-			raise osexception(
-				u'correct should be 0, 1, True, False, or None')
-		# Handle response variables.
-		var.total_responses += 1
-		var.response = response
-		var.response_time = response_time
-		if response_time is not None:
-			var.total_response_time += response_time
-		if correct is None:
-			var.correct = u'undefined'
-		elif correct:
-			var.total_correct += 1
-			var.correct = 1
-		else:
-			var.correct = 0
-		# Set feedback variables
-		var.accuracy = var.acc = 100. * var.total_correct / var.total_responses
-		var.average_response_time = var.avg_rt = \
-			var.total_response_time / var.total_responses
-		# Copy the response variables to variables with a name suffix.
-		var.set(u'correct_%s' % self.name, var.correct)
-		var.set(u'response_%s' % self.name, var.response)
-		var.set(u'response_time_%s' % self.name, var.response_time)
+		warnings.warn(
+			u'set_response() has been deprecated. Use responses object instead.',
+			DeprecationWarning)
+		self.responses.add(response=response, response_time=response_time,
+			correct=correct)
 
 	def __getattr__(self, var):
 
@@ -536,15 +491,20 @@ class item(object):
 	def set_item_onset(self, time=None):
 
 		"""
-		Set a timestamp for the item's executions
+		desc:
+			Set a timestamp for the onset time of the item's execution.
 
-		Keyword arguments:
-		time -- the timestamp or None to use the current time (default = None)
+		keywords:
+			time:	A timestamp or None to use the current time.
+
+		returns:
+			desc:	A timestamp.
 		"""
 
 		if time is None:
 			time = self.time()
 		self.experiment.var.set(u'time_%s' % self.name, time)
+		return time
 
 	def dummy(self, **args):
 

@@ -21,10 +21,13 @@ from libopensesame.py3compat import *
 from libopensesame import sketchpad_elements
 from libopensesame.exceptions import osexception
 from libopensesame.item import item
-from libopensesame.generic_response import generic_response
+from libopensesame.base_response_item import base_response_item
+from libopensesame.keyboard_response import keyboard_response_mixin
+from libopensesame.mouse_response import mouse_response_mixin
 from openexp.canvas import canvas
 
-class sketchpad(item, generic_response):
+class sketchpad(base_response_item, keyboard_response_mixin,
+	mouse_response_mixin):
 
 	"""
 	desc:
@@ -56,13 +59,7 @@ class sketchpad(item, generic_response):
 
 	def from_string(self, string):
 
-		"""
-		desc:
-			Parses a definition string.
-
-		arguments:
-			string:		A definition string.
-		"""
+		"""See item."""
 
 		self.variables = {}
 		self.comments = []
@@ -86,15 +83,32 @@ class sketchpad(item, generic_response):
 			self.elements.append(element)
 		self.elements.sort(key=lambda element: -element.z_index)
 
+	def process_response(self, response_args):
+
+		"""See base_response_item."""
+
+		if self.var.duration == u'mouseclick':
+			mouse_response_mixin.process_response(self, response_args)
+			return
+		base_response_item.process_response(self, response_args)
+
+	def prepare_response_func(self):
+
+		"""See base_response_item."""
+
+		if isinstance(self.var.duration, (int, float)):
+			return self._prepare_sleep_func(self.var.duration)
+		if self.var.duration == u'keypress':
+			return keyboard_response_mixin.prepare_response_func(self)
+		if self.var.duration == u'mouseclick':
+			return mouse_response_mixin.prepare_response_func(self)
+		raise osexception(u'Invalid duration: %s' % self.var.duration)
+
 	def prepare(self):
 
-		"""
-		desc:
-			Prepares the canvas.
-		"""
+		"""See item."""
 
-		super(sketchpad, self).prepare()
-		generic_response.prepare(self)
+		base_response_item.prepare(self)
 		self.canvas = canvas(self.experiment, color=self.var.foreground,
 			background_color=self.var.background, auto_prepare=False)
 		for element in self.elements:
@@ -104,42 +118,25 @@ class sketchpad(item, generic_response):
 
 	def run(self):
 
-		"""
-		desc:
-			Shows the canvas and implements the duration.
-		"""
+		"""See item."""
 
-		self.set_item_onset(self.canvas.show())
-		self.set_sri(False)
-		self.process_response()
+		self._t0 = self.set_item_onset(self.canvas.show())
+		base_response_item.run(self)
 
 	def to_string(self):
 
-		"""
-		desc:
-			Generates a string representation for the sketchpad.
+		"""See item."""
 
-		returns:
-			A string representation.
-		"""
-
-		s = super(sketchpad, self).to_string()
+		s = base_response_item.to_string(self)
 		for element in self.elements:
 			s += u'\t%s\n' % element.to_string()
 		return s
 
 	def var_info(self):
 
-		"""
-		desc:
-			Returns a list of dictionaries with variable descriptions.
+		"""See item."""
 
-		returns:
-			A list of (name, description) tuples.
-		"""
-
-		l = item.var_info(self)
 		if self.var.get(u'duration', _eval=False, default=u'') in \
 			[u'keypress', u'mouseclick']:
-			l += generic_response.var_info(self)
-		return l
+			return base_response_item.var_info(self)
+		return item.var_info(self)

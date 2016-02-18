@@ -18,14 +18,10 @@ along with opensesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame.py3compat import *
-from libopensesame.exceptions import osexception
-from libopensesame.generic_response import generic_response
 from libopensesame.item import item
 from libqtopensesame.items.qtautoplugin import qtautoplugin
-import openexp.canvas
-import os.path
 
-class text_input(item, generic_response):
+class text_input(item):
 
 	pass
 

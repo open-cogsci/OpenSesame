@@ -22,130 +22,70 @@ along with OpenSesame. If not, see <http://www.gnu.org/licenses/>.
 
 from libopensesame.py3compat import *
 from libopensesame import plugins
-from libopensesame.exceptions import osexception
-from libopensesame import item, generic_response, debug
+from libopensesame.base_response_item import base_response_item
 from libqtopensesame.items.qtautoplugin import qtautoplugin
-import openexp.keyboard
+from openexp.keyboard import keyboard
 
-class joystick(item.item, generic_response.generic_response):
 
-	"""A plug-in for using a joystick/gamepad"""
+class joystick(base_response_item):
+
+	"""
+	desc:
+		A plug-in for using a joystick/gamepad.
+	"""
 
 	description = u'Collects input from a joystick or gamepad'
-
-	def __init__(self, name, experiment, string=None):
-
-		"""
-		Constructor
-
-		Arguments:
-		name		--	The item name.
-		experiment	--	The OpenSesame experiment.
-
-		Keyword arguments:
-		string		--	A definition string. (default=None)
-		"""
-
-		item.item.__init__(self, name, experiment, string)
-		self.process_feedback = True
+	process_feedback = True
 
 	def reset(self):
 
-		"""
-		desc:
-			Initialize the plug-in.
-		"""
+		"""See item."""
 
 		self.var.timeout = u'infinite'
 		self.var.allowed_responses = u''
 		self.var._dummy = u'no'
 		self.var._device = 0
 
-	def prepare(self):
+	def validate_response(self, response):
+
+		"""See base_response_item."""
+
+		try:
+			response = int(response)
+		except:
+			return False
+		return response >= 0 or response <= 255
+
+	def _get_button_press(self):
 
 		"""
 		desc:
-			Prepares the item.
+			Calls libjoystick.get_button_press() with the correct arguments.
 		"""
 
-		item.item.prepare(self)
-		self._allowed_responses = []
-		for r in safe_decode(self.var.allowed_responses).split(u";"):
-			if r.strip() != "":
-				try:
-					r = int(r)
-				except:
-					raise osexception(
-						u"'%s' is not a valid response on your joystick/gamepad. Expecting a number in the range of 1 to the amount of buttons." \
-						% (r,self.name))
-				if r < 0 or r > 255:
-					raise osexception(
-						u"'%s' is not a valid response on your joystick/gamepad. Expecting a number in the range of 1 to the amount of buttons." \
-						% (r, self.name))
-				self._allowed_responses.append(r)
-		if len(self._allowed_responses) == 0:
-			self._allowed_responses = None
-		debug.msg(
-			u"allowed responses has been set to %s" % self._allowed_responses)
-		# In case of dummy-mode:
-		self._keyboard = openexp.keyboard.keyboard(self.experiment)
-		if self.var._dummy == u"yes":
-			self._resp_func = self._keyboard.get_key
-		# Not in dummy-mode:
-		else:
-			timeout = self.var.timeout
-			# Dynamically load a joystick instance
-			if not hasattr(self.experiment, u"joystick"):
-				_joystick = plugins.load_mod(__file__, u'libjoystick')
-				self.experiment.joystick = _joystick.libjoystick(
-					self.experiment, device=self._device)
-			# Prepare auto response
-			if self.experiment.auto_response:
-				self._resp_func = self.auto_responder
-			else:
-				self._resp_func = self.experiment.joystick.get_joybutton
-		self.prepare_timeout()
+		return self.experiment.joystick.get_joybutton(
+			joybuttonlist=self._allowed_responses,
+			timeout=self._timeout
+			)
 
-	def run(self):
+	def prepare_response_func(self):
 
-		"""
-		desc:
-			Runs the item.
-		"""
+		"""See base_response_item."""
 
-		# Set the onset time
-		self.set_item_onset()
-		# Flush keyboard, so the escape key can be used
-		self._keyboard.flush()
-		# If no start response interval has been set, set it to the onset of
-		# the current response item
-		if self.experiment._start_response_interval is None:
-			self.experiment._start_response_interval = self.var.get(
-				u'time_%s' % self.name)
+		self._keyboard = keyboard(self.experiment,
+			keylist=self._allowed_responses, timeout=self._timeout)
 		if self.var._dummy == u'yes':
-			# In dummy mode, no one can hear you scream! Oh, and we simply
-			# take input from the keyboard
-			resp, self.experiment.end_response_interval = self._resp_func(
-				keylist=None, timeout=self._timeout)
-		else:
-			# Get the response
-			resp, self.experiment.end_response_interval = self._resp_func(
-				self._allowed_responses, self._timeout)
-		debug.msg(u'received %s' % resp)
-		self.experiment.var.response = resp
-		generic_response.generic_response.response_bookkeeping(self)
+			return self._keyboard.get_key
+		# Dynamically load a joystick instance
+		if not hasattr(self.experiment, u'joystick'):
+			_joystick = plugins.load_mod(__file__, u'libjoystick')
+			self.experiment.joystick = _joystick.libjoystick(
+				self.experiment, device=self._device)
+			self.python_workspace[u'joystick'] = self.experiment.joystick
+		if self._allowed_responses is not None:
+			self._allowed_responses = [int(r) for r in self._allowed_responses]
+		return self._get_button_press
 
-	def var_info(self):
-
-		"""
-		Gives a list of dictionaries with variable descriptions.
-
-		Returns:
-		A list of (name, description) tuples
-		"""
-
-		return item.item.var_info(self) + \
-			generic_response.generic_response.var_info(self)
 
 class qtjoystick(joystick, qtautoplugin):
 

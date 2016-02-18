@@ -18,13 +18,36 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame.py3compat import *
-from libopensesame import item, generic_response
+from libopensesame.base_response_item import base_response_item
+from openexp.keyboard import keyboard
 
-class keyboard_response(item.item, generic_response.generic_response):
 
-	"""An item for collection keyboard responses"""
+class keyboard_response_mixin(object):
+
+	"""
+	desc:
+		A mixin class that should be inherited along with base_response_item
+		by all classes that want to collect keyboard responses.
+	"""
+
+	def prepare_response_func(self):
+
+		"""See base_response_item."""
+
+		self._keyboard = keyboard(self.experiment, timeout=self._timeout,
+			keylist=self._allowed_responses)
+		return self._keyboard.get_key
+
+
+class keyboard_response(keyboard_response_mixin, base_response_item):
+
+	"""
+	desc:
+		An item for collecting keyboard responses.
+	"""
 
 	description = u'Collects keyboard responses'
+	process_feedback = True
 
 	def reset(self):
 
@@ -35,38 +58,24 @@ class keyboard_response(item.item, generic_response.generic_response):
 		self.var.duration = u'keypress'
 		self.var.unset(u'allowed_responses')
 		self.var.unset(u'correct_response')
-		self.auto_response = u'space'
-		self.process_feedback = True
 
 	def prepare(self):
 
-		"""Prepares the item."""
+		"""See item."""
 
-		item.item.prepare(self)
-		generic_response.generic_response.prepare(self)
+		base_response_item.prepare(self)
 		self._flush = self.var.flush == u'yes'
+
+	def response_matches(self, test, ref):
+
+		"""See base_response_item."""
+
+		return ref in self._keyboard.synonyms(test)
 
 	def run(self):
 
-		"""Runs the item."""
+		"""See item."""
 
-		# Record the onset of the current item
-		self.set_item_onset()
-		# Flush responses, to make sure that earlier responses
-		# are not carried over
 		if self._flush:
 			self._keyboard.flush()
-		self.set_sri()
-		self.process_response()
-
-	def var_info(self):
-
-		"""
-		Gives a list of dictionaries with variable descriptions.
-
-		Returns:
-		A list of (name, description) tuples.
-		"""
-
-		return item.item.var_info(self) + \
-			generic_response.generic_response.var_info(self)
+		base_response_item.run(self)

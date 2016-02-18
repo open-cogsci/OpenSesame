@@ -18,14 +18,9 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame.py3compat import *
-
-from libopensesame import item, exceptions, generic_response, widgets, plugins
+from libopensesame import plugins
 from libqtopensesame.items.qtautoplugin import qtautoplugin
 from openexp.canvas import canvas
-import openexp.keyboard
-import os.path
-from qtpy import QtWidgets, QtCore
-
 form_base = plugins.import_plugin(u'form_base')
 
 default_script = u"""
@@ -53,8 +48,9 @@ widget 0 3 1 1 button text=[accept_text] var=accept_status
 widget 1 3 1 1 button text=[decline_text]
 """
 
+
 class form_consent(form_base.form_base):
-	
+
 	initial_view = u'controls'
 
 	def __init__(self, name, experiment, string=None):
@@ -102,4 +98,3 @@ class qtform_consent(form_consent, qtautoplugin):
 
 		form_consent.__init__(self, name, experiment, script)
 		qtautoplugin.__init__(self, __file__)
-

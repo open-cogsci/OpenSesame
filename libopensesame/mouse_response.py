@@ -18,15 +18,48 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame.py3compat import *
+from libopensesame.base_response_item import base_response_item
+from openexp.mouse import mouse
 
-from libopensesame import item, generic_response
-import openexp.mouse
 
-class mouse_response(item.item, generic_response.generic_response):
+class mouse_response_mixin(object):
 
-	"""An item for collection keyboard responses"""
+	"""
+	desc:
+		A mixin class that should be inherited along with base_response_item
+		by all classes that want to collect mouse responses.
+	"""
+
+	def prepare_response_func(self):
+
+		"""See base_response_item."""
+
+		self._mouse = mouse(self.experiment, timeout=self._timeout,
+			buttonlist=self._allowed_responses)
+		return self._mouse.get_click
+
+	def process_response(self, response_args):
+
+		"""See base_response_item."""
+
+		response, pos, t1 = response_args
+		if pos is None:
+			self.experiment.var.cursor_x = u'NA'
+			self.experiment.var.cursor_y = u'NA'
+		else:
+			self.experiment.var.cursor_x, self.experiment.var.cursor_y = pos
+		base_response_item.process_response(self, (response, t1) )
+
+
+class mouse_response(mouse_response_mixin, base_response_item):
+
+	"""
+	desc:
+		An item for collecting mouse responses.
+	"""
 
 	description = u'Collects mouse responses'
+	process_feedback = True
 
 	def reset(self):
 
@@ -37,54 +70,55 @@ class mouse_response(item.item, generic_response.generic_response):
 		self.var.timeout = u'infinite'
 		self.var.duration = u'mouseclick'
 		self.var.unset(u'allowed_responses')
-		self.var.unset(u'correct_response')		
-		self.auto_response = 1
-		self.process_feedback = True
+		self.var.unset(u'correct_response')
+		self._resp_codes = {
+			None : u'timeout',
+			1 : u'left_button',
+			2 : u'middle_button',
+			3 : u'right_button',
+			4 : u'scroll_up',
+			5 : u'scroll_down'
+			}
 
-		self.resp_codes = {}
-		self.resp_codes[None] = u'timeout'
-		self.resp_codes[1] = u'left_button'
-		self.resp_codes[2] = u'middle_button'
-		self.resp_codes[3] = u'right_button'
-		self.resp_codes[4] = u'scroll_up'
-		self.resp_codes[5] = u'scroll_down'
+	def validate_response(self, response):
+
+		"""See base_response_item."""
+
+		return response in self._resp_codes \
+			or response in self._resp_codes.values()
+
+	def response_matches(self, test, ref):
+
+		"""See base_response_item."""
+
+		if test in self._resp_codes and self._resp_codes[test] == ref:
+			return True
+		return test == ref
 
 	def prepare(self):
 
-		"""Prepares the item."""
+		"""See item."""
 
-		item.item.prepare(self)
-		generic_response.generic_response.prepare(self)
+		base_response_item.prepare(self)
 		self._flush = self.var.flush == u'yes'
 
 	def run(self):
 
-		"""Runs the item."""
+		"""See item."""
 
-		# Record the onset of the current item
-		self.set_item_onset()
-		# Show cursor if necessary
-		if self.show_cursor == u'yes':
-			self._mouse.visible = True
-		# Flush responses, to make sure that earlier responses are not carried
-		# over.
 		if self._flush:
 			self._mouse.flush()
-		self.set_sri()
-		self.process_response()
+		# Show cursor if necessary
+		if self.var.show_cursor == u'yes':
+			self._mouse.visible = True
+		base_response_item.run(self)
 		self._mouse.visible = False
 
 	def var_info(self):
 
-		"""
-		Gives a list of dictionaries with variable descriptions.
+		"""See item."""
 
-		Returns:
-		A list of (name, description) tuples.
-		"""
-
-		l = item.item.var_info(self) + \
-			generic_response.generic_response.var_info(self)
+		l = base_response_item.var_info(self)
 		l.append( (u'cursor_x', u'[Depends on response]') )
 		l.append( (u'cursor_y', u'[Depends on response]') )
 		return l

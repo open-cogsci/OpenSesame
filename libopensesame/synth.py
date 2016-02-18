@@ -18,14 +18,18 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame.py3compat import *
-
 from libopensesame.exceptions import osexception
-from libopensesame import sampler, item, generic_response
-import openexp.synth
+from libopensesame.base_response_item import base_response_item
+from libopensesame.sampler import sampler
+from openexp.synth import synth as openexp_synth
 
-class synth(sampler.sampler, item.item):
 
-	"""Plays a synthesized sound"""
+class synth(sampler):
+
+	"""
+	desc:
+		An item for synthesized-sound playback.
+	"""
 
 	description = u'A basic sound synthesizer'
 
@@ -47,14 +51,13 @@ class synth(sampler.sampler, item.item):
 
 		"""Prepares for playback."""
 
-		item.item.prepare(self)
+		base_response_item.prepare(self)
 		try:
-			self.sampler = openexp.synth.synth(self.experiment,
-				osc=self.var.osc, freq=self.var.freq, length=self.var.length,
+			self.sampler = openexp_synth(self.experiment, osc=self.var.osc,
+				freq=self.var.freq, length=self.var.length,
 				attack=self.var.attack, decay=self.var.decay)
 		except Exception as e:
-			raise osexception(
-				u"Failed to generate sound in synth '%s': %s" % (self.name, e))
+			raise osexception(u'Failed to generate sound', exception=e)
 		pan = self.var.pan
 		if pan == -20:
 			pan = u'left'
@@ -62,4 +65,4 @@ class synth(sampler.sampler, item.item):
 			pan = u'right'
 		self.sampler.pan = pan
 		self.sampler.volume = self.var.volume
-		generic_response.generic_response.prepare(self)
+		self.sampler.block = self.var.duration == u'sound'

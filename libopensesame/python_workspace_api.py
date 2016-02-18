@@ -26,6 +26,7 @@ from libopensesame.py3compat import *
 from libopensesame.exceptions import osexception
 import random
 import math
+import warnings
 
 # Factory functions
 
@@ -194,34 +195,13 @@ def reset_feedback():
 def set_response(response=None, response_time=None, correct=None):
 
 	"""
-	desc:
-		Processes a response in such a way that feedback variables are updated
-		as well.
-
-	keywords:
-		response:
-			desc:	The response value.
-		response_time:
-			desc:	The response time, or `None`.
-			type:	[int, float, NoneType]
-		correct:
-			desc:	The correctness value, which should be 0, 1, `True`,
-					`False`, or `None`.
-			type:	[int, bool, NoneType]
-
-	example: |
-		my_keyboard = keyboard()
-		t1 = time()
-		button, timestamp = my_keyboard.get_key()
-		if button == 'left':
-			correct = 1
-		else:
-			correct = 0
-		rt = timestamp - t1
-		set_response(response=button, response_time=rt, correct=correct)
+	visible: False
 	"""
 
-	experiment.set_response(response=response, response_time=response_time,
+	warnings.warn(
+		u'set_response() has been deprecated. Use responses object instead.',
+		DeprecationWarning)
+	experiment.responses.add(response=response, response_time=response_time,
 		correct=correct)
 
 def set_subject_nr(nr):

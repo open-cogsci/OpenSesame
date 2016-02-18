@@ -18,25 +18,24 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame.py3compat import *
-import os
-from libopensesame.item import item
-from libopensesame.generic_response import generic_response
+from libopensesame.base_response_item import base_response_item
+from libopensesame.sketchpad import sketchpad
 from libqtopensesame.items.qtautoplugin import qtautoplugin
 from openexp.canvas import canvas
 
-class fixation_dot(item, generic_response):
+class fixation_dot(sketchpad):
 
-	"""A simple fixation-dot plug-in."""
+	"""
+	desc:
+		A simple fixation-dot plug-in.
+	"""
 
 	description = \
 		u'Presents a central fixation dot with a choice of various styles'
 
 	def reset(self):
 
-		"""
-		desc:
-			Initialize the plug-in.
-		"""
+		"""See item."""
 
 		self.var.style = u'default'
 		self.var.duration = 1000
@@ -46,65 +45,44 @@ class fixation_dot(item, generic_response):
 
 	def prepare(self):
 
-		"""
-		desc:
-			Prepare a canvas with a fixation dot.
-		"""
+		"""See item."""
 
-		# Call parent functions.
-		item.prepare(self)
-		generic_response.prepare(self)
+		base_response_item.prepare(self)
 		# Create a canvas.
-		self.c = canvas(self.experiment, background_color=self.var.background,
-			color=self.var.foreground, penwidth=self.var.penwidth)
-		self.c.color = self.var.foreground
-		self.c.background_color = self.var.background
+		self.canvas = canvas(self.experiment,
+			background_color=self.var.background, color=self.var.foreground,
+			penwidth=self.var.penwidth)
 		# Set the coordinates.
 		self._x = self.var.x
 		self._y = self.var.y
 		if self.var.uniform_coordinates != u'yes':
-			self._x += self.c.width/2
-			self._y += self.c.height/2
+			self._x += self.canvas.width/2
+			self._y += self.canvas.height/2
 		# For backwards compatibility, we support a few special fixdot styles
 		if self.var.style == u'filled':
-			self.c.ellipse(self._x - 10, self._y - 10, 20, 20, fill=True)
+			self.canvas.ellipse(self._x - 10, self._y - 10, 20, 20, fill=True)
 		elif self.var.style == u'filled-small':
-			self.c.ellipse(self._x - 5, self._y - 5, 10, 10, fill=True)
+			self.canvas.ellipse(self._x - 5, self._y - 5, 10, 10, fill=True)
 		elif self.var.style == u'empty':
-			self.c.ellipse(self._x - 10, self._y - 10, 20, 20, fill=False)
+			self.canvas.ellipse(self._x - 10, self._y - 10, 20, 20, fill=False)
 		elif self.var.style == u'empty-small':
-			self.c.ellipse(self._x - 5, self._y - 5, 10, 10, fill=False)
+			self.canvas.ellipse(self._x - 5, self._y - 5, 10, 10, fill=False)
 		elif self.var.style == u'cross':
-			self.c.line(self._x - 10, self._y, self._x + 10, self._y)
-			self.c.line(self._x, self._y - 10, self._x, self._y + 10)
+			self.canvas.line(self._x - 10, self._y, self._x + 10, self._y)
+			self.canvas.line(self._x, self._y - 10, self._x, self._y + 10)
 		elif self.var.style == u'cross-small':
-			self.c.line(self._x - 5, self._y, self._x + 5, self._y)
-			self.c.line(self._x, self._y - 5, self._x, self._y + 5)
+			self.canvas.line(self._x - 5, self._y, self._x + 5, self._y)
+			self.canvas.line(self._x, self._y - 5, self._x, self._y + 5)
 		# But the new way is to use the style keyword
 		else:
-			self.c.fixdot(self._x, self._y, style=self.var.style)
+			self.canvas.fixdot(self._x, self._y, style=self.var.style)
 
-	def run(self):
+	# We don't use the fancy sketchpad from and to string functions.
 
-		"""
-		desc:
-			Show the canvas and wait for a specified duration.
-		"""
-
-		self.set_item_onset(self.c.show())
-		self.set_sri()
-		self.process_response()
-
-	def var_info(self):
-
-		"""
-		Gives a list of dictionaries with variable descriptions.
-
-		Returns:
-		A list of (name, description) tuples.
-		"""
-
-		return item.var_info(self) + generic_response.var_info(self)
+	def from_string(self, string):
+		base_response_item.from_string(self, string)
+	def to_string(self):
+		return base_response_item.to_string(self)
 
 class qtfixation_dot(fixation_dot, qtautoplugin):
 

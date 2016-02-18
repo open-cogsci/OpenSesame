@@ -18,14 +18,8 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame.py3compat import *
-
-from libopensesame import item, exceptions, generic_response, widgets, plugins
+from libopensesame import plugins
 from libqtopensesame.items.qtautoplugin import qtautoplugin
-from openexp.canvas import canvas
-import openexp.keyboard
-import os.path
-from qtpy import QtWidgets, QtCore
-
 form_base = plugins.import_plugin(u'form_base')
 
 default_script = u"""
@@ -38,6 +32,7 @@ widget 0 0 1 1 label text=[form_title]
 widget 0 1 1 1 label text=[form_question] center=no
 widget 0 2 1 1 text_input return_accepts=yes focus=yes var=[form_var] stub=""
 """
+
 
 class form_text_input(form_base.form_base):
 

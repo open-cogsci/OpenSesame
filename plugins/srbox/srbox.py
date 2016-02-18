@@ -17,73 +17,73 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
-from libopensesame.exceptions import osexception
-from libopensesame import item, generic_response, debug
-from libqtopensesame.items.qtautoplugin import qtautoplugin
-import openexp.keyboard
-import imp
-import os
-import os.path
-from qtpy import QtWidgets, QtCore
-import libsrbox
 from libopensesame.py3compat import *
+from libopensesame import debug
+from libopensesame.base_response_item import base_response_item
+from libqtopensesame.items.qtautoplugin import qtautoplugin
+from openexp.keyboard import keyboard
+import libsrbox
 
-class srbox(item.item, generic_response.generic_response):
+
+class srbox(base_response_item):
 
 	"""
 	desc:
 		A plug-in for using the serial response box.
 	"""
 
+	process_feedback = True
+
 	def reset(self):
 
-		"""
-		desc:
-			Reset item and experimental variables.
-		"""
+		"""See item."""
 
 		self.var.timeout = u'infinite'
 		self.var.lights = u''
 		self.var.dev = u'autodetect'
 		self.var._dummy = u'no'
 		self.var.require_state_change = u'no'
-		self.process_feedback = True
 
-	def prepare(self):
+	def validate_response(self, response):
+
+		"""See base_response_item."""
+
+		try:
+			response = int(response)
+		except:
+			return False
+		return response >= 0 or response <= 255
+
+	def process_response(self, response_args):
+
+		"""See base_response_item."""
+
+		response, t1 = response_args
+		if isinstance(response, list):
+			response = response[0]
+		base_response_item.process_response(self, (response, t1) )
+
+	def _get_button_press(self):
 
 		"""
 		desc:
-			Prepare the item.
+			Calls srbox.get_button_press() with the correct arguments.
 		"""
 
-		item.item.prepare(self)
-		self.prepare_timeout()
-		self._require_state_change = self.require_state_change == u'yes'
-		# Prepare the allowed responses
-		self._allowed_responses = None
-		if u'allowed_responses' in self.var:
-			self._allowed_responses = []
-			for r in safe_decode(self.var.allowed_responses).split(u';'):
-				if r.strip() != u'':
-					try:
-						r = int(r)
-					except:
-						raise osexception(
-							u"'%s' is not a valid response in srbox '%s'. Expecting a number in the range 0 .. 5." \
-							% (r, self.name))
-					if r < 0 or r > 255:
-						raise osexception(
-							u"'%s' is not a valid response in srbox '%s'. Expecting a number in the range 0 .. 5." \
-							% (r, self.name))
-					self._allowed_responses.append(r)
-			if not self._allowed_responses:
-				self._allowed_responses = None
-		debug.msg(u"allowed responses set to %s" % self._allowed_responses)
-		# Prepare keyboard for dummy-mode and flushing
-		self._keyboard = openexp.keyboard.keyboard(self.experiment)
+		return self.experiment.srbox.get_button_press(
+			allowed_buttons=self._allowed_responses,
+			timeout=self._timeout,
+			require_state_change=self._require_state_change
+			)
+
+	def prepare_response_func(self):
+
+		"""See base_response_item."""
+
+		self._keyboard = keyboard(self.experiment,
+			keylist=self._allowed_responses, timeout=self._timeout)
 		if self.var._dummy == u'yes':
-			self._resp_func = self._keyboard.get_key
-			return
+			return self._keyboard.get_key
 		# Prepare the device string
 		dev = self.var.dev
 		if dev == u"autodetect":
@@ -102,48 +102,19 @@ class srbox(item.item, generic_response.generic_response):
 				s += "0"
 		self._lights = chr(int(s, 2))
 		debug.msg(u"lights string set to %s (%s)" % (s, self.var.lights))
-		# Prepare auto response
-		if self.experiment.auto_response:
-			self._resp_func = self.auto_responder
-		else:
-			self._resp_func = self.experiment.srbox.get_button_press
+		if self._allowed_responses is not None:
+			self._allowed_responses = [int(r) for r in self._allowed_responses]
+		self._require_state_change = self.var.require_state_change == u'yes'
+		return self._get_button_press
 
 	def run(self):
 
-		"""
-		desc:
-			Runs the item.
-		"""
+		"""See item."""
 
-		self.set_item_onset()
 		self._keyboard.flush()
-		self.set_sri(reset=True)
-		if self.var._dummy == 'yes':
-			# In dummy mode, we simply take the numeric keys from the keyboard
-			if self._allowed_responses is None:
-				self._allowed_responses = list(range(0,10))
-			resp, self.experiment.end_response_interval = self._resp_func(
-				keylist=self._allowed_responses, timeout=self._timeout)
-			if resp is not None:
-				resp = int(resp)
-		else:
-			# Get the response
-			try:
-				self.experiment.srbox.send(self._lights)
-				self.experiment.srbox.start()
-				resp, self.experiment.end_response_interval = \
-					self._resp_func(allowed_buttons=self._allowed_responses,
-						timeout=self._timeout,
-						require_state_change=self._require_state_change)
-				self.experiment.srbox.stop()
-			except Exception as e:
-				raise osexception(
-					"An error occured in srbox '%s': %s." % (self.name, e))
-			if isinstance(resp, list):
-				resp = resp[0]
-		debug.msg("received %s" % resp)
-		self.experiment.var.response = resp
-		generic_response.generic_response.response_bookkeeping(self)
+		self.experiment.srbox.start()
+		base_response_item.run(self)
+		self.experiment.srbox.stop()
 
 	def close(self):
 
@@ -163,15 +134,6 @@ class srbox(item.item, generic_response.generic_response):
 		except:
 			debug.msg("failed to close srbox")
 
-	def var_info(self):
-
-		"""
-		returns:
-			A list of (name, description) tuples with variable descriptions.
-		"""
-
-		return item.item.var_info(self) + \
-			generic_response.generic_response.var_info(self)
 
 class qtsrbox(srbox, qtautoplugin):
 

@@ -18,14 +18,10 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame.py3compat import *
-
 from libopensesame.exceptions import osexception
-from libopensesame import item, generic_response, widgets, plugins
+from libopensesame import item, widgets
 from libqtopensesame.items.qtautoplugin import qtautoplugin
-from openexp.canvas import canvas
-import openexp.keyboard
-import os.path
-from qtpy import QtWidgets, QtCore
+
 
 class form_multiple_choice(item.item):
 

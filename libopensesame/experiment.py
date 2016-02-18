@@ -19,6 +19,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 
 from libopensesame.var_store import var_store
 from libopensesame.item_store import item_store
+from libopensesame.response_store import response_store
 from libopensesame.file_pool_store import file_pool_store
 from libopensesame.python_workspace import python_workspace
 from libopensesame.syntax import syntax
@@ -98,6 +99,7 @@ class experiment(item.item):
 
 		self.var = var_store(self)
 		self.pool = file_pool_store(self, folder=pool_folder)
+		self._responses = response_store(self)
 		# The _syntax and items objects may already have been created by
 		# libqtopensesame.experiment.
 		if not hasattr(self, u'_syntax'):
@@ -656,13 +658,7 @@ class experiment(item.item):
 
 		"""Resets the feedback variables (acc, avg_rt, etc.)."""
 
-		self.var.total_responses = 0
-		self.var.total_correct = 0
-		self.var.total_response_time = 0
-		self.var.avg_rt = u"undefined"
-		self.var.average_response_time = u"undefined"
-		self.var.accuracy = u"undefined"
-		self.var.acc = u"undefined"
+		self.responses.reset_feedback()
 
 	def var_info(self):
 

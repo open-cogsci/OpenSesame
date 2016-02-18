@@ -19,12 +19,20 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 
 from libopensesame.py3compat import *
 from libopensesame.exceptions import osexception
-from libopensesame import item, generic_response, debug
-import openexp.sampler
+from openexp.sampler import sampler as openexp_sampler
+from libopensesame.item import item
+from libopensesame.base_response_item import base_response_item
+from libopensesame.keyboard_response import keyboard_response_mixin
+from libopensesame.mouse_response import mouse_response_mixin
 
-class sampler(item.item, generic_response.generic_response):
 
-	"""Sound playback item"""
+class sampler(base_response_item, keyboard_response_mixin,
+	mouse_response_mixin):
+
+	"""
+	desc:
+		An item for sound-file playback.
+	"""
 
 	description = u'Plays a sound file in .wav or .ogg format'
 
@@ -41,31 +49,43 @@ class sampler(item.item, generic_response.generic_response):
 		self.var.duration = u'sound'
 		self.block = False
 
-	def prepare_duration_sound(self):
+	def process_response(self, response_args):
 
-		"""Sets the duration function for 'sound' duration."""
+		"""See base_response_item."""
 
-		self.block = True
-		self._duration_func = self.dummy
+		if self.var.duration == u'mouseclick':
+			mouse_response_mixin.process_response(self, response_args)
+			return
+		base_response_item.process_response(self, response_args)
+
+	def prepare_response_func(self):
+
+		"""See base_response_item."""
+
+		if isinstance(self.var.duration, (int, float)):
+			return self._prepare_sleep_func(self.var.duration)
+		if self.var.duration == u'keypress':
+			return keyboard_response_mixin.prepare_response_func(self)
+		if self.var.duration == u'mouseclick':
+			return mouse_response_mixin.prepare_response_func(self)
+		if self.var.duration == u'sound':
+			return lambda: None
+		raise osexception(u'Invalid duration: %s' % self.var.duration)
 
 	def prepare(self):
 
-		"""Prepares for playback."""
+		"""See item."""
 
-		item.item.prepare(self)
+		base_response_item.prepare(self)
 		if safe_decode(self.var.sample).strip() == u'':
 			raise osexception(
 				u'No sample has been specified in sampler "%s"' % self.name)
-		sample = self.experiment.get_file(self.var.sample)
-		if debug.enabled:
-			self.sampler = openexp.sampler.sampler(self.experiment, sample)
-		else:
-			try:
-				self.sampler = openexp.sampler.sampler(self.experiment, sample)
-			except Exception as e:
-				raise osexception(
-					u'Failed to load sample in sampler "%s": %s' % (self.name, \
-					e))
+		sample = self.experiment.pool[self.var.sample]
+		try:
+			self.sampler = openexp_sampler(self.experiment, sample)
+		except Exception as e:
+			raise osexception(u'Failed to load sample: %s' % sample,
+				exception=e)
 		pan = self.var.pan
 		if pan == -20:
 			pan = u'left'
@@ -76,26 +96,21 @@ class sampler(item.item, generic_response.generic_response):
 		self.sampler.pitch = self.var.pitch
 		self.sampler.fade_in = self.var.fade_in
 		self.sampler.duration = self.var.stop_after
-		self.sampler.block = self.block
-		generic_response.generic_response.prepare(self)
+		self.sampler.block = self.var.duration == u'sound'
 
 	def run(self):
 
-		"""Plays the sample."""
+		"""See item."""
 
-		self.set_item_onset()
-		self.set_sri()
+		self._t0 = self.set_item_onset()
 		self.sampler.play()
-		self.process_response()
+		base_response_item.run(self)
 
 	def var_info(self):
 
-		"""
-		Give a list of dictionaries with variable descriptions
+		"""See item."""
 
-		Returns:
-		A list of (name, description) tuples
-		"""
-
-		return item.item.var_info(self) + \
-			generic_response.generic_response.var_info(self)
+		if self.var.get(u'duration', _eval=False, default=u'') in \
+			[u'keypress', u'mouseclick']:
+			return base_response_item.var_info(self)
+		return item.var_info(self)
