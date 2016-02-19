@@ -79,3 +79,20 @@ class keyboard_response(keyboard_response_mixin, base_response_item):
 		if self._flush:
 			self._keyboard.flush()
 		base_response_item.run(self)
+
+	def coroutine(self):
+
+		"""See coroutines plug-in."""
+
+		self._keyboard.timeout = 0
+		alive = True
+		yield
+		self._t0 = self.set_item_onset()
+		if self._flush:
+			self._keyboard.flush()
+		while alive:
+			key, time = self._keyboard.get_key()
+			if key is not None:
+				break
+			alive = yield
+		self.process_response((key, time))

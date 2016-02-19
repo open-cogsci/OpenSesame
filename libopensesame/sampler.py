@@ -35,6 +35,7 @@ class sampler(base_response_item, keyboard_response_mixin,
 	"""
 
 	description = u'Plays a sound file in .wav or .ogg format'
+	is_oneshot_coroutine = True
 
 	def reset(self):
 
@@ -105,6 +106,15 @@ class sampler(base_response_item, keyboard_response_mixin,
 		self._t0 = self.set_item_onset()
 		self.sampler.play()
 		base_response_item.run(self)
+
+	def coroutine(self):
+
+		"""See coroutines plug-in."""
+
+		self.sampler.block = False
+		yield
+		self.set_item_onset()
+		self.sampler.play()
 
 	def var_info(self):
 

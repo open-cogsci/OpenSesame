@@ -259,6 +259,7 @@ class loop(item.item):
 
 		"""See item."""
 
+		item.item.prepare(self)
 		# Deprecation errors
 		if (self.var.has(u'skip') and self.var.skip != 0) \
 			or (self.var.has(u'offset') and self.var.offset != u'no'):

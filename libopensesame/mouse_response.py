@@ -114,6 +114,23 @@ class mouse_response(mouse_response_mixin, base_response_item):
 		base_response_item.run(self)
 		self._mouse.visible = False
 
+	def coroutine(self):
+
+		"""See coroutines plug-in."""
+
+		self._mouse.timeout = 0
+		alive = True
+		yield
+		self._t0 = self.set_item_onset()
+		if self._flush:
+			self._mouse.flush()
+		while alive:
+			button, pos, time = self._mouse.get_click()
+			if button is not None:
+				break
+			alive = yield
+		self.process_response((button, pos, time))
+
 	def var_info(self):
 
 		"""See item."""
