@@ -30,12 +30,38 @@ class mouse_response_mixin(object):
 		by all classes that want to collect mouse responses.
 	"""
 
+	_resp_codes = {
+		u'none' : None,
+		u'timeout' : None,
+		u'left_button' : 1,
+		u'middle_button' : 2,
+		u'right_button' : 3,
+		u'left' : 1,
+		u'middle' : 2,
+		u'right' : 3,
+		u'scroll_up' : 4,
+		u'scroll_down': 5
+		}
+
+	def button_code(self, response):
+
+		if response is None or isinstance(response, int):
+			return response
+		try:
+			return int(response)
+		except:
+			return self._resp_codes[response.lower()]
+
 	def prepare_response_func(self):
 
 		"""See base_response_item."""
 
+		if self._allowed_responses is None:
+			buttonlist = None
+		else:
+			buttonlist = [self.button_code(r) for r in self._allowed_responses]
 		self._mouse = mouse(self.experiment, timeout=self._timeout,
-			buttonlist=self._allowed_responses)
+			buttonlist=buttonlist)
 		return self._mouse.get_click
 
 	def process_response(self, response_args):
@@ -71,29 +97,22 @@ class mouse_response(mouse_response_mixin, base_response_item):
 		self.var.duration = u'mouseclick'
 		self.var.unset(u'allowed_responses')
 		self.var.unset(u'correct_response')
-		self._resp_codes = {
-			None : u'timeout',
-			1 : u'left_button',
-			2 : u'middle_button',
-			3 : u'right_button',
-			4 : u'scroll_up',
-			5 : u'scroll_down'
-			}
 
 	def validate_response(self, response):
 
 		"""See base_response_item."""
 
-		return response in self._resp_codes \
-			or response in self._resp_codes.values()
+		try:
+			self.button_code(response)
+		except:
+			return False
+		return True
 
 	def response_matches(self, test, ref):
 
 		"""See base_response_item."""
 
-		if test in self._resp_codes and self._resp_codes[test] == ref:
-			return True
-		return test == ref
+		return self.button_code(test) == self.button_code(ref)
 
 	def prepare(self):
 
