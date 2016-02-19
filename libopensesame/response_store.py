@@ -21,7 +21,7 @@ from libopensesame.py3compat import *
 from libopensesame.exceptions import osexception
 
 
-class response(object):
+class response_info(object):
 
 	"""
 	desc:
@@ -75,7 +75,49 @@ class response(object):
 
 class response_store(object):
 
+	"""
+	desc:
+		The `responses` object contains the history of the responses that were
+		collected during the experiment.
+
+		In addition to the functions listed below, the following semantics are
+		supported:
+
+		__Example__:
+
+		~~~ .python
+		# Loop through all responses, where last-given responses come first
+		# Each response has correct, response, response_time, item, and feedback
+		# attributes.
+		for response in responses:
+			print(response.correct)
+		# Print the two last-given respones
+		print('last_two responses:')
+		print(responses[:2])
+		~~~
+
+		__Function list:__
+
+		%--
+		toc:
+			mindepth: 2
+			maxdepth: 2
+		--%
+	"""
+
 	def __init__(self, experiment):
+
+		"""
+		visible: False
+
+		desc:
+			Constructor.
+
+		arguments:
+			experiment:
+				desc:	The experiment object.
+				type:	experiment.
+		"""
 
 		self._experiment = experiment
 		self._responses = []
@@ -84,7 +126,16 @@ class response_store(object):
 	@property
 	def acc(self):
 
-		l = self.select(feedback=True).selectnot(correct=None).correct
+		"""
+		name: acc
+
+		desc:
+			The percentage correct responses for all responses that are included
+			in feedback. If there are no responses to give feedback on,
+			'undefined' is returned.
+		"""
+
+		l = self._select(feedback=True)._selectnot(correct=None).correct
 		if not l:
 			return u'undefined'
 		return 100.*sum(l)/len(l)
@@ -92,7 +143,16 @@ class response_store(object):
 	@property
 	def avg_rt(self):
 
-		l = self.select(feedback=True).selectnot(response_time=None) \
+		"""
+		name: acc
+
+		desc:
+			The average response time for all responses that are included
+			in feedback. If there are no responses to give feedback on,
+			'undefined' is returned.
+		"""
+
+		l = self._select(feedback=True)._selectnot(response_time=None) \
 			.response_time
 		if not l:
 			return u'undefined'
@@ -101,25 +161,63 @@ class response_store(object):
 	@property
 	def response(self):
 
+		"""
+		name: response
+
+		desc:
+			A list of all response values. (I.e. not response objects, but
+			actual response keys, buttons, etc.)
+		"""
+
 		return [r.response for r in self._responses]
 
 	@property
 	def correct(self):
+
+		"""
+		name: correct
+
+		desc:
+			A list of all correct (0, 1, or None) values.
+		"""
 
 		return [r.correct for r in self._responses]
 
 	@property
 	def response_time(self):
 
+		"""
+		name: correct
+
+		desc:
+			A list of all response times (float or None).
+		"""
+
 		return [r.response_time for r in self._responses]
 
 	@property
 	def item(self):
 
+		"""
+		name: item
+
+		desc:
+			A list of all item names (str or None) associated with each
+			response.
+		"""
+
 		return [r.item for r in self._responses]
 
 	@property
 	def feedback(self):
+
+		"""
+		name: item
+
+		desc:
+			A list of the feedback status (True or False) associated with each
+			response.
+		"""
 
 		return [r.item for r in self._responses]
 
@@ -128,42 +226,87 @@ class response_store(object):
 
 		return self._experiment.var
 
-	def add(self, **kwdict):
+	def add(self, response=None, correct=None, response_time=None, item=None,
+		feedback=True):
 
-		if u'response' not in kwdict or u'response_time' not in kwdict \
-			or u'correct' not in kwdict:
-			raise osexception(
-				u'response, response_time, and correct are required keywords')
-		r = response(self, **kwdict)
-		if r.correct is None:
+		"""
+		desc:
+			Adds a response.
+
+		keywords:
+			response:
+				desc:	The response value, for example, 'space' for the
+						spacebar, 0 for joystick button 0, etc.
+			correct:
+				desc:	The correctness of the response.
+				type:	[bool, int, None]
+			response_time:
+				desc:	The response_time.
+				type:	[float, int, None]
+			item:
+				desc:	The item that collected the response.
+				type:	[str, None]
+			feedback:
+				desc:	Indicates whether the response should be included in
+						feedback on accuracy and average response time.
+				type:	bool
+
+		example: |
+			responses.add(response_time=500, correct=1, response='left')
+		"""
+
+		r = response_info(self, response=response, correct=correct,
+			response_time=response_time, item=item, feedback=feedback)
+		if correct is None:
 			correct = u'undefined'
 		else:
 			correct = r.correct
-		self._responses.append(r)
+		self._responses.insert(0, r)
 		self.var.response = r.response
 		self.var.response_time = r.response_time
 		self.var.correct = correct
-		if u'item' in kwdict:
-			self.var.set(u'response_%s' % kwdict[u'item'], r.response)
-			self.var.set(u'response_time_%s' % kwdict[u'item'], r.response_time)
-			self.var.set(u'correct_%s' % kwdict[u'item'], correct)
+		if item is not None:
+			self.var.set(u'response_%s' % item, r.response)
+			self.var.set(u'response_time_%s' % item, r.response_time)
+			self.var.set(u'correct_%s' % item, correct)
 		self.var.acc = self.var.accuracy = self.acc
 		self.var.avg_rt = self.avg_rt
 		# Old variables, mostly for backwards compatibility
-		rs = self.select(feedback=True)
+		rs = self._select(feedback=True)
 		self.var.accuracy = self.var.acc
 		self.var.average_response_time = self.var.avg_rt
 		self.var.total_response_time = sum(
-			rs.selectnot(response_time=None).response_time)
+			rs._selectnot(response_time=None).response_time)
 		self.var.total_responses = len(rs)
-		self.var.total_correct = len(rs.select(correct=1))
+		self.var.total_correct = len(rs._select(correct=1))
+
+	def clear(self):
+
+		"""
+		desc:
+			Clears all responses.
+
+		example: |
+			responses.clear()
+		"""
+
+		self._responses = []
 
 	def reset_feedback(self):
+
+		"""
+		desc:
+			Sets the feedback status of all responses to False, so that only
+			new responses will be included in feedback.
+
+		example: |
+			responses.reset_feedback()
+		"""
 
 		for r in self._responses:
 			r.feedback = False
 
-	def select(self, **kwdict):
+	def _select(self, **kwdict):
 
 		rs = response_store(self._experiment)
 		for r in self._responses:
@@ -171,7 +314,7 @@ class response_store(object):
 				rs._responses.append(r)
 		return rs
 
-	def selectnot(self, **kwdict):
+	def _selectnot(self, **kwdict):
 
 		rs = response_store(self._experiment)
 		for r in self._responses:
@@ -185,11 +328,18 @@ class response_store(object):
 
 	def __getitem__(self, key):
 
-		return self._responses[key]
+		rs = response_store(self._experiment)
+		rs._responses = self._responses[key]
+		return rs
 
 	def __str__(self):
 
-		s = u'%d responses (last first):\n' % len(self)
-		for r in self[::-1]:
-			s += str(r) + u'\n'
+		s = u'%d responses (last response is shown first):\n' % len(self)
+		for i, r in enumerate(self):
+			s += '%d: %s\n' % (i, r)
 		return s
+
+	def __iter__(self):
+
+		for r in self._responses:
+			yield r

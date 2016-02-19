@@ -21,23 +21,81 @@ from libopensesame.py3compat import *
 from libopensesame.item import item
 from libopensesame.exceptions import osexception
 
+
 class base_response_item(item):
 
+	"""
+	desc:
+		The base class for items that collect responses, such as
+		keyboard_response, mouse_response, joystick, etc.
+	"""
+
+	# Override as True for objects that should be included in feedback
 	process_feedback = False
 
 	def prepare_response_func(self):
+
+		"""
+		desc:
+			Should return a function that, when called, returns a
+			(response, timestamp) tuple. This function needs to be implemented
+			in every response item.
+
+		returns:
+			type:	FunctionType
+		"""
 
 		raise NotImplementedError()
 
 	def validate_response(self, response):
 
+		"""
+		desc:
+			Optionally checks whether a response is valid for this item. This
+			can be used to check whether the list of allowed responses is
+			valid.
+
+		arguments:
+			response:	The response to check.
+
+		returns:
+			desc:	True if response is valid, False otherwise.
+			type:	bool
+		"""
+
 		return True
 
 	def response_matches(self, test, ref):
 
+		"""
+		desc:
+			Checks whether two responses are the same. This can be
+			re-implemented to take synonyms into account.
+
+		arguments:
+			test:	The first response.
+			ref:	The second response.
+
+		returns:
+			desc:	True if the responses match, False otherwise.
+			type:	bool
+		"""
+
 		return test == ref
 
 	def process_response(self, response_args):
+
+		"""
+		desc:
+			Processes a collected responses, so that it is added to the
+			response_store, etc.
+
+		arguments:
+			response_args:
+				desc:	The return value of the function created by
+						prepare_response_func().
+				type:	tuple
+		"""
 
 		response, t1 = response_args
 		if u'correct_response' in self.var:
@@ -49,12 +107,16 @@ class base_response_item(item):
 
 	def prepare(self):
 
+		"""See item."""
+
 		self._timeout = self._prepare_timeout()
 		self._allowed_responses = self._prepare_allowed_responses()
 		self._collect_response = self.prepare_response_func()
 		self._t0 = None
 
 	def run(self):
+
+		"""See item."""
 
 		if self._t0 is None:
 			self._t0 = self.set_item_onset()
@@ -64,6 +126,8 @@ class base_response_item(item):
 		self.process_response(retval)
 
 	def var_info(self):
+
+		"""See item."""
 
 		l = []
 		l.append( (u"response", u"[Depends on response]") )
@@ -83,6 +147,15 @@ class base_response_item(item):
 
 	def _prepare_timeout(self):
 
+		"""
+		desc:
+			Processes the timeout variable, and checks whether it is valid.
+
+		returns:
+			desc:	A timeout value.
+			type:	float
+		"""
+
 		timeout = self.var.get(u'timeout', default=u'infinite')
 		if timeout == u'infinite':
 			return
@@ -96,6 +169,16 @@ class base_response_item(item):
 		return timeout
 
 	def _prepare_allowed_responses(self):
+
+		"""
+		desc:
+			Processes the allowed_responses variable, and checks whether it is
+			valid.
+
+		returns:
+			desc:	A list of allowed responses.
+			type:	list
+		"""
 
 		allowed_responses = safe_decode(
 			self.var.get(u'allowed_responses', default=u''))
@@ -116,6 +199,20 @@ class base_response_item(item):
 		return allowed_responses
 
 	def _prepare_sleep_func(self, duration):
+
+		"""
+		desc:
+			Creates a function that sleeps for a specific duration.
+
+		arguments:
+			duration:
+				desc:	The duration to sleep for.
+				type:	[int, float]
+
+		returns:
+			desc:	A sleep function with a fixed duration.
+			type:	FunctionType
+		"""
 
 		if duration == 0:
 			return lambda: None
