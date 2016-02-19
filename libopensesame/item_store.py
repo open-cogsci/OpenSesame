@@ -150,7 +150,7 @@ class item_store(object):
 			desc:	The newly generated item.
 			type:	item
 
-		examples: |
+		example: |
 			items.new(u'sketchpad', name=u'my_sketchpad')
 			items[u'my_sketchpad'].prepare()
 			items[u'my_sketchpad'].run()
