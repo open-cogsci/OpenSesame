@@ -128,7 +128,7 @@ class loop(qtstructure_item, qtitem, loop_runtime):
 
 		self.var.source = self.loop_widget.ui.combobox_source.currentText()
 		self._update_source()
-		self._update_script()
+		self.update_script()
 
 	def _update_source(self):
 
