@@ -75,7 +75,7 @@ class markdown_parser(base_subcomponent):
 		self.ext = [attr_list.AttrListExtension(), extra.ExtraExtension()]
 		self.footer = u'''
 <p>
-<a class="red-button" href="opensesame://action.close_current_tab">%s</a>
+<a class="dismiss-button" href="opensesame://action.close_current_tab">%s</a>
 </p>
 
 <div class="footer">

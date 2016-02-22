@@ -15,7 +15,7 @@ Commencer avec une nouvelle expérience :<br />
 
 Avez-vous pensé à faire un don à OpenSesame ? C'est facile et rapide.
 
-[Faire un don par PayPal](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=QEWKSAY4WMKRW){: .green-button}
+[Faire un don par PayPal](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=QEWKSAY4WMKRW){: .important-button}
 
 Ou en savoir plus :
 

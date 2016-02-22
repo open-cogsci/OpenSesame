@@ -15,7 +15,7 @@ Start a new experiment:<br />
 
 Have you considered supporting OpenSesame? It's easy and quick.
 
-[Donate through PayPal](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=QEWKSAY4WMKRW){: .green-button}
+[Donate through PayPal](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=QEWKSAY4WMKRW){: .important-button}
 
 Or learn more:
 

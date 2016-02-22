@@ -4,7 +4,7 @@ It looks like you're new to OpenSesame 3.
 
 If you've never used OpenSesame before, I recommend that you follow the beginner tutorial. This will take a bit of time now, but will save lots of time later.
 
-[Step-by-step tutorial](new:http://osdoc.cogsci.nl/tutorials/step-by-step-tutorial/){: .green-button}
+[Step-by-step tutorial](new:http://osdoc.cogsci.nl/tutorials/step-by-step-tutorial/){: .important-button}
 
 If you've used OpenSesame 2 before, I recommend that you take a look at what's new in version 3. Don't worry: Your old experiments still work, and things have only got easier!
 
@@ -16,4 +16,4 @@ And remember, you can always ask questions on the support forum:
 
 Or you can:
 
-[Dismiss this message forever](opensesame://event.os3n_dismiss_startup){: .red-button}
+[Dismiss this message forever](opensesame://event.os3n_dismiss_startup){: .dismiss-button}

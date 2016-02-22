@@ -42,8 +42,8 @@ h2 {
 	word-wrap: break-word;
 }
 
-.green-button,
-.red-button,
+.important-button,
+.dismiss-button,
 .button {
 	display: inline-block;
 	color: #2e3436;
@@ -53,8 +53,8 @@ h2 {
 	border-radius: 4px;
 }
 
-.red-button:hover,
-.green-button:hover,
+.dismiss-button:hover,
+.important-button:hover,
 .button:hover {
 	color: #2e3436;
 }
@@ -68,26 +68,26 @@ h2 {
 	background-color: #d3d7cf;
 }
 
-.red-button {
-	border: solid 1px #cc0000;
-	color: #ffffff;
-	background-color: #ef2929;
-}
-
-.red-button:hover {
-	color: #ffffff;
-	background-color: #cc0000;
-}
-
-.green-button {
-	border: solid 1px #4e9a06;
-	background-color: #73d216;
-	color: #ffffff;
-}
-
-.green-button:hover {
+.dismiss-button {
+	border: solid 1px #3a7404;
 	color: #ffffff;
 	background-color: #4e9a06;
+}
+
+.dismiss-button:hover {
+	color: #ffffff;
+	background-color: #3a7404;
+}
+
+.important-button {
+	border: solid 1px #204a87;
+	background-color: #3465a4;
+	color: #ffffff;
+}
+
+.important-button:hover {
+	color: #ffffff;
+	background-color: #204a87;
 }
 
 .footer {

@@ -6,9 +6,9 @@ Don't worry! This shouldn't cause any problems. But, just to be safe, I recommen
 
 What do you want to do?
 
-[Save experiment now](opensesame://action.save){: .green-button} <br />
+[Save experiment now](opensesame://action.save){: .important-button} <br />
 [See what's new in OpenSesame 3](new:html://osdoc.cogsci.nl/3.0/miscellaneous/important-changes-3/){: .button} <br />
 
 Or you can:
 
-[Dismiss this message forever](opensesame://event.os3n_dismiss_old_experiment){: .red-button}
+[Dismiss this message forever](opensesame://event.os3n_dismiss_old_experiment){: .dismiss-button}

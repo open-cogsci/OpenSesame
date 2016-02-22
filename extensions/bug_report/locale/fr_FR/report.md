@@ -2,7 +2,7 @@
 
 Une erreur inattendue s'est produit. Voulez-vous envoyer un rapport de bogue ? Ceci est automatique, et aide à prévenir des problèmes similaires dans l'avenir.
 
-[Envoyer le rapport de bogue](opensesame://event.bug_report_send){: .green-button}
+[Envoyer le rapport de bogue](opensesame://event.bug_report_send){: .important-button}
 
 Privacy :
 

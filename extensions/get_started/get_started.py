@@ -50,7 +50,7 @@ class get_started(base_extension):
 			except:
 				continue
 			if not i:
-				cls = u'green-button'
+				cls = u'important-button'
 			else:
 				cls = u'button'
 			md = u'<a href="opensesame://%s" class="%s">%s</a><br />' \
@@ -64,7 +64,7 @@ class get_started(base_extension):
 			recent = [_(u'Continue with a recent experiment:')+u'<br />']
 			for i, path in enumerate(self.main_window.recent_files):
 				if not i:
-					cls = u'green-button'
+					cls = u'important-button'
 				else:
 					cls = u'button'
 				md = u'<a href="opensesame://event.open_recent_%d" class="%s">%s</a><br />' % \
