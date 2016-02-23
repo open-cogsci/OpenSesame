@@ -28,5 +28,5 @@ from libqtopensesame.sketchpad_elements._line import line
 from libqtopensesame.sketchpad_elements._noise import noise
 from libqtopensesame.sketchpad_elements._textline import textline
 from libqtopensesame.sketchpad_elements._rect import rect
-elements = [textline, fixdot, line, arrow, rect, circle, ellipse, image, gabor,
+elements = [textline, image, fixdot, line, arrow, rect, circle, ellipse, gabor,
 	noise]
