@@ -29,8 +29,7 @@ class loop(item.item):
 	"""A loop item runs a single other item multiple times"""
 
 	description = u'Repeatedly runs another item'
-	valid_orders = u'sequential', u'random', u'advanced'
-
+	valid_orders = u'sequential', u'random'
 	commands = [
 		u'fullfactorial',
 		u'shuffle',
@@ -204,54 +203,51 @@ class loop(item.item):
 				dm <<= operations.shuffle(src_dm)[:i]
 			else:
 				dm <<= src_dm[:i]
-		if self.var.order == u'sequential':
-			return dm
 		if self.var.order == u'random':
 			return operations.shuffle(dm)
-		if self.var.order == u'advanced':
-			if self.ef is not None:
-				self.ef.dm = src_dm
-				dm = self.ef.enforce()
-			for cmd, arglist in self.operations:
-				# The column name is always specified last, or not at all
-				if arglist:
-					try:
-						colname = arglist[-1]
-						col = dm[colname]
-					except:
-						raise osexception(
-							u'Column %s does not exist' % arglist[-1])
-				if cmd == u'fullfactorial':
-					dm = operations.fullfactorial(dm)
-				elif cmd == u'shuffle':
-					if not arglist:
-						dm = operations.shuffle(dm)
-					else:
-						dm[colname] = operations.shuffle(col)
-				elif cmd == u'slice':
-					self._require_arglist(cmd, arglist, minlen=2)
-					dm = dm[arglist[0]: arglist[1]]
-				elif cmd == u'sort':
-					self._require_arglist(cmd, arglist)
-					dm[colname] = operations.sort(col)
-				elif cmd == u'sortby':
-					self._require_arglist(cmd, arglist)
-					dm = operations.sort(dm, by=col)
-				elif cmd == u'reverse':
-					if not arglist:
-						dm = dm[::-1]
-					else:
-						dm[colname] = col[::-1]
-				elif cmd == u'roll':
-					self._require_arglist(cmd, arglist)
-					steps = arglist[0]
-					if not arglist:
-						dm = dm[-steps:] << dm[:-steps]
-					else:
-						dm[colname] = list(col[-steps:]) + list(col[:-steps])
-				elif cmd == u'weight':
-					self._require_arglist(cmd, arglist)
-					dm = operations.weight(col)
+		if self.ef is not None:
+			self.ef.dm = src_dm
+			dm = self.ef.enforce()
+		for cmd, arglist in self.operations:
+			# The column name is always specified last, or not at all
+			if arglist:
+				try:
+					colname = arglist[-1]
+					col = dm[colname]
+				except:
+					raise osexception(
+						u'Column %s does not exist' % arglist[-1])
+			if cmd == u'fullfactorial':
+				dm = operations.fullfactorial(dm)
+			elif cmd == u'shuffle':
+				if not arglist:
+					dm = operations.shuffle(dm)
+				else:
+					dm[colname] = operations.shuffle(col)
+			elif cmd == u'slice':
+				self._require_arglist(cmd, arglist, minlen=2)
+				dm = dm[arglist[0]: arglist[1]]
+			elif cmd == u'sort':
+				self._require_arglist(cmd, arglist)
+				dm[colname] = operations.sort(col)
+			elif cmd == u'sortby':
+				self._require_arglist(cmd, arglist)
+				dm = operations.sort(dm, by=col)
+			elif cmd == u'reverse':
+				if not arglist:
+					dm = dm[::-1]
+				else:
+					dm[colname] = col[::-1]
+			elif cmd == u'roll':
+				self._require_arglist(cmd, arglist)
+				steps = arglist[0]
+				if not arglist:
+					dm = dm[-steps:] << dm[:-steps]
+				else:
+					dm[colname] = list(col[-steps:]) + list(col[:-steps])
+			elif cmd == u'weight':
+				self._require_arglist(cmd, arglist)
+				dm = operations.weight(col)
 			return dm
 		raise osexception(u'Invalid order: %s' % self.var.order)
 
