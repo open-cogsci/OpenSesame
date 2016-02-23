@@ -75,6 +75,9 @@ class keyboard_response(keyboard_response_runtime, qtplugin):
 		"""Show a dialog with available key names"""
 
 		my_keyboard = keyboard(self.experiment)
-		s = _(u'The following key names are valid:<br />') \
-			+ u'<br />'.join(my_keyboard.valid_keys())
-		self.experiment.notify(s)
+		keylist = filter(lambda key: key.strip(), my_keyboard.valid_keys())
+		md = u'# ' + _(u'Key names') + u'\n\n' \
+			+ _(u'The following key names are valid:') + u'\n\n- ' \
+			+ u'\n- '.join([u'`%s`' % key for key in keylist])
+		self.tabwidget.open_markdown(md, icon=u'os-keyboard_response',
+			title=_(u'Key names'))
