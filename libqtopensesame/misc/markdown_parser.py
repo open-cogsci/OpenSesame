@@ -63,7 +63,7 @@ class markdown_parser(base_subcomponent):
 		with open(self.main_window.theme.resource(u'markdown.css')) as fd:
 			self.css += safe_decode(fd.read()) % {u'background_image' : \
 				os.path.abspath(self.main_window.theme.resource(
-				u'background.jpg'))}
+				u'background.png'))}
 		if highlight is not None:
 			self.traceback_lexer = TracebackLexer()
 			self.python_lexer = PythonLexer()
