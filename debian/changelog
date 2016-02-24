@@ -8,6 +8,7 @@ opensesame (3.0.6a2-ubuntu1) wily; urgency=medium
     - Fix background-color changes with psycho backend
     - Catch non osexception Exceptions during script validation
     - Add console property to sketchpad base_element
+    - Avoid setting config values to QPyNullVariant (#397)
   * Improvements
     - Add `experiment_file` experimental variable, which contains the file name of the experiment (#387)
     - Catch warnings when creating a new item and provide an informative message
