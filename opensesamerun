@@ -94,7 +94,7 @@ if __name__ == u"__main__":
 		exp = libopensesame.experiment.experiment(u"Experiment",
 			experiment, experiment_path=experiment_path)
 		exp.set_subject(options.subject)
-		exp.fullscreen = options.fullscreen
+		exp.var.fullscreen = options.fullscreen
 		exp.logfile = logfile
 		exp.run()
 		exp.end()
@@ -111,7 +111,7 @@ if __name__ == u"__main__":
 			sys.exit()
 		# Set some options
 		exp.set_subject(options.subject)
-		exp.fullscreen = options.fullscreen
+		exp.var.fullscreen = options.fullscreen
 		exp.logfile = logfile
 		# Initialize random number generator
 		import random
