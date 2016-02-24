@@ -426,6 +426,8 @@ class qtitem(base_qtobject):
 				try:
 					self.validator(self.name, self.experiment, test_script)
 				except Exception as e_:
+					if not isinstance(e_, osexception):
+						e_ = osexception(e_)					
 					if hasattr(self._script_widget, u'setInvalid'):
 						self._script_widget.setInvalid(line_nr, e_.markdown())
 					break

@@ -1,4 +1,4 @@
-opensesame (3.0.6a1-ubuntu1) wily; urgency=medium
+opensesame (3.0.6a2-ubuntu1) wily; urgency=medium
 
   * Bugs fixed
     - Fix a crash when adding an empty list to the file pool
@@ -6,6 +6,7 @@ opensesame (3.0.6a1-ubuntu1) wily; urgency=medium
     - Fix initial state of auto_example plug-in (#389)
     - Catch errors in file pool
     - Fix background-color changes with psycho backend
+    - Catch non osexception Exceptions during script validation
   * Improvements
     - Add `experiment_file` experimental variable, which contains the file name of the experiment (#387)
     - Catch warnings when creating a new item and provide an informative message
