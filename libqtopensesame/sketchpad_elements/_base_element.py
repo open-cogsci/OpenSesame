@@ -70,6 +70,10 @@ class base_element(object):
 	def theme(self):
 		return self.experiment.main_window.theme
 
+	@property
+	def console(self):
+		return self.experiment.main_window.console
+
 	def draw(self):
 
 		"""

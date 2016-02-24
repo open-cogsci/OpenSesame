@@ -7,6 +7,7 @@ opensesame (3.0.6a2-ubuntu1) wily; urgency=medium
     - Catch errors in file pool
     - Fix background-color changes with psycho backend
     - Catch non osexception Exceptions during script validation
+    - Add console property to sketchpad base_element
   * Improvements
     - Add `experiment_file` experimental variable, which contains the file name of the experiment (#387)
     - Catch warnings when creating a new item and provide an informative message
