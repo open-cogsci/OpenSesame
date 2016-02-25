@@ -115,11 +115,11 @@ for extension in included_extensions:
 for plugin in included_plugins:
 	shutil.copytree(os.path.join("plugins",plugin), os.path.join("dist/opensesame.app/Contents/Resources/plugins/",plugin))
 
-# Anaconda libpng version is too old for pygame (min required version is 36). Copy homebrew version instead
-# try:
-# 	shutil.copy('/usr/local/opt/libpng/lib/libpng16.16.dylib','dist/OpenSesame.app/Contents/Frameworks/libpng16.16.dylib')
-# except:
-# 	print("Could not copy newer libpng16.16.dylib")
+Anaconda libpng version is too old for pygame (min required version is 36). Copy homebrew version instead
+try:
+	shutil.copy('/usr/local/opt/libpng/lib/libpng16.16.dylib','dist/OpenSesame.app/Contents/Frameworks/libpng16.16.dylib')
+except:
+	print("Could not copy newer libpng16.16.dylib")
 
 # Remove opensesame.py
 try:
