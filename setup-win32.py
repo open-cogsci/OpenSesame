@@ -190,6 +190,7 @@ print(u'Optimize = %d' % optimize)
 # copied properly.
 copy_packages = [
 	'QProgEdit',
+	'decorator',
 	'libopensesame',
 	'openexp',
     'pyflakes',
@@ -227,7 +228,6 @@ if jupyter:
 		'ipykernel',
 		'ipyparallel',
 		'ipywidgets',
-		'decorator',
 		'jupyter',
 		'pickleshare',
 		'path',
