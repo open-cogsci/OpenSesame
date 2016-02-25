@@ -18,6 +18,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame.py3compat import *
+import platform
 
 import pygame
 from pygame.locals import *
@@ -29,6 +30,20 @@ from openexp.backend import configurable
 # Whitespace, backspace, and empty strings are not acceptable names for keys.
 # These should be converted to descriptions, e.g. '\t' to 'tab'
 invalid_unicode = [u'', u'\x08', u'\x7f'] + list(whitespace)
+# On mac arrow keys are not accepted as valid input either. Add them to this list
+if platform.system() == "Darwin":
+	invalid_unicode += [
+		u'\uf702', # left
+		u'\uf703', # right
+		u'\uf700', # up
+		u'\uf701', # down
+		u'\uf729', # home
+		u'\uf72b', # end
+		u'\uf72c', # page up
+		u'\uf72d', # page down
+		u'\uf728', # delete
+		u'\uf739', # numlock
+	]
 
 class legacy(keyboard.keyboard):
 

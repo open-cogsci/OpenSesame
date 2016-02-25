@@ -1,8 +1,10 @@
 # OpenSesame
 
+![](resources/theme/default/os-custom-icons/32x32/misc/os-experiment.png)
+
 OpenSesame is a tool to create experiments for psychology, neuroscience, and experimental economics.
 
-Copyright, 2010-2015, Sebastiaan Mathôt and contributors.
+Copyright, 2010-2016, Sebastiaan Mathôt and contributors.
 
 <http://osdoc.cogsci.nl/>
 
@@ -23,6 +25,7 @@ Each major version of OpenSesame lives in its own branch. The master branch cont
 - `gibson` - 2.8
 - `heisenberg` - 2.9
 - `ising` - 3.0
+- `james` - 3.1
 
 ## About
 
