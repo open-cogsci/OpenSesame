@@ -584,3 +584,11 @@ class item(object):
 			u'item.split() has been deprecated. Please use syntax.split()',
 			DeprecationWarning)
 		return self.syntax.split(s)
+
+	def eval_text(self, text, round_float=False, soft_ignore=False,
+		quote_str=False):
+
+		warnings.warn(
+			u'item.eval_text() has been deprecated. Please use syntax.eval_text()',
+			DeprecationWarning)
+		return self.syntax.eval_text(text, round_float=round_float)

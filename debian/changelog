@@ -10,7 +10,7 @@ opensesame (3.0.6a3-ubuntu1) wily; urgency=medium
     - Add console property to sketchpad base_element
     - Avoid setting config values to QPyNullVariant (#397)
     - Don't set fullscreen as property of experiment in opensesamerun (#392)
-    - Don't allow line breaks in sketchpad-element scripts
+    - Re-implement item.eval_text() for backward compatibility (#398)
   * Improvements
     - Add `experiment_file` experimental variable, which contains the file name of the experiment (#387)
     - Catch warnings when creating a new item and provide an informative message
