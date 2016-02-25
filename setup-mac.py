@@ -29,6 +29,8 @@ import shutil
 
 from setup_shared  import included_plugins, included_extensions
 
+from libopensesame.metadata import __version__ as version, codename
+
 # Clean up previous builds
 try:
 	shutil.rmtree("dist")
@@ -44,7 +46,7 @@ try:
 	shutil.rmtree("qt_menu.nib")
 except:
 	pass
-shutil.copytree("/usr/local/Frameworks/QtGui.framework/Resources/qt_menu.nib", "qt_menu.nib")
+shutil.copytree("/Users/daniel/anaconda/python.app/Contents/Resources/qt_menu.nib", "qt_menu.nib")
 
 # Py2app doesn't like extensionless Python scripts
 try:
@@ -61,7 +63,7 @@ setup(
     data_files = ['opensesame.py'],
     options = {'py2app' : 
 		{
-			'argv_emulation': False, 
+			'argv_emulation': True, 
 			'includes' : [
 				'PyQt4.QtNetwork', 'serial', 'opensesamerun', 'skimage', 'sip', \
 				'billiard',
@@ -69,7 +71,7 @@ setup(
 			'excludes': [
 				'Finder','idlelib', 'gtk', 'matplotlib', 'pandas', 'PyQt4.QtDesigner',\
 			 	'PyQt4.QtOpenGL', 'PyQt4.QtScript', 'PyQt4.QtSql', 'PyQt4.QtTest', \
-			 	'PyQt4.QtXml', 'PyQt4.phonon', 'rpy2', 'wx',
+			 	'PyQt4.QtXml', 'PyQt4.phonon', 'rpy2', 'wx', 'pycurl','mkl','dynd','bokeh',
 			],
 			'resources' : ['qt_menu.nib', 'resources', 'sounds', 'help', 'data'],
 			'packages' : [
@@ -79,8 +81,8 @@ setup(
 			'iconfile' : 'resources/opensesame.icns',
 			'plist': {
 				'CFBundleName': 'OpenSesame',
-				'CFBundleShortVersionString':'3.0.5',
-				'CFBundleVersion': '3.0.5',
+				'CFBundleShortVersionString': version,
+				'CFBundleVersion': ' '.join([version, codename]),
 				'CFBundleIdentifier':'nl.cogsci.osdoc',
 				'NSHumanReadableCopyright': 'Sebastiaan Mathot (2010-2016)',
 				'CFBundleDevelopmentRegion': 'English', 	
@@ -112,6 +114,12 @@ for extension in included_extensions:
 # Copy plugins into app
 for plugin in included_plugins:
 	shutil.copytree(os.path.join("plugins",plugin), os.path.join("dist/opensesame.app/Contents/Resources/plugins/",plugin))
+
+# Anaconda libpng version is too old for pygame (min required version is 36). Copy homebrew version instead
+# try:
+# 	shutil.copy('/usr/local/opt/libpng/lib/libpng16.16.dylib','dist/OpenSesame.app/Contents/Frameworks/libpng16.16.dylib')
+# except:
+# 	print("Could not copy newer libpng16.16.dylib")
 
 # Remove opensesame.py
 try:
