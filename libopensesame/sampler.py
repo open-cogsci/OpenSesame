@@ -76,8 +76,8 @@ class sampler(item.item, generic_response.generic_response):
 		self.sampler.pitch = self.var.pitch
 		self.sampler.fade_in = self.var.fade_in
 		self.sampler.duration = self.var.stop_after
-		self.sampler.block = self.block
 		generic_response.generic_response.prepare(self)
+		self.sampler.block = self.block
 
 	def run(self):
 

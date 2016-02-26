@@ -63,3 +63,4 @@ class synth(sampler.sampler, item.item):
 		self.sampler.pan = pan
 		self.sampler.volume = self.var.volume
 		generic_response.generic_response.prepare(self)
+		self.sampler.block = self.block
