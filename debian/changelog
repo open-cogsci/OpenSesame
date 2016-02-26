@@ -1,4 +1,11 @@
-opensesame (3.0.6-ubuntu1) wily; urgency=medium
+opensesame (3.0.7a1-ubuntu1) wily; urgency=medium
+
+  * Bugs fixed
+  * Improvements
+
+ -- Sebastiaan Mathot <sebastiaan@mantis>  Fri, 26 Feb 2016 16:28:33 +0100
+
+opensesame (3.0.6-ubuntu2) wily; urgency=medium
 
   * Bugs fixed
     - Fix a crash when adding an empty list to the file pool
