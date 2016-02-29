@@ -34,11 +34,12 @@ class multiprocess_runner(base_runner):
 		"""See base_runner.execute()."""
 
 		import platform
-		# In OS X the multiprocessing module is horribly broken, but a fixed
-		# version has been released as the 'billiard' module
-		if platform.system() == 'Darwin':
-			import billiard as multiprocessing
-			multiprocessing.forking_enable(0)
+		if platform.system() == 'Darwin' and \
+			sys.version_info < (3,4):
+				# In OS X the multiprocessing module is horribly broken, 
+				# for python 2.7 but a fixed version has been released 
+				# as the 'billiard' module
+				import billiard as multiprocessing
 		else:
 			import multiprocessing
 
