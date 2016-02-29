@@ -31,10 +31,10 @@ if __name__ == u'__main__':
 	# version has been released as the 'billiard' module
 	if platform.system() == 'Darwin':
 		# Use normal multirpocessing module from python 3.4 and on
-		if sys.version_info[0] > 2 and sys.version_info[1] >= 4:
+		if sys.version_info >= (3,4):
 			from multiprocessing import freeze_support, set_start_method
 			freeze_support()
-			set_start_method('spawn')
+			set_start_method('forkserver')
 		else:
 			from billiard import freeze_support, forking_enable
 			freeze_support()

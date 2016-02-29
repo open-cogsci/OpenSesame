@@ -35,7 +35,7 @@ class multiprocess_runner(base_runner):
 
 		import platform
 		if platform.system() == 'Darwin' and \
-			sys.version_info[0] < 3:
+			sys.version_info < (3,4):
 				# In OS X the multiprocessing module is horribly broken, 
 				# for python 2.7 but a fixed version has been released 
 				# as the 'billiard' module
