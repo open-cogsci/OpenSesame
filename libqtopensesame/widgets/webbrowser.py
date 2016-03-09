@@ -93,7 +93,8 @@ class webbrowser(base_widget):
 
 		if isinstance(url, QtCore.QUrl):
 			url = url.toString()
-		if url.endswith(u'.md'):
+		if url.endswith(u'.md') and not url.startswith(u'http://') \
+			and not url.startswith(u'https://'):
 			self.ui.top_widget.hide()
 			with open(url) as fd:
 				md = safe_decode(fd.read(), errors=u'ignore')
