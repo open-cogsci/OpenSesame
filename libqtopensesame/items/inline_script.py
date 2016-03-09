@@ -123,8 +123,12 @@ class inline_script(inline_script_runtime, qtplugin):
 		"""See qtitem."""
 
 		super(inline_script, self).edit_widget()
-		self.qprogedit.tab(0).setText(safe_decode(self.var._prepare))
-		self.qprogedit.tab(1).setText(safe_decode(self.var._run))
+		_prepare = safe_decode(self.var._prepare)
+		if _prepare != self.qprogedit.tab(0).text():
+			self.qprogedit.tab(0).setText(_prepare)
+		_run = safe_decode(self.var._run)
+		if _run != self.qprogedit.tab(1).text():
+			self.qprogedit.tab(1).setText(_run)
 
 	def get_ready(self):
 
