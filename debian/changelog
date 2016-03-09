@@ -2,7 +2,9 @@ opensesame (3.0.7a1-ubuntu1) wily; urgency=medium
 
   * Bugs fixed
     - Fix 'sound' duration in sampler and sketchpad (#401)
+    - Correctly escape slashes in OpenSesame syntax (#403)
   * Improvements
+  * 
 
  -- Sebastiaan Mathot <sebastiaan@mantis>  Fri, 26 Feb 2016 16:28:33 +0100
 

@@ -282,13 +282,17 @@ class item(object):
 	def variable_to_string(self, var):
 
 		"""
-		Encodes a variable into a definition string.
+		desc:
+			Encodes a variable into a definition string.
 
-		Arguments:
-		var		--	The variable to encode.
+		arguments:
+			var:
+				desc:	The name of the variable to encode.
+				type:	str
 
-		Returns:
-		A definition string.
+		returns:
+			desc:	A definition string.
+			type:	str
 		"""
 
 		val = safe_decode(self.var.get(var, _eval=False))
@@ -303,13 +307,7 @@ class item(object):
 			s += u'\n\t__end__\n'
 			return s
 		# Regular variables
-		try:
-			val = float(val)
-		except:
-			return u'set %s "%s"\n' % (var, val)
-		if val == int(val):
-			return u'set %s %d\n' % (var, val)
-		return u'set %s %s\n' % (var, val)
+		return self.syntax.create_cmd(u'set', arglist=[var, val]) + u'\n'
 
 	def from_string(self, string):
 
