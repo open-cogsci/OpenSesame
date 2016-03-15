@@ -362,7 +362,9 @@ class item(object):
 			elif not self.parse_variable(line):
 				self.parse_line(line)
 		if textblock_var is not None:
-			raise osexception(u'Missing __end__ block for multiline variable.')
+			raise osexception(
+				u'Missing __end__ block for multiline variable "%s" in item %s' \
+				% (textblock_var, self.name))
 
 	def to_string(self, item_type=None):
 

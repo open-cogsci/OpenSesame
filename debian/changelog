@@ -6,6 +6,7 @@ opensesame (3.0.7a2-ubuntu1) wily; urgency=medium
     - Don't crash on viewing remote urls ending in .md
   * Improvements
     - Preserve cursor position when switching to and from inline_script items (#390)
+    - Give better error message when missing end-of-block line for multiline variables
 
  -- Sebastiaan Mathot <sebastiaan@mantis>  Fri, 26 Feb 2016 16:28:33 +0100
 
