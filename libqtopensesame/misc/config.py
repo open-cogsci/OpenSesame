@@ -297,7 +297,8 @@ class config(object):
 			A value.
 		"""
 
-		if isinstance(value, QtCore.QPyNullVariant):
+		if hasattr(QtCore, u'QPyNullVariant') and \
+				isinstance(value, QtCore.QPyNullVariant):
 			return default
 		if isinstance(default, bool):
 			if isinstance(value, basestring):
