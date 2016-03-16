@@ -1,6 +1,6 @@
 * {
-	font-family: sans-serif;
-	line-height: 150%%;
+	font-family: 'Roboto', sans-serif;;
+	line-height:  1.428571429;
 	color: #263238;
 }
 
@@ -15,82 +15,94 @@ table tr td {
 }
 
 a {
-	color: #01579B;
+	color: #78909c;
 }
 
 a:hover {
-	color: #FF5722;
+	color: #ff5722;
+}
+
+h1, h2 {
+	font-family: 'Roboto Slab', serif;
+	font-weight: normal;
+	color: #0277bd!important;
+	border-bottom: solid 1px #cfd8dc;
 }
 
 h1 {
 	font-size: 2em;
-	font-weight: normal;
-	color: #ffffff;
+	display: block;
 	height: 48px;
 	background: url("file://%(background_image)s") no-repeat top right;
-	color: #01579b;
 }
 
 h2 {
-	border-bottom: dotted 1px #01579b;
 	font-size: 1.5em;
-	font-weight: normal;
-	color: #01579b;
 }
 
 .highlight span, code, pre {
-	font-family: "Droid Sans Mono", monospace, "Courier New"!important;
+	font-family: 'Roboto Mono', monospace!important;
 	word-wrap: break-word;
 }
 
 .important-button,
 .dismiss-button,
 .button {
+	/*font-family: 'Roboto Condensed';*/
 	display: inline-block;
-	color: #2e3436;
 	padding: 4px 8px 4px 8px;
 	margin: 4px 0px 4px 0px;
 	text-decoration: none;
 	border-radius: 4px;
+	border: solid 1px;
 }
 
-.dismiss-button:hover,
+/*.dismiss-button:hover,
 .important-button:hover,
 .button:hover {
 	color: #2e3436;
-}
+}*/
 
 .button {
-	background-color: #CFD8DC;
+	color: #0277bd;
+	border-color: #cfd8dc;
 }
 
 .button:hover {
-	background-color: #B0BEC5;
+	color: #0277bd!important;
+	background-color: #eceff1;
 }
 
 .dismiss-button {
-	color: #ffffff;
-	background-color: #43A047;
+	color: #fff;
+	border-color: #2e7d32;
+	background-color: #4CAF50;
 }
 
 .dismiss-button:hover {
-	color: #ffffff;
-	background-color: #388e3c;
+	color: #fff;
+	background-color: #43A047;
 }
 
 .important-button {
-	background-color: #0277bd;
-	color: #ffffff;
+	color: #fff;
+	border-color: #0277bd;
+	background-color: #03A9F4;
 }
 
 .important-button:hover {
-	color: #ffffff;
-	background-color: #01579b;
+	color: #fff;
+	background-color: #039BE5;
 }
 
 .footer {
-	color: #555753;
+	color: #78909c;
 	font-size: 0.8em;
 	border-top: solid 1px #555753;
 	float: right;
+	font-family: 'Roboto Condensed';
+}
+
+.footer a {
+	font-family: 'Roboto Condensed';
 }
