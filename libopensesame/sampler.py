@@ -48,7 +48,6 @@ class sampler(base_response_item, keyboard_response_mixin,
 		self.var.stop_after = 0
 		self.var.volume = 1.0
 		self.var.duration = u'sound'
-		self.block = False
 
 	def process_response(self, response_args):
 

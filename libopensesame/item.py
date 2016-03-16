@@ -241,13 +241,17 @@ class item(object):
 	def variable_to_string(self, var):
 
 		"""
-		Encodes a variable into a definition string.
+		desc:
+			Encodes a variable into a definition string.
 
-		Arguments:
-		var		--	The variable to encode.
+		arguments:
+			var:
+				desc:	The name of the variable to encode.
+				type:	str
 
-		Returns:
-		A definition string.
+		returns:
+			desc:	A definition string.
+			type:	str
 		"""
 
 		val = safe_decode(self.var.get(var, _eval=False))
@@ -262,13 +266,7 @@ class item(object):
 			s += u'\n\t__end__\n'
 			return s
 		# Regular variables
-		try:
-			val = float(val)
-		except:
-			return u'set %s "%s"\n' % (var, val)
-		if val == int(val):
-			return u'set %s %d\n' % (var, val)
-		return u'set %s %s\n' % (var, val)
+		return self.syntax.create_cmd(u'set', arglist=[var, val]) + u'\n'
 
 	def from_string(self, string):
 
@@ -323,7 +321,9 @@ class item(object):
 			elif not self.parse_variable(line):
 				self.parse_line(line)
 		if textblock_var is not None:
-			raise osexception(u'Missing __end__ block for multiline variable.')
+			raise osexception(
+				u'Missing __end__ block for multiline variable "%s" in item %s' \
+				% (textblock_var, self.name))
 
 	def to_string(self, item_type=None):
 
@@ -548,3 +548,11 @@ class item(object):
 			u'item.split() has been deprecated. Please use syntax.split()',
 			DeprecationWarning)
 		return self.syntax.split(s)
+
+	def eval_text(self, text, round_float=False, soft_ignore=False,
+		quote_str=False):
+
+		warnings.warn(
+			u'item.eval_text() has been deprecated. Please use syntax.eval_text()',
+			DeprecationWarning)
+		return self.syntax.eval_text(text, round_float=round_float)

@@ -29,7 +29,7 @@ class text_input(base_dialog):
 		A simple text-input dialog.
 	"""
 
-	def __init__(self, main_window, msg=None, content=u''):
+	def __init__(self, main_window, msg=None, content=u'', validator=None):
 
 		"""
 		desc:
@@ -41,12 +41,16 @@ class text_input(base_dialog):
 
 		keywords:
 			content:		The starting content.
+			validator:		A function to validate the input. This function
+							should take a single str as argument, and return a
+							bool.
 		"""
 
 		super(text_input, self).__init__(main_window,
 			ui=u'dialogs.text_input_dialog')
 		if msg is not None:
 			self.ui.label_message.setText(msg)
+		self._validator = validator
 		self.ui.textedit_input.setPlainText(content)
 		self.ui.textedit_input.setFont(self.experiment.monospace())
 		self.adjustSize()
@@ -61,6 +65,10 @@ class text_input(base_dialog):
 			A string with text input or None of the dialog was not accepted.
 		"""
 
-		if self.exec_() == QtWidgets.QDialog.Accepted:
-			return str(self.ui.textedit_input.toPlainText())
+		while True:
+			if self.exec_() != QtGui.QDialog.Accepted:
+				break
+			s = self.ui.textedit_input.toPlainText()
+			if self._validator is None or self._validator(s):
+				return s
 		return None

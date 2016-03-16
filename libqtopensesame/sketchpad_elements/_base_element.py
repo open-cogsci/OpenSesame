@@ -21,6 +21,7 @@ from libopensesame.py3compat import *
 from libopensesame.exceptions import osexception
 from qtpy import QtWidgets, QtGui, QtCore
 from libqtopensesame.misc.translate import translation_context
+from libqtopensesame.dialogs.text_input import text_input
 _ = translation_context(u'sketchpad', category=u'item')
 
 class base_element(object):
@@ -70,6 +71,10 @@ class base_element(object):
 	@property
 	def theme(self):
 		return self.experiment.main_window.theme
+
+	@property
+	def console(self):
+		return self.experiment.main_window.console
 
 	def draw(self):
 
@@ -272,6 +277,24 @@ class base_element(object):
 				val = u'no'
 		self.properties[name] = val
 
+	def script_validator(self, s):
+
+		"""
+		desc:
+			Validates an element script.
+
+		arguments:
+			s:
+				desc:	An element script.
+				type:	str
+
+		returns:
+			desc:	True if the script is valid, False otherwise.
+			type:	bool
+		"""
+
+		return u'\n' not in s
+
 	def show_script_edit_dialog(self):
 
 		"""
@@ -280,9 +303,9 @@ class base_element(object):
 		"""
 
 		old_string = self.to_string()
-		string = self.experiment.text_input(_(u'Edit element'),
-			message=_(u'Element script'), content=self.to_string(),
-			parent=self.sketchpad._edit_widget)
+		string = text_input(self.sketchpad._edit_widget,
+			msg=_(u'Element script'), content=self.to_string(),
+			validator=self.script_validator).get_input()
 		if string is None:
 			return
 		try:

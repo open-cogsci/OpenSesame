@@ -297,6 +297,8 @@ class config(object):
 			A value.
 		"""
 
+		if isinstance(value, QtCore.QPyNullVariant):
+			return default
 		if isinstance(default, bool):
 			if isinstance(value, basestring):
 				return value == u'true'

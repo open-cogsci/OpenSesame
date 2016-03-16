@@ -19,6 +19,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 
 import os
 import os.path
+import platform
 import sys
 
 use_global_resources = '--no-global-resources' not in sys.argv
@@ -263,9 +264,6 @@ def opensesame_folder():
 	Returns:
 	The OpenSesame folder or None if the os is not Windows.
 	"""
-
-	if os.name != u'nt':
-		return None
 	# Determines the directory name of the script or the directory name
 	# of the executable after being packaged with py2exe. This has to be
 	# done so the child process can find all relevant modules too.
@@ -275,17 +273,22 @@ def opensesame_folder():
 	# in which case the OpenSesame folder is the folder containing the
 	# executable, or OpenSesame is run from source, in which case we go to
 	# the OpenSesame folder by going two levels up from the __file__ folder.
-	import imp
-	if (hasattr(sys, u'frozen') or hasattr(sys, u'importers') or \
-		imp.is_frozen(u'__main__')):
-		path = safe_decode(os.path.dirname(sys.executable),
-			enc=sys.getfilesystemencoding())
+	if platform.system() == u'Darwin':
+		return os.getcwd()
+	elif platform.system() == u'Windows':
+		import imp
+		if (hasattr(sys, u'frozen') or hasattr(sys, u'importers') or \
+			imp.is_frozen(u'__main__')):
+			path = safe_decode(os.path.dirname(sys.executable),
+				enc=sys.getfilesystemencoding())
+		else:
+			# To get the opensesame folder, simply jump to levels up
+			path = safe_decode(os.path.dirname(__file__),
+				enc=sys.getfilesystemencoding())
+			path = os.path.normpath(os.path.join(path, u'..'))
+		return path
 	else:
-		# To get the opensesame folder, simply jump to levels up
-		path = safe_decode(os.path.dirname(__file__),
-			enc=sys.getfilesystemencoding())
-		path = os.path.normpath(os.path.join(path, u'..'))
-	return path
+		return None
 
 def module_versions():
 

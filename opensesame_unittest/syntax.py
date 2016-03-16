@@ -38,6 +38,8 @@ class check_syntax(unittest.TestCase):
 		self.assertTrue(cmd == _cmd)
 		self.assertTrue(arglist == _arglist)
 		self.assertTrue(kwdict == _kwdict)
+		self.assertTrue(
+			s == self.exp.syntax.create_cmd(_cmd, _arglist, _kwdict))
 
 	def checkEvalText(self, sIn, sOut):
 
@@ -62,6 +64,8 @@ class check_syntax(unittest.TestCase):
 			u'widget', [0, 0, 1, 1, u'label'],
 			{u'text' : u'Tést 123'})
 		self.checkCmd(u'test', u'test',	[], {})
+		self.checkCmd(u'set test "c:\\\\" x="d:\\\\"',
+			u'set', [u'test', u'c:\\'], {u'x' : u'd:\\'})
 		self.checkCmd(u'test "\\"quoted\\""',
 			u'test', [u'\"quoted\"'], {})
 		self.checkCmd(u'test test="\\"quoted\\""', u'test',	[],

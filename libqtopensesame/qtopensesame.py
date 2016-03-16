@@ -914,7 +914,7 @@ class qtopensesame(QtWidgets.QMainWindow, base_component):
 		# For the same reason, inOSX the default runner is set to inprocess
 		# for now in misc.config
 		if cfg.runner == u'multiprocess' and sys.platform == "darwin" \
-			and getattr(sys, 'frozen', None):
+			and getattr(sys, 'frozen', None) and sys.version_info < (3,4):
 			self.experiment.notify(u'Multiprocessing does not work in the '
 				u'OSX app version yet. Please change the runner to '
 				u'\'inprocess\' in the preferences panel')

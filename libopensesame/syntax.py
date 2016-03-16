@@ -459,7 +459,7 @@ class syntax(object):
 			type:	str
 		"""
 
-		s = safe_decode(s)
+		s = safe_decode(s).replace(u'\\', u'\\\\')
 		try:
 			float(s)
 		except:

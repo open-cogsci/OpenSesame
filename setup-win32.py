@@ -156,7 +156,7 @@ include_simpleio = not py3
 include_pyqt4_plugins = True
 jupyter = py3
 release_zip = True
-release_build = 1
+release_build = 3
 channel = u'win32'
 
 python_folder = os.path.dirname(sys.executable)
@@ -190,6 +190,7 @@ print(u'Optimize = %d' % optimize)
 # copied properly.
 copy_packages = [
 	'QProgEdit',
+	'decorator',
 	'libopensesame',
 	'openexp',
 	'pyflakes',
@@ -227,7 +228,6 @@ if jupyter:
 		'ipykernel',
 		'ipyparallel',
 		'ipywidgets',
-		'decorator',
 		'jupyter',
 		'pickleshare',
 		'path',

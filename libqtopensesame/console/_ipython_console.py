@@ -18,6 +18,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame.py3compat import *
+import platform
 
 # If OpenSesame is launched with pythonw.exe under Windows, the standard
 # channels are not available. This will cause IPython to crash sometimes, so we
@@ -33,6 +34,14 @@ if (sys.stderr is None or \
 from qtpy import QtWidgets, QtGui
 try:
 	# New-style Jupyter imports
+	
+	# When packaged on a mac, a check that qtconsole does to see if pyqt4 is available fails
+	# Since PyQt4 is packaged with OpenSesame, we may assume it will be available and 
+	# override the check to return True 
+	if platform.system() == "Darwin" and hasattr(sys,"frozen"):
+		import qtconsole.qt_loaders
+		qtconsole.qt_loaders.has_binding = lambda api: api == u'pyqt'
+
 	from qtconsole.rich_jupyter_widget import RichJupyterWidget \
 		as RichIPythonWidget
 	from qtconsole.inprocess import QtInProcessKernelManager

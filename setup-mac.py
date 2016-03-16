@@ -27,6 +27,10 @@ from setuptools import setup
 import os
 import shutil
 
+from setup_shared  import included_plugins, included_extensions
+
+from libopensesame.metadata import __version__ as version, codename
+
 # Clean up previous builds
 try:
 	shutil.rmtree("dist")
@@ -42,7 +46,7 @@ try:
 	shutil.rmtree("qt_menu.nib")
 except:
 	pass
-shutil.copytree("/usr/local/Frameworks/QtGui.framework/Resources/qt_menu.nib", "qt_menu.nib")
+shutil.copytree("/Users/daniel/anaconda/python.app/Contents/Resources/qt_menu.nib", "qt_menu.nib")
 
 # Py2app doesn't like extensionless Python scripts
 try:
@@ -58,35 +62,38 @@ setup(
     app = ['opensesame.py'],
     data_files = ['opensesame.py'],
     options = {'py2app' : 
-			{'argv_emulation': False, 
-			 'includes' : ['PyQt4.QtNetwork','serial','opensesamerun','skimage','sip','billiard','wx'],
-			 'excludes': ['Finder','idlelib', 'gtk', 'sqlite3', 'matplotlib', 'pandas', 'PyQt4.QtDesigner',\
-			 			  'PyQt4.QtOpenGL', 'PyQt4.QtScript', 'PyQt4.QtSql', 'PyQt4.QtTest', 'PyQt4.QtXml', 'PyQt4.phonon',\
-			 			  'rpy2',
-			 			  ],
-			 'resources' : ['qt_menu.nib', 'resources', 'sounds', 'plugins', 'extensions', 'help', 'data', 'examples'],
-			 'packages' : ['openexp','expyriment','psychopy','QProgEdit','libqtopensesame','libopensesame'],
-			 'iconfile' : 'resources/opensesame.icns',
-			 'plist': {
+		{
+			'argv_emulation': True, 
+			'includes' : [
+				'PyQt4.QtNetwork', 'serial', 'opensesamerun', 'skimage', 'sip', \
+				'billiard',
+			],
+			'excludes': [
+				'Finder','idlelib', 'gtk', 'matplotlib', 'pandas', 'PyQt4.QtDesigner',\
+			 	'PyQt4.QtOpenGL', 'PyQt4.QtScript', 'PyQt4.QtSql', 'PyQt4.QtTest', \
+			 	'PyQt4.QtXml', 'PyQt4.phonon', 'rpy2', 'wx', 'pycurl','mkl','dynd','bokeh',
+			],
+			'resources' : ['qt_menu.nib', 'resources', 'sounds', 'help', 'data'],
+			'packages' : [
+				'openexp','expyriment','psychopy','QProgEdit','libqtopensesame','libopensesame',\
+				'IPython','ipykernel','jupyter_client','qtconsole','pygments','OpenGL_accelerate',
+			],
+			'iconfile' : 'resources/opensesame.icns',
+			'plist': {
 				'CFBundleName': 'OpenSesame',
-				'CFBundleShortVersionString':'2.9.7',
-				'CFBundleVersion': '2.9.7',
+				'CFBundleShortVersionString': version,
+				'CFBundleVersion': ' '.join([version, codename]),
 				'CFBundleIdentifier':'nl.cogsci.osdoc',
-				'NSHumanReadableCopyright': 'Sebastiaan Mathot (2010-2015)',
+				'NSHumanReadableCopyright': 'Sebastiaan Mathot (2010-2016)',
 				'CFBundleDevelopmentRegion': 'English', 	
 				'CFBundleDocumentTypes': [ 
 					{
-                    			'CFBundleTypeExtensions' : ['opensesame'],
-                    			'CFBundleTypeIconFile' : 'opensesame.icns',
-                    			'CFBundleTypeRole' : 'Editor',
-                    			'CFBundleTypeName' : 'OpenSesame File',
+                    	'CFBundleTypeExtensions' : ['osexp'],
+                    	'CFBundleTypeIconFile' : 'resources/opensesame.icns',
+                    	'CFBundleTypeRole' : 'Editor',
+                    	'CFBundleTypeName' : 'OpenSesame File',
 					},
-					{
-                    			'CFBundleTypeExtensions' : ['gz'],
-                    			'CFBundleTypeIconFile' : 'opensesame.icns',
-                    			'CFBundleTypeRole' : 'Editor',
-					}
-                                ]
+				]
 			}
 		}
 	},
@@ -96,9 +103,23 @@ setup(
 # Clean up qt_menu.nib
 shutil.rmtree("qt_menu.nib")
 
-# Remove unwanted plugins from build
-shutil.rmtree("dist/opensesame.app/Contents/Resources/plugins/pp_io")
-shutil.rmtree("dist/opensesame.app/Contents/Resources/plugins/port_reader")
+# Psychopy monitor center does not play nicely together with the OpenSesame GUI
+if 'psychopy_monitor_center' in included_extensions:
+	del included_extensions[included_extensions.index('psychopy_monitor_center')]
+
+# Copy extensions into app
+for extension in included_extensions:
+	shutil.copytree(os.path.join("extensions",extension), os.path.join("dist/opensesame.app/Contents/Resources/extensions/",extension))
+
+# Copy plugins into app
+for plugin in included_plugins:
+	shutil.copytree(os.path.join("plugins",plugin), os.path.join("dist/opensesame.app/Contents/Resources/plugins/",plugin))
+
+# Anaconda libpng version is too old for pygame (min required version is 36). Copy homebrew version instead
+try:
+	shutil.copy('/usr/local/opt/libpng/lib/libpng16.16.dylib','dist/OpenSesame.app/Contents/Frameworks/libpng16.16.dylib')
+except:
+	print("Could not copy newer libpng16.16.dylib")
 
 # Remove opensesame.py
 try:
