@@ -156,7 +156,7 @@ include_simpleio = not py3
 include_pyqt4_plugins = True
 jupyter = py3
 release_zip = True
-release_build = 2
+release_build = 3
 channel = u'win32'
 
 python_folder = os.path.dirname(sys.executable)
