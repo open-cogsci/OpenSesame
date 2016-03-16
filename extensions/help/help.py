@@ -116,7 +116,9 @@ class help(base_extension):
 			sitemap = fd.read()
 			_dict = yaml.load(sitemap)
 		except:
-			return None
+			return
+		if not isinstance(_dict, dict):
+			return
 		menu = self.build_menu(self.menu, _(u'Online help'), _dict)
 		return menu
 

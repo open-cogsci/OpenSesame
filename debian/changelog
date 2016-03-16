@@ -1,9 +1,10 @@
-opensesame (3.0.7-ubuntu1) wily; urgency=medium
+opensesame (3.0.7-ubuntu2) wily; urgency=medium
 
   * Bugs fixed
     - Fix 'sound' duration in sampler and sketchpad (#401)
     - Correctly escape slashes in OpenSesame syntax (#403)
     - Don't crash on viewing remote urls ending in .md
+    - Fix crashing help menu when off-line (#395)
   * Improvements
     - Preserve cursor position when switching to and from inline_script items (#390)
     - Give better error message when missing end-of-block line for multiline variables
