@@ -45,19 +45,32 @@ class header_widget(base_widget):
 		self.setToolTip(_(u"Click to edit"))
 		self.item = item
 		self.label_name = QtWidgets.QLabel()
+		self.label_name.setObjectName(u'item_name')
+		self.label_name.setSizePolicy(QtWidgets.QSizePolicy.Fixed,
+			QtWidgets.QSizePolicy.Fixed)
+		self.label_type = QtWidgets.QLabel()
+		self.label_type.setObjectName(u'item_type')
 		self.edit_name = QtWidgets.QLineEdit()
 		self.edit_name.editingFinished.connect(self.apply_name)
 		self.edit_name.hide()
 		self.label_desc = QtWidgets.QLabel()
+		self.label_desc.setObjectName(u'item_desc')
 		self.label_desc.setWordWrap(True)
 		self.edit_desc = QtWidgets.QLineEdit()
 		self.edit_desc.editingFinished.connect(self.apply_desc)
 		self.edit_desc.hide()
 
+		hbox = QtWidgets.QHBoxLayout()
+		hbox.setContentsMargins(0, 0, 0, 0)
+		hbox.setSpacing(0)
+		hbox.addWidget(self.label_name)
+		hbox.addWidget(self.label_type)
+		name_type = QtWidgets.QWidget()
+		name_type.setLayout(hbox)
 		vbox = QtWidgets.QVBoxLayout()
 		vbox.setContentsMargins(0, 0, 0, 0)
 		vbox.setSpacing(0)
-		vbox.addWidget(self.label_name)
+		vbox.addWidget(name_type)
 		vbox.addWidget(self.edit_name)
 		vbox.addWidget(self.label_desc)
 		vbox.addWidget(self.edit_desc)
@@ -87,9 +100,8 @@ class header_widget(base_widget):
 			type:	unicode
 		"""
 
-		self.label_name.setText((u"<font size='5'>%s"
-			u"<font color='gray'> &ndash; %s</font></font>") \
-			% (name, self.item.item_type.replace(u"_", u" ")))
+		self.label_name.setText(name)
+		self.label_type.setText(u' — ' + self.item.item_type.replace(u"_", u" "))
 		self.edit_name.setText(name)
 
 	def set_desc(self, desc):

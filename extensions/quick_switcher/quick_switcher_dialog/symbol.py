@@ -51,7 +51,7 @@ class quick_open_element_symbol(base_widget):
 		self.item = item
 		self.phase = phase
 		self.lineNo, self._type, self.name, self.argspec = symbol
-		self.icon = self.theme.qlabel(u'os-symbol')
+		self.icon = self.theme.qlabel(u'text-x-script')
 		self.label = QtWidgets.QLabel(u'%s <b>%s</b><br /><i>In: %s [%s:%d]</i>' % (
 			self._type, self.name, self.item.name, self.phase, self.lineNo))
 		self.layout = QtWidgets.QHBoxLayout(self)

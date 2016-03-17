@@ -58,10 +58,6 @@ class pool_widget(base_widget):
 		self.ui.list_pool.itemActivated.connect(self.activate_file)
 		self.ui.list_pool.itemChanged.connect(self.rename_file)
 		self.main_window.theme.apply_theme(self)
-		self.ui.combobox_view.setItemIcon(0, self.main_window.theme.qicon(
-			u"view-list-details"))
-		self.ui.combobox_view.setItemIcon(1, self.main_window.theme.qicon(
-			u"view-list-icons"))
 		self.ui.label_size_warning.setVisible(False)
 
 	def help(self):

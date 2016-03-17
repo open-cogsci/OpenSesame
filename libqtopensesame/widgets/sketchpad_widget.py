@@ -53,8 +53,8 @@ class sketchpad_widget(base_widget):
 		self.initialized = False
 		self.margin = 50
 		self.canvas = self.sketchpad.canvas
-		self.arrow_cursor = QtGui.QCursor(self.theme.qpixmap(u'cursor-move'),
-			7, 2)
+		self.arrow_cursor = QtGui.QCursor(
+			self.theme.qpixmap(u'os-pointer'), 7, 2)
 		self.ui.graphics_view.setScene(self.canvas)
 		self.ui.graphics_view.setMouseTracking(True)
 		self.ui.button_pointer.clicked.connect(self.select_pointer_tool)

@@ -40,7 +40,7 @@ class tree_inline_script_phase_item(tree_base_item):
 		self.inline_script = inline_script
 		self.phase = phase
 		self.setText(0, phase)
-		self.setIcon(0, self.theme.qicon(u'os-symbol'))
+		self.setIcon(0, self.theme.qicon(u'text-x-script'))
 		self._droppable = False
 		self._draggable = False
 		self.expand()

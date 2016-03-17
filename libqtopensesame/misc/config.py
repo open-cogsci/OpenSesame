@@ -123,7 +123,7 @@ class config(object):
 		u'qProgEditTogglePrefsShortcut' : u'Ctrl+Shift+P',
 		u'qProgEditRunSelectedShortcut' : u'Alt+R',
 		u'qProgEditRunAllShortcut' : u'Shift+Alt+R',
-		u'qProgEditSymbolTreeWidgetItemIcon' : u'os-symbol',
+		u'qProgEditSymbolTreeWidgetItemIcon' : u'text-x-script',
 		}
 
 	# OS specific override settings

@@ -202,8 +202,7 @@
           <string>View as list</string>
          </property>
          <property name="icon">
-          <iconset>
-           <normaloff>:/icons/variable_inspector.png</normaloff>:/icons/variable_inspector.png</iconset>
+          <iconset theme="view-list-details"/>
          </property>
         </item>
         <item>
@@ -211,8 +210,7 @@
           <string>View as icons</string>
          </property>
          <property name="icon">
-          <iconset>
-           <normaloff>:/icons/variable_inspector.png</normaloff>:/icons/variable_inspector.png</iconset>
+          <iconset theme="view-list-icons"/>
          </property>
         </item>
        </widget>

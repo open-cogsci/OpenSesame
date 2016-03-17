@@ -1,0 +1,83 @@
+#user_hint_widget QPushButton {
+	background-color: #729fcf;
+}
+
+#label_size_warning {
+	background-color: #729fcf;
+	color: #ffffff;
+	border-radius: 2px;
+	padding: 4px;
+}
+
+#user_hint_widget,
+#widget_variable_inspector_header_box,
+#widget_debug_window_header_box,
+#widget_header_box {
+	background-color: #729fcf;
+	border-radius: 2px;
+	padding: 0px;
+}
+
+#user_hint_widget QPushButton,
+#user_hint_widget QLabel,
+#widget_variable_inspector_header_box QLabel,
+#widget_debug_window_header_box QLabel,
+#widget_header_box QLabel {
+	color: #ffffff;
+	padding-left: 4px;
+}
+
+#item_name {
+	font-family: 'Roboto Slab';
+	color: #0277bd;
+	font-size: 16pt;
+}
+
+#item_type {
+	font-family: 'Roboto Slab';
+	font-size: 16pt;
+	color: #78909c;
+}
+
+#item_desc {
+	font-family: 'Roboto Condensed', serif;
+	color: #78909c;
+}
+
+#quick_switcher #filter_line_edit {
+	font-size: 14pt;
+}
+
+#quick_switcher {
+	border-color: #0277bd;
+	background-color: #03A9F4;
+}
+
+#quick_switcher QListWidget,
+#quick_switcher QLineEdit {
+	border: none;
+	border-radius: 2px;
+	background-color: #eeeeec;
+	padding: 4px;
+}
+
+#quick_switcher #label_quick_switcher_wait {
+	font-size: 14pt;
+	color: #ffffff;
+}
+
+#form_sketchpad * {
+	font-size: 8pt;
+}
+
+#form_sketchpad #label_cursor_pos {
+	font-family: monospace;
+}
+
+#toolbar_items QLabel {
+	font-size: 8pt;
+}
+
+QTreeView::item {
+	padding: 4px;
+}

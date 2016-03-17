@@ -257,7 +257,10 @@ class qtopensesame(QtWidgets.QMainWindow, base_component):
 		"""
 
 		from libqtopensesame.widgets.font_widget import font_widget
-		for font in font_widget.font_list:
+		for font in font_widget.font_list + [
+				u'RobotoSlab-Regular',
+				u'RobotoMono-Regular',
+				u'Roboto-Regular']:
 			try:
 				ttf = self.experiment.resource(u'%s.ttf' % font)
 			except:

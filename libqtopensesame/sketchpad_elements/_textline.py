@@ -112,4 +112,4 @@ class textline(base_element, textline_runtime):
 
 	@staticmethod
 	def cursor():
-		return u'cursor-text', -1, -1
+		return u'os-textline', -1, -1
