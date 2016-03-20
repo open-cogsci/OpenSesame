@@ -157,14 +157,20 @@ class theme:
 		"""
 
 		if isinstance(icon, basestring) and os.path.exists(icon):
-			return QtWidgets.QPixmap(icon)
+			return QtGui.QPixmap(icon)
 		if size is None:
 			if icon in self.icon_map:
 				size = self.icon_map[icon][1]
 			else:
 				size = self.default_icon_size
-		icon = self.qicon(icon)
-		return icon.pixmap(size)
+		size = QtCore.QSize(size, size)
+		# Pixmap should never return a pixmap larger than the requested size.
+		# However, this does happen on some versions of Qt4. Therefore, we check
+		# the size, and scale if necessary.
+		pixmap = self.qicon(icon).pixmap(size)
+		if pixmap.size() != size:
+			pixmap = pixmap.scaled(size)
+		return pixmap
 
 	def qlabel(self, icon, size=None):
 
