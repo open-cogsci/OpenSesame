@@ -59,7 +59,6 @@ class get_started(base_extension):
 		# Initialize recent experiments
 		if not self.main_window.recent_files:
 			recent = []
-			self.ui._label_recent.hide()
 		else:
 			recent = [_(u'Continue with a recent experiment:')+u'<br />']
 			for i, path in enumerate(self.main_window.recent_files):
