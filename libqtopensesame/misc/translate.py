@@ -34,6 +34,7 @@ Translation logic:
 
 """
 
+import os
 from libopensesame.py3compat import *
 from qtpy.QtCore import QCoreApplication
 
@@ -59,8 +60,8 @@ def translation_context(name, category=u'core'):
 	"""
 
 	_context = u'%s_%s' % (category, name)
-	if py3:
-		# Python 3 doesn't require an encoding
+	if os.environ[u'QT_API'] == u'pyqt5':
+		# PyQt5 3 doesn't require an encoding
 		return lambda s, context=None: QCoreApplication.translate(_context,
 			s)
 	return lambda s, context=None: QCoreApplication.translate(_context, s,
