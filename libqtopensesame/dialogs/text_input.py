@@ -66,7 +66,7 @@ class text_input(base_dialog):
 		"""
 
 		while True:
-			if self.exec_() != QtGui.QDialog.Accepted:
+			if self.exec_() != QtWidgets.QDialog.Accepted:
 				break
 			s = self.ui.textedit_input.toPlainText()
 			if self._validator is None or self._validator(s):
