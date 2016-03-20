@@ -56,7 +56,7 @@ class textline(base_element, textline_runtime):
 	def mouse_press(cls, sketchpad, pos):
 
 		text = sketchpad.experiment.text_input(title=_(u'New textline'),
-			message=_(u'Please enter a text for the textline'),
+			message=_(u'Enter text'),
 			parent=sketchpad._edit_widget)
 		if text is None:
 			return None
