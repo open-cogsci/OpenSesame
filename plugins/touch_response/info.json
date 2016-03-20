@@ -3,6 +3,7 @@
 	"url"		: "http://osdoc.cogsci.nl/",
 	"category"	: "Response collection",
 	"comment"	: "Standard OpenSesame plug-in",
+	"icon"		: "os-touch_response",
 	"controls" : [
 		{
 			"type"		: "line_edit",

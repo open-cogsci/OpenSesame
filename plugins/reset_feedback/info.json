@@ -1,9 +1,5 @@
-{
-	"category"	: "Response collection",
-	"controls" : [
-		{
-			"type"		: "text",
-			"label"		: "This plug-in has no settings"
-		}
-	]
-}
+category : Response collection
+icon: os-reset_feedback
+controls:
+- type		: text
+  label		: This plug-in has no settings

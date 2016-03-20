@@ -1,6 +1,7 @@
 {
 	"author"	: "Edwin Dalmaijer",
 	"category"	: "Response collection",
+	"icon"		: "os-joystick",
 	"controls" : [
 		{
 			"type"		: "combobox",

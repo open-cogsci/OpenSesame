@@ -156,6 +156,8 @@ class theme:
 		A QPixmap
 		"""
 
+		if isinstance(icon, basestring) and os.path.exists(icon):
+			return QtWidgets.QPixmap(icon)
 		if size is None:
 			if icon in self.icon_map:
 				size = self.icon_map[icon][1]

@@ -3,6 +3,7 @@
 	"url"		: "http://osdoc.cogsci.nl",
 	"category"	: "Miscellaneous",
 	"comment"	: "Simple notepad plug-in",
+	"icon"		: "notes",
 	"controls" : [
 		{
 			"type"		: "editor",

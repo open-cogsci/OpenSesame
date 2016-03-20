@@ -116,6 +116,6 @@ class toolbar_items(base_subcomponent, QtWidgets.QToolBar):
 			content = []
 			for plugin in cat_plugins:
 				debug.msg(u"adding plugin '%s'" % plugin)
-				content.append(toolbar_items_item(self, plugin,
-					QtGui.QPixmap(plugins.plugin_icon_large(plugin))))
+				pixmap = self.theme.qpixmap(plugins.plugin_icon_large(plugin))
+				content.append(toolbar_items_item(self, plugin, pixmap))
 			self.add_content(content)

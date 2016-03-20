@@ -17,14 +17,14 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
+from libopensesame.py3compat import *
 import os
-import sys
+from libopensesame import plugins
 from qtpy import QtGui, QtCore, QtWidgets
 from libqtopensesame.items import qtitem
-from libqtopensesame.widgets import color_edit, pool_widget
+from libqtopensesame.widgets import color_edit
 from libopensesame import debug, misc
 from libqtopensesame.misc.config import cfg
-from libopensesame.py3compat import *
 from libqtopensesame.misc.translate import translation_context
 _ = translation_context(u'qtplugin', category=u'core')
 
@@ -50,21 +50,12 @@ class qtplugin(qtitem.qtitem):
 			# These lines makes sure that the icons and help file are recognized
 			# by OpenSesame.
 			self.plugin_folder = os.path.dirname(plugin_file)
-			icon16 = os.path.join(
-				self.plugin_folder, u'%s.png' % self.item_type)
-			icon32 = os.path.join(
-				self.plugin_folder, u'%s_large.png' % self.item_type)
-			self.experiment.resources[u'%s.png' % self.item_type] = icon16
-			self.experiment.resources[u'%s_large.png' % self.item_type] = icon32
 			self.experiment.resources[u'%s.html' % self.item_type] = \
 				os.path.join(self.plugin_folder, u'%s.html' \
 				% self.item_type)
 			self.experiment.resources[u'%s.md' % self.item_type] = \
 				os.path.join(self.plugin_folder, u'%s.md' \
 				% self.item_type)
-			self.qicon = QtGui.QIcon()
-			self.qicon.addFile(icon16, QtCore.QSize(16,16))
-			self.qicon.addFile(icon32, QtCore.QSize(32,32))
 			# Install a translation file if there is one. Most plugins have
 			# their translations as part of the OpenSesame main translations.
 			# However, separate plugins can bring their own translation.
@@ -74,10 +65,27 @@ class qtplugin(qtitem.qtitem):
 				translator = QtCore.QTranslator()
 				translator.load(translation_file)
 				QtCore.QCoreApplication.installTranslator(translator)
+			self.init_item_icon()
 		else:
 			self.qicon = None
 		self.lock = False
 		qtitem.qtitem.__init__(self)
+
+	def init_item_icon(self):
+
+		icon = plugins.plugin_property(self.item_type, u'icon', default=None)
+		if icon is not None:
+			self.qicon = self.theme.qicon(icon)
+			return
+		icon16 = os.path.join(
+			self.plugin_folder, u'%s.png' % self.item_type)
+		icon32 = os.path.join(
+			self.plugin_folder, u'%s_large.png' % self.item_type)
+		self.experiment.resources[u'%s.png' % self.item_type] = icon16
+		self.experiment.resources[u'%s_large.png' % self.item_type] = icon32
+		self.qicon = QtGui.QIcon()
+		self.qicon.addFile(icon16, QtCore.QSize(16,16))
+		self.qicon.addFile(icon32, QtCore.QSize(32,32))
 
 	def item_icon(self):
 
@@ -146,7 +154,9 @@ class qtplugin(qtitem.qtitem):
 			hbox.setContentsMargins(0,0,0,0)
 			hbox.setSpacing(12)
 			hbox.addWidget(widget)
-			hbox.addWidget(QtWidgets.QLabel(u'<small><i>%s</i></small>' % info))
+			info = QtWidgets.QLabel(info)
+			info.setObjectName(u'control-info')
+			hbox.addWidget(info)
 			container = QtWidgets.QWidget()
 			container.setLayout(hbox)
 			self.edit_grid.insertRow(row, label, container)

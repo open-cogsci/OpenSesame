@@ -1,5 +1,6 @@
 {
 	"category"	: "Flow control",
+	"icon"		: "clock",
 	"controls" : [
 		{
 			"type"		: "spinbox",

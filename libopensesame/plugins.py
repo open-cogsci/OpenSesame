@@ -291,6 +291,9 @@ def plugin_icon_large(plugin, _type=u'plugins'):
 	The full path to an icon
 	"""
 
+	icon = plugin_property(plugin, u'icon', default=None)
+	if icon is not None:
+		return icon
 	return os.path.join(plugin_folder(plugin, _type=_type),
 		u'%s_large.png' % plugin)
 
@@ -306,6 +309,9 @@ def plugin_icon_small(plugin, _type=u'plugins'):
 	The full path to an icon
 	"""
 
+	icon = plugin_property(plugin, u'icon', default=None)
+	if icon is not None:
+		return icon
 	return os.path.join(plugin_folder(plugin, _type=_type), u'%s.png' % plugin)
 
 def import_plugin(plugin, _type=u'plugins'):

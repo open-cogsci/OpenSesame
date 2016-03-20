@@ -19,7 +19,7 @@ table tr td {
 	word-wrap: break-word;
 }
 
-code, pre {
+code {
 	color: #bf360c;
 }
 
@@ -54,7 +54,7 @@ h2 {
 .important-button,
 .dismiss-button,
 .button {
-	font-family: 'Roboto Condensed';
+	/*font-family: 'Roboto Condensed';*/
 	display: inline-block;
 	padding: 4px 8px 4px 8px;
 	margin: 4px 0px 4px 0px;
