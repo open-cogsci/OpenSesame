@@ -72,7 +72,8 @@ class markdown_parser(base_subcomponent):
 			self.re_script = re.compile(
 				r'^~~~\s*.(?P<syntax>\w+)(?P<script>.*?)^~~~', re.S | re.M)
 		self.css += u'</style>'
-		self.ext = [attr_list.AttrListExtension(), extra.ExtraExtension()]
+		if markdown is not None:
+			self.ext = [attr_list.AttrListExtension(), extra.ExtraExtension()]
 		self.footer = u'''
 <p>
 <a class="dismiss-button" href="opensesame://action.close_current_tab">%s</a>
