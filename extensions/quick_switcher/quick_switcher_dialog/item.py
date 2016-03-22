@@ -43,7 +43,7 @@ class quick_open_element_item(base_widget):
 
 		super(quick_open_element_item, self).__init__(item.main_window)
 		self.item = item
-		self.icon = self.theme.qlabel(self.item.item_type)
+		self.icon = self.theme.qlabel(self.item.item_icon())
 		self.label = QtWidgets.QLabel(u'item <b>%s</b><br /><i>Type: %s</i>' \
 			% (self.item.name, self.item.item_type))
 		self.layout = QtWidgets.QHBoxLayout(self)
