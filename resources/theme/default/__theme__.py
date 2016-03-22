@@ -17,9 +17,6 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
-__author__ = "Sebastiaan Mathot"
-__license__ = "GPLv3"
-
 icon_map = "icon_map.csv"
-icon_theme = "os-custom-icons"
+icon_theme = "MokaSesame"
 qss = "stylesheet.qss"

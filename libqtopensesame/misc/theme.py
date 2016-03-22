@@ -25,7 +25,7 @@ from libopensesame import debug, misc
 from libqtopensesame.misc import config
 from qtpy import QtGui, QtWidgets, QtCore
 
-available_themes = [u'default', u'moka']
+available_themes = [u'default']
 
 class theme:
 

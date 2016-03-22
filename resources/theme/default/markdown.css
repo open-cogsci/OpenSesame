@@ -14,8 +14,14 @@ table tr td {
 	padding-right: 36px;
 }
 
+.highlight span, code, pre {
+	font-family: 'Roboto Mono', monospace!important;
+	word-wrap: break-word;
+}
+
 a {
-	color: #78909c;
+	color: #0277bd;
+	text-decoration: none;
 }
 
 a:hover {
@@ -26,7 +32,6 @@ h1, h2 {
 	font-family: 'Roboto Slab', serif;
 	font-weight: normal;
 	color: #0277bd!important;
-	border-bottom: solid 1px #cfd8dc;
 }
 
 h1 {
@@ -34,15 +39,12 @@ h1 {
 	display: block;
 	height: 48px;
 	background: url("file://%(background_image)s") no-repeat top right;
+	border-bottom: solid 1px #ff5722;
 }
 
 h2 {
 	font-size: 1.5em;
-}
-
-.highlight span, code, pre {
-	font-family: 'Roboto Mono', monospace!important;
-	word-wrap: break-word;
+	border-bottom: solid 1px #cfd8dc;
 }
 
 .important-button,
@@ -57,12 +59,6 @@ h2 {
 	border: solid 1px;
 }
 
-/*.dismiss-button:hover,
-.important-button:hover,
-.button:hover {
-	color: #2e3436;
-}*/
-
 .button {
 	color: #0277bd;
 	border-color: #cfd8dc;
@@ -76,23 +72,23 @@ h2 {
 .dismiss-button {
 	color: #fff;
 	border-color: #2e7d32;
-	background-color: #4CAF50;
+	background-color: #43A047;
 }
 
 .dismiss-button:hover {
 	color: #fff;
-	background-color: #43A047;
+	background-color: #388E3C;
 }
 
 .important-button {
 	color: #fff;
 	border-color: #0277bd;
-	background-color: #03A9F4;
+	background-color: #039BE5;
 }
 
 .important-button:hover {
 	color: #fff;
-	background-color: #039BE5;
+	background-color: #0288D1;
 }
 
 .footer {
