@@ -183,6 +183,7 @@ class qtopensesame(QtWidgets.QMainWindow, base_component):
 		self.ui.dock_pool.setWidget(self.ui.pool_widget)
 
 		# Uncheck the debug window button on debug window close
+		self.ui.dock_stdout.hide()
 		self.ui.dock_stdout.visibilityChanged.connect(
 			self.ui.action_show_stdout.setChecked)
 
@@ -258,6 +259,7 @@ class qtopensesame(QtWidgets.QMainWindow, base_component):
 
 		from libqtopensesame.widgets.font_widget import font_widget
 		for font in font_widget.font_list + [
+				u'RobotoCondensed-Regular',
 				u'RobotoSlab-Regular',
 				u'RobotoMono-Regular',
 				u'Roboto-Regular']:
