@@ -27,6 +27,7 @@ desc:
 # List of included plug-ins
 included_plugins = [
 	'advanced_delay',
+	'coroutines',
 	'fixation_dot',
 	'form_base',
 	'form_text_input',
