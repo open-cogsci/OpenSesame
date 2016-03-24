@@ -19,13 +19,12 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 if __name__ == u'__main__':
-	# Make sure the multiprocessing part of OS plays well with py2exe/py2app
-	# Has no effect if program is run straight from cli interpreter
-
-	# First, load a minimum number of modules and show an empty app window.
-	# This gives the user the feeling of a snappy response.
 	import os, sys, platform
-
+	# Add the folder that contains the OpenSesame modules to the path. This is
+	# generally only necessary if OpenSesame is directly run from source,
+	# instead from an installation.
+	if os.path.exists(os.path.join(os.getcwd(), 'libopensesame')):
+		sys.path.insert(0, os.getcwd())
 	# Support for multiprocessing when packaged
 	# In OS X the multiprocessing module is horribly broken, but a fixed
 	# version has been released as the 'billiard' module
@@ -42,23 +41,14 @@ if __name__ == u'__main__':
 	else:
 		from multiprocessing import freeze_support
 		freeze_support()
-
+	# Parse the (optional) environment file that contains special paths, etc.
 	from libopensesame.misc import resource, filesystem_encoding, \
 		parse_environment_file
 	parse_environment_file()
-
-	# Change Qt API
+	# Force the new-style Qt API
 	import sip
 	sip.setapi('QString', 2)
 	sip.setapi('QVariant', 2)
-
-	# Register PyQt4 plugin folder
-	from qtpy.QtCore import QCoreApplication
-	if os.environ[u'QT_API'] == u'pyqt' and os.path.exists(u'PyQt4_plugins'):
-		QCoreApplication.addLibraryPath(u'PyQt4_plugins')
-	elif os.environ[u'QT_API'] == u'pyqt5' and os.path.exists(u'PyQt5_plugins'):
-		QCoreApplication.addLibraryPath(u'PyQt5_plugins')
-
 	# Load debug package (this must be after the working directory change)
 	from libopensesame import debug
 	# Do the basic window initialization
@@ -66,6 +56,7 @@ if __name__ == u'__main__':
 	app = QApplication(sys.argv)
 	from libqtopensesame.qtopensesame import qtopensesame
 	opensesame = qtopensesame(app)
+	opensesame.__script__ = __file__
 	app.processEvents()
 	# Import the remaining modules
 	from qtpy.QtCore import QObject, QLocale, QTranslator

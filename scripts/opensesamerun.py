@@ -23,22 +23,11 @@ if __name__ == u"__main__":
 	# First, load a minimum number of modules and show an empty app window. This
 	# gives the user the feeling of a snappy response.
 	import os, sys
-	# Change the working directory on Windows. Depending on whether the
-	# application has been frozen by py2exe or not we need to use a different
-	# method of deducing the name to the main script.
-	# See also http://www.py2exe.org/index.cgi/HowToDetermineIfRunningFromExe
-	if os.name == "nt":
-		import imp
-		if (hasattr(sys, "frozen") or hasattr(sys, "importers") or \
-			imp.is_frozen("__main__")):
-			path = os.path.dirname(sys.executable)
-		else:
-			path = os.path.dirname(__file__)
-		if path != '':
-			os.chdir(path)
-			if path not in sys.path:
-				sys.path.append(path)
-
+	# Add the folder that contains the OpenSesame modules to the path. This is
+	# generally only necessary if OpenSesame is directly run from source,
+	# instead from an installation.
+	if os.path.exists(os.path.join(os.getcwd(), 'libopensesame')):
+		sys.path.insert(0, os.getcwd())
 	import libopensesame.misc
 	libopensesame.misc.parse_environment_file()
 	import libopensesame.experiment
@@ -69,14 +58,11 @@ if __name__ == u"__main__":
 			myapp = libqtopensesame.qtopensesamerun.qtopensesamerun(options)
 		myapp.show()
 		app.exec_()
-
 		# Update the options from the GUI
 		options = myapp.options
-
 		# Exit if the GUI was canceled
 		if not myapp.run:
 			sys.exit()
-
 	# Decode the experiment path and logfile
 	experiment = os.path.abspath(options.experiment)
 	if isinstance(experiment, str):

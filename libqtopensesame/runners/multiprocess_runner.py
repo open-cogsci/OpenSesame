@@ -36,8 +36,8 @@ class multiprocess_runner(base_runner):
 		import platform
 		if platform.system() == 'Darwin' and \
 			sys.version_info < (3,4):
-				# In OS X the multiprocessing module is horribly broken, 
-				# for python 2.7 but a fixed version has been released 
+				# In OS X the multiprocessing module is horribly broken,
+				# for python 2.7 but a fixed version has been released
 				# as the 'billiard' module
 				import billiard as multiprocessing
 		else:
@@ -47,23 +47,6 @@ class multiprocess_runner(base_runner):
 		from libopensesame import misc
 
 		self._workspace_globals = {}
-		if os.name == u'nt' or (sys.platform == u'darwin' \
-			and not hasattr(sys,"frozen")):
-			# Under Windows and OSX, the multiprocess runner assumes that there
-			# is a file called `opensesame.py` or `opensesame.pyc`. If this file
-			# does not exist, try to copy it from the main script
-			# (`opensesame`). If this fails, provide an informative error
-			# message.
-			os_folder = misc.opensesame_folder()
-			if not os.path.exists(os.path.join(os_folder, u'opensesame.pyc')) \
-				and not os.path.exists(os.path.join(os_folder, u'opensesame.py')):
-				import shutil
-				try:
-					shutil.copyfile(os.path.join(os_folder, u'opensesame'),
-						os.path.join(os_folder, u'opensesame.py'))
-				except Exception as e:
-					return osexception(
-						_(u'Failed to copy `opensesame` to `opensesame.py`, which is required for the multiprocess runner. Please copy the file manually, or select a different runner under Preferences.'), exception=e)
 		self.channel = multiprocessing.Queue()
 		try:
 			self.exp_process = process.ExperimentProcess(self.experiment,
