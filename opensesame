@@ -43,22 +43,6 @@ if __name__ == u'__main__':
 		from multiprocessing import freeze_support
 		freeze_support()
 
-	# Change the working directory on Windows. Depending on whether the
-	# application has been frozen by py2exe or not we need to use a different
-	# method of deducing the name to the main script.
-	# See also http://www.py2exe.org/index.cgi/HowToDetermineIfRunningFromExe
-	if os.name == u'nt':
-		import imp
-		if (hasattr(sys, u'frozen') or hasattr(sys, u'importers') or \
-			imp.is_frozen(u'__main__')):
-			path = os.path.dirname(sys.executable)
-		else:
-			path = os.path.dirname(__file__)
-		if path != '':
-			os.chdir(path)
-			if path not in sys.path:
-				sys.path.append(path)
-
 	from libopensesame.misc import resource, filesystem_encoding, \
 		parse_environment_file
 	parse_environment_file()
