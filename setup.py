@@ -21,11 +21,14 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 import glob
 import os
 import shutil
-from distutils.core import setup
+from setuptools import setup
 from libopensesame import metadata
 from setup_shared  import included_plugins, included_extensions
 
-share_folder = "/usr/share/opensesame"
+if os.name == 'nt':
+	share_folder = ''
+else:
+	share_folder = "/usr/share/opensesame"
 exclude_resources = [
 	'.hidden',
 	'eco_alt_template.opensesame.tar.gz'
@@ -110,6 +113,37 @@ def plugins(included, _type='plugins'):
 			l += recursive_glob(src_folder, target_folder)
 	return l
 
+def data_files_linux():
+
+	return [
+		("/usr/share/icons/hicolor/scalable/apps", ["data/opensesame.svg"]),
+		("/usr/share/opensesame", ["COPYING"]),
+		("/usr/share/mime/packages", ["data/x-opensesame-experiment.xml"]),
+		("/usr/share/applications", ["data/opensesame.desktop"]),
+		("/usr/share/opensesame/help", glob.glob("help/*.md")),
+		("/usr/share/opensesame/sounds", glob.glob("sounds/*"))
+		] + \
+		plugins(included=included_plugins, _type='plugins') + \
+		plugins(included=included_extensions, _type='extensions') + \
+		resources()
+
+def data_files_windows():
+
+	return [
+		("help", glob.glob("help/*.md")),
+		("sounds", glob.glob("sounds/*"))
+		] + \
+		plugins(included=included_plugins, _type='plugins') + \
+		plugins(included=included_extensions, _type='extensions') + \
+		resources()
+
+
+def data_files():
+
+	if os.name == 'nt':
+		return data_files_windows()
+	return data_files_linux()
+
 # Temporarily create README.txt
 shutil.copy('readme.md', 'README.txt')
 
@@ -152,17 +186,7 @@ setup(name="opensesame",
 		"libopensesame" : "libopensesame",
 		"libqtopensesame" : "libqtopensesame"
 		},
-	data_files=[
-		("/usr/share/icons/hicolor/scalable/apps", ["data/opensesame.svg"]),
-		("/usr/share/opensesame", ["COPYING"]),
-		("/usr/share/mime/packages", ["data/x-opensesame-experiment.xml"]),
-		("/usr/share/applications", ["data/opensesame.desktop"]),
-		("/usr/share/opensesame/help", glob.glob("help/*.md")),
-		("/usr/share/opensesame/sounds", glob.glob("sounds/*"))
-		] +
-		plugins(included=included_plugins, _type='plugins') + \
-		plugins(included=included_extensions, _type='extensions') + \
-		resources()
+	data_files=data_files()
 	)
 
 # Clean up temporary readme

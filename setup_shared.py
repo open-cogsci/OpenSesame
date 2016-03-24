@@ -51,6 +51,7 @@ included_plugins = [
 # List of included extensions
 included_extensions = [
 	'automatic_backup',
+	'get_started',
 	'help',
 	'plugin_manager',
 	'quick_switcher',
