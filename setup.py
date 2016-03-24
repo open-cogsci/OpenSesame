@@ -34,6 +34,7 @@ exclude_resources = [
 	'eco_alt_template.opensesame.tar.gz'
 	]
 
+
 def resources():
 
 	"""
@@ -55,6 +56,7 @@ def resources():
 				l.append( (os.path.join(share_folder, root), [os.path.join( \
 					root, f)] ) )
 	return l
+
 
 def recursive_glob(src_folder, target_folder):
 
@@ -91,6 +93,7 @@ def recursive_glob(src_folder, target_folder):
 	l.append( (target_folder, path_list) )
 	return l
 
+
 def plugins(included, _type='plugins'):
 
 	"""
@@ -113,6 +116,7 @@ def plugins(included, _type='plugins'):
 			l += recursive_glob(src_folder, target_folder)
 	return l
 
+
 def data_files_linux():
 
 	return [
@@ -126,6 +130,7 @@ def data_files_linux():
 		plugins(included=included_plugins, _type='plugins') + \
 		plugins(included=included_extensions, _type='extensions') + \
 		resources()
+
 
 def data_files_windows():
 
@@ -144,17 +149,18 @@ def data_files():
 		return data_files_windows()
 	return data_files_linux()
 
+
 # Temporarily create README.txt
 shutil.copy('readme.md', 'README.txt')
 
-setup(name="opensesame",
-	version = metadata.deb_version,
-	description = "A graphical experiment builder for the social sciences",
-	author = "Sebastiaan Mathot",
-	author_email = "s.mathot@cogsci.nl",
-	url = "http://osdoc.cogsci.nl/",
-	scripts = ["opensesame", "opensesamerun"],
-	packages = [
+setup(name="python-opensesame",
+	version=metadata.__version__,
+	description="A graphical experiment builder for the social sciences",
+	author="Sebastiaan Mathot",
+	author_email="s.mathot@cogsci.nl",
+	url="http://osdoc.cogsci.nl/",
+	scripts=["opensesame", "opensesamerun"],
+	packages=[
 		"openexp",
 		"openexp._canvas",
 		"openexp._keyboard",
@@ -186,7 +192,21 @@ setup(name="opensesame",
 		"libopensesame" : "libopensesame",
 		"libqtopensesame" : "libqtopensesame"
 		},
-	data_files=data_files()
+	data_files=data_files(),
+	classifiers=[
+		'Development Status :: 4 - Beta',
+		'Intended Audience :: Science/Research',
+		'Topic :: Scientific/Engineering',
+		'License :: OSI Approved :: GNU General Public License v3 (GPLv3)',
+		'Programming Language :: Python :: 2',
+		'Programming Language :: Python :: 3',
+		],
+	install_requires=[
+		'python-datamatrix',
+		'python-qdatamatrix',
+		'python-pseudorandom',
+		'python-qprogedit',
+		]
 	)
 
 # Clean up temporary readme

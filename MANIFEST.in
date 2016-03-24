@@ -1,36 +1,25 @@
 include data/opensesame.desktop
 include data/x-opensesame-experiment.xml
 include resources/*.ttf
-include resources/templates/*.opensesame
+include resources/templates/*.osexp
+exclude resources/templates/eco_alt_template.osexp
 include setup_shared.py
+recursive-include resources/ui *.ui
+recursive-include resources/widgets *.png
+recursive-include resources/widgets *.png
+recursive-include resources/locale/*.qm
 include readme.md
 exclude .hidden
 recursive-include resources/theme *
 recursive-exclude resources/theme *~
 recursive-exclude resources/theme *.pyc
 recursive-exclude resources/theme *.pyo
-include examples/*.opensesame
-include examples/*.opensesame.tar.gz
 include help/*.md
 include sounds/*
 include COPYING
-recursive-include plugins/advanced_delay *
-recursive-include plugins/external_script *
-recursive-include plugins/fixation_dot *
-recursive-include plugins/text_display *
-recursive-include plugins/text_input *
-recursive-include plugins/notepad *
-recursive-include plugins/srbox *
-recursive-include plugins/reset_feedback *
-recursive-include plugins/form_base *
-recursive-include plugins/form_consent *
-recursive-include plugins/form_text_input *
-recursive-include plugins/form_text_display *
-recursive-include plugins/parallel *
-recursive-include plugins/touch_response *
-recursive-include plugins/joystick *
-recursive-exclude plugins *~
-recursive-exclude plugins *.csv
+recursive-include plugins *
+recursive-exclude plugins __pycache__
 recursive-exclude plugins *.pyc
-recursive-exclude plugins *.pyo
-recursive-exclude plugins */resources/*
+recursive-include extensions *
+recursive-exclude extensions __pycache__
+recursive-exclude extensions *.pyc
