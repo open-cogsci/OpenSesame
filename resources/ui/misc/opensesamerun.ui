@@ -385,7 +385,7 @@ color: rgb(255, 255, 255);</string>
   <connection>
    <sender>button_cancel</sender>
    <signal>clicked()</signal>
-   <receiver>opensesamerun_mainwindow</receiver>
+   <receiver>ui_opensesamerun</receiver>
    <slot>close()</slot>
    <hints>
     <hint type="sourcelabel">
