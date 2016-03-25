@@ -20,6 +20,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 import os
 import sys
 import yaml
+import site
 from libopensesame import debug, misc
 from libopensesame.exceptions import osexception
 from libopensesame.py3compat import *
@@ -57,14 +58,16 @@ def plugin_folders(only_existing=True, _type=u'plugins'):
 
 	l = []
 
-	# For all platforms, the plugins folder relative to the working directory
-	# should be searched
+	# Build a list of default plugin/ extension folders
 	if py3:
-		path = os.path.join(os.getcwd(), _type)
+		cwd = os.getcwd()
 	else:
-		path = os.path.join(os.getcwdu(), _type)
-	if not only_existing or os.path.exists(path):
-		l.append(path)
+		cwd = os.getcwdu()
+	for folder in [cwd] + site.getsitepackages():
+		path = os.path.join(safe_decode(folder, enc=misc.filesystem_encoding()),
+			u'opensesame_%s' % _type)
+		if os.path.exists(path):
+			l.append(path)
 
 	# Get the environment variables
 	if _type == u'plugins':

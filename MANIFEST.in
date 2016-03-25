@@ -1,9 +1,6 @@
-recursive-include help *
-recursive-include sounds *
-recursive-include scripts *
-recursive-include resources *
-recursive-include plugins *
-recursive-include extensions *
+recursive-include opensesame_resources *
+recursive-include opensesame_plugins *
+recursive-include opensesame_extensions *
 global-exclude *.pyc
 global-exclude *.pyo
 global-exclude *.hidden

@@ -101,24 +101,10 @@ class experiment(libopensesame.experiment.experiment):
 		not found.
 		"""
 
-		# Check in the subfolder of the current path, which is
-		# where the helpfile will be on Windows
-		path = os.path.join(u'help', name)
-		if os.path.exists(path):
-			return path
-		# Check in the shared folders
-		if os.name == u'posix':
-			path = u'/usr/share/opensesame/help/%s' % name
-			if os.path.exists(path):
-				return path
-		# Fall back to the resource folder if the help
-		# file is not found
 		try:
-			return self.resource(name)
+			return self.resource(os.path.join(u'help', name))
 		except:
-			pass
-		# Return an empty string if not found
-		return u''
+			return u''
 
 	def module_container(self):
 

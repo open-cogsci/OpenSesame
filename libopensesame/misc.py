@@ -21,8 +21,7 @@ import os
 import os.path
 import platform
 import sys
-
-use_global_resources = '--no-global-resources' not in sys.argv
+import site
 from libopensesame import debug, metadata
 from libopensesame.py3compat import *
 
@@ -224,13 +223,8 @@ def resource(name):
 	A Unicode string with the full path to the resource.
 	"""
 
-	global use_global_resources
-
-	path = os.path.join(u'resources', safe_decode(name, enc=u'utf-8'))
-	if os.path.exists(path):
-		return os.path.join(u'resources', name)
-	if os.name == u'posix' and use_global_resources:
-		path = u'/usr/share/opensesame/resources/%s' % name
+	for folder in resource_folders:
+		path = os.path.join(folder, safe_decode(name, enc=u'utf-8'))
 		if os.path.exists(path):
 			return path
 	return None
@@ -518,3 +512,16 @@ def escape_html(s):
 	for orig, new in l:
 		s = s.replace(orig, new)
 	return s
+
+
+# Build a list of resource folders
+resource_folders = []
+if py3:
+	cwd = os.getcwd()
+else:
+	cwd = os.getcwdu()
+for folder in [cwd] + site.getsitepackages():
+	path = os.path.join(safe_decode(folder, enc=filesystem_encoding()),
+		u'opensesame_resources')
+	if os.path.exists(path):
+		resource_folders.append(path)
