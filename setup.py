@@ -138,7 +138,7 @@ setup(name=u"python-opensesame",
 	author=u"Sebastiaan Mathot",
 	author_email=u"s.mathot@cogsci.nl",
 	url=u"http://osdoc.cogsci.nl/",
-	scripts=[u"scripts/opensesame.py", u"scripts/opensesamerun.py"],
+	scripts=['opensesame', 'opensesamerun'],
 	include_package_data=False,
 	packages=[
 		"openexp",

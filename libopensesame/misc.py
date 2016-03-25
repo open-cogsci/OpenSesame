@@ -223,8 +223,9 @@ def resource(name):
 	A Unicode string with the full path to the resource.
 	"""
 
-	for folder in resource_folders:
-		path = os.path.join(folder, safe_decode(name, enc=u'utf-8'))
+	for folder in base_folders:
+		path = os.path.join(folder, u'opensesame_resources',
+			safe_decode(name, enc=u'utf-8'))
 		if os.path.exists(path):
 			return path
 	return None
@@ -514,14 +515,14 @@ def escape_html(s):
 	return s
 
 
-# Build a list of resource folders
-resource_folders = []
+# Build a list of base folders, that is, folders that can have
+# opensesame_resources, opensesame_plugins, or opensesame_extensions as
+# subfolders
+base_folders = []
 if py3:
 	cwd = os.getcwd()
 else:
 	cwd = os.getcwdu()
-for folder in [cwd] + site.getsitepackages():
-	path = os.path.join(safe_decode(folder, enc=filesystem_encoding()),
-		u'opensesame_resources')
-	if os.path.exists(path):
-		resource_folders.append(path)
+base_folders = [safe_decode(folder, enc=filesystem_encoding()) for \
+	folder in [cwd, site.getuserbase(), site.getusersitepackages()] \
+	+ site.getsitepackages() + [u'/usr/local']]

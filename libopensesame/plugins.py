@@ -59,13 +59,8 @@ def plugin_folders(only_existing=True, _type=u'plugins'):
 	l = []
 
 	# Build a list of default plugin/ extension folders
-	if py3:
-		cwd = os.getcwd()
-	else:
-		cwd = os.getcwdu()
-	for folder in [cwd] + site.getsitepackages():
-		path = os.path.join(safe_decode(folder, enc=misc.filesystem_encoding()),
-			u'opensesame_%s' % _type)
+	for folder in misc.base_folders:
+		path = os.path.join(folder, u'opensesame_%s' % _type)
 		if os.path.exists(path):
 			l.append(path)
 
