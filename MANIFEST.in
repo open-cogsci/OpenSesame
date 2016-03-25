@@ -1,25 +1,10 @@
-include data/opensesame.desktop
-include data/x-opensesame-experiment.xml
-include resources/*.ttf
-include resources/templates/*.osexp
-exclude resources/templates/eco_alt_template.osexp
-include setup_shared.py
-recursive-include resources/ui *.ui
-recursive-include resources/widgets *.png
-recursive-include resources/widgets *.png
-recursive-include resources/locale/*.qm
-include readme.md
-exclude .hidden
-recursive-include resources/theme *
-recursive-exclude resources/theme *~
-recursive-exclude resources/theme *.pyc
-recursive-exclude resources/theme *.pyo
-include help/*.md
-include sounds/*
-include COPYING
+recursive-include help *
+recursive-include sounds *
+recursive-include scripts *
+recursive-include resources *
 recursive-include plugins *
-recursive-exclude plugins __pycache__
-recursive-exclude plugins *.pyc
 recursive-include extensions *
-recursive-exclude extensions __pycache__
-recursive-exclude extensions *.pyc
+global-exclude *.pyc
+global-exclude *.pyo
+global-exclude *.hidden
+global-exclude *~

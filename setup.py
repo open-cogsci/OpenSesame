@@ -24,15 +24,29 @@ import shutil
 from setuptools import setup
 from libopensesame import metadata
 from setup_shared  import included_plugins, included_extensions
+import fnmatch
 
-if os.name == 'nt':
-	share_folder = ''
+if os.name == u'nt':
+	SHARE_FOLDER = u''
 else:
-	share_folder = "/usr/share/opensesame"
-exclude_resources = [
-	'.hidden',
-	'eco_alt_template.opensesame.tar.gz'
+	SHARE_FOLDER = u'/usr/share/opensesame'
+
+EXCLUDE = [
+	u'[\\/].*',
+	u'*eco_alt_template.osexp',
+	u'*~',
+	u'*.pyc',
+	u'*.pyo',
+	u'*__pycache__*'
 	]
+
+
+def is_excluded(path):
+
+	for m in EXCLUDE:
+		if fnmatch.fnmatch(path, m):
+			return True
+	return False
 
 
 def resources():
@@ -46,15 +60,11 @@ def resources():
 	"""
 
 	l = []
-	for root, dirnames, filenames in os.walk("resources"):
-		print(root)
-		if root in ["resources/bak", "resources/ui"]:
-			continue
+	for root, dirnames, filenames in os.walk(u'resources'):
 		for f in filenames:
-			if f not in exclude_resources and (os.path.splitext(f)[1] not in \
-				[".csv"] or f in ["icon_map.csv"]):
-				l.append( (os.path.join(share_folder, root), [os.path.join( \
-					root, f)] ) )
+			path = os.path.join(root, f)
+			if not is_excluded(path):
+				l.append((os.path.join(SHARE_FOLDER, root), [path]))
 	return l
 
 
@@ -80,21 +90,15 @@ def recursive_glob(src_folder, target_folder):
 		if os.path.isdir(full_path):
 			l += recursive_glob(full_path, os.path.join(target_folder, path))
 			continue
-		if path.startswith('.'):
+		if is_excluded(full_path):
 			continue
-		if path.endswith('.pyc'):
-			continue
-		if path.endswith('.pyo'):
-			continue
-		if path.endswith('~'):
-			continue
-		print('\t%s' % full_path)
+		print(u'\t%s' % full_path)
 		path_list.append(full_path)
 	l.append( (target_folder, path_list) )
 	return l
 
 
-def plugins(included, _type='plugins'):
+def plugins(included, _type=u'plugins'):
 
 	"""
 	desc:
@@ -111,7 +115,7 @@ def plugins(included, _type='plugins'):
 	l = []
 	for plugin in os.listdir(_type):
 		if plugin in included:
-			target_folder = os.path.join(share_folder, _type, plugin)
+			target_folder = os.path.join(SHARE_FOLDER, _type, plugin)
 			src_folder = os.path.join(_type, plugin)
 			l += recursive_glob(src_folder, target_folder)
 	return l
@@ -120,46 +124,47 @@ def plugins(included, _type='plugins'):
 def data_files_linux():
 
 	return [
-		("/usr/share/icons/hicolor/scalable/apps", ["data/opensesame.svg"]),
-		("/usr/share/opensesame", ["COPYING"]),
-		("/usr/share/mime/packages", ["data/x-opensesame-experiment.xml"]),
-		("/usr/share/applications", ["data/opensesame.desktop"]),
-		("/usr/share/opensesame/help", glob.glob("help/*.md")),
-		("/usr/share/opensesame/sounds", glob.glob("sounds/*"))
+		(u"/usr/share/icons/hicolor/scalable/apps", [u"data/opensesame.svg"]),
+		(u"/usr/share/opensesame", [u"COPYING"]),
+		(u"/usr/share/mime/packages", [u"data/x-opensesame-experiment.xml"]),
+		(u"/usr/share/applications", [u"data/opensesame.desktop"]),
+		(u"/usr/share/opensesame/help", glob.glob(u"help/*.md")),
+		(u"/usr/share/opensesame/sounds", glob.glob(u"sounds/*"))
 		] + \
-		plugins(included=included_plugins, _type='plugins') + \
-		plugins(included=included_extensions, _type='extensions') + \
+		plugins(included=included_plugins, _type=u'plugins') + \
+		plugins(included=included_extensions, _type=u'extensions') + \
 		resources()
 
 
 def data_files_windows():
 
 	return [
-		("help", glob.glob("help/*.md")),
-		("sounds", glob.glob("sounds/*"))
+		(u"help", glob.glob(u"help/*.md")),
+		(u"sounds", glob.glob(u"sounds/*"))
 		] + \
-		plugins(included=included_plugins, _type='plugins') + \
-		plugins(included=included_extensions, _type='extensions') + \
+		plugins(included=included_plugins, _type=u'plugins') + \
+		plugins(included=included_extensions, _type=u'extensions') + \
 		resources()
 
 
 def data_files():
 
-	if os.name == 'nt':
+	if os.name == u'nt':
 		return data_files_windows()
 	return data_files_linux()
 
 
 # Temporarily create README.txt
-shutil.copy('readme.md', 'README.txt')
+shutil.copy(u'readme.md', u'README.txt')
 
-setup(name="python-opensesame",
+setup(name=u"python-opensesame",
 	version=metadata.__version__,
-	description="A graphical experiment builder for the social sciences",
-	author="Sebastiaan Mathot",
-	author_email="s.mathot@cogsci.nl",
-	url="http://osdoc.cogsci.nl/",
-	scripts=["opensesame", "opensesamerun"],
+	description=u"A graphical experiment builder for the social sciences",
+	author=u"Sebastiaan Mathot",
+	author_email=u"s.mathot@cogsci.nl",
+	url=u"http://osdoc.cogsci.nl/",
+	scripts=[u"scripts/opensesame.py", u"scripts/opensesamerun.py"],
+	include_package_data=False,
 	packages=[
 		"openexp",
 		"openexp._canvas",
@@ -187,11 +192,6 @@ setup(name="python-opensesame",
 		"libqtopensesame._input",
 		"libqtopensesame.console",
 		],
-	package_dir = {
-		"openexp" : "openexp",
-		"libopensesame" : "libopensesame",
-		"libqtopensesame" : "libqtopensesame"
-		},
 	data_files=data_files(),
 	classifiers=[
 		'Development Status :: 4 - Beta',
@@ -201,13 +201,7 @@ setup(name="python-opensesame",
 		'Programming Language :: Python :: 2',
 		'Programming Language :: Python :: 3',
 		],
-	install_requires=[
-		'python-datamatrix',
-		'python-qdatamatrix',
-		'python-pseudorandom',
-		'python-qprogedit',
-		]
 	)
 
 # Clean up temporary readme
-os.remove('README.txt')
+os.remove(u'README.txt')
