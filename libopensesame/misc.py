@@ -523,6 +523,12 @@ if py3:
 	cwd = os.getcwd()
 else:
 	cwd = os.getcwdu()
-base_folders = [safe_decode(folder, enc=filesystem_encoding()) for \
-	folder in [cwd, site.getuserbase(), site.getusersitepackages()] \
-	+ site.getsitepackages() + [u'/usr/local']]
+base_folders = [cwd]
+if hasattr(site, u'getuserbase'):
+	base_folders.append(site.getuserbase())
+if hasattr(site, u'getusersitepackages'):
+	base_folders.append(site.getusersitepackages())
+if hasattr(site, u'getsitepackages'):
+	base_folders += site.getsitepackages()
+if os.path.exists(u'/usr/local'):
+	base_folders.append(u'/usr/local')
