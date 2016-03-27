@@ -1,16 +1,24 @@
 Format: Format: http://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
 Upstream-Name: opensesame
 Maintainer-Contact: Sebastiaan Mathot <s.mathot@cogsci.nl>
-Source: http://www.cogsci.nl/software/opensesame
+Source: https://github.com/smathot/OpenSesame
 
 Files: *
-Copyright: 2010-2014, Sebastiaan Mathot
+Copyright: 2010-2016, Sebastiaan Mathot
 Licenses: GPL-3
  On Debian systems, the full text of the GNU General Public License version 3
  can be found in the file `/usr/share/common-licenses/GPL-3'.
 
+Files: opensesame_resurces/theme/default/Faba/*
+Copyright: 2014-2016, Sam Hewitt
+Licenses: CC-BY-SA
+
+Files: opensesame_resurces/theme/default/MokaSesame/*
+Copyright: 2014-2016, Sam Hewitt
+Licenses: CC-BY-SA
+
 Files: resources/*.ttf
-Copyright: 2006, 2007, 2008, 2009, 2010 Google Corp.
+Copyright: 2006-2011 Google Corp.
  Droid is a trademark of Google Corp.
 Licenses: Apache-2.0
  On Debian systems, the complete text of the Apache License Version 2.0
@@ -50,17 +58,6 @@ Licenses: GPL-2+
  The full text of the GNU General Public License version 2 is available on
  Debian systems in /usr/share/common-licenses/GPL-2.
 
-Files: resources/theme/default/os-custom-icons/*
-Copyright: 2010-2011, Matthieu James <matthieu.james@gmail.com>
-           2012, Daniel Fore <Daniel.p.Fore@gmail.com>
-           2012, Sebastiaan Mathot <s.mathot@cogsci.nl>
-Licenses: GPL-3
-
-Files: debian/*
-Copyright: 2010-2012, Sebastiaan Mathot <s.mathot@cogsci.nl>
-           2011, Michael Hanke <mih@debian.org>
-Licenses: GPL-3
-
 Files: resources/ts/it_IT.ts
 Copyright: 2012, Andrea Epifani <andreaepifani@gmail.com>
 Licenses: GPL-3
@@ -91,9 +88,3 @@ Copyright: 2014, Timo Lueke
 Licenses: GPL-3
  The full text of the GNU General Public License version 3 is available on
  Debian systems in /usr/share/common-licenses/GPL-3.
-
-Files: resources/templates/eco_alt_template.opensesame.tar.gz
-Copyright: 2012, Francisco Javier Moreno-Martinez
-           2012, Pedro R. Montoro
-           2012, Sebastiaan Mathot <s.mathot@cogsci.nl>
-Licenses: CC-BY-3.0

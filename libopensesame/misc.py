@@ -525,10 +525,11 @@ else:
 	cwd = os.getcwdu()
 base_folders = [cwd]
 if hasattr(site, u'getuserbase'):
-	base_folders.append(site.getuserbase())
+	base_folders.append(os.path.join(site.getuserbase(), u'share'))
 if hasattr(site, u'getusersitepackages'):
-	base_folders.append(site.getusersitepackages())
+	base_folders.append(os.path.join(site.getusersitepackages(), u'share'))
 if hasattr(site, u'getsitepackages'):
-	base_folders += site.getsitepackages()
-if os.path.exists(u'/usr/local'):
-	base_folders.append(u'/usr/local')
+	base_folders += \
+		[os.path.join(folder, u'share') for folder in site.getsitepackages()]
+base_folders += [u'/usr/local/share', u'/usr/share']
+base_folders = filter(os.path.exists, base_folders)

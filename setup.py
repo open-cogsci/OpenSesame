@@ -18,13 +18,21 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
-import glob
 import os
 import shutil
 from setuptools import setup
 from libopensesame import metadata
 from setup_shared  import included_plugins, included_extensions
 import fnmatch
+
+# Fix a bug in the packaging of stdeb
+try:
+	from stdeb import util
+except ImportError:
+	pass
+else:
+	if not hasattr(util, 'RULES_BINARY_ALL_TARGET'):
+		util.RULES_BINARY_ALL_TARGET = '\nbinary: binary-indep\n'
 
 EXCLUDE = [
 	u'[\\/].*',
@@ -59,7 +67,7 @@ def resources():
 		for f in filenames:
 			path = os.path.join(root, f)
 			if not is_excluded(path):
-				l.append((root, [path]))
+				l.append((os.path.join(u'share', root), [path]))
 	return l
 
 
@@ -89,7 +97,7 @@ def recursive_glob(src_folder, target_folder):
 			continue
 		print(u'\t%s' % full_path)
 		path_list.append(full_path)
-	l.append( (target_folder, path_list) )
+	l.append( (os.path.join(u'share', target_folder), path_list) )
 	return l
 
 
@@ -117,17 +125,11 @@ def plugins(included, _type=u'plugins'):
 
 def data_files():
 
-	return [
-		(u"/usr/share/icons/hicolor/scalable/apps", [u"data/opensesame.svg"]),
-		(u"/usr/share/opensesame", [u"COPYING"]),
-		(u"/usr/share/mime/packages", [u"data/x-opensesame-experiment.xml"]),
-		(u"/usr/share/applications", [u"data/opensesame.desktop"]),
-		(u"opensesame_resources/help", glob.glob(u"help/*.md")),
-		(u"opensesame_resources/sounds", glob.glob(u"sounds/*"))
-		] + \
+	return [(u"/usr/share/icons/hicolor/scalable/apps", [u"mime/opensesame.svg"])] + \
 		plugins(included=included_plugins, _type=u'plugins') + \
 		plugins(included=included_extensions, _type=u'extensions') + \
 		resources()
+
 
 # Temporarily create README.txt
 shutil.copy(u'readme.md', u'README.txt')
