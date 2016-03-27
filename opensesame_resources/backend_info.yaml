@@ -34,7 +34,7 @@ xpyriment:
   log: csv
   icon: os-expyriment
   py2: true
-  py3: false
+  py3: true
 droid:
   description: for Android devices
   canvas: droid

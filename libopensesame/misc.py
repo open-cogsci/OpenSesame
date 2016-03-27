@@ -536,4 +536,4 @@ if hasattr(site, u'getsitepackages'):
 		[os.path.join(safe_decode(folder, enc=filesystem_encoding()), u'share') \
 		for folder in site.getsitepackages()]
 base_folders += [u'/usr/local/share', u'/usr/share']
-base_folders = filter(os.path.exists, base_folders)
+base_folders = list(filter(os.path.exists, base_folders))
