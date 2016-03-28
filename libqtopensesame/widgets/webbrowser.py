@@ -17,20 +17,19 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
+from libopensesame.py3compat import *
 import platform
 from qtpy import QtCore
 from libqtopensesame.widgets.base_widget import base_widget
 from libopensesame import plugins, misc
-from libopensesame.py3compat import *
 from libqtopensesame.misc.markdown_parser import markdown_parser
 import os.path
-import webbrowser as external_webbrowser
 
 import os
 if os.environ[u'QT_API'] == u'pyqt':
 	from PyQt4 import QtWebKit
 else:
-	from PyQt5 import QtWebKit
+	from PyQt5 import QtWebKitWidgets as QtWebKit
 
 class small_webview(QtWebKit.QWebView):
 
