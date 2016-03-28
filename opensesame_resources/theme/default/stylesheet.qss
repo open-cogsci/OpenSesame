@@ -39,9 +39,10 @@
 	color: #78909c;
 }
 
+#label_summary,
 #control-info,
 #item_desc {
-	font-family: 'Roboto Condensed', serif;
+	font-family: 'Roboto Condensed', sans;
 	color: #78909c;
 }
 

@@ -83,14 +83,12 @@ class loop(qtstructure_item, qtitem, loop_runtime):
 
 	def _show_preview(self):
 
-		import time
-
 		l = [_(u'# Preview of loop table'), u'\n\n']
 		try:
 			dm = self._create_live_datamatrix()
-		except (osexception, EnforceFailed):
-			l.append(
-				_(u'Failed to generate preview. Are you using a non-existing source file, or have you specified impossible constraints?'))
+		except (osexception, EnforceFailed) as e:
+			l.append(_(u'Failed to generate preview.'))
+			l.append(u'\n~~~ .python\n%s\n~~~' % e)
 		else:
 			l.append(u'\n\n<table><thead><tr>')
 			l.append(u''.join([u'<th>%s</th>' % column_name \
@@ -158,8 +156,7 @@ class loop(qtstructure_item, qtitem, loop_runtime):
 
 	def _set_summary(self, msg):
 
-		self.loop_widget.ui.label_summary.setText(
-			u'<small>'+ msg + u'</small>')
+		self.loop_widget.ui.label_summary.setText(msg)
 
 	def _update_summary(self):
 

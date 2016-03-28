@@ -33,6 +33,7 @@ class loop(item.item):
 	commands = [
 		u'fullfactorial',
 		u'shuffle',
+		u'shuffle_horiz',
 		u'slice',
 		u'sort',
 		u'sortby',
@@ -78,6 +79,9 @@ class loop(item.item):
 				self._item = arglist[0]
 				continue
 			if cmd == u'setcycle':
+				if self.ef is not None or self.operations:
+					raise osexception(
+						u'setcycle must come before constraints and operations')
 				if len(arglist) != 3 or kwdict:
 					raise osexception(u'Invalid setcycle command: %s' % i)
 				row, var, val = tuple(arglist)
@@ -88,7 +92,11 @@ class loop(item.item):
 				self.dm[row][var] = val
 				continue
 			if cmd == u'constrain':
-				self.ef = Enforce(self.dm)
+				if self.operations:
+					raise osexception(
+						u'constraints must come before operations')
+				if self.ef is None:
+					self.ef = Enforce(self.dm)
 				if len(arglist) != 1:
 					raise osexception(u'Invalid constrain command: %s' % i)
 				colname = arglist[0]
@@ -224,6 +232,12 @@ class loop(item.item):
 					dm = operations.shuffle(dm)
 				else:
 					dm[colname] = operations.shuffle(col)
+			elif cmd == u'shuffle_horiz':
+				if not arglist:
+					dm = operations.shuffle_horiz(dm)
+				else:
+					dm = operations.shuffle_horiz(
+						*[dm[_colname] for _colname in arglist])
 			elif cmd == u'slice':
 				self._require_arglist(cmd, arglist, minlen=2)
 				dm = dm[arglist[0]: arglist[1]]
@@ -241,15 +255,16 @@ class loop(item.item):
 			elif cmd == u'roll':
 				self._require_arglist(cmd, arglist)
 				steps = arglist[0]
-				if not arglist:
+				if not isinstance(steps, int):
+					raise osexception(u'roll steps should be numeric')
+				if len(arglist) == 1:
 					dm = dm[-steps:] << dm[:-steps]
 				else:
 					dm[colname] = list(col[-steps:]) + list(col[:-steps])
 			elif cmd == u'weight':
 				self._require_arglist(cmd, arglist)
 				dm = operations.weight(col)
-			return dm
-		raise osexception(u'Invalid order: %s' % self.var.order)
+		return dm
 
 	def prepare(self):
 
