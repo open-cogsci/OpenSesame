@@ -25,6 +25,11 @@ _ = translation_context(u'item_combobox', category=u'core')
 
 class item_combobox(QtWidgets.QComboBox, base_subcomponent):
 
+	"""
+	desc:
+		A combobox to select existing items.
+	"""
+
 	def __init__(self, main_window, exclude=[]):
 
 		QtWidgets.QComboBox.__init__(self, main_window)
@@ -63,5 +68,5 @@ class item_combobox(QtWidgets.QComboBox, base_subcomponent):
 		for i, item_name in enumerate(self.items):
 			self.addItem(item_name)
 			self.setItemIcon(i+1,
-				self.theme.qicon(self.item_store._type(item_name)))
+				self.theme.qicon(self.item_store[item_name].item_icon()))
 		self.select(prev_selected)

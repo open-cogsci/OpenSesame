@@ -54,7 +54,8 @@ class append_existing_action(base_subcomponent, QtWidgets.QAction):
 		self.setup(append_menu)
 		self.setText(item_name)
 		self.item_name = item_name
-		self.setIcon(self.theme.qicon(self.experiment.items._type(item_name)))
+		self.setIcon(
+			self.theme.qicon(self.experiment.items[item_name].item_icon()))
 
 	def append_item(self, target_item_name):
 
@@ -103,7 +104,7 @@ class append_new_action(base_subcomponent, QtWidgets.QAction):
 		self.item_type = item_type
 		self.setText(item_type)
 		if item_type not in self.experiment.core_items:
-			icon = QtGui.QIcon(plugins.plugin_icon_small(item_type))
+			icon = self.theme.qicon(plugins.plugin_icon_small(item_type))
 		else:
 			icon = self.theme.qicon(item_type)
 		self.setIcon(icon)

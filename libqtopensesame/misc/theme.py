@@ -111,17 +111,32 @@ class theme:
 	def qicon(self, icon):
 
 		"""
-		Get an icon from the theme
+		desc:
+			Gets an icon from the theme.
 
-		Arguments:p
-		icon -- the icon name
+		arguments:
+			icon:	One of the following:
+					- A QIcon, which returned as is
+					- The name of an image file
+					- The name of a plug-in with a hardcoded icon
+					- The name of an entry in the icon map
+					- A theme icon name.
 
-		Returns:
-		A QIcon
+		returns:
+			desc:	An icon, or a fallback icon if the specified wasn't found.
+			type:	QIcon
 		"""
 
 		if isinstance(icon, QtGui.QIcon):
 			return icon
+		if os.path.isfile(icon):
+			qicon = QtGui.QIcon()
+			if icon.endswith(u'_large.png'):
+				size = 32
+			else:
+				size = 16
+			qicon.addFile(icon, size=QtCore.QSize(size, size))
+			return qicon
 		if hasattr(self, u'experiment') and (u'%s_large.png' % icon in \
 			self.experiment.resources or '%s.png' in self.experiment.resources):
 			qicon = QtGui.QIcon()

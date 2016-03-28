@@ -51,7 +51,7 @@ class item_context_menu(base_subcomponent, QtWidgets.QMenu):
 		super(item_context_menu, self).__init__(main_window)
 		self.setup(main_window)
 		self.treeitem = treeitem
-		self.addAction(self.theme.qicon(self.item.item_type), _('Open'),
+		self.addAction(self.theme.qicon(self.item.item_icon()), _('Open'),
 			self.item.open_tab)
 		self.addSeparator()
 		self.add_action(u"accessories-text-editor", _("Rename"),
