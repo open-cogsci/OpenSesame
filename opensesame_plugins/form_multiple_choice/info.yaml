@@ -1,5 +1,6 @@
 ---
 category: Form
+icon: os-form_multiple_choice
 controls:
   -
     label: "Form title"
@@ -35,7 +36,7 @@ controls:
     name: line_edit_timeout
     tooltip: "Response timeout"
     type: line_edit
-	validator: timeout
+    validator: timeout
     var: timeout
   -
     label: "Your question"

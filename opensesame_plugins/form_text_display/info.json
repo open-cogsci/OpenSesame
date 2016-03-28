@@ -1,5 +1,6 @@
 {
 	"category"	: "Form",
+	"icon"		: "os-form_text_display",
 	"controls" : [
 		{
 			"type"		: "line_edit",
