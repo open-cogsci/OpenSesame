@@ -71,7 +71,6 @@ class base_console(base_subcomponent):
 		"""
 
 		return {
-			'modules': misc.module_versions,
 			'console' : self,
 			'opensesame' : self.main_window,
 			'cfg' : cfg,
@@ -215,7 +214,6 @@ class base_console(base_subcomponent):
 		s = u'''Python %s
 
 * Type "help()", "copyright()", "credits()" or "license()" for more information.
-* Type "print(modules())" for details about installed modules and version information.
 * Use the "print([msg])" function in inline_script items to print to this debug window.
 * Inspect inline_script variables when an experiment is finished.
 ''' % metadata.python_version
