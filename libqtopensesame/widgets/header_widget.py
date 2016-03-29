@@ -129,6 +129,7 @@ class header_widget(base_widget):
 		if self.label_name.isVisible():
 			return
 		self.label_name.show()
+		self.label_type.show()
 		self.edit_name.hide()
 		self.item_store.rename(self.item.name, self.edit_name.text())
 
@@ -165,6 +166,7 @@ class header_widget(base_widget):
 		if target == self.label_name:
 			self.apply_desc()
 			self.label_name.hide()
+			self.label_type.hide()
 			self.edit_name.show()
 			self.edit_name.selectAll()
 			self.edit_name.setFocus()
