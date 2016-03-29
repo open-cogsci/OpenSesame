@@ -62,6 +62,10 @@ class qtitem(base_qtobject):
 		return self.experiment.main_window
 
 	@property
+	def overview_area(self):
+		return self.experiment.main_window.ui.itemtree
+
+	@property
 	def theme(self):
 		return self.experiment.main_window.theme
 

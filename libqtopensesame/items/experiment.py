@@ -81,6 +81,10 @@ class experiment(libopensesame.experiment.experiment):
 			fullscreen=None)
 
 	@property
+	def overview_area(self):
+		return self.experiment.main_window.ui.itemtree
+
+	@property
 	def default_title(self):
 		return _(u'New experiment')
 
@@ -132,28 +136,31 @@ class experiment(libopensesame.experiment.experiment):
 		select=None):
 
 		"""
-		Constructs an item tree.
+		desc:
+			Builds the overview area for the full experiment.
 
-		Keyword arguments:
-		toplevel	--	The toplevel widget. (default=None)
-		items		--	A list of items that have already been added, to
-						prevent recursion. (default=[])
+		keywords:
+			toplevel:	The toplevel widget.
+			items:		A list of items that have already been added, to
+						prevent recursion.
+			max_depth:	The maximum depth of the tree.
+			select:		The selected item.
 		"""
 
-		if self.ui.itemtree.locked:
+		if self.overview_area.locked:
 			return
 		from libqtopensesame.widgets.tree_unused_items_item import \
 			tree_unused_items_item
 		from libqtopensesame.widgets.tree_general_item import tree_general_item
-		self.ui.itemtree.clear()
 		self.treeitem_general = tree_general_item(self)
 		self.treeitem_unused = tree_unused_items_item(self.main_window)
-		self.ui.itemtree.insertTopLevelItem(0, self.treeitem_general)
-		self.ui.itemtree.insertTopLevelItem(1, self.treeitem_unused)
-		self.treeitem_general.expand()
-		self.treeitem_unused.collapse()
+		fold_state = self.overview_area.get_fold_state()
+		self.overview_area.clear()
+		self.overview_area.insertTopLevelItem(0, self.treeitem_general)
+		self.overview_area.insertTopLevelItem(1, self.treeitem_unused)
+		self.overview_area.set_fold_state(fold_state)
 		if select is not None:
-			l = self.ui.itemtree.select_item(select)
+			self.ui.itemtree.select_item(select)
 
 	def rename(self, from_name, to_name):
 

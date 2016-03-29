@@ -55,6 +55,10 @@ class tree_general_item(tree_base_item):
 			self.child(0).set_draggable(False)
 		self.expand()
 
+	def ancestry(self):
+
+		return u'__general__', u'__general__'
+
 	def open_tab(self):
 
 		self.main_window.tabwidget.open_general()

@@ -208,6 +208,7 @@ class qtopensesame(QtWidgets.QMainWindow, base_component):
 			self.experiment = experiment.experiment(self, u'New experiment',
 				fd.read())
 		self.experiment.build_item_tree()
+		self.ui.itemtree.default_fold_state()
 
 		# Miscellaneous initialization
 		self.restore_state()
@@ -690,6 +691,7 @@ class qtopensesame(QtWidgets.QMainWindow, base_component):
 		self.experiment.pool.clean_up()
 		self.experiment = exp
 		self.experiment.build_item_tree()
+		self.ui.itemtree.default_fold_state()
 		self.ui.tabwidget.open_general()
 		if add_to_recent:
 			self.current_path = path

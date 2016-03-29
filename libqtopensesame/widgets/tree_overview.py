@@ -95,6 +95,36 @@ class tree_overview(base_subcomponent, base_draggable, QtWidgets.QTreeWidget):
 		self.set_supported_drop_types([u'item-snippet', u'item-existing',
 			u'url-local'])
 
+	def items(self):
+
+		l = []
+		for i in range(self.topLevelItemCount()):
+			item = self.topLevelItem(i)
+			l += [item] + item.children()
+		return l
+
+	def default_fold_state(self):
+
+		self.topLevelItem(0).expand()
+		if self.topLevelItemCount() > 0:
+			self.topLevelItem(1).collapse()
+
+	def get_fold_state(self):
+
+		fold_state = {}
+		for item in self.items():
+			fold_state[item.path()] = item.isExpanded()
+		return fold_state
+
+	def set_fold_state(self, fold_state):
+
+		for item in self.items():
+			a = item.path()
+			if a in fold_state:
+				item.setExpanded(fold_state[a])
+			else:
+				item.expand()
+
 	def show_context_menu(self):
 
 		item = self.currentItem()

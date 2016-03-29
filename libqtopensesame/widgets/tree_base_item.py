@@ -34,6 +34,24 @@ class tree_base_item(base_subcomponent, QtWidgets.QTreeWidgetItem):
 
 		self.treeWidget().editItem(self, col)
 
+	def ancestry(self):
+
+		return None
+
+	def path(self):
+
+		if self.parent() is None:
+			return self.text(0)
+		return self.parent().path() + u'.' + self.text(0)
+
+	def children(self):
+
+		l = []
+		for i in range(self.childCount()):
+			child = self.child(i)
+			l += [child] + child.children()
+		return l
+
 	def show_context_menu(self, pos):
 
 		pass
