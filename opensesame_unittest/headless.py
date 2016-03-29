@@ -38,10 +38,13 @@ class check_headless(unittest.TestCase):
 		"""
 
 		experiment_path = os.path.join(os.path.dirname(__file__), u'data')
-		for experiment_file in [u'response_test.osexp',
-				u'sketchpad_test.osexp']:
+		for experiment_file in [
+				u'response_test.osexp',
+				u'sketchpad_test.osexp',
+				u'loop_test.osexp']:
 			print(u'Testing %s' % experiment_file)
 			e = experiment(
+				logfile='/tmp/tmp.csv',
 				experiment_path=experiment_path,
 				string=os.path.join(experiment_path, experiment_file))
 			e.run()

@@ -1,0 +1,751 @@
+---
+API: 2
+OpenSesame: 3.1.0a19
+Platform: posix
+---
+set width 100
+set uniform_coordinates yes
+set title "Unit tests for loop"
+set subject_parity even
+set subject_nr 0
+set start experiment
+set sampler_backend legacy
+set mouse_backend legacy
+set keyboard_backend legacy
+set height 100
+set foreground white
+set font_size 18
+set font_italic no
+set font_family mono
+set font_bold no
+set experiment_path "/home/sebastiaan/git/opensesame-james/opensesame_unittest/data"
+set description "Default description"
+set coordinates uniform
+set compensation 0
+set color_backend legacy
+set clock_backend legacy
+set canvas_backend legacy
+set bidi no
+set background black
+
+define inline_script check_constrain
+	set description "Executes Python code"
+	___run__
+	print('Checking constrain ...')
+	log.close()
+	dm = io.readtxt(var.logfile)
+	if not check_col(dm.category, ['w', 'p']*4) \
+		and not check_col(dm.category, ['p', 'w']*4):
+			raise Exception('Constrain error (category)')
+	for ref in itertools.permutations(['cit', 'cat', 'deg', 'dog']):
+		if check_col(dm.word, list(ref)*2):
+			break
+	else:
+		raise Exception('Constrain error (word)')
+	log.open(var.logfile)
+	__end__
+	set _prepare ""
+
+define inline_script check_from_file
+	set description "Executes Python code"
+	___run__
+	print('Checking from file ...')
+	log.close()
+	dm = io.readtxt(var.logfile)
+	if not check_col(dm.word, ['dog', 'deg', 'cat', 'cit']*2):
+		raise Exception('From file error')
+	log.open(var.logfile)
+	__end__
+	set _prepare ""
+
+define inline_script check_full_factorial
+	set description "Executes Python code"
+	___run__
+	print('Checking fullfactorial ...')
+	log.close()
+	dm = io.readtxt(var.logfile)
+	if not check_col(dm.category, ['dog', 'deg', 'cit', 'cat']*2):
+		raise Exception('fullfactorial error (category)')
+	if not check_col(dm.word, ['p']*4+['w']*4):
+		raise Exception('fullfactorial error (word)')
+	log.open(var.logfile)
+	__end__
+	set _prepare ""
+
+define inline_script check_repeat
+	set description "Executes Python code"
+	___run__
+	print('Checking repeat ...')
+	log.close()
+	dm = io.readtxt(var.logfile)
+	if not check_col(dm.word, ['dog', 'deg', 'cat']):
+		raise Exception('Repeat error')
+	log.open(var.logfile)
+	__end__
+	set _prepare ""
+
+define inline_script check_resume
+	set description "Executes Python code"
+	___run__
+	print('Checking resume ...')
+	log.close()
+	dm = io.readtxt(var.logfile)
+	if not check_col(dm.word, ['dog', 'deg', 'cat', 'cit', 'dog', 'deg']):
+		raise Exception('Resume error')
+	log.open(var.logfile)
+	__end__
+	set _prepare ""
+
+define inline_script check_reverse_all
+	set description "Executes Python code"
+	___run__
+	print('Checking reverse (all) ...')
+	log.close()
+	dm = io.readtxt(var.logfile)
+	if not check_col(dm.word, ['cit', 'cat', 'deg', 'dog'])\
+		or not check_col(dm.category, ['p', 'w', 'p', 'w']):
+		raise Exception('Reverse (all) error')
+	log.open(var.logfile)
+	__end__
+	set _prepare ""
+
+define inline_script check_reverse_column
+	set description "Executes Python code"
+	___run__
+	print('Checking reverse (column) ...')
+	log.close()
+	dm = io.readtxt(var.logfile)
+	if not check_col(dm.word, ['cit', 'cat', 'deg', 'dog'])\
+		or not check_col(dm.category, ['w', 'p', 'w', 'p']):
+		raise Exception('Reverse (column) error')
+	log.open(var.logfile)
+	__end__
+	set _prepare ""
+
+define inline_script check_roll_all
+	set description "Executes Python code"
+	___run__
+	print('Checking roll (all) ...')
+	log.close()
+	dm = io.readtxt(var.logfile)
+	if not check_col(dm.word, ['cit', 'dog', 'deg', 'cat'])\
+		or not check_col(dm.category, ['p', 'w', 'p', 'w']):
+		raise Exception('Roll (all) error')
+	log.open(var.logfile)
+	__end__
+	set _prepare ""
+
+define inline_script check_roll_column
+	set description "Executes Python code"
+	___run__
+	print('Checking roll (column) ...')
+	log.close()
+	dm = io.readtxt(var.logfile)
+	if not check_col(dm.word, ['deg', 'cat', 'cit', 'dog'])\
+		or not check_col(dm.category, ['w', 'p', 'w', 'p']):
+		raise Exception('Roll (column) error')
+	log.open(var.logfile)
+	__end__
+	set _prepare ""
+
+define inline_script check_shuffle_all
+	set description "Executes Python code"
+	___run__
+	print('Checking shuffle (all) ...')
+	
+	for i in range(1000):
+		log.close()
+		dm = io.readtxt(var.logfile)
+		log.open(var.logfile)
+		if not check_col(dm.word, ['dog', 'deg', 'cat', 'cit']) \
+			and not check_col(dm.category, ['w', 'p', 'w', 'p']):
+			break
+		items.execute('test_shuffle_all')
+	else:
+		raise Exception('Shuffle (all) error')
+	__end__
+	set _prepare ""
+
+define inline_script check_shuffle_column
+	set description "Executes Python code"
+	___run__
+	print('Checking shuffle (column) ...')
+	
+	for i in range(1000):
+		log.close()
+		dm = io.readtxt(var.logfile)
+		log.open(var.logfile)
+		if not check_col(dm.word, ['dog', 'deg', 'cat', 'cit']) \
+			and check_col(dm.category, ['w', 'p', 'w', 'p']):
+			break
+		items.execute('test_shuffle_column')
+	else:
+		raise Exception('Shuffle (column) error')
+	__end__
+	set _prepare ""
+
+define inline_script check_shuffle_horiz_all
+	set description "Executes Python code"
+	___run__
+	print('Checking shuffle_horiz (all) ...')
+	
+	for i in range(1000):
+		log.close()
+		dm = io.readtxt(var.logfile)
+		log.open(var.logfile)
+		if 'w' in dm.word and 'cat' in dm.category:
+			break
+		items.execute('test_shuffle_horiz_all')
+	else:
+		raise Exception('Shuffle (horiz) error')
+	__end__
+	set _prepare ""
+
+define inline_script check_shuffle_horiz_column
+	set description "Executes Python code"
+	___run__
+	print('Checking shuffle_horiz (column) ...')
+	
+	for i in range(1000):
+		log.close()
+		dm = io.readtxt(var.logfile)
+		log.open(var.logfile)
+		if 'w' in dm.prime or 'cat' in dm.prime:
+			raise Exception('Shuffle_horiz (column) error in prime')
+		if 'w' in dm.word and 'cat' in dm.category:
+			break
+		items.execute('test_shuffle_horiz_column')
+	else:
+		raise Exception('Shuffle_horiz (column) error')
+	__end__
+	set _prepare ""
+
+define inline_script check_slice
+	set description "Executes Python code"
+	___run__
+	print('Checking slice ...')
+	log.close()
+	dm = io.readtxt(var.logfile)
+	if not check_col(dm.word, ['dog', 'dog']):
+		raise Exception('Slice error')
+	log.open(var.logfile)
+	__end__
+	set _prepare ""
+
+define inline_script check_sort
+	set description "Executes Python code"
+	___run__
+	print('Checking sort ...')
+	log.close()
+	dm = io.readtxt(var.logfile)
+	if not check_col(dm.word, ['cat', 'cit', 'deg', 'dog'])\
+		or not check_col(dm.category, ['w', 'p', 'w', 'p']):
+		raise Exception('Sort error')
+	log.open(var.logfile)
+	__end__
+	set _prepare ""
+
+define inline_script check_sortby
+	set description "Executes Python code"
+	___run__
+	print('Checking sortby ...')
+	log.close()
+	dm = io.readtxt(var.logfile)
+	if not check_col(dm.word, ['cat', 'cit', 'deg', 'dog'])\
+		or not check_col(dm.category, ['w', 'p', 'p', 'w']):
+		raise Exception('Sortby error')
+	log.open(var.logfile)
+	__end__
+	set _prepare ""
+
+define inline_script check_weight
+	set description "Executes Python code"
+	___run__
+	print('Checking weight ...')
+	log.close()
+	dm = io.readtxt(var.logfile)
+	if not check_col(dm.word, ['deg', 'cat', 'cat']):
+		raise Exception('Weight error')
+	log.open(var.logfile)
+	__end__
+	set _prepare ""
+
+define sequence experiment
+	set flush_keyboard yes
+	set description "Runs a number of items in sequence"
+	run init always
+	run test_from_file always
+	run test_repeat always
+	run test_resume always
+	run test_constraints always
+	run test_operations always
+
+define inline_script init
+	set description "Executes Python code"
+	___run__
+	import itertools
+	from datamatrix import io
+	
+	def check_col(col, ref):
+		if len(col) != len(ref):
+			return False
+		for v1, v2 in zip(col, ref):
+			if v1 != v2:
+				return False
+		return True
+	__end__
+	set _prepare ""
+
+define logger logger
+	set description "Logs experimental data"
+	set auto_log no
+	log word
+	log category
+	log prime
+
+define inline_script new_inline_script
+	set description "Executes Python code"
+	___run__
+	print(var.live_row)
+	__end__
+	set _prepare ""
+
+define sequence new_sequence
+	set flush_keyboard yes
+	set description "Runs a number of items in sequence"
+	run logger always
+	run new_inline_script always
+
+define loop test_constrain
+	set source_file "test.xlsx"
+	set source table
+	set repeat 1
+	set order sequential
+	set description "Repeatedly runs another item"
+	set cycles 8
+	set continuous no
+	set checkbox_break_if_on_first no
+	set break_if_on_first yes
+	set break_if never
+	setcycle 0 word cat
+	setcycle 0 category w
+	setcycle 1 word cat
+	setcycle 1 category w
+	setcycle 2 word dog
+	setcycle 2 category w
+	setcycle 3 word dog
+	setcycle 3 category w
+	setcycle 4 word cit
+	setcycle 4 category p
+	setcycle 5 word cit
+	setcycle 5 category p
+	setcycle 6 word deg
+	setcycle 6 category p
+	setcycle 7 word deg
+	setcycle 7 category p
+	constrain category maxrep=1
+	constrain word mindist=4
+	run logger
+
+define sequence test_constraints
+	set flush_keyboard yes
+	set description "Runs a number of items in sequence"
+	run test_constrain always
+	run check_constrain always
+
+define loop test_from_csv
+	set source_file "test.csv"
+	set source file
+	set repeat 1
+	set order sequential
+	set description "Repeatedly runs another item"
+	set cycles 1
+	set continuous no
+	set break_if_on_first yes
+	set break_if never
+	setcycle 0 empty_column ""
+	run logger
+
+define sequence test_from_file
+	set flush_keyboard yes
+	set description "Runs a number of items in sequence"
+	run test_from_xlsx always
+	run test_from_csv always
+	run check_from_file always
+
+define loop test_from_xlsx
+	set source_file "test.xlsx"
+	set source file
+	set repeat 1
+	set order sequential
+	set description "Repeatedly runs another item"
+	set cycles 1
+	set continuous no
+	set break_if_on_first yes
+	set break_if never
+	setcycle 0 empty_column ""
+	run logger
+
+define loop test_fullfactorial
+	set source_file ""
+	set source table
+	set repeat 1
+	set order sequential
+	set description "Repeatedly runs another item"
+	set cycles 4
+	set continuous no
+	set checkbox_break_if_on_first no
+	set break_if_on_first yes
+	set break_if never
+	setcycle 0 category dog
+	setcycle 0 word p
+	setcycle 1 category deg
+	setcycle 1 word w
+	setcycle 2 category cit
+	setcycle 2 word ""
+	setcycle 3 category cat
+	setcycle 3 word ""
+	fullfactorial
+	run logger
+
+define sequence test_operations
+	set flush_keyboard yes
+	set description "Runs a number of items in sequence"
+	run test_fullfactorial always
+	run check_full_factorial always
+	run test_shuffle_all always
+	run check_shuffle_all always
+	run test_shuffle_column always
+	run check_shuffle_column always
+	run test_shuffle_horiz_all always
+	run check_shuffle_horiz_all always
+	run test_shuffle_horiz_column always
+	run check_shuffle_horiz_column always
+	run test_slice always
+	run check_slice always
+	run test_sort always
+	run check_sort always
+	run test_sortby always
+	run check_sortby always
+	run test_reverse_all always
+	run check_reverse_all always
+	run test_reverse_column always
+	run check_reverse_column always
+	run test_roll_all always
+	run check_roll_all always
+	run test_roll_column always
+	run check_roll_column always
+	run test_weight always
+	run check_weight always
+
+define sequence test_repeat
+	set flush_keyboard yes
+	set description "Runs a number of items in sequence"
+	run test_repeat_loop always
+	run check_repeat always
+
+define loop test_repeat_loop
+	set source_file ""
+	set source table
+	set repeat 0.9
+	set order sequential
+	set description "Repeatedly runs another item"
+	set cycles 4
+	set continuous no
+	set break_if_on_first yes
+	set break_if never
+	setcycle 0 word dog
+	setcycle 1 word deg
+	setcycle 2 word cat
+	setcycle 3 word cit
+	run logger
+
+define sequence test_resume
+	set flush_keyboard yes
+	set description "Runs a number of items in sequence"
+	run test_resume_loop always
+	run test_resume_loop always
+	run test_resume_loop always
+	run check_resume always
+
+define loop test_resume_loop
+	set source_file ""
+	set source table
+	set repeat 1
+	set order sequential
+	set description "Repeatedly runs another item"
+	set cycles 4
+	set continuous yes
+	set checkbox_break_if_on_first no
+	set break_if_on_first no
+	set break_if "[live_row] % 2 = 0"
+	setcycle 0 word dog
+	setcycle 1 word deg
+	setcycle 2 word cat
+	setcycle 3 word cit
+	run logger
+
+define loop test_reverse_all
+	set source_file ""
+	set source table
+	set repeat 1
+	set order sequential
+	set description "Repeatedly runs another item"
+	set cycles 4
+	set continuous no
+	set checkbox_break_if_on_first no
+	set break_if_on_first yes
+	set break_if never
+	setcycle 0 word dog
+	setcycle 0 category w
+	setcycle 1 word deg
+	setcycle 1 category p
+	setcycle 2 word cat
+	setcycle 2 category w
+	setcycle 3 word cit
+	setcycle 3 category p
+	reverse
+	run logger
+
+define loop test_reverse_column
+	set source_file ""
+	set source table
+	set repeat 1
+	set order sequential
+	set description "Repeatedly runs another item"
+	set cycles 4
+	set continuous no
+	set checkbox_break_if_on_first no
+	set break_if_on_first yes
+	set break_if never
+	setcycle 0 word dog
+	setcycle 0 category w
+	setcycle 1 word deg
+	setcycle 1 category p
+	setcycle 2 word cat
+	setcycle 2 category w
+	setcycle 3 word cit
+	setcycle 3 category p
+	reverse word
+	run logger
+
+define loop test_roll_all
+	set source_file ""
+	set source table
+	set repeat 1
+	set order sequential
+	set description "Repeatedly runs another item"
+	set cycles 4
+	set continuous no
+	set checkbox_break_if_on_first no
+	set break_if_on_first yes
+	set break_if never
+	setcycle 0 word dog
+	setcycle 0 category w
+	setcycle 1 word deg
+	setcycle 1 category p
+	setcycle 2 word cat
+	setcycle 2 category w
+	setcycle 3 word cit
+	setcycle 3 category p
+	roll 1
+	run logger
+
+define loop test_roll_column
+	set source_file ""
+	set source table
+	set repeat 1
+	set order sequential
+	set description "Repeatedly runs another item"
+	set cycles 4
+	set continuous no
+	set checkbox_break_if_on_first no
+	set break_if_on_first yes
+	set break_if never
+	setcycle 0 word dog
+	setcycle 0 category w
+	setcycle 1 word deg
+	setcycle 1 category p
+	setcycle 2 word cat
+	setcycle 2 category w
+	setcycle 3 word cit
+	setcycle 3 category p
+	roll -1 word
+	run logger
+
+define loop test_shuffle_all
+	set source_file ""
+	set source table
+	set repeat 1
+	set order sequential
+	set description "Repeatedly runs another item"
+	set cycles 4
+	set continuous no
+	set checkbox_break_if_on_first no
+	set break_if_on_first yes
+	set break_if never
+	setcycle 0 word dog
+	setcycle 0 category w
+	setcycle 1 word deg
+	setcycle 1 category p
+	setcycle 2 word cat
+	setcycle 2 category w
+	setcycle 3 word cit
+	setcycle 3 category p
+	shuffle
+	run logger
+
+define loop test_shuffle_column
+	set source_file ""
+	set source table
+	set repeat 1
+	set order sequential
+	set description "Repeatedly runs another item"
+	set cycles 4
+	set continuous no
+	set checkbox_break_if_on_first no
+	set break_if_on_first yes
+	set break_if never
+	setcycle 0 word dog
+	setcycle 0 category w
+	setcycle 1 word deg
+	setcycle 1 category p
+	setcycle 2 word cat
+	setcycle 2 category w
+	setcycle 3 word cit
+	setcycle 3 category p
+	shuffle word
+	run logger
+
+define loop test_shuffle_horiz_all
+	set source_file ""
+	set source table
+	set repeat 1
+	set order sequential
+	set description "Repeatedly runs another item"
+	set cycles 4
+	set continuous no
+	set checkbox_break_if_on_first no
+	set break_if_on_first yes
+	set break_if never
+	setcycle 0 category cat
+	setcycle 0 word w
+	setcycle 1 category cat
+	setcycle 1 word w
+	setcycle 2 category cat
+	setcycle 2 word w
+	setcycle 3 category cat
+	setcycle 3 word w
+	shuffle_horiz
+	run logger
+
+define loop test_shuffle_horiz_column
+	set source_file ""
+	set source table
+	set repeat 1
+	set order sequential
+	set description "Repeatedly runs another item"
+	set cycles 4
+	set continuous no
+	set checkbox_break_if_on_first no
+	set break_if_on_first yes
+	set break_if never
+	setcycle 0 category cat
+	setcycle 0 word w
+	setcycle 0 prime yes
+	setcycle 1 category cat
+	setcycle 1 word w
+	setcycle 1 prime yes
+	setcycle 2 category cat
+	setcycle 2 word w
+	setcycle 2 prime yes
+	setcycle 3 category cat
+	setcycle 3 word w
+	setcycle 3 prime yes
+	shuffle_horiz category word
+	run logger
+
+define loop test_slice
+	set source_file ""
+	set source table
+	set repeat 1
+	set order sequential
+	set description "Repeatedly runs another item"
+	set cycles 6
+	set continuous no
+	set checkbox_break_if_on_first no
+	set break_if_on_first yes
+	set break_if never
+	setcycle 0 word cat
+	setcycle 1 word cat
+	setcycle 2 word dog
+	setcycle 3 word dog
+	setcycle 4 word cat
+	setcycle 5 word cat
+	slice 2 -2
+	run logger
+
+define loop test_sort
+	set source_file ""
+	set source table
+	set repeat 1
+	set order sequential
+	set description "Repeatedly runs another item"
+	set cycles 4
+	set continuous no
+	set checkbox_break_if_on_first no
+	set break_if_on_first yes
+	set break_if never
+	setcycle 0 word dog
+	setcycle 0 category w
+	setcycle 1 word deg
+	setcycle 1 category p
+	setcycle 2 word cat
+	setcycle 2 category w
+	setcycle 3 word cit
+	setcycle 3 category p
+	sort word
+	run logger
+
+define loop test_sortby
+	set source_file ""
+	set source table
+	set repeat 1
+	set order sequential
+	set description "Repeatedly runs another item"
+	set cycles 4
+	set continuous no
+	set checkbox_break_if_on_first no
+	set break_if_on_first yes
+	set break_if never
+	setcycle 0 word dog
+	setcycle 0 category w
+	setcycle 1 word deg
+	setcycle 1 category p
+	setcycle 2 word cat
+	setcycle 2 category w
+	setcycle 3 word cit
+	setcycle 3 category p
+	sortby word
+	run logger
+
+define loop test_weight
+	set source_file ""
+	set source table
+	set repeat 1
+	set order sequential
+	set description "Repeatedly runs another item"
+	set cycles 3
+	set continuous no
+	set checkbox_break_if_on_first no
+	set break_if_on_first yes
+	set break_if never
+	setcycle 0 word dog
+	setcycle 0 weight 0
+	setcycle 1 word deg
+	setcycle 1 weight 1
+	setcycle 2 word cat
+	setcycle 2 weight 2
+	weight weight
+	run logger
+

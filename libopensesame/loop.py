@@ -212,7 +212,7 @@ class loop(item.item):
 			else:
 				dm <<= src_dm[:i]
 		if self.var.order == u'random':
-			return operations.shuffle(dm)
+			dm = operations.shuffle(dm)
 		if self.ef is not None:
 			self.ef.dm = src_dm
 			dm = self.ef.enforce()
@@ -289,23 +289,25 @@ class loop(item.item):
 			raise osexception(
 				u"Could not find item '%s', which is called by loop item '%s'" \
 				% (self._item, self.name))
-		# And run!
-		if self.live_dm is None or self.var.continuous == u'no':
-			self.live_dm = self._create_live_datamatrix()
-			self.live_row = 0
 
 	def run(self):
 
 		"""See item."""
 
 		self.set_item_onset()
+		if self.live_dm is None or self.var.continuous == u'no':
+			self.live_dm = self._create_live_datamatrix()
+			self.live_row = 0
+		first = True
 		while self.live_row < len(self.live_dm):
 			self.experiment.var.repeat_cycle = 0
+			self.experiment.var.live_row = self.live_row
+			self.experiment.var.set('live_row_%s' % self.name, self.live_row)
 			for name, val in self.live_dm[self.live_row]:
 				self.experiment.var.set(name, val)
 			# Evaluate the run if statement
 			if self._break_if is not None and \
-				(self.live_row or self.var.break_if_on_first == u'yes'):
+				(not first or self.var.break_if_on_first == u'yes'):
 				self.python_workspace[u'self'] = self
 				if self.python_workspace._eval(self._break_if):
 					break
@@ -318,6 +320,7 @@ class loop(item.item):
 					self.live_dm = self.live_dm[:self.live_row+1] \
 						<< operations.shuffle(self.live_dm[self.live_row+1:])
 			self.live_row += 1
+			first = False
 		else:
 			# If the loop finished without breaking, it needs to be reset on
 			# the next run of the loop item
