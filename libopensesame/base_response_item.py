@@ -109,6 +109,7 @@ class base_response_item(item):
 
 		"""See item."""
 
+		item.prepare(self)
 		self._timeout = self._prepare_timeout()
 		self._allowed_responses = self._prepare_allowed_responses()
 		self._collect_response = self.prepare_response_func()
@@ -118,6 +119,7 @@ class base_response_item(item):
 
 		"""See item."""
 
+		item.run(self)
 		if self._t0 is None:
 			self._t0 = self.set_item_onset()
 		retval = self._collect_response()
