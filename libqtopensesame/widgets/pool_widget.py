@@ -132,12 +132,12 @@ class pool_widget(base_widget):
 
 		"""
 
-		path_list, filter_ = QtWidgets.QFileDialog.getOpenFileNames(
+		path_list = QtWidgets.QFileDialog.getOpenFileNames(
 			self.main_window.ui.centralwidget, _(u"Add files to pool"),
 			directory=cfg.default_pool_folder)
-		if len(path_list) == 0:
+		if not path_list:
 			return
-		cfg.default_pool_folder = os.path.dirname(str(path_list[0]))
+		cfg.default_pool_folder = os.path.dirname(path_list[0])
 		self.add(path_list)
 
 	def select(self, fname):
