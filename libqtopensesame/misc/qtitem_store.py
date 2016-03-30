@@ -89,8 +89,15 @@ class qtitem_store(item_store):
 
 		import warnings
 		with warnings.catch_warnings(record=True) as warning_list:
-			item = super(qtitem_store, self).new(_type, name=name,
-				script=script)
+			try:
+				item = super(qtitem_store, self).new(_type, name=name,
+					script=script)
+			except Exception as e:
+				from libqtopensesame.dialogs.notification import notification
+				notification(self.main_window, safe_decode(e),
+					title=_(u'Failed to load item'),
+					icon=u'dialog-warning').exec_()
+				return
 		if warning_list:
 			import yaml
 			self.tabwidget.open_help(u'new_item_warning')
