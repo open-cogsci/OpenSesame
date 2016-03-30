@@ -80,7 +80,7 @@ class get_started(base_extension):
 			u'recent_experiments' : u'  \n'.join(recent)
 			}
 		self.tabwidget.open_markdown(md, title=_(u'Get started!'),
-			icon=u'opensesame')
+			icon=u'document-new')
 
 	def event_open_recent_0(self):
 		self.main_window.open_file(path=self.main_window.recent_files[0])
