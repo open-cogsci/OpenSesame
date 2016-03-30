@@ -106,7 +106,13 @@ class theme:
 			type:	QIcon
 		"""
 
-		return QtWidgets.QFileIconProvider().icon(QtCore.QFileInfo(path))
+		try:
+			import fileinspector
+		except ImportError:
+			return QtWidgets.QFileIconProvider().icon(QtCore.QFileInfo(path))
+		return QtGui.QIcon.fromTheme(
+			fileinspector.translate_to_xdg(fileinspector.determine_type(path)),
+			fallback=QtGui.QIcon.fromTheme(u'unknown'))
 
 	def qicon(self, icon):
 
