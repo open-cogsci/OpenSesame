@@ -707,6 +707,14 @@ class qtopensesame(QtWidgets.QMainWindow, base_component):
 		self.ui.console.reset()
 		self.extension_manager.fire(u'open_experiment', path=path)
 		self.set_busy(False)
+		# Process non-fatal errors
+		if exp.items.error_log:
+			self.tabwidget.open_markdown(
+				_(u'Errors occurred while opening the file:\n\n') + \
+				u'\n---\n'.join([exc.markdown() for exc in exp.items.error_log]),
+				title=_(u'Error'), icon=u'dialog-error')
+			self.window_message(u"New experiment")
+			self.current_path = None
 
 	def set_run_status(self, status):
 

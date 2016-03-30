@@ -18,6 +18,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame.py3compat import *
+from libopensesame.exceptions import osexception
 from libopensesame.item_store import item_store
 from libopensesame import plugins
 from libqtopensesame.misc.translate import translation_context
@@ -44,6 +45,7 @@ class qtitem_store(item_store):
 		"""
 
 		super(qtitem_store, self).__init__(experiment)
+		self.error_log = []
 
 	@property
 	def main_window(self):
@@ -93,10 +95,9 @@ class qtitem_store(item_store):
 				item = super(qtitem_store, self).new(_type, name=name,
 					script=script)
 			except Exception as e:
-				from libqtopensesame.dialogs.notification import notification
-				notification(self.main_window, safe_decode(e),
-					title=_(u'Failed to load item'),
-					icon=u'dialog-warning').exec_()
+				if not isinstance(e, osexception):
+					e = osexception(e)
+				self.error_log.append(e)
 				return
 		if warning_list:
 			import yaml
