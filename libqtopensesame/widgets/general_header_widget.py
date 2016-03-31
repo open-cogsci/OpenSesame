@@ -66,6 +66,7 @@ class general_header_widget(header_widget):
 		if self.label_name.isVisible():
 			return
 		self.label_name.show()
+		self.label_type.show()
 		self.edit_name.hide()
 		self.general_tab.apply_changes()
 		self.refresh()
