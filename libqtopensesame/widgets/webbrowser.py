@@ -109,11 +109,9 @@ class small_webpage(WebPage):
 		# of received arguments can be determined.
 		if isinstance(args[0], QtCore.QUrl):
 			url, navtype, isMainFrame = args
-			mode = 'QtWebEngine'
 		else:
 			frame, request, navtype = args
 			url = request.url()
-			mode = 'QtWebKit'
 
 		if navtype == self.NavigationTypeLinkClicked:			
 			url = url.toString()
@@ -126,13 +124,8 @@ class small_webpage(WebPage):
 			if url.startswith(u'http://osdoc.cogsci.nl'):
 				self.parent().load(url)
 				return False
-				
-			# QtWebEngine already opens URLs in a platform specific way
-			# automatically. This does not need to be handeled by OpenSesame.
-			if mode == 'QtWebKit':
-				misc.open_url(url)
-			else:
-				return super(small_webpage, self).acceptNavigationRequest(*args)
+			misc.open_url(url)
+			return False
 		else:
 			return super(small_webpage, self).acceptNavigationRequest(*args)
 
