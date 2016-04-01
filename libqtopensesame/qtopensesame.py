@@ -267,7 +267,6 @@ class qtopensesame(QtWidgets.QMainWindow, base_component):
 			try:
 				ttf = self.experiment.resource(u'%s.ttf' % font)
 			except:
-				ttf = None
 				debug.msg(u'failed to find %s' % font)
 			else:
 				debug.msg(u'registering %s (%s)' % (font, ttf))
