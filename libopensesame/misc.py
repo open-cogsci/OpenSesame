@@ -389,4 +389,11 @@ if hasattr(site, u'getsitepackages'):
 		[os.path.join(safe_decode(folder, enc=filesystem_encoding()), u'share') \
 		for folder in site.getsitepackages()]
 base_folders += [u'/usr/local/share', u'/usr/share']
+# Locate Anaconda/Miniconda share
+if any(entry in sys.executable.lower() for entry in ['anaconda','miniconda']):
+	base_folders.append(os.path.join(
+		safe_decode(
+			os.path.dirname(os.path.dirname(sys.executable)),
+			enc=filesystem_encoding()), 
+		u"share"))
 base_folders = list(filter(os.path.exists, base_folders))

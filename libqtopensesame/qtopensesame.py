@@ -267,13 +267,13 @@ class qtopensesame(QtWidgets.QMainWindow, base_component):
 			try:
 				ttf = self.experiment.resource(u'%s.ttf' % font)
 			except:
-				ttf = None
 				debug.msg(u'failed to find %s' % font)
-			if ttf is not None:
+			else:
 				debug.msg(u'registering %s (%s)' % (font, ttf))
 				id = QtGui.QFontDatabase.addApplicationFont(ttf)
-				family = QtGui.QFontDatabase.applicationFontFamilies(id)[0]
-				QtGui.QFont.insertSubstitution(font, family)
+				families = QtGui.QFontDatabase.applicationFontFamilies(id)
+				if families:
+					QtGui.QFont.insertSubstitution(font, families[0])
 
 
 	def parse_command_line(self):

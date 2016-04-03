@@ -50,12 +50,21 @@ def opensesame():
 	parse_environment_file()
 	# Force the new-style Qt API
 	import sip
+	import qtpy
 	sip.setapi('QString', 2)
 	sip.setapi('QVariant', 2)
 	# Load debug package (this must be after the working directory change)
 	from libopensesame import debug
 	# Do the basic window initialization
 	from qtpy.QtWidgets import QApplication
+
+	# From Qt 5.6 on, QtWebEngine is the default way to render web pages
+	# QtWebEngineWidgets must be imported before a QCoreApplication instance is created
+	try:
+		from qtpy import QtWebEngineWidgets
+	except ImportError:
+		pass
+	
 	app = QApplication(sys.argv)
 	from libqtopensesame.qtopensesame import qtopensesame
 	opensesame = qtopensesame(app)

@@ -125,7 +125,7 @@ def plugins(included, _type=u'plugins'):
 
 def data_files():
 
-	return [(u"/usr/share/icons/hicolor/scalable/apps", [u"mime/opensesame.svg"])] + \
+	return [(u"share/icons/hicolor/scalable/apps", [u"mime/opensesame.svg"])] + \
 		plugins(included=included_plugins, _type=u'plugins') + \
 		plugins(included=included_extensions, _type=u'extensions') + \
 		resources()
@@ -174,6 +174,9 @@ setup(name=u"python-opensesame",
 		'python-qprogedit',
 		'python-qdatamatrix',
 		'python-pseudorandom',
+		'PyYAML',
+		'webcolors',
+		'Markdown'
 		],
 	classifiers=[
 		'Development Status :: 4 - Beta',

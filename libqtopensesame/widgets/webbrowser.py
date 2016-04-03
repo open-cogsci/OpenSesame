@@ -27,11 +27,18 @@ import os.path
 
 import os
 if os.environ[u'QT_API'] == u'pyqt':
-	from PyQt4 import QtWebKit
+	from PyQt4.QtWebKit import QWebView as WebView
+	from PyQt4.QtWebKit import QWebPage as WebPage
 else:
-	from PyQt5 import QtWebKitWidgets as QtWebKit
+	# QtWebKit is dropped in favour of QtWebEngine from Qt 5.6 on
+	try:	
+		from PyQt5.QtWebKitWidgets import QWebView as WebView
+		from PyQt5.QtWebKitWidgets import QWebPage as WebPage
+	except ImportError as e:
+		from PyQt5.QtWebEngineWidgets import QWebEngineView as WebView
+		from PyQt5.QtWebEngineWidgets import QWebEnginePage as WebPage
 
-class small_webview(QtWebKit.QWebView):
+class small_webview(WebView):
 
 	"""
 	desc:
@@ -50,6 +57,77 @@ class small_webview(QtWebKit.QWebView):
 		"""
 
 		return QtCore.QSize(100,100)
+
+class small_webpage(WebPage):
+
+	"""
+	desc:
+		A wrapper around QWeb(Engine)Page, to overload the acceptNavigationRequest
+		function, which determines what needs to be done after a link is clicked.
+	"""
+
+	def acceptNavigationRequest(self, *args):
+
+		"""
+		desc:
+			Handles navigation requests to the browser, which can originate from
+			link clicks, or other sources. the arguments and their order differ
+			with the web browser backend being used, which can be QtWebKit or the
+			newer QtWebEngine.
+
+			Arguments (when used by QtWebKit):
+				frame: 			
+					desc: 	The frame that has to be changed depending on the 
+							request
+					type: 	QtWebKit.QWebFrame 
+				request: 		
+					desc:	request containing information about the
+							navigation request, among which the url to change the
+							frame to.
+					type: 	QtWebKit.QNetworkRequest
+				navtype: 		
+					desc: 	type of request has been received (such as link 
+							clicked, form submitted)
+					type: 	QtWebKit.NavigationType
+
+			Arguments (when used by QtWebEngine):
+				url: 			
+					desc: 	url to navigate to
+					type: 	QtCore.QUrl
+				navtype: 		
+					desc: 	type of request has been received (such as link 
+							clicked, form submitted)	
+					type: 	QtWebEngine.NavigationType
+				isMainFrame: 	 
+					desc: 	indicating whether the request corresponds 
+							to the main frame or a child frame.
+					type: 	boolean
+		"""
+
+		# Check if the first argument is a QUrl. If so, then
+		# QWebEngine is used, if not, then QWebKit must be used. This way, the order
+		# of received arguments can be determined.
+		if isinstance(args[0], QtCore.QUrl):
+			url, navtype, isMainFrame = args
+		else:
+			frame, request, navtype = args
+			url = request.url()
+
+		if navtype == self.NavigationTypeLinkClicked:			
+			url = url.toString()
+			if url.startswith(u'opensesame://'):
+				self.parent().command(url)
+				return False
+			if url.startswith(u'new:'):
+				self.parent().main_window.tabwidget.open_browser(url[4:])
+				return False
+			if url.startswith(u'http://osdoc.cogsci.nl'):
+				self.parent().load(url)
+				return False
+			misc.open_url(url)
+			return False
+		else:
+			return super(small_webpage, self).acceptNavigationRequest(*args)
 
 class webbrowser(base_widget):
 
@@ -71,6 +149,9 @@ class webbrowser(base_widget):
 		super(webbrowser, self).__init__(main_window,
 			ui=u'widgets.webbrowser_widget')
 		self.ui.webview = small_webview(self)
+		# Set webpage which handles link clicks
+		webpage = small_webpage(self)
+		self.ui.webview.setPage(webpage)
 		# Touch events are enabled by default, and this has the effect that
 		# touch events are broken for all other widgets once the webbrowser has
 		# been used. This affects at least Ubuntu 15.05.
@@ -79,7 +160,6 @@ class webbrowser(base_widget):
 		self.ui.webview.loadStarted.connect(self.load_started)
 		self.ui.webview.loadFinished.connect(self.load_finished)
 		self.ui.webview.urlChanged.connect(self.url_changed)
-		self.ui.webview.linkClicked.connect(self.link_clicked)
 		self.ui.layout_main.addWidget(self.ui.webview)
 		self.ui.button_back.clicked.connect(self.ui.webview.back)
 		self.ui.button_osdoc.clicked.connect(self.open_osdoc)
@@ -108,8 +188,6 @@ class webbrowser(base_widget):
 			return
 		self.ui.top_widget.show()
 		self.ui.webview.load(QtCore.QUrl(url))
-		self.ui.webview.page().setLinkDelegationPolicy(
-			self.ui.webview.page().DelegateAllLinks)
 
 	def load_markdown(self, md):
 
@@ -123,8 +201,6 @@ class webbrowser(base_widget):
 
 		self.ui.top_widget.hide()
 		self.ui.webview.setHtml(self.markdown_parser.to_html(md))
-		self.ui.webview.page().setLinkDelegationPolicy(
-			self.ui.webview.page().DelegateAllLinks)
 
 	def load_finished(self):
 
@@ -185,31 +261,6 @@ class webbrowser(base_widget):
 		"""
 
 		self.ui.edit_url.setText(url.toString())
-
-	def link_clicked(self, url):
-
-		"""
-		desc:
-			Process link-clicks to capture special URLs.
-
-		arguments:
-			url:
-				type:	QUrl
-		"""
-
-		url = url.toString()
-		if url.startswith(u'opensesame://'):
-			self.command(url)
-			return
-		if url.startswith(u'new:'):
-			wb = webbrowser(self.main_window)
-			wb.load(url[4:])
-			self.main_window.tabwidget.open_browser(url[4:])
-			return
-		if url.startswith(u'http://osdoc.cogsci.nl'):
-			self.load(url)
-			return
-		misc.open_url(url)
 
 	def command(self, cmd):
 

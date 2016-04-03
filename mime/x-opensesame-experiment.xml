@@ -2,7 +2,7 @@
 <mime-info xmlns="http://www.freedesktop.org/standards/shared-mime-info">
 	<mime-type type="application/x-opensesame-experiment">
 		<comment>OpenSesame experiment</comment>
-		<icon>applications/opensesame</icon>
+		<icon>apps/opensesame</icon>
 		<glob pattern="*.osexp"/>
 		<glob pattern="*.opensesame"/>
 		<glob pattern="*.opensesame.tar.gz"/>
