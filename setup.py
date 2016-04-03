@@ -176,7 +176,6 @@ setup(name=u"python-opensesame",
 		'python-pseudorandom',
 		'PyYAML',
 		'webcolors',
-		'Markdown'
 		],
 	classifiers=[
 		'Development Status :: 4 - Beta',
