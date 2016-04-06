@@ -668,6 +668,11 @@ class qtopensesame(QtWidgets.QMainWindow, base_component):
 			path = QtWidgets.QFileDialog.getOpenFileName(self.ui.centralwidget,
 				_(u"Open file"), filter=self.open_file_filter,
 				directory=cfg.file_dialog_path)
+		# In PyQt5, the QFileDialog.getOpenFileName returns a tuple instead of 
+		# a string, of which the first position contains the path. check for that 
+		# here.
+		if isinstance(path,tuple):
+			path = path[0]
 		if path is None or path == u'' or ( \
 			not path.lower().endswith(u'.opensesame') and \
 			not  path.lower().endswith(u'.opensesame.tar.gz') and \
