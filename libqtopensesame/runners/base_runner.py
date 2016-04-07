@@ -111,10 +111,14 @@ class base_runner(object):
 				u'subject-%d.csv' % subject_nr)
 			# Get the data file
 			csv_filter = u'Comma-separated values (*.csv)'
-			logfile = str(QtWidgets.QFileDialog.getSaveFileName( \
+			logfile = QtWidgets.QFileDialog.getSaveFileName( \
 				self.main_window.ui.centralwidget, \
 				_(u"Choose location for logfile (press 'escape' for default location)"), \
-				suggested_path, filter=csv_filter))
+				suggested_path, filter=csv_filter)
+			# In PyQt5, the QFileDialog.getOpenFileName returns a tuple instead of 
+			# a string, of which the first position contains the path.
+			if isinstance(logfile,tuple):
+				logfile = logfile[0]
 			# An empty string indicates that the dialogue was cancelled, in
 			# which case we fall back to a default location.
 			if logfile == u'':

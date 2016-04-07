@@ -795,6 +795,10 @@ class qtopensesame(QtWidgets.QMainWindow, base_component):
 		path = QtWidgets.QFileDialog.getSaveFileName(self.ui.centralwidget,
 			_(u'Save as…'), directory=cfg.file_dialog_path,
 			filter=self.save_file_filter)
+		# In PyQt5, the QFileDialog.getOpenFileName returns a tuple instead of 
+		# a string, of which the first position contains the path.
+		if isinstance(path,tuple):
+			path = path[0]
 		if path is None or path == u"":
 			return
 		if not path.lower().endswith(u'.osexp'):

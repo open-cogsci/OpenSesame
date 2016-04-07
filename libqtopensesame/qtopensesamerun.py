@@ -66,6 +66,10 @@ class qtopensesamerun(QtWidgets.QMainWindow, base_component):
 			u"OpenSesame files (*.osexp *.opensesame.tar.gz *.opensesame);;OpenSesame script and file pool (*.opensesame.tar.gz);;OpenSesame script (*.opensesame)"
 		path = QtWidgets.QFileDialog.getOpenFileName(self, \
 			u"Open experiment file", filter = file_type_filter)
+		# In PyQt5, the QFileDialog.getOpenFileName returns a tuple instead of 
+		# a string, of which the first position contains the path.
+		if isinstance(path,tuple):
+			path = path[0]
 		if path == u"":
 			return
 		self.ui.edit_experiment.setText(path)
@@ -76,6 +80,11 @@ class qtopensesamerun(QtWidgets.QMainWindow, base_component):
 
 		path = QtWidgets.QFileDialog.getSaveFileName(self, \
 			u"Choose a location for the logfile")
+		# In PyQt5, the QFileDialog.getOpenFileName returns a tuple instead of 
+		# a string, of which the first position contains the path.
+		if isinstance(path,tuple):
+			path = path[0]
+			
 		if path == u"":
 			return
 		self.ui.edit_logfile.setText(path)
