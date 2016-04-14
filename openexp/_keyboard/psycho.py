@@ -101,6 +101,9 @@ class psycho(keyboard.keyboard):
 
 	def synonyms(self, key):
 
+		if key is None:
+			return [None, 'None', 'none', 'NONE']
+
 		# Respond correctly if a keycode is passed, rather than a Unicode string
 		# key description.
 		if type(key) == int:
