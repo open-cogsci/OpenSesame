@@ -271,9 +271,10 @@ class loop(item.item):
 		"""See item."""
 
 		item.item.prepare(self)
-		# Deprecation errors
-		if (self.var.has(u'skip') and self.var.skip != 0) \
-			or (self.var.has(u'offset') and self.var.offset != u'no'):
+		# Deprecation errors. The direct reference to __vars__ prevents a lookup
+		# in the parent var store.
+		if (u'skip' in self.var.__vars__ and self.var.skip != 0) \
+			or (u'offset' in self.var.__vars__ and self.var.offset != u'no'):
 			raise osexception(
 				u'The skip and offset options have been removed. Please refer to the documentation of the loop item for more information.')
 		# Compile break-if statement
