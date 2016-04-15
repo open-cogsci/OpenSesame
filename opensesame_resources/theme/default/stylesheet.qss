@@ -83,3 +83,41 @@
 QTreeView::item {
 	padding: 4px;
 }
+
+/** QNotifications **/
+
+QNotification {
+	font-size: 16px;
+	padding: 0px;
+	margin: 0px;
+	border-radius: 6px;
+}
+
+QNotification #message{
+	color: #FFFFFF;
+	padding: 0px;
+	margin: 0px;
+}
+
+QNotification #closeButton{
+	color: #FFFFFF;
+	padding: 0px;
+	margin: 0px;
+}
+
+QNotification#info,
+QNotification#primary {
+	background-color: #039be5;
+	border-color: #0227bd;
+}
+
+QNotification#success {
+	background-color: #43a047;
+	border-color: #2e7d32;
+}
+
+QNotification#danger,
+QNotification#warning {
+	background-color: #e53935;
+	border-color: #c62828;
+}

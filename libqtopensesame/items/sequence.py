@@ -84,9 +84,9 @@ class sequence(qtstructure_item, qtplugin, sequence_runtime):
 			return
 		for item, cond in self.items:
 			if item not in self.experiment.items:
-				self.user_hint_widget.add(
-					_(u'Sequence contains non-existing item: %s') % item)
-		self.user_hint_widget.refresh()
+				self.extension_manager.fire(u'notify',
+					message=_(u'Sequence contains non-existing item: %s') % item,
+					category=u'warning')
 		self.treewidget.clear()
 		self.toplevel_treeitem = self.build_item_tree(max_depth=2)
 		self.treewidget.addTopLevelItem(self.toplevel_treeitem)

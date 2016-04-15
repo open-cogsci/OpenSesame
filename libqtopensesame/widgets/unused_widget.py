@@ -53,8 +53,6 @@ class unused_widget(base_widget):
 		header_label.setText(_(u"<b><font size='5'>Unused</font></b>"))
 		header_hbox.addWidget(header_label)
 		header_hbox.addStretch()
-		user_hint_widget = QtWidgets.QWidget()
-		user_hint_widget.setLayout(header_hbox)
 		self.purge_button = QtWidgets.QPushButton(self.theme.qicon(u"purge"),
 			_(u"Permanently delete unused items"))
 		self.purge_button.setIconSize(QtCore.QSize(16, 16))
@@ -65,7 +63,6 @@ class unused_widget(base_widget):
 		purge_widget = QtWidgets.QWidget()
 		purge_widget.setLayout(purge_hbox)
 		vbox = QtWidgets.QVBoxLayout()
-		vbox.addWidget(user_hint_widget)
 		vbox.addWidget(purge_widget)
 		vbox.addStretch()
 		self.setLayout(vbox)

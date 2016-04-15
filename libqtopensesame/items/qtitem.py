@@ -19,14 +19,12 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 
 from libopensesame.py3compat import *
 from qtpy import QtCore, QtWidgets
-import os.path
-import sip
 from libopensesame.exceptions import osexception
-from libopensesame import debug, item
+from libopensesame import debug
 from libqtopensesame.widgets.item_view_button import item_view_button
 from libqtopensesame.widgets.tree_item_item import tree_item_item
 from libqtopensesame.widgets.qtitem_splitter import qtitem_splitter
-from libqtopensesame.widgets import header_widget, user_hint_widget
+from libqtopensesame.widgets import header_widget
 from libqtopensesame._input.pool_select import pool_select
 from libqtopensesame.misc.config import cfg
 from libqtopensesame.misc.base_qtobject import base_qtobject
@@ -197,8 +195,6 @@ class qtitem(base_qtobject):
 
 		# Header widget
 		self.header = header_widget.header_widget(self)
-		self.user_hint_widget = user_hint_widget.user_hint_widget(
-			self.experiment.main_window, self)
 		self.header_hbox = QtWidgets.QHBoxLayout()
 		self.header_item_icon = self.theme.qlabel(self.item_icon())
 		self.header_hbox.addWidget(self.header_item_icon)
@@ -242,7 +238,6 @@ class qtitem(base_qtobject):
 
 		# The edit_vbox contains the edit_grid and the header widget
 		self.edit_vbox = QtWidgets.QVBoxLayout()
-		self.edit_vbox.addWidget(self.user_hint_widget)
 		self.edit_vbox.addWidget(self.edit_grid_widget)
 		self.edit_vbox.setContentsMargins(0, 0, 0, 0)
 		self.edit_vbox.setSpacing(12)
@@ -530,7 +525,6 @@ class qtitem(base_qtobject):
 			self.button_toggle_maximize.setIcon(
 				self.theme.qicon(u'view-fullscreen'))
 		self.maximized = not self.maximized
-		self.user_hint_widget.disable(self.maximized)
 		self.button_help.setDisabled(self.maximized)
 		self.main_window.setDisabled(self.maximized)
 
@@ -648,9 +642,10 @@ class qtitem(base_qtobject):
 			else:
 				if combobox.isEnabled():
 					combobox.setDisabled(True)
-					self.user_hint_widget.add(_(u'"%s" is set to a variable or '
+					self.extension_manager.fire(u'notify',
+						message=_(u'"%s" is set to a variable or '
 						u'unknown value and can only be edited through '
-						u'the script.') % var)
+						u'the script.') % var, category=u'info')
 
 		for var, spinbox in list(self.auto_spinbox.items()) \
 			+ list(self.auto_slider.items()):
@@ -671,9 +666,10 @@ class qtitem(base_qtobject):
 					if not spinbox.isEnabled():
 						continue
 					spinbox.setDisabled(True)
-					self.user_hint_widget.add(_(u'"%s" is defined using '
+					self.extension_manager.fire(u'notify',
+						message=_(u'"%s" is defined using '
 						'variables and can only be edited through the '
-						'script.') % var)
+						'script.') % var, category=u'info')
 
 		for var, checkbox in self.auto_checkbox.items():
 			if isinstance(var, int):
@@ -687,9 +683,11 @@ class qtitem(base_qtobject):
 						checkbox.setChecked(checked)
 				else:
 					checkbox.setDisabled(True)
-					self.user_hint_widget.add(_(u'"%s" is defined using '
+					self.extension_manager.fire(u'notify',
+						message=_(u'"%s" is defined using '
 						u'variables or has an invalid value, and can only be '
-						u'edited through the script.') % var)
+						u'edited through the script.') % var,
+						category=u'info')
 
 		for var, qprogedit in self.auto_editor.items():
 			if isinstance(var, int):
@@ -698,8 +696,6 @@ class qtitem(base_qtobject):
 				val = safe_decode(self.var.get(var, _eval=False))
 				if val != qprogedit.text():
 					qprogedit.setText(val)
-
-		self.user_hint_widget.refresh()
 
 	def auto_apply_edit_changes(self, rebuild=True):
 
