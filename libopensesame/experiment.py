@@ -161,6 +161,9 @@ class experiment(item.item):
 		# Logfile parameters
 		self._log = None
 		self.logfile = logfile
+		# A list of data files, which may include more than just the OpenSesame
+		# logfile, for example if data is also recorded using some other method.
+		self.data_files = []
 
 		# This is some duplication of the option parser in qtopensesame,
 		# but nevertheless keep it so we don't need qtopensesame

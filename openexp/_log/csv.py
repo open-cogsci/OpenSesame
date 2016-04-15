@@ -33,6 +33,7 @@ class csv(log):
 
 		self._log = None
 		log.__init__(self, experiment, path)
+		experiment.data_files.append(path)
 
 	def close(self):
 

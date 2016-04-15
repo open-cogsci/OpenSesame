@@ -115,7 +115,7 @@ class base_runner(object):
 				self.main_window.ui.centralwidget, \
 				_(u"Choose location for logfile (press 'escape' for default location)"), \
 				suggested_path, filter=csv_filter)
-			# In PyQt5, the QFileDialog.getOpenFileName returns a tuple instead of 
+			# In PyQt5, the QFileDialog.getOpenFileName returns a tuple instead of
 			# a string, of which the first position contains the path.
 			if isinstance(logfile,tuple):
 				logfile = logfile[0]
@@ -260,6 +260,9 @@ class base_runner(object):
 		self.main_window.set_run_status(u'finished')
 		self.main_window.extension_manager.fire(u'end_experiment',
 			ret_val=ret_val)
+		if ret_val is None:
+			self.main_window.extension_manager.fire(u'process_data_files',
+				data_files=self.data_files())
 
 	def workspace_globals(self):
 
@@ -274,6 +277,10 @@ class base_runner(object):
 		"""
 
 		return {}
+
+	def data_files(self):
+
+		return self.workspace_globals().get(u'data_files', [])
 
 	def pause(self):
 

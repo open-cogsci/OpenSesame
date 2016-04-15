@@ -98,3 +98,6 @@ class example(base_extension):
 
 	def event_purge_unused_items(self):
 		debug.msg(u'Event fired: purge_unused_items')
+
+	def event_process_data_files(self, data_files):
+		debug.msg(u'Event fired: process_data_files')
