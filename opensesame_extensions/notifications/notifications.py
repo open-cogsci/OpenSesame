@@ -18,44 +18,30 @@ This module is distributed under the Apache v2.0 License.
 You should have received a copy of the Apache v2.0 License
 along with this module. If not, see <http://www.apache.org/licenses/>.
 """
-# Python3 compatibility
-from __future__ import absolute_import
-from __future__ import division
-from __future__ import print_function
-from __future__ import unicode_literals
-
-from qtpy import QtWidgets, QtCore, QtGui
 
 import QNotifications
-
-from libopensesame import debug
-from libopensesame.exceptions import osexception
 from libopensesame.py3compat import *
 from libqtopensesame.extensions import base_extension
-from libqtopensesame.misc.translate import translation_context
-_ = translation_context(u'notifications', category=u'extension')
 
 __author__ = u"Daniel Schreij"
 __license__ = u"GPLv3"
 
-import os
-
 class notifications(base_extension):
-	### OpenSesame events
+
 	def event_startup(self):
-		self.notification_area = QNotifications.QNotificationArea(self.tabwidget)
+
+		self.old_notifications = []
+		self.notification_area = QNotifications.QNotificationArea(
+			self.tabwidget, useGlobalCSS=True)
 		self.notification_area.setEntryEffect(u'fadeIn', 200)
 		self.notification_area.setExitEffect(u'fadeOut', 200)
-	
-	def event_save_experiment(self, path):
-		""" Displays a notification after an experiment has been saved. """
-		self.event_notify(_(u"Experiment has been saved"), u"info")
 
-	def event_notify(self, message, kind='primary', timeout=5000):
+	def event_notify(self, message, category='primary', timeout=5000):
 		""" Show a notification 'message' in the style 'notification type' for
-		'timeout' milliseconds (where 0 milliseconds displays the notification 
+		'timeout' milliseconds (where 0 milliseconds displays the notification
 		indefinitely, until the user removes it)."""
-		self.notification_area.display(message, kind, timeout)
-		
-	
-	
+
+		if (message, category, timeout) in self.old_notifications:
+			return
+		self.old_notifications.append( (message, category, timeout) )
+		self.notification_area.display(message, category, timeout)

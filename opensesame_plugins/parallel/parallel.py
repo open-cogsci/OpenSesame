@@ -152,8 +152,8 @@ class qtparallel(qtsequence.sequence, qtplugin.qtplugin):
 	def edit_widget(self):
 
 		qtplugin.qtplugin.edit_widget(self)
-		self.user_hint_widget.add(
-			_(u'Using the parallel plug-in is not recommended. For an '
+		self.extension_manager.fire(u'notify',
+			message=_(u'Using the parallel plug-in is not recommended. For an '
 			u'alternative, see <a href="http://osdoc.cogsci.nl/usage/coroutines/"> '
-			u'coroutines</a>.'))
-		self.user_hint_widget.refresh()
+			u'coroutines</a>.'),
+			category=u'danger')

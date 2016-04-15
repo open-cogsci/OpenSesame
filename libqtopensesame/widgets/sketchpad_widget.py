@@ -538,10 +538,9 @@ class sketchpad_widget(base_widget):
 		self.elements.sort(key=z_sort)
 		for element in self.elements:
 			element.draw()
-		self.sketchpad.user_hint_widget.clear()
-		if len(self.canvas.notifications) > 0:
-			self.sketchpad.user_hint_widget.add(self.canvas.notifications)
-		self.sketchpad.user_hint_widget.refresh()
+		for notification in self.canvas.notifications:
+			self.extension_manager.fire(u'notify', message=notification,
+				category=u'info')
 		self.sketchpad.apply_edit_changes()
 
 	def center(self):
