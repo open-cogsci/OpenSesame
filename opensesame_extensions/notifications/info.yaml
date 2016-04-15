@@ -1,0 +1,6 @@
+label: Notifications
+version: 0.1.0
+author: Daniel Schreij
+link : https://github.com/dschreij/opensesame-notifications-widget
+icon: folder-remote
+tooltip: Pretty notifications for OpenSesame
