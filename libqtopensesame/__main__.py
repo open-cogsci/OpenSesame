@@ -66,6 +66,9 @@ def opensesame():
 		pass
 	
 	app = QApplication(sys.argv)
+	# Enable High DPI display with PyQt5
+	if hasattr(qtpy.QtCore.Qt, 'AA_UseHighDpiPixmaps'):
+		app.setAttribute(qtpy.QtCore.Qt.AA_UseHighDpiPixmaps)
 	from libqtopensesame.qtopensesame import qtopensesame
 	opensesame = qtopensesame(app)
 	opensesame.__script__ = __file__
