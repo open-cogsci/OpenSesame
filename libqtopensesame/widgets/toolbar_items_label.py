@@ -54,5 +54,4 @@ class toolbar_items_label(base_subcomponent, QtWidgets.QFrame):
 		hbox = QtWidgets.QHBoxLayout()
 		hbox.setContentsMargins(0,0,0,0)
 		hbox.addWidget(l)
-		# hbox.setMargin(0)
 		self.setLayout(hbox)

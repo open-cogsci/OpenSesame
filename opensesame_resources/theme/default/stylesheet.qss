@@ -78,6 +78,7 @@
 
 #toolbar_items QLabel {
 	font-size: 8pt;
+	font-family: "Roboto Condensed";
 }
 
 QTreeView::item {
