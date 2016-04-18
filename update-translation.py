@@ -88,9 +88,9 @@ def parse_yaml(path, t, category):
 	if category == u'auto':
 		folder = os.path.basename(os.path.dirname(os.path.dirname(path)))
 		print(folder)
-		if folder == u'extensions':
+		if folder == u'opensesame_extensions':
 			category = u'extension'
-		elif folder== u'plugins':
+		elif folder== u'opensesame_plugins':
 			category = u'plugin'
 		else:
 			raise Exception(u'Unkown category for %s' % path)
@@ -139,7 +139,7 @@ def compile_ts(locales, t, ui_list, fname='translate.pro'):
 	pro = pro_tmpl % {
 		u'ui_list' : u' \\\n\t'.join(ui_list),
 		u'locales' : u' \\\n\t'.join(
-			[u'resources/ts/%s.ts' % locale for locale in locales])
+			[u'opensesame_resources/ts/%s.ts' % locale for locale in locales])
 		}
 	with open(fname, u'w') as fd:
 		fd.write(pro)
@@ -150,13 +150,30 @@ def compile_ts(locales, t, ui_list, fname='translate.pro'):
 def compile_qm(locales):
 
 	for locale in locales:
-		cmd = [u'lrelease-qt4', u'resources/ts/%s.ts' % locale, u'-qm',
-			u'resources/locale/%s.qm' % locale]
+		cmd = [u'lrelease-qt4', u'opensesame_resources/ts/%s.ts' % locale,
+			u'-qm', u'opensesame_resources/locale/%s.qm' % locale]
 		subprocess.call(cmd)
+
+
+def check_markdown_translations(dirname, locale):
+
+	for basename in os.listdir(dirname):
+		path = os.path.join(dirname, basename)
+		if os.path.isdir(path) and basename != u'locale':
+			check_markdown_translations(path, locale)
+			continue
+		if not path.endswith(u'.md'):
+			continue
+		if os.path.exists(os.path.join(dirname, u'locale', locale, basename)):
+			print('+ %s' % path)
+		else:
+			print('- %s' % path)
 
 
 if __name__ == u'__main__':
 
+	locales = u'fr_FR', u'de_DE', u'it_IT', u'zh_CN', u'ru_RU', u'es_ES', \
+	u'translatables'
 	parser = argparse.ArgumentParser(
 		description=u'Update ts and qm files for OpenSesame-related projects')
 	parser.add_argument('--category', type=str, default=u'auto',
@@ -165,8 +182,12 @@ if __name__ == u'__main__':
 	args = parser.parse_args()
 	t = Translatables()
 	ui_list = []
-	locales = u'fr_FR', u'de_DE', u'it_IT', u'zh_CN', u'ru_RU', u'es_ES', \
-		u'translatables'
 	parse_folder(os.path.abspath(u'.'), t, ui_list, category=args.category)
 	compile_ts(locales, t, ui_list)
 	compile_qm(locales)
+	for locale in locales:
+		print('Markdown translations for %s' % locale)
+		check_markdown_translations('opensesame_extensions', locale)
+		check_markdown_translations('opensesame_plugins', locale)
+		check_markdown_translations('opensesame_resources', locale)
+		print()
