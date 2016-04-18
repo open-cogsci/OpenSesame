@@ -85,7 +85,7 @@ def main():
 	# with the experiment path, subject nr, and logfile in it.
 	for folder in sdcard_folders:
 		path = os.path.join(folder, 'opensesame-autorun.yml')
-		print path
+		print(path)
 		if os.path.exists(path):
 			d = yaml.load(open(path))
 			experiment_path = d['experiment']
