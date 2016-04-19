@@ -25,6 +25,7 @@ from qtpy import QtCore
 import sys
 import yaml
 import os
+import traceback
 from libqtopensesame.misc.translate import translation_context
 _ = translation_context(u'bug_report', category=u'extension')
 
@@ -107,14 +108,18 @@ class bug_report(base_extension):
 
 		with open(self.ext_resource(u'report.md')) as fd:
 			md = safe_decode(fd.read())
-		self.traceback = tb
+		error_list = traceback.format_exception(exception_type, value, tb)
+	
+		self.traceback = u"".join([safe_decode(tb_line) for tb_line in error_list])
+		self.traceback_md = u'~~~ .traceback\n%s\n~~~\n' % self.traceback
+
 		md = md % {
 			# u'traceback' : self.indent(self.stderr.buffer),
-			u'traceback' : tb,
+			u'traceback' : self.traceback_md,
 			u'version' : metadata.__version__,
 			u'python_version' : safe_str(metadata.python_version,
 				errors=u'ignore'),
 			u'platform' : metadata.platform,
 			}
 		self.tabwidget.open_markdown(md, title=_(u'Oops ...'))
-		sys.stderr.write(tb)
+		sys.stderr.write(self.traceback)
