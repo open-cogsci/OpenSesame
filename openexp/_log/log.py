@@ -35,13 +35,7 @@ class log(object):
 		log.write_vars()
 		~~~
 
-		__Overview:__
-
-		%--
-		toc:
-			mindepth: 2
-			maxdepth: 3
-		--%
+		[TOC]
 	"""
 
 	def __init__(self, experiment, path):

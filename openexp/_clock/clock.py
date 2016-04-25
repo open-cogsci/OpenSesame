@@ -36,13 +36,7 @@ class clock(object):
 		print(u'This should be 1000: %s' % time_passed)
 		~~~
 
-		__Overview:__
-
-		%--
-		toc:
-			mindepth: 2
-			maxdepth: 3
-		--%
+		[TOC]
 	"""
 
 	def __init__(self, experiment):

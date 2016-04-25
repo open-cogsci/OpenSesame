@@ -1,3 +1,4 @@
+
 #-*- coding:utf-8 -*-
 
 """
@@ -48,16 +49,10 @@ class var_store(object):
 		    print(u'my_variable exists!')
 		# Loop through all experimental variables
 		for var_name in var:
-		    print(u'variable found: %s' % var_name)
+			print(u'variable found: %s' % var_name)
 		~~~
 
-		__Function list:__
-
-		%--
-		toc:
-			mindepth: 2
-			maxdepth: 2
-		--%
+		[TOC]
 	"""
 
 	def __init__(self, item, parent=None):

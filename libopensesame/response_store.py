@@ -76,7 +76,7 @@ class response_info(object):
 class response_store(object):
 
 	"""
-	desc:
+	desc: |
 		The `responses` object contains the history of the responses that were
 		collected during the experiment.
 
@@ -96,13 +96,7 @@ class response_store(object):
 		print(responses[:2])
 		~~~
 
-		__Function list:__
-
-		%--
-		toc:
-			mindepth: 2
-			maxdepth: 2
-		--%
+		[TOC]
 	"""
 
 	def __init__(self, experiment):

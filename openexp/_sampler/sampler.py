@@ -35,13 +35,7 @@ class sampler(backend):
 		my_sampler.play()
 		~~~
 
-		__Overview:__
-
-		%--
-		toc:
-			mindepth: 2
-			maxdepth: 3
-		--%
+		[TOC]
 
 		## Things to know
 

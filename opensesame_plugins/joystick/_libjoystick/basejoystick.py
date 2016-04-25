@@ -25,15 +25,7 @@ class basejoystick(object):
 	desc: |
 		If you insert the `joystick` plugin at the start of your experiment, a
 		`joystick` object automatically becomes part of the experiment object
-		and can be accessed from within an inline_script item as `exp.joystick`.
-
-		__Function list:__
-
-		%--
-		toc:
-			mindepth: 2
-			maxdepth: 2
-		--%
+		and can be used within an inline_script item as `joystick`.
 
 		%--
 		constant:
@@ -41,8 +33,10 @@ class basejoystick(object):
 				A list of buttons that are accepted or `None` to accept all
 				buttons.
 			arg_timeout: |
-				An timeout value in milliseconds or `None` for no timeout.
+				A timeout value in milliseconds or `None` for no timeout.
 		--%
+
+		[TOC]
 	"""
 
 

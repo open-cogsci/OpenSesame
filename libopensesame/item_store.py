@@ -48,13 +48,7 @@ class item_store(object):
 			print(item_name)
 		~~~
 
-		__Function list:__
-
-		%--
-		toc:
-			mindepth: 2
-			maxdepth: 2
-		--%
+		[TOC]
 	"""
 
 	built_in_types = [u'sequence', u'loop', u'sketchpad', u'feedback',

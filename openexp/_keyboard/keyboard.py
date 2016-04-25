@@ -38,13 +38,7 @@ class keyboard(backend):
 		var.response_time = end_time - start_time
 		~~~
 
-		__Overview:__
-
-		%--
-		toc:
-			mindepth: 2
-			maxdepth: 3
-		--%
+		[TOC]
 
 		## Things to know
 

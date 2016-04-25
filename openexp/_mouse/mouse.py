@@ -44,13 +44,7 @@ class mouse(backend):
 			my_canvas.show()
 		~~~
 
-		__Overview:__
-
-		%--
-		toc:
-			mindepth: 2
-			maxdepth: 3
-		--%
+		[TOC]
 
 		## Things to know
 

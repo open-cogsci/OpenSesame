@@ -1,23 +1,22 @@
-# Sequence items
+title: Doing things in sequence
 
-In an experiment, you generally have a number of events that occur sequentially. For example, in a trial, you may present a fixation point, followed by a number of stimulus displays, followed in turn by response collection and response logging. This is where the `sequence` item comes in.
+The `sequence` item has two important functions:
 
-## Sequences are sequential
+- It runs multiple other items one after another.
+- It determines which items should, and which shouldn't, be run.
 
-`sequence`s are run from top to bottom, i.e. the first item is the item that is presented at the top. You can change the order of the `sequence` by picking up items by their grab handle (on the left) and dragging them to a new position. You can remove items from a `sequence` by right-clicking an item and selecting 'Delete'.
-
-## Appending items to the sequence
-
-You can add items to a `sequence` by clicking on the buttons at the bottom of the tab. The *Append existing item* button appends an existing item to the sequence table, without creating a new item. This way you can add a single item (a fixation dot display, say) multiple times to a `sequence`. The *Append new item* button creates a new item and appends it to the `sequence`.
+`sequence`s are run from top to bottom; that is, the item at the top is run first.
 
 ## Run-if statements
 
-A very convenient feature of the sequence item is that you can use conditional ('if') statements to determine whether or not a particular item should be executed. For example, if you want a display to be presented only if a participant has made an incorrect response, you can set the Run-if statement to
+You can use run-if statements to determine whether or not a particular item should be run. For example, if you want a display to be presented only if a participant has made an incorrect response, you can set the Run-if statement for that item to:
 
 	[correct] = 0
 
-If you leave the Run-if statement empty or enter 'always', the item will always be executed.
+If you leave the Run-if statement empty or enter 'always', the item will always be run.
 
-For more information, see also:
-	
-- <http://osdoc.cogsci.nl/usage/variables-and-conditional-statements/#usingconditionalifstatements>
+*Important:* Run-if statements only affect which items are run, not which items are prepared. Phrased differently, the prepare phase of all items in a `sequence` is always executed, regardless of the run-if statement.
+
+Run-if statements use the same syntax as all OpenSesame conditional statements. For more information, see:
+
+- /manual/ifstatements

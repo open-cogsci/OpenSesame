@@ -23,7 +23,7 @@ from libopensesame import debug
 import serial
 import os
 
-class libsrbox:
+class libsrbox(object):
 
 	"""
 	desc: |
@@ -42,14 +42,6 @@ class libsrbox:
 		You need to call [srbox.start] to put the SR Box in sending mode,
 		before calling [srbox.get_button_press] to collect a button press.
 
-		__Function list:__
-
-		%--
-		toc:
-			mindepth: 2
-			maxdepth: 2
-		--%
-
 		__Example:__
 
 		~~~ .python
@@ -62,6 +54,8 @@ class libsrbox:
 			print('Button 1 was pressed in %d ms!' % response_time)
 		srbox.stop()
 		~~~
+
+		[TOC]
 	"""
 
 	# The PST sr box only supports five buttons, but some of the VU boxes use

@@ -66,13 +66,7 @@ class file_pool_store(object):
 			my_canvas.show()
 		~~~
 
-		__Function list:__
-
-		%--
-		toc:
-			mindepth: 2
-			maxdepth: 2
-		--%
+		[TOC]
 	"""
 
 	def __init__(self, experiment, folder=None):
