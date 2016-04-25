@@ -25,68 +25,9 @@ from qtpy import QtCore
 import sys
 import yaml
 import os
+import traceback
 from libqtopensesame.misc.translate import translation_context
 _ = translation_context(u'bug_report', category=u'extension')
-
-class capture_stderr(object):
-
-	"""
-	desc:
-		A file-like object to capture the stderr.
-	"""
-
-	def __init__(self, ext):
-
-		"""
-		desc:
-			Constructor.
-
-		arguments:
-			ext:	The bug_report extension.
-		"""
-
-		self.ext = ext
-		self.clear()
-		self.timer = QtCore.QTimer()
-		self.timer.setSingleShot(True)
-		self.timer.timeout.connect(self.ext.captured_err)
-
-	def clear(self):
-
-		"""
-		desc:
-			Clear the error buffer.
-		"""
-
-		self.buffer = u''
-
-	def write(self, msg):
-
-		"""
-		desc:
-			Receives a chunk of error message. We use a timer of 1 second to
-			report an error if no new error lines come in.
-
-		arguments:
-			msg:
-				desc:	A chunk of error message.
-				type:	str
-		"""
-
-		self.buffer += safe_decode(msg, errors=u'ignore')
-		self.timer.start(1)
-		if sys.__stderr__ is not None:
-			sys.__stderr__.write(msg)
-
-	def flush(self):
-
-		"""
-		desc:
-			Flushes the standard error if available.
-		"""
-
-		if sys.__stderr__ is not None:
-			sys.__stderr__.flush()
 
 class bug_report(base_extension):
 
@@ -101,20 +42,7 @@ class bug_report(base_extension):
 		desc:
 			Start capturing.
 		"""
-
-		self.stderr = capture_stderr(self)
-		sys.stderr = self.stderr
-		self.traceback = None
-
-	def event_end_experiment(self, ret_val):
-
-		"""
-		desc:
-			Recapture after the experiment has finished, because the console
-			has set the stderr back to the original.
-		"""
-
-		sys.stderr = self.stderr
+		sys.excepthook = self.captured_err
 
 	def indent(self, s):
 
@@ -171,7 +99,7 @@ class bug_report(base_extension):
 			self.tabwidget.open_markdown(self.ext_resource(u'failure.md'),
 				title=_(u'Bug report not sent'))
 
-	def captured_err(self):
+	def captured_err(self, exception_type, value, tb):
 
 		"""
 		desc:
@@ -180,13 +108,18 @@ class bug_report(base_extension):
 
 		with open(self.ext_resource(u'report.md')) as fd:
 			md = safe_decode(fd.read())
-		self.traceback = self.stderr.buffer
+		error_list = traceback.format_exception(exception_type, value, tb)
+	
+		self.traceback = u"".join([safe_decode(tb_line) for tb_line in error_list])
+		self.traceback_md = u'~~~ .traceback\n%s\n~~~\n' % self.traceback
+
 		md = md % {
-			u'traceback' : self.indent(self.stderr.buffer),
+			# u'traceback' : self.indent(self.stderr.buffer),
+			u'traceback' : self.traceback_md,
 			u'version' : metadata.__version__,
 			u'python_version' : safe_str(metadata.python_version,
 				errors=u'ignore'),
 			u'platform' : metadata.platform,
 			}
 		self.tabwidget.open_markdown(md, title=_(u'Oops ...'))
-		self.stderr.clear()
+		sys.stderr.write(self.traceback)

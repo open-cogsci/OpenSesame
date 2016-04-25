@@ -35,6 +35,7 @@ class notifications(base_extension):
 
 		self.notification_area = QNotifications.QNotificationArea(
 			self.tabwidget, useGlobalCSS=True)
+		self.notification_area.move(0,15)
 		self.notification_area.setEntryEffect(u'fadeIn', 200)
 		self.notification_area.setExitEffect(u'fadeOut', 200)
 
