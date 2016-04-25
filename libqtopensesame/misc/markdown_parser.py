@@ -24,7 +24,7 @@ import re
 import os
 try:
 	import markdown
-	from markdown.extensions import attr_list, extra
+	from markdown.extensions import attr_list, extra, toc
 except:
 	markdown = None
 try:
@@ -73,7 +73,9 @@ class markdown_parser(base_subcomponent):
 				r'^~~~\s*.(?P<syntax>\w+)(?P<script>.*?)^~~~', re.S | re.M)
 		self.css += u'</style>'
 		if markdown is not None:
-			self.ext = [attr_list.AttrListExtension(), extra.ExtraExtension()]
+			self.ext = [attr_list.AttrListExtension(), extra.ExtraExtension(),
+				toc.TocExtension(title=u'Overview'),
+				u'markdown.extensions.tables']
 		self.footer = u'''
 <p>
 <a class="dismiss-button" href="opensesame://action.close_current_tab">%s</a>
@@ -140,5 +142,9 @@ Copyright <a href="http://www.cogsci.nl/smathot">Sebastiaan Mathôt</a> 2010-201
 		md = self.highlight(md)
 		if markdown is None:
 			return u'<pre>%s</pre>' % md
-		return markdown.markdown(md, extensions=self.ext, errors=u'ignore') \
+		html = markdown.markdown(md, extensions=self.ext, errors=u'ignore') \
 			+ self.css + self.footer
+		if html.startswith(u'<p>title:'):
+			title, body = tuple(html.split(u'\n', maxsplit=1))
+			html = u'<h1>%s</h1>\n\n%s' % (title[9:-4], body)
+		return html
