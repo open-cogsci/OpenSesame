@@ -214,7 +214,7 @@ class loop(item.item):
 		if self.var.order == u'random':
 			dm = operations.shuffle(dm)
 		if self.ef is not None:
-			self.ef.dm = src_dm
+			self.ef.dm = dm
 			dm = self.ef.enforce()
 		for cmd, arglist in self.operations:
 			# The column name is always specified last, or not at all
