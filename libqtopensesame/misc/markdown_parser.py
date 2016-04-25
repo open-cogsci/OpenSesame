@@ -145,6 +145,6 @@ Copyright <a href="http://www.cogsci.nl/smathot">Sebastiaan Mathôt</a> 2010-201
 		html = markdown.markdown(md, extensions=self.ext, errors=u'ignore') \
 			+ self.css + self.footer
 		if html.startswith(u'<p>title:'):
-			title, body = tuple(html.split(u'\n', maxsplit=1))
+			title, body = tuple(html.split(u'\n', 1))
 			html = u'<h1>%s</h1>\n\n%s' % (title[9:-4], body)
 		return html
