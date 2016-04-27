@@ -1,5 +1,6 @@
 {
 	"author"	: "Sebastiaan Mathôt",
+	"disabled"	: true,
 	"url"		: "http://osdoc.cogsci.nl/",
 	"category"	: "Visual stimuli",
 	"comment"	: "Standard OpenSesame plug-in",
