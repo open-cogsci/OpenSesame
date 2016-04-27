@@ -67,7 +67,8 @@ class theme:
 				self.theme))
 		self.theme_info = os.path.join(self.theme_folder, u"__theme__.py")
 		if os.path.exists(self.theme_info):
-			info = imp.load_source(self.theme, self.theme_info)
+			info = imp.load_source(self.theme,
+				safe_str(self.theme_info, enc=misc.filesystem_encoding()))
 			with open(os.path.join(self.theme_folder, info.qss)) as fd:
 				self._qss = fd.read()
 			self._icon_map = info.icon_map
