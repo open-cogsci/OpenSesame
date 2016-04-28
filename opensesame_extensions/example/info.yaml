@@ -1,4 +1,5 @@
 author: John Doe
+disabled: true
 description: An example extenstion
 icon: applications-accessories
 label: Example extension
