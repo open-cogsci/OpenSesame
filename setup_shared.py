@@ -65,5 +65,6 @@ included_extensions = [
 	'bug_report',
 	'variable_inspector',
 	'after_experiment',
-	'system_information'
+	'system_information',
+	'notifications'
 	]
