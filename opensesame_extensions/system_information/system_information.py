@@ -65,6 +65,11 @@ class system_information(base_extension):
 			except ImportError:
 				l.append(u'%s [not available]' % name)
 				continue
+			except Exception as e:
+				l.append(
+					u'%s [installed, but `%s` occured while importing]' \
+					% (name, e.__class__.__name__))
+				continue
 			if hasattr(mod, attr):
 				l.append(u'%s %s' % (name, getattr(mod, attr)))
 				continue
