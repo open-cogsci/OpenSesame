@@ -370,13 +370,31 @@ def escape_html(s):
 
 # Build a list of base folders, that is, folders that can have
 # opensesame_resources, opensesame_plugins, or opensesame_extensions as
-# subfolders
+# subfolders. Which folders are available depends on the environment, but the
+# following folders are scanned:
+#
+# - The working directory (cwd)
+# - The folder that contains libopensesame (parent_folder)
+# - The userbase folder:
+#		- ~/.local (on Ubuntu 16.04)
+# - The user site-packages folder:
+#		- ~/.local/lib/python[X]/site-packages (on Ubuntu 16.04)
+# - The global site-packages folders (on Ubuntu 16.04):
+#		- /usr/local/lib/python3.5/dist-packages
+#		- /usr/lib/python3/dist-packages
+#		- /usr/lib/python3.5/dist-packages
+# - /usr/local/share
+# - /usr/share
+# - The share folder within an Anaconda/ Miniconda environment
+
 base_folders = []
 if py3:
 	cwd = os.getcwd()
 else:
 	cwd = os.getcwdu()
-base_folders = [cwd]
+parent_folder = safe_decode(os.path.dirname(os.path.dirname(__file__)),
+	enc=filesystem_encoding())
+base_folders = [cwd, parent_folder]
 if hasattr(site, u'getuserbase'):
 	base_folders.append(os.path.join(
 		safe_decode(site.getuserbase(), enc=filesystem_encoding()), u'share'))
@@ -394,6 +412,6 @@ if any(entry in sys.executable.lower() for entry in ['anaconda','miniconda']):
 	base_folders.append(os.path.join(
 		safe_decode(
 			os.path.dirname(os.path.dirname(sys.executable)),
-			enc=filesystem_encoding()), 
+			enc=filesystem_encoding()),
 		u"share"))
 base_folders = list(filter(os.path.exists, base_folders))
