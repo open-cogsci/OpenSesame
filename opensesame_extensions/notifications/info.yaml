@@ -1,4 +1,4 @@
 label: Notifications
-version: 0.1.0
 author: Daniel Schreij
-tooltip: Pretty notifications for OpenSesame
+description: Pretty notifications for OpenSesame
+priority: 999999
