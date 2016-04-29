@@ -85,7 +85,11 @@ class qtopensesame(QtWidgets.QMainWindow, base_component):
 		# icons by default.
 		QtWidgets.QApplication.setAttribute(QtCore.Qt.AA_DontShowIconsInMenus,
 			False)
-
+		# Add the Qt plugins folder to the library paths, if it exists
+		qt_plugin_path = os.path.join(
+			os.path.dirname(sys.executable), 'Library', 'plugins')
+		if os.path.isdir(qt_plugin_path):
+			QtCore.QCoreApplication.addLibraryPath(qt_plugin_path)
 		# Do a few things to customize QProgEdit behavior:
 		# - Register the bundled monospace font (Droid Sans Mono)
 		# - Make sure that QProgEdit doesn't complain about some standard names
@@ -668,8 +672,8 @@ class qtopensesame(QtWidgets.QMainWindow, base_component):
 			path = QtWidgets.QFileDialog.getOpenFileName(self.ui.centralwidget,
 				_(u"Open file"), filter=self.open_file_filter,
 				directory=cfg.file_dialog_path)
-		# In PyQt5, the QFileDialog.getOpenFileName returns a tuple instead of 
-		# a string, of which the first position contains the path. check for that 
+		# In PyQt5, the QFileDialog.getOpenFileName returns a tuple instead of
+		# a string, of which the first position contains the path. check for that
 		# here.
 		if isinstance(path,tuple):
 			path = path[0]
@@ -795,7 +799,7 @@ class qtopensesame(QtWidgets.QMainWindow, base_component):
 		path = QtWidgets.QFileDialog.getSaveFileName(self.ui.centralwidget,
 			_(u'Save as…'), directory=cfg.file_dialog_path,
 			filter=self.save_file_filter)
-		# In PyQt5, the QFileDialog.getOpenFileName returns a tuple instead of 
+		# In PyQt5, the QFileDialog.getOpenFileName returns a tuple instead of
 		# a string, of which the first position contains the path.
 		if isinstance(path,tuple):
 			path = path[0]
