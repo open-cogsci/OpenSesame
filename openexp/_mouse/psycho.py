@@ -53,10 +53,9 @@ class psycho(mouse.mouse, psycho_coordinates):
 			time = self.experiment.clock.time()
 			buttons, times = self.mouse.getPressed(getTime=True)
 			for i in (1,2,3):
-				if buttons[i-1] and (buttonlist is None or i-1 in buttonlist):
+				if buttons[i-1] and (buttonlist is None or i in buttonlist):
 					button = i
 					pos = self.mouse.getPos()
-					time = times[i]
 					break
 			else:
 				if timeout is not None and time-start_time >= timeout:
@@ -67,12 +66,12 @@ class psycho(mouse.mouse, psycho_coordinates):
 			pos = self.from_xy(pos)
 		self.mouse.setVisible(self._cursor_shown)
 		return button, pos, time
-		
+
 	def show_cursor(self, show=True):
-		
+
 		self.mouse.setVisible(show)
 		mouse.mouse.show_cursor(self, show=show)
-		
+
 	def get_pos(self):
 
 		return self.from_xy(self.mouse.getPos()), self.experiment.time()
