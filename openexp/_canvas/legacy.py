@@ -78,14 +78,8 @@ class legacy(canvas.canvas, legacy_coordinates):
 				self._font = None
 		if self._font is None:
 			# First see if the font refers to a file in the resources/ filepool
-			try:
-				font_path = self.experiment.resource(
-					u'%s.ttf' % self.font_family)
-				self._font = pygame.font.Font(font_path, self.font_size)
-			# If not, try to match a system font
-			except:
-				self._font = pygame.font.SysFont(self.font_family,
-					self.font_size)
+			self._font = self._pygame_font(self.experiment, self.font_family,
+				self.font_size)
 			self._font.set_bold(self.font_bold)
 			self._font.set_italic(self.font_italic)
 			self._font.set_underline(self.font_underline)
@@ -274,17 +268,39 @@ class legacy(canvas.canvas, legacy_coordinates):
 		pygame.display.set_caption(u'OpenSesame (legacy backend)')
 		pygame.mouse.set_visible(False)
 		experiment.surface = pygame.display.get_surface()
-
-		# Create a font, falling back to the default font
-		try:
-			experiment.font = pygame.font.Font(experiment.resource(
-				u"%s.ttf" % experiment.var.font_family), experiment.var.font_size)
-		except:
-			debug.msg(u"'%s.ttf' not found, falling back to default font" \
-				% experiment.var.font_family)
-			experiment.font = pygame.font.Font(None, experiment.var.font_size)
+		experiment.font = legacy._pygame_font(experiment, experiment.var.font_family,
+			experiment.var.font_size)
 
 	@staticmethod
 	def close_display(experiment):
 
 		pygame.display.quit()
+
+	@staticmethod
+	def _pygame_font(experiment, family, size):
+
+		"""
+		visible: False
+
+		desc:
+			A helper function to create a pygame.font.Font object.
+
+		arguments:
+			experiment:	The experiment object.
+			family:		The font family.
+			size:		The font size.
+
+		returns:
+			type:	Font
+		"""
+
+		try:
+			# PyGame 1.9.2a0 crashes on fonts that are located in a path with
+			# special characters. This will cause OpenSesame to crash when run
+			# from a folder with special characters. To bypass this, we use the
+			# relative path, which usually doesn't contain special characters.
+			path = os.path.relpath(
+				experiment.resource(u'%s.ttf' % family), os.getcwdu())
+			return pygame.font.Font(path, size)
+		except:
+			return pygame.font.Font(None, size)
