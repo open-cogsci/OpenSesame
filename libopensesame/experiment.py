@@ -34,6 +34,7 @@ import time
 import tarfile
 import tempfile
 import warnings
+import gc
 
 class experiment(item.item):
 
@@ -127,6 +128,7 @@ class experiment(item.item):
 		self.var.bidi = u'no'
 		self.var.round_decimals = 2
 		self.var.form_clicks = u'no'
+		self.var.disable_garbage_collection = u'yes'
 		# In version 2.9.X and before, the sketchpad used 0,0 for the screen
 		# center, whereas scripting items used 0,0 for the top-left. By setting
 		# uniform_coordinates to 'yes', 0,0 is used for the center in all cases.
@@ -403,6 +405,9 @@ class experiment(item.item):
 
 		if self.var.start in self.items:
 			item_stack_singleton.clear()
+			if self.var.disable_garbage_collection == u'yes':
+				print('experiment.run(): disabling garbage collection')
+				gc.disable()
 			self.items.execute(self.var.start)
 		else:
 			raise osexception( \
@@ -477,6 +482,9 @@ class experiment(item.item):
 		sampler.close_sound(self)
 		canvas.close_display(self)
 		self.cleanup()
+		if not gc.isenabled():
+			print('experiment.end(): enabling garbage collection')
+			gc.enable()
 
 	def to_string(self):
 

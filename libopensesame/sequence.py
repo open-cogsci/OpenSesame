@@ -21,6 +21,7 @@ from libopensesame.py3compat import *
 
 from libopensesame.exceptions import osexception
 from libopensesame import item
+import gc
 import openexp.keyboard
 
 class sequence(item.item):
@@ -48,6 +49,8 @@ class sequence(item.item):
 			self.python_workspace[u'self'] = self
 			if self.python_workspace._eval(cond):
 				self.experiment.items.run(_item)
+		if not gc.isenabled():
+			gc.collect()
 
 	def set_validator(self):
 
