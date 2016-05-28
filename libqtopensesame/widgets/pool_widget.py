@@ -267,14 +267,12 @@ class pool_widget(base_widget):
 		l = []
 		suffix = u''
 		for item in self.ui.list_pool.selectedItems()[:self.max_len]:
-			l.append(str(item.text()))
+			l.append(self.pool[item.text()])
 		if len(self.ui.list_pool.selectedItems()) > self.max_len:
 			suffix = _('And %d more file(s)') % \
 				(len(self.ui.list_pool.selectedItems())-self.max_len)
-		msg = _(u"<p>Are you sure you want to remove the following files from "
-			u"the file pool? This operation will only affect the OpenSesame "
-			u"file pool, not the original files on your disk.</p><p><b> - "
-			u"%s</b></p><p>%s</p>") % (u"<br /> - ".join(l), suffix)
+		msg = _(u"<p>Are you sure you want to remove the following files?</p>"
+			u"<p>- %s</p> <p>%s</p>") % (u"<br /> - ".join(l), suffix)
 		c = confirmation(self.main_window, msg)
 		if not c.show():
 			return
