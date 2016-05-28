@@ -21,7 +21,10 @@ from libopensesame.py3compat import *
 from libopensesame import plugins
 from libqtopensesame.misc.config import cfg
 from libqtopensesame.widgets.base_widget import base_widget
-from PyQt4.QtCore import QPyNullVariant
+try:
+	from qtpy.QtCore import QPyNullVariant
+except ImportError:
+	QPyNullVariant = type(None)
 
 class plugin_widget(base_widget):
 
@@ -71,7 +74,7 @@ class plugin_widget(base_widget):
 		# when the disabled plugin list is empty. the 'in' operator is not allowed on
 		# this datatype. It is reasonable to assume that the plugin is not disabled if
 		# the disabled list is empty and thus a QPyNullVariant.
-		if type(cfg[cfg_var]) == QPyNullVariant:
+		if isinstance(cfg[cfg_var], QPyNullVariant):
 			return True
 		return self.plugin not in cfg[cfg_var]
 
