@@ -85,20 +85,24 @@ class qtitem_store(item_store):
 			self[_name].remove_child_item(name, index=-1)
 		self.extension_manager.fire(u'delete_item', name=name)
 
-	def new(self, _type, name=None, script=None):
+	def new(self, _type, name=None, script=None, catch_exceptions=True):
 
 		"""See item_store."""
 
 		import warnings
 		with warnings.catch_warnings(record=True) as warning_list:
-			try:
+			if catch_exceptions:
+				try:
+					item = super(qtitem_store, self).new(_type, name=name,
+						script=script)
+				except Exception as e:
+					if not isinstance(e, osexception):
+						e = osexception(e)
+					self.error_log.append(e)
+					return
+			else:
 				item = super(qtitem_store, self).new(_type, name=name,
 					script=script)
-			except Exception as e:
-				if not isinstance(e, osexception):
-					e = osexception(e)
-				self.error_log.append(e)
-				return
 		if warning_list:
 			import yaml
 			self.tabwidget.open_help(u'new_item_warning')
