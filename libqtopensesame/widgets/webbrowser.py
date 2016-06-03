@@ -24,6 +24,8 @@ from libqtopensesame.widgets.base_widget import base_widget
 from libopensesame import plugins, misc
 from libqtopensesame.misc.markdown_parser import markdown_parser
 import os.path
+from libqtopensesame.misc.translate import translation_context
+_ = translation_context(u'webbrowser', category=u'core')
 
 import os
 if os.environ[u'QT_API'] == u'pyqt':
@@ -31,12 +33,29 @@ if os.environ[u'QT_API'] == u'pyqt':
 	from PyQt4.QtWebKit import QWebPage as WebPage
 else:
 	# QtWebKit is dropped in favour of QtWebEngine from Qt 5.6 on
-	try:	
+	try:
 		from PyQt5.QtWebKitWidgets import QWebView as WebView
 		from PyQt5.QtWebKitWidgets import QWebPage as WebPage
 	except ImportError as e:
 		from PyQt5.QtWebEngineWidgets import QWebEngineView as WebView
 		from PyQt5.QtWebEngineWidgets import QWebEnginePage as WebPage
+
+# These urls are viewed internally in the browser component. All other urls are
+# opened in an external browser.
+INTERNAL_URLS = [
+	u'http://osdoc.cogsci.nl/',
+	u'https://osdoc.cogsci.nl/',
+	u'http://www.psychopy.org/',
+	u'https://www.psychopy.org/',
+	u'http://psychopy.org/',
+	u'https://psychopy.org/',
+	u'http://www.expyriment.org/',
+	u'https://www.expyriment.org/',
+	u'http://expyriment.org/',
+	u'https://expyriment.org/',
+	u'http://docs.expyriment.org/',
+	u'https://docs.expyriment.org/',
+	]
 
 class small_webview(WebView):
 
@@ -76,30 +95,30 @@ class small_webpage(WebPage):
 			newer QtWebEngine.
 
 			Arguments (when used by QtWebKit):
-				frame: 			
-					desc: 	The frame that has to be changed depending on the 
+				frame:
+					desc: 	The frame that has to be changed depending on the
 							request
-					type: 	QtWebKit.QWebFrame 
-				request: 		
+					type: 	QtWebKit.QWebFrame
+				request:
 					desc:	request containing information about the
 							navigation request, among which the url to change the
 							frame to.
 					type: 	QtWebKit.QNetworkRequest
-				navtype: 		
-					desc: 	type of request has been received (such as link 
+				navtype:
+					desc: 	type of request has been received (such as link
 							clicked, form submitted)
 					type: 	QtWebKit.NavigationType
 
 			Arguments (when used by QtWebEngine):
-				url: 			
+				url:
 					desc: 	url to navigate to
 					type: 	QtCore.QUrl
-				navtype: 		
-					desc: 	type of request has been received (such as link 
-							clicked, form submitted)	
+				navtype:
+					desc: 	type of request has been received (such as link
+							clicked, form submitted)
 					type: 	QtWebEngine.NavigationType
-				isMainFrame: 	 
-					desc: 	indicating whether the request corresponds 
+				isMainFrame:
+					desc: 	indicating whether the request corresponds
 							to the main frame or a child frame.
 					type: 	boolean
 		"""
@@ -113,7 +132,7 @@ class small_webpage(WebPage):
 			frame, request, navtype = args
 			url = request.url()
 
-		if navtype == self.NavigationTypeLinkClicked:			
+		if navtype == self.NavigationTypeLinkClicked:
 			url = url.toString()
 			if url.startswith(u'opensesame://'):
 				self.parent().command(url)
@@ -121,13 +140,13 @@ class small_webpage(WebPage):
 			if url.startswith(u'new:'):
 				self.parent().main_window.tabwidget.open_browser(url[4:])
 				return False
-			if url.startswith(u'http://osdoc.cogsci.nl'):
-				self.parent().load(url)
-				return False
+			for internal_url in INTERNAL_URLS:
+				if url.startswith(internal_url):
+					self.parent().load(url)
+					return False
 			misc.open_url(url)
 			return False
-		else:
-			return super(small_webpage, self).acceptNavigationRequest(*args)
+		return super(small_webpage, self).acceptNavigationRequest(*args)
 
 class webbrowser(base_widget):
 
@@ -148,6 +167,8 @@ class webbrowser(base_widget):
 
 		super(webbrowser, self).__init__(main_window,
 			ui=u'widgets.webbrowser_widget')
+		self._current_url = u''
+		self._cache = None
 		self.ui.webview = small_webview(self)
 		# Set webpage which handles link clicks
 		webpage = small_webpage(self)
@@ -187,6 +208,7 @@ class webbrowser(base_widget):
 			self.load_markdown(md)
 			return
 		self.ui.top_widget.show()
+		self._current_url = url
 		self.ui.webview.load(QtCore.QUrl(url))
 
 	def load_markdown(self, md):
@@ -202,14 +224,61 @@ class webbrowser(base_widget):
 		self.ui.top_widget.hide()
 		self.ui.webview.setHtml(self.markdown_parser.to_html(md))
 
-	def load_finished(self):
+	def init_cache(self):
+
+		"""
+		desc:
+			Initializes the webbrowser cache, if available.
+		"""
+
+		import pickle
+
+		cache_file = misc.resource(u'webbrowser-cache.pkl')
+		if cache_file is None:
+			self.extension_manager.fire(u'notify',
+				message=_(u'No webbrowser cache available'),
+				category=u'info')
+			self._cache = {}
+			return
+		with open(cache_file) as fd:
+			self._cache = pickle.load(fd)
+		if not isinstance(self._cache, dict):
+			self.extension_manager.fire(u'notify',
+				message=_(u'Webbrowser cache is corrupt'),
+				category=u'warning')
+			self._cache = {}
+			return
+
+	def try_cache(self):
+
+		"""
+		desc:
+			Checks if the current page, after a failed load, is available in the
+			cache, and if so, loads it from the cache.
+		"""
+
+		if self._cache is None:
+			self.init_cache()
+		if self._current_url not in self._cache:
+			self.extension_manager.fire(u'notify',
+				message=_(u'Failed to load page: ') + self._current_url,
+				category=u'warning')
+			return
+		self.extension_manager.fire(u'notify',
+			message=_(u'Displaying cached version of: %s. For a better viewing experience, connect to the internet.') \
+			% self._current_url, category=u'info')
+		self.ui.webview.setHtml(self._cache[self._current_url])
+
+	def load_finished(self, ok):
 
 		"""
 		desc:
 			Hides the statusbar to indicate that loading is finished.
 		"""
 
-		self.ui.label_load_progress.setText(u'Done')
+		if not ok:
+			self.try_cache()
+		self.ui.label_load_progress.setText(_(u'Done'))
 
 	def update_progressbar(self, progress):
 
@@ -230,7 +299,7 @@ class webbrowser(base_widget):
 			Shows the statusbar to indicate that loading has started.
 		"""
 
-		self.ui.label_load_progress.setText(u'Starting ...')
+		self.ui.label_load_progress.setText(_(u'Loading …'))
 
 	def open_osdoc(self):
 
