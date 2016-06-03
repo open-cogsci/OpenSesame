@@ -36,6 +36,10 @@ class base_subcomponent(base_component):
 		return self.main_window.experiment
 
 	@property
+	def tabwidget(self):
+		return self.main_window.ui.tabwidget
+
+	@property
 	def theme(self):
 		return self.main_window.theme
 

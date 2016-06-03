@@ -31,6 +31,8 @@ class feedpad(object):
 		Controls for the sketchpad item.
 	"""
 
+	help_url = u'manual/stimuli/visual'
+
 	def init_edit_widget(self):
 
 		"""

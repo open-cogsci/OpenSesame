@@ -32,6 +32,7 @@ class logger(logger_runtime, qtplugin):
 	"""
 
 	description = _(u'Logs experimental data')
+	help_url = u'manual/logging'
 
 	def __init__(self, name, experiment, string=None):
 

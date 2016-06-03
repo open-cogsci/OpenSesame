@@ -1,0 +1,133 @@
+!!python/object/apply:collections.OrderedDict
+dictitems:
+  Dev: !!python/object/apply:collections.OrderedDict
+    dictitems:
+      Create a plugin: /3.1/dev/plugin.html
+      Create an extension: /3.1/dev/extension.html
+      File format (.osexp): /3.1/dev/fileformat.html
+      How to contribute: /3.1/dev/howtocontribute.html
+      Running from source: /3.1/dev/fromsource.html
+      Translate: /3.1/dev/translate.html
+  Download: /3.1/download.html
+  Manual: !!python/object/apply:collections.OrderedDict
+    dictitems:
+      Backends: /3.1/manual/backends.html
+      Data logging: /3.1/manual/logging.html
+      Examples: /3.1/manual/examples.html
+      Flow and structure: !!python/object/apply:collections.OrderedDict
+        dictitems:
+          Counterbalancing: /3.1/manual/structure/counterbalancing.html
+          Doing things in parallel: /3.1/manual/structure/coroutines.html
+          Doing things in sequence: /3.1/manual/structure/sequence.html
+          Looping and defining indepedent variables: /3.1/manual/structure/loop.html
+      Forms: !!python/object/apply:collections.OrderedDict
+        dictitems:
+          About forms: /3.1/manual/forms/about.html
+          Custom forms: /3.1/manual/forms/custom.html
+          Form variables: /3.1/manual/forms/variables.html
+          Performance issues: /3.1/manual/forms/performance.html
+          Ready-made forms: /3.1/manual/forms/readymade.html
+          Widgets: !!python/object/apply:collections.OrderedDict
+            dictitems:
+              button: /3.1/manual/forms/widgets/button.html
+              checkbox: /3.1/manual/forms/widgets/checkbox.html
+              form: /3.1/manual/forms/widgets/form.html
+              image: /3.1/manual/forms/widgets/image.html
+              image_button: /3.1/manual/forms/widgets/image_button.html
+              label: /3.1/manual/forms/widgets/label.html
+              rating_scale: /3.1/manual/forms/widgets/rating_scale.html
+              text_input: /3.1/manual/forms/widgets/text_input.html
+      Installing plugins and extensions: /3.1/manual/plugins.html
+      OpenSesame script: /3.1/manual/opensesame-script.html
+      Response collection: !!python/object/apply:collections.OrderedDict
+        dictitems:
+          Button box: /3.1/manual/response/buttonbox.html
+          Joystick: /3.1/manual/response/joystick.html
+          Keyboard: /3.1/manual/response/keyboard.html
+          Mouse: /3.1/manual/response/mouse.html
+          SR Box: /3.1/manual/response/srbox.html
+          Sound recording: /3.1/manual/response/soundrecording.html
+      Running on Android: /3.1/manual/android.html
+      Stimulus presentation: !!python/object/apply:collections.OrderedDict
+        dictitems:
+          Sound: /3.1/manual/stimuli/sound.html
+          Text: /3.1/manual/stimuli/text.html
+          Video: /3.1/manual/stimuli/video.html
+          Visual stimuli: /3.1/manual/stimuli/visual.html
+      The prepare-run strategy: /3.1/manual/prepare-run.html
+      Timing: /3.1/manual/timing.html
+      Using Python: !!python/object/apply:collections.OrderedDict
+        dictitems:
+          Canvas: /3.1/manual/python/canvas.html
+          Clock: /3.1/manual/python/clock.html
+          Common functions: /3.1/manual/python/common.html
+          File pool: /3.1/manual/python/pool.html
+          Items: /3.1/manual/python/items.html
+          Keyboard: /3.1/manual/python/keyboard.html
+          Log: /3.1/manual/python/log.html
+          Mouse: /3.1/manual/python/mouse.html
+          Python in OpenSesame: /3.1/manual/python/about.html
+          Response history: /3.1/manual/python/responses.html
+          Sampler: /3.1/manual/python/sampler.html
+          Variables: /3.1/manual/python/var.html
+      Using external devices: !!python/object/apply:collections.OrderedDict
+        dictitems:
+          Ambulatory Monitoring System (VU-AMS): /3.1/manual/devices/vuams.html
+          Emotiv EEG: /3.1/manual/devices/emotiv.html
+          Eye tracking: !!python/object/apply:collections.OrderedDict
+            dictitems:
+              EyeLink: /3.1/manual/eyetracking/eyelink.html
+              EyeTribe: /3.1/manual/eyetracking/eyetribe.html
+              PyGaze: /3.1/manual/eyetracking/pygaze.html
+          Mouse tracking: /3.1/manual/mousetracking.html
+          Oculus rift: /3.1/manual/devices/oculusrift.html
+          Parallel port (EEG triggers): /3.1/manual/devices/parallel.html
+          Serial port: /3.1/manual/devices/serial.html
+          StimSync: /3.1/manual/devices/stimsync.html
+      Using the interface: /3.1/manual/interface.html
+      Variables and if statements: /3.1/manual/variables.html
+  Other: !!python/object/apply:collections.OrderedDict
+    dictitems:
+      Degrees of visual angle: /3.1/visualangle.html
+      Donate: /3.1/donate.html
+      Important changes in 3.0: /3.1/important-changes-3.html
+      Meet the team!: /3.1/team.html
+      Notation for experimental design: /3.1/experimentaldesign.html
+      Publications: /3.1/publications.html
+      Release notes: !!python/object/apply:collections.OrderedDict
+        dictitems:
+          0.27.1: /3.1/notes/0271.html
+          0.27.2: /3.1/notes/0272.html
+          0.27.3: /3.1/notes/0273.html
+          0.27.4: /3.1/notes/0274.html
+          2.8.0: /3.1/notes/280.html
+          2.8.1: /3.1/notes/281.html
+          2.8.2: /3.1/notes/282.html
+          2.8.3: /3.1/notes/283.html
+          2.9.0: /3.1/notes/290.html
+          2.9.1: /3.1/notes/291.html
+          2.9.2: /3.1/notes/292.html
+          2.9.3: /3.1/notes/293.html
+          2.9.4: /3.1/notes/294.html
+          2.9.5: /3.1/notes/295.html
+          2.9.6: /3.1/notes/296.html
+          2.9.7: /3.1/notes/297.html
+          3.0.0: /3.1/notes/300.html
+          3.0.1: /3.1/notes/301.html
+          3.0.2: /3.1/notes/302.html
+          3.0.3: /3.1/notes/303.html
+          3.0.4: /3.1/notes/304.html
+          3.0.5: /3.1/notes/305.html
+          3.0.6: /3.1/notes/306.html
+          3.0.7: /3.1/notes/307.html
+  Tutorials: !!python/object/apply:collections.OrderedDict
+    dictitems:
+      APS tutorial: /3.1/tutorials/aps.html
+      Advanced tutorial: /3.1/tutorials/advanced.html
+      "Amor\xE7age cat\xE9gorique": /3.1/fr/amorcage-categorique.html
+      Beginner tutorial: /3.1/tutorials/beginner.html
+      Cats, dogs, and capybaras: /3.1/tutorials/capybara.html
+      Direction du regard: /3.1/fr/direction-du-regard.html
+      "Gu\xEDa paso a paso": /3.1/es/guia-paso-a-paso.html
+      Udemy course (by Monk Prayogshala): https://www.udemy.com/opensesame-the-experiment-building-software/
+      Video tutorials: /3.1/tutorials/video.html

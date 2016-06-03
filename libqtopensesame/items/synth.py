@@ -32,6 +32,7 @@ class synth(synth_runtime, qtplugin):
 	"""
 
 	description = _(u'A basic sound synthesizer')
+	help_url = u'manual/stimuli/sound'
 
 	def __init__(self, name, experiment, string=None):
 

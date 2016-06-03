@@ -31,6 +31,7 @@ class mouse_response(mouse_response_runtime, qtplugin):
 	"""mouse_response item GUI"""
 
 	description = _(u'Collects mouse responses')
+	help_url = u'manual/response/mouse'
 
 	def __init__(self, name, experiment, string=None):
 

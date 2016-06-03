@@ -37,6 +37,7 @@ class qtcoroutines(coroutines, sequence):
 	"""
 
 	description = _(u'Run items simultaneously')
+	help_url = u'manual/structure/coroutines'
 
 	def __init__(self, name, experiment, string=None):
 

@@ -18,8 +18,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame.py3compat import *
-
-from libopensesame import debug
+from libopensesame import debug, metadata
 from libqtopensesame.misc.base_subcomponent import base_subcomponent
 from libqtopensesame.misc import config
 from qtpy import QtGui, QtWidgets, QtCore
@@ -337,17 +336,20 @@ class tab_widget(base_subcomponent, QtWidgets.QTabWidget):
 		self.add(general_script_editor(self.main_window), u'utilities-terminal',
 			_(u'General script editor'))
 
-	def open_osdoc(self):
+	def open_osdoc(self, url=u''):
 
 		"""Open osdoc.cogsci.nl"""
 
-		self.open_browser(u'http://osdoc.cogsci.nl')
+		if url:
+			url += u'.html'
+		self.open_browser(u'http://osdoc.cogsci.nl/%s/%s' \
+			% (metadata.main_version, url))
 
 	def open_stdout_help(self):
 
 		"""Open the debug window help tab"""
 
-		self.open_help(u'stdout')
+		self.open_osdoc(u'manual/interface')
 
 	def open_unused(self):
 
@@ -358,12 +360,6 @@ class tab_widget(base_subcomponent, QtWidgets.QTabWidget):
 		from libqtopensesame.widgets.unused_widget import unused_widget
 		w = unused_widget(self.main_window)
 		self.add(w, u'unused', _(u'Unused items'))
-
-	def open_variables_help(self):
-
-		"""Open the variable inspector help tab"""
-
-		self.open_help(u'variables')
 
 	def open_preferences(self):
 

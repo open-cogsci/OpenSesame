@@ -67,7 +67,7 @@ class pool_widget(base_widget):
 			Opens the help tab.
 		"""
 
-		self.main_window.ui.tabwidget.open_help(u"pool")
+		self.tabwidget.open_osdoc(u'manual/interface')
 
 	def set_view(self):
 

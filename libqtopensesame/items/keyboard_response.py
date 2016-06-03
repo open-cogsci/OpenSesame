@@ -32,6 +32,7 @@ class keyboard_response(keyboard_response_runtime, qtplugin):
 	"""keyboard_response item GUI"""
 
 	description = _(u'Collects keyboard responses')
+	help_url = u'manual/response/keyboard'
 
 	def __init__(self, name, experiment, string=None):
 

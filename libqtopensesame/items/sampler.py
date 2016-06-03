@@ -32,6 +32,7 @@ class sampler(sampler_runtime, qtplugin):
 	"""
 
 	description = _(u'Plays a sound file in .wav or .ogg format')
+	help_url = u'manual/stimuli/sound'
 
 	def __init__(self, name, experiment, string=None):
 

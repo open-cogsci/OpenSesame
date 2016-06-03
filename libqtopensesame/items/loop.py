@@ -35,6 +35,7 @@ class loop(qtstructure_item, qtitem, loop_runtime):
 	"""The GUI for the loop item"""
 
 	description = _(u'Repeatedly runs another item')
+	help_url = u'manual/structure/loop'
 
 	def __init__(self, name, experiment, string=None):
 

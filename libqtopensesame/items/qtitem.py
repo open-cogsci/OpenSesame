@@ -37,6 +37,7 @@ class qtitem(base_qtobject):
 
 	initial_view = u'controls'
 	label_align = u'right'
+	help_url = None
 
 	def __init__(self):
 
@@ -495,7 +496,10 @@ class qtitem(base_qtobject):
 			Opens a help tab.
 		"""
 
-		self.experiment.main_window.ui.tabwidget.open_help(self.item_type)
+		if self.help_url is None:
+			self.tabwidget.open_help(self.item_type)
+		else:
+			self.tabwidget.open_osdoc(self.help_url)
 
 	def toggle_maximize(self):
 

@@ -36,6 +36,7 @@ class inline_script(inline_script_runtime, qtplugin):
 	"""The inline_script GUI controls"""
 
 	description = _(u'Executes Python code'	)
+	help_url = u'manual/python/about'
 
 	def __init__(self, name, experiment, string=None):
 
