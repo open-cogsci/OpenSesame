@@ -37,7 +37,7 @@ def canvas(auto_prepare=True, **style_args):
 		A convenience function that creates a new `canvas` object. For a
 		description of possible keywords, see:
 
-		- [/python/canvas/](/python/canvas/)
+		- %link:manual/python/canvas%
 
 	returns:
 		desc:	A `canvas` object.
@@ -60,7 +60,7 @@ def keyboard(**resp_args):
 		A convenience function that creates a new `keyboard` object. For a
 		description of possible keywords, see:
 
-		- [/python/keyboard/](/python/keyboard/)
+		- %link:manual/python/keyboard%
 
 	returns:
 		desc:	A `keyboard` object.
@@ -81,7 +81,7 @@ def mouse(**resp_args):
 		A convenience function that creates a new `mouse` object. For a
 		description of possible keywords, see:
 
-		- [/python/mouse/](/python/mouse/)
+		- %link:manual/python/mouse%
 
 	returns:
 		desc:	A `mouse` object.
@@ -102,7 +102,7 @@ def sampler(src, **playback_args):
 		A convenience function that creates a new `sampler` object. For a
 		description of possible keywords, see:
 
-		- [/python/sampler/](/python/sampler/)
+		- %link:manual/python/sampler%
 
 	returns:
 		desc:	A `sampler` object.
