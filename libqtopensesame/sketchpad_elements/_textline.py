@@ -109,7 +109,3 @@ class textline(base_element, textline_runtime):
 	@staticmethod
 	def requires_center():
 		return True
-
-	@staticmethod
-	def cursor():
-		return u'os-textline', -1, -1

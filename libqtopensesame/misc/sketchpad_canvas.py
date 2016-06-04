@@ -694,7 +694,7 @@ class sketchpad_canvas(QtWidgets.QGraphicsScene):
 		else:
 			pen = self._pen(color, penwidth)
 			brush = QtGui.QBrush()
-		polygon = QtWidgets.QPolygonF()
+		polygon = QtGui.QPolygonF()
 		for point in shape:
 			polygon <<  QtCore.QPointF(point[0],point[1])
 		i = QtWidgets.QGraphicsPolygonItem(polygon)
