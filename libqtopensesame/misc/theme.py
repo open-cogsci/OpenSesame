@@ -111,8 +111,10 @@ class theme:
 			import fileinspector
 		except ImportError:
 			return QtWidgets.QFileIconProvider().icon(QtCore.QFileInfo(path))
-		return QtGui.QIcon.fromTheme(
-			fileinspector.translate_to_xdg(fileinspector.determine_type(path)),
+		filetype = fileinspector.determine_type(path, output='xdg')
+		if filetype is None:
+			filetype = 'text-x-generic'
+		return QtGui.QIcon.fromTheme(filetype,
 			fallback=QtGui.QIcon.fromTheme(u'unknown'))
 
 	def qicon(self, icon):
