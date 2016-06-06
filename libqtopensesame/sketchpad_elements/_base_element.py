@@ -557,4 +557,4 @@ class base_element(object):
 			type:	int
 		"""
 
-		return u'cursor-pencil', 2, 17
+		return u'cursor-pencil', 3, 28
