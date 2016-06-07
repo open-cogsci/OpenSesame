@@ -113,9 +113,14 @@ class theme:
 			return QtWidgets.QFileIconProvider().icon(QtCore.QFileInfo(path))
 		filetype = fileinspector.determine_type(path, output='xdg')
 		if filetype is None:
-			filetype = 'text-x-generic'
+			filetype = u'text-x-generic'
+		category = fileinspector.determine_category(filetype)
+		if category is None:
+			fallback = u'text-x-generic'
+		else:
+			fallback = category + u'-x-generic'
 		return QtGui.QIcon.fromTheme(filetype,
-			fallback=QtGui.QIcon.fromTheme(u'unknown'))
+			fallback=QtGui.QIcon.fromTheme(fallback))
 
 	def qicon(self, icon):
 
