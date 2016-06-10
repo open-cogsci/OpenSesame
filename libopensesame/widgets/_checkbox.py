@@ -36,7 +36,7 @@ class checkbox(button):
 
 		__Example (Python):__
 
-		~~~ {.python}
+		~~~ .python
 		from libopensesame import widgets
 		form = widgets.form(exp)
 		checkbox1 = widgets.checkbox(form, text='Option 1', group='group')
@@ -45,13 +45,7 @@ class checkbox(button):
 		form.set_widget(checkbox2, (0,1))
 		~~~
 
-		__Function list:__
-
-		%--
-		toc:
-			mindepth: 2
-			maxdepth: 2
-		--%
+		[TOC]
 	"""
 
 	def __init__(self, form, text=u'checkbox', frame=False, group=None,

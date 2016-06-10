@@ -43,7 +43,7 @@ def synth(experiment, osc="sine", freq=440, length=100, attack=0, decay=5):
 			type:		experiment
 
 	returns:
-		desc:	A `sampler` object.
+		desc:	A SAMPLER object.
 		type:	sampler
 	"""
 

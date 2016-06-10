@@ -27,9 +27,9 @@ class var_store(object):
 	desc: |
 		The `var` object provides access to experimental variables.
 		Experimental variables are the variables that live in the GUI, and are
-		commonly set as independent variables in the `loop` item, referred
+		commonly set as independent variables in the LOOP item, referred
 		to using the square-bracket (`[my_variable]`) notation, and logged by
-		the `logger` item.
+		the LOGGER item.
 
 		In addition to the functions listed below, the following semantics are
 		supported:

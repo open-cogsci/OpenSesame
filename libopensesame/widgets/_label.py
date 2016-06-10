@@ -36,7 +36,7 @@ class label(widget):
 
 		__Example (Python):__
 
-		~~~ {.python}
+		~~~ .python
 		from libopensesame import widgets
 		form = widgets.form(exp)
 		label = widgets.label(form, text='My text')
@@ -44,13 +44,7 @@ class label(widget):
 		form._exec()
 		~~~
 
-		__Function list:__
-
-		%--
-		toc:
-			mindepth: 2
-			maxdepth: 2
-		--%
+		[TOC]
 	"""
 
 	def __init__(self, form, text=u'label', frame=False, center=True):

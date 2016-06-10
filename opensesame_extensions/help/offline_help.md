@@ -38,10 +38,10 @@ each tab.
 
 Items are the building blocks of your experiment. Ten core items provide basic functionality for creating an experiment. To add items to your experiment, drag them from the item toolbar into the overview area.
 
-- The [loop](opensesame://help.loop) item runs another item multiple times. You can also define independent variables in the `loop` item.
+- The [loop](opensesame://help.loop) item runs another item multiple times. You can also define independent variables in the LOOP item.
 - The [sequence](opensesame://help.sequence) item runs multiple other items in sequence.
 - The [sketchpad](opensesame://help.sketchpad) item presents visual stimuli. Built-in drawing tools allow you to easily create stimulus displays.
-- The [feedback](opensesame://help.feedback) item is similar to the `sketchpad`, but is not prepared in advance. Therefore, `feedback` items can be used to provide feedback to participants.
+- The [feedback](opensesame://help.feedback) item is similar to the `sketchpad`, but is not prepared in advance. Therefore, FEEDBACK items can be used to provide feedback to participants.
 - The [sampler](opensesame://help.sampler) item plays a single sound file.
 - The [synth](opensesame://help.synth) item generates a single sound.
 - The [keyboard_response](opensesame://help.keyboard_response) item collects key-press responses.

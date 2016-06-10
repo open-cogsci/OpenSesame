@@ -28,14 +28,14 @@ class form(object):
 
 	"""
 	desc: |
-		The form is a container for widgets, such as labels, etc. If you use the
-		form_base plug-in in combination with OpenSesame script, you do not need
+		The `form` is a container for widgets, such as labels, etc. If you use the
+		FORM_BASE plug-in in combination with OpenSesame script, you do not need
 		to explicitly create a form. However, if you use Python inline code, you
 		do.
 
 		__Example__:
 
-		~~~ {.python}
+		~~~ .python
 		from libopensesame import widgets
 		form = widgets.form(exp)
 		label = widgets.label(form, text='label)
@@ -43,13 +43,7 @@ class form(object):
 		form._exec()
 		~~~
 
-		__Function list:__
-
-		%--
-		toc:
-			mindepth: 2
-			maxdepth: 2
-		--%
+		[TOC]
 	"""
 
 	def __init__(self, experiment, cols=2, rows=2, spacing=10,

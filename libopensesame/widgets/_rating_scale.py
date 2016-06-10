@@ -39,7 +39,7 @@ class rating_scale(widget):
 
 		__Example (OpenSesame script):__
 
-		~~~ {.python}
+		~~~ .python
 		from libopensesame import widgets
 		form = widgets.form(exp)
 		label = widgets.label(form, text='I like fluffy kittens')
@@ -50,13 +50,7 @@ class rating_scale(widget):
 		form._exec()
 		~~~
 
-		__Function list:__
-
-		%--
-		toc:
-			mindepth: 2
-			maxdepth: 2
-		--%
+		[TOC]
 	"""
 
 	def __init__(self, form, nodes=5, click_accepts=False,

@@ -38,7 +38,7 @@ class text_input(label):
 
 		__Example (Python):__
 
-		~~~ {.python}
+		~~~ .python
 		from libopensesame import widgets
 		form = widgets.form(exp)
 		text_input = widgets.text_input(form, var='response',
@@ -47,13 +47,7 @@ class text_input(label):
 		form._exec()
 		~~~
 
-		__Function list:__
-
-		%--
-		toc:
-			mindepth: 2
-			maxdepth: 2
-		--%
+		[TOC]
 	"""
 
 	def __init__(self, form, text=u'', frame=True, center=False,

@@ -53,9 +53,9 @@ class keyboard(backend):
 		  - The spacebar is represented by 'space' and 'SPACE'
 		- To find out the name of key, you can:
 		  - Click on the 'list available keys' button of the
-		    `keyboard_response` item.
-		  - Collect a key press with a `keyboard_response` item, and display
-		    the key name through a `feedback` item with the text 'You
+		    KEYBOARD_RESPONSE item.
+		  - Collect a key press with a KEYBOARD_RESPONSE item, and display
+		    the key name through a FEEDBACK item with the text 'You
 		    pressed [response]' in it.
 
 		### Response keywords

@@ -25,12 +25,12 @@ class sampler(backend):
 
 	"""
 	desc: |
-		The `sampler` module provides functionality to play sound samples.
+		The SAMPLER module provides functionality to play sound samples.
 
 		__Example:__
 
 		~~~ .python
-		src = exp.pool['bark.ogg']
+		src = pool['bark.ogg']
 		my_sampler = sampler(src, volume=.5)
 		my_sampler.play()
 		~~~
@@ -128,7 +128,7 @@ class sampler(backend):
 
 		"""
 		desc: |
-			Constructor to create a new `sampler` object. You do not generally
+			Constructor to create a new SAMPLER object. You do not generally
 			call this constructor directly, but use the `sampler()` function,
 			which is described here: [/python/sampler/]().
 
@@ -143,7 +143,7 @@ class sampler(backend):
 		keyword-dict:
 			playback_args:
 				Optional [playback keywords] that will be used as the default
-				for this `sampler` object.
+				for this SAMPLER object.
 
 		example: |
 			src = exp.pool[u'my_sound.ogg']

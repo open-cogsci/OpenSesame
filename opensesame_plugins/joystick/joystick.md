@@ -1,10 +1,10 @@
 # Joystick plug-in
 
-The `joystick` plug-in handles input from joystick devices, including trackballs and video-game-style gamepads. Using the joystick module of PyGame, the `joystick` plug-in allows for the use of a joystick with buttons, axes, trackballs, and hats.
+The JOYSTICK plug-in handles input from joystick devices, including trackballs and video-game-style gamepads. Using the joystick module of PyGame, the JOYSTICK plug-in allows for the use of a joystick with buttons, axes, trackballs, and hats.
 
 ## Options and response variables
 
-The `joystick` plug-in works analogously to the `keyboard_response` item. For more information, see the `keyboard_response`-item help or visit:
+The JOYSTICK plug-in works analogously to the KEYBOARD_RESPONSE item. For more information, see the KEYBOARD_RESPONSE-item help or visit:
 
 - <http://osdoc.cogsci.nl/usage/collecting-responses/>
 

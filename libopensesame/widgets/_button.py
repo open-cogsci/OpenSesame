@@ -38,7 +38,7 @@ class button(label):
 
 		__Example (Python):__
 
-		~~~ {.python}
+		~~~ .python
 		from libopensesame import widgets
 		form = widgets.form(exp)
 		button = widgets.button(form, text='Click me!', frame=True, center=True,
@@ -47,13 +47,7 @@ class button(label):
 		form._exec()
 		~~~
 
-		__Function list:__
-
-		%--
-		toc:
-			mindepth: 2
-			maxdepth: 2
-		--%
+		[TOC]
 	"""
 
 	def __init__(self, form, text=u'button', frame=True, center=True, var=None):

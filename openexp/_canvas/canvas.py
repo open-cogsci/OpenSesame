@@ -31,7 +31,7 @@ class canvas(backend):
 
 	"""
 	desc: |
-		The `canvas` class is used to present visual stimuli.
+		The CANVAS class is used to present visual stimuli.
 
 		__Example__:
 
@@ -167,7 +167,7 @@ class canvas(backend):
 
 		"""
 		desc: |
-			Constructor to create a new `canvas` object. You do not generally
+			Constructor to create a new CANVAS object. You do not generally
 			call this constructor directly, but use the `canvas()` function,
 			which is described here: [/python/common/]().
 
@@ -186,7 +186,7 @@ class canvas(backend):
 						unless [canvas.prepare] is explicitly called in
 						advance. Generally, it only makes sense to disable
 						auto_prepare when you want to draw a large number
-						of stimuli, as in the second example below.
+						of stimuli, as in the second example above.
 						Currently, the auto_prepare parameter only applies
 						to the xpyriment backend, and is ignored by the
 						other backends.
@@ -195,7 +195,7 @@ class canvas(backend):
 		keyword-dict:
 			style_args:
 				Optional [style keywords], which will be used as the default
-				for all drawing operations on this `canvas`.
+				for all drawing operations on this CANVAS.
 
 		example: |
 			# Example 1: Show a central fixation dot.
@@ -322,16 +322,16 @@ class canvas(backend):
 
 		"""
 		desc: |
-			Turns the current `canvas` into a copy of the passed `canvas`.
+			Turns the current CANVAS into a copy of the passed CANVAS.
 
 			__Note:__
 
-			If you want to create a copy of a `sketchpad` `canvas`, you can also
+			If you want to create a copy of a `sketchpad` CANVAS, you can also
 			use the `inline_script.copy_sketchpad` function.
 
 		arguments:
 			canvas:
-				desc:	The `canvas` to copy.
+				desc:	The CANVAS to copy.
 				type:	canvas
 
 		example: |

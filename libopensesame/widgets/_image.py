@@ -41,7 +41,7 @@ class image(widget):
 
 		__Example (Python):__
 
-		~~~ {.python}
+		~~~ .python
 		from libopensesame import widgets
 		form = widgets.form(exp)
 		# The full path to the image needs to be provided.
@@ -52,13 +52,7 @@ class image(widget):
 		form._exec()
 		~~~
 
-		__Function list:__
-
-		%--
-		toc:
-			mindepth: 2
-			maxdepth: 2
-		--%
+		[TOC]
 	"""
 
 	def __init__(self, form, path=None, adjust=True, frame=False):
