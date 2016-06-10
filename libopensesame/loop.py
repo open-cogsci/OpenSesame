@@ -305,6 +305,8 @@ class loop(item.item):
 			self.experiment.var.live_row = self.live_row
 			self.experiment.var.set('live_row_%s' % self.name, self.live_row)
 			for name, val in self.live_dm[self.live_row]:
+				if isinstance(val, basestring) and val.startswith(u'='):
+					val = self.python_workspace._eval(val[1:])
 				self.experiment.var.set(name, val)
 			# Evaluate the run if statement
 			if self._break_if is not None and \
