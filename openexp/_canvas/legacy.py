@@ -27,6 +27,19 @@ from openexp.backend import configurable
 from openexp._canvas import canvas
 from openexp._coordinates.legacy import legacy as legacy_coordinates
 
+# PyGame 1.9.2 suffers from character encoding issues. To get around those, we
+# pass file objects directly to PyGame, instead of paths. These file objects
+# need to remain open in the case of fonts, otherwise the associated font object
+# won't work anymore. So here we keep a list of all open file objects, which are
+# closed when the display is closed. In addition, we keep track of font objects
+# so that we don't repeatedly initialize the same font.
+#
+# A bug report regarding character encoding is here:
+# - https://bitbucket.org/pygame/pygame/issues/196/\
+#   font-file-name-containing-unicode-error
+fileobjects = []
+fonts = {}
+
 class legacy(canvas.canvas, legacy_coordinates):
 
 	"""
@@ -173,14 +186,15 @@ class legacy(canvas.canvas, legacy_coordinates):
 
 	def image(self, fname, center=True, x=None, y=None, scale=None):
 
-		_fname = safe_str(fname, enc=misc.filesystem_encoding())
-		if not os.path.isfile(_fname):
+		fname = safe_decode(fname)
+		if not os.path.isfile(fname):
 			raise osexception(u'"%s" does not exist' % fname)
-		try:
-			surface = pygame.image.load(_fname)
-		except pygame.error:
-			raise osexception(
-				u"'%s' is not a supported image format" % fname)
+		with open(fname, u'rb') as fd:
+			try:
+				surface = pygame.image.load(fd)
+			except pygame.error:
+				raise osexception(
+					u"'%s' is not a supported image format" % fname)
 		if scale is not None:
 			try:
 				surface = pygame.transform.smoothscale(surface,
@@ -274,6 +288,10 @@ class legacy(canvas.canvas, legacy_coordinates):
 	@staticmethod
 	def close_display(experiment):
 
+		while fileobjects:
+			fileobjects.pop().close()
+		while fonts:
+			fonts.pop(fonts.keys()[0], None)
 		pygame.display.quit()
 
 	@staticmethod
@@ -294,13 +312,11 @@ class legacy(canvas.canvas, legacy_coordinates):
 			type:	Font
 		"""
 
-		try:
-			# PyGame 1.9.2a0 crashes on fonts that are located in a path with
-			# special characters. This will cause OpenSesame to crash when run
-			# from a folder with special characters. To bypass this, we use the
-			# relative path, which usually doesn't contain special characters.
-			path = os.path.relpath(
-				experiment.resource(u'%s.ttf' % family), os.getcwdu())
-			return pygame.font.Font(path, size)
-		except:
-			return pygame.font.Font(None, size)
+		if (family, size) in fonts:
+			return fonts[(family, size)]
+		path = experiment.resource(u'%s.ttf' % family)
+		fd = open(path, u'rb')
+		fileobjects.append(fd)
+		font = pygame.font.Font(fd, size)
+		fonts[(family, size)] = font
+		return font
