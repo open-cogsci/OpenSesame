@@ -819,8 +819,10 @@ class canvas(backend):
 
 		arguments:
 			fname:
-				desc:	The filename of the image. If this is a `str` it is
-						assumed to be in utf-8 encoding.
+				desc:	The filename of the image. When using Python 2, this
+						should be either `unicode` or a utf-8-encoded `str`.
+						When using Python 3, this should be either `str` or a
+						utf-8-encoded `bytes`.
 				type:	[str, unicode]
 
 		keywords:
