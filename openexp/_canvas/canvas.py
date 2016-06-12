@@ -728,7 +728,10 @@ class canvas(backend):
 
 		arguments:
 			text:
-				desc:	A string of text.
+				desc:	A string of text. When using Python 2, this should be
+						either `unicode` or a utf-8-encoded `str`. When using
+						Python 3, this should be either `str` or a utf-8-encoded
+						`bytes`.
 				type:	[str, unicode]
 
 		keywords:

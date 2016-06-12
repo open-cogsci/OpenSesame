@@ -116,7 +116,10 @@ class log(object):
 
 		arguments:
 			msg:
-				desc:	A text message.
+				desc:	A text message. When using Python 2, this should be
+						either `unicode` or a utf-8-encoded `str`. When using
+						Python 3, this should be either `str` or a utf-8-encoded
+						`bytes`.
 				type:	[str, unicode]
 
 		keywords:
