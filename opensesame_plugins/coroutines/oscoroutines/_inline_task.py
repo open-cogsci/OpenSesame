@@ -59,6 +59,6 @@ class inline_task(base_task):
 		if not inspect.isgeneratorfunction(self.coroutine):
 			raise osexception(
 				u'"%s" is not a generator function' % self.function_name)
-		print('launching %s' % self.coroutine)
+		self.coroutines.event('launching %s' % self.coroutine)
 		self.coroutine = self.coroutine()
 		self.coroutine.send(None)

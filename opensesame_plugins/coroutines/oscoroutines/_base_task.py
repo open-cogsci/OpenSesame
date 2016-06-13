@@ -27,6 +27,10 @@ class base_task(object):
 		A task controls the coroutine for one item.
 	"""
 
+	ALIVE = 0
+	DEAD = 1
+	ABORT = 2
+
 	def __init__(self, coroutines, start_time, end_time):
 
 		"""
@@ -121,8 +125,9 @@ class base_task(object):
 		"""
 
 		try:
-			self.coroutine.send(True)
+			if self.coroutine.send(True) is False:
+				return self.ABORT
 		except StopIteration:
 			self.coroutines.event('died %s' % self.coroutine)
-			return False
-		return True
+			return self.DEAD
+		return self.ALIVE

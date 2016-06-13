@@ -151,13 +151,25 @@ class coroutines(item):
 		active = []
 		t0 = self.clock.time()
 		i = 0
-		while dt < self.var.duration:
+		running = True
+		while running and dt < self.var.duration:
 			# Activate coroutines by start time
 			while self._schedule and self._schedule[0].started(dt):
 				active.append(self._schedule.pop(0))
 				active.sort(key=lambda task: task.end_time)
-			# Run all active coroutines
-			active = [task for task in active if task.step()]
+			# Run all active coroutines. If a task returns alive, it should be
+			# kept as an active task; if it returns DEAD, it should be removed
+			# from the active tasks; if it returns ABORT, the whole coroutines
+			# should be aborted.
+			_active = []
+			for task in active:
+				status = task.step()
+				if status == task.ALIVE:
+					_active.append(task)
+					continue
+				if status == task.ABORT:
+					running = False
+			active = _active
 			# De-activate coroutines by end time
 			while active and active[0].stopped(dt):
 				active.pop(0)
