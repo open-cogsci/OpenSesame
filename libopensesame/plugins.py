@@ -73,7 +73,7 @@ def plugin_folders(only_existing=True, _type=u'plugins'):
 		for path in os.environ[key].split(';'):
 			path = safe_decode(path, enc=misc.filesystem_encoding())
 			if os.path.exists(path):
-				l.append(path)
+				l.insert(0, path)
 
 	if os.name == u'posix' and u'HOME' in os.environ:
 		# Regular Linux distributions. TODO: How well does this apply to Mac OS?
