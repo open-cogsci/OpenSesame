@@ -1,6 +1,6 @@
 # Lancez-vous !
 
-Bienvenu chez OpenSesame ! Que puis-je pour vous ?
+Bienvenue chez OpenSesame ! Que puis-je pour vous ?
 
 <table><tr><td>
 

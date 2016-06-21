@@ -78,8 +78,7 @@ class unused_widget(base_widget):
 		# Ask confirmation
 		resp = QtWidgets.QMessageBox.question(self.main_window.ui.centralwidget,
 			_(u"Permanently delete items?"),
-			_(u"Are you sure you want to permanently delete all unused items? "
-			u"This action cannot be undone."),
+			_(u"Are you sure you want to permanently delete all unused items? This action cannot be undone."),
 			QtWidgets.QMessageBox.Yes, QtWidgets.QMessageBox.No)
 		if resp == QtWidgets.QMessageBox.No:
 			return
