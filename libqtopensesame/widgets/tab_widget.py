@@ -420,7 +420,7 @@ class tab_widget(base_subcomponent, QtWidgets.QTabWidget):
 			w.on_activate()
 
 	def open_markdown(self, md, icon=u'dialog-information',
-		title=u'Attention!'):
+		title=u'Attention!', url=None, tmpl=None):
 
 		"""
 		desc:
@@ -439,14 +439,19 @@ class tab_widget(base_subcomponent, QtWidgets.QTabWidget):
 			title:
 				desc:	The tab title.
 				type:	str
+			url:
+				desc:	A url to identify the page. This only applies when the
+						markdown is provided as text; otherwise the markdown
+						filename is used.
+				type:	str
 		"""
 
 		from libqtopensesame.widgets.webbrowser import webbrowser
 		wb = webbrowser(self.main_window)
 		if md.endswith(u'.md'):
-			wb.load(md)
+			wb.load(md, tmpl=tmpl)
 		else:
-			wb.load_markdown(md)
+			wb.load_markdown(md, url=url, tmpl=tmpl)
 		self.main_window.tabwidget.add(wb, icon, title)
 
 	def focus(self):

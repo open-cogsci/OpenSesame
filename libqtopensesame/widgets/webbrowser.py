@@ -188,7 +188,7 @@ class webbrowser(base_widget):
 		self.main_window.theme.apply_theme(self)
 		self.markdown_parser = markdown_parser(self)
 
-	def load(self, url):
+	def load(self, url, tmpl=None):
 
 		"""
 		desc:
@@ -196,6 +196,8 @@ class webbrowser(base_widget):
 
 		arguments:
 			url:	The url to load.
+			tmpl:	A template to be wrapped around the html in the case of
+					Markdown files.
 		"""
 
 		if isinstance(url, QtCore.QUrl):
@@ -205,13 +207,13 @@ class webbrowser(base_widget):
 			self.ui.top_widget.hide()
 			with open(url) as fd:
 				md = safe_decode(fd.read(), errors=u'ignore')
-			self.load_markdown(md)
+			self.load_markdown(md, url=os.path.basename(url), tmpl=tmpl)
 			return
 		self.ui.top_widget.show()
 		self._current_url = url
 		self.ui.webview.load(QtCore.QUrl(url))
 
-	def load_markdown(self, md):
+	def load_markdown(self, md, url=None, tmpl=None):
 
 		"""
 		desc:
@@ -219,10 +221,18 @@ class webbrowser(base_widget):
 
 		arguments:
 			md:		A Markdown text string.
+			url:	The url to load.
+			tmpl:	A template to be wrapped around the html.
 		"""
 
+		if url is None:
+			url = u'untitled'
+		url = QtCore.QUrl(u'http://opensesame.app.cogsci.nl/%s' % url)
 		self.ui.top_widget.hide()
-		self.ui.webview.setHtml(self.markdown_parser.to_html(md))
+		html = self.markdown_parser.to_html(md)
+		if tmpl is not None:
+			html = tmpl % {u'body' : html}
+		self.ui.webview.setHtml(html, baseUrl=url)
 
 	def init_cache(self):
 
