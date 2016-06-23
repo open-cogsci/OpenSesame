@@ -18,6 +18,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame.py3compat import *
+from libqtopensesame.misc.config import cfg
 import os
 import sys
 from libopensesame import misc, metadata
@@ -79,8 +80,18 @@ class get_started(base_extension):
 			u'templates' : u'  \n'.join(templates),
 			u'recent_experiments' : u'  \n'.join(recent)
 			}
+		if cfg.enable_ping:
+			with open(self.ext_resource(u'tracking-wrapper.html')) as fd:
+				tmpl = safe_decode(fd.read())
+			if cfg.enable_ping_info:
+				self.extension_manager.fire(u'notify',
+					message=_('Anonymous usage data is sent to cogsci.nl. You can disable this under preferences.'),
+					category=u'info', timeout=0, buttontext=_(u'Got it!'))
+				cfg.enable_ping_info = 0
+		else:
+			tmpl = None
 		self.tabwidget.open_markdown(md, title=_(u'Get started!'),
-			icon=u'document-new')
+			icon=u'document-new', url='get-started', tmpl=tmpl)
 
 	def event_open_recent_0(self):
 		self.main_window.open_file(path=self.main_window.recent_files[0])

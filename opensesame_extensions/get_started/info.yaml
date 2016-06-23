@@ -13,3 +13,6 @@ toolbar:
   separator_after: false
   separator_before: false
 tooltip: Start a new experiment
+settings:
+  enable_ping: 1
+  enable_ping_info: 1
