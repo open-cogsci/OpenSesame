@@ -50,6 +50,7 @@ included_plugins = [
 
 # List of included extensions
 included_extensions = [
+	'analytics',
 	'automatic_backup',
 	'get_started',
 	'help',
