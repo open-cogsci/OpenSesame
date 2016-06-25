@@ -1,4 +1,4 @@
-#-*- coding:utf-8 -*-
+	#-*- coding:utf-8 -*-
 
 """
 This file is part of OpenSesame.
@@ -89,15 +89,15 @@ class help(base_extension):
 			sitemap_url=cfg.online_help_sitemap.replace(u'[version]',
 				metadata.main_version),
 			base_url=cfg.online_help_base_url, label=_(u'Online help'),
-			local_sitemap=u'sitemap-osdoc.yml')
+			local_sitemap=u'sitemap-osdoc.yaml')
 		if menu is not None:
 			self.action_online_help = self.menu.addMenu(menu)
-		menu = self.online_help_menu(
-			sitemap_url=u'http://docs.expyriment.org/0.8.0/sitemap.yml',
-			base_url=u'http://expyriment.org/', label=_(u'Expyriment API'),
-			local_sitemap=u'sitemap-expyriment.yml')
-		if menu is not None:
-			self.action_online_help = self.menu.addMenu(menu)
+		# menu = self.online_help_menu(
+		# 	sitemap_url=u'http://docs.expyriment.org/0.8.0/sitemap.yml',
+		# 	base_url=u'http://expyriment.org/', label=_(u'Expyriment API'),
+		# 	local_sitemap=u'sitemap-expyriment.yaml')
+		# if menu is not None:
+		# 	self.action_online_help = self.menu.addMenu(menu)
 		menu = self.psychopy_help_menu()
 		if menu is not None:
 			self.action_psychopy_help = self.menu.addMenu(menu)
@@ -118,7 +118,7 @@ class help(base_extension):
 		except:
 			if local_sitemap is None:
 				return
-			with open(misc.resource(local_sitemap)) as fd:
+			with open(self.ext_resource(local_sitemap)) as fd:
 				sitemap = fd.read()
 				_dict = yaml.load(sitemap)
 		if not isinstance(_dict, dict):

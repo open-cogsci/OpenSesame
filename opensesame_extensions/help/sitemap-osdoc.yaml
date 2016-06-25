@@ -12,11 +12,11 @@ dictitems:
   Manual: !!python/object/apply:collections.OrderedDict
     dictitems:
       Backends: /3.1/manual/backends.html
+      Counterbalancing: /3.1/manual/counterbalancing.html
       Data logging: /3.1/manual/logging.html
       Examples: /3.1/manual/examples.html
       Flow and structure: !!python/object/apply:collections.OrderedDict
         dictitems:
-          Counterbalancing: /3.1/manual/structure/counterbalancing.html
           Doing things in parallel: /3.1/manual/structure/coroutines.html
           Doing things in sequence: /3.1/manual/structure/sequence.html
           Looping and defining indepedent variables: /3.1/manual/structure/loop.html
@@ -38,6 +38,7 @@ dictitems:
               rating_scale: /3.1/manual/forms/widgets/rating_scale.html
               text_input: /3.1/manual/forms/widgets/text_input.html
       Installing plugins and extensions: /3.1/manual/plugins.html
+      OSF Integration: /3.1/manual/osf.html
       OpenSesame script: /3.1/manual/opensesame-script.html
       Response collection: !!python/object/apply:collections.OrderedDict
         dictitems:
@@ -129,5 +130,6 @@ dictitems:
       Cats, dogs, and capybaras: /3.1/tutorials/capybara.html
       Direction du regard: /3.1/fr/direction-du-regard.html
       "Gu\xEDa paso a paso": /3.1/es/guia-paso-a-paso.html
+      Intermediate tutorial: /3.1/tutorials/intermediate.html
       Udemy course (by Monk Prayogshala): https://www.udemy.com/opensesame-the-experiment-building-software/
       Video tutorials: /3.1/tutorials/video.html
