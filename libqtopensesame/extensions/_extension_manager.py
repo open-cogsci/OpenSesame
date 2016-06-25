@@ -86,6 +86,26 @@ class extension_manager(base_subcomponent):
 				self.events[event].append(ext)
 		self.main_window.set_busy(False)
 
+	def __getitem__(self, extension_name):
+
+		"""
+		desc:
+			Emulates a dict interface for retrieving extensions.
+
+		arguments:
+			extension_name:
+				desc:	The extension name.
+				type:	str
+
+		returns:
+			type:	base_extension
+		"""
+
+		for ext in self._extensions:
+			if ext.name() == extension_name:
+				return ext
+		raise osexception(u'Extension %s does not exist' % extension_name)
+
 	def fire(self, event, **kwdict):
 
 		"""
