@@ -25,6 +25,8 @@ import os
 import subprocess
 import argparse
 
+EXCLUDE_FOLDERS = [u'build', u'dist', 'deb_dist']
+
 pro_tmpl = u'''CODECFORTR = UTF-8
 FORMS = %(ui_list)s
 SOURCES = translatables-tmp.py
@@ -129,7 +131,8 @@ def parse_folder(path, t, ui_list, category):
 		if fname.endswith(u'.ui'):
 			ui_list.append(_fname)
 			continue
-		if os.path.isdir(_fname):
+		if os.path.isdir(_fname) and \
+			os.path.basename(_fname) not in EXCLUDE_FOLDERS:
 			parse_folder(_fname, t, ui_list, category)
 
 
