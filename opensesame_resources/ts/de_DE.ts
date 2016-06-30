@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS><TS version="2.0" language="de_DE" sourcelanguage="">
+<!DOCTYPE TS>
+<TS version="2.0" language="de_DE">
 <context>
     <name>Form</name>
     <message>
@@ -451,17 +452,17 @@
     <message>
         <location filename="../../translatables-tmp.py" line="1093"/>
         <source>Failed to load backend</source>
-        <translation type="unfinished">Laden des Backends fehlgeschlagen</translation>
+        <translation>Laden des Backends fehlgeschlagen</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="1094"/>
         <source>No settings for %s</source>
-        <translation type="unfinished">Keine Einstellungen für %s</translation>
+        <translation>Keine Einstellungen für %s</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="1095"/>
         <source>Settings for %s:</source>
-        <translation type="unfinished">Einstellungen für %s:</translation>
+        <translation>Einstellungen für %s:</translation>
     </message>
 </context>
 <context>
@@ -469,22 +470,22 @@
     <message>
         <location filename="../../translatables-tmp.py" line="978"/>
         <source>Choose location for logfile (press &apos;escape&apos; for default location)</source>
-        <translation type="unfinished">Speicherort für das Logfile auswählen (drücke Esc um den Standardordner zu nutzen)</translation>
+        <translation>Speicherort für das Logfile auswählen (drücke Esc um den Standardordner zu nutzen)</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="979"/>
         <source>The logfile &apos;%s&apos; is not writable. Please choose another location for the logfile.</source>
-        <translation type="unfinished">Das Logfile &apos;%s&apos; kann nicht gespeichert werden. Bitte wähle einen anderen Speicherort.</translation>
+        <translation>Das Logfile &apos;%s&apos; kann nicht gespeichert werden. Bitte wähle einen anderen Speicherort.</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="980"/>
         <source>Subject number</source>
-        <translation type="unfinished">Versuchspersonennummer</translation>
+        <translation>Versuchspersonennummer</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="981"/>
         <source>Please enter the subject number</source>
-        <translation type="unfinished">Bitte Versuchspersonennummer eingeben</translation>
+        <translation>Bitte Versuchspersonennummer eingeben</translation>
     </message>
 </context>
 <context>
@@ -492,7 +493,7 @@
     <message>
         <location filename="../../translatables-tmp.py" line="687"/>
         <source>Pick a color</source>
-        <translation type="unfinished">Wähle eine Farbe</translation>
+        <translation>Wähle eine Farbe</translation>
     </message>
 </context>
 <context>
@@ -500,7 +501,7 @@
     <message>
         <location filename="../../translatables-tmp.py" line="84"/>
         <source>Please confirm</source>
-        <translation type="unfinished">Bitte bestätige</translation>
+        <translation>Bitte bestätige</translation>
     </message>
 </context>
 <context>
@@ -508,7 +509,7 @@
     <message>
         <location filename="../../translatables-tmp.py" line="1243"/>
         <source>Error: Command contains invalid characters</source>
-        <translation type="unfinished">Fehler: Eingabe enthält ungültige Zeichen</translation>
+        <translation>Fehler: Eingabe enthält ungültige Zeichen</translation>
     </message>
 </context>
 <context>
@@ -516,7 +517,7 @@
     <message>
         <location filename="../../translatables-tmp.py" line="327"/>
         <source>Failed to parse the resolution. Expecting positive numeric values.</source>
-        <translation type="unfinished">Änderung der Auflösung gescheitert. Erwarte positive numerische Eingabe.</translation>
+        <translation>Änderung der Auflösung gescheitert. Erwarte positive numerische Eingabe.</translation>
     </message>
 </context>
 <context>
@@ -524,12 +525,12 @@
     <message>
         <location filename="../../translatables-tmp.py" line="1314"/>
         <source>Apply?</source>
-        <translation type="unfinished">Anwenden?</translation>
+        <translation>Anwenden?</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="1315"/>
         <source>Are you sure you want to apply the changes to the general script?</source>
-        <translation type="unfinished">Bist Du sicher, dass Du die Änderungen am Gesamtskript anwenden möchtest?</translation>
+        <translation>Sind Sie sicher, dass Sie die Änderungen am Gesamtskript anwenden möchten?</translation>
     </message>
 </context>
 <context>
@@ -537,7 +538,7 @@
     <message>
         <location filename="../../translatables-tmp.py" line="943"/>
         <source>Click to edit</source>
-        <translation type="unfinished">Zum Bearbeiten klicken</translation>
+        <translation>Zum Bearbeiten klicken</translation>
     </message>
 </context>
 <context>
@@ -545,22 +546,22 @@
     <message>
         <location filename="../../translatables-tmp.py" line="1039"/>
         <source>Form</source>
-        <translation type="unfinished"></translation>
+        <translation>Formular</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="1035"/>
         <source>Miscellaneous</source>
-        <translation type="unfinished">Verschiedenes</translation>
+        <translation>Verschiedenes</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="1037"/>
         <source>Staircase</source>
-        <translation type="unfinished"></translation>
+        <translation>Staircase</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="1038"/>
         <source>Visual stimuli</source>
-        <translation type="unfinished">Visuelle Stimuli</translation>
+        <translation>Visuelle Stimuli</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="414"/>
@@ -570,17 +571,17 @@
     <message>
         <location filename="../../translatables-tmp.py" line="1034"/>
         <source>Response collection</source>
-        <translation type="unfinished">Reaktion aufzeichnen</translation>
+        <translation>Reaktionsaufzeichnung</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="1033"/>
         <source>miscellaneous</source>
-        <translation type="unfinished">Verschiedenes</translation>
+        <translation>Verschiedenes</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="1031"/>
         <source>Flow control</source>
-        <translation type="unfinished"></translation>
+        <translation>Flow-Kontrolle</translation>
     </message>
 </context>
 <context>
@@ -588,7 +589,7 @@
     <message>
         <location filename="../../translatables-tmp.py" line="937"/>
         <source>No item selected</source>
-        <translation type="unfinished"></translation>
+        <translation>Kein Item ausgewählt</translation>
     </message>
 </context>
 <context>
@@ -596,52 +597,52 @@
     <message>
         <location filename="../../translatables-tmp.py" line="117"/>
         <source>Open</source>
-        <translation type="unfinished">Öffnen</translation>
+        <translation>Öffnen</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="118"/>
         <source>Rename</source>
-        <translation type="unfinished">Umbenennen</translation>
+        <translation>Umbenennen</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="119"/>
         <source>Edit run-if statement</source>
-        <translation type="unfinished">Bearbeite &quot;Durchführen, wenn&quot;-Bedingung</translation>
+        <translation>Bearbeite &quot;Durchführen, wenn&quot;-Bedingung</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="120"/>
         <source>Copy (unlinked)</source>
-        <translation type="unfinished">Kopiere (unverknüpft)</translation>
+        <translation>Kopiere (unverknüpft)</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="121"/>
         <source>Copy (linked)</source>
-        <translation type="unfinished">Kopiere (verknüpft)</translation>
+        <translation>Kopiere (verknüpft)</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="122"/>
         <source>Paste</source>
-        <translation type="unfinished">Einfügen</translation>
+        <translation>Einfügen</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="123"/>
         <source>Delete</source>
-        <translation type="unfinished">Löschen</translation>
+        <translation>Löschen</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="124"/>
         <source>Permanently delete all linked copies</source>
-        <translation type="unfinished">Alle verknüpften Kopien dauerhaft löschen</translation>
+        <translation>Alle verknüpften Kopien dauerhaft löschen</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="125"/>
         <source>Permanently delete</source>
-        <translation type="unfinished">Lösche dauerhaft</translation>
+        <translation>Lösche dauerhaft</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="126"/>
         <source>Help</source>
-        <translation type="unfinished">Hilfe</translation>
+        <translation>Hilfe</translation>
     </message>
 </context>
 <context>
@@ -649,22 +650,22 @@
     <message>
         <location filename="../../translatables-tmp.py" line="794"/>
         <source>View controls</source>
-        <translation type="unfinished">Zeige Bedienoberfläche</translation>
+        <translation>Zeige Bedienoberfläche</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="795"/>
         <source>View script</source>
-        <translation type="unfinished">Zeige Skript</translation>
+        <translation>Zeige Skript</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="796"/>
         <source>Split view</source>
-        <translation type="unfinished">Geteilte Ansicht</translation>
+        <translation>Geteilte Ansicht</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="797"/>
         <source>Select view</source>
-        <translation type="unfinished">Ansicht wählen</translation>
+        <translation>Ansicht wählen</translation>
     </message>
 </context>
 <context>
@@ -672,7 +673,7 @@
     <message>
         <location filename="../../translatables-tmp.py" line="210"/>
         <source>Dismiss this message</source>
-        <translation type="unfinished"></translation>
+        <translation>Verwerfe diese Nachricht</translation>
     </message>
 </context>
 <context>
@@ -680,7 +681,7 @@
     <message>
         <location filename="../../translatables-tmp.py" line="931"/>
         <source>Browse</source>
-        <translation type="unfinished">Durchsuchen</translation>
+        <translation>Durchsuchen</translation>
     </message>
 </context>
 <context>
@@ -688,67 +689,67 @@
     <message>
         <location filename="../../translatables-tmp.py" line="168"/>
         <source>A file named &apos;%s&apos; already exists in the pool. Do you want to overwrite this file?</source>
-        <translation type="unfinished">Es existiert bereits eine Datei mit dem Namen &apos;%s&apos; in der Dateisammlung. Möchtest Du die alte Datei überschreiben?</translation>
+        <translation>Es existiert bereits eine Datei mit dem Namen &apos;%s&apos; in der Dateisammlung. Möchtest Du die alte Datei überschreiben?</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="170"/>
         <source>Add files to pool</source>
-        <translation type="unfinished">Datei(en) zur Dateisammlung hinzufügen</translation>
+        <translation>Datei(en) zur Dateisammlung hinzufügen</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="172"/>
         <source>Open</source>
-        <translation type="unfinished">Öffnen</translation>
+        <translation>Öffnen</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="173"/>
         <source>Remove from pool</source>
-        <translation type="unfinished">Aus Dateisammlung entfernen</translation>
+        <translation>Aus Dateisammlung entfernen</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="174"/>
         <source>Rename</source>
-        <translation type="unfinished">Umbenennen</translation>
+        <translation>Umbenennen</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="175"/>
         <source>And %d more file(s)</source>
-        <translation type="unfinished">Und %d weitere Datei(en)</translation>
+        <translation>Und %d weitere Datei(en)</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="176"/>
         <source>There already is a file named &apos;%s&apos; in the file pool</source>
-        <translation type="unfinished">In der Dateisammlung existiert bereits eine Datei mit dem Namen &apos;%s&apos;</translation>
+        <translation>In der Dateisammlung existiert bereits eine Datei mit dem Namen &apos;%s&apos;</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="177"/>
         <source>Failed to rename &quot;%s&quot; to &quot;%s&quot;.</source>
-        <translation type="unfinished">Fehlgeschlagen &quot;%s&quot; in &quot;%s&quot; umzubenennen.</translation>
+        <translation>Umbenennen  von &quot;%s&quot; in &quot;%s&quot; fehlgeschlagen.</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="178"/>
         <source>Cancel</source>
-        <translation type="unfinished">Abbrechen</translation>
+        <translation>Abbrechen</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="180"/>
         <source>Select file from pool</source>
-        <translation type="unfinished">Aus Dateisammlung wählen</translation>
+        <translation>Aus Dateisammlung wählen</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="169"/>
         <source>Failed to copy %s to file pool</source>
-        <translation type="unfinished"></translation>
+        <translation>Kopieren von %s Datei in die Dateisammlung fehlgeschlagen</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="171"/>
         <source>Failed to refresh file pool</source>
-        <translation type="unfinished"></translation>
+        <translation>Aktualisieren der Dateisammlung fehlgeschlagen</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="179"/>
         <source>Select</source>
-        <translation type="unfinished"></translation>
+        <translation>Auswählen</translation>
     </message>
 </context>
 <context>
@@ -756,7 +757,7 @@
     <message>
         <location filename="../../translatables-tmp.py" line="1171"/>
         <source>Cancel</source>
-        <translation type="unfinished">Abbrechen</translation>
+        <translation>Abbrechen</translation>
     </message>
 </context>
 <context>
@@ -764,27 +765,27 @@
     <message>
         <location filename="../../translatables-tmp.py" line="622"/>
         <source>&quot;%s&quot; is not a valid qtautoplugin control</source>
-        <translation type="unfinished">&quot;%s&quot; is not a valid qtautoplugin control</translation>
+        <translation>&quot;%s&quot; ist kein gültiger qtautoplugin Kontrollbefehl</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="619"/>
         <source>You must specify &quot;type&quot; for %s controls in info.yaml</source>
-        <translation type="unfinished"></translation>
+        <translation>Sie müssen den Typ für %s Kontrollbefehl in info.yaml angeben</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="620"/>
         <source>You must specify &quot;%s&quot; for %s controls in info.yaml</source>
-        <translation type="unfinished"></translation>
+        <translation>Sie müssen %s für %s Kontrollbefehl in info.yaml angeben</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="621"/>
         <source>Invalid variable name (%s) specified in %s plugin info</source>
-        <translation type="unfinished"></translation>
+        <translation>Ungültiger Variablennamen (%s) in den %s plugin info angegeben</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="623"/>
         <source>Name &quot;%s&quot; is already taken in qtautoplugin control</source>
-        <translation type="unfinished"></translation>
+        <translation>Name %s existiert bereits in den qtautoplugin Kontrollbefehlen</translation>
     </message>
 </context>
 <context>
@@ -792,27 +793,27 @@
     <message>
         <location filename="../../translatables-tmp.py" line="261"/>
         <source>Toggle pop-out</source>
-        <translation type="unfinished">Vollbildmodus</translation>
+        <translation>Vollbildmodus</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="262"/>
         <source>Tell me more about the %s item</source>
-        <translation type="unfinished">Erzähl mir mehr über Item %s</translation>
+        <translation>Erzähl mir mehr über Item %s</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="263"/>
         <source>Apply and close</source>
-        <translation type="unfinished">Anwenden und schließen</translation>
+        <translation>Anwenden und schließen</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="264"/>
         <source>Failed to set control &apos;%s&apos;: %s</source>
-        <translation type="unfinished">Failed to set control &apos;%s&apos;: %s</translation>
+        <translation>Einstellen des Kontrollbefehls &apos;%s&apos;: zu %s fehlgeschlagen</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="260"/>
         <source>Default description</source>
-        <translation type="unfinished"></translation>
+        <translation>Standardbeschreibung</translation>
     </message>
 </context>
 <context>
@@ -820,12 +821,12 @@
     <message>
         <location filename="../../translatables-tmp.py" line="430"/>
         <source>An item with that name already exists.</source>
-        <translation type="unfinished">Es gibt bereits ein Item mit diesem Namen.</translation>
+        <translation>Es gibt bereits ein Item mit diesem Namen.</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="431"/>
         <source>An item name cannot be empty.</source>
-        <translation type="unfinished">Ein Item darf nicht leer sein.</translation>
+        <translation>Ein Item darf nicht leer sein.</translation>
     </message>
 </context>
 <context>
@@ -833,37 +834,37 @@
     <message>
         <location filename="../../translatables-tmp.py" line="389"/>
         <source>New experiment</source>
-        <translation type="unfinished">Neues Experiment</translation>
+        <translation>Neues Experiment</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="390"/>
         <source>Your experiment contains unsaved changes. Do you want to save your experiment?</source>
-        <translation type="unfinished">Dein Experiment enthält Änderungen, die noch nicht gespeichert wurden. Möchtest Du Dein Experiment speichern?</translation>
+        <translation>Dein Experiment enthält Änderungen, die noch nicht gespeichert wurden. Möchtest Du Dein Experiment speichern?</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="391"/>
         <source>Save changes?</source>
-        <translation type="unfinished">Änderungen speichern?</translation>
+        <translation>Änderungen speichern?</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="392"/>
         <source>(No recent files)</source>
-        <translation type="unfinished">(keine Dateien)</translation>
+        <translation>(keine Dateien)</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="393"/>
         <source>Open file</source>
-        <translation type="unfinished">Öffne Datei</translation>
+        <translation>Öffne Datei</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="396"/>
         <source>The following error occured while trying to save:&lt;br/&gt;%s</source>
-        <translation type="unfinished">Beim Versuch zu Speichern trat folgender Fehler auf:&lt;br/&gt;%s</translation>
+        <translation>Beim Versuch zu Speichern trat folgender Fehler auf:&lt;br/&gt;%s</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="397"/>
         <source>Failed to save file. Error: %s</source>
-        <translation type="unfinished">Konnte Datei nicht speichern. Fehler: %s</translation>
+        <translation>Konnte Datei nicht speichern. Fehler: %s</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="159"/>
@@ -873,24 +874,24 @@
     <message>
         <location filename="../../translatables-tmp.py" line="399"/>
         <source>Could not parse script: %s</source>
-        <translation type="unfinished">Konnte Skript nicht analysieren: %s</translation>
+        <translation>Konnte Skript nicht analysieren: %s</translation>
     </message>
-    <message encoding="UTF-8">
+    <message utf8="true">
         <location filename="../../translatables-tmp.py" line="398"/>
         <source>Save as…</source>
-        <translation type="unfinished"></translation>
+        <translation>Speicher als...</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="394"/>
         <source>Errors occurred while opening the file:
 
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Ein Fehler beim Öffnen der Datei ist aufgetreten:</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="395"/>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation>Fehler</translation>
     </message>
 </context>
 <context>
@@ -898,32 +899,32 @@
     <message>
         <location filename="../../translatables-tmp.py" line="644"/>
         <source>Help</source>
-        <translation type="unfinished">Hilfe</translation>
+        <translation>Hilfe</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="645"/>
         <source>Back-end settings</source>
-        <translation type="unfinished">Back-End-Einstellungen</translation>
+        <translation>Back-End-Einstellungen</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="646"/>
         <source>General properties</source>
-        <translation type="unfinished"></translation>
+        <translation>Allgemeinen Einstellungen</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="647"/>
         <source>General script editor</source>
-        <translation type="unfinished"></translation>
+        <translation>Allgemeiner Skripteditor</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="648"/>
         <source>Unused items</source>
-        <translation type="unfinished">Unbenutzte Items</translation>
+        <translation>Unbenutzte Items</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="649"/>
         <source>Preferences</source>
-        <translation type="unfinished">Einstellungen</translation>
+        <translation>Einstellungen</translation>
     </message>
 </context>
 <context>
@@ -931,27 +932,27 @@
     <message>
         <location filename="../../translatables-tmp.py" line="1143"/>
         <source>Default template</source>
-        <translation type="unfinished"></translation>
+        <translation>Standard-Vorlage</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="1144"/>
         <source>Extended template</source>
-        <translation type="unfinished"></translation>
+        <translation>Erweiterte-Vorlage</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="1145"/>
         <source>Questionnaire template</source>
-        <translation type="unfinished"></translation>
+        <translation>Fragebogen-Vorlage</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="1146"/>
         <source>Android template</source>
-        <translation type="unfinished"></translation>
+        <translation>Android-Vorlage</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="1147"/>
         <source>Eye-tracking template</source>
-        <translation type="unfinished"></translation>
+        <translation>Eye-tracking-Vorlage</translation>
     </message>
 </context>
 <context>
@@ -959,7 +960,7 @@
     <message>
         <location filename="../../translatables-tmp.py" line="1109"/>
         <source>Commonly used</source>
-        <translation type="unfinished"></translation>
+        <translation>Häufig benutzt</translation>
     </message>
 </context>
 <context>
@@ -967,7 +968,7 @@
     <message>
         <location filename="../../translatables-tmp.py" line="803"/>
         <source>Drag this &lt;b&gt;%s&lt;/b&gt; item to the intended location in the overview area or into the item list of a sequence tab</source>
-        <translation type="unfinished">Ziehe das &lt;b&gt;%s&lt;/b&gt; Item an die passende Stelle in der Übersicht oder in die Itemliste eines Sequenz-Tabs</translation>
+        <translation>Ziehe das &lt;b&gt;%s&lt;/b&gt; Item an die passende Stelle in der Übersicht oder in die Itemliste eines Sequenz-Tabs</translation>
     </message>
 </context>
 <context>
@@ -975,12 +976,12 @@
     <message>
         <location filename="../../translatables-tmp.py" line="241"/>
         <source>Append new item</source>
-        <translation type="unfinished">Neues Item einfügen</translation>
+        <translation>Neues Item einfügen</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="242"/>
         <source>Append existing item (linked)</source>
-        <translation type="unfinished">Füge existentes Item hinzu (verknüpft)</translation>
+        <translation>Füge existentes Item hinzu (verknüpft)</translation>
     </message>
 </context>
 <context>
@@ -988,7 +989,7 @@
     <message>
         <location filename="../../translatables-tmp.py" line="62"/>
         <source>General options</source>
-        <translation type="unfinished">Allgemeine Einstellungen</translation>
+        <translation>Allgemeine Einstellungen</translation>
     </message>
 </context>
 <context>
@@ -997,33 +998,33 @@
         <location filename="../../translatables-tmp.py" line="846"/>
         <source>Type: %s
 Description: %s</source>
-        <translation type="unfinished">Typ: %s
+        <translation>Typ: %s
 Beschreibung: %s</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="847"/>
         <source>Set as item to run for %s</source>
-        <translation type="unfinished">Item zur Durchführung für %s</translation>
+        <translation>Item zur Durchführung für %s festlegen</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="848"/>
         <source>Insert into %s</source>
-        <translation type="unfinished">Einfügen in %s</translation>
+        <translation>Einfügen in %s</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="849"/>
         <source>Drop below %s</source>
-        <translation type="unfinished">Nach %s einfügen</translation>
+        <translation>Nach %s einfügen</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="850"/>
         <source>Permanently delete item</source>
-        <translation type="unfinished">Item dauerhaft löschen</translation>
+        <translation>Item dauerhaft löschen</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="851"/>
         <source>Are you sure you want to permanently delete &lt;b&gt;%s&lt;/b&gt;? All linked copies of &lt;b&gt;%s&lt;/b&gt; will be deleted. You will not be able to undo this.</source>
-        <translation type="unfinished">Bist Du sicher, dass Du &lt;b&gt;%s&lt;/b&gt; dauerhaft löschen willst? Alel verknüpften Kopien von &lt;b&gt;%s&lt;/b&gt; werden ebenfalls gelöscht. Du kannst diesen Vorgang nicht rückgängig machen.</translation>
+        <translation>Bist Du sicher, dass Du &lt;b&gt;%s&lt;/b&gt; dauerhaft löschen willst? Alle verknüpften Kopien von &lt;b&gt;%s&lt;/b&gt; werden ebenfalls gelöscht. Du kannst diesen Vorgang nicht rückgängig machen.</translation>
     </message>
 </context>
 <context>
@@ -1031,17 +1032,17 @@ Beschreibung: %s</translation>
     <message>
         <location filename="../../translatables-tmp.py" line="417"/>
         <source>Item name</source>
-        <translation type="unfinished">Name des Items</translation>
+        <translation>Name des Items</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="418"/>
         <source>Run if</source>
-        <translation type="unfinished">Durchführen, wenn</translation>
+        <translation>Durchführen, wenn</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="419"/>
         <source>Unknown item type: %s</source>
-        <translation type="unfinished">Unbekannter Itemtyp %s</translation>
+        <translation>Unbekannter Itemtyp %s</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="150"/>
@@ -1051,7 +1052,7 @@ Beschreibung: %s</translation>
     <message>
         <location filename="../../translatables-tmp.py" line="420"/>
         <source>Insert into %s</source>
-        <translation type="unfinished">Einfügen in %s</translation>
+        <translation>Einfügen in %s</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="153"/>
@@ -1061,7 +1062,7 @@ Beschreibung: %s</translation>
     <message>
         <location filename="../../translatables-tmp.py" line="421"/>
         <source>Insert after %s</source>
-        <translation type="unfinished"></translation>
+        <translation>Einfügen nach %s</translation>
     </message>
 </context>
 <context>
@@ -1069,12 +1070,12 @@ Beschreibung: %s</translation>
     <message>
         <location filename="../../translatables-tmp.py" line="824"/>
         <source>Unused items</source>
-        <translation type="unfinished">Unbenutzte Items</translation>
+        <translation>Unbenutzte Items</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="825"/>
         <source>Move to unused items</source>
-        <translation type="unfinished">Zu den unbenutzten Items verschieben</translation>
+        <translation>Zu den unbenutzten Items verschieben</translation>
     </message>
 </context>
 <context>
@@ -1082,22 +1083,22 @@ Beschreibung: %s</translation>
     <message>
         <location filename="../../translatables-tmp.py" line="318"/>
         <source>&lt;b&gt;&lt;font size=&apos;5&apos;&gt;Unused&lt;/font&gt;&lt;/b&gt;</source>
-        <translation type="unfinished">&lt;b&gt;&lt;font size=&apos;5&apos;&gt;Unbenutzt&lt;/font&gt;&lt;/b&gt;</translation>
+        <translation>&lt;b&gt;&lt;font size=&apos;5&apos;&gt;Unbenutzt&lt;/font&gt;&lt;/b&gt;</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="319"/>
         <source>Permanently delete unused items</source>
-        <translation type="unfinished">Unbenutzte Items endgültig löschen</translation>
+        <translation>Unbenutzte Items endgültig löschen</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="320"/>
         <source>Permanently delete items?</source>
-        <translation type="unfinished">Items endgültig löschen?</translation>
+        <translation>Items endgültig löschen?</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="321"/>
         <source>Are you sure you want to permanently delete all unused items? This action cannot be undone.</source>
-        <translation type="unfinished">Bist Du sicher, dass Du alle unbenutzten Items endgültig löschen möchtest? Diese Aktion kann nicht rückgängig gemacht werden.</translation>
+        <translation>Bist Du sicher, dass Sie alle unbenutzten Items endgültig löschen möchten? Diese Aktion kann nicht rückgängig gemacht werden.</translation>
     </message>
 </context>
 <context>
@@ -1105,32 +1106,32 @@ Beschreibung: %s</translation>
     <message>
         <location filename="../../translatables-tmp.py" line="15"/>
         <source>No webbrowser cache available</source>
-        <translation type="unfinished"></translation>
+        <translation>Kein Webbrowser-Cache verfügbar</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="16"/>
         <source>Webbrowser cache is corrupt</source>
-        <translation type="unfinished"></translation>
+        <translation>Webbrowser-Cache ist korrupt</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="17"/>
         <source>Failed to load page: </source>
-        <translation type="unfinished"></translation>
+        <translation>Laden der Seite fehlgeschlagen:</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="18"/>
         <source>Displaying cached version of: %s. For a better viewing experience, connect to the internet.</source>
-        <translation type="unfinished"></translation>
+        <translation>Cached-Version von %s wird angezeigt. Für ein bessere Ansicht, stelle eine Verbindung zum Internet her.</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="19"/>
         <source>Done</source>
-        <translation type="unfinished">Fertig</translation>
+        <translation>Fertig</translation>
     </message>
-    <message encoding="UTF-8">
+    <message utf8="true">
         <location filename="../../translatables-tmp.py" line="20"/>
         <source>Loading …</source>
-        <translation type="unfinished"></translation>
+        <translation>Laden ...</translation>
     </message>
 </context>
 <context>
@@ -1182,29 +1183,29 @@ Beschreibung: %s</translation>
     <message>
         <location filename="../../translatables-tmp.py" line="351"/>
         <source>Finished</source>
-        <translation type="unfinished">Beendet</translation>
+        <translation>Beendet</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="354"/>
         <source>Stopped</source>
-        <translation type="unfinished">Gestoppt</translation>
+        <translation>Gestoppt</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="350"/>
         <source>Handles the end of an experimental run</source>
-        <translation type="unfinished">Regelt das Ende eines experimentellen Laufs</translation>
+        <translation>Regelt das Ende eines experimentellen Laufs</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="352"/>
         <source>Aborted</source>
-        <translation type="unfinished"></translation>
+        <translation>Abgebrochen</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="353"/>
         <source># Aborted
 
 - </source>
-        <translation type="unfinished"></translation>
+        <translation># Abgebrochen -</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="355"/>
@@ -1213,7 +1214,10 @@ Beschreibung: %s</translation>
 The experiment did not finish normally for the following reason:
 
 - </source>
-        <translation type="unfinished"></translation>
+        <translation>Gestoppt:
+Das Experiment konnte nicht normal abgeschlossen werden wegen folgender Gründe:
+
+-</translation>
     </message>
 </context>
 <context>
@@ -1221,17 +1225,17 @@ The experiment did not finish normally for the following reason:
     <message>
         <location filename="../../translatables-tmp.py" line="42"/>
         <source>Sends a ping to Google Analytics when OpenSesame is started</source>
-        <translation type="unfinished"></translation>
+        <translation>Sendet einen Ping zu Google Analytics wenn OpenSesame gestartet wurde</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="43"/>
         <source>Anonymous usage data is collected. You can disable this by disabling the &lt;i&gt;analytics&lt;/i&gt; extension.</source>
-        <translation type="unfinished"></translation>
+        <translation>Anonyme Nutzerdaten werden gesammelt. Durch Deaktivieren der &lt;i&gt;analytics&lt;/i&gt; Erweiterung können Sie dies ausstellen.</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="44"/>
         <source>Got it!</source>
-        <translation type="unfinished"></translation>
+        <translation>Verstanden!</translation>
     </message>
 </context>
 <context>
@@ -1239,12 +1243,12 @@ The experiment did not finish normally for the following reason:
     <message>
         <location filename="../../translatables-tmp.py" line="36"/>
         <source>Periodically saves your experiment to a back-up folder.</source>
-        <translation type="unfinished">Erstellt regelmäßig Sicherungskopien Deines Experiments im Sicherungsordner.</translation>
+        <translation>Erstellt regelmäßig Sicherungskopien Deines Experiments im Sicherungsordner.</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="35"/>
         <source>Open backup folder</source>
-        <translation type="unfinished"></translation>
+        <translation>Öffne Sicherungsorder</translation>
     </message>
 </context>
 <context>
@@ -1252,27 +1256,27 @@ The experiment did not finish normally for the following reason:
     <message>
         <location filename="../../translatables-tmp.py" line="338"/>
         <source>Bug report not sent</source>
-        <translation type="unfinished">Fehlerbericht nicht gesendet</translation>
+        <translation>Fehlerbericht nicht gesendet</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="337"/>
         <source>Bug report sent</source>
-        <translation type="unfinished">Fehlerbericht gesendet</translation>
+        <translation>Fehlerbericht gesendet</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="339"/>
         <source>Oops ...</source>
-        <translation type="unfinished">Oops ...</translation>
+        <translation>Oops ...</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="340"/>
         <source>Bug report</source>
-        <translation type="unfinished">Fehlerbericht</translation>
+        <translation>Fehlerbericht</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="341"/>
         <source>Sends a bug report when an exception occurs</source>
-        <translation type="unfinished">Sendet einen Fehlerbericht wenn eine Exception geschieht</translation>
+        <translation>Sendet einen Fehlerbericht wenn eine Exception geschieht</translation>
     </message>
 </context>
 <context>
@@ -1280,17 +1284,17 @@ The experiment did not finish normally for the following reason:
     <message>
         <location filename="../../translatables-tmp.py" line="1153"/>
         <source>Example extension</source>
-        <translation type="unfinished">Beispiel Erweiterung</translation>
+        <translation>Beispiel Erweiterung</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="1154"/>
         <source>An example extenstion</source>
-        <translation type="unfinished">Beispiel für Erweiterung</translation>
+        <translation>Beispiel für Erweiterung</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="1155"/>
         <source>Some tooltip</source>
-        <translation type="unfinished">Eine Schnellinfo</translation>
+        <translation>Eine Schnellinfo</translation>
     </message>
 </context>
 <context>
@@ -1298,40 +1302,40 @@ The experiment did not finish normally for the following reason:
     <message>
         <location filename="../../translatables-tmp.py" line="302"/>
         <source>Example experiments</source>
-        <translation type="unfinished">Beispielexperimente</translation>
+        <translation>Beispielexperimente</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="304"/>
         <source>Shows a list of example experiments</source>
-        <translation type="unfinished">Zeigt eine Liste von Beispielexperimenten</translation>
+        <translation>Zeigt eine Liste von Beispielexperimenten</translation>
     </message>
 </context>
 <context>
     <name>extension_get_started</name>
-    <message encoding="UTF-8">
+    <message utf8="true">
         <location filename="../../translatables-tmp.py" line="989"/>
         <source>New…</source>
-        <translation type="unfinished"></translation>
+        <translation>Neu...</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="990"/>
         <source>A starting point</source>
-        <translation type="unfinished"></translation>
+        <translation>Ein Startpunkt</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="991"/>
         <source>Start a new experiment</source>
-        <translation type="unfinished"></translation>
+        <translation>Beginne ein neues Experiment</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="992"/>
         <source>Continue with a recent experiment:</source>
-        <translation type="unfinished"></translation>
+        <translation>Fahre fort mit einem kürzlich begonnen Experiment:</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="993"/>
         <source>Get started!</source>
-        <translation type="unfinished"></translation>
+        <translation>Werde startklar!</translation>
     </message>
 </context>
 <context>
@@ -1339,7 +1343,7 @@ The experiment did not finish normally for the following reason:
     <message>
         <location filename="../../translatables-tmp.py" line="74"/>
         <source>Help</source>
-        <translation type="unfinished">Hilfe</translation>
+        <translation>Hilfe</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="9"/>
@@ -1349,22 +1353,22 @@ The experiment did not finish normally for the following reason:
     <message>
         <location filename="../../translatables-tmp.py" line="75"/>
         <source>Online help</source>
-        <translation type="unfinished">Online Hilfe</translation>
+        <translation>Online Hilfe</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="77"/>
         <source>PsychoPy API</source>
-        <translation type="unfinished">PsychoPy API</translation>
+        <translation>PsychoPy API</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="78"/>
         <source>Adds a Help menu.</source>
-        <translation type="unfinished">Fügt ein Hilfe-Menü hinzu.</translation>
+        <translation>Fügt ein Hilfe-Menü hinzu.</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="76"/>
         <source>Expyriment API</source>
-        <translation type="unfinished"></translation>
+        <translation>Expyriment API</translation>
     </message>
 </context>
 <context>
@@ -1372,12 +1376,12 @@ The experiment did not finish normally for the following reason:
     <message>
         <location filename="../../translatables-tmp.py" line="1062"/>
         <source>Notifications</source>
-        <translation type="unfinished"></translation>
+        <translation>Benachrichtigungen</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="1063"/>
         <source>Pretty notifications for OpenSesame</source>
-        <translation type="unfinished"></translation>
+        <translation>Schöne Benachrichtigungen für OpenSesame</translation>
     </message>
 </context>
 <context>
@@ -1385,12 +1389,12 @@ The experiment did not finish normally for the following reason:
     <message>
         <location filename="../../translatables-tmp.py" line="914"/>
         <source>OpenSesame 3 notifications</source>
-        <translation type="unfinished">OpenSesame 3 Benachrichtigungen</translation>
+        <translation>OpenSesame 3 Benachrichtigungen</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="915"/>
         <source>Provides tips for new users of OpenSesame 3</source>
-        <translation type="unfinished">Bietet Tipps für neue Nutzer von OpenSesame 3 an</translation>
+        <translation>Bietet Tipps für neue Nutzer von OpenSesame 3 an</translation>
     </message>
 </context>
 <context>
@@ -1398,77 +1402,77 @@ The experiment did not finish normally for the following reason:
     <message>
         <location filename="../../translatables-tmp.py" line="1101"/>
         <source>Plug-in and extension manager</source>
-        <translation type="unfinished">Plugin- und Erweiterungsmanager</translation>
+        <translation>Plugin- und Erweiterungsmanager</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="1102"/>
         <source>Enable or disable plug-ins and extensions.</source>
-        <translation type="unfinished">Plugins und Erweiterungen aktivieren oder deaktivieren.</translation>
+        <translation>Plugins und Erweiterungen aktivieren oder deaktivieren.</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="1103"/>
         <source>Manage plug-ins and extensions</source>
-        <translation type="unfinished">Verwalte Plugins und Erweiterungen</translation>
+        <translation>Verwalte Plugins und Erweiterungen</translation>
     </message>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_extensions/plugin_manager/plugin_manager.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished"></translation>
+        <translation>Formular</translation>
     </message>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_extensions/plugin_manager/plugin.ui" line="67"/>
         <source>Author(s):</source>
-        <translation type="unfinished"></translation>
+        <translation>Autor(en):</translation>
     </message>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_extensions/plugin_manager/plugin.ui" line="74"/>
         <source>No author specified</source>
-        <translation type="unfinished"></translation>
+        <translation>Kein Autor angegeben</translation>
     </message>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_extensions/plugin_manager/plugin.ui" line="81"/>
         <source>Version:</source>
-        <translation type="unfinished"></translation>
+        <translation>Version:</translation>
     </message>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_extensions/plugin_manager/plugin.ui" line="88"/>
         <source>No version specified</source>
-        <translation type="unfinished"></translation>
+        <translation>Keine Version angegeben</translation>
     </message>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_extensions/plugin_manager/plugin.ui" line="102"/>
         <source>Extension manager</source>
-        <translation type="unfinished"></translation>
+        <translation>Erweiterungenmanager</translation>
     </message>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_extensions/plugin_manager/plugin.ui" line="114"/>
         <source>No description specified</source>
-        <translation type="unfinished"></translation>
+        <translation>Keine Beschreibung angegeben</translation>
     </message>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_extensions/plugin_manager/plugin.ui" line="121"/>
         <source>No link specified</source>
-        <translation type="unfinished"></translation>
+        <translation>Kein Link angegeben</translation>
     </message>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_extensions/plugin_manager/plugin.ui" line="128"/>
         <source>Link</source>
-        <translation type="unfinished"></translation>
+        <translation>Link</translation>
     </message>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_extensions/plugin_manager/plugin.ui" line="135"/>
         <source>/path/to/extension</source>
-        <translation type="unfinished"></translation>
+        <translation>/path/to/extension</translation>
     </message>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_extensions/plugin_manager/plugin.ui" line="142"/>
         <source>Folder:</source>
-        <translation type="unfinished"></translation>
+        <translation>Ordner:</translation>
     </message>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_extensions/plugin_manager/plugin_manager.ui" line="23"/>
         <source>Changes take effect after restart</source>
-        <translation type="unfinished"></translation>
+        <translation>Nach Neustart werden Änderungen aktiv</translation>
     </message>
 </context>
 <context>
@@ -1476,17 +1480,17 @@ The experiment did not finish normally for the following reason:
     <message>
         <location filename="../../translatables-tmp.py" line="737"/>
         <source>PsychoPy monitor center</source>
-        <translation type="unfinished">PsychoPy-Kontrollzentrum</translation>
+        <translation>PsychoPy-Kontrollzentrum</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="738"/>
         <source>Launches the PsychoPy monitor center</source>
-        <translation type="unfinished">Startet das PsychoPy-Kontrollzentrum</translation>
+        <translation>Startet das PsychoPy-Kontrollzentrum</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="739"/>
         <source>Launch the PsychoPy monitor center</source>
-        <translation type="unfinished">Starte das PsychoPy-Kontrollzentrum</translation>
+        <translation>Starte das PsychoPy-Kontrollzentrum</translation>
     </message>
 </context>
 <context>
@@ -1494,12 +1498,12 @@ The experiment did not finish normally for the following reason:
     <message>
         <location filename="../../translatables-tmp.py" line="295"/>
         <source>Editor preferences (QProgEdit)</source>
-        <translation type="unfinished">Editoreinstellungen (QProgEdit)</translation>
+        <translation>Editoreinstellungen (QProgEdit)</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="296"/>
         <source>QProgEdit preferences</source>
-        <translation type="unfinished">QProgEdit Einstellungen</translation>
+        <translation>QProgEdit Einstellungen</translation>
     </message>
 </context>
 <context>
@@ -1507,12 +1511,12 @@ The experiment did not finish normally for the following reason:
     <message>
         <location filename="../../translatables-tmp.py" line="654"/>
         <source>Quick switcher</source>
-        <translation type="unfinished">Schnellzugriff</translation>
+        <translation>Schnellzugriff</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="655"/>
         <source>Quickly open items and scripts.</source>
-        <translation type="unfinished">Items und Scripts schnell öffnen.</translation>
+        <translation>Items und Scripts schnell öffnen.</translation>
     </message>
 </context>
 <context>
@@ -1520,12 +1524,12 @@ The experiment did not finish normally for the following reason:
     <message>
         <location filename="../../translatables-tmp.py" line="439"/>
         <source>System information</source>
-        <translation type="unfinished"></translation>
+        <translation>Systeminformation</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="438"/>
         <source>Provides system information and module versions</source>
-        <translation type="unfinished"></translation>
+        <translation>Liefert Systeminformationen und Modulversionen</translation>
     </message>
 </context>
 <context>
@@ -1533,22 +1537,22 @@ The experiment did not finish normally for the following reason:
     <message>
         <location filename="../../translatables-tmp.py" line="446"/>
         <source>Menu</source>
-        <translation type="unfinished">Menü</translation>
+        <translation>Menü</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="447"/>
         <source>Integrate menu and toolbar</source>
-        <translation type="unfinished">Menü und Werkzeugleiste zusammenführen</translation>
+        <translation>Menü und Werkzeugleiste zusammenführen</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="448"/>
         <source>Integrates the menu into the toolbar.</source>
-        <translation type="unfinished">Integriert das Menü in die Werkzeugleiste.</translation>
+        <translation>Integriert das Menü in die Werkzeugleiste.</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="449"/>
         <source>Integrates the menu into the toolbar</source>
-        <translation type="unfinished">Integriert das Menü in die Werkzeugleiste</translation>
+        <translation>Integriert das Menü in die Werkzeugleiste</translation>
     </message>
 </context>
 <context>
@@ -1556,27 +1560,27 @@ The experiment did not finish normally for the following reason:
     <message>
         <location filename="../../translatables-tmp.py" line="588"/>
         <source>Undo</source>
-        <translation type="unfinished">Rückgängig</translation>
+        <translation>Rückgängig</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="589"/>
         <source>Undo most recent action</source>
-        <translation type="unfinished">Mache letzte Handlung rückgängig</translation>
+        <translation>Mache letzte Handlung rückgängig</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="585"/>
         <source>Redo</source>
-        <translation type="unfinished">Stelle wieder her</translation>
+        <translation>Stelle wieder her</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="586"/>
         <source>Implements undo/ redo</source>
-        <translation type="unfinished">Implementiert Rückgängig/Wiederherstellen</translation>
+        <translation>Implementiert Rückgängig/Wiederherstellen</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="587"/>
         <source>Redo most recently undone action</source>
-        <translation type="unfinished">Stelle letzte rückgängig gemachte Handlung wieder her</translation>
+        <translation>Stelle letzte rückgängig gemachte Handlung wieder her</translation>
     </message>
 </context>
 <context>
@@ -1584,17 +1588,17 @@ The experiment did not finish normally for the following reason:
     <message>
         <location filename="../../translatables-tmp.py" line="810"/>
         <source>Check for updates</source>
-        <translation type="unfinished">Auf Updates prüfen</translation>
+        <translation>Auf Updates prüfen</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="811"/>
         <source>Checks whether a new version of OpenSesame is available.</source>
-        <translation type="unfinished">Überprüft, ob eine neue Version von OpenSesame verfügbar ist.</translation>
+        <translation>Überprüft, ob eine neue Version von OpenSesame verfügbar ist.</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="809"/>
         <source>Up to date!</source>
-        <translation type="unfinished"></translation>
+        <translation>Alles auf dem neusten Stand!</translation>
     </message>
 </context>
 <context>
@@ -1602,7 +1606,7 @@ The experiment did not finish normally for the following reason:
     <message>
         <location filename="../../translatables-tmp.py" line="200"/>
         <source>Variable inspector</source>
-        <translation type="unfinished">Variablenassistent</translation>
+        <translation>Variablenassistent</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="933"/>
@@ -1612,17 +1616,17 @@ The experiment did not finish normally for the following reason:
     <message>
         <location filename="../../translatables-tmp.py" line="204"/>
         <source>Experiment status: &lt;b&gt;%s&lt;/b&gt;</source>
-        <translation type="unfinished">Experiment status: &lt;b&gt;%s&lt;/b&gt;</translation>
+        <translation>Experimentstatus: &lt;b&gt;%s&lt;/b&gt;</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="203"/>
         <source>Show variable inspector</source>
-        <translation type="unfinished">Zeige Variablenassistenten</translation>
+        <translation>Zeige Variablenassistenten</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="202"/>
         <source>Graphical variable inspector</source>
-        <translation type="unfinished">Graphischer Variablenassistent</translation>
+        <translation>Graphischer Variablenassistent</translation>
     </message>
 </context>
 <context>
@@ -2359,7 +2363,7 @@ The experiment did not finish normally for the following reason:
         <source>* Has no effect in psycho back-end</source>
         <translation type="obsolete">* Hat im psycho Back-End keine Auswirkung</translation>
     </message>
-    <message encoding="UTF-8">
+    <message utf8="true">
         <location filename="gabor_settings.ui" line="89"/>
         <source> °</source>
         <translation type="obsolete"> °</translation>
@@ -2526,12 +2530,12 @@ The experiment did not finish normally for the following reason:
     <message>
         <location filename="../../translatables-tmp.py" line="1164"/>
         <source>New experiment</source>
-        <translation type="unfinished">Neues Experiment</translation>
+        <translation>Neues Experiment</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="1165"/>
         <source>Default description</source>
-        <translation type="unfinished"></translation>
+        <translation>Standardbeschreibung</translation>
     </message>
 </context>
 <context>
@@ -2539,7 +2543,7 @@ The experiment did not finish normally for the following reason:
     <message>
         <location filename="../../translatables-tmp.py" line="949"/>
         <source>Provides feedback to the participant</source>
-        <translation type="unfinished"></translation>
+        <translation>Bietet Versuchspersonen Feedback an</translation>
     </message>
 </context>
 <context>
@@ -2547,12 +2551,12 @@ The experiment did not finish normally for the following reason:
     <message>
         <location filename="../../translatables-tmp.py" line="29"/>
         <source>Prepare</source>
-        <translation type="unfinished"></translation>
+        <translation>Bereite vor</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="30"/>
         <source>Run</source>
-        <translation type="unfinished">Starte</translation>
+        <translation>Starte</translation>
     </message>
 </context>
 <context>
@@ -2565,12 +2569,12 @@ The experiment did not finish normally for the following reason:
     <message>
         <location filename="../../translatables-tmp.py" line="566"/>
         <source>Collects keyboard responses</source>
-        <translation type="unfinished"></translation>
+        <translation>Sammelt Keyboardantworten</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="567"/>
         <source>Correct response</source>
-        <translation type="unfinished">Richtige Reaktion</translation>
+        <translation>Richtige Reaktion</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="222"/>
@@ -2580,47 +2584,47 @@ The experiment did not finish normally for the following reason:
     <message>
         <location filename="../../translatables-tmp.py" line="569"/>
         <source>Allowed responses</source>
-        <translation type="unfinished">Erlaubte Reaktionen</translation>
+        <translation>Erlaubte Reaktionen</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="571"/>
         <source>Timeout</source>
-        <translation type="unfinished">Timeout</translation>
+        <translation>Timeout</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="573"/>
         <source>Flush pending keypresses</source>
-        <translation type="unfinished"></translation>
+        <translation>Lösche offene Tastendrücke</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="574"/>
         <source>List available keys</source>
-        <translation type="unfinished"></translation>
+        <translation>Liste verfügbare Tasten auf</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="568"/>
         <source>Leave empty to use &quot;correct_response&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>Lass offen um &quot;correct_response&quot; zu gebrauchen</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="570"/>
         <source>Separated by semicolons, e.g. &quot;z;/&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>Getrennt durch Semikolons, z.B. &quot;z;/&quot;</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="572"/>
         <source>In milliseconds or &quot;infinite&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>In Millisekunden oder &quot;infinite&quot;</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="577"/>
         <source>Key names</source>
-        <translation type="unfinished"></translation>
+        <translation>Tastennamen</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="576"/>
         <source>The following key names are valid:</source>
-        <translation type="unfinished"></translation>
+        <translation>Folgende Tastennamen sind gültig:</translation>
     </message>
 </context>
 <context>
@@ -2628,27 +2632,27 @@ The experiment did not finish normally for the following reason:
     <message>
         <location filename="../../translatables-tmp.py" line="777"/>
         <source>Add custom variable</source>
-        <translation type="unfinished">Benutzerdefinierte Variable hinzufügen</translation>
+        <translation>Benutzerdefinierte Variable hinzufügen</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="778"/>
         <source>Which variable do you wish to log?</source>
-        <translation type="unfinished">Welche Variable möchtest Du loggen?</translation>
+        <translation>Welche Variable möchtest Du loggen?</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="779"/>
         <source>custom</source>
-        <translation type="unfinished">benutzerdefiniert</translation>
+        <translation>benutzerdefiniert</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="776"/>
         <source>You have multiple unlinked loggers. This can lead to messy log files.</source>
-        <translation type="unfinished"></translation>
+        <translation>Sie haben mehrere unverbundene Logger. Dies kann zu chaotischen Logdateien führen.</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="775"/>
         <source>Logs experimental data</source>
-        <translation type="unfinished"></translation>
+        <translation>Registriert experimentelle Daten</translation>
     </message>
 </context>
 <context>
@@ -2751,82 +2755,82 @@ The experiment did not finish normally for the following reason:
     <message>
         <location filename="../../translatables-tmp.py" line="512"/>
         <source>Repeatedly runs another item</source>
-        <translation type="unfinished"></translation>
+        <translation>Führt wiederholend ein anderes Item aus</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="513"/>
         <source># Preview of loop table</source>
-        <translation type="unfinished"></translation>
+        <translation># Vorschau der Schleifentabelle</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="514"/>
         <source>Failed to generate preview.</source>
-        <translation type="unfinished"></translation>
+        <translation>Vorschauerstellung fehlgeschlagen.</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="515"/>
         <source>one row occurs</source>
-        <translation type="unfinished"></translation>
+        <translation>eine Reihe tritt ein</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="516"/>
         <source>two rows occur</source>
-        <translation type="unfinished"></translation>
+        <translation>zwei Reihen treten ein</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="517"/>
         <source>never</source>
-        <translation type="unfinished"></translation>
+        <translation>niemals</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="518"/>
         <source>once</source>
-        <translation type="unfinished"></translation>
+        <translation>einmal</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="519"/>
         <source>twice</source>
-        <translation type="unfinished"></translation>
+        <translation>zweimal</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="520"/>
         <source>Warning: No item to run has been specified</source>
-        <translation type="unfinished"></translation>
+        <translation>Warnung: Kein Item zum Ausführen angegeben</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="521"/>
         <source>Note: Order or repeat is unknown or variably defined</source>
-        <translation type="unfinished"></translation>
+        <translation>Anmerkung: Reihenfolge oder Wiederholungen sind unbekannt oder variabel definiert</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="522"/>
         <source>Note: Loop data will be read from file</source>
-        <translation type="unfinished"></translation>
+        <translation>Anmerkung: Schleifen-Daten werden von der Datei gelesen</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="523"/>
         <source>Summary: &lt;b&gt;%s&lt;/b&gt; will be called &lt;b&gt;%s&lt;/b&gt; in &lt;b&gt;%s&lt;/b&gt; order.</source>
-        <translation type="unfinished"></translation>
+        <translation>Zusammenfassung: &lt;b&gt;%s&lt;/b&gt; wird aufgerufen &lt;b&gt;%s&lt;/b&gt; in &lt;b&gt;%s&lt;/b&gt; Reihenfolge.</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="524"/>
         <source>The number of rows is %s.</source>
-        <translation type="unfinished"></translation>
+        <translation>Die Anzahl der Reihen ist %s.</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="526"/>
         <source>All rows occur %s.</source>
-        <translation type="unfinished"></translation>
+        <translation>Alle Reihen ereignen sich %s.</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="527"/>
         <source>This means that %s %s and %s %s.</source>
-        <translation type="unfinished"></translation>
+        <translation>Das bedeutet dass %s %s and %s %s.</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="482"/>
         <source>Failed to generate preview. Are you using a non-existing source file, or have you specified impossible constraints?</source>
-        <translation type="unfinished"></translation>
+        <translation>Vorschauerstellung fehlgeschlagen. Benutzen Sie eine nicht-existente Ursprungsdatei, oder haben Sie unmögliche Beschränkungen aufgestellt?</translation>
     </message>
 </context>
 <context>
@@ -2834,12 +2838,12 @@ The experiment did not finish normally for the following reason:
     <message>
         <location filename="../../translatables-tmp.py" line="901"/>
         <source>Collects mouse responses</source>
-        <translation type="unfinished"></translation>
+        <translation>Sammelt Mausreaktionen</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="902"/>
         <source>Correct response</source>
-        <translation type="unfinished">Richtige Reaktion</translation>
+        <translation>Richtige Reaktion</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="398"/>
@@ -2849,37 +2853,37 @@ The experiment did not finish normally for the following reason:
     <message>
         <location filename="../../translatables-tmp.py" line="904"/>
         <source>Allowed responses</source>
-        <translation type="unfinished">Erlaubte Reaktionen</translation>
+        <translation>Erlaubte Reaktionen</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="906"/>
         <source>Timeout</source>
-        <translation type="unfinished">Timeout</translation>
+        <translation>Timeout</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="908"/>
         <source>Visible mouse cursor</source>
-        <translation type="unfinished"></translation>
+        <translation>Sichtbarer Mauszeiger</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="909"/>
         <source>Flush pending mouse clicks</source>
-        <translation type="unfinished"></translation>
+        <translation>Entfernt offene Mausklicks</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="903"/>
         <source>Leave empty to use &quot;correct_response&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>Offenlassen um &quot;correct_response&quot; zu benutzen</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="905"/>
         <source>Separated by semicolons, e.g. &quot;left_button;right_button&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>Getrennt durch Semikolons, z.B: &quot;left_button;right_button&quot;</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="907"/>
         <source>In milliseconds or &quot;infinite&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>In Millisekunden oder &quot;infinite&quot;</translation>
     </message>
 </context>
 <context>
@@ -2887,67 +2891,67 @@ The experiment did not finish normally for the following reason:
     <message>
         <location filename="../../translatables-tmp.py" line="1291"/>
         <source>Plays a sound file in .wav or .ogg format</source>
-        <translation type="unfinished"></translation>
+        <translation>Spielt eine Audiodatei in .wav oder .ogg Format ab</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="1292"/>
         <source>Sound file</source>
-        <translation type="unfinished">Audiodatei</translation>
+        <translation>Audiodatei</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="1294"/>
         <source>Volume</source>
-        <translation type="unfinished">Lautstärke</translation>
+        <translation>Lautstärke</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="1299"/>
         <source> x original</source>
-        <translation type="unfinished"></translation>
+        <translation>x Original</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="1296"/>
         <source>Panning</source>
-        <translation type="unfinished"></translation>
+        <translation>Panning</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="1298"/>
         <source>Pitch</source>
-        <translation type="unfinished">Tonhöhe</translation>
+        <translation>Tonhöhe</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="1300"/>
         <source>Stop after</source>
-        <translation type="unfinished">Wiedergabe stoppen nach</translation>
+        <translation>Wiedergabe stoppen nach</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="1303"/>
         <source> ms</source>
-        <translation type="unfinished"> ms</translation>
+        <translation> ms</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="1302"/>
         <source>Fade in</source>
-        <translation type="unfinished">Fade-In</translation>
+        <translation>Fade-In</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="1304"/>
         <source>Duration</source>
-        <translation type="unfinished">Dauer</translation>
+        <translation>Dauer</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="1293"/>
         <source>In .ogg or .wav format</source>
-        <translation type="unfinished"></translation>
+        <translation>In .off oder .wav Format</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="1297"/>
         <source>Positive values toward the right; &quot;left&quot; or &quot;right&quot; for full panning</source>
-        <translation type="unfinished"></translation>
+        <translation>Positive Werte nach rechts; &quot;left&quot; oder &quot;right&quot; für komplettes Panning</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="1305"/>
         <source>In milliseconds, &quot;sound&quot;, &quot;keypress&quot;, or &quot;mouseclick&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>In Millisekunden, &quot;sound&quot;, &quot;keypress&quot;, oder &quot;Mausklick&quot;</translation>
     </message>
 </context>
 <context>
@@ -2955,22 +2959,22 @@ The experiment did not finish normally for the following reason:
     <message>
         <location filename="../../translatables-tmp.py" line="681"/>
         <source>Sequence contains non-existing item: %s</source>
-        <translation type="unfinished">Sequenz enthält ein nicht existentes Item: %s</translation>
+        <translation>Sequenz enthält ein nicht existentes Item: %s</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="677"/>
         <source>Runs a number of items in sequence</source>
-        <translation type="unfinished"></translation>
+        <translation>Führt mehrere Items in einer Sequenz aus</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="679"/>
         <source>Flush pending key presses at sequence start</source>
-        <translation type="unfinished">Bei Sequenzstart bestehenden Tastendruck ignorieren</translation>
+        <translation>Bei Sequenzstart bestehenden Tastendruck ignorieren</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="680"/>
         <source>&lt;b&gt;Important&lt;/b&gt;: A sequence has &lt;a href=&quot;http://osdoc.cogsci.nl/usage/prepare-run&quot;&gt;a variable preparation time&lt;/a&gt;.</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Wichtig&lt;/b&gt;: Eine Sequenz &lt;a href=&quot;http://osdoc.cogsci.nl/usage/prepare-run&quot;&gt;hat eine variable Vorbereitungszeit&lt;/a&gt;.</translation>
     </message>
 </context>
 <context>
@@ -2978,92 +2982,92 @@ The experiment did not finish normally for the following reason:
     <message>
         <location filename="../../translatables-tmp.py" line="1396"/>
         <source>Image name &quot;%s&quot; is unknown or variably defined, using fallback image</source>
-        <translation type="unfinished">Bild &quot;%s&quot; ist unbekannt oder variabel definiert, benutze Ersatzbild</translation>
+        <translation>Bildname &quot;%s&quot; ist unbekannt oder variabel definiert, benutze Ersatzbild</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="1397"/>
         <source>Penwidth &quot;%s&quot; is unknown or variably defined, using 1</source>
-        <translation type="unfinished">Stiftbreite &quot;%s&quot; ist unbekannt oder variabel definiert, benutze 1</translation>
+        <translation>Stiftbreite &quot;%s&quot; ist unbekannt oder variabel definiert, benutze 1</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="1398"/>
         <source>Scale &quot;%s&quot; is unknown or variably defined, using 1</source>
-        <translation type="unfinished">Skalierung &quot;%s&quot; ist unbekannt oder variabel definiert, benutze 1</translation>
+        <translation>Skalierung &quot;%s&quot; ist unbekannt oder variabel definiert, benutze 1</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="1399"/>
         <source>Color &quot;%s&quot; is unknown or variably defined, using placeholder color</source>
-        <translation type="unfinished">Farbe &quot;%s&quot; ist unbekannt oder variabel definiert, benutze Ersatzfarbe</translation>
+        <translation>Farbe &quot;%s&quot; ist unbekannt oder variabel definiert, benutze Ersatzfarbe</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="1400"/>
         <source>X coordinate &quot;%s&quot; is unknown or variably defined, using display center</source>
-        <translation type="unfinished">X-Koordinate &quot;%s&quot; ist unbekannt oder variabel definiert, benutze Bildschirmmitte</translation>
+        <translation>X-Koordinate &quot;%s&quot; ist unbekannt oder variabel definiert, benutze Bildschirmmitte</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="1401"/>
         <source>Y coordinate &quot;%s&quot; is unknown or variably defined, using display center</source>
-        <translation type="unfinished">Y-Koordinate &quot;%s&quot; ist unbekannt oder variabel definiert, benutze Bildschirmmitte</translation>
+        <translation>Y-Koordinate &quot;%s&quot; ist unbekannt oder variabel definiert, benutze Bildschirmmitte</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="1402"/>
         <source>Radius &quot;%s&quot; is unknown or variably defined, using 50</source>
-        <translation type="unfinished">Radius &quot;%s&quot; ist unbekannt oder variable definiert, benutze 50</translation>
+        <translation>Radius &quot;%s&quot; ist unbekannt oder variable definiert, benutze 50</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="1403"/>
         <source>Proportion &quot;%s&quot; is unknown or variably defined, using .5</source>
-        <translation type="unfinished">Proportion &quot;%s&quot; ist unbekannt oder variabel definiert, benutze 5</translation>
+        <translation>Proportion &quot;%s&quot; ist unbekannt oder variabel definiert, benutze 5</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="1404"/>
         <source>Width &quot;%s&quot; is unknown or variably defined, using 100</source>
-        <translation type="unfinished">Breite &quot;%s&quot; ist unbekannt oder variabel definiert, benutze 100</translation>
+        <translation>Breite &quot;%s&quot; ist unbekannt oder variabel definiert, benutze 100</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="1405"/>
         <source>Height &quot;%s&quot; is unknown or variably defined, using 100</source>
-        <translation type="unfinished">Höhe &quot;%s&quot; ist unbekannt oder variabel definiert, benutze 100</translation>
+        <translation>Höhe &quot;%s&quot; ist unbekannt oder variabel definiert, benutze 100</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="1406"/>
         <source>Scale &quot;%s&quot; is unknown or variably defined, using 1.0</source>
-        <translation type="unfinished">Skalierung &quot;%s&quot; ist unbekannt oder variabel definiert, benutze 1.0</translation>
+        <translation>Skalierung &quot;%s&quot; ist unbekannt oder variabel definiert, benutze 1.0</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="1407"/>
         <source>Font size &quot;%s&quot; is invalid or variably defined, using 18</source>
-        <translation type="unfinished">Schriftgröße &quot;%s&quot; ist ungültig oder variabel definiert, benutze 18</translation>
+        <translation>Schriftgröße &quot;%s&quot; ist ungültig oder variabel definiert, benutze 18</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="1408"/>
         <source>Some properties of a Gabor patch are unknown or variably defined, using fallback image</source>
-        <translation type="unfinished">Einige Eigenschaften des Gabor-patch sind unbekannt oder variabel definiert, benutze Rückfallbild</translation>
+        <translation>Einige Eigenschaften des Gabor-patches sind unbekannt oder variabel definiert, benutze Rückfallbild</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="1409"/>
         <source>Some properties of a noise patch are unknown or variably defined, using fallback image</source>
-        <translation type="unfinished">Einige Eigenschaften des Rausch-paches sind unbekannt oder variabel definiert, benutze Rückfallbild</translation>
+        <translation>Einige Eigenschaften des Rausch-patches sind unbekannt oder variabel definiert, benutze Rückfallbild</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="1410"/>
         <source>Fixdot style &quot;%s&quot; is unknown or variably defined</source>
-        <translation type="unfinished">Fixdot Stil &quot;%s&quot; ist unbekannt oder variabel definiert</translation>
+        <translation>Fixdot Stil &quot;%s&quot; ist unbekannt oder variabel definiert</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="1412"/>
         <source>Edit text</source>
-        <translation type="unfinished">Text bearbeiten</translation>
+        <translation>Text bearbeiten</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="1413"/>
         <source>Please enter a text for the textline</source>
-        <translation type="unfinished">Hier den Text für das Textfeld eingeben</translation>
+        <translation>Hier den Text für das Textfeld eingeben</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="1414"/>
         <source>New textline</source>
-        <translation type="unfinished">Neues Textfeld</translation>
+        <translation>Neues Textfeld</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="530"/>
@@ -3073,42 +3077,42 @@ The experiment did not finish normally for the following reason:
     <message>
         <location filename="../../translatables-tmp.py" line="1416"/>
         <source>Element script</source>
-        <translation type="unfinished">Elementskript</translation>
+        <translation>Elementskript</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="1418"/>
         <source>Raise to front</source>
-        <translation type="unfinished">In den Vordergrund</translation>
+        <translation>In den Vordergrund</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="1419"/>
         <source>Lower to bottom</source>
-        <translation type="unfinished">In den Hintergrund</translation>
+        <translation>In den Hintergrund</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="1420"/>
         <source>Delete</source>
-        <translation type="unfinished">Löschen</translation>
+        <translation>Löschen</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="1417"/>
         <source>Edit script</source>
-        <translation type="unfinished"></translation>
+        <translation>Skript bearbeiten</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="1411"/>
         <source>Displays stimuli</source>
-        <translation type="unfinished"></translation>
+        <translation>Präsentiert Stimuli</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="1421"/>
         <source>Draw %s element</source>
-        <translation type="unfinished"></translation>
+        <translation>Zeichnet %s Element</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="1415"/>
         <source>Enter text</source>
-        <translation type="unfinished">Text eingeben</translation>
+        <translation>Text eingeben</translation>
     </message>
 </context>
 <context>
@@ -3116,72 +3120,72 @@ The experiment did not finish normally for the following reason:
     <message>
         <location filename="../../translatables-tmp.py" line="1222"/>
         <source>A basic sound synthesizer</source>
-        <translation type="unfinished"></translation>
+        <translation>Ein einfacher Sound-Synthesizer</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="1223"/>
         <source>Waveform</source>
-        <translation type="unfinished"></translation>
+        <translation>Wellenform</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="1226"/>
         <source>Attack</source>
-        <translation type="unfinished">Anschwellen</translation>
+        <translation>Anschwellen</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="1235"/>
         <source> ms</source>
-        <translation type="unfinished"> ms</translation>
+        <translation> ms</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="1228"/>
         <source>Decay</source>
-        <translation type="unfinished">Abklingen</translation>
+        <translation>Abklingen</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="1230"/>
         <source>Volume</source>
-        <translation type="unfinished">Lautstärke</translation>
+        <translation>Lautstärke</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="1231"/>
         <source> x maximum</source>
-        <translation type="unfinished"></translation>
+        <translation>x Maximum</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="1232"/>
         <source>Panning</source>
-        <translation type="unfinished"></translation>
+        <translation>Panning</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="1234"/>
         <source>Length</source>
-        <translation type="unfinished">Länge</translation>
+        <translation>Länge</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="1236"/>
         <source>Duration</source>
-        <translation type="unfinished">Dauer</translation>
+        <translation>Dauer</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="1224"/>
         <source>Frequency</source>
-        <translation type="unfinished"></translation>
+        <translation>Frequenz</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="1225"/>
         <source>In Hertz or as note, e.g. &quot;A1&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>In Hertz oder als Note, e.g. &quot;A1&quot;</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="1233"/>
         <source>Positive values toward the right; &quot;left&quot; or &quot;right&quot; for full panning</source>
-        <translation type="unfinished"></translation>
+        <translation>Positiven Werte nach rechts; &quot;left&quot; oder &quot;right&quot; für komplettes Panning</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="1237"/>
         <source>In milliseconds, &quot;sound&quot;, &quot;keypress&quot;, or &quot;mouseclick&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>In Millisekunden, &quot;sound&quot;, &quot;keypress&quot;, oder &quot;mouseclick&quot;</translation>
     </message>
 </context>
 <context>
@@ -4156,7 +4160,7 @@ The experiment did not finish normally for the following reason:
     <message>
         <location filename="../../translatables-tmp.py" line="188"/>
         <source>Duration</source>
-        <translation type="unfinished">Dauer</translation>
+        <translation>Dauer</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="53"/>
@@ -4166,12 +4170,12 @@ The experiment did not finish normally for the following reason:
     <message>
         <location filename="../../translatables-tmp.py" line="191"/>
         <source> ms</source>
-        <translation type="unfinished"> ms</translation>
+        <translation> ms</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="190"/>
         <source>Jitter</source>
-        <translation type="unfinished">Schwankung</translation>
+        <translation>Schwankung</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="56"/>
@@ -4181,7 +4185,7 @@ The experiment did not finish normally for the following reason:
     <message>
         <location filename="../../translatables-tmp.py" line="192"/>
         <source>Jitter mode</source>
-        <translation type="unfinished">Schwankungsmodus</translation>
+        <translation>Schwankungsmodus</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="59"/>
@@ -4202,7 +4206,7 @@ The experiment did not finish normally for the following reason:
     <message>
         <location filename="../../translatables-tmp.py" line="279"/>
         <source>Example plug-in.</source>
-        <translation type="unfinished">Beispiel Plugin.</translation>
+        <translation>Beispiel Plugin.</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="9"/>
@@ -4212,7 +4216,7 @@ The experiment did not finish normally for the following reason:
     <message>
         <location filename="../../translatables-tmp.py" line="280"/>
         <source>Example checkbox</source>
-        <translation type="unfinished">Beispiel Checkbox</translation>
+        <translation>Beispiel Checkbox</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="107"/>
@@ -4222,7 +4226,7 @@ The experiment did not finish normally for the following reason:
     <message>
         <location filename="../../translatables-tmp.py" line="281"/>
         <source>Color</source>
-        <translation type="unfinished">Farbe</translation>
+        <translation>Farbe</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="109"/>
@@ -4232,7 +4236,7 @@ The experiment did not finish normally for the following reason:
     <message>
         <location filename="../../translatables-tmp.py" line="282"/>
         <source>Select option</source>
-        <translation type="unfinished">Option auswählen</translation>
+        <translation>Option auswählen</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="111"/>
@@ -4242,7 +4246,7 @@ The experiment did not finish normally for the following reason:
     <message>
         <location filename="../../translatables-tmp.py" line="283"/>
         <source>Select file</source>
-        <translation type="unfinished">Datei auswählen</translation>
+        <translation>Datei auswählen</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="113"/>
@@ -4252,7 +4256,7 @@ The experiment did not finish normally for the following reason:
     <message>
         <location filename="../../translatables-tmp.py" line="284"/>
         <source>Enter text</source>
-        <translation type="unfinished">Text eingeben</translation>
+        <translation>Text eingeben</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="115"/>
@@ -4262,7 +4266,7 @@ The experiment did not finish normally for the following reason:
     <message>
         <location filename="../../translatables-tmp.py" line="285"/>
         <source>Enter value</source>
-        <translation type="unfinished">Wert eingeben</translation>
+        <translation>Wert eingeben</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="117"/>
@@ -4272,17 +4276,17 @@ The experiment did not finish normally for the following reason:
     <message>
         <location filename="../../translatables-tmp.py" line="286"/>
         <source>approx. </source>
-        <translation type="unfinished">ca. </translation>
+        <translation>ca. </translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="287"/>
         <source> ms</source>
-        <translation type="unfinished"> ms</translation>
+        <translation> ms</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="288"/>
         <source>Select value</source>
-        <translation type="unfinished">Wert auswählen</translation>
+        <translation>Wert auswählen</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="121"/>
@@ -4292,12 +4296,12 @@ The experiment did not finish normally for the following reason:
     <message>
         <location filename="../../translatables-tmp.py" line="289"/>
         <source>Some non-interactive text</source>
-        <translation type="unfinished">Ein bisschen nicht-interaktiver Text</translation>
+        <translation>Ein nicht-interaktiver Text</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="290"/>
         <source>Python editor</source>
-        <translation type="unfinished">Python Editor</translation>
+        <translation>Python Editor</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="124"/>
@@ -4362,7 +4366,7 @@ The experiment did not finish normally for the following reason:
     <message>
         <location filename="../../translatables-tmp.py" line="858"/>
         <source>Runs Python code from a file</source>
-        <translation type="unfinished">Führt Python code von einer Datei aus</translation>
+        <translation>Führt Python code von einer Datei aus</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="215"/>
@@ -4372,7 +4376,7 @@ The experiment did not finish normally for the following reason:
     <message>
         <location filename="../../translatables-tmp.py" line="859"/>
         <source>Script file</source>
-        <translation type="unfinished">Skriptdatei</translation>
+        <translation>Skriptdatei</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="380"/>
@@ -4382,7 +4386,7 @@ The experiment did not finish normally for the following reason:
     <message>
         <location filename="../../translatables-tmp.py" line="860"/>
         <source>Prepare function in script</source>
-        <translation type="unfinished">Bereite Funktion in Skript vor</translation>
+        <translation>Bereite Funktion in Skript vor</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="382"/>
@@ -4392,7 +4396,7 @@ The experiment did not finish normally for the following reason:
     <message>
         <location filename="../../translatables-tmp.py" line="861"/>
         <source>Run function in script</source>
-        <translation type="unfinished">Runfunktion in Skript</translation>
+        <translation>Führe Funktion in Skript aus</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="384"/>
@@ -4410,7 +4414,7 @@ The experiment did not finish normally for the following reason:
     <message>
         <location filename="../../translatables-tmp.py" line="221"/>
         <source>Style</source>
-        <translation type="unfinished">Stil</translation>
+        <translation>Stil</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="74"/>
@@ -4425,12 +4429,12 @@ The experiment did not finish normally for the following reason:
     <message>
         <location filename="../../translatables-tmp.py" line="223"/>
         <source>px</source>
-        <translation type="unfinished">px</translation>
+        <translation>px</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="224"/>
         <source>Duration</source>
-        <translation type="unfinished">Dauer</translation>
+        <translation>Dauer</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="79"/>
@@ -4440,7 +4444,7 @@ The experiment did not finish normally for the following reason:
     <message>
         <location filename="../../translatables-tmp.py" line="225"/>
         <source>Foreground color</source>
-        <translation type="unfinished">Vordergrundfarbe</translation>
+        <translation>Vordergrundfarbe</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="83"/>
@@ -4450,12 +4454,12 @@ The experiment did not finish normally for the following reason:
     <message>
         <location filename="../../translatables-tmp.py" line="226"/>
         <source>Background color</source>
-        <translation type="unfinished">Hintergrundfarbe</translation>
+        <translation>Hintergrundfarbe</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="227"/>
         <source>X coordinate</source>
-        <translation type="unfinished">X-Koordinate</translation>
+        <translation>X-Koordinate</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="85"/>
@@ -4465,7 +4469,7 @@ The experiment did not finish normally for the following reason:
     <message>
         <location filename="../../translatables-tmp.py" line="228"/>
         <source>Y coordinate</source>
-        <translation type="unfinished">Y-Koordinate</translation>
+        <translation>Y-Koordinate</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="87"/>
@@ -4475,7 +4479,7 @@ The experiment did not finish normally for the following reason:
     <message>
         <location filename="../../translatables-tmp.py" line="222"/>
         <source>Pen width</source>
-        <translation type="unfinished"></translation>
+        <translation>Stiftbreite</translation>
     </message>
 </context>
 <context>
@@ -4483,22 +4487,22 @@ The experiment did not finish normally for the following reason:
     <message>
         <location filename="../../translatables-tmp.py" line="922"/>
         <source>cols, rows, and margins should be numeric values separated by a semi-colon</source>
-        <translation type="unfinished">cols, rows und margins müssen numerische Werte enthalten und mit Semikolon getrennt werden</translation>
+        <translation>cols, rows und margins müssen numerische Werte enthalten und mit Semikolon getrennt werden</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="923"/>
         <source>In a form widget col, row, colspan, and rowspan should be integer</source>
-        <translation type="unfinished">In einem form widget sollten col, row, colspan and rowspan ganzzahlig sein </translation>
+        <translation>In einem form widget sollten col, row, colspan and rowspan ganzzahlig sein </translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="924"/>
         <source>You can only specify one focus widget</source>
-        <translation type="unfinished">Du kannst lediglich ein Fokus widget spezifizieren</translation>
+        <translation>Du kannst lediglich einen Fokus widget spezifizieren</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="925"/>
         <source>Edit the script to modify the form</source>
-        <translation type="unfinished">Bearbeite das Skript, um das Formular zu verändern</translation>
+        <translation>Bearbeite das Skript, um das Formular zu verändern</translation>
     </message>
 </context>
 <context>
@@ -4506,7 +4510,7 @@ The experiment did not finish normally for the following reason:
     <message>
         <location filename="../../translatables-tmp.py" line="958"/>
         <source>Form title</source>
-        <translation type="unfinished">Formularüberschrift</translation>
+        <translation>Formularüberschrift</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="442"/>
@@ -4516,7 +4520,7 @@ The experiment did not finish normally for the following reason:
     <message>
         <location filename="../../translatables-tmp.py" line="959"/>
         <source>Checkbox text</source>
-        <translation type="unfinished">Checkbox-Text</translation>
+        <translation>Checkbox-Text</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="444"/>
@@ -4526,7 +4530,7 @@ The experiment did not finish normally for the following reason:
     <message>
         <location filename="../../translatables-tmp.py" line="960"/>
         <source>Accept-button text</source>
-        <translation type="unfinished">Einverstanden-Schaltfläche (Text)</translation>
+        <translation>Einverstanden-Schaltfläche (Text)</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="446"/>
@@ -4536,7 +4540,7 @@ The experiment did not finish normally for the following reason:
     <message>
         <location filename="../../translatables-tmp.py" line="961"/>
         <source>Decline-button text</source>
-        <translation type="unfinished">Nicht einverstanden-Schaltfläche (Text)</translation>
+        <translation>Nicht einverstanden-Schaltfläche (Text)</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="448"/>
@@ -4546,7 +4550,7 @@ The experiment did not finish normally for the following reason:
     <message>
         <location filename="../../translatables-tmp.py" line="962"/>
         <source>Message on decline</source>
-        <translation type="unfinished">Nachricht, wenn nicht einverstanden</translation>
+        <translation>Nachricht, wenn nicht einverstanden</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="450"/>
@@ -4556,7 +4560,7 @@ The experiment did not finish normally for the following reason:
     <message>
         <location filename="../../translatables-tmp.py" line="963"/>
         <source>Consent form text</source>
-        <translation type="unfinished">Einverständniserklärungstext</translation>
+        <translation>Einverständniserklärungstext</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="452"/>
@@ -4569,27 +4573,27 @@ The experiment did not finish normally for the following reason:
     <message>
         <location filename="../../translatables-tmp.py" line="1074"/>
         <source>Form title</source>
-        <translation type="unfinished">Formularüberschrift</translation>
+        <translation>Formularüberschrift</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="1075"/>
         <source>Response variable</source>
-        <translation type="unfinished">Antwortvariable</translation>
+        <translation>Antwortvariable</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="1076"/>
         <source>Allow multiple options to be selected</source>
-        <translation type="unfinished">Erlaube Mehrfachauswahl</translation>
+        <translation>Erlaube Mehrfachauswahl</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="1077"/>
         <source>Advance immediately to the next item once a selection has been made</source>
-        <translation type="unfinished">Sofort zum nächsten Item gehen, wenn eine Auswahl gemacht wurde</translation>
+        <translation>Sofort zum nächsten Item gehen, wenn eine Auswahl gemacht wurde</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="1078"/>
         <source>Button text</source>
-        <translation type="unfinished">Schaltflächentext</translation>
+        <translation>Schaltflächentext</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="517"/>
@@ -4599,7 +4603,7 @@ The experiment did not finish normally for the following reason:
     <message>
         <location filename="../../translatables-tmp.py" line="1079"/>
         <source>Timeout</source>
-        <translation type="unfinished">Timeout</translation>
+        <translation>Timeout</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="519"/>
@@ -4609,12 +4613,12 @@ The experiment did not finish normally for the following reason:
     <message>
         <location filename="../../translatables-tmp.py" line="1080"/>
         <source>Your question</source>
-        <translation type="unfinished">Deine Frage</translation>
+        <translation>Ihre Frage</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="1081"/>
         <source>Response options (different options on different lines)</source>
-        <translation type="unfinished">Antwortoptionen (eine Antwort je Zeile)</translation>
+        <translation>Antwortoptionen (verschiedenene Antwortmöglichkeiten per Zeile)</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="523"/>
@@ -4627,7 +4631,7 @@ The experiment did not finish normally for the following reason:
     <message>
         <location filename="../../translatables-tmp.py" line="595"/>
         <source>Form title</source>
-        <translation type="unfinished">Formularüberschrift</translation>
+        <translation>Formularüberschrift</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="242"/>
@@ -4637,7 +4641,7 @@ The experiment did not finish normally for the following reason:
     <message>
         <location filename="../../translatables-tmp.py" line="596"/>
         <source>Ok-button text</source>
-        <translation type="unfinished">OK-Schaltfläche (Text)</translation>
+        <translation>OK-Schaltfläche (Text)</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="244"/>
@@ -4647,7 +4651,7 @@ The experiment did not finish normally for the following reason:
     <message>
         <location filename="../../translatables-tmp.py" line="597"/>
         <source>Main form text</source>
-        <translation type="unfinished">Formulartext</translation>
+        <translation>Hauptformulartext</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="246"/>
@@ -4660,7 +4664,7 @@ The experiment did not finish normally for the following reason:
     <message>
         <location filename="../../translatables-tmp.py" line="728"/>
         <source>Form title</source>
-        <translation type="unfinished">Formularüberschrift</translation>
+        <translation>Formularüberschrift</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="317"/>
@@ -4670,7 +4674,7 @@ The experiment did not finish normally for the following reason:
     <message>
         <location filename="../../translatables-tmp.py" line="729"/>
         <source>Response variable</source>
-        <translation type="unfinished">Antwortvariable</translation>
+        <translation>Antwortvariable</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="319"/>
@@ -4680,7 +4684,7 @@ The experiment did not finish normally for the following reason:
     <message>
         <location filename="../../translatables-tmp.py" line="730"/>
         <source>Timeout</source>
-        <translation type="unfinished">Timeout</translation>
+        <translation>Timeout</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="321"/>
@@ -4690,7 +4694,7 @@ The experiment did not finish normally for the following reason:
     <message>
         <location filename="../../translatables-tmp.py" line="731"/>
         <source>Your question</source>
-        <translation type="unfinished">Deine Frage</translation>
+        <translation>Ihre Frage</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="323"/>
@@ -4716,7 +4720,7 @@ The experiment did not finish normally for the following reason:
     <message>
         <location filename="../../translatables-tmp.py" line="457"/>
         <source>Dummy mode (use keyboard instead of joystick)</source>
-        <translation type="unfinished">Dummymodus (Tastatur anstelle von Responsebox benutzen)</translation>
+        <translation>Dummymodus (Tastatur anstelle von Responsebox benutzen)</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="186"/>
@@ -4726,7 +4730,7 @@ The experiment did not finish normally for the following reason:
     <message>
         <location filename="../../translatables-tmp.py" line="458"/>
         <source>Device nr.</source>
-        <translation type="unfinished">Gerät Nr.</translation>
+        <translation>Gerät Nr.</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="188"/>
@@ -4736,7 +4740,7 @@ The experiment did not finish normally for the following reason:
     <message>
         <location filename="../../translatables-tmp.py" line="459"/>
         <source>Correct response</source>
-        <translation type="unfinished">Richtige Reaktion</translation>
+        <translation>Richtige Antwort</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="192"/>
@@ -4746,12 +4750,12 @@ The experiment did not finish normally for the following reason:
     <message>
         <location filename="../../translatables-tmp.py" line="460"/>
         <source>Allowed responses</source>
-        <translation type="unfinished">Erlaubte Reaktionen</translation>
+        <translation>Erlaubte Antworten</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="461"/>
         <source>Timeout</source>
-        <translation type="unfinished">Timeout</translation>
+        <translation>Timeout</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="194"/>
@@ -4787,7 +4791,7 @@ The experiment did not finish normally for the following reason:
     <message>
         <location filename="../../translatables-tmp.py" line="232"/>
         <source>Note</source>
-        <translation type="unfinished">Notiz</translation>
+        <translation>Notiz</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="91"/>
@@ -4857,52 +4861,52 @@ The experiment did not finish normally for the following reason:
     <message>
         <location filename="../../translatables-tmp.py" line="712"/>
         <source>Estimated threshold (used for starting test value)</source>
-        <translation type="unfinished">Geschätzte Reizschwelle</translation>
+        <translation>Geschätzte Reizschwelle</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="713"/>
         <source>Std. dev. of estimated threshold</source>
-        <translation type="unfinished">Standardabweichung der geschätzten Reizschwelle</translation>
+        <translation>Standardabweichung der geschätzten Reizschwelle</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="714"/>
         <source>Desired proportion of correct responses</source>
-        <translation type="unfinished">Angestrebter Anteil korrekter Reaktionen</translation>
+        <translation>Angestrebter Anteil korrekter Antworten</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="715"/>
-        <source>Steepness of the Weibull psychometric function (&#xce;&#xb2;)</source>
-        <translation type="unfinished">Steilheit der Weibull-Verteilung (Î²)</translation>
+        <source>Steepness of the Weibull psychometric function (Î²)</source>
+        <translation>Steilheit der Weibull-Verteilung (Î²)</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="716"/>
-        <source>Proportion of random responses at maximum stimulus intensity (&#xce;&#xb4;)</source>
-        <translation type="unfinished">Anteil zufälliger Reaktionen bei höchster Stimulusdichte  (Î´)</translation>
+        <source>Proportion of random responses at maximum stimulus intensity (Î´)</source>
+        <translation>Anteil zufälliger Reaktionen bei höchster Stimulusdichte  (Î´)</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="717"/>
-        <source>Chance level (&#xce;&#xb3;)</source>
-        <translation type="unfinished">Zufallsniveau (Î³)</translation>
+        <source>Chance level (Î³)</source>
+        <translation>Zufallsniveau (Î³)</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="718"/>
         <source>Method to determine optimal test value</source>
-        <translation type="unfinished">Methode um den optimalen Testwert zu ermitteln</translation>
+        <translation>Methode um den optimalen Testwert zu ermitteln</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="719"/>
         <source>Minimum test value</source>
-        <translation type="unfinished">Minimaler Testwert</translation>
+        <translation>Minimaler Testwert</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="720"/>
         <source>Maximum test value</source>
-        <translation type="unfinished">Maximaler Testwert</translation>
+        <translation>Maximaler Testwert</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="721"/>
         <source>Experimental variable for test value</source>
-        <translation type="unfinished">Variable für Testwert</translation>
+        <translation>Variable für Testwert</translation>
     </message>
 </context>
 <context>
@@ -4910,7 +4914,7 @@ The experiment did not finish normally for the following reason:
     <message>
         <location filename="../../translatables-tmp.py" line="871"/>
         <source>Response variable (0 or 1)</source>
-        <translation type="unfinished">Antwortvariable (0 oder 1)</translation>
+        <translation>Antwortvariable (0 oder 1)</translation>
     </message>
 </context>
 <context>
@@ -4931,7 +4935,7 @@ The experiment did not finish normally for the following reason:
     <message>
         <location filename="../../translatables-tmp.py" line="866"/>
         <source>Marks the current loop cycle so that it is repeated</source>
-        <translation type="unfinished">Markiert den aktuellen Loop Durchläufe, so dass dieser wiederholt wird</translation>
+        <translation>Markiert den aktuellen Loop Durchlauf, so dass dieser wiederholt wird</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="326"/>
@@ -4941,7 +4945,7 @@ The experiment did not finish normally for the following reason:
     <message>
         <location filename="../../translatables-tmp.py" line="867"/>
         <source>Repeat if</source>
-        <translation type="unfinished">Wiederhole, wenn</translation>
+        <translation>Wiederhole, wenn</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="389"/>
@@ -4959,7 +4963,7 @@ The experiment did not finish normally for the following reason:
     <message>
         <location filename="../../translatables-tmp.py" line="66"/>
         <source>This plug-in has no settings</source>
-        <translation type="unfinished">Das Plugin hat keine Einstellungen</translation>
+        <translation>Das Plugin hat keine Einstellungen</translation>
     </message>
 </context>
 <context>
@@ -4967,17 +4971,17 @@ The experiment did not finish normally for the following reason:
     <message>
         <location filename="../../translatables-tmp.py" line="753"/>
         <source>Correct response</source>
-        <translation type="unfinished">Richtige Reaktion</translation>
+        <translation>Richtige Reaktion</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="754"/>
         <source>Allowed responses</source>
-        <translation type="unfinished">Erlaubte Reaktionen</translation>
+        <translation>Erlaubte Reaktionen</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="755"/>
         <source>Timeout</source>
-        <translation type="unfinished">Timeout</translation>
+        <translation>Timeout</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="342"/>
@@ -4987,28 +4991,29 @@ The experiment did not finish normally for the following reason:
     <message>
         <location filename="../../translatables-tmp.py" line="750"/>
         <source>Dummy mode (use keyboard instead)</source>
-        <translation type="unfinished"></translation>
+        <translation>Dummymodus (benutze die Tastatur)</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="751"/>
         <source>Ignore buttons that are already pressed</source>
-        <translation type="unfinished"></translation>
+        <translation>Ignoriere Tasten die schon gedrückt wurden</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="752"/>
         <source>Device name</source>
-        <translation type="unfinished"></translation>
+        <translation>Gerätname</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="756"/>
         <source>Turn on lights</source>
-        <translation type="unfinished"></translation>
+        <translation>Schalte Lichter an</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="757"/>
         <source>&lt;small&gt;&lt;b&gt;Note:&lt;/b&gt; If there are multiple srbox items in the experiment, the first srbox item determines the device name and whether dummy mode is enabled&lt;/small&gt;
 </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;small&gt;&lt;b&gt;Beachte:&lt;/b&gt; Falls es mehrere Srbox Items im Experiment gibt, legt das erste Item den Gerätnamen und ob der Dummymodus aktiviert ist fest&lt;/small&gt;
+</translation>
     </message>
 </context>
 <context>
@@ -5022,7 +5027,8 @@ The experiment did not finish normally for the following reason:
         <location filename="../../translatables-tmp.py" line="659"/>
         <source>&lt;b&gt;Warning:&lt;/b&gt; The text_display plug-in has been removed. Please use a different way to present text, as described on &lt;a href=&quot;http://osdoc.cogsci.nl/usage/text&quot;&gt;http://osdoc.cogsci.nl/usage/text&lt;/a&gt;.
 </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Warnung:&lt;/b&gt; Die text_display Erweiterung wurde entfernt. Bitte gebrauchen Sie eine andere Art Text darzustellen, so wie hier &lt;a href=&quot;http://osdoc.cogsci.nl/usage/text&quot;&gt;http://osdoc.cogsci.nl/usage/text&lt;/a&gt; beschrieben.
+</translation>
     </message>
 </context>
 <context>
@@ -5036,7 +5042,8 @@ The experiment did not finish normally for the following reason:
         <location filename="../../translatables-tmp.py" line="601"/>
         <source>&lt;b&gt;Warning:&lt;/b&gt; The text_input plug-in has been removed. To collect text input, please use a form, as described on &lt;a href=&quot;http://osdoc.cogsci.nl/forms&quot;&gt;http://osdoc.cogsci.nl/forms/&lt;/a&gt;.
 </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Warnung:&lt;/b&gt; Die text_input Erweiterung wurde entfernt. Bitte gebrauchen Sie eine andere Art Texteingabe zu registrieren, so wie hier &lt;a href=&quot;http://osdoc.cogsci.nl/forms&quot;&gt;http://osdoc.cogsci.nl/forms/&lt;/a&gt; beschrieben.
+</translation>
     </message>
 </context>
 <context>
@@ -5067,7 +5074,7 @@ The experiment did not finish normally for the following reason:
     <message>
         <location filename="../../translatables-tmp.py" line="52"/>
         <source>Correct response</source>
-        <translation type="unfinished">Richtige Reaktion</translation>
+        <translation>Richtige Reaktion</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="497"/>
@@ -5077,7 +5084,7 @@ The experiment did not finish normally for the following reason:
     <message>
         <location filename="../../translatables-tmp.py" line="53"/>
         <source>Timeout</source>
-        <translation type="unfinished">Timeout</translation>
+        <translation>Timeout</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="499"/>
@@ -5087,7 +5094,7 @@ The experiment did not finish normally for the following reason:
     <message>
         <location filename="../../translatables-tmp.py" line="54"/>
         <source>Number of columns</source>
-        <translation type="unfinished">Anzahl Spalten</translation>
+        <translation>Anzahl Spalten</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="501"/>
@@ -5097,7 +5104,7 @@ The experiment did not finish normally for the following reason:
     <message>
         <location filename="../../translatables-tmp.py" line="55"/>
         <source>Number of rows</source>
-        <translation type="unfinished">Anzahl Zeilen</translation>
+        <translation>Anzahl Zeilen</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="503"/>
@@ -5107,7 +5114,7 @@ The experiment did not finish normally for the following reason:
     <message>
         <location filename="../../translatables-tmp.py" line="56"/>
         <source>Show cursor</source>
-        <translation type="unfinished">Zeige Maus</translation>
+        <translation>Zeige Maus</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="505"/>
@@ -5169,7 +5176,7 @@ The experiment did not finish normally for the following reason:
     <message>
         <location filename="../../translatables-tmp.py" line="695"/>
         <source>Video file</source>
-        <translation type="unfinished">Videodatei</translation>
+        <translation>Videodatei</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="284"/>
@@ -5179,7 +5186,7 @@ The experiment did not finish normally for the following reason:
     <message>
         <location filename="../../translatables-tmp.py" line="696"/>
         <source>Resize to fit screen</source>
-        <translation type="unfinished">Größe anpassen</translation>
+        <translation>Größe anpassen</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="286"/>
@@ -5189,7 +5196,7 @@ The experiment did not finish normally for the following reason:
     <message>
         <location filename="../../translatables-tmp.py" line="698"/>
         <source>Duration</source>
-        <translation type="unfinished">Dauer</translation>
+        <translation>Dauer</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="288"/>
@@ -5204,7 +5211,7 @@ The experiment did not finish normally for the following reason:
     <message>
         <location filename="../../translatables-tmp.py" line="699"/>
         <source>ms</source>
-        <translation type="unfinished">ms</translation>
+        <translation>ms</translation>
     </message>
 </context>
 <context>
@@ -5212,42 +5219,42 @@ The experiment did not finish normally for the following reason:
     <message>
         <location filename="../../translatables-tmp.py" line="1050"/>
         <source>Run items simultaneously</source>
-        <translation type="unfinished"></translation>
+        <translation>Führe Items gleichzeitig aus</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="1051"/>
         <source>Item name</source>
-        <translation type="unfinished">Name des Items</translation>
+        <translation>Name des Items</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="1052"/>
         <source>Start time</source>
-        <translation type="unfinished"></translation>
+        <translation>Beginnzeit</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="1053"/>
         <source>End time (if applicable)</source>
-        <translation type="unfinished"></translation>
+        <translation>Endzeit (Falls verfügbar)</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="1054"/>
         <source>Duration</source>
-        <translation type="unfinished">Dauer</translation>
+        <translation>Dauer</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="1055"/>
         <source>Generator function name (optional)</source>
-        <translation type="unfinished"></translation>
+        <translation>Generator Funktionsname (optionell)</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="1056"/>
         <source>Flush pending key presses at coroutines start</source>
-        <translation type="unfinished"></translation>
+        <translation>Lösche offene Tastendrücke so bald Co-routinen beginnen</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="1057"/>
         <source>&quot;%s&quot; does not support coroutines.</source>
-        <translation type="unfinished"></translation>
+        <translation>&quot;%s&quot; unterstützt keine Co-Routinen</translation>
     </message>
 </context>
 <context>
@@ -5513,17 +5520,17 @@ The experiment did not finish normally for the following reason:
     </message>
     <message>
         <location filename="translatables.py" line="32"/>
-        <source>Steepness of the Weibull psychometric function (&#xce;&#xb2;)</source>
+        <source>Steepness of the Weibull psychometric function (Î²)</source>
         <translation type="obsolete">Steilheit der Weibull-Verteilung (Î²)</translation>
     </message>
     <message>
         <location filename="translatables.py" line="32"/>
-        <source>Proportion of random responses at maximum stimulus intensity (&#xce;&#xb4;)</source>
+        <source>Proportion of random responses at maximum stimulus intensity (Î´)</source>
         <translation type="obsolete">Anteil zufälliger Reaktionen bei höchster Stimulusdichte  (Î´)</translation>
     </message>
     <message>
         <location filename="translatables.py" line="32"/>
-        <source>Chance level (&#xce;&#xb3;)</source>
+        <source>Chance level (Î³)</source>
         <translation type="obsolete">Zufallsniveau (Î³)</translation>
     </message>
     <message>
@@ -5575,17 +5582,17 @@ The experiment did not finish normally for the following reason:
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_extensions/quick_switcher/quick_switcher.ui" line="17"/>
         <source>Quick open item</source>
-        <translation type="unfinished"></translation>
+        <translation>Schnellöffne Item</translation>
     </message>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_extensions/quick_switcher/quick_switcher.ui" line="34"/>
         <source>Search by item name or type</source>
-        <translation type="unfinished"></translation>
+        <translation>Suche mittels Namen oder Typ des Items</translation>
     </message>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_extensions/quick_switcher/quick_switcher.ui" line="41"/>
         <source>Your bidding, sire ...</source>
-        <translation type="unfinished"></translation>
+        <translation>Ihr Gebot, Majestät ...</translation>
     </message>
 </context>
 <context>
@@ -7462,59 +7469,59 @@ Beschreibung: %s</translation>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/widgets/backend_settings.ui" line="53"/>
         <source>ICON</source>
-        <translation type="unfinished">Icon</translation>
+        <translation>Icon</translation>
     </message>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/widgets/backend_settings.ui" line="60"/>
         <source>&lt;b&gt;Back-end settings&lt;/b&gt;&lt;br /&gt;
 Various settings related to the control of the display, sound, and input devices</source>
-        <translation type="unfinished">&lt;b&gt;Back-End-Einstellungen&lt;/b&gt;&lt;br /&gt;
+        <translation>&lt;b&gt;Back-End-Einstellungen&lt;/b&gt;&lt;br /&gt;
 Einstellungen im Zusammenhang mit dem Bildschirm, Ton und Eingabegeräten</translation>
     </message>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/widgets/backend_settings.ui" line="71"/>
         <source>Canvas</source>
-        <translation type="unfinished">Canvas</translation>
+        <translation>Canvas</translation>
     </message>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/widgets/backend_settings.ui" line="236"/>
         <source>TextLabel</source>
-        <translation type="unfinished">TextLabel</translation>
+        <translation>TextLabel</translation>
     </message>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/widgets/backend_settings.ui" line="96"/>
         <source>Keyboard</source>
-        <translation type="unfinished">Tastatur</translation>
+        <translation>Tastatur</translation>
     </message>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/widgets/backend_settings.ui" line="121"/>
         <source>Mouse</source>
-        <translation type="unfinished">Maus</translation>
+        <translation>Maus</translation>
     </message>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/widgets/backend_settings.ui" line="146"/>
         <source>Sampler</source>
-        <translation type="unfinished">Sampler</translation>
+        <translation>Sampler</translation>
     </message>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/widgets/backend_settings.ui" line="171"/>
         <source>Clock</source>
-        <translation type="unfinished">Uhr</translation>
+        <translation>Uhr</translation>
     </message>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/widgets/backend_settings.ui" line="196"/>
         <source>Color</source>
-        <translation type="unfinished">Farbe</translation>
+        <translation>Farbe</translation>
     </message>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/widgets/backend_settings.ui" line="221"/>
         <source>Log</source>
-        <translation type="unfinished">Log</translation>
+        <translation>Log</translation>
     </message>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/widgets/backend_settings.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished"></translation>
+        <translation>Formular</translation>
     </message>
 </context>
 <context>
@@ -7560,32 +7567,32 @@ Einstellungen im Zusammenhang mit dem Bildschirm, Ton und Eingabegeräten</trans
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/widgets/font_widget.ui" line="77"/>
         <source>other ...</source>
-        <translation type="unfinished">Andere...</translation>
+        <translation>Andere...</translation>
     </message>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/widgets/font_widget.ui" line="85"/>
         <source> px</source>
-        <translation type="unfinished"> px</translation>
+        <translation> px</translation>
     </message>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/widgets/font_widget.ui" line="118"/>
         <source>Italic</source>
-        <translation type="unfinished">Kursiv</translation>
+        <translation>Kursiv</translation>
     </message>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/widgets/font_widget.ui" line="131"/>
         <source>Bold</source>
-        <translation type="unfinished">Fett</translation>
+        <translation>Fett</translation>
     </message>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/widgets/font_widget.ui" line="144"/>
         <source>Example</source>
-        <translation type="unfinished">Beispiel</translation>
+        <translation>Beispiel</translation>
     </message>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/widgets/font_widget.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished"></translation>
+        <translation>Formular</translation>
     </message>
 </context>
 <context>
@@ -7593,32 +7600,32 @@ Einstellungen im Zusammenhang mit dem Bildschirm, Ton und Eingabegeräten</trans
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/widgets/font_widget_horizontal.ui" line="50"/>
         <source>Example</source>
-        <translation type="unfinished">Beispiel</translation>
+        <translation>Beispiel</translation>
     </message>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/widgets/font_widget_horizontal.ui" line="99"/>
         <source>other ...</source>
-        <translation type="unfinished">Andere...</translation>
+        <translation>Andere...</translation>
     </message>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/widgets/font_widget_horizontal.ui" line="107"/>
         <source> px</source>
-        <translation type="unfinished"> px</translation>
+        <translation> px</translation>
     </message>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/widgets/font_widget_horizontal.ui" line="129"/>
         <source>Bold</source>
-        <translation type="unfinished">Fett</translation>
+        <translation>Fett</translation>
     </message>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/widgets/font_widget_horizontal.ui" line="141"/>
         <source>Italic</source>
-        <translation type="unfinished">Kursiv</translation>
+        <translation>Kursiv</translation>
     </message>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/widgets/font_widget_horizontal.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished"></translation>
+        <translation>Formular</translation>
     </message>
 </context>
 <context>
@@ -7626,52 +7633,52 @@ Einstellungen im Zusammenhang mit dem Bildschirm, Ton und Eingabegeräten</trans
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/dialogs/gabor_settings.ui" line="57"/>
         <source>Insert Gabor patch</source>
-        <translation type="unfinished">Gabor-Patch einfügen</translation>
+        <translation>Gabor-Patch einfügen</translation>
     </message>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/dialogs/gabor_settings.ui" line="90"/>
         <source>Orientation&lt;br /&gt;&lt;i&gt;in degrees (0 .. 360)&lt;/i&gt;</source>
-        <translation type="unfinished">Ausrichtung&lt;br /&gt;&lt;i&gt;in Grad (0 .. 360)&lt;/i&gt;</translation>
+        <translation>Ausrichtung&lt;br /&gt;&lt;i&gt;in Grad (0 .. 360)&lt;/i&gt;</translation>
     </message>
-    <message encoding="UTF-8">
+    <message utf8="true">
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/dialogs/gabor_settings.ui" line="100"/>
         <source> °</source>
-        <translation type="unfinished"> °</translation>
+        <translation> °</translation>
     </message>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/dialogs/gabor_settings.ui" line="110"/>
         <source>Size&lt;br /&gt;&lt;i&gt;in pixels&lt;/i&gt;</source>
-        <translation type="unfinished">Größe&lt;br /&gt;&lt;i&gt;in Pixel&lt;/i&gt;</translation>
+        <translation>Größe&lt;br /&gt;&lt;i&gt;in Pixel&lt;/i&gt;</translation>
     </message>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/dialogs/gabor_settings.ui" line="177"/>
         <source> px</source>
-        <translation type="unfinished"> px</translation>
+        <translation> px</translation>
     </message>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/dialogs/gabor_settings.ui" line="136"/>
         <source>Envelope</source>
-        <translation type="unfinished">Umschlag</translation>
+        <translation>Umschlag</translation>
     </message>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/dialogs/gabor_settings.ui" line="190"/>
         <source>Frequency&lt;br /&gt;&lt;i&gt;in cycles/ px&lt;/i&gt;</source>
-        <translation type="unfinished">Frequenz&lt;br /&gt;&lt;i&gt;in Durchläufen / px&lt;/i&gt;</translation>
+        <translation>Frequenz&lt;br /&gt;&lt;i&gt;in Durchläufen / px&lt;/i&gt;</translation>
     </message>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/dialogs/gabor_settings.ui" line="213"/>
         <source>Phase&lt;br /&gt;&lt;i&gt;in cycles (0 .. 1)&lt;/i&gt;</source>
-        <translation type="unfinished">Phase&lt;br /&gt;&lt;i&gt;in Zyklen (0 .. 1)&lt;/i&gt;</translation>
+        <translation>Phase&lt;br /&gt;&lt;i&gt;in Zyklen (0 .. 1)&lt;/i&gt;</translation>
     </message>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/dialogs/gabor_settings.ui" line="233"/>
         <source>Color 1&lt;br /&gt;&lt;i&gt;e.g., &apos;white&apos; or &apos;#FFFFFF&apos;&lt;/i&gt;</source>
-        <translation type="unfinished">Farbe 1&lt;br /&gt;&lt;i&gt;z.B., &apos;white&apos; oder &apos;#FFFFFF&apos;&lt;/i&gt;</translation>
+        <translation>Farbe 1&lt;br /&gt;&lt;i&gt;z.B., &apos;white&apos; oder &apos;#FFFFFF&apos;&lt;/i&gt;</translation>
     </message>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/dialogs/gabor_settings.ui" line="250"/>
         <source>Color 1&lt;br /&gt;&lt;i&gt;e.g., &apos;black&apos; or &apos;#000000&apos;&lt;/i&gt;</source>
-        <translation type="unfinished">Farbe 2&lt;br /&gt;&lt;i&gt;z.B., &apos;black&apos; or &apos;#000000&apos;&lt;/i&gt;</translation>
+        <translation>Farbe 1&lt;br /&gt;&lt;i&gt;z.B., &apos;black&apos; or &apos;#000000&apos;&lt;/i&gt;</translation>
     </message>
     <message>
         <location filename="../ui/dialogs/gabor_settings.ui" line="243"/>
@@ -7681,13 +7688,13 @@ Einstellungen im Zusammenhang mit dem Bildschirm, Ton und Eingabegeräten</trans
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/dialogs/gabor_settings.ui" line="167"/>
         <source>Standard deviation&lt;br /&gt;&lt;i&gt;in pixels, only applies to Gaussian envelope&lt;/i&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>Standardabweichung &lt;br/&gt;&lt;i&gt; in Pixel, nur wenn an einem Gausschen Umschlag angewandt&lt;i&gt;</translation>
     </message>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/dialogs/gabor_settings.ui" line="267"/>
         <source>Background color&lt;br /&gt;
 &lt;i&gt;Has no effect in psycho back-end&lt;/i&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>Hintergrundfarbe &lt;br&gt;&lt;i&gt; hat keine folgen on psycho Back-end&lt;/i&gt;</translation>
     </message>
 </context>
 <context>
@@ -7700,7 +7707,7 @@ Einstellungen im Zusammenhang mit dem Bildschirm, Ton und Eingabegeräten</trans
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/widgets/general_properties.ui" line="93"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://osdoc.cogsci.nl/back-ends/about&quot;&gt;&lt;span style=&quot;font-size:small;font-style:italic; text-decoration: underline; color:#0057ae;&quot;&gt;Why is this important?&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://osdoc.cogsci.nl/back-ends/about&quot;&gt;&lt;span style=&quot;font-size:small;font-style:italic; text-decoration: underline; color:#0057ae;&quot;&gt;Wofür ist das wichtig?&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://osdoc.cogsci.nl/back-ends/about&quot;&gt;&lt;span style=&quot;font-size:small;font-style:italic; text-decoration: underline; color:#0057ae;&quot;&gt;Wofür ist das wichtig?&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../ui/widgets/general_properties.ui" line="106"/>
@@ -7725,12 +7732,12 @@ Einstellungen im Zusammenhang mit dem Bildschirm, Ton und Eingabegeräten</trans
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/widgets/general_properties.ui" line="183"/>
         <source>Foreground</source>
-        <translation type="unfinished">Vordergrund</translation>
+        <translation>Vordergrund</translation>
     </message>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/widgets/general_properties.ui" line="206"/>
         <source>Background</source>
-        <translation type="unfinished">Hintergrund</translation>
+        <translation>Hintergrund</translation>
     </message>
     <message>
         <location filename="../ui/widgets/general_properties.ui" line="227"/>
@@ -7755,7 +7762,7 @@ Einstellungen im Zusammenhang mit dem Bildschirm, Ton und Eingabegeräten</trans
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/widgets/general_properties.ui" line="81"/>
         <source>Back-end settings</source>
-        <translation type="unfinished">Back-End-Einstellungen</translation>
+        <translation>Back-End-Einstellungen</translation>
     </message>
     <message>
         <location filename="../ui/widgets/general_properties.ui" line="328"/>
@@ -7770,27 +7777,27 @@ Einstellungen im Zusammenhang mit dem Bildschirm, Ton und Eingabegeräten</trans
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/widgets/general_properties.ui" line="296"/>
         <source>Enables support for bi-directional languages, such as Arabic and Hebrew</source>
-        <translation type="unfinished">Aktiviert Unterstützung für rechts-links-Schriften, wie Arabisch und Hebräisch</translation>
+        <translation>Aktiviert Unterstützung für rechts-links-Schriften, wie Arabisch und Hebräisch</translation>
     </message>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/widgets/general_properties.ui" line="299"/>
         <source>Bi-directional-text support</source>
-        <translation type="unfinished">Bidirektionale Schriftunterstützung</translation>
+        <translation>Bidirektionale Schriftunterstützung</translation>
     </message>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/widgets/general_properties.ui" line="306"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:small; font-style:italic;&quot;&gt;Warning: python-bidi is not available&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:small; font-style:italic;&quot;&gt;Warnung: python-bidi ist nicht verfügbar&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:small; font-style:italic;&quot;&gt;Warnung: python-bidi ist nicht verfügbar&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/widgets/general_properties.ui" line="286"/>
         <source>If enabled, (0,0) always refers to the center of the display</source>
-        <translation type="unfinished">Falls aktiviert, bezieht sich (0,0) immer auf die Mitte des Bildschirms</translation>
+        <translation>Falls aktiviert, bezieht sich (0,0) immer auf die Mitte des Bildschirms</translation>
     </message>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/widgets/general_properties.ui" line="289"/>
         <source>Uniform coordinates</source>
-        <translation type="unfinished">Uniforme Koordinaten</translation>
+        <translation>Uniforme Koordinaten</translation>
     </message>
     <message>
         <location filename="../ui/widgets/general_properties.ui" line="368"/>
@@ -7800,52 +7807,52 @@ Einstellungen im Zusammenhang mit dem Bildschirm, Ton und Eingabegeräten</trans
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/widgets/general_properties.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished"></translation>
+        <translation>Formular</translation>
     </message>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/widgets/general_properties.ui" line="141"/>
         <source>The display resolution (width) in pixels</source>
-        <translation type="unfinished"></translation>
+        <translation>Die Anzeigeauflösung (Weite) in Pixel</translation>
     </message>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/widgets/general_properties.ui" line="164"/>
         <source>The display resolution (height) in pixels</source>
-        <translation type="unfinished"></translation>
+        <translation>Die Anzeigeauflösung (Höhe) in Pixel</translation>
     </message>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/widgets/general_properties.ui" line="56"/>
         <source>Back-end</source>
-        <translation type="unfinished"></translation>
+        <translation>Back-end</translation>
     </message>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/widgets/general_properties.ui" line="116"/>
         <source>Resolution</source>
-        <translation type="unfinished"></translation>
+        <translation>Auflösung</translation>
     </message>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/widgets/general_properties.ui" line="167"/>
         <source> px</source>
-        <translation type="unfinished"> px</translation>
+        <translation> px</translation>
     </message>
-    <message encoding="UTF-8">
+    <message utf8="true">
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/widgets/general_properties.ui" line="157"/>
         <source>×</source>
-        <translation type="unfinished"></translation>
+        <translation>x</translation>
     </message>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/widgets/general_properties.ui" line="229"/>
         <source>Font</source>
-        <translation type="unfinished"></translation>
+        <translation>Schriftart</translation>
     </message>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/widgets/general_properties.ui" line="273"/>
         <source>Miscellaneous</source>
-        <translation type="unfinished">Verschiedenes</translation>
+        <translation>Verschiedenes</translation>
     </message>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/widgets/general_properties.ui" line="325"/>
         <source>General script</source>
-        <translation type="unfinished"></translation>
+        <translation>Allgemeines Skript</translation>
     </message>
 </context>
 <context>
@@ -7853,19 +7860,19 @@ Einstellungen im Zusammenhang mit dem Bildschirm, Ton und Eingabegeräten</trans
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/widgets/general_script_editor.ui" line="47"/>
         <source>ICON</source>
-        <translation type="unfinished">Icon</translation>
+        <translation>Icon</translation>
     </message>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/widgets/general_script_editor.ui" line="60"/>
         <source>&lt;b&gt;General script editor&lt;/b&gt;&lt;br /&gt;
 Edit your experiment in script form</source>
-        <translation type="unfinished">&lt;b&gt;Gesamtskripteditor&lt;/b&gt;&lt;br /&gt;
+        <translation>&lt;b&gt;Gesamtskripteditor&lt;/b&gt;&lt;br /&gt;
 Bearbeite Dein Experiment im Skriptmodus</translation>
     </message>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/widgets/general_script_editor.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished"></translation>
+        <translation>Formular</translation>
     </message>
 </context>
 <context>
@@ -7873,27 +7880,27 @@ Bearbeite Dein Experiment im Skriptmodus</translation>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/widgets/logger.ui" line="35"/>
         <source>Log all variables (recommended)</source>
-        <translation type="unfinished">Registriere alle Variablen (empfohlen)</translation>
+        <translation>Registriere alle Variablen (empfohlen)</translation>
     </message>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/widgets/logger.ui" line="48"/>
         <source>Add custom variable</source>
-        <translation type="unfinished">Benutzerdefinierte Variable hinzufügen</translation>
+        <translation>Benutzerdefinierte Variable hinzufügen</translation>
     </message>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/widgets/logger.ui" line="76"/>
         <source>Custom variable</source>
-        <translation type="unfinished">Benutzerdefinierte Variable</translation>
+        <translation>Benutzerdefinierte Variable</translation>
     </message>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/widgets/logger.ui" line="81"/>
         <source>Source(s)</source>
-        <translation type="unfinished">Quelle(n)</translation>
+        <translation>Quelle(n)</translation>
     </message>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/widgets/logger.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished"></translation>
+        <translation>Formular</translation>
     </message>
 </context>
 <context>
@@ -7979,7 +7986,7 @@ Bearbeite Dein Experiment im Skriptmodus</translation>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/widgets/loop_widget.ui" line="249"/>
         <source>Break if</source>
-        <translation type="unfinished">Beenden, wenn</translation>
+        <translation>Beenden, wenn</translation>
     </message>
     <message>
         <location filename="../ui/widgets/loop_widget.ui" line="162"/>
@@ -7999,17 +8006,17 @@ Bearbeite Dein Experiment im Skriptmodus</translation>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/widgets/loop_widget.ui" line="107"/>
         <source>Order</source>
-        <translation type="unfinished">Reihenfolge</translation>
+        <translation>Reihenfolge</translation>
     </message>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/widgets/loop_widget.ui" line="100"/>
         <source>Repeat</source>
-        <translation type="unfinished">Wiederhole</translation>
+        <translation>Wiederhole</translation>
     </message>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/widgets/loop_widget.ui" line="215"/>
         <source>each cycle </source>
-        <translation type="unfinished">jeden Durchgang </translation>
+        <translation>jeden Durchgang </translation>
     </message>
     <message>
         <location filename="../ui/widgets/loop_widget.ui" line="236"/>
@@ -8029,57 +8036,57 @@ Bearbeite Dein Experiment im Skriptmodus</translation>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/widgets/loop_widget.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished"></translation>
+        <translation>Formular</translation>
     </message>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/widgets/loop_widget.ui" line="71"/>
         <source>Run</source>
-        <translation type="unfinished">Starte</translation>
+        <translation>Starte</translation>
     </message>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/widgets/loop_widget.ui" line="186"/>
         <source>Source</source>
-        <translation type="unfinished"></translation>
+        <translation>Quelle</translation>
     </message>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/widgets/loop_widget.ui" line="193"/>
         <source>File</source>
-        <translation type="unfinished">Datei</translation>
+        <translation>Datei</translation>
     </message>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/widgets/loop_widget.ui" line="218"/>
         <source> x</source>
-        <translation type="unfinished"> x</translation>
+        <translation> x</translation>
     </message>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/widgets/loop_widget.ui" line="271"/>
         <source>never</source>
-        <translation type="unfinished"></translation>
+        <translation>niemals</translation>
     </message>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/widgets/loop_widget.ui" line="278"/>
         <source>Evaluate on first cycle</source>
-        <translation type="unfinished"></translation>
+        <translation>Evaluiere beim ersten Durchlauf</translation>
     </message>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/widgets/loop_widget.ui" line="285"/>
         <source>Resume after break</source>
-        <translation type="unfinished"></translation>
+        <translation>Nach Pause fortfahren</translation>
     </message>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/widgets/loop_widget.ui" line="304"/>
         <source>Full-factorial design</source>
-        <translation type="unfinished"></translation>
+        <translation>Voller faktorieller Versuchsplan</translation>
     </message>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/widgets/loop_widget.ui" line="322"/>
         <source>Preview </source>
-        <translation type="unfinished"></translation>
+        <translation>Vorschau</translation>
     </message>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/widgets/loop_widget.ui" line="340"/>
         <source>Summary</source>
-        <translation type="unfinished"></translation>
+        <translation>Zusammenfassung</translation>
     </message>
 </context>
 <context>
@@ -8097,73 +8104,73 @@ Bearbeite Dein Experiment im Skriptmodus</translation>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/dialogs/loop_wizard_dialog.ui" line="37"/>
         <source>Show example</source>
-        <translation type="unfinished">Beispiel zeigen</translation>
+        <translation>Beispiel zeigen</translation>
     </message>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/dialogs/loop_wizard_dialog.ui" line="112"/>
         <source>New Row</source>
-        <translation type="unfinished">Neue Zeile</translation>
+        <translation>Neue Zeile</translation>
     </message>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/dialogs/loop_wizard_dialog.ui" line="162"/>
         <source>New Column</source>
-        <translation type="unfinished">Neue Spalte</translation>
+        <translation>Neue Spalte</translation>
     </message>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/dialogs/loop_wizard_dialog.ui" line="167"/>
         <source>soa</source>
-        <translation type="unfinished">soa</translation>
+        <translation>soa</translation>
     </message>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/dialogs/loop_wizard_dialog.ui" line="172"/>
         <source>target</source>
-        <translation type="unfinished">Zielitem</translation>
+        <translation>Zielitem</translation>
     </message>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/dialogs/loop_wizard_dialog.ui" line="177"/>
         <source>cue</source>
-        <translation type="unfinished">Hinweisreiz</translation>
+        <translation>Hinweisreiz</translation>
     </message>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/dialogs/loop_wizard_dialog.ui" line="182"/>
         <source>0</source>
-        <translation type="unfinished">0</translation>
+        <translation>0</translation>
     </message>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/dialogs/loop_wizard_dialog.ui" line="192"/>
         <source>left</source>
-        <translation type="unfinished">links</translation>
+        <translation>links</translation>
     </message>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/dialogs/loop_wizard_dialog.ui" line="197"/>
         <source>100</source>
-        <translation type="unfinished">100</translation>
+        <translation>100</translation>
     </message>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/dialogs/loop_wizard_dialog.ui" line="207"/>
         <source>right</source>
-        <translation type="unfinished">rechts</translation>
+        <translation>rechts</translation>
     </message>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/dialogs/loop_wizard_dialog.ui" line="212"/>
         <source>500</source>
-        <translation type="unfinished">500</translation>
+        <translation>500</translation>
     </message>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/dialogs/loop_wizard_dialog.ui" line="217"/>
         <source>1000</source>
-        <translation type="unfinished">1000</translation>
+        <translation>1000</translation>
     </message>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/dialogs/loop_wizard_dialog.ui" line="14"/>
         <source>Generate full-factorial design</source>
-        <translation type="unfinished"></translation>
+        <translation>Stelle volles faktoriellen Versuchsplan her</translation>
     </message>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/dialogs/loop_wizard_dialog.ui" line="26"/>
         <source>To generate a full-factorial design, enter variable names (factors) in the first row of the table below. Below the variable names, enter the levels of the variables.&lt;br /&gt;&lt;br /&gt;
 &lt;b&gt;Note:&lt;/b&gt; This will overwrite the current loop table</source>
-        <translation type="unfinished"></translation>
+        <translation>Um ein vollständig faktoriellen Versuchsplan zu erzeugen, geben Sie die Variablennamen (Faktoren) in die erste Reihe der untenstehenden Tabelle ein. Unter den Variablennamen, geben Sie die Stufen der Variablen ein &lt;/br&gt;&lt;br /&gt;&lt;b&gt;Beachte:&lt;/b&gt; Dies wird die aktuelle Tabelle überschreiben</translation>
     </message>
 </context>
 <context>
@@ -8171,82 +8178,82 @@ Bearbeite Dein Experiment im Skriptmodus</translation>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/misc/main_window.ui" line="14"/>
         <source>OpenSesame</source>
-        <translation type="unfinished">OpenSesame</translation>
+        <translation>OpenSesame</translation>
     </message>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/misc/main_window.ui" line="75"/>
         <source>File</source>
-        <translation type="unfinished">Datei</translation>
+        <translation>Datei</translation>
     </message>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/misc/main_window.ui" line="79"/>
         <source>Recent files</source>
-        <translation type="unfinished">Zuletzt verwendet</translation>
+        <translation>Zuletzt verwendet</translation>
     </message>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/misc/main_window.ui" line="97"/>
         <source>Run</source>
-        <translation type="unfinished">Starte</translation>
+        <translation>Starte</translation>
     </message>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/misc/main_window.ui" line="107"/>
         <source>View</source>
-        <translation type="unfinished">Ansicht</translation>
+        <translation>Ansicht</translation>
     </message>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/misc/main_window.ui" line="120"/>
         <source>Tools</source>
-        <translation type="unfinished">Extras</translation>
+        <translation>Werkzeuge</translation>
     </message>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/misc/main_window.ui" line="126"/>
         <source>Edit</source>
-        <translation type="unfinished">Bearbeiten</translation>
+        <translation>Bearbeiten</translation>
     </message>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/misc/main_window.ui" line="146"/>
         <source>Overview</source>
-        <translation type="unfinished">Überblick</translation>
+        <translation>Überblick</translation>
     </message>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/misc/main_window.ui" line="169"/>
         <source>Name</source>
-        <translation type="unfinished">Name</translation>
+        <translation>Name</translation>
     </message>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/misc/main_window.ui" line="185"/>
         <source>File pool</source>
-        <translation type="unfinished">Dateisammlung</translation>
+        <translation>Dateisammlung</translation>
     </message>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/misc/main_window.ui" line="206"/>
         <source>Debug window</source>
-        <translation type="unfinished">Debug</translation>
+        <translation>Debugfenster</translation>
     </message>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/misc/main_window.ui" line="253"/>
         <source>Help</source>
-        <translation type="unfinished">Hilfe</translation>
+        <translation>Hilfe</translation>
     </message>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/misc/main_window.ui" line="263"/>
         <source>Clear debug window</source>
-        <translation type="unfinished">Debug zurücksetzen</translation>
+        <translation>Debug zurücksetzen</translation>
     </message>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/misc/main_window.ui" line="273"/>
         <source>Reset workspace</source>
-        <translation type="unfinished">Setze Arbeitsbereich zurück</translation>
+        <translation>Setze Arbeitsbereich zurück</translation>
     </message>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/misc/main_window.ui" line="304"/>
         <source>Main toolbar</source>
-        <translation type="unfinished">Werkzeugleiste</translation>
+        <translation>Werkzeugleiste</translation>
     </message>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/misc/main_window.ui" line="340"/>
         <source>Toolbar items</source>
-        <translation type="unfinished">Elemente der Werkzeugleiste</translation>
+        <translation>Elemente der Werkzeugleiste</translation>
     </message>
     <message>
         <location filename="../ui/misc/main_window.ui" line="381"/>
@@ -8261,12 +8268,12 @@ Bearbeite Dein Experiment im Skriptmodus</translation>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/misc/main_window.ui" line="361"/>
         <source>Ctrl+O</source>
-        <translation type="unfinished">Ctrl+O</translation>
+        <translation>Strg+O</translation>
     </message>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/misc/main_window.ui" line="373"/>
         <source>Save</source>
-        <translation type="unfinished">Speichern</translation>
+        <translation>Speichern</translation>
     </message>
     <message>
         <location filename="main_window.ui" line="399"/>
@@ -8276,7 +8283,7 @@ Bearbeite Dein Experiment im Skriptmodus</translation>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/misc/main_window.ui" line="376"/>
         <source>Ctrl+S</source>
-        <translation type="unfinished">Ctrl+S</translation>
+        <translation>Strg+S</translation>
     </message>
     <message>
         <location filename="../ui/misc/main_window.ui" line="411"/>
@@ -8291,12 +8298,12 @@ Bearbeite Dein Experiment im Skriptmodus</translation>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/misc/main_window.ui" line="391"/>
         <source>Ctrl+Shift+S</source>
-        <translation type="unfinished">Ctrl+Shift+S</translation>
+        <translation>Strg+Shift+S</translation>
     </message>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/misc/main_window.ui" line="403"/>
         <source>Quit</source>
-        <translation type="unfinished">Beenden</translation>
+        <translation>Beenden</translation>
     </message>
     <message>
         <location filename="main_window.ui" line="429"/>
@@ -8316,7 +8323,7 @@ Bearbeite Dein Experiment im Skriptmodus</translation>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/misc/main_window.ui" line="414"/>
         <source>Ctrl+R</source>
-        <translation type="unfinished">Ctrl+R</translation>
+        <translation>Strg+R</translation>
     </message>
     <message>
         <location filename="../ui/misc/main_window.ui" line="449"/>
@@ -8371,17 +8378,17 @@ Bearbeite Dein Experiment im Skriptmodus</translation>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/misc/main_window.ui" line="423"/>
         <source>Close all tabs</source>
-        <translation type="unfinished">Alle Tabs schließen</translation>
+        <translation>Alle Tabs schließen</translation>
     </message>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/misc/main_window.ui" line="426"/>
         <source>Ctrl+Alt+T</source>
-        <translation type="unfinished">Ctrl+Alt+T</translation>
+        <translation>Strg+Alt+T</translation>
     </message>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/misc/main_window.ui" line="438"/>
         <source>Close other tabs</source>
-        <translation type="unfinished">Alle anderen Tabs schließen</translation>
+        <translation>Alle anderen Tabs schließen</translation>
     </message>
     <message>
         <location filename="main_window.ui" line="479"/>
@@ -8391,7 +8398,7 @@ Bearbeite Dein Experiment im Skriptmodus</translation>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/misc/main_window.ui" line="441"/>
         <source>Ctrl+T</source>
-        <translation type="unfinished">Ctrl+T</translation>
+        <translation>Strg+T</translation>
     </message>
     <message>
         <location filename="main_window.ui" line="554"/>
@@ -8421,7 +8428,7 @@ Bearbeite Dein Experiment im Skriptmodus</translation>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/misc/main_window.ui" line="452"/>
         <source>Ctrl+W</source>
-        <translation type="unfinished">Ctrl+W</translation>
+        <translation>Strg+W</translation>
     </message>
     <message>
         <location filename="main_window.ui" line="592"/>
@@ -8451,17 +8458,17 @@ Bearbeite Dein Experiment im Skriptmodus</translation>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/misc/main_window.ui" line="464"/>
         <source>Show file pool</source>
-        <translation type="unfinished">Dateisammlung zeigen</translation>
+        <translation>Dateisammlung zeigen</translation>
     </message>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/misc/main_window.ui" line="467"/>
         <source>Ctrl+P</source>
-        <translation type="unfinished">Ctrl+P</translation>
+        <translation>Strg+P</translation>
     </message>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/misc/main_window.ui" line="482"/>
         <source>Show debug window</source>
-        <translation type="unfinished">Debug anzeigen</translation>
+        <translation>Debugfenster anzeigen</translation>
     </message>
     <message>
         <location filename="main_window.ui" line="523"/>
@@ -8471,12 +8478,12 @@ Bearbeite Dein Experiment im Skriptmodus</translation>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/misc/main_window.ui" line="485"/>
         <source>Ctrl+D</source>
-        <translation type="unfinished">Ctrl+D</translation>
+        <translation>Strg+D</translation>
     </message>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/misc/main_window.ui" line="493"/>
         <source>Enable auto response</source>
-        <translation type="unfinished">Automatischen Antwortmodus aktivieren</translation>
+        <translation>Automatischen Antwortmodus aktivieren</translation>
     </message>
     <message>
         <location filename="main_window.ui" line="665"/>
@@ -8506,22 +8513,22 @@ Bearbeite Dein Experiment im Skriptmodus</translation>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/misc/main_window.ui" line="502"/>
         <source>Preferences</source>
-        <translation type="unfinished">Einstellungen</translation>
+        <translation>Einstellungen</translation>
     </message>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/misc/main_window.ui" line="507"/>
         <source>Dummy</source>
-        <translation type="unfinished">Dummy</translation>
+        <translation>Dummy</translation>
     </message>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/misc/main_window.ui" line="515"/>
         <source>Show overview area</source>
-        <translation type="unfinished">Überblick anzeigen</translation>
+        <translation>Überblick anzeigen</translation>
     </message>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/misc/main_window.ui" line="518"/>
         <source>Ctrl+\</source>
-        <translation type="unfinished">Ctrl+\</translation>
+        <translation>Strg+\</translation>
     </message>
     <message>
         <location filename="../ui/misc/main_window.ui" line="571"/>
@@ -8551,7 +8558,7 @@ Bearbeite Dein Experiment im Skriptmodus</translation>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/misc/main_window.ui" line="541"/>
         <source>Quick run</source>
-        <translation type="unfinished">Schnellstart</translation>
+        <translation>Schnellstart</translation>
     </message>
     <message>
         <location filename="../ui/misc/main_window.ui" line="541"/>
@@ -8561,7 +8568,7 @@ Bearbeite Dein Experiment im Skriptmodus</translation>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/misc/main_window.ui" line="544"/>
         <source>Ctrl+Shift+W</source>
-        <translation type="unfinished">Ctrl+Shift+W</translation>
+        <translation>Strg+Shift+W</translation>
     </message>
     <message>
         <location filename="main_window.ui" line="783"/>
@@ -8576,7 +8583,7 @@ Bearbeite Dein Experiment im Skriptmodus</translation>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/misc/main_window.ui" line="552"/>
         <source>Close current tab</source>
-        <translation type="unfinished">Aktuellen Tab schließen</translation>
+        <translation>Aktuellen Tab schließen</translation>
     </message>
     <message>
         <location filename="../ui/misc/main_window.ui" line="552"/>
@@ -8586,32 +8593,32 @@ Bearbeite Dein Experiment im Skriptmodus</translation>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/misc/main_window.ui" line="555"/>
         <source>Alt+T</source>
-        <translation type="unfinished">Alt+T</translation>
+        <translation>Alt+T</translation>
     </message>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/misc/main_window.ui" line="533"/>
         <source>One-tab mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Ein-Tab-Modus</translation>
     </message>
-    <message encoding="UTF-8">
+    <message utf8="true">
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/misc/main_window.ui" line="358"/>
         <source>Open…</source>
-        <translation type="unfinished"></translation>
+        <translation>Öffne...</translation>
     </message>
-    <message encoding="UTF-8">
+    <message utf8="true">
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/misc/main_window.ui" line="388"/>
         <source>Save as…</source>
-        <translation type="unfinished"></translation>
+        <translation>Speichern als...</translation>
     </message>
-    <message encoding="UTF-8">
+    <message utf8="true">
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/misc/main_window.ui" line="411"/>
         <source>Run fullscreen…</source>
-        <translation type="unfinished"></translation>
+        <translation>Ausführen im Vollbildmodus</translation>
     </message>
-    <message encoding="UTF-8">
+    <message utf8="true">
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/misc/main_window.ui" line="449"/>
         <source>Run in window…</source>
-        <translation type="unfinished"></translation>
+        <translation>Ausführen im Fenster</translation>
     </message>
 </context>
 <context>
@@ -8619,27 +8626,27 @@ Bearbeite Dein Experiment im Skriptmodus</translation>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/dialogs/noise_settings.ui" line="57"/>
         <source>Insert noise patch</source>
-        <translation type="unfinished">Rauschen einfügen (noise patch)</translation>
+        <translation>Rauschen einfügen (noise patch)</translation>
     </message>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/dialogs/noise_settings.ui" line="150"/>
         <source> px</source>
-        <translation type="unfinished"> px</translation>
+        <translation> px</translation>
     </message>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/dialogs/noise_settings.ui" line="106"/>
         <source>Envelope</source>
-        <translation type="unfinished">Umschlag</translation>
+        <translation>Umschlag</translation>
     </message>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/dialogs/noise_settings.ui" line="163"/>
         <source>Color 1&lt;br /&gt;&lt;i&gt;e.g., &apos;white&apos; or &apos;#FFFFFF&apos;&lt;/i&gt;</source>
-        <translation type="unfinished">Farbe 1&lt;br /&gt;&lt;i&gt;z.B., &apos;white&apos; oder &apos;#FFFFFF&apos;&lt;/i&gt;</translation>
+        <translation>Farbe 1&lt;br /&gt;&lt;i&gt;z.B., &apos;white&apos; oder &apos;#FFFFFF&apos;&lt;/i&gt;</translation>
     </message>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/dialogs/noise_settings.ui" line="180"/>
         <source>Color 2&lt;br /&gt;&lt;i&gt;e.g., &apos;black&apos; or &apos;#000000&apos;&lt;/i&gt;</source>
-        <translation type="unfinished">Farbe 2&lt;br /&gt;&lt;i&gt;z.B., &apos;black&apos; oder &apos;#000000&apos;&lt;/i&gt;</translation>
+        <translation>Farbe 2&lt;br /&gt;&lt;i&gt;z.B., &apos;black&apos; oder &apos;#000000&apos;&lt;/i&gt;</translation>
     </message>
     <message>
         <location filename="../ui/dialogs/noise_settings.ui" line="182"/>
@@ -8649,18 +8656,19 @@ Bearbeite Dein Experiment im Skriptmodus</translation>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/dialogs/noise_settings.ui" line="222"/>
         <source>Size&lt;br /&gt;&lt;i&gt;in pixels&lt;/i&gt;</source>
-        <translation type="unfinished">Größe&lt;br /&gt;&lt;i&gt;in Pixel&lt;/i&gt;</translation>
+        <translation>Größe&lt;br /&gt;&lt;i&gt;in Pixel&lt;/i&gt;</translation>
     </message>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/dialogs/noise_settings.ui" line="140"/>
         <source>Standard deviation&lt;br /&gt;&lt;i&gt;in pixels, only applies to Gaussian envelope&lt;/i&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>Standardabweichung &lt;br /&gt;&lt;i&gt; in Pixel, nur relevant für Gausschen Umschlag &lt;/i&gt;</translation>
     </message>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/dialogs/noise_settings.ui" line="197"/>
         <source>Background color&lt;br /&gt;
 &lt;i&gt;Has no effect in psycho back-end&lt;/i&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>Hintergrundfarbe &lt;br/&gt;
+&lt;i&gt; Hat keinen Effekt in Psycho Back-end</translation>
     </message>
 </context>
 <context>
@@ -8668,7 +8676,7 @@ Bearbeite Dein Experiment im Skriptmodus</translation>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/dialogs/notification_dialog.ui" line="57"/>
         <source>OpenSesame says ...</source>
-        <translation type="unfinished">OpenSesame meldet ...</translation>
+        <translation>OpenSesame meldet ...</translation>
     </message>
 </context>
 <context>
@@ -8676,88 +8684,89 @@ Bearbeite Dein Experiment im Skriptmodus</translation>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/misc/opensesamerun.ui" line="14"/>
         <source>OpenSesame Run</source>
-        <translation type="unfinished">Starte Experiment</translation>
+        <translation>Starte Experiment</translation>
     </message>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/misc/opensesamerun.ui" line="62"/>
         <source>Experiment, subject and log file</source>
-        <translation type="unfinished">Experiment, Versuchsperson und Protokoll</translation>
+        <translation>Experiment, Versuchsperson und Protokoll</translation>
     </message>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/misc/opensesamerun.ui" line="122"/>
         <source>Browse</source>
-        <translation type="unfinished">Durchsuchen</translation>
+        <translation>Durchsuchen</translation>
     </message>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/misc/opensesamerun.ui" line="106"/>
         <source>Experiment</source>
-        <translation type="unfinished">Experiment</translation>
+        <translation>Experiment</translation>
     </message>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/misc/opensesamerun.ui" line="136"/>
         <source>Log file</source>
-        <translation type="unfinished">Protokoll</translation>
+        <translation>Protokoll</translation>
     </message>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/misc/opensesamerun.ui" line="150"/>
         <source>Subject number</source>
-        <translation type="unfinished">Versuchspersonennummer</translation>
+        <translation>Versuchspersonennummer</translation>
     </message>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/misc/opensesamerun.ui" line="160"/>
         <source>Display</source>
-        <translation type="unfinished">Bildschirm</translation>
+        <translation>Bildschirm</translation>
     </message>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/misc/opensesamerun.ui" line="181"/>
         <source>Run fullscreen</source>
-        <translation type="unfinished">Starte im Vollbildmodus</translation>
+        <translation>Starte im Vollbildmodus</translation>
     </message>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/misc/opensesamerun.ui" line="188"/>
         <source>Use custom display resolution</source>
-        <translation type="unfinished">Benutzerdefinierte Bildschirmauflösung</translation>
+        <translation>Benutzerdefinierte Bildschirmauflösung</translation>
     </message>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/misc/opensesamerun.ui" line="216"/>
         <source>Width</source>
-        <translation type="unfinished">Breite</translation>
+        <translation>Breite</translation>
     </message>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/misc/opensesamerun.ui" line="273"/>
         <source>px</source>
-        <translation type="unfinished">px</translation>
+        <translation>px</translation>
     </message>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/misc/opensesamerun.ui" line="257"/>
         <source>Height</source>
-        <translation type="unfinished">Höhe</translation>
+        <translation>Höhe</translation>
     </message>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/misc/opensesamerun.ui" line="308"/>
         <source>Miscellaneous</source>
-        <translation type="unfinished">Verschiedenes</translation>
+        <translation>Verschiedenes</translation>
     </message>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/misc/opensesamerun.ui" line="329"/>
         <source>Enable PyLink module (required for the Eyelink plug-ins)</source>
-        <translation type="unfinished">PyLink-Modul aktivieren (notwendig für Eyelink-Erweiterungen)</translation>
+        <translation>PyLink-Modul aktivieren (notwendig für Eyelink-Erweiterungen)</translation>
     </message>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/misc/opensesamerun.ui" line="358"/>
         <source>Cancel</source>
-        <translation type="unfinished">Abbrechen</translation>
+        <translation>Abbrechen</translation>
     </message>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/misc/opensesamerun.ui" line="369"/>
         <source>Run</source>
-        <translation type="unfinished">Starte</translation>
+        <translation>Starte</translation>
     </message>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/misc/opensesamerun.ui" line="51"/>
         <source>&lt;b&gt;Run, OpenSesame, run!&lt;/b&gt;&lt;br /&gt;
 &lt;small&gt;%s&lt;/small&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt; Lauf, OpenSesame, lauf!&lt;/b&gt;&lt;br/&gt;
+&lt;small&gt;%s&lt;/small&gt;</translation>
     </message>
 </context>
 <context>
@@ -8765,52 +8774,52 @@ Bearbeite Dein Experiment im Skriptmodus</translation>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/widgets/pool_widget.ui" line="29"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Warning text&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Warnungstext&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Warnungstext&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/widgets/pool_widget.ui" line="77"/>
         <source>Clear filter</source>
-        <translation type="unfinished">Filter zurücksetzen</translation>
+        <translation>Filter zurücksetzen</translation>
     </message>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/widgets/pool_widget.ui" line="97"/>
         <source>Help</source>
-        <translation type="unfinished">Hilfe</translation>
+        <translation>Hilfe</translation>
     </message>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/widgets/pool_widget.ui" line="135"/>
         <source>Add file</source>
-        <translation type="unfinished">Datei hinzufügen</translation>
+        <translation>Datei hinzufügen</translation>
     </message>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/widgets/pool_widget.ui" line="175"/>
         <source>Open file pool in file manager</source>
-        <translation type="unfinished">Verzeichnis im Dateimanager öffnen</translation>
+        <translation>Verzeichnis im Dateimanager öffnen</translation>
     </message>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/widgets/pool_widget.ui" line="202"/>
         <source>View as list</source>
-        <translation type="unfinished">Listenansicht</translation>
+        <translation>Listenansicht</translation>
     </message>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/widgets/pool_widget.ui" line="210"/>
         <source>View as icons</source>
-        <translation type="unfinished">Kachelansicht</translation>
+        <translation>Kachelansicht</translation>
     </message>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/widgets/pool_widget.ui" line="17"/>
         <source>Form</source>
-        <translation type="unfinished"></translation>
+        <translation>Formular</translation>
     </message>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/widgets/pool_widget.ui" line="64"/>
         <source>Search filter</source>
-        <translation type="unfinished"></translation>
+        <translation>Suchfilter</translation>
     </message>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/widgets/pool_widget.ui" line="155"/>
         <source>Refresh</source>
-        <translation type="unfinished"></translation>
+        <translation>Aktualisieren</translation>
     </message>
 </context>
 <context>
@@ -8818,74 +8827,74 @@ Bearbeite Dein Experiment im Skriptmodus</translation>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/widgets/preferences_widget.ui" line="50"/>
         <source>Miscellaneous</source>
-        <translation type="unfinished">Verschiedenes</translation>
+        <translation>Verschiedenes</translation>
     </message>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/widgets/preferences_widget.ui" line="71"/>
         <source>Enable auto-response</source>
-        <translation type="unfinished">Automatisches Antworten aktivieren</translation>
+        <translation>Automatisches Antworten aktivieren</translation>
     </message>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/widgets/preferences_widget.ui" line="87"/>
         <source>Appearance</source>
-        <translation type="unfinished">Aussehen</translation>
+        <translation>Aussehen</translation>
     </message>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/widgets/preferences_widget.ui" line="105"/>
         <source>&lt;small&gt;&lt;i&gt;Changes take effect the next time you start OpenSesame&lt;/i&gt;&lt;/small&gt;
 </source>
-        <translation type="unfinished">&lt;small&gt;&lt;i&gt;Änderungen werden erst beim nächsten Start wirksam&lt;/i&gt;&lt;/small&gt;
+        <translation>&lt;small&gt;&lt;i&gt;Änderungen werden erst beim nächsten Start wirksam&lt;/i&gt;&lt;/small&gt;
 </translation>
     </message>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/widgets/preferences_widget.ui" line="116"/>
         <source>Interface style</source>
-        <translation type="unfinished">Programmoberfläche</translation>
+        <translation>Programmoberfläche</translation>
     </message>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/widgets/preferences_widget.ui" line="126"/>
         <source>icon theme</source>
-        <translation type="unfinished">Iconstil</translation>
+        <translation>Iconstil</translation>
     </message>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/widgets/preferences_widget.ui" line="136"/>
         <source>Small icons in toolbar</source>
-        <translation type="unfinished">Kleine Icons in der Werkzeugleiste</translation>
+        <translation>Kleine Icons in der Werkzeugleiste</translation>
     </message>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/widgets/preferences_widget.ui" line="143"/>
         <source>Show text in toolbar</source>
-        <translation type="unfinished">Text in der Werkzeugleiste anzeigen</translation>
+        <translation>Text in der Werkzeugleiste anzeigen</translation>
     </message>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/widgets/preferences_widget.ui" line="159"/>
         <source>Runner</source>
-        <translation type="unfinished">Runner</translation>
+        <translation>Runner</translation>
     </message>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/widgets/preferences_widget.ui" line="177"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:8pt; font-style:italic;&quot;&gt;The &apos;runner&apos; determines how your OpenSesame experiment is executed. For more information, please visit &lt;/span&gt;&lt;a href=&quot;http://osdoc.cogsci.nl/miscellaneous/runners&quot;&gt;&lt;span style=&quot; font-size:8pt; font-style:italic; text-decoration: underline; color:#0057ae;&quot;&gt;http://osdoc.cogsci.nl/miscellaneous/runners&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:8pt; font-style:italic;&quot;&gt;.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:8pt; font-style:italic;&quot;&gt;Der &quot;Runner&quot; bestimmt, wie Dein  OpenSesame-Experiment ausgeführt wird. Weitere Informationen unter &lt;/span&gt;&lt;a href=&quot;http://osdoc.cogsci.nl/miscellaneous/runners&quot;&gt;&lt;span style=&quot; font-size:8pt; font-style:italic; text-decoration: underline; color:#0057ae;&quot;&gt;http://osdoc.cogsci.nl/miscellaneous/runners&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:8pt; font-style:italic;&quot;&gt;.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:8pt; font-style:italic;&quot;&gt;Der &quot;Runner&quot; bestimmt, wie Ihr  OpenSesame-Experiment ausgeführt wird. Weitere Informationen unter &lt;/span&gt;&lt;a href=&quot;http://osdoc.cogsci.nl/miscellaneous/runners&quot;&gt;&lt;span style=&quot; font-size:8pt; font-style:italic; text-decoration: underline; color:#0057ae;&quot;&gt;http://osdoc.cogsci.nl/miscellaneous/runners&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:8pt; font-style:italic;&quot;&gt;.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/widgets/preferences_widget.ui" line="188"/>
         <source>Run experiment in the same process (inprocess)</source>
-        <translation type="unfinished">Führe Experiment im selben Prozess aus (inprocess)</translation>
+        <translation>Führe Experiment im selben Prozess aus (inprocess)</translation>
     </message>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/widgets/preferences_widget.ui" line="193"/>
         <source>Run experiment in a separate process (multiprocess)</source>
-        <translation type="unfinished">Führe Experiment im eigenem Prozess aus (multiprocess)</translation>
+        <translation>Führe Experiment im eigenem Prozess aus (multiprocess)</translation>
     </message>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/widgets/preferences_widget.ui" line="198"/>
         <source>Run experiment with opensesamerun (external)</source>
-        <translation type="unfinished">Führe Experiment mit opensesamerun aus (external)</translation>
+        <translation>Führe Experiment mit opensesamerun aus (external)</translation>
     </message>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/widgets/preferences_widget.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished"></translation>
+        <translation>Formular</translation>
     </message>
 </context>
 <context>
@@ -8981,162 +8990,162 @@ Bearbeite Dein Experiment im Skriptmodus</translation>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/widgets/sketchpad.ui" line="50"/>
         <source>Duration</source>
-        <translation type="unfinished">Dauer</translation>
+        <translation>Dauer</translation>
     </message>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/widgets/sketchpad.ui" line="63"/>
         <source>A numeric value (duration in milliseconds), &quot;keypress&quot;, or &quot;mouseclick&quot;</source>
-        <translation type="unfinished">Numerischer Wert (Dauer in Millisekunden), &quot;keypress&quot; oder &quot;mouseclick&quot;</translation>
+        <translation>Numerischer Wert (Dauer in Millisekunden), &quot;keypress&quot; oder &quot;mouseclick&quot;</translation>
     </message>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/widgets/sketchpad.ui" line="89"/>
         <source>Reset feedback variables</source>
-        <translation type="unfinished">Zurücksetzen der Feedbackvariablen</translation>
+        <translation>Zurücksetzen der Feedbackvariablen</translation>
     </message>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/widgets/sketchpad.ui" line="121"/>
         <source>Color</source>
-        <translation type="unfinished">Farbe</translation>
+        <translation>Farbe</translation>
     </message>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/widgets/sketchpad.ui" line="609"/>
         <source> px</source>
-        <translation type="unfinished"> px</translation>
+        <translation> px</translation>
     </message>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/widgets/sketchpad.ui" line="150"/>
         <source>Penwidth </source>
-        <translation type="unfinished">Stiftbreite </translation>
+        <translation>Stiftbreite </translation>
     </message>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/widgets/sketchpad.ui" line="182"/>
         <source>Proportional length of the base relative to the arrow head</source>
-        <translation type="unfinished">Proportionale Länge des Körpers relativ zum Kopf des Pfeiles</translation>
+        <translation>Proportionale Länge des Körpers relativ zum Kopf des Pfeiles</translation>
     </message>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/widgets/sketchpad.ui" line="185"/>
         <source>Body length </source>
-        <translation type="unfinished">Körperlänge</translation>
+        <translation>Körperlänge</translation>
     </message>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/widgets/sketchpad.ui" line="235"/>
         <source> prop</source>
-        <translation type="unfinished">prop</translation>
+        <translation>prop</translation>
     </message>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/widgets/sketchpad.ui" line="229"/>
         <source>Proportional width (thickness) of the base relative to the arrow head</source>
-        <translation type="unfinished">Proportionale Breite des Körpers relativ zum Kopf des Pfeiles</translation>
+        <translation>Proportionale Breite des Körpers relativ zum Kopf des Pfeiles</translation>
     </message>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/widgets/sketchpad.ui" line="232"/>
         <source>Body width </source>
-        <translation type="unfinished">Körperbreite</translation>
+        <translation>Körperbreite</translation>
     </message>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/widgets/sketchpad.ui" line="276"/>
         <source>Width (thickness) of the arrow head</source>
-        <translation type="unfinished">Breite des Pfeilkopfes</translation>
+        <translation>Breite des Pfeilkopfes</translation>
     </message>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/widgets/sketchpad.ui" line="282"/>
         <source>Head width </source>
-        <translation type="unfinished">Kopfweite</translation>
+        <translation>Kopfweite</translation>
     </message>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/widgets/sketchpad.ui" line="317"/>
         <source>Image scaling factor</source>
-        <translation type="unfinished">Bildskalierungsfaktor</translation>
+        <translation>Bildskalierungsfaktor</translation>
     </message>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/widgets/sketchpad.ui" line="320"/>
         <source>Scale </source>
-        <translation type="unfinished">Skalierung </translation>
+        <translation>Skalierung </translation>
     </message>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/widgets/sketchpad.ui" line="496"/>
         <source> x</source>
-        <translation type="unfinished"> x</translation>
+        <translation> x</translation>
     </message>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/widgets/sketchpad.ui" line="367"/>
         <source>Fill</source>
-        <translation type="unfinished">Füllen</translation>
+        <translation>Füllen</translation>
     </message>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/widgets/sketchpad.ui" line="393"/>
         <source>Center the object</source>
-        <translation type="unfinished">Objekt zentrieren</translation>
+        <translation>Objekt zentrieren</translation>
     </message>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/widgets/sketchpad.ui" line="396"/>
         <source>Center</source>
-        <translation type="unfinished">Mittelpunkt</translation>
+        <translation>Mittelpunkt</translation>
     </message>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/widgets/sketchpad.ui" line="425"/>
         <source>Show if</source>
-        <translation type="unfinished">Zeigen, wenn</translation>
+        <translation>Zeigen, wenn</translation>
     </message>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/widgets/sketchpad.ui" line="467"/>
         <source>Best-fitting zoom level</source>
-        <translation type="unfinished">Am besten passende Zoom-stufe</translation>
+        <translation>Am besten passende Zoom-stufe</translation>
     </message>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/widgets/sketchpad.ui" line="480"/>
         <source>Original zoom level</source>
-        <translation type="unfinished">Ursprüngliche Zoom-stufe</translation>
+        <translation>Ursprüngliche Zoom-stufe</translation>
     </message>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/widgets/sketchpad.ui" line="493"/>
         <source>Zoom factor</source>
-        <translation type="unfinished">Vergrößerungsfaktor</translation>
+        <translation>Vergrößerungsfaktor</translation>
     </message>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/widgets/sketchpad.ui" line="539"/>
         <source>HTML</source>
-        <translation type="unfinished">HTML</translation>
+        <translation>HTML</translation>
     </message>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/widgets/sketchpad.ui" line="583"/>
         <source>0,0</source>
-        <translation type="unfinished">0,0</translation>
+        <translation>0,0</translation>
     </message>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/widgets/sketchpad.ui" line="596"/>
         <source>Grid</source>
-        <translation type="unfinished">Gitternetz</translation>
+        <translation>Gitternetz</translation>
     </message>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/widgets/sketchpad.ui" line="606"/>
         <source>Grid size</source>
-        <translation type="unfinished">Gitternetzabstände</translation>
+        <translation>Gitternetzabstände</translation>
     </message>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/widgets/sketchpad.ui" line="649"/>
         <source>Select and move elements</source>
-        <translation type="unfinished">Elemente auswählen und bewegen</translation>
+        <translation>Elemente auswählen und bewegen</translation>
     </message>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/widgets/sketchpad.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished"></translation>
+        <translation>Formular</translation>
     </message>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/widgets/sketchpad.ui" line="364"/>
         <source>Check to draw filled objects</source>
-        <translation type="unfinished"></translation>
+        <translation>Ankreuzen um gefüllte Objekte zu zeichnen</translation>
     </message>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/widgets/sketchpad.ui" line="536"/>
         <source>Parse a subset of HTML tags</source>
-        <translation type="unfinished"></translation>
+        <translation>Verarbeite eine Auswahl von HTML-tags</translation>
     </message>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/widgets/sketchpad.ui" line="593"/>
         <source>Check to display the grid and enable snap-to-grid</source>
-        <translation type="unfinished"></translation>
+        <translation>Ankreuzen um das Gitternetz zu zeigen und snap-to-grid zu aktivieren </translation>
     </message>
 </context>
 <context>
@@ -9324,12 +9333,12 @@ Bearbeite Dein Experiment im Skriptmodus</translation>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/dialogs/text_input_dialog.ui" line="14"/>
         <source>OpenSesame says ...</source>
-        <translation type="unfinished">OpenSesame meldet ...</translation>
+        <translation>OpenSesame meldet ...</translation>
     </message>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/dialogs/text_input_dialog.ui" line="57"/>
         <source>Message</source>
-        <translation type="unfinished">Nachricht</translation>
+        <translation>Nachricht</translation>
     </message>
 </context>
 <context>
@@ -9337,27 +9346,27 @@ Bearbeite Dein Experiment im Skriptmodus</translation>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/widgets/user_hint_widget.ui" line="23"/>
         <source>A list of user hints</source>
-        <translation type="unfinished">Liste mit Hinweisen zur Benutzung</translation>
+        <translation>Liste mit Hinweisen zur Benutzung</translation>
     </message>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/widgets/user_hint_widget.ui" line="26"/>
         <source>User hints</source>
-        <translation type="unfinished">Nutzerhinweise</translation>
+        <translation>Nutzerhinweise</translation>
     </message>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/widgets/user_hint_widget.ui" line="42"/>
         <source>Click to open script editor</source>
-        <translation type="unfinished">Klicken um Skripteditor zu öffnen</translation>
+        <translation>Klicken um Skripteditor zu öffnen</translation>
     </message>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/widgets/user_hint_widget.ui" line="45"/>
         <source>Hide</source>
-        <translation type="unfinished">Verbergen</translation>
+        <translation>Verbergen</translation>
     </message>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/widgets/user_hint_widget.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished"></translation>
+        <translation>Formular</translation>
     </message>
 </context>
 <context>
@@ -9365,37 +9374,37 @@ Bearbeite Dein Experiment im Skriptmodus</translation>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/widgets/webbrowser_widget.ui" line="44"/>
         <source>Go back</source>
-        <translation type="unfinished">Zurück</translation>
+        <translation>Zurück</translation>
     </message>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/widgets/webbrowser_widget.ui" line="57"/>
         <source>Open OpenSesame documentation area</source>
-        <translation type="unfinished">Öffne OpenSesame Dokumentation</translation>
+        <translation>Öffne OpenSesame Dokumentation</translation>
     </message>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/widgets/webbrowser_widget.ui" line="70"/>
         <source>Open cogsci.nl forum</source>
-        <translation type="unfinished">Öffne cogsci.nl-Forum</translation>
+        <translation>Öffne cogsci.nl-Forum</translation>
     </message>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/widgets/webbrowser_widget.ui" line="83"/>
         <source>Address</source>
-        <translation type="unfinished">Adresse</translation>
+        <translation>Adresse</translation>
     </message>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/widgets/webbrowser_widget.ui" line="104"/>
         <source>Progress</source>
-        <translation type="unfinished">Fortschritt</translation>
+        <translation>Fortschritt</translation>
     </message>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/widgets/webbrowser_widget.ui" line="107"/>
         <source>50%</source>
-        <translation type="unfinished">50%</translation>
+        <translation>50%</translation>
     </message>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_resources/ui/widgets/webbrowser_widget.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished"></translation>
+        <translation>Formular</translation>
     </message>
 </context>
 <context>
@@ -9505,7 +9514,7 @@ Bearbeite Dein Experiment im Skriptmodus</translation>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_extensions/variable_inspector/variable_inspector.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished">Formular</translation>
+        <translation>Formular</translation>
     </message>
     <message>
         <location filename="translatables.py" line="32"/>
@@ -9515,27 +9524,27 @@ Bearbeite Dein Experiment im Skriptmodus</translation>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_extensions/variable_inspector/variable_inspector.ui" line="42"/>
         <source>Enter a filter</source>
-        <translation type="unfinished">Filter setzen</translation>
+        <translation>Filter setzen</translation>
     </message>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_extensions/variable_inspector/variable_inspector.ui" line="49"/>
         <source>Clear filter</source>
-        <translation type="unfinished">Filter zurücksetzen</translation>
+        <translation>Filter zurücksetzen</translation>
     </message>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_extensions/variable_inspector/variable_inspector.ui" line="75"/>
         <source>Help</source>
-        <translation type="unfinished">Hilfe</translation>
+        <translation>Hilfe</translation>
     </message>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_extensions/variable_inspector/variable_inspector.ui" line="186"/>
         <source>Variable</source>
-        <translation type="unfinished">Variable</translation>
+        <translation>Variable</translation>
     </message>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_extensions/variable_inspector/variable_inspector.ui" line="191"/>
         <source>Value</source>
-        <translation type="unfinished">Wert</translation>
+        <translation>Wert</translation>
     </message>
     <message>
         <location filename="variable_inspector.ui" line="133"/>
@@ -9565,27 +9574,27 @@ Bearbeite Dein Experiment im Skriptmodus</translation>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_extensions/variable_inspector/variable_inspector.ui" line="142"/>
         <source>Reset workspace</source>
-        <translation type="unfinished">Setze Arbeitsbereich zurück</translation>
+        <translation>Setze Arbeitsbereich zurück</translation>
     </message>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_extensions/variable_inspector/variable_inspector.ui" line="196"/>
         <source>Source(s)</source>
-        <translation type="unfinished">Quelle(n)</translation>
+        <translation>Quelle(n)</translation>
     </message>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_extensions/variable_inspector/variable_inspector.ui" line="101"/>
         <source>Status</source>
-        <translation type="unfinished"></translation>
+        <translation>Status</translation>
     </message>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_extensions/variable_inspector/variable_inspector.ui" line="126"/>
         <source>You are viewing the final state of your last experimental run. To view the state of the current experiment, click the reset on the right.</source>
-        <translation type="unfinished"></translation>
+        <translation>Sie schauen sich den Endzustand ihres letzten experimentellen Durchlaufes an. Um den Zustand des aktuellen Experimentes zu sehen, klicken Sie reset auf der rechten Seite.</translation>
     </message>
     <message>
         <location filename="../../deb_dist/opensesame-3.1.0a45/opensesame_extensions/variable_inspector/variable_inspector.ui" line="216"/>
         <source>&lt;small&gt;Live variable updating is not supported by the current runner. You can select a different runner under Preferences. For more information, visit &lt;a href=&quot;http://osdoc.cogsci.nl/miscellaneous/runners/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;http://osdoc.cogsci.nl/miscellaneous/runners/&lt;/span&gt;&lt;/a&gt;.&lt;/small&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;small&gt;Live-Aktualisierung von Variablen wird vom aktuellen Runner nichts unterstützt. Sie können einen anderen Runner unter Einstellungen auswählen. Für mehr Informationen, besuchen Sie &lt;a href=&quot;http://osdoc.cogsci.nl/miscellaneous/runners/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;http://osdoc.cogsci.nl/miscellaneous/runners/&lt;/span&gt;&lt;/a&gt;.&lt;/small&gt;</translation>
     </message>
 </context>
 <context>
@@ -9972,14 +9981,14 @@ Einstellungen im Zusammenhang mit dem Bildschirm, Ton und Eingabegeräten</trans
         <source>&lt;a href=&quot;http://osdoc.cogsci.nl/donate/&quot;&gt;Donate&lt;/a&gt;</source>
         <translation type="obsolete">&lt;a href=&quot;http://osdoc.cogsci.nl/donate/&quot;&gt;Spenden&lt;/a&gt;</translation>
     </message>
-    <message encoding="UTF-8">
+    <message utf8="true">
         <location filename="credits_widget.ui" line="179"/>
         <source>OpenSesame [version] [codename]
 Copyright Sebastiaan Mathôt (2010-2014)</source>
         <translation type="obsolete">OpenSesame [version] [codename]
 Copyright Sebastiaan Mathôt (2010-2014)</translation>
     </message>
-    <message encoding="UTF-8">
+    <message utf8="true">
         <location filename="credits_widget.ui" line="146"/>
         <source>OpenSesame %(version)s %(codename)s
 Copyright Sebastiaan Mathôt (2010-2015)</source>
