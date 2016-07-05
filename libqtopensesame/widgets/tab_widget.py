@@ -281,22 +281,24 @@ class tab_widget(base_subcomponent, QtWidgets.QTabWidget):
 	def open_help(self, item):
 
 		"""
-		Open a help tab for the specified item. Looks for a file called
-		[item].html or [item.md] in the resources folder.
+		desc:
+			Opens a help tab for the specified item. Looks for a file called
+			[item].html or [item].md in the resources folder.
 
-		Arguments:
-		item -- the item for which help should be displayed
+		arguments:
+			item:	The item for which help should be displayed.
 		"""
 
 		import os
-		md_path = self.main_window.experiment.help(item + u'.md')
-		html_path = self.main_window.experiment.help(item + u'.html')
-		if os.path.exists(md_path):
-			path = md_path
-		elif os.path.exists(html_path):
-			path = html_path
-		else:
-			path = self.main_window.experiment.help(u'missing.md')
+		try:
+			path = self.main_window.experiment.resource(item + u'.md')
+		except:
+			try:
+				html_path = self.main_window.experiment.resource(
+					item + u'.html')
+			except:
+				path = self.main_window.experiment.resource(
+					os.path.join(u'help', u'missing.md'))
 		self.open_browser(path)
 
 	def open_backend_settings(self):
@@ -338,10 +340,14 @@ class tab_widget(base_subcomponent, QtWidgets.QTabWidget):
 
 	def open_osdoc(self, url=u''):
 
-		"""Open osdoc.cogsci.nl"""
+		"""
+		desc:
+			Open a page on osdoc.cogsci.nl.
 
-		if url:
-			url += u'.html'
+		keyword:
+			url:	A sub-url to view on osdoc.
+		"""
+
 		self.open_browser(u'http://osdoc.cogsci.nl/%s/%s' \
 			% (metadata.main_version, url))
 

@@ -105,7 +105,8 @@ class qtitem_store(item_store):
 					script=script)
 		if warning_list:
 			import yaml
-			self.tabwidget.open_help(u'new_item_warning')
+			import os
+			self.tabwidget.open_help(os.path.join(u'help', u'new_item_warning'))
 			self.console.write(yaml.dump(warning_list))
 		self.main_window.set_unsaved(True)
 		return item

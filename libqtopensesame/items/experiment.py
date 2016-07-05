@@ -92,24 +92,6 @@ class experiment(libopensesame.experiment.experiment):
 	def default_description(self):
 		return _(u'Default description')
 
-	def help(self, name):
-
-		"""
-		Returns the full path to a help file.
-
-		Arguments:
-		name	--	The name of the help file. (e.g., "sequence.html")
-
-		Returns:
-		The full path to the help file or an empty string if the help file was
-		not found.
-		"""
-
-		try:
-			return self.resource(os.path.join(u'help', name))
-		except:
-			return u''
-
 	def module_container(self):
 
 		"""
