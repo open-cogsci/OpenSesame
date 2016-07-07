@@ -15,8 +15,8 @@
 
 ; USAGE
 ; -----
-; This script assumes that the binary is located in
-; 	C:\Users\Dévélõpe®\Documents\gît\opensesame-ising\dist
+; This script assumes that the binary is located as an extracted folder in
+; 	C:\Users\dev\Documents\gît\OpenSesame\dist\opensesame_[version]
 ;
 ; The extension FileAssociation.nsh must be installed. This can be
 ; done by downloading the script from the link below and copying it
@@ -24,14 +24,13 @@
 ; - <http://nsis.sourceforge.net/File_Association>
 
 ; For each new release, adjust the PRODUCT_VERSION as follows:
-; 	version-win32-package#
+; 	X.X.X-pyX.X-win32-X
 
-; After compilation, rename the .exe file to (e.g.)
-; 	opensesame_{PRODUCT_VERSION}.exe
+SetCompressor /SOLID /FINAL lzma
 
 ; HM NIS Edit Wizard helper defines
 !define PRODUCT_NAME "OpenSesame"
-!define PRODUCT_VERSION "3.0.7-py2.7-win32-3"
+!define PRODUCT_VERSION "3.1.0a51-py2.7-win32-1"
 !define PRODUCT_PUBLISHER "Sebastiaan Mathot"
 !define PRODUCT_WEB_SITE "http://osdoc.cogsci.nl"
 !define PRODUCT_UNINST_KEY "Software\Microsoft\Windows\CurrentVersion\Uninstall\${PRODUCT_NAME}"
@@ -43,7 +42,7 @@
 
 ; MUI Settings
 !define MUI_ABORTWARNING
-!define MUI_ICON "C:\Users\Dévélõpe®\Documents\gît\opensesame-ising\resources\opensesame.ico"
+!define MUI_ICON "C:\Users\dev\Documents\git\OpenSesame\opensesame_resources\opensesame.ico"
 !define MUI_UNICON "${NSISDIR}\Contrib\Graphics\Icons\modern-uninstall.ico"
 
 ; Welcome page
@@ -65,57 +64,28 @@
 ; MUI end ------
 
 Name "${PRODUCT_NAME} ${PRODUCT_VERSION}"
-OutFile "opensesame_X-win32-X.exe"
+OutFile "dist\opensesame_${PRODUCT_VERSION}.exe"
 InstallDir "$PROGRAMFILES\OpenSesame"
 ShowInstDetails hide
 ShowUnInstDetails hide
 
 Section "OpenSesame" SEC01
-  SetOutPath "$INSTDIR"
-  RMDir /r "$INSTDIR\extensions"
-  RMDir /r "$INSTDIR\plugins"
-  RMDir /r "$INSTDIR\libopensesame"
-  RMDir /r "$INSTDIR\libqtopensesame"
-  RMDir /r "$INSTDIR\resources"
-  RMDir /r "$INSTDIR\openexp"
-  RMDir /r "$INSTDIR\expyriment"
-  RMDir /r "$INSTDIR\psychopy"
-  RMDir /r "$INSTDIR\bidi"
-  RMDir /r "$INSTDIR\dateutil"
-  RMDir /r "$INSTDIR\help"
-  RMDir /r "$INSTDIR\IPython"
-  RMDir /r "$INSTDIR\markdown"
-  RMDir /r "$INSTDIR\matplotlib"
-  RMDir /r "$INSTDIR\numpy"
-  RMDir /r "$INSTDIR\openexp"
-  RMDir /r "$INSTDIR\OpenGL"
-  RMDir /r "$INSTDIR\parallel"
-  RMDir /r "$INSTDIR\PIL"
-  RMDir /r "$INSTDIR\pyflakes"
-  RMDir /r "$INSTDIR\pygame"
-  RMDir /r "$INSTDIR\PyQt4"
-  RMDir /r "$INSTDIR\PyQt4_plugins"
-  RMDir /r "$INSTDIR\pytz"
-  RMDir /r "$INSTDIR\QProgEdit"
-  RMDir /r "$INSTDIR\scipy"
-  RMDir /r "$INSTDIR\serial"
-  RMDir /r "$INSTDIR\sounds"
-  RMDir /r "$INSTDIR\tcl"
-  RMDir /r "$INSTDIR\wx"
-  RMDir /r "$INSTDIR\yaml"
-  RMDir /r "$INSTDIR\zmq"
-  SetOverwrite try
-  File /r "C:\Users\Dévélõpe®\Documents\gît\opensesame-ising\dist\*.*"
-  ${registerExtension} "$INSTDIR\opensesame.exe" ".osexp" "OpenSesame experiment"
-  ${registerExtension} "$INSTDIR\opensesame.exe" ".opensesame" "OpenSesame script"
-  ${registerExtension} "$INSTDIR\opensesame.exe" ".gz" "OpenSesame experiment archive"
+  MessageBox MB_YESNO "Another version of OpenSesame is already installed in $INSTDIR, and will be removed. Do you want to continue?" IDYES true IDNO false
+  false:
+    Abort
+  true:
+    RMDir /r "$INSTDIR"
+    SetOutPath "$INSTDIR"
+    SetOverwrite try
+    File /r "C:\Users\dev\Documents\git\OpenSesame\dist\opensesame_${PRODUCT_VERSION}\*.*"
+    ${registerExtension} "$INSTDIR\opensesame.exe" ".osexp" "OpenSesame experiment"
 SectionEnd
 
 Section -AdditionalIcons
   WriteIniStr "$INSTDIR\${PRODUCT_NAME}.url" "InternetShortcut" "URL" "${PRODUCT_WEB_SITE}"
   CreateDirectory "$SMPROGRAMS\OpenSesame"
-  CreateShortCut "$SMPROGRAMS\OpenSesame\OpenSesame.lnk" "$INSTDIR\opensesame.exe" "" "$INSTDIR\resources\opensesame.ico"
-  CreateShortCut "$SMPROGRAMS\OpenSesame\OpenSesame (runtime).lnk" "$INSTDIR\opensesamerun.exe" "" "$INSTDIR\resources\opensesamerun.ico"
+  CreateShortCut "$SMPROGRAMS\OpenSesame\OpenSesame.lnk" "$INSTDIR\opensesame.exe" "" "$INSTDIR\Lib\site-packages\share\opensesame_resources\opensesame.ico"
+  CreateShortCut "$SMPROGRAMS\OpenSesame\OpenSesame (runtime).lnk" "$INSTDIR\opensesamerun.exe" "" "$INSTDIR\Lib\site-packages\share\opensesame_resources\opensesamerun.ico"
   CreateShortCut "$SMPROGRAMS\OpenSesame\Website.lnk" "$INSTDIR\${PRODUCT_NAME}.url"
   CreateShortCut "$SMPROGRAMS\OpenSesame\Uninstall.lnk" "$INSTDIR\uninst.exe"
 SectionEnd
@@ -147,8 +117,6 @@ Section Uninstall
   RMDir "$SMPROGRAMS\OpenSesame"
   RMDir /r "$INSTDIR"
   ${unregisterExtension} ".osexp" "OpenSesame experiment"
-  ${unregisterExtension} ".opensesame" "OpenSesame script"
-  ${unregisterExtension} ".opensesame.tar.gz" "OpenSesame experiment"
   DeleteRegKey ${PRODUCT_UNINST_ROOT_KEY} "${PRODUCT_UNINST_KEY}"
   SetAutoClose true
 SectionEnd
