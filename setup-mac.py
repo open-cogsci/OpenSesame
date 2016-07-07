@@ -94,9 +94,9 @@ setup(
 				'requests_oauthlib','pyaudio','imageio','sounddevice',
 			],
 			'excludes': [
-				'Finder','idlelib', 'gtk', 'pandas', 'PyQt4.QtDesigner',
-			 	'PyQt4.QtScript', 'PyQt4.QtSql', 'PyQt4.QtTest', 'PyQt4.phonon', 
-			 	'rpy2', 'wx', 'pycurl', 'dynd', 'bokeh',
+				'Finder','idlelib', 'gtk', 'matplotlib', 'pandas', 'PyQt4.QtDesigner',\
+			 	'PyQt4.QtOpenGL', 'PyQt4.QtScript', 'PyQt4.QtSql', 'PyQt4.QtTest', \
+			 	'PyQt4.QtXml', 'PyQt4.phonon', 'rpy2', 'wx', 'pycurl','dynd','bokeh',
 			],
 			'resources' : ['qt_menu.nib','opensesame_resources'],
 			'packages' : [
