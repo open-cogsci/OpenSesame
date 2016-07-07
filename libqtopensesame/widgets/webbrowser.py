@@ -251,7 +251,11 @@ class webbrowser(base_widget):
 			self._cache = {}
 			return
 		with open(cache_file) as fd:
-			self._cache = pickle.load(fd)
+			try:
+				self._cache = pickle.load(fd)
+			except:
+				self._cache = {}
+				return
 		if not isinstance(self._cache, dict):
 			self.extension_manager.fire(u'notify',
 				message=_(u'Webbrowser cache is corrupt'),
@@ -267,6 +271,11 @@ class webbrowser(base_widget):
 			cache, and if so, loads it from the cache.
 		"""
 
+		# On some versions of Qt, the load_finished signal is also sent when
+		# displaying pages that have been set programmatically. In this case,
+		# the current_url is '', so we ignore those.
+		if self._current_url in (None, u''):
+			return
 		if self._cache is None:
 			self.init_cache()
 		if self._current_url not in self._cache:
