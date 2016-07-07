@@ -4,13 +4,13 @@ Es scheint Sie sind ein neuer Nutzer von OpenSesame 3.
 
 Falls Sie OpenSesame noch nie benutzt haben, empfehle ich, dass Sie das Anfängertutorial durcharbeiten. Das wird eine Weile dauern, spart aber viel mehr Zeit später.
 
-[Anfängertutorial](new:http://osdoc.cogsci.nl/3.1/tutorials/beginner.html){: .important-button}
+[Anfängertutorial](new:http://osdoc.cogsci.nl/3.1/tutorials/beginner){: .important-button}
 
-Falls Sie OpenSesame 2 schon benutzt haben, empfehle ich, dass Sie eben schauen was es Neues gibt in der neuen Version 3. (Dies ist Version 3.1). Keine Sorge: Ihre alten Experimente funktionieren immer noch, und der Rest wird auch immer einfacher. 
+Falls Sie OpenSesame 2 schon benutzt haben, empfehle ich, dass Sie eben schauen was es Neues gibt in der neuen Version 3. (Dies ist Version 3.1). Keine Sorge: Ihre alten Experimente funktionieren immer noch, und der Rest wird auch immer einfacher.
 
-[Nachschauen was es Neues gibt bei OpenSesame 3](new:http://osdoc.cogsci.nl/3.1/important-changes-3.html){: .button}
+[Nachschauen was es Neues gibt bei OpenSesame 3](new:http://osdoc.cogsci.nl/3.1/important-changes-3){: .button}
 
-Und vergessen Sie nicht, Sie können stets Fragen in unserem Forum stellen. 
+Und vergessen Sie nicht, Sie können stets Fragen in unserem Forum stellen.
 
 [Support forum](new:http://forum.cogsci.nl/){: .button}
 
