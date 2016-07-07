@@ -85,9 +85,15 @@ class qtopensesame(QtWidgets.QMainWindow, base_component):
 		# icons by default.
 		QtWidgets.QApplication.setAttribute(QtCore.Qt.AA_DontShowIconsInMenus,
 			False)
-		# Add the Qt plugins folder to the library paths, if it exists
+		# Add the Qt plugin folders to the library path, if they exists. Where
+		# these folders are depends on the version of Qt4, but these are two
+		# possible locations.
 		qt_plugin_path = os.path.join(
 			os.path.dirname(sys.executable), 'Library', 'plugins')
+		if os.path.isdir(qt_plugin_path):
+			QtCore.QCoreApplication.addLibraryPath(qt_plugin_path)
+		qt_plugin_path = os.path.join(
+			os.path.dirname(sys.executable), 'Library', 'lib', 'qt4', 'plugins')
 		if os.path.isdir(qt_plugin_path):
 			QtCore.QCoreApplication.addLibraryPath(qt_plugin_path)
 		# Do a few things to customize QProgEdit behavior:
