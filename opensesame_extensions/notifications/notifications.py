@@ -44,7 +44,7 @@ class notifications(base_extension):
 
 		# Filthly hack to make this work with Qt4 on the Mac
 		# Otherwise the notifications are not shown on top.
-		if platform.system == "Darwin" and QT_VERSION_STR < '5':
+		if platform.system() == "Darwin" and QT_VERSION_STR < '5':
 			self.notification_area.setParent(self.main_window)
 			self.notification_area.setParent(self.tabwidget)
 
