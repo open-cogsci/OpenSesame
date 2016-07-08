@@ -291,7 +291,7 @@ class legacy(canvas.canvas, legacy_coordinates):
 		while fileobjects:
 			fileobjects.pop().close()
 		while fonts:
-			fonts.pop(fonts.keys()[0], None)
+			fonts.pop(list(fonts.keys())[0], None)
 		pygame.display.quit()
 
 	@staticmethod
