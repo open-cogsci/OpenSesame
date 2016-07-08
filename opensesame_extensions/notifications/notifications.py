@@ -20,9 +20,12 @@ along with this module. If not, see <http://www.apache.org/licenses/>.
 """
 
 import QNotifications
+import time
+import platform
 from libopensesame.py3compat import *
 from libqtopensesame.extensions import base_extension
-import time
+from qtpy.QtCore import QT_VERSION_STR
+
 
 __author__ = u"Daniel Schreij"
 __license__ = u"GPLv3"
@@ -38,6 +41,12 @@ class notifications(base_extension):
 		self.notification_area.move(0,15)
 		self.notification_area.setEntryEffect(u'fadeIn', 200)
 		self.notification_area.setExitEffect(u'fadeOut', 200)
+
+		# Filthly hack to make this work with Qt4 on the Mac
+		# Otherwise the notifications are not shown on top.
+		if platform.system() == "Darwin" and QT_VERSION_STR < '5':
+			self.notification_area.setParent(self.main_window)
+			self.notification_area.setParent(self.tabwidget)
 
 	def event_notify(self, message, category='primary', timeout=5000,
 		always_show=False, buttontext=None):

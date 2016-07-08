@@ -25,11 +25,34 @@ Usage:
 
 from setuptools import setup
 import os
+import sys
 import shutil
 
 from setup_shared  import included_plugins, included_extensions
-
 from libopensesame.metadata import __version__ as version, codename
+
+"""
+Monkey-patch macholib to fix "dyld_find() got an unexpected keyword argument 'loader'".
+"""
+import macholib
+#print("~"*60 + "macholib verion: "+macholib.__version__)
+if macholib.__version__ <= "1.7":
+    print("Applying macholib patch...")
+    import macholib.dyld
+    import macholib.MachOGraph
+    dyld_find_1_7 = macholib.dyld.dyld_find
+    def dyld_find(name, loader=None, **kwargs):
+        #print("~"*60 + "calling alternate dyld_find")
+        if loader is not None:
+            kwargs['loader_path'] = loader
+        return dyld_find_1_7(name, **kwargs)
+    macholib.MachOGraph.dyld_find = dyld_find
+"""
+END Monkey-patch macholib"
+"""
+
+# Get the root folder of anaconda
+anaconda_path = os.path.dirname(os.path.dirname(sys.executable))
 
 # Clean up previous builds
 try:
@@ -46,7 +69,8 @@ try:
 	shutil.rmtree("qt_menu.nib")
 except:
 	pass
-shutil.copytree("/Users/daniel/anaconda/python.app/Contents/Resources/qt_menu.nib", "qt_menu.nib")
+shutil.copytree(os.path.join(anaconda_path, 
+	"python.app/Contents/Resources/qt_menu.nib"), "qt_menu.nib")
 
 # Py2app doesn't like extensionless Python scripts
 try:
@@ -65,20 +89,23 @@ setup(
 		{
 			'argv_emulation': True, 
 			'includes' : [
-				'PyQt4.QtNetwork', 'serial', 'opensesamerun', 'skimage', 'sip', \
-				'billiard',
+				'PyQt4.QtNetwork', 'serial', 'opensesamerun', 'sip', 
+				'billiard', 'QNotifications', 'arrow', 'humanize',
+				'requests_oauthlib','pyaudio','imageio','sounddevice',
 			],
 			'excludes': [
 				'Finder','idlelib', 'gtk', 'matplotlib', 'pandas', 'PyQt4.QtDesigner',\
 			 	'PyQt4.QtOpenGL', 'PyQt4.QtScript', 'PyQt4.QtSql', 'PyQt4.QtTest', \
-			 	'PyQt4.QtXml', 'PyQt4.phonon', 'rpy2', 'wx', 'pycurl','mkl','dynd','bokeh',
+			 	'PyQt4.QtXml', 'PyQt4.phonon', 'rpy2', 'wx', 'pycurl','dynd','bokeh',
 			],
-			'resources' : ['qt_menu.nib', 'resources', 'sounds', 'help', 'data'],
+			'resources' : ['qt_menu.nib','opensesame_resources'],
 			'packages' : [
-				'openexp','expyriment','psychopy','QProgEdit','libqtopensesame','libopensesame',\
-				'IPython','ipykernel','jupyter_client','qtconsole','pygments','OpenGL_accelerate',
+				'openexp','expyriment','psychopy','QProgEdit','libqtopensesame',
+				'libopensesame', 'IPython', 'ipykernel', 'jupyter_client', 
+				'qtconsole', 'pygments', 'OpenGL_accelerate', 'markdown',
+				'QOpenScienceFramework', 'moviepy', 'qtawesome',
 			],
-			'iconfile' : 'resources/opensesame.icns',
+			'iconfile' : 'opensesame_resources/opensesame.icns',
 			'plist': {
 				'CFBundleName': 'OpenSesame',
 				'CFBundleShortVersionString': version,
@@ -89,7 +116,7 @@ setup(
 				'CFBundleDocumentTypes': [ 
 					{
                     	'CFBundleTypeExtensions' : ['osexp'],
-                    	'CFBundleTypeIconFile' : 'resources/opensesame.icns',
+                    	'CFBundleTypeIconFile' : 'opensesame_resources/opensesame.icns',
                     	'CFBundleTypeRole' : 'Editor',
                     	'CFBundleTypeName' : 'OpenSesame File',
 					},
@@ -109,17 +136,50 @@ if 'psychopy_monitor_center' in included_extensions:
 
 # Copy extensions into app
 for extension in included_extensions:
-	shutil.copytree(os.path.join("extensions",extension), os.path.join("dist/opensesame.app/Contents/Resources/extensions/",extension))
+	shutil.copytree(os.path.join("opensesame_extensions",extension), 
+		os.path.join("dist/OpenSesame.app/Contents/Resources/opensesame_extensions/",extension))
+
+# Open Science Framework extension
+try:
+	osf_path = os.path.abspath(os.path.join(anaconda_path, 
+		'share/opensesame_extensions/OpenScienceFramework'))
+	shutil.copytree(osf_path,
+		"dist/opensesame.app/Contents/Resources/opensesame_extensions/OpenScienceFramework")
+except Exception as e:
+	print("Could not copy OSF extension: {}".format(e))
 
 # Copy plugins into app
 for plugin in included_plugins:
-	shutil.copytree(os.path.join("plugins",plugin), os.path.join("dist/opensesame.app/Contents/Resources/plugins/",plugin))
+	shutil.copytree(os.path.join("opensesame_plugins",plugin), 
+		os.path.join("dist/OpenSesame.app/Contents/Resources/opensesame_plugins/",plugin))
 
-# Anaconda libpng version is too old for pygame (min required version is 36). Copy homebrew version instead
+# Copy media_player_mpy plugin
 try:
-	shutil.copy('/usr/local/opt/libpng/lib/libpng16.16.dylib','dist/OpenSesame.app/Contents/Frameworks/libpng16.16.dylib')
-except:
-	print("Could not copy newer libpng16.16.dylib")
+	mp_path = os.path.abspath(os.path.join(anaconda_path, 
+		'share/opensesame_plugins/media_player_mpy'))
+	shutil.copytree(mp_path,
+		"dist/opensesame.app/Contents/Resources/opensesame_plugins/media_player_mpy")
+except Exception as e:
+	print("Could not copy media_player_mpy plugin: {}".format(e))
+
+# Copy ffmpeg (required by media_player_mpy)
+try:
+	import imageio
+	appdata_dir = imageio.core.appdata_dir('imageio')
+	ffmpeg_path = os.path.abspath(os.path.join(appdata_dir, 
+		'ffmpeg/ffmpeg.osx'))
+	shutil.copy(ffmpeg_path,
+		"dist/opensesame.app/Contents/Resources/ffmpeg.osx")
+except Exception as e:
+	print("Could not copy media_player_mpy plugin: {}".format(e))
+
+# Anaconda libpng version is too old for pygame (min required version is 36). 
+# Copy homebrew version instead
+try:
+	shutil.copy('/usr/local/opt/libpng/lib/libpng16.16.dylib',
+		'dist/OpenSesame.app/Contents/Frameworks/libpng16.16.dylib')
+except Exception as e:
+	print("Could not copy newer libpng16.16.dylib: {}".format(e))
 
 # Remove opensesame.py
 try:
