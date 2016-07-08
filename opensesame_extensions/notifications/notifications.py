@@ -21,6 +21,7 @@ along with this module. If not, see <http://www.apache.org/licenses/>.
 
 import QNotifications
 import time
+import platform
 from libopensesame.py3compat import *
 from libqtopensesame.extensions import base_extension
 from qtpy.QtCore import QT_VERSION_STR
