@@ -24,8 +24,20 @@ import re
 import os
 try:
 	import markdown
-	from markdown.extensions import attr_list, extra, toc
+	from distutils.version import LooseVersion
+	# TocExtension() doesn't support the title keyword in previous versions
+	# This seems to have been added in 2.6 as part of the depraction of the 
+	# HeaderID extension: 
+	# https://github.com/waylan/Python-Markdown/releases/tag/2.6-final
+	if LooseVersion(markdown.version) > LooseVersion(u'2.6'):
+		from markdown.extensions import attr_list, extra, toc
+	else:
+		from libopensesame import debug
+		debug.msg(u'Markdown disabled for markdown version: {}'.format(markdown.version))
+		markdown = None
 except:
+	from libopensesame import debug
+	debug.msg(u'Unable to import markdown, proceeding without markdown')
 	markdown = None
 try:
 	from pygments import highlight
