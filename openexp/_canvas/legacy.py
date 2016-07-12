@@ -314,9 +314,15 @@ class legacy(canvas.canvas, legacy_coordinates):
 
 		if (family, size) in fonts:
 			return fonts[(family, size)]
-		path = experiment.resource(u'%s.ttf' % family)
-		fd = open(path, u'rb')
-		fileobjects.append(fd)
-		font = pygame.font.Font(fd, size)
+		try:
+			path = experiment.resource(u'%s.ttf' % family)
+		except:
+			# If the family cannot be found in the filepool, assume that it is
+			# a system font.
+			font = pygame.font.SysFont(family, size)
+		else:
+			fd = open(path, u'rb')
+			fileobjects.append(fd)
+			font = pygame.font.Font(fd, size)
 		fonts[(family, size)] = font
 		return font

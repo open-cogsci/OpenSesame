@@ -200,7 +200,7 @@ class xpyriment(canvas.canvas, xpyriment_coordinates):
 		try:
 			_font = self.experiment.resource(u"%s.ttf" % self.font_family)
 		except:
-			_font = self.font_style
+			_font = self.font_family
 
 		w, h = self.text_size(text)
 		x += w/2

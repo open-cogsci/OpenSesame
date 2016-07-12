@@ -56,7 +56,7 @@ class font_widget_base(base_widget):
 		if self.ui.combobox_family.currentText() == _(u'other ...',
 			context=u'font_widget'):
 			print(self._parent)
-			font, ok = QtGui.QFontDialog.getFont(self.get_font(),
+			font, ok = QtWidgets.QFontDialog.getFont(self.get_font(),
 				parent=self._parent)
 			if ok:
 				self.family = str(font.family())
