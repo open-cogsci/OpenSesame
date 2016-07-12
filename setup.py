@@ -34,6 +34,13 @@ else:
 	if not hasattr(util, 'RULES_BINARY_ALL_TARGET'):
 		util.RULES_BINARY_ALL_TARGET = '\nbinary: binary-indep\n'
 
+# For debian packaging, we use a slightly different version-number scheme, which
+# is triggered by setting the USEDEBVERSION environment variable.
+if 'USEDEBVERSION' in os.environ and os.environ['USEDEBVERSION'] == '1':
+	version = metadata.deb_version
+else:
+	version = metadata.__version__
+
 EXCLUDE = [
 	u'[\\/].*',
 	u'*eco_alt_template.osexp',
@@ -135,7 +142,7 @@ def data_files():
 shutil.copy(u'readme.md', u'README.txt')
 
 setup(name=u"python-opensesame",
-	version=metadata.__version__,
+	version=version,
 	description=u"A graphical experiment builder for the social sciences",
 	author=u"Sebastiaan Mathot",
 	author_email=u"s.mathot@cogsci.nl",

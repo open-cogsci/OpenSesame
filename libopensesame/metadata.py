@@ -29,7 +29,7 @@ main_version = u'.'.join([str(i) for i in strict_version.version])
 if strict_version.prerelease is None:
 	deb_version = main_version
 else:
-	deb_version = main_version + u'~%s%d' % strict_version.prerelease
+	deb_version = main_version + u'+%s%d' % strict_version.prerelease
 python_version = u'%d.%d.%d' % (sys.version_info[0], sys.version_info[1], \
 	sys.version_info[2])
 codename = u'Jazzy James'
