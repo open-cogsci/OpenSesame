@@ -50,21 +50,21 @@ class check_response(unittest.TestCase):
 		print(u'Checking response handling')
 		self.exp = experiment()
 		with self.assertRaises(osexception) as cm:
-			self.exp.set_response(correct='A')
+			self.exp.set_response(correct=u'A')
 		with self.assertRaises(osexception) as cm:
-			self.exp.set_response(response_time='A')
+			self.exp.set_response(response_time=u'A')
 		for i in range(2):
 			self.exp.reset_feedback()
 			self.exp.set_response()
-			self.assertState(None, None, u'undefined', 1, 0, 0)
-			self.exp.set_response(response='A')
-			self.assertState('A', None, u'undefined', 2, 0, 0)
-			self.exp.set_response(response='B', response_time=1000)
-			self.assertState('B', 1000, u'undefined', 3, 1000, 0)
-			self.exp.set_response(response='C', response_time=1000, correct=1)
-			self.assertState('C', 1000, 1, 4, 2000, 1)
-			self.exp.set_response(response='D', response_time=1, correct=0)
-			self.assertState('D', 1, 0, 5, 2001, 1)
+			self.assertState(u'None', None, u'undefined', 1, 0, 0)
+			self.exp.set_response(response=u'A')
+			self.assertState(u'A', None, u'undefined', 2, 0, 0)
+			self.exp.set_response(response=u'B', response_time=1000)
+			self.assertState(u'B', 1000, u'undefined', 3, 1000, 0)
+			self.exp.set_response(response=u'C', response_time=1000, correct=1)
+			self.assertState(u'C', 1000, 1, 4, 2000, 1)
+			self.exp.set_response(response=u'D', response_time=1, correct=0)
+			self.assertState(u'D', 1, 0, 5, 2001, 1)
 
 if __name__ == '__main__':
 	unittest.main()
