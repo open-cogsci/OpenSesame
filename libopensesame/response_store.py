@@ -256,11 +256,12 @@ class response_store(object):
 		else:
 			correct = r.correct
 		self._responses.insert(0, r)
-		self.var.response = r.response
+		self.var.response = self._experiment.syntax.sanitize(r.response)
 		self.var.response_time = r.response_time
 		self.var.correct = correct
 		if item is not None:
-			self.var.set(u'response_%s' % item, r.response)
+			self.var.set(u'response_%s' % item,
+				self._experiment.syntax.sanitize(r.response))
 			self.var.set(u'response_time_%s' % item, r.response_time)
 			self.var.set(u'correct_%s' % item, correct)
 		self.var.acc = self.var.accuracy = self.acc
