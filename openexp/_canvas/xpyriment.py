@@ -52,17 +52,23 @@ class xpyriment(canvas.canvas, xpyriment_coordinates):
 		canvas.canvas.__init__(self, experiment, auto_prepare=auto_prepare,
 			**style_args)
 		xpyriment_coordinates.__init__(self)
+		self.prepared = False
 		self.aa = 10
 		self.clear()
 
 	def copy(self, canvas):
 
 		self.set_config(**canvas.get_config())
+		self.auto_prepare = canvas.auto_prepare
 		self.aa = canvas.aa
+		self.prepared = False
 		self.clear()
 		self.stim_list = [stim.copy() for stim in canvas.stim_list]
+		if self.auto_prepare:
+			self.prepare()
+		canvas.prepared = False
 
-	def add_stim(self, stim):
+	def add_stim(self, stim, prepare=True):
 
 		"""
 		desc:
@@ -72,20 +78,33 @@ class xpyriment(canvas.canvas, xpyriment_coordinates):
 
 		arguments:
 			stim:		the stimulus
+
+		keywords:
+			prepare:	indicates whether we should prepare.
 		"""
 
 		self.stim_list.append(stim)
-		stim.preload()
+		self.prepared = False
+		if prepare and self.auto_prepare:
+			self.prepare()
+
+	def prepare(self):
+
+		if not self.prepared:
+			self._canvas = stimuli.Canvas(
+				self.experiment.expyriment.screen.size,
+				colour=self.background_color.backend_color)
+			for stim in self.stim_list:
+				stim.plot(self._canvas)
+			self._canvas.preload()
+			self.prepared = True
+		return self.experiment.time()
 
 	def show(self):
 
-		if len(self.stim_list) == 1:
-			self.stim_list[0].present(clear=True, update=True)
-			return self.experiment.time()
-		self.stim_list[0].present(clear=True, update=False)
-		for stim in self.stim_list[1:-1]:
-			stim.present(clear=False, update=False)
-		self.stim_list[-1].present(clear=False, update=True)
+		if not self.prepared: self.prepare()
+		self._canvas.present()
+		self.experiment.last_shown_canvas = self._canvas
 		return self.experiment.time()
 
 	@configurable
@@ -97,10 +116,8 @@ class xpyriment(canvas.canvas, xpyriment_coordinates):
 					'canvas.clear(). Use background_color instead.',
 					DeprecationWarning)
 			self.background_color = color
-		background = stimuli.BlankScreen(
-			colour=self.background_color.backend_color)
-		background.preload()
-		self.stim_list = [background]
+		self.stim_list = []
+		self.prepare()
 
 	@configurable
 	def line(self, sx, sy, ex, ey):
