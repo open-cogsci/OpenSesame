@@ -18,10 +18,10 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame.py3compat import *
-
 import openexp.mouse
 from libopensesame.mouse_response import mouse_response
 from libqtopensesame.items.qtautoplugin import qtautoplugin
+
 
 class touch_response(mouse_response):
 
@@ -36,12 +36,11 @@ class touch_response(mouse_response):
 		self.var._nrow = 1
 		mouse_response.reset(self)
 
-	def process_response_mouseclick(self, retval):
+	def process_response(self, response_args):
 
-		"""Processes a mouseclick response."""
+		"""See base_response_item."""
 
-		self.experiment._start_response_interval = self.sri
-		button, pos, self.experiment.end_response_interval = retval
+		response, pos, t1 = response_args
 		if pos is not None:
 			x, y = pos
 			if self.experiment.var.uniform_coordinates == u'yes':
@@ -51,14 +50,9 @@ class touch_response(mouse_response):
 				_x, _y = x, y
 			col = _x // (self.experiment.var.width / self.var._ncol)
 			row = _y // (self.experiment.var.height / self.var._nrow)
-			cell = row * self.var._ncol + col + 1
-			self.experiment.var.cursor_x = x
-			self.experiment.var.cursor_y = y
-			self.experiment.var.response = cell
-		else:
-			self.experiment.var.cursor_x = u'NA'
-			self.experiment.var.cursor_y = u'NA'
-			self.experiment.var.response = None
+			response = row * self.var._ncol + col + 1
+		mouse_response.process_response(self, (response, pos, t1) )
+
 
 class qttouch_response(touch_response, qtautoplugin):
 
