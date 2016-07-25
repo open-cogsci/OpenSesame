@@ -68,7 +68,7 @@ class syntax(object):
 		# alphanumeric ones and [] signs that indicate variables
 		self.re_sanitize_strict_vars = re.compile(r'[^\w\[\]]')
 		# Matches valid variable names
-		self.re_valid_var_name = re.compile(r'^[_a-zA-Z]+[_a-zA-Z0-9]*$')
+		self.re_valid_var_name = re.compile(r'\A[_a-zA-Z]+[_a-zA-Z0-9]*\Z')
 		# Loose is used to remove double-quotes, slashes, and newlines
 		self.re_sanitize_loose = re.compile(r'[\n\"\\]')
 		# Unsanitization is used to replace U+XXXX unicode notation
