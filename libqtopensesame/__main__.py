@@ -64,7 +64,7 @@ def opensesame():
 		from qtpy import QtWebEngineWidgets
 	except ImportError:
 		pass
-	
+
 	app = QApplication(sys.argv)
 	# Enable High DPI display with PyQt5
 	if hasattr(qtpy.QtCore.Qt, 'AA_UseHighDpiPixmaps'):
@@ -78,12 +78,21 @@ def opensesame():
 	import os.path
 	# Load the locale for UI translation. The locale can be specified on the
 	# command line using the --locale parameter
-	locale = str(QLocale().system().name())
+	locale = QLocale().system().name()
 	for i in range(len(sys.argv)-1):
 		if sys.argv[i] == '--locale':
 			locale = sys.argv[i+1]
-	opensesame._locale = locale
 	qm = resource(os.path.join(u'locale', locale) + u'.qm')
+	# Say that we're trying to load de_AT, and it is not found, then we'll try
+	# de_DE as fallback.
+	if qm is None:
+		l = locale.split(u'_')
+		if len(l):
+			_locale = l[0] +  u'_' + l[0].upper()
+			qm = resource(os.path.join(u'locale', _locale + u'.qm'))
+			if qm is not None:
+				locale = _locale
+	opensesame._locale = locale
 	if qm is not None:
 		debug.msg(u'installing %s translator' % qm)
 		translator = QTranslator()
