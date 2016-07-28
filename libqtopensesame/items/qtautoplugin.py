@@ -44,6 +44,9 @@ class qtautoplugin(qtplugin):
 		item_type_translate = translation_context(self.item_type,
 			category=u'plugin')
 		self.info = plugins.plugin_properties(self.item_type, _type=u'plugins')
+		# Process the help url, if specified
+		if u'help' in self.info:
+			self.help_url = self.info[u'help']
 		# Some options are required. Which options are requires depends on the
 		# specific widget.
 		required  = [
