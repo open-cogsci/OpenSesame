@@ -29,10 +29,12 @@ from libopensesame.exceptions import osexception
 try:
 	from bidi.algorithm import get_display as bidi_func
 except:
-	debug.msg( \
-		u'Failed to import bidi. Bi-directional-text support will not be available', \
+	debug.msg(
+		u'Failed to import bidi. Bi-directional-text support will not be available',
 		reason=u'warning')
 	bidi_func = None
+else:
+	import re
 
 class html(HTMLParser):
 
@@ -166,8 +168,11 @@ class html(HTMLParser):
 
 		text = safe_decode(text)
 		debug.msg(text)
-		# Parse bi-directional strings
+		# Parse bi-directional strings. Bidi doesn't play nice with HTML tags,
+		# which is especially annoying for BR tags. So we first convert all BR
+		# tags to newlines.
 		if canvas.bidi and bidi_func is not None:
+			text = re.sub(u'<[ ]*(br|BR)[ ]*/>', u'\n', text)
 			text = bidi_func(text)
 		# Convert line breaks to HTML break tags
 		text = text.replace(os.linesep, u'<br />').replace(u'\n', u'<br />')
