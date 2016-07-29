@@ -1,6 +1,6 @@
----
 category: Form
 icon: os-form_multiple_choice
+help: manual/forms/readymade
 controls:
   -
     label: "Form title"

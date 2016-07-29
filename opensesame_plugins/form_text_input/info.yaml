@@ -1,5 +1,6 @@
 category: Form
 icon: os-form_text_input
+help: manual/forms/readymade
 controls:
   -
     label: "Form title"
