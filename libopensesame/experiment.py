@@ -43,6 +43,8 @@ class experiment(item.item):
 		A special item that controls the flow of the experiment.
 	"""
 
+	description = u'The main experiment item'
+
 	def __init__(self, name=u'experiment', string=None, pool_folder=None,
 		experiment_path=None, fullscreen=False, auto_response=False,
 		logfile=u'defaultlog.csv', subject_nr=0, workspace=None, resources={},
@@ -190,7 +192,6 @@ class experiment(item.item):
 		# Set default variables
 		self.var.start = u'experiment'
 		self.var.title = self.default_title
-		self.var.description = u'The main experiment item'
 		self.var.bidi = u'no'
 		self.var.round_decimals = 2
 		self.var.form_clicks = u'no'

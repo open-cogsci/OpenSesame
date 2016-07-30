@@ -78,8 +78,33 @@ class var_store(object):
 		object.__setattr__(self, u'__parent__', parent)
 		object.__setattr__(self, u'__vars__', {})
 		object.__setattr__(self, u'__lock__', None)
+		self._copy_class_description()
 
-	def check_var_name(self, var):
+	def _copy_class_description(self):
+
+		"""
+		visible: False
+
+		desc:
+			Item descriptions can be class properties. In that case, copy theme
+			into the var store to avoid warnings.
+		"""
+
+		if hasattr(self.__item__.__class__, u'description'):
+			self.__vars__[u'description'] = self.__item__.__class__.description
+
+	def _check_var_name(self, var):
+
+		"""
+		visible: False
+
+		desc:
+			Checks whether a variable name is valid, and raises an `osexception`
+			if it isn't.
+
+		arguments:
+			var:	The variable name to check.
+		"""
 
 		try:
 			self.__item__.experiment
@@ -99,7 +124,7 @@ class var_store(object):
 			Implements the `in` operator to check if a variable exists.
 		"""
 
-		self.check_var_name(var)
+		self._check_var_name(var)
 		if var in self.__vars__:
 			return True
 		if hasattr(self.__item__, var):
@@ -165,6 +190,7 @@ class var_store(object):
 		for var in list(self.__vars__.keys()):
 			if var not in preserve:
 				del self.__vars__[var]
+		self._copy_class_description()
 
 	def get(self, var, default=None, _eval=True, valid=None):
 
@@ -198,7 +224,7 @@ class var_store(object):
 			var.get(u'my_variable', default=u'a_default_value')
 		"""
 
-		self.check_var_name(var)
+		self._check_var_name(var)
 		if self.__lock__ == var:
 			raise osexception(
 				u"Recursion detected! Is variable '%s' defined in terms of itself (e.g., 'var = [var]') in item '%s'" \
@@ -277,7 +303,7 @@ class var_store(object):
 			var.my_variable = u'my_value'
 		"""
 
-		self.check_var_name(var)
+		self._check_var_name(var)
 		self.__setattr__(var, val)
 
 	def unset(self, var):
@@ -297,7 +323,7 @@ class var_store(object):
 			del var.my_variable
 		"""
 
-		self.check_var_name(var)
+		self._check_var_name(var)
 		self.__delattr__(var)
 
 	def __iter__(self):
