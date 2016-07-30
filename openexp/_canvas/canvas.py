@@ -73,6 +73,7 @@ class canvas(backend):
 		- `html` indicates whether HTML-tags are interpreted, and should be
 		  `True` or `False`. For supported tags, see [/usage/text/]().
 		- `font_family` is the name of a font family, such as 'sans'.
+		- `font_size` is a font size in pixels.
 		- `font_italic` indicates whether text should italics, and should be
 		  `True` or `False`.
 		- `font_bold` indicates whether text should bold, and should be
