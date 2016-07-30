@@ -148,6 +148,24 @@ class var_store(object):
 
 		self.__vars__[var] = val
 
+	def clear(self, preserve=[]):
+
+		"""
+		desc: |
+			*New in 3.1.2*
+
+			Clears all experimentals variables.
+
+		keywords:
+			preserve:
+				desc:	A list of variable names that shouldn't be cleared.
+				type:	list
+		"""
+
+		for var in list(self.__vars__.keys()):
+			if var not in preserve:
+				del self.__vars__[var]
+
 	def get(self, var, default=None, _eval=True, valid=None):
 
 		"""

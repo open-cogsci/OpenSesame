@@ -282,7 +282,7 @@ class item(object):
 
 		debug.msg()
 		textblock_var = None
-		self.variables = {}
+		self.var.clear()
 		self.reset()
 		self.comments = []
 		if string is None:

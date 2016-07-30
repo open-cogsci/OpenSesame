@@ -121,44 +121,8 @@ class experiment(item.item):
 		self.resources = resources
 		self.paused = False
 		self.output_channel = None
-
-		# Set default variables
-		self.var.start = u'experiment'
-		self.var.title = self.default_title
-		self.var.bidi = u'no'
-		self.var.round_decimals = 2
-		self.var.form_clicks = u'no'
-		self.var.disable_garbage_collection = u'yes'
-		# In version 2.9.X and before, the sketchpad used 0,0 for the screen
-		# center, whereas scripting items used 0,0 for the top-left. By setting
-		# uniform_coordinates to 'yes', 0,0 is used for the center in all cases.
-		self.var.uniform_coordinates = u'no'
-
-		# Sound parameters
-		self.var.sound_freq = 48000
-		self.var.sound_sample_size = -16 # Negative values mean signed
-		self.var.sound_channels = 2
-		self.var.sound_buf_size = 1024
-
-		# Default backend
-		self.var.canvas_backend = u'xpyriment'
-
-		# Display parameters
-		self.var.width = 1024
-		self.var.height = 768
-		self.var.background = u'black'
-		self.var.foreground = u'white'
-		if fullscreen:
-			self.var.fullscreen = u'yes'
-		else:
-			self.var.fullscreen = u'no'
-
-		# Font parameters
-		self.var.font_size = 18
-		self.var.font_family = u'mono'
-		self.var.font_italic = u'no'
-		self.var.font_bold = u'no'
-		self.var.font_underline = u'no'
+		self._fullscreen = fullscreen
+		self.reset()
 
 		# Logfile parameters
 		self._log = None
@@ -218,6 +182,45 @@ class experiment(item.item):
 			u'experiment.get_file() is deprecated. Use file_pool_store instead.',
 			DeprecationWarning)
 		return self.pool[path]
+
+	def reset(self):
+
+		"""See item."""
+
+		# Set default variables
+		self.var.start = u'experiment'
+		self.var.title = self.default_title
+		self.var.description = u'The main experiment item'
+		self.var.bidi = u'no'
+		self.var.round_decimals = 2
+		self.var.form_clicks = u'no'
+		self.var.disable_garbage_collection = u'yes'
+		# In version 2.9.X and before, the sketchpad used 0,0 for the screen
+		# center, whereas scripting items used 0,0 for the top-left. By setting
+		# uniform_coordinates to 'yes', 0,0 is used for the center in all cases.
+		self.var.uniform_coordinates = u'no'
+		# Sound parameters
+		self.var.sound_freq = 48000
+		self.var.sound_sample_size = -16 # Negative values mean signed
+		self.var.sound_channels = 2
+		self.var.sound_buf_size = 1024
+		# Default backend
+		self.var.canvas_backend = u'xpyriment'
+		# Display parameters
+		self.var.width = 1024
+		self.var.height = 768
+		self.var.background = u'black'
+		self.var.foreground = u'white'
+		if self._fullscreen:
+			self.var.fullscreen = u'yes'
+		else:
+			self.var.fullscreen = u'no'
+		# Font parameters
+		self.var.font_size = 18
+		self.var.font_family = u'mono'
+		self.var.font_italic = u'no'
+		self.var.font_bold = u'no'
+		self.var.font_underline = u'no'
 
 	def file_in_pool(self, path):
 
@@ -309,7 +312,8 @@ class experiment(item.item):
 			string:	The definition string.
 		"""
 
-		self.variables = {}
+		self.var.clear(preserve=[u'experiment_path', u'experiment_file'])
+		self.reset()
 		self.comments = []
 		debug.msg(u"building experiment")
 		if string is None:

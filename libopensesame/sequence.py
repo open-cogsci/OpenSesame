@@ -88,7 +88,7 @@ class sequence(item.item):
 		string 	--	A definition string.
 		"""
 
-		self.variables = {}
+		self.var.clear()
 		self.comments = []
 		self.reset()
 		if string is None:

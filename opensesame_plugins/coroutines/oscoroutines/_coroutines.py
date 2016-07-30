@@ -87,7 +87,7 @@ class coroutines(item):
 
 		"""See item."""
 
-		self.variables = {}
+		self.var.clear()
 		self.comments = []
 		self.reset()
 		if string is None:

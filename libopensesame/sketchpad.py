@@ -62,7 +62,7 @@ class sketchpad(base_response_item, keyboard_response_mixin,
 
 		"""See item."""
 
-		self.variables = {}
+		self.var.clear()
 		self.comments = []
 		self.reset()
 		if string is None:

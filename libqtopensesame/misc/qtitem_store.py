@@ -106,7 +106,13 @@ class qtitem_store(item_store):
 		if warning_list:
 			import yaml
 			import os
-			self.tabwidget.open_help(os.path.join(u'help', u'new_item_warning'))
+			try:
+				self.tabwidget.open_help(
+					os.path.join(u'help', u'new_item_warning'))
+			except AttributeError:
+				# In case the experiment object doesn't exist yet, which causes
+				# the help page to fail.
+				pass
 			self.console.write(yaml.dump(warning_list))
 		self.main_window.set_unsaved(True)
 		return item
