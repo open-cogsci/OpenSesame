@@ -46,6 +46,7 @@ class sketchpad_canvas(QtWidgets.QGraphicsScene):
 		"""
 
 		self.sketchpad = sketchpad
+		self.background_color = sketchpad.var.background
 		self.placeholder_color = cfg.sketchpad_placeholder_color
 		self.grid = 32
 		super(sketchpad_canvas, self).__init__(self.sketchpad.main_window)

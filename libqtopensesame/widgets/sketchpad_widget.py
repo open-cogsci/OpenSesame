@@ -533,8 +533,9 @@ class sketchpad_widget(base_widget):
 				return -element.z_index
 			return 0
 
-		if refresh:
-			self.canvas.invalidate()
+		if refresh or \
+			self.canvas.background_color != self.sketchpad.var.background:
+				self.canvas.invalidate()
 		self.canvas.clear()
 		self.elements.sort(key=z_sort)
 		for element in self.elements:
