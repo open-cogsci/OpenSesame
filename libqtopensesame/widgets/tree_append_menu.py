@@ -123,8 +123,9 @@ class append_new_action(base_subcomponent, QtWidgets.QAction):
 		"""
 
 		target_item = self.experiment.items[target_item_name]
-		item = self.experiment.items.new(self.item_type)
-		target_item.insert_child_item(item.name, len(target_item.items))
+		item = self.experiment.items.new(self.item_type, catch_exceptions=False)
+		if item is not None:
+			target_item.insert_child_item(item.name, len(target_item.items))
 
 class tree_append_menu(base_subcomponent, QtWidgets.QMenu):
 
