@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS><TS version="2.0" language="fr" sourcelanguage="">
+<!DOCTYPE TS>
+<TS version="2.0" language="fr">
 <context>
     <name>Form</name>
     <message>
@@ -188,7 +189,7 @@
     <message>
         <location filename="../../translatables-tmp.py" line="441"/>
         <source>Please enter the subject number</source>
-        <translation type="unfinished">Veuillez saisir le numéro du sujet</translation>
+        <translation>Veuillez saisir le numéro du sujet</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="438"/>
@@ -589,7 +590,7 @@
         <source>Could not parse script: %s</source>
         <translation>L&apos;analyse du script a échoué : %s</translation>
     </message>
-    <message encoding="UTF-8">
+    <message utf8="true">
         <location filename="../../translatables-tmp.py" line="206"/>
         <source>Save as…</source>
         <translation>Enregistrer sous…</translation>
@@ -609,7 +610,7 @@
         <source>Errors occurred while opening the file:
 
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Des erreurs se sont produites lors de l&apos;ouverture du fichier :</translation>
     </message>
 </context>
 <context>
@@ -821,7 +822,7 @@ Description : %s</translation>
     <message>
         <location filename="../../translatables-tmp.py" line="124"/>
         <source>Are you sure you want to permanently delete all unused items? This action cannot be undone.</source>
-        <translation type="unfinished">Êtes vous sûr(e) de vouloir supprimer définitivement tous les éléments non utilisés ? Cette action est irréversible.</translation>
+        <translation>Êtes vous sûr(e) de vouloir supprimer définitivement tous les éléments non utilisés ? Cette action est irréversible.</translation>
     </message>
 </context>
 <context>
@@ -851,7 +852,7 @@ Description : %s</translation>
         <source>Done</source>
         <translation>Fini !</translation>
     </message>
-    <message encoding="UTF-8">
+    <message utf8="true">
         <location filename="../../translatables-tmp.py" line="8"/>
         <source>Loading …</source>
         <translation>Chargement…</translation>
@@ -994,7 +995,7 @@ L&apos;éxpérience ne s&apos;est pas terminée normalement pour la raison suiva
 </context>
 <context>
     <name>extension_get_started</name>
-    <message encoding="UTF-8">
+    <message utf8="true">
         <location filename="../../translatables-tmp.py" line="444"/>
         <source>New…</source>
         <translation>Nouveau…</translation>
@@ -3780,7 +3781,7 @@ L&apos;éxpérience ne s&apos;est pas terminée normalement pour la raison suiva
     <message>
         <location filename="../../translatables-tmp.py" line="173"/>
         <source>Device nr.</source>
-        <translation>Numéro de l&apos;appareil</translation>
+        <translation type="unfinished">Numéro de l&apos;appareil.</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="188"/>
@@ -3805,7 +3806,7 @@ L&apos;éxpérience ne s&apos;est pas terminée normalement pour la raison suiva
     <message>
         <location filename="../../translatables-tmp.py" line="176"/>
         <source>Timeout</source>
-        <translation>Délai maximum</translation>
+        <translation type="unfinished">Délai maximum</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="194"/>
@@ -3888,17 +3889,17 @@ L&apos;éxpérience ne s&apos;est pas terminée normalement pour la raison suiva
         <source>Experimental variable for test value</source>
         <translation>Variable expérimentale pour la valeur de test</translation>
     </message>
-    <message encoding="UTF-8">
+    <message utf8="true">
         <location filename="../../translatables-tmp.py" line="291"/>
         <source>Steepness of the Weibull psychometric function (β)</source>
         <translation>Pente de la fonction psychométrique Weibull (β)</translation>
     </message>
-    <message encoding="UTF-8">
+    <message utf8="true">
         <location filename="../../translatables-tmp.py" line="292"/>
         <source>Proportion of random responses at maximum stimulus intensity (δ)</source>
         <translation>Proportion de réponses aléatoires à l&apos;intensité maximale du stimulus (δ)</translation>
     </message>
-    <message encoding="UTF-8">
+    <message utf8="true">
         <location filename="../../translatables-tmp.py" line="293"/>
         <source>Chance level (γ)</source>
         <translation>Niveau de hasard (γ)</translation>
@@ -3914,7 +3915,7 @@ L&apos;éxpérience ne s&apos;est pas terminée normalement pour la raison suiva
     <message>
         <location filename="../../translatables-tmp.py" line="374"/>
         <source>Response variable (0 or 1)</source>
-        <translation>Variable de résponse (0 ou 1)</translation>
+        <translation type="unfinished">Variable de réponse (0 ou 1)</translation>
     </message>
 </context>
 <context>
@@ -4029,7 +4030,7 @@ L&apos;éxpérience ne s&apos;est pas terminée normalement pour la raison suiva
         <location filename="../../translatables-tmp.py" line="318"/>
         <source>&lt;small&gt;&lt;b&gt;Note:&lt;/b&gt; If there are multiple srbox items in the experiment, the first srbox item determines the device name and whether dummy mode is enabled&lt;/small&gt;
 </source>
-        <translation>&lt;small&gt;&lt;b&gt;Note :&lt;/b&gt; S&apos;il y a plusieurs items srbox dans l&apos;expérience, le premier item srbox détermine le nom d&apos;appareil et si le mode factice soit activé&lt;/small&gt;</translation>
+        <translation type="unfinished">&lt;small&gt;&lt;b&gt;Note :&lt;/b&gt; S&apos;il y a plusieurs items srbox dans l&apos;expérience, le premier item srbox détermine le nom d&apos;appareil et si le mode factice est activé&lt;/small&gt;</translation>
     </message>
 </context>
 <context>
@@ -4043,7 +4044,7 @@ L&apos;éxpérience ne s&apos;est pas terminée normalement pour la raison suiva
         <location filename="../../translatables-tmp.py" line="251"/>
         <source>&lt;b&gt;Warning:&lt;/b&gt; The text_display plug-in has been removed. Please use a different way to present text, as described on &lt;a href=&quot;http://osdoc.cogsci.nl/usage/text&quot;&gt;http://osdoc.cogsci.nl/usage/text&lt;/a&gt;.
 </source>
-        <translation>Le plugin text_display a été supprimé. Veuillez utiliser une autre manière pour afficher du texte en vous référent à la documentation sur &lt;a href=&quot;http://osdoc.cogsci.nl/usage/text&quot;&gt;http://osdoc.cogsci.nl/usage/text&lt;/a&gt;</translation>
+        <translation type="unfinished">Le plugin text_display a été supprimé. Veuillez utiliser une autre manière pour afficher du texte en vous référent à la documentation sur &lt;a href=&quot;http://osdoc.cogsci.nl/usage/text&quot;&gt;http://osdoc.cogsci.nl/usage/text&lt;/a&gt;.</translation>
     </message>
 </context>
 <context>
@@ -4062,7 +4063,7 @@ L&apos;éxpérience ne s&apos;est pas terminée normalement pour la raison suiva
         <location filename="../../translatables-tmp.py" line="222"/>
         <source>&lt;b&gt;Warning:&lt;/b&gt; The text_input plug-in has been removed. To collect text input, please use a form, as described on &lt;a href=&quot;http://osdoc.cogsci.nl/forms&quot;&gt;http://osdoc.cogsci.nl/forms/&lt;/a&gt;.
 </source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Le plugin text_input a été supprimé. Pour enregistrer du texte, veuillez utiliser un formulaire en vous référant à la documentation sur &lt;a href=&quot;http://osdoc.cogsci.nl/forms&quot;&gt;http://osdoc.cogsci.nl/forms/&lt;/a&gt;.</translation>
     </message>
 </context>
 <context>
@@ -4202,7 +4203,7 @@ L&apos;éxpérience ne s&apos;est pas terminée normalement pour la raison suiva
     <message>
         <location filename="../../translatables-tmp.py" line="480"/>
         <source>Generator function name (optional)</source>
-        <translation>Nom d&apos;une fonction generator (optionnel)</translation>
+        <translation type="unfinished">Nom du générateur de fonction (optionnel)</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="481"/>
@@ -4212,7 +4213,7 @@ L&apos;éxpérience ne s&apos;est pas terminée normalement pour la raison suiva
     <message>
         <location filename="../../translatables-tmp.py" line="482"/>
         <source>&quot;%s&quot; does not support coroutines.</source>
-        <translation>&quot;%s&quot; ne supporte pas coroutines.</translation>
+        <translation type="unfinished">&quot;%s&quot; ne supporte pas les coroutines.</translation>
     </message>
 </context>
 <context>
@@ -5996,7 +5997,7 @@ Différents réglages liés au contrôle de l&apos;affichage, le son, et les sys
         <source>Orientation&lt;br /&gt;&lt;i&gt;in degrees (0 .. 360)&lt;/i&gt;</source>
         <translation>Orientation&lt;br /&gt;&lt;i&gt;en degrés (0 .. 360)&lt;/i&gt;</translation>
     </message>
-    <message encoding="UTF-8">
+    <message utf8="true">
         <location filename="../ui/dialogs/gabor_settings.ui" line="100"/>
         <source> °</source>
         <translation> °</translation>
@@ -6019,7 +6020,7 @@ Différents réglages liés au contrôle de l&apos;affichage, le son, et les sys
     <message>
         <location filename="../ui/dialogs/gabor_settings.ui" line="167"/>
         <source>Standard deviation&lt;br /&gt;&lt;i&gt;in pixels, only applies to Gaussian envelope&lt;/i&gt;</source>
-        <translation>Déviation standard&lt;br /&gt;&lt;i&gt;en pixels, ne concerne que l&apos;enveloppe Gaussian&lt;/i&gt;</translation>
+        <translation type="unfinished">Déviation standard&lt;br /&gt;&lt;i&gt;en pixels, ne concerne que l&apos;enveloppe Gaussienne&lt;/i&gt;</translation>
     </message>
     <message>
         <location filename="../ui/dialogs/gabor_settings.ui" line="190"/>
@@ -6169,7 +6170,7 @@ Différents réglages liés au contrôle de l&apos;affichage, le son, et les sys
     <message>
         <location filename="../ui/widgets/general_properties.ui" line="286"/>
         <source>If enabled, (0,0) always refers to the center of the display</source>
-        <translation>Si activé, (0,0) correspond toujours au centre de l&apos;écran</translation>
+        <translation type="unfinished">Si activé, (0,0) correspond toujours au centre de l&apos;écran</translation>
     </message>
     <message>
         <location filename="../ui/widgets/general_properties.ui" line="289"/>
@@ -6196,7 +6197,7 @@ Différents réglages liés au contrôle de l&apos;affichage, le son, et les sys
         <source> px</source>
         <translation> px</translation>
     </message>
-    <message encoding="UTF-8">
+    <message utf8="true">
         <location filename="../ui/widgets/general_properties.ui" line="157"/>
         <source>×</source>
         <translation>×</translation>
@@ -6481,6 +6482,7 @@ Edit your experiment in script form</source>
     <message>
         <location filename="../ui/dialogs/loop_wizard_dialog.ui" line="167"/>
         <source>soa</source>
+        <translatorcomment>SOA can also be called SOA in French</translatorcomment>
         <translation>iis</translation>
     </message>
     <message>
@@ -6532,7 +6534,7 @@ Edit your experiment in script form</source>
         <location filename="../ui/dialogs/loop_wizard_dialog.ui" line="26"/>
         <source>To generate a full-factorial design, enter variable names (factors) in the first row of the table below. Below the variable names, enter the levels of the variables.&lt;br /&gt;&lt;br /&gt;
 &lt;b&gt;Note:&lt;/b&gt; This will overwrite the current loop table</source>
-        <translation>Pour générer un plan factoriel, saissir des noms de variables (facteurs) dans la première ligne du tableau. Au-dessous les noms de variables, saissir les niveaux de variables.&lt;br /&gt;&lt;br /&gt;
+        <translation type="unfinished">Pour générer un plan factoriel, saisir des noms de variables (facteurs) dans la première ligne du tableau. Au-dessous des noms de variables, saissir les niveaux de variables.&lt;br /&gt;&lt;br /&gt;
 &lt;b&gt;Note :&lt;/b&gt; Cela écrasera le tableau de loop actuel</translation>
     </message>
 </context>
@@ -6988,7 +6990,7 @@ Edit your experiment in script form</source>
         <source>Show debug window (standard output) and a Python interpreter</source>
         <translation type="obsolete">Montrer la fenêtre de débogage (sortie standard) et un interpreteur python</translation>
     </message>
-    <message encoding="UTF-8">
+    <message utf8="true">
         <location filename="../ui/misc/main_window.ui" line="355"/>
         <source>Open …</source>
         <translation type="obsolete">Ouvrir</translation>
@@ -6998,22 +7000,22 @@ Edit your experiment in script form</source>
         <source>One-tab mode</source>
         <translation>Mode un-onglet</translation>
     </message>
-    <message encoding="UTF-8">
+    <message utf8="true">
         <location filename="../ui/misc/main_window.ui" line="358"/>
         <source>Open…</source>
         <translation>Ouvrir…</translation>
     </message>
-    <message encoding="UTF-8">
+    <message utf8="true">
         <location filename="../ui/misc/main_window.ui" line="388"/>
         <source>Save as…</source>
         <translation>Enregistrer sous…</translation>
     </message>
-    <message encoding="UTF-8">
+    <message utf8="true">
         <location filename="../ui/misc/main_window.ui" line="411"/>
         <source>Run fullscreen…</source>
         <translation>Exécuter en plein écran…</translation>
     </message>
-    <message encoding="UTF-8">
+    <message utf8="true">
         <location filename="../ui/misc/main_window.ui" line="449"/>
         <source>Run in window…</source>
         <translation>Exécuter en fenêtre…</translation>
@@ -7039,7 +7041,7 @@ Edit your experiment in script form</source>
     <message>
         <location filename="../ui/dialogs/noise_settings.ui" line="140"/>
         <source>Standard deviation&lt;br /&gt;&lt;i&gt;in pixels, only applies to Gaussian envelope&lt;/i&gt;</source>
-        <translation>Déviation standard&lt;br /&gt;&lt;i&gt;en pixels, ne concerne que l&apos;enveloppe Gaussian&lt;/i&gt;</translation>
+        <translation type="unfinished">Déviation standard&lt;br /&gt;&lt;i&gt;en pixels, ne concerne que l&apos;enveloppe Gaussienne&lt;/i&gt;</translation>
     </message>
     <message>
         <location filename="../ui/dialogs/noise_settings.ui" line="163"/>
@@ -7266,12 +7268,12 @@ Edit your experiment in script form</source>
     <message>
         <location filename="../ui/widgets/preferences_widget.ui" line="126"/>
         <source>icon theme</source>
-        <translation>thème d&apos;icone</translation>
+        <translation type="unfinished">thème d&apos;icône</translation>
     </message>
     <message>
         <location filename="../ui/widgets/preferences_widget.ui" line="136"/>
         <source>Small icons in toolbar</source>
-        <translation>Petites icones dans la barre d&apos;outils</translation>
+        <translation type="unfinished">Petites icônes dans la barre d&apos;outils</translation>
     </message>
     <message>
         <location filename="../ui/widgets/preferences_widget.ui" line="143"/>
@@ -7457,7 +7459,8 @@ Edit your experiment in script form</source>
     <message>
         <location filename="../ui/widgets/sketchpad.ui" line="185"/>
         <source>Body length </source>
-        <translation>Longeur base </translation>
+        <translatorcomment>Not sure about this translation</translatorcomment>
+        <translation type="unfinished">Longueur de base </translation>
     </message>
     <message>
         <location filename="../ui/widgets/sketchpad.ui" line="235"/>
@@ -7467,27 +7470,28 @@ Edit your experiment in script form</source>
     <message>
         <location filename="../ui/widgets/sketchpad.ui" line="229"/>
         <source>Proportional width (thickness) of the base relative to the arrow head</source>
-        <translation>Largeur de la base par rapport à la pointe de flèche</translation>
+        <translation type="unfinished">Largeur de la base par rapport à la pointe de la flèche</translation>
     </message>
     <message>
         <location filename="../ui/widgets/sketchpad.ui" line="232"/>
         <source>Body width </source>
-        <translation>Largeur base </translation>
+        <translatorcomment>Not sure about this translation</translatorcomment>
+        <translation type="unfinished">Largeur de base </translation>
     </message>
     <message>
         <location filename="../ui/widgets/sketchpad.ui" line="276"/>
         <source>Width (thickness) of the arrow head</source>
-        <translation>Largeur de la pointe de flèche</translation>
+        <translation type="unfinished">Largeur de la pointe de la flèche</translation>
     </message>
     <message>
         <location filename="../ui/widgets/sketchpad.ui" line="282"/>
         <source>Head width </source>
-        <translation>Largeur pointe </translation>
+        <translation type="unfinished">Largeur de la pointe </translation>
     </message>
     <message>
         <location filename="../ui/widgets/sketchpad.ui" line="317"/>
         <source>Image scaling factor</source>
-        <translation>Facteur de l&apos;échelle d&apos;image</translation>
+        <translation type="unfinished">Echelle de redimensionnement de l&apos;image</translation>
     </message>
     <message>
         <location filename="../ui/widgets/sketchpad.ui" line="320"/>
@@ -8210,7 +8214,7 @@ Différents réglages liés au contrôle de l&apos;affichage, le son, et les sys
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;COGSCIdotNL // cognitive science and more&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="obsolete">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;COGSCIpointNL // cognitive science and more&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
-    <message encoding="UTF-8">
+    <message utf8="true">
         <location filename="credits_widget.ui" line="150"/>
         <source>OpenSesame [version] [codename]
 Copyright Sebastiaan Mathôt (2010-2013)</source>
