@@ -24,16 +24,39 @@ import unittest
 from libopensesame.py3compat import *
 
 
+NO_PUNCTUATION_CHECK = [
+	u'zh_CN'
+	]
+
+
 class check_translations(unittest.TestCase):
+
+	def check_punctuation(self, path):
+
+		for locale in NO_PUNCTUATION_CHECK:
+			if path.endswith(locale + u'.ts'):
+				return False
+		return True
 
 	def extractWildcards(self, s):
 
 		return re.findall('(?<!%)%(\(\w+\)){0,1}([dfs]){1}', s)
 
-	def validateTranslation(self, original, translation):
+	def validateTranslation(self, original, translation, punctuation=True):
 
+		print(u'"%s" -> "%s"' % (safe_decode(original), safe_decode(translation)))
 		self.assertEqual(
 			self.extractWildcards(original), self.extractWildcards(translation))
+		self.assertEqual(original[-1] == u' ', translation[-1] == u' ')
+		self.assertEqual(original[-1] == u'\n', translation[-1] == u'\n')
+		self.assertEqual(original[:1] == u' ', translation[:1] == u' ')
+		if not punctuation:
+			return
+		if not original.endswith(u'nr.'):
+			self.assertEqual(original[-1] == u'.', translation[-1] == u'.')
+		self.assertEqual(original[-1] == u'?', translation[-1] == u'?')
+		self.assertEqual(original[-1] == u'…', translation[-1] == u'…')
+		self.assertEqual(original[-1] == u':', translation[-1] == u':')
 
 	def checkMarkdown(self, dirname):
 
@@ -57,13 +80,15 @@ class check_translations(unittest.TestCase):
 					continue
 				print(u'-> '+localepath)
 				with open(path) as fd:
-					original = fd.read()
+					original = safe_decode(fd.read())
 				with open(localepath) as fd:
-					translation = fd.read()
-				self.validateTranslation(original, translation)
+					translation = safe_decode(fd.read())
+				self.validateTranslation(original, translation,
+					self.check_punctuation(localepath))
 
 	def checkXML(self, path):
 
+		print(path)
 		import xml.etree.ElementTree as ET
 		tree = ET.parse(path)
 		root = tree.getroot()
@@ -71,11 +96,15 @@ class check_translations(unittest.TestCase):
 			for message in context:
 				if message.tag != u'message':
 					continue
+				_translation = message.find(u'translation')
+				if _translation.attrib.get(u'type', u'?') == u'obsolete':
+					continue
 				original = message.find(u'source').text
-				translation = message.find(u'translation').text
+				translation = _translation.text
 				if translation is None:
 					continue
-				self.validateTranslation(original, translation)
+				self.validateTranslation(original, translation,
+					self.check_punctuation(path))
 
 	def checkTs(self, dirname):
 
