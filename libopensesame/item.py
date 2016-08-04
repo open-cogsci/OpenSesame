@@ -50,7 +50,6 @@ class item(object):
 			object.__getattr__(self, u'var')
 		except:
 			self.var = var_store(self, parent=experiment.var)
-		self.reset()
 		self.name = name
 		self.experiment = experiment
 		self.debug = debug.enabled
