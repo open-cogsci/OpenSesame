@@ -123,7 +123,6 @@ class experiment(item.item):
 		self.resources = resources
 		self.paused = False
 		self.output_channel = None
-		self._fullscreen = fullscreen
 		self.reset()
 
 		# Logfile parameters
@@ -141,6 +140,9 @@ class experiment(item.item):
 		item.item.__init__(self, name, self, string)
 		# Default subject info
 		self.set_subject(subject_nr)
+		# Fullscreen needs to be set after the experiment has been parsed from
+		# script, otherwise it will be overridden by the script.
+		self.var.fullscreen = u'yes' if fullscreen else u'no'
 		# Restore experiment path, which is either the full path (including
 		# filename), only the folder, or None.
 		if experiment_path is not None:
@@ -212,10 +214,6 @@ class experiment(item.item):
 		self.var.height = 768
 		self.var.background = u'black'
 		self.var.foreground = u'white'
-		if self._fullscreen:
-			self.var.fullscreen = u'yes'
-		else:
-			self.var.fullscreen = u'no'
 		# Font parameters
 		self.var.font_size = 18
 		self.var.font_family = u'mono'
