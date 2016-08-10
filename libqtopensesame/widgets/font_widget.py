@@ -69,18 +69,14 @@ class font_widget_base(base_widget):
 	def get_font(self):
 
 		"""
-		Make a QFont based on the settings
-
-		Returns:
-		A QFont
+		returns:
+			type: QFont
 		"""
 
-		if self.bold:
-			weight = QtGui.QFont.Bold
-		else:
-			weight = QtGui.QFont.Normal
-		return QtGui.QFont(self.family, min(self.max_size, self.size),
-			weight, self.italic)
+		font = QtGui.QFont(self.family, italic=self.italic,
+			weight=QtGui.QFont.Bold if self.bold else QtGui.QFont.Normal)
+		font.setPixelSize(min(self.max_size, self.size))
+		return font
 
 	def set_font(self, family=None, italic=None, bold=None, size=None):
 
