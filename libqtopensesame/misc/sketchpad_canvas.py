@@ -343,7 +343,7 @@ class sketchpad_canvas(QtWidgets.QGraphicsScene):
 			self.notify(
 				_(u'Image name "%s" is unknown or variably defined, using fallback image') \
 				% fname)
-			return self.sketchpad.theme.qpixmap(u'os-image-fallback')
+			return self.sketchpad.theme.qpixmap(u'dialog-question')
 		return QtGui.QPixmap(fname)
 
 	def _pen(self, color, penwidth, alpha=255):
@@ -772,7 +772,7 @@ class sketchpad_canvas(QtWidgets.QGraphicsScene):
 		except:
 			self.notify(
 				_(u'Some properties of a Gabor patch are unknown or variably defined, using fallback image'))
-			image = self.sketchpad.theme.qpixmap(u'os-image-fallback')
+			image = self.sketchpad.theme.qpixmap(u'dialog-question')
 		return self.image(image, x=x, y=y, scale=1)
 
 	def noise_patch(self, x, y, *arglist, **kwdict):
@@ -785,7 +785,7 @@ class sketchpad_canvas(QtWidgets.QGraphicsScene):
 		except:
 			self.notify(
 				_(u'Some properties of a noise patch are unknown or variably defined, using fallback image'))
-			image = self.sketchpad.theme.qpixmap(u'os-image-fallback')
+			image = self.sketchpad.theme.qpixmap(u'dialog-question')
 		return self.image(image, x=x, y=y, scale=1)
 
 	def fixdot(self, x=None, y=None, color=None, style=u'default'):
