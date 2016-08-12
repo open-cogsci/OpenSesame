@@ -39,7 +39,7 @@ Mathôt, S., Schreij, D., & Theeuwes, J. (2012). OpenSesame: An open-source, gra
 
 If you wish to contribute to OpenSesame (and you are welcome to!), please visit:
 
-- <http://osdoc.cogsci.nl/contribute/>
+- <http://osdoc.cogsci.nl/3.1/dev/howtocontribute/>
 
 ## License
 
