@@ -24,7 +24,7 @@ import time
 import platform
 from libopensesame.py3compat import *
 from libqtopensesame.extensions import base_extension
-from qtpy.QtCore import QT_VERSION_STR
+from qtpy.QtCore import PYQT_VERSION_STR
 
 
 __author__ = u"Daniel Schreij"
@@ -44,7 +44,7 @@ class notifications(base_extension):
 
 		# Filthly hack to make this work with Qt4 on the Mac
 		# Otherwise the notifications are not shown on top.
-		if platform.system() == "Darwin" and QT_VERSION_STR < '5':
+		if platform.system() == "Darwin" and PYQT_VERSION_STR < '5':
 			self.notification_area.setParent(self.main_window)
 			self.notification_area.setParent(self.tabwidget)
 

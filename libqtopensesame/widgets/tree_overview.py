@@ -40,8 +40,8 @@ class tree_overview(base_subcomponent, base_draggable, QtWidgets.QTreeWidget):
 		A tree widget used in sequence items and the overview area.
 	"""
 
-	structure_change = QtCore.pyqtSignal()
-	text_change = QtCore.pyqtSignal()
+	structure_change = QtCore.Signal()
+	text_change = QtCore.Signal()
 
 	def __init__(self, main_window, overview_mode=True):
 

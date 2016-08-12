@@ -31,8 +31,8 @@ class color_edit(base_widget):
 		A colorpicker widget that emulates a QLineEdit.
 	"""
 
-	textChanged = QtCore.pyqtSignal('QString')
-	textEdited = QtCore.pyqtSignal('QString')
+	textChanged = QtCore.Signal('QString')
+	textEdited = QtCore.Signal('QString')
 
 	def __init__(self, main_window):
 

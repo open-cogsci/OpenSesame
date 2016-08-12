@@ -32,7 +32,7 @@ class pool_select(QtWidgets.QWidget, base_subcomponent):
 		QLineEdit API.
 	"""
 
-	editingFinished = QtCore.pyqtSignal()
+	editingFinished = QtCore.Signal()
 
 	def __init__(self, main_window):
 

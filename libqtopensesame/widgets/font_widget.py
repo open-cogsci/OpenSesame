@@ -32,7 +32,7 @@ class font_widget_base(base_widget):
 		u'chinese-japanese-korean', u'hebrew', u'hindi', _(u'other ...',
 		context=u'font_widget')]
 
-	font_changed = QtCore.pyqtSignal(['QString', int, bool, bool])
+	font_changed = QtCore.Signal(['QString', int, bool, bool])
 
 	def _apply(self):
 
