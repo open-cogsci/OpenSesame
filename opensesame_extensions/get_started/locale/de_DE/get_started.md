@@ -1,6 +1,6 @@
 # Leg' los!
 
-Willkommen zu OpenSesame. Wie kann ich Ihnen helfen?
+Willkommen bei OpenSesame. Wie kann ich Dir helfen?
 
 <table><tr><td>
 
@@ -13,11 +13,11 @@ Beginne ein neues Experiment:<br />
 
 </td></tr></table>
 
-Haben Sie darüber nachgedacht OpenSesame zu unterstützen? Es geht einfach und schnell.
+Hast Du Dir schon einmal überlegt OpenSesame zu unterstützen? Es geht einfach und schnell.
 
 [Spende via PayPal](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=QEWKSAY4WMKRW){: .important-button}
 
-Oder informieren Sie sich mehr:
+Finde mehr heraus:
 
-[Dokumentation lesen](http://osdoc.cogsci.nl){: .button}<br />
-[Frage im Forum stellen](http://forum.cogsci.nl){: .button}<br />
+[Dokumentation lesen (Englisch)](http://osdoc.cogsci.nl){: .button}<br />
+[Frage im Forum stellen (Englisch)](http://forum.cogsci.nl){: .button}<br />

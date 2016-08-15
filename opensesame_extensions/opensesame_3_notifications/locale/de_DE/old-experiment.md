@@ -1,14 +1,14 @@
-# Achtung!
+# Aufmerksamkeit bitte!
 
-Dieses Experiment wurde mit einer alten Version von OpenSesame erstellt. 
+Dieses Experiment wurde mit einer älteren Version von OpenSesame erstellt. 
 
-Keine Sorge! Dies sollte keine Probleme bereiten. Um jedoch auf Nummer sicher zu gehen, empfehle ich Ihr Experiment unter einem neuen Namen zu speichern. 
+Keine Sorge! Das sollte keine Probleme verursachen. Um ganz auf Nummer sicher zu gehen, empfehle ich Dir aber Dein Experiment unter einem neuen Namen zu speichern.
 
-Was möchten Sie tun?
+Was möchtest Du tun?
 
-[Jetzt Experiment speichern](opensesame://action.save){: .important-button} <br />
-[Nachschauen was neu ist bei OpenSesame 3](new:html://osdoc.cogsci.nl/3.0/miscellaneous/important-changes-3/){: .button} <br />
+[Experiment jetzt speichern](opensesame://action.save){: .important-button} <br />
+[Anschauen was es Neues gibt bei OpenSesame 3](new:html://osdoc.cogsci.nl/3.0/miscellaneous/important-changes-3/){: .button} <br />
 
-Oder Sie können:
+Oder:
 
-[Verwerfe diese Nachricht für immer](opensesame://event.os3n_dismiss_old_experiment){: .dismiss-button}
+[Diese Nachricht dauerhaft ausblenden](opensesame://event.os3n_dismiss_old_experiment){: .dismiss-button}
