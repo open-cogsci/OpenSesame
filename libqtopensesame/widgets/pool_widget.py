@@ -137,11 +137,11 @@ class pool_widget(base_widget):
 			directory=cfg.default_pool_folder)
 		if not path_list:
 			return
-
 		# Qt5 puts the first element in another list, check for that here
 		if isinstance(path_list[0], list):
 			path_list = path_list[0]
-
+		if not path_list:
+			return
 		cfg.default_pool_folder = os.path.dirname(path_list[0])
 		self.add(path_list)
 
