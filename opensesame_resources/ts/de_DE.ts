@@ -530,7 +530,7 @@
     <message>
         <location filename="../../translatables-tmp.py" line="533"/>
         <source>Are you sure you want to apply the changes to the general script?</source>
-        <translation>Sind Sie sicher, dass Sie die Änderungen am Gesamtskript anwenden möchten?</translation>
+        <translation>Bist Du sicher, dass Du die Änderungen am Gesamtskript anwenden möchtest?</translation>
     </message>
 </context>
 <context>
@@ -886,7 +886,7 @@
         <source>Errors occurred while opening the file:
 
 </source>
-        <translation>Beim Öffnen der Datei ist ein Fehler aufgetreten:
+        <translation>Beim Öffnen der Datei sind Fehler aufgetreten:
 
 </translation>
     </message>
@@ -1220,7 +1220,7 @@ The experiment did not finish normally for the following reason:
 - </source>
         <translation># Gestoppt:
 
-Das Experiment konnte nicht normal abgeschlossen aus dem folgenden Grund:
+Das Experiment konnte aus dem folgenden Grund nicht normal abgeschlossen werden:
 
 - </translation>
     </message>
@@ -1386,7 +1386,7 @@ Das Experiment konnte nicht normal abgeschlossen aus dem folgenden Grund:
     <message>
         <location filename="../../translatables-tmp.py" line="139"/>
         <source>Pretty notifications for OpenSesame</source>
-        <translation>Schöne Benachrichtigungen von OpenSesame</translation>
+        <translation>Schöne Benachrichtigungen für OpenSesame</translation>
     </message>
 </context>
 <context>
@@ -1467,7 +1467,7 @@ Das Experiment konnte nicht normal abgeschlossen aus dem folgenden Grund:
     <message>
         <location filename="../../opensesame_extensions/plugin_manager/plugin.ui" line="135"/>
         <source>/path/to/extension</source>
-        <translation>/path/to/extension</translation>
+        <translation>/Pfad/zur/Erweiterung</translation>
     </message>
     <message>
         <location filename="../../opensesame_extensions/plugin_manager/plugin.ui" line="142"/>
@@ -1477,7 +1477,7 @@ Das Experiment konnte nicht normal abgeschlossen aus dem folgenden Grund:
     <message>
         <location filename="../../opensesame_extensions/plugin_manager/plugin_manager.ui" line="23"/>
         <source>Changes take effect after restart</source>
-        <translation>Änderungen treten nach Neutstart in Kraft</translation>
+        <translation>Änderungen treten nach Neustart in Kraft</translation>
     </message>
 </context>
 <context>
@@ -2795,7 +2795,7 @@ Das Experiment konnte nicht normal abgeschlossen aus dem folgenden Grund:
     <message>
         <location filename="../../translatables-tmp.py" line="172"/>
         <source>twice</source>
-        <translation>zwei Male</translation>
+        <translation>zwei Mal</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="173"/>
@@ -2805,7 +2805,7 @@ Das Experiment konnte nicht normal abgeschlossen aus dem folgenden Grund:
     <message>
         <location filename="../../translatables-tmp.py" line="174"/>
         <source>Note: Order or repeat is unknown or variably defined</source>
-        <translation>Anmerkung: Reihenfolge oder Wiederholungen sind unbekannt oder variabel definiert</translation>
+        <translation>Anmerkung: Reihenfolge oder Wiederholungen ist unbekannt oder variabel definiert</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="175"/>
@@ -2969,7 +2969,7 @@ Das Experiment konnte nicht normal abgeschlossen aus dem folgenden Grund:
     <message>
         <location filename="../../translatables-tmp.py" line="257"/>
         <source>Runs a number of items in sequence</source>
-        <translation>Führt mehrere Items einer Sequenz aus</translation>
+        <translation>Führt mehrere Items nacheinander aus</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="259"/>
@@ -2979,7 +2979,7 @@ Das Experiment konnte nicht normal abgeschlossen aus dem folgenden Grund:
     <message>
         <location filename="../../translatables-tmp.py" line="260"/>
         <source>&lt;b&gt;Important&lt;/b&gt;: A sequence has &lt;a href=&quot;http://osdoc.cogsci.nl/usage/prepare-run&quot;&gt;a variable preparation time&lt;/a&gt;.</source>
-        <translation>&lt;b&gt;Wichtig&lt;/b&gt;: Sequenzen benötigen &lt;a href=&quot;http://osdoc.cogsci.nl/usage/prepare-run&quot;&gt;Variablenvorbereitungszeit&lt;/a&gt;.</translation>
+        <translation>&lt;b&gt;Wichtig&lt;/b&gt;: Sequenzen benötigen eine unregelmäßige &lt;a href=&quot;http://osdoc.cogsci.nl/usage/prepare-run&quot;&gt;Vorbereitungszeit&lt;/a&gt;.</translation>
     </message>
 </context>
 <context>
@@ -5597,7 +5597,7 @@ Das Experiment konnte nicht normal abgeschlossen aus dem folgenden Grund:
     <message>
         <location filename="../../opensesame_extensions/quick_switcher/quick_switcher.ui" line="34"/>
         <source>Search by item name or type</source>
-        <translation>Suche Item mittels Name oder Typ</translation>
+        <translation>Suche mittels Item Name oder Typ</translation>
     </message>
     <message>
         <location filename="../../opensesame_extensions/quick_switcher/quick_switcher.ui" line="41"/>
@@ -7822,12 +7822,12 @@ Zahlreiche Einstellungen zur Kontrolle der Anzeige, des Tons und der Eingabeger�
     <message>
         <location filename="../ui/widgets/general_properties.ui" line="141"/>
         <source>The display resolution (width) in pixels</source>
-        <translation>Auflösung (Breite) in Pixel</translation>
+        <translation>Bildschirmauflösung (Breite) in Pixel</translation>
     </message>
     <message>
         <location filename="../ui/widgets/general_properties.ui" line="164"/>
         <source>The display resolution (height) in pixels</source>
-        <translation>Auflösung (Höhe) in Pixel</translation>
+        <translation>Bildschirmauflösung (Höhe) in Pixel</translation>
     </message>
     <message>
         <location filename="../ui/widgets/general_properties.ui" line="56"/>
@@ -7877,7 +7877,7 @@ Zahlreiche Einstellungen zur Kontrolle der Anzeige, des Tons und der Eingabeger�
         <source>&lt;b&gt;General script editor&lt;/b&gt;&lt;br /&gt;
 Edit your experiment in script form</source>
         <translation>&lt;b&gt;Gesamtskripteditor&lt;/b&gt;&lt;br /&gt;
-Bearbeite Dein Experiment im Skriptform</translation>
+Bearbeite Dein Experiment in Skriptform</translation>
     </message>
     <message>
         <location filename="../ui/widgets/general_script_editor.ui" line="14"/>
@@ -8086,7 +8086,7 @@ Bearbeite Dein Experiment im Skriptform</translation>
     <message>
         <location filename="../ui/widgets/loop_widget.ui" line="304"/>
         <source>Full-factorial design</source>
-        <translation>Vollständiger Versuchsplan</translation>
+        <translation>Vollfaktorieller Versuchsplan</translation>
     </message>
     <message>
         <location filename="../ui/widgets/loop_widget.ui" line="322"/>
@@ -8174,13 +8174,13 @@ Bearbeite Dein Experiment im Skriptform</translation>
     <message>
         <location filename="../ui/dialogs/loop_wizard_dialog.ui" line="14"/>
         <source>Generate full-factorial design</source>
-        <translation>Erstelle vollständigen Versuchsplan</translation>
+        <translation>Erstelle vollfaktoriellen Versuchsplan</translation>
     </message>
     <message>
         <location filename="../ui/dialogs/loop_wizard_dialog.ui" line="26"/>
         <source>To generate a full-factorial design, enter variable names (factors) in the first row of the table below. Below the variable names, enter the levels of the variables.&lt;br /&gt;&lt;br /&gt;
 &lt;b&gt;Note:&lt;/b&gt; This will overwrite the current loop table</source>
-        <translation>Um einen vollständigen Versuchsplan zu erzeugen, geben Sie die Variablennamen (Faktoren) in die erste Reihe der Tabelle ein. Unter den Variablennamen, geben Sie die Faktorstufen der Variablen ein &lt;/br&gt;&lt;br /&gt;&lt;b&gt;Beachte:&lt;/b&gt; Dies wird die aktuelle Tabelle überschreiben</translation>
+        <translation>Um einen vollfaktoriellen Versuchsplan zu erzeugen, geben Sie die Variablennamen (Faktoren) in die erste Reihe der Tabelle ein. Unter den Variablennamen, geben Sie die Faktorstufen der Variablen ein &lt;/br&gt;&lt;br /&gt;&lt;b&gt;Beachte:&lt;/b&gt; Dies wird die aktuelle Tabelle überschreiben</translation>
     </message>
 </context>
 <context>
@@ -9035,12 +9035,12 @@ Bearbeite Dein Experiment im Skriptform</translation>
     <message>
         <location filename="../ui/widgets/sketchpad.ui" line="185"/>
         <source>Body length </source>
-        <translation>Gesamtlänge </translation>
+        <translation>Körperlänge </translation>
     </message>
     <message>
         <location filename="../ui/widgets/sketchpad.ui" line="235"/>
         <source> prop</source>
-        <translation> </translation>
+        <translation> prop</translation>
     </message>
     <message>
         <location filename="../ui/widgets/sketchpad.ui" line="229"/>
@@ -9050,7 +9050,7 @@ Bearbeite Dein Experiment im Skriptform</translation>
     <message>
         <location filename="../ui/widgets/sketchpad.ui" line="232"/>
         <source>Body width </source>
-        <translation>Gesamtbreite </translation>
+        <translation>Körperbreite </translation>
     </message>
     <message>
         <location filename="../ui/widgets/sketchpad.ui" line="276"/>
