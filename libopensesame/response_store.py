@@ -124,7 +124,7 @@ class response_store(object):
 		name: acc
 
 		desc:
-			The percentage correct responses for all responses that are included
+			The percentage of correct responses for all responses that are included
 			in feedback. If there are no responses to give feedback on,
 			'undefined' is returned.
 		"""
@@ -138,7 +138,7 @@ class response_store(object):
 	def avg_rt(self):
 
 		"""
-		name: acc
+		name: avg_rt
 
 		desc:
 			The average response time for all responses that are included
@@ -181,7 +181,7 @@ class response_store(object):
 	def response_time(self):
 
 		"""
-		name: correct
+		name: response_time
 
 		desc:
 			A list of all response times (float or None).
@@ -206,7 +206,7 @@ class response_store(object):
 	def feedback(self):
 
 		"""
-		name: item
+		name: feedback
 
 		desc:
 			A list of the feedback status (True or False) associated with each
