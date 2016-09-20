@@ -25,7 +25,8 @@ from libopensesame.py3compat import *
 
 
 NO_PUNCTUATION_CHECK = [
-	u'zh_CN'
+	u'zh_CN',
+	u'ja_JP'
 	]
 
 
