@@ -1,19 +1,19 @@
 # Willkommen!
 
-Es scheint Sie sind ein neuer Nutzer von OpenSesame 3.
+Wie es aussieht, bist Du neu bei OpenSesame 3.
 
-Falls Sie OpenSesame noch nie benutzt haben, empfehle ich, dass Sie das Anfängertutorial durcharbeiten. Das wird eine Weile dauern, spart aber viel mehr Zeit später.
+Falls Du OpenSesame noch nie benutzt hast, empfehle ich Dir das Tutorial für Anfänger durchzugehen. Das wird zunächst ein wenig Zeit kosten, zahlt sich später aber durch große Zeitersparnis wieder ein.
 
-[Anfängertutorial](new:http://osdoc.cogsci.nl/3.1/tutorials/beginner){: .important-button}
+[Tutorial](new:http://osdoc.cogsci.nl/3.1/tutorials/beginner){: .important-button}
 
-Falls Sie OpenSesame 2 schon benutzt haben, empfehle ich, dass Sie eben schauen was es Neues gibt in der neuen Version 3. (Dies ist Version 3.1). Keine Sorge: Ihre alten Experimente funktionieren immer noch, und der Rest wird auch immer einfacher.
+Wenn Du OpenSesame 2 schon benutzt hast, empfehle ich Dir kurz anzuschauen, was es Neues gibt seit Version 3 (Dies ist Version 3.1). Keine Sorge: Deine alten Experimente funktionieren weiterhin, und alles andere ist nur noch einfacher geworden.
 
-[Nachschauen was es Neues gibt bei OpenSesame 3](new:http://osdoc.cogsci.nl/3.1/important-changes-3){: .button}
+[Anschauen was es Neues gibt bei OpenSesame 3](new:http://osdoc.cogsci.nl/3.1/important-changes-3){: .button}
 
-Und vergessen Sie nicht, Sie können stets Fragen in unserem Forum stellen.
+Und vergiss nicht, dass Du jederzeit Deine Fragen in unserem Support-Forum (Englisch) stellen kannst.
 
-[Support forum](new:http://forum.cogsci.nl/){: .button}
+[Support-Forum](new:http://forum.cogsci.nl/){: .button}
 
-Oder Sie können:
+Oder:
 
-[diese Nachricht für immer verwerfen](opensesame://event.os3n_dismiss_startup){: .dismiss-button}
+[Diese Nachricht dauerhaft ausblenden](opensesame://event.os3n_dismiss_startup){: .dismiss-button}
