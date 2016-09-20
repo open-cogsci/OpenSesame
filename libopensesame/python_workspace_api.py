@@ -34,7 +34,7 @@ def canvas(auto_prepare=True, **style_args):
 
 	"""
 	desc: |
-		A convenience function that creates a new CANVAS object. For a
+		A convenience function that creates a new `canvas` object. For a
 		description of possible keywords, see:
 
 		- %link:manual/python/canvas%
@@ -99,7 +99,7 @@ def sampler(src, **playback_args):
 
 	"""
 	desc: |
-		A convenience function that creates a new SAMPLER object. For a
+		A convenience function that creates a new `sampler` object. For a
 		description of possible keywords, see:
 
 		- %link:manual/python/sampler%
@@ -123,7 +123,7 @@ def synth(osc="sine", freq=440, length=100, attack=0, decay=5):
 
 	"""
 	desc:
-		Synthesizes a sound and returns it as a SAMPLER object.
+		Synthesizes a sound and returns it as a `sampler` object.
 
 	keywords:
 		osc:
