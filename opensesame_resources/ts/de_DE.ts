@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
-<TS version="2.0" language="de_DE">
+<!DOCTYPE TS><TS version="2.0" language="de_DE" sourcelanguage="">
 <context>
     <name>Form</name>
     <message>
@@ -876,7 +875,7 @@
         <source>Could not parse script: %s</source>
         <translation>Konnte Skript nicht analysieren: %s</translation>
     </message>
-    <message utf8="true">
+    <message encoding="UTF-8">
         <location filename="../../translatables-tmp.py" line="192"/>
         <source>Save as…</source>
         <translation>Speichern unter…</translation>
@@ -1130,7 +1129,7 @@ Beschreibung: %s</translation>
         <source>Done</source>
         <translation>Fertig</translation>
     </message>
-    <message utf8="true">
+    <message encoding="UTF-8">
         <location filename="../../translatables-tmp.py" line="8"/>
         <source>Loading …</source>
         <translation>Lade …</translation>
@@ -1317,7 +1316,7 @@ Das Experiment konnte aus dem folgenden Grund nicht normal abgeschlossen werden:
 </context>
 <context>
     <name>extension_get_started</name>
-    <message utf8="true">
+    <message encoding="UTF-8">
         <location filename="../../translatables-tmp.py" line="430"/>
         <source>New…</source>
         <translation>Neu…</translation>
@@ -2368,7 +2367,7 @@ Das Experiment konnte aus dem folgenden Grund nicht normal abgeschlossen werden:
         <source>* Has no effect in psycho back-end</source>
         <translation type="obsolete">* Hat im psycho Back-End keine Auswirkung</translation>
     </message>
-    <message utf8="true">
+    <message encoding="UTF-8">
         <location filename="gabor_settings.ui" line="89"/>
         <source> °</source>
         <translation type="obsolete"> °</translation>
@@ -4885,17 +4884,17 @@ Das Experiment konnte aus dem folgenden Grund nicht normal abgeschlossen werden:
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="277"/>
-        <source>Steepness of the Weibull psychometric function (Î²)</source>
+        <source>Steepness of the Weibull psychometric function (&#xce;&#xb2;)</source>
         <translation>Steilheit der Weibull-Verteilung (Î²)</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="278"/>
-        <source>Proportion of random responses at maximum stimulus intensity (Î´)</source>
+        <source>Proportion of random responses at maximum stimulus intensity (&#xce;&#xb4;)</source>
         <translation>Anteil zufälliger Reaktionen bei höchster Stimulusdichte (Î´)</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="279"/>
-        <source>Chance level (Î³)</source>
+        <source>Chance level (&#xce;&#xb3;)</source>
         <translation>Zufallsniveau (Î³)</translation>
     </message>
     <message>
@@ -5530,17 +5529,17 @@ Das Experiment konnte aus dem folgenden Grund nicht normal abgeschlossen werden:
     </message>
     <message>
         <location filename="translatables.py" line="32"/>
-        <source>Steepness of the Weibull psychometric function (Î²)</source>
+        <source>Steepness of the Weibull psychometric function (&#xce;&#xb2;)</source>
         <translation type="obsolete">Steilheit der Weibull-Verteilung (Î²)</translation>
     </message>
     <message>
         <location filename="translatables.py" line="32"/>
-        <source>Proportion of random responses at maximum stimulus intensity (Î´)</source>
+        <source>Proportion of random responses at maximum stimulus intensity (&#xce;&#xb4;)</source>
         <translation type="obsolete">Anteil zufälliger Reaktionen bei höchster Stimulusdichte  (Î´)</translation>
     </message>
     <message>
         <location filename="translatables.py" line="32"/>
-        <source>Chance level (Î³)</source>
+        <source>Chance level (&#xce;&#xb3;)</source>
         <translation type="obsolete">Zufallsniveau (Î³)</translation>
     </message>
     <message>
@@ -7650,7 +7649,7 @@ Zahlreiche Einstellungen zur Kontrolle der Anzeige, des Tons und der Eingabeger�
         <source>Orientation&lt;br /&gt;&lt;i&gt;in degrees (0 .. 360)&lt;/i&gt;</source>
         <translation>Ausrichtung&lt;br /&gt;&lt;i&gt;in Grad (0 .. 360)&lt;/i&gt;</translation>
     </message>
-    <message utf8="true">
+    <message encoding="UTF-8">
         <location filename="../ui/dialogs/gabor_settings.ui" line="100"/>
         <source> °</source>
         <translation> °</translation>
@@ -7844,7 +7843,7 @@ Zahlreiche Einstellungen zur Kontrolle der Anzeige, des Tons und der Eingabeger�
         <source> px</source>
         <translation> px</translation>
     </message>
-    <message utf8="true">
+    <message encoding="UTF-8">
         <location filename="../ui/widgets/general_properties.ui" line="157"/>
         <source>×</source>
         <translation>x</translation>
@@ -8610,22 +8609,22 @@ Bearbeite Dein Experiment in Skriptform</translation>
         <source>One-tab mode</source>
         <translation>Ein-Tab-Modus</translation>
     </message>
-    <message utf8="true">
+    <message encoding="UTF-8">
         <location filename="../ui/misc/main_window.ui" line="358"/>
         <source>Open…</source>
         <translation>Öffne…</translation>
     </message>
-    <message utf8="true">
+    <message encoding="UTF-8">
         <location filename="../ui/misc/main_window.ui" line="388"/>
         <source>Save as…</source>
         <translation>Speichern unter…</translation>
     </message>
-    <message utf8="true">
+    <message encoding="UTF-8">
         <location filename="../ui/misc/main_window.ui" line="411"/>
         <source>Run fullscreen…</source>
         <translation>Ausführen im Vollbildmodus…</translation>
     </message>
-    <message utf8="true">
+    <message encoding="UTF-8">
         <location filename="../ui/misc/main_window.ui" line="449"/>
         <source>Run in window…</source>
         <translation>Ausführen im Fenstermodus…</translation>
@@ -9991,14 +9990,14 @@ Einstellungen im Zusammenhang mit dem Bildschirm, Ton und Eingabegeräten</trans
         <source>&lt;a href=&quot;http://osdoc.cogsci.nl/donate/&quot;&gt;Donate&lt;/a&gt;</source>
         <translation type="obsolete">&lt;a href=&quot;http://osdoc.cogsci.nl/donate/&quot;&gt;Spenden&lt;/a&gt;</translation>
     </message>
-    <message utf8="true">
+    <message encoding="UTF-8">
         <location filename="credits_widget.ui" line="179"/>
         <source>OpenSesame [version] [codename]
 Copyright Sebastiaan Mathôt (2010-2014)</source>
         <translation type="obsolete">OpenSesame [version] [codename]
 Copyright Sebastiaan Mathôt (2010-2014)</translation>
     </message>
-    <message utf8="true">
+    <message encoding="UTF-8">
         <location filename="credits_widget.ui" line="146"/>
         <source>OpenSesame %(version)s %(codename)s
 Copyright Sebastiaan Mathôt (2010-2015)</source>
