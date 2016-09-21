@@ -86,6 +86,8 @@ class check_syntax(unittest.TestCase):
 		self.checkEvalText(u'[=u"tést"]', u'tést')
 		self.checkEvalText(u'[="\[test\]"]', u'[test]')
 		self.checkCnd(u'[width] > 100', u'var.width > 100')
+		self.checkCnd(u'[width] >= 100', u'var.width >= 100')
+		self.checkCnd(u'[width] <= 100', u'var.width <= 100')
 		self.checkCnd(u'always', u'True')
 		self.checkCnd(u'ALWAYS', u'True')
 		self.checkCnd(u'never', u'False')

@@ -57,7 +57,7 @@ class syntax(object):
 		# [\[test\]]
 		self.re_txt_py = re.compile(r'(?<!\\)(\[=.*?[^\\]\])')
 		# Catch single equals signs
-		self.re_single_eq = re.compile(r'(?<![=!])(=)(?!=)')
+		self.re_single_eq = re.compile(r'(?<![=!<>])(=)(?!=)')
 		# Catch 'never' and 'always'
 		self.re_never = re.compile(r'\bnever\b', re.I)
 		self.re_always = re.compile(r'\balways\b', re.I)
