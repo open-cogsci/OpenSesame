@@ -201,7 +201,7 @@ class loop(item.item):
 				try:
 					src_dm = io.readtxt(src)
 				except Exception as e:
-					raise osexception(u'Failed to read text file: %s' % src,
+					raise osexception(u'Failed to read text file (perhaps it has the wrong format or it is not utf-8 encoded): %s' % src,
 						exception=e)
 		length = int(len(src_dm) * self.var.repeat)
 		dm = DataMatrix(length=0)
