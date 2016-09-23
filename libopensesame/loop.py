@@ -124,6 +124,13 @@ class loop(item.item):
 			self.dm.length = 1
 		if len(self.dm.columns) == 0:
 			self.dm.empty_column = u''
+		# Backwards compatibility: Older version of OpenSesame can specify the
+		# number of cycles through the cycles variable. If the specified number
+		# of cycles doesn't match the length of the datamatrix, we change the
+		# length of the datamatrix.
+		if u'cycles' in self.var and isinstance(self.var.cycles, int) \
+				and self.var.cycles != len(self.dm):
+			self.dm.length = self.var.cycles
 
 	def to_string(self):
 
