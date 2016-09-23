@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS><TS version="2.0" language="fr" sourcelanguage="">
+<!DOCTYPE TS>
+<TS version="2.0" language="fr">
 <context>
     <name>Form</name>
     <message>
@@ -589,7 +590,7 @@
         <source>Could not parse script: %s</source>
         <translation>L&apos;analyse du script a échoué : %s</translation>
     </message>
-    <message encoding="UTF-8">
+    <message utf8="true">
         <location filename="../../translatables-tmp.py" line="192"/>
         <source>Save as…</source>
         <translation>Enregistrer sous…</translation>
@@ -853,7 +854,7 @@ Description : %s</translation>
         <source>Done</source>
         <translation>Fini !</translation>
     </message>
-    <message encoding="UTF-8">
+    <message utf8="true">
         <location filename="../../translatables-tmp.py" line="8"/>
         <source>Loading …</source>
         <translation>Chargement…</translation>
@@ -996,7 +997,7 @@ L&apos;éxpérience ne s&apos;est pas terminée normalement pour la raison suiva
 </context>
 <context>
     <name>extension_get_started</name>
-    <message encoding="UTF-8">
+    <message utf8="true">
         <location filename="../../translatables-tmp.py" line="430"/>
         <source>New…</source>
         <translation>Nouveau…</translation>
@@ -2333,7 +2334,7 @@ L&apos;éxpérience ne s&apos;est pas terminée normalement pour la raison suiva
     <message>
         <location filename="../../translatables-tmp.py" line="555"/>
         <source>Enter text</source>
-        <translation>Saissir du texte</translation>
+        <translation type="unfinished">Saisir du texte</translation>
     </message>
 </context>
 <context>
@@ -3840,17 +3841,17 @@ L&apos;éxpérience ne s&apos;est pas terminée normalement pour la raison suiva
         <source>Experimental variable for test value</source>
         <translation>Variable expérimentale pour la valeur de test</translation>
     </message>
-    <message encoding="UTF-8">
+    <message utf8="true">
         <location filename="../../translatables-tmp.py" line="277"/>
         <source>Steepness of the Weibull psychometric function (β)</source>
         <translation>Pente de la fonction psychométrique Weibull (β)</translation>
     </message>
-    <message encoding="UTF-8">
+    <message utf8="true">
         <location filename="../../translatables-tmp.py" line="278"/>
         <source>Proportion of random responses at maximum stimulus intensity (δ)</source>
         <translation>Proportion de réponses aléatoires à l&apos;intensité maximale du stimulus (δ)</translation>
     </message>
-    <message encoding="UTF-8">
+    <message utf8="true">
         <location filename="../../translatables-tmp.py" line="279"/>
         <source>Chance level (γ)</source>
         <translation>Niveau de hasard (γ)</translation>
@@ -5951,7 +5952,7 @@ Différents réglages liés au contrôle de l&apos;affichage, le son, et les sys
         <source>Orientation&lt;br /&gt;&lt;i&gt;in degrees (0 .. 360)&lt;/i&gt;</source>
         <translation>Orientation&lt;br /&gt;&lt;i&gt;en degrés (0 .. 360)&lt;/i&gt;</translation>
     </message>
-    <message encoding="UTF-8">
+    <message utf8="true">
         <location filename="../ui/dialogs/gabor_settings.ui" line="100"/>
         <source> °</source>
         <translation> °</translation>
@@ -6151,7 +6152,7 @@ Différents réglages liés au contrôle de l&apos;affichage, le son, et les sys
         <source> px</source>
         <translation> px</translation>
     </message>
-    <message encoding="UTF-8">
+    <message utf8="true">
         <location filename="../ui/widgets/general_properties.ui" line="157"/>
         <source>×</source>
         <translation>×</translation>
@@ -6487,7 +6488,7 @@ Edit your experiment in script form</source>
         <location filename="../ui/dialogs/loop_wizard_dialog.ui" line="26"/>
         <source>To generate a full-factorial design, enter variable names (factors) in the first row of the table below. Below the variable names, enter the levels of the variables.&lt;br /&gt;&lt;br /&gt;
 &lt;b&gt;Note:&lt;/b&gt; This will overwrite the current loop table</source>
-        <translation type="unfinished">Pour générer un plan factoriel, saisir des noms de variables (facteurs) dans la première ligne du tableau. Au-dessous des noms de variables, saissir les niveaux de variables.&lt;br /&gt;&lt;br /&gt;
+        <translation type="unfinished">Pour générer un plan factoriel, saisir des noms de variables (facteurs) dans la première ligne du tableau. Au-dessous des noms de variables, saisir les niveaux de variables.&lt;br /&gt;&lt;br /&gt;
 &lt;b&gt;Note :&lt;/b&gt; Cela écrasera le tableau de loop actuel</translation>
     </message>
 </context>
@@ -6943,7 +6944,7 @@ Edit your experiment in script form</source>
         <source>Show debug window (standard output) and a Python interpreter</source>
         <translation type="obsolete">Montrer la fenêtre de débogage (sortie standard) et un interpreteur python</translation>
     </message>
-    <message encoding="UTF-8">
+    <message utf8="true">
         <location filename="../ui/misc/main_window.ui" line="355"/>
         <source>Open …</source>
         <translation type="obsolete">Ouvrir</translation>
@@ -6953,22 +6954,22 @@ Edit your experiment in script form</source>
         <source>One-tab mode</source>
         <translation>Mode un-onglet</translation>
     </message>
-    <message encoding="UTF-8">
+    <message utf8="true">
         <location filename="../ui/misc/main_window.ui" line="358"/>
         <source>Open…</source>
         <translation>Ouvrir…</translation>
     </message>
-    <message encoding="UTF-8">
+    <message utf8="true">
         <location filename="../ui/misc/main_window.ui" line="388"/>
         <source>Save as…</source>
         <translation>Enregistrer sous…</translation>
     </message>
-    <message encoding="UTF-8">
+    <message utf8="true">
         <location filename="../ui/misc/main_window.ui" line="411"/>
         <source>Run fullscreen…</source>
         <translation>Exécuter en plein écran…</translation>
     </message>
-    <message encoding="UTF-8">
+    <message utf8="true">
         <location filename="../ui/misc/main_window.ui" line="449"/>
         <source>Run in window…</source>
         <translation>Exécuter en fenêtre…</translation>
@@ -6994,7 +6995,7 @@ Edit your experiment in script form</source>
     <message>
         <location filename="../ui/dialogs/noise_settings.ui" line="140"/>
         <source>Standard deviation&lt;br /&gt;&lt;i&gt;in pixels, only applies to Gaussian envelope&lt;/i&gt;</source>
-        <translation type="unfinished">Déviation standard&lt;br /&gt;&lt;i&gt;en pixels, ne concerne que l&apos;enveloppe Gaussienne&lt;/i&gt;</translation>
+        <translation>Déviation standard&lt;br /&gt;&lt;i&gt;en pixels, ne concerne que l&apos;enveloppe Gaussienne&lt;/i&gt;</translation>
     </message>
     <message>
         <location filename="../ui/dialogs/noise_settings.ui" line="163"/>
@@ -7222,12 +7223,12 @@ Edit your experiment in script form</source>
     <message>
         <location filename="../ui/widgets/preferences_widget.ui" line="126"/>
         <source>icon theme</source>
-        <translation type="unfinished">thème d&apos;icône</translation>
+        <translation>thème d&apos;icône</translation>
     </message>
     <message>
         <location filename="../ui/widgets/preferences_widget.ui" line="136"/>
         <source>Small icons in toolbar</source>
-        <translation type="unfinished">Petites icônes dans la barre d&apos;outils</translation>
+        <translation>Petites icônes dans la barre d&apos;outils</translation>
     </message>
     <message>
         <location filename="../ui/widgets/preferences_widget.ui" line="143"/>
@@ -7413,7 +7414,7 @@ Edit your experiment in script form</source>
     <message>
         <location filename="../ui/widgets/sketchpad.ui" line="185"/>
         <source>Body length </source>
-        <translation type="unfinished">Longueur de base </translation>
+        <translation>Longueur de base </translation>
     </message>
     <message>
         <location filename="../ui/widgets/sketchpad.ui" line="235"/>
@@ -8166,7 +8167,7 @@ Différents réglages liés au contrôle de l&apos;affichage, le son, et les sys
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;COGSCIdotNL // cognitive science and more&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="obsolete">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;COGSCIpointNL // cognitive science and more&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
-    <message encoding="UTF-8">
+    <message utf8="true">
         <location filename="credits_widget.ui" line="150"/>
         <source>OpenSesame [version] [codename]
 Copyright Sebastiaan Mathôt (2010-2013)</source>
