@@ -346,6 +346,10 @@ class qtitem(base_qtobject):
 			Updates both the script and the controls.
 		"""
 
+		# Items are updated when their tab is shown, so we don't need to update
+		# them if they aren't shown.
+		if self.tabwidget.current_item() != self.name:
+			return
 		self.update_script()
 		self.edit_widget()
 
