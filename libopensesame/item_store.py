@@ -18,10 +18,12 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame import plugins
+from libopensesame.cistr import cistr
 from libopensesame.misc import debug
 from libopensesame.exceptions import osexception
 from libopensesame.item_stack import item_stack_singleton
 from libopensesame.py3compat import *
+
 
 class item_store(object):
 
@@ -208,7 +210,7 @@ class item_store(object):
 		while _name in self:
 			_name = u'%s_%d' % (name, i)
 			i += 1
-		return _name
+		return cistr(_name)
 
 	def _type(self, name):
 
@@ -278,16 +280,18 @@ class item_store(object):
 
 	def __contains__(self, name):
 
-		if not isinstance(name, basestring):
-			return False
-		for item in self.__items__:
-			if item.lower() == name.lower():
-				return True
-		return False
+		if not isinstance(name, cistr):
+			try:
+				name = cistr(name)
+			except AttributeError:
+				return False
+		return name in self.__items__
 
 	def __getitem__(self, name):
 
-		for item in self.__items__:
-			if item.lower() == name.lower():
-				return self.__items__[item]
-		raise osexception(u'No item named "%s"' % name)
+		if not isinstance(name, cistr):
+			name = cistr(name)
+		try:
+			return self.__items__[name]
+		except KeyError:
+			raise osexception(u'No item named "%s"' % name)
