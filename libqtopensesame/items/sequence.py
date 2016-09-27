@@ -54,6 +54,7 @@ class sequence(qtstructure_item, qtplugin, sequence_runtime):
 		sequence_runtime.__init__(self, name, experiment, string)
 		qtplugin.__init__(self)
 		self.last_removed_child = None, None
+		self._children = None
 
 	def init_edit_widget(self):
 
@@ -108,6 +109,7 @@ class sequence(qtstructure_item, qtplugin, sequence_runtime):
 				new_items.append( (item, cond) )
 		self.items = new_items
 		self.treewidget.rename(from_name, to_name)
+		self._children = None
 
 	def delete(self, item_name, item_parent=None, index=None):
 
@@ -125,6 +127,7 @@ class sequence(qtstructure_item, qtplugin, sequence_runtime):
 		elif item_parent == self.name and index is not None:
 			if self.items[index][0] == item_name:
 				self.items = self.items[:index]+self.items[index+1:]
+		self._children = None
 
 	def build_item_tree(self, toplevel=None, items=[], max_depth=-1,
 		extra_info=None):
@@ -167,22 +170,20 @@ class sequence(qtstructure_item, qtplugin, sequence_runtime):
 
 		"""See qtitem."""
 
-		_children = []
+		if self._children is not None:
+			return self._children
+		self._children = []
 		for item, cond in self.items:
 			if item not in self.experiment.items:
 				continue
-			_children += [item] + self.experiment.items[item].children()
-		return _children
+			self._children += [item] + self.experiment.items[item].children()
+		return self._children
 
 	def is_child_item(self, item):
 
 		"""See qtitem."""
 
-		for i, cond in self.items:
-			if i == item or (i in self.experiment.items and \
-				self.experiment.items[i].is_child_item(item)):
-				return True
-		return False
+		return item in self.children()
 
 	def insert_child_item(self, item_name, index=0):
 
@@ -196,6 +197,7 @@ class sequence(qtstructure_item, qtplugin, sequence_runtime):
 			self.items.insert(index, (item_name, u'always'))
 		self.update()
 		self.main_window.set_unsaved(True)
+		self._children = None
 
 	def remove_child_item(self, item_name, index=0):
 
@@ -214,3 +216,4 @@ class sequence(qtstructure_item, qtplugin, sequence_runtime):
 			del self.items[index]
 		self.update()
 		self.main_window.set_unsaved(True)
+		self._children = None
