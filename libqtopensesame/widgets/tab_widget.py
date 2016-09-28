@@ -294,8 +294,7 @@ class tab_widget(base_subcomponent, QtWidgets.QTabWidget):
 			path = self.main_window.experiment.resource(item + u'.md')
 		except:
 			try:
-				html_path = self.main_window.experiment.resource(
-					item + u'.html')
+				path = self.main_window.experiment.resource(item + u'.html')
 			except:
 				path = self.main_window.experiment.resource(
 					os.path.join(u'help', u'missing.md'))
