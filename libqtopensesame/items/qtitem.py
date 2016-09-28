@@ -78,6 +78,7 @@ class qtitem(base_qtobject):
 			self.container_widget = None
 		else:
 			self.init_edit_widget()
+		self._children = None
 		self.lock = False
 		self.maximized = False
 		self.set_validator()
@@ -837,6 +838,16 @@ class qtitem(base_qtobject):
 			self.auto_checkbox[var] = widget
 		else:
 			raise Exception(u"Cannot auto-add widget of type %s" % widget)
+			
+	def clear_children_cache(self):
+		
+		"""
+		desc:
+			Changes the children cache for all items in the experiment.
+		"""
+		
+		for item in self.experiment.items.values():
+			item._children = None			
 
 	def children(self):
 

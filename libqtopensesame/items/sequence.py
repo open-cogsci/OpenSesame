@@ -55,7 +55,6 @@ class sequence(qtstructure_item, qtplugin, sequence_runtime):
 		sequence_runtime.__init__(self, name, experiment, string)
 		qtplugin.__init__(self)
 		self.last_removed_child = None, None
-		self._children = None
 
 	def init_edit_widget(self):
 
@@ -96,7 +95,7 @@ class sequence(qtstructure_item, qtplugin, sequence_runtime):
 		self.toplevel_treeitem.setExpanded(True)
 		self.treewidget.resizeColumnToContents(0)
 		self.treewidget.append_button.set_position()
-
+				
 	@requires_init
 	def rename(self, from_name, to_name):
 
@@ -111,7 +110,7 @@ class sequence(qtstructure_item, qtplugin, sequence_runtime):
 				new_items.append( (item, cond) )
 		self.items = new_items
 		self.treewidget.rename(from_name, to_name)
-		self._children = None
+		self.clear_children_cache()
 
 	def delete(self, item_name, item_parent=None, index=None):
 
@@ -129,7 +128,7 @@ class sequence(qtstructure_item, qtplugin, sequence_runtime):
 		elif item_parent == self.name and index is not None:
 			if self.items[index][0] == item_name:
 				self.items = self.items[:index]+self.items[index+1:]
-		self._children = None
+		self.clear_children_cache()
 
 	def build_item_tree(self, toplevel=None, items=[], max_depth=-1,
 		extra_info=None):
@@ -199,7 +198,7 @@ class sequence(qtstructure_item, qtplugin, sequence_runtime):
 			self.items.insert(index, (item_name, u'always'))
 		self.update()
 		self.main_window.set_unsaved(True)
-		self._children = None
+		self.clear_children_cache()
 
 	def remove_child_item(self, item_name, index=0):
 
@@ -218,4 +217,4 @@ class sequence(qtstructure_item, qtplugin, sequence_runtime):
 			del self.items[index]
 		self.update()
 		self.main_window.set_unsaved(True)
-		self._children = None
+		self.clear_children_cache()
