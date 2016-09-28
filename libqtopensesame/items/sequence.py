@@ -25,6 +25,7 @@ from libqtopensesame.widgets.tree_overview import tree_overview
 from libqtopensesame.items.qtplugin import qtplugin
 from libqtopensesame.items.qtstructure_item import qtstructure_item
 from libqtopensesame.misc.translate import translation_context
+from libqtopensesame.items.qtitem import requires_init
 _ = translation_context(u'sequence', category=u'item')
 
 class sequence(qtstructure_item, qtplugin, sequence_runtime):
@@ -96,6 +97,7 @@ class sequence(qtstructure_item, qtplugin, sequence_runtime):
 		self.treewidget.resizeColumnToContents(0)
 		self.treewidget.append_button.set_position()
 
+	@requires_init
 	def rename(self, from_name, to_name):
 
 		"""See qtitem."""
