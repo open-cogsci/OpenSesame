@@ -75,7 +75,6 @@ class unused_widget(base_widget):
 			Purges all unused items.
 		"""
 
-		# Ask confirmation
 		resp = QtWidgets.QMessageBox.question(self.main_window.ui.centralwidget,
 			_(u"Permanently delete items?"),
 			_(u"Are you sure you want to permanently delete all unused items? This action cannot be undone."),
@@ -83,9 +82,11 @@ class unused_widget(base_widget):
 		if resp == QtWidgets.QMessageBox.No:
 			return
 		self.extension_manager.fire(u'prepare_purge_unused_items')
+		self.overview_area.locked = True
 		for item_name in self.experiment.items.unused():
 			self.experiment.items[item_name].close_tab()
 			del self.experiment.items[item_name]
+		self.overview_area.locked = False
 		self.experiment.build_item_tree()
 		self.purge_button.setDisabled(True)
 		self.extension_manager.fire(u'purge_unused_items')
