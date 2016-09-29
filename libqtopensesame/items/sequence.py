@@ -37,6 +37,7 @@ class sequence(qtstructure_item, qtplugin, sequence_runtime):
 
 	description = _(u'Runs a number of items in sequence')
 	help_url = u'manual/structure/sequence'
+	lazy_init = True
 
 	def __init__(self, name, experiment, string=None):
 

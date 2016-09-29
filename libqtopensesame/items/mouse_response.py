@@ -32,6 +32,7 @@ class mouse_response(mouse_response_runtime, qtplugin):
 
 	description = _(u'Collects mouse responses')
 	help_url = u'manual/response/mouse'
+	lazy_init = True
 
 	def __init__(self, name, experiment, string=None):
 

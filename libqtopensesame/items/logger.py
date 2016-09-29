@@ -33,6 +33,7 @@ class logger(logger_runtime, qtplugin):
 
 	description = _(u'Logs experimental data')
 	help_url = u'manual/logging'
+	lazy_init = True
 
 	def __init__(self, name, experiment, string=None):
 

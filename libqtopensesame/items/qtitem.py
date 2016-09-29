@@ -56,7 +56,7 @@ class qtitem(base_qtobject):
 	initial_view = u'controls'
 	label_align = u'right'
 	help_url = None
-	lazy_init = True
+	lazy_init = False
 
 	def __init__(self):
 

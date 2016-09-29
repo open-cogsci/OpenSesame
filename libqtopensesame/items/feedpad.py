@@ -32,6 +32,7 @@ class feedpad(object):
 	"""
 
 	help_url = u'manual/stimuli/visual'
+	lazy_init = True
 
 	def init_edit_widget(self):
 

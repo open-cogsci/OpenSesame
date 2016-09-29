@@ -33,6 +33,7 @@ class keyboard_response(keyboard_response_runtime, qtplugin):
 
 	description = _(u'Collects keyboard responses')
 	help_url = u'manual/response/keyboard'
+	lazy_init = True
 
 	def __init__(self, name, experiment, string=None):
 
