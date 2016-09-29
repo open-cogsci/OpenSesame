@@ -62,7 +62,6 @@ class xpyriment(canvas.canvas, xpyriment_coordinates):
 		self.auto_prepare = canvas.auto_prepare
 		self.aa = canvas.aa
 		self.prepared = False
-		#self.clear()
 		self.stim_list = [stim.copy() for stim in canvas.stim_list]
 		if self.auto_prepare:
 			self.prepare()
