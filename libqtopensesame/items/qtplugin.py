@@ -50,12 +50,11 @@ class qtplugin(qtitem.qtitem):
 			# These lines makes sure that the icons and help file are recognized
 			# by OpenSesame.
 			self.plugin_folder = os.path.dirname(plugin_file)
-			self.experiment.resources[u'%s.html' % self.item_type] = \
-				os.path.join(self.plugin_folder, u'%s.html' \
-				% self.item_type)
-			self.experiment.resources[u'%s.md' % self.item_type] = \
-				os.path.join(self.plugin_folder, u'%s.md' \
-				% self.item_type)
+			for ext in [u'.html', u'.md']:			
+				basename = self.item_type + ext
+				path = os.path.join(self.plugin_folder, basename)
+				if os.path.exists(path):
+					self.experiment.resources[basename] = path
 			# Install a translation file if there is one. Most plugins have
 			# their translations as part of the OpenSesame main translations.
 			# However, separate plugins can bring their own translation.

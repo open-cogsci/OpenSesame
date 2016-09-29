@@ -25,6 +25,7 @@ from libqtopensesame.widgets.tree_overview import tree_overview
 from libqtopensesame.items.qtplugin import qtplugin
 from libqtopensesame.items.qtstructure_item import qtstructure_item
 from libqtopensesame.misc.translate import translation_context
+from libqtopensesame.items.qtitem import requires_init
 _ = translation_context(u'sequence', category=u'item')
 
 class sequence(qtstructure_item, qtplugin, sequence_runtime):
@@ -94,7 +95,8 @@ class sequence(qtstructure_item, qtplugin, sequence_runtime):
 		self.toplevel_treeitem.setExpanded(True)
 		self.treewidget.resizeColumnToContents(0)
 		self.treewidget.append_button.set_position()
-
+				
+	@requires_init
 	def rename(self, from_name, to_name):
 
 		"""See qtitem."""
@@ -108,6 +110,7 @@ class sequence(qtstructure_item, qtplugin, sequence_runtime):
 				new_items.append( (item, cond) )
 		self.items = new_items
 		self.treewidget.rename(from_name, to_name)
+		self.clear_children_cache()
 
 	def delete(self, item_name, item_parent=None, index=None):
 
@@ -125,6 +128,7 @@ class sequence(qtstructure_item, qtplugin, sequence_runtime):
 		elif item_parent == self.name and index is not None:
 			if self.items[index][0] == item_name:
 				self.items = self.items[:index]+self.items[index+1:]
+		self.clear_children_cache()
 
 	def build_item_tree(self, toplevel=None, items=[], max_depth=-1,
 		extra_info=None):
@@ -167,22 +171,20 @@ class sequence(qtstructure_item, qtplugin, sequence_runtime):
 
 		"""See qtitem."""
 
-		_children = []
+		if self._children is not None:
+			return self._children
+		self._children = []
 		for item, cond in self.items:
 			if item not in self.experiment.items:
 				continue
-			_children += [item] + self.experiment.items[item].children()
-		return _children
+			self._children += [item] + self.experiment.items[item].children()
+		return self._children
 
 	def is_child_item(self, item):
 
 		"""See qtitem."""
 
-		for i, cond in self.items:
-			if i == item or (i in self.experiment.items and \
-				self.experiment.items[i].is_child_item(item)):
-				return True
-		return False
+		return item in self.children()
 
 	def insert_child_item(self, item_name, index=0):
 
@@ -196,6 +198,7 @@ class sequence(qtstructure_item, qtplugin, sequence_runtime):
 			self.items.insert(index, (item_name, u'always'))
 		self.update()
 		self.main_window.set_unsaved(True)
+		self.clear_children_cache()
 
 	def remove_child_item(self, item_name, index=0):
 
@@ -214,3 +217,4 @@ class sequence(qtstructure_item, qtplugin, sequence_runtime):
 			del self.items[index]
 		self.update()
 		self.main_window.set_unsaved(True)
+		self.clear_children_cache()

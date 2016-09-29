@@ -31,6 +31,24 @@ from libqtopensesame.misc.base_qtobject import base_qtobject
 from libqtopensesame.misc.translate import translation_context
 _ = translation_context(u'qtitem', category=u'core')
 
+
+def requires_init(fnc):
+	
+	"""
+	desc:
+		A decorator that makes sure that an item's controls are initialized
+		before a function is called.
+	"""
+	
+	def inner(self, *args, **kwargs):
+		
+		if self.container_widget is None:
+			self.init_edit_widget()
+		return fnc(self, *args, **kwargs)
+		
+	return inner
+
+
 class qtitem(base_qtobject):
 
 	"""Base class for the GUI controls of other items"""
@@ -38,6 +56,7 @@ class qtitem(base_qtobject):
 	initial_view = u'controls'
 	label_align = u'right'
 	help_url = None
+	lazy_init = True
 
 	def __init__(self):
 
@@ -50,7 +69,16 @@ class qtitem(base_qtobject):
 		self.auto_slider = {}
 		self.auto_editor = {}
 		self.auto_checkbox = {}
-		self.init_edit_widget()
+		# Lazy initialization means that the control widgets are initialized
+		# only when they are shown for the first time. This dramatically speeds
+		# up opening of files. However, with some items this is not currently
+		# possible, because their widgets are also referred when they are not
+		# shown. Currently this means the inline_script.
+		if self.lazy_init:
+			self.container_widget = None
+		else:
+			self.init_edit_widget()
+		self._children = None
 		self.lock = False
 		self.maximized = False
 		self.set_validator()
@@ -83,7 +111,7 @@ class qtitem(base_qtobject):
 	@property
 	def default_description(self):
 		return _(u'Default description')
-
+		
 	def open_tab(self, select_in_tree=True):
 
 		"""
@@ -170,6 +198,7 @@ class qtitem(base_qtobject):
 		self.edit_widget()
 		self.main_window.ui.itemtree.select_item(self.name, open_tab=False)
 
+	@requires_init
 	def widget(self):
 
 		"""
@@ -346,6 +375,10 @@ class qtitem(base_qtobject):
 			Updates both the script and the controls.
 		"""
 
+		# Items are updated when their tab is shown, so we don't need to update
+		# them if they aren't shown.
+		if self.tabwidget.current_item() != self.name:
+			return
 		self.update_script()
 		self.edit_widget()
 
@@ -805,6 +838,16 @@ class qtitem(base_qtobject):
 			self.auto_checkbox[var] = widget
 		else:
 			raise Exception(u"Cannot auto-add widget of type %s" % widget)
+			
+	def clear_children_cache(self):
+		
+		"""
+		desc:
+			Changes the children cache for all items in the experiment.
+		"""
+		
+		for item in self.experiment.items.values():
+			item._children = None			
 
 	def children(self):
 

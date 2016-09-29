@@ -62,6 +62,10 @@ class base_subcomponent(base_component):
 	@property
 	def extension_manager(self):
 		return self.main_window.extension_manager
+		
+	@property
+	def overview_area(self):
+		return self.main_window.ui.itemtree
 
 	@property
 	def console(self):

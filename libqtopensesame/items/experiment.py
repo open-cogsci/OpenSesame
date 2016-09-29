@@ -82,7 +82,7 @@ class experiment(libopensesame.experiment.experiment):
 
 	@property
 	def overview_area(self):
-		return self.experiment.main_window.ui.itemtree
+		return self.main_window.ui.itemtree
 
 	@property
 	def default_title(self):

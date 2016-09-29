@@ -36,6 +36,7 @@ class inline_script(item.item):
 	"""
 
 	description = u'Executes Python code'
+	lazy_init = False
 
 	def reset(self):
 
