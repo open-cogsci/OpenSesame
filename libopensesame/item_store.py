@@ -203,8 +203,13 @@ class item_store(object):
 		else:
 			name = self.experiment.syntax.sanitize(suggestion, strict=True,
 				allow_vars=False)
-			if len(name) == 0:
+			# Empty names are not allowed, and we fall back to the item type
+			if not name:
 				name = item_type
+			# Names cannot start with a number, and are therefore prefixed by
+			# an underscore.
+			elif name[0].isnumeric():
+				name = u'_' + name
 		_name = name
 		i = 1
 		while _name in self:
