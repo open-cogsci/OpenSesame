@@ -210,6 +210,11 @@ class loop(item.item):
 				except Exception as e:
 					raise osexception(u'Failed to read text file (perhaps it has the wrong format or it is not utf-8 encoded): %s' % src,
 						exception=e)
+		for column_name in src_dm.column_names:
+			if not self.syntax.valid_var_name(column_name):
+				raise osexception(
+					'The loop table contains an invalid column name: 'u'\'%s\'' \
+					% column_name)
 		length = int(len(src_dm) * self.var.repeat)
 		dm = DataMatrix(length=0)
 		while len(dm) < length:
