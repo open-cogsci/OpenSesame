@@ -33,7 +33,10 @@ class cistr(str):
 
 	def __init__(self, s):
 		
-		str.__init__(self, s)
+		if py3:			
+			str.__init__(s)
+		else:
+			str.__init__(self, s)
 		self._lower = s.lower()
 		self._hash = hash(self._lower)
 
