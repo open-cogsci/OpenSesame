@@ -108,7 +108,7 @@ class qtplugin(qtitem.qtitem):
 		qtitem.qtitem.edit_widget(self)
 		self.auto_edit_widget()
 
-	def apply_edit_changes(self):
+	def apply_edit_changes(self, *deprecated, **_deprecated):
 
 		"""
 		desc:
