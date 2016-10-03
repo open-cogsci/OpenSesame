@@ -51,6 +51,10 @@ class toolbar_items(base_subcomponent, QtWidgets.QToolBar):
 		super(toolbar_items, self).__init__(parent)
 		self.setup(parent)
 		self.orientationChanged.connect(self.build)
+		for child in self.children():
+			if isinstance(child, QtWidgets.QToolButton):
+				self._expand_button = child
+				break
 
 	def add_content(self, content):
 
@@ -119,3 +123,14 @@ class toolbar_items(base_subcomponent, QtWidgets.QToolBar):
 				pixmap = self.theme.qpixmap(plugins.plugin_icon_large(plugin))
 				content.append(toolbar_items_item(self, plugin, pixmap))
 			self.add_content(content)
+
+	def collapse(self):
+		
+		"""
+		desc:
+			Collapses the item toolbar if is was expanded.
+		"""
+		
+		if self._expand_button.isChecked():
+			self._expand_button.click()
+			

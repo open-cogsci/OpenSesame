@@ -87,4 +87,5 @@ class toolbar_items_item(base_subcomponent, QtWidgets.QLabel):
 				u'script'		: u''
 				}]
 			}
+		self.item_toolbar.collapse()
 		drag_and_drop.send(self, data)
