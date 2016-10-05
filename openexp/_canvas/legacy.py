@@ -110,14 +110,8 @@ class legacy(canvas.canvas, legacy_coordinates):
 		return pygame.time.get_ticks()
 
 	@configurable
-	def clear(self, color=None):
+	def clear(self):
 
-		if color is not None:
-			if u'color' in cfg:
-				warnings.warn(u'color is a deprecated style argument for '
-					'canvas.clear(). Use background_color instead.',
-					DeprecationWarning)
-			self.background_color = color
 		self.surface.fill(self.background_color.backend_color)
 
 	@configurable
