@@ -53,6 +53,11 @@ class item_task(base_task):
 		"""See base_task."""
 
 		self._item.prepare()
-		self.coroutine = self._item.coroutine()
+		# New-style coroutines take a coroutines keyword, which is used to
+		# communicate the coroutines item. Old-style coroutines do not.
+		try:
+			self.coroutine = self._item.coroutine(coroutines=self.coroutines)
+		except TypeError:
+			self.coroutine = self._item.coroutine()
 		self.coroutines.event('launch %s' % self._item)
 		self.coroutine.send(None)

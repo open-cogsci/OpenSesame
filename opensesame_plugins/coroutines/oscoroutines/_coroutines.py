@@ -40,6 +40,8 @@ class coroutines(item):
 		self.var.function_name = u''
 		self.schedule = []
 		self._events = []
+		self.pre_cycle_functions = []
+		self.post_cycle_functions = []
 
 	def event(self, msg):
 
@@ -157,6 +159,7 @@ class coroutines(item):
 			while self._schedule and self._schedule[0].started(dt):
 				active.append(self._schedule.pop(0))
 				active.sort(key=lambda task: task.end_time)
+			for fnc in self.pre_cycle_functions: fnc()
 			# Run all active coroutines. If a task returns alive, it should be
 			# kept as an active task; if it returns DEAD, it should be removed
 			# from the active tasks; if it returns ABORT, the whole coroutines
@@ -170,6 +173,7 @@ class coroutines(item):
 				if status == task.ABORT:
 					running = False
 			active = _active
+			for fnc in self.post_cycle_functions: fnc()			
 			# De-activate coroutines by end time
 			while active and active[0].stopped(dt):
 				active.pop(0)
