@@ -110,7 +110,9 @@ class xpyriment(canvas.canvas, xpyriment_coordinates):
 	def clear(self):
 
 		self.stim_list = []
-		self.prepare()
+		self.prepared = False
+		if self.auto_prepare:
+			self.prepare()
 
 	@configurable
 	def line(self, sx, sy, ex, ey):
