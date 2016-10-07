@@ -146,17 +146,9 @@ class psycho(canvas.canvas, psycho_coordinates):
 		return self.experiment.clock.time()
 
 	@configurable
-	def clear(self, color=None):
+	def clear(self):
 
 		self.stim_list = []
-		if color is not None:
-			if u'color' in cfg:
-				warnings.warn(u'color is a deprecated style argument for '
-					'canvas.clear(). Use background_color instead.',
-					DeprecationWarning)
-			self.background_color = color
-		# The background is simply a rectangle, because of the double flip
-		# required by set_color()
 		if self.uniform_coordinates:
 			x, y = -self._width/2, -self._height/2
 		else:

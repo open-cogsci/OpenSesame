@@ -107,14 +107,8 @@ class xpyriment(canvas.canvas, xpyriment_coordinates):
 		return self.experiment.time()
 
 	@configurable
-	def clear(self, color=None):
+	def clear(self):
 
-		if color is not None:
-			if u'color' in cfg:
-				warnings.warn(u'color is a deprecated style argument for '
-					'canvas.clear(). Use background_color instead.',
-					DeprecationWarning)
-			self.background_color = color
 		self.stim_list = []
 		self.prepare()
 
