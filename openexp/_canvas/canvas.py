@@ -405,7 +405,7 @@ class canvas(backend):
 		raise NotImplementedError()
 
 	@configurable
-	def clear(self, color=None, **style_args):
+	def clear(self, **style_args):
 
 		"""
 		desc:
@@ -413,10 +413,6 @@ class canvas(backend):
 			generally faster to use a different canvas for each experimental
 			display than to use a single canvas and repeatedly clear and redraw
 			it.
-
-		keywords:
-			color: 	Deprecated. Specify `background_color` as part of
-					`style_args` instead.
 
 		keyword-dict:
 			style_args:	"%arg_style"
