@@ -30,8 +30,8 @@ SetCompressor /SOLID /FINAL lzma
 
 ; HM NIS Edit Wizard helper defines
 !define PRODUCT_NAME "OpenSesame"
-!define PRODUCT_VERSION "3.1.0-py3.5-win64-1"
-!define EXEC_SUBFOLDER "Scripts\"
+!define PRODUCT_VERSION "3.1.3a5-py2.7-win32-2"
+!define EXEC_SUBFOLDER ""
 !define PRODUCT_PUBLISHER "Sebastiaan Mathot"
 !define PRODUCT_WEB_SITE "http://osdoc.cogsci.nl"
 !define PRODUCT_UNINST_KEY "Software\Microsoft\Windows\CurrentVersion\Uninstall\${PRODUCT_NAME}"
@@ -71,7 +71,7 @@ ShowInstDetails hide
 ShowUnInstDetails hide
 
 Section "OpenSesame" SEC01
-  MessageBox MB_YESNO "Another version of OpenSesame is already installed in $INSTDIR, and will be removed. Do you want to continue?" IDYES true IDNO false
+  MessageBox MB_YESNO "Another version of OpenSesame is already installed in $INSTDIR, and will be removed. Do you want to continue?" /SD IDYES IDYES true IDNO false
   false:
     Abort
   true:
