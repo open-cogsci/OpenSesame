@@ -53,9 +53,9 @@ except ValueError:
 	warnings.warn(u'Invalid version number %s of PsychoPy'%psychopy.__version__)
 else:
 	if psypy_vers.version < (1,84,1):
-		warnings.warn(u'Your PsychoPy version is too old. You will not be able'
-					u'to draw complex shapes that include holes, concavities and such.'
-					u'Try to update PsychoPy to version 1.84.1 or higher.')
+		warnings.warn(u'Your PsychoPy version is outdated. To draw complex '
+			u'shapes that include holes, concavities, etc., please update to '
+			u'PsychoPy version 1.84.1 or higher.')
 
 # Store the experiment as a singleton, to be used in the _time() function
 _experiment = None
