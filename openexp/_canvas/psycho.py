@@ -48,14 +48,14 @@ if not hasattr(visual, u'GratingStim'):
 import psychopy, warnings
 from distutils.version import StrictVersion
 try:
-    PsyPy_vers = StrictVersion(psychopy.__version__)
+	psypy_vers = StrictVersion(psychopy.__version__)
 except ValueError:
-    warnings.warn(u'Invalid version number %s of PsychoPy'%psychopy.__version__)
+	warnings.warn(u'Invalid version number %s of PsychoPy'%psychopy.__version__)
 else:
-	if PsyPy_vers.version < (1, 87):
-		warnings.warn(u'Your PsychoPy version is too old. You will not be able\
-to draw complex shapes that include holes, concavities and such. \
-Try to update PsychoPy to version 1.84.1 or higher')
+	if psypy_vers.version < (1,84,1):
+		warnings.warn(u'Your PsychoPy version is too old. You will not be able'
+					u'to draw complex shapes that include holes, concavities and such.'
+					u'Try to update PsychoPy to version 1.84.1 or higher.')
 
 # Store the experiment as a singleton, to be used in the _time() function
 _experiment = None
