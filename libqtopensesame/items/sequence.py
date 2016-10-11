@@ -22,6 +22,7 @@ from qtpy import QtWidgets
 from libopensesame.sequence import sequence as sequence_runtime
 from libqtopensesame.widgets.tree_item_item import tree_item_item
 from libqtopensesame.widgets.tree_overview import tree_overview
+from libqtopensesame.items.qtitem import requires_init
 from libqtopensesame.items.qtplugin import qtplugin
 from libqtopensesame.items.qtstructure_item import qtstructure_item
 from libqtopensesame.misc.translate import translation_context
@@ -98,7 +99,7 @@ class sequence(qtstructure_item, qtplugin, sequence_runtime):
 		self.treewidget.resizeColumnToContents(0)
 		self.treewidget.append_button.set_position()
 				
-	@qtplugin.requires_init
+	@requires_init
 	@qtstructure_item.clears_children_cache
 	def rename(self, from_name, to_name):
 

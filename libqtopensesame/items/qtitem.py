@@ -57,7 +57,6 @@ class qtitem(base_qtobject):
 	label_align = u'right'
 	help_url = None
 	lazy_init = False
-	requires_init = requires_init
 
 	def __init__(self):
 
