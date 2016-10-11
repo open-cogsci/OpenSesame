@@ -19,6 +19,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 
 from libopensesame.py3compat import *
 
+
 class qtstructure_item(object):
 
 	"""
@@ -27,6 +28,15 @@ class qtstructure_item(object):
 		i.e. those that require rebuilding of the item tree when they are
 		changed.
 	"""
+	
+	def __init__(self):
+		
+		"""
+		desc:
+			Constructor.
+		"""
+
+		self._children = None
 
 	def update(self):
 
@@ -41,3 +51,37 @@ class qtstructure_item(object):
 
 		super(qtstructure_item, self).apply_script_changes()
 		self.experiment.build_item_tree()
+		
+	@staticmethod
+	def clears_children_cache(fnc):
+		
+		"""
+		desc:
+			A decorator for functions that change the structure of the
+			experiment, and thus need a clearing of the children cache.
+		"""
+		
+		def inner(self, *args, **kwargs):
+			
+			for item in self.experiment.items.values():
+				item._children = None
+			return fnc(self, *args, **kwargs)
+			
+		return inner
+		
+	@staticmethod
+	def cached_children(fnc):
+		
+		"""
+		desc:
+			A decorator for the children function, which is cached to speed up
+			performance.
+		"""
+		
+		def inner(self, *args, **kwargs):
+			
+			if self._children is not None:
+				return self._children
+			return fnc(self, *args, **kwargs)
+			
+		return inner

@@ -30,6 +30,7 @@ from libqtopensesame.misc.translate import translation_context
 import math
 _ = translation_context(u'loop', category=u'item')
 
+
 class loop(qtstructure_item, qtitem, loop_runtime):
 
 	"""The GUI for the loop item"""
@@ -44,6 +45,7 @@ class loop(qtstructure_item, qtitem, loop_runtime):
 
 		self.lock_cycles = False
 		loop_runtime.__init__(self, name, experiment, string)
+		qtstructure_item.__init__(self)
 		qtitem.__init__(self)
 
 	def init_edit_widget(self):
@@ -72,8 +74,12 @@ class loop(qtstructure_item, qtitem, loop_runtime):
 		self.loop_widget.ui.button_preview.clicked.connect(self._show_preview)
 		self.loop_widget.ui.button_wizard.clicked.connect(self._show_wizard)
 
-
 	def _show_wizard(self):
+		
+		"""
+		desc:
+			Shows the full-factorial-design wizard.
+		"""
 
 		from libqtopensesame.dialogs.loop_wizard import loop_wizard
 		d = loop_wizard(self.main_window)
@@ -84,6 +90,11 @@ class loop(qtstructure_item, qtitem, loop_runtime):
 		self.update()
 
 	def _show_preview(self):
+		
+		"""
+		desc:
+			Shows a preview tab for the loop table.
+		"""
 
 		l = [_(u'# Preview of loop table'), u'\n\n']
 		try:
@@ -104,17 +115,36 @@ class loop(qtstructure_item, qtitem, loop_runtime):
 		md = u'\n'.join(l)
 		self.tabwidget.open_markdown(md, title=u'Loop preview', icon=u'os-loop')
 
-	def _apply_item(self):
+	@qtstructure_item.clears_children_cache
+	def _apply_item(self, *args):
+		
+		"""
+		desc:
+			Applies changes to the item combobox.
+			
+		argument-list:
+			args:	Dummy arguments passed by the signal-slot system.
+		"""
 
 		self._item = self.loop_widget.ui.combobox_item.selected_item
 		self.experiment.build_item_tree()
 		self.update_script()
 
 	def _update_item(self):
+		
+		"""
+		desc:
+			Updates the item combobox.
+		"""
 
 		self.loop_widget.ui.combobox_item.select(self._item)
 
 	def _apply_table(self):
+		
+		"""
+		desc:
+			Applies changes to the loop table.
+		"""
 
 		if len(self.dm) == 0:
 			self.dm.length = 1
@@ -125,12 +155,24 @@ class loop(qtstructure_item, qtitem, loop_runtime):
 		self.update_script()
 
 	def _apply_source(self):
+		
+		"""
+		desc:
+			Applies changes to the source selector, if a file source is
+			selected.
+		"""
 
 		self.var.source = self.loop_widget.ui.combobox_source.currentText()
 		self._update_source()
 		self.update_script()
 
 	def _update_source(self):
+		
+		"""
+		desc:
+			Update the file-source selector, hiding it when the loop table is
+			used as source.
+		"""
 
 		file_mode = self.var.get(u'source', _eval=False) != u'table'
 		self.loop_widget.ui.label_source_file.setVisible(file_mode)
@@ -139,6 +181,17 @@ class loop(qtstructure_item, qtitem, loop_runtime):
 		self.qdm.setVisible(not file_mode)
 
 	def _row_count_text(self, n):
+		
+		"""
+		desc:
+			A descriptive text for the number of rows.
+			
+		arguments:
+			n:	The number of rows.
+			
+		returns:
+			A descriptive text.
+		"""
 
 		if n == 1:
 			return _(u'one row occurs')
@@ -147,6 +200,17 @@ class loop(qtstructure_item, qtitem, loop_runtime):
 		return _(u'%s rows occur' % n)
 
 	def _time_count_text(self, n):
+		
+		"""
+		desc:
+			A descriptive text for the number of times an item is executed.
+			
+		arguments:
+			n:	The number of times.
+			
+		returns:
+			A descriptive text.
+		"""		
 
 		if n == 0:
 			return _(u'never')
@@ -157,10 +221,23 @@ class loop(qtstructure_item, qtitem, loop_runtime):
 		return _(u'%s times' % n)
 
 	def _set_summary(self, msg):
+		
+		"""
+		desc:
+			Sets the summary label.
+			
+		arguments:
+			msg:	The summary message.
+		"""		
 
 		self.loop_widget.ui.label_summary.setText(msg)
 
 	def _update_summary(self):
+		
+		"""
+		desc:
+			Generates a loop summary and sets the summary label.
+		"""
 
 		if self._item not in self.experiment.items:
 			self._set_summary(_(u'Warning: No item to run has been specified'))
@@ -214,6 +291,8 @@ class loop(qtstructure_item, qtitem, loop_runtime):
 		self._update_source()
 
 	def update_script(self):
+		
+		"""See qtitem."""
 
 		qtitem.update_script(self)
 		self._update_summary()
@@ -233,6 +312,7 @@ class loop(qtstructure_item, qtitem, loop_runtime):
 				max_depth=max_depth-1)
 		return items
 
+	@qtstructure_item.cached_children
 	def children(self):
 
 		"""See qtitem."""
@@ -248,6 +328,7 @@ class loop(qtstructure_item, qtitem, loop_runtime):
 		return self._item == item or (self._item in self.experiment.items and \
 			self.experiment.items[self._item].is_child_item(item))
 
+	@qtstructure_item.clears_children_cache
 	def insert_child_item(self, item_name, index=0):
 
 		"""See qtitem."""
@@ -256,6 +337,7 @@ class loop(qtstructure_item, qtitem, loop_runtime):
 		self.update()
 		self.main_window.set_unsaved(True)
 
+	@qtstructure_item.clears_children_cache
 	def remove_child_item(self, item_name, index=0):
 
 		"""See qtitem."""
@@ -265,34 +347,19 @@ class loop(qtstructure_item, qtitem, loop_runtime):
 		self.update()
 		self.main_window.set_unsaved(True)
 
+	@qtstructure_item.clears_children_cache
 	def rename(self, from_name, to_name):
 
-		"""
-		desc:
-			Responds to an item rename.
-
-		arguments:
-			from_name:	The old name of the item to be renamed.
-			to_name:	The new name of the item to be renamed.
-		"""
+		"""See qtitem."""
 
 		qtitem.rename(self, from_name, to_name)
 		if self._item == from_name:
 			self._item = to_name
 
+	@qtstructure_item.clears_children_cache
 	def delete(self, item_name, item_parent=None, index=None):
 
-		"""
-		desc:
-			Responds to an item deletion.
-
-		arguments:
-			item_name:	The name of the item to be deleted.
-
-		keywords:
-			item_parent:	The parent item.
-			index:			The index of the item in the parent.
-		"""
+		"""See qtitem."""
 
 		if self._item == item_name and item_parent == self.name:
 			self._item = u''
