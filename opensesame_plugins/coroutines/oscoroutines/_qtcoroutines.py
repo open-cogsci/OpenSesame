@@ -21,6 +21,7 @@ from libopensesame.py3compat import *
 import os
 from libqtopensesame.items.sequence import sequence
 from libqtopensesame.items.qtplugin import qtplugin
+from libqtopensesame.items.qtstructure_item import qtstructure_item
 from libopensesame.sequence import sequence as sequence_runtime
 from libqtopensesame.widgets.tree_item_item import tree_item_item
 from libqtopensesame.validators import duration_validator
@@ -45,8 +46,11 @@ class qtcoroutines(coroutines, sequence):
 
 		coroutines.__init__(self, name, experiment, string)
 		# We don't call the sequence constructor, because it doesn't specify
-		# the plugin_file to qtplugin, which we need to do.
+		# the plugin_file to qtplugin, which we need to do. We therefore
+		# explicitly need to call the qtplugin and qtstructure_item
+		# constructors.
 		sequence_runtime.__init__(self, name, experiment, string)
+		qtstructure_item.__init__(self)
 		qtplugin.__init__(self, plugin_file=os.path.dirname(__file__))
 		self.last_removed_child = None, None
 
