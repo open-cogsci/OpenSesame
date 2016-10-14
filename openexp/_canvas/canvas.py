@@ -1197,9 +1197,9 @@ def _gabor(orient, freq, env=u"gaussian", size=96, stdev=12, phase=0,
 			elif bgmode == u"col2":
 				amp = amp * f
 			else:
-				raise osexception((u"Invalid argument for bgmode: %s " % bgmode) + 
-									u"(should be one of 'avg','col2')")
-
+				raise osexception(u"Invalid argument for bgmode: %s "
+								  u"(should be one of 'avg','col2')" % bgmode)
+			
 			r = col1.r * amp + col2.r * (1.0 - amp)
 			g = col1.g * amp + col2.g * (1.0 - amp)
 			b = col1.b * amp + col2.b * (1.0 - amp)
@@ -1264,8 +1264,8 @@ def _noise_patch(env=u"gaussian", size=96, stdev=12, col1=u"white",
 			elif bgmode == u"col2":
 				amp = amp * f
 			else:
-				raise osexception((u"Invalid argument for bgmode: %s " % bgmode) + 
-									u"(should be one of 'avg','col2')")
+				raise osexception(u"Invalid argument for bgmode: %s "
+								  u"(should be one of 'avg','col2')" % bgmode)
 
 			r = col1.r * amp + col2.r * (1.0 - amp)
 			g = col1.g * amp + col2.g * (1.0 - amp)
