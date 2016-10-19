@@ -491,7 +491,7 @@ class qtopensesame(QtWidgets.QMainWindow, base_component):
 		if self.unsaved_changes:
 			self.setWindowTitle(self.window_msg + u' * - OpenSesame')
 		else:
-			self.setWindowTitle(self.window_msg + u'- OpenSesame')
+			self.setWindowTitle(self.window_msg + u' - OpenSesame')
 
 	def update_overview_area(self):
 
