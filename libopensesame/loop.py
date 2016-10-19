@@ -213,8 +213,15 @@ class loop(item.item):
 		for column_name in src_dm.column_names:
 			if not self.syntax.valid_var_name(column_name):
 				raise osexception(
-					'The loop table contains an invalid column name: 'u'\'%s\'' \
+					u'The loop table contains an invalid column name: 'u'\'%s\'' \
 					% column_name)
+		# The number of repeats should be numeric. If not, then give an error.
+		# This can also occur when generating a preview of a loop table if
+		# repeat is variable.
+		if not isinstance(self.var.repeat, (int, float)):
+			raise osexception(
+				u'Don\'t know how to generate a DataMatrix for "%s" repeats' \
+				% self.var.repeat)
 		length = int(len(src_dm) * self.var.repeat)
 		dm = DataMatrix(length=0)
 		while len(dm) < length:
