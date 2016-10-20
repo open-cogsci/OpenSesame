@@ -30,7 +30,7 @@ SetCompressor /SOLID /FINAL lzma
 
 ; HM NIS Edit Wizard helper defines
 !define PRODUCT_NAME "OpenSesame"
-!define PRODUCT_VERSION "3.1.3a5-py2.7-win32-2"
+!define PRODUCT_VERSION "3.1.3-py2.7-win32-1"
 !define EXEC_SUBFOLDER ""
 !define PRODUCT_PUBLISHER "Sebastiaan Mathot"
 !define PRODUCT_WEB_SITE "http://osdoc.cogsci.nl"
@@ -65,7 +65,7 @@ SetCompressor /SOLID /FINAL lzma
 ; MUI end ------
 
 Name "${PRODUCT_NAME} ${PRODUCT_VERSION}"
-OutFile "dist\opensesame_${PRODUCT_VERSION}.exe"
+OutFile "opensesame_${PRODUCT_VERSION}.exe"
 InstallDir "$PROGRAMFILES\OpenSesame"
 ShowInstDetails hide
 ShowUnInstDetails hide
