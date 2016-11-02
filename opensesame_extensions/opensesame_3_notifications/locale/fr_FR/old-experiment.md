@@ -2,7 +2,7 @@
 
 Cette expérience a été développé avec une ancienne version d'OpenSesame.
 
-N'inquiétez vous pas ! Cela ne devrait poser aucun problème. Mais, pour être sûr, je recommande que vous enregistrez votre expérience sous un nouveau nom.
+N'inquiétez vous pas ! Cela ne devrait poser aucun problème. Mais, pour être sûr, je vous recommande d'enregistrez votre expérience sous un nouveau nom.
 
 Qu'est-ce que vous voulez faire ?
 
