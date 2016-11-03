@@ -621,10 +621,15 @@ class experiment(item.item):
 			type:	str
 		"""
 
-		# If the path is not a path at all, but a string containing
-		# the script, return it. Also, convert the path back to Unicode before
-		# returning.
-		if not os.path.exists(src):
+		# If the path is not a path at all, but a string containing the script,
+		# return it. Also, convert the path back to Unicode before returning.
+		try:
+			# Checking whether a path exists can appartently trigger a
+			# ValueError when src is too long. Therefore, we use this awkward
+			# construction.
+			if not os.path.exists(src):
+				raise ValueError('Path doesn\'t exist)')
+		except ValueError: 
 			debug.msg(u'opening from unicode string')
 			self.experiment_path = None
 			return safe_decode(src, errors=u'replace')
