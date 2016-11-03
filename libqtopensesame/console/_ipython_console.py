@@ -245,6 +245,7 @@ class ipython_console(base_console, QtWidgets.QWidget):
 		"""See base_console."""
 
 		self.control._append_plain_text(str(s))
+		self.control._control.ensureCursorVisible()
 
 	def execute(self, s):
 
