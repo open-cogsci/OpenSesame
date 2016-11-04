@@ -96,7 +96,7 @@ class config(object):
 		u"shortcut_rename" : u"F2",
 		u"shortcut_edit_runif" : u"F3",
 		u"style" : u"",
-		u"theme" : u"moka",
+		u"theme" : u"default",
 		u"toolbar_size" : 32,
 		u"toolbar_text" : False,
 		u"runner" : u"multiprocess",
@@ -124,6 +124,7 @@ class config(object):
 		u'qProgEditRunSelectedShortcut' : u'Alt+R',
 		u'qProgEditRunAllShortcut' : u'Shift+Alt+R',
 		u'qProgEditSymbolTreeWidgetItemIcon' : u'text-x-script',
+		u'locale' : u'',
 		}
 
 	# OS specific override settings

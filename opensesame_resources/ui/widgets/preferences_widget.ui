@@ -99,6 +99,40 @@
           <property name="bottomMargin">
            <number>0</number>
           </property>
+          <item row="2" column="0">
+           <widget class="QLabel" name="label_2">
+            <property name="text">
+             <string>Interface style</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="1">
+           <widget class="QComboBox" name="combobox_style"/>
+          </item>
+          <item row="3" column="0">
+           <widget class="QLabel" name="label_7">
+            <property name="text">
+             <string>icon theme</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="1">
+           <widget class="QComboBox" name="combobox_theme"/>
+          </item>
+          <item row="4" column="0" colspan="2">
+           <widget class="QCheckBox" name="checkbox_small_toolbar">
+            <property name="text">
+             <string>Small icons in toolbar</string>
+            </property>
+           </widget>
+          </item>
+          <item row="5" column="0" colspan="2">
+           <widget class="QCheckBox" name="checkbox_toolbar_text">
+            <property name="text">
+             <string>Show text in toolbar</string>
+            </property>
+           </widget>
+          </item>
           <item row="0" column="0" colspan="2">
            <widget class="QLabel" name="label_8">
             <property name="text">
@@ -111,38 +145,14 @@
            </widget>
           </item>
           <item row="1" column="0">
-           <widget class="QLabel" name="label_2">
+           <widget class="QLabel" name="label_locale">
             <property name="text">
-             <string>Interface style</string>
+             <string>Language</string>
             </property>
            </widget>
           </item>
           <item row="1" column="1">
-           <widget class="QComboBox" name="combobox_style"/>
-          </item>
-          <item row="2" column="0">
-           <widget class="QLabel" name="label_7">
-            <property name="text">
-             <string>icon theme</string>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="1">
-           <widget class="QComboBox" name="combobox_theme"/>
-          </item>
-          <item row="3" column="0" colspan="2">
-           <widget class="QCheckBox" name="checkbox_small_toolbar">
-            <property name="text">
-             <string>Small icons in toolbar</string>
-            </property>
-           </widget>
-          </item>
-          <item row="4" column="0" colspan="2">
-           <widget class="QCheckBox" name="checkbox_toolbar_text">
-            <property name="text">
-             <string>Show text in toolbar</string>
-            </property>
-           </widget>
+           <widget class="QComboBox" name="combobox_locale"/>
           </item>
          </layout>
         </widget>

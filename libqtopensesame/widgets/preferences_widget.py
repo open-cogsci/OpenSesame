@@ -18,13 +18,14 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame.py3compat import *
-
-from libopensesame import debug
+from libopensesame import debug, misc
 from libopensesame.exceptions import osexception
 from libqtopensesame.widgets.base_widget import base_widget
-from libqtopensesame.misc import config, theme
+from libqtopensesame.misc import theme
+from libqtopensesame.misc.config import cfg
 from qtpy import QtCore, QtWidgets
 import os
+
 
 class preferences_widget(base_widget):
 
@@ -54,6 +55,7 @@ class preferences_widget(base_widget):
 		self.ui.combobox_runner.currentIndexChanged.connect(self.apply)
 		self.ui.combobox_style.currentIndexChanged.connect(self.apply)
 		self.ui.combobox_theme.currentIndexChanged.connect(self.apply)
+		self.ui.combobox_locale.currentIndexChanged.connect(self.apply)
 		self.set_controls()
 		for ext in self.extensions:
 			try:
@@ -85,29 +87,32 @@ class preferences_widget(base_widget):
 		self.ui.checkbox_toolbar_text.setChecked(
 			self.main_window.ui.toolbar_main.toolButtonStyle() == \
 			QtCore.Qt.ToolButtonTextUnderIcon)
-		self.ui.checkbox_small_toolbar.setChecked(
-			config.get_config(u"toolbar_size") == 16)
+		self.ui.checkbox_small_toolbar.setChecked(cfg.toolbar_size == 16)
 		self.ui.combobox_runner.setCurrentIndex(
-			self.ui.combobox_runner.findText(config.get_config(u'runner'),
+			self.ui.combobox_runner.findText(cfg.runner,
 			flags=QtCore.Qt.MatchContains))
+		# Set the locale combobox
+		self.ui.combobox_locale.addItem(u'[Default]')
+		self.ui.combobox_locale.setCurrentIndex(0)
+		locales = [locale[:-3] \
+			for locale in os.listdir(misc.resource(u'locale')) \
+			if locale != u'translatables']
+		for i, locale in enumerate(locales):
+			self.ui.combobox_locale.addItem(locale)
+			if cfg.locale == locale:
+				self.ui.combobox_locale.setCurrentIndex(i+1)
 		# Set the style combobox
-		i = 0
-		if config.get_config(u'style') == u'':
-			self.ui.combobox_style.addItem(u"[Default]")
-			self.ui.combobox_style.setCurrentIndex(i)
-			i += 1
-		for style in QtWidgets.QStyleFactory.keys():
+		self.ui.combobox_style.addItem(u"[Default]")
+		self.ui.combobox_style.setCurrentIndex(0)
+		for i, style in enumerate(QtWidgets.QStyleFactory.keys()):
 			self.ui.combobox_style.addItem(style)
-			if config.get_config(u'style') == str(style):
-				self.ui.combobox_style.setCurrentIndex(i)
-			i += 1
+			if cfg.style == style:
+				self.ui.combobox_style.setCurrentIndex(i+1)
 		# Set the theme combobox
-		i = 0
-		for _theme in theme.available_themes:
+		for i, _theme in enumerate(theme.available_themes):
 			self.ui.combobox_theme.addItem(_theme)
-			if config.get_config(u'theme') == _theme:
-				self.ui.combobox_theme.setCurrentIndex(i)
-			i += 1
+			if cfg.theme == _theme:
+				self.ui.combobox_theme.setCurrentIndex(i+1)
 		self.lock = False
 
 	def apply(self):
@@ -121,33 +126,27 @@ class preferences_widget(base_widget):
 			self.ui.checkbox_autoresponse.isChecked()
 		self.main_window.ui.action_enable_auto_response.setChecked(
 			self.ui.checkbox_autoresponse.isChecked())
-
-		if self.ui.checkbox_toolbar_text.isChecked():
-			self.main_window.ui.toolbar_main.setToolButtonStyle(
-				QtCore.Qt.ToolButtonTextUnderIcon)
-		else:
-			self.main_window.ui.toolbar_main.setToolButtonStyle(
-				QtCore.Qt.ToolButtonIconOnly)
-
-		old_size = config.get_config(u'toolbar_size')
-		if self.ui.checkbox_small_toolbar.isChecked():
-			new_size = 16
-		else:
-			new_size = 32
+		self.main_window.ui.toolbar_main.setToolButtonStyle(
+			QtCore.Qt.ToolButtonTextUnderIcon \
+			if self.ui.checkbox_toolbar_text.isChecked() else \
+			QtCore.Qt.ToolButtonIconOnly)
+		# Apply locale
+		cfg.locale = self.ui.combobox_locale.currentText()
+		if cfg.locale == u'[Default]':
+			cfg.locale = u''
+		# Apply toolbar size
+		old_size = cfg.toolbar_size
+		new_size = 16 if self.ui.checkbox_small_toolbar.isChecked() else 32
 		if old_size != new_size:
-			config.set_config(u"toolbar_size", new_size)
-			self.theme.set_toolbar_size(config.get_config("toolbar_size"))
-
+			cfg.toolbar_size = new_size
+			self.theme.set_toolbar_size(cfg.toolbar_size)
+		# Apply runner
 		from libqtopensesame import runners
 		for runner in runners.runner_list:
 			if runner in self.ui.combobox_runner.currentText():
-				config.set_config(u'runner', runner)
-
-		config.set_config(u'theme',
-			str(self.ui.combobox_theme.currentText()))
-
-		config.set_config(u'style',
-			str(self.ui.combobox_style.currentText()))
+				cfg.runner = runner
+		# Apply theme and style
+		cfg.theme = self.ui.combobox_theme.currentText()
+		cfg.style = self.ui.combobox_style.currentText()
 		self.main_window.save_state()
-
 		self.lock = False

@@ -22,7 +22,7 @@ from qtpy import QtGui, QtCore, QtWidgets
 from libqtopensesame.misc.base_component import base_component
 from libqtopensesame.misc.config import cfg
 from libqtopensesame.items import experiment
-from libopensesame import debug
+from libopensesame import debug, metadata
 from libopensesame.exceptions import osexception
 import libopensesame.experiment
 import libopensesame.plugins
@@ -61,24 +61,24 @@ class qtopensesame(QtWidgets.QMainWindow, base_component):
 			QtWidgets.QMainWindow.__init__(self, parent)
 		self.app = app
 		self.first_show = True
-
-	def resume_init(self):
-
-		"""Resume GUI initialization"""
-
-		from libopensesame import misc, metadata
-		from libqtopensesame.misc import theme
-		from libqtopensesame.extensions import extension_manager
-		import random
-
-		# Set some initial variables
 		self.current_path = None
 		self.version = metadata.__version__
 		self.codename = metadata.codename
 		self.lock_refresh = False
 		self.unsaved_changes = False
 		self._run_status = u'inactive'
-		self.block_close_event = False
+		self.block_close_event = False		
+		self.parse_command_line()
+		self.restore_config()
+
+	def resume_init(self):
+
+		"""Resume GUI initialization"""
+
+		from libopensesame import misc
+		from libqtopensesame.misc import theme
+		from libqtopensesame.extensions import extension_manager
+		import random
 
 		# Make sure that icons are shown in context menu, regardless of the
 		# system settings. This is necessary, because Ubuntu doesn't show menu
@@ -113,13 +113,14 @@ class qtopensesame(QtWidgets.QMainWindow, base_component):
 		# Check the filesystem encoding for debugging purposes
 		debug.msg(u'filesystem encoding: %s' % misc.filesystem_encoding())
 
-		# Parse the command line
-		self.parse_command_line()
-
-		# Restore the configuration
-		self.restore_config()
+		# # Parse the command line
+		# self.parse_command_line()
+		# 
+		# # Restore the configuration
+		# self.restore_config()
 		self.set_style()
 		self.set_warnings()
+		# self.set_locale()
 
 		# Setup the UI
 		self.load_ui(u'misc.main_window')
@@ -449,6 +450,44 @@ class qtopensesame(QtWidgets.QMainWindow, base_component):
 		else:
 			debug.msg(u"ignoring unknown style '%s'" % cfg.style)
 			cfg.style = u''
+			
+	def set_locale(self, translator):
+		
+		""""
+		desc:
+			Sets the application language.
+		
+		arguments:
+			translator:
+				desc:	For some reason, the QTranslator object needs to be
+						created in the main function. Therefore it is passed
+						as an argument.
+				type:	QTranslator
+		"""
+
+		# If a locale has been explicitly specified, use it; otherwise, use the
+		# system default locale.
+		locale = cfg.locale if cfg.locale != u'' else \
+			QtCore.QLocale().system().name()
+		# If a locale has been specified on the command line, it overrides.
+		for i, argv in enumerate(sys.argv[:-1]):
+			if argv == '--locale':
+				locale = safe_decode(sys.argv[i+1])
+		qm = libopensesame.misc.resource(
+			os.path.join(u'locale', locale) + u'.qm')
+		# Say that we're trying to load de_AT, and it is not found, then we'll
+		# try de_DE as fallback.
+		if qm is None:
+			l = locale.split(u'_')
+			if l:
+				_locale = l[0] +  u'_' + l[0].upper()
+				qm = libopensesame.misc.resource(
+					os.path.join(u'locale', _locale + u'.qm'))
+				if qm is not None:
+					locale = _locale
+		self._locale = locale
+		translator.load(qm)
+		QtWidgets.QApplication.installTranslator(translator)
 
 	def set_auto_response(self):
 

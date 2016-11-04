@@ -57,14 +57,13 @@ def opensesame():
 	from libopensesame import debug
 	# Do the basic window initialization
 	from qtpy.QtWidgets import QApplication
-
 	# From Qt 5.6 on, QtWebEngine is the default way to render web pages
-	# QtWebEngineWidgets must be imported before a QCoreApplication instance is created
+	# QtWebEngineWidgets must be imported before a QCoreApplication instance is
+	# created.
 	try:
 		from qtpy import QtWebEngineWidgets
 	except ImportError:
 		pass
-
 	app = QApplication(sys.argv)
 	# Enable High DPI display with PyQt5
 	if hasattr(qtpy.QtCore.Qt, 'AA_UseHighDpiPixmaps'):
@@ -73,33 +72,12 @@ def opensesame():
 	opensesame = qtopensesame(app)
 	opensesame.__script__ = __file__
 	app.processEvents()
-	# Import the remaining modules
-	from qtpy.QtCore import QObject, QLocale, QTranslator
-	import os.path
-	# Load the locale for UI translation. The locale can be specified on the
-	# command line using the --locale parameter
-	locale = QLocale().system().name()
-	for i in range(len(sys.argv)-1):
-		if sys.argv[i] == '--locale':
-			locale = sys.argv[i+1]
-	qm = resource(os.path.join(u'locale', locale) + u'.qm')
-	# Say that we're trying to load de_AT, and it is not found, then we'll try
-	# de_DE as fallback.
-	if qm is None:
-		l = locale.split(u'_')
-		if len(l):
-			_locale = l[0] +  u'_' + l[0].upper()
-			qm = resource(os.path.join(u'locale', _locale + u'.qm'))
-			if qm is not None:
-				locale = _locale
-	opensesame._locale = locale
-	if qm is not None:
-		debug.msg(u'installing %s translator' % qm)
-		translator = QTranslator()
-		translator.load(qm)
-		app.installTranslator(translator)
-	else:
-		debug.msg(u'no translator found for %s' % locale)
+	# Install the translator. For some reason, the translator needs to be
+	# instantiated here and not in the set_locale() function, otherwise the	
+	# locale is ignored.
+	from qtpy.QtCore import QTranslator
+	translator = QTranslator()
+	opensesame.set_locale(translator)
 	# Now that the window is shown, load the remaining modules and resume the
 	# GUI initialization.
 	opensesame.resume_init()
