@@ -22,6 +22,7 @@ import re
 import codecs
 import os
 import yaml
+from distutils.version import StrictVersion
 from libopensesame import metadata
 from libopensesame.exceptions import osexception
 from libopensesame.py3compat import *
@@ -119,8 +120,16 @@ class syntax(object):
 			s = s[len(m.group(0)):]
 		except:
 			d = {}
+		# The API can be stored in a few ways:
+		# - Not at all, which was the case in <= v2.9
+		# - As a single value, in which the case the minor version becomes 0
+		# - As a float, which is seen as a major.minor version
 		if u'API' not in d:
-			d['API'] = 1
+			d['API'] = StrictVersion(u'1.0')
+		elif isinstance(d['API'], int):
+			d['API'] = StrictVersion(u'%d.0' % d['API'])
+		elif isinstance(d['API'], float):
+			d['API'] = StrictVersion(str(d['API']))
 		return d, s
 
 	def generate_front_matter(self):
@@ -138,11 +147,15 @@ class syntax(object):
 
 		self.experiment.front_matter.update({
 			'OpenSesame' : safe_str(metadata.__version__),
-			'API' : 2,
+			'API' : metadata.api,
 			'Platform' : os.name
 			})
+		front_matter = self.experiment.front_matter.copy()
+		front_matter[u'API'] = metadata.api.version[0] \
+			if metadata.api.version[1] == 0 \
+			else float(str(metadata.api))
 		return u'---\n%s---\n' % safe_decode(yaml.dump(
-			self.experiment.front_matter, default_flow_style=False,
+			front_matter, default_flow_style=False,
 			allow_unicode=True))
 
 	def split(self, s):

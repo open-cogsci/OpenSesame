@@ -318,7 +318,7 @@ class experiment(item.item):
 		if string is None:
 			return
 		self.front_matter, string = self._syntax.parse_front_matter(string)
-		if self.experiment.front_matter[u'API'] < 2:
+		if self.experiment.front_matter[u'API'].version[0] < 2:
 			# Old experiment scripts were saved in ASCII, and require decoding
 			# of U+XXXX unicode characters.
 			string = self.syntax.from_ascii(string)
@@ -329,10 +329,9 @@ class experiment(item.item):
 			try:
 				l = self.syntax.split(line)
 			except ValueError as e:
-				raise osexception(
-					u"Failed to parse script. Maybe it contains illegal characters or unclosed quotes?", \
-					exception=e)
-			if len(l) > 0:
+				raise osexception(u'Failed to parse script. Maybe it contains '
+					u'illegal characters or unclosed quotes?', exception=e)
+			if l:
 				self.parse_variable(line)
 				# Parse definitions
 				if l[0] == u"define":

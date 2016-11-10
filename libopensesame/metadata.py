@@ -34,4 +34,5 @@ python_version = u'%d.%d.%d' % (sys.version_info[0], sys.version_info[1], \
 	sys.version_info[2])
 codename = u'Jazzy James'
 channel = u'dev'
+api = StrictVersion(u'2.0')
 platform = sys.platform

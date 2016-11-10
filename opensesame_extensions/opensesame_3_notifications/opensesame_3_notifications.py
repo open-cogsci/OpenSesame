@@ -18,6 +18,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame.py3compat import *
+from libopensesame import metadata
 from libqtopensesame.extensions import base_extension
 from libqtopensesame.misc.config import cfg
 from libqtopensesame.misc.translate import translation_context
@@ -74,11 +75,17 @@ class opensesame_3_notifications(base_extension):
 				type:	unicode
 		"""
 
-		if self.experiment.front_matter[u'API'] >= 2:
+		exp_api = self.experiment.front_matter[u'API']
+		# If the major API of the experiment is the same, and the minor API is
+		# the same or older
+		if exp_api.version[0] == metadata.api.version[0] and \
+			exp_api.version[1] <= metadata.api.version[1]:
 			return
 		self.main_window.current_path = None
 		self.main_window.window_message(u'New experiment')
 		self.main_window.set_unsaved(True)
 		if not cfg.os3n_old_experiment_notification:
 			return
-		self.tabwidget.open_markdown(self.ext_resource(u'old-experiment.md'))
+		src = u'old-experiment.md' if exp_api < metadata.api \
+			else u'new-experiment.md'
+		self.tabwidget.open_markdown(self.ext_resource(src))
