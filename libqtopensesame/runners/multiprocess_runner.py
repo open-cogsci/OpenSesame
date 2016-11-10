@@ -58,6 +58,7 @@ class multiprocess_runner(base_runner):
 		self.exp_process.start()
 		# Wait for experiment to finish.
 		# Listen for incoming messages in the meantime.
+		finished = False
 		while self.exp_process.is_alive() or not self.channel.empty():
 			# We need to process the GUI. To make the GUI feel more responsive
 			# during pauses, we refresh the GUI more often when paused.
@@ -95,14 +96,18 @@ class multiprocess_runner(base_runner):
 						self.pause()
 					else:
 						self.resume()
+				elif u'__finished__' in msg:
+					finished = True
 				continue
 			# Anything that is not a string, not an Exception, and not None is
 			# unexpected
 			return osexception(
 				u"Illegal message type received from child process: %s (%s)" \
 				% (msg, type(msg)))
-		# Return None if experiment finished without problems
-		return None
+		if not finished:
+			return osexception(u'Python seems to have crashed. This should not '
+				u'happen. If Python crashes often, please report it on the '
+				u'OpenSesame forum.')
 
 	def workspace_globals(self):
 

@@ -488,6 +488,7 @@ class experiment(item.item):
 		if not gc.isenabled():
 			print('experiment.end(): enabling garbage collection')
 			gc.enable()
+		self.transmit_workspace(__finished__=True)
 
 	def to_string(self):
 
