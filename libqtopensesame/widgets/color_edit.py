@@ -69,9 +69,8 @@ class color_edit(base_widget):
 			Picks a color with the colorpicker dialog.
 		"""
 
-		from openexp._color.color import color
-		_color = QtWidgets.QColorDialog.getColor(QtGui.QColor(u'white'), self._parent,
-			_(u'Pick a color'))
+		_color = QtWidgets.QColorDialog.getColor(QtGui.QColor(u'white'),
+			self._parent, _(u'Pick a color'))
 		if not _color.isValid():
 			return
 		self.setText(_color.name())
@@ -102,7 +101,7 @@ class color_edit(base_widget):
 				type:	unicode
 		"""
 
-		self.edit.setText(s)
+		self.edit.setText(safe_decode(s))
 
 	def apply(self):
 
