@@ -497,6 +497,7 @@ class qtitem(base_qtobject):
 		debug.msg(u'validator: %s' % cls)
 		self.validator = cls
 
+	@requires_init
 	def rename(self, from_name, to_name):
 
 		"""
