@@ -54,7 +54,7 @@ class system_information(base_extension):
 			(u'pygame', u'pygame', u'__version__'),
 			(u'pygaze', u'pygaze', u'__version__'),
 			(u'pyglet', u'pyglet', u'version'),
-			(u'PyQt', u'qtpy', u'__version__'),
+			(u'PyQt', u'qtpy', [u'QtCore', u'PYQT_VERSION_STR']),
 			(u'serial', u'serial', u'VERSION'),
 			(u'markdown', u'markdown', u'version'),
 			(u'bidi', u'bidi', u'VERSION'),
@@ -70,8 +70,15 @@ class system_information(base_extension):
 					u'%s [installed, but `%s` occured while importing]' \
 					% (name, e.__class__.__name__))
 				continue
-			if hasattr(mod, attr):
-				l.append(u'%s %s' % (name, getattr(mod, attr)))
+			if isinstance(attr, basestring):
+				attr = [attr]
+			while len(attr) > 1:
+				a = attr.pop(0)
+				if hasattr(mod, a):
+					mod = getattr(mod, a)
+			a = attr.pop(0)
+			if hasattr(mod, a):
+				l.append(u'%s %s' % (name, getattr(mod, a)))
 				continue
 			l.append(u'%s [version unknown]' % name)
 		with open(self.ext_resource(u'system-information.md')) as fd:
