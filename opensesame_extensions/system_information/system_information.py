@@ -82,7 +82,7 @@ class system_information(base_extension):
 				continue
 			l.append(u'%s [version unknown]' % name)
 		with open(self.ext_resource(u'system-information.md')) as fd:
-			tmpl = fd.read()
+			tmpl = safe_decode(fd.read())
 		md = tmpl % {
 			u'system' : platform.system(),
 			u'architecture' : platform.architecture()[0],
