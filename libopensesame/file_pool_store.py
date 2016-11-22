@@ -39,7 +39,7 @@ class file_pool_store(object):
 
 		~~~ .python
 		# Get the full path to a file in the file pool
-		print(u'The fool path to img.png is %s' %  pool[u'img.png'])
+		print(u'The full path to img.png is %s' %  pool[u'img.png'])
 		# Check if a file is in the file pool
 		if u'img.png' in pool:
 			print(u'img.png is in the file pool')
