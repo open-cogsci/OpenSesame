@@ -79,8 +79,7 @@ class update_checker(base_extension):
 			return
 		if remote_strict_version > metadata.strict_version:
 			debug.msg(u"new version available")
-			with open(self.ext_resource(u'update-available.md')) as fd:
-				s = fd.read()
+			s = safe_read(self.ext_resource(u'update-available.md'))
 			self.tabwidget.open_markdown(s % remote_metadata,
 				title=u'Update available!')
 		else:

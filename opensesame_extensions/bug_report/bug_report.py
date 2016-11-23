@@ -106,14 +106,10 @@ class bug_report(base_extension):
 			Shows a report tab when an error message has been captured.
 		"""
 
-		with open(self.ext_resource(u'report.md')) as fd:
-			md = safe_decode(fd.read())
 		error_list = traceback.format_exception(exception_type, value, tb)
-	
 		self.traceback = u"".join([safe_decode(tb_line) for tb_line in error_list])
 		self.traceback_md = u'~~~ .traceback\n%s\n~~~\n' % self.traceback
-
-		md = md % {
+		md = safe_read(self.ext_resource(u'report.md')) % {
 			# u'traceback' : self.indent(self.stderr.buffer),
 			u'traceback' : self.traceback_md,
 			u'version' : metadata.__version__,

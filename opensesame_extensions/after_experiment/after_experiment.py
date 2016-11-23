@@ -108,9 +108,7 @@ class after_experiment(base_extension):
 		logfile = self.logfile()
 		if logfile is None:
 			logfile = u'Unknown logfile'
-		with open(self.ext_resource(u'finished.md')) as fd:
-			md = safe_decode(fd.read())
-		md = md % {
+		md = safe_read(self.ext_resource(u'finished.md')) % {
 			u'time': time.ctime(),
 			u'logfile': logfile
 			}

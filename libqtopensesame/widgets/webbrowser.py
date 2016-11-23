@@ -205,9 +205,8 @@ class webbrowser(base_widget):
 		if url.endswith(u'.md') and not url.startswith(u'http://') \
 			and not url.startswith(u'https://'):
 			self.ui.top_widget.hide()
-			with open(url) as fd:
-				md = safe_decode(fd.read(), errors=u'ignore')
-			self.load_markdown(md, url=os.path.basename(url), tmpl=tmpl)
+			self.load_markdown(safe_read(url), url=os.path.basename(url),
+				tmpl=tmpl)
 			return
 		self.ui.top_widget.show()
 		self._current_url = url
