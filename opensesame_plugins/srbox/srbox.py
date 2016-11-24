@@ -136,6 +136,8 @@ class srbox(base_response_item):
 
 
 class qtsrbox(srbox, qtautoplugin):
+	
+	help_url = u'manual/response/srbox'
 
 	def __init__(self, name, experiment, script=None):
 
