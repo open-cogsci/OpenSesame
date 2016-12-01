@@ -81,9 +81,17 @@ class system_information(base_extension):
 				l.append(u'%s %s' % (name, getattr(mod, a)))
 				continue
 			l.append(u'%s [version unknown]' % name)
+		
+		# platform.architecture() does not seem to work correctly on Windows so a solution found on stackoverflow is used
+		# http://stackoverflow.com/questions/2208828/detect-64bit-os-windows-in-python
+		if(platform.machine().endswith('64')):
+			t = 'win64'
+		else:
+			t = 'win32'
+		
 		md = safe_read(self.ext_resource(u'system-information.md')) % {
-			u'system' : platform.system(),
-			u'architecture' : platform.architecture()[0],
+			u'system' : platform.platform(),
+			u'architecture' : t,
 			u'modules' : u'- ' + u'\n- '.join(l)
 			}
 		self.tabwidget.open_markdown(md, icon=self.icon(),
