@@ -165,6 +165,7 @@ class legacy(canvas.canvas, legacy_coordinates):
 			tmp = pygame.surface.Surface(
 			    [p - line_width for p in size])
 			tmp.fill([0, 0, 0])
+			tmp.set_colorkey([255, 255, 255])
 
 			hole = pygame.surface.Surface(
 			    [p - line_width for p in size],
@@ -172,7 +173,6 @@ class legacy(canvas.canvas, legacy_coordinates):
 			
 			pygame.draw.ellipse(tmp, (255, 255, 255), pygame.Rect(
 			    (0, 0), [p - line_width for p in size]))
-			tmp.set_colorkey([255, 255, 255])
 			hole.blit(tmp, (0, 0))
 			surface.blit(hole, (line_width, line_width),
 			             special_flags=pygame.BLEND_RGBA_MIN)
