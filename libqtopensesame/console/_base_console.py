@@ -61,6 +61,11 @@ class base_console(base_subcomponent):
 
 		sys.stdout = self
 		sys.stderr = self
+		
+	def _modules(self):
+		
+		self.extension_manager[u'system_information'].activate()
+		print(u'Activated system_information extension')
 
 	def default_globals(self):
 
@@ -74,6 +79,7 @@ class base_console(base_subcomponent):
 			'console' : self,
 			'opensesame' : self.main_window,
 			'cfg' : cfg,
+			'modules' : self._modules,
 			'__spec__' : None, # Required by multiprocessing
 			}
 
