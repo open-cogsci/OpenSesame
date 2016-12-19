@@ -865,11 +865,22 @@ class tree_overview(base_subcomponent, base_draggable, QtWidgets.QTreeWidget):
 		if self.currentItem() is None:
 			return
 		super(tree_overview, self).keyPressEvent(e)
-		if e.key() in [QtCore.Qt.Key_Up, QtCore.Qt.Key_Down,
-			QtCore.Qt.Key_PageUp, QtCore.Qt.Key_PageDown, QtCore.Qt.Key_Home,
-			QtCore.Qt.Key_End, QtCore.Qt.Key_Return]:
-			if self.overview_mode:
+		# In overview mode, navigating through the items causes tabs to be
+		# opened
+		if self.overview_mode:
+			if e.key() in [QtCore.Qt.Key_Up, QtCore.Qt.Key_Down,
+					QtCore.Qt.Key_PageUp, QtCore.Qt.Key_PageDown,
+					QtCore.Qt.Key_Home, QtCore.Qt.Key_End,
+					QtCore.Qt.Key_Return]:
 				self.currentItem().open_tab()
+			return
+		# In sequence view, the run-if statements can be changed using
+		# Control+Plus (always) and Control+Minus (never)
+		if QtCore.Qt.ControlModifier & e.modifiers():
+			if e.key() == QtCore.Qt.Key_Minus:
+				self.currentItem().setText(1, u'never')
+			elif e.key() in [QtCore.Qt.Key_Plus, QtCore.Qt.Key_Equal]:
+				self.currentItem().setText(1, u'always')				
 
 	def recursive_children(self, item):
 
