@@ -418,11 +418,13 @@ class tab_widget(base_subcomponent, QtWidgets.QTabWidget):
 		index -- the index of the new tab
 		"""
 
+		self.currentChanged.disconnect()
 		if config.get_config(u"onetabmode"):
 			self.close_other()
 		w = self.currentWidget()
 		if hasattr(w, u'on_activate'):
 			w.on_activate()
+		self.currentChanged.connect(self.index_changed)
 
 	def open_markdown(self, md, icon=u'dialog-information',
 		title=u'Attention!', url=None, tmpl=None):
