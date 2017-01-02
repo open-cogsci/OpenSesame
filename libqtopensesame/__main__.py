@@ -45,16 +45,13 @@ def opensesame():
 		from multiprocessing import freeze_support
 		freeze_support()
 	# Parse the (optional) environment file that contains special paths, etc.
-	from libopensesame.misc import resource, filesystem_encoding, \
-		parse_environment_file
+	from libopensesame.misc import parse_environment_file
 	parse_environment_file()
 	# Force the new-style Qt API
 	import sip
 	import qtpy
 	sip.setapi('QString', 2)
 	sip.setapi('QVariant', 2)
-	# Load debug package (this must be after the working directory change)
-	from libopensesame import debug
 	# Do the basic window initialization
 	from qtpy.QtWidgets import QApplication
 	# From Qt 5.6 on, QtWebEngine is the default way to render web pages
