@@ -260,29 +260,6 @@ class experiment(libopensesame.experiment.experiment):
 		font.setFixedPitch(True)
 		return font
 
-	def clear_widget(self, widget):
-
-		"""
-		Explicitly clears the layout in a widget. This is necessary in some
-		weird cases.
-
-		Arguments:
-		widget	--	The QWidget to be cleared.
-		"""
-
-		if widget is not None:
-			layout = widget.layout()
-			if layout is not None:
-				while layout.count() > 0:
-					item = layout.takeAt(0)
-					if not item:
-						continue
-					w = item.widget()
-					self.clear_widget(w)
-					if w:
-						w.deleteLater()
-						QtCore.QCoreApplication.sendPostedEvents(w, QtCore.QEvent.DeferredDelete)
-
 	def varref(self, val):
 
 		"""
