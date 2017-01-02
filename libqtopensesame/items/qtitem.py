@@ -193,9 +193,11 @@ class qtitem(base_qtobject):
 			Is called when the tab becomes visible, and updated the contents.
 		"""
 
+		self.extension_manager.fire('prepare_open_item', name=self.name)
 		self.update_script()
 		self.edit_widget()
 		self.main_window.ui.itemtree.select_item(self.name, open_tab=False)
+		self.extension_manager.fire('open_item', name=self.name)
 
 	@requires_init
 	def widget(self):

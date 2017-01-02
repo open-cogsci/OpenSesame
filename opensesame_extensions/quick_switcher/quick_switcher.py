@@ -18,9 +18,8 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame.py3compat import *
-
-from qtpy import QtWidgets
 from libqtopensesame.extensions import base_extension
+
 
 class quick_switcher(base_extension):
 
@@ -30,7 +29,7 @@ class quick_switcher(base_extension):
 		functions, and to quickly activate menu actions.
 	"""
 
-	# We need to (re)initialize the dialog on startup and after structural
+	# We need to update or fully refresh the dialog after several structural
 	# changes.
 
 	def event_startup(self):
@@ -40,10 +39,16 @@ class quick_switcher(base_extension):
 		self.d = None
 
 	def event_rename_item(self, from_name, to_name):
-		self.d = None
+		if self.d is not None:
+			self.d.rename_item(from_name, to_name)
 
 	def event_new_item(self, name, _type):
-		self.d = None
+		if self.d is not None:
+			self.d.add_item(name)
+
+	def event_delete_item(self, name):
+		if self.d is not None:
+			self.d.delete_item(name)
 
 	def event_purge_unused_items(self):
 		self.d = None
@@ -52,9 +57,13 @@ class quick_switcher(base_extension):
 		self.d = None
 
 	def event_change_item(self, name):
-
-		if self.experiment.items._type(name) == u'inline_script':
-			self.d = None
+		if self.d is not None:
+			if self.experiment.items._type(name) == u'inline_script':
+				self.d.refresh_item(name)
+				
+	def event_open_item(self, name):
+		if self.d is not None:
+			self.d.bump_item(name)
 
 	def init_dialog(self):
 
@@ -77,4 +86,5 @@ class quick_switcher(base_extension):
 
 		if not hasattr(self, u'd') or self.d is None:
 			self.init_dialog()
+		self.d.items_list_widget.sortItems()
 		self.d.exec_()

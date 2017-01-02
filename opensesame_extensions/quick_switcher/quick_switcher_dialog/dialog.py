@@ -20,11 +20,11 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 from libopensesame.py3compat import *
 
 from qtpy import QtCore, QtWidgets
-from libopensesame import plugins
 from libqtopensesame.dialogs.base_dialog import base_dialog
 from quick_switcher_dialog.item import quick_open_element_item
 from quick_switcher_dialog.symbol import quick_open_element_symbol
 from quick_switcher_dialog.action import quick_open_element_action
+from quick_switcher_dialog.sortable_list_widget import sortable_list_widget
 
 class quick_switcher(base_dialog):
 
@@ -47,34 +47,145 @@ class quick_switcher(base_dialog):
 		super(quick_switcher, self).__init__(main_window,
 			ui=u'extensions.quick_switcher.quick_switcher',
 			flags=QtCore.Qt.Dialog | QtCore.Qt.FramelessWindowHint)
+		self._element_size = None
+		self._sortkey = 0
+		self._item_elements = {}
 		self.ui.filter_line_edit.textChanged.connect(self.filter_list)
 		self.ui.filter_line_edit.returnPressed.connect(self.select_item)
 		self.ui.items_list_widget.itemActivated.connect(self.select_item)
-		self.items = []
-		for item_name in self.experiment.items:
-			item = self.experiment.items[item_name]
-			list_widget_item = QtWidgets.QListWidgetItem()
-			element = quick_open_element_item(item)
-			list_widget_item.setSizeHint(element.minimumSizeHint())
-			self.ui.items_list_widget.addItem(list_widget_item)
-			self.ui.items_list_widget.setItemWidget(list_widget_item, element)
-			if item.item_type == u'inline_script':
-				item.edit_widget()
-				for phase in (u'Run', u'Prepare'):
-					for symbol in item.qprogedit.tab(phase).symbols():
-						list_widget_item = QtWidgets.QListWidgetItem()
-						element = quick_open_element_symbol(item, phase, symbol)
-						list_widget_item.setSizeHint(element.minimumSizeHint())
-						self.ui.items_list_widget.addItem(list_widget_item)
-						self.ui.items_list_widget.setItemWidget(
-							list_widget_item, element)
-		for element in self.action_elements(
-			self.main_window.menubar.actions()):
-			list_widget_item = QtWidgets.QListWidgetItem()
-			list_widget_item.setSizeHint(element.minimumSizeHint())
+		for element in self.action_elements(self.main_window.menubar.actions()):
+			list_widget_item = sortable_list_widget(self.sortkey)
+			list_widget_item.setSizeHint(self.element_size(element))
 			self.ui.items_list_widget.addItem(list_widget_item)
 			self.ui.items_list_widget.setItemWidget(list_widget_item,
 				element)
+		for item_name in self.experiment.items:
+			self.add_item(item_name)
+		self.items_list_widget.sortItems()
+				
+	@property
+	def sortkey(self):
+		
+		"""
+		desc:
+			An automatically incrementing sort key.
+		"""
+		
+		self._sortkey += 1
+		return self._sortkey
+				
+	def element_size(self, element):
+		
+		"""
+		desc:
+			Determines the size of a list element. Uses previously determined
+			size if available, to improve performance.
+			
+		arguments:
+			element:
+				desc:	The element to determine the size for.
+				type:	QListWidgetItem
+				
+		returns:
+			type:	QSize
+		"""
+		
+		if self._element_size is None:
+			self._element_size = QtCore.QSize(
+				self.ui.items_list_widget.size().width(),
+				element.minimumSizeHint().height())
+		return self._element_size
+				
+	def add_item(self, item_name):
+		
+		"""
+		desc:
+			Adds one or more elements to the quick switcher for an item.
+			
+		arguments:
+			item_name:	The name of an item.
+		"""
+		
+		item = self.experiment.items[item_name]
+		list_widget_item = sortable_list_widget(self.sortkey)
+		self._item_elements[item_name] = [list_widget_item]
+		element = quick_open_element_item(item)
+		list_widget_item.setSizeHint(self.element_size(element))
+		self.ui.items_list_widget.addItem(list_widget_item)
+		self.ui.items_list_widget.setItemWidget(list_widget_item, element)
+		if item.item_type == u'inline_script':
+			# Call edit widget to make sure that QProgEdit has content and thus
+			# can extract symbols. But don't do this for the currently visible
+			# item, because that causes the cursor to jump to the top.
+			if self.tabwidget.current_item() != item_name:
+				item.edit_widget()
+			for phase in (u'Run', u'Prepare'):
+				for symbol in item.qprogedit.tab(phase).symbols():
+					list_widget_item = sortable_list_widget(self.sortkey)
+					self._item_elements[item_name].append(list_widget_item)
+					element = quick_open_element_symbol(item, phase, symbol)
+					list_widget_item.setSizeHint(self.element_size(element))
+					self.ui.items_list_widget.addItem(list_widget_item)
+					self.ui.items_list_widget.setItemWidget(
+						list_widget_item, element)
+						
+	def delete_item(self, item_name):
+		
+		"""
+		desc:
+			Removes elements corresponding to an item from the quick switcher.
+			
+		arguments:
+			item_name:	The name of the item.
+		"""
+		
+		if item_name not in self._item_elements:
+			return
+		for list_widget_item in self._item_elements.pop(item_name):
+			row = self.ui.items_list_widget.row(list_widget_item)
+			self.ui.items_list_widget.takeItem(row)
+		
+	def rename_item(self, from_name, to_name):
+		
+		"""
+		desc:
+			Modifies the quick switcher for an item rename.
+			
+		arguments:
+			from_name:	The old item name.
+			to_name:	The new item name.
+		"""
+		
+		self.delete_item(from_name)
+		self.add_item(to_name)
+		
+	def refresh_item(self, item_name):
+		
+		"""
+		desc:
+			Refresh an item in the quick switcher.
+			
+		arguments:
+			item_name:	The name of an item.
+		"""
+		
+		self.delete_item(item_name)
+		self.add_item(item_name)
+		
+	def bump_item(self, item_name):
+		
+		"""
+		desc:
+			Puts an item at the top of the quick switcher.
+		
+		arguments:
+			item_name:	The name of an item.
+		"""
+
+		if item_name not in self._item_elements:
+			return
+		for list_widget_item in self._item_elements.pop(item_name):
+			list_widget_item.sortkey = self.sortkey
 
 	def action_elements(self, actions, path_to_action=[]):
 
@@ -215,4 +326,3 @@ class quick_switcher(base_dialog):
 		"""
 
 		self.ui.items_list_widget.setFocus()
-
