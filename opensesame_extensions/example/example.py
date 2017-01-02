@@ -65,6 +65,12 @@ class example(base_extension):
 
 	def event_close(self):
 		debug.msg(u'Event fired: close')
+		
+	def event_prepare_open_item(self, name):
+		debug.msg(u'Event fired: prepare_open_item(name=%s)' % name)
+
+	def event_open_item(self, name):
+		debug.msg(u'Event fired: open_item(name=%s)' % name)
 
 	def event_prepare_rename_item(self, from_name, to_name):
 		debug.msg(
