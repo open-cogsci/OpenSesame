@@ -26,6 +26,21 @@ from quick_switcher_dialog.symbol import quick_open_element_symbol
 from quick_switcher_dialog.action import quick_open_element_action
 from quick_switcher_dialog.sortable_list_widget import sortable_list_widget
 
+
+NAVIGATION_KEYS = [
+	QtCore.Qt.Key_Home,
+	QtCore.Qt.Key_End,
+	QtCore.Qt.Key_Up,
+	QtCore.Qt.Key_Down,
+	QtCore.Qt.Key_PageUp,
+	QtCore.Qt.Key_Return,
+	QtCore.Qt.Key_Enter,
+	QtCore.Qt.Key_PageDown
+	]
+
+NUMBER_KEYS = range(QtCore.Qt.Key_1, QtCore.Qt.Key_9)
+	
+
 class quick_switcher(base_dialog):
 
 	"""
@@ -53,15 +68,24 @@ class quick_switcher(base_dialog):
 		self.ui.filter_line_edit.textChanged.connect(self.filter_list)
 		self.ui.filter_line_edit.returnPressed.connect(self.select_item)
 		self.ui.items_list_widget.itemActivated.connect(self.select_item)
+		# Monkeypatch key processing, so that we can smoothly control the list
+		# and filter widget at the same time.
+		self.ui.filter_line_edit._keyPressEvent = \
+			self.ui.filter_line_edit.keyPressEvent
+		self.ui.filter_line_edit.keyPressEvent = self.on_keypress
+		self.ui.items_list_widget._keyPressEvent = \
+			self.ui.items_list_widget.keyPressEvent
+		self.ui.items_list_widget.keyPressEvent = self.on_keypress
+		# Populate dialog with action elements
 		for element in self.action_elements(self.main_window.menubar.actions()):
 			list_widget_item = sortable_list_widget(self.sortkey)
 			list_widget_item.setSizeHint(self.element_size(element))
 			self.ui.items_list_widget.addItem(list_widget_item)
 			self.ui.items_list_widget.setItemWidget(list_widget_item,
 				element)
+		# Populate dialog with item elements
 		for item_name in self.experiment.items:
 			self.add_item(item_name)
-		self.items_list_widget.sortItems()
 				
 	@property
 	def sortkey(self):
@@ -184,7 +208,7 @@ class quick_switcher(base_dialog):
 
 		if item_name not in self._item_elements:
 			return
-		for list_widget_item in self._item_elements.pop(item_name):
+		for list_widget_item in self._item_elements[item_name]:
 			list_widget_item.sortkey = self.sortkey
 
 	def action_elements(self, actions, path_to_action=[]):
@@ -326,3 +350,28 @@ class quick_switcher(base_dialog):
 		"""
 
 		self.ui.items_list_widget.setFocus()
+		
+	def on_keypress(self, e):
+		
+		"""
+		desc:
+			Overrides the keyPressEvent() of the items list and filter edit,
+			manages the focus, and dispatches the events to the correct widget.
+			
+		arguments:
+			e:
+				type:	QKeyEvent
+		"""
+		
+		if e.key() in NUMBER_KEYS:
+			row = e.key() - QtCore.Qt.Key_1
+			list_widget_item = self.ui.items_list_widget.item(row)
+			self.ui.items_list_widget.itemWidget(list_widget_item).activate()
+			self.accept()
+			return
+		if e.key() in NAVIGATION_KEYS:
+			self.ui.items_list_widget.setFocus()
+			self.ui.items_list_widget._keyPressEvent(e)
+			return
+		self.ui.filter_line_edit.setFocus()
+		self.ui.filter_line_edit._keyPressEvent(e)
