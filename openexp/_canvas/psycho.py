@@ -28,9 +28,9 @@ from openexp._coordinates.psycho import psycho as psycho_coordinates
 from libopensesame.exceptions import osexception
 from libopensesame import debug
 try: # Try both import statements
-	from PIL import Image
+	from PIL import Image, ImageDraw
 except:
-	import Image
+	import Image, ImageDraw
 import numpy as np
 
 try:
@@ -177,17 +177,35 @@ class psycho(canvas.canvas, psycho_coordinates):
 	@configurable
 	def ellipse(self, x, y, w, h):
 
-		pos = self.to_xy(x+w/2, y+h/2)
-		stim = visual.GratingStim(win=self.experiment.window, mask=u'circle',
-			pos=pos, size=[w, h], color=self.color.backend_color, tex=None,
-			interpolate=True)
+		p = self.penwidth
+		if self.fill:
+			# A filled ellipse ignores the penwidth and fills up exactly the
+			# specified size
+			im = Image.new('L', (w, h), 0)
+			dr = ImageDraw.Draw(im)
+			dr.ellipse((0, 0, w-1, h-1), fill=1)			
+		elif p == 1:
+			# An unfilled ellipses with a pendwidth of 1 also fills up exactly
+			# the specified size
+			im = Image.new('L', (w, h), 0)
+			dr = ImageDraw.Draw(im)
+			dr.ellipse((0,0,w-1,h-1), outline=1)
+		else:
+			# An unfilled ellipse with a positive larger than 1 fills up
+			# slightly more than the specified size, because half the penwidth
+			# extends beyond the size on each side.
+			im = Image.new('L', (w+p, h+p), 0)
+			dr = ImageDraw.Draw(im)
+			dr.ellipse((0,0,w+p-1, h+p-1), fill=1)
+			dr.ellipse((p, p, w-1, h-1), fill=0)
+		# Transform the image into a mask, and remap the colors to PsychoPy
+		# format (-1 = transparent, 1 = opaque)
+		mask = np.array(im, dtype=int)
+		mask[mask == 0] = -1
+		stim = visual.GratingStim(win=self.experiment.window, mask=mask,
+			pos=self.to_xy(x+w/2, y+h/2), size=im.size,
+			color=self.color.backend_color, tex=None)
 		self.stim_list.append(stim)
-		if not self.fill:
-			stim = visual.GratingStim(win=self.experiment.window,
-				mask=u'circle', pos=pos, size=[w-2*self.penwidth,
-				h-2*self.penwidth], color=self.background_color.backend_color,
-				tex=None, interpolate=True)
-			self.stim_list.append(stim)
 
 	@configurable
 	def polygon(self, vertices):
