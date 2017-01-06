@@ -640,29 +640,53 @@ class sketchpad_canvas(QtGui.QGraphicsScene):
 		if add:
 			self.addItem(i)
 		return i
+		d = math.sqrt((ey-sy)**2 + (sx-ex)**2)
+		# direction  
+		angle = math.atan2(ey-sy,ex-sx)
 
-	def arrow(self, sx, sy, ex, ey, arrow_size=5, color=None, penwidth=None):
+	def arrow(self, sx, sy, ex, ey, proportion=0.7, arrow_width=30, 
+		arrowhead_width=0.5, color=None, fill=False, penwidth=None, add=True):
 
 		"""Mimicks canvas api. See openexp._canvas.canvas."""
 
-		a = math.atan2(ey - sy, ex - sx)
-		sx1 = ex + arrow_size * math.cos(a + math.radians(135))
-		sy1 = ey + arrow_size * math.sin(a + math.radians(135))
-		sx2 = ex + arrow_size * math.cos(a + math.radians(225))
-		sy2 = ey + arrow_size * math.sin(a + math.radians(225))
-		group = QtGui.QGraphicsItemGroup()
-		i = self.line(sx, sy, ex, ey, color=color, penwidth=penwidth,
-			add=False)
-		group.addToGroup(i)
-		i = self.line(sx1, sy1, ex, ey, color=color, penwidth=penwidth,
-			add=False)
-		group.addToGroup(i)
-		i = self.line(sx2, sy2, ex, ey, color=color, penwidth=penwidth,
-			add=False)
-		group.addToGroup(i)
-		self.addItem(group)
-		return group
-
+		# length
+		d = math.sqrt((ey-sy)**2 + (sx-ex)**2)
+		# direction  
+		angle = math.atan2(ey-sy,ex-sx)
+		head_width = arrowhead_width/2.0 
+		body_width = (1-arrowhead_width)/2.0 
+		# calculate coordinates
+		p0 = (sx,sy)
+		p4 = (ex,ey)
+		p1 = (sx +body_width * arrow_width * math.cos(angle - math.pi/2),\
+			sy + body_width * arrow_width * math.sin(angle - math.pi/2))
+		p2 = (p1[0] + proportion*math.cos(angle) * d, \
+		 	p1[1] + proportion * math.sin(angle) * d)
+		p3 = (p2[0]+head_width * arrow_width * math.cos(angle-math.pi/2),\
+			p2[1] + head_width * arrow_width * math.sin(angle-math.pi/2))
+		p7 = (sx + body_width * arrow_width*math.cos(angle + math.pi/2),\
+			sy + body_width * arrow_width*math.sin(angle + math.pi/2))
+		p6 = (p7[0] + proportion * math.cos(angle) * d, \
+		 	p7[1] + proportion * math.sin(angle) * d)
+		p5 = (p6[0]+head_width * arrow_width * math.cos(angle+math.pi/2),\
+			p6[1]+head_width * arrow_width * math.sin(angle+math.pi/2))
+		color = self._color(color)
+		if fill:
+			pen = self._pen(color, 1)
+			brush = self._brush(color)
+		else:
+			pen = self._pen(color, penwidth)
+			brush = QtGui.QBrush()
+		polygon = QtGui.QPolygonF()
+		for point in [p0,p1, p2,p3,p4,p5,p6,p7]:
+			polygon <<  QtCore.QPointF(point[0],point[1])
+		i = QtGui.QGraphicsPolygonItem(polygon)
+		i.setPen(pen)
+		i.setBrush(brush)
+		if add:
+			self.addItem(i)
+		return i
+		
 	def rect(self, x, y, w, h, fill=False, color=None, penwidth=None):
 
 		"""Mimicks canvas api. See openexp._canvas.canvas."""

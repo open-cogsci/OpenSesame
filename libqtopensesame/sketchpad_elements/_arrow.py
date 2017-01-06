@@ -41,14 +41,17 @@ class arrow(base_line_arrow, arrow_runtime):
 			sketchpad.canvas.removeItem(cls.preview)
 			return
 		properties = {
-				u'x1':		cls.pos_start[0],
-				u'y1':		cls.pos_start[1],
-				u'x2':		pos[0],
-				u'y2':		pos[1],
-				u'color': 	sketchpad.current_color(),
-				u'penwidth'	: sketchpad.current_penwidth(),
-				u'arrow_size'	: sketchpad.current_arrow_size(),
-				u'show_if'	: sketchpad.current_show_if()
+				u'x1':				cls.pos_start[0],
+				u'y1':				cls.pos_start[1],
+				u'x2':				pos[0],
+				u'y2':				pos[1],
+				u'color': 			sketchpad.current_color(),
+				u'penwidth'	: 		sketchpad.current_penwidth(),
+				u'proportion':		sketchpad.current_proportion(),
+				u'arrow_width':		sketchpad.current_arrow_width(),
+				u'arrowhead_width':	sketchpad.current_arrowhead_width(),
+				u'fill':			sketchpad.current_fill(),
+				u'show_if':			sketchpad.current_show_if()
 			}
 		e = arrow(sketchpad, properties=properties)
 		cls.pos_start = None
@@ -56,5 +59,18 @@ class arrow(base_line_arrow, arrow_runtime):
 		return e
 
 	@staticmethod
-	def requires_arrow_size():
+	def requires_arrow_width():
 		return True
+
+	@staticmethod
+	def requires_arrowhead_width():
+		return True
+
+	@staticmethod
+	def requires_proportion():
+		return True
+
+	@staticmethod
+	def requires_fill():
+		return True
+
