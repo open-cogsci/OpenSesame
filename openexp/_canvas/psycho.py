@@ -177,7 +177,9 @@ class psycho(canvas.canvas, psycho_coordinates):
 	@configurable
 	def ellipse(self, x, y, w, h):
 
-		p = self.penwidth
+		p = int(self.penwidth)
+		w = int(w)
+		h = int(h)
 		if self.fill:
 			# A filled ellipse ignores the penwidth and fills up exactly the
 			# specified size
