@@ -123,6 +123,7 @@ class sketchpad(base_response_item, keyboard_response_mixin,
 
 		self._t0 = self.set_item_onset(self.canvas.show())
 		base_response_item.run(self)
+		del self.canvas
 
 	def coroutine(self):
 

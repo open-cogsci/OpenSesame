@@ -56,6 +56,9 @@ class preferences_widget(base_widget):
 		self.ui.combobox_style.currentIndexChanged.connect(self.apply)
 		self.ui.combobox_theme.currentIndexChanged.connect(self.apply)
 		self.ui.combobox_locale.currentIndexChanged.connect(self.apply)
+		# Hide miscellaneous group for now, because it only contains the
+		# auto-response option, which is defunct
+		self.ui.group_miscellaneous.setVisible(False)
 		self.set_controls()
 		for ext in self.extensions:
 			try:
