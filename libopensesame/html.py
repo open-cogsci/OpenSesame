@@ -270,6 +270,8 @@ class html(HTMLParser):
 		canvas.set_config(**backup_cfg)
 		if dry_run:
 			return max_width, height
+		# Delete to avoid cyclic references
+		del self.canvas
 
 	def pop_style(self):
 

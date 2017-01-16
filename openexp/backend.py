@@ -273,7 +273,8 @@ class backend(object):
 		_cfg.update(cfg)
 		self.set_config(**_cfg)
 
-	def assert_list_or_None(self, key, val):
+	@classmethod
+	def assert_list_or_None(cls, key, val):
 
 		"""
 		visible:	False
@@ -290,7 +291,8 @@ class backend(object):
 			raise osexception(
 				u'%s should be a list or None, not %s' % (key, val))
 
-	def assert_bool(self, key, val):
+	@classmethod
+	def assert_bool(cls, key, val):
 
 		"""
 		visible:	False
@@ -307,7 +309,8 @@ class backend(object):
 			raise osexception(
 				u'%s should be True or False, not %s' % (key, val))
 
-	def assert_numeric_or_None(self, key, val):
+	@classmethod
+	def assert_numeric_or_None(cls, key, val):
 
 		"""
 		visible:	False
@@ -326,7 +329,8 @@ class backend(object):
 				u'%s should be numeric (float or int) or None, not %s' \
 				% (key, val))
 
-	def assert_numeric(self, key, val):
+	@classmethod
+	def assert_numeric(cls, key, val):
 
 		"""
 		visible:	False
@@ -343,7 +347,8 @@ class backend(object):
 			raise osexception(
 				u'%s should be numeric (float or int), not %s' % (key, val))
 
-	def assert_string(self, key, val):
+	@classmethod
+	def assert_string(cls, key, val):
 
 		"""
 		visible:	False
