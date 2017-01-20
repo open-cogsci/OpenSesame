@@ -18,4 +18,6 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """ 
 
 from libopensesame import debug
-debug.msg('using dummy PyQt4.QtGui')
+debug.msg('using dummy qtpy.QtCore')
+# Indicates that we are in dummy mode
+QCoreApplication = None

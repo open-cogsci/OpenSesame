@@ -1,34 +1,45 @@
 ---
 API: 2
-OpenSesame: 3.0.0a17
+OpenSesame: 3.1.5a4
 Platform: posix
 ---
 set width 1280
+set uniform_coordinates no
 set title "Runtime GUI for Android"
-set synth_backend "droid"
-set subject_parity "even"
+set synth_backend droid
+set subject_parity even
 set subject_nr 0
-set start "experiment"
-set sampler_backend "legacy"
-set mouse_backend "droid"
-set keyboard_backend "droid"
+set start experiment
+set sound_sample_size -16
+set sound_freq 48000
+set sound_channels 2
+set sound_buf_size 1024
+set sampler_backend legacy
+set round_decimals 2
+set mouse_backend droid
+set keyboard_backend droid
 set height 800
-set foreground "white"
+set fullscreen no
+set form_clicks no
+set foreground white
+set font_underline no
 set font_size 28
-set font_italic "no"
-set font_family "sans"
-set font_bold "no"
+set font_italic no
+set font_family sans
+set font_bold no
+set experiment_path "/home/sebastiaan/git/OpenSesame/opensesame_resources/android"
+set disable_garbage_collection yes
 set description "Implements the launcher menu for the Android runtime"
-set coordinates "relative"
+set coordinates relative
 set compensation 0
-set canvas_backend "droid"
-set bidi "no"
+set canvas_backend droid
+set bidi no
 set background "#2e3436"
 
 define sequence experiment
-	set flush_keyboard "yes"
+	set flush_keyboard yes
 	set description "Runs a number of items in sequence"
-	run inline_script "always"
+	run inline_script always
 
 define inline_script inline_script
 	set description "Executes Python code"

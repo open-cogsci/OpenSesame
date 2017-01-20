@@ -21,7 +21,11 @@ import os
 import os.path
 import platform
 import sys
-import site
+try:
+	import site
+except IOError:
+	# On Android, the site package cannot be imported
+	site = None
 from libopensesame import debug, metadata
 from libopensesame.py3compat import *
 

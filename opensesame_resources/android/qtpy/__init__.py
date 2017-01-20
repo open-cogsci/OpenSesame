@@ -15,24 +15,15 @@ GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
-"""
+""" 
 
-from libopensesame.py3compat import *
-from distutils.version import StrictVersion
+import os
+os.environ['QT_API'] = 'pyqt'
 import sys
-
-__version__ = u'3.1.5a4'
-strict_version = StrictVersion(__version__)
-# The version without the prerelease (if any): e.g. 3.0.0
-main_version = u'.'.join([str(i) for i in strict_version.version])
-# The version following the debian convention: e.g. 3.0.0~a1
-if strict_version.prerelease is None:
-	deb_version = main_version
-else:
-	deb_version = main_version + u'+%s%d' % strict_version.prerelease
-python_version = u'%d.%d.%d' % (sys.version_info[0], sys.version_info[1], \
-	sys.version_info[2])
-codename = u'Jazzy James'
-channel = u'dev'
-api = StrictVersion(u'2.0')
-platform = sys.platform
+from libopensesame import debug
+from libqtopensesame.misc import dummy
+debug.msg('using dummy qtpy')
+sys.modules['libqtopensesame.items.qtplugin'] = dummy
+sys.modules['libqtopensesame.items.qtautoplugin'] = dummy
+sys.modules['libqtopensesame.qtplugin'] = dummy
+sys.modules['libqtopensesame.qtautoplugin'] = dummy

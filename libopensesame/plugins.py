@@ -20,7 +20,6 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 import os
 import sys
 import yaml
-import site
 from libopensesame import debug, misc
 from libopensesame.exceptions import osexception
 from libopensesame.py3compat import *

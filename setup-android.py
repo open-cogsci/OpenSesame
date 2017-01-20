@@ -70,6 +70,7 @@ module_list = [
 	'HTMLParser',
 	'markupbase',
 	'webcolors',
+	'numbers'
 	]
 
 # A list of pure Python packages that are not included by default but are
@@ -79,7 +80,9 @@ package_list = [
 	'libopensesame',
 	'libqtopensesame',
 	'openexp',
-	'distutils'
+	'distutils',
+	'datamatrix',
+	'pseudorandom',
 	]
 
 # A list of files/folders in the resources folder that should be copied
@@ -129,24 +132,26 @@ print('Creating %s' % target)
 os.mkdir(target)
 
 print('Copying resources')
-shutil.copytree('resources', os.path.join(target, 'resources'),
+shutil.copytree('opensesame_resources',
+	os.path.join(target, 'opensesame_resources'),
 	ignore=ignore_resources)
 
 print('Copying example(s)')
 os.mkdir(os.path.join(target, u'examples'))
 shutil.copyfile(
-	u'extensions/example_experiments/examples/gaze_cuing/experiment.osexp',
+	u'opensesame_extensions/example_experiments/examples/gaze_cuing/experiment.osexp',
 	os.path.join(target, u'examples', u'gaze_cuing.osexp'))
 shutil.copytree(
-	u'extensions/example_experiments/examples/gaze_cuing/__pool__',
+	u'opensesame_extensions/example_experiments/examples/gaze_cuing/__pool__',
 	os.path.join(target, u'examples/__pool__'))
 
 print('Copying plugins')
-os.mkdir(os.path.join(target, 'plugins'))
+os.mkdir(os.path.join(target, 'opensesame_plugins'))
 for plugin in included_plugins:
 	print('Copying plugin %s' % plugin)
-	shutil.copytree(os.path.join('plugins', plugin), os.path.join(target,
-		'plugins', plugin))
+	shutil.copytree(
+		os.path.join('opensesame_plugins', plugin),
+		os.path.join(target, 'opensesame_plugins', plugin))
 
 print('Copying modules')
 for module in module_list:
@@ -164,18 +169,19 @@ for package in package_list:
 	print('\t%s (%s)' % (package, folder))
 	shutil.copytree(folder, os.path.join(target, package))
 
-print('Copying dummy PyQt4')
-shutil.copytree('resources/android/PyQt4', os.path.join(target, 'PyQt4'))
+print('Copying dummy qtpy')
+shutil.copytree('opensesame_resources/android/qtpy',
+	os.path.join(target, 'qtpy'))
 print('Copying main.py')
 shutil.copyfile('opensesameandroid.py', os.path.join(target, 'main.py'))
 print('Copying .android.json')
-shutil.copyfile('resources/android/android.json', os.path.join(target,
-	'.android.json'))
+shutil.copyfile('opensesame_resources/android/android.json',
+	os.path.join(target, '.android.json'))
 print('Copying android-icon.png')
-shutil.copyfile('resources/android/android-icon.png',
+shutil.copyfile('opensesame_resources/android/android-icon.png',
 	os.path.join(target, 'android-icon.png'))
 print('Copying android-presplash.png')
-shutil.copyfile('resources/android/android-presplash.jpg',
+shutil.copyfile('opensesame_resources/android/android-presplash.jpg',
 	os.path.join(target, 'android-presplash.jpg'))
 print('Building')
 os.chdir(pgs4a_folder)

@@ -94,7 +94,7 @@ def main():
 			break
 	# If no autorun file has been specified, we launch the menu experiment.
 	else:
-		src = 'resources/android/menu.osexp'
+		src = 'opensesame_resources/android/menu.osexp'
 		print('Launching %s' % src)
 		menu = experiment('Experiment', src)
 		menu.experiment_path = None
