@@ -71,6 +71,7 @@ ShowInstDetails hide
 ShowUnInstDetails hide
 
 Section "OpenSesame" SEC01
+  SetShellVarContext all
   IfFileExists "$INSTDIR" 0 true
   MessageBox MB_YESNO "Another version of OpenSesame is already installed in $INSTDIR, and will be removed. Do you want to continue?" /SD IDYES IDYES true IDNO false
   false:
@@ -112,6 +113,7 @@ Function un.onInit
 FunctionEnd
 
 Section Uninstall
+  SetShellVarContext all
   Delete "$SMPROGRAMS\OpenSesame\OpenSesame.lnk"
   Delete "$SMPROGRAMS\OpenSesame\OpenSesame (runtime).lnk"
   Delete "$SMPROGRAMS\OpenSesame\Website.lnk"
