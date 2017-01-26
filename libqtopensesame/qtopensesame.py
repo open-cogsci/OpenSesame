@@ -215,7 +215,7 @@ class qtopensesame(QtWidgets.QMainWindow, base_component):
 			tmpl = u'default-py3.osexp'
 		else:
 			tmpl = u'default.osexp'
-		with open(misc.resource(os.path.join(u'templates', tmpl)), u'r') as fd:
+		with safe_open(misc.resource(os.path.join(u'templates', tmpl)), u'r') as fd:
 			self.experiment = experiment.experiment(self, u'New experiment',
 				fd.read())
 		self.experiment.build_item_tree()

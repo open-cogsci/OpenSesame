@@ -17,7 +17,9 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
+import functools
 import sys
+import io
 
 if sys.version_info >= (3,0,0):
 	py3 = True
@@ -63,6 +65,7 @@ def safe_read(path):
 	with open(path, u'r') as fd:
 		return safe_decode(fd.read(), errors=u'ignore')
 
+safe_open = functools.partial(io.open, encoding=u'utf-8')
 
 if py3:
 	safe_str = safe_decode
@@ -70,7 +73,7 @@ else:
 	safe_str = safe_encode
 
 __all__ = ['py3', 'safe_decode', 'safe_encode', 'safe_str',
-	'universal_newline_mode', 'safe_read']
+	'universal_newline_mode', 'safe_read', 'safe_open']
 if not py3:
 	__all__ += ['str', 'bytes']
 else:

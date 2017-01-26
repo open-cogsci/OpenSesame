@@ -50,7 +50,7 @@ def backend_info(experiment):
 	# Use caching
 	if _backend_info is not None:
 		return _backend_info
-	with open(experiment.resource(u'backend_info.yaml')) as fd:
+	with safe_open(experiment.resource(u'backend_info.yaml')) as fd:
 		d = yaml.load(fd)
 	l = []
 	for name, info in d.items():

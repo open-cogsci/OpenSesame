@@ -564,16 +564,16 @@ class experiment(item.item):
 		# If there are no files in the pool, save the script as plain text
 		if self.pool.count_included() == 0:
 			debug.msg(u'saving as plain text (without file pool)')
-			with open(path, u'w') as fd:
-				fd.write(safe_str(self.to_string()))
+			with safe_open(path, u'w') as fd:
+				fd.write(self.to_string())
 			self.experiment_path = os.path.dirname(path)
 			return path
 		debug.msg(u'saving as .tar.gz archive (with file pool)')
 		# Write the script to a text file
 		script = self.to_string()
 		script_path = os.path.join(self.pool.folder(), u'script.opensesame')
-		with open(script_path, u'w') as fd:
-			fd.write(safe_str(script))
+		with safe_open(script_path, u'w') as fd:
+			fd.write(script)
 		# Create the archive in a a temporary folder and move it afterwards.
 		# This hack is needed, because tarfile fails on a Unicode path.
 		tmp_path = tempfile.mktemp(suffix=u'.osexp')
@@ -638,8 +638,8 @@ class experiment(item.item):
 		except tarfile.ReadError:
 			# If the file wasn't a .tar.gz, then it must be a plain-text file
 			debug.msg(u"opening plain-text experiment")
-			with open(src, universal_newline_mode) as fd:
-				return safe_decode(fd.read())
+			with safe_open(src, universal_newline_mode) as fd:
+				return fd.read()
 		debug.msg(u"opening .tar.gz archive")
 		# If the file is a .tar.gz archive, extract the pool to the pool folder
 		# and return the contents of opensesame.script.
@@ -667,8 +667,8 @@ class experiment(item.item):
 				os.rmdir(os.path.join(self.pool.folder(), folder))
 		script_path = os.path.join(self.pool.folder(), u"script.opensesame")
 		tar.extract(u"script.opensesame", self.pool.folder())
-		with open(script_path, universal_newline_mode) as fd:
-			script = safe_decode(fd.read())
+		with safe_open(script_path, universal_newline_mode) as fd:
+			script = fd.read()
 		os.remove(script_path)
 		self.experiment_path = os.path.dirname(src)
 		return script

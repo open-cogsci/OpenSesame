@@ -72,8 +72,8 @@ class markdown_parser(base_subcomponent):
 
 		self.setup(main_window)
 		self.css = u'<style type="text/css">'
-		with open(self.main_window.theme.resource(u'markdown.css')) as fd:
-			self.css += safe_decode(fd.read()) % {u'background_image' : \
+		with safe_open(self.main_window.theme.resource(u'markdown.css')) as fd:
+			self.css += fd.read() % {u'background_image' : \
 				os.path.abspath(self.main_window.theme.resource(
 				u'background.png'))}
 		if highlight is not None:

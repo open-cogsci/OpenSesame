@@ -119,7 +119,7 @@ class python_workspace(object):
 				type:	str
 		"""
 
-		with open(path) as fd:
+		with safe_open(path) as fd:
 			script = fd.read()
 		bytecode = self._compile(script)
 		self._exec(bytecode)

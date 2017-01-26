@@ -118,7 +118,7 @@ class help(base_extension):
 		except:
 			if local_sitemap is None:
 				return
-			with open(self.ext_resource(local_sitemap)) as fd:
+			with safe_open(self.ext_resource(local_sitemap)) as fd:
 				sitemap = fd.read()
 				_dict = yaml.load(sitemap)
 		if not isinstance(_dict, dict):
@@ -169,7 +169,7 @@ class help(base_extension):
 		"""
 
 		import yaml
-		with open(self.ext_resource(u'psychopy_sitemap.yaml')) as fd:
+		with safe_open(self.ext_resource(u'psychopy_sitemap.yaml')) as fd:
 			sitemap = fd.read()
 		_dict = yaml.load(sitemap)
 		menu = self.build_menu(self.menu, None, _(u'PsychoPy API'), _dict)

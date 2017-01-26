@@ -19,7 +19,6 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 
 from libopensesame.py3compat import *
 from openexp._log.log import log
-import codecs
 import os
 
 class csv(log):
@@ -52,7 +51,7 @@ class csv(log):
 		else:
 			self._path = path
 		# Open the logfile
-		self._log = codecs.open(self._path, u'w', u'utf-8')
+		self._log = safe_open(self._path, u'w')
 		self._header_written = False
 
 	def write(self, msg, newline=True):

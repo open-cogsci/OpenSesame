@@ -71,8 +71,8 @@ class get_started(base_extension):
 					(i, cls, os.path.basename(path))
 				recent.append(md)
 		# Create markdown
-		with open(self.ext_resource(u'get_started.md')) as fd:
-			md = safe_decode(fd.read())
+		with safe_open(self.ext_resource(u'get_started.md')) as fd:
+			md = fd.read()
 		md = md % {
 			u'version' : metadata.__version__,
 			u'codename' : metadata.codename,

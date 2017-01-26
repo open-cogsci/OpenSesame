@@ -69,7 +69,7 @@ class theme:
 		if os.path.exists(self.theme_info):
 			info = imp.load_source(self.theme,
 				safe_str(self.theme_info, enc=misc.filesystem_encoding()))
-			with open(os.path.join(self.theme_folder, info.qss)) as fd:
+			with safe_open(os.path.join(self.theme_folder, info.qss)) as fd:
 				self._qss = fd.read()
 			self._icon_map = info.icon_map
 			self._icon_theme = info.icon_theme
@@ -236,9 +236,9 @@ class theme:
 		self.icon_map = {}
 		path = os.path.join(self.theme_folder, self._icon_map)
 		debug.msg(path)
-		with open(path) as fd:
+		with safe_open(path) as fd:
 			for l in fd:
-				l = l.split(",")
+				l = l.split(u',')
 				if len(l) == 3:
 					try:
 						size = int(l[2])
