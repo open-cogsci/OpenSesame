@@ -32,7 +32,7 @@ def opensesame():
 	# In OS X the multiprocessing module is horribly broken, but a fixed
 	# version has been released as the 'billiard' module
 	if platform.system() == 'Darwin':
-		# Use normal multirpocessing module from python 3.4 and on
+		# Use normal multiprocessing module from python 3.4 and on
 		if sys.version_info >= (3,4):
 			from multiprocessing import freeze_support, set_start_method
 			freeze_support()
