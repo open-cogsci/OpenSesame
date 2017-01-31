@@ -36,7 +36,7 @@ def opensesame():
 		if sys.version_info >= (3,4):
 			from multiprocessing import freeze_support, set_start_method
 			freeze_support()
-			set_start_method('forkserver')
+			set_start_method('spawn')
 		else:
 			from billiard import freeze_support, forking_enable
 			freeze_support()
