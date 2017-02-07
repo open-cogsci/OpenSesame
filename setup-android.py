@@ -70,7 +70,7 @@ module_list = [
 	'HTMLParser',
 	'markupbase',
 	'webcolors',
-	'numbers'
+	'numbers',
 	]
 
 # A list of pure Python packages that are not included by default but are
