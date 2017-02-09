@@ -146,10 +146,13 @@ class loop(qtstructure_item, qtitem, loop_runtime):
 			Applies changes to the loop table.
 		"""
 
-		if len(self.dm) == 0:
+		# QDataMatrix can create a new datamatrix object, and that's the one we
+		# have to use.
+		self.dm = self.qdm.dm
+		if not self.dm:
 			self.dm.length = 1
 			self.qdm.refresh()
-		if len(self.dm.columns) == 0:
+		if not self.dm.columns:
 			self.dm.empty_column = u''
 			self.qdm.refresh()
 		self.update_script()
