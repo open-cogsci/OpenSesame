@@ -76,6 +76,10 @@ class psycho(mouse.mouse, psycho_coordinates):
 
 		return self.from_xy(self.mouse.getPos()), self.experiment.time()
 
+	def set_pos(self, pos=(0,0)):
+
+		self.mouse.setPos(self.to_xy(pos))
+		
 	def get_pressed(self):
 
 		return tuple(self.mouse.getPressed(getTime=False))
