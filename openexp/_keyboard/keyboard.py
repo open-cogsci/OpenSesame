@@ -32,7 +32,7 @@ class keyboard(backend):
 		~~~ .python
 		# Wait for a 'z' or 'x' key with a timeout of 3000 ms
 		my_keyboard = keyboard(keylist=['z', 'x'], timeout=3000)
-		start_time = time()
+		start_time = clock.time()
 		key, end_time = my_keyboard.get_key()
 		var.response = key
 		var.response_time = end_time - start_time
