@@ -120,7 +120,7 @@ class theme:
 		else:
 			fallback = category + u'-x-generic'
 		return QtGui.QIcon.fromTheme(filetype,
-			fallback=QtGui.QIcon.fromTheme(fallback))
+			QtGui.QIcon.fromTheme(fallback))
 
 	def qicon(self, icon):
 
