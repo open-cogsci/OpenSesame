@@ -34,4 +34,4 @@ class legacy(clock):
 
 	def sleep(self, ms):
 
-		pygame.time.delay(ms)
+		pygame.time.delay(int(ms))
