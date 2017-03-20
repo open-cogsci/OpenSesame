@@ -156,7 +156,7 @@ def envelope(length, attack, decay, rate):
 	length *= .001
 	attack *= .001
 	decay *= .001
-	e = np.ones(length*rate)
+	e = np.ones(int(length*rate))
 	if attack > 0:
 		attack = int(attack*rate)
 		e[:attack] *= np.linspace(0, 1, attack)
