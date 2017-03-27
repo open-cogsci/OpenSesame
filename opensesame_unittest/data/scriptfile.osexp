@@ -23,6 +23,7 @@ set font_size 18
 set font_italic no
 set font_family mono
 set font_bold no
+set experiment_path "/home/sebastiaan/git/OpenSesame/opensesame_unittest/data"
 set disable_garbage_collection yes
 set description "The main experiment item"
 set coordinates uniform
@@ -34,22 +35,7 @@ set background black
 define sequence experiment
 	set flush_keyboard yes
 	set description "Runs a number of items in sequence"
-	run getting_started always
 	run welcome always
-
-define notepad getting_started
-	__note__
-	Welcome to OpenSesame 3.1 "Jazzy James"!
-	If you are new to OpenSesame, it is a good idea to follow one of the tutorials,
-	which can be found on the documentation site:
-	- <http://osdoc.cogsci.nl/>
-	You can also check out the examples. These can be opened via:
-	- Menu -> Tools -> Example experiments.
-	And feel free to ask for help on the forum:
-	- <http://forum.cogsci.nl/>
-	Have fun with OpenSesame!
-	__end__
-	set description "A simple notepad to document your experiment. This plug-in does nothing."
 
 define sketchpad welcome
 	set start_response_interval no
