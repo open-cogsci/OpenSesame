@@ -213,7 +213,7 @@
       <item>
        <widget class="QLabel" name="label_no_heartbeat">
         <property name="text">
-         <string>&lt;small&gt;Live variable updating is not supported by the current runner. You can select a different runner under Preferences. For more information, visit &lt;a href=&quot;http://osdoc.cogsci.nl/miscellaneous/runners/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;http://osdoc.cogsci.nl/miscellaneous/runners/&lt;/span&gt;&lt;/a&gt;.&lt;/small&gt;</string>
+         <string>&lt;small&gt;Live variable updating is not supported by the current runner. You can select a different runner under Preferences. For more information, visit &lt;a href=&quot;http://osdoc.cogsci.nl/manual/runners/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;http://osdoc.cogsci.nl/manual/runners/&lt;/span&gt;&lt;/a&gt;.&lt;/small&gt;</string>
         </property>
         <property name="wordWrap">
          <bool>true</bool>
