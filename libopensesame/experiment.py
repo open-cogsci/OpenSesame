@@ -558,120 +558,37 @@ class experiment(item.item):
 		"""
 
 		path = safe_decode(path, enc=self.encoding)
-		debug.msg(u'asked to save "%s"' % path)
 		if os.path.exists(path) and not overwrite:
 			return False
-		# If there are no files in the pool, save the script as plain text
-		if self.pool.count_included() == 0:
-			debug.msg(u'saving as plain text (without file pool)')
-			with safe_open(path, u'w') as fd:
-				fd.write(self.to_string())
-			self.experiment_path = os.path.dirname(path)
-			return path
-		debug.msg(u'saving as .tar.gz archive (with file pool)')
-		# Write the script to a text file
-		script = self.to_string()
-		script_path = os.path.join(self.pool.folder(), u'script.opensesame')
-		with safe_open(script_path, u'w') as fd:
-			fd.write(script)
-		# Create the archive in a a temporary folder and move it afterwards.
-		# This hack is needed, because tarfile fails on a Unicode path.
-		tmp_path = tempfile.mktemp(suffix=u'.osexp')
-		tar = tarfile.open(tmp_path, u'w:gz')
-		tar.add(script_path, u'script.opensesame')
-		os.remove(script_path)
-		# We also create a temporary pool folder, where all the filenames are
-		# Unicode sanitized to ASCII format. Again, this is necessary to deal
-		# with poor Unicode support in .tar.gz.
-		tmp_pool = tempfile.mkdtemp(suffix=u'.opensesame.pool')
-		for fname in os.listdir(self.pool.folder()):
-			sname = self.syntax.to_ascii(fname)
-			shutil.copyfile(os.path.join(self.pool.folder(), fname),
-				os.path.join(tmp_pool, sname))
-		tar.add(tmp_pool, u'pool', True)
-		tar.close()
-		# Move the file to the intended location
-		shutil.move(tmp_path, path)
+		from libopensesame.osexpfile import osexpwriter
+		w = osexpwriter(self, path)
 		if update_path:
-			self.experiment_path = os.path.dirname(path)
-		# Clean up the temporary pool folder
-		try:
-			shutil.rmtree(tmp_pool)
-			debug.msg(u'Removed temporary pool folder: %s' % tmp_pool)
-		except:
-			debug.msg(u'Failed to remove temporary pool folder: %s' % tmp_pool)
+			self.experiment_path = w.experiment_path
 		return path
 
 	def open(self, src):
 
 		"""
 		desc: |
-			Opens a file from a source, which can be any of the following:
+			Opens an experiment. The source can be any of the following:
 
-			- A definition string
-			- The name of a plain-text file
-			- The name of a .tar.gz archive, which contains the script and the
-			  file pool.
+			- An OpenSesame script (ie. not a file)
+			- The full path to a .osexp experiment file.
 
 		arguments:
-			src:	The source.
+			src:
+				desc:	The source.
+				type:	str
 
 		returns:
-			desc:	A defition string.
+			desc:	An OpenSesame script.
 			type:	str
 		"""
 
-		# If the path is not a path at all, but a string containing the script,
-		# return it. Also, convert the path back to Unicode before returning.
-		try:
-			# Checking whether a path exists can appartently trigger a
-			# ValueError when src is too long. Therefore, we use this awkward
-			# construction.
-			if not os.path.exists(src):
-				raise ValueError('Path doesn\'t exist)')
-		except ValueError: 
-			debug.msg(u'opening from unicode string')
-			self.experiment_path = None
-			return safe_decode(src, errors=u'replace')
-		try:
-			tar = tarfile.open(src, u'r:gz')
-		except tarfile.ReadError:
-			# If the file wasn't a .tar.gz, then it must be a plain-text file
-			debug.msg(u"opening plain-text experiment")
-			with safe_open(src, universal_newline_mode) as fd:
-				return fd.read()
-		debug.msg(u"opening .tar.gz archive")
-		# If the file is a .tar.gz archive, extract the pool to the pool folder
-		# and return the contents of opensesame.script.
-		tar = tarfile.open(src, u'r:gz')
-		for name in tar.getnames():
-			# Here, all paths except name are Unicode. In addition, fname is
-			# Unicode from_asciid, because the files as saved are Unicode
-			# sanitized (see save()).
-			uname = safe_decode(name)
-			folder, fname = os.path.split(uname)
-			fname = self._syntax.from_ascii(fname)
-			if folder == u"pool":
-				# NOTE: When merging into `ising`, this needs to be ported to
-				# the py3compat system, and Python 3 compatibility needs to be
-				# checked.
-				debug.msg(u"extracting '%s'" % uname)
-				pool_folder = safe_str(self.pool.folder(),
-					enc=misc.filesystem_encoding())
-				from_name = safe_str(os.path.join(self.pool.folder(), uname),
-					enc=misc.filesystem_encoding())
-				to_name = safe_str(os.path.join(self.pool.folder(), fname),
-					enc=misc.filesystem_encoding())
-				tar.extract(name, pool_folder)
-				os.rename(from_name, to_name)
-				os.rmdir(os.path.join(self.pool.folder(), folder))
-		script_path = os.path.join(self.pool.folder(), u"script.opensesame")
-		tar.extract(u"script.opensesame", self.pool.folder())
-		with safe_open(script_path, universal_newline_mode) as fd:
-			script = fd.read()
-		os.remove(script_path)
-		self.experiment_path = os.path.dirname(src)
-		return script
+		from libopensesame.osexpfile import osexpreader
+		f = osexpreader(self, src)
+		self.experiment_path = f.experiment_path		
+		return f.script
 
 	def reset_feedback(self):
 
