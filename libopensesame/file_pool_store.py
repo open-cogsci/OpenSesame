@@ -271,8 +271,10 @@ class file_pool_store(object):
 			desc:	The full path to the fallback pool folder, which is the
 					`__pool__` subfolder of the current experiment folder, or
 					`None` if this folder does not exist. The fallback pool
-					folder is mostly useful in combination with a
-					[versioning system](/miscellaneous/git/).
+					folder is mostly useful in combination with a versioning
+					system, such as git, because it allows you to save the
+					experiment as a plain-text file, even when having files
+					in the file pool.
 			type:	[unicode, NoneType]
 
 		example: |
