@@ -442,13 +442,13 @@ class experiment(item.item):
 			u'The experiment has been paused<br /><br />'
 			u'Press spacebar to resume<br />'
 			u'Press Q to quit')
-		pause_keyboard = keyboard(self, keylist=[u'space', u'q'], timeout=0)
+		pause_keyboard = keyboard(self, keylist=[u'space', u'q', u'Q'], timeout=0)
 		pause_keyboard.show_virtual_keyboard()
 		pause_canvas.show()
 		try:
 			while True:
 				key, _time = pause_keyboard.get_key()
-				if key == u'q':
+				if key == u'q' or key == u'Q':
 					pause_keyboard.show_virtual_keyboard(False)
 					raise osexception(u'The experiment was aborted',
 						user_triggered=True)
