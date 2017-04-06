@@ -49,7 +49,7 @@ class quest_staircase_next(item):
 
 		resp = self.var.get(self.var.response_var)
 		try:
-			resp = float(resp)
+			resp = int(resp)
 		except:
 			# Don't process non-float responses
 			return
