@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 #-*- coding:utf-8 -*-
 
 """
@@ -59,7 +58,6 @@ included_extensions = [
 	'toolbar_menu',
 	'update_checker',
 	'qprogedit_preferences',
-	'psychopy_monitor_center',
 	'opensesame_3_notifications',
 	'example_experiments',
 	'undo_manager',
