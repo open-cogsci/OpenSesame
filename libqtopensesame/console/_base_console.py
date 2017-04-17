@@ -42,7 +42,16 @@ class base_console(base_subcomponent):
 		self.vault = StringIO()
 		self.orig_stdout = sys.stdout
 		self.orig_stderr = sys.stderr
-
+		
+	def isatty(self):
+		
+		"""
+		desc:
+			Indicates that the output is not attached to a terminal.
+		"""
+		
+		return False		
+		
 	def clear(self):
 
 		"""

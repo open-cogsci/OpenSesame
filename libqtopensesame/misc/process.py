@@ -68,6 +68,16 @@ class OutputChannel:
 			self.orig.flush()
 		else:
 			pass
+			
+	def isatty(self):
+		
+		"""
+		desc:
+			Indicates that the output is not attached to a terminal.
+		"""
+		
+		return False
+
 
 class ExperimentProcess(multiprocessing.Process):
 
