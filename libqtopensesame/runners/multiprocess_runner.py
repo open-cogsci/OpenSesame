@@ -18,7 +18,6 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame.py3compat import *
-import os
 import sys
 import time
 from libqtopensesame.runners import base_runner
@@ -44,7 +43,6 @@ class multiprocess_runner(base_runner):
 			import multiprocessing
 
 		from libqtopensesame.misc import process, _
-		from libopensesame import misc
 
 		self._workspace_globals = {}
 		self.channel = multiprocessing.Queue()
