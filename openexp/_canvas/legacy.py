@@ -155,28 +155,29 @@ class legacy(canvas.canvas, legacy_coordinates):
 			size = (w, h)
 			
 			surface = pygame.surface.Surface(
-			    [p + line_width for p in size],
-			    pygame.SRCALPHA).convert_alpha()
+				[p + line_width for p in size],
+				pygame.SRCALPHA).convert_alpha()
 			
 			pygame.draw.ellipse(surface, (0, 0, 0), pygame.Rect(
-			    (0, 0),
-			    [p + line_width for p in size]))
+				(0, 0),
+				[p + line_width for p in size]))
 			
 			tmp = pygame.surface.Surface(
-			    [p - line_width for p in size])
+				[p - line_width for p in size])
 			tmp.fill([0, 0, 0])
 			tmp.set_colorkey([255, 255, 255])
 
 			hole = pygame.surface.Surface(
-			    [p - line_width for p in size],
-			    pygame.SRCALPHA).convert_alpha()
+				[p - line_width for p in size],
+				pygame.SRCALPHA).convert_alpha()
 			
 			pygame.draw.ellipse(tmp, (255, 255, 255), pygame.Rect(
-			    (0, 0), [p - line_width for p in size]))
+				    (0, 0), [p - line_width for p in size]))
 			hole.blit(tmp, (0, 0))
 			surface.blit(hole, (line_width, line_width),
-			             special_flags=pygame.BLEND_RGBA_MIN)
-			surface.fill(self.color.backend_color, special_flags=pygame.BLEND_RGB_MAX)
+				special_flags=pygame.BLEND_RGBA_MIN)
+			surface.fill(self.color.backend_color,
+				special_flags=pygame.BLEND_RGB_MAX)
 			# The line_width affects the temp's surface size, so use it to correct the
 			# positioning when blitting.
 			self.surface.blit(surface, (x-line_width/2, y-line_width/2) )
