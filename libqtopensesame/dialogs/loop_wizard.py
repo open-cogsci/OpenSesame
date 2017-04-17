@@ -47,6 +47,7 @@ class loop_wizard(base_dialog):
 		try:
 			self._dm = pickle.loads(cfg.loop_wizard)
 			assert(isinstance(self._dm, DataMatrix))
+			assert(hasattr(self._dm._rowid, u'clone'))
 		except:
 			self._dm = DataMatrix(length=0)
 		self._qdm = QDataMatrix(self._dm)
