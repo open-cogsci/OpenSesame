@@ -59,7 +59,6 @@ class config(object):
 		u"disabled_extensions" : "",
 		u"file_dialog_path" : "",
 		u"file_pool_size_warning" : 104857600,
-		u"locale" : u"default",
 		u"loop_wizard" : None,
 		u"onetabmode" : False,
 		u"qProgEditCommentShortcut" : u'Ctrl+M',
@@ -104,8 +103,6 @@ class config(object):
 		u"start_drag_delay" : 300,
 		u"pos" : QtCore.QPoint(200, 200),
 		u"size" : QtCore.QSize(1000, 600),
-		u"_initial_window_geometry" : QtCore.QByteArray(),
-		u"_initial_window_state" : QtCore.QByteArray(),
 		u"url_website" : u"http://www.cogsci.nl/opensesame",
 		u"url_facebook" : u"http://www.facebook.com/cognitivescience",
 		u"url_twitter" : u"http://www.twitter.com/cogscinl",
@@ -131,9 +128,7 @@ class config(object):
 	config_linux = {
 		u"theme" : u"gnome"
 		}
-	config_mac = {
-		u"runner" : u"inprocess"
-		}
+	config_mac = {}
 	config_windows = {}
 
 	def __init__(self):
