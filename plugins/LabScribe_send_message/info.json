@@ -1,0 +1,31 @@
+{
+	"author"	: "Andrew Boutin",
+	"url"		: "http://www.iworx.com/",
+	"category"	: "Miscellaneous",
+	"comment"	: "Send Message Plugin",
+	"controls" : [
+		{
+			"type"		: "text",
+			"label"		: "Choose message type.  The help file for this plugin can be viewed by clicking on the Question Mark button in the top right of this window."
+		},
+		{
+			"type"		: "combobox",
+			"var"		: "_option",
+			"label"		: "Select Message Option",
+			"options"	: [
+				"Start Connection",
+				"Send Message",
+				"End Connection"
+			],
+			"name"		: "combobox_widget",
+			"tooltip"	: "Choose one of the options."
+		},
+		{
+			"type"		: "line_edit",
+			"var"		: "_text",
+			"label"		: "Enter Message",
+			"name"		: "line_edit_widget",
+			"tooltip"	: "Insert message to send to server here."
+		}
+	]
+}
