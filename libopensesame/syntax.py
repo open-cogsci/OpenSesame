@@ -51,12 +51,17 @@ class syntax(object):
 		# - Consists only of letters, numbers, or underscores, except for
 		# - The last character, which is an equals sign
 		self.re_cmd = re.compile(r'\A[_a-zA-Z]+[_a-zA-Z0-9]*=')
-		# A regular expression to match [variables] in text
-		self.re_txt = re.compile(r'(?<!\\)(\[[_a-zA-Z]+[_a-zA-Z0-9]*\])')
+		# A regular expression to match [variables] in text. The first part
+		# indictates that we don't match items preceded by a slash
+		# (\[variables]). This introduces a problem in that the slash itself can
+		# also be escaped. To deal with this we eat up any even number of
+		# slashes (\\\\)* so that only sequences preceded by an odd number of
+		# slashes are preserved.
+		self.re_txt = re.compile(r'(?<!\\)(\\\\)*(\[[_a-zA-Z]+[_a-zA-Z0-9]*\])')
 		# A regular expression to match inline Python statements, like so:
 		# [=10*10]
 		# [\[test\]]
-		self.re_txt_py = re.compile(r'(?<!\\)(\[=.*?[^\\]\])')
+		self.re_txt_py = re.compile(r'(?<!\\)(\\\\)*(\[=.*?[^\\]\])')
 		# Catch single equals signs
 		self.re_single_eq = re.compile(r'(?<![=!<>])(=)(?!=)')
 		# Catch 'never' and 'always'
@@ -277,6 +282,10 @@ class syntax(object):
 		returns:
 			The evaluated string, or the input value for non-string input.
 		"""
+		
+		def get_escape_sequence(m):
+			return u'' if m.group(1) is None \
+				else m.group(1)[:len(m.group(1))//2]			
 
 		if not isinstance(txt, basestring):
 			return txt
@@ -289,20 +298,23 @@ class syntax(object):
 			m = self.re_txt.search(txt)
 			if m is None:
 				break
-			val = var.get(m.group()[1:-1])
+			varname = m.group(2)[1:-1]
+			val = var.get(varname)
 			if round_float and isinstance(val, float):
 				val = float_template % val
 			else:
 				val = safe_decode(val)
-			txt = txt[:m.start(0)] + val + txt[m.end(0):]
+			txt = txt[:m.start(0)] + get_escape_sequence(m) + val \
+				+ txt[m.end(0):]
 		# Detect Python inlines [=10*10]
 		while True:
 			m = self.re_txt_py.search(txt)
 			if m is None:
 				break
-			py = self.unescape(m.group()[2:-1])
+			py = self.unescape(m.group(2)[2:-1])
 			val = self.experiment.python_workspace._eval(py)
-			txt = txt[:m.start(0)] + safe_decode(val) + txt[m.end(0):]
+			txt = txt[:m.start(0)] + get_escape_sequence(m) + safe_decode(val) \
+				+ txt[m.end(0):]
 		return self.unescape(txt)
 
 	def quotable_symbol(self, s):

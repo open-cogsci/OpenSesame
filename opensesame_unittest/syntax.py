@@ -44,7 +44,7 @@ class check_syntax(unittest.TestCase):
 	def checkEvalText(self, sIn, sOut):
 
 		print(u'Checking: %s -> %s' % (sIn, sOut))
-		self.assertTrue(self.exp.syntax.eval_text(sIn) == sOut)
+		self.assertEqual(self.exp.syntax.eval_text(sIn), sOut)
 
 	def checkCnd(self, sIn, sOut):
 
@@ -76,13 +76,15 @@ class check_syntax(unittest.TestCase):
 				u'widget', [0, 0, 1, 1, u'label'],
 				{u'text' : u'Tést 123'})
 		self.checkEvalText(r'\\[width] = \[width] = [width]',
-			u'\[width] = [width] = 1024')
+			r'\1024 = [width] = 1024')
 		self.checkEvalText(u'[no var]', u'[no var]')
 		self.checkEvalText(u'[nóvar]', u'[nóvar]')
 		self.checkEvalText(u'\[width]', u'[width]')
+		self.checkEvalText(r'\\[width]', r'\1024')
 		self.checkEvalText(u'[width] x [height]', u'1024 x 768')
 		self.checkEvalText(u'[=10*10]', u'100')
-		self.checkEvalText(u'\[=10*10]', u'[=10*10]')
+		self.checkEvalText(r'\[=10*10]', u'[=10*10]')
+		self.checkEvalText(r'\\[=10*10]', r'\100')
 		self.checkEvalText(u'[=u"tést"]', u'tést')
 		self.checkEvalText(u'[="\[test\]"]', u'[test]')
 		self.checkCnd(u'[width] > 100', u'var.width > 100')
