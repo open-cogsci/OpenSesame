@@ -63,12 +63,9 @@ class get_started(base_extension):
 		else:
 			recent = [_(u'Continue with a recent experiment:')+u'<br />']
 			for i, path in enumerate(self.main_window.recent_files):
-				if not i:
-					cls = u'important-button'
-				else:
-					cls = u'button'
+				cls = u'important-button' if not i else u'button'
 				md = u'<a href="opensesame://event.open_recent_%d" class="%s">%s</a><br />' % \
-					(i, cls, os.path.basename(path))
+					(i, cls, self._unambiguous_path(path))
 				recent.append(md)
 		# Create markdown
 		with safe_open(self.ext_resource(u'get_started.md')) as fd:
@@ -81,6 +78,25 @@ class get_started(base_extension):
 			}
 		self.tabwidget.open_markdown(md, title=_(u'Get started!'),
 			icon=u'document-new')
+			
+	def _unambiguous_path(self, path):
+		
+		"""
+		desc:
+			If the path basename is unique among the resent experiments, this is
+			used. Otherwise, the full path is used.
+			
+		arguments:
+			path:	The path to shorten unambiguously.
+			
+		returns:
+			The unambiguously shortened path.
+		"""
+		
+		basename = os.path.basename(path)
+		basenames = \
+			[os.path.basename(_path) for _path in self.main_window.recent_files]
+		return path if basenames.count(basename) > 1 else basename
 
 	def event_open_recent_0(self):
 		self.main_window.open_file(path=self.main_window.recent_files[0])
