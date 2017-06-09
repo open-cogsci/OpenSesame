@@ -45,7 +45,6 @@ class general_properties(base_widget):
 
 		super(general_properties, self).__init__(main_window,
 			ui=u'widgets.general_properties')
-
 		# Set the header, with the icon, label and script button
 		self.header_widget = general_header_widget(self, self.main_window)
 		header_hbox = QtWidgets.QHBoxLayout()
@@ -57,35 +56,35 @@ class general_properties(base_widget):
 		header_widget = QtWidgets.QWidget()
 		header_widget.setLayout(header_hbox)
 		self.ui.container_layout.insertWidget(0, header_widget)
-
 		# Initialize the color and font widgets
 		self.ui.edit_foreground.initialize(self.experiment)
-		self.ui.edit_foreground.textEdited.connect(self.apply_changes)
 		self.ui.edit_background.initialize(self.experiment)
-		self.ui.edit_background.textEdited.connect(self.apply_changes)
 		self.ui.widget_font.initialize(self.experiment)
-		self.ui.widget_font.font_changed.connect(self.apply_changes)
-
-		# Connect the rest
-		self.ui.spinbox_width.editingFinished.connect(self.apply_changes)
-		self.ui.spinbox_height.editingFinished.connect(self.apply_changes)
-		self.ui.checkbox_bidi.stateChanged.connect(self.apply_changes)
-		self.ui.checkbox_uniform_coordinates.stateChanged.connect(
-			self.apply_changes)
-
-		self.ui.button_script_editor.clicked.connect(
-			self.main_window.ui.tabwidget.open_general_script)
-		self.ui.button_backend_settings.clicked.connect(
-			self.main_window.ui.tabwidget.open_backend_settings)
-
 		# Set the backend combobox
 		for name, info in backend.backend_info(self.experiment).items():
 			desc = info[u"description"]
 			icon = info[u"icon"]
 			self.ui.combobox_backend.addItem(self.main_window.theme.qicon(
 				icon), self.backend_format % (name, desc))
-		self.ui.combobox_backend.currentIndexChanged.connect(self.apply_changes)
-
+		self.connect(
+			slot=self.main_window.ui.tabwidget.open_general_script,
+			signals=[
+				self.ui.button_script_editor.clicked,
+				self.ui.button_backend_settings.clicked
+			])				
+		self.connect(
+			slot=self.apply_changes,
+			signals=[
+				self.ui.combobox_backend.currentIndexChanged,
+				self.ui.spinbox_width.editingFinished,
+				self.ui.spinbox_height.editingFinished,
+				self.ui.checkbox_bidi.stateChanged,
+				self.ui.checkbox_disable_garbage_collection.stateChanged,
+				self.ui.checkbox_uniform_coordinates.stateChanged,
+				self.ui.edit_foreground.textEdited,
+				self.ui.edit_background.textEdited,
+				self.ui.widget_font.font_changed,			
+			])
 		self.tab_name = u'__general_properties__'
 		self.on_activate = self.refresh
 
@@ -123,7 +122,6 @@ class general_properties(base_widget):
 		desc = self.experiment.syntax.sanitize(
 			self.header_widget.edit_desc.text())
 		self.experiment.var.description = desc
-
 		# Set the backend
 		if self.ui.combobox_backend.isEnabled():
 			i = self.ui.combobox_backend.currentIndex()
@@ -137,14 +135,12 @@ class general_properties(base_widget):
 		else:
 			debug.msg(
 				u'not setting back-end, because a custom backend is selected')
-
 		# Set the display width
 		width = self.ui.spinbox_width.value()
 		height = self.ui.spinbox_height.value()
 		if self.experiment.var.width != width or \
 			self.experiment.var.height != height:
 			self.main_window.update_resolution(width, height)
-
 		# Set the foreground color
 		foreground = self.experiment.syntax.sanitize(self.ui.edit_foreground.text())
 		refs = []
@@ -157,7 +153,6 @@ class general_properties(base_widget):
 				foreground = self.experiment.var.foreground
 				self.ui.edit_foreground.setText(foreground)
 		self.experiment.var.foreground = foreground
-
 		# Set the background color
 		background = self.experiment.syntax.sanitize(self.ui.edit_background.text())
 		refs = []
@@ -171,16 +166,17 @@ class general_properties(base_widget):
 				self.ui.edit_background.setText(background)
 		self.experiment.var.background = foreground
 		self.experiment.var.background = background
-
 		# Set the font
 		self.experiment.var.font_family = self.ui.widget_font.family
 		self.experiment.var.font_size = self.ui.widget_font.size
 		self.experiment.var.font_italic = self.ui.widget_font.italic
 		self.experiment.var.font_bold = self.ui.widget_font.bold
-		# Set bi-directional text
-		self.experiment.var.bidi = self.ui.checkbox_bidi.isChecked()
+		# Other checkboxes
+		self.experiment.var.disable_garbage_collection = \
+			self.ui.checkbox_disable_garbage_collection.isChecked()
 		self.experiment.var.uniform_coordinates = \
 			self.ui.checkbox_uniform_coordinates.isChecked()
+		self.experiment.var.bidi = self.ui.checkbox_bidi.isChecked()
 		self.check_bidi()
 		# Refresh the interface and unlock the general tab
 		self.lock = False
@@ -196,10 +192,8 @@ class general_properties(base_widget):
 
 		# Lock the general tab to prevent a recursive loop
 		self.lock = True
-
 		# Set the header containing the titel etc
 		self.set_header_label()
-
 		# Select the backend
 		_backend = backend.backend_match(self.experiment)
 		if _backend == u"custom":
@@ -211,7 +205,6 @@ class general_properties(base_widget):
 			i = self.ui.combobox_backend.findText(
 				self.backend_format % (_backend, desc))
 			self.ui.combobox_backend.setCurrentIndex(i)
-
 		# Set the resolution
 		try:
 			self.ui.spinbox_width.setValue(int(self.experiment.var.width))
@@ -219,15 +212,15 @@ class general_properties(base_widget):
 		except:
 			self.experiment.notify(
 				_(u"Failed to parse the resolution. Expecting positive numeric values."))
-
 		# Set the colors
 		self.ui.edit_foreground.setText(safe_decode(
 			self.experiment.var.foreground))
 		self.ui.edit_background.setText(safe_decode(
 			self.experiment.var.background))
-
 		self.ui.widget_font.initialize(self.experiment)
 		self.ui.checkbox_bidi.setChecked(self.experiment.var.bidi == u'yes')
+		self.ui.checkbox_disable_garbage_collection.setChecked(
+			self.experiment.var.disable_garbage_collection == u'yes')
 		self.ui.checkbox_uniform_coordinates.setChecked(
 			self.experiment.var.uniform_coordinates == u'yes')
 		self.check_bidi()
