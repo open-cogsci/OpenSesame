@@ -445,6 +445,23 @@ class sketchpad_canvas(QtWidgets.QGraphicsScene):
 				% _color)
 			return QtGui.QColor(self.placeholder_color)
 		return QtGui.QColor(hexcolor)
+		
+	def _fill(self, fill):
+		
+		"""
+		desc:
+			Safely returns a fill value.
+
+		returns:
+			A fill value (bool).
+		"""		
+		
+		if isinstance(fill, str):
+			self.notify(
+				_(u'Fill "%s" is unknown or variably defined, assuming filled') \
+				% fill)
+			return True
+		return bool(fill)
 
 	def _x(self, x):
 
@@ -710,7 +727,7 @@ class sketchpad_canvas(QtWidgets.QGraphicsScene):
 		"""Mimicks canvas api. See openexp._canvas.canvas."""
 
 		color = self._color(color)
-		if fill:
+		if self._fill(fill):
 			pen = self._pen(color, 1)
 			brush = self._brush(color)
 		else:

@@ -18,14 +18,14 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame.py3compat import *
-
-from qtpy import QtCore, QtGui, QtWidgets
+from qtpy import QtCore, QtGui
+from libopensesame.exceptions import osexception
 from libqtopensesame import sketchpad_elements
-from libqtopensesame.sketchpad_elements._base_element import base_element
 from libqtopensesame.widgets.sketchpad_element_button import \
 	sketchpad_element_button
 from libqtopensesame.widgets.base_widget import base_widget
 from libqtopensesame.validators import cond_validator
+
 
 class sketchpad_widget(base_widget):
 
@@ -281,29 +281,47 @@ class sketchpad_widget(base_widget):
 			# variably defined, or it has an invalid type.
 			try:
 				val = element.get_property(prop, _type=_type)
-			except:
+			except osexception:
 				continue
 			# Adjust the widget
 			if _type in (int, float):
 				spinbox = getattr(self.ui, u'spinbox_%s' % prop)
-				if isinstance(val, (int, float)):
+				if val is None:
+					spinbox.setEnabled(False)
+					spinbox.setValue(0)
+				elif isinstance(val, (int, float)):
+					spinbox.setEnabled(True)
 					spinbox.setValue(val)
 			elif _type == bool:
 				checkbox = getattr(self.ui, u'checkbox_%s' % prop)
-				checkbox.setChecked(val)
+				if val is None:
+					checkbox.setEnabled(False)
+					checkbox.setChecked(False)
+				else:
+					checkbox.setEnabled(True)
+					checkbox.setChecked(val)
 			else:
 				edit = getattr(self.ui, u'edit_%s' % prop)
 				edit.setText(val)
 		# Text needs special treatment
 		if element.requires_text():
-			self.ui.widget_font.set_font(
-				family=element.get_property(u'font_family'),
-				size=element.get_property(u'font_size', _type=int, fallback=-1),
-				bold=element.get_property(u'font_bold', _type=bool),
-				italic=element.get_property(u'font_italic', _type=bool)
-				)
-			self.ui.checkbox_html.setChecked(element.get_property(u'html',
-				_type=bool))
+			family = element.get_property(u'font_family')
+			size = element.get_property(u'font_size', _type=int)
+			bold = element.get_property(u'font_bold', _type=bool)
+			italic = element.get_property(u'font_italic', _type=bool)
+			if None in (family, size, bold, italic):
+				self.ui.widget_font.setEnabled(False)
+			else:
+				self.ui.widget_font.setEnabled(True)
+				self.ui.widget_font.set_font(family=family, size=size,
+					bold=bold, italic=italic)
+			val = element.get_property(u'html', _type=bool)
+			if val is None:
+				self.ui.checkbox_html.setEnabled(False)
+				self.ui.checkbox_html.setChecked(False)
+			else:
+				self.ui.checkbox_html.setEnabled(True)
+				self.ui.checkbox_html.setChecked(val)
 		self.show_element_tool_settings(element)
 
 	def zoom_fit(self):

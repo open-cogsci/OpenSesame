@@ -238,21 +238,23 @@ class base_element(object):
 		if _type == int:
 			try:
 				return int(val)
-			except:
+			except ValueError:
 				return fallback
 		if _type == float:
 			try:
 				return float(val)
-			except:
+			except ValueError:
 				return fallback
 		if _type == bool:
-			if val in (u'yes', u'1'):
-				return True
-			if val in (u'no', u'0'):
-				return False
+			if isinstance(val, str):
+				if val in (u'yes', u'1'):
+					return True
+				if val in (u'no', u'0'):
+					return False
+				return fallback
 			return bool(val)
 		raise osexception(u'Unknown type: %s' % _type)
-
+		
 	def set_property(self, name, val, yes_no=False):
 
 		"""

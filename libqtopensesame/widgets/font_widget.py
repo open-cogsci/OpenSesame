@@ -112,30 +112,18 @@ class font_widget_base(base_widget):
 			parent:	A parent QWidget.
 		"""
 
-		if parent is not None:
-			self._parent = parent
-		else:
-			self._parent = self.main_window
+		
+		self._parent = parent if parent is not None else self.main_window
 		if experiment is None:
 			experiment = self.experiment
-		if family is None:
-			self.family = experiment.var.get(u'font_family')
-		else:
-			self.family = family
-		if italic is None:
-			self.italic = experiment.var.get(u'font_italic',
-				_eval=False) == u'yes'
-		else:
-			self.italic = italic
-		if bold is None:
-			self.bold = experiment.var.get(u'font_bold',
-				_eval=False) == u'yes'
-		else:
-			self.bold = bold
-		if size is None:
-			self.size = experiment.var.get(u'font_size', _eval=False)
-		else:
-			self.size = size
+		self.family = experiment.var.get(u'font_family', _eval=False) \
+			if family is None else family
+		self.italic = experiment.var.get(u'font_italic', _eval=False) == u'yes' \
+			if italic is None else italic
+		self.bold = experiment.var.get(u'font_bold', _eval=False) == u'yes' \
+			if bold is None else bold
+		self.size = experiment.var.get(u'font_size', _eval=False) \
+			if size is None else size
 		if not isinstance(self.size, int) or self.size <= 0:
 			self.size = 18
 		if self.ui.combobox_family.findText(self.family) < 0:
