@@ -124,3 +124,18 @@ class base_component(base_qtobject):
 					raise osexception(u'Invalid main_window')
 			main_window = _parent
 		return main_window
+
+	@staticmethod
+	def connect(slot, signals):
+		
+		"""
+		desc:
+			A convenience function to connect many signals to one slot.
+			
+		arguments:
+			slot:		a slot
+			signals:	a list of signals
+		"""
+		
+		for signal in signals:
+			signal.connect(slot)
