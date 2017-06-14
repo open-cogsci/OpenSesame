@@ -225,3 +225,14 @@ class qtitem_store(item_store):
 		if _type in self.built_in_types:
 			return True
 		return False
+
+	def clear_cache(self):
+		
+		"""
+		desc:
+			Clears the cache, currently only the cache with children for each
+			item.
+		"""
+		
+		for item in self.values():
+			item._children = None

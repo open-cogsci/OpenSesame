@@ -63,8 +63,7 @@ class qtstructure_item(object):
 		
 		def inner(self, *args, **kwargs):
 			
-			for item in self.experiment.items.values():
-				item._children = None
+			self.experiment.items.clear_cache()
 			return fnc(self, *args, **kwargs)
 			
 		return inner

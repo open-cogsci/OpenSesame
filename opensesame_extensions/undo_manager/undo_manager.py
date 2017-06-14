@@ -19,6 +19,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 
 from libopensesame.py3compat import *
 from libqtopensesame.extensions import base_extension, suspend_events
+from libqtopensesame.items.qtstructure_item import qtstructure_item
 from qtpy.QtWidgets import QMenu, QToolBar
 from undo_stack import undo_stack
 import difflib
@@ -66,6 +67,15 @@ class undo_manager(base_extension):
 		"""
 
 		self.remember_item_state(name)
+		
+	def event_new_item(self, name, _type):
+		
+		"""
+		desc:
+			Remember addition of a new item.
+		"""
+		
+		self.remember_new_item(name)		
 
 	def activate(self):
 
@@ -152,6 +162,12 @@ class undo_manager(base_extension):
 		self.stack.add(u'__experiment__', script)
 		self.set_enabled(self.stack.can_redo())
 		self.undo_action.setEnabled(self.stack.can_undo())
+		
+	def remember_new_item(self, name):
+		
+		self.stack.add(u'__newitem__', name)
+		self.set_enabled(self.stack.can_redo())
+		self.undo_action.setEnabled(self.stack.can_undo())
 
 	def prune_unchanged_experiment(self):
 
@@ -161,6 +177,8 @@ class undo_manager(base_extension):
 			there is no change between them, discard them.
 		"""
 
+		if len(self.stack) < 2:
+			return False
 		key1, state1 = self.stack.peek(-1)
 		key2, state2 = self.stack.peek(-2)
 		if key1 == key2 == u'__experiment__' and state1 == state2:
@@ -176,17 +194,23 @@ class undo_manager(base_extension):
 			Perform an undo action.
 		"""
 
-		if len(self.stack) == 0:
+		if not self.stack:
 			return
 		item, script = self.stack.undo()
 		if item == u'__experiment__':
 			self.main_window.regenerate(script)
+		elif item == u'__newitem__':
+			del self.experiment.items[script]
+			self.tabwidget.close_all()
 		else:
 			if item not in self.experiment.items:
 				return
 			self.experiment.items[item].from_string(script)
 			self.experiment.items[item].update()
 			self.experiment.items[item].open_tab()
+			if isinstance(self.experiment.items[item], qtstructure_item):
+				self.experiment.items.clear_cache()
+				self.experiment.build_item_tree()
 		self.set_enabled(self.stack.can_redo())
 		self.undo_action.setEnabled(self.stack.can_undo())
 
@@ -204,6 +228,9 @@ class undo_manager(base_extension):
 		self.experiment.items[item].from_string(script)
 		self.experiment.items[item].update()
 		self.experiment.items[item].open_tab()
+		if isinstance(self.experiment.items[item], qtstructure_item):
+			self.experiment.items.clear_cache()
+			self.experiment.build_item_tree()		
 		self.set_enabled(self.stack.can_redo())
 		self.undo_action.setEnabled(self.stack.can_undo())
 
@@ -222,6 +249,8 @@ class undo_manager(base_extension):
 		if item == u'__experiment__':
 			old_script = self.stack.peek(-2)[1]
 			new_script = self.stack.peek(-1)[1]
+		elif item == u'__newitem__':
+			new_script = old_script
 		else:
 			new_script = self.stack.current[item][0]
 		for line in difflib.ndiff(old_script.splitlines(),

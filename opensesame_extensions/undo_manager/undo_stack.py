@@ -36,8 +36,8 @@ class undo_stack(object):
 	def add(self, key, state):
 
 		self.future = []
-		if key == u'__experiment__':
-			self.history.append( (u'__experiment__', state) )
+		if key in  (u'__experiment__', u'__newitem__'):
+			self.history.append( (key, state) )
 			return
 		timestamp = time.time()
 		if key in self.current:
@@ -54,11 +54,11 @@ class undo_stack(object):
 
 	def can_undo(self):
 
-		return len(self.history) > 0
+		return bool(self.history)
 
 	def can_redo(self):
 
-		return len(self.future) > 0
+		return bool(self.future)
 
 	def __len__(self):
 
@@ -66,15 +66,20 @@ class undo_stack(object):
 
 	def pop(self, l1, l2):
 
-		if len(l1) == 0:
+		if not l1:
 			return None, None
 		key, state = l1.pop()
+		# Both undoing experiment changes and adding new items clears the future
+		# That is, these cannot be redone
 		if key == u'__experiment__':
 			self.future = []
 			_key, _state = l1.pop()
 			if _key != u'__experiment__':
 				return None, None
 			return _key, _state
+		if key == u'__newitem__':
+			self.future = []
+			return u'__newitem__', state
 		l2.append( (key, self.current[key][0]) )
 		self.current[key] = state, time.time()
 		return key, state
@@ -89,6 +94,9 @@ class undo_stack(object):
 
 	def peek(self, i=-1):
 
-		if len(self.history) == 0:
+		if not(self.history):
 			return None, None
-		return self.history[i]
+		try:
+			return self.history[i]
+		except IndexError:
+			return None, None

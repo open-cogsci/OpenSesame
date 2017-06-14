@@ -121,14 +121,14 @@ class sequence(qtstructure_item, qtplugin, sequence_runtime):
 		"""See qtitem."""
 
 		if item_parent is None or (item_parent == self.name and index is None):
-			redo = True
-			while redo:
-				redo = False
-				for i in range(len(self.items)):
-					if self.items[i][0] == item_name:
+			while True:
+				for i, (child_item_name, child_run_if) in enumerate(self.items):
+					if child_item_name == item_name:
 						self.items = self.items[:i]+self.items[i+1:]
-						redo = True
 						break
+				else:
+					# Break the while loop if no break occurred in the for loop
+					break
 		elif item_parent == self.name and index is not None:
 			if self.items[index][0] == item_name:
 				self.items = self.items[:index]+self.items[index+1:]
@@ -218,5 +218,6 @@ class sequence(qtstructure_item, qtplugin, sequence_runtime):
 			# it's run-if statement if it is re-added.
 			self.last_removed_child = self.items[index]
 			del self.items[index]
-		self.update()
+		if not self.update():
+			self.extension_manager.fire(u'change_item', name=self.name)		
 		self.main_window.set_unsaved(True)

@@ -347,7 +347,8 @@ class loop(qtstructure_item, qtitem, loop_runtime):
 
 		if item_name == self._item:
 			self._item = u''
-		self.update()
+		if not self.update():
+			self.extension_manager.fire(u'change_item', name=self.name)		
 		self.main_window.set_unsaved(True)
 
 	@qtstructure_item.clears_children_cache
