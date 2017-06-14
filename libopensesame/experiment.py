@@ -29,12 +29,10 @@ from libopensesame.item_stack import item_stack_singleton
 from libopensesame.py3compat import *
 import os
 import pickle
-import shutil
 import time
-import tarfile
-import tempfile
 import warnings
 import gc
+
 
 class experiment(item.item):
 
