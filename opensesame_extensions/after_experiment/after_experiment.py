@@ -26,6 +26,7 @@ import os
 from libqtopensesame.misc.translate import translation_context
 _ = translation_context(u'after_experiment', category=u'extension')
 
+
 class after_experiment(base_extension):
 
 	"""
@@ -50,7 +51,8 @@ class after_experiment(base_extension):
 		else:
 			self.handle_exception(ret_val)
 
-	def logfile(self):
+	@property
+	def _logfile(self):
 
 		"""
 		returns:
@@ -63,6 +65,19 @@ class after_experiment(base_extension):
 		if u'var' not in d or u'logfile' not in d[u'var']:
 			return None
 		return d[u'var'].logfile
+		
+	@property
+	def _extra_data_files(self):
+		
+		"""
+		returns:
+			A list of extra data files, such as eye-tracking data.
+		"""
+		
+		return list(filter(
+			lambda path: path != self._logfile,
+			self.console.get_workspace_globals().get(u'data_files', [])
+			))
 
 	def event_after_experiment_copy_logfile(self):
 
@@ -71,9 +86,9 @@ class after_experiment(base_extension):
 			Copies the logfile to the file pool.
 		"""
 
-		if self.logfile() is None:
+		if self._logfile is None:
 			return
-		self.main_window.ui.pool_widget.add([self.logfile()],
+		self.main_window.ui.pool_widget.add([self._logfile],
  			rename=True)
 
 	def event_after_experiment_open_logfile_folder(self):
@@ -83,9 +98,9 @@ class after_experiment(base_extension):
 			Opens the logfile folder.
 		"""
 
-		if self.logfile() is None:
+		if self._logfile is None:
 			return
-		misc.open_url(os.path.dirname(self.logfile()))
+		misc.open_url(os.path.dirname(self._logfile))
 
 	def event_after_experiment_open_logfile(self):
 
@@ -94,9 +109,9 @@ class after_experiment(base_extension):
 			Opens the logfile.
 		"""
 
-		if self.logfile() is None:
+		if self._logfile is None:
 			return
-		misc.open_url(self.logfile())
+		misc.open_url(self._logfile)
 
 	def handle_success(self):
 
@@ -105,13 +120,19 @@ class after_experiment(base_extension):
 			Shows a summary after successful completion of the experiment.
 		"""
 
-		logfile = self.logfile()
+		logfile = self._logfile
 		if logfile is None:
 			logfile = u'Unknown logfile'
 		md = safe_read(self.ext_resource(u'finished.md')) % {
 			u'time': time.ctime(),
 			u'logfile': logfile
 			}
+		if self._extra_data_files:
+			md += u'\n' \
+				+ _(u'The following extra data files where created:') + u'\n\n'
+			for data_file in self._extra_data_files:
+				md += u'- `' + data_file + u'`\n'
+			md += u'\n'
 		self.tabwidget.open_markdown(md, u'os-finished-success', _(u'Finished'))
 
 	def handle_exception(self, e):
