@@ -28,13 +28,12 @@ example: |
 """
 
 import re
-from libopensesame.misc import escape_html
 from libopensesame import debug
 from libopensesame.item_stack import item_stack_singleton
 from libopensesame.py3compat import *
 import traceback
 import time
-import sys
+
 
 class osexception(Exception):
 
@@ -45,7 +44,7 @@ class osexception(Exception):
 		a (usually harmless) bug somewhere.
 	"""
 
-	def __init__(self, msg, exception=None, line_offset=0, **info):
+	def __init__(self, msg, exception=None, **info):
 
 		"""
 		desc:
@@ -61,13 +60,6 @@ class osexception(Exception):
 				desc:	An exception that was intercepted or None for
 						self-generated exceptions.
 				type:	[Exception, NoneType]
-			line_offset:
-				desc:	A value to decrease/ increase line numbers. The primary
-						goal for this keyword is to re-align line numbers that
-						arise in inline_scripts, which need to be compensated
-						for the source encoding line that is added to the
-						source.
-				type:	int
 
 		keyword-dict:
 			info:		Optional additional info for the exception.
@@ -75,65 +67,130 @@ class osexception(Exception):
 
 		super(osexception, self).__init__(msg)
 		# Create both HTML and plain text representations of the Exception.
-		self._md = u'%s\n\n' % msg
-		self._plaintext = u'\n%s\n\n' % msg
 		self.enc = u'utf-8'
-		self.user_triggered = u'user_triggered' in info \
-			and info[u'user_triggered']
-		# If an Exception is passed, i.e. if we are catching an Exception,
-		# summarize this exception here.
+		self.user_triggered = info.get(u'user_triggered', False)
 		self.exception = exception
-		if self.exception is not None:
-			info[u'exception type'] = safe_decode(
-				self.exception.__class__.__name__, enc=self.enc,
-				errors=u'ignore')
-			try:
-				msg = safe_decode(self.exception, errors=u'ignore')
-			except:
-				msg = u'Description unavailable'
-			info[u'exception message'] = msg
-			if isinstance(self.exception, SyntaxError):
-				# Syntax errors are dealt with specially, because they provide
-				# introspective information.
-				info[u'line'] = self.exception.lineno + line_offset
-				if self.exception.text is not None:
-					info[u'code'] = safe_decode(self.exception.text,
-						enc=self.enc, errors=u'ignore')
-		info[u'item-stack'] = str(item_stack_singleton)
-		info[u'time'] = time.ctime()
-		# List any additional information that was passed
-		self._md += u'## Details\n\n'
-		for key, val in info.items():
-			self._md += u'- %s: `%s`\n' % (key, val)
-			self._plaintext += u'%s: %s\n' % (key, val)
-		self._md += u'\n'
-		# If an Exception is passed, we should include a traceback.
+		info = self._exception_info(msg, info)		
+		self._md, self._plaintext = self._exception_details(msg, info)		
 		if self.exception is None:
 			return
+		tb_md, tb_plaintext = self._parse_traceback(info)
+		self._md += tb_md
+		self._plaintext += tb_plaintext
+			
+	def _traceback(self):
+		
+		"""
+		desc:
+			Returns the traceback as a formatted string.
+		"""
+		
 		if py3:
-			tb = traceback.format_exc()
-		else:
-			tb = safe_decode(traceback.format_exc(self.exception), enc=self.enc,
-				errors=u'ignore')
-		self._md += u'## Traceback (also in debug window)\n\n'
-		self._plaintext += u'\nTraceback:\n'
+			return traceback.format_exc()
+		return safe_decode( traceback.format_exc(self.exception), enc=self.enc,
+			errors=u'ignore')
+		
+	def _parse_traceback(self, info):
+		
+		"""
+		desc:
+			Processes the traceback by replacing generic <string> references to
+			Inline script, and by correct the line offset to compensate for the
+			added utf-8 encoding header, which increments the line number by
+			one.
+		"""
+		
+		tb = self._traceback()
+		md = u'## Traceback (also in debug window)\n\n'
+		plaintext = u'\nTraceback:\n'
 		_tb = u''
 		for l in tb.split(u'\n')[1:]:
-			# It is confusing that the contents of the inline script are
-			# described as <string>, so replace that. In addition, we need to
-			# decrease the line numer by 1, to compensate for the extra (hidden)
-			# source-encoding line that the inline script has.
-			if u'item' in info and info[u'item'] == u'inline_script':
+			if u'line_offset' in info:
 				for g in re.finditer(
-					u'File "<string>", line (?P<linenr>\d+),', l):
+					u'File "<string>", line (?P<linenr>\d+)', l):
 					try:
-						l = l.replace(g.group(), u'Inline_script, line %d,' % \
-							(int(g.group(u'linenr')) + line_offset))
+						l = l.replace(g.group(), u'%s, line %d' % \
+								(info.get(u'item_type', u'Inline script'),
+								int(g.group(u'linenr')) + info[u'line_offset'])
+							)
 					except:
 						debug.msg(u'Failed to correct inline_script exception')
 			_tb += l + u'\n'
-		self._plaintext += _tb
-		self._md += u'~~~ .traceback\n%s\n~~~\n' % _tb
+		plaintext += _tb
+		md += u'~~~ .traceback\n%s\n~~~\n' % _tb
+		return md, plaintext
+		
+	def _exception_details(self, msg, info):
+		
+		"""
+		desc:
+			Provides a markdown and plaintext overview of relevant information.
+		"""
+		
+		md = u'%s\n\n## Details\n\n' % msg
+		plaintext = u'\n%s\n\n' % msg
+		for key, val in info.items():
+			if key == u'line_offset': # For internal use only
+				continue
+			md += u'- %s: `%s`\n' % (key, val)
+			plaintext += u'%s: %s\n' % (key, val)
+		md += u'\n'
+		return md, plaintext
+		
+	def _exception_info(self, msg, info):
+		
+		"""
+		desc:
+			Updates the info dict based on the type of Exception and the
+			exception message.
+		"""
+		 
+		if isinstance(self.exception, SyntaxError):
+			return self._syntaxerror_info(msg, info)
+		return self._defaultexception_info(msg, info)
+		
+	def _syntaxerror_info(self, msg, info):
+		
+		"""
+		desc:
+			Updates the info dict specifically for SyntaxErrors
+		"""		
+				
+		info = self._defaultexception_info(msg, info)
+		# Syntax errors are dealt with specially, because they provide
+		# introspective information.
+		for g in re.finditer(u'<string>, line (?P<linenr>\d+)', msg):
+			msg = msg.replace(g.group(), u'%s, line %d' % (
+					info.get(u'item_type', u'Inline script'),
+					int(g.group(u'linenr')) \
+						+ info.get(u'line_offset', -1))
+				)
+		info[u'exception message'] = msg
+		info[u'line'] = self.exception.lineno + info.get(u'line_offset', -1)
+		if self.exception.text is not None:
+			info[u'code'] = safe_decode(self.exception.text, enc=self.enc,
+				errors=u'ignore')
+		return info
+		
+	def _defaultexception_info(self, msg, info):
+		
+		"""
+		desc:
+			Updates the info dict for all Exceptions.
+		"""				
+		
+		info[u'item-stack'] = str(item_stack_singleton)
+		info[u'time'] = time.ctime()
+		if self.exception is None:
+			return info
+		info[u'exception type'] = safe_decode(
+			self.exception.__class__.__name__, enc=self.enc,
+			errors=u'ignore')
+		try:
+			info[u'exception message'] = safe_decode(self.exception, errors=u'ignore')
+		except:
+			info[u'exception message'] = u'Description unavailable'
+		return info
 
 	def __unicode__(self):
 
