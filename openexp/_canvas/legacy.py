@@ -19,10 +19,11 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 
 from libopensesame.py3compat import *
 from pygame.locals import *
-import pygame
 import os
+import pygame
+import platform
 from libopensesame.exceptions import osexception
-from libopensesame import debug, misc
+from libopensesame import debug
 from openexp.backend import configurable
 from openexp._canvas import canvas
 from openexp._coordinates.legacy import legacy as legacy_coordinates
@@ -82,6 +83,8 @@ class legacy(canvas.canvas, legacy_coordinates):
 		self.antialias = True
 		self.surface = self.experiment.surface.copy()
 		self.clear()
+		if platform.system() == u'Darwin':
+			self.show = self._show_macos
 
 	def set_config(self, **cfg):
 
@@ -108,7 +111,24 @@ class legacy(canvas.canvas, legacy_coordinates):
 		self.experiment.last_shown_canvas = self.surface
 		pygame.display.flip()
 		return pygame.time.get_ticks()
+		
+	def _show_macos(self):
+		
+		"""
+		visible: False
+		
+		desc:
+			On Mac OS, the display is sometimes not refreshed unless there is
+			some interaction with the event loop. Therefor we implement this
+			hack which is only used on Mac OS.
+		"""
 
+		self.experiment.surface.blit(self.surface, (0, 0))
+		self.experiment.last_shown_canvas = self.surface
+		pygame.display.flip()
+		pygame.event.pump()
+		return pygame.time.get_ticks()
+		
 	@configurable
 	def clear(self):
 
