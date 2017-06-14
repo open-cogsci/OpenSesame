@@ -186,9 +186,14 @@ class legacy(sampler.sampler):
 			print(
 				u'openexp.sampler._legacy.init_sound(): mixer already initialized, closing')
 			pygame.mixer.quit()
-		mixer.pre_init(experiment.var.sound_freq, experiment.var.sound_sample_size, \
-			experiment.var.sound_channels, experiment.var.sound_buf_size)
-		mixer.init()
+		mixer.pre_init(experiment.var.sound_freq,
+			experiment.var.sound_sample_size,
+			experiment.var.sound_channels,
+			experiment.var.sound_buf_size)
+		try:
+			mixer.init()
+		except pygame.error:
+			print(u'openexp.sampler._legacy.init_sound(): failed to initialize mixer')
 
 	@staticmethod
 	def close_sound(experiment):
