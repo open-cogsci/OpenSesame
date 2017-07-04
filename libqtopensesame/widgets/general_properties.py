@@ -66,13 +66,13 @@ class general_properties(base_widget):
 			icon = info[u"icon"]
 			self.ui.combobox_backend.addItem(self.main_window.theme.qicon(
 				icon), self.backend_format % (name, desc))
-		self.connect(
+		self.quick_connect(
 			slot=self.main_window.ui.tabwidget.open_general_script,
 			signals=[
 				self.ui.button_script_editor.clicked,
 				self.ui.button_backend_settings.clicked
-			])				
-		self.connect(
+			])
+		self.quick_connect(
 			slot=self.apply_changes,
 			signals=[
 				self.ui.combobox_backend.currentIndexChanged,
@@ -83,7 +83,7 @@ class general_properties(base_widget):
 				self.ui.checkbox_uniform_coordinates.stateChanged,
 				self.ui.edit_foreground.textEdited,
 				self.ui.edit_background.textEdited,
-				self.ui.widget_font.font_changed,			
+				self.ui.widget_font.font_changed,
 			])
 		self.tab_name = u'__general_properties__'
 		self.on_activate = self.refresh

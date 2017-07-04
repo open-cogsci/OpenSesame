@@ -126,16 +126,16 @@ class base_component(base_qtobject):
 		return main_window
 
 	@staticmethod
-	def connect(slot, signals):
-		
+	def quick_connect(slot, signals):
+
 		"""
 		desc:
 			A convenience function to connect many signals to one slot.
-			
+
 		arguments:
 			slot:		a slot
 			signals:	a list of signals
 		"""
-		
+
 		for signal in signals:
 			signal.connect(slot)
