@@ -32,7 +32,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 
 Currently, most development is done on Ubuntu 15.04. Most of the dependencies
 for pgs4a are described on their homepage, but in addition you need to install
-the Oracle Java JDK (v8 currently used). This is available from
+the Oracle Java JDK v8 (v9 doesn't work). This is available from
 `ppa:webupd8team/java`. Instructions taken from:
 
 - <http://www.mameau.com/pygame-subset-for-android-pgs4a-on-ubuntu-precise-12-04/>
