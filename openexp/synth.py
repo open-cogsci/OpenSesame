@@ -139,7 +139,7 @@ def osc_gen(_type, freq, length, rate):
 	if _type == u'sine':
 		return np.sin(2*np.pi*freq*t)
 	if _type == u'white_noise':
-		return np.random.random(length*rate)*2 - 1
+		return np.random.random(int(length*rate))*2 - 1
 	raise osexception(u'Invalid oscillator: %s' % _type)
 
 def envelope(length, attack, decay, rate):
