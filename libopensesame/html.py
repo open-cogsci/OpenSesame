@@ -89,11 +89,9 @@ class html(HTMLParser):
 
 		if tag not in self.valid_end_tags:
 			return
-
 		if self.current_tag != tag:
 			debug.msg(u'Warning: expecting closing tag for %s, got %s' % \
 				(self.current_tag, tag), reason=u'warning')
-
 		self.pop_style()
 
 	def handle_starttag(self, tag, attrs):
@@ -176,34 +174,23 @@ class html(HTMLParser):
 			text = bidi_func(text)
 		# Convert line breaks to HTML break tags
 		text = text.replace(os.linesep, u'<br />').replace(u'\n', u'<br />')
-
 		# Initialize the style
 		self.canvas = canvas
 		backup_cfg = canvas.get_config()
-
 		# Set the maximum width
-		if max_width is None:
-			max_x = canvas.experiment.var.width
+		if max_width is not None:
+			max_x = x + max_width/2 if center else x + max_width
 		else:
-			if center:
-				max_x = x + max_width/2
-			else:
-				max_x = x + max_width
-
+			max_x = self.canvas.right
 		# First parse the HTML
 		self.text = []
 		self.paragraph = []
 		self.style_stack = []
 		self.current_tag = None
 		self.push_style()
-
 		# Optionally parse HTML
-		if self.canvas.html:
-			self.feed(text)
-		else:
-			self.handle_data(text)
+		self.feed(text) if self.canvas.html else self.handle_data(text)
 		self.text.append(self.paragraph)
-
 		# If we want to center the next, we need a dry run to calculate all the
 		# line lengths and determine the vertical and horizontal offset for each
 		# line
@@ -226,7 +213,6 @@ class html(HTMLParser):
 						_y += dy
 						dx = canvas._text_size(word.lstrip())[0]
 						word = word.lstrip()
-
 					# Draw!
 					_x += dx
 					width += dx
@@ -238,47 +224,36 @@ class html(HTMLParser):
 			y_offset = -(_y-y)/2
 		if not dry_run:
 			# Now render it onto the canvas
-			if center:
-				_y = y+y_offset
-			else:
-				_y = y
+			_y = y+y_offset if center else y
 			for paragraph in self.text:
-				if center:
-					_x = x+l_x_offset.pop()
-				else:
-					_x = x
+				_x = x+l_x_offset.pop() if center else x
 				dy = canvas._text_size(u'dummy')[1]
 				for word, style in paragraph:
 					canvas.set_config(**style)
 					# Line wrap if we run out of the screen
 					dx, dy = canvas._text_size(word)
 					if _x+dx > max_x:
-						if center:
-							_x = x+l_x_offset.pop()
-						else:
-							_x = x
+						_x = x+l_x_offset.pop() if center else x
 						_y += dy
 						dx = canvas._text_size(word.lstrip())[0]
 						word = word.lstrip()
-
 					# Draw!
 					canvas._text(word, _x, _y)
 					_x += dx
 				_y += dy
-
 		# Restore the canvas font and colors
 		canvas.set_config(**backup_cfg)
 		if dry_run:
 			return max_width, height
 		# Delete to avoid cyclic references
 		del self.canvas
-
+		
 	def pop_style(self):
 
 		"""Pop a style from the style stack"""
 
 		self.style_stack.pop()
-		if len(self.style_stack) == 0:
+		if not self.style_stack:
 			self.push_style()
 
 	def push_style(self, **keywords):
@@ -290,7 +265,7 @@ class html(HTMLParser):
 		**keywords -- a keyword dictionary with style attributes
 		"""
 
-		if len(self.style_stack) == 0:
+		if not self.style_stack:
 			current_style = self.canvas.get_config()
 		else:
 			current_style = self.style_stack[-1].copy()
