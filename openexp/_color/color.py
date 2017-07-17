@@ -80,7 +80,7 @@ class color(object):
 		"""
 		is_rgb = lambda c: hasattr(c, '__len__') \
 			and len(c) == 3 \
-			and all(isinstance(i, numbers.Number) and 0 <= i <= 255 for i in c)
+			and all(isinstance(i, numbers.Integral) and 0 <= i <= 255 for i in c)
 
 		if isinstance(colorspec, int):
 			return webcolors.rgb_to_hex((colorspec, colorspec, colorspec))
