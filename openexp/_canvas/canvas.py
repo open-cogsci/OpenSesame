@@ -338,6 +338,62 @@ class canvas(backend):
 		"""
 
 		return self._height
+		
+	@property
+	def left(self):
+		
+		"""
+		name:
+			left
+			
+		desc:
+			The x coordinate of the left edge of the display. This is a
+			read-only property.
+		"""
+		
+		return self._left
+	
+	@property
+	def right(self):
+		
+		"""
+		name:
+			right
+			
+		desc:
+			The x coordinate of the right edge of the display. This is a
+			read-only property.
+		"""
+		
+		return self._right
+	
+	@property
+	def top(self):
+		
+		"""
+		name:
+			top
+			
+		desc:
+			The y coordinate of the top edge of the display. This is a
+			read-only property.
+		"""
+		
+		return self._top
+		
+	@property
+	def bottom(self):
+		
+		"""
+		name:
+			bottom
+			
+		desc:
+			The y coordinate of the bottom edge of the display. This is a
+			read-only property.
+		"""
+		
+		return self._bottom
 
 	def copy(self, canvas):
 

@@ -42,6 +42,15 @@ class coordinates(object):
 		self._height = self.experiment.var.height
 		self._xcenter = self._width/2
 		self._ycenter = self._height/2
+		if self.uniform_coordinates:
+			self._bottom = self._ycenter
+			self._top = -self._ycenter
+			self._left = -self._xcenter
+			self._right = self._xcenter
+		else:
+			self._top = self._left = 0
+			self._bottom = self._height
+			self._right = self._width
 		self._mouse_dev = isinstance(self, mouse)
 		self._canvas_dev = isinstance(self, canvas)
 		if not self._mouse_dev and not self._canvas_dev:
