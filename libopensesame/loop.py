@@ -48,6 +48,7 @@ class loop(item.item):
 
 		self.ef = None
 		self.dm = DataMatrix(length=0)
+		self.dm.sorted = False
 		self.live_dm = None
 		self.live_row = None
 		self.operations = []
