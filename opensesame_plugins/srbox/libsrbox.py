@@ -139,7 +139,7 @@ class libsrbox(object):
 		debug.msg("using device %s" % dev)
 		# Turn off all lights
 		if self._srbox is not None:
-			self._srbox.write('\x60')
+			self._srbox.write(b'\x60')
 
 	def send(self, ch):
 
@@ -170,7 +170,7 @@ class libsrbox(object):
 		# Write the start byte
 		self._srbox.flushOutput()
 		self._srbox.flushInput()
-		self._srbox.write('\xA0')
+		self._srbox.write(b'\xA0')
 		self._started = True
 
 	def stop(self):
@@ -185,7 +185,7 @@ class libsrbox(object):
 		# Write the stop byte and flush the input
 		self._srbox.flushOutput()
 		self._srbox.flushInput()
-		self._srbox.write('\x20')
+		self._srbox.write(b'\x20')
 		self._started = False
 
 	def get_button_press(self, allowed_buttons=None, timeout=None,
@@ -228,7 +228,7 @@ class libsrbox(object):
 		while True:
 			# Get a valid character and convert it to a byte
 			inputchar = self._srbox.read(1)
-			if inputchar == '':
+			if inputchar == b'':
 				continue
 			inputbyte1 = ord(inputchar)
 			# Check for a timeout
