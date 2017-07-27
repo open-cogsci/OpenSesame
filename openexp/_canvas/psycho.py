@@ -399,8 +399,6 @@ class psycho(canvas.canvas, psycho_coordinates):
 		# debug window
 		if experiment.var.get(u'psychopy_suppress_warnings', u'yes'):
 			logging.console.setLevel(logging.CRITICAL)
-		# We need to initialize the pygame mixer, because PsychoPy uses that as well
-		pygame.mixer.init()
 
 	@staticmethod
 	def close_display(experiment):
