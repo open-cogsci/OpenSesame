@@ -48,8 +48,8 @@ class form_base(item.item):
 		"""
 
 		self.item_type = item_type
-		self.description = description
 		item.item.__init__(self, name, experiment, script)
+		self.var.description = description
 
 	def reset(self):
 
