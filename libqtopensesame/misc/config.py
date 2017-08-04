@@ -18,19 +18,10 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 
 # About
 
-This module is used to maintain configuration settings. There is a old and a new
-style API. The new one is obviously preferred for new code. When this module is
+This module is used to maintain configuration settings. When this module is
 first loaded, a single instance of the `config` class is instantiated, whicn is
 subsequently used for all configuration getting and setting (i.e. a singleton
 design pattern).
-
-Old style:
-
-	from libqtopensesame.misc import config
-	config.set_config('my_setting', 'my_value')
-	print(config.get_config('my_setting'))
-
-New style:
 
 	from libqtopensesame.misc.config import cfg
 	cfg.my_setting = 'my_value' # set
@@ -45,112 +36,104 @@ from libopensesame import debug
 import platform
 import sys
 
+
+DEFAULT_CONFIG = {
+	u"cfg_ver" : 0,
+	u"_initial_window_geometry" : QtCore.QByteArray(),
+	u"_initial_window_state" : QtCore.QByteArray(),
+	u"auto_update_check" : True,
+	u"auto_response" : False,
+	u"default_logfile_folder" : libopensesame.misc.home_folder(),
+	u"default_pool_folder" : libopensesame.misc.home_folder(),
+	u"disabled_plugins" : "",
+	u"disabled_extensions" : "",
+	u"file_dialog_path" : "",
+	u"file_pool_size_warning" : 104857600,
+	u"loop_wizard" : None,
+	u"onetabmode" : False,
+	u"qProgEditCommentShortcut" : u'Ctrl+M',
+	u"qProgEditUncommentShortcut" : u'Ctrl+Shift+M',
+	u'qProgEditFontFamily' : u'Roboto Mono',
+	u'qProgEditFontSize' : 10,
+	u'qProgEditLineNumbers' : True,
+	u'qProgEditHighlightCurrentLine' : False,
+	u'qProgEditHighlightMatchingBrackets' : True,
+	u'qProgEditWordWrapMarker' : 80,
+	u'qProgEditWordWrap' : True,
+	u'qProgEditTabWidth' : 4,
+	u'qProgEditAutoIndent' : True,
+	u'qProgEditShowEol' : False,
+	u'qProgEditShowWhitespace' : False,
+	u'qProgEditShowIndent' : False,
+	u'qProgEditShowFolding' : True,
+	u'qProgEditAutoComplete' : True,
+	u'qProgEditColorScheme' : u'Monokai',
+	u'qProgEditValidate' : False,
+	u"quick_run_logfile": u"quickrun.csv",
+	u"recent_files" : u"",
+	u"reset_console_on_experiment_start" : True,
+	u"shortcut_itemtree" : u"Ctrl+1",
+	u"shortcut_tabwidget" : u"Ctrl+2",
+	u"shortcut_stdout" : u"Ctrl+3",
+	u"shortcut_pool" : u"Ctrl+4",
+	u"shortcut_copy_clipboard_unlinked" : u"Ctrl+C",
+	u"shortcut_copy_clipboard_linked" : u"Ctrl+Shift+C",
+	u"shortcut_paste_clipboard" : u"Ctrl+V",
+	u"shortcut_delete" : u"Del",
+	u"shortcut_permanently_delete" : u"Shift+Del",
+	u"shortcut_context_menu" : u"+",
+	u"shortcut_rename" : u"F2",
+	u"shortcut_edit_runif" : u"F3",
+	u"style" : u"",
+	u"theme" : u"default",
+	u"toolbar_size" : 32,
+	u"toolbar_text" : False,
+	u"runner" : u"multiprocess",
+	u"opensesamerun_exec" : u"",
+	u"start_drag_delay" : 300,
+	u"pos" : QtCore.QPoint(200, 200),
+	u"size" : QtCore.QSize(1000, 600),
+	u"url_website" : u"http://www.cogsci.nl/opensesame",
+	u"url_facebook" : u"http://www.facebook.com/cognitivescience",
+	u"url_twitter" : u"http://www.twitter.com/cogscinl",
+	u'sketchpad_placeholder_color' : u'#00FF00',
+	u'sketchpad_grid_color' : u'#00FF00',
+	u'sketchpad_grid_thickness_thin' : 2,
+	u'sketchpad_grid_thickness_thick' : 4,
+	u'sketchpad_grid_opacity' : 32,
+	u'sketchpad_preview_color' : u'#00FF00',
+	u'sketchpad_preview_penwidth' : 2,
+	u'qProgEditSwitchLeftShortcut' : u'Alt+Left',
+	u'qProgEditSwitchRightShortcut' : u'Alt+Right',
+	u'qProgEditShowFindShortcut' : u'Ctrl+F',
+	u'qProgEditHideFindShortcut' : u'Escape',
+	u'qProgEditTogglePrefsShortcut' : u'Ctrl+Shift+P',
+	u'qProgEditRunSelectedShortcut' : u'Alt+R',
+	u'qProgEditRunAllShortcut' : u'Shift+Alt+R',
+	u'qProgEditSymbolTreeWidgetItemIcon' : u'text-x-script',
+	u'locale' : u'',
+	}
+DEFAULT_CONFIG_LINUX = {
+	u"theme" : u"gnome"
+	}
+DEFAULT_CONFIG_MAC = {}
+DEFAULT_CONFIG_WINDOWS = {}
+
+
 class config(object):
-
-	config = {
-		u"cfg_ver" : 0,
-		u"_initial_window_geometry" : QtCore.QByteArray(),
-		u"_initial_window_state" : QtCore.QByteArray(),
-		u"auto_update_check" : True,
-		u"auto_response" : False,
-		u"default_logfile_folder" : libopensesame.misc.home_folder(),
-		u"default_pool_folder" : libopensesame.misc.home_folder(),
-		u"disabled_plugins" : "",
-		u"disabled_extensions" : "",
-		u"file_dialog_path" : "",
-		u"file_pool_size_warning" : 104857600,
-		u"loop_wizard" : None,
-		u"onetabmode" : False,
-		u"qProgEditCommentShortcut" : u'Ctrl+M',
-		u"qProgEditUncommentShortcut" : u'Ctrl+Shift+M',
-		u'qProgEditFontFamily' : u'Roboto Mono',
-		u'qProgEditFontSize' : 10,
-		u'qProgEditLineNumbers' : True,
-		u'qProgEditHighlightCurrentLine' : False,
-		u'qProgEditHighlightMatchingBrackets' : True,
-		u'qProgEditWordWrapMarker' : 80,
-		u'qProgEditWordWrap' : True,
-		u'qProgEditTabWidth' : 4,
-		u'qProgEditAutoIndent' : True,
-		u'qProgEditShowEol' : False,
-		u'qProgEditShowWhitespace' : False,
-		u'qProgEditShowIndent' : False,
-		u'qProgEditShowFolding' : True,
-		u'qProgEditAutoComplete' : True,
-		u'qProgEditColorScheme' : u'Monokai',
-		u'qProgEditValidate' : False,
-		u"quick_run_logfile": u"quickrun.csv",
-		u"recent_files" : u"",
-		u"reset_console_on_experiment_start" : True,
-		u"shortcut_itemtree" : u"Ctrl+1",
-		u"shortcut_tabwidget" : u"Ctrl+2",
-		u"shortcut_stdout" : u"Ctrl+3",
-		u"shortcut_pool" : u"Ctrl+4",
-		u"shortcut_copy_clipboard_unlinked" : u"Ctrl+C",
-		u"shortcut_copy_clipboard_linked" : u"Ctrl+Shift+C",
-		u"shortcut_paste_clipboard" : u"Ctrl+V",
-		u"shortcut_delete" : u"Del",
-		u"shortcut_permanently_delete" : u"Shift+Del",
-		u"shortcut_context_menu" : u"+",
-		u"shortcut_rename" : u"F2",
-		u"shortcut_edit_runif" : u"F3",
-		u"style" : u"",
-		u"theme" : u"default",
-		u"toolbar_size" : 32,
-		u"toolbar_text" : False,
-		u"runner" : u"multiprocess",
-		u"opensesamerun_exec" : u"",
-		u"start_drag_delay" : 300,
-		u"pos" : QtCore.QPoint(200, 200),
-		u"size" : QtCore.QSize(1000, 600),
-		u"url_website" : u"http://www.cogsci.nl/opensesame",
-		u"url_facebook" : u"http://www.facebook.com/cognitivescience",
-		u"url_twitter" : u"http://www.twitter.com/cogscinl",
-		u'sketchpad_placeholder_color' : u'#00FF00',
-		u'sketchpad_grid_color' : u'#00FF00',
-		u'sketchpad_grid_thickness_thin' : 2,
-		u'sketchpad_grid_thickness_thick' : 4,
-		u'sketchpad_grid_opacity' : 32,
-		u'sketchpad_preview_color' : u'#00FF00',
-		u'sketchpad_preview_penwidth' : 2,
-		u'qProgEditSwitchLeftShortcut' : u'Alt+Left',
-		u'qProgEditSwitchRightShortcut' : u'Alt+Right',
-		u'qProgEditShowFindShortcut' : u'Ctrl+F',
-		u'qProgEditHideFindShortcut' : u'Escape',
-		u'qProgEditTogglePrefsShortcut' : u'Ctrl+Shift+P',
-		u'qProgEditRunSelectedShortcut' : u'Alt+R',
-		u'qProgEditRunAllShortcut' : u'Shift+Alt+R',
-		u'qProgEditSymbolTreeWidgetItemIcon' : u'text-x-script',
-		u'locale' : u'',
-		}
-
-	# OS specific override settings
-	config_linux = {
-		u"theme" : u"gnome"
-		}
-	config_mac = {}
-	config_windows = {}
 
 	def __init__(self):
 
-		"""Constructor"""
+		"""
+		desc:
+			Constructor.
+		"""
 
-		# Apply OS specific override settings
-		if platform.system() == u"Windows":
-			for key, value in self.config_windows.items():
-				self.config[key] = value
-		elif platform.system() == u"Darwin":
-			for key, value in self.config_mac.items():
-				self.config[key] = value
-		elif platform.system() == u"Linux":
-			for key, value in self.config_linux.items():
-				self.config[key] = value
+		self.reset()
 
 	def __str__(self):
 
-		if py3:
-			return self.__unicode__()
-		return safe_encode(self.__unicode__())
+		return self.__unicode__() if py3 else safe_encode(self.__unicode__())
 
 	def __unicode__(self):
 
@@ -165,10 +148,11 @@ class config(object):
 	def __getattr__(self, setting):
 
 		"""
-		A getter for settings, to allow for easy access
+		desc:
+			A getter for settings, to allow for easy access
 
-		Argument:
-		setting -- the setting to get
+		arguments:
+			setting:	The setting to get
 		"""
 
 		if setting not in self.config:
@@ -179,12 +163,14 @@ class config(object):
 	def __setattr__(self, setting, value):
 
 		"""
-		A setter for settings, to allow for easy access
+		desc:
+			A setter for settings, to allow for easy access
 
-		Argument:
-		setting -- the setting to set
-		value -- the value to set
+		argumentsL
+			setting: 	The setting to set
+			value:		The value to set
 		"""
+		
 		if setting not in self.config:
 			raise osexception(u'The setting "%s" does not exist' \
 				% setting)
@@ -243,11 +229,12 @@ class config(object):
 	def parse_cmdline_args(self, args):
 
 		"""
-		Apply settings that were specified on the command line. The expected
-		format is as follows: [name]=[val];[name]=[val];...
+		desc:
+			Apply settings that were specified on the command line. The expected
+			format is as follows: [name]=[val];[name]=[val];...
 
-		Arguments:
-		args -- the string of command line arguments
+		arguments:
+			args:	The string of command line arguments
 		"""
 
 		if args is None:
@@ -365,21 +352,41 @@ class config(object):
 	def version(self):
 
 		"""
-		Gets the current version of the config.
+		desc:
+			Gets the current version of the config.
 
 		Returns:
-		The config version.
+			The config version.
 		"""
 
 		return self.cfg_ver
+		
+	def reset(self):
+		
+		"""
+		desc:
+			Resets the configution back to default.
+		"""
+				
+		object.__setattr__(self, u'config', DEFAULT_CONFIG)
+		if platform.system() == u"Windows":
+			self.config.update(DEFAULT_CONFIG_WINDOWS)
+		elif platform.system() == u"Darwin":
+			self.config.update(DEFAULT_CONFIG_MAC)
+		elif platform.system() == u"Linux":
+			self.config.update(DEFAULT_CONFIG_LINUX)			
+		
+	def nuke(self):
+		
+		"""
+		desc:
+			Clears the config.
+		"""
+		
+		self.reset()
+		self.clear()
+		self.save()		
 
-# Old style API. See explanation above
-def get_config(setting):
-	return cfg.__getattr__(setting)
-
-def set_config(setting, value):
-	cfg.__setattr__(setting, value)
 
 # Create a singleton config instance
-global cfg
 cfg = config()

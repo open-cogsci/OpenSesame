@@ -18,7 +18,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame import misc, metadata
-from libqtopensesame.misc import config
+from libqtopensesame.misc.config import cfg
 from libqtopensesame.widgets.base_widget import base_widget
 from libopensesame.py3compat import *
 from qtpy import QtWidgets, QtCore
@@ -56,16 +56,16 @@ class credits_widget(base_widget):
 
 		"""Open the main website"""
 
-		misc.open_url(config.get_config("url_website"))
+		misc.open_url(cfg.url_website)
 
 	def open_facebook(self, dummy=None):
 
 		"""Open Facebook page"""
 
-		misc.open_url(config.get_config("url_facebook"))
+		misc.open_url(cfg.url_facebook)
 
 	def open_twitter(self, dummy=None):
 
 		"""Open Twitter page"""
 
-		misc.open_url(config.get_config("url_twitter"))
+		misc.open_url(cfg.url_twitter)

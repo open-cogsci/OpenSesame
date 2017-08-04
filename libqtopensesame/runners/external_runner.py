@@ -23,7 +23,7 @@ import sys
 import os
 from libopensesame.exceptions import osexception
 from libopensesame import debug
-from libqtopensesame.misc import config
+from libqtopensesame.misc.config import cfg
 from libqtopensesame.runners import base_runner
 
 from qtpy import QtWidgets
@@ -51,13 +51,13 @@ class external_runner(base_runner):
 			self.experiment.save(self.path, True)
 			debug.msg(u"experiment saved as '%s'" % self.path)
 			# Determine the name of the executable
-			if config.get_config(u'opensesamerun_exec') == u'':
+			if cfg.opensesamerun_exec == u'':
 				if os.name == u"nt":
 					self.cmd = [u"opensesamerun.exe"]
 				else:
 					self.cmd = [u"opensesamerun"]
 			else:
-				self.cmd = config.get_config(u'opensesamerun_exec').split()
+				self.cmd = cfg.opensesamerun_exec.split()
 			self.cmd += [
 				self.path,
 				u"--logfile=%s" % self.experiment.logfile,

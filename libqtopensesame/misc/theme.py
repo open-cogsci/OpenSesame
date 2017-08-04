@@ -18,11 +18,10 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame.py3compat import *
-
 import os.path
 import imp
 from libopensesame import debug, misc
-from libqtopensesame.misc import config
+from libqtopensesame.misc.config import cfg
 from qtpy import QtGui, QtWidgets, QtCore
 
 available_themes = [u'default']
@@ -48,23 +47,19 @@ class theme:
 		self.main_window = main_window
 		self.fallback_icon = QtGui.QIcon(os.path.join(misc.resource(u"theme"),
 			u"fallback.png"))
-		if theme is None:
-			self.theme = config.get_config(u"theme")
-		else:
-			self.theme = theme
-		self.theme_folder = misc.resource(os.path.join(u"theme", \
-			self.theme))
+		self.theme = cfg.theme if theme is None else theme
+		self.theme_folder = misc.resource(os.path.join(u"theme", self.theme))
 		debug.msg(u"theme = '%s' (%s)" % (self.theme, self.theme_folder))
 		# The theme folder must exist, and contain a file called __theme__.py,
 		# if not, we fall back to the default theme, which is assumed to always
 		# exist.
 		if self.theme_folder is None or not os.path.exists(
 			os.path.join(self.theme_folder, u'__theme__.py')):
-			debug.msg(u"theme '%s' does not exist, using 'default'" % theme, \
+			debug.msg(u"theme '%s' does not exist, using 'default'" % theme,
 				reason=u"warning")
 			self.theme = u"default"
-			self.theme_folder = misc.resource(os.path.join(u"theme", \
-				self.theme))
+			self.theme_folder = misc.resource(
+				os.path.join(u"theme", self.theme))
 		self.theme_info = os.path.join(self.theme_folder, u"__theme__.py")
 		if os.path.exists(self.theme_info):
 			info = imp.load_source(self.theme,

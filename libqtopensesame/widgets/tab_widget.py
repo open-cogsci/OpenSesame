@@ -20,7 +20,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 from libopensesame.py3compat import *
 from libopensesame import debug, metadata
 from libqtopensesame.misc.base_subcomponent import base_subcomponent
-from libqtopensesame.misc import config
+from libqtopensesame.misc.config import cfg
 from qtpy import QtGui, QtWidgets, QtCore
 from libqtopensesame.misc.translate import translation_context
 _ = translation_context(u'tab_widget', category=u'core')
@@ -394,20 +394,19 @@ class tab_widget(base_subcomponent, QtWidgets.QTabWidget):
 
 		"""Toggles onetabmode"""
 
-		config.set_config(u"onetabmode",
-			self.main_window.ui.action_onetabmode.isChecked())
-		if config.get_config(u"onetabmode"):
+		cfg.onetabmode = self.main_window.ui.action_onetabmode.isChecked()
+		if cfg.onetabmode:
 			self.close_other()
 			self.tabBar().setVisible(False)
 		else:
 			self.tabBar().setVisible(True)
-		self.setTabsClosable(not config.get_config(u"onetabmode"))
+		self.setTabsClosable(not cfg.onetabmode)
 		self.main_window.ui.action_close_all_tabs.setEnabled(
-			not config.get_config(u"onetabmode"))
+			not cfg.onetabmode)
 		self.main_window.ui.action_close_current_tab.setEnabled(
-			not config.get_config(u"onetabmode"))
+			not cfg.onetabmode)
 		self.main_window.ui.action_close_other_tabs.setEnabled(
-			not config.get_config(u"onetabmode"))
+			not cfg.onetabmode)
 
 	def index_changed(self, index):
 
@@ -419,7 +418,7 @@ class tab_widget(base_subcomponent, QtWidgets.QTabWidget):
 		"""
 
 		self.currentChanged.disconnect()
-		if config.get_config(u"onetabmode"):
+		if cfg.onetabmode:
 			self.close_other()
 		w = self.currentWidget()
 		if hasattr(w, u'on_activate'):
