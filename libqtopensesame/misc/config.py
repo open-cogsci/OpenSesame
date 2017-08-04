@@ -368,7 +368,8 @@ class config(object):
 			Resets the configution back to default.
 		"""
 				
-		object.__setattr__(self, u'config', DEFAULT_CONFIG)
+		object.__setattr__(self, u'config', {})
+		self.config.update(DEFAULT_CONFIG)
 		if platform.system() == u"Windows":
 			self.config.update(DEFAULT_CONFIG_WINDOWS)
 		elif platform.system() == u"Darwin":
