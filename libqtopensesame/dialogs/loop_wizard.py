@@ -67,5 +67,6 @@ class loop_wizard(base_dialog):
 		retval = base_dialog.exec_(self)
 		if retval == QtWidgets.QDialog.Rejected:
 			return None
+		self._dm = self._qdm.dm
 		cfg.loop_wizard = pickle.dumps(self._dm)
 		return operations.fullfactorial(self._dm)
