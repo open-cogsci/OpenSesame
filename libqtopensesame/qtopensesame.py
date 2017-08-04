@@ -312,10 +312,6 @@ class qtopensesame(QtWidgets.QMainWindow, base_component):
 		group.add_option(u"--start-clean", action=u"store_true",
 			dest=u"start_clean", help=\
 			u"Do not load configuration and do not restore window geometry")
-		group.add_option(u"-p", u"--preload", action=u"store_true",
-			dest=u"preload", help=u"Preload Python modules")
-		group.add_option(u"--pylink", action=u"store_true", dest=u"pylink",
-			help=u"Load PyLink before PyGame (necessary for using the Eyelink plug-ins in non-dummy mode)")
 		group.add_option(u"--locale", action=u"store_true", dest=u"locale",
 			help=u"Specify localization")
 		group.add_option(u"--catch-translatables", action=u"store_true",

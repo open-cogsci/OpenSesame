@@ -67,8 +67,6 @@ class external_runner(base_runner):
 				self.cmd.append(u"--debug")
 			if self.experiment.var.fullscreen == u'yes':
 				self.cmd.append(u"--fullscreen")
-			if u"--pylink" in sys.argv:
-				self.cmd.append(u"--pylink")
 
 			debug.msg(u"spawning opensesamerun as a separate process")
 			# Call opensesamerun and wait for the process to complete
