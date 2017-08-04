@@ -22,10 +22,7 @@ from libopensesame.var_store import var_store
 import warnings
 from libopensesame.exceptions import osexception
 from libopensesame import debug
-try:
-	import pygame
-except:
-	pygame = None
+
 
 class item(object):
 
