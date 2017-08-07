@@ -25,7 +25,7 @@ import os
 import subprocess
 import argparse
 
-EXCLUDE_FOLDERS = [u'build', u'dist', 'deb_dist']
+EXCLUDE_FOLDERS = [u'build', u'dist', 'deb_dist', 'pgs4a-0.9.4']
 
 pro_tmpl = u'''CODECFORTR = UTF-8
 FORMS = %(ui_list)s
