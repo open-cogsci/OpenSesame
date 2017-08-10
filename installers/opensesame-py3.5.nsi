@@ -30,7 +30,7 @@ SetCompressor /SOLID /FINAL lzma
 
 ; HM NIS Edit Wizard helper defines
 !define PRODUCT_NAME "OpenSesame"
-!define PRODUCT_VERSION "3.1.7-py3.5-win64-1"
+!define PRODUCT_VERSION "3.1.8-py3.5-win64-1"
 !define EXEC_SUBFOLDER "Scripts\"
 !define PRODUCT_PUBLISHER "Sebastiaan Mathot"
 !define PRODUCT_WEB_SITE "http://osdoc.cogsci.nl"
