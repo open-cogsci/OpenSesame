@@ -265,6 +265,7 @@ class xpyriment(canvas.canvas, xpyriment_coordinates):
 		control.defaults.audiosystem_channels = experiment.var.sound_channels
 		control.defaults.audiosystem_buffer_size = \
 			experiment.var.sound_buf_size
+		control.defaults.audiosystem_autostart = False
 
 		# Initialize. If Expyriment jumps into interactive mode, it reads from
 		# the stdin, and crashes. Thus we explicitly disable the interactive-
