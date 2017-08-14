@@ -26,6 +26,12 @@ from libopensesame.exceptions import osexception
 from libopensesame.html import html
 from openexp.backend import backend, configurable
 from openexp.color import color
+from collections import OrderedDict
+from openexp.canvas_elements import Line, Rect, Polygon, Ellipse, Image, \
+	Gabor, NoisePatch, Circle, FixDot, ElementFactory, RichText
+from openexp._canvas._element.element import Element
+from openexp._canvas._element.group import Group
+
 
 class canvas(backend):
 
@@ -41,12 +47,12 @@ class canvas(backend):
 		my_canvas.fixdot()
 		my_canvas.show()
 		~~~
-		
+
 		If drawing on a `canvas` is slow, especially if you draw many stimuli,
 		you should disable `auto_prepare` and explicitly call `canvas.prepare()`
 		after all drawing operations are done, but before calling
 		`canvas.show()`.
-		
+
 		__Example__:
 
 		~~~ .python
@@ -60,7 +66,7 @@ class canvas(backend):
 			my_canvas.text(text=letter, x=x, y=y)
 		my_canvas.prepare()
 		my_canvas.show()
-		~~~		
+		~~~
 
 		[TOC]
 
@@ -254,6 +260,40 @@ class canvas(backend):
 			u'font_underline' : self.assert_bool,
 			}, **style_args)
 		self.html_renderer = html()
+		self._stimuli = OrderedDict()
+		self._stimnr = 0
+
+	def __setitem__(self, key, value):
+
+		if isinstance(value, list):
+			value = Group(self, [e.construct(self) \
+				if isinstance(e, ElementFactory) else e for e in value])
+		if isinstance(value, ElementFactory):
+			value = value.construct(self)
+		if not isinstance(value, Element):
+			raise TypeError('%s is not a canvas element but %s' % \
+				(key, type(value)))
+		self._stimuli[key] = value
+
+	def __getitem__(self, key):
+
+		return self._stimuli[key]
+
+	def __len__(self):
+
+		return len(self._stimuli)
+
+	def __iter__(self):
+
+		for name, stim in self._stimuli.items():
+			yield name, stim
+
+	def __iadd__(self, stim):
+
+		while 'stim%d' % self._stimnr in self._stimuli:
+			self._stimnr += 1
+		self['stim%d' % self._stimnr] = stim
+		return self
 
 	def set_config(self, **cfg):
 
@@ -338,61 +378,61 @@ class canvas(backend):
 		"""
 
 		return self._height
-		
+
 	@property
 	def left(self):
-		
+
 		"""
 		name:
 			left
-			
+
 		desc:
 			The x coordinate of the left edge of the display. This is a
 			read-only property.
 		"""
-		
+
 		return self._left
-	
+
 	@property
 	def right(self):
-		
+
 		"""
 		name:
 			right
-			
+
 		desc:
 			The x coordinate of the right edge of the display. This is a
 			read-only property.
 		"""
-		
+
 		return self._right
-	
+
 	@property
 	def top(self):
-		
+
 		"""
 		name:
 			top
-			
+
 		desc:
 			The y coordinate of the top edge of the display. This is a
 			read-only property.
 		"""
-		
+
 		return self._top
-		
+
 	@property
 	def bottom(self):
-		
+
 		"""
 		name:
 			bottom
-			
+
 		desc:
 			The y coordinate of the bottom edge of the display. This is a
 			read-only property.
 		"""
-		
+
 		return self._bottom
 
 	def copy(self, canvas):
@@ -527,38 +567,9 @@ class canvas(backend):
 			my_canvas.fixdot()
 		"""
 
-		if x is None:
-			if self.uniform_coordinates:
-				x = 0
-			else:
-				x = self._width/2
-		if y is None:
-			if self.uniform_coordinates:
-				y = 0
-			else:
-				y = self._height/2
-		h = 2
-		if u'large' in style:
-			s = 16
-		elif u'medium' in style or style == u'default':
-			s = 8
-		elif u'small' in style:
-			s = 4
-		else:
-			raise osexception(u'Unknown style: %s' % self.style)
-		if u'open' in style or style == u'default':
-			self.ellipse(x-s, y-s, 2*s, 2*s, fill=True)
-			self.ellipse(x-h, y-h, 2*h, 2*h, fill=True,
-				color=self.background_color)
-		elif u'filled' in style:
-			self.ellipse(x-s, y-s, 2*s, 2*s, fill=True)
-		elif u'cross' in style:
-			self.line(x, y-s, x, y+s)
-			self.line(x-s, y, x+s, y)
-		else:
-			raise osexception(u'Unknown style: %s' % self.style)
+		self += FixDot(x=None, y=None, style=u'default', **style_args)
+		return 'stim%d' % self._stimnr
 
-	@configurable
 	def circle(self, x, y, r, **style_args):
 
 		"""
@@ -584,9 +595,9 @@ class canvas(backend):
 			my_canvas.circle(100, 100, 50, fill=True, color='red')
 		"""
 
-		self.ellipse(x-r, y-r, 2*r, 2*r)
+		self += Circle(x, y, r, **style_args)
+		return 'stim%d' % self._stimnr
 
-	@configurable
 	def line(self, sx, sy, ex, ey, **style_args):
 
 		"""
@@ -617,9 +628,9 @@ class canvas(backend):
 			my_canvas.line(0, 0, w, h)
 		"""
 
-		raise NotImplementedError()
+		self += Line(sx, sy, ex, ey, **style_args)
+		return 'stim%d' % self._stimnr
 
-	@configurable
 	def arrow(self, sx, sy, ex, ey, body_length=0.8, body_width=.5,
 		head_width=30, **style_args):
 
@@ -663,10 +674,10 @@ class canvas(backend):
 			my_canvas.show()
 		"""
 
-		self.polygon(self.arrow_shape(sx, sy, ex, ey, body_width=body_width,
-			body_length=body_length, head_width=head_width))
+		return self.polygon(self.arrow_shape(sx, sy, ex, ey,
+			body_width=body_width, body_length=body_length,
+			head_width=head_width))
 
-	@configurable
 	def rect(self, x, y, w, h, **style_args):
 
 		"""
@@ -695,9 +706,10 @@ class canvas(backend):
 			my_canvas.rect(-10, -10, 20, 20, fill=True)
 		"""
 
-		raise NotImplementedError()
+		self += Rect(x, y, w, h, **style_args)
+		return 'stim%d' % self._stimnr
 
-	@configurable
+
 	def ellipse(self, x, y, w, h, **style_args):
 
 		"""
@@ -726,9 +738,9 @@ class canvas(backend):
 			my_canvas.ellipse(-10, -10, 20, 20, fill=True)
 		"""
 
-		raise NotImplementedError()
+		self += Ellipse(x, y, w, h, **style_args)
+		return 'stim%d' % self._stimnr
 
-	@configurable
 	def polygon(self, vertices, **style_args):
 
 		"""
@@ -754,9 +766,9 @@ class canvas(backend):
 			my_canvas.polygon([n1, n2, n3])
 		"""
 
-		raise NotImplementedError()
+		self += Polygon(vertices, **style_args)
+		return 'stim%d' % self._stimnr
 
-	@configurable
 	def text_size(self, text, max_width=None, **style_args):
 
 		"""
@@ -786,12 +798,9 @@ class canvas(backend):
 			w, h = my_canvas.text_size('Some text')
 		"""
 
-		self.html_renderer.reset()
-		width, height = self.html_renderer.render(text, 0, 0, self,
-			max_width=max_width, dry_run=True)
-		return width, height
+		s = RichText(text, max_width=None).construct(self)
+		return s.size()
 
-	@configurable
 	def text(self, text, center=True, x=None, y=None, max_width=None,
 		**style_args):
 
@@ -832,56 +841,9 @@ class canvas(backend):
 			my_canvas.text('Some text with <b>boldface</b> and <i>italics</i>')
 		"""
 
-		x, y = self.none_to_center(x, y)
-		self.html_renderer.reset()
-		self.html_renderer.render(text, x, y, self, max_width=max_width,
-			center=center)
-
-	def _text(self, text, x, y):
-
-		"""
-		desc:
-			A simple function that renders a string of text with the canvas
-			default settings. This function needs to be re-implemented in
-			each back-ends, as it handles actual text rendering.
-
-		visible:		False
-
-		arguments:
-			text:
-				desc:	A string of text.
-				type:	[str, unicode]
-			x:
-				desc:	The X coordinate.
-				type:	int
-			y:
-				desc:	The Y coordinate.
-				type:	int
-		"""
-
-		raise NotImplementedError()
-
-	def _text_size(self, text):
-
-		"""
-		desc:
-			Determines the size of a string of text for the default font. This
-			function is for internal use, and should be re-implemented for each
-			back-end.
-
-		visible:		False
-
-		arguments:
-			text:
-				desc:	A string of text.
-				type:	[str, unicode]
-
-		returns:
-			desc:		A (width, height) tuple.
-			type:		tuple
-		"""
-
-		raise NotImplementedError()
+		self += RichText(text, center=center, x=x, y=y, max_width=max_width,
+			**style_args)
+		return 'stim%d' % self._stimnr
 
 	def image(self, fname, center=True, x=None, y=None, scale=None):
 
@@ -923,7 +885,8 @@ class canvas(backend):
 			my_canvas.image(path)
 		"""
 
-		raise NotImplementedError()
+		self += Image(fname, center=center, x=x, y=y, scale=scale)
+		return 'stim%d' % self._stimnr
 
 	def gabor(self, x, y, orient, freq, env=u'gaussian', size=96, stdev=12,
 		phase=0, col1=u'white', col2=u'black', bgmode=u'avg'):
@@ -980,7 +943,9 @@ class canvas(backend):
 			my_canvas.gabor(100, 100, 45, .05)
 		"""
 
-		raise NotImplementedError()
+		self += Gabor(x, y, orient, freq, env=u"gaussian", size=96,
+			stdev=12, phase=0, col1=u"white", col2=u"black", bgmode=u"avg")
+		return 'stim%d' % self._stimnr
 
 	def noise_patch(self, x, y, env=u'gaussian', size=96, stdev=12,
 		col1=u'white', col2=u'black', bgmode=u'avg'):
@@ -1027,7 +992,10 @@ class canvas(backend):
 			my_canvas.noise_patch(100, 100, env='circular')
 		"""
 
-		raise NotImplementedError()
+		self += NoisePatch(x, y, env=u"gaussian", size=96, stdev=12,
+			col1=u"white", col2=u"black", bgmode=u"avg")
+		return 'stim%d' % self._stimnr
+
 
 	# Deprecated functions
 
@@ -1163,6 +1131,7 @@ class canvas(backend):
 			p6[1]+_head_width * head_width * math.sin(angle+math.pi/2))
 		return [p1, p2, p3, p4, p5, p6, p7]
 
+
 # Translation mapping from envelope names
 env_synonyms = {}
 env_synonyms[u"c"] = u"c"
@@ -1271,7 +1240,7 @@ def _gabor(orient, freq, env=u"gaussian", size=96, stdev=12, phase=0,
 			else:
 				raise osexception(u"Invalid argument for bgmode: %s "
 								  u"(should be one of 'avg','col2')" % bgmode)
-			
+
 			r = col1.r * amp + col2.r * (1.0 - amp)
 			g = col1.g * amp + col2.g * (1.0 - amp)
 			b = col1.b * amp + col2.b * (1.0 - amp)

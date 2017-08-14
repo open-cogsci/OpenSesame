@@ -168,7 +168,7 @@ def configurable(fnc):
 	"""
 
 	def inner(self, *arglist, **kwdict):
-
+		
 		cfg = {}
 		for key, val in list(kwdict.items()):
 			if key in self.configurables:

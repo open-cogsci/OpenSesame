@@ -22,8 +22,6 @@ from pygame.locals import *
 import os
 import pygame
 import platform
-from libopensesame.exceptions import osexception
-from libopensesame import debug
 from openexp.backend import configurable
 from openexp._canvas import canvas
 from openexp._coordinates.legacy import legacy as legacy_coordinates
@@ -40,6 +38,7 @@ from openexp._coordinates.legacy import legacy as legacy_coordinates
 #   font-file-name-containing-unicode-error
 fileobjects = []
 fonts = {}
+
 
 class legacy(canvas.canvas, legacy_coordinates):
 
@@ -86,37 +85,18 @@ class legacy(canvas.canvas, legacy_coordinates):
 		if platform.system() == u'Darwin':
 			self.show = self._show_macos
 
-	def set_config(self, **cfg):
-
-		canvas.canvas.set_config(self, **cfg)
-		for key, val in cfg.items():
-			if u'font_' in key:
-				self._font = None
-		if self._font is None:
-			# First see if the font refers to a file in the resources/ filepool
-			self._font = self._pygame_font(self.experiment, self.font_family,
-				self.font_size)
-			self._font.set_bold(self.font_bold)
-			self._font.set_italic(self.font_italic)
-			self._font.set_underline(self.font_underline)
-
-	def copy(self, canvas):
-
-		self.surface = canvas.surface.copy()
-		self.set_config(**canvas.get_config())
-
 	def show(self):
 
 		self.experiment.surface.blit(self.surface, (0, 0))
 		self.experiment.last_shown_canvas = self.surface
 		pygame.display.flip()
 		return pygame.time.get_ticks()
-		
+
 	def _show_macos(self):
-		
+
 		"""
 		visible: False
-		
+
 		desc:
 			On Mac OS, the display is sometimes not refreshed unless there is
 			some interaction with the event loop. Therefor we implement this
@@ -128,145 +108,46 @@ class legacy(canvas.canvas, legacy_coordinates):
 		pygame.display.flip()
 		pygame.event.pump()
 		return pygame.time.get_ticks()
-		
+
+	def redraw(self):
+
+		self.surface.fill(self.background_color.backend_color)
+		for stim in self._stimuli.values():
+			stim.prepare()
+
+	def set_config(self, **cfg):
+
+		canvas.canvas.set_config(self, **cfg)
+		if hasattr(self, u'surface'):
+			self.redraw()
+		# for key, val in cfg.items():
+		# 	if u'font_' in key:
+		# 		self._font = None
+		# if self._font is None:
+		# 	# First see if the font refers to a file in the resources/ filepool
+		# 	self._font = self._pygame_font(self.experiment, self.font_family,
+		# 		self.font_size)
+		# 	self._font.set_bold(self.font_bold)
+		# 	self._font.set_italic(self.font_italic)
+		# 	self._font.set_underline(self.font_underline)
+
+	def copy(self, canvas):
+
+		# TODO
+		# self.surface = canvas.surface.copy()
+		# self.set_config(**canvas.get_config())
+		raise NotImplementedError()
+
 	@configurable
 	def clear(self):
 
 		self.surface.fill(self.background_color.backend_color)
+		self._stimuli = {}
 
-	@configurable
-	def line(self, sx, sy, ex, ey):
-
-		sx, sy = self.to_xy(sx, sy)
-		ex, ey = self.to_xy(ex, ey)
-		pygame.draw.line(self.surface, self.color.backend_color, (sx, sy),
-			(ex, ey), self.penwidth)
-
-	@configurable
-	def rect(self, x, y, w, h):
-
-		x, y = self.to_xy(x, y)
-		if self.fill:
-			pygame.draw.rect(self.surface, self.color.backend_color,
-				(x, y, w, h), 0)
-		else:
-			pygame.draw.rect(self.surface, self.color.backend_color,
-				(x, y, w, h), self.penwidth)
-
-	@configurable
-	def ellipse(self, x, y, w, h):
-
-		x = int(x)
-		y = int(y)
-		w = int(w)
-		h = int(h)
-		x, y = self.to_xy(x, y)
-		if self.fill:
-			pygame.draw.ellipse(self.surface, self.color.backend_color,
-				(x, y, w, h), 0)
-		else:
-			# Use experyiment's method to draw ellipses with a transparent
-			# interior by using the transparent colorkey method. This involves
-			# some trickery by making a separate surface of which a certain color
-			# is designated as transparent and draw the ellipse on there first. 
-			# When being blit onto another surface, this transparent color 
-			# (e.g. the ellipses interior is not blitted with the rest.
-			line_width = self.penwidth
-			size = (w, h)
-			
-			surface = pygame.surface.Surface(
-				[p + line_width for p in size],
-				pygame.SRCALPHA).convert_alpha()
-			
-			pygame.draw.ellipse(surface, (0, 0, 0), pygame.Rect(
-				(0, 0),
-				[p + line_width for p in size]))
-			
-			tmp = pygame.surface.Surface(
-				[p - line_width for p in size])
-			tmp.fill([0, 0, 0])
-			tmp.set_colorkey([255, 255, 255])
-
-			hole = pygame.surface.Surface(
-				[p - line_width for p in size],
-				pygame.SRCALPHA).convert_alpha()
-			
-			pygame.draw.ellipse(tmp, (255, 255, 255), pygame.Rect(
-				    (0, 0), [p - line_width for p in size]))
-			hole.blit(tmp, (0, 0))
-			surface.blit(hole, (line_width, line_width),
-				special_flags=pygame.BLEND_RGBA_MIN)
-			surface.fill(self.color.backend_color,
-				special_flags=pygame.BLEND_RGB_MAX)
-			# The line_width affects the temp's surface size, so use it to correct the
-			# positioning when blitting.
-			self.surface.blit(surface, (x-line_width/2, y-line_width/2) )
-
-	@configurable
-	def polygon(self, vertices):
-
-		vertices = [self.to_xy(x, y) for x, y in vertices]
-		if self.fill:
-			penwidth = 0
-		else:
-			penwidth = self.penwidth
-		pygame.draw.polygon(self.surface, self.color.backend_color, vertices,
-			penwidth)
-
-	def _text(self, text, x, y):
-
-		surface = self._font.render(text, self.antialias,
-			self.color.backend_color)
-		x, y = self.to_xy(x, y)
-		self.surface.blit(surface, (x, y))
 
 	def _text_size(self, text):
 
 		return self._font.size(text)
-
-	def image(self, fname, center=True, x=None, y=None, scale=None):
-
-		fname = safe_decode(fname)
-		if not os.path.isfile(fname):
-			raise osexception(u'"%s" does not exist' % fname)
-		with open(fname, u'rb') as fd:
-			try:
-				surface = pygame.image.load(fd)
-			except pygame.error:
-				raise osexception(
-					u"'%s' is not a supported image format" % fname)
-		if scale is not None:
-			try:
-				surface = pygame.transform.smoothscale(surface,
-					(int(surface.get_width()*scale),
-					int(surface.get_height()*scale)))
-			except:
-				debug.msg(u"smooth scaling failed for '%s'" % fname,
-					reason=u"warning")
-				surface = pygame.transform.scale(surface,
-					(int(surface.get_width()*scale),
-					int(surface.get_height()*scale)))
-		size = surface.get_size()
-		x, y = self.to_xy(x, y)
-		if center:
-			x -= size[0] / 2
-			y -= size[1] / 2
-		self.surface.blit(surface, (x, y))
-
-	def gabor(self, x, y, orient, freq, env=u"gaussian", size=96, stdev=12,
-		phase=0, col1=u"white", col2=u"black", bgmode=u"avg"):
-
-		surface = canvas._gabor(orient, freq, env, size, stdev, phase, col1,
-			col2, bgmode)
-		x, y = self.to_xy(x, y)
-		self.surface.blit(surface, (x - 0.5 * size, y - 0.5 * size))
-
-	def noise_patch(self, x, y, env=u"gaussian", size=96, stdev=12,
-		col1=u"white", col2=u"black", bgmode=u"avg"):
-
-		surface = canvas._noise_patch(env, size, stdev, col1, col2, bgmode)
-		x, y = self.to_xy(x, y)
-		self.surface.blit(surface, (x - 0.5 * size, y - 0.5 * size))
 
 	@staticmethod
 	def init_display(experiment):
@@ -322,8 +203,6 @@ class legacy(canvas.canvas, legacy_coordinates):
 		pygame.display.set_caption(u'OpenSesame (legacy backend)')
 		pygame.mouse.set_visible(False)
 		experiment.surface = pygame.display.get_surface()
-		experiment.font = legacy._pygame_font(experiment, experiment.var.font_family,
-			experiment.var.font_size)
 
 	@staticmethod
 	def close_display(experiment):
@@ -333,36 +212,3 @@ class legacy(canvas.canvas, legacy_coordinates):
 		while fonts:
 			fonts.pop(list(fonts.keys())[0], None)
 		pygame.display.quit()
-
-	@staticmethod
-	def _pygame_font(experiment, family, size):
-
-		"""
-		visible: False
-
-		desc:
-			A helper function to create a pygame.font.Font object.
-
-		arguments:
-			experiment:	The experiment object.
-			family:		The font family.
-			size:		The font size.
-
-		returns:
-			type:	Font
-		"""
-
-		if (family, size) in fonts:
-			return fonts[(family, size)]
-		try:
-			path = experiment.resource(u'%s.ttf' % family)
-		except:
-			# If the family cannot be found in the filepool, assume that it is
-			# a system font.
-			font = pygame.font.SysFont(family, size)
-		else:
-			fd = open(path, u'rb')
-			fileobjects.append(fd)
-			font = pygame.font.Font(fd, size)
-		fonts[(family, size)] = font
-		return font
