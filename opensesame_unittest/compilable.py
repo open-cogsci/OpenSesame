@@ -49,11 +49,12 @@ class check_compilable(unittest.TestCase):
 		if u'\n# NO UNITTEST\n' in usrc:
 			return
 		compile(src, u'<string>', u'exec')
-		self.assertTrue(
-			usrc.startswith(
-				u'#!/usr/bin/env python\n#-*- coding:utf-8 -*-\n') or \
-			usrc.startswith(
-				u'#-*- coding:utf-8 -*-\n'))
+		self.assertTrue(any([
+			usrc.startswith(u'#!/usr/bin/env python\n#-*- coding:utf-8 -*-\n'),
+			usrc.startswith(u'#!/usr/bin/env python\n# coding=utf-8\n'),
+			usrc.startswith(u'#-*- coding:utf-8 -*-\n'),
+			usrc.startswith(u'# coding=utf-8\n')
+			]))
 		if not path.endswith(u'py3compat.py'):
 			self.assertTrue(u'\nfrom libopensesame.py3compat import *\n' in usrc)
 
