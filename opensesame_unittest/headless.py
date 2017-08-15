@@ -37,6 +37,9 @@ class check_headless(unittest.TestCase):
 			Walks through the test.
 		"""
 
+		from qtpy.QtWidgets import QApplication
+		app = QApplication([])
+
 		experiment_path = os.path.join(os.path.dirname(__file__), u'data')
 		for experiment_file in [
 				u'response_test.osexp',
