@@ -20,15 +20,17 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 
 from libopensesame.py3compat import *
 from openexp._canvas._element.element import Element
+from openexp.canvas_elements import ElementFactory
 
 
 class Group(Element):
 
 	def __init__(self, canvas, elements=[], **properties):
 
-		if not all(isinstance(e, Element) for e in elements):
+		if not all(isinstance(e, (Element, ElementFactory)) for e in elements):
 			raise TypeError('A group can only contain canvas elements')
-		self._elements = elements
+		self._elements = [e if isinstance(e, Element) else e.construct(canvas) \
+			for e in elements]
 		Element.__init__(self, canvas, **properties)
 
 	def prepare(self):
@@ -52,4 +54,6 @@ class Group(Element):
 	@staticmethod
 	def _setter(key, self, val):
 
+		if key == u'visible':
+			return Element._setter(key, self, val)
 		raise TypeError(u'Properties of element groups cannot be changed')

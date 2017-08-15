@@ -18,9 +18,10 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame.py3compat import *
-
 from libopensesame.widgets._form import form as _form
 from libopensesame.exceptions import osexception
+from openexp.canvas_elements import Rect
+
 
 class widget(object):
 
@@ -43,13 +44,13 @@ class widget(object):
 
 		self.type = u'widget'
 		self.form = form
+		self.frame = False
 		self.rect = None
 		self.focus = False
 		self.var = None
-
 		# Check if the form parameter is valid
 		if not isinstance(form, _form):
-			raise osexception( \
+			raise osexception(
 				u'The first parameter passed to the constructor of a form widget should be a form, not "%s"' \
 				% form)
 
@@ -60,6 +61,19 @@ class widget(object):
 	@property
 	def theme_engine(self):
 		return self.form.theme_engine
+
+	@property
+	def canvas(self):
+		return self.form.canvas
+
+	def _init_canvas_elements(self):
+
+		"""
+		desc:
+			Initializes all canvas elements.
+		"""
+
+		self._frame_elements = {}
 
 	def draw_frame(self, rect=None, style=u'normal'):
 
@@ -73,12 +87,20 @@ class widget(object):
 						geometry or `None` to use the widget geometry.
 				type:	[tuple, NoneType]
 			style:
-				desc:	A visual style. Should be 'normal', 'active', or 'light'.
+				desc:	A visual style. Should be 'normal', 'active', or
+						'light'.
 				type:	[str, unicode]
 		"""
 
-		x, y, w, h = rect
-		self.form.theme_engine.frame(x, y, w, h, style=style)
+		if not self.frame:
+			return
+		if style not in self._frame_elements:
+			element = self.theme_engine.frame(*self.rect, style=style)
+			self._frame_elements[style] = element
+			self.canvas.add_element(element)
+			self.canvas.lower_to_bottom(element)
+		for element_style, element in self._frame_elements.items():
+			element.visible = element_style == style
 
 	def on_mouse_click(self, pos):
 
@@ -101,10 +123,7 @@ class widget(object):
 			Draws the widget.
 		"""
 
-		if self.focus:
-			self.draw_frame(self.rect, focus=True)
-		else:
-			self.draw_frame(self.rect)
+		self.draw_frame(self.rect)
 
 	def set_rect(self, rect):
 
@@ -119,6 +138,8 @@ class widget(object):
 		"""
 
 		self.rect = rect
+		self._init_canvas_elements()
+
 
 	def set_var(self, val, var=None):
 

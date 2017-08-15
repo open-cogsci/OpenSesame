@@ -121,9 +121,8 @@ class form(object):
 		n_cells = len(self.cols)*len(self.rows)
 		self.widgets = [None]*n_cells
 		self.span = [(1,1)]*n_cells
-		self.canvas = canvas(self.experiment, auto_prepare=False,
-			color=self.item.var.foreground,
-			background_color=self.item.var.background)
+		self.canvas = canvas(self.experiment, color=self.item.var.foreground,
+			background_color=self.item.var.background, auto_prepare=True)
 		# Dynamically load the theme object
 		theme_mod = __import__(
 			u'libopensesame.widgets.themes.%s' % theme, fromlist=[u'dummy'])
@@ -325,7 +324,6 @@ class form(object):
 		"""
 
 		self.validate_geometry()
-		self.canvas.clear()
 		for widget in self.widgets:
 			if widget is not None:
 				widget.render()

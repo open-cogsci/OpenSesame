@@ -23,7 +23,6 @@ import random
 import pygame
 import math
 from libopensesame.exceptions import osexception
-from libopensesame.html import html
 from openexp.backend import backend, configurable
 from openexp.color import color
 from collections import OrderedDict
@@ -258,42 +257,128 @@ class canvas(backend):
 			u'font_italic' : self.assert_bool,
 			u'font_bold' : self.assert_bool,
 			u'font_underline' : self.assert_bool,
-			}, **style_args)
-		self.html_renderer = html()
-		self._stimuli = OrderedDict()
+		}, **style_args)
+		self._elements = OrderedDict()
 		self._stimnr = 0
 
 	def __setitem__(self, key, value):
 
+		if key in self._elements:
+			raise ValueError('An element with the name "%s" already exists' %
+				key)
 		if isinstance(value, list):
-			value = Group(self, [e.construct(self) \
+			value = Group(self, [e.construct(self)
 				if isinstance(e, ElementFactory) else e for e in value])
 		if isinstance(value, ElementFactory):
 			value = value.construct(self)
 		if not isinstance(value, Element):
-			raise TypeError('%s is not a canvas element but %s' % \
+			raise TypeError('%s is not a canvas element but %s' %
 				(key, type(value)))
-		self._stimuli[key] = value
+		self._elements[key] = value
+
+	def __delitem__(self, key):
+
+		del self._elements[key]
 
 	def __getitem__(self, key):
 
-		return self._stimuli[key]
+		return self._elements[key]
 
 	def __len__(self):
 
-		return len(self._stimuli)
+		return len(self._elements)
 
 	def __iter__(self):
 
-		for name, stim in self._stimuli.items():
+		for name, stim in self._elements.items():
 			yield name, stim
 
-	def __iadd__(self, stim):
+	def __iadd__(self, element):
 
-		while 'stim%d' % self._stimnr in self._stimuli:
+		while 'stim%d' % self._stimnr in self._elements:
 			self._stimnr += 1
-		self['stim%d' % self._stimnr] = stim
+		self['stim%d' % self._stimnr] = element
 		return self
+
+	def _get_name_element(self, element):
+
+		"""
+		visible: False
+
+		desc:
+			Gets a name, element tuple for an element or element name (i.e.
+			get both if you have only one).
+
+		arguments:
+			elements:
+				desc:	A SKETCHPAD element, or its name.
+				type:	[Element, str]
+
+		returns:
+			A (name, element) tuple.
+		"""
+
+		if isinstance(element, basestring):
+			return element, self._elements[element]
+		for name, _element in self._elements.iteritems():
+			if element is _element:
+				return name, element
+		raise ValueError('"%s" not found in canvas"' % element)
+
+	def lower_to_bottom(self, element):
+
+		"""
+		desc:
+			Lowers an element to the bottom, so that it is drawn first; that is,
+			it becomes the background.
+
+		arguments:
+			elements:
+				desc:	A SKETCHPAD element, or its name.
+				type:	[Element, str]
+		"""
+
+		first_name, first_element = self._get_name_element(element)
+		self._elements.pop(first_name)
+		_elements = OrderedDict()
+		_elements[first_name] = first_element
+		for name, element in self._elements.iteritems():
+			_elements[name] = element
+		self._elements = _elements
+
+	def raise_to_top(self, element):
+
+		"""
+		desc:
+			Raises an element to the top, so that it is drawn last; that is,
+			it becomes the foreground.
+
+		arguments:
+			elements:
+				desc:	A SKETCHPAD element, or its name.
+				type:	[Element, str]
+		"""
+
+		last_name, last_element = self._get_name_element(element)
+		self._elements.pop(last_name)
+		_elements = OrderedDict()
+		for name, element in self._elements.iteritems():
+			_elements[name] = element
+		_elements[last_name] = last_element
+		self._elements = _elements
+
+	def add_element(self, element, name=None):
+
+		"""
+		visible: False
+
+		desc:	An alternative to the dict and += API. For internal use.
+		"""
+
+		if name is None:
+			self.__iadd__(element)
+			return
+		self._elements[name] = element
 
 	def set_config(self, **cfg):
 
@@ -460,7 +545,8 @@ class canvas(backend):
 			my_copied_canvas.show()
 		"""
 
-		raise NotImplementedError()
+		self._elements = [e.copy(self) for e in canvas._elements]
+		self.set_config(**canvas.get_config())
 
 	def prepare(self):
 
@@ -472,7 +558,9 @@ class canvas(backend):
 			[canvas.__init__].
 		"""
 
-		pass
+		for name, element in self._elements.iteritems():
+			if element.visible:
+				element.prepare()
 
 	def show(self):
 
@@ -525,7 +613,6 @@ class canvas(backend):
 
 		raise NotImplementedError()
 
-	@configurable
 	def fixdot(self, x=None, y=None, style=u'default', **style_args):
 
 		"""
@@ -567,7 +654,7 @@ class canvas(backend):
 			my_canvas.fixdot()
 		"""
 
-		self += FixDot(x=None, y=None, style=u'default', **style_args)
+		self += FixDot(x=x, y=y, style=style, **style_args)
 		return 'stim%d' % self._stimnr
 
 	def circle(self, x, y, r, **style_args):

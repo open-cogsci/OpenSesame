@@ -20,7 +20,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 from libopensesame.py3compat import *
 from openexp._canvas._element.element import Element
 from qtpy.QtWidgets import QGraphicsTextItem, QStyleOptionGraphicsItem
-from qtpy.QtGui import QPixmap, QPainter, QBrush, QColor, QFont
+from qtpy.QtGui import QPixmap, QPainter, QColor, QFont
 from qtpy.QtCore import Qt
 from PIL import Image
 
@@ -51,8 +51,11 @@ class RichText(Element):
 
 		t = QGraphicsTextItem()
 		t.setDefaultTextColor(QColor(self.color.colorspec))
-		t.setHtml(u'<div align="center">%s</div>' % self.text \
-			if self.center else self.text)
+		if self.html:
+			t.setHtml(u'<div align="center">%s</div>' % self.text \
+				if self.center else self.text)
+		else:
+			t.setPlainText(self.text)
 		mw = self.max_width
 		if mw is None:
 			if self.uniform_coordinates:

@@ -445,17 +445,17 @@ class sketchpad_canvas(QtWidgets.QGraphicsScene):
 				% _color)
 			return QtGui.QColor(self.placeholder_color)
 		return QtGui.QColor(hexcolor)
-		
+
 	def _fill(self, fill):
-		
+
 		"""
 		desc:
 			Safely returns a fill value.
 
 		returns:
 			A fill value (bool).
-		"""		
-		
+		"""
+
 		if isinstance(fill, str):
 			self.notify(
 				_(u'Fill "%s" is unknown or variably defined, assuming filled') \
@@ -655,6 +655,7 @@ class sketchpad_canvas(QtWidgets.QGraphicsScene):
 
 		"""Mimicks canvas api. See openexp._canvas.canvas."""
 
+		# Deprecated function
 		if bold:
 			weight = QtGui.QFont.Bold
 		else:
@@ -663,10 +664,14 @@ class sketchpad_canvas(QtWidgets.QGraphicsScene):
 		self._font.setPixelSize(self._font_size(size))
 
 	def text(self, text, center=True, x=None, y=None, max_width=None,
-		color=None, bidi=None, html=True):
+		color=None, bidi=None, html=True, font_family=None, font_size=None,
+		font_italic=None, font_bold=None):
 
 		"""Mimicks canvas api. See openexp._canvas.canvas."""
 
+		# Deprecated
+		self.set_font(style=font_family, size=font_size, italic=font_italic,
+			bold=font_bold)
 		i = self.addText(str(text), self._font)
 		i.setDefaultTextColor(self._color(color))
 		if html:

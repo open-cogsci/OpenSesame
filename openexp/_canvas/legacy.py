@@ -109,40 +109,41 @@ class legacy(canvas.canvas, legacy_coordinates):
 		pygame.event.pump()
 		return pygame.time.get_ticks()
 
-	def redraw(self):
+	def prepare(self):
+
+		"""
+		desc:
+			Finishes pending canvas operations (if any), so that a subsequent
+			call to [canvas.show] is extra fast. It's only necessary to call
+			this function if you have disabled `auto_prepare` in
+			[canvas.__init__].
+		"""
 
 		self.surface.fill(self.background_color.backend_color)
-		for stim in self._stimuli.values():
-			stim.prepare()
+		canvas.canvas.prepare(self)
+
+	def redraw(self):
+
+		if not self.auto_prepare:
+			return
+		self.prepare()
 
 	def set_config(self, **cfg):
 
 		canvas.canvas.set_config(self, **cfg)
 		if hasattr(self, u'surface'):
 			self.redraw()
-		# for key, val in cfg.items():
-		# 	if u'font_' in key:
-		# 		self._font = None
-		# if self._font is None:
-		# 	# First see if the font refers to a file in the resources/ filepool
-		# 	self._font = self._pygame_font(self.experiment, self.font_family,
-		# 		self.font_size)
-		# 	self._font.set_bold(self.font_bold)
-		# 	self._font.set_italic(self.font_italic)
-		# 	self._font.set_underline(self.font_underline)
 
 	def copy(self, canvas):
 
-		# TODO
-		# self.surface = canvas.surface.copy()
-		# self.set_config(**canvas.get_config())
-		raise NotImplementedError()
+		self.surface = canvas.surface.copy()
+		canvas.canvas.copy(self, canvas)
 
 	@configurable
 	def clear(self):
 
 		self.surface.fill(self.background_color.backend_color)
-		self._stimuli = {}
+		self._elements = {}
 
 
 	def _text_size(self, text):

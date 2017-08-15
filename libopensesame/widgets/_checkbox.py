@@ -107,7 +107,8 @@ class checkbox(button):
 		self.x_pad += self.x_pad + self.box_size
 		self.var = var
 		self.click_accepts = click_accepts
-		self.set_checked(checked)
+		self.checked = checked
+		self.set_var(checked)
 
 	def on_mouse_click(self, pos):
 
@@ -139,17 +140,16 @@ class checkbox(button):
 		if self.click_accepts:
 			return self.text
 
-	def render(self):
-
-		"""
-		desc:
-			Draws the widget.
-		"""
+	def _init_canvas_elements(self):
 
 		x, y, w, h = self.rect
-		self.form.theme_engine.box(x+self.box_pad, y+self.y_pad, \
-			checked=self.checked)
-		self.draw_text(self.text)
+		self._checked_element = self.form.theme_engine.box(x+self.box_pad,
+			y+self.y_pad, checked=True)
+		self._unchecked_element = self.form.theme_engine.box(x+self.box_pad,
+			y+self.y_pad, checked=False)
+		self.canvas.add_element(self._checked_element)
+		self.canvas.add_element(self._unchecked_element)
+		button._init_canvas_elements(self)
 
 	def set_checked(self, checked=True):
 
@@ -163,7 +163,8 @@ class checkbox(button):
 				type:	bool
 		"""
 
-		self.checked = checked
+		self._checked_element.visible = checked
+		self._unchecked_element.visible = not checked
 		self.set_var(checked)
 
 	def set_var(self, val, var=None):

@@ -94,6 +94,7 @@ class text_input(label):
 		self.type = u'text_input'
 		self.stub = safe_decode(stub)
 		self.prompt = u'_'
+		self.html = False
 		self.return_accepts = return_accepts
 		self.var = var
 		self.text = safe_decode(text)
@@ -113,12 +114,12 @@ class text_input(label):
 			else:
 				self.draw_frame(self.rect, style=u'light')
 		if self.text == '' and not self.focus:
-			self.draw_text(self.stub, html=False)
+			self.draw_text(self.stub)
 		elif self.focus:
 			self.draw_text(self.text[:self.caret_pos] + self.prompt +
-							self.text[self.caret_pos:], html=False)
+							self.text[self.caret_pos:])
 		else:
-			self.draw_text(self.text, html=False)
+			self.draw_text(self.text)
 
 	def on_mouse_click(self, pos):
 

@@ -29,27 +29,39 @@ class Legacy(LegacyElement, Image):
 
 	def prepare(self):
 
-		fname = safe_decode(self.fname)
-		if not os.path.isfile(fname):
-			raise osexception(u'"%s" does not exist' % fname)
-		with open(fname, u'rb') as fd:
-			try:
-				surface = pygame.image.load(fd)
-			except pygame.error:
-				raise osexception(
-					u"'%s' is not a supported image format" % fname)
-		if self.scale is not None:
-			try:
-				surface = pygame.transform.smoothscale(surface,
-					(int(surface.get_width()*self.scale),
-					int(surface.get_height()*self.scale)))
-			except:
-				surface = pygame.transform.scale(surface,
-					(int(surface.get_width()*self.scale),
-					int(surface.get_height()*self.scale)))
-		size = surface.get_size()
+		if not hasattr(self, '_image_surface') or self._dirty:
+			self._dirty = False
+			fname = safe_decode(self.fname)
+			if not os.path.isfile(fname):
+				raise osexception(u'"%s" does not exist' % fname)
+			with open(fname, u'rb') as fd:
+				try:
+					self._image_surface = pygame.image.load(fd)
+				except pygame.error:
+					raise osexception(
+						u"'%s' is not a supported image format" % fname)
+			if self.scale is not None:
+				try:
+					self._image_surface = pygame.transform.smoothscale(
+						self._image_surfacesurface,
+						(int(self._image_surface.get_width()*self.scale),
+						int(self._image_surface.get_height()*self.scale))
+					)
+				except:
+					self._image_surface = pygame.transform.scale(
+						self._image_surface,
+						(int(self._image_surface.get_width()*self.scale),
+						int(self._image_surface.get_height()*self.scale))
+					)
+		size = self._image_surface.get_size()
 		x, y = self.to_xy(self.x, self.y)
 		if self.center:
 			x -= size[0] / 2
 			y -= size[1] / 2
-		self.surface.blit(surface, (x, y))
+		self.surface.blit(self._image_surface, (x, y))
+
+	@staticmethod
+	def _setter(key, self, val):
+
+		self._dirty = True
+		Image._setter(key, self, val)

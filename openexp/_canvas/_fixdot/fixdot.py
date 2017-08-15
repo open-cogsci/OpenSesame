@@ -46,17 +46,17 @@ class FixDot(Group):
 					.construct(canvas),
 				Ellipse(x-h, y-h, 2*h, 2*h, fill=True,
 					color=canvas.background_color.colorspec,
-					**{key:val for key, val in properties.items() \
-					if key is not u'color'}).construct(canvas)
+					**{key : val for key, val in properties.items() \
+					if key != u'color'}).construct(canvas)
 				]
 		elif u'filled' in style:
 			elements = [Ellipse(
-				canvas, x-s, y-s, 2*s, 2*s, fill=True, **properties)\
+				x-s, y-s, 2*s, 2*s, fill=True, **properties)\
 				.construct(canvas)]
 		elif u'cross' in style:
 			elements = [
-				Line(canvas, x, y-s, x, y+s, **properties).construct(canvas),
-				Line(canvas, x-s, y, x+s, y, **properties).construct(canvas)
+				Line(x, y-s, x, y+s, **properties).construct(canvas),
+				Line(x-s, y, x+s, y, **properties).construct(canvas)
 				]
 		else:
 			raise osexception(u'Unknown style: %s' % self.style)

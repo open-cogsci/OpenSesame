@@ -17,8 +17,8 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
-
 from libopensesame.py3compat import *
+import copy
 from functools import partial
 from openexp.color import color
 
@@ -30,18 +30,26 @@ class Element(object):
 	def __init__(self, canvas, **properties):
 
 		self._canvas = canvas
+		if u'visible' not in properties:
+			properties[u'visible'] = True
 		if u'color' in properties:
 			properties[u'color'] = color(self.experiment, properties[u'color'])
 		self._properties = properties
 		for prop in self.property_names:
 			self._create_property(prop)
-		if canvas.auto_prepare:
+		if canvas.auto_prepare and self.visible:
 			self.prepare()
 
 	def __add__(self, element):
 
 		from openexp._canvas._element.group import Group
 		return Group(self.canvas, [self, element])
+
+	def copy(self, canvas):
+
+		e = copy.deepcopy(self)
+		e._canvas = canvas
+		return e
 
 	def prepare(self):
 
@@ -102,7 +110,7 @@ class Element(object):
 		if key == u'color':
 			val = color(self.experiment, val)
 		self._properties[key] = val
-		self._on_attribute_change(**{key : val})
+		self._on_attribute_change(**{key: val})
 
 	@staticmethod
 	def _deller(self, key):

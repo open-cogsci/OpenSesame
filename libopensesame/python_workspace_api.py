@@ -27,10 +27,12 @@ from libopensesame.exceptions import osexception
 import random
 import math
 import warnings
+from openexp.canvas_elements import Rect, Line, RichText, Ellipse, Circle, \
+	FixDot, Gabor, NoisePatch
 
 # Factory functions
 
-def canvas(auto_prepare=True, **style_args):
+def Canvas(auto_prepare=True, **style_args):
 
 	"""
 	desc: |
@@ -53,7 +55,7 @@ def canvas(auto_prepare=True, **style_args):
 	from openexp.canvas import canvas
 	return canvas(experiment, auto_prepare=auto_prepare, **style_args)
 
-def keyboard(**resp_args):
+def Keyboard(**resp_args):
 
 	"""
 	desc: |
@@ -74,7 +76,7 @@ def keyboard(**resp_args):
 	from openexp.keyboard import keyboard
 	return keyboard(experiment, **resp_args)
 
-def mouse(**resp_args):
+def Mouse(**resp_args):
 
 	"""
 	desc: |
@@ -95,7 +97,7 @@ def mouse(**resp_args):
 	from openexp.mouse import mouse
 	return mouse(experiment, **resp_args)
 
-def sampler(src, **playback_args):
+def Sampler(src, **playback_args):
 
 	"""
 	desc: |
@@ -119,7 +121,7 @@ def sampler(src, **playback_args):
 
 # Miscellaneous API	functions
 
-def synth(osc="sine", freq=440, length=100, attack=0, decay=5):
+def Synth(osc="sine", freq=440, length=100, attack=0, decay=5):
 
 	"""
 	desc:
@@ -155,6 +157,13 @@ def synth(osc="sine", freq=440, length=100, attack=0, decay=5):
 	from openexp.synth import synth
 	return synth(experiment, osc=osc, freq=freq, length=length, attack=attack,
 		decay=decay)
+
+# Mimick old-style lowercase API
+canvas = Canvas
+sampler = Sampler
+synth = Synth
+keyboard = Keyboard
+mouse = Mouse
 
 def copy_sketchpad(name):
 

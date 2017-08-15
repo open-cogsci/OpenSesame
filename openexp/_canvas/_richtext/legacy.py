@@ -42,4 +42,4 @@ class Legacy(LegacyElement, RichText):
 	def _setter(key, self, val):
 
 		self._dirty = True
-		LegacyElement._setter(key, self, val)
+		RichText._setter(key, self, val)
