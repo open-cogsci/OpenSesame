@@ -93,7 +93,7 @@ class text_input(label):
 		label.__init__(self, form, text, frame=frame, center=center)
 		self.type = u'text_input'
 		self.stub = safe_decode(stub)
-		self.prompt = u'_'
+		self.prompt = u'\u2038'
 		self.html = False
 		self.return_accepts = return_accepts
 		self.var = var
