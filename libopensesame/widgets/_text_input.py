@@ -51,7 +51,7 @@ class text_input(label):
 	"""
 
 	def __init__(self, form, text=u'', frame=True, center=False,
-		stub=u'Type here ...', return_accepts=False, var=None):
+		stub=u'Type here ...', return_accepts=False, var=None, key_filter=None):
 
 		"""
 		desc:
@@ -85,11 +85,16 @@ class text_input(label):
 				desc:	The name of the experimental variable that should be
 						used to log the widget status.
 				type:	[str, unicode, NoneType]
+			key_filter:
+				desc:	A function that takes a key as a single argument and
+						return True if the key should be accepted and False
+						otherwise. This can also filter out keys such as return
+						and backspace, but not Escape.
+				type:	[FunctionType, NoneType]
 		"""
 
-		if type(return_accepts) != bool:
+		if isinstance(return_accepts, basestring):
 			return_accepts = return_accepts == u'yes'
-
 		label.__init__(self, form, text, frame=frame, center=center)
 		self.type = u'text_input'
 		self.stub = safe_decode(stub)
@@ -100,6 +105,7 @@ class text_input(label):
 		self.text = safe_decode(text)
 		self.set_var(text)
 		self.caret_pos = None
+		self._key_filter = (lambda k: True) if key_filter is None else key_filter
 
 	def _update(self):
 
@@ -138,6 +144,8 @@ class text_input(label):
 			if d[u'type'] != u'key':
 				continue
 			key = d[u'key']
+			if not self._key_filter(key):
+				continue
 			if key == u'space':
 				self.text = self.text[:self.caret_pos] + u' ' \
 					+ self.text[self.caret_pos:]

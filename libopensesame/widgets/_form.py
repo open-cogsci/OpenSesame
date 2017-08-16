@@ -50,7 +50,7 @@ class form(object):
 
 	def __init__(self, experiment, cols=2, rows=2, spacing=10,
 		margins=(100, 100, 100, 100), theme=u'gray', item=None, timeout=None,
-		clicks=False):
+		clicks=False, validator=None):
 
 		"""
 		desc:
@@ -94,6 +94,10 @@ class form(object):
 						interactions. This can help to make interactions feel
 						smoother if there is some visual lag.
 				type:	bool
+			validator:
+				desc:	A function that takes no arguments and returns True if
+						the foru is successfully validated, and False if not.
+				type: 	[FunctionType, NoneType]
 		"""
 
 		# Normalize the column and row sizes so that they add up to 1
@@ -119,6 +123,7 @@ class form(object):
 		n_cells = len(self.cols)*len(self.rows)
 		self.widgets = [None]*n_cells
 		self.span = [(1, 1)]*n_cells
+		self._validator = (lambda: True) if validator is None else validator
 		self.canvas = canvas(
 			self.experiment,
 			color=self.item.var.foreground,
@@ -220,7 +225,7 @@ class form(object):
 				continue
 			resp = coroutines[focus_widget].send(msg)
 			self.canvas.show()
-			if resp is not None:
+			if resp is not None and self._validator():
 				break
 		kb.show_virtual_keyboard(False)
 		ms.show_cursor(False)
