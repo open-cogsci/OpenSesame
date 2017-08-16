@@ -100,7 +100,7 @@ class label(widget):
 		self.canvas.add_element(self._text_element)
 		widget._init_canvas_elements(self)
 
-	def draw_text(self, text):
+	def _update_text(self, text):
 
 		"""
 		desc:
@@ -121,7 +121,7 @@ class label(widget):
 		text = safe_decode(text).replace(u'\t', self.tab_str)
 		self._text_element.text = text
 
-	def render(self):
+	def _update(self):
 
 		"""
 		desc:
@@ -129,5 +129,5 @@ class label(widget):
 		"""
 
 		if self.frame:
-			self.draw_frame(self.rect)
-		self.draw_text(self.text)
+			self._update_frame(self.rect)
+		self._update_text(self.text)

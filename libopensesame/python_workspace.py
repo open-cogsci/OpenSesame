@@ -23,6 +23,7 @@ from libopensesame import debug
 import types
 import warnings
 from openexp.canvas_elements import ElementFactory
+from libopensesame.widgets.widget_factory import WidgetFactory
 
 
 class python_workspace(object):
@@ -86,8 +87,9 @@ class python_workspace(object):
 
 		if isinstance(obj, types.FunctionType):
 			return True
-		if isinstance(obj, type) and issubclass(obj, ElementFactory):
-			return True
+		if isinstance(obj, type) and issubclass(
+			obj, (WidgetFactory, ElementFactory)):
+				return True
 		return False
 
 

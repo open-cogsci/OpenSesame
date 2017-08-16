@@ -29,8 +29,14 @@ import math
 import warnings
 from openexp.canvas_elements import Rect, Line, RichText, Ellipse, Circle, \
 	FixDot, Gabor, NoisePatch
+from libopensesame.widgets.widget_factory import Label, Button
 
 # Factory functions
+
+def Form(*args, **kwargs):
+
+	from libopensesame.widgets import form
+	return form(experiment, **kwargs)
 
 def Canvas(auto_prepare=True, **style_args):
 

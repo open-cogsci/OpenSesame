@@ -46,13 +46,24 @@ class widget(object):
 		self.form = form
 		self.frame = False
 		self.rect = None
-		self.focus = False
+		self._focus = False
 		self.var = None
 		# Check if the form parameter is valid
 		if not isinstance(form, _form):
 			raise osexception(
-				u'The first parameter passed to the constructor of a form widget should be a form, not "%s"' \
+				u'The first parameter passed to the constructor of a form widget should be a form, not "%s"'
 				% form)
+
+	@property
+	def focus(self):
+
+		return self._focus
+
+	@focus.setter
+	def focus(self, focus):
+
+		self._focus = focus
+		self._update()
 
 	@property
 	def box_size(self):
@@ -66,6 +77,12 @@ class widget(object):
 	def canvas(self):
 		return self.form.canvas
 
+	def _inside(self, pos, rect):
+
+		x1, y1 = pos
+		x2, y2, w, h = rect
+		return not (x1 < x2 or y1 < y2 or x1 > x2+w or y1 > y2+h)
+
 	def _init_canvas_elements(self):
 
 		"""
@@ -75,7 +92,7 @@ class widget(object):
 
 		self._frame_elements = {}
 
-	def draw_frame(self, rect=None, style=u'normal'):
+	def _update_frame(self, rect=None, style=u'normal'):
 
 		"""
 		desc:
@@ -102,28 +119,14 @@ class widget(object):
 		for element_style, element in self._frame_elements.items():
 			element.visible = element_style == style
 
-	def on_mouse_click(self, pos):
-
-		"""
-		desc:
-			Is called whenever the user clicks on the widget.
-
-		arguments:
-			pos:
-				desc:	An (x, y) coordinates tuple.
-				type:	tuple
-		"""
-
-		pass
-
-	def render(self):
+	def _update(self):
 
 		"""
 		desc:
 			Draws the widget.
 		"""
 
-		self.draw_frame(self.rect)
+		self._update_frame(self.rect)
 
 	def set_rect(self, rect):
 
@@ -139,7 +142,7 @@ class widget(object):
 
 		self.rect = rect
 		self._init_canvas_elements()
-
+		self._update()
 
 	def set_var(self, val, var=None):
 
@@ -162,3 +165,49 @@ class widget(object):
 		if var is None:
 			return
 		self.form.experiment.var.set(var, val)
+
+	def on_key_press(self, key):
+
+		"""
+		desc:
+			Is called whenever the widget is focused and the users enters a key.
+
+		arguments:
+			key:
+				desc:	A key
+				type:	str
+		"""
+
+		pass
+
+	def on_mouse_click(self, pos):
+
+		"""
+		desc:
+			Is called whenever the user clicks on the widget.
+
+		arguments:
+			pos:
+				desc:	An (x, y) coordinates tuple.
+				type:	tuple
+		"""
+
+		pass
+
+	def coroutine(self):
+
+		"""
+		desc:
+			Implements the interaction. This can be overridden to implement more
+			complicated keyboard/ mouse interactions.
+		"""
+
+		retval = None
+		while True:
+			d = yield retval
+			if d[u'type'] == u'click':
+				retval = self.on_mouse_click(d['pos'])
+			elif d[u'type'] == u'key':
+				retval = self.on_key_press(d[u'key'])
+			elif d[u'type'] == u'stop':
+				break

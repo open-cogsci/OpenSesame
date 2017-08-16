@@ -18,8 +18,8 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame.py3compat import *
-
 from libopensesame.widgets._image import image
+
 
 class image_button(image):
 
@@ -87,10 +87,7 @@ class image_button(image):
 		"""
 
 		image.__init__(self, form, path, adjust=adjust, frame=frame)
-		if image_id is None:
-			self.image_id = path
-		else:
-			self.image_id = image_id
+		self.image_id = path if image_id is None else image_id
 		self.type = u'image_button'
 		self.var = var
 		self.set_var(False)

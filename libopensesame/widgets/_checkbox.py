@@ -122,7 +122,6 @@ class checkbox(button):
 				type:	tuple
 		"""
 
-		self.theme_engine.click()
 		if self.group is not None:
 			# If the checkbox is part of a group than checking it will uncheck
 			# all other checkboxes in the group, and check the current one
@@ -135,7 +134,6 @@ class checkbox(button):
 			# If the checkbox is not part of a group then checking it will
 			# toggle its check status
 			self.set_checked(not self.checked)
-
 		if self.click_accepts:
 			return self.text
 
