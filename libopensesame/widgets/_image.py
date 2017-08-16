@@ -19,18 +19,18 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 
 from libopensesame.py3compat import *
 from libopensesame import misc
-from libopensesame.widgets._widget import widget
+from libopensesame.widgets._widget import Widget
 from PIL import Image
 from libopensesame.exceptions import osexception
-from openexp.canvas_elements import Image
+from openexp.canvas_elements import Image as ImageElement
 import os
 
 
-class image(widget):
+class ImageWidget(Widget):
 
 	"""
 	desc: |
-		The image widget is used to display a non-interactive image.
+		The `Image` widget is used to display a non-interactive image.
 
 		__Example (OpenSesame script):__
 
@@ -41,12 +41,11 @@ class image(widget):
 		__Example (Python):__
 
 		~~~ .python
-		from libopensesame import widgets
-		form = widgets.form(exp)
+		form = Form()
 		# The full path to the image needs to be provided.
 		# self.experiment.pool can be used to retrieve the full path
 		# to an image in the file pool.
-		image = widgets.image(form, path=pool['5.png'])
+		image = ImageWidget(path=pool['5.png'])
 		form.set_widget(image, (0,0))
 		form._exec()
 		~~~
@@ -57,8 +56,12 @@ class image(widget):
 	def __init__(self, form, path=None, adjust=True, frame=False):
 
 		"""
-		desc:
+		desc: |
 			Constructor.
+
+			*Note:* When creating an `ImageWidget` in a Python inline script,
+			you do not need to (and cannot) provide a `Form` object as a first
+			argument.
 
 		arguments:
 			form:
@@ -85,7 +88,7 @@ class image(widget):
 			adjust = adjust == u'yes'
 		if isinstance(frame, basestring):
 			frame = frame == u'yes'
-		widget.__init__(self, form)
+		Widget.__init__(self, form)
 		self.adjust = adjust
 		self.frame = frame
 		self.path = path
@@ -107,7 +110,7 @@ class image(widget):
 		y += h/2
 		print(_path)
 		self.canvas.add_element(
-			Image(_path, x=x, y=y, scale=self.scale, center=True)
+			ImageElement(_path, x=x, y=y, scale=self.scale, center=True)
 				.construct(self.canvas)
 		)
 		if self.frame:
@@ -148,4 +151,7 @@ class image(widget):
 			self.scale = min(scale_x, scale_y)
 		else:
 			self.scale = 1
-		widget.set_rect(self, rect)
+		Widget.set_rect(self, rect)
+
+
+image = ImageWidget

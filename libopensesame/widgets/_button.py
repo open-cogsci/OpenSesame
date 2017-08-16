@@ -18,15 +18,15 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame.py3compat import *
+from libopensesame.widgets._label import Label
 
-from libopensesame.widgets._label import label
 
-class button(label):
+class Button(Label):
 
 	"""
 	desc: |
-		The button widget is a clickable text string, by default surrounded by a
-		button-like frame.
+		The `Button` widget is a clickable text string, by default surrounded by
+		a button-like frame.
 
 		__Example (OpenSesame script):__
 
@@ -39,10 +39,8 @@ class button(label):
 		__Example (Python):__
 
 		~~~ .python
-		from libopensesame import widgets
-		form = widgets.form(exp)
-		button = widgets.button(form, text='Click me!', frame=True, center=True,
-			var='response')
+		form = Form()
+		button = Button(text='Click me!', frame=True, center=True, var='response')
 		form.set_widget(button, (0,0))
 		form._exec()
 		~~~
@@ -53,8 +51,12 @@ class button(label):
 	def __init__(self, form, text=u'button', frame=True, center=True, var=None):
 
 		"""
-		desc:
+		desc: |
 			Constructor.
+
+			*Note:* When creating a `Button` in a Python inline script, you do
+			not need to (and cannot) provide a `Form` object as a first
+			argument.
 
 		arguments:
 			form:
@@ -78,7 +80,7 @@ class button(label):
 				type:	[str, unicode, NoneType]
 		"""
 
-		label.__init__(self, form, text, frame=frame, center=center)
+		Label.__init__(self, form, text, frame=frame, center=center)
 		self.type = u'button'
 		self.var = var
 		self.set_var(False)
@@ -103,3 +105,6 @@ class button(label):
 		self.theme_engine.click()
 		self.set_var(True)
 		return self.text
+
+
+button = Button

@@ -20,11 +20,11 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 from libopensesame.py3compat import *
 from libopensesame.exceptions import osexception
 from libopensesame import debug
-from libopensesame.widgets._widget import widget
+from libopensesame.widgets._widget import Widget
 from openexp.canvas_elements import RichText
 
 
-class rating_scale(widget):
+class RatingScale(Widget):
 
 	"""
 	desc: |
@@ -41,10 +41,9 @@ class rating_scale(widget):
 		__Example (OpenSesame script):__
 
 		~~~ .python
-		from libopensesame import widgets
-		form = widgets.form(exp)
-		label = widgets.label(form, text='I like fluffy kittens')
-		rating_scale = widgets.rating_scale(form, nodes=['Agree', "Don't know",
+		form = Form()
+		label = Label(text='I like fluffy kittens')
+		rating_scale = RatingScale(nodes=['Agree', "Don't know",
 			'Disagree'], var='response')
 		form.set_widget(label, (0,0))
 		form.set_widget(rating_scale, (0,1))
@@ -58,8 +57,12 @@ class rating_scale(widget):
 		orientation=u'horizontal', var=None, default=None):
 
 		"""
-		desc:
+		desc: |
 			Constructor.
+
+			*Note:* When creating a `RatingScale` in a Python inline script,
+			you do not need to (and cannot) provide a `Form` object as a first
+			argument.
 
 		arguments:
 			form:
@@ -101,8 +104,7 @@ class rating_scale(widget):
 
 		if isinstance(click_accepts, basestring):
 			click_accepts = click_accepts == u'yes'
-
-		widget.__init__(self, form)
+		Widget.__init__(self, form)
 		self.type = u'rating_scale'
 		self.click_accepts = click_accepts
 		self.pos_list = []
@@ -202,46 +204,6 @@ class rating_scale(widget):
 				cb.visible = i == self.value
 				ub.visible = i != self.value
 
-
-		return
-
-		x, y, w, h = self.rect
-		cx = x+w/2
-		cy = y+h/2
-		_h = self.form.theme_engine.box_size()
-		if self.orientation == u'horizontal':
-			# Some ugly maths, but basically it evenly spaces the checkboxes and
-			# draws a frame around it.
-			dx = (1*w-3*_h)/(len(self.nodes)-1)
-			self.form.theme_engine.frame(x, cy-.5*_h, w, 2*_h, style=u'light')
-			_x = x+_h
-			i = 0
-			for node in self.nodes:
-				self.form.theme_engine.box(_x, cy, checked=(self.value == i))
-				text_height = self.form.canvas.text_size(node)[1]
-				self.form.canvas.text(node, center=True, x=_x+self.box_size/2, \
-					y=cy-text_height)
-				self.pos_list.append( (_x, cy) )
-				_x += dx
-				i += 1
-		elif self.orientation == u'vertical':
-			dy = (1*h-3*_h)/(len(self.nodes)-1)
-			self.form.theme_engine.frame(cx-.5*_h, y, 2*_h, h, style=u'light')
-			_y = y+_h
-			i = 0
-			for node in self.nodes:
-				self.form.theme_engine.box(cx, _y, checked=(self.value == i))
-				text_width = self.form.canvas.text_size(node)[0]
-				self.form.canvas.text(node, center=True, x=cx-text_width,
-					y=_y+self.box_size/2)
-				self.pos_list.append( (cx, _y) )
-				_y += dy
-				i += 1
-		else:
-			raise osexception( \
-				u'rating_scale orientation must be "horizontal" or "vertical", not "%s"' % \
-				self.orientation)
-
 	def set_value(self, val):
 
 		"""
@@ -260,3 +222,6 @@ class rating_scale(widget):
 				% val)
 		self.value = val
 		self.set_var(val)
+
+
+rating_scale = RatingScale

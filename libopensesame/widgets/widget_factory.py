@@ -21,6 +21,12 @@ from libopensesame.py3compat import *
 from openexp import backend
 
 
+def Form(*args, **kwargs):
+
+	from libopensesame.widgets import form
+	return form(experiment, **kwargs)
+
+
 class WidgetFactory(object):
 
 	def __init__(self, *args, **kwargs):
@@ -32,14 +38,14 @@ class WidgetFactory(object):
 
 		mod = __import__('libopensesame.widgets._%s' % self.mod,
 			fromlist=['dummy'])
-		cls = getattr(mod, self.mod)
+		cls = getattr(mod, self.__class__.__name__)
 		return cls(form, *self._args, **self._kwargs)
 
 
 class Label(WidgetFactory): mod = 'label'
 class Button(WidgetFactory): mod = 'button'
 class ImageButton(WidgetFactory): mod = 'image_button'
+class ImageWidget(WidgetFactory): mod = 'image'
 class RatingScale(WidgetFactory): mod = 'rating_scale'
 class TextInput(WidgetFactory): mod = 'text_input'
-class Image(WidgetFactory): mod = 'image'
 class Checkbox(WidgetFactory): mod = 'checkbox'

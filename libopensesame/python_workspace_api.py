@@ -27,16 +27,12 @@ from libopensesame.exceptions import osexception
 import random
 import math
 import warnings
-from openexp.canvas_elements import Rect, Line, RichText, Ellipse, Circle, \
-	FixDot, Gabor, NoisePatch
-from libopensesame.widgets.widget_factory import Label, Button
+from openexp.canvas_elements import (Rect, Line, RichText, Ellipse, Circle,
+	FixDot, Gabor, NoisePatch, Image)
+from libopensesame.widgets.widget_factory import (Label, Button, ImageWidget,
+	ImageButton, TextInput, RatingScale, Checkbox, Form)
 
 # Factory functions
-
-def Form(*args, **kwargs):
-
-	from libopensesame.widgets import form
-	return form(experiment, **kwargs)
 
 def Canvas(auto_prepare=True, **style_args):
 

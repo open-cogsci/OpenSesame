@@ -19,13 +19,15 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 
 from libopensesame.py3compat import *
 from libopensesame.exceptions import osexception
-from libopensesame.widgets._button import button
+from libopensesame.widgets._button import Button
 
-class checkbox(button):
+
+class Checkbox(Button):
 
 	"""
 	desc: |
-		The checkbox widget is a checkable box accompanied by a string of text.
+		The `Checkbox` widget is a checkable box accompanied by a string of
+		text.
 
 		__Example (OpenSesame script):__
 
@@ -37,10 +39,9 @@ class checkbox(button):
 		__Example (Python):__
 
 		~~~ .python
-		from libopensesame import widgets
-		form = widgets.form(exp)
-		checkbox1 = widgets.checkbox(form, text='Option 1', group='group')
-		checkbox2 = widgets.checkbox(form, text='Option 2', group='group')
+		form = Form()
+		checkbox1 = Checkbox(text='Option 1', group='group')
+		checkbox2 = Checkbox(text='Option 2', group='group')
 		form.set_widget(checkbox1, (0,0))
 		form.set_widget(checkbox2, (0,1))
 		~~~
@@ -52,8 +53,12 @@ class checkbox(button):
 		checked=False, click_accepts=False, var=None):
 
 		"""
-		desc:
+		desc: |
 			Constructor.
+
+			*Note:* When creating a `Checkbox` in a Python inline script,
+			you do not need to (and cannot) provide a `Form` object as a first
+			argument.
 
 		arguments:
 			form:
@@ -100,7 +105,7 @@ class checkbox(button):
 			checked = checked == u'yes'
 		if isinstance(click_accepts, basestring):
 			click_accepts = click_accepts == u'yes'
-		button.__init__(self, form, text, frame=frame, center=False)
+		Button.__init__(self, form, text, frame=frame, center=False)
 		self.type = u'checkbox'
 		self.group = group
 		self.box_pad = self.x_pad
@@ -146,7 +151,7 @@ class checkbox(button):
 			y+self.y_pad, checked=False)
 		self.canvas.add_element(self._checked_element)
 		self.canvas.add_element(self._unchecked_element)
-		button._init_canvas_elements(self)
+		Button._init_canvas_elements(self)
 		self.set_checked(self.checked)
 
 	def set_checked(self, checked=True):
@@ -209,4 +214,7 @@ class checkbox(button):
 		val = u';'.join(l_val)
 		if val == u'':
 			val = u'no'
-		button.set_var(self, val, var=var)
+		Button.set_var(self, val, var=var)
+
+
+checkbox = Checkbox

@@ -19,14 +19,15 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 
 from libopensesame.py3compat import *
 import textwrap
-from libopensesame.widgets._widget import widget
+from libopensesame.widgets._widget import Widget
 from openexp.canvas_elements import RichText
 
-class label(widget):
+
+class Label(Widget):
 
 	"""
 	desc: |
-		The label widget is a non-interactive string of text.
+		The `Label` widget is a non-interactive string of text.
 
 		__Example (OpenSesame script):__
 
@@ -37,9 +38,8 @@ class label(widget):
 		__Example (Python):__
 
 		~~~ .python
-		from libopensesame import widgets
-		form = widgets.form(exp)
-		label = widgets.label(form, text='My text')
+		form = Form()
+		label = Label(text='My text')
 		form.set_widget(label, (0,0))
 		form._exec()
 		~~~
@@ -50,8 +50,12 @@ class label(widget):
 	def __init__(self, form, text=u'label', frame=False, center=True):
 
 		"""
-		desc:
+		desc: |
 			Constructor.
+
+			*Note:* When creating a `Label` in a Python inline script, you do
+			not need to (and cannot) provide a `Form` object as a first
+			argument.
 
 		arguments:
 			form:
@@ -75,7 +79,7 @@ class label(widget):
 			frame = frame == u'yes'
 		if isinstance(center, basestring):
 			center = center == u'yes'
-		widget.__init__(self, form)
+		Widget.__init__(self, form)
 		self.type = u'label'
 		self.text = text
 		self.frame = frame
@@ -98,7 +102,7 @@ class label(widget):
 		self._text_element = RichText(self.text, center=self.center,
 			x=x, y=y, max_width=w, html=self.html).construct(self.canvas)
 		self.canvas.add_element(self._text_element)
-		widget._init_canvas_elements(self)
+		Widget._init_canvas_elements(self)
 
 	def _update_text(self, text):
 
@@ -131,3 +135,6 @@ class label(widget):
 		if self.frame:
 			self._update_frame(self.rect)
 		self._update_text(self.text)
+
+
+label = Label

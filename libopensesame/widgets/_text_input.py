@@ -18,11 +18,11 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame.py3compat import *
-
-from libopensesame.widgets._label import label
+from libopensesame.widgets._label import Label
 from openexp.keyboard import keyboard
 
-class text_input(label):
+
+class TextInput(Label):
 
 	"""
 	desc: |
@@ -39,10 +39,8 @@ class text_input(label):
 		__Example (Python):__
 
 		~~~ .python
-		from libopensesame import widgets
-		form = widgets.form(exp)
-		text_input = widgets.text_input(form, var='response',
-			return_accepts=True)
+		form = Form()
+		text_input = TextInput(var='response', return_accepts=True)
 		form.set_widget(text_input, (0,0))
 		form._exec()
 		~~~
@@ -54,8 +52,12 @@ class text_input(label):
 		stub=u'Type here ...', return_accepts=False, var=None, key_filter=None):
 
 		"""
-		desc:
+		desc: |
 			Constructor.
+
+			*Note:* When creating a `TextInput` in a Python inline script,
+			you do not need to (and cannot) provide a `Form` object as a first
+			argument.
 
 		arguments:
 			form:
@@ -95,7 +97,7 @@ class text_input(label):
 
 		if isinstance(return_accepts, basestring):
 			return_accepts = return_accepts == u'yes'
-		label.__init__(self, form, text, frame=frame, center=center)
+		Label.__init__(self, form, text, frame=frame, center=center)
 		self.type = u'text_input'
 		self.stub = safe_decode(stub)
 		self.prompt = u'\u2038'
@@ -173,3 +175,6 @@ class text_input(label):
 				self.caret_pos +=1
 			self._update()
 			self.set_var(self.text)
+
+
+text_input = TextInput

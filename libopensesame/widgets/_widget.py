@@ -18,12 +18,12 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame.py3compat import *
-from libopensesame.widgets._form import form as _form
+from libopensesame.widgets._form import Form
 from libopensesame.exceptions import osexception
 from openexp.canvas_elements import Rect
 
 
-class widget(object):
+class Widget(object):
 
 	"""
 	desc:
@@ -49,7 +49,7 @@ class widget(object):
 		self._focus = False
 		self.var = None
 		# Check if the form parameter is valid
-		if not isinstance(form, _form):
+		if not isinstance(form, Form):
 			raise osexception(
 				u'The first parameter passed to the constructor of a form widget should be a form, not "%s"'
 				% form)
@@ -211,3 +211,6 @@ class widget(object):
 				retval = self.on_key_press(d[u'key'])
 			elif d[u'type'] == u'stop':
 				break
+
+
+widget = Widget

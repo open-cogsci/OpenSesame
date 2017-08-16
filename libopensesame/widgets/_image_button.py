@@ -18,10 +18,10 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame.py3compat import *
-from libopensesame.widgets._image import image
+from libopensesame.widgets._image import ImageWidget
 
 
-class image_button(image):
+class ImageButton(ImageWidget):
 
 	"""
 	desc: |
@@ -36,13 +36,11 @@ class image_button(image):
 		__Example (Python):__
 
 		~~~ .python
-		from libopensesame import widgets
-		form = widgets.form(exp)
+		form = Form()
 		# The full path to the image needs to be provided.
 		# self.experiment.pool can be used to retrieve the full path
 		# to an image in the file pool.
-		image_button = widgets.image_button(form, path=pool['5.png'],
-			var='response')
+		image_button = ImageButton(path=pool['5.png'], var='response')
 		form.set_widget(image_button, (0,0))
 		form._exec()
 		~~~
@@ -54,8 +52,12 @@ class image_button(image):
 		var=None):
 
 		"""
-		desc:
+		desc: |
 			Constructor.
+
+			*Note:* When creating an `ImageButton` in a Python inline script,
+			you do not need to (and cannot) provide a `Form` object as a first
+			argument.
 
 		arguments:
 			form:
@@ -86,7 +88,7 @@ class image_button(image):
 				type:	[str, unicode, NoneType]
 		"""
 
-		image.__init__(self, form, path, adjust=adjust, frame=frame)
+		ImageWidget.__init__(self, form, path, adjust=adjust, frame=frame)
 		self.image_id = path if image_id is None else image_id
 		self.type = u'image_button'
 		self.var = var
@@ -108,3 +110,6 @@ class image_button(image):
 		self.theme_engine.click()
 		self.set_var(True)
 		return self.image_id
+
+
+image_button = ImageButton

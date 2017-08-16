@@ -26,21 +26,20 @@ from openexp.keyboard import keyboard
 from libopensesame.widgets.widget_factory import WidgetFactory
 
 
-class form(object):
+class Form(object):
 
 	"""
 	desc: |
-		The `form` is a container for widgets, such as labels, etc. If you use the
-		FORM_BASE plug-in in combination with OpenSesame script, you do not need
-		to explicitly create a form. However, if you use Python inline code, you
-		do.
+		The `Form` is a container for widgets, such as labels, etc. If you use
+		the FORM_BASE plug-in in combination with OpenSesame script, you do not
+		need to explicitly create a `Form` object. However, if you use Python
+		inline code, you do.
 
 		__Example__:
 
 		~~~ .python
-		from libopensesame import widgets
-		form = widgets.form(exp)
-		label = widgets.label(form, text='label)
+		form = Form()
+		label = Label(text='label)
 		form.set_widget(label, (0,0))
 		form._exec()
 		~~~
@@ -53,8 +52,13 @@ class form(object):
 		clicks=False, validator=None):
 
 		"""
-		desc:
+		desc: |
 			Constructor.
+
+			*Note:* When creating a `Form` in a Python inline script, you do
+			not need to (and cannot) provide an `experiment` object as a first
+			argument.
+
 
 		arguments:
 			experiment:
@@ -428,3 +432,6 @@ class form(object):
 		if index is None:
 			return None
 		return self.widgets[index]
+
+
+form = Form
