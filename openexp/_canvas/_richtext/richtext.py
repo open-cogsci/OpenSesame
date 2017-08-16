@@ -45,10 +45,9 @@ class RichText(Element):
 	def size(self):
 
 		bbox = Image.fromqimage(self._to_qimage()).getbbox()
-		if bbox is None:
-			return 0, 0
-		x, y, w, h = bbox
-		return w-x, h-y
+		x1, y1, x2, y2 = (0, 0, 1, 1) if bbox is None else bbox
+		y2 = max(y1+self.font_size, y2)
+		return x2-x1, y2-y1
 
 	def _to_qgraphicstextitem(self):
 
@@ -92,4 +91,6 @@ class RichText(Element):
 
 		im = Image.fromqimage(self._to_qimage())
 		bbox = im.getbbox()
-		return im.crop((0, 0, 1, 1) if bbox is None else bbox)
+		x1, y1, x2, y2 = (0, 0, 1, 1) if bbox is None else bbox
+		y1 = min(y2-self.font_size, y1)
+		return im.crop((x1, y1, x2, y2))
