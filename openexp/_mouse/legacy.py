@@ -61,7 +61,6 @@ class legacy(mouse.mouse, legacy_coordinates):
 
 		buttonlist = self.buttonlist
 		timeout = self.timeout
-		visible = self.visible
 		enable_escape = self.experiment.var.get(u'enable_escape', u'no',
 			[u'yes', u'no']) == u'yes'
 		pygame.mouse.set_visible(self.visible)
@@ -71,8 +70,11 @@ class legacy(mouse.mouse, legacy_coordinates):
 			time = pygame.time.get_ticks()
 			# Process the input
 			for event in pygame.event.get():
-				if event.type == KEYDOWN and event.key == pygame.K_ESCAPE:
-					self.experiment.pause()
+				if event.type == KEYDOWN:
+					if event.key == pygame.K_ESCAPE:
+						self.experiment.pause()
+						continue
+					pygame.event.post(event)
 				if event.type == MOUSEBUTTONDOWN:
 					# Check escape sequence. If the top-left and top-right
 					# corner are clicked successively within 2000ms, the
@@ -91,6 +93,7 @@ class legacy(mouse.mouse, legacy_coordinates):
 					if buttonlist is None or event.button in buttonlist:
 						pygame.mouse.set_visible(self._cursor_shown)
 						return event.button, self.from_xy(event.pos), time
+						continue
 			if timeout is not None and time-start_time >= timeout:
 				break
 		pygame.mouse.set_visible(self._cursor_shown)
