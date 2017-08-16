@@ -38,14 +38,17 @@ class RichText(Element):
 			'x' : x,
 			'y' : y,
 			'max_width' : max_width
-			})
+		})
 		Element.__init__(self, canvas, **properties)
 
+	@property
 	def size(self):
 
-		t = self._to_qgraphicstextitem()
-		rect = t.boundingRect()
-		return rect.width(), rect.height()
+		bbox = Image.fromqimage(self._to_qimage()).getbbox()
+		if bbox is None:
+			return 0, 0
+		x, y, w, h = bbox
+		return w-x, h-y
 
 	def _to_qgraphicstextitem(self):
 
@@ -87,4 +90,6 @@ class RichText(Element):
 
 	def _to_pil(self):
 
-		return Image.fromqimage(self._to_qimage())
+		im = Image.fromqimage(self._to_qimage())
+		bbox = im.getbbox()
+		return im.crop((0, 0, 1, 1) if bbox is None else bbox)
