@@ -106,6 +106,7 @@ class legacy(mouse.mouse, legacy_coordinates):
 
 	def get_pressed(self):
 
+		pygame.event.get()
 		return pygame.mouse.get_pressed()
 
 	def flush(self):
