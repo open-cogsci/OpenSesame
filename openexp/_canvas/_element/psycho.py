@@ -31,7 +31,8 @@ class PsychoElement(object):
 
 	def show(self):
 
-		self._stim.draw()
+		if self.visible:
+			self._stim.draw()
 
 	def _on_attribute_change(self, **kwargs):
 
