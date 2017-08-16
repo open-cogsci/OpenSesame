@@ -177,14 +177,21 @@ class form(object):
 			coroutine.send(None)
 		self.canvas.show()
 		self.start_time = None
+		mousedown = False
 		while True:
 			if self.timed_out():
 				resp = None
 				break
 			msg = None
-			# Handle mouse clicks
+			# Handle mouse clicks, including waiting until the mouse is released
+			# after a mouse click.
+			if mousedown:
+				while any(ms.get_pressed()):
+					pass
+				mousedown = False
 			button, xy, timestamp = ms.get_click(visible=True)
 			if button is not None:
+				mousedown = True
 				# Switch the focus to the newly clicked widget (if any)
 				widget = self.xy_to_widget(xy)
 				if widget is None:
