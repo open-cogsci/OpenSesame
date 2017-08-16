@@ -108,7 +108,6 @@ class checkbox(button):
 		self.var = var
 		self.click_accepts = click_accepts
 		self.checked = checked
-		self.set_var(checked)
 
 	def on_mouse_click(self, pos):
 
@@ -150,6 +149,7 @@ class checkbox(button):
 		self.canvas.add_element(self._checked_element)
 		self.canvas.add_element(self._unchecked_element)
 		button._init_canvas_elements(self)
+		self.set_checked(self.checked)
 
 	def set_checked(self, checked=True):
 
@@ -165,6 +165,7 @@ class checkbox(button):
 
 		self._checked_element.visible = checked
 		self._unchecked_element.visible = not checked
+		self.checked = checked
 		self.set_var(checked)
 
 	def set_var(self, val, var=None):
