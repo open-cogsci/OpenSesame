@@ -320,7 +320,7 @@ class canvas(backend):
 
 		if isinstance(element, basestring):
 			return element, self._elements[element]
-		for name, _element in self._elements.iteritems():
+		for name, _element in self._elements.items():
 			if element is _element:
 				return name, element
 		raise ValueError('"%s" not found in canvas"' % element)
@@ -342,7 +342,7 @@ class canvas(backend):
 		self._elements.pop(first_name)
 		_elements = OrderedDict()
 		_elements[first_name] = first_element
-		for name, element in self._elements.iteritems():
+		for name, element in self._elements.items():
 			_elements[name] = element
 		self._elements = _elements
 
@@ -362,7 +362,7 @@ class canvas(backend):
 		last_name, last_element = self._get_name_element(element)
 		self._elements.pop(last_name)
 		_elements = OrderedDict()
-		for name, element in self._elements.iteritems():
+		for name, element in self._elements.items():
 			_elements[name] = element
 		_elements[last_name] = last_element
 		self._elements = _elements
@@ -558,7 +558,7 @@ class canvas(backend):
 			[canvas.__init__].
 		"""
 
-		for name, element in self._elements.iteritems():
+		for name, element in self._elements.items():
 			if element.visible:
 				element.prepare()
 

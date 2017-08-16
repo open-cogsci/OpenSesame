@@ -94,7 +94,7 @@ class psycho(canvas.canvas, psycho_coordinates):
 
 	def show(self):
 
-		for e in self._elements.itervalues():
+		for e in self._elements.values():
 			e.show()
 		self.experiment.window.flip(clearBuffer=True)
 		return self.experiment.clock.time()
