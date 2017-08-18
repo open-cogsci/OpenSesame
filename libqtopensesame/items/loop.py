@@ -75,7 +75,7 @@ class loop(qtstructure_item, qtitem, loop_runtime):
 		self.loop_widget.ui.button_wizard.clicked.connect(self._show_wizard)
 
 	def _show_wizard(self):
-		
+
 		"""
 		desc:
 			Shows the full-factorial-design wizard.
@@ -86,11 +86,12 @@ class loop(qtstructure_item, qtitem, loop_runtime):
 		dm = d.exec_()
 		if dm is None:
 			return
+		dm.sorted = False
 		self.dm = dm
 		self.update()
 
 	def _show_preview(self):
-		
+
 		"""
 		desc:
 			Shows a preview tab for the loop table.
@@ -117,11 +118,11 @@ class loop(qtstructure_item, qtitem, loop_runtime):
 
 	@qtstructure_item.clears_children_cache
 	def _apply_item(self, *args):
-		
+
 		"""
 		desc:
 			Applies changes to the item combobox.
-			
+
 		argument-list:
 			args:	Dummy arguments passed by the signal-slot system.
 		"""
@@ -131,7 +132,7 @@ class loop(qtstructure_item, qtitem, loop_runtime):
 		self.update_script()
 
 	def _update_item(self):
-		
+
 		"""
 		desc:
 			Updates the item combobox.
@@ -140,7 +141,7 @@ class loop(qtstructure_item, qtitem, loop_runtime):
 		self.loop_widget.ui.combobox_item.select(self._item)
 
 	def _apply_table(self):
-		
+
 		"""
 		desc:
 			Applies changes to the loop table.
@@ -158,7 +159,7 @@ class loop(qtstructure_item, qtitem, loop_runtime):
 		self.update_script()
 
 	def _apply_source(self):
-		
+
 		"""
 		desc:
 			Applies changes to the source selector, if a file source is
@@ -170,7 +171,7 @@ class loop(qtstructure_item, qtitem, loop_runtime):
 		self.update_script()
 
 	def _update_source(self):
-		
+
 		"""
 		desc:
 			Update the file-source selector, hiding it when the loop table is
@@ -184,14 +185,14 @@ class loop(qtstructure_item, qtitem, loop_runtime):
 		self.qdm.setVisible(not file_mode)
 
 	def _row_count_text(self, n):
-		
+
 		"""
 		desc:
 			A descriptive text for the number of rows.
-			
+
 		arguments:
 			n:	The number of rows.
-			
+
 		returns:
 			A descriptive text.
 		"""
@@ -203,17 +204,17 @@ class loop(qtstructure_item, qtitem, loop_runtime):
 		return _(u'%s rows occur' % n)
 
 	def _time_count_text(self, n):
-		
+
 		"""
 		desc:
 			A descriptive text for the number of times an item is executed.
-			
+
 		arguments:
 			n:	The number of times.
-			
+
 		returns:
 			A descriptive text.
-		"""		
+		"""
 
 		if n == 0:
 			return _(u'never')
@@ -224,19 +225,19 @@ class loop(qtstructure_item, qtitem, loop_runtime):
 		return _(u'%s times' % n)
 
 	def _set_summary(self, msg):
-		
+
 		"""
 		desc:
 			Sets the summary label.
-			
+
 		arguments:
 			msg:	The summary message.
-		"""		
+		"""
 
 		self.loop_widget.ui.label_summary.setText(msg)
 
 	def _update_summary(self):
-		
+
 		"""
 		desc:
 			Generates a loop summary and sets the summary label.
@@ -294,7 +295,7 @@ class loop(qtstructure_item, qtitem, loop_runtime):
 		self._update_source()
 
 	def update_script(self):
-		
+
 		"""See qtitem."""
 
 		qtitem.update_script(self)
@@ -348,7 +349,7 @@ class loop(qtstructure_item, qtitem, loop_runtime):
 		if item_name == self._item:
 			self._item = u''
 		if not self.update():
-			self.extension_manager.fire(u'change_item', name=self.name)		
+			self.extension_manager.fire(u'change_item', name=self.name)
 		self.main_window.set_unsaved(True)
 
 	@qtstructure_item.clears_children_cache
