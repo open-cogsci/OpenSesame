@@ -25,9 +25,30 @@ from openexp.color import color
 
 class Element(object):
 
+	"""
+	desc:
+		A base class for sketchpad elements.
+	"""
+
+	# A property that indicates whether style properties (color etc) can be
+	# changed or not.
 	read_only = False
 
 	def __init__(self, canvas, **properties):
+
+		"""
+		desc:
+			Constructor.
+
+		arguments:
+			canvas:
+				desc:	The canvas of which this element is part.
+				type:	Canvas
+
+		keyword-dict:
+			properties:
+				A dict with style arguments such as color, fill, etc.
+		"""
 
 		self._canvas = canvas
 		if u'visible' not in properties:
@@ -42,10 +63,42 @@ class Element(object):
 
 	def __add__(self, element):
 
+		"""
+		visible: False
+
+		desc:
+			Implements the + syntax, which combines Element objects into Group
+			objects.
+
+		arguments:
+			element:
+				desc:	The element to add.
+				type:	Element
+
+		returns:
+			desc:	A group of elements.
+			type:	Group
+		"""
+
 		from openexp._canvas._element.group import Group
 		return Group(self.canvas, [self, element])
 
 	def copy(self, canvas):
+
+		"""
+		desc:
+			Creates a deep copy of the current element. This new copy becomes
+			part of the provided canvas.
+
+		arguments:
+			canvas:
+				desc:	The canvas of which the copied element is part.
+				type:	Canvas
+
+		returns:
+			desc:	A copy of the current element.
+			type:	Element
+		"""
 
 		e = copy.deepcopy(self)
 		e._canvas = canvas
@@ -53,43 +106,74 @@ class Element(object):
 
 	def prepare(self):
 
+		"""
+		desc:
+			Is called when the canvas is prepared. This should be implemented
+			by backend-specific element objects.
+		"""
+
 		pass
 
 	def show(self):
+
+		"""
+		desc:
+			Is called when the canvas is shown. This should be implemented by
+			backend-specfic element objects.
+		"""
 
 		pass
 
 	def _on_attribute_change(self, **kwargs):
 
+		"""
+		visible: False
+
+		desc:
+			Is called when an attribute, such as color, is changed.
+
+		keyword-dict:
+			kwargs:
+				A dict with changed attributes.
+		"""
+
 		pass
 
 	@property
 	def experiment(self):
-
 		return self._canvas.experiment
 
 	@property
 	def to_xy(self):
-
 		return self._canvas.to_xy
 
 	@property
 	def none_to_center(self):
-
 		return self._canvas.none_to_center
 
 	@property
 	def uniform_coordinates(self):
-
 		return self._canvas.uniform_coordinates
 
 	@property
 	def property_names(self):
-
 		return set(self._properties.keys()) \
 			| set(self._canvas.configurables.keys())
 
 	def _create_property(self, key):
+
+		"""
+		visible: False
+
+		desc:
+			Dynamically creates a getter/setter property. This is used to make
+			style arguments such as color get-able and set-able.
+
+		argumens:
+			key:
+				desc:	The key to create a property for.
+				type:	str
+		"""
 
 		setattr(self.__class__, key, property(
 			partial(self._getter, key),
@@ -99,6 +183,22 @@ class Element(object):
 	@staticmethod
 	def _getter(key, self):
 
+		"""
+		visible: False
+
+		desc:
+			A getter for dynamically created properties.
+
+		arguments:
+			key:
+				desc:	A property name.
+				type:	str
+			self:
+				desc:	The Element instance. For technical reasons this is
+						passed as the second argument.
+				type:	Element.
+		"""
+
 		try:
 			return self._properties[key]
 		except KeyError:
@@ -107,6 +207,25 @@ class Element(object):
 	@staticmethod
 	def _setter(key, self, val):
 
+		"""
+		visible: False
+
+		desc:
+			A setter for dynamically created properties.
+
+		arguments:
+			key:
+				desc:	A property name.
+				type:	str
+			self:
+				desc:	The Element instance. For technical reasons this is
+						passed as the second argument.
+				type:	Element.
+			val:
+				desc:	A property value.
+				type:	Any
+		"""
+
 		if key == u'color':
 			val = color(self.experiment, val)
 		self._properties[key] = val
@@ -114,5 +233,17 @@ class Element(object):
 
 	@staticmethod
 	def _deller(self, key):
+
+		"""
+		visible: False
+
+		desc:
+			A deller for dynamically created properties.
+
+		arguments:
+			key:
+				desc:	A property name.
+				type:	str
+		"""
 
 		pass

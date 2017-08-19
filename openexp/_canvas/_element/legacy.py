@@ -22,9 +22,14 @@ from libopensesame.py3compat import *
 
 class LegacyElement(object):
 
+	"""
+	desc:
+		Together with Element, LegacyElement is the base object for all legacy
+		sketchpad elements.
+	"""
+
 	@property
 	def surface(self):
-
 		return self._canvas.surface
 
 	def _on_attribute_change(self, **kwargs):

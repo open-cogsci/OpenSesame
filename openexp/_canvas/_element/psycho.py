@@ -24,9 +24,14 @@ from openexp._canvas import canvas
 
 class PsychoElement(object):
 
+	"""
+	desc:
+		Together with Element, LegacyElement is the base object for all legacy
+		sketchpad elements.
+	"""
+
 	@property
 	def win(self):
-
 		return self._canvas.experiment.window
 
 	def show(self):
@@ -40,6 +45,29 @@ class PsychoElement(object):
 			self.prepare()
 
 	def _mask(self, env, size, stdev):
+
+		"""
+		visible: False
+
+		desc:
+			Generates a PsychoPy mask for Gabor and NoisePatch stimuli.
+
+		arguments:
+			env:
+				desc:	The envelope.
+				type:	str
+			size:
+				desc:	The stimulus size.
+				type:	int
+			stdev:
+				desc:	The standard deviation of the mask if the envelope is
+						gaussian.
+				type:	int
+
+		returns:
+			desc:	A PsychoPy mask, which is a numpy array.
+			type:	ndarray
+		"""
 
 		# Get the smallest power-of-two that is larger than or equal to the
 		# given size
