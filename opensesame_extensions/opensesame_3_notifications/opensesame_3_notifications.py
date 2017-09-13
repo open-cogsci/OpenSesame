@@ -58,7 +58,7 @@ class opensesame_3_notifications(base_extension):
 			Called at the end of the OpenSesame startup process.
 		"""
 
-		if cfg.os3n_new_user_notification:
+		if cfg.os3n_new_user_notification and not self.experiment.items.error_log:
 			self.tabwidget.open_markdown(self.ext_resource(u'new-user.md'),
 				title=u'Welcome!')
 
