@@ -26,7 +26,7 @@ class PsychoElement(object):
 
 	"""
 	desc:
-		Together with Element, LegacyElement is the base object for all legacy
+		Together with Element, PsychoElement is the base object for all psycho
 		sketchpad elements.
 	"""
 
