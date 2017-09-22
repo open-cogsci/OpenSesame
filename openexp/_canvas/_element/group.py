@@ -38,10 +38,10 @@ class Group(Element):
 		for element in self._elements:
 			element.prepare()
 
-	def show(self):
+	def show(self, **kwargs):
 
 		for element in self._elements:
-			element.show()
+			element.show(**kwargs)
 
 	def __len__(self):
 
