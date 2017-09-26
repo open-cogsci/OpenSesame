@@ -19,7 +19,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 
 from libopensesame.py3compat import *
 from libopensesame.exceptions import osexception
-from openexp.sampler import sampler
+from openexp.sampler import Sampler
 try:
 	import numpy as np
 	from scipy import signal
@@ -27,7 +27,8 @@ except:
 	np = None
 	signal = None
 
-def synth(experiment, osc="sine", freq=440, length=100, attack=0, decay=5):
+
+def Synth(experiment, osc="sine", freq=440, length=100, attack=0, decay=5):
 
 	"""
 	desc: |
@@ -61,7 +62,8 @@ def synth(experiment, osc="sine", freq=440, length=100, attack=0, decay=5):
 	signal = osc_gen(osc, key_to_freq(freq), length, rate)
 	_envelope = envelope(length, attack, decay, rate)
 	sound = to_int_16(signal * _envelope)
-	return sampler(experiment, sound)
+	return Sampler(experiment, sound)
+
 
 def key_to_freq(key):
 
@@ -128,6 +130,7 @@ def key_to_freq(key):
 		freq = f * o
 	return freq
 
+
 def osc_gen(_type, freq, length, rate):
 
 	length *= .001
@@ -141,6 +144,7 @@ def osc_gen(_type, freq, length, rate):
 	if _type == u'white_noise':
 		return np.random.random(int(length*rate))*2 - 1
 	raise osexception(u'Invalid oscillator: %s' % _type)
+
 
 def envelope(length, attack, decay, rate):
 
@@ -165,6 +169,7 @@ def envelope(length, attack, decay, rate):
 		e[-decay:] *= np.linspace(1, 0, decay)
 	return e
 
+
 def to_int_16(a):
 
 	"""
@@ -178,3 +183,7 @@ def to_int_16(a):
 
 	a *= 32767
 	return a.astype(np.int16)
+
+
+# Non PEP-8 alias for backwards compatibility
+synth = Synth

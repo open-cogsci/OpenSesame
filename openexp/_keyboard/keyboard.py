@@ -18,10 +18,11 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame.py3compat import *
-from openexp.backend import backend, configurable
+from openexp.backend import Backend, configurable
 import warnings
 
-class keyboard(backend):
+
+class Keyboard(Backend):
 
 	"""
 	desc: |
@@ -121,7 +122,7 @@ class keyboard(backend):
 		"""
 
 		self.experiment = experiment
-		backend.__init__(self, configurables={
+		Backend.__init__(self, configurables={
 			u'timeout' : self.assert_numeric_or_None,
 			u'keylist' : self.assert_list_or_None,
 			}, **resp_args)
@@ -135,7 +136,7 @@ class keyboard(backend):
 				keylist += [key for key in self.synonyms(key) \
 					if key not in keylist]
 			cfg[u'keylist'] = keylist
-		backend.set_config(self, **cfg)
+		Backend.set_config(self, **cfg)
 
 	def default_config(self):
 
@@ -308,3 +309,7 @@ class keyboard(backend):
 		warnings.warn(u'keyboard.set_timeout() has been deprecated. '
 			'Use keyboard.timeout instead.', DeprecationWarning)
 		self.timeout = timeout
+
+
+# Non PEP-8 alias for backwards compatibility
+keyboard = Keyboard

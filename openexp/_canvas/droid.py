@@ -21,7 +21,7 @@ from libopensesame.py3compat import *
 
 from math import hypot
 import pygame
-from openexp._canvas.legacy import legacy
+from openexp._canvas.legacy import Legacy
 from libopensesame.exceptions import osexception
 
 try:
@@ -32,7 +32,8 @@ except ImportError:
 initialized = False
 resolution = 1280, 800 # resolution is hardcoded for now
 
-class droid(legacy):
+
+class Droid(Legacy):
 
 	"""
 	This is a canvas backend for Android devices. It is identical to the legacy
@@ -96,3 +97,7 @@ class droid(legacy):
 		# application altogether.
 		if android is None:
 			pygame.display.quit()
+
+
+# Non PEP-8 alias for backwards compatibility
+droid = Droid

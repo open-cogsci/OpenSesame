@@ -18,10 +18,11 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame.py3compat import *
-from openexp._clock.clock import clock
+from openexp._clock.clock import Clock
 import pygame
 
-class legacy(clock):
+
+class Legacy(Clock):
 
 	"""
 	desc:
@@ -35,3 +36,7 @@ class legacy(clock):
 	def sleep(self, ms):
 
 		pygame.time.delay(int(ms))
+
+
+# Non PEP-8 alias for backwards compatibility
+legacy = Legacy

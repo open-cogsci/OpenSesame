@@ -19,15 +19,17 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 
 from libopensesame.py3compat import *
 from pygame.locals import *
-from openexp._mouse import legacy, mouse
+from openexp._mouse.mouse import Mouse
+from openexp._mouse.legacy import Legacy
 from openexp.backend import configurable
 from libopensesame.exceptions import osexception
 import pygame
 from expyriment import stimuli
 from expyriment.misc.geometry import coordinates2position as c2p
-from openexp._coordinates.xpyriment import xpyriment as xpyriment_coordinates
+from openexp._coordinates.xpyriment import Xpyriment as XpyrimentCoordinates
 
-class xpyriment(xpyriment_coordinates, legacy.legacy):
+
+class Xpyriment(XpyrimentCoordinates, Legacy):
 
 	"""
 	desc:
@@ -40,8 +42,8 @@ class xpyriment(xpyriment_coordinates, legacy.legacy):
 
 	def __init__(self, experiment, **resp_args):
 
-		mouse.mouse.__init__(self, experiment, **resp_args)
-		xpyriment_coordinates.__init__(self)
+		Mouse.__init__(self, experiment, **resp_args)
+		XpyrimentCoordinates.__init__(self)
 
 	@configurable
 	def get_click(self):
@@ -65,3 +67,7 @@ class xpyriment(xpyriment_coordinates, legacy.legacy):
 				break
 		pygame.mouse.set_visible(self._cursor_shown)
 		return None, None, time
+
+
+# Non PEP-8 alias for backwards compatibility
+xpyriment = Xpyriment

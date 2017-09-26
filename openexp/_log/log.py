@@ -20,7 +20,8 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 from libopensesame.py3compat import *
 import warnings
 
-class log(object):
+
+class Log(object):
 
 	"""
 	desc: |
@@ -153,3 +154,7 @@ class log(object):
 		"""
 
 		pass
+
+
+# Non PEP-8 alias for backwards compatibility
+log = Log

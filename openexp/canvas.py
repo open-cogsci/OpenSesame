@@ -29,7 +29,8 @@ import os
  # A list of temporary files that should be cleaned up.
 temp_files = []
 
-def canvas(experiment, *arglist, **kwdict):
+
+def Canvas(experiment, *arglist, **kwdict):
 
 	"""
 	desc:
@@ -50,6 +51,7 @@ def canvas(experiment, *arglist, **kwdict):
 	cls = backend.get_backend_class(experiment, u'canvas')
 	return cls(experiment, *arglist, **kwdict)
 
+
 def init_display(experiment):
 
 	"""
@@ -64,6 +66,7 @@ def init_display(experiment):
 	cls = backend.get_backend_class(experiment, u'canvas')
 	cls.init_display(experiment)
 
+
 def close_display(experiment):
 
 	"""
@@ -77,6 +80,7 @@ def close_display(experiment):
 
 	cls = backend.get_backend_class(experiment, u'canvas')
 	cls.close_display(experiment)
+
 
 def clean_up(verbose=False):
 
@@ -103,6 +107,7 @@ def clean_up(verbose=False):
 				print(u"canvas.clean_up(): failed to remove '%s': %s" \
 					% (path, e))
 
+
 def gabor_file(*arglist, **kwdict):
 
 	"""
@@ -127,6 +132,7 @@ def gabor_file(*arglist, **kwdict):
 	os.close(fd)
 	return fname
 
+
 def noise_file(*arglist, **kwdict):
 
 	"""
@@ -150,3 +156,7 @@ def noise_file(*arglist, **kwdict):
 	temp_files.append(fname)
 	os.close(fd)
 	return fname
+
+
+# Non PEP-8 alias for backwards compatibility
+canvas = Canvas

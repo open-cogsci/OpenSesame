@@ -18,10 +18,11 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame.py3compat import *
-from openexp._clock.clock import clock
+from openexp._clock.clock import Clock
 from psychopy import core
 
-class psycho(clock):
+
+class Psycho(Clock):
 
 	"""
 	desc:
@@ -35,3 +36,7 @@ class psycho(clock):
 	def sleep(self, ms):
 
 		core.wait(.001*ms)
+
+
+# Non PEP-8 alias for backwards compatibility
+psycho = Psycho

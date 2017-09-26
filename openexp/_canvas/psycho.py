@@ -20,9 +20,9 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 from libopensesame.py3compat import *
 from collections import OrderedDict
 from openexp.backend import configurable
-from openexp._canvas import canvas
-from openexp._coordinates.psycho import psycho as psycho_coordinates
-from openexp.color import color
+from openexp._canvas.canvas import Canvas
+from openexp._coordinates.psycho import Psycho as PsychoCoordinates
+from openexp.color import Color
 from openexp.canvas_elements import Rect
 from psychopy import visual, event, core, logging
 
@@ -32,7 +32,7 @@ _experiment = None
 _old_gamma = None
 
 
-class psycho(canvas.canvas, psycho_coordinates):
+class Psycho(Canvas, PsychoCoordinates):
 
 	"""
 	desc:
@@ -73,9 +73,9 @@ class psycho(canvas.canvas, psycho_coordinates):
 
 	def __init__(self, experiment, auto_prepare=True, **style_args):
 
-		canvas.canvas.__init__(self, experiment, auto_prepare=auto_prepare,
+		Canvas.__init__(self, experiment, auto_prepare=auto_prepare,
 			**style_args)
-		psycho_coordinates.__init__(self)
+		PsychoCoordinates.__init__(self)
 		self.clear()
 
 	@configurable
@@ -89,8 +89,8 @@ class psycho(canvas.canvas, psycho_coordinates):
 
 	def lower_to_bottom(self, element):
 
-		canvas.canvas.lower_to_bottom(self, element)
-		canvas.canvas.lower_to_bottom(self, u'__background__')
+		Canvas.lower_to_bottom(self, element)
+		Canvas.lower_to_bottom(self, u'__background__')
 
 	def show(self):
 
@@ -170,3 +170,7 @@ def _psychopy_clean_quit():
 
 	raise osexception(
 		u'PsychoPy encountered an error and aborted the program. See the debug window for PsychoPy error messages.')
+
+
+# Non PEP-8 alias for backwards compatibility
+psycho = Psycho

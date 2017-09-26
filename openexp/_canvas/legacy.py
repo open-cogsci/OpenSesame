@@ -23,8 +23,8 @@ import os
 import pygame
 import platform
 from openexp.backend import configurable
-from openexp._canvas import canvas
-from openexp._coordinates.legacy import legacy as legacy_coordinates
+from openexp._canvas.canvas import Canvas
+from openexp._coordinates.legacy import Legacy as LegacyCoordinates
 
 # PyGame 1.9.2 suffers from character encoding issues. To get around those, we
 # pass file objects directly to PyGame, instead of paths. These file objects
@@ -40,7 +40,7 @@ fileobjects = []
 fonts = {}
 
 
-class legacy(canvas.canvas, legacy_coordinates):
+class Legacy(Canvas, LegacyCoordinates):
 
 	"""
 	desc:
@@ -76,9 +76,9 @@ class legacy(canvas.canvas, legacy_coordinates):
 
 	def __init__(self, experiment, auto_prepare=True, **style_args):
 
-		canvas.canvas.__init__(self, experiment, auto_prepare=auto_prepare,
+		Canvas.__init__(self, experiment, auto_prepare=auto_prepare,
 			**style_args)
-		legacy_coordinates.__init__(self)
+		LegacyCoordinates.__init__(self)
 		self.antialias = True
 		self.surface = self.experiment.surface.copy()
 		self.clear()
@@ -120,7 +120,7 @@ class legacy(canvas.canvas, legacy_coordinates):
 		"""
 
 		self.surface.fill(self.background_color.backend_color)
-		canvas.canvas.prepare(self)
+		Canvas.prepare(self)
 
 	def redraw(self):
 
@@ -130,14 +130,14 @@ class legacy(canvas.canvas, legacy_coordinates):
 
 	def set_config(self, **cfg):
 
-		canvas.canvas.set_config(self, **cfg)
+		Canvas.set_config(self, **cfg)
 		if hasattr(self, u'surface'):
 			self.redraw()
 
 	def copy(self, canvas):
 
 		self.surface = canvas.surface.copy()
-		canvas.canvas.copy(self, canvas)
+		Canvas.copy(self, canvas)
 
 	@configurable
 	def clear(self):
@@ -213,3 +213,7 @@ class legacy(canvas.canvas, legacy_coordinates):
 		while fonts:
 			fonts.pop(list(fonts.keys())[0], None)
 		pygame.display.quit()
+
+
+# Non PEP-8 alias for backwards compatibility
+legacy = Legacy

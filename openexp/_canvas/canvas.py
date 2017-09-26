@@ -23,8 +23,8 @@ import random
 import pygame
 import math
 from libopensesame.exceptions import osexception
-from openexp.backend import backend, configurable
-from openexp.color import color
+from openexp.backend import Backend, configurable
+from openexp.color import Color
 from collections import OrderedDict
 from openexp.canvas_elements import Line, Rect, Polygon, Ellipse, Image, \
 	Gabor, NoisePatch, Circle, FixDot, ElementFactory, RichText
@@ -32,7 +32,7 @@ from openexp._canvas._element.element import Element
 from openexp._canvas._element.group import Group
 
 
-class canvas(backend):
+class Canvas(Backend):
 
 	"""
 	desc: |
@@ -245,7 +245,7 @@ class canvas(backend):
 		self._width = self.experiment.var.width
 		self._height = self.experiment.var.height
 		self.auto_prepare = auto_prepare
-		backend.__init__(self, configurables={
+		Backend.__init__(self, configurables={
 			u'color' : None,
 			u'background_color' : None,
 			u'fill' : self.assert_bool,
@@ -401,12 +401,12 @@ class canvas(backend):
 			del cfg['font_style']
 		# Convert color to backend specific colors
 		if u'color' in cfg and not hasattr(cfg[u'color'], u'backend_color'):
-			cfg[u'color'] = color(self.experiment, cfg[u'color'])
+			cfg[u'color'] = Color(self.experiment, cfg[u'color'])
 		if u'background_color' in cfg \
 			and not hasattr(cfg[u'background_color'], u'backend_color'):
-			cfg[u'background_color'] = color(self.experiment,
+			cfg[u'background_color'] = Color(self.experiment,
 				cfg[u'background_color'])
-		backend.set_config(self, **cfg)
+		Backend.set_config(self, **cfg)
 
 	def default_config(self):
 
@@ -1261,8 +1261,8 @@ def _color(col):
 		A PyGame color object.
 	"""
 
-	from openexp._color.legacy import legacy
-	return legacy(None, col).backend_color
+	from openexp._color.legacy import Legacy
+	return Legacy(None, col).backend_color
 
 def _gabor(orient, freq, env=u"gaussian", size=96, stdev=12, phase=0,
 	col1=u"white", col2=u"black", bgmode=u"avg"):
@@ -1426,3 +1426,7 @@ def _match_env(env):
 	if env not in env_synonyms:
 		raise osexception(u"'%s' is not a valid envelope" % env)
 	return env_synonyms[env]
+
+
+# Non PEP-8 alias for backwards compatibility
+canvas = Canvas

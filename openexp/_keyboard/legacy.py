@@ -19,12 +19,11 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 
 from libopensesame.py3compat import *
 import platform
-
 import pygame
 from pygame.locals import *
 from string import whitespace
 from libopensesame.exceptions import osexception
-from openexp._keyboard import keyboard
+from openexp._keyboard.keyboard import Keyboard
 from openexp.backend import configurable
 
 # Whitespace, backspace, and empty strings are not acceptable names for keys.
@@ -45,7 +44,8 @@ if platform.system() == "Darwin":
 		u'\uf739', # numlock
 	]
 
-class legacy(keyboard.keyboard):
+
+class Legacy(Keyboard):
 
 	"""
 	desc:
@@ -77,7 +77,7 @@ class legacy(keyboard.keyboard):
 				self.key_name_to_code[name3] = code
 				self.key_name_to_code[name4] = code
 		self.persistent_virtual_keyboard = False
-		keyboard.keyboard.__init__(self, experiment, **resp_args)
+		Keyboard.__init__(self, experiment, **resp_args)
 
 	@configurable
 	def get_key(self):
@@ -143,3 +143,7 @@ class legacy(keyboard.keyboard):
 
 		return str(pygame.key.name(key)).replace(u'[', u'').replace(u']',
 			u'')
+
+
+# Non PEP-8 alias for backwards compatibility
+legacy = Legacy

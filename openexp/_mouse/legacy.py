@@ -19,13 +19,14 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 
 from libopensesame.py3compat import *
 from pygame.locals import *
-from openexp._mouse import mouse
-from openexp._coordinates.legacy import legacy as legacy_coordinates
+from openexp._mouse.mouse import Mouse
+from openexp._coordinates.legacy import Legacy as LegacyCoordinates
 from libopensesame.exceptions import osexception
 from openexp.backend import configurable
 import pygame
 
-class legacy(mouse.mouse, legacy_coordinates):
+
+class Legacy(Mouse, LegacyCoordinates):
 
 	"""
 	desc:
@@ -44,8 +45,8 @@ class legacy(mouse.mouse, legacy_coordinates):
 
 	def __init__(self, experiment, **resp_args):
 
-		mouse.mouse.__init__(self, experiment, **resp_args)
-		legacy_coordinates.__init__(self)
+		Mouse.__init__(self, experiment, **resp_args)
+		LegacyCoordinates.__init__(self)
 
 	def set_pos(self, pos=(0,0)):
 
@@ -54,7 +55,7 @@ class legacy(mouse.mouse, legacy_coordinates):
 	def show_cursor(self, show=True):
 
 		pygame.mouse.set_visible(show)
-		mouse.mouse.show_cursor(self, show=show)
+		Mouse.show_cursor(self, show=show)
 
 	@configurable
 	def get_click(self):
@@ -118,3 +119,7 @@ class legacy(mouse.mouse, legacy_coordinates):
 			if event.type == MOUSEBUTTONDOWN:
 				buttonclicked = True
 		return buttonclicked
+
+
+# Non PEP-8 alias for backwards compatibility
+legacy = Legacy

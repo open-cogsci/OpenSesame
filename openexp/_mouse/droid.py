@@ -20,7 +20,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 from libopensesame.py3compat import *
 from pygame.locals import *
 import pygame
-from openexp._mouse import legacy
+from openexp._mouse.legacy import Legacy
 from libopensesame.exceptions import osexception
 from openexp.backend import configurable
 try:
@@ -28,7 +28,8 @@ try:
 except ImportError:
 	android = None
 
-class droid(legacy.legacy):
+
+class Droid(Legacy):
 
 	"""
 	desc:
@@ -75,3 +76,7 @@ class droid(legacy.legacy):
 			if android is not None and android.check_pause():
 				android.wait_for_resume()
 		return None, None, time
+
+
+# Non PEP-8 alias for backwards compatibility
+droid = Droid

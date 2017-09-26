@@ -19,7 +19,8 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 
 from libopensesame.py3compat import *
 
-class clock(object):
+
+class Clock(object):
 
 	"""
 	desc: |
@@ -97,3 +98,7 @@ class clock(object):
 		"""
 
 		raise NotImplementedError()
+
+
+# Non PEP-8 alias for backwards compatibility
+clock = Clock

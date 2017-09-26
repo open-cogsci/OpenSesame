@@ -18,9 +18,10 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame.py3compat import *
-from openexp._coordinates.coordinates import coordinates
+from openexp._coordinates.coordinates import Coordinates
 
-class legacy(coordinates):
+
+class Legacy(Coordinates):
 
 	"""
 	desc:
@@ -44,3 +45,7 @@ class legacy(coordinates):
 		if not self.uniform_coordinates:
 			return x, y
 		return x - self._xcenter, y - self._ycenter
+
+
+# Non PEP-8 alias for backwards compatibility
+legacy = Legacy

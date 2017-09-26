@@ -18,11 +18,12 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame.py3compat import *
-from openexp.backend import backend, configurable
+from openexp.backend import Backend, configurable
 from libopensesame.exceptions import osexception
 import warnings
 
-class mouse(backend):
+
+class Mouse(Backend):
 
 	"""
 	desc: |
@@ -138,7 +139,7 @@ class mouse(backend):
 
 		self.experiment = experiment
 		self._cursor_shown = False
-		backend.__init__(self, configurables={
+		Backend.__init__(self, configurables={
 			u'timeout' : self.assert_numeric_or_None,
 			u'buttonlist' : self.assert_list_or_None,
 			u'visible' : self.assert_bool,
@@ -154,7 +155,7 @@ class mouse(backend):
 			except:
 				raise osexception(
 					u"buttonlist must be a list of numeric values, or None")
-		backend.set_config(self, **cfg)
+		Backend.set_config(self, **cfg)
 
 	def default_config(self):
 
@@ -353,3 +354,7 @@ class mouse(backend):
 		warnings.warn(u'mouse.set_visible() has been deprecated. '
 			'Use mouse.visible instead.', DeprecationWarning)
 		self.visible = visible
+
+
+# Non PEP-8 alias for backwards compatibility
+mouse = Mouse

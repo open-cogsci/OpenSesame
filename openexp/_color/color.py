@@ -22,7 +22,8 @@ import webcolors
 import numbers
 from libopensesame.exceptions import osexception
 
-class color(object):
+
+class Color(object):
 
 	"""
 	desc:
@@ -151,3 +152,7 @@ class color(object):
 		"""
 
 		return hexcolor
+
+
+# Non PEP-8 alias for backwards compatibility
+color = Color

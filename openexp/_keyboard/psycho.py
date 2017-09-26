@@ -19,12 +19,13 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 
 from libopensesame.py3compat import *
 from libopensesame.exceptions import osexception
-from openexp._keyboard import keyboard
+from openexp._keyboard.keyboard import Keyboard
 from psychopy import event
 import pyglet.window.key
 from openexp.backend import configurable
 
-class psycho(keyboard.keyboard):
+
+class Psycho(Keyboard):
 
 	"""
 	desc:
@@ -147,3 +148,7 @@ class psycho(keyboard.keyboard):
 				self.experiment.pause()
 			keypressed = True
 		return keypressed
+
+
+# Non PEP-8 alias for backwards compatibility
+psycho = Psycho

@@ -20,7 +20,8 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 from libopensesame.py3compat import *
 from openexp import backend
 
-def color(experiment, *arglist, **kwdict):
+
+def Color(experiment, *arglist, **kwdict):
 
 	"""
 	desc:
@@ -40,3 +41,7 @@ def color(experiment, *arglist, **kwdict):
 
 	cls = backend.get_backend_class(experiment, u'color')
 	return cls(experiment, *arglist, **kwdict)
+
+
+# Non PEP-8 alias for backwards compatibility
+color = Color

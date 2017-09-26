@@ -20,14 +20,14 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 from libopensesame.py3compat import *
 import pygame
 from collections import OrderedDict
-from openexp._canvas import canvas
+from openexp._canvas.canvas import Canvas
 from libopensesame.exceptions import osexception
 from openexp.backend import configurable
 from expyriment import io, control, stimuli
-from openexp._coordinates.xpyriment import xpyriment as xpyriment_coordinates
+from openexp._coordinates.xpyriment import Xpyriment as XpyrimentCoordinates
 
 
-class xpyriment(canvas.canvas, xpyriment_coordinates):
+class Xpyriment(Canvas, XpyrimentCoordinates):
 
 	"""
 	desc:
@@ -45,9 +45,9 @@ class xpyriment(canvas.canvas, xpyriment_coordinates):
 
 	def __init__(self, experiment, auto_prepare=True, **style_args):
 
-		canvas.canvas.__init__(self, experiment, auto_prepare=auto_prepare,
+		Canvas.__init__(self, experiment, auto_prepare=auto_prepare,
 			**style_args)
-		xpyriment_coordinates.__init__(self)
+		XpyrimentCoordinates.__init__(self)
 		self.clear()
 
 	@configurable
@@ -106,3 +106,7 @@ class xpyriment(canvas.canvas, xpyriment_coordinates):
 	def close_display(experiment):
 
 		control.end()
+
+
+# Non PEP-8 alias for backwards compatibility
+xpyriment = Xpyriment

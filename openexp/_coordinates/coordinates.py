@@ -18,11 +18,12 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame.py3compat import *
-from openexp._canvas.canvas import canvas
-from openexp._mouse.mouse import mouse
+from openexp._canvas.canvas import Canvas
+from openexp._mouse.mouse import Mouse
 from libopensesame.exceptions import osexception
 
-class coordinates(object):
+
+class Coordinates(object):
 
 	"""
 	desc:
@@ -51,8 +52,8 @@ class coordinates(object):
 			self._top = self._left = 0
 			self._bottom = self._height
 			self._right = self._width
-		self._mouse_dev = isinstance(self, mouse)
-		self._canvas_dev = isinstance(self, canvas)
+		self._mouse_dev = isinstance(self, Mouse)
+		self._canvas_dev = isinstance(self, Canvas)
 		if not self._mouse_dev and not self._canvas_dev:
 			raise osexception(
 				u'coordinates class should be coparent with canvas or mouse class')
@@ -138,3 +139,7 @@ class coordinates(object):
 		"""
 
 		raise NotImplementedError()
+
+
+# Non PEP-8 alias for backwards compatibility
+coordinates = Coordinates

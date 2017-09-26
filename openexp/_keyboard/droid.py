@@ -21,13 +21,13 @@ from libopensesame.py3compat import *
 from openexp._keyboard.legacy import *
 import pygame
 from openexp.backend import configurable
-
 try:
 	import android
 except ImportError:
 	android = None
 
-class droid(legacy):
+
+class Droid(Legacy):
 
 	"""
 	desc: |
@@ -92,3 +92,7 @@ class droid(legacy):
 			android.show_keyboard()
 		else:
 			android.hide_keyboard()
+
+
+# Non PEP-8 alias for backwards compatibility
+droid = Droid

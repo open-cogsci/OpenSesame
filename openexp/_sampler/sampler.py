@@ -18,10 +18,11 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame.py3compat import *
-from openexp.backend import backend, configurable
+from openexp.backend import Backend, configurable
 from libopensesame.exceptions import osexception
 
-class sampler(backend):
+
+class Sampler(Backend):
 
 	"""
 	desc: |
@@ -151,7 +152,7 @@ class sampler(backend):
 		"""
 
 		self.experiment = experiment
-		backend.__init__(self, configurables={
+		Backend.__init__(self, configurables={
 			u'volume' : self.assert_numeric,
 			u'pan' : self.assert_pan,
 			u'pitch' : self.assert_numeric,
@@ -330,3 +331,7 @@ class sampler(backend):
 		"""
 
 		raise NotImplementedError()
+
+
+# Non PEP-8 alias for backwards compatibility
+sampler = Sampler
