@@ -92,7 +92,6 @@ class python_workspace(object):
 				return True
 		return False
 
-
 	def check_syntax(self, script):
 
 		"""

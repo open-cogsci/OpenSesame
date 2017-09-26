@@ -114,11 +114,6 @@ class Label(Widget):
 			text:
 				desc:	The text to draw.
 				type:	[str, unicode]
-
-		keywords:
-			html:
-				desc:	Indicates whether HTML should be parsed.
-				type:	bool
 		"""
 
 		text = self.form.experiment.syntax.eval_text(text)

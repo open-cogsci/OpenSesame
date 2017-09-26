@@ -27,18 +27,20 @@ from libopensesame.exceptions import osexception
 import random
 import math
 import warnings
-from openexp.canvas_elements import (Rect, Line, RichText, Ellipse, Circle,
-	FixDot, Gabor, NoisePatch, Image)
+from openexp.canvas_elements import (Rect, Line, Text, Ellipse, Circle,
+	FixDot, Gabor, NoisePatch, Image, Arrow, Polygon)
 from libopensesame.widgets.widget_factory import (Label, Button, ImageWidget,
 	ImageButton, TextInput, RatingScale, Checkbox, Form)
 
+
 # Factory functions
+
 
 def Canvas(auto_prepare=True, **style_args):
 
 	"""
 	desc: |
-		A convenience function that creates a new `canvas` object. For a
+		A factory function that creates a new `Canvas` object. For a
 		description of possible keywords, see:
 
 		- %link:manual/python/canvas%
@@ -48,41 +50,43 @@ def Canvas(auto_prepare=True, **style_args):
 		type:	canvas
 
 	example: |
-		my_canvas = canvas(color=u'red', penwidth=2)
+		my_canvas = Canvas(color=u'red', penwidth=2)
 		my_canvas.line(-10, -10, 10, 10)
 		my_canvas.line(-10, 10, 10, -10)
 		my_canvas.show()
 	"""
 
-	from openexp.canvas import canvas
-	return canvas(experiment, auto_prepare=auto_prepare, **style_args)
+	from openexp.canvas import Canvas
+	return Canvas(experiment, auto_prepare=auto_prepare, **style_args)
+
 
 def Keyboard(**resp_args):
 
 	"""
 	desc: |
-		A convenience function that creates a new `keyboard` object. For a
+		A factory function that creates a new `Keyboard` object. For a
 		description of possible keywords, see:
 
 		- %link:manual/python/keyboard%
 
 	returns:
-		desc:	A `keyboard` object.
+		desc:	A `Keyboard` object.
 		type:	keyboard
 
 	example: |
-		my_keyboard = keyboard(keylist=[u'a', u'b'], timeout=5000)
+		my_keyboard = Keyboard(keylist=[u'a', u'b'], timeout=5000)
 		key, time = my_keyboard.get_key()
 	"""
 
-	from openexp.keyboard import keyboard
-	return keyboard(experiment, **resp_args)
+	from openexp.keyboard import Keyboard
+	return Keyboard(experiment, **resp_args)
+
 
 def Mouse(**resp_args):
 
 	"""
 	desc: |
-		A convenience function that creates a new `mouse` object. For a
+		A factory function that creates a new `Mouse` object. For a
 		description of possible keywords, see:
 
 		- %link:manual/python/mouse%
@@ -92,18 +96,19 @@ def Mouse(**resp_args):
 		type:	mouse
 
 	example: |
-		my_mouse = mouse(keylist=[1,3], timeout=5000)
+		my_mouse = Mouse(keylist=[1,3], timeout=5000)
 		button, time = my_mouse.get_button()
 	"""
 
-	from openexp.mouse import mouse
-	return mouse(experiment, **resp_args)
+	from openexp.mouse import Mouse
+	return Mouse(experiment, **resp_args)
+
 
 def Sampler(src, **playback_args):
 
 	"""
 	desc: |
-		A convenience function that creates a new `sampler` object. For a
+		A factory function that creates a new `Sampler` object. For a
 		description of possible keywords, see:
 
 		- %link:manual/python/sampler%
@@ -113,21 +118,24 @@ def Sampler(src, **playback_args):
 		type:	sampler
 
 	example: |
-		src = exp.pool['bark.ogg']
-		my_sampler = sampler(src, volume=.5, pan='left')
+		src = pool['bark.ogg']
+		my_sampler = Sampler(src, volume=.5, pan='left')
 		my_sampler.play()
 	"""
 
-	from openexp.sampler import sampler
-	return sampler(experiment, src, **playback_args)
+	from openexp.sampler import Sampler
+	return Sampler(experiment, src, **playback_args)
+
 
 # Miscellaneous API	functions
+
 
 def Synth(osc="sine", freq=440, length=100, attack=0, decay=5):
 
 	"""
 	desc:
-		Synthesizes a sound and returns it as a `sampler` object.
+		A factory function that synthesizes a sound and returns it as a
+		`Sampler` object.
 
 	keywords:
 		osc:
@@ -153,19 +161,13 @@ def Synth(osc="sine", freq=440, length=100, attack=0, decay=5):
 		type:	sampler
 
 	example: |
-		my_sampler = synth(freq=u'b2', length=500)
+		my_sampler = Synth(freq=u'b2', length=500)
 	"""
 
-	from openexp.synth import synth
-	return synth(experiment, osc=osc, freq=freq, length=length, attack=attack,
+	from openexp.synth import Synth
+	return Synth(experiment, osc=osc, freq=freq, length=length, attack=attack,
 		decay=decay)
 
-# Mimick old-style lowercase API
-canvas = Canvas
-sampler = Sampler
-synth = Synth
-keyboard = Keyboard
-mouse = Mouse
 
 def copy_sketchpad(name):
 
@@ -187,9 +189,10 @@ def copy_sketchpad(name):
 		my_canvas.show()
 	"""
 
-	c = canvas()
+	c = Canvas()
 	c.copy(experiment.items[name].canvas)
 	return c
+
 
 def reset_feedback():
 
@@ -202,6 +205,7 @@ def reset_feedback():
 	"""
 
 	experiment.reset_feedback()
+
 
 def set_response(response=None, response_time=None, correct=None):
 
@@ -237,6 +241,7 @@ def set_subject_nr(nr):
 
 	experiment.set_subject(nr)
 
+
 def sometimes(p=.5):
 
 	"""
@@ -265,6 +270,7 @@ def sometimes(p=.5):
 			u'p should be a numeric value between 0 and 1, not "%s"' % p)
 	return random.random() < p
 
+
 def pause():
 
 	"""
@@ -274,7 +280,8 @@ def pause():
 
 	experiment.pause()
 
-def xy_from_polar(rho, phi, pole=(0,0)):
+
+def xy_from_polar(rho, phi, pole=(0, 0)):
 
 	"""
 	desc:
@@ -324,7 +331,8 @@ def xy_from_polar(rho, phi, pole=(0,0)):
 	y = rho * math.sin(phi) + oy
 	return x, y
 
-def xy_to_polar(x, y, pole=(0,0)):
+
+def xy_to_polar(x, y, pole=(0, 0)):
 
 	"""
 	desc:
@@ -370,6 +378,7 @@ def xy_to_polar(x, y, pole=(0,0)):
 	phi = math.degrees(math.atan2(dy, dx))
 	return rho, phi
 
+
 def xy_distance(x1, y1, x2, y2):
 
 	"""
@@ -404,7 +413,8 @@ def xy_distance(x1, y1, x2, y2):
 		raise osexception(u'Coordinates should be numeric in xy_distance()')
 	return math.sqrt((x1-x2)**2+(y1-y2)**2)
 
-def xy_circle(n, rho, phi0=0, pole=(0,0)):
+
+def xy_circle(n, rho, phi0=0, pole=(0, 0)):
 
 	"""
 	desc:
@@ -455,7 +465,8 @@ def xy_circle(n, rho, phi0=0, pole=(0,0)):
 		phi0 += 360./n
 	return l
 
-def xy_grid(n, spacing, pole=(0,0)):
+
+def xy_grid(n, spacing, pole=(0, 0)):
 
 	"""
 	desc:
@@ -523,6 +534,7 @@ def xy_grid(n, spacing, pole=(0,0)):
 			x = (col - (n_col-1) / 2.) * s_col + pole[0]
 			l.append((x, y))
 	return l
+
 
 def xy_random(n, width, height, min_dist=0, pole=(0,0)):
 
@@ -606,7 +618,9 @@ def xy_random(n, width, height, min_dist=0, pole=(0,0)):
 	raise osexception(
 		u'Failed to generate random coordinates in xy_random()')
 
+
 # Helper functions that are not part of the public API
+
 
 def parse_pole(pole):
 
@@ -622,3 +636,11 @@ def parse_pole(pole):
 		raise osexception(u'pole should be a tuple (or similar) of length '
 			u'with two numeric values')
 	return ox, oy
+
+
+# Non PEP-8 alias for backwards compatibility
+canvas = Canvas
+sampler = Sampler
+synth = Synth
+keyboard = Keyboard
+mouse = Mouse

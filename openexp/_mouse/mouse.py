@@ -27,14 +27,14 @@ class Mouse(Backend):
 
 	"""
 	desc: |
-		The `mouse` class is used to collect mouse input.
+		The `Mouse` class is used to collect mouse input.
 
 		__Example:__
 
 		~~~ .python
 		# Draw a 'fixation-dot mouse cursor' until a button is clicked
-		my_mouse = mouse()
-		my_canvas = canvas()
+		my_mouse = Mouse()
+		my_canvas = Canvas()
 		while True:
 			button, position, timestamp = my_mouse.get_click(timeout=20)
 			if button is not None:
@@ -88,7 +88,7 @@ class Mouse(Backend):
 
 		~~~ .python
 		# Get a left or right button press with a timeout of 3000 ms
-		my_mouse = mouse()
+		my_mouse = Mouse()
 		button, time = my_mouse.get_key(buttonlist=[1,3], timeout=3000)
 		~~~
 
@@ -98,7 +98,7 @@ class Mouse(Backend):
 
 		~~~ .python
 		# Get two key left or right presses with a 5000 ms timeout
-		my_mouse = mouse()
+		my_mouse = Mouse()
 		my_mouse.keylist = [1,3]
 		my_mouse.timeout = 5000
 		button1, time1 = my_mouse.get_button()
@@ -109,7 +109,7 @@ class Mouse(Backend):
 
 		~~~ .python
 		# Get two key left or right presses with a 5000 ms timeout
-		my_mouse = mouse(keylist=[1,3], timeout=5000)
+		my_mouse = Mouse(keylist=[1,3], timeout=5000)
 		button1, time1 = my_mouse.get_button()
 		button2, time2 = my_mouse.get_button()
 		~~~
@@ -119,8 +119,8 @@ class Mouse(Backend):
 
 		"""
 		desc: |
-			Constructor to create a new `mouse` object. You do not generally
-			call this constructor directly, but use the `mouse()` function,
+			Constructor to create a new `Mouse` object. You do not generally
+			call this constructor directly, but use the `Mouse()` function,
 			which is described here: [/python/common/]().
 
 		arguments:
@@ -131,10 +131,10 @@ class Mouse(Backend):
 		keyword-dict:
 			resp_args:
 				Optional [response keywords] that will be used as the default
-				for this `mouse` object.
+				for this `Mouse` object.
 
 		example: |
-			my_mouse = mouse(buttonlist=[1, 2], timeout=2000)
+			my_mouse = Mouse(buttonlist=[1, 2], timeout=2000)
 		"""
 
 		self.experiment = experiment
@@ -143,7 +143,8 @@ class Mouse(Backend):
 			u'timeout' : self.assert_numeric_or_None,
 			u'buttonlist' : self.assert_list_or_None,
 			u'visible' : self.assert_bool,
-			}, **resp_args)
+			}, **resp_args
+		)
 
 	def set_config(self, **cfg):
 
@@ -199,7 +200,7 @@ class Mouse(Backend):
 				type:	tuple
 
 		example: |
-			my_mouse = mouse()
+			my_mouse = Mouse()
 			my_mouse.set_pos(pos=(0,0))
 		"""
 
@@ -224,7 +225,7 @@ class Mouse(Backend):
 			type:			tuple
 
 		example: |
-			my_mouse = mouse()
+			my_mouse = Mouse()
 			button, (x, y), timestamp = my_mouse.get_click(timeout=5000)
 			if button is None:
 				print('A timeout occurred!')
@@ -243,7 +244,7 @@ class Mouse(Backend):
 			type:	tuple
 
 		example: |
-			my_mouse = mouse()
+			my_mouse = Mouse()
 			(x, y), timestamp = my_mouse.get_pos()
 			print('The cursor was at (%d, %d)' % (x, y))
 		"""
@@ -262,7 +263,7 @@ class Mouse(Backend):
 			type:	tuple.
 
 		example: |
-			my_mouse = mouse()
+			my_mouse = Mouse()
 			buttons = my_mouse.get_pressed()
 			b1, b2, b3 = buttons
 			print('Currently pressed mouse buttons: (%d,%d,%d)' % (b1,b2,b3))
@@ -282,7 +283,7 @@ class Mouse(Backend):
 			type:	bool
 
 		example: |
-			my_mouse = mouse()
+			my_mouse = Mouse()
 			my_mouse.flush()
 			button, position, timestamp = my_mouse.get_click()
 		"""

@@ -705,8 +705,9 @@ class sketchpad_canvas(QtWidgets.QGraphicsScene):
 
 		"""Mimicks canvas api. See openexp._canvas.canvas."""
 
-		from openexp._canvas.canvas import canvas
-		shape = canvas.arrow_shape(self._x(sx), self._y(sy), self._x(ex),
+		from openexp._canvas._arrow.arrow import Arrow
+
+		shape = Arrow._shape(self._x(sx), self._y(sy), self._x(ex),
 			self._y(ey), body_length=self._p(body_length),
 			body_width=self._p(body_width),
 			head_width=self._w(head_width))

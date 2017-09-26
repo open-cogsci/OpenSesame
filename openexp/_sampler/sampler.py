@@ -26,13 +26,13 @@ class Sampler(Backend):
 
 	"""
 	desc: |
-		The SAMPLER module provides functionality to play sound samples.
+		The `Sampler` class provides functionality to play sound samples.
 
 		__Example:__
 
 		~~~ .python
 		src = pool['bark.ogg']
-		my_sampler = sampler(src, volume=.5)
+		my_sampler = Sampler(src, volume=.5)
 		my_sampler.play()
 		~~~
 
@@ -97,8 +97,8 @@ class Sampler(Backend):
 		  playback or not (`False`).
 
 		~~~ .python
-		src = exp.pool['bark.ogg']
-		my_sampler = sampler(src)
+		src = pool['bark.ogg']
+		my_sampler = Sampler(src)
 		my_sampler.play(volume=.5, pan='left')
 		~~~
 
@@ -107,8 +107,8 @@ class Sampler(Backend):
 		subsequent operations, set the playback properties directly:
 
 		~~~ .python
-		src = exp.pool['bark.ogg']
-		my_sampler = sampler(src)
+		src = pool['bark.ogg']
+		my_sampler = Sampler(src)
 		my_sampler.volume = .5
 		my_sampler.pan = 'left'
 		my_sampler.play()
@@ -118,8 +118,8 @@ class Sampler(Backend):
 		Or pass the playback keywords to [sampler.\_\_init\_\_][__init__]:
 
 		~~~ .python
-		src = exp.pool['bark.ogg']
-		my_sampler = sampler(src, volume=.5, pan='left')
+		src = pool['bark.ogg']
+		my_sampler = Sampler(src, volume=.5, pan='left')
 		my_sampler.play()
 		my_sampler.play()
 		~~~
@@ -130,7 +130,7 @@ class Sampler(Backend):
 		"""
 		desc: |
 			Constructor to create a new SAMPLER object. You do not generally
-			call this constructor directly, but use the `sampler()` function,
+			call this constructor directly, but use the `Sampler()` function,
 			which is described here: [/python/sampler/]().
 
 		arguments:
@@ -147,8 +147,8 @@ class Sampler(Backend):
 				for this SAMPLER object.
 
 		example: |
-			src = exp.pool[u'my_sound.ogg']
-			my_sampler = sampler(src, volume=.5)
+			src = pool[u'my_sound.ogg']
+			my_sampler = Sampler(src, volume=.5)
 		"""
 
 		self.experiment = experiment
@@ -192,8 +192,8 @@ class Sampler(Backend):
 				[sampler.play]. This does not affect subsequent operations.
 
 		example: |
-			src = exp.pool[u'my_sound.ogg']
-			my_sampler = sampler(src)
+			src = pool[u'my_sound.ogg']
+			my_sampler = Sampler(src)
 			my_sampler.play(pitch=.5, block=True)
 		"""
 
@@ -206,8 +206,8 @@ class Sampler(Backend):
 			Stops the currently playing sound (if any).
 
 		example: |
-			src = exp.pool[u'my_sound.ogg']
-			my_sampler = sampler(src)
+			src = pool[u'my_sound.ogg']
+			my_sampler = Sampler(src)
 			my_sampler.play()
 			sleep(100)
 			my_sampler.stop()
@@ -222,8 +222,8 @@ class Sampler(Backend):
 			Pauses playback (if any).
 
 		example: |
-			src = exp.pool[u'my_sound.ogg']
-			my_sampler = sampler(src)
+			src = pool[u'my_sound.ogg']
+			my_sampler = Sampler(src)
 			my_sampler.play()
 			sleep(100)
 			my_sampler.pause()
@@ -240,8 +240,8 @@ class Sampler(Backend):
 			Resumes playback (if any).
 
 		example: |
-			src = exp.pool[u'my_sound.ogg']
-			my_sampler = sampler(src)
+			src = pool[u'my_sound.ogg']
+			my_sampler = Sampler(src)
 			my_sampler.play()
 			sleep(100)
 			my_sampler.pause()
@@ -262,8 +262,8 @@ class Sampler(Backend):
 			type:	bool
 
 		Example: |
-			src = exp.pool[u'my_sound.ogg']
-			my_sampler = sampler(src)
+			src = pool[u'my_sound.ogg']
+			my_sampler = Sampler(src)
 			my_sampler.play()
 			sleep(100)
 			if my_sampler.is_playing():
@@ -280,8 +280,8 @@ class Sampler(Backend):
 			no sound is playing.
 
 		example: |
-			src = exp.pool[u'my_sound.ogg']
-			my_sampler = sampler(src)
+			src = pool[u'my_sound.ogg']
+			my_sampler = Sampler(src)
 			my_sampler.play()
 			my_sampler.wait()
 			print('The sampler is finished!')

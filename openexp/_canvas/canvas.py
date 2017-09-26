@@ -26,8 +26,8 @@ from libopensesame.exceptions import osexception
 from openexp.backend import Backend, configurable
 from openexp.color import Color
 from collections import OrderedDict
-from openexp.canvas_elements import Line, Rect, Polygon, Ellipse, Image, \
-	Gabor, NoisePatch, Circle, FixDot, ElementFactory, RichText
+from openexp.canvas_elements import (Line, Rect, Polygon, Ellipse, Image,
+	Gabor, NoisePatch, Circle, FixDot, ElementFactory, RichText, Arrow)
 from openexp._canvas._element.element import Element
 from openexp._canvas._element.group import Group
 
@@ -36,18 +36,18 @@ class Canvas(Backend):
 
 	"""
 	desc: |
-		The `canvas` class is used to present visual stimuli.
+		The `Canvas` class is used to present visual stimuli.
 
 		__Example__:
 
 		~~~ .python
 		# Create and show a canvas with a central fixation dot
-		my_canvas = canvas()
+		my_canvas = Canvas()
 		my_canvas.fixdot()
 		my_canvas.show()
 		~~~
 
-		If drawing on a `canvas` is slow, especially if you draw many stimuli,
+		If drawing on a `Canvas` is slow, especially if you draw many stimuli,
 		you should disable `auto_prepare` and explicitly call `canvas.prepare()`
 		after all drawing operations are done, but before calling
 		`canvas.show()`.
@@ -108,7 +108,7 @@ class Canvas(Backend):
 
 		~~~ .python
 		# Draw a green fixation dot
-		my_canvas = canvas()
+		my_canvas = Canvas()
 		my_canvas.fixdot(color='green')
 		my_canvas.show()
 		~~~
@@ -120,7 +120,7 @@ class Canvas(Backend):
 
 		~~~ .python
 		# Draw a red cross with a 2px penwidth
-		my_canvas = canvas()
+		my_canvas = Canvas()
 		my_canvas.color = u'red'
 		my_canvas.penwidth = 2
 		my_canvas.line(-10, -10, 10, 10)
@@ -171,6 +171,37 @@ class Canvas(Backend):
 		my_canvas.fixdot(color=255)
 		~~~
 
+
+		## Naming, accessing, and modifying elements
+
+		As of OpenSesame 3.2, the `Canvas` supports an object-based interface
+		that allows you to name elements, and to access and modify elements
+		individually, without having to redraw the entire `Canvas`.
+
+		For example, the following will first add a red `Line` element to a
+		`Canvas` and show it, and then change the color of the line to green and
+		show it again. The name of the element (`my_line`) is used to refer to
+		the element later on to change it.
+
+		~~~ .python
+		my_canvas = Canvas()
+		my_canvas['my_line'] = Line(-100, -100, 100, 100, color='red')
+		my_canvas.show()
+		clock.sleep(1000)
+		my_canvas['my_line'].color = 'green'
+		my_canvas.show()
+		~~~
+
+		You can also add an element without explicitly providing a name for it.
+		In that case, a name is generated automatically (e.g. `stim0`).
+
+		~~~ .python
+		my_canvas = Canvas()
+		my_canvas += FixDot()
+		my_canvas.show()
+		~~~
+
+
 		%--
 		constant:
 			arg_max_width: |
@@ -193,8 +224,8 @@ class Canvas(Backend):
 
 		"""
 		desc: |
-			Constructor to create a new `canvas` object. You do not generally
-			call this constructor directly, but use the `canvas()` function,
+			Constructor to create a new `Canvas` object. You do not generally
+			call this constructor directly, but use the `Canvas()` function,
 			which is described here: [/python/common/]().
 
 		arguments:
@@ -221,11 +252,11 @@ class Canvas(Backend):
 		keyword-dict:
 			style_args:
 				Optional [style keywords], which will be used as the default
-				for all drawing operations on this `canvas`.
+				for all drawing operations on this `Canvas`.
 
 		example: |
 			# Example 1: Show a central fixation dot.
-			my_canvas = canvas()
+			my_canvas = Canvas()
 			my_canvas.fixdot()
 			my_canvas.show()
 
@@ -310,7 +341,7 @@ class Canvas(Backend):
 			get both if you have only one).
 
 		arguments:
-			elements:
+			element:
 				desc:	A SKETCHPAD element, or its name.
 				type:	[Element, str]
 
@@ -333,7 +364,7 @@ class Canvas(Backend):
 			it becomes the background.
 
 		arguments:
-			elements:
+			element:
 				desc:	A SKETCHPAD element, or its name.
 				type:	[Element, str]
 		"""
@@ -354,7 +385,7 @@ class Canvas(Backend):
 			it becomes the foreground.
 
 		arguments:
-			elements:
+			element:
 				desc:	A SKETCHPAD element, or its name.
 				type:	[Element, str]
 		"""
@@ -524,22 +555,22 @@ class Canvas(Backend):
 
 		"""
 		desc: |
-			Turns the current `canvas` into a copy of the passed `canvas`.
+			Turns the current `Canvas` into a copy of the passed `Canvas`.
 
 			__Note:__
 
-			If you want to create a copy of a `sketchpad` `canvas`, you can also
+			If you want to create a copy of a `sketchpad` `Canvas`, you can also
 			use the `inline_script.copy_sketchpad` function.
 
 		arguments:
 			canvas:
-				desc:	The `canvas` to copy.
+				desc:	The `Canvas` to copy.
 				type:	canvas
 
 		example: |
-			my_canvas = canvas()
+			my_canvas = Canvas()
 			my_canvas.fixdot(x=100, color='green')
-			my_copied_canvas = canvas()
+			my_copied_canvas = Canvas()
 			my_copied_canvas.copy(my_canvas)
 			my_copied_canvas.fixdot(x=200, color="blue")
 			my_copied_canvas.show()
@@ -580,7 +611,7 @@ class Canvas(Backend):
 
 
 		example: |
-			my_canvas = canvas()
+			my_canvas = Canvas()
 			my_canvas.fixdot()
 			t = my_canvas.show()
 			exp.set('time_fixdot', t)
@@ -602,7 +633,7 @@ class Canvas(Backend):
 			style_args:	"%arg_style"
 
 		example: |
-			my_canvas = canvas()
+			my_canvas = Canvas()
 			my_canvas.fixdot(color='green')
 			my_canvas.show()
 			sleep(1000)
@@ -650,8 +681,11 @@ class Canvas(Backend):
 			style_args:	"%arg_style"
 
 		example: |
-			my_canvas = canvas()
+			my_canvas = Canvas()
+			# Function interface
 			my_canvas.fixdot()
+			# Element interface
+			my_canvas['my_fixdot'] = FixDot()
 		"""
 
 		self += FixDot(x=x, y=y, style=style, **style_args)
@@ -678,8 +712,11 @@ class Canvas(Backend):
 			style_args:	"%arg_style"
 
 		example: |
-			my_canvas = canvas()
+			my_canvas = Canvas()
+			# Function interface
 			my_canvas.circle(100, 100, 50, fill=True, color='red')
+			# Element interface
+			my_canvas['my_circle'] = Circle(100, 100, 50, fill=True, color='red')
 		"""
 
 		self += Circle(x, y, r, **style_args)
@@ -709,10 +746,13 @@ class Canvas(Backend):
 			style_args:	"%arg_style"
 
 		Example: |
-			my_canvas = canvas()
+			my_canvas = Canvas()
 			w = self.var.width
 			h = self.var.height
+			# Function interface
 			my_canvas.line(0, 0, w, h)
+			# Element interface
+			my_canvas['my_line'] = Line(0, 0, w, h)
 		"""
 
 		self += Line(sx, sy, ex, ey, **style_args)
@@ -754,16 +794,18 @@ class Canvas(Backend):
 				type:	float
 
 		Example: |
-			my_canvas = canvas()
+			my_canvas = Canvas()
 			w = var.width/2
 			h = var.height/2
+			# Function interface
 			my_canvas.arrow(0, 0, w, h, head_width=100, body_length=0.5)
-			my_canvas.show()
+			# Element interface
+			my_canvas['my_arrow'] = Arrow(0, 0, w, h, head_width=100, body_length=0.5)
 		"""
 
-		return self.polygon(self.arrow_shape(sx, sy, ex, ey,
-			body_width=body_width, body_length=body_length,
-			head_width=head_width))
+		self += Arrow(sx, sy, ex, ey, body_width=body_width,
+			body_length=body_length, head_width=head_width, **style_args)
+		return 'stim%d' % self._stimnr
 
 	def rect(self, x, y, w, h, **style_args):
 
@@ -789,13 +831,15 @@ class Canvas(Backend):
 			style_args:	"%arg_style"
 
 		example: |
-			my_canvas = canvas()
+			my_canvas = Canvas()
+			# Function interface
 			my_canvas.rect(-10, -10, 20, 20, fill=True)
+			# Element interface
+			my_canvas['my_rect'] = Rect(-10, -10, 20, 20, fill=True)
 		"""
 
 		self += Rect(x, y, w, h, **style_args)
 		return 'stim%d' % self._stimnr
-
 
 	def ellipse(self, x, y, w, h, **style_args):
 
@@ -821,8 +865,11 @@ class Canvas(Backend):
 			style_args:	"%arg_style"
 
 		example: |
-			my_canvas = canvas()
+			my_canvas = Canvas()
+			# Function interface
 			my_canvas.ellipse(-10, -10, 20, 20, fill=True)
+			# Element interface
+			my_canvas['my_ellipse'] = Ellipse(-10, -10, 20, 20, fill=True)
 		"""
 
 		self += Ellipse(x, y, w, h, **style_args)
@@ -846,11 +893,14 @@ class Canvas(Backend):
 			style_args:	"%arg_style"
 
 		example: |
-			my_canvas = canvas()
+			my_canvas = Canvas()
 			n1 = 0,0
 			n2 = 100, 100
 			n3 = 0, 100
+			# Function interface
 			my_canvas.polygon([n1, n2, n3])
+			# Element interface
+			my_canvas['my_polygon'] = Polygon([n1, n2, n3])
 		"""
 
 		self += Polygon(vertices, **style_args)
@@ -881,7 +931,7 @@ class Canvas(Backend):
 			type:	tuple
 
 		example: |
-			my_canvas = canvas()
+			my_canvas = Canvas()
 			w, h = my_canvas.text_size('Some text')
 		"""
 
@@ -924,8 +974,11 @@ class Canvas(Backend):
 			style_args:	"%arg_style"
 
 		example: |
-			my_canvas = canvas()
+			my_canvas = Canvas()
+			# Function interface
 			my_canvas.text('Some text with <b>boldface</b> and <i>italics</i>')
+			# Element interface
+			my_canvas['my_text'] = Text('Some text with <b>boldface</b> and <i>italics</i>')
 		"""
 
 		self += RichText(text, center=center, x=x, y=y, max_width=max_width,
@@ -966,10 +1019,13 @@ class Canvas(Backend):
 				type:	[float, int, NoneType]
 
 		example: |
-			my_canvas = canvas()
+			my_canvas = Canvas()
 			# Determine the absolute path:
 			path = exp.pool[u'image_in_pool.png']
+			# Function interface
 			my_canvas.image(path)
+			# Element interface
+			my_canvas['my_image'] = Image(path)
 		"""
 
 		self += Image(fname, center=center, x=x, y=y, scale=scale)
@@ -1026,12 +1082,15 @@ class Canvas(Backend):
 				type:	[str, unicode]
 
 		example: |
-			my_canvas = canvas()
+			my_canvas = Canvas()
+			# Function interface
 			my_canvas.gabor(100, 100, 45, .05)
+			# Element interface
+			my_canvas['my_gabor'] = Gabor(100, 100, 45, .05)
 		"""
 
-		self += Gabor(x, y, orient, freq, env=u"gaussian", size=96,
-			stdev=12, phase=0, col1=u"white", col2=u"black", bgmode=u"avg")
+		self += Gabor(x, y, orient, freq, env=env, size=size,
+			stdev=stdev, phase=phase, col1=col1, col2=col2, bgmode=bgmode)
 		return 'stim%d' % self._stimnr
 
 	def noise_patch(self, x, y, env=u'gaussian', size=96, stdev=12,
@@ -1075,14 +1134,16 @@ class Canvas(Backend):
 				type:	[str, unicode]
 
 		example: |
-			my_canvas = canvas()
+			my_canvas = Canvas()
+			# Function interface
 			my_canvas.noise_patch(100, 100, env='circular')
+			# Element interface
+			my_canvas['my_noise_patch'] = NoisePatch(100, 100, env='circular')
 		"""
 
-		self += NoisePatch(x, y, env=u"gaussian", size=96, stdev=12,
-			col1=u"white", col2=u"black", bgmode=u"avg")
+		self += NoisePatch(x, y, env=env, size=size, stdev=stdev,
+			col1=col1, col2=col2, bgmode=bgmode)
 		return 'stim%d' % self._stimnr
-
 
 	# Deprecated functions
 
@@ -1184,40 +1245,6 @@ class Canvas(Backend):
 
 		raise NotImplementedError()
 
-	@staticmethod
-	def arrow_shape(sx, sy, ex, ey, body_length=0.8, body_width=.5,
-		head_width=30):
-
-		"""
-		visible: False
-
-		returns:
-			Returns a list of (x, y) tuples that specify an arrow shape. See
-			canvas.canvas() for keywords.
-		"""
-
-		# length
-		d = math.sqrt((ey-sy)**2 + (sx-ex)**2)
-		# direction
-		angle = math.atan2(ey-sy,ex-sx)
-		_head_width = (1-body_width)/2.0
-		body_width = body_width/2.0
-		# calculate coordinates
-		p4 = (ex,ey)
-		p1 = (sx +body_width * head_width * math.cos(angle - math.pi/2),\
-			sy + body_width * head_width * math.sin(angle - math.pi/2))
-		p2 = (p1[0] + body_length*math.cos(angle) * d, \
-		 	p1[1] + body_length * math.sin(angle) * d)
-		p3 = (p2[0]+_head_width * head_width * math.cos(angle-math.pi/2),\
-			p2[1] + _head_width * head_width * math.sin(angle-math.pi/2))
-		p7 = (sx + body_width * head_width*math.cos(angle + math.pi/2),\
-			sy + body_width * head_width*math.sin(angle + math.pi/2))
-		p6 = (p7[0] + body_length * math.cos(angle) * d, \
-		 	p7[1] + body_length * math.sin(angle) * d)
-		p5 = (p6[0]+_head_width * head_width * math.cos(angle+math.pi/2),\
-			p6[1]+_head_width * head_width * math.sin(angle+math.pi/2))
-		return [p1, p2, p3, p4, p5, p6, p7]
-
 
 # Translation mapping from envelope names
 env_synonyms = {}
@@ -1247,6 +1274,7 @@ env_synonyms[u"l"] = u"l"
 
 canvas_cache = {}
 
+
 def _color(col):
 
 	"""
@@ -1263,6 +1291,7 @@ def _color(col):
 
 	from openexp._color.legacy import Legacy
 	return Legacy(None, col).backend_color
+
 
 def _gabor(orient, freq, env=u"gaussian", size=96, stdev=12, phase=0,
 	col1=u"white", col2=u"black", bgmode=u"avg"):
@@ -1339,6 +1368,7 @@ def _gabor(orient, freq, env=u"gaussian", size=96, stdev=12, phase=0,
 	del px
 	return surface
 
+
 def _noise_patch(env=u"gaussian", size=96, stdev=12, col1=u"white",
 	col2=u"black", bgmode=u"avg"):
 
@@ -1405,6 +1435,7 @@ def _noise_patch(env=u"gaussian", size=96, stdev=12, col1=u"white",
 	canvas_cache[key] = surface
 	del px
 	return surface
+
 
 def _match_env(env):
 

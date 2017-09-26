@@ -47,3 +47,5 @@ class Image(ElementFactory): mod = 'image'
 class Gabor(ElementFactory): mod = 'gabor'
 class NoisePatch(ElementFactory): mod = 'noise_patch'
 class RichText(ElementFactory): mod = 'richtext'
+class Arrow(ElementFactory): mod = 'arrow'
+Text = RichText

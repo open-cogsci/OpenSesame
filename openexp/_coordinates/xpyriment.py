@@ -32,7 +32,7 @@ class Xpyriment(Coordinates):
 
 	def __init__(self):
 
-		coordinates.__init__(self)
+		Coordinates.__init__(self)
 		self._xwcenter = self.experiment.expyriment.screen.window_size[0]/2
 		self._ywcenter = self.experiment.expyriment.screen.window_size[1]/2
 

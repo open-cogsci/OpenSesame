@@ -20,7 +20,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 from libopensesame.py3compat import *
 from openexp._canvas._polygon.polygon import Polygon
 from openexp._canvas._element.xpyriment import XpyrimentElement
-from expyriment.stimuli import Polygon as ExpyrimentPolygon
+from expyriment.stimuli import Shape
 
 
 class Xpyriment(XpyrimentElement, Polygon):
@@ -30,11 +30,11 @@ class Xpyriment(XpyrimentElement, Polygon):
 		left = min(x for x, y in self.vertices)
 		right = max(x for x, y in self.vertices)
 		top = min(y for x, y in self.vertices)
-		bottom = max(y for x, y in vertices)
+		bottom = max(y for x, y in self.vertices)
 		pos = left + (right-left)//2, top + (bottom-top)//2
-		self._stim = ExpyrimentPolygon(
+		self._stim = Shape(
 			line_width=0 if self.fill else self.penwidth,
-			position=pos,
+			position=self.to_xy(pos),
 			colour=self.color.backend_color,
 			anti_aliasing=self.ANTI_ALIAS
 		)

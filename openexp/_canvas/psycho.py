@@ -122,7 +122,7 @@ class Psycho(Canvas, PsychoCoordinates):
 			fullscr=experiment.var.fullscreen==u'yes',
 			monitor=monitor,
 			units=u'pix',
-			rgb=color(experiment, experiment.var.background).backend_color,
+			rgb=Color(experiment, experiment.var.background).backend_color,
 			winType=u'pyglet',
 			allowStencil=True
 		)

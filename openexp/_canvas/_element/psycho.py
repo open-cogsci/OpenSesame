@@ -71,7 +71,7 @@ class PsychoElement(object):
 
 		# Get the smallest power-of-two that is larger than or equal to the
 		# given size
-		size = np.ceil(np.sqrt(size))**2
+		size = int(np.ceil(np.sqrt(size))**2)
 		# Create a PsychoPy mask
 		env = canvas._match_env(env)
 		if env == u'c':

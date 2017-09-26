@@ -26,13 +26,13 @@ class Keyboard(Backend):
 
 	"""
 	desc: |
-		The `keyboard` class is used to collect keyboard responses.
+		The `Keyboard` class is used to collect keyboard responses.
 
 		__Example:__
 
 		~~~ .python
 		# Wait for a 'z' or 'x' key with a timeout of 3000 ms
-		my_keyboard = keyboard(keylist=['z', 'x'], timeout=3000)
+		my_keyboard = Keyboard(keylist=['z', 'x'], timeout=3000)
 		start_time = clock.time()
 		key, end_time = my_keyboard.get_key()
 		var.response = key
@@ -71,7 +71,7 @@ class Keyboard(Backend):
 
 		~~~ .python
 		# Get a left or right arrow press with a timeout of 3000 ms
-		my_keyboard = keyboard()
+		my_keyboard = Keyboard()
 		key, time = my_keyboard.get_key(keylist=[u'left', u'right'],
 			timeout=3000)
 		~~~
@@ -82,7 +82,7 @@ class Keyboard(Backend):
 
 		~~~ .python
 		# Get two key A or B presses with a 5000 ms timeout
-		my_keyboard = keyboard()
+		my_keyboard = Keyboard()
 		my_keyboard.keylist = [u'a', u'b']
 		my_keyboard.timeout = 5000
 		key1, time1 = my_keyboard.get_key()
@@ -93,7 +93,7 @@ class Keyboard(Backend):
 
 		~~~ .python
 		# Get two key A or B presses with a 5000 ms timeout
-		my_keyboard = keyboard(keylist=[u'a', u'b'], timeout=5000)
+		my_keyboard = Keyboard(keylist=[u'a', u'b'], timeout=5000)
 		key1, time1 = my_keyboard.get_key()
 		key2, time2 = my_keyboard.get_key()
 		~~~
@@ -103,8 +103,8 @@ class Keyboard(Backend):
 
 		"""
 		desc: |
-			Constructor to create a new `keyboard` object. You do not generally
-			call this constructor directly, but use the `keyboard()` function,
+			Constructor to create a new `Keyboard` object. You do not generally
+			call this constructor directly, but use the `Keyboard()` function,
 			which is described here: [/python/common/]().
 
 		arguments:
@@ -115,10 +115,10 @@ class Keyboard(Backend):
 		keyword-dict:
 			resp_args:
 				Optional [response keywords] (`timeout` and `keylist`) that will
-				be used as the default for this `keyboard` object.
+				be used as the default for this `Keyboard` object.
 
 		example: |
-			my_keyboard = keyboard(keylist=['z', 'm'], timeout=2000)
+			my_keyboard = Keyboard(keylist=['z', 'm'], timeout=2000)
 		"""
 
 		self.experiment = experiment
@@ -164,7 +164,7 @@ class Keyboard(Backend):
 			type:		tuple
 
 		example: |
-			my_keyboard = keyboard()
+			my_keyboard = Keyboard()
 			response, timestamp = my_keyboard.get_key(timeout=5000)
 			if response is None:
 				print(u'A timeout occurred!')
@@ -185,7 +185,7 @@ class Keyboard(Backend):
 			type:	list
 
 		example: |
-			my_keyboard = keyboard()
+			my_keyboard = Keyboard()
 			moderators = my_keyboard.get_mods()
 			if u'shift' in moderators:
 				print(u'The shift-key is down!')
@@ -240,7 +240,7 @@ class Keyboard(Backend):
 			type:	bool
 
 		Example: |
-			my_keyboard = keyboard()
+			my_keyboard = Keyboard()
 			my_keyboard.flush()
 			response, timestamp = my_keyboard.get_key()
 		"""
@@ -266,7 +266,7 @@ class Keyboard(Backend):
 				type:	bool
 
 		example: |
-			my_keyboard = keyboard()
+			my_keyboard = Keyboard()
 			my_keyboard.show_virtual_keyboard(True)
 			response1, timestamp2 = my_keyboard.get_key()
 			response2, timestamp2 = my_keyboard.get_key()
