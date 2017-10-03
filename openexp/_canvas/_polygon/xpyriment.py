@@ -21,6 +21,7 @@ from libopensesame.py3compat import *
 from openexp._canvas._polygon.polygon import Polygon
 from openexp._canvas._element.xpyriment import XpyrimentElement
 from expyriment.stimuli import Shape
+from expyriment.misc.geometry import points_to_vertices
 
 
 class Xpyriment(XpyrimentElement, Polygon):
@@ -38,5 +39,7 @@ class Xpyriment(XpyrimentElement, Polygon):
 			colour=self.color.backend_color,
 			anti_aliasing=self.ANTI_ALIAS
 		)
-		self._stim.add_vertices([self.to_xy(x, y) for x, y in self.vertices])
+		self._stim.add_vertices(points_to_vertices(
+			[self.to_xy(x, y) for x, y in self.vertices]
+		))
 		self._stim.preload()

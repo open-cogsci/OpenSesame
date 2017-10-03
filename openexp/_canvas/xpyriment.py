@@ -66,7 +66,6 @@ class Xpyriment(Canvas, XpyrimentCoordinates):
 		while elements:
 			e = elements.pop(0)
 			e.show(clear=False, update=not elements)
-			print(e, self.experiment.clock.time()- t0)
 		return self.experiment.clock.time()
 
 	@staticmethod
