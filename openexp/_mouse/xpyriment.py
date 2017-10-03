@@ -57,8 +57,11 @@ class Xpyriment(XpyrimentCoordinates, Legacy):
 			time = pygame.time.get_ticks()
 			# Process the input
 			for event in pygame.event.get([MOUSEBUTTONDOWN, KEYDOWN]):
-				if event.type == KEYDOWN and event.key == pygame.K_ESCAPE:
-					raise osexception(u'The escape key was pressed.')
+				if event.type == KEYDOWN:
+					if event.key == pygame.K_ESCAPE:
+						self.experiment.pause()
+						continue
+					pygame.event.post(event)
 				if event.type == MOUSEBUTTONDOWN:
 					if buttonlist is None or event.button in buttonlist:
 						pygame.mouse.set_visible(self._cursor_shown)
