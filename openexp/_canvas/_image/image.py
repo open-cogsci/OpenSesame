@@ -27,3 +27,14 @@ class Image(Element):
 
 		Element.__init__(self, canvas, fname=fname, center=center, x=x, y=y,
 			scale=scale)
+
+	@property
+	def rect(self):
+
+		from PIL import Image
+
+		im = Image.open(fname)
+		w, h = im.size
+		if self.center:
+			return self.x-w//2, self.y-h//2, w, h
+		return self.x, self.y, w, h

@@ -28,3 +28,7 @@ class Ellipse(Element):
 		properties = properties.copy()
 		properties.update({ 'x' : x, 'y' : y, 'w' : w, 'h' : h })
 		Element.__init__(self, canvas, **properties)
+
+	@property
+	def rect(self):
+		return self.x-r, self.y-r, self.w, self.h

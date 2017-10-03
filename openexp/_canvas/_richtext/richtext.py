@@ -49,6 +49,14 @@ class RichText(Element):
 		y2 = max(y1+self.font_size, y2)
 		return x2-x1, y2-y1
 
+	@property
+	def rect(self):
+
+		w, h = self.size
+		if self.center:
+			return self.x-w//2, self.y-h//2, w, h
+		return self.x, self.y, w, h
+
 	def _to_qgraphicstextitem(self):
 
 		t = QGraphicsTextItem()

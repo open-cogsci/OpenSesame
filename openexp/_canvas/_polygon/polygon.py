@@ -28,3 +28,12 @@ class Polygon(Element):
 		properties = properties.copy()
 		properties.update({ 'vertices' : vertices })
 		Element.__init__(self, canvas, **properties)
+
+	@property
+	def rect(self):
+
+		left = min(x for x,y in self.vertices)
+		right = max(x for x,y in self.vertices)
+		top = min(y for x,y in self.vertices)
+		bottom = max(y for x,y in self.vertices)
+		return left, top, right-left, bottom-top

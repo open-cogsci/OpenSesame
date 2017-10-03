@@ -26,5 +26,14 @@ class Line(Element):
 	def __init__(self, canvas, sx, sy, ex, ey, **properties):
 
 		properties = properties.copy()
-		properties.update({ 'sx' : sx, 'sy' : sy, 'ex' : ex, 'ey' : ey })
+		properties.update({'sx' : sx, 'sy' : sy, 'ex' : ex, 'ey' : ey})
 		Element.__init__(self, canvas, **properties)
+
+	@property
+	def rect(self):
+
+		top = min(sy, ey)
+		bottom = max(sy, ey)
+		left = min(sx, ex)
+		right = max(sx, ex)
+		return left, top, right-left, bottom-top

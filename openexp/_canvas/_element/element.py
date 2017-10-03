@@ -61,6 +61,11 @@ class Element(object):
 		if canvas.auto_prepare and self.visible:
 			self.prepare()
 
+	def __contains__(self, xy):
+
+		x, y, w, h = self.rect
+		return x <= xy[0] and x+w >= xy[0] and y <= xy[1] and y+h >= xy[1]
+
 	def __iter__(self):
 
 		"""
@@ -183,6 +188,34 @@ class Element(object):
 	def property_names(self):
 		return set(self._properties.keys()) \
 			| set(self._canvas.configurables.keys())
+
+	@property
+	def rect(self):
+		raise NotImplementedError()
+
+	@property
+	def top(self):
+		return self.rect[1]
+
+	@property
+	def left(self):
+		return self.rect[0]
+
+	@property
+	def width(self):
+		return self.rect[2]
+
+	@property
+	def height(self):
+		return self.rect[3]
+
+	@property
+	def size(self):
+		return self.rect[2:]
+
+	@property
+	def position(self):
+		return self.rect[:2]
 
 	def _create_property(self, key):
 

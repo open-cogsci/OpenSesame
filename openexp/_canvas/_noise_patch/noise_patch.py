@@ -28,3 +28,7 @@ class NoisePatch(Element):
 
 		Element.__init__(self, canvas, x=x, y=y, env=env, size=size,
 			stdev=stdev, col1=col1, col2=col2, bgmode=bgmode)
+
+	@property
+	def rect(self):
+		return self.x-self.size//2, self.y-self.size//2, self.size, self.size
