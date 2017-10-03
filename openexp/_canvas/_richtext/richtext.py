@@ -19,10 +19,17 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 
 from libopensesame.py3compat import *
 from openexp._canvas._element.element import Element
-from qtpy.QtWidgets import QGraphicsTextItem, QStyleOptionGraphicsItem
+from qtpy.QtWidgets import (QGraphicsTextItem, QStyleOptionGraphicsItem,
+	QApplication)
 from qtpy.QtGui import QPixmap, QPainter, QColor, QFont
-from qtpy.QtCore import Qt
+from qtpy.QtCore import Qt, QCoreApplication
 from PIL import Image
+
+
+# If no instance of QApplication exists, a segmentation fault seems to always
+# occur. So we create one.
+if QCoreApplication.instance() is None:
+	app = QApplication([])
 
 
 class RichText(Element):
