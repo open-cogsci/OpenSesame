@@ -27,7 +27,8 @@ class Mouse(Backend):
 
 	"""
 	desc: |
-		The `Mouse` class is used to collect mouse input.
+		The `Mouse` class is used to collect mouse input. You generally create a
+		`Mouse` object with the `Mouse()` factory function.
 
 		__Example:__
 

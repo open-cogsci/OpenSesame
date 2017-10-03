@@ -26,7 +26,9 @@ class Keyboard(Backend):
 
 	"""
 	desc: |
-		The `Keyboard` class is used to collect keyboard responses.
+		The `Keyboard` class is used to collect keyboard responses. You
+		generally create a `Keyboard` object with the `Keyboard()` factory
+		function.
 
 		__Example:__
 

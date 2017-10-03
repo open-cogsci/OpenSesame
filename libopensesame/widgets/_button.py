@@ -52,11 +52,9 @@ class Button(Label):
 
 		"""
 		desc: |
-			Constructor.
-
-			*Note:* When creating a `Button` in a Python inline script, you do
-			not need to (and cannot) provide a `Form` object as a first
-			argument.
+			Constructor to create a new `Button` object. You do not generally
+			call this constructor directly, but use the `Button()` factory
+			function, which is described here: [/python/common/]().
 
 		arguments:
 			form:

@@ -30,7 +30,8 @@ class item_store(object):
 	"""
 	desc: |
 		The `items` object provides dict-like access to the items. It's mainly
-		useful for programatically executing items.
+		useful for programatically executing items. An `items` object is created
+		automatically when the experiment starts.
 
 		In addition to the functions listed below, the following semantics are
 		supported:

@@ -43,6 +43,11 @@ class Group(Element):
 		for element in self._elements:
 			element.show(**kwargs)
 
+	def __iter__(self):
+
+		for e in self._elements:
+			yield e
+
 	def __len__(self):
 
 		return len(self._elements)

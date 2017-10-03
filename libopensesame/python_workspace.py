@@ -79,6 +79,7 @@ class python_workspace(object):
 			})
 		# All functions from the api modules are also loaded into the globals.
 		# This way they can be called directly by name.
+		api.set_aliases()
 		for name, obj in api.__dict__.items():
 			if self._is_api_object(obj):
 				self._globals[name] = obj

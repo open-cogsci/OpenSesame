@@ -36,7 +36,8 @@ class Canvas(Backend):
 
 	"""
 	desc: |
-		The `Canvas` class is used to present visual stimuli.
+		The `Canvas` class is used to present visual stimuli. You generally
+		create a `Canvas` object with the `Canvas()` factory function.
 
 		__Example__:
 
@@ -47,23 +48,15 @@ class Canvas(Backend):
 		my_canvas.show()
 		~~~
 
-		If drawing on a `Canvas` is slow, especially if you draw many stimuli,
-		you should disable `auto_prepare` and explicitly call `canvas.prepare()`
-		after all drawing operations are done, but before calling
-		`canvas.show()`.
-
 		__Example__:
 
-		~~~ .python
-		import random
-		import string
+		As of OpenSesame 3.2, you can also add `Canvas` elements as objects.
+		See also the section on [Naming, accessing, and modifying elements](#naming-accessing-and-modifying-elements).
 
-		# Create and show a canvas with a grid of random letters
-		my_canvas = canvas(auto_prepare=False)
-		for x, y in xy_grid(n=10, spacing=20):
-			letter = random.choice(string.ascii_uppercase)
-			my_canvas.text(text=letter, x=x, y=y)
-		my_canvas.prepare()
+		~~~ .python
+		# Create a canvas with a fixation dot and a rectangle
+		my_canvas = Canvas()
+		my_canvas['my_fixdot'] = FixDot()
 		my_canvas.show()
 		~~~
 
@@ -132,7 +125,7 @@ class Canvas(Backend):
 
 		~~~ .python
 		# Draw a red cross with a 2px penwidth
-		my_canvas = canvas(color=u'red', penwidth=2)
+		my_canvas = Canvas(color=u'red', penwidth=2)
 		my_canvas.line(-10, -10, 10, 10)
 		my_canvas.line(-10, 10, 10, -10)
 		my_canvas.show()
@@ -201,6 +194,18 @@ class Canvas(Backend):
 		my_canvas.show()
 		~~~
 
+		If you add a list of elements, they will be automatically grouped
+		together, and you can refer to the entire group by name.
+
+		~~~ .python
+		my_canvas = Canvas()
+		my_canvas['my_cross'] = [
+			Line(-100, 0, 100, 0),
+			Line(0, -100, 0, 100)
+		]
+		my_canvas.show()
+		~~~
+
 
 		%--
 		constant:
@@ -225,8 +230,8 @@ class Canvas(Backend):
 		"""
 		desc: |
 			Constructor to create a new `Canvas` object. You do not generally
-			call this constructor directly, but use the `Canvas()` function,
-			which is described here: [/python/common/]().
+			call this constructor directly, but use the `Canvas()` factory
+			function, which is described here: [/python/common/]().
 
 		arguments:
 			experiment:
@@ -241,12 +246,9 @@ class Canvas(Backend):
 						auto_prepare is turned off, drawing operations may
 						be faster, but [canvas.show] will take longer,
 						unless [canvas.prepare] is explicitly called in
-						advance. Generally, it only makes sense to disable
-						auto_prepare when you want to draw a large number
-						of stimuli, as in the second example above.
-						Currently, the auto_prepare parameter only applies
-						to the xpyriment backend, and is ignored by the
-						other backends.
+						advance. This option exists mostly for historical
+						purposes, because there are currently no backends for
+						which it is necessary to disable auto prepare.
 				type:	bool
 
 		keyword-dict:
@@ -255,20 +257,8 @@ class Canvas(Backend):
 				for all drawing operations on this `Canvas`.
 
 		example: |
-			# Example 1: Show a central fixation dot.
 			my_canvas = Canvas()
 			my_canvas.fixdot()
-			my_canvas.show()
-
-			# Example 2: Show many randomly positioned fixation dot. Here we
-			# disable `auto_prepare`, so that drawing goes more quickly.
-			from random import randint
-			my_canvas = canvas(auto_prepare=False)
-			for i in range(1000):
-				x = randint(0, my_canvas.width)
-				y = randint(0, my_canvas.height)
-				my_canvas.fixdot(x, y)
-			my_canvas.prepare()
 			my_canvas.show()
 		"""
 
@@ -292,7 +282,44 @@ class Canvas(Backend):
 		self._elements = OrderedDict()
 		self._stimnr = 0
 
+	def __enter__(self):
+
+		"""
+		visible: False
+
+		desc:
+			The context manager provides an elegant way to disable auto
+			preparation. However, it is hidden for now because none of the
+			backends require it.
+		"""
+
+		self._original_auto_prepare = self.auto_prepare
+		self.auto_prepare = False
+		return self
+
+	def __exit__(self, exc_type, exc_value, traceback):
+
+		"""
+		visible: False
+
+		desc:
+			The context manager provides an elegant way to disable auto
+			preparation. However, it is hidden for now because none of the
+			backends require it.
+		"""
+
+		self.auto_prepare = self._original_auto_prepare
+		self.prepare()
+
 	def __setitem__(self, key, value):
+
+		"""
+		visible: False
+
+		desc:
+			Sets a named element. If a list of elements is provided, a Group
+			is automatically created.
+		"""
 
 		if key in self._elements:
 			raise ValueError('An element with the name "%s" already exists' %
@@ -309,22 +336,57 @@ class Canvas(Backend):
 
 	def __delitem__(self, key):
 
+		"""
+		visible: False
+
+		desc:
+			Deletes an element by name.
+		"""
+
 		del self._elements[key]
 
 	def __getitem__(self, key):
+
+		"""
+		visible: False
+
+		desc:
+			Retrieves an element by name.
+		"""
 
 		return self._elements[key]
 
 	def __len__(self):
 
+		"""
+		visible: False
+
+		desc:
+			Gets the number of elements, where a Group counts as 1.
+		"""
+
 		return len(self._elements)
 
 	def __iter__(self):
+
+		"""
+		visible: False
+
+		desc:
+			Iterates over the elements.
+		"""
 
 		for name, stim in self._elements.items():
 			yield name, stim
 
 	def __iadd__(self, element):
+
+		"""
+		visible: False
+
+		desc:
+			Adds an unnamed element.
+		"""
 
 		while 'stim%d' % self._stimnr in self._elements:
 			self._stimnr += 1

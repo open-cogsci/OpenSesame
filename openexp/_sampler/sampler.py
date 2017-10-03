@@ -26,7 +26,9 @@ class Sampler(Backend):
 
 	"""
 	desc: |
-		The `Sampler` class provides functionality to play sound samples.
+		The `Sampler` class provides functionality to play sound samples. You
+		generally create a `Sampler` object with the `Sampler()` factory
+		function.
 
 		__Example:__
 

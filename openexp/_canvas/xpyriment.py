@@ -60,9 +60,11 @@ class Xpyriment(Canvas, XpyrimentCoordinates):
 
 	def show(self):
 
-		elements = [e for e in self._elements.values() if e.visible]
-		t0 = self.experiment.clock.time()
-		self._background.present(clear=True, update=False)
+		# First create a flat list of all elements, including elements that are
+		# part of a group. Then we show them, clearing the display on the first,
+		# and updating the display on the last.
+		elements = [e for g in self._elements.values() if g.visible for e in g]
+		self._background.present(clear=True, update=not elements)
 		while elements:
 			e = elements.pop(0)
 			e.show(clear=False, update=not elements)

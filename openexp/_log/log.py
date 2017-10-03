@@ -25,7 +25,8 @@ class Log(object):
 
 	"""
 	desc: |
-		The `log` provides data logging.
+		The `log` object provides data logging. A `log` object is created
+		automatically when the experiment starts.
 
 		__Example__:
 

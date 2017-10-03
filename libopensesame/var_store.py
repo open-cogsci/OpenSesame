@@ -29,7 +29,8 @@ class var_store(object):
 		Experimental variables are the variables that live in the GUI, and are
 		commonly set as independent variables in the LOOP item, referred
 		to using the square-bracket (`[my_variable]`) notation, and logged by
-		the LOGGER item.
+		the LOGGER item. A `var` object is created automatically when the
+		experiment starts.
 
 		In addition to the functions listed below, the following semantics are
 		supported:

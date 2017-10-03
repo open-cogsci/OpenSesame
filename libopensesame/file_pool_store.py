@@ -30,7 +30,8 @@ class file_pool_store(object):
 	desc: |
 		The `pool` object provides dict-like access to the file pool. When
 		checking whether a file is in the file pool, several folders are
-		searched. For more details, see [folders].
+		searched. For more details, see [folders]. A `pool` object is created
+		automatically when the experiment starts.
 
 		In addition to the functions listed below, the following semantics are
 		supported:

@@ -61,6 +61,30 @@ class Element(object):
 		if canvas.auto_prepare and self.visible:
 			self.prepare()
 
+	def __iter__(self):
+
+		"""
+		visible: False
+
+		desc:
+			Elements are iterable, but by default contain only themselves.
+			However, Group objects can contain other elements.
+		"""
+
+		yield self
+
+	def __len__(self):
+
+		"""
+		visible: False
+
+		desc:
+			Elements have a length, but by default this is 1. However, Group
+			objects can have a different length.
+		"""
+
+		return 1
+
 	def __add__(self, element):
 
 		"""

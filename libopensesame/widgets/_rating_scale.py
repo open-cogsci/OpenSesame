@@ -58,11 +58,10 @@ class RatingScale(Widget):
 
 		"""
 		desc: |
-			Constructor.
-
-			*Note:* When creating a `RatingScale` in a Python inline script,
-			you do not need to (and cannot) provide a `Form` object as a first
-			argument.
+			Constructor to create a new `RatingScale` object. You do not
+			generally call this constructor directly, but use the
+			`RatingScale()` factory function, which is described here:
+			[/python/common/]().
 
 		arguments:
 			form:

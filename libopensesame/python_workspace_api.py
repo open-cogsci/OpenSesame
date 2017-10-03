@@ -638,9 +638,16 @@ def parse_pole(pole):
 	return ox, oy
 
 
-# Non PEP-8 alias for backwards compatibility
-canvas = Canvas
-sampler = Sampler
-synth = Synth
-keyboard = Keyboard
-mouse = Mouse
+def set_aliases():
+
+	"""
+	visible: False
+	"""
+
+	# Non PEP-8 alias for backwards compatibility
+	global canvas, sampler, synth, keyboard, mouse
+	canvas = Canvas
+	sampler = Sampler
+	synth = Synth
+	keyboard = Keyboard
+	mouse = Mouse

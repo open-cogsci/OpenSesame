@@ -53,11 +53,9 @@ class TextInput(Label):
 
 		"""
 		desc: |
-			Constructor.
-
-			*Note:* When creating a `TextInput` in a Python inline script,
-			you do not need to (and cannot) provide a `Form` object as a first
-			argument.
+			Constructor to create a new `TextInput` object. You do not generally
+			call this constructor directly, but use the `TextInput()` factory
+			function, which is described here: [/python/common/]().
 
 		arguments:
 			form:

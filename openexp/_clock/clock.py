@@ -24,7 +24,8 @@ class Clock(object):
 
 	"""
 	desc: |
-		The `clock` offers basic time functions.
+		The `clock` object offers basic time functions. A `clock` object is
+		created automatically when the experiment starts.
 
 		__Example__:
 

@@ -53,11 +53,9 @@ class Form(object):
 
 		"""
 		desc: |
-			Constructor.
-
-			*Note:* When creating a `Form` in a Python inline script, you do
-			not need to (and cannot) provide an `experiment` object as a first
-			argument.
+			Constructor to create a new `Form` object. You do not generally
+			call this constructor directly, but use the `Form()` factory
+			function, which is described here: [/python/common/]().
 
 
 		arguments:

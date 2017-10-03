@@ -57,11 +57,10 @@ class ImageWidget(Widget):
 
 		"""
 		desc: |
-			Constructor.
-
-			*Note:* When creating an `ImageWidget` in a Python inline script,
-			you do not need to (and cannot) provide a `Form` object as a first
-			argument.
+			Constructor to create a new `ImageWidget` object. You do not
+			generally call this constructor directly, but use the
+			`ImageWidget()` factory function, which is described here:
+			[/python/common/]().
 
 		arguments:
 			form:

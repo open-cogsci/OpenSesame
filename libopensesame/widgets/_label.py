@@ -51,11 +51,9 @@ class Label(Widget):
 
 		"""
 		desc: |
-			Constructor.
-
-			*Note:* When creating a `Label` in a Python inline script, you do
-			not need to (and cannot) provide a `Form` object as a first
-			argument.
+			Constructor to create a new `Label` object. You do not generally
+			call this constructor directly, but use the `Label()` factory
+			function, which is described here: [/python/common/]().
 
 		arguments:
 			form:

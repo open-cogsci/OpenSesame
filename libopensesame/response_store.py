@@ -78,7 +78,8 @@ class response_store(object):
 	"""
 	desc: |
 		The `responses` object contains the history of the responses that were
-		collected during the experiment.
+		collected during the experiment. A `responses` object is created
+		automatically when the experiment starts.
 
 		In addition to the functions listed below, the following semantics are
 		supported:
