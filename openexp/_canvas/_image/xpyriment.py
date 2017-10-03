@@ -35,5 +35,5 @@ class Xpyriment(XpyrimentElement, Image):
 		if not self.center:
 			w, h = self._stim.surface_size
 			x += w//2
-			y += h//2
+			y -= h//2
 		self._stim.reposition((x, y))
