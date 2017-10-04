@@ -423,7 +423,7 @@
     <message>
         <location filename="../../translatables-tmp.py" line="404"/>
         <source>Save as…</source>
-        <translation>Farklı kaydet...</translation>
+        <translation>Farklı kaydet…</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="400"/>
@@ -672,7 +672,7 @@ Tanım: %s</translation>
     <message>
         <location filename="../../translatables-tmp.py" line="142"/>
         <source>Loading …</source>
-        <translation>Yükleniyor ...</translation>
+        <translation>Yükleniyor …</translation>
     </message>
 </context>
 <context>
@@ -1448,7 +1448,7 @@ Deney takip eden hatadan dolayı bitmedi:
     <message>
         <location filename="../../translatables-tmp.py" line="408"/>
         <source>Runs a number of items in sequence</source>
-        <translation type="unfinished">Dizgedeki ögeleri belirtilen sayı kadar çalıştırır</translation>
+        <translation>Dizgedeki ögeleri belirtilen sayı kadar çalıştırır</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="410"/>
@@ -2902,22 +2902,22 @@ Deneylerinizi komut dizisi üzerinden düzenle</translation>
     <message>
         <location filename="../ui/misc/main_window.ui" line="358"/>
         <source>Open…</source>
-        <translation>Aç...</translation>
+        <translation>Aç…</translation>
     </message>
     <message>
         <location filename="../ui/misc/main_window.ui" line="388"/>
         <source>Save as…</source>
-        <translation>Farklı kaydet...</translation>
+        <translation>Farklı kaydet…</translation>
     </message>
     <message>
         <location filename="../ui/misc/main_window.ui" line="411"/>
         <source>Run fullscreen…</source>
-        <translation>Tam ekran modunda çalıştır...</translation>
+        <translation>Tam ekran modunda çalıştır…</translation>
     </message>
     <message>
         <location filename="../ui/misc/main_window.ui" line="449"/>
         <source>Run in window…</source>
-        <translation>Pencerede çalıştır...</translation>
+        <translation>Pencerede çalıştır…</translation>
     </message>
 </context>
 <context>
