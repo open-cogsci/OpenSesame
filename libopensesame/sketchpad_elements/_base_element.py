@@ -56,11 +56,20 @@ class base_element(object):
 		debug.msg(self._type)
 		self.defaults = defaults + [
 			(u'z_index', 0),
-			(u'show_if', u'always')
+			(u'show_if', u'always'),
+			(u'name', u'')
 			]
 		self.sketchpad = sketchpad
 		self.var = self.sketchpad.var
 		self.from_string(string)
+
+	@property
+	def element_name(self):
+
+		p = self.eval_properties()
+		if not p[u'name']:
+			return None
+		return p[u'name']
 
 	@property
 	def canvas(self): return self.sketchpad.canvas
@@ -208,7 +217,10 @@ class base_element(object):
 			type:	unicode
 		"""
 
-		return self.syntax.create_cmd(u'draw', [self._type], self.properties)
+		return self.syntax.create_cmd(u'draw', [self._type],
+			{var : val for var, val in self.properties.items()
+			if var != u'name' or val}
+		)
 
 	def eval_properties(self):
 

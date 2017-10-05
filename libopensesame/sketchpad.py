@@ -114,7 +114,11 @@ class sketchpad(base_response_item, keyboard_response_mixin,
 			background_color=self.var.background, auto_prepare=False)
 		for element in self.elements:
 			if element.is_shown():
-				element.draw()
+				temp_name = element.draw()
+				if element.element_name is not None:
+					self.canvas.rename_element(
+						temp_name, element.element_name
+					)
 		self.canvas.prepare()
 
 	def run(self):

@@ -492,6 +492,22 @@ class Canvas(Backend):
 			return
 		self._elements[name] = element
 
+	def rename_element(self, old_name, new_name):
+
+		"""
+		visible: False
+
+		desc: 	Renames an element. 
+		"""
+
+		element = self._elements.pop(old_name)
+		i = 1
+		name = new_name
+		while name in self._elements:
+			name = '%s_%d' % (new_name, i)
+			i += 1
+		self._elements[name] = element
+
 	def set_config(self, **cfg):
 
 		# Remap deprecated names

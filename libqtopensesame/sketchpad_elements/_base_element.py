@@ -254,7 +254,7 @@ class base_element(object):
 				return fallback
 			return bool(val)
 		raise osexception(u'Unknown type: %s' % _type)
-		
+
 	def set_property(self, name, val, yes_no=False):
 
 		"""
@@ -428,6 +428,19 @@ class base_element(object):
 		"""
 
 		return False
+
+	@staticmethod
+	def requires_name():
+
+		"""
+		desc:
+			Indicates whether the element requires name settings.
+
+		returns:
+			type:	bool
+		"""
+
+		return True
 
 	@staticmethod
 	def requires_penwidth():

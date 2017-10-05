@@ -65,6 +65,7 @@ class sketchpad_widget(base_widget):
 		self.ui.edit_show_if.editingFinished.connect(self.apply_show_if)
 		self.ui.edit_show_if.setValidator(cond_validator(self,
 			default=u'always'))
+		self.ui.edit_name.editingFinished.connect(self.apply_name)
 		self.ui.spinbox_arrow_head_width.valueChanged.connect(
 			self.apply_arrow_head_width)
 		self.ui.spinbox_arrow_body_width.valueChanged.connect(
@@ -206,6 +207,18 @@ class sketchpad_widget(base_widget):
 			self.ui.edit_show_if.setText(show_if)
 		self.draw()
 
+	def apply_name(self):
+
+		"""
+		desc:
+			Applies changes to the name field.
+		"""
+
+		name = self.ui.edit_name.text()
+		for element in self.sketchpad.selected_elements():
+			element.set_property(u'name', name)
+		self.draw()
+
 	def apply_penwidth(self, penwidth):
 
 		"""
@@ -269,6 +282,7 @@ class sketchpad_widget(base_widget):
 			(u'arrow_body_length', float),
 			(u'scale', float),
 			(u'show_if', str),
+			(u'name', str),
 			(u'color', str),
 			(u'center', bool),
 			(u'fill', bool),
@@ -496,6 +510,10 @@ class sketchpad_widget(base_widget):
 		self.ui.widget_settings_fill.setVisible(element.requires_fill())
 		self.ui.widget_settings_center.setVisible(element.requires_center())
 		self.ui.widget_settings_show_if.setVisible(element.requires_show_if())
+		self.ui.widget_settings_name.setVisible(
+			element.requires_name() and
+			len(self.sketchpad.selected_elements()) < 2
+		)
 
 	def unselect_all_tools(self):
 
