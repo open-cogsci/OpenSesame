@@ -820,7 +820,7 @@ Deney takip eden hatadan dolayı bitmedi:
     <message>
         <location filename="../../translatables-tmp.py" line="269"/>
         <source>New…</source>
-        <translation>Yeni...</translation>
+        <translation type="unfinished">Yeni…</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="270"/>
@@ -2902,7 +2902,7 @@ Deneylerinizi komut dizisi üzerinden düzenle</translation>
     <message>
         <location filename="../ui/misc/main_window.ui" line="358"/>
         <source>Open…</source>
-        <translation>Aç…</translation>
+        <translation type="unfinished">Aç…</translation>
     </message>
     <message>
         <location filename="../ui/misc/main_window.ui" line="388"/>
