@@ -673,6 +673,11 @@ class sketchpad_canvas(QtWidgets.QGraphicsScene):
 		self.set_font(style=font_family, size=font_size, italic=font_italic,
 			bold=font_bold)
 		i = self.addText(str(text), self._font)
+		mw = self.sketchpad.var.width//2 - self._x(x) \
+			if max_width is None else max_width
+		if center:
+			mw *= 2
+		i.setTextWidth(mw)
 		i.setDefaultTextColor(self._color(color))
 		if html:
 			i.setHtml(str(text))
@@ -680,7 +685,6 @@ class sketchpad_canvas(QtWidgets.QGraphicsScene):
 			# Source:
 			# http://www.cesarbs.org/blog/2011/05/30/aligning-text-in-\
 			# qgraphicstextitem/
-			i.setTextWidth(i.boundingRect().width())
 			fmt = QtGui.QTextBlockFormat()
 			fmt.setAlignment(QtCore.Qt.AlignCenter)
 			cursor = i.textCursor()
