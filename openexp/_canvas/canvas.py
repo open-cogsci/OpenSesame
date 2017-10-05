@@ -94,8 +94,6 @@ class Canvas(Backend):
 		  are filled (`True`), or drawn as an outline (`False`).
 		- `penwidth` indicates a penwidth in pixels and should be `int` or
 		  `float`.
-		- `bidi` indicates whether bidirectional-text support is enabled, and
-		  should be `True` or `False`.
 		- `html` indicates whether HTML-tags are interpreted, and should be
 		  `True` or `False`. For supported tags, see [/usage/text/]().
 		- `font_family` is the name of a font family, such as 'sans'.
@@ -290,7 +288,6 @@ class Canvas(Backend):
 			u'background_color' : None,
 			u'fill' : self.assert_bool,
 			u'penwidth' : self.assert_numeric,
-			u'bidi' : self.assert_bool,
 			u'html' : self.assert_bool,
 			u'font_family' : self.assert_string,
 			u'font_size' : self.assert_numeric,
@@ -497,7 +494,7 @@ class Canvas(Backend):
 		"""
 		visible: False
 
-		desc: 	Renames an element. 
+		desc: 	Renames an element.
 		"""
 
 		element = self._elements.pop(old_name)
@@ -542,7 +539,6 @@ class Canvas(Backend):
 			u'penwidth' 		: 1,
 			u'fill'				: False,
 			u'html'				: True,
-			u'bidi'				: self.experiment.var.bidi==u'yes',
 			u'color'			: self.experiment.var.foreground,
 			u'background_color'	: self.experiment.var.background,
 			u'font_size'		: self.experiment.var.font_size,
@@ -1263,15 +1259,6 @@ class Canvas(Backend):
 		"""
 
 		return self.experiment.var.get(u'height') / 2
-
-	def set_bidi(self, bidi):
-
-		"""
-		visible:	False
-		desc:		deprecated
-		"""
-
-		self.bidi = bidi
 
 	def set_penwidth(self, penwidth):
 

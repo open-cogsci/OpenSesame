@@ -57,7 +57,6 @@ class system_information(base_extension):
 			(u'PyQt', u'qtpy', [u'QtCore', u'PYQT_VERSION_STR']),
 			(u'serial', u'serial', u'VERSION'),
 			(u'markdown', u'markdown', u'version'),
-			(u'bidi', u'bidi', u'VERSION'),
 			(u'yaml', u'yaml', u'__version__'),
 			]:
 			try:
@@ -81,7 +80,7 @@ class system_information(base_extension):
 				l.append(u'%s %s' % (name, getattr(mod, a)))
 				continue
 			l.append(u'%s [version unknown]' % name)
-		
+
 		# platform.architecture() does not seem to work correctly on Windows so a solution found on stackoverflow is used
 		# http://stackoverflow.com/questions/2208828/detect-64bit-os-windows-in-python
 		if(platform.platform().startswith('Windows') and platform.machine().endswith('64')):
@@ -90,7 +89,7 @@ class system_information(base_extension):
 			t = 'win32'
 		else:
 			t = platform.architecture()[0]
-			
+
 		md = safe_read(self.ext_resource(u'system-information.md')) % {
 			u'system' : platform.platform(),
 			u'architecture' : t,

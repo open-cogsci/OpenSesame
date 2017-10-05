@@ -664,7 +664,7 @@ class sketchpad_canvas(QtWidgets.QGraphicsScene):
 		self._font.setPixelSize(self._font_size(size))
 
 	def text(self, text, center=True, x=None, y=None, max_width=None,
-		color=None, bidi=None, html=True, font_family=None, font_size=None,
+		color=None, html=True, font_family=None, font_size=None,
 		font_italic=None, font_bold=None):
 
 		"""Mimicks canvas api. See openexp._canvas.canvas."""

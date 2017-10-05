@@ -80,7 +80,6 @@ class general_properties(base_widget):
 				self.ui.combobox_backend.currentIndexChanged,
 				self.ui.spinbox_width.editingFinished,
 				self.ui.spinbox_height.editingFinished,
-				self.ui.checkbox_bidi.stateChanged,
 				self.ui.checkbox_disable_garbage_collection.stateChanged,
 				self.ui.checkbox_uniform_coordinates.stateChanged,
 				self.ui.edit_foreground.textEdited,
@@ -178,8 +177,6 @@ class general_properties(base_widget):
 			self.ui.checkbox_disable_garbage_collection.isChecked()
 		self.experiment.var.uniform_coordinates = \
 			self.ui.checkbox_uniform_coordinates.isChecked()
-		self.experiment.var.bidi = self.ui.checkbox_bidi.isChecked()
-		self.check_bidi()
 		# Refresh the interface and unlock the general tab
 		self.lock = False
 		self.main_window.extension_manager.fire(u'change_experiment')
@@ -220,31 +217,9 @@ class general_properties(base_widget):
 		self.ui.edit_background.setText(safe_decode(
 			self.experiment.var.background))
 		self.ui.widget_font.initialize(self.experiment)
-		self.ui.checkbox_bidi.setChecked(self.experiment.var.bidi == u'yes')
 		self.ui.checkbox_disable_garbage_collection.setChecked(
 			self.experiment.var.disable_garbage_collection == u'yes')
 		self.ui.checkbox_uniform_coordinates.setChecked(
 			self.experiment.var.uniform_coordinates == u'yes')
-		self.check_bidi()
 		# Release the general tab
 		self.lock = False
-
-	def check_bidi(self):
-
-		"""
-		desc:
-			Shows the bidi-check message if bi-directional text support is
-			enabled while python-bidi is not installed.
-		"""
-
-		if self.experiment.var.bidi != u'yes':
-			self.ui.label_bidi_check.hide()
-			return
-		try:
-			import bidi
-		except:
-			bidi = None
-		if bidi is None:
-			self.ui.label_bidi_check.show()
-		else:
-			self.ui.label_bidi_check.hide()
