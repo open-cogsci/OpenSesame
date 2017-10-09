@@ -102,6 +102,47 @@ class Clock(object):
 
 		raise NotImplementedError()
 
+	def loop_for(self, ms, throttle=None, t0=None):
+
+		"""
+		desc: |
+			*New in v3.2.0*
+
+			An iterator that loops for a fixed time.
+
+		arguments:
+			ms:
+				desc:	The number of milliseconds to loop for.
+				type:	[int. float]
+
+		keywords:
+			throttle:
+				desc:	A period to sleep for in between each iteration.
+				type:	[NoneType, float, int]
+			t0:
+				desc:	A starting time. If `None`, the starting time is the
+						moment at which the iteration starts.
+				type:	[NoneType, float, int]
+
+		returns:
+			desc:	An Iterator over times in milliseconds that have passed
+					since `t0`.
+
+		example: |
+			for ms in clock.sleep_for(100, throttle=10):
+				print(ms)
+		"""
+
+		if t0 is None:
+			t0 = self.time()
+		while True:
+			dt = self.time() - t0
+			if dt >= ms:
+				break
+			yield dt
+			if throttle is not None:
+				self.sleep(throttle)
+
 
 # Non PEP-8 alias for backwards compatibility
 clock = Clock
