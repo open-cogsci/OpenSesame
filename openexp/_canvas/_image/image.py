@@ -23,10 +23,11 @@ from openexp._canvas._element.element import Element
 
 class Image(Element):
 
-	def __init__(self, canvas, fname, center=True, x=None, y=None, scale=None):
+	def __init__(self, canvas, fname, center=True, x=None, y=None, scale=None,
+		rotation=None):
 
 		Element.__init__(self, canvas, fname=fname, center=center, x=x, y=y,
-			scale=scale)
+			scale=scale, rotation=rotation)
 
 	@property
 	def rect(self):

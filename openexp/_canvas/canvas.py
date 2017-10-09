@@ -1080,7 +1080,8 @@ class Canvas(Backend):
 			**style_args)
 		return 'stim%d' % self._stimnr
 
-	def image(self, fname, center=True, x=None, y=None, scale=None):
+	def image(self, fname, center=True, x=None, y=None, scale=None,
+		rotation=None):
 
 		"""
 		desc:
@@ -1112,6 +1113,11 @@ class Canvas(Backend):
 				desc:	The scaling factor of the image. `None` or 1 indicate
 						the original size. 2.0 indicates a 200% zoom, etc.
 				type:	[float, int, NoneType]
+			rotation:
+				desc:	The rotation of the image `None` or 0 indicate the
+						original rotation. Positive values indicate a
+						counterclockwise rotation in degrees.
+				type:	[float, int, NoneType]
 
 		example: |
 			my_canvas = Canvas()
@@ -1123,7 +1129,9 @@ class Canvas(Backend):
 			my_canvas['my_image'] = Image(path)
 		"""
 
-		self += Image(fname, center=center, x=x, y=y, scale=scale)
+		self += Image(
+			fname, center=center, x=x, y=y, scale=scale, rotation=rotation
+		)
 		return 'stim%d' % self._stimnr
 
 	def gabor(self, x, y, orient, freq, env=u'gaussian', size=96, stdev=12,

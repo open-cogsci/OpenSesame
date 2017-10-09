@@ -88,3 +88,13 @@ class PsychoElement(object):
 					_env[x, y] = (max(0, (0.5*size-r) / (0.5*size))-0.5)*2
 			return _env, size
 		raise ValueError('Invalid mask')
+
+
+class GratingElement(PsychoElement):
+
+	def _on_attribute_change(self, **kwargs):
+
+		if u'rotation' in kwargs:
+			self._stim.ori = -kwargs.pop(u'rotation')
+		if kwargs:
+			PsychoElement._on_attribute_change(self, **kwargs)
