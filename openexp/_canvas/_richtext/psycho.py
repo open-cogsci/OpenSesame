@@ -32,4 +32,4 @@ class Psycho(PsychoElement, RichText):
 		if not self.center:
 			x += im.width // 2
 			y -= im.height // 2
-		self._stim = visual.ImageStim(self.win, im, pos=(x, y))
+		self._stim = visual.SimpleImageStim(self.win, im, pos=(x, y))
