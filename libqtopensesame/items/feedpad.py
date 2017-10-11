@@ -276,6 +276,10 @@ class feedpad(object):
 		return self.sketchpad_widget.current_scale
 
 	@property
+	def current_rotation(self):
+		return self.sketchpad_widget.current_rotation
+
+	@property
 	def current_show_if(self):
 		return self.sketchpad_widget.current_show_if
 

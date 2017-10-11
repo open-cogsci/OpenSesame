@@ -44,8 +44,9 @@ class image(base_element):
 			(u'y'		, None),
 			(u'file'	, None),
 			(u'scale'	, 1),
+			(u'rotation', 0),
 			(u'center'	, 1),
-			]
+		]
 		super(image, self).__init__(sketchpad, string, defaults=defaults)
 
 	def draw(self):
@@ -60,5 +61,10 @@ class image(base_element):
 			_file = self.pool[properties[u'file']]
 		except:
 			_file = u''
-		return self.canvas.image(_file, center=properties[u'center']==1,
-			x=properties[u'x'], y=properties[u'y'], scale=properties[u'scale'])
+		return self.canvas.image(_file,
+			center=properties[u'center']==1,
+			x=properties[u'x'],
+			y=properties[u'y'],
+			scale=properties[u'scale'],
+			rotation=properties[u'rotation']
+		)

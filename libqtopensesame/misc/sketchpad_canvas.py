@@ -27,6 +27,7 @@ from qtpy import QtWidgets, QtGui, QtCore
 from libqtopensesame.misc.translate import translation_context
 _ = translation_context(u'sketchpad', category=u'item')
 
+
 class sketchpad_canvas(QtWidgets.QGraphicsScene):
 
 	"""
@@ -392,11 +393,33 @@ class sketchpad_canvas(QtWidgets.QGraphicsScene):
 			An float scale.
 		"""
 
-		if type(scale) not in (int, float):
+		if not isinstance(scale, (int, float)):
 			self.notify(
-				_(u'Scale "%s" is unknown or variably defined, using 1') % scale)
+				_(u'Scale "%s" is unknown or variably defined, using 1')
+				% scale
+			)
 			return 1
 		return scale
+
+	def _rotation(self, rotation):
+
+		"""
+		desc:
+			Safely returns a rotation.
+
+		returns:
+			A rotation.
+		"""
+
+		if rotation is None:
+			return 0
+		if not isinstance(rotation, (int, float)):
+			self.notify(
+				_('Rotation "%s" is unknown or variably defined, using 0')
+				% rotation
+			)
+			return 0
+		return -rotation
 
 	def _point(self, i, x, y, center, scale):
 
@@ -421,8 +444,8 @@ class sketchpad_canvas(QtWidgets.QGraphicsScene):
 		scale = self._scale(scale)
 		if center:
 			r = i.boundingRect()
-			x -= r.width()*scale/2
-			y -= r.height()*scale/2
+			x -= r.width() *scale/2
+			y -= r.height() *scale/2
 		return QtCore.QPoint(x, y)
 
 	def _color(self, _color):
@@ -559,22 +582,6 @@ class sketchpad_canvas(QtWidgets.QGraphicsScene):
 			self.notify(_('Height "%s" is unknown or variably defined, using 100') % y)
 			return 100
 		return y
-
-	def _scale(self, scale):
-
-		"""
-		desc:
-			Safely returns a scale.
-
-		returns:
-			A scale.
-		"""
-
-		if type(scale) not in (int, float):
-			self.notify(_('Scale "%s" is unknown or variably defined, using 1.0') % scale)
-			return 1.0
-		return scale
-
 
 	def _font_size(self, font_size):
 
@@ -778,15 +785,32 @@ class sketchpad_canvas(QtWidgets.QGraphicsScene):
 			penwidth=penwidth)
 		return i
 
-	def image(self, image, center=True, x=None, y=None, scale=None):
+	def image(self, image, center=True, x=None, y=None, scale=None,
+		rotation=None):
 
 		"""Mimicks canvas api. See openexp._canvas.canvas."""
 
 		if not isinstance(image, QtGui.QPixmap):
 			image = self._pixmap(image)
 		i = self.addPixmap(image)
-		i.setScale(self._scale(scale))
-		i.setPos(self._point(i, x, y, center, scale))
+		s = self._scale(scale)
+		x = self._x(x)
+		y = self._x(y)
+		r = self._rotation(rotation)
+		c = i.boundingRect().center()
+		dx = c.x()*s
+		dy = c.y()*s
+		i.setTransform(
+			QtGui.QTransform()
+			.translate(dx, dy)
+			.rotate(r)
+			.translate(-dx, -dy)
+			.scale(s, s)
+		)
+		if center:
+			x -= dx
+			y -= dy
+		i.setPos(x, y)
 		return i
 
 	def gabor(self, x, y, *arglist, **kwdict):

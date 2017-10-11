@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>2247</width>
+    <width>2344</width>
     <height>620</height>
    </rect>
   </property>
@@ -435,6 +435,50 @@
               </property>
               <property name="value">
                <double>1.000000000000000</double>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+         </item>
+         <item>
+          <widget class="QWidget" name="widget_settings_rotation" native="true">
+           <layout class="QHBoxLayout" name="horizontalLayout_16">
+            <property name="leftMargin">
+             <number>0</number>
+            </property>
+            <property name="topMargin">
+             <number>0</number>
+            </property>
+            <property name="rightMargin">
+             <number>0</number>
+            </property>
+            <property name="bottomMargin">
+             <number>0</number>
+            </property>
+            <item>
+             <widget class="QFrame" name="frame_10">
+              <property name="frameShape">
+               <enum>QFrame::VLine</enum>
+              </property>
+              <property name="frameShadow">
+               <enum>QFrame::Raised</enum>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QSpinBox" name="spinbox_rotation">
+              <property name="suffix">
+               <string>°</string>
+              </property>
+              <property name="prefix">
+               <string>Rotate </string>
+              </property>
+              <property name="minimum">
+               <number>-1000</number>
+              </property>
+              <property name="maximum">
+               <number>1000</number>
               </property>
              </widget>
             </item>

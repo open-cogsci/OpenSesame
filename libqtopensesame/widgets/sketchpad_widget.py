@@ -60,6 +60,7 @@ class sketchpad_widget(base_widget):
 		self.ui.button_pointer.clicked.connect(self.select_pointer_tool)
 		self.ui.spinbox_zoom.valueChanged.connect(self.zoom)
 		self.ui.spinbox_scale.valueChanged.connect(self.apply_scale)
+		self.ui.spinbox_rotation.valueChanged.connect(self.apply_rotation)
 		self.ui.spinbox_penwidth.valueChanged.connect(self.apply_penwidth)
 		self.ui.edit_color.textEdited.connect(self.apply_color)
 		self.ui.edit_show_if.editingFinished.connect(self.apply_show_if)
@@ -164,11 +165,22 @@ class sketchpad_widget(base_widget):
 
 		"""
 		desc:
-			Applies toggling of the center checkbox.
+			Applies changes to the scale.
 		"""
 
 		for element in self.sketchpad.selected_elements():
 			element.set_property(u'scale', scale)
+		self.draw()
+
+	def apply_rotation(self, rotation):
+
+		"""
+		desc:
+			Applies changes to the rotation.
+		"""
+
+		for element in self.sketchpad.selected_elements():
+			element.set_property(u'rotation', rotation)
 		self.draw()
 
 	def apply_center(self, center):
@@ -281,6 +293,7 @@ class sketchpad_widget(base_widget):
 			(u'arrow_body_width', float),
 			(u'arrow_body_length', float),
 			(u'scale', float),
+			(u'rotation', int),
 			(u'show_if', str),
 			(u'name', str),
 			(u'color', str),
@@ -457,9 +470,11 @@ class sketchpad_widget(base_widget):
 		self.ui.widget_settings_arrow_body_width.setVisible(False)
 		self.ui.widget_settings_arrow_body_length.setVisible(False)
 		self.ui.widget_settings_scale.setVisible(False)
+		self.ui.widget_settings_rotation.setVisible(False)
 		self.ui.widget_settings_fill.setVisible(False)
 		self.ui.widget_settings_center.setVisible(False)
 		self.ui.widget_settings_show_if.setVisible(False)
+		self.ui.widget_settings_name.setVisible(False)
 		self.ui.graphics_view.setCursor(self.arrow_cursor)
 
 	def select_element_tool(self, element):
@@ -507,6 +522,7 @@ class sketchpad_widget(base_widget):
 		self.ui.widget_settings_arrow_body_length.setVisible(
 			element.requires_arrow_body_length())
 		self.ui.widget_settings_scale.setVisible(element.requires_scale())
+		self.ui.widget_settings_rotation.setVisible(element.requires_rotation())
 		self.ui.widget_settings_fill.setVisible(element.requires_fill())
 		self.ui.widget_settings_center.setVisible(element.requires_center())
 		self.ui.widget_settings_show_if.setVisible(element.requires_show_if())
@@ -630,8 +646,17 @@ class sketchpad_widget(base_widget):
 			type:	float
 		"""
 
-
 		return self.ui.spinbox_scale.value()
+
+	def current_rotation(self):
+
+		"""
+		returns:
+			desc:	The current rotation.
+			type:	float
+		"""
+
+		return self.ui.spinbox_rotation.value()
 
 	def current_arrow_body_width(self):
 

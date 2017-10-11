@@ -40,6 +40,18 @@ class Legacy(LegacyElement, Image):
 				except pygame.error:
 					raise osexception(
 						u"'%s' is not a supported image format" % fname)
+			# After rotation, the figure gets bigger. We therefore need to
+			# compensate by moving it a bit
+			if self.rotation is not None and self.rotation != 0:
+				w1, h1 = self._image_surface.get_size()
+				self._image_surface = pygame.transform.rotate(
+					self._image_surface.convert_alpha(), self.rotation
+				)
+				w2, h2 = self._image_surface.get_size()
+				self._dx = (w2-w1)/2
+				self._dy = (h2-h1)/2
+			else:
+				self._dx = self._dy = 0
 			if self.scale is not None:
 				try:
 					self._image_surface = pygame.transform.smoothscale(
@@ -53,11 +65,16 @@ class Legacy(LegacyElement, Image):
 						(int(self._image_surface.get_width()*self.scale),
 						int(self._image_surface.get_height()*self.scale))
 					)
+				self._dx *= self.scale
+				self._dy *= self.scale
 		size = self._image_surface.get_size()
 		x, y = self.to_xy(self.x, self.y)
 		if self.center:
 			x -= size[0] / 2
 			y -= size[1] / 2
+		else:
+			x -= self._dx
+			y -= self._dy
 		self.surface.blit(self._image_surface, (x, y))
 
 	@staticmethod

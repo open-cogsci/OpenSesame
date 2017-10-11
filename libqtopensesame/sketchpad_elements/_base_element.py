@@ -520,6 +520,20 @@ class base_element(object):
 
 		return False
 
+
+	@staticmethod
+	def requires_rotation():
+
+		"""
+		desc:
+			Indicates whether the element requires rotation settings.
+
+		returns:
+			type:	bool
+		"""
+
+		return False
+
 	@staticmethod
 	def requires_fill():
 

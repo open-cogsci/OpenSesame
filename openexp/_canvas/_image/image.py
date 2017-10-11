@@ -34,8 +34,19 @@ class Image(Element):
 
 		from PIL import Image
 
-		im = Image.open(fname)
-		w, h = im.size
+		im = Image.open(self.fname)
+		w1, h1 = im.size
+		if self.rotation is not None and self.rotation != 0:
+			im = im.rotate(-self.rotation, expand=True)
+		w2, h2 = im.size
+		dx = (w2-w1)/2
+		dy = (h2-h1)/2
+		if self.scale is not None:
+			w2 *= self.scale
+			h2 *= self.scale
+			dx *= self.scale
+			dy *= self.scale
+		x, y = self.none_to_center(self.x, self.y)
 		if self.center:
-			return self.x-w//2, self.y-h//2, w, h
-		return self.x, self.y, w, h
+			return x-w2//2, y-h2//2, w2, h2
+		return x-dx, y-dy, w2, h2

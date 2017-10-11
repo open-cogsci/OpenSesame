@@ -90,11 +90,11 @@ class PsychoElement(object):
 		raise ValueError('Invalid mask')
 
 
-class GratingElement(PsychoElement):
+class RotatingElement(object):
 
 	def _on_attribute_change(self, **kwargs):
 
 		if u'rotation' in kwargs:
 			self._stim.ori = -kwargs.pop(u'rotation')
 		if kwargs:
-			PsychoElement._on_attribute_change(self, **kwargs)
+			super(RotatingElement, self)._on_attribute_change(**kwargs)

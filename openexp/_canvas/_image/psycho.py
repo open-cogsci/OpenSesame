@@ -20,11 +20,11 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 from libopensesame.py3compat import *
 from libopensesame.exceptions import osexception
 from openexp._canvas._image.image import Image
-from openexp._canvas._element.psycho import GratingElement
+from openexp._canvas._element.psycho import PsychoElement, RotatingElement
 from psychopy import visual
 
 
-class Psycho(GratingElement, Image):
+class Psycho(RotatingElement, PsychoElement, Image):
 
 	def prepare(self):
 
@@ -32,7 +32,7 @@ class Psycho(GratingElement, Image):
 			win=self.win,
 			image=safe_decode(self.fname)
 		)
-		if self.rotation is not None:
+		if self.rotation is not None and self.rotation != 0:
 			self._stim.ori = -self.rotation
 		if self.scale is not None:
 			w, h = self._stim.size
