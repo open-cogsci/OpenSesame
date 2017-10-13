@@ -175,8 +175,8 @@ def check_markdown_translations(dirname, locale):
 
 if __name__ == u'__main__':
 
-	locales = u'fr_FR', u'de_DE', u'it_IT', u'zh_CN', u'ru_RU', u'es_ES', \
-		u'ja_JP', u'translatables'
+	locales = [u'fr_FR', u'de_DE', u'it_IT', u'zh_CN', u'ru_RU', u'es_ES',
+		u'ja_JP', u'tr_TR', u'translatables']
 	parser = argparse.ArgumentParser(
 		description=u'Update ts and qm files for OpenSesame-related projects')
 	parser.add_argument('--category', type=str, default=u'auto',
