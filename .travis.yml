@@ -17,7 +17,7 @@ addons:
     - python-qt4
     - python-scipy
 before_install:
-  - pip install pillow webcolors python-datamatrix python-qdatamatrix python-pseudorandom openpyxl qtpy
+  - pip install pillow webcolors python-datamatrix python-qdatamatrix python-pseudorandom openpyxl qtpy psychopy expyriment
   - wget https://github.com/smathot/python-yamldoc/archive/release/0.2.0.tar.gz -O yamldoc.tar.gz
   - tar -xzvf yamldoc.tar.gz
   - export PYTHONPATH=$PYTHONPATH:python-yamldoc-release-0.2.0
