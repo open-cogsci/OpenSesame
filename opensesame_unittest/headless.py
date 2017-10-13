@@ -39,18 +39,21 @@ class check_headless(unittest.TestCase):
 
 		from qtpy.QtWidgets import QApplication
 		app = QApplication([])
-
 		experiment_path = os.path.join(os.path.dirname(__file__), u'data')
 		for experiment_file in [
-				u'response_test.osexp',
 				u'sketchpad_test.osexp',
-				u'loop_test.osexp']:
+				u'response_test.osexp',
+				u'loop_test.osexp'
+			]:
 			print(u'Testing %s' % experiment_file)
-			e = experiment(
-				logfile='/tmp/tmp.csv',
-				experiment_path=experiment_path,
-				string=os.path.join(experiment_path, experiment_file))
-			e.run()
+			for backend in (u'xpyriment', u'psycho', u'legacy'):
+				e = experiment(
+					logfile=u'/tmp/tmp.csv',
+					experiment_path=experiment_path,
+					string=os.path.join(experiment_path, experiment_file)
+				)
+				e.var.canvas_backend = backend
+				e.run()
 
 if __name__ == '__main__':
 	unittest.main()
