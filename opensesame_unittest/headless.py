@@ -46,7 +46,7 @@ class check_headless(unittest.TestCase):
 				u'loop_test.osexp'
 			]:
 			print(u'Testing %s' % experiment_file)
-			for backend in (u'xpyriment', u'psycho'):
+			for backend in (u'xpyriment'):
 				e = experiment(
 					logfile=u'/tmp/tmp.csv',
 					experiment_path=experiment_path,
