@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS><TS version="2.0" language="ja" sourcelanguage="">
+<!DOCTYPE TS><TS version="2.0" language="tr" sourcelanguage="">
 <context>
     <name>core_backend_settings</name>
     <message>
         <location filename="../../translatables-tmp.py" line="482"/>
         <source>Failed to load backend</source>
-        <translation type="unfinished">バックエンドの読み込みに失敗しました</translation>
+        <translation>Sunucu uygulama yükleme hatası</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="483"/>
         <source>No settings for %s</source>
-        <translation type="unfinished">設定なし %s</translation>
+        <translation>%s için ayar bulunamadı</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="484"/>
         <source>Settings for %s:</source>
-        <translation type="unfinished">設定 %s:</translation>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -23,22 +23,22 @@
     <message>
         <location filename="../../translatables-tmp.py" line="428"/>
         <source>Subject number</source>
-        <translation type="unfinished">実験参加番号</translation>
+        <translation>Katılımcı numarası</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="429"/>
         <source>Please enter the subject number</source>
-        <translation type="unfinished">実験参加者番号を入力してください</translation>
+        <translation>Lütfen katılımcı numaranızı giriniz</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="426"/>
         <source>Choose location for logfile (press &apos;escape&apos; for default location)</source>
-        <translation type="unfinished">ログファイルの場所を選択してください (デフォルトの場所に設定する場合は、エスケープキーを押してください)</translation>
+        <translation>Kayıt dosyasının konumu seçiniz (varsayılan konum için &quot;esc&quot;ye basınız)</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="427"/>
         <source>The logfile &apos;%s&apos; is not writable. Please choose another location for the logfile.</source>
-        <translation type="unfinished">ログファイル &apos;%s&apos; は書き込みできません. 別の場所を選択してください.</translation>
+        <translation>Kayıt dosyası &apos;%s&apos; belirtilen konumda oluşturulamadı. Lütfen kayıt dosyası için farklı bir konum seçiniz.</translation>
     </message>
 </context>
 <context>
@@ -46,7 +46,7 @@
     <message>
         <location filename="../../translatables-tmp.py" line="266"/>
         <source>Pick a color</source>
-        <translation type="unfinished">色の選択</translation>
+        <translation>Bir renk seçiniz</translation>
     </message>
 </context>
 <context>
@@ -54,7 +54,7 @@
     <message>
         <location filename="../../translatables-tmp.py" line="40"/>
         <source>Please confirm</source>
-        <translation type="unfinished">確認してください</translation>
+        <translation>Lütfen onaylayınız</translation>
     </message>
 </context>
 <context>
@@ -62,7 +62,7 @@
     <message>
         <location filename="../../translatables-tmp.py" line="514"/>
         <source>Error: Command contains invalid characters</source>
-        <translation type="unfinished">エラー: コマンドに無効な文字が含まれています</translation>
+        <translation>Hata: Komut geçersiz karakterler içermektedir</translation>
     </message>
 </context>
 <context>
@@ -70,7 +70,7 @@
     <message>
         <location filename="../../translatables-tmp.py" line="119"/>
         <source>Failed to parse the resolution. Expecting positive numeric values.</source>
-        <translation type="unfinished">解像度の解析に失敗しました。正の数値を入力してください.</translation>
+        <translation>Netlik çözümlenemedi. Pozitif sayısal değerleri kullanınız.</translation>
     </message>
 </context>
 <context>
@@ -78,12 +78,12 @@
     <message>
         <location filename="../../translatables-tmp.py" line="534"/>
         <source>Apply?</source>
-        <translation type="unfinished">適用しますか?</translation>
+        <translation>Uygulamak istediğinize emin misiniz?</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="535"/>
         <source>Are you sure you want to apply the changes to the general script?</source>
-        <translation type="unfinished">スクリプトへの変更を適用しますか?</translation>
+        <translation>Değişiklikleri genel komut dizisine uygulamak istediğinize emin misiniz?</translation>
     </message>
 </context>
 <context>
@@ -91,7 +91,7 @@
     <message>
         <location filename="../../translatables-tmp.py" line="403"/>
         <source>Click to edit</source>
-        <translation type="unfinished"></translation>
+        <translation>Düzenlemek için tıklayınız</translation>
     </message>
 </context>
 <context>
@@ -99,37 +99,37 @@
     <message>
         <location filename="../../translatables-tmp.py" line="459"/>
         <source>Form</source>
-        <translation type="unfinished">フォーム</translation>
+        <translation>Oluştur</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="455"/>
         <source>Miscellaneous</source>
-        <translation type="unfinished">その他</translation>
+        <translation>Diğer</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="457"/>
         <source>Staircase</source>
-        <translation type="unfinished">階段法</translation>
+        <translation>Merdiven yöntemi</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="458"/>
         <source>Visual stimuli</source>
-        <translation type="unfinished">視覚刺激</translation>
+        <translation>Görsel uyarıcı</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="454"/>
         <source>Response collection</source>
-        <translation type="unfinished">反応取得</translation>
+        <translation>Yanıt toplama</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="453"/>
         <source>miscellaneous</source>
-        <translation type="unfinished">その他</translation>
+        <translation>diğer</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="451"/>
         <source>Flow control</source>
-        <translation type="unfinished">実験フロー制御</translation>
+        <translation>Akış kontrolü</translation>
     </message>
 </context>
 <context>
@@ -137,7 +137,7 @@
     <message>
         <location filename="../../translatables-tmp.py" line="400"/>
         <source>No item selected</source>
-        <translation type="unfinished">アイテムが選択されていません</translation>
+        <translation>Hiç öge seçilmedi</translation>
     </message>
 </context>
 <context>
@@ -145,52 +145,52 @@
     <message>
         <location filename="../../translatables-tmp.py" line="376"/>
         <source>Open</source>
-        <translation type="unfinished">開く</translation>
+        <translation>Aç</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="377"/>
         <source>Rename</source>
-        <translation type="unfinished">名前の変更</translation>
+        <translation>Yeniden adlandır</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="378"/>
         <source>Edit run-if statement</source>
-        <translation type="unfinished"></translation>
+        <translation>Run-if komutlarını düzenle</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="379"/>
         <source>Copy (unlinked)</source>
-        <translation type="unfinished">コピー (リンクなし)</translation>
+        <translation>Kopyala (bağlantısız)</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="380"/>
         <source>Copy (linked)</source>
-        <translation type="unfinished">コピー (リンク)</translation>
+        <translation>Kopyala (bağlantılı)</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="381"/>
         <source>Paste</source>
-        <translation type="unfinished">ペースト</translation>
+        <translation>Yapıştır</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="382"/>
         <source>Delete</source>
-        <translation type="unfinished">消去</translation>
+        <translation>Sil</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="383"/>
         <source>Permanently delete all linked copies</source>
-        <translation type="unfinished">全てのリンクされたコピーを完全消去</translation>
+        <translation>Bağlantılı kopyaları kalıcı olarak sil</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="384"/>
         <source>Permanently delete</source>
-        <translation type="unfinished">完全消去</translation>
+        <translation>Kalıcı olarak sil</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="385"/>
         <source>Help</source>
-        <translation type="unfinished">ヘルプ</translation>
+        <translation>Yardım</translation>
     </message>
 </context>
 <context>
@@ -198,22 +198,22 @@
     <message>
         <location filename="../../translatables-tmp.py" line="312"/>
         <source>View controls</source>
-        <translation type="unfinished">コントロール画面の表示</translation>
+        <translation>Kontrolleri görüntüle</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="313"/>
         <source>View script</source>
-        <translation type="unfinished">スクリプトの表示</translation>
+        <translation>Komutları gör</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="314"/>
         <source>Split view</source>
-        <translation type="unfinished">画面の分割</translation>
+        <translation>Geçerli görünümü ikiye böl</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="315"/>
         <source>Select view</source>
-        <translation type="unfinished">表示選択</translation>
+        <translation>Geçerli görünümü seç</translation>
     </message>
 </context>
 <context>
@@ -221,7 +221,7 @@
     <message>
         <location filename="../../translatables-tmp.py" line="76"/>
         <source>Dismiss this message</source>
-        <translation type="unfinished">メッセージを破棄</translation>
+        <translation>Bu mesaji gösterme</translation>
     </message>
 </context>
 <context>
@@ -229,7 +229,7 @@
     <message>
         <location filename="../../translatables-tmp.py" line="397"/>
         <source>Browse</source>
-        <translation type="unfinished">参照</translation>
+        <translation>Gözat</translation>
     </message>
 </context>
 <context>
@@ -237,67 +237,67 @@
     <message>
         <location filename="../../translatables-tmp.py" line="48"/>
         <source>Failed to copy %s to file pool</source>
-        <translation type="unfinished">ファイルプールへの %s のコピーが失敗しました</translation>
+        <translation>%s dosya havuzuna kopyalanamadı</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="49"/>
         <source>Add files to pool</source>
-        <translation type="unfinished">プールにファイルを追加</translation>
+        <translation>Havuza dosya ekle</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="50"/>
         <source>Failed to refresh file pool</source>
-        <translation type="unfinished">ファイルプールの更新に失敗しました</translation>
+        <translation>Dosya havuzu yenilenemedi</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="51"/>
         <source>Open</source>
-        <translation type="unfinished">開く</translation>
+        <translation>Aç</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="52"/>
         <source>Remove from pool</source>
-        <translation type="unfinished">プールから削除</translation>
+        <translation>Havuzdan kaldır</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="53"/>
         <source>Rename</source>
-        <translation type="unfinished">名前の変更</translation>
+        <translation>Yenıden adlandır</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="54"/>
         <source>And %d more file(s)</source>
-        <translation type="unfinished">%d 個以上のファイル</translation>
+        <translation>%d daha fazla dosya</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="56"/>
         <source>Failed to rename &quot;%s&quot; to &quot;%s&quot;.</source>
-        <translation type="unfinished">&quot;%s&quot; から &quot;%s&quot; への名前の変更に失敗しました.</translation>
+        <translation>&quot;%s&quot; ten &quot;%s&quot;e yeniden adlandırma yapılamadı.</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="57"/>
         <source>Cancel</source>
-        <translation type="unfinished">キャンセル</translation>
+        <translation>İptal et</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="58"/>
         <source>Select</source>
-        <translation type="unfinished">選択</translation>
+        <translation>Seç</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="59"/>
         <source>Select file from pool</source>
-        <translation type="unfinished">プールからファイルを選択</translation>
+        <translation>Havuzdan dosya seç</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="47"/>
         <source>A file named &apos;%s&apos; already exists in the pool. Do you want to overwrite this file?</source>
-        <translation type="unfinished">ファイル名 &apos;%s&apos; はすでにプールに存在します. 上書きしますか?</translation>
+        <translation>Havuzda &apos;%s&apos; adında bir dosya zaten mevcut. Mevcut dosyanın üzerine yeni dosyayı kaydetmek istediğinize emin misiniz?</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="55"/>
         <source>There already is a file named &apos;%s&apos; in the file pool</source>
-        <translation type="unfinished">ファイル名 &apos;%s&apos; はすでにプールに存在します</translation>
+        <translation>&apos;%s&apos; adında bir dosya havuzda zaten mevcut</translation>
     </message>
 </context>
 <context>
@@ -305,7 +305,7 @@
     <message>
         <location filename="../../translatables-tmp.py" line="309"/>
         <source>Cancel</source>
-        <translation type="unfinished">キャンセル</translation>
+        <translation>Iptal et</translation>
     </message>
 </context>
 <context>
@@ -313,27 +313,27 @@
     <message>
         <location filename="../../translatables-tmp.py" line="213"/>
         <source>You must specify &quot;type&quot; for %s controls in info.yaml</source>
-        <translation type="unfinished"></translation>
+        <translation>%s kontrolleri için info.yaml ın içine &quot;tür&quot;ü belirtmeniz gereklidir</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="214"/>
         <source>You must specify &quot;%s&quot; for %s controls in info.yaml</source>
-        <translation type="unfinished"></translation>
+        <translation>%s kontrolleri için info.yaml ın içine &quot;%s&quot; ü belirtmeniz gereklidir</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="215"/>
         <source>Invalid variable name (%s) specified in %s plugin info</source>
-        <translation type="unfinished"></translation>
+        <translation>Geçersiz değişken ismi (%s) %s eklenti bilgisinin içine belirtilmiştir</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="216"/>
         <source>&quot;%s&quot; is not a valid qtautoplugin control</source>
-        <translation type="unfinished"></translation>
+        <translation>&quot;%s&quot; geçerli bir qtautoplugin kontrolü değildir</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="217"/>
         <source>Name &quot;%s&quot; is already taken in qtautoplugin control</source>
-        <translation type="unfinished"></translation>
+        <translation>&quot;%s&quot; ismi zaten qtautoplugin kontrolü olarak kullanılmaktadır</translation>
     </message>
 </context>
 <context>
@@ -341,27 +341,27 @@
     <message>
         <location filename="../../translatables-tmp.py" line="97"/>
         <source>Toggle pop-out</source>
-        <translation type="unfinished"></translation>
+        <translation>Açılır pencereyi değiştir</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="98"/>
         <source>Tell me more about the %s item</source>
-        <translation type="unfinished"></translation>
+        <translation>%s ögesi hakkında bana daha fazla bilgi ver</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="99"/>
         <source>Apply and close</source>
-        <translation type="unfinished"></translation>
+        <translation>Uygula ve kapat</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="100"/>
         <source>Failed to set control &apos;%s&apos;: %s</source>
-        <translation type="unfinished"></translation>
+        <translation>Kontrol ayarlanamadı &apos;%s&apos;:%s</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="96"/>
         <source>Default description</source>
-        <translation type="unfinished"></translation>
+        <translation>Varsayılan tanım</translation>
     </message>
 </context>
 <context>
@@ -369,12 +369,12 @@
     <message>
         <location filename="../../translatables-tmp.py" line="150"/>
         <source>An item with that name already exists.</source>
-        <translation type="unfinished">この名前のアイテムはすでに存在します.</translation>
+        <translation>Bu isimde bir öge zaten mevcut.</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="151"/>
         <source>An item name cannot be empty.</source>
-        <translation type="unfinished">アイテムをつけてください.</translation>
+        <translation>Bir öge ismi boş olamaz.</translation>
     </message>
 </context>
 <context>
@@ -382,65 +382,70 @@
     <message>
         <location filename="../../translatables-tmp.py" line="184"/>
         <source>New experiment</source>
-        <translation type="unfinished">新規実験</translation>
+        <translation>Yeni deney</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="186"/>
         <source>Your experiment contains unsaved changes. Do you want to save your experiment?</source>
-        <translation type="unfinished">この実験には保存されていない変更が含まれています. 保存しますか？?</translation>
+        <translation>Deneyiniz kaydedilmemiş değişikler içeriyor. Bu değişiklikleri kaydetmek ister misiniz?</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="187"/>
         <source>Save changes?</source>
-        <translation type="unfinished">変更を保存しますか?</translation>
+        <translation>Değişiklikleri kaydet?</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="188"/>
         <source>(No recent files)</source>
-        <translation type="unfinished">(最近使用したファイルはありません)</translation>
+        <translation>(Son kullanılan dosya yok)</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="189"/>
         <source>Open file</source>
-        <translation type="unfinished">ファイルを開く</translation>
+        <translation>Dosya aç</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="192"/>
         <source>The following error occured while trying to save:&lt;br/&gt;%s</source>
-        <translation type="unfinished">保存の際, 次のエラーが生じました:&lt;br/&gt;%s</translation>
+        <translation>Kaydetmeye çalışırken hata oluştu:&lt;br/&gt;%s</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="193"/>
         <source>Failed to save file. Error: %s</source>
-        <translation type="unfinished">ファイルの保存に失敗しました. エラー: %s</translation>
+        <translation>Dosya kaydedilirken hata oluştu. Hata: %s</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="195"/>
         <source>Could not parse script: %s</source>
-        <translation type="unfinished">スクリプトの解析ができませんでした: %s</translation>
+        <translation>Komut dosyası yürütülemedi: %s</translation>
     </message>
-    <message encoding="UTF-8">
-        <location filename="../../translatables-tmp.py" line="194"/>
-        <source>Save as…</source>
-        <translation type="unfinished">保存…</translation>
+    <message>
+        <location filename="../../translatables-tmp.py" line="404"/>
+        <source>Save as?</source>
+        <translation type="obsolete">Farklı kaydet…</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="190"/>
         <source>Errors occurred while opening the file:
 
 </source>
-        <translation type="unfinished">ファイルを開く際, エラーが生じました:
+        <translation>Dosya açılırken hata oluştu:
 
 </translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="191"/>
         <source>Error</source>
-        <translation type="unfinished">エラー</translation>
+        <translation>Hata</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="185"/>
         <source> [read only]</source>
+        <translation> [salt okunur]</translation>
+    </message>
+    <message encoding="UTF-8">
+        <location filename="../../translatables-tmp.py" line="194"/>
+        <source>Save as…</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -449,32 +454,32 @@
     <message>
         <location filename="../../translatables-tmp.py" line="220"/>
         <source>Help</source>
-        <translation type="unfinished">ヘルプ</translation>
+        <translation>Yardım</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="221"/>
         <source>Back-end settings</source>
-        <translation type="unfinished">バックエンドの設定</translation>
+        <translation>Sunucu uygulama ayarları</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="222"/>
         <source>General properties</source>
-        <translation type="unfinished">プロパティ</translation>
+        <translation>Genel özellikler</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="223"/>
         <source>General script editor</source>
-        <translation type="unfinished">スクリプトエディター</translation>
+        <translation>Genel komut düzenleyici</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="224"/>
         <source>Unused items</source>
-        <translation type="unfinished">使われていないアイテム</translation>
+        <translation>Kullanılmayan ögeler</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="225"/>
         <source>Preferences</source>
-        <translation type="unfinished">設定</translation>
+        <translation>Tercihler</translation>
     </message>
 </context>
 <context>
@@ -482,27 +487,27 @@
     <message>
         <location filename="../../translatables-tmp.py" line="232"/>
         <source>Default template</source>
-        <translation type="unfinished">デフォルトのテンプレート</translation>
+        <translation>Varsayılan şablon</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="233"/>
         <source>Extended template</source>
-        <translation type="unfinished">拡張テンプレート</translation>
+        <translation>Genişletilmiş şablon</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="234"/>
         <source>Questionnaire template</source>
-        <translation type="unfinished">質問紙テンプレート</translation>
+        <translation>Anket şablonu</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="235"/>
         <source>Android template</source>
-        <translation type="unfinished">Androidテンプレート</translation>
+        <translation>Android şablonu</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="236"/>
         <source>Eye-tracking template</source>
-        <translation type="unfinished">眼球運動測定テンプレート</translation>
+        <translation>Göz izleme şablonu</translation>
     </message>
 </context>
 <context>
@@ -510,7 +515,7 @@
     <message>
         <location filename="../../translatables-tmp.py" line="487"/>
         <source>Commonly used</source>
-        <translation type="unfinished">よく使うアイテム</translation>
+        <translation>Yaygın olarak kullanılan</translation>
     </message>
 </context>
 <context>
@@ -518,7 +523,7 @@
     <message>
         <location filename="../../translatables-tmp.py" line="323"/>
         <source>Drag this &lt;b&gt;%s&lt;/b&gt; item to the intended location in the overview area or into the item list of a sequence tab</source>
-        <translation type="unfinished">この &lt;b&gt;%s&lt;/b&gt; を, overview area か シークエンスタブのアイテムリストの指定場所にドラッグしてください</translation>
+        <translation>&lt;b&gt;%s&lt;/b&gt; ögesini genel bakış bölümünde istenilen konuma ya da dizi sekmesinin içerisindeki öge listesine sürükle</translation>
     </message>
 </context>
 <context>
@@ -526,12 +531,12 @@
     <message>
         <location filename="../../translatables-tmp.py" line="92"/>
         <source>Append new item</source>
-        <translation type="unfinished">新しいアイテムの追加</translation>
+        <translation>Sonuna yeni öge ekle</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="93"/>
         <source>Append existing item (linked)</source>
-        <translation type="unfinished">すでに存在する連結されたアイテムの追加</translation>
+        <translation>Sonuna mevcut öge ekle (bağlantılı)</translation>
     </message>
 </context>
 <context>
@@ -539,7 +544,7 @@
     <message>
         <location filename="../../translatables-tmp.py" line="256"/>
         <source>General options</source>
-        <translation type="unfinished">一般オプション</translation>
+        <translation>Genel seçenekler</translation>
     </message>
 </context>
 <context>
@@ -548,33 +553,33 @@
         <location filename="../../translatables-tmp.py" line="344"/>
         <source>Type: %s
 Description: %s</source>
-        <translation type="unfinished">タイプ: %s
-説明: %s</translation>
+        <translation>Tür: %s
+Tanım: %s</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="345"/>
         <source>Set as item to run for %s</source>
-        <translation type="unfinished">%s にアイテムとして設定</translation>
+        <translation>%s&apos;u bir öge olarak çalıştır</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="346"/>
         <source>Insert into %s</source>
-        <translation type="unfinished">%s へ挿入</translation>
+        <translation>%s&apos;in içine yerleştir</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="347"/>
         <source>Drop below %s</source>
-        <translation type="unfinished">%s の下に移動</translation>
+        <translation>%s &apos;nin aşağısına bırak</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="348"/>
         <source>Permanently delete item</source>
-        <translation type="unfinished">アイテムの完全消去</translation>
+        <translation>Ögeyi kalıcı olarak sil</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="349"/>
         <source>Are you sure you want to permanently delete &lt;b&gt;%s&lt;/b&gt;? All linked copies of &lt;b&gt;%s&lt;/b&gt; will be deleted. You will not be able to undo this.</source>
-        <translation type="unfinished">&lt;b&gt;%s&lt;/b&gt; を完全に消去しますか? &lt;b&gt;%s&lt;/b&gt; にリンクされた全てのコピーは消去されます. 元に戻すことはできません.</translation>
+        <translation>&lt;b&gt;%s&lt;/b&gt; ögesini kalıcı olarak silmek istediğinize emin misiniz? &lt;b&gt;%s&lt;/b&gt; ögesine bağlı bütün kopyalar silinecektir. Bu işlemi geri alamazsınız.</translation>
     </message>
 </context>
 <context>
@@ -582,27 +587,27 @@ Description: %s</source>
     <message>
         <location filename="../../translatables-tmp.py" line="143"/>
         <source>Item name</source>
-        <translation type="unfinished">アイテム名</translation>
+        <translation>Öge ismi</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="144"/>
         <source>Run if</source>
-        <translation type="unfinished"></translation>
+        <translation>yürüt eğer</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="145"/>
         <source>Unknown item type: %s</source>
-        <translation type="unfinished">不明なアイテムタイプ: %s</translation>
+        <translation>Bilinmeyen öge türü: %s</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="146"/>
         <source>Insert into %s</source>
-        <translation type="unfinished">%s に挿入</translation>
+        <translation>%s nin içine yerleştir</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="147"/>
         <source>Insert after %s</source>
-        <translation type="unfinished">%s の後に挿入</translation>
+        <translation>%s&apos;den sonra yerleştir</translation>
     </message>
 </context>
 <context>
@@ -610,12 +615,12 @@ Description: %s</source>
     <message>
         <location filename="../../translatables-tmp.py" line="510"/>
         <source>Unused items</source>
-        <translation type="unfinished">未使用アイテム</translation>
+        <translation>Kullanılmayan ögeler</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="511"/>
         <source>Move to unused items</source>
-        <translation type="unfinished">未使用アイテムに移動</translation>
+        <translation>Kullanılmayan ögelere taşı</translation>
     </message>
 </context>
 <context>
@@ -623,22 +628,22 @@ Description: %s</source>
     <message>
         <location filename="../../translatables-tmp.py" line="113"/>
         <source>&lt;b&gt;&lt;font size=&apos;5&apos;&gt;Unused&lt;/font&gt;&lt;/b&gt;</source>
-        <translation type="unfinished">&lt;b&gt;&lt;font size=&apos;5&apos;&gt;未使用&lt;/font&gt;&lt;/b&gt;</translation>
+        <translation>&lt;b&gt;&lt;font size=&apos;5&apos;&gt;Kullanılmayan&lt;/font&gt;&lt;/b&gt;</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="114"/>
         <source>Permanently delete unused items</source>
-        <translation type="unfinished">未使用のアイテムを完全消去</translation>
+        <translation>Kullanılmayan ögeleri kalıcı olarak sil</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="115"/>
         <source>Permanently delete items?</source>
-        <translation type="unfinished">完全に消去しますか?</translation>
+        <translation>Ögeleri kalıcı olarak silmek istediğinize emin misiniz?</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="116"/>
         <source>Are you sure you want to permanently delete all unused items? This action cannot be undone.</source>
-        <translation type="unfinished">全ての未使用アイテムを完全消去しますか? 元に戻すことはできません.</translation>
+        <translation>Kullanılmayan ögelerin tamamını kalıcı olarak silmek istediğinize emin misiniz? Bu işlem geri alınamaz.</translation>
     </message>
 </context>
 <context>
@@ -646,32 +651,37 @@ Description: %s</source>
     <message>
         <location filename="../../translatables-tmp.py" line="3"/>
         <source>No webbrowser cache available</source>
-        <translation type="unfinished">ウェブブラウザのキャッシュが無効です</translation>
+        <translation>Mevcut web tarayıcısı önbelleği bulunmamaktadır</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="4"/>
         <source>Webbrowser cache is corrupt</source>
-        <translation type="unfinished">ウェブブラウザのキャッシュが壊れています</translation>
+        <translation>Web tarayıcısı önbelleği çalışmayı durdurdu</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="5"/>
         <source>Failed to load page: </source>
-        <translation type="unfinished">ページの読み込みに失敗しました: </translation>
+        <translation>Sayfa yüklenemedi: </translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="6"/>
         <source>Displaying cached version of: %s. For a better viewing experience, connect to the internet.</source>
-        <translation type="unfinished"></translation>
+        <translation>%s&apos;nın önbellek versiyonu görüntülenmektedir. Daha iyi bir görüntüleme deneyimi için internete bağlanın.</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="7"/>
         <source>Done</source>
-        <translation type="unfinished">完了</translation>
+        <translation>Tamamlandı</translation>
+    </message>
+    <message>
+        <location filename="../../translatables-tmp.py" line="142"/>
+        <source>Loading ?</source>
+        <translation type="obsolete">Yükleniyor …</translation>
     </message>
     <message encoding="UTF-8">
         <location filename="../../translatables-tmp.py" line="8"/>
         <source>Loading …</source>
-        <translation type="unfinished">読み込み中…</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -679,32 +689,31 @@ Description: %s</source>
     <message>
         <location filename="../../translatables-tmp.py" line="132"/>
         <source>Finished</source>
-        <translation type="unfinished">完了</translation>
+        <translation>Bitti</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="133"/>
         <source>Aborted</source>
-        <translation type="unfinished">中断</translation>
+        <translation>İşlem durduruldu</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="134"/>
         <source># Aborted
 
 - </source>
-        <translation type="unfinished">
-# 中断
+        <translation># İşlem durduruldu
 
 - </translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="135"/>
         <source>Stopped</source>
-        <translation type="unfinished">停止</translation>
+        <translation>İşlem durdu</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="130"/>
         <source>Handles the end of an experimental run</source>
-        <translation type="unfinished"></translation>
+        <translation>Bir deneyin sonunu idare eder</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="136"/>
@@ -713,17 +722,16 @@ Description: %s</source>
 The experiment did not finish normally for the following reason:
 
 - </source>
-        <translation type="unfinished">
-# 停止
+        <translation>#Durdu
 
-実験は次の理由により正常に終了しませんでした:
+Deney takip eden hatadan dolayı bitmedi:
 
 - </translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="131"/>
         <source>The following extra data files where created:</source>
-        <translation type="unfinished"></translation>
+        <translation>Takip edem ekstra veri dosyları kaydedildi:</translation>
     </message>
 </context>
 <context>
@@ -731,17 +739,17 @@ The experiment did not finish normally for the following reason:
     <message>
         <location filename="../../translatables-tmp.py" line="504"/>
         <source>Sends a ping to Google Analytics when OpenSesame is started</source>
-        <translation type="unfinished"></translation>
+        <translation>OpenSesame açıldığında Google Analytics&apos;e bildirim gönderir</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="505"/>
         <source>Anonymous usage data is collected. You can disable this by disabling the &lt;i&gt;analytics&lt;/i&gt; extension.</source>
-        <translation type="unfinished"></translation>
+        <translation>OpenSesame kullanım verileriniz anonim olarak toplandı. Bu özelliği &lt;i&gt;analytics&lt;/i&gt; eklentisini devre dışı bırakarak kaldırabilirsiniz.</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="506"/>
         <source>Got it!</source>
-        <translation type="unfinished"></translation>
+        <translation>Anladım!</translation>
     </message>
 </context>
 <context>
@@ -749,12 +757,12 @@ The experiment did not finish normally for the following reason:
     <message>
         <location filename="../../translatables-tmp.py" line="15"/>
         <source>Open backup folder</source>
-        <translation type="unfinished">バックアップフォルダを開く</translation>
+        <translation>Yedekleme klasörünü aç</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="16"/>
         <source>Periodically saves your experiment to a back-up folder.</source>
-        <translation type="unfinished">実験を定期的にバックアップフォルダに保存する.</translation>
+        <translation>Deneyi periyodik olarak yedeklemek klasörüne kaydet.</translation>
     </message>
 </context>
 <context>
@@ -762,27 +770,27 @@ The experiment did not finish normally for the following reason:
     <message>
         <location filename="../../translatables-tmp.py" line="124"/>
         <source>Bug report not sent</source>
-        <translation type="unfinished">バグの報告が送信されていません</translation>
+        <translation>Gönderilmemiş bug raporu</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="123"/>
         <source>Bug report sent</source>
-        <translation type="unfinished">バグの報告が送信されました</translation>
+        <translation>Gönderilmiş bug raporu</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="125"/>
         <source>Oops ...</source>
-        <translation type="unfinished">Oops ...</translation>
+        <translation>Haydaaaa ...</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="126"/>
         <source>Bug report</source>
-        <translation type="unfinished">バグ報告</translation>
+        <translation>Bug raporu</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="127"/>
         <source>Sends a bug report when an exception occurs</source>
-        <translation type="unfinished">例外が生じた場合にバグの報告を送信する</translation>
+        <translation>İstisnai bir durum olduğunda bug raporu gönder</translation>
     </message>
 </context>
 <context>
@@ -790,17 +798,17 @@ The experiment did not finish normally for the following reason:
     <message>
         <location filename="../../translatables-tmp.py" line="499"/>
         <source>Example extension</source>
-        <translation type="unfinished">拡張機能の例</translation>
+        <translation>Örnek eklenti</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="500"/>
         <source>An example extenstion</source>
-        <translation type="unfinished">拡張機能の例</translation>
+        <translation>Bir örnek eklenti</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="501"/>
         <source>Some tooltip</source>
-        <translation type="unfinished">ツールチップ</translation>
+        <translation>Birkaç ipucu</translation>
     </message>
 </context>
 <context>
@@ -808,39 +816,44 @@ The experiment did not finish normally for the following reason:
     <message>
         <location filename="../../translatables-tmp.py" line="406"/>
         <source>Example experiments</source>
-        <translation type="unfinished">実験例</translation>
+        <translation>Örnek deneyler</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="408"/>
         <source>Shows a list of example experiments</source>
-        <translation type="unfinished">実験例のリストを表示</translation>
+        <translation>Bütün örnek deneyleri listele</translation>
     </message>
 </context>
 <context>
     <name>extension_get_started</name>
-    <message encoding="UTF-8">
-        <location filename="../../translatables-tmp.py" line="432"/>
-        <source>New…</source>
-        <translation type="unfinished">新規...</translation>
+    <message>
+        <location filename="../../translatables-tmp.py" line="269"/>
+        <source>New?</source>
+        <translation type="obsolete">Yeni…</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="433"/>
         <source>A starting point</source>
-        <translation type="unfinished">開始点</translation>
+        <translation>Bir başlangıç noktası</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="434"/>
         <source>Start a new experiment</source>
-        <translation type="unfinished">新規実験の開始</translation>
+        <translation>Yeni bir deney başlat</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="435"/>
         <source>Continue with a recent experiment:</source>
-        <translation type="unfinished">最近の実験を続行:</translation>
+        <translation>Son deney ile devam et:</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="436"/>
         <source>Get started!</source>
+        <translation>Başla!</translation>
+    </message>
+    <message encoding="UTF-8">
+        <location filename="../../translatables-tmp.py" line="432"/>
+        <source>New…</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -849,27 +862,27 @@ The experiment did not finish normally for the following reason:
     <message>
         <location filename="../../translatables-tmp.py" line="33"/>
         <source>Help</source>
-        <translation type="unfinished">ヘルプ</translation>
+        <translation>Yardım</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="34"/>
         <source>Online help</source>
-        <translation type="unfinished">オンラインヘルプ</translation>
+        <translation>Çevirimiçi yardım</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="36"/>
         <source>PsychoPy API</source>
-        <translation type="unfinished">PsychoPy API</translation>
+        <translation>PsychoPy API</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="37"/>
         <source>Adds a Help menu.</source>
-        <translation type="unfinished">ヘルプメニューの追加.</translation>
+        <translation>Yardım menüsü ekler.</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="35"/>
         <source>Expyriment API</source>
-        <translation type="unfinished">Expyriment API</translation>
+        <translation>Expyriment API</translation>
     </message>
 </context>
 <context>
@@ -877,12 +890,12 @@ The experiment did not finish normally for the following reason:
     <message>
         <location filename="../../translatables-tmp.py" line="139"/>
         <source>Notifications</source>
-        <translation type="unfinished">お知らせ</translation>
+        <translation>Bldirimler</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="140"/>
         <source>Pretty notifications for OpenSesame</source>
-        <translation type="unfinished">重要なお知らせ</translation>
+        <translation>OpenSesame için güzel bildirimler</translation>
     </message>
 </context>
 <context>
@@ -890,12 +903,12 @@ The experiment did not finish normally for the following reason:
     <message>
         <location filename="../../translatables-tmp.py" line="43"/>
         <source>OpenSesame 3 notifications</source>
-        <translation type="unfinished">OpenSesame 3 お知らせ</translation>
+        <translation>Open Sesame 3 bildirimleri</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="44"/>
         <source>Provides tips for new users of OpenSesame 3</source>
-        <translation type="unfinished">OpenSesame 3 新規ユーザ向けTips</translation>
+        <translation>OpenSesame 3 yeni kullanıcıları için yararlı ipuçları sağlar</translation>
     </message>
 </context>
 <context>
@@ -903,77 +916,77 @@ The experiment did not finish normally for the following reason:
     <message>
         <location filename="../../translatables-tmp.py" line="490"/>
         <source>Plug-in and extension manager</source>
-        <translation type="unfinished">プラグインと拡張機能マネージャー</translation>
+        <translation>Eklenti ve uzantı yöneticisi</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="491"/>
         <source>Enable or disable plug-ins and extensions.</source>
-        <translation type="unfinished">プラグインと拡張機能を使用可能または使用不可にする.</translation>
+        <translation>Eklenti ya da uzantlarıı etkinleştir ya da devre dışı bırak.</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="492"/>
         <source>Manage plug-ins and extensions</source>
-        <translation type="unfinished">プラグインと拡張機能の管理</translation>
+        <translation>Eklenti ya da uzantıları yönet</translation>
     </message>
     <message>
         <location filename="../../opensesame_extensions/plugin_manager/plugin_manager.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished">フォーム</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <location filename="../../opensesame_extensions/plugin_manager/plugin.ui" line="67"/>
         <source>Author(s):</source>
-        <translation type="unfinished">オーサー:</translation>
+        <translation>Yazar(lar):</translation>
     </message>
     <message>
         <location filename="../../opensesame_extensions/plugin_manager/plugin.ui" line="74"/>
         <source>No author specified</source>
-        <translation type="unfinished">オーサー指定なし</translation>
+        <translation>Yazar belirtilmedi</translation>
     </message>
     <message>
         <location filename="../../opensesame_extensions/plugin_manager/plugin.ui" line="81"/>
         <source>Version:</source>
-        <translation type="unfinished">バージョン:</translation>
+        <translation>Versiyon:</translation>
     </message>
     <message>
         <location filename="../../opensesame_extensions/plugin_manager/plugin.ui" line="88"/>
         <source>No version specified</source>
-        <translation type="unfinished">バージョン指定なし</translation>
+        <translation>Versiyon belirtilmedi</translation>
     </message>
     <message>
         <location filename="../../opensesame_extensions/plugin_manager/plugin.ui" line="102"/>
         <source>Extension manager</source>
-        <translation type="unfinished">拡張機能マネージャー</translation>
+        <translation>Uzantı yöneticisi</translation>
     </message>
     <message>
         <location filename="../../opensesame_extensions/plugin_manager/plugin.ui" line="114"/>
         <source>No description specified</source>
-        <translation type="unfinished">説明指定なし</translation>
+        <translation>Tanım belirtilmedi</translation>
     </message>
     <message>
         <location filename="../../opensesame_extensions/plugin_manager/plugin.ui" line="121"/>
         <source>No link specified</source>
-        <translation type="unfinished">リンク指定なし</translation>
+        <translation>Bağlantı belirtilmedi</translation>
     </message>
     <message>
         <location filename="../../opensesame_extensions/plugin_manager/plugin.ui" line="128"/>
         <source>Link</source>
-        <translation type="unfinished">リンク</translation>
+        <translation>Bağlantı</translation>
     </message>
     <message>
         <location filename="../../opensesame_extensions/plugin_manager/plugin.ui" line="135"/>
         <source>/path/to/extension</source>
-        <translation type="unfinished"></translation>
+        <translation>/path/to/extension</translation>
     </message>
     <message>
         <location filename="../../opensesame_extensions/plugin_manager/plugin.ui" line="142"/>
         <source>Folder:</source>
-        <translation type="unfinished">フォルダ:</translation>
+        <translation>Klasör:</translation>
     </message>
     <message>
         <location filename="../../opensesame_extensions/plugin_manager/plugin_manager.ui" line="23"/>
         <source>Changes take effect after restart</source>
-        <translation type="unfinished"></translation>
+        <translation>Değişiklikler yeniden başlatıldıktan sonra devreye girecek</translation>
     </message>
 </context>
 <context>
@@ -981,17 +994,17 @@ The experiment did not finish normally for the following reason:
     <message>
         <location filename="../../translatables-tmp.py" line="294"/>
         <source>PsychoPy monitor center</source>
-        <translation type="unfinished">PsychoPy モニタセンター</translation>
+        <translation>PsychoPy görüntüleme merkezi</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="295"/>
         <source>Launches the PsychoPy monitor center</source>
-        <translation type="unfinished">PsychoPy モニターセンター開始</translation>
+        <translation>PsychoPy görüntüleme merkezini çalıştırır</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="296"/>
         <source>Launch the PsychoPy monitor center</source>
-        <translation type="unfinished">PsychoPy モニタセンターの開始</translation>
+        <translation>PsychoPy görüntüleme merkezini çalıştır</translation>
     </message>
 </context>
 <context>
@@ -999,12 +1012,12 @@ The experiment did not finish normally for the following reason:
     <message>
         <location filename="../../translatables-tmp.py" line="109"/>
         <source>Editor preferences (QProgEdit)</source>
-        <translation type="unfinished">エディター設定 (QProgEdit)</translation>
+        <translation>Editör seçenekleri(QProgEdit)</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="110"/>
         <source>QProgEdit preferences</source>
-        <translation type="unfinished">QProgEdit 設定</translation>
+        <translation>QProgEdit seçenekleri</translation>
     </message>
 </context>
 <context>
@@ -1012,12 +1025,12 @@ The experiment did not finish normally for the following reason:
     <message>
         <location filename="../../translatables-tmp.py" line="26"/>
         <source>Quick switcher</source>
-        <translation type="unfinished"></translation>
+        <translation>Hızlı değiştirici</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="27"/>
         <source>Quickly open items and scripts.</source>
-        <translation type="unfinished"></translation>
+        <translation>Hızlıca ögeleri ve komut dizilerini aç.</translation>
     </message>
 </context>
 <context>
@@ -1025,12 +1038,12 @@ The experiment did not finish normally for the following reason:
     <message>
         <location filename="../../translatables-tmp.py" line="156"/>
         <source>System information</source>
-        <translation type="unfinished">システム情報</translation>
+        <translation>Sistem bilgisi</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="155"/>
         <source>Provides system information and module versions</source>
-        <translation type="unfinished">システム情報とモジュールバージョンの表示</translation>
+        <translation>Sistem bilgisini ve modül versiton bilgisini sağlar</translation>
     </message>
 </context>
 <context>
@@ -1038,22 +1051,22 @@ The experiment did not finish normally for the following reason:
     <message>
         <location filename="../../translatables-tmp.py" line="103"/>
         <source>Menu</source>
-        <translation type="unfinished">メニュー</translation>
+        <translation>Menü</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="104"/>
         <source>Integrate menu and toolbar</source>
-        <translation type="unfinished">メニューとツールバーを統合</translation>
+        <translation>Menü ve araç çubuğunu birleştir</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="105"/>
         <source>Integrates the menu into the toolbar.</source>
-        <translation type="unfinished">メニューをツールバーに統合.</translation>
+        <translation>.Menüyü araç çubuğunun içerisine birleştirir.</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="106"/>
         <source>Integrates the menu into the toolbar</source>
-        <translation type="unfinished">メニューをツールバーに統合</translation>
+        <translation>Menüyü araç çubuğunun içerisine birleştirir</translation>
     </message>
 </context>
 <context>
@@ -1061,27 +1074,27 @@ The experiment did not finish normally for the following reason:
     <message>
         <location filename="../../translatables-tmp.py" line="201"/>
         <source>Undo</source>
-        <translation type="unfinished">戻る</translation>
+        <translation>Geri al</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="202"/>
         <source>Undo most recent action</source>
-        <translation type="unfinished">最も新しい操作に戻る</translation>
+        <translation>En son yapılan eylemi geri al</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="198"/>
         <source>Redo</source>
-        <translation type="unfinished">やり直す</translation>
+        <translation>İşlemi yinele</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="199"/>
         <source>Implements undo/ redo</source>
-        <translation type="unfinished">戻る/やり直す の実行</translation>
+        <translation>Geri al/yineleyi uygular</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="200"/>
         <source>Redo most recently undone action</source>
-        <translation type="unfinished">最も新しい未完了操作をやり直す</translation>
+        <translation>En son yapılan geri al eylemini yinele</translation>
     </message>
 </context>
 <context>
@@ -1089,17 +1102,17 @@ The experiment did not finish normally for the following reason:
     <message>
         <location filename="../../translatables-tmp.py" line="319"/>
         <source>Check for updates</source>
-        <translation type="unfinished">アップデートの確認</translation>
+        <translation>Güncellemeleri denetle</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="320"/>
         <source>Checks whether a new version of OpenSesame is available.</source>
-        <translation type="unfinished">新しいバージョンが有効か確認.</translation>
+        <translation>OpenSesame&apos;nin yeni bir sürümü olup olmadığını denetler.</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="318"/>
         <source>Up to date!</source>
-        <translation type="unfinished">最新です!</translation>
+        <translation>Uygulama güncel!</translation>
     </message>
 </context>
 <context>
@@ -1107,22 +1120,22 @@ The experiment did not finish normally for the following reason:
     <message>
         <location filename="../../translatables-tmp.py" line="69"/>
         <source>Variable inspector</source>
-        <translation type="unfinished">変数インスペクター</translation>
+        <translation>Değişken denetleyicisi</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="73"/>
         <source>Experiment status: &lt;b&gt;%s&lt;/b&gt;</source>
-        <translation type="unfinished">実験ステータス: &lt;b&gt;%s&lt;/b&gt;</translation>
+        <translation>Deney durumu: &lt;b&gt;%s&lt;/b&gt;</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="72"/>
         <source>Show variable inspector</source>
-        <translation type="unfinished">変数インスペクターの表示</translation>
+        <translation>Değişken denetleyicisini göster</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="71"/>
         <source>Graphical variable inspector</source>
-        <translation type="unfinished">グラフィカル変数インスペクター</translation>
+        <translation>Çizgesel değişken denetleyicisi</translation>
     </message>
 </context>
 <context>
@@ -1130,12 +1143,12 @@ The experiment did not finish normally for the following reason:
     <message>
         <location filename="../../translatables-tmp.py" line="495"/>
         <source>New experiment</source>
-        <translation type="unfinished">新規実験</translation>
+        <translation>Yeni deney</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="496"/>
         <source>Default description</source>
-        <translation type="unfinished">デフォルトの説明</translation>
+        <translation>Varsayılan tanımlama</translation>
     </message>
 </context>
 <context>
@@ -1143,7 +1156,7 @@ The experiment did not finish normally for the following reason:
     <message>
         <location filename="../../translatables-tmp.py" line="394"/>
         <source>Provides feedback to the participant</source>
-        <translation type="unfinished">実験参加者にフィードッバックの表示</translation>
+        <translation>Katılımcıya geribildirim sağlar</translation>
     </message>
 </context>
 <context>
@@ -1151,12 +1164,12 @@ The experiment did not finish normally for the following reason:
     <message>
         <location filename="../../translatables-tmp.py" line="11"/>
         <source>Prepare</source>
-        <translation type="unfinished">準備</translation>
+        <translation>Hazırla</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="12"/>
         <source>Run</source>
-        <translation type="unfinished">実行</translation>
+        <translation>Çalıştır</translation>
     </message>
 </context>
 <context>
@@ -1164,57 +1177,57 @@ The experiment did not finish normally for the following reason:
     <message>
         <location filename="../../translatables-tmp.py" line="242"/>
         <source>Collects keyboard responses</source>
-        <translation type="unfinished">キーボードの反応を取得</translation>
+        <translation>Klavye yanıtlarını toplar</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="243"/>
         <source>Correct response</source>
-        <translation type="unfinished">正反応</translation>
+        <translation>Doğru yanıt</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="245"/>
         <source>Allowed responses</source>
-        <translation type="unfinished">可能な反応</translation>
+        <translation>İzin verilen değerler</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="247"/>
         <source>Timeout</source>
-        <translation type="unfinished">タイムアウト</translation>
+        <translation>Süre aşımı</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="249"/>
         <source>Flush pending keypresses</source>
-        <translation type="unfinished"></translation>
+        <translation>Beklemede olan basılmış tuşları iptal et</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="250"/>
         <source>List available keys</source>
-        <translation type="unfinished">利用可能キーのリスト</translation>
+        <translation>Uygun tuşları listele</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="244"/>
         <source>Leave empty to use &quot;correct_response&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>&quot;correct_response&quot;u kullanmak için boş bırak</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="246"/>
         <source>Separated by semicolons, e.g. &quot;z;/&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>Noktalı virgül ile ayrılır, örneğin &quot;z;/&quot;</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="248"/>
         <source>In milliseconds or &quot;infinite&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>Milisaniye olarak ya da &quot;infinite&quot; (sonsuz)</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="253"/>
         <source>Key names</source>
-        <translation type="unfinished">キーの名称</translation>
+        <translation>Tuş isimleri</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="252"/>
         <source>The following key names are valid:</source>
-        <translation type="unfinished">次のキー名称は有効です:</translation>
+        <translation>Geçerli tuş isimleri:</translation>
     </message>
 </context>
 <context>
@@ -1222,27 +1235,27 @@ The experiment did not finish normally for the following reason:
     <message>
         <location filename="../../translatables-tmp.py" line="420"/>
         <source>You have multiple unlinked loggers. This can lead to messy log files.</source>
-        <translation type="unfinished"></translation>
+        <translation>Birden fazla ilişkilendirilmemiş kaydediciniz var. Bu durum karışık kayıt dosyalarına neden olabilir.</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="421"/>
         <source>Add custom variable</source>
-        <translation type="unfinished"></translation>
+        <translation>Özel değişken ekle</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="422"/>
         <source>Which variable do you wish to log?</source>
-        <translation type="unfinished"></translation>
+        <translation>Hangi değişkenleri kaydetmek istersiniz?</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="423"/>
         <source>custom</source>
-        <translation type="unfinished"></translation>
+        <translation>özel</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="419"/>
         <source>Logs experimental data</source>
-        <translation type="unfinished"></translation>
+        <translation>Deneysel veriyi kaydeder</translation>
     </message>
 </context>
 <context>
@@ -1250,82 +1263,77 @@ The experiment did not finish normally for the following reason:
     <message>
         <location filename="../../translatables-tmp.py" line="166"/>
         <source>Repeatedly runs another item</source>
-        <translation type="unfinished">他のアイテムを繰り返し実行</translation>
+        <translation>Başka bir ögeyi tekrarlanan bir şekilde çalıştırır</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="167"/>
         <source># Preview of loop table</source>
-        <translation type="unfinished"># ループテーブルのプレビュー</translation>
+        <translation># Döngü tablosunu önizleme</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="168"/>
         <source>Failed to generate preview.</source>
-        <translation type="unfinished">プレビューに失敗しました.</translation>
+        <translation>Önizleme hazırlanamadı.</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="169"/>
         <source>one row occurs</source>
-        <translation type="unfinished"></translation>
+        <translation>bır satır oldu</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="170"/>
         <source>two rows occur</source>
-        <translation type="unfinished"></translation>
+        <translation>iki satır oldu</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="171"/>
         <source>never</source>
-        <translation type="unfinished">なし</translation>
+        <translation>hiçbir zaman</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="172"/>
         <source>once</source>
-        <translation type="unfinished">1回</translation>
+        <translation>yalnızca biir kere</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="173"/>
         <source>twice</source>
-        <translation type="unfinished">2回</translation>
+        <translation>iki kere</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="174"/>
         <source>Warning: No item to run has been specified</source>
-        <translation type="unfinished">警告: アイテムが指定されていません</translation>
+        <translation>Uyarı: çalıştırılmayacak ögeler belirlendi</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="175"/>
         <source>Note: Order or repeat is unknown or variably defined</source>
-        <translation type="unfinished">注意: 順序もしくは繰り返しが不明か一定でありません</translation>
+        <translation>Not: Sıra ya da tekrar bilinmiyor ya da değişken bir biçimde tanımlanmış</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="176"/>
         <source>Note: Loop data will be read from file</source>
-        <translation type="unfinished">注意: ループのデータがファイルから読み込まれます</translation>
+        <translation>Not: Döngü verileri dosyadan okunacak</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="177"/>
         <source>Summary: &lt;b&gt;%s&lt;/b&gt; will be called &lt;b&gt;%s&lt;/b&gt; in &lt;b&gt;%s&lt;/b&gt; order.</source>
-        <translation type="unfinished">概要: &lt;b&gt;%s&lt;/b&gt; が &lt;b&gt;%s&lt;/b&gt; 繰り返しで &lt;b&gt;%s&lt;/b&gt; の順序で呼び出されます.</translation>
+        <translation>Summary: &lt;b&gt;%s&lt;/b&gt; will be called &lt;b&gt;%s&lt;/b&gt; in &lt;b&gt;%s&lt;/b&gt; order.</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="178"/>
         <source>The number of rows is %s.</source>
-        <translation type="unfinished">列数は %s です.</translation>
+        <translation>Satır sayısı %s&apos;dır.</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="180"/>
         <source>All rows occur %s.</source>
-        <translation type="unfinished">全ての列は %s です.</translation>
+        <translation>Bütün satırlar %s gerçekleşti.</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="181"/>
         <source>This means that %s %s and %s %s.</source>
-        <translation type="unfinished">これは %s %s と %s %s を示します.</translation>
-    </message>
-    <message>
-        <location filename="../../translatables-tmp.py" line="657"/>
-        <source>Failed to generate preview. Are you using a non-existing source file, or have you specified impossible constraints?</source>
-        <translation type="obsolete">プレビューに失敗しました. 存在しないソースファイルを使用しているか, 不可能な制限を指定していませんか?</translation>
+        <translation>Bu %s %s ve %s %s anlamına gelir.</translation>
     </message>
 </context>
 <context>
@@ -1333,47 +1341,47 @@ The experiment did not finish normally for the following reason:
     <message>
         <location filename="../../translatables-tmp.py" line="365"/>
         <source>Collects mouse responses</source>
-        <translation type="unfinished">マウス反を取得</translation>
+        <translation>Fare yanıtlarını toplar</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="366"/>
         <source>Correct response</source>
-        <translation type="unfinished">正反応</translation>
+        <translation>Doğru yanıt</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="368"/>
         <source>Allowed responses</source>
-        <translation type="unfinished">可能な反応</translation>
+        <translation>İzin verilen yanıtlar</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="370"/>
         <source>Timeout</source>
-        <translation type="unfinished">タイムアウト</translation>
+        <translation>Süre aşımı</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="372"/>
         <source>Visible mouse cursor</source>
-        <translation type="unfinished">マウスカーソルの可視化</translation>
+        <translation>Görünür fare imleci</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="373"/>
         <source>Flush pending mouse clicks</source>
-        <translation type="unfinished"></translation>
+        <translation>Beklemede olan fare tıklarını iptal et</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="367"/>
         <source>Leave empty to use &quot;correct_response&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>&quot;correct_response&quot;u kullanmak için boş bırak</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="369"/>
         <source>Separated by semicolons, e.g. &quot;left_button;right_button&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>Noktalı virgül ile ayrılır, örneğin &quot;sol_tuşu;sağ_tuşu&quot;</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="371"/>
         <source>In milliseconds or &quot;infinite&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>Milisaniye olarak ya da &quot;infinite&quot; (sonsuz)</translation>
     </message>
 </context>
 <context>
@@ -1381,67 +1389,67 @@ The experiment did not finish normally for the following reason:
     <message>
         <location filename="../../translatables-tmp.py" line="517"/>
         <source>Plays a sound file in .wav or .ogg format</source>
-        <translation type="unfinished">音声ファイル (.wav, .ogg形式) の再生</translation>
+        <translation>.wav ya da .ogg formatında ses dosyası oynatır</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="518"/>
         <source>Sound file</source>
-        <translation type="unfinished">音声ファイル</translation>
+        <translation>Ses dosyası</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="520"/>
         <source>Volume</source>
-        <translation type="unfinished">ボリューム</translation>
+        <translation>Ses</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="525"/>
         <source> x original</source>
-        <translation type="unfinished"> x オリジナル</translation>
+        <translation> x orjinal</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="522"/>
         <source>Panning</source>
-        <translation type="unfinished">パニング</translation>
+        <translation>Gezdirme</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="524"/>
         <source>Pitch</source>
-        <translation type="unfinished">ピッチ</translation>
+        <translation>Ses perdesi (akord)</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="526"/>
         <source>Stop after</source>
-        <translation type="unfinished">停止</translation>
+        <translation>Bitince dur</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="529"/>
         <source> ms</source>
-        <translation type="unfinished"> ms</translation>
+        <translation> ms</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="528"/>
         <source>Fade in</source>
-        <translation type="unfinished">フェードイン</translation>
+        <translation>Güçlenme (ses)</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="530"/>
         <source>Duration</source>
-        <translation type="unfinished">呈示時間</translation>
+        <translation>Süre</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="519"/>
         <source>In .ogg or .wav format</source>
-        <translation type="unfinished">.ogg または .wav 形式</translation>
+        <translation>.wav ya da .ogg formatında</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="523"/>
         <source>Positive values toward the right; &quot;left&quot; or &quot;right&quot; for full panning</source>
-        <translation type="unfinished"></translation>
+        <translation>Pozitif değerler sağa doğru; tam bir gezdirme için ise &quot;sol&quot; ya da &quot;sağ&quot;</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="531"/>
         <source>In milliseconds, &quot;sound&quot;, &quot;keypress&quot;, or &quot;mouseclick&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>Milisaniye olarak &quot;sound&quot;(ses), &quot;keypress&quot; (tuşa basılması), ya da &quot;mouseclic&quot;(fare tıklaması)</translation>
     </message>
 </context>
 <context>
@@ -1449,22 +1457,22 @@ The experiment did not finish normally for the following reason:
     <message>
         <location filename="../../translatables-tmp.py" line="263"/>
         <source>Sequence contains non-existing item: %s</source>
-        <translation type="unfinished">シークエンスは存在するアイテムを含んでいません: %s</translation>
+        <translation>Dizge olmayan ögeleri içermektedir: %s</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="259"/>
         <source>Runs a number of items in sequence</source>
-        <translation type="unfinished">アイテムをシークエンスで実行</translation>
+        <translation>Dizgedeki ögeleri belirtilen sayı kadar çalıştırır</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="261"/>
         <source>Flush pending key presses at sequence start</source>
-        <translation type="unfinished"></translation>
+        <translation>Dizge başladığında beklemede olan basılı tuşları iptal et</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="262"/>
         <source>&lt;b&gt;Important&lt;/b&gt;: A sequence has &lt;a href=&quot;http://osdoc.cogsci.nl/usage/prepare-run&quot;&gt;a variable preparation time&lt;/a&gt;.</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Önemli&lt;/b&gt;: Dizgede değişken hazırlama süresini içerir &lt;a href=&quot;http://osdoc.cogsci.nl/usage/prepare-run&quot;&gt;&lt;/a&gt;.</translation>
     </message>
 </context>
 <context>
@@ -1472,137 +1480,137 @@ The experiment did not finish normally for the following reason:
     <message>
         <location filename="../../translatables-tmp.py" line="538"/>
         <source>Image name &quot;%s&quot; is unknown or variably defined, using fallback image</source>
-        <translation type="unfinished"></translation>
+        <translation>&quot;%s&quot; resim ismi bilinmiyor ya da değişken bir biçimde tanımlanmış,yedek resim kullanılıyor</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="539"/>
         <source>Penwidth &quot;%s&quot; is unknown or variably defined, using 1</source>
-        <translation type="unfinished"></translation>
+        <translation>Kalem kalınlığı &quot;%s&quot; bilinmiyor ya da değişken bir biçimde tanımlanmış,kalem kalınlığı 1 olarak kullanılacaktır</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="540"/>
         <source>Scale &quot;%s&quot; is unknown or variably defined, using 1</source>
-        <translation type="unfinished"></translation>
+        <translation>Ölçeklendirme &quot;%s&quot; bilinmiyor ya da değişken bir biçimde tanımlanmış,ölçeklendirme 1 olarak kullanılacaktır</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="541"/>
         <source>Color &quot;%s&quot; is unknown or variably defined, using placeholder color</source>
-        <translation type="unfinished"></translation>
+        <translation>Renk &quot;%s&quot; bilinmiyor ya da değişken bir biçimde tanımlanmış,varsayılan renk kullanılacaktır</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="543"/>
         <source>X coordinate &quot;%s&quot; is unknown or variably defined, using display center</source>
-        <translation type="unfinished"></translation>
+        <translation>X koordinatı &quot;%s&quot; bilinmiyor ya da değişken bir biçimde tanımlanmış, koordinat merkez olarak kullanılacaktır</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="544"/>
         <source>Y coordinate &quot;%s&quot; is unknown or variably defined, using display center</source>
-        <translation type="unfinished"></translation>
+        <translation>Y koordinatı &quot;%s&quot; bilinmiyor ya da değişken bir biçimde tanımlanmış, koordinat merkez olarak kullanılacaktır</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="545"/>
         <source>Radius &quot;%s&quot; is unknown or variably defined, using 50</source>
-        <translation type="unfinished"></translation>
+        <translation>Yarıçap &quot;%s&quot; bilinmiyor ya da değişken bir biçimde tanımlanmış, yarıçap 50 olarak belirlenmiştir</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="546"/>
         <source>Proportion &quot;%s&quot; is unknown or variably defined, using .5</source>
-        <translation type="unfinished"></translation>
+        <translation>Oran &quot;%s&quot; bilinmiyor ya da değişken bir biçimde tanımlanmış,oran 5 olarak kullanılmıştır</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="547"/>
         <source>Width &quot;%s&quot; is unknown or variably defined, using 100</source>
-        <translation type="unfinished"></translation>
+        <translation>Genişlik &quot;%s&quot; bilinmiyor ya da değişken bir biçimde tanımlanmış, genişlik 100 olarak kullanılacaktır</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="548"/>
         <source>Height &quot;%s&quot; is unknown or variably defined, using 100</source>
-        <translation type="unfinished"></translation>
+        <translation>Yükseklik &quot;%s&quot; bilinmiyor ya da değişken bir biçimde tanımlanmış,yükseklik 100 olarak kullanılacaktır</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="549"/>
         <source>Scale &quot;%s&quot; is unknown or variably defined, using 1.0</source>
-        <translation type="unfinished"></translation>
+        <translation>Ölçek &quot;%s&quot; bilinmiyor ya da değişken bir biçimde tanımlanmış,ölçek 1.0 olarak kullanılacaktır</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="550"/>
         <source>Font size &quot;%s&quot; is invalid or variably defined, using 18</source>
-        <translation type="unfinished"></translation>
+        <translation>Yazı boyutu &quot;%s&quot; bilinmiyor ya da değişken bir biçimde tanımlanmış,18 punto kullanılacaktır</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="551"/>
         <source>Some properties of a Gabor patch are unknown or variably defined, using fallback image</source>
-        <translation type="unfinished"></translation>
+        <translation>Gabor parçasının bazı özellikleri bilinmiyor ya da değişken bir biçimde tanımlanmış, son çare resmi kullanılıyor</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="552"/>
         <source>Some properties of a noise patch are unknown or variably defined, using fallback image</source>
-        <translation type="unfinished"></translation>
+        <translation>Gürültü parçasının (noise patch) bazı özellikleri bilinmiyor ya da değişken bir biçimde tanımlanmış, son çare resmi kullanılıyor</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="553"/>
         <source>Fixdot style &quot;%s&quot; is unknown or variably defined</source>
-        <translation type="unfinished"></translation>
+        <translation>Odaklanma noktası (fıxdot) stili &quot;%s&quot; bilinmiyor ya da değişken bir şekilde tanımlanmış</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="555"/>
         <source>Edit text</source>
-        <translation type="unfinished">テキストの編集</translation>
+        <translation>Metni düzenle</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="556"/>
         <source>Please enter a text for the textline</source>
-        <translation type="unfinished">テキストを入力してください</translation>
+        <translation>Lütfen metin satırına bir metin giriniz</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="557"/>
         <source>New textline</source>
-        <translation type="unfinished">新しい文字列</translation>
+        <translation>Yeni metin satırı</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="559"/>
         <source>Element script</source>
-        <translation type="unfinished">エレメントスクリプト</translation>
+        <translation>Element komut dizisi</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="560"/>
         <source>Edit script</source>
-        <translation type="unfinished">スクリプトの編集</translation>
+        <translation>Komut dizisini düzenle</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="561"/>
         <source>Raise to front</source>
-        <translation type="unfinished">前に移動</translation>
+        <translation>Ön tarafı yükselt</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="562"/>
         <source>Lower to bottom</source>
-        <translation type="unfinished">後ろに移動</translation>
+        <translation>Altı aşağı indir</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="563"/>
         <source>Delete</source>
-        <translation type="unfinished">消去</translation>
+        <translation>Sil</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="554"/>
         <source>Displays stimuli</source>
-        <translation type="unfinished">視覚刺激の呈示</translation>
+        <translation>Uyarıcıyı görüntüle</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="564"/>
         <source>Draw %s element</source>
-        <translation type="unfinished">%s エレメントの描画</translation>
+        <translation>%s elementini çiz</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="558"/>
         <source>Enter text</source>
-        <translation type="unfinished">テキストの入力</translation>
+        <translation>Metin gir</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="542"/>
         <source>Fill &quot;%s&quot; is unknown or variably defined, assuming filled</source>
-        <translation type="unfinished"></translation>
+        <translation>Doldurma rengi &quot;%s&quot; bilinmiyor ya da değişken bir biçimde tanımlanmış, doldurulmuş farzedilecek</translation>
     </message>
 </context>
 <context>
@@ -1610,72 +1618,72 @@ The experiment did not finish normally for the following reason:
     <message>
         <location filename="../../translatables-tmp.py" line="326"/>
         <source>A basic sound synthesizer</source>
-        <translation type="unfinished">サウンドシンセサイザー</translation>
+        <translation>Basit bir ses birleştirici</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="327"/>
         <source>Waveform</source>
-        <translation type="unfinished">波形</translation>
+        <translation>Dalga biçimi</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="330"/>
         <source>Attack</source>
-        <translation type="unfinished">アタック</translation>
+        <translation>Atak</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="339"/>
         <source> ms</source>
-        <translation type="unfinished"> ms</translation>
+        <translation> ms</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="332"/>
         <source>Decay</source>
-        <translation type="unfinished">ディケイ</translation>
+        <translation>Bozulma</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="334"/>
         <source>Volume</source>
-        <translation type="unfinished">音量</translation>
+        <translation>Ses</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="335"/>
         <source> x maximum</source>
-        <translation type="unfinished"> x 最大値</translation>
+        <translation> x maksimum</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="336"/>
         <source>Panning</source>
-        <translation type="unfinished">パニング</translation>
+        <translation>Gezdirme</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="338"/>
         <source>Length</source>
-        <translation type="unfinished">呈示時間</translation>
+        <translation>Uzunluk</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="340"/>
         <source>Duration</source>
-        <translation type="unfinished">持続時間</translation>
+        <translation>Süre</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="328"/>
         <source>Frequency</source>
-        <translation type="unfinished">周波数</translation>
+        <translation>Frekans</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="329"/>
         <source>In Hertz or as note, e.g. &quot;A1&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>Hertz ya da nota olarak, örneğin &quot;A1&quot;</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="337"/>
         <source>Positive values toward the right; &quot;left&quot; or &quot;right&quot; for full panning</source>
-        <translation type="unfinished"></translation>
+        <translation>Pozitif değerler sağa doğru; tam bir gezdirme için ise &quot;sol&quot; ya da &quot;sağ&quot;</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="341"/>
         <source>In milliseconds, &quot;sound&quot;, &quot;keypress&quot;, or &quot;mouseclick&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>Milisaniye olarak &quot;sound&quot;(ses),&quot;keypress&quot; (tuşa basılması), ya da &quot;mouseclic&quot;(fare tıklaması)</translation>
     </message>
 </context>
 <context>
@@ -1683,22 +1691,22 @@ The experiment did not finish normally for the following reason:
     <message>
         <location filename="../../translatables-tmp.py" line="62"/>
         <source>Duration</source>
-        <translation type="unfinished"></translation>
+        <translation>Süre</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="65"/>
         <source> ms</source>
-        <translation type="unfinished"></translation>
+        <translation> ms</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="64"/>
         <source>Jitter</source>
-        <translation type="unfinished"></translation>
+        <translation>Sapma</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="66"/>
         <source>Jitter mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Sapma modu</translation>
     </message>
 </context>
 <context>
@@ -1706,22 +1714,22 @@ The experiment did not finish normally for the following reason:
     <message>
         <location filename="../../translatables-tmp.py" line="352"/>
         <source>Runs Python code from a file</source>
-        <translation type="unfinished"></translation>
+        <translation>Python kodunu bir dosyadan çalıştırır</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="353"/>
         <source>Script file</source>
-        <translation type="unfinished"></translation>
+        <translation>Komut dizisi dosyası</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="354"/>
         <source>Prepare function in script</source>
-        <translation type="unfinished"></translation>
+        <translation>Komut dizisinin içerisinde fonksiyon hazırla</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="355"/>
         <source>Run function in script</source>
-        <translation type="unfinished"></translation>
+        <translation>Komut dizisinin içerisinde fonksiyon çalıştır</translation>
     </message>
 </context>
 <context>
@@ -1729,42 +1737,42 @@ The experiment did not finish normally for the following reason:
     <message>
         <location filename="../../translatables-tmp.py" line="79"/>
         <source>Style</source>
-        <translation type="unfinished"></translation>
+        <translation>Stil</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="80"/>
         <source>Pen width</source>
-        <translation type="unfinished"></translation>
+        <translation>Kalem kalınlığı</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="81"/>
         <source>px</source>
-        <translation type="unfinished"></translation>
+        <translation>px</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="82"/>
         <source>Duration</source>
-        <translation type="unfinished"></translation>
+        <translation>Süre</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="83"/>
         <source>Foreground color</source>
-        <translation type="unfinished"></translation>
+        <translation>Ön plan rengi</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="84"/>
         <source>Background color</source>
-        <translation type="unfinished"></translation>
+        <translation>Arkaplan rengi</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="85"/>
         <source>X coordinate</source>
-        <translation type="unfinished"></translation>
+        <translation>X koordinatı</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="86"/>
         <source>Y coordinate</source>
-        <translation type="unfinished"></translation>
+        <translation>Y koordinatı</translation>
     </message>
 </context>
 <context>
@@ -1772,22 +1780,22 @@ The experiment did not finish normally for the following reason:
     <message>
         <location filename="../../translatables-tmp.py" line="388"/>
         <source>cols, rows, and margins should be numeric values separated by a semi-colon</source>
-        <translation type="unfinished"></translation>
+        <translation>sütunlar, satırlar ve kenar boşlukları noktalı virgül ile ayrılmış sayısal değerler olmalıdır</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="389"/>
         <source>In a form widget col, row, colspan, and rowspan should be integer</source>
-        <translation type="unfinished"></translation>
+        <translation>Bir form aracında sütun, satır, sütun genişliği ve satır genişliği bir tamsayı olmalıdır</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="390"/>
         <source>You can only specify one focus widget</source>
-        <translation type="unfinished"></translation>
+        <translation>Sadece bir adet odaklanma aracı seçebilirsiniz</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="391"/>
         <source>Edit the script to modify the form</source>
-        <translation type="unfinished"></translation>
+        <translation>Formu değiştirmek için komut dizisini düzenle</translation>
     </message>
 </context>
 <context>
@@ -1795,32 +1803,32 @@ The experiment did not finish normally for the following reason:
     <message>
         <location filename="../../translatables-tmp.py" line="411"/>
         <source>Form title</source>
-        <translation type="unfinished"></translation>
+        <translation>Form başlığı</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="412"/>
         <source>Checkbox text</source>
-        <translation type="unfinished"></translation>
+        <translation>İşaret kutusu metni</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="413"/>
         <source>Accept-button text</source>
-        <translation type="unfinished"></translation>
+        <translation>Kabul et-butonu metni</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="414"/>
         <source>Decline-button text</source>
-        <translation type="unfinished"></translation>
+        <translation>Reddet-butonu metni</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="415"/>
         <source>Message on decline</source>
-        <translation type="unfinished"></translation>
+        <translation>Reddetme üzerine mesaj</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="416"/>
         <source>Consent form text</source>
-        <translation type="unfinished"></translation>
+        <translation>Onam formu metni</translation>
     </message>
 </context>
 <context>
@@ -1828,42 +1836,42 @@ The experiment did not finish normally for the following reason:
     <message>
         <location filename="../../translatables-tmp.py" line="472"/>
         <source>Form title</source>
-        <translation type="unfinished"></translation>
+        <translation>Form başlığı</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="473"/>
         <source>Response variable</source>
-        <translation type="unfinished"></translation>
+        <translation>Yanıt değişkeni</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="474"/>
         <source>Allow multiple options to be selected</source>
-        <translation type="unfinished"></translation>
+        <translation>Çoklu seçenekleri seçmeye izin ver</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="475"/>
         <source>Advance immediately to the next item once a selection has been made</source>
-        <translation type="unfinished"></translation>
+        <translation>Bir öge seçildikten sonra beklemeden diğer ögeye  geç</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="476"/>
         <source>Button text</source>
-        <translation type="unfinished"></translation>
+        <translation>Buton metni</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="477"/>
         <source>Timeout</source>
-        <translation type="unfinished"></translation>
+        <translation>Zaman aşımı</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="478"/>
         <source>Your question</source>
-        <translation type="unfinished"></translation>
+        <translation>Soru</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="479"/>
         <source>Response options (different options on different lines)</source>
-        <translation type="unfinished"></translation>
+        <translation>Yanıtlar (farklı seçenekler için farklı satırlar kullanın)</translation>
     </message>
 </context>
 <context>
@@ -1871,17 +1879,17 @@ The experiment did not finish normally for the following reason:
     <message>
         <location filename="../../translatables-tmp.py" line="205"/>
         <source>Form title</source>
-        <translation type="unfinished"></translation>
+        <translation>Form başlığı</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="206"/>
         <source>Ok-button text</source>
-        <translation type="unfinished"></translation>
+        <translation>Tamam-butonu metni</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="207"/>
         <source>Main form text</source>
-        <translation type="unfinished"></translation>
+        <translation>Ana form metni</translation>
     </message>
 </context>
 <context>
@@ -1889,22 +1897,22 @@ The experiment did not finish normally for the following reason:
     <message>
         <location filename="../../translatables-tmp.py" line="288"/>
         <source>Form title</source>
-        <translation type="unfinished"></translation>
+        <translation>Form başlığı</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="289"/>
         <source>Response variable</source>
-        <translation type="unfinished"></translation>
+        <translation>Yanıt değişkeni</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="290"/>
         <source>Timeout</source>
-        <translation type="unfinished"></translation>
+        <translation>Süre aşımı</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="291"/>
         <source>Your question</source>
-        <translation type="unfinished"></translation>
+        <translation>Sorunuz</translation>
     </message>
 </context>
 <context>
@@ -1912,27 +1920,27 @@ The experiment did not finish normally for the following reason:
     <message>
         <location filename="../../translatables-tmp.py" line="159"/>
         <source>Dummy mode (use keyboard instead of joystick)</source>
-        <translation type="unfinished"></translation>
+        <translation>Sahte mod (joystik yerine klavye kullan)</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="160"/>
         <source>Device nr.</source>
-        <translation type="unfinished"></translation>
+        <translation>Alet no.</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="161"/>
         <source>Correct response</source>
-        <translation type="unfinished"></translation>
+        <translation>Doğru yanıt</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="162"/>
         <source>Allowed responses</source>
-        <translation type="unfinished"></translation>
+        <translation>İzin verilen yanıtlar</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="163"/>
         <source>Timeout</source>
-        <translation type="unfinished"></translation>
+        <translation>Zaman aşımı</translation>
     </message>
 </context>
 <context>
@@ -1940,7 +1948,7 @@ The experiment did not finish normally for the following reason:
     <message>
         <location filename="../../translatables-tmp.py" line="89"/>
         <source>Note</source>
-        <translation type="unfinished"></translation>
+        <translation>Not</translation>
     </message>
 </context>
 <context>
@@ -1948,52 +1956,52 @@ The experiment did not finish normally for the following reason:
     <message>
         <location filename="../../translatables-tmp.py" line="276"/>
         <source>Estimated threshold (used for starting test value)</source>
-        <translation type="unfinished"></translation>
+        <translation>Tahmini eşik (başlangıç test değişkeni için kullanılır)</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="277"/>
         <source>Std. dev. of estimated threshold</source>
-        <translation type="unfinished"></translation>
+        <translation>Tahmini eşik değerinin standart sapması</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="278"/>
         <source>Desired proportion of correct responses</source>
-        <translation type="unfinished"></translation>
+        <translation>Doğru yanıtların istenen oranı</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="279"/>
         <source>Steepness of the Weibull psychometric function (&#xce;&#xb2;)</source>
-        <translation type="unfinished"></translation>
+        <translation>Weibull psikometrik fonksiyonunun yüksekliği (Î²)</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="280"/>
         <source>Proportion of random responses at maximum stimulus intensity (&#xce;&#xb4;)</source>
-        <translation type="unfinished"></translation>
+        <translation>Maksimum uyarıcı yoğunluğunda rastgele yanıtların oran ı(Î´)</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="281"/>
         <source>Chance level (&#xce;&#xb3;)</source>
-        <translation type="unfinished"></translation>
+        <translation>Şans seviyesi (Î³)</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="282"/>
         <source>Method to determine optimal test value</source>
-        <translation type="unfinished"></translation>
+        <translation>Optımum test değerini berlirlemek için metod</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="283"/>
         <source>Minimum test value</source>
-        <translation type="unfinished"></translation>
+        <translation>Minimum test değeri</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="284"/>
         <source>Maximum test value</source>
-        <translation type="unfinished"></translation>
+        <translation>Maksimum test değeri</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="285"/>
         <source>Experimental variable for test value</source>
-        <translation type="unfinished"></translation>
+        <translation>Test değeri için deneysel değişken</translation>
     </message>
 </context>
 <context>
@@ -2001,7 +2009,7 @@ The experiment did not finish normally for the following reason:
     <message>
         <location filename="../../translatables-tmp.py" line="362"/>
         <source>Response variable (0 or 1)</source>
-        <translation type="unfinished"></translation>
+        <translation>Yanıt değişkeni (0 ya da 1)</translation>
     </message>
 </context>
 <context>
@@ -2009,12 +2017,12 @@ The experiment did not finish normally for the following reason:
     <message>
         <location filename="../../translatables-tmp.py" line="358"/>
         <source>Marks the current loop cycle so that it is repeated</source>
-        <translation type="unfinished"></translation>
+        <translation>Geçerli döngüyü işaretler, döngü tekrar edilir</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="359"/>
         <source>Repeat if</source>
-        <translation type="unfinished"></translation>
+        <translation>Repeat if</translation>
     </message>
 </context>
 <context>
@@ -2022,7 +2030,7 @@ The experiment did not finish normally for the following reason:
     <message>
         <location filename="../../translatables-tmp.py" line="30"/>
         <source>This plug-in has no settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Bu eklentinin ayarları bulunmamaktadır</translation>
     </message>
 </context>
 <context>
@@ -2030,43 +2038,44 @@ The experiment did not finish normally for the following reason:
     <message>
         <location filename="../../translatables-tmp.py" line="299"/>
         <source>Dummy mode (use keyboard instead)</source>
-        <translation type="unfinished"></translation>
+        <translation>Sahte mod (klavye kullanılır)</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="300"/>
         <source>Ignore buttons that are already pressed</source>
-        <translation type="unfinished"></translation>
+        <translation>Basılmış olan tuşları yoksay</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="301"/>
         <source>Device name</source>
-        <translation type="unfinished"></translation>
+        <translation>Cihazın adı</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="302"/>
         <source>Correct response</source>
-        <translation type="unfinished"></translation>
+        <translation>Doğru yanıt</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="303"/>
         <source>Allowed responses</source>
-        <translation type="unfinished"></translation>
+        <translation>İzin verilen yanıtlar</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="304"/>
         <source>Timeout</source>
-        <translation type="unfinished"></translation>
+        <translation>Süre aşımı</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="305"/>
         <source>Turn on lights</source>
-        <translation type="unfinished"></translation>
+        <translation>Işıkları aç</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="306"/>
         <source>&lt;small&gt;&lt;b&gt;Note:&lt;/b&gt; If there are multiple srbox items in the experiment, the first srbox item determines the device name and whether dummy mode is enabled&lt;/small&gt;
 </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;small&gt;&lt;b&gt;Not:&lt;/b&gt; Eğer deneyde birden fazla srbox ögesi bulunursa ilk srbox ögesi cihaz ismini belirler ve sahte modun etkinleştirlip etkinleştirilmediğine karar verir&lt;/small&gt;
+</translation>
     </message>
 </context>
 <context>
@@ -2075,7 +2084,8 @@ The experiment did not finish normally for the following reason:
         <location filename="../../translatables-tmp.py" line="239"/>
         <source>&lt;b&gt;Warning:&lt;/b&gt; The text_display plug-in has been removed. Please use a different way to present text, as described on &lt;a href=&quot;http://osdoc.cogsci.nl/usage/text&quot;&gt;http://osdoc.cogsci.nl/usage/text&lt;/a&gt;.
 </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Uyarı:&lt;/b&gt; Metin gösterme eklentisi kaldırıldı. Metin göstermek için&lt;a href=&quot;http://osdoc.cogsci.nl/usage/text&quot;&gt;http://osdoc.cogsci.nl/usage/text&lt;/a&gt; adresinde açıklanan yöntemlerden başka bir yöntemi seçiniz.
+</translation>
     </message>
 </context>
 <context>
@@ -2084,7 +2094,8 @@ The experiment did not finish normally for the following reason:
         <location filename="../../translatables-tmp.py" line="210"/>
         <source>&lt;b&gt;Warning:&lt;/b&gt; The text_input plug-in has been removed. To collect text input, please use a form, as described on &lt;a href=&quot;http://osdoc.cogsci.nl/forms&quot;&gt;http://osdoc.cogsci.nl/forms/&lt;/a&gt;.
 </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Uyarı:&lt;/b&gt; Metin girdi eklentisi kaldırıldı. Metin girdisi toplamak için&lt;a href=&quot;http://osdoc.cogsci.nl/forms&quot;&gt;http://osdoc.cogsci.nl/forms/&lt;/a&gt; adresinde açıklanan yöntemlerden başka bir tanesini seçiniz.
+</translation>
     </message>
 </context>
 <context>
@@ -2092,27 +2103,27 @@ The experiment did not finish normally for the following reason:
     <message>
         <location filename="../../translatables-tmp.py" line="19"/>
         <source>Correct response</source>
-        <translation type="unfinished"></translation>
+        <translation>Doğru tepki</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="20"/>
         <source>Timeout</source>
-        <translation type="unfinished"></translation>
+        <translation>Zaman aşımı</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="21"/>
         <source>Number of columns</source>
-        <translation type="unfinished"></translation>
+        <translation>Sütun sayısı</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="22"/>
         <source>Number of rows</source>
-        <translation type="unfinished"></translation>
+        <translation>Satır sayısı</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="23"/>
         <source>Show cursor</source>
-        <translation type="unfinished"></translation>
+        <translation>İmleci göster</translation>
     </message>
 </context>
 <context>
@@ -2120,22 +2131,22 @@ The experiment did not finish normally for the following reason:
     <message>
         <location filename="../../translatables-tmp.py" line="269"/>
         <source>Video file</source>
-        <translation type="unfinished"></translation>
+        <translation>Vidyo dosyası</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="270"/>
         <source>Resize to fit screen</source>
-        <translation type="unfinished"></translation>
+        <translation>Ekrana sığdırmak için yeniden boyutlandır</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="272"/>
         <source>Duration</source>
-        <translation type="unfinished"></translation>
+        <translation>Not</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="273"/>
         <source>ms</source>
-        <translation type="unfinished"></translation>
+        <translation>ms</translation>
     </message>
 </context>
 <context>
@@ -2143,42 +2154,42 @@ The experiment did not finish normally for the following reason:
     <message>
         <location filename="../../translatables-tmp.py" line="462"/>
         <source>Run items simultaneously</source>
-        <translation type="unfinished"></translation>
+        <translation>Ögeleri eş zamanlı olarak çalıştır</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="463"/>
         <source>Item name</source>
-        <translation type="unfinished"></translation>
+        <translation>Öge ismi</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="464"/>
         <source>Start time</source>
-        <translation type="unfinished"></translation>
+        <translation>Başlangıç zamanı</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="465"/>
         <source>End time (if applicable)</source>
-        <translation type="unfinished"></translation>
+        <translation>Bitirme zamanı (eğer uygulanabilirse)</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="466"/>
         <source>Duration</source>
-        <translation type="unfinished"></translation>
+        <translation>Süre</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="467"/>
         <source>Generator function name (optional)</source>
-        <translation type="unfinished"></translation>
+        <translation>Üretici fonksiyonu ismi (isteğe bağlı)</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="468"/>
         <source>Flush pending key presses at coroutines start</source>
-        <translation type="unfinished"></translation>
+        <translation>coroutines başladığında beklemede olan basılan tuşların görevlerini iptal et</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="469"/>
         <source>&quot;%s&quot; does not support coroutines.</source>
-        <translation type="unfinished"></translation>
+        <translation>&quot;%s&quot; coroutinesi desteklememektedir.</translation>
     </message>
 </context>
 <context>
@@ -2186,17 +2197,17 @@ The experiment did not finish normally for the following reason:
     <message>
         <location filename="../../opensesame_extensions/quick_switcher/quick_switcher.ui" line="17"/>
         <source>Quick open item</source>
-        <translation type="unfinished"></translation>
+        <translation>Hızlı öge açma</translation>
     </message>
     <message>
         <location filename="../../opensesame_extensions/quick_switcher/quick_switcher.ui" line="34"/>
         <source>Search by item name or type</source>
-        <translation type="unfinished"></translation>
+        <translation>Öge ismi ya da türü ile arama</translation>
     </message>
     <message>
         <location filename="../../opensesame_extensions/quick_switcher/quick_switcher.ui" line="41"/>
         <source>Your bidding, sire ...</source>
-        <translation type="unfinished"></translation>
+        <translation>Teklifiniz, efendim ...</translation>
     </message>
 </context>
 <context>
@@ -2204,59 +2215,59 @@ The experiment did not finish normally for the following reason:
     <message>
         <location filename="../ui/widgets/backend_settings.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished">フォーム</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <location filename="../ui/widgets/backend_settings.ui" line="53"/>
         <source>ICON</source>
-        <translation type="unfinished">アイコン</translation>
+        <translation>SİMGE</translation>
     </message>
     <message>
         <location filename="../ui/widgets/backend_settings.ui" line="60"/>
         <source>&lt;b&gt;Back-end settings&lt;/b&gt;&lt;br /&gt;
 Various settings related to the control of the display, sound, and input devices</source>
-        <translation type="unfinished">&lt;b&gt;バックエンドの設定&lt;/b&gt;&lt;br /&gt;
-ディスプレイや音, 入力デバイスを制御するための設定です</translation>
+        <translation>&lt;b&gt;Sunucu uygulama ayarları&lt;/b&gt;&lt;br /&gt;
+Görüntünün, sesin ve girdi aletleriyle ilgili ayarlar</translation>
     </message>
     <message>
         <location filename="../ui/widgets/backend_settings.ui" line="71"/>
         <source>Canvas</source>
-        <translation type="unfinished">キャンバス</translation>
+        <translation>Kanvas</translation>
     </message>
     <message>
         <location filename="../ui/widgets/backend_settings.ui" line="236"/>
         <source>TextLabel</source>
-        <translation type="unfinished">テキストラベル</translation>
+        <translation>MetinEtiketi</translation>
     </message>
     <message>
         <location filename="../ui/widgets/backend_settings.ui" line="96"/>
         <source>Keyboard</source>
-        <translation type="unfinished">キーボード</translation>
+        <translation>Klavye</translation>
     </message>
     <message>
         <location filename="../ui/widgets/backend_settings.ui" line="121"/>
         <source>Mouse</source>
-        <translation type="unfinished">マウス</translation>
+        <translation>Fare</translation>
     </message>
     <message>
         <location filename="../ui/widgets/backend_settings.ui" line="146"/>
         <source>Sampler</source>
-        <translation type="unfinished">サンプラー</translation>
+        <translation>Örnekleyici</translation>
     </message>
     <message>
         <location filename="../ui/widgets/backend_settings.ui" line="171"/>
         <source>Clock</source>
-        <translation type="unfinished">時間</translation>
+        <translation>Saat</translation>
     </message>
     <message>
         <location filename="../ui/widgets/backend_settings.ui" line="196"/>
         <source>Color</source>
-        <translation type="unfinished">色</translation>
+        <translation>Renk</translation>
     </message>
     <message>
         <location filename="../ui/widgets/backend_settings.ui" line="221"/>
         <source>Log</source>
-        <translation type="unfinished">ログ</translation>
+        <translation>Kayıt</translation>
     </message>
 </context>
 <context>
@@ -2264,32 +2275,32 @@ Various settings related to the control of the display, sound, and input devices
     <message>
         <location filename="../ui/widgets/font_widget.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished">フォーム</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <location filename="../ui/widgets/font_widget.ui" line="77"/>
         <source>other ...</source>
-        <translation type="unfinished">その他...</translation>
+        <translation>diğer ...</translation>
     </message>
     <message>
         <location filename="../ui/widgets/font_widget.ui" line="85"/>
         <source> px</source>
-        <translation type="unfinished"></translation>
+        <translation> px</translation>
     </message>
     <message>
         <location filename="../ui/widgets/font_widget.ui" line="118"/>
         <source>Italic</source>
-        <translation type="unfinished">斜体</translation>
+        <translation>Eğik yazı</translation>
     </message>
     <message>
         <location filename="../ui/widgets/font_widget.ui" line="131"/>
         <source>Bold</source>
-        <translation type="unfinished">太字</translation>
+        <translation>Kalın</translation>
     </message>
     <message>
         <location filename="../ui/widgets/font_widget.ui" line="144"/>
         <source>Example</source>
-        <translation type="unfinished">例</translation>
+        <translation>Örnek</translation>
     </message>
 </context>
 <context>
@@ -2297,32 +2308,32 @@ Various settings related to the control of the display, sound, and input devices
     <message>
         <location filename="../ui/widgets/font_widget_horizontal.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished">フォーム</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <location filename="../ui/widgets/font_widget_horizontal.ui" line="50"/>
         <source>Example</source>
-        <translation type="unfinished">例</translation>
+        <translation>Örnek</translation>
     </message>
     <message>
         <location filename="../ui/widgets/font_widget_horizontal.ui" line="99"/>
         <source>other ...</source>
-        <translation type="unfinished">その他...</translation>
+        <translation>diğer ...</translation>
     </message>
     <message>
         <location filename="../ui/widgets/font_widget_horizontal.ui" line="107"/>
         <source> px</source>
-        <translation type="unfinished"></translation>
+        <translation> px</translation>
     </message>
     <message>
         <location filename="../ui/widgets/font_widget_horizontal.ui" line="129"/>
         <source>Bold</source>
-        <translation type="unfinished">太字</translation>
+        <translation>Kalın</translation>
     </message>
     <message>
         <location filename="../ui/widgets/font_widget_horizontal.ui" line="141"/>
         <source>Italic</source>
-        <translation type="unfinished">斜体</translation>
+        <translation>Eğik yazı</translation>
     </message>
 </context>
 <context>
@@ -2330,64 +2341,69 @@ Various settings related to the control of the display, sound, and input devices
     <message>
         <location filename="../ui/dialogs/gabor_settings.ui" line="57"/>
         <source>Insert Gabor patch</source>
-        <translation type="unfinished">ガボールパッチの挿入</translation>
+        <translation>Bir Gabor parçası ekle</translation>
     </message>
     <message>
         <location filename="../ui/dialogs/gabor_settings.ui" line="90"/>
         <source>Orientation&lt;br /&gt;&lt;i&gt;in degrees (0 .. 360)&lt;/i&gt;</source>
-        <translation type="unfinished">方位&lt;br /&gt;&lt;i&gt;in degrees (0 .. 360)&lt;/i&gt;</translation>
+        <translation>Yön &lt;br /&gt;&lt;i&gt;derece olarak (0 .. 360)&lt;/i&gt;</translation>
     </message>
-    <message encoding="UTF-8">
+    <message>
         <location filename="../ui/dialogs/gabor_settings.ui" line="100"/>
-        <source> °</source>
-        <translation type="unfinished"> °</translation>
+        <source> &#xb0;</source>
+        <translation type="obsolete"> °</translation>
     </message>
     <message>
         <location filename="../ui/dialogs/gabor_settings.ui" line="110"/>
         <source>Size&lt;br /&gt;&lt;i&gt;in pixels&lt;/i&gt;</source>
-        <translation type="unfinished">Size&lt;br /&gt;&lt;i&gt;in pixels&lt;/i&gt;</translation>
+        <translation>Boyut&lt;br /&gt;&lt;i&gt;pixel olarak&lt;/i&gt;</translation>
     </message>
     <message>
         <location filename="../ui/dialogs/gabor_settings.ui" line="177"/>
         <source> px</source>
-        <translation type="unfinished"> px</translation>
+        <translation> px</translation>
     </message>
     <message>
         <location filename="../ui/dialogs/gabor_settings.ui" line="136"/>
         <source>Envelope</source>
-        <translation type="unfinished">刺激輪郭</translation>
+        <translation>Zarf</translation>
     </message>
     <message>
         <location filename="../ui/dialogs/gabor_settings.ui" line="167"/>
         <source>Standard deviation&lt;br /&gt;&lt;i&gt;in pixels, only applies to Gaussian envelope&lt;/i&gt;</source>
-        <translation type="unfinished">偏差&lt;br /&gt;&lt;i&gt;in pixels, only applies to Gaussian envelope&lt;/i&gt;</translation>
+        <translation>Standart sapma &lt;br /&gt;&lt;i&gt; pixel değeri. Bu sadece Gaussion zarfında kullanılabilir&lt;/i&gt;</translation>
     </message>
     <message>
         <location filename="../ui/dialogs/gabor_settings.ui" line="190"/>
         <source>Frequency&lt;br /&gt;&lt;i&gt;in cycles/ px&lt;/i&gt;</source>
-        <translation type="unfinished">空間周波数 &lt;br /&gt;&lt;i&gt;in cycles/ px&lt;/i&gt;</translation>
+        <translation>Frekans&lt;br /&gt;&lt;i&gt;cycles/ px olarak&lt;/i&gt;</translation>
     </message>
     <message>
         <location filename="../ui/dialogs/gabor_settings.ui" line="213"/>
         <source>Phase&lt;br /&gt;&lt;i&gt;in cycles (0 .. 1)&lt;/i&gt;</source>
-        <translation type="unfinished">位相&lt;br /&gt;&lt;i&gt;in cycles (0 .. 1)&lt;/i&gt;</translation>
+        <translation>Süreç &lt;br /&gt;&lt;i&gt;cycles olarak (0 .. 1)&lt;/i&gt;</translation>
     </message>
     <message>
         <location filename="../ui/dialogs/gabor_settings.ui" line="233"/>
         <source>Color 1&lt;br /&gt;&lt;i&gt;e.g., &apos;white&apos; or &apos;#FFFFFF&apos;&lt;/i&gt;</source>
-        <translation type="unfinished">色 1&lt;br /&gt;&lt;i&gt;e.g., &apos;white&apos; or &apos;#FFFFFF&apos;&lt;/i&gt;</translation>
+        <translation>1. renk &lt;br /&gt;&lt;i&gt;örneğin, &apos;beyaz&apos; ya da &apos;#FFFFFF&apos;&lt;/i&gt;</translation>
     </message>
     <message>
         <location filename="../ui/dialogs/gabor_settings.ui" line="250"/>
         <source>Color 1&lt;br /&gt;&lt;i&gt;e.g., &apos;black&apos; or &apos;#000000&apos;&lt;/i&gt;</source>
-        <translation type="unfinished">色 1&lt;br /&gt;&lt;i&gt;e.g., &apos;black&apos; or &apos;#000000&apos;&lt;/i&gt;</translation>
+        <translation>2. renk &lt;br /&gt;&lt;i&gt;örneğin, &apos;siyah&apos; ya da &apos;#000000&apos;&lt;/i&gt;</translation>
     </message>
     <message>
         <location filename="../ui/dialogs/gabor_settings.ui" line="267"/>
         <source>Background color&lt;br /&gt;
 &lt;i&gt;Has no effect in psycho back-end&lt;/i&gt;</source>
-        <translation type="unfinished">背景色&lt;br /&gt;
-&lt;i&gt;Has no effect in psycho back-end&lt;/i&gt;</translation>
+        <translation>Arkaplan rengi&lt;br /&gt;
+&lt;i&gt;Psycho arka plan uygulamarına etkisi yoktur&lt;/i&gt;</translation>
+    </message>
+    <message encoding="UTF-8">
+        <location filename="../ui/dialogs/gabor_settings.ui" line="100"/>
+        <source> °</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2395,106 +2411,111 @@ Various settings related to the control of the display, sound, and input devices
     <message>
         <location filename="../ui/widgets/general_properties.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished">フォーム</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <location filename="../ui/widgets/general_properties.ui" line="93"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://osdoc.cogsci.nl/back-ends/about&quot;&gt;&lt;span style=&quot;font-size:small;font-style:italic; text-decoration: underline; color:#0057ae;&quot;&gt;Why is this important?&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="obsolete">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://osdoc.cogsci.nl/back-ends/about&quot;&gt;&lt;span style=&quot;font-size:small;font-style:italic; text-decoration: underline; color:#0057ae;&quot;&gt;どうして重要?&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation type="obsolete">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://osdoc.cogsci.nl/back-ends/about&quot;&gt;&lt;span style=&quot;font-size:small;font-style:italic; text-decoration: underline; color:#0057ae;&quot;&gt;Bu neden önemli&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../ui/widgets/general_properties.ui" line="167"/>
         <source>The display resolution (width) in pixels</source>
-        <translation type="unfinished">ディスプレイ解像度 (横) in pixels</translation>
+        <translation>Görüntü çözünürlüğü(genişlik) piksel olarak</translation>
     </message>
     <message>
         <location filename="../ui/widgets/general_properties.ui" line="190"/>
         <source>The display resolution (height) in pixels</source>
-        <translation type="unfinished">ディスプレイ解像度 (縦) in pixels</translation>
+        <translation>Görüntü çözünürlüğü (yükseklik) piksel olarak</translation>
     </message>
     <message>
         <location filename="../ui/widgets/general_properties.ui" line="209"/>
         <source>Foreground</source>
-        <translation type="unfinished">前景</translation>
+        <translation>Önplan</translation>
     </message>
     <message>
         <location filename="../ui/widgets/general_properties.ui" line="232"/>
         <source>Background</source>
-        <translation type="unfinished">背景</translation>
+        <translation>Arkaplan</translation>
     </message>
     <message>
         <location filename="../ui/widgets/general_properties.ui" line="99"/>
         <source>Back-end settings</source>
-        <translation type="unfinished">バックエンドの設定</translation>
+        <translation>Sunucu uygulama ayarları</translation>
     </message>
     <message>
         <location filename="../ui/widgets/general_properties.ui" line="331"/>
         <source>Enables support for bi-directional languages, such as Arabic and Hebrew</source>
-        <translation type="unfinished">アラビア語やヘブライ語などの、双方向言語サポートを有効にする</translation>
+        <translation>Arapça ve İbranice gibi çift yönlü dillere desteği etkinleştirir</translation>
     </message>
     <message>
         <location filename="../ui/widgets/general_properties.ui" line="334"/>
         <source>Bi-directional-text support</source>
-        <translation type="unfinished">双方向テキストサポート</translation>
+        <translation>Çift yönlü metin desteği</translation>
     </message>
     <message>
         <location filename="../ui/widgets/general_properties.ui" line="341"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:small; font-style:italic;&quot;&gt;Warning: python-bidi is not available&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:small; font-style:italic;&quot;&gt;Warning: python-bidi is not available&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:small; font-style:italic;&quot;&gt;Uyarı: python-bidi kullanılamaz&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../ui/widgets/general_properties.ui" line="321"/>
         <source>If enabled, (0,0) always refers to the center of the display</source>
-        <translation type="unfinished">可能であれば, (0,0) は常にディスプレイ中央を参照する</translation>
+        <translation>Etkinleştirildiğinde (0,0) koordinatları her zaman ekranın merkezine işaret eder</translation>
     </message>
     <message>
         <location filename="../ui/widgets/general_properties.ui" line="324"/>
         <source>Uniform coordinates</source>
-        <translation type="unfinished">均一座標</translation>
+        <translation>Tek biçimli koordinatlar</translation>
     </message>
     <message>
         <location filename="../ui/widgets/general_properties.ui" line="74"/>
         <source>Back-end</source>
-        <translation type="unfinished">バックエンド</translation>
+        <translation>Sunucu uygulama</translation>
     </message>
     <message>
         <location filename="../ui/widgets/general_properties.ui" line="133"/>
         <source>Resolution</source>
-        <translation type="unfinished">解像度</translation>
+        <translation>Çözünürlük</translation>
     </message>
     <message>
         <location filename="../ui/widgets/general_properties.ui" line="193"/>
         <source> px</source>
-        <translation type="unfinished"> px</translation>
+        <translation> px</translation>
     </message>
-    <message encoding="UTF-8">
-        <location filename="../ui/widgets/general_properties.ui" line="183"/>
-        <source>×</source>
-        <translation type="unfinished">×</translation>
+    <message>
+        <location filename="../ui/widgets/general_properties.ui" line="157"/>
+        <source>&#xd7;</source>
+        <translation type="obsolete">×</translation>
     </message>
     <message>
         <location filename="../ui/widgets/general_properties.ui" line="255"/>
         <source>Font</source>
-        <translation type="unfinished">フォント</translation>
+        <translation>Yazı tipi</translation>
     </message>
     <message>
         <location filename="../ui/widgets/general_properties.ui" line="308"/>
         <source>Miscellaneous</source>
-        <translation type="unfinished">その他</translation>
+        <translation>Diğer</translation>
     </message>
     <message>
         <location filename="../ui/widgets/general_properties.ui" line="360"/>
         <source>General script</source>
-        <translation type="unfinished">スクリプト</translation>
+        <translation>Genel komut dizisi</translation>
     </message>
     <message>
         <location filename="../ui/widgets/general_properties.ui" line="404"/>
         <source>Disable garbage collection</source>
-        <translation type="unfinished"></translation>
+        <translation>Çöpleri toplamayı devre dışı bırak</translation>
     </message>
     <message>
         <location filename="../ui/widgets/general_properties.ui" line="110"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://osdoc.cogsci.nl/manual/backends/&quot;&gt;&lt;span style=&quot;font-size:small;font-style:italic; text-decoration: underline; color:#0057ae;&quot;&gt;Why is this important?&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message encoding="UTF-8">
+        <location filename="../ui/widgets/general_properties.ui" line="183"/>
+        <source>×</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2503,19 +2524,19 @@ Various settings related to the control of the display, sound, and input devices
     <message>
         <location filename="../ui/widgets/general_script_editor.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished">フォーム</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <location filename="../ui/widgets/general_script_editor.ui" line="47"/>
         <source>ICON</source>
-        <translation type="unfinished">アイコン</translation>
+        <translation>SİMGE</translation>
     </message>
     <message>
         <location filename="../ui/widgets/general_script_editor.ui" line="60"/>
         <source>&lt;b&gt;General script editor&lt;/b&gt;&lt;br /&gt;
 Edit your experiment in script form</source>
-        <translation type="unfinished">&lt;b&gt;スクリプトエディター&lt;/b&gt;&lt;br /&gt;
-実験をエディターフォームで編集する</translation>
+        <translation>&lt;b&gt;Genel komut dizisi düzenleyici&lt;/b&gt;&lt;br /&gt;
+Deneylerinizi komut dizisi üzerinden düzenle</translation>
     </message>
 </context>
 <context>
@@ -2523,27 +2544,27 @@ Edit your experiment in script form</source>
     <message>
         <location filename="../ui/widgets/logger.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished">フォーム</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <location filename="../ui/widgets/logger.ui" line="35"/>
         <source>Log all variables (recommended)</source>
-        <translation type="unfinished">全ての変数を記録する (推奨)</translation>
+        <translation>Bütün değişkenleri kaydet (önerilen)</translation>
     </message>
     <message>
         <location filename="../ui/widgets/logger.ui" line="48"/>
         <source>Add custom variable</source>
-        <translation type="unfinished">カスタム変数を追加</translation>
+        <translation>Özel bir değişken ekle</translation>
     </message>
     <message>
         <location filename="../ui/widgets/logger.ui" line="76"/>
         <source>Custom variable</source>
-        <translation type="unfinished">カスタム変数</translation>
+        <translation>Özel değişken</translation>
     </message>
     <message>
         <location filename="../ui/widgets/logger.ui" line="81"/>
         <source>Source(s)</source>
-        <translation type="unfinished">ソース</translation>
+        <translation>Kaynak(lar)</translation>
     </message>
 </context>
 <context>
@@ -2551,77 +2572,77 @@ Edit your experiment in script form</source>
     <message>
         <location filename="../ui/widgets/loop_widget.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished">フォーム</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <location filename="../ui/widgets/loop_widget.ui" line="249"/>
         <source>Break if</source>
-        <translation type="unfinished">中断</translation>
+        <translation>Durdur eğer</translation>
     </message>
     <message>
         <location filename="../ui/widgets/loop_widget.ui" line="107"/>
         <source>Order</source>
-        <translation type="unfinished">順序</translation>
+        <translation>Sırası</translation>
     </message>
     <message>
         <location filename="../ui/widgets/loop_widget.ui" line="100"/>
         <source>Repeat</source>
-        <translation type="unfinished">繰り返し</translation>
+        <translation>Tekrar et</translation>
     </message>
     <message>
         <location filename="../ui/widgets/loop_widget.ui" line="215"/>
         <source>each cycle </source>
-        <translation type="unfinished"></translation>
+        <translation>her bir döngü </translation>
     </message>
     <message>
         <location filename="../ui/widgets/loop_widget.ui" line="71"/>
         <source>Run</source>
-        <translation type="unfinished">実行</translation>
+        <translation>Çalıştır</translation>
     </message>
     <message>
         <location filename="../ui/widgets/loop_widget.ui" line="186"/>
         <source>Source</source>
-        <translation type="unfinished">ソース</translation>
+        <translation>Kaynak</translation>
     </message>
     <message>
         <location filename="../ui/widgets/loop_widget.ui" line="193"/>
         <source>File</source>
-        <translation type="unfinished">ファイル</translation>
+        <translation>Dosya</translation>
     </message>
     <message>
         <location filename="../ui/widgets/loop_widget.ui" line="218"/>
         <source> x</source>
-        <translation type="unfinished"> x</translation>
+        <translation> x</translation>
     </message>
     <message>
         <location filename="../ui/widgets/loop_widget.ui" line="271"/>
         <source>never</source>
-        <translation type="unfinished">しない</translation>
+        <translation>hiçbir zaman</translation>
     </message>
     <message>
         <location filename="../ui/widgets/loop_widget.ui" line="278"/>
         <source>Evaluate on first cycle</source>
-        <translation type="unfinished"></translation>
+        <translation>İlk döngüde değerlendir</translation>
     </message>
     <message>
         <location filename="../ui/widgets/loop_widget.ui" line="285"/>
         <source>Resume after break</source>
-        <translation type="unfinished"></translation>
+        <translation>Aradan sonra devam et</translation>
     </message>
     <message>
         <location filename="../ui/widgets/loop_widget.ui" line="304"/>
         <source>Full-factorial design</source>
-        <translation type="unfinished"></translation>
+        <translation>Tam etkenli tasarım</translation>
     </message>
     <message>
         <location filename="../ui/widgets/loop_widget.ui" line="322"/>
         <source>Preview </source>
-        <translation type="unfinished">プレビュー </translation>
+        <translation>Önizleme </translation>
     </message>
     <message>
         <location filename="../ui/widgets/loop_widget.ui" line="340"/>
         <source>Summary</source>
-        <translation type="unfinished"></translation>
+        <translation>Özet</translation>
     </message>
 </context>
 <context>
@@ -2629,73 +2650,74 @@ Edit your experiment in script form</source>
     <message>
         <location filename="../ui/dialogs/loop_wizard_dialog.ui" line="37"/>
         <source>Show example</source>
-        <translation type="unfinished">例を表示</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../ui/dialogs/loop_wizard_dialog.ui" line="112"/>
         <source>New Row</source>
-        <translation type="unfinished">新しい列</translation>
+        <translation>Yeni satır</translation>
     </message>
     <message>
         <location filename="../ui/dialogs/loop_wizard_dialog.ui" line="162"/>
         <source>New Column</source>
-        <translation type="unfinished">新しい行</translation>
+        <translation>Yeni sütun</translation>
     </message>
     <message>
         <location filename="../ui/dialogs/loop_wizard_dialog.ui" line="167"/>
         <source>soa</source>
-        <translation type="unfinished">soa</translation>
+        <translation>uyarıcı başlama desenkronizasyonu</translation>
     </message>
     <message>
         <location filename="../ui/dialogs/loop_wizard_dialog.ui" line="172"/>
         <source>target</source>
-        <translation type="unfinished">ターゲット</translation>
+        <translation>hedef</translation>
     </message>
     <message>
         <location filename="../ui/dialogs/loop_wizard_dialog.ui" line="177"/>
         <source>cue</source>
-        <translation type="unfinished">キュー</translation>
+        <translation>işaret</translation>
     </message>
     <message>
         <location filename="../ui/dialogs/loop_wizard_dialog.ui" line="182"/>
         <source>0</source>
-        <translation type="unfinished">0</translation>
+        <translation>0</translation>
     </message>
     <message>
         <location filename="../ui/dialogs/loop_wizard_dialog.ui" line="192"/>
         <source>left</source>
-        <translation type="unfinished">左</translation>
+        <translation>sol</translation>
     </message>
     <message>
         <location filename="../ui/dialogs/loop_wizard_dialog.ui" line="197"/>
         <source>100</source>
-        <translation type="unfinished">100</translation>
+        <translation>100</translation>
     </message>
     <message>
         <location filename="../ui/dialogs/loop_wizard_dialog.ui" line="207"/>
         <source>right</source>
-        <translation type="unfinished">右</translation>
+        <translation>sağ</translation>
     </message>
     <message>
         <location filename="../ui/dialogs/loop_wizard_dialog.ui" line="212"/>
         <source>500</source>
-        <translation type="unfinished">500</translation>
+        <translation>500</translation>
     </message>
     <message>
         <location filename="../ui/dialogs/loop_wizard_dialog.ui" line="217"/>
         <source>1000</source>
-        <translation type="unfinished">1000</translation>
+        <translation>1000</translation>
     </message>
     <message>
         <location filename="../ui/dialogs/loop_wizard_dialog.ui" line="14"/>
         <source>Generate full-factorial design</source>
-        <translation type="unfinished"></translation>
+        <translation>Tam etkenli tasarım oluştur</translation>
     </message>
     <message>
         <location filename="../ui/dialogs/loop_wizard_dialog.ui" line="26"/>
         <source>To generate a full-factorial design, enter variable names (factors) in the first row of the table below. Below the variable names, enter the levels of the variables.&lt;br /&gt;&lt;br /&gt;
 &lt;b&gt;Note:&lt;/b&gt; This will overwrite the current loop table</source>
-        <translation type="unfinished"></translation>
+        <translation>Tam etkenli tasarım oluşturmak için değiken isimlerini (faktörleri) aşağıdaki tablonun ilk satırına giriniz. Değişken isimlerinin altına değişkenin seviyelerini giriniz.&lt;br /&gt;&lt;br /&gt;
+&lt;b&gt;Not:&lt;/b&gt;Bu işlem geçerli olan döngü tablosunun içine yazılacaktır</translation>
     </message>
 </context>
 <context>
@@ -2703,227 +2725,247 @@ Edit your experiment in script form</source>
     <message>
         <location filename="../ui/misc/main_window.ui" line="14"/>
         <source>OpenSesame</source>
-        <translation type="unfinished"></translation>
+        <translation>OpenSesame</translation>
     </message>
     <message>
         <location filename="../ui/misc/main_window.ui" line="75"/>
         <source>File</source>
-        <translation type="unfinished">ファイル</translation>
+        <translation>Dosya</translation>
     </message>
     <message>
         <location filename="../ui/misc/main_window.ui" line="79"/>
         <source>Recent files</source>
-        <translation type="unfinished">最近使ったファイル</translation>
+        <translation>Son dosyalar</translation>
     </message>
     <message>
         <location filename="../ui/misc/main_window.ui" line="97"/>
         <source>Run</source>
-        <translation type="unfinished">実行</translation>
+        <translation>Çalıştır</translation>
     </message>
     <message>
         <location filename="../ui/misc/main_window.ui" line="107"/>
         <source>View</source>
-        <translation type="unfinished">表示</translation>
+        <translation>Görüntüle</translation>
     </message>
     <message>
         <location filename="../ui/misc/main_window.ui" line="120"/>
         <source>Tools</source>
-        <translation type="unfinished">ツール</translation>
+        <translation>Araçlar</translation>
     </message>
     <message>
         <location filename="../ui/misc/main_window.ui" line="126"/>
         <source>Edit</source>
-        <translation type="unfinished">編集</translation>
+        <translation>Düzenle</translation>
     </message>
     <message>
         <location filename="../ui/misc/main_window.ui" line="146"/>
         <source>Overview</source>
-        <translation type="unfinished"></translation>
+        <translation>Genel bakış</translation>
     </message>
     <message>
         <location filename="../ui/misc/main_window.ui" line="169"/>
         <source>Name</source>
-        <translation type="unfinished">名</translation>
+        <translation>İsim</translation>
     </message>
     <message>
         <location filename="../ui/misc/main_window.ui" line="185"/>
         <source>File pool</source>
-        <translation type="unfinished">ファイルプール</translation>
+        <translation>Dosya havuzu</translation>
     </message>
     <message>
         <location filename="../ui/misc/main_window.ui" line="206"/>
         <source>Debug window</source>
-        <translation type="unfinished">デバックウィンドウ</translation>
+        <translation>Hata ayıklama penceresi</translation>
     </message>
     <message>
         <location filename="../ui/misc/main_window.ui" line="253"/>
         <source>Help</source>
-        <translation type="unfinished">ヘルプ</translation>
+        <translation>Yardım</translation>
     </message>
     <message>
         <location filename="../ui/misc/main_window.ui" line="263"/>
         <source>Clear debug window</source>
-        <translation type="unfinished"></translation>
+        <translation>Hata ayıklama penceresini temizle</translation>
     </message>
     <message>
         <location filename="../ui/misc/main_window.ui" line="273"/>
         <source>Reset workspace</source>
-        <translation type="unfinished">ワークスペースのリセット</translation>
+        <translation>Çalışma alanını yeniden başlat</translation>
     </message>
     <message>
         <location filename="../ui/misc/main_window.ui" line="304"/>
         <source>Main toolbar</source>
-        <translation type="unfinished">メインツールバー</translation>
+        <translation>Ana araç çubuğu</translation>
     </message>
     <message>
         <location filename="../ui/misc/main_window.ui" line="340"/>
         <source>Toolbar items</source>
-        <translation type="unfinished">ツールバーアイテム</translation>
+        <translation>Araç çubuğu ögeleri</translation>
     </message>
     <message>
         <location filename="../ui/misc/main_window.ui" line="361"/>
         <source>Ctrl+O</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+O</translation>
     </message>
     <message>
         <location filename="../ui/misc/main_window.ui" line="373"/>
         <source>Save</source>
-        <translation type="unfinished">保存</translation>
+        <translation>Kaydet</translation>
     </message>
     <message>
         <location filename="../ui/misc/main_window.ui" line="376"/>
         <source>Ctrl+S</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+S</translation>
     </message>
     <message>
         <location filename="../ui/misc/main_window.ui" line="391"/>
         <source>Ctrl+Shift+S</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+Shift+S</translation>
     </message>
     <message>
         <location filename="../ui/misc/main_window.ui" line="403"/>
         <source>Quit</source>
-        <translation type="unfinished">停止</translation>
+        <translation>Çıkış</translation>
     </message>
     <message>
         <location filename="../ui/misc/main_window.ui" line="414"/>
         <source>Ctrl+R</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+R</translation>
     </message>
     <message>
         <location filename="../ui/misc/main_window.ui" line="423"/>
         <source>Close all tabs</source>
-        <translation type="unfinished">全てのタブを閉じる</translation>
+        <translation>Bütün sekmeleri kapat</translation>
     </message>
     <message>
         <location filename="../ui/misc/main_window.ui" line="426"/>
         <source>Ctrl+Alt+T</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+Alt+T</translation>
     </message>
     <message>
         <location filename="../ui/misc/main_window.ui" line="438"/>
         <source>Close other tabs</source>
-        <translation type="unfinished">他のタブを閉じる</translation>
+        <translation>Diğer sekmeleri kapat</translation>
     </message>
     <message>
         <location filename="../ui/misc/main_window.ui" line="441"/>
         <source>Ctrl+T</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+T</translation>
     </message>
     <message>
         <location filename="../ui/misc/main_window.ui" line="452"/>
         <source>Ctrl+W</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+W</translation>
     </message>
     <message>
         <location filename="../ui/misc/main_window.ui" line="464"/>
         <source>Show file pool</source>
-        <translation type="unfinished">ファイルプールを表示</translation>
+        <translation>Dosya havuzunu göster</translation>
     </message>
     <message>
         <location filename="../ui/misc/main_window.ui" line="467"/>
         <source>Ctrl+P</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+P</translation>
     </message>
     <message>
         <location filename="../ui/misc/main_window.ui" line="482"/>
         <source>Show debug window</source>
-        <translation type="unfinished">デバックウィンドウの表示</translation>
+        <translation>Hata ayıklama penceresini göster</translation>
     </message>
     <message>
         <location filename="../ui/misc/main_window.ui" line="485"/>
         <source>Ctrl+D</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+D</translation>
     </message>
     <message>
         <location filename="../ui/misc/main_window.ui" line="493"/>
         <source>Enable auto response</source>
-        <translation type="unfinished">自動反応を有効にする</translation>
+        <translation>Otomatik yanıtı etkinleştir</translation>
     </message>
     <message>
         <location filename="../ui/misc/main_window.ui" line="505"/>
         <source>Preferences</source>
-        <translation type="unfinished">設定</translation>
+        <translation>Tercihler</translation>
     </message>
     <message>
         <location filename="../ui/misc/main_window.ui" line="510"/>
         <source>Dummy</source>
-        <translation type="unfinished">ダミー</translation>
+        <translation>Sahte</translation>
     </message>
     <message>
         <location filename="../ui/misc/main_window.ui" line="518"/>
         <source>Show overview area</source>
-        <translation type="unfinished">overviewエリアの表示</translation>
+        <translation>Genel alanı göster</translation>
     </message>
     <message>
         <location filename="../ui/misc/main_window.ui" line="521"/>
         <source>Ctrl+\</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+\</translation>
     </message>
     <message>
         <location filename="../ui/misc/main_window.ui" line="544"/>
         <source>Quick run</source>
-        <translation type="unfinished"></translation>
+        <translation>Hızlı çalıştır</translation>
     </message>
     <message>
         <location filename="../ui/misc/main_window.ui" line="547"/>
         <source>Ctrl+Shift+W</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+Shift+W</translation>
     </message>
     <message>
         <location filename="../ui/misc/main_window.ui" line="555"/>
         <source>Close current tab</source>
-        <translation type="unfinished">現在のタブを閉じる</translation>
+        <translation>Geçerli sekmeyi kapat</translation>
     </message>
     <message>
         <location filename="../ui/misc/main_window.ui" line="558"/>
         <source>Alt+T</source>
-        <translation type="unfinished"></translation>
+        <translation>Alt+T</translation>
     </message>
     <message>
         <location filename="../ui/misc/main_window.ui" line="536"/>
         <source>One-tab mode</source>
-        <translation type="unfinished">1つのタブのみ表示</translation>
+        <translation>Bir araç çubuğu modu</translation>
+    </message>
+    <message>
+        <location filename="../ui/misc/main_window.ui" line="358"/>
+        <source>Open?</source>
+        <translation type="obsolete">Aç…</translation>
+    </message>
+    <message>
+        <location filename="../ui/misc/main_window.ui" line="388"/>
+        <source>Save as?</source>
+        <translation type="obsolete">Farklı kaydet…</translation>
+    </message>
+    <message>
+        <location filename="../ui/misc/main_window.ui" line="411"/>
+        <source>Run fullscreen?</source>
+        <translation type="obsolete">Tam ekran modunda çalıştır…</translation>
+    </message>
+    <message>
+        <location filename="../ui/misc/main_window.ui" line="449"/>
+        <source>Run in window?</source>
+        <translation type="obsolete">Pencerede çalıştır…</translation>
     </message>
     <message encoding="UTF-8">
         <location filename="../ui/misc/main_window.ui" line="358"/>
         <source>Open…</source>
-        <translation type="unfinished">開く...</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message encoding="UTF-8">
         <location filename="../ui/misc/main_window.ui" line="388"/>
         <source>Save as…</source>
-        <translation type="unfinished">保存...</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message encoding="UTF-8">
         <location filename="../ui/misc/main_window.ui" line="411"/>
         <source>Run fullscreen…</source>
-        <translation type="unfinished">フルスクリーンで実行...</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message encoding="UTF-8">
         <location filename="../ui/misc/main_window.ui" line="449"/>
         <source>Run in window…</source>
-        <translation type="unfinished">ウィンドウモードで実行...</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2931,44 +2973,44 @@ Edit your experiment in script form</source>
     <message>
         <location filename="../ui/dialogs/noise_settings.ui" line="57"/>
         <source>Insert noise patch</source>
-        <translation type="unfinished">ノイズパッチの挿入</translation>
+        <translation>Gürültü (noise) yaması ekle</translation>
     </message>
     <message>
         <location filename="../ui/dialogs/noise_settings.ui" line="150"/>
         <source> px</source>
-        <translation type="unfinished"> px</translation>
+        <translation> px</translation>
     </message>
     <message>
         <location filename="../ui/dialogs/noise_settings.ui" line="106"/>
         <source>Envelope</source>
-        <translation type="unfinished">刺激輪郭</translation>
+        <translation>Zarf</translation>
     </message>
     <message>
         <location filename="../ui/dialogs/noise_settings.ui" line="140"/>
         <source>Standard deviation&lt;br /&gt;&lt;i&gt;in pixels, only applies to Gaussian envelope&lt;/i&gt;</source>
-        <translation type="unfinished">標偏差&lt;br /&gt;&lt;i&gt;in pixels, only applies to Gaussian envelope&lt;/i&gt;</translation>
+        <translation>Standart sapma &lt;br /&gt;&lt;i&gt; pixel değeri. Bu sadece Gaussion zarfında kullanılabilir&lt;/i&gt;</translation>
     </message>
     <message>
         <location filename="../ui/dialogs/noise_settings.ui" line="163"/>
         <source>Color 1&lt;br /&gt;&lt;i&gt;e.g., &apos;white&apos; or &apos;#FFFFFF&apos;&lt;/i&gt;</source>
-        <translation type="unfinished">色 1&lt;br /&gt;&lt;i&gt;e.g., &apos;white&apos; or &apos;#FFFFFF&apos;&lt;/i&gt;</translation>
+        <translation>1. renk &lt;br /&gt;&lt;i&gt;örneğin, &apos;beyaz&apos; ya da &apos;#FFFFFF&apos;&lt;/i&gt;</translation>
     </message>
     <message>
         <location filename="../ui/dialogs/noise_settings.ui" line="180"/>
         <source>Color 2&lt;br /&gt;&lt;i&gt;e.g., &apos;black&apos; or &apos;#000000&apos;&lt;/i&gt;</source>
-        <translation type="unfinished">色 2&lt;br /&gt;&lt;i&gt;e.g., &apos;black&apos; or &apos;#000000&apos;&lt;/i&gt;</translation>
+        <translation>2. renk &lt;br /&gt;&lt;i&gt;örneğin, &apos;siyah&apos; ya da &apos;#000000&apos;&lt;/i&gt;</translation>
     </message>
     <message>
         <location filename="../ui/dialogs/noise_settings.ui" line="222"/>
         <source>Size&lt;br /&gt;&lt;i&gt;in pixels&lt;/i&gt;</source>
-        <translation type="unfinished">Size&lt;br /&gt;&lt;i&gt;in pixels&lt;/i&gt;</translation>
+        <translation>Boyut&lt;br /&gt;&lt;i&gt; piksel olarak&lt;/i&gt;</translation>
     </message>
     <message>
         <location filename="../ui/dialogs/noise_settings.ui" line="197"/>
         <source>Background color&lt;br /&gt;
 &lt;i&gt;Has no effect in psycho back-end&lt;/i&gt;</source>
-        <translation type="unfinished">背景色&lt;br /&gt;
-&lt;i&gt;Has no effect in psycho back-end&lt;/i&gt;</translation>
+        <translation>Arkaplan rengi&lt;br /&gt;
+&lt;i&gt;Psycho arka plan uygulamarına etkisi yoktur&lt;/i&gt;</translation>
     </message>
 </context>
 <context>
@@ -2976,7 +3018,7 @@ Edit your experiment in script form</source>
     <message>
         <location filename="../ui/dialogs/notification_dialog.ui" line="57"/>
         <source>OpenSesame says ...</source>
-        <translation type="unfinished">OpenSesame からのお伝え ...</translation>
+        <translation>OpenSesame diyor ki ...</translation>
     </message>
 </context>
 <context>
@@ -2984,89 +3026,89 @@ Edit your experiment in script form</source>
     <message>
         <location filename="../ui/misc/opensesamerun.ui" line="14"/>
         <source>OpenSesame Run</source>
-        <translation type="unfinished">OpenSesame Run</translation>
+        <translation>OpenSesame Çalıştır</translation>
     </message>
     <message>
         <location filename="../ui/misc/opensesamerun.ui" line="51"/>
         <source>&lt;b&gt;Run, OpenSesame, run!&lt;/b&gt;&lt;br /&gt;
 &lt;small&gt;%s&lt;/small&gt;</source>
-        <translation type="unfinished">&lt;b&gt;Run, OpenSesame, run!&lt;/b&gt;&lt;br /&gt;
+        <translation>&lt;b&gt;Çalış, OpenSesame, çalış!&lt;/b&gt;&lt;br /&gt;
 &lt;small&gt;%s&lt;/small&gt;</translation>
     </message>
     <message>
         <location filename="../ui/misc/opensesamerun.ui" line="62"/>
         <source>Experiment, subject and log file</source>
-        <translation type="unfinished">実験, 参加者, ログファイル</translation>
+        <translation>Deney, katılımcı ve kayıt dosyası</translation>
     </message>
     <message>
         <location filename="../ui/misc/opensesamerun.ui" line="122"/>
         <source>Browse</source>
-        <translation type="unfinished">参照</translation>
+        <translation>Göz at</translation>
     </message>
     <message>
         <location filename="../ui/misc/opensesamerun.ui" line="106"/>
         <source>Experiment</source>
-        <translation type="unfinished">実験</translation>
+        <translation>Deney</translation>
     </message>
     <message>
         <location filename="../ui/misc/opensesamerun.ui" line="136"/>
         <source>Log file</source>
-        <translation type="unfinished">ログファイル</translation>
+        <translation>Kayıt dosyası</translation>
     </message>
     <message>
         <location filename="../ui/misc/opensesamerun.ui" line="150"/>
         <source>Subject number</source>
-        <translation type="unfinished">実験参加者番号</translation>
+        <translation>Katılımcı numarası</translation>
     </message>
     <message>
         <location filename="../ui/misc/opensesamerun.ui" line="160"/>
         <source>Display</source>
-        <translation type="unfinished">ディスプレイ</translation>
+        <translation>Göster</translation>
     </message>
     <message>
         <location filename="../ui/misc/opensesamerun.ui" line="181"/>
         <source>Run fullscreen</source>
-        <translation type="unfinished">フルスクリーンで実行</translation>
+        <translation>Tam ekran çalıştır</translation>
     </message>
     <message>
         <location filename="../ui/misc/opensesamerun.ui" line="188"/>
         <source>Use custom display resolution</source>
-        <translation type="unfinished">カスタムディスプレイ解像度の使用</translation>
+        <translation>Özelleştirilmiş ekran çözünürlüğü kullan</translation>
     </message>
     <message>
         <location filename="../ui/misc/opensesamerun.ui" line="216"/>
         <source>Width</source>
-        <translation type="unfinished">横</translation>
+        <translation>Genişlik</translation>
     </message>
     <message>
         <location filename="../ui/misc/opensesamerun.ui" line="273"/>
         <source>px</source>
-        <translation type="unfinished">px</translation>
+        <translation>px</translation>
     </message>
     <message>
         <location filename="../ui/misc/opensesamerun.ui" line="257"/>
         <source>Height</source>
-        <translation type="unfinished">縦</translation>
+        <translation>Yükseklik</translation>
     </message>
     <message>
         <location filename="../ui/misc/opensesamerun.ui" line="308"/>
         <source>Miscellaneous</source>
-        <translation type="unfinished">その他</translation>
+        <translation>Diğer</translation>
     </message>
     <message>
         <location filename="../ui/misc/opensesamerun.ui" line="329"/>
         <source>Enable PyLink module (required for the Eyelink plug-ins)</source>
-        <translation type="unfinished">PyLinkモードを有効にする (Eyelinkプラグインが必要です)</translation>
+        <translation>PyLink modülünü etkinleştir (Eyelink eklentileri için zorunludur)</translation>
     </message>
     <message>
         <location filename="../ui/misc/opensesamerun.ui" line="358"/>
         <source>Cancel</source>
-        <translation type="unfinished">キャンセル</translation>
+        <translation>İptal et</translation>
     </message>
     <message>
         <location filename="../ui/misc/opensesamerun.ui" line="369"/>
         <source>Run</source>
-        <translation type="unfinished">実行</translation>
+        <translation>Çalıştır</translation>
     </message>
 </context>
 <context>
@@ -3074,52 +3116,52 @@ Edit your experiment in script form</source>
     <message>
         <location filename="../ui/widgets/pool_widget.ui" line="17"/>
         <source>Form</source>
-        <translation type="unfinished">フォーム</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <location filename="../ui/widgets/pool_widget.ui" line="29"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Warning text&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Warning text&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Uyarı metni&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../ui/widgets/pool_widget.ui" line="77"/>
         <source>Clear filter</source>
-        <translation type="unfinished">フィルターのクリア</translation>
+        <translation>Filtreleri temizle</translation>
     </message>
     <message>
         <location filename="../ui/widgets/pool_widget.ui" line="97"/>
         <source>Help</source>
-        <translation type="unfinished">ヘルプ</translation>
+        <translation>Yardım</translation>
     </message>
     <message>
         <location filename="../ui/widgets/pool_widget.ui" line="135"/>
         <source>Add file</source>
-        <translation type="unfinished">ファイルの追加</translation>
+        <translation>Dosya ekle</translation>
     </message>
     <message>
         <location filename="../ui/widgets/pool_widget.ui" line="175"/>
         <source>Open file pool in file manager</source>
-        <translation type="unfinished">ファイルマネージャーでファイルプールを開く</translation>
+        <translation>Dosya yöneticisindeki dosya havuzunu aç</translation>
     </message>
     <message>
         <location filename="../ui/widgets/pool_widget.ui" line="202"/>
         <source>View as list</source>
-        <translation type="unfinished">リスト表示</translation>
+        <translation>Liste olarak göster</translation>
     </message>
     <message>
         <location filename="../ui/widgets/pool_widget.ui" line="210"/>
         <source>View as icons</source>
-        <translation type="unfinished">アイコン表示</translation>
+        <translation>Simge olarak göster</translation>
     </message>
     <message>
         <location filename="../ui/widgets/pool_widget.ui" line="64"/>
         <source>Search filter</source>
-        <translation type="unfinished">検索フィルタ</translation>
+        <translation>Filtre ara</translation>
     </message>
     <message>
         <location filename="../ui/widgets/pool_widget.ui" line="155"/>
         <source>Refresh</source>
-        <translation type="unfinished">更新</translation>
+        <translation>Yenile</translation>
     </message>
 </context>
 <context>
@@ -3127,84 +3169,79 @@ Edit your experiment in script form</source>
     <message>
         <location filename="../ui/widgets/preferences_widget.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished">フォーム</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <location filename="../ui/widgets/preferences_widget.ui" line="50"/>
         <source>Miscellaneous</source>
-        <translation type="unfinished">その他</translation>
+        <translation>Diğer</translation>
     </message>
     <message>
         <location filename="../ui/widgets/preferences_widget.ui" line="71"/>
         <source>Enable auto-response</source>
-        <translation type="unfinished">自動反応を有効にする</translation>
+        <translation>Otomatik yanıtı etkinleştir</translation>
     </message>
     <message>
         <location filename="../ui/widgets/preferences_widget.ui" line="87"/>
         <source>Appearance</source>
-        <translation type="unfinished">外観</translation>
+        <translation>Görünüş</translation>
     </message>
     <message>
         <location filename="../ui/widgets/preferences_widget.ui" line="139"/>
         <source>&lt;small&gt;&lt;i&gt;Changes take effect the next time you start OpenSesame&lt;/i&gt;&lt;/small&gt;
 </source>
-        <translation type="unfinished">&lt;small&gt;&lt;i&gt;変更は次回のOpenSesame実行から適用されます&lt;/i&gt;&lt;/small&gt;
+        <translation>&lt;small&gt;&lt;i&gt;Değişiklikler OpenSesame&apos;yi tekrar açtığınızda etkinleşecek&lt;/i&gt;&lt;/small&gt;
 </translation>
     </message>
     <message>
         <location filename="../ui/widgets/preferences_widget.ui" line="105"/>
         <source>Interface style</source>
-        <translation type="unfinished">インターフェース</translation>
+        <translation>Arayüz</translation>
     </message>
     <message>
         <location filename="../ui/widgets/preferences_widget.ui" line="115"/>
         <source>icon theme</source>
-        <translation type="unfinished">アイコン</translation>
+        <translation>simge teması</translation>
     </message>
     <message>
         <location filename="../ui/widgets/preferences_widget.ui" line="125"/>
         <source>Small icons in toolbar</source>
-        <translation type="unfinished">ツールバーのアイコンを小さくする</translation>
+        <translation>Araç çubuğundaki simgeleri küçült</translation>
     </message>
     <message>
         <location filename="../ui/widgets/preferences_widget.ui" line="132"/>
         <source>Show text in toolbar</source>
-        <translation type="unfinished">ツールバーにテキストを表示</translation>
+        <translation>Araç çubuğunda metini göster</translation>
     </message>
     <message>
         <location filename="../ui/widgets/preferences_widget.ui" line="169"/>
         <source>Runner</source>
-        <translation type="unfinished">ランナー</translation>
-    </message>
-    <message>
-        <location filename="../ui/widgets/preferences_widget.ui" line="177"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:8pt; font-style:italic;&quot;&gt;The &apos;runner&apos; determines how your OpenSesame experiment is executed. For more information, please visit &lt;/span&gt;&lt;a href=&quot;http://osdoc.cogsci.nl/miscellaneous/runners&quot;&gt;&lt;span style=&quot; font-size:8pt; font-style:italic; text-decoration: underline; color:#0057ae;&quot;&gt;http://osdoc.cogsci.nl/miscellaneous/runners&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:8pt; font-style:italic;&quot;&gt;.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="obsolete">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:8pt; font-style:italic;&quot;&gt;&apos;ランナー&apos;はOpenSesameがどのように実行されるかを決定します, 詳細はこちら &lt;/span&gt;&lt;a href=&quot;http://osdoc.cogsci.nl/miscellaneous/runners&quot;&gt;&lt;span style=&quot; font-size:8pt; font-style:italic; text-decoration: underline; color:#0057ae;&quot;&gt;http://osdoc.cogsci.nl/miscellaneous/runners&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:8pt; font-style:italic;&quot;&gt;.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>Çalıştırıcı</translation>
     </message>
     <message>
         <location filename="../ui/widgets/preferences_widget.ui" line="198"/>
         <source>Run experiment in the same process (inprocess)</source>
-        <translation type="unfinished"></translation>
+        <translation>Deneyi aynı işlemin içinde çalıştır (tekli işlem)</translation>
     </message>
     <message>
         <location filename="../ui/widgets/preferences_widget.ui" line="203"/>
         <source>Run experiment in a separate process (multiprocess)</source>
-        <translation type="unfinished"></translation>
+        <translation>Deneyi farklı bir işlemin içinde çalıştır (çoklu işlem)</translation>
     </message>
     <message>
         <location filename="../ui/widgets/preferences_widget.ui" line="208"/>
         <source>Run experiment with opensesamerun (external)</source>
-        <translation type="unfinished"></translation>
+        <translation>Deneyi openssesamerun aracılığı ile çalıştır (dışsal)</translation>
     </message>
     <message>
         <location filename="../ui/widgets/preferences_widget.ui" line="150"/>
         <source>Language</source>
-        <translation type="unfinished"></translation>
+        <translation>Dil</translation>
     </message>
     <message>
         <location filename="../ui/widgets/preferences_widget.ui" line="187"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:8pt; font-style:italic;&quot;&gt;The &apos;runner&apos; determines how your OpenSesame experiment is executed. For more information, please visit &lt;/span&gt;&lt;a href=&quot;http://osdoc.cogsci.nl/manual/runners/&quot;&gt;&lt;span style=&quot; font-size:8pt; font-style:italic; text-decoration: underline; color:#0057ae;&quot;&gt;http://osdoc.cogsci.nl/manual/runners/&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:8pt; font-style:italic;&quot;&gt;.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:8pt; font-style:italic;&quot;&gt; &apos;Çalıştırıcı&apos; Opensesame&apos;nin deneyi nasıl çalıştıracığını belirler. Daha fazla bilgi için siteyi ziyaret ediniz &lt;/span&gt;&lt;a href=&quot;http://osdoc.cogsci.nl/manual/runners/&quot;&gt;&lt;span style=&quot; font-size:8pt; font-style:italic; text-decoration: underline; color:#0057ae;&quot;&gt;http://osdoc.cogsci.nl/manual/runners/&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:8pt; font-style:italic;&quot;&gt;.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
@@ -3212,162 +3249,162 @@ Edit your experiment in script form</source>
     <message>
         <location filename="../ui/widgets/sketchpad.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished">フォーム</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <location filename="../ui/widgets/sketchpad.ui" line="50"/>
         <source>Duration</source>
-        <translation type="unfinished">呈示時間</translation>
+        <translation>Süre</translation>
     </message>
     <message>
         <location filename="../ui/widgets/sketchpad.ui" line="63"/>
         <source>A numeric value (duration in milliseconds), &quot;keypress&quot;, or &quot;mouseclick&quot;</source>
-        <translation type="unfinished">数値 (milliseconds), &quot;キープレス&quot;, &quot;マウスクリック&quot;</translation>
+        <translation>Sayısal bir değer (milisaniye olarak süre), &quot;keypress&quot; (tuşa basılması), ya da &quot;mouseclic&quot;(fare tıklaması)</translation>
     </message>
     <message>
         <location filename="../ui/widgets/sketchpad.ui" line="89"/>
         <source>Reset feedback variables</source>
-        <translation type="unfinished">フィードバック変数のリセット</translation>
+        <translation>Geri bildirim değişkenlerini sıfırla</translation>
     </message>
     <message>
         <location filename="../ui/widgets/sketchpad.ui" line="121"/>
         <source>Color</source>
-        <translation type="unfinished">色</translation>
+        <translation>Renk</translation>
     </message>
     <message>
         <location filename="../ui/widgets/sketchpad.ui" line="609"/>
         <source> px</source>
-        <translation type="unfinished"> px</translation>
+        <translation> px</translation>
     </message>
     <message>
         <location filename="../ui/widgets/sketchpad.ui" line="150"/>
         <source>Penwidth </source>
-        <translation type="unfinished">ペン幅 </translation>
+        <translation>Kalem kalınlığı </translation>
     </message>
     <message>
         <location filename="../ui/widgets/sketchpad.ui" line="182"/>
         <source>Proportional length of the base relative to the arrow head</source>
-        <translation type="unfinished"></translation>
+        <translation>Tabanın ok ucuna göre orantılı uzunluğu</translation>
     </message>
     <message>
         <location filename="../ui/widgets/sketchpad.ui" line="185"/>
         <source>Body length </source>
-        <translation type="unfinished"></translation>
+        <translation>Gövde uzunluğu </translation>
     </message>
     <message>
         <location filename="../ui/widgets/sketchpad.ui" line="235"/>
         <source> prop</source>
-        <translation type="unfinished"></translation>
+        <translation> oran</translation>
     </message>
     <message>
         <location filename="../ui/widgets/sketchpad.ui" line="229"/>
         <source>Proportional width (thickness) of the base relative to the arrow head</source>
-        <translation type="unfinished"></translation>
+        <translation>Tabanın ok ucuna göre orantılı kalınlığı</translation>
     </message>
     <message>
         <location filename="../ui/widgets/sketchpad.ui" line="232"/>
         <source>Body width </source>
-        <translation type="unfinished"></translation>
+        <translation>Gövde kalınlığı </translation>
     </message>
     <message>
         <location filename="../ui/widgets/sketchpad.ui" line="276"/>
         <source>Width (thickness) of the arrow head</source>
-        <translation type="unfinished"></translation>
+        <translation>Ok ucunun kalınlığı</translation>
     </message>
     <message>
         <location filename="../ui/widgets/sketchpad.ui" line="282"/>
         <source>Head width </source>
-        <translation type="unfinished"></translation>
+        <translation>Ok ucu genişliği </translation>
     </message>
     <message>
         <location filename="../ui/widgets/sketchpad.ui" line="317"/>
         <source>Image scaling factor</source>
-        <translation type="unfinished"></translation>
+        <translation>Resim ölçekleme faktörü</translation>
     </message>
     <message>
         <location filename="../ui/widgets/sketchpad.ui" line="320"/>
         <source>Scale </source>
-        <translation type="unfinished">スケール </translation>
+        <translation>Ölçekle </translation>
     </message>
     <message>
         <location filename="../ui/widgets/sketchpad.ui" line="496"/>
         <source> x</source>
-        <translation type="unfinished"> x</translation>
+        <translation> x</translation>
     </message>
     <message>
         <location filename="../ui/widgets/sketchpad.ui" line="364"/>
         <source>Check to draw filled objects</source>
-        <translation type="unfinished"></translation>
+        <translation>İçi doldurulmuş nesneleri çizmek için işaretleyin</translation>
     </message>
     <message>
         <location filename="../ui/widgets/sketchpad.ui" line="367"/>
         <source>Fill</source>
-        <translation type="unfinished"></translation>
+        <translation>Doldur</translation>
     </message>
     <message>
         <location filename="../ui/widgets/sketchpad.ui" line="393"/>
         <source>Center the object</source>
-        <translation type="unfinished">オブジェクトを中心に配置</translation>
+        <translation>Nesnenin merkezi</translation>
     </message>
     <message>
         <location filename="../ui/widgets/sketchpad.ui" line="396"/>
         <source>Center</source>
-        <translation type="unfinished">中心</translation>
+        <translation>Merkez</translation>
     </message>
     <message>
         <location filename="../ui/widgets/sketchpad.ui" line="425"/>
         <source>Show if</source>
-        <translation type="unfinished">表示</translation>
+        <translation>Göster eğer</translation>
     </message>
     <message>
         <location filename="../ui/widgets/sketchpad.ui" line="467"/>
         <source>Best-fitting zoom level</source>
-        <translation type="unfinished">ズームレベルの最適化</translation>
+        <translation>En iyi yakınlaştırma (zumlama) seviyesi</translation>
     </message>
     <message>
         <location filename="../ui/widgets/sketchpad.ui" line="480"/>
         <source>Original zoom level</source>
-        <translation type="unfinished">元のズームレベル</translation>
+        <translation>Orjinal yakınlaştırma (zum) seviyesi</translation>
     </message>
     <message>
         <location filename="../ui/widgets/sketchpad.ui" line="493"/>
         <source>Zoom factor</source>
-        <translation type="unfinished"></translation>
+        <translation>Yakınlaştırma faktörü</translation>
     </message>
     <message>
         <location filename="../ui/widgets/sketchpad.ui" line="536"/>
         <source>Parse a subset of HTML tags</source>
-        <translation type="unfinished"></translation>
+        <translation>HTML etiketlerinden bir altküme ayrıştır</translation>
     </message>
     <message>
         <location filename="../ui/widgets/sketchpad.ui" line="539"/>
         <source>HTML</source>
-        <translation type="unfinished">HTML</translation>
+        <translation>HTML</translation>
     </message>
     <message>
         <location filename="../ui/widgets/sketchpad.ui" line="583"/>
         <source>0,0</source>
-        <translation type="unfinished">0,0</translation>
+        <translation>0,0</translation>
     </message>
     <message>
         <location filename="../ui/widgets/sketchpad.ui" line="593"/>
         <source>Check to display the grid and enable snap-to-grid</source>
-        <translation type="unfinished"></translation>
+        <translation>Karelajı görüntülemek ve snap-to-gridi etkinleştirmek için işaretleyin</translation>
     </message>
     <message>
         <location filename="../ui/widgets/sketchpad.ui" line="596"/>
         <source>Grid</source>
-        <translation type="unfinished">グリッド</translation>
+        <translation>Karelaj</translation>
     </message>
     <message>
         <location filename="../ui/widgets/sketchpad.ui" line="606"/>
         <source>Grid size</source>
-        <translation type="unfinished">グリッドサイズ</translation>
+        <translation>Karelajın boyutu</translation>
     </message>
     <message>
         <location filename="../ui/widgets/sketchpad.ui" line="649"/>
         <source>Select and move elements</source>
-        <translation type="unfinished">要素の選択/移動</translation>
+        <translation>Elementleri seç ve yerlerini değiştir</translation>
     </message>
 </context>
 <context>
@@ -3375,12 +3412,12 @@ Edit your experiment in script form</source>
     <message>
         <location filename="../ui/dialogs/text_input_dialog.ui" line="14"/>
         <source>OpenSesame says ...</source>
-        <translation type="unfinished">OpenSesame says ...</translation>
+        <translation>OpenSesame diyor ki ...</translation>
     </message>
     <message>
         <location filename="../ui/dialogs/text_input_dialog.ui" line="57"/>
         <source>Message</source>
-        <translation type="unfinished">メッセージ</translation>
+        <translation>Mesaj</translation>
     </message>
 </context>
 <context>
@@ -3388,27 +3425,27 @@ Edit your experiment in script form</source>
     <message>
         <location filename="../ui/widgets/user_hint_widget.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished">フォーム</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <location filename="../ui/widgets/user_hint_widget.ui" line="23"/>
         <source>A list of user hints</source>
-        <translation type="unfinished">ユーザーヒント一覧</translation>
+        <translation>Kullanıcı ipuçları için liste</translation>
     </message>
     <message>
         <location filename="../ui/widgets/user_hint_widget.ui" line="26"/>
         <source>User hints</source>
-        <translation type="unfinished">ユーザーヒント</translation>
+        <translation>Kullanıcı ipuçları</translation>
     </message>
     <message>
         <location filename="../ui/widgets/user_hint_widget.ui" line="42"/>
         <source>Click to open script editor</source>
-        <translation type="unfinished">スクリプトエディターを開くためにクリック</translation>
+        <translation>Komut dizisi düzenleyicisini aç</translation>
     </message>
     <message>
         <location filename="../ui/widgets/user_hint_widget.ui" line="45"/>
         <source>Hide</source>
-        <translation type="unfinished">隠す</translation>
+        <translation>Gizle</translation>
     </message>
 </context>
 <context>
@@ -3416,37 +3453,37 @@ Edit your experiment in script form</source>
     <message>
         <location filename="../ui/widgets/webbrowser_widget.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished">フォーム￥</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <location filename="../ui/widgets/webbrowser_widget.ui" line="44"/>
         <source>Go back</source>
-        <translation type="unfinished">戻る</translation>
+        <translation>Geri dön</translation>
     </message>
     <message>
         <location filename="../ui/widgets/webbrowser_widget.ui" line="57"/>
         <source>Open OpenSesame documentation area</source>
-        <translation type="unfinished">OpenSesameのドキュメントを開く</translation>
+        <translation>OpenSesame dökümantasyon alanını aç</translation>
     </message>
     <message>
         <location filename="../ui/widgets/webbrowser_widget.ui" line="70"/>
         <source>Open cogsci.nl forum</source>
-        <translation type="unfinished">Open cogsci.nl forum</translation>
+        <translation>congci.nl forum sayfasını aç</translation>
     </message>
     <message>
         <location filename="../ui/widgets/webbrowser_widget.ui" line="83"/>
         <source>Address</source>
-        <translation type="unfinished">Address</translation>
+        <translation>Adres</translation>
     </message>
     <message>
         <location filename="../ui/widgets/webbrowser_widget.ui" line="104"/>
         <source>Progress</source>
-        <translation type="unfinished">Progress</translation>
+        <translation>İlerleme</translation>
     </message>
     <message>
         <location filename="../ui/widgets/webbrowser_widget.ui" line="107"/>
         <source>50%</source>
-        <translation type="unfinished">50%</translation>
+        <translation>50%</translation>
     </message>
 </context>
 <context>
@@ -3454,62 +3491,57 @@ Edit your experiment in script form</source>
     <message>
         <location filename="../../opensesame_extensions/variable_inspector/variable_inspector.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished">フォーム</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <location filename="../../opensesame_extensions/variable_inspector/variable_inspector.ui" line="42"/>
         <source>Enter a filter</source>
-        <translation type="unfinished">フィルタの入力</translation>
+        <translation>Bir filtre ekle</translation>
     </message>
     <message>
         <location filename="../../opensesame_extensions/variable_inspector/variable_inspector.ui" line="49"/>
         <source>Clear filter</source>
-        <translation type="unfinished">フォルタのクリア</translation>
+        <translation>Filtreyi temizle</translation>
     </message>
     <message>
         <location filename="../../opensesame_extensions/variable_inspector/variable_inspector.ui" line="75"/>
         <source>Help</source>
-        <translation type="unfinished">ヘルプ</translation>
+        <translation>Yardım</translation>
     </message>
     <message>
         <location filename="../../opensesame_extensions/variable_inspector/variable_inspector.ui" line="101"/>
         <source>Status</source>
-        <translation type="unfinished">ステータス</translation>
+        <translation>Durum</translation>
     </message>
     <message>
         <location filename="../../opensesame_extensions/variable_inspector/variable_inspector.ui" line="126"/>
         <source>You are viewing the final state of your last experimental run. To view the state of the current experiment, click the reset on the right.</source>
-        <translation type="unfinished">最後に実行された実験ステータスを表示しています. 現在の実験ステータスを見るには, 右のリセットをクリックしてください.</translation>
+        <translation>Deneyin son halini görmektesiniz. Kullanılan deneyin durumunu görüntülemek için sağdaki yeniden başlata basınız.</translation>
     </message>
     <message>
         <location filename="../../opensesame_extensions/variable_inspector/variable_inspector.ui" line="142"/>
         <source>Reset workspace</source>
-        <translation type="unfinished">ワークスペースのリセット</translation>
+        <translation>Çalışma alanını yeniden başlat</translation>
     </message>
     <message>
         <location filename="../../opensesame_extensions/variable_inspector/variable_inspector.ui" line="186"/>
         <source>Variable</source>
-        <translation type="unfinished">変数</translation>
+        <translation>Değişken</translation>
     </message>
     <message>
         <location filename="../../opensesame_extensions/variable_inspector/variable_inspector.ui" line="191"/>
         <source>Value</source>
-        <translation type="unfinished">値</translation>
+        <translation>Değer</translation>
     </message>
     <message>
         <location filename="../../opensesame_extensions/variable_inspector/variable_inspector.ui" line="196"/>
         <source>Source(s)</source>
-        <translation type="unfinished">ソース</translation>
-    </message>
-    <message>
-        <location filename="../../opensesame_extensions/variable_inspector/variable_inspector.ui" line="216"/>
-        <source>&lt;small&gt;Live variable updating is not supported by the current runner. You can select a different runner under Preferences. For more information, visit &lt;a href=&quot;http://osdoc.cogsci.nl/miscellaneous/runners/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;http://osdoc.cogsci.nl/miscellaneous/runners/&lt;/span&gt;&lt;/a&gt;.&lt;/small&gt;</source>
-        <translation type="obsolete">&lt;small&gt;Live variable updating is not supported by the current runner. You can select a different runner under Preferences. For more information, visit &lt;a href=&quot;http://osdoc.cogsci.nl/miscellaneous/runners/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;http://osdoc.cogsci.nl/miscellaneous/runners/&lt;/span&gt;&lt;/a&gt;.&lt;/small&gt;</translation>
+        <translation>Kaynak(lar)</translation>
     </message>
     <message>
         <location filename="../../opensesame_extensions/variable_inspector/variable_inspector.ui" line="216"/>
         <source>&lt;small&gt;Live variable updating is not supported by the current runner. You can select a different runner under Preferences. For more information, visit &lt;a href=&quot;http://osdoc.cogsci.nl/manual/runners/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;http://osdoc.cogsci.nl/manual/runners/&lt;/span&gt;&lt;/a&gt;.&lt;/small&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;small&gt;Canlı değişken yüklemesi geçerli çalıştırıcı tarafından desteklenmemektedir. Başka bir çalıştırıcıyı Seçeneklerden seçebilirsiniz. Daha fazla bilgi için ziyaret ediniz&lt;a href=&quot;http://osdoc.cogsci.nl/manual/runners/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;http://osdoc.cogsci.nl/manual/runners/&lt;/span&gt;&lt;/a&gt;.&lt;/small&gt;</translation>
     </message>
 </context>
 </TS>

@@ -68,10 +68,12 @@ class general_properties(base_widget):
 				icon), self.backend_format % (name, desc))
 		self.quick_connect(
 			slot=self.main_window.ui.tabwidget.open_general_script,
-			signals=[
-				self.ui.button_script_editor.clicked,
-				self.ui.button_backend_settings.clicked
-			])
+			signals=[self.ui.button_script_editor.clicked],
+		)
+		self.quick_connect(
+			slot=self.main_window.ui.tabwidget.open_backend_settings,
+			signals=[self.ui.button_backend_settings.clicked]
+		)
 		self.quick_connect(
 			slot=self.apply_changes,
 			signals=[
