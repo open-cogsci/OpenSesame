@@ -21,27 +21,7 @@ from libopensesame.py3compat import *
 from distutils.version import StrictVersion
 import sys
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
 __version__ = u'3.2.0a8'
-=======
-__version__ = u'3.2.0a2'
->>>>>>> docstrings: further improvements for API generation
-=======
-__version__ = u'3.2.0a3'
->>>>>>> Bump to 3.2.0a3
-=======
-__version__ = u'3.2.0a4'
->>>>>>> Bump to 3.2.0a4
-=======
-__version__ = u'3.2.0a5'
->>>>>>> Set Qt5 plugin paths before QApplication
-=======
-__version__ = u'3.2.0a6'
->>>>>>> canvas: add qt-plugin path in RichText
 strict_version = StrictVersion(__version__)
 # The version without the prerelease (if any): e.g. 3.0.0
 main_version = u'.'.join([str(i) for i in strict_version.version])
@@ -50,8 +30,7 @@ if strict_version.prerelease is None:
 	deb_version = main_version
 else:
 	deb_version = main_version + u'+%s%d' % strict_version.prerelease
-python_version = u'%d.%d.%d' % (sys.version_info[0], sys.version_info[1], \
-	sys.version_info[2])
+python_version = u'%d.%d.%d' % sys.version_info[:3]
 codename = u'Kitschy Kuhn'
 channel = u'dev'
 api = StrictVersion(u'2.1')
