@@ -43,6 +43,8 @@ class Log(object):
 	def __init__(self, experiment, path):
 
 		"""
+		visible: False
+
 		desc:
 			Constructor to create a new `log` object. You do not generally
 			call this constructor directly, because a `log` object is created
@@ -95,7 +97,7 @@ class Log(object):
 		"""
 		desc:
 			Opens the current log. If a log was already open, it is closed
-			automatically.
+			automatically, and re-opened.
 
 		arguments:
 			path:

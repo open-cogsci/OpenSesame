@@ -21,12 +21,6 @@ from libopensesame.py3compat import *
 from openexp import backend
 
 
-def Form(*args, **kwargs):
-
-	from libopensesame.widgets import form
-	return form(experiment, **kwargs)
-
-
 class WidgetFactory(object):
 
 	def __init__(self, *args, **kwargs):

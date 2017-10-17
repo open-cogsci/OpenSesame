@@ -30,8 +30,9 @@ class file_pool_store(object):
 	desc: |
 		The `pool` object provides dict-like access to the file pool. When
 		checking whether a file is in the file pool, several folders are
-		searched. For more details, see [folders]. A `pool` object is created
-		automatically when the experiment starts.
+		searched. For more details, see [folders].
+
+		A `pool` object is created automatically when the experiment starts.
 
 		In addition to the functions listed below, the following semantics are
 		supported:
@@ -62,7 +63,7 @@ class file_pool_store(object):
 			print(u'img.png could not be found!')
 		else:
 			image_path = pool[u'img.png']
-			my_canvas = canvas()
+			my_canvas = Canvas()
 			my_canvas.image(image_path)
 			my_canvas.show()
 		~~~
@@ -291,10 +292,12 @@ class file_pool_store(object):
 	def folder(self):
 
 		"""
+		desc:
+			Gives the full path to the (main) pool folder. This is typically a
+			temporary folder that is deleted when the experiment is finished.
+
 		returns:
-			desc:	The full path to the (main) pool folder. This is typically a
-					temporary folder that is deleted when the experiment is
-					finished.
+			desc:	The full path to the main pool folder.
 			type:	unicode
 
 		example: |
@@ -318,6 +321,9 @@ class file_pool_store(object):
 
 		returns:
 			type:	bool
+
+		example: |
+			print(pool.in_folder('cue.png'))
 		"""
 
 		return os.path.exists(os.path.join(self.__folder__, path))

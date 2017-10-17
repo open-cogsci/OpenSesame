@@ -21,7 +21,11 @@ from libopensesame.py3compat import *
 from distutils.version import StrictVersion
 import sys
 
+<<<<<<< HEAD
 __version__ = u'3.2.0a8'
+=======
+__version__ = u'3.2.0a2'
+>>>>>>> docstrings: further improvements for API generation
 strict_version = StrictVersion(__version__)
 # The version without the prerelease (if any): e.g. 3.0.0
 main_version = u'.'.join([str(i) for i in strict_version.version])

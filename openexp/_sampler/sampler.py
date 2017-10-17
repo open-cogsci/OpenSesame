@@ -28,7 +28,8 @@ class Sampler(Backend):
 	desc: |
 		The `Sampler` class provides functionality to play sound samples. You
 		generally create a `Sampler` object with the `Sampler()` factory
-		function.
+		function, as described in the section
+		[Creating a Sampler](#creating-a-sampler).
 
 		__Example:__
 
@@ -41,6 +42,24 @@ class Sampler(Backend):
 		[TOC]
 
 		## Things to know
+
+		### Creating a Sampler
+
+		You generally create a `Sampler` with the `Sampler()` factory function,
+		which takes the full path to a sound file as the first argument.
+
+		~~~ .python
+		src = pool['bark.ogg']
+		my_sampler = Sampler(src)
+		~~~
+
+		Optionally, you can pass [Playback keywords](#playback-keywords) to
+		`Sampler()` to set the default behavior:
+
+		~~~ .python
+		src = pool['bark.ogg']
+		my_sampler = Sampler(src, volume=.5)
+		~~~
 
 		### Sampling rate
 
@@ -130,6 +149,8 @@ class Sampler(Backend):
 	def __init__(self, experiment, src, **playback_args):
 
 		"""
+		visible: False
+
 		desc: |
 			Constructor to create a new SAMPLER object. You do not generally
 			call this constructor directly, but use the `Sampler()` function,
@@ -263,7 +284,7 @@ class Sampler(Backend):
 			desc:	True if a sound is playing, False if not.
 			type:	bool
 
-		Example: |
+		example: |
 			src = pool[u'my_sound.ogg']
 			my_sampler = Sampler(src)
 			my_sampler.play()
@@ -308,6 +329,8 @@ class Sampler(Backend):
 	def init_sound(experiment):
 
 		"""
+		visible: False
+
 		desc:
 			Initializes the pygame mixer before the experiment begins.
 
@@ -323,6 +346,8 @@ class Sampler(Backend):
 	def close_sound(experiment):
 
 		"""
+		visible: False
+
 		desc:
 			Closes the mixer after the experiment is finished.
 

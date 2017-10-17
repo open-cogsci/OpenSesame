@@ -28,7 +28,8 @@ class Mouse(Backend):
 	"""
 	desc: |
 		The `Mouse` class is used to collect mouse input. You generally create a
-		`Mouse` object with the `Mouse()` factory function.
+		`Mouse` object with the `Mouse()` factory function, as described in the
+		section [Creating a Mouse](#creating-a-mouse).
 
 		__Example:__
 
@@ -49,6 +50,21 @@ class Mouse(Backend):
 		[TOC]
 
 		## Things to know
+
+		### Creating a Mouse
+
+		You generally create a `Mouse` with the `Mouse()` factory function:
+
+		~~~ .python
+		my_mouse = Mouse()
+		~~~
+
+		Optionally, you can pass [Response keywords](#response-keywords) to
+		`Keyboard()` to set the default behavior:
+
+		~~~ .python
+		my_mouse = Mouse(timeout=2000)
+		~~~
 
 		### Coordinates
 
@@ -119,6 +135,8 @@ class Mouse(Backend):
 	def __init__(self, experiment, **resp_args):
 
 		"""
+		visible: False
+
 		desc: |
 			Constructor to create a new `Mouse` object. You do not generally
 			call this constructor directly, but use the `Mouse()` function,

@@ -30,10 +30,36 @@ import warnings
 from openexp.canvas_elements import (Rect, Line, Text, Ellipse, Circle,
 	FixDot, Gabor, NoisePatch, Image, Arrow, Polygon)
 from libopensesame.widgets.widget_factory import (Label, Button, ImageWidget,
-	ImageButton, TextInput, RatingScale, Checkbox, Form)
+	ImageButton, TextInput, RatingScale, Checkbox)
 
 
 # Factory functions
+
+
+def Form(*args, **kwargs):
+
+	"""
+	desc: |
+		A factory function that creates a new `Form` object. For a
+		description of possible keywords, see:
+
+		- %link:manual/forms/widgets/form%
+
+	returns:
+		desc:	A `Form` object.
+		type:	canvas
+
+	example: |
+		form = Form()
+		label = Label(text='label')
+		button = Button(text='Ok')
+		form.set_widget(label, (0,0))
+		form.set_widget(button, (0,1))
+		form._exec()
+	"""
+
+	from libopensesame.widgets import form
+	return form(experiment, **kwargs)
 
 
 def Canvas(auto_prepare=True, **style_args):
@@ -46,7 +72,7 @@ def Canvas(auto_prepare=True, **style_args):
 		- %link:manual/python/canvas%
 
 	returns:
-		desc:	A CANVAS object.
+		desc:	A `Canvas` object.
 		type:	canvas
 
 	example: |
@@ -311,7 +337,7 @@ def xy_from_polar(rho, phi, pole=(0, 0)):
 		# Draw a cross
 		x1, y1 = xy_from_polar(100, 45)
 		x2, y2 = xy_from_polar(100, -45)
-		c = canvas()
+		c = Canvas()
 		c.line(x1, y1, -x1, -y1)
 		c.line(x2, y2, -x2, -y2)
 		c.show()
@@ -446,7 +472,7 @@ def xy_circle(n, rho, phi0=0, pole=(0, 0)):
 
 	example: |
 		# Draw 8 rectangles around a central fixation dot
-		c = canvas()
+		c = Canvas()
 		c.fixdot()
 		for x, y in xy_circle(8, 100):
 			c.rect(x-10, y-10, 20, 20)
@@ -495,7 +521,7 @@ def xy_grid(n, spacing, pole=(0, 0)):
 
 	example: |
 		# Draw a 4x4 grid of rectangles
-		c = canvas()
+		c = Canvas()
 		c.fixdot()
 		for x, y in xy_grid(4, 100):
 			c.rect(x-10, y-10, 20, 20)
@@ -571,7 +597,7 @@ def xy_random(n, width, height, min_dist=0, pole=(0,0)):
 
 	example: |
 		# Draw a 50 rectangles in a random grid
-		c = canvas()
+		c = Canvas()
 		c.fixdot()
 		for x, y in xy_random(50, 500, 500, min_dist=40):
 			c.rect(x-10, y-10, 20, 20)

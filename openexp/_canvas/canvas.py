@@ -37,7 +37,8 @@ class Canvas(Backend):
 	"""
 	desc: |
 		The `Canvas` class is used to present visual stimuli. You generally
-		create a `Canvas` object with the `Canvas()` factory function.
+		create a `Canvas` object with the `Canvas()` factory function, as
+		described in the section [Creating a Canvas](#creating-a-canvas).
 
 		__Example__:
 
@@ -64,14 +65,21 @@ class Canvas(Backend):
 
 		## Things to know
 
-		### Coordinates
+		### Creating a Canvas
 
-		- When *Uniform coordinates* is set to 'yes', coordinates are
-		  relative to the center of the display. That is, (0,0) is the center.
-		  This is the default as of OpenSesame 3.0.0.
-		- When *Uniform coordinates* is set to 'no', coordinates are relative to
-		  the top-left of the display. That is, (0,0) is the top-left. This was
-		  the default in OpenSesame 2.9.X and earlier.
+		You generally create a `Canvas` with the `Canvas()` factory function:
+
+		~~~ .python
+		my_canvas = Canvas()
+		~~~
+
+		Optionally, you can pass [Style keywords](#style-keywords) to `Canvas()`
+		to set the default style:
+
+		~~~ .python
+		my_canvas = Canvas(color='green')
+		my_canvas.fixdot() # Will be green
+		~~~
 
 		### Style keywords
 
@@ -107,8 +115,8 @@ class Canvas(Backend):
 		~~~
 
 		Style keywords only affect the current drawing operation (except when
-		passed to [canvas.\_\_init\_\_][__init__]). To change the style for all
-		subsequent drawing operations, set style properties, such as
+		passed to `Canvas()` while creating the `Canvas`). To change the style
+		for all subsequent drawing operations, set style properties, such as
 		[canvas.color], directly:
 
 		~~~ .python
@@ -121,7 +129,7 @@ class Canvas(Backend):
 		my_canvas.show()
 		~~~
 
-		Or pass the style properties to [canvas.\_\_init\_\_][__init__]:
+		Or pass the style properties to `Canvas()`:
 
 		~~~ .python
 		# Draw a red cross with a 2px penwidth
@@ -130,6 +138,15 @@ class Canvas(Backend):
 		my_canvas.line(-10, 10, 10, -10)
 		my_canvas.show()
 		~~~
+
+		### Coordinates
+
+		- When *Uniform coordinates* is set to 'yes', coordinates are
+		  relative to the center of the display. That is, (0,0) is the center.
+		  This is the default as of OpenSesame 3.0.0.
+		- When *Uniform coordinates* is set to 'no', coordinates are relative to
+		  the top-left of the display. That is, (0,0) is the top-left. This was
+		  the default in OpenSesame 2.9.X and earlier.
 
 		### Colors
 
@@ -165,7 +182,7 @@ class Canvas(Backend):
 		~~~
 
 
-		## Naming, accessing, and modifying elements
+		### Naming, accessing, and modifying elements
 
 		As of OpenSesame 3.2, the `Canvas` supports an object-based interface
 		that allows you to name elements, and to access and modify elements
@@ -228,6 +245,8 @@ class Canvas(Backend):
 	def __init__(self, experiment, auto_prepare=True, **style_args):
 
 		"""
+		visible: False
+
 		desc: |
 			Constructor to create a new `Canvas` object. You do not generally
 			call this constructor directly, but use the `Canvas()` factory
@@ -644,6 +663,8 @@ class Canvas(Backend):
 	def prepare(self):
 
 		"""
+		visible: False
+
 		desc:
 			Finishes pending canvas operations (if any), so that a subsequent
 			call to [canvas.show] is extra fast. It's only necessary to call
@@ -1281,6 +1302,8 @@ class Canvas(Backend):
 	def init_display(experiment):
 
 		"""
+		visible: False
+
 		desc:
 			Initializes the display before the experiment begins.
 
@@ -1296,6 +1319,8 @@ class Canvas(Backend):
 	def close_display(experiment):
 
 		"""
+		visible: False
+
 		desc:
 			Closes the display after the experiment is finished.
 

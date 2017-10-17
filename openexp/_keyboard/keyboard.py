@@ -28,7 +28,8 @@ class Keyboard(Backend):
 	desc: |
 		The `Keyboard` class is used to collect keyboard responses. You
 		generally create a `Keyboard` object with the `Keyboard()` factory
-		function.
+		function, as described in the section
+		[Creating a Keyboard](#creating-a-keyboard).
 
 		__Example:__
 
@@ -44,6 +45,21 @@ class Keyboard(Backend):
 		[TOC]
 
 		## Things to know
+
+		### Creating a Keyboard
+
+		You generally create a `Keyboard` with the `Keyboard()` factory function:
+
+		~~~ .python
+		my_keyboard = Keyboard()
+		~~~
+
+		Optionally, you can pass [Response keywords](#response-keywords) to
+		`Keyboard()` to set the default behavior:
+
+		~~~ .python
+		my_keyboard = Keyboard(timeout=2000)
+		~~~
 
 		### Key names
 
@@ -104,6 +120,8 @@ class Keyboard(Backend):
 	def __init__(self, experiment, **resp_args):
 
 		"""
+		visible: False
+
 		desc: |
 			Constructor to create a new `Keyboard` object. You do not generally
 			call this constructor directly, but use the `Keyboard()` function,

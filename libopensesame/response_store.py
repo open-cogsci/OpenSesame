@@ -78,8 +78,9 @@ class response_store(object):
 	"""
 	desc: |
 		The `responses` object contains the history of the responses that were
-		collected during the experiment. A `responses` object is created
-		automatically when the experiment starts.
+		collected during the experiment.
+
+		A `responses` object is created automatically when the experiment starts.
 
 		In addition to the functions listed below, the following semantics are
 		supported:
@@ -128,6 +129,9 @@ class response_store(object):
 			The percentage of correct responses for all responses that are included
 			in feedback. If there are no responses to give feedback on,
 			'undefined' is returned.
+
+		example: |
+			print('The accuracy was %s%%' % responses.acc)
 		"""
 
 		l = self._select(feedback=True)._selectnot(correct=None).correct
@@ -145,6 +149,9 @@ class response_store(object):
 			The average response time for all responses that are included
 			in feedback. If there are no responses to give feedback on,
 			'undefined' is returned.
+
+		example: |
+			print('The average RT was %s ms' % responses.avg_rt)
 		"""
 
 		l = self._select(feedback=True)._selectnot(response_time=None) \
@@ -162,6 +169,10 @@ class response_store(object):
 		desc:
 			A list of all response values. (I.e. not response objects, but
 			actual response keys, buttons, etc.)
+
+		example: |
+			for response in responses.response:
+				print(response)
 		"""
 
 		return [r.response for r in self._responses]
@@ -174,6 +185,10 @@ class response_store(object):
 
 		desc:
 			A list of all correct (0, 1, or None) values.
+
+		example: |
+			for correct in responses.correct:
+				print(correct)
 		"""
 
 		return [r.correct for r in self._responses]
@@ -186,6 +201,10 @@ class response_store(object):
 
 		desc:
 			A list of all response times (float or None).
+
+		example: |
+			for rt in responses.response_time:
+				print(rt)
 		"""
 
 		return [r.response_time for r in self._responses]
@@ -199,6 +218,10 @@ class response_store(object):
 		desc:
 			A list of all item names (str or None) associated with each
 			response.
+
+		example: |
+			for item in responses.item:
+				print(item)
 		"""
 
 		return [r.item for r in self._responses]
@@ -212,6 +235,10 @@ class response_store(object):
 		desc:
 			A list of the feedback status (True or False) associated with each
 			response.
+
+		example: |
+			for feedback in responses.feedback:
+				print(feedback)
 		"""
 
 		return [r.item for r in self._responses]
