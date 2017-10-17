@@ -98,7 +98,7 @@ class Form(object):
 				type:	bool
 			validator:
 				desc:	A function that takes no arguments and returns True if
-						the foru is successfully validated, and False if not.
+						the form is successfully validated, and False if not.
 				type: 	[FunctionType, NoneType]
 		"""
 

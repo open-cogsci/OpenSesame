@@ -4,8 +4,8 @@ Das `external_script` Item ist eine Alternative um Python Code in Ihr Experiment
 
 ## Optionen
 
-- *Script file*  ist der Name des Pythonskripts, welches ausgeführt wird. 
-- *Prepare function in script* ist der Name der Funktion im Skript, welches während der Prepare Phase ausgeführt wird (ohne Parameter). 
+- *Script file*  ist der Name des Pythonskripts, welches ausgeführt wird.
+- *Prepare function in script* ist der Name der Funktion im Skript, welches während der Prepare Phase ausgeführt wird (ohne Parameter).
 - *Run function in script* ist der Name der Funktion im Skript, welches während der Run Phase ausgeführt wird (ohne Parameter).
 
 ## Skriptausführung und Python workspace
@@ -25,7 +25,7 @@ def prepare():
 
     print('Das wird während der Prepare Phase gezeigt')
     global c
-    c = canvas()
+    c = Canvas()
     c.fixdot()
 
 def run():

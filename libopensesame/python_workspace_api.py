@@ -43,7 +43,7 @@ def Form(*args, **kwargs):
 		A factory function that creates a new `Form` object. For a
 		description of possible keywords, see:
 
-		- %link:manual/forms/widgets/form%
+		- %link:manual/forms/widgets%
 
 	returns:
 		desc:	A `Form` object.
