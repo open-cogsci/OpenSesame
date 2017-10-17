@@ -24,6 +24,7 @@ import sys
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 __version__ = u'3.2.0a8'
 =======
 __version__ = u'3.2.0a2'
@@ -34,6 +35,9 @@ __version__ = u'3.2.0a3'
 =======
 __version__ = u'3.2.0a4'
 >>>>>>> Bump to 3.2.0a4
+=======
+__version__ = u'3.2.0a5'
+>>>>>>> Set Qt5 plugin paths before QApplication
 strict_version = StrictVersion(__version__)
 # The version without the prerelease (if any): e.g. 3.0.0
 main_version = u'.'.join([str(i) for i in strict_version.version])

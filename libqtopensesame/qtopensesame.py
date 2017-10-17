@@ -67,7 +67,7 @@ class qtopensesame(QtWidgets.QMainWindow, base_component):
 		self.lock_refresh = False
 		self.unsaved_changes = False
 		self._run_status = u'inactive'
-		self.block_close_event = False		
+		self.block_close_event = False
 		self.parse_command_line()
 		self.restore_config()
 
@@ -85,17 +85,6 @@ class qtopensesame(QtWidgets.QMainWindow, base_component):
 		# icons by default.
 		QtWidgets.QApplication.setAttribute(QtCore.Qt.AA_DontShowIconsInMenus,
 			False)
-		# Add the Qt plugin folders to the library path, if they exists. Where
-		# these folders are depends on the version of Qt4, but these are two
-		# possible locations.
-		qt_plugin_path = os.path.join(
-			os.path.dirname(sys.executable), 'Library', 'plugins')
-		if os.path.isdir(qt_plugin_path):
-			QtCore.QCoreApplication.addLibraryPath(qt_plugin_path)
-		qt_plugin_path = os.path.join(
-			os.path.dirname(sys.executable), 'Library', 'lib', 'qt4', 'plugins')
-		if os.path.isdir(qt_plugin_path):
-			QtCore.QCoreApplication.addLibraryPath(qt_plugin_path)
 		# Do a few things to customize QProgEdit behavior:
 		# - Register the bundled monospace font (Droid Sans Mono)
 		# - Make sure that QProgEdit doesn't complain about some standard names
@@ -115,7 +104,7 @@ class qtopensesame(QtWidgets.QMainWindow, base_component):
 
 		# # Parse the command line
 		# self.parse_command_line()
-		# 
+		#
 		# # Restore the configuration
 		# self.restore_config()
 		self.set_style()
@@ -447,13 +436,13 @@ class qtopensesame(QtWidgets.QMainWindow, base_component):
 		else:
 			debug.msg(u"ignoring unknown style '%s'" % cfg.style)
 			cfg.style = u''
-			
+
 	def set_locale(self, translator):
-		
+
 		""""
 		desc:
 			Sets the application language.
-		
+
 		arguments:
 			translator:
 				desc:	For some reason, the QTranslator object needs to be
@@ -1055,21 +1044,21 @@ class qtopensesame(QtWidgets.QMainWindow, base_component):
 
 	@property
 	def read_only(self):
-		
+
 		"""
 		desc:
 			Getter property for toggling the save action when setting.
 		"""
-						
+
 		return self._read_only
-		
+
 	@read_only.setter
 	def read_only(self, read_only):
-		
+
 		"""
 		desc:
 			Setter property for toggling the save action.
-		"""		
-		
+		"""
+
 		self._read_only = read_only
 		self.ui.action_save.setEnabled(not read_only)
