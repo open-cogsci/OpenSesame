@@ -17,6 +17,8 @@ You should have received a copy of the GNU General Public Licensepass
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
+import os
+import sys
 from libopensesame.py3compat import *
 import warnings
 from openexp._canvas._element.element import Element
@@ -60,6 +62,17 @@ class RichText(Element):
 
 		global app, font_database
 
+		# Add the Qt plugin folders to the library path, if they exists. Where
+		# these folders are depends on the version of Qt4, but these are two
+		# possible locations.
+		qt_plugin_path = os.path.join(
+			os.path.dirname(sys.executable), 'Library', 'plugins')
+		if os.path.isdir(qt_plugin_path):
+			QCoreApplication.addLibraryPath(qt_plugin_path)
+		qt_plugin_path = os.path.join(
+			os.path.dirname(sys.executable), 'Library', 'lib', 'qt4', 'plugins')
+		if os.path.isdir(qt_plugin_path):
+			QCoreApplication.addLibraryPath(qt_plugin_path)
 		# If no instance of QApplication exists, a segmentation fault seems to always
 		# occur. So we create one.
 		if QCoreApplication.instance() is None:
