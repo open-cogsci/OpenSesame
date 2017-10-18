@@ -323,9 +323,13 @@ class response_store(object):
 
 	def __getitem__(self, key):
 
-		rs = response_store(self._experiment)
-		rs._responses = self._responses[key]
-		return rs
+		if isinstance(key, slice):
+			rs = response_store(self._experiment)
+			rs._responses = self._responses[key]
+			return rs
+		if isinstance(key, int):
+			return self._responses[key]
+		raise TypeError(u'A key for responses should be either slice or int')
 
 	def __str__(self):
 
