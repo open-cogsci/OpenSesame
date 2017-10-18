@@ -47,7 +47,7 @@ Grafik arayüzü aşağıdaki bileşenleri içerir. İçerikle alakalı yardım 
 - [inline_script](opensesame://help.inline_script) ögesi deneyinize Python kodu gömer.
 
 Eklenti ögeler yüklendiği takdirde ek fonksiyonlar sağlar. Eklentiler, öz ögelerin altında yer alır.
-## Deneyinizi çalıştırma
+## Deneyinizi çalıştırın
 
 Deneyinizi aşağıdaki seçeneklerde çalıştırabilirsiniz:
 
