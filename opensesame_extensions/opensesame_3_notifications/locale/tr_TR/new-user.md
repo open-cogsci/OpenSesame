@@ -2,7 +2,7 @@
 
 OpenSesame 3'te yeni gibi görünüyorsun.
 
-Eğer OpenSesame'yi daha önce hiç kullanmadıysan, başlangıç seviyesi öğretici başlangıcı (tutorial) takip etmenizi öneririm. Bu şu an için biraz vakit alacak olsa da daha sonrasında zaman kazanmanızı sağlayacaktır.
+Eğer OpenSesame'yi daha önce hiç kullanmadıysan, başlangıç seviyesi öğreticisini (tutorial) takip etmenizi öneririm. Bu şu an için biraz vakit alacak olsa da daha sonrasında zaman kazanmanızı sağlayacaktır.
 
 [Aşama aşama öğretici](new:http://osdoc.cogsci.nl/3.1/tutorials/beginner){: .important-button}
 
@@ -10,7 +10,7 @@ OpenSesame'yi daha önce kullandıysanız, OpenSesame 3 versiyonunda yeni neler 
 
 [OpenSesame 3'teki yenilikler](new:http://osdoc.cogsci.nl/3.1/important-changes-3){: .button}
 
-Her zaman destek forumunda sorular sorabileceğinizi unutmayın.m:
+Her zaman destek forumunda sorular sorabileceğinizi unutmayın:
 
 [Destek forumu](new:http://forum.cogsci.nl/){: .button}
 

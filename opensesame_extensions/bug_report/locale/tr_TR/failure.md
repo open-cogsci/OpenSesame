@@ -1,3 +1,3 @@
 # Hata raporu gönderilemedi
 
-Bug raporu gönderilemedi. İnternete bağlı olduğunuzdan emin misiniz?
+Hata raporu gönderilemedi. İnternete bağlı olduğunuzdan emin misiniz?
