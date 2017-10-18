@@ -9,6 +9,6 @@ Ne yapmak istersiniz?
 [Deneyi şimdi kaydet](opensesame://action.save){: .important-button} <br />
 [OpenSesame 3'teki yenilikler](new:html://osdoc.cogsci.nl/3.1/important-changes-3/){: .button} <br />
 
-Or you can:
+ya da:
 
 [Bu mesajı sonsuza kadar yoksay](opensesame://event.os3n_dismiss_old_experiment){: .dismiss-button}
