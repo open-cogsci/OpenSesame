@@ -820,7 +820,7 @@ Deney takip eden hatadan dolayı bitmedi:
     <message>
         <location filename="../../translatables-tmp.py" line="269"/>
         <source>New…</source>
-        <translation type="unfinished">Yeni…</translation>
+        <translation>Yeni…</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="270"/>
@@ -2897,12 +2897,12 @@ Deneylerinizi komut dizisi üzerinden düzenle</translation>
     <message>
         <location filename="../ui/misc/main_window.ui" line="536"/>
         <source>One-tab mode</source>
-        <translation>Bir araç çubuğu modu</translation>
+        <translation>Bir sekme modu</translation>
     </message>
     <message>
         <location filename="../ui/misc/main_window.ui" line="358"/>
         <source>Open…</source>
-        <translation type="unfinished">Aç…</translation>
+        <translation>Aç…</translation>
     </message>
     <message>
         <location filename="../ui/misc/main_window.ui" line="388"/>
