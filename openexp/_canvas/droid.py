@@ -23,14 +23,13 @@ from math import hypot
 import pygame
 from openexp._canvas.legacy import Legacy
 from libopensesame.exceptions import osexception
-
 try:
 	import android
 except ImportError:
 	android = None
 
 initialized = False
-resolution = 1280, 800 # resolution is hardcoded for now
+resolution = 1280, 800  # resolution is hardcoded for now
 
 
 class Droid(Legacy):
@@ -44,10 +43,11 @@ class Droid(Legacy):
 	def init_display(experiment):
 
 		if experiment.resolution() != resolution:
-			raise osexception( \
-			'The droid back-end requires a resolution of %d x %d. Your display will be scaled automatically to fit devices with different resolutions.' \
-			% resolution)
-
+			raise osexception(
+				(u'The droid back-end requires a resolution of %d x %d. Your '
+				u'display will be scaled automatically to fit devices with '
+				u'different resolutions.') % resolution
+			)
 		# Intialize PyGame
 		if not pygame.display.get_init():
 			pygame.init()
@@ -69,21 +69,16 @@ class Droid(Legacy):
 		# Log the device characteristics
 		info = pygame.display.Info()
 		diag = hypot(info.current_w, info.current_h) / dpi
-		if diag < 6: # 6" is the minimum size to be considered a tablet
-			is_tablet = 'yes'
-		else:
-			is_tablet = 'no'
 		experiment.var.device_resolution_width = info.current_w
 		experiment.var.device_resolution_height = info.current_h
 		experiment.var.device_dpi = dpi
 		experiment.var.device_screen_diag = diag
-		experiment.var.device_is_tablet = is_tablet
-
+		experiment.var.device_is_tablet = u'yes' if diag >= 6 else u'no'
 		# Start with a splash screen
 		splash = pygame.image.load(experiment.resource('android-splash.jpg'))
 		x = resolution[0]/2 - splash.get_width()/2
 		y = resolution[1]/2 - splash.get_height()/2
-		experiment.surface.blit(splash, (x,y))
+		experiment.surface.blit(splash, (x, y))
 		for i in range(10):
 			pygame.display.flip()
 			pygame.time.delay(100)

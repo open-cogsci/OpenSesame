@@ -49,12 +49,15 @@ class Droid(Legacy):
 			[u'yes', u'no']) == u'yes'
 		start_time = pygame.time.get_ticks()
 		time = start_time
-		while timeout is None or time - start_time < timeout:
+		while True:
 			time = pygame.time.get_ticks()
 			# Process the input
 			for event in pygame.event.get():
-				if event.type == KEYDOWN and event.key == pygame.K_ESCAPE:
-					self.experiment.pause()
+				if event.type == KEYDOWN:
+					if event.key == pygame.K_ESCAPE:
+						self.experiment.pause()
+						continue
+					pygame.event.post(event)
 				if event.type == MOUSEBUTTONDOWN:
 					# Check escape sequence. If the top-left and top-right
 					# corner are clicked successively within 2000ms, the
@@ -72,6 +75,8 @@ class Droid(Legacy):
 											u"The escape sequence was clicked/ tapped")
 					if buttonlist is None or event.button in buttonlist:
 						return event.button, self.from_xy(event.pos), time
+			if timeout is not None and time-start_time >= timeout:
+				break
 			# Allow Android interrupt
 			if android is not None and android.check_pause():
 				android.wait_for_resume()

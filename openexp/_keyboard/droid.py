@@ -49,9 +49,7 @@ class Droid(Legacy):
 		timeout = self.timeout
 		while True:
 			time = pygame.time.get_ticks()
-			for event in pygame.event.get():
-				if event.type != pygame.KEYDOWN:
-					continue
+			for event in pygame.event.get(pygame.KEYDOWN):
 				if event.key == pygame.K_ESCAPE:
 					self.experiment.pause()
 				# TODO The unicode mechanism that ensures compatibility between
@@ -60,8 +58,10 @@ class Droid(Legacy):
 				# virtual keyboards.
 				if android is not None:
 					key = pygame.key.name(event.key)
-					if len(key) == 1 and (event.mod & pygame.KMOD_LSHIFT or \
-						event.mod & pygame.KMOD_RSHIFT):
+					if len(key) == 1 and (
+						event.mod & pygame.KMOD_LSHIFT or
+						event.mod & pygame.KMOD_RSHIFT
+					):
 						key = key.upper()
 				else:
 					# If we're not on Android, simply use the same logic as the
