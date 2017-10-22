@@ -26,9 +26,10 @@ import subprocess
 import argparse
 
 EXCLUDE_FOLDERS = [u'build', u'dist', 'deb_dist', 'pgs4a-0.9.4']
+LUPDATE = u'pylupdate5'
+LRELEASE = u'/usr/lib/x86_64-linux-gnu/qt5/bin/lrelease'
 
-pro_tmpl = u'''CODECFORTR = UTF-8
-FORMS = %(ui_list)s
+pro_tmpl = u'''FORMS = %(ui_list)s
 SOURCES = translatables-tmp.py
 TRANSLATIONS = %(locales)s
 '''
@@ -146,14 +147,14 @@ def compile_ts(locales, t, ui_list, fname='translate.pro'):
 		}
 	with open(fname, u'w') as fd:
 		fd.write(pro)
-	cmd = [u'pylupdate4', fname]
+	cmd = [LUPDATE, fname]
 	subprocess.call(cmd)
 
 
 def compile_qm(locales):
 
 	for locale in locales:
-		cmd = [u'lrelease-qt4', u'opensesame_resources/ts/%s.ts' % locale,
+		cmd = [LRELEASE, u'opensesame_resources/ts/%s.ts' % locale,
 			u'-qm', u'opensesame_resources/locale/%s.qm' % locale]
 		subprocess.call(cmd)
 

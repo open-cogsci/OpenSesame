@@ -24,6 +24,7 @@ from datamatrix import operations, DataMatrix
 from pseudorandom import Enforce, MaxRep, MinDist, InvalidConstraint
 import openexp.keyboard
 
+
 class loop(item.item):
 
 	"""A loop item runs a single other item multiple times"""
@@ -40,7 +41,7 @@ class loop(item.item):
 		u'reverse',
 		u'roll',
 		u'weight',
-		]
+	]
 
 	def reset(self):
 
@@ -59,7 +60,7 @@ class loop(item.item):
 		self.var.order = u'random'
 		self.var.break_if = u'never'
 		self.var.break_if_on_first = u'yes'
-		self.var.source = u'table' # file or table
+		self.var.source = u'table'  # file or table
 		self.var.source_file = u''
 
 	def from_string(self, string):
@@ -120,7 +121,7 @@ class loop(item.item):
 					raise osexception(u'Invalid constrain command: %s' % i)
 				continue
 			if cmd in self.commands:
-				self.operations.append( (cmd, arglist) )
+				self.operations.append((cmd, arglist))
 		if len(self.dm) == 0:
 			self.dm.length = 1
 		if len(self.dm.columns) == 0:
@@ -130,7 +131,7 @@ class loop(item.item):
 		# of cycles doesn't match the length of the datamatrix, we change the
 		# length of the datamatrix.
 		if u'cycles' in self.var and isinstance(self.var.cycles, int) \
-				and self.var.cycles != len(self.dm):
+			and self.var.cycles != len(self.dm):
 			self.dm.length = self.var.cycles
 
 	def to_string(self):
@@ -194,35 +195,21 @@ class loop(item.item):
 			type:	DataMatrix
 		"""
 
-		if self.var.source == u'table':
-			src_dm = self.dm
-		else:
-			from datamatrix import io
-			src = self.experiment.pool[self.var.source_file]
-			if src.endswith(u'.xlsx'):
-				try:
-					src_dm = io.readxlsx(src)
-				except Exception as e:
-					raise osexception(u'Failed to read .xlsx file: %s' % src,
-						exception=e)
-			else:
-				try:
-					src_dm = io.readtxt(src)
-				except Exception as e:
-					raise osexception(u'Failed to read text file (perhaps it has the wrong format or it is not utf-8 encoded): %s' % src,
-						exception=e)
+		src_dm = self.dm if self.var.source == u'table' else self._read_file()
 		for column_name in src_dm.column_names:
 			if not self.syntax.valid_var_name(column_name):
 				raise osexception(
-					u'The loop table contains an invalid column name: 'u'\'%s\'' \
-					% column_name)
+					u'The loop table contains an invalid column name: 'u'\'%s\''
+					% column_name
+				)
 		# The number of repeats should be numeric. If not, then give an error.
 		# This can also occur when generating a preview of a loop table if
 		# repeat is variable.
 		if not isinstance(self.var.repeat, (int, float)):
 			raise osexception(
-				u'Don\'t know how to generate a DataMatrix for "%s" repeats' \
-				% self.var.repeat)
+				u'Don\'t know how to generate a DataMatrix for "%s" repeats'
+				% self.var.repeat
+			)
 		length = int(len(src_dm) * self.var.repeat)
 		dm = DataMatrix(length=0)
 		while len(dm) < length:
@@ -296,7 +283,9 @@ class loop(item.item):
 		if (u'skip' in self.var.__vars__ and self.var.skip != 0) \
 			or (u'offset' in self.var.__vars__ and self.var.offset != u'no'):
 			raise osexception(
-				u'The skip and offset options have been removed. Please refer to the documentation of the loop item for more information.')
+				u'The skip and offset options have been removed. Please refer '
+				u'to the documentation of the loop item for more information.'
+			)
 		# Compile break-if statement
 		break_if = self.var.get(u'break_if', _eval=False)
 		if break_if not in (u'never', u''):
@@ -308,8 +297,9 @@ class loop(item.item):
 		# Make sure the item to run exists
 		if self._item not in self.experiment.items:
 			raise osexception(
-				u"Could not find item '%s', which is called by loop item '%s'" \
-				% (self._item, self.name))
+				u"Could not find item '%s', which is called by loop item '%s'"
+				% (self._item, self.name)
+			)
 
 	def run(self):
 
@@ -350,9 +340,63 @@ class loop(item.item):
 			self.live_row = None
 			self.live_dm = None
 
+	def _read_file(self):
+
+		"""
+		desc:
+			Reads a source file and raises an osexception if this fails.
+
+		returns:
+			type:	DataMatrix
+		"""
+
+		from datamatrix import io
+		src = self.experiment.pool[self.var.source_file]
+		if src.endswith(u'.xlsx'):
+			try:
+				return io.readxlsx(src)
+			except Exception as e:
+				raise osexception(u'Failed to read .xlsx file: %s' % src,
+					exception=e)
+		try:
+			return io.readtxt(src)
+		except Exception as e:
+			raise osexception(
+				(u'Failed to read text file (perhaps it has the '
+				u'wrong format or it is not utf-8 encoded): %s') % src,
+				exception=e
+			)
+
+	def _var_info_table(self):
+
+		"""
+		returns:
+			A list of (var, value) tuples that have been defined in the loop
+			table.
+		"""
+
+		return [(colname, safe_decode(col)) for colname, col in self.dm.columns]
+
+	def _var_info_file(self):
+
+		"""
+		returns:
+			A list of (var, value) tuples that have been defined in a source
+			file.
+		"""
+
+		try:
+			dm = self._read_file()
+		except osexception:
+			return []
+		return [(colname, safe_decode(col)) for colname, col in dm.columns]
+
 	def var_info(self):
 
 		"""See item."""
 
-		return item.item.var_info(self) + [ (colname, safe_decode(col)) \
-			for colname, col in self.dm.columns]
+		return item.item.var_info(self) + (
+			self._var_info_table()
+			if self.var.source == u'table'
+			else self._var_info_file()
+		)

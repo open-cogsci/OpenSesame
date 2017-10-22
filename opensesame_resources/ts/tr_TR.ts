@@ -419,10 +419,10 @@
         <source>Could not parse script: %s</source>
         <translation>Komut dosyası yürütülemedi: %s</translation>
     </message>
-    <message>
-        <location filename="../../translatables-tmp.py" line="404"/>
-        <source>Save as?</source>
-        <translation type="obsolete">Farklı kaydet…</translation>
+    <message encoding="UTF-8">
+        <location filename="../../translatables-tmp.py" line="194"/>
+        <source>Save as…</source>
+        <translation>Farklı kaydet…</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="190"/>
@@ -442,11 +442,6 @@
         <location filename="../../translatables-tmp.py" line="185"/>
         <source> [read only]</source>
         <translation> [salt okunur]</translation>
-    </message>
-    <message encoding="UTF-8">
-        <location filename="../../translatables-tmp.py" line="194"/>
-        <source>Save as…</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -673,15 +668,10 @@ Tanım: %s</translation>
         <source>Done</source>
         <translation>Tamamlandı</translation>
     </message>
-    <message>
-        <location filename="../../translatables-tmp.py" line="142"/>
-        <source>Loading ?</source>
-        <translation type="obsolete">Yükleniyor …</translation>
-    </message>
     <message encoding="UTF-8">
         <location filename="../../translatables-tmp.py" line="8"/>
         <source>Loading …</source>
-        <translation type="unfinished"></translation>
+        <translation>Yükleniyor …</translation>
     </message>
 </context>
 <context>
@@ -826,10 +816,10 @@ Deney takip eden hatadan dolayı bitmedi:
 </context>
 <context>
     <name>extension_get_started</name>
-    <message>
-        <location filename="../../translatables-tmp.py" line="269"/>
-        <source>New?</source>
-        <translation type="obsolete">Yeni…</translation>
+    <message encoding="UTF-8">
+        <location filename="../../translatables-tmp.py" line="432"/>
+        <source>New…</source>
+        <translation>Yeni…</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="433"/>
@@ -850,11 +840,6 @@ Deney takip eden hatadan dolayı bitmedi:
         <location filename="../../translatables-tmp.py" line="436"/>
         <source>Get started!</source>
         <translation>Başla!</translation>
-    </message>
-    <message encoding="UTF-8">
-        <location filename="../../translatables-tmp.py" line="432"/>
-        <source>New…</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1951,7 +1936,7 @@ Deney takip eden hatadan dolayı bitmedi:
         <translation>Not</translation>
     </message>
 </context>
-<context>
+<context encoding="UTF-8">
     <name>plugin_quest_staircase_init</name>
     <message>
         <location filename="../../translatables-tmp.py" line="276"/>
@@ -1968,20 +1953,20 @@ Deney takip eden hatadan dolayı bitmedi:
         <source>Desired proportion of correct responses</source>
         <translation>Doğru yanıtların istenen oranı</translation>
     </message>
-    <message>
-        <location filename="../../translatables-tmp.py" line="279"/>
-        <source>Steepness of the Weibull psychometric function (&#xce;&#xb2;)</source>
-        <translation>Weibull psikometrik fonksiyonunun yüksekliği (Î²)</translation>
+    <message encoding="UTF-8">
+        <location filename="../../translatables-tmp.py" line="249"/>
+        <source>Steepness of the Weibull psychometric function (Î²)</source>
+        <translation type="obsolete">Weibull psikometrik fonksiyonunun yüksekliği (Î²)</translation>
     </message>
-    <message>
-        <location filename="../../translatables-tmp.py" line="280"/>
-        <source>Proportion of random responses at maximum stimulus intensity (&#xce;&#xb4;)</source>
-        <translation>Maksimum uyarıcı yoğunluğunda rastgele yanıtların oran ı(Î´)</translation>
+    <message encoding="UTF-8">
+        <location filename="../../translatables-tmp.py" line="250"/>
+        <source>Proportion of random responses at maximum stimulus intensity (Î´)</source>
+        <translation type="obsolete">Maksimum uyarıcı yoğunluğunda rastgele yanıtların oran ı(Î´)</translation>
     </message>
-    <message>
-        <location filename="../../translatables-tmp.py" line="281"/>
-        <source>Chance level (&#xce;&#xb3;)</source>
-        <translation>Şans seviyesi (Î³)</translation>
+    <message encoding="UTF-8">
+        <location filename="../../translatables-tmp.py" line="251"/>
+        <source>Chance level (Î³)</source>
+        <translation type="obsolete">Şans seviyesi (Î³)</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="282"/>
@@ -2002,6 +1987,21 @@ Deney takip eden hatadan dolayı bitmedi:
         <location filename="../../translatables-tmp.py" line="285"/>
         <source>Experimental variable for test value</source>
         <translation>Test değeri için deneysel değişken</translation>
+    </message>
+    <message>
+        <location filename="../../translatables-tmp.py" line="279"/>
+        <source>Steepness of the Weibull psychometric function (&#xce;&#xb2;)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../translatables-tmp.py" line="280"/>
+        <source>Proportion of random responses at maximum stimulus intensity (&#xce;&#xb4;)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../translatables-tmp.py" line="281"/>
+        <source>Chance level (&#xce;&#xb3;)</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2348,10 +2348,10 @@ Görüntünün, sesin ve girdi aletleriyle ilgili ayarlar</translation>
         <source>Orientation&lt;br /&gt;&lt;i&gt;in degrees (0 .. 360)&lt;/i&gt;</source>
         <translation>Yön &lt;br /&gt;&lt;i&gt;derece olarak (0 .. 360)&lt;/i&gt;</translation>
     </message>
-    <message>
+    <message encoding="UTF-8">
         <location filename="../ui/dialogs/gabor_settings.ui" line="100"/>
-        <source> &#xb0;</source>
-        <translation type="obsolete"> °</translation>
+        <source> °</source>
+        <translation> °</translation>
     </message>
     <message>
         <location filename="../ui/dialogs/gabor_settings.ui" line="110"/>
@@ -2399,11 +2399,6 @@ Görüntünün, sesin ve girdi aletleriyle ilgili ayarlar</translation>
 &lt;i&gt;Has no effect in psycho back-end&lt;/i&gt;</source>
         <translation>Arkaplan rengi&lt;br /&gt;
 &lt;i&gt;Psycho arka plan uygulamarına etkisi yoktur&lt;/i&gt;</translation>
-    </message>
-    <message encoding="UTF-8">
-        <location filename="../ui/dialogs/gabor_settings.ui" line="100"/>
-        <source> °</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2483,10 +2478,10 @@ Görüntünün, sesin ve girdi aletleriyle ilgili ayarlar</translation>
         <source> px</source>
         <translation> px</translation>
     </message>
-    <message>
-        <location filename="../ui/widgets/general_properties.ui" line="157"/>
-        <source>&#xd7;</source>
-        <translation type="obsolete">×</translation>
+    <message encoding="UTF-8">
+        <location filename="../ui/widgets/general_properties.ui" line="183"/>
+        <source>×</source>
+        <translation>×</translation>
     </message>
     <message>
         <location filename="../ui/widgets/general_properties.ui" line="255"/>
@@ -2511,11 +2506,6 @@ Görüntünün, sesin ve girdi aletleriyle ilgili ayarlar</translation>
     <message>
         <location filename="../ui/widgets/general_properties.ui" line="110"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://osdoc.cogsci.nl/manual/backends/&quot;&gt;&lt;span style=&quot;font-size:small;font-style:italic; text-decoration: underline; color:#0057ae;&quot;&gt;Why is this important?&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message encoding="UTF-8">
-        <location filename="../ui/widgets/general_properties.ui" line="183"/>
-        <source>×</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2927,45 +2917,25 @@ Deneylerinizi komut dizisi üzerinden düzenle</translation>
         <source>One-tab mode</source>
         <translation>Bir sekme modu</translation>
     </message>
-    <message>
-        <location filename="../ui/misc/main_window.ui" line="358"/>
-        <source>Open?</source>
-        <translation type="obsolete">Aç…</translation>
-    </message>
-    <message>
-        <location filename="../ui/misc/main_window.ui" line="388"/>
-        <source>Save as?</source>
-        <translation type="obsolete">Farklı kaydet…</translation>
-    </message>
-    <message>
-        <location filename="../ui/misc/main_window.ui" line="411"/>
-        <source>Run fullscreen?</source>
-        <translation type="obsolete">Tam ekran modunda çalıştır…</translation>
-    </message>
-    <message>
-        <location filename="../ui/misc/main_window.ui" line="449"/>
-        <source>Run in window?</source>
-        <translation type="obsolete">Pencerede çalıştır…</translation>
-    </message>
     <message encoding="UTF-8">
         <location filename="../ui/misc/main_window.ui" line="358"/>
         <source>Open…</source>
-        <translation type="unfinished"></translation>
+        <translation>Aç…</translation>
     </message>
     <message encoding="UTF-8">
         <location filename="../ui/misc/main_window.ui" line="388"/>
         <source>Save as…</source>
-        <translation type="unfinished"></translation>
+        <translation>Farklı kaydet…</translation>
     </message>
     <message encoding="UTF-8">
         <location filename="../ui/misc/main_window.ui" line="411"/>
         <source>Run fullscreen…</source>
-        <translation type="unfinished"></translation>
+        <translation>Tam ekran modunda çalıştır…</translation>
     </message>
     <message encoding="UTF-8">
         <location filename="../ui/misc/main_window.ui" line="449"/>
         <source>Run in window…</source>
-        <translation type="unfinished"></translation>
+        <translation>Pencerede çalıştır…</translation>
     </message>
 </context>
 <context>
