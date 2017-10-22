@@ -94,7 +94,6 @@ class Legacy(Mouse, LegacyCoordinates):
 					if buttonlist is None or event.button in buttonlist:
 						pygame.mouse.set_visible(self._cursor_shown)
 						return event.button, self.from_xy(event.pos), time
-						continue
 			if timeout is not None and time-start_time >= timeout:
 				break
 		pygame.mouse.set_visible(self._cursor_shown)

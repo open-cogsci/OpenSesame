@@ -89,8 +89,6 @@ class Legacy(Keyboard):
 		while True:
 			time = pygame.time.get_ticks()
 			for event in pygame.event.get(pygame.KEYDOWN):
-				if event.type != pygame.KEYDOWN:
-					continue
 				if event.key == pygame.K_ESCAPE:
 					self.experiment.pause()
 				if event.unicode in invalid_unicode:
