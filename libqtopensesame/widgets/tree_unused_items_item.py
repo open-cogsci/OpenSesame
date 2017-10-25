@@ -72,3 +72,10 @@ class tree_unused_items_item(tree_base_item):
 	def ancestry(self):
 
 		return u'__unused__', u'__unused__:0'
+
+	def show_context_menu(self, pos):
+
+		from libqtopensesame.widgets.unused_items_context_menu import \
+			unused_items_context_menu
+		menu = unused_items_context_menu(self.main_window, self)
+		menu.popup(pos)
