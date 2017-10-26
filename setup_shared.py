@@ -65,5 +65,6 @@ included_extensions = [
 	'variable_inspector',
 	'after_experiment',
 	'system_information',
-	'notifications'
+	'notifications',
+	'tab_to_dockwidget'
 	]
