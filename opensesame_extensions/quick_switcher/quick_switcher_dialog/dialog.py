@@ -39,7 +39,7 @@ NAVIGATION_KEYS = [
 	]
 
 NUMBER_KEYS = range(QtCore.Qt.Key_1, QtCore.Qt.Key_9)
-	
+
 
 class quick_switcher(base_dialog):
 
@@ -86,50 +86,50 @@ class quick_switcher(base_dialog):
 		# Populate dialog with item elements
 		for item_name in self.experiment.items:
 			self.add_item(item_name)
-				
+
 	@property
 	def sortkey(self):
-		
+
 		"""
 		desc:
 			An automatically incrementing sort key.
 		"""
-		
+
 		self._sortkey += 1
 		return self._sortkey
-				
+
 	def element_size(self, element):
-		
+
 		"""
 		desc:
 			Determines the size of a list element. Uses previously determined
 			size if available, to improve performance.
-			
+
 		arguments:
 			element:
 				desc:	The element to determine the size for.
 				type:	QListWidgetItem
-				
+
 		returns:
 			type:	QSize
 		"""
-		
+
 		if self._element_size is None:
 			self._element_size = QtCore.QSize(
 				self.ui.items_list_widget.size().width(),
 				element.minimumSizeHint().height())
 		return self._element_size
-				
+
 	def add_item(self, item_name):
-		
+
 		"""
 		desc:
 			Adds one or more elements to the quick switcher for an item.
-			
+
 		arguments:
 			item_name:	The name of an item.
 		"""
-		
+
 		item = self.experiment.items[item_name]
 		list_widget_item = sortable_list_widget(self.sortkey)
 		self._item_elements[item_name] = [list_widget_item]
@@ -137,71 +137,74 @@ class quick_switcher(base_dialog):
 		list_widget_item.setSizeHint(self.element_size(element))
 		self.ui.items_list_widget.addItem(list_widget_item)
 		self.ui.items_list_widget.setItemWidget(list_widget_item, element)
-		if item.item_type == u'inline_script':
-			# Call edit widget to make sure that QProgEdit has content and thus
-			# can extract symbols. But don't do this for the currently visible
-			# item, because that causes the cursor to jump to the top.
-			if self.tabwidget.current_item() != item_name:
-				item.edit_widget()
-			for phase in (u'Run', u'Prepare'):
-				for symbol in item.qprogedit.tab(phase).symbols():
-					list_widget_item = sortable_list_widget(self.sortkey)
-					self._item_elements[item_name].append(list_widget_item)
-					element = quick_open_element_symbol(item, phase, symbol)
-					list_widget_item.setSizeHint(self.element_size(element))
-					self.ui.items_list_widget.addItem(list_widget_item)
-					self.ui.items_list_widget.setItemWidget(
-						list_widget_item, element)
-						
+		if item.item_type != u'inline_script':
+			return
+		# Call edit widget to make sure that QProgEdit has content and thus
+		# can extract symbols. But don't do this for the currently visible
+		# item, because that causes the cursor to jump to the top.
+		if self.tabwidget.current_item() != item_name:
+			item.edit_widget()
+		for i, tab in enumerate(item.qprogedit.tabs()):
+			for symbol in tab.symbols():
+				list_widget_item = sortable_list_widget(self.sortkey)
+				self._item_elements[item_name].append(list_widget_item)
+				element = quick_open_element_symbol(
+					item, item.qprogedit.tabText(i), symbol
+				)
+				list_widget_item.setSizeHint(self.element_size(element))
+				self.ui.items_list_widget.addItem(list_widget_item)
+				self.ui.items_list_widget.setItemWidget(
+					list_widget_item, element)
+
 	def delete_item(self, item_name):
-		
+
 		"""
 		desc:
 			Removes elements corresponding to an item from the quick switcher.
-			
+
 		arguments:
 			item_name:	The name of the item.
 		"""
-		
+
 		if item_name not in self._item_elements:
 			return
 		for list_widget_item in self._item_elements.pop(item_name):
 			row = self.ui.items_list_widget.row(list_widget_item)
 			self.ui.items_list_widget.takeItem(row)
-		
+
 	def rename_item(self, from_name, to_name):
-		
+
 		"""
 		desc:
 			Modifies the quick switcher for an item rename.
-			
+
 		arguments:
 			from_name:	The old item name.
 			to_name:	The new item name.
 		"""
-		
+
 		self.delete_item(from_name)
 		self.add_item(to_name)
-		
+
 	def refresh_item(self, item_name):
-		
+
 		"""
 		desc:
 			Refresh an item in the quick switcher.
-			
+
 		arguments:
 			item_name:	The name of an item.
 		"""
-		
+
 		self.delete_item(item_name)
 		self.add_item(item_name)
-		
+
 	def bump_item(self, item_name):
-		
+
 		"""
 		desc:
 			Puts an item at the top of the quick switcher.
-		
+
 		arguments:
 			item_name:	The name of an item.
 		"""
@@ -350,19 +353,19 @@ class quick_switcher(base_dialog):
 		"""
 
 		self.ui.items_list_widget.setFocus()
-		
+
 	def on_keypress(self, e):
-		
+
 		"""
 		desc:
 			Overrides the keyPressEvent() of the items list and filter edit,
 			manages the focus, and dispatches the events to the correct widget.
-			
+
 		arguments:
 			e:
 				type:	QKeyEvent
 		"""
-		
+
 		if e.key() in NUMBER_KEYS:
 			row = e.key() - QtCore.Qt.Key_1
 			list_widget_item = self.ui.items_list_widget.item(row)
