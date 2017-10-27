@@ -213,7 +213,7 @@ class response_store(object):
 			response.
 		"""
 
-		return [r.item for r in self._responses]
+		return [r.feedback for r in self._responses]
 
 	@property
 	def var(self):
