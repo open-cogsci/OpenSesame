@@ -44,6 +44,16 @@ class tab_to_dockwidget(base_extension):
 		self.tabwidget.remove = self._remove_tab(self.tabwidget.remove)
 		self.tabwidget.close_all = self._close_all_tabs(self.tabwidget.close_all)
 
+	def event_rename_item(self, from_name, to_name):
+
+		"""
+		desc:
+			Change the dockwidget titles on item rename.
+		"""
+
+		for docktab in self._docktabs.values():
+			docktab.rename(from_name, to_name)
+
 	def activate(self):
 
 		"""

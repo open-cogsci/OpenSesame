@@ -19,6 +19,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 
 from libopensesame.py3compat import *
 from qtpy.QtWidgets import QDockWidget
+from libqtopensesame.items.qtitem import qtitem
 
 
 class DockTab(QDockWidget):
@@ -38,3 +39,11 @@ class DockTab(QDockWidget):
 	def closeEvent(self, event):
 
 		self._tab_to_dockwidget.remove_widget(self.widget())
+
+	def rename(self, from_name, to_name):
+
+		if (
+			hasattr(self.widget(), u'__item__')
+			and self.widget().__item__ == to_name
+		):
+			self.setWindowTitle(to_name)
