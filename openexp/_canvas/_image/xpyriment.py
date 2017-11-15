@@ -31,7 +31,7 @@ class Xpyriment(XpyrimentElement, Image):
 		self._stim = Picture(filename=safe_decode(self.fname))
 		if self.rotation is not None and self.rotation != 0:
 			w1, h1 = self._stim.surface_size
-			self._stim.rotate(self.rotation)
+			self._stim.rotate(-self.rotation)
 			w2, h2 = self._stim.surface_size
 			dx = (w2-w1)/2
 			dy = (h2-h1)/2

@@ -33,7 +33,7 @@ class Psycho(RotatingElement, PsychoElement, Image):
 			image=safe_decode(self.fname)
 		)
 		if self.rotation is not None and self.rotation != 0:
-			self._stim.ori = -self.rotation
+			self._stim.ori = self.rotation
 		if self.scale is not None:
 			w, h = self._stim.size
 			w *= self.scale

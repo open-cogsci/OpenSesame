@@ -419,7 +419,7 @@ class sketchpad_canvas(QtWidgets.QGraphicsScene):
 				% rotation
 			)
 			return 0
-		return -rotation
+		return rotation
 
 	def _point(self, i, x, y, center, scale):
 

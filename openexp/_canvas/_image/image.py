@@ -37,7 +37,7 @@ class Image(Element):
 		im = Image.open(self.fname)
 		w1, h1 = im.size
 		if self.rotation is not None and self.rotation != 0:
-			im = im.rotate(-self.rotation, expand=True)
+			im = im.rotate(self.rotation, expand=True)
 		w2, h2 = im.size
 		dx = (w2-w1)/2
 		dy = (h2-h1)/2

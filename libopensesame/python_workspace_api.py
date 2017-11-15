@@ -344,8 +344,8 @@ def xy_from_polar(rho, phi, pole=(0, 0)):
 			desc:	The radial coordinate, also distance or eccentricity.
 			type:	float
 		phi:
-			desc:	The angular coordinate. This reflects a counterclockwise
-					rotation in degrees (i.e. not radians), where 0 is straight
+			desc:	The angular coordinate. This reflects a clockwise rotation
+					in degrees (i.e. not radians), where 0 is straight
 					right.
 			type:	float
 

@@ -1131,7 +1131,7 @@ class Canvas(Backend):
 			rotation:
 				desc:	The rotation of the image `None` or 0 indicate the
 						original rotation. Positive values indicate a
-						counterclockwise rotation in degrees.
+						clockwise rotation in degrees.
 				type:	[float, int, NoneType]
 
 		example: |

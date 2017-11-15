@@ -45,7 +45,7 @@ class Legacy(LegacyElement, Image):
 			if self.rotation is not None and self.rotation != 0:
 				w1, h1 = self._image_surface.get_size()
 				self._image_surface = pygame.transform.rotate(
-					self._image_surface.convert_alpha(), self.rotation
+					self._image_surface.convert_alpha(), -self.rotation
 				)
 				w2, h2 = self._image_surface.get_size()
 				self._dx = (w2-w1)/2
