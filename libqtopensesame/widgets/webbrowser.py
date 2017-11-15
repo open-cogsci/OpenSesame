@@ -56,6 +56,12 @@ INTERNAL_URLS = [
 	u'http://docs.expyriment.org/',
 	u'https://docs.expyriment.org/',
 	]
+# The DPI of the browser appears to be hard-set to 96, so we need adjust the
+# zooom of QWebView to correct for this.
+WEBVIEW_DPI = 96
+SYSTEM_DPI = QtCore.QCoreApplication.instance().desktop().screen().logicalDpiX()
+ZOOM_FACTOR = 1.*SYSTEM_DPI/WEBVIEW_DPI
+
 
 class small_webview(WebView):
 
@@ -76,6 +82,7 @@ class small_webview(WebView):
 		"""
 
 		return QtCore.QSize(100,100)
+
 
 class small_webpage(WebPage):
 
@@ -148,6 +155,7 @@ class small_webpage(WebPage):
 			return False
 		return super(small_webpage, self).acceptNavigationRequest(*args)
 
+
 class webbrowser(base_widget):
 
 	"""
@@ -205,8 +213,10 @@ class webbrowser(base_widget):
 		if url.endswith(u'.md') and not url.startswith(u'http://') \
 			and not url.startswith(u'https://'):
 			self.ui.top_widget.hide()
-			self.load_markdown(safe_read(url), url=os.path.basename(url),
-				tmpl=tmpl)
+			self.load_markdown(
+				safe_read(url), url=os.path.basename(url),
+				tmpl=tmpl
+			)
 			return
 		self.ui.top_widget.show()
 		self._current_url = url
@@ -232,6 +242,7 @@ class webbrowser(base_widget):
 		if tmpl is not None:
 			html = tmpl % {u'body' : html}
 		self.ui.webview.setHtml(html, baseUrl=url)
+		self.ui.webview.setZoomFactor(ZOOM_FACTOR)
 
 	def init_cache(self):
 
@@ -286,6 +297,7 @@ class webbrowser(base_widget):
 			message=_(u'Displaying cached version of: %s. For a better viewing experience, connect to the internet.') \
 			% self._current_url, category=u'info')
 		self.ui.webview.setHtml(self._cache[self._current_url])
+		self.ui.webview.setZoomFactor(ZOOM_FACTOR)
 
 	def load_finished(self, ok):
 
@@ -297,6 +309,7 @@ class webbrowser(base_widget):
 		if not ok:
 			self.try_cache()
 		self.ui.label_load_progress.setText(_(u'Done'))
+		self.ui.webview.setZoomFactor(ZOOM_FACTOR)
 
 	def update_progressbar(self, progress):
 
