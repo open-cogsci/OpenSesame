@@ -221,6 +221,21 @@ class Canvas(Backend):
 		my_canvas.show()
 		~~~
 
+		To check whether a particular `x,y` coordinate falls within the bounding
+		rectangle of an element, you can use `in`:
+
+		~~~ .python
+		my_mouse = Mouse(visible=True)
+		my_canvas = Canvas()
+		my_canvas['rect'] = Rect(-100, -100, 200, 200)
+		my_canvas.show()
+		button, (x, y), time = my_mouse.get_click()
+		if (x, y) in my_canvas['rect']:
+			print('Clicked in rectangle')
+		else:
+			print('Clicked outside of rectangle')
+		~~~
+
 
 		%--
 		constant:
