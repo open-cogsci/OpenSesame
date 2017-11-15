@@ -38,6 +38,7 @@ class coroutines(item):
 		self.var.duration = 5000
 		self.var.flush_keyboard = u'yes'
 		self.var.function_name = u''
+		self.var.end_after_item = u''
 		self.schedule = []
 		self._events = []
 		self.pre_cycle_functions = []
@@ -131,10 +132,12 @@ class coroutines(item):
 		for item_name, start_time, end_time, cond in self.schedule:
 			if not self.python_workspace._eval(self.syntax.compile_cond(cond)):
 				continue
-			t = item_task(self, self.experiment.items[item_name],
+			t = item_task(
+				self, self.experiment.items[item_name],
 				self.syntax.auto_type(self.syntax.eval_text(start_time)),
-				self.syntax.auto_type(self.syntax.eval_text(end_time))
-				)
+				self.syntax.auto_type(self.syntax.eval_text(end_time)),
+				abort_on_end=item_name==self.var.end_after_item
+			)
 			self._schedule.append(t)
 		if self.var.function_name != u"":
 			t = inline_task(self, self.var.function_name, self.python_workspace,
@@ -173,7 +176,7 @@ class coroutines(item):
 				if status == task.ABORT:
 					running = False
 			active = _active
-			for fnc in self.post_cycle_functions: fnc()			
+			for fnc in self.post_cycle_functions: fnc()
 			# De-activate coroutines by end time
 			while active and active[0].stopped(dt):
 				active.pop(0)
@@ -187,9 +190,12 @@ class coroutines(item):
 		self.experiment.var.coroutines_cycles = i
 		self.experiment.var.coroutines_duration = dt
 		self.experiment.var.coroutines_mean_cycle_duration = 1.*dt/i
-		self.event('%d cycles with an average duration of %.4f ms' % \
-			(self.experiment.var.coroutines_cycles, \
-			self.experiment.var.coroutines_mean_cycle_duration))
+		self.event('%d cycles with an average duration of %.4f ms' %
+			(
+				self.experiment.var.coroutines_cycles,
+				self.experiment.var.coroutines_mean_cycle_duration
+			)
+		)
 
 	def var_info(self):
 

@@ -29,7 +29,8 @@ class item_task(base_task):
 		A task controls the coroutine for one item.
 	"""
 
-	def __init__(self, coroutines, _item, start_time, end_time):
+	def __init__(self, coroutines, _item, start_time, end_time,
+		abort_on_end=False):
 
 		"""
 		desc:
@@ -45,7 +46,7 @@ class item_task(base_task):
 			raise osexception(
 				u'%s not supported by coroutines' % _item.item_type)
 		self._item = _item
-		base_task.__init__(self, coroutines, start_time, end_time)
+		base_task.__init__(self, coroutines, start_time, end_time, abort_on_end)
 		self.coroutines.event(u'initialize %s' % _item.coroutine)
 
 	def launch(self):

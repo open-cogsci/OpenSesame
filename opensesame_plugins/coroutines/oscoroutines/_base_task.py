@@ -31,7 +31,7 @@ class base_task(object):
 	DEAD = 1
 	ABORT = 2
 
-	def __init__(self, coroutines, start_time, end_time):
+	def __init__(self, coroutines, start_time, end_time, abort_on_end=False):
 
 		"""
 		desc:
@@ -44,6 +44,12 @@ class base_task(object):
 			end_time:
 				desc:	The end-time of the coroutine.
 				type:	int
+
+		keywords:
+			abort_on_end:
+				desc:	Indicates whetehr an ABORT signal should be given when
+						the task ends.
+				type:	bool`
 		"""
 
 		if not (isinstance(start_time, (int, float)) and start_time >= 0) or \
@@ -55,6 +61,7 @@ class base_task(object):
 		self.start_time = start_time
 		self.end_time = end_time
 		self.coroutines = coroutines
+		self._abort_on_end = abort_on_end
 
 	def started(self, dt):
 
@@ -129,5 +136,5 @@ class base_task(object):
 				return self.ABORT
 		except StopIteration:
 			self.coroutines.event('died %s' % self.coroutine)
-			return self.DEAD
+			return self.ABORT if self._abort_on_end else self.DEAD
 		return self.ALIVE
