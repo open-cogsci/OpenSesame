@@ -81,7 +81,7 @@ class base_response_item(item):
 			type:	bool
 		"""
 
-		return test == ref
+		return test in ref
 
 	def process_response(self, response_args):
 
@@ -98,12 +98,14 @@ class base_response_item(item):
 		"""
 
 		response, t1 = response_args
-		if u'correct_response' in self.var:
-			correct = self.response_matches(response, self.var.correct_response)
+		if self._correct_responses is not None:
+			correct = self.response_matches(response, self._correct_responses)
 		else:
 			correct = None
-		self.responses.add(response=response, response_time=t1-self._t0,
-			correct=correct, item=self.name, feedback=self.process_feedback)
+		self.responses.add(
+			response=response, response_time=t1-self._t0, correct=correct,
+			item=self.name, feedback=self.process_feedback
+		)
 
 	def prepare(self):
 
@@ -111,7 +113,8 @@ class base_response_item(item):
 
 		item.prepare(self)
 		self._timeout = self._prepare_timeout()
-		self._allowed_responses = self._prepare_allowed_responses()
+		self._allowed_responses = self._prepare_responses(u'allowed_responses')
+		self._correct_responses = self._prepare_responses(u'correct_response')
 		self._collect_response = self.prepare_response_func()
 		self._t0 = None
 
@@ -170,35 +173,39 @@ class base_response_item(item):
 				% timeout)
 		return timeout
 
-	def _prepare_allowed_responses(self):
+	def _prepare_responses(self, var):
 
 		"""
 		desc:
-			Processes the allowed_responses variable, and checks whether it is
-			valid.
+			Parses a semicolon-separated list of responses into a list of
+			responses or None if no responses are provided.
+
+		arguments:
+			var:
+				desc:	The name of the variable that contains the responses.
+				type:	str
 
 		returns:
-			desc:	A list of allowed responses.
-			type:	list
+			type:	[NoneType, list]
 		"""
 
-		allowed_responses = safe_decode(
-			self.var.get(u'allowed_responses', default=u''))
-		if allowed_responses == u'':
+		responses = safe_decode(self.var.get(var, default=u''))
+		if responses == u'':
 			return
 		if py3:
-			allowed_responses = [r.strip() \
-				for r in allowed_responses.split(';')]
+			responses = [r.strip() for r in responses.split(';')]
 		else:
-			allowed_responses = [safe_decode(r.strip()) \
-				for r in safe_encode(allowed_responses).split(';')]
-		for r in allowed_responses:
+			responses = [
+				safe_decode(r.strip())
+				for r in safe_encode(responses).split(';')
+			]
+		for r in responses:
 			if not self.validate_response(r):
 				raise osexception(u'Invalid value in allowed_responses: %s' % r)
 		# If allowed responses are provided, the list should not be empty
-		if not allowed_responses:
-			raise osexception(u'allowed_responses should not be an empty list')
-		return allowed_responses
+		if not responses:
+			raise osexception(u'%s should not be an empty list' % var)
+		return responses
 
 	def _prepare_sleep_func(self, duration):
 

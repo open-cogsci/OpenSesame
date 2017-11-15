@@ -69,8 +69,8 @@ class keyboard_response(keyboard_response_mixin, base_response_item):
 	def response_matches(self, test, ref):
 
 		"""See base_response_item."""
-		
-		return safe_decode(ref) in self._keyboard.synonyms(test)
+
+		return any(safe_decode(r) in self._keyboard.synonyms(test) for r in ref)
 
 	def run(self):
 

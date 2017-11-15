@@ -112,7 +112,7 @@ class mouse_response(mouse_response_mixin, base_response_item):
 
 		"""See base_response_item."""
 
-		return self.button_code(test) == self.button_code(ref)
+		return any(self.button_code(test) == self.button_code(r) for r in ref)
 
 	def prepare(self):
 
