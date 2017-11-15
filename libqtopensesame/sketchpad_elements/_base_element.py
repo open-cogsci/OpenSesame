@@ -19,7 +19,7 @@ along with openexp.  If not, see <http://www.gnu.org/licenses/>.
 
 from libopensesame.py3compat import *
 from libopensesame.exceptions import osexception
-from qtpy import QtWidgets, QtGui, QtCore
+from qtpy import QtWidgets, QtGui
 from libqtopensesame.misc.translate import translation_context
 from libqtopensesame.dialogs.text_input import text_input
 _ = translation_context(u'sketchpad', category=u'item')
@@ -345,7 +345,8 @@ class base_element(object):
 			(0, _(u'Edit script'), u'utilities-terminal'),
 			(1, _(u'Raise to front'), u'go-top'),
 			(2, _(u'Lower to bottom'), u'go-bottom'),
-			(3, _(u'Delete'), u'edit-delete'),
+			(3, _(u'Specify polar coordinates'), u'accessories-calculator'),
+			(4, _(u'Delete'), u'edit-delete'),
 			])
 		resp = pm.show()
 		if resp is None:
@@ -357,6 +358,8 @@ class base_element(object):
 		elif resp == 2:
 			self.properties[u'z_index'] = self.sketchpad.max_z_index() + 1
 		elif resp == 3:
+			self.show_polar_coordinates_dialog()
+		elif resp == 4:
 			self.sketchpad.remove_elements([self])
 		self.sketchpad.draw()
 
@@ -587,3 +590,20 @@ class base_element(object):
 		"""
 
 		return u'cursor-pencil', 3, 28
+
+	def show_polar_coordinates_dialog(self):
+
+		"""
+		desc:
+			The dialog for calculating cartesian coordinates from polar
+			coordinates.
+		"""
+
+		from libqtopensesame.dialogs.polar_coordinates import polar_coordinates
+
+		d = polar_coordinates(self.sketchpad._edit_widget)
+		xy = d.get_xy()
+		if xy is None:
+			return
+		self.properties.update({u'x' : xy[0], u'y' : xy[1]})
+		self.sketchpad.draw()
