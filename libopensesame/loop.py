@@ -52,7 +52,8 @@ class loop(item.item):
 		self.dm.sorted = False
 		self.live_dm = None
 		self.live_row = None
-		self.operations = []
+		self._operations = []
+		self._constraints = []
 		self._item = u''
 
 		self.var.repeat = 1
@@ -81,7 +82,7 @@ class loop(item.item):
 				self._item = arglist[0]
 				continue
 			if cmd == u'setcycle':
-				if self.ef is not None or self.operations:
+				if self.ef is not None or self._operations:
 					raise osexception(
 						u'setcycle must come before constraints and operations')
 				if len(arglist) != 3 or kwdict:
@@ -94,34 +95,33 @@ class loop(item.item):
 				self.dm[row][var] = val
 				continue
 			if cmd == u'constrain':
-				if self.operations:
+				if self._operations:
 					raise osexception(
-						u'constraints must come before operations')
-				if self.ef is None:
-					self.ef = Enforce(self.dm)
+						u'constraints must come before operations'
+					)
 				if len(arglist) != 1:
 					raise osexception(u'Invalid constrain command: %s' % i)
 				colname = arglist[0]
-				try:
-					col = self.dm[colname]
-				except:
-					raise osexception(u'Invalid column name: %s' % colname)
 				for constraint, value in kwdict.items():
-					try:
-						if constraint == u'maxrep':
-							self.ef.add_constraint(MaxRep, cols=[col],
-								maxrep=value)
-							continue
-						if constraint == u'mindist':
-							self.ef.add_constraint(MinDist, cols=[col],
-								mindist=value)
-							continue
-					except InvalidConstraint as e:
-						raise osexception(e)
-					raise osexception(u'Invalid constrain command: %s' % i)
+					if constraint == u'maxrep':
+						constraint_cls = MaxRep
+						kwargs = {u'maxrep' : value}
+					elif constraint == u'mindist':
+						constraint_cls = MinDist
+						kwargs = {u'mindist' : value}
+					else:
+						raise osexception(
+							u'Unknown constraint: %s' % constraint
+						)
+					self._constraints.append((
+							constraint_cls,
+							colname,
+							kwargs
+					))
+					# raise osexception(u'Invalid constrain command: %s' % i)
 				continue
 			if cmd in self.commands:
-				self.operations.append((cmd, arglist))
+				self._operations.append((cmd, arglist))
 		if len(self.dm) == 0:
 			self.dm.length = 1
 		if len(self.dm.columns) == 0:
@@ -146,20 +146,11 @@ class loop(item.item):
 			for name, val in row:
 				s += u'\t%s\n' % \
 					self.syntax.create_cmd(u'setcycle', [i, name, val])
-		if self.ef is not None:
-			d = {}
-			for constraint in self.ef.constraints:
-				col = constraint.cols[0]
-				if col not in d:
-					d[col] = {}
-				if isinstance(constraint, MaxRep):
-					d[col][u'maxrep'] = constraint.maxrep
-				elif isinstance(constraint, MinDist):
-					d[col][u'mindist'] = constraint.mindist
-			for col, kwdict in d.items():
-				s += u'\t%s\n' % self.syntax.create_cmd(u'constrain', [col],
-					kwdict)
-		for cmd, arglist in self.operations:
+		for constraint_cls, colname, kwargs in self._constraints:
+			s += u'\t%s\n' % self.syntax.create_cmd(
+				u'constrain', [colname], kwargs
+			)
+		for cmd, arglist in self._operations:
 			s += u'\t%s\n' % self.syntax.create_cmd(cmd, arglist)
 		s += u'\t%s\n' % self.syntax.create_cmd(u'run', [self._item])
 		return s
@@ -220,10 +211,16 @@ class loop(item.item):
 				dm <<= src_dm[:i]
 		if self.var.order == u'random':
 			dm = operations.shuffle(dm)
-		if self.ef is not None:
-			self.ef.dm = dm
+		# Constraints come before loop operations
+		if self._constraints:
+			self.ef = Enforce(dm)
+			for constraint_cls, colname, kwargs in self._constraints:
+				self.ef.add_constraint(
+					constraint_cls, cols=dm[colname], **kwargs
+				)
 			dm = self.ef.enforce()
-		for cmd, arglist in self.operations:
+		# Operations come last
+		for cmd, arglist in self._operations:
 			# The column name is always specified last, or not at all
 			if arglist:
 				try:
