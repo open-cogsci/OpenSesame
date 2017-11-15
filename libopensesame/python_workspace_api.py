@@ -27,6 +27,8 @@ from libopensesame.exceptions import osexception
 import random
 import math
 import warnings
+# The classes below are unused, but imported so that they are available in the
+# workspace.
 from openexp.canvas_elements import (Rect, Line, Text, Ellipse, Circle,
 	FixDot, Gabor, NoisePatch, Image, Arrow, Polygon)
 from libopensesame.widgets.widget_factory import (Label, Button, ImageWidget,
@@ -305,6 +307,29 @@ def pause():
 	"""
 
 	experiment.pause()
+
+
+def register_cleanup_function(fnc):
+
+	"""
+	desc:
+		Registers a clean-up function, which is executed when the experiment
+		ends. Clean-up functions are executed at the very end, after the
+		display, sound device, and log file have been closed. Clean-up functions
+		are also executed when the experiment crashes.
+
+	argument:
+		fnc:
+			desc:	A function that doesn't require arguments.
+			type:	callable
+
+	example: |
+		def my_cleanup_function():
+			print(u'The experiment is finished!')
+		register_cleanup_function(my_cleanup_function)
+	"""
+
+	experiment.cleanup_functions.append(fnc)
 
 
 def xy_from_polar(rho, phi, pole=(0, 0)):
