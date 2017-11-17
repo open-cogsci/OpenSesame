@@ -684,7 +684,10 @@ class Canvas(Backend):
 			my_copied_canvas.show()
 		"""
 
-		self._elements = [e.copy(self) for e in canvas._elements]
+		self._elements = OrderedDict([
+			(name, element.copy(self))
+			for name, element in canvas._elements.items()
+		])
 		self.set_config(**canvas.get_config())
 
 	def prepare(self):

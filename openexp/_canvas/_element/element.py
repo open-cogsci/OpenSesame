@@ -129,7 +129,13 @@ class Element(object):
 			type:	Element
 		"""
 
-		e = copy.deepcopy(self)
+		try:
+			e = copy.deepcopy(self)
+		except (ValueError, TypeError):
+			# Silently fall back to shallow copies if deep copies are not
+			# possible. This happens for example with the c-types-based
+			# PsychoPy stimuli.
+			e = copy.copy(self)
 		e._canvas = canvas
 		return e
 
