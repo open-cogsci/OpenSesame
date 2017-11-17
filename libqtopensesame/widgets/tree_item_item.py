@@ -17,11 +17,13 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
+from libopensesame.py3compat import *
 from qtpy import QtCore, QtWidgets
 from libqtopensesame.widgets.tree_base_item import tree_base_item
-from libopensesame.py3compat import *
+from libqtopensesame.items.qtstructure_item import qtstructure_item
 from libqtopensesame.misc.translate import translation_context
 _ = translation_context(u'tree_item_item', category=u'core')
+
 
 class tree_item_item(tree_base_item):
 
@@ -315,8 +317,8 @@ class tree_item_item(tree_base_item):
 			u'move'				: False,
 			u'application-id'	: self.main_window._id(),
 			u'ancestry'			: self.ancestry()[1],
-			}
-
+			u'structure-item'	: isinstance(self.item, qtstructure_item),
+		}
 		text = safe_decode(json.dumps(data))
 		QtWidgets.QApplication.clipboard().setText(text)
 
