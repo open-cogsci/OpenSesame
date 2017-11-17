@@ -115,7 +115,7 @@ class RichText(Element):
 	def _to_qgraphicstextitem(self):
 
 		t = QGraphicsTextItem()
-		t.setDefaultTextColor(QColor(self.color.colorspec))
+		t.setDefaultTextColor(QColor(self.color.hexcolor))
 		if self.html:
 			t.setHtml(u'<div align="center">%s</div>' % self.text \
 				if self.center else self.text)
