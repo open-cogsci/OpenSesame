@@ -473,7 +473,10 @@ class experiment(item.item):
 
 		from openexp import sampler, canvas
 		self.running = False
-		self._log.close()
+		try:
+			self._log.close()
+		except:
+			pass
 		sampler.close_sound(self)
 		canvas.close_display(self)
 		self.cleanup()
