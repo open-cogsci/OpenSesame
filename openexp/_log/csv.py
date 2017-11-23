@@ -37,7 +37,8 @@ class Csv(Log):
 
 	def close(self):
 
-		self._log.close()
+		if self._log is not None:
+			self._log.close()
 
 	def open(self, path):
 

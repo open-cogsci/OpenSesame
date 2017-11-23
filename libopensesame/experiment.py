@@ -474,8 +474,8 @@ class experiment(item.item):
 		self.running = False
 		try:
 			self._log.close()
-		except:
-			pass
+		except AttributeError:
+			print('experiment.end(): missing or invalid log object')
 		sampler.close_sound(self)
 		canvas.close_display(self)
 		self.cleanup()
