@@ -24,4 +24,4 @@ from qtpy import QtCore
 # zooom of QWebView to correct for this.
 STANDARD_DPI = 96
 system_dpi = QtCore.QCoreApplication.instance().desktop().screen().logicalDpiX()
-display_scaling = 1.*STANDARD_DPI/system_dpi
+display_scaling = 1.*system_dpi/STANDARD_DPI
