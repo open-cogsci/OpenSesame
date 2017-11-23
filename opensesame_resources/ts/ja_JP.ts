@@ -3,17 +3,17 @@
 <context>
     <name>core_backend_settings</name>
     <message>
-        <location filename="../../translatables-tmp.py" line="482"/>
+        <location filename="../../translatables-tmp.py" line="492"/>
         <source>Failed to load backend</source>
         <translation type="unfinished">バックエンドの読み込みに失敗しました</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="483"/>
+        <location filename="../../translatables-tmp.py" line="493"/>
         <source>No settings for %s</source>
         <translation type="unfinished">設定なし %s</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="484"/>
+        <location filename="../../translatables-tmp.py" line="494"/>
         <source>Settings for %s:</source>
         <translation type="unfinished">設定 %s:</translation>
     </message>
@@ -21,22 +21,22 @@
 <context>
     <name>core_base_runner</name>
     <message>
-        <location filename="../../translatables-tmp.py" line="428"/>
+        <location filename="../../translatables-tmp.py" line="437"/>
         <source>Subject number</source>
         <translation type="unfinished">実験参加番号</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="429"/>
+        <location filename="../../translatables-tmp.py" line="438"/>
         <source>Please enter the subject number</source>
         <translation type="unfinished">実験参加者番号を入力してください</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="426"/>
+        <location filename="../../translatables-tmp.py" line="435"/>
         <source>Choose location for logfile (press &apos;escape&apos; for default location)</source>
         <translation type="unfinished">ログファイルの場所を選択してください (デフォルトの場所に設定する場合は、エスケープキーを押してください)</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="427"/>
+        <location filename="../../translatables-tmp.py" line="436"/>
         <source>The logfile &apos;%s&apos; is not writable. Please choose another location for the logfile.</source>
         <translation type="unfinished">ログファイル &apos;%s&apos; は書き込みできません. 別の場所を選択してください.</translation>
     </message>
@@ -44,7 +44,7 @@
 <context>
     <name>core_color_edit</name>
     <message>
-        <location filename="../../translatables-tmp.py" line="266"/>
+        <location filename="../../translatables-tmp.py" line="275"/>
         <source>Pick a color</source>
         <translation type="unfinished">色の選択</translation>
     </message>
@@ -60,7 +60,7 @@
 <context>
     <name>core_console</name>
     <message>
-        <location filename="../../translatables-tmp.py" line="514"/>
+        <location filename="../../translatables-tmp.py" line="524"/>
         <source>Error: Command contains invalid characters</source>
         <translation type="unfinished">エラー: コマンドに無効な文字が含まれています</translation>
     </message>
@@ -68,7 +68,7 @@
 <context>
     <name>core_general_properties</name>
     <message>
-        <location filename="../../translatables-tmp.py" line="119"/>
+        <location filename="../../translatables-tmp.py" line="120"/>
         <source>Failed to parse the resolution. Expecting positive numeric values.</source>
         <translation type="unfinished">解像度の解析に失敗しました。正の数値を入力してください.</translation>
     </message>
@@ -76,12 +76,12 @@
 <context>
     <name>core_general_script_editor</name>
     <message>
-        <location filename="../../translatables-tmp.py" line="534"/>
+        <location filename="../../translatables-tmp.py" line="544"/>
         <source>Apply?</source>
         <translation type="unfinished">適用しますか?</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="535"/>
+        <location filename="../../translatables-tmp.py" line="545"/>
         <source>Are you sure you want to apply the changes to the general script?</source>
         <translation type="unfinished">スクリプトへの変更を適用しますか?</translation>
     </message>
@@ -89,7 +89,7 @@
 <context>
     <name>core_header_widget</name>
     <message>
-        <location filename="../../translatables-tmp.py" line="403"/>
+        <location filename="../../translatables-tmp.py" line="412"/>
         <source>Click to edit</source>
         <translation type="unfinished"></translation>
     </message>
@@ -97,37 +97,37 @@
 <context>
     <name>core_item_category</name>
     <message>
-        <location filename="../../translatables-tmp.py" line="459"/>
+        <location filename="../../translatables-tmp.py" line="468"/>
         <source>Form</source>
         <translation type="unfinished">フォーム</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="455"/>
+        <location filename="../../translatables-tmp.py" line="464"/>
         <source>Miscellaneous</source>
         <translation type="unfinished">その他</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="457"/>
+        <location filename="../../translatables-tmp.py" line="466"/>
         <source>Staircase</source>
         <translation type="unfinished">階段法</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="458"/>
+        <location filename="../../translatables-tmp.py" line="467"/>
         <source>Visual stimuli</source>
         <translation type="unfinished">視覚刺激</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="454"/>
+        <location filename="../../translatables-tmp.py" line="463"/>
         <source>Response collection</source>
         <translation type="unfinished">反応取得</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="453"/>
+        <location filename="../../translatables-tmp.py" line="462"/>
         <source>miscellaneous</source>
         <translation type="unfinished">その他</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="451"/>
+        <location filename="../../translatables-tmp.py" line="460"/>
         <source>Flow control</source>
         <translation type="unfinished">実験フロー制御</translation>
     </message>
@@ -135,7 +135,7 @@
 <context>
     <name>core_item_combobox</name>
     <message>
-        <location filename="../../translatables-tmp.py" line="400"/>
+        <location filename="../../translatables-tmp.py" line="409"/>
         <source>No item selected</source>
         <translation type="unfinished">アイテムが選択されていません</translation>
     </message>
@@ -143,52 +143,52 @@
 <context>
     <name>core_item_context_menu</name>
     <message>
-        <location filename="../../translatables-tmp.py" line="376"/>
+        <location filename="../../translatables-tmp.py" line="385"/>
         <source>Open</source>
         <translation type="unfinished">開く</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="377"/>
+        <location filename="../../translatables-tmp.py" line="386"/>
         <source>Rename</source>
         <translation type="unfinished">名前の変更</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="378"/>
+        <location filename="../../translatables-tmp.py" line="387"/>
         <source>Edit run-if statement</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="379"/>
+        <location filename="../../translatables-tmp.py" line="388"/>
         <source>Copy (unlinked)</source>
         <translation type="unfinished">コピー (リンクなし)</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="380"/>
+        <location filename="../../translatables-tmp.py" line="389"/>
         <source>Copy (linked)</source>
         <translation type="unfinished">コピー (リンク)</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="381"/>
+        <location filename="../../translatables-tmp.py" line="390"/>
         <source>Paste</source>
         <translation type="unfinished">ペースト</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="382"/>
+        <location filename="../../translatables-tmp.py" line="391"/>
         <source>Delete</source>
         <translation type="unfinished">消去</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="383"/>
+        <location filename="../../translatables-tmp.py" line="392"/>
         <source>Permanently delete all linked copies</source>
         <translation type="unfinished">全てのリンクされたコピーを完全消去</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="384"/>
+        <location filename="../../translatables-tmp.py" line="393"/>
         <source>Permanently delete</source>
         <translation type="unfinished">完全消去</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="385"/>
+        <location filename="../../translatables-tmp.py" line="394"/>
         <source>Help</source>
         <translation type="unfinished">ヘルプ</translation>
     </message>
@@ -196,22 +196,22 @@
 <context>
     <name>core_item_view_button</name>
     <message>
-        <location filename="../../translatables-tmp.py" line="312"/>
+        <location filename="../../translatables-tmp.py" line="321"/>
         <source>View controls</source>
         <translation type="unfinished">コントロール画面の表示</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="313"/>
+        <location filename="../../translatables-tmp.py" line="322"/>
         <source>View script</source>
         <translation type="unfinished">スクリプトの表示</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="314"/>
+        <location filename="../../translatables-tmp.py" line="323"/>
         <source>Split view</source>
         <translation type="unfinished">画面の分割</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="315"/>
+        <location filename="../../translatables-tmp.py" line="324"/>
         <source>Select view</source>
         <translation type="unfinished">表示選択</translation>
     </message>
@@ -227,7 +227,7 @@
 <context>
     <name>core_pool_select</name>
     <message>
-        <location filename="../../translatables-tmp.py" line="397"/>
+        <location filename="../../translatables-tmp.py" line="406"/>
         <source>Browse</source>
         <translation type="unfinished">参照</translation>
     </message>
@@ -303,7 +303,7 @@
 <context>
     <name>core_popup_menu</name>
     <message>
-        <location filename="../../translatables-tmp.py" line="309"/>
+        <location filename="../../translatables-tmp.py" line="318"/>
         <source>Cancel</source>
         <translation type="unfinished">キャンセル</translation>
     </message>
@@ -311,27 +311,27 @@
 <context>
     <name>core_qtautoplugin</name>
     <message>
-        <location filename="../../translatables-tmp.py" line="213"/>
+        <location filename="../../translatables-tmp.py" line="222"/>
         <source>You must specify &quot;type&quot; for %s controls in info.yaml</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="214"/>
+        <location filename="../../translatables-tmp.py" line="223"/>
         <source>You must specify &quot;%s&quot; for %s controls in info.yaml</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="215"/>
+        <location filename="../../translatables-tmp.py" line="224"/>
         <source>Invalid variable name (%s) specified in %s plugin info</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="216"/>
+        <location filename="../../translatables-tmp.py" line="225"/>
         <source>&quot;%s&quot; is not a valid qtautoplugin control</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="217"/>
+        <location filename="../../translatables-tmp.py" line="226"/>
         <source>Name &quot;%s&quot; is already taken in qtautoplugin control</source>
         <translation type="unfinished"></translation>
     </message>
@@ -367,12 +367,12 @@
 <context>
     <name>core_qtitem_store</name>
     <message>
-        <location filename="../../translatables-tmp.py" line="150"/>
+        <location filename="../../translatables-tmp.py" line="159"/>
         <source>An item with that name already exists.</source>
         <translation type="unfinished">この名前のアイテムはすでに存在します.</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="151"/>
+        <location filename="../../translatables-tmp.py" line="160"/>
         <source>An item name cannot be empty.</source>
         <translation type="unfinished">アイテムをつけてください.</translation>
     </message>
@@ -380,52 +380,52 @@
 <context>
     <name>core_qtopensesame</name>
     <message>
-        <location filename="../../translatables-tmp.py" line="184"/>
+        <location filename="../../translatables-tmp.py" line="193"/>
         <source>New experiment</source>
         <translation type="unfinished">新規実験</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="186"/>
+        <location filename="../../translatables-tmp.py" line="195"/>
         <source>Your experiment contains unsaved changes. Do you want to save your experiment?</source>
         <translation type="unfinished">この実験には保存されていない変更が含まれています. 保存しますか？?</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="187"/>
+        <location filename="../../translatables-tmp.py" line="196"/>
         <source>Save changes?</source>
         <translation type="unfinished">変更を保存しますか?</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="188"/>
+        <location filename="../../translatables-tmp.py" line="197"/>
         <source>(No recent files)</source>
         <translation type="unfinished">(最近使用したファイルはありません)</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="189"/>
+        <location filename="../../translatables-tmp.py" line="198"/>
         <source>Open file</source>
         <translation type="unfinished">ファイルを開く</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="192"/>
+        <location filename="../../translatables-tmp.py" line="201"/>
         <source>The following error occured while trying to save:&lt;br/&gt;%s</source>
         <translation type="unfinished">保存の際, 次のエラーが生じました:&lt;br/&gt;%s</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="193"/>
+        <location filename="../../translatables-tmp.py" line="202"/>
         <source>Failed to save file. Error: %s</source>
         <translation type="unfinished">ファイルの保存に失敗しました. エラー: %s</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="195"/>
+        <location filename="../../translatables-tmp.py" line="204"/>
         <source>Could not parse script: %s</source>
         <translation type="unfinished">スクリプトの解析ができませんでした: %s</translation>
     </message>
     <message encoding="UTF-8">
-        <location filename="../../translatables-tmp.py" line="194"/>
+        <location filename="../../translatables-tmp.py" line="203"/>
         <source>Save as…</source>
         <translation type="unfinished">保存…</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="190"/>
+        <location filename="../../translatables-tmp.py" line="199"/>
         <source>Errors occurred while opening the file:
 
 </source>
@@ -434,12 +434,12 @@
 </translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="191"/>
+        <location filename="../../translatables-tmp.py" line="200"/>
         <source>Error</source>
         <translation type="unfinished">エラー</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="185"/>
+        <location filename="../../translatables-tmp.py" line="194"/>
         <source> [read only]</source>
         <translation type="unfinished"></translation>
     </message>
@@ -447,32 +447,32 @@
 <context>
     <name>core_tab_widget</name>
     <message>
-        <location filename="../../translatables-tmp.py" line="220"/>
+        <location filename="../../translatables-tmp.py" line="229"/>
         <source>Help</source>
         <translation type="unfinished">ヘルプ</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="221"/>
+        <location filename="../../translatables-tmp.py" line="230"/>
         <source>Back-end settings</source>
         <translation type="unfinished">バックエンドの設定</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="222"/>
+        <location filename="../../translatables-tmp.py" line="231"/>
         <source>General properties</source>
         <translation type="unfinished">プロパティ</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="223"/>
+        <location filename="../../translatables-tmp.py" line="232"/>
         <source>General script editor</source>
         <translation type="unfinished">スクリプトエディター</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="224"/>
+        <location filename="../../translatables-tmp.py" line="233"/>
         <source>Unused items</source>
         <translation type="unfinished">使われていないアイテム</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="225"/>
+        <location filename="../../translatables-tmp.py" line="234"/>
         <source>Preferences</source>
         <translation type="unfinished">設定</translation>
     </message>
@@ -480,27 +480,27 @@
 <context>
     <name>core_template</name>
     <message>
-        <location filename="../../translatables-tmp.py" line="232"/>
+        <location filename="../../translatables-tmp.py" line="241"/>
         <source>Default template</source>
         <translation type="unfinished">デフォルトのテンプレート</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="233"/>
+        <location filename="../../translatables-tmp.py" line="242"/>
         <source>Extended template</source>
         <translation type="unfinished">拡張テンプレート</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="234"/>
+        <location filename="../../translatables-tmp.py" line="243"/>
         <source>Questionnaire template</source>
         <translation type="unfinished">質問紙テンプレート</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="235"/>
+        <location filename="../../translatables-tmp.py" line="244"/>
         <source>Android template</source>
         <translation type="unfinished">Androidテンプレート</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="236"/>
+        <location filename="../../translatables-tmp.py" line="245"/>
         <source>Eye-tracking template</source>
         <translation type="unfinished">眼球運動測定テンプレート</translation>
     </message>
@@ -508,7 +508,7 @@
 <context>
     <name>core_toolbar_items</name>
     <message>
-        <location filename="../../translatables-tmp.py" line="487"/>
+        <location filename="../../translatables-tmp.py" line="497"/>
         <source>Commonly used</source>
         <translation type="unfinished">よく使うアイテム</translation>
     </message>
@@ -516,7 +516,7 @@
 <context>
     <name>core_toolbar_items_item</name>
     <message>
-        <location filename="../../translatables-tmp.py" line="323"/>
+        <location filename="../../translatables-tmp.py" line="332"/>
         <source>Drag this &lt;b&gt;%s&lt;/b&gt; item to the intended location in the overview area or into the item list of a sequence tab</source>
         <translation type="unfinished">この &lt;b&gt;%s&lt;/b&gt; を, overview area か シークエンスタブのアイテムリストの指定場所にドラッグしてください</translation>
     </message>
@@ -537,7 +537,7 @@
 <context>
     <name>core_tree_general_item</name>
     <message>
-        <location filename="../../translatables-tmp.py" line="256"/>
+        <location filename="../../translatables-tmp.py" line="265"/>
         <source>General options</source>
         <translation type="unfinished">一般オプション</translation>
     </message>
@@ -545,34 +545,34 @@
 <context>
     <name>core_tree_item_item</name>
     <message>
-        <location filename="../../translatables-tmp.py" line="344"/>
+        <location filename="../../translatables-tmp.py" line="353"/>
         <source>Type: %s
 Description: %s</source>
         <translation type="unfinished">タイプ: %s
 説明: %s</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="345"/>
+        <location filename="../../translatables-tmp.py" line="354"/>
         <source>Set as item to run for %s</source>
         <translation type="unfinished">%s にアイテムとして設定</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="346"/>
+        <location filename="../../translatables-tmp.py" line="355"/>
         <source>Insert into %s</source>
         <translation type="unfinished">%s へ挿入</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="347"/>
+        <location filename="../../translatables-tmp.py" line="356"/>
         <source>Drop below %s</source>
         <translation type="unfinished">%s の下に移動</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="348"/>
+        <location filename="../../translatables-tmp.py" line="357"/>
         <source>Permanently delete item</source>
         <translation type="unfinished">アイテムの完全消去</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="349"/>
+        <location filename="../../translatables-tmp.py" line="358"/>
         <source>Are you sure you want to permanently delete &lt;b&gt;%s&lt;/b&gt;? All linked copies of &lt;b&gt;%s&lt;/b&gt; will be deleted. You will not be able to undo this.</source>
         <translation type="unfinished">&lt;b&gt;%s&lt;/b&gt; を完全に消去しますか? &lt;b&gt;%s&lt;/b&gt; にリンクされた全てのコピーは消去されます. 元に戻すことはできません.</translation>
     </message>
@@ -580,27 +580,27 @@ Description: %s</source>
 <context>
     <name>core_tree_overview</name>
     <message>
-        <location filename="../../translatables-tmp.py" line="143"/>
+        <location filename="../../translatables-tmp.py" line="152"/>
         <source>Item name</source>
         <translation type="unfinished">アイテム名</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="144"/>
+        <location filename="../../translatables-tmp.py" line="153"/>
         <source>Run if</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="145"/>
+        <location filename="../../translatables-tmp.py" line="154"/>
         <source>Unknown item type: %s</source>
         <translation type="unfinished">不明なアイテムタイプ: %s</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="146"/>
+        <location filename="../../translatables-tmp.py" line="155"/>
         <source>Insert into %s</source>
         <translation type="unfinished">%s に挿入</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="147"/>
+        <location filename="../../translatables-tmp.py" line="156"/>
         <source>Insert after %s</source>
         <translation type="unfinished">%s の後に挿入</translation>
     </message>
@@ -608,12 +608,12 @@ Description: %s</source>
 <context>
     <name>core_tree_unused_items_item</name>
     <message>
-        <location filename="../../translatables-tmp.py" line="510"/>
+        <location filename="../../translatables-tmp.py" line="520"/>
         <source>Unused items</source>
         <translation type="unfinished">未使用アイテム</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="511"/>
+        <location filename="../../translatables-tmp.py" line="521"/>
         <source>Move to unused items</source>
         <translation type="unfinished">未使用アイテムに移動</translation>
     </message>
@@ -621,22 +621,22 @@ Description: %s</source>
 <context>
     <name>core_unused_widget</name>
     <message>
-        <location filename="../../translatables-tmp.py" line="113"/>
+        <location filename="../../translatables-tmp.py" line="114"/>
         <source>&lt;b&gt;&lt;font size=&apos;5&apos;&gt;Unused&lt;/font&gt;&lt;/b&gt;</source>
         <translation type="unfinished">&lt;b&gt;&lt;font size=&apos;5&apos;&gt;未使用&lt;/font&gt;&lt;/b&gt;</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="114"/>
+        <location filename="../../translatables-tmp.py" line="115"/>
         <source>Permanently delete unused items</source>
         <translation type="unfinished">未使用のアイテムを完全消去</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="115"/>
+        <location filename="../../translatables-tmp.py" line="116"/>
         <source>Permanently delete items?</source>
         <translation type="unfinished">完全に消去しますか?</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="116"/>
+        <location filename="../../translatables-tmp.py" line="117"/>
         <source>Are you sure you want to permanently delete all unused items? This action cannot be undone.</source>
         <translation type="unfinished">全ての未使用アイテムを完全消去しますか? 元に戻すことはできません.</translation>
     </message>
@@ -677,17 +677,17 @@ Description: %s</source>
 <context>
     <name>extension_after_experiment</name>
     <message>
-        <location filename="../../translatables-tmp.py" line="132"/>
+        <location filename="../../translatables-tmp.py" line="136"/>
         <source>Finished</source>
         <translation type="unfinished">完了</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="133"/>
+        <location filename="../../translatables-tmp.py" line="137"/>
         <source>Aborted</source>
         <translation type="unfinished">中断</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="134"/>
+        <location filename="../../translatables-tmp.py" line="138"/>
         <source># Aborted
 
 - </source>
@@ -697,17 +697,17 @@ Description: %s</source>
 - </translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="135"/>
+        <location filename="../../translatables-tmp.py" line="139"/>
         <source>Stopped</source>
         <translation type="unfinished">停止</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="130"/>
+        <location filename="../../translatables-tmp.py" line="134"/>
         <source>Handles the end of an experimental run</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="136"/>
+        <location filename="../../translatables-tmp.py" line="140"/>
         <source># Stopped
 
 The experiment did not finish normally for the following reason:
@@ -721,7 +721,7 @@ The experiment did not finish normally for the following reason:
 - </translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="131"/>
+        <location filename="../../translatables-tmp.py" line="135"/>
         <source>The following extra data files where created:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -729,17 +729,17 @@ The experiment did not finish normally for the following reason:
 <context>
     <name>extension_analytics</name>
     <message>
-        <location filename="../../translatables-tmp.py" line="504"/>
+        <location filename="../../translatables-tmp.py" line="514"/>
         <source>Sends a ping to Google Analytics when OpenSesame is started</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="505"/>
+        <location filename="../../translatables-tmp.py" line="515"/>
         <source>Anonymous usage data is collected. You can disable this by disabling the &lt;i&gt;analytics&lt;/i&gt; extension.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="506"/>
+        <location filename="../../translatables-tmp.py" line="516"/>
         <source>Got it!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -760,27 +760,27 @@ The experiment did not finish normally for the following reason:
 <context>
     <name>extension_bug_report</name>
     <message>
-        <location filename="../../translatables-tmp.py" line="124"/>
+        <location filename="../../translatables-tmp.py" line="128"/>
         <source>Bug report not sent</source>
         <translation type="unfinished">バグの報告が送信されていません</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="123"/>
+        <location filename="../../translatables-tmp.py" line="127"/>
         <source>Bug report sent</source>
         <translation type="unfinished">バグの報告が送信されました</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="125"/>
+        <location filename="../../translatables-tmp.py" line="129"/>
         <source>Oops ...</source>
         <translation type="unfinished">Oops ...</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="126"/>
+        <location filename="../../translatables-tmp.py" line="130"/>
         <source>Bug report</source>
         <translation type="unfinished">バグ報告</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="127"/>
+        <location filename="../../translatables-tmp.py" line="131"/>
         <source>Sends a bug report when an exception occurs</source>
         <translation type="unfinished">例外が生じた場合にバグの報告を送信する</translation>
     </message>
@@ -788,17 +788,17 @@ The experiment did not finish normally for the following reason:
 <context>
     <name>extension_example</name>
     <message>
-        <location filename="../../translatables-tmp.py" line="499"/>
+        <location filename="../../translatables-tmp.py" line="509"/>
         <source>Example extension</source>
         <translation type="unfinished">拡張機能の例</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="500"/>
+        <location filename="../../translatables-tmp.py" line="510"/>
         <source>An example extenstion</source>
         <translation type="unfinished">拡張機能の例</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="501"/>
+        <location filename="../../translatables-tmp.py" line="511"/>
         <source>Some tooltip</source>
         <translation type="unfinished">ツールチップ</translation>
     </message>
@@ -806,12 +806,12 @@ The experiment did not finish normally for the following reason:
 <context>
     <name>extension_example_experiments</name>
     <message>
-        <location filename="../../translatables-tmp.py" line="406"/>
+        <location filename="../../translatables-tmp.py" line="415"/>
         <source>Example experiments</source>
         <translation type="unfinished">実験例</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="408"/>
+        <location filename="../../translatables-tmp.py" line="417"/>
         <source>Shows a list of example experiments</source>
         <translation type="unfinished">実験例のリストを表示</translation>
     </message>
@@ -819,27 +819,27 @@ The experiment did not finish normally for the following reason:
 <context>
     <name>extension_get_started</name>
     <message encoding="UTF-8">
-        <location filename="../../translatables-tmp.py" line="432"/>
+        <location filename="../../translatables-tmp.py" line="441"/>
         <source>New…</source>
         <translation type="unfinished">新規...</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="433"/>
+        <location filename="../../translatables-tmp.py" line="442"/>
         <source>A starting point</source>
         <translation type="unfinished">開始点</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="434"/>
+        <location filename="../../translatables-tmp.py" line="443"/>
         <source>Start a new experiment</source>
         <translation type="unfinished">新規実験の開始</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="435"/>
+        <location filename="../../translatables-tmp.py" line="444"/>
         <source>Continue with a recent experiment:</source>
         <translation type="unfinished">最近の実験を続行:</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="436"/>
+        <location filename="../../translatables-tmp.py" line="445"/>
         <source>Get started!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -875,12 +875,12 @@ The experiment did not finish normally for the following reason:
 <context>
     <name>extension_notifications</name>
     <message>
-        <location filename="../../translatables-tmp.py" line="139"/>
+        <location filename="../../translatables-tmp.py" line="143"/>
         <source>Notifications</source>
         <translation type="unfinished">お知らせ</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="140"/>
+        <location filename="../../translatables-tmp.py" line="144"/>
         <source>Pretty notifications for OpenSesame</source>
         <translation type="unfinished">重要なお知らせ</translation>
     </message>
@@ -901,17 +901,17 @@ The experiment did not finish normally for the following reason:
 <context>
     <name>extension_plugin_manager</name>
     <message>
-        <location filename="../../translatables-tmp.py" line="490"/>
+        <location filename="../../translatables-tmp.py" line="500"/>
         <source>Plug-in and extension manager</source>
         <translation type="unfinished">プラグインと拡張機能マネージャー</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="491"/>
+        <location filename="../../translatables-tmp.py" line="501"/>
         <source>Enable or disable plug-ins and extensions.</source>
         <translation type="unfinished">プラグインと拡張機能を使用可能または使用不可にする.</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="492"/>
+        <location filename="../../translatables-tmp.py" line="502"/>
         <source>Manage plug-ins and extensions</source>
         <translation type="unfinished">プラグインと拡張機能の管理</translation>
     </message>
@@ -979,17 +979,17 @@ The experiment did not finish normally for the following reason:
 <context>
     <name>extension_psychopy_monitor_center</name>
     <message>
-        <location filename="../../translatables-tmp.py" line="294"/>
+        <location filename="../../translatables-tmp.py" line="303"/>
         <source>PsychoPy monitor center</source>
         <translation type="unfinished">PsychoPy モニタセンター</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="295"/>
+        <location filename="../../translatables-tmp.py" line="304"/>
         <source>Launches the PsychoPy monitor center</source>
         <translation type="unfinished">PsychoPy モニターセンター開始</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="296"/>
+        <location filename="../../translatables-tmp.py" line="305"/>
         <source>Launch the PsychoPy monitor center</source>
         <translation type="unfinished">PsychoPy モニタセンターの開始</translation>
     </message>
@@ -1021,16 +1021,42 @@ The experiment did not finish normally for the following reason:
     </message>
 </context>
 <context>
+    <name>extension_system_check</name>
+    <message>
+        <location filename="../../translatables-tmp.py" line="123"/>
+        <source>Checks the system and provides warnings if necessary</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>extension_system_information</name>
     <message>
-        <location filename="../../translatables-tmp.py" line="156"/>
+        <location filename="../../translatables-tmp.py" line="165"/>
         <source>System information</source>
         <translation type="unfinished">システム情報</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="155"/>
+        <location filename="../../translatables-tmp.py" line="164"/>
         <source>Provides system information and module versions</source>
         <translation type="unfinished">システム情報とモジュールバージョンの表示</translation>
+    </message>
+</context>
+<context>
+    <name>extension_tab_to_dockwidget</name>
+    <message>
+        <location filename="../../translatables-tmp.py" line="147"/>
+        <source>Tab to dockwidget</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../translatables-tmp.py" line="148"/>
+        <source>Turns a tab into a dockwidget</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../translatables-tmp.py" line="149"/>
+        <source>Turn tab into dockwidget</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1059,27 +1085,27 @@ The experiment did not finish normally for the following reason:
 <context>
     <name>extension_undo_manager</name>
     <message>
-        <location filename="../../translatables-tmp.py" line="201"/>
+        <location filename="../../translatables-tmp.py" line="210"/>
         <source>Undo</source>
         <translation type="unfinished">戻る</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="202"/>
+        <location filename="../../translatables-tmp.py" line="211"/>
         <source>Undo most recent action</source>
         <translation type="unfinished">最も新しい操作に戻る</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="198"/>
+        <location filename="../../translatables-tmp.py" line="207"/>
         <source>Redo</source>
         <translation type="unfinished">やり直す</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="199"/>
+        <location filename="../../translatables-tmp.py" line="208"/>
         <source>Implements undo/ redo</source>
         <translation type="unfinished">戻る/やり直す の実行</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="200"/>
+        <location filename="../../translatables-tmp.py" line="209"/>
         <source>Redo most recently undone action</source>
         <translation type="unfinished">最も新しい未完了操作をやり直す</translation>
     </message>
@@ -1087,17 +1113,17 @@ The experiment did not finish normally for the following reason:
 <context>
     <name>extension_update_checker</name>
     <message>
-        <location filename="../../translatables-tmp.py" line="319"/>
+        <location filename="../../translatables-tmp.py" line="328"/>
         <source>Check for updates</source>
         <translation type="unfinished">アップデートの確認</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="320"/>
+        <location filename="../../translatables-tmp.py" line="329"/>
         <source>Checks whether a new version of OpenSesame is available.</source>
         <translation type="unfinished">新しいバージョンが有効か確認.</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="318"/>
+        <location filename="../../translatables-tmp.py" line="327"/>
         <source>Up to date!</source>
         <translation type="unfinished">最新です!</translation>
     </message>
@@ -1128,12 +1154,12 @@ The experiment did not finish normally for the following reason:
 <context>
     <name>item_experiment</name>
     <message>
-        <location filename="../../translatables-tmp.py" line="495"/>
+        <location filename="../../translatables-tmp.py" line="505"/>
         <source>New experiment</source>
         <translation type="unfinished">新規実験</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="496"/>
+        <location filename="../../translatables-tmp.py" line="506"/>
         <source>Default description</source>
         <translation type="unfinished">デフォルトの説明</translation>
     </message>
@@ -1141,7 +1167,7 @@ The experiment did not finish normally for the following reason:
 <context>
     <name>item_feeback</name>
     <message>
-        <location filename="../../translatables-tmp.py" line="394"/>
+        <location filename="../../translatables-tmp.py" line="403"/>
         <source>Provides feedback to the participant</source>
         <translation type="unfinished">実験参加者にフィードッバックの表示</translation>
     </message>
@@ -1162,57 +1188,57 @@ The experiment did not finish normally for the following reason:
 <context>
     <name>item_keyboard_response</name>
     <message>
-        <location filename="../../translatables-tmp.py" line="242"/>
+        <location filename="../../translatables-tmp.py" line="251"/>
         <source>Collects keyboard responses</source>
         <translation type="unfinished">キーボードの反応を取得</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="243"/>
+        <location filename="../../translatables-tmp.py" line="252"/>
         <source>Correct response</source>
         <translation type="unfinished">正反応</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="245"/>
+        <location filename="../../translatables-tmp.py" line="254"/>
         <source>Allowed responses</source>
         <translation type="unfinished">可能な反応</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="247"/>
+        <location filename="../../translatables-tmp.py" line="256"/>
         <source>Timeout</source>
         <translation type="unfinished">タイムアウト</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="249"/>
+        <location filename="../../translatables-tmp.py" line="258"/>
         <source>Flush pending keypresses</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="250"/>
+        <location filename="../../translatables-tmp.py" line="259"/>
         <source>List available keys</source>
         <translation type="unfinished">利用可能キーのリスト</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="244"/>
+        <location filename="../../translatables-tmp.py" line="253"/>
         <source>Leave empty to use &quot;correct_response&quot;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="246"/>
+        <location filename="../../translatables-tmp.py" line="255"/>
         <source>Separated by semicolons, e.g. &quot;z;/&quot;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="248"/>
+        <location filename="../../translatables-tmp.py" line="257"/>
         <source>In milliseconds or &quot;infinite&quot;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="253"/>
+        <location filename="../../translatables-tmp.py" line="262"/>
         <source>Key names</source>
         <translation type="unfinished">キーの名称</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="252"/>
+        <location filename="../../translatables-tmp.py" line="261"/>
         <source>The following key names are valid:</source>
         <translation type="unfinished">次のキー名称は有効です:</translation>
     </message>
@@ -1220,27 +1246,27 @@ The experiment did not finish normally for the following reason:
 <context>
     <name>item_logger</name>
     <message>
-        <location filename="../../translatables-tmp.py" line="420"/>
+        <location filename="../../translatables-tmp.py" line="429"/>
         <source>You have multiple unlinked loggers. This can lead to messy log files.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="421"/>
+        <location filename="../../translatables-tmp.py" line="430"/>
         <source>Add custom variable</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="422"/>
+        <location filename="../../translatables-tmp.py" line="431"/>
         <source>Which variable do you wish to log?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="423"/>
+        <location filename="../../translatables-tmp.py" line="432"/>
         <source>custom</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="419"/>
+        <location filename="../../translatables-tmp.py" line="428"/>
         <source>Logs experimental data</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1248,77 +1274,77 @@ The experiment did not finish normally for the following reason:
 <context>
     <name>item_loop</name>
     <message>
-        <location filename="../../translatables-tmp.py" line="166"/>
+        <location filename="../../translatables-tmp.py" line="175"/>
         <source>Repeatedly runs another item</source>
         <translation type="unfinished">他のアイテムを繰り返し実行</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="167"/>
+        <location filename="../../translatables-tmp.py" line="176"/>
         <source># Preview of loop table</source>
         <translation type="unfinished"># ループテーブルのプレビュー</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="168"/>
+        <location filename="../../translatables-tmp.py" line="177"/>
         <source>Failed to generate preview.</source>
         <translation type="unfinished">プレビューに失敗しました.</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="169"/>
+        <location filename="../../translatables-tmp.py" line="178"/>
         <source>one row occurs</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="170"/>
+        <location filename="../../translatables-tmp.py" line="179"/>
         <source>two rows occur</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="171"/>
+        <location filename="../../translatables-tmp.py" line="180"/>
         <source>never</source>
         <translation type="unfinished">なし</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="172"/>
+        <location filename="../../translatables-tmp.py" line="181"/>
         <source>once</source>
         <translation type="unfinished">1回</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="173"/>
+        <location filename="../../translatables-tmp.py" line="182"/>
         <source>twice</source>
         <translation type="unfinished">2回</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="174"/>
+        <location filename="../../translatables-tmp.py" line="183"/>
         <source>Warning: No item to run has been specified</source>
         <translation type="unfinished">警告: アイテムが指定されていません</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="175"/>
+        <location filename="../../translatables-tmp.py" line="184"/>
         <source>Note: Order or repeat is unknown or variably defined</source>
         <translation type="unfinished">注意: 順序もしくは繰り返しが不明か一定でありません</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="176"/>
+        <location filename="../../translatables-tmp.py" line="185"/>
         <source>Note: Loop data will be read from file</source>
         <translation type="unfinished">注意: ループのデータがファイルから読み込まれます</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="177"/>
+        <location filename="../../translatables-tmp.py" line="186"/>
         <source>Summary: &lt;b&gt;%s&lt;/b&gt; will be called &lt;b&gt;%s&lt;/b&gt; in &lt;b&gt;%s&lt;/b&gt; order.</source>
         <translation type="unfinished">概要: &lt;b&gt;%s&lt;/b&gt; が &lt;b&gt;%s&lt;/b&gt; 繰り返しで &lt;b&gt;%s&lt;/b&gt; の順序で呼び出されます.</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="178"/>
+        <location filename="../../translatables-tmp.py" line="187"/>
         <source>The number of rows is %s.</source>
         <translation type="unfinished">列数は %s です.</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="180"/>
+        <location filename="../../translatables-tmp.py" line="189"/>
         <source>All rows occur %s.</source>
         <translation type="unfinished">全ての列は %s です.</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="181"/>
+        <location filename="../../translatables-tmp.py" line="190"/>
         <source>This means that %s %s and %s %s.</source>
         <translation type="unfinished">これは %s %s と %s %s を示します.</translation>
     </message>
@@ -1331,47 +1357,47 @@ The experiment did not finish normally for the following reason:
 <context>
     <name>item_mouse_response</name>
     <message>
-        <location filename="../../translatables-tmp.py" line="365"/>
+        <location filename="../../translatables-tmp.py" line="374"/>
         <source>Collects mouse responses</source>
         <translation type="unfinished">マウス反を取得</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="366"/>
+        <location filename="../../translatables-tmp.py" line="375"/>
         <source>Correct response</source>
         <translation type="unfinished">正反応</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="368"/>
+        <location filename="../../translatables-tmp.py" line="377"/>
         <source>Allowed responses</source>
         <translation type="unfinished">可能な反応</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="370"/>
+        <location filename="../../translatables-tmp.py" line="379"/>
         <source>Timeout</source>
         <translation type="unfinished">タイムアウト</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="372"/>
+        <location filename="../../translatables-tmp.py" line="381"/>
         <source>Visible mouse cursor</source>
         <translation type="unfinished">マウスカーソルの可視化</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="373"/>
+        <location filename="../../translatables-tmp.py" line="382"/>
         <source>Flush pending mouse clicks</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="367"/>
+        <location filename="../../translatables-tmp.py" line="376"/>
         <source>Leave empty to use &quot;correct_response&quot;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="369"/>
+        <location filename="../../translatables-tmp.py" line="378"/>
         <source>Separated by semicolons, e.g. &quot;left_button;right_button&quot;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="371"/>
+        <location filename="../../translatables-tmp.py" line="380"/>
         <source>In milliseconds or &quot;infinite&quot;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1379,67 +1405,67 @@ The experiment did not finish normally for the following reason:
 <context>
     <name>item_sampler</name>
     <message>
-        <location filename="../../translatables-tmp.py" line="517"/>
+        <location filename="../../translatables-tmp.py" line="527"/>
         <source>Plays a sound file in .wav or .ogg format</source>
         <translation type="unfinished">音声ファイル (.wav, .ogg形式) の再生</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="518"/>
+        <location filename="../../translatables-tmp.py" line="528"/>
         <source>Sound file</source>
         <translation type="unfinished">音声ファイル</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="520"/>
+        <location filename="../../translatables-tmp.py" line="530"/>
         <source>Volume</source>
         <translation type="unfinished">ボリューム</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="525"/>
+        <location filename="../../translatables-tmp.py" line="535"/>
         <source> x original</source>
         <translation type="unfinished"> x オリジナル</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="522"/>
+        <location filename="../../translatables-tmp.py" line="532"/>
         <source>Panning</source>
         <translation type="unfinished">パニング</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="524"/>
+        <location filename="../../translatables-tmp.py" line="534"/>
         <source>Pitch</source>
         <translation type="unfinished">ピッチ</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="526"/>
+        <location filename="../../translatables-tmp.py" line="536"/>
         <source>Stop after</source>
         <translation type="unfinished">停止</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="529"/>
+        <location filename="../../translatables-tmp.py" line="539"/>
         <source> ms</source>
         <translation type="unfinished"> ms</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="528"/>
+        <location filename="../../translatables-tmp.py" line="538"/>
         <source>Fade in</source>
         <translation type="unfinished">フェードイン</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="530"/>
+        <location filename="../../translatables-tmp.py" line="540"/>
         <source>Duration</source>
         <translation type="unfinished">呈示時間</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="519"/>
+        <location filename="../../translatables-tmp.py" line="529"/>
         <source>In .ogg or .wav format</source>
         <translation type="unfinished">.ogg または .wav 形式</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="523"/>
+        <location filename="../../translatables-tmp.py" line="533"/>
         <source>Positive values toward the right; &quot;left&quot; or &quot;right&quot; for full panning</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="531"/>
+        <location filename="../../translatables-tmp.py" line="541"/>
         <source>In milliseconds, &quot;sound&quot;, &quot;keypress&quot;, or &quot;mouseclick&quot;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1447,22 +1473,22 @@ The experiment did not finish normally for the following reason:
 <context>
     <name>item_sequence</name>
     <message>
-        <location filename="../../translatables-tmp.py" line="263"/>
+        <location filename="../../translatables-tmp.py" line="272"/>
         <source>Sequence contains non-existing item: %s</source>
         <translation type="unfinished">シークエンスは存在するアイテムを含んでいません: %s</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="259"/>
+        <location filename="../../translatables-tmp.py" line="268"/>
         <source>Runs a number of items in sequence</source>
         <translation type="unfinished">アイテムをシークエンスで実行</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="261"/>
+        <location filename="../../translatables-tmp.py" line="270"/>
         <source>Flush pending key presses at sequence start</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="262"/>
+        <location filename="../../translatables-tmp.py" line="271"/>
         <source>&lt;b&gt;Important&lt;/b&gt;: A sequence has &lt;a href=&quot;http://osdoc.cogsci.nl/usage/prepare-run&quot;&gt;a variable preparation time&lt;/a&gt;.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1470,210 +1496,215 @@ The experiment did not finish normally for the following reason:
 <context>
     <name>item_sketchpad</name>
     <message>
-        <location filename="../../translatables-tmp.py" line="538"/>
+        <location filename="../../translatables-tmp.py" line="548"/>
         <source>Image name &quot;%s&quot; is unknown or variably defined, using fallback image</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="539"/>
+        <location filename="../../translatables-tmp.py" line="549"/>
         <source>Penwidth &quot;%s&quot; is unknown or variably defined, using 1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="540"/>
+        <location filename="../../translatables-tmp.py" line="550"/>
         <source>Scale &quot;%s&quot; is unknown or variably defined, using 1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="541"/>
+        <location filename="../../translatables-tmp.py" line="552"/>
         <source>Color &quot;%s&quot; is unknown or variably defined, using placeholder color</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="543"/>
+        <location filename="../../translatables-tmp.py" line="554"/>
         <source>X coordinate &quot;%s&quot; is unknown or variably defined, using display center</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="544"/>
+        <location filename="../../translatables-tmp.py" line="555"/>
         <source>Y coordinate &quot;%s&quot; is unknown or variably defined, using display center</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="545"/>
+        <location filename="../../translatables-tmp.py" line="556"/>
         <source>Radius &quot;%s&quot; is unknown or variably defined, using 50</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="546"/>
+        <location filename="../../translatables-tmp.py" line="557"/>
         <source>Proportion &quot;%s&quot; is unknown or variably defined, using .5</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="547"/>
+        <location filename="../../translatables-tmp.py" line="558"/>
         <source>Width &quot;%s&quot; is unknown or variably defined, using 100</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="548"/>
+        <location filename="../../translatables-tmp.py" line="559"/>
         <source>Height &quot;%s&quot; is unknown or variably defined, using 100</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="549"/>
-        <source>Scale &quot;%s&quot; is unknown or variably defined, using 1.0</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../translatables-tmp.py" line="550"/>
+        <location filename="../../translatables-tmp.py" line="560"/>
         <source>Font size &quot;%s&quot; is invalid or variably defined, using 18</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="551"/>
+        <location filename="../../translatables-tmp.py" line="561"/>
         <source>Some properties of a Gabor patch are unknown or variably defined, using fallback image</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="552"/>
+        <location filename="../../translatables-tmp.py" line="562"/>
         <source>Some properties of a noise patch are unknown or variably defined, using fallback image</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="553"/>
+        <location filename="../../translatables-tmp.py" line="563"/>
         <source>Fixdot style &quot;%s&quot; is unknown or variably defined</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="555"/>
+        <location filename="../../translatables-tmp.py" line="565"/>
         <source>Edit text</source>
         <translation type="unfinished">テキストの編集</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="556"/>
+        <location filename="../../translatables-tmp.py" line="566"/>
         <source>Please enter a text for the textline</source>
         <translation type="unfinished">テキストを入力してください</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="557"/>
+        <location filename="../../translatables-tmp.py" line="567"/>
         <source>New textline</source>
         <translation type="unfinished">新しい文字列</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="559"/>
+        <location filename="../../translatables-tmp.py" line="569"/>
         <source>Element script</source>
         <translation type="unfinished">エレメントスクリプト</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="560"/>
+        <location filename="../../translatables-tmp.py" line="570"/>
         <source>Edit script</source>
         <translation type="unfinished">スクリプトの編集</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="561"/>
+        <location filename="../../translatables-tmp.py" line="571"/>
         <source>Raise to front</source>
         <translation type="unfinished">前に移動</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="562"/>
+        <location filename="../../translatables-tmp.py" line="572"/>
         <source>Lower to bottom</source>
         <translation type="unfinished">後ろに移動</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="563"/>
+        <location filename="../../translatables-tmp.py" line="574"/>
         <source>Delete</source>
         <translation type="unfinished">消去</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="554"/>
+        <location filename="../../translatables-tmp.py" line="564"/>
         <source>Displays stimuli</source>
         <translation type="unfinished">視覚刺激の呈示</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="564"/>
+        <location filename="../../translatables-tmp.py" line="575"/>
         <source>Draw %s element</source>
         <translation type="unfinished">%s エレメントの描画</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="558"/>
+        <location filename="../../translatables-tmp.py" line="568"/>
         <source>Enter text</source>
         <translation type="unfinished">テキストの入力</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="542"/>
+        <location filename="../../translatables-tmp.py" line="553"/>
         <source>Fill &quot;%s&quot; is unknown or variably defined, assuming filled</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../translatables-tmp.py" line="551"/>
+        <source>Rotation &quot;%s&quot; is unknown or variably defined, using 0</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../translatables-tmp.py" line="573"/>
+        <source>Specify polar coordinates</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>item_synth</name>
     <message>
-        <location filename="../../translatables-tmp.py" line="326"/>
+        <location filename="../../translatables-tmp.py" line="335"/>
         <source>A basic sound synthesizer</source>
         <translation type="unfinished">サウンドシンセサイザー</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="327"/>
+        <location filename="../../translatables-tmp.py" line="336"/>
         <source>Waveform</source>
         <translation type="unfinished">波形</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="330"/>
+        <location filename="../../translatables-tmp.py" line="339"/>
         <source>Attack</source>
         <translation type="unfinished">アタック</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="339"/>
+        <location filename="../../translatables-tmp.py" line="348"/>
         <source> ms</source>
         <translation type="unfinished"> ms</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="332"/>
+        <location filename="../../translatables-tmp.py" line="341"/>
         <source>Decay</source>
         <translation type="unfinished">ディケイ</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="334"/>
+        <location filename="../../translatables-tmp.py" line="343"/>
         <source>Volume</source>
         <translation type="unfinished">音量</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="335"/>
+        <location filename="../../translatables-tmp.py" line="344"/>
         <source> x maximum</source>
         <translation type="unfinished"> x 最大値</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="336"/>
+        <location filename="../../translatables-tmp.py" line="345"/>
         <source>Panning</source>
         <translation type="unfinished">パニング</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="338"/>
+        <location filename="../../translatables-tmp.py" line="347"/>
         <source>Length</source>
         <translation type="unfinished">呈示時間</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="340"/>
+        <location filename="../../translatables-tmp.py" line="349"/>
         <source>Duration</source>
         <translation type="unfinished">持続時間</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="328"/>
+        <location filename="../../translatables-tmp.py" line="337"/>
         <source>Frequency</source>
         <translation type="unfinished">周波数</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="329"/>
+        <location filename="../../translatables-tmp.py" line="338"/>
         <source>In Hertz or as note, e.g. &quot;A1&quot;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="337"/>
+        <location filename="../../translatables-tmp.py" line="346"/>
         <source>Positive values toward the right; &quot;left&quot; or &quot;right&quot; for full panning</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="341"/>
+        <location filename="../../translatables-tmp.py" line="350"/>
         <source>In milliseconds, &quot;sound&quot;, &quot;keypress&quot;, or &quot;mouseclick&quot;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1704,22 +1735,22 @@ The experiment did not finish normally for the following reason:
 <context>
     <name>plugin_external_script</name>
     <message>
-        <location filename="../../translatables-tmp.py" line="352"/>
+        <location filename="../../translatables-tmp.py" line="361"/>
         <source>Runs Python code from a file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="353"/>
+        <location filename="../../translatables-tmp.py" line="362"/>
         <source>Script file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="354"/>
+        <location filename="../../translatables-tmp.py" line="363"/>
         <source>Prepare function in script</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="355"/>
+        <location filename="../../translatables-tmp.py" line="364"/>
         <source>Run function in script</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1770,22 +1801,22 @@ The experiment did not finish normally for the following reason:
 <context>
     <name>plugin_form_base</name>
     <message>
-        <location filename="../../translatables-tmp.py" line="388"/>
+        <location filename="../../translatables-tmp.py" line="397"/>
         <source>cols, rows, and margins should be numeric values separated by a semi-colon</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="389"/>
+        <location filename="../../translatables-tmp.py" line="398"/>
         <source>In a form widget col, row, colspan, and rowspan should be integer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="390"/>
+        <location filename="../../translatables-tmp.py" line="399"/>
         <source>You can only specify one focus widget</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="391"/>
+        <location filename="../../translatables-tmp.py" line="400"/>
         <source>Edit the script to modify the form</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1793,32 +1824,32 @@ The experiment did not finish normally for the following reason:
 <context>
     <name>plugin_form_consent</name>
     <message>
-        <location filename="../../translatables-tmp.py" line="411"/>
+        <location filename="../../translatables-tmp.py" line="420"/>
         <source>Form title</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="412"/>
+        <location filename="../../translatables-tmp.py" line="421"/>
         <source>Checkbox text</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="413"/>
+        <location filename="../../translatables-tmp.py" line="422"/>
         <source>Accept-button text</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="414"/>
+        <location filename="../../translatables-tmp.py" line="423"/>
         <source>Decline-button text</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="415"/>
+        <location filename="../../translatables-tmp.py" line="424"/>
         <source>Message on decline</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="416"/>
+        <location filename="../../translatables-tmp.py" line="425"/>
         <source>Consent form text</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1826,42 +1857,42 @@ The experiment did not finish normally for the following reason:
 <context>
     <name>plugin_form_multiple_choice</name>
     <message>
-        <location filename="../../translatables-tmp.py" line="472"/>
+        <location filename="../../translatables-tmp.py" line="482"/>
         <source>Form title</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="473"/>
+        <location filename="../../translatables-tmp.py" line="483"/>
         <source>Response variable</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="474"/>
+        <location filename="../../translatables-tmp.py" line="484"/>
         <source>Allow multiple options to be selected</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="475"/>
+        <location filename="../../translatables-tmp.py" line="485"/>
         <source>Advance immediately to the next item once a selection has been made</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="476"/>
+        <location filename="../../translatables-tmp.py" line="486"/>
         <source>Button text</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="477"/>
+        <location filename="../../translatables-tmp.py" line="487"/>
         <source>Timeout</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="478"/>
+        <location filename="../../translatables-tmp.py" line="488"/>
         <source>Your question</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="479"/>
+        <location filename="../../translatables-tmp.py" line="489"/>
         <source>Response options (different options on different lines)</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1869,17 +1900,17 @@ The experiment did not finish normally for the following reason:
 <context>
     <name>plugin_form_text_display</name>
     <message>
-        <location filename="../../translatables-tmp.py" line="205"/>
+        <location filename="../../translatables-tmp.py" line="214"/>
         <source>Form title</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="206"/>
+        <location filename="../../translatables-tmp.py" line="215"/>
         <source>Ok-button text</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="207"/>
+        <location filename="../../translatables-tmp.py" line="216"/>
         <source>Main form text</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1887,22 +1918,22 @@ The experiment did not finish normally for the following reason:
 <context>
     <name>plugin_form_text_input</name>
     <message>
-        <location filename="../../translatables-tmp.py" line="288"/>
+        <location filename="../../translatables-tmp.py" line="297"/>
         <source>Form title</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="289"/>
+        <location filename="../../translatables-tmp.py" line="298"/>
         <source>Response variable</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="290"/>
+        <location filename="../../translatables-tmp.py" line="299"/>
         <source>Timeout</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="291"/>
+        <location filename="../../translatables-tmp.py" line="300"/>
         <source>Your question</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1910,27 +1941,27 @@ The experiment did not finish normally for the following reason:
 <context>
     <name>plugin_joystick</name>
     <message>
-        <location filename="../../translatables-tmp.py" line="159"/>
+        <location filename="../../translatables-tmp.py" line="168"/>
         <source>Dummy mode (use keyboard instead of joystick)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="160"/>
+        <location filename="../../translatables-tmp.py" line="169"/>
         <source>Device nr.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="161"/>
+        <location filename="../../translatables-tmp.py" line="170"/>
         <source>Correct response</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="162"/>
+        <location filename="../../translatables-tmp.py" line="171"/>
         <source>Allowed responses</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="163"/>
+        <location filename="../../translatables-tmp.py" line="172"/>
         <source>Timeout</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1946,52 +1977,52 @@ The experiment did not finish normally for the following reason:
 <context>
     <name>plugin_quest_staircase_init</name>
     <message>
-        <location filename="../../translatables-tmp.py" line="276"/>
+        <location filename="../../translatables-tmp.py" line="285"/>
         <source>Estimated threshold (used for starting test value)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="277"/>
+        <location filename="../../translatables-tmp.py" line="286"/>
         <source>Std. dev. of estimated threshold</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="278"/>
+        <location filename="../../translatables-tmp.py" line="287"/>
         <source>Desired proportion of correct responses</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="279"/>
+        <location filename="../../translatables-tmp.py" line="288"/>
         <source>Steepness of the Weibull psychometric function (&#xce;&#xb2;)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="280"/>
+        <location filename="../../translatables-tmp.py" line="289"/>
         <source>Proportion of random responses at maximum stimulus intensity (&#xce;&#xb4;)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="281"/>
+        <location filename="../../translatables-tmp.py" line="290"/>
         <source>Chance level (&#xce;&#xb3;)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="282"/>
+        <location filename="../../translatables-tmp.py" line="291"/>
         <source>Method to determine optimal test value</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="283"/>
+        <location filename="../../translatables-tmp.py" line="292"/>
         <source>Minimum test value</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="284"/>
+        <location filename="../../translatables-tmp.py" line="293"/>
         <source>Maximum test value</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="285"/>
+        <location filename="../../translatables-tmp.py" line="294"/>
         <source>Experimental variable for test value</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1999,7 +2030,7 @@ The experiment did not finish normally for the following reason:
 <context>
     <name>plugin_quest_staircase_next</name>
     <message>
-        <location filename="../../translatables-tmp.py" line="362"/>
+        <location filename="../../translatables-tmp.py" line="371"/>
         <source>Response variable (0 or 1)</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2007,12 +2038,12 @@ The experiment did not finish normally for the following reason:
 <context>
     <name>plugin_repeat_cycle</name>
     <message>
-        <location filename="../../translatables-tmp.py" line="358"/>
+        <location filename="../../translatables-tmp.py" line="367"/>
         <source>Marks the current loop cycle so that it is repeated</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="359"/>
+        <location filename="../../translatables-tmp.py" line="368"/>
         <source>Repeat if</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2028,42 +2059,42 @@ The experiment did not finish normally for the following reason:
 <context>
     <name>plugin_srbox</name>
     <message>
-        <location filename="../../translatables-tmp.py" line="299"/>
+        <location filename="../../translatables-tmp.py" line="308"/>
         <source>Dummy mode (use keyboard instead)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="300"/>
+        <location filename="../../translatables-tmp.py" line="309"/>
         <source>Ignore buttons that are already pressed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="301"/>
+        <location filename="../../translatables-tmp.py" line="310"/>
         <source>Device name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="302"/>
+        <location filename="../../translatables-tmp.py" line="311"/>
         <source>Correct response</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="303"/>
+        <location filename="../../translatables-tmp.py" line="312"/>
         <source>Allowed responses</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="304"/>
+        <location filename="../../translatables-tmp.py" line="313"/>
         <source>Timeout</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="305"/>
+        <location filename="../../translatables-tmp.py" line="314"/>
         <source>Turn on lights</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="306"/>
+        <location filename="../../translatables-tmp.py" line="315"/>
         <source>&lt;small&gt;&lt;b&gt;Note:&lt;/b&gt; If there are multiple srbox items in the experiment, the first srbox item determines the device name and whether dummy mode is enabled&lt;/small&gt;
 </source>
         <translation type="unfinished"></translation>
@@ -2072,7 +2103,7 @@ The experiment did not finish normally for the following reason:
 <context>
     <name>plugin_text_display</name>
     <message>
-        <location filename="../../translatables-tmp.py" line="239"/>
+        <location filename="../../translatables-tmp.py" line="248"/>
         <source>&lt;b&gt;Warning:&lt;/b&gt; The text_display plug-in has been removed. Please use a different way to present text, as described on &lt;a href=&quot;http://osdoc.cogsci.nl/usage/text&quot;&gt;http://osdoc.cogsci.nl/usage/text&lt;/a&gt;.
 </source>
         <translation type="unfinished"></translation>
@@ -2081,7 +2112,7 @@ The experiment did not finish normally for the following reason:
 <context>
     <name>plugin_text_input</name>
     <message>
-        <location filename="../../translatables-tmp.py" line="210"/>
+        <location filename="../../translatables-tmp.py" line="219"/>
         <source>&lt;b&gt;Warning:&lt;/b&gt; The text_input plug-in has been removed. To collect text input, please use a form, as described on &lt;a href=&quot;http://osdoc.cogsci.nl/forms&quot;&gt;http://osdoc.cogsci.nl/forms/&lt;/a&gt;.
 </source>
         <translation type="unfinished"></translation>
@@ -2118,22 +2149,22 @@ The experiment did not finish normally for the following reason:
 <context>
     <name>plugin_video_player</name>
     <message>
-        <location filename="../../translatables-tmp.py" line="269"/>
+        <location filename="../../translatables-tmp.py" line="278"/>
         <source>Video file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="270"/>
+        <location filename="../../translatables-tmp.py" line="279"/>
         <source>Resize to fit screen</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="272"/>
+        <location filename="../../translatables-tmp.py" line="281"/>
         <source>Duration</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="273"/>
+        <location filename="../../translatables-tmp.py" line="282"/>
         <source>ms</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2141,43 +2172,48 @@ The experiment did not finish normally for the following reason:
 <context>
     <name>plugins_coroutines</name>
     <message>
-        <location filename="../../translatables-tmp.py" line="462"/>
+        <location filename="../../translatables-tmp.py" line="471"/>
         <source>Run items simultaneously</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="463"/>
+        <location filename="../../translatables-tmp.py" line="472"/>
         <source>Item name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="464"/>
+        <location filename="../../translatables-tmp.py" line="473"/>
         <source>Start time</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="465"/>
+        <location filename="../../translatables-tmp.py" line="474"/>
         <source>End time (if applicable)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="466"/>
+        <location filename="../../translatables-tmp.py" line="475"/>
         <source>Duration</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="467"/>
+        <location filename="../../translatables-tmp.py" line="477"/>
         <source>Generator function name (optional)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="468"/>
+        <location filename="../../translatables-tmp.py" line="478"/>
         <source>Flush pending key presses at coroutines start</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="469"/>
+        <location filename="../../translatables-tmp.py" line="479"/>
         <source>&quot;%s&quot; does not support coroutines.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../translatables-tmp.py" line="476"/>
+        <source>End after item (optional)</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2430,17 +2466,17 @@ Various settings related to the control of the display, sound, and input devices
     <message>
         <location filename="../ui/widgets/general_properties.ui" line="331"/>
         <source>Enables support for bi-directional languages, such as Arabic and Hebrew</source>
-        <translation type="unfinished">アラビア語やヘブライ語などの、双方向言語サポートを有効にする</translation>
+        <translation type="obsolete">アラビア語やヘブライ語などの、双方向言語サポートを有効にする</translation>
     </message>
     <message>
         <location filename="../ui/widgets/general_properties.ui" line="334"/>
         <source>Bi-directional-text support</source>
-        <translation type="unfinished">双方向テキストサポート</translation>
+        <translation type="obsolete">双方向テキストサポート</translation>
     </message>
     <message>
         <location filename="../ui/widgets/general_properties.ui" line="341"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:small; font-style:italic;&quot;&gt;Warning: python-bidi is not available&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:small; font-style:italic;&quot;&gt;Warning: python-bidi is not available&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation type="obsolete">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:small; font-style:italic;&quot;&gt;Warning: python-bidi is not available&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../ui/widgets/general_properties.ui" line="321"/>
@@ -2483,12 +2519,12 @@ Various settings related to the control of the display, sound, and input devices
         <translation type="unfinished">その他</translation>
     </message>
     <message>
-        <location filename="../ui/widgets/general_properties.ui" line="360"/>
+        <location filename="../ui/widgets/general_properties.ui" line="350"/>
         <source>General script</source>
         <translation type="unfinished">スクリプト</translation>
     </message>
     <message>
-        <location filename="../ui/widgets/general_properties.ui" line="404"/>
+        <location filename="../ui/widgets/general_properties.ui" line="331"/>
         <source>Disable garbage collection</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3070,6 +3106,74 @@ Edit your experiment in script form</source>
     </message>
 </context>
 <context>
+    <name>ui_polar_coordinates</name>
+    <message>
+        <location filename="../ui/dialogs/polar_coordinates.ui" line="14"/>
+        <source>Polar coordinates</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/dialogs/polar_coordinates.ui" line="35"/>
+        <source>Polar coordinates:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/dialogs/polar_coordinates.ui" line="42"/>
+        <source>Pole (X)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/dialogs/polar_coordinates.ui" line="89"/>
+        <source> px</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/dialogs/polar_coordinates.ui" line="62"/>
+        <source>Pole (Y)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/dialogs/polar_coordinates.ui" line="82"/>
+        <source>Radius (rho)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/dialogs/polar_coordinates.ui" line="102"/>
+        <source>Angle (phi)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message encoding="UTF-8">
+        <location filename="../ui/dialogs/polar_coordinates.ui" line="109"/>
+        <source>°</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/dialogs/polar_coordinates.ui" line="122"/>
+        <source>Cartesian coordinates:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/dialogs/polar_coordinates.ui" line="129"/>
+        <source>X</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/dialogs/polar_coordinates.ui" line="150"/>
+        <source>TextLabel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/dialogs/polar_coordinates.ui" line="143"/>
+        <source>Y</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/dialogs/polar_coordinates.ui" line="172"/>
+        <source>This tool allows you to calculate cartesian (x, y) coordinates from polar coordinates.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ui_pool_widget</name>
     <message>
         <location filename="../ui/widgets/pool_widget.ui" line="17"/>
@@ -3215,159 +3319,179 @@ Edit your experiment in script form</source>
         <translation type="unfinished">フォーム</translation>
     </message>
     <message>
-        <location filename="../ui/widgets/sketchpad.ui" line="50"/>
+        <location filename="../ui/widgets/sketchpad.ui" line="86"/>
         <source>Duration</source>
         <translation type="unfinished">呈示時間</translation>
     </message>
     <message>
-        <location filename="../ui/widgets/sketchpad.ui" line="63"/>
+        <location filename="../ui/widgets/sketchpad.ui" line="99"/>
         <source>A numeric value (duration in milliseconds), &quot;keypress&quot;, or &quot;mouseclick&quot;</source>
         <translation type="unfinished">数値 (milliseconds), &quot;キープレス&quot;, &quot;マウスクリック&quot;</translation>
     </message>
     <message>
-        <location filename="../ui/widgets/sketchpad.ui" line="89"/>
+        <location filename="../ui/widgets/sketchpad.ui" line="134"/>
         <source>Reset feedback variables</source>
         <translation type="unfinished">フィードバック変数のリセット</translation>
     </message>
     <message>
-        <location filename="../ui/widgets/sketchpad.ui" line="121"/>
+        <location filename="../ui/widgets/sketchpad.ui" line="175"/>
         <source>Color</source>
         <translation type="unfinished">色</translation>
     </message>
     <message>
-        <location filename="../ui/widgets/sketchpad.ui" line="609"/>
+        <location filename="../ui/widgets/sketchpad.ui" line="835"/>
         <source> px</source>
         <translation type="unfinished"> px</translation>
     </message>
     <message>
-        <location filename="../ui/widgets/sketchpad.ui" line="150"/>
+        <location filename="../ui/widgets/sketchpad.ui" line="213"/>
         <source>Penwidth </source>
         <translation type="unfinished">ペン幅 </translation>
     </message>
     <message>
-        <location filename="../ui/widgets/sketchpad.ui" line="182"/>
+        <location filename="../ui/widgets/sketchpad.ui" line="254"/>
         <source>Proportional length of the base relative to the arrow head</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/widgets/sketchpad.ui" line="185"/>
+        <location filename="../ui/widgets/sketchpad.ui" line="257"/>
         <source>Body length </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/widgets/sketchpad.ui" line="235"/>
+        <location filename="../ui/widgets/sketchpad.ui" line="316"/>
         <source> prop</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/widgets/sketchpad.ui" line="229"/>
+        <location filename="../ui/widgets/sketchpad.ui" line="310"/>
         <source>Proportional width (thickness) of the base relative to the arrow head</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/widgets/sketchpad.ui" line="232"/>
+        <location filename="../ui/widgets/sketchpad.ui" line="313"/>
         <source>Body width </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/widgets/sketchpad.ui" line="276"/>
+        <location filename="../ui/widgets/sketchpad.ui" line="366"/>
         <source>Width (thickness) of the arrow head</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/widgets/sketchpad.ui" line="282"/>
+        <location filename="../ui/widgets/sketchpad.ui" line="372"/>
         <source>Head width </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/widgets/sketchpad.ui" line="317"/>
+        <location filename="../ui/widgets/sketchpad.ui" line="416"/>
         <source>Image scaling factor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/widgets/sketchpad.ui" line="320"/>
+        <location filename="../ui/widgets/sketchpad.ui" line="419"/>
         <source>Scale </source>
         <translation type="unfinished">スケール </translation>
     </message>
     <message>
-        <location filename="../ui/widgets/sketchpad.ui" line="496"/>
+        <location filename="../ui/widgets/sketchpad.ui" line="704"/>
         <source> x</source>
         <translation type="unfinished"> x</translation>
     </message>
     <message>
-        <location filename="../ui/widgets/sketchpad.ui" line="364"/>
+        <location filename="../ui/widgets/sketchpad.ui" line="516"/>
         <source>Check to draw filled objects</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/widgets/sketchpad.ui" line="367"/>
+        <location filename="../ui/widgets/sketchpad.ui" line="519"/>
         <source>Fill</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/widgets/sketchpad.ui" line="393"/>
+        <location filename="../ui/widgets/sketchpad.ui" line="554"/>
         <source>Center the object</source>
         <translation type="unfinished">オブジェクトを中心に配置</translation>
     </message>
     <message>
-        <location filename="../ui/widgets/sketchpad.ui" line="396"/>
+        <location filename="../ui/widgets/sketchpad.ui" line="557"/>
         <source>Center</source>
         <translation type="unfinished">中心</translation>
     </message>
     <message>
-        <location filename="../ui/widgets/sketchpad.ui" line="425"/>
+        <location filename="../ui/widgets/sketchpad.ui" line="595"/>
         <source>Show if</source>
         <translation type="unfinished">表示</translation>
     </message>
     <message>
-        <location filename="../ui/widgets/sketchpad.ui" line="467"/>
+        <location filename="../ui/widgets/sketchpad.ui" line="675"/>
         <source>Best-fitting zoom level</source>
         <translation type="unfinished">ズームレベルの最適化</translation>
     </message>
     <message>
-        <location filename="../ui/widgets/sketchpad.ui" line="480"/>
+        <location filename="../ui/widgets/sketchpad.ui" line="688"/>
         <source>Original zoom level</source>
         <translation type="unfinished">元のズームレベル</translation>
     </message>
     <message>
-        <location filename="../ui/widgets/sketchpad.ui" line="493"/>
+        <location filename="../ui/widgets/sketchpad.ui" line="701"/>
         <source>Zoom factor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/widgets/sketchpad.ui" line="536"/>
+        <location filename="../ui/widgets/sketchpad.ui" line="762"/>
         <source>Parse a subset of HTML tags</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/widgets/sketchpad.ui" line="539"/>
+        <location filename="../ui/widgets/sketchpad.ui" line="765"/>
         <source>HTML</source>
         <translation type="unfinished">HTML</translation>
     </message>
     <message>
-        <location filename="../ui/widgets/sketchpad.ui" line="583"/>
+        <location filename="../ui/widgets/sketchpad.ui" line="809"/>
         <source>0,0</source>
         <translation type="unfinished">0,0</translation>
     </message>
     <message>
-        <location filename="../ui/widgets/sketchpad.ui" line="593"/>
+        <location filename="../ui/widgets/sketchpad.ui" line="819"/>
         <source>Check to display the grid and enable snap-to-grid</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/widgets/sketchpad.ui" line="596"/>
+        <location filename="../ui/widgets/sketchpad.ui" line="822"/>
         <source>Grid</source>
         <translation type="unfinished">グリッド</translation>
     </message>
     <message>
-        <location filename="../ui/widgets/sketchpad.ui" line="606"/>
+        <location filename="../ui/widgets/sketchpad.ui" line="832"/>
         <source>Grid size</source>
         <translation type="unfinished">グリッドサイズ</translation>
     </message>
     <message>
-        <location filename="../ui/widgets/sketchpad.ui" line="649"/>
+        <location filename="../ui/widgets/sketchpad.ui" line="893"/>
         <source>Select and move elements</source>
         <translation type="unfinished">要素の選択/移動</translation>
+    </message>
+    <message encoding="UTF-8">
+        <location filename="../ui/widgets/sketchpad.ui" line="472"/>
+        <source>°</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/widgets/sketchpad.ui" line="475"/>
+        <source>Rotate </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/widgets/sketchpad.ui" line="630"/>
+        <source>Name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/widgets/sketchpad.ui" line="643"/>
+        <source>auto</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
