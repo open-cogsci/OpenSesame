@@ -18,16 +18,16 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame.py3compat import *
+import os
 import platform
 from qtpy import QtCore
 from libqtopensesame.widgets.base_widget import base_widget
 from libopensesame import plugins, misc
 from libqtopensesame.misc.markdown_parser import markdown_parser
-import os.path
+from libqtopensesame.misc import display
 from libqtopensesame.misc.translate import translation_context
 _ = translation_context(u'webbrowser', category=u'core')
 
-import os
 if os.environ[u'QT_API'] == u'pyqt':
 	from PyQt4.QtWebKit import QWebView as WebView
 	from PyQt4.QtWebKit import QWebPage as WebPage
@@ -56,11 +56,6 @@ INTERNAL_URLS = [
 	u'http://docs.expyriment.org/',
 	u'https://docs.expyriment.org/',
 	]
-# The DPI of the browser appears to be hard-set to 96, so we need adjust the
-# zooom of QWebView to correct for this.
-WEBVIEW_DPI = 96
-SYSTEM_DPI = QtCore.QCoreApplication.instance().desktop().screen().logicalDpiX()
-ZOOM_FACTOR = 1.*SYSTEM_DPI/WEBVIEW_DPI
 
 
 class small_webview(WebView):
@@ -242,7 +237,7 @@ class webbrowser(base_widget):
 		if tmpl is not None:
 			html = tmpl % {u'body' : html}
 		self.ui.webview.setHtml(html, baseUrl=url)
-		self.ui.webview.setZoomFactor(ZOOM_FACTOR)
+		self.ui.webview.setZoomFactor(display.display_scaling)
 
 	def init_cache(self):
 
@@ -297,7 +292,7 @@ class webbrowser(base_widget):
 			message=_(u'Displaying cached version of: %s. For a better viewing experience, connect to the internet.') \
 			% self._current_url, category=u'info')
 		self.ui.webview.setHtml(self._cache[self._current_url])
-		self.ui.webview.setZoomFactor(ZOOM_FACTOR)
+		self.ui.webview.setZoomFactor(display.display_scaling)
 
 	def load_finished(self, ok):
 
@@ -309,7 +304,7 @@ class webbrowser(base_widget):
 		if not ok:
 			self.try_cache()
 		self.ui.label_load_progress.setText(_(u'Done'))
-		self.ui.webview.setZoomFactor(ZOOM_FACTOR)
+		self.ui.webview.setZoomFactor(display.display_scaling)
 
 	def update_progressbar(self, progress):
 
