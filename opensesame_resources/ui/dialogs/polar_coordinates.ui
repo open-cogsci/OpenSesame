@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>Dialog</class>
- <widget class="QDialog" name="Dialog">
+ <class>ui_polar_coordinates</class>
+ <widget class="QDialog" name="ui_polar_coordinates">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Dialog</string>
+   <string>Polar coordinates</string>
   </property>
   <layout class="QFormLayout" name="formLayout">
    <property name="horizontalSpacing">
@@ -183,7 +183,7 @@
   <connection>
    <sender>buttonBox</sender>
    <signal>accepted()</signal>
-   <receiver>Dialog</receiver>
+   <receiver>ui_polar_coordinates</receiver>
    <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -199,7 +199,7 @@
   <connection>
    <sender>buttonBox</sender>
    <signal>rejected()</signal>
-   <receiver>Dialog</receiver>
+   <receiver>ui_polar_coordinates</receiver>
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -215,7 +215,7 @@
   <connection>
    <sender>spinbox_phi</sender>
    <signal>valueChanged(double)</signal>
-   <receiver>Dialog</receiver>
+   <receiver>ui_polar_coordinates</receiver>
    <slot>update()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -231,7 +231,7 @@
   <connection>
    <sender>spinbox_pole_x</sender>
    <signal>valueChanged(int)</signal>
-   <receiver>Dialog</receiver>
+   <receiver>ui_polar_coordinates</receiver>
    <slot>update()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -247,7 +247,7 @@
   <connection>
    <sender>spinbox_pole_y</sender>
    <signal>valueChanged(int)</signal>
-   <receiver>Dialog</receiver>
+   <receiver>ui_polar_coordinates</receiver>
    <slot>update()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -263,7 +263,7 @@
   <connection>
    <sender>spinbox_rho</sender>
    <signal>valueChanged(int)</signal>
-   <receiver>Dialog</receiver>
+   <receiver>ui_polar_coordinates</receiver>
    <slot>update()</slot>
    <hints>
     <hint type="sourcelabel">
