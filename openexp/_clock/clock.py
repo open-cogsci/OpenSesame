@@ -129,7 +129,7 @@ class Clock(object):
 					since `t0`.
 
 		example: |
-			for ms in clock.sleep_for(100, throttle=10):
+			for ms in clock.loop_for(100, throttle=10):
 				print(ms)
 		"""
 
