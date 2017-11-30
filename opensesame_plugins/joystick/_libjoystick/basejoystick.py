@@ -19,6 +19,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 
 from libopensesame.py3compat import *
 
+
 class basejoystick(object):
 
 	"""
@@ -135,8 +136,9 @@ class basejoystick(object):
 				type:	[int, float, NoneType]
 
 		returns:
-			desc:	A (position, timestamp) tuple. The position is None if a
-					timeout occurs.
+			desc:	A `(position, timestamp)` tuple. `position` is `None` if a
+					timeout occurs. Otherwise, `position` is an `(x, y, z)`
+					tuple.
 			type:	tuple
 		"""
 
@@ -155,8 +157,8 @@ class basejoystick(object):
 				type:	[int, float, NoneType]
 
 		returns:
-			desc:	A (position, timestamp) tuple. The position is `None` if a
-					timeout occurs.
+			desc:	A `(position, timestamp)` tuple. The position is `None` if
+					a timeout occurs.
 			type:	tuple
 		"""
 
@@ -175,8 +177,8 @@ class basejoystick(object):
 				type:	[int, float, NoneType]
 
 		returns:
-			desc:	A (position, timestamp) tuple. The position is `None` if a
-					timeout occurs.
+			desc:	A `(position, timestamp)` tuple. `position` is `None` if a
+					timeout occurs. Otherwise, `position` is an `(x, y)` tuple.
 			type:	tuple
 		"""
 
@@ -200,7 +202,8 @@ class basejoystick(object):
 
 		returns:
 			desc:	A (event, value, timestamp) tuple. The value is `None` if a
-					timeout occurs.
+					timeout occurs. `event` is one of `None`, 'joybuttonpress',
+					'joyballmotion', 'joyaxismotion', or 'joyhatmotion'
 			type:	tuple
 		"""
 
