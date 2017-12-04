@@ -39,6 +39,7 @@ FONTS = [
 ]
 font_database = None
 font_substitutions = []
+pyqt_initialized = False
 
 
 class RichText(Element):
@@ -46,7 +47,11 @@ class RichText(Element):
 	def __init__(self, canvas, text, center=True, x=None, y=None,
 		max_width=None, **properties):
 
-		self._init_pyqt(canvas.experiment)
+		global pyqt_initialized
+
+		if not pyqt_initialized:
+			self._init_pyqt(canvas.experiment)
+			pyqt_initialized = True
 		x, y = canvas.none_to_center(x, y)
 		properties = properties.copy()
 		properties.update({

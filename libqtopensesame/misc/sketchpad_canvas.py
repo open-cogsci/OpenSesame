@@ -21,11 +21,29 @@ from libopensesame.py3compat import *
 import os
 import math
 from openexp._color.color import color
+from openexp._canvas._richtext.richtext import RichText
+from openexp._canvas.canvas import Canvas
+from openexp._coordinates.coordinates import Coordinates
 from libqtopensesame.misc import drag_and_drop
 from libqtopensesame.misc.config import cfg
 from qtpy import QtWidgets, QtGui, QtCore
 from libqtopensesame.misc.translate import translation_context
 _ = translation_context(u'sketchpad', category=u'item')
+
+
+class QtCanvas(Canvas, Coordinates):
+
+	def __init__(self, experiment):
+
+		Canvas.__init__(self, experiment)
+		Coordinates.__init__(self)
+
+
+class QtRichText(RichText):
+
+	def _init_pyqt(self, exp):
+
+		pass
 
 
 class sketchpad_canvas(QtWidgets.QGraphicsScene):
@@ -671,33 +689,33 @@ class sketchpad_canvas(QtWidgets.QGraphicsScene):
 		self._font.setPixelSize(self._font_size(size))
 
 	def text(self, text, center=True, x=None, y=None, max_width=None,
-		color=None, html=True, font_family=None, font_size=None,
-		font_italic=None, font_bold=None):
+		**properties):
 
 		"""Mimicks canvas api. See openexp._canvas.canvas."""
 
-		# Deprecated
-		self.set_font(style=font_family, size=font_size, italic=font_italic,
-			bold=font_bold)
-		i = self.addText(str(text), self._font)
-		mw = self.sketchpad.var.width//2 - self._x(x) \
-			if max_width is None else max_width
+		t = QtRichText(
+			QtCanvas(self.sketchpad.experiment),
+			text,
+			center=center, max_width=max_width,
+			**properties
+		)
+		im = t._to_pil()
+		qim = QtGui.QImage(
+			im.tobytes('raw', 'RGBA'),
+			im.size[0], im.size[1],
+			QtGui.QImage.Format_ARGB32
+		)
+		pixmap = QtGui.QPixmap.fromImage(qim)
+		i = self.addPixmap(pixmap)
+		x = self._x(x)
+		y = self._x(y)
+		c = i.boundingRect().center()
+		dx = c.x()
+		dy = c.y()
 		if center:
-			mw *= 2
-		i.setTextWidth(mw)
-		i.setDefaultTextColor(self._color(color))
-		if html:
-			i.setHtml(str(text))
-		if center:
-			# Source:
-			# http://www.cesarbs.org/blog/2011/05/30/aligning-text-in-\
-			# qgraphicstextitem/
-			fmt = QtGui.QTextBlockFormat()
-			fmt.setAlignment(QtCore.Qt.AlignCenter)
-			cursor = i.textCursor()
-			cursor.mergeBlockFormat(fmt)
-			i.setTextCursor(cursor)
-		i.setPos(self._point(i, x, y, center, scale=1))
+			x -= dx
+			y -= dy
+		i.setPos(x, y)
 		return i
 
 	def line(self, sx, sy, ex, ey, color=None, penwidth=None, add=True):
