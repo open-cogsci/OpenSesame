@@ -18,6 +18,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame.py3compat import *
+from libopensesame.exceptions import osexception
 from libopensesame.base_response_item import base_response_item
 from openexp.keyboard import keyboard
 
@@ -36,7 +37,11 @@ class keyboard_response_mixin(object):
 
 		self._keyboard = keyboard(self.experiment, timeout=self._timeout,
 			keylist=self._allowed_responses)
-		return self._keyboard.get_key
+		if self.var.get(u'event_type', default=u'keypress') == u'keypress':
+			return self._keyboard.get_key
+		if self.var.event_type == u'keyrelease':
+			return self._keyboard.get_key_release
+		raise osexception(u'event_type should be "keypress" or "keyrelease"')
 
 
 class keyboard_response(keyboard_response_mixin, base_response_item):
@@ -56,6 +61,7 @@ class keyboard_response(keyboard_response_mixin, base_response_item):
 		self.var.flush = u'yes'
 		self.var.timeout = u'infinite'
 		self.var.duration = u'keypress'
+		self.var.event_type = u'keypress'
 		self.var.unset(u'allowed_responses')
 		self.var.unset(u'correct_response')
 

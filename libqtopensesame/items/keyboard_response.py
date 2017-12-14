@@ -27,6 +27,7 @@ from qtpy import QtCore, QtWidgets
 from libqtopensesame.misc.translate import translation_context
 _ = translation_context(u'keyboard_response', category=u'item')
 
+
 class keyboard_response(keyboard_response_runtime, qtplugin):
 
 	"""keyboard_response item GUI"""
@@ -55,19 +56,38 @@ class keyboard_response(keyboard_response_runtime, qtplugin):
 
 		"""Initialize controls"""
 
-		super(keyboard_response, self).init_edit_widget(stretch=True)
+		qtplugin.init_edit_widget(self, stretch=True)
 		# Use auto-controls for most stuff
-		self.add_line_edit_control(u'correct_response', _(u'Correct response'),
-			info=_(u'Leave empty to use "correct_response"'))
-		self.add_line_edit_control(u'allowed_responses', _(u'Allowed responses'),
-			info=_(u'Separated by semicolons, e.g. "z;/"'))
-		self.add_line_edit_control(u'timeout', _(u'Timeout'),
+		self.add_line_edit_control(
+			var=u'correct_response',
+			label=_(u'Correct response'),
+			info=_(u'Leave empty to use "correct_response"')
+		)
+		self.add_line_edit_control(
+			var=u'allowed_responses',
+			label=_(u'Allowed responses'),
+			info=_(u'Separated by semicolons, e.g. "z;/"')
+		)
+		self.add_line_edit_control(
+			var=u'timeout',
+			label=_(u'Timeout'),
 			info=_(u'In milliseconds or "infinite"'),
-			validator=timeout_validator(self))
-		self.add_checkbox_control(u'flush', _(u'Flush pending keypresses'))
+			validator=timeout_validator(self)
+		)
+		self.add_combobox_control(
+			var=u'event_type',
+			label=_(u'Event type'),
+			options=[
+				u'keypress',
+				u'keyrelease'
+			]
+		)
+		self.add_checkbox_control(u'flush', _(u'Flush pending key events'))
 		# List available keys
 		button_list_keys = QtWidgets.QPushButton(
-			self.theme.qicon(u"help-about"), _(u"List available keys"))
+			self.theme.qicon(u"help-about"),
+			_(u"List available keys")
+		)
 		button_list_keys.setIconSize(QtCore.QSize(16,16))
 		button_list_keys.clicked.connect(self.list_keys)
 		self.add_control(u'', button_list_keys)
