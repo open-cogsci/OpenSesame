@@ -38,8 +38,7 @@ class Droid(Legacy):
 		`openexp._keyboard.keyboard`.
 	"""
 
-	@configurable
-	def get_key(self):
+	def _get_key_event(self, event_type):
 
 		if not self.persistent_virtual_keyboard and android is not None:
 			android.show_keyboard()
@@ -49,7 +48,7 @@ class Droid(Legacy):
 		timeout = self.timeout
 		while True:
 			time = pygame.time.get_ticks()
-			for event in pygame.event.get(pygame.KEYDOWN):
+			for event in pygame.event.get(event_type):
 				if event.key == pygame.K_ESCAPE:
 					self.experiment.pause()
 				# TODO The unicode mechanism that ensures compatibility between

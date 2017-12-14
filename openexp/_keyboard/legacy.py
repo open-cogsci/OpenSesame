@@ -82,19 +82,38 @@ class Legacy(Keyboard):
 	@configurable
 	def get_key(self):
 
+		return self._get_key_event(pygame.KEYDOWN)
+
+	@configurable
+	def get_key_release(self):
+
+		return self._get_key_event(pygame.KEYUP)
+
+	def _get_key_event(self, event_type):
+
 		start_time = pygame.time.get_ticks()
 		time = start_time
 		keylist = self.keylist
 		timeout = self.timeout
 		while True:
 			time = pygame.time.get_ticks()
-			for event in pygame.event.get(pygame.KEYDOWN):
+			for event in pygame.event.get(event_type):
 				if event.key == pygame.K_ESCAPE:
 					self.experiment.pause()
-				if event.unicode in invalid_unicode:
+				# KEYUP events don't have a unicode property, so in that case
+				# we fall back to converting the key code straight to an ASCII
+				# value. This is not great, because it assumes a QWERTY
+				# keyboard layout.
+				if hasattr(event, u'unicode'):
+					ucode = event.unicode
+				elif event.key < 128:
+					ucode = chr(event.key)
+				else:
+					ucode = u''
+				if ucode in invalid_unicode:
 					key = self.key_name(event.key)
 				else:
-					key = event.unicode
+					key = ucode
 				if keylist is None or key in keylist:
 					return key, time
 			if timeout is not None and time-start_time >= timeout:

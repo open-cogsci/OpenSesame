@@ -175,7 +175,7 @@ class Keyboard(Backend):
 		keyword-dict:
 			resp_args:
 				Optional [response keywords] (`timeout` and `keylist`) that will
-				be used for this call to [keyboard.get_key] this does not
+				be used for this call to [keyboard.get_key]. This does not
 				affect subsequent operations.
 
 		returns:
@@ -186,6 +186,40 @@ class Keyboard(Backend):
 		example: |
 			my_keyboard = Keyboard()
 			response, timestamp = my_keyboard.get_key(timeout=5000)
+			if response is None:
+				print(u'A timeout occurred!')
+		"""
+
+		raise NotImplementedError()
+
+	@configurable
+	def get_key_release(self, **resp_args):
+
+		"""
+		desc: |
+			*New in v3.2.0*
+
+			Collects a single key release.
+
+			*Important:* This function currently assumes a QWERTY keyboard
+			layout (unlike `Keyboard.get_key()`). This means that the returned
+			`key` may be incorrect on non-QWERTY keyboard layouts. In addition,
+			this function is not implemented for the *psycho* backend.
+
+		keyword-dict:
+			resp_args:
+				Optional [response keywords] (`timeout` and `keylist`) that will
+				be used for this call to [keyboard.get_key_release]. This does
+				not affect subsequent operations.
+
+		returns:
+			desc:		A `(key, timestamp)` tuple. `key` is None if a timeout
+						occurs.
+			type:		tuple
+
+		example: |
+			my_keyboard = Keyboard()
+			response, timestamp = my_keyboard.get_key_release(timeout=5000)
 			if response is None:
 				print(u'A timeout occurred!')
 		"""
