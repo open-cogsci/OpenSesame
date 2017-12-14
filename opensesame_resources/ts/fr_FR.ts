@@ -163,17 +163,17 @@
 <context>
     <name>core_backend_settings</name>
     <message>
-        <location filename="../../translatables-tmp.py" line="492"/>
+        <location filename="../../translatables-tmp.py" line="493"/>
         <source>Failed to load backend</source>
         <translation>Echec du chargement du backend</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="493"/>
+        <location filename="../../translatables-tmp.py" line="494"/>
         <source>No settings for %s</source>
         <translation>Pas de réglagles pour %s</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="494"/>
+        <location filename="../../translatables-tmp.py" line="495"/>
         <source>Settings for %s:</source>
         <translation>Réglages pour %s :</translation>
     </message>
@@ -181,22 +181,22 @@
 <context>
     <name>core_base_runner</name>
     <message>
-        <location filename="../../translatables-tmp.py" line="437"/>
+        <location filename="../../translatables-tmp.py" line="438"/>
         <source>Subject number</source>
         <translation>Numéro du sujet</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="438"/>
+        <location filename="../../translatables-tmp.py" line="439"/>
         <source>Please enter the subject number</source>
         <translation>Veuillez saisir le numéro du sujet</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="435"/>
+        <location filename="../../translatables-tmp.py" line="436"/>
         <source>Choose location for logfile (press &apos;escape&apos; for default location)</source>
         <translation>Choisir une localisation pour le journal (appuyer sur &apos;ÉCHAP&apos; pour la localisation par défaut)</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="436"/>
+        <location filename="../../translatables-tmp.py" line="437"/>
         <source>The logfile &apos;%s&apos; is not writable. Please choose another location for the logfile.</source>
         <translation>Il est impossible d&apos;écrire sur le journal &apos;%s&apos;. Veuillez choisir une autre localisation pour le journal.</translation>
     </message>
@@ -204,7 +204,7 @@
 <context>
     <name>core_color_edit</name>
     <message>
-        <location filename="../../translatables-tmp.py" line="275"/>
+        <location filename="../../translatables-tmp.py" line="276"/>
         <source>Pick a color</source>
         <translation>Choisir une couleur</translation>
     </message>
@@ -220,7 +220,7 @@
 <context>
     <name>core_console</name>
     <message>
-        <location filename="../../translatables-tmp.py" line="524"/>
+        <location filename="../../translatables-tmp.py" line="525"/>
         <source>Error: Command contains invalid characters</source>
         <translation>Erreur : la commande contient des caractères invalides</translation>
     </message>
@@ -236,12 +236,12 @@
 <context>
     <name>core_general_script_editor</name>
     <message>
-        <location filename="../../translatables-tmp.py" line="544"/>
+        <location filename="../../translatables-tmp.py" line="545"/>
         <source>Apply?</source>
         <translation>Appliquer ?</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="545"/>
+        <location filename="../../translatables-tmp.py" line="546"/>
         <source>Are you sure you want to apply the changes to the general script?</source>
         <translation>Êtes-vous sur(e) de vouloir appliquer les modifications au script général ?</translation>
     </message>
@@ -249,7 +249,7 @@
 <context>
     <name>core_header_widget</name>
     <message>
-        <location filename="../../translatables-tmp.py" line="412"/>
+        <location filename="../../translatables-tmp.py" line="413"/>
         <source>Click to edit</source>
         <translation>Cliquer pour éditer</translation>
     </message>
@@ -257,22 +257,22 @@
 <context>
     <name>core_item_category</name>
     <message>
-        <location filename="../../translatables-tmp.py" line="468"/>
+        <location filename="../../translatables-tmp.py" line="469"/>
         <source>Form</source>
         <translation>Formulaire</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="464"/>
+        <location filename="../../translatables-tmp.py" line="465"/>
         <source>Miscellaneous</source>
         <translation>Divers</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="466"/>
+        <location filename="../../translatables-tmp.py" line="467"/>
         <source>Staircase</source>
         <translation>Escalier</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="467"/>
+        <location filename="../../translatables-tmp.py" line="468"/>
         <source>Visual stimuli</source>
         <translation>Stimuli visuels</translation>
     </message>
@@ -282,17 +282,17 @@
         <translation type="obsolete">Timing</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="463"/>
+        <location filename="../../translatables-tmp.py" line="464"/>
         <source>Response collection</source>
         <translation>Collecte de réponse</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="462"/>
+        <location filename="../../translatables-tmp.py" line="463"/>
         <source>miscellaneous</source>
         <translation>Divers</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="460"/>
+        <location filename="../../translatables-tmp.py" line="461"/>
         <source>Flow control</source>
         <translation>Contrôle de flux</translation>
     </message>
@@ -300,7 +300,7 @@
 <context>
     <name>core_item_combobox</name>
     <message>
-        <location filename="../../translatables-tmp.py" line="409"/>
+        <location filename="../../translatables-tmp.py" line="410"/>
         <source>No item selected</source>
         <translation>Aucun item sélectionné</translation>
     </message>
@@ -308,52 +308,52 @@
 <context>
     <name>core_item_context_menu</name>
     <message>
-        <location filename="../../translatables-tmp.py" line="385"/>
+        <location filename="../../translatables-tmp.py" line="386"/>
         <source>Open</source>
         <translation>Ouvrir</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="386"/>
+        <location filename="../../translatables-tmp.py" line="387"/>
         <source>Rename</source>
         <translation>Renommer</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="387"/>
+        <location filename="../../translatables-tmp.py" line="388"/>
         <source>Edit run-if statement</source>
         <translation>Éditer la condition &apos;exécuter si&apos;</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="388"/>
+        <location filename="../../translatables-tmp.py" line="389"/>
         <source>Copy (unlinked)</source>
         <translation>Copier (non lié)</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="389"/>
+        <location filename="../../translatables-tmp.py" line="390"/>
         <source>Copy (linked)</source>
         <translation>Copier (lié)</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="390"/>
+        <location filename="../../translatables-tmp.py" line="391"/>
         <source>Paste</source>
         <translation>Coller</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="391"/>
+        <location filename="../../translatables-tmp.py" line="392"/>
         <source>Delete</source>
         <translation>Supprimer</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="392"/>
+        <location filename="../../translatables-tmp.py" line="393"/>
         <source>Permanently delete all linked copies</source>
         <translation>Supprimer définitivement toutes les copies liées</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="393"/>
+        <location filename="../../translatables-tmp.py" line="394"/>
         <source>Permanently delete</source>
         <translation>Supprimer définitivement</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="394"/>
+        <location filename="../../translatables-tmp.py" line="395"/>
         <source>Help</source>
         <translation>Aide</translation>
     </message>
@@ -361,22 +361,22 @@
 <context>
     <name>core_item_view_button</name>
     <message>
-        <location filename="../../translatables-tmp.py" line="321"/>
+        <location filename="../../translatables-tmp.py" line="322"/>
         <source>View controls</source>
         <translation>Afficher les contrôles</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="322"/>
+        <location filename="../../translatables-tmp.py" line="323"/>
         <source>View script</source>
         <translation>Afficher le script</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="323"/>
+        <location filename="../../translatables-tmp.py" line="324"/>
         <source>Split view</source>
         <translation>Affichage partagé</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="324"/>
+        <location filename="../../translatables-tmp.py" line="325"/>
         <source>Select view</source>
         <translation>Choisir l&apos;affichage</translation>
     </message>
@@ -392,7 +392,7 @@
 <context>
     <name>core_pool_select</name>
     <message>
-        <location filename="../../translatables-tmp.py" line="406"/>
+        <location filename="../../translatables-tmp.py" line="407"/>
         <source>Browse</source>
         <translation>Parcourir</translation>
     </message>
@@ -468,7 +468,7 @@
 <context>
     <name>core_popup_menu</name>
     <message>
-        <location filename="../../translatables-tmp.py" line="318"/>
+        <location filename="../../translatables-tmp.py" line="319"/>
         <source>Cancel</source>
         <translation>Annuler</translation>
     </message>
@@ -688,7 +688,7 @@
 <context>
     <name>core_toolbar_items</name>
     <message>
-        <location filename="../../translatables-tmp.py" line="497"/>
+        <location filename="../../translatables-tmp.py" line="498"/>
         <source>Commonly used</source>
         <translation>Fréquemment utilisés</translation>
     </message>
@@ -696,7 +696,7 @@
 <context>
     <name>core_toolbar_items_item</name>
     <message>
-        <location filename="../../translatables-tmp.py" line="332"/>
+        <location filename="../../translatables-tmp.py" line="333"/>
         <source>Drag this &lt;b&gt;%s&lt;/b&gt; item to the intended location in the overview area or into the item list of a sequence tab</source>
         <translation>Glisser cet élément &lt;b&gt;%s&lt;/b&gt; vers la localisation souhaitée dans la zone de vue d&apos;ensemble, ou dans la liste des éléments d&apos;un onglet de séquences</translation>
     </message>
@@ -717,7 +717,7 @@
 <context>
     <name>core_tree_general_item</name>
     <message>
-        <location filename="../../translatables-tmp.py" line="265"/>
+        <location filename="../../translatables-tmp.py" line="266"/>
         <source>General options</source>
         <translation>Options générales</translation>
     </message>
@@ -725,34 +725,34 @@
 <context>
     <name>core_tree_item_item</name>
     <message>
-        <location filename="../../translatables-tmp.py" line="353"/>
+        <location filename="../../translatables-tmp.py" line="354"/>
         <source>Type: %s
 Description: %s</source>
         <translation>Type : %s
 Description : %s</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="354"/>
+        <location filename="../../translatables-tmp.py" line="355"/>
         <source>Set as item to run for %s</source>
         <translation>Mettre comme item à exécuter pour %s</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="355"/>
+        <location filename="../../translatables-tmp.py" line="356"/>
         <source>Insert into %s</source>
         <translation>Insérer dans %s</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="356"/>
+        <location filename="../../translatables-tmp.py" line="357"/>
         <source>Drop below %s</source>
         <translation>Insérer en desous de %s</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="357"/>
+        <location filename="../../translatables-tmp.py" line="358"/>
         <source>Permanently delete item</source>
         <translation>Supprimer définitivement l&apos;item</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="358"/>
+        <location filename="../../translatables-tmp.py" line="359"/>
         <source>Are you sure you want to permanently delete &lt;b&gt;%s&lt;/b&gt;? All linked copies of &lt;b&gt;%s&lt;/b&gt; will be deleted. You will not be able to undo this.</source>
         <translation>Êtes-vous sûr(e) de vouloir supprimer définitivement &lt;b&gt;%s&lt;/b&gt; ? Toutes les copies liées de &lt;b&gt;%s&lt;/b&gt; seront supprimées. Cette action est irréversible.</translation>
     </message>
@@ -798,12 +798,12 @@ Description : %s</translation>
 <context>
     <name>core_tree_unused_items_item</name>
     <message>
-        <location filename="../../translatables-tmp.py" line="520"/>
+        <location filename="../../translatables-tmp.py" line="521"/>
         <source>Unused items</source>
         <translation>Items non utilisés</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="521"/>
+        <location filename="../../translatables-tmp.py" line="522"/>
         <source>Move to unused items</source>
         <translation>Déplacer vers les items non utilisés</translation>
     </message>
@@ -917,17 +917,17 @@ L&apos;éxpérience ne s&apos;est pas terminée normalement pour la raison suiva
 <context>
     <name>extension_analytics</name>
     <message>
-        <location filename="../../translatables-tmp.py" line="514"/>
+        <location filename="../../translatables-tmp.py" line="515"/>
         <source>Sends a ping to Google Analytics when OpenSesame is started</source>
         <translation>Envoie une notification à Google Analytics lors du démarrage d&apos;OpenSesame</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="515"/>
+        <location filename="../../translatables-tmp.py" line="516"/>
         <source>Anonymous usage data is collected. You can disable this by disabling the &lt;i&gt;analytics&lt;/i&gt; extension.</source>
         <translation>Des données à usage anonyme sont collectées. Vous pouvez désactiver cette option en désactivant l&apos;extension &lt;i&gt;analytics&lt;/i&gt;.</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="516"/>
+        <location filename="../../translatables-tmp.py" line="517"/>
         <source>Got it!</source>
         <translation>Vous avez compris !</translation>
     </message>
@@ -976,17 +976,17 @@ L&apos;éxpérience ne s&apos;est pas terminée normalement pour la raison suiva
 <context>
     <name>extension_example</name>
     <message>
-        <location filename="../../translatables-tmp.py" line="509"/>
+        <location filename="../../translatables-tmp.py" line="510"/>
         <source>Example extension</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="510"/>
+        <location filename="../../translatables-tmp.py" line="511"/>
         <source>An example extenstion</source>
         <translation>Un exemple d&apos;extension</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="511"/>
+        <location filename="../../translatables-tmp.py" line="512"/>
         <source>Some tooltip</source>
         <translation>Quelques info-bulles</translation>
     </message>
@@ -994,12 +994,12 @@ L&apos;éxpérience ne s&apos;est pas terminée normalement pour la raison suiva
 <context>
     <name>extension_example_experiments</name>
     <message>
-        <location filename="../../translatables-tmp.py" line="415"/>
+        <location filename="../../translatables-tmp.py" line="416"/>
         <source>Example experiments</source>
         <translation>Expériences d&apos;examples</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="417"/>
+        <location filename="../../translatables-tmp.py" line="418"/>
         <source>Shows a list of example experiments</source>
         <translation>Montrer une liste des expériences d&apos;exemples</translation>
     </message>
@@ -1007,27 +1007,27 @@ L&apos;éxpérience ne s&apos;est pas terminée normalement pour la raison suiva
 <context>
     <name>extension_get_started</name>
     <message encoding="UTF-8">
-        <location filename="../../translatables-tmp.py" line="441"/>
+        <location filename="../../translatables-tmp.py" line="442"/>
         <source>New…</source>
         <translation>Nouveau…</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="442"/>
+        <location filename="../../translatables-tmp.py" line="443"/>
         <source>A starting point</source>
         <translation>Un point de départ</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="443"/>
+        <location filename="../../translatables-tmp.py" line="444"/>
         <source>Start a new experiment</source>
         <translation>Commencer une nouvelle expérience</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="444"/>
+        <location filename="../../translatables-tmp.py" line="445"/>
         <source>Continue with a recent experiment:</source>
         <translation>Continuer avec une expérience récente :</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="445"/>
+        <location filename="../../translatables-tmp.py" line="446"/>
         <source>Get started!</source>
         <translation>Lancez-vous !</translation>
     </message>
@@ -1094,17 +1094,17 @@ L&apos;éxpérience ne s&apos;est pas terminée normalement pour la raison suiva
 <context>
     <name>extension_plugin_manager</name>
     <message>
-        <location filename="../../translatables-tmp.py" line="500"/>
+        <location filename="../../translatables-tmp.py" line="501"/>
         <source>Plug-in and extension manager</source>
         <translation>Gestionnaire plug-ins et extensions</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="501"/>
+        <location filename="../../translatables-tmp.py" line="502"/>
         <source>Enable or disable plug-ins and extensions.</source>
         <translation>Activer ou désactiver des plug-ins et des extensions.</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="502"/>
+        <location filename="../../translatables-tmp.py" line="503"/>
         <source>Manage plug-ins and extensions</source>
         <translation>Gérer des plug-ins et des extensions</translation>
     </message>
@@ -1172,17 +1172,17 @@ L&apos;éxpérience ne s&apos;est pas terminée normalement pour la raison suiva
 <context>
     <name>extension_psychopy_monitor_center</name>
     <message>
-        <location filename="../../translatables-tmp.py" line="303"/>
+        <location filename="../../translatables-tmp.py" line="304"/>
         <source>PsychoPy monitor center</source>
         <translation>Centre d&apos;écran PsychoPy</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="304"/>
+        <location filename="../../translatables-tmp.py" line="305"/>
         <source>Launches the PsychoPy monitor center</source>
         <translation>Exécute le centre d&apos;écran PsychoPy</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="305"/>
+        <location filename="../../translatables-tmp.py" line="306"/>
         <source>Launch the PsychoPy monitor center</source>
         <translation>Exécuter le centre d&apos;écran PsychoPy</translation>
     </message>
@@ -1306,17 +1306,17 @@ L&apos;éxpérience ne s&apos;est pas terminée normalement pour la raison suiva
 <context>
     <name>extension_update_checker</name>
     <message>
-        <location filename="../../translatables-tmp.py" line="328"/>
+        <location filename="../../translatables-tmp.py" line="329"/>
         <source>Check for updates</source>
         <translation>Vérifier les mises à jour</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="329"/>
+        <location filename="../../translatables-tmp.py" line="330"/>
         <source>Checks whether a new version of OpenSesame is available.</source>
         <translation>Vérifie si une nouvelle version d&apos;OpenSesame est disponible.</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="327"/>
+        <location filename="../../translatables-tmp.py" line="328"/>
         <source>Up to date!</source>
         <translation>Mis à jour !</translation>
     </message>
@@ -1720,12 +1720,12 @@ L&apos;éxpérience ne s&apos;est pas terminée normalement pour la raison suiva
 <context>
     <name>item_experiment</name>
     <message>
-        <location filename="../../translatables-tmp.py" line="506"/>
+        <location filename="../../translatables-tmp.py" line="507"/>
         <source>Default description</source>
         <translation>Description par défaut</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="505"/>
+        <location filename="../../translatables-tmp.py" line="506"/>
         <source>New experiment</source>
         <translation>Nouvelle expérience</translation>
     </message>
@@ -1733,7 +1733,7 @@ L&apos;éxpérience ne s&apos;est pas terminée normalement pour la raison suiva
 <context>
     <name>item_feeback</name>
     <message>
-        <location filename="../../translatables-tmp.py" line="403"/>
+        <location filename="../../translatables-tmp.py" line="404"/>
         <source>Provides feedback to the participant</source>
         <translation>Fournir du feedback au participant</translation>
     </message>
@@ -1796,10 +1796,10 @@ L&apos;éxpérience ne s&apos;est pas terminée normalement pour la raison suiva
     <message>
         <location filename="../../translatables-tmp.py" line="258"/>
         <source>Flush pending keypresses</source>
-        <translation>Effacer les touches pressées auparavant</translation>
+        <translation type="obsolete">Effacer les touches pressées auparavant</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="259"/>
+        <location filename="../../translatables-tmp.py" line="260"/>
         <source>List available keys</source>
         <translation>Montrer les touches disponibles</translation>
     </message>
@@ -1819,40 +1819,50 @@ L&apos;éxpérience ne s&apos;est pas terminée normalement pour la raison suiva
         <translation>En millisecondes ou &quot;infinite&quot;</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="262"/>
+        <location filename="../../translatables-tmp.py" line="263"/>
         <source>Key names</source>
         <translation>Noms des touches</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="261"/>
+        <location filename="../../translatables-tmp.py" line="262"/>
         <source>The following key names are valid:</source>
         <translation>Les noms des touches suivantes sont valables :</translation>
+    </message>
+    <message>
+        <location filename="../../translatables-tmp.py" line="258"/>
+        <source>Event type</source>
+        <translation>Type d&apos;événement</translation>
+    </message>
+    <message>
+        <location filename="../../translatables-tmp.py" line="259"/>
+        <source>Flush pending key events</source>
+        <translation>Effacer les événements auparavant</translation>
     </message>
 </context>
 <context>
     <name>item_logger</name>
     <message>
-        <location filename="../../translatables-tmp.py" line="429"/>
+        <location filename="../../translatables-tmp.py" line="430"/>
         <source>You have multiple unlinked loggers. This can lead to messy log files.</source>
         <translation>Vous avez plusierus loggers non-liés. Cela pourrait produire des fichiers journaux en désordre.</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="430"/>
+        <location filename="../../translatables-tmp.py" line="431"/>
         <source>Add custom variable</source>
         <translation>Ajouter une variable personnalisée</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="431"/>
+        <location filename="../../translatables-tmp.py" line="432"/>
         <source>Which variable do you wish to log?</source>
         <translation>Quelle variable souhaitez-vous enregistrer ?</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="432"/>
+        <location filename="../../translatables-tmp.py" line="433"/>
         <source>custom</source>
         <translation>Personnalisé</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="428"/>
+        <location filename="../../translatables-tmp.py" line="429"/>
         <source>Logs experimental data</source>
         <translation>Enregistrer des données expérimentales</translation>
     </message>
@@ -2038,7 +2048,7 @@ L&apos;éxpérience ne s&apos;est pas terminée normalement pour la raison suiva
 <context>
     <name>item_mouse_response</name>
     <message>
-        <location filename="../../translatables-tmp.py" line="374"/>
+        <location filename="../../translatables-tmp.py" line="375"/>
         <source>Collects mouse responses</source>
         <translation>Récolte des clics de souris</translation>
     </message>
@@ -2048,7 +2058,7 @@ L&apos;éxpérience ne s&apos;est pas terminée normalement pour la raison suiva
         <translation type="obsolete">Lecture un fichier audio au format .wav ou .ogg</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="375"/>
+        <location filename="../../translatables-tmp.py" line="376"/>
         <source>Correct response</source>
         <translation>Réponse correcte</translation>
     </message>
@@ -2058,7 +2068,7 @@ L&apos;éxpérience ne s&apos;est pas terminée normalement pour la raison suiva
         <translation type="obsolete">Spécifier la réponse correcte</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="377"/>
+        <location filename="../../translatables-tmp.py" line="378"/>
         <source>Allowed responses</source>
         <translation>Réponses valides</translation>
     </message>
@@ -2068,7 +2078,7 @@ L&apos;éxpérience ne s&apos;est pas terminée normalement pour la raison suiva
         <translation type="obsolete">Une liste de réponses valides separées par des point-virgules, par ex. &quot;left_button;right_button&quot;</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="379"/>
+        <location filename="../../translatables-tmp.py" line="380"/>
         <source>Timeout</source>
         <translation>Délai maximum</translation>
     </message>
@@ -2078,7 +2088,7 @@ L&apos;éxpérience ne s&apos;est pas terminée normalement pour la raison suiva
         <translation type="obsolete">Indique un délai maximum en millisecondes ou &quot;infinite&quot;</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="381"/>
+        <location filename="../../translatables-tmp.py" line="382"/>
         <source>Visible mouse cursor</source>
         <translation>Afficher le curseur de la souris</translation>
     </message>
@@ -2088,22 +2098,22 @@ L&apos;éxpérience ne s&apos;est pas terminée normalement pour la raison suiva
         <translation type="obsolete">Si active, le curseur de la souris sera visible</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="382"/>
+        <location filename="../../translatables-tmp.py" line="383"/>
         <source>Flush pending mouse clicks</source>
         <translation>Effacer les clics réalisés auparavant</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="376"/>
+        <location filename="../../translatables-tmp.py" line="377"/>
         <source>Leave empty to use &quot;correct_response&quot;</source>
         <translation>Laisser vide pour utiliser &quot;correct_response&quot;</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="378"/>
+        <location filename="../../translatables-tmp.py" line="379"/>
         <source>Separated by semicolons, e.g. &quot;left_button;right_button&quot;</source>
         <translation>Séparés par points-virgules, par ex. &quot;left_button;right_button&quot;</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="380"/>
+        <location filename="../../translatables-tmp.py" line="381"/>
         <source>In milliseconds or &quot;infinite&quot;</source>
         <translation>En millisecondes ou &quot;infinite&quot;</translation>
     </message>
@@ -2111,12 +2121,12 @@ L&apos;éxpérience ne s&apos;est pas terminée normalement pour la raison suiva
 <context>
     <name>item_sampler</name>
     <message>
-        <location filename="../../translatables-tmp.py" line="527"/>
+        <location filename="../../translatables-tmp.py" line="528"/>
         <source>Plays a sound file in .wav or .ogg format</source>
         <translation>Lecture d&apos;un fichier audio au format .wav ou .ogg</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="528"/>
+        <location filename="../../translatables-tmp.py" line="529"/>
         <source>Sound file</source>
         <translation>Fichier son</translation>
     </message>
@@ -2126,7 +2136,7 @@ L&apos;éxpérience ne s&apos;est pas terminée normalement pour la raison suiva
         <translation type="obsolete">Un fichier son au format .wav ou .ogg </translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="530"/>
+        <location filename="../../translatables-tmp.py" line="531"/>
         <source>Volume</source>
         <translation>Volume</translation>
     </message>
@@ -2136,12 +2146,12 @@ L&apos;éxpérience ne s&apos;est pas terminée normalement pour la raison suiva
         <translation type="obsolete">Le volume du son</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="535"/>
+        <location filename="../../translatables-tmp.py" line="536"/>
         <source> x original</source>
         <translation> × original</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="532"/>
+        <location filename="../../translatables-tmp.py" line="533"/>
         <source>Panning</source>
         <translation>Spatialisation</translation>
     </message>
@@ -2156,7 +2166,7 @@ L&apos;éxpérience ne s&apos;est pas terminée normalement pour la raison suiva
         <translation type="obsolete">Régler la spatialisation du son. Gauche correspond à négatif, droite correspond à positif.</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="534"/>
+        <location filename="../../translatables-tmp.py" line="535"/>
         <source>Pitch</source>
         <translation>Hauteur</translation>
     </message>
@@ -2166,17 +2176,17 @@ L&apos;éxpérience ne s&apos;est pas terminée normalement pour la raison suiva
         <translation type="obsolete">L&apos;hauteur du son</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="536"/>
+        <location filename="../../translatables-tmp.py" line="537"/>
         <source>Stop after</source>
         <translation>Arrêter après</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="539"/>
+        <location filename="../../translatables-tmp.py" line="540"/>
         <source> ms</source>
         <translation> ms</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="538"/>
+        <location filename="../../translatables-tmp.py" line="539"/>
         <source>Fade in</source>
         <translation>Fondu</translation>
     </message>
@@ -2186,7 +2196,7 @@ L&apos;éxpérience ne s&apos;est pas terminée normalement pour la raison suiva
         <translation type="obsolete">Le temps d&apos;apparition en fondu du son</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="540"/>
+        <location filename="../../translatables-tmp.py" line="541"/>
         <source>Duration</source>
         <translation>Durée</translation>
     </message>
@@ -2196,17 +2206,17 @@ L&apos;éxpérience ne s&apos;est pas terminée normalement pour la raison suiva
         <translation type="obsolete">Une durée en ms, &apos;sound&apos; (à attendre jusqu&apos;à ce que le son se termine), &apos;keypress&apos;, &apos;mouseclick&apos;, ou une variable (par ex.,&apos;[synth_dur]&apos;).</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="529"/>
+        <location filename="../../translatables-tmp.py" line="530"/>
         <source>In .ogg or .wav format</source>
         <translation>Au format .wav ou .ogg</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="533"/>
+        <location filename="../../translatables-tmp.py" line="534"/>
         <source>Positive values toward the right; &quot;left&quot; or &quot;right&quot; for full panning</source>
         <translation>Valeurs positives vers la droite ; &quot;left&quot; ou &quot;right&quot; pour pleine spatialisation</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="541"/>
+        <location filename="../../translatables-tmp.py" line="542"/>
         <source>In milliseconds, &quot;sound&quot;, &quot;keypress&quot;, or &quot;mouseclick&quot;</source>
         <translation>En millisecondes, &quot;sound&quot;, &quot;keypress&quot; ou &quot;mouseclick&quot;</translation>
     </message>
@@ -2214,22 +2224,22 @@ L&apos;éxpérience ne s&apos;est pas terminée normalement pour la raison suiva
 <context>
     <name>item_sequence</name>
     <message>
-        <location filename="../../translatables-tmp.py" line="272"/>
+        <location filename="../../translatables-tmp.py" line="273"/>
         <source>Sequence contains non-existing item: %s</source>
         <translation>La séquence contient des items non-existants : %s</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="268"/>
+        <location filename="../../translatables-tmp.py" line="269"/>
         <source>Runs a number of items in sequence</source>
         <translation>Exécute séquentiellement plusieurs items</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="270"/>
+        <location filename="../../translatables-tmp.py" line="271"/>
         <source>Flush pending key presses at sequence start</source>
         <translation>Effacer les touches pressées auparavant au début de la séquence</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="271"/>
+        <location filename="../../translatables-tmp.py" line="272"/>
         <source>&lt;b&gt;Important&lt;/b&gt;: A sequence has &lt;a href=&quot;http://osdoc.cogsci.nl/usage/prepare-run&quot;&gt;a variable preparation time&lt;/a&gt;.</source>
         <translation>&lt;b&gt;Important&lt;/b&gt; : Le temps de préparation d&apos;une sequence peut &lt;a href=&quot;http://osdoc.cogsci.nl/usage/prepare-run&quot;&gt;varier&lt;/a&gt;.</translation>
     </message>
@@ -2237,52 +2247,52 @@ L&apos;éxpérience ne s&apos;est pas terminée normalement pour la raison suiva
 <context>
     <name>item_sketchpad</name>
     <message>
-        <location filename="../../translatables-tmp.py" line="548"/>
+        <location filename="../../translatables-tmp.py" line="549"/>
         <source>Image name &quot;%s&quot; is unknown or variably defined, using fallback image</source>
         <translation>Le nom d&apos;image &quot;%s&quot; est inconnu ou défini avec des variables. Une image de remplacement est utilisée</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="549"/>
+        <location filename="../../translatables-tmp.py" line="550"/>
         <source>Penwidth &quot;%s&quot; is unknown or variably defined, using 1</source>
         <translation>La largeur de la ligne &quot;%s&quot; est inconnue ou définie de façon variable. 1 est utilisé</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="550"/>
+        <location filename="../../translatables-tmp.py" line="551"/>
         <source>Scale &quot;%s&quot; is unknown or variably defined, using 1</source>
         <translation>L&apos;échelle &quot;%s&quot; est inconnue ou définie de façon variable. 1 est utilisé</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="552"/>
+        <location filename="../../translatables-tmp.py" line="553"/>
         <source>Color &quot;%s&quot; is unknown or variably defined, using placeholder color</source>
         <translation>La couleur &quot;%s&quot; est inconnue ou définie de façon variable. Une couleur de remplacement est utilisée</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="554"/>
+        <location filename="../../translatables-tmp.py" line="555"/>
         <source>X coordinate &quot;%s&quot; is unknown or variably defined, using display center</source>
         <translation>La coordonnée X &quot;%s&quot; est inconnue ou définie de façon variable. Le centre d&apos;écran est utilisé</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="555"/>
+        <location filename="../../translatables-tmp.py" line="556"/>
         <source>Y coordinate &quot;%s&quot; is unknown or variably defined, using display center</source>
         <translation>La coordonnée Y &quot;%s&quot; est inconnue ou définie de façon variable. Le centre d&apos;écran est utilisé</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="556"/>
+        <location filename="../../translatables-tmp.py" line="557"/>
         <source>Radius &quot;%s&quot; is unknown or variably defined, using 50</source>
         <translation>Le rayon &quot;%s&quot; est inconnu ou défini de façon variable. 50 est utilisé</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="557"/>
+        <location filename="../../translatables-tmp.py" line="558"/>
         <source>Proportion &quot;%s&quot; is unknown or variably defined, using .5</source>
         <translation>La proportion &quot;%s&quot; est inconnue ou définie de façon variable. .5 est utilisé</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="558"/>
+        <location filename="../../translatables-tmp.py" line="559"/>
         <source>Width &quot;%s&quot; is unknown or variably defined, using 100</source>
         <translation>La largeur &quot;%s&quot; est inconnue ou définie de façon variable. 100 est utilisé</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="559"/>
+        <location filename="../../translatables-tmp.py" line="560"/>
         <source>Height &quot;%s&quot; is unknown or variably defined, using 100</source>
         <translation>La hauteur &quot;%s&quot; est inconnue ou définie de façon variable. 100 est utilisé</translation>
     </message>
@@ -2292,37 +2302,37 @@ L&apos;éxpérience ne s&apos;est pas terminée normalement pour la raison suiva
         <translation type="obsolete">L&apos;échelle &quot;%s&quot; est inconnue ou définie de façon variable. 1.0 est utilisé</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="560"/>
+        <location filename="../../translatables-tmp.py" line="561"/>
         <source>Font size &quot;%s&quot; is invalid or variably defined, using 18</source>
         <translation>La taille de la police &quot;%s&quot; est inconnue ou définie de façon variable. 18 est utilisé</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="561"/>
+        <location filename="../../translatables-tmp.py" line="562"/>
         <source>Some properties of a Gabor patch are unknown or variably defined, using fallback image</source>
         <translation>Certaines propriétes d&apos;un patch Gabor sont inconnus ou définis par des variables. Une image de remplacement est utilisée</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="562"/>
+        <location filename="../../translatables-tmp.py" line="563"/>
         <source>Some properties of a noise patch are unknown or variably defined, using fallback image</source>
         <translation>Certaines propriétes d&apos;un patch de bruit sont inconnues ou définie des façon variable. Une image de remplacement est utilisée</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="563"/>
+        <location filename="../../translatables-tmp.py" line="564"/>
         <source>Fixdot style &quot;%s&quot; is unknown or variably defined</source>
         <translation>Le style fixdot &quot;%s&quot; est inconnu ou défini de façon variable</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="565"/>
+        <location filename="../../translatables-tmp.py" line="566"/>
         <source>Edit text</source>
         <translation>Modifier le texte</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="566"/>
+        <location filename="../../translatables-tmp.py" line="567"/>
         <source>Please enter a text for the textline</source>
         <translation>Veuillez entrer du texte pour la ligne de texte</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="567"/>
+        <location filename="../../translatables-tmp.py" line="568"/>
         <source>New textline</source>
         <translation>Nouvelle ligne de texte</translation>
     </message>
@@ -2332,57 +2342,57 @@ L&apos;éxpérience ne s&apos;est pas terminée normalement pour la raison suiva
         <translation type="obsolete">Modifier l&apos;élément</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="569"/>
+        <location filename="../../translatables-tmp.py" line="570"/>
         <source>Element script</source>
         <translation>Script de l&apos;élément</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="570"/>
+        <location filename="../../translatables-tmp.py" line="571"/>
         <source>Edit script</source>
         <translation>Modifier le script</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="571"/>
+        <location filename="../../translatables-tmp.py" line="572"/>
         <source>Raise to front</source>
         <translation>Envoyer à l&apos;avant</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="572"/>
+        <location filename="../../translatables-tmp.py" line="573"/>
         <source>Lower to bottom</source>
         <translation>Envoyer à l&apos;arrière</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="574"/>
+        <location filename="../../translatables-tmp.py" line="575"/>
         <source>Delete</source>
         <translation>Supprimer</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="564"/>
+        <location filename="../../translatables-tmp.py" line="565"/>
         <source>Displays stimuli</source>
         <translation>Montrer des stimuli visuels</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="575"/>
+        <location filename="../../translatables-tmp.py" line="576"/>
         <source>Draw %s element</source>
         <translation>Dessiner un élément %s</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="568"/>
+        <location filename="../../translatables-tmp.py" line="569"/>
         <source>Enter text</source>
         <translation>Saisir du texte</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="553"/>
+        <location filename="../../translatables-tmp.py" line="554"/>
         <source>Fill &quot;%s&quot; is unknown or variably defined, assuming filled</source>
         <translation>Remplissage &quot;%s&quot; est inconnue ou définie de façon variable. L&apos;objet sera rempli</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="551"/>
+        <location filename="../../translatables-tmp.py" line="552"/>
         <source>Rotation &quot;%s&quot; is unknown or variably defined, using 0</source>
         <translation>La rotation &quot;%s&quot; est inconnue ou définie de façon variable. 0 est utilisé</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="573"/>
+        <location filename="../../translatables-tmp.py" line="574"/>
         <source>Specify polar coordinates</source>
         <translation>Spécifier des coordonnées polaires</translation>
     </message>
@@ -2390,12 +2400,12 @@ L&apos;éxpérience ne s&apos;est pas terminée normalement pour la raison suiva
 <context>
     <name>item_synth</name>
     <message>
-        <location filename="../../translatables-tmp.py" line="335"/>
+        <location filename="../../translatables-tmp.py" line="336"/>
         <source>A basic sound synthesizer</source>
         <translation>Un synthétiseur simple de sons</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="336"/>
+        <location filename="../../translatables-tmp.py" line="337"/>
         <source>Waveform</source>
         <translation>La courbe</translation>
     </message>
@@ -2405,7 +2415,7 @@ L&apos;éxpérience ne s&apos;est pas terminée normalement pour la raison suiva
         <translation type="obsolete">La courbe du son</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="339"/>
+        <location filename="../../translatables-tmp.py" line="340"/>
         <source>Attack</source>
         <translation>Apparition en fondu</translation>
     </message>
@@ -2415,12 +2425,12 @@ L&apos;éxpérience ne s&apos;est pas terminée normalement pour la raison suiva
         <translation type="obsolete">Le temps de l&apos;apparition en fondu du son.</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="348"/>
+        <location filename="../../translatables-tmp.py" line="349"/>
         <source> ms</source>
         <translation> ms</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="341"/>
+        <location filename="../../translatables-tmp.py" line="342"/>
         <source>Decay</source>
         <translation>Disparition</translation>
     </message>
@@ -2430,7 +2440,7 @@ L&apos;éxpérience ne s&apos;est pas terminée normalement pour la raison suiva
         <translation type="obsolete">Régler la disparition (&quot;fade out&quot;) du son</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="343"/>
+        <location filename="../../translatables-tmp.py" line="344"/>
         <source>Volume</source>
         <translation>Volume</translation>
     </message>
@@ -2440,12 +2450,12 @@ L&apos;éxpérience ne s&apos;est pas terminée normalement pour la raison suiva
         <translation type="obsolete">Le volume du son</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="344"/>
+        <location filename="../../translatables-tmp.py" line="345"/>
         <source> x maximum</source>
         <translation> x maximum</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="345"/>
+        <location filename="../../translatables-tmp.py" line="346"/>
         <source>Panning</source>
         <translation>Spatialisation</translation>
     </message>
@@ -2460,7 +2470,7 @@ L&apos;éxpérience ne s&apos;est pas terminée normalement pour la raison suiva
         <translation type="obsolete">Régler la spatialisation (gauche-droite) du son.</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="347"/>
+        <location filename="../../translatables-tmp.py" line="348"/>
         <source>Length</source>
         <translation>Longueur</translation>
     </message>
@@ -2470,7 +2480,7 @@ L&apos;éxpérience ne s&apos;est pas terminée normalement pour la raison suiva
         <translation type="obsolete">La durée du son</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="349"/>
+        <location filename="../../translatables-tmp.py" line="350"/>
         <source>Duration</source>
         <translation>Durée</translation>
     </message>
@@ -2490,22 +2500,22 @@ L&apos;éxpérience ne s&apos;est pas terminée normalement pour la raison suiva
         <translation type="obsolete">Fréquence (en Hz) ou note (e.g. &quot;A1&quot;)</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="337"/>
+        <location filename="../../translatables-tmp.py" line="338"/>
         <source>Frequency</source>
         <translation>Fréquence</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="338"/>
+        <location filename="../../translatables-tmp.py" line="339"/>
         <source>In Hertz or as note, e.g. &quot;A1&quot;</source>
         <translation>En Hertz ou une note (par ex. &quot;A1&quot;)</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="346"/>
+        <location filename="../../translatables-tmp.py" line="347"/>
         <source>Positive values toward the right; &quot;left&quot; or &quot;right&quot; for full panning</source>
         <translation>Valeurs positives vers la droite ; &quot;left&quot; ou &quot;right&quot; pour pleine spatialisation</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="350"/>
+        <location filename="../../translatables-tmp.py" line="351"/>
         <source>In milliseconds, &quot;sound&quot;, &quot;keypress&quot;, or &quot;mouseclick&quot;</source>
         <translation>En millisecondes, &quot;sound&quot;, &quot;keypress&quot; ou &quot;mouseclick&quot;</translation>
     </message>
@@ -3400,7 +3410,7 @@ L&apos;éxpérience ne s&apos;est pas terminée normalement pour la raison suiva
 <context>
     <name>plugin_external_script</name>
     <message>
-        <location filename="../../translatables-tmp.py" line="361"/>
+        <location filename="../../translatables-tmp.py" line="362"/>
         <source>Runs Python code from a file</source>
         <translation>Exécute du code Python à partir d&apos;un fichier</translation>
     </message>
@@ -3410,7 +3420,7 @@ L&apos;éxpérience ne s&apos;est pas terminée normalement pour la raison suiva
         <translation type="obsolete">Divers</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="362"/>
+        <location filename="../../translatables-tmp.py" line="363"/>
         <source>Script file</source>
         <translation>Fichier de script</translation>
     </message>
@@ -3420,7 +3430,7 @@ L&apos;éxpérience ne s&apos;est pas terminée normalement pour la raison suiva
         <translation type="obsolete">Un fichier Python (.py)</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="363"/>
+        <location filename="../../translatables-tmp.py" line="364"/>
         <source>Prepare function in script</source>
         <translation>La fonction de préparation dans le script</translation>
     </message>
@@ -3430,7 +3440,7 @@ L&apos;éxpérience ne s&apos;est pas terminée normalement pour la raison suiva
         <translation type="obsolete">Le nom d&apos;une fonction à exécuter lorsque la phase de préparation</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="364"/>
+        <location filename="../../translatables-tmp.py" line="365"/>
         <source>Run function in script</source>
         <translation>La fonction d&apos;exécution dans le script</translation>
     </message>
@@ -3521,17 +3531,17 @@ L&apos;éxpérience ne s&apos;est pas terminée normalement pour la raison suiva
 <context>
     <name>plugin_form_base</name>
     <message>
-        <location filename="../../translatables-tmp.py" line="397"/>
+        <location filename="../../translatables-tmp.py" line="398"/>
         <source>cols, rows, and margins should be numeric values separated by a semi-colon</source>
         <translation>Les cols, rows, et margins doivent être des valeurs numériques et séparées par un point-virgule</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="398"/>
+        <location filename="../../translatables-tmp.py" line="399"/>
         <source>In a form widget col, row, colspan, and rowspan should be integer</source>
         <translation>Dans une formulaire, les col, row, colspan et rowspan doivent être des valeurs entières</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="399"/>
+        <location filename="../../translatables-tmp.py" line="400"/>
         <source>You can only specify one focus widget</source>
         <translation>Vous ne pouvez spécifier qu&apos;un widget focalisé</translation>
     </message>
@@ -3541,7 +3551,7 @@ L&apos;éxpérience ne s&apos;est pas terminée normalement pour la raison suiva
         <translation type="obsolete">Formulaire</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="400"/>
+        <location filename="../../translatables-tmp.py" line="401"/>
         <source>Edit the script to modify the form</source>
         <translation>Editer le script pour modifier le formulaire</translation>
     </message>
@@ -3554,7 +3564,7 @@ L&apos;éxpérience ne s&apos;est pas terminée normalement pour la raison suiva
         <translation type="obsolete">Formulaire</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="420"/>
+        <location filename="../../translatables-tmp.py" line="421"/>
         <source>Form title</source>
         <translation>Titre du formulaire</translation>
     </message>
@@ -3564,7 +3574,7 @@ L&apos;éxpérience ne s&apos;est pas terminée normalement pour la raison suiva
         <translation type="obsolete">Titre apparaissant au-dessus du texte</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="421"/>
+        <location filename="../../translatables-tmp.py" line="422"/>
         <source>Checkbox text</source>
         <translation>Texte de la case à cocher</translation>
     </message>
@@ -3574,7 +3584,7 @@ L&apos;éxpérience ne s&apos;est pas terminée normalement pour la raison suiva
         <translation type="obsolete">Texte de la case à cocher</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="422"/>
+        <location filename="../../translatables-tmp.py" line="423"/>
         <source>Accept-button text</source>
         <translation>Texte du bouton à accepter</translation>
     </message>
@@ -3584,7 +3594,7 @@ L&apos;éxpérience ne s&apos;est pas terminée normalement pour la raison suiva
         <translation type="obsolete">Texte du bouton à accepter</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="423"/>
+        <location filename="../../translatables-tmp.py" line="424"/>
         <source>Decline-button text</source>
         <translation>Texte du bouton à refuser</translation>
     </message>
@@ -3594,7 +3604,7 @@ L&apos;éxpérience ne s&apos;est pas terminée normalement pour la raison suiva
         <translation type="obsolete">Texte du bouton à refuser</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="424"/>
+        <location filename="../../translatables-tmp.py" line="425"/>
         <source>Message on decline</source>
         <translation>Texte à montrer lorsque le participant refuse</translation>
     </message>
@@ -3604,7 +3614,7 @@ L&apos;éxpérience ne s&apos;est pas terminée normalement pour la raison suiva
         <translation type="obsolete">Texte à montrer lorsque le participant refuse</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="425"/>
+        <location filename="../../translatables-tmp.py" line="426"/>
         <source>Consent form text</source>
         <translation>Texte pour le formulaire de consentement</translation>
     </message>
@@ -3622,27 +3632,27 @@ L&apos;éxpérience ne s&apos;est pas terminée normalement pour la raison suiva
         <translation type="obsolete">Formulaire</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="482"/>
+        <location filename="../../translatables-tmp.py" line="483"/>
         <source>Form title</source>
         <translation>Titre du formulaire</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="483"/>
+        <location filename="../../translatables-tmp.py" line="484"/>
         <source>Response variable</source>
         <translation>Variable de réponse</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="484"/>
+        <location filename="../../translatables-tmp.py" line="485"/>
         <source>Allow multiple options to be selected</source>
         <translation>Permettre de sélectionner plusieurs options</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="485"/>
+        <location filename="../../translatables-tmp.py" line="486"/>
         <source>Advance immediately to the next item once a selection has been made</source>
         <translation>Avancer immédiatement au prochain item lorsque la sélection a été faite</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="486"/>
+        <location filename="../../translatables-tmp.py" line="487"/>
         <source>Button text</source>
         <translation>Texte du bouton</translation>
     </message>
@@ -3652,7 +3662,7 @@ L&apos;éxpérience ne s&apos;est pas terminée normalement pour la raison suiva
         <translation type="obsolete">Texte du bouton pour passer au prochain item</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="487"/>
+        <location filename="../../translatables-tmp.py" line="488"/>
         <source>Timeout</source>
         <translation>Délai maximum</translation>
     </message>
@@ -3662,12 +3672,12 @@ L&apos;éxpérience ne s&apos;est pas terminée normalement pour la raison suiva
         <translation type="obsolete">Délai maximum de la réponse</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="488"/>
+        <location filename="../../translatables-tmp.py" line="489"/>
         <source>Your question</source>
         <translation>Votre question</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="489"/>
+        <location filename="../../translatables-tmp.py" line="490"/>
         <source>Response options (different options on different lines)</source>
         <translation>Options de la réponse (différentes options sur des lignes différentes)</translation>
     </message>
@@ -3723,7 +3733,7 @@ L&apos;éxpérience ne s&apos;est pas terminée normalement pour la raison suiva
         <translation type="obsolete">Formulaire</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="297"/>
+        <location filename="../../translatables-tmp.py" line="298"/>
         <source>Form title</source>
         <translation>Titre du formulaire</translation>
     </message>
@@ -3733,7 +3743,7 @@ L&apos;éxpérience ne s&apos;est pas terminée normalement pour la raison suiva
         <translation type="obsolete">Titre apparaissant au-dessus du texte</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="298"/>
+        <location filename="../../translatables-tmp.py" line="299"/>
         <source>Response variable</source>
         <translation>Variable de résponse</translation>
     </message>
@@ -3743,7 +3753,7 @@ L&apos;éxpérience ne s&apos;est pas terminée normalement pour la raison suiva
         <translation type="obsolete">La variable expérimentale pour sauvegarder la réponse</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="299"/>
+        <location filename="../../translatables-tmp.py" line="300"/>
         <source>Timeout</source>
         <translation>Délai maximum</translation>
     </message>
@@ -3753,7 +3763,7 @@ L&apos;éxpérience ne s&apos;est pas terminée normalement pour la raison suiva
         <translation type="obsolete">Délai maximum de la réponse</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="300"/>
+        <location filename="../../translatables-tmp.py" line="301"/>
         <source>Your question</source>
         <translation>Votre question</translation>
     </message>
@@ -3842,17 +3852,17 @@ L&apos;éxpérience ne s&apos;est pas terminée normalement pour la raison suiva
         <translation type="obsolete">Escalier</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="285"/>
+        <location filename="../../translatables-tmp.py" line="286"/>
         <source>Estimated threshold (used for starting test value)</source>
         <translation>Seuil estimée (utilisée pour la valeur de test initiale)</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="286"/>
+        <location filename="../../translatables-tmp.py" line="287"/>
         <source>Std. dev. of estimated threshold</source>
         <translation>Dev. std. de la seuil estimée</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="287"/>
+        <location filename="../../translatables-tmp.py" line="288"/>
         <source>Desired proportion of correct responses</source>
         <translation>Proportion desirée des réponses correctes</translation>
     </message>
@@ -3872,37 +3882,37 @@ L&apos;éxpérience ne s&apos;est pas terminée normalement pour la raison suiva
         <translation type="obsolete">Niveau de hasard (γ)</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="291"/>
+        <location filename="../../translatables-tmp.py" line="292"/>
         <source>Method to determine optimal test value</source>
         <translation>Méthode pour déterminer la valeur de test optimale</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="292"/>
+        <location filename="../../translatables-tmp.py" line="293"/>
         <source>Minimum test value</source>
         <translation>Valeur de test minimale</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="293"/>
+        <location filename="../../translatables-tmp.py" line="294"/>
         <source>Maximum test value</source>
         <translation>Valeur de test maximale</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="294"/>
+        <location filename="../../translatables-tmp.py" line="295"/>
         <source>Experimental variable for test value</source>
         <translation>Variable expérimentale pour la valeur de test</translation>
     </message>
     <message encoding="UTF-8">
-        <location filename="../../translatables-tmp.py" line="288"/>
+        <location filename="../../translatables-tmp.py" line="289"/>
         <source>Steepness of the Weibull psychometric function (β)</source>
         <translation>Pente de la fonction psychométrique Weibull (β)</translation>
     </message>
     <message encoding="UTF-8">
-        <location filename="../../translatables-tmp.py" line="289"/>
+        <location filename="../../translatables-tmp.py" line="290"/>
         <source>Proportion of random responses at maximum stimulus intensity (δ)</source>
         <translation>Proportion de réponses aléatoires à l&apos;intensité maximale du stimulus (δ)</translation>
     </message>
     <message encoding="UTF-8">
-        <location filename="../../translatables-tmp.py" line="290"/>
+        <location filename="../../translatables-tmp.py" line="291"/>
         <source>Chance level (γ)</source>
         <translation>Niveau de hasard (γ)</translation>
     </message>
@@ -3915,7 +3925,7 @@ L&apos;éxpérience ne s&apos;est pas terminée normalement pour la raison suiva
         <translation type="obsolete">Escalier</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="371"/>
+        <location filename="../../translatables-tmp.py" line="372"/>
         <source>Response variable (0 or 1)</source>
         <translation>Variable de réponse (0 ou 1)</translation>
     </message>
@@ -3923,7 +3933,7 @@ L&apos;éxpérience ne s&apos;est pas terminée normalement pour la raison suiva
 <context>
     <name>plugin_repeat_cycle</name>
     <message>
-        <location filename="../../translatables-tmp.py" line="367"/>
+        <location filename="../../translatables-tmp.py" line="368"/>
         <source>Marks the current loop cycle so that it is repeated</source>
         <translation>Marquer le cycle actuel de sorte qu&apos;il est répété</translation>
     </message>
@@ -3933,7 +3943,7 @@ L&apos;éxpérience ne s&apos;est pas terminée normalement pour la raison suiva
         <translation type="obsolete">Divers</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="368"/>
+        <location filename="../../translatables-tmp.py" line="369"/>
         <source>Repeat if</source>
         <translation>Répéter si</translation>
     </message>
@@ -3959,7 +3969,7 @@ L&apos;éxpérience ne s&apos;est pas terminée normalement pour la raison suiva
 <context>
     <name>plugin_srbox</name>
     <message>
-        <location filename="../../translatables-tmp.py" line="308"/>
+        <location filename="../../translatables-tmp.py" line="309"/>
         <source>Dummy mode (use keyboard instead)</source>
         <translation>Mode factice (utilise le clavier)</translation>
     </message>
@@ -3969,7 +3979,7 @@ L&apos;éxpérience ne s&apos;est pas terminée normalement pour la raison suiva
         <translation type="obsolete">Activer pour tester l&apos;expérience en utilisant le clavier et non le SR Box</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="309"/>
+        <location filename="../../translatables-tmp.py" line="310"/>
         <source>Ignore buttons that are already pressed</source>
         <translation>Ignorer les boutons déjà appuyés</translation>
     </message>
@@ -3979,7 +3989,7 @@ L&apos;éxpérience ne s&apos;est pas terminée normalement pour la raison suiva
         <translation type="obsolete">Exiger un changement de l&apos;état de bouton de sort que des boutons déjà appuyés ne sont pas pris en compte </translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="310"/>
+        <location filename="../../translatables-tmp.py" line="311"/>
         <source>Device name</source>
         <translation>Nom d&apos;appareil</translation>
     </message>
@@ -3989,7 +3999,7 @@ L&apos;éxpérience ne s&apos;est pas terminée normalement pour la raison suiva
         <translation type="obsolete">Un nom d&apos;appareil valide est attendu. Laisser vide pour une détection automatique.</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="311"/>
+        <location filename="../../translatables-tmp.py" line="312"/>
         <source>Correct response</source>
         <translation>Réponse correcte</translation>
     </message>
@@ -3999,7 +4009,7 @@ L&apos;éxpérience ne s&apos;est pas terminée normalement pour la raison suiva
         <translation type="obsolete">Une nombre de bouton (1 .. 5)</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="312"/>
+        <location filename="../../translatables-tmp.py" line="313"/>
         <source>Allowed responses</source>
         <translation>Réponses valides</translation>
     </message>
@@ -4009,7 +4019,7 @@ L&apos;éxpérience ne s&apos;est pas terminée normalement pour la raison suiva
         <translation type="obsolete">Une liste des nombres de boutons separés par point-virgule, e.g., 1;3;4</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="313"/>
+        <location filename="../../translatables-tmp.py" line="314"/>
         <source>Timeout</source>
         <translation>Délai maximum</translation>
     </message>
@@ -4019,7 +4029,7 @@ L&apos;éxpérience ne s&apos;est pas terminée normalement pour la raison suiva
         <translation type="obsolete">Une valeur en millisecondes ou &apos;infinite&apos;</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="314"/>
+        <location filename="../../translatables-tmp.py" line="315"/>
         <source>Turn on lights</source>
         <translation>Activer les lumières</translation>
     </message>
@@ -4029,7 +4039,7 @@ L&apos;éxpérience ne s&apos;est pas terminée normalement pour la raison suiva
         <translation type="obsolete">Une liste des nombres de lumières separés par point-virgule, e.g., 1;3;4</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="315"/>
+        <location filename="../../translatables-tmp.py" line="316"/>
         <source>&lt;small&gt;&lt;b&gt;Note:&lt;/b&gt; If there are multiple srbox items in the experiment, the first srbox item determines the device name and whether dummy mode is enabled&lt;/small&gt;
 </source>
         <translation>&lt;small&gt;&lt;b&gt;Note :&lt;/b&gt; S&apos;il y a plusieurs items srbox dans l&apos;expérience, le premier item srbox détermine le nom d&apos;appareil et si le mode factice est activé&lt;/small&gt;
@@ -4153,17 +4163,17 @@ L&apos;éxpérience ne s&apos;est pas terminée normalement pour la raison suiva
         <translation type="obsolete">Stimuli visuels</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="278"/>
+        <location filename="../../translatables-tmp.py" line="279"/>
         <source>Video file</source>
         <translation>Fichier vidéo</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="279"/>
+        <location filename="../../translatables-tmp.py" line="280"/>
         <source>Resize to fit screen</source>
         <translation>Redimensionner en fonction de l&apos;écran</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="281"/>
+        <location filename="../../translatables-tmp.py" line="282"/>
         <source>Duration</source>
         <translation>Durée</translation>
     </message>
@@ -4173,7 +4183,7 @@ L&apos;éxpérience ne s&apos;est pas terminée normalement pour la raison suiva
         <translation type="obsolete">Une valeur en millisecondes, &apos;keypress&apos; ou &apos;mouseclick&apos; est attendu(e)</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="282"/>
+        <location filename="../../translatables-tmp.py" line="283"/>
         <source>ms</source>
         <translation>ms</translation>
     </message>
@@ -4181,47 +4191,47 @@ L&apos;éxpérience ne s&apos;est pas terminée normalement pour la raison suiva
 <context>
     <name>plugins_coroutines</name>
     <message>
-        <location filename="../../translatables-tmp.py" line="471"/>
+        <location filename="../../translatables-tmp.py" line="472"/>
         <source>Run items simultaneously</source>
         <translation>Exécuter les items simultanément</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="472"/>
+        <location filename="../../translatables-tmp.py" line="473"/>
         <source>Item name</source>
         <translation>Nom de l&apos;item</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="473"/>
+        <location filename="../../translatables-tmp.py" line="474"/>
         <source>Start time</source>
         <translation>Temps de démarrage</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="474"/>
+        <location filename="../../translatables-tmp.py" line="475"/>
         <source>End time (if applicable)</source>
         <translation>Temps de fin (le cas échéant)</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="475"/>
+        <location filename="../../translatables-tmp.py" line="476"/>
         <source>Duration</source>
         <translation>Durée</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="477"/>
+        <location filename="../../translatables-tmp.py" line="478"/>
         <source>Generator function name (optional)</source>
         <translation>Nom du fonction générateur (optionnel)</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="478"/>
+        <location filename="../../translatables-tmp.py" line="479"/>
         <source>Flush pending key presses at coroutines start</source>
         <translation>Effacer les touches pressées auparavant</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="479"/>
+        <location filename="../../translatables-tmp.py" line="480"/>
         <source>&quot;%s&quot; does not support coroutines.</source>
         <translation>&quot;%s&quot; ne supporte pas les coroutines.</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="476"/>
+        <location filename="../../translatables-tmp.py" line="477"/>
         <source>End after item (optional)</source>
         <translation>Finir après item (optionnel)</translation>
     </message>
