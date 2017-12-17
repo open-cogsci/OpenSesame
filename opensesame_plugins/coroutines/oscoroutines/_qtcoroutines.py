@@ -177,6 +177,9 @@ class qtcoroutines(coroutines, sequence):
 			end_after_item.
 		"""
 
+		# No refresh necessary if the combobox hasn't been initialized yet
+		if not hasattr(self, u'_combobox_end_after_item'):
+			return
 		self._combobox_end_after_item.clear()
 		self._combobox_end_after_item.addItem(u'')
 		current_index = 0
