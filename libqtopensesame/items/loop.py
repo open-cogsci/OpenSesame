@@ -285,7 +285,9 @@ class loop(qtstructure_item, qtitem, loop_runtime):
 		"""See qtitem."""
 
 		qtitem.edit_widget(self)
-		self.loop_widget.ui.combobox_item.exclude = self.parents()
+		self.loop_widget.ui.combobox_item.filter_fnc = (
+			lambda item: item not in self.parents()
+		)
 		self.loop_widget.ui.combobox_item.refresh()
 		self.loop_widget.ui.combobox_item.select(self._item)
 		self.qdm.dm = self.dm

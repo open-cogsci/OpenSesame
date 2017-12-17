@@ -23,6 +23,7 @@ from libqtopensesame.misc.base_subcomponent import base_subcomponent
 from libqtopensesame.misc.translate import translation_context
 _ = translation_context(u'item_combobox', category=u'core')
 
+
 class item_combobox(QtWidgets.QComboBox, base_subcomponent):
 
 	"""
@@ -30,24 +31,47 @@ class item_combobox(QtWidgets.QComboBox, base_subcomponent):
 		A combobox to select existing items.
 	"""
 
-	def __init__(self, main_window, exclude=[]):
+	def __init__(self, main_window, filter_fnc=None):
 
 		QtWidgets.QComboBox.__init__(self, main_window)
 		self.setup(main_window)
-		self.exclude = exclude
+		self.filter_fnc = filter_fnc
 		self.refresh()
+
+	@property
+	def filter_fnc(self):
+
+		return self._filter_fnc
+
+	@filter_fnc.setter
+	def filter_fnc(self, filter_fnc):
+
+		if filter_fnc is None:
+			self._filter_fnc = lambda item: True
+		else:
+			self._filter_fnc = filter_fnc
 
 	@property
 	def selected_item(self):
 
-		if self.currentIndex() == 0:
-			return None
 		return self.currentText()
+
+	def currentText(self):
+
+		if self.currentIndex() == 0:
+			return u''
+		return QtWidgets.QComboBox.currentText(self)
+
+	def findText(self, item):
+
+		if item == u'':
+			return 0
+		return QtWidgets.QComboBox.findText(self, item)
 
 	@property
 	def items(self):
 
-		return [item for item in self.item_store if item not in self.exclude]
+		return filter(self._filter_fnc, self.item_store)
 
 	def select(self, item_name):
 
