@@ -26,6 +26,7 @@ class Rect(Element):
 	def __init__(self, canvas, x, y, w, h, **properties):
 
 		properties = properties.copy()
+		x, y, w, h = self._rect(x, y, w, h)
 		properties.update({ 'x' : x, 'y' : y, 'w' : w, 'h' : h })
 		Element.__init__(self, canvas, **properties)
 

@@ -32,8 +32,4 @@ class Line(Element):
 	@property
 	def rect(self):
 
-		top = min(sy, ey)
-		bottom = max(sy, ey)
-		left = min(sx, ex)
-		right = max(sx, ex)
-		return left, top, right-left, bottom-top
+		return self._rect(self.sx, self.sy, self.ex-self.sx, self.ey-self.sy)

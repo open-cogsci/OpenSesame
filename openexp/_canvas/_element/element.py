@@ -310,3 +310,30 @@ class Element(object):
 		"""
 
 		pass
+
+	@staticmethod
+	def _rect(x, y, w, h):
+
+		"""
+		visible: False
+
+		desc:
+			Fixes negative width and heights when defining a rect
+
+		arguments:
+			x:	An X coordinate
+			y:	A Y coordinate
+			w:	A width
+			h:	A height
+
+		returns:
+			desc:	An `(x, y, w, h)` tuple where the `w` and `h` >= 0.
+		"""
+
+		if w < 0:
+			x += w
+			w = abs(w)
+		if h < 0:
+			y += h
+			h = abs(h)
+		return x, y, w, h
