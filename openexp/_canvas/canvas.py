@@ -236,6 +236,10 @@ class Canvas(Backend):
 			print('Clicked outside of rectangle')
 		~~~
 
+		You can also get a list of the names of all elements that contain an
+		`x,y` coordinate, using the `Canvas.elements_at()` function, documented
+		below.
+
 
 		%--
 		constant:
@@ -448,6 +452,52 @@ class Canvas(Backend):
 			if element is _element:
 				return name, element
 		raise ValueError('"%s" not found in canvas"' % element)
+
+	def elements_at(self, x, y):
+
+		"""
+		desc:
+			*New in v3.2.0*
+
+			Gets the names of elements that contain a particular `x, y`
+			coordinate.
+
+		arguments:
+			x:
+				desc:	An X coordinate.
+				type:	[int, float]
+			y:
+				desc:	A Y coordinate.
+				type:	[int, float]
+
+		returns:
+			desc:	A `list` of element names that contain the coordinate
+					`x, y`.
+			type:	list
+
+		example: |
+		  # Create and show a canvas with two partly overlapping rectangles
+		  my_canvas = Canvas()
+		  my_canvas['right_rect'] = Rect(x=-200, y=-100, w=200, h=200, color='red')
+		  my_canvas['left_rect'] = Rect(x=-100, y=-100, w=200, h=200, color='green')
+		  my_canvas.show()
+		  # Collect a mouse click and print the names of the elements that
+		  # contain the clicked point
+		  my_mouse = Mouse(visible=True)
+		  button, pos, time = my_mouse.get_click()
+		  if pos is not None:
+		      x, y = pos
+		      print('Clicked on elements: %s' % my_canvas.elements_at(x, y))
+		"""
+
+		elements = []
+		for name, element in self._elements.items():
+			try:
+				if (x, y) in element:
+					elements.append(name)
+			except NotImplementedError:
+				pass
+		return elements
 
 	def lower_to_bottom(self, element):
 
