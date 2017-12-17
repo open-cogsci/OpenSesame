@@ -67,7 +67,13 @@ class mouse_response_mixin(object):
 			timeout=self._timeout,
 			buttonlist=buttonlist
 		)
-		return self._mouse.get_click
+		if self.var.get(u'event_type', default=u'mouseclick') == u'mouseclick':
+			return self._mouse.get_click
+		if self.var.event_type == u'mouserelease':
+			return self._mouse.get_click_release
+		raise osexception(
+			u'event_type should be "mouseclick" or "mouserelease"'
+		)
 
 	def process_response(self, response_args):
 
@@ -121,6 +127,7 @@ class mouse_response(mouse_response_mixin, base_response_item):
 		self.var.timeout = u'infinite'
 		self.var.duration = u'mouseclick'
 		self.var.linked_sketchpad = u''
+		self.var.event_type = u'mouseclick'
 		self.var.unset(u'allowed_responses')
 		self.var.unset(u'correct_response')
 

@@ -252,6 +252,36 @@ class Mouse(Backend):
 
 		raise NotImplementedError()
 
+	@configurable
+	def get_click_release(self, **resp_args):
+
+		"""
+		desc: |
+			*New in v3.2.0*
+
+			Collects a mouse-click release.
+
+		keyword-dict:
+			resp_args:
+				Optional [response keywords] that will be used for this call to
+				[mouse.get_click_release]. This does not affect subsequent
+				operations.
+
+		returns:
+			desc:			A (button, position, timestamp) tuple. The button
+							and position are `None` if a timeout occurs.
+							Position is an (x, y) tuple in screen coordinates.
+			type:			tuple
+
+		example: |
+			my_mouse = Mouse()
+			button, (x, y), timestamp = my_mouse.get_click_release(timeout=5000)
+			if button is None:
+				print('A timeout occurred!')
+		"""
+
+		raise NotImplementedError()
+
 	def get_pos(self):
 
 		"""

@@ -60,10 +60,22 @@ class Legacy(Mouse, LegacyCoordinates):
 	@configurable
 	def get_click(self):
 
+		return self._get_mouse_event(MOUSEBUTTONDOWN)
+
+	@configurable
+	def get_click_release(self):
+
+		return self._get_mouse_event(MOUSEBUTTONUP)
+
+	def _get_mouse_event(self, event_type):
+
 		buttonlist = self.buttonlist
 		timeout = self.timeout
-		enable_escape = self.experiment.var.get(u'enable_escape', u'no',
-			[u'yes', u'no']) == u'yes'
+		enable_escape = self.experiment.var.get(
+			u'enable_escape',
+			u'no',
+			[u'yes', u'no']
+		) == u'yes'
 		pygame.mouse.set_visible(self.visible)
 		start_time = pygame.time.get_ticks()
 		time = start_time
@@ -76,21 +88,25 @@ class Legacy(Mouse, LegacyCoordinates):
 						self.experiment.pause()
 						continue
 					pygame.event.post(event)
-				if event.type == MOUSEBUTTONDOWN:
+				if event.type == event_type:
 					# Check escape sequence. If the top-left and top-right
 					# corner are clicked successively within 2000ms, the
 					# experiment is aborted
-					if enable_escape and event.pos[0] < 64 and event.pos[1] \
-						< 64:
+					if (
+						enable_escape and event.pos[0] < 64
+						and event.pos[1] < 64
+					):
 						_time = pygame.time.get_ticks()
 						while pygame.time.get_ticks() - _time < 2000:
 							for event in pygame.event.get():
-								if event.type == MOUSEBUTTONDOWN:
-									if event.pos[0] > \
-										self.experiment.var.width-64 and \
-										event.pos[1] < 64:
+								if event.type == event_type:
+									if (
+										event.pos[0] > self.experiment.var.width-64
+										and  event.pos[1] < 64
+									):
 										raise osexception(
-											u"The escape sequence was clicked/ tapped")
+											u"The escape sequence was clicked/ tapped"
+										)
 					if buttonlist is None or event.button in buttonlist:
 						pygame.mouse.set_visible(self._cursor_shown)
 						return event.button, self.from_xy(event.pos), time

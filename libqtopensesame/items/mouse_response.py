@@ -88,6 +88,14 @@ class mouse_response(mouse_response_runtime, qtplugin):
 			widget=combobox,
 			info=_('Elements define regions of interest')
 		)
+		self.add_combobox_control(
+			var=u'event_type',
+			label=_(u'Event type'),
+			options=[
+				u'mouseclick',
+				u'mouserelease'
+			]
+		)
 		self.add_checkbox_control(
 			var=u'show_cursor',
 			label=_(u'Visible mouse cursor')
